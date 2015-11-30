@@ -27,6 +27,20 @@ The `metafor` package website can be found at [http://www.metafor-project.org](h
 * a [frequently asked questions](http://www.metafor-project.org/doku.php/faq) section, and
 * some [links](http://www.metafor-project.org/doku.php/links) to other websites related to software for meta-analysis.
 
-## Development Version
+## Installation
 
-Instruction for installing the current development version can be found [here](http://www.metafor-project.org/doku.php/installation#development_version).
+The current official (i.e., [CRAN](https://cran.r-project.org/package=metafor)) release can be installed directly within R with:
+```r
+install.packages("metafor")
+```
+
+The development version of the package can be installed with:
+```r
+library("devtools")
+install_github("wviechtb/metafor")
+```
+This approach builds the package from source based on the development branch on GitHub. On Windows, [Rtools](http://cran.r-project.org/bin/windows/Rtools/) must be installed for this to work.
+
+## Meta
+
+The metafor package was written by [Wolfgang Viechtbauer](http://www.wvbauer.com/). It is licensed under the [GNU General Public License Version 2](http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt). For citation info, type `citation(package='metafor')` in R. To report any issues or bugs, please go [here](https://github.com/wviechtb/metafor/issues).
