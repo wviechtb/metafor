@@ -19,7 +19,7 @@ The `metafor` package website can be found at [http://www.metafor-project.org](h
 * a [to-do list](http://www.metafor-project.org/doku.php/todo) and a description of planned features to be implemented in the future,
 * information on how to [download and install](http://www.metafor-project.org/doku.php/installation) the package,
 * information on how to obtain [documentation and help](http://www.metafor-project.org/doku.php/help) with using the package,
-* some [analysis examples](http://www.metafor-project.org/doku.php/analyses) that illustrate how to apply various models, methods, and techniques described in the literature with the package,
+* some [analysis examples](http://www.metafor-project.org/doku.php/analyses) that illustrate various models, methods, and techniques,
 * a little showcase of [plots and figures](http://www.metafor-project.org/doku.php/plots) that can be created with the package,
 * some [tips and notes](http://www.metafor-project.org/doku.php/tips) that may be useful when working with the package,
 * a list of people that have in some shape or form [contributed](http://www.metafor-project.org/doku.php/contributors) to the development of the package,
