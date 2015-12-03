@@ -34,7 +34,7 @@ The current official (i.e., [CRAN](https://cran.r-project.org/package=metafor)) 
 install.packages("metafor")
 ```
 
-The development version of the package can be installed with:
+After installing the [devtools](https://cran.r-project.org/package=devtools) package with ```install.packages("devtools")```, the development version of the metafor package can be installed with:
 ```r
 library("devtools")
 install_github("wviechtb/metafor")
