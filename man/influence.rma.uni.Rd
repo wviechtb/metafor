@@ -15,7 +15,6 @@
 
 \method{cooks.distance}{rma.uni}(model, \dots)
 \method{dfbetas}{rma.uni}(model, \dots)
-
 \method{hatvalues}{rma.uni}(model, type="diagonal", \dots)
 }
 \arguments{

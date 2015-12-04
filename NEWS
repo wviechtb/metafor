@@ -1,5 +1,7 @@
-Changes in Version 1.9-9 (2015-11-30)
+Changes in Version 1.9-9 (2015-12-04)
 =====================================
+
+   o cooks.distance() now also works with 'rma.mv' objects
 
    o fixed an issue with robust.rma.mv() throwing errors when the model was
      fitted with sparse=TRUE
