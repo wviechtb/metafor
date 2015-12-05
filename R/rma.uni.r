@@ -1353,7 +1353,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
    ### the Knapp & Hartung method as described in the literature is for random/mixed-effects models
 
    if (method == "FE" && ((is.logical(knha) && knha) || is.character(knha)))
-      warning("Knapp & Hartung method is not meant to be used in the context of fixed-effects models.")
+      warning("Knapp & Hartung method is not meant to be used in the context of FE models.")
 
    ### Knapp & Hartung method with ad-hoc correction so that the scale factor is always >= 1
 
@@ -1385,9 +1385,15 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
    if ((is.logical(knha) && knha) || is.character(knha)) {
       dfs  <- k-p
       QM   <- QM / m
-      QMp  <- pf(QM, df1=m, df2=dfs, lower.tail=FALSE)
-      pval <- 2*pt(abs(zval), df=dfs, lower.tail=FALSE)
-      crit <- qt(alpha/2, df=dfs, lower.tail=FALSE)
+      if (dfs > 0) {
+         QMp  <- pf(QM, df1=m, df2=dfs, lower.tail=FALSE)
+         pval <- 2*pt(abs(zval), df=dfs, lower.tail=FALSE)
+         crit <- qt(alpha/2, df=dfs, lower.tail=FALSE)
+      } else {
+         QMp  <- NaN
+         pval <- NaN
+         crit <- NaN
+      }
    } else {
       dfs  <- NA
       QMp  <- pchisq(QM, df=m, lower.tail=FALSE)

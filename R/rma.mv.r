@@ -2454,22 +2454,31 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
 
    }
 
-   rownames(vb) <- colnames(vb) <- rownames(b) <- colnames(X)
+   ### QM calculation
+
+   QM <- try(as.vector(t(b)[btt] %*% chol2inv(chol(vb[btt,btt])) %*% b[btt]), silent=TRUE)
+
+   if (inherits(QM, "try-error"))
+      QM <- NA
+
+   rownames(b) <- rownames(vb) <- colnames(vb) <- colnames(X)
 
    se <- sqrt(diag(vb))
    names(se) <- NULL
-
    zval <- c(b/se)
-   pval <- 2*pnorm(abs(zval), lower.tail=FALSE)
-
-   QM <- as.vector(t(b)[btt] %*% chol2inv(chol(vb[btt,btt])) %*% b[btt])
 
    if (knha) {
       dfs  <- k-p
-      QM   <- QM/m
-      QMp  <- pf(QM, df1=m, df2=dfs, lower.tail=FALSE)
-      pval <- 2*pt(abs(zval), df=dfs, lower.tail=FALSE)
-      crit <- qt(alpha/2, df=dfs, lower.tail=FALSE)
+      QM   <- QM / m
+      if (dfs > 0) {
+         QMp  <- pf(QM, df1=m, df2=dfs, lower.tail=FALSE)
+         pval <- 2*pt(abs(zval), df=dfs, lower.tail=FALSE)
+         crit <- qt(alpha/2, df=dfs, lower.tail=FALSE)
+      } else {
+         QMp  <- NaN
+         pval <- NaN
+         crit <- NaN
+      }
    } else {
       dfs  <- NA
       QMp  <- pchisq(QM, df=m, lower.tail=FALSE)

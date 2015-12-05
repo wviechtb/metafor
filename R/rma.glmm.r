@@ -1691,7 +1691,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
       X  <- Xsave
    }
 
-   rownames(vb) <- colnames(vb) <- rownames(b) <- colnames(X)
+   rownames(b) <- rownames(vb) <- colnames(vb) <- colnames(X)
 
    se <- sqrt(diag(vb))
    names(se) <- NULL
@@ -1699,10 +1699,16 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
 
    if (knha) {
       dfs  <- k-p
-      QM   <- QM/m
-      QMp  <- pf(QM, df1=m, df2=dfs, lower.tail=FALSE)
-      pval <- 2*pt(abs(zval), df=dfs, lower.tail=FALSE)
-      crit <- qt(alpha/2, df=dfs, lower.tail=FALSE)
+      QM   <- QM / m
+      if (dfs > 0) {
+         QMp  <- pf(QM, df1=m, df2=dfs, lower.tail=FALSE)
+         pval <- 2*pt(abs(zval), df=dfs, lower.tail=FALSE)
+         crit <- qt(alpha/2, df=dfs, lower.tail=FALSE)
+      } else {
+         QMp  <- NaN
+         pval <- NaN
+         crit <- NaN
+      }
    } else {
       dfs  <- NA
       QMp  <- pchisq(QM, df=m, lower.tail=FALSE)
