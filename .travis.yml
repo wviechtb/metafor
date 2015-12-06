@@ -1,3 +1,9 @@
 language: r
 warnings_are_errors: true
 sudo: required
+
+### as per https://github.com/travis-ci/travis-ci/issues/4125#issuecomment-114711210
+env:
+  global:
+    - NOT_CRAN=true
+before_install: echo "options(repos = c(CRAN='http://cran.rstudio.com'))" > ~/.Rprofile

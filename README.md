@@ -1,9 +1,10 @@
 metafor: A Meta-Analysis Package for R
 ======================================
 
-[![cran version](http://www.r-pkg.org/badges/version/metafor)](http://cran.rstudio.com/web/packages/metafor)
-[![downloads](http://cranlogs.r-pkg.org/badges/metafor)](http://cranlogs.r-pkg.org/badges/metafor)
-[![total downloads](http://cranlogs.r-pkg.org/badges/grand-total/metafor)](http://cranlogs.r-pkg.org/badges/grand-total/metafor)
+[![Build Status](https://travis-ci.org/wviechtb/metafor.svg?branch=master)](https://travis-ci.org/wviechtb/metafor)
+[![CRAN Version](http://www.r-pkg.org/badges/version/metafor)](http://cran.rstudio.com/web/packages/metafor)
+[![Monthly Downloads](http://cranlogs.r-pkg.org/badges/metafor)](http://cranlogs.r-pkg.org/badges/metafor)
+[![Total Downloads](http://cranlogs.r-pkg.org/badges/grand-total/metafor)](http://cranlogs.r-pkg.org/badges/grand-total/metafor)
 
 ## Description
 
