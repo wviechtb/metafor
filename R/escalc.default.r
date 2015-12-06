@@ -279,7 +279,7 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
       if (measure == "RTET") {
 
-         ### FIXME: allow uers to set control arguments for pmvnorm and optimizers
+         ### TODO: allow user to set control arguments for pmvnorm and optimizers
 
          ### upgrade warnings to errors (so that tables with no events or only events are skipped)
          #warn.before <- getOption("warn")
@@ -1386,7 +1386,7 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
    attr(dat, "ci.lb.names") <- attr(data, "ci.lb.names")
    attr(dat, "ci.ub.names") <- attr(data, "ci.ub.names")
 
-   ### FIXME: clean up attribute elements that are no longer actually part of the object
+   ### TODO: clean up attribute elements that are no longer actually part of the object
 
    class(dat) <- c("escalc", "data.frame")
    return(dat)

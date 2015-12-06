@@ -237,7 +237,7 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi, xlim, ylim, s
    if (missing(xlim)) {
 
       ### if the user has not specified xlim argument, set automatically
-      ### FIXME: try something based on CI later
+      ### TODO: try something based on CI later
 
       if (is.element(comp, c("sigma2", "tau2", "gamma2"))) {
          #vc.lb <- max(.00001, log(vc)) ### old method

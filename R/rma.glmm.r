@@ -1415,7 +1415,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
             if (very.verbose)
                message("Computing Hessian ...")
 
-            ### FIXME: note r=8 seems to give more accurate results, but this needs a whole lot more testing
+            ### TODO: r=8 seems to give more accurate results, but this needs a whole lot more testing
             h.ML <- numDeriv::hessian(.dnchg, x=res.ML$par, method.args=list(r=8), ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=TRUE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, intCtrl=intCtrl)
             #return(list(res.ML, h.ML))
 

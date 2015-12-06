@@ -276,7 +276,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
          if (is.element(x$struct[1], c("AR", "HAR")))
             con$vc.min <- min(0, vc)                          ### negative autocorrelation parameters not considered
          if (is.element(x$struct[1], c("UN", "UNHO")))
-            con$vc.min <- -1                                  ### FIXME: this will often fail! (but with retries, this should still work)
+            con$vc.min <- -1                                  ### TODO: this will often fail! (but with retries, this should still work)
          con$vc.max <- 1
       }
       if (comp == "phi") {
@@ -286,7 +286,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
          if (is.element(x$struct[2], c("AR", "HAR")))
             con$vc.min <- min(0, vc)                          ### negative autocorrelation parameters not considered
          if (is.element(x$struct[2], c("UN", "UNHO")))
-            con$vc.min <- -1                                  ### FIXME: this will often fail! (but with retries, this should still work)
+            con$vc.min <- -1                                  ### TODO: this will often fail! (but with retries, this should still work)
          con$vc.max <- 1
       }
 

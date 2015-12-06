@@ -34,8 +34,8 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
       b    <- c(x$b)
       ci.lb <- x$ci.lb
       ci.ub <- x$ci.ub
-      tau2 <- 1/mean(1/x$tau2) ### FIXME: geometric mean of tau^2 values (hackish solution for models with multiple tau^2 values)
-                               ### note: this works for 1/mean(1/0) = 0
+      tau2 <- 1/mean(1/x$tau2) ### geometric mean of tau^2 values (hackish solution for models with multiple tau^2 values)
+                               ### note: this works for 1/mean(1/0) = 0; TODO: consider something more sophisticated here
       if (is.null(aty)) {
          atyis <- range(yi)
       } else {

@@ -189,7 +189,7 @@ H0=0, append=TRUE, replace=TRUE, level=95, digits, transf, ...) {
    attr(dat, "ci.lb.names") <- unique(c(out.names[3], attr(object, "ci.lb.names"))) ### if 'ci.lb.names' is not an attribute, attr() returns NULL, so this works fine
    attr(dat, "ci.ub.names") <- unique(c(out.names[4], attr(object, "ci.ub.names"))) ### if 'ci.ub.names' is not an attribute, attr() returns NULL, so this works fine
 
-   ### FIXME: clean up attribute elements that are no longer actually part of the object
+   ### TODO: clean up attribute elements that are no longer actually part of the object
 
    class(dat) <- c("escalc", "data.frame")
    return(dat)

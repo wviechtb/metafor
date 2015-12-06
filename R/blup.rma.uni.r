@@ -36,7 +36,7 @@ blup.rma.uni <- function(x, level, digits, transf, targs, ...) {
    ### see Appendix in: Raudenbush, S. W., & Bryk, A. S. (1985). Empirical
    ### Bayes meta-analysis. Journal of Educational Statistics, 10(2), 75-98
 
-   ### FIXME: is this still correct if user has specified arbitrary weights?
+   ### TODO: is this still correct if user has specified arbitrary weights?
 
    li <- x$tau2 / (x$tau2 + x$vi.f)
 

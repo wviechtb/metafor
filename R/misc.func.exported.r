@@ -73,7 +73,7 @@
    if (!is.null(attr(x, "digits")))
       attr(dat, "digits") <- attr(x, "digits")
 
-   ### FIXME: clean up attribute elements that are no longer actually part of the object
+   ### TODO: clean up attribute elements that are no longer actually part of the object
 
    return(dat)
 
@@ -135,7 +135,7 @@ cbind.escalc <- function (..., deparse.level=1) {
 
    attr(dat, "digits") <- digits[1]
 
-   ### FIXME: clean up attribute elements that are no longer actually part of the object
+   ### TODO: clean up attribute elements that are no longer actually part of the object
 
    class(dat) <- c("escalc", "data.frame")
    return(dat)

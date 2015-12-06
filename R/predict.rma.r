@@ -54,7 +54,7 @@ level, digits, transf, targs, ...) {
 
    #########################################################################
 
-   ### FIXME: every time I sit down and stare at the mess below, it gives me a headache ...
+   ### TODO: can this be simplified? (every time I sit down and stare at the mess below, it gives me a headache ...)
 
    if (is.null(newmods)) {
 

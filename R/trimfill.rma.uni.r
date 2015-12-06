@@ -27,7 +27,7 @@ trimfill.rma.uni <- function(x, side, estimator="L0", maxiter=100, verbose=FALSE
 
    if (is.null(side)) {
       res <- suppressWarnings(rma(yi, vi, weights=weights, mods=sqrt(vi), method=x$method, weighted=x$weighted, ...))
-      ### FIXME: add check in case there are problems with fitting this model
+      ### TODO: add check in case there are problems with fitting the model
       if (res$b[2] < 0) {
          side <- "right"
       } else {

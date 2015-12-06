@@ -100,7 +100,7 @@ cex, cex.lab, cex.axis, ...) {
 
    measure <- x$measure
 
-   ### FIXME: when there is a weights() function for 'rma.glmm' objects
+   ### TODO: remove this when there is a weights() function for 'rma.glmm' objects
    if (is.element("rma.glmm", class(x)) && showweights)
       stop("Option 'showweights=TRUE' currently not possible for 'rma.glmm' objects. Sorry!")
 
@@ -164,7 +164,7 @@ cex, cex.lab, cex.axis, ...) {
          }
       }
 
-      if (is.element("rma.glmm", class(x))) {   ### FIXME: when there is a weights() function for 'rma.glmm' objects
+      if (is.element("rma.glmm", class(x))) {   ### TODO: change this when there is a weights() function for 'rma.glmm' objects
          weights <- NULL
       } else {
          weights <- weights(x)                  ### these are the weights used for the actual model fitting

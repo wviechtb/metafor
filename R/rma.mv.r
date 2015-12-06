@@ -1296,7 +1296,7 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
          R[[j]] <- R[[j]][s.levels[[j]], s.levels[[j]]]
       }
 
-      ### FIXME: allow Rscale to be a vector so that different Rs can be scaled differently
+      ### TODO: allow Rscale to be a vector so that different Rs can be scaled differently
 
       ### force each element of R to be a correlation matrix
 
@@ -1332,9 +1332,9 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
                D.S[[j]] <- Z.S[[j]] %*% R[[j]] %*% t(Z.S[[j]])
             }
             # D.S[[j]] <- as.matrix(nearPD(D.S[[j]])$mat)
-            ### FIXME: this helps to avoid that the full R matrix becomes non-positive definite but
-            ### adding a tiny amount to the diagonal of D.S[[j]] is easier and works just as well; is
-            ### this something to add by default?
+            ### this avoids that the full matrix becomes non-positive definite but adding
+            ### a tiny amount to the diagonal of D.S[[j]] is easier and works just as well
+            ### TODO: consider doing something like this by default
          } else {
             D.S[[j]] <- tcrossprod(Z.S[[j]])
          }
@@ -1819,7 +1819,7 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
       sX <- U %*% X
       sY <- U %*% Y
       b.FE <- solve(crossprod(sX), crossprod(sX, sY))
-      ### FIXME: Need better way to set initial values
+      ### TODO: consider a better way to set initial values
       #total      <- max(.001*(sigma2s + tau2s + gamma2s), var(c(Y - X %*% res.FE$b)) - 1/mean(1/diag(V)))
       #total      <- max(.001*(sigma2s + tau2s + gamma2s), var(as.vector(sY - sX %*% b)) - 1/mean(1/diag(V)))
       total       <- max(.001*(sigma2s + tau2s + gamma2s), var(as.vector(Y) - as.vector(X %*% b.FE)) - 1/mean(1/diag(V)))

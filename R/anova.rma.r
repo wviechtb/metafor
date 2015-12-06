@@ -175,7 +175,7 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
          p.r <- m.r$parms
       }
 
-      ### check if models are based on the same data (FIXME: also check for same weights?)
+      ### check if models are based on the same data (TODO: also check for same weights?)
 
       if (is.element("rma.uni", class(object))) {
          if (!(identical(as.vector(m.f$yi), as.vector(m.r$yi)) && identical(as.vector(m.f$vi), as.vector(m.r$vi)))) ### as.vector() to strip attributes/names
