@@ -12,4 +12,5 @@ ByteCompile: TRUE
 LazyData: TRUE
 Encoding: UTF-8
 VignetteBuilder: R.rsp
-URL: http://www.metafor-project.org http://www.wvbauer.com
+URL: http://www.metafor-project.org https://github.com/wviechtb/metafor http://www.wvbauer.com
+BugReports: https://github.com/wviechtb/metafor/issues
