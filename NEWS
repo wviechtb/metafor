@@ -1,5 +1,9 @@
-Changes in Version 1.9-9 (2015-12-04)
+Changes in Version 1.9-9 (2015-12-06)
 =====================================
+
+   o started to use git as version control system, GitHub to host the
+     repository (https://github.com/wviechtb/metafor), and Travis CI as
+     continuous integration service (https://travis-ci.org/wviechtb/metafor)
 
    o cooks.distance() now also works with 'rma.mv' objects
 
