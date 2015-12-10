@@ -73,7 +73,7 @@ H0=0, append=TRUE, replace=TRUE, level=95, digits, transf, ...) {
    ### compute sei, zi, and lower/upper CI bounds; when applying a transformation, compute the transformed outcome and CI bounds
 
    sei <- sqrt(vi)
-   zi  <- (yi-H0) / sei
+   zi  <- (yi - H0) / sei
    if (is.function(transf)) {
       ci.lb <- mapply(transf, yi - crit * sei, ...)
       ci.ub <- mapply(transf, yi + crit * sei, ...)
@@ -183,11 +183,12 @@ H0=0, append=TRUE, replace=TRUE, level=95, digits, transf, ...) {
    }
 
    ### add 'sei.names', 'zi.names', 'ci.lb.names', and 'ci.ub.names' to the first position of the corresponding attributes
+   ### note: if "xyz" is not an attribute of the object, attr(object, "xyz") returns NULL, so this works fine
 
-   attr(dat, "sei.names")   <- unique(c(out.names[1], attr(object, "sei.names")))   ### if 'sei.names'   is not an attribute, attr() returns NULL, so this works fine
-   attr(dat, "zi.names")    <- unique(c(out.names[2], attr(object, "zi.names")))    ### if 'zi.names'    is not an attribute, attr() returns NULL, so this works fine
-   attr(dat, "ci.lb.names") <- unique(c(out.names[3], attr(object, "ci.lb.names"))) ### if 'ci.lb.names' is not an attribute, attr() returns NULL, so this works fine
-   attr(dat, "ci.ub.names") <- unique(c(out.names[4], attr(object, "ci.ub.names"))) ### if 'ci.ub.names' is not an attribute, attr() returns NULL, so this works fine
+   attr(dat, "sei.names")   <- unique(c(out.names[1], attr(object, "sei.names")))
+   attr(dat, "zi.names")    <- unique(c(out.names[2], attr(object, "zi.names")))
+   attr(dat, "ci.lb.names") <- unique(c(out.names[3], attr(object, "ci.lb.names")))
+   attr(dat, "ci.ub.names") <- unique(c(out.names[4], attr(object, "ci.ub.names")))
 
    ### TODO: clean up attribute elements that are no longer actually part of the object
 

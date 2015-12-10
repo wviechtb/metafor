@@ -11,14 +11,16 @@ print.escalc <- function(x, digits, ...) {
    if (is.null(digits))
       digits <- 4
 
-   ### get all positions of the variable names in the object
+   ### get positions of the variable names in the object
+   ### note: if the object no longer contains a particular variable, match() returns NA;
+   ### use na.omit(), so that length() is then zero (as needed for if() statements below)
 
-   yi.pos    <- na.omit(match(attr(x, "yi.names"),    names(x))) ### if the object no longer contains that variable, get NA, so use na.omit()
-   vi.pos    <- na.omit(match(attr(x, "vi.names"),    names(x))) ### if the object no longer contains that variable, get NA, so use na.omit()
-   sei.pos   <- na.omit(match(attr(x, "sei.names"),   names(x))) ### if the object no longer contains that variable, get NA, so use na.omit()
-   zi.pos    <- na.omit(match(attr(x, "zi.names"),    names(x))) ### if the object no longer contains that variable, get NA, so use na.omit()
-   ci.lb.pos <- na.omit(match(attr(x, "ci.lb.names"), names(x))) ### if the object no longer contains that variable, get NA, so use na.omit()
-   ci.ub.pos <- na.omit(match(attr(x, "ci.ub.names"), names(x))) ### if the object no longer contains that variable, get NA, so use na.omit()
+   yi.pos    <- na.omit(match(attr(x, "yi.names"),    names(x)))
+   vi.pos    <- na.omit(match(attr(x, "vi.names"),    names(x)))
+   sei.pos   <- na.omit(match(attr(x, "sei.names"),   names(x)))
+   zi.pos    <- na.omit(match(attr(x, "zi.names"),    names(x)))
+   ci.lb.pos <- na.omit(match(attr(x, "ci.lb.names"), names(x)))
+   ci.ub.pos <- na.omit(match(attr(x, "ci.ub.names"), names(x)))
 
    x <- data.frame(x)
 

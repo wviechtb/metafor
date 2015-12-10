@@ -9,7 +9,7 @@ update.rma <- function (object, formula., ..., evaluate=TRUE) {
       stop("Function not applicable to objects of class \"robust.rma\".")
 
    if (is.null(call <- getCall(object)))
-      stop("need an object with call component")
+      stop("Need an object with call component.")
 
    extras <- match.call(expand.dots = FALSE)$...
 

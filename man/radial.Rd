@@ -72,7 +72,7 @@ res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, metho
 radial(res)
 
 ### line from (0,0) with slope equal to the log relative risk from the 4th study
-abline(a=0, b=c(-1.44155119), lty="dotted")
+abline(a=0, b=-1.44155119, lty="dotted")
 
 ### meta-analysis of the log relative risks using a random-effects model
 res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
