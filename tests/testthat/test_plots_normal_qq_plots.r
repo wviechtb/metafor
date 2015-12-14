@@ -8,7 +8,7 @@ test_that("plot can be drawn.", {
 
    skip_on_cran()
 
-   opar <- par()
+   opar <- par(no.readonly=TRUE)
 
    ### set up 2x2 array for plotting
    par(mfrow=c(2,2))

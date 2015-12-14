@@ -8,7 +8,7 @@ test_that("plot can be drawn.", {
 
    skip_on_cran()
 
-   opar <- par()
+   opar <- par(no.readonly=TRUE)
 
    ### load ETS data
    data(dat.hackshaw1998)

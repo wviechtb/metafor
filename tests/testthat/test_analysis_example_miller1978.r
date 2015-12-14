@@ -78,7 +78,7 @@ test_that("back-transformations work as intended for individual studies and the 
    skip_on_cran()
 
    ### create forest plot with CI bounds supplied and then add model estimate
-   opar <- par()
+   opar <- par(no.readonly=TRUE)
    forest(dat.back$yi, ci.lb=dat.back$ci.lb, ci.ub=dat.back$ci.ub, psize=1,
           xlim=c(-.5,1.8), alim=c(0,1), ylim=c(-1,8), refline=NA, digits=3, xlab="Proportion")
    addpoly(pred$pred, ci.lb=pred$ci.lb, ci.ub=pred$ci.ub, row=-0.5, digits=3, mlab="FE Model", efac=1.3)

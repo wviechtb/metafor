@@ -11,7 +11,7 @@ test_that("the log likelihood plot can be created.", {
 
    skip_on_cran()
 
-   opar <- par()
+   opar <- par(no.readonly=TRUE)
    llplot(measure="OR", ai=b.xci, n1i=nci, ci=b.xti, n2i=nti, data=dat,
           xlim=c(-4,4), lwd=1, col="black", refline=NA, drop00=FALSE)
    par(opar)

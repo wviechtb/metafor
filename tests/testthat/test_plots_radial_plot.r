@@ -8,7 +8,7 @@ test_that("plot can be drawn.", {
 
    skip_on_cran()
 
-   opar <- par()
+   opar <- par(no.readonly=TRUE)
 
    ### adjust margins so the space is better used
    par(mar=c(5,4,0,2))
