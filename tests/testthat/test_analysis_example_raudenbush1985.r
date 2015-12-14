@@ -29,8 +29,9 @@ test_that("results are correct for the random-effects model.", {
    skip_on_cran()
 
    ### profile tau^2
-   par(mfrow=c(1,1))
+   opar <- par()
    profile(res, xlim=c(0,.20), progbar=FALSE)
+   par(opar)
 
 })
 
@@ -67,7 +68,8 @@ test_that("results are correct for the mixed-effects model.", {
    skip_on_cran()
 
    ### profile tau^2
-   par(mfrow=c(1,1))
+   opar <- par()
    profile(res, xlim=c(0,.06), progbar=FALSE)
+   par(opar)
 
 })

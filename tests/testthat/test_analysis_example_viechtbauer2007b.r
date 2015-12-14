@@ -81,6 +81,8 @@ test_that("results are correct for the mixed-effects model.", {
    modvals <- cbind(0, cbind(seq(12, 24, by=.1)) - 20, 0)
    preds   <- predict(res, modvals, transf=exp)
 
+   opar <- par()
+
    plot(NA, NA, xlab="Baseline HRSD Score", ylab="Relative Rate", xlim=c(12,24), ylim=c(0.5,4.0), bty="l")
    abline(h=seq(1, 4, by=0.5), col="lightgray")
    abline(v=seq(14, 24, by=2), col="lightgray")
@@ -88,5 +90,7 @@ test_that("results are correct for the mixed-effects model.", {
    lines(modvals[,2] + 20, preds$ci.lb, col="darkgray", lty="dashed", lwd=2)
    lines(modvals[,2] + 20, preds$ci.ub, col="darkgray", lty="dashed", lwd=2)
    points(dat$baseline, exp(dat$yi), pch=19, cex=cexs)
+
+   par(opar)
 
 })

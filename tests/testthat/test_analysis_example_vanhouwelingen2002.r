@@ -57,10 +57,11 @@ test_that("profile plot for tau^2 can be drawn.", {
 
    res <- rma(yi, vi, data=dat, method="ML")
 
-   par(mfrow=c(1,1))
+   opar <- par()
    profile(res, xlim=c(.01,2), steps=200, log="x", cex=0, lwd=2, progbar=FALSE)
    abline(h=logLik(res) - 1.92, lwd=2)
    abline(v=c(.12, .89), lty="dashed")
+   par(opar)
 
 })
 
@@ -71,7 +72,7 @@ test_that("forest plot of observed log(OR)s and corresponding BLUPs can be drawn
    res <- rma(yi, vi, data=dat, method="ML")
    sav <- blup(res)
 
-   par(mfrow=c(1,1))
+   opar <- par()
    par(family="mono", mar=c(5,4,1,2))
    forest(res, refline=res$b, addcred=TRUE, xlim=c(-7,8), alim=c(-3,3), slab=1:13, psize=.8,
           ilab=paste0("(n = ", formatC(apply(dat[,c(4:7)], 1, sum), width=7, big.mark=","), ")"),
@@ -80,6 +81,7 @@ test_that("forest plot of observed log(OR)s and corresponding BLUPs can be drawn
    points(sav$pred, 13:1 - .15, pch=15, cex=.8)
    text(-7, 15, "Trial (total n)", pos=4)
    text( 8, 15, "Log Odds Ratio [95% CI]", pos=2)
+   par(opar)
 
 })
 
@@ -108,8 +110,9 @@ test_that("L'Abbe plot can be drawn.", {
 
    res <- rma(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat, method="FE")
 
-   par(mfrow=c(1,1))
+   opar <- par()
    labbe(res, xlim=c(-7,-1), ylim=c(-7,-1), xlab="ln(odds) not-vaccinated group", ylab="ln(odds) vaccinated group")
+   par(opar)
 
 })
 
