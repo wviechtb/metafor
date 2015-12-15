@@ -14,7 +14,7 @@ test_that("results are correct for the multiple outcomes random-effects model.",
 
    ### multiple outcomes random-effects model (with ML estimation)
    res <- rma.mv(yi, V, mods = ~ outcome - 1, random = ~ outcome | trial, struct="UN", data=dat, method="ML")
-   res ### so that print.rma.mv() is run (at least once)
+   print(res) ### so that print.rma.mv() is run (at least once)
 
    ### (results for this model not given in paper)
    expect_equivalent(round(coef(res),3), c(-0.338, 0.345))
