@@ -73,6 +73,7 @@ test_that("results are correct for Mantel-Haenszel method.", {
 
    ### Mantel-Haenszel method with risk differences
    res <- rma.mh(ai=ai, bi=bi, ci=ci, di=di, data=dat, measure="RD", digits=3, level=90)
+   res ### so that print.rma.mh() is used
 
    expect_equivalent(round(coef(res),3),  0.035)
    expect_equivalent(round(res$ci.lb,3), -0.018)
@@ -82,6 +83,7 @@ test_that("results are correct for Mantel-Haenszel method.", {
 
    ### Mantel-Haenszel method with risk ratios
    res <- rma.mh(ai=ai, bi=bi, ci=ci, di=di, data=dat, measure="RR", digits=2, level=90)
+   res ### so that print.rma.mh() is used
 
    expect_equivalent(round(coef(res),2),  0.28)
    expect_equivalent(round(res$ci.lb,2), -0.14)
@@ -94,6 +96,7 @@ test_that("results are correct for Mantel-Haenszel method.", {
 
    ### Mantel-Haenszel method with odds ratios
    res <- rma.mh(ai=ai, bi=bi, ci=ci, di=di, data=dat, measure="OR", correct=FALSE, digits=2, level=90)
+   res ### so that print.rma.mh() is used
 
    expect_equivalent(round(coef(res),2),  0.34)
    expect_equivalent(round(res$ci.lb,2), -0.17)

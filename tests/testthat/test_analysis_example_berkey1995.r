@@ -18,6 +18,7 @@ test_that("results are correct for the random-effects model.", {
 
    ### fit random-effects model using empirical Bayes method
    res.RE <- rma(yi, vi, data=dat, method="EB")
+   res.RE ### so that print.rma.uni() is run (at least once)
 
    ### compare with results on page 408
    expect_equivalent(round(coef(res.RE),4), -0.5429)

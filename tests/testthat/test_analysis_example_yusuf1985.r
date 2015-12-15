@@ -25,6 +25,8 @@ test_that("log likelihood plot can be drawn.", {
 test_that("results are correct for the analysis using Peto's method.", {
 
    res <- rma.peto(ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, subset=(table=="6"))
+   res ### so that print.rma.peto() is run (at least once)
+
    sav <- predict(res, transf=exp)
    tmp <- round(c(sav$pred, sav$ci.lb, sav$ci.ub), 2)
 

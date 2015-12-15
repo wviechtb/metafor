@@ -116,23 +116,20 @@ test_that("results are correct for the random-effects model (Huber-White method)
    res.std$DL   <- rma(yi, vi, data=dat, digits=3, method="DL")
    res.std$HE   <- rma(yi, vi, data=dat, digits=3, method="HE")
 
-   res <- list()
+   res.hw <- list()
 
-   wi.FE   <- 1/(dat$vi + res.std$FE$tau2)
-   wi.ML   <- 1/(dat$vi + res.std$ML$tau2)
-   wi.REML <- 1/(dat$vi + res.std$REML$tau2)
-   wi.DL   <- 1/(dat$vi + res.std$DL$tau2)
-   wi.HE   <- 1/(dat$vi + res.std$HE$tau2)
+   res.hw$FE   <- robust(res.std$FE,   cluster=dat$study, adjust=FALSE)
+   res.hw$ML   <- robust(res.std$ML,   cluster=dat$study, adjust=FALSE)
+   res.hw$REML <- robust(res.std$REML, cluster=dat$study, adjust=FALSE)
+   res.hw$DL   <- robust(res.std$DL,   cluster=dat$study, adjust=FALSE)
+   res.hw$HE   <- robust(res.std$HE,   cluster=dat$study, adjust=FALSE)
 
-   res$FE   <- sqrt((1 / sum(wi.FE))^2   * sum(wi.FE^2*resid(res.std$FE)^2))
-   res$ML   <- sqrt((1 / sum(wi.ML))^2   * sum(wi.ML^2*resid(res.std$ML)^2))
-   res$REML <- sqrt((1 / sum(wi.REML))^2 * sum(wi.REML^2*resid(res.std$REML)^2))
-   res$DL   <- sqrt((1 / sum(wi.DL))^2   * sum(wi.DL^2*resid(res.std$DL)^2))
-   res$HE   <- sqrt((1 / sum(wi.HE))^2   * sum(wi.HE^2*resid(res.std$HE)^2))
+   tmp <- round(t(sapply(res.hw, function(x) c(tau2=x$tau2, mu=x$b, se=x$se, t=x$tval, ci.lb=x$ci.lb, ci.ub=x$ci.ub))), 3)
 
-   tmp <- sapply(res, round, 3)
+   expected <- structure(c(0, 0.013, 0.019, 0.026, 0.08, 0.06, 0.078, 0.084, 0.089, 0.114, 0.04, 0.047, 0.05, 0.052, 0.062, 1.515, 1.637, 1.676, 1.71, 1.85, -0.023, -0.022, -0.021, -0.02, -0.015, 0.144, 0.178, 0.189, 0.199, 0.244),
+                         .Dim = 5:6, .Dimnames = list(c("FE", "ML", "REML", "DL", "HE"), c("tau2", "mu", "se", "t", "ci.lb", "ci.ub")))
 
    ### compare with results on page 309 (Table 16.3)
-   expect_equivalent(tmp, c(0.040, 0.047, 0.050, 0.052, 0.062))
+   expect_equivalent(tmp, expected)
 
 })
