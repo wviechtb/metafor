@@ -30,6 +30,7 @@ test_that("results are correct for the Henmi & Copas method.", {
 
    ### apply Henmi & Copas method
    sav <- hc(res)
+   print(sav)
 
    ### compare with results on page 2978
    expect_equivalent(round(sav$b,3), -0.514)
