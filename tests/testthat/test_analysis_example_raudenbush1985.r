@@ -21,6 +21,8 @@ test_that("results are correct for the random-effects model.", {
    ### empirical Bayes estimates
    tmp <- blup(res)
 
+   print(tmp) ### so that print.list.rma() is run (at least once)
+
    ### compare with results in Figure 2
    expect_equivalent(round(tmp$pred,3), c(0.054, 0.101, -0.006, 0.214, 0.105, -0.008, 0.017, -0.029, 0.16, 0.249, 0.162, 0.11, 0.065, 0.11, -0.029, 0.026, 0.191, 0.074, 0.025))
    expect_equivalent(round(tmp$pi.lb,3), c(-0.132, -0.103, -0.223, -0.053, -0.162, -0.174, -0.148, -0.269, -0.054, 0, -0.097, -0.13, -0.192, -0.146, -0.241, -0.191, -0.008, -0.081, -0.195))

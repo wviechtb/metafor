@@ -19,6 +19,8 @@ test_that("plot can be drawn.", {
    ### calculate influence diagnostics
    inf <- influence(res)
 
+   print(inf) ### so that print.infl.rma.uni() is run (at least once)
+
    ### plot the influence diagnostics
    plot(inf, layout=c(8,1))
 

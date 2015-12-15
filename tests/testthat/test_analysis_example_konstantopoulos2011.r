@@ -18,6 +18,7 @@ test_that("results are correct for the two-level random-effects model fitted wit
 
    ### CI for tau^2 based on the Q-profile method (CI in paper is based on a Satterthwaite approximation)
    tmp <- confint(res, digits=3)
+   print(tmp) ### so that print.confint.rma() is run (at least once)
    expect_equivalent(round(tmp$random[1,2],3), 0.056)
    expect_equivalent(round(tmp$random[1,3],3), 0.139)
 
