@@ -12,7 +12,7 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
                               "PR","PLN","PLO","PAS","PFT",                        ### single proportions (and transformations thereof)
                               "IR","IRLN","IRS","IRFT",                            ### single-group person-time data (and transformations thereof)
                               "MN","MC","SMCC","SMCR","SMCRH","ROMC",              ### raw/standardized mean change and log(ROM) for dependent samples
-                              "ARAW","AHW","ABT")))                                ### alpha (and transformations thereof_
+                              "ARAW","AHW","ABT")))                                ### alpha (and transformations thereof)
       stop("Unknown 'measure' specified.")
 
    if (!is.element(to, c("all","only0","if0all","none")))
@@ -27,7 +27,7 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
          var.names <- c(var.names, "measure")
 
       if (length(var.names) != 3)
-         stop("Argument var.names must be of length 2 or 3.")
+         stop("Argument 'var.names' must be of length 2 or 3.")
 
       if (any(var.names != make.names(var.names, unique=TRUE))) {
          var.names <- make.names(var.names, unique=TRUE)
@@ -36,11 +36,11 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
    } else {
 
-      if (length(var.names) == 2)
+      if (length(var.names) == 3)
          var.names <- var.names[1:2]
 
       if (length(var.names) != 2)
-         stop("Argument var.names must be of length 2.")
+         stop("Argument 'var.names' must be of length 2.")
 
       if (any(var.names != make.names(var.names, unique=TRUE))) {
          var.names <- make.names(var.names, unique=TRUE)
@@ -1250,7 +1250,7 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
    is.inf <- is.infinite(yi) | is.infinite(vi)
 
    if (any(is.inf)) {
-      warning("Some yi and/or vi values equal to +-Inf. Recoded to NAs.")
+      warning("Some 'yi' and/or 'vi' values equal to +-Inf. Recoded to NAs.")
       yi[is.inf] <- NA
       vi[is.inf] <- NA
    }

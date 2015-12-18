@@ -1,4 +1,4 @@
-Changes in Version 1.9-9 (2015-12-18)
+Changes in Version 1.9-9 (2015-12-19)
 =====================================
 
    o started to use git as version control system, GitHub to host the
@@ -8,6 +8,9 @@ Changes in Version 1.9-9 (2015-12-18)
    o one can now pass an 'escalc' object directly to rma.uni(), which then
      tries to automatically determine the 'yi' and 'vi' variables in the
      data frame (thanks to Christian Röver for the suggestion)
+
+   o added escalc.data.frame() method, a convenience function that can be
+     used to convert a regular data frame to an 'escalc' object
 
    o cooks.distance() now also works with 'rma.mv' objects
 

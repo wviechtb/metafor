@@ -1,5 +1,6 @@
 \name{escalc}
 \alias{escalc}
+\alias{escalc.data.frame}
 \alias{escalc.default}
 \alias{escalc.formula}
 \alias{[.escalc}
@@ -22,6 +23,9 @@ escalc(measure, formula, \dots)
 \method{escalc}{formula}(measure, formula, weights, data,
        add=1/2, to="only0", drop00=FALSE, vtype="LS",
        var.names=c("yi","vi"), digits=4, \dots)
+
+\method{escalc}{data.frame}(measure, formula, slab, subset,
+       var.names=c("yi","vi"), add.measure=FALSE, digits=4, \dots)
 }
 \arguments{
    \item{measure}{a character string indicating which effect size or outcome measure should be calculated. See \sQuote{Details} for possible options and how the data should be specified.}
@@ -384,6 +388,12 @@ escalc(measure, formula, \dots)
 
    }
 
+   \subsection{Converting a Data Frame to an 'escalc' Object}{
+
+      The \code{escalc.data.frame} method is a convenience function that can be used to convert a regular data frame to an 'escalc' object. One simply sets the \code{measure} argument to one of the options described above (or to \code{measure="GEN"} for a generic outcome measure not further specified) and passes the data frame via the second argument to the function (e.g., \code{escalc(measure="RR", dat)}). With the default setting for the \code{var.names} argument, the function then looks for variable \code{yi}, which should contain the observed outcomes or effect size estimates and variable \code{vi}, which should contain the corresponding sampling variances.
+
+   }
+
 }
 \value{
    An object of class \code{c("escalc","data.frame")}. The object is a data frame containing the following components:
@@ -500,5 +510,10 @@ dat
 dat.long <- to.long(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg,
                     data=dat.bcg, append=FALSE, vlong=TRUE)
 escalc(measure="RR", outcome ~ group | study, weights=freq, data=dat.long)
+
+### convert a regular data frame to an 'escalc' object
+data(dat.raudenbush1985)
+dat <- escalc(measure="SMD", dat.raudenbush1985, slab=paste0(author, ", ", year))
+dat
 }
 \keyword{datagen}
