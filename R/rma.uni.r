@@ -71,16 +71,24 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
       }
    }
 
-   ### extract yi, weights, slab, subset, mods, and tau2 values, possibly from the data frame specified via data (arguments not specified are NULL)
+   ### extract yi (either NULL if not specified, a vector, a formula, or an escalc object)
 
    mf <- match.call()
-   mf.yi      <- mf[[match("yi", names(mf))]]
+   mf.yi <- mf[[match("yi", names(mf))]]
+   yi <- eval(mf.yi, data, enclos=sys.frame(sys.parent())) ### NULL if user does not specify this
+
+   ### if yi is not NULL and it is an escalc object, then use that object in place of the data argument
+
+   if (!is.null(yi) && is.element("escalc", class(yi)))
+      data <- yi
+
+   ### extract weights, slab, subset, mods, and tau2 values, possibly from the data frame specified via data or yi (arguments not specified are NULL)
+
    mf.weights <- mf[[match("weights", names(mf))]]
-   mf.slab    <- mf[[match("slab",   names(mf))]]
-   mf.subset  <- mf[[match("subset", names(mf))]]
-   mf.mods    <- mf[[match("mods",   names(mf))]]
-   mf.scale   <- mf[[match("scale",  names(mf))]]
-   yi      <- eval(mf.yi,      data, enclos=sys.frame(sys.parent())) ### NULL if user does not specify this
+   mf.slab    <- mf[[match("slab",    names(mf))]]
+   mf.subset  <- mf[[match("subset",  names(mf))]]
+   mf.mods    <- mf[[match("mods",    names(mf))]]
+   mf.scale   <- mf[[match("scale",   names(mf))]]
    weights <- eval(mf.weights, data, enclos=sys.frame(sys.parent())) ### NULL if user does not specify this
    slab    <- eval(mf.slab,    data, enclos=sys.frame(sys.parent())) ### NULL if user does not specify this
    subset  <- eval(mf.subset,  data, enclos=sys.frame(sys.parent())) ### NULL if user does not specify this
@@ -94,10 +102,11 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
    #if (measure == "GEN") { ### this way, one *must* use measure="GEN" when specifying yi/vi directly
    if (!is.null(yi)) {      ### this way, one can specify yi/vi directly, but still set 'measure' to something else
 
-      ### if yi is not NULL, then yi now either contains the yi values or it is a formula
+      ### if yi is not NULL, then yi now either contains the yi values, a formula, or an escalc object
+
       ### if yi is a formula, extract yi and X (this overrides anything specified via the mods argument further below)
 
-      if (class(yi) == "formula") {
+      if (is.element("formula", class(yi))) {
          options(na.action = "na.pass")                   ### set na.action to na.pass, so that NAs are not filtered out (we'll do that later)
          mods <- model.matrix(yi, data=data)              ### extract model matrix (now mods is no longer a formula, so part further below is skipped)
          attr(mods, "assign") <- NULL                     ### strip assign attribute (not needed at the moment)
@@ -106,6 +115,36 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
          names(yi) <- NULL                                ### strip names (1:k) from yi (so res$yi is the same whether yi is a formula or not)
          intercept <- FALSE                               ### set to FALSE since formula now controls whether the intercept is included or not
          is.formula <- TRUE                               ### note: code further below actually checks whether intercept is included or not
+      }
+
+      ### if yi is an escalc object, try to extract yi and vi (note that moderators must then be specified via the mods argument)
+
+      if (is.element("escalc", class(yi))) {
+
+         if (!is.null(attr(yi, "yi.names"))) { ### if yi.names attributes is available
+            yi.name <- attr(yi, "yi.names")[1] ### take the first entry to be the yi variable
+         } else {                              ### if not, see if 'yi' is in the object and assume that is the yi variable
+            if (!is.element("yi", names(yi)))
+               stop("Cannot determine name of the 'yi' variable.")
+            yi.name <- "yi"
+         }
+         if (!is.null(attr(yi, "vi.names"))) { ### if vi.names attributes is available
+            vi.name <- attr(yi, "vi.names")[1] ### take the first entry to be the vi variable
+         } else {                              ### if not, see if 'vi' is in the object and assume that is the vi variable
+            if (!is.element("vi", names(yi)))
+               stop("Cannot determine name of the 'vi' variable.")
+            vi.name <- "vi"
+         }
+
+         vi <- yi[[vi.name]]
+         yi <- yi[[yi.name]]
+
+         yi.escalc <- TRUE
+
+      } else {
+
+         yi.escalc <- FALSE
+
       }
 
       ### in case user passed a matrix to yi, convert it to a vector
@@ -127,14 +166,21 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
 
       attr(yi, "measure") <- measure
 
-      ### extract vi values and other arguments
+      ### extract vi and sei values (but only if yi wasn't an escalc object)
 
-      mf.vi  <- mf[[match("vi",  names(mf))]]
-      mf.sei <- mf[[match("sei", names(mf))]]
-      mf.ni  <- mf[[match("ni",  names(mf))]]
-      vi  <- eval(mf.vi,  data, enclos=sys.frame(sys.parent())) ### NULL if user does not specify this
-      sei <- eval(mf.sei, data, enclos=sys.frame(sys.parent())) ### NULL if user does not specify this
-      ni  <- eval(mf.ni,  data, enclos=sys.frame(sys.parent())) ### NULL if user does not specify this
+      if (!yi.escalc) {
+
+         mf.vi  <- mf[[match("vi",  names(mf))]]
+         mf.sei <- mf[[match("sei", names(mf))]]
+         vi  <- eval(mf.vi,  data, enclos=sys.frame(sys.parent())) ### NULL if user does not specify this
+         sei <- eval(mf.sei, data, enclos=sys.frame(sys.parent())) ### NULL if user does not specify this
+
+      }
+
+      ### extract ni argument
+
+      mf.ni <- mf[[match("ni",  names(mf))]]
+      ni <- eval(mf.ni,  data, enclos=sys.frame(sys.parent())) ### NULL if user does not specify this
 
       ### if vi is specified, this will be used (even if user has specified sei as well)
       ### otherwise, if user has specified sei, then square those values to get vi
@@ -595,7 +641,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
    weights.f <- weights
    ni.f      <- ni
    mods.f    <- mods
-   #Z.f       <- Z ### don't need this at the moment
+   #Z.f      <- Z ### don't need this at the moment
 
    k.f <- k ### total number of observed outcomes including all NAs (on yi/vi and/or mods)
 

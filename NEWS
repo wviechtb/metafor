@@ -1,9 +1,13 @@
-Changes in Version 1.9-9 (2015-12-10)
+Changes in Version 1.9-9 (2015-12-18)
 =====================================
 
    o started to use git as version control system, GitHub to host the
      repository (https://github.com/wviechtb/metafor), and Travis CI as
      continuous integration service (https://travis-ci.org/wviechtb/metafor)
+
+   o one can now pass an 'escalc' object directly to rma.uni(), which then
+     tries to automatically determine the 'yi' and 'vi' variables in the
+     data frame (thanks to Christian Röver for the suggestion)
 
    o cooks.distance() now also works with 'rma.mv' objects
 
