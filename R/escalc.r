@@ -18,11 +18,4 @@ escalc <- function(measure, formula, ...) {
 
    UseMethod("escalc", NULL)
 
-   #if (missing(formula))
-   #   formula <- NULL
-
-   ### this will fall back on escalc.default when formula is NULL
-
-   #UseMethod("escalc", formula)
-
 }
