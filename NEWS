@@ -2,8 +2,10 @@ Changes in Version 1.9-9 (2015-12-19)
 =====================================
 
    o started to use git as version control system, GitHub to host the
-     repository (https://github.com/wviechtb/metafor), and Travis CI as
-     continuous integration service (https://travis-ci.org/wviechtb/metafor)
+     repository (https://github.com/wviechtb/metafor) for the development
+     version of the package, Travis CI as continuous integration service
+     (https://travis-ci.org/wviechtb/metafor), and Codecov for automated
+     code coverage reporting of the package tests
 
    o one can now pass an 'escalc' object directly to rma.uni(), which then
      tries to automatically determine the 'yi' and 'vi' variables in the

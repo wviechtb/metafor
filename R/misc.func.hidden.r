@@ -40,7 +40,7 @@
    ### first/last (na.last=FALSE/TRUE); but we just want to leave the NAs in
    ### their position!
 
-   if (is.null(x)) ### need to catch this
+   if (is.null(x) || length(x) == 0) ### need to catch this
       return(NULL)
 
    if (missing(y)) {
