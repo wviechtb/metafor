@@ -7,3 +7,9 @@ env:
   global:
     - NOT_CRAN=true
 before_install: echo "options(repos = c(CRAN='http://cran.rstudio.com'))" > ~/.Rprofile
+
+r_packages:
+  - covr
+
+after_success:
+  - Rscript -e 'library(covr); Sys.setenv(NOT_CRAN="true"); codecov()'
