@@ -512,8 +512,13 @@ dat.long <- to.long(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg,
 escalc(measure="RR", outcome ~ group | study, weights=freq, data=dat.long)
 
 ### convert a regular data frame to an 'escalc' object
-data(dat.raudenbush1985)
-dat <- escalc(measure="SMD", dat.raudenbush1985, slab=paste0(author, ", ", year))
+### dataset from Lipsey & Wilson (2001), Table 7.1, page 130
+dat <- data.frame(id = c(100, 308, 1596, 2479, 9021, 9028, 161, 172, 537, 7049),
+                  yi = c(-0.33, 0.32, 0.39, 0.31, 0.17, 0.64, -0.33, 0.15, -0.02, 0.00),
+                  vi = c(0.084, 0.035, 0.017, 0.034, 0.072, 0.117, 0.102, 0.093, 0.012, 0.067),
+                  random = c(0, 0, 0, 0, 0, 0, 1, 1, 1, 1),
+                  intensity = c(7, 3, 7, 5, 7, 7, 4, 4, 5, 6))
+dat <- escalc(measure="SMD", dat, slab=paste0("Study ID: ", id), digits=3)
 dat
 }
 \keyword{datagen}

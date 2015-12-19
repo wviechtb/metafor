@@ -12,6 +12,7 @@
 \bold{ni}         \tab \code{numeric}    \tab number of patients \cr
 \bold{outcome}    \tab \code{character}  \tab outcome (PD = probing depth; AL = attachment level) \cr
 \bold{yi}         \tab \code{numeric}    \tab observed mean difference in outcome (surgical versus non-surgical) \cr
+\bold{vi}         \tab \code{numeric}    \tab corresponding sampling variance \cr
 \bold{v1i}        \tab \code{numeric}    \tab variances and covariances of the observed effects \cr
 \bold{v2i}        \tab \code{numeric}    \tab variances and covariances of the observed effects
 }

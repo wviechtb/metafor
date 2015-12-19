@@ -10,12 +10,12 @@
 \bold{trt}        \tab \code{character}  \tab treatment (BMT or CMO) \cr
 \bold{arms}       \tab \code{numeric}    \tab number of arms in the study (1 = uncontrolled studies; 2 = controlled studies) \cr
 \bold{yi}         \tab \code{numeric}    \tab 2-year disease-free survival \cr
-\bold{sei}        \tab \code{numeric}    \tab standard error \cr
-\bold{vi}         \tab \code{numeric}    \tab sampling variance
+\bold{sei}        \tab \code{numeric}    \tab corresponding standard error \cr
+\bold{vi}         \tab \code{numeric}    \tab corresponding sampling variance
 }
 }
 \details{
-   The dataset includes the results from controlled and uncontrolled studies on the 2-year disease-free survival in patients with acute nonlymphocytic leukemia receiving either allogeneic bone-marrow transplantation (BMT) or conventional chemotherapy (CMO). In the controlled (two-arm) studies, a cohort of patients in complete remission and potentially eligible for BMT was assembled, and those who consented and for whom a donor could be found received BMT, with the remaining patients used as controls (receiving CMO). In the uncontrolled (one-arm) studies, only a single group was studied, receiving either BMT or CMO.
+   The dataset includes the results from controlled and uncontrolled studies on the 2-year disease-free survival in patients with acute nonlymphocytic leukemia receiving either allogeneic bone-marrow transplantation (BMT) or conventional chemotherapy (CMO). In the controlled (two-arm) studies (studies 1-4), a cohort of patients in complete remission and potentially eligible for BMT was assembled, and those who consented and for whom a donor could be found received BMT, with the remaining patients used as controls (receiving CMO). In the uncontrolled (one-arm) studies (studies 5-16), only a single group was studied, receiving either BMT or CMO.
 
    The data in this dataset were obtained from Table 1 in Begg & Pilote (1991, p. 902).
 }
@@ -42,7 +42,7 @@ res <- rma(yi, vi, data=dat2, method="DL", digits=2)
 res
 
 ### Begg & Pilote (1991) model incorporating the uncontrolled studies
-res <- rma.mv(yi, vi, mods = ~ trt, random = ~ 1 | study, 
+res <- rma.mv(yi, vi, mods = ~ trt, random = ~ 1 | study,
               data=dat, method="ML", digits=2)
 res
 

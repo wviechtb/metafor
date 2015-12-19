@@ -10,7 +10,7 @@
 \bold{author}     \tab \code{character}  \tab first author of study \cr
 \bold{year}       \tab \code{numeric}    \tab publication year \cr
 \bold{country}    \tab \code{character}  \tab country where study was conducted \cr
-\bold{design}     \tab \code{character}  \tab either cohort or case-control study \cr
+\bold{design}     \tab \code{character}  \tab study design (either cohort or case-control) \cr
 \bold{cases}      \tab \code{numeric}    \tab number of lung cancer cases \cr
 \bold{yi}         \tab \code{numeric}    \tab log odds ratio \cr
 \bold{vi}         \tab \code{numeric}    \tab corresponding sampling variance
