@@ -4,7 +4,7 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, digits, ...) {
       stop("Argument 'x' must be an object of class \"rma.uni\".")
 
    if (missing(cluster))
-      stop("Need to specify cluster variable.")
+      stop("Need to specify 'cluster' variable.")
 
    if (missing(digits))
       digits <- x$digits

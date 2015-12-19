@@ -93,7 +93,7 @@ cex, cex.lab, cex.axis, ...) {
 
    if (hasArg(ci.lb) && hasArg(ci.ub)) {     ### CI bounds are specified by user
       if (length(ci.lb) != length(ci.ub))
-         stop("Length of ci.lb and ci.ub do not match.")
+         stop("Length of 'ci.lb' and 'ci.ub' do not match.")
       if (missing(vi) && missing(sei)) {     ### vi/sei not specified, so calculate vi based on CI
          vi <- ((ci.ub - ci.lb) / (2*qnorm(alpha/2, lower.tail=FALSE)))^2
       } else {
@@ -101,11 +101,11 @@ cex, cex.lab, cex.axis, ...) {
             vi <- sei^2
       }
       if (length(ci.lb) != length(vi))
-         stop("Length of vi (or sei) does not match length of (ci.lb, ci.ub) pairs.")
+         stop("Length of 'vi' (or 'sei') does not match length of ('ci.lb', 'ci.ub') pairs.")
    } else {                                  ### CI bounds are not specified by user
       if (missing(vi)) {
          if (missing(sei)) {
-            stop("Must specify either vi, sei, or (ci.lb, ci.ub) pairs.")
+            stop("Must specify either 'vi', 'sei', or ('ci.lb', 'ci.ub') pairs.")
          } else {
             vi <- sei^2
             ci.lb <- yi - qnorm(alpha/2, lower.tail=FALSE) * sei
@@ -120,7 +120,7 @@ cex, cex.lab, cex.axis, ...) {
    ### check length of yi and vi
 
    if (length(yi) != length(vi))
-      stop("Length of yi does not match the length of vi, sei, or the (ci.lb, ci.ub) pairs.")
+      stop("Length of 'yi' does not match the length of 'vi', 'sei', or the ('ci.lb', 'ci.ub') pairs.")
 
    k <- length(yi)
 

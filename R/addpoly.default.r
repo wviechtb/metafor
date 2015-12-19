@@ -53,7 +53,7 @@ efac=1, col, border, cex, ...) {
       ### CI bounds are specified by user
 
       if (length(ci.lb) != length(ci.ub))
-         stop("Length of ci.lb and ci.ub do not match.")
+         stop("Length of 'ci.lb' and 'ci.ub' do not match.")
 
       if (missing(vi) && missing(sei)) {
 
@@ -73,7 +73,7 @@ efac=1, col, border, cex, ...) {
       }
 
       if (length(ci.lb) != length(vi))
-         stop("Length of vi (or sei) does not match length of (ci.lb, ci.ub) pairs.")
+         stop("Length of 'vi' (or 'sei') does not match length of ('ci.lb', 'ci.ub') pairs.")
 
    } else {
 
@@ -81,7 +81,7 @@ efac=1, col, border, cex, ...) {
 
       if (missing(vi)) {
          if (missing(sei)) {
-            stop("Must specify either vi, sei, or (ci.lb, ci.ub) pairs.")
+            stop("Must specify either 'vi', 'sei', or ('ci.lb', 'ci.ub') pairs.")
          } else {
             vi <- sei^2
             ci.lb <- yi - qnorm(alpha/2, lower.tail=FALSE) * sei

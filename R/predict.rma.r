@@ -98,10 +98,10 @@ level, digits, transf, targs, ...) {
                }                                                              #
                if ((!is.null(tau2.levels) && is.null(gamma2.levels)) ||       #   # if user specifies only one of tau2.levels and gamma2.levels, throw an error
                    (is.null(tau2.levels) && !is.null(gamma2.levels)))
-                  stop("Either specify both of tau2.levels and gamma2.levels or neither.")
+                  stop("Either specify both of 'tau2.levels' and 'gamma2.levels' or neither.")
                if (!is.null(tau2.levels) && !is.null(gamma2.levels)) {        #   # if user has specified both tau2s.levels and gamma2.levels
                   if (length(tau2.levels) != length(gamma2.levels))           #
-                     stop("Length of tau2.levels and gamma2.levels must be the same.")
+                     stop("Length of 'tau2.levels' and 'gamma2.levels' must be the same.")
                   k.new <- length(tau2.levels)                                #      # then we need to predict intercepts for those level combinations
                   X.new <- cbind(rep(1,k.new))                                #
                }                                                              #
@@ -125,7 +125,7 @@ level, digits, transf, targs, ...) {
             k.new <- x$k.f                                                    #   # then predict for all k.f studies (including studies with NAs)
             X.new <- x$X.f                                                    #
             if (!is.null(tau2.levels) || !is.null(gamma2.levels))             #
-               warning("Arguments tau2.levels and gamma2.levels ignored when obtaining fitted values.")
+               warning("Arguments 'tau2.levels' and 'gamma2.levels' ignored when obtaining fitted values.")
             tau2.levels <- as.character(x$mf.g.f$inner)                       #
             gamma2.levels <- as.character(x$mf.h.f$inner)                     #
          }                                                                    #

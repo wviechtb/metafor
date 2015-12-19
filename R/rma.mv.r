@@ -160,7 +160,7 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
    ### some checks on V (and turn V into a diagonal matrix if it is a column/row vector)
 
    if (is.null(V))
-      stop("Need to specify V argument.")
+      stop("Need to specify 'V' argument.")
 
    if (is.list(V)) {
 
@@ -168,7 +168,7 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
       cols <- sapply(V, NCOL) ### (V <- list(matrix(1, nrow=2, ncol=2), 3, c(1,4), cbind(c(2,1)))); sapply(V, NROW); sapply(V, NCOL); sapply(V, nrow); sapply(V, ncol)
 
       if (any(rows != cols))
-         stop("List elements in V must be square matrices.")
+         stop("List elements in 'V' must be square matrices.")
 
       ### need to do this first, since is.vector(V) is TRUE for lists and so that further code works
 
@@ -197,15 +197,15 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
    ### check whether V is square and symmetric
 
    if (dim(V)[1] != dim(V)[2])
-      stop("V must be a square matrix.")
+      stop("'V' must be a square matrix.")
 
    if (!isSymmetric(V))
-      stop("V must be a symmetric matrix.")
+      stop("'V' must be a symmetric matrix.")
 
    ### check length of yi and V
 
    if (dim(V)[1] != k)
-      stop("Length of yi and length/dimensions of V are not the same.")
+      stop("Length of 'yi' and length/dimensions of 'V' are not the same.")
 
    ### force V to be sparse when sparse=TRUE (and V is not yet sparse)
 
@@ -246,15 +246,15 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
       ### check whether A is square and symmetric
 
       if (dim(A)[1] != dim(A)[2])
-         stop("W must be a square matrix.")
+         stop("'W' must be a square matrix.")
 
       if (!isSymmetric(A))
-         stop("W must be a symmetric matrix.")
+         stop("'W' must be a symmetric matrix.")
 
       ### check length of yi and A
 
       if (dim(A)[1] != k)
-         stop("Length of yi and length/dimensions of W are not the same.")
+         stop("Length of 'yi' and length/dimensions of 'W' are not the same.")
 
       ### force A to be sparse when sparse=TRUE (and A is not yet sparse)
 
@@ -278,7 +278,7 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
 
    if (!is.null(ni) && length(ni) != k)
       ni <- NULL
-      #stop("Length of yi and ni vectors are not the same.")
+      #stop("Length of 'yi' and 'ni' vectors are not the same.")
 
    ### if ni is now available, add it (back) as an attribute to yi
    ### this is currently pointless, but may be useful if function has an ni argument
@@ -321,7 +321,7 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
    ### check if mods matrix has the right number of rows
 
    if (!is.null(mods) && (nrow(mods) != k))
-      stop("Number of rows of the model matrix does not match length of yi argument.")
+      stop("Number of rows of the model matrix does not match length of 'yi' argument.")
 
    #########################################################################
    #########################################################################
@@ -1167,7 +1167,7 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
    ### but at least issue a warning, since a fixed-effects model can then not be fitted and there is otherwise no indication why
 
    if (any(eigen(V, symmetric=TRUE, only.values=TRUE)$values <= .Machine$double.eps)) ### any eigenvalue below double.eps is essentially 0
-      warning("V appears to be not positive definite.")
+      warning("'V' appears to be not positive definite.")
 
    ### make sure that there is at least one column in X
 
@@ -1256,7 +1256,7 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
 
       if (any(is.na(sigma2) & s.nlevels == 1)) {
          sigma2[is.na(sigma2) & s.nlevels == 1] <- 0
-         warning("Single-level factor(s) found in 'random' argument. Corresponding sigma2 value(s) fixed to 0.")
+         warning("Single-level factor(s) found in 'random' argument. Corresponding 'sigma2' value(s) fixed to 0.")
       }
 
       ### create model matrix for each element in mf.s
@@ -1398,7 +1398,7 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
       if (is.element(struct[1], c("HCS","UN","DIAG","HAR"))) {
          if (any(is.na(tau2) & g.levels.k == 1)) {
             tau2[is.na(tau2) & g.levels.k == 1] <- 0
-            warning("Inner factor has k=1 for one or more levels. Corresponding tau2 value(s) fixed to 0.")
+            warning("Inner factor has k=1 for one or more levels. Corresponding 'tau2' value(s) fixed to 0.")
          }
       }
 
@@ -1617,7 +1617,7 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
       if (is.element(struct[2], c("HCS","UN","DIAG","HAR"))) {
          if (any(is.na(gamma2) & h.levels.k == 1)) {
             gamma2[is.na(gamma2) & h.levels.k == 1] <- 0
-            warning("Inner factor has k=1 for one or more levels. Corresponding gamma2 value(s) fixed to 0.")
+            warning("Inner factor has k=1 for one or more levels. Corresponding 'gamma2' value(s) fixed to 0.")
          }
       }
 
@@ -1912,7 +1912,7 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
       G <- .con.vcov.UN(tau2.init, rho.init)
       G <- try(chol(G), silent=TRUE)
       if (inherits(G, "try-error"))
-         stop("Cannot take Choleski decomposition of initial G matrix.")
+         stop("Cannot take Choleski decomposition of initial 'G' matrix.")
       con$tau2.init <- diag(G)        ### note: con$tau2.init and con$rho.init are the 'choled' values of the initial G matrix, so con$rho.init really
       con$rho.init <- G[upper.tri(G)] ### contains the 'choled' covariances; and these values are also passed on the .ll.rma.mv as the initial values
    } else {
@@ -1924,7 +1924,7 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
       H <- .con.vcov.UN(gamma2.init, phi.init)
       H <- try(chol(H), silent=TRUE)
       if (inherits(H, "try-error"))
-         stop("Cannot take Choleski decomposition of initial H matrix.")
+         stop("Cannot take Choleski decomposition of initial 'H' matrix.")
       con$gamma2.init <- diag(H)      ### note: con$gamma2.init and con$phi.init are the 'choled' values of the initial H matrix, so con$phi.init really
       con$phi.init <- H[upper.tri(H)] ### contains the 'choled' covariances; and these values are also passed on the .ll.rma.mv as the initial values
    } else {

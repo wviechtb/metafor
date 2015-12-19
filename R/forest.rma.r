@@ -188,7 +188,7 @@ cex, cex.lab, cex.axis, ...) {
       if (is.character(order)) {
 
          if (length(order) != 1)
-            stop("Incorrect length of order argument.")
+            stop("Incorrect length of 'order' argument.")
 
          if (order == "obs")
             sort.vec <- order(yi)

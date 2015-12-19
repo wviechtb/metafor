@@ -11,7 +11,7 @@ H0=0, append=TRUE, replace=TRUE, level=95, digits, transf, ...) {
    crit <- qnorm(alpha/2, lower.tail=FALSE)
 
    if (length(out.names) != 4)
-      stop("Argument out.names must be of length 4.")
+      stop("Argument 'out.names' must be of length 4.")
 
    if (any(out.names != make.names(out.names, unique=TRUE))) {
       out.names <- make.names(out.names, unique=TRUE)

@@ -42,6 +42,9 @@ Changes in Version 1.9-9 (2015-12-19)
    o in the extreme case where all observed outcomes are exactly equal to
      each other, using knha=TRUE in rma() now leads to appropriate results
 
+   o updated datasets so those containing precomputed effect size estimates
+     or observed outcomes are already declared to be 'escalc' objects
+
    o some general code cleanup
 
    o added more tests

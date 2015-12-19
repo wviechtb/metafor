@@ -42,7 +42,7 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, subset, 
 
    if (is.null(vi)) {
       if (is.null(sei)) {
-         stop("Need to specify vi or sei argument.")
+         stop("Need to specify 'vi' or 'sei' argument.")
       } else {
          vi <- sei^2
       }
@@ -51,7 +51,7 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, subset, 
    ### check length of yi and vi
 
    if (length(yi) != length(vi))
-      stop("Length of yi and vi (or sei) vectors is not the same.")
+      stop("Length of 'yi' and 'vi' (or 'sei') vectors is not the same.")
 
    ### if a subset of studies is specified
 

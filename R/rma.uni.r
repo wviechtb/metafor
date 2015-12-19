@@ -49,7 +49,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
       control <- list()
 
    if (!(is.logical(knha) || (is.character(knha) && is.element(knha, c("adhoc", "tdist")))))
-      stop("Invalid options selected for 'knha' argument.")
+      stop("Invalid option selected for 'knha' argument.")
 
    very.verbose <- ifelse(!is.logical(verbose) && verbose > 1, TRUE, FALSE)
 
@@ -188,7 +188,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
 
       if (is.null(vi)) {
          if (is.null(sei)) {
-            stop("Need to specify vi or sei argument.")
+            stop("Need to specify 'vi' or 'sei' argument.")
          } else {
             vi <- sei^2
          }
@@ -207,7 +207,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
       ### check length of yi and vi
 
       if (length(vi) != k)
-         stop("Length of yi and vi (or sei) vectors are not the same.")
+         stop("Length of 'yi' and 'vi' (or 'sei') vectors are not the same.")
 
       ### if ni has not been specified but is an attribute of yi, get it
 
@@ -219,7 +219,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
 
       if (!is.null(ni) && length(ni) != k)
          ni <- NULL
-         #stop("Length of yi and ni vectors are not the same.")
+         #stop("Length of 'yi' and 'ni' vectors are not the same.")
 
       ### if ni is now available, add it (back) as an attribute to yi
 
@@ -492,7 +492,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
    ### check length of yi and weights (only if weights is not NULL)
 
    if (!is.null(weights) && (length(weights) != k))
-      stop("Length of yi and weights vectors are not the same.")
+      stop("Length of 'yi' and 'weights' vectors are not the same.")
 
    ### subsetting of weights
 
@@ -534,7 +534,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
    ### check if mods matrix has the right number of rows
 
    if (!is.null(mods) && (nrow(mods) != k))
-      stop("Number of rows of the model matrix does not match length of yi argument.")
+      stop("Number of rows of the model matrix does not match length of 'yi' argument.")
 
    ### in case scale is a formula, get model matrix for it
 
@@ -545,7 +545,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
       options(na.action = na.act)
       model <- "rma.tau2"
       if (nrow(Z) != k)
-         stop("Number of rows of the model matrix for tau2 does not match length of yi argument.")
+         stop("Number of rows of the model matrix for tau2 does not match length of 'yi' argument.")
    } else {
       Z <- NULL
       model <- "rma.uni"
@@ -1169,7 +1169,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
             tau2 <- ifelse(tau2.fix, tau2.val, try(uniroot(.QE.func, interval=c(con$tau2.min, con$tau2.max), tol=con$threshold, maxiter=con$maxiter, Y=Y, vi=vi, X=X, k=k, objective=k-p, verbose=verbose, digits=digits, extendInt="upX")$root, silent=TRUE))
 
             if (!is.numeric(tau2))
-               stop("Error in iterative search for tau2. Try increasing tau2.max or switch to another 'method'.")
+               stop("Error in iterative search for tau2. Try increasing 'tau2.max' or switch to another 'method'.")
 
          }
 

@@ -81,7 +81,7 @@ cex, cex.lab, cex.axis, ...) {
    ### check length of yi and vi
 
    if (length(yi) != length(vi))
-      stop("Length of yi and vi (or sei) vectors are not the same.")
+      stop("Length of 'yi' and 'vi' (or 'sei') vectors are not the same.")
 
    k <- length(yi)
 
