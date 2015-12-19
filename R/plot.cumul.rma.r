@@ -1,4 +1,5 @@
-plot.cumul.rma <- function(x, yaxis="tau2", xlim, ylim, xlab, ylab, at, transf, atransf, targs, digits, cols=c("gray90","gray10"), addgrid=TRUE, pch=19, cex=1, lwd=2, ...) {
+plot.cumul.rma <- function(x, yaxis="tau2", xlim, ylim, xlab, ylab, at, transf, atransf, targs,
+digits, cols=c("gray90","gray10"), addgrid=TRUE, pch=19, cex=1, lwd=2, ...) {
 
    #########################################################################
 
@@ -138,6 +139,8 @@ plot.cumul.rma <- function(x, yaxis="tau2", xlim, ylim, xlab, ylab, at, transf, 
    aty <- axTicks(side=2)
    axis(side=2, at=aty, labels=formatC(aty, digits=digits[2], format="f", drop0trailing=TRUE))
 
+   ### add grid
+
    if (addgrid) {
       abline(v=at, lty="dotted", col="lightgray")
       abline(h=aty, lty="dotted", col="lightgray")
@@ -173,6 +176,10 @@ plot.cumul.rma <- function(x, yaxis="tau2", xlim, ylim, xlab, ylab, at, transf, 
    ### add points
 
    points(dat$estim, dat$yval, pch=pch, col=cols.points, cex=cex)
+
+   ### redraw box around plot
+
+   box()
 
    ### return data frame invisibly
 
