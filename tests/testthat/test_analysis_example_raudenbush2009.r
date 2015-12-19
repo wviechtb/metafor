@@ -124,7 +124,7 @@ test_that("results are correct for the random-effects model (Huber-White method)
    res.hw$DL   <- robust(res.std$DL,   cluster=dat$study, adjust=FALSE)
    res.hw$HE   <- robust(res.std$HE,   cluster=dat$study, adjust=FALSE)
 
-   print(res.hw$REML) ### so that print.robust.rma() is run (at least once)
+   out <- capture.output(print(res.hw$REML)) ### so that print.robust.rma() is run (at least once)
 
    tmp <- round(t(sapply(res.hw, function(x) c(tau2=x$tau2, mu=x$b, se=x$se, t=x$tval, ci.lb=x$ci.lb, ci.ub=x$ci.ub))), 3)
 

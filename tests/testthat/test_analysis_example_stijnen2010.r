@@ -79,7 +79,7 @@ test_that("results for the conditional logistic model with exact likelihood are 
    skip_on_cran()
 
    res <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="CM.EL")
-   print(res) ### so that print.rma.glmm() is run (at least once)
+   out <- capture.output(print(res)) ### so that print.rma.glmm() is run (at least once)
 
    ### compare with results on page 3052 (Table III)
    expect_equivalent(round(coef(res), digits=3), -1.353)

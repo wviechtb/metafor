@@ -14,7 +14,7 @@ test_that("results are correct for the multiple outcomes random-effects model.",
 
    ### multiple outcomes random-effects model (with ML estimation)
    res <- rma.mv(yi, V, mods = ~ outcome - 1, random = ~ outcome | trial, struct="UN", data=dat, method="ML")
-   print(res) ### so that print.rma.mv() is run (at least once)
+   out <- capture.output(print(res)) ### so that print.rma.mv() is run (at least once)
 
    ### (results for this model not given in paper)
    expect_equivalent(round(coef(res),3), c(-0.338, 0.345))
@@ -55,7 +55,7 @@ test_that("results are correct when testing var-cov structures against each othe
    res1 <- rma.mv(yi, V, mods = ~ outcome - 1, random = ~ outcome | trial, struct="UN", data=dat, method="ML")
    res0 <- rma.mv(yi, V, mods = ~ outcome - 1, random = ~ outcome | trial, struct="CS", data=dat, method="ML")
    tmp <- anova(res0, res1)
-   print(tmp) ### so that print.anova.rma() is run (at least once)
+   out <- capture.output(print(tmp)) ### so that print.anova.rma() is run (at least once)
 
    ### (results for this not given in paper)
    expect_equivalent(round(tmp$pval,4), 0.2597)

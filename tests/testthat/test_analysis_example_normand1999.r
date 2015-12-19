@@ -16,7 +16,7 @@ test_that("results are correct for the first example (using dat.hine1989).", {
    dat$yi <- dat$yi * 100
    dat$vi <- dat$vi * 100^2
 
-   print(dat) ### so that print.escalc() is run (at least once)
+   out <- capture.output(print(dat)) ### so that print.escalc() is run (at least once)
 
    ### compare with results on page 330 (Table III)
    expect_equivalent(round(dat$yi,4), c(2.8026, 0.0000, 1.9711, 1.7961, 3.5334, 4.4031))
