@@ -1,6 +1,5 @@
 \name{escalc}
 \alias{escalc}
-\alias{escalc.data.frame}
 \alias{escalc.default}
 \alias{escalc.formula}
 \alias{[.escalc}
@@ -15,7 +14,7 @@
 escalc(measure, formula, \dots)
 
 \method{escalc}{default}(measure, formula, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
-       m1i, m2i, sd1i, sd2i, xi, mi, ri, ti, sdi, ni, data, slab, subset,
+       m1i, m2i, sd1i, sd2i, xi, mi, ri, ti, sdi, ni, yi, vi, sei, data, slab, subset,
        add=1/2, to="only0", drop00=FALSE, vtype="LS",
        var.names=c("yi","vi"), add.measure=FALSE,
        append=TRUE, replace=TRUE, digits=4, \dots)
@@ -23,9 +22,6 @@ escalc(measure, formula, \dots)
 \method{escalc}{formula}(measure, formula, weights, data,
        add=1/2, to="only0", drop00=FALSE, vtype="LS",
        var.names=c("yi","vi"), digits=4, \dots)
-
-\method{escalc}{data.frame}(measure, formula, slab, subset,
-       var.names=c("yi","vi"), add.measure=FALSE, digits=4, \dots)
 }
 \arguments{
    \item{measure}{a character string indicating which effect size or outcome measure should be calculated. See \sQuote{Details} for possible options and how the data should be specified.}
@@ -51,6 +47,9 @@ escalc(measure, formula, \dots)
    \item{ti}{vector to specify the total person-times.}
    \item{sdi}{vector to specify the standard deviations.}
    \item{ni}{vector to specify the sample/group sizes.}
+   \item{yi}{vector to specify the observed effect size or outcomes.}
+   \item{vi}{vector to specify the corresponding sampling variances.}
+   \item{sei}{vector to specify the corresponding standard errors.}
    \item{data}{optional data frame containing the variables given to the arguments above.}
    \item{slab}{optional vector with labels for the studies.}
    \item{subset}{optional vector indicating the subset of studies that should be used. This can be a logical vector or a numeric vector indicating the indices of the studies to include.}
@@ -390,7 +389,7 @@ escalc(measure, formula, \dots)
 
    \subsection{Converting a Data Frame to an 'escalc' Object}{
 
-      The \code{escalc.data.frame} method is a convenience function that can be used to convert a regular data frame to an 'escalc' object. One simply sets the \code{measure} argument to one of the options described above (or to \code{measure="GEN"} for a generic outcome measure not further specified) and passes the data frame via the second argument to the function (e.g., \code{escalc(measure="RR", dat)}). With the default setting for the \code{var.names} argument, the function then looks for variable \code{yi}, which should contain the observed outcomes or effect size estimates and variable \code{vi}, which should contain the corresponding sampling variances.
+      The function can also be used to convert a regular data frame to an 'escalc' object. One simply sets the \code{measure} argument to one of the options described above (or to \code{measure="GEN"} for a generic outcome measure not further specified) and passes the observed effect sizes or outcomes via the \code{yi} argument and the corresponding sampling variances via the \code{vi} argument (or the standard errors via the \code{sei} argument).
 
    }
 
@@ -518,7 +517,7 @@ dat <- data.frame(id = c(100, 308, 1596, 2479, 9021, 9028, 161, 172, 537, 7049),
                   vi = c(0.084, 0.035, 0.017, 0.034, 0.072, 0.117, 0.102, 0.093, 0.012, 0.067),
                   random = c(0, 0, 0, 0, 0, 0, 1, 1, 1, 1),
                   intensity = c(7, 3, 7, 5, 7, 7, 4, 4, 5, 6))
-dat <- escalc(measure="SMD", dat, slab=paste0("Study ID: ", id), digits=3)
+dat <- escalc(measure="SMD", yi=yi, vi=vi, data=dat, slab=paste0("Study ID: ", id), digits=3)
 dat
 }
 \keyword{datagen}

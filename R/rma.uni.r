@@ -12,8 +12,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
    ### check for some incorrect argument specifications
    ### (arguments "to" and "vtype" are checked inside escalc function)
 
-   if (!is.element(measure, c("GEN",
-                              "RR","OR","PETO","RD","AS","PHI","YUQ","YUY","RTET", ### 2x2 table measures
+   if (!is.element(measure, c("RR","OR","PETO","RD","AS","PHI","YUQ","YUY","RTET", ### 2x2 table measures
                               "PBIT","OR2D","OR2DN","OR2DL",                       ### - transformations to SMD
                               "IRR","IRD","IRSD",                                  ### two-group person-time data measures
                               "MD","SMD","SMDH","ROM",                             ### two-group mean/SD measures
@@ -22,7 +21,8 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
                               "PR","PLN","PLO","PAS","PFT",                        ### single proportions (and transformations thereof)
                               "IR","IRLN","IRS","IRFT",                            ### single-group person-time data (and transformations thereof)
                               "MN","MC","SMCC","SMCR","SMCRH","ROMC",              ### raw/standardized mean change and log(ROM) for dependent samples
-                              "ARAW","AHW","ABT")))                                ### alpha (and transformations thereof)
+                              "ARAW","AHW","ABT",                                  ### alpha (and transformations thereof)
+                              "GEN")))
       stop("Unknown 'measure' specified.")
 
    if (!is.element(method, c("FE","HS","HE","DL","GENQ","SJ","ML","REML","EB","DLIT","SJIT","PM")))
