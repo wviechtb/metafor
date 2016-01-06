@@ -1,17 +1,17 @@
-\name{blup}
-\alias{blup}
-\alias{blup.rma.uni}
+\name{ranef}
+\alias{ranef}
+\alias{ranef.rma.uni}
 \title{Best Linear Unbiased Predictions for 'rma.uni' Objects}
 \description{
-   The function calculates best linear unbiased predictions (BLUPs) of the true outcomes by combining the fitted values based on the fixed effects and the estimated contributions of the random effects for objects of class \code{"rma.uni"}. Corresponding standard errors and prediction interval bounds are also provided.
+   The function calculates best linear unbiased predictions (BLUPs) of the random effects for objects of class \code{"rma.uni"}. Corresponding standard errors and prediction interval bounds are also provided.
 }
 \usage{
-blup(x, \dots)
+ranef(object, \dots)
 
-\method{blup}{rma.uni}(x, level, digits, transf, targs, \dots)
+\method{ranef}{rma.uni}(object, level, digits, transf, targs, \dots)
 }
 \arguments{
-   \item{x}{an object of class \code{"rma.uni"}.}
+   \item{object}{an object of class \code{"rma.uni"}.}
    \item{level}{numerical value between 0 and 100 specifying the prediction interval level (if unspecified, the default is to take the value from the object).}
    \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is to take the value from the object).}
    \item{transf}{optional argument specifying the name of a function that should be used to transform the predicted values and interval bounds (e.g., \code{transf=exp}). If unspecified, no transformation is used.}
@@ -29,11 +29,11 @@ blup(x, \dots)
    The \code{"list.rma"} object is formated and printed with \code{\link{print.list.rma}}.
 }
 \note{
-   For best linear unbiased predictions of only the random effects, see \code{\link{ranef}}.
+   For best linear unbiased predictions that combine the fitted values based on the fixed effects and the estimated contributions of the random effects, see \code{\link{blup}}.
 
    For predicted/fitted values that are based only on the fixed effects of the model, see \code{\link{fitted.rma}} and \code{\link{predict.rma}}.
 
-   Fixed-effects models (with or without moderators) do not contain random study effects. The BLUPs for these models will therefore be equal to the usual fitted values, that is, those obtained with \code{\link{fitted.rma}} and \code{\link{predict.rma}}.
+   Fixed-effects models (with or without moderators) do not contain random study effects. The BLUPs for these models will therefore be 0.
 
    When using the \code{transf} argument, the transformation is applied to the predicted values and the corresponding interval bounds. The standard errors are set equal to \code{NA}.
 
@@ -56,7 +56,7 @@ blup(x, \dots)
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{http://www.jstatsoft.org/v36/i03/}.
 }
 \seealso{
-   \code{\link{rma.uni}}, \code{\link{predict.rma}}, \code{\link{fitted.rma}}, \code{\link{ranef.rma.uni}}
+   \code{\link{rma.uni}}, \code{\link{predict.rma}}, \code{\link{fitted.rma}}, \code{\link{blup.rma.uni}}
 }
 \examples{
 ### load BCG vaccine data
@@ -68,19 +68,7 @@ dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 ### meta-analysis of the log relative risks using a random-effects model
 res <- rma(yi, vi, data=dat)
 
-### BLUPs of the true relative risks for each study
-blup(res, transf=exp)
-
-### illustrate shrinkage of BLUPs towards the (estimated) population average
-res <- rma(yi, vi, data=dat)
-blups <- blup(res)$pred
-plot(NA, NA, xlim=c(.8,2.4), ylim=c(-2,0.5), pch=19,
-     xaxt="n", bty="n", xlab="", ylab="Log Relative Risk")
-segments(rep(1,13), dat$yi, rep(2,13), blups, col="darkgray")
-points(rep(1,13), dat$yi, pch=19)
-points(rep(2,13), blups, pch=19)
-axis(side=1, at=c(1,2), labels=c("Observed\nValues", "BLUPs"), lwd=0)
-segments(.7, res$b, 2.15, res$b, lty="dotted")
-text(2.3, res$b, expression(hat(mu)==-0.71), cex=1)
+### BLUPs of the random effects
+blup(res)
 }
 \keyword{models}

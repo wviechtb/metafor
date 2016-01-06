@@ -82,7 +82,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
    if (!is.null(yi) && is.element("escalc", class(yi)))
       data <- yi
 
-   ### extract weights, slab, subset, mods, and tau2 values, possibly from the data frame specified via data or yi (arguments not specified are NULL)
+   ### extract weights, slab, subset, mods, and scale values, possibly from the data frame specified via data or yi (arguments not specified are NULL)
 
    mf.weights <- mf[[match("weights", names(mf))]]
    mf.slab    <- mf[[match("slab",    names(mf))]]

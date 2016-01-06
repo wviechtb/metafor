@@ -1,4 +1,6 @@
-blup.rma.uni <- function(x, level, digits, transf, targs, ...) {
+ranef.rma.uni <- function(object, level, digits, transf, targs, ...) {
+
+   x <- object
 
    if (!is.element("rma.uni", class(x)))
       stop("Argument 'x' must be an object of class \"rma.uni\".")
@@ -42,8 +44,13 @@ blup.rma.uni <- function(x, level, digits, transf, targs, ...) {
 
    for (i in seq_len(x$k.f)[x$not.na]) { ### note: skipping NA cases
       Xi <- matrix(x$X.f[i,], nrow=1)
-      pred[i]  <- li[i] * x$yi.f[i] + (1 - li[i])   * Xi %*% x$b
-      vpred[i] <- li[i] * x$vi.f[i] + (1 - li[i])^2 * Xi %*% tcrossprod(x$vb,Xi)
+      if (x$method == "FE") {
+         pred[i]  <- 0
+         vpred[i] <- 0
+      } else {
+         pred[i]  <- li[i] * (x$yi.f[i] - Xi %*% x$b)
+         vpred[i] <- li[i] * x$vi.f[i] + li[i]^2 * Xi %*% tcrossprod(x$vb,Xi)
+      }
    }
 
    se <- sqrt(vpred)
