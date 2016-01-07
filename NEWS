@@ -1,4 +1,4 @@
-Changes in Version 1.9-9 (2015-12-20)
+Changes in Version 1.9-9 (2016-01-07)
 =====================================
 
    o started to use git as version control system, GitHub to host the
@@ -21,6 +21,9 @@ Changes in Version 1.9-9 (2015-12-20)
 
    o fixed an error with robust.rma.mv() when the model was fitted with
      user-defined weights (or a user-defined weight matrix)
+
+   o added ranef() for extracting the BLUPs of the random effects (only for
+     'rma.uni' objects at the moment)
 
    o the various forest() and addpoly() functions now have a new argument
      called 'width', which provides manual control over the width of the
