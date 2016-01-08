@@ -315,8 +315,12 @@ level=95, digits=4, verbose=FALSE) {
 
    if (k.pos >= 1) {
       QEp <- pchisq(QE, df=k.yi-1, lower.tail=FALSE)
+      I2 <- max(0, 100 * (QE - (k.yi-1)) / QE)
+      H2 <- QE / (k.yi-1)
    } else {
       QEp <- 1
+      I2 <- 0
+      H2 <- 1
    }
 
    wi  <- 1/vi
@@ -368,7 +372,7 @@ level=95, digits=4, verbose=FALSE) {
    res <- list(b=b, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
                tau2=tau2,
                k=k, k.f=k.f, k.yi=k.yi, k.pos=k.pos, k.eff=k.eff, p=p, parms=parms,
-               QE=QE, QEp=QEp,
+               QE=QE, QEp=QEp, I2=I2, H2=H2,
                int.only=int.only,
                yi=yi, vi=vi, yi.f=yi.f, vi.f=vi.f, X.f=X.f, ai=ai, bi=bi, ci=ci, di=di, ai.f=ai.f, bi.f=bi.f, ci.f=ci.f, di.f=di.f, ni=ni, ni.f=ni.f,
                ids=ids, not.na=not.na, not.na.yivi=not.na.yivi, slab=slab, slab.null=slab.null,

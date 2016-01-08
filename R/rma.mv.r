@@ -1186,6 +1186,18 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
       X.f <- mods.f
    }
 
+   ### drop redundant predictors
+   ### note: need to save coef.na for functions that modify the data/model and then refit the model (regtest() and the
+   ### various function that leave out an observation); so we can check if there are redundant/dropped predictors then
+
+   tmp <- lm(yi ~ X - 1)
+   coef.na <- is.na(coef(tmp))
+   if (any(coef.na)) {
+      warning("Redundant predictors dropped from the model.")
+      X   <- X[,!coef.na,drop=FALSE]
+      X.f <- X.f[,!coef.na,drop=FALSE]
+   }
+
    ### check whether intercept is included and if yes, move it to the first column (NAs already removed, so na.rm=TRUE for any() not necessary)
 
    is.int <- apply(X, 2, .is.int.func)
@@ -1198,18 +1210,6 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
          intercept <- TRUE ### set intercept appropriately so that the predict() function works
    } else {
       int.incl <- FALSE
-   }
-
-   ### drop redundant predictors
-   ### note: need to save coef.na for functions that modify the data/model and then refit the model (regtest() and the
-   ### various function that leave out an observation); so we can check if there are redundant/dropped predictors then
-
-   tmp <- lm(yi ~ X - 1)
-   coef.na <- is.na(coef(tmp))
-   if (any(coef.na)) {
-      warning("Redundant predictors dropped from the model.")
-      X   <- X[,!coef.na,drop=FALSE]
-      X.f <- X.f[,!coef.na,drop=FALSE]
    }
 
    p <- NCOL(X) ### number of columns in X (including the intercept if it is included)

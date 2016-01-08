@@ -710,9 +710,19 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
       X.f <- mods.f
    }
 
+   ### drop redundant predictors
+   ### note: need to save coef.na for functions that modify the data/model and then refit the model (regtest() and the
+   ### various function that leave out an observation); so we can check if there are redundant/dropped predictors then
+
+   tmp <- lm(yi ~ X - 1)
+   coef.na <- is.na(coef(tmp))
+   if (any(coef.na)) {
+      warning("Redundant predictors dropped from the model.")
+      X   <- X[,!coef.na,drop=FALSE]
+      X.f <- X.f[,!coef.na,drop=FALSE]
+   }
+
    ### check whether intercept is included and if yes, move it to the first column (NAs already removed, so na.rm=TRUE for any() not necessary)
-   ### note that a column may turn into an 'intercept' due to the removal of NAs (e.g., X=cbind(c(1,1,1,1), c(1,2,1,1), c(5,NA,2,8))), so does
-   ### this have consequences for how X.f gets used in other functions?
 
    is.int <- apply(X, 2, .is.int.func)
    if (any(is.int)) {
@@ -724,18 +734,6 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
          intercept <- TRUE ### set intercept appropriately so that the predict() function works
    } else {
       int.incl <- FALSE
-   }
-
-   ### drop redundant predictors
-   ### note: need to save coef.na for functions that modify the data/model and then refit the model (regtest() and the
-   ### various function that leave out an observation); so we can check if there are redundant/dropped predictors then
-
-   tmp <- lm(yi ~ X - 1)
-   coef.na <- is.na(coef(tmp))
-   if (any(coef.na)) {
-      warning("Redundant predictors dropped from the model.")
-      X   <- X[,!coef.na,drop=FALSE]
-      X.f <- X.f[,!coef.na,drop=FALSE]
    }
 
    p <- NCOL(X) ### number of columns in X (including the intercept if it is included)
@@ -1467,23 +1465,37 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
       ### one-way ANOVA and meta-analysis. Statistical Papers, 55(2), 301-310. This shows that the weights used
       ### are not relevant.
 
-      wi    <- 1/vi
-      W.FE  <- diag(wi, nrow=k, ncol=k) ### care: ll.REML below involves W, so cannot overwrite W
-      stXWX <- .invcalc(X=X, W=W.FE, k=k)
-      P     <- W.FE - W.FE %*% X %*% stXWX %*% crossprod(X,W.FE) ### need P below for calculation of I^2
-      QE    <- max(0, c(crossprod(Y,P) %*% Y))
-      #b.FE  <- stXWX %*% crossprod(X,W.FE) %*% Y
-      #QE    <- max(0, sum(wi*(yi - X %*% b.FE)^2))
-      QEp   <- ifelse(k-p >= 1, pchisq(QE, df=k-p, lower.tail=FALSE), 1)
+      if (k > p) {
 
-      ### calculation of I^2 and H^2 in the RE/ME model
+         wi    <- 1/vi
+         W.FE  <- diag(wi, nrow=k, ncol=k) ### care: ll.REML below involves W, so cannot overwrite W
+         stXWX <- .invcalc(X=X, W=W.FE, k=k)
+         P     <- W.FE - W.FE %*% X %*% stXWX %*% crossprod(X,W.FE) ### need P below for calculation of I^2
+         QE    <- max(0, c(crossprod(Y,P) %*% Y))
+         #b.FE  <- stXWX %*% crossprod(X,W.FE) %*% Y
+         #QE    <- max(0, sum(wi*(yi - X %*% b.FE)^2))
+         QEp   <- pchisq(QE, df=k-p, lower.tail=FALSE)
 
-      if (method != "FE") {
-         #vi.avg <- (k-1) / (sum(wi) - sum(wi^2)/sum(wi)) ### this only applies to the RE model
-         #vi.avg <- 1/mean(wi) ### harmonic mean of vi's (see Takkouche et al., 1999)
-         vi.avg  <- (k-p) / .tr(P)
-         I2      <- 100 * mean(tau2) / (vi.avg + mean(tau2)) ### must use mean(tau2) in case tau2 is vector from location-scale model
-         H2      <- mean(tau2) / vi.avg + 1                  ### must use mean(tau2) in case tau2 is vector from location-scale model
+         ### calculation of I^2 and H^2
+
+         if (method == "FE") {
+            I2 <- max(0, 100 * (QE - (k-p)) / QE)
+            H2 <- QE / (k-p)
+         } else {
+            #vi.avg <- (k-1) / (sum(wi) - sum(wi^2)/sum(wi)) ### this only applies to the RE model
+            #vi.avg <- 1/mean(wi) ### harmonic mean of vi's (see Takkouche et al., 1999)
+            vi.avg  <- (k-p) / .tr(P)
+            I2      <- 100 * mean(tau2) / (vi.avg + mean(tau2)) ### must use mean(tau2) in case tau2 is vector from location-scale model
+            H2      <- mean(tau2) / vi.avg + 1                  ### must use mean(tau2) in case tau2 is vector from location-scale model
+         }
+
+      } else {
+
+         QE <- 0
+         QEp <- 1
+         I2 <- 0
+         H2 <- 1
+
       }
 
    } else {

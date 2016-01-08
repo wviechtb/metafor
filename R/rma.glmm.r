@@ -499,6 +499,24 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
       X.yi <- mods.yi
    }
 
+   ### drop redundant predictors
+   ### careful: yi may have become shorter than X due to the omission of NAs, so just use a fake yi vector here
+
+   tmp <- lm(rep(0,k) ~ X - 1)
+   coef.na <- is.na(coef(tmp))
+   if (any(coef.na)) {
+      warning("Redundant predictors dropped from the model.")
+      X    <- X[,!coef.na,drop=FALSE]
+      X.f  <- X.f[,!coef.na,drop=FALSE]
+   }
+
+   ### need to do this separately for X.yi, since model matrix may have fewer rows due to removal of NA/NA pairs for yi/vi
+
+   tmp <- lm(yi ~ X.yi - 1)
+   coef.na <- is.na(coef(tmp))
+   if (any(coef.na))
+      X.yi <- X.yi[,!coef.na,drop=FALSE]
+
    ### check whether intercept is included and if yes, move it to the first column (NAs already removed, so na.rm=TRUE for any() not necessary)
 
    is.int <- apply(X, 2, .is.int.func)
@@ -520,24 +538,6 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
       int.indx <- which(is.int, arr.ind=TRUE)
       X.yi     <- cbind(intrcpt=1, X.yi[,-int.indx, drop=FALSE]) ### note: this removes any duplicate intercepts
    }
-
-   ### drop redundant predictors
-   ### careful: yi may have become shorter than X due to the omission of NAs, so just use a fake yi vector here
-
-   tmp <- lm(rep(0,k) ~ X - 1)
-   coef.na <- is.na(coef(tmp))
-   if (any(coef.na)) {
-      warning("Redundant predictors dropped from the model.")
-      X    <- X[,!coef.na,drop=FALSE]
-      X.f  <- X.f[,!coef.na,drop=FALSE]
-   }
-
-   ### need to do this separately for X.yi, since model matrix may have fewer rows due to removal of NA/NA pairs for yi/vi
-
-   tmp <- lm(yi ~ X.yi - 1)
-   coef.na <- is.na(coef(tmp))
-   if (any(coef.na))
-      X.yi <- X.yi[,!coef.na,drop=FALSE]
 
    p <- NCOL(X) ### number of columns in X (including the intercept if it is included)
 
