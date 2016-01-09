@@ -1394,13 +1394,14 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
       g.levels.k <- table(factor(mf.g[[1]], levels=g.levels.f[[1]]))
 
       ### for "HCS","UN","DIAG","HAR": if a particular level of the inner factor only occurs once, then set corresponding tau2 value to 0 (if not already fixed)
+      ### note: no longer done; variance component should still be (weakly) identifiable
 
-      if (is.element(struct[1], c("HCS","UN","DIAG","HAR"))) {
-         if (any(is.na(tau2) & g.levels.k == 1)) {
-            tau2[is.na(tau2) & g.levels.k == 1] <- 0
-            warning("Inner factor has k=1 for one or more levels. Corresponding 'tau2' value(s) fixed to 0.")
-         }
-      }
+      #if (is.element(struct[1], c("HCS","UN","DIAG","HAR"))) {
+      #   if (any(is.na(tau2) & g.levels.k == 1)) {
+      #      tau2[is.na(tau2) & g.levels.k == 1] <- 0
+      #      warning("Inner factor has k=1 for one or more levels. Corresponding 'tau2' value(s) fixed to 0.")
+      #   }
+      #}
 
       ### create matrix where each row (= study) indicates how often each arm occurred
       ### then turn this into a list (with each element equal to a row (= study))
@@ -1613,13 +1614,14 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
       h.levels.k <- table(factor(mf.h[[1]], levels=h.levels.f[[1]]))
 
       ### for "HCS","UN","DIAG","HAR": if a particular level of the inner factor only occurs once, then set corresponding gamma2 value to 0 (if not already fixed)
+      ### note: no longer done; variance component should still be (weakly) identifiable
 
-      if (is.element(struct[2], c("HCS","UN","DIAG","HAR"))) {
-         if (any(is.na(gamma2) & h.levels.k == 1)) {
-            gamma2[is.na(gamma2) & h.levels.k == 1] <- 0
-            warning("Inner factor has k=1 for one or more levels. Corresponding 'gamma2' value(s) fixed to 0.")
-         }
-      }
+      #if (is.element(struct[2], c("HCS","UN","DIAG","HAR"))) {
+      #   if (any(is.na(gamma2) & h.levels.k == 1)) {
+      #      gamma2[is.na(gamma2) & h.levels.k == 1] <- 0
+      #      warning("Inner factor has k=1 for one or more levels. Corresponding 'gamma2' value(s) fixed to 0.")
+      #   }
+      #}
 
       ### create matrix where each row (= study) indicates how often each arm occurred
       ### then turn this into a list (with each element equal to a row (= study))
