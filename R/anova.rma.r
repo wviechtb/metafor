@@ -119,7 +119,7 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
 
          hyp <- rep("", m)
          for (j in 1:m) {
-            Lj <- L[j,]    ### coefficients for the jth contrast
+            Lj <- round(L[j,], digits=digits) ### coefficients for the jth contrast
             sel <- Lj != 0 ### TRUE if coefficient is != 0
             hyp[j] <- paste(paste(Lj[sel], rownames(b)[sel], sep="*"), collapse=" + ") ### coefficient*variable + coefficient*variable ...
             hyp[j] <- gsub("1*", "", hyp[j], fixed=TRUE) ### turn '+1' into '+' and '-1' into '-'
