@@ -86,7 +86,7 @@ profile.rma.uni <- function(fitted, xlim, ylim, steps=20, progbar=TRUE, parallel
 
       for (i in 1:length(vcs)) {
 
-         res <- try(suppressWarnings(rma(x$yi, x$vi, weights=x$weights, mods=x$X, method=x$method, weighted=x$weighted, intercept=FALSE, knha=x$knha, level=x$level, control=x$control, tau2=vcs[i])), silent=TRUE)
+         res <- try(suppressWarnings(rma.uni(x$yi, x$vi, weights=x$weights, mods=x$X, intercept=FALSE, method=x$method, weighted=x$weighted, knha=x$knha, level=x$level, control=x$control, tau2=vcs[i])), silent=TRUE)
 
          if (inherits(res, "try-error"))
             next
@@ -117,15 +117,15 @@ profile.rma.uni <- function(fitted, xlim, ylim, steps=20, progbar=TRUE, parallel
          stop("Argument 'ncpus' must be >= 1.")
 
       if (parallel == "multicore")
-         res <- parallel::mclapply(vcs, .profile.rma.uni, obj=x, mc.cores=ncpus, parallel=parallel)
+         res <- parallel::mclapply(vcs, .profile.rma.uni, obj=x, mc.cores=ncpus, parallel=parallel, profile=TRUE)
 
       if (parallel == "snow") {
          if (is.null(cl)) {
             cl <- parallel::makePSOCKcluster(ncpus)
-            res <- parallel::parLapply(cl, vcs, .profile.rma.uni, obj=x, parallel=parallel)
+            res <- parallel::parLapply(cl, vcs, .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE)
             parallel::stopCluster(cl)
          } else {
-            res <- parallel::parLapply(cl, vcs, .profile.rma.uni, obj=x, parallel=parallel)
+            res <- parallel::parLapply(cl, vcs, .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE)
          }
       }
 

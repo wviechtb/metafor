@@ -26,7 +26,7 @@ trimfill.rma.uni <- function(x, side, estimator="L0", maxiter=100, verbose=FALSE
    ### determine side (if none is specified)
 
    if (is.null(side)) {
-      res <- suppressWarnings(rma(yi, vi, weights=weights, mods=sqrt(vi), method=x$method, weighted=x$weighted, ...))
+      res <- suppressWarnings(rma.uni(yi, vi, weights=weights, mods=sqrt(vi), method=x$method, weighted=x$weighted, ...))
       ### TODO: add check in case there are problems with fitting the model
       if (res$b[2] < 0) {
          side <- "right"
@@ -74,7 +74,7 @@ trimfill.rma.uni <- function(x, side, estimator="L0", maxiter=100, verbose=FALSE
       vi.t <- vi[1:(k-k0)]
       weights.t <- weights[1:(k-k0)]
 
-      res <- suppressWarnings(rma(yi.t, vi.t, weights=weights.t, method=x$method, weighted=x$weighted, ...))
+      res <- suppressWarnings(rma.uni(yi.t, vi.t, weights=weights.t, method=x$method, weighted=x$weighted, ...))
 
       ### intercept estimate based on truncated data
 
@@ -146,7 +146,7 @@ trimfill.rma.uni <- function(x, side, estimator="L0", maxiter=100, verbose=FALSE
 
       attr(yi.fill, "measure") <- x$measure
 
-      res      <- suppressWarnings(rma(yi.fill, vi.fill, weights=weights.fill, ni=ni.fill, method=x$method, weighted=x$weighted, ...))
+      res      <- suppressWarnings(rma.uni(yi.fill, vi.fill, weights=weights.fill, ni=ni.fill, method=x$method, weighted=x$weighted, ...))
       res$fill <- c(rep(FALSE,k),rep(TRUE,k0))
 
       res$ids <- c(x$ids, (x$k.f+1):(x$k.f+k0))

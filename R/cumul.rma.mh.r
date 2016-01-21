@@ -52,9 +52,9 @@ cumul.rma.mh <- function(x, order, digits, transf, targs, ...) {
    for (i in seq_len(x$k.f)[not.na]) {
 
       if (is.element(x$measure, c("RR","OR","RD"))) {
-         res <- try(suppressWarnings(rma.mh(ai=ai.f[seq_len(i)], bi=bi.f[seq_len(i)], ci=ci.f[seq_len(i)], di=di.f[seq_len(i)], measure=x$measure, add=x$add, to=x$to, drop00=x$drop00, correct=x$correct)), silent=TRUE)
+         res <- try(suppressWarnings(rma.mh(ai=ai.f, bi=bi.f, ci=ci.f, di=di.f, measure=x$measure, add=x$add, to=x$to, drop00=x$drop00, correct=x$correct, subset=seq_len(i))), silent=TRUE)
       } else {
-         res <- try(suppressWarnings(rma.mh(x1i=x1i.f[seq_len(i)], x2i=x2i.f[seq_len(i)], t1i=t1i.f[seq_len(i)], t2i=t2i.f[seq_len(i)], measure=x$measure, add=x$add, to=x$to, drop00=x$drop00, correct=x$correct)), silent=TRUE)
+         res <- try(suppressWarnings(rma.mh(x1i=x1i.f, x2i=x2i.f, t1i=t1i.f, t2i=t2i.f, measure=x$measure, add=x$add, to=x$to, drop00=x$drop00, correct=x$correct, subset=seq_len(i))), silent=TRUE)
       }
 
       if (inherits(res, "try-error"))

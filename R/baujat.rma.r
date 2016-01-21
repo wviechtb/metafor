@@ -34,18 +34,18 @@ baujat.rma <- function(x, xlim, ylim, xlab, ylab, cex, symbol, grid=TRUE, ...) {
    for (i in seq_len(x$k.f)[x$not.na]) {
 
       if (is.element("rma.uni", class(x)))
-         res <- try(suppressWarnings(rma(x$yi.f[-i], x$vi.f[-i], weights=x$weights.f[-i], mods=cbind(x$X.f[-i,]), method=x$method, weighted=x$weighted, intercept=FALSE, knha=x$knha, control=x$control)), silent=TRUE)
+         res <- try(suppressWarnings(rma.uni(x$yi.f, x$vi.f, weights=x$weights.f, mods=x$X.f, intercept=FALSE, method=x$method, weighted=x$weighted, knha=x$knha, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, subset=-i)), silent=TRUE)
 
       if (is.element("rma.mh", class(x))) {
          if (is.element(x$measure, c("RR","OR","RD"))) {
-            res <- try(suppressWarnings(rma.mh(ai=x$ai.f[-i], bi=x$bi.f[-i], ci=x$ci.f[-i], di=x$di.f[-i], measure=x$measure, add=x$add, to=x$to, drop00=x$drop00, correct=x$correct)), silent=TRUE)
+            res <- try(suppressWarnings(rma.mh(ai=x$ai.f, bi=x$bi.f, ci=x$ci.f, di=x$di.f, measure=x$measure, add=x$add, to=x$to, drop00=x$drop00, correct=x$correct, subset=-i)), silent=TRUE)
          } else {
-            res <- try(suppressWarnings(rma.mh(x1i=x$x1i.f[-i], x2i=x$x2i.f[-i], t1i=x$t1i.f[-i], t2i=x$t2i.f[-i], measure=x$measure, add=x$add, to=x$to, drop00=x$drop00, correct=x$correct)), silent=TRUE)
+            res <- try(suppressWarnings(rma.mh(x1i=x$x1i.f, x2i=x$x2i.f, t1i=x$t1i.f, t2i=x$t2i.f, measure=x$measure, add=x$add, to=x$to, drop00=x$drop00, correct=x$correct, subset=-i)), silent=TRUE)
          }
       }
 
       if (is.element("rma.peto", class(x)))
-         res <- try(suppressWarnings(rma.peto(ai=x$ai.f[-i], bi=x$bi.f[-i], ci=x$ci.f[-i], di=x$di.f[-i], add=x$add, to=x$to, drop00=x$drop00)), silent=TRUE)
+         res <- try(suppressWarnings(rma.peto(ai=x$ai.f, bi=x$bi.f, ci=x$ci.f, di=x$di.f, add=x$add, to=x$to, drop00=x$drop00, subset=-i)), silent=TRUE)
 
       if (inherits(res, "try-error"))
          next

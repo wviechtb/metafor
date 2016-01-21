@@ -92,7 +92,7 @@
 
 ############################################################################
 
-### function to test whether a vector is all equal to 1s (to find intercept(s) in a model matrix)
+### function to test whether a vector is all equal to 1s (e.g., to find intercept(s) in a model matrix)
 
 .is.int.func <- function(x, eps=1e-08)
    all(abs(x - 1) < eps)
@@ -482,105 +482,185 @@
 
 ############################################################################
 
-### needed for multicore processing with profile()
+### for profile(), confint(), and multicore processing
 
-.profile.rma.uni <- function(val, obj, parallel=FALSE, CI=FALSE, objective, verbose=FALSE) {
+.profile.rma.uni <- function(val, obj, parallel=FALSE, profile=FALSE, CI=FALSE, subset=FALSE, objective, sel, verbose=FALSE) {
 
    if (parallel == "snow")
       library(metafor)
 
-   res <- try(suppressWarnings(rma.uni(obj$yi, obj$vi, weights=obj$weights, mods=obj$X, method=obj$method, weighted=obj$weighted, intercept=FALSE, knha=obj$knha, level=obj$level, control=obj$control, tau2=val)), silent=TRUE)
+   if (profile || CI) {
 
-   if (!CI) {
+      ### for profiling and CI construction, fit model with tau2 fixed to 'val'
 
-      if (inherits(res, "try-error")) {
-         list(ll = NA, b = matrix(NA, nrow=nrow(obj$b), ncol=1), ci.lb = rep(NA, length(obj$ci.lb)), ci.ub = rep(NA, length(obj$ci.ub)))
-      } else {
-         list(ll = logLik(res), b = res$b, ci.lb = res$ci.lb, ci.ub = res$ci.ub)
+      res <- try(suppressWarnings(rma.uni(obj$yi, obj$vi, weights=obj$weights, mods=obj$X, intercept=FALSE, method=obj$method, weighted=obj$weighted, knha=obj$knha, level=obj$level, control=obj$control, tau2=val)), silent=TRUE)
+
+      if (profile) {
+
+         if (inherits(res, "try-error")) {
+            sav <- list(ll = NA, b = matrix(NA, nrow=nrow(obj$b), ncol=1), ci.lb = rep(NA, length(obj$ci.lb)), ci.ub = rep(NA, length(obj$ci.ub)))
+         } else {
+            sav <- list(ll = logLik(res), b = res$b, ci.lb = res$ci.lb, ci.ub = res$ci.ub)
+         }
+
       }
 
-   } else {
+      if (CI) {
 
-      if (inherits(res, "try-error")) {
+         if (inherits(res, "try-error")) {
 
-         if (verbose)
-            cat("tau2 =", formatC(val, digits=obj$digits, width=obj$digits+4, format="f"), " LRT - objective = NA", "\n")
+            if (verbose)
+               cat("tau2 =", formatC(val, digits=obj$digits, width=obj$digits+4, format="f"), " LRT - objective = NA", "\n")
 
-         stop()
+            stop()
 
-      } else {
+         } else {
 
-         difference <- -2*(logLik(res) - logLik(obj)) - objective
+            sav <- -2*(logLik(res) - logLik(obj)) - objective
 
-         if (verbose)
-            cat("tau2 =", formatC(val, digits=obj$digits, width=obj$digits+4, format="f"), " LRT - objective =", difference, "\n")
+            if (verbose)
+               cat("tau2 =", formatC(val, digits=obj$digits, width=obj$digits+4, format="f"), " LRT - objective =", sav, "\n")
 
-         return(difference)
+         }
 
       }
 
    }
+
+   if (subset) {
+
+      ### for subsetting, fit model to subset as specified in row 'val' of 'sel'
+
+      res <- try(suppressWarnings(rma.uni(obj$yi, obj$vi, weights=obj$weights, mods=obj$X, intercept=FALSE, method=obj$method, weighted=obj$weighted, knha=obj$knha, level=obj$level, control=obj$control, tau2=ifelse(obj$tau2.fix, obj$tau2, NA), subset=sel[val,])), silent=TRUE)
+
+      if (inherits(res, "try-error") || any(res$coef.na)) {
+         sav <- list(b = matrix(NA, nrow=nrow(obj$b), ncol=1), het = rep(NA, 5))
+      } else {
+         sav <- list(b = res$b, het = c(res$k, res$QE, res$I2, res$H2, res$tau2))
+      }
+
+   }
+
+   return(sav)
 
 }
 
-.profile.rma.mv <- function(val, obj, comp, sigma2.pos, tau2.pos, rho.pos, gamma2.pos, phi.pos, parallel=FALSE, CI=FALSE, objective, verbose=FALSE) {
+.profile.rma.mv <- function(val, obj, comp, sigma2.pos, tau2.pos, rho.pos, gamma2.pos, phi.pos, parallel=FALSE, profile=FALSE, CI=FALSE, subset=FALSE, objective, verbose=FALSE) {
 
    if (parallel == "snow")
       library(metafor)
 
-   ### set any fixed components to their values
-   sigma2.arg <- ifelse(obj$vc.fix$sigma2, obj$sigma2, NA)
-   tau2.arg   <- ifelse(obj$vc.fix$tau2, obj$tau2, NA)
-   rho.arg    <- ifelse(obj$vc.fix$rho, obj$rho, NA)
-   gamma2.arg <- ifelse(obj$vc.fix$gamma2, obj$gamma2, NA)
-   phi.arg    <- ifelse(obj$vc.fix$phi, obj$phi, NA)
+   if (profile || CI) {
 
-   if (comp == "sigma2")
-      sigma2.arg[sigma2.pos] <- val
+      ### for profiling and CI construction, fit model with variance component fixed to 'val'
 
-   if (comp == "tau2")
-      tau2.arg[tau2.pos] <- val
+      ### set any fixed components to their values
+      sigma2.arg <- ifelse(obj$vc.fix$sigma2, obj$sigma2, NA)
+      tau2.arg   <- ifelse(obj$vc.fix$tau2, obj$tau2, NA)
+      rho.arg    <- ifelse(obj$vc.fix$rho, obj$rho, NA)
+      gamma2.arg <- ifelse(obj$vc.fix$gamma2, obj$gamma2, NA)
+      phi.arg    <- ifelse(obj$vc.fix$phi, obj$phi, NA)
 
-   if (comp == "rho")
-      rho.arg[rho.pos] <- val
+      if (comp == "sigma2")
+         sigma2.arg[sigma2.pos] <- val
 
-   if (comp == "gamma2")
-      gamma2.arg[gamma2.pos] <- val
+      if (comp == "tau2")
+         tau2.arg[tau2.pos] <- val
 
-   if (comp == "phi")
-      phi.arg[phi.pos] <- val
+      if (comp == "rho")
+         rho.arg[rho.pos] <- val
 
-   res <- try(suppressWarnings(rma.mv(obj$yi, obj$V, obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, method=obj$method, tdist=obj$knha, level=obj$level, R=obj$R, Rscale=obj$Rscale, data=obj$mf.r, sigma2=sigma2.arg, tau2=tau2.arg, rho=rho.arg, gamma2=gamma2.arg, phi=phi.arg, control=obj$control)), silent=TRUE)
+      if (comp == "gamma2")
+         gamma2.arg[gamma2.pos] <- val
 
-   if (!CI) {
+      if (comp == "phi")
+         phi.arg[phi.pos] <- val
 
-      if (inherits(res, "try-error")) {
-         list(ll = NA, b = matrix(NA, nrow=nrow(obj$b), ncol=1), ci.lb = rep(NA, length(obj$ci.lb)), ci.ub = rep(NA, length(obj$ci.ub)))
-      } else {
-         list(ll = logLik(res), b = res$b, ci.lb = res$ci.lb, ci.ub = res$ci.ub)
+      res <- try(suppressWarnings(rma.mv(obj$yi, obj$V, obj$W, mods=obj$X, intercept=FALSE, random=obj$random, struct=obj$struct, method=obj$method, tdist=obj$knha, level=obj$level, R=obj$R, Rscale=obj$Rscale, data=obj$mf.r, sigma2=sigma2.arg, tau2=tau2.arg, rho=rho.arg, gamma2=gamma2.arg, phi=phi.arg, control=obj$control)), silent=TRUE)
+
+      if (profile) {
+
+         if (inherits(res, "try-error")) {
+            sav <- list(ll = NA, b = matrix(NA, nrow=nrow(obj$b), ncol=1), ci.lb = rep(NA, length(obj$ci.lb)), ci.ub = rep(NA, length(obj$ci.ub)))
+         } else {
+            sav <- list(ll = logLik(res), b = res$b, ci.lb = res$ci.lb, ci.ub = res$ci.ub)
+         }
+
       }
 
-   } else {
+      if (CI) {
 
-      if (inherits(res, "try-error")) {
+         if (inherits(res, "try-error")) {
 
-         if (verbose)
-            cat("vc =", formatC(val, digits=obj$digits, width=obj$digits+4, format="f"), " LRT - objective = NA", "\n")
+            if (verbose)
+               cat("vc =", formatC(val, digits=obj$digits, width=obj$digits+4, format="f"), " LRT - objective = NA", "\n")
 
-         stop()
+            stop()
 
-      } else {
+         } else {
 
-         difference <- -2*(logLik(res) - logLik(obj)) - objective
+            sav <- -2*(logLik(res) - logLik(obj)) - objective
 
-         if (verbose)
-            cat("vc =", formatC(val, digits=obj$digits, width=obj$digits+4, format="f"), " LRT - objective =", difference, "\n")
+            if (verbose)
+               cat("vc =", formatC(val, digits=obj$digits, width=obj$digits+4, format="f"), " LRT - objective =", sav, "\n")
 
-         return(difference)
+         }
 
       }
 
    }
+
+   return(sav)
+
+}
+
+.profile.rma.mh <- function(val, obj, parallel=FALSE, subset=FALSE, sel) {
+
+   if (parallel == "snow")
+      library(metafor)
+
+   if (subset) {
+
+      ### for subsetting, fit model to subset as specified in row 'val' of 'sel'
+
+      if (is.element(obj$measure, c("RR","OR","RD"))) {
+         res <- try(suppressWarnings(rma.mh(ai=obj$ai, bi=obj$bi, ci=obj$ci, di=obj$di, measure=obj$measure, add=obj$add, to=obj$to, drop00=obj$drop00, correct=obj$correct, subset=sel[val,])), silent=TRUE)
+      } else {
+         res <- try(suppressWarnings(rma.mh(x1i=obj$x1i, x2i=obj$x2i, t1i=obj$t1i, t2i=obj$t2i, measure=obj$measure, add=obj$add, to=obj$to, drop00=obj$drop00, correct=obj$correct, subset=sel[val,])), silent=TRUE)
+      }
+
+      if (inherits(res, "try-error")) {
+         sav <- list(b = NA, het = rep(NA, 5))
+      } else {
+         sav <- list(b = res$b, het = c(res$k, res$QE, res$I2, res$H2, res$tau2))
+      }
+
+   }
+
+   return(sav)
+
+}
+
+.profile.rma.peto <- function(val, obj, parallel=FALSE, subset=FALSE, sel) {
+
+   if (parallel == "snow")
+      library(metafor)
+
+   if (subset) {
+
+      ### for subsetting, fit model to subset as specified in row 'val' of 'sel'
+
+      res <- try(suppressWarnings(rma.peto(ai=obj$ai, bi=obj$bi, ci=obj$ci, di=obj$di, add=obj$add, to=obj$to, drop00=obj$drop00, subset=sel[val,])), silent=TRUE)
+
+      if (inherits(res, "try-error")) {
+         sav <- list(b = NA, het = rep(NA, 5))
+      } else {
+         sav <- list(b = res$b, het = c(res$k, res$QE, res$I2, res$H2, res$tau2))
+      }
+
+   }
+
+   return(sav)
 
 }
 

@@ -13,7 +13,7 @@ ranktest.rma <- function(x, ...) {
    yi <- x$yi
    vi <- x$vi
 
-   res <- rma(yi, vi, method="FE")
+   res <- rma.uni(yi, vi, method="FE")
    b   <- res$b
    vb  <- res$vb
 

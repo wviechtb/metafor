@@ -313,7 +313,7 @@ level=95, digits=4, verbose=FALSE) {
    Vi[Vi == 0] <- NA    ### set 0 sampling variances to NA
    QE <- max(0, sum((ai - Ei)^2 / Vi, na.rm=TRUE) - sum(ai - Ei)^2 / sum(Vi, na.rm=TRUE))
 
-   if (k.pos >= 1) {
+   if (k.pos > 1) {
       QEp <- pchisq(QE, df=k.yi-1, lower.tail=FALSE)
       I2 <- max(0, 100 * (QE - (k.yi-1)) / QE)
       H2 <- QE / (k.yi-1)

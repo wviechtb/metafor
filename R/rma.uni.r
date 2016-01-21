@@ -1244,7 +1244,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
 
       ### check if any marginal variances negative (only possible if user has changed tau2.min)
 
-      if (any(tau2 + vi < 0))
+      if (!is.na(tau2) && any(tau2 + vi < 0))
          stop("Some marginal variances are negative.")
 
       ### verbose output upon convergence for ML/REML/EB estimators
@@ -1512,9 +1512,9 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
 
       if (very.verbose) {
          message("Fitting RE model for R^2 computation ...")
-         res.RE <- try(rma(yi, vi, weights=weights, method=method, weighted=weighted, knha=knha, verbose=ifelse(verbose, TRUE, FALSE), control=con, digits=digits), silent=FALSE)
+         res.RE <- try(rma.uni(yi, vi, weights=weights, method=method, weighted=weighted, knha=knha, verbose=ifelse(verbose, TRUE, FALSE), control=con, digits=digits), silent=FALSE)
       } else {
-         res.RE <- try(suppressWarnings(rma(yi, vi, weights=weights, method=method, weighted=weighted, knha=knha, verbose=ifelse(verbose, TRUE, FALSE), control=con, digits=digits)), silent=FALSE)
+         res.RE <- try(suppressWarnings(rma.uni(yi, vi, weights=weights, method=method, weighted=weighted, knha=knha, verbose=ifelse(verbose, TRUE, FALSE), control=con, digits=digits)), silent=FALSE)
       }
 
       if (!inherits(res.RE, "try-error")) {

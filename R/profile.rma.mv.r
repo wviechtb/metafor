@@ -371,11 +371,11 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi, xlim, ylim, s
                x.control[[con.pos.phi.init]] <- res$phi
             }
 
-            res <- try(suppressWarnings(rma.mv(x$yi, x$V, x$W, mods=x$X, random=x$random, struct=x$struct, intercept=FALSE, method=x$method, tdist=x$knha, level=x$level, R=x$R, Rscale=x$Rscale, data=x$mf.r, sigma2=sigma2.arg, tau2=tau2.arg, rho=rho.arg, gamma2=gamma2.arg, phi=phi.arg, control=x.control)), silent=TRUE)
+            res <- try(suppressWarnings(rma.mv(x$yi, x$V, x$W, mods=x$X, intercept=FALSE, random=x$random, struct=x$struct, method=x$method, tdist=x$knha, level=x$level, R=x$R, Rscale=x$Rscale, data=x$mf.r, sigma2=sigma2.arg, tau2=tau2.arg, rho=rho.arg, gamma2=gamma2.arg, phi=phi.arg, control=x.control)), silent=TRUE)
 
          } else {
 
-            res <- try(suppressWarnings(rma.mv(x$yi, x$V, x$W, mods=x$X, random=x$random, struct=x$struct, intercept=FALSE, method=x$method, tdist=x$knha, level=x$level, R=x$R, Rscale=x$Rscale, data=x$mf.r, sigma2=sigma2.arg, tau2=tau2.arg, rho=rho.arg, gamma2=gamma2.arg, phi=phi.arg, control=x$control)), silent=TRUE)
+            res <- try(suppressWarnings(rma.mv(x$yi, x$V, x$W, mods=x$X, intercept=FALSE, random=x$random, struct=x$struct, method=x$method, tdist=x$knha, level=x$level, R=x$R, Rscale=x$Rscale, data=x$mf.r, sigma2=sigma2.arg, tau2=tau2.arg, rho=rho.arg, gamma2=gamma2.arg, phi=phi.arg, control=x$control)), silent=TRUE)
 
          }
 
@@ -408,15 +408,15 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi, xlim, ylim, s
          stop("Argument 'ncpus' must be >= 1.")
 
       if (parallel == "multicore")
-         res <- parallel::mclapply(vcs, .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, mc.cores=ncpus, parallel=parallel)
+         res <- parallel::mclapply(vcs, .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, mc.cores=ncpus, parallel=parallel, profile=TRUE)
 
       if (parallel == "snow") {
          if (is.null(cl)) {
             cl <- parallel::makePSOCKcluster(ncpus)
-            res <- parallel::parLapply(cl, vcs, .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel)
+            res <- parallel::parLapply(cl, vcs, .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE)
             parallel::stopCluster(cl)
          } else {
-            res <- parallel::parLapply(cl, vcs, .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel)
+            res <- parallel::parLapply(cl, vcs, .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE)
          }
       }
 
