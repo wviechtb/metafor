@@ -3,7 +3,7 @@ level=y$level, bonferroni=FALSE, reps=1000, smooth=TRUE, bass=0,
 label=FALSE, offset=0.3, ...) {
 
    if (!is.element("rma.uni", class(y)))
-      stop("Argument 'y' must be an y of class \"rma.uni\".")
+      stop("Argument 'y' must be an object of class \"rma.uni\".")
 
    na.act <- getOption("na.action")
 

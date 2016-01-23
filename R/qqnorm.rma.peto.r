@@ -1,7 +1,7 @@
 qqnorm.rma.peto <- function(y, type="rstandard", pch=19, label=FALSE, offset=0.3, ...) {
 
    if (!is.element("rma.peto", class(y)))
-      stop("Argument 'y' must be an y of class \"rma.peto\".")
+      stop("Argument 'y' must be an object of class \"rma.peto\".")
 
    x <- y
 
