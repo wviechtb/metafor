@@ -24,7 +24,7 @@ permutest(x, \dots)
 \details{
    For models without moderators, the permutation test is carried out by permuting the signs of the observed effect sizes or outcomes. The (two-sided) p-value of the permutation test is then equal to two times the proportion of times that the test statistic under the permuted data is as extreme or more extreme than under the actually observed data. See Follmann and Proschan (1999) for more details.
 
-   For models with moderators, the permutation test is carried out by permuting the rows of the model matrix (i.e., \eqn{\mathbf{X}}{X}). The (two-sided) p-value for a particular model coefficient is then equal to two times the proportion of times that the test statistic for the coefficient under the permuted data is as extreme or more extreme than under the actually observed data. Similarly, for the omnibus test, the p-value is the proportion of times that the test statistic for the omnibus test is as extreme or more extreme than the actually observed one. See Higgins and Thompson (2004) and Viechtbauer et al. (in press) for more details.
+   For models with moderators, the permutation test is carried out by permuting the rows of the model matrix (i.e., \eqn{\mathbf{X}}{X}). The (two-sided) p-value for a particular model coefficient is then equal to two times the proportion of times that the test statistic for the coefficient under the permuted data is as extreme or more extreme than under the actually observed data. Similarly, for the omnibus test, the p-value is the proportion of times that the test statistic for the omnibus test is as extreme or more extreme than the actually observed one. See Higgins and Thompson (2004) and Viechtbauer et al. (2015) for more details.
 
    If \code{exact=TRUE}, the function will try to carry out an exact permutation test. An exact permutation test requires fitting the model to each possible permutation once. However, the number of possible permutations increases rapidly with the number of outcomes/studies (i.e., \eqn{k}). For models without moderators, there are \eqn{2^k} possible permutations of the signs. Therefore, for \eqn{k=5}, there are 32 possible permutations, for \eqn{k=10}, there are already 1024, and for \eqn{k=20}, there are over one million permutations of the signs.
 
@@ -67,7 +67,7 @@ permutest(x, \dots)
 
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{http://www.jstatsoft.org/v36/i03/}.
 
-   Viechtbauer, W., López-López, J. A., Sánchez-Meca, J., & Marín-Martínez, F. (in press). A comparison of procedures to test for moderators in mixed-effects meta-regression models. \emph{Psychological Methods}.
+   Viechtbauer, W., López-López, J. A., Sánchez-Meca, J., & Marín-Martínez, F. (2015). A comparison of procedures to test for moderators in mixed-effects meta-regression models. \emph{Psychological Methods}, \bold{20}, 360--374.
 }
 \seealso{
    \code{\link{rma.uni}}, \code{\link{print.permutest.rma.uni}}
