@@ -1,11 +1,11 @@
-Changes in Version 1.9-9 (2016-01-21)
+Changes in Version 1.9-9 (2016-01-28)
 =====================================
 
    o started to use git as version control system, GitHub to host the
      repository (https://github.com/wviechtb/metafor) for the development
      version of the package, Travis CI as continuous integration service
      (https://travis-ci.org/wviechtb/metafor), and Codecov for automated
-     code coverage reporting of the package tests
+     code coverage reporting (https://codecov.io/github/wviechtb/metafor)
 
    o one can now pass an 'escalc' object directly to rma.uni(), which then
      tries to automatically determine the 'yi' and 'vi' variables in the
@@ -44,7 +44,10 @@ Changes in Version 1.9-9 (2016-01-21)
    o baujat.rma() gains argument 'symbol' for more control over the plotting
      symbol
 
-   o in the extreme case where all observed outcomes are exactly equal to
+   o added gosh.rma() and plot.gosh.rma() for creating GOSH (i.e., graphical
+     display of study heterogeneity) plots based on Olkin et al. (2012)
+
+   o in the (rare) case where all observed outcomes are exactly equal to
      each other, using knha=TRUE in rma() now leads to appropriate results
 
    o updated datasets so those containing precomputed effect size estimates

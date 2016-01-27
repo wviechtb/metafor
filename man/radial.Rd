@@ -14,21 +14,21 @@ galbraith(x, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma"}.}
-   \item{center}{logical to indicate whether the plot should be centered horizontally at the model estimate (default is \code{FALSE}).}
+   \item{center}{logical to indicate whether the plot should be centered horizontally at the model estimate (the default is \code{FALSE}).}
    \item{xlim}{x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.}
    \item{zlim}{z-axis limits. If unspecified, the function tries to set the z-axis limits to some sensible values (note that the z-axis limits are the actual vertical limit of the plotting region).}
    \item{xlab}{title for the x-axis. If unspecified, the function tries to set an appropriate axis title.}
    \item{zlab}{title for the z-axis. If unspecified, the function tries to set an appropriate axis title.}
    \item{atz}{position for the z-axis tick marks and labels. If unspecified, these values are set by the function.}
    \item{aty}{position for the y-axis tick marks and labels. If unspecified, these values are set by the function.}
-   \item{steps}{the number of tick marks for the y-axis (default is 7). Ignored when argument \code{aty} is used.}
+   \item{steps}{the number of tick marks for the y-axis (the default is 7). Ignored when argument \code{aty} is used.}
    \item{level}{numerical value between 0 and 100 specifying the level of the z-axis error region (the default is to take the value from the object).}
-   \item{digits}{integer specifying the number of decimal places to which the tick mark labels of the y-axis should be rounded (default is 2).}
+   \item{digits}{integer specifying the number of decimal places to which the tick mark labels of the y-axis should be rounded (the default is 2).}
    \item{back}{color of the z-axis error region. Set to \code{NA} to suppress shading of the region.}
    \item{transf}{optional argument specifying the name of a function that should be used to transform the y-axis labels (e.g., \code{transf=exp}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified via \code{transf}.}
    \item{pch}{plotting symbol. By default, a solid circle is used. See \code{\link{points}} for other options.}
-   \item{arc.res}{integer specifying the number of line segments to use when drawing the y-axis and confidence interval arcs (default is 100).}
+   \item{arc.res}{integer specifying the number of line segments to use when drawing the y-axis and confidence interval arcs (the default is 100).}
    \item{cex}{optional character and symbol expansion factor. If unspecified, the function tries to set this to a sensible value.}
    \item{\dots}{other arguments.}
 }

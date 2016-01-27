@@ -13,10 +13,10 @@ permutest(x, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma.uni"}.}
-   \item{exact}{logical indicating whether an exact permutation test should be carried out or not (default is \code{FALSE}). See \sQuote{Details}.}
-   \item{iter}{integer specifying the number of iterations for the permutation test when not doing an exact test (default is 1000 iterations).}
-   \item{progbar}{logical indicating whether a progress bar should be shown (default is \code{TRUE}).}
-   \item{retpermdist}{logical indicating whether the permutation distributions of the test statistics should be returned (default is \code{FALSE}).}
+   \item{exact}{logical indicating whether an exact permutation test should be carried out or not (the default is \code{FALSE}). See \sQuote{Details}.}
+   \item{iter}{integer specifying the number of iterations for the permutation test when not doing an exact test (the default is 1000 iterations).}
+   \item{progbar}{logical indicating whether a progress bar should be shown (the default is \code{TRUE}).}
+   \item{retpermdist}{logical indicating whether the permutation distributions of the test statistics should be returned (the default is \code{FALSE}).}
    \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is to take the value from the object).}
    \item{tol}{numerical tolerance used when making \code{>=} or \code{<=} comparisons between an observed test statistic and the test statistic under the permuted data. Defaults to \code{.Machine$double.eps^0.5} if unspecified. See \sQuote{Note}.}
    \item{\dots}{other arguments.}

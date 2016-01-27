@@ -44,7 +44,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \item{ni}{see below and the documentation of the \code{\link{escalc}} function for more details.}
    \item{mods}{optional argument to include one or more moderators in the model. A single moderator can be given as a vector of length \eqn{k} specifying the values of the moderator. Multiple moderators are specified by giving a matrix with \eqn{k} rows and as many columns as there are moderator variables. Alternatively, a model \code{\link{formula}} can be used to specify the model. See \sQuote{Details}.}
    \item{measure}{character string indicating the type of data supplied to the function. When \code{measure="GEN"} (default), the observed effect sizes or outcomes and corresponding sampling variances (or standard errors) should be supplied to the function via the \code{yi}, \code{vi}, and \code{sei} arguments (only one of the two, \code{vi} or \code{sei}, needs to be specified). Alternatively, one can set \code{measure} to one of the effect size or outcome measures described under the documentation for the \code{\link{escalc}} function and specify the needed data via the appropriate arguments.}
-   \item{intercept}{logical indicating whether an intercept term should be added to the model (default is \code{TRUE}).}
+   \item{intercept}{logical indicating whether an intercept term should be added to the model (the default is \code{TRUE}).}
    \item{data}{optional data frame containing the data supplied to the function.}
    \item{slab}{optional vector with labels for the \eqn{k} studies.}
    \item{subset}{optional vector indicating the subset of studies that should be used for the analysis. This can be a logical vector of length \eqn{k} or a numeric vector indicating the indices of the observations to include.}
@@ -54,12 +54,12 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \item{vtype}{see the documentation of the \code{\link{escalc}} function.}
    \item{method}{character string specifying whether a fixed- or a random/mixed-effects model should be fitted. A fixed-effects model (with or without moderators) is fitted when using \code{method="FE"}. Random/mixed-effects models are fitted by setting \code{method} equal to one of the following: \code{"DL"}, \code{"HE"}, \code{"SJ"}, \code{"ML"}, \code{"REML"}, \code{"EB"}, \code{"HS"}, or \code{"GENQ"}. Default is \code{"REML"}. See \sQuote{Details}.}
    \item{weighted}{logical indicating whether weighted (default) or unweighted estimation should be used to fit the model.}
-   \item{knha}{logical specifying whether the method by Knapp and Hartung (2003) should be used for adjusting test statistics and confidence intervals (default is \code{FALSE}). See \sQuote{Details}.}
-   \item{level}{numerical value between 0 and 100 specifying the confidence interval level (default is 95).}
-   \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (default is 4).}
+   \item{knha}{logical specifying whether the method by Knapp and Hartung (2003) should be used for adjusting test statistics and confidence intervals (the default is \code{FALSE}). See \sQuote{Details}.}
+   \item{level}{numerical value between 0 and 100 specifying the confidence interval level (the default is 95).}
+   \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (the default is 4).}
    \item{btt}{optional vector of indices specifying which coefficients to include in the omnibus test of moderators. See \sQuote{Details}.}
    \item{tau2}{optional numerical value to specify the amount of (residual) heterogeneity in a random- or mixed-effects model (instead of estimating it). Useful for sensitivity analyses (e.g., for plotting results as a function of \if{latex}{\eqn{\tau^2}}\if{html}{\eqn{\tau²}}\if{text}{\eqn{\tau^2}}). When unspecified, the value of \if{latex}{\eqn{\tau^2}}\if{html}{\eqn{\tau²}}\if{text}{\eqn{\tau^2}} is estimated from the data.}
-   \item{verbose}{logical indicating whether output should be generated on the progress of the model fitting (default is \code{FALSE}). Can also be an integer. Values > 1 generate more verbose output. See \sQuote{Note}.}
+   \item{verbose}{logical indicating whether output should be generated on the progress of the model fitting (the default is \code{FALSE}). Can also be an integer. Values > 1 generate more verbose output. See \sQuote{Note}.}
    \item{control}{optional list of control values for the iterative estimation algorithms. If unspecified, default values are defined inside the function. See \sQuote{Note}.}
 }
 \details{

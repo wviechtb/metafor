@@ -29,8 +29,8 @@ llplot(measure="OR", ai, bi, ci, di, n1i, n2i, data, subset, drop00=TRUE,
    \item{lty}{the line type (either a single value or a vector of length \eqn{k}). If unspecified, the function uses solid lines for tables where the MLE of the odds ratio is finite and dashed/dotted lines otherwise.}
    \item{lwd}{the line width (either a single value or a vector of length \eqn{k}). If unspecified, the function sets the widths according to the sampling variances (so that the line is thicker for more precise studies and vice-versa).}
    \item{col}{the line color (either a single value or a vector of length \eqn{k}). If unspecified, the function uses various gray shades according to the sampling variances (so that darher shades are used for more precise studies and vice-versa).}
-   \item{level}{numerical value between 0 and 100 specifying the plotting limits for each density line in terms of the confidence interval (default is 99.99).}
-   \item{refline}{value at which a vertical \sQuote{reference} line should be drawn (default is 0). The line can be suppressed by setting this argument to \code{NA}.}
+   \item{level}{numerical value between 0 and 100 specifying the plotting limits for each density line in terms of the confidence interval (the default is 99.99).}
+   \item{refline}{value at which a vertical \sQuote{reference} line should be drawn (the default is 0). The line can be suppressed by setting this argument to \code{NA}.}
    \item{\dots}{other arguments.}
 }
 \details{

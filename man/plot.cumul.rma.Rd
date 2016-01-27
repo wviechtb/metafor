@@ -22,7 +22,7 @@
    \item{targs}{optional arguments needed by the function specified via \code{transf} or \code{atransf}.}
    \item{digits}{integer specifying the number of decimal places to which the tick mark labels of the x- and y-axis should be rounded. Can also be a vector of two integers, the first specifying the number of decimal places for the x-axis, the second for the y-axis labels (e.g., c(2,3)). If unspecified, the function tries to set the argument to some sensible values.}
    \item{cols}{vector with two or more colors to be used for indicating the order of the cumulative results.}
-   \item{addgrid}{logical specifying whether a grid should be added to the plot (default is \code{TRUE}).}
+   \item{addgrid}{logical specifying whether a grid should be added to the plot (the default is \code{TRUE}).}
    \item{pch}{plotting symbol to use. By default, a solid circle is used. See \code{\link{points}} for other options.}
    \item{cex}{symbol expansion factor.}
    \item{lwd}{line width.}

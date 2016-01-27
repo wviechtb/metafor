@@ -18,7 +18,7 @@
    \item{out.names}{character string with four elements, specifying the variable names for the standard errors, test statistics, and lower/upper confidence interval bounds.}
    \item{var.names}{character string with two elements, specifying the variable names for the observed outcomes and the sampling variances (the default is to take the value from the object if possible).}
    \item{H0}{numeric value specifying the value of the outcome under the null hypothesis.}
-   \item{append}{logical indicating whether the data frame specified via the \code{object} argument should be returned together with the additional variables that are calculated by the \code{summary} function (default is \code{TRUE}).}
+   \item{append}{logical indicating whether the data frame specified via the \code{object} argument should be returned together with the additional variables that are calculated by the \code{summary} function (the default is \code{TRUE}).}
    \item{replace}{logical indicating whether existing values for \code{sei}, \code{zi}, \code{ci.lb}, and \code{ci.ub} in the data frame should be replaced or not. Only relevant when the data frame already contains these variables. If \code{replace=TRUE} (the default), all of the existing values will be overwritten. If \code{replace=FALSE}, only \code{NA} values will be replaced.}
    \item{level}{numerical value between 0 and 100 specifying the confidence interval level (the default is 95).}
    \item{transf}{optional argument specifying the name of a function that should be used to transform the observed outcomes and interval bounds (e.g., \code{transf=exp}). If unspecified, no transformation is used. Any additional arguments needed for the function specified here can be passed via \code{\ldots}.}

@@ -14,9 +14,9 @@
    \item{ci.lb}{vector with the corresponding lower confidence intervals bounds. Not needed if \code{vi} or \code{sei} is specified. See \sQuote{Details}.}
    \item{ci.ub}{vector with the corresponding upper confidence intervals bounds. Not needed if \code{vi} or \code{sei} is specified. See \sQuote{Details}.}
    \item{rows}{vector specifying the rows (or more generally, the horizontal positions) for plotting the polygons (defaults is \code{-1}). Can also be a single value specifying the row (horizontal position) of the first polygon (the remaining polygons are then plotted below this starting row).}
-   \item{level}{numerical value between 0 and 100 specifying the confidence interval level (default is 95).}
-   \item{annotate}{logical specifying whether annotations should be added to the plot for the polygons that are drawn (default is \code{TRUE}).}
-   \item{digits}{integer specifying the number of decimal places to which the annotations should be rounded (default is 2).}
+   \item{level}{numerical value between 0 and 100 specifying the confidence interval level (the default is 95).}
+   \item{annotate}{logical specifying whether annotations should be added to the plot for the polygons that are drawn (the default is \code{TRUE}).}
+   \item{digits}{integer specifying the number of decimal places to which the annotations should be rounded (the default is 2).}
    \item{width}{optional integer to manually adjust the width of the columns for the annotations.}
    \item{mlab}{optional character vector with the same length as \code{x} giving labels for the polygons that are drawn.}
    \item{transf}{optional argument specifying the name of a function that should be used to transform the \code{x} values and confidence interval bounds. If unspecified, no transformation is used.}

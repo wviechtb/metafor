@@ -102,15 +102,17 @@
 ### function to format p-values
 ### if showeq=FALSE, c(.001, .00001) becomes c("0.0010", "<.0001")
 ### if showeq=TRUE,  c(.001, .00001) becomes c("=0.0010", "<.0001")
+### if add0=FALSE, "<.0001"; if add0=TRUE, "<0.0001"
 
-.pval <- function(p, digits=4, showeq=FALSE, sep="") {
+.pval <- function(p, digits=4, showeq=FALSE, sep="", add0=FALSE) {
 
+   digits <- max(digits, 1)
    cutoff  <- paste(c(".", rep(0,digits-1),1), collapse="")
    ncutoff <- as.numeric(cutoff)
 
    ifelse(is.na(p), paste0(ifelse(showeq, "=", ""), sep, NA),
                     ifelse(p >= ncutoff, paste0(ifelse(showeq, "=", ""), sep, formatC(p, digits=digits, format="f")),
-                                         paste0("<", sep, cutoff)))
+                                         paste0("<", sep, ifelse(add0, "0", ""), cutoff)))
 
 }
 
@@ -484,7 +486,7 @@
 
 ### for profile(), confint(), and multicore processing
 
-.profile.rma.uni <- function(val, obj, parallel=FALSE, profile=FALSE, CI=FALSE, subset=FALSE, objective, sel, verbose=FALSE) {
+.profile.rma.uni <- function(val, obj, parallel=FALSE, profile=FALSE, CI=FALSE, subset=FALSE, objective, sel, FE=FALSE, verbose=FALSE) {
 
    if (parallel == "snow")
       library(metafor)
@@ -531,12 +533,44 @@
 
       ### for subsetting, fit model to subset as specified in row 'val' of 'sel'
 
-      res <- try(suppressWarnings(rma.uni(obj$yi, obj$vi, weights=obj$weights, mods=obj$X, intercept=FALSE, method=obj$method, weighted=obj$weighted, knha=obj$knha, level=obj$level, control=obj$control, tau2=ifelse(obj$tau2.fix, obj$tau2, NA), subset=sel[val,])), silent=TRUE)
+      if (FE) {
 
-      if (inherits(res, "try-error") || any(res$coef.na)) {
-         sav <- list(b = matrix(NA, nrow=nrow(obj$b), ncol=1), het = rep(NA, 5))
+         if (parallel == "snow" || parallel == "multicore") {
+            yi <- obj$yi[sel[val,]]
+            vi <- obj$vi[sel[val,]]
+         } else {
+            yi <- obj$yi[sel]
+            vi <- obj$vi[sel]
+         }
+         k <- length(yi)
+         wi <- 1/vi
+         est <- sum(wi*yi)/sum(wi)
+         if (k > 1) {
+            Q <- sum(wi * (yi - est)^2)
+            I2 <- max(0, 100 * (Q - (k-1)) / Q)
+            H2 <- Q / (k-1)
+         } else {
+            Q <- 0
+            I2 <- 0
+            H2 <- 1
+         }
+         tau2 <- 0
+         if (parallel == "snow" || parallel == "multicore") {
+            sav <- list(b=est, het = c(k=k, QE=Q, I2=I2, H2=H2, tau2=tau2))
+         } else {
+            sav <- list(b=est, k=k, QE=Q, I2=I2, H2=H2, tau2=tau2)
+         }
+
       } else {
-         sav <- list(b = res$b, het = c(res$k, res$QE, res$I2, res$H2, res$tau2))
+
+         res <- try(suppressWarnings(rma.uni(obj$yi, obj$vi, weights=obj$weights, mods=obj$X, intercept=FALSE, method=obj$method, weighted=obj$weighted, knha=obj$knha, level=obj$level, control=obj$control, tau2=ifelse(obj$tau2.fix, obj$tau2, NA), subset=sel[val,])), silent=TRUE)
+
+         if (inherits(res, "try-error") || any(res$coef.na)) {
+            sav <- list(b = matrix(NA, nrow=nrow(obj$b), ncol=1), het = rep(NA, 5))
+         } else {
+            sav <- list(b = res$b, het = c(res$k, res$QE, res$I2, res$H2, res$tau2))
+         }
+
       }
 
    }

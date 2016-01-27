@@ -86,8 +86,8 @@ cex, cex.lab, cex.axis, ...) {
    k <- length(yi)
 
    if (x$slab.null) {
-      slab    <- paste("+ Study ", x$slab)
-      slab[1] <- paste("Study ", x$slab[1])
+      slab    <- paste("+ Study", x$slab)
+      slab[1] <- paste("Study", x$slab[1])
    } else {
       slab    <- paste("+", x$slab)
       slab[1] <- paste(x$slab[1])

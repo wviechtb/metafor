@@ -57,11 +57,11 @@ escalc(measure, formula, \dots)
    \item{to}{a character string indicating when the values under \code{add} should be added (either \code{"all"}, \code{"only0"}, \code{"if0all"}, or \code{"none"}). See \sQuote{Details}.}
    \item{drop00}{logical indicating whether studies with no cases/events (or only cases) in both groups should be dropped when calculating the observed outcomes of the individual studies. See \sQuote{Details}.}
    \item{vtype}{a character string indicating the type of sampling variances to calculate (either \code{"LS"}, \code{"UB"}, \code{"HO"}, \code{"ST"}, or \code{vtype="CS"}). See \sQuote{Details}.}
-   \item{var.names}{a character string with two elements, specifying the name of the variable for the observed outcomes and the name of the variable for the corresponding sampling variances (default is \code{"yi"} and \code{"vi"}).}
+   \item{var.names}{a character string with two elements, specifying the name of the variable for the observed outcomes and the name of the variable for the corresponding sampling variances (the default is \code{"yi"} and \code{"vi"}).}
    \item{add.measure}{logical indicating whether a variable should be added to the data frame (with default name \code{"measure"}) that indicates the type of outcome measure computed. When using this option, \code{var.names} can have a third element to change this variable name.}
-   \item{append}{logical indicating whether the data frame specified via the \code{data} argument (if one has been specified) should be returned together with the observed outcomes and corresponding sampling variances (default is \code{TRUE}).}
+   \item{append}{logical indicating whether the data frame specified via the \code{data} argument (if one has been specified) should be returned together with the observed outcomes and corresponding sampling variances (the default is \code{TRUE}).}
    \item{replace}{logical indicating whether existing values for \code{yi} and \code{vi} in the data frame should be replaced or not. Only relevant when \code{append=TRUE} and the data frame already contains the \code{yi} and \code{vi} variables. If \code{replace=TRUE} (the default), all of the existing values will be overwritten. If \code{replace=FALSE}, only \code{NA} values will be replaced. See \sQuote{Value} section below for more details.}
-   \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (default is 4). Note that the values are stored without rounding in the returned object.}
+   \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (the default is 4). Note that the values are stored without rounding in the returned object.}
    \item{\dots}{other arguments.}
 }
 \details{

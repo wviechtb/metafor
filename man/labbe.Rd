@@ -22,7 +22,7 @@ labbe(x, \dots)
    \item{targs}{optional arguments needed by the function specified under \code{transf}.}
    \item{pch}{plotting symbol to use for the outcomes. By default, a filled circle is used. Can also be a vector of values. See \code{\link{points}} for other options.}
    \item{psize}{optional vector with point sizes for the outcomes. If unspecified, the point sizes are drawn proportional to the precision of the estimates.}
-   \item{bg}{color to use for filling the plotting symbol (default is \code{"gray"}). Can also be a vector of values. Set to \code{NA} to make the plotting symbols transparent.}
+   \item{bg}{color to use for filling the plotting symbol (the default is \code{"gray"}). Can also be a vector of values. Set to \code{NA} to make the plotting symbols transparent.}
    \item{\dots}{other arguments.}
 }
 \details{

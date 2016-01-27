@@ -9,13 +9,13 @@
 \bold{author}      \tab \code{character} \tab (first) author of study \cr
 \bold{year}        \tab \code{numeric}   \tab publication year \cr
 \bold{scq}         \tab \code{numeric}   \tab standard care quality \cr
-\bold{ni}          \tab \code{numeric}   \tab number of patients in standard care group \cr
-\bold{xi}          \tab \code{numeric}   \tab number of patients with undetectable viral load in standard care group \cr
-\bold{mi}          \tab \code{numeric}   \tab number of patients with detectable viral load in standard care group \cr
-\bold{ethnicity}   \tab \code{numeric}   \tab dominant ethnicity of the patients in standard care group \cr
-\bold{patients}    \tab \code{numeric}   \tab inclusion of patients continuing or starting (a new) treatment \cr
-\bold{select}      \tab \code{numeric}   \tab baseline selection of patients with adherence problems or no selection \cr
-\bold{sens}        \tab \code{numeric}   \tab sensitivity of viral load assessments (<400 vs. >=400 copies/ml).
+\bold{ni}          \tab \code{numeric}   \tab number of patients in the standard care group \cr
+\bold{xi}          \tab \code{numeric}   \tab number of patients with an undetectable viral load in standard care group \cr
+\bold{mi}          \tab \code{numeric}   \tab number of patients with a detectable viral load in standard care group \cr
+\bold{ethnicity}   \tab \code{character} \tab dominant ethnicity of the patients in the standard care group \cr
+\bold{patients}    \tab \code{character} \tab inclusion of patients continuing or starting (a new) treatment \cr
+\bold{select}      \tab \code{character} \tab baseline selection of patients with adherence problems or no selection \cr
+\bold{sens}        \tab \code{character} \tab sensitivity of viral load assessments (<400 vs. >=400 copies/ml).
 }
 }
 \details{

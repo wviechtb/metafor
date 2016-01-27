@@ -19,13 +19,13 @@
    \item{phi}{integer specifying for which \eqn{\phi} value the likelihood should be profiled (only relevant for \code{"rma.mv"} objects).}
    \item{xlim}{optional vector specifying the lower and upper limit of the parameter over which the profiling should be done. If unspecified, the function tries to set these limits automatically.}
    \item{ylim}{optional vector specifying the y-axis limits when plotting the profiled likelihood. If unspecified, the function tries to set these limits automatically.}
-   \item{steps}{number of points between \code{xlim[1]} and \code{xlim[2]} (inclusive) for which the likelihood should be evaluated (default is 20).}
+   \item{steps}{number of points between \code{xlim[1]} and \code{xlim[2]} (inclusive) for which the likelihood should be evaluated (the default is 20).}
    \item{startmethod}{method for picking starting values for the optimization. Default is \code{"init"}, which starts each model fit at the default initial values. The alternative is \code{"prev"}, which starts at the estimates from the previous model fit (usually faster, but also less stable for ill-defined models).}
-   \item{progbar}{logical indicating whether a progress bar should be shown (default is \code{TRUE}).}
-   \item{parallel}{character string indicating whether parallel processing should be used (the default is \code{"no"}). For parallel processing, set to either \code{"snow"} or \code{"multicore"}.}
+   \item{progbar}{logical indicating whether a progress bar should be shown (the default is \code{TRUE}).}
+   \item{parallel}{character string indicating whether parallel processing should be used (the default is \code{"no"}). For parallel processing, set to either \code{"snow"} or \code{"multicore"}. See \sQuote{Details}.}
    \item{ncpus}{integer specifying the number of processes to be used in the parallel operation.}
    \item{cl}{optional snow cluster to use if \code{parallel="snow"}. If not supplied, a cluster on the local machine is created for the duration of the call.}
-   \item{plot}{logical indicating whether the profile plot should be drawn after profiling is finished (default is \code{TRUE}).}
+   \item{plot}{logical indicating whether the profile plot should be drawn after profiling is finished (the default is \code{TRUE}).}
    \item{pch}{plotting symbol to use. By default, a filled circle is used. See \code{\link{points}} for other options.}
    \item{\dots}{other arguments.}
 }

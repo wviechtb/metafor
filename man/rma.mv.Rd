@@ -15,14 +15,14 @@ rma.mv(yi, V, W, mods, random, struct="CS", intercept=TRUE,
    \item{mods}{optional argument to include one or more moderators in the model. A single moderator can be given as a vector of length \eqn{k} specifying the values of the moderator. Multiple moderators are specified by giving a matrix with \eqn{k} rows and as many columns as there are moderator variables. Alternatively, a model \code{\link{formula}} can be used to specify the model. See \sQuote{Details}.}
    \item{random}{either a single one-sided formula or list of one-sided formulas to specify the random-effects structure of the model. See \sQuote{Details}.}
    \item{struct}{character string to specify the variance structure of an \code{~ inner | outer} formula in the \code{random} argument. Either \code{"CS"} for compound symmetry, \code{"HCS"} for heteroscedastic compound symmetry, \code{"UN"} for an unstructured variance-covariance matrix, \code{"ID"} for a scaled identity matrix, \code{"DIAG"} for a diagonal matrix, \code{"AR"} for an AR(1) autoregressive structure, or \code{"HAR"} for a heteroscedastic AR(1) autoregressive structure. See \sQuote{Details}.}
-   \item{intercept}{logical indicating whether an intercept term should be added to the model (default is \code{TRUE}).}
+   \item{intercept}{logical indicating whether an intercept term should be added to the model (the default is \code{TRUE}).}
    \item{data}{optional data frame containing the data supplied to the function.}
    \item{slab}{optional vector with labels for the \eqn{k} outcomes/studies.}
    \item{subset}{optional vector indicating the subset of outcomes/studies that should be used for the analysis. This can be a logical vector of length \eqn{k} or a numeric vector indicating the indices of the observations to include.}
    \item{method}{character string specifying whether the model should be fitted via maximum-likelihood (\code{"ML"}) or via restricted maximum-likelihood (\code{"REML"}) estimation. Default is \code{"REML"}.}
    \item{tdist}{logical specifying whether test statistics and confidence intervals should be based on the normal (when \code{FALSE}, the default) or the t-distribution (when \code{TRUE}). See \sQuote{Details}.}
-   \item{level}{numerical value between 0 and 100 specifying the confidence interval level (default is 95).}
-   \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (default is 4).}
+   \item{level}{numerical value between 0 and 100 specifying the confidence interval level (the default is 95).}
+   \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (the default is 4).}
    \item{btt}{optional vector of indices specifying which coefficients to include in the omnibus test of moderators. See \sQuote{Details}.}
    \item{R}{an optional named list of known correlation matrices corresponding to (some of) the components specified via the \code{random} argument. See \sQuote{Details}.}
    \item{Rscale}{character string, integer, or logical indicating how matrices specified via the \code{R} argument should be scaled. See \sQuote{Details}.}
@@ -32,7 +32,7 @@ rma.mv(yi, V, W, mods, random, struct="CS", intercept=TRUE,
    \item{gamma2}{as \code{tau2} argument, but for a second \code{~ inner | outer} formula specified in the \code{random} argument. See \sQuote{Details}.}
    \item{phi}{as \code{rho} argument, but for a second \code{~ inner | outer} formula specified in the \code{random} argument. See \sQuote{Details}.}
    \item{sparse}{logical indicating whether the function should use sparse matrix objects to the extent possible (can speed up model fitting substantially for certain models). See \sQuote{Note}.}
-   \item{verbose}{logical indicating whether output should be generated on the progress of the model fitting (default is \code{FALSE}). Can also be an integer. Values > 1 generate more verbose output. See \sQuote{Note}.}
+   \item{verbose}{logical indicating whether output should be generated on the progress of the model fitting (the default is \code{FALSE}). Can also be an integer. Values > 1 generate more verbose output. See \sQuote{Note}.}
    \item{control}{optional list of control values for the estimation algorithms. If unspecified, default values are defined inside the function. See \sQuote{Note}.}
 }
 \details{

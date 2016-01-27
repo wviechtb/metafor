@@ -26,7 +26,7 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
    \item{ni}{see below and the documentation of the \code{\link{escalc}} function for more details.}
    \item{mods}{optional argument to include one or more moderators in the model. A single moderator can be given as a vector of length \eqn{k} specifying the values of the moderator. Multiple moderators are specified by giving a matrix with \eqn{k} rows and as many columns as there are moderator variables. Alternatively, a model \code{\link{formula}} can be used to specify the model. See \sQuote{Details}.}
    \item{measure}{character string indicating the outcome measure to use for the meta-analysis. Possible options are the odds ratio (\code{"OR"}), the incidence rate ratio (\code{"IRR"}), the logit transformed proportion (\code{"PLO"}), or the log transformed incidence rate (\code{"IRLN"}).}
-   \item{intercept}{logical indicating whether an intercept term should be added to the model (default is \code{TRUE}).}
+   \item{intercept}{logical indicating whether an intercept term should be added to the model (the default is \code{TRUE}).}
    \item{data}{optional data frame containing the data supplied to the function.}
    \item{slab}{optional vector with labels for the \eqn{k} studies.}
    \item{subset}{optional vector indicating the subset of studies that should be used for the analysis. This can be a logical vector of length \eqn{k} or a numeric vector indicating the indices of the observations to include.}
@@ -37,11 +37,11 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
    \item{model}{character string specifying the general model type to use for the analysis (either \code{"UM.FS"} (the default), \code{"UM.RS"}, \code{"CM.EL"}, or \code{"CM.AL"}). See \sQuote{Details}.}
    \item{method}{character string specifying whether a fixed- or a random/mixed-effects model should be fitted. A fixed-effects model (with or without moderators) is fitted when using \code{method="FE"}. Random/mixed-effects models are fitted by setting \code{method="ML"} (the default). See \sQuote{Details}.}
    \item{tdist}{logical specifying whether test statistics and confidence intervals should be based on the normal (when \code{FALSE}, the default) or the t-distribution (when \code{TRUE}). See \sQuote{Details}.}
-   \item{level}{numerical value between 0 and 100 specifying the confidence interval level (default is 95).}
-   \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (default is 4).}
+   \item{level}{numerical value between 0 and 100 specifying the confidence interval level (the default is 95).}
+   \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (the default is 4).}
    \item{btt}{optional vector of indices specifying which coefficients to include in the omnibus test of moderators. See \sQuote{Details}.}
-   \item{nAGQ}{positive integer specifying the number of points per axis for evaluating the adaptive Gauss-Hermite approximation to the log-likelihood. This defaults to 7. Setting this to 1 corresponds to the Laplacian approximation. See \sQuote{Note}.}
-   \item{verbose}{logical indicating whether output should be generated on the progress of the model fitting (default is \code{FALSE}). Can also be an integer. Values > 1 generate more verbose output. See \sQuote{Note}.}
+   \item{nAGQ}{positive integer specifying the number of points per axis for evaluating the adaptive Gauss-Hermite approximation to the log-likelihood. The default is 7. Setting this to 1 corresponds to the Laplacian approximation. See \sQuote{Note}.}
+   \item{verbose}{logical indicating whether output should be generated on the progress of the model fitting (the default is \code{FALSE}). Can also be an integer. Values > 1 generate more verbose output. See \sQuote{Note}.}
    \item{control}{optional list of control values for the estimation algorithms. If unspecified, default values are defined inside the function. See \sQuote{Note}.}
 }
 \details{
@@ -149,7 +149,7 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
    Various control parameters can be adjusted via the \code{control} argument:
    \itemize{
       \item \code{optimizer} is set by default to \code{\link[stats:optim]{"optim"}}, but can be set to \code{\link[stats:nlminb]{"nlminb"}} or one of the optimizers from the \pkg{minqa} package (i.e., \code{\link[minqa:bobyqa]{"bobyqa"}}, \code{\link[minqa:newuoa]{"newuoa"}}, or \code{\link[minqa:uobyqa]{"uobyqa"}}),
-      \item \code{optmethod} is used to set the \code{method} argument for \code{\link{optim}} (default is \code{"BFGS"}),
+      \item \code{optmethod} is used to set the \code{method} argument for \code{\link{optim}} (the default is \code{"BFGS"}),
       \item \code{optCtrl} is a list of named arguments to be passed on to the \code{control} argument of the chosen optimizer,
       \item \code{glmCtrl} is a list of named arguments to be passed on to the \code{control} argument of the \code{\link{glm}} function,
       \item \code{glmerCtrl} is a list of named arguments to be passed on to the \code{control} argument of the \code{\link[lme4]{glmer}} function, and

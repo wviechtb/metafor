@@ -13,16 +13,16 @@
 }
 \arguments{
    \item{x}{an object of class \code{"cumul.rma"}.}
-   \item{annotate}{logical specifying whether annotations should be added to the plot (default is \code{TRUE}).}
+   \item{annotate}{logical specifying whether annotations should be added to the plot (the default is \code{TRUE}).}
    \item{xlim}{horizontal limits of the plot region. If unspecified, the function tries to set the horizontal plot limits to some sensible values.}
    \item{alim}{the actual x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.}
    \item{clim}{limits for the confidence intervals. If unspecified, no limits are used.}
    \item{ylim}{the y limits of the plot. If unspecified, the function tries to set the y-axis limits to some sensible values.}
    \item{at}{position of the x-axis tick marks and corresponding labels. If unspecified, the function tries to set the tick mark positions/labels to some sensible values.}
-   \item{steps}{the number of tick marks for the x-axis (default is 5). Ignored when the user specifies the positions via the \code{at} argument.}
+   \item{steps}{the number of tick marks for the x-axis (the default is 5). Ignored when the user specifies the positions via the \code{at} argument.}
    \item{level}{numerical value between 0 and 100 specifying the confidence interval level (the default is to take the value from the object).}
-   \item{refline}{value at which a vertical \sQuote{reference} line should be drawn (default is 0). The line can be suppressed by setting this argument to \code{NA}.}
-   \item{digits}{integer specifying the number of decimal places to which the tick mark labels of the x-axis and the annotations should be rounded (default is 2). Can also be a vector of two integers, the first specifying the number of decimal places for the annotations, the second for the x-axis labels.}
+   \item{refline}{value at which a vertical \sQuote{reference} line should be drawn (the default is 0). The line can be suppressed by setting this argument to \code{NA}.}
+   \item{digits}{integer specifying the number of decimal places to which the tick mark labels of the x-axis and the annotations should be rounded (the default is 2). Can also be a vector of two integers, the first specifying the number of decimal places for the annotations, the second for the x-axis labels.}
    \item{width}{optional integer to manually adjust the width of the columns for the annotations.}
    \item{xlab}{title for the x-axis. If unspecified, the function tries to set an appropriate axis title.}
    \item{ilab}{optional vector or matrix of character strings providing additional information about the studies.}

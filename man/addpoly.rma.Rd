@@ -9,10 +9,10 @@
 }
 \arguments{
    \item{x}{an object of class \code{"rma"}.}
-   \item{row}{value specifying the row (or more generally, the horizontal position) for plotting the polygon (default is \code{-2}).}
+   \item{row}{value specifying the row (or more generally, the horizontal position) for plotting the polygon (the default is \code{-2}).}
    \item{level}{numerical value between 0 and 100 specifying the confidence interval level (the default is to take the value from the object).}
-   \item{annotate}{logical specifying whether annotations for the summary estimate should be added to the plot (default is \code{TRUE}).}
-   \item{digits}{integer specifying the number of decimal places to which the annotations should be rounded (default is 2).}
+   \item{annotate}{logical specifying whether annotations for the summary estimate should be added to the plot (the default is \code{TRUE}).}
+   \item{digits}{integer specifying the number of decimal places to which the annotations should be rounded (the default is 2).}
    \item{width}{optional integer to manually adjust the width of the columns for the annotations.}
    \item{mlab}{optional character string giving a label for the summary estimate polygon. If unspecified, the function sets a default label.}
    \item{transf}{optional argument specifying the name of a function that should be used to transform the summary estimate and confidence interval bound. If unspecified, no transformation is used.}

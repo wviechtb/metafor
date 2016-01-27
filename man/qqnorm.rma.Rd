@@ -18,14 +18,14 @@
    \item{y}{an object of class \code{"rma.uni"}, \code{"rma.mh"}, or \code{"rma.peto"}. The method is not yet implemented for objects of class \code{"rma.glmm"} or \code{"rma.mv"}.}
    \item{type}{either \code{"rstandard"} (default) or \code{"rstudent"} indicating whether standardized residuals or studentized deleted residuals should be used in creating the plot. See \sQuote{Details}.}
    \item{pch}{plotting symbol to use for the observed effect sizes or outcomes. By default, a solid circle is used. See \code{\link{points}} for other options.}
-   \item{envelope}{logical indicating whether a pseudo confidence envelope should be simulated and added to the plot (default is \code{TRUE})). Only for objects of class \code{"rma.uni"}. See \sQuote{Details}.}
+   \item{envelope}{logical indicating whether a pseudo confidence envelope should be simulated and added to the plot (the default is \code{TRUE})). Only for objects of class \code{"rma.uni"}. See \sQuote{Details}.}
    \item{level}{numerical value between 0 and 100 specifying the level of the pseudo confidence envelope (the default is to take the value from the object).}
    \item{bonferroni}{logical indicating whether the bounds of the envelope should be Bonferroni corrected.}
-   \item{reps}{numerical value indicating the number of iterations to use for simulating the pseudo confidence envelope (default is 1000).}
-   \item{smooth}{logical indicating whether the results from the simulation should be smoothed (default is \code{TRUE}).}
-   \item{bass}{numerical value that controls the degree of smoothing (default is 0).}
-   \item{label}{argument to control the labeling of the points (default is \code{FALSE}). See \sQuote{Details}.}
-   \item{offset}{argument to control the distance between the points and the corresponding labels (default is 0.3).}
+   \item{reps}{numerical value indicating the number of iterations to use for simulating the pseudo confidence envelope (the default is 1000).}
+   \item{smooth}{logical indicating whether the results from the simulation should be smoothed (the default is \code{TRUE}).}
+   \item{bass}{numerical value that controls the degree of smoothing (the default is 0).}
+   \item{label}{argument to control the labeling of the points (the default is \code{FALSE}). See \sQuote{Details}.}
+   \item{offset}{argument to control the distance between the points and the corresponding labels (the default is 0.3).}
    \item{\dots}{other arguments.}
 }
 \details{

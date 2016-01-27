@@ -128,7 +128,7 @@ cex, cex.lab, cex.axis, ...) {
       if (!is.null(attr(yi, "slab"))) {         ### even when subsetting eventually
          slab <- attr(yi, "slab")               ### check if slab info can be found in slab attribute of yi
       } else {
-         slab <- paste("Study ", seq_len(k))
+         slab <- paste("Study", seq_len(k))
       }
    }
 

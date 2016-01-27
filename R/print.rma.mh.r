@@ -54,15 +54,18 @@ print.rma.mh <- function(x, digits, showfit=FALSE, ...) {
       cat("\n")
 
       if (x$measure == "OR") {
-         if (is.na(x$MH)) {
+         MH <- ifelse(is.na(x$MH), NA, formatC(x$MH, digits=digits, format="f"))
+         TA <- ifelse(is.na(x$TA), NA, formatC(x$TA, digits=digits, format="f"))
+         width <- max(nchar(MH), nchar(TA))
+         if (is.na(MH)) {
             cat("Cochran-Mantel-Haenszel Test:    test value not computable for these data \n", sep="")
          } else {
-            cat("Cochran-Mantel-Haenszel Test:    CMH = ", formatC(x$MH, digits, format="f"), ", df = 1,", paste(rep(" ", nchar(x$k.pos)-1, collapse="")), " p-val ", .pval(x$MHp, digits=digits, showeq=TRUE, sep=" "), "\n", sep="")
+            cat("Cochran-Mantel-Haenszel Test:    CMH = ", formatC(MH, width=width), ", df = 1,", paste(rep(" ", nchar(x$k.pos)-1, collapse="")), " p-val ", .pval(x$MHp, digits=digits, showeq=TRUE, sep=" ", add0=TRUE), "\n", sep="")
          }
-         if (is.na(x$TAp)) {
+         if (is.na(TA)) {
             cat("Tarone's Test for Heterogeneity: test value not computable for these data \n\n", sep="")
          } else {
-            cat("Tarone's Test for Heterogeneity: X^2 = ", formatC(x$TA, digits, format="f"), ", df = ", x$k.pos-1, ", p-val ", .pval(x$TAp, digits=digits, showeq=TRUE, sep=" "), "\n\n", sep="")
+            cat("Tarone's Test for Heterogeneity: X^2 = ", formatC(TA, width=width), ", df = ", x$k.pos-1, ", p-val ", .pval(x$TAp, digits=digits, showeq=TRUE, sep=" ", add0=TRUE), "\n\n", sep="")
          }
       }
 

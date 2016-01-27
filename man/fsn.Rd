@@ -14,7 +14,7 @@ fsn(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, subset, digits=4)
    \item{alpha}{target alpha level to use for the Rosenthal and Rosenberg methods (.05 by default).}
    \item{target}{target average effect size to use for the Orwin method. If undefined, then the target average effect size will be equal to the observed average effect size divided by 2.}
    \item{subset}{optional vector indicating the subset of studies that should be used for the calculation. This can be a logical vector of length \eqn{k} or a numeric vector indicating the indices of the observations to include.}
-   \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (default is 4).}
+   \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (the default is 4).}
 }
 \details{
    The function can be used in conjunction with any of the usual effect size or outcome measures used in meta-analyses (e.g., log odds ratios, log relative risks, risk differences, mean differences, standardized mean differences, raw correlation coefficients, correlation coefficients transformed with Fisher's r-to-z transformation, and so on). Simply specify the observed outcomes via the \code{yi} argument and the corresponding sampling variances via the \code{vi} argument (instead of specifying \code{vi}, one can specify the standard errors (the square root of the sampling variances) via the \code{sei} argument). The \code{\link{escalc}} function can be used to compute a wide variety of effect size and outcome measures (and the corresponding sampling variances) based on summary statistics.
