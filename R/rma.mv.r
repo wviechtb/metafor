@@ -1878,6 +1878,11 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
    if (withH && any(con$phi.init <= -1 | con$phi.init >= 1))
       stop("Values of 'phi.init' must be in (-1,1).")
 
+   ### in case user manually sets con$cholesky and specifies only a single value
+
+   if (length(con$cholesky) == 1)
+      con$cholesky <- rep(con$cholesky, 2)
+
    ### use of Cholesky factorization only applicable for models with "UN" structure ("UNHO" may also be possible, but that still requires a fix; see below)
 
    if (!withG) ### in case user sets cholesky=TRUE and struct="UN" even though there is no 1st 'inner | outer' term
