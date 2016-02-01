@@ -1,6 +1,6 @@
 profile.rma.uni <- function(fitted, xlim, ylim, steps=20, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, plot=TRUE, pch=19, ...) {
 
-   if (!is.element("rma.uni", class(fitted)))
+   if (!inherits(fitted, "rma.uni"))
       stop("Argument 'fitted' must be an object of class \"rma.uni\".")
 
    if (steps < 2)

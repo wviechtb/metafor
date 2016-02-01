@@ -2,7 +2,7 @@ plot.infl.rma.uni <- function(x, plotinf=TRUE, plotdfbs=FALSE, dfbsnew=FALSE, lo
 layout, slab.style=1, las=0, pch=21, bg="black", bg.infl="red",
 col.na="lightgray", ...) {
 
-   if (class(x) != "infl.rma.uni")
+   if (!inherits(x, "infl.rma.uni"))
       stop("Argument 'x' must be an object of class \"infl.rma.uni\".")
 
    na.act <- getOption("na.action")

@@ -126,7 +126,7 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
 
    is.formula <- FALSE
 
-   if (class(yi) == "formula") {
+   if (inherits(yi, "formula")) {
       options(na.action = "na.pass")                   ### set na.action to na.pass, so that NAs are not filtered out (we'll do that later)
       mods <- model.matrix(yi, data=data)              ### extract model matrix (now mods is no longer a formula, so part further below is skipped)
       attr(mods, "assign") <- NULL                     ### strip assign attribute (not needed at the moment)
@@ -209,7 +209,7 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
 
    ### force V to be sparse when sparse=TRUE (and V is not yet sparse)
 
-   if (sparse && class(V)=="matrix")
+   if (sparse && inherits(V, "matrix"))
       V <- Matrix(V, sparse=TRUE)
 
    ### process W if it was specified
@@ -258,7 +258,7 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
 
       ### force A to be sparse when sparse=TRUE (and A is not yet sparse)
 
-      if (sparse && class(A)=="matrix")
+      if (sparse && inherits(A, "matrix"))
          A <- Matrix(A, sparse=TRUE)
 
    } else {
@@ -294,7 +294,7 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
    ### convert mods formula to X matrix and set intercept equal to FALSE
    ### skipped if formula has already been specified via yi argument, since mods is then no longer a formula
 
-   if (class(mods) == "formula") {
+   if (inherits(mods, "formula")) {
       options(na.action = "na.pass")        ### set na.action to na.pass, so that NAs are not filtered out (we'll do that later)
       mods <- model.matrix(mods, data=data) ### extract model matrix
       attr(mods, "assign") <- NULL          ### strip assign attribute (not needed at the moment)

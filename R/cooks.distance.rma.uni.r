@@ -1,6 +1,6 @@
 cooks.distance.rma.uni <- function(model, ...) {
 
-   if (!is.element("rma.uni", class(model)))
+   if (!inherits(model, "rma.uni"))
       stop("Argument 'model' must be an object of class \"rma.uni\".")
 
    na.act <- getOption("na.action")

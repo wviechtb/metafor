@@ -2,10 +2,10 @@ ranktest.rma <- function(x, ...) {
 
    #########################################################################
 
-   if (!is.element("rma", class(x)))
+   if (!inherits(x, "rma"))
       stop("Argument 'x' must be an object of class \"rma\".")
 
-   if (is.element("robust.rma", class(x)))
+   if (inherits(x, "robust.rma"))
       stop("Function not applicable to objects of class \"robust.rma\".")
 
    #########################################################################
@@ -25,6 +25,7 @@ ranktest.rma <- function(x, ...) {
    tau  <- res$estimate
 
    res <- list(tau=tau, pval=pval, digits=x$digits)
+
    class(res) <- "ranktest.rma"
    return(res)
 

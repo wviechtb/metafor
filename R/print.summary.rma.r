@@ -1,6 +1,6 @@
 print.summary.rma <- function(x, digits, showfit=TRUE, signif.stars=getOption("show.signif.stars"), signif.legend=signif.stars, ...) {
 
-   if (!is.element("summary.rma", class(x)))
+   if (!inherits(x, "summary.rma"))
       stop("Argument 'x' must be an object of class \"summary.rma\".")
 
    if (missing(digits))

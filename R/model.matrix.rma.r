@@ -1,6 +1,6 @@
 model.matrix.rma <- function(object, ...) {
 
-   if (!is.element("rma", class(object)))
+   if (!inherits(object, "rma"))
       stop("Argument 'object' must be an object of class \"rma\".")
 
    na.act <- getOption("na.action")

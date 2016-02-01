@@ -2,13 +2,13 @@
 
 anova.rma <- function(object, object2, btt, L, digits, ...) {
 
-   if (!is.element("rma", class(object)))
+   if (!inherits(object, "rma"))
       stop("Argument 'object' must be an object of class \"rma\".")
 
-   if (any(is.element(c("rma.mh","rma.peto"), class(object))))
+   if (inherits(object, c("rma.mh", "rma.peto")))
       stop("Function not applicable for objects of class \"rma.mh\" or \"rma.peto\".")
 
-   if (is.element("rma.glmm", class(object)))
+   if (inherits(object, "rma.glmm"))
       stop("Method not yet implemented for objects of class \"rma.glmm\". Sorry!")
 
    if (missing(digits))
@@ -139,13 +139,13 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
       ### if 'object' and 'object2' have been specified, can use function to
       ### do model comparisons via a likelihood ratio test (and fit indices)
 
-      if (!is.element("rma", class(object2)))
+      if (!inherits(object2, "rma"))
          stop("Argument 'object2' must be an object of class \"rma\".")
 
-      if (any(is.element(c("rma.mh","rma.peto"), class(object2))))
+      if (inherits(object2, c("rma.mh","rma.peto")))
          stop("Function not applicable for objects of class \"rma.mh\" or \"rma.peto\".")
 
-      if (is.element("rma.glmm", class(object2)))
+      if (inherits(object2, "rma.glmm"))
          stop("Method not yet implemented for objects of class \"rma.glmm\". Sorry!")
 
       if (!identical(class(object), class(object2)))
@@ -177,12 +177,12 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
 
       ### check if models are based on the same data (TODO: also check for same weights?)
 
-      if (is.element("rma.uni", class(object))) {
+      if (inherits(object, "rma.uni")) {
          if (!(identical(as.vector(m.f$yi), as.vector(m.r$yi)) && identical(as.vector(m.f$vi), as.vector(m.r$vi)))) ### as.vector() to strip attributes/names
             stop("Observed outcomes and/or sampling variances not equal in the full and reduced model.")
       }
 
-      if (is.element("rma.mv", class(object))) {
+      if (inherits(object, "rma.mv")) {
          if (!(identical(as.vector(m.f$yi), as.vector(m.r$yi)) && identical(m.f$V, m.r$V))) ### as.vector() to strip attributes/names
             stop("Observed outcomes and/or sampling variances/covariances not equal in the full and reduced model.")
       }
@@ -236,7 +236,7 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
       ### for 'rma.uni' objects, calculate pseudo R^2 value (based on the
       ### proportional reduction in tau^2) comparing full vs. reduced model
 
-      if (is.element("rma.uni", class(object))) {
+      if (inherits(object, "rma.uni")) {
          if (m.f$method == "FE" || identical(m.r$tau2,0)) {
             R2 <- NA
          } else {
@@ -248,7 +248,7 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
 
       ### for 'rma.uni' objects, extract tau^2 estimates
 
-      if (is.element("rma.uni", class(object))) {
+      if (inherits(object, "rma.uni")) {
          tau2.f <- m.f$tau2
          tau2.r <- m.r$tau2
       } else {

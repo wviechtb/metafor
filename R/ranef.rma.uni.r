@@ -2,7 +2,7 @@ ranef.rma.uni <- function(object, level, digits, transf, targs, ...) {
 
    x <- object
 
-   if (!is.element("rma.uni", class(x)))
+   if (!inherits(x, "rma.uni"))
       stop("Argument 'x' must be an object of class \"rma.uni\".")
 
    na.act <- getOption("na.action")

@@ -1,6 +1,6 @@
 confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, gamma2, phi, digits, transf, targs, verbose=FALSE, control, ...) {
 
-   if (!is.element("rma.mv", class(object)))
+   if (!inherits(object, "rma.mv"))
       stop("Argument 'object' must be an object of class \"rma.mv\".")
 
    x <- object

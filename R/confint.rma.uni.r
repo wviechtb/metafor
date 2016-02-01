@@ -11,7 +11,7 @@
 
 confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digits, transf, targs, verbose=FALSE, control, ...) {
 
-   if (!is.element("rma.uni", class(object)))
+   if (!inherits(object, "rma.uni"))
       stop("Argument 'object' must be an object of class \"rma.uni\".")
 
    x <- object

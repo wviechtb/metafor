@@ -200,7 +200,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
 
    ### convert mods formula to X matrix and set intercept equal to FALSE
 
-   is.formula <- class(mods) == "formula"
+   is.formula <- inherits(mods, "formula")
    if (is.formula) {
       options(na.action = "na.pass")        ### set na.action to na.pass, so that NAs are not filtered out (we'll do that later)
       mods <- model.matrix(mods, data=data) ### extract model matrix
@@ -1270,7 +1270,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
                h.C      <- hessian[-seq_len(p),seq_len(p),drop=FALSE]  ### lower left part of hessian
                h.D      <- hessian[-seq_len(p),-seq_len(p),drop=FALSE] ### lower right part of hessian (of which we need the inverse)
                chol.h.A <- try(chol(h.A), silent=!verbose)             ### see if h.A can be inverted with chol()
-               if (class(chol.h.A) == "try-error") {
+               if (inherits(chol.h.A, "try-error")) {
                   warning("Cannot invert Hessian for saturated model.")
                } else {
                   Ivb2.QE  <- h.D-h.C%*%chol2inv(chol.h.A)%*%h.B       ### inverse of the inverse of the lower right part
@@ -1441,10 +1441,10 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
                b <- cbind(res.FE$par[seq_len(p)])
                #chol.h <- try(chol(res.FE$hessian[seq_len(p),seq_len(p)]), silent=!verbose) ### see if Hessian can be inverted with chol()
                chol.h <- try(chol(h.FE[seq_len(p),seq_len(p)]), silent=!verbose) ### see if Hessian can be inverted with chol()
-               if (class(chol.h) == "try-error") {
+               if (inherits(chol.h, "try-error")) {
                   warning("Choleski factorization of Hessian failed. Trying inversion via QR decomposition.")
                   vb <- try(qr.solve(h.FE[seq_len(p),seq_len(p)]), silent=!verbose) ### see if Hessian can be inverted with qr.solve()
-                  if (class(vb) == "try-error")
+                  if (inherits(vb, "try-error"))
                      stop("Cannot invert Hessian for ML model.")
                } else {
                   vb <- chol2inv(chol.h)
@@ -1464,10 +1464,10 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
          if (method == "ML") {
             b <- cbind(res.ML$par[seq_len(p)])
             chol.h <- try(chol(h.ML), silent=!verbose) ### see if Hessian can be inverted with chol()
-            if (class(chol.h) == "try-error") {
+            if (inherits(chol.h, "try-error")) {
                warning("Choleski factorization of Hessian failed. Trying inversion via QR decomposition.")
                vb.f <- try(qr.solve(h.ML), silent=!verbose) ### see if Hessian can be inverted with qr.solve()
-               if (class(vb.f) == "try-error")
+               if (inherits(vb.f, "try-error"))
                   stop("Cannot invert Hessian for ML model.")
             } else {
                vb.f <- chol2inv(chol.h)
@@ -1634,7 +1634,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
 
          chol.h <- try(chol(vb2.QE), silent=!verbose) ### see if Hessian can be inverted with chol()
 
-         if (class(chol.h) == "try-error") {
+         if (inherits(chol.h, "try-error")) {
             warning("Cannot invert Hessian for saturated model.")
             QE.Wld <- NA
          } else {
@@ -1677,7 +1677,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
 
    chol.h <- try(chol(vb[btt,btt]), silent=!verbose) ### see if Hessian can be inverted with chol()
 
-   if (class(chol.h) == "try-error")
+   if (inherits(chol.h, "try-error"))
       stop("Cannot invert Hessian for QM test.")
 
    QM <- c(t(b)[btt] %*% chol2inv(chol.h) %*% b[btt])

@@ -1,6 +1,6 @@
 hc.rma.uni <- function(object, digits, transf, targs, control, ...) {
 
-   if (!is.element("rma.uni", class(object)))
+   if (!inherits(object, "rma.uni"))
       stop("Argument 'object' must be an object of class \"rma.uni\".")
 
    x <- object

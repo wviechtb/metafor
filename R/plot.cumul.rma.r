@@ -3,7 +3,7 @@ digits, cols=c("gray90","gray10"), addgrid=TRUE, pch=19, cex=1, lwd=2, ...) {
 
    #########################################################################
 
-   if (!is.element("cumul.rma", class(x)))
+   if (!inherits(x, "cumul.rma"))
       stop("Argument 'x' must be an object of class \"cumul.rma\".")
 
    if (is.null(x$tau2))

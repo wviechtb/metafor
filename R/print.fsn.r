@@ -1,6 +1,6 @@
 print.fsn <- function(x, digits, ...) {
 
-   if (class(x) != "fsn")
+   if (!inherits(x, "fsn"))
       stop("Argument 'x' must be an object of class \"fsn\".")
 
    if (missing(digits))

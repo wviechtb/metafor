@@ -2,7 +2,7 @@ trimfill.rma.uni <- function(x, side, estimator="L0", maxiter=100, verbose=FALSE
 
    #########################################################################
 
-   if (!is.element("rma.uni", class(x)))
+   if (!inherits(x, "rma.uni"))
       stop("Argument 'x' must be an object of class \"rma.uni\".")
 
    if (!x$int.only)

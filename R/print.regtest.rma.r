@@ -1,6 +1,6 @@
 print.regtest.rma <- function(x, digits, ret.fit, ...) {
 
-   if (class(x) != "regtest.rma")
+   if (!inherits(x, "regtest.rma"))
       stop("Argument 'x' must be an object of class \"regtest.rma\".")
 
    if (missing(digits))

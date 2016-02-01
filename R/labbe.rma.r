@@ -1,10 +1,10 @@
 labbe.rma <- function(x, xlim, ylim, xlab, ylab,
 add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", ...) {
 
-   if (!is.element("rma", class(x)))
+   if (!inherits(x, "rma"))
       stop("Argument 'x' must be an object of class \"rma\".")
 
-   if (is.element("robust.rma", class(x)))
+   if (inherits(x, "robust.rma"))
       stop("Function not applicable to objects of class \"robust.rma\".")
 
    if (!x$int.only)

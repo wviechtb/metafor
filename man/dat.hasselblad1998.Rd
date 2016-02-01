@@ -35,14 +35,15 @@ data(dat.hasselblad1998)
 ### calculate log odds for each study arm
 dat <- escalc(measure="PLO", xi=xi, ni=ni, add=1/2, to="all", data=dat.hasselblad1998)
 
-### create network graph (using 'plyr' and 'igraph' packages if installed)
-if (require(plyr) && require(igraph)) {
-   pairs <- do.call(rbind, sapply(split(dat$trt, dat$study), function(x) t(combn(x,2))))
-   pairs <- ddply(data.frame(pairs), .(X1, X2), count)
-   g <- graph.edgelist(as.matrix(pairs[,1:2]), directed=FALSE)
-   plot(g, edge.curved=FALSE, edge.width=pairs$freq, vertex.label.dist=.7,
-   vertex.label=c("Individual\nCounseling", "Group\nCounseling", "No Contact", "Self-Help"))
-}
+### create network graph ('plyr' and 'igraph' packages must be installed)
+\dontrun{
+require(plyr)
+require(igraph)
+pairs <- do.call(rbind, sapply(split(dat$trt, dat$study), function(x) t(combn(x,2))))
+pairs <- ddply(data.frame(pairs), .(X1, X2), count)
+g <- graph.edgelist(as.matrix(pairs[,1:2]), directed=FALSE)
+plot(g, edge.curved=FALSE, edge.width=pairs$freq, vertex.label.dist=.7,
+vertex.label=c("Individual\nCounseling", "Group\nCounseling", "No Contact", "Self-Help"))}
 
 ### convert trt variable to factor with desired ordering of levels
 dat$trt <- factor(dat$trt, levels=c("no_contact", "self_help", "ind_counseling", "grp_counseling"))

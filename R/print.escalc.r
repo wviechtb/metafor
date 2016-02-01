@@ -1,6 +1,6 @@
 print.escalc <- function(x, digits, ...) {
 
-   if (!is.element("escalc", class(x)))
+   if (!inherits(x, "escalc"))
       stop("Argument 'x' must be an object of class \"escalc\".")
 
    attr(x, "class") <- NULL

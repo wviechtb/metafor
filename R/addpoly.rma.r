@@ -6,7 +6,7 @@ efac=1, col, border, cex, ...) {
 
    #########################################################################
 
-   if (!is.element("rma", class(x)))
+   if (!inherits(x, "rma"))
       stop("Argument 'x' must be an object of class \"rma\".")
 
    if (!x$int.only)

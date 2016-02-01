@@ -2,16 +2,16 @@ regtest.rma <- function(x, model="rma", predictor="sei", ret.fit=FALSE, ...) {
 
    #########################################################################
 
-   if (!is.element("rma", class(x)))
+   if (!inherits(x, "rma"))
       stop("Argument 'x' must be an object of class \"rma\".")
 
-   if (is.element("robust.rma", class(x)))
+   if (inherits(x, "robust.rma"))
       stop("Function not applicable to objects of class \"robust.rma\".")
 
-   if (is.element("rma.glmm", class(x)))
+   if (inherits(x, "rma.glmm"))
       stop("Method not yet implemented for objects of class \"rma.glmm\". Sorry!")
 
-   if (is.element("rma.mv", class(x)))
+   if (inherits(x, "rma.mv"))
       stop("Method not yet implemented for objects of class \"rma.mv\". Sorry!")
 
    model <- match.arg(model, c("lm", "rma"))
@@ -78,6 +78,7 @@ regtest.rma <- function(x, model="rma", predictor="sei", ret.fit=FALSE, ...) {
    }
 
    res <- list(model=model, predictor=predictor, zval=zval, pval=pval, dfs=dfs, method=x$method, digits=x$digits, ret.fit=ret.fit, fit=fit)
+
    class(res) <- "regtest.rma"
    return(res)
 

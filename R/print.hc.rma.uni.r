@@ -1,6 +1,6 @@
 print.hc.rma.uni <- function(x, digits, ...) {
 
-   if (!is.element("hc.rma.uni", class(x)))
+   if (!inherits(x, "hc.rma.uni"))
       stop("Argument 'x' must be an object of class \"hc.rma.uni\".")
 
    if (missing(digits))

@@ -1,6 +1,6 @@
 rstandard.rma.mv <- function(model, digits, ...) {
 
-   if (!is.element("rma.mv", class(model)))
+   if (!inherits(model, "rma.mv"))
       stop("Argument 'model' must be an object of class \"rma.mv\".")
 
    na.act <- getOption("na.action")

@@ -1,6 +1,6 @@
 print.permutest.rma.uni <- function(x, digits, signif.stars=getOption("show.signif.stars"), signif.legend=signif.stars, ...) {
 
-   if (!is.element("permutest.rma.uni", class(x)))
+   if (!inherits(x, "permutest.rma.uni"))
       stop("Argument 'x' must be an object of class \"permutest.rma.uni\".")
 
    if (missing(digits))

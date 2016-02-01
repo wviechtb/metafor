@@ -1,12 +1,12 @@
 print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.signif.stars"), signif.legend=signif.stars, ...) {
 
-   if (!is.element("rma.uni", class(x)))
+   if (!inherits(x, "rma.uni"))
       stop("Argument 'x' must be an object of class \"rma.uni\".")
 
    if (missing(digits))
       digits <- x$digits
 
-   if (is.element("rma.uni.trimfill", class(x))) {
+   if (inherits(x, "rma.uni.trimfill")) {
       cat("\nEstimated number of missing studies on the ", x$side, " side: ", x$k0, " (SE = ", ifelse(is.na(x$se.k0), NA, formatC(x$se.k0, digits=digits, format="f")), ")\n", sep="")
       if (x$k0.est == "R0")
          cat("Test of H0: no missing studies on the ", x$side, " side: p-val ", .pval(x$p.k0, digits=digits, showeq=TRUE, sep=" "), "\n", sep="")

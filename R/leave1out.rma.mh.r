@@ -1,6 +1,6 @@
 leave1out.rma.mh <- function(x, digits, transf, targs, ...) {
 
-   if (!is.element("rma.mh", class(x)))
+   if (!inherits(x, "rma.mh"))
       stop("Argument 'x' must be an object of class \"rma.mh\".")
 
    na.act <- getOption("na.action")

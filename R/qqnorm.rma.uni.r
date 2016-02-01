@@ -2,7 +2,7 @@ qqnorm.rma.uni <- function(y, type="rstandard", pch=19, envelope=TRUE,
 level=y$level, bonferroni=FALSE, reps=1000, smooth=TRUE, bass=0,
 label=FALSE, offset=0.3, ...) {
 
-   if (!is.element("rma.uni", class(y)))
+   if (!inherits(y, "rma.uni"))
       stop("Argument 'y' must be an object of class \"rma.uni\".")
 
    na.act <- getOption("na.action")

@@ -1,7 +1,7 @@
 summary.escalc <- function(object, out.names=c("sei","zi","ci.lb","ci.ub"), var.names,
 H0=0, append=TRUE, replace=TRUE, level=95, digits, transf, ...) {
 
-   if (!is.element("escalc", class(object)))
+   if (!inherits(object, "escalc"))
       stop("Argument 'object' must be an object of class \"escalc\".")
 
    x <- object

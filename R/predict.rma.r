@@ -5,7 +5,7 @@ level, digits, transf, targs, ...) {
 
    #########################################################################
 
-   if (!is.element("rma", class(object)))
+   if (!inherits(object, "rma"))
       stop("Argument 'object' must be an object of class \"rma\".")
 
    na.act <- getOption("na.action")
@@ -60,7 +60,7 @@ level, digits, transf, targs, ...) {
 
       ### if no new moderator values are specified
 
-      if (!is.element("rma.mv", class(object))) {
+      if (!inherits(object, "rma.mv")) {
 
          ### for rma.uni, rma.mh, rma.peto, and rma.glmm objects
 
@@ -171,7 +171,7 @@ level, digits, transf, targs, ...) {
 
    ### for rma.mv models with multiple tau^2 values, must use tau2.levels argument when using newmods to obtain credibility intervals
 
-   if (is.element("rma.mv", class(object)) && x$withG) {
+   if (inherits(object, "rma.mv") && x$withG) {
 
       if (x$tau2s > 1) {
 
@@ -212,7 +212,7 @@ level, digits, transf, targs, ...) {
 
    ### for rma.mv models with multiple gamma^2 values, must use gamma.levels argument when using newmods to obtain credibility intervals
 
-   if (is.element("rma.mv", class(object)) && x$withH) {
+   if (inherits(object, "rma.mv") && x$withH) {
 
       if (x$gamma2s > 1) {
 
@@ -272,7 +272,7 @@ level, digits, transf, targs, ...) {
 
    ### credibility/prediction intervals
 
-   if (!is.element("rma.mv", class(object))) {
+   if (!inherits(object, "rma.mv")) {
 
       ### for rma.uni, rma.mh, rma.peto, and rma.glmm objects (in rma.mh and rma.peto, tau2 = 0 by default and stored as such)
 
@@ -438,12 +438,12 @@ level, digits, transf, targs, ...) {
 
    ### add tau2.levels values to list
 
-   if (is.element("rma.mv", class(object)) && x$withG && x$tau2s > 1)
+   if (inherits(object, "rma.mv") && x$withG && x$tau2s > 1)
       out$tau2.level <- tau2.levels
 
    ### add gamma2.levels values to list
 
-   if (is.element("rma.mv", class(object)) && x$withH && x$gamma2s > 1)
+   if (inherits(object, "rma.mv") && x$withH && x$gamma2s > 1)
       out$gamma2.level <- gamma2.levels
 
    ### add X matrix to list

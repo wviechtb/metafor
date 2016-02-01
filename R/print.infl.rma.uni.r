@@ -1,6 +1,6 @@
 print.infl.rma.uni <- function(x, digits, ...) {
 
-   if (class(x) != "infl.rma.uni")
+   if (!inherits(x, "infl.rma.uni"))
       stop("Argument 'x' must be an object of class \"infl.rma.uni\".")
 
    na.act <- getOption("na.action")

@@ -1,6 +1,6 @@
 robust.rma.mv <- function(x, cluster, adjust=TRUE, digits, ...) {
 
-   if (!is.element("rma.mv", class(x)))
+   if (!inherits(x, "rma.mv"))
       stop("Argument 'x' must be an object of class \"rma.mv\".")
 
    if (missing(cluster))
@@ -136,6 +136,7 @@ robust.rma.mv <- function(x, cluster, adjust=TRUE, digits, ...) {
                withG=x$withG, withH=x$withH, tau2s=x$tau2s, gamma2s=x$gamma2s, mf.g.f=x$mf.g.f, mf.h.f=x$mf.h.f,
                g.levels.f=x$g.levels.f, h.levels.f=x$h.levels.f, sigma2=x$sigma2, tau2=x$tau2, gamma2=x$gamma2, slab=x$slab, slab.null=x$slab.null, not.na=x$not.na,
                fit.stats=x$fit.stats, k.eff=x$k.eff, p.eff=x$p.eff, parms=x$parms, measure=x$measure)
+
    class(res) <- c("robust.rma", "rma", "rma.mv")
    return(res)
 

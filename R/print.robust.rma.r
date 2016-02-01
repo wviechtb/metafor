@@ -1,6 +1,6 @@
 print.robust.rma <- function(x, digits, signif.stars=getOption("show.signif.stars"), signif.legend=signif.stars, ...) {
 
-   if (!is.element("robust.rma", class(x)))
+   if (!inherits(x, "robust.rma"))
       stop("Argument 'x' must be an object of class \"robust.rma\".")
 
    if (missing(digits))

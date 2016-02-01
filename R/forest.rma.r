@@ -9,7 +9,7 @@ cex, cex.lab, cex.axis, ...) {
 
    #########################################################################
 
-   if (!is.element("rma", class(x)))
+   if (!inherits(x, "rma"))
       stop("Argument 'x' must be an object of class \"rma\".")
 
    na.act <- getOption("na.action")
@@ -101,7 +101,7 @@ cex, cex.lab, cex.axis, ...) {
    measure <- x$measure
 
    ### TODO: remove this when there is a weights() function for 'rma.glmm' objects
-   if (is.element("rma.glmm", class(x)) && showweights)
+   if (inherits(x, "rma.glmm") && showweights)
       stop("Option 'showweights=TRUE' currently not possible for 'rma.glmm' objects. Sorry!")
 
    #########################################################################
@@ -164,7 +164,7 @@ cex, cex.lab, cex.axis, ...) {
          }
       }
 
-      if (is.element("rma.glmm", class(x))) {   ### TODO: change this when there is a weights() function for 'rma.glmm' objects
+      if (inherits(x, "rma.glmm")) {            ### TODO: change this when there is a weights() function for 'rma.glmm' objects
          weights <- NULL
       } else {
          weights <- weights(x)                  ### these are the weights used for the actual model fitting
@@ -532,7 +532,7 @@ cex, cex.lab, cex.axis, ...) {
 
    if (addfit && x$int.only) {
 
-      if (is.element("rma.mv", class(x)) && x$withG && x$tau2s > 1) {
+      if (inherits(x, "rma.mv") && x$withG && x$tau2s > 1) {
 
          if (!is.logical(addcred)) {
             ### for multiple tau^2 (and gamma^2) values, need to specify level(s) of the inner factor(s) to compute the credibility interval

@@ -9,7 +9,7 @@ cex, cex.lab, cex.axis, ...) {
 
    na.act <- getOption("na.action")
 
-   if (!is.element("cumul.rma", class(x)))
+   if (!inherits(x, "cumul.rma"))
       stop("Argument 'x' must be an object of class \"cumul.rma\".")
 
    if (missing(transf))

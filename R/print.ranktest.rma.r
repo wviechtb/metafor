@@ -1,6 +1,6 @@
 print.ranktest.rma <- function(x, digits, ...) {
 
-   if (class(x) != "ranktest.rma")
+   if (!inherits(x, "ranktest.rma"))
       stop("Argument 'x' must be an object of class \"ranktest.rma\".")
 
    if (missing(digits))

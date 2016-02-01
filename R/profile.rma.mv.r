@@ -1,6 +1,6 @@
 profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi, xlim, ylim, steps=20, startmethod="init", progbar=TRUE, parallel="no", ncpus=1, cl=NULL, plot=TRUE, pch=19, ...) {
 
-   if (!is.element("rma.mv", class(fitted)))
+   if (!inherits(fitted, "rma.mv"))
       stop("Argument 'fitted' must be an object of class \"rma.mv\".")
 
    if (steps < 2)

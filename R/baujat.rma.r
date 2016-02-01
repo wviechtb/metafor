@@ -1,12 +1,12 @@
 baujat.rma <- function(x, xlim, ylim, xlab, ylab, cex, symbol, grid=TRUE, ...) {
 
-   if (!is.element("rma", class(x)))
+   if (!inherits(x, "rma"))
       stop("Argument 'x' must be an object of class \"rma\".")
 
-   if (is.element("rma.glmm", class(x)))
+   if (inherits(x, "rma.glmm"))
       stop("Method not yet implemented for objects of class \"rma.glmm\". Sorry!")
 
-   if (is.element("rma.mv", class(x)))
+   if (inherits(x, "rma.mv"))
       stop("Method not yet implemented for objects of class \"rma.mv\". Sorry!")
 
    na.act <- getOption("na.action")
@@ -33,10 +33,10 @@ baujat.rma <- function(x, xlim, ylim, xlab, ylab, cex, symbol, grid=TRUE, ...) {
 
    for (i in seq_len(x$k.f)[x$not.na]) {
 
-      if (is.element("rma.uni", class(x)))
+      if (inherits(x, "rma.uni"))
          res <- try(suppressWarnings(rma.uni(x$yi.f, x$vi.f, weights=x$weights.f, mods=x$X.f, intercept=FALSE, method=x$method, weighted=x$weighted, knha=x$knha, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, subset=-i)), silent=TRUE)
 
-      if (is.element("rma.mh", class(x))) {
+      if (inherits(x, "rma.mh")) {
          if (is.element(x$measure, c("RR","OR","RD"))) {
             res <- try(suppressWarnings(rma.mh(ai=x$ai.f, bi=x$bi.f, ci=x$ci.f, di=x$di.f, measure=x$measure, add=x$add, to=x$to, drop00=x$drop00, correct=x$correct, subset=-i)), silent=TRUE)
          } else {
@@ -44,7 +44,7 @@ baujat.rma <- function(x, xlim, ylim, xlab, ylab, cex, symbol, grid=TRUE, ...) {
          }
       }
 
-      if (is.element("rma.peto", class(x)))
+      if (inherits(x, "rma.peto"))
          res <- try(suppressWarnings(rma.peto(ai=x$ai.f, bi=x$bi.f, ci=x$ci.f, di=x$di.f, add=x$add, to=x$to, drop00=x$drop00, subset=-i)), silent=TRUE)
 
       if (inherits(res, "try-error"))

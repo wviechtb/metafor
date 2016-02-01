@@ -4,10 +4,10 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
 
    #########################################################################
 
-   if (!is.element("rma", class(x)))
+   if (!inherits(x, "rma"))
       stop("Argument 'x' must be an object of class \"rma\".")
 
-   if (is.element("robust.rma", class(x)))
+   if (inherits(x, "robust.rma"))
       stop("Function not applicable to objects of class \"robust.rma\".")
 
    if (missing(transf))

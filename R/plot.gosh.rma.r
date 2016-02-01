@@ -1,6 +1,6 @@
 plot.gosh.rma <- function(x, het="I2", pch=19, cex, out, col, alpha, breaks, adjust, lwd, labels, ...) {
 
-   if (!is.element("gosh.rma", class(x)))
+   if (!inherits(x, "gosh.rma"))
       stop("Argument 'x' must be an object of class \"gosh.rma\".")
 
    het <- match.arg(het, c("QE", "I2", "H2", "tau2"))

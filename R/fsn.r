@@ -125,6 +125,7 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, subset, 
    #########################################################################
 
    res <- list(type=type, fsnum=fsnum, alpha=alpha, pval=pval, meanes=meanes, target=target, digits=digits)
+
    class(res) <- "fsn"
    return(res)
 

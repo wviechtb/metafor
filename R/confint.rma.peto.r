@@ -1,6 +1,6 @@
 confint.rma.peto <- function(object, parm, level, digits, transf, targs, ...) {
 
-   if (!is.element("rma.peto", class(object)))
+   if (!inherits(object, "rma.peto"))
       stop("Argument 'object' must be an object of class \"rma.peto\".")
 
    x <- object

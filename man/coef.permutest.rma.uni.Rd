@@ -43,7 +43,8 @@ res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg,
            mods = ~ ablat + year, data=dat.bcg)
 
 ### permutation test
-\dontrun{pres <- permutest(res)}
-\dontrun{coef(pres)}
+\dontrun{
+pres <- permutest(res)
+coef(pres)}
 }
 \keyword{models}

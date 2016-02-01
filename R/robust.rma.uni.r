@@ -1,6 +1,6 @@
 robust.rma.uni <- function(x, cluster, adjust=TRUE, digits, ...) {
 
-   if (!is.element("rma.uni", class(x)))
+   if (!inherits(x, "rma.uni"))
       stop("Argument 'x' must be an object of class \"rma.uni\".")
 
    if (missing(cluster))
@@ -138,6 +138,7 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, digits, ...) {
                int.only=x$int.only, int.incl=x$int.incl, knha=TRUE, btt=x$btt, intercept=x$intercept, digits=digits, level=x$level, tau2=x$tau2, slab=x$slab,
                slab.null=x$slab.null, not.na=x$not.na,
                fit.stats=x$fit.stats, k.eff=x$k.eff, p.eff=x$p.eff, parms=x$parms, measure=x$measure)
+
    class(res) <- c("robust.rma", "rma", "rma.uni")
    return(res)
 

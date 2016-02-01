@@ -1,6 +1,6 @@
 print.anova.rma <- function(x, digits, ...) {
 
-   if (class(x) != "anova.rma")
+   if (!inherits(x, "anova.rma"))
       stop("Argument 'x' must be an object of class \"anova.rma\".")
 
    if (missing(digits))

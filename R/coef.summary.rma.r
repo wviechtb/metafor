@@ -2,12 +2,12 @@
 
 coef.summary.rma <- function(object, ...) {
 
-   if (!is.element("summary.rma", class(object)))
+   if (!inherits(object, "summary.rma"))
       stop("Argument 'object' must be an object of class \"summary.rma\".")
 
    x <- object
 
-   if (is.element("robust.rma", class(x))) ### so that code below works with x$zval
+   if (inherits(x, "robust.rma")) ### so that code below works with x$zval
       x$zval <- x$tval
 
    res.table <- data.frame(estimate=x$b, se=x$se, zval=x$zval, pval=x$pval, ci.lb=x$ci.lb, ci.ub=x$ci.ub)

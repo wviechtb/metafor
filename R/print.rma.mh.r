@@ -1,6 +1,6 @@
 print.rma.mh <- function(x, digits, showfit=FALSE, ...) {
 
-   if (!is.element("rma.mh", class(x)))
+   if (!inherits(x, "rma.mh"))
       stop("Argument 'x' must be an object of class \"rma.mh\".")
 
    if (missing(digits))

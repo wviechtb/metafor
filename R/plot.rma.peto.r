@@ -2,7 +2,7 @@ plot.rma.peto <- function(x, qqplot=FALSE, ...) {
 
    #########################################################################
 
-   if (!is.element("rma.peto", class(x)))
+   if (!inherits(x, "rma.peto"))
       stop("Argument 'x' must be an object of class \"rma.peto\".")
 
    na.act <- getOption("na.action")

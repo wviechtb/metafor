@@ -2,10 +2,10 @@
 
 update.rma <- function (object, formula., ..., evaluate=TRUE) {
 
-   if (!is.element("rma", class(object)))
+   if (!inherits(object, "rma"))
       stop("Argument 'object' must be an object of class \"rma\".")
 
-   if (is.element("robust.rma", class(object)))
+   if (inherits(object, "robust.rma"))
       stop("Function not applicable to objects of class \"robust.rma\".")
 
    if (is.null(call <- getCall(object)))
@@ -15,8 +15,8 @@ update.rma <- function (object, formula., ..., evaluate=TRUE) {
 
    if (!missing(formula.)) {
 
-      if (any(is.element(c("rma.uni","rma.mv"), class(object)))) {
-         if (class(object$call$yi) == "call") {
+      if (inherits(object, c("rma.uni","rma.mv"))) {
+         if (inherits(object$call$yi, "call")) {
             call$yi <- update.formula(object$call$yi, formula.)
          } else {
             if (is.null(object$call$mods)) {
@@ -32,7 +32,7 @@ update.rma <- function (object, formula., ..., evaluate=TRUE) {
          }
       }
 
-      if (is.element("rma.glmm", class(object)))
+      if (inherits(object, "rma.glmm"))
          call$mods <- update.formula(object$call$mods, formula.)
 
    }

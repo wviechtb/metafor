@@ -1,6 +1,6 @@
 print.list.rma <- function(x, digits, ...) {
 
-   if (!is.element("list.rma", class(x)))
+   if (!inherits(x, "list.rma"))
       stop("Argument 'x' must be an object of class \"list.rma\".")
 
    if (missing(digits))

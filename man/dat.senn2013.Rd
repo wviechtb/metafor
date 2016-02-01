@@ -26,13 +26,14 @@
 ### load data
 dat <- get(data(dat.senn2013))
 
-### create network graph (using 'plyr' and 'igraph' packages if installed)
-if (require(plyr) && require(igraph)) {
-   pairs <- do.call(rbind, sapply(split(dat$treatment, dat$study), function(x) t(combn(x,2))))
-   pairs <- ddply(data.frame(pairs), .(X1, X2), count)
-   g <- graph.edgelist(as.matrix(pairs[,1:2]), directed=FALSE)
-   plot(g, edge.curved=FALSE, edge.width=pairs$freq, vertex.label.dist=.8)
-}
+### create network graph ('plyr' and 'igraph' packages must be installed)
+\dontrun{
+require(plyr)
+require(igraph)
+pairs <- do.call(rbind, sapply(split(dat$treatment, dat$study), function(x) t(combn(x,2))))
+pairs <- ddply(data.frame(pairs), .(X1, X2), count)
+g <- graph.edgelist(as.matrix(pairs[,1:2]), directed=FALSE)
+plot(g, edge.curved=FALSE, edge.width=pairs$freq, vertex.label.dist=.8)}
 
 ### table of studies versus treatments examined
 print(addmargins(table(dat$study, dat$treatment)), zero.print="")

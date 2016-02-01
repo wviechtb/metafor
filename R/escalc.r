@@ -6,7 +6,7 @@ escalc <- function(measure, formula, ...) {
    ### catch cases where the user specifies a formula for the 'measure' argument
    ### (i.e., incorrectly uses the first argument to specify the formula)
 
-   if (is.element("formula", class(measure)))
+   if (inherits(measure, "formula"))
       stop("Must specify the formula via the second ('formula') argument.")
 
    ### if formula argument is used, dispatch accordingly

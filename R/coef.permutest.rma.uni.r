@@ -1,6 +1,6 @@
 coef.permutest.rma.uni <- function(object, ...) {
 
-   if (!is.element("permutest.rma.uni", class(object)))
+   if (!inherits(object, "permutest.rma.uni"))
       stop("Argument 'object' must be an object of class \"permutest.rma.uni\".")
 
    x <- object

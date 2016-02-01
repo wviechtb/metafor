@@ -1,6 +1,6 @@
 print.confint.rma <- function(x, digits, ...) {
 
-   if (!is.element("confint.rma", class(x)))
+   if (!inherits(x, "confint.rma"))
       stop("Argument 'x' must be an object of class \"confint.rma\".")
 
    if (missing(digits))

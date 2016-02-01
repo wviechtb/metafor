@@ -2,7 +2,7 @@
 
 AIC.rma <- function(object, ..., k=2, correct=FALSE) {
 
-   if (!is.element("rma", class(object)))
+   if (!inherits(object, "rma"))
       stop("Argument 'object' must be an object of class \"rma\".")
 
    if (missing(...)) {

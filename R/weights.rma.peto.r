@@ -1,6 +1,6 @@
 weights.rma.peto <- function(object, type="diagonal", ...) {
 
-   if (!is.element("rma.peto", class(object)))
+   if (!inherits(object, "rma.peto"))
       stop("Argument 'object' must be an object of class \"rma.peto\".")
 
    na.act <- getOption("na.action")

@@ -1,6 +1,6 @@
 print.rma.glmm <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.signif.stars"), signif.legend=signif.stars, ...) {
 
-   if (!is.element("rma.glmm", class(x)))
+   if (!inherits(x, "rma.glmm"))
       stop("Argument 'x' must be an object of class \"rma.glmm\".")
 
    if (missing(digits))

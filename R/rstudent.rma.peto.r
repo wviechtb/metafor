@@ -1,6 +1,6 @@
 rstudent.rma.peto <- function(model, digits, ...) {
 
-   if (!is.element("rma.peto", class(model)))
+   if (!inherits(model, "rma.peto"))
       stop("Argument 'model' must be an object of class \"rma.peto\".")
 
    na.act <- getOption("na.action")

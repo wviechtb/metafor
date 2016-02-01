@@ -5,10 +5,10 @@ refline, pch=19, pch.fill=21, ci.res=1000, ...) {
 
    #########################################################################
 
-   if (!is.element("rma", class(x)))
+   if (!inherits(x, "rma"))
       stop("Argument 'x' must be an object of class \"rma\".")
 
-   if (is.element("robust.rma", class(x)))
+   if (inherits(x, "robust.rma"))
       stop("Function not applicable to objects of class \"robust.rma\".")
 
    na.act <- getOption("na.action")
@@ -99,7 +99,7 @@ refline, pch=19, pch.fill=21, ci.res=1000, ...) {
       if (missing(refline))
          refline <- x$b
 
-      if (is.element("rma.mv", class(x)))
+      if (inherits(x, "rma.mv"))
          addtau2 <- FALSE
 
       tau2 <- ifelse(addtau2, x$tau2, 0)
@@ -403,7 +403,7 @@ refline, pch=19, pch.fill=21, ci.res=1000, ...) {
 
    ### add trim-and-fill points
 
-   if (is.element("rma.uni.trimfill", class(x)))
+   if (inherits(x, "rma.uni.trimfill"))
       points(xaxis.vals[x$fill], yaxis.vals[x$fill], pch=pch.fill, col="black", bg="white", ...)
 
    #########################################################################

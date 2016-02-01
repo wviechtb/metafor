@@ -79,7 +79,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
 
    ### if yi is not NULL and it is an escalc object, then use that object in place of the data argument
 
-   if (!is.null(yi) && is.element("escalc", class(yi)))
+   if (!is.null(yi) && inherits(yi, "escalc"))
       data <- yi
 
    ### extract weights, slab, subset, mods, and scale values, possibly from the data frame specified via data or yi (arguments not specified are NULL)
@@ -106,7 +106,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
 
       ### if yi is a formula, extract yi and X (this overrides anything specified via the mods argument further below)
 
-      if (is.element("formula", class(yi))) {
+      if (inherits(yi, "formula")) {
          options(na.action = "na.pass")                   ### set na.action to na.pass, so that NAs are not filtered out (we'll do that later)
          mods <- model.matrix(yi, data=data)              ### extract model matrix (now mods is no longer a formula, so part further below is skipped)
          attr(mods, "assign") <- NULL                     ### strip assign attribute (not needed at the moment)
@@ -119,7 +119,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
 
       ### if yi is an escalc object, try to extract yi and vi (note that moderators must then be specified via the mods argument)
 
-      if (is.element("escalc", class(yi))) {
+      if (inherits(yi, "escalc")) {
 
          if (!is.null(attr(yi, "yi.names"))) { ### if yi.names attributes is available
             yi.name <- attr(yi, "yi.names")[1] ### take the first entry to be the yi variable
@@ -507,7 +507,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
    ### convert mods formula to X matrix and set intercept equal to FALSE
    ### skipped if formula has already been specified via yi argument, since mods is then no longer a formula
 
-   if (class(mods) == "formula") {
+   if (inherits(mods, "formula")) {
       options(na.action = "na.pass")        ### set na.action to na.pass, so that NAs are not filtered out (we'll do that later)
       mods <- model.matrix(mods, data=data) ### extract model matrix
       attr(mods, "assign") <- NULL          ### strip assign attribute (not needed at the moment)
@@ -538,7 +538,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
 
    ### in case scale is a formula, get model matrix for it
 
-   if (class(scale) == "formula") {
+   if (inherits(scale, "formula")) {
       options(na.action = "na.pass")
       Z <- model.matrix(scale, data=data)
       attr(Z, "assign") <- NULL

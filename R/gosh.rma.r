@@ -1,12 +1,12 @@
 gosh.rma <- function(x, subsets="all", progbar=TRUE, parallel="no", ncpus=1, cl=NULL, ...) {
 
-   if (!is.element("rma", class(x)))
+   if (!inherits(x, "rma"))
       stop("Argument 'x' must be an object of class \"rma\".")
 
-   if (is.element("rma.glmm", class(x)))
+   if (inherits(x, "rma.glmm"))
       stop("Method not yet implemented for objects of class \"rma.glmm\". Sorry!")
 
-   if (is.element("rma.mv", class(x)))
+   if (inherits(x, "rma.mv"))
       stop("Method not yet implemented for objects of class \"rma.mv\". Sorry!")
 
    na.act <- getOption("na.action")
@@ -90,7 +90,7 @@ gosh.rma <- function(x, subsets="all", progbar=TRUE, parallel="no", ncpus=1, cl=
          if (progbar)
             setTxtProgressBar(pbar, j)
 
-         if (is.element("rma.uni", class(x))) {
+         if (inherits(x, "rma.uni")) {
             if (FE) {
                res <- .profile.rma.uni(val=1, obj=x, subset=TRUE, sel=incl[j,], FE=TRUE)
             } else {
@@ -98,7 +98,7 @@ gosh.rma <- function(x, subsets="all", progbar=TRUE, parallel="no", ncpus=1, cl=
             }
          }
 
-         if (is.element("rma.mh", class(x))) {
+         if (inherits(x, "rma.mh")) {
             if (is.element(x$measure, c("RR","OR","RD"))) {
                res <- try(suppressWarnings(rma.mh(ai=x$ai, bi=x$bi, ci=x$ci, di=x$di, measure=x$measure, add=x$add, to=x$to, drop00=x$drop00, correct=x$correct, subset=incl[j,])), silent=TRUE)
             } else {
@@ -106,7 +106,7 @@ gosh.rma <- function(x, subsets="all", progbar=TRUE, parallel="no", ncpus=1, cl=
             }
          }
 
-         if (is.element("rma.peto", class(x)))
+         if (inherits(x, "rma.peto"))
             res <- try(suppressWarnings(rma.peto(ai=x$ai, bi=x$bi, ci=x$ci, di=x$di, add=x$add, to=x$to, drop00=x$drop00, subset=incl[j,])), silent=TRUE)
 
          if (inherits(res, "try-error"))
@@ -144,13 +144,13 @@ gosh.rma <- function(x, subsets="all", progbar=TRUE, parallel="no", ncpus=1, cl=
 
       if (parallel == "multicore") {
 
-         if (is.element("rma.uni", class(x)))
+         if (inherits(x, "rma.uni"))
             res <- parallel::mclapply(1:N.tot, .profile.rma.uni, obj=x, mc.cores=ncpus, parallel=parallel, subset=TRUE, sel=incl, FE=FE)
 
-         if (is.element("rma.mh", class(x)))
+         if (inherits(x, "rma.mh"))
             res <- parallel::mclapply(1:N.tot, .profile.rma.mh, obj=x, mc.cores=ncpus, parallel=parallel, subset=TRUE, sel=incl)
 
-         if (is.element("rma.peto", class(x)))
+         if (inherits(x, "rma.peto"))
             res <- parallel::mclapply(1:N.tot, .profile.rma.peto, obj=x, mc.cores=ncpus, parallel=parallel, subset=TRUE, sel=incl)
 
       }
@@ -164,13 +164,13 @@ gosh.rma <- function(x, subsets="all", progbar=TRUE, parallel="no", ncpus=1, cl=
             clnew <- FALSE
          }
 
-         if (is.element("rma.uni", class(x)))
+         if (inherits(x, "rma.uni"))
             res <- parallel::parLapply(cl, 1:N.tot, .profile.rma.uni, obj=x, parallel=parallel, subset=TRUE, sel=incl, FE=FE)
 
-         if (is.element("rma.mh", class(x)))
+         if (inherits(x, "rma.mh"))
             res <- parallel::parLapply(cl, 1:N.tot, .profile.rma.mh, obj=x, parallel=parallel, subset=TRUE, sel=incl)
 
-         if (is.element("rma.peto", class(x)))
+         if (inherits(x, "rma.peto"))
             res <- parallel::parLapply(cl, 1:N.tot, .profile.rma.peto, obj=x, parallel=parallel, subset=TRUE, sel=incl)
 
          if (clnew)

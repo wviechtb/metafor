@@ -1,6 +1,6 @@
 permutest.rma.uni <- function(x, exact=FALSE, iter=1000, progbar=TRUE, retpermdist=FALSE, digits, tol, ...) {
 
-   if (!is.element("rma.uni", class(x)))
+   if (!inherits(x, "rma.uni"))
       stop("Argument 'x' must be an object of class \"rma.uni\".")
 
    if (missing(digits))

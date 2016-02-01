@@ -1,6 +1,6 @@
 print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.signif.stars"), signif.legend=signif.stars, ...) {
 
-   if (!is.element("rma.mv", class(x)))
+   if (!inherits(x, "rma.mv"))
       stop("Argument 'x' must be an object of class \"rma.mv\".")
 
    if (missing(digits))

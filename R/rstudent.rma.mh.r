@@ -1,6 +1,6 @@
 rstudent.rma.mh <- function(model, digits, ...) {
 
-   if (!is.element("rma.mh", class(model)))
+   if (!inherits(model, "rma.mh"))
       stop("Argument 'model' must be an object of class \"rma.mh\".")
 
    na.act <- getOption("na.action")

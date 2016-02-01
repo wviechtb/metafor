@@ -4,7 +4,7 @@
 
 vcov.rma <- function(object, type="fixed", ...) {
 
-   if (!is.element("rma", class(object)))
+   if (!inherits(object, "rma"))
       stop("Argument 'object' must be an object of class \"rma\".")
 
    na.act <- getOption("na.action")
@@ -23,7 +23,7 @@ vcov.rma <- function(object, type="fixed", ...) {
 
    if (type=="obs") {
 
-      if (any(is.element(c("rma.uni","rma.mv"), class(object)))) {
+      if (inherits(object, c("rma.uni","rma.mv"))) {
 
          if (na.act == "na.omit")
             return(object$M)
