@@ -1,4 +1,4 @@
-gosh.rma <- function(x, subsets="all", progbar=TRUE, parallel="no", ncpus=1, cl=NULL, ...) {
+gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, ...) {
 
    if (!inherits(x, "rma"))
       stop("Argument 'x' must be an object of class \"rma\".")
@@ -23,11 +23,25 @@ gosh.rma <- function(x, subsets="all", progbar=TRUE, parallel="no", ncpus=1, cl=
 
    N.tot <- sum(choose(x$k, x$p:x$k))
 
-   if (ifelse(is.numeric(subsets), N.tot <= subsets, TRUE)) {
-      exact <- TRUE
+   ### if 'subsets' is missing, include all possible subsets if N.tot is <= 10^6
+   ### and otherwise include 10^6 random subsets; if the user specifies 'subsets'
+   ### and N.tot is actually <= than what was specified, then again include all
+   ### possible subsets
+
+   if (missing(subsets)) {
+      if (N.tot <= 10^6) {
+         exact <- TRUE
+      } else {
+         exact <- FALSE
+         N.tot <- 10^6
+      }
    } else {
-      exact <- FALSE
-      N.tot <- subsets
+      if (N.tot <= subsets) {
+         exact <- TRUE
+      } else {
+         exact <- FALSE
+         N.tot <- subsets
+      }
    }
 
    if (N.tot == Inf)

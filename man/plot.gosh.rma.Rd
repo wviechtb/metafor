@@ -49,13 +49,13 @@ dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 res <- rma(yi, vi, data=dat, method="FE")
 res
 
-### fit all possible subsets
+### fit all possible subsets (8191 models)
 sav <- gosh(res)
 
 ### plot results
-plot(sav, breaks=80)
+plot(sav, breaks=80, adjust=.2)
 
 ### plot results (red for subsets containing study 8; blue otherwise)
-plot(sav, breaks=80, out=8)
+plot(sav, breaks=80, adjust=.2, out=8)
 }
 \keyword{hplot}
