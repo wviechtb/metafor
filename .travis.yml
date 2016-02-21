@@ -5,6 +5,7 @@ sudo: false
 cache: packages
 
 r_packages:
+  - lme4
   - covr
 
 after_success:
