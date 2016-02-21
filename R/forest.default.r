@@ -130,6 +130,9 @@ cex, cex.lab, cex.axis, ...) {
       } else {
          slab <- paste("Study", seq_len(k))
       }
+   } else {
+      if (length(slab) == 1 && is.na(slab))
+         slab <- rep("", k)
    }
 
    if (length(yi) != length(slab))

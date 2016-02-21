@@ -128,6 +128,9 @@ cex, cex.lab, cex.axis, ...) {
       } else {
          slab <- x$slab                         ### note: slab must have same length as yi.f in rma object
       }                                         ### even when fewer studies used for model fitting (due to NAs)
+   } else {
+      if (length(slab) == 1 && is.na(slab))
+         slab <- rep("", k)
    }
 
    if (length(yi) != length(slab))
