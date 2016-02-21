@@ -1,15 +1,11 @@
-language: r
+language: R
+r: devel
 warnings_are_errors: true
-sudo: required
+sudo: false
+cache: packages
 
-### as per https://github.com/travis-ci/travis-ci/issues/4125#issuecomment-114711210
-env:
-  global:
-    - NOT_CRAN=true
-before_install: echo "options(repos = c(CRAN='http://cran.rstudio.com'))" > ~/.Rprofile
-
-r_packages:
-  - covr
+r_github_packages:
+  - jimhester/covr
 
 after_success:
   - Rscript -e 'library(covr); Sys.setenv(NOT_CRAN="true"); codecov()'
