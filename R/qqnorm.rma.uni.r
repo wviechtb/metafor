@@ -1,6 +1,6 @@
 qqnorm.rma.uni <- function(y, type="rstandard", pch=19, envelope=TRUE,
 level=y$level, bonferroni=FALSE, reps=1000, smooth=TRUE, bass=0,
-label=FALSE, offset=0.3, ...) {
+label=FALSE, offset=0.3, pos=13, ...) {
 
    if (!inherits(y, "rma.uni"))
       stop("Argument 'y' must be an object of class \"rma.uni\".")
@@ -17,7 +17,7 @@ label=FALSE, offset=0.3, ...) {
    draw.envelope <- envelope
 
    if (label == "out" & !envelope) {
-      envelope      <- TRUE
+      envelope <- TRUE
       draw.envelope <- FALSE
    }
 
@@ -31,15 +31,15 @@ label=FALSE, offset=0.3, ...) {
       not.na <- !is.na(res$z)
       zi     <- res$z[not.na]
       slab   <- res$slab[not.na]
-      pos    <- order(zi)
-      slab   <- slab[pos]
+      ord    <- order(zi)
+      slab   <- slab[ord]
    } else {
       res    <- rstudent(x)
       not.na <- !is.na(res$z)
       zi     <- res$z[not.na]
       slab   <- res$slab[not.na]
-      pos    <- order(zi)
-      slab   <- slab[pos]
+      ord    <- order(zi)
+      slab   <- slab[ord]
    }
 
    sav <- qqnorm(zi, pch=pch, bty="l", ...)
@@ -66,11 +66,11 @@ label=FALSE, offset=0.3, ...) {
       ei  <- ImH %*% dat
       ei  <- apply(ei, 2, sort)
       if (bonferroni) {
-         lb  <- apply(ei, 1, quantile,   (alpha/2)/x$k) ### consider using rowQuantiles() from matrixStats package
-         ub  <- apply(ei, 1, quantile, 1-(alpha/2)/x$k) ### consider using rowQuantiles() from matrixStats package
+         lb <- apply(ei, 1, quantile,   (alpha/2)/x$k) ### consider using rowQuantiles() from matrixStats package
+         ub <- apply(ei, 1, quantile, 1-(alpha/2)/x$k) ### consider using rowQuantiles() from matrixStats package
       } else {
-         lb  <- apply(ei, 1, quantile,   (alpha/2)) ### consider using rowQuantiles() from matrixStats package
-         ub  <- apply(ei, 1, quantile, 1-(alpha/2)) ### consider using rowQuantiles() from matrixStats package
+         lb <- apply(ei, 1, quantile,   (alpha/2)) ### consider using rowQuantiles() from matrixStats package
+         ub <- apply(ei, 1, quantile, 1-(alpha/2)) ### consider using rowQuantiles() from matrixStats package
       }
 
       temp.lb <- qqnorm(lb, plot.it=FALSE)
@@ -92,6 +92,12 @@ label=FALSE, offset=0.3, ...) {
 
    ### labeling of points
 
+   if ((is.character(label) && label=="none") || (is.logical(label) && !label))
+      return(invisible(sav))
+
+   if ((is.character(label) && label=="all") || (is.logical(label) && label))
+      label <- x$k
+
    if (is.numeric(label)) {
 
       label <- round(label)
@@ -99,37 +105,39 @@ label=FALSE, offset=0.3, ...) {
       if (label < 1 | label > x$k)
          stop("Out of range value for 'label' argument.")
 
-      pos.x <- sav$x[pos]
-      pos.y <- sav$y[pos]
+      pos.x <- sav$x[ord]
+      pos.y <- sav$y[ord]
 
       dev <- abs(pos.x - pos.y)
 
       for (i in seq_len(x$k)) {
 
-         if (sum(dev > dev[i]) < label)
-            text(pos.x[i], pos.y[i], slab[i], pos=ifelse(pos.x[i] >= 0, 2, 4), offset=offset, ...)
+         if (sum(dev > dev[i]) < label) {
+            if (pos <= 4)
+               text(pos.x[i], pos.y[i], slab[i], pos=pos, offset=offset, ...)
+            if (pos == 13)
+               text(pos.x[i], pos.y[i], slab[i], pos=ifelse(pos.x[i]-pos.y[i] >= 0, 1, 3), offset=offset, ...)
+            if (pos == 24)
+               text(pos.x[i], pos.y[i], slab[i], pos=ifelse(pos.x[i]-pos.y[i] <= 0, 2, 4), offset=offset, ...)
+               #text(pos.x[i], pos.y[i], slab[i], pos=ifelse(pos.x[i] >= 0, 2, 4), offset=offset, ...)
+         }
 
       }
 
    } else {
 
-      if (is.logical(label))
-         label <- ifelse(label, "out", "none")
+      pos.x <- sav$x[ord]
+      pos.y <- sav$y[ord]
 
-      pos.x <- sav$x[pos]
-      pos.y <- sav$y[pos]
+      for (i in seq_len(x$k)) {
 
-      if (label != "none") {
-
-         for (i in seq_len(x$k)) {
-
-            if (label == "all") {
-               text(pos.x[i], pos.y[i], slab[i], pos=ifelse(pos.x[i] >= 0, 2, 4), offset=offset, ...)
-            } else {
-               if (pos.y[i] < temp.lb$y[i] || pos.y[i] > temp.ub$y[i])
-                  text(pos.x[i], pos.y[i], slab[i], pos=ifelse(pos.x[i] >= 0, 2, 4), offset=offset, ...)
-            }
-
+         if (pos.y[i] < temp.lb$y[i] || pos.y[i] > temp.ub$y[i]) {
+            if (pos <= 4)
+               text(pos.x[i], pos.y[i], slab[i], pos=pos, offset=offset, ...)
+            if (pos == 13)
+               text(pos.x[i], pos.y[i], slab[i], pos=ifelse(pos.x[i]-pos.y[i] >= 0, 1, 3), offset=offset, ...)
+            if (pos == 24)
+               text(pos.x[i], pos.y[i], slab[i], pos=ifelse(pos.x[i]-pos.y[i] <= 0, 2, 4), offset=offset, ...)
          }
 
       }

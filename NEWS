@@ -1,4 +1,4 @@
-Changes in Version 1.9-9 (2016-02-01)
+Changes in Version 1.9-9 (2016-02-27)
 =====================================
 
    o started to use git as version control system, GitHub to host the
@@ -43,6 +43,9 @@ Changes in Version 1.9-9 (2016-02-01)
 
    o baujat.rma() gains argument 'symbol' for more control over the plotting
      symbol
+
+   o more logical placement of labels in qqnorm.rma.uni(), qqnorm.rma.mh(),
+     and qqnorm.rma.peto() functions (and more control thereof)
 
    o added gosh.rma() and plot.gosh.rma() for creating GOSH (i.e., graphical
      display of study heterogeneity) plots based on Olkin et al. (2012)

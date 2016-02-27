@@ -1,4 +1,4 @@
-qqnorm.rma.mh <- function(y, type="rstandard", pch=19, label=FALSE, offset=0.3, ...) {
+qqnorm.rma.mh <- function(y, type="rstandard", pch=19, label=FALSE, offset=0.3, pos=13, ...) {
 
    if (!inherits(y, "rma.mh"))
       stop("Argument 'y' must be an object of class \"rma.mh\".")
@@ -20,15 +20,15 @@ qqnorm.rma.mh <- function(y, type="rstandard", pch=19, label=FALSE, offset=0.3, 
       not.na <- !is.na(res$z)
       zi     <- res$z[not.na]
       slab   <- res$slab[not.na]
-      pos    <- order(zi)
-      slab   <- slab[pos]
+      ord    <- order(zi)
+      slab   <- slab[ord]
    } else {
       res    <- rstudent(x)
       not.na <- !is.na(res$z)
       zi     <- res$z[not.na]
       slab   <- res$slab[not.na]
-      pos    <- order(zi)
-      slab   <- slab[pos]
+      ord    <- order(zi)
+      slab   <- slab[ord]
    }
 
    sav <- qqnorm(zi, pch=pch, bty="l", ...)
@@ -41,6 +41,12 @@ qqnorm.rma.mh <- function(y, type="rstandard", pch=19, label=FALSE, offset=0.3, 
 
    ### labeling of points
 
+   if ((is.character(label) && label=="none") || (is.logical(label) && !label))
+      return(invisible(sav))
+
+   if ((is.character(label) && label=="all") || (is.logical(label) && label))
+      label <- x$k
+
    if (is.numeric(label)) {
 
       label <- round(label)
@@ -48,32 +54,21 @@ qqnorm.rma.mh <- function(y, type="rstandard", pch=19, label=FALSE, offset=0.3, 
       if (label < 1 | label > x$k)
          stop("Out of range value for 'label' argument.")
 
-      pos.x <- sav$x[pos]
-      pos.y <- sav$y[pos]
+      pos.x <- sav$x[ord]
+      pos.y <- sav$y[ord]
 
       dev <- abs(pos.x - pos.y)
 
       for (i in seq_len(x$k)) {
 
-         if (sum(dev > dev[i]) < label)
-            text(pos.x[i], pos.y[i], slab[i], pos=ifelse(pos.x[i] >= 0, 2, 4), offset=offset, ...)
-
-      }
-
-   } else {
-
-      if (is.logical(label))
-         label <- ifelse(label, "all", "none")
-
-      pos.x <- sav$x[pos]
-      pos.y <- sav$y[pos]
-
-      if (label != "none") {
-
-         for (i in seq_len(x$k)) {
-
-            text(pos.x[i], pos.y[i], slab[i], pos=ifelse(pos.x[i] >= 0, 2, 4), offset=offset, ...)
-
+         if (sum(dev > dev[i]) < label) {
+            if (pos <= 4)
+               text(pos.x[i], pos.y[i], slab[i], pos=pos, offset=offset, ...)
+            if (pos == 13)
+               text(pos.x[i], pos.y[i], slab[i], pos=ifelse(pos.x[i]-pos.y[i] >= 0, 1, 3), offset=offset, ...)
+            if (pos == 24)
+               text(pos.x[i], pos.y[i], slab[i], pos=ifelse(pos.x[i]-pos.y[i] <= 0, 2, 4), offset=offset, ...)
+               #text(pos.x[i], pos.y[i], slab[i], pos=ifelse(pos.x[i] >= 0, 2, 4), offset=offset, ...)
          }
 
       }
