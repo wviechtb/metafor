@@ -1,4 +1,4 @@
-Changes in Version 1.9-9 (2016-02-27)
+Changes in Version 1.9-9 (2016-02-28)
 =====================================
 
    o started to use git as version control system, GitHub to host the
@@ -55,6 +55,9 @@ Changes in Version 1.9-9 (2016-02-27)
 
    o updated datasets so those containing precomputed effect size estimates
      or observed outcomes are already declared to be 'escalc' objects
+
+   o added new datasets (dat.egger2001 and dat.li2007) on the effectiveness
+     of intravenous magnesium in acute myocardial infarction
 
    o some general code cleanup
 
