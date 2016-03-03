@@ -42,7 +42,7 @@ After installing the [devtools](https://cran.r-project.org/package=devtools) pac
 library("devtools")
 install_github("wviechtb/metafor")
 ```
-This approach builds the package from source based on the development branch on GitHub. On Windows, [Rtools](http://cran.r-project.org/bin/windows/Rtools/) must be installed for this to work.
+This approach builds the package from source based on the development branch on GitHub.
 
 ## Meta
 
