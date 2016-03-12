@@ -1,4 +1,4 @@
-cooks.distance.rma.mv <- function(model, ...) {
+cooks.distance.rma.mv <- function(model, progbar=FALSE, ...) {
 
    if (!inherits(model, "rma.mv"))
       stop("Argument 'model' must be an object of class \"rma.mv\".")
@@ -24,6 +24,9 @@ cooks.distance.rma.mv <- function(model, ...) {
    ### note: skipping NA cases
    ### also: it is possible that model fitting fails, so that generates more NAs (these NAs will always be shown in output)
 
+   if (progbar)
+      pbar <- txtProgressBar(min=0, max=x$k.f, style=3)
+
    for (i in seq_len(x$k.f)[x$not.na]) {
 
       res <- try(suppressWarnings(rma.mv(x$yi.f, x$V.f, W=x$W.f, mods=x$X.f, intercept=FALSE, random=x$random, struct=x$struct, method=x$method, tdist=x$knha, R=x$R, Rscale=x$Rscale, data=x$mf.r, sigma2=ifelse(x$vc.fix$sigma2, x$sigma2, NA), tau2=ifelse(x$vc.fix$tau2, x$tau2, NA), rho=ifelse(x$vc.fix$rho, x$rho, NA), gamma2=ifelse(x$vc.fix$gamma2, x$gamma2, NA), phi=ifelse(x$vc.fix$phi, x$phi, NA), control=x$control, subset=-i)), silent=TRUE)
@@ -44,7 +47,13 @@ cooks.distance.rma.mv <- function(model, ...) {
 
       cook.d[i]  <- crossprod(dfb,svb) %*% dfb
 
+      if (progbar)
+         setTxtProgressBar(pbar, i)
+
    }
+
+   if (progbar)
+      close(pbar)
 
    #########################################################################
 

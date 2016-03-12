@@ -5,8 +5,9 @@
    Plot method for objects of class \code{"gosh.rma"}.
 }
 \usage{
-\method{plot}{gosh.rma}(x, het="I2", pch=19, cex, out, col,
-     alpha, breaks, adjust, lwd, labels, \ldots)
+\method{plot}{gosh.rma}(x, het="I2", pch=19, cex, out, col, alpha,
+     xhist=TRUE, yhist=TRUE, hh=.3, hcol, breaks,
+     adjust, lwd, labels, \ldots)
 }
 \arguments{
    \item{x}{an object of class \code{"gosh.rma"}.}
@@ -16,14 +17,20 @@
    \item{out}{optional integer indicating the number of a study that may be a potential outlier. If specified, subsets containing the specified study are drawn in a different color than those not containing the study.}
    \item{col}{optional character string specifying the name of a color to use for the points (if not provided, points are drawn in black). When \code{out} is used, two colors should be specified (if not provided, red is used for subsets containing the specified study and blue otherwise).}
    \item{alpha}{optional alpha transparency value for the points (0 means fully transparent and 1 means opaque). If unspecified, the function tries to set this to a sensible value. Ignored when \code{col} is specified.}
-   \item{breaks}{optional argument passed on to \code{\link{hist}} for choosing the (number of) breakpoints of the histograms.}
-   \item{adjust}{optional argument passed on to \code{\link{density}} for adjusting the bandwidth of the kernel density estimates.}
-   \item{lwd}{optional numeric value to specify the line width of the kernel density estimates.}
-   \item{labels}{optional argument passed on to \code{\link{pairs}} for specifying the names of the variables.}
+   \item{xhist}{logical specifying whether a histogram should be drawn for the x-axis (the default is \code{TRUE}).}
+   \item{yhist}{logical specifying whether a histogram should be drawn for the y-axis (the default is \code{TRUE}).}
+   \item{hh}{optional numerical value (or vector of two values) to adjust the height of the histogram(s). Must be between 0 and 1, but should not be too close to 0 or 1, as otherwise the plot cannot be drawn.}
+   \item{hcol}{optional character string specifying the name of a color to use for the histogram(s).}
+   \item{breaks}{optional argument passed on to \code{\link{hist}} for choosing the (number of) breakpoints of the histogram(s).}
+   \item{adjust}{optional argument passed on to \code{\link{density}} for adjusting the bandwidth of the kernel density estimation.}
+   \item{lwd}{optional numeric value to specify the line width of the estimated densities. Set to \code{0} to omit the line(s).}
+   \item{labels}{optional argument to specify the x-axis and y-axis labels (or passed on to \code{\link{pairs}} for specifying the names of the variables in the scatterplot matrix).}
    \item{\dots}{other arguments.}
 }
 \details{
-   The function draws a scatterplot matrix with the \code{\link{pairs}} function. Histograms of the variables plotted are shown along the diagonal, with a kernel density estimate of the distribution superimposed.
+   For models without moderators, the function draws a scatterplot of the model estimates on the x-axis against the chosen measure of heterogeneity on the y-axis. Histograms of the respective distributions (with kernel density estimates superimposed) are shown in the margins.
+
+   For models with moderators, the function draws a scatterplot matrix (with the \code{\link{pairs}} function) of the chosen measure of heterogeneity and each of the model coefficients. Histograms of the variables plotted are shown along the diagonal, with kernel density estimates of the distributions superimposed. Arguments \code{xhist}, \code{yhist}, and \code{hh} are then ignored.
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \cr
@@ -39,23 +46,18 @@
    \code{\link{gosh.rma}}
 }
 \examples{
-### load BCG vaccine data
-data(dat.bcg)
+### load magnesium data
+data(dat.egger2001)
 
-### calculate log relative risks and corresponding sampling variances
-dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
+### meta-analysis of all trials including ISIS-4 using a FE model
+res <- rma(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat.egger2001, method="FE")
 
-### fixed-effects model
-res <- rma(yi, vi, data=dat, method="FE")
-res
-
-### fit all possible subsets (8191 models)
+### fit FE model to all possible subsets (65535 models)
 sav <- gosh(res)
 
-### plot results
-plot(sav, breaks=80, adjust=.2)
-
-### plot results (red for subsets containing study 8; blue otherwise)
-plot(sav, breaks=80, adjust=.2, out=8)
+### create GOSH plot
+### red points for subsets that include and blue points
+### for subsets that exclude study 16 (the ISIS-4 trial)
+plot(sav, out=16, breaks=100, adjust=.3)
 }
 \keyword{hplot}

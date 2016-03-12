@@ -13,7 +13,7 @@
 
 \method{print}{infl.rma.uni}(x, digits, \dots)
 
-\method{cooks.distance}{rma.uni}(model, \dots)
+\method{cooks.distance}{rma.uni}(model, progbar=FALSE, \dots)
 \method{dfbetas}{rma.uni}(model, \dots)
 \method{hatvalues}{rma.uni}(model, type="diagonal", \dots)
 }
@@ -21,6 +21,7 @@
    \item{model}{an object of class \code{"rma.uni"}.}
    \item{x}{an object of class \code{"infl.rma.uni"} (for \code{print}).}
    \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is to take the value from the object).}
+   \item{progbar}{logical indicating whether a progress bar should be shown (the default is \code{FALSE}).}
    \item{type}{character string indicating whether to return only the diagonal of the hat matrix (\code{"diagonal"}) or the entire hat matrix (\code{"matrix"}).}
    \item{\dots}{other arguments.}
 }

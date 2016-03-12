@@ -1,4 +1,4 @@
-cooks.distance.rma.uni <- function(model, ...) {
+cooks.distance.rma.uni <- function(model, progbar=FALSE, ...) {
 
    if (!inherits(model, "rma.uni"))
       stop("Argument 'model' must be an object of class \"rma.uni\".")
@@ -24,6 +24,9 @@ cooks.distance.rma.uni <- function(model, ...) {
    ### note: skipping NA cases
    ### also: it is possible that model fitting fails, so that generates more NAs (these NAs will always be shown in output)
 
+   if (progbar)
+      pbar <- txtProgressBar(min=0, max=x$k.f, style=3)
+
    for (i in seq_len(x$k.f)[x$not.na]) {
 
       res <- try(suppressWarnings(rma.uni(x$yi.f, x$vi.f, weights=x$weights.f, mods=x$X.f, intercept=FALSE, method=x$method, weighted=x$weighted, knha=x$knha, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, subset=-i)), silent=TRUE)
@@ -44,7 +47,13 @@ cooks.distance.rma.uni <- function(model, ...) {
 
       cook.d[i]  <- crossprod(dfb,svb) %*% dfb
 
+      if (progbar)
+         setTxtProgressBar(pbar, i)
+
    }
+
+   if (progbar)
+      close(pbar)
 
    #########################################################################
 

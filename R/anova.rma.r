@@ -37,10 +37,10 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
          QM <- c(t(b)[btt] %*% chol2inv(chol(vb[btt,btt])) %*% b[btt])
 
          if ((is.logical(x$knha) && x$knha) || is.character(x$knha)) {
-            QM   <- QM/m
-            QMp  <- pf(QM, df1=m, df2=x$dfs, lower.tail=FALSE)
+            QM  <- QM/m
+            QMp <- pf(QM, df1=m, df2=x$dfs, lower.tail=FALSE)
          } else {
-            QMp  <- pchisq(QM, df=m, lower.tail=FALSE)
+            QMp <- pchisq(QM, df=m, lower.tail=FALSE)
          }
 
          res <- list(QM=QM, QMp=QMp, btt=btt, k=k, p=p, m=m, knha=x$knha, dfs=x$dfs, digits=digits, test="Wald.b")
@@ -92,6 +92,9 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
 
          ### omnibus test of all hypotheses (only possible if 'L' is of full rank)
 
+         QM  <- NULL ### need this in case QM cannot be calculated below
+         QMp <- NULL ### need this in case QMp cannot be calculated below
+
          if (rankMatrix(L) == m) {
 
             ### use try(), since this could fail: this could happen when the var-cov matrix of the
@@ -108,9 +111,6 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
                } else {
                   QMp <- pchisq(QM, df=m, lower.tail=FALSE)
                }
-            } else {
-               QM  <- NULL
-               QMp <- NULL
             }
 
          }

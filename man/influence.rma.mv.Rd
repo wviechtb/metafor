@@ -6,11 +6,12 @@
    The functions compute various outlier and influential case diagnostics (some of which indicate the influence of deleting one case/study at a time on the model fit and the fitted/residual values) for objects of class \code{"rma.mv"}. At the moment, only Cook's distances and hat values can be obtained.
 }
 \usage{
-\method{cooks.distance}{rma.mv}(model, \dots)
+\method{cooks.distance}{rma.mv}(model, progbar=FALSE, \dots)
 \method{hatvalues}{rma.mv}(model, type="diagonal", \dots)
 }
 \arguments{
    \item{model}{an object of class \code{"rma.mv"}.}
+   \item{progbar}{logical indicating whether a progress bar should be shown (the default is \code{FALSE}).}
    \item{type}{character string indicating whether to return only the diagonal of the hat matrix (\code{"diagonal"}) or the entire hat matrix (\code{"matrix"}).}
    \item{\dots}{other arguments.}
 }

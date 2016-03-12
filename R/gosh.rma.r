@@ -225,7 +225,7 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
    rownames(res) <- 1:nrow(res)
    rownames(incl) <- 1:nrow(incl)
 
-   out <- list(res=res, incl=incl, k=x$k, int.only=x$int.only, method=x$method)
+   out <- list(res=res, incl=incl, k=x$k, int.only=x$int.only, method=x$method, measure=x$measure)
 
    class(out) <- "gosh.rma"
    return(out)
