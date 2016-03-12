@@ -14,7 +14,7 @@ test_that("plot can be drawn.", {
    par(mar=c(5,4,2,2))
 
    ### load data from Pignon et al. (2000)
-   dat <- get(data(dat.pignon2000))
+   dat <- get(data(dat.pignon2000, package="metafor"))
 
    ### compute estimated log hazard ratios and sampling variances
    dat$yi <- with(dat, OmE/V)

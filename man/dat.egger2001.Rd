@@ -43,23 +43,23 @@ dat.egger2001
 }
 \examples{
 ### load data
-data(dat.egger2001)
+dat <- get(data(dat.egger2001))
 
 ### meta-analysis of trials 1-7 using Peto's method (as in Teo et al., 1991)
-res <- rma.peto(ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat.egger2001, subset=1:7)
+res <- rma.peto(ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, subset=1:7)
 print(res, digits=2)
 
 ### meta-analysis of trials 1-7 and LIMIT-2 (as in Yusuf et al., 1993)
-res <- rma.peto(ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat.egger2001, subset=c(1:7,14))
+res <- rma.peto(ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, subset=c(1:7,14))
 print(res, digits=2)
 
 ### meta-analysis of all trials except ISIS-4
-res <- rma.peto(ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat.egger2001, subset=-16)
+res <- rma.peto(ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, subset=-16)
 print(res, digits=2)
 predict(res, transf=exp, digits=2)
 
 ### meta-analysis of all trials including ISIS-4
-res <- rma.peto(ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat.egger2001)
+res <- rma.peto(ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat)
 print(res, digits=2)
 predict(res, transf=exp, digits=2)
 

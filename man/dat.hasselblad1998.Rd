@@ -30,10 +30,10 @@
 }
 \examples{
 ### load data
-data(dat.hasselblad1998)
+dat <- get(data(dat.hasselblad1998))
 
 ### calculate log odds for each study arm
-dat <- escalc(measure="PLO", xi=xi, ni=ni, add=1/2, to="all", data=dat.hasselblad1998)
+dat <- escalc(measure="PLO", xi=xi, ni=ni, add=1/2, to="all", data=dat)
 
 ### create network graph ('plyr' and 'igraph' packages must be installed)
 \dontrun{

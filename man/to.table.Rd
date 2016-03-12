@@ -69,26 +69,17 @@ to.table(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \code{\link{escalc}}, \code{\link{to.long}}
 }
 \examples{
-### load BCG vaccine data
-data(dat.bcg)
-
 ### create tables
 dat <- to.table(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg,
                 data=dat.bcg, slab=paste(author, year, sep=", "),
                 rows=c("Vaccinated", "Not Vaccinated"), cols=c("TB+", "TB-"))
 dat
 
-### load data from Hart et al. (1999)
-data(dat.hart1999)
-
 ### create tables
 dat <- to.table(measure="IRR", x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i,
                 data=dat.hart1999, slab=paste(study, year, sep=", "),
                 rows=c("Warfarin Group", "Placebo/Control Group"))
 dat
-
-### load data from Normand (1999)
-data(dat.normand1999)
 
 ### create tables
 dat <- to.table(measure="MD", m1i=m1i, sd1i=sd1i, n1i=n1i,

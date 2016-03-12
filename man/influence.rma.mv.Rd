@@ -41,11 +41,8 @@
    Viechtbauer, W., & Cheung, M. W.-L. (2010). Outlier and influence diagnostics for meta-analysis. \emph{Research Synthesis Methods}, \bold{1}, 112--125.
 }
 \examples{
-### load data
-dat <- get(data(dat.konstantopoulos2011))
-
 ### multilevel random-effects model
-res <- rma.mv(yi, vi, random = ~ 1 | district/school, data=dat)
+res <- rma.mv(yi, vi, random = ~ 1 | district/school, data=dat.konstantopoulos2011)
 print(res, digits=3)
 
 ### Cook's distances

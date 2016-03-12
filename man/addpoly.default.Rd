@@ -47,9 +47,6 @@
    \code{\link{forest.rma}}, \code{\link{forest.default}}
 }
 \examples{
-### load BCG vaccine data
-data(dat.bcg)
-
 ### meta-analysis of the log relative risks using a mixed-
 ### effects model with absolute latitude as a moderator
 res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, mods = ~ ablat,

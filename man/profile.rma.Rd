@@ -63,9 +63,6 @@
    \code{\link{rma.uni}}, \code{\link{rma.mv}}
 }
 \examples{
-### load BCG vaccine data
-data(dat.bcg)
-
 ### calculate log odds ratios and corresponding sampling variances
 dat <- escalc(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 

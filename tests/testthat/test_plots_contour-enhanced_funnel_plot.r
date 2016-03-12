@@ -14,7 +14,7 @@ test_that("plot can be drawn.", {
    par(mar=c(5,4,1,2))
 
    ### load BCG vaccine data
-   data(dat.bcg)
+   data(dat.bcg, package="metafor")
 
    ### fit random-effects model
    res <- rma(ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, measure="RR",

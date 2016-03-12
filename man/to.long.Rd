@@ -74,9 +74,6 @@ to.long(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \code{\link{escalc}}, \code{\link{to.table}}
 }
 \examples{
-### load BCG vaccine data
-data(dat.bcg)
-
 ### convert data to long format
 dat <- to.long(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 dat
@@ -85,16 +82,10 @@ dat
 dat <- to.long(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, vlong=TRUE)
 dat
 
-### load data from Hart et al. (1999)
-data(dat.hart1999)
-
 ### convert data to long format
 dat <- to.long(measure="IRR", x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i,
                data=dat.hart1999, var.names=c("id", "group", "events", "ptime"))
 dat
-
-### load data from Normand (1999)
-data(dat.normand1999)
 
 ### convert data to long format
 dat <- to.long(measure="MD", m1i=m1i, sd1i=sd1i, n1i=n1i,

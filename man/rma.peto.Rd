@@ -96,9 +96,6 @@ rma.peto(ai, bi, ci, di, n1i, n2i,
    \code{\link{dat.collins1985a}}, \code{\link{dat.collins1985b}}, and \code{\link{dat.yusuf1985}} for further examples of the use of the \code{rma.peto} function.
 }
 \examples{
-### load data
-data(dat.bcg)
-
 ### meta-analysis of the (log) odds ratios using Peto's method
 rma.peto(ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 }

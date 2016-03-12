@@ -50,9 +50,6 @@ hc(object, \dots)
    \code{\link{rma.uni}}
 }
 \examples{
-### load data from Lee & Done (2004)
-data(dat.lee2004)
-
 ### meta-analysis based on log odds ratios
 res <- rma(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat.lee2004)
 res

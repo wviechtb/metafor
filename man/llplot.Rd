@@ -50,14 +50,8 @@ llplot(measure="OR", ai, bi, ci, di, n1i, n2i, data, subset, drop00=TRUE,
    \code{\link{rma.glmm}}
 }
 \examples{
-### load BCG vaccine data
-data(dat.bcg)
-
-### create plot
+### create plot for BCG data
 llplot(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
-
-### load histamine H2 antagonist data
-data(dat.collins1985a)
 
 ### create plot (Figure 2 in van Houwelingen, Zwinderman, & Stijnen, 1993)
 llplot(measure="OR", ai=b.xci, n1i=nci, ci=b.xti, n2i=nti, data=dat.collins1985a,

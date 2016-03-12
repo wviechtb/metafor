@@ -14,7 +14,7 @@ test_that("plot can be drawn.", {
    par(mfrow=c(2,2))
 
    ### load BCG vaccine data
-   data(dat.bcg)
+   data(dat.bcg, package="metafor")
 
    ### calculate (log) relative risks and corresponding sampling variances
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)

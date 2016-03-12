@@ -491,10 +491,10 @@ escalc(measure, formula, \dots)
 }
 \examples{
 ### load BCG vaccine data
-data(dat.bcg)
+dat <- get(data(dat.bcg))
 
 ### calculate log relative risks and corresponding sampling variances
-dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
+dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat)
 dat
 
 ### suppose that for a particular study, yi and vi are known (i.e., have
@@ -507,7 +507,7 @@ dat
 
 ### using formula interface (first rearrange data into long format)
 dat.long <- to.long(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg,
-                    data=dat.bcg, append=FALSE, vlong=TRUE)
+                    data=dat, append=FALSE, vlong=TRUE)
 escalc(measure="RR", outcome ~ group | study, weights=freq, data=dat.long)
 
 ### convert a regular data frame to an 'escalc' object

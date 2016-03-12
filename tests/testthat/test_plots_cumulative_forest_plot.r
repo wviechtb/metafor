@@ -14,7 +14,7 @@ test_that("plot can be drawn.", {
    par(mar=c(4,4,1,2))
 
    ### load BCG vaccine data
-   data(dat.bcg)
+   data(dat.bcg, package="metafor")
 
    ### calculate (log) relative risks and corresponding sampling variances
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
@@ -50,7 +50,7 @@ test_that("plot can be drawn.", {
    par(mar=c(4,4,1,2))
 
    ### load BCG vaccine data
-   data(dat.bcg)
+   data(dat.bcg, package="metafor")
 
    ### fit fixed-effects models using the Mantel-Haenszel method
    res <- rma.mh(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, slab=paste(author, year, sep=", "))
@@ -83,7 +83,7 @@ test_that("plot can be drawn.", {
    par(mar=c(4,4,1,2))
 
    ### load BCG vaccine data
-   data(dat.bcg)
+   data(dat.bcg, package="metafor")
 
    ### fit fixed-effects models using Peto's method
    res <- rma.peto(ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, slab=paste(author, year, sep=", "))

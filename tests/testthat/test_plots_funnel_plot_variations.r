@@ -11,7 +11,7 @@ test_that("plot can be drawn.", {
    opar <- par(no.readonly=TRUE)
 
    ### load ETS data
-   data(dat.hackshaw1998)
+   data(dat.hackshaw1998, package="metafor")
 
    ### fit fixed-effects model
    res <- rma(yi, vi, data=dat.hackshaw1998, measure="OR", method="FE")

@@ -203,9 +203,6 @@ rma.mv(yi, V, W, mods, random, struct="CS", intercept=TRUE,
    \code{\link{dat.konstantopoulos2011}}, \code{\link{dat.hasselblad1998}}, \code{\link{dat.begg1989}}, \code{\link{dat.berkey1998}}, \code{\link{dat.fine1993}}, and \code{\link{dat.ishak2007}} for further examples of the use of the \code{rma.mv} function.
 }
 \examples{
-### load BCG vaccine data
-data(dat.bcg)
-
 ### calculate log odds ratios and corresponding sampling variances
 dat <- escalc(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 

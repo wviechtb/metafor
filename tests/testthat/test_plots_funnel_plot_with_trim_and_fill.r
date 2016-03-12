@@ -14,7 +14,7 @@ test_that("plot can be drawn.", {
    par(mar=c(5,4,1,2))
 
    ### load ETS data
-   data(dat.hackshaw1998)
+   data(dat.hackshaw1998, package="metafor")
 
    ### fit random-effects model
    res <- rma(yi, vi, data=dat.hackshaw1998, measure="OR")

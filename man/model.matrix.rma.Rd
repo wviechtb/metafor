@@ -26,9 +26,6 @@
    \code{\link{fitted.rma}}
 }
 \examples{
-### load BCG vaccine data
-data(dat.bcg)
-
 ### meta-analysis of the log relative risks using a mixed-effects meta-regression model
 ### with multiple moderators (absolute latitude, publication year, and allocation method)
 res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg,

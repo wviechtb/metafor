@@ -188,9 +188,6 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
    \code{\link{dat.nielweise2007}}, \code{\link{dat.nielweise2008}}, and \code{\link{dat.collins1985a}} for further examples of the use of the \code{rma.glmm} function.
 }
 \examples{
-### load BCG vaccine data
-data(dat.bcg)
-
 ### random-effects model using rma.uni() (standard RE model analysis)
 rma(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg,
     data=dat.bcg, method="ML", verbose=TRUE)

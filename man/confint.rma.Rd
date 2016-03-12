@@ -95,9 +95,6 @@
    \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, \code{\link{rma.glmm}}, \code{\link{rma.mv}}
 }
 \examples{
-### load BCG vaccine data
-data(dat.bcg)
-
 ### meta-analysis of the log relative risks using a random-effects model
 res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
@@ -111,11 +108,8 @@ res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg,
 ### confidence interval for the residual amount of heterogeneity
 confint(res)
 
-### load data
-dat <- get(data(dat.konstantopoulos2011))
-
 ### multilevel random-effects model
-res <- rma.mv(yi, vi, random = ~ 1 | district/school, data=dat)
+res <- rma.mv(yi, vi, random = ~ 1 | district/school, data=dat.konstantopoulos2011)
 
 ### profile plots and confidence intervals for the variance components
 \dontrun{
@@ -132,7 +126,7 @@ sav
 abline(v=sav$random[1,2:3], lty="dotted")}
 
 ### multivariate parameterization of the model
-res <- rma.mv(yi, vi, random = ~ factor(school) | district, data=dat)
+res <- rma.mv(yi, vi, random = ~ factor(school) | district, data=dat.konstantopoulos2011)
 
 ### profile plots and confidence intervals for the variance component and correlation
 \dontrun{
