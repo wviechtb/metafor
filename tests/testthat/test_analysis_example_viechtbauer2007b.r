@@ -2,7 +2,7 @@
 
 ### see also: http://www.metafor-project.org/doku.php/analyses:viechtbauer2007b
 
-context("Checking analysis example viechtbauer2007b")
+context("Checking analysis example: viechtbauer2007b")
 
 ### create dataset for example
 data(dat.linde2005, package="metafor")

@@ -2,7 +2,7 @@
 
 ### see also: http://www.metafor-project.org/doku.php/analyses:vanhouwelingen1993
 
-context("Checking analysis example vanhouwelingen1993")
+context("Checking analysis example: vanhouwelingen1993")
 
 ### load data
 dat <- get(data(dat.collins1985a, package="metafor"))

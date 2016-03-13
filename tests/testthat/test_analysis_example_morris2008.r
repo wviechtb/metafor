@@ -2,7 +2,7 @@
 
 ### see also: http://www.metafor-project.org/doku.php/analyses:morris2008
 
-context("Checking analysis example morris2008")
+context("Checking analysis example: morris2008")
 
 ### create datasets
 

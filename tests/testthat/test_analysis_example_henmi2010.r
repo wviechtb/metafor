@@ -2,7 +2,7 @@
 
 ### see also: http://www.metafor-project.org/doku.php/analyses:henmi2010
 
-context("Checking analysis example henmi2010")
+context("Checking analysis example: henmi2010")
 
 ### load dataset
 dat <- get(data(dat.lee2004, package="metafor"))

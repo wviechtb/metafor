@@ -1,6 +1,6 @@
 ### library(metafor); library(testthat); Sys.setenv(NOT_CRAN="true")
 
-context("Comparing rma.uni() against direct computations")
+context("Checking misc: rma.uni() against direct computations")
 
 test_that("results match (FE model).", {
 

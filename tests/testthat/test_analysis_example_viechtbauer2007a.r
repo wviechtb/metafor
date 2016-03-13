@@ -2,7 +2,7 @@
 
 ### see also: http://www.metafor-project.org/doku.php/analyses:viechtbauer2007a
 
-context("Checking analysis example viechtbauer2007a")
+context("Checking analysis example: viechtbauer2007a")
 
 ### load data
 data(dat.collins1985b, package="metafor")

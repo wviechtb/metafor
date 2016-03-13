@@ -2,7 +2,7 @@
 
 ### see also: http://www.metafor-project.org/doku.php/analyses:viechtbauer2005
 
-context("Checking analysis example viechtbauer2005")
+context("Checking analysis example: viechtbauer2005")
 
 ### create dataset for example 1
 dat <- data.frame(

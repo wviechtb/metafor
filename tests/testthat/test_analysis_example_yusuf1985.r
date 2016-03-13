@@ -2,7 +2,7 @@
 
 ### see also: http://www.metafor-project.org/doku.php/analyses:yusuf1985
 
-context("Checking analysis example yusuf1985")
+context("Checking analysis example: yusuf1985")
 
 ### create dataset for example
 dat <- get(data(dat.yusuf1985, package="metafor"))

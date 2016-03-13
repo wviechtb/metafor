@@ -2,7 +2,7 @@
 
 ### see also: http://www.metafor-project.org/doku.php/analyses:lipsey2001
 
-context("Checking analysis example lipsey2001")
+context("Checking analysis example: lipsey2001")
 
 ### create dataset
 dat <- data.frame(

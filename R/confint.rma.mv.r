@@ -65,7 +65,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
                j <- j + 1
                cl.vc <- cl
                cl.vc$tau2 <- pos
-               cl.vc$fitted <- quote(x)
+               cl.vc$object <- quote(x)
                if (verbose)
                   cat("\nObtaining CI for tau2 =", pos, "\n")
                res.all[[j]] <- eval(cl.vc)
@@ -76,7 +76,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
                j <- j + 1
                cl.vc <- cl
                cl.vc$rho <- pos
-               cl.vc$fitted <- quote(x)
+               cl.vc$object <- quote(x)
                if (verbose)
                   cat("\nObtaining CI for rho =", pos, "\n")
                res.all[[j]] <- eval(cl.vc)
@@ -90,7 +90,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
                j <- j + 1
                cl.vc <- cl
                cl.vc$gamma2 <- pos
-               cl.vc$fitted <- quote(x)
+               cl.vc$object <- quote(x)
                if (verbose)
                   cat("\nObtaining CI for gamma2 =", pos, "\n")
                res.all[[j]] <- eval(cl.vc)
@@ -101,7 +101,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
                j <- j + 1
                cl.vc <- cl
                cl.vc$phi <- pos
-               cl.vc$fitted <- quote(x)
+               cl.vc$object <- quote(x)
                if (verbose)
                   cat("\nObtaining CI for phi =", pos, "\n")
                res.all[[j]] <- eval(cl.vc)

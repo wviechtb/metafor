@@ -2,7 +2,7 @@
 
 ### see also: http://www.metafor-project.org/doku.php/analyses:normand1999
 
-context("Checking analysis example normand1999")
+context("Checking analysis example: normand1999")
 
 test_that("results are correct for the first example (using dat.hine1989).", {
 

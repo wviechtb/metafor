@@ -1,6 +1,6 @@
 ### library(metafor); library(testthat); Sys.setenv(NOT_CRAN="true")
 
-context("Checking that results for rma() match up with those from lm() and lme()")
+context("Checking tip: rma() results match up with those from lm() and lme()")
 
 ### this is essentially checking the equivalence of the results as explained here:
 ### http://www.metafor-project.org/doku.php/tips:rma_vs_lm_and_lme

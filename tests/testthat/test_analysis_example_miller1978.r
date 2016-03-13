@@ -2,7 +2,7 @@
 
 ### see also: http://www.metafor-project.org/doku.php/analyses:miller1978
 
-context("Checking analysis example miller1978")
+context("Checking analysis example: miller1978")
 
 ### create dataset
 dat <- data.frame(xi=c(3, 6, 10, 1), ni=c(11, 17, 21, 6))

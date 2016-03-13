@@ -2,7 +2,7 @@
 
 ### see also: http://www.metafor-project.org/doku.php/analyses:berkey1995
 
-context("Checking analysis example berkey1995")
+context("Checking analysis example: berkey1995")
 
 ### load BCG dataset
 data(dat.bcg, package="metafor")

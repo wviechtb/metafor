@@ -1,6 +1,6 @@
 ### library(metafor); library(testthat); Sys.setenv(NOT_CRAN="true")
 
-context("Comparing rma.mh() against metan with 'dat.bcg'")
+context("Checking misc: rma.mh() against metan with 'dat.bcg'")
 
 test_that("results match (FE model, measure='RR').", {
 

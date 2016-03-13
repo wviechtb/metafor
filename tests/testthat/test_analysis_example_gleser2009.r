@@ -2,7 +2,7 @@
 
 ### see also: http://www.metafor-project.org/doku.php/analyses:gleser2009
 
-context("Checking analysis example gleser2009")
+context("Checking analysis example: gleser2009")
 
 ############################################################################
 

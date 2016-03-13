@@ -2,7 +2,7 @@
 
 ### see also: http://www.metafor-project.org/doku.php/analyses:berkey1998
 
-context("Checking analysis example berkey1998")
+context("Checking analysis example: berkey1998")
 
 ### load data
 dat <- get(data(dat.berkey1998, package="metafor"))

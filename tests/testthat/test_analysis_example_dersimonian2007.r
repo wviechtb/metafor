@@ -2,7 +2,7 @@
 
 ### see also: http://www.metafor-project.org/doku.php/analyses:dersimonian2007
 
-context("Checking analysis example dersimonian2007")
+context("Checking analysis example: dersimonian2007")
 
 ### data for the CLASP example
 n1i <- c(156, 303, 565, 1570, 103, 4659)

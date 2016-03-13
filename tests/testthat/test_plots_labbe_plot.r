@@ -2,7 +2,7 @@
 
 ### see also: http://www.metafor-project.org/doku.php/plots:labbe_plot
 
-context("Checking plots example: L'Abbé plot")
+context("Checking plots example: L'Abbe plot")
 
 test_that("plot can be drawn.", {
 

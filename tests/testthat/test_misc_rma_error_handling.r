@@ -1,6 +1,6 @@
 ### library(metafor); library(testthat); Sys.setenv(NOT_CRAN="true")
 
-context("Checking that rma() handles various errors properly")
+context("Checking misc: proper handling of errors in rma()")
 
 test_that("rma() handles NAs correctly.", {
 

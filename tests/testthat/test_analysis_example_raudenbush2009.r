@@ -2,7 +2,7 @@
 
 ### see also: http://www.metafor-project.org/doku.php/analyses:raudenbush2009
 
-context("Checking analysis example raudenbush2009")
+context("Checking analysis example: raudenbush2009")
 
 ### load data
 dat <- get(data(dat.raudenbush1985, package="metafor"))

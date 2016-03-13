@@ -1,6 +1,6 @@
 ### library(metafor); library(testthat); Sys.setenv(NOT_CRAN="true")
 
-context("Checking computations of fit statistics")
+context("Checking misc: computations of fit statistics")
 
 test_that("fit statistics are correct for rma.uni().", {
 

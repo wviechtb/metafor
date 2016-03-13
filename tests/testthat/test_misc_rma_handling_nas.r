@@ -1,6 +1,6 @@
 ### library(metafor); library(testthat); Sys.setenv(NOT_CRAN="true")
 
-context("Checking that missing values are handled correctly")
+context("Checking misc: proper handling of missing values")
 
 test_that("rma.glmm() handles NAs correctly.", {
 
