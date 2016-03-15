@@ -1,4 +1,4 @@
-Changes in Version 1.9-9 (2016-03-12)
+Changes in Version 1.9-9 (2016-03-15)
 =====================================
 
    o started to use git as version control system, GitHub to host the
@@ -36,6 +36,8 @@ Changes in Version 1.9-9 (2016-03-12)
    o the annotations created by the various forest() and addpoly() functions
      are now a bit more compact by default
 
+   o more flexible 'efac' argument in the various forest() functions
+
    o trailing zeros in the axis labels are now dropped in forest and funnel
      plots
 
@@ -63,7 +65,7 @@ Changes in Version 1.9-9 (2016-03-12)
 
    o some general code cleanup
 
-   o added more tests
+   o added more tests (and used a more consistent naming scheme for tests)
 
 
 Changes in Version 1.9-8 (2015-09-28)

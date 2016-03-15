@@ -95,8 +95,13 @@ cex, cex.lab, cex.axis, ...) {
          lty <- c(lty, "solid")
    }
 
+   ### vertical expansion factor: 1st = CI end lines, 2nd = arrows, 3rd = summary polygon or fitted polygons
+
    if (length(efac) == 1L)
-      efac <- rep(efac, 2) ### 1st = segments/arrows, 2nd = summary polygon or fitted polygons
+      efac <- rep(efac, 3)
+
+   if (length(efac) == 2L)
+      efac <- c(efac[1], efac[1], efac[2])
 
    measure <- x$measure
 
@@ -519,11 +524,11 @@ cex, cex.lab, cex.axis, ...) {
          if (is.na(pred[i]))
             next
 
-         polygon(x=c(max(pred.ci.lb[i], alim[1]), pred[i], min(pred.ci.ub[i], alim[2]), pred[i]), y=c(rows[i], rows[i]+(height/100)*cex*efac[2], rows[i], rows[i]-(height/100)*cex*efac[2]), col=col, border=border, ...)
+         polygon(x=c(max(pred.ci.lb[i], alim[1]), pred[i], min(pred.ci.ub[i], alim[2]), pred[i]), y=c(rows[i], rows[i]+(height/100)*cex*efac[3], rows[i], rows[i]-(height/100)*cex*efac[3]), col=col, border=border, ...)
 
          ### this would only draw intervals if bounds fall within alim range
          #if ((pred.ci.lb[i] > alim[1]) && (pred.ci.ub[i] < alim[2]))
-         #   polygon(x=c(pred.ci.lb[i], pred[i], pred.ci.ub[i], pred[i]), y=c(rows[i], rows[i]+(height/100)*cex*efac[2], rows[i], rows[i]-(height/100)*cex*efac[2]), col=col, border=border, ...)
+         #   polygon(x=c(pred.ci.lb[i], pred[i], pred.ci.ub[i], pred[i]), y=c(rows[i], rows[i]+(height/100)*cex*efac[3], rows[i], rows[i]-(height/100)*cex*efac[3]), col=col, border=border, ...)
 
       }
 
@@ -610,20 +615,20 @@ cex, cex.lab, cex.axis, ...) {
          if (b.cr.lb >= alim[1]) {
             segments(b.cr.lb, -1-(height/150)*cex*efac[1], b.cr.lb, -1+(height/150)*cex*efac[1], col=col[2], ...)
          } else {
-            polygon(x=c(alim[1], alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]), y=c(-1, -1+(height/150)*cex*efac[1], -1-(height/150)*cex*efac[1], -1), col=col[2], border=col[2], ...)
+            polygon(x=c(alim[1], alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]), y=c(-1, -1+(height/150)*cex*efac[2], -1-(height/150)*cex*efac[2], -1), col=col[2], border=col[2], ...)
          }
 
          if (b.cr.ub <= alim[2]) {
             segments(b.cr.ub, -1-(height/150)*cex*efac[1], b.cr.ub, -1+(height/150)*cex*efac[1], col=col[2], ...)
          } else {
-            polygon(x=c(alim[2], alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]), y=c(-1, -1+(height/150)*cex*efac[1], -1-(height/150)*cex*efac[1], -1), col=col[2], border=col[2], ...)
+            polygon(x=c(alim[2], alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]), y=c(-1, -1+(height/150)*cex*efac[2], -1-(height/150)*cex*efac[2], -1), col=col[2], border=col[2], ...)
          }
 
       }
 
       ### polygon for the summary estimate
 
-      polygon(x=c(b.ci.lb, b, b.ci.ub, b), y=c(-1, -1+(height/100)*cex*efac[2], -1, -1-(height/100)*cex*efac[2]), col=col[1], border=border, ...)
+      polygon(x=c(b.ci.lb, b, b.ci.ub, b), y=c(-1, -1+(height/100)*cex*efac[3], -1, -1-(height/100)*cex*efac[3]), col=col[1], border=border, ...)
 
       ### add label for model estimate
 
@@ -657,13 +662,13 @@ cex, cex.lab, cex.axis, ...) {
 
       ### if the lower bound is actually larger than upper x-axis limit, then everything is to the right and just draw a polygon pointing in that direction
       if (ci.lb[i] >= alim[2]) {
-         polygon(x=c(alim[2], alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]), y=c(rows[i], rows[i]+(height/150)*cex*efac[1], rows[i]-(height/150)*cex*efac[1], rows[i]), col="black", ...)
+         polygon(x=c(alim[2], alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]), y=c(rows[i], rows[i]+(height/150)*cex*efac[2], rows[i]-(height/150)*cex*efac[2], rows[i]), col="black", ...)
          next
       }
 
       ### if the upper bound is actually lower than lower x-axis limit, then everything is to the left and just draw a polygon pointing in that direction
       if (ci.ub[i] <= alim[1]) {
-         polygon(x=c(alim[1], alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]), y=c(rows[i], rows[i]+(height/150)*cex*efac[1], rows[i]-(height/150)*cex*efac[1], rows[i]), col="black", ...)
+         polygon(x=c(alim[1], alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]), y=c(rows[i], rows[i]+(height/150)*cex*efac[2], rows[i]-(height/150)*cex*efac[2], rows[i]), col="black", ...)
          next
       }
 
@@ -672,13 +677,13 @@ cex, cex.lab, cex.axis, ...) {
       if (ci.lb[i] >= alim[1]) {
          segments(ci.lb[i], rows[i]-(height/150)*cex*efac[1], ci.lb[i], rows[i]+(height/150)*cex*efac[1], ...)
       } else {
-         polygon(x=c(alim[1], alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]), y=c(rows[i], rows[i]+(height/150)*cex*efac[1], rows[i]-(height/150)*cex*efac[1], rows[i]), col="black", ...)
+         polygon(x=c(alim[1], alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]), y=c(rows[i], rows[i]+(height/150)*cex*efac[2], rows[i]-(height/150)*cex*efac[2], rows[i]), col="black", ...)
       }
 
       if (ci.ub[i] <= alim[2]) {
          segments(ci.ub[i], rows[i]-(height/150)*cex*efac[1], ci.ub[i], rows[i]+(height/150)*cex*efac[1], ...)
       } else {
-         polygon(x=c(alim[2], alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]), y=c(rows[i], rows[i]+(height/150)*cex*efac[1], rows[i]-(height/150)*cex*efac[1], rows[i]), col="black", ...)
+         polygon(x=c(alim[2], alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]), y=c(rows[i], rows[i]+(height/150)*cex*efac[2], rows[i]-(height/150)*cex*efac[2], rows[i]), col="black", ...)
       }
 
    }
