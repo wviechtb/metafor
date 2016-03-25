@@ -1,4 +1,4 @@
-Changes in Version 1.9-9 (2016-03-15)
+Changes in Version 1.9-9 (2016-03-25)
 =====================================
 
    o started to use git as version control system, GitHub to host the
@@ -47,6 +47,8 @@ Changes in Version 1.9-9 (2016-03-15)
 
    o baujat.rma() gains argument 'symbol' for more control over the plotting
      symbol
+
+   o labbe() gains a 'grid' argument
 
    o more logical placement of labels in qqnorm.rma.uni(), qqnorm.rma.mh(),
      and qqnorm.rma.peto() functions (and more control thereof)

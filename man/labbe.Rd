@@ -8,7 +8,7 @@ labbe(x, \dots)
 
 \method{labbe}{rma}(x, xlim, ylim, xlab, ylab,
       add=x$add, to=x$to, transf, targs,
-      pch=21, psize, bg="gray", \dots)
+      pch=21, psize, bg="gray", grid=FALSE, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma"}. See \sQuote{Details}.}
@@ -23,6 +23,7 @@ labbe(x, \dots)
    \item{pch}{plotting symbol to use for the outcomes. By default, a filled circle is used. Can also be a vector of values. See \code{\link{points}} for other options.}
    \item{psize}{optional vector with point sizes for the outcomes. If unspecified, the point sizes are drawn proportional to the precision of the estimates.}
    \item{bg}{color to use for filling the plotting symbol (the default is \code{"gray"}). Can also be a vector of values. Set to \code{NA} to make the plotting symbols transparent.}
+   \item{grid}{logical indicating whether a grid should be added to the plot.}
    \item{\dots}{other arguments.}
 }
 \details{

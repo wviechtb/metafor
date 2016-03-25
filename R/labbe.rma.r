@@ -1,5 +1,5 @@
 labbe.rma <- function(x, xlim, ylim, xlab, ylab,
-add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", ...) {
+add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, ...) {
 
    if (!inherits(x, "rma"))
       stop("Argument 'x' must be an object of class \"rma\".")
@@ -233,7 +233,15 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", ...) {
       ylab <- paste(ylab, "(Group 2)")
    }
 
-   plot(NA, NA, xlim=xlim, ylim=ylim, xlab=xlab, ylab=ylab, cex=psize, pch=pch, bg=bg, ...)
+   plot(NA, NA, xlim=xlim, ylim=ylim, xlab=xlab, ylab=ylab, ...)
+
+   ### add grid (and redraw box)
+
+   if (grid) {
+      grid()
+      box(...)
+   }
+
    abline(a=0, b=1, ...)
    lines(c.vals, t.vals, lty="dashed", ...)
    points(dat.c$yi, dat.t$yi, cex=psize, pch=pch, bg=bg, ...)

@@ -101,7 +101,7 @@ baujat.rma <- function(x, xlim, ylim, xlab, ylab, cex, symbol, grid=TRUE, ...) {
 
    plot(NA, xlab=xlab, ylab=ylab, xlim=xlim, ylim=ylim, ...)
 
-   ### add grid (and redraw box) (if requested)
+   ### add grid (and redraw box)
 
    if (grid) {
       grid()
