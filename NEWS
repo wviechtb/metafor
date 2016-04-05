@@ -1,4 +1,4 @@
-Changes in Version 1.9-9 (2016-03-25)
+Changes in Version 1.9-9 (2016-04-05)
 =====================================
 
    o started to use git as version control system, GitHub to host the
@@ -39,7 +39,8 @@ Changes in Version 1.9-9 (2016-03-25)
    o more flexible 'efac' argument in the various forest() functions
 
    o trailing zeros in the axis labels are now dropped in forest and funnel
-     plots
+     plots by default (but can retain trailing zeros by specifying a numeric
+     value for the 'digits' argument)
 
    o simplified baujat.rma.uni(), baujat.rma.mh(), and baujat.rma.peto() to
      baujat.rma(), which now handles objects of class 'rma.uni', 'rma.mh',

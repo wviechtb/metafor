@@ -73,7 +73,7 @@ print.anova.rma <- function(x, digits, ...) {
 
       res.table["Full",c("LRT","pval")] <- ""
       res.table["Full","R^2"] <- ""
-      res.table["Reduced","R^2"] <- paste0(x$R2, "%")
+      res.table["Reduced","R^2"] <- paste0(ifelse(is.na(x$R2), NA, formatC(x$R2, format="f", digits=2)), "%")
 
       ### remove tau^2 and R^2 columns if full model is FE or if dealing with rma.mv models
 

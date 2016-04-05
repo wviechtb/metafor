@@ -43,15 +43,17 @@ digits, cols=c("gray90","gray10"), addgrid=TRUE, pch=19, cex=1, lwd=2, ...) {
 
    if (missing(digits)) {
       if(yaxis == "tau2")
-         digits <- c(2,3)
+         digits <- c(2L,3L)
       if(yaxis == "I2")
-         digits <- c(2,1)
+         digits <- c(2L,1L)
       if(yaxis == "H2")
-         digits <- c(2,1)
+         digits <- c(2L,1L)
    } else {
       if (length(digits) == 1L)     ### digits[1] for x-axis labels
          digits <- c(digits,digits) ### digits[2] for y-axis labels
    }
+
+   ### note: digits can also be a list (e.g., digits=list(2L,3))
 
    #########################################################################
 
@@ -122,12 +124,12 @@ digits, cols=c("gray90","gray10"), addgrid=TRUE, pch=19, cex=1, lwd=2, ...) {
 
    if (is.function(atransf)) {
       if (is.null(targs)) {
-         at.lab <- formatC(sapply(at.lab, atransf), digits=digits[1], format="f", drop0trailing=TRUE)
+         at.lab <- formatC(sapply(at.lab, atransf), digits=digits[[1]], format="f", drop0trailing=ifelse(class(digits[[1]]) == "integer", TRUE, FALSE))
       } else {
-         at.lab <- formatC(sapply(at.lab, atransf, targs), digits=digits[1], format="f", drop0trailing=TRUE)
+         at.lab <- formatC(sapply(at.lab, atransf, targs), digits=digits[[1]], format="f", drop0trailing=ifelse(class(digits[[1]]) == "integer", TRUE, FALSE))
       }
    } else {
-      at.lab <- formatC(at.lab, digits=digits[1], format="f", drop0trailing=TRUE)
+      at.lab <- formatC(at.lab, digits=digits[[1]], format="f", drop0trailing=ifelse(class(digits[[1]]) == "integer", TRUE, FALSE))
    }
 
    ### add x-axis
@@ -137,7 +139,7 @@ digits, cols=c("gray90","gray10"), addgrid=TRUE, pch=19, cex=1, lwd=2, ...) {
    ### add y-axis
 
    aty <- axTicks(side=2)
-   axis(side=2, at=aty, labels=formatC(aty, digits=digits[2], format="f", drop0trailing=TRUE))
+   axis(side=2, at=aty, labels=formatC(aty, digits=digits[[2]], format="f", drop0trailing=ifelse(class(digits[[2]]) == "integer", TRUE, FALSE)))
 
    ### add grid
 

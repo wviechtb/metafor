@@ -111,8 +111,7 @@ trimfill.rma.uni <- function(x, side, estimator="L0", maxiter=100, verbose=FALSE
 
       ### round k0 and make sure that k0 is non-negative
 
-      k0 <- max(0, k0)
-      k0 <- round(k0)
+      k0 <- max(0, round(k0))
 
       se.k0 <- max(0, se.k0)
 

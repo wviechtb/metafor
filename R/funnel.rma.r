@@ -65,29 +65,31 @@ refline, pch=19, pch.fill=21, ci.res=1000, ...) {
 
    if (missing(digits)) {
       if(yaxis == "sei")
-         digits <- c(2,3)
+         digits <- c(2L,3L)
       if(yaxis == "vi")
-         digits <- c(2,3)
+         digits <- c(2L,3L)
       if(yaxis == "seinv")
-         digits <- c(2,3)
+         digits <- c(2L,3L)
       if(yaxis == "vinv")
-         digits <- c(2,3)
+         digits <- c(2L,3L)
       if(yaxis == "ni")
-         digits <- c(2,0)
+         digits <- c(2L,0L)
       if(yaxis == "ninv")
-         digits <- c(2,3)
+         digits <- c(2L,3L)
       if(yaxis == "sqrtni")
-         digits <- c(2,3)
+         digits <- c(2L,3L)
       if(yaxis == "sqrtninv")
-         digits <- c(2,3)
+         digits <- c(2L,3L)
       if(yaxis == "lni")
-         digits <- c(2,3)
+         digits <- c(2L,3L)
       if(yaxis == "wi")
-         digits <- c(2,2)
+         digits <- c(2L,2L)
    } else {
       if (length(digits) == 1L)     ### digits[1] for x-axis labels
          digits <- c(digits,digits) ### digits[2] for y-axis labels
    }
+
+   ### note: digits can also be a list (e.g., digits=list(2L,3))
 
    #########################################################################
 
@@ -289,7 +291,7 @@ refline, pch=19, pch.fill=21, ci.res=1000, ...) {
 
    ### add y-axis
 
-   axis(side=2, at=seq(from=ylim[1], to=ylim[2], length.out=steps), labels=formatC(seq(from=ylim[1], to=ylim[2], length.out=steps), digits=digits[2], format="f", drop0trailing=TRUE), ...)
+   axis(side=2, at=seq(from=ylim[1], to=ylim[2], length.out=steps), labels=formatC(seq(from=ylim[1], to=ylim[2], length.out=steps), digits=digits[[2]], format="f", drop0trailing=ifelse(class(digits[[2]]) == "integer", TRUE, FALSE)), ...)
 
    ### add horizontal lines
 
@@ -427,12 +429,12 @@ refline, pch=19, pch.fill=21, ci.res=1000, ...) {
 
    if (is.function(atransf)) {
       if (is.null(targs)) {
-         at.lab <- formatC(sapply(at.lab, atransf), digits=digits[1], format="f", drop0trailing=TRUE)
+         at.lab <- formatC(sapply(at.lab, atransf), digits=digits[[1]], format="f", drop0trailing=ifelse(class(digits[[1]]) == "integer", TRUE, FALSE))
       } else {
-         at.lab <- formatC(sapply(at.lab, atransf, targs), digits=digits[1], format="f", drop0trailing=TRUE)
+         at.lab <- formatC(sapply(at.lab, atransf, targs), digits=digits[[1]], format="f", drop0trailing=ifelse(class(digits[[1]]) == "integer", TRUE, FALSE))
       }
    } else {
-      at.lab <- formatC(at.lab, digits=digits[1], format="f", drop0trailing=TRUE)
+      at.lab <- formatC(at.lab, digits=digits[[1]], format="f", drop0trailing=ifelse(class(digits[[1]]) == "integer", TRUE, FALSE))
    }
 
    ### add x-axis

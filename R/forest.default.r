@@ -1,5 +1,5 @@
 forest.default <- function(x, vi, sei, ci.lb, ci.ub, annotate=TRUE,  showweights=FALSE,
-xlim, alim, clim, ylim, at, steps=5, level=95,      refline=0, digits=2, width,
+xlim, alim, clim, ylim, at, steps=5, level=95,      refline=0, digits=2L, width,
 xlab, slab,            ilab, ilab.xpos, ilab.pos, subset,
 transf, atransf, targs, rows,
 efac=1, pch=15, psize, col, lty,
@@ -389,12 +389,12 @@ cex, cex.lab, cex.axis, ...) {
 
    if (is.function(atransf)) {
       if (is.null(targs)) {
-         at.lab <- formatC(sapply(at.lab, atransf), digits=digits[2], format="f", drop0trailing=TRUE)
+         at.lab <- formatC(sapply(at.lab, atransf), digits=digits[2], format="f", drop0trailing=ifelse(class(digits) == "integer", TRUE, FALSE))
       } else {
-         at.lab <- formatC(sapply(at.lab, atransf, targs), digits=digits[2], format="f", drop0trailing=TRUE)
+         at.lab <- formatC(sapply(at.lab, atransf, targs), digits=digits[2], format="f", drop0trailing=ifelse(class(digits) == "integer", TRUE, FALSE))
       }
    } else {
-      at.lab <- formatC(at.lab, digits=digits[2], format="f", drop0trailing=TRUE)
+      at.lab <- formatC(at.lab, digits=digits[2], format="f", drop0trailing=ifelse(class(digits) == "integer", TRUE, FALSE))
    }
 
    #########################################################################

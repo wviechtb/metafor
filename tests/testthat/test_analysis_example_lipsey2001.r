@@ -103,6 +103,6 @@ test_that("results are correct for the comutation of R^2 via the anova() functio
    res.RE <- rma(yi, vi, data=dat, method="DL")
    tmp <- anova(res.RE, res.ME)
 
-   expect_equivalent(tmp$R2, 81.2)
+   expect_equivalent(round(tmp$R2, 2), 81.2)
 
 })

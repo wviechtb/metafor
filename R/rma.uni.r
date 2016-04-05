@@ -1524,7 +1524,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
          if (identical(tau2.RE,0)) {
             R2 <- NA
          } else {
-            R2 <- round(max(0, 100 * (tau2.RE - tau2) / tau2.RE), 2)
+            R2 <- max(0, 100 * (tau2.RE - tau2) / tau2.RE)
          }
 
       } else {

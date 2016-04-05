@@ -240,7 +240,7 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
          if (m.f$method == "FE" || identical(m.r$tau2,0)) {
             R2 <- NA
          } else {
-            R2 <- round(100 * max(0, (m.r$tau2 - m.f$tau2)/m.r$tau2), 2)
+            R2 <- 100 * max(0, (m.r$tau2 - m.f$tau2)/m.r$tau2)
          }
       } else {
          R2 <- NA
