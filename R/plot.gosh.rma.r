@@ -1,4 +1,5 @@
-plot.gosh.rma <- function(x, het="I2", pch=19, cex, out, col, alpha, xhist=TRUE, yhist=TRUE, hh=.3, hcol, breaks, adjust, lwd, labels, ...) {
+plot.gosh.rma <- function(x, het="I2", pch=16, cex, out, col, alpha,
+xlim, ylim, xhist=TRUE, yhist=TRUE, hh=.3, hcol, breaks, adjust, lwd, labels, ...) {
 
    if (!inherits(x, "gosh.rma"))
       stop("Argument 'x' must be an object of class \"gosh.rma\".")
@@ -38,7 +39,7 @@ plot.gosh.rma <- function(x, het="I2", pch=19, cex, out, col, alpha, xhist=TRUE,
    if (length(hh) == 1)
       hh <- c(hh, hh)
 
-   if (any(hh < 0) | any(hh > 1))
+   if (x$int.only && (any(hh < 0) | any(hh > 1)))
       stop("Invalid value(s) specified for 'hh' argument.")
 
    if (missing(hcol))
@@ -82,7 +83,7 @@ plot.gosh.rma <- function(x, het="I2", pch=19, cex, out, col, alpha, xhist=TRUE,
    if (x$int.only) {
 
       par.mar <- par("mar")
-      par.mar.adj <- par.mar - c(0,-1,3.5,1.5)
+      par.mar.adj <- par.mar - c(0,-1,3.1,1.1)
       par.mar.adj[par.mar.adj < 0] <- 0
       on.exit(par(mar = par.mar))
 
@@ -93,14 +94,21 @@ plot.gosh.rma <- function(x, het="I2", pch=19, cex, out, col, alpha, xhist=TRUE,
       if (!xhist & yhist)
          layout(mat=matrix(c(1,2), nrow=1, byrow=TRUE), widths=c(1-hh[2],hh[2]))
 
+      hx <- hist(x$res[,6],   breaks=breaks, plot=FALSE)
+      hy <- hist(x$res[,het], breaks=breaks, plot=FALSE)
+
+      if (missing(xlim))
+         xlim <- range(hx$breaks)
+      if (missing(ylim))
+         ylim <- range(hy$breaks)
+
       if (xhist) {
          d <- density(x$res[,6], adjust=adjust, na.rm=TRUE)
-         h <- hist(x$res[,6], breaks=breaks, plot=FALSE)
-         brks <- h$breaks
+         brks <- hx$breaks
          nB <- length(brks)
-         y <- h$density
+         y <- hx$density
          par(mar=c(0,par.mar.adj[2:4]))
-         plot(NULL, xlim = c(range(h$breaks)), ylim = c(0,max(h$density,d$y)), xlab="", ylab="", xaxt="n", yaxt="n", bty="n")
+         plot(NULL, xlim=xlim, ylim=c(0,max(hx$density,d$y)), xlab="", ylab="", xaxt="n", yaxt="n", bty="n")
          rect(brks[-nB], 0, brks[-1], y, col=hcol[1], border=hcol[2])
          if (lwd > 0)
             lines(d$x, d$y, lwd=lwd, col="black")
@@ -110,20 +118,23 @@ plot.gosh.rma <- function(x, het="I2", pch=19, cex, out, col, alpha, xhist=TRUE,
          plot.new()
 
       par(mar = par.mar.adj)
-      plot(x$res[,6], x$res[,het], pch=pch, cex=cex, col=col, bty="l", xlab=labels[1], ylab=labels[2], ...)
+      plot(x$res[,6], x$res[,het], xlim=xlim, ylim=ylim, pch=pch, cex=cex, col=col, bty="l", xlab=labels[1], ylab=labels[2], ...)
 
       if (yhist) {
          d <- density(x$res[,het], adjust=adjust, na.rm=TRUE)
-         h <- hist(x$res[,het], breaks=breaks, plot=FALSE)
-         brks <- h$breaks
+         brks <- hy$breaks
          nB <- length(brks)
-         y <- h$density
+         y <- hy$density
          par(mar=c(par.mar.adj[1],0,par.mar.adj[3:4]))
-         plot(NULL, xlim = c(0,max(h$density,d$y)), ylim = c(range(h$breaks)), xlab="", ylab="", xaxt="n", yaxt="n", bty="n")
+         plot(NULL, xlim=c(0,max(hy$density,d$y)), ylim=ylim, xlab="", ylab="", xaxt="n", yaxt="n", bty="n")
          rect(0, brks[-nB], y, brks[-1], col=hcol[1], border=hcol[2])
          if (lwd > 0)
             lines(d$y, d$x, lwd=lwd, col="black")
       }
+
+      ### reset to a single figure
+      if (xhist | yhist)
+         layout(matrix(1))
 
    } else {
 
@@ -132,13 +143,13 @@ plot.gosh.rma <- function(x, het="I2", pch=19, cex, out, col, alpha, xhist=TRUE,
       panel.hist <- function(x, ...) {
          usr <- par("usr")
          on.exit(par(usr))
-         par(usr = c(usr[1:2], 0, 1.5))
+         par(usr = c(usr[1:2], 0, 1.2 + hh[1]))
          h <- hist(x, plot=FALSE, breaks=breaks)
-         breaks <- h$breaks
-         nB <- length(breaks)
+         brks <- h$breaks
+         nB <- length(brks)
          y <- h$density
          z <- y / max(y)
-         rect(breaks[-nB], 0, breaks[-1], z, col=hcol[1], border=hcol[2])
+         rect(brks[-nB], 0, brks[-1], z, col=hcol[1], border=hcol[2])
          res <- density(x, adjust=adjust, na.rm=TRUE)
          res$y <- res$y / max(y)
          if (lwd > 0)
