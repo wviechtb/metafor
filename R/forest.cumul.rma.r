@@ -345,8 +345,11 @@ cex, cex.lab, cex.axis, ...) {
 
    par.usr <- par("usr")
    height  <- par.usr[4] - par.usr[3]
-   lheight <- strheight("O")
-   cex.adj <- ifelse(k * lheight > height * 0.8, height/(1.25 * k * lheight), 1)
+
+   if (is.null(cex)) {
+      lheight <- strheight("O")
+      cex.adj <- ifelse(k * lheight > height * 0.8, height/(1.25 * k * lheight), 1)
+   }
 
    if (is.null(cex)) {
       cex <- par("cex") * cex.adj
