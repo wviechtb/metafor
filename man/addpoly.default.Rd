@@ -54,7 +54,7 @@ res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, mods = ~ ablat,
 
 ### forest plot of the observed relative risks
 forest(res, addfit=FALSE, atransf=exp, xlim=c(-8,5), ylim=c(-4.5,16), cex=.8,
-       order=order(dat.bcg$ablat), ilab=dat.bcg$ablat, ilab.xpos=-3.5)
+       order=order(dat.bcg$ablat), ilab=dat.bcg$ablat, ilab.xpos=-2.8, ilab.pos=2)
 
 ### predicted average log relative risk for 10, 30, and 50 degrees absolute latitude
 x <- predict(res, newmods=c(10, 30, 50))
@@ -66,6 +66,6 @@ abline(h=0)
 text(-8,   -1, "Model-Based Estimates of RR:", pos=4, cex=.8)
 text(-8,   15, "Author(s) and Year",     pos=4, cex=.8)
 text(5,    15, "Relative Risk [95\% CI]", pos=2, cex=.8)
-text(-3.5, 15, "Latitude", cex=.8)
+text(-3.3, 15, "Latitude", cex=.8)
 }
 \keyword{aplot}

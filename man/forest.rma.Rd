@@ -30,9 +30,9 @@
    \item{xlab}{title for the x-axis. If unspecified, the function tries to set an appropriate axis title.}
    \item{slab}{optional vector with labels for the \eqn{k} studies. If unspecified, the labels are either taken from the object (if study labels were specified) or simple labels are created within the function. To suppress labels, set this argument to \code{NA}.}
    \item{mlab}{optional character string giving a label to the summary estimate from a fixed- or random-effects model. If unspecified, the label is created within the function.}
-   \item{ilab}{optional vector or matrix of character strings providing additional information about the studies.}
-   \item{ilab.xpos}{vector of numerical value(s) specifying the x-axis position(s) of the character vector(s) given via \code{ilab} (must be specified if \code{ilab} is specified).}
-   \item{ilab.pos}{integer(s) (either 1, 2, 3, or 4) specifying the alignment of the character vector(s) given via \code{ilab} (2 means right, 4 mean left aligned). If unspecified, the default is to center the labels.}
+   \item{ilab}{optional vector, matrix, or data frame providing additional information about the studies that should be added to the plot.}
+   \item{ilab.xpos}{vector of numerical value(s) specifying the x-axis position(s) of the variable(s) given via \code{ilab} (must be specified if \code{ilab} is specified).}
+   \item{ilab.pos}{integer(s) (either 1, 2, 3, or 4) specifying the alignment of the vector(s) given via \code{ilab} (2 means right, 4 mean left aligned). If unspecified, the default is to center the labels.}
    \item{order}{optional character string specifying how the studies should be ordered. See \sQuote{Details}.}
    \item{transf}{optional argument specifying the name of a function that should be used to transform the observed effect sizes, summary estimates, fitted values, and confidence interval bounds (e.g., \code{transf=exp}). If unspecified, no transformation is used.}
    \item{atransf}{optional argument specifying the name of a function that should be used to transform the x-axis labels and annotations (e.g., \code{transf=exp}). If unspecified, no transformation is used.}
@@ -146,7 +146,8 @@ forest(res, atransf=exp, at=log(c(.05,.25,1,4,20)), xlim=c(-8,7), cex=.8)
 forest(res, atransf=exp, at=log(c(.05,.25,1,4,20)), xlim=c(-8,8),
        order="prec", showweights=TRUE, cex=.8)
 
-### forest plot with extra annotations (may need to stretch plotting device)
+### forest plot with extra annotations
+### note: may need to widen plotting device to avoid overlapping text
 forest(res, atransf=exp, at=log(c(.05, .25, 1, 4)), xlim=c(-16,6),
        ilab=cbind(dat.bcg$tpos, dat.bcg$tneg, dat.bcg$cpos, dat.bcg$cneg),
        ilab.xpos=c(-9.5,-8,-6,-4.5), cex=.75)
@@ -180,7 +181,8 @@ forest(res, ylim=c(-1.5, 16)) ### the default
 forest(res, ylim=c(-1.5, 20)) ### extra space in plot
 forest(res, ylim=c(-1.5, 20), rows=c(17:15, 12:6, 3:1)) ### set positions
 
-### forest plot with subgrouping of studies (may need to stretch plotting device)
+### forest plot with subgrouping of studies
+### note: may need to widen plotting device to avoid overlapping text
 forest(res, xlim=c(-16, 6), at=log(c(.05, .25, 1, 4)), atransf=exp,
        ilab=cbind(dat.bcg$tpos, dat.bcg$tneg, dat.bcg$cpos, dat.bcg$cneg),
        ilab.xpos=c(-9.5,-8,-6,-4.5), cex=.75, ylim=c(-1, 21),

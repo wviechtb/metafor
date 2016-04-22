@@ -98,10 +98,8 @@ cex, cex.lab, cex.axis, ...) {
       slab[1] <- paste(x$slab[1])
    }
 
-   if (is.vector(ilab) || NCOL(ilab) == 1)
+   if (is.null(dim(ilab)))
       ilab <- cbind(ilab)
-
-   ### note: is.vector() is FALSE if ilab is a factor, so use NCOL() to test for this case
 
    if (length(pch) == 1L)
       pch <- rep(pch, k)
@@ -420,9 +418,11 @@ cex, cex.lab, cex.axis, ...) {
    if (!is.null(ilab)) {
       if (is.null(ilab.xpos))
          stop("Must specify 'ilab.xpos' argument when adding information with 'ilab'.")
-      if (length(ilab.xpos) != NCOL(ilab))
-         stop("Number of 'ilab' columns does not match length of 'ilab.xpos' argument.")
-      for (l in seq_len(NCOL(ilab))) {
+      if (length(ilab.xpos) != ncol(ilab))
+         stop(paste0("Number of 'ilab' columns (", ncol(ilab), ") does not match length of 'ilab.xpos' argument (", length(ilab.xpos), ")."))
+      if (!is.null(ilab.pos) && length(ilab.pos) == 1)
+         ilab.pos <- rep(ilab.pos, ncol(ilab))
+      for (l in seq_len(ncol(ilab))) {
          text(ilab.xpos[l], rows, ilab[,l], pos=ilab.pos[l], cex=cex, ...)
       }
    }

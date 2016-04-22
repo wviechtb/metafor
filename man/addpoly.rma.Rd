@@ -55,6 +55,7 @@ res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 addpoly(res, atransf=exp)
 
 ### forest plot with subgrouping of studies and summaries per subgroup
+### note: may need to widen plotting device to avoid overlapping text
 res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg,
            slab=paste(author, year, sep=", "))
 forest(res, xlim=c(-16, 6), at=log(c(.05, .25, 1, 4)), atransf=exp,

@@ -141,10 +141,8 @@ cex, cex.lab, cex.axis, ...) {
    if (length(yi) != length(slab))
       stop("Number of outcomes does not correspond to the length of the 'slab' argument.")
 
-   if (is.vector(ilab) || NCOL(ilab) == 1)      ### note: ilab must have same length as yi.f in rma object
+   if (is.null(dim(ilab)))                      ### note: ilab must have same length as yi.f in rma object
       ilab <- cbind(ilab)                       ### even when fewer studies used for model fitting
-
-   ### note: is.vector() is FALSE if ilab is a factor, so use NCOL() to test for this case
 
    if (length(pch) == 1L)                       ### note: pch must have same length as yi.f in rma object
       pch <- rep(pch, k)                        ### or be equal to a single value (which is then repeated)
@@ -700,9 +698,11 @@ cex, cex.lab, cex.axis, ...) {
    if (!is.null(ilab)) {
       if (is.null(ilab.xpos))
          stop("Must specify 'ilab.xpos' argument when adding information with 'ilab'.")
-      if (length(ilab.xpos) != NCOL(ilab))
-         stop("Number of 'ilab' columns does not match length of 'ilab.xpos' argument.")
-      for (l in seq_len(NCOL(ilab))) {
+      if (length(ilab.xpos) != ncol(ilab))
+         stop(paste0("Number of 'ilab' columns (", ncol(ilab), ") does not match length of 'ilab.xpos' argument (", length(ilab.xpos), ")."))
+      if (!is.null(ilab.pos) && length(ilab.pos) == 1)
+         ilab.pos <- rep(ilab.pos, ncol(ilab))
+      for (l in seq_len(ncol(ilab))) {
          text(ilab.xpos[l], rows, ilab[,l], pos=ilab.pos[l], cex=cex, ...)
       }
    }
