@@ -517,7 +517,7 @@ dat <- data.frame(id = c(100, 308, 1596, 2479, 9021, 9028, 161, 172, 537, 7049),
                   vi = c(0.084, 0.035, 0.017, 0.034, 0.072, 0.117, 0.102, 0.093, 0.012, 0.067),
                   random = c(0, 0, 0, 0, 0, 0, 1, 1, 1, 1),
                   intensity = c(7, 3, 7, 5, 7, 7, 4, 4, 5, 6))
-dat <- escalc(measure="SMD", yi=yi, vi=vi, data=dat, slab=paste0("Study ID: ", id), digits=3)
+dat <- escalc(measure="SMD", yi=yi, vi=vi, data=dat, slab=paste("Study ID:", id), digits=3)
 dat
 }
 \keyword{datagen}

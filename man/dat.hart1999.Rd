@@ -43,10 +43,10 @@ predict(res, transf=exp)
 
 ### forest plot with extra annotations
 par(mar=c(5,4,1,2))
-forest(res, xlim=c(-11, 5), at=log(c(.05, .25, 1, 4)), atransf=exp, 
-       slab=paste(dat$study, " (", dat$year, ")", sep=""), 
-       ilab=cbind(paste(dat$x1i, "/", dat$t1i, sep=" "), 
-       paste(dat$x2i, "/", dat$t2i, sep=" ")), 
+forest(res, xlim=c(-11, 5), at=log(c(.05, .25, 1, 4)), atransf=exp,
+       slab=paste0(dat$study, " (", dat$year, ")"),
+       ilab=cbind(paste(dat$x1i, "/", dat$t1i, sep=" "),
+       paste(dat$x2i, "/", dat$t2i, sep=" ")),
        ilab.xpos=c(-6.5,-4), cex=.85)
 op <- par(cex=.85, font=2)
 text(-11, 7.5, "Study (Year)", pos=4)
