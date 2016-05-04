@@ -18,6 +18,8 @@ print.permutest.rma.uni <- function(x, digits, signif.stars=getOption("show.sign
    }
 
    res.table <- cbind(estimate=c(x$b), se=x$se, zval=x$zval, "pval*"=x$pval, ci.lb=x$ci.lb, ci.ub=x$ci.ub)
+   if (x$permci)
+      colnames(res.table)[5:6] <- c("ci.lb*", "ci.ub*")
    rownames(res.table) <- rownames(x$b)
    if ((is.logical(x$knha) && x$knha) || is.character(x$knha))
       colnames(res.table)[3] <- "tval"

@@ -17,8 +17,8 @@
    \item{se}{corresponding standard error(s).}
    \item{zval}{corresponding test statistic(s).}
    \item{pval}{p-value(s) based on the permutation test.}
-   \item{ci.lb}{lower bound of the confidence interval(s).}
-   \item{ci.ub}{upper bound of the confidence interval(s).}
+   \item{ci.lb}{lower bound of the (permutation-based) confidence interval(s).}
+   \item{ci.ub}{upper bound of the (permutation-based) confidence interval(s).}
 
    When the model was fitted with the Knapp and Hartung (2003) method (i.e., \code{knha=TRUE} in the \code{\link{rma.uni}} function), then \code{zval} is called \code{tval} in the data frame that is returned by the function.
 }

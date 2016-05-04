@@ -749,6 +749,31 @@
 
 }
 
+.permci <- function(val, obj, j, exact, iter, progbar, comp.tol, alpha, digits, control) {
+
+   ### fit model with shifted outcome
+   res <- try(suppressWarnings(rma.uni(obj$yi - c(val*obj$X[,j]), obj$vi, weights=obj$weights, mods=obj$X, intercept=FALSE, method=obj$method, weighted=obj$weighted, knha=obj$knha, tau2=ifelse(obj$tau2.fix, obj$tau2, NA), control=obj$control)), silent=TRUE)
+
+   if (inherits(res, "try-error"))
+      stop()
+
+   ### p-value based on permutation test
+   pval <- permutest(res, exact=exact, iter=iter, progbar=FALSE, tol=comp.tol, control=control)$pval[j]
+
+   ### get difference between p-value and alpha
+   diff <- pval - alpha / ifelse(control$alternative == "two.sided", 1, 2)
+
+   ### show progress
+   if (progbar)
+      cat("pval =", formatC(pval, format="f", digits=digits), " diff =", formatC(diff, format="f", digits=digits, flag=" "), " val =", formatC(val, format="f", digits=digits, flag=" "), "\n")
+
+   ### penalize negative differences, which should force the CI bound to correspond to a p-value of *at least* alpha
+   diff <- ifelse(diff < 0, diff*10, diff)
+
+   return(diff)
+
+}
+
 ############################################################################
 
 ### set axis label (for forest, funnel, and labbe functions)

@@ -1,4 +1,4 @@
-Changes in Version 1.9-9 (2016-04-11)
+Changes in Version 1.9-9 (2016-05-04)
 =====================================
 
    o started to use git as version control system, GitHub to host the
@@ -26,6 +26,14 @@ Changes in Version 1.9-9 (2016-04-11)
 
    o added ranef() for extracting the BLUPs of the random effects (only for
      'rma.uni' objects at the moment)
+
+   o reverted back to the pre-1.1-0 way of computing p-values for individual
+     coefficients in permutest.rma.uni(), that is, the p-value is computed
+     with mean(abs(z_perm) >= abs(z_obs)) (with numerical tolerance)
+
+   o permutest.rma.uni() gains 'permci' argument, which can be used to
+     obtain permutation-based CIs of the model coefficients (note that this
+     is computationally very demanding and may take a long time to complete)
 
    o the various forest() and addpoly() functions now have a new argument
      called 'width', which provides manual control over the width of the
