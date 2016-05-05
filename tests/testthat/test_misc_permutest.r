@@ -41,6 +41,6 @@ test_that("permutest() gives correct results for a mixed-effects model", {
    ### exact permutation test
    sav <- permutest(res, progbar=FALSE)
 
-   expect_equivalent(round(sav$pval, 4), c(0.0111, 0.0056))
+   expect_equivalent(round(sav$pval, 4), c(1, 0.0028))
 
 })
