@@ -221,6 +221,9 @@
          sigma2[sigma2 < 0] <- 0
       }
 
+      #if (any(is.nan(sigma2)))
+      #   return(Inf)
+
       for (j in seq_len(sigma2s)) {
          M <- M + sigma2[j] * D.S[[j]]
       }
@@ -432,13 +435,15 @@
    if (posdefify)
       M <- as.matrix(nearPD(M)$mat)
 
-   if (verbose) {
-      L <- try(chol(M), silent=!verbose)
+   if (very.verbose) {
+      W <- try(chol2inv(chol(M)), silent=FALSE)
    } else {
-      L <- try(suppressWarnings(chol(M)), silent=!verbose)
+      W <- try(suppressWarnings(chol2inv(chol(M))), silent=TRUE)
    }
 
-   if (inherits(L, "try-error")) {
+   ### note: need W for REML llval computation
+
+   if (inherits(W, "try-error")) {
 
       ### if M is not positive-definite, set the (restricted) log likelihood to -Inf
       ### this idea is based on: http://stats.stackexchange.com/q/11368/1934 (this is crude, but should
@@ -448,18 +453,29 @@
 
    } else {
 
-      W <- chol2inv(L) ### need this for REML llval computation
-      U <- chol(W)
-      sX <- U %*% X.fit
-
-      sY <- U %*% Y
-      b  <- solve(crossprod(sX), crossprod(sX, sY))
-      RSS.f <- sum(as.vector(sY - sX %*% b)^2)
-
-      if (reml) {
-         llval  <- -1/2 * (k-pX) * log(2*base::pi) + ifelse(REMLf, 1/2 * determinant(crossprod(X.fit), logarithm=TRUE)$modulus, 0) - 1/2 * determinant(M, logarithm=TRUE)$modulus - 1/2 * determinant(crossprod(X.fit,W) %*% X.fit, logarithm=TRUE)$modulus - 1/2 * RSS.f
+      if (very.verbose) {
+         U <- try(chol(W), silent=FALSE)
       } else {
-         llval  <- -1/2 * (k)    * log(2*base::pi)                                                                                 - 1/2 * determinant(M, logarithm=TRUE)$modulus                                                                           - 1/2 * RSS.f
+         U <- try(suppressWarnings(chol(W)), silent=TRUE)
+      }
+
+      if (inherits(U, "try-error")) {
+
+         llval <- -Inf
+
+      } else {
+
+         sX <- U %*% X.fit
+         sY <- U %*% Y
+         b  <- solve(crossprod(sX), crossprod(sX, sY))
+         RSS.f <- sum(as.vector(sY - sX %*% b)^2)
+
+         if (reml) {
+            llval  <- -1/2 * (k-pX) * log(2*base::pi) + ifelse(REMLf, 1/2 * determinant(crossprod(X.fit), logarithm=TRUE)$modulus, 0) - 1/2 * determinant(M, logarithm=TRUE)$modulus - 1/2 * determinant(crossprod(X.fit,W) %*% X.fit, logarithm=TRUE)$modulus - 1/2 * RSS.f
+         } else {
+            llval  <- -1/2 * (k)    * log(2*base::pi)                                                                                 - 1/2 * determinant(M, logarithm=TRUE)$modulus                                                                           - 1/2 * RSS.f
+         }
+
       }
 
    }

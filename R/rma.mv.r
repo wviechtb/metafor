@@ -1800,13 +1800,13 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
    if (very.verbose)
       message("Extracting/computing initial values ...")
 
-   if (verbose) {
-      L.FE <- try(chol(V), silent=TRUE)
+   if (very.verbose) {
+      U <- try(chol(chol2inv(chol(V))), silent=FALSE)
    } else {
-      L.FE <- try(suppressWarnings(chol(V)), silent=!verbose)
+      U <- try(suppressWarnings(chol(chol2inv(chol(V)))), silent=TRUE)
    }
 
-   if (inherits(L.FE, "try-error")) {
+   if (inherits(U, "try-error")) {
 
       sigma2.init <- rep(.001, sigma2s)
       tau2.init   <- rep(.001, tau2s)
@@ -1814,10 +1814,11 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
       gamma2.init <- rep(.001, gamma2s)
       phi.init    <- rep(.50,  rhos)
 
+      QE <- NA
+      QEp <- NA
+
    } else {
 
-      W <- chol2inv(L.FE)
-      U <- chol(W)
       sX <- U %*% X
       sY <- U %*% Y
       b.FE <- solve(crossprod(sX), crossprod(sX, sY))
@@ -1832,6 +1833,8 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
       phi.init    <- rep(.50, phis)
 
       QE <- sum(as.vector(sY - sX %*% b.FE)^2)
+
+      ### QEp calculated below
 
    }
 
@@ -2425,24 +2428,30 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
 
    ### fit model with the actually estimated (or fixed) variance components and correlations
 
-   if (verbose) {
-      L <- try(chol(M), silent=!verbose)
+   if (very.verbose) {
+      W <- try(chol2inv(chol(M)), silent=FALSE)
    } else {
-      L <- try(suppressWarnings(chol(M)), silent=!verbose)
+      W <- try(suppressWarnings(chol2inv(chol(M))), silent=TRUE)
    }
 
-   if (inherits(L, "try-error")) {
+   ### note: need W for REML llval computation
 
+   if (inherits(W, "try-error"))
       stop("Final variance-covariance matrix not positive definite.")
 
+   ### Y ~ N(beta, M), so UY ~ N(U beta, U M U) where U M U = I
+
+   if (very.verbose) {
+      U <- try(chol(W), silent=FALSE)
    } else {
-
-      W  <- chol2inv(L) ### need this for REML llval computation
-      U  <- chol(W)     ### Y ~ N(beta, M), so UY ~ N(U beta, U M U)
-      sX <- U %*% X     ### where U M U = I
-      #return(U %*% M %*% U)
-
+      U <- try(suppressWarnings(chol(W)), silent=TRUE)
    }
+
+   if (inherits(U, "try-error"))
+      stop("Cannot fit model based on estimated marginal variance-covariance matrix.")
+
+   sX <- U %*% X
+   #return(U %*% M %*% U)
 
    if (is.null(A)) {
 
@@ -2507,18 +2516,12 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
 
    if (QE.df > 0L) {
 
-      if (inherits(L.FE, "try-error")) {
+      if (!is.na(QE)) {
 
-         ### if V is not positive definite, FE model fit will fail; then QE and QEp are NA
-
-         QE <- NA
-         QEp <- NA
-
-      } else {
-
+         ### if V is not positive definite, FE model fit will fail; then QE is NA
          ### otherwise compute the RSS (which is equal to the Q/QE-test statistic)
 
-         QEp <- pchisq(QE, df=QE.df, lower.tail=FALSE) # QE already calculated earlier
+         QEp <- pchisq(QE, df=QE.df, lower.tail=FALSE)
 
       }
 
