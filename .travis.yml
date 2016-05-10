@@ -1,5 +1,5 @@
 language: r
-r: release
+r: oldrel
 warnings_are_errors: true
 sudo: false
 cache: packages
