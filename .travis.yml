@@ -9,8 +9,5 @@ r_packages:
   - covr
   - testthat
 
-env:
-  - NOT_CRAN=true
-
 after_success:
   - Rscript -e 'library(covr); codecov()'
