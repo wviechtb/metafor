@@ -8,5 +8,8 @@ r_packages:
   - lme4
   - covr
 
+env:
+  - NOT_CRAN=true
+
 after_success:
-  - Rscript -e 'library(covr); Sys.setenv(NOT_CRAN="true"); codecov()'
+  - Rscript -e 'library(covr); codecov()'
