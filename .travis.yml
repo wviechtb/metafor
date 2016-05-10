@@ -6,10 +6,8 @@ cache: packages
 
 r_packages:
   - lme4
-  - xml2
-
-r_github_packages:
-  - jimhester/covr
+  - covr
+  - testthat
 
 env:
   - NOT_CRAN=true
