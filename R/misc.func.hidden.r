@@ -95,7 +95,21 @@
 ### function to test whether a vector is all equal to 1s (e.g., to find intercept(s) in a model matrix)
 
 .is.int.func <- function(x, eps=1e-08)
-   all(abs(x - 1) < eps)
+   return(all(abs(x - 1) < eps))
+
+############################################################################
+
+### function to test each row for any missings in the lower triangular part of a matrix
+
+.anyNAlt <- function(x)
+   return(sapply(1:nrow(x), FUN=function(i) anyNA(x[i,1:i])))
+
+### function above is faster (and does not require making a copy of the object)
+
+#.anyNAlt <- function(X) {
+#   X[upper.tri(X)] <- 0
+#   return(apply(is.na(X), 1, any))
+#}
 
 ############################################################################
 
@@ -175,7 +189,7 @@
 
 ############################################################################
 
-### function to construct vcov matrix for struct="UN" given vector of variances and correlations
+### function to construct var-cov matrix for struct="UN" given vector of variances and correlations
 
 .con.vcov.UN <- function(vars, cors) {
    dims <- length(vars)
@@ -186,7 +200,7 @@
    return(H %*% G %*% H)
 }
 
-### function to construct G matrix for struct="UN" given vector of 'choled' variances and covariances
+### function to construct var-cov matrix for struct="UN" given vector of 'choled' variances and covariances
 
 .con.vcov.UN.chol <- function(vars, covs) {
    dims <- length(vars)
@@ -196,17 +210,121 @@
    return(crossprod(G))
 }
 
+### function to construct var-cov matrix (G or H) for '~ inner | outer' terms
+
+.con.S <- function(v, r, v.val, r.val, Z1, levels.r, struct, cholesky, vctransf, posdefify, sparse) {
+
+      ### if cholesky=TRUE, back-transformation/substitution is done below; otherwise, back-transform and replace fixed values
+      if (!cholesky) {
+         if (vctransf) {
+            ### variance is optimized in log-space, so exponentiate
+            v <- ifelse(is.na(v.val), exp(v), v.val)
+            ### correlation is optimized in r-to-z space, so use transf.ztor
+            r  <- ifelse(is.na(r.val), transf.ztor(r), r.val)
+         } else {
+            ### for Hessian computation, leave as is
+            v <- ifelse(is.na(v.val), v, v.val)
+            r <- ifelse(is.na(r.val), r, r.val)
+            v[v < 0] <- 0
+            r[r >  1] <-  1
+            r[r < -1] <- -1
+         }
+         v <- ifelse(v <= .Machine$double.eps*10, 0, v) ### don't do this with Cholesky factorization, since variance can be negative
+      }
+
+      ncol.Z1 <- ncol(Z1)
+
+      if (struct == "CS") {
+         S <- matrix(r*v, nrow=ncol.Z1, ncol=ncol.Z1)
+         diag(S) <- v
+      }
+
+      if (struct == "HCS") {
+         S <- matrix(r, nrow=ncol.Z1, ncol=ncol.Z1)
+         diag(S) <- 1
+         S <- diag(sqrt(v), nrow=ncol.Z1, ncol=ncol.Z1) %*% S %*% diag(sqrt(v), nrow=ncol.Z1, ncol=ncol.Z1)
+         diag(S) <- v
+      }
+
+      if (struct == "UN") {
+         if (cholesky) {
+            S <- .con.vcov.UN.chol(v, r)
+            v <- diag(S)                  ### need this, so correct values are shown when verbose=TRUE
+            r <- cov2cor(S)[upper.tri(S)] ### need this, so correct values are shown when verbose=TRUE
+            v[!is.na(v.val)] <- v.val[!is.na(v.val)] ### replace any fixed values
+            r[!is.na(r.val)] <- r.val[!is.na(r.val)] ### replace any fixed values
+         }
+         S <- .con.vcov.UN(v, r)
+         if (posdefify) {
+            S <- as.matrix(nearPD(S)$mat) ### nearPD() in Matrix package
+            v <- diag(S)                  ### need this, so correct values are shown when verbose=TRUE
+            r <- cov2cor(S)[upper.tri(S)] ### need this, so correct values are shown when verbose=TRUE
+         }
+      }
+
+      if (struct == "ID" || struct == "DIAG") {
+         S <- diag(v, nrow=ncol.Z1, ncol=ncol.Z1)
+      }
+
+      if (struct == "UNHO") {
+         S <- matrix(NA_real_, nrow=ncol.Z1, ncol=ncol.Z1)
+         S[upper.tri(S)] <- r
+         S[lower.tri(S)] <- t(S)[lower.tri(S)]
+         diag(S) <- 1
+         S <- diag(sqrt(rep(v, ncol.Z1)), nrow=ncol.Z1, ncol=ncol.Z1) %*% S %*% diag(sqrt(rep(v, ncol.Z1)), nrow=ncol.Z1, ncol=ncol.Z1)
+         if (posdefify) {
+            S <- as.matrix(nearPD(S, keepDiag=TRUE)$mat) ### nearPD() in Matrix package
+            v <- S[1,1]                                  ### need this, so correct values are shown when verbose=TRUE
+            r <- cov2cor(S)[upper.tri(S)]                ### need this, so correct values are shown when verbose=TRUE
+         }
+      }
+
+      if (struct == "AR") {
+         if (ncol.Z1 > 1) {
+            S <- toeplitz(ARMAacf(ar=r, lag.max=ncol.Z1-1))
+         } else {
+            S <- diag(1)
+         }
+         S <- diag(sqrt(rep(v, ncol.Z1)), nrow=ncol.Z1, ncol=ncol.Z1) %*% S %*% diag(sqrt(rep(v, ncol.Z1)), nrow=ncol.Z1, ncol=ncol.Z1)
+         diag(S) <- v
+      }
+
+      if (struct == "HAR") {
+         if (ncol.Z1 > 1) {
+            S <- toeplitz(ARMAacf(ar=r, lag.max=ncol.Z1-1))
+         } else {
+            S <- diag(1)
+         }
+         S <- diag(sqrt(v), nrow=ncol.Z1, ncol=ncol.Z1) %*% S %*% diag(sqrt(v), nrow=ncol.Z1, ncol=ncol.Z1)
+         diag(S) <- v
+      }
+
+      ### set variance and corresponding correlation value(s) to 0 for any levels that were removed
+
+      if (any(levels.r)) {
+         S[levels.r,] <- 0
+         S[,levels.r] <- 0
+      }
+
+      if (sparse)
+         S <- Matrix(S, sparse=TRUE)
+
+      return(list(v=v, r=r, S=S))
+
+}
+
 ############################################################################
 
 ### -1 times the log likelihood (regular or restricted) for rma.mv models
 
-.ll.rma.mv <- function(par, reml, Y, M, X.fit, k, pX, # note: need to call model matrix X.fit due to hessian()
+.ll.rma.mv <- function(par, reml, Y, M, A, X.fit, k, pX, # note: X.fit due to hessian(); pX due to nlm()
                        D.S, Z.G1, Z.G2, Z.H1, Z.H2,
                        sigma2.val, tau2.val, rho.val, gamma2.val, phi.val,
                        sigma2s, tau2s, rhos, gamma2s, phis,
                        withS, withG, withH,
                        struct, g.levels.r, h.levels.r,
-                       tol, sparse, cholesky, posdefify, vctransf, verbose, very.verbose, digits, REMLf) {
+                       sparse, cholesky, posdefify, vctransf,
+                       verbose, digits, REMLf, dofit=FALSE) {
 
    ### only NA values in sigma2.val, tau2.val, rho.val, gamma2.val, phi.val should be estimated; otherwise, replace with fixed values
 
@@ -224,6 +342,9 @@
       #if (any(is.nan(sigma2)))
       #   return(Inf)
 
+      ### set really small sigma2 values equal to 0 (anything below .Machine$double.eps*10 is essentially 0)
+      sigma2 <- ifelse(sigma2 <= .Machine$double.eps*10, 0, sigma2)
+
       for (j in seq_len(sigma2s)) {
          M <- M + sigma2[j] * D.S[[j]]
       }
@@ -232,100 +353,12 @@
 
    if (withG) {
 
-      ### if cholesky=TRUE, back-transformation/substitution is done below; otherwise, back-transform and replace fixed values
-      if (cholesky[1]) {
-         tau2 <- par[(sigma2s+1):(sigma2s+tau2s)]
-         rho  <- par[(sigma2s+tau2s+1):(sigma2s+tau2s+rhos)]
-      } else {
-         if (vctransf) {
-            ### tau2 is optimized in log-space, so exponentiate
-            tau2 <- ifelse(is.na(tau2.val), exp(par[(sigma2s+1):(sigma2s+tau2s)]), tau2.val)
-            ### rho is optimized in r-to-z space, so use transf.ztor
-            rho  <- ifelse(is.na(rho.val), transf.ztor(par[(sigma2s+tau2s+1):(sigma2s+tau2s+rhos)]), rho.val)
-         } else {
-            ### for Hessian computation, leave as is
-            tau2 <- ifelse(is.na(tau2.val), par[(sigma2s+1):(sigma2s+tau2s)], tau2.val)
-            rho  <- ifelse(is.na(rho.val), par[(sigma2s+tau2s+1):(sigma2s+tau2s+rhos)], rho.val)
-            tau2[tau2 < 0] <- 0
-            rho[rho >  1] <-  1
-            rho[rho < -1] <- -1
-         }
-      }
-
-      ncol.Z.G1 <- ncol(Z.G1)
-
-      if (struct[1] == "CS") {
-         G <- matrix(rho*tau2, nrow=ncol.Z.G1, ncol=ncol.Z.G1)
-         diag(G) <- tau2
-      }
-
-      if (struct[1] == "HCS") {
-         G <- matrix(rho, nrow=ncol.Z.G1, ncol=ncol.Z.G1)
-         diag(G) <- 1
-         G <- diag(sqrt(tau2), nrow=ncol.Z.G1, ncol=ncol.Z.G1) %*% G %*% diag(sqrt(tau2), nrow=ncol.Z.G1, ncol=ncol.Z.G1)
-         diag(G) <- tau2
-      }
-
-      if (struct[1] == "UN") {
-         if (cholesky[1]) {
-            G <- .con.vcov.UN.chol(tau2, rho)
-            tau2 <- diag(G)                 ### need this, so correct values are shown when verbose=TRUE
-            rho <- cov2cor(G)[upper.tri(G)] ### need this, so correct values are shown when verbose=TRUE
-            tau2[!is.na(tau2.val)] <- tau2.val[!is.na(tau2.val)] ### replace any fixed values
-            rho[!is.na(rho.val)] <- rho.val[!is.na(rho.val)] ### replace any fixed values
-         }
-         G <- .con.vcov.UN(tau2, rho)
-         if (posdefify) {
-            G <- as.matrix(nearPD(G)$mat)   ### nearPD() in Matrix package
-            tau2 <- diag(G)                 ### need this, so correct values are shown when verbose=TRUE
-            rho <- cov2cor(G)[upper.tri(G)] ### need this, so correct values are shown when verbose=TRUE
-         }
-      }
-
-      if (struct[1] == "ID" || struct[1] == "DIAG") {
-         G <- diag(tau2, nrow=ncol.Z.G1, ncol=ncol.Z.G1)
-      }
-
-      if (struct[1] == "UNHO") {
-         G <- matrix(1, nrow=ncol.Z.G1, ncol=ncol.Z.G1)
-         G[upper.tri(G)] <- rho
-         G[lower.tri(G)] <- t(G)[lower.tri(G)]
-         G <- diag(sqrt(rep(tau2, ncol.Z.G1)), nrow=ncol.Z.G1, ncol=ncol.Z.G1) %*% G %*% diag(sqrt(rep(tau2, ncol.Z.G1)), nrow=ncol.Z.G1, ncol=ncol.Z.G1)
-         if (posdefify) {
-            G <- as.matrix(nearPD(G, keepDiag=TRUE)$mat) ### nearPD() in Matrix package
-            tau2 <- G[1,1]                               ### need this, so correct values are shown when verbose=TRUE
-            rho <- cov2cor(G)[upper.tri(G)]              ### need this, so correct values are shown when verbose=TRUE
-         }
-      }
-
-      if (struct[1] == "AR") {
-         if (ncol.Z.G1 > 1) {
-            G <- toeplitz(ARMAacf(ar=rho, lag.max=ncol.Z.G1-1))
-         } else {
-            G <- diag(1)
-         }
-         G <- diag(sqrt(rep(tau2, ncol.Z.G1)), nrow=ncol.Z.G1, ncol=ncol.Z.G1) %*% G %*% diag(sqrt(rep(tau2, ncol.Z.G1)), nrow=ncol.Z.G1, ncol=ncol.Z.G1)
-         diag(G) <- tau2
-      }
-
-      if (struct[1] == "HAR") {
-         if (ncol.Z.G1 > 1) {
-            G <- toeplitz(ARMAacf(ar=rho, lag.max=ncol.Z.G1-1))
-         } else {
-            G <- diag(1)
-         }
-         G <- diag(sqrt(tau2), nrow=ncol.Z.G1, ncol=ncol.Z.G1) %*% G %*% diag(sqrt(tau2), nrow=ncol.Z.G1, ncol=ncol.Z.G1)
-         diag(G) <- tau2
-      }
-
-      ### set tau2 and corresponding rho value(s) to 0 for any levels that were removed
-      if (any(g.levels.r)) {
-         G[g.levels.r,] <- 0
-         G[,g.levels.r] <- 0
-      }
-
-      if (sparse)
-         G <- Matrix(G, sparse=TRUE)
+      resG <- .con.S(v=par[(sigma2s+1):(sigma2s+tau2s)], r=par[(sigma2s+tau2s+1):(sigma2s+tau2s+rhos)],
+                     v.val=tau2.val, r.val=rho.val, Z1=Z.G1, levels.r=g.levels.r,
+                     struct=struct[1], cholesky=cholesky[1], vctransf=vctransf, posdefify=posdefify, sparse=sparse)
+      tau2 <- resG$v
+      rho  <- resG$r
+      G    <- resG$S
 
       M <- M + (Z.G1 %*% G %*% t(Z.G1)) * tcrossprod(Z.G2)
 
@@ -333,100 +366,12 @@
 
    if (withH) {
 
-      ### if cholesky=TRUE, back-transformation/substitution is done below; otherwise, back-transform and replace fixed values
-      if (cholesky[2]) {
-         gamma2 <- par[(sigma2s+tau2s+rhos+1):(sigma2s+tau2s+rhos+gamma2s)]
-         phi    <- par[(sigma2s+tau2s+rhos+gamma2s+1):(sigma2s+tau2s+rhos+gamma2s+phis)]
-      } else {
-         if (vctransf) {
-            ### gamma2 is optimized in log-space, so exponentiate
-            gamma2 <- ifelse(is.na(gamma2.val), exp(par[(sigma2s+tau2s+rhos+1):(sigma2s+tau2s+rhos+gamma2s)]), gamma2.val)
-            ### phi is optimized in r-to-z space, so use transf.ztor
-            phi    <- ifelse(is.na(phi.val), transf.ztor(par[(sigma2s+tau2s+rhos+gamma2s+1):(sigma2s+tau2s+rhos+gamma2s+phis)]), phi.val)
-         } else {
-            ### for Hessian computation, leave as is
-            gamma2 <- ifelse(is.na(gamma2.val), par[(sigma2s+tau2s+rhos+1):(sigma2s+tau2s+rhos+gamma2s)], gamma2.val)
-            phi    <- ifelse(is.na(phi.val), par[(sigma2s+tau2s+rhos+gamma2s+1):(sigma2s+tau2s+rhos+gamma2s+phis)], phi.val)
-            gamma2[gamma2 < 0] <- 0
-            phi[phi >  1] <-  1
-            phi[phi < -1] <- -1
-         }
-      }
-
-      ncol.Z.H1 <- ncol(Z.H1)
-
-      if (struct[2] == "CS") {
-         H <- matrix(phi*gamma2, nrow=ncol.Z.H1, ncol=ncol.Z.H1)
-         diag(H) <- gamma2
-      }
-
-      if (struct[2] == "HCS") {
-         H <- matrix(phi, nrow=ncol.Z.H1, ncol=ncol.Z.H1)
-         diag(H) <- 1
-         H <- diag(sqrt(gamma2), nrow=ncol.Z.H1, ncol=ncol.Z.H1) %*% H %*% diag(sqrt(gamma2), nrow=ncol.Z.H1, ncol=ncol.Z.H1)
-         diag(H) <- gamma2
-      }
-
-      if (struct[2] == "UN") {
-         if (cholesky[2]) {
-            H <- .con.vcov.UN.chol(gamma2, phi)
-            gamma2 <- diag(H)               ### need this, so correct values are shown when verbose=TRUE
-            phi <- cov2cor(H)[upper.tri(H)] ### need this, so correct values are shown when verbose=TRUE
-            gamma2[!is.na(gamma2.val)] <- gamma2.val[!is.na(gamma2.val)] ### replace any fixed values
-            phi[!is.na(phi.val)] <- phi.val[!is.na(phi.val)] ### replace any fixed values
-         }
-         H <- .con.vcov.UN(gamma2, phi)
-         if (posdefify) {
-            H <- as.matrix(nearPD(H)$mat)   ### nearPD() in Matrix package
-            gamma2 <- diag(H)               ### need this, so correct values are shown when verbose=TRUE
-            phi <- cov2cor(H)[upper.tri(H)] ### need this, so correct values are shown when verbose=TRUE
-         }
-      }
-
-      if (struct[2] == "ID" || struct[2] == "DIAG") {
-         H <- diag(gamma2, nrow=ncol.Z.H1, ncol=ncol.Z.H1)
-      }
-
-      if (struct[2] == "UNHO") {
-         H <- matrix(1, nrow=ncol.Z.H1, ncol=ncol.Z.H1)
-         H[upper.tri(H)] <- phi
-         H[lower.tri(H)] <- t(H)[lower.tri(H)]
-         H <- diag(sqrt(rep(gamma2, ncol.Z.H1)), nrow=ncol.Z.H1, ncol=ncol.Z.H1) %*% H %*% diag(sqrt(rep(gamma2, ncol.Z.H1)), nrow=ncol.Z.H1, ncol=ncol.Z.H1)
-         if (posdefify) {
-            H <- as.matrix(nearPD(H, keepDiag=TRUE)$mat) ### nearPD() in Matrix package
-            gamma2 <- H[1,1]                             ### need this, so correct values are shown when verbose=TRUE
-            phi <- cov2cor(H)[upper.tri(H)]              ### need this, so correct values are shown when verbose=TRUE
-         }
-      }
-
-      if (struct[2] == "AR") {
-         if (ncol.Z.H1 > 1) {
-            H <- toeplitz(ARMAacf(ar=phi, lag.max=ncol.Z.H1-1))
-         } else {
-            H <- diag(1)
-         }
-         H <- diag(sqrt(rep(gamma2, ncol.Z.H1)), nrow=ncol.Z.H1, ncol=ncol.Z.H1) %*% H %*% diag(sqrt(rep(gamma2, ncol.Z.H1)), nrow=ncol.Z.H1, ncol=ncol.Z.H1)
-         diag(H) <- gamma2
-      }
-
-      if (struct[2] == "HAR") {
-         if (ncol.Z.H1 > 1) {
-            H <- toeplitz(ARMAacf(ar=phi, lag.max=ncol.Z.H1-1))
-         } else {
-            H <- diag(1)
-         }
-         H <- diag(sqrt(gamma2), nrow=ncol.Z.H1, ncol=ncol.Z.H1) %*% H %*% diag(sqrt(gamma2), nrow=ncol.Z.H1, ncol=ncol.Z.H1)
-         diag(H) <- gamma2
-      }
-
-      ### set gamma2 and corresponding phi value(s) to 0 for any levels that were removed
-      if (any(h.levels.r)) {
-         H[h.levels.r,] <- 0
-         H[,h.levels.r] <- 0
-      }
-
-      if (sparse)
-         H <- Matrix(H, sparse=TRUE)
+      resH <- .con.S(v=par[(sigma2s+tau2s+rhos+1):(sigma2s+tau2s+rhos+gamma2s)], r=par[(sigma2s+tau2s+rhos+gamma2s+1):(sigma2s+tau2s+rhos+gamma2s+phis)],
+                     v.val=gamma2.val, r.val=phi.val, Z1=Z.H1, levels.r=h.levels.r,
+                     struct=struct[2], cholesky=cholesky[2], vctransf=vctransf, posdefify=posdefify, sparse=sparse)
+      gamma2 <- resH$v
+      phi    <- resH$r
+      H      <- resH$S
 
       M <- M + (Z.H1 %*% H %*% t(Z.H1)) * tcrossprod(Z.H2)
 
@@ -435,7 +380,7 @@
    if (posdefify)
       M <- as.matrix(nearPD(M)$mat)
 
-   if (very.verbose) {
+   if (verbose > 1) {
       W <- try(chol2inv(chol(M)), silent=FALSE)
    } else {
       W <- try(suppressWarnings(chol2inv(chol(M))), silent=TRUE)
@@ -449,38 +394,92 @@
       ### this idea is based on: http://stats.stackexchange.com/q/11368/1934 (this is crude, but should
       ### move the parameter estimates away from values that create the non-positive-definite M matrix)
 
-      llval <- -Inf
+      if (dofit) {
+         stop("Final variance-covariance matrix not positive definite.")
+      } else {
+         llval <- -Inf
+      }
 
    } else {
 
-      if (very.verbose) {
+      if (verbose > 1) {
          U <- try(chol(W), silent=FALSE)
       } else {
          U <- try(suppressWarnings(chol(W)), silent=TRUE)
       }
 
+      ### Y ~ N(Xbeta, M), so UY ~ N(UXbeta, UMU) where UMU = I
+      ### return(U %*% M %*% U)
+
       if (inherits(U, "try-error")) {
 
-         llval <- -Inf
+         if (dofit) {
+            stop("Cannot fit model based on estimated marginal variance-covariance matrix.")
+         } else {
+            llval <- -Inf
+         }
 
       } else {
 
-         sX <- U %*% X.fit
-         sY <- U %*% Y
-         b  <- solve(crossprod(sX), crossprod(sX, sY))
-         RSS.f <- sum(as.vector(sY - sX %*% b)^2)
+         if (!dofit || is.null(A)) {
 
-         if (reml) {
-            llval  <- -1/2 * (k-pX) * log(2*base::pi) + ifelse(REMLf, 1/2 * determinant(crossprod(X.fit), logarithm=TRUE)$modulus, 0) - 1/2 * determinant(M, logarithm=TRUE)$modulus - 1/2 * determinant(crossprod(X.fit,W) %*% X.fit, logarithm=TRUE)$modulus - 1/2 * RSS.f
+            sX <- U %*% X.fit
+            sY <- U %*% Y
+            b  <- solve(crossprod(sX), crossprod(sX, sY))
+            if (dofit)
+               vb <- matrix(solve(crossprod(sX)), nrow=pX, ncol=pX)
+            RSS.f <- sum(as.vector(sY - sX %*% b)^2)
+
          } else {
-            llval  <- -1/2 * (k)    * log(2*base::pi)                                                                                 - 1/2 * determinant(M, logarithm=TRUE)$modulus                                                                           - 1/2 * RSS.f
+
+            stXAX <- chol2inv(chol(as.matrix(t(X.fit) %*% A %*% X.fit)))
+            #stXAX <- tcrossprod(qr.solve(sX, diag(k)))
+            b     <- matrix(stXAX %*% crossprod(X.fit,A) %*% Y, ncol=1)
+            vb    <- matrix(stXAX %*% t(X.fit) %*% A %*% M %*% A %*% X.fit %*% stXAX, nrow=pX, ncol=pX)
+            RSS.f <- as.vector(t(Y - X.fit %*% b) %*% W %*% (Y - X.fit %*% b))
+
+         }
+
+         llvals <- c(NA_real_, NA_real_)
+
+         if (dofit || !reml)
+            llvals[1]  <- -1/2 * (k)    * log(2*base::pi)                                                                                 - 1/2 * determinant(M, logarithm=TRUE)$modulus                                                                           - 1/2 * RSS.f
+
+         if (dofit || reml)
+            llvals[2]  <- -1/2 * (k-pX) * log(2*base::pi) + ifelse(REMLf, 1/2 * determinant(crossprod(X.fit), logarithm=TRUE)$modulus, 0) - 1/2 * determinant(M, logarithm=TRUE)$modulus - 1/2 * determinant(crossprod(X.fit,W) %*% X.fit, logarithm=TRUE)$modulus - 1/2 * RSS.f
+
+         if (dofit) {
+
+            res <- list(b=b, vb=vb, M=M, llvals=llvals)
+
+            if (withS)
+               res$sigma2 <- sigma2
+
+            if (withG) {
+               res$G <- G
+               res$tau2 <- tau2
+               res$rho <- rho
+            }
+
+            if (withH) {
+               res$H <- H
+               res$gamma2 <- gamma2
+               res$phi <- phi
+            }
+
+            return(res)
+
+         } else {
+
+            llval <- ifelse(reml, llvals[2], llvals[1])
+
          }
 
       }
 
    }
 
-   if ((vctransf && verbose) || (!vctransf && very.verbose)) {
+   if ((vctransf && verbose) || (!vctransf && (verbose > 1))) {
       if (withS)
          cat("sigma2 =", ifelse(is.na(sigma2), NA, paste(formatC(sigma2, digits=digits, format="f", flag=" "), " ", sep="")), "  ", sep="")
       if (withG)
@@ -494,7 +493,7 @@
       cat("  ll = ", ifelse(is.na(llval), NA, formatC(llval, digits=digits, format="f", flag=" ")), sep="", "\n")
    }
 
-   return(-1 * llval)
+   return(-1 * c(llval))
 
 }
 

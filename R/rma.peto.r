@@ -7,7 +7,7 @@ level=95, digits=4, verbose=FALSE) {
 
    ###### setup
 
-   ### check for some incorrect argument specifications
+   ### check argument specifications
 
    if (length(add) == 1)
       add <- c(add, 0)

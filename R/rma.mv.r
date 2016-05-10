@@ -27,7 +27,7 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
 
    ###### data setup
 
-   ### check for some incorrect argument specifications
+   ### check argument specifications
 
    if (!is.element(method, c("FE","ML","REML")))
       stop("Unknown 'method' specified.")
@@ -84,11 +84,9 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
       Rscale <- switch(as.character(Rscale), "0"="none", "1"="cor", "2"="cor0", "3"="cov0")
    }
 
-   very.verbose <- ifelse(!is.logical(verbose) && verbose > 1, TRUE, FALSE)
-
    #########################################################################
 
-   if (very.verbose)
+   if (verbose > 1)
       message("Extracting yi/V values ...")
 
    ### check if data argument has been specified
@@ -199,7 +197,7 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
    if (dim(V)[1] != dim(V)[2])
       stop("'V' must be a square matrix.")
 
-   if (!isSymmetric(V))
+   if (!isSymmetric(V)) ### note: copy of V is made when doing this
       stop("'V' must be a symmetric matrix.")
 
    ### check length of yi and V
@@ -288,7 +286,7 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
 
    #########################################################################
 
-   if (very.verbose)
+   if (verbose > 1)
       message("Creating model matrix ...")
 
    ### convert mods formula to X matrix and set intercept equal to FALSE
@@ -331,7 +329,7 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
 
    if (method!="FE" && !is.null(random)) {
 
-      if (very.verbose)
+      if (verbose > 1)
          message("Processing 'random' argument ...")
 
       ### make sure random argument is always a list (so lapply() below works)
@@ -482,7 +480,7 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
 
    ### generate study labels if none are specified (or none can be found in yi argument)
 
-   if (very.verbose)
+   if (verbose > 1)
       message("Generating/extracting study labels ...")
 
    ### if slab has not been specified but is an attribute of yi, get it
@@ -521,7 +519,7 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
 
    if (!is.null(subset)) {
 
-      if (very.verbose)
+      if (verbose > 1)
          message("Subsetting ...")
 
       yi    <- yi[subset]
@@ -594,7 +592,7 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
 
    if (withS) {
 
-      if (very.verbose)
+      if (verbose > 1)
          message(paste0("Processing '", paste(as.character(random[mf.r.ncols == 1]), collapse=", "), "' term(s) ..."))
 
       ### get variables names in mf.s
@@ -656,7 +654,7 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
 
       } else {
 
-         if (very.verbose)
+         if (verbose > 1)
             message("Processing 'R' argument ...")
 
          withR <- TRUE
@@ -822,7 +820,7 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
 
    if (withG) {
 
-      if (very.verbose)
+      if (verbose > 1)
          message(paste0("Processing '", as.character(random[mf.r.ncols == 2][1]), "' term ..."))
 
       ### get variables names in mf.g
@@ -893,12 +891,12 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
 
       ### allow quickly setting all tau2 values to a fixed value
 
-      if (length(tau2) == 1 && is.element(struct[1], c("HCS","UN","DIAG","HAR")))
+      if (length(tau2) == 1)
          tau2 <- rep(tau2, tau2s)
 
       ### allow quickly setting all rho values to a fixed value
 
-      if (length(rho) == 1 && is.element(struct[1], c("UN","UNHO")))
+      if (length(rho) == 1)
          rho <- rep(rho, rhos)
 
       ### check if tau2 and rho are of correct length
@@ -964,7 +962,7 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
 
    if (withH) {
 
-      if (very.verbose)
+      if (verbose > 1)
          message(paste0("Processing '", as.character(random[mf.r.ncols == 2][2]), "' term ..."))
 
       ### get variables names in mf.h
@@ -1035,12 +1033,12 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
 
       ### allow quickly setting all gamma2 values to a fixed value
 
-      if (length(gamma2) == 1 && is.element(struct[2], c("HCS","UN","DIAG","HAR")))
+      if (length(gamma2) == 1)
          gamma2 <- rep(gamma2, gamma2s)
 
       ### allow quickly setting all phi values to a fixed value
 
-      if (length(phi) == 1 && is.element(struct[2], c("UN","UNHO")))
+      if (length(phi) == 1)
          phi <- rep(phi, phis)
 
       ### check if gamma2 and phi are of correct length
@@ -1110,15 +1108,11 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
    ### if Vi = matrix(c(1,NA,NA,NA), nrow=2, ncol=2), then only row/col 2 needs to be removed
    ### but when checking for NAs in the entire V matrix, rows/cols 1 and 2 would be removed
 
-   Vlt <- V
-   Vlt[upper.tri(Vlt)] <- 0
-   #Vlt[lower.tri(V, diag=TRUE)] <- V[lower.tri(V, diag=TRUE)] ### seems totally unnecessary to do this
-
-   has.na <- is.na(yi) | if (is.null(mods)) FALSE else apply(is.na(mods), 1, any) | apply(is.na(Vlt), 1, any) | if (is.null(A)) FALSE else apply(is.na(A), 1, any)
+   has.na <- is.na(yi) | (if (is.null(mods)) FALSE else apply(is.na(mods), 1, any)) | .anyNAlt(V) | (if (is.null(A)) FALSE else apply(is.na(A), 1, any))
 
    if (any(has.na)) {
 
-      if (very.verbose)
+      if (verbose > 1)
          message("Handling NAs ...")
 
       not.na <- !has.na
@@ -1351,7 +1345,7 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
 
    if (withG) {
 
-      ### save the full results (note: g.nlevels and g.levels contain results are subsetting)
+      ### save the full results (note: g.nlevels and g.levels contain results after subsetting)
 
       g.nlevels.f <- g.nlevels
       g.levels.f  <- g.levels
@@ -1437,7 +1431,7 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
       }
 
       ### if there was only a single arm for "UN/UNHO" to begin with, then fix rho to 0
-      ### (technically there is then no rho at all to begin with, but rho was still set to 1 earlier for the optimization routine)
+      ### (technically there is then no rho at all to begin with, but rhos was still set to 1 earlier for the optimization routine)
       ### (if there is a single arm after removing NAs, then this is dealt with below by setting tau2 and rho values to 0)
 
       if (is.element(struct[1], c("UN","UNHO")) && g.nlevels.f[1] == 1 && is.na(rho)) {
@@ -1571,7 +1565,7 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
 
    if (withH) {
 
-      ### save the full results (note: h.nlevels and h.levels contain results are subsetting)
+      ### save the full results (note: h.nlevels and h.levels contain results after subsetting)
 
       h.nlevels.f <- h.nlevels
       h.levels.f  <- h.levels
@@ -1657,7 +1651,7 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
       }
 
       ### if there was only a single arm for "UN/UNHO" to begin with, then fix phi to 0
-      ### (technically there is then no phi at all to begin with, but phi was still set to 1 earlier for the optimization routine)
+      ### (technically there is then no phi at all to begin with, but phis was still set to 1 earlier for the optimization routine)
       ### (if there is a single arm after removing NAs, then this is dealt with below by setting gamma2 and phi values to 0)
 
       if (is.element(struct[2], c("UN","UNHO")) && h.nlevels.f[1] == 1 && is.na(phi)) {
@@ -1797,10 +1791,10 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
 
    ### initial values for variance components (need to do something better here in the future; see rma.mv2() and rma.bv() for some general ideas; leave for now)
 
-   if (very.verbose)
+   if (verbose > 1)
       message("Extracting/computing initial values ...")
 
-   if (very.verbose) {
+   if (verbose > 1) {
       U <- try(chol(chol2inv(chol(V))), silent=FALSE)
    } else {
       U <- try(suppressWarnings(chol(chol2inv(chol(V)))), silent=TRUE)
@@ -2091,7 +2085,7 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
 
    ###### model fitting, test statistics, and confidence intervals
 
-   if (very.verbose)
+   if (verbose > 1)
       message("Model fitting ...")
 
    ### estimate sigma2, tau2, rho, gamma2, and phi as needed
@@ -2132,14 +2126,14 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
    }
 
    optcall <- paste(optimizer, "(", par.arg, "=c(con$sigma2.init, con$tau2.init, con$rho.init, con$gamma2.init, con$phi.init),
-      .ll.rma.mv, reml=reml, ", ifelse(optimizer=="optim", "method=optmethod, ", ""), "Y=Y, M=V, X.fit=X, k=k, pX=p,
+      .ll.rma.mv, reml=reml, ", ifelse(optimizer=="optim", "method=optmethod, ", ""), "Y=Y, M=V, A=NULL, X.fit=X, k=k, pX=p,
       D.S=D.S, Z.G1=Z.G1, Z.G2=Z.G2, Z.H1=Z.H1, Z.H2=Z.H2,
       sigma2.val=sigma2, tau2.val=tau2, rho.val=rho, gamma2.val=gamma2, phi.val=phi,
       sigma2s=sigma2s, tau2s=tau2s, rhos=rhos, gamma2s=gamma2s, phis=phis,
       withS=withS, withG=withG, withH=withH,
       struct=struct, g.levels.r=g.levels.r, h.levels.r=h.levels.r,
-      tol=tol, sparse=sparse, cholesky=cholesky, posdefify=posdefify, vctransf=TRUE,
-      verbose=verbose, very.verbose=very.verbose, digits=digits, REMLf=con$REMLf", ctrl.arg, ")\n", sep="")
+      sparse=sparse, cholesky=cholesky, posdefify=posdefify, vctransf=TRUE,
+      verbose=verbose, digits=digits, REMLf=con$REMLf", ctrl.arg, ")\n", sep="")
 
    #return(optcall)
    opt.res <- try(eval(parse(text=optcall)), silent=!verbose)
@@ -2172,7 +2166,7 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
    if (optimizer=="nlm")
       ll <- -1 * c(opt.res$minimum)
 
-   if (verbose) {
+   if (verbose > 1) {
       cat("\n")
       print(opt.res)
    }
@@ -2184,52 +2178,10 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
    if (optimizer=="nlm")
       opt.res$par <- opt.res$estimate
 
-   if (p < k) {
+   if (p == k) {
 
-      ### need to save these for Hessian computation and in case we need to substitute fixed values below when using the Cholesky decomposition
-
-      sigma2.val <- sigma2
-      tau2.val   <- tau2
-      rho.val    <- rho
-      gamma2.val <- gamma2
-      phi.val    <- phi
-
-      ### only NA values in sigma2, tau2, rho, gamma2, and phi are estimated; otherwise, replace with fixed values
-
-      ### sigma2 is always optimized in log-space, so exponentiate sigma2
-
-      sigma2 <- ifelse(is.na(sigma2), exp(opt.res$par[1:sigma2s]), sigma2)
-
-      ### if cholesky=TRUE, back-transformation/substitution is done below; otherwise, back-transform and replace fixed values
-
-      if (cholesky[1]) {
-         tau2 <- opt.res$par[(sigma2s+1):(sigma2s+tau2s)]
-         rho  <- opt.res$par[(sigma2s+tau2s+1):(sigma2s+tau2s+rhos)]
-      } else {
-         tau2 <- ifelse(is.na(tau2), exp(opt.res$par[(sigma2s+1):(sigma2s+tau2s)]), tau2)
-         rho  <- ifelse(is.na(rho), transf.ztor(opt.res$par[(sigma2s+tau2s+1):(sigma2s+tau2s+rhos)]), rho)
-         tau2 <- ifelse(tau2 <= .Machine$double.eps*10, 0, tau2) ### don't do this with Cholesky factorization, since tau2 can be negative
-      }
-
-      ### if cholesky=TRUE, back-transformation/substitution is done below; otherwise, back-transform and replace fixed values
-
-      if (cholesky[2]) {
-         gamma2 <- opt.res$par[(sigma2s+tau2s+rhos+1):(sigma2s+tau2s+rhos+gamma2s)]
-         phi    <- opt.res$par[(sigma2s+tau2s+rhos+gamma2s+1):(sigma2s+tau2s+rhos+gamma2s+phis)]
-      } else {
-         gamma2 <- ifelse(is.na(gamma2), exp(opt.res$par[(sigma2s+tau2s+rhos+1):(sigma2s+tau2s+rhos+gamma2s)]), gamma2)
-         phi    <- ifelse(is.na(phi), transf.ztor(opt.res$par[(sigma2s+tau2s+rhos+gamma2s+1):(sigma2s+tau2s+rhos+gamma2s+phis)]), phi)
-         gamma2 <- ifelse(gamma2 <= .Machine$double.eps*10, 0, gamma2) ### don't do this with Cholesky factorization, since gamma2 can be negative
-      }
-
-      ### set really small sigma2 values equal to 0 (anything below .Machine$double.eps*10 is essentially 0)
-
-      sigma2 <- ifelse(sigma2 <= .Machine$double.eps*10, 0, sigma2)
-
-   } else {
-
-      ### if the user fits a saturated model with REML estimation, the estimated values of the variance components remain stuck at their initial values
-      ### this ensures that the values are fixed to zero regardless of whether ML or REML estimation is used (unless values were fixed by the user)
+      ### when fitting a saturated model (with REML estimation), estimated values of variance components can remain stuck
+      ### at their initial values; this ensures that the values are fixed to zero (unless values were fixed by the user)
 
       sigma2[is.na(sigma2)] <- 0
       tau2[is.na(tau2)]     <- 0
@@ -2239,236 +2191,56 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
 
    }
 
-   ### estimate b and vb with the estimated values of sigma2, tau2, rho, gamma2, and phi
+   ### save these for Hessian computation
 
-   M <- V ### marginal var-cov matrix of the yi's (more parts added to M below)
+   sigma2.val <- sigma2
+   tau2.val   <- tau2
+   rho.val    <- rho
+   gamma2.val <- gamma2
+   phi.val    <- phi
 
-   if (withS) {
-      for (j in seq_len(sigma2s)) {
-         M <- M + sigma2[j] * D.S[[j]]
-      }
-   }
+   #########################################################################
+
+   ### do the final model fit with estimated variance components
+
+   fitcall <- .ll.rma.mv(opt.res$par, reml=reml, Y=Y, M=V, A=A, X.fit=X, k=k, pX=p,
+      D.S=D.S, Z.G1=Z.G1, Z.G2=Z.G2, Z.H1=Z.H1, Z.H2=Z.H2,
+      sigma2.val=sigma2, tau2.val=tau2, rho.val=rho, gamma2.val=gamma2, phi.val=phi,
+      sigma2s=sigma2s, tau2s=tau2s, rhos=rhos, gamma2s=gamma2s, phis=phis,
+      withS=withS, withG=withG, withH=withH,
+      struct=struct, g.levels.r=g.levels.r, h.levels.r=h.levels.r,
+      sparse=sparse, cholesky=cholesky, posdefify=posdefify, vctransf=TRUE,
+      verbose=FALSE, digits=digits, REMLf=con$REMLf, dofit=TRUE)
+
+   #return(fitcall)
+
+   ### extract elements
+
+   b  <- fitcall$b
+   vb <- fitcall$vb
+
+   if (withS)
+      sigma2 <- fitcall$sigma2
 
    if (withG) {
-
-      ncol.Z.G1 <- ncol(Z.G1)
-
-      if (struct[1] == "CS") {
-         G <- matrix(rho*tau2, nrow=ncol.Z.G1, ncol=ncol.Z.G1)
-         diag(G) <- tau2
-      }
-
-      if (struct[1] == "HCS") {
-         G <- matrix(rho, nrow=ncol.Z.G1, ncol=ncol.Z.G1)
-         diag(G) <- 1
-         G <- diag(sqrt(tau2), nrow=ncol.Z.G1, ncol=ncol.Z.G1) %*% G %*% diag(sqrt(tau2), nrow=ncol.Z.G1, ncol=ncol.Z.G1)
-         diag(G) <- tau2
-      }
-
-      if (struct[1] == "UN") {
-         if (cholesky[1]) {
-            G <- .con.vcov.UN.chol(tau2, rho)
-            tau2 <- diag(G)                 ### need this, so correct values are saved
-            rho <- cov2cor(G)[upper.tri(G)] ### need this, so correct values are saved
-            tau2[!is.na(tau2.val)] <- tau2.val[!is.na(tau2.val)] ### replace any fixed values
-            rho[!is.na(rho.val)] <- rho.val[!is.na(rho.val)] ### replace any fixed values
-         }
-         G <- .con.vcov.UN(tau2, rho)
-         if (posdefify) {
-            G <- as.matrix(nearPD(G)$mat) ### nearPD() in Matrix package
-            tau2 <- diag(G)
-            rho <- cov2cor(G)[upper.tri(G)]
-         }
-      }
-
-      if (struct[1] == "ID" || struct[1] == "DIAG") {
-         G <- diag(tau2, nrow=ncol.Z.G1, ncol=ncol.Z.G1)
-      }
-
-      if (struct[1] == "UNHO") {
-         G <- matrix(NA_real_, nrow=ncol.Z.G1, ncol=ncol.Z.G1)
-         G[upper.tri(G)] <- rho
-         G[lower.tri(G)] <- t(G)[lower.tri(G)]
-         diag(G) <- 1
-         G <- diag(sqrt(rep(tau2, ncol.Z.G1)), nrow=ncol.Z.G1, ncol=ncol.Z.G1) %*% G %*% diag(sqrt(rep(tau2, ncol.Z.G1)), nrow=ncol.Z.G1, ncol=ncol.Z.G1)
-         if (posdefify) {
-            G <- as.matrix(nearPD(G, keepDiag=TRUE)$mat) ### nearPD() in Matrix package
-            tau2 <- G[1,1]
-            rho <- cov2cor(G)[upper.tri(G)]
-         }
-      }
-
-      if (struct[1] == "AR") {
-         if (ncol.Z.G1 > 1) {
-            G <- toeplitz(ARMAacf(ar=rho, lag.max=ncol.Z.G1-1))
-         } else {
-            G <- diag(1)
-         }
-         G <- diag(sqrt(rep(tau2, ncol.Z.G1)), nrow=ncol.Z.G1, ncol=ncol.Z.G1) %*% G %*% diag(sqrt(rep(tau2, ncol.Z.G1)), nrow=ncol.Z.G1, ncol=ncol.Z.G1)
-         diag(G) <- tau2
-      }
-
-      if (struct[1] == "HAR") {
-         if (ncol.Z.G1 > 1) {
-            G <- toeplitz(ARMAacf(ar=rho, lag.max=ncol.Z.G1-1))
-         } else {
-            G <- diag(1)
-         }
-         G <- diag(sqrt(tau2), nrow=ncol.Z.G1, ncol=ncol.Z.G1) %*% G %*% diag(sqrt(tau2), nrow=ncol.Z.G1, ncol=ncol.Z.G1)
-         diag(G) <- tau2
-      }
-
-      ### set tau2 and corresponding rho value(s) to 0 for any levels that were removed
-
-      if (any(g.levels.r)) {
-         G[g.levels.r,] <- 0
-         G[,g.levels.r] <- 0
-      }
-
-      if (sparse)
-         G <- Matrix(G, sparse=TRUE)
-
-      M <- M + (Z.G1 %*% G %*% t(Z.G1)) * tcrossprod(Z.G2)
-
+      G <- fitcall$G
       colnames(G) <- rownames(G) <- g.levels.f[[1]]
-
+      tau2 <- fitcall$tau2
+      rho  <- fitcall$rho
    }
 
    if (withH) {
-
-      ncol.Z.H1 <- ncol(Z.H1)
-
-      if (struct[2] == "CS") {
-         H <- matrix(phi*gamma2, nrow=ncol.Z.H1, ncol=ncol.Z.H1)
-         diag(H) <- gamma2
-      }
-
-      if (struct[2] == "HCS") {
-         H <- matrix(phi, nrow=ncol.Z.H1, ncol=ncol.Z.H1)
-         diag(H) <- 1
-         H <- diag(sqrt(gamma2), nrow=ncol.Z.H1, ncol=ncol.Z.H1) %*% H %*% diag(sqrt(gamma2), nrow=ncol.Z.H1, ncol=ncol.Z.H1)
-         diag(H) <- gamma2
-      }
-
-      if (struct[2] == "UN") {
-         if (cholesky[2]) {
-            H <- .con.vcov.UN.chol(gamma2, phi)
-            gamma2 <- diag(H)               ### need this, so correct values are saved
-            phi <- cov2cor(H)[upper.tri(H)] ### need this, so correct values are saved
-            gamma2[!is.na(gamma2.val)] <- gamma2.val[!is.na(gamma2.val)] ### replace any fixed values
-            phi[!is.na(phi.val)] <- phi.val[!is.na(phi.val)] ### replace any fixed values
-         }
-         H <- .con.vcov.UN(gamma2, phi)
-         if (posdefify) {
-            H <- as.matrix(nearPD(H)$mat) ### nearPD() in Matrix package
-            gamma2 <- diag(H)
-            phi <- cov2cor(H)[upper.tri(H)]
-         }
-      }
-
-      if (struct[2] == "ID" || struct[2] == "DIAG") {
-         H <- diag(gamma2, nrow=ncol.Z.H1, ncol=ncol.Z.H1)
-      }
-
-      if (struct[2] == "UNHO") {
-         H <- matrix(NA_real_, nrow=ncol.Z.H1, ncol=ncol.Z.H1)
-         H[upper.tri(H)] <- phi
-         H[lower.tri(H)] <- t(H)[lower.tri(H)]
-         diag(H) <- 1
-         H <- diag(sqrt(rep(gamma2, ncol.Z.H1)), nrow=ncol.Z.H1, ncol=ncol.Z.H1) %*% H %*% diag(sqrt(rep(gamma2, ncol.Z.H1)), nrow=ncol.Z.H1, ncol=ncol.Z.H1)
-         if (posdefify) {
-            H <- as.matrix(nearPD(H, keepDiag=TRUE)$mat) ### nearPD() in Matrix package
-            gamma2 <- H[1,1]
-            phi <- cov2cor(H)[upper.tri(H)]
-         }
-      }
-
-      if (struct[2] == "AR") {
-         if (ncol.Z.H1 > 1) {
-            H <- toeplitz(ARMAacf(ar=phi, lag.max=ncol.Z.H1-1))
-         } else {
-            H <- diag(1)
-         }
-         H <- diag(sqrt(rep(gamma2, ncol.Z.H1)), nrow=ncol.Z.H1, ncol=ncol.Z.H1) %*% H %*% diag(sqrt(rep(gamma2, ncol.Z.H1)), nrow=ncol.Z.H1, ncol=ncol.Z.H1)
-         diag(H) <- gamma2
-      }
-
-      if (struct[2] == "HAR") {
-         if (ncol.Z.H1 > 1) {
-            H <- toeplitz(ARMAacf(ar=phi, lag.max=ncol.Z.H1-1))
-         } else {
-            H <- diag(1)
-         }
-         H <- diag(sqrt(gamma2), nrow=ncol.Z.H1, ncol=ncol.Z.H1) %*% H %*% diag(sqrt(gamma2), nrow=ncol.Z.H1, ncol=ncol.Z.H1)
-         diag(H) <- gamma2
-      }
-
-      ### set gamma2 and corresponding phi value(s) to 0 for any levels that were removed
-
-      if (any(h.levels.r)) {
-         H[h.levels.r,] <- 0
-         H[,h.levels.r] <- 0
-      }
-
-      if (sparse)
-         H <- Matrix(H, sparse=TRUE)
-
-      M <- M + (Z.H1 %*% H %*% t(Z.H1)) * tcrossprod(Z.H2)
-
+      H <- fitcall$H
       colnames(H) <- rownames(H) <- h.levels.f[[1]]
-
+      gamma2 <- fitcall$gamma2
+      phi    <- fitcall$phi
    }
+
+   M <- fitcall$M
 
    colnames(M) <- rownames(M) <- NULL ### strip row/column names of M
 
    #print(M[1:8,1:8])
-
-   if (posdefify)
-      M <- as.matrix(nearPD(M)$mat)
-
-   ### fit model with the actually estimated (or fixed) variance components and correlations
-
-   if (very.verbose) {
-      W <- try(chol2inv(chol(M)), silent=FALSE)
-   } else {
-      W <- try(suppressWarnings(chol2inv(chol(M))), silent=TRUE)
-   }
-
-   ### note: need W for REML llval computation
-
-   if (inherits(W, "try-error"))
-      stop("Final variance-covariance matrix not positive definite.")
-
-   ### Y ~ N(beta, M), so UY ~ N(U beta, U M U) where U M U = I
-
-   if (very.verbose) {
-      U <- try(chol(W), silent=FALSE)
-   } else {
-      U <- try(suppressWarnings(chol(W)), silent=TRUE)
-   }
-
-   if (inherits(U, "try-error"))
-      stop("Cannot fit model based on estimated marginal variance-covariance matrix.")
-
-   sX <- U %*% X
-   #return(U %*% M %*% U)
-
-   if (is.null(A)) {
-
-      sY <- U %*% Y
-      vb <- matrix(solve(crossprod(sX)), nrow=p, ncol=p)
-      b  <- matrix(vb %*% crossprod(sX, sY), ncol=1)
-      RSS.f <- sum(as.vector(sY - sX %*% b)^2)
-
-   } else {
-
-      stXAX <- chol2inv(chol(as.matrix(t(X) %*% A %*% X)))
-      #stXAX <- tcrossprod(qr.solve(sX, diag(k)))
-      b     <- matrix(stXAX %*% crossprod(X,A) %*% Y, ncol=1)
-      vb    <- matrix(stXAX %*% t(X) %*% A %*% M %*% A %*% X %*% stXAX, nrow=p, ncol=p)
-      RSS.f <- as.vector(t(Y - X %*% b) %*% W %*% (Y - X %*% b))
-
-   }
 
    ### QM calculation
 
@@ -2509,7 +2281,7 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
 
    ### heterogeneity test (Wald-type test of the extra coefficients in the saturated model)
 
-   if (very.verbose)
+   if (verbose > 1)
       message("Heterogeneity testing ...")
 
    QE.df <- k-p
@@ -2544,20 +2316,20 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
 
    if (con$hessian) {
 
-      if (very.verbose)
+      if (verbose > 1)
          message("Computing Hessian ...")
 
       if (!requireNamespace("numDeriv", quietly=TRUE))
          stop("Please install the 'numDeriv' package for Hessian computation.")
 
-      hessian <- try(numDeriv::hessian(func=.ll.rma.mv, x = if (con$vctransf) opt.res$par else c(sigma2, tau2, rho, gamma2, phi), reml=reml, Y=Y, M=V, X.fit=X, k=k, pX=p,
+      hessian <- try(numDeriv::hessian(func=.ll.rma.mv, x = if (con$vctransf) opt.res$par else c(sigma2, tau2, rho, gamma2, phi), reml=reml, Y=Y, M=V, A=NULL, X.fit=X, k=k, pX=p,
          D.S=D.S, Z.G1=Z.G1, Z.G2=Z.G2, Z.H1=Z.H1, Z.H2=Z.H2,
          sigma2.val=sigma2.val, tau2.val=tau2.val, rho.val=rho.val, gamma2.val=gamma2.val, phi.val=phi.val,
          sigma2s=sigma2s, tau2s=tau2s, rhos=rhos, gamma2s=gamma2s, phis=phis,
          withS=withS, withG=withG, withH=withH,
          struct=struct, g.levels.r=g.levels.r, h.levels.r=h.levels.r,
-         tol=tol, sparse=sparse, cholesky=ifelse(c(con$vctransf,con$vctransf) & cholesky, TRUE, FALSE), posdefify=posdefify, vctransf=con$vctransf,
-         verbose=verbose, very.verbose=very.verbose, digits=digits, REMLf=con$REMLf), silent=TRUE) # , method.args=list(r=6)
+         sparse=sparse, cholesky=ifelse(c(con$vctransf,con$vctransf) & cholesky, TRUE, FALSE), posdefify=posdefify, vctransf=con$vctransf,
+         verbose=verbose, digits=digits, REMLf=con$REMLf), silent=TRUE) # , method.args=list(r=6)
 
       if (inherits(hessian, "try-error"))
          warning("Error when trying to compute Hessian.")
@@ -2566,30 +2338,30 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
 
       colnames(hessian) <- 1:ncol(hessian) ### need to do this, so the subsetting of colnames below works
 
-      if (length(sigma2) == 1) {
+      if (sigma2s == 1) {
          colnames(hessian)[1] <- "sigma^2"
       } else {
-         colnames(hessian)[1:length(sigma2)] <- paste("sigma^2.", 1:length(sigma2), sep="")
+         colnames(hessian)[1:sigma2s] <- paste("sigma^2.", 1:sigma2s, sep="")
       }
-      if (length(tau2) == 1) {
-         colnames(hessian)[length(sigma2)+1] <- "tau^2"
+      if (tau2s == 1) {
+         colnames(hessian)[sigma2s+1] <- "tau^2"
       } else {
-         colnames(hessian)[(length(sigma2)+1):(length(sigma2)+length(tau2))] <- paste("tau^2.", 1:length(tau2), sep="")
+         colnames(hessian)[(sigma2s+1):(sigma2s+tau2s)] <- paste("tau^2.", 1:tau2s, sep="")
       }
-      if (length(rho) == 1) {
-         colnames(hessian)[length(sigma2)+length(tau2)+1] <- "rho"
+      if (rhos == 1) {
+         colnames(hessian)[sigma2s+tau2s+1] <- "rho"
       } else {
-         colnames(hessian)[(length(sigma2)+length(tau2)+1):(length(sigma2)+length(tau2)+length(rho))] <- paste("rho.", outer(1:g.nlevels.f[1], 1:g.nlevels.f, paste, sep=".")[upper.tri(matrix(NA,nrow=g.nlevels.f,ncol=g.nlevels.f))], sep="")
+         colnames(hessian)[(sigma2s+tau2s+1):(sigma2s+tau2s+rhos)] <- paste("rho.", outer(1:g.nlevels.f[1], 1:g.nlevels.f, paste, sep=".")[upper.tri(matrix(NA,nrow=g.nlevels.f,ncol=g.nlevels.f))], sep="")
       }
-      if (length(gamma2) == 1) {
-         colnames(hessian)[length(sigma2)+length(tau2)+length(rho)+1] <- "gamma^2"
+      if (gamma2s == 1) {
+         colnames(hessian)[sigma2s+tau2s+rhos+1] <- "gamma^2"
       } else {
-         colnames(hessian)[(length(sigma2)+length(tau2)+length(rho)+1):(length(sigma2)+length(tau2)+length(rho)+length(gamma2))] <- paste("gamma^2.", 1:length(gamma2), sep="")
+         colnames(hessian)[(sigma2s+tau2s+rhos+1):(sigma2s+tau2s+rhos+gamma2s)] <- paste("gamma^2.", 1:gamma2s, sep="")
       }
-      if (length(phi) == 1) {
-         colnames(hessian)[length(sigma2)+length(tau2)+length(rho)+length(gamma2)+1] <- "phi"
+      if (phis == 1) {
+         colnames(hessian)[sigma2s+tau2s+rhos+gamma2s+1] <- "phi"
       } else {
-         colnames(hessian)[(length(sigma2)+length(tau2)+length(rho)+length(gamma2)+1):(length(sigma2)+length(tau2)+length(rho)+length(gamma2)+length(phi))] <- paste("phi.", outer(1:h.nlevels.f[1], 1:h.nlevels.f, paste, sep=".")[upper.tri(matrix(NA,nrow=h.nlevels.f,ncol=h.nlevels.f))], sep="")
+         colnames(hessian)[(sigma2s+tau2s+rhos+gamma2s+1):(sigma2s+tau2s+rhos+gamma2s+phis)] <- paste("phi.", outer(1:h.nlevels.f[1], 1:h.nlevels.f, paste, sep=".")[upper.tri(matrix(NA,nrow=h.nlevels.f,ncol=h.nlevels.f))], sep="")
       }
 
       rownames(hessian) <- colnames(hessian)
@@ -2619,7 +2391,7 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
 
    ###### fit statistics
 
-   if (very.verbose)
+   if (verbose > 1)
       message("Computing fit statistics and log likelihood ...")
 
    ### note: this only counts *estimated* variance components and correlations for the total number of parameters
@@ -2631,10 +2403,10 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
                 ifelse(withH, sum(ifelse(phi.fix,0,1)), 0)
 
    ### note: this counts all variance components and correlations for the total number of parameters, even if they were fixed by the user or function
-   #parms <- p + ifelse(withS, length(sigma2), 0) + ifelse(withG, length(tau2), 0) + ifelse(withG, length(rho), 0) + ifelse(withH, length(gamma2), 0) + ifelse(withH, length(phi), 0)
+   #parms <- p + ifelse(withS, sigma2s, 0) + ifelse(withG, tau2s, 0) + ifelse(withG, rhos, 0) + ifelse(withH, gamma2s, 0) + ifelse(withH, phis, 0)
 
-   ll.ML   <- -1/2 * (k)   * log(2*base::pi)                                                                                 - 1/2 * determinant(M, logarithm=TRUE)$modulus                                                                   - 1/2 * RSS.f
-   ll.REML <- -1/2 * (k-p) * log(2*base::pi) + ifelse(con$REMLf, 1/2 * determinant(crossprod(X), logarithm=TRUE)$modulus, 0) - 1/2 * determinant(M, logarithm=TRUE)$modulus - 1/2 * determinant(crossprod(X,W) %*% X, logarithm=TRUE)$modulus - 1/2 * RSS.f
+   ll.ML   <- fitcall$llvals[1]
+   ll.REML <- fitcall$llvals[2]
 
    dev.ML    <- -2 * (ll.ML - ll.QE)
    AIC.ML    <- -2 * ll.ML   + 2*parms
@@ -2653,7 +2425,7 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
 
    ###### prepare output
 
-   if (very.verbose)
+   if (verbose > 1)
       message("Preparing output ...")
 
    p.eff <- p

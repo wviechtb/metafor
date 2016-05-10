@@ -9,7 +9,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
 
    ###### setup
 
-   ### check for some incorrect argument specifications
+   ### check argument specifications
    ### (arguments "to" and "vtype" are checked inside escalc function)
 
    if (!is.element(measure, c("RR","OR","PETO","RD","AS","PHI","YUQ","YUY","RTET", ### 2x2 table measures
@@ -51,11 +51,9 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
    if (!(is.logical(knha) || (is.character(knha) && is.element(knha, c("adhoc", "tdist")))))
       stop("Invalid option selected for 'knha' argument.")
 
-   very.verbose <- ifelse(!is.logical(verbose) && verbose > 1, TRUE, FALSE)
-
    #########################################################################
 
-   if (very.verbose)
+   if (verbose > 1)
       message("Extracting/computing yi/vi values ...")
 
    ### check if data argument has been specified
@@ -501,7 +499,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
 
    #########################################################################
 
-   if (very.verbose)
+   if (verbose > 1)
       message("Creating model matrix ...")
 
    ### convert mods formula to X matrix and set intercept equal to FALSE
@@ -557,7 +555,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
 
    ### generate study labels if none are specified (or none have been found in yi)
 
-   if (very.verbose)
+   if (verbose > 1)
       message("Generating/extracting study labels ...")
 
    if (is.null(slab)) {
@@ -581,7 +579,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
 
    if (!is.null(subset)) {
 
-      if (very.verbose)
+      if (verbose > 1)
          message("Subsetting ...")
 
       mods <- mods[subset,,drop=FALSE]
@@ -651,7 +649,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
 
    if (any(YVXZW.na)) {
 
-      if (very.verbose)
+      if (verbose > 1)
          message("Handling NAs ...")
 
       not.na <- !YVXZW.na
@@ -975,7 +973,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
          tau2.val <- NA
       }
 
-      if (very.verbose && !tau2.fix)
+      if ((verbose > 1) && !tau2.fix)
          message("Estimating tau^2 value ...")
 
       ### Hunter & Schmidt (HS) estimator
@@ -1296,7 +1294,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
 
    ###### model fitting, test statistics, and confidence intervals
 
-   if (very.verbose)
+   if (verbose > 1)
       message("Model fitting ...")
 
    wi <- 1/(vi + tau2)
@@ -1452,7 +1450,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
 
    ### heterogeneity test (Wald-type test of the extra coefficients in the saturated model)
 
-   if (very.verbose)
+   if (verbose > 1)
       message("Heterogeneity testing ...")
 
    if (allvipos) {
@@ -1510,7 +1508,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
 
    if (!int.only && int.incl && method != "FE" && model == "rma.uni") {
 
-      if (very.verbose) {
+      if (verbose > 1) {
          message("Fitting RE model for R^2 computation ...")
          res.RE <- try(rma.uni(yi, vi, weights=weights, method=method, weighted=weighted, knha=knha, verbose=ifelse(verbose, TRUE, FALSE), control=con, digits=digits), silent=FALSE)
       } else {
@@ -1543,7 +1541,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
 
    ###### fit statistics
 
-   if (very.verbose)
+   if (verbose > 1)
       message("Computing fit statistics and log likelihood ...")
 
    ### note: tau2 is not counted as a parameter when it was fixed by the user
@@ -1575,7 +1573,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
 
    ###### prepare output
 
-   if (very.verbose)
+   if (verbose > 1)
       message("Preparing output ...")
 
    p.eff <- p

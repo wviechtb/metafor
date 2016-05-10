@@ -7,7 +7,7 @@ correct=TRUE, level=95, digits=4, verbose=FALSE) {
 
    ###### setup
 
-   ### check for some incorrect argument specifications
+   ### check argument specifications
 
    if (!is.element(measure, c("OR","RR","RD","IRR","IRD")))
       stop("Mantel-Haenszel method can only be used with measures OR, RR, RD, IRR, and IRD.")

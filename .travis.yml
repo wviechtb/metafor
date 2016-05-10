@@ -1,5 +1,5 @@
 language: R
-r: devel
+r: release
 warnings_are_errors: true
 sudo: false
 cache: packages

@@ -9,7 +9,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
 
    ###### setup
 
-   ### check for some incorrect argument specifications
+   ### check argument specifications
    ### (arguments "to" and "vtype" are checked inside escalc function)
 
    if (missing(measure))
@@ -58,11 +58,9 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
 
    knha <- tdist
 
-   very.verbose <- ifelse(!is.logical(verbose) && verbose > 1, TRUE, FALSE)
-
    #########################################################################
 
-   if (very.verbose)
+   if (verbose > 1)
       message("Extracting data and computing yi/vi values ...")
 
    ### check if data argument has been specified
@@ -195,7 +193,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
 
    #########################################################################
 
-   if (very.verbose)
+   if (verbose > 1)
       message("Creating model matrix ...")
 
    ### convert mods formula to X matrix and set intercept equal to FALSE
@@ -231,7 +229,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
 
    ### generate study labels if none are specified
 
-   if (very.verbose)
+   if (verbose > 1)
       message("Generating/extracting study labels ...")
 
    if (is.null(slab)) {
@@ -255,7 +253,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
 
    if (!is.null(subset)) {
 
-      if (very.verbose)
+      if (verbose > 1)
          message("Subsetting ...")
 
       mods <- mods[subset,,drop=FALSE]
@@ -325,7 +323,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
 
       if (any(aibicidimods.na)) {
 
-         if (very.verbose)
+         if (verbose > 1)
             message("Handling NAs in table data ...")
 
          not.na <- !aibicidimods.na
@@ -355,7 +353,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
 
       if (any(x1ix2it1it2imods.na)) {
 
-         if (very.verbose)
+         if (verbose > 1)
             message("Handling NAs in table data ...")
 
          not.na <- !x1ix2it1it2imods.na
@@ -385,7 +383,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
 
       if (any(ximimods.na)) {
 
-         if (very.verbose)
+         if (verbose > 1)
             message("Handling NAs in table data ...")
 
          not.na <- !ximimods.na
@@ -413,7 +411,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
 
       if (any(xitimods.na)) {
 
-         if (very.verbose)
+         if (verbose > 1)
             message("Handling NAs in table data ...")
 
          not.na <- !xitimods.na
@@ -453,7 +451,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
 
    if (any(yivi.na)) {
 
-      if (very.verbose)
+      if (verbose > 1)
          message("Handling NAs in yi/vi ...")
 
       not.na.yivi <- !yivi.na
@@ -1166,7 +1164,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
                   stop("Cannot fit FE model.")
             }
 
-            if (very.verbose)
+            if (verbose > 1)
                message("Computing Hessian ...")
 
             h.FE <- numDeriv::hessian(.dnchg, x=res.FE$par, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=FALSE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec)
@@ -1218,7 +1216,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
                }
 
                if (QEconv) {
-                  if (very.verbose)
+                  if (verbose > 1)
                      message("Computing Hessian ...")
                   h.QE <- numDeriv::hessian(.dnchg, x=res.QE$par, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.QE, random=FALSE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec)
                }
@@ -1412,7 +1410,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
                   stop("Cannot fit ML model.")
             }
 
-            if (very.verbose)
+            if (verbose > 1)
                message("Computing Hessian ...")
 
             ### TODO: r=8 seems to give more accurate results, but this needs a whole lot more testing
@@ -1625,7 +1623,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
 
    ### heterogeneity tests (Wald-type and likelihood ratio tests of the extra coefficients in the saturated model)
 
-   if (very.verbose)
+   if (verbose > 1)
       message("Heterogeneity testing ...")
 
    if (measure!="OR" || model!="CM.EL" || con$optimizer!="optim") { ### for OR & CM.EL & optim, QE.Wld is already calculated
@@ -1725,7 +1723,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
 
    ###### fit statistics
 
-   if (very.verbose)
+   if (verbose > 1)
       message("Computing fit statistics and log likelihood ...")
 
    ll.ML     <- ifelse(method == "FE", ll.FE, ll.ML)
@@ -1747,7 +1745,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
 
    ###### prepare output
 
-   if (very.verbose)
+   if (verbose > 1)
       message("Preparing output ...")
 
    weighted  <- TRUE
