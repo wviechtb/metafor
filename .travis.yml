@@ -1,12 +1,11 @@
 language: r
-r: oldrel
+r: release
 warnings_are_errors: true
 sudo: false
 cache: packages
 
 r_packages:
   - covr
-  - boot
 
 env:
   - NOT_CRAN=true
