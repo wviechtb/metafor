@@ -1,4 +1,4 @@
-Changes in Version 1.9-9 (2016-05-11)
+Changes in Version 1.9-9 (2016-05-13)
 =====================================
 
    o started to use git as version control system, GitHub to host the
@@ -13,6 +13,12 @@ Changes in Version 1.9-9 (2016-05-11)
 
    o escalc() can now also be used to convert a regular data frame to an
      'escalc' object
+
+   o for measure="UCOR", the exact bias-correction is now used (instead of
+     the approximation); when vtype="UB", the exact equation is now used to
+     compute the unbiased estimate of the variance of the bias-corrected
+     correlation coefficient; hence 'gsl' is now a suggested package (needed
+     to compute the hypergeometric function) and is loaded when required
 
    o cooks.distance() now also works with 'rma.mv' objects; and since model
      fitting can take some time, an option to show a progress bar has been

@@ -704,24 +704,32 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
          if (any(ni < 0, na.rm=TRUE))
             stop("One or more sample sizes are negative.")
 
-         if (any(ni <= 4, na.rm=TRUE))
-            warning("Cannot estimate sampling variance when ni <= 4.")
+         if (measure != "UCOR" && vtype == "UB")
+            stop("Use of vtype='UB' only permitted when measure='UCOR'.")
+
+         if (any(ni <= 4, na.rm=TRUE)) {
+            if (measure == "UCOR") {
+               warning("Cannot compute the bias-corrected correlation coefficient when ni <= 4.")
+            } else {
+               warning("Cannot estimate the sampling variance when ni <= 4.")
+            }
+         }
 
          ni.u <- ni ### unadjusted total sample sizes
 
          k <- length(ri)
 
-         ### raw correlation
+         ### raw correlation coefficient
 
-         if (measure == "COR") {
+         if (measure == "COR")
             yi <- ri
-         }
 
-         ### raw correlation with bias correction
+         ### raw correlation coefficient with bias correction
 
          if (measure == "UCOR") {
-            yi <- ri + ri*(1-ri^2)/(2*(ni-4))
-            yi[ni <= 4] <- NA ### set corrected correlations for ni <= 4 to NA
+            #yi <- ri + ri*(1-ri^2)/(2*(ni-4)) ### approximation
+            #yi[ni <= 4] <- NA ### set corrected correlations for ni <= 4 to NA
+            yi <- ri * .Fcalc(1/2, 1/2, (ni-2)/2, 1-ri^2)
          }
 
          ### sampling variances for COR or UCOR
@@ -737,9 +745,10 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
             for (i in seq_len(k)) {
 
-               ### approximation to the unbiased estimate of the sampling variance
+               ### unbiased estimate of the sampling variance of the bias-corrected correlation coefficient
                if (vtype[i] == "UB") {
-                  vi[i] <- yi[i]^2 - 1 + (ni[i]-3)/(ni[i]-2) * ((1-ri[i]^2) + 2*(1-ri[i]^2)^2/ni[i] + 8*(1-ri[i]^2)^3/(ni[i]*(ni[i]+2)) + 48*(1-ri[i]^2)^4/(ni[i]*(ni[i]+2)*(ni[i]+4)))
+                  #vi[i] <- yi[i]^2 - 1 + (ni[i]-3)/(ni[i]-2) * ((1-ri[i]^2) + 2*(1-ri[i]^2)^2/ni[i] + 8*(1-ri[i]^2)^3/(ni[i]*(ni[i]+2)) + 48*(1-ri[i]^2)^4/(ni[i]*(ni[i]+2)*(ni[i]+4)))
+                  vi[i] <- yi[i]^2 - (1 - (ni[i]-3)/(ni[i]-2) * (1-ri[i]^2) * .Fcalc(1, 1, ni[i]/2, 1-ri[i]^2))
                }
 
                ### large sample approximation to the sampling variance

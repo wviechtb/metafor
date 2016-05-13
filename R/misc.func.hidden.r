@@ -1443,3 +1443,32 @@
 }
 
 ############################################################################
+
+### function to calculate the Gaussian hypergeometric (Hypergeometric2F1) function
+
+.Fcalc <- function(a, b, g, x) {
+
+   if (!requireNamespace("gsl", quietly=TRUE))
+      stop("Please install the 'gsl' package to use measure='UCOR'.")
+
+   k <- length(g)
+   res <- rep(NA_real_, k)
+
+   if (length(g) != length(x))
+      stop("Length of 'g' and 'x' arguments do not match.")
+
+   for (i in 1:k) {
+
+      if (g[i] > (a+b)) {
+         res[i] <- gsl::hyperg_2F1(a, b, g[i], x[i])
+      } else {
+         res[i] <- NA
+      }
+
+   }
+
+   return(res)
+
+}
+
+############################################################################
