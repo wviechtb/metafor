@@ -4,11 +4,11 @@ warnings_are_errors: true
 sudo: required
 cache: packages
 
-before_install:
-  - ./travis-tool.sh aptget_install libgsl0-dev
-
 r_packages:
   - covr
+
+r_binary_packages:
+  - gsl
 
 env:
   - NOT_CRAN=true
