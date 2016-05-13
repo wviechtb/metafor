@@ -6,6 +6,8 @@ cache: packages
 
 r_packages:
   - covr
+
+r_binary_packages:
   - gsl
 
 env:
