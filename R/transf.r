@@ -1,38 +1,22 @@
-transf.rtoz <- function(xi, ...) {                 ### resulting value between -Inf (for -1) and +Inf (for +1)
-   zi <- 1/2 * log((1+xi)/(1-xi))
-   return(c(zi))
-}
+transf.rtoz <- function(xi, ...)                   ### resulting value between -Inf (for -1) and +Inf (for +1)
+   atanh(xi)
 
-transf.ztor <- function(xi, ...) {
-   zi <- (exp(2*xi)-1) / (exp(2*xi)+1)
-   zi[xi == -Inf] <- -1
-   zi[xi ==  Inf] <-  1
-   zi[is.nan(zi) & (xi > 0)] <- 1                  ### if xi value is too large, get Inf/Inf = NaN; must be +1
-   return(c(zi))
-}
+transf.ztor <- function(xi, ...)
+   tanh(xi)
 
-transf.logit <- function(xi, ...) {                ### resulting value between -Inf (for 0) and +Inf (for +1)
-   zi <- log(xi/(1-xi))                            ### same as qlogis(xi)
-   return(c(zi))
-}
+transf.logit <- function(xi, ...)                  ### resulting value between -Inf (for 0) and +Inf (for +1)
+   qlogis(xi)
 
-transf.ilogit <- function(xi, ...) {
-   zi <- exp(xi)/(1+exp(xi))                       ### same as plogis(xi)
-   zi[xi == -Inf] <- 0
-   zi[xi ==  Inf] <- 1
-   zi[is.nan(zi) & (xi > 0.5)] <- 1                ### if xi value is too large, get Inf/Inf = NaN; must be 1
-   return(c(zi))
-}
+transf.ilogit <- function(xi, ...)
+   plogis(xi)
 
-transf.arcsin <- function(xi, ...) {               ### resulting value between 0 (for 0) and asin(1) (for +1)
-   zi <- asin(sqrt(xi))
-   return(c(zi))
-}
+transf.arcsin <- function(xi, ...)                 ### resulting value between 0 (for 0) and asin(1) = pi/2 (for +1)
+   asin(sqrt(xi))
 
 transf.iarcsin <- function(xi, ...) {
    zi <- sin(xi)^2
-   zi[xi < 0] <- 0                                 ### if xi value is below 0 (e.g., CI bound); must be 0
-   zi[xi > asin(1)] <- 1                           ### if xi value is above maximum possible value; must be 1
+   zi[xi < 0] <- 0                                 ### if xi value is below 0 (e.g., CI bound), return 0
+   zi[xi > asin(1)] <- 1                           ### if xi value is above maximum possible value, return 1
    return(c(zi))
 }
 
@@ -45,8 +29,8 @@ transf.pft <- function(xi, ni, ...) {              ### Freeman-Tukey transformat
 transf.ipft <- function(xi, ni, ...) {             ### inverse of Freeman-Tukey transformation for individual proportions
    zi <- 1/2 * (1 - sign(cos(2*xi)) * sqrt(1 - (sin(2*xi)+(sin(2*xi)-1/sin(2*xi))/ni)^2))
    zi <- ifelse(is.nan(zi), NA, zi)
-   zi[xi > transf.pft(1,ni)] <- 1                  ### if xi is above upper limit, must be 1
-   zi[xi < transf.pft(0,ni)] <- 0                  ### if xi is below lower limit, must be 0
+   zi[xi > transf.pft(1,ni)] <- 1                  ### if xi is above upper limit, return 1
+   zi[xi < transf.pft(0,ni)] <- 0                  ### if xi is below lower limit, return 0
    return(c(zi))
 }
 
@@ -54,14 +38,14 @@ transf.ipft.hm <- function(xi, targs, ...) {       ### inverse of Freeman-Tukey 
    ni <- 1/(mean(1/targs$ni, na.rm=TRUE))          ### calculate harmonic mean of the ni's
    zi <- suppressWarnings(1/2 * (1 - sign(cos(2*xi)) * sqrt(1 - (sin(2*xi)+(sin(2*xi)-1/sin(2*xi))/ni)^2)))
    zi <- ifelse(is.nan(zi), NA, zi)                ### it may not be possible to calculate zi
-   zi[xi > transf.pft(1,ni)] <- 1                  ### if xi is above upper limit, must be 1
-   zi[xi < transf.pft(0,ni)] <- 0                  ### if xi is below lower limit, must be 0
+   zi[xi > transf.pft(1,ni)] <- 1                  ### if xi is above upper limit, return 1
+   zi[xi < transf.pft(0,ni)] <- 0                  ### if xi is below lower limit, return 0
    return(c(zi))
 }
 
 transf.isqrt <- function(xi, ...) {
    zi <- xi*xi
-   zi[xi < 0] <- 0                                 ### if xi value is below 0 (e.g., CI bound); must be 0
+   zi[xi < 0] <- 0                                 ### if xi value is below 0 (e.g., CI bound), return 0
    return(c(zi))
 }
 
@@ -74,8 +58,8 @@ transf.iirft <- function(xi, ti, ...) {            ### inverse of Freeman-Tukey 
    #zi <- (1/ti - 2*xi^2 + ti*xi^4)/(4*xi^2*ti)    ### old version where transf.irft was not multiplied by 1/2
    zi <- (1/ti - 8*xi^2 + 16*ti*xi^4)/(16*xi^2*ti) ### xi is the incidence rate (not the number of events!)
    zi <- ifelse(is.nan(zi), NA, zi)
-   zi[xi < transf.irft(0,ti)] <- 0                 ### if xi is below lower limit, must be 0
-   zi[zi <= .Machine$double.eps] <- 0              ### avoid finite precisions errors in back-transformed values (transf.iirft(transf.irft(0, 1:200), 1:200))
+   zi[xi < transf.irft(0,ti)] <- 0                 ### if xi is below lower limit, return 0
+   zi[zi <= .Machine$double.eps] <- 0              ### avoid finite precision errors in back-transformed values (transf.iirft(transf.irft(0, 1:200), 1:200))
    return(c(zi))
 }
 
@@ -89,8 +73,8 @@ transf.iahw <- function(xi, ...) {
    #zi <- 1-xi^3
    zi <- 1 - (1-xi)^3
    zi <- ifelse(is.nan(zi), NA, zi)
-   zi[xi > 1] <- 1                                 ### if xi is above upper limit, must be 1
-   zi[xi < 0] <- 0                                 ### if xi is below lower limit, must be 0
+   zi[xi > 1] <- 1                                 ### if xi is above upper limit, return 1
+   zi[xi < 0] <- 0                                 ### if xi is below lower limit, return 0
    return(c(zi))
 }
 
@@ -108,7 +92,7 @@ transf.iabt <- function(xi, ...) {                 ### inverse of Bonett (2002) 
    #zi <- 1 - exp(xi)
    zi <- 1 - exp(-xi)
    zi <- ifelse(is.nan(zi), NA, zi)
-   zi[xi < 0] <- 0                                 ### if xi is below lower limit, must be 0
+   zi[xi < 0] <- 0                                 ### if xi is below lower limit, return 0
    return(c(zi))
 }
 
@@ -121,13 +105,8 @@ transf.ztor.int <- function(xi, targs=NULL, ...) {
    if (is.null(targs$upper))
       targs$upper <- xi+5*sqrt(targs$tau2)
 
-   toint <- function(zval, xi, tau2) {
-      zi <- (exp(2*zval)-1) / (exp(2*zval)+1)
-      zi[xi == -Inf] <- -1
-      zi[xi ==  Inf] <-  1
-      zi[is.nan(zi) & (xi > 0)] <- 1
-      zi * dnorm(zval, mean=xi, sd=sqrt(tau2))
-   }
+   toint <- function(zval, xi, tau2)
+      tanh(zval) * dnorm(zval, mean=xi, sd=sqrt(tau2))
 
    cfunc <- function(xi, tau2, lower, upper)
       integrate(toint, lower=lower, upper=upper, xi=xi, tau2=tau2)$value
@@ -147,9 +126,8 @@ transf.exp.int <- function(xi, targs=NULL, ...) {
    if (is.null(targs$upper))
       targs$upper <- xi+5*sqrt(targs$tau2)
 
-   toint <- function(zval, xi, tau2) {
+   toint <- function(zval, xi, tau2)
       exp(zval) * dnorm(zval, mean=xi, sd=sqrt(tau2))
-   }
 
    cfunc <- function(xi, tau2, lower, upper)
       integrate(toint, lower=lower, upper=upper, xi=xi, tau2=tau2)$value
@@ -169,13 +147,8 @@ transf.ilogit.int <- function(xi, targs=NULL, ...) {
    if (is.null(targs$upper))
       targs$upper <- xi+5*sqrt(targs$tau2)
 
-   toint <- function(zval, xi, tau2) {
-      zi <- exp(zval)/(1+exp(zval))
-      zi[xi == -Inf] <- 0
-      zi[xi ==  Inf] <- 1
-      zi[is.nan(zi) & (xi > 0.5)] <- 1
-      zi * dnorm(zval, mean=xi, sd=sqrt(tau2))
-   }
+   toint <- function(zval, xi, tau2)
+      plogis(zval) * dnorm(zval, mean=xi, sd=sqrt(tau2))
 
    cfunc <- function(xi, tau2, lower, upper)
       integrate(toint, lower=lower, upper=upper, xi=xi, tau2=tau2)$value
