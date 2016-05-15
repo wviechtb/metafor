@@ -4,7 +4,7 @@
 
 context("Checking plots example: normal QQ plots")
 
-test_that("plot can be drawn.", {
+test_that("plot can be drawn for rma().", {
 
    skip_on_cran()
 
@@ -33,6 +33,35 @@ test_that("plot can be drawn.", {
    qqnorm(res3, main="Fixed-Effects with Moderators Model")
    qqnorm(res4, main="Mixed-Effects Model")
 
+   par(opar)
+
+   ### draw plot with studentized residuals and labels
+   qqnorm(res2, type="rstudent", label=TRUE)
+
+})
+
+test_that("plot can be drawn for rma.mh().", {
+
+   skip_on_cran()
+
+   opar <- par(no.readonly=TRUE)
+   data(dat.bcg, package="metafor")
+   res <- rma.mh(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
+   qqnorm(res)
+   qqnorm(res, type="rstudent", label=TRUE)
+   par(opar)
+
+})
+
+test_that("plot can be drawn for rma.peto().", {
+
+   skip_on_cran()
+
+   opar <- par(no.readonly=TRUE)
+   data(dat.bcg, package="metafor")
+   res <- rma.peto(ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
+   qqnorm(res)
+   qqnorm(res, type="rstudent", label=TRUE)
    par(opar)
 
 })
