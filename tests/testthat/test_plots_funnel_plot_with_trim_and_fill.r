@@ -27,4 +27,6 @@ test_that("plot can be drawn.", {
 
    par(opar)
 
+   out <- capture.output(print(taf))
+
 })

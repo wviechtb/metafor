@@ -80,6 +80,10 @@ test_that("results are correct for example 1.", {
    expect_equivalent(round(ci[[1]]$random[1,2:3], digits=3), c(0.000, 0.071))
    expect_equivalent(round(ci[[2]]$random[1,2:3], digits=3), c(0.000, 0.615))
 
+   sav <- predict(modI, newmods=c(1,0,0,0,0,0,0), transf=exp)
+   sav <- round(c(sav[[1]], sav[[3]], sav[[4]], sav[[5]], sav[[6]]), 4)
+   expect_equivalent(sav, c(0.7991, 0.6477, 0.9859, 0.6477, 0.9859))
+
 })
 
 test_that("results are correct for example 2.", {
@@ -143,5 +147,9 @@ test_that("results are correct for example 2.", {
    expect_equivalent(round(coef(modI), digits=3), c(-1.973, -1.396, -0.657))
    expect_equivalent(round(ci[[1]]$random[1,2:3], digits=3), c(0.000, 1.666))
    expect_equivalent(round(ci[[2]]$random[1,2:3], digits=3), c(0.000, 3.960))
+
+   sav <- predict(modI, newmods=c(1,0,0), transf=exp)
+   sav <- round(c(sav[[1]], sav[[3]], sav[[4]], sav[[5]], sav[[6]]), 4)
+   expect_equivalent(sav, c(0.1390, 0.0369, 0.5230, 0.0178, 1.0856))
 
 })

@@ -10,32 +10,42 @@ test_that("fit statistics are correct for rma.uni().", {
    ### calculate log relative risks and corresponding sampling variances
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
-   ### fit random-effects model (with ML estimation)
-   res <- rma(yi, vi, data=dat, method="ML")
+   ### fit random- and mixed-effects models (with ML estimation)
+   res1 <- rma(yi, vi, data=dat, method="ML")
+   res2 <- rma(yi ~ ablat, vi, data=dat, method="ML")
 
-   tmp <- c(logLik(res))
+   tmp <- c(logLik(res1))
    expect_equivalent(round(tmp,4), -12.6651)
-   expect_equivalent(round(tmp,4), round(sum(dnorm(dat$yi, coef(res), sqrt(dat$vi+res$tau2), log=TRUE)),4))
+   expect_equivalent(round(tmp,4), round(sum(dnorm(dat$yi, coef(res1), sqrt(dat$vi+res1$tau2), log=TRUE)),4))
 
-   tmp <- deviance(res)
+   tmp <- deviance(res1)
    expect_equivalent(round(tmp,4), 37.1160)
-   expect_equivalent(round(tmp,4), round(-2 * (sum(dnorm(dat$yi, coef(res), sqrt(dat$vi+res$tau2), log=TRUE)) - sum(dnorm(dat$yi, dat$yi, sqrt(dat$vi), log=TRUE))), 4))
+   expect_equivalent(round(tmp,4), round(-2 * (sum(dnorm(dat$yi, coef(res1), sqrt(dat$vi+res1$tau2), log=TRUE)) - sum(dnorm(dat$yi, dat$yi, sqrt(dat$vi), log=TRUE))), 4))
 
-   tmp <- AIC(res)
+   tmp <- AIC(res1)
    expect_equivalent(round(tmp,4), 29.3302)
-   expect_equivalent(round(tmp,4), round(-2 * sum(dnorm(dat$yi, coef(res), sqrt(dat$vi+res$tau2), log=TRUE)) + 2*2,4))
+   expect_equivalent(round(tmp,4), round(-2 * sum(dnorm(dat$yi, coef(res1), sqrt(dat$vi+res1$tau2), log=TRUE)) + 2*2,4))
 
-   tmp <- BIC(res)
+   tmp <- AIC(res1, res2)
+   expect_equivalent(round(tmp,4), structure(list(df = c(2, 3), AIC = c(29.3302, 21.3713)), .Names = c("df", "AIC"), row.names = c("res1", "res2"), class = "data.frame"))
+
+   tmp <- BIC(res1)
    expect_equivalent(round(tmp,4), 30.4601)
-   expect_equivalent(round(tmp,4), round(-2 * sum(dnorm(dat$yi, coef(res), sqrt(dat$vi+res$tau2), log=TRUE)) + 2*log(res$k),4))
+   expect_equivalent(round(tmp,4), round(-2 * sum(dnorm(dat$yi, coef(res1), sqrt(dat$vi+res1$tau2), log=TRUE)) + 2*log(res1$k),4))
 
-   tmp <- c(fitstats(res))
+   tmp <- BIC(res1, res2)
+   expect_equivalent(round(tmp,4), structure(list(df = c(2, 3), BIC = c(30.4601, 23.0662)), .Names = c("df", "BIC"), row.names = c("res1", "res2"), class = "data.frame"))
+
+   tmp <- c(fitstats(res1))
    expect_equivalent(round(tmp,4), c(-12.6651, 37.1160, 29.3302, 30.4601, 30.5302))
 
-   tmp <- nobs(res)
+   tmp <- fitstats(res1, res2)
+   expect_equivalent(round(tmp,4), structure(list(res1 = c(-12.6651, 37.116, 29.3302, 30.4601, 30.5302), res2 = c(-7.6857, 27.1572, 21.3713, 23.0662, 24.038)), .Names = c("res1", "res2"), row.names = c("logLik:", "deviance:", "AIC:", "BIC:", "AICc:"), class = "data.frame"))
+
+   tmp <- nobs(res1)
    expect_equivalent(tmp, 13)
 
-   tmp <- df.residual(res)
+   tmp <- df.residual(res1)
    expect_equivalent(tmp, 12)
 
 })

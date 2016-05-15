@@ -42,6 +42,11 @@ test_that("results are correct for the random-effects model.", {
    profile(res, xlim=c(0,.20), progbar=FALSE)
    par(opar)
 
+   ### profile tau^2 (without 'xlim' specified)
+   opar <- par(no.readonly=TRUE)
+   profile(res, progbar=FALSE)
+   par(opar)
+
 })
 
 test_that("results are correct for the mixed-effects model.", {

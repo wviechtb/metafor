@@ -111,7 +111,11 @@ transf.ztor.int <- function(xi, targs=NULL, ...) {
    cfunc <- function(xi, tau2, lower, upper)
       integrate(toint, lower=lower, upper=upper, xi=xi, tau2=tau2)$value
 
-   zi <- mapply(xi, FUN=cfunc, tau2=targs$tau2, lower=targs$lower, upper=targs$upper)
+   if (targs$tau2 == 0) {
+      zi <- transf.ztor(xi)
+   } else {
+      zi <- mapply(xi, FUN=cfunc, tau2=targs$tau2, lower=targs$lower, upper=targs$upper)
+   }
 
    return(c(zi))
 
@@ -132,7 +136,11 @@ transf.exp.int <- function(xi, targs=NULL, ...) {
    cfunc <- function(xi, tau2, lower, upper)
       integrate(toint, lower=lower, upper=upper, xi=xi, tau2=tau2)$value
 
-   zi <- mapply(xi, FUN=cfunc, tau2=targs$tau2, lower=targs$lower, upper=targs$upper)
+   if (targs$tau2 == 0) {
+      zi <- exp(xi)
+   } else {
+      zi <- mapply(xi, FUN=cfunc, tau2=targs$tau2, lower=targs$lower, upper=targs$upper)
+   }
 
    return(c(zi))
 
@@ -153,7 +161,11 @@ transf.ilogit.int <- function(xi, targs=NULL, ...) {
    cfunc <- function(xi, tau2, lower, upper)
       integrate(toint, lower=lower, upper=upper, xi=xi, tau2=tau2)$value
 
-   zi <- mapply(xi, FUN=cfunc, tau2=targs$tau2, lower=targs$lower, upper=targs$upper)
+   if (targs$tau2 == 0) {
+      zi <- transf.ilogit(xi)
+   } else {
+      zi <- mapply(xi, FUN=cfunc, tau2=targs$tau2, lower=targs$lower, upper=targs$upper)
+   }
 
    return(c(zi))
 

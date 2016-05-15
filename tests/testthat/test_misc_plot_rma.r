@@ -9,6 +9,9 @@ test_that("plot can be drawn for rma().", {
    res <- rma(yi, vi, data=dat)
    plot(res)
 
+   res <- rma(yi ~ ablat, vi, data=dat)
+   plot(res)
+
 })
 
 test_that("plot can be drawn for rma.mh().", {
