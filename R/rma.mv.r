@@ -2216,21 +2216,21 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
 
    ### extract elements
 
-   b  <- fitcall$b
-   vb <- fitcall$vb
+   b  <- as.matrix(fitcall$b)
+   vb <- as.matrix(fitcall$vb)
 
    if (withS)
       sigma2 <- fitcall$sigma2
 
    if (withG) {
-      G <- fitcall$G
+      G <- as.matrix(fitcall$G)
       colnames(G) <- rownames(G) <- g.levels.f[[1]]
       tau2 <- fitcall$tau2
       rho  <- fitcall$rho
    }
 
    if (withH) {
-      H <- fitcall$H
+      H <- as.matrix(fitcall$H)
       colnames(H) <- rownames(H) <- h.levels.f[[1]]
       gamma2 <- fitcall$gamma2
       phi    <- fitcall$phi
@@ -2256,8 +2256,8 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
    zval <- c(b/se)
 
    if (knha) {
-      dfs  <- k-p
-      QM   <- QM / m
+      dfs <- k-p
+      QM  <- QM / m
       if (dfs > 0) {
          QMp  <- pf(QM, df1=m, df2=dfs, lower.tail=FALSE)
          pval <- 2*pt(abs(zval), df=dfs, lower.tail=FALSE)
