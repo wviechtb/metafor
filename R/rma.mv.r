@@ -2237,8 +2237,7 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
    }
 
    M <- fitcall$M
-
-   colnames(M) <- rownames(M) <- NULL ### strip row/column names of M
+   M <- unname(M) ### strip row/column names of M
 
    #print(M[1:8,1:8])
 
