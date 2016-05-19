@@ -1,4 +1,4 @@
-Changes in Version 1.9-9 (2016-05-15)
+Changes in Version 1.9-9 (2016-05-19)
 =====================================
 
    o started to use git as version control system, GitHub to host the
@@ -40,6 +40,9 @@ Changes in Version 1.9-9 (2016-05-15)
    o permutest.rma.uni() gains 'permci' argument, which can be used to
      obtain permutation-based CIs of the model coefficients (note that this
      is computationally very demanding and may take a long time to complete)
+
+   o rma.glmm() continues to work even when the saturated model cannot be
+     fitted (although the tests for heterogeneity are not available then)
 
    o the various forest() and addpoly() functions now have a new argument
      called 'width', which provides manual control over the width of the

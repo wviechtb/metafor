@@ -816,6 +816,12 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
             if (inherits(res.FE, "try-error"))
                stop("Cannot fit FE model.")
 
+            ### log-likelihood
+
+            #ll.FE <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, predict(res.FE, type="response"), log=TRUE))) ### model has a NULL offset
+            #ll.FE <- with(data.frame(dat.grp), sum(dpois(xi, predict(res.FE, type="response"), log=TRUE)))         ### offset already incorporated into predict()
+            ll.FE <- c(logLik(res.FE)) ### same as above
+
             ### fit saturated FE model (= QE model)
 
             if (verbose)
@@ -828,25 +834,28 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
                res.QE <- res.FE
             }
 
-            if (inherits(res.QE, "try-error"))
-               stop("Cannot fit saturated model.")
+            if (inherits(res.QE, "try-error")) {
 
-            ### log-likelihood
+               warning("Cannot fit saturated model.")
+               QEconv <- FALSE
+               ll.QE <- NA
 
-            #ll.FE <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, predict(res.FE, type="response"), log=TRUE))) ### model has a NULL offset
-            #ll.QE <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, xi/(xi+mi), log=TRUE)))                       ### model has a NULL offset
-            #ll.FE <- with(data.frame(dat.grp), sum(dpois(xi, predict(res.FE, type="response"), log=TRUE)))         ### offset already incorporated into predict()
-            #ll.QE <- with(data.frame(dat.grp), sum(dpois(xi, xi, log=TRUE)))                                       ### offset not relevant for saturated model
-            ll.FE  <- c(logLik(res.FE)) ### same as above
-            ll.QE  <- c(logLik(res.QE)) ### same as above
+            } else {
 
-            ### extract coefficients and variance-covariance matrix for Wald-type test for heterogeneity
+               QEconv <- TRUE
 
-            b2.QE  <- cbind(na.omit(coef(res.QE)[-seq_len(k+p)]))          ### coef() still includes aliased coefficients as NAs, so have to filter them out
-            vb2.QE <- vcov(res.QE)[-seq_len(k+p),-seq_len(k+p),drop=FALSE] ### aliased coefficients are already removed by vcov()
+               ### log-likelihood
 
-            #return(list(res.FE, res.QE, ll.FE, ll.QE))
-            #res.FE <- res[[1]]; res.QE <- res[[2]]
+               #ll.QE <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, xi/(xi+mi), log=TRUE))) ### model has a NULL offset
+               #ll.QE <- with(data.frame(dat.grp), sum(dpois(xi, xi, log=TRUE)))                 ### offset not relevant for saturated model
+               ll.QE  <- c(logLik(res.QE)) ### same as above
+
+               ### extract coefficients and variance-covariance matrix for Wald-type test for heterogeneity
+
+               b2.QE  <- cbind(na.omit(coef(res.QE)[-seq_len(k+p)]))          ### coef() still includes aliased coefficients as NAs, so have to filter them out
+               vb2.QE <- vcov(res.QE)[-seq_len(k+p),-seq_len(k+p),drop=FALSE] ### aliased coefficients are already removed by vcov()
+
+            }
 
             if (method == "ML") {
 
@@ -864,10 +873,10 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
 
                ### log-likelihood
 
-               #ll.ML  <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, fitted(res.ML), log=TRUE))) ### not correct (since it does not incorporate the random effects; same as ll.FE if tau^2=0)
-               #ll.ML  <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, plogis(qlogis(fitted(res.ML)) + group12*unlist(ranef(res.ML))), log=TRUE))) ### not correct (since one really has to integrate; same as ll.FE if tau^2=0)
-               #ll.ML  <- c(logLik(res.ML)) ### this is not the same as ll.FE when tau^2 = 0 (not sure why)
-               ll.ML  <- ll.QE - 1/2 * deviance(res.ML) ### this makes ll.ML comparable to ll.FE (same as ll.FE when tau^2=0)
+               #ll.ML <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, fitted(res.ML), log=TRUE))) ### not correct (since it does not incorporate the random effects; same as ll.FE if tau^2=0)
+               #ll.ML <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, plogis(qlogis(fitted(res.ML)) + group12*unlist(ranef(res.ML))), log=TRUE))) ### not correct (since one really has to integrate; same as ll.FE if tau^2=0)
+               #ll.ML <- c(logLik(res.ML)) ### this is not the same as ll.FE when tau^2 = 0 (not sure why)
+               ll.ML <- ll.QE - 1/2 * deviance(res.ML) ### this makes ll.ML comparable to ll.FE (same as ll.FE when tau^2=0)
 
             }
 
@@ -917,6 +926,10 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
             if (inherits(res.FE, "try-error"))
                stop("Cannot fit FE model.")
 
+            ### log-likelihood
+
+            ll.FE <- c(logLik(res.FE))
+
             ### fit saturated FE model (= QE model)
             ### notes: 1) must figure out which terms are aliased in saturated model and remove those terms before fitting
             ###        2) sigma^2 for the study random effect must be close to the one from the FE model - so set start value to sigma from that model
@@ -933,21 +946,26 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
                res.QE <- res.FE
             }
 
-            if (inherits(res.QE, "try-error"))
-               stop("Cannot fit saturated model.")
+            if (inherits(res.QE, "try-error")) {
 
-            ### log-likelihood
+               warning("Cannot fit saturated model.")
+               QEconv <- FALSE
+               ll.QE <- NA
 
-            ll.FE  <- c(logLik(res.FE))
-            ll.QE  <- c(logLik(res.QE))
+            } else {
 
-            ### extract coefficients and variance-covariance matrix for Wald-type test for heterogeneity
+               QEconv <- TRUE
 
-            b2.QE  <- cbind(lme4::fixef(res.QE)[-seq_len(p+1)])                       ### aliased coefficients are already removed
-            vb2.QE <- as.matrix(vcov(res.QE))[-seq_len(p+1),-seq_len(p+1),drop=FALSE] ### aliased coefficients are already removed
+               ### log-likelihood
 
-            #return(list(res.FE, res.QE, ll.FE, ll.QE))
-            #res.FE <- res[[1]]; res.QE <- res[[2]]
+               ll.QE <- c(logLik(res.QE))
+
+               ### extract coefficients and variance-covariance matrix for Wald-type test for heterogeneity
+
+               b2.QE  <- cbind(lme4::fixef(res.QE)[-seq_len(p+1)])                       ### aliased coefficients are already removed
+               vb2.QE <- as.matrix(vcov(res.QE))[-seq_len(p+1),-seq_len(p+1),drop=FALSE] ### aliased coefficients are already removed
+
+            }
 
             if (method == "ML") {
 
@@ -968,7 +986,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
 
                ### log-likelihood
 
-               ll.ML  <- c(logLik(res.ML))
+               ll.ML <- c(logLik(res.ML))
 
             }
 
@@ -1040,6 +1058,12 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
          if (inherits(res.FE, "try-error"))
             stop("Cannot fit FE model.")
 
+         ### log-likelihood
+
+         #ll.FE <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, predict(res.FE, type="response"), log=TRUE))) ### offset already incorporated into predict()
+         #ll.FE <- with(data.frame(dat.grp), sum(dpois(xi, predict(res.FE, type="response"), log=TRUE)))         ### offset already incorporated into predict()
+         ll.FE <- c(logLik(res.FE)) ### same as above
+
          ### fit saturated FE model (= QE model)
 
          if (verbose)
@@ -1052,22 +1076,28 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
             res.QE <- res.FE
          }
 
-         if (inherits(res.QE, "try-error"))
-            stop("Cannot fit saturated model.")
+         if (inherits(res.QE, "try-error")) {
 
-         ### log-likelihood
+            warning("Cannot fit saturated model.")
+            QEconv <- FALSE
+            ll.QE <- NA
 
-         #ll.FE  <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, predict(res.FE, type="response"), log=TRUE))) ### offset already incorporated into predict()
-         #ll.QE  <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, xi/(xi+mi), log=TRUE)))                       ### offset not relevant for saturated model
-         #ll.FE  <- with(data.frame(dat.grp), sum(dpois(xi, predict(res.FE, type="response"), log=TRUE)))         ### offset already incorporated into predict()
-         #ll.QE  <- with(data.frame(dat.grp), sum(dpois(xi, xi, log=TRUE)))                                       ### offset not relevant for saturated model
-         ll.FE  <- c(logLik(res.FE)) ### same as above
-         ll.QE  <- c(logLik(res.QE)) ### same as above
+         } else {
 
-         ### extract coefficients and variance-covariance matrix for Wald-type test for heterogeneity
+            QEconv <- TRUE
 
-         b2.QE  <- cbind(na.omit(coef(res.QE)[-seq_len(p)]))        ### coef() still includes aliased coefficients as NAs, so have to filter them out
-         vb2.QE <- vcov(res.QE)[-seq_len(p),-seq_len(p),drop=FALSE] ### aliased coefficients are already removed by vcov()
+            ### log-likelihood
+
+            #ll.QE  <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, xi/(xi+mi), log=TRUE))) ### offset not relevant for saturated model
+            #ll.QE  <- with(data.frame(dat.grp), sum(dpois(xi, xi, log=TRUE)))                 ### offset not relevant for saturated model
+            ll.QE  <- c(logLik(res.QE)) ### same as above
+
+            ### extract coefficients and variance-covariance matrix for Wald-type test for heterogeneity
+
+            b2.QE  <- cbind(na.omit(coef(res.QE)[-seq_len(p)]))        ### coef() still includes aliased coefficients as NAs, so have to filter them out
+            vb2.QE <- vcov(res.QE)[-seq_len(p),-seq_len(p),drop=FALSE] ### aliased coefficients are already removed by vcov()
+
+         }
 
          #return(list(res.FE, res.QE, ll.FE, ll.QE))
          #res.FE <- res[[1]]; res.QE <- res[[2]]
@@ -1170,86 +1200,86 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
             h.FE <- numDeriv::hessian(.dnchg, x=res.FE$par, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=FALSE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec)
             #return(list(res.FE, h.FE))
 
+            ### log-likelihood
+
+            if (con$optimizer == "optim")
+               ll.FE <- -1 * res.FE$value
+            if (con$optimizer == "nlminb")
+               ll.FE <- -1 * res.FE$objective
+            if (con$optimizer == "minqa")
+               ll.FE <- -1 * res.FE$fval
+
             ### fit saturated FE model (= QE model)
             ### notes: 1) must figure out which terms are aliased in saturated model and remove those terms before fitting
             ###        2) start values from CM.AL model and 0 for tau^2 (held at 0 during the optimization since random=FALSE)
-            ###        3) no integration for FE model, so intCtrl is not relevant
+            ###        3) therefore only try to fit saturated model if this was possible with CM.AL
+            ###        4) no integration for FE model, so intCtrl is not relevant
 
-            if (verbose)
-               message("Fitting saturated model ...")
+            if (QEconv) {
 
-            ### set defaults, so in case saturated model doesn't converge, rest still works
-            QEconv <- TRUE
-            QE.Wld <- NA
+               if (verbose)
+                  message("Fitting saturated model ...")
 
-            if (k > 1) {
+               if (k > 1) {
 
-               is.aliased <- is.na(coef(res.QE))
-               X.QE <- X.QE[,!is.aliased,drop=FALSE] ### res.QE is from CM.AL model
+                  is.aliased <- is.na(coef(res.QE))
+                  X.QE <- X.QE[,!is.aliased,drop=FALSE] ### res.QE is from CM.AL model
 
-               if (con$optimizer == "optim") {
-                  res.QE <- try(optim(par=c(coef(res.QE)[!is.aliased], 0), .dnchg, method=con$optmethod, hessian=TRUE, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.QE, random=FALSE,
-                                      verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, control=optCtrl), silent=!verbose)
-               }
-               if (con$optimizer == "nlminb") {
-                  res.QE <- try(nlminb(start=c(coef(res.QE)[!is.aliased], 0), .dnchg, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.QE, random=FALSE,
-                                       verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, control=optCtrl), silent=!verbose)
-               }
-               if (con$optimizer == "minqa") {
-                  res.QE <- try(minqa(par=c(coef(res.QE)[!is.aliased], 0), .dnchg, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.QE, random=FALSE,
-                                      verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, control=optCtrl), silent=!verbose)
-               }
-
-               if (con$optimizer == "optim" || con$optimizer == "nlminb") {
-                  if (inherits(res.QE, "try-error") || res.QE$convergence != 0) {
-                     warning("Cannot fit saturated model.")
-                     QEconv <- FALSE
-                     res.QE <- NULL
+                  if (con$optimizer == "optim") {
+                     res.QE <- try(optim(par=c(coef(res.QE)[!is.aliased], 0), .dnchg, method=con$optmethod, hessian=TRUE, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.QE, random=FALSE,
+                                         verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, control=optCtrl), silent=!verbose)
                   }
-               }
-               if (con$optimizer == "minqa") {
-                  if (inherits(res.QE, "try-error") || res.QE$ierr != 0) {
-                     warning("Cannot fit saturated model.")
-                     QEconv <- FALSE
-                     res.QE <- NULL
+                  if (con$optimizer == "nlminb") {
+                     res.QE <- try(nlminb(start=c(coef(res.QE)[!is.aliased], 0), .dnchg, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.QE, random=FALSE,
+                                          verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, control=optCtrl), silent=!verbose)
                   }
-               }
+                  if (con$optimizer == "minqa") {
+                     res.QE <- try(minqa(par=c(coef(res.QE)[!is.aliased], 0), .dnchg, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.QE, random=FALSE,
+                                         verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, control=optCtrl), silent=!verbose)
+                  }
 
-               if (QEconv) {
-                  if (verbose > 1)
-                     message("Computing Hessian ...")
-                  h.QE <- numDeriv::hessian(.dnchg, x=res.QE$par, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.QE, random=FALSE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec)
+                  if (con$optimizer == "optim" || con$optimizer == "nlminb") {
+                     if (inherits(res.QE, "try-error") || res.QE$convergence != 0) {
+                        warning("Cannot fit saturated model.")
+                        QEconv <- FALSE
+                        ll.QE <- NA
+                     }
+                  }
+                  if (con$optimizer == "minqa") {
+                     if (inherits(res.QE, "try-error") || res.QE$ierr != 0) {
+                        warning("Cannot fit saturated model.")
+                        QEconv <- FALSE
+                        ll.QE <- NA
+                     }
+                  }
+
+                  if (QEconv) {
+                     if (verbose > 1)
+                        message("Computing Hessian ...")
+                     h.QE <- numDeriv::hessian(.dnchg, x=res.QE$par, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.QE, random=FALSE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec)
+                  }
+
+               } else {
+                  res.QE <- res.FE
+                  h.QE   <- h.FE
                }
 
                #return(list(res.QE, h.QE))
 
-            } else {
-               res.QE <- res.FE
-               h.QE   <- h.FE
             }
-
-            ### log-likelihood
-
-            if (con$optimizer == "optim") {
-               ll.FE <- -1 * res.FE$value
-               ll.QE <- -1 * res.QE$value
-            }
-            if (con$optimizer == "nlminb") {
-               ll.FE <- -1 * res.FE$objective
-               ll.QE <- -1 * res.QE$objective
-            }
-            if (con$optimizer == "minqa") {
-               ll.FE <- -1 * res.FE$fval
-               ll.QE <- -1 * res.QE$fval
-            }
-
-            ### in case saturated model doesn't converge, ll.QE will be numeric(0), but that breaks things down below, so fix that here
-            if (!QEconv)
-               ll.QE <- NA
-
-            ### extract coefficients and variance-covariance matrix for Wald-type test for heterogeneity
 
             if (QEconv) {
+
+               ### log-likelihood
+
+               if (con$optimizer == "optim")
+                  ll.QE <- -1 * res.QE$value
+               if (con$optimizer == "nlminb")
+                  ll.QE <- -1 * res.QE$objective
+               if (con$optimizer == "minqa")
+                  ll.QE <- -1 * res.QE$fval
+
+               ### extract coefficients and variance-covariance matrix for Wald-type test for heterogeneity
 
                #return(res.QE)
                b2.QE    <- res.QE$par                                  ### recall: aliased coefficients are already removed
@@ -1419,15 +1449,12 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
 
             ### log-likelihood
 
-            if (con$optimizer == "optim") {
+            if (con$optimizer == "optim")
                ll.ML <- -1 * res.ML$value
-            }
-            if (con$optimizer == "nlminb") {
+            if (con$optimizer == "nlminb")
                ll.ML <- -1 * res.ML$objective
-            }
-            if (con$optimizer == "minqa") {
+            if (con$optimizer == "minqa")
                ll.ML <- -1 * res.ML$fval
-            }
 
          }
 
@@ -1526,6 +1553,12 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
       if (inherits(res.FE, "try-error"))
          stop("Cannot fit FE model.")
 
+      ### log-likelihood
+
+      #ll.FE <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, predict(res.FE, type="response"), log=TRUE))) ### model has a NULL offset
+      #ll.FE <- with(data.frame(dat.grp), sum(dpois(xi, predict(res.FE, type="response"), log=TRUE)))         ### offset already incorporated into predict()
+      ll.FE <- c(logLik(res.FE)) ### same as above
+
       ### fit saturated FE model (= QE model)
       ### notes: 1) suppressWarnings() to suppress warning "glm.fit: fitted probabilities numerically 0 or 1 occurred"
 
@@ -1543,25 +1576,28 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
          res.QE <- res.FE
       }
 
-      if (inherits(res.QE, "try-error"))
-         stop("Cannot fit saturated model.")
+      if (inherits(res.QE, "try-error")) {
 
-      ### log-likelihood
+         warning("Cannot fit saturated model.")
+         QEconv <- FALSE
+         ll.QE <- NA
 
-      #ll.FE <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, predict(res.FE, type="response"), log=TRUE))) ### model has a NULL offset
-      #ll.QE <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, xi/(xi+mi), log=TRUE)))                       ### model has a NULL offset
-      #ll.FE <- with(data.frame(dat.grp), sum(dpois(xi, predict(res.FE, type="response"), log=TRUE)))         ### offset already incorporated into predict()
-      #ll.QE <- with(data.frame(dat.grp), sum(dpois(xi, xi, log=TRUE)))                                       ### offset not relevant for saturated model
-      ll.FE  <- c(logLik(res.FE)) ### same as above
-      ll.QE  <- c(logLik(res.QE)) ### same as above
+      } else {
 
-      ### extract coefficients and variance-covariance matrix for Wald-type test for heterogeneity
+         QEconv <- TRUE
 
-      b2.QE  <- cbind(na.omit(coef(res.QE)[-seq_len(p)]))        ### coef() still includes aliased coefficients as NAs, so have to filter them out
-      vb2.QE <- vcov(res.QE)[-seq_len(p),-seq_len(p),drop=FALSE] ### aliased coefficients are already removed by vcov()
+         ### log-likelihood
 
-      #return(list(res.FE, res.QE, ll.FE, ll.QE))
-      #res.FE <- res[[1]]; res.QE <- res[[2]]
+         #ll.QE <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, xi/(xi+mi), log=TRUE))) ### model has a NULL offset
+         #ll.QE <- with(data.frame(dat.grp), sum(dpois(xi, xi, log=TRUE)))                 ### offset not relevant for saturated model
+         ll.QE <- c(logLik(res.QE)) ### same as above
+
+         ### extract coefficients and variance-covariance matrix for Wald-type test for heterogeneity
+
+         b2.QE  <- cbind(na.omit(coef(res.QE)[-seq_len(p)]))        ### coef() still includes aliased coefficients as NAs, so have to filter them out
+         vb2.QE <- vcov(res.QE)[-seq_len(p),-seq_len(p),drop=FALSE] ### aliased coefficients are already removed by vcov()
+
+      }
 
       if (method == "ML") {
 
@@ -1582,11 +1618,11 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
 
          ### log-likelihood
 
-         #ll.ML  <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, fitted(res.ML), log=TRUE))) ### not correct (since it does not incorporate the random effects; same as ll.FE if tau^2=0)
-         #ll.ML  <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, plogis(qlogis(fitted(res.ML)) + group12*unlist(ranef(res.ML))), log=TRUE))) ### not correct (since one really has to integrate; same as ll.FE if tau^2=0)
-         #ll.ML  <- c(logLik(res.ML)) ### this is not the same as ll.FE when tau^2 = 0 (not sure why)
-         #ll.ML  <- ll.QE - 1/2 * lme4::deviance(res.ML) ### this makes ll.ML comparable to ll.FE (same as ll.FE when tau^2=0)
-         ll.ML  <- ll.QE - 1/2 * deviance(res.ML) ### this makes ll.ML comparable to ll.FE (same as ll.FE when tau^2=0)
+         #ll.ML <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, fitted(res.ML), log=TRUE))) ### not correct (since it does not incorporate the random effects; same as ll.FE if tau^2=0)
+         #ll.ML <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, plogis(qlogis(fitted(res.ML)) + group12*unlist(ranef(res.ML))), log=TRUE))) ### not correct (since one really has to integrate; same as ll.FE if tau^2=0)
+         #ll.ML <- c(logLik(res.ML)) ### this is not the same as ll.FE when tau^2 = 0 (not sure why)
+         #ll.ML <- ll.QE - 1/2 * lme4::deviance(res.ML) ### this makes ll.ML comparable to ll.FE (same as ll.FE when tau^2=0)
+         ll.ML <- ll.QE - 1/2 * deviance(res.ML) ### this makes ll.ML comparable to ll.FE (same as ll.FE when tau^2=0)
 
       }
 
@@ -1626,39 +1662,54 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
    if (verbose > 1)
       message("Heterogeneity testing ...")
 
-   if (measure!="OR" || model!="CM.EL" || con$optimizer!="optim") { ### for OR & CM.EL & optim, QE.Wld is already calculated
+   if (QEconv) {
 
-      if (dim(vb2.QE)[1] > 0) {
+      ### for OR, CM.EL, & optim/nlminb/minqa, QE.Wld is already calculated, so skip this part then
 
-         chol.h <- try(chol(vb2.QE), silent=!verbose) ### see if Hessian can be inverted with chol()
+      if (measure!="OR" || model!="CM.EL" || !is.element(con$optimizer, c("optim", "nlminb", "minqa"))) {
 
-         if (inherits(chol.h, "try-error")) {
-            warning("Cannot invert Hessian for saturated model.")
-            QE.Wld <- NA
+         if (dim(vb2.QE)[1] > 0) {
+
+            chol.h <- try(chol(vb2.QE), silent=!verbose) ### see if Hessian can be inverted with chol()
+
+            if (inherits(chol.h, "try-error")) {
+               warning("Cannot invert Hessian for saturated model.")
+               QE.Wld <- NA
+            } else {
+               QE.Wld <- c(t(b2.QE) %*% chol2inv(chol.h) %*% b2.QE)
+            }
+
          } else {
-            QE.Wld <- c(t(b2.QE) %*% chol2inv(chol.h) %*% b2.QE)
+
+            QE.Wld <- 0 ### if vb2.QE has 0x0 dims, then fitted model is the saturated model and QE.Wld must be 0
+
          }
-
-      } else {
-
-         QE.Wld <- 0 ### if vb2.QE has 0x0 dims, then fitted model is the saturated model and QE.Wld must be 0
 
       }
 
-   }
+      QE.LRT <- -2 * (ll.FE - ll.QE)
 
-   QE.LRT <- -2 * (ll.FE - ll.QE)
+      QE.Wld[QE.Wld < 0] <- 0
+      QE.LRT[QE.LRT < 0] <- 0
 
-   QE.Wld[QE.Wld < 0] <- 0
-   QE.LRT[QE.LRT < 0] <- 0
-   #QE.df <- length(b2.QE) ### removed coefficients are not counted if dfs are determined like this
-   QE.df <- k-p            ### this yields always the same dfs regardless of how many coefficients are removed
-   if (QE.df > 0L) {
-      QEp.Wld <- pchisq(QE.Wld, df=QE.df, lower.tail=FALSE)
-      QEp.LRT <- pchisq(QE.LRT, df=QE.df, lower.tail=FALSE)
+      #QE.df <- length(b2.QE) ### removed coefficients are not counted if dfs are determined like this
+      QE.df <- k-p            ### this yields always the same dfs regardless of how many coefficients are removed
+      if (QE.df > 0L) {
+         QEp.Wld <- pchisq(QE.Wld, df=QE.df, lower.tail=FALSE)
+         QEp.LRT <- pchisq(QE.LRT, df=QE.df, lower.tail=FALSE)
+      } else {
+         QEp.Wld <- 1
+         QEp.LRT <- 1
+      }
+
    } else {
-      QEp.Wld <- 1
-      QEp.LRT <- 1
+
+      QE.Wld <- NA
+      QE.LRT <- NA
+      QEp.Wld <- NA
+      QEp.LRT <- NA
+      QE.df <- NA
+
    }
 
    ### calculation of I^2 and H^2
