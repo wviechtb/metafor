@@ -1173,7 +1173,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
             ###        4) results can be sensitive to the scaling of moderators
 
             if (con$optimizer == "optim") {
-               res.FE <- try(optim(par=c(coef(res.FE)[seq_len(p)], 0), .dnchg, method=con$optmethod, hessian=TRUE, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=FALSE,
+               res.FE <- try(optim(par=c(coef(res.FE)[seq_len(p)], 0), .dnchg, method=con$optmethod, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=FALSE,
                                    verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, control=optCtrl), silent=!verbose)
             }
             if (con$optimizer == "nlminb") {
@@ -1226,7 +1226,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
                   X.QE <- X.QE[,!is.aliased,drop=FALSE] ### res.QE is from CM.AL model
 
                   if (con$optimizer == "optim") {
-                     res.QE <- try(optim(par=c(coef(res.QE)[!is.aliased], 0), .dnchg, method=con$optmethod, hessian=TRUE, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.QE, random=FALSE,
+                     res.QE <- try(optim(par=c(coef(res.QE)[!is.aliased], 0), .dnchg, method=con$optmethod, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.QE, random=FALSE,
                                          verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, control=optCtrl), silent=!verbose)
                   }
                   if (con$optimizer == "nlminb") {
@@ -1419,7 +1419,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
                message("Fitting ML model ...")
 
             if (con$optimizer == "optim") {
-               res.ML <- try(optim(par=c(b, log(tau2+.001)), .dnchg, method=con$optmethod, hessian=TRUE, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=TRUE,
+               res.ML <- try(optim(par=c(b, log(tau2+.001)), .dnchg, method=con$optmethod, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=TRUE,
                                    verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, intCtrl=intCtrl, control=optCtrl), silent=!verbose)
             }
             if (con$optimizer == "nlminb") {
