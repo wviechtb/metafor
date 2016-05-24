@@ -671,7 +671,14 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
       intCtrl$rel.tol <- .Machine$double.eps^0.25
    }
 
-   #return(list(verbose=verbose, optimizer=con$optimizer, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, optCtrl=optCtrl, glmCtrl=glmCtrl, glmerCtrl=glmerCtrl, intCtrl=intCtrl))
+   pos.hessianCtrl <- pmatch(names(control), "hessianCtrl", nomatch=0)
+   if (sum(pos.hessianCtrl) > 0) {
+      hessianCtrl <- control[[which(pos.hessianCtrl == 1)]]
+   } else {
+      hessianCtrl <- list(r=8)
+   }
+
+   #return(list(verbose=verbose, optimizer=con$optimizer, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, optCtrl=optCtrl, glmCtrl=glmCtrl, glmerCtrl=glmerCtrl, intCtrl=intCtrl, hessianCtrl=hessianCtrl))
 
    if (!is.element(con$optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","clogit","clogistic")))
       stop("Unknown optimizer specified.")
@@ -1197,7 +1204,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
             if (verbose > 1)
                message("Computing Hessian ...")
 
-            h.FE <- numDeriv::hessian(.dnchg, x=res.FE$par, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=FALSE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec)
+            h.FE <- numDeriv::hessian(.dnchg, x=res.FE$par, method.args=hessianCtrl, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=FALSE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec)
             #return(list(res.FE, h.FE))
 
             ### log-likelihood
@@ -1256,7 +1263,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
                   if (QEconv) {
                      if (verbose > 1)
                         message("Computing Hessian ...")
-                     h.QE <- numDeriv::hessian(.dnchg, x=res.QE$par, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.QE, random=FALSE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec)
+                     h.QE <- numDeriv::hessian(.dnchg, x=res.QE$par, method.args=hessianCtrl, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.QE, random=FALSE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec)
                   }
 
                } else {
@@ -1444,7 +1451,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
                message("Computing Hessian ...")
 
             ### TODO: r=8 seems to give more accurate results, but this needs a whole lot more testing
-            h.ML <- numDeriv::hessian(.dnchg, x=res.ML$par, method.args=list(r=8), ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=TRUE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, intCtrl=intCtrl)
+            h.ML <- numDeriv::hessian(.dnchg, x=res.ML$par, method.args=hessianCtrl, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=TRUE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, intCtrl=intCtrl)
             #return(list(res.ML, h.ML))
 
             ### log-likelihood
@@ -1726,10 +1733,12 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
 
    chol.h <- try(chol(vb[btt,btt]), silent=!verbose) ### see if Hessian can be inverted with chol()
 
-   if (inherits(chol.h, "try-error"))
-      stop("Cannot invert Hessian for QM test.")
-
-   QM <- c(t(b)[btt] %*% chol2inv(chol.h) %*% b[btt])
+   if (inherits(chol.h, "try-error")) {
+      warning("Cannot invert Hessian for QM test.")
+      QM <- NA
+   } else {
+      QM <- c(t(b)[btt] %*% chol2inv(chol.h) %*% b[btt])
+   }
 
    ### scale back b and vb
 
@@ -1742,13 +1751,14 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
 
    rownames(b) <- rownames(vb) <- colnames(vb) <- colnames(X)
 
-   se <- sqrt(diag(vb))
+   ve <- diag(vb)
+   se <- ifelse(ve >= 0, sqrt(ve), NA)
    names(se) <- NULL
    zval <- c(b/se)
 
    if (knha) {
-      dfs  <- k-p
-      QM   <- QM / m
+      dfs <- k-p
+      QM  <- QM / m
       if (dfs > 0) {
          QMp  <- pf(QM, df1=m, df2=dfs, lower.tail=FALSE)
          pval <- 2*pt(abs(zval), df=dfs, lower.tail=FALSE)

@@ -16,7 +16,7 @@ The `metafor` package is a comprehensive collection of functions for conducting 
 
 The `metafor` package website can be found at [http://www.metafor-project.org](http://www.metafor-project.org). On the website, you can find:
 
-* some [news](http://www.metafor-project.org/doku.php/news) concerning the package and/or its development,
+* some [news](http://www.metafor-project.org/doku.php/news:news) concerning the package and/or its development,
 * a more detailed description of the [package features](http://www.metafor-project.org/doku.php/features),
 * a log of the [package updates](http://www.metafor-project.org/doku.php/updates) that have been made over the years,
 * a [to-do list](http://www.metafor-project.org/doku.php/todo) and a description of planned features to be implemented in the future,

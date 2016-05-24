@@ -1849,6 +1849,7 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
                cholesky = ifelse(struct=="UN", TRUE, FALSE), # by default, use Cholesky factorization for G and H matrix when struct="UN" (struct has 2 elements)
                posdefify = FALSE,         # to force G and H matrix to become positive definite
                hessian = FALSE,           # to compute Hessian
+               hessianCtrl=list(r=8),     # arguments passed on to 'method.args' of hessian()
                vctransf = FALSE)          # if FALSE, Hessian is computed for untransformed (raw) variance components
                                           # if TRUE,  Hessian is computed for transformed components (log and r-to-z space)
 
@@ -2321,7 +2322,7 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
       if (!requireNamespace("numDeriv", quietly=TRUE))
          stop("Please install the 'numDeriv' package for Hessian computation.")
 
-      hessian <- try(numDeriv::hessian(func=.ll.rma.mv, x = if (con$vctransf) opt.res$par else c(sigma2, tau2, rho, gamma2, phi), reml=reml, Y=Y, M=V, A=NULL, X.fit=X, k=k, pX=p,
+      hessian <- try(numDeriv::hessian(func=.ll.rma.mv, x = if (con$vctransf) opt.res$par else c(sigma2, tau2, rho, gamma2, phi), method.args=con$hessianCtrl, reml=reml, Y=Y, M=V, A=NULL, X.fit=X, k=k, pX=p,
          D.S=D.S, Z.G1=Z.G1, Z.G2=Z.G2, Z.H1=Z.H1, Z.H2=Z.H2,
          sigma2.val=sigma2.val, tau2.val=tau2.val, rho.val=rho.val, gamma2.val=gamma2.val, phi.val=phi.val,
          sigma2s=sigma2s, tau2s=tau2s, rhos=rhos, gamma2s=gamma2s, phis=phis,
