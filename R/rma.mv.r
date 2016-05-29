@@ -189,8 +189,10 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
       V <- as.matrix(V)
 
    ### remove row and column names (important for isSymmetric() function)
+   ### (but only do this if V has row/column names)
 
-   V <- unname(V)
+   if (!is.null(dimnames(V)))
+      V <- unname(V)
 
    ### check whether V is square and symmetric
 
@@ -238,8 +240,10 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
          A <- as.matrix(A)
 
       ### remove row and column names (important for isSymmetric() function)
+      ### (but only do this if A has row/column names)
 
-      A <- unname(A)
+      if (!is.null(dimnames(A)))
+         A <- unname(A)
 
       ### check whether A is square and symmetric
 
@@ -2235,7 +2239,12 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
    }
 
    M <- fitcall$M
-   M <- unname(M) ### strip row/column names of M
+
+   ### remove row and column names of M
+   ### (but only do this if M has row/column names)
+
+   if (!is.null(dimnames(M)))
+      M <- unname(M)
 
    #print(M[1:8,1:8])
 
