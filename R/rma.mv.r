@@ -327,7 +327,7 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
 
    ### process random argument
 
-   if (method!="FE" && !is.null(random)) {
+   if (method != "FE" && !is.null(random)) {
 
       if (verbose > 1)
          message("Processing 'random' argument ...")
@@ -522,18 +522,18 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
       if (verbose > 1)
          message("Subsetting ...")
 
-      yi    <- yi[subset]
-      V     <- V[subset,subset,drop=FALSE]
-      A     <- A[subset,subset,drop=FALSE]
-      ni    <- ni[subset]
-      mods  <- mods[subset,,drop=FALSE]
-      slab  <- slab[subset]
-      mf.s  <- lapply(mf.s, function(x) x[subset,,drop=FALSE])
-      mf.g  <- mf.g[subset,,drop=FALSE]
-      mf.h  <- mf.h[subset,,drop=FALSE]
-      mf.r  <- lapply(mf.r, function(x) x[subset,,drop=FALSE])
-      ids   <- ids[subset]
-      k     <- length(yi)
+      yi   <- yi[subset]
+      V    <- V[subset,subset,drop=FALSE]
+      A    <- A[subset,subset,drop=FALSE]
+      ni   <- ni[subset]
+      mods <- mods[subset,,drop=FALSE]
+      slab <- slab[subset]
+      mf.s <- lapply(mf.s, function(x) x[subset,,drop=FALSE])
+      mf.g <- mf.g[subset,,drop=FALSE]
+      mf.h <- mf.h[subset,,drop=FALSE]
+      mf.r <- lapply(mf.r, function(x) x[subset,,drop=FALSE])
+      ids  <- ids[subset]
+      k    <- length(yi)
 
       attr(yi, "measure") <- measure ### add measure attribute back
       attr(yi, "ni")      <- ni      ### add ni attribute back
@@ -1157,7 +1157,7 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
       stop("Processing terminated since k <= 1.")
 
    ### check for V being positive definite (this should also cover non-positive variances)
-   ### skipped: even if V is not positive definite, the marginal var-cov matrix can still be; so just check that marginal matrix during the optimization
+   ### skipped: even if V is not positive definite, the marginal var-cov matrix can still be; so just check the marginal matrix during the optimization
    ### but at least issue a warning, since a fixed-effects model can then not be fitted and there is otherwise no indication why
 
    if (any(eigen(V, symmetric=TRUE, only.values=TRUE)$values <= .Machine$double.eps)) ### any eigenvalue below double.eps is essentially 0
@@ -1333,6 +1333,7 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
             D.S[[j]] <- tcrossprod(Z.S[[j]])
          }
       }
+
    } else {
 
       D.S <- NULL
@@ -2126,79 +2127,77 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
       ctrl.arg <- ", control=optcontrol"
    }
 
-   optcall <- paste(optimizer, "(", par.arg, "=c(con$sigma2.init, con$tau2.init, con$rho.init, con$gamma2.init, con$phi.init),
-      .ll.rma.mv, reml=reml, ", ifelse(optimizer=="optim", "method=optmethod, ", ""), "Y=Y, M=V, A=NULL, X.fit=X, k=k, pX=p,
-      D.S=D.S, Z.G1=Z.G1, Z.G2=Z.G2, Z.H1=Z.H1, Z.H2=Z.H2,
-      sigma2.val=sigma2, tau2.val=tau2, rho.val=rho, gamma2.val=gamma2, phi.val=phi,
-      sigma2s=sigma2s, tau2s=tau2s, rhos=rhos, gamma2s=gamma2s, phis=phis,
-      withS=withS, withG=withG, withH=withH,
-      struct=struct, g.levels.r=g.levels.r, h.levels.r=h.levels.r,
-      sparse=sparse, cholesky=cholesky, posdefify=posdefify, vctransf=TRUE,
-      verbose=verbose, digits=digits, REMLf=con$REMLf", ctrl.arg, ")\n", sep="")
+   if (method != "FE" && !is.null(random)) {
 
-   #return(optcall)
-   opt.res <- try(eval(parse(text=optcall)), silent=!verbose)
-   #return(opt.res)
+      optcall <- paste(optimizer, "(", par.arg, "=c(con$sigma2.init, con$tau2.init, con$rho.init, con$gamma2.init, con$phi.init),
+         .ll.rma.mv, reml=reml, ", ifelse(optimizer=="optim", "method=optmethod, ", ""), "Y=Y, M=V, A=NULL, X.fit=X, k=k, pX=p,
+         D.S=D.S, Z.G1=Z.G1, Z.G2=Z.G2, Z.H1=Z.H1, Z.H2=Z.H2,
+         sigma2.val=sigma2, tau2.val=tau2, rho.val=rho, gamma2.val=gamma2, phi.val=phi,
+         sigma2s=sigma2s, tau2s=tau2s, rhos=rhos, gamma2s=gamma2s, phis=phis,
+         withS=withS, withG=withG, withH=withH,
+         struct=struct, g.levels.r=g.levels.r, h.levels.r=h.levels.r,
+         sparse=sparse, cholesky=cholesky, posdefify=posdefify, vctransf=TRUE,
+         verbose=verbose, digits=digits, REMLf=con$REMLf", ctrl.arg, ")\n", sep="")
 
-   if (inherits(opt.res, "try-error"))
-      stop("Error during optimization.")
+      #return(optcall)
+      opt.res <- try(eval(parse(text=optcall)), silent=!verbose)
+      #return(opt.res)
 
-   if (is.element(optimizer, c("optim","nlminb","dfoptim::hjk","dfoptim::nmk")) && opt.res$convergence != 0)
-      stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (convergence = ", opt.res$convergence, ")."))
+      if (inherits(opt.res, "try-error"))
+         stop("Error during optimization.")
 
-   if (is.element(optimizer, c("minqa::uobyqa","minqa::newuoa","minqa::bobyqa")) && opt.res$ierr != 0)
-      stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (ierr = ", opt.res$ierr, ")."))
+      ### convergence checks
 
-   if (optimizer=="nloptr::nloptr" && !(opt.res$status >= 1 && opt.res$status <= 4))
-      stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (status = ", opt.res$status, ")."))
+      if (is.element(optimizer, c("optim","nlminb","dfoptim::hjk","dfoptim::nmk")) && opt.res$convergence != 0)
+         stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (convergence = ", opt.res$convergence, ")."))
 
-   if (optimizer=="ucminf::ucminf" && !(opt.res$convergence == 1 || opt.res$convergence == 2))
-      stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (convergence = ", opt.res$convergence, ")."))
+      if (is.element(optimizer, c("minqa::uobyqa","minqa::newuoa","minqa::bobyqa")) && opt.res$ierr != 0)
+         stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (ierr = ", opt.res$ierr, ")."))
 
-   if (is.element(optimizer, c("optim","dfoptim::hjk","dfoptim::nmk","ucminf::ucminf")))
-      ll <- -1 * c(opt.res$value)
+      if (optimizer=="nloptr::nloptr" && !(opt.res$status >= 1 && opt.res$status <= 4))
+         stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (status = ", opt.res$status, ")."))
 
-   if (is.element(optimizer, c("nlminb","nloptr::nloptr")))
-      ll <- -1 * c(opt.res$objective)
+      if (optimizer=="ucminf::ucminf" && !(opt.res$convergence == 1 || opt.res$convergence == 2))
+         stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (convergence = ", opt.res$convergence, ")."))
 
-   if (is.element(optimizer, c("minqa::uobyqa","minqa::newuoa","minqa::bobyqa")))
-      ll <- -1 * c(opt.res$fval)
+      if (verbose > 1) {
+         cat("\n")
+         print(opt.res)
+      }
 
-   if (optimizer=="nlm")
-      ll <- -1 * c(opt.res$minimum)
+      ### copy estimated values to 'par' so code below works
 
-   if (verbose > 1) {
-      cat("\n")
-      print(opt.res)
+      if (optimizer=="nloptr::nloptr")
+         opt.res$par <- opt.res$solution
+      if (optimizer=="nlm")
+         opt.res$par <- opt.res$estimate
+
+      if (p == k) {
+
+         ### when fitting a saturated model (with REML estimation), estimated values of variance components can remain stuck
+         ### at their initial values; this ensures that the values are fixed to zero (unless values were fixed by the user)
+
+         sigma2[is.na(sigma2)] <- 0
+         tau2[is.na(tau2)]     <- 0
+         rho[is.na(rho)]       <- 0
+         gamma2[is.na(gamma2)] <- 0
+         phi[is.na(phi)]       <- 0
+
+      }
+
+      ### save these for Hessian computation
+
+      sigma2.val <- sigma2
+      tau2.val   <- tau2
+      rho.val    <- rho
+      gamma2.val <- gamma2
+      phi.val    <- phi
+
+   } else {
+
+      opt.res <- list(par=c(0,0,0,0,0))
+
    }
-
-   ### copy estimated values to 'par' so code below works
-
-   if (optimizer=="nloptr::nloptr")
-      opt.res$par <- opt.res$solution
-   if (optimizer=="nlm")
-      opt.res$par <- opt.res$estimate
-
-   if (p == k) {
-
-      ### when fitting a saturated model (with REML estimation), estimated values of variance components can remain stuck
-      ### at their initial values; this ensures that the values are fixed to zero (unless values were fixed by the user)
-
-      sigma2[is.na(sigma2)] <- 0
-      tau2[is.na(tau2)]     <- 0
-      rho[is.na(rho)]       <- 0
-      gamma2[is.na(gamma2)] <- 0
-      phi[is.na(phi)]       <- 0
-
-   }
-
-   ### save these for Hessian computation
-
-   sigma2.val <- sigma2
-   tau2.val   <- tau2
-   rho.val    <- rho
-   gamma2.val <- gamma2
-   phi.val    <- phi
 
    #########################################################################
 
@@ -2212,8 +2211,6 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
       struct=struct, g.levels.r=g.levels.r, h.levels.r=h.levels.r,
       sparse=sparse, cholesky=cholesky, posdefify=posdefify, vctransf=TRUE,
       verbose=FALSE, digits=digits, REMLf=con$REMLf, dofit=TRUE)
-
-   #return(fitcall)
 
    ### extract elements
 

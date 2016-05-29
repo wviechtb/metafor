@@ -212,7 +212,7 @@
 
 ### function to construct var-cov matrix (G or H) for '~ inner | outer' terms
 
-.con.S <- function(v, r, v.val, r.val, Z1, levels.r, struct, cholesky, vctransf, posdefify, sparse) {
+.con.E <- function(v, r, v.val, r.val, Z1, levels.r, struct, cholesky, vctransf, posdefify, sparse) {
 
       ### if cholesky=TRUE, back-transformation/substitution is done below; otherwise, back-transform and replace fixed values
       if (!cholesky) {
@@ -235,81 +235,81 @@
       ncol.Z1 <- ncol(Z1)
 
       if (struct == "CS") {
-         S <- matrix(r*v, nrow=ncol.Z1, ncol=ncol.Z1)
-         diag(S) <- v
+         E <- matrix(r*v, nrow=ncol.Z1, ncol=ncol.Z1)
+         diag(E) <- v
       }
 
       if (struct == "HCS") {
-         S <- matrix(r, nrow=ncol.Z1, ncol=ncol.Z1)
-         diag(S) <- 1
-         S <- diag(sqrt(v), nrow=ncol.Z1, ncol=ncol.Z1) %*% S %*% diag(sqrt(v), nrow=ncol.Z1, ncol=ncol.Z1)
-         diag(S) <- v
+         E <- matrix(r, nrow=ncol.Z1, ncol=ncol.Z1)
+         diag(E) <- 1
+         E <- diag(sqrt(v), nrow=ncol.Z1, ncol=ncol.Z1) %*% E %*% diag(sqrt(v), nrow=ncol.Z1, ncol=ncol.Z1)
+         diag(E) <- v
       }
 
       if (struct == "UN") {
          if (cholesky) {
-            S <- .con.vcov.UN.chol(v, r)
-            v <- diag(S)                  ### need this, so correct values are shown when verbose=TRUE
-            r <- cov2cor(S)[upper.tri(S)] ### need this, so correct values are shown when verbose=TRUE
+            E <- .con.vcov.UN.chol(v, r)
+            v <- diag(E)                  ### need this, so correct values are shown when verbose=TRUE
+            r <- cov2cor(E)[upper.tri(E)] ### need this, so correct values are shown when verbose=TRUE
             v[!is.na(v.val)] <- v.val[!is.na(v.val)] ### replace any fixed values
             r[!is.na(r.val)] <- r.val[!is.na(r.val)] ### replace any fixed values
          }
-         S <- .con.vcov.UN(v, r)
+         E <- .con.vcov.UN(v, r)
          if (posdefify) {
-            S <- as.matrix(nearPD(S)$mat) ### nearPD() in Matrix package
-            v <- diag(S)                  ### need this, so correct values are shown when verbose=TRUE
-            r <- cov2cor(S)[upper.tri(S)] ### need this, so correct values are shown when verbose=TRUE
+            E <- as.matrix(nearPD(E)$mat) ### nearPD() in Matrix package
+            v <- diag(E)                  ### need this, so correct values are shown when verbose=TRUE
+            r <- cov2cor(E)[upper.tri(E)] ### need this, so correct values are shown when verbose=TRUE
          }
       }
 
       if (struct == "ID" || struct == "DIAG") {
-         S <- diag(v, nrow=ncol.Z1, ncol=ncol.Z1)
+         E <- diag(v, nrow=ncol.Z1, ncol=ncol.Z1)
       }
 
       if (struct == "UNHO") {
-         S <- matrix(NA_real_, nrow=ncol.Z1, ncol=ncol.Z1)
-         S[upper.tri(S)] <- r
-         S[lower.tri(S)] <- t(S)[lower.tri(S)]
-         diag(S) <- 1
-         S <- diag(sqrt(rep(v, ncol.Z1)), nrow=ncol.Z1, ncol=ncol.Z1) %*% S %*% diag(sqrt(rep(v, ncol.Z1)), nrow=ncol.Z1, ncol=ncol.Z1)
+         E <- matrix(NA_real_, nrow=ncol.Z1, ncol=ncol.Z1)
+         E[upper.tri(E)] <- r
+         E[lower.tri(E)] <- t(E)[lower.tri(E)]
+         diag(E) <- 1
+         E <- diag(sqrt(rep(v, ncol.Z1)), nrow=ncol.Z1, ncol=ncol.Z1) %*% E %*% diag(sqrt(rep(v, ncol.Z1)), nrow=ncol.Z1, ncol=ncol.Z1)
          if (posdefify) {
-            S <- as.matrix(nearPD(S, keepDiag=TRUE)$mat) ### nearPD() in Matrix package
-            v <- S[1,1]                                  ### need this, so correct values are shown when verbose=TRUE
-            r <- cov2cor(S)[upper.tri(S)]                ### need this, so correct values are shown when verbose=TRUE
+            E <- as.matrix(nearPD(E, keepDiag=TRUE)$mat) ### nearPD() in Matrix package
+            v <- E[1,1]                                  ### need this, so correct values are shown when verbose=TRUE
+            r <- cov2cor(E)[upper.tri(E)]                ### need this, so correct values are shown when verbose=TRUE
          }
       }
 
       if (struct == "AR") {
          if (ncol.Z1 > 1) {
-            S <- toeplitz(ARMAacf(ar=r, lag.max=ncol.Z1-1))
+            E <- toeplitz(ARMAacf(ar=r, lag.max=ncol.Z1-1))
          } else {
-            S <- diag(1)
+            E <- diag(1)
          }
-         S <- diag(sqrt(rep(v, ncol.Z1)), nrow=ncol.Z1, ncol=ncol.Z1) %*% S %*% diag(sqrt(rep(v, ncol.Z1)), nrow=ncol.Z1, ncol=ncol.Z1)
-         diag(S) <- v
+         E <- diag(sqrt(rep(v, ncol.Z1)), nrow=ncol.Z1, ncol=ncol.Z1) %*% E %*% diag(sqrt(rep(v, ncol.Z1)), nrow=ncol.Z1, ncol=ncol.Z1)
+         diag(E) <- v
       }
 
       if (struct == "HAR") {
          if (ncol.Z1 > 1) {
-            S <- toeplitz(ARMAacf(ar=r, lag.max=ncol.Z1-1))
+            E <- toeplitz(ARMAacf(ar=r, lag.max=ncol.Z1-1))
          } else {
-            S <- diag(1)
+            E <- diag(1)
          }
-         S <- diag(sqrt(v), nrow=ncol.Z1, ncol=ncol.Z1) %*% S %*% diag(sqrt(v), nrow=ncol.Z1, ncol=ncol.Z1)
-         diag(S) <- v
+         E <- diag(sqrt(v), nrow=ncol.Z1, ncol=ncol.Z1) %*% E %*% diag(sqrt(v), nrow=ncol.Z1, ncol=ncol.Z1)
+         diag(E) <- v
       }
 
       ### set variance and corresponding correlation value(s) to 0 for any levels that were removed
 
       if (any(levels.r)) {
-         S[levels.r,] <- 0
-         S[,levels.r] <- 0
+         E[levels.r,] <- 0
+         E[,levels.r] <- 0
       }
 
       if (sparse)
-         S <- Matrix(S, sparse=TRUE)
+         E <- Matrix(E, sparse=TRUE)
 
-      return(list(v=v, r=r, S=S))
+      return(list(v=v, r=r, E=E))
 
 }
 
@@ -353,12 +353,12 @@
 
    if (withG) {
 
-      resG <- .con.S(v=par[(sigma2s+1):(sigma2s+tau2s)], r=par[(sigma2s+tau2s+1):(sigma2s+tau2s+rhos)],
+      resG <- .con.E(v=par[(sigma2s+1):(sigma2s+tau2s)], r=par[(sigma2s+tau2s+1):(sigma2s+tau2s+rhos)],
                      v.val=tau2.val, r.val=rho.val, Z1=Z.G1, levels.r=g.levels.r,
                      struct=struct[1], cholesky=cholesky[1], vctransf=vctransf, posdefify=posdefify, sparse=sparse)
       tau2 <- resG$v
       rho  <- resG$r
-      G    <- resG$S
+      G    <- resG$E
 
       M <- M + (Z.G1 %*% G %*% t(Z.G1)) * tcrossprod(Z.G2)
 
@@ -366,12 +366,12 @@
 
    if (withH) {
 
-      resH <- .con.S(v=par[(sigma2s+tau2s+rhos+1):(sigma2s+tau2s+rhos+gamma2s)], r=par[(sigma2s+tau2s+rhos+gamma2s+1):(sigma2s+tau2s+rhos+gamma2s+phis)],
+      resH <- .con.E(v=par[(sigma2s+tau2s+rhos+1):(sigma2s+tau2s+rhos+gamma2s)], r=par[(sigma2s+tau2s+rhos+gamma2s+1):(sigma2s+tau2s+rhos+gamma2s+phis)],
                      v.val=gamma2.val, r.val=phi.val, Z1=Z.H1, levels.r=h.levels.r,
                      struct=struct[2], cholesky=cholesky[2], vctransf=vctransf, posdefify=posdefify, sparse=sparse)
       gamma2 <- resH$v
       phi    <- resH$r
-      H      <- resH$S
+      H      <- resH$E
 
       M <- M + (Z.H1 %*% H %*% t(Z.H1)) * tcrossprod(Z.H2)
 
