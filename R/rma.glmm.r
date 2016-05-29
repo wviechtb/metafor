@@ -1471,7 +1471,6 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
          if (method == "FE") {
             if (con$optimizer == "optim" || con$optimizer == "nlminb" || con$optimizer == "minqa") {
                b <- cbind(res.FE$par[seq_len(p)])
-               #chol.h <- try(chol(res.FE$hessian[seq_len(p),seq_len(p)]), silent=!verbose) ### see if Hessian can be inverted with chol()
                chol.h <- try(chol(h.FE[seq_len(p),seq_len(p)]), silent=!verbose) ### see if Hessian can be inverted with chol()
                if (inherits(chol.h, "try-error")) {
                   warning("Choleski factorization of Hessian failed. Trying inversion via QR decomposition.")
