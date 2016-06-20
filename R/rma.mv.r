@@ -323,7 +323,7 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
    ### check if mods matrix has the right number of rows
 
    if (!is.null(mods) && (nrow(mods) != k))
-      stop("Number of rows of the model matrix does not match length of 'yi' argument.")
+      stop("Number of rows of the model matrix does not match length of the outcome vector.")
 
    #########################################################################
    #########################################################################

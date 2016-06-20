@@ -1263,7 +1263,7 @@
 
 ### -1 times the log likelihood (regular or restricted) for rma() location-scale models
 
-.ll.rma.tau2 <- function(par, yi, vi, X, Z, reml, k, p, verbose, digits, REMLf) {
+.ll.rma.ls <- function(par, yi, vi, X, Z, reml, k, p, verbose, digits, REMLf) {
 
    #b.fe   <- par[1:p]
    #b.tau2 <- par[-c(1:p)]

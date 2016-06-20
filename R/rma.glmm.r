@@ -225,7 +225,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
    ### check if mods matrix has the right number of rows
 
    if (!is.null(mods) && (nrow(mods) != k))
-      stop("Number of rows of the model matrix does not match length of the outcome data.")
+      stop("Number of rows of the model matrix does not match length of the outcome vector.")
 
    ### generate study labels if none are specified
 

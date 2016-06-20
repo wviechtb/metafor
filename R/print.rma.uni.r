@@ -119,9 +119,9 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
       print(res.table, quote=FALSE, right=TRUE, print.gap=2)
    }
 
-   if (x$model == "rma.tau2") {
+   if (x$model == "rma.ls") {
 
-      res.table <- cbind(estimate=x$b.tau2, se=x$se.tau2, zval=x$zval.tau2, pval=x$pval.tau2, ci.lb=x$ci.lb.tau2, ci.ub=x$ci.ub.tau2)
+      res.table <- cbind(estimate=c(x$b.tau2), se=x$se.tau2, zval=x$zval.tau2, pval=x$pval.tau2, ci.lb=x$ci.lb.tau2, ci.ub=x$ci.ub.tau2)
       rownames(res.table) <- rownames(x$b.tau2)
       signif <- symnum(x$pval.tau2, corr=FALSE, na=FALSE, cutpoints=c(0, 0.001, 0.01, 0.05, 0.1, 1), symbols = c("***", "**", "*", ".", " "))
       if (signif.stars) {

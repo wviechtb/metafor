@@ -532,7 +532,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
    ### check if mods matrix has the right number of rows
 
    if (!is.null(mods) && (nrow(mods) != k))
-      stop("Number of rows of the model matrix does not match length of 'yi' argument.")
+      stop("Number of rows of the model matrix does not match length of the outcome vector.")
 
    ### in case scale is a formula, get model matrix for it
 
@@ -541,9 +541,9 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
       Z <- model.matrix(scale, data=data)
       attr(Z, "assign") <- NULL
       options(na.action = na.act)
-      model <- "rma.tau2"
+      model <- "rma.ls"
       if (nrow(Z) != k)
-         stop("Number of rows of the model matrix for tau2 does not match length of 'yi' argument.")
+         stop("Number of rows of the model matrix specified via 'scale' argument does not match length of the outcome vector.")
    } else {
       Z <- NULL
       model <- "rma.uni"
@@ -896,7 +896,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
          optimizer <- paste0("nloptr::nloptr") ### need to use this due to requireNamespace()
       }
 
-      optcall <- paste(optimizer, "(", par.arg, "=con$tau2.init, .ll.rma.tau2, ",
+      optcall <- paste(optimizer, "(", par.arg, "=con$tau2.init, .ll.rma.ls, ",
                                                     ifelse(optimizer=="optim", "method=optmethod, ", ""),
                                                     "yi=yi, vi=vi, X=X, Z=Z, reml=reml,
                                                     k=k, p=p,
@@ -933,7 +933,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
       vb.tau2 <- matrix(NA, nrow=p.tau2, ncol=p.tau2)
       se.tau2 <- rep(NA, p.tau2)
 
-      h <- try(numDeriv::hessian(.ll.rma.tau2, x=opt.res$par, yi=yi, vi=vi, X=X, Z=Z, reml=reml, k=k, p=p, verbose=FALSE, digits=digits, REMLf=con$REMLf), silent=TRUE)
+      h <- try(numDeriv::hessian(.ll.rma.ls, x=opt.res$par, yi=yi, vi=vi, X=X, Z=Z, reml=reml, k=k, p=p, verbose=FALSE, digits=digits, REMLf=con$REMLf), silent=TRUE)
 
       if (!inherits(h, "try-error")) {
          chol.h <- try(chol(h), silent=TRUE)
@@ -1592,7 +1592,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
                add=add, to=to, drop00=drop00,
                fit.stats=fit.stats, version=packageVersion("metafor"), model=model, call=mf)
 
-   if (model == "rma.tau2") {
+   if (model == "rma.ls") {
 
       res$b.tau2     <- b.tau2
       res$vb.tau2    <- vb.tau2
