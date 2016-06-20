@@ -88,6 +88,9 @@ profile.rma.uni <- function(fitted, xlim, ylim, steps=20, progbar=TRUE, parallel
 
          res <- try(suppressWarnings(rma.uni(x$yi, x$vi, weights=x$weights, mods=x$X, intercept=FALSE, method=x$method, weighted=x$weighted, knha=x$knha, level=x$level, control=x$control, tau2=vcs[i])), silent=TRUE)
 
+         if (progbar)
+            setTxtProgressBar(pbar, i)
+
          if (inherits(res, "try-error"))
             next
 
@@ -95,9 +98,6 @@ profile.rma.uni <- function(fitted, xlim, ylim, steps=20, progbar=TRUE, parallel
          b[i,]  <- c(res$b)
          ci.lb[i,] <- c(res$ci.lb)
          ci.ub[i,] <- c(res$ci.ub)
-
-         if (progbar)
-            setTxtProgressBar(pbar, i)
 
       }
 
@@ -145,32 +145,34 @@ profile.rma.uni <- function(fitted, xlim, ylim, steps=20, progbar=TRUE, parallel
    names(ci.lb) <- rownames(x$b)
    names(ci.ub) <- rownames(x$b)
 
-   res <- list(tau2=vcs, ll=lls, b=b, ci.lb=ci.lb, ci.ub=ci.ub)
+   if (missing(ylim)) {
 
-   class(res) <- "profile.rma.uni"
+      ylim <- range(lls, na.rm=TRUE)
+      ylim[1] <- ylim[1] - .1
+      ylim[2] <- ylim[2] + .1
 
-   #########################################################################
+   } else {
 
-   if (plot) {
+      if (length(ylim) != 2L)
+         stop("Argument 'ylim' should be a vector of length 2.")
 
-      if (missing(ylim)) {
-         ylim <- range(lls, na.rm=TRUE)
-         ylim[1] <- ylim[1] - .1
-         ylim[2] <- ylim[2] + .1
-      }
-
-      xlab <- expression(paste(tau^2, " Value"))
-      title <- expression(paste("Profile Plot for ", tau^2))
-
-      plot(vcs, lls, type="o", xlab=xlab, ylab=paste(ifelse(x$method=="REML", "Restricted", ""), " Log-Likelihood", sep=""), main=title, bty="l", pch=pch, ylim=ylim, ...)
-      abline(v=x$tau2,    lty="dotted")
-      abline(h=logLik(x), lty="dotted")
-      #abline(h=max(lls, na.rm=TRUE), lty="dotted")
+      ylim <- sort(ylim)
 
    }
 
+   xlab <- expression(paste(tau^2, " Value"))
+   title <- expression(paste("Profile Plot for ", tau^2))
+
+   sav <- list(tau2=vcs, ll=lls, b=b, ci.lb=ci.lb, ci.ub=ci.ub, comps=1, ylim=ylim, method=x$method, vc=x$tau2, maxll=logLik(x), xlab=xlab, title=title)
+   class(sav) <- "profile.rma"
+
    #########################################################################
 
-   invisible(res)
+   if (plot)
+      plot(sav, pch=pch, ...)
+
+   #########################################################################
+
+   invisible(sav)
 
 }

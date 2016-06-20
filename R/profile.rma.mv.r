@@ -32,7 +32,7 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi, xlim, ylim, s
          }
       }
 
-      res <- list()
+      sav <- list()
       j <- 0
 
       if (x$withS && any(!x$vc.fix$sigma2)) {
@@ -43,8 +43,8 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi, xlim, ylim, s
             cl.vc$fitted <- quote(x)
             if (progbar)
                cat("Profiling sigma2 =", pos, "\n")
-            res[[j]] <- eval(cl.vc)
-            #res[[j]] <- profile.rma.mv(x, sigma2=pos, xlim=xlim, ylim=ylim, steps=steps, startmethod=startmethod, progbar=progbar, parallel=parallel, ncpus=ncpus, cl=cl, plot=plot, pch=pch, ...)
+            sav[[j]] <- eval(cl.vc)
+            #sav[[j]] <- profile.rma.mv(x, sigma2=pos, xlim=xlim, ylim=ylim, steps=steps, startmethod=startmethod, progbar=progbar, parallel=parallel, ncpus=ncpus, cl=cl, plot=plot, pch=pch, ...)
          }
       }
 
@@ -57,7 +57,7 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi, xlim, ylim, s
                cl.vc$fitted <- quote(x)
                if (progbar)
                   cat("Profiling tau2 =", pos, "\n")
-               res[[j]] <- eval(cl.vc)
+               sav[[j]] <- eval(cl.vc)
             }
          }
          if (any(!x$vc.fix$rho)) {
@@ -68,7 +68,7 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi, xlim, ylim, s
                cl.vc$fitted <- quote(x)
                if (progbar)
                   cat("Profiling rho =", pos, "\n")
-               res[[j]] <- eval(cl.vc)
+               sav[[j]] <- eval(cl.vc)
             }
          }
       }
@@ -82,7 +82,7 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi, xlim, ylim, s
                cl.vc$fitted <- quote(x)
                if (progbar)
                   cat("Profiling gamma2 =", pos, "\n")
-               res[[j]] <- eval(cl.vc)
+               sav[[j]] <- eval(cl.vc)
             }
          }
          if (any(!x$vc.fix$phi)) {
@@ -93,12 +93,18 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi, xlim, ylim, s
                cl.vc$fitted <- quote(x)
                if (progbar)
                   cat("Profiling phi =", pos, "\n")
-               res[[j]] <- eval(cl.vc)
+               sav[[j]] <- eval(cl.vc)
             }
          }
       }
 
-      return(invisible(res))
+      if (comps == 1)
+         sav <- sav[[1]]
+
+      sav$comps <- comps
+
+      class(sav) <- "profile.rma"
+      return(invisible(sav))
 
    }
 
@@ -381,6 +387,9 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi, xlim, ylim, s
 
          }
 
+         if (progbar)
+            setTxtProgressBar(pbar, i)
+
          if (inherits(res, "try-error"))
             next
 
@@ -388,9 +397,6 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi, xlim, ylim, s
          b[i,] <- c(res$b)
          ci.lb[i,] <- c(res$ci.lb)
          ci.ub[i,] <- c(res$ci.ub)
-
-         if (progbar)
-            setTxtProgressBar(pbar, i)
 
       }
 
@@ -438,76 +444,78 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi, xlim, ylim, s
    names(ci.lb) <- rownames(x$b)
    names(ci.ub) <- rownames(x$b)
 
-   res <- list(vc=vcs, ll=lls, b=b, ci.lb=ci.lb, ci.ub=ci.ub)
-   names(res)[1] <- switch(comp, sigma2="sigma2", tau2="tau2", rho="rho", gamma2="gamma2", phi="phi")
+   if (missing(ylim)) {
 
-   class(res) <- "profile.rma.mv"
+      ylim <- range(lls, na.rm=TRUE)
+      ylim[1] <- ylim[1] - .1
+      ylim[2] <- ylim[2] + .1
 
-   #########################################################################
+   } else {
 
-   if (plot) {
+      if (length(ylim) != 2L)
+         stop("Argument 'ylim' should be a vector of length 2.")
 
-      if (missing(ylim)) {
-         ylim <- range(lls, na.rm=TRUE)
-         ylim[1] <- ylim[1] - .1
-         ylim[2] <- ylim[2] + .1
-      }
-
-      if (comp == "sigma2") {
-         if (length(x$sigma2) == 1L) {
-            xlab <- expression(paste(sigma^2, " Value"))
-            title <- expression(paste("Profile Plot for ", sigma^2))
-         } else {
-            xlab <- bquote(sigma[.(sigma2)]^2 ~ "Value")
-            title <- bquote("Profile Plot for" ~ sigma[.(sigma2)]^2)
-         }
-      }
-      if (comp == "tau2") {
-         if (length(x$tau2) == 1L) {
-            xlab <- expression(paste(tau^2, " Value"))
-            title <- expression(paste("Profile Plot for ", tau^2))
-         } else {
-            xlab <- bquote(tau[.(tau2)]^2 ~ "Value")
-            title <- bquote("Profile Plot for" ~ tau[.(tau2)]^2)
-         }
-      }
-      if (comp == "rho") {
-         if (length(x$rho) == 1L) {
-            xlab <- expression(paste(rho, " Value"))
-            title <- expression(paste("Profile Plot for ", rho))
-         } else {
-            xlab <- bquote(rho[.(rho)] ~ "Value")
-            title <- bquote("Profile Plot for" ~ rho[.(rho)])
-         }
-      }
-      if (comp == "gamma2") {
-         if (length(x$gamma2) == 1L) {
-            xlab <- expression(paste(gamma^2, " Value"))
-            title <- expression(paste("Profile Plot for ", gamma^2))
-         } else {
-            xlab <- bquote(gamma[.(gamma2)]^2 ~ "Value")
-            title <- bquote("Profile Plot for" ~ gamma[.(gamma2)]^2)
-         }
-      }
-      if (comp == "phi") {
-         if (length(x$phi) == 1L) {
-            xlab <- expression(paste(phi, " Value"))
-            title <- expression(paste("Profile Plot for ", phi))
-         } else {
-            xlab <- bquote(phi[.(phi)] ~ "Value")
-            title <- bquote("Profile Plot for" ~ phi[.(phi)])
-         }
-      }
-
-      plot(vcs, lls, type="o", xlab=xlab, ylab=paste(ifelse(x$method=="REML", "Restricted", ""), " Log-Likelihood", sep=""), main=title, bty="l", pch=pch, ylim=ylim, ...)
-      abline(v=vc, lty="dotted")
-      abline(h=logLik(x), lty="dotted")
-      #abline(h=max(lls, na.rm=TRUE), lty="dotted")
+      ylim <- sort(ylim)
 
    }
 
+   if (comp == "sigma2") {
+      if (x$sigma2s == 1L) {
+         xlab <- expression(paste(sigma^2, " Value"))
+         title <- expression(paste("Profile Plot for ", sigma^2))
+      } else {
+         xlab <- bquote(sigma[.(sigma2)]^2 ~ "Value")
+         title <- bquote("Profile Plot for" ~ sigma[.(sigma2)]^2)
+      }
+   }
+   if (comp == "tau2") {
+      if (x$tau2s == 1L) {
+         xlab <- expression(paste(tau^2, " Value"))
+         title <- expression(paste("Profile Plot for ", tau^2))
+      } else {
+         xlab <- bquote(tau[.(tau2)]^2 ~ "Value")
+         title <- bquote("Profile Plot for" ~ tau[.(tau2)]^2)
+      }
+   }
+   if (comp == "rho") {
+      if (x$rhos == 1L) {
+         xlab <- expression(paste(rho, " Value"))
+         title <- expression(paste("Profile Plot for ", rho))
+      } else {
+         xlab <- bquote(rho[.(rho)] ~ "Value")
+         title <- bquote("Profile Plot for" ~ rho[.(rho)])
+      }
+   }
+   if (comp == "gamma2") {
+      if (x$gamma2s == 1L) {
+         xlab <- expression(paste(gamma^2, " Value"))
+         title <- expression(paste("Profile Plot for ", gamma^2))
+      } else {
+         xlab <- bquote(gamma[.(gamma2)]^2 ~ "Value")
+         title <- bquote("Profile Plot for" ~ gamma[.(gamma2)]^2)
+      }
+   }
+   if (comp == "phi") {
+      if (x$phis == 1L) {
+         xlab <- expression(paste(phi, " Value"))
+         title <- expression(paste("Profile Plot for ", phi))
+      } else {
+         xlab <- bquote(phi[.(phi)] ~ "Value")
+         title <- bquote("Profile Plot for" ~ phi[.(phi)])
+      }
+   }
+
+   sav <- list(vc=vcs, ll=lls, b=b, ci.lb=ci.lb, ci.ub=ci.ub, comps=1, ylim=ylim, method=x$method, vc=vc, maxll=logLik(x), xlab=xlab, title=title)
+   names(sav)[1] <- switch(comp, sigma2="sigma2", tau2="tau2", rho="rho", gamma2="gamma2", phi="phi")
+   class(sav) <- "profile.rma"
+
    #########################################################################
 
-   invisible(res)
+   if (plot)
+      plot(sav, pch=pch, ...)
+
+   #########################################################################
+
+   invisible(sav)
 
 }

@@ -1,6 +1,7 @@
 \name{profile.rma.uni}
 \alias{profile.rma.uni}
 \alias{profile.rma.mv}
+\alias{plot.profile.rma}
 \title{Profile Plots for 'rma' Objects}
 \description{Function to profile the (restricted) log-likelihood for objects of class \code{"rma.uni"} and \code{"rma.mv"}.}
 \usage{
@@ -9,9 +10,12 @@
 
 \method{profile}{rma.mv}(fitted, sigma2, tau2, rho, gamma2, phi, xlim, ylim, steps=20, startmethod="init",
         progbar=TRUE, parallel="no", ncpus=1, cl=NULL, plot=TRUE, pch=19, \ldots)
+
+\method{plot}{profile.rma}(x, ylim, pch=19, \ldots)
 }
 \arguments{
    \item{fitted}{an object of class \code{"rma.uni"} or \code{"rma.mv"}.}
+   \item{x}{an object of class \code{"profile.rma"} (for \code{plot}).}
    \item{sigma2}{integer specifying for which \if{latex}{\eqn{\sigma^2}}\if{html}{\eqn{\sigma²}}\if{text}{\eqn{\sigma^2}} value the likelihood should be profiled (only relevant for \code{"rma.mv"} objects).}
    \item{tau2}{integer specifying for which \if{latex}{\eqn{\tau^2}}\if{html}{\eqn{\tau²}}\if{text}{\eqn{\tau^2}} value the likelihood should be profiled (only relevant for \code{"rma.mv"} objects).}
    \item{rho}{integer specifying for which \eqn{\rho} value the likelihood should be profiled (only relevant for \code{"rma.mv"} objects).}
@@ -39,16 +43,17 @@
    Profiling requires repeatedly refitting the same model, which can be slow when \eqn{k} is large and/or the model is complex (the latter especially applies to \code{"rma.mv"} objects). On machines with multiple cores, one can usually speed things up by delegating the model fitting to separate worker processes, that is, by setting \code{parallel="snow"} or \code{parallel="multicore"} and \code{ncpus} to some value larger than 1. Parallel processing makes use of the \code{\link[parallel]{parallel}} package, using the \code{\link[parallel]{makePSOCKcluster}} and \code{\link[parallel]{parLapply}} functions when \code{parallel="snow"} or using the \code{\link[parallel]{mclapply}} function when \code{parallel="multicore"} (the latter only works on Unix/Linux-alikes). With \code{parallel::detectCores()}, one can check on the number of available cores on the local machine. Note that argument \code{startmethod} is ignored when using parallel processing and no progress bar will be shown.
 }
 \value{
-   An object of class \code{"profile.rma.uni"} or \code{"profile.rma.mv"}. The object is a list containing the following components:
+   An object of class \code{"profile.rma"}. The object is a list (or list of lists) containing the following components:
    \item{sigma2}{values of \if{latex}{\eqn{\sigma^2}}\if{html}{\eqn{\sigma²}}\if{text}{\eqn{\sigma^2}} over which the likelihood was profiled (only when profiling was actually done over \if{latex}{\eqn{\sigma^2}}\if{html}{\eqn{\sigma²}}\if{text}{\eqn{\sigma^2}}).}
    \item{tau2}{values of \if{latex}{\eqn{\tau^2}}\if{html}{\eqn{\tau²}}\if{text}{\eqn{\tau^2}} over which the likelihood was profiled (only when profiling was actually done over \if{latex}{\eqn{\tau^2}}\if{html}{\eqn{\tau²}}\if{text}{\eqn{\tau^2}}).}
    \item{rho}{values of \eqn{\rho} over which the likelihood was profiled (only when profiling was actually done over \eqn{\rho}).}
    \item{gamma2}{values of \if{latex}{\eqn{\gamma^2}}\if{html}{\eqn{\gamma²}}\if{text}{\eqn{\gamma^2}} over which the likelihood was profiled (only when profiling was actually done over \if{latex}{\eqn{\gamma^2}}\if{html}{\eqn{\gamma²}}\if{text}{\eqn{\gamma^2}}).}
-   \item{rho}{values of \eqn{\phi} over which the likelihood was profiled (only when profiling was actually done over \eqn{\phi}).}
+   \item{phi}{values of \eqn{\phi} over which the likelihood was profiled (only when profiling was actually done over \eqn{\phi}).}
    \item{ll}{(restricted) log-likelihood at the corresponding parameter value.}
    \item{b}{a matrix with the estimated model coefficients at the corresponding parameter value.}
    \item{ci.lb}{a matrix with the lower confidence interval bounds for the model coefficients at the corresponding parameter value.}
    \item{ci.ub}{a matrix with the upper confidence interval bounds for the model coefficients at the corresponding parameter value.}
+   \item{\dots}{some additional elements/values.}
    Note that the list is returned invisibly.
 }
 \author{
