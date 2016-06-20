@@ -87,7 +87,7 @@ Changes in Version 1.9-9 (2016-05-29)
    o added new datasets (dat.egger2001 and dat.li2007) on the effectiveness
      of intravenous magnesium in acute myocardial infarction
 
-   o 'methods' package is now under 'Depends' (in addition to 'Matrix'), so 
+   o 'methods' package is now under 'Depends' (in addition to 'Matrix'), so
      that rma.mv(..., sparse=TRUE) always works, even under Rscript
 
    o some general code cleanup

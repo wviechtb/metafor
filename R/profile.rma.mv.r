@@ -26,8 +26,10 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi, xlim, ylim, s
          stop("No components to profile.")
 
       if (plot) {
-         if (dev.cur() == 1)
+         if (dev.cur() == 1) {
             par(mfrow=c(comps, 1))
+            on.exit(par(mfrow=c(1,1)))
+         }
       }
 
       res <- list()
