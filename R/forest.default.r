@@ -28,9 +28,8 @@ cex, cex.lab, cex.axis, ...) {
    ### passed down from other functions (i.e., deparse(substitute(...)) will grab exactly what
    ### is specified for the argument), so the following function would not work:
    ###
-   ### misc <- function(x, vi, tfunction=FALSE) {
+   ### misc <- function(x, vi, tfunction=FALSE)
    ###   forest.default(x, vi, atransf=tfunction)
-   ### }
 
    if (missing(targs))
       targs <- NULL

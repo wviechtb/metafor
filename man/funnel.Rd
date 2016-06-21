@@ -1,19 +1,30 @@
 \name{funnel}
 \alias{funnel}
 \alias{funnel.rma}
-\title{Funnel Plots for 'rma' Objects}
-\description{Function to create funnel plots for objects of class \code{"rma"}.}
+\alias{funnel.default}
+\title{Funnel Plots}
+\description{Function to create funnel plots.}
 \usage{
 funnel(x, \dots)
 
-\method{funnel}{rma}(x, yaxis="sei", xlim, ylim, xlab, ylab,
-       steps=5, at, atransf, targs, digits,
-       level=x$level, addtau2=FALSE, type="rstandard",
+\method{funnel}{rma}(x, yaxis="sei",
+       xlim, ylim, xlab, ylab,
+       steps=5, at, atransf, targs, digits, level=x$level,
+       addtau2=FALSE, type="rstandard",
        back="lightgray", shade="white", hlines="white",
        refline, pch=19, pch.fill=21, ci.res=1000, \dots)
+
+\method{funnel}{default}(x, vi, sei, ni, yaxis="sei",
+       xlim, ylim, xlab, ylab,
+       steps=5, at, atransf, targs, digits, level=95,
+       back="lightgray", shade="white", hlines="white",
+       refline=0, pch=19, pch.fill=21, ci.res=1000, \dots)
 }
 \arguments{
-   \item{x}{an object of class \code{"rma"}.}
+   \item{x}{an object of class \code{"rma"} or a vector with the observed effect sizes or outcomes.}
+   \item{vi}{vector with the corresponding sampling variances.}
+   \item{sei}{vector with the corresponding standard errors.}
+   \item{ni}{vector with the corresponding sample sizes.}
    \item{yaxis}{either \code{"sei"}, \code{"vi"}, \code{"seinv"}, \code{"vinv"}, \code{"ni"}, \code{"ninv"}, \code{"sqrtni"}, \code{"sqrtninv"}, \code{"lni"}, or \code{"wi"} to indicate what values should be placed on the y-axis. See \sQuote{Details}.}
    \item{xlim}{x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.}
    \item{ylim}{y-axis limits. If unspecified, the function tries to set the y-axis limits to some sensible values.}
@@ -24,13 +35,13 @@ funnel(x, \dots)
    \item{atransf}{optional argument specifying the name of a function that should be used to transform the x-axis labels (e.g., \code{transf=exp}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified via \code{atransf}.}
    \item{digits}{integer specifying the number of decimal places to which the tick mark labels of the x- and y-axis should be rounded. Can also be a vector of two integers, the first specifying the number of decimal places for the x-axis, the second for the y-axis labels (e.g., \code{c(2,3)}). If unspecified, the function tries to set the argument to some sensible values.}
-   \item{level}{numerical value between 0 and 100 specifying the level of the pseudo confidence interval region (the default is to take the value from the object). May also be a vector of values to obtain multiple regions. See \sQuote{Examples}.}
+   \item{level}{numerical value between 0 and 100 specifying the level of the pseudo confidence interval region (for \code{"rma"} objects, the default is to take the value from the object). May also be a vector of values to obtain multiple regions. See \sQuote{Examples}.}
    \item{addtau2}{logical to indicate whether the amount of heterogeneity should be accounted for when drawing the pseudo confidence interval region (the default is \code{FALSE}). Ignored when the model includes moderators and residuals are plotted. See \sQuote{Details}.}
    \item{type}{either \code{"rstandard"} (default) or \code{"rstudent"} indicating whether the usual or deleted residuals should be used in creating the funnel plot when the model involves moderators. See \sQuote{Details}.}
    \item{back}{color to use for the background of the plotting region.}
    \item{shade}{color to use for shading the pseudo confidence interval region. When \code{level} is a vector of values, different shading colors can be specified for each region.}
    \item{hlines}{color of the horizontal reference lines.}
-   \item{refline}{value at which to draw the vertical reference line and, if drawn, where the pseudo confidence interval should be centered. If unspecified, the reference line is drawn at the fixed- or random-effects model estimate when the model does not include moderators and at zero when moderators are included (and therefore residuals are plotted).}
+   \item{refline}{value at which to draw the vertical reference line and, if drawn, where the pseudo confidence interval should be centered. If unspecified, the reference line is drawn at the fixed- or random-effects model estimate when the model does not include moderators and at zero when moderators are included (and therefore residuals are plotted) or when directly plotting observed effect sizes or outcomes.}
    \item{pch}{plotting symbol to use for the observed effect sizes or outcomes. By default, a solid circle is used. Can also be a vector of values. See \code{\link{points}} for other options.}
    \item{pch.fill}{plotting symbol to use for the effect sizes or outcomes filled in by the trim and fill method. By default, a circle is used. Only relevant when plotting an object created by the \code{\link{trimfill}} function.}
    \item{ci.res}{integer specifying the number of y-axis values at which to calculate the bounds of the pseudo confidence interval. The default is \code{1000}, which usually provides a sufficient resolution for the plotting.}
@@ -56,12 +67,14 @@ funnel(x, \dots)
 
    If the object passed to the function comes from the \code{\link{trimfill}} function, the effect sizes or outcomes that are filled in by the trim and fill method are also added to the funnel plot. The symbol to use for plotting the filled in values can then be specified via the \code{pch.fill} argument.
 
+   One can also directly pass a vector of observed effect sizes or outcomes (via \code{x}) and the corresponding sampling variances (via \code{vi}), standard errors (via \code{sei}), and/or sample sizes (via \code{ni}) to the function. By default, the vertical reference line is then drawn at zero.
+
    The arguments \code{back}, \code{shade}, and \code{hlines} can be set to \code{NULL} to suppress the shading and the horizontal reference lines.
 }
 \note{
    Placing (a function of) the sample size on the y-axis (i.e., using \code{yaxis="ni"}, \code{yaxis="ninv"}, \code{yaxis="sqrtni"}, \code{yaxis="sqrtninv"}, or \code{yaxis="lni"}) is only possible when information about the sample sizes is actually stored within the object passed to the \code{funnel} function. That should automatically be the case when the observed outcomes were computed with the \code{escalc} function or when the observed outcomes were computed within the model fitting function. On the other hand, this will not automatically be the case when \code{rma.uni} was used together with the \code{yi} and \code{vi} arguments and the \code{yi} and \code{vi} values were \emph{not} computed with \code{escalc}. In that case, it is still possible to pass information about the sample sizes to the \code{rma.uni} function (i.e., use \code{rma.uni(yi, vi, ni)}).
 
-   When using unweighted estimation, using \code{yaxis="wi"} will place all points on a horizontal line.
+   When using unweighted estimation, using \code{yaxis="wi"} will place all points on a horizontal line. When directly passing a vector of observed effect sizes or outcomes to the function, \code{yaxis="wi"} is equivalent to \code{yaxis="vinv"}, except that the weights are expressed in percent.
 }
 \value{
    A data frame with components:
@@ -88,11 +101,22 @@ funnel(x, \dots)
    \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, \code{\link{rma.glmm}}, \code{\link{rma.mv}}, \code{\link{influence.rma.uni}}, \code{\link{trimfill}}
 }
 \examples{
-### meta-analysis of the log relative risks using a random-effects model
-res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
+### load BCG vaccine data
+dat <- get(data(dat.bcg))
+
+### calculate log relative risks and corresponding sampling variances
+dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat)
+
+### random-effects model
+res <- rma(yi, vi, data=dat)
 
 ### standard funnel plot
 funnel(res)
+
+### passing log relative risks and sampling variances directly to the function
+### note: essentially the same plot, except that reference line is centered at zero
+funnel(dat$yi, dat$vi)
+funnel(res, refline=0)
 
 ### funnel plot with relative risk values on the x-axis
 funnel(res, atransf=exp, at=log(c(.12, .25, .5, 1, 2)))
@@ -102,8 +126,7 @@ funnel(res, level=c(90, 95, 99), shade=c("white", "gray", "darkgray"),
        refline=0, atransf=exp, at=log(c(.10, .25, .5, 1, 2, 4, 10)))
 
 ### mixed-effects model with absolute latitude in the model
-res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, mods = ~ ablat,
-           data=dat.bcg)
+res <- rma(yi, vi, mods = ~ ablat, data=dat)
 
 ### funnel plot of the residuals
 funnel(res)

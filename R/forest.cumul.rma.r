@@ -9,6 +9,9 @@ cex, cex.lab, cex.axis, ...) {
 
    na.act <- getOption("na.action")
 
+   if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
+      stop("Unknown 'na.action' specified under options().")
+
    if (!inherits(x, "cumul.rma"))
       stop("Argument 'x' must be an object of class \"cumul.rma\".")
 

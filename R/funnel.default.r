@@ -1,34 +1,71 @@
-funnel.rma <- function(x, yaxis="sei", xlim, ylim, xlab, ylab,
-steps=5, at, atransf, targs, digits, level=x$level, addtau2=FALSE,
-type="rstandard", back="lightgray", shade="white", hlines="white",
-refline, pch=19, pch.fill=21, ci.res=1000, ...) {
+funnel.default <- function(x, vi, sei, ni, yaxis="sei", xlim, ylim, xlab, ylab,
+steps=5, at, atransf, targs, digits, level=95,
+back="lightgray", shade="white", hlines="white",
+refline=0, pch=19, pch.fill=21, ci.res=1000, ...) {
 
    #########################################################################
 
-   if (!inherits(x, "rma"))
-      stop("Argument 'x' must be an object of class \"rma\".")
-
-   if (inherits(x, "robust.rma"))
-      stop("Function not applicable to objects of class \"robust.rma\".")
-
    na.act <- getOption("na.action")
 
+   if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
+      stop("Unknown 'na.action' specified under options().")
+
    yaxis <- match.arg(yaxis, c("sei", "vi", "seinv", "vinv", "ni", "ninv", "sqrtni", "sqrtninv", "lni", "wi"))
-   type  <- match.arg(type,  c("rstandard", "rstudent"))
 
    if (missing(atransf))
       atransf <- FALSE
 
    atransf.char <- deparse(substitute(atransf))
 
+   yi <- x
+
    ### check if sample size information is available if plotting (some function of) sample sizes
 
+   if (missing(ni))
+      ni <- NULL
+
    if (is.element(yaxis, c("ni", "ninv", "sqrtni", "sqrtninv", "lni"))) {
-      if (is.null(x$ni))
-         stop("No sample size information stored in model object.")
-      if (anyNA(x$ni))
-         warning("Sample size information stored in model object \n  contains NAs. Not all studies will be plotted.")
+      if (is.null(ni) && !is.null(attr(yi, "ni")))
+         ni <- attr(yi, "ni")
+      if (!is.null(ni) && length(ni) != length(yi))
+         ni <- NULL
+      if (is.null(ni))
+         stop("No sample size information available.")
    }
+
+   ### check if sampling variances and/or standard errors are available
+
+   if (missing(vi))
+      vi <- NULL
+
+   if (missing(sei))
+      sei <- NULL
+
+   if (is.null(vi)) {
+      if (!is.null(sei))
+         vi <- sei^2
+   }
+   if (is.null(sei)) {
+      if (!is.null(vi))
+         sei <- sqrt(vi)
+   }
+
+   if (is.element(yaxis, c("sei", "vi", "seinv", "vinv", "wi")) && is.null(vi))
+      stop("Need to specify 'vi' or 'sei' argument.")
+
+   ### set negative variances and/or standard errors to 0
+
+   if (!is.null(vi))
+      vi[vi < 0] <- 0
+   if (!is.null(sei))
+      sei[sei < 0] <- 0
+
+   ### get slab from attributes of yi; if not available or it doesn't have the right length, set slab <- 1:k
+
+   slab <- attr(yi, "slab")
+
+   if (is.null(slab) || length(slab) != length(yi))
+      slab <- 1:length(yi)
 
    ### set y-axis label if not specified
 
@@ -93,65 +130,42 @@ refline, pch=19, pch.fill=21, ci.res=1000, ...) {
 
    #########################################################################
 
-   ### get values for the x-axis (and corresponding vi, sei, and ni values)
-   ### if int.only, get the observed values; otherwise, get the (deleted) residuals
+   ### check for NAs and act accordingly
 
-   if (x$int.only) {
+   has.na <- is.na(yi) | if (is.element(yaxis, c("vi", "vinv"))) is.na(vi) else FALSE | if (is.element(yaxis, c("sei", "seinv"))) is.na(vi) else FALSE | if (is.element(yaxis, c("ni", "ninv", "sqrtni", "sqrtninv", "lni"))) is.na(ni) else FALSE
 
-      if (missing(refline))
-         refline <- x$b
+   if (any(has.na)) {
 
-      if (inherits(x, "rma.mv"))
-         addtau2 <- FALSE
+      not.na <- !has.na
 
-      tau2 <- ifelse(addtau2, x$tau2, 0)
+      if (na.act == "na.omit" || na.act == "na.exclude" || na.act == "na.pass") {
 
-      yi   <- x$yi             ### yi/vi does not contain any NAs, so no need to check for missing here
-      vi   <- x$vi
-      ni   <- x$ni             ### ni can be NULL and can still include NAs
-      sei  <- sqrt(vi)
-      slab <- x$slab[x$not.na]
+         yi   <- yi[not.na]
+         vi   <- vi[not.na]
+         sei  <- sei[not.na]
+         ni   <- ni[not.na]
+         slab <- slab[not.na]
 
-      if (missing(xlab))
-         xlab <- .setlab(x$measure, transf.char="FALSE", atransf.char, gentype=1)
-
-   } else {
-
-      if (missing(refline))
-         refline <- 0
-
-      tau2 <- 0 ### when plotting residuals, tau2 should not be added to the vars/SEs of the residuals
-
-      options(na.action = "na.pass")
-
-      if (type == "rstandard") {
-         res <- rstandard(x)
-      } else {
-         res <- rstudent(x)
       }
 
-      options(na.action = na.act)
-
-      ### need to check for missings here
-
-      not.na <- !is.na(res$resid) ### vector of residuals is of size k.f and can includes NAs
-      yi     <- res$resid[not.na]
-      sei    <- res$se[not.na]
-      ni     <- x$ni.f[not.na]    ### ni can be NULL and can still include NAs
-      vi     <- sei^2
-      slab   <- x$slab[not.na]
-
-      if (missing(xlab))
-         xlab <- "Residual Value"
+      if (na.act == "na.fail")
+         stop("Missing values in data.")
 
    }
 
-   ### get weights (omit any NAs)
+   if (missing(xlab))
+      xlab <- .setlab(attr(yi, "measure"), transf.char="FALSE", atransf.char, gentype=1)
+
+   ### at least two studies left?
+
+   if (length(yi) < 2)
+      stop("Plotting terminated since k < 2.")
+
+   ### get weights
 
    if (yaxis == "wi") {
-      options(na.action = "na.omit")
-      weights <- weights(x)
-      options(na.action = na.act)
+      weights <- 1/vi
+      weights <- weights / sum(weights) * 100
    }
 
    #########################################################################
@@ -172,15 +186,15 @@ refline, pch=19, pch.fill=21, ci.res=1000, ...) {
       if (yaxis == "vinv")
          ylim <- c(min(1/vi), max(1/vi))
       if (yaxis == "ni")
-         ylim <- c(min(ni, na.rm=TRUE), max(ni, na.rm=TRUE))
+         ylim <- c(min(ni), max(ni))
       if (yaxis == "ninv")
-         ylim <- c(max(1/ni, na.rm=TRUE), min(1/ni, na.rm=TRUE))
+         ylim <- c(max(1/ni), min(1/ni))
       if (yaxis == "sqrtni")
-         ylim <- c(min(sqrt(ni), na.rm=TRUE), max(sqrt(ni), na.rm=TRUE))
+         ylim <- c(min(sqrt(ni)), max(sqrt(ni)))
       if (yaxis == "sqrtninv")
-         ylim <- c(max(1/sqrt(ni), na.rm=TRUE), min(1/sqrt(ni), na.rm=TRUE))
+         ylim <- c(max(1/sqrt(ni)), min(1/sqrt(ni)))
       if (yaxis == "lni")
-         ylim <- c(min(log(ni), na.rm=TRUE), max(log(ni), na.rm=TRUE))
+         ylim <- c(min(log(ni)), max(log(ni)))
       if (yaxis == "wi")
          ylim <- c(min(weights), max(weights))
 
@@ -231,20 +245,20 @@ refline, pch=19, pch.fill=21, ci.res=1000, ...) {
       ### calculate the CI bounds at the bottom of the figure (for the widest CI if there are multiple)
 
       if (yaxis == "sei") {
-         x.lb.bot <- refline - qnorm(alpha.min/2, lower.tail=FALSE) * sqrt(ylim[1]^2 + tau2)
-         x.ub.bot <- refline + qnorm(alpha.min/2, lower.tail=FALSE) * sqrt(ylim[1]^2 + tau2)
+         x.lb.bot <- refline - qnorm(alpha.min/2, lower.tail=FALSE) * sqrt(ylim[1]^2)
+         x.ub.bot <- refline + qnorm(alpha.min/2, lower.tail=FALSE) * sqrt(ylim[1]^2)
       }
       if (yaxis == "vi") {
-         x.lb.bot <- refline - qnorm(alpha.min/2, lower.tail=FALSE) * sqrt(ylim[1] + tau2)
-         x.ub.bot <- refline + qnorm(alpha.min/2, lower.tail=FALSE) * sqrt(ylim[1] + tau2)
+         x.lb.bot <- refline - qnorm(alpha.min/2, lower.tail=FALSE) * sqrt(ylim[1])
+         x.ub.bot <- refline + qnorm(alpha.min/2, lower.tail=FALSE) * sqrt(ylim[1])
       }
       if (yaxis == "seinv") {
-         x.lb.bot <- refline - qnorm(alpha.min/2, lower.tail=FALSE) * sqrt(1/ylim[1]^2 + tau2)
-         x.ub.bot <- refline + qnorm(alpha.min/2, lower.tail=FALSE) * sqrt(1/ylim[1]^2 + tau2)
+         x.lb.bot <- refline - qnorm(alpha.min/2, lower.tail=FALSE) * sqrt(1/ylim[1]^2)
+         x.ub.bot <- refline + qnorm(alpha.min/2, lower.tail=FALSE) * sqrt(1/ylim[1]^2)
       }
       if (yaxis == "vinv") {
-         x.lb.bot <- refline - qnorm(alpha.min/2, lower.tail=FALSE) * sqrt(1/ylim[1] + tau2)
-         x.ub.bot <- refline + qnorm(alpha.min/2, lower.tail=FALSE) * sqrt(1/ylim[1] + tau2)
+         x.lb.bot <- refline - qnorm(alpha.min/2, lower.tail=FALSE) * sqrt(1/ylim[1])
+         x.ub.bot <- refline + qnorm(alpha.min/2, lower.tail=FALSE) * sqrt(1/ylim[1])
       }
 
       if (missing(xlim)) {
@@ -345,8 +359,8 @@ refline, pch=19, pch.fill=21, ci.res=1000, ...) {
 
       for (m in avals:1) {
 
-         ci.left  <- refline - qnorm(alpha[m]/2, lower.tail=FALSE) * sqrt(vi.vals + tau2)
-         ci.right <- refline + qnorm(alpha[m]/2, lower.tail=FALSE) * sqrt(vi.vals + tau2)
+         ci.left  <- refline - qnorm(alpha[m]/2, lower.tail=FALSE) * sqrt(vi.vals)
+         ci.right <- refline + qnorm(alpha[m]/2, lower.tail=FALSE) * sqrt(vi.vals)
 
          polygon(c(ci.left,ci.right[ci.res:1]), c(yi.vals,yi.vals[ci.res:1]), border=NA, col=shade[m], ...)
          lines(ci.left,  yi.vals, lty="dotted", ...)
@@ -403,11 +417,6 @@ refline, pch=19, pch.fill=21, ci.res=1000, ...) {
 
    points(xaxis.vals, yaxis.vals, pch=pch, ...)
 
-   ### add trim-and-fill points
-
-   if (inherits(x, "rma.uni.trimfill"))
-      points(xaxis.vals[x$fill], yaxis.vals[x$fill], pch=pch.fill, col="black", bg="white", ...)
-
    #########################################################################
 
    ### add L-shaped box around plot
@@ -444,7 +453,6 @@ refline, pch=19, pch.fill=21, ci.res=1000, ...) {
    ### prepare data frame to return
 
    sav <- data.frame(x=xaxis.vals, y=yaxis.vals, slab=slab)
-   sav$fill <- x$fill
 
    invisible(sav)
 

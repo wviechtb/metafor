@@ -1,4 +1,4 @@
-Changes in Version 1.9-9 (2016-06-20)
+Changes in Version 1.9-9 (2016-06-21)
 =====================================
 
    o started to use git as version control system, GitHub to host the
@@ -62,6 +62,10 @@ Changes in Version 1.9-9 (2016-06-20)
    o trailing zeros in the axis labels are now dropped in forest and funnel
      plots by default (but can retain trailing zeros by specifying a numeric
      value for the 'digits' argument)
+
+   o added funnel.default(), which directly takes as input a vector with the
+     observed effect sizes or outcomes and the corresponding sampling
+     variances, standard errors, and/or sample sizes
 
    o simplified baujat.rma.uni(), baujat.rma.mh(), and baujat.rma.peto() to
      baujat.rma(), which now handles objects of class 'rma.uni', 'rma.mh',
