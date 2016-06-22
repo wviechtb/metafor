@@ -43,7 +43,7 @@ efac=1, col, border, cex, ...) {
    if (is.null(mlab))
       mlab <- ifelse((x$method=="FE"), "FE Model", "RE Model")
 
-   ### passing ci.lb and ci.ub, so that the bounds are correct when the model was fitted with knha=TRUE
+   ### passing ci.lb and ci.ub, so that the bounds are correct when the model was fitted with test="knha"
 
    addpoly(x$b, ci.lb=x$ci.lb, ci.ub=x$ci.ub, rows=row, level=level,
            annotate=annotate, digits=digits, width=width, mlab=mlab,
