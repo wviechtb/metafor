@@ -12,6 +12,11 @@ Changes in Version 1.9-9 (2016-06-22)
      for backwards compatibility, the 'knha' and 'tdist' arguments still
      work, but are no longer documented
 
+   o rma(yi, vi, weights=1, test="knha") now yields the same results as
+     rma(yi, vi, weighted=FALSE, test="knha") (but use of the Knapp and
+     Hartung method in the context of an unweighted analysis remains an
+     experimental feature)
+
    o one can now pass an 'escalc' object directly to rma.uni(), which then
      tries to automatically determine the 'yi' and 'vi' variables in the
      data frame (thanks to Christian Röver for the suggestion)

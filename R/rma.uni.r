@@ -1320,7 +1320,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
       ### fit model with weighted estimation
 
-      if (is.null(weights)) {
+      if (is.null(weights) || is.element(test, c("knha","adhoc"))) {
 
          ### if no weights are specified, use default inverse variance weights, that is, 1/vi or 1/(vi + tau2)
 
@@ -1335,8 +1335,11 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
          RSS.f <- sum(wi*(yi - X %*% b)^2)
          #P     <- W - W %*% X %*% stXWX %*% crossprod(X,W)
          #RSS.f <- crossprod(Y,P) %*% Y
+         RSS.knha <- RSS.f
 
-      } else {
+      }
+
+      if (!is.null(weights)) {
 
          ### if weights are specified, use them
 
@@ -1353,15 +1356,15 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
       #return(list(b=b, vb=vb, se=sqrt(diag(vb)), RSS.f=RSS.f))
 
       ### calculate scaling factor for Knapp & Hartung method
-      ### note: catch cases where RSS.f is extremely small, which is probably due to all yi being equal
+      ### note: catch cases where RSS.knha is extremely small, which is probably due to all yi being equal
       ### then set s2w to 0 (to avoid the strange looking output we would obtain if we don't do this)
 
       if (is.element(test, c("knha","adhoc"))) {
 
-         if (RSS.f <= .Machine$double.eps) {
+         if (RSS.knha <= .Machine$double.eps) {
             s2w <- 0
          } else {
-            s2w <- RSS.f / (k-p)
+            s2w <- RSS.knha / (k-p)
          }
 
       }
@@ -1386,6 +1389,9 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
       ### calculate scaling factor for Knapp & Hartung method
 
       if (is.element(test, c("knha","adhoc"))) {
+
+         if (any(is.infinite(wi)))
+            stop("Division by zero when computing the inverse variance weights.")
 
          stXWX     <- .invcalc(X=X, W=W, k=k)
          b.knha    <- stXWX %*% crossprod(X,W) %*% Y

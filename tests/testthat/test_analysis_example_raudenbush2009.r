@@ -90,11 +90,11 @@ test_that("results are correct for the random-effects model (Knapp & Hartung met
 
    res.knha <- list()
 
-   res.knha$FE   <- rma(yi, vi, data=dat, digits=3, method="FE", knha=TRUE)
-   res.knha$ML   <- rma(yi, vi, data=dat, digits=3, method="ML", knha=TRUE)
-   res.knha$REML <- rma(yi, vi, data=dat, digits=3, method="REML", knha=TRUE)
-   res.knha$DL   <- rma(yi, vi, data=dat, digits=3, method="DL", knha=TRUE)
-   res.knha$HE   <- rma(yi, vi, data=dat, digits=3, method="HE", knha=TRUE)
+   res.knha$FE   <- rma(yi, vi, data=dat, digits=3, method="FE", test="knha")
+   res.knha$ML   <- rma(yi, vi, data=dat, digits=3, method="ML", test="knha")
+   res.knha$REML <- rma(yi, vi, data=dat, digits=3, method="REML", test="knha")
+   res.knha$DL   <- rma(yi, vi, data=dat, digits=3, method="DL", test="knha")
+   res.knha$HE   <- rma(yi, vi, data=dat, digits=3, method="HE", test="knha")
 
    tmp <- round(t(sapply(res.knha, function(x) c(tau2=x$tau2, mu=x$b, se=x$se, z=x$zval, ci.lb=x$ci.lb, ci.ub=x$ci.ub))), 3)
 

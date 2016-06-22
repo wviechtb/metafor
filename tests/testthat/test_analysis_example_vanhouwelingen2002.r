@@ -42,7 +42,7 @@ test_that("results for the random-effects model are correct.", {
    expect_equivalent(round(tmp$random[1,3],3), 1.181) ### 1.181 based on a Satterthwaite approximation (page 597)
 
    ### CI for mu with Knapp & Hartung method
-   res <- rma(yi, vi, data=dat, method="ML", knha=TRUE)
+   res <- rma(yi, vi, data=dat, method="ML", test="knha")
    tmp <- predict(res, transf=exp, digits=3)
 
    ### (results for this not given in paper)
