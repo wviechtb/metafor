@@ -7,7 +7,7 @@ coef.permutest.rma.uni <- function(object, ...) {
 
    res.table <- data.frame(estimate=x$b, se=x$se, zval=x$zval, pval=x$pval, ci.lb=x$ci.lb, ci.ub=x$ci.ub)
 
-   if ((is.logical(x$knha) && x$knha) || is.character(x$knha))
+   if (is.element(x$test, c("knha","adhoc","t")))
       colnames(res.table)[3] <- "tval"
 
    return(res.table)

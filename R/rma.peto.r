@@ -366,7 +366,7 @@ level=95, digits=4, verbose=FALSE) {
 
    method    <- "FE"
    weighted  <- TRUE
-   knha      <- FALSE
+   test      <- "z"
    dfs       <- NA
 
    res <- list(b=b, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
@@ -376,7 +376,7 @@ level=95, digits=4, verbose=FALSE) {
                int.only=int.only,
                yi=yi, vi=vi, yi.f=yi.f, vi.f=vi.f, X.f=X.f, ai=ai, bi=bi, ci=ci, di=di, ai.f=ai.f, bi.f=bi.f, ci.f=ci.f, di.f=di.f, ni=ni, ni.f=ni.f,
                ids=ids, not.na=not.na, not.na.yivi=not.na.yivi, slab=slab, slab.null=slab.null,
-               measure=measure, method=method, weighted=weighted, knha=knha, dfs=dfs, intercept=intercept, digits=digits, level=level,
+               measure=measure, method=method, weighted=weighted, test=test, dfs=dfs, intercept=intercept, digits=digits, level=level,
                add=add, to=to, drop00=drop00,
                fit.stats=fit.stats, call=mf)
 

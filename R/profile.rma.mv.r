@@ -379,11 +379,11 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi, xlim, ylim, s
                x.control[[con.pos.phi.init]] <- res$phi
             }
 
-            res <- try(suppressWarnings(rma.mv(x$yi, x$V, x$W, mods=x$X, intercept=FALSE, random=x$random, struct=x$struct, method=x$method, tdist=x$knha, level=x$level, R=x$R, Rscale=x$Rscale, data=x$mf.r, sigma2=sigma2.arg, tau2=tau2.arg, rho=rho.arg, gamma2=gamma2.arg, phi=phi.arg, control=x.control)), silent=TRUE)
+            res <- try(suppressWarnings(rma.mv(x$yi, x$V, x$W, mods=x$X, intercept=FALSE, random=x$random, struct=x$struct, method=x$method, test=x$test, level=x$level, R=x$R, Rscale=x$Rscale, data=x$mf.r, sigma2=sigma2.arg, tau2=tau2.arg, rho=rho.arg, gamma2=gamma2.arg, phi=phi.arg, control=x.control)), silent=TRUE)
 
          } else {
 
-            res <- try(suppressWarnings(rma.mv(x$yi, x$V, x$W, mods=x$X, intercept=FALSE, random=x$random, struct=x$struct, method=x$method, tdist=x$knha, level=x$level, R=x$R, Rscale=x$Rscale, data=x$mf.r, sigma2=sigma2.arg, tau2=tau2.arg, rho=rho.arg, gamma2=gamma2.arg, phi=phi.arg, control=x$control)), silent=TRUE)
+            res <- try(suppressWarnings(rma.mv(x$yi, x$V, x$W, mods=x$X, intercept=FALSE, random=x$random, struct=x$struct, method=x$method, test=x$test, level=x$level, R=x$R, Rscale=x$Rscale, data=x$mf.r, sigma2=sigma2.arg, tau2=tau2.arg, rho=rho.arg, gamma2=gamma2.arg, phi=phi.arg, control=x$control)), silent=TRUE)
 
          }
 

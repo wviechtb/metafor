@@ -119,7 +119,7 @@ cumul.rma.mh <- function(x, order, digits, transf, targs, ...) {
    out$slab.null <- x$slab.null
    out$level     <- x$level
    out$measure   <- x$measure
-   out$knha      <- x$knha
+   out$test      <- x$test
 
    attr(out$estimate, "measure") <- x$measure
 

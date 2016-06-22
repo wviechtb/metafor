@@ -11,7 +11,7 @@ print.anova.rma <- function(x, digits, ...) {
       cat("\n")
 
       cat("Test of Moderators (coefficient(s) ", paste(x$btt, collapse=","),"): \n", sep="")
-      if ((is.logical(x$knha) && x$knha) || is.character(x$knha)) {
+      if (is.element(x$test, c("knha","adhoc","t"))) {
          cat("F(df1 = ", x$m, ", df2 = ", x$dfs, ") = ", formatC(x$QM, digits=digits, format="f"), ", p-val ", .pval(x$QMp, digits=digits, showeq=TRUE, sep=" "), "\n\n", sep="")
       } else {
          cat("QM(df = ", x$m, ") = ", formatC(x$QM, digits=digits, format="f"), ", p-val ", .pval(x$QMp, digits=digits, showeq=TRUE, sep=" "), "\n\n", sep="")
@@ -34,7 +34,7 @@ print.anova.rma <- function(x, digits, ...) {
       cat("\nResults:\n")
 
       res.table <- cbind(estimate=c(x$Lb), se=x$se, zval=x$zval, pval=x$pval)
-      if ((is.logical(x$knha) && x$knha) || is.character(x$knha))
+      if (is.element(x$test, c("knha","adhoc","t")))
          colnames(res.table)[3] <- "tval"
       rownames(res.table) <- paste0(seq_len(x$m), ":")
       res.table <- formatC(res.table, digits=digits, format="f")
@@ -49,7 +49,7 @@ print.anova.rma <- function(x, digits, ...) {
          } else {
             cat("Omnibus Test of Hypotheses:\n")
          }
-         if ((is.logical(x$knha) && x$knha) || is.character(x$knha)) {
+         if (is.element(x$test, c("knha","adhoc","t"))) {
             cat("F(df1 = ", x$m, ", df2 = ", x$dfs, ") = ", formatC(x$QM, digits=digits, format="f"), ", p-val ", .pval(x$QMp, digits=digits, showeq=TRUE, sep=" "), "\n\n", sep="")
          } else {
             cat("QM(df = ", x$m, ") = ", formatC(x$QM, digits=digits, format="f"), ", p-val ", .pval(x$QMp, digits=digits, showeq=TRUE, sep=" "), "\n\n", sep="")

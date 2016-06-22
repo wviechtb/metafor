@@ -4,9 +4,9 @@
 \description{Function to fit meta-analytic multivariate/multilevel fixed- and random/mixed-effects models with or without moderators via linear (mixed-effects) models. See below and the documentation of the \pkg{\link{metafor-package}} for more details on these models.}
 \usage{
 rma.mv(yi, V, W, mods, random, struct="CS", intercept=TRUE,
-       data, slab, subset, method="REML", tdist=FALSE,
+       data, slab, subset, method="REML", test="z",
        level=95, digits=4, btt, R, Rscale="cor",
-       sigma2, tau2, rho, gamma2, phi, sparse=FALSE, verbose=FALSE, control)
+       sigma2, tau2, rho, gamma2, phi, sparse=FALSE, verbose=FALSE, control, \dots)
 }
 \arguments{
    \item{yi}{vector of length \eqn{k} with the observed effect sizes or outcomes. See \sQuote{Details}.}
@@ -20,7 +20,7 @@ rma.mv(yi, V, W, mods, random, struct="CS", intercept=TRUE,
    \item{slab}{optional vector with labels for the \eqn{k} outcomes/studies.}
    \item{subset}{optional vector indicating the subset of outcomes/studies that should be used for the analysis. This can be a logical vector of length \eqn{k} or a numeric vector indicating the indices of the observations to include.}
    \item{method}{character string specifying whether the model should be fitted via maximum-likelihood (\code{"ML"}) or via restricted maximum-likelihood (\code{"REML"}) estimation. Default is \code{"REML"}.}
-   \item{tdist}{logical specifying whether test statistics and confidence intervals should be based on the normal (when \code{FALSE}, the default) or the t-distribution (when \code{TRUE}). See \sQuote{Details}.}
+   \item{test}{logical specifying whether test statistics and confidence intervals should be based on the normal (when \code{FALSE}, the default) or the t-distribution (when \code{TRUE}). See \sQuote{Details}.}
    \item{level}{numerical value between 0 and 100 specifying the confidence interval level (the default is 95).}
    \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (the default is 4).}
    \item{btt}{optional vector of indices specifying which coefficients to include in the omnibus test of moderators. See \sQuote{Details}.}
@@ -34,6 +34,7 @@ rma.mv(yi, V, W, mods, random, struct="CS", intercept=TRUE,
    \item{sparse}{logical indicating whether the function should use sparse matrix objects to the extent possible (can speed up model fitting substantially for certain models). See \sQuote{Note}.}
    \item{verbose}{logical indicating whether output should be generated on the progress of the model fitting (the default is \code{FALSE}). Can also be an integer. Values > 1 generate more verbose output. See \sQuote{Note}.}
    \item{control}{optional list of control values for the estimation algorithms. If unspecified, default values are defined inside the function. See \sQuote{Note}.}
+   \item{\dots}{additional arguments.}
 }
 \details{
 
@@ -109,7 +110,7 @@ rma.mv(yi, V, W, mods, random, struct="CS", intercept=TRUE,
 
    \bold{Tests and Confidence Intervals}
 
-   By default, the test statistics of the individual coefficients in the model (and the corresponding confidence intervals) are based on the normal distribution, while the omnibus test is based on a chi-square distribution with \eqn{m} degrees of freedom (\eqn{m} being the number of coefficients tested). As an alternative, one can set \code{tdist=TRUE}, which slightly mimics the Knapp and Hartung (2003) method by using a t-distribution with \eqn{k-p} degrees of freedom for tests of individual coefficients and confidence intervals and an F-distribution with \eqn{m} and \eqn{k-p} degrees of freedom (\eqn{p} being the total number of model coefficients including the intercept if it is present) for the omnibus test statistic.
+   By default, the test statistics of the individual coefficients in the model (and the corresponding confidence intervals) are based on the normal distribution, while the omnibus test is based on a chi-square distribution with \eqn{m} degrees of freedom (\eqn{m} being the number of coefficients tested). As an alternative, one can set \code{test="t"}, which slightly mimics the Knapp and Hartung (2003) method by using a t-distribution with \eqn{k-p} degrees of freedom for tests of individual coefficients and confidence intervals and an F-distribution with \eqn{m} and \eqn{k-p} degrees of freedom (\eqn{p} being the total number of model coefficients including the intercept if it is present) for the omnibus test statistic.
 
    \bold{Test for (Residual) Heterogeneity}
 

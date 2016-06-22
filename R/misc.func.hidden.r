@@ -510,7 +510,7 @@
 
       ### for profiling and CI construction, fit model with tau2 fixed to 'val'
 
-      res <- try(suppressWarnings(rma.uni(obj$yi, obj$vi, weights=obj$weights, mods=obj$X, intercept=FALSE, method=obj$method, weighted=obj$weighted, knha=obj$knha, level=obj$level, control=obj$control, tau2=val)), silent=TRUE)
+      res <- try(suppressWarnings(rma.uni(obj$yi, obj$vi, weights=obj$weights, mods=obj$X, intercept=FALSE, method=obj$method, weighted=obj$weighted, test=obj$test, level=obj$level, control=obj$control, tau2=val)), silent=TRUE)
 
       if (profile) {
 
@@ -578,7 +578,7 @@
 
       } else {
 
-         res <- try(suppressWarnings(rma.uni(obj$yi, obj$vi, weights=obj$weights, mods=obj$X, intercept=FALSE, method=obj$method, weighted=obj$weighted, knha=obj$knha, level=obj$level, control=obj$control, tau2=ifelse(obj$tau2.fix, obj$tau2, NA), subset=sel[val,])), silent=TRUE)
+         res <- try(suppressWarnings(rma.uni(obj$yi, obj$vi, weights=obj$weights, mods=obj$X, intercept=FALSE, method=obj$method, weighted=obj$weighted, test=obj$test, level=obj$level, control=obj$control, tau2=ifelse(obj$tau2.fix, obj$tau2, NA), subset=sel[val,])), silent=TRUE)
 
          if (inherits(res, "try-error") || any(res$coef.na)) {
             sav <- list(b = matrix(NA, nrow=nrow(obj$b), ncol=1), het = rep(NA, 5))
@@ -625,7 +625,7 @@
       if (comp == "phi")
          phi.arg[phi.pos] <- val
 
-      res <- try(suppressWarnings(rma.mv(obj$yi, obj$V, obj$W, mods=obj$X, intercept=FALSE, random=obj$random, struct=obj$struct, method=obj$method, tdist=obj$knha, level=obj$level, R=obj$R, Rscale=obj$Rscale, data=obj$mf.r, sigma2=sigma2.arg, tau2=tau2.arg, rho=rho.arg, gamma2=gamma2.arg, phi=phi.arg, control=obj$control)), silent=TRUE)
+      res <- try(suppressWarnings(rma.mv(obj$yi, obj$V, obj$W, mods=obj$X, intercept=FALSE, random=obj$random, struct=obj$struct, method=obj$method, test=obj$test, level=obj$level, R=obj$R, Rscale=obj$Rscale, data=obj$mf.r, sigma2=sigma2.arg, tau2=tau2.arg, rho=rho.arg, gamma2=gamma2.arg, phi=phi.arg, control=obj$control)), silent=TRUE)
 
       if (profile) {
 
@@ -767,7 +767,7 @@
 .permci <- function(val, obj, j, exact, iter, progbar, comp.tol, alpha, digits, control) {
 
    ### fit model with shifted outcome
-   res <- try(suppressWarnings(rma.uni(obj$yi - c(val*obj$X[,j]), obj$vi, weights=obj$weights, mods=obj$X, intercept=FALSE, method=obj$method, weighted=obj$weighted, knha=obj$knha, tau2=ifelse(obj$tau2.fix, obj$tau2, NA), control=obj$control)), silent=TRUE)
+   res <- try(suppressWarnings(rma.uni(obj$yi - c(val*obj$X[,j]), obj$vi, weights=obj$weights, mods=obj$X, intercept=FALSE, method=obj$method, weighted=obj$weighted, test=obj$test, tau2=ifelse(obj$tau2.fix, obj$tau2, NA), control=obj$control)), silent=TRUE)
 
    if (inherits(res, "try-error"))
       stop()

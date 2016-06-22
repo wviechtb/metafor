@@ -43,7 +43,7 @@ level, digits, transf, targs, ...) {
 
    #########################################################################
 
-   if ((is.logical(x$knha) && x$knha) || is.character(x$knha)) {
+   if (is.element(x$test, c("knha","adhoc","t"))) {
       crit <- qt(alpha/2, df=x$dfs, lower.tail=FALSE)
    } else {
       crit <- qnorm(alpha/2, lower.tail=FALSE)

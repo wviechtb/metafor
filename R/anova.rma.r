@@ -36,14 +36,14 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
 
          QM <- c(t(b)[btt] %*% chol2inv(chol(vb[btt,btt])) %*% b[btt])
 
-         if ((is.logical(x$knha) && x$knha) || is.character(x$knha)) {
+         if (is.element(x$test, c("knha","adhoc","t"))) {
             QM  <- QM/m
             QMp <- pf(QM, df1=m, df2=x$dfs, lower.tail=FALSE)
          } else {
             QMp <- pchisq(QM, df=m, lower.tail=FALSE)
          }
 
-         res <- list(QM=QM, QMp=QMp, btt=btt, k=k, p=p, m=m, knha=x$knha, dfs=x$dfs, digits=digits, test="Wald.b")
+         res <- list(QM=QM, QMp=QMp, btt=btt, k=k, p=p, m=m, test=x$test, dfs=x$dfs, digits=digits, test="Wald.b")
 
       } else {
 
@@ -84,7 +84,7 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
          se <- sqrt(diag(vLb))
          zval <- c(Lb/se)
 
-         if ((is.logical(x$knha) && x$knha) || is.character(x$knha)) {
+         if (is.element(x$test, c("knha","adhoc","t"))) {
             pval <- 2*pt(abs(zval), df=x$dfs, lower.tail=FALSE)
          } else {
             pval <- 2*pnorm(abs(zval), lower.tail=FALSE)
@@ -105,7 +105,7 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
             QM <- try(t(Lb) %*% chol2inv(chol(vLb)) %*% Lb, silent=TRUE)
 
             if (!inherits(QM, "try-error")) {
-               if ((is.logical(x$knha) && x$knha) || is.character(x$knha)) {
+               if (is.element(x$test, c("knha","adhoc","t"))) {
                   QM  <- QM/m
                   QMp <- pf(QM, df1=m, df2=x$dfs, lower.tail=FALSE)
                } else {
@@ -130,7 +130,7 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
          colnames(hyp) <- ""
          rownames(hyp) <- paste0(seq_len(m), ":") ### add '1:', '2:', ... as row names
 
-         res <- list(QM=QM, QMp=QMp, hyp=hyp, Lb=Lb, se=se, zval=zval, pval=pval, k=k, p=p, m=m, knha=x$knha, dfs=x$dfs, digits=digits, test="Wald.L")
+         res <- list(QM=QM, QMp=QMp, hyp=hyp, Lb=Lb, se=se, zval=zval, pval=pval, k=k, p=p, m=m, test=x$test, dfs=x$dfs, digits=digits, test="Wald.L")
 
       }
 

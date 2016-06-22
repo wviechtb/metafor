@@ -121,7 +121,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
 
          for (i in seq_len(iter)) {
 
-            res <- try(suppressWarnings(rma.uni(signmat[i,]*x$yi, x$vi, weights=x$weights, intercept=TRUE, method=x$method, weighted=x$weighted, knha=x$knha, btt=1, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control)), silent=FALSE)
+            res <- try(suppressWarnings(rma.uni(signmat[i,]*x$yi, x$vi, weights=x$weights, intercept=TRUE, method=x$method, weighted=x$weighted, test=x$test, btt=1, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control)), silent=FALSE)
 
             if (inherits(res, "try-error"))
                next
@@ -146,7 +146,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
 
             #if (i == 2) print(sample(c(-1,1), x$k, replace=TRUE))
 
-            res <- try(suppressWarnings(rma.uni(signs*x$yi, x$vi, weights=x$weights, intercept=TRUE, method=x$method, weighted=x$weighted, knha=x$knha, btt=1, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control)), silent=FALSE)
+            res <- try(suppressWarnings(rma.uni(signs*x$yi, x$vi, weights=x$weights, intercept=TRUE, method=x$method, weighted=x$weighted, test=x$test, btt=1, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control)), silent=FALSE)
 
             if (inherits(res, "try-error"))
                next
@@ -257,7 +257,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
 
          for (i in seq_len(iter)) {
 
-            res <- try(suppressWarnings(rma.uni(x$yi, x$vi, weights=x$weights, mods=cbind(X[permmat[i,],]), intercept=FALSE, method=x$method, weighted=x$weighted, knha=x$knha, btt=x$btt, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control)), silent=FALSE)
+            res <- try(suppressWarnings(rma.uni(x$yi, x$vi, weights=x$weights, mods=cbind(X[permmat[i,],]), intercept=FALSE, method=x$method, weighted=x$weighted, test=x$test, btt=x$btt, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control)), silent=FALSE)
 
             if (inherits(res, "try-error"))
                next
@@ -277,7 +277,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
 
          while (i <= iter) {
 
-            res <- try(suppressWarnings(rma.uni(x$yi, x$vi, weights=x$weights, mods=cbind(X[sample(x$k),]), intercept=FALSE, method=x$method, weighted=x$weighted, knha=x$knha, btt=x$btt, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control)), silent=FALSE)
+            res <- try(suppressWarnings(rma.uni(x$yi, x$vi, weights=x$weights, mods=cbind(X[sample(x$k),]), intercept=FALSE, method=x$method, weighted=x$weighted, test=x$test, btt=x$btt, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control)), silent=FALSE)
 
             if (inherits(res, "try-error"))
                next
@@ -450,7 +450,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
    #########################################################################
 
    out <- list(pval=pval, QMp=QMp, b=x$b, se=x$se, zval=x$zval, ci.lb=ci.lb, ci.ub=ci.ub,
-               QM=x$QM, k=x$k, p=x$p, btt=x$btt, m=x$m, knha=x$knha, dfs=x$dfs,
+               QM=x$QM, k=x$k, p=x$p, btt=x$btt, m=x$m, test=x$test, dfs=x$dfs,
                int.only=x$int.only, digits=digits, exact.iter=exact.iter, permci=permci)
 
    if (retpermdist) {

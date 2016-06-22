@@ -108,7 +108,7 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
             if (FE) {
                res <- .profile.rma.uni(val=1, obj=x, subset=TRUE, sel=incl[j,], FE=TRUE)
             } else {
-               res <- try(suppressWarnings(rma.uni(x$yi, x$vi, weights=x$weights, mods=x$X, method=x$method, weighted=x$weighted, intercept=FALSE, knha=x$knha, control=x$control, subset=incl[j,])), silent=TRUE)
+               res <- try(suppressWarnings(rma.uni(x$yi, x$vi, weights=x$weights, mods=x$X, method=x$method, weighted=x$weighted, intercept=FALSE, test=x$test, control=x$control, subset=incl[j,])), silent=TRUE)
             }
          }
 

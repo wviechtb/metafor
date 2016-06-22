@@ -1,4 +1,4 @@
-Changes in Version 1.9-9 (2016-06-21)
+Changes in Version 1.9-9 (2016-06-22)
 =====================================
 
    o started to use git as version control system, GitHub to host the
@@ -6,6 +6,11 @@ Changes in Version 1.9-9 (2016-06-21)
      version of the package, Travis CI as continuous integration service
      (https://travis-ci.org/wviechtb/metafor), and Codecov for automated
      code coverage reporting (https://codecov.io/github/wviechtb/metafor)
+
+   o argument 'knha' in rma.uni() and argument 'tdist' in rma.glmm() and
+     rma.mv() are now superseded by argument 'test' in all three functions;
+     for backwards compatibility, the 'knha' and 'tdist' arguments still
+     work, but are no longer documented
 
    o one can now pass an 'escalc' object directly to rma.uni(), which then
      tries to automatically determine the 'yi' and 'vi' variables in the
@@ -60,19 +65,19 @@ Changes in Version 1.9-9 (2016-06-21)
    o more flexible 'efac' argument in the various forest() functions
 
    o trailing zeros in the axis labels are now dropped in forest and funnel
-     plots by default (but can retain trailing zeros by specifying a numeric
-     value for the 'digits' argument)
+     plots by default; but trailing zeros can be retained by specifying a
+     numeric (and not an integer) value for the 'digits' argument
 
    o added funnel.default(), which directly takes as input a vector with the
      observed effect sizes or outcomes and the corresponding sampling
      variances, standard errors, and/or sample sizes
 
+   o added plot.profile.rma(), a plot method for objects returned by the
+     profile.rma.uni() and profile.rma.mv() functions
+
    o simplified baujat.rma.uni(), baujat.rma.mh(), and baujat.rma.peto() to
      baujat.rma(), which now handles objects of class 'rma.uni', 'rma.mh',
      and 'rma.peto'
-
-   o added plot.profile.rma(), a plot method for objects returned by the
-     profile.rma.uni() and profile.rma.mv() functions
 
    o baujat.rma() gains argument 'symbol' for more control over the plotting
      symbol
@@ -86,7 +91,8 @@ Changes in Version 1.9-9 (2016-06-21)
      display of study heterogeneity) plots based on Olkin et al. (2012)
 
    o in the (rare) case where all observed outcomes are exactly equal to
-     each other, using knha=TRUE in rma() now leads to appropriate results
+     each other, test="knha" (i.e., knha=TRUE) in rma() now leads to more
+     appropriate results
 
    o updated datasets so those containing precomputed effect size estimates
      or observed outcomes are already declared to be 'escalc' objects

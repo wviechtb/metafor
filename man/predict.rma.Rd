@@ -58,7 +58,7 @@
 
    When using the \code{transf} option, the transformation is applied to the predicted values and the corresponding interval bounds. The standard errors are then set equal to \code{NA} and are omitted from the printed output.
 
-   Confidence and credibility/prediction intervals are calculated based on the critical values from a standard normal distribution (i.e., \eqn{\pm 1.96}{+- 1.96} for \code{level=95}). When the model was fitted with the Knapp and Hartung (2003) method (i.e., \code{knha=TRUE} in the \code{\link{rma.uni}} function or \code{tdist=TRUE} in the \code{\link{rma.glmm}} and \code{\link{rma.mv}} functions), then the t-distribution with \eqn{k-p} degrees of freedom is used.
+   Confidence and credibility/prediction intervals are calculated based on the critical values from a standard normal distribution (i.e., \eqn{\pm 1.96}{+- 1.96} for \code{level=95}). When the model was fitted with the Knapp and Hartung (2003) method (i.e., \code{test="knha"} in the \code{\link{rma.uni}} function) or with \code{test="t"} in the \code{\link{rma.glmm}} and \code{\link{rma.mv}} functions, then the t-distribution with \eqn{k-p} degrees of freedom is used.
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \cr

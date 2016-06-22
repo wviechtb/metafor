@@ -29,7 +29,7 @@ cooks.distance.rma.uni <- function(model, progbar=FALSE, ...) {
 
    for (i in seq_len(x$k.f)[x$not.na]) {
 
-      res <- try(suppressWarnings(rma.uni(x$yi.f, x$vi.f, weights=x$weights.f, mods=x$X.f, intercept=FALSE, method=x$method, weighted=x$weighted, knha=x$knha, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, subset=-i)), silent=TRUE)
+      res <- try(suppressWarnings(rma.uni(x$yi.f, x$vi.f, weights=x$weights.f, mods=x$X.f, intercept=FALSE, method=x$method, weighted=x$weighted, test=x$test, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, subset=-i)), silent=TRUE)
 
       if (inherits(res, "try-error"))
          next

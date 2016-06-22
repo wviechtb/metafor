@@ -135,7 +135,7 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, digits, ...) {
 
    res <- list(b=b, se=se, tval=tval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
                k=x$k, k.f=x$k.f, p=x$p, m=x$m, n=n, dfs=dfs, tcl=tcl, QM=QM, QMp=QMp, yi.f=x$yi.f, vi.f=x$vi.f, X=x$X, X.f=x$X.f, method=x$method,
-               int.only=x$int.only, int.incl=x$int.incl, knha=TRUE, btt=x$btt, intercept=x$intercept, digits=digits, level=x$level, tau2=x$tau2, slab=x$slab,
+               int.only=x$int.only, int.incl=x$int.incl, test="t", btt=x$btt, intercept=x$intercept, digits=digits, level=x$level, tau2=x$tau2, slab=x$slab,
                slab.null=x$slab.null, not.na=x$not.na,
                fit.stats=x$fit.stats, k.eff=x$k.eff, p.eff=x$p.eff, parms=x$parms, measure=x$measure)
 

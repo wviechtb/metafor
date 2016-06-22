@@ -52,7 +52,7 @@ cumul.rma.uni <- function(x, order, digits, transf, targs, ...) {
 
    for (i in seq_len(x$k.f)[not.na]) {
 
-      res <- try(suppressWarnings(rma.uni(yi.f, vi.f, weights=weights.f, intercept=TRUE, method=x$method, weighted=x$weighted, knha=x$knha, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, subset=seq_len(i))), silent=TRUE)
+      res <- try(suppressWarnings(rma.uni(yi.f, vi.f, weights=weights.f, intercept=TRUE, method=x$method, weighted=x$weighted, test=x$test, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, subset=seq_len(i))), silent=TRUE)
 
       if (inherits(res, "try-error"))
          next
@@ -116,7 +116,7 @@ cumul.rma.uni <- function(x, order, digits, transf, targs, ...) {
    if (na.act == "na.fail" && any(!x$not.na))
       stop("Missing values in results.")
 
-   if ((is.logical(x$knha) && x$knha) || is.character(x$knha))
+   if (is.element(x$test, c("knha","adhoc","t")))
       names(out)[3] <- "tval"
 
    ### remove tau2, I2, and H2 columns for FE models
@@ -129,7 +129,7 @@ cumul.rma.uni <- function(x, order, digits, transf, targs, ...) {
    out$slab.null <- x$slab.null
    out$level     <- x$level
    out$measure   <- x$measure
-   out$knha      <- x$knha
+   out$test      <- x$test
 
    attr(out$estimate, "measure") <- x$measure
 

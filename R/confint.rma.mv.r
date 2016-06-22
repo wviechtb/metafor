@@ -489,7 +489,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
 
    if (fixed) {
 
-      if (x$knha) {
+      if (is.element(x$test, c("t"))) {
          crit <- qt(alpha/2, df=x$dfs, lower.tail=FALSE)
       } else {
          crit <- qnorm(alpha/2, lower.tail=FALSE)

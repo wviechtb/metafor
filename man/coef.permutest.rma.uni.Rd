@@ -20,7 +20,7 @@
    \item{ci.lb}{lower bound of the (permutation-based) confidence interval(s).}
    \item{ci.ub}{upper bound of the (permutation-based) confidence interval(s).}
 
-   When the model was fitted with the Knapp and Hartung (2003) method (i.e., \code{knha=TRUE} in the \code{\link{rma.uni}} function), then \code{zval} is called \code{tval} in the data frame that is returned by the function.
+   When the model was fitted with the Knapp and Hartung (2003) method (i.e., \code{test="knha"} in the \code{\link{rma.uni}} function), then \code{zval} is called \code{tval} in the data frame that is returned by the function.
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \cr

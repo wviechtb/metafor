@@ -21,7 +21,7 @@
 ### - DIAG (same as HCS but with rho/phi=0)
 
 rma.mv <- function(yi, V, W, mods, random, struct="CS", intercept=TRUE, data, slab, subset, ### add ni as argument in the future
-method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2, rho, gamma2, phi, sparse=FALSE, verbose=FALSE, control) {
+method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2, rho, gamma2, phi, sparse=FALSE, verbose=FALSE, control, ...) {
 
    #########################################################################
 
@@ -67,7 +67,19 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
    if (missing(control))
       control <- list()
 
-   knha <- tdist
+   ### get ... argument
+
+   ddd <- list(...)
+
+   ### handle 'tdist' argument from ...
+
+   if (is.logical(ddd$tdist) && !ddd$tdist)
+      test <- "z"
+   if (is.logical(ddd$tdist) && ddd$tdist)
+      test <- "t"
+
+   if (!is.element(test, c("z","t","knha","adhoc")))
+      stop("Invalid option selected for 'test' argument.")
 
    ### deal with Rscale argument (either character, logical, or integer)
 
@@ -2261,7 +2273,7 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
    names(se) <- NULL
    zval <- c(b/se)
 
-   if (knha) {
+   if (is.element(test, c("t"))) {
       dfs <- k-p
       QM  <- QM / m
       if (dfs > 0) {
@@ -2446,7 +2458,7 @@ method="REML", tdist=FALSE, level=95, digits=4, btt, R, Rscale="cor", sigma2, ta
                int.only=int.only, int.incl=int.incl, allvipos=allvipos, coef.na=coef.na,
                yi=yi, vi=vi, V=V, W=A, X=X, yi.f=yi.f, vi.f=vi.f, V.f=V.f, X.f=X.f, W.f=W.f, ni=ni, ni.f=ni.f, M=M, G=G, H=H, hessian=hessian,
                ids=ids, not.na=not.na, subset=subset, slab=slab, slab.null=slab.null,
-               measure=measure, method=method, weighted=weighted, knha=knha, dfs=dfs, btt=btt, intercept=intercept, digits=digits, level=level, sparse=sparse, control=control,
+               measure=measure, method=method, weighted=weighted, test=test, dfs=dfs, btt=btt, intercept=intercept, digits=digits, level=level, sparse=sparse, control=control,
                fit.stats=fit.stats,
                vc.fix=vc.fix,
                withS=withS, withG=withG, withH=withH, withR=withR,

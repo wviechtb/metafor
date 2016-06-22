@@ -2,8 +2,8 @@ rma.glmm <- function(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, n
 measure, intercept=TRUE,
 data, slab, subset,
 add=1/2, to="only0", drop00=TRUE, vtype="LS",
-model="UM.FS", method="ML", tdist=FALSE, # weighted=TRUE, ### change tdist to test="t" (or "z")?
-level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
+model="UM.FS", method="ML", test="z", #tdist=FALSE, #weighted=TRUE,
+level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    #########################################################################
 
@@ -56,7 +56,19 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
       nAGQ <- 1
    }
 
-   knha <- tdist
+   ### get ... argument
+
+   ddd <- list(...)
+
+   ### handle 'tdist' argument from ...
+
+   if (is.logical(ddd$tdist) && !ddd$tdist)
+      test <- "z"
+   if (is.logical(ddd$tdist) && ddd$tdist)
+      test <- "t"
+
+   if (!is.element(test, c("z","t")))
+      stop("Invalid option selected for 'test' argument.")
 
    #########################################################################
 
@@ -1755,7 +1767,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
    names(se) <- NULL
    zval <- c(b/se)
 
-   if (knha) {
+   if (is.element(test, c("t"))) {
       dfs <- k-p
       QM  <- QM / m
       if (dfs > 0) {
@@ -1820,7 +1832,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control) { # tau2,
                x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i, x1i.f=x1i.f, x2i.f=x2i.f, t1i.f=t1i.f, t2i.f=t2i.f,
                xi=xi, mi=mi, ti=ti, xi.f=xi.f, mi.f=mi.f, ti.f=ti.f, ni=ni, ni.f=ni.f,
                ids=ids, not.na=not.na, not.na.yivi=not.na.yivi, slab=slab, slab.null=slab.null,
-               measure=measure, method=method, model=model, weighted=weighted, knha=knha, dfs=dfs, btt=btt, intercept=intercept, digits=digits, level=level, control=control, verbose=verbose,
+               measure=measure, method=method, model=model, weighted=weighted, test=test, dfs=dfs, btt=btt, intercept=intercept, digits=digits, level=level, control=control, verbose=verbose,
                add=add, to=to, drop00=drop00,
                fit.stats=fit.stats, version=packageVersion("metafor"), call=mf)
 

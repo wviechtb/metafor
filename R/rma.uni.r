@@ -2,8 +2,8 @@ rma <- rma.uni <- function(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, 
 measure="GEN", intercept=TRUE,
 data, slab, subset,
 add=1/2, to="only0", drop00=FALSE, vtype="LS",
-method="REML", weighted=TRUE, knha=FALSE,
-level=95, digits=4, btt, tau2, verbose=FALSE, control) {
+method="REML", weighted=TRUE, test="z", #knha=FALSE,
+level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
    #########################################################################
 
@@ -48,8 +48,19 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
    if (missing(control))
       control <- list()
 
-   if (!(is.logical(knha) || (is.character(knha) && is.element(knha, c("adhoc", "tdist")))))
-      stop("Invalid option selected for 'knha' argument.")
+   ### get ... argument
+
+   ddd <- list(...)
+
+   ### handle 'knha' argument from ...
+
+   if (is.logical(ddd$knha) && !ddd$knha)
+      test <- "z"
+   if (is.logical(ddd$knha) && ddd$knha)
+      test <- "knha"
+
+   if (!is.element(test, c("z","t","knha","adhoc")))
+      stop("Invalid option selected for 'test' argument.")
 
    #########################################################################
 
@@ -688,7 +699,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
 
    if (k == 1) {
       method <- "FE"
-      knha   <- FALSE
+      test   <- "z"
    }
 
    ### make sure that there is at least one column in X
@@ -1345,7 +1356,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
       ### note: catch cases where RSS.f is extremely small, which is probably due to all yi being equal
       ### then set s2w to 0 (to avoid the strange looking output we would obtain if we don't do this)
 
-      if ((is.logical(knha) && knha) || is.character(knha)) {
+      if (is.element(test, c("knha","adhoc"))) {
 
          if (RSS.f <= .Machine$double.eps) {
             s2w <- 0
@@ -1374,7 +1385,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
 
       ### calculate scaling factor for Knapp & Hartung method
 
-      if ((is.logical(knha) && knha) || is.character(knha)) {
+      if (is.element(test, c("knha","adhoc"))) {
 
          stXWX     <- .invcalc(X=X, W=W, k=k)
          b.knha    <- stXWX %*% crossprod(X,W) %*% Y
@@ -1394,18 +1405,13 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
 
    ### the Knapp & Hartung method as described in the literature is for random/mixed-effects models
 
-   if (method == "FE" && ((is.logical(knha) && knha) || is.character(knha)))
+   if (method == "FE" && is.element(test, c("knha","adhoc")))
       warning("Knapp & Hartung method is not meant to be used in the context of FE models.")
 
    ### Knapp & Hartung method with ad-hoc correction so that the scale factor is always >= 1
 
-   if (knha == "adhoc")
+   if (test == "adhoc")
       s2w[s2w < 1] <- 1
-
-   ### to force use of a t-distribution with no adjustment to the SEs (for testing purposes)
-
-   if (knha == "tdist")
-      s2w <- 1
 
    ### for Knapp & Hartung method, apply scaling to vb
 
@@ -1424,7 +1430,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
    names(se) <- NULL
    zval <- c(b/se)
 
-   if ((is.logical(knha) && knha) || is.character(knha)) {
+   if (is.element(test, c("knha","adhoc","t"))) {
       dfs  <- k-p
       QM   <- QM / m
       if (dfs > 0) {
@@ -1510,9 +1516,9 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
 
       if (verbose > 1) {
          message("Fitting RE model for R^2 computation ...")
-         res.RE <- try(rma.uni(yi, vi, weights=weights, method=method, weighted=weighted, knha=knha, verbose=ifelse(verbose, TRUE, FALSE), control=con, digits=digits), silent=FALSE)
+         res.RE <- try(rma.uni(yi, vi, weights=weights, method=method, weighted=weighted, test=test, verbose=ifelse(verbose, TRUE, FALSE), control=con, digits=digits), silent=FALSE)
       } else {
-         res.RE <- try(suppressWarnings(rma.uni(yi, vi, weights=weights, method=method, weighted=weighted, knha=knha, verbose=ifelse(verbose, TRUE, FALSE), control=con, digits=digits)), silent=FALSE)
+         res.RE <- try(suppressWarnings(rma.uni(yi, vi, weights=weights, method=method, weighted=weighted, test=test, verbose=ifelse(verbose, TRUE, FALSE), control=con, digits=digits)), silent=FALSE)
       }
 
       if (!inherits(res.RE, "try-error")) {
@@ -1588,7 +1594,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control) {
                ai.f=ai.f, bi.f=bi.f, ci.f=ci.f, di.f=di.f,
                x1i.f=x1i.f, x2i.f=x2i.f, t1i.f=t1i.f, t2i.f=t2i.f, ni=ni, ni.f=ni.f,
                ids=ids, not.na=not.na, subset=subset, slab=slab, slab.null=slab.null,
-               measure=measure, method=method, weighted=weighted, knha=knha, dfs=dfs, s2w=s2w, btt=btt, intercept=intercept, digits=digits, level=level, control=control, verbose=verbose,
+               measure=measure, method=method, weighted=weighted, test=test, dfs=dfs, s2w=s2w, btt=btt, intercept=intercept, digits=digits, level=level, control=control, verbose=verbose,
                add=add, to=to, drop00=drop00,
                fit.stats=fit.stats, version=packageVersion("metafor"), model=model, call=mf)
 

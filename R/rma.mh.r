@@ -738,7 +738,7 @@ correct=TRUE, level=95, digits=4, verbose=FALSE) {
 
    method    <- "FE"
    weighted  <- TRUE
-   knha      <- FALSE
+   test      <- "z"
    dfs       <- NA
 
    res <- list(b=b, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
@@ -750,7 +750,7 @@ correct=TRUE, level=95, digits=4, verbose=FALSE) {
                ai=ai, bi=bi, ci=ci, di=di, ai.f=ai.f, bi.f=bi.f, ci.f=ci.f, di.f=di.f,
                x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i, x1i.f=x1i.f, x2i.f=x2i.f, t1i.f=t1i.f, t2i.f=t2i.f, ni=ni, ni.f=ni.f,
                ids=ids, not.na=not.na, not.na.yivi=not.na.yivi, slab=slab, slab.null=slab.null,
-               measure=measure, method=method, weighted=weighted, knha=knha, dfs=dfs, intercept=intercept, digits=digits, level=level,
+               measure=measure, method=method, weighted=weighted, test=test, dfs=dfs, intercept=intercept, digits=digits, level=level,
                add=add, to=to, drop00=drop00, correct=correct,
                fit.stats=fit.stats, version=packageVersion("metafor"), call=mf)
 
