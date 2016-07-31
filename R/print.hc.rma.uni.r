@@ -14,6 +14,9 @@ print.hc.rma.uni <- function(x, digits, ...) {
                            ci.lb=formatC(c(x$ci.lb.rma, x$ci.lb), digits=digits, format="f"),
                            ci.ub=formatC(c(x$ci.ub.rma, x$ci.ub), digits=digits, format="f"), stringsAsFactors=FALSE)
 
+   if (is.na(res.table$se[1]))
+      res.table$se <- NULL
+
    rownames(res.table) <- c("rma", "hc")
 
    print(res.table, quote=FALSE, right=TRUE)
