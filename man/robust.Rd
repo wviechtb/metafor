@@ -40,7 +40,7 @@ robust(x, cluster, \dots)
    The results are formated and printed with the \code{\link{print.robust.rma}} function.
 }
 \note{
-   The variable specified via \code{cluster} is assumed to be of the same length as the data originally passed to the \code{rma.uni} or \code{rma.mv} function. Any subsetting and removal of studies with missing values as done when fitting the original model is also applied to the variable specified via \code{cluster}.
+   The variable specified via \code{cluster} is assumed to be of the same length as the data originally passed to the \code{rma.uni} or \code{rma.mv} function. Any subsetting and removal of studies with missing values as done when fitting the original model is also automatically applied to the variable specified via \code{cluster}.
 
    The idea of the robust (sandwich-type) estimator for models with unspecified heteroscedasticity can be traced back to Eicker (1967), Huber (1967), and White (1980). Hence, the method in general is often referred to as the Eicker-Huber-White method. Some small-sample improvements to the method are described by MacKinnon and White (1985). The extension to the cluster robust estimator can be found in Froot (1989) and Williams (2000). Cameron and Miller (2015) provide an extensive overview of cluster robust methods. Sidik and Jonkman (2005, 2006) introduced robust methods in the meta-analytic context for standard random/mixed-effects models. The use of the cluster robust estimator for multivariate/multilevel meta-analytic models is described in Hedges, Tipton, and Johnson (2010).
 }
