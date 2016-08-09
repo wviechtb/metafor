@@ -1,4 +1,4 @@
-Changes in Version 1.9-9 (2016-06-22)
+Changes in Version 1.9-9 (2016-08-09)
 =====================================
 
    o started to use git as version control system, GitHub to host the
@@ -45,7 +45,8 @@ Changes in Version 1.9-9 (2016-06-22)
 
    o reverted back to the pre-1.1-0 way of computing p-values for individual
      coefficients in permutest.rma.uni(), that is, the p-value is computed
-     with mean(abs(z_perm) >= abs(z_obs)) (with numerical tolerance)
+     with mean(abs(z_perm) >= abs(z_obs) - tol) (where 'tol' is a numerical
+     tolerance)
 
    o permutest.rma.uni() gains 'permci' argument, which can be used to
      obtain permutation-based CIs of the model coefficients (note that this
