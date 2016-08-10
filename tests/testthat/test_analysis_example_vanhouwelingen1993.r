@@ -26,9 +26,9 @@ test_that("results of the fixed-effects conditional logistic model are correct."
 
    ### compare with results on page 2275 (in text)
    expect_equivalent(round(coef(res),3), 0.122)
-   expect_equivalent(round(res$se,3), 0.100)
-   expect_equivalent(round(res$ci.lb,3), -0.074)
-   expect_equivalent(round(res$ci.ub,3), 0.317) ### 0.31 in paper
+   expect_equivalent(round(res$se,3), 0.099)
+   expect_equivalent(round(res$ci.lb,3), -0.073)
+   expect_equivalent(round(res$ci.ub,3), 0.316) ### 0.31 in paper
    expect_equivalent(round(c(logLik(res)), 3), -53.679)
 
 })
@@ -41,9 +41,9 @@ test_that("results of the random-effects conditional logistic model are correct.
 
    ### compare with results on page 2277 (in text)
    expect_equivalent(round(coef(res),3), 0.175)
-   expect_equivalent(round(res$se,3), 0.134)
-   expect_equivalent(round(res$ci.lb,3), -0.088)
-   expect_equivalent(round(res$ci.ub,3), 0.437)
+   expect_equivalent(round(res$se,3), 0.136)
+   expect_equivalent(round(res$ci.lb,3), -0.092)
+   expect_equivalent(round(res$ci.ub,3), 0.441)
    expect_equivalent(round(c(logLik(res)), 3), -52.989)
    expect_equivalent(round(res$tau2,3), 0.119)
 

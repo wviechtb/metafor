@@ -1,4 +1,4 @@
-Changes in Version 1.9-9 (2016-08-09)
+Changes in Version 1.9-9 (2016-08-10)
 =====================================
 
    o started to use git as version control system, GitHub to host the
@@ -56,8 +56,13 @@ Changes in Version 1.9-9 (2016-08-09)
      fitted (although the tests for heterogeneity are not available then)
 
    o rma.glmm() now allows control over the arguments used for 'method.args'
-     (via control=list(hessianCtrl=list(...))) passed to 'hessian()' when
-     using model="CM.EL" and measure="OR"
+     (via control=list(hessianCtrl=list(...))) passed to hessian() (from
+     the 'numDeriv' package) when using model="CM.EL" and measure="OR"
+
+   o in rma.glmm(), default 'method.args' value for 'r' passed to hessian()
+     has been increased to 16 (while this slows things down a bit, this
+     appears to improve the accuracy of the numerical approximation to the
+     Hessian, especially when tau^2 is close to 0)
 
    o the various forest() and addpoly() functions now have a new argument
      called 'width', which provides manual control over the width of the

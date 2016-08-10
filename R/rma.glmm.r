@@ -687,7 +687,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    if (sum(pos.hessianCtrl) > 0) {
       hessianCtrl <- control[[which(pos.hessianCtrl == 1)]]
    } else {
-      hessianCtrl <- list(r=8)
+      hessianCtrl <- list(r=16)
    }
 
    #return(list(verbose=verbose, optimizer=con$optimizer, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, optCtrl=optCtrl, glmCtrl=glmCtrl, glmerCtrl=glmerCtrl, intCtrl=intCtrl, hessianCtrl=hessianCtrl))

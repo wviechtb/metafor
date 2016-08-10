@@ -135,7 +135,7 @@ test_that("results are correct for Mantel-Haenszel method.", {
    expect_equivalent(round(coef(res),3),  0.338)
    expect_equivalent(round(res$ci.lb,3), -0.271)
    expect_equivalent(round(res$ci.ub,3),  0.947)
-   expect_equivalent(round(res$QE.Wld,3),  0.346)
+   expect_equivalent(round(res$QE.Wld,3),  0.347)
    expect_equivalent(round(res$QEp.Wld,3), 0.556)
    expect_equivalent(round(res$QE.LRT,3),  0.350)
    expect_equivalent(round(res$QEp.LRT,3), 0.554)
@@ -373,17 +373,17 @@ test_that("results are correct for Mantel-Haenszel method.", {
    res <- rma.glmm(ai=ai, bi=bi, ci=ci, di=di, data=dat, measure="OR", digits=2, level=90, model="CM.EL", method="FE")
 
    expect_equivalent(round(coef(res),3), 1.326)
-   expect_equivalent(round(res$ci.lb,3), 0.356)
+   expect_equivalent(round(res$ci.lb,3), 0.355)
    expect_equivalent(round(res$ci.ub,3), 2.296)
-   expect_equivalent(round(res$QE.Wld,3),  0.123)
-   expect_equivalent(round(res$QEp.Wld,3), 0.726)
+   expect_equivalent(round(res$QE.Wld,3),  0.132)
+   expect_equivalent(round(res$QEp.Wld,3), 0.717)
    expect_equivalent(round(res$QE.LRT,3),  0.119)
    expect_equivalent(round(res$QEp.LRT,3), 0.730)
 
    tmp <- predict(res, transf=exp)
    expect_equivalent(round(tmp$pred,3),  3.765)
-   expect_equivalent(round(tmp$ci.lb,3), 1.427)
-   expect_equivalent(round(tmp$ci.ub,3), 9.932)
+   expect_equivalent(round(tmp$ci.lb,3), 1.426)
+   expect_equivalent(round(tmp$ci.ub,3), 9.936)
 
 })
 
