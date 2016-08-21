@@ -27,7 +27,7 @@
    When specifying two models for comparison, the function provides a likelihood ratio test comparing the two models. The two models must be based on the same set of data, must be of the same class, and should be nested for the likelihood ratio test to make sense. Note that likelihood ratio tests are not meaningful when using REML estimation and the two models have different fixed effects.
 }
 \value{
-   An object of class \code{"anova.rma"}. When a single model is specified, the object is a list containing the following components:
+   An object of class \code{"anova.rma"}. When a single model is specified (without any further arguments or together with the \code{btt} argument), the object is a list containing the following components:
    \item{QM}{test statistic for the Wald-type test of model coefficients.}
    \item{QMp}{p-value for the Wald-type test of model coefficients.}
    \item{btt}{indices of the coefficients tested by the Wald-type test.}
@@ -35,6 +35,14 @@
    \item{p}{number of coefficients in the model (including the intercept).}
    \item{m}{number of coefficients included in the Wald-type test of coefficients.}
    \item{\dots}{some additional elements/values.}
+   When argument \code{L} is specified, the object is a list containing the following components:
+   \item{QM}{test statistic for the omnibus Wald-type test of all linear combinations.}
+   \item{QMp}{p-value for the omnibus Wald-type test.}
+   \item{hyp}{description of the linear combinations tested.}
+   \item{Lb}{values of the linear combinations.}
+   \item{se}{standard errors of the linear combinations.}
+   \item{zval}{test statistics of the linear combinations.}
+   \item{pval}{p-values for the linear combinations.}
    When two models are specified, the object is a list containing the following components:
    \item{fit.stats.f}{log-likelihood, deviance, AIC, BIC, and AICc for the full model.}
    \item{fit.stats.r}{log-likelihood, deviance, AIC, BIC, and AICc for the reduced model.}

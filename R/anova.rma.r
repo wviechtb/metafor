@@ -43,7 +43,7 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
             QMp <- pchisq(QM, df=m, lower.tail=FALSE)
          }
 
-         res <- list(QM=QM, QMp=QMp, btt=btt, k=k, p=p, m=m, test=x$test, dfs=x$dfs, digits=digits, test="Wald.b")
+         res <- list(QM=QM, QMp=QMp, btt=btt, k=k, p=p, m=m, test=x$test, dfs=x$dfs, digits=digits, type="Wald.b")
 
       } else {
 
@@ -130,7 +130,7 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
          colnames(hyp) <- ""
          rownames(hyp) <- paste0(seq_len(m), ":") ### add '1:', '2:', ... as row names
 
-         res <- list(QM=QM, QMp=QMp, hyp=hyp, Lb=Lb, se=se, zval=zval, pval=pval, k=k, p=p, m=m, test=x$test, dfs=x$dfs, digits=digits, test="Wald.L")
+         res <- list(QM=QM, QMp=QMp, hyp=hyp, Lb=Lb, se=se, zval=zval, pval=pval, k=k, p=p, m=m, test=x$test, dfs=x$dfs, digits=digits, type="Wald.L")
 
       }
 
@@ -259,7 +259,7 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
       res <- list(fit.stats.f=fit.stats.f, fit.stats.r=fit.stats.r, p.f=p.f, p.r=p.r,
                   LRT=LRT, pval=pval, QE.f=m.f$QE, QE.r=m.r$QE,
                   tau2.f=tau2.f, tau2.r=tau2.r, R2=R2,
-                  method=m.f$method, class.f=class(m.f), digits=digits, test="LRT")
+                  method=m.f$method, class.f=class(m.f), digits=digits, type="LRT")
 
    }
 

@@ -6,7 +6,7 @@ print.anova.rma <- function(x, digits, ...) {
    if (missing(digits))
       digits <- x$digits
 
-   if (x$test == "Wald.b") {
+   if (x$type == "Wald.b") {
 
       cat("\n")
 
@@ -19,7 +19,7 @@ print.anova.rma <- function(x, digits, ...) {
 
    }
 
-   if (x$test == "Wald.L") {
+   if (x$type == "Wald.L") {
 
       cat("\n")
 
@@ -58,7 +58,7 @@ print.anova.rma <- function(x, digits, ...) {
 
    }
 
-   if (x$test == "LRT") {
+   if (x$type == "LRT") {
 
       res.table <- rbind(
          c(x$p.f, x$fit.stats.f["AIC"], x$fit.stats.f["BIC"], x$fit.stats.f["AICc"], x$fit.stats.f["ll"], NA,    NA,     x$QE.f, x$tau2.f, NA),
