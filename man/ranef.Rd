@@ -14,7 +14,7 @@ ranef(object, \dots)
    \item{object}{an object of class \code{"rma.uni"}.}
    \item{level}{numerical value between 0 and 100 specifying the prediction interval level (if unspecified, the default is to take the value from the object).}
    \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is to take the value from the object).}
-   \item{transf}{optional argument specifying the name of a function that should be used to transform the predicted values and interval bounds (e.g., \code{transf=exp}). If unspecified, no transformation is used.}
+   \item{transf}{optional argument specifying the name of a function that should be used to transform the predicted values and interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified under \code{transf}.}
    \item{\dots}{other arguments.}
 }
@@ -35,7 +35,7 @@ ranef(object, \dots)
 
    Fixed-effects models (with or without moderators) do not contain random study effects. The BLUPs for these models will therefore be 0.
 
-   When using the \code{transf} argument, the transformation is applied to the predicted values and the corresponding interval bounds. The standard errors are set equal to \code{NA}.
+   When using the \code{transf} argument, the transformation is applied to the predicted values and the corresponding interval bounds. The standard errors are then set equal to \code{NA} and are omitted from the printed output.
 
    The normal distribution is used to calculate the prediction intervals. When the model was fitted with the Knapp and Hartung (2003) method (i.e., \code{test="knha"} in the \code{\link{rma.uni}} function), then the t-distribution with \eqn{k-p} degrees of freedom is used.
 

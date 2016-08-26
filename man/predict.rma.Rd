@@ -17,7 +17,7 @@
    \item{addx}{logical specifying whether the values of the moderator variables should be added to the returned object. See \sQuote{Examples}.}
    \item{level}{numerical value between 0 and 100 specifying the confidence and credibility/prediction interval level (if unspecified, the default is to take the value from the object).}
    \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is to take the value from the object).}
-   \item{transf}{optional argument specifying the name of a function that should be used to transform the predicted values and interval bounds (e.g., \code{transf=exp}). If unspecified, no transformation is used.}
+   \item{transf}{optional argument specifying the name of a function that should be used to transform the predicted values and interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified under \code{transf}.}
    \item{\dots}{other arguments.}
 }

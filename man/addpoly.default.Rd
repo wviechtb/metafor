@@ -19,8 +19,8 @@
    \item{digits}{integer specifying the number of decimal places to which the annotations should be rounded (the default is 2).}
    \item{width}{optional integer to manually adjust the width of the columns for the annotations.}
    \item{mlab}{optional character vector with the same length as \code{x} giving labels for the polygons that are drawn.}
-   \item{transf}{optional argument specifying the name of a function that should be used to transform the \code{x} values and confidence interval bounds. If unspecified, no transformation is used.}
-   \item{atransf}{optional argument specifying the name of a function that should be used to transform the annotations. If unspecified, no transformation is used.}
+   \item{transf}{optional argument specifying the name of a function that should be used to transform the \code{x} values and confidence interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
+   \item{atransf}{optional argument specifying the name of a function that should be used to transform the annotations (e.g., \code{atransf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified via \code{transf} or \code{atransf}.}
    \item{efac}{vertical expansion factor for the polygons. The default value of 1 should usually work okay.}
    \item{col}{optional character string specifying the name of a color to use for the polygons. If unspecified, the function sets a default color.}

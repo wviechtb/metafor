@@ -1,4 +1,5 @@
 \name{transf}
+\alias{transf}
 \alias{transf.rtoz}
 \alias{transf.ztor}
 \alias{transf.logit}

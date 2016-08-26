@@ -32,7 +32,7 @@ funnel(x, \dots)
    \item{ylab}{title for the y-axis. If unspecified, the function tries to set an appropriate axis title.}
    \item{steps}{the number of tick marks for the y-axis (the default is 5).}
    \item{at}{position of the x-axis tick marks and corresponding labels. If unspecified, the function tries to set the tick mark positions/labels to some sensible values.}
-   \item{atransf}{optional argument specifying the name of a function that should be used to transform the x-axis labels (e.g., \code{transf=exp}). If unspecified, no transformation is used.}
+   \item{atransf}{optional argument specifying the name of a function that should be used to transform the x-axis labels (e.g., \code{atransf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified via \code{atransf}.}
    \item{digits}{integer specifying the number of decimal places to which the tick mark labels of the x- and y-axis should be rounded. Can also be a vector of two integers, the first specifying the number of decimal places for the x-axis, the second for the y-axis labels (e.g., \code{c(2,3)}). If unspecified, the function tries to set the argument to some sensible values.}
    \item{level}{numerical value between 0 and 100 specifying the level of the pseudo confidence interval region (for \code{"rma"} objects, the default is to take the value from the object). May also be a vector of values to obtain multiple regions. See \sQuote{Examples}.}
@@ -51,6 +51,8 @@ funnel(x, \dots)
    For fixed- and random-effects models (i.e., models not involving moderators), the plot shows the individual observed effect sizes or outcomes on the x-axis against the corresponding standard errors (i.e., the square root of the sampling variances) on the y-axis. A vertical line indicates the estimate based on the model. A pseudo confidence interval region is drawn around this value with bounds equal to \if{latex}{\eqn{\pm 1.96 SE}}\if{html}{\eqn{± 1.96 SE}}\if{text}{\eqn{+- 1.96 SE}}, where \eqn{SE} is the standard error value from the y-axis (assuming \code{level=95}). If \code{addtau2=TRUE} (only for models of class \code{"rma.uni"}), then the bounds of the pseudo confidence interval region are equal to \if{latex}{\eqn{\pm 1.96 \sqrt{SE^2 + \tau^2}}}\if{html}{\eqn{± 1.96 \sqrt(SE² + \tau²)}}\if{text}{\eqn{+- 1.96 \sqrt(SE^2 + \tau^2)}}, where \if{latex}{\eqn{\tau^2}}\if{html}{\eqn{\tau²}}\if{text}{\eqn{\tau^2}} is the amount of heterogeneity as estimated by the model.
 
    For models involving moderators, the plot shows the residuals on the x-axis against their corresponding standard errors. Either the usual or deleted residuals can be used for that purpose (set via the \code{type} argument). See \code{\link{residuals.rma}} for more details on the different types of residuals.
+
+   With the \code{atransf} argument, the labels of the observed effect sizes or outcomes on the x-axis can be transformed with some suitable function. For example, when plotting log odds ratios, one could use \code{transf=exp} to obtain a funnel plot with the values on the x-axis corresponding to the odds ratios. See also \link{transf} for some transformation functions useful for meta-analyses.
 
    Instead of placing the standard error value on the y-axis, several other options are available by setting the \code{yaxis} argument to:
    \itemize{
@@ -112,6 +114,9 @@ res <- rma(yi, vi, data=dat)
 
 ### standard funnel plot
 funnel(res)
+
+### show relative risk values on x-axis (log scale)
+funnel(res, atransf=exp)
 
 ### passing log relative risks and sampling variances directly to the function
 ### note: essentially the same plot, except that reference line is centered at zero

@@ -33,7 +33,7 @@
    \item{phi}{integer specifying for which \eqn{\phi} value a confidence interval should be obtained (only relevant for \code{"rma.mv"} objects).}
    \item{level}{numerical value between 0 and 100 specifying the confidence interval level (if unspecified, the default is to take the value from the object).}
    \item{digits}{integer specifying the number of decimal places to which the results should be rounded (if unspecified, the default is to take the value from the object).}
-   \item{transf}{optional argument specifying the name of a function that should be used to transform the model coefficients and interval bounds (e.g., \code{transf=exp}). If unspecified, no transformation is used.}
+   \item{transf}{optional argument specifying the name of a function that should be used to transform the model coefficients and interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified under \code{transf}.}
    \item{verbose}{logical indicating whether output should be generated on the progress of the iterative algorithms used to obtain the confidence intervals (the default is \code{FALSE}). See \sQuote{Note}.}
    \item{control}{list of control values for the iterative algorithm. If unspecified, default values are defined inside the function. See \sQuote{Note}.}

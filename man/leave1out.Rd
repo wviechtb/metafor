@@ -17,7 +17,7 @@ leave1out(x, \dots)
 \arguments{
    \item{x}{an object of class \code{"rma.mh"}, \code{"rma.peto"}, or \code{"rma.uni"}.}
    \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is to take the value from the object).}
-   \item{transf}{an optional argument specifying the name of a function that should be used to transform the model coefficients and interval bounds (e.g., \code{transf=exp}). If unspecified, no transformation is used.}
+   \item{transf}{an optional argument specifying the name of a function that should be used to transform the model coefficients and interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified under \code{transf}.}
    \item{\dots}{other arguments.}
 }
