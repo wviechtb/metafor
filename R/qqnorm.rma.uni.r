@@ -1,6 +1,6 @@
 qqnorm.rma.uni <- function(y, type="rstandard", pch=19, envelope=TRUE,
 level=y$level, bonferroni=FALSE, reps=1000, smooth=TRUE, bass=0,
-label=FALSE, offset=0.3, pos=13, ...) {
+label=FALSE, offset=0.3, pos=13, lty, ...) {
 
    if (!inherits(y, "rma.uni"))
       stop("Argument 'y' must be an object of class \"rma.uni\".")
@@ -24,6 +24,13 @@ label=FALSE, offset=0.3, pos=13, ...) {
    if (length(label) != 1)
       stop("Argument 'label' should be of length 1.")
 
+   if (missing(lty)) {
+      lty <- c("solid", "dotted") ### 1st value = diagonal line, 2nd value = pseudo confidence envelope
+   } else {
+      if (length(lty) == 1L)
+         lty <- c(lty, lty)
+   }
+
    #########################################################################
 
    if (type == "rstandard") {
@@ -43,7 +50,7 @@ label=FALSE, offset=0.3, pos=13, ...) {
    }
 
    sav <- qqnorm(zi, pch=pch, bty="l", ...)
-   abline(a=0, b=1, lty="solid", ...)
+   abline(a=0, b=1, lty=lty[1], ...)
    #qqline(zi, ...)
    #abline(h=0, lty="dotted", ...)
    #abline(v=0, lty="dotted", ...)
@@ -77,13 +84,13 @@ label=FALSE, offset=0.3, pos=13, ...) {
       if (smooth)
          temp.lb <- supsmu(temp.lb$x, temp.lb$y, bass=bass)
       if (draw.envelope)
-         lines(temp.lb$x, temp.lb$y, lty="dotted", ...)
+         lines(temp.lb$x, temp.lb$y, lty=lty[2], ...)
          #lines(temp.lb$x, temp.lb$y, lty="12", lwd=1.5, ...)
       temp.ub <- qqnorm(ub, plot.it=FALSE)
       if (smooth)
          temp.ub <- supsmu(temp.ub$x, temp.ub$y, bass=bass)
       if (draw.envelope)
-         lines(temp.ub$x, temp.ub$y, lty="dotted", ...)
+         lines(temp.ub$x, temp.ub$y, lty=lty[2], ...)
          #lines(temp.ub$x, temp.ub$y, lty="12", lwd=1.5, , ...)
 
    }

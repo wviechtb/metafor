@@ -9,7 +9,7 @@
 \usage{
 \method{qqnorm}{rma.uni}(y, type="rstandard", pch=19, envelope=TRUE,
        level=y$level, bonferroni=FALSE, reps=1000, smooth=TRUE, bass=0,
-       label=FALSE, offset=0.3, pos=13, \dots)
+       label=FALSE, offset=0.3, pos=13, lty, \dots)
 \method{qqnorm}{rma.mh}(y, type="rstandard", pch=19, label=FALSE, offset=0.3, pos=13, \dots)
 \method{qqnorm}{rma.peto}(y, type="rstandard", pch=19, label=FALSE, offset=0.3, pos=13, \dots)
 \method{qqnorm}{rma.glmm}(y, \dots)
@@ -28,6 +28,7 @@
    \item{label}{argument to control the labeling of the points (the default is \code{FALSE}). See \sQuote{Details}.}
    \item{offset}{argument to control the distance between the points and the corresponding labels.}
    \item{pos}{argument to control the position of the labels.}
+   \item{lty}{optional character string specifying the line type for the diagonal line and the pseudo confidence envelope (if unspecified, the function sets this to \code{c("solid", "dotted")} by default).}
    \item{\dots}{other arguments.}
 }
 \details{
