@@ -142,5 +142,13 @@ res.cb <- rma.mv(yi, V, mods = ~ acarbose + benfluorex + metformin + miglitol + 
                                  rosiglitazone + sitagliptin + sulfonylurea + vildagliptin - 1,
                  random = ~ factor(id) | study, rho=1/2, data=dat.c)
 res.cb
+
+### estimate all pairwise differences between treatments (using the 'multcomp' package)
+if (require(multcomp)) {
+   contr <- contrMat(setNames(rep(1,res.cb$p), colnames(res.cb$X)), type="Tukey")
+   sav <- predict(res.cb, newmods=contr)
+   sav$slab <- rownames(contr)
+   sav
+}
 }
 \keyword{datasets}
