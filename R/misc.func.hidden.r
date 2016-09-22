@@ -174,10 +174,18 @@
 
    S <- diag(sqrt(vi + tau2val), nrow=k, ncol=k)
    lambda <- Re(eigen(S %*% P %*% S, symmetric=TRUE, only.values=TRUE)$values)
+   tmp <- CompQuadForm::farebrother(Q, lambda[1:(k-p)])
+
+   ### starting with version 1.4.2 of CompQuadForm, the element is called 'Qq' (before it was called 'res')
+   ### this way, things should work regardless of the version of CompQuadForm that is installed
+
+   if (exists("res", tmp))
+      tmp$Qq <- tmp$res
+
    if (getlower) {
-      res <- CompQuadForm::farebrother(Q, lambda[1:(k-p)])$res - alpha
+      res <- tmp$Qq - alpha
    } else {
-      res <- (1 - CompQuadForm::farebrother(Q, lambda[1:(k-p)])$res) - alpha
+      res <- (1 - tmp$Qq) - alpha
    }
 
    if (verbose)
