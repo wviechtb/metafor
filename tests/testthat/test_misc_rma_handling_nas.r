@@ -17,7 +17,7 @@ test_that("rma.glmm() handles NAs correctly.", {
    ###       mod2 is in essence also -Inf; on x86_64-w64-mingw32/x64 (64-bit) with lme4 version 1.1-7, this just barely converges, but
    ###       may fail in other cases; so checks with both moderators included are skipped on CRAN
 
-   res <- rma.glmm(measure="PLO", xi=xi, ni=ni, mods = ~ mod1, data=dat)
+   expect_warning(res <- rma.glmm(measure="PLO", xi=xi, ni=ni, mods = ~ mod1, data=dat))
 
    ### k, length of xi/mi, and number of rows in X must be equal to 8 (studies 1 and 2 removed due to NAs in table data)
    expect_equivalent(res$k, 8)
@@ -40,7 +40,7 @@ test_that("rma.glmm() handles NAs correctly.", {
 
    ### now use add=0, so that studies 3 and 4 have NA/NA for yi/vi
 
-   res <- rma.glmm(measure="PLO", xi=xi, ni=ni, mods = ~ mod1, data=dat, add=0)
+   expect_warning(res <- rma.glmm(measure="PLO", xi=xi, ni=ni, mods = ~ mod1, data=dat, add=0))
 
    ### k, length of xi/mi, and number of rows in X must be equal to 8 (studies 1 and 2 removed due to NAs in table data, but studies 3 and 4 included in the model fitting)
    expect_equivalent(res$k, 8)
@@ -64,9 +64,9 @@ test_that("rma.glmm() handles NAs correctly.", {
    ### include both mod1 and mod2 in the model and use add=0, so that studies 3 and 4 have NA/NA for yi/vi
    ### as a result, the model matrix for X.yi is rank deficient, so that in essence mod2 needs to be removed for the I^2/H^2 computation
    ### also note that the coefficient for mod2 is technically -Inf (since xi=0 for the only study where mod2=1); glmer() therefore issues
-   ### several warnings (which are suppressed)
+   ### several warnings
 
-   res <- suppressWarnings(rma.glmm(measure="PLO", xi=xi, ni=ni, mods = ~ mod1 + mod2, data=dat, add=0))
+   expect_warning(res <- rma.glmm(measure="PLO", xi=xi, ni=ni, mods = ~ mod1 + mod2, data=dat, add=0))
 
    ### k, length of xi/mi, and number of rows in X must be equal to 8 (studies 1 and 2 removed due to NAs in table data, but studies 3 and 4 included in the model fitting)
    expect_equivalent(res$k, 8)

@@ -24,7 +24,7 @@ test_that("rma.mv() works correctly when using user-defined weights", {
 test_that("rma.mv() correctly handles negative sampling variances", {
 
    dat$vi[1] <- -.01
-   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat)
+   expect_warning(res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat))
    expect_equivalent(round(coef(res), 4), -0.7220)
    expect_equivalent(round(c(vcov(res)), 4),  0.0293)
 
@@ -33,7 +33,7 @@ test_that("rma.mv() correctly handles negative sampling variances", {
 test_that("rma.mv() correctly handles a missing value", {
 
    dat$vi[1] <- NA
-   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat)
+   expect_warning(res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat))
    expect_equivalent(round(coef(res), 4), -0.7071)
    expect_equivalent(round(c(vcov(res)), 4),  0.0361)
 

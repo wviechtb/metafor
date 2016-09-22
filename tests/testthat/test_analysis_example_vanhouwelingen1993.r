@@ -12,8 +12,8 @@ test_that("the log likelihood plot can be created.", {
    skip_on_cran()
 
    opar <- par(no.readonly=TRUE)
-   llplot(measure="OR", ai=b.xci, n1i=nci, ci=b.xti, n2i=nti, data=dat,
-          xlim=c(-4,4), lwd=1, col="black", refline=NA, drop00=FALSE)
+   expect_warning(llplot(measure="OR", ai=b.xci, n1i=nci, ci=b.xti, n2i=nti, data=dat,
+                  xlim=c(-4,4), lwd=1, col="black", refline=NA, drop00=FALSE))
    par(opar)
 
 })
@@ -22,13 +22,13 @@ test_that("results of the fixed-effects conditional logistic model are correct."
 
    skip_on_cran()
 
-   res <- rma.glmm(measure="OR", ai=b.xci, n1i=nci, ci=b.xti, n2i=nti, data=dat, model="CM.EL", method="FE")
+   expect_warning(res <- rma.glmm(measure="OR", ai=b.xci, n1i=nci, ci=b.xti, n2i=nti, data=dat, model="CM.EL", method="FE"))
 
    ### compare with results on page 2275 (in text)
    expect_equivalent(round(coef(res),3), 0.122)
    expect_equivalent(round(res$se,3), 0.099)
    expect_equivalent(round(res$ci.lb,3), -0.073)
-   expect_equivalent(round(res$ci.ub,3), 0.316) ### 0.31 in paper
+   expect_equivalent(round(res$ci.ub,2), 0.32) ### 0.31 in paper (rounded a bit more heavily, so 32-bit and 64-bit versions give same result)
    expect_equivalent(round(c(logLik(res)), 3), -53.679)
 
 })
@@ -37,7 +37,7 @@ test_that("results of the random-effects conditional logistic model are correct.
 
    skip_on_cran()
 
-   res <- rma.glmm(measure="OR", ai=b.xci, n1i=nci, ci=b.xti, n2i=nti, data=dat, model="CM.EL", method="ML")
+   expect_warning(res <- rma.glmm(measure="OR", ai=b.xci, n1i=nci, ci=b.xti, n2i=nti, data=dat, model="CM.EL", method="ML"))
 
    ### compare with results on page 2277 (in text)
    expect_equivalent(round(coef(res),3), 0.175)

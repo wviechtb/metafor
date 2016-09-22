@@ -90,7 +90,7 @@ test_that("results are correct for the random-effects model (Knapp & Hartung met
 
    res.knha <- list()
 
-   res.knha$FE   <- rma(yi, vi, data=dat, digits=3, method="FE", test="knha")
+   expect_warning(res.knha$FE   <- rma(yi, vi, data=dat, digits=3, method="FE", test="knha"))
    res.knha$ML   <- rma(yi, vi, data=dat, digits=3, method="ML", test="knha")
    res.knha$REML <- rma(yi, vi, data=dat, digits=3, method="REML", test="knha")
    res.knha$DL   <- rma(yi, vi, data=dat, digits=3, method="DL", test="knha")

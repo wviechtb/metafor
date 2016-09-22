@@ -135,7 +135,7 @@ test_that("results are correct for Mantel-Haenszel method.", {
    expect_equivalent(round(coef(res),3),  0.338)
    expect_equivalent(round(res$ci.lb,3), -0.271)
    expect_equivalent(round(res$ci.ub,3),  0.947)
-   expect_equivalent(round(res$QE.Wld,3),  0.347)
+   expect_equivalent(round(res$QE.Wld,2),  0.35) ### rounded a bit more heavily, so 32-bit and 64-bit versions give same result
    expect_equivalent(round(res$QEp.Wld,3), 0.556)
    expect_equivalent(round(res$QE.LRT,3),  0.350)
    expect_equivalent(round(res$QEp.LRT,3), 0.554)
@@ -143,7 +143,7 @@ test_that("results are correct for Mantel-Haenszel method.", {
    tmp <- predict(res, transf=exp)
    expect_equivalent(round(tmp$pred,3),  1.402)
    expect_equivalent(round(tmp$ci.lb,3), 0.763)
-   expect_equivalent(round(tmp$ci.ub,3), 2.578)
+   expect_equivalent(round(tmp$ci.ub,2), 2.58) ### rounded a bit more heavily, so 32-bit and 64-bit versions give same result
 
 })
 
@@ -373,17 +373,17 @@ test_that("results are correct for Mantel-Haenszel method.", {
    res <- rma.glmm(ai=ai, bi=bi, ci=ci, di=di, data=dat, measure="OR", digits=2, level=90, model="CM.EL", method="FE")
 
    expect_equivalent(round(coef(res),3), 1.326)
-   expect_equivalent(round(res$ci.lb,3), 0.355)
+   expect_equivalent(round(res$ci.lb,2), 0.36) ### rounded a bit more heavily, so 32-bit and 64-bit versions give same result
    expect_equivalent(round(res$ci.ub,3), 2.296)
-   expect_equivalent(round(res$QE.Wld,3),  0.132)
-   expect_equivalent(round(res$QEp.Wld,3), 0.717)
+   expect_equivalent(round(res$QE.Wld,2),  0.13) ### rounded a bit more heavily, so 32-bit and 64-bit versions give same result
+   expect_equivalent(round(res$QEp.Wld,2), 0.72) ### rounded a bit more heavily, so 32-bit and 64-bit versions give same result
    expect_equivalent(round(res$QE.LRT,3),  0.119)
    expect_equivalent(round(res$QEp.LRT,3), 0.730)
 
    tmp <- predict(res, transf=exp)
    expect_equivalent(round(tmp$pred,3),  3.765)
-   expect_equivalent(round(tmp$ci.lb,3), 1.426)
-   expect_equivalent(round(tmp$ci.ub,3), 9.936)
+   expect_equivalent(round(tmp$ci.lb,2), 1.43) ### rounded a bit more heavily, so 32-bit and 64-bit versions give same result
+   expect_equal(tmp$ci.ub, 9.936, tolerance=.001) ### need to use tolerance so 32-bit and 64-bit versions give same result
 
 })
 

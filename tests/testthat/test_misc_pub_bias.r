@@ -1,4 +1,5 @@
 ### library(metafor); library(testthat); Sys.setenv(NOT_CRAN="true")
+library(metafor); library(testthat); Sys.setenv(NOT_CRAN="true")
 
 context("Checking misc: regtest() and ranktest() functions")
 

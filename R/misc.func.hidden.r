@@ -61,6 +61,8 @@
       xy[i,] <- sort(xy[i,])
    }
 
+   colnames(xy) <- NULL
+
    return(xy)
 
 }

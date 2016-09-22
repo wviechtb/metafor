@@ -10,7 +10,7 @@ test_that("rma() handles NAs correctly.", {
    dat$yi[1] <- NA
    dat$yi[2] <- NA
 
-   res <- rma(yi, vi, data=dat, digits=3)
+   expect_warning(res <- rma(yi, vi, data=dat, digits=3))
 
    expect_equivalent(res$k, 11)
    expect_equivalent(res$k.f, 13)
