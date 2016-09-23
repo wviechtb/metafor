@@ -14,8 +14,8 @@ ranktest.rma <- function(x, ...) {
    vi <- x$vi
 
    res <- rma.uni(yi, vi, method="FE")
-   b   <- res$b
-   vb  <- res$vb
+   b   <- c(res$b)
+   vb  <- c(res$vb)
 
    vi.star <- vi - vb
    yi.star <- (yi - b) / sqrt(vi.star)

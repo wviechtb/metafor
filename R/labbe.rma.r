@@ -169,22 +169,24 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, ...) {
 
    len <- 1000
 
+   intrcpt <- c(x$b)
+
    if (x$measure == "RD")
-      c.vals <- seq(ifelse(x$b>0, 0, -x$b), ifelse(x$b>0, 1-x$b, 1), length.out=len)
+      c.vals <- seq(ifelse(intrcpt>0, 0, -intrcpt), ifelse(intrcpt>0, 1-intrcpt, 1), length.out=len)
    if (x$measure == "RR")
-      c.vals <- seq(min.yi-rng.yi, ifelse(x$b>0, 0-x$b, 0), length.out=len)
+      c.vals <- seq(min.yi-rng.yi, ifelse(intrcpt>0, 0-intrcpt, 0), length.out=len)
    if (x$measure == "OR")
       c.vals <- seq(min.yi-rng.yi, max.yi+rng.yi, length.out=len)
    if (x$measure == "AS")
-      c.vals <- seq(ifelse(x$b>0, 0, -x$b), ifelse(x$b>0, asin(sqrt(1))-x$b, asin(sqrt(1))), length.out=len)
+      c.vals <- seq(ifelse(intrcpt>0, 0, -intrcpt), ifelse(intrcpt>0, asin(sqrt(1))-intrcpt, asin(sqrt(1))), length.out=len)
    if (x$measure == "IRR")
-      c.vals <- seq(min.yi-rng.yi, ifelse(x$b>0, 0-x$b, 0), length.out=len)
+      c.vals <- seq(min.yi-rng.yi, ifelse(intrcpt>0, 0-intrcpt, 0), length.out=len)
    if (x$measure == "IRD")
-      c.vals <- seq(ifelse(x$b>0, 0, -x$b), ifelse(x$b>0, 1-x$b, 1), length.out=len)
+      c.vals <- seq(ifelse(intrcpt>0, 0, -intrcpt), ifelse(intrcpt>0, 1-intrcpt, 1), length.out=len)
    if (x$measure == "IRSD")
-      c.vals <- seq(ifelse(x$b>0, 0, -x$b), ifelse(x$b>0, 1-x$b, 1), length.out=len)
+      c.vals <- seq(ifelse(intrcpt>0, 0, -intrcpt), ifelse(intrcpt>0, 1-intrcpt, 1), length.out=len)
 
-   t.vals <- x$b + 1*c.vals
+   t.vals <- intrcpt + 1*c.vals
 
    if (is.function(transf)) {
       if (is.null(targs)) {

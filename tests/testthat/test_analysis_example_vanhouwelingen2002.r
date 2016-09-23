@@ -90,7 +90,7 @@ test_that("the credibility/prediction interval is correct.", {
    res <- rma(yi, vi, data=dat, method="ML")
 
    ### computation as done in the paper
-   tmp <- round(res$b + c(-1,+1) * qnorm(.975) * sqrt(res$tau2), 3)
+   tmp <- round(c(res$b) + c(-1,+1) * qnorm(.975) * sqrt(res$tau2), 3)
 
    ### compare with results on page 599 (in text)
    expect_equivalent(tmp, c(-1.820, 0.336))
