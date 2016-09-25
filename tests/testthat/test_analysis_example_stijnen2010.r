@@ -35,6 +35,8 @@ test_that("results for the normal-normal model are correct (measure=='PLO')", {
 
 test_that("results for the binomial-normal normal are correct (measure=='PLO')", {
 
+   skip_on_cran()
+
    res <- rma.glmm(measure="PLO", xi=ci, ni=n2i, data=dat)
 
    ### compare with results on page 3050 (Table II)
@@ -94,6 +96,8 @@ test_that("results for the conditional logistic model with exact likelihood are 
 
 test_that("results for the conditional logistic model with approximate likelihood are correct (measure=='OR')", {
 
+   skip_on_cran()
+
    expect_warning(res <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="CM.AL"))
 
    ### compare with results on page 3052 (Table III)
@@ -144,6 +148,8 @@ test_that("results for the normal-normal model are correct (measure=='IRLN')", {
 
 test_that("results for the Poisson-normal model are correct (measure=='IRLN')", {
 
+   skip_on_cran()
+
    res <- rma.glmm(measure="IRLN", xi=x2i, ti=t2i, data=dat)
 
    ### compare with results on page 3054 (Table VII)
@@ -184,6 +190,8 @@ test_that("results for the normal-normal model are correct (measure=='IRR')", {
 })
 
 test_that("results for the Poisson-normal model are correct (measure=='IRR')", {
+
+   skip_on_cran()
 
    res <- rma.glmm(measure="IRR", x1i=x1i, t1i=t1i, x2i=x2i, t2i=t2i, data=dat, model="CM.EL")
 

@@ -129,6 +129,8 @@ test_that("results are correct for Mantel-Haenszel method.", {
    tmp <- c(round(confint(res, transf=exp)$fixed, 2))
    expect_equivalent(tmp, c(1.40, 0.84, 2.34))
 
+   skip_on_cran()
+
    ### conditional MLE of the odds ratio
    res <- rma.glmm(ai=ai, bi=bi, ci=ci, di=di, data=dat, measure="OR", model="CM.EL", method="FE")
 
@@ -136,7 +138,7 @@ test_that("results are correct for Mantel-Haenszel method.", {
    expect_equivalent(round(res$ci.lb,3), -0.271)
    expect_equivalent(round(res$ci.ub,3),  0.947)
    expect_equivalent(round(res$QE.Wld,2),  0.35) ### rounded a bit more heavily, so 32-bit and 64-bit versions give same result
-   expect_equivalent(round(res$QEp.Wld,3), 0.556)
+   expect_equivalent(round(res$QEp.Wld,2), 0.56) ### rounded a bit more heavily, so OS X version gives same result
    expect_equivalent(round(res$QE.LRT,3),  0.350)
    expect_equivalent(round(res$QEp.LRT,3), 0.554)
 
@@ -262,6 +264,8 @@ test_that("results are correct for Mantel-Haenszel method.", {
    expect_equivalent(round(res$MH,3), 11.016)
    expect_equivalent(round(res$MHp,3), 0.001)
 
+   skip_on_cran()
+
    ### unconditional MLE of the rate ratio
    res <- rma.glmm(x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i, data=dat, measure="IRR", digits=2, level=90, model="UM.FS", method="FE")
 
@@ -352,6 +356,8 @@ test_that("results are correct for Mantel-Haenszel method.", {
 
    tmp <- c(round(confint(res, transf=exp)$fixed, 2))
    expect_equivalent(tmp, c(3.78, 1.43, 10.00))
+
+   skip_on_cran()
 
    ### unconditional MLE of the odds ratio
    res <- rma.glmm(ai=ai, bi=bi, ci=ci, di=di, data=dat, measure="OR", digits=2, level=90, model="UM.FS", method="FE")

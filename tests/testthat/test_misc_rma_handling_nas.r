@@ -4,6 +4,8 @@ context("Checking misc: proper handling of missing values")
 
 test_that("rma.glmm() handles NAs correctly.", {
 
+   skip_on_cran()
+
    dat <- data.frame(ni = rep(20, 10),
                      xi =   c(NA, 4, 0, 0, 2, 2, 3, 8, 9, 2),
                      mod1 = c(0, NA, 0, 0, 0, 0, 0, 1, 1, 1),
