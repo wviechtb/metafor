@@ -37,7 +37,7 @@
    \item{psize}{optional vector with point sizes for the observed effect sizes or outcomes. Default is 1.}
    \item{lty}{optional character string specifying the line type for the confidence intervals (if unspecified, the function sets this to \code{"solid"} by default).}
    \item{cex}{optional character and symbol expansion factor. If unspecified, the function tries to set this to a sensible value.}
-   \item{cex.lab}{optional expansion factor for the x-axis titel. If unspecified, the function tries to set this to a sensible value.}
+   \item{cex.lab}{optional expansion factor for the x-axis title If unspecified, the function tries to set this to a sensible value.}
    \item{cex.axis}{optional expansion factor for the x-axis labels. If unspecified, the function tries to set this to a sensible value.}
    \item{\dots}{other arguments.}
 }
