@@ -27,7 +27,7 @@ transf.pft <- function(xi, ni, ...) {              ### Freeman-Tukey transformat
 }
 
 transf.ipft <- function(xi, ni, ...) {             ### inverse of Freeman-Tukey transformation for individual proportions
-   zi <- 1/2 * (1 - sign(cos(2*xi)) * sqrt(1 - (sin(2*xi)+(sin(2*xi)-1/sin(2*xi))/ni)^2))
+   zi <- suppressWarnings(1/2 * (1 - sign(cos(2*xi)) * sqrt(1 - (sin(2*xi)+(sin(2*xi)-1/sin(2*xi))/ni)^2)))
    zi <- ifelse(is.nan(zi), NA, zi)
    zi[xi > transf.pft(1,ni)] <- 1                  ### if xi is above upper limit, return 1
    zi[xi < transf.pft(0,ni)] <- 0                  ### if xi is below lower limit, return 0
