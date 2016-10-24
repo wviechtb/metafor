@@ -18,11 +18,23 @@
 
    } else {
 
-      btt <- btt[(btt >= 1) & (btt <= p)] ### weed out values below 1 or above p
-      btt <- unique(round(btt))           ### round values and then take unique values
+      ### round, take unique values, and sort
+      btt <- sort(unique(round(btt)))
 
-      if (length(btt) == 0L)              ### make sure that at least one valid value is left
+      ### check for mix of positive and negative values
+      if (any(btt < 0) && any(btt > 0))
+         stop("Cannot mix positive and negative 'btt' values.")
+
+      ### keep/remove from 1:p vector as specified
+      btt <- seq.int(from=1, to=p)[btt]
+
+      ### (1:5)[5:6] yields c(5, NA) so remove NAs if this happens
+      btt <- btt[!is.na(btt)]
+
+      ### make sure that at least one valid value is left
+      if (length(btt) == 0L)
          stop("Non-existent coefficients specified via 'btt'.")
+
    }
 
    return(btt)
