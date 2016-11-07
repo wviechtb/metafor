@@ -7,7 +7,7 @@ plot.profile.rma <- function(x, ylim, pch=19, ...) {
 
    if (dev.cur() == 1) {
       par(mfrow=c(x$comps, 1))
-      on.exit(par(mfrow=c(1,1)))
+      #on.exit(par(mfrow=c(1,1)))
    }
 
    if (missing(ylim)) {

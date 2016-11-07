@@ -44,9 +44,7 @@ res.ml <- rma.mv(yi, vi, random = ~ 1 | district/school, data=dat)
 print(res.ml, digits=3)
 
 ### profile variance components
-par(mfrow=c(2,1))
-profile(res.ml, sigma2=1)
-profile(res.ml, sigma2=2)
+profile(res.ml)
 
 ### multivariate parameterization of the model
 res.mv <- rma.mv(yi, vi, random = ~ factor(school) | district, data=dat)

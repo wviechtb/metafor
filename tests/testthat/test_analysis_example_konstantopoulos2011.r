@@ -107,8 +107,7 @@ test_that("profiling works for the three-level random-effects model (multilevel 
    ### profile variance components
    opar <- par(no.readonly=TRUE)
    par(mfrow=c(2,1))
-   profile(res.ml, sigma2=1, progbar=FALSE)
-   profile(res.ml, sigma2=2, progbar=FALSE)
+   profile(res.ml, progbar=FALSE)
    par(opar)
 
 })
@@ -139,8 +138,7 @@ test_that("profiling works for the three-level random-effects model (multivariat
    ### profile variance components
    opar <- par(no.readonly=TRUE)
    par(mfrow=c(2,1))
-   profile(res.mv, tau2=1, progbar=FALSE)
-   profile(res.mv, rho=1, progbar=FALSE)
+   profile(res.mv, progbar=FALSE)
    par(opar)
 
 })

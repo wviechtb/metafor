@@ -120,7 +120,7 @@ col.na="lightgray", ...) {
             par(mfrow=c(4,2))
 
       } else {
-         layout <- layout[(layout >= 1)]
+         layout <- layout[layout >= 1]
          layout <- round(layout)
          if (length(layout) != 2L)
             stop("Incorrect specification of 'layout' argument.")
