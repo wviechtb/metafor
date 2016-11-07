@@ -1425,7 +1425,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
    ### QM calculation
 
-   QM <- try(c(t(b)[btt] %*% chol2inv(chol(vb[btt,btt])) %*% b[btt]), silent=TRUE)
+   QM <- try(as.vector(t(b)[btt] %*% chol2inv(chol(vb[btt,btt])) %*% b[btt]), silent=TRUE)
 
    if (inherits(QM, "try-error"))
       QM <- NA
@@ -1437,8 +1437,8 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
    zval <- c(b/se)
 
    if (is.element(test, c("knha","adhoc","t"))) {
-      dfs  <- k-p
-      QM   <- QM / m
+      dfs <- k-p
+      QM  <- QM / m
       if (dfs > 0) {
          QMp  <- pf(QM, df1=m, df2=dfs, lower.tail=FALSE)
          pval <- 2*pt(abs(zval), df=dfs, lower.tail=FALSE)

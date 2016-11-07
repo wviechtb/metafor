@@ -34,7 +34,7 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
          btt <- .set.btt(btt, p, x$int.incl)
          m <- length(btt) ### number of betas to test (m = p if all betas are tested)
 
-         QM <- c(t(b)[btt] %*% chol2inv(chol(vb[btt,btt])) %*% b[btt])
+         QM <- as.vector(t(b)[btt] %*% chol2inv(chol(vb[btt,btt])) %*% b[btt])
 
          if (is.element(x$test, c("knha","adhoc","t"))) {
             QM  <- QM/m
@@ -92,8 +92,8 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
 
          ### omnibus test of all hypotheses (only possible if 'L' is of full rank)
 
-         QM  <- NULL ### need this in case QM cannot be calculated below
-         QMp <- NULL ### need this in case QMp cannot be calculated below
+         QM  <- NA ### need this in case QM cannot be calculated below
+         QMp <- NA ### need this in case QMp cannot be calculated below
 
          if (rankMatrix(L) == m) {
 
@@ -102,15 +102,16 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
             ### be positive semidefinite, so for certain linear combinations, vLb could be singular
             ### (see Cameron & Miller, 2015, p. 326)
 
-            QM <- try(t(Lb) %*% chol2inv(chol(vLb)) %*% Lb, silent=TRUE)
+            QM <- try(as.vector(t(Lb) %*% chol2inv(chol(vLb)) %*% Lb), silent=TRUE)
 
-            if (!inherits(QM, "try-error")) {
-               if (is.element(x$test, c("knha","adhoc","t"))) {
-                  QM  <- QM/m
-                  QMp <- pf(QM, df1=m, df2=x$dfs, lower.tail=FALSE)
-               } else {
-                  QMp <- pchisq(QM, df=m, lower.tail=FALSE)
-               }
+            if (inherits(QM, "try-error"))
+               QM <- NA
+
+            if (is.element(x$test, c("knha","adhoc","t"))) {
+               QM  <- QM/m
+               QMp <- pf(QM, df1=m, df2=x$dfs, lower.tail=FALSE)
+            } else {
+               QMp <- pchisq(QM, df=m, lower.tail=FALSE)
             }
 
          }

@@ -83,7 +83,7 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
       }
    }
 
-   if (x$p > 1) {
+   if (x$p > 1 && !is.na(x$QM)) {
       cat("Test of Moderators (coefficient(s) ", .format.btt(x$btt),"): \n", sep="")
       #cat("Test of Moderators (coefficient(s) ", paste(x$btt, collapse=","),"): \n", sep="")
       if (is.element(x$test, c("knha","adhoc","t"))) {

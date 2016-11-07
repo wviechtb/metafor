@@ -121,7 +121,11 @@ robust.rma.mv <- function(x, cluster, adjust=TRUE, digits, ...) {
    ci.lb <- c(b - crit * se)
    ci.ub <- c(b + crit * se)
 
-   QM <- c(t(b)[x$btt] %*% chol2inv(chol(as.matrix(vb[x$btt,x$btt]))) %*% b[x$btt]) ### as.matrix() to avoid some issues with the matrix being not symmetric (when it must be)
+   QM <- try(as.vector(t(b)[x$btt] %*% chol2inv(chol(as.matrix(vb[x$btt,x$btt]))) %*% b[x$btt]), silent=TRUE) ### as.matrix() helps to avoid some issues with 'vb' appearing as non-symmetric (when it must be)
+
+   if (inherits(QM, "try-error"))
+      QM <- NA
+
    QM <- QM / x$m ### careful: m is the number of coefficients in btt, not the number of clusters
    QMp <- pf(QM, df1=x$m, df2=dfs, lower.tail=FALSE)
 

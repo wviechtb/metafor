@@ -1748,7 +1748,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       warning("Cannot invert Hessian for QM test.")
       QM <- NA
    } else {
-      QM <- c(t(b)[btt] %*% chol2inv(chol.h) %*% b[btt])
+      QM <- as.vector(t(b)[btt] %*% chol2inv(chol.h) %*% b[btt])
    }
 
    ### scale back b and vb

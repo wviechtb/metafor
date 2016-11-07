@@ -124,7 +124,11 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, digits, ...) {
    ci.lb <- c(b - crit * se)
    ci.ub <- c(b + crit * se)
 
-   QM <- c(t(b)[x$btt] %*% chol2inv(chol(vb[x$btt,x$btt])) %*% b[x$btt])
+   QM <- try(as.vector(t(b)[x$btt] %*% chol2inv(chol(vb[x$btt,x$btt])) %*% b[x$btt]), silent=TRUE)
+
+   if (inherits(QM, "try-error"))
+      QM <- NA
+
    QM <- QM / x$m ### careful: m is the number of coefficients in btt, not the number of unique clusters
    QMp <- pf(QM, df1=x$m, df2=dfs, lower.tail=FALSE)
 
