@@ -9,7 +9,8 @@ print.permutest.rma.uni <- function(x, digits, signif.stars=getOption("show.sign
    cat("\n")
 
    if (!x$int.only) {
-      cat("Test of Moderators (coefficient(s) ", paste(x$btt, collapse=","),"): \n", sep="")
+      cat("Test of Moderators (coefficient(s) ", .format.btt(x$btt),"): \n", sep="")
+      #cat("Test of Moderators (coefficient(s) ", paste(x$btt, collapse=","),"): \n", sep="")
       if (is.element(x$test, c("knha","adhoc","t"))) {
          cat("F(df1 = ", x$m, ", df2 = ", x$dfs, ") = ", formatC(x$QM, digits=digits, format="f"), ", p-val* ", .pval(x$QMp, digits=digits, showeq=TRUE, sep=" "), "\n\n", sep="")
       } else {

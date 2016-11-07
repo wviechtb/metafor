@@ -84,7 +84,8 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
    }
 
    if (x$p > 1) {
-      cat("Test of Moderators (coefficient(s) ", paste(x$btt, collapse=","),"): \n", sep="")
+      cat("Test of Moderators (coefficient(s) ", .format.btt(x$btt),"): \n", sep="")
+      #cat("Test of Moderators (coefficient(s) ", paste(x$btt, collapse=","),"): \n", sep="")
       if (is.element(x$test, c("knha","adhoc","t"))) {
          cat("F(df1 = ", x$m, ", df2 = ", x$dfs, ") = ", formatC(x$QM, digits=digits, format="f"), ", p-val ", .pval(x$QMp, digits=digits, showeq=TRUE, sep=" "), "\n\n", sep="")
       } else {

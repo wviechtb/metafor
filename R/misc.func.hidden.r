@@ -41,6 +41,41 @@
 
 }
 
+### function to format 'btt' values for printing
+
+.format.btt <- function(btt) {
+
+   sav <- c()
+
+   if (length(btt) > 1) {
+
+      while (length(btt) > 0) {
+
+         x <- rle(diff(btt))
+
+         if (x$values[1] == 1 && length(x$values) != 0) {
+            sav <- c(sav, c(btt[1], ":", btt[x$lengths[1] + 1]))
+            btt <- btt[-c(1:(x$lengths[1] + 1))]
+            sav <- c(sav, ", ")
+         } else {
+            sav <- c(sav, btt[1], ",")
+            btt <- btt[-1]
+         }
+
+      }
+
+      sav <- paste0(sav[-length(sav)], collapse="")
+
+   } else {
+
+      sav <- paste0(btt)
+
+   }
+
+   return(sav)
+
+}
+
 ############################################################################
 
 ### pairwise sorting of the elements of two vectors
