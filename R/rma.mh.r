@@ -1,7 +1,7 @@
 rma.mh   <- function(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, measure="OR",
 data, slab, subset,
 add=1/2, to="only0", drop00=TRUE, ### for add/to/drop00, 1st element for escalc(), 2nd for MH method
-correct=TRUE, level=95, digits=4, verbose=FALSE) {
+correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
 
    #########################################################################
 
@@ -40,6 +40,10 @@ correct=TRUE, level=95, digits=4, verbose=FALSE) {
 
    if (!is.element(to[2], c("all","only0","if0all","none")))
       stop("Unknown 'to' argument specified.")
+
+   ### get ... argument
+
+   ddd <- list(...)
 
    #########################################################################
 
@@ -741,18 +745,30 @@ correct=TRUE, level=95, digits=4, verbose=FALSE) {
    test      <- "z"
    dfs       <- NA
 
-   res <- list(b=b, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
-               tau2=tau2,
-               k=k, k.f=k.f, k.yi=k.yi, k.pos=k.pos, k.eff=k.eff, p=p, parms=parms,
-               QE=QE, QEp=QEp, CO=CO, COp=COp, MH=MH, MHp=MHp, BD=BD, BDp=BDp, TA=TA, TAp=TAp, I2=I2, H2=H2,
-               int.only=int.only,
-               yi=yi, vi=vi, yi.f=yi.f, vi.f=vi.f, X.f=X.f,
-               ai=ai, bi=bi, ci=ci, di=di, ai.f=ai.f, bi.f=bi.f, ci.f=ci.f, di.f=di.f,
-               x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i, x1i.f=x1i.f, x2i.f=x2i.f, t1i.f=t1i.f, t2i.f=t2i.f, ni=ni, ni.f=ni.f,
-               ids=ids, not.na=not.na, not.na.yivi=not.na.yivi, slab=slab, slab.null=slab.null,
-               measure=measure, method=method, weighted=weighted, test=test, dfs=dfs, intercept=intercept, digits=digits, level=level,
-               add=add, to=to, drop00=drop00, correct=correct,
-               fit.stats=fit.stats, version=packageVersion("metafor"), call=mf)
+   if (is.null(ddd$outlist)) {
+
+      res <- list(b=b, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
+                  tau2=tau2,
+                  k=k, k.f=k.f, k.yi=k.yi, k.pos=k.pos, k.eff=k.eff, p=p, parms=parms,
+                  QE=QE, QEp=QEp, CO=CO, COp=COp, MH=MH, MHp=MHp, BD=BD, BDp=BDp, TA=TA, TAp=TAp, I2=I2, H2=H2,
+                  int.only=int.only,
+                  yi=yi, vi=vi, yi.f=yi.f, vi.f=vi.f, X.f=X.f,
+                  ai=ai, bi=bi, ci=ci, di=di, ai.f=ai.f, bi.f=bi.f, ci.f=ci.f, di.f=di.f,
+                  x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i, x1i.f=x1i.f, x2i.f=x2i.f, t1i.f=t1i.f, t2i.f=t2i.f, ni=ni, ni.f=ni.f,
+                  ids=ids, not.na=not.na, not.na.yivi=not.na.yivi, slab=slab, slab.null=slab.null,
+                  measure=measure, method=method, weighted=weighted, test=test, dfs=dfs, intercept=intercept, digits=digits, level=level,
+                  add=add, to=to, drop00=drop00, correct=correct,
+                  fit.stats=fit.stats, version=packageVersion("metafor"), call=mf)
+
+   }
+
+   if (!is.null(ddd$outlist)) {
+      if (ddd$outlist == "minimal") {
+         res <- list(b=b, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, digits=digits, k=k, k.yi=k.yi, k.pos=k.pos, fit.stats=fit.stats, QE=QE, QEp=QEp, MH=MH, MHp=MHp, TA=TA, TAp=TAp, measure=measure)
+      } else {
+         res <- eval(parse(text=paste0("list(", ddd$outlist, ")")))
+      }
+   }
 
    class(res) <- c("rma.mh", "rma")
    return(res)

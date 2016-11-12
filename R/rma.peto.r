@@ -1,7 +1,7 @@
 rma.peto <- function(ai, bi, ci, di, n1i, n2i,
 data, slab, subset,
 add=1/2, to="only0", drop00=TRUE, ### for add/to/drop00, 1st element for escalc(), 2nd for Peto's method
-level=95, digits=4, verbose=FALSE) {
+level=95, digits=4, verbose=FALSE, ...) {
 
    #########################################################################
 
@@ -37,6 +37,10 @@ level=95, digits=4, verbose=FALSE) {
 
    if (!is.element(to[2], c("all","only0","if0all","none")))
       stop("Unknown 'to' argument specified.")
+
+   ### get ... argument
+
+   ddd <- list(...)
 
    measure <- "PETO" ### set measure here so that it can be added below
 
@@ -369,16 +373,28 @@ level=95, digits=4, verbose=FALSE) {
    test      <- "z"
    dfs       <- NA
 
-   res <- list(b=b, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
-               tau2=tau2,
-               k=k, k.f=k.f, k.yi=k.yi, k.pos=k.pos, k.eff=k.eff, p=p, parms=parms,
-               QE=QE, QEp=QEp, I2=I2, H2=H2,
-               int.only=int.only,
-               yi=yi, vi=vi, yi.f=yi.f, vi.f=vi.f, X.f=X.f, ai=ai, bi=bi, ci=ci, di=di, ai.f=ai.f, bi.f=bi.f, ci.f=ci.f, di.f=di.f, ni=ni, ni.f=ni.f,
-               ids=ids, not.na=not.na, not.na.yivi=not.na.yivi, slab=slab, slab.null=slab.null,
-               measure=measure, method=method, weighted=weighted, test=test, dfs=dfs, intercept=intercept, digits=digits, level=level,
-               add=add, to=to, drop00=drop00,
-               fit.stats=fit.stats, call=mf)
+   if (is.null(ddd$outlist)) {
+
+      res <- list(b=b, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
+                  tau2=tau2,
+                  k=k, k.f=k.f, k.yi=k.yi, k.pos=k.pos, k.eff=k.eff, p=p, parms=parms,
+                  QE=QE, QEp=QEp, I2=I2, H2=H2,
+                  int.only=int.only,
+                  yi=yi, vi=vi, yi.f=yi.f, vi.f=vi.f, X.f=X.f, ai=ai, bi=bi, ci=ci, di=di, ai.f=ai.f, bi.f=bi.f, ci.f=ci.f, di.f=di.f, ni=ni, ni.f=ni.f,
+                  ids=ids, not.na=not.na, not.na.yivi=not.na.yivi, slab=slab, slab.null=slab.null,
+                  measure=measure, method=method, weighted=weighted, test=test, dfs=dfs, intercept=intercept, digits=digits, level=level,
+                  add=add, to=to, drop00=drop00,
+                  fit.stats=fit.stats, call=mf)
+
+   }
+
+   if (!is.null(ddd$outlist)) {
+      if (ddd$outlist == "minimal") {
+         res <- list(b=b, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, digits=digits, k=k, k.pos=k.pos, fit.stats=fit.stats, QE=QE, QEp=QEp)
+      } else {
+         res <- eval(parse(text=paste0("list(", ddd$outlist, ")")))
+      }
+   }
 
    class(res) <- c("rma.peto", "rma")
    return(res)

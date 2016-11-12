@@ -1591,30 +1591,42 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
    p.eff <- p
    k.eff <- k
 
-   res <- list(b=b, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
-               tau2=tau2, se.tau2=se.tau2, tau2.fix=tau2.fix,
-               k=k, k.f=k.f, k.eff=k.eff, p=p, p.eff=p.eff, parms=parms, m=m,
-               QE=QE, QEp=QEp, QM=QM, QMp=QMp, I2=I2, H2=H2, R2=R2,
-               int.only=int.only, int.incl=int.incl, allvipos=allvipos, coef.na=coef.na,
-               yi=yi, vi=vi, X=X, weights=weights, yi.f=yi.f, vi.f=vi.f, X.f=X.f, weights.f=weights.f, M=M,
-               ai.f=ai.f, bi.f=bi.f, ci.f=ci.f, di.f=di.f,
-               x1i.f=x1i.f, x2i.f=x2i.f, t1i.f=t1i.f, t2i.f=t2i.f, ni=ni, ni.f=ni.f,
-               ids=ids, not.na=not.na, subset=subset, slab=slab, slab.null=slab.null,
-               measure=measure, method=method, weighted=weighted, test=test, dfs=dfs, s2w=s2w, btt=btt, intercept=intercept, digits=digits, level=level, control=control, verbose=verbose,
-               add=add, to=to, drop00=drop00,
-               fit.stats=fit.stats, version=packageVersion("metafor"), model=model, call=mf)
+   if (is.null(ddd$outlist)) {
 
-   if (model == "rma.ls") {
+      res <- list(b=b, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
+                  tau2=tau2, se.tau2=se.tau2, tau2.fix=tau2.fix,
+                  k=k, k.f=k.f, k.eff=k.eff, p=p, p.eff=p.eff, parms=parms, m=m,
+                  QE=QE, QEp=QEp, QM=QM, QMp=QMp, I2=I2, H2=H2, R2=R2,
+                  int.only=int.only, int.incl=int.incl, allvipos=allvipos, coef.na=coef.na,
+                  yi=yi, vi=vi, X=X, weights=weights, yi.f=yi.f, vi.f=vi.f, X.f=X.f, weights.f=weights.f, M=M,
+                  ai.f=ai.f, bi.f=bi.f, ci.f=ci.f, di.f=di.f,
+                  x1i.f=x1i.f, x2i.f=x2i.f, t1i.f=t1i.f, t2i.f=t2i.f, ni=ni, ni.f=ni.f,
+                  ids=ids, not.na=not.na, subset=subset, slab=slab, slab.null=slab.null,
+                  measure=measure, method=method, weighted=weighted, test=test, dfs=dfs, s2w=s2w, btt=btt, intercept=intercept, digits=digits, level=level, control=control, verbose=verbose,
+                  add=add, to=to, drop00=drop00,
+                  fit.stats=fit.stats, version=packageVersion("metafor"), model=model, call=mf)
 
-      res$b.tau2     <- b.tau2
-      res$vb.tau2    <- vb.tau2
-      res$se.tau2    <- se.tau2
-      res$zval.tau2  <- zval.tau2
-      res$pval.tau2  <- pval.tau2
-      res$ci.lb.tau2 <- ci.lb.tau2
-      res$ci.ub.tau2 <- ci.ub.tau2
-      res$Z <- Z
+      if (model == "rma.ls") {
 
+         res$b.tau2     <- b.tau2
+         res$vb.tau2    <- vb.tau2
+         res$se.tau2    <- se.tau2
+         res$zval.tau2  <- zval.tau2
+         res$pval.tau2  <- pval.tau2
+         res$ci.lb.tau2 <- ci.lb.tau2
+         res$ci.ub.tau2 <- ci.ub.tau2
+         res$Z <- Z
+
+      }
+
+   }
+
+   if (!is.null(ddd$outlist)) {
+      if (ddd$outlist == "minimal") {
+         res <- list(b=b, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, int.only=int.only, digits=digits, method=method, k=k, p=p, m=m, tau2=tau2, se.tau2=se.tau2, tau2.fix=tau2.fix, method=method, fit.stats=fit.stats, model=model, QE=QE, QEp=QEp, QM=QM, QMp=QMp, I2=I2, H2=H2, R2=R2, btt=btt, test=test, dfs=dfs)
+      } else {
+         res <- eval(parse(text=paste0("list(", ddd$outlist, ")")))
+      }
    }
 
    class(res) <- c("rma.uni", "rma")

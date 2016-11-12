@@ -1822,19 +1822,31 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    weighted  <- TRUE
 
-   res <- list(b=b, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
-               tau2=tau2, se.tau2=se.tau2, sigma2=sigma2,
-               k=k, k.f=k.f, k.yi=k.yi, k.eff=k.eff, p=p, p.eff=p.eff, parms=parms, m=m,
-               QE.Wld=QE.Wld, QEp.Wld=QEp.Wld, QE.LRT=QE.LRT, QEp.LRT=QEp.LRT, QE.df=QE.df, QM=QM, QMp=QMp, I2=I2, H2=H2,
-               int.only=int.only, int.incl=int.incl,
-               yi=yi, vi=vi, X=X, yi.f=yi.f, vi.f=vi.f, X.f=X.f,
-               ai=ai, bi=bi, ci=ci, di=di, ai.f=ai.f, bi.f=bi.f, ci.f=ci.f, di.f=di.f,
-               x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i, x1i.f=x1i.f, x2i.f=x2i.f, t1i.f=t1i.f, t2i.f=t2i.f,
-               xi=xi, mi=mi, ti=ti, xi.f=xi.f, mi.f=mi.f, ti.f=ti.f, ni=ni, ni.f=ni.f,
-               ids=ids, not.na=not.na, not.na.yivi=not.na.yivi, slab=slab, slab.null=slab.null,
-               measure=measure, method=method, model=model, weighted=weighted, test=test, dfs=dfs, btt=btt, intercept=intercept, digits=digits, level=level, control=control, verbose=verbose,
-               add=add, to=to, drop00=drop00,
-               fit.stats=fit.stats, version=packageVersion("metafor"), call=mf)
+   if (is.null(ddd$outlist)) {
+
+      res <- list(b=b, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
+                  tau2=tau2, se.tau2=se.tau2, sigma2=sigma2,
+                  k=k, k.f=k.f, k.yi=k.yi, k.eff=k.eff, p=p, p.eff=p.eff, parms=parms, m=m,
+                  QE.Wld=QE.Wld, QEp.Wld=QEp.Wld, QE.LRT=QE.LRT, QEp.LRT=QEp.LRT, QE.df=QE.df, QM=QM, QMp=QMp, I2=I2, H2=H2,
+                  int.only=int.only, int.incl=int.incl,
+                  yi=yi, vi=vi, X=X, yi.f=yi.f, vi.f=vi.f, X.f=X.f,
+                  ai=ai, bi=bi, ci=ci, di=di, ai.f=ai.f, bi.f=bi.f, ci.f=ci.f, di.f=di.f,
+                  x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i, x1i.f=x1i.f, x2i.f=x2i.f, t1i.f=t1i.f, t2i.f=t2i.f,
+                  xi=xi, mi=mi, ti=ti, xi.f=xi.f, mi.f=mi.f, ti.f=ti.f, ni=ni, ni.f=ni.f,
+                  ids=ids, not.na=not.na, not.na.yivi=not.na.yivi, slab=slab, slab.null=slab.null,
+                  measure=measure, method=method, model=model, weighted=weighted, test=test, dfs=dfs, btt=btt, intercept=intercept, digits=digits, level=level, control=control, verbose=verbose,
+                  add=add, to=to, drop00=drop00,
+                  fit.stats=fit.stats, version=packageVersion("metafor"), call=mf)
+
+   }
+
+   if (!is.null(ddd$outlist)) {
+      if (ddd$outlist == "minimal") {
+         res <- list(b=b, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, int.only=int.only, digits=digits, method=method, k=k, p=p, m=m, tau2=tau2, se.tau2=se.tau2, sigma2=sigma2, method=method, fit.stats=fit.stats, model=model, QE.Wld=QE.Wld, QEp.Wld=QEp.Wld, QE.LRT=QE.LRT, QEp.LRT=QEp.LRT, QE.df=QE.df, QEp=QEp, QM=QM, QMp=QMp, I2=I2, H2=H2, btt=btt, test=test, dfs=dfs, measure=measure)
+      } else {
+         res <- eval(parse(text=paste0("list(", ddd$outlist, ")")))
+      }
+   }
 
    class(res) <- c("rma.glmm", "rma")
    return(res)

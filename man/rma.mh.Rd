@@ -6,7 +6,7 @@
 rma.mh(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
        measure="OR", data, slab, subset,
        add=1/2, to="only0", drop00=TRUE,
-       correct=TRUE, level=95, digits=4, verbose=FALSE)
+       correct=TRUE, level=95, digits=4, verbose=FALSE, \dots)
 }
 \arguments{
    \item{ai}{vector to specify the \eqn{2 \times 2}{2x2} table frequencies (upper left cell). See below and the documentation of the \code{\link{escalc}} function for more details.}
@@ -30,6 +30,7 @@ rma.mh(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \item{level}{numerical value between 0 and 100 specifying the confidence interval level (the default is 95).}
    \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (the default is 4).}
    \item{verbose}{logical indicating whether output should be generated on the progress of the model fitting (the default is \code{FALSE}).}
+   \item{\dots}{additional arguments.}
 }
 \details{
 
