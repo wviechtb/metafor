@@ -1,6 +1,9 @@
 Changes in Version 2.0-0 (2016-11-12)
 =====================================
 
+   o added a new dataset (dat.pagliaro1992) for another illustration of a
+     network meta-analysis
+
    o improved output formatting
 
    o some general code cleanup
