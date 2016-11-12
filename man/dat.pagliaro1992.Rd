@@ -32,8 +32,10 @@ rownames(dat.c) <- 1:nrow(dat.c)
 dat.c
 
 ### Mantel-Haenszel results for beta-blockers and sclerotherapy versus control, respectively
-rma.mh(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat.c, subset=(trt1=="beta-blockers"), digits=2)
-rma.mh(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat.c, subset=(trt1=="sclerotherapy"), digits=2)
+rma.mh(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i,
+       data=dat.c, subset=(trt1=="beta-blockers"), digits=2)
+rma.mh(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i,
+       data=dat.c, subset=(trt1=="sclerotherapy"), digits=2)
 
 ### calculate log odds for each study arm
 dat <- escalc(measure="PLO", xi=xi, ni=ni, data=dat)
@@ -49,11 +51,11 @@ levels(dat$trt) <- paste0(" ", levels(dat$trt))
 res <- rma.mv(yi, vi, mods = ~ factor(study) + trt - 1, random = ~ trt | study, rho=1/2, data=dat)
 res
 
-### estimated average odds ratio comparing beta-blockers and sclerotherapy versus control, respectively
+### average odds ratio comparing beta-blockers and sclerotherapy versus control, respectively
 predict(res, newmods=c(rep(0,26), 1, 0), transf=exp, digits=2)
 predict(res, newmods=c(rep(0,26), 0, 1), transf=exp, digits=2)
 
-### estimated average odds ratio comparing beta-blockers versus sclerotherapy
+### average odds ratio comparing beta-blockers versus sclerotherapy
 predict(res, newmods=c(rep(0,26), 1, -1), transf=exp, digits=2)
 }
 \keyword{datasets}

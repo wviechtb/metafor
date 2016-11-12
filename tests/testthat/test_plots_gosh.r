@@ -18,6 +18,7 @@ test_that("plot can be drawn.", {
 
    ### fit FE model to all possible subsets
    sav <- gosh(res, progbar=FALSE)
+   out <- capture.output(print(sav)) ### so that print.gosh.rma() is run (at least once)
 
    ### create GOSH plot
    ### red points for subsets that include and blue points

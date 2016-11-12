@@ -65,7 +65,7 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
 
    } else {
 
-      j <- sample(x$p:x$k, N.tot, replace=TRUE, prob=dbinom(x$p:x$k, x$k, .5))
+      j <- sample(x$p:x$k, N.tot, replace=TRUE, prob=dbinom(x$p:x$k, x$k, 0.5))
       incl <- t(sapply(j, function(m) 1:x$k %in% sample(x$k, m)))
 
    }
@@ -199,8 +199,8 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
 
    #########################################################################
 
-   ### in case a model fit was skipped, this guarantees that we still
-   ### get a value for k in the first column for each model
+   ### in case a model fit was skipped, this guarantees that we still get
+   ### a value for k in the first column of the het matrix for each model
 
    het[,1] <- apply(incl, 1, sum)
 
@@ -225,7 +225,13 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
    rownames(res) <- 1:nrow(res)
    rownames(incl) <- 1:nrow(incl)
 
-   out <- list(res=res, incl=incl, k=x$k, int.only=x$int.only, method=x$method, measure=x$measure)
+   ### was model fitted successfully / all values are not NA?
+
+   fit <- apply(res, 1, function(x) all(!is.na(x)))
+
+   ### list to return
+
+   out <- list(res=res, incl=incl, fit=fit, k=x$k, int.only=x$int.only, method=x$method, measure=x$measure, digits=x$digits)
 
    class(out) <- "gosh.rma"
    return(out)

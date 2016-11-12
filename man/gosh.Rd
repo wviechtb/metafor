@@ -36,7 +36,7 @@ gosh(x, \dots)
    \item{incl}{a matrix indicating which studies were included in which subset.}
    \item{\dots}{some additional elements/values.}
 
-   The results can be plotted with the \code{\link{plot.gosh.rma}} function.
+   The results can be printed with the \code{\link{print.gosh.rma}} function and plotted with the \code{\link{plot.gosh.rma}} function.
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \cr
@@ -58,6 +58,7 @@ res <- rma(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat.egger2001, met
 \dontrun{
 ### fit FE model to all possible subsets (65535 models)
 sav <- gosh(res)
+sav
 
 ### create GOSH plot
 ### red points for subsets that include and blue points
