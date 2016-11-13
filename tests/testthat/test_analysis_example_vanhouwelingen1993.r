@@ -57,8 +57,8 @@ test_that("results of the random-effects conditional logistic model are correct.
    expect_equivalent(round(c(logLik(res)), 3), -52.989)
    expect_equivalent(round(res$tau2,3), 0.119)
 
-   ### run with control(dnchgcalc="dnoncenhypergeom")
-   expect_warning(res <- rma.glmm(measure="OR", ai=b.xci, n1i=nci, ci=b.xti, n2i=nti, data=dat, model="CM.EL", method="ML", control=list(dnchgcalc="dnoncenhypergeom")))
+   ### run with control(dnchgcalc="dnoncenhypergeom") (skip this for now)
+   #expect_warning(res <- rma.glmm(measure="OR", ai=b.xci, n1i=nci, ci=b.xti, n2i=nti, data=dat, model="CM.EL", method="ML", control=list(dnchgcalc="dnoncenhypergeom")))
 
    ### no discrepancies
    expect_equivalent(round(coef(res),3), 0.175)
