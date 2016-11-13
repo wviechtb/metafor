@@ -25,6 +25,16 @@ test_that("plot can be drawn.", {
    ### for subsets that exclude study 16 (the ISIS-4 trial)
    plot(sav, out=16, breaks=100, adjust=.5)
 
+   ### meta-analysis using MH method (using subset to speed things up)
+   res <- rma.mh(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat.egger2001, subset=c(1:7,16))
+   sav <- gosh(res, progbar=FALSE)
+   plot(sav, out=8, breaks=20)
+
+   ### meta-analysis using Peto's method (using subset to speed things up)
+   res <- rma.peto(ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat.egger2001, subset=c(1:7,16))
+   sav <- gosh(res, progbar=FALSE)
+   plot(sav, out=8, breaks=20)
+
    par(opar)
 
 })

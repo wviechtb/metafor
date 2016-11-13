@@ -1,4 +1,4 @@
-Changes in Version 2.0-0 (2016-11-12)
+Changes in Version 2.0-0 (2016-11-13)
 =====================================
 
    o added a print method for 'rma.gosh' objects
@@ -7,6 +7,8 @@ Changes in Version 2.0-0 (2016-11-12)
      network meta-analysis
 
    o improved output formatting
+
+   o added more tests
 
    o some general code cleanup
 

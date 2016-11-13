@@ -774,25 +774,25 @@
 
 ### generate all possible permutations
 
-.genperms <- function(k) {
-
-   v <- seq_len(k)
-
-   sub <- function(k, v) {
-      if (k==1L) {
-         matrix(v,1,k)
-      } else {
-         X  <-  NULL
-         for(i in seq_len(k)) {
-            X <- rbind(X, cbind(v[i], Recall(k-1, v[-i])))
-         }
-      X
-      }
-   }
-
-   return(sub(k, v[seq_len(k)]))
-
-}
+# .genperms <- function(k) {
+#
+#    v <- seq_len(k)
+#
+#    sub <- function(k, v) {
+#       if (k==1L) {
+#          matrix(v,1,k)
+#       } else {
+#          X  <-  NULL
+#          for(i in seq_len(k)) {
+#             X <- rbind(X, cbind(v[i], Recall(k-1, v[-i])))
+#          }
+#       X
+#       }
+#    }
+#
+#    return(sub(k, v[seq_len(k)]))
+#
+# }
 
 ### generate all possible unique permutations
 
@@ -1047,9 +1047,9 @@
             lab <- "Double Arcsine Transformed Proportion"
          } else {
             lab <- "Transformed Double Arcsine Transformed Proportion"
-            if (atransf.char == "transf.ift.hm")
+            if (atransf.char == "transf.ipft.hm")
                lab <- "Proportion"
-            if (transf.char == "transf.ift.hm")
+            if (transf.char == "transf.ipft.hm")
                lab <- "Proportion"
          }
       }
