@@ -7,6 +7,8 @@ vi <- rep(.02, length(yi))
 
 test_that(".setlab() works correctly together with forest().", {
 
+   if (F) {
+
    opar <- par(no.readonly=TRUE)
 
    par(mfrow=c(5,3), mar=c(5,6,0,4))
@@ -143,5 +145,7 @@ test_that(".setlab() works correctly together with forest().", {
    forest(dat$yi, dat$vi, xlim=xlim, cex.lab=cex.lab, atransf=transf.iahw)
 
    par(opar)
+
+   }
 
 })
