@@ -3,4 +3,4 @@
 
 library(testthat)
 library(metafor)
-test_check("metafor")
+test_check("metafor", reporter="summary")
