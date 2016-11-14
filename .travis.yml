@@ -4,8 +4,11 @@ warnings_are_errors: true
 sudo: required
 cache: packages
 
-r_packages:
-  - covr
+r_github_packages:
+  - jimhester/covr
+
+#r_packages:
+#  - covr
 
 r_binary_packages:
   - gsl
@@ -14,4 +17,4 @@ env:
   - NOT_CRAN=true
 
 after_success:
-  - Rscript -e 'library(covr); codecov()'
+  - Rscript -e 'library(covr); codecov(quiet=FALSE)'
