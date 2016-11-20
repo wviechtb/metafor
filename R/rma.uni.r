@@ -1181,9 +1181,9 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
          }
 
          wi    <- 1/(vi + tau2)
-         W     <- diag(wi, nrow=k, ncol=k)
-         stXWX <- .invcalc(X=X, W=W, k=k)
-         P     <- W - W %*% X %*% stXWX %*% crossprod(X,W) ### needed for se.tau2 computation below
+         #W     <- diag(wi, nrow=k, ncol=k)
+         #stXWX <- .invcalc(X=X, W=W, k=k)
+         #P     <- W - W %*% X %*% stXWX %*% crossprod(X,W) ### needed for se.tau2 computation below (not when using the simpler equation)
 
       }
 
@@ -1245,6 +1245,17 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
          if (conv == 0L)
             stop("Fisher scoring algorithm did not converge. See 'help(rma)' for possible remedies.")
 
+         ### need to run this so that wi and P are based on the final tau^2 value
+
+         wi    <- 1/(vi + tau2)
+         if (any(tau2 + vi < 0))
+            stop("Some marginal variances are negative.")
+         if (any(is.infinite(wi)))
+            stop("Division by zero when computing the inverse variance weights.")
+         W     <- diag(wi, nrow=k, ncol=k)
+         stXWX <- .invcalc(X=X, W=W, k=k)
+         P     <- W - W %*% X %*% stXWX %*% crossprod(X,W)
+
       }
 
       ### make sure that tau2 is >= con$tau2.min
@@ -1267,7 +1278,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
       ### see notes.pdf and note: .tr(P%*%P) = sum(P*t(P)) = sum(P*P) (since P is symmetric)
 
       if (method == "HS") {
-         se.tau2 <- sqrt(1/sum(wi)^2 * (2*(k-p) + 4*max(tau2,0)*.tr(P) + 2*max(tau2,0)^2*sum(P*P)))
+         se.tau2 <- sqrt(1/sum(wi)^2 * (2*(k-p) + 4*max(tau2,0)*.tr(P) + 2*max(tau2,0)^2*sum(P*P))) ### note: wi = 1/vi
       }
       if (method == "HE") {
          se.tau2 <- sqrt(1/(k-p)^2 * (2*sum(PV*t(PV)) + 4*max(tau2,0)*trPV + 2*max(tau2,0)^2*(k-p)))
@@ -1282,14 +1293,14 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
          se.tau2 <- sqrt(tau2.0^2/(k-p)^2 * (2*sum(PV*t(PV)) + 4*max(tau2,0)*sum(PV*P) + 2*max(tau2,0)^2*sum(P*P)))
       }
       if (method == "ML") {
-         se.tau2 <- sqrt(2/sum(wi^2))
+         se.tau2 <- sqrt(2/sum(wi^2)) ### note: wi = 1/(vi + tau2) for ML, REML, EB, PM, and SJIT
       }
       if (method == "REML") {
          se.tau2 <- sqrt(2/sum(P*P))
       }
       if (method == "EB" || method == "PM" || method == "SJIT") {
-         V  <- diag(vi, nrow=k, ncol=k)
-         PV <- P %*% V ### careful: is not symmetric
+         #V  <- diag(vi, nrow=k, ncol=k)
+         #PV <- P %*% V ### careful: is not symmetric
          #se.tau2 <- sqrt((k/(k-p))^2 / sum(wi)^2 * (2*sum(PV*t(PV)) + 4*max(tau2,0)*sum(PV*P) + 2*max(tau2,0)^2*sum(P*P)))
          se.tau2 <- sqrt(2*k^2/(k-p) / sum(wi)^2) ### these two equations are actually identical, but this one is much simpler
       }
