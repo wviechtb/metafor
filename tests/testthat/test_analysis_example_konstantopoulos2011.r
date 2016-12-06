@@ -56,6 +56,8 @@ test_that("results are correct for the three-level random-effects model fitted w
 
    ### three-level model (ml = multilevel parameterization)
    res.ml <- rma.mv(yi, vi, random = ~ 1 | district/study, data=dat, method="ML")
+   out <- capture.output(print(res.ml))
+   out <- capture.output(print(summary(res.ml)))
 
    ### compare with results on page 71 (Table 5)
    expect_equivalent(round(coef(res.ml),3), 0.184)
@@ -68,6 +70,7 @@ test_that("results are correct for the three-level mixed-effects model fitted wi
 
    ### three-level model (multilevel parameterization)
    res.ml <- rma.mv(yi, vi, mods = ~ I(year-mean(year)), random = ~ 1 | district/study, data=dat, method="ML")
+   out <- capture.output(print(res.ml))
 
    ### compare with results on page 71 (Table 5)
    expect_equivalent(round(coef(res.ml),3), c(0.178, 0.005)) ### intercept is given as 0.183 in paper, but this seems to be a misprint
@@ -80,6 +83,7 @@ test_that("results are correct for the three-level random-effects model fitted w
 
    ### three-level model (ml = multilevel parameterization)
    res.ml <- rma.mv(yi, vi, random = ~ 1 | district/study, data=dat)
+   out <- capture.output(print(res.ml))
 
    ### (results for this not given in paper)
    expect_equivalent(round(coef(res.ml),3), 0.185)

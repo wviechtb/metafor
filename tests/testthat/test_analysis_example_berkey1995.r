@@ -35,6 +35,7 @@ test_that("results are correct for the mixed-effects meta-regression model.", {
 
    ### fit mixed-effects model with absolute latitude as moderator
    res.ME <- rma(yi, vi, mods=~I(ablat-33.46), data=dat, method="EB")
+   out <- capture.output(print(res.ME))
 
    ### compare with results on page 408
    expect_equivalent(round(coef(res.ME),4), c(-0.6303, -0.0268)) ### -0.6304 in article
