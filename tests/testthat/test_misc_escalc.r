@@ -200,11 +200,60 @@ test_that("escalc() with formula works correctly for measure='ARAW'", {
 
 })
 
-test_that("cbind() works correctly for 'escalc' objects.", {
+test_that("'var.names' argument works correctly for 'escalc' objects.", {
 
-   data(dat.bcg, package="metafor")
-   dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
-   dat <- cbind(dat, study=1:13)
-   expect_equivalent(dat[,1], dat[,12])
+   dat <- get(data(dat.bcg, package="metafor"))
+   dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat, var.names=c("y1","v1"), slab=paste0(dat$author, ", ", dat$year))
+   dat <- escalc(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat, var.names=c("y2","v2"), slab=paste0(dat$author, ", ", dat$year))
+   expect_identical(tail(names(dat), 4), c("y1","v1","y2","v2"))
+   expect_identical(attributes(dat)$yi.names, c("y2","y1"))
+   expect_identical(attributes(dat)$vi.names, c("v2","v1"))
+   expect_identical(attr(dat$y1, "measure"), "RR")
+   expect_identical(attr(dat$y2, "measure"), "OR")
+
+})
+
+test_that("`[`, cbind(), and rbind() work correctly for 'escalc' objects.", {
+
+   dat <- get(data(dat.bcg, package="metafor"))
+   dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat, var.names=c("y1","v1"), slab=paste0(dat$author, ", ", dat$year))
+   dat <- escalc(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat, var.names=c("y2","v2"), slab=paste0(dat$author, ", ", dat$year))
+   dat <- cbind(dat[,1:9], dat[,c(12:13,10:11)])
+   expect_identical(tail(names(dat), 4), c("y2","v2","y1","v1"))
+   expect_identical(attributes(dat)$yi.names, c("y2","y1"))
+   expect_identical(attributes(dat)$vi.names, c("v2","v1"))
+   expect_identical(attr(dat$y1, "measure"), "RR")
+   expect_identical(attr(dat$y2, "measure"), "OR")
+
+   dat <- rbind(dat[13,], dat[1:12,])
+   expect_equivalent(attr(dat$y2, "ni"), rowSums(dat[,c("tpos", "tneg", "cpos", "cneg")]))
+   expect_identical(attr(dat$y2, "slab"), paste0(dat$author, ", ", dat$year))
+
+   dat <- get(data(dat.bcg, package="metafor"))
+   dat1 <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat, var.names=c("y1","v1"), slab=paste0(dat$author, ", ", dat$year))
+   dat2 <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat, var.names=c("y1","v1"), slab=paste0(dat$author, ", ", dat$year))
+   dat1 <- dat1[1:4,]
+   dat2 <- dat2[4:1,]
+   dat <- rbind(dat1, dat2)
+   expect_equivalent(attr(dat$y1, "ni"), rowSums(dat[,c("tpos", "tneg", "cpos", "cneg")]))
+   attr(dat1$y1, "ni") <- NULL
+   dat <- rbind(dat1, dat2)
+   expect_null(attr(dat$y1, "ni"))
+
+})
+
+test_that("summary() of 'escalc' objects works correctly with the 'out.names' argument.", {
+
+   dat <- get(data(dat.bcg, package="metafor"))
+   dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat, var.names=c("y1","v1"), slab=paste0(dat$author, ", ", dat$year))
+   dat <- escalc(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat, var.names=c("y2","v2"), slab=paste0(dat$author, ", ", dat$year))
+   dat <- summary(dat, var.names=c("y1","v1"), out.names=c("sei1","zi1","ci.lb1","ci.ub1"))
+   dat <- summary(dat, var.names=c("y2","v2"), out.names=c("sei2","zi2","ci.lb2","ci.ub2"))
+   expect_equivalent(round(with(dat, c(zi1[1], sei1[1], ci.lb1[1], ci.ub1[1])), 4), c(-1.5586, 0.5706, -2.0077, 0.2290))
+   expect_equivalent(round(with(dat, c(zi2[1], sei2[1], ci.lb2[1], ci.ub2[1])), 4), c(-1.5708, 0.5976, -2.1100, 0.2326))
+
+   dat <- dat[,1:11]
+   expect_identical(attr(dat, "yi.names"), "y1")
+   expect_identical(attr(dat, "vi.names"), "v1")
 
 })

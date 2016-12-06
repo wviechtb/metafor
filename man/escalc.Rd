@@ -6,6 +6,8 @@
 \alias{[.summary.escalc}
 \alias{cbind.escalc}
 \alias{cbind.summary.escalc}
+\alias{rbind.escalc}
+\alias{rbind.summary.escalc}
 \title{Calculate Effect Sizes and Outcome Measures}
 \description{
    The function can be used to calculate various effect sizes or outcome measures (and the corresponding sampling variances) that are commonly used in meta-analyses.

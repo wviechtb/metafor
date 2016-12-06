@@ -36,44 +36,42 @@
 
 ############################################################################
 
-"[.escalc" <- function(x, ...) {
+"[.escalc" <- function(x, i, ...) {
 
    dat <- NextMethod("[")
 
    ### add measure attribute back to each yi variable (if that variable is still part of dat)
 
    yi.names <- attr(x, "yi.names")
+   yi.names <- yi.names[is.element(yi.names, names(dat))]
 
-   if (!is.null(yi.names)) {
-      for (i in 1:length(yi.names)) {
-         if (!is.element(yi.names[i], names(dat))) {
-            next
-         } else {
-            eval(parse(text=paste0("attr(dat$", yi.names[i], ", 'measure') <- attr(x$", yi.names[i], ", 'measure')")))
-         }
+   for (l in seq_along(yi.names)) {
+
+      #eval(parse(text=paste0("attr(dat$", yi.names[l], ", 'measure') <- attr(x$", yi.names[l], ", 'measure')")))
+      attr(dat[[yi.names[l]]], "measure") <- attr(x[[yi.names[l]]], "measure")
+
+      ### if selecting rows, also subset ni and slab attributes and add them back to each yi variable
+
+      if (!missing(i)) {
+         attr(dat[[yi.names[l]]], "ni")   <- attr(x[[yi.names[l]]], "ni")[i]
+         attr(dat[[yi.names[l]]], "slab") <- attr(x[[yi.names[l]]], "slab")[i]
       }
+
    }
 
-   ### note: ni attribute is lost upon subsetting, but it's better that way (since it would also need
-   ### to be subsetted, as otherwise it could end up having a different length than yi itself)
+   ### add var.names and out.names attributes back to object (but only if they exist and only keep variables still in the dataset)
 
-   ### same goes for slab attribute
+   all.names <- c("yi.names", "vi.names", "sei.names", "zi.names", "ci.lb.names", "ci.ub.names")
 
-   ### add var.names and out.names attributes back to object
+   for (l in seq_along(all.names)) {
+      if (any(is.element(attr(x, all.names[l]), names(dat)))) ### check if any of the variables still exist in the dataset
+         attr(dat, all.names[l]) <- attr(x, all.names[l])[is.element(attr(x, all.names[l]), names(dat))]
+   }
 
-   attr(dat, "yi.names")    <- attr(x, "yi.names")
-   attr(dat, "vi.names")    <- attr(x, "vi.names")
-   attr(dat, "sei.names")   <- attr(x, "sei.names")
-   attr(dat, "zi.names")    <- attr(x, "zi.names")
-   attr(dat, "ci.lb.names") <- attr(x, "ci.lb.names")
-   attr(dat, "ci.ub.names") <- attr(x, "ci.ub.names")
+   ### add digits attribute back to object (but not to vectors)
 
-   ### add digits attribute back to object
-
-   if (!is.null(attr(x, "digits")))
+   if (!is.null(attr(x, "digits")) && !is.null(dim(dat)))
       attr(dat, "digits") <- attr(x, "digits")
-
-   ### TODO: clean up attribute elements that are no longer actually part of the object
 
    return(dat)
 
@@ -85,9 +83,9 @@ cbind.escalc <- function (..., deparse.level=1) {
 
    dat <- data.frame(..., check.names = FALSE)
 
-   arguments <- list(...)
+   allargs <- list(...)
 
-   ### for each element, extract the 'var.names' and 'out.names' attributes and add that entire set back to the object
+   ### for each element, extract the 'var.names' and 'out.names' attributes and add entire set back to the object
 
    yi.names    <- NULL
    vi.names    <- NULL
@@ -97,15 +95,17 @@ cbind.escalc <- function (..., deparse.level=1) {
    ci.ub.names <- NULL
    digits      <- NULL
 
-   for (arg in arguments) {
+   for (arg in allargs) {
       yi.names    <- c(attr(arg, "yi.names"),    yi.names)
       vi.names    <- c(attr(arg, "vi.names"),    vi.names)
       sei.names   <- c(attr(arg, "sei.names"),   sei.names)
       zi.names    <- c(attr(arg, "zi.names"),    zi.names)
       ci.lb.names <- c(attr(arg, "ci.lb.names"), ci.lb.names)
       ci.ub.names <- c(attr(arg, "ci.ub.names"), ci.ub.names)
-      digits      <- c(attr(arg, "digits"), digits)
+      digits      <- c(attr(arg, "digits"),      digits)
    }
+
+   ### but only keep unique variable names
 
    attr(dat, "yi.names")    <- unique(yi.names)
    attr(dat, "vi.names")    <- unique(vi.names)
@@ -114,30 +114,42 @@ cbind.escalc <- function (..., deparse.level=1) {
    attr(dat, "ci.lb.names") <- unique(ci.lb.names)
    attr(dat, "ci.ub.names") <- unique(ci.ub.names)
 
-   # var.name.list <- list()
-   # digits.list   <- list()
-
-   # i <- 0
-
-   # for (arg in arguments) {
-      # i <- i + 1
-      # var.name.list[[i]] <- attr(arg, "var.names")
-      # digits.list[[i]]   <- attr(arg, "digits")
-   # }
-
-   # if (length(var.name.list) > 0)
-      # attr(dat, "var.names") <- var.name.list[[1]]
-
-   # if (length(digits.list) > 0)
-      # attr(dat, "digits") <- digits.list[[1]]
-
    ### add 'digits' attribute back (use the first value)
 
    attr(dat, "digits") <- digits[1]
 
-   ### TODO: clean up attribute elements that are no longer actually part of the object
-
    class(dat) <- c("escalc", "data.frame")
+   return(dat)
+
+}
+
+rbind.escalc <- function (..., deparse.level=1) {
+
+   dat <- rbind.data.frame(..., deparse.level = deparse.level)
+
+   allargs <- list(...)
+
+   yi.names <- attr(dat, "yi.names")
+   yi.names <- yi.names[is.element(yi.names, names(dat))]
+
+   for (i in seq_along(yi.names)) {
+
+      ### get 'ni' attribute from all arguments
+      ni <- lapply(allargs, function(x) attr(x[[yi.names[i]]], "ni"))
+
+      ### if none of them are missing, then combine and add back to variable
+      if (all(sapply(ni, function(x) !is.null(x))))
+         attr(dat[[yi.names[i]]], "ni") <- unlist(ni)
+
+      ### get 'slab' attribute from all arguments
+      slab <- lapply(allargs, function(x) attr(x[[yi.names[i]]], "slab"))
+
+      ### if none of them are missing, then combine and add back to variable (and make sure they are unique)
+      if (all(sapply(slab, function(x) !is.null(x))))
+         attr(dat[[yi.names[i]]], "slab") <- make.unique(as.character(unlist(slab)))
+
+   }
+
    return(dat)
 
 }

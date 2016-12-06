@@ -73,7 +73,7 @@ H0=0, append=TRUE, replace=TRUE, level=95, digits, transf, ...) {
    ### compute sei, zi, and lower/upper CI bounds; when applying a transformation, compute the transformed outcome and CI bounds
 
    sei <- sqrt(vi)
-   zi  <- (yi - H0) / sei
+   zi  <- c(yi - H0) / sei
    if (is.function(transf)) {
       ci.lb <- mapply(transf, yi - crit * sei, ...)
       ci.ub <- mapply(transf, yi + crit * sei, ...)

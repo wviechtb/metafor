@@ -1,4 +1,4 @@
-Changes in Version 2.0-0 (2016-11-20)
+Changes in Version 2.0-0 (2016-12-06)
 =====================================
 
    o added a print method for 'rma.gosh' objects
@@ -7,6 +7,12 @@ Changes in Version 2.0-0 (2016-11-20)
      network meta-analysis
 
    o improved output formatting
+
+   o the `[` method for 'escalc' objects now properly handles the 'ni' and
+     'slab' attributes and does a better job of cleaning out superfluous
+     variable name information
+
+   o added rbind() method for 'escalc' objects
 
    o added more tests
 
