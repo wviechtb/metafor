@@ -66,11 +66,11 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
    } else {
 
       j <- sample(x$p:x$k, N.tot, replace=TRUE, prob=dbinom(x$p:x$k, x$k, 0.5))
-      incl <- t(sapply(j, function(m) 1:x$k %in% sample(x$k, m)))
+      incl <- t(sapply(j, function(m) seq_len(x$k) %in% sample(x$k, m)))
 
    }
 
-   colnames(incl) <- 1:x$k
+   colnames(incl) <- seq_len(x$k)
 
    ### check if model is a standard FE model (fitted with the usual 1/vi weights)
 
@@ -99,7 +99,7 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
       if (progbar)
          pbar <- txtProgressBar(min=0, max=N.tot, style=3)
 
-      for (j in 1:N.tot) {
+      for (j in seq_len(N.tot)) {
 
          if (progbar)
             setTxtProgressBar(pbar, j)
@@ -159,13 +159,13 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
       if (parallel == "multicore") {
 
          if (inherits(x, "rma.uni"))
-            res <- parallel::mclapply(1:N.tot, .profile.rma.uni, obj=x, mc.cores=ncpus, parallel=parallel, subset=TRUE, sel=incl, FE=FE)
+            res <- parallel::mclapply(seq_len(N.tot), .profile.rma.uni, obj=x, mc.cores=ncpus, parallel=parallel, subset=TRUE, sel=incl, FE=FE)
 
          if (inherits(x, "rma.mh"))
-            res <- parallel::mclapply(1:N.tot, .profile.rma.mh, obj=x, mc.cores=ncpus, parallel=parallel, subset=TRUE, sel=incl)
+            res <- parallel::mclapply(seq_len(N.tot), .profile.rma.mh, obj=x, mc.cores=ncpus, parallel=parallel, subset=TRUE, sel=incl)
 
          if (inherits(x, "rma.peto"))
-            res <- parallel::mclapply(1:N.tot, .profile.rma.peto, obj=x, mc.cores=ncpus, parallel=parallel, subset=TRUE, sel=incl)
+            res <- parallel::mclapply(seq_len(N.tot), .profile.rma.peto, obj=x, mc.cores=ncpus, parallel=parallel, subset=TRUE, sel=incl)
 
       }
 
@@ -179,13 +179,13 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
          }
 
          if (inherits(x, "rma.uni"))
-            res <- parallel::parLapply(cl, 1:N.tot, .profile.rma.uni, obj=x, parallel=parallel, subset=TRUE, sel=incl, FE=FE)
+            res <- parallel::parLapply(cl, seq_len(N.tot), .profile.rma.uni, obj=x, parallel=parallel, subset=TRUE, sel=incl, FE=FE)
 
          if (inherits(x, "rma.mh"))
-            res <- parallel::parLapply(cl, 1:N.tot, .profile.rma.mh, obj=x, parallel=parallel, subset=TRUE, sel=incl)
+            res <- parallel::parLapply(cl, seq_len(N.tot), .profile.rma.mh, obj=x, parallel=parallel, subset=TRUE, sel=incl)
 
          if (inherits(x, "rma.peto"))
-            res <- parallel::parLapply(cl, 1:N.tot, .profile.rma.peto, obj=x, parallel=parallel, subset=TRUE, sel=incl)
+            res <- parallel::parLapply(cl, seq_len(N.tot), .profile.rma.peto, obj=x, parallel=parallel, subset=TRUE, sel=incl)
 
          if (clnew)
             parallel::stopCluster(cl)
@@ -222,8 +222,8 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
 
    ### fix rownames
 
-   rownames(res) <- 1:nrow(res)
-   rownames(incl) <- 1:nrow(incl)
+   rownames(res) <- seq_len(nrow(res))
+   rownames(incl) <- seq_len(nrow(incl))
 
    ### was model fitted successfully / all values are not NA?
 

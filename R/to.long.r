@@ -673,7 +673,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
          dat[,3] <- factor(dat[,3])
 
          if (!no.data && append)
-            dat <- data.frame(data[rep(1:k, each=4),], dat)
+            dat <- data.frame(data[rep(seq_len(k), each=4),], dat)
 
       } else {
 
@@ -699,7 +699,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
          dat[,2] <- factor(dat[,2])
 
          if (!no.data && append)
-            dat <- data.frame(data[rep(1:k, each=2),], dat)
+            dat <- data.frame(data[rep(seq_len(k), each=2),], dat)
 
       }
 
@@ -762,7 +762,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
       dat[,2] <- factor(dat[,2])
 
       if (!no.data && append)
-         dat <- data.frame(data[rep(1:k, each=2),], dat)
+         dat <- data.frame(data[rep(seq_len(k), each=2),], dat)
 
    }
 
@@ -826,7 +826,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
       dat[,2] <- factor(dat[,2])
 
       if (!no.data && append)
-         dat <- data.frame(data[rep(1:k, each=2),], dat)
+         dat <- data.frame(data[rep(seq_len(k), each=2),], dat)
 
    }
 
@@ -945,7 +945,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
          dat[,2] <- factor(dat[,2])
 
          if (!no.data && append)
-            dat <- data.frame(data[rep(1:k, each=2),], dat)
+            dat <- data.frame(data[rep(seq_len(k), each=2),], dat)
 
       } else {
 
@@ -1250,7 +1250,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
    #########################################################################
 
-   rownames(dat) <- 1:nrow(dat)
+   rownames(dat) <- seq_len(nrow(dat))
    return(dat)
 
 }

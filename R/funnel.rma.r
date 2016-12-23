@@ -46,9 +46,9 @@ refline, pch=19, pch.fill=21, ci.res=1000, ...) {
       if(yaxis == "ninv")
          ylab <- "Inverse Sample Size"
       if(yaxis == "sqrtni")
-         ylab <- "Square-Root Sample Size"
+         ylab <- "Square Root Sample Size"
       if(yaxis == "sqrtninv")
-         ylab <- "Inverse Square-Root Sample Size"
+         ylab <- "Inverse Square Root Sample Size"
       if(yaxis == "lni")
          ylab <- "Log Sample Size"
       if(yaxis == "wi")

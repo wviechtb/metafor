@@ -655,7 +655,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
 
       dat <- array(NA, dim=c(2,2,k), dimnames=list(rows, cols, slab))
 
-      for (i in 1:k) {
+      for (i in seq_len(k)) {
          tab.i <- rbind(c(ai[i],bi[i]), c(ci[i],di[i]))
          dat[,,i] <- tab.i
       }
@@ -713,7 +713,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
 
       dat <- array(NA, dim=c(2,2,k), dimnames=list(rows, cols, slab))
 
-      for (i in 1:k) {
+      for (i in seq_len(k)) {
          tab.i <- rbind(c(x1i[i],t1i[i]), c(x2i[i],t2i[i]))
          dat[,,i] <- tab.i
       }
@@ -773,7 +773,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
 
       dat <- array(NA, dim=c(2,3,k), dimnames=list(rows, cols, slab))
 
-      for (i in 1:k) {
+      for (i in seq_len(k)) {
          tab.i <- rbind(c(m1i[i],sd1i[i],n1i[i]), c(m2i[i],sd2i[i],n2i[i]))
          dat[,,i] <- tab.i
       }
@@ -829,7 +829,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
 
       dat <- array(NA, dim=c(1,2,k), dimnames=list(rows, cols, slab))
 
-      for (i in 1:k) {
+      for (i in seq_len(k)) {
          tab.i <- c(ri[i],ni[i])
          dat[,,i] <- tab.i
       }
@@ -885,7 +885,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
 
       dat <- array(NA, dim=c(1,2,k), dimnames=list(rows, cols, slab))
 
-      for (i in 1:k) {
+      for (i in seq_len(k)) {
          tab.i <- c(xi[i],mi[i])
          dat[,,i] <- tab.i
       }
@@ -941,7 +941,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
 
       dat <- array(NA, dim=c(1,2,k), dimnames=list(rows, cols, slab))
 
-      for (i in 1:k) {
+      for (i in seq_len(k)) {
          tab.i <- c(xi[i],ti[i])
          dat[,,i] <- tab.i
       }
@@ -998,7 +998,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
 
       dat <- array(NA, dim=c(1,3,k), dimnames=list(rows, cols, slab))
 
-      for (i in 1:k) {
+      for (i in seq_len(k)) {
          tab.i <- c(mi[i],sdi[i],ni[i])
          dat[,,i] <- tab.i
       }
@@ -1074,7 +1074,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
 
          dat <- array(NA, dim=c(1,6,k), dimnames=list(rows, cols, slab))
 
-         for (i in 1:k) {
+         for (i in seq_len(k)) {
             tab.i <- c(m1i[i],m2i[i],sd1i[i],sd2i[i],ni[i],ri[i])
             dat[,,i] <- tab.i
          }
@@ -1083,7 +1083,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
 
          dat <- array(NA, dim=c(1,5,k), dimnames=list(rows, cols, slab))
 
-         for (i in 1:k) {
+         for (i in seq_len(k)) {
             tab.i <- c(m1i[i],m2i[i],sd1i[i],ni[i],ri[i])
             dat[,,i] <- tab.i
          }
@@ -1142,7 +1142,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
 
       dat <- array(NA, dim=c(1,3,k), dimnames=list(rows, cols, slab))
 
-      for (i in 1:k) {
+      for (i in seq_len(k)) {
          tab.i <- c(ai[i],mi[i],ni[i])
          dat[,,i] <- tab.i
       }

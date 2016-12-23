@@ -84,7 +84,7 @@ profile.rma.uni <- function(fitted, xlim, ylim, steps=20, progbar=TRUE, parallel
       if (progbar)
          pbar <- txtProgressBar(min=0, max=steps, style=3)
 
-      for (i in 1:length(vcs)) {
+      for (i in seq_along(vcs)) {
 
          res <- try(suppressWarnings(rma.uni(x$yi, x$vi, weights=x$weights, mods=x$X, intercept=FALSE, method=x$method, weighted=x$weighted, test=x$test, level=x$level, control=x$control, tau2=vcs[i])), silent=TRUE)
 

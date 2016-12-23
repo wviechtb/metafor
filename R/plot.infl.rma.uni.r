@@ -29,7 +29,7 @@ col.na="lightgray", ...) {
 
    if (is.logical(plotinf)) {
       if (plotinf) {
-         which.inf <- 1:8
+         which.inf <- seq_len(8)
       }
    } else {
       which.inf <- plotinf

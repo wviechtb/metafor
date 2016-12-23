@@ -73,7 +73,7 @@ xlim, ylim, xhist=TRUE, yhist=TRUE, hh=.3, hcol, breaks, adjust, lwd, labels, ..
       if (x$int.only) {
          labels <- c(.setlab(x$measure, transf.char="FALSE", atransf.char="FALSE", gentype=2), labels)
       } else {
-         labels <- c(labels, colnames(x$res)[-c(1:5)])
+         labels <- c(labels, colnames(x$res)[-seq_len(5)])
       }
 
    }

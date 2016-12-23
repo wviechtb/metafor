@@ -65,7 +65,7 @@ refline=0, pch=19, pch.fill=21, ci.res=1000, ...) {
    slab <- attr(yi, "slab")
 
    if (is.null(slab) || length(slab) != length(yi))
-      slab <- 1:length(yi)
+      slab <- seq_along(yi)
 
    ### set y-axis label if not specified
 
@@ -83,9 +83,9 @@ refline=0, pch=19, pch.fill=21, ci.res=1000, ...) {
       if(yaxis == "ninv")
          ylab <- "Inverse Sample Size"
       if(yaxis == "sqrtni")
-         ylab <- "Square-Root Sample Size"
+         ylab <- "Square Root Sample Size"
       if(yaxis == "sqrtninv")
-         ylab <- "Inverse Square-Root Sample Size"
+         ylab <- "Inverse Square Root Sample Size"
       if(yaxis == "lni")
          ylab <- "Log Sample Size"
       if(yaxis == "wi")

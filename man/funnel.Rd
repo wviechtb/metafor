@@ -61,8 +61,8 @@ funnel(x, \dots)
    \item \code{yaxis="vinv"} for the inverse of the sampling variance,
    \item \code{yaxis="ni"} for the sample size,
    \item \code{yaxis="ninv"} for the inverse of the sample size,
-   \item \code{yaxis="sqrtni"} for the square-root sample size,
-   \item \code{yaxis="sqrtninv"} for the inverse of the square-root sample size,
+   \item \code{yaxis="sqrtni"} for the square root sample size,
+   \item \code{yaxis="sqrtninv"} for the inverse of the square root sample size,
    \item \code{yaxis="lni"} for the log of the sample size,
    \item \code{yaxis="wi"} for the weights.
    } However, only when \code{yaxis="sei"} (the default) will the pseudo confidence region have the expected (upside-down) funnel shape with straight lines. Also, when placing (a function of) the sample size on the y-axis or the weights, then the pseudo confidence region cannot be drawn. See Sterne and Egger (2001) for more details on the choice of the y-axis.

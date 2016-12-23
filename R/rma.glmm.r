@@ -1686,7 +1686,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
       if (measure!="OR" || model!="CM.EL" || !is.element(con$optimizer, c("optim", "nlminb", "minqa"))) {
 
-         if (dim(vb2.QE)[1] > 0) {
+         if (nrow(vb2.QE) > 0) {
 
             chol.h <- try(chol(vb2.QE), silent=!verbose) ### see if Hessian can be inverted with chol()
 

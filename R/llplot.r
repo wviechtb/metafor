@@ -228,8 +228,8 @@ lty, lwd, col, level=99.99, refline=0, ...) {
    lls <- matrix(NA_real_, nrow=k, ncol=xvals)
    out <- matrix(TRUE, nrow=k, ncol=xvals)
 
-   for (i in 1:k) {
-      for (j in 1:xvals) {
+   for (i in seq_len(k)) {
+      for (j in seq_len(xvals)) {
          lls[i,j] <- .dnchgi(logORs[j], ai=ai[i], bi=bi[i], ci=ci[i], di=di[i], random=FALSE, dnchgcalc="dFNCHypergeo", dnchgprec=1e-10)
          if (logORs[j] >= ci.lb[i] & logORs[j] <= ci.ub[i])
             out[i,j] <- FALSE
@@ -239,7 +239,7 @@ lty, lwd, col, level=99.99, refline=0, ...) {
    if (scale) {
       trapezoid <- function(x,y) sum(diff(x)*(y[-1]+y[-length(y)]))/2
       lls.sum <- rep(NA_real_, k)
-      for (i in 1:k) {
+      for (i in seq_len(k)) {
          lls.sum[i] <- trapezoid(logORs[!is.na(lls[i,])], lls[i,!is.na(lls[i,])])
       }
       #lls.sum <- rowSums(lls, na.rm=TRUE)
@@ -258,7 +258,7 @@ lty, lwd, col, level=99.99, refline=0, ...) {
 
    plot(NA, NA, xlim=c(xlim[1], xlim[2]), ylim=ylim, xlab=xlab, ylab=ylab, ...)
 
-   for (i in (1:k)[order(1/vi)]) {
+   for (i in seq_len(k)[order(1/vi)]) {
       lines(logORs, lls[i,], lty=lty[i], lwd=lwd[i], col=col[i], ...)
    }
 

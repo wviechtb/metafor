@@ -31,7 +31,7 @@ print.gosh.rma <- function(x, digits, ...) {
    ### add blank row before the model coefficients in meta-regression models
 
    if (ncol(x$res) > 6)
-      res.table <- rbind(res.table[1:5,], "", res.table[6:nrow(res.table),,drop=FALSE])
+      res.table <- rbind(res.table[seq_len(5),], "", res.table[6:nrow(res.table),,drop=FALSE])
 
    ### remove row for tau^2 in FE models
 

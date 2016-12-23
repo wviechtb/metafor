@@ -249,7 +249,7 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
          }
 
-         ### arcsine square-root risk difference
+         ### arcsine square root risk difference
 
          if (measure == "AS") {
             yi <- asin(sqrt(p1i)) - asin(sqrt(p2i))
@@ -459,7 +459,7 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
             vi <- ir1i/t1i + ir2i/t2i ### note: same as x1i/t1i^2 + x2i/t2i^2
          }
 
-         ### square-root transformed incidence rate difference
+         ### square root transformed incidence rate difference
 
          if (measure == "IRSD") {
             yi <- sqrt(ir1i) - sqrt(ir2i)
@@ -934,7 +934,7 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
          }
 
-         ### proportion with arcsine square-root (angular) transformation
+         ### proportion with arcsine square root (angular) transformation
 
          if (measure == "PAS") {
             yi <- asin(sqrt(pri))
@@ -1028,7 +1028,7 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
             vi <- 1/xi
          }
 
-         ### square-root transformed incidence rate
+         ### square root transformed incidence rate
 
          if (measure == "IRS") {
             yi <- sqrt(iri)

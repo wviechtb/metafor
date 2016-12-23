@@ -98,14 +98,14 @@ escalc(measure, formula, \dots)
 
          For example, in a set of randomized clinical trials, group 1 and group 2 may refer to the treatment and placebo/control group, respectively, with outcome 1 denoting some event of interest (e.g., death, complications, failure to improve under the treatment) and outcome 2 its complement. Similarly, in a set of cohort studies, group 1 and group 2 may denote those who engage in and those who do not engage in a potentially harmful behavior (e.g., smoking), with outcome 1 denoting the development of a particular disease (e.g., lung cancer) during the follow-up period. Finally, in a set of case-control studies, group 1 and group 2 may refer to those with the disease (i.e., cases) and those free of the disease (i.e., controls), with outcome 1 denoting, for example, exposure to some risk environmental risk factor in the past and outcome 2 non-exposure. Note that in all of these examples, the stratified sampling scheme fixes the row totals (i.e., the group sizes) by design.
 
-         A meta-analysis of studies reporting results in terms of \eqn{2 \times 2}{2x2} tables can be based on one of several different outcome measures, including the relative risk (risk ratio), the odds ratio, the risk difference, and the arcsine square-root transformed risk difference (e.g., Fleiss & Berlin, 2009, Rücker et al., 2009). For any of these outcome measures, one needs to specify the cell frequencies via the \code{ai}, \code{bi}, \code{ci}, and \code{di} arguments (or alternatively, one can use the \code{ai}, \code{ci}, \code{n1i}, and \code{n2i} arguments).
+         A meta-analysis of studies reporting results in terms of \eqn{2 \times 2}{2x2} tables can be based on one of several different outcome measures, including the relative risk (risk ratio), the odds ratio, the risk difference, and the arcsine square root transformed risk difference (e.g., Fleiss & Berlin, 2009, Rücker et al., 2009). For any of these outcome measures, one needs to specify the cell frequencies via the \code{ai}, \code{bi}, \code{ci}, and \code{di} arguments (or alternatively, one can use the \code{ai}, \code{ci}, \code{n1i}, and \code{n2i} arguments).
 
          The options for the \code{measure} argument are then:
          \itemize{
          \item \code{"RR"} for the \emph{log relative risk}.
          \item \code{"OR"} for the \emph{log odds ratio}.
          \item \code{"RD"} for the \emph{risk difference}.
-         \item \code{"AS"} for the \emph{arcsine square-root transformed risk difference} (Rücker et al., 2009).
+         \item \code{"AS"} for the \emph{arcsine square root transformed risk difference} (Rücker et al., 2009).
          \item \code{"PETO"} for the \emph{log odds ratio} estimated with Peto's method (Yusuf et al., 1985).
          } Note that the log is taken of the relative risk and the odds ratio, which makes these outcome measures symmetric around 0 and yields corresponding sampling distributions that are closer to normality.
 
@@ -133,13 +133,13 @@ escalc(measure, formula, \dots)
          group 2 \tab \code{x2i}       \tab \code{t2i}
          } where \code{x1i} and \code{x2i} denote the total number of events in the first and the second group, respectively, and \code{t1i} and \code{t2i} the corresponding total person-times at risk. Often, the person-time is measured in years, so that \code{t1i} and \code{t2i} denote the total number of follow-up years in the two groups.
 
-         This form of data is fundamentally different from what was described in the previous section, since the total follow-up time may differ even for groups of the same size and the individuals studied may experience the event of interest multiple times. Hence, different outcome measures than the ones described in the previous section must be considered when data are reported in this format. These inlude the incidence rate ratio, the incidence rate difference, and the square-root transformed incidence rate difference (Bagos & Nikolopoulos, 2009; Rothman et al., 2008). For any of these outcome measures, one needs to specify the total number of events via the \code{x1i} and \code{x2i} arguments and the corresponding total person-time values via the \code{t1i} and \code{t2i} arguments.
+         This form of data is fundamentally different from what was described in the previous section, since the total follow-up time may differ even for groups of the same size and the individuals studied may experience the event of interest multiple times. Hence, different outcome measures than the ones described in the previous section must be considered when data are reported in this format. These inlude the incidence rate ratio, the incidence rate difference, and the square root transformed incidence rate difference (Bagos & Nikolopoulos, 2009; Rothman et al., 2008). For any of these outcome measures, one needs to specify the total number of events via the \code{x1i} and \code{x2i} arguments and the corresponding total person-time values via the \code{t1i} and \code{t2i} arguments.
 
          The options for the \code{measure} argument are then:
          \itemize{
          \item \code{"IRR"} for the \emph{log incidence rate ratio}.
          \item \code{"IRD"} for the \emph{incidence rate difference}.
-         \item \code{"IRSD"} for the \emph{square-root transformed incidence rate difference}.
+         \item \code{"IRSD"} for the \emph{square root transformed incidence rate difference}.
          } Note that the log is taken of the incidence rate ratio, which makes this outcome measure symmetric around 0 and yields a corresponding sampling distribution that is closer to normality.
 
          Studies with zero events in one or both groups can be problematic, especially for the incidence rate ratio. Adding a small constant to the number of events is a common solution to this problem. When \code{to="only0"} (the default), the value of \code{add} (the default is 1/2) is added to \code{x1i} and \code{x2i} only in the studies that have zero events in one or both groups. When \code{to="all"}, the value of \code{add} is added to \code{x1i} and \code{x2i} in all studies. When \code{to="if0all"}, the value of \code{add} is added to \code{x1i} and \code{x2i} in all studies, but only when there is at least one study with zero events in one or both groups. Setting \code{to="none"} or \code{add=0} has the same effect: No adjustment to the observed number of events is made. Depending on the outcome measure and the data, this may lead to division by zero inside of the function (when this occurs, the resulting value is recoded to \code{NA}). Like for \eqn{2 \times 2}{2x2} table data, studies where \code{x1i=x2i=0} may be considered to be uninformative about the size of the effect and dropping such studies has sometimes been recommended. This can be done by setting \code{drop00=TRUE}. The values for such studies will then be set to \code{NA}.
@@ -242,7 +242,7 @@ escalc(measure, formula, \dots)
          \item \code{"PR"} for the \emph{raw proportion}.
          \item \code{"PLN"} for the \emph{log transformed proportion}.
          \item \code{"PLO"} for the \emph{logit transformed proportion} (i.e., log odds).
-         \item \code{"PAS"} for the \emph{arcsine square-root transformed proportion} (i.e., the angular transformation).
+         \item \code{"PAS"} for the \emph{arcsine square root transformed proportion} (i.e., the angular transformation).
          \item \code{"PFT"} for the \emph{Freeman-Tukey double arcsine transformed proportion} (Freeman & Tukey, 1950).
          } Zero cell entries can be problematic for certain outcome measures. When \code{to="only0"} (the default), the value of \code{add} (the default is 1/2) is added to \code{xi} and \code{mi} only for studies where \code{xi} or \code{mi} is equal to 0. When \code{to="all"}, the value of \code{add} is added to \code{xi} and \code{mi} in all studies. When \code{to="if0all"}, the value of \code{add} is added in all studies, but only when there is at least one study with a zero value for \code{xi} or \code{mi}. Setting \code{to="none"} or \code{add=0} has the same effect: No adjustment to the observed values is made. Depending on the outcome measure and the data, this may lead to division by zero inside of the function (when this occurs, the resulting value is recoded to \code{NA}).
 
@@ -256,7 +256,7 @@ escalc(measure, formula, \dots)
          \itemize{
          \item \code{"IR"} for the \emph{raw incidence rate}.
          \item \code{"IRLN"} for the \emph{log transformed incidence rate}.
-         \item \code{"IRS"} for the \emph{square-root transformed incidence rate}.
+         \item \code{"IRS"} for the \emph{square root transformed incidence rate}.
          \item \code{"IRFT"} for the \emph{Freeman-Tukey transformed incidence rate} (Freeman & Tukey, 1950).
          } Studies with zero events can be problematic, especially for the log transformed incidence rate. Adding a small constant to the number of events is a common solution to this problem. When \code{to="only0"} (the default), the value of \code{add} (the default is 1/2) is added to \code{xi} only in the studies that have zero events. When \code{to="all"}, the value of \code{add} is added to \code{xi} in all studies. When \code{to="if0all"}, the value of \code{add} is added to \code{xi} in all studies, but only when there is at least one study with zero events. Setting \code{to="none"} or \code{add=0} has the same effect: No adjustment to the observed number of events is made. Depending on the outcome measure and the data, this may lead to division by zero inside of the function (when this occurs, the resulting value is recoded to \code{NA}).
 

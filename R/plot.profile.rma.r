@@ -28,7 +28,7 @@ plot.profile.rma <- function(x, ylim, pch=19, ...) {
 
    } else {
 
-      for (j in 1:x$comps) {
+      for (j in seq_len(x$comps)) {
 
          if (missing.ylim)
             ylim <- x[[j]]$ylim

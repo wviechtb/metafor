@@ -48,7 +48,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
       j <- 0
 
       if (x$withS && any(!x$vc.fix$sigma2)) {
-         for (pos in (1:x$sigma2s)[!x$vc.fix$sigma2]) {
+         for (pos in seq_len(x$sigma2s)[!x$vc.fix$sigma2]) {
             j <- j + 1
             cl.vc <- cl
             cl.vc$sigma2 <- pos
@@ -61,7 +61,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
 
       if (x$withG) {
          if (any(!x$vc.fix$tau2)) {
-            for (pos in (1:x$tau2s)[!x$vc.fix$tau2]) {
+            for (pos in seq_len(x$tau2s)[!x$vc.fix$tau2]) {
                j <- j + 1
                cl.vc <- cl
                cl.vc$tau2 <- pos
@@ -72,7 +72,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
             }
          }
          if (any(!x$vc.fix$rho)) {
-            for (pos in (1:x$rhos)[!x$vc.fix$rho]) {
+            for (pos in seq_len(x$rhos)[!x$vc.fix$rho]) {
                j <- j + 1
                cl.vc <- cl
                cl.vc$rho <- pos
@@ -86,7 +86,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
 
       if (x$withH) {
          if (any(!x$vc.fix$gamma2)) {
-            for (pos in (1:x$gamma2s)[!x$vc.fix$gamma2]) {
+            for (pos in seq_len(x$gamma2s)[!x$vc.fix$gamma2]) {
                j <- j + 1
                cl.vc <- cl
                cl.vc$gamma2 <- pos
@@ -97,7 +97,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
             }
          }
          if (any(!x$vc.fix$phi)) {
-            for (pos in (1:x$phis)[!x$vc.fix$phi]) {
+            for (pos in seq_len(x$phis)[!x$vc.fix$phi]) {
                j <- j + 1
                cl.vc <- cl
                cl.vc$phi <- pos
@@ -332,7 +332,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
          epdiff <- seq(0, abs(con$vc.min - vc), length=con$eptries+1) ### e.g., if vc.min=0, vc=.5, and eptries=10, then get 0, .05, .10, ..., .50
          epdiff <- epdiff[-(con$eptries+1)]                           ### this then strips the last entry (.50), so we get 0, .05, .10, ..., .45
 
-         for (i in 1:con$eptries) {
+         for (i in seq_len(con$eptries)) {
 
             con$vc.min <- con$vc.min + epdiff[i]
 
@@ -382,7 +382,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
          epdiff <- seq(0, abs(con$vc.max - vc), length=con$eptries+1) ### e.g., if vc.max=1, vc=.5, and eptries=10, then get 0, .05, .10, ..., .50
          epdiff <- epdiff[-(con$eptries+1)]                           ### this then strips the last entry (.50), so we get 0, .05, .10, ..., .45
 
-         for (i in 1:con$eptries) {
+         for (i in seq_len(con$eptries)) {
 
             con$vc.max <- con$vc.max - epdiff[i]
 

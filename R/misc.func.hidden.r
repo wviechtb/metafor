@@ -26,7 +26,7 @@
          stop("Cannot mix positive and negative 'btt' values.")
 
       ### keep/remove from 1:p vector as specified
-      btt <- seq.int(from=1, to=p)[btt]
+      btt <- seq_len(p)[btt]
 
       ### (1:5)[5:6] yields c(5, NA) so remove NAs if this happens
       btt <- btt[!is.na(btt)]
@@ -102,7 +102,7 @@
 
    n <- nrow(xy)
 
-   for (i in 1:n) {
+   for (i in seq_len(n)) {
       if (anyNA(xy[i,]))
          next
       xy[i,] <- sort(xy[i,])
@@ -139,6 +139,14 @@
 .tr <- function(X)
    return(sum(diag(X)))
 
+### function to obtain the trace of a matrix
+
+.is.square <- function(X)
+   NROW(X) == NCOL(X)
+
+### use NROW/NCOL to better deal with scalars; compare:
+### (V <- list(matrix(1, nrow=2, ncol=2), 3, c(1,4), cbind(c(2,1)))); sapply(V, function(x) nrow(x) == ncol(x)); sapply(V, function(x) NROW(x) == NCOL(x))
+
 ############################################################################
 
 ### function to test whether a vector is all equal to 1s (e.g., to find intercept(s) in a model matrix)
@@ -151,7 +159,7 @@
 ### function to test each row for any missings in the lower triangular part of a matrix
 
 .anyNAlt <- function(x)
-   return(sapply(1:nrow(x), FUN=function(i) anyNA(x[i,1:i])))
+   return(sapply(seq_len(nrow(x)), FUN=function(i) anyNA(x[i,seq_len(i)])))
 
 ### function above is faster (and does not require making a copy of the object)
 
@@ -389,10 +397,10 @@
 
       if (vctransf) {
          ### sigma2 is optimized in log-space, so exponentiate
-         sigma2 <- ifelse(is.na(sigma2.val), exp(par[1:sigma2s]), sigma2.val)
+         sigma2 <- ifelse(is.na(sigma2.val), exp(par[seq_len(sigma2s)]), sigma2.val)
       } else {
          ### for Hessian computation, leave as is
-         sigma2 <- ifelse(is.na(sigma2.val), par[1:sigma2s], sigma2.val)
+         sigma2 <- ifelse(is.na(sigma2.val), par[seq_len(sigma2s)], sigma2.val)
          sigma2[sigma2 < 0] <- 0
       }
 
@@ -940,9 +948,9 @@
       }
       if (measure == "IRSD") {
          if (transf.char == "FALSE" && atransf.char == "FALSE") {
-            lab <- "Square-Root Transformed Incidence Rate Difference"
+            lab <- "Square Root Transformed Incidence Rate Difference"
          } else {
-            lab <- "Transformed Square-Root Transformed Incidence Rate Difference"
+            lab <- "Transformed Square Root Transformed Incidence Rate Difference"
          }
       }
       ######################################################################
@@ -1074,11 +1082,11 @@
       }
       if (measure == "IRS") {
          if (transf.char == "FALSE" && atransf.char == "FALSE") {
-            lab <- "Square-Root Transformed Incidence Rate"
+            lab <- "Square Root Transformed Incidence Rate"
          } else {
-            lab <- "Transformed Square-Root Transformed Incidence Rate"
+            lab <- "Transformed Square Root Transformed Incidence Rate"
             if (atransf.char == "transf.isqrt" || atransf.char == "transf.isqrt.int")
-               lab <- "Incidence Rate (square-root scale)"
+               lab <- "Incidence Rate (square root scale)"
             if (transf.char == "transf.isqrt" || transf.char == "transf.isqrt.int")
                lab <- "Incidence Rate"
          }
@@ -1514,7 +1522,7 @@
    if (length(g) != length(x))
       stop("Length of 'g' and 'x' arguments do not match.")
 
-   for (i in 1:k) {
+   for (i in seq_len(k)) {
 
       if (g[i] > (a+b)) {
          res[i] <- gsl::hyperg_2F1(a, b, g[i], x[i])

@@ -25,9 +25,9 @@ print.regtest.rma <- function(x, digits, ret.fit, ...) {
    if (x$predictor == "ninv")
       cat("predictor: inverse of the sample size\n")
    if (x$predictor == "sqrtni")
-      cat("predictor: square-root sample size\n")
+      cat("predictor: square root sample size\n")
    if (x$predictor == "sqrtninv")
-      cat("predictor: inverse of the square-root sample size\n")
+      cat("predictor: inverse of the square root sample size\n")
 
    if (ret.fit) {
       print(x$fit)

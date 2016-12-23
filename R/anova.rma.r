@@ -119,7 +119,7 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
          ### create a data frame with each row specifying the linear combination tested
 
          hyp <- rep("", m)
-         for (j in 1:m) {
+         for (j in seq_len(m)) {
             Lj <- round(L[j,], digits=digits) ### coefficients for the jth contrast
             sel <- Lj != 0 ### TRUE if coefficient is != 0
             hyp[j] <- paste(paste(Lj[sel], rownames(b)[sel], sep="*"), collapse=" + ") ### coefficient*variable + coefficient*variable ...

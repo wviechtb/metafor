@@ -174,11 +174,8 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    if (is.list(V)) {
 
-      rows <- sapply(V, NROW) ### use NROW/NCOL preferable here (to better deal with scalars); compare:
-      cols <- sapply(V, NCOL) ### (V <- list(matrix(1, nrow=2, ncol=2), 3, c(1,4), cbind(c(2,1)))); sapply(V, NROW); sapply(V, NCOL); sapply(V, nrow); sapply(V, ncol)
-
-      if (any(rows != cols))
-         stop("List elements in 'V' must be square matrices.")
+      if (any(!sapply(V, .is.square)))
+         stop("All list elements in 'V' must be square matrices.")
 
       ### need to do this first, since is.vector(V) is TRUE for lists and so that further code works
 
@@ -201,14 +198,14 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       V <- as.matrix(V)
 
    ### remove row and column names (important for isSymmetric() function)
-   ### (but only do this if V has row/column names)
+   ### (but only do this if V has row/column names to avoid making an unnecessary copy)
 
    if (!is.null(dimnames(V)))
       V <- unname(V)
 
    ### check whether V is square and symmetric
 
-   if (dim(V)[1] != dim(V)[2])
+   if (!.is.square(V))
       stop("'V' must be a square matrix.")
 
    if (!isSymmetric(V)) ### note: copy of V is made when doing this
@@ -216,7 +213,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    ### check length of yi and V
 
-   if (dim(V)[1] != k)
+   if (nrow(V) != k)
       stop("Length of 'yi' and length/dimensions of 'V' are not the same.")
 
    ### force V to be sparse when sparse=TRUE (and V is not yet sparse)
@@ -252,14 +249,14 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
          A <- as.matrix(A)
 
       ### remove row and column names (important for isSymmetric() function)
-      ### (but only do this if A has row/column names)
+      ### (but only do this if A has row/column names to avoid making an unnecessary copy)
 
       if (!is.null(dimnames(A)))
          A <- unname(A)
 
       ### check whether A is square and symmetric
 
-      if (dim(A)[1] != dim(A)[2])
+      if (!.is.square(A))
          stop("'W' must be a square matrix.")
 
       if (!isSymmetric(A))
@@ -267,7 +264,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
       ### check length of yi and A
 
-      if (dim(A)[1] != k)
+      if (nrow(A) != k)
          stop("Length of 'yi' and length/dimensions of 'W' are not the same.")
 
       ### force A to be sparse when sparse=TRUE (and A is not yet sparse)
@@ -375,7 +372,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
       ### for formulas with slashes, create interaction terms
 
-      for (j in 1:length(has.slash)) {
+      for (j in seq_along(has.slash)) {
 
          if (!has.slash[j])
             next
@@ -725,12 +722,12 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
             ### check if given R matrices are square and symmetric
 
-            if (any(sapply(R[Rfix], function(x) dim(x)[1] != dim(x)[2])))
+            if (any(!sapply(R[Rfix], .is.square)))
                stop("Elements of 'R' must be square matrices.")
-            if (any(sapply(R[Rfix], function(x) !isSymmetric(unname(x)))))
+            if (any(!sapply(R[Rfix], function(x) isSymmetric(unname(x)))))
                stop("Elements of 'R' must be symmetric matrices.")
 
-            for (j in 1:length(R)) { ### not sure how this can be done with lapply (i.e., without looping)
+            for (j in seq_along(R)) { ### not sure how this can be done with lapply (i.e., without looping)
 
                if (!Rfix[j])
                   next
@@ -774,7 +771,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
             #if (any(sapply(R[Rfix], function(x) any(eigen(x, symmetric=TRUE, only.values=TRUE)$values <= .Machine$double.eps)))) ### any eigenvalue below double.eps is essentially 0
             #   stop("Matrix in R is not positive definite.")
 
-            for (j in 1:length(R)) { ### not sure how this can be done with lapply (i.e., without looping)
+            for (j in seq_along(length(R))) { ### not sure how this can be done with lapply (i.e., without looping)
 
                if (!Rfix[j])
                   next
@@ -1272,7 +1269,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       ### create model matrix for each element in mf.s
 
       Z.S <- vector(mode="list", length=sigma2s)
-      for (j in 1:sigma2s) {
+      for (j in seq_len(sigma2s)) {
          if (s.nlevels[j] == 1) {
             Z.S[[j]] <- cbind(rep(1,k))
          } else {
@@ -1300,7 +1297,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       ### R may contain levels that are not in ids (that's fine; just filter them out)
       ### also, R may not be in the order that Z.S is in, so this fixes that up
 
-      for (j in 1:length(R)) { ### not sure how this can be done with lapply (i.e., without looping)
+      for (j in seq_along(R)) { ### not sure how this can be done with lapply (i.e., without looping)
          if (!Rfix[j])
             next
          R[[j]] <- R[[j]][s.levels[[j]], s.levels[[j]]]
@@ -1418,7 +1415,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       ### then turn this into a list (with each element equal to a row (= study))
 
       g.levels.comb.k <- crossprod(Z.G2, Z.G1)
-      g.levels.comb.k <- split(g.levels.comb.k, 1:nrow(g.levels.comb.k))
+      g.levels.comb.k <- split(g.levels.comb.k, seq_len(nrow(g.levels.comb.k)))
 
       ### check if each study has only a single arm (could be different arms!)
       ### for "CS","HCS","AR","HAR", if yes, then must fix rho to 0 (if not already fixed)
@@ -1638,7 +1635,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       ### then turn this into a list (with each element equal to a row (= study))
 
       h.levels.comb.k <- crossprod(Z.H2, Z.H1)
-      h.levels.comb.k <- split(h.levels.comb.k, 1:nrow(h.levels.comb.k))
+      h.levels.comb.k <- split(h.levels.comb.k, seq_len(nrow(h.levels.comb.k)))
 
       ### check if each study has only a single arm (could be different arms!)
       ### for "CS","HCS","AR","HAR", if yes, then must fix phi to 0 (if not already fixed)
@@ -2354,32 +2351,32 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
       ### row/column names
 
-      colnames(hessian) <- 1:ncol(hessian) ### need to do this, so the subsetting of colnames below works
+      colnames(hessian) <- seq_len(ncol(hessian)) ### need to do this, so the subsetting of colnames below works
 
       if (sigma2s == 1) {
          colnames(hessian)[1] <- "sigma^2"
       } else {
-         colnames(hessian)[1:sigma2s] <- paste("sigma^2.", 1:sigma2s, sep="")
+         colnames(hessian)[1:sigma2s] <- paste("sigma^2.", seq_len(sigma2s), sep="")
       }
       if (tau2s == 1) {
          colnames(hessian)[sigma2s+1] <- "tau^2"
       } else {
-         colnames(hessian)[(sigma2s+1):(sigma2s+tau2s)] <- paste("tau^2.", 1:tau2s, sep="")
+         colnames(hessian)[(sigma2s+1):(sigma2s+tau2s)] <- paste("tau^2.", seq_len(tau2s), sep="")
       }
       if (rhos == 1) {
          colnames(hessian)[sigma2s+tau2s+1] <- "rho"
       } else {
-         colnames(hessian)[(sigma2s+tau2s+1):(sigma2s+tau2s+rhos)] <- paste("rho.", outer(1:g.nlevels.f[1], 1:g.nlevels.f, paste, sep=".")[upper.tri(matrix(NA,nrow=g.nlevels.f,ncol=g.nlevels.f))], sep="")
+         colnames(hessian)[(sigma2s+tau2s+1):(sigma2s+tau2s+rhos)] <- paste("rho.", outer(seq_len(g.nlevels.f[1]), seq_len(g.nlevels.f), paste, sep=".")[upper.tri(matrix(NA,nrow=g.nlevels.f,ncol=g.nlevels.f))], sep="")
       }
       if (gamma2s == 1) {
          colnames(hessian)[sigma2s+tau2s+rhos+1] <- "gamma^2"
       } else {
-         colnames(hessian)[(sigma2s+tau2s+rhos+1):(sigma2s+tau2s+rhos+gamma2s)] <- paste("gamma^2.", 1:gamma2s, sep="")
+         colnames(hessian)[(sigma2s+tau2s+rhos+1):(sigma2s+tau2s+rhos+gamma2s)] <- paste("gamma^2.", seq_len(gamma2s), sep="")
       }
       if (phis == 1) {
          colnames(hessian)[sigma2s+tau2s+rhos+gamma2s+1] <- "phi"
       } else {
-         colnames(hessian)[(sigma2s+tau2s+rhos+gamma2s+1):(sigma2s+tau2s+rhos+gamma2s+phis)] <- paste("phi.", outer(1:h.nlevels.f[1], 1:h.nlevels.f, paste, sep=".")[upper.tri(matrix(NA,nrow=h.nlevels.f,ncol=h.nlevels.f))], sep="")
+         colnames(hessian)[(sigma2s+tau2s+rhos+gamma2s+1):(sigma2s+tau2s+rhos+gamma2s+phis)] <- paste("phi.", outer(seq_len(h.nlevels.f[1]), seq_len(h.nlevels.f), paste, sep=".")[upper.tri(matrix(NA,nrow=h.nlevels.f,ncol=h.nlevels.f))], sep="")
       }
 
       rownames(hessian) <- colnames(hessian)

@@ -70,9 +70,9 @@ trimfill.rma.uni <- function(x, side, estimator="L0", maxiter=100, verbose=FALSE
 
       ### truncated data
 
-      yi.t <- yi[1:(k-k0)]
-      vi.t <- vi[1:(k-k0)]
-      weights.t <- weights[1:(k-k0)]
+      yi.t <- yi[seq_len(k-k0)]
+      vi.t <- vi[seq_len(k-k0)]
+      weights.t <- weights[seq_len(k-k0)]
 
       res <- suppressWarnings(rma.uni(yi.t, vi.t, weights=weights.t, method=x$method, weighted=x$weighted, ...))
 

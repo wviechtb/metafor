@@ -36,7 +36,7 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi, xlim, ylim, s
       j <- 0
 
       if (x$withS && any(!x$vc.fix$sigma2)) {
-         for (pos in (1:x$sigma2s)[!x$vc.fix$sigma2]) {
+         for (pos in seq_len(x$sigma2s)[!x$vc.fix$sigma2]) {
             j <- j + 1
             cl.vc <- cl
             cl.vc$sigma2 <- pos
@@ -50,7 +50,7 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi, xlim, ylim, s
 
       if (x$withG) {
          if (any(!x$vc.fix$tau2)) {
-            for (pos in (1:x$tau2s)[!x$vc.fix$tau2]) {
+            for (pos in seq_len(x$tau2s)[!x$vc.fix$tau2]) {
                j <- j + 1
                cl.vc <- cl
                cl.vc$tau2 <- pos
@@ -61,7 +61,7 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi, xlim, ylim, s
             }
          }
          if (any(!x$vc.fix$rho)) {
-            for (pos in (1:x$rhos)[!x$vc.fix$rho]) {
+            for (pos in seq_len(x$rhos)[!x$vc.fix$rho]) {
                j <- j + 1
                cl.vc <- cl
                cl.vc$rho <- pos
@@ -75,7 +75,7 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi, xlim, ylim, s
 
       if (x$withH) {
          if (any(!x$vc.fix$gamma2)) {
-            for (pos in (1:x$gamma2s)[!x$vc.fix$gamma2]) {
+            for (pos in seq_len(x$gamma2s)[!x$vc.fix$gamma2]) {
                j <- j + 1
                cl.vc <- cl
                cl.vc$gamma2 <- pos
@@ -86,7 +86,7 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi, xlim, ylim, s
             }
          }
          if (any(!x$vc.fix$phi)) {
-            for (pos in (1:x$phis)[!x$vc.fix$phi]) {
+            for (pos in seq_len(x$phis)[!x$vc.fix$phi]) {
                j <- j + 1
                cl.vc <- cl
                cl.vc$phi <- pos
@@ -318,7 +318,7 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi, xlim, ylim, s
       gamma2.arg <- ifelse(x$vc.fix$gamma2, x$gamma2, NA)
       phi.arg    <- ifelse(x$vc.fix$phi, x$phi, NA)
 
-      for (i in 1:length(vcs)) {
+      for (i in seq_along(vcs)) {
 
          if (comp == "sigma2")
             sigma2.arg[sigma2] <- vcs[i]

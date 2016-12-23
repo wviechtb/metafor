@@ -163,7 +163,7 @@ digits, cols=c("gray90","gray10"), addgrid=TRUE, pch=19, cex=1, lwd=2, ...) {
    ### add lines that have a gradient (by interpolating values)
    ### looks better this way, especially when k is low
 
-   for (i in 1:(k-1)) {
+   for (i in seq_len(k-1)) {
       estims <- approx(c(dat$estim[i], dat$estim[i+1]), n=50)$y
       yvals  <- approx(c(dat$yval[i], dat$yval[i+1]), n=50)$y
       cols.lines <- colorRampPalette(c(cols.points[i], cols.points[i+1]))(50)

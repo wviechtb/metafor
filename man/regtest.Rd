@@ -26,8 +26,8 @@ regtest(x, \dots)
    \item \code{predictor="vi"} for the sampling variance,
    \item \code{predictor="ni"} for the sample size,
    \item \code{predictor="ninv"} for the inverse of the sample size,
-   \item \code{predictor="sqrtni"} for the square-root transformed sample size, and
-   \item \code{predictor="sqrtninv"} for the inverse of the square-root transformed sample size.
+   \item \code{predictor="sqrtni"} for the square root transformed sample size, and
+   \item \code{predictor="sqrtninv"} for the inverse of the square root transformed sample size.
    } For predictors based on the sample size, the object \code{x} obviously must contain the information about the sample sizes. This will automatically be the case when \code{measure} was \emph{not} equal to \code{"GEN"} or the \code{ni} values were explicitly specified during the initial model fitting.
 
    Finally, depending on what outcome measure was used for the model fitting will determine which outcome measure is used for the regression test.

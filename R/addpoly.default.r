@@ -205,7 +205,7 @@ efac=1, col, border, cex, ...) {
             width <- rep(width, ncol(annotext))
       }
 
-      for (j in 1:ncol(annotext)) {
+      for (j in seq_len(ncol(annotext))) {
          annotext[,j] <- formatC(annotext[,j], width=width[j])
       }
 
