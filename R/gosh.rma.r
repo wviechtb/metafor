@@ -57,7 +57,7 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
    if (exact) {
 
       incl <- as.matrix(expand.grid(replicate(x$k, list(c(FALSE,TRUE))), KEEP.OUT.ATTRS=FALSE))
-      incl <- incl[apply(incl, 1, sum) >= x$p,]
+      incl <- incl[rowSums(incl) >= x$p,]
 
       ### slower, but does not generate rows that need to be filtered out (as above)
       #incl <- lapply(x$p:x$k, function(m) apply(combn(x$k,m), 2, function(l) 1:x$k %in% l))
@@ -202,7 +202,7 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
    ### in case a model fit was skipped, this guarantees that we still get
    ### a value for k in the first column of the het matrix for each model
 
-   het[,1] <- apply(incl, 1, sum)
+   het[,1] <- rowSums(incl)
 
    ### set column names
 

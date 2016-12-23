@@ -1432,7 +1432,6 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       ### take upper triangle part that corresponds to the arm combinations (in order of rho)
 
       g.levels.comb.k <- lapply(g.levels.comb.k, function(x) outer(x,x, FUN="&"))
-      g.levels.comb.k <- lapply(g.levels.comb.k, function(x) ifelse(x, 1, 0)) ### turns TRUE/FALSE into 1/0
       g.levels.comb.k <- Reduce("+", g.levels.comb.k)
       g.levels.comb.k <- g.levels.comb.k[upper.tri(g.levels.comb.k)]
 
@@ -1652,7 +1651,6 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       ### take upper triangle part that corresponds to the arm combinations (in order of phi)
 
       h.levels.comb.k <- lapply(h.levels.comb.k, function(x) outer(x,x, FUN="&"))
-      h.levels.comb.k <- lapply(h.levels.comb.k, function(x) ifelse(x, 1, 0)) ### turns TRUE/FALSE into 1/0
       h.levels.comb.k <- Reduce("+", h.levels.comb.k)
       h.levels.comb.k <- h.levels.comb.k[upper.tri(h.levels.comb.k)]
 
