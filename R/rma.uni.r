@@ -1259,7 +1259,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
             #con$alpha.init <- coef(tmp)
 
          if (link == "identity")
-            con$alpha.init <- ifelse(is.int, tmp$tau2+.01, 0)
+            con$alpha.init <- ifelse(is.int, tmp$tau2+.01, .01)
             #con$alpha.init <- rep(0.0001, q)
 
       } else {
