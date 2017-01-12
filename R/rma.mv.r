@@ -114,9 +114,10 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       }
    }
 
+   mf <- match.call()
+
    ### extract yi, V, W, ni, slab, subset, and mods values, possibly from the data frame specified via data (arguments not specified are NULL)
 
-   mf <- match.call()
    mf.yi     <- mf[[match("yi", names(mf))]]
    mf.V      <- mf[[match("V",  names(mf))]]
    mf.W      <- mf[[match("W",  names(mf))]]
@@ -138,9 +139,9 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    if (inherits(yi, "formula")) {
       options(na.action = "na.pass")                   ### set na.action to na.pass, so that NAs are not filtered out (we'll do that later)
-      mods <- model.matrix(yi, data=data)              ### extract model matrix (now mods is no longer a formula, so part further below is skipped)
+      mods <- model.matrix(yi, data=data)              ### extract model matrix (now mods is no longer a formula, so [a] further below is skipped)
       attr(mods, "assign") <- NULL                     ### strip assign attribute (not needed at the moment)
-      yi <- model.response(model.frame(yi, data=data)) ### extract dependent variable from model frame (the yi values)
+      yi <- model.response(model.frame(yi, data=data)) ### extract yi values from model frame
       options(na.action = na.act)                      ### set na.action back to na.act
       names(yi) <- NULL                                ### strip names (1:k) from yi (so res$yi is the same whether yi is a formula or not)
       intercept <- FALSE                               ### set to FALSE since formula now controls whether the intercept is included or not
@@ -303,7 +304,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       message("Creating model matrix ...")
 
    ### convert mods formula to X matrix and set intercept equal to FALSE
-   ### skipped if formula has already been specified via yi argument, since mods is then no longer a formula
+   ### skipped if formula has already been specified via yi argument, since mods is then no longer a formula (see [a])
 
    if (inherits(mods, "formula")) {
       options(na.action = "na.pass")        ### set na.action to na.pass, so that NAs are not filtered out (we'll do that later)
@@ -1207,7 +1208,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    ### check whether intercept is included and if yes, move it to the first column (NAs already removed, so na.rm=TRUE for any() not necessary)
 
-   is.int <- apply(X, 2, .is.int.func)
+   is.int <- apply(X, 2, .is.intercept)
    if (any(is.int)) {
       int.incl <- TRUE
       int.indx <- which(is.int, arr.ind=TRUE)
@@ -1968,7 +1969,6 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
    if (optimizer=="nloptr" && !is.element("ftol_rel", names(optcontrol)))
       optcontrol$ftol_rel <- 1e-8
 
-   #return(optcontrol)
    #return(list(con=con, optimizer=optimizer, optmethod=optmethod, tol=tol, posdefify=posdefify, optcontrol=optcontrol))
 
    reml <- ifelse(method=="REML", TRUE, FALSE)
@@ -2088,7 +2088,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       }
    }
 
-   alpha <- ifelse(level > 1, (100-level)/100, 1-level)
+   level <- ifelse(level > 1, (100-level)/100, ifelse(level > .5, 1-level, level))
 
    #return(list(sigma2s, tau2s, rhos, gamma2s, phis))
 
@@ -2274,7 +2274,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       if (dfs > 0) {
          QMp  <- pf(QM, df1=m, df2=dfs, lower.tail=FALSE)
          pval <- 2*pt(abs(zval), df=dfs, lower.tail=FALSE)
-         crit <- qt(alpha/2, df=dfs, lower.tail=FALSE)
+         crit <- qt(level/2, df=dfs, lower.tail=FALSE)
       } else {
          QMp  <- NaN
          pval <- NaN
@@ -2284,7 +2284,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       dfs  <- NA
       QMp  <- pchisq(QM, df=m, lower.tail=FALSE)
       pval <- 2*pnorm(abs(zval), lower.tail=FALSE)
-      crit <- qnorm(alpha/2, lower.tail=FALSE)
+      crit <- qnorm(level/2, lower.tail=FALSE)
    }
 
    ci.lb <- c(b - crit * se)
@@ -2342,7 +2342,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
          withS=withS, withG=withG, withH=withH,
          struct=struct, g.levels.r=g.levels.r, h.levels.r=h.levels.r,
          sparse=sparse, cholesky=ifelse(c(con$vctransf,con$vctransf) & cholesky, TRUE, FALSE), posdefify=posdefify, vctransf=con$vctransf,
-         verbose=verbose, digits=digits, REMLf=con$REMLf), silent=TRUE) # , method.args=list(r=6)
+         verbose=verbose, digits=digits, REMLf=con$REMLf), silent=TRUE)
 
       if (inherits(hessian, "try-error"))
          warning("Error when trying to compute Hessian.")
@@ -2465,7 +2465,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
                                        h.nlevels.f=h.nlevels.f, h.nlevels=h.nlevels,
                   g.levels.f=g.levels.f, g.levels.k=g.levels.k, g.levels.comb.k=g.levels.comb.k,
                   h.levels.f=h.levels.f, h.levels.k=h.levels.k, h.levels.comb.k=h.levels.comb.k,
-                  struct=struct, Rfix=Rfix, R=R, Rscale=Rscale, mf.r=mf.r, mf.g.f=mf.g.f, mf.h.f=mf.h.f, random=random, version=packageVersion("metafor"), call=mf)
+                  struct=struct, Rfix=Rfix, R=R, Rscale=Rscale, mf.r=mf.r, mf.g.f=mf.g.f, mf.h.f=mf.h.f, Z.S=Z.S, random=random, version=packageVersion("metafor"), call=mf)
 
    }
 

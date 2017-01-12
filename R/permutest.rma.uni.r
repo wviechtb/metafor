@@ -377,11 +377,11 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
 
    if ((is.logical(permci) && permci) || is.numeric(permci)) {
 
-      alpha <- ifelse(x$level > 1, (100-x$level)/100, 1-x$level)
+      level <- ifelse(x$level > 1, (100-x$level)/100, ifelse(x$level > .5, 1-x$level, x$level))
 
-      ### check if it is even possible to reject at alpha
+      ### check if it is even possible to reject at level
 
-      if (1/iter > alpha / ifelse(con$cialt == "one.sided", 1, 2)) {
+      if (1/iter > level / ifelse(con$cialt == "one.sided", 1, 2)) {
 
          permci <- FALSE
          warning("Cannot obtain ", x$level, "% permutation-based CI; number of permutations (", iter, ") too low.")
@@ -414,8 +414,8 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
                con$alternative <- "two.sided"
             }
 
-            #tmp <- try(uniroot(.permci, interval=c(x$ci.lb[j], coef(x)[j]), extendInt="upX", tol=con$tol, maxiter=con$maxiter, obj=x, j=j, exact=exact, iter=iter, progbar=progbar, comp.tol=comp.tol, alpha=alpha, digits=digits, control=con)$root, silent=TRUE)
-            tmp <- try(uniroot(.permci, interval=c(x$ci.lb[j] - con$distfac*(coef(x)[j] - x$ci.lb[j]), coef(x)[j]), extendInt="no", tol=con$tol, maxiter=con$maxiter, obj=x, j=j, exact=exact, iter=iter, progbar=progbar, comp.tol=comp.tol, alpha=alpha, digits=digits, control=con)$root, silent=TRUE)
+            #tmp <- try(uniroot(.permci, interval=c(x$ci.lb[j], coef(x)[j]), extendInt="upX", tol=con$tol, maxiter=con$maxiter, obj=x, j=j, exact=exact, iter=iter, progbar=progbar, comp.tol=comp.tol, level=level, digits=digits, control=con)$root, silent=TRUE)
+            tmp <- try(uniroot(.permci, interval=c(x$ci.lb[j] - con$distfac*(coef(x)[j] - x$ci.lb[j]), coef(x)[j]), extendInt="no", tol=con$tol, maxiter=con$maxiter, obj=x, j=j, exact=exact, iter=iter, progbar=progbar, comp.tol=comp.tol, level=level, digits=digits, control=con)$root, silent=TRUE)
 
             if (inherits(tmp, "try-error")) {
                ci.lb[j] <- NA
@@ -432,8 +432,8 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
                con$alternative <- "two.sided"
             }
 
-            #tmp <- try(uniroot(.permci, interval=c(coef(x)[j], x$ci.ub[j]), extendInt="downX", tol=con$tol, maxiter=con$maxiter, obj=x, j=j, exact=exact, iter=iter, progbar=progbar, comp.tol=comp.tol, alpha=alpha, digits=digits, control=con)$root, silent=TRUE)
-            tmp <- try(uniroot(.permci, interval=c(coef(x)[j], x$ci.ub[j] + con$distfac*(x$ci.ub[j] - coef(x)[j])), extendInt="no", tol=con$tol, maxiter=con$maxiter, obj=x, j=j, exact=exact, iter=iter, progbar=progbar, comp.tol=comp.tol, alpha=alpha, digits=digits, control=con)$root, silent=TRUE)
+            #tmp <- try(uniroot(.permci, interval=c(coef(x)[j], x$ci.ub[j]), extendInt="downX", tol=con$tol, maxiter=con$maxiter, obj=x, j=j, exact=exact, iter=iter, progbar=progbar, comp.tol=comp.tol, level=level, digits=digits, control=con)$root, silent=TRUE)
+            tmp <- try(uniroot(.permci, interval=c(coef(x)[j], x$ci.ub[j] + con$distfac*(x$ci.ub[j] - coef(x)[j])), extendInt="no", tol=con$tol, maxiter=con$maxiter, obj=x, j=j, exact=exact, iter=iter, progbar=progbar, comp.tol=comp.tol, level=level, digits=digits, control=con)$root, silent=TRUE)
 
             if (inherits(tmp, "try-error")) {
                ci.ub[j] <- NA

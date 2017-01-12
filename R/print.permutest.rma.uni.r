@@ -38,7 +38,8 @@ print.permutest.rma.uni <- function(x, digits, signif.stars=getOption("show.sign
    cat("Model Results:")
    cat("\n\n")
    if (x$int.only) {
-      print(res.table, quote=FALSE, right=TRUE)
+      .print.out(res.table)
+      #print(res.table, quote=FALSE, right=TRUE)
    } else {
       print(res.table, quote=FALSE, right=TRUE, print.gap=2)
    }

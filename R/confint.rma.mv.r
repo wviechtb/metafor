@@ -23,7 +23,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
    if (missing(control))
       control <- list()
 
-   alpha <- ifelse(level > 1, (100-level)/100, 1-level)
+   level <- ifelse(level > 1, (100-level)/100, ifelse(level > .5, 1-level, level))
 
    ### check if user has specified one of the sigma2, tau2, rho, gamma2, or phi argument
 
@@ -320,7 +320,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
          if (con$vc.max < vc)
             stop("Upper bound of interval to be searched must be >= estimated value of component.")
 
-         objective <- qchisq(1-alpha, df=1)
+         objective <- qchisq(1-level, df=1)
 
          ###################################################################
 
@@ -490,9 +490,9 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
    if (fixed) {
 
       if (is.element(x$test, c("t"))) {
-         crit <- qt(alpha/2, df=x$dfs, lower.tail=FALSE)
+         crit <- qt(level/2, df=x$dfs, lower.tail=FALSE)
       } else {
-         crit <- qnorm(alpha/2, lower.tail=FALSE)
+         crit <- qnorm(level/2, lower.tail=FALSE)
       }
 
       b <- c(x$b)

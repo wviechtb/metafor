@@ -19,8 +19,8 @@ confint.rma.peto <- function(object, parm, level, digits, transf, targs, ...) {
 
    #########################################################################
 
-   alpha <- ifelse(level > 1, (100-level)/100, 1-level)
-   crit  <- qnorm(alpha/2, lower.tail=FALSE)
+   level <- ifelse(level > 1, (100-level)/100, ifelse(level > .5, 1-level, level))
+   crit  <- qnorm(level/2, lower.tail=FALSE)
 
    b <- x$b
    ci.lb <- x$b - crit * x$se

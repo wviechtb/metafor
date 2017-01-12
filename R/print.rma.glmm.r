@@ -114,7 +114,8 @@ print.rma.glmm <- function(x, digits, showfit=FALSE, signif.stars=getOption("sho
    cat("Model Results:")
    cat("\n\n")
    if (x$int.only) {
-      print(res.table, quote=FALSE, right=TRUE)
+      .print.out(res.table)
+      #print(res.table, quote=FALSE, right=TRUE)
    } else {
       print(res.table, quote=FALSE, right=TRUE, print.gap=2)
    }

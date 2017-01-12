@@ -27,7 +27,7 @@ hc.rma.uni <- function(object, digits, transf, targs, control, ...) {
    if (!x$allvipos)
       stop("Cannot use method when one or more sampling variances are non-positive.")
 
-   alpha <- ifelse(x$level > 1, (100-x$level)/100, 1-x$level)
+   level <- ifelse(x$level > 1, (100-x$level)/100, ifelse(x$level > .5, 1-x$level, x$level))
 
    if (missing(control))
       control <- list()
@@ -87,12 +87,12 @@ hc.rma.uni <- function(object, digits, transf, targs, control, ...) {
       (W1/W2 - 1) * ((f^2) - 1) + (k - 1)
 
    ### equation to be solved
-   eqn <- function(t) {
+   eqn <- function(x) {
       integrand <- function(r) {
-         pgamma(finv(r/t), scale=scale(SDR*r), shape=shape(SDR*r))*dnorm(r)
+         pgamma(finv(r/x), scale=scale(SDR*r), shape=shape(SDR*r))*dnorm(r)
       }
-      integral <- integrate(integrand, lower=t, upper=Inf)$value
-      val <- integral - alpha / 2
+      integral <- integrate(integrand, lower=x, upper=Inf)$value
+      val <- integral - level / 2
       #cat(val, "\n")
       val
    }

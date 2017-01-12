@@ -37,11 +37,24 @@ test_that("calculations of escalc() are correct for measure='SMCR'.", {
    ### compute difference between treatment and control groups
    dat <- data.frame(yi = datT$yi - datC$yi, vi = datT$vi + datC$vi)
 
-   ### compare with results on page 368 (Table 1)
+   ### compare with results on page 382 (Table 5)
    expect_equivalent(round(dat$yi,2), c(0.74, 0.95, 1.81, 1.15, 0.51))
 
    ### (results for this not given in paper)
    expect_equivalent(round(dat$vi,4), c(0.1138, 0.0426, 0.2833, 0.1458, 0.1667))
+
+   ### use pooled pretest SDs
+
+   sd_pool <- sqrt((with(datT, (ni-1)*sd_pre^2) + with(datC, (ni-1)*sd_pre^2)) / (datT$ni + datC$ni - 2))
+
+   dat <- data.frame(yi = metafor:::.cmicalc(datT$ni + datC$ni - 2) * (with(datT, m_post - m_pre) - with(datC, m_post - m_pre)) / sd_pool)
+   dat$vi <- 2*(1-datT$ri) * (1/datT$ni + 1/datC$ni) + dat$yi^2 / (2*(datT$ni + datC$ni))
+
+   ### compare with results on page 382 (Table 5)
+   expect_equivalent(round(dat$yi,2), c(0.77, 0.80, 1.20, 1.05, 0.44))
+
+   ### (results for this not given in paper)
+   expect_equivalent(round(dat$vi,4), c(0.1134, 0.0350, 0.1425, 0.0681, 0.1634))
 
 })
 

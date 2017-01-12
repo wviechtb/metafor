@@ -116,7 +116,7 @@ cex, cex.lab, cex.axis, ...) {
    if (length(digits) == 1L)
       digits <- c(digits,digits)
 
-   alpha <- ifelse(level > 1, (100-level)/100, 1-level)
+   level <- ifelse(level > 1, (100-level)/100, ifelse(level > .5, 1-level, level))
 
    ### extract data and study labels
    ### note: yi.f/vi.f and pred may contain NAs
@@ -298,8 +298,8 @@ cex, cex.lab, cex.axis, ...) {
 
    ### calculate individual CI bounds
 
-   ci.lb <- yi - qnorm(alpha/2, lower.tail=FALSE) * sqrt(vi)
-   ci.ub <- yi + qnorm(alpha/2, lower.tail=FALSE) * sqrt(vi)
+   ci.lb <- yi - qnorm(level/2, lower.tail=FALSE) * sqrt(vi)
+   ci.ub <- yi + qnorm(level/2, lower.tail=FALSE) * sqrt(vi)
 
    ### if requested, apply transformation to yi's and CI bounds
 

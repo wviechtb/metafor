@@ -45,10 +45,12 @@ print.rma.peto <- function(x, digits, showfit=FALSE, ...) {
    names(res.table.exp) <- c("estimate", "ci.lb", "ci.ub")
 
    cat("\n\nModel Results (log scale):\n\n")
-   print(res.table, quote=FALSE, right=TRUE)
+   .print.out(res.table)
+   #print(res.table, quote=FALSE, right=TRUE)
 
    cat("\nModel Results (OR scale):\n\n")
-   print(res.table.exp, quote=FALSE, right=TRUE)
+   .print.out(res.table.exp)
+   #print(res.table.exp, quote=FALSE, right=TRUE)
    cat("\n")
 
    invisible()

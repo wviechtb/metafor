@@ -47,10 +47,12 @@ print.rma.mh <- function(x, digits, showfit=FALSE, ...) {
       names(res.table.exp) <- c("estimate", "ci.lb", "ci.ub")
 
       cat("\n\nModel Results (log scale):\n\n")
-      print(res.table, quote=FALSE, right=TRUE)
+      .print.out(res.table)
+      #print(res.table, quote=FALSE, right=TRUE)
 
       cat("\nModel Results (", x$measure, " scale):", "\n\n", sep="")
-      print(res.table.exp, quote=FALSE, right=TRUE)
+      .print.out(res.table.exp)
+      #print(res.table.exp, quote=FALSE, right=TRUE)
       cat("\n")
 
       if (x$measure == "OR") {
@@ -89,7 +91,8 @@ print.rma.mh <- function(x, digits, showfit=FALSE, ...) {
       names(res.table) <- c("estimate", "se", "zval", "pval", "ci.lb", "ci.ub")
 
       cat("\n\nModel Results:\n\n")
-      print(res.table, quote=FALSE, right=TRUE)
+      .print.out(res.table)
+      #print(res.table, quote=FALSE, right=TRUE)
       cat("\n")
 
    }

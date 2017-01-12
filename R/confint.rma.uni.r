@@ -58,7 +58,7 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
    #   type <- match.arg(type, c("QP", "GENQ", "PL"))
    #}
 
-   alpha <- ifelse(level > 1, (100-level)/100, 1-level)
+   level <- ifelse(level > 1, (100-level)/100, ifelse(level > .5, 1-level, level))
 
    #########################################################################
    #########################################################################
@@ -122,8 +122,8 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
          if (!x$allvipos)
             stop("Cannot compute confidence interval for the amount of (residual)\n  heterogeneity with non-positive sampling variances in the data.")
 
-         crit.u <- qchisq(alpha/2, k-p, lower.tail=FALSE) ### upper critical chi^2 value for df = k-p
-         crit.l <- qchisq(alpha/2, k-p, lower.tail=TRUE)  ### lower critical chi^2 value for df = k-p
+         crit.u <- qchisq(level/2, k-p, lower.tail=FALSE) ### upper critical chi^2 value for df = k-p
+         crit.l <- qchisq(level/2, k-p, lower.tail=TRUE)  ### lower critical chi^2 value for df = k-p
 
          QE.tau2.max <- .QE.func(con$tau2.max, Y=Y, vi=vi, X=X, k=k, objective=0, verbose=FALSE)
          QE.tau2.min <- .QE.func(con$tau2.min, Y=Y, vi=vi, X=X, k=k, objective=0, verbose=FALSE)
@@ -245,19 +245,19 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
          P <- A - A %*% X %*% stXAX %*% t(X) %*% A
          Q <- crossprod(Y,P) %*% Y
 
-         ### note: .GENQ.func(tau2val, ..., Q=Q, alpha=0, getlower=TRUE) gives the area to the right of Q for a
+         ### note: .GENQ.func(tau2val, ..., Q=Q, level=0, getlower=TRUE) gives the area to the right of Q for a
          ### distribution with specified tau2val; and as we increase tau2val, so does the area to the right of Q
 
-         GENQ.tau2.max <- .GENQ.func(con$tau2.max, P=P, vi=vi, Q=Q, alpha=0, k=k, p=p, getlower=TRUE, verbose=FALSE)
-         GENQ.tau2.min <- .GENQ.func(con$tau2.min, P=P, vi=vi, Q=Q, alpha=0, k=k, p=p, getlower=TRUE, verbose=FALSE)
+         GENQ.tau2.max <- .GENQ.func(con$tau2.max, P=P, vi=vi, Q=Q, level=0, k=k, p=p, getlower=TRUE, verbose=FALSE)
+         GENQ.tau2.min <- .GENQ.func(con$tau2.min, P=P, vi=vi, Q=Q, level=0, k=k, p=p, getlower=TRUE, verbose=FALSE)
 
          ###################################################################
 
          ### start search for upper bound
 
-         if (GENQ.tau2.min > 1 - alpha/2) {
+         if (GENQ.tau2.min > 1 - level/2) {
 
-            ### if GENQ.tau2.min is to the right of 1 - alpha/2, then both bounds are below tau2.min
+            ### if GENQ.tau2.min is to the right of 1 - level/2, then both bounds are below tau2.min
 
             tau2.lb <- con$tau2.min
             tau2.ub <- con$tau2.min
@@ -273,9 +273,9 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
 
          } else {
 
-            if (GENQ.tau2.max < 1 - alpha/2) {
+            if (GENQ.tau2.max < 1 - level/2) {
 
-               ### if GENQ.tau2.max is to the left of 1 - alpha/2, then upper bound > tau2.max, so set tau2.ub to >tau2.max
+               ### if GENQ.tau2.max is to the left of 1 - level/2, then upper bound > tau2.max, so set tau2.ub to >tau2.max
 
                tau2.ub <- con$tau2.max
                ub.sign <- ">"
@@ -283,9 +283,9 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
 
             } else {
 
-               ### now GENQ.tau2.min is to the left of 1 - alpha/2 and GENQ.tau2.max is to the right of 1 - alpha/2, so upper bound can be found
+               ### now GENQ.tau2.min is to the left of 1 - level/2 and GENQ.tau2.max is to the right of 1 - level/2, so upper bound can be found
 
-               res <- try(uniroot(.GENQ.func, c(con$tau2.min, con$tau2.max), P=P, vi=vi, Q=Q, alpha=alpha/2, k=k, p=p, getlower=FALSE, verbose=verbose, digits=digits)$root, silent=TRUE)
+               res <- try(uniroot(.GENQ.func, c(con$tau2.min, con$tau2.max), P=P, vi=vi, Q=Q, level=level/2, k=k, p=p, getlower=FALSE, verbose=verbose, digits=digits)$root, silent=TRUE)
 
                ### check if uniroot method converged
 
@@ -304,9 +304,9 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
 
          ### start search for lower bound
 
-         if (GENQ.tau2.max < alpha/2) {
+         if (GENQ.tau2.max < level/2) {
 
-            ### if GENQ.tau2.max is to the left of alpha/2, then both bounds are abova tau2.max
+            ### if GENQ.tau2.max is to the left of level/2, then both bounds are abova tau2.max
 
             tau2.lb <- con$tau2.max
             tau2.ub <- con$tau2.max
@@ -317,9 +317,9 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
 
          } else {
 
-            if (GENQ.tau2.min > alpha/2) {
+            if (GENQ.tau2.min > level/2) {
 
-               ### if GENQ.tau2.min is to the right of alpha/2, then lower bound < tau2.min, so set tau2.lb to <tau2.min
+               ### if GENQ.tau2.min is to the right of level/2, then lower bound < tau2.min, so set tau2.lb to <tau2.min
 
                tau2.lb <- con$tau2.min
                lb.conv <- TRUE
@@ -329,9 +329,9 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
 
             } else {
 
-               ### now GENQ.tau2.max is to the right of alpha/2 and GENQ.tau2.min is to the left of alpha/2, so lower bound can be found
+               ### now GENQ.tau2.max is to the right of level/2 and GENQ.tau2.min is to the left of level/2, so lower bound can be found
 
-               res <- try(uniroot(.GENQ.func, c(con$tau2.min, con$tau2.max), P=P, vi=vi, Q=Q, alpha=alpha/2, k=k, p=p, getlower=TRUE, verbose=verbose, digits=digits)$root, silent=TRUE)
+               res <- try(uniroot(.GENQ.func, c(con$tau2.min, con$tau2.max), P=P, vi=vi, Q=Q, level=level/2, k=k, p=p, getlower=TRUE, verbose=verbose, digits=digits)$root, silent=TRUE)
 
                ### check if uniroot method converged
 
@@ -365,7 +365,7 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
          if (con$tau2.max < x$tau2)
             stop("Upper bound of interval to be searched must be >= actual value of component.")
 
-         objective <- qchisq(1-alpha, df=1)
+         objective <- qchisq(1-level, df=1)
 
          ###################################################################
 
@@ -482,9 +482,9 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
    if (fixed) {
 
       if (is.element(x$test, c("knha","adhoc","t"))) {
-         crit <- qt(alpha/2, df=x$dfs, lower.tail=FALSE)
+         crit <- qt(level/2, df=x$dfs, lower.tail=FALSE)
       } else {
-         crit <- qnorm(alpha/2, lower.tail=FALSE)
+         crit <- qnorm(level/2, lower.tail=FALSE)
       }
 
       b <- c(x$b)

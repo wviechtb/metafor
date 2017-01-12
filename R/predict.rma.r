@@ -39,14 +39,14 @@ level, digits, transf, targs, ...) {
    if (missing(targs))
       targs <- NULL
 
-   alpha <- ifelse(level > 1, (100-level)/100, 1-level)
+   level <- ifelse(level > 1, (100-level)/100, ifelse(level > .5, 1-level, level))
 
    #########################################################################
 
    if (is.element(x$test, c("knha","adhoc","t"))) {
-      crit <- qt(alpha/2, df=x$dfs, lower.tail=FALSE)
+      crit <- qt(level/2, df=x$dfs, lower.tail=FALSE)
    } else {
-      crit <- qnorm(alpha/2, lower.tail=FALSE)
+      crit <- qnorm(level/2, lower.tail=FALSE)
    }
 
    if (x$int.only && !is.null(newmods))

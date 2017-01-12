@@ -6,9 +6,9 @@ H0=0, append=TRUE, replace=TRUE, level=95, digits, transf, ...) {
 
    x <- object
 
-   alpha <- ifelse(level > 1, (100-level)/100, 1-level)
+   level <- ifelse(level > 1, (100-level)/100, ifelse(level > .5, 1-level, level))
 
-   crit <- qnorm(alpha/2, lower.tail=FALSE)
+   crit <- qnorm(level/2, lower.tail=FALSE)
 
    if (length(out.names) != 4)
       stop("Argument 'out.names' must be of length 4.")

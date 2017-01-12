@@ -273,7 +273,8 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
 
    cat("Model Results:\n\n")
    if (x$int.only) {
-      print(res.table, quote=FALSE, right=TRUE)
+      .print.out(res.table)
+      #print(res.table, quote=FALSE, right=TRUE)
    } else {
       print(res.table, quote=FALSE, right=TRUE, print.gap=2)
    }

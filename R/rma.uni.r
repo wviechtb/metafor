@@ -62,6 +62,15 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
    if (!is.element(test, c("z","t","knha","adhoc")))
       stop("Invalid option selected for 'test' argument.")
 
+   if (!is.null(ddd$scale))
+      scale <- ddd$scale
+
+   if (!is.null(ddd$link)) {
+      link <- match.arg(ddd$link, c("log", "identity"))
+   } else {
+      link <- "log"
+   }
+
    #########################################################################
 
    if (verbose > 1)
@@ -80,9 +89,10 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
       }
    }
 
+   mf <- match.call()
+
    ### extract yi (either NULL if not specified, a vector, a formula, or an escalc object)
 
-   mf <- match.call()
    mf.yi <- mf[[match("yi", names(mf))]]
    yi <- eval(mf.yi, data, enclos=sys.frame(sys.parent())) ### NULL if user does not specify this
 
@@ -108,8 +118,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
    is.formula <- FALSE
 
-   #if (measure == "GEN") { ### this way, one *must* use measure="GEN" when specifying yi/vi directly
-   if (!is.null(yi)) {      ### this way, one can specify yi/vi directly, but still set 'measure' to something else
+   if (!is.null(yi)) {
 
       ### if yi is not NULL, then yi now either contains the yi values, a formula, or an escalc object
 
@@ -117,9 +126,9 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
       if (inherits(yi, "formula")) {
          options(na.action = "na.pass")                   ### set na.action to na.pass, so that NAs are not filtered out (we'll do that later)
-         mods <- model.matrix(yi, data=data)              ### extract model matrix (now mods is no longer a formula, so part further below is skipped)
+         mods <- model.matrix(yi, data=data)              ### extract model matrix (now mods is no longer a formula, so [a] further below is skipped)
          attr(mods, "assign") <- NULL                     ### strip assign attribute (not needed at the moment)
-         yi <- model.response(model.frame(yi, data=data)) ### extract dependent variable from model frame (the yi values)
+         yi <- model.response(model.frame(yi, data=data)) ### extract yi values from model frame
          options(na.action = na.act)                      ### set na.action back to na.act
          names(yi) <- NULL                                ### strip names (1:k) from yi (so res$yi is the same whether yi is a formula or not)
          intercept <- FALSE                               ### set to FALSE since formula now controls whether the intercept is included or not
@@ -144,6 +153,8 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
                stop("Cannot determine name of the 'vi' variable.")
             vi.name <- "vi"
          }
+
+         ### get vi and yi variables from the escalc object (vi first, then yi)
 
          vi <- yi[[vi.name]]
          yi <- yi[[yi.name]]
@@ -188,12 +199,12 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
       ### extract ni argument
 
-      mf.ni <- mf[[match("ni",  names(mf))]]
+      mf.ni <- mf[[match("ni", names(mf))]]
       ni <- eval(mf.ni,  data, enclos=sys.frame(sys.parent())) ### NULL if user does not specify this
 
-      ### if vi is specified, this will be used (even if user has specified sei as well)
-      ### otherwise, if user has specified sei, then square those values to get vi
-      ### if neither is specified, then throw an error
+      ### if neither vi nor sei is specified, then throw an error
+      ### if only sei is specified, then square those values to get vi
+      ### if vi is specified, use those values
 
       if (is.null(vi)) {
          if (is.null(sei)) {
@@ -204,6 +215,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
       }
 
       ### in case user passes a matrix to vi, convert it to a vector
+      ### note: only a row or column matrix with the right dimensions will end with the right length
 
       if (is.matrix(vi))
          vi <- as.vector(vi)
@@ -266,6 +278,8 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
       }
 
    } else {
+
+      ### if yi is NULL, try to compute yi/vi based on specified measure and supplied data
 
       if (is.element(measure, c("RR","OR","PETO","RD","AS","PHI","YUQ","YUY","RTET","PBIT","OR2D","OR2DN","OR2DL"))) {
 
@@ -514,7 +528,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
       message("Creating model matrix ...")
 
    ### convert mods formula to X matrix and set intercept equal to FALSE
-   ### skipped if formula has already been specified via yi argument, since mods is then no longer a formula
+   ### skipped if formula has already been specified via yi argument, since mods is then no longer a formula (see [a])
 
    if (inherits(mods, "formula")) {
       options(na.action = "na.pass")        ### set na.action to na.pass, so that NAs are not filtered out (we'll do that later)
@@ -733,7 +747,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
    ### check whether intercept is included and if yes, move it to the first column (NAs already removed, so na.rm=TRUE for any() not necessary)
 
-   is.int <- apply(X, 2, .is.int.func)
+   is.int <- apply(X, 2, .is.intercept)
    if (any(is.int)) {
       int.incl <- TRUE
       int.indx <- which(is.int, arr.ind=TRUE)
@@ -780,16 +794,18 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
    ### set default control parameters
 
    con <- list(verbose = FALSE,
-               tau2.init = NULL,     # initial value for iterative estimators (ML, REML, EB, SJ, SJIT, DLIT) or scale parameters
-               tau2.min = 0,         # lower bound for tau^2 value
-               tau2.max = 100,       # upper bound for tau^2 value (only needed for PM estimator; and passed down for tau^2 CI obtained with confint())
-               threshold = 10^-5,    # convergence threshold (for ML, REML, EB, SJIT, DLIT; also used for PM)
-               maxiter = 100,        # maximum number of iterations (for ML, REML, EB, SJIT, DLIT)
-               stepadj = 1,          # step size adjustment for Fisher scoring algorithm (for ML, REML, EB)
-               REMLf = TRUE,         # should |X'X| term be included in the REML log likelihood?
-               tol = 1e-07,          # tolerance for checking whether X'X is of full rank
-               optimizer = "nlminb", # optimizer to use ("optim", "nlminb", "uobyqa", "newuoa", "bobyqa", "nloptr") for location-scale model
-               optmethod = "BFGS")   # argument 'method' for optim() ("Nelder-Mead" and "BFGS" are sensible options)
+               tau2.init = NULL,      # initial value for iterative estimators (ML, REML, EB, SJ, SJIT, DLIT)
+               tau2.min = 0,          # lower bound for tau^2 value
+               tau2.max = 100,        # upper bound for tau^2 value (only needed for PM estimator; and passed down for tau^2 CI obtained with confint())
+               threshold = 10^-5,     # convergence threshold (for ML, REML, EB, SJIT, DLIT; also used for PM)
+               maxiter = 100,         # maximum number of iterations (for ML, REML, EB, SJIT, DLIT)
+               stepadj = 1,           # step size adjustment for Fisher scoring algorithm (for ML, REML, EB)
+               REMLf = TRUE,          # should |X'X| term be included in the REML log likelihood?
+               tol = 1e-07,           # tolerance for checking whether X'X is of full rank
+               alpha.init = NULL,     # initial values for scale parameters
+               optimizer = "nlminb",  # optimizer to use ("optim", "nlminb", "uobyqa", "newuoa", "bobyqa", "nloptr", "nlm", "hjk", "nmk", "ucminf") for location-scale model
+               optmethod = "BFGS",    # argument 'method' for optim() ("Nelder-Mead" and "BFGS" are sensible options)
+               hessianCtrl=list(r=8)) # arguments passed on to 'method.args' of hessian()
 
    ### replace defaults with any user-defined values
 
@@ -821,7 +837,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
    s2w <- 1
 
-   alpha <- ifelse(level > 1, (100-level)/100, 1-level)
+   level <- ifelse(level > 1, (100-level)/100, ifelse(level > .5, 1-level, level))
 
    Y <- as.matrix(yi)
 
@@ -829,152 +845,9 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
    ###### heterogeneity estimation
 
-   if (model == "rma.tau2") {
+   if (model == "rma.uni") {
 
-      ### code for location-scale model
-
-      if (method != "ML" && method != "REML")
-         stop("Location-scale model can only be fitted with ML or REML estimation.")
-
-      if (!weighted)
-         stop("Cannot use weighted estimation to fit location-scale model.")
-
-      if (!is.null(weights))
-         stop("Cannot use user-defined weights for location-scale model.")
-
-      if (any(eigen(crossprod(Z), symmetric=TRUE, only.values=TRUE)$values <= con$tol))
-         stop("Model matrix for scale part of the model not of full rank. Cannot fit model.")
-
-      optimizer  <- match.arg(con$optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr"))
-      optmethod  <- con$optmethod
-      optcontrol <- control[is.na(con.pos)] ### get arguments that are control arguments for optimizer
-
-      if (length(optcontrol) == 0)
-         optcontrol <- list()
-
-      ### set NLOPT_LN_BOBYQA as the default algorithm for nloptr optimizer
-      ### and by default use a relative convergence criterion of 1e-8 on the function value
-
-      if (optimizer=="nloptr" && !is.element("algorithm", names(optcontrol)))
-         optcontrol$algorithm <- "NLOPT_LN_BOBYQA"
-
-      if (optimizer=="nloptr" && !is.element("ftol_rel", names(optcontrol)))
-         optcontrol$ftol_rel <- 1e-8
-
-      reml <- ifelse(method=="REML", TRUE, FALSE)
-
-      if (is.element(optimizer, c("uobyqa","newuoa","bobyqa"))) {
-         if (!requireNamespace("minqa", quietly=TRUE))
-            stop("Please install the 'minqa' package to use this optimizer.")
-      }
-
-      if (optimizer == "nloptr") {
-         if (!requireNamespace("nloptr", quietly=TRUE))
-            stop("Please install the 'nloptr' package to use this optimizer.")
-      }
-
-      if (!requireNamespace("numDeriv", quietly=TRUE))
-         stop("Please install the 'numDeriv' package to fit a location-scale model.")
-
-      p.tau2 <- NCOL(Z)
-
-      ### check if length of tau2.init matches number of parameters
-
-      if (!is.null(con$tau2.init)) {
-         if (length(con$tau2.init) != p.tau2)
-            stop(paste("Length of 'tau2.init' argument (", length(con$tau2.init), ") does not match actual number of parameters (", p.tau2, ").", sep=""))
-      } else {
-         con$tau2.init <- rep(0.0001, p.tau2) ### need a better way to set default initial value(s)
-      }
-
-      ### obtain initial values for b (only need this when optimizing over b.fe and b.tau2 jointly)
-
-      #wi <- 1/vi
-      #W  <- diag(wi, nrow=k, ncol=k)
-      #stXWX <- .invcalc(X=X, W=W, k=k)
-      #b     <- stXWX %*% crossprod(X,W) %*% Y
-
-      if (optimizer=="optim")
-         par.arg <- "par"
-      if (optimizer=="nlminb")
-         par.arg <- "start"
-      if (is.element(optimizer, c("uobyqa","newuoa","bobyqa"))) {
-         par.arg <- "par"
-         optimizer <- paste0("minqa::", optimizer) ### need to use this since loading nloptr masks bobyqa() and newuoa() functions
-      }
-      if (optimizer=="nloptr") {
-         par.arg <- "x0"
-         optimizer <- paste0("nloptr::nloptr") ### need to use this due to requireNamespace()
-      }
-
-      optcall <- paste(optimizer, "(", par.arg, "=con$tau2.init, .ll.rma.ls, ",
-                                                    ifelse(optimizer=="optim", "method=optmethod, ", ""),
-                                                    "yi=yi, vi=vi, X=X, Z=Z, reml=reml,
-                                                    k=k, p=p,
-                                                    verbose=verbose, digits=digits, REMLf=con$REMLf, ",
-                                                    ifelse(optimizer=="nloptr::nloptr", "opts=optcontrol)", "control=optcontrol)"), sep="")
-      #return(optcall)
-      opt.res <- try(eval(parse(text=optcall)), silent=!verbose)
-      #return(opt.res)
-
-      if (inherits(opt.res, "try-error"))
-         stop("Error during optimization for location-scale model.")
-
-      if (is.element(optimizer, c("optim","nlminb")) && opt.res$convergence != 0)
-         stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (convergence = ", opt.res$convergence, ")."))
-
-      if (is.element(optimizer, c("minqa::uobyqa","minqa::newuoa","minqa::bobyqa")) && opt.res$ierr != 0)
-         stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (ierr = ", opt.res$ierr, ")."))
-
-      if (optimizer=="nloptr::nloptr" && !(opt.res$status >= 1 && opt.res$status <= 4))
-         stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (status = ", opt.res$status, ")."))
-
-      if (verbose) {
-         cat("\n")
-         print(opt.res)
-      }
-
-      ### copy 'solution' to 'par' so code below works (all other optimizers use 'par' for the solution)
-
-      if (optimizer=="nloptr::nloptr")
-         opt.res$par <- opt.res$solution
-
-      ### try to compute vcov matrix for scale parameters
-
-      vb.tau2 <- matrix(NA, nrow=p.tau2, ncol=p.tau2)
-      se.tau2 <- rep(NA, p.tau2)
-
-      h <- try(numDeriv::hessian(.ll.rma.ls, x=opt.res$par, yi=yi, vi=vi, X=X, Z=Z, reml=reml, k=k, p=p, verbose=FALSE, digits=digits, REMLf=con$REMLf), silent=TRUE)
-
-      if (!inherits(h, "try-error")) {
-         chol.h <- try(chol(h), silent=TRUE)
-         if (!inherits(chol.h, "try-error")) {
-            vb.tau2 <- chol2inv(chol.h)
-            se.tau2 <- sqrt(diag(vb.tau2))
-         }
-      }
-
-      ### scale parameter estimates
-
-      b.tau2 <- cbind(opt.res$par)
-
-      colnames(Z)[grep("(Intercept)", colnames(Z))] <- "intrcpt"
-      rownames(b.tau2) <- rownames(vb.tau2) <- colnames(vb.tau2) <- colnames(Z)
-
-      crit <- qnorm(alpha/2, lower.tail=FALSE)
-
-      names(se.tau2) <- NULL
-      zval.tau2  <- c(b.tau2/se.tau2)
-      pval.tau2  <- 2*pnorm(abs(zval.tau2), lower.tail=FALSE)
-      ci.lb.tau2 <- c(b.tau2 - crit * se.tau2)
-      ci.ub.tau2 <- c(b.tau2 + crit * se.tau2)
-
-      tau2 <- exp(as.vector(Z %*% b.tau2))
-      tau2.fix <- FALSE
-
-   } else {
-
-      ### if user has NOT specified a formula for tau2
+      ### code for standard model (rma.uni)
 
       if (is.numeric(tau2)) { ### if user has fixed the tau2 value
          tau2.fix <- TRUE
@@ -1262,7 +1135,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
       tau2 <- max(con$tau2.min, c(tau2))
 
-      ### check if any marginal variances negative (only possible if user has changed tau2.min)
+      ### check if any marginal variances are negative (only possible if user has changed tau2.min)
 
       if (!is.na(tau2) && any(tau2 + vi < 0))
          stop("Some marginal variances are negative.")
@@ -1277,33 +1150,261 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
       ### standard error of the tau^2 estimators (also when the user has fixed/specified a tau^2 value)
       ### see notes.pdf and note: .tr(P%*%P) = sum(P*t(P)) = sum(P*P) (since P is symmetric)
 
-      if (method == "HS") {
+      if (method == "HS")
          se.tau2 <- sqrt(1/sum(wi)^2 * (2*(k-p) + 4*max(tau2,0)*.tr(P) + 2*max(tau2,0)^2*sum(P*P))) ### note: wi = 1/vi
-      }
-      if (method == "HE") {
+      if (method == "HE")
          se.tau2 <- sqrt(1/(k-p)^2 * (2*sum(PV*t(PV)) + 4*max(tau2,0)*trPV + 2*max(tau2,0)^2*(k-p)))
-      }
-      if (method == "DL" || method == "DLIT") {
+      if (method == "DL" || method == "DLIT")
          se.tau2 <- sqrt(1/trP^2 * (2*(k-p) + 4*max(tau2,0)*trP + 2*max(tau2,0)^2*sum(P*P)))
-      }
-      if (method == "GENQ") {
+      if (method == "GENQ")
          se.tau2 <- sqrt(1/trP^2 * (2*sum(PV*t(PV)) + 4*max(tau2,0)*sum(PV*P) + 2*max(tau2,0)^2*sum(P*P)))
-      }
-      if (method == "SJ") {
+      if (method == "SJ")
          se.tau2 <- sqrt(tau2.0^2/(k-p)^2 * (2*sum(PV*t(PV)) + 4*max(tau2,0)*sum(PV*P) + 2*max(tau2,0)^2*sum(P*P)))
-      }
-      if (method == "ML") {
+      if (method == "ML")
          se.tau2 <- sqrt(2/sum(wi^2)) ### note: wi = 1/(vi + tau2) for ML, REML, EB, PM, and SJIT
-      }
-      if (method == "REML") {
+      if (method == "REML")
          se.tau2 <- sqrt(2/sum(P*P))
-      }
       if (method == "EB" || method == "PM" || method == "SJIT") {
          #V  <- diag(vi, nrow=k, ncol=k)
          #PV <- P %*% V ### careful: is not symmetric
          #se.tau2 <- sqrt((k/(k-p))^2 / sum(wi)^2 * (2*sum(PV*t(PV)) + 4*max(tau2,0)*sum(PV*P) + 2*max(tau2,0)^2*sum(P*P)))
          se.tau2 <- sqrt(2*k^2/(k-p) / sum(wi)^2) ### these two equations are actually identical, but this one is much simpler
       }
+
+   } else {
+
+      ### code for location-scale model (rma.ls)
+
+      if (method != "ML" && method != "REML")
+         stop("Location-scale model can only be fitted with ML or REML estimation.")
+
+      if (!weighted)
+         stop("Cannot use weighted estimation to fit location-scale model.")
+
+      if (!is.null(weights))
+         stop("Cannot use user-defined weights for location-scale model.")
+
+      ### drop redundant predictors
+
+      tmp <- lm(yi ~ Z - 1)
+      coef.na <- is.na(coef(tmp))
+      if (any(coef.na)) {
+         warning("Redundant predictors dropped from the scale model.")
+         Z <- Z[,!coef.na,drop=FALSE]
+      }
+
+      ### check whether model matrix is of full rank
+
+      if (any(eigen(crossprod(Z), symmetric=TRUE, only.values=TRUE)$values <= con$tol))
+         stop("Model matrix for scale part of the model not of full rank. Cannot fit model.")
+
+      optimizer  <- match.arg(con$optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","ucminf"))
+      optmethod  <- con$optmethod
+      optcontrol <- control[is.na(con.pos)] ### get arguments that are control arguments for optimizer
+
+      if (length(optcontrol) == 0)
+         optcontrol <- list()
+
+      ### set NLOPT_LN_BOBYQA as the default algorithm for nloptr optimizer
+      ### and by default use a relative convergence criterion of 1e-8 on the function value
+
+      if (optimizer=="nloptr" && !is.element("algorithm", names(optcontrol)))
+         optcontrol$algorithm <- "NLOPT_LN_BOBYQA"
+
+      if (optimizer=="nloptr" && !is.element("ftol_rel", names(optcontrol)))
+         optcontrol$ftol_rel <- 1e-8
+
+      reml <- ifelse(method=="REML", TRUE, FALSE)
+
+      if (is.element(optimizer, c("uobyqa","newuoa","bobyqa"))) {
+         if (!requireNamespace("minqa", quietly=TRUE))
+            stop("Please install the 'minqa' package to use this optimizer.")
+      }
+
+      if (optimizer == "nloptr") {
+         if (!requireNamespace("nloptr", quietly=TRUE))
+            stop("Please install the 'nloptr' package to use this optimizer.")
+      }
+
+      if (is.element(optimizer, c("hjk","nmk"))) {
+         if (!requireNamespace("dfoptim", quietly=TRUE))
+            stop("Please install the 'dfoptim' package to use this optimizer.")
+      }
+
+      if (optimizer == "ucminf") {
+         if (!requireNamespace("ucminf", quietly=TRUE))
+            stop("Please install the 'ucminf' package to use this optimizer.")
+      }
+
+      if (!requireNamespace("numDeriv", quietly=TRUE))
+         stop("Please install the 'numDeriv' package to fit a location-scale model.")
+
+      q <- NCOL(Z)
+
+      ### set alpha.init (or check if length of alpha.init matches number of parameters)
+      ### FIXME: need a better way of setting default initial values
+
+      if (is.null(con$alpha.init)) {
+
+         is.int <- apply(Z, 2, .is.intercept)
+         tmp <- rma(yi, vi, mods=X, intercept=FALSE, method="HE")
+
+         #tmp <- rstandard(tmp)
+         #tmp <- rma(log(tmp$resid^2), tmp$se^2, mods=Z, intercept=FALSE, method="FE")
+         #print(coef(tmp))
+
+         if (link == "log")
+            con$alpha.init <- ifelse(is.int, log(tmp$tau2+.01), -5)
+            #con$alpha.init <- rep(log(0.0001), q)
+            #con$alpha.init <- coef(tmp)
+
+         if (link == "identity")
+            con$alpha.init <- ifelse(is.int, tmp$tau2+.01, 0)
+            #con$alpha.init <- rep(0.0001, q)
+
+      } else {
+
+         if (length(con$alpha.init) != q)
+            stop(paste("Length of 'alpha.init' argument (", length(con$alpha.init), ") does not match actual number of parameters (", q, ").", sep=""))
+
+      }
+
+      if (verbose > 1)
+         message("Estimating scale parameters ...")
+
+      ### obtain initial values for b (only need this when optimizing over beta and alpha jointly)
+
+      #wi <- 1/vi
+      #W  <- diag(wi, nrow=k, ncol=k)
+      #stXWX <- .invcalc(X=X, W=W, k=k)
+      #b     <- stXWX %*% crossprod(X,W) %*% Y
+
+      if (optimizer=="optim") {
+         par.arg <- "par"
+         ctrl.arg <- ", control=optcontrol"
+      }
+      if (optimizer=="nlminb") {
+         par.arg <- "start"
+         ctrl.arg <- ", control=optcontrol"
+      }
+      if (is.element(optimizer, c("uobyqa","newuoa","bobyqa"))) {
+         par.arg <- "par"
+         optimizer <- paste0("minqa::", optimizer) ### need to use this since loading nloptr masks bobyqa() and newuoa() functions
+         ctrl.arg <- ", control=optcontrol"
+      }
+      if (optimizer=="nloptr") {
+         par.arg <- "x0"
+         optimizer <- paste0("nloptr::nloptr") ### need to use this due to requireNamespace()
+         ctrl.arg <- ", opts=optcontrol"
+      }
+      if (optimizer=="nlm") {
+         par.arg <- "p" ### because of this, must use argument name pX for p (number of columns in X matrix)
+         ctrl.arg <- paste(names(optcontrol), unlist(optcontrol), sep="=", collapse=", ")
+         if (nchar(ctrl.arg) != 0)
+            ctrl.arg <- paste0(", ", ctrl.arg)
+      }
+      if (is.element(optimizer, c("hjk","nmk"))) {
+         par.arg <- "par"
+         optimizer <- paste0("dfoptim::", optimizer) ### need to use this so that the optimizers can be found
+         ctrl.arg <- ", control=optcontrol"
+      }
+      if (optimizer=="ucminf") {
+         par.arg <- "par"
+         optimizer <- paste0("ucminf::ucminf") ### need to use this due to requireNamespace()
+         ctrl.arg <- ", control=optcontrol"
+      }
+
+      #return(list(con=con, optimizer=optimizer, optmethod=optmethod, optcontrol=optcontrol, ctrl.arg=ctrl.arg))
+
+      if (link == "log") {
+
+         optcall <- paste(optimizer, "(", par.arg, "=con$alpha.init, .ll.rma.ls, ", ifelse(optimizer=="optim", "method=optmethod, ", ""),
+                                                       "yi=yi, vi=vi, X=X, Z=Z, reml=reml, k=k, pX=p, verbose=verbose, digits=digits,
+                                                       REMLf=con$REMLf, link=link", ctrl.arg, ")\n", sep="")
+         #return(optcall)
+         opt.res <- try(eval(parse(text=optcall)), silent=!verbose)
+
+      }
+
+      if (link == "identity") {
+
+         optimizer <- "optim"
+
+         opt.res <- try(constrOptim(theta=con$alpha.init, f=.ll.rma.ls, grad=NULL, ui=Z, ci=rep(0,k),
+                                    yi=yi, vi=vi, X=X, Z=Z, reml=reml, k=k, pX=p, verbose=verbose, digits=digits,
+                                    REMLf=con$REMLf, link=link), silent=!verbose)
+      }
+
+      #return(opt.res)
+
+      if (inherits(opt.res, "try-error"))
+         stop("Error during optimization for scale model.")
+
+      ### convergence checks
+
+      if (is.element(optimizer, c("optim","nlminb","dfoptim::hjk","dfoptim::nmk")) && opt.res$convergence != 0)
+         stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (convergence = ", opt.res$convergence, ")."))
+
+      if (is.element(optimizer, c("minqa::uobyqa","minqa::newuoa","minqa::bobyqa")) && opt.res$ierr != 0)
+         stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (ierr = ", opt.res$ierr, ")."))
+
+      if (optimizer=="nloptr::nloptr" && !(opt.res$status >= 1 && opt.res$status <= 4))
+         stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (status = ", opt.res$status, ")."))
+
+      if (optimizer=="ucminf::ucminf" && !(opt.res$convergence == 1 || opt.res$convergence == 2))
+         stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (convergence = ", opt.res$convergence, ")."))
+
+      if (verbose > 1) {
+         cat("\n")
+         print(opt.res)
+      }
+
+      ### copy estimated values to 'par' so code below works
+
+      if (optimizer=="nloptr::nloptr")
+         opt.res$par <- opt.res$solution
+      if (optimizer=="nlm")
+         opt.res$par <- opt.res$estimate
+
+      ### try to compute vcov matrix for scale parameter estimates
+
+      h <- try(numDeriv::hessian(func=.ll.rma.ls, x=opt.res$par, method.args=con$hessianCtrl, yi=yi, vi=vi, X=X,
+                                 Z=Z, reml=reml, k=k, pX=p, verbose=FALSE, digits=digits, REMLf=con$REMLf, link=link), silent=TRUE)
+
+      if (!inherits(h, "try-error")) {
+         vb.alpha <- try(chol2inv(chol(h)), silent=TRUE)
+         if (!inherits(vb.alpha, "try-error")) {
+            se.alpha <- sqrt(diag(vb.alpha))
+         } else {
+            vb.alpha <- matrix(NA, nrow=q, ncol=q)
+            se.alpha <- rep(NA, q)
+         }
+      } else {
+         vb.alpha <- matrix(NA, nrow=q, ncol=q)
+         se.alpha <- rep(NA, q)
+      }
+
+      ### get scale parameter estimates
+
+      alpha <- cbind(opt.res$par)
+
+      colnames(Z)[grep("(Intercept)", colnames(Z))] <- "intrcpt"
+      rownames(alpha) <- rownames(vb.alpha) <- colnames(vb.alpha) <- colnames(Z)
+
+      crit <- qnorm(level/2, lower.tail=FALSE)
+
+      names(se.alpha) <- NULL
+      zval.alpha  <- c(alpha/se.alpha)
+      pval.alpha  <- 2*pnorm(abs(zval.alpha), lower.tail=FALSE)
+      ci.lb.alpha <- c(alpha - crit * se.alpha)
+      ci.ub.alpha <- c(alpha + crit * se.alpha)
+
+      if (link == "log")
+         tau2 <- exp(as.vector(Z %*% alpha))
+      if (link == "identity")
+         tau2 <- as.vector(Z %*% alpha)
+
+      tau2.fix <- FALSE
 
    }
 
@@ -1390,12 +1491,12 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
       ### note: 1) if user has specified weights, they are ignored
       ###       2) but if method="GENQ", they were used to estimate tau^2
 
-      stXX <- .invcalc(X=X, W=diag(k), k=k)
-      b    <- stXX %*% crossprod(X,Y)
-      vb   <- tcrossprod(stXX,X) %*% M %*% X %*% stXX
-      #P    <- W - W %*% X %*% tcrossprod(stXX,X) - X %*% stXX %*% crossprod(X,W) + X %*% stXX %*% crossprod(X,W) %*% X %*% tcrossprod(stXX,X)
-      #RSS.f <- crossprod(Y,P) %*% Y
+      stXX  <- .invcalc(X=X, W=diag(k), k=k)
+      b     <- stXX %*% crossprod(X,Y)
+      vb    <- tcrossprod(stXX,X) %*% M %*% X %*% stXX
       RSS.f <- sum(wi*(yi - X %*% b)^2)
+      #P     <- W - W %*% X %*% tcrossprod(stXX,X) - X %*% stXX %*% crossprod(X,W) + X %*% stXX %*% crossprod(X,W) %*% X %*% tcrossprod(stXX,X)
+      #RSS.f <- crossprod(Y,P) %*% Y
 
       ### calculate scaling factor for Knapp & Hartung method
 
@@ -1406,9 +1507,9 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
          stXWX     <- .invcalc(X=X, W=W, k=k)
          b.knha    <- stXWX %*% crossprod(X,W) %*% Y
-         #P        <- W - W %*% X %*% stXWX %*% crossprod(X,W)
-         #RSS.knha <- c(crossprod(Y,P) %*% Y)
          RSS.knha  <- sum(wi*(yi - X %*% b.knha)^2)
+         #P         <- W - W %*% X %*% stXWX %*% crossprod(X,W)
+         #RSS.knha  <- c(crossprod(Y,P) %*% Y)
 
          if (RSS.knha <= .Machine$double.eps) {
             s2w <- 0
@@ -1453,7 +1554,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
       if (dfs > 0) {
          QMp  <- pf(QM, df1=m, df2=dfs, lower.tail=FALSE)
          pval <- 2*pt(abs(zval), df=dfs, lower.tail=FALSE)
-         crit <- qt(alpha/2, df=dfs, lower.tail=FALSE)
+         crit <- qt(level/2, df=dfs, lower.tail=FALSE)
       } else {
          QMp  <- NaN
          pval <- NaN
@@ -1463,7 +1564,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
       dfs  <- NA
       QMp  <- pchisq(QM, df=m, lower.tail=FALSE)
       pval <- 2*pnorm(abs(zval), lower.tail=FALSE)
-      crit <- qnorm(alpha/2, lower.tail=FALSE)
+      crit <- qnorm(level/2, lower.tail=FALSE)
    }
 
    ci.lb <- c(b - crit * se)
@@ -1568,7 +1669,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
       message("Computing fit statistics and log likelihood ...")
 
    ### note: tau2 is not counted as a parameter when it was fixed by the user
-   parms <- p + ifelse(model == "rma.uni", ifelse(method == "FE" || tau2.fix, 0, 1), p.tau2)
+   parms <- p + ifelse(model == "rma.uni", ifelse(method == "FE" || tau2.fix, 0, 1), q)
 
    ll.ML    <- -1/2 * (k)   * log(2*base::pi)                                                                                 - 1/2 * sum(log(vi + tau2))                                                                   - 1/2 * RSS.f
    ll.REML  <- -1/2 * (k-p) * log(2*base::pi) + ifelse(con$REMLf, 1/2 * determinant(crossprod(X), logarithm=TRUE)$modulus, 0) - 1/2 * sum(log(vi + tau2)) - 1/2 * determinant(crossprod(X,W) %*% X, logarithm=TRUE)$modulus - 1/2 * RSS.f
@@ -1619,13 +1720,13 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
       if (model == "rma.ls") {
 
-         res$b.tau2     <- b.tau2
-         res$vb.tau2    <- vb.tau2
-         res$se.tau2    <- se.tau2
-         res$zval.tau2  <- zval.tau2
-         res$pval.tau2  <- pval.tau2
-         res$ci.lb.tau2 <- ci.lb.tau2
-         res$ci.ub.tau2 <- ci.ub.tau2
+         res$alpha       <- alpha
+         res$vb.alpha    <- vb.alpha
+         res$se.alpha    <- se.alpha
+         res$zval.alpha  <- zval.alpha
+         res$pval.alpha  <- pval.alpha
+         res$ci.lb.alpha <- ci.lb.alpha
+         res$ci.ub.alpha <- ci.ub.alpha
          res$Z <- Z
 
       }

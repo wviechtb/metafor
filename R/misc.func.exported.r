@@ -158,6 +158,9 @@ rbind.escalc <- function (..., deparse.level=1) {
 
 replmiss <- function(x, y) {
 
+   if (length(y) == 0L)
+      y <- NA
+
    ### catch cases where x is of length 0
 
    if (length(x) == 0L)

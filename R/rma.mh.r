@@ -63,9 +63,10 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
       }
    }
 
+   mf <- match.call()
+
    ### extract slab and subset values, possibly from the data frame specified via data (arguments not specified are NULL)
 
-   mf <- match.call()
    mf.slab   <- mf[[match("slab",   names(mf))]]
    mf.subset <- mf[[match("subset", names(mf))]]
    slab   <- eval(mf.slab,   data, enclos=sys.frame(sys.parent()))
@@ -487,7 +488,7 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
 
    #########################################################################
 
-   alpha <- ifelse(level > 1, (100-level)/100, 1-level)
+   level <- ifelse(level > 1, (100-level)/100, ifelse(level > .5, 1-level, level))
 
    CO <- COp <- MH <- MHp <- BD <- BDp <- TA <- TAp <- k.pos <- NA
 
@@ -519,8 +520,8 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
          se    <- sqrt(1/2 * (sum(Pi*Ri)/R^2 + sum(Pi*Si + Qi*Ri)/(R*S) + sum(Qi*Si)/S^2)) ### based on Robins et al. (1986)
          zval  <- b / se
          pval  <- 2*pnorm(abs(zval), lower.tail=FALSE)
-         ci.lb <- b - qnorm(alpha/2, lower.tail=FALSE) * se
-         ci.ub <- b + qnorm(alpha/2, lower.tail=FALSE) * se
+         ci.lb <- b - qnorm(level/2, lower.tail=FALSE) * se
+         ci.ub <- b + qnorm(level/2, lower.tail=FALSE) * se
       }
 
       names(b) <- "intrcpt"
@@ -597,8 +598,8 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
          se    <- sqrt(sum(((n1i/Ni)*(n2i/Ni)*(ai+ci) - (ai/Ni)*ci)) / (R*S))
          zval  <- b / se
          pval  <- 2*pnorm(abs(zval), lower.tail=FALSE)
-         ci.lb <- b - qnorm(alpha/2, lower.tail=FALSE) * se
-         ci.ub <- b + qnorm(alpha/2, lower.tail=FALSE) * se
+         ci.lb <- b - qnorm(level/2, lower.tail=FALSE) * se
+         ci.ub <- b + qnorm(level/2, lower.tail=FALSE) * se
       }
 
       names(b) <- "intrcpt"
@@ -613,8 +614,8 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
       #se   <- sqrt(sum(((ai/Ni^2)*bi*(n2i^2/n1i) + (ci/Ni^2)*di*(n1i^2/n2i))) / sum(n1i*(n2i/Ni))^2) ### equation in: Greenland & Robins (1985)
       zval  <- b / se
       pval  <- 2*pnorm(abs(zval), lower.tail=FALSE)
-      ci.lb <- b - qnorm(alpha/2, lower.tail=FALSE) * se
-      ci.ub <- b + qnorm(alpha/2, lower.tail=FALSE) * se
+      ci.lb <- b - qnorm(level/2, lower.tail=FALSE) * se
+      ci.ub <- b + qnorm(level/2, lower.tail=FALSE) * se
 
       names(b) <- "intrcpt"
       vb <- matrix(se^2, dimnames=list("intrcpt", "intrcpt"))
@@ -640,8 +641,8 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
          se    <- sqrt(sum((t1i/Ti)*(t2i/Ti)*(x1i+x2i)) / (R*S))
          zval  <- b / se
          pval  <- 2*pnorm(abs(zval), lower.tail=FALSE)
-         ci.lb <- b - qnorm(alpha/2, lower.tail=FALSE) * se
-         ci.ub <- b + qnorm(alpha/2, lower.tail=FALSE) * se
+         ci.lb <- b - qnorm(level/2, lower.tail=FALSE) * se
+         ci.ub <- b + qnorm(level/2, lower.tail=FALSE) * se
       }
 
       names(b) <- "intrcpt"
@@ -666,8 +667,8 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
       se    <- sqrt(sum(((t1i/Ti)*t2i)^2*(x1i/t1i^2+x2i/t2i^2))) / sum((t1i/Ti)*t2i) ### from Rothland et al. (2008), chapter 15
       zval  <- b / se
       pval  <- 2*pnorm(abs(zval), lower.tail=FALSE)
-      ci.lb <- b - qnorm(alpha/2, lower.tail=FALSE) * se
-      ci.ub <- b + qnorm(alpha/2, lower.tail=FALSE) * se
+      ci.lb <- b - qnorm(level/2, lower.tail=FALSE) * se
+      ci.ub <- b + qnorm(level/2, lower.tail=FALSE) * se
 
       names(b) <- "intrcpt"
       vb <- matrix(se^2, dimnames=list("intrcpt", "intrcpt"))

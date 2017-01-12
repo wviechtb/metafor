@@ -83,7 +83,7 @@ cex, cex.lab, cex.axis, ...) {
    if (length(digits) == 1L)
       digits <- c(digits,digits)
 
-   alpha <- ifelse(level > 1, (100-level)/100, 1-level)
+   level <- ifelse(level > 1, (100-level)/100, ifelse(level > .5, 1-level, level))
 
    yi <- x
 
@@ -99,7 +99,7 @@ cex, cex.lab, cex.axis, ...) {
       if (length(ci.lb) != length(ci.ub))
          stop("Length of 'ci.lb' and 'ci.ub' do not match.")
       if (missing(vi) && missing(sei)) {     ### vi/sei not specified, so calculate vi based on CI
-         vi <- ((ci.ub - ci.lb) / (2*qnorm(alpha/2, lower.tail=FALSE)))^2
+         vi <- ((ci.ub - ci.lb) / (2*qnorm(level/2, lower.tail=FALSE)))^2
       } else {
          if (missing(vi))                    ### vi not specified, but sei is, so set vi = sei^2
             vi <- sei^2
@@ -112,12 +112,12 @@ cex, cex.lab, cex.axis, ...) {
             stop("Must specify either 'vi', 'sei', or ('ci.lb', 'ci.ub') pairs.")
          } else {
             vi <- sei^2
-            ci.lb <- yi - qnorm(alpha/2, lower.tail=FALSE) * sei
-            ci.ub <- yi + qnorm(alpha/2, lower.tail=FALSE) * sei
+            ci.lb <- yi - qnorm(level/2, lower.tail=FALSE) * sei
+            ci.ub <- yi + qnorm(level/2, lower.tail=FALSE) * sei
          }
       } else {
-         ci.lb <- yi - qnorm(alpha/2, lower.tail=FALSE) * sqrt(vi)
-         ci.ub <- yi + qnorm(alpha/2, lower.tail=FALSE) * sqrt(vi)
+         ci.lb <- yi - qnorm(level/2, lower.tail=FALSE) * sqrt(vi)
+         ci.ub <- yi + qnorm(level/2, lower.tail=FALSE) * sqrt(vi)
       }
    }
 

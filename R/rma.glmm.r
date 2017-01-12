@@ -88,9 +88,10 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       }
    }
 
+   mf <- match.call()
+
    ### extract slab, subset, and mods values, possibly from the data frame specified via data (arguments not specified are NULL)
 
-   mf <- match.call()
    mf.slab   <- mf[[match("slab",   names(mf))]]
    mf.subset <- mf[[match("subset", names(mf))]]
    mf.mods   <- mf[[match("mods",   names(mf))]]
@@ -529,7 +530,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    ### check whether intercept is included and if yes, move it to the first column (NAs already removed, so na.rm=TRUE for any() not necessary)
 
-   is.int <- apply(X, 2, .is.int.func)
+   is.int <- apply(X, 2, .is.intercept)
    if (any(is.int)) {
       int.incl <- TRUE
       int.indx <- which(is.int, arr.ind=TRUE)
@@ -543,7 +544,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    ### need to do this separately for X.yi, since model matrix may have fewer rows due to removal of NA/NA pairs for yi/vi
 
-   is.int <- apply(X.yi, 2, .is.int.func)
+   is.int <- apply(X.yi, 2, .is.intercept)
    if (any(is.int)) {
       int.indx <- which(is.int, arr.ind=TRUE)
       X.yi     <- cbind(intrcpt=1, X.yi[,-int.indx, drop=FALSE]) ### note: this removes any duplicate intercepts
@@ -755,7 +756,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    se.tau2 <- I2 <- H2 <- QE <- QEp <- NA
 
-   alpha <- ifelse(level > 1, (100-level)/100, 1-level)
+   level <- ifelse(level > 1, (100-level)/100, ifelse(level > .5, 1-level, level))
 
    ###### model fitting, test statistics, and confidence intervals
 
@@ -1773,7 +1774,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       if (dfs > 0) {
          QMp  <- pf(QM, df1=m, df2=dfs, lower.tail=FALSE)
          pval <- 2*pt(abs(zval), df=dfs, lower.tail=FALSE)
-         crit <- qt(alpha/2, df=dfs, lower.tail=FALSE)
+         crit <- qt(level/2, df=dfs, lower.tail=FALSE)
       } else {
          QMp  <- NaN
          pval <- NaN
@@ -1783,7 +1784,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       dfs  <- NA
       QMp  <- pchisq(QM, df=m, lower.tail=FALSE)
       pval <- 2*pnorm(abs(zval), lower.tail=FALSE)
-      crit <- qnorm(alpha/2, lower.tail=FALSE)
+      crit <- qnorm(level/2, lower.tail=FALSE)
    }
 
    ci.lb <- c(b - crit * se)

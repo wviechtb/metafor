@@ -62,9 +62,10 @@ level=95, digits=4, verbose=FALSE, ...) {
       }
    }
 
+   mf <- match.call()
+
    ### extract slab and subset values, possibly from the data frame specified via data (arguments not specified are NULL)
 
-   mf <- match.call()
    mf.slab   <- mf[[match("slab",   names(mf))]]
    mf.subset <- mf[[match("subset", names(mf))]]
    slab   <- eval(mf.slab,   data, enclos=sys.frame(sys.parent()))
@@ -279,7 +280,7 @@ level=95, digits=4, verbose=FALSE, ...) {
 
    #########################################################################
 
-   alpha <- ifelse(level > 1, (100-level)/100, 1-level)
+   level <- ifelse(level > 1, (100-level)/100, ifelse(level > .5, 1-level, level))
 
    ###### model fitting, test statistics, and confidence intervals
 
@@ -300,8 +301,8 @@ level=95, digits=4, verbose=FALSE, ...) {
    se    <- sqrt(1/sumVi)
    zval  <- b / se
    pval  <- 2*pnorm(abs(zval), lower.tail=FALSE)
-   ci.lb <- b - qnorm(alpha/2, lower.tail=FALSE) * se
-   ci.ub <- b + qnorm(alpha/2, lower.tail=FALSE) * se
+   ci.lb <- b - qnorm(level/2, lower.tail=FALSE) * se
+   ci.ub <- b + qnorm(level/2, lower.tail=FALSE) * se
 
    names(b) <- "intrcpt"
    vb <- matrix(se^2, dimnames=list("intrcpt", "intrcpt"))

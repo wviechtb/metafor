@@ -61,7 +61,7 @@ label=FALSE, offset=0.3, pos=13, lty, ...) {
 
    if (envelope) {
 
-      alpha <- ifelse(level > 1, (100-level)/100, 1-level)
+      level <- ifelse(level > 1, (100-level)/100, ifelse(level > .5, 1-level, level))
 
       dat <- matrix(rnorm(x$k*reps), nrow=x$k, ncol=reps)
 
@@ -73,11 +73,11 @@ label=FALSE, offset=0.3, pos=13, lty, ...) {
       ei  <- ImH %*% dat
       ei  <- apply(ei, 2, sort)
       if (bonferroni) {
-         lb <- apply(ei, 1, quantile,   (alpha/2)/x$k) ### consider using rowQuantiles() from matrixStats package
-         ub <- apply(ei, 1, quantile, 1-(alpha/2)/x$k) ### consider using rowQuantiles() from matrixStats package
+         lb <- apply(ei, 1, quantile,   (level/2)/x$k) ### consider using rowQuantiles() from matrixStats package
+         ub <- apply(ei, 1, quantile, 1-(level/2)/x$k) ### consider using rowQuantiles() from matrixStats package
       } else {
-         lb <- apply(ei, 1, quantile,   (alpha/2)) ### consider using rowQuantiles() from matrixStats package
-         ub <- apply(ei, 1, quantile, 1-(alpha/2)) ### consider using rowQuantiles() from matrixStats package
+         lb <- apply(ei, 1, quantile,   (level/2)) ### consider using rowQuantiles() from matrixStats package
+         ub <- apply(ei, 1, quantile, 1-(level/2)) ### consider using rowQuantiles() from matrixStats package
       }
 
       temp.lb <- qqnorm(lb, plot.it=FALSE)

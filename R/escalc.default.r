@@ -1273,9 +1273,9 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
       sei    <- eval(mf.sei, data, enclos=sys.frame(sys.parent()))
       ni     <- eval(mf.ni,  data, enclos=sys.frame(sys.parent()))
 
-      ### if vi is specified, this will be used (even if user has specified sei as well)
-      ### otherwise, if user has specified sei, then square those values to get vi
-      ### if neither is specified, then throw an error
+      ### if neither vi nor sei is specified, then throw an error
+      ### if only sei is specified, then square those values to get vi
+      ### if vi is specified, use those values
 
       if (is.null(vi)) {
          if (is.null(sei)) {

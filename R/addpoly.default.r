@@ -44,7 +44,7 @@ efac=1, col, border, cex, ...) {
 
    #########################################################################
 
-   alpha <- ifelse(level > 1, (100-level)/100, 1-level)
+   level <- ifelse(level > 1, (100-level)/100, ifelse(level > .5, 1-level, level))
 
    yi <- x
 
@@ -61,7 +61,7 @@ efac=1, col, border, cex, ...) {
          ### note: technically assumes that the CI is a symmetric Wald-type
          ###       CI computed based on a standard normal distribution
 
-         vi <- ((ci.ub - ci.lb) / (2*qnorm(alpha/2, lower.tail=FALSE)))^2
+         vi <- ((ci.ub - ci.lb) / (2*qnorm(level/2, lower.tail=FALSE)))^2
 
       } else {
 
@@ -84,12 +84,12 @@ efac=1, col, border, cex, ...) {
             stop("Must specify either 'vi', 'sei', or ('ci.lb', 'ci.ub') pairs.")
          } else {
             vi <- sei^2
-            ci.lb <- yi - qnorm(alpha/2, lower.tail=FALSE) * sei
-            ci.ub <- yi + qnorm(alpha/2, lower.tail=FALSE) * sei
+            ci.lb <- yi - qnorm(level/2, lower.tail=FALSE) * sei
+            ci.ub <- yi + qnorm(level/2, lower.tail=FALSE) * sei
          }
       } else {
-         ci.lb <- yi - qnorm(alpha/2, lower.tail=FALSE) * sqrt(vi)
-         ci.ub <- yi + qnorm(alpha/2, lower.tail=FALSE) * sqrt(vi)
+         ci.lb <- yi - qnorm(level/2, lower.tail=FALSE) * sqrt(vi)
+         ci.ub <- yi + qnorm(level/2, lower.tail=FALSE) * sqrt(vi)
       }
 
    }

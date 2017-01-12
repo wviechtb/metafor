@@ -151,7 +151,7 @@
 
 ### function to test whether a vector is all equal to 1s (e.g., to find intercept(s) in a model matrix)
 
-.is.int.func <- function(x, eps=1e-08)
+.is.intercept <- function(x, eps=1e-08)
    return(all(abs(x - 1) < eps))
 
 ############################################################################
@@ -184,6 +184,28 @@
    ifelse(is.na(p), paste0(ifelse(showeq, "=", ""), sep, NA),
                     ifelse(p >= ncutoff, paste0(ifelse(showeq, "=", ""), sep, formatC(p, digits=digits, format="f")),
                                          paste0("<", sep, ifelse(add0, "0", ""), cutoff)))
+
+}
+
+############################################################################
+
+### function to print a named (character) vector right aligned with
+### a gap of two spaces between adjacent values and no padding
+
+.print.out <- function(x) {
+
+   if (is.null(names(x)))
+      names(x) <- 1:length(x)
+
+   len.n   <- nchar(names(x))
+   len.x   <- nchar(x)
+   len.max <- pmax(len.n, len.x)
+   format  <- sapply(len.max, function(x) paste("%", x, "s", sep=""))
+
+   row.n <- paste(sprintf(format, names(x)), collapse="  ")
+   row.x <- paste(sprintf(format, x), collapse="  ")
+
+   cat(row.n, "\n", row.x, "\n", sep="")
 
 }
 
@@ -227,7 +249,7 @@
 
 ### function for confint.rma.uni() with method="GENQ"
 
-.GENQ.func <- function(tau2val, P, vi, Q, alpha, k, p, getlower, verbose=FALSE, digits=4) {
+.GENQ.func <- function(tau2val, P, vi, Q, level, k, p, getlower, verbose=FALSE, digits=4) {
 
    S <- diag(sqrt(vi + tau2val), nrow=k, ncol=k)
    lambda <- Re(eigen(S %*% P %*% S, symmetric=TRUE, only.values=TRUE)$values)
@@ -240,9 +262,9 @@
       tmp$Qq <- tmp$res
 
    if (getlower) {
-      res <- tmp$Qq - alpha
+      res <- tmp$Qq - level
    } else {
-      res <- (1 - tmp$Qq) - alpha
+      res <- (1 - tmp$Qq) - level
    }
 
    if (verbose)
@@ -829,7 +851,7 @@
 
 }
 
-.permci <- function(val, obj, j, exact, iter, progbar, comp.tol, alpha, digits, control) {
+.permci <- function(val, obj, j, exact, iter, progbar, comp.tol, level, digits, control) {
 
    ### fit model with shifted outcome
    res <- try(suppressWarnings(rma.uni(obj$yi - c(val*obj$X[,j]), obj$vi, weights=obj$weights, mods=obj$X, intercept=FALSE, method=obj$method, weighted=obj$weighted, test=obj$test, tau2=ifelse(obj$tau2.fix, obj$tau2, NA), control=obj$control)), silent=TRUE)
@@ -840,14 +862,14 @@
    ### p-value based on permutation test
    pval <- permutest(res, exact=exact, iter=iter, progbar=FALSE, tol=comp.tol, control=control)$pval[j]
 
-   ### get difference between p-value and alpha
-   diff <- pval - alpha / ifelse(control$alternative == "two.sided", 1, 2)
+   ### get difference between p-value and level
+   diff <- pval - level / ifelse(control$alternative == "two.sided", 1, 2)
 
    ### show progress
    if (progbar)
       cat("pval =", formatC(pval, format="f", digits=digits), " diff =", formatC(diff, format="f", digits=digits, flag=" "), " val =", formatC(val, format="f", digits=digits, flag=" "), "\n")
 
-   ### penalize negative differences, which should force the CI bound to correspond to a p-value of *at least* alpha
+   ### penalize negative differences, which should force the CI bound to correspond to a p-value of *at least* level
    diff <- ifelse(diff < 0, diff*10, diff)
 
    return(diff)
@@ -1326,42 +1348,57 @@
 
 ############################################################################
 
-### -1 times the log likelihood (regular or restricted) for rma() location-scale models
+### -1 times the log likelihood (regular or restricted) for location-scale model
 
-.ll.rma.ls <- function(par, yi, vi, X, Z, reml, k, p, verbose, digits, REMLf) {
+.ll.rma.ls <- function(par, yi, vi, X, Z, reml, k, pX, verbose, digits, REMLf, link) {
 
-   #b.fe   <- par[1:p]
-   #b.tau2 <- par[-c(1:p)]
+   #beta  <- par[1:pX]
+   #alpha <- par[-c(1:pX)]
 
-   b.tau2 <- par
+   alpha <- par
 
-   ### compute predicted tau2 values and exponentiate (to force variances to be non-negative)
-   tau2 <- exp(c(Z %*% b.tau2))
+   ### compute predicted tau2 values
 
-   ### compute weights
-   wi <- 1/(vi + tau2)
+   if (link == "log")
+      tau2 <- exp(c(Z %*% alpha))
+   if (link == "identity")
+      tau2 <- c(Z %*% alpha)
 
-   ### when using this, the optimization only pertains to the parameter(s) in 'b.tau2', as 'b.fe' is then fully
-   ### determined by the current value(s) of 'b.tau2'; this is actually also how the standard RE/ME model is fitted;
-   ### but is this really the best way of doing this? one could also optimize over b.fe and b.tau2 jointly
-   W <- diag(wi, nrow=k, ncol=k)
-   stXWX <- .invcalc(X=X, W=W, k=k)
-   b.fe <- stXWX %*% crossprod(X,W) %*% as.matrix(yi)
+   if (any(tau2 < 0)) {
 
-   ### compute residual sum of squares
-   RSS.f <- sum(wi*(yi - X %*% b.fe)^2)
+      llval <- -Inf
 
-   ### log-likelihood (could leave out additive constants)
-   if (!reml) {
-      llval <- -1/2 * (k)   * log(2*base::pi)                                                                             - 1/2 * sum(log(vi + tau2))                                                                   - 1/2 * RSS.f
    } else {
-      llval <- -1/2 * (k-p) * log(2*base::pi) + ifelse(REMLf, 1/2 * determinant(crossprod(X), logarithm=TRUE)$modulus, 0) - 1/2 * sum(log(vi + tau2)) - 1/2 * determinant(crossprod(X,W) %*% X, logarithm=TRUE)$modulus - 1/2 * RSS.f
+
+      ### compute weights
+      wi <- 1/(vi + tau2)
+
+      ### when using this, the optimization only pertains to the parameter(s) in 'alpha', as 'b' is then fully
+      ### determined by the current value(s) of 'alpha'; this is actually also how the standard RE/ME model is fitted;
+      ### but is this really the best way of doing this? one could also optimize over beta and alpha jointly
+      W <- diag(wi, nrow=k, ncol=k)
+
+      #print(any(wi <= 0))
+      stXWX <- .invcalc(X=X, W=W, k=k)
+      b <- stXWX %*% crossprod(X,W) %*% as.matrix(yi)
+
+      ### compute residual sum of squares
+      RSS.f <- sum(wi*(yi - X %*% b)^2)
+
+      ### log-likelihood (could leave out additive constants)
+      if (!reml) {
+         llval <- -1/2 * (k)    * log(2*base::pi)                                                                             - 1/2 * sum(log(vi + tau2))                                                                   - 1/2 * RSS.f
+      } else {
+         llval <- -1/2 * (k-pX) * log(2*base::pi) + ifelse(REMLf, 1/2 * determinant(crossprod(X), logarithm=TRUE)$modulus, 0) - 1/2 * sum(log(vi + tau2)) - 1/2 * determinant(crossprod(X,W) %*% X, logarithm=TRUE)$modulus - 1/2 * RSS.f
+      }
+
    }
 
    if (verbose) {
       cat("ll = ", ifelse(is.na(llval), NA, formatC(llval, digits=digits, format="f", flag=" ")), " ", sep="")
-      cat("b.tau2 =", ifelse(is.na(b.tau2), NA, paste(formatC(b.tau2, digits=digits, format="f", flag=" "), " ", sep="")), "\n", sep="")
+      cat("alpha =", ifelse(is.na(alpha), NA, paste(formatC(alpha, digits=digits, format="f", flag=" "), " ", sep="")), "\n", sep="")
    }
+
    return(-1 * llval)
 
 }

@@ -28,7 +28,7 @@ lty, lwd, col, level=99.99, refline=0, ...) {
       }
    }
 
-   alpha <- ifelse(level > 1, (100-level)/100, 1-level)
+   level <- ifelse(level > 1, (100-level)/100, ifelse(level > .5, 1-level, level))
 
    #########################################################################
 
@@ -214,8 +214,8 @@ lty, lwd, col, level=99.99, refline=0, ...) {
 
    ### set x axis limits
 
-   ci.lb <- yi - qnorm(alpha/2, lower.tail=FALSE) * sqrt(vi)
-   ci.ub <- yi + qnorm(alpha/2, lower.tail=FALSE) * sqrt(vi)
+   ci.lb <- yi - qnorm(level/2, lower.tail=FALSE) * sqrt(vi)
+   ci.ub <- yi + qnorm(level/2, lower.tail=FALSE) * sqrt(vi)
 
    if (missing(xlim)) {
       xlim <- c(min(ci.lb, na.rm=TRUE),max(ci.ub, na.rm=TRUE))

@@ -115,31 +115,33 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
       cat("Model Results (Location):\n\n")
    }
    if (x$int.only) {
-      print(res.table, quote=FALSE, right=TRUE)
+      .print.out(res.table)
+      #print(res.table, quote=FALSE, right=TRUE)
    } else {
       print(res.table, quote=FALSE, right=TRUE, print.gap=2)
    }
 
    if (x$model == "rma.ls") {
 
-      res.table <- cbind(estimate=c(x$b.tau2), se=x$se.tau2, zval=x$zval.tau2, pval=x$pval.tau2, ci.lb=x$ci.lb.tau2, ci.ub=x$ci.ub.tau2)
-      rownames(res.table) <- rownames(x$b.tau2)
-      signif <- symnum(x$pval.tau2, corr=FALSE, na=FALSE, cutpoints=c(0, 0.001, 0.01, 0.05, 0.1, 1), symbols = c("***", "**", "*", ".", " "))
+      res.table <- cbind(estimate=c(x$alpha), se=x$se.alpha, zval=x$zval.alpha, pval=x$pval.alpha, ci.lb=x$ci.lb.alpha, ci.ub=x$ci.ub.alpha)
+      rownames(res.table) <- rownames(x$alpha)
+      signif <- symnum(x$pval.alpha, corr=FALSE, na=FALSE, cutpoints=c(0, 0.001, 0.01, 0.05, 0.1, 1), symbols = c("***", "**", "*", ".", " "))
       if (signif.stars) {
          res.table <- cbind(formatC(res.table, digits=digits, format="f"), signif)
          colnames(res.table)[7] <- ""
       } else {
          res.table <- formatC(res.table, digits=digits, format="f")
       }
-      res.table[,4] <- .pval(x$pval.tau2, digits=digits)
+      res.table[,4] <- .pval(x$pval.alpha, digits=digits)
 
-      if (length(x$b.tau2) == 1)
+      if (length(x$alpha) == 1)
          res.table <- res.table[1,]
 
       cat("\nModel Results (Scale):\n\n")
 
-      if (length(x$b.tau2) == 1) {
-         print(res.table, quote=FALSE, right=TRUE)
+      if (length(x$alpha) == 1) {
+         .print.out(res.table)
+         #print(res.table, quote=FALSE, right=TRUE)
       } else {
          print(res.table, quote=FALSE, right=TRUE, print.gap=2)
       }

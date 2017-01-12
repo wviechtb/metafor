@@ -9,7 +9,7 @@ robust.rma.mv <- function(x, cluster, adjust=TRUE, digits, ...) {
    if (missing(digits))
       digits <- x$digits
 
-   alpha <- ifelse(x$level > 1, (100-x$level)/100, 1-x$level)
+   level <- ifelse(x$level > 1, (100-x$level)/100, ifelse(x$level > .5, 1-x$level, x$level))
 
    #########################################################################
 
@@ -117,7 +117,7 @@ robust.rma.mv <- function(x, cluster, adjust=TRUE, digits, ...) {
    names(se) <- NULL
    tval <- c(b/se)
    pval <- 2*pt(abs(tval), df=dfs, lower.tail=FALSE)
-   crit <- qt(alpha/2, df=dfs, lower.tail=FALSE)
+   crit <- qt(level/2, df=dfs, lower.tail=FALSE)
    ci.lb <- c(b - crit * se)
    ci.ub <- c(b + crit * se)
 

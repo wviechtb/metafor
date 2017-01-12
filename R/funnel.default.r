@@ -238,27 +238,27 @@ refline=0, pch=19, pch.fill=21, ci.res=1000, ...) {
 
    if (is.element(yaxis, c("sei", "vi", "seinv", "vinv"))) {
 
-      alpha     <- ifelse(level > 1, (100-level)/100, 1-level) ### note: there may be multiple level values
-      alpha.min <- min(alpha)                                  ### note: smallest alpha is the widest CI
-      avals     <- length(alpha)
+      level     <- ifelse(level > 1, (100-level)/100, ifelse(level > .5, 1-level, level)) ### note: there may be multiple level values
+      level.min <- min(level)                                                             ### note: smallest level is the widest CI
+      lvals     <- length(level)
 
       ### calculate the CI bounds at the bottom of the figure (for the widest CI if there are multiple)
 
       if (yaxis == "sei") {
-         x.lb.bot <- refline - qnorm(alpha.min/2, lower.tail=FALSE) * sqrt(ylim[1]^2)
-         x.ub.bot <- refline + qnorm(alpha.min/2, lower.tail=FALSE) * sqrt(ylim[1]^2)
+         x.lb.bot <- refline - qnorm(level.min/2, lower.tail=FALSE) * sqrt(ylim[1]^2)
+         x.ub.bot <- refline + qnorm(level.min/2, lower.tail=FALSE) * sqrt(ylim[1]^2)
       }
       if (yaxis == "vi") {
-         x.lb.bot <- refline - qnorm(alpha.min/2, lower.tail=FALSE) * sqrt(ylim[1])
-         x.ub.bot <- refline + qnorm(alpha.min/2, lower.tail=FALSE) * sqrt(ylim[1])
+         x.lb.bot <- refline - qnorm(level.min/2, lower.tail=FALSE) * sqrt(ylim[1])
+         x.ub.bot <- refline + qnorm(level.min/2, lower.tail=FALSE) * sqrt(ylim[1])
       }
       if (yaxis == "seinv") {
-         x.lb.bot <- refline - qnorm(alpha.min/2, lower.tail=FALSE) * sqrt(1/ylim[1]^2)
-         x.ub.bot <- refline + qnorm(alpha.min/2, lower.tail=FALSE) * sqrt(1/ylim[1]^2)
+         x.lb.bot <- refline - qnorm(level.min/2, lower.tail=FALSE) * sqrt(1/ylim[1]^2)
+         x.ub.bot <- refline + qnorm(level.min/2, lower.tail=FALSE) * sqrt(1/ylim[1]^2)
       }
       if (yaxis == "vinv") {
-         x.lb.bot <- refline - qnorm(alpha.min/2, lower.tail=FALSE) * sqrt(1/ylim[1])
-         x.ub.bot <- refline + qnorm(alpha.min/2, lower.tail=FALSE) * sqrt(1/ylim[1])
+         x.lb.bot <- refline - qnorm(level.min/2, lower.tail=FALSE) * sqrt(1/ylim[1])
+         x.ub.bot <- refline + qnorm(level.min/2, lower.tail=FALSE) * sqrt(1/ylim[1])
       }
 
       if (missing(xlim)) {
@@ -357,10 +357,10 @@ refline=0, pch=19, pch.fill=21, ci.res=1000, ...) {
       if (yaxis == "vinv")
          vi.vals  <- 1/yi.vals
 
-      for (m in avals:1) {
+      for (m in lvals:1) {
 
-         ci.left  <- refline - qnorm(alpha[m]/2, lower.tail=FALSE) * sqrt(vi.vals)
-         ci.right <- refline + qnorm(alpha[m]/2, lower.tail=FALSE) * sqrt(vi.vals)
+         ci.left  <- refline - qnorm(level[m]/2, lower.tail=FALSE) * sqrt(vi.vals)
+         ci.right <- refline + qnorm(level[m]/2, lower.tail=FALSE) * sqrt(vi.vals)
 
          polygon(c(ci.left,ci.right[ci.res:1]), c(yi.vals,yi.vals[ci.res:1]), border=NA, col=shade[m], ...)
          lines(ci.left,  yi.vals, lty="dotted", ...)
