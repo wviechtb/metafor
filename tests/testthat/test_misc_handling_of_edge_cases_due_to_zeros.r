@@ -12,11 +12,11 @@ test_that("rma.peto(), rma.mh(), and rma.glmm() handle outcome1 never occurring 
    expect_that(suppressWarnings(rma.peto(ai=ai, bi=bi, ci=ci, di=di)), throws_error())
 
    expect_warning(res <- rma.mh(measure="OR", ai=ai, bi=bi, ci=ci, di=di))
-   expect_true(is.na(res$b))
+   expect_true(is.na(res$beta))
    expect_warning(res <- rma.mh(measure="RR", ai=ai, bi=bi, ci=ci, di=di))
-   expect_true(is.na(res$b))
+   expect_true(is.na(res$beta))
    expect_warning(res <- rma.mh(measure="RD", ai=ai, bi=bi, ci=ci, di=di))
-   expect_equivalent(res$b, 0)
+   expect_equivalent(res$beta, 0)
 
    skip_on_cran()
 
@@ -34,11 +34,11 @@ test_that("rma.peto(), rma.mh(), and rma.glmm() handle outcome2 never occurring 
    expect_error(suppressWarnings(rma.peto(ai=ai, bi=bi, ci=ci, di=di)))
 
    expect_warning(res <- rma.mh(measure="OR", ai=ai, bi=bi, ci=ci, di=di))
-   expect_true(is.na(res$b))
+   expect_true(is.na(res$beta))
    expect_warning(res <- rma.mh(measure="RR", ai=ai, bi=bi, ci=ci, di=di))
-   expect_equivalent(res$b, 0)
+   expect_equivalent(res$beta, 0)
    expect_warning(res <- rma.mh(measure="RD", ai=ai, bi=bi, ci=ci, di=di))
-   expect_equivalent(res$b, 0)
+   expect_equivalent(res$beta, 0)
 
    skip_on_cran()
 

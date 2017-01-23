@@ -3,6 +3,9 @@ cumul.rma.uni <- function(x, order, digits, transf, targs, ...) {
    if (!inherits(x, "rma.uni"))
       stop("Argument 'x' must be an object of class \"rma.uni\".")
 
+   if (inherits(x, "rma.ls"))
+      stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!")
+
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
@@ -35,7 +38,7 @@ cumul.rma.uni <- function(x, order, digits, transf, targs, ...) {
    not.na    <- x$not.na[order]
    slab      <- x$slab[order]
 
-   b     <- rep(NA_real_, x$k.f)
+   beta  <- rep(NA_real_, x$k.f)
    se    <- rep(NA_real_, x$k.f)
    zval  <- rep(NA_real_, x$k.f)
    pval  <- rep(NA_real_, x$k.f)
@@ -57,7 +60,7 @@ cumul.rma.uni <- function(x, order, digits, transf, targs, ...) {
       if (inherits(res, "try-error"))
          next
 
-      b[i]     <- res$b
+      beta[i]  <- res$beta
       se[i]    <- res$se
       zval[i]  <- res$zval
       pval[i]  <- res$pval
@@ -82,12 +85,12 @@ cumul.rma.uni <- function(x, order, digits, transf, targs, ...) {
 
    if (is.function(transf)) {
       if (is.null(targs)) {
-         b     <- sapply(b, transf)
+         beta  <- sapply(beta, transf)
          se    <- rep(NA,x$k.f)
          ci.lb <- sapply(ci.lb, transf)
          ci.ub <- sapply(ci.ub, transf)
       } else {
-         b     <- sapply(b, transf, targs)
+         beta  <- sapply(beta, transf, targs)
          se    <- rep(NA,x$k.f)
          ci.lb <- sapply(ci.lb, transf, targs)
          ci.ub <- sapply(ci.ub, transf, targs)
@@ -104,12 +107,12 @@ cumul.rma.uni <- function(x, order, digits, transf, targs, ...) {
    #########################################################################
 
    if (na.act == "na.omit") {
-      out <- list(estimate=b[not.na], se=se[not.na], zval=zval[not.na], pvals=pval[not.na], ci.lb=ci.lb[not.na], ci.ub=ci.ub[not.na], QE=QE[not.na], QEp=QEp[not.na], tau2=tau2[not.na], I2=I2[not.na], H2=H2[not.na])
+      out <- list(estimate=beta[not.na], se=se[not.na], zval=zval[not.na], pvals=pval[not.na], ci.lb=ci.lb[not.na], ci.ub=ci.ub[not.na], QE=QE[not.na], QEp=QEp[not.na], tau2=tau2[not.na], I2=I2[not.na], H2=H2[not.na])
       out$slab <- slab[not.na]
    }
 
    if (na.act == "na.exclude" || na.act == "na.pass") {
-      out <- list(estimate=b, se=se, zval=zval, pvals=pval, ci.lb=ci.lb, ci.ub=ci.ub, QE=QE, QEp=QEp, tau2=tau2, I2=I2, H2=H2)
+      out <- list(estimate=beta, se=se, zval=zval, pvals=pval, ci.lb=ci.lb, ci.ub=ci.ub, QE=QE, QEp=QEp, tau2=tau2, I2=I2, H2=H2)
       out$slab <- slab
    }
 

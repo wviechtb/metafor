@@ -34,7 +34,7 @@ cumul.rma.peto <- function(x, order, digits, transf, targs, ...) {
    not.na <- x$not.na[order]
    slab   <- x$slab[order]
 
-   b     <- rep(NA_real_, x$k.f)
+   beta  <- rep(NA_real_, x$k.f)
    se    <- rep(NA_real_, x$k.f)
    zval  <- rep(NA_real_, x$k.f)
    pval  <- rep(NA_real_, x$k.f)
@@ -52,7 +52,7 @@ cumul.rma.peto <- function(x, order, digits, transf, targs, ...) {
       if (inherits(res, "try-error"))
          next
 
-      b[i]     <- res$b
+      beta[i]  <- res$beta
       se[i]    <- res$se
       zval[i]  <- res$zval
       pval[i]  <- res$pval
@@ -72,12 +72,12 @@ cumul.rma.peto <- function(x, order, digits, transf, targs, ...) {
 
    if (is.function(transf)) {
       if (is.null(targs)) {
-         b     <- sapply(b, transf)
+         beta  <- sapply(beta, transf)
          se    <- rep(NA,x$k.f)
          ci.lb <- sapply(ci.lb, transf)
          ci.ub <- sapply(ci.ub, transf)
       } else {
-         b     <- sapply(b, transf, targs)
+         beta  <- sapply(beta, transf, targs)
          se    <- rep(NA,x$k.f)
          ci.lb <- sapply(ci.lb, transf, targs)
          ci.ub <- sapply(ci.ub, transf, targs)
@@ -94,12 +94,12 @@ cumul.rma.peto <- function(x, order, digits, transf, targs, ...) {
    #########################################################################
 
    if (na.act == "na.omit") {
-      out <- list(estimate=b[not.na], se=se[not.na], zval=zval[not.na], pval=pval[not.na], ci.lb=ci.lb[not.na], ci.ub=ci.ub[not.na], Q=QE[not.na], Qp=QEp[not.na])
+      out <- list(estimate=beta[not.na], se=se[not.na], zval=zval[not.na], pval=pval[not.na], ci.lb=ci.lb[not.na], ci.ub=ci.ub[not.na], Q=QE[not.na], Qp=QEp[not.na])
       out$slab <- slab[not.na]
    }
 
    if (na.act == "na.exclude" || na.act == "na.pass") {
-      out <- list(estimate=b, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, Q=QE, Qp=QEp)
+      out <- list(estimate=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, Q=QE, Qp=QEp)
       out$slab <- slab
    }
 

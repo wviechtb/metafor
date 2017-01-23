@@ -27,7 +27,7 @@ rstudent.rma.peto <- function(model, digits, ...) {
       if (inherits(res, "try-error"))
          next
 
-      delpred[i]  <- res$b
+      delpred[i]  <- res$beta
       vdelpred[i] <- res$vb
 
    }

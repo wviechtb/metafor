@@ -495,24 +495,24 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
          crit <- qnorm(level/2, lower.tail=FALSE)
       }
 
-      b <- c(x$b)
-      ci.lb <- c(x$b - crit * x$se)
-      ci.ub <- c(x$b + crit * x$se)
+      beta  <- c(x$beta)
+      ci.lb <- c(beta - crit * x$se)
+      ci.ub <- c(beta + crit * x$se)
 
       if (is.function(transf)) {
          if (is.null(targs)) {
-            b     <- sapply(b, transf)
+            beta  <- sapply(beta, transf)
             ci.lb <- sapply(ci.lb, transf)
             ci.ub <- sapply(ci.ub, transf)
          } else {
-            b     <- sapply(b, transf, targs)
+            beta  <- sapply(beta, transf, targs)
             ci.lb <- sapply(ci.lb, transf, targs)
             ci.ub <- sapply(ci.ub, transf, targs)
          }
       }
 
-      res.fixed <- cbind(estimate=b, ci.lb=ci.lb, ci.ub=ci.ub)
-      rownames(res.fixed) <- rownames(x$b)
+      res.fixed <- cbind(estimate=beta, ci.lb=ci.lb, ci.ub=ci.ub)
+      rownames(res.fixed) <- rownames(x$beta)
 
    }
 

@@ -139,7 +139,7 @@
 .tr <- function(X)
    return(sum(diag(X)))
 
-### function to obtain the trace of a matrix
+### function to check if a matrix is square
 
 .is.square <- function(X)
    NROW(X) == NCOL(X)
@@ -147,12 +147,14 @@
 ### use NROW/NCOL to better deal with scalars; compare:
 ### (V <- list(matrix(1, nrow=2, ncol=2), 3, c(1,4), cbind(c(2,1)))); sapply(V, function(x) nrow(x) == ncol(x)); sapply(V, function(x) NROW(x) == NCOL(x))
 
-############################################################################
-
 ### function to test whether a vector is all equal to 1s (e.g., to find intercept(s) in a model matrix)
 
 .is.intercept <- function(x, eps=1e-08)
    return(all(abs(x - 1) < eps))
+
+.is.dummy <- function(x, eps=1e-08)
+   return(all(abs(x) < eps | abs(x - 1) < eps))
+   #return(all(sapply(x, identical, 0) | sapply(x, identical, 1)))
 
 ############################################################################
 
@@ -510,20 +512,20 @@
 
          if (!dofit || is.null(A)) {
 
-            sX <- U %*% X.fit
-            sY <- U %*% Y
-            b  <- solve(crossprod(sX), crossprod(sX, sY))
+            sX   <- U %*% X.fit
+            sY   <- U %*% Y
+            beta <- solve(crossprod(sX), crossprod(sX, sY))
             if (dofit)
                vb <- matrix(solve(crossprod(sX)), nrow=pX, ncol=pX)
-            RSS.f <- sum(as.vector(sY - sX %*% b)^2)
+            RSS.f <- sum(as.vector(sY - sX %*% beta)^2)
 
          } else {
 
             stXAX <- chol2inv(chol(as.matrix(t(X.fit) %*% A %*% X.fit)))
             #stXAX <- tcrossprod(qr.solve(sX, diag(k)))
-            b     <- matrix(stXAX %*% crossprod(X.fit,A) %*% Y, ncol=1)
+            beta  <- matrix(stXAX %*% crossprod(X.fit,A) %*% Y, ncol=1)
             vb    <- matrix(stXAX %*% t(X.fit) %*% A %*% M %*% A %*% X.fit %*% stXAX, nrow=pX, ncol=pX)
-            RSS.f <- as.vector(t(Y - X.fit %*% b) %*% W %*% (Y - X.fit %*% b))
+            RSS.f <- as.vector(t(Y - X.fit %*% beta) %*% W %*% (Y - X.fit %*% beta))
 
          }
 
@@ -537,7 +539,7 @@
 
          if (dofit) {
 
-            res <- list(b=b, vb=vb, M=M, llvals=llvals)
+            res <- list(beta=beta, vb=vb, M=M, llvals=llvals)
 
             if (withS)
                res$sigma2 <- sigma2
@@ -602,9 +604,9 @@
       if (profile) {
 
          if (inherits(res, "try-error")) {
-            sav <- list(ll = NA, b = matrix(NA, nrow=nrow(obj$b), ncol=1), ci.lb = rep(NA, length(obj$ci.lb)), ci.ub = rep(NA, length(obj$ci.ub)))
+            sav <- list(ll = NA, beta = matrix(NA, nrow=nrow(obj$beta), ncol=1), ci.lb = rep(NA, length(obj$ci.lb)), ci.ub = rep(NA, length(obj$ci.ub)))
          } else {
-            sav <- list(ll = logLik(res), b = res$b, ci.lb = res$ci.lb, ci.ub = res$ci.ub)
+            sav <- list(ll = logLik(res), beta = res$beta, ci.lb = res$ci.lb, ci.ub = res$ci.ub)
          }
 
       }
@@ -658,9 +660,9 @@
          }
          tau2 <- 0
          if (parallel == "snow" || parallel == "multicore") {
-            sav <- list(b=est, het = c(k=k, QE=Q, I2=I2, H2=H2, tau2=tau2))
+            sav <- list(beta=est, het = c(k=k, QE=Q, I2=I2, H2=H2, tau2=tau2))
          } else {
-            sav <- list(b=est, k=k, QE=Q, I2=I2, H2=H2, tau2=tau2)
+            sav <- list(beta=est, k=k, QE=Q, I2=I2, H2=H2, tau2=tau2)
          }
 
       } else {
@@ -668,9 +670,9 @@
          res <- try(suppressWarnings(rma.uni(obj$yi, obj$vi, weights=obj$weights, mods=obj$X, intercept=FALSE, method=obj$method, weighted=obj$weighted, test=obj$test, level=obj$level, control=obj$control, tau2=ifelse(obj$tau2.fix, obj$tau2, NA), subset=sel[val,])), silent=TRUE)
 
          if (inherits(res, "try-error") || any(res$coef.na)) {
-            sav <- list(b = matrix(NA, nrow=nrow(obj$b), ncol=1), het = rep(NA, 5))
+            sav <- list(beta = matrix(NA, nrow=nrow(obj$beta), ncol=1), het = rep(NA, 5))
          } else {
-            sav <- list(b = res$b, het = c(res$k, res$QE, res$I2, res$H2, res$tau2))
+            sav <- list(beta = res$beta, het = c(res$k, res$QE, res$I2, res$H2, res$tau2))
          }
 
       }
@@ -717,9 +719,9 @@
       if (profile) {
 
          if (inherits(res, "try-error")) {
-            sav <- list(ll = NA, b = matrix(NA, nrow=nrow(obj$b), ncol=1), ci.lb = rep(NA, length(obj$ci.lb)), ci.ub = rep(NA, length(obj$ci.ub)))
+            sav <- list(ll = NA, beta = matrix(NA, nrow=nrow(obj$beta), ncol=1), ci.lb = rep(NA, length(obj$ci.lb)), ci.ub = rep(NA, length(obj$ci.ub)))
          } else {
-            sav <- list(ll = logLik(res), b = res$b, ci.lb = res$ci.lb, ci.ub = res$ci.ub)
+            sav <- list(ll = logLik(res), beta = res$beta, ci.lb = res$ci.lb, ci.ub = res$ci.ub)
          }
 
       }
@@ -766,9 +768,9 @@
       }
 
       if (inherits(res, "try-error")) {
-         sav <- list(b = NA, het = rep(NA, 5))
+         sav <- list(beta = NA, het = rep(NA, 5))
       } else {
-         sav <- list(b = res$b, het = c(res$k, res$QE, res$I2, res$H2, res$tau2))
+         sav <- list(beta = res$beta, het = c(res$k, res$QE, res$I2, res$H2, res$tau2))
       }
 
    }
@@ -789,9 +791,9 @@
       res <- try(suppressWarnings(rma.peto(ai=obj$ai, bi=obj$bi, ci=obj$ci, di=obj$di, add=obj$add, to=obj$to, drop00=obj$drop00, subset=sel[val,])), silent=TRUE)
 
       if (inherits(res, "try-error")) {
-         sav <- list(b = NA, het = rep(NA, 5))
+         sav <- list(beta = NA, het = rep(NA, 5))
       } else {
-         sav <- list(b = res$b, het = c(res$k, res$QE, res$I2, res$H2, res$tau2))
+         sav <- list(beta = res$beta, het = c(res$k, res$QE, res$I2, res$H2, res$tau2))
       }
 
    }
@@ -1302,9 +1304,9 @@
 
    p    <- ncol(X.fit)
    k    <- length(ai)
-   b    <- parms[seq_len(p)]                  ### first p elemenets in parms are the model coefficients
+   beta <- parms[seq_len(p)]                  ### first p elemenets in parms are the model coefficients
    tau2 <- ifelse(random, exp(parms[p+1]), 0) ### next value is tau^2 -- optimize over exp(tau^2) value or hold at 0 if random=FALSE
-   mu.i <- X.fit %*% cbind(b)
+   mu.i <- X.fit %*% cbind(beta)
 
    lli  <- rep(NA_real_, k)
 
@@ -1315,7 +1317,7 @@
       }
 
       if (verbose)
-         cat("ll =", formatC(sum(lli), digits=digits, format="f"), " ", formatC(b, digits=digits, format="f"), "\n")
+         cat("ll =", formatC(sum(lli), digits=digits, format="f"), " ", formatC(beta, digits=digits, format="f"), "\n")
 
    }
 
@@ -1338,7 +1340,7 @@
       }
 
       if (verbose)
-         cat("ll = ", formatC(sum(lli), digits=digits, format="f"), " ", formatC(tau2, digits=digits, format="f"), " ", formatC(b, digits=digits, format="f"), "\n")
+         cat("ll = ", formatC(sum(lli), digits=digits, format="f"), " ", formatC(tau2, digits=digits, format="f"), " ", formatC(beta, digits=digits, format="f"), "\n")
 
    }
 
@@ -1373,17 +1375,17 @@
       ### compute weights
       wi <- 1/(vi + tau2)
 
-      ### when using this, the optimization only pertains to the parameter(s) in 'alpha', as 'b' is then fully
+      ### when using this, the optimization only pertains to the parameter(s) in 'alpha', as 'beta' is then fully
       ### determined by the current value(s) of 'alpha'; this is actually also how the standard RE/ME model is fitted;
       ### but is this really the best way of doing this? one could also optimize over beta and alpha jointly
       W <- diag(wi, nrow=k, ncol=k)
 
       #print(any(wi <= 0))
       stXWX <- .invcalc(X=X, W=W, k=k)
-      b <- stXWX %*% crossprod(X,W) %*% as.matrix(yi)
+      beta <- stXWX %*% crossprod(X,W) %*% as.matrix(yi)
 
       ### compute residual sum of squares
-      RSS.f <- sum(wi*(yi - X %*% b)^2)
+      RSS.f <- sum(wi*(yi - X %*% beta)^2)
 
       ### log-likelihood (could leave out additive constants)
       if (!reml) {

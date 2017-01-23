@@ -62,8 +62,9 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, digits, ...) {
 
          ### if no weights were specified, then vb = (X'WX)^-1, so we can use that part
 
-         wi <- 1/(x$vi[ocl] + x$tau2)
-         W  <- diag(wi, nrow=x$k, ncol=x$k)
+         wi <- 1/(x$vi + x$tau2)
+         wi <- wi[ocl]
+         W <- diag(wi, nrow=x$k, ncol=x$k)
          bread <- x$vb %*% crossprod(x$X[ocl,], W)
 
       } else {
@@ -87,7 +88,7 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, digits, ...) {
 
    ### construct meat part
 
-   ei <- c(x$yi - x$X %*% x$b) ### use this instead of resid(), since this guarantees that the length is correct
+   ei <- c(x$yi - x$X %*% x$beta) ### use this instead of resid(), since this guarantees that the length is correct
    ei <- ei[ocl]
 
    cluster <- factor(cluster, levels=unique(cluster))
@@ -115,16 +116,16 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, digits, ...) {
 
    ### prepare results
 
-   b <- x$b
+   beta <- x$beta
    se <- sqrt(diag(vb))
    names(se) <- NULL
-   tval <- c(b/se)
+   tval <- c(beta/se)
    pval <- 2*pt(abs(tval), df=dfs, lower.tail=FALSE)
    crit <- qt(level/2, df=dfs, lower.tail=FALSE)
-   ci.lb <- c(b - crit * se)
-   ci.ub <- c(b + crit * se)
+   ci.lb <- c(beta - crit * se)
+   ci.ub <- c(beta + crit * se)
 
-   QM <- try(as.vector(t(b)[x$btt] %*% chol2inv(chol(vb[x$btt,x$btt])) %*% b[x$btt]), silent=TRUE)
+   QM <- try(as.vector(t(beta)[x$btt] %*% chol2inv(chol(vb[x$btt,x$btt])) %*% beta[x$btt]), silent=TRUE)
 
    if (inherits(QM, "try-error"))
       QM <- NA
@@ -137,7 +138,7 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, digits, ...) {
    ### table of cluster variable
    tcl <- table(cluster)
 
-   res <- list(b=b, se=se, tval=tval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
+   res <- list(beta=beta, se=se, tval=tval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
                k=x$k, k.f=x$k.f, p=x$p, m=x$m, n=n, dfs=dfs, tcl=tcl, QM=QM, QMp=QMp, yi.f=x$yi.f, vi.f=x$vi.f, X=x$X, X.f=x$X.f, method=x$method,
                int.only=x$int.only, int.incl=x$int.incl, test="t", btt=x$btt, intercept=x$intercept, digits=digits, level=x$level, tau2=x$tau2, slab=x$slab,
                slab.null=x$slab.null, not.na=x$not.na,

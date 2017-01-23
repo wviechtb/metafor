@@ -13,13 +13,13 @@ test_that("results match (FE model).", {
    W <- diag(1/dat$vi)
    y <- cbind(dat$yi)
 
-   b  <- solve(t(X) %*% W %*% X) %*% t(X) %*% W %*% y
+   beta <- solve(t(X) %*% W %*% X) %*% t(X) %*% W %*% y
    vb <- solve(t(X) %*% W %*% X)
 
-   expect_equivalent(res$b, b)
+   expect_equivalent(res$beta, beta)
    expect_equivalent(res$vb, vb)
 
-   yhat <- c(X %*% b)
+   yhat <- c(X %*% beta)
 
    expect_equivalent(fitted(res), yhat)
 

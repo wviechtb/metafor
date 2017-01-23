@@ -8,6 +8,9 @@ level, digits, transf, targs, ...) {
    if (!inherits(object, "rma"))
       stop("Argument 'object' must be an object of class \"rma\".")
 
+   if (inherits(object, "rma.ls"))
+      stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!")
+
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
@@ -177,7 +180,7 @@ level, digits, transf, targs, ...) {
 
          if (is.null(tau2.levels)) {
 
-            warning("Need to specify 'tau2.levels' argument to obtain credibility intervals.")
+            #warning("Need to specify 'tau2.levels' argument to obtain credibility intervals.")
 
          } else {
 
@@ -218,7 +221,7 @@ level, digits, transf, targs, ...) {
 
          if (is.null(gamma2.levels)) {
 
-            warning("Need to specify 'gamma2.levels' argument to obtain credibility intervals.")
+            #warning("Need to specify 'gamma2.levels' argument to obtain credibility intervals.")
 
          } else {
 
@@ -260,7 +263,7 @@ level, digits, transf, targs, ...) {
 
    for (i in seq_len(k.new)) {
       Xi.new   <- X.new[i,,drop=FALSE]
-      pred[i]  <- Xi.new %*% x$b
+      pred[i]  <- Xi.new %*% x$beta
       vpred[i] <- Xi.new %*% tcrossprod(x$vb, Xi.new)
    }
 

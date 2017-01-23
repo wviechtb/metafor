@@ -112,7 +112,7 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
 }
 \value{
    An object of class \code{c("rma.glmm","rma")}. The object is a list containing the following components:
-   \item{b}{estimated coefficients of the model.}
+   \item{beta}{estimated coefficients of the model.}
    \item{se}{standard errors of the coefficients.}
    \item{zval}{test statistics of the coefficients.}
    \item{pval}{p-values for the test statistics.}
@@ -155,7 +155,7 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
       \item \code{glmCtrl} is a list of named arguments to be passed on to the \code{control} argument of the \code{\link{glm}} function,
       \item \code{glmerCtrl} is a list of named arguments to be passed on to the \code{control} argument of the \code{\link[lme4]{glmer}} function, and
       \item \code{intCtrl} is a list of named arguments (i.e., \code{rel.tol} and \code{subdivisions}) to be passed on to the \code{\link{integrate}} function.
-      \item \code{hessianCtrl} is a list of named arguments to be passed on to the \code{method.args} argument of the \code{\link[numDeriv]{hessian}} function. For some borderline cases, it may be necessary to bump up the \code{r} argument to a high number to get sufficient numerical accuracy (e.g., \code{control=list(hessianCtrl=list(r=16))}).
+      \item \code{hessianCtrl} is a list of named arguments to be passed on to the \code{method.args} argument of the \code{\link[numDeriv]{hessian}} function. For some borderline cases, it may be necessary to bump up the \code{r} argument to a high number to get sufficient numerical accuracy (the default is \code{control=list(hessianCtrl=list(r=16))}).
    } Also, for \code{\link[lme4]{glmer}}, the \code{nAGQ} argument is used to specify the number of quadrature points. The default value is 7, which should provide sufficient accuracy in the evaluation of the log-likelihood in most cases, but at the expense of speed. Setting this to 1 corresponds to the Laplacian approximation (which is faster, but less accurate).
 
    Information on the progress of the various algorithms is obtained by setting \code{verbose=TRUE} or with \code{control=list(verbose=TRUE)}. Since fitting the various models can be computationally expensive, this option is quite useful to determine how the model fitting is progressing.

@@ -5,6 +5,9 @@ trimfill.rma.uni <- function(x, side, estimator="L0", maxiter=100, verbose=FALSE
    if (!inherits(x, "rma.uni"))
       stop("Argument 'x' must be an object of class \"rma.uni\".")
 
+   if (inherits(x, "rma.ls"))
+      stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!")
+
    if (!x$int.only)
       stop("Trim-and-fill method only applicable for models without moderators.")
 
@@ -28,7 +31,7 @@ trimfill.rma.uni <- function(x, side, estimator="L0", maxiter=100, verbose=FALSE
    if (is.null(side)) {
       res <- suppressWarnings(rma.uni(yi, vi, weights=weights, mods=sqrt(vi), method=x$method, weighted=x$weighted, ...))
       ### TODO: add check in case there are problems with fitting the model
-      if (res$b[2] < 0) {
+      if (res$beta[2] < 0) {
          side <- "right"
       } else {
          side <- "left"
@@ -78,9 +81,9 @@ trimfill.rma.uni <- function(x, side, estimator="L0", maxiter=100, verbose=FALSE
 
       ### intercept estimate based on truncated data
 
-      b <- c(res$b)
+      beta <- c(res$beta)
 
-      yi.c     <- yi - b                               ### centered values
+      yi.c     <- yi - beta                            ### centered values
       yi.c.r   <- rank(abs(yi.c), ties.method="first") ### ranked absolute centered values
       yi.c.r.s <- sign(yi.c) * yi.c.r                  ### signed ranked centered values
 
@@ -116,7 +119,7 @@ trimfill.rma.uni <- function(x, side, estimator="L0", maxiter=100, verbose=FALSE
       se.k0 <- max(0, se.k0)
 
       if (verbose)
-         cat("Iteration:", iter, "\tmissing =", k0, "\t  b =", ifelse(side == "right", -1*b, b), "\n")
+         cat("Iteration:", iter, "\tmissing =", k0, "\t  beta =", ifelse(side == "right", -1*beta, beta), "\n")
 
    }
 
@@ -129,9 +132,9 @@ trimfill.rma.uni <- function(x, side, estimator="L0", maxiter=100, verbose=FALSE
       ### flip data back if side is right
 
       if (side == "right") {
-         yi.c <- -1*(yi.c - b)
+         yi.c <- -1*(yi.c - beta)
       } else {
-         yi.c <- yi.c - b
+         yi.c <- yi.c - beta
       }
 
       ### create filled-in data set

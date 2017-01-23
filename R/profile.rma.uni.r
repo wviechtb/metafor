@@ -3,6 +3,9 @@ profile.rma.uni <- function(fitted, xlim, ylim, steps=20, progbar=TRUE, parallel
    if (!inherits(fitted, "rma.uni"))
       stop("Argument 'fitted' must be an object of class \"rma.uni\".")
 
+   if (inherits(fitted, "rma.ls"))
+      stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!")
+
    if (steps < 2)
       stop("Argument 'steps' must be >= 2.")
 
@@ -77,7 +80,7 @@ profile.rma.uni <- function(fitted, xlim, ylim, steps=20, progbar=TRUE, parallel
    if (parallel=="no") {
 
       lls   <- rep(NA_real_, length(vcs))
-      b     <- matrix(NA_real_, nrow=length(vcs), ncol=x$p)
+      beta  <- matrix(NA_real_, nrow=length(vcs), ncol=x$p)
       ci.lb <- matrix(NA_real_, nrow=length(vcs), ncol=x$p)
       ci.ub <- matrix(NA_real_, nrow=length(vcs), ncol=x$p)
 
@@ -95,7 +98,7 @@ profile.rma.uni <- function(fitted, xlim, ylim, steps=20, progbar=TRUE, parallel
             next
 
          lls[i] <- c(logLik(res))
-         b[i,]  <- c(res$b)
+         beta[i,]  <- c(res$beta)
          ci.lb[i,] <- c(res$ci.lb)
          ci.ub[i,] <- c(res$ci.ub)
 
@@ -130,7 +133,7 @@ profile.rma.uni <- function(fitted, xlim, ylim, steps=20, progbar=TRUE, parallel
       }
 
       lls <- sapply(res, function(z) z$ll)
-      b   <- do.call("rbind", lapply(res, function(z) t(z$b)))
+      beta  <- do.call("rbind", lapply(res, function(z) t(z$beta)))
       ci.lb <- do.call("rbind", lapply(res, function(z) t(z$ci.lb)))
       ci.ub <- do.call("rbind", lapply(res, function(z) t(z$ci.ub)))
 
@@ -138,12 +141,12 @@ profile.rma.uni <- function(fitted, xlim, ylim, steps=20, progbar=TRUE, parallel
 
    #########################################################################
 
-   b <- data.frame(b)
+   beta  <- data.frame(beta)
    ci.lb <- data.frame(ci.lb)
    ci.ub <- data.frame(ci.ub)
-   names(b) <- rownames(x$b)
-   names(ci.lb) <- rownames(x$b)
-   names(ci.ub) <- rownames(x$b)
+   names(beta)  <- rownames(x$beta)
+   names(ci.lb) <- rownames(x$beta)
+   names(ci.ub) <- rownames(x$beta)
 
    if (missing(ylim)) {
 
@@ -163,7 +166,7 @@ profile.rma.uni <- function(fitted, xlim, ylim, steps=20, progbar=TRUE, parallel
    xlab <- expression(paste(tau^2, " Value"))
    title <- expression(paste("Profile Plot for ", tau^2))
 
-   sav <- list(tau2=vcs, ll=lls, b=b, ci.lb=ci.lb, ci.ub=ci.ub, comps=1, ylim=ylim, method=x$method, vc=x$tau2, maxll=logLik(x), xlab=xlab, title=title)
+   sav <- list(tau2=vcs, ll=lls, beta=beta, ci.lb=ci.lb, ci.ub=ci.ub, comps=1, ylim=ylim, method=x$method, vc=x$tau2, maxll=logLik(x), xlab=xlab, title=title)
    class(sav) <- "profile.rma"
 
    #########################################################################

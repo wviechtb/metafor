@@ -297,14 +297,14 @@ level=95, digits=4, verbose=FALSE, ...) {
    if (sumVi == 0L) ### sumVi = 0 when xt or yt = 0 in *all* tables
       stop("One of the two outcomes never occurred in any of the tables. Peto's method cannot be used.")
 
-   b     <- sum(ai - Ei) / sumVi
+   beta  <- sum(ai - Ei) / sumVi
    se    <- sqrt(1/sumVi)
-   zval  <- b / se
+   zval  <- beta / se
    pval  <- 2*pnorm(abs(zval), lower.tail=FALSE)
-   ci.lb <- b - qnorm(level/2, lower.tail=FALSE) * se
-   ci.ub <- b + qnorm(level/2, lower.tail=FALSE) * se
+   ci.lb <- beta - qnorm(level/2, lower.tail=FALSE) * se
+   ci.ub <- beta + qnorm(level/2, lower.tail=FALSE) * se
 
-   names(b) <- "intrcpt"
+   names(beta) <- "intrcpt"
    vb <- matrix(se^2, dimnames=list("intrcpt", "intrcpt"))
 
    #########################################################################
@@ -329,7 +329,7 @@ level=95, digits=4, verbose=FALSE, ...) {
    }
 
    wi  <- 1/vi
-   RSS <- sum(wi*(yi-b)^2)
+   RSS <- sum(wi*(yi-beta)^2)
 
    #########################################################################
 
@@ -376,7 +376,7 @@ level=95, digits=4, verbose=FALSE, ...) {
 
    if (is.null(ddd$outlist)) {
 
-      res <- list(b=b, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
+      res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
                   tau2=tau2,
                   k=k, k.f=k.f, k.yi=k.yi, k.pos=k.pos, k.eff=k.eff, p=p, parms=parms,
                   QE=QE, QEp=QEp, I2=I2, H2=H2,
@@ -391,7 +391,7 @@ level=95, digits=4, verbose=FALSE, ...) {
 
    if (!is.null(ddd$outlist)) {
       if (ddd$outlist == "minimal") {
-         res <- list(b=b, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, digits=digits, k=k, k.pos=k.pos, fit.stats=fit.stats, QE=QE, QEp=QEp)
+         res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, digits=digits, k=k, k.pos=k.pos, fit.stats=fit.stats, QE=QE, QEp=QEp)
       } else {
          res <- eval(parse(text=paste0("list(", ddd$outlist, ")")))
       }

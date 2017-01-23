@@ -41,7 +41,7 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, ...) {
 
       ### compute dfbeta value(s)
 
-      dfb <- x$b - res$b
+      dfb <- x$beta - res$beta
 
       ### compute Cook's distance
 

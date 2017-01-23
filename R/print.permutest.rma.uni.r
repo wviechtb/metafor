@@ -17,10 +17,10 @@ print.permutest.rma.uni <- function(x, digits, signif.stars=getOption("show.sign
       }
    }
 
-   res.table <- cbind(estimate=c(x$b), se=x$se, zval=x$zval, "pval*"=x$pval, ci.lb=x$ci.lb, ci.ub=x$ci.ub)
+   res.table <- cbind(estimate=c(x$beta), se=x$se, zval=x$zval, "pval*"=x$pval, ci.lb=x$ci.lb, ci.ub=x$ci.ub)
    if (x$permci)
       colnames(res.table)[5:6] <- c("ci.lb*", "ci.ub*")
-   rownames(res.table) <- rownames(x$b)
+   rownames(res.table) <- rownames(x$beta)
    if (is.element(x$test, c("knha","adhoc","t")))
       colnames(res.table)[3] <- "tval"
    signif <- symnum(x$pval, corr=FALSE, na=FALSE, cutpoints=c(0, 0.001, 0.01, 0.05, 0.1, 1), symbols = c("***", "**", "*", ".", " "))

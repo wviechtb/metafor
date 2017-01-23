@@ -507,24 +507,24 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
       S  <- sum(Si)
 
       if (identical(R,0) || identical(S,0)) {
-         b.exp <- NA
-         b     <- NA
-         se    <- NA
-         zval  <- NA
-         pval  <- NA
-         ci.lb <- NA
-         ci.ub <- NA
+         beta.exp <- NA
+         beta     <- NA
+         se       <- NA
+         zval     <- NA
+         pval     <- NA
+         ci.lb    <- NA
+         ci.ub    <- NA
       } else {
-         b.exp <- R/S
-         b     <- log(b.exp)
-         se    <- sqrt(1/2 * (sum(Pi*Ri)/R^2 + sum(Pi*Si + Qi*Ri)/(R*S) + sum(Qi*Si)/S^2)) ### based on Robins et al. (1986)
-         zval  <- b / se
-         pval  <- 2*pnorm(abs(zval), lower.tail=FALSE)
-         ci.lb <- b - qnorm(level/2, lower.tail=FALSE) * se
-         ci.ub <- b + qnorm(level/2, lower.tail=FALSE) * se
+         beta.exp <- R/S
+         beta     <- log(beta.exp)
+         se       <- sqrt(1/2 * (sum(Pi*Ri)/R^2 + sum(Pi*Si + Qi*Ri)/(R*S) + sum(Qi*Si)/S^2)) ### based on Robins et al. (1986)
+         zval     <- beta / se
+         pval     <- 2*pnorm(abs(zval), lower.tail=FALSE)
+         ci.lb    <- beta - qnorm(level/2, lower.tail=FALSE) * se
+         ci.ub    <- beta + qnorm(level/2, lower.tail=FALSE) * se
       }
 
-      names(b) <- "intrcpt"
+      names(beta) <- "intrcpt"
       vb <- matrix(se^2, dimnames=list("intrcpt", "intrcpt"))
 
       ### Cochran and Cochran-Mantel-Haenszel Statistics
@@ -546,19 +546,19 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
 
       ### Breslow-Day and Tarone's Test for Heterogeneity
 
-      if (is.na(b)) {
+      if (is.na(beta)) {
          BD    <- NA
          TA    <- NA
          BDp   <- NA
          TAp   <- NA
          k.pos <- 0
       } else {
-         if (identical(b.exp,1)) {
+         if (identical(beta.exp,1)) {
             N11 <- (n1i/Ni)*xt
          } else {
-            A   <- b.exp * (n1i + xt) + (n2i - xt)
-            B   <- sqrt(A^2 - 4*n1i*xt*b.exp*(b.exp-1))
-            N11 <- (A-B) / (2*(b.exp-1))
+            A   <- beta.exp * (n1i + xt) + (n2i - xt)
+            B   <- sqrt(A^2 - 4*n1i*xt*beta.exp*(beta.exp-1))
+            N11 <- (A-B) / (2*(beta.exp-1))
          }
          pos   <- (N11 > 0) & (xt > 0) & (yt > 0)
          k.pos <- sum(pos)
@@ -585,39 +585,39 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
       S <- sum(ci * (n1i/Ni))
 
       if (identical(sum(ai),0) || identical(sum(ci),0)) {
-         b.exp <- NA
-         b     <- NA
-         se    <- NA
-         zval  <- NA
-         pval  <- NA
-         ci.lb <- NA
-         ci.ub <- NA
+         beta.exp <- NA
+         beta     <- NA
+         se       <- NA
+         zval     <- NA
+         pval     <- NA
+         ci.lb    <- NA
+         ci.ub    <- NA
       } else {
-         b.exp <- R/S
-         b     <- log(b.exp)
-         se    <- sqrt(sum(((n1i/Ni)*(n2i/Ni)*(ai+ci) - (ai/Ni)*ci)) / (R*S))
-         zval  <- b / se
-         pval  <- 2*pnorm(abs(zval), lower.tail=FALSE)
-         ci.lb <- b - qnorm(level/2, lower.tail=FALSE) * se
-         ci.ub <- b + qnorm(level/2, lower.tail=FALSE) * se
+         beta.exp <- R/S
+         beta     <- log(beta.exp)
+         se       <- sqrt(sum(((n1i/Ni)*(n2i/Ni)*(ai+ci) - (ai/Ni)*ci)) / (R*S))
+         zval     <- beta / se
+         pval     <- 2*pnorm(abs(zval), lower.tail=FALSE)
+         ci.lb    <- beta - qnorm(level/2, lower.tail=FALSE) * se
+         ci.ub    <- beta + qnorm(level/2, lower.tail=FALSE) * se
       }
 
-      names(b) <- "intrcpt"
+      names(beta) <- "intrcpt"
       vb <- matrix(se^2, dimnames=list("intrcpt", "intrcpt"))
 
    }
 
    if (measure == "RD") {
 
-      b     <- sum(ai*(n2i/Ni) - ci*(n1i/Ni)) / sum(n1i*(n2i/Ni))
-      se    <- sqrt((b * (sum(ci*(n1i/Ni)^2 - ai*(n2i/Ni)^2 + (n1i/Ni)*(n2i/Ni)*(n2i-n1i)/2)) + sum(ai*(n2i-ci)/Ni + ci*(n1i-ai)/Ni)/2) / sum(n1i*(n2i/Ni))^2) ### equation in: Sato, Greenland, & Robins (1989)
+      beta  <- sum(ai*(n2i/Ni) - ci*(n1i/Ni)) / sum(n1i*(n2i/Ni))
+      se    <- sqrt((beta * (sum(ci*(n1i/Ni)^2 - ai*(n2i/Ni)^2 + (n1i/Ni)*(n2i/Ni)*(n2i-n1i)/2)) + sum(ai*(n2i-ci)/Ni + ci*(n1i-ai)/Ni)/2) / sum(n1i*(n2i/Ni))^2) ### equation in: Sato, Greenland, & Robins (1989)
       #se   <- sqrt(sum(((ai/Ni^2)*bi*(n2i^2/n1i) + (ci/Ni^2)*di*(n1i^2/n2i))) / sum(n1i*(n2i/Ni))^2) ### equation in: Greenland & Robins (1985)
-      zval  <- b / se
+      zval  <- beta / se
       pval  <- 2*pnorm(abs(zval), lower.tail=FALSE)
-      ci.lb <- b - qnorm(level/2, lower.tail=FALSE) * se
-      ci.ub <- b + qnorm(level/2, lower.tail=FALSE) * se
+      ci.lb <- beta - qnorm(level/2, lower.tail=FALSE) * se
+      ci.ub <- beta + qnorm(level/2, lower.tail=FALSE) * se
 
-      names(b) <- "intrcpt"
+      names(beta) <- "intrcpt"
       vb <- matrix(se^2, dimnames=list("intrcpt", "intrcpt"))
 
    }
@@ -628,24 +628,24 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
       S <- sum(x2i * (t1i/Ti))
 
       if (identical(sum(x1i),0) || identical(sum(x2i),0)) {
-         b.exp <- NA
-         b     <- NA
-         se    <- NA
-         zval  <- NA
-         pval  <- NA
-         ci.lb <- NA
-         ci.ub <- NA
+         beta.exp <- NA
+         beta     <- NA
+         se       <- NA
+         zval     <- NA
+         pval     <- NA
+         ci.lb    <- NA
+         ci.ub    <- NA
       } else {
-         b.exp <- R/S
-         b     <- log(b.exp)
-         se    <- sqrt(sum((t1i/Ti)*(t2i/Ti)*(x1i+x2i)) / (R*S))
-         zval  <- b / se
-         pval  <- 2*pnorm(abs(zval), lower.tail=FALSE)
-         ci.lb <- b - qnorm(level/2, lower.tail=FALSE) * se
-         ci.ub <- b + qnorm(level/2, lower.tail=FALSE) * se
+         beta.exp <- R/S
+         beta     <- log(beta.exp)
+         se       <- sqrt(sum((t1i/Ti)*(t2i/Ti)*(x1i+x2i)) / (R*S))
+         zval     <- beta / se
+         pval     <- 2*pnorm(abs(zval), lower.tail=FALSE)
+         ci.lb    <- beta - qnorm(level/2, lower.tail=FALSE) * se
+         ci.ub    <- beta + qnorm(level/2, lower.tail=FALSE) * se
       }
 
-      names(b) <- "intrcpt"
+      names(beta) <- "intrcpt"
       vb <- matrix(se^2, dimnames=list("intrcpt", "intrcpt"))
 
       ### Mantel-Haenszel Statistic
@@ -663,14 +663,14 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
 
    if (measure == "IRD") {
 
-      b     <- sum((x1i*t2i - x2i*t1i)/Ti) / sum((t1i/Ti)*t2i)
+      beta  <- sum((x1i*t2i - x2i*t1i)/Ti) / sum((t1i/Ti)*t2i)
       se    <- sqrt(sum(((t1i/Ti)*t2i)^2*(x1i/t1i^2+x2i/t2i^2))) / sum((t1i/Ti)*t2i) ### from Rothland et al. (2008), chapter 15
-      zval  <- b / se
+      zval  <- beta / se
       pval  <- 2*pnorm(abs(zval), lower.tail=FALSE)
-      ci.lb <- b - qnorm(level/2, lower.tail=FALSE) * se
-      ci.ub <- b + qnorm(level/2, lower.tail=FALSE) * se
+      ci.lb <- beta - qnorm(level/2, lower.tail=FALSE) * se
+      ci.ub <- beta + qnorm(level/2, lower.tail=FALSE) * se
 
-      names(b) <- "intrcpt"
+      names(beta) <- "intrcpt"
       vb <- matrix(se^2, dimnames=list("intrcpt", "intrcpt"))
 
    }
@@ -684,7 +684,7 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
 
    wi <- 1/vi
 
-   QE <- max(0, sum(wi*(yi-b)^2))
+   QE <- max(0, sum(wi*(yi-beta)^2))
 
    if (k.yi > 1) {
       QEp <- pchisq(QE, df=k.yi-1, lower.tail=FALSE)
@@ -748,7 +748,7 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
 
    if (is.null(ddd$outlist)) {
 
-      res <- list(b=b, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
+      res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
                   tau2=tau2,
                   k=k, k.f=k.f, k.yi=k.yi, k.pos=k.pos, k.eff=k.eff, p=p, parms=parms,
                   QE=QE, QEp=QEp, CO=CO, COp=COp, MH=MH, MHp=MHp, BD=BD, BDp=BDp, TA=TA, TAp=TAp, I2=I2, H2=H2,
@@ -765,7 +765,7 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
 
    if (!is.null(ddd$outlist)) {
       if (ddd$outlist == "minimal") {
-         res <- list(b=b, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, digits=digits, k=k, k.yi=k.yi, k.pos=k.pos, fit.stats=fit.stats, QE=QE, QEp=QEp, MH=MH, MHp=MHp, TA=TA, TAp=TAp, measure=measure)
+         res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, digits=digits, k=k, k.yi=k.yi, k.pos=k.pos, fit.stats=fit.stats, QE=QE, QEp=QEp, MH=MH, MHp=MHp, TA=TA, TAp=TAp, measure=measure)
       } else {
          res <- eval(parse(text=paste0("list(", ddd$outlist, ")")))
       }

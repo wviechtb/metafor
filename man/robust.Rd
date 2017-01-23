@@ -26,7 +26,7 @@ robust(x, cluster, \dots)
 }
 \value{
    An object of class \code{"robust.rma"}. The object is a list containing the following components:
-   \item{b}{estimated coefficients of the model.}
+   \item{beta}{estimated coefficients of the model.}
    \item{se}{robust standard errors of the coefficients.}
    \item{tval}{test statistics of the coefficients.}
    \item{pval}{p-values for the test statistics.}

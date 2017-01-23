@@ -7,6 +7,9 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, ...) {
    if (inherits(x, "robust.rma"))
       stop("Function not applicable to objects of class \"robust.rma\".")
 
+   if (inherits(x, "rma.ls"))
+      stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!")
+
    if (!x$int.only)
       stop("L'Abbe plot only applicable for models without moderators.")
 
@@ -169,7 +172,7 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, ...) {
 
    len <- 1000
 
-   intrcpt <- c(x$b)
+   intrcpt <- c(x$beta)
 
    if (x$measure == "RD")
       c.vals <- seq(ifelse(intrcpt>0, 0, -intrcpt), ifelse(intrcpt>0, 1-intrcpt, 1), length.out=len)

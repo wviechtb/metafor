@@ -3,6 +3,9 @@ rstudent.rma.uni <- function(model, digits, ...) {
    if (!inherits(model, "rma.uni"))
       stop("Argument 'model' must be an object of class \"rma.uni\".")
 
+   if (inherits(model, "rma.ls"))
+      stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!")
+
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
@@ -36,7 +39,7 @@ rstudent.rma.uni <- function(model, digits, ...) {
 
       tau2.del[i] <- res$tau2
       Xi          <- matrix(x$X.f[i,], nrow=1)
-      delpred[i]  <- Xi %*% res$b
+      delpred[i]  <- Xi %*% res$beta
       vdelpred[i] <- Xi %*% tcrossprod(res$vb,Xi)
 
    }

@@ -10,6 +10,9 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
    if (inherits(x, "robust.rma"))
       stop("Function not applicable to objects of class \"robust.rma\".")
 
+   if (inherits(x, "rma.ls"))
+      stop("Function not applicable to objects of class \"rma.ls\".")
+
    if (missing(transf))
       transf <- FALSE
 
@@ -31,7 +34,7 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
       yi   <- x$yi
       yi.c <- yi
       vi   <- x$vi
-      b    <- c(x$b)
+      beta <- c(x$beta)
       ci.lb <- x$ci.lb
       ci.ub <- x$ci.ub
       tau2 <- 1/mean(1/x$tau2) ### geometric mean of tau^2 values (hackish solution for models with multiple tau^2 values)
@@ -48,13 +51,13 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
    }
 
    if (center) {
-      yi    <- yi - x$b
-      b     <- 0
-      ci.lb <- ci.lb - x$b
-      ci.ub <- ci.ub - x$b
-      atyis <- atyis - x$b
+      yi    <- yi - x$beta
+      beta  <- 0
+      ci.lb <- ci.lb - x$beta
+      ci.ub <- ci.ub - x$beta
+      atyis <- atyis - x$beta
       if (!is.null(aty))
-         aty <- aty - x$b
+         aty <- aty - x$beta
    }
 
    #########################################################################
@@ -91,7 +94,7 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
    ### set z axis limits if none are specified (these are the actual y axis limits of the plot)
 
    if (missing(zlim)) {
-      zlims <- c(min(-5, 1.10*min(zi), 1.10*ci.lb*ci.xpos, 1.10*min(atyis)*ya.xpos, 1.10*min(yi)*ya.xpos, -1.10*zcrit+xaxismax*b), max(5, 1.10*max(zi), 1.10*ci.ub*ci.xpos, 1.10*max(atyis)*ya.xpos, 1.10*max(yi)*ya.xpos, 1.10*zcrit+xaxismax*b))
+      zlims <- c(min(-5, 1.10*min(zi), 1.10*ci.lb*ci.xpos, 1.10*min(atyis)*ya.xpos, 1.10*min(yi)*ya.xpos, -1.10*zcrit+xaxismax*beta), max(5, 1.10*max(zi), 1.10*ci.ub*ci.xpos, 1.10*max(atyis)*ya.xpos, 1.10*max(yi)*ya.xpos, 1.10*zcrit+xaxismax*beta))
    } else {
       zlims <- sort(zlim)
    }
@@ -125,10 +128,10 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
 
    ### add polygon and +-zcrit lines
 
-   polygon(c(0,xaxismax,xaxismax,0), c(zcrit, zcrit+xaxismax*b, -zcrit+xaxismax*b, -zcrit), border=NA, col=back, ...)
-   segments(0, 0, xaxismax, xaxismax*b, lty="solid", ...)
-   segments(0, -zcrit, xaxismax, -zcrit+xaxismax*b, lty="dotted", ...)
-   segments(0,  zcrit, xaxismax,  zcrit+xaxismax*b, lty="dotted", ...)
+   polygon(c(0,xaxismax,xaxismax,0), c(zcrit, zcrit+xaxismax*beta, -zcrit+xaxismax*beta, -zcrit), border=NA, col=back, ...)
+   segments(0, 0, xaxismax, xaxismax*beta, lty="solid", ...)
+   segments(0, -zcrit, xaxismax, -zcrit+xaxismax*beta, lty="dotted", ...)
+   segments(0,  zcrit, xaxismax,  zcrit+xaxismax*beta, lty="dotted", ...)
 
    ### add x axis
 
@@ -272,7 +275,7 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
 
    ### add CI tick marks
 
-   atyis <- c(ci.lb, b, ci.ub)
+   atyis <- c(ci.lb, beta, ci.ub)
    len.l <- ci.xpos-.007*(xlims[2]-xlims[1])
    len.u <- ci.xpos+.007*(xlims[2]-xlims[1])
    xis.l <- rep(NA_real_,3)

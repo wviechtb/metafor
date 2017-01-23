@@ -15,7 +15,7 @@ rstandard.rma.mh <- function(model, digits, ...) {
 
    #########################################################################
 
-   ei <- c(x$yi.f - x$b)
+   ei <- c(x$yi.f - x$beta)
    ei[abs(ei) < 100 * .Machine$double.eps] <- 0
    #ei[abs(ei) < 100 * .Machine$double.eps * median(abs(ei), na.rm=TRUE)] <- 0 ### see lm.influence
    sei <- sqrt(x$vi.f)

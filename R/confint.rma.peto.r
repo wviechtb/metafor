@@ -22,9 +22,9 @@ confint.rma.peto <- function(object, parm, level, digits, transf, targs, ...) {
    level <- ifelse(level > 1, (100-level)/100, ifelse(level > .5, 1-level, level))
    crit  <- qnorm(level/2, lower.tail=FALSE)
 
-   b <- x$b
-   ci.lb <- x$b - crit * x$se
-   ci.ub <- x$b + crit * x$se
+   beta  <- x$beta
+   ci.lb <- beta - crit * x$se
+   ci.ub <- beta + crit * x$se
 
    ### if requested, apply transformation function
 
@@ -33,11 +33,11 @@ confint.rma.peto <- function(object, parm, level, digits, transf, targs, ...) {
 
    if (is.function(transf)) {
       if (is.null(targs)) {
-         b     <- sapply(b, transf)
+         beta  <- sapply(beta, transf)
          ci.lb <- sapply(ci.lb, transf)
          ci.ub <- sapply(ci.ub, transf)
       } else {
-         b     <- sapply(b, transf, targs)
+         beta  <- sapply(beta, transf, targs)
          ci.lb <- sapply(ci.lb, transf, targs)
          ci.ub <- sapply(ci.ub, transf, targs)
       }
@@ -45,7 +45,7 @@ confint.rma.peto <- function(object, parm, level, digits, transf, targs, ...) {
 
    #########################################################################
 
-   res <- cbind(estimate=b, ci.lb, ci.ub)
+   res <- cbind(estimate=beta, ci.lb, ci.ub)
    res <- list(fixed=res)
    rownames(res$fixed) <- ""
 

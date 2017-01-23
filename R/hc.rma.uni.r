@@ -3,6 +3,9 @@ hc.rma.uni <- function(object, digits, transf, targs, control, ...) {
    if (!inherits(object, "rma.uni"))
       stop("Argument 'object' must be an object of class \"rma.uni\".")
 
+   if (inherits(object, "rma.ls"))
+      stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!")
+
    x <- object
 
    if (!x$int.only)
@@ -51,10 +54,10 @@ hc.rma.uni <- function(object, digits, transf, targs, control, ...) {
    W4 <- sum(wi^4) / W1
 
    ### fixed-effects estimate of theta
-   b <- sum(wi*yi) / W1
+   beta <- sum(wi*yi) / W1
 
    ### Q statistic
-   Q <- sum(wi * ((yi - b)^2))
+   Q <- sum(wi * ((yi - beta)^2))
 
    ### DL estimate of tau^2
    tau2 <- max(0, (Q - (k-1)) / (W1 - W2))
@@ -107,11 +110,11 @@ hc.rma.uni <- function(object, digits, transf, targs, control, ...) {
 
    #########################################################################
 
-   ci.lb <- b - u0 * se ### lower CI bound
-   ci.ub <- b + u0 * se ### upper CI bound
+   ci.lb <- beta - u0 * se ### lower CI bound
+   ci.ub <- beta + u0 * se ### upper CI bound
 
-   b.rma  <- x$b
-   se.rma <- x$se
+   beta.rma  <- x$beta
+   se.rma    <- x$se
    ci.lb.rma <- x$ci.lb
    ci.ub.rma <- x$ci.ub
 
@@ -119,8 +122,8 @@ hc.rma.uni <- function(object, digits, transf, targs, control, ...) {
 
    if (is.function(transf)) {
       if (is.null(targs)) {
-         b         <- sapply(b, transf)
-         b.rma     <- sapply(b.rma, transf)
+         beta      <- sapply(beta, transf)
+         beta.rma  <- sapply(beta.rma, transf)
          se        <- NA
          se.rma    <- NA
          ci.lb     <- sapply(ci.lb, transf)
@@ -128,8 +131,8 @@ hc.rma.uni <- function(object, digits, transf, targs, control, ...) {
          ci.lb.rma <- sapply(ci.lb.rma, transf)
          ci.ub.rma <- sapply(ci.ub.rma, transf)
       } else {
-         b         <- sapply(b, transf, targs)
-         br.rma    <- sapply(b.rma, transf, targs)
+         beta      <- sapply(beta, transf, targs)
+         beta.rma  <- sapply(beta.rma, transf, targs)
          se        <- NA
          se.rma    <- NA
          ci.lb     <- sapply(ci.lb, transf, targs)
@@ -151,8 +154,8 @@ hc.rma.uni <- function(object, digits, transf, targs, control, ...) {
 
    #########################################################################
 
-   res <- list(b=b, se=se, ci.lb=ci.lb, ci.ub=ci.ub,
-               b.rma=b.rma, se.rma=se.rma, ci.lb.rma=ci.lb.rma, ci.ub.rma=ci.ub.rma,
+   res <- list(beta=beta, se=se, ci.lb=ci.lb, ci.ub=ci.ub,
+               beta.rma=beta.rma, se.rma=se.rma, ci.lb.rma=ci.lb.rma, ci.ub.rma=ci.ub.rma,
                method="DL", method.rma=x$method, tau2=tau2, tau2.rma=x$tau2, digits=digits)
 
    class(res) <- "hc.rma.uni"

@@ -48,7 +48,7 @@ ranef.rma.uni <- function(object, level, digits, transf, targs, ...) {
          pred[i]  <- 0
          vpred[i] <- 0
       } else {
-         pred[i]  <- li[i] * (x$yi.f[i] - Xi %*% x$b)
+         pred[i]  <- li[i] * (x$yi.f[i] - Xi %*% x$beta)
          vpred[i] <- li[i] * x$vi.f[i] + li[i]^2 * Xi %*% tcrossprod(x$vb,Xi)
       }
    }

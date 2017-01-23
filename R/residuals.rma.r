@@ -14,7 +14,7 @@ residuals.rma <- function(object, ...) {
 
    ### note: can calculate this even if vi is missing
 
-   out <- c(x$yi.f - x$X.f %*% x$b)
+   out <- c(x$yi.f - x$X.f %*% x$beta)
    out[abs(out) < 100 * .Machine$double.eps] <- 0
 
    #########################################################################

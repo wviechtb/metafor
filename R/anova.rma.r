@@ -19,11 +19,11 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
       ### if only 'object' has been specified, can use function to test (sets) of coefficients via
       ### the 'btt' argument or one or more linear contrasts of the coefficients via the 'L' argument
 
-      x  <- object
-      k  <- x$k
-      p  <- x$p
-      b  <- x$b
-      vb <- x$vb
+      x    <- object
+      k    <- x$k
+      p    <- x$p
+      beta <- x$beta
+      vb   <- x$vb
 
       if (missing(L)) {
 
@@ -34,7 +34,7 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
          btt <- .set.btt(btt, p, x$int.incl)
          m <- length(btt) ### number of betas to test (m = p if all betas are tested)
 
-         QM <- as.vector(t(b)[btt] %*% chol2inv(chol(vb[btt,btt])) %*% b[btt])
+         QM <- as.vector(t(beta)[btt] %*% chol2inv(chol(vb[btt,btt])) %*% beta[btt])
 
          if (is.element(x$test, c("knha","adhoc","t"))) {
             QM  <- QM/m
@@ -78,7 +78,7 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
 
          ### test of individual hypotheses
 
-         Lb  <- L %*% b
+         Lb  <- L %*% beta
          vLb <- L %*% vb %*% t(L)
 
          se <- sqrt(diag(vLb))
@@ -122,7 +122,7 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
          for (j in seq_len(m)) {
             Lj <- round(L[j,], digits=digits) ### coefficients for the jth contrast
             sel <- Lj != 0 ### TRUE if coefficient is != 0
-            hyp[j] <- paste(paste(Lj[sel], rownames(b)[sel], sep="*"), collapse=" + ") ### coefficient*variable + coefficient*variable ...
+            hyp[j] <- paste(paste(Lj[sel], rownames(beta)[sel], sep="*"), collapse=" + ") ### coefficient*variable + coefficient*variable ...
             hyp[j] <- gsub("1*", "", hyp[j], fixed=TRUE) ### turn '+1' into '+' and '-1' into '-'
             hyp[j] <- gsub("+ -", "- ", hyp[j], fixed=TRUE) ### turn '+ -' into '-'
          }
@@ -237,7 +237,7 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
       ### for 'rma.uni' objects, calculate pseudo R^2 value (based on the
       ### proportional reduction in tau^2) comparing full vs. reduced model
 
-      if (inherits(object, "rma.uni")) {
+      if (inherits(object, "rma.uni") && !inherits(object, "rma.ls") && !inherits(object2, "rma.ls")) {
          if (m.f$method == "FE" || identical(m.r$tau2,0)) {
             R2 <- NA
          } else {
@@ -249,7 +249,7 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
 
       ### for 'rma.uni' objects, extract tau^2 estimates
 
-      if (inherits(object, "rma.uni")) {
+      if (inherits(object, "rma.uni") && !inherits(object, "rma.ls") && !inherits(object2, "rma.ls")) {
          tau2.f <- m.f$tau2
          tau2.r <- m.r$tau2
       } else {

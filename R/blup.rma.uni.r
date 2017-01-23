@@ -42,7 +42,7 @@ blup.rma.uni <- function(x, level, digits, transf, targs, ...) {
 
    for (i in seq_len(x$k.f)[x$not.na]) { ### note: skipping NA cases
       Xi <- matrix(x$X.f[i,], nrow=1)
-      pred[i]  <- li[i] * x$yi.f[i] + (1 - li[i])   * Xi %*% x$b
+      pred[i]  <- li[i] * x$yi.f[i] + (1 - li[i])   * Xi %*% x$beta
       vpred[i] <- li[i] * x$vi.f[i] + (1 - li[i])^2 * Xi %*% tcrossprod(x$vb,Xi)
    }
 

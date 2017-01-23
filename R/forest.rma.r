@@ -12,6 +12,9 @@ cex, cex.lab, cex.axis, ...) {
    if (!inherits(x, "rma"))
       stop("Argument 'x' must be an object of class \"rma\".")
 
+   if (inherits(x, "rma.ls"))
+      stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!")
+
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
@@ -566,61 +569,61 @@ cex, cex.lab, cex.axis, ...) {
 
       }
 
-      b       <- temp$pred
-      b.ci.lb <- temp$ci.lb
-      b.ci.ub <- temp$ci.ub
-      b.cr.lb <- temp$cr.lb
-      b.cr.ub <- temp$cr.ub
+      beta       <- temp$pred
+      beta.ci.lb <- temp$ci.lb
+      beta.ci.ub <- temp$ci.ub
+      beta.cr.lb <- temp$cr.lb
+      beta.cr.ub <- temp$cr.ub
 
       if (is.function(transf)) {
          if (is.null(targs)) {
-            b       <- sapply(b, transf)
-            b.ci.lb <- sapply(b.ci.lb, transf)
-            b.ci.ub <- sapply(b.ci.ub, transf)
-            b.cr.lb <- sapply(b.cr.lb, transf)
-            b.cr.ub <- sapply(b.cr.ub, transf)
+            beta       <- sapply(beta, transf)
+            beta.ci.lb <- sapply(beta.ci.lb, transf)
+            beta.ci.ub <- sapply(beta.ci.ub, transf)
+            beta.cr.lb <- sapply(beta.cr.lb, transf)
+            beta.cr.ub <- sapply(beta.cr.ub, transf)
          } else {
-            b       <- sapply(b, transf, targs)
-            b.ci.lb <- sapply(b.ci.lb, transf, targs)
-            b.ci.ub <- sapply(b.ci.ub, transf, targs)
-            b.cr.lb <- sapply(b.cr.lb, transf, targs)
-            b.cr.ub <- sapply(b.cr.ub, transf, targs)
+            beta       <- sapply(beta, transf, targs)
+            beta.ci.lb <- sapply(beta.ci.lb, transf, targs)
+            beta.ci.ub <- sapply(beta.ci.ub, transf, targs)
+            beta.cr.lb <- sapply(beta.cr.lb, transf, targs)
+            beta.cr.ub <- sapply(beta.cr.ub, transf, targs)
          }
       }
 
       ### make sure order of intervals is always increasing
 
-      tmp <- .psort(b.ci.lb, b.ci.ub)
-      b.ci.lb <- tmp[,1]
-      b.ci.ub <- tmp[,2]
+      tmp <- .psort(beta.ci.lb, beta.ci.ub)
+      beta.ci.lb <- tmp[,1]
+      beta.ci.ub <- tmp[,2]
 
-      tmp <- .psort(b.cr.lb, b.cr.ub)
-      b.cr.lb <- tmp[,1]
-      b.cr.ub <- tmp[,2]
+      tmp <- .psort(beta.cr.lb, beta.cr.ub)
+      beta.cr.lb <- tmp[,1]
+      beta.cr.ub <- tmp[,2]
 
       ### apply ci limits if specified
 
       if (!missing(clim)) {
-         b.ci.lb[b.ci.lb < clim[1]] <- clim[1]
-         b.ci.ub[b.ci.ub > clim[2]] <- clim[2]
-         b.cr.lb[b.cr.lb < clim[1]] <- clim[1]
-         b.cr.ub[b.cr.ub > clim[2]] <- clim[2]
+         beta.ci.lb[beta.ci.lb < clim[1]] <- clim[1]
+         beta.ci.ub[beta.ci.ub > clim[2]] <- clim[2]
+         beta.cr.lb[beta.cr.lb < clim[1]] <- clim[1]
+         beta.cr.ub[beta.cr.ub > clim[2]] <- clim[2]
       }
 
       ### add credibility interval
 
       if (x$method != "FE" && addcred) {
 
-         segments(max(b.cr.lb, alim[1]), -1, min(b.cr.ub, alim[2]), -1, lty=lty[2], col=col[2], ...)
+         segments(max(beta.cr.lb, alim[1]), -1, min(beta.cr.ub, alim[2]), -1, lty=lty[2], col=col[2], ...)
 
-         if (b.cr.lb >= alim[1]) {
-            segments(b.cr.lb, -1-(height/150)*cex*efac[1], b.cr.lb, -1+(height/150)*cex*efac[1], col=col[2], ...)
+         if (beta.cr.lb >= alim[1]) {
+            segments(beta.cr.lb, -1-(height/150)*cex*efac[1], beta.cr.lb, -1+(height/150)*cex*efac[1], col=col[2], ...)
          } else {
             polygon(x=c(alim[1], alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]), y=c(-1, -1+(height/150)*cex*efac[2], -1-(height/150)*cex*efac[2], -1), col=col[2], border=col[2], ...)
          }
 
-         if (b.cr.ub <= alim[2]) {
-            segments(b.cr.ub, -1-(height/150)*cex*efac[1], b.cr.ub, -1+(height/150)*cex*efac[1], col=col[2], ...)
+         if (beta.cr.ub <= alim[2]) {
+            segments(beta.cr.ub, -1-(height/150)*cex*efac[1], beta.cr.ub, -1+(height/150)*cex*efac[1], col=col[2], ...)
          } else {
             polygon(x=c(alim[2], alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]), y=c(-1, -1+(height/150)*cex*efac[2], -1-(height/150)*cex*efac[2], -1), col=col[2], border=col[2], ...)
          }
@@ -629,7 +632,7 @@ cex, cex.lab, cex.axis, ...) {
 
       ### polygon for the summary estimate
 
-      polygon(x=c(b.ci.lb, b, b.ci.ub, b), y=c(-1, -1+(height/100)*cex*efac[3], -1, -1-(height/100)*cex*efac[3]), col=col[1], border=border, ...)
+      polygon(x=c(beta.ci.lb, beta, beta.ci.ub, beta), y=c(-1, -1+(height/100)*cex*efac[3], -1, -1-(height/100)*cex*efac[3]), col=col[1], border=border, ...)
 
       ### add label for model estimate
 
@@ -717,13 +720,13 @@ cex, cex.lab, cex.axis, ...) {
 
          if (is.null(targs)) {
             if (addfit && x$int.only) {
-               annotext <- cbind(sapply(c(yi, b), atransf), sapply(c(ci.lb, b.ci.lb), atransf), sapply(c(ci.ub, b.ci.ub), atransf))
+               annotext <- cbind(sapply(c(yi, beta), atransf), sapply(c(ci.lb, beta.ci.lb), atransf), sapply(c(ci.ub, beta.ci.ub), atransf))
             } else {
                annotext <- cbind(sapply(yi, atransf), sapply(ci.lb, atransf), sapply(ci.ub, atransf))
             }
          } else {
             if (addfit && x$int.only) {
-               annotext <- cbind(sapply(c(yi, b), atransf, targs), sapply(c(ci.lb, b.ci.lb), atransf, targs), sapply(c(ci.ub, b.ci.ub), atransf, targs))
+               annotext <- cbind(sapply(c(yi, beta), atransf, targs), sapply(c(ci.lb, beta.ci.lb), atransf, targs), sapply(c(ci.ub, beta.ci.ub), atransf, targs))
             } else {
                annotext <- cbind(sapply(yi, atransf, targs), sapply(ci.lb, atransf, targs), sapply(ci.ub, atransf, targs))
             }
@@ -737,7 +740,7 @@ cex, cex.lab, cex.axis, ...) {
       } else {
 
          if (addfit && x$int.only) {
-            annotext <- cbind(c(yi, b), c(ci.lb, b.ci.lb), c(ci.ub, b.ci.ub))
+            annotext <- cbind(c(yi, beta), c(ci.lb, beta.ci.lb), c(ci.ub, beta.ci.ub))
          } else {
             annotext <- cbind(yi, ci.lb, ci.ub)
          }

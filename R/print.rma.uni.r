@@ -93,8 +93,8 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
       }
    }
 
-   res.table <- cbind(estimate=c(x$b), se=x$se, zval=x$zval, pval=x$pval, ci.lb=x$ci.lb, ci.ub=x$ci.ub)
-   rownames(res.table) <- rownames(x$b)
+   res.table <- cbind(estimate=c(x$beta), se=x$se, zval=x$zval, pval=x$pval, ci.lb=x$ci.lb, ci.ub=x$ci.ub)
+   rownames(res.table) <- rownames(x$beta)
    if (is.element(x$test, c("knha","adhoc","t")))
       colnames(res.table)[3] <- "tval"
    signif <- symnum(x$pval, corr=FALSE, na=FALSE, cutpoints=c(0, 0.001, 0.01, 0.05, 0.1, 1), symbols = c("***", "**", "*", ".", " "))
@@ -125,6 +125,8 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
 
       res.table <- cbind(estimate=c(x$alpha), se=x$se.alpha, zval=x$zval.alpha, pval=x$pval.alpha, ci.lb=x$ci.lb.alpha, ci.ub=x$ci.ub.alpha)
       rownames(res.table) <- rownames(x$alpha)
+      if (is.element(x$test, c("t")))
+         colnames(res.table)[3] <- "tval"
       signif <- symnum(x$pval.alpha, corr=FALSE, na=FALSE, cutpoints=c(0, 0.001, 0.01, 0.05, 0.1, 1), symbols = c("***", "**", "*", ".", " "))
       if (signif.stars) {
          res.table <- cbind(formatC(res.table, digits=digits, format="f"), signif)

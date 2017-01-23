@@ -66,7 +66,7 @@ rma.mh(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 }
 \value{
    An object of class \code{c("rma.mh","rma")}. The object is a list containing the following components:
-   \item{b}{aggregated log odds ratio, log relative risk, risk difference, log rate ratio, or rate difference.}
+   \item{beta}{aggregated log odds ratio, log relative risk, risk difference, log rate ratio, or rate difference.}
    \item{se}{standard error of the aggregated value.}
    \item{zval}{test statistics of the aggregated value.}
    \item{pval}{p-value for the test statistic.}

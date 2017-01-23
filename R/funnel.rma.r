@@ -99,7 +99,7 @@ refline, pch=19, pch.fill=21, ci.res=1000, ...) {
    if (x$int.only) {
 
       if (missing(refline))
-         refline <- c(x$b)
+         refline <- c(x$beta)
 
       if (inherits(x, "rma.mv"))
          addtau2 <- FALSE

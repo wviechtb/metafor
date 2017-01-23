@@ -16,8 +16,16 @@ vcov.rma <- function(object, type="fixed", ...) {
 
    #########################################################################
 
-   if (type=="fixed")
-      return(object$vb)
+   if (type=="fixed") {
+
+      out <- object$vb
+
+      if (inherits(object, "rma.ls"))
+         out <- list(location = object$vb, scale = object$vb.alpha)
+
+      return(out)
+
+   }
 
    #########################################################################
 

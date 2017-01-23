@@ -3,6 +3,9 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
    if (!inherits(x, "rma.uni"))
       stop("Argument 'x' must be an object of class \"rma.uni\".")
 
+   if (inherits(x, "rma.ls"))
+      stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!")
+
    if (missing(digits))
       digits <- x$digits
 
@@ -102,9 +105,9 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
       if (inherits(zval.perm, "try-error"))
          stop("Number of iterations requested too large.")
 
-      b.perm <- try(rep(NA_real_, iter), silent=TRUE)
+      beta.perm <- try(rep(NA_real_, iter), silent=TRUE)
 
-      if (inherits(b.perm, "try-error"))
+      if (inherits(beta.perm, "try-error"))
          stop("Number of iterations requested too large.")
 
       QM.perm <- try(rep(NA_real_, iter), silent=TRUE)
@@ -126,7 +129,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
             if (inherits(res, "try-error"))
                next
 
-            b.perm[i]    <- coef(res)
+            beta.perm[i] <- coef(res)
             zval.perm[i] <- res$zval
             QM.perm[i]   <- res$QM
 
@@ -151,7 +154,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
             if (inherits(res, "try-error"))
                next
 
-            b.perm[i]    <- coef(res)
+            beta.perm[i] <- coef(res)
             zval.perm[i] <- res$zval
             QM.perm[i]   <- res$QM
 
@@ -167,7 +170,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
       ### the first random permutation is always the observed data (avoids possibility of p=0)
 
       if (!exact) {
-         b.perm[1]    <- coef(x)
+         beta.perm[1] <- coef(x)
          zval.perm[1] <- x$zval
          QM.perm[1]   <- x$QM
       }
@@ -181,7 +184,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
             if (con$stat == "test") {
                pval <- mean(abs(zval.perm) >= abs(x$zval) - comp.tol, na.rm=TRUE) ### based on test statistic
             } else {
-               pval <- mean(abs(b.perm) >= abs(c(x$b)) - comp.tol, na.rm=TRUE) ### based on coefficient
+               pval <- mean(abs(beta.perm) >= abs(c(x$beta)) - comp.tol, na.rm=TRUE) ### based on coefficient
             }
 
          } else {
@@ -195,10 +198,10 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
                   pval <- 2*mean(zval.perm <= x$zval + comp.tol, na.rm=TRUE) ### based on coefficient
                }
             } else {
-               if (c(x$b) > 0) {
-                  pval <- 2*mean(b.perm >= c(x$b) - comp.tol, na.rm=TRUE) ### based on test statistic
+               if (c(x$beta) > 0) {
+                  pval <- 2*mean(beta.perm >= c(x$beta) - comp.tol, na.rm=TRUE) ### based on test statistic
                } else {
-                  pval <- 2*mean(b.perm <= c(x$b) + comp.tol, na.rm=TRUE) ### based on coefficient
+                  pval <- 2*mean(beta.perm <= c(x$beta) + comp.tol, na.rm=TRUE) ### based on coefficient
                }
             }
 
@@ -210,7 +213,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
          if (con$stat == "test") {
             pval <- mean(zval.perm <= x$zval + comp.tol, na.rm=TRUE) ### based on test statistic
          } else {
-            pval <- mean(b.perm <= c(x$b) + comp.tol, na.rm=TRUE) ### based on coefficient
+            pval <- mean(beta.perm <= c(x$beta) + comp.tol, na.rm=TRUE) ### based on coefficient
          }
       }
 
@@ -218,7 +221,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
          if (con$stat == "test") {
             pval <- mean(zval.perm >= x$zval - comp.tol, na.rm=TRUE) ### based on test statistic
          } else {
-            pval <- mean(b.perm >= c(x$b) - comp.tol, na.rm=TRUE) ### based on coefficient
+            pval <- mean(beta.perm >= c(x$beta) - comp.tol, na.rm=TRUE) ### based on coefficient
          }
       }
 
@@ -237,9 +240,9 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
       if (inherits(zval.perm, "try-error"))
          stop("Number of iterations requested too large.")
 
-      b.perm <- try(suppressWarnings(matrix(NA_real_, nrow=iter, ncol=x$p)), silent=TRUE)
+      beta.perm <- try(suppressWarnings(matrix(NA_real_, nrow=iter, ncol=x$p)), silent=TRUE)
 
-      if (inherits(b.perm, "try-error"))
+      if (inherits(beta.perm, "try-error"))
          stop("Number of iterations requested too large.")
 
       QM.perm <- try(rep(NA_real_, iter), silent=TRUE)
@@ -262,7 +265,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
             if (inherits(res, "try-error"))
                next
 
-            b.perm[i,]    <- coef(res)
+            beta.perm[i,] <- coef(res)
             zval.perm[i,] <- res$zval
             QM.perm[i]    <- res$QM
 
@@ -282,7 +285,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
             if (inherits(res, "try-error"))
                next
 
-            b.perm[i,]    <- coef(res)
+            beta.perm[i,] <- coef(res)
             zval.perm[i,] <- res$zval
             QM.perm[i]    <- res$QM
 
@@ -298,7 +301,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
       ### the first random permutation is always the observed data (avoids possibility of p=0)
 
       if (!exact) {
-         b.perm[1,]    <- coef(x)
+         beta.perm[1,] <- coef(x)
          zval.perm[1,] <- x$zval
          QM.perm[1]    <- x$QM
       }
@@ -312,7 +315,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
             if (con$stat == "test") {
                pval <- rowMeans(t(abs(zval.perm)) >= abs(x$zval) - comp.tol, na.rm=TRUE) ### based on test statistics
             } else {
-               pval <- rowMeans(t(abs(b.perm)) >= abs(c(x$b)) - comp.tol, na.rm=TRUE) ### based on coefficients
+               pval <- rowMeans(t(abs(beta.perm)) >= abs(c(x$beta)) - comp.tol, na.rm=TRUE) ### based on coefficients
             }
 
          } else {
@@ -331,10 +334,10 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
                }
             } else {
                for (j in seq_len(x$p)) {
-                  if (c(x$b)[j] > 0) {
-                     pval[j] <- 2*mean(b.perm[,j] >= c(x$b)[j] - comp.tol, na.rm=TRUE)
+                  if (c(x$beta)[j] > 0) {
+                     pval[j] <- 2*mean(beta.perm[,j] >= c(x$beta)[j] - comp.tol, na.rm=TRUE)
                   } else {
-                     pval[j] <- 2*mean(b.perm[,j] <= c(x$b)[j] + comp.tol, na.rm=TRUE)
+                     pval[j] <- 2*mean(beta.perm[,j] <= c(x$beta)[j] + comp.tol, na.rm=TRUE)
                   }
                }
             }
@@ -347,7 +350,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
          if (con$stat == "test") {
             pval <- rowMeans(t(zval.perm) <= x$zval + comp.tol, na.rm=TRUE) ### based on test statistics
          } else {
-            pval <- rowMeans(t(b.perm) <= c(x$b) + comp.tol, na.rm=TRUE) ### based on coefficients
+            pval <- rowMeans(t(beta.perm) <= c(x$beta) + comp.tol, na.rm=TRUE) ### based on coefficients
          }
       }
 
@@ -355,7 +358,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
          if (con$stat == "test") {
             pval <- rowMeans(t(zval.perm) >= x$zval - comp.tol, na.rm=TRUE) ### based on test statistics
          } else {
-            pval <- rowMeans(t(b.perm) >= c(x$b) - comp.tol, na.rm=TRUE) ### based on coefficients
+            pval <- rowMeans(t(beta.perm) >= c(x$beta) - comp.tol, na.rm=TRUE) ### based on coefficients
          }
       }
 
@@ -449,15 +452,15 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
 
    #########################################################################
 
-   out <- list(pval=pval, QMp=QMp, b=x$b, se=x$se, zval=x$zval, ci.lb=ci.lb, ci.ub=ci.ub,
+   out <- list(pval=pval, QMp=QMp, beta=x$beta, se=x$se, zval=x$zval, ci.lb=ci.lb, ci.ub=ci.ub,
                QM=x$QM, k=x$k, p=x$p, btt=x$btt, m=x$m, test=x$test, dfs=x$dfs,
                int.only=x$int.only, digits=digits, exact.iter=exact.iter, permci=permci)
 
    if (retpermdist) {
       out$QM.perm   <- QM.perm
       out$zval.perm <- data.frame(zval.perm)
-      out$b.perm    <- data.frame(b.perm)
-      names(out$zval.perm) <- names(out$b.perm) <- colnames(x$X)
+      out$beta.perm <- data.frame(beta.perm)
+      names(out$zval.perm) <- names(out$beta.perm) <- colnames(x$X)
    }
 
    class(out) <- "permutest.rma.uni"

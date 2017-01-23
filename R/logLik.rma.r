@@ -18,7 +18,7 @@ logLik.rma <- function(object, REML, ...) {
    }
 
    attr(val, "nall") <- object$k.eff
-   attr(val, "nobs") <- object$k.eff - ifelse(REML, 1, 0) * object$p.eff
+   attr(val, "nobs") <- object$k.eff - ifelse(REML, object$p.eff, 0)
    attr(val, "df")   <- object$parms
 
    class(val) <- "logLik"

@@ -6,6 +6,9 @@ influence.rma.uni <- function(model, digits, ...) {
    if (!inherits(model, "rma.uni"))
       stop("Argument 'model' must be an object of class \"rma.uni\".")
 
+   if (inherits(model, "rma.ls"))
+      stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!")
+
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
@@ -26,14 +29,14 @@ influence.rma.uni <- function(model, digits, ...) {
    vdelpred <- rep(NA_real_, x$k.f)
    QE.del   <- rep(NA_real_, x$k.f)
    dffits   <- rep(NA_real_, x$k.f)
-   dfbs     <- matrix(NA_real_, nrow=x$k.f, ncol=length(x$b))
+   dfbs     <- matrix(NA_real_, nrow=x$k.f, ncol=length(x$beta))
    cook.d   <- rep(NA_real_, x$k.f)
    cov.r    <- rep(NA_real_, x$k.f)
    weight   <- rep(NA_real_, x$k.f)
 
    ### predicted values under the full model
 
-   pred.full <- x$X.f %*% x$b
+   pred.full <- x$X.f %*% x$beta
 
    ### calculate inverse of variance-covariance matrix under the full model (needed for the Cook's distances)
    ### also need H matrix for dffits calculation (when not using the standard weights)
@@ -83,7 +86,7 @@ influence.rma.uni <- function(model, digits, ...) {
       ### 'deleted' predicted value for the ith observation based on the model without the ith observation included
 
       Xi          <- matrix(x$X.f[i,], nrow=1)
-      delpred[i]  <- Xi %*% res$b
+      delpred[i]  <- Xi %*% res$beta
       vdelpred[i] <- Xi %*% tcrossprod(res$vb,Xi)
 
       ### compute dffits
@@ -113,14 +116,14 @@ influence.rma.uni <- function(model, digits, ...) {
 
       ### compute dbeta and dfbetas value(s)
 
-      dfb <- x$b - res$b
+      dfb <- x$beta - res$beta
       dfbs[i,] <- dfb / sqrt(res$s2w * diag(vb.del))
       #dfbs[i,] <- dfb / sqrt(diag(res$vb))
 
       ### compute Cook's distance
 
       cook.d[i]  <- crossprod(dfb,svb) %*% dfb # / x$p
-      #cook.d[i] <- sum(1/(x$vi.f+tau2.del[i]) * (pred.full - x$X.f %*% res$b)^2) / x$p
+      #cook.d[i] <- sum(1/(x$vi.f+tau2.del[i]) * (pred.full - x$X.f %*% res$beta)^2) / x$p
 
       ### compute covariance ratio
 
@@ -169,7 +172,7 @@ influence.rma.uni <- function(model, digits, ...) {
    rownames(out$inf) <- x$slab
    rownames(out$dfbs) <- x$slab
 
-   colnames(out$dfbs) <- rownames(x$b)
+   colnames(out$dfbs) <- rownames(x$beta)
    colnames(out$inf) <- c("rstudent", "dffits", "cook.d", "cov.r", "tau2.del", "QE.del", "hat", "weight")
 
    class(out) <- "infl.rma.uni"

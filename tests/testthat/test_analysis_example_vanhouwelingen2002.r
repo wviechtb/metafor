@@ -74,7 +74,7 @@ test_that("forest plot of observed log(OR)s and corresponding BLUPs can be drawn
 
    opar <- par(no.readonly=TRUE)
    par(family="mono", mar=c(5,4,1,2))
-   forest(res, refline=res$b, addcred=TRUE, xlim=c(-7,8), alim=c(-3,3), slab=1:13, psize=.8,
+   forest(res, refline=res$beta, addcred=TRUE, xlim=c(-7,8), alim=c(-3,3), slab=1:13, psize=.8,
           ilab=paste0("(n = ", formatC(apply(dat[,c(4:7)], 1, sum), width=7, big.mark=","), ")"),
           ilab.xpos=-3.5, ilab.pos=2, rows=13:1+.15)
    arrows(sav$pi.lb, 13:1 - .15, sav$pi.ub, 13:1 -.15, length=.03, angle=90, code=3, lty="dotted")
@@ -90,7 +90,7 @@ test_that("the credibility/prediction interval is correct.", {
    res <- rma(yi, vi, data=dat, method="ML")
 
    ### computation as done in the paper
-   tmp <- round(c(res$b) + c(-1,+1) * qnorm(.975) * sqrt(res$tau2), 3)
+   tmp <- round(c(res$beta) + c(-1,+1) * qnorm(.975) * sqrt(res$tau2), 3)
 
    ### compare with results on page 599 (in text)
    expect_equivalent(tmp, c(-1.820, 0.336))

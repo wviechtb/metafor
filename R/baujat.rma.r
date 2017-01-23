@@ -9,6 +9,9 @@ baujat.rma <- function(x, xlim, ylim, xlab, ylab, cex, symbol, grid=TRUE, ...) {
    if (inherits(x, "rma.mv"))
       stop("Method not yet implemented for objects of class \"rma.mv\". Sorry!")
 
+   if (inherits(x, "rma.ls"))
+      stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!")
+
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
@@ -26,7 +29,7 @@ baujat.rma <- function(x, xlim, ylim, xlab, ylab, cex, symbol, grid=TRUE, ...) {
 
    ### predicted values under the full model
 
-   pred.full <- x$X.f %*% x$b
+   pred.full <- x$X.f %*% x$beta
 
    ### note: skipping NA cases
    ### also: it is possible that model fitting fails, so that generates more NAs (these NAs will always be shown in output)
@@ -56,7 +59,7 @@ baujat.rma <- function(x, xlim, ylim, xlab, ylab, cex, symbol, grid=TRUE, ...) {
          next
 
       Xi          <- matrix(x$X.f[i,], nrow=1)
-      delpred[i]  <- Xi %*% res$b
+      delpred[i]  <- Xi %*% res$beta
       vdelpred[i] <- Xi %*% tcrossprod(res$vb,Xi)
 
    }

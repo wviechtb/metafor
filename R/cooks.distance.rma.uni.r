@@ -3,6 +3,9 @@ cooks.distance.rma.uni <- function(model, progbar=FALSE, ...) {
    if (!inherits(model, "rma.uni"))
       stop("Argument 'model' must be an object of class \"rma.uni\".")
 
+   if (inherits(model, "rma.ls"))
+      stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!")
+
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
@@ -41,7 +44,7 @@ cooks.distance.rma.uni <- function(model, progbar=FALSE, ...) {
 
       ### compute dfbeta value(s)
 
-      dfb <- x$b - res$b
+      dfb <- x$beta - res$beta
 
       ### compute Cook's distance
 

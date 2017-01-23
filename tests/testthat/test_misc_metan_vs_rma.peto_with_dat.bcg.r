@@ -10,7 +10,7 @@ test_that("results match (FE model, measure='OR').", {
 
    res <- rma.peto(ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
-   expect_equivalent(round(res$b, digits=3), -0.474)
+   expect_equivalent(round(res$beta,  digits=3), -0.474)
    expect_equivalent(round(res$ci.lb, digits=3), -0.554)
    expect_equivalent(round(res$ci.ub, digits=3), -0.395)
    expect_equivalent(round(res$zval,  digits=2), -11.67) ### 11.67 in Stata

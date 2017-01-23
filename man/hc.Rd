@@ -27,7 +27,7 @@ hc(object, \dots)
 }
 \value{
    An object of class \code{"hc.rma.uni"}. The object is a list containing the following components:
-   \item{b}{estimated average true effect.}
+   \item{beta}{estimated average true effect.}
    \item{se}{corresponding standard error.}
    \item{ci.lb}{lower bound of the confidence intervals for the average true effect.}
    \item{ci.ub}{upper bound of the confidence intervals for the average true effect.}

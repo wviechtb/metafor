@@ -9,6 +9,9 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
    if (inherits(x, "rma.mv"))
       stop("Method not yet implemented for objects of class \"rma.mv\". Sorry!")
 
+   if (inherits(x, "rma.ls"))
+      stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!")
+
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
@@ -86,9 +89,9 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
 
       ### set up vectors to store results in
 
-      b <- try(matrix(NA_real_, nrow=N.tot, ncol=x$p), silent=TRUE)
+      beta <- try(matrix(NA_real_, nrow=N.tot, ncol=x$p), silent=TRUE)
 
-      if (inherits(b, "try-error"))
+      if (inherits(beta, "try-error"))
          stop("Number of models requested too large.")
 
       het <- try(matrix(NA_real_, nrow=N.tot, ncol=5), silent=TRUE)
@@ -131,7 +134,7 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
          if (any(res$coef.na))
             next
 
-         b[j,] <- c(res$b)
+         beta[j,] <- c(res$beta)
 
          het[j,1] <- res$k
          het[j,2] <- res$QE
@@ -192,8 +195,8 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
 
       }
 
-      b <- do.call("rbind", lapply(res, function(z) t(z$b)))
-      het <- do.call("rbind", lapply(res, function(z) z$het))
+      beta <- do.call("rbind", lapply(res, function(z) t(z$beta)))
+      het  <- do.call("rbind", lapply(res, function(z) z$het))
 
    }
 
@@ -209,14 +212,14 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
    colnames(het) <- c("k", "QE", "I2", "H2", "tau2")
 
    if (x$int.only) {
-      colnames(b) <- "estimate"
+      colnames(beta) <- "estimate"
    } else {
-      colnames(b) <- colnames(x$X)
+      colnames(beta) <- colnames(x$X)
    }
 
-   ### combine het and b objects and order incl and res by k
+   ### combine het and beta objects and order incl and res by k
 
-   res <- data.frame(het, b)
+   res <- data.frame(het, beta)
    incl <- incl[order(res$k),]
    res <- res[order(res$k),]
 

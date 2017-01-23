@@ -3,6 +3,9 @@ dfbetas.rma.uni <- function(model, ...) {
    if (!inherits(model, "rma.uni"))
       stop("Argument 'model' must be an object of class \"rma.uni\".")
 
+   if (inherits(model, "rma.ls"))
+      stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!")
+
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
@@ -58,7 +61,7 @@ dfbetas.rma.uni <- function(model, ...) {
 
       ### compute dbeta and dfbetas value(s)
 
-      dfb <- x$b - res$b
+      dfb <- x$beta - res$beta
       dfbs[i,] <- dfb / sqrt(res$s2w * diag(vb.del))
 
    }
@@ -78,7 +81,7 @@ dfbetas.rma.uni <- function(model, ...) {
    if (na.act == "na.fail" && any(!x$not.na))
       stop("Missing values in results.")
 
-   colnames(out) <- rownames(x$b)
+   colnames(out) <- rownames(x$beta)
 
    out <- data.frame(out)
 

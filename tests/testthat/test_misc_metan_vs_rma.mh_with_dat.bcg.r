@@ -10,7 +10,7 @@ test_that("results match (FE model, measure='RR').", {
 
    res <- rma.mh(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
-   expect_equivalent(round(res$b, digits=3), -0.454)
+   expect_equivalent(round(res$beta,  digits=3), -0.454)
    expect_equivalent(round(res$ci.lb, digits=3), -0.531)
    expect_equivalent(round(res$ci.ub, digits=3), -0.377)
    expect_equivalent(round(res$zval,  digits=2), -11.53) ### 11.53 in Stata
@@ -34,7 +34,7 @@ test_that("results match (FE model, measure='OR').", {
 
    res <- rma.mh(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
-   expect_equivalent(round(res$b, digits=3), -0.473)
+   expect_equivalent(round(res$beta,  digits=3), -0.473)
    expect_equivalent(round(res$ci.lb, digits=3), -0.554)
    expect_equivalent(round(res$ci.ub, digits=3), -0.393)
    expect_equivalent(round(res$zval,  digits=2), -11.54) ### 11.54 in Stata
@@ -58,7 +58,7 @@ test_that("results match (FE model, measure='RD').", {
 
    res <- rma.mh(measure="RD", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
-   expect_equivalent(round(res$b, digits=3), -0.003)
+   expect_equivalent(round(res$beta,  digits=3), -0.003)
    expect_equivalent(round(res$ci.lb, digits=3), -0.004)
    expect_equivalent(round(res$ci.ub, digits=3), -0.003)
    expect_equivalent(round(res$zval,  digits=2), -11.47) ### 11.56 in Stata

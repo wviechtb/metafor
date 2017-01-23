@@ -1224,7 +1224,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    ### check whether this is an intercept-only model
 
-   if ((p == 1L) && (all(sapply(X, identical, 1)))) {
+   if ((p == 1L) && .is.intercept(X)) {
       int.only <- TRUE
    } else {
       int.only <- FALSE
@@ -1828,18 +1828,18 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
       sX <- U %*% X
       sY <- U %*% Y
-      b.FE <- solve(crossprod(sX), crossprod(sX, sY))
+      beta.FE <- solve(crossprod(sX), crossprod(sX, sY))
       ### TODO: consider a better way to set initial values
-      #total      <- max(.001*(sigma2s + tau2s + gamma2s), var(c(Y - X %*% res.FE$b)) - 1/mean(1/diag(V)))
-      #total      <- max(.001*(sigma2s + tau2s + gamma2s), var(as.vector(sY - sX %*% b)) - 1/mean(1/diag(V)))
-      total       <- max(.001*(sigma2s + tau2s + gamma2s), var(as.vector(Y) - as.vector(X %*% b.FE)) - 1/mean(1/diag(V)))
+      #total      <- max(.001*(sigma2s + tau2s + gamma2s), var(c(Y - X %*% res.FE$beta)) - 1/mean(1/diag(V)))
+      #total      <- max(.001*(sigma2s + tau2s + gamma2s), var(as.vector(sY - sX %*% beta)) - 1/mean(1/diag(V)))
+      total       <- max(.001*(sigma2s + tau2s + gamma2s), var(as.vector(Y) - as.vector(X %*% beta.FE)) - 1/mean(1/diag(V)))
       sigma2.init <- rep(total / (sigma2s + tau2s + gamma2s), sigma2s)
       tau2.init   <- rep(total / (sigma2s + tau2s + gamma2s), tau2s)
       gamma2.init <- rep(total / (sigma2s + tau2s + gamma2s), gamma2s)
       rho.init    <- rep(.50, rhos)
       phi.init    <- rep(.50, phis)
 
-      QE <- sum(as.vector(sY - sX %*% b.FE)^2)
+      QE <- sum(as.vector(sY - sX %*% beta.FE)^2)
 
       ### QEp calculated below
 
@@ -1951,7 +1951,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
    }
 
    optimizer  <- match.arg(con$optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","ucminf"))
-   optmethod  <- con$optmethod
+   optmethod  <- match.arg(con$optmethod, c("Nelder-Mead", "BFGS", "CG", "L-BFGS-B", "SANN", "Brent"))
    tol        <- con$tol
    posdefify  <- con$posdefify
    cholesky   <- con$cholesky
@@ -2225,8 +2225,8 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    ### extract elements
 
-   b  <- as.matrix(fitcall$b)
-   vb <- as.matrix(fitcall$vb)
+   beta <- as.matrix(fitcall$beta)
+   vb   <- as.matrix(fitcall$vb)
 
    if (withS)
       sigma2 <- fitcall$sigma2
@@ -2257,16 +2257,16 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    ### QM calculation
 
-   QM <- try(as.vector(t(b)[btt] %*% chol2inv(chol(vb[btt,btt])) %*% b[btt]), silent=TRUE)
+   QM <- try(as.vector(t(beta)[btt] %*% chol2inv(chol(vb[btt,btt])) %*% beta[btt]), silent=TRUE)
 
    if (inherits(QM, "try-error"))
       QM <- NA
 
-   rownames(b) <- rownames(vb) <- colnames(vb) <- colnames(X)
+   rownames(beta) <- rownames(vb) <- colnames(vb) <- colnames(X)
 
    se <- sqrt(diag(vb))
    names(se) <- NULL
-   zval <- c(b/se)
+   zval <- c(beta/se)
 
    if (is.element(test, c("t"))) {
       dfs <- k-p
@@ -2287,8 +2287,8 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       crit <- qnorm(level/2, lower.tail=FALSE)
    }
 
-   ci.lb <- c(b - crit * se)
-   ci.ub <- c(b + crit * se)
+   ci.lb <- c(beta - crit * se)
+   ci.ub <- c(beta + crit * se)
 
    #########################################################################
 
@@ -2448,7 +2448,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    if (is.null(ddd$outlist)) {
 
-      res <- list(b=b, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
+      res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
                   sigma2=sigma2, tau2=tau2, rho=rho, gamma2=gamma2, phi=phi,
                   k=k, k.f=k.f, k.eff=k.eff, p=p, p.eff=p.eff, parms=parms, m=m,
                   QE=QE, QEp=QEp, QM=QM, QMp=QMp,
@@ -2471,7 +2471,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    if (!is.null(ddd$outlist)) {
       if (ddd$outlist == "minimal") {
-         res <- list(b=b, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, int.only=int.only, digits=digits, method=method, k=k, p=p, m=m, sigma2=sigma2, tau2=tau2, rho=rho, gamma2=gamma2, phi=phi, withR=withR, withS=withS, withG=withG, withH=withH, s.nlevels=s.nlevels, vc.fix=vc.fix, s.names=s.names, Rfix=Rfix, g.names=g.names, g.nlevels=g.nlevels, g.nlevels.f=g.nlevels.f, g.levels.k=g.levels.k, g.levels.f=g.levels.f, g.levels.comb.k=g.levels.comb.k, h.names=h.names, h.nlevels=h.nlevels, h.levels.k=h.levels.k, h.levels.f=h.levels.f, h.nlevels.f=h.nlevels.f, h.levels.comb.k=h.levels.comb.k, struct=struct, method=method, fit.stats=fit.stats, QE=QE, QEp=QEp, QM=QM, QMp=QMp, btt=btt, test=test, dfs=dfs)
+         res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, int.only=int.only, digits=digits, method=method, k=k, p=p, m=m, sigma2=sigma2, tau2=tau2, rho=rho, gamma2=gamma2, phi=phi, withR=withR, withS=withS, withG=withG, withH=withH, s.nlevels=s.nlevels, vc.fix=vc.fix, s.names=s.names, Rfix=Rfix, g.names=g.names, g.nlevels=g.nlevels, g.nlevels.f=g.nlevels.f, g.levels.k=g.levels.k, g.levels.f=g.levels.f, g.levels.comb.k=g.levels.comb.k, h.names=h.names, h.nlevels=h.nlevels, h.levels.k=h.levels.k, h.levels.f=h.levels.f, h.nlevels.f=h.nlevels.f, h.levels.comb.k=h.levels.comb.k, struct=struct, method=method, fit.stats=fit.stats, QE=QE, QEp=QEp, QM=QM, QMp=QMp, btt=btt, test=test, dfs=dfs)
       } else {
          res <- eval(parse(text=paste0("list(", ddd$outlist, ")")))
       }

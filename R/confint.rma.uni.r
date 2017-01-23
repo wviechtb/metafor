@@ -7,12 +7,15 @@
 ### if method='SJ':      method by Sidik & Jonkman (2005) (but this performs poorly, except if tau^2 is very large)
 ### if method='HS':      not sure since this is an ad-hoc estimator with no obvious underlying statistical principle
 ### Also could in principle compute Wald-type CIs (but those perform poorly except when k is very large).
-### But it may be a bit late to change how the function works (right now, type=GENQ if method=GENQ and type=QP otherwise).
+### But it may be a bit late to change how the function works (right now, type=GENQ if method="GENQ" and type=QP otherwise).
 
 confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digits, transf, targs, verbose=FALSE, control, ...) {
 
    if (!inherits(object, "rma.uni"))
       stop("Argument 'object' must be an object of class \"rma.uni\".")
+
+   if (inherits(object, "rma.ls"))
+      stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!")
 
    x <- object
 
@@ -487,24 +490,24 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
          crit <- qnorm(level/2, lower.tail=FALSE)
       }
 
-      b <- c(x$b)
-      ci.lb <- c(x$b - crit * x$se)
-      ci.ub <- c(x$b + crit * x$se)
+      beta  <- c(x$beta)
+      ci.lb <- c(beta - crit * x$se)
+      ci.ub <- c(beta + crit * x$se)
 
       if (is.function(transf)) {
          if (is.null(targs)) {
-            b     <- sapply(b, transf)
+            beta  <- sapply(beta, transf)
             ci.lb <- sapply(ci.lb, transf)
             ci.ub <- sapply(ci.ub, transf)
          } else {
-            b     <- sapply(b, transf, targs)
+            beta  <- sapply(beta, transf, targs)
             ci.lb <- sapply(ci.lb, transf, targs)
             ci.ub <- sapply(ci.ub, transf, targs)
          }
       }
 
-      res.fixed <- cbind(estimate=b, ci.lb=ci.lb, ci.ub=ci.ub)
-      rownames(res.fixed) <- rownames(x$b)
+      res.fixed <- cbind(estimate=beta, ci.lb=ci.lb, ci.ub=ci.ub)
+      rownames(res.fixed) <- rownames(x$beta)
 
    }
 

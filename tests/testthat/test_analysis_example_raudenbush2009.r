@@ -76,7 +76,7 @@ test_that("results are correct for the random-effects model (conventional approa
    res.std$DL   <- rma(yi, vi, data=dat, digits=3, method="DL")
    res.std$HE   <- rma(yi, vi, data=dat, digits=3, method="HE")
 
-   tmp <- round(t(sapply(res.std, function(x) c(tau2=x$tau2, mu=x$b, se=x$se, z=x$zval, ci.lb=x$ci.lb, ci.ub=x$ci.ub))), 3)
+   tmp <- round(t(sapply(res.std, function(x) c(tau2=x$tau2, mu=x$beta, se=x$se, z=x$zval, ci.lb=x$ci.lb, ci.ub=x$ci.ub))), 3)
 
    expected <- structure(c(0, 0.013, 0.019, 0.026, 0.08, 0.06, 0.078, 0.084, 0.089, 0.114, 0.036, 0.047, 0.052, 0.056, 0.079, 1.655, 1.637, 1.621, 1.601, 1.443, -0.011, -0.015, -0.018, -0.02, -0.041, 0.132, 0.171, 0.185, 0.199, 0.27),
                          .Dim = 5:6, .Dimnames = list(c("FE", "ML", "REML", "DL", "HE"), c("tau2", "mu", "se", "z", "ci.lb", "ci.ub")))
@@ -96,7 +96,7 @@ test_that("results are correct for the random-effects model (Knapp & Hartung met
    res.knha$DL   <- rma(yi, vi, data=dat, digits=3, method="DL", test="knha")
    res.knha$HE   <- rma(yi, vi, data=dat, digits=3, method="HE", test="knha")
 
-   tmp <- round(t(sapply(res.knha, function(x) c(tau2=x$tau2, mu=x$b, se=x$se, z=x$zval, ci.lb=x$ci.lb, ci.ub=x$ci.ub))), 3)
+   tmp <- round(t(sapply(res.knha, function(x) c(tau2=x$tau2, mu=x$beta, se=x$se, z=x$zval, ci.lb=x$ci.lb, ci.ub=x$ci.ub))), 3)
 
    expected <- structure(c(0, 0.013, 0.019, 0.026, 0.08, 0.06, 0.078, 0.084, 0.089, 0.114, 0.051, 0.059, 0.062, 0.064, 0.071, 1.173, 1.311, 1.359, 1.405, 1.608, -0.048, -0.047, -0.046, -0.044, -0.035, 0.168, 0.202, 0.213, 0.223, 0.264),
                          .Dim = 5:6, .Dimnames = list(c("FE", "ML", "REML", "DL", "HE"), c("tau2", "mu", "se", "z", "ci.lb", "ci.ub")))
@@ -126,7 +126,7 @@ test_that("results are correct for the random-effects model (Huber-White method)
 
    out <- capture.output(print(res.hw$REML)) ### so that print.robust.rma() is run (at least once)
 
-   tmp <- round(t(sapply(res.hw, function(x) c(tau2=x$tau2, mu=x$b, se=x$se, t=x$tval, ci.lb=x$ci.lb, ci.ub=x$ci.ub))), 3)
+   tmp <- round(t(sapply(res.hw, function(x) c(tau2=x$tau2, mu=x$beta, se=x$se, t=x$tval, ci.lb=x$ci.lb, ci.ub=x$ci.ub))), 3)
 
    expected <- structure(c(0, 0.013, 0.019, 0.026, 0.08, 0.06, 0.078, 0.084, 0.089, 0.114, 0.04, 0.047, 0.05, 0.052, 0.062, 1.515, 1.637, 1.676, 1.71, 1.85, -0.023, -0.022, -0.021, -0.02, -0.015, 0.144, 0.178, 0.189, 0.199, 0.244),
                          .Dim = 5:6, .Dimnames = list(c("FE", "ML", "REML", "DL", "HE"), c("tau2", "mu", "se", "t", "ci.lb", "ci.ub")))

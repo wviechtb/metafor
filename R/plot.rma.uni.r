@@ -5,6 +5,9 @@ plot.rma.uni <- function(x, qqplot=FALSE, ...) {
    if (!inherits(x, "rma.uni"))
       stop("Argument 'x' must be an object of class \"rma.uni\".")
 
+   if (inherits(x, "rma.ls"))
+      stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!")
+
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))

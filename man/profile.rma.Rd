@@ -50,7 +50,7 @@
    \item{gamma2}{values of \if{latex}{\eqn{\gamma^2}}\if{html}{\eqn{\gamma²}}\if{text}{\eqn{\gamma^2}} over which the likelihood was profiled (only when profiling was actually done over \if{latex}{\eqn{\gamma^2}}\if{html}{\eqn{\gamma²}}\if{text}{\eqn{\gamma^2}}).}
    \item{phi}{values of \eqn{\phi} over which the likelihood was profiled (only when profiling was actually done over \eqn{\phi}).}
    \item{ll}{(restricted) log-likelihood at the corresponding parameter value.}
-   \item{b}{a matrix with the estimated model coefficients at the corresponding parameter value.}
+   \item{beta}{a matrix with the estimated model coefficients at the corresponding parameter value.}
    \item{ci.lb}{a matrix with the lower confidence interval bounds for the model coefficients at the corresponding parameter value.}
    \item{ci.ub}{a matrix with the upper confidence interval bounds for the model coefficients at the corresponding parameter value.}
    \item{\dots}{some additional elements/values.}

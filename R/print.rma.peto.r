@@ -30,15 +30,15 @@ print.rma.peto <- function(x, digits, showfit=FALSE, ...) {
       cat("Q(df = ", x$k.pos-1, ") = ", formatC(x$QE, digits=digits, format="f"), ", p-val ", .pval(x$QEp, digits=digits, showeq=TRUE, sep=" "), sep="")
    }
 
-   res.table     <- c(x$b, x$se, x$zval, x$pval, x$ci.lb, x$ci.ub)
-   res.table.exp <- c(exp(x$b), exp(x$ci.lb), exp(x$ci.ub))
+   res.table     <- c(x$beta, x$se, x$zval, x$pval, x$ci.lb, x$ci.ub)
+   res.table.exp <- c(exp(x$beta), exp(x$ci.lb), exp(x$ci.ub))
 
-   if (!is.na(x$b)) {
+   if (!is.na(x$beta)) {
       res.table    <- formatC(res.table, digits=digits, format="f")
       res.table[4] <- .pval(x$pval, digits=digits)
    }
 
-   if (!is.na(x$b))
+   if (!is.na(x$beta))
       res.table.exp <- formatC(res.table.exp, digits=digits, format="f")
 
    names(res.table)     <- c("estimate", "se", "zval", "pval", "ci.lb", "ci.ub")

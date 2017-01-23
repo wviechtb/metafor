@@ -556,7 +556,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    ### check whether this is an intercept-only model
 
-   if ((p == 1L) && (all(sapply(X, identical, 1)))) {
+   if ((p == 1L) && .is.intercept(X)) {
       int.only <- TRUE
    } else {
       int.only <- FALSE
@@ -771,7 +771,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       Xsave <- X
       meanX <- colMeans(X[, 2:p, drop=FALSE])
       sdX   <- apply(X[, 2:p, drop=FALSE], 2, sd) ### consider using colSds() from matrixStats package
-      is.d  <- apply(X, 2, function(x) all(sapply(x, identical, 0) | sapply(x, identical, 1))) ### is each column a dummy variable (i.e., only 0s and 1s)?
+      is.d  <- apply(X, 2, .is.dummy) ### is each column a dummy variable (i.e., only 0s and 1s)?
       X[,!is.d] <- apply(X[, !is.d, drop=FALSE], 2, scale) ### rescale the non-dummy variables
    }
 
@@ -905,7 +905,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             #res.FE <- res[[1]]; res.QE <- res[[2]]; res.ML <- res[[3]]
 
             if (method == "FE") {
-               b      <- cbind(coef(res.FE)[seq_len(p)])
+               beta   <- cbind(coef(res.FE)[seq_len(p)])
                vb     <- vcov(res.FE)[seq_len(p),seq_len(p),drop=FALSE]
                tau2   <- 0
                sigma2 <- NA
@@ -915,7 +915,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             }
 
             if (method == "ML") {
-               b      <- cbind(lme4::fixef(res.ML)[seq_len(p)])
+               beta   <- cbind(lme4::fixef(res.ML)[seq_len(p)])
                vb     <- as.matrix(vcov(res.ML))[seq_len(p),seq_len(p),drop=FALSE]
                tau2   <- lme4::VarCorr(res.ML)[[1]][1]
                sigma2 <- NA
@@ -924,7 +924,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                k.eff  <- 2*k
             }
 
-            #return(list(b=b, vb=vb, tau2=tau2, sigma2=sigma2, parms=parms, p.eff=p.eff, k.eff=k.eff, b2.QE=b2.QE, vb2.QE=vb2.QE))
+            #return(list(beta=beta, vb=vb, tau2=tau2, sigma2=sigma2, parms=parms, p.eff=p.eff, k.eff=k.eff, b2.QE=b2.QE, vb2.QE=vb2.QE))
 
          }
 
@@ -1014,7 +1014,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             #res.FE <- res[[1]]; res.QE <- res[[2]]; res.ML <- res[[3]]
 
             if (method == "FE") {
-               b      <- cbind(lme4::fixef(res.FE)[seq_len(p)])
+               beta   <- cbind(lme4::fixef(res.FE)[seq_len(p)])
                vb     <- as.matrix(vcov(res.FE))[seq_len(p),seq_len(p),drop=FALSE]
                tau2   <- 0
                sigma2 <- lme4::VarCorr(res.FE)[[1]][1]
@@ -1024,7 +1024,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             }
 
             if (method == "ML") {
-               b      <- cbind(lme4::fixef(res.ML)[seq_len(p)])
+               beta   <- cbind(lme4::fixef(res.ML)[seq_len(p)])
                vb     <- as.matrix(vcov(res.ML))[seq_len(p),seq_len(p),drop=FALSE]
                tau2   <- lme4::VarCorr(res.ML)[[2]][1]
                sigma2 <- lme4::VarCorr(res.ML)[[1]][1]
@@ -1033,7 +1033,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                k.eff  <- 2*k
             }
 
-            #return(list(b=b, vb=vb, tau2=tau2, sigma2=sigma2, parms=parms, p.eff=p.eff, k.eff=k.eff, b2.QE=b2.QE, vb2.QE=vb2.QE))
+            #return(list(beta=beta, vb=vb, tau2=tau2, sigma2=sigma2, parms=parms, p.eff=p.eff, k.eff=k.eff, b2.QE=b2.QE, vb2.QE=vb2.QE))
 
          }
 
@@ -1150,7 +1150,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
          #res.FE <- res[[1]]; res.QE <- res[[2]]; res.ML <- res[[3]]
 
          if (method == "FE") {
-            b      <- cbind(coef(res.FE)[seq_len(p)])
+            beta   <- cbind(coef(res.FE)[seq_len(p)])
             vb     <- vcov(res.FE)[seq_len(p),seq_len(p),drop=FALSE]
             tau2   <- 0
             sigma2 <- NA
@@ -1160,7 +1160,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
          }
 
          if (method == "ML") {
-            b      <- cbind(lme4::fixef(res.ML)[seq_len(p)])
+            beta   <- cbind(lme4::fixef(res.ML)[seq_len(p)])
             vb     <- as.matrix(vcov(res.ML))[seq_len(p),seq_len(p),drop=FALSE]
             tau2   <- lme4::VarCorr(res.ML)[[1]][1]
             sigma2 <- NA
@@ -1169,7 +1169,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             k.eff  <- k
          }
 
-         #return(list(b=b, vb=vb, tau2=tau2, sigma2=sigma2, parms=parms, p.eff=p.eff, k.eff=k.eff, b2.QE=b2.QE, vb2.QE=vb2.QE))
+         #return(list(beta=beta, vb=vb, tau2=tau2, sigma2=sigma2, parms=parms, p.eff=p.eff, k.eff=k.eff, b2.QE=b2.QE, vb2.QE=vb2.QE))
 
          ###################################################################
 
@@ -1439,15 +1439,15 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                message("Fitting ML model ...")
 
             if (con$optimizer == "optim") {
-               res.ML <- try(optim(par=c(b, log(tau2+.001)), .dnchg, method=con$optmethod, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=TRUE,
+               res.ML <- try(optim(par=c(beta, log(tau2+.001)), .dnchg, method=con$optmethod, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=TRUE,
                                    verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, intCtrl=intCtrl, control=optCtrl), silent=!verbose)
             }
             if (con$optimizer == "nlminb") {
-               res.ML <- try(nlminb(start=c(b, log(tau2+.001)), .dnchg, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=TRUE,
+               res.ML <- try(nlminb(start=c(beta, log(tau2+.001)), .dnchg, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=TRUE,
                                     verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, intCtrl=intCtrl, control=optCtrl), silent=!verbose)
             }
             if (con$optimizer == "minqa") {
-               res.ML <- try(minqa(par=c(b, log(tau2+.001)), .dnchg, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=TRUE,
+               res.ML <- try(minqa(par=c(beta, log(tau2+.001)), .dnchg, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=TRUE,
                                    verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, intCtrl=intCtrl, control=optCtrl), silent=!verbose)
             }
 
@@ -1463,7 +1463,6 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             if (verbose > 1)
                message("Computing Hessian ...")
 
-            ### TODO: r=8 seems to give more accurate results, but this needs a whole lot more testing
             h.ML <- numDeriv::hessian(.dnchg, x=res.ML$par, method.args=hessianCtrl, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=TRUE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, intCtrl=intCtrl)
             #return(list(res.ML, h.ML))
 
@@ -1483,7 +1482,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
          if (method == "FE") {
             if (con$optimizer == "optim" || con$optimizer == "nlminb" || con$optimizer == "minqa") {
-               b <- cbind(res.FE$par[seq_len(p)])
+               beta <- cbind(res.FE$par[seq_len(p)])
                chol.h <- try(chol(h.FE[seq_len(p),seq_len(p)]), silent=!verbose) ### see if Hessian can be inverted with chol()
                if (inherits(chol.h, "try-error")) {
                   warning("Choleski factorization of Hessian failed. Trying inversion via QR decomposition.")
@@ -1495,7 +1494,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                }
             }
             if (con$optimizer == "clogit" || con$optimizer == "clogistic") {
-               b  <- cbind(coef(res.FE)[seq_len(p)])
+               beta <- cbind(coef(res.FE)[seq_len(p)])
                vb <- vcov(res.FE)[seq_len(p),seq_len(p),drop=FALSE]
             }
             tau2   <- 0
@@ -1506,7 +1505,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
          }
 
          if (method == "ML") {
-            b <- cbind(res.ML$par[seq_len(p)])
+            beta <- cbind(res.ML$par[seq_len(p)])
             chol.h <- try(chol(h.ML), silent=!verbose) ### see if Hessian can be inverted with chol()
             if (inherits(chol.h, "try-error")) {
                warning("Choleski factorization of Hessian failed. Trying inversion via QR decomposition.")
@@ -1529,7 +1528,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             }
          }
 
-         #return(list(b=b, vb=vb, tau2=tau2, sigma2=sigma2, parms=parms, p.eff=p.eff, k.eff=k.eff, b2.QE=b2.QE, vb2.QE=vb2.QE))
+         #return(list(beta=beta, vb=vb, tau2=tau2, sigma2=sigma2, parms=parms, p.eff=p.eff, k.eff=k.eff, b2.QE=b2.QE, vb2.QE=vb2.QE))
 
       }
 
@@ -1649,7 +1648,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       #res.FE <- res[[1]]; res.QE <- res[[2]]; res.ML <- res[[3]]
 
       if (method == "FE") {
-         b      <- cbind(coef(res.FE)[seq_len(p)])
+         beta   <- cbind(coef(res.FE)[seq_len(p)])
          vb     <- vcov(res.FE)[seq_len(p),seq_len(p),drop=FALSE]
          tau2   <- 0
          sigma2 <- NA
@@ -1659,7 +1658,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       }
 
       if (method == "ML") {
-         b      <- cbind(lme4::fixef(res.ML)[seq_len(p)])
+         beta   <- cbind(lme4::fixef(res.ML)[seq_len(p)])
          vb     <- as.matrix(vcov(res.ML))[seq_len(p),seq_len(p),drop=FALSE]
          tau2   <- lme4::VarCorr(res.ML)[[1]][1]
          sigma2 <- NA
@@ -1668,7 +1667,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
          k.eff  <- k
       }
 
-      #return(list(b=b, vb=vb, tau2=tau2, sigma2=sigma2, parms=parms, p.eff=p.eff, k.eff=k.eff, b2.QE=b2.QE, vb2.QE=vb2.QE))
+      #return(list(beta=beta, vb=vb, tau2=tau2, sigma2=sigma2, parms=parms, p.eff=p.eff, k.eff=k.eff, b2.QE=b2.QE, vb2.QE=vb2.QE))
 
    }
 
@@ -1749,24 +1748,24 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       warning("Cannot invert Hessian for QM test.")
       QM <- NA
    } else {
-      QM <- as.vector(t(b)[btt] %*% chol2inv(chol.h) %*% b[btt])
+      QM <- as.vector(t(beta)[btt] %*% chol2inv(chol.h) %*% beta[btt])
    }
 
-   ### scale back b and vb
+   ### scale back beta and vb
 
    if (!int.only && int.incl && con$scale) {
       mX <- rbind(c(1, -1*ifelse(is.d[-1], 0, meanX/sdX)), cbind(0, diag(ifelse(is.d[-1], 1, 1/sdX), nrow=length(is.d)-1, ncol=length(is.d)-1)))
-      b  <- mX %*% b
+      beta <- mX %*% beta
       vb <- mX %*% vb %*% t(mX)
       X  <- Xsave
    }
 
-   rownames(b) <- rownames(vb) <- colnames(vb) <- colnames(X)
+   rownames(beta) <- rownames(vb) <- colnames(vb) <- colnames(X)
 
    ve <- diag(vb)
    se <- ifelse(ve >= 0, sqrt(ve), NA)
    names(se) <- NULL
-   zval <- c(b/se)
+   zval <- c(beta/se)
 
    if (is.element(test, c("t"))) {
       dfs <- k-p
@@ -1787,10 +1786,10 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       crit <- qnorm(level/2, lower.tail=FALSE)
    }
 
-   ci.lb <- c(b - crit * se)
-   ci.ub <- c(b + crit * se)
+   ci.lb <- c(beta - crit * se)
+   ci.ub <- c(beta + crit * se)
 
-   #return(list(b=b, se=se, zval=zval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb, tau2=tau2, QM=QM, QMp=QMp))
+   #return(list(beta=beta, se=se, zval=zval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb, tau2=tau2, QM=QM, QMp=QMp))
 
    #########################################################################
 
@@ -1825,7 +1824,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    if (is.null(ddd$outlist)) {
 
-      res <- list(b=b, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
+      res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
                   tau2=tau2, se.tau2=se.tau2, sigma2=sigma2,
                   k=k, k.f=k.f, k.yi=k.yi, k.eff=k.eff, p=p, p.eff=p.eff, parms=parms, m=m,
                   QE.Wld=QE.Wld, QEp.Wld=QEp.Wld, QE.LRT=QE.LRT, QEp.LRT=QEp.LRT, QE.df=QE.df, QM=QM, QMp=QMp, I2=I2, H2=H2,
@@ -1843,7 +1842,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    if (!is.null(ddd$outlist)) {
       if (ddd$outlist == "minimal") {
-         res <- list(b=b, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, int.only=int.only, digits=digits, method=method, k=k, p=p, m=m, tau2=tau2, se.tau2=se.tau2, sigma2=sigma2, method=method, fit.stats=fit.stats, model=model, QE.Wld=QE.Wld, QEp.Wld=QEp.Wld, QE.LRT=QE.LRT, QEp.LRT=QEp.LRT, QE.df=QE.df, QEp=QEp, QM=QM, QMp=QMp, I2=I2, H2=H2, btt=btt, test=test, dfs=dfs, measure=measure)
+         res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, int.only=int.only, digits=digits, method=method, k=k, p=p, m=m, tau2=tau2, se.tau2=se.tau2, sigma2=sigma2, method=method, fit.stats=fit.stats, model=model, QE.Wld=QE.Wld, QEp.Wld=QEp.Wld, QE.LRT=QE.LRT, QEp.LRT=QEp.LRT, QE.df=QE.df, QEp=QEp, QM=QM, QMp=QMp, I2=I2, H2=H2, btt=btt, test=test, dfs=dfs, measure=measure)
       } else {
          res <- eval(parse(text=paste0("list(", ddd$outlist, ")")))
       }

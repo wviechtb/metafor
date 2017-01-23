@@ -14,6 +14,9 @@ regtest.rma <- function(x, model="rma", predictor="sei", ret.fit=FALSE, ...) {
    if (inherits(x, "rma.mv"))
       stop("Method not yet implemented for objects of class \"rma.mv\". Sorry!")
 
+   if (inherits(x, "rma.ls"))
+      stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!")
+
    model <- match.arg(model, c("lm", "rma"))
    predictor <- match.arg(predictor, c("sei", "vi", "ni", "ninv", "sqrtni", "sqrtninv"))
 
