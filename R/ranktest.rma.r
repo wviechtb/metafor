@@ -1,4 +1,4 @@
-ranktest.rma <- function(x, ...) {
+ranktest.rma <- function(x, digits, ...) {
 
    #########################################################################
 
@@ -8,12 +8,15 @@ ranktest.rma <- function(x, ...) {
    if (inherits(x, "robust.rma"))
       stop("Function not applicable to objects of class \"robust.rma\".")
 
+   if (missing(digits))
+      digits <- x$digits
+
    #########################################################################
 
    yi <- x$yi
    vi <- x$vi
 
-   res <- rma.uni(yi, vi, method="FE")
+   res  <- rma.uni(yi, vi, method="FE")
    beta <- c(res$beta)
    vb   <- c(res$vb)
 
@@ -24,7 +27,7 @@ ranktest.rma <- function(x, ...) {
    pval <- res$p.value
    tau  <- res$estimate
 
-   res <- list(tau=tau, pval=pval, digits=x$digits)
+   res <- list(tau=tau, pval=pval, digits=digits)
 
    class(res) <- "ranktest.rma"
    return(res)

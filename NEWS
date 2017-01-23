@@ -1,6 +1,9 @@
 Changes in Version 2.0-0 (2017-01-23)
 =====================================
 
+   o added ranktest.default(), so user can now specify the outcomes and
+     corresponding sampling variances directly to the function
+
    o added location-scale model
 
    o added a print method for 'rma.gosh' objects

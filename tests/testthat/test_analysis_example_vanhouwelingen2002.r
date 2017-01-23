@@ -140,7 +140,7 @@ test_that("results for the bivariate model are correct.", {
    expect_equivalent(round(res$se,3), c(0.435, 0.180))
 
    ### estimated odds ratio
-   expect_warning(tmp <- predict(res, newmods=1, intercept=FALSE, transf=exp, digits=3))
+   tmp <- predict(res, newmods=1, intercept=FALSE, transf=exp, digits=3)
    expect_equivalent(round(tmp$pred,3), 0.478)
    expect_equivalent(round(tmp$ci.lb,3), 0.336)
    expect_equivalent(round(tmp$ci.ub,3), 0.680)
