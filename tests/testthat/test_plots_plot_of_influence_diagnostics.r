@@ -23,6 +23,7 @@ test_that("plot can be drawn.", {
 
    ### plot the influence diagnostics
    plot(inf, layout=c(8,1))
+   plot(inf, plotinf=FALSE, plotdfbs=TRUE)
 
    par(opar)
 

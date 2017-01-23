@@ -20,4 +20,11 @@ test_that("rma.glmm() works correctly for 'UM.RS' model.", {
    expect_equivalent(round(res$tau2, 3),   0.726)
    expect_equivalent(round(res$sigma2, 3), 0.521)
 
+   ### check some (current) stop()'s
+
+   expect_error(confint(res))
+   expect_error(plot(res))
+   expect_error(qqnorm(res))
+   expect_error(weights(res))
+
 })

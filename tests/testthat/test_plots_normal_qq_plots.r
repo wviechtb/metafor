@@ -65,3 +65,12 @@ test_that("plot can be drawn for rma.peto().", {
    par(opar)
 
 })
+
+test_that("plot cannot be drawn for rma.mv().", {
+
+   data(dat.bcg, package="metafor")
+   dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
+   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat)
+   expect_error(qqnorm(res))
+
+})
