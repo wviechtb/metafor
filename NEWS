@@ -1,7 +1,10 @@
-Changes in Version 2.0-0 (2017-01-23)
+Changes in Version 2.0-0 (2017-01-24)
 =====================================
 
    o added ranktest.default(), so user can now specify the outcomes and
+     corresponding sampling variances directly to the function
+
+   o added regtest.default(), so user can now specify the outcomes and
      corresponding sampling variances directly to the function
 
    o added location-scale model

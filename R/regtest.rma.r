@@ -1,4 +1,4 @@
-regtest.rma <- function(x, model="rma", predictor="sei", ret.fit=FALSE, ...) {
+regtest.rma <- function(x, model="rma", predictor="sei", ret.fit=FALSE, digits, ...) {
 
    #########################################################################
 
@@ -19,6 +19,9 @@ regtest.rma <- function(x, model="rma", predictor="sei", ret.fit=FALSE, ...) {
 
    model <- match.arg(model, c("lm", "rma"))
    predictor <- match.arg(predictor, c("sei", "vi", "ni", "ninv", "sqrtni", "sqrtninv"))
+
+   if (missing(digits))
+      digits <- x$digits
 
    #########################################################################
 
@@ -55,7 +58,7 @@ regtest.rma <- function(x, model="rma", predictor="sei", ret.fit=FALSE, ...) {
 
    }
 
-   ### check if X is no longer of full rank (in which case we cannot carry out the test)
+   ### check if X of full rank (if not, cannot carry out the test)
 
    tmp <- lm(yi ~ X - 1)
    coef.na <- is.na(coef(tmp))
@@ -80,7 +83,7 @@ regtest.rma <- function(x, model="rma", predictor="sei", ret.fit=FALSE, ...) {
 
    }
 
-   res <- list(model=model, predictor=predictor, zval=zval, pval=pval, dfs=dfs, method=x$method, digits=x$digits, ret.fit=ret.fit, fit=fit)
+   res <- list(model=model, predictor=predictor, zval=zval, pval=pval, dfs=dfs, method=x$method, digits=digits, ret.fit=ret.fit, fit=fit)
 
    class(res) <- "regtest.rma"
    return(res)

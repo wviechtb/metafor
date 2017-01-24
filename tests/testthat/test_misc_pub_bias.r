@@ -13,7 +13,13 @@ test_that("regtest() works correctly for rma().", {
 
    out <- capture.output(print(sav)) ### so that print.regtest.rma() is run (at least once)
 
+   sav <- regtest(dat$yi, dat$vi)
+   expect_equivalent(round(sav$zval, 4), -4.6686)
+
    sav <- regtest(res, model="lm", predictor="sqrtninv")
+   expect_equivalent(round(sav$zval, 4), -5.6083)
+
+   sav <- regtest(dat$yi, dat$vi, model="lm", predictor="sqrtninv")
    expect_equivalent(round(sav$zval, 4), -5.6083)
 
 })
