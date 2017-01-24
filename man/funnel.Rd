@@ -14,7 +14,7 @@ funnel(x, \dots)
        back="lightgray", shade="white", hlines="white",
        refline, pch=19, pch.fill=21, ci.res=1000, \dots)
 
-\method{funnel}{default}(x, vi, sei, ni, yaxis="sei",
+\method{funnel}{default}(x, vi, sei, ni, subset, yaxis="sei",
        xlim, ylim, xlab, ylab,
        steps=5, at, atransf, targs, digits, level=95,
        back="lightgray", shade="white", hlines="white",
@@ -25,6 +25,7 @@ funnel(x, \dots)
    \item{vi}{vector with the corresponding sampling variances.}
    \item{sei}{vector with the corresponding standard errors.}
    \item{ni}{vector with the corresponding sample sizes.}
+   \item{subset}{optional vector indicating the subset of studies that should be included in the plot. This can be a logical vector of the same length as \code{x} or a numeric vector indicating the indices of the observations to include. Only relevant when passing a vector via \code{x}.}
    \item{yaxis}{either \code{"sei"}, \code{"vi"}, \code{"seinv"}, \code{"vinv"}, \code{"ni"}, \code{"ninv"}, \code{"sqrtni"}, \code{"sqrtninv"}, \code{"lni"}, or \code{"wi"} to indicate what values should be placed on the y-axis. See \sQuote{Details}.}
    \item{xlim}{x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.}
    \item{ylim}{y-axis limits. If unspecified, the function tries to set the y-axis limits to some sensible values.}

@@ -1,4 +1,4 @@
-funnel.default <- function(x, vi, sei, ni, yaxis="sei", xlim, ylim, xlab, ylab,
+funnel.default <- function(x, vi, sei, ni, subset, yaxis="sei", xlim, ylim, xlab, ylab,
 steps=5, at, atransf, targs, digits, level=95,
 back="lightgray", shade="white", hlines="white",
 refline=0, pch=19, pch.fill=21, ci.res=1000, ...) {
@@ -129,6 +129,16 @@ refline=0, pch=19, pch.fill=21, ci.res=1000, ...) {
    ### note: digits can also be a list (e.g., digits=list(2L,3))
 
    #########################################################################
+
+   ### if a subset of studies is specified
+
+   if (!is.null(subset)) {
+      yi   <- yi[subset]
+      vi   <- vi[subset]
+      sei  <- sei[subset]
+      ni   <- ni[subset]
+      slab <- slab[subset]
+   }
 
    ### check for NAs and act accordingly
 
