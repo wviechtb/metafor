@@ -28,7 +28,7 @@ robust(x, cluster, \dots)
    An object of class \code{"robust.rma"}. The object is a list containing the following components:
    \item{beta}{estimated coefficients of the model.}
    \item{se}{robust standard errors of the coefficients.}
-   \item{tval}{test statistics of the coefficients.}
+   \item{zval}{test statistics of the coefficients.}
    \item{pval}{p-values for the test statistics.}
    \item{ci.lb}{lower bound of the confidence intervals for the coefficients.}
    \item{ci.ub}{upper bound of the confidence intervals for the coefficients.}

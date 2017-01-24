@@ -58,12 +58,10 @@ robust.rma.mv <- function(x, cluster, adjust=TRUE, digits, ...) {
 
       ### if no weights were specified, then vb = (X'WX)^-1, so we can use that part
 
-      W <- try(chol(x$M[ocl,ocl]), silent=TRUE)
+      W <- try(chol2inv(chol(x$M[ocl,ocl])), silent=TRUE)
 
       if (inherits(W, "try-error"))
-         stop("Cannot take Choleski decomposition of marginal var-cov matrix.")
-
-      W <- chol2inv(W)
+         stop("Cannot invert marginal var-cov matrix.")
 
       bread <- x$vb %*% crossprod(x$X[ocl,], W)
 
@@ -73,7 +71,6 @@ robust.rma.mv <- function(x, cluster, adjust=TRUE, digits, ...) {
 
       A     <- x$W[ocl,ocl]
       stXAX <- chol2inv(chol(as.matrix(t(x$X[ocl,]) %*% A %*% x$X[ocl,]))) ### as.matrix() to avoid some issues with the matrix being not symmetric (when it must be)
-
       bread <- stXAX %*% crossprod(x$X[ocl,], A)
 
    }
@@ -115,8 +112,8 @@ robust.rma.mv <- function(x, cluster, adjust=TRUE, digits, ...) {
    beta <- x$beta
    se <- sqrt(diag(vb))
    names(se) <- NULL
-   tval <- c(beta/se)
-   pval <- 2*pt(abs(tval), df=dfs, lower.tail=FALSE)
+   zval <- c(beta/se)
+   pval <- 2*pt(abs(zval), df=dfs, lower.tail=FALSE)
    crit <- qt(level/2, df=dfs, lower.tail=FALSE)
    ci.lb <- c(beta - crit * se)
    ci.ub <- c(beta + crit * se)
@@ -134,12 +131,30 @@ robust.rma.mv <- function(x, cluster, adjust=TRUE, digits, ...) {
    ### table of cluster variable
    tcl <- table(cluster)
 
-   res <- list(beta=beta, se=se, tval=tval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
-               k=x$k, k.f=x$k.f, p=x$p, m=x$m, n=n, dfs=dfs, tcl=tcl, QM=QM, QMp=QMp, yi.f=x$yi.f, vi.f=x$vi.f, X=x$X, X.f=x$X.f, method=x$method,
-               int.only=x$int.only, int.incl=x$int.incl, test="t", btt=x$btt, intercept=x$intercept, digits=digits, level=x$level,
-               withG=x$withG, withH=x$withH, tau2s=x$tau2s, gamma2s=x$gamma2s, mf.g.f=x$mf.g.f, mf.h.f=x$mf.h.f,
-               g.levels.f=x$g.levels.f, h.levels.f=x$h.levels.f, sigma2=x$sigma2, tau2=x$tau2, gamma2=x$gamma2, slab=x$slab, slab.null=x$slab.null, not.na=x$not.na,
-               fit.stats=x$fit.stats, k.eff=x$k.eff, p.eff=x$p.eff, parms=x$parms, measure=x$measure)
+   res <- x
+   res$digits <- digits
+
+   ### replace elements with robust results
+
+   res$dfs   <- dfs
+   res$vb    <- vb
+   res$se    <- se
+   res$zval  <- zval
+   res$pval  <- pval
+   res$ci.lb <- ci.lb
+   res$ci.ub <- ci.ub
+   res$QM    <- QM
+   res$QMp   <- QMp
+   res$n     <- n
+   res$tcl   <- tcl
+   res$test  <- "t"
+
+   #res <- list(beta=beta, se=se, tval=tval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
+   #            k=x$k, k.f=x$k.f, p=x$p, m=x$m, n=n, dfs=dfs, tcl=tcl, QM=QM, QMp=QMp, yi.f=x$yi.f, vi.f=x$vi.f, X=x$X, X.f=x$X.f, M=x$M, method=x$method,
+   #            int.only=x$int.only, int.incl=x$int.incl, test="t", btt=x$btt, intercept=x$intercept, digits=digits, level=x$level,
+   #            withG=x$withG, withH=x$withH, tau2s=x$tau2s, gamma2s=x$gamma2s, mf.g.f=x$mf.g.f, mf.h.f=x$mf.h.f,
+   #            g.levels.f=x$g.levels.f, h.levels.f=x$h.levels.f, sigma2=x$sigma2, tau2=x$tau2, gamma2=x$gamma2, slab=x$slab, slab.null=x$slab.null, not.na=x$not.na,
+   #            fit.stats=x$fit.stats, k.eff=x$k.eff, p.eff=x$p.eff, parms=x$parms, measure=x$measure)
 
    class(res) <- c("robust.rma", "rma", "rma.mv")
    return(res)

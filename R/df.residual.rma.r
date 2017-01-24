@@ -1,5 +1,3 @@
-# Note: Works with "robust.rma" objects.
-
 df.residual.rma <- function(object, ...) {
 
    if (!inherits(object, "rma"))

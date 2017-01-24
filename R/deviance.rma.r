@@ -1,5 +1,3 @@
-# Note: Works with "robust.rma" objects.
-
 deviance.rma <- function(object, REML, ...) {
 
    if (!inherits(object, "rma"))

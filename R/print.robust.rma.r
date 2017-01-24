@@ -23,8 +23,10 @@ print.robust.rma <- function(x, digits, signif.stars=getOption("show.signif.star
       cat("F(df1 = ", x$m, ", df2 = ", x$dfs, ") = ", formatC(x$QM, digits=digits, format="f"), ", p-val ", .pval(x$QMp, digits=digits, showeq=TRUE, sep=" "), "\n\n", sep="")
    }
 
-   res.table <- cbind(estimate=c(x$beta), se=x$se, tval=x$tval, pval=x$pval, ci.lb=x$ci.lb, ci.ub=x$ci.ub)
+   res.table <- cbind(estimate=c(x$beta), se=x$se, zval=x$zval, pval=x$pval, ci.lb=x$ci.lb, ci.ub=x$ci.ub)
    rownames(res.table) <- rownames(x$beta)
+   if (is.element(x$test, c("knha","adhoc","t")))
+      colnames(res.table)[3] <- "tval"
    signif <- symnum(x$pval, corr=FALSE, na=FALSE, cutpoints=c(0, 0.001, 0.01, 0.05, 0.1, 1), symbols = c("***", "**", "*", ".", " "))
    if (signif.stars) {
       res.table <- cbind(formatC(res.table, digits=digits, format="f"), signif)

@@ -9,6 +9,9 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
    if (inherits(x, "rma.mv"))
       stop("Method not yet implemented for objects of class \"rma.mv\". Sorry!")
 
+   if (inherits(x, "robust.rma"))
+      stop("Method not yet implemented for objects of class \"robust.rma\". Sorry!")
+
    if (inherits(x, "rma.ls"))
       stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!")
 

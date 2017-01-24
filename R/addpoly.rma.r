@@ -1,5 +1,3 @@
-# Note: Works with "robust.rma" objects.
-
 addpoly.rma <- function(x, row=-2, level=x$level,
 annotate=TRUE, digits=2, width, mlab, transf, atransf, targs,
 efac=1, col, border, cex, ...) {

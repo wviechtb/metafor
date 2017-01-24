@@ -3,6 +3,9 @@ cooks.distance.rma.uni <- function(model, progbar=FALSE, ...) {
    if (!inherits(model, "rma.uni"))
       stop("Argument 'model' must be an object of class \"rma.uni\".")
 
+   if (inherits(model, "robust.rma"))
+      stop("Method not yet implemented for objects of class \"robust.rma\". Sorry!")
+
    if (inherits(model, "rma.ls"))
       stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!")
 

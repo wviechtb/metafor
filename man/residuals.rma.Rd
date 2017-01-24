@@ -52,6 +52,8 @@
    Right now, the externally standardized residuals are calculated by refitting the model \eqn{k} times. Depending on how large \eqn{k} is, it may take a few moments to finish the calculations.
 
    It may not be possible to fit the model after deletion of the \eqn{i}th case from the dataset. This will result in \code{NA} values for that case when calling \code{rstudent}.
+
+   For objects of class \code{"rma.mh"} and \code{"rma.mh"}, \code{rstandard} computes Pearson (or semi-standardized) residuals.
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \cr

@@ -1,5 +1,3 @@
-# Note: Works with "robust.rma" objects.
-
 coef.rma <- function(object, ...) {
 
    if (!inherits(object, "rma"))

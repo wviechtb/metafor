@@ -1,5 +1,3 @@
-# Note: Works with "robust.rma" objects.
-
 AIC.rma <- function(object, ..., k=2, correct=FALSE) {
 
    if (!inherits(object, "rma"))

@@ -1,5 +1,3 @@
-# Note: Works with "robust.rma" objects.
-
 forest.rma <- function(x, annotate=TRUE, addfit=TRUE, addcred=FALSE, showweights=FALSE,
 xlim, alim, clim, ylim, at, steps=5, level=x$level, refline=0, digits=2L, width,
 xlab, slab, mlab, ilab, ilab.xpos, ilab.pos, order,

@@ -1,5 +1,3 @@
-# Note: Works with "robust.rma" objects.
-
 anova.rma <- function(object, object2, btt, L, digits, ...) {
 
    if (!inherits(object, "rma"))

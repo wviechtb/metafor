@@ -1,4 +1,4 @@
-Changes in Version 2.0-0 (2017-01-24)
+Changes in Version 2.0-0 (2017-01-25)
 =====================================
 
    o added ranktest.default(), so user can now specify the outcomes and
@@ -6,6 +6,8 @@ Changes in Version 2.0-0 (2017-01-24)
 
    o added regtest.default(), so user can now specify the outcomes and
      corresponding sampling variances directly to the function
+
+   o more consistent handling of 'robust.rma' objects
 
    o funnel.default() gains 'subset' argument
 

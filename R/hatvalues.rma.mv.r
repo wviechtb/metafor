@@ -15,8 +15,10 @@ hatvalues.rma.mv <- function(model, type="diagonal", ...) {
    x <- model
 
    if (is.null(x$W)) {
-      W <- chol2inv(chol(x$M))
-      H <- as.matrix(x$X %*% x$vb %*% crossprod(x$X,W))
+      W     <- chol2inv(chol(x$M))
+      stXWX <- chol2inv(chol(as.matrix(t(x$X) %*% W %*% x$X)))
+      H     <- as.matrix(x$X %*% stXWX %*% crossprod(x$X,W))
+      #H <- as.matrix(x$X %*% x$vb %*% crossprod(x$X,W)) ### x$vb may be changed through robust()
    } else {
       A     <- x$W
       stXAX <- chol2inv(chol(as.matrix(t(x$X) %*% A %*% x$X)))

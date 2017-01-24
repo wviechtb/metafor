@@ -8,9 +8,6 @@ refline, pch=19, pch.fill=21, ci.res=1000, ...) {
    if (!inherits(x, "rma"))
       stop("Argument 'x' must be an object of class \"rma\".")
 
-   if (inherits(x, "robust.rma"))
-      stop("Function not applicable to objects of class \"robust.rma\".")
-
    na.act <- getOption("na.action")
 
    yaxis <- match.arg(yaxis, c("sei", "vi", "seinv", "vinv", "ni", "ninv", "sqrtni", "sqrtninv", "lni", "wi"))

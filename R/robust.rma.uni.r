@@ -62,9 +62,9 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, digits, ...) {
 
          ### if no weights were specified, then vb = (X'WX)^-1, so we can use that part
 
-         wi <- 1/(x$vi + x$tau2)
-         wi <- wi[ocl]
-         W <- diag(wi, nrow=x$k, ncol=x$k)
+         wi    <- 1/(x$vi + x$tau2)
+         wi    <- wi[ocl]
+         W     <- diag(wi, nrow=x$k, ncol=x$k)
          bread <- x$vb %*% crossprod(x$X[ocl,], W)
 
       } else {
@@ -81,7 +81,7 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, digits, ...) {
 
       ### for unweighted analysis
 
-      stXX <- .invcalc(X=x$X[ocl,], W=diag(x$k), k=x$k)
+      stXX  <- .invcalc(X=x$X[ocl,], W=diag(x$k), k=x$k)
       bread <- stXX %*% t(x$X[ocl,])
 
    }
@@ -119,8 +119,8 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, digits, ...) {
    beta <- x$beta
    se <- sqrt(diag(vb))
    names(se) <- NULL
-   tval <- c(beta/se)
-   pval <- 2*pt(abs(tval), df=dfs, lower.tail=FALSE)
+   zval <- c(beta/se)
+   pval <- 2*pt(abs(zval), df=dfs, lower.tail=FALSE)
    crit <- qt(level/2, df=dfs, lower.tail=FALSE)
    ci.lb <- c(beta - crit * se)
    ci.ub <- c(beta + crit * se)
@@ -138,11 +138,30 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, digits, ...) {
    ### table of cluster variable
    tcl <- table(cluster)
 
-   res <- list(beta=beta, se=se, tval=tval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
-               k=x$k, k.f=x$k.f, p=x$p, m=x$m, n=n, dfs=dfs, tcl=tcl, QM=QM, QMp=QMp, yi.f=x$yi.f, vi.f=x$vi.f, X=x$X, X.f=x$X.f, method=x$method,
-               int.only=x$int.only, int.incl=x$int.incl, test="t", btt=x$btt, intercept=x$intercept, digits=digits, level=x$level, tau2=x$tau2, slab=x$slab,
-               slab.null=x$slab.null, not.na=x$not.na,
-               fit.stats=x$fit.stats, k.eff=x$k.eff, p.eff=x$p.eff, parms=x$parms, measure=x$measure)
+   res <- x
+   res$digits <- digits
+
+   ### replace elements with robust results
+
+   res$dfs   <- dfs
+   res$vb    <- vb
+   res$se    <- se
+   res$zval  <- zval
+   res$pval  <- pval
+   res$ci.lb <- ci.lb
+   res$ci.ub <- ci.ub
+   res$QM    <- QM
+   res$QMp   <- QMp
+   res$n     <- n
+   res$tcl   <- tcl
+   res$test  <- "t"
+   res$s2w   <- 1 ### just in case test="knha" originally
+
+   #res <- list(beta=beta, se=se, tval=tval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
+   #            k=x$k, k.f=x$k.f, p=x$p, m=x$m, n=n, dfs=dfs, tcl=tcl, QM=QM, QMp=QMp, yi.f=x$yi.f, vi.f=x$vi.f, X=x$X, X.f=x$X.f, weights=x$weights, method=x$method,
+   #            weighted=x$weighted, int.only=x$int.only, int.incl=x$int.incl, test="t", btt=x$btt, intercept=x$intercept, digits=digits, level=x$level, tau2=x$tau2, slab=x$slab,
+   #            slab.null=x$slab.null, not.na=x$not.na,
+   #            fit.stats=x$fit.stats, k.eff=x$k.eff, p.eff=x$p.eff, parms=x$parms, measure=x$measure)
 
    class(res) <- c("robust.rma", "rma", "rma.uni")
    return(res)

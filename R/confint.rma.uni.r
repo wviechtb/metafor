@@ -14,6 +14,9 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
    if (!inherits(object, "rma.uni"))
       stop("Argument 'object' must be an object of class \"rma.uni\".")
 
+   if (inherits(object, "robust.rma"))
+      stop("Method not yet implemented for objects of class \"robust.rma\". Sorry!")
+
    if (inherits(object, "rma.ls"))
       stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!")
 

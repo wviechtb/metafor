@@ -1,5 +1,3 @@
-# Note: Works with "robust.rma" objects.
-
 predict.rma <- function(object, newmods, intercept, tau2.levels, gamma2.levels, addx=FALSE,
 level, digits, transf, targs, ...) {
 

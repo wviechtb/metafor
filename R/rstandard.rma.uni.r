@@ -15,19 +15,21 @@ rstandard.rma.uni <- function(model, digits, ...) {
 
    #########################################################################
 
-   M <- diag(x$vi + x$tau2, nrow=x$k, ncol=x$k)
-
    options(na.action="na.omit")
    H <- hatvalues(x, type="matrix")
    options(na.action = na.act)
 
    #########################################################################
 
-   ImH <- diag(x$k) - H
-   ei <- ImH %*% cbind(x$yi)
+   #ImH <- diag(x$k) - H
+   #ei <- ImH %*% cbind(x$yi)
+   ei <- c(x$yi - x$X %*% x$beta)
+
    ei[abs(ei) < 100 * .Machine$double.eps] <- 0
    #ei[abs(ei) < 100 * .Machine$double.eps * median(abs(ei), na.rm=TRUE)] <- 0 ### see lm.influence
-   ve  <- ImH %*% tcrossprod(M,ImH)
+
+   #ve <- ImH %*% tcrossprod(x$M,ImH)
+   ve  <- x$M + x$X %*% x$vb %*% t(x$X) - 2*H%*%x$M
    sei <- sqrt(diag(ve))
 
    resid   <- rep(NA_real_, x$k.f)

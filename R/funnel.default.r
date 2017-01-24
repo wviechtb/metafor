@@ -10,6 +10,9 @@ refline=0, pch=19, pch.fill=21, ci.res=1000, ...) {
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
       stop("Unknown 'na.action' specified under options().")
 
+   if (missing(subset))
+      subset <- NULL
+
    yaxis <- match.arg(yaxis, c("sei", "vi", "seinv", "vinv", "ni", "ninv", "sqrtni", "sqrtninv", "lni", "wi"))
 
    if (missing(atransf))

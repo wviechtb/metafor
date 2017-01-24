@@ -16,8 +16,10 @@ hatvalues.rma.uni <- function(model, type="diagonal", ...) {
 
    if (x$weighted) {
       if (is.null(x$weights)) {
-         W <- diag(1/(x$vi + x$tau2), nrow=x$k, ncol=x$k)
-         H <- x$X %*% (x$vb / x$s2w) %*% crossprod(x$X,W) ### need to potentially re-adjust vb
+         W     <- diag(1/(x$vi + x$tau2), nrow=x$k, ncol=x$k)
+         stXWX <- .invcalc(X=x$X, W=W, k=x$k)
+         H     <- x$X %*% stXWX %*% crossprod(x$X,W)
+         #H <- x$X %*% (x$vb / x$s2w) %*% crossprod(x$X,W) ### x$vb may be changed through robust() (and when test="knha")
       } else {
          A     <- diag(x$weights, nrow=x$k, ncol=x$k)
          stXAX <- .invcalc(X=x$X, W=A, k=x$k)

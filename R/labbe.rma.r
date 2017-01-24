@@ -4,9 +4,6 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, ...) {
    if (!inherits(x, "rma"))
       stop("Argument 'x' must be an object of class \"rma\".")
 
-   if (inherits(x, "robust.rma"))
-      stop("Function not applicable to objects of class \"robust.rma\".")
-
    if (inherits(x, "rma.ls"))
       stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!")
 

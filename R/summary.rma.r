@@ -1,5 +1,3 @@
-# Note: Works with "robust.rma" objects.
-
 summary.rma <- function(object, digits, showfit=TRUE, ...) {
 
    if (!inherits(object, "rma"))
