@@ -1,4 +1,4 @@
-Changes in Version 2.0-0 (2017-01-25)
+Changes in Version 2.0-0 (2017-01-27)
 =====================================
 
    o added ranktest.default(), so user can now specify the outcomes and
@@ -10,6 +10,8 @@ Changes in Version 2.0-0 (2017-01-25)
    o more consistent handling of 'robust.rma' objects
 
    o funnel.default() gains 'subset' argument
+
+   o funnel.default() and funnel.rma() gain 'col' and 'bg' arguments
 
    o added location-scale model
 

@@ -1,7 +1,7 @@
 funnel.rma <- function(x, yaxis="sei", xlim, ylim, xlab, ylab,
 steps=5, at, atransf, targs, digits, level=x$level, addtau2=FALSE,
 type="rstandard", back="lightgray", shade="white", hlines="white",
-refline, pch=19, pch.fill=21, ci.res=1000, ...) {
+refline, pch=19, pch.fill=21, col, bg, ci.res=1000, ...) {
 
    #########################################################################
 
@@ -87,6 +87,18 @@ refline, pch=19, pch.fill=21, ci.res=1000, ...) {
    }
 
    ### note: digits can also be a list (e.g., digits=list(2L,3))
+
+   if (missing(col))
+      col <- "black"
+
+   if (length(col) == 1L)
+      col <- c(col, col)
+
+   if (missing(bg))
+      bg <- "white"
+
+   if (length(bg) == 1L)
+      bg <- c(bg, bg)
 
    #########################################################################
 
@@ -398,12 +410,12 @@ refline, pch=19, pch.fill=21, ci.res=1000, ...) {
    if (yaxis == "wi")
       yaxis.vals <- weights
 
-   points(xaxis.vals, yaxis.vals, pch=pch, ...)
+   points(xaxis.vals, yaxis.vals, pch=pch, col=col[1], bg=bg[2], ...)
 
    ### add trim-and-fill points
 
    if (inherits(x, "rma.uni.trimfill"))
-      points(xaxis.vals[x$fill], yaxis.vals[x$fill], pch=pch.fill, col="black", bg="white", ...)
+      points(xaxis.vals[x$fill], yaxis.vals[x$fill], pch=pch.fill, col=col[2], bg=bg[2], ...)
 
    #########################################################################
 

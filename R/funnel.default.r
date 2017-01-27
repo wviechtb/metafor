@@ -1,7 +1,7 @@
 funnel.default <- function(x, vi, sei, ni, subset, yaxis="sei", xlim, ylim, xlab, ylab,
 steps=5, at, atransf, targs, digits, level=95,
 back="lightgray", shade="white", hlines="white",
-refline=0, pch=19, pch.fill=21, ci.res=1000, ...) {
+refline=0, pch=19, pch.fill=21, col, bg, ci.res=1000, ...) {
 
    #########################################################################
 
@@ -130,6 +130,18 @@ refline=0, pch=19, pch.fill=21, ci.res=1000, ...) {
    }
 
    ### note: digits can also be a list (e.g., digits=list(2L,3))
+
+   if (missing(col))
+      col <- "black"
+
+   if (length(col) == 1L)
+      col <- c(col, col)
+
+   if (missing(bg))
+      bg <- "white"
+
+   if (length(bg) == 1L)
+      bg <- c(bg, bg)
 
    #########################################################################
 
@@ -428,7 +440,7 @@ refline=0, pch=19, pch.fill=21, ci.res=1000, ...) {
    if (yaxis == "wi")
       yaxis.vals <- weights
 
-   points(xaxis.vals, yaxis.vals, pch=pch, ...)
+   points(xaxis.vals, yaxis.vals, pch=pch, col=col[1], bg=bg[1], ...)
 
    #########################################################################
 
