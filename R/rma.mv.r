@@ -594,7 +594,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
    mf.g.f  <- mf.g ### needed for predict()
    mf.h.f  <- mf.h ### needed for predict()
    #mf.s.f <- mf.s (at the moment, this is not used further below, so skipped)
-   #mf.r.f <- mf.r (at the moment, this is not used further below, so skipped)
+   mf.r.f <- mf.r ### needed for cooks.distance()
 
    k.f <- k ### total number of observed outcomes including all NAs (on yi/V and/or mods)
 
@@ -2465,7 +2465,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
                                        h.nlevels.f=h.nlevels.f, h.nlevels=h.nlevels,
                   g.levels.f=g.levels.f, g.levels.k=g.levels.k, g.levels.comb.k=g.levels.comb.k,
                   h.levels.f=h.levels.f, h.levels.k=h.levels.k, h.levels.comb.k=h.levels.comb.k,
-                  struct=struct, Rfix=Rfix, R=R, Rscale=Rscale, mf.r=mf.r, mf.g.f=mf.g.f, mf.h.f=mf.h.f, Z.S=Z.S, random=random, version=packageVersion("metafor"), call=mf)
+                  struct=struct, Rfix=Rfix, R=R, Rscale=Rscale, mf.r=mf.r, mf.r.f=mf.r.f, mf.g.f=mf.g.f, mf.h.f=mf.h.f, Z.S=Z.S, random=random, version=packageVersion("metafor"), call=mf)
 
    }
 
