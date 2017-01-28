@@ -45,8 +45,8 @@ funnel(x, \dots)
    \item{refline}{value at which to draw the vertical reference line and, if drawn, where the pseudo confidence interval should be centered. If unspecified, the reference line is drawn at the fixed- or random-effects model estimate when the model does not include moderators and at zero when moderators are included (and therefore residuals are plotted) or when directly plotting observed effect sizes or outcomes.}
    \item{pch}{plotting symbol to use for the observed effect sizes or outcomes. By default, a solid circle is used. Can also be a vector of values. See \code{\link{points}} for other options.}
    \item{pch.fill}{plotting symbol to use for the effect sizes or outcomes filled in by the trim and fill method. By default, a circle is used. Only relevant when plotting an object created by the \code{\link{trimfill}} function.}
-   \item{col}{the color for the points.}
-   \item{bg}{background color for open plot symbols.}
+   \item{col}{optional character string specifying the name of a color to use for the points.}
+   \item{bg}{optional character string specifying the name of a background color for open plot symbols.}
    \item{ci.res}{integer specifying the number of y-axis values at which to calculate the bounds of the pseudo confidence interval. The default is \code{1000}, which usually provides a sufficient resolution for the plotting.}
    \item{\dots}{other arguments.}
 }
