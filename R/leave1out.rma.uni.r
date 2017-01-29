@@ -1,4 +1,4 @@
-leave1out.rma.uni <- function(x, digits, transf, targs, ...) {
+leave1out.rma.uni <- function(x, digits, transf, targs, progbar=FALSE, ...) {
 
    if (!inherits(x, "rma.uni"))
       stop("Argument 'x' must be an object of class \"rma.uni\".")
@@ -46,7 +46,16 @@ leave1out.rma.uni <- function(x, digits, transf, targs, ...) {
    ### note: skipping NA cases
    ### also: it is possible that model fitting fails, so that generates more NAs (these NAs will always be shown in output)
 
-   for (i in seq_len(x$k.f)[x$not.na]) {
+   if (progbar)
+      pbar <- txtProgressBar(min=0, max=x$k.f, style=3)
+
+   for (i in seq_len(x$k.f)) {
+
+      if (progbar)
+         setTxtProgressBar(pbar, i)
+
+      if (!x$not.na[i])
+         next
 
       res <- try(suppressWarnings(rma.uni(x$yi.f, x$vi.f, weights=x$weights.f, intercept=TRUE, method=x$method, weighted=x$weighted, test=x$test, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, subset=-i)), silent=TRUE)
 
@@ -66,6 +75,9 @@ leave1out.rma.uni <- function(x, digits, transf, targs, ...) {
       H2[i]    <- res$H2
 
    }
+
+   if (progbar)
+      close(pbar)
 
    #########################################################################
 

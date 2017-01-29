@@ -27,7 +27,13 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, ...) {
    if (progbar)
       pbar <- txtProgressBar(min=0, max=x$k.f, style=3)
 
-   for (i in seq_len(x$k.f)[x$not.na]) {
+   for (i in seq_len(x$k.f)) {
+
+      if (progbar)
+         setTxtProgressBar(pbar, i)
+
+      if (!x$not.na[i])
+         next
 
       res <- try(suppressWarnings(rma.mv(x$yi.f, x$V.f, W=x$W.f, mods=x$X.f, intercept=FALSE, random=x$random, struct=x$struct, method=x$method, test=x$test, R=x$R, Rscale=x$Rscale, data=x$mf.r.f, sigma2=ifelse(x$vc.fix$sigma2, x$sigma2, NA), tau2=ifelse(x$vc.fix$tau2, x$tau2, NA), rho=ifelse(x$vc.fix$rho, x$rho, NA), gamma2=ifelse(x$vc.fix$gamma2, x$gamma2, NA), phi=ifelse(x$vc.fix$phi, x$phi, NA), control=x$control, subset=-i)), silent=TRUE)
 
@@ -46,9 +52,6 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, ...) {
       ### compute Cook's distance
 
       cook.d[i]  <- crossprod(dfb,svb) %*% dfb
-
-      if (progbar)
-         setTxtProgressBar(pbar, i)
 
    }
 

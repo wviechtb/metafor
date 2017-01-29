@@ -19,14 +19,15 @@
 \method{rstandard}{rma.mv}(model, digits, \dots)
 \method{rstandard}{rma.peto}(model, digits, \dots)
 
-\method{rstudent}{rma.uni}(model, digits, \dots)
-\method{rstudent}{rma.mh}(model, digits, \dots)
-\method{rstudent}{rma.peto}(model, digits, \dots)
+\method{rstudent}{rma.uni}(model, digits, progbar=FALSE, \dots)
+\method{rstudent}{rma.mh}(model, digits, progbar=FALSE, \dots)
+\method{rstudent}{rma.peto}(model, digits, progbar=FALSE, \dots)
 }
 \arguments{
    \item{object}{an object of class \code{"rma"} (for \code{residuals}).}
    \item{model}{an object of class \code{"rma.uni"}, \code{"rma.mh"}, \code{"rma.peto"}, or \code{"rma.mv"} (for \code{rstandard} and \code{rstudent}).}
    \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is to take the value from the object).}
+   \item{progbar}{logical indicating whether a progress bar should be shown (the default is \code{FALSE}).}
    \item{\dots}{other arguments.}
 }
 \details{

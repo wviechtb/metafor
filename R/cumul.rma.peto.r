@@ -1,4 +1,4 @@
-cumul.rma.peto <- function(x, order, digits, transf, targs, ...) {
+cumul.rma.peto <- function(x, order, digits, transf, targs, progbar=FALSE, ...) {
 
    if (!inherits(x, "rma.peto"))
       stop("Argument 'x' must be an object of class \"rma.peto\".")
@@ -45,7 +45,16 @@ cumul.rma.peto <- function(x, order, digits, transf, targs, ...) {
 
    ### note: skipping NA cases
 
-   for (i in seq_len(x$k.f)[not.na]) {
+   if (progbar)
+      pbar <- txtProgressBar(min=0, max=x$k.f, style=3)
+
+   for (i in seq_len(x$k.f)) {
+
+      if (progbar)
+         setTxtProgressBar(pbar, i)
+
+      if (!not.na[i])
+         next
 
       res <- try(suppressWarnings(rma.peto(ai=ai.f, bi=bi.f, ci=ci.f, di=di.f, add=x$add, to=x$to, drop00=x$drop00, subset=seq_len(i))), silent=TRUE)
 
@@ -62,6 +71,9 @@ cumul.rma.peto <- function(x, order, digits, transf, targs, ...) {
       QEp[i]   <- res$QEp
 
    }
+
+   if (progbar)
+      close(pbar)
 
    #########################################################################
 

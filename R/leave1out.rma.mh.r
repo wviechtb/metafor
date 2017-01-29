@@ -1,4 +1,4 @@
-leave1out.rma.mh <- function(x, digits, transf, targs, ...) {
+leave1out.rma.mh <- function(x, digits, transf, targs, progbar=FALSE, ...) {
 
    if (!inherits(x, "rma.mh"))
       stop("Argument 'x' must be an object of class \"rma.mh\".")
@@ -39,7 +39,16 @@ leave1out.rma.mh <- function(x, digits, transf, targs, ...) {
 
    ### note: skipping NA cases
 
-   for (i in seq_len(x$k.f)[x$not.na]) {
+   if (progbar)
+      pbar <- txtProgressBar(min=0, max=x$k.f, style=3)
+
+   for (i in seq_len(x$k.f)) {
+
+      if (progbar)
+         setTxtProgressBar(pbar, i)
+
+      if (!x$not.na[i])
+         next
 
       if (is.element(x$measure, c("RR","OR","RD"))) {
          res <- try(suppressWarnings(rma.mh(ai=x$ai.f, bi=x$bi.f, ci=x$ci.f, di=x$di.f, measure=x$measure, add=x$add, to=x$to, drop00=x$drop00, correct=x$correct, subset=-i)), silent=TRUE)
@@ -63,6 +72,9 @@ leave1out.rma.mh <- function(x, digits, transf, targs, ...) {
       #H2[i]   <- res$H2
 
    }
+
+   if (progbar)
+      close(pbar)
 
    #########################################################################
 

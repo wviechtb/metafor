@@ -9,12 +9,12 @@
    The functions compute various outlier and influential case diagnostics (some of which indicate the influence of deleting one case/study at a time on the model fit and the fitted/residual values) for objects of class \code{"rma.uni"}.
 }
 \usage{
-\method{influence}{rma.uni}(model, digits, \dots)
+\method{influence}{rma.uni}(model, digits, progbar=FALSE, \dots)
 
 \method{print}{infl.rma.uni}(x, digits, \dots)
 
 \method{cooks.distance}{rma.uni}(model, progbar=FALSE, \dots)
-\method{dfbetas}{rma.uni}(model, \dots)
+\method{dfbetas}{rma.uni}(model, progbar=FALSE, \dots)
 \method{hatvalues}{rma.uni}(model, type="diagonal", \dots)
 }
 \arguments{

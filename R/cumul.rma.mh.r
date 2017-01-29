@@ -1,4 +1,4 @@
-cumul.rma.mh <- function(x, order, digits, transf, targs, ...) {
+cumul.rma.mh <- function(x, order, digits, transf, targs, progbar=FALSE, ...) {
 
    if (!inherits(x, "rma.mh"))
       stop("Argument 'x' must be an object of class \"rma.mh\".")
@@ -49,7 +49,16 @@ cumul.rma.mh <- function(x, order, digits, transf, targs, ...) {
 
    ### note: skipping NA cases
 
-   for (i in seq_len(x$k.f)[not.na]) {
+   if (progbar)
+      pbar <- txtProgressBar(min=0, max=x$k.f, style=3)
+
+   for (i in seq_len(x$k.f)) {
+
+      if (progbar)
+         setTxtProgressBar(pbar, i)
+
+      if (!not.na[i])
+         next
 
       if (is.element(x$measure, c("RR","OR","RD"))) {
          res <- try(suppressWarnings(rma.mh(ai=ai.f, bi=bi.f, ci=ci.f, di=di.f, measure=x$measure, add=x$add, to=x$to, drop00=x$drop00, correct=x$correct, subset=seq_len(i))), silent=TRUE)
@@ -70,6 +79,9 @@ cumul.rma.mh <- function(x, order, digits, transf, targs, ...) {
       QEp[i]   <- res$QEp
 
    }
+
+   if (progbar)
+      close(pbar)
 
    #########################################################################
 

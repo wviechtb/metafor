@@ -1,8 +1,11 @@
-Changes in Version 2.0-0 (2017-01-28)
+Changes in Version 2.0-0 (2017-01-29)
 =====================================
 
    o cooks.distance.rma.mv() now works properly even when there are missing
      values in the data
+
+   o all functions that repeatedly refit models now have the option to show
+     a progress bar
 
    o added ranktest.default(), so user can now specify the outcomes and
      corresponding sampling variances directly to the function

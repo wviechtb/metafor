@@ -1,4 +1,4 @@
-rstudent.rma.peto <- function(model, digits, ...) {
+rstudent.rma.peto <- function(model, digits, progbar=FALSE, ...) {
 
    if (!inherits(model, "rma.peto"))
       stop("Argument 'model' must be an object of class \"rma.peto\".")
@@ -20,7 +20,16 @@ rstudent.rma.peto <- function(model, digits, ...) {
 
    ### note: skipping NA tables
 
-   for (i in seq_len(x$k.f)[x$not.na]) {
+   if (progbar)
+      pbar <- txtProgressBar(min=0, max=x$k.f, style=3)
+
+   for (i in seq_len(x$k.f)) {
+
+      if (progbar)
+         setTxtProgressBar(pbar, i)
+
+      if (!x$not.na[i])
+         next
 
       res <- try(suppressWarnings(rma.peto(ai=x$ai.f, bi=x$bi.f, ci=x$ci.f, di=x$di.f, add=x$add, to=x$to, drop00=x$drop00, subset=-i)), silent=TRUE)
 
@@ -31,6 +40,9 @@ rstudent.rma.peto <- function(model, digits, ...) {
       vdelpred[i] <- res$vb
 
    }
+
+   if (progbar)
+      close(pbar)
 
    delresid <- x$yi.f - delpred
    delresid[abs(delresid) < 100 * .Machine$double.eps] <- 0

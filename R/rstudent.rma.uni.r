@@ -1,4 +1,4 @@
-rstudent.rma.uni <- function(model, digits, ...) {
+rstudent.rma.uni <- function(model, digits, progbar=FALSE, ...) {
 
    if (!inherits(model, "rma.uni"))
       stop("Argument 'model' must be an object of class \"rma.uni\".")
@@ -28,7 +28,16 @@ rstudent.rma.uni <- function(model, digits, ...) {
    ### note: skipping NA cases
    ### also: it is possible that model fitting fails, so that generates more NAs (these NAs will always be shown in output)
 
-   for (i in seq_len(x$k.f)[x$not.na]) {
+   if (progbar)
+      pbar <- txtProgressBar(min=0, max=x$k.f, style=3)
+
+   for (i in seq_len(x$k.f)) {
+
+      if (progbar)
+         setTxtProgressBar(pbar, i)
+
+      if (!x$not.na[i])
+         next
 
       res <- try(suppressWarnings(rma.uni(x$yi.f, x$vi.f, weights=x$weights.f, mods=x$X.f, intercept=FALSE, method=x$method, weighted=x$weighted, test=x$test, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, subset=-i)), silent=TRUE)
 
@@ -46,6 +55,9 @@ rstudent.rma.uni <- function(model, digits, ...) {
       vdelpred[i] <- Xi %*% tcrossprod(res$vb,Xi)
 
    }
+
+   if (progbar)
+      close(pbar)
 
    delresid <- x$yi.f - delpred
    delresid[abs(delresid) < 100 * .Machine$double.eps] <- 0

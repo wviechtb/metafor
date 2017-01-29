@@ -1,4 +1,4 @@
-dfbetas.rma.uni <- function(model, ...) {
+dfbetas.rma.uni <- function(model, progbar=FALSE, ...) {
 
    if (!inherits(model, "rma.uni"))
       stop("Argument 'model' must be an object of class \"rma.uni\".")
@@ -34,7 +34,16 @@ dfbetas.rma.uni <- function(model, ...) {
    ### note: skipping NA cases
    ### also: it is possible that model fitting fails, so that generates more NAs (these NAs will always be shown in output)
 
-   for (i in seq_len(x$k.f)[x$not.na]) {
+   if (progbar)
+      pbar <- txtProgressBar(min=0, max=x$k.f, style=3)
+
+   for (i in seq_len(x$k.f)) {
+
+      if (progbar)
+         setTxtProgressBar(pbar, i)
+
+      if (!x$not.na[i])
+         next
 
       res <- try(suppressWarnings(rma.uni(x$yi.f, x$vi.f, weights=x$weights.f, mods=x$X.f, intercept=FALSE, method=x$method, weighted=x$weighted, test=x$test, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, subset=-i)), silent=TRUE)
 
@@ -68,6 +77,9 @@ dfbetas.rma.uni <- function(model, ...) {
       dfbs[i,] <- dfb / sqrt(res$s2w * diag(vb.del))
 
    }
+
+   if (progbar)
+      close(pbar)
 
    #########################################################################
 

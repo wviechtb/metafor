@@ -1,4 +1,4 @@
-cumul.rma.uni <- function(x, order, digits, transf, targs, ...) {
+cumul.rma.uni <- function(x, order, digits, transf, targs, progbar=FALSE, ...) {
 
    if (!inherits(x, "rma.uni"))
       stop("Argument 'x' must be an object of class \"rma.uni\".")
@@ -56,7 +56,16 @@ cumul.rma.uni <- function(x, order, digits, transf, targs, ...) {
    ### note: skipping NA cases
    ### also: it is possible that model fitting fails, so that generates more NAs (these NAs will always be shown in output)
 
-   for (i in seq_len(x$k.f)[not.na]) {
+   if (progbar)
+      pbar <- txtProgressBar(min=0, max=x$k.f, style=3)
+
+   for (i in seq_len(x$k.f)) {
+
+      if (progbar)
+         setTxtProgressBar(pbar, i)
+
+      if (!not.na[i])
+         next
 
       res <- try(suppressWarnings(rma.uni(yi.f, vi.f, weights=weights.f, intercept=TRUE, method=x$method, weighted=x$weighted, test=x$test, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, subset=seq_len(i))), silent=TRUE)
 
@@ -76,6 +85,9 @@ cumul.rma.uni <- function(x, order, digits, transf, targs, ...) {
       H2[i]    <- res$H2
 
    }
+
+   if (progbar)
+      close(pbar)
 
    ### for first 'not.na' element, I2 and H2 would be NA (since k=1), but set to 0 and 1, respectively
 
