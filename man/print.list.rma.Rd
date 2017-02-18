@@ -3,9 +3,9 @@
 \alias{[.list.rma}
 \alias{head.list.rma}
 \alias{tail.list.rma}
-\title{Print Method for 'list.rma' Objects}
+\title{Methods for 'list.rma' Objects}
 \description{
-   Print method for objects of class \code{"list.rma"}.
+   Methods for objects of class \code{"list.rma"}.
 }
 \usage{
 \method{print}{list.rma}(x, digits, \dots)

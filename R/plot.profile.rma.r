@@ -24,7 +24,7 @@ plot.profile.rma <- function(x, ylim, pch=19, ...) {
       plot(x[[1]], x[[2]], type="o", xlab=x$xlab, ylab=paste(ifelse(x$method=="REML", "Restricted", ""), " Log-Likelihood", sep=""), main=x$title, bty="l", pch=pch, ylim=ylim, ...)
       abline(v=x$vc, lty="dotted")
       abline(h=x$maxll, lty="dotted")
-      #abline(h=max(lls, na.rm=TRUE), lty="dotted")
+      #abline(h=x$maxll - qchisq(.95, df=1)/2, lty="dotted")
 
    } else {
 

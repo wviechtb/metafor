@@ -30,13 +30,13 @@ fitstats(object, \dots)
    \item{correct}{logical indicating whether the regular (default) or corrected (i.e., AICc) should be extracted.}
 }
 \value{
-   For \code{fitstats.rma}, a data frame with the (restricted) log-likelihood, deviance, AIC, BIC, and AICc values for each model passed to the function.
+   For \code{fitstats}, a data frame with the (restricted) log-likelihood, deviance, AIC, BIC, and AICc values for each model passed to the function.
 
-   For \code{logLik.rma}, an object of class \code{"logLik"}, providing the (restricted) log-likelihood of the model evaluated at the estimated coefficient(s).
+   For \code{logLik}, an object of class \code{"logLik"}, providing the (restricted) log-likelihood of the model evaluated at the estimated coefficient(s).
 
-   For \code{deviance.rma}, a numeric value with the corresponding deviance.
+   For \code{deviance}, a numeric value with the corresponding deviance.
 
-   For \code{AIC.rma} and \code{BIC.rma}, either a numeric value with the corresponding AIC, AICc, or BIC or a data frame with rows corresponding to the models and columns representing the number of parameters in the model (\code{df}) and the AIC, AICc, or BIC.
+   For \code{AIC} and \code{BIC}, either a numeric value with the corresponding AIC, AICc, or BIC or a data frame with rows corresponding to the models and columns representing the number of parameters in the model (\code{df}) and the AIC, AICc, or BIC.
 }
 \note{
    Variance components in the model (e.g., \if{latex}{\eqn{\tau^2}}\if{html}{\eqn{\tau²}}\if{text}{\eqn{\tau^2}} in random/mixed-effects models) are counted as additional parameters in the calculation of the AIC, BIC, and AICc. Also, the fixed effects are counted as parameters in the calculation of the AIC, BIC, and AICc even when using REML estimation.
