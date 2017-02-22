@@ -135,7 +135,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    ### if yi is a formula, extract yi and X (this overrides anything specified via the mods argument further below)
 
-   is.formula <- FALSE
+   #is.formula <- FALSE
 
    if (inherits(yi, "formula")) {
       options(na.action = "na.pass")                   ### set na.action to na.pass, so that NAs are not filtered out (we'll do that later)
@@ -145,7 +145,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       options(na.action = na.act)                      ### set na.action back to na.act
       names(yi) <- NULL                                ### strip names (1:k) from yi (so res$yi is the same whether yi is a formula or not)
       intercept <- FALSE                               ### set to FALSE since formula now controls whether the intercept is included or not
-      is.formula <- TRUE                               ### note: code further below actually checks whether intercept is included or not
+      #is.formula <- TRUE                               ### note: code further below ([b]) actually checks whether intercept is included or not
    }
 
    ### in case user passed a matrix to yi, convert it to a vector
@@ -290,7 +290,6 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    if (!is.null(ni) && length(ni) != k)
       ni <- NULL
-      #stop("Length of 'yi' and 'ni' vectors are not the same.")
 
    ### if ni is now available, add it (back) as an attribute to yi
    ### this is currently pointless, but may be useful if function has an ni argument
@@ -312,7 +311,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       attr(mods, "assign") <- NULL          ### strip assign attribute (not needed at the moment)
       options(na.action = na.act)           ### set na.action back to na.act
       intercept <- FALSE                    ### set to FALSE since formula now controls whether the intercept is included or not
-      is.formula <- TRUE                    ### note: code below actually checks whether intercept is included or not
+      #is.formula <- TRUE                    ### note: code further below ([b]) actually checks whether intercept is included or not
    }
 
    ### turn a row vector for mods into a column vector
@@ -360,10 +359,10 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       random.plus <- lapply(random, function(f) formula(sub("\\|", "+", paste0(f, collapse=""))))
 
       ### get all model frames corresponding to the formulas in the random argument
+      ### mf.r <- lapply(random, get_all_vars, data=data)
       ### note: get_all_vars() does not carry out any functions calls within the formula
-      #mf.r <- lapply(random, get_all_vars, data=data)
-      ### note: this works now and allows for things like 'random = ~ factor(arm) | study'
-      ### note: need to use na.pass so that NAs are passed through and not omitted (check for NAs is done below)
+      ###       so use model.frame(), which allows for things like 'random = ~ factor(arm) | study'
+      ###       need to use na.pass so that NAs are passed through and not omitted (check for NAs is done below)
 
       mf.r <- lapply(random.plus, model.frame, data=data, na.action=na.pass)
 
@@ -382,7 +381,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
          ### interaction between var1, var1:var2, and var3; by going backwards, we get var1, var1:var2, and var1:var2:var3
 
          for (p in mf.r.ncols[j]:1) {
-            mf.r[[j]][,p] <- interaction(mf.r[[j]][1:p], drop=TRUE)
+            mf.r[[j]][,p] <- interaction(mf.r[[j]][1:p], drop=TRUE, lex.order=TRUE, sep = "/")
             colnames(mf.r[[j]])[p] <- paste(colnames(mf.r[[j]])[1:p], collapse="/")
          }
 
@@ -392,8 +391,6 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
       if (any(has.slash)) {
 
-         #return(mf.r)
-
          if (length(mf.r) == 1) {
 
             ### if formula only has one element of the form ~ 1 | var1/var2/..., create a list of the data frames (each with one column)
@@ -402,7 +399,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
          } else {
 
-            ### if there are non-slash elements, then this flattens things out
+            ### if there are non-slash elements, then this flattens things out (obviously ...)
 
             mf.r <- unlist(mapply(function(mf, sl) if (sl) lapply(seq(mf), function(x) mf[x]) else list(mf), mf.r, has.slash), recursive=FALSE, use.names=FALSE)
 
@@ -414,6 +411,8 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
       }
 
+      #return(mf.r)
+
       ### make sure that each model frame has no more than 2 columns
 
       if (any(mf.r.ncols > 2))
@@ -422,7 +421,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       ### make sure that there are only up to 2 model frames with 2 columns
 
       if (sum(mf.r.ncols == 2) > 2)
-         stop("Only up to two formulas with two elements allowed in the 'random' argument.")
+         stop("Only up to two '~ inner | outer' formulas allowed in the 'random' argument.")
 
       ### separate mf.r into mf.s (~ 1 | id), mf.g (~ inner | outer), and mf.h (~ inner | outer) parts
 
@@ -466,21 +465,17 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
       ### set defaults for some elements when method="FE"
 
+      mf.r  <- NULL
       mf.s  <- NULL
       mf.g  <- NULL
       mf.h  <- NULL
-      mf.r  <- NULL
       withS <- FALSE
       withG <- FALSE
       withH <- FALSE
 
    }
 
-   #########################################################################
-
-   #return(mf.g)
-   #return(mf.h)
-   #return(list(mf.s, mf.g, mf.h, mf.r))
+   #return(list(mf.r, mf.s, mf.g, mf.h))
 
    ### note: checks on NAs in mf.s, mf.g, and mf.h after subsetting (since NAs may be removed by subsetting)
 
@@ -488,14 +483,14 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
    #########################################################################
    #########################################################################
 
-   ### study ids (1:k sequence before subsetting)
-
-   ids <- seq_len(k)
-
    ### generate study labels if none are specified (or none can be found in yi argument)
 
    if (verbose > 1)
       message("Generating/extracting study labels ...")
+
+   ### study ids (1:k sequence before subsetting)
+
+   ids <- seq_len(k)
 
    ### if slab has not been specified but is an attribute of yi, get it
 
@@ -542,10 +537,10 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       ni   <- ni[subset]
       mods <- mods[subset,,drop=FALSE]
       slab <- slab[subset]
+      mf.r <- lapply(mf.r, function(x) x[subset,,drop=FALSE])
       mf.s <- lapply(mf.s, function(x) x[subset,,drop=FALSE])
       mf.g <- mf.g[subset,,drop=FALSE]
       mf.h <- mf.h[subset,,drop=FALSE]
-      mf.r <- lapply(mf.r, function(x) x[subset,,drop=FALSE])
       ids  <- ids[subset]
       k    <- length(yi)
 
@@ -583,7 +578,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       allvipos <- TRUE
    }
 
-   ### save full data (including potential NAs in yi/V and/or mods)
+   ### save full data (including potential NAs in yi/vi/V/W/ni/mods)
 
    yi.f    <- yi
    vi.f    <- vi
@@ -591,12 +586,12 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
    W.f     <- A
    ni.f    <- ni
    mods.f  <- mods
-   mf.g.f  <- mf.g ### needed for predict()
-   mf.h.f  <- mf.h ### needed for predict()
-   #mf.s.f <- mf.s (at the moment, this is not used further below, so skipped)
-   mf.r.f <- mf.r ### needed for cooks.distance()
+   mf.r.f  <- mf.r ### needed for cooks.distance()
+   #mf.g.f <- mf.g ### copied further below
+   #mf.h.f <- mf.h ### copied further below
+   #mf.s.f <- mf.s ### copied further below
 
-   k.f <- k ### total number of observed outcomes including all NAs (on yi/V and/or mods)
+   k.f <- k ### total number of observed outcomes including all NAs
 
    #########################################################################
    #########################################################################
@@ -607,15 +602,11 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
    if (withS) {
 
       if (verbose > 1)
-         message(paste0("Processing '", paste(as.character(random[mf.r.ncols == 1]), collapse=", "), "' term(s) ..."))
+         message(paste0("Processing '", paste0("~ 1 | ", sapply(mf.s, names), collapse=", "), "' term(s) ..."))
 
       ### get variables names in mf.s
 
       s.names <- sapply(mf.s, names) ### one name per term
-
-      ### turn each variable in mf.s.f into a factor (at the moment, this is not used further below, so skipped)
-
-      #mf.s.f <- lapply(mf.s.f, function(x) factor(x[[1]]))
 
       ### turn each variable in mf.s into a factor (and turn each column vector into just a vector)
       ### if a variable was a factor to begin with, this drops any unused levels, but order of existing levels is preserved
@@ -624,7 +615,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
       ### check if there are any NAs anywhere in mf.s
 
-      if (any(sapply(lapply(mf.s, is.na), any)))
+      if (any(sapply(mf.s, anyNA)))
          stop("No NAs allowed in variables specified in the 'random' argument.")
 
       ### how many (~ 1 | id) terms does the random argument include? (0 if none, but if withS is TRUE, must be at least 1)
@@ -684,10 +675,6 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
          if (is.null(names(R)) || any(nchar(names(R)) == 0))
             stop("Argument 'R' must be a *named* list.")
 
-         ### if list has no names, give default names
-         #if (is.null(names(R)))
-         #   R.names <- 1:length(R)
-
          ### remove elements in R that are NULL (not sure why this is needed; why would anybody ever do this?)
          ### maybe this had something to do with functions that repeatedly call rma.mv(); so leave this be for now
 
@@ -707,11 +694,6 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
          names(R) <- s.names
 
-         ### check if R is of the correct length
-
-         #if (length(R) != sigma2s)
-         #   stop(paste("Length of 'R' argument (", length(R), ") does not match actual number of variance components (", sigma2s, ").", sep=""))
-
          ### check for which components an R matrix has been specified
 
          Rfix <- !sapply(R, is.null)
@@ -728,7 +710,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
             if (any(!sapply(R[Rfix], function(x) isSymmetric(unname(x)))))
                stop("Elements of 'R' must be symmetric matrices.")
 
-            for (j in seq_along(R)) { ### not sure how this can be done with lapply (i.e., without looping)
+            for (j in seq_along(R)) {
 
                if (!Rfix[j])
                   next
@@ -755,24 +737,20 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
             ### no, the user can specify an entire (k x k) matrix; the problem is repeated dimension names
             ### so let's filter out rows/columns with the same dimension names
 
-            R[Rfix] <- lapply(R[Rfix], function(x) x[!duplicated(colnames(x)), !duplicated(colnames(x)), drop=FALSE])
+            R[Rfix] <- lapply(R[Rfix], function(x) x[!duplicated(rownames(x)), !duplicated(colnames(x)), drop=FALSE])
 
             ### after the two commands above, this should always be FALSE, but leave for now just in case
 
             if (any(sapply(R[Rfix], function(x) length(colnames(x)) != length(unique(colnames(x))))))
                stop("Each element of 'R' must have unique dimension names.")
 
-            ### force each element of R to be a correlation matrix (moved below, plus more options)
-
-            #R[Rfix] <- lapply(R[Rfix], cov2cor)
-
             ### check for R being positive definite
-            ### skipped: even if R is not positive definite, the marginal var-cov matrix can still be; so just check that marginal matrix during the optimization
+            ### skipped: even if R is not positive definite, the marginal var-cov matrix can still be; so just check for pd during optimization
 
             #if (any(sapply(R[Rfix], function(x) any(eigen(x, symmetric=TRUE, only.values=TRUE)$values <= .Machine$double.eps)))) ### any eigenvalue below double.eps is essentially 0
             #   stop("Matrix in R is not positive definite.")
 
-            for (j in seq_along(length(R))) { ### not sure how this can be done with lapply (i.e., without looping)
+            for (j in seq_along(length(R))) {
 
                if (!Rfix[j])
                   next
@@ -780,10 +758,9 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
                ### check if there are NAs in a matrix specified via R
 
                if (anyNA(R[[j]]))
-                  stop("No missing values allowed in matrix specified via 'R'.")
+                  stop("No missing values allowed in matrices specified via 'R'.")
 
                ### check if there are levels in s.levels which are not in R (if yes, issue an error and stop)
-               ### -> could consider later to filter out those rows; see rma.phylo() for some code that may work here
 
                if (any(!is.element(s.levels[[j]], colnames(R[[j]]))))
                   stop(paste0("There are levels in '", s.names[j], "' for which there are no rows/columns in the corresponding 'R' matrix."))
@@ -814,13 +791,9 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       sigma2s <- 1
       sigma2  <- 0
 
-      ### need Z.S to exist further below and for optimization function
-
-      #Z.S <- NULL ### creation of Z.S moved further below
       s.nlevels <- NULL
       s.levels  <- NULL
-
-      s.names <- NULL
+      s.names   <- NULL
 
       withR   <- FALSE
       Rfix    <- FALSE
@@ -828,127 +801,31 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    }
 
+   #mf.s.f <- mf.s ### (at the moment, this is not used further below, so skipped)
+
+   ### copy s.nlevels and s.levels
+
+   s.nlevels.f <- s.nlevels
+   s.levels.f  <- s.levels
+
    #########################################################################
 
    ### stuff that need to be done after subsetting
 
    if (withG) {
 
-      if (verbose > 1)
-         message(paste0("Processing '", as.character(random[mf.r.ncols == 2][1]), "' term ..."))
+      tmp <- .process.G.aftersub(verbose, mf.g, struct[1], tau2, rho, isG=TRUE, k, sparse)
 
-      ### get variables names in mf.g
-
-      g.names <- names(mf.g) ### two names for inner and outer factor
-
-      if (is.element(struct[1], c("CS","HCS","UN","ID","DIAG","UNHO")) && !is.factor(mf.g.f[[1]]) && !is.character(mf.g.f[[1]]))
-         stop("Inner variable in (~ inner | outer) must be a factor or character variable.")
-
-      ### turn each variable in mf.g.f and mf.g into a factor (and turn the list into a data frame with 2 columns)
-      ### if a variable was a factor to begin with, this drops any unused levels, but order of existing levels is preserved
-
-      mf.g.f <- data.frame(inner=factor(mf.g.f[[1]]), outer=factor(mf.g.f[[2]]))
-      mf.g   <- data.frame(inner=factor(mf.g[[1]]),   outer=factor(mf.g[[2]]))
-
-      ### check if there are any NAs anywhere in mf.g
-
-      #if (any(sapply(lapply(mf.g, is.na), any))) ### this seems totally unncessary ...
-      if (anyNA(mf.g))
-         stop("No NAs allowed in variables specified in the 'random' argument.")
-
-      ### get number of levels of each variable in mf.g (vector with two values, for the inner and outer factor)
-
-      g.nlevels <- c(nlevels(mf.g[[1]]), nlevels(mf.g[[2]]))
-
-      ### get levels of each variable in mf.g
-
-      g.levels <- list(levels(mf.g[[1]]), levels(mf.g[[2]]))
-
-      ### determine appropriate number of tau2 and rho values (care: this is done *after* subsetting)
-      ### care: if g.nlevels[1] is 1, then technically there is no correlation, but we need one rho
-      ### for the optimization function (this rho is fixed further below to 0 then)
-
-      if (struct[1] == "CS" || struct[1] == "ID") {
-         tau2s <- 1
-         rhos  <- 1
-      }
-      if (struct[1] == "HCS" || struct[1] == "DIAG") {
-         tau2s <- g.nlevels[1]
-         rhos  <- 1
-      }
-      if (struct[1] == "UN") {
-         tau2s <- g.nlevels[1]
-         rhos  <- ifelse(g.nlevels[1] > 1, g.nlevels[1]*(g.nlevels[1]-1)/2, 1)
-      }
-      if (struct[1] == "AR") {
-         tau2s <- 1
-         rhos  <- 1
-      }
-      if (struct[1] == "HAR") {
-         tau2s <- g.nlevels[1]
-         rhos  <- 1
-      }
-      if (struct[1] == "UNHO") {
-         tau2s <- 1
-         rhos  <- ifelse(g.nlevels[1] > 1, g.nlevels[1]*(g.nlevels[1]-1)/2, 1)
-      }
-
-      ### set default value(s) for tau2 if it is unspecified
-
-      if (is.null(tau2))
-         tau2 <- rep(NA_real_, tau2s)
-
-      ### set default value(s) for rho argument if it is unspecified
-
-      if (is.null(rho))
-         rho <- rep(NA_real_, rhos)
-
-      ### allow quickly setting all tau2 values to a fixed value
-
-      if (length(tau2) == 1)
-         tau2 <- rep(tau2, tau2s)
-
-      ### allow quickly setting all rho values to a fixed value
-
-      if (length(rho) == 1)
-         rho <- rep(rho, rhos)
-
-      ### check if tau2 and rho are of correct length
-
-      if (length(tau2) != tau2s)
-         stop(paste("Length of 'tau2' argument (", length(tau2), ") does not match actual number of variance components (", tau2s, ").", sep=""))
-      if (length(rho) != rhos)
-         stop(paste("Length of 'rho' argument (", length(rho), ") does not match actual number of correlations (", rhos, ").", sep=""))
-
-      ### checks on any fixed values of tau2 and rho arguments
-
-      if (any(tau2 < 0, na.rm=TRUE))
-         stop("Specified value(s) of 'tau2' must be non-negative.")
-      if (any(rho > 1 | rho < -1, na.rm=TRUE))
-         stop("Specified value(s) of 'rho' must be in [-1,1].")
-
-      ### create model matrix for inner and outer factors of mf.g
-
-      if (g.nlevels[1] == 1) {
-         Z.G1 <- cbind(rep(1,k))
-      } else {
-         if (sparse) {
-            #Z.G1 <- Matrix(model.matrix(~ mf.g[[1]] - 1), sparse=TRUE, dimnames=list(NULL, NULL))
-            Z.G1 <- sparse.model.matrix(~ mf.g[[1]] - 1)
-         } else {
-            Z.G1 <- model.matrix(~ mf.g[[1]] - 1)
-         }
-      }
-      if (g.nlevels[2] == 1) {
-         Z.G2 <- cbind(rep(1,k))
-      } else {
-         if (sparse) {
-            #Z.G2 <- Matrix(model.matrix(~ mf.g[[2]] - 1), sparse=TRUE, dimnames=list(NULL, NULL))
-            Z.G2 <- sparse.model.matrix(~ mf.g[[2]] - 1)
-         } else {
-            Z.G2 <- model.matrix(~ mf.g[[2]] - 1)
-         }
-      }
+      mf.g      <- tmp$mf.g
+      g.names   <- tmp$g.names
+      g.nlevels <- tmp$g.nlevels
+      g.levels  <- tmp$g.levels
+      tau2s     <- tmp$tau2s
+      rhos      <- tmp$rhos
+      tau2      <- tmp$tau2
+      rho       <- tmp$rho
+      Z.G1      <- tmp$Z.G1
+      Z.G2      <- tmp$Z.G2
 
    } else {
 
@@ -970,127 +847,26 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    }
 
+   mf.g.f <- mf.g ### needed for predict()
+
    #########################################################################
 
    ### stuff that need to be done after subsetting
 
    if (withH) {
 
-      if (verbose > 1)
-         message(paste0("Processing '", as.character(random[mf.r.ncols == 2][2]), "' term ..."))
+      tmp <- .process.G.aftersub(verbose, mf.h, struct[2], gamma2, phi, isG=FALSE, k, sparse)
 
-      ### get variables names in mf.h
-
-      h.names <- names(mf.h) ### two names for inner and outer factor
-
-      if (is.element(struct[2], c("CS","HCS","UN","ID","DIAG","UNHO")) && !is.factor(mf.h.f[[1]]) && !is.character(mf.h.f[[1]]))
-         stop("Inner variable in (~ inner | outer) must be a factor or character variable.")
-
-      ### turn each variable in mf.h.f and mf.h into a factor (and turn the list into a data frame with 2 columns)
-      ### if a variable was a factor to begin with, this drops any unused levels, but order of existing levels is preserved
-
-      mf.h.f <- data.frame(inner=factor(mf.h.f[[1]]), outer=factor(mf.h.f[[2]]))
-      mf.h   <- data.frame(inner=factor(mf.h[[1]]),   outer=factor(mf.h[[2]]))
-
-      ### check if there are any NAs anywhere in mf.h
-
-      #if (any(sapply(lapply(mf.h, is.na), any)))
-      if (anyNA(mf.h))
-         stop("No NAs allowed in variables specified in the 'random' argument.")
-
-      ### get number of levels of each variable in mf.h (vector with two values, for the inner and outer factor)
-
-      h.nlevels <- c(nlevels(mf.h[[1]]), nlevels(mf.h[[2]]))
-
-      ### get levels of each variable in mf.h
-
-      h.levels <- list(levels(mf.h[[1]]), levels(mf.h[[2]]))
-
-      ### determine appropriate number of gamma2 and phi values (care: this is done *after* subsetting)
-      ### care: if h.nlevels[1] is 1, then technically there is no correlation, but we need one phi
-      ### for the optimization function (this phi is fixed further below to 0 then)
-
-      if (struct[2] == "CS" || struct[2] == "ID") {
-         gamma2s <- 1
-         phis    <- 1
-      }
-      if (struct[2] == "HCS" || struct[2] == "DIAG") {
-         gamma2s <- h.nlevels[1]
-         phis    <- 1
-      }
-      if (struct[2] == "UN") {
-         gamma2s <- h.nlevels[1]
-         phis    <- ifelse(h.nlevels[1] > 1, h.nlevels[1]*(h.nlevels[1]-1)/2, 1)
-      }
-      if (struct[2] == "AR") {
-         gamma2s <- 1
-         phis    <- 1
-      }
-      if (struct[2] == "HAR") {
-         gamma2s <- h.nlevels[1]
-         phis    <- 1
-      }
-      if (struct[2] == "UNHO") {
-         gamma2s <- 1
-         phis    <- ifelse(h.nlevels[1] > 1, h.nlevels[1]*(h.nlevels[1]-1)/2, 1)
-      }
-
-      ### set default value(s) for gamma2 if it is unspecified
-
-      if (is.null(gamma2))
-         gamma2 <- rep(NA_real_, gamma2s)
-
-      ### set default value(s) for phi argument if it is unspecified
-
-      if (is.null(phi))
-         phi <- rep(NA_real_, phis)
-
-      ### allow quickly setting all gamma2 values to a fixed value
-
-      if (length(gamma2) == 1)
-         gamma2 <- rep(gamma2, gamma2s)
-
-      ### allow quickly setting all phi values to a fixed value
-
-      if (length(phi) == 1)
-         phi <- rep(phi, phis)
-
-      ### check if gamma2 and phi are of correct length
-
-      if (length(gamma2) != gamma2s)
-         stop(paste("Length of 'gamma2' argument (", length(gamma2), ") does not match actual number of variance components (", gamma2s, ").", sep=""))
-      if (length(phi) != phis)
-         stop(paste("Length of 'phi' argument (", length(phi), ") does not match actual number of correlations (", phis, ").", sep=""))
-
-      ### checks on any fixed values of gamma2 and phi arguments
-
-      if (any(gamma2 < 0, na.rm=TRUE))
-         stop("Specified value(s) of 'gamma2' must be non-negative.")
-      if (any(phi > 1 | phi < -1, na.rm=TRUE))
-         stop("Specified value(s) of 'phi' must be in [-1,1].")
-
-      ### create model matrix for inner and outer factors of mf.h
-
-      if (h.nlevels[1] == 1) {
-         Z.H1 <- cbind(rep(1,k))
-      } else {
-         if (sparse) {
-            #Z.H1 <- Matrix(model.matrix(~ mf.h[[1]] - 1), sparse=TRUE, dimnames=list(NULL, NULL))
-            Z.H1 <- sparse.model.matrix(~ mf.h[[1]] - 1)
-         } else {
-            Z.H1 <- model.matrix(~ mf.h[[1]] - 1)
-         }
-      }
-      if (h.nlevels[2] == 1) {
-         Z.H2 <- cbind(rep(1,k))
-      } else {
-         if (sparse) {
-            #Z.H2 <- Matrix(model.matrix(~ mf.h[[2]] - 1), sparse=TRUE, dimnames=list(NULL, NULL))
-            Z.H2 <- sparse.model.matrix(~ mf.h[[2]] - 1)
-         } else {
-            Z.H2 <- model.matrix(~ mf.h[[2]] - 1)
-         }
-      }
+      mf.h      <- tmp$mf.g
+      h.names   <- tmp$g.names
+      h.nlevels <- tmp$g.nlevels
+      h.levels  <- tmp$g.levels
+      gamma2s   <- tmp$tau2s
+      phis      <- tmp$rhos
+      gamma2    <- tmp$tau2
+      phi       <- tmp$rho
+      Z.H1      <- tmp$Z.G1
+      Z.H2      <- tmp$Z.G2
 
    } else {
 
@@ -1112,6 +888,8 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    }
 
+   mf.h.f <- mf.h ### needed for predict()
+
    #########################################################################
    #########################################################################
    #########################################################################
@@ -1123,13 +901,12 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
    ### but when checking for NAs in the entire V matrix, rows/cols 1 and 2 would be removed
 
    has.na <- is.na(yi) | (if (is.null(mods)) FALSE else apply(is.na(mods), 1, any)) | .anyNAlt(V) | (if (is.null(A)) FALSE else apply(is.na(A), 1, any))
+   not.na <- !has.na
 
    if (any(has.na)) {
 
       if (verbose > 1)
          message("Handling NAs ...")
-
-      not.na <- !has.na
 
       if (na.act == "na.omit" || na.act == "na.exclude" || na.act == "na.pass") {
 
@@ -1139,11 +916,10 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
          vi   <- vi[not.na]
          ni   <- ni[not.na]
          mods <- mods[not.na,,drop=FALSE]
-         mf.s <- lapply(mf.s, function(x) x[not.na])
+         mf.r <- lapply(mf.r, function(x) x[not.na,,drop=FALSE])
+         mf.s <- lapply(mf.s, function(x) x[not.na]) ### note: mf.s is a list of vectors at this point
          mf.g <- mf.g[not.na,,drop=FALSE]
          mf.h <- mf.h[not.na,,drop=FALSE]
-         mf.r <- lapply(mf.r, function(x) x[not.na,,drop=FALSE])
-         #Z.S  <- lapply(Z.S, function(x) x[not.na,,drop=FALSE])
          Z.G1 <- Z.G1[not.na,,drop=FALSE]
          Z.G2 <- Z.G2[not.na,,drop=FALSE]
          Z.H1 <- Z.H1[not.na,,drop=FALSE]
@@ -1161,8 +937,6 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       if (na.act == "na.fail")
          stop("Missing values in data.")
 
-   } else {
-      not.na <- rep(TRUE, k)
    }
 
    ### more than one study left?
@@ -1171,13 +945,13 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       stop("Processing terminated since k <= 1.")
 
    ### check for V being positive definite (this should also cover non-positive variances)
-   ### skipped: even if V is not positive definite, the marginal var-cov matrix can still be; so just check the marginal matrix during the optimization
+   ### skipped: even if V is not positive definite, the marginal var-cov matrix can still be; so just check for pd during the optimization
    ### but at least issue a warning, since a fixed-effects model can then not be fitted and there is otherwise no indication why
 
    if (any(eigen(V, symmetric=TRUE, only.values=TRUE)$values <= .Machine$double.eps)) ### any eigenvalue below double.eps is essentially 0
       warning("'V' appears to be not positive definite.")
 
-   ### make sure that there is at least one column in X
+   ### make sure that there is at least one column in X ([b])
 
    if (is.null(mods) && !intercept) {
       warning("Must either include an intercept and/or moderators in model.\n  Coerced intercept into the model.")
@@ -1214,7 +988,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       int.indx <- which(is.int, arr.ind=TRUE)
       X        <- cbind(intrcpt=1,   X[,-int.indx, drop=FALSE]) ### this removes any duplicate intercepts
       X.f      <- cbind(intrcpt=1, X.f[,-int.indx, drop=FALSE]) ### this removes any duplicate intercepts
-      if (is.formula)
+      #if (is.formula)
          intercept <- TRUE ### set intercept appropriately so that the predict() function works
    } else {
       int.incl <- FALSE
@@ -1245,9 +1019,6 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    if (withS) {
 
-      #s.nlevels.f <- s.nlevels ### not needed at the moment, so skipped
-      #s.levels.f  <- s.levels  ### not needed at the moment, so skipped
-
       ### redo: turn each variable in mf.s into a factor (reevaluates the levels present, but order of existing levels is preserved)
 
       mf.s <- lapply(mf.s, factor)
@@ -1270,6 +1041,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       ### create model matrix for each element in mf.s
 
       Z.S <- vector(mode="list", length=sigma2s)
+
       for (j in seq_len(sigma2s)) {
          if (s.nlevels[j] == 1) {
             Z.S[[j]] <- cbind(rep(1,k))
@@ -1298,7 +1070,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       ### R may contain levels that are not in ids (that's fine; just filter them out)
       ### also, R may not be in the order that Z.S is in, so this fixes that up
 
-      for (j in seq_along(R)) { ### not sure how this can be done with lapply (i.e., without looping)
+      for (j in seq_along(R)) {
          if (!Rfix[j])
             next
          R[[j]] <- R[[j]][s.levels[[j]], s.levels[[j]]]
@@ -1360,216 +1132,31 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    if (withG) {
 
-      ### save the full results (note: g.nlevels and g.levels contain results after subsetting)
+      tmp <- .process.G.afterrmna(mf.g, g.nlevels, g.levels, struct[1], tau2, rho, Z.G1, Z.G2, isG=TRUE)
 
-      g.nlevels.f <- g.nlevels
-      g.levels.f  <- g.levels
+      mf.g <- tmp$mf.g
 
-      ### redo: turn each variable in mf.g into a factor (reevaluates the levels present, but order of existing levels is preserved)
+      g.nlevels       <- tmp$g.nlevels
+      g.nlevels.f     <- tmp$g.nlevels.f
+      g.levels        <- tmp$g.levels
+      g.levels.f      <- tmp$g.levels.f
+      g.levels.r      <- tmp$g.levels.r
+      g.levels.k      <- tmp$g.levels.k
+      g.levels.comb.k <- tmp$g.levels.comb.k
 
-      mf.g <- data.frame(inner=factor(mf.g[[1]]), outer=factor(mf.g[[2]]))
-
-      ### redo: get number of levels of each variable in mf.g (vector with two values, for the inner and outer factor)
-
-      g.nlevels <- c(nlevels(mf.g[[1]]), nlevels(mf.g[[2]]))
-
-      ### redo: get levels of each variable in mf.g
-
-      g.levels <- list(levels(mf.g[[1]]), levels(mf.g[[2]]))
-
-      ### determine which levels of the inner factor were removed
-
-      g.levels.r <- !is.element(g.levels.f[[1]], g.levels[[1]])
-
-      ### warn if any levels were removed
-
-      if (any(g.levels.r))
-         warning("One or more levels of inner factor removed due to NAs.")
-
-      ### for "ID" and "DIAG", fix rho to 0
-
-      if (is.element(struct[1], c("ID","DIAG")))
-         rho <- 0
-
-      ### if there is only a single arm for "CS","HCS","AR","HAR" (either to begin with or after removing NAs), then fix rho to 0
-
-      if (g.nlevels[1] == 1 && is.element(struct[1], c("CS","HCS","AR","HAR")) && is.na(rho)) {
-         rho <- 0
-         warning("Inner factor has only a single level, so fixed value of 'rho' to 0.")
-      }
-
-      ### k per level of the inner factor
-
-      g.levels.k <- table(factor(mf.g[[1]], levels=g.levels.f[[1]]))
-
-      ### for "HCS","UN","DIAG","HAR": if a particular level of the inner factor only occurs once, then set corresponding tau2 value to 0 (if not already fixed)
-      ### note: no longer done; variance component should still be (weakly) identifiable
-
-      #if (is.element(struct[1], c("HCS","UN","DIAG","HAR"))) {
-      #   if (any(is.na(tau2) & g.levels.k == 1)) {
-      #      tau2[is.na(tau2) & g.levels.k == 1] <- 0
-      #      warning("Inner factor has k=1 for one or more levels. Corresponding 'tau2' value(s) fixed to 0.")
-      #   }
-      #}
-
-      ### create matrix where each row (= study) indicates how often each arm occurred
-      ### then turn this into a list (with each element equal to a row (= study))
-
-      g.levels.comb.k <- crossprod(Z.G2, Z.G1)
-      g.levels.comb.k <- split(g.levels.comb.k, seq_len(nrow(g.levels.comb.k)))
-
-      ### check if each study has only a single arm (could be different arms!)
-      ### for "CS","HCS","AR","HAR", if yes, then must fix rho to 0 (if not already fixed)
-
-      if (all(unlist(lapply(g.levels.comb.k, sum)) == 1)) {
-         if (is.element(struct[1], c("CS","HCS","AR","HAR")) && is.na(rho)) {
-            rho <- 0
-            warning("Each level of the outer factor contains only a single level of the inner factor, so fixed value of 'rho' to 0.")
-         }
-      }
-
-      ### create matrix for each element (= study) that indicates which combinations occurred
-      ### sum up all matrices (numbers indicate in how many studies each combination occurred)
-      ### take upper triangle part that corresponds to the arm combinations (in order of rho)
-
-      g.levels.comb.k <- lapply(g.levels.comb.k, function(x) outer(x,x, FUN="&"))
-      g.levels.comb.k <- Reduce("+", g.levels.comb.k)
-      g.levels.comb.k <- g.levels.comb.k[upper.tri(g.levels.comb.k)]
-
-      ### UN/UNHO: if a particular combination of arms never occurs in any of the studies, then must fix the corresponding rho to 0 (if not already fixed)
-      ### this also takes care of the case where each study has only a single arm
-
-      if (is.element(struct[1], c("UN","UNHO")) && any(g.levels.comb.k == 0 & is.na(rho))) {
-         rho[g.levels.comb.k == 0] <- 0
-         warning("Some combinations of the levels of the inner factor never occurred. Corresponding 'rho' value(s) fixed to 0.")
-      }
-
-      ### if there was only a single arm for "UN/UNHO" to begin with, then fix rho to 0
-      ### (technically there is then no rho at all to begin with, but rhos was still set to 1 earlier for the optimization routine)
-      ### (if there is a single arm after removing NAs, then this is dealt with below by setting tau2 and rho values to 0)
-
-      if (is.element(struct[1], c("UN","UNHO")) && g.nlevels.f[1] == 1 && is.na(rho)) {
-         rho <- 0
-         warning("Inner factor has only a single level, so fixed value of 'rho' to 0.")
-      }
-
-      ### construct G matrix for the various structures
-
-      if (struct[1] == "CS") {
-         G <- matrix(rho*tau2, nrow=g.nlevels.f[1], ncol=g.nlevels.f[1])
-         diag(G) <- tau2
-      }
-
-      if (struct[1] == "HCS") {
-         G <- matrix(rho, nrow=g.nlevels.f[1], ncol=g.nlevels.f[1])
-         diag(G) <- 1
-         G <- diag(sqrt(tau2), nrow=g.nlevels.f[1], ncol=g.nlevels.f[1]) %*% G %*% diag(sqrt(tau2), nrow=g.nlevels.f[1], ncol=g.nlevels.f[1])
-         diag(G) <- tau2
-      }
-
-      if (struct[1] == "UN") {
-         G <- .con.vcov.UN(tau2, rho)
-      }
-
-      if (struct[1] == "ID" || struct[1] == "DIAG" ) {
-         G <- diag(tau2, nrow=g.nlevels.f[1], ncol=g.nlevels.f[1])
-      }
-
-      if (struct[1] == "UNHO") {
-         G <- matrix(NA_real_, nrow=g.nlevels.f[1], ncol=g.nlevels.f[1])
-         G[upper.tri(G)] <- rho
-         G[lower.tri(G)] <- t(G)[lower.tri(G)]
-         diag(G) <- 1
-         G <- diag(sqrt(rep(tau2, g.nlevels.f[1])), nrow=g.nlevels.f[1], ncol=g.nlevels.f[1]) %*% G %*% diag(sqrt(rep(tau2, g.nlevels.f[1])), nrow=g.nlevels.f[1], ncol=g.nlevels.f[1])
-         diag(G) <- tau2
-      }
-
-      if (struct[1] == "AR") {
-         if (is.na(rho)) {
-            G <- matrix(NA_real_, nrow=g.nlevels.f[1], ncol=g.nlevels.f[1])
-         } else {
-            ### is g.nlevels.f[1] == 1 even possible here?
-            if (g.nlevels.f[1] > 1) {
-               G <- toeplitz(ARMAacf(ar=rho, lag.max=g.nlevels.f[1]-1))
-            } else {
-               G <- diag(1)
-            }
-         }
-         G <- diag(sqrt(rep(tau2, g.nlevels.f[1])), nrow=g.nlevels.f[1], ncol=g.nlevels.f[1]) %*% G %*% diag(sqrt(rep(tau2, g.nlevels.f[1])), nrow=g.nlevels.f[1], ncol=g.nlevels.f[1])
-         diag(G) <- tau2
-      }
-
-      if (struct[1] == "HAR") {
-         if (is.na(rho)) {
-            G <- matrix(NA_real_, nrow=g.nlevels.f[1], ncol=g.nlevels.f[1])
-         } else {
-            ### is g.nlevels.f[1] == 1 even possible here?
-            if (g.nlevels.f[1] > 1) {
-               G <- toeplitz(ARMAacf(ar=rho, lag.max=g.nlevels.f[1]-1))
-            } else {
-               G <- diag(1)
-            }
-         }
-         G <- diag(sqrt(tau2), nrow=g.nlevels.f[1], ncol=g.nlevels.f[1]) %*% G %*% diag(sqrt(tau2), nrow=g.nlevels.f[1], ncol=g.nlevels.f[1])
-         diag(G) <- tau2
-      }
-
-      ### for "CS","AR","ID" set tau2 value to 0 for any levels that were removed
-
-      if (any(g.levels.r) && is.element(struct[1], c("CS","AR","ID"))) {
-         G[g.levels.r,] <- 0
-         G[,g.levels.r] <- 0
-      }
-
-      ### for "HCS","HAR","DIAG" set tau2 value(s) to 0 for any levels that were removed
-
-      if (any(g.levels.r) && is.element(struct[1], c("HCS","HAR","DIAG"))) {
-         G[g.levels.r,] <- 0
-         G[,g.levels.r] <- 0
-         tau2[g.levels.r] <- 0
-         warning("Fixed 'tau2' to 0 for removed level(s).")
-      }
-
-      ### for "UN", set tau2 value(s) and corresponding rho(s) to 0 for any levels that were removed
-
-      if (any(g.levels.r) && struct[1] == "UN") {
-         G[g.levels.r,] <- 0
-         G[,g.levels.r] <- 0
-         tau2[g.levels.r] <- 0
-         rho <- G[upper.tri(G)]
-         warning("Fixed 'tau2' and corresponding 'rho' value(s) to 0 for removed level(s).")
-      }
-
-      ### for "UNHO", set rho(s) to 0 corresponding to any levels that were removed
-
-      if (any(g.levels.r) && struct[1] == "UNHO") {
-         G[g.levels.r,] <- 0
-         G[,g.levels.r] <- 0
-         diag(G) <- tau2 ### don't really need this
-         rho <- G[upper.tri(G)]
-         warning("Fixed 'rho' value(s) to 0 corresponding to removed level(s).")
-      }
-
-      ### special handling for the bivariate model:
-      ### if tau2 (for "CS","AR","UNHO") or either tau2.1 or tau2.2 (for "HCS","UN","HAR") is fixed to 0, then rho must be fixed to 0
-
-      if (g.nlevels.f[1] == 2) {
-         if (is.element(struct[1], c("CS","AR","UNHO")) && !is.na(tau2) && tau2 == 0)
-            rho <- 0
-         if (is.element(struct[1], c("HCS","UN","HAR")) && ((!is.na(tau2[1]) && tau2[1] == 0) || (!is.na(tau2[2]) && tau2[2] == 0)))
-            rho <- 0
-      }
-
-      #return(list(G=G, tau2=tau2, rho=rho, Z.G1=Z.G1, Z.G2=Z.G2))
+      tau2 <- tmp$tau2
+      rho  <- tmp$rho
+      G    <- tmp$G
 
    } else {
 
-      G <- NULL
-      g.levels.f <- NULL
-      g.levels.r <- NULL
-      g.levels.k <- NULL
+      g.nlevels.f     <- NULL
+      g.levels.f      <- NULL
+      g.levels.r      <- NULL
+      g.levels.k      <- NULL
       g.levels.comb.k <- NULL
-      g.nlevels.f <- NULL
+
+      G <- NULL
 
    }
 
@@ -1579,216 +1166,31 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    if (withH) {
 
-      ### save the full results (note: h.nlevels and h.levels contain results after subsetting)
+      tmp <- .process.G.afterrmna(mf.h, h.nlevels, h.levels, struct[2], gamma2, phi, Z.H1, Z.H2, isG=FALSE)
 
-      h.nlevels.f <- h.nlevels
-      h.levels.f  <- h.levels
+      mf.h <- tmp$mf.g
 
-      ### redo: turn each variable in mf.h into a factor (reevaluates the levels present, but order of existing levels is preserved)
+      h.nlevels       <- tmp$g.nlevels
+      h.nlevels.f     <- tmp$g.nlevels.f
+      h.levels        <- tmp$g.levels
+      h.levels.f      <- tmp$g.levels.f
+      h.levels.r      <- tmp$g.levels.r
+      h.levels.k      <- tmp$g.levels.k
+      h.levels.comb.k <- tmp$g.levels.comb.k
 
-      mf.h <- data.frame(inner=factor(mf.h[[1]]), outer=factor(mf.h[[2]]))
-
-      ### redo: get number of levels of each variable in mf.h (vector with two values, for the inner and outer factor)
-
-      h.nlevels <- c(nlevels(mf.h[[1]]), nlevels(mf.h[[2]]))
-
-      ### redo: get levels of each variable in mf.h
-
-      h.levels <- list(levels(mf.h[[1]]), levels(mf.h[[2]]))
-
-      ### determine which levels of the inner factor were removed
-
-      h.levels.r <- !is.element(h.levels.f[[1]], h.levels[[1]])
-
-      ### warn if any levels were removed
-
-      if (any(h.levels.r))
-         warning("One or more levels of inner factor removed due to NAs.")
-
-      ### for "ID" and "DIAG", fix phi to 0
-
-      if (is.element(struct[2], c("ID","DIAG")))
-         phi <- 0
-
-      ### if there is only a single arm for "CS","HCS","AR","HAR" (either to begin with or after removing NAs), then fix phi to 0
-
-      if (h.nlevels[1] == 1 && is.element(struct[2], c("CS","HCS","AR","HAR")) && is.na(phi)) {
-         phi <- 0
-         warning("Inner factor has only a single level, so fixed value of 'phi' to 0.")
-      }
-
-      ### k per level of the inner factor
-
-      h.levels.k <- table(factor(mf.h[[1]], levels=h.levels.f[[1]]))
-
-      ### for "HCS","UN","DIAG","HAR": if a particular level of the inner factor only occurs once, then set corresponding gamma2 value to 0 (if not already fixed)
-      ### note: no longer done; variance component should still be (weakly) identifiable
-
-      #if (is.element(struct[2], c("HCS","UN","DIAG","HAR"))) {
-      #   if (any(is.na(gamma2) & h.levels.k == 1)) {
-      #      gamma2[is.na(gamma2) & h.levels.k == 1] <- 0
-      #      warning("Inner factor has k=1 for one or more levels. Corresponding 'gamma2' value(s) fixed to 0.")
-      #   }
-      #}
-
-      ### create matrix where each row (= study) indicates how often each arm occurred
-      ### then turn this into a list (with each element equal to a row (= study))
-
-      h.levels.comb.k <- crossprod(Z.H2, Z.H1)
-      h.levels.comb.k <- split(h.levels.comb.k, seq_len(nrow(h.levels.comb.k)))
-
-      ### check if each study has only a single arm (could be different arms!)
-      ### for "CS","HCS","AR","HAR", if yes, then must fix phi to 0 (if not already fixed)
-
-      if (all(unlist(lapply(h.levels.comb.k, sum)) == 1)) {
-         if (is.element(struct[2], c("CS","HCS","AR","HAR")) && is.na(phi)) {
-            phi <- 0
-            warning("Each level of the outer factor contains only a single level of the inner factor, so fixed value of 'phi' to 0.")
-         }
-      }
-
-      ### create matrix for each element (= study) that indicates which combinations occurred
-      ### sum up all matrices (numbers indicate in how many studies each combination occurred)
-      ### take upper triangle part that corresponds to the arm combinations (in order of phi)
-
-      h.levels.comb.k <- lapply(h.levels.comb.k, function(x) outer(x,x, FUN="&"))
-      h.levels.comb.k <- Reduce("+", h.levels.comb.k)
-      h.levels.comb.k <- h.levels.comb.k[upper.tri(h.levels.comb.k)]
-
-      ### UN/UNHO: if a particular combination of arms never occurs in any of the studies, then must fix the corresponding phi to 0 (if not already fixed)
-      ### this also takes care of the case where each study has only a single arm
-
-      if (is.element(struct[2], c("UN","UNHO")) && any(h.levels.comb.k == 0 & is.na(phi))) {
-         phi[h.levels.comb.k == 0] <- 0
-         warning("Some combinations of the levels of the inner factor never occurred. Corresponding 'phi' value(s) fixed to 0.")
-      }
-
-      ### if there was only a single arm for "UN/UNHO" to begin with, then fix phi to 0
-      ### (technically there is then no phi at all to begin with, but phis was still set to 1 earlier for the optimization routine)
-      ### (if there is a single arm after removing NAs, then this is dealt with below by setting gamma2 and phi values to 0)
-
-      if (is.element(struct[2], c("UN","UNHO")) && h.nlevels.f[1] == 1 && is.na(phi)) {
-         phi <- 0
-         warning("Inner factor has only a single level, so fixed value of 'phi' to 0.")
-      }
-
-      ### construct H matrix for the various structures
-
-      if (struct[2] == "CS") {
-         H <- matrix(phi*gamma2, nrow=h.nlevels.f[1], ncol=h.nlevels.f[1])
-         diag(H) <- gamma2
-      }
-
-      if (struct[2] == "HCS") {
-         H <- matrix(phi, nrow=h.nlevels.f[1], ncol=h.nlevels.f[1])
-         diag(H) <- 1
-         H <- diag(sqrt(gamma2), nrow=h.nlevels.f[1], ncol=h.nlevels.f[1]) %*% H %*% diag(sqrt(gamma2), nrow=h.nlevels.f[1], ncol=h.nlevels.f[1])
-         diag(H) <- gamma2
-      }
-
-      if (struct[2] == "UN") {
-         H <- .con.vcov.UN(gamma2, phi)
-      }
-
-      if (struct[2] == "ID" || struct[2] == "DIAG") {
-         H <- diag(gamma2, nrow=h.nlevels.f[1], ncol=h.nlevels.f[1])
-      }
-
-      if (struct[2] == "UNHO") {
-         H <- matrix(NA_real_, nrow=h.nlevels.f[1], ncol=h.nlevels.f[1])
-         H[upper.tri(H)] <- phi
-         H[lower.tri(H)] <- t(H)[lower.tri(H)]
-         diag(H) <- 1
-         H <- diag(sqrt(rep(gamma2, h.nlevels.f[1])), nrow=h.nlevels.f[1], ncol=h.nlevels.f[1]) %*% H %*% diag(sqrt(rep(gamma2, h.nlevels.f[1])), nrow=h.nlevels.f[1], ncol=h.nlevels.f[1])
-         diag(H) <- gamma2
-      }
-
-      if (struct[2] == "AR") {
-         if (is.na(phi)) {
-            H <- matrix(NA_real_, nrow=h.nlevels.f[1], ncol=h.nlevels.f[1])
-         } else {
-            ### is h.nlevels.f[1] == 1 even possible here?
-            if (h.nlevels.f[1] > 1) {
-               H <- toeplitz(ARMAacf(ar=phi, lag.max=h.nlevels.f[1]-1))
-            } else {
-               H <- diag(1)
-            }
-         }
-         H <- diag(sqrt(rep(gamma2, h.nlevels.f[1])), nrow=h.nlevels.f[1], ncol=h.nlevels.f[1]) %*% H %*% diag(sqrt(rep(gamma2, h.nlevels.f[1])), nrow=h.nlevels.f[1], ncol=h.nlevels.f[1])
-         diag(H) <- gamma2
-      }
-
-      if (struct[2] == "HAR") {
-         if (is.na(phi)) {
-            H <- matrix(NA_real_, nrow=h.nlevels.f[1], ncol=h.nlevels.f[1])
-         } else {
-            ### is h.nlevels.f[1] == 1 even possible here?
-            if (h.nlevels.f[1] > 1) {
-               H <- toeplitz(ARMAacf(ar=phi, lag.max=h.nlevels.f[1]-1))
-            } else {
-               H <- diag(1)
-            }
-         }
-         H <- diag(sqrt(gamma2), nrow=h.nlevels.f[1], ncol=h.nlevels.f[1]) %*% H %*% diag(sqrt(gamma2), nrow=h.nlevels.f[1], ncol=h.nlevels.f[1])
-         diag(H) <- gamma2
-      }
-
-      ### for "CS","AR","ID", set gamma2 value to 0 for any levels that were removed
-
-      if (any(h.levels.r) && is.element(struct[2], c("CS","AR","ID"))) {
-         H[h.levels.r,] <- 0
-         H[,h.levels.r] <- 0
-      }
-
-      ### for "HCS","HAR","DIAG" set gamma2 value(s) to 0 for any levels that were removed
-
-      if (any(h.levels.r) && is.element(struct[2], c("HCS","HAR","DIAG"))) {
-         H[h.levels.r,] <- 0
-         H[,h.levels.r] <- 0
-         gamma2[h.levels.r] <- 0
-         warning("Fixed 'gamma2' to 0 for removed level(s).")
-      }
-
-      ### for "UN", set gamma2 value(s) and corresponding phi(s) to 0 for any levels that were removed
-
-      if (any(h.levels.r) && struct[2] == "UN") {
-         H[h.levels.r,] <- 0
-         H[,h.levels.r] <- 0
-         gamma2[h.levels.r] <- 0
-         phi <- H[upper.tri(H)]
-         warning("Fixed 'gamma2' and corresponding 'phi' value(s) to 0 for removed level(s).")
-      }
-
-      ### for "UNHO", set phi(s) to 0 corresponding to any levels that were removed
-
-      if (any(h.levels.r) && struct[2] == "UNHO") {
-         H[h.levels.r,] <- 0
-         H[,h.levels.r] <- 0
-         diag(H) <- gamma2 ### don't really need this
-         phi <- H[upper.tri(H)]
-         warning("Fixed 'phi' value(s) to 0 corresponding to removed level(s).")
-      }
-
-      ### special provision for the bivariate model:
-      ### if gamma2 (for "CS","AR","UNHO") or either gamma2.1 or gamma2.2 (for "HCS","UN","HAR") is fixed to 0, then phi must be fixed to 0
-
-      if (h.nlevels.f[1] == 2) {
-         if (is.element(struct[2], c("CS","AR","UNHO")) && !is.na(gamma2) && gamma2 == 0)
-            phi <- 0
-         if (is.element(struct[2], c("HCS","UN","HAR")) && ((!is.na(gamma2[1]) && gamma2[1] == 0) || (!is.na(gamma2[2]) && gamma2[2] == 0)))
-            phi <- 0
-      }
-
-      #return(list(H=H, gamma2=gamma2, phi=phi, Z.H1=Z.H1, Z.H2=Z.H2))
+      gamma2 <- tmp$tau2
+      phi    <- tmp$rho
+      H      <- tmp$G
 
    } else {
 
-      H <- NULL
-      h.levels.f <- NULL
-      h.levels.r <- NULL
-      h.levels.k <- NULL
+      h.nlevels.f     <- NULL
+      h.levels.f      <- NULL
+      h.levels.r      <- NULL
+      h.levels.k      <- NULL
       h.levels.comb.k <- NULL
-      h.nlevels.f <- NULL
+
+      H <- NULL
 
    }
 
@@ -2461,8 +1863,10 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
                   withS=withS, withG=withG, withH=withH, withR=withR,
                   sigma2s=sigma2s, tau2s=tau2s, rhos=rhos, gamma2s=gamma2s, phis=phis,
                   s.names=s.names, g.names=g.names, h.names=h.names,
-                  s.nlevels=s.nlevels, g.nlevels.f=g.nlevels.f, g.nlevels=g.nlevels,
-                                       h.nlevels.f=h.nlevels.f, h.nlevels=h.nlevels,
+                  s.levels=s.levels, s.levels.f=s.levels.f,
+                  s.nlevels=s.nlevels, s.nlevels.f=s.nlevels.f,
+                  g.nlevels.f=g.nlevels.f, g.nlevels=g.nlevels,
+                  h.nlevels.f=h.nlevels.f, h.nlevels=h.nlevels,
                   g.levels.f=g.levels.f, g.levels.k=g.levels.k, g.levels.comb.k=g.levels.comb.k,
                   h.levels.f=h.levels.f, h.levels.k=h.levels.k, h.levels.comb.k=h.levels.comb.k,
                   struct=struct, Rfix=Rfix, R=R, Rscale=Rscale, mf.r=mf.r, mf.r.f=mf.r.f, mf.g.f=mf.g.f, mf.h.f=mf.h.f, Z.S=Z.S, random=random, version=packageVersion("metafor"), call=mf)

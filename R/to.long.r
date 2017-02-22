@@ -617,11 +617,11 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
       ### check for NAs in table data and act accordingly
 
-      aibicidi.na <- is.na(ai) | is.na(bi) | is.na(ci) | is.na(di)
+      has.na <- is.na(ai) | is.na(bi) | is.na(ci) | is.na(di)
 
-      if (any(aibicidi.na)) {
+      if (any(has.na)) {
 
-         not.na <- !aibicidi.na
+         not.na <- !has.na
 
          if (na.act == "na.omit") {
             ai   <- ai[not.na]
@@ -711,11 +711,11 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
       ### check for NAs in table data and act accordingly
 
-      x1ix2it1it2i.na <- is.na(x1i) | is.na(x2i) | is.na(t1i) | is.na(t2i)
+      has.na <- is.na(x1i) | is.na(x2i) | is.na(t1i) | is.na(t2i)
 
-      if (any(x1ix2it1it2i.na)) {
+      if (any(has.na)) {
 
-         not.na <- !x1ix2it1it2i.na
+         not.na <- !has.na
 
          if (na.act == "na.omit") {
             x1i  <- x1i[not.na]
@@ -772,11 +772,11 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
       ### check for NAs in table data and act accordingly
 
-      m1im2isd1isd2in1in2i.na <- is.na(m1i) | is.na(m2i) | is.na(sd1i) | is.na(sd2i) | is.na(n1i) | is.na(n2i)
+      has.na <- is.na(m1i) | is.na(m2i) | is.na(sd1i) | is.na(sd2i) | is.na(n1i) | is.na(n2i)
 
-      if (any(m1im2isd1isd2in1in2i.na)) {
+      if (any(has.na)) {
 
-         not.na <- !m1im2isd1isd2in1in2i.na
+         not.na <- !has.na
 
          if (na.act == "na.omit") {
             m1i  <- m1i[not.na]
@@ -836,11 +836,11 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
       ### check for NAs in table data and act accordingly
 
-      rini.na <- is.na(ri) | is.na(ni)
+      has.na <- is.na(ri) | is.na(ni)
 
-      if (any(rini.na)) {
+      if (any(has.na)) {
 
-         not.na <- !rini.na
+         not.na <- !has.na
 
          if (na.act == "na.omit") {
             ri   <- ri[not.na]
@@ -893,11 +893,11 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
       ### check for NAs in table data and act accordingly
 
-      ximi.na <- is.na(xi) | is.na(mi)
+      has.na <- is.na(xi) | is.na(mi)
 
-      if (any(ximi.na)) {
+      if (any(has.na)) {
 
-         not.na <- !ximi.na
+         not.na <- !has.na
 
          if (na.act == "na.omit") {
             xi   <- xi[not.na]
@@ -980,11 +980,11 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
       ### check for NAs in table data and act accordingly
 
-      xiti.na <- is.na(xi) | is.na(ti)
+      has.na <- is.na(xi) | is.na(ti)
 
-      if (any(xiti.na)) {
+      if (any(has.na)) {
 
-         not.na <- !xiti.na
+         not.na <- !has.na
 
          if (na.act == "na.omit") {
             xi   <- xi[not.na]
@@ -1037,11 +1037,11 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
       ### check for NAs in table data and act accordingly
 
-      misdini.na <- is.na(mi) | is.na(sdi) | is.na(ni)
+      has.na <- is.na(mi) | is.na(sdi) | is.na(ni)
 
-      if (any(misdini.na)) {
+      if (any(has.na)) {
 
-         not.na <- !misdini.na
+         not.na <- !has.na
 
          if (na.act == "na.omit") {
             mi   <- mi[not.na]
@@ -1097,14 +1097,14 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
       ### check for NAs in table data and act accordingly
 
       if (is.element(measure, c("MC","SMCC","SMCRH","ROMC"))) {
-         m1im2isdiniri.na <- is.na(m1i) | is.na(m2i) | is.na(sd1i) | is.na(sd2i) | is.na(ni) | is.na(ri)
+         has.na <- is.na(m1i) | is.na(m2i) | is.na(sd1i) | is.na(sd2i) | is.na(ni) | is.na(ri)
       } else {
-         m1im2isdiniri.na <- is.na(m1i) | is.na(m2i) | is.na(sd1i) | is.na(ni) | is.na(ri)
+         has.na <- is.na(m1i) | is.na(m2i) | is.na(sd1i) | is.na(ni) | is.na(ri)
       }
 
-      if (any(m1im2isdiniri.na)) {
+      if (any(has.na)) {
 
-         not.na <- !m1im2isdiniri.na
+         not.na <- !has.na
 
          if (na.act == "na.omit") {
             m1i  <- m1i[not.na]
@@ -1195,11 +1195,11 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
       ### check for NAs in table data and act accordingly
 
-      aimini.na <- is.na(ai) | is.na(mi) | is.na(ni)
+      has.na <- is.na(ai) | is.na(mi) | is.na(ni)
 
-      if (any(aimini.na)) {
+      if (any(has.na)) {
 
-         not.na <- !aimini.na
+         not.na <- !has.na
 
          if (na.act == "na.omit") {
             ai   <- ai[not.na]

@@ -1,6 +1,6 @@
 Package: metafor
 Version: 2.0-0
-Date: 2017-01-29
+Date: 2017-02-22
 Title: Meta-Analysis Package for R
 Authors@R: person("Wolfgang", "Viechtbauer", email = "wvb@metafor-project.org", role = c("aut","cre"))
 Depends: R (>= 3.2.0), methods, Matrix

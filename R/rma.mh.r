@@ -175,14 +175,13 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
 
       ### check for NAs in table data and act accordingly
 
-      aibicidi.na <- is.na(ai) | is.na(bi) | is.na(ci) | is.na(di)
+      has.na <- is.na(ai) | is.na(bi) | is.na(ci) | is.na(di)
+      not.na <- !has.na
 
-      if (any(aibicidi.na)) {
+      if (any(has.na)) {
 
          if (verbose)
             message("Handling NAs in table data ...")
-
-         not.na <- !aibicidi.na
 
          if (na.act == "na.omit" || na.act == "na.exclude" || na.act == "na.pass") {
             ai <- ai[not.na]
@@ -196,8 +195,6 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
          if (na.act == "na.fail")
             stop("Missing values in tables.")
 
-      } else {
-         not.na <- rep(TRUE, k)
       }
 
       ### at least one study left?
@@ -208,13 +205,12 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
       ### check for NAs in yi/vi and act accordingly
 
       yivi.na <- is.na(yi) | is.na(vi)
+      not.na.yivi <- !yivi.na
 
       if (any(yivi.na)) {
 
          if (verbose)
             message("Handling NAs in yi/vi ...")
-
-         not.na.yivi <- !yivi.na
 
          if (na.act == "na.omit" || na.act == "na.exclude" || na.act == "na.pass") {
 
@@ -231,8 +227,6 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
          if (na.act == "na.fail")
             stop("Missing yi/vi values.")
 
-      } else {
-         not.na.yivi <- rep(TRUE, k)
       }
 
       k.yi <- length(yi) ### number of yi/vi pairs that are not NA (needed for QE df and fitstats calculation)
@@ -382,14 +376,13 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
 
       ### check for NAs in table data and act accordingly
 
-      x1ix2it1it2i.na <- is.na(x1i) | is.na(x2i) | is.na(t1i) | is.na(t2i)
+      has.na <- is.na(x1i) | is.na(x2i) | is.na(t1i) | is.na(t2i)
+      not.na <- !has.na
 
-      if (any(x1ix2it1it2i.na)) {
+      if (any(has.na)) {
 
          if (verbose)
             message("Handling NAs in table data ...")
-
-         not.na <- !x1ix2it1it2i.na
 
          if (na.act == "na.omit" || na.act == "na.exclude" || na.act == "na.pass") {
             x1i  <- x1i[not.na]
@@ -403,8 +396,6 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
          if (na.act == "na.fail")
             stop("Missing values in tables.")
 
-      } else {
-         not.na <- rep(TRUE, k)
       }
 
       ### at least one study left?
@@ -415,13 +406,12 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
       ### check for NAs in yi/vi and act accordingly
 
       yivi.na <- is.na(yi) | is.na(vi)
+      not.na.yivi <- !yivi.na
 
       if (any(yivi.na)) {
 
          if (verbose)
             message("Handling NAs in yi/vi ...")
-
-         not.na.yivi <- !yivi.na
 
          if (na.act == "na.omit" || na.act == "na.exclude" || na.act == "na.pass") {
 
@@ -438,8 +428,6 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
          if (na.act == "na.fail")
             stop("Missing yi/vi values.")
 
-      } else {
-         not.na.yivi <- rep(TRUE, k)
       }
 
       k.yi <- length(yi) ### number of yi/vi pairs that are not NA (needed for QE df and fitstats calculation)

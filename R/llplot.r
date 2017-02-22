@@ -160,11 +160,10 @@ lty, lwd, col, level=99.99, refline=0, ...) {
 
    ### check for NAs and act accordingly
 
-   aibicidi.na <- is.na(ai) | is.na(bi) | is.na(ci) | is.na(di)
+   has.na <- is.na(ai) | is.na(bi) | is.na(ci) | is.na(di)
+   not.na <- !has.na
 
-   if (any(aibicidi.na)) {
-
-      not.na <- !aibicidi.na
+   if (any(has.na)) {
 
       if (na.act == "na.omit" || na.act == "na.exclude" || na.act == "na.pass") {
          yi   <- yi[not.na]
@@ -186,8 +185,6 @@ lty, lwd, col, level=99.99, refline=0, ...) {
       if (na.act == "na.fail")
          stop("Missing values in studies.")
 
-   } else {
-      not.na <- rep(TRUE, k)
    }
 
    ### at least one study left?

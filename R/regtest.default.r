@@ -65,7 +65,7 @@ regtest.default <- function(x, vi, sei, ni, subset, model="rma", predictor="sei"
 
    ### check for NAs and act accordingly
 
-   has.na <- is.na(yi) | is.na(vi) | if (is.null(ni)) FALSE else is.na(ni)
+   has.na <- is.na(yi) | is.na(vi) | (if (is.null(ni)) FALSE else is.na(ni))
 
    if (any(has.na)) {
 

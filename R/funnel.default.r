@@ -157,7 +157,7 @@ refline=0, pch=19, pch.fill=21, col, bg, ci.res=1000, ...) {
 
    ### check for NAs and act accordingly
 
-   has.na <- is.na(yi) | if (is.element(yaxis, c("vi", "vinv"))) is.na(vi) else FALSE | if (is.element(yaxis, c("sei", "seinv"))) is.na(vi) else FALSE | if (is.element(yaxis, c("ni", "ninv", "sqrtni", "sqrtninv", "lni"))) is.na(ni) else FALSE
+   has.na <- is.na(yi) | (if (is.element(yaxis, c("vi", "vinv"))) is.na(vi) else FALSE) | (if (is.element(yaxis, c("sei", "seinv"))) is.na(vi) else FALSE) | (if (is.element(yaxis, c("ni", "ninv", "sqrtni", "sqrtninv", "lni"))) is.na(ni) else FALSE)
 
    if (any(has.na)) {
 

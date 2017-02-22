@@ -122,7 +122,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
    ai <- bi <- ci <- di <- x1i <- x2i <- t1i <- t2i <- NA
 
-   is.formula <- FALSE
+   #is.formula <- FALSE
 
    if (!is.null(yi)) {
 
@@ -138,7 +138,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
          options(na.action = na.act)                      ### set na.action back to na.act
          names(yi) <- NULL                                ### strip names (1:k) from yi (so res$yi is the same whether yi is a formula or not)
          intercept <- FALSE                               ### set to FALSE since formula now controls whether the intercept is included or not
-         is.formula <- TRUE                               ### note: code further below actually checks whether intercept is included or not
+         #is.formula <- TRUE                               ### note: code further below ([b]) actually checks whether intercept is included or not
       }
 
       ### if yi is an escalc object, try to extract yi and vi (note that moderators must then be specified via the mods argument)
@@ -246,7 +246,6 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
       if (!is.null(ni) && length(ni) != k)
          ni <- NULL
-         #stop("Length of 'yi' and 'ni' vectors are not the same.")
 
       ### if ni is now available, add it (back) as an attribute to yi
 
@@ -542,7 +541,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
       attr(mods, "assign") <- NULL          ### strip assign attribute (not needed at the moment)
       options(na.action = na.act)           ### set na.action back to na.act
       intercept <- FALSE                    ### set to FALSE since formula now controls whether the intercept is included or not
-      is.formula <- TRUE                    ### note: code further below actually checks whether intercept is included or not
+      #is.formula <- TRUE                    ### note: code further below ([b]) actually checks whether intercept is included or not
    }
 
    ### turn a row vector for mods into a column vector
@@ -582,14 +581,14 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
       model <- "rma.uni"
    }
 
-   ### study ids (1:k sequence before subsetting)
-
-   ids <- seq_len(k)
-
    ### generate study labels if none are specified (or none have been found in yi)
 
    if (verbose > 1)
       message("Generating/extracting study labels ...")
+
+   ### study ids (1:k sequence before subsetting)
+
+   ids <- seq_len(k)
 
    if (is.null(slab)) {
 
@@ -657,7 +656,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
    if (any(is.infinite(weights)))
       stop("Infinite weights not allowed.")
 
-   ### save full data (including potential NAs in yi/vi and/or mods)
+   ### save full data (including potential NAs in yi/vi/weights/ni/mods/Z.f)
 
    ai.f      <- ai
    bi.f      <- bi
@@ -674,18 +673,17 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
    mods.f    <- mods
    Z.f       <- Z
 
-   k.f <- k ### total number of observed outcomes including all NAs (on yi/vi and/or mods)
+   k.f <- k ### total number of observed outcomes including all NAs
 
    ### check for NAs and act accordingly
 
-   YVXZW.na <- is.na(yi) | is.na(vi) | if (is.null(mods)) FALSE else apply(is.na(mods), 1, any) | if (is.null(Z)) FALSE else apply(is.na(Z), 1, any) | if (is.null(weights)) FALSE else is.na(weights)
+   has.na <- is.na(yi) | is.na(vi) | (if (is.null(mods)) FALSE else apply(is.na(mods), 1, any)) | (if (is.null(Z)) FALSE else apply(is.na(Z), 1, any)) | (if (is.null(weights)) FALSE else is.na(weights))
+   not.na <- !has.na
 
-   if (any(YVXZW.na)) {
+   if (any(has.na)) {
 
       if (verbose > 1)
          message("Handling NAs ...")
-
-      not.na <- !YVXZW.na
 
       if (na.act == "na.omit" || na.act == "na.exclude" || na.act == "na.pass") {
 
@@ -708,8 +706,6 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
       if (na.act == "na.fail")
          stop("Missing values in data.")
 
-   } else {
-      not.na <- rep(TRUE, k)
    }
 
    ### at least one study left?
@@ -724,7 +720,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
       test   <- "z"
    }
 
-   ### make sure that there is at least one column in X
+   ### make sure that there is at least one column in X ([b])
 
    if (is.null(mods) && !intercept) {
       warning("Must either include an intercept and/or moderators in model.\n  Coerced intercept into the model.")
@@ -761,7 +757,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
       int.indx <- which(is.int, arr.ind=TRUE)
       X        <- cbind(intrcpt=1,   X[,-int.indx, drop=FALSE]) ### this removes any duplicate intercepts
       X.f      <- cbind(intrcpt=1, X.f[,-int.indx, drop=FALSE]) ### this removes any duplicate intercepts
-      if (is.formula)
+      #if (is.formula)
          intercept <- TRUE ### set intercept appropriately so that the predict() function works
    } else {
       int.incl <- FALSE
@@ -968,21 +964,21 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
             if (verbose)
                cat("Iteration", iter, "\ttau^2 =", formatC(tau2, format="f", digits=digits), "\n")
 
-            iter     <- iter + 1
-            tau2.old <- tau2
-            wi       <- 1/(vi + tau2)
+            iter <- iter + 1
+            old2 <- tau2
+            wi   <- 1/(vi + tau2)
             if (any(tau2 + vi < 0))
                stop("Some marginal variances are negative.")
             if (any(is.infinite(wi)))
                stop("Division by zero when computing the inverse variance weights.")
-            W        <- diag(wi, nrow=k, ncol=k)
-            stXWX    <- .invcalc(X=X, W=W, k=k)
-            P        <- W - W %*% X %*% stXWX %*% crossprod(X,W)
-            RSS      <- crossprod(Y,P) %*% Y
-            trP      <- .tr(P)
-            tau2     <- ifelse(tau2.fix, tau2.val, (RSS - (k-p)) / trP)
+            W     <- diag(wi, nrow=k, ncol=k)
+            stXWX <- .invcalc(X=X, W=W, k=k)
+            P     <- W - W %*% X %*% stXWX %*% crossprod(X,W)
+            RSS   <- crossprod(Y,P) %*% Y
+            trP   <- .tr(P)
+            tau2  <- ifelse(tau2.fix, tau2.val, (RSS - (k-p)) / trP)
             tau2[tau2 < con$tau2.min] <- con$tau2.min
-            change   <- abs(tau2.old - tau2)
+            change <- abs(old2 - tau2)
 
             if (iter > con$maxiter) {
                conv <- 0
@@ -1013,8 +1009,8 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
             if (verbose)
                cat("Iteration", iter, "\ttau^2 =", formatC(tau2, format="f", digits=digits), "\n")
 
-            iter     <- iter + 1
-            tau2.old <- tau2
+            iter <- iter + 1
+            old2 <- tau2
 
             wi     <- 1/(vi + tau2)
             W      <- diag(wi, nrow=k, ncol=k)
@@ -1024,7 +1020,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
             V      <- diag(vi, nrow=k, ncol=k)
             PV     <- P %*% V ### careful: is not symmetric
             tau2   <- ifelse(tau2.fix, tau2.val, tau2 * RSS / (k-p))
-            change <- abs(tau2.old - tau2)
+            change <- abs(old2 - tau2)
 
             if (iter > con$maxiter) {
                conv <- 0
@@ -1080,16 +1076,16 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
             if (verbose)
                cat("Iteration", iter, "\ttau^2 =", formatC(tau2, format="f", digits=digits), "\n")
 
-            iter     <- iter + 1
-            tau2.old <- tau2
-            wi       <- 1/(vi + tau2)
+            iter <- iter + 1
+            old2 <- tau2
+            wi   <- 1/(vi + tau2)
             if (any(tau2 + vi < 0))
                stop("Some marginal variances are negative.")
             if (any(is.infinite(wi)))
                stop("Division by zero when computing the inverse variance weights.")
-            W        <- diag(wi, nrow=k, ncol=k)
-            stXWX    <- .invcalc(X=X, W=W, k=k)
-            P        <- W - W %*% X %*% stXWX %*% crossprod(X,W)
+            W     <- diag(wi, nrow=k, ncol=k)
+            stXWX <- .invcalc(X=X, W=W, k=k)
+            P     <- W - W %*% X %*% stXWX %*% crossprod(X,W)
 
             if (method == "ML") {
                PP  <- P %*% P
@@ -1111,7 +1107,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
             }
 
             tau2   <- ifelse(tau2.fix, tau2.val, tau2 + adj)
-            change <- abs(tau2.old - tau2)
+            change <- abs(old2 - tau2)
 
             if (iter > con$maxiter) {
                conv <- 0

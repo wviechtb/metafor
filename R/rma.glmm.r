@@ -211,8 +211,8 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    ### convert mods formula to X matrix and set intercept equal to FALSE
 
-   is.formula <- inherits(mods, "formula")
-   if (is.formula) {
+   #is.formula <- inherits(mods, "formula")
+   if (inherits(mods, "formula")) {
       options(na.action = "na.pass")        ### set na.action to na.pass, so that NAs are not filtered out (we'll do that later)
       mods <- model.matrix(mods, data=data) ### extract model matrix
       attr(mods, "assign") <- NULL          ### strip assign attribute (not needed at the moment)
@@ -308,7 +308,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       }
    }
 
-   ### save full data (including potential NAs in table data, yi/vi, and/or mods) (after subsetting)
+   ### save full data (including potential NAs in table data, yi/vi/ni/mods) (after subsetting)
 
    ai.f   <- ai
    bi.f   <- bi
@@ -332,14 +332,13 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    if (is.element(measure, "OR")) {
 
-      aibicidimods.na <- is.na(ai) | is.na(bi) | is.na(ci) | is.na(di) | if (is.null(mods)) FALSE else apply(is.na(mods), 1, any)
+      has.na <- is.na(ai) | is.na(bi) | is.na(ci) | is.na(di) | (if (is.null(mods)) FALSE else apply(is.na(mods), 1, any))
+      not.na <- !has.na
 
-      if (any(aibicidimods.na)) {
+      if (any(has.na)) {
 
          if (verbose > 1)
             message("Handling NAs in table data ...")
-
-         not.na <- !aibicidimods.na
 
          if (na.act == "na.omit" || na.act == "na.exclude" || na.act == "na.pass") {
             ai   <- ai[not.na]
@@ -354,22 +353,19 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
          if (na.act == "na.fail")
             stop("Missing values in studies.")
 
-      } else {
-         not.na <- rep(TRUE, k)
       }
 
    }
 
    if (is.element(measure, "IRR")) {
 
-      x1ix2it1it2imods.na <- is.na(x1i) | is.na(x2i) | is.na(t1i) | is.na(t2i) | if (is.null(mods)) FALSE else apply(is.na(mods), 1, any)
+      has.na <- is.na(x1i) | is.na(x2i) | is.na(t1i) | is.na(t2i) | (if (is.null(mods)) FALSE else apply(is.na(mods), 1, any))
+      not.na <- !has.na
 
-      if (any(x1ix2it1it2imods.na)) {
+      if (any(has.na)) {
 
          if (verbose > 1)
             message("Handling NAs in table data ...")
-
-         not.na <- !x1ix2it1it2imods.na
 
          if (na.act == "na.omit" || na.act == "na.exclude" || na.act == "na.pass") {
             x1i  <- x1i[not.na]
@@ -384,22 +380,19 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
          if (na.act == "na.fail")
             stop("Missing values in studies.")
 
-      } else {
-         not.na <- rep(TRUE, k)
       }
 
    }
 
    if (is.element(measure, "PLO")) {
 
-      ximimods.na <- is.na(xi) | is.na(mi) | if (is.null(mods)) FALSE else apply(is.na(mods), 1, any)
+      has.na <- is.na(xi) | is.na(mi) | (if (is.null(mods)) FALSE else apply(is.na(mods), 1, any))
+      not.na <- !has.na
 
-      if (any(ximimods.na)) {
+      if (any(has.na)) {
 
          if (verbose > 1)
             message("Handling NAs in table data ...")
-
-         not.na <- !ximimods.na
 
          if (na.act == "na.omit" || na.act == "na.exclude" || na.act == "na.pass") {
             xi   <- xi[not.na]
@@ -412,22 +405,19 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
          if (na.act == "na.fail")
             stop("Missing values in studies.")
 
-      } else {
-         not.na <- rep(TRUE, k)
       }
 
    }
 
    if (is.element(measure, "IRLN")) {
 
-      xitimods.na <- is.na(xi) | is.na(ti) | if (is.null(mods)) FALSE else apply(is.na(mods), 1, any)
+      has.na <- is.na(xi) | is.na(ti) | (if (is.null(mods)) FALSE else apply(is.na(mods), 1, any))
+      not.na <- !has.na
 
-      if (any(xitimods.na)) {
+      if (any(has.na)) {
 
          if (verbose > 1)
             message("Handling NAs in table data ...")
-
-         not.na <- !xitimods.na
 
          if (na.act == "na.omit" || na.act == "na.exclude" || na.act == "na.pass") {
             xi   <- xi[not.na]
@@ -440,8 +430,6 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
          if (na.act == "na.fail")
             stop("Missing values in studies.")
 
-      } else {
-         not.na <- rep(TRUE, k)
       }
 
    }
@@ -460,14 +448,13 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    ###       mods.yi element, so that dimensions of the model matrix and vi are guaranteed to match up)
 
    mods.yi <- mods.f
-   yivi.na <- is.na(yi) | is.na(vi) | if (is.null(mods.yi)) FALSE else apply(is.na(mods.yi), 1, any)
-
+   yivi.na <- is.na(yi) | is.na(vi) | (if (is.null(mods.yi)) FALSE else apply(is.na(mods.yi), 1, any))
+   not.na.yivi <- !yivi.na
+   
    if (any(yivi.na)) {
 
       if (verbose > 1)
          message("Handling NAs in yi/vi ...")
-
-      not.na.yivi <- !yivi.na
 
       if (na.act == "na.omit" || na.act == "na.exclude" || na.act == "na.pass") {
 
@@ -485,8 +472,6 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       if (na.act == "na.fail")
          stop("Missing yi/vi values.")
 
-   } else {
-      not.na.yivi <- rep(TRUE, k)
    }
 
    k.yi <- length(yi) ### number of yi/vi pairs that are not NA
@@ -536,7 +521,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       int.indx <- which(is.int, arr.ind=TRUE)
       X        <- cbind(intrcpt=1,   X[,-int.indx, drop=FALSE]) ### note: this removes any duplicate intercepts
       X.f      <- cbind(intrcpt=1, X.f[,-int.indx, drop=FALSE]) ### note: this removes any duplicate intercepts
-      if (is.formula)
+      #if (is.formula)
          intercept <- TRUE ### set intercept appropriately so that the predict() function works
    } else {
       int.incl <- FALSE
