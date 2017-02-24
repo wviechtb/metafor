@@ -832,7 +832,18 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
    if (any(eigen(crossprod(X), symmetric=TRUE, only.values=TRUE)$values <= con$tol))
       stop("Model matrix not of full rank. Cannot fit model.")
 
-   iter <- 0 ### iterations counter
+   ### check ratio of largest to smallest sampling variance
+   ### note: need to exclude some special cases (0/0 = Nan, max(vi)/0 = Inf)
+
+   vimaxmin <- max(vi) / min(vi)
+
+   if (!is.nan(vimaxmin) && !is.infinite(vimaxmin) && vimaxmin >= 1/con$tol)
+      stop("Ratio of largest to smallest sampling variance extremely large. Cannot obtain stable results.")
+
+   ### iterations counter for iterative estimators
+   ### (DLIT, SJIT, ML, REML, EB; PM is also iterative, but uniroot() handles that)
+
+   iter <- 0
 
    ### set some defaults
 
@@ -1707,10 +1718,9 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
    ### note: tau2 is not counted as a parameter when it was fixed by the user
    parms <- p + ifelse(model == "rma.uni", ifelse(method == "FE" || tau2.fix, 0, 1), q)
 
-   ll.ML    <- -1/2 * (k)   * log(2*base::pi)                                                                                 - 1/2 * sum(log(vi + tau2))                                                                   - 1/2 * RSS.f
-   ll.REML  <- -1/2 * (k-p) * log(2*base::pi) + ifelse(con$REMLf, 1/2 * determinant(crossprod(X), logarithm=TRUE)$modulus, 0) - 1/2 * sum(log(vi + tau2)) - 1/2 * determinant(crossprod(X,W) %*% X, logarithm=TRUE)$modulus - 1/2 * RSS.f
-   #ll.REML <- -1/2 * (k-p) * log(2*base::pi) +                   1/2 * log(det(crossprod(X)))                                - 1/2 * sum(log(vi + tau2)) - 1/2 * log(det(crossprod(X,W) %*% X))                            - 1/2 * RSS.f
-   #ll.REML <- -1/2 * (k-p) * log(2*base::pi)                                                                                 - 1/2 * sum(log(vi + tau2)) - 1/2 * log(det(crossprod(X,W) %*% X))                            - 1/2 * RSS.f
+   ll.ML    <- -1/2 * (k) * log(2*base::pi) - 1/2 * sum(log(vi + tau2)) - 1/2 * RSS.f
+   ll.REML  <- -1/2 * (k-p) * log(2*base::pi) + ifelse(con$REMLf, 1/2 * determinant(crossprod(X), logarithm=TRUE)$modulus, 0) +
+               -1/2 * sum(log(vi + tau2)) - 1/2 * determinant(crossprod(X,W) %*% X, logarithm=TRUE)$modulus - 1/2 * RSS.f
 
    if (k > p) {
       dev.ML <- -2 * (ll.ML - sum(dnorm(yi, mean=yi, sd=sqrt(vi), log=TRUE)))

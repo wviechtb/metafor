@@ -24,12 +24,14 @@ test_that("results are correct for example 1.", {
    res <- data.frame(method=sapply(res, function(x) x$method),
                      tau2=sapply(res, function(x) round(x$tau2,3)),
                      I2=sapply(res, function(x) round(x$I2,2)),
-                     H2=sapply(res, function(x) round(x$H2,2)))
+                     H2=sapply(res, function(x) round(x$H2,2)),
+                     se.tau2=sapply(res, function(x) round(x$se.tau2, 4)))
 
    ### compare with results on page 271
-   expect_equivalent(res$tau2, c(0.228, 0.148, 0.277, 0.197, 0.223, 0.192, 0.199))
-   expect_equivalent(res$I2,   c(77.23, 68.80, 80.44, 74.51, 76.84, 74.05, 74.75))
-   expect_equivalent(res$H2,   c(4.39, 3.21, 5.11, 3.92, 4.32, 3.85, 3.96))
+   expect_equivalent(res$tau2,    c(0.228, 0.148, 0.277, 0.197, 0.223, 0.192, 0.199))
+   expect_equivalent(res$I2,      c(77.23, 68.80, 80.44, 74.51, 76.84, 74.05, 74.75))
+   expect_equivalent(res$H2,      c(4.39, 3.21, 5.11, 3.92, 4.32, 3.85, 3.96))
+   expect_equivalent(res$se.tau2, c(0.1328, 0.1234, 0.1841, 0.1255, 0.1464, 0.133, 0.0979))
 
 })
 
@@ -54,11 +56,13 @@ test_that("results are correct for example 2.", {
    res <- data.frame(method=sapply(res, function(x) x$method),
                      tau2=sapply(res, function(x) round(x$tau2,3)),
                      I2=sapply(res, function(x) round(x$I2,2)),
-                     H2=sapply(res, function(x) round(x$H2,2)))
+                     H2=sapply(res, function(x) round(x$H2,2)),
+                     se.tau2=sapply(res, function(x) round(x$se.tau2, 4)))
 
    ### compare with results on page 272
-   expect_equivalent(res$tau2, c(0.010, 0.000, 0.013, 0.013, 0.016, 0.010, 0.025))
-   expect_equivalent(res$I2,   c(22.93, 0.00, 27.53, 28.45, 32.02, 23.72, 42.67))
-   expect_equivalent(res$H2,   c(1.30, 1.00, 1.38, 1.40, 1.47, 1.31, 1.74))
+   expect_equivalent(res$tau2,    c(0.010, 0.000, 0.013, 0.013, 0.016, 0.010, 0.025))
+   expect_equivalent(res$I2,      c(22.93, 0.00, 27.53, 28.45, 32.02, 23.72, 42.67))
+   expect_equivalent(res$H2,      c(1.30, 1.00, 1.38, 1.40, 1.47, 1.31, 1.74))
+   expect_equivalent(res$se.tau2, c(0.0138, 0.0217, 0.0159, 0.0151, 0.0167, 0.0156, 0.0118))
 
 })

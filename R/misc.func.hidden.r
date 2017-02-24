@@ -220,8 +220,11 @@
 
 .invcalc <- function(X, W, k) {
 
-   sWX     <- sqrt(W) %*% X
+   sWX <- sqrt(W) %*% X
    res.qrs <- qr.solve(sWX, diag(k))
+   #res.qrs <- try(qr.solve(sWX, diag(k)), silent=TRUE)
+   #if (inherits(res.qrs, "try-error"))
+   #   stop("Cannot compute QR decomposition.")
    return(tcrossprod(res.qrs))
 
 }
@@ -843,27 +846,28 @@
             sX   <- U %*% X.fit
             sY   <- U %*% Y
             beta <- solve(crossprod(sX), crossprod(sX, sY))
+            RSS  <- sum(as.vector(sY - sX %*% beta)^2)
             if (dofit)
                vb <- matrix(solve(crossprod(sX)), nrow=pX, ncol=pX)
-            RSS.f <- sum(as.vector(sY - sX %*% beta)^2)
 
          } else {
 
             stXAX <- chol2inv(chol(as.matrix(t(X.fit) %*% A %*% X.fit)))
             #stXAX <- tcrossprod(qr.solve(sX, diag(k)))
             beta  <- matrix(stXAX %*% crossprod(X.fit,A) %*% Y, ncol=1)
+            RSS   <- as.vector(t(Y - X.fit %*% beta) %*% W %*% (Y - X.fit %*% beta))
             vb    <- matrix(stXAX %*% t(X.fit) %*% A %*% M %*% A %*% X.fit %*% stXAX, nrow=pX, ncol=pX)
-            RSS.f <- as.vector(t(Y - X.fit %*% beta) %*% W %*% (Y - X.fit %*% beta))
 
          }
 
          llvals <- c(NA_real_, NA_real_)
 
          if (dofit || !reml)
-            llvals[1]  <- -1/2 * (k)    * log(2*base::pi)                                                                                 - 1/2 * determinant(M, logarithm=TRUE)$modulus                                                                           - 1/2 * RSS.f
+            llvals[1]  <- -1/2 * (k) * log(2*base::pi) - 1/2 * determinant(M, logarithm=TRUE)$modulus - 1/2 * RSS
 
          if (dofit || reml)
-            llvals[2]  <- -1/2 * (k-pX) * log(2*base::pi) + ifelse(REMLf, 1/2 * determinant(crossprod(X.fit), logarithm=TRUE)$modulus, 0) - 1/2 * determinant(M, logarithm=TRUE)$modulus - 1/2 * determinant(crossprod(X.fit,W) %*% X.fit, logarithm=TRUE)$modulus - 1/2 * RSS.f
+            llvals[2]  <- -1/2 * (k-pX) * log(2*base::pi) + ifelse(REMLf, 1/2 * determinant(crossprod(X.fit), logarithm=TRUE)$modulus, 0) +
+                          -1/2 * determinant(M, logarithm=TRUE)$modulus - 1/2 * determinant(crossprod(X.fit,W) %*% X.fit, logarithm=TRUE)$modulus - 1/2 * RSS
 
          if (dofit) {
 
@@ -1713,19 +1717,20 @@
       beta <- stXWX %*% crossprod(X,W) %*% as.matrix(yi)
 
       ### compute residual sum of squares
-      RSS.f <- sum(wi*(yi - X %*% beta)^2)
+      RSS <- sum(wi*(yi - X %*% beta)^2)
 
       ### log-likelihood (could leave out additive constants)
       if (!reml) {
-         llval <- -1/2 * (k)    * log(2*base::pi)                                                                             - 1/2 * sum(log(vi + tau2))                                                                   - 1/2 * RSS.f
+         llval <- -1/2 * (k) * log(2*base::pi) - 1/2 * sum(log(vi + tau2)) - 1/2 * RSS
       } else {
-         llval <- -1/2 * (k-pX) * log(2*base::pi) + ifelse(REMLf, 1/2 * determinant(crossprod(X), logarithm=TRUE)$modulus, 0) - 1/2 * sum(log(vi + tau2)) - 1/2 * determinant(crossprod(X,W) %*% X, logarithm=TRUE)$modulus - 1/2 * RSS.f
+         llval <- -1/2 * (k-pX) * log(2*base::pi) + ifelse(REMLf, 1/2 * determinant(crossprod(X), logarithm=TRUE)$modulus, 0) +
+                  -1/2 * sum(log(vi + tau2)) - 1/2 * determinant(crossprod(X,W) %*% X, logarithm=TRUE)$modulus - 1/2 * RSS
       }
 
    }
 
    if (verbose) {
-      cat("ll = ", ifelse(is.na(llval), NA, formatC(llval, digits=digits, format="f", flag=" ")), " ", sep="")
+      cat("ll = ",   ifelse(is.na(llval), NA, formatC(llval, digits=digits, format="f", flag=" ")), " ", sep="")
       cat("alpha =", ifelse(is.na(alpha), NA, paste(formatC(alpha, digits=digits, format="f", flag=" "), " ", sep="")), "\n", sep="")
    }
 

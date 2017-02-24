@@ -10,7 +10,7 @@
 \bold{paper}    \tab \code{numeric}   \tab paper number \cr
 \bold{genus}    \tab \code{character} \tab genus name \cr
 \bold{species}  \tab \code{character} \tab species name \cr
-\bold{function} \tab \code{character} \tab plant functional group \cr
+\bold{fungrp}   \tab \code{character} \tab plant functional group \cr
 \bold{co2.ambi} \tab \code{numeric}   \tab ambient CO2 level (control group) \cr
 \bold{co2.elev} \tab \code{numeric}   \tab elevated CO2 level (treatment group) \cr
 \bold{units}    \tab \code{character} \tab units for CO2 exposure levels \cr

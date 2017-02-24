@@ -93,4 +93,27 @@ test_that("results are correct for the mixed-effects model.", {
 
    par(opar)
 
+   ### check results for all tau^2 estimators
+
+   res.HS   <- rma(yi, vi, mods = ~ I(dosage-34) * I(baseline-20), data=dat, method="HS")
+   res.HE   <- rma(yi, vi, mods = ~ I(dosage-34) * I(baseline-20), data=dat, method="HE")
+   res.DL   <- rma(yi, vi, mods = ~ I(dosage-34) * I(baseline-20), data=dat, method="DL")
+   res.GENQ <- rma(yi, vi, mods = ~ I(dosage-34) * I(baseline-20), data=dat, method="GENQ", weights = n1i + n2i)
+   res.SJ   <- rma(yi, vi, mods = ~ I(dosage-34) * I(baseline-20), data=dat, method="SJ")
+   res.DLIT <- rma(yi, vi, mods = ~ I(dosage-34) * I(baseline-20), data=dat, method="DLIT", control=list(maxiter=500))
+   res.SJIT <- rma(yi, vi, mods = ~ I(dosage-34) * I(baseline-20), data=dat, method="SJIT")
+   res.PM   <- rma(yi, vi, mods = ~ I(dosage-34) * I(baseline-20), data=dat, method="PM")
+   res.ML   <- rma(yi, vi, mods = ~ I(dosage-34) * I(baseline-20), data=dat, method="ML")
+   res.REML <- rma(yi, vi, mods = ~ I(dosage-34) * I(baseline-20), data=dat, method="REML")
+   res.EB   <- rma(yi, vi, mods = ~ I(dosage-34) * I(baseline-20), data=dat, method="EB")
+
+   res <- list(res.HS, res.HE, res.DL, res.GENQ, res.SJ, res.DLIT, res.SJIT, res.PM, res.ML, res.REML, res.EB)
+
+   res <- data.frame(method=sapply(res, function(x) x$method),
+                     tau2=sapply(res, function(x) round(x$tau2,3)),
+                     se.tau2=sapply(res, function(x) round(x$se.tau2, 3)))
+
+   expect_equivalent(res$tau2,    c(0.025, 0.039, 0.047, 0.060, 0.091, 0.030, 0.063, 0.063, 0.024, 0.056, 0.063))
+   expect_equivalent(res$se.tau2, c(0.020, 0.076, 0.038, 0.053, 0.044, 0.044, 0.046, 0.046, 0.022, 0.041, 0.046))
+
 })

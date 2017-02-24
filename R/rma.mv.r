@@ -951,6 +951,14 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
    if (any(eigen(V, symmetric=TRUE, only.values=TRUE)$values <= .Machine$double.eps)) ### any eigenvalue below double.eps is essentially 0
       warning("'V' appears to be not positive definite.")
 
+   ### check ratio of largest to smallest sampling variance
+   ### note: need to exclude some special cases (0/0 = Nan, max(vi)/0 = Inf)
+
+   vimaxmin <- max(vi) / min(vi)
+
+   if (!is.nan(vimaxmin) && !is.infinite(vimaxmin) && vimaxmin >= 1e+07)
+      stop("Ratio of largest to smallest sampling variance extremely large. Cannot obtain stable results.")
+
    ### make sure that there is at least one column in X ([b])
 
    if (is.null(mods) && !intercept) {
@@ -1230,7 +1238,11 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
       sX <- U %*% X
       sY <- U %*% Y
-      beta.FE <- solve(crossprod(sX), crossprod(sX, sY))
+      beta.FE <- try(solve(crossprod(sX), crossprod(sX, sY)), silent=TRUE)
+
+      if (inherits(beta.FE, "try-error"))
+         stop("Cannot compute initial values.")
+
       ### TODO: consider a better way to set initial values
       #total      <- max(.001*(sigma2s + tau2s + gamma2s), var(c(Y - X %*% res.FE$beta)) - 1/mean(1/diag(V)))
       #total      <- max(.001*(sigma2s + tau2s + gamma2s), var(as.vector(sY - sX %*% beta)) - 1/mean(1/diag(V)))
