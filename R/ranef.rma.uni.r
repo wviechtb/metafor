@@ -30,6 +30,11 @@ ranef.rma.uni <- function(object, level, digits, transf, targs, ...) {
       crit <- qnorm(level/2, lower.tail=FALSE)
    }
 
+   ### TODO: check computations for user-defined weights
+
+   if (!is.null(x$weights) || !x$weighted)
+      stop("Extraction of random effects for models with non-standard weights not currently implemented.")
+
    #########################################################################
 
    pred  <- rep(NA_real_, x$k.f)
@@ -37,8 +42,6 @@ ranef.rma.uni <- function(object, level, digits, transf, targs, ...) {
 
    ### see Appendix in: Raudenbush, S. W., & Bryk, A. S. (1985). Empirical
    ### Bayes meta-analysis. Journal of Educational Statistics, 10(2), 75-98
-
-   ### TODO: is this still correct if user has specified arbitrary weights?
 
    li <- x$tau2 / (x$tau2 + x$vi.f)
 

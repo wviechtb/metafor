@@ -397,6 +397,11 @@
       }
    }
 
+   attr(Z.G1, "assign")    <- NULL
+   attr(Z.G1, "contrasts") <- NULL
+   attr(Z.G2, "assign")    <- NULL
+   attr(Z.G2, "contrasts") <- NULL
+
    return(list(mf.g=mf.g, g.names=g.names, g.nlevels=g.nlevels, g.levels=g.levels, tau2s=tau2s, rhos=rhos, tau2=tau2, rho=rho, Z.G1=Z.G1, Z.G2=Z.G2))
 
 }

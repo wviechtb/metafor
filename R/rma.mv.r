@@ -1061,6 +1061,8 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
                Z.S[[j]] <- model.matrix(~ mf.s[[j]] - 1) ### cannot use this for factors with a single level
             }
          }
+         attr(Z.S[[j]], "assign")    <- NULL
+         attr(Z.S[[j]], "contrasts") <- NULL
       }
 
    } else {

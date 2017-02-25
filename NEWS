@@ -1,8 +1,11 @@
-Changes in Version 2.0-0 (2017-02-24)
+Changes in Version 2.0-0 (2017-02-25)
 =====================================
 
    o cooks.distance.rma.mv() now works properly even when there are missing
      values in the data
+
+   o added ranef.rma.mv() for extracting the BLUPs of the random effects for
+     'rma.mv' models (but not yet for '~ inner | outer' terms)
 
    o all functions that repeatedly refit models now have the option to show
      a progress bar
