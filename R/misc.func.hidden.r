@@ -213,6 +213,28 @@
 
 ############################################################################
 
+### function like make.unique(), but starts at .1 for the first instance
+### of a repeated element
+
+.make.unique <- function(x) {
+
+   x <- as.character(x)
+   ux <- unique(x)
+
+   for (i in 1:length(ux)) {
+      xiTF <- x == ux[i]
+      xi <- x[xiTF]
+      if (length(xi) == 1L)
+         next
+      x[xiTF] <- paste(xi, seq_along(xi), sep=".")
+   }
+
+   return(x)
+
+}
+
+############################################################################
+
 ### function to calculate:
 ### solve(t(X) %*% W %*% X) = .invcalc(X=X, W=W, k=k)
 ### solve(t(X) %*% X)       = .invcalc(X=X, W=diag(k), k=k)

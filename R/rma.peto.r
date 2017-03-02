@@ -135,7 +135,7 @@ level=95, digits=4, verbose=FALSE, ...) {
    ### check if study labels are unique; if not, make them unique
 
    if (anyDuplicated(slab))
-      slab <- make.unique(as.character(slab)) ### make.unique() only works with character vectors
+      slab <- .make.unique(slab)
 
    ### calculate observed effect estimates and sampling variances
 
@@ -385,7 +385,7 @@ level=95, digits=4, verbose=FALSE, ...) {
 
    if (!is.null(ddd$outlist)) {
       if (ddd$outlist == "minimal") {
-         res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, digits=digits, k=k, k.pos=k.pos, fit.stats=fit.stats, QE=QE, QEp=QEp)
+         res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb, digits=digits, k=k, k.pos=k.pos, k.eff=k.eff, p=p, parms=parms, fit.stats=fit.stats, QE=QE, QEp=QEp)
       } else {
          res <- eval(parse(text=paste0("list(", ddd$outlist, ")")))
       }

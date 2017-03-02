@@ -130,7 +130,7 @@ cex, cex.lab, cex.axis, ...) {
 
    if (missing(slab)) {
       if (x$slab.null) {
-         slab <- paste("Study", x$slab)        ### x$slab is always of length yi.f (i.e., NAs also have an slab)
+         slab <- paste("Study", x$slab)         ### x$slab is always of length yi.f (i.e., NAs also have an slab)
       } else {
          slab <- x$slab                         ### note: slab must have same length as yi.f in rma object
       }                                         ### even when fewer studies used for model fitting (due to NAs)

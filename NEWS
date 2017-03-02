@@ -1,4 +1,4 @@
-Changes in Version 2.0-0 (2017-02-25)
+Changes in Version 2.0-0 (2017-03-02)
 =====================================
 
    o cooks.distance.rma.mv() now works properly even when there are missing

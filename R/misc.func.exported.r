@@ -146,7 +146,7 @@ rbind.escalc <- function (..., deparse.level=1) {
 
       ### if none of them are missing, then combine and add back to variable (and make sure they are unique)
       if (all(sapply(slab, function(x) !is.null(x))))
-         attr(dat[[yi.names[i]]], "slab") <- make.unique(as.character(unlist(slab)))
+         attr(dat[[yi.names[i]]], "slab") <- .make.unique(unlist(slab))
 
    }
 

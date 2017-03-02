@@ -1341,7 +1341,7 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
       ### check if study labels are unique; if not, make them unique
 
       if (anyDuplicated(slab))
-         slab <- make.unique(as.character(slab)) ### make.unique() only works with character vectors
+         slab <- .make.unique(slab)
 
       if (length(slab) != length(yi))
          stop("Study labels not of same length as data.")

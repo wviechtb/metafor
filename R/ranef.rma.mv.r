@@ -25,6 +25,8 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
    if (missing(verbose))
       verbose <- FALSE
 
+   expand <- FALSE
+
    level <- ifelse(level > 1, (100-level)/100, ifelse(level > .5, 1-level, level))
 
    if (is.element(x$test, c("knha","adhoc","t"))) {
@@ -42,16 +44,30 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
 
    out <- NULL
 
+   if (verbose)
+      message("\nComputing inverse marginal var-cov and hat matrix ... ", appendLF = FALSE)
+
    ### compute inverse marginal var-cov and hat matrix
 
    W     <- chol2inv(chol(x$M))
    stXWX <- chol2inv(chol(as.matrix(t(x$X) %*% W %*% x$X)))
    H     <- x$X %*% stXWX %*% crossprod(x$X,W)
 
+   if (verbose)
+      message("Done.")
+
    ### compute residuals
 
    ei <- c(x$yi - x$X %*% x$beta) ### use this instead of resid(), since this guarantees that the length is correct
    ei[abs(ei) < 100 * .Machine$double.eps] <- 0
+
+   ### create identity matrix
+
+   if (x$sparse) {
+      I <- Diagonal(x$k)
+   } else {
+      I <- diag(x$k)
+   }
 
    if (x$withS) {
 
@@ -63,7 +79,7 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
       for (j in seq_len(x$sigma2s)) {
 
          if (verbose)
-            message(paste0("Computing BLUPs for '", x$s.names[j], "' random effects ... "), appendLF = FALSE)
+            message(paste0("Computing BLUPs for '", paste0("~ 1 | ", x$s.names[j]), "' term ... "), appendLF = FALSE)
 
          if (x$Rfix[j]) {
             if (x$sparse) {
@@ -73,16 +89,10 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
             }
          } else {
             if (x$sparse) {
-               D <- x$sigma2[j] * diag(x$s.nlevels[j])
-            } else {
                D <- x$sigma2[j] * Diagonal(x$s.nlevels[j])
+            } else {
+               D <- x$sigma2[j] * diag(x$s.nlevels[j])
             }
-         }
-
-         if (x$sparse) {
-            I <- Diagonal(x$k)
-         } else {
-            I <- diag(x$k)
          }
 
          DZtW  <- D %*% t(x$Z.S[[j]]) %*% W
@@ -120,6 +130,16 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
 
          }
 
+         if (expand) {
+
+            rows <- c(x$Z.S[[j]] %*% seq_along(x$s.levels[[j]]))
+            pred <- pred[rows,]
+            rnames <- x$s.levels[[j]][rows]
+
+            rownames(pred) <- .make.unique(x$s.levels[[j]][rows])
+
+         }
+
          if (verbose)
             message("Done.")
 
@@ -127,11 +147,44 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
 
    }
 
-   if (verbose)
-      cat("\n")
+   if (x$withG) {
 
-   if (x$withG || x$withH)
-      warning("Extraction of random effects for models with '~ inner | outer' structures not currently implemented.")
+      if (verbose)
+         message(paste0("Computing BLUPs for '", paste(x$g.names, collapse=" | "), "' term ... "), appendLF = FALSE)
+
+      G  <- ((x$Z.G1 %*% x$G %*% t(x$Z.G1)) * tcrossprod(x$Z.G2))
+      GW <- G %*% W
+      pred  <- as.vector(GW %*% cbind(ei))
+      #vpred <- G - (G %*% W %*% G - G %*% W %*% x$X %*% stXWX %*% t(x$X) %*% W %*% G)
+      vpred <- G - (GW %*% (I - H) %*% G)
+
+      se <- sqrt(diag(vpred))
+      pi.lb <- c(pred - crit * se)
+      pi.ub <- c(pred + crit * se)
+
+      pred <- data.frame(intrcpt=pred, se=se, pi.lb=pi.lb, pi.ub=pi.ub)
+
+      r.names <- paste(x$mf.g[[1]], x$mf.g[[2]], sep=" | ")
+      is.dup  <- duplicated(r.names)
+
+      pred <- pred[!is.dup,]
+
+      rownames(pred) <- r.names[!is.dup]
+
+      r.order <- order(x$mf.g[[2]][!is.dup], x$mf.g[[1]][!is.dup])
+
+      pred <- pred[r.order,]
+
+      out <- c(out, list(pred))
+      names(out)[length(out)] <- paste(x$g.names, collapse=" | ")
+
+      if (verbose)
+         message("Done.\n")
+
+   }
+
+   #if (x$withG || x$withH)
+   #   warning("Extraction of random effects for models with '~ inner | outer' structures not currently implemented.")
 
    #########################################################################
 

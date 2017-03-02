@@ -624,7 +624,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
    ### check if study labels are unique; if not, make them unique
 
    if (anyDuplicated(slab))
-      slab <- make.unique(as.character(slab)) ### make.unique() only works with character vectors
+      slab <- .make.unique(slab)
 
    ### add slab attribute back
 
@@ -1782,7 +1782,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
    if (!is.null(ddd$outlist)) {
       if (ddd$outlist == "minimal") {
-         res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, int.only=int.only, digits=digits, method=method, k=k, p=p, m=m, tau2=tau2, se.tau2=se.tau2, tau2.fix=tau2.fix, method=method, fit.stats=fit.stats, model=model, QE=QE, QEp=QEp, QM=QM, QMp=QMp, I2=I2, H2=H2, R2=R2, btt=btt, test=test, dfs=dfs)
+         res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb, int.only=int.only, digits=digits, k=k, k.eff=k.eff, p=p, p.eff=p.eff, parms=parms, m=m, tau2=tau2, se.tau2=se.tau2, tau2.fix=tau2.fix, method=method, fit.stats=fit.stats, model=model, QE=QE, QEp=QEp, QM=QM, QMp=QMp, I2=I2, H2=H2, R2=R2, btt=btt, test=test, dfs=dfs)
       } else {
          res <- eval(parse(text=paste0("list(", ddd$outlist, ")")))
       }
