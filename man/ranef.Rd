@@ -7,8 +7,6 @@
    The function calculates best linear unbiased predictions (BLUPs) of the random effects for objects of class \code{"rma.uni"} and \code{"rma.mv"}. Corresponding standard errors and prediction interval bounds are also provided.
 }
 \usage{
-ranef(object, \dots)
-
 \method{ranef}{rma.uni}(object, level, digits, transf, targs, \dots)
 \method{ranef}{rma.mv}(object, level, digits, transf, targs, verbose=FALSE, \dots)
 }
@@ -73,6 +71,6 @@ dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 res <- rma(yi, vi, data=dat)
 
 ### BLUPs of the random effects
-blup(res)
+ranef(res)
 }
 \keyword{models}

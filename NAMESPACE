@@ -6,7 +6,8 @@ import(graphics)
 import(grDevices)
 import(methods)
 import(Matrix)
-importFrom(nlme, ranef)# because we define an S3 method for it
+importFrom(nlme, ranef)
+export(ranef)
 
 S3method("[", list.rma)
 S3method("[", escalc)

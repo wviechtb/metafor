@@ -1,4 +1,4 @@
-Changes in Version 2.0-0 (2017-03-02)
+Changes in Version 2.0-0 (2017-03-07)
 =====================================
 
    o cooks.distance.rma.mv() now works properly even when there are missing
@@ -38,6 +38,8 @@ Changes in Version 2.0-0 (2017-03-02)
    o rma.uni() and rma.mv() now check if the ratio of the largest to
      smallest sampling variance is extreme large; results may not be stable
      then (and very large ratios typically indicate wrongly coded data)
+
+   o instead of defining own generic ranef(), import ranef() from 'nlme'
 
    o improved output formatting
 
