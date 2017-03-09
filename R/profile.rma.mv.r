@@ -16,7 +16,7 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi, xlim, ylim, s
 
    if (missing(sigma2) && missing(tau2) && missing(rho) && missing(gamma2) && missing(phi)) {
 
-      cl <- match.call()
+      mc <- match.call()
 
       ### total number of non-fixed components
 
@@ -38,12 +38,12 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi, xlim, ylim, s
       if (x$withS && any(!x$vc.fix$sigma2)) {
          for (pos in seq_len(x$sigma2s)[!x$vc.fix$sigma2]) {
             j <- j + 1
-            cl.vc <- cl
-            cl.vc$sigma2 <- pos
-            cl.vc$fitted <- quote(x)
+            mc.vc <- mc
+            mc.vc$sigma2 <- pos
+            mc.vc$fitted <- quote(x)
             if (progbar)
                cat("Profiling sigma2 =", pos, "\n")
-            sav[[j]] <- eval(cl.vc)
+            sav[[j]] <- eval(mc.vc)
             #sav[[j]] <- profile.rma.mv(x, sigma2=pos, xlim=xlim, ylim=ylim, steps=steps, startmethod=startmethod, progbar=progbar, parallel=parallel, ncpus=ncpus, cl=cl, plot=plot, pch=pch, ...)
          }
       }
@@ -52,23 +52,23 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi, xlim, ylim, s
          if (any(!x$vc.fix$tau2)) {
             for (pos in seq_len(x$tau2s)[!x$vc.fix$tau2]) {
                j <- j + 1
-               cl.vc <- cl
-               cl.vc$tau2 <- pos
-               cl.vc$fitted <- quote(x)
+               mc.vc <- mc
+               mc.vc$tau2 <- pos
+               mc.vc$fitted <- quote(x)
                if (progbar)
                   cat("Profiling tau2 =", pos, "\n")
-               sav[[j]] <- eval(cl.vc)
+               sav[[j]] <- eval(mc.vc)
             }
          }
          if (any(!x$vc.fix$rho)) {
             for (pos in seq_len(x$rhos)[!x$vc.fix$rho]) {
                j <- j + 1
-               cl.vc <- cl
-               cl.vc$rho <- pos
-               cl.vc$fitted <- quote(x)
+               mc.vc <- mc
+               mc.vc$rho <- pos
+               mc.vc$fitted <- quote(x)
                if (progbar)
                   cat("Profiling rho =", pos, "\n")
-               sav[[j]] <- eval(cl.vc)
+               sav[[j]] <- eval(mc.vc)
             }
          }
       }
@@ -77,23 +77,23 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi, xlim, ylim, s
          if (any(!x$vc.fix$gamma2)) {
             for (pos in seq_len(x$gamma2s)[!x$vc.fix$gamma2]) {
                j <- j + 1
-               cl.vc <- cl
-               cl.vc$gamma2 <- pos
-               cl.vc$fitted <- quote(x)
+               mc.vc <- mc
+               mc.vc$gamma2 <- pos
+               mc.vc$fitted <- quote(x)
                if (progbar)
                   cat("Profiling gamma2 =", pos, "\n")
-               sav[[j]] <- eval(cl.vc)
+               sav[[j]] <- eval(mc.vc)
             }
          }
          if (any(!x$vc.fix$phi)) {
             for (pos in seq_len(x$phis)[!x$vc.fix$phi]) {
                j <- j + 1
-               cl.vc <- cl
-               cl.vc$phi <- pos
-               cl.vc$fitted <- quote(x)
+               mc.vc <- mc
+               mc.vc$phi <- pos
+               mc.vc$fitted <- quote(x)
                if (progbar)
                   cat("Profiling phi =", pos, "\n")
-               sav[[j]] <- eval(cl.vc)
+               sav[[j]] <- eval(mc.vc)
             }
          }
       }

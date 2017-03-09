@@ -25,7 +25,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
 
    level <- ifelse(level > 1, (100-level)/100, ifelse(level > .5, 1-level, level))
 
-   ### check if user has specified one of the sigma2, tau2, rho, gamma2, or phi argument
+   ### check if user has specified one of the sigma2, tau2, rho, gamma2, or phi arguments
 
    random <- !all(missing(sigma2), missing(tau2), missing(rho), missing(gamma2), missing(phi))
 
