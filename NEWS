@@ -4,6 +4,8 @@ Changes in Version 2.0-0 (2017-03-17)
    o cooks.distance.rma.mv() now works properly even when there are missing
      values in the data
 
+   o residuals() gains 'type' argument and can compute Pearson residuals
+
    o added ranef.rma.mv() for extracting the BLUPs of the random effects for
      'rma.mv' models (but not yet for '~ inner | outer' terms)
 

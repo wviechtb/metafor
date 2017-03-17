@@ -12,7 +12,7 @@
    The \code{residuals}, \code{rstandard}, and \code{rstudent} functions can be used to compute residuals, corresponding standard errors, and standardized residuals for models fitted with the \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, and \code{\link{rma.mv}} functions.
 }
 \usage{
-\method{residuals}{rma}(object, \dots)
+\method{residuals}{rma}(object, type="response", \dots)
 
 \method{rstandard}{rma.uni}(model, digits, \dots)
 \method{rstandard}{rma.mh}(model, digits, \dots)
@@ -25,24 +25,27 @@
 }
 \arguments{
    \item{object}{an object of class \code{"rma"} (for \code{residuals}).}
+   \item{type}{the type of residuals which should be returned. The alternatives are: \code{"response"} (default), \code{"rstandard"}, \code{"rstudent"}, and \code{"pearson"}.}
    \item{model}{an object of class \code{"rma.uni"}, \code{"rma.mh"}, \code{"rma.peto"}, or \code{"rma.mv"} (for \code{rstandard} and \code{rstudent}).}
    \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is to take the value from the object).}
-   \item{progbar}{logical indicating whether a progress bar should be shown (the default is \code{FALSE}).}
+   \item{progbar}{logical indicating whether a progress bar should be shown (only for \code{rstudent}) (the default is \code{FALSE}).}
    \item{\dots}{other arguments.}
 }
 \details{
-   The observed residuals (obtained with \code{residuals}) are simply equal to the \sQuote{observed - fitted} values.
+   The observed residuals (obtained with \code{residuals}) are simply equal to the \sQuote{observed - fitted} values. These can be obtained with \code{residuals(object)} (using the default \code{type="response"}).
 
-   Dividing the observed residuals by their corresponding standard errors yields (internally) standardized residuals. These can be obtained with \code{rstandard}.
+   Dividing the observed residuals by the model-implied standard errors of the observed effect sizes or outcomes yields Pearson (or semi-standardized) residuals. These can be obtained with \code{residuals(object, type="pearson")}.
 
-   The \code{rstudent} function calculates externally standardized residuals (studentized deleted residuals). The externally standardized residual for the \eqn{i}th case is obtained by deleting the \eqn{i}th case from the dataset, fitting the model based on the remaining cases, calculating the predicted value for the \eqn{i}th case based on the fitted model, taking the difference between the observed and the predicted value for the \eqn{i}th case (the deleted residual), and then standardizing the deleted residual. The standard error of the deleted residual is equal to the square root of the sampling variance of the \eqn{i}th case plus the variance of the predicted value plus the amount of (residual) heterogeneity from the fitted model (for fixed-effects models, this last part is always equal to zero).
+   Dividing the observed residuals by their corresponding standard errors yields (internally) standardized residuals. These can be obtained with \code{rstandard} or \code{residuals(object, type="rstandard")}.
+
+   The \code{rstudent} function (or \code{residuals(object, type="rstudent")}) calculates externally standardized residuals (also called standardized deleted residuals or (externally) studentized residuals). The externally standardized residual for the \eqn{i}th case is obtained by deleting the \eqn{i}th case from the dataset, fitting the model based on the remaining cases, calculating the predicted value for the \eqn{i}th case based on the fitted model, taking the difference between the observed and the predicted value for the \eqn{i}th case (the deleted residual), and then standardizing the deleted residual.
 
    If a particular study fits the model, its standardized residual follows (asymptotically) a standard normal distribution. A large standardized residual for a study therefore may suggest that the study does not fit the assumed model (i.e., it may be an outlier).
 
    See also \code{\link{influence.rma.uni}} for other leave-one-out diagnostics that are useful for detecting influential cases in models fitted with the \code{\link{rma.uni}} function.
 }
 \value{
-   Either a vector with the observed residuals (for \code{residuals}) or an object of class \code{"list.rma"}, which is a list containing the following components:
+   Either a vector with the residuals of the requested type (for \code{residuals}) or an object of class \code{"list.rma"}, which is a list containing the following components:
    \item{resid}{observed residuals (for \code{rstandard}) or deleted residuals (for \code{rstudent}).}
    \item{se}{corresponding standard errors.}
    \item{z}{standardized residuals (internally standardized for \code{rstandard} or externally standardized for \code{rstudent}).}
@@ -54,7 +57,7 @@
 
    It may not be possible to fit the model after deletion of the \eqn{i}th case from the dataset. This will result in \code{NA} values for that case when calling \code{rstudent}.
 
-   For objects of class \code{"rma.mh"} and \code{"rma.mh"}, \code{rstandard} computes Pearson (or semi-standardized) residuals.
+   For objects of class \code{"rma.mh"} and \code{"rma.peto"}, \code{rstandard} also computes Pearson (or semi-standardized) residuals.
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \cr
