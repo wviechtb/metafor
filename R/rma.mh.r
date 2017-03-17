@@ -58,9 +58,8 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
    if (is.null(data)) {
       data <- sys.frame(sys.parent())
    } else {
-      if (!is.data.frame(data)) {
+      if (!is.data.frame(data))
          data <- data.frame(data)
-      }
    }
 
    mf <- match.call()

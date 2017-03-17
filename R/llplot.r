@@ -40,9 +40,8 @@ lty, lwd, col, level=99.99, refline=0, ...) {
    if (is.null(data)) {
       data <- sys.frame(sys.parent())
    } else {
-      if (!is.data.frame(data)) {
+      if (!is.data.frame(data))
          data <- data.frame(data)
-      }
    }
 
    ### extract slab, subset, and mods values, possibly from the data frame specified via data (arguments not specified are NULL)

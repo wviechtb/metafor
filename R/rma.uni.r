@@ -90,9 +90,8 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
    if (is.null(data)) {
       data <- sys.frame(sys.parent())
    } else {
-      if (!is.data.frame(data)) {
+      if (!is.data.frame(data))
          data <- data.frame(data)
-      }
    }
 
    mf <- match.call()
@@ -138,7 +137,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
          options(na.action = na.act)                      ### set na.action back to na.act
          names(yi) <- NULL                                ### strip names (1:k) from yi (so res$yi is the same whether yi is a formula or not)
          intercept <- FALSE                               ### set to FALSE since formula now controls whether the intercept is included or not
-         #is.formula <- TRUE                               ### note: code further below ([b]) actually checks whether intercept is included or not
+         #is.formula <- TRUE                              ### note: code further below ([b]) actually checks whether intercept is included or not
       }
 
       ### if yi is an escalc object, try to extract yi and vi (note that moderators must then be specified via the mods argument)
