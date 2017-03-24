@@ -1915,15 +1915,23 @@
    if (!requireNamespace("gsl", quietly=TRUE))
       stop("Please install the 'gsl' package to use measure='UCOR'.")
 
-   k <- length(g)
+   k.g <- length(g)
+   k.x <- length(x)
+   k   <- max(k.g, k.x)
+
    res <- rep(NA_real_, k)
+
+   if (k.g == 1)
+      g <- rep(g, k)
+   if (k.x == 1)
+      x <- rep(x, k)
 
    if (length(g) != length(x))
       stop("Length of 'g' and 'x' arguments do not match.")
 
    for (i in seq_len(k)) {
 
-      if (g[i] > (a+b)) {
+      if (!is.na(g[i]) && !is.na(x[i]) && g[i] > (a+b)) {
          res[i] <- gsl::hyperg_2F1(a, b, g[i], x[i])
       } else {
          res[i] <- NA
@@ -1934,5 +1942,90 @@
    return(res)
 
 }
+
+############################################################################
+
+### pdf of SMD (with or without bias correction)
+
+.dsmd <- function(x, n1, n2, theta, correct=TRUE, warn=FALSE) {
+
+   nt <- n1 * n2 / (n1 + n2)
+   m  <- n1 + n2 - 2
+
+   if (correct) {
+      cm <- .cmicalc(m)
+   } else {
+      cm <- 1
+   }
+
+   if (warn) {
+      res <- dt(x * sqrt(nt) / cm, df = m, ncp = sqrt(nt) * theta) * sqrt(nt) / cm
+   } else {
+      res <- suppressWarnings(dt(x * sqrt(nt) / cm, df = m, ncp = sqrt(nt) * theta) * sqrt(nt) / cm)
+   }
+
+   return(res)
+
+}
+
+#integrate(function(x) .dsmd(x, n1=4, n2=4, theta=.5), lower=-Inf, upper=Inf)
+#integrate(function(x) x*.dsmd(x, n1=4, n2=4, theta=.5), lower=-Inf, upper=Inf)
+
+### pdf of COR
+
+.dcor <- function(x, n, rho) {
+
+   x[x < -1] <- NA
+   x[x >  1] <- NA
+
+   ### only accurate for n >= 5
+   n[n <= 4] <- NA
+
+   ### calculate density
+   res <- exp(log(n-2) + lgamma(n-1) + (n-1)/2 * log(1 - rho^2) + (n-4)/2 * log(1 - x^2) -
+          1/2 * log(2*base::pi) - lgamma(n-1/2) - (n-3/2) * log(1 - rho*x)) *
+          .Fcalc(1/2, 1/2, n-1/2, (rho*x + 1)/2)
+
+   ### make sure that density is 0 for r = +-1
+   res[abs(x) == 1] <- 0
+
+   return(res)
+
+}
+
+#integrate(function(x) .dcor(x, n=5, rho=.8), lower=-1, upper=1)
+#integrate(function(x) x*.dcor(x, n=5, rho=.8), lower=-1, upper=1) ### should not be rho due to bias!
+#integrate(function(x) x*.Fcalc(1/2, 1/2, (5-2)/2, 1-x^2)*.dcor(x, n=5, rho=.8), lower=-1, upper=1) ### should be ~rho
+
+### pdf of ZCOR
+
+.dzcor <- function(x, n, rho, zrho) {
+
+   ### only accurate for n >= 5
+   n[n <= 4] <- NA
+
+   ### if rho is missing, then back-transform zrho value(s)
+   if (missing(rho))
+      rho <- tanh(zrho)
+
+   ### copy x to z and back-transform z values (so x = correlation)
+   z <- x
+   x <- tanh(z)
+
+   ### calculate density
+   res <- exp(log(n-2) + lgamma(n-1) + (n-1)/2 * log(1 - rho^2) + (n-4)/2 * log(1 - x^2) -
+          1/2 * log(2*base::pi) - lgamma(n-1/2) - (n-3/2) * log(1 - rho*x) +
+          log(4) + 2*z - 2*log(exp(2*z) + 1)) *
+          .Fcalc(1/2, 1/2, n-1/2, (rho*x + 1)/2)
+
+   ### make sure that density is 0 for r = +-1
+   res[abs(x) == 1] <- 0
+
+   return(res)
+
+}
+
+#integrate(function(x) .dzcor(x, n=5, rho=.8), lower=-100, upper=100)
+#integrate(function(x) x*.dzcor(x, n=5, rho=.8), lower=-100, upper=100)
 
 ############################################################################

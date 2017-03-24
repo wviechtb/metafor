@@ -1,4 +1,4 @@
-Changes in Version 2.0-0 (2017-03-17)
+Changes in Version 2.0-0 (2017-03-24)
 =====================================
 
    o cooks.distance.rma.mv() now works properly even when there are missing
@@ -21,6 +21,8 @@ Changes in Version 2.0-0 (2017-03-17)
    o funnel.default() gains 'subset' argument
 
    o funnel.default() and funnel.rma() gain 'col' and 'bg' arguments
+
+   o plot.profile.rma() gains 'ylab' argument
 
    o more consistent handling of 'robust.rma' objects
 

@@ -11,7 +11,7 @@
 \method{profile}{rma.mv}(fitted, sigma2, tau2, rho, gamma2, phi, xlim, ylim, steps=20, startmethod="init",
         progbar=TRUE, parallel="no", ncpus=1, cl=NULL, plot=TRUE, pch=19, \ldots)
 
-\method{plot}{profile.rma}(x, ylim, pch=19, \ldots)
+\method{plot}{profile.rma}(x, ylim, pch=19, ylab, \ldots)
 }
 \arguments{
    \item{fitted}{an object of class \code{"rma.uni"} or \code{"rma.mv"}.}
@@ -31,6 +31,7 @@
    \item{cl}{optional snow cluster to use if \code{parallel="snow"}. If not supplied, a cluster on the local machine is created for the duration of the call.}
    \item{plot}{logical indicating whether the profile plot should be drawn after profiling is finished (the default is \code{TRUE}).}
    \item{pch}{plotting symbol to use. By default, a filled circle is used. See \code{\link{points}} for other options.}
+   \item{ylab}{title for the y-axis. If unspecified, the function tries to set an appropriate axis title.}
    \item{\dots}{other arguments.}
 }
 \details{
