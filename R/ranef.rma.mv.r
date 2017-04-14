@@ -51,7 +51,7 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
 
    W     <- chol2inv(chol(x$M))
    stXWX <- chol2inv(chol(as.matrix(t(x$X) %*% W %*% x$X)))
-   H     <- x$X %*% stXWX %*% crossprod(x$X,W)
+   Hmat  <- x$X %*% stXWX %*% crossprod(x$X,W)
 
    if (verbose)
       message("Done.")
@@ -98,7 +98,7 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
          DZtW  <- D %*% t(x$Z.S[[j]]) %*% W
          pred  <- as.vector(DZtW %*% cbind(ei))
          #vpred <- D - (D %*% t(x$Z.S[[j]]) %*% W %*% x$Z.S[[j]] %*% D - D %*% t(x$Z.S[[j]]) %*% W %*% x$X %*% stXWX %*% t(x$X) %*% W %*% x$Z.S[[j]] %*% D)
-         vpred <- D - (DZtW %*% (I - H) %*% x$Z.S[[j]] %*% D)
+         vpred <- D - (DZtW %*% (I - Hmat) %*% x$Z.S[[j]] %*% D)
 
          se <- sqrt(diag(vpred))
          pi.lb <- c(pred - crit * se)
@@ -156,7 +156,7 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
       GW <- G %*% W
       pred  <- as.vector(GW %*% cbind(ei))
       #vpred <- G - (G %*% W %*% G - G %*% W %*% x$X %*% stXWX %*% t(x$X) %*% W %*% G)
-      vpred <- G - (GW %*% (I - H) %*% G)
+      vpred <- G - (GW %*% (I - Hmat) %*% G)
 
       se <- sqrt(diag(vpred))
       pi.lb <- c(pred - crit * se)
@@ -183,8 +183,41 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
 
    }
 
-   #if (x$withG || x$withH)
-   #   warning("Extraction of random effects for models with '~ inner | outer' structures not currently implemented.")
+   if (x$withH) {
+
+      if (verbose)
+         message(paste0("Computing BLUPs for '", paste(x$h.names, collapse=" | "), "' term ... "), appendLF = FALSE)
+
+      H  <- ((x$Z.H1 %*% x$H %*% t(x$Z.H1)) * tcrossprod(x$Z.H2))
+      HW <- H %*% W
+      pred  <- as.vector(HW %*% cbind(ei))
+      #vpred <- G - (G %*% W %*% G - G %*% W %*% x$X %*% stXWX %*% t(x$X) %*% W %*% G)
+      vpred <- H - (HW %*% (I - Hmat) %*% H)
+
+      se <- sqrt(diag(vpred))
+      pi.lb <- c(pred - crit * se)
+      pi.ub <- c(pred + crit * se)
+
+      pred <- data.frame(intrcpt=pred, se=se, pi.lb=pi.lb, pi.ub=pi.ub)
+
+      r.names <- paste(x$mf.h[[1]], x$mf.h[[2]], sep=" | ")
+      is.dup  <- duplicated(r.names)
+
+      pred <- pred[!is.dup,]
+
+      rownames(pred) <- r.names[!is.dup]
+
+      r.order <- order(x$mf.h[[2]][!is.dup], x$mf.h[[1]][!is.dup])
+
+      pred <- pred[r.order,]
+
+      out <- c(out, list(pred))
+      names(out)[length(out)] <- paste(x$h.names, collapse=" | ")
+
+      if (verbose)
+         message("Done.\n")
+
+   }
 
    #########################################################################
 

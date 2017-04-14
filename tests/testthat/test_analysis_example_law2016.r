@@ -152,4 +152,11 @@ test_that("results are correct for example 2.", {
    sav <- round(c(sav[[1]], sav[[3]], sav[[4]], sav[[5]], sav[[6]]), 4)
    expect_equivalent(sav, c(0.1390, 0.0369, 0.5230, 0.0178, 1.0856))
 
+   sav <- lapply(ranef(modI), round, 3)
+
+   expect_equivalent(sav[[1]]$intrcpt, c(-0.106, -0.094, -0.078, 0.335, -0.058, -0.128, 0.026, -0.121, 0.013, -0.148, 0.029, 0.13, 0.027, 0.084, -0.101, -0.064))
+   expect_equivalent(sav[[1]]$se,      c(0.314, 0.293, 0.283, 0.301, 0.285, 0.282, 0.286, 0.297, 0.297, 0.304, 0.313, 0.315, 0.301, 0.304, 0.302, 0.305))
+   expect_equivalent(sav[[2]]$intrcpt, c(-0.551, 0.152, 0.675, -0.119, -0.383, 0.104, -0.493, -0.699))
+   expect_equivalent(sav[[2]]$se,      c(0.64, 0.619, 0.642, 0.518, 0.543, 0.53, 0.486, 0.54))
+
 })

@@ -1885,7 +1885,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
                   g.levels.f=g.levels.f, g.levels.k=g.levels.k, g.levels.comb.k=g.levels.comb.k,
                   h.levels.f=h.levels.f, h.levels.k=h.levels.k, h.levels.comb.k=h.levels.comb.k,
                   struct=struct, Rfix=Rfix, R=R, Rscale=Rscale,
-                  mf.r=mf.r, mf.r.f=mf.r.f, mf.g=mf.g, mf.g.f=mf.g.f, mf.h.f=mf.h.f, Z.S=Z.S, Z.G1=Z.G1, Z.G2=Z.G2,
+                  mf.r=mf.r, mf.r.f=mf.r.f, mf.g=mf.g, mf.g.f=mf.g.f, mf.h.f=mf.h.f, Z.S=Z.S, Z.G1=Z.G1, Z.G2=Z.G2, Z.H1=Z.H1, Z.H2=Z.H2,
                   random=random, version=packageVersion("metafor"), call=mf)
 
    }

@@ -7,7 +7,7 @@ Changes in Version 2.0-0 (2017-04-14)
    o residuals() gains 'type' argument and can compute Pearson residuals
 
    o added ranef.rma.mv() for extracting the BLUPs of the random effects for
-     'rma.mv' models (but not yet for '~ inner | outer' terms)
+     'rma.mv' models
 
    o all functions that repeatedly refit models now have the option to show
      a progress bar
