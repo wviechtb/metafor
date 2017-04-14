@@ -45,7 +45,7 @@
    \item{col}{optional character string specifying the name of a color to use for plotting ("black" is used by default if not specified). Can also be a vector of color names.}
    \item{lty}{optional character string specifying the line type for the confidence intervals (if unspecified, the function sets this to \code{"solid"} by default).}
    \item{cex}{optional character and symbol expansion factor. If unspecified, the function tries to set this to a sensible value.}
-   \item{cex.lab}{optional expansion factor for the x-axis title If unspecified, the function tries to set this to a sensible value.}
+   \item{cex.lab}{optional expansion factor for the x-axis title. If unspecified, the function tries to set this to a sensible value.}
    \item{cex.axis}{optional expansion factor for the x-axis labels. If unspecified, the function tries to set this to a sensible value.}
    \item{\dots}{other arguments.}
 }
