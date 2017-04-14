@@ -56,9 +56,11 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       nAGQ <- 1
    }
 
-   ### get ... argument
+   ### get ... argument and check for extra/superfluous arguments
 
    ddd <- list(...)
+
+   .chkdots(ddd, c("tdist", "outlist"))
 
    ### handle 'tdist' argument from ...
 
@@ -449,7 +451,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    mods.yi <- mods.f
    yivi.na <- is.na(yi) | is.na(vi) | (if (is.null(mods.yi)) FALSE else apply(is.na(mods.yi), 1, any))
    not.na.yivi <- !yivi.na
-   
+
    if (any(yivi.na)) {
 
       if (verbose > 1)

@@ -48,9 +48,11 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
    if (missing(control))
       control <- list()
 
-   ### get ... argument
+   ### get ... argument and check for extra/superfluous arguments
 
    ddd <- list(...)
+
+   .chkdots(ddd, c("knha", "scale", "link", "outlist"))
 
    ### handle 'knha' argument from ...
 

@@ -67,9 +67,11 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
    if (missing(control))
       control <- list()
 
-   ### get ... argument
+   ### get ... argument and check for extra/superfluous arguments
 
    ddd <- list(...)
+
+   .chkdots(ddd, c("tdist", "outlist"))
 
    ### handle 'tdist' argument from ...
 

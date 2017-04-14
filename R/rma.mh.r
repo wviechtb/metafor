@@ -41,9 +41,11 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
    if (!is.element(to[2], c("all","only0","if0all","none")))
       stop("Unknown 'to' argument specified.")
 
-   ### get ... argument
+   ### get ... argument and check for extra/superfluous arguments
 
    ddd <- list(...)
+
+   .chkdots(ddd, c("outlist"))
 
    #########################################################################
 

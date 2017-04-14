@@ -43,6 +43,9 @@ Changes in Version 2.0-0 (2017-04-14)
      smallest sampling variance is extreme large; results may not be stable
      then (and very large ratios typically indicate wrongly coded data)
 
+   o model fitting functions now check if extra/superfluous arguments are
+     specified via ... and issues are warning if so
+
    o instead of defining own generic ranef(), import ranef() from 'nlme'
 
    o improved output formatting

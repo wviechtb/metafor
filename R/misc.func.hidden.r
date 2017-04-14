@@ -235,6 +235,20 @@
 
 ############################################################################
 
+### function to check if extra/superfluous arguments are specified via ...
+
+.chkdots <- function(ddd, okargs) {
+
+   for (i in seq_along(okargs))
+      ddd[okargs[i]] <- NULL
+
+   if (length(ddd) > 0)
+      warning(paste0("Extra argument", ifelse(length(ddd) > 1, "s ", " "), paste0("'", names(ddd), "'", collapse=", "), " disregarded."), call.=FALSE)
+
+}
+
+############################################################################
+
 ### function to calculate:
 ### solve(t(X) %*% W %*% X) = .invcalc(X=X, W=W, k=k)
 ### solve(t(X) %*% X)       = .invcalc(X=X, W=diag(k), k=k)
