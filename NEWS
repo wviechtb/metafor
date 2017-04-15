@@ -6,6 +6,10 @@ Changes in Version 2.0-0 (2017-04-15)
 
    o residuals() gains 'type' argument and can compute Pearson residuals
 
+   o the 'newmods' argument in predict() can now be a named vector or a
+     matrix/data frame with column names that get properly matched up with
+     the variables in the model
+
    o added ranef.rma.mv() for extracting the BLUPs of the random effects for
      'rma.mv' models
 

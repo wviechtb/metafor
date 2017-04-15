@@ -113,5 +113,10 @@ predict(res, addx=TRUE)
 predict(res, newmods=c(30, 0, 0), addx=TRUE)   # for alternate  allocation
 predict(res, newmods=c(30, 1, 0), addx=TRUE)   # for random     allocation
 predict(res, newmods=c(30, 0, 1), addx=TRUE)   # for systematic allocation
+
+### can also use named vector with arbitrary order and abbreviated variable names
+predict(res, newmods=c(sys=0, ran=0, abl=30))
+predict(res, newmods=c(sys=0, ran=1, abl=30))
+predict(res, newmods=c(sys=1, ran=0, abl=30))
 }
 \keyword{models}
