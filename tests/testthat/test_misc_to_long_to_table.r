@@ -129,19 +129,19 @@ ri      = c(.47, .64, .77, .89, .44))
 
 test_that("to.long() works correctly for measure='SMCR'", {
 
-   sav <- to.long(measure="SMCR", m1i=m_post, m2i=m_pre, sd1i=sd_pre, ni=ni, ri=ri, data=datT)
+   sav <- to.long(measure="SMCR", m1i=m_post, m2i=m_pre, sd1i=sd_pre, ni=ni, ri=ri, data=datT, subset=2:4)
    sav <- sav[,c(7:12)]
 
-   expected <- structure(list(study = structure(1:5, .Label = c("1", "2", "3", "4", "5"), class = "factor"), mean1 = c(38.5, 26.8, 0.7, 75.9, 36), mean2 = c(30.6, 23.5, 0.5, 53.4, 35.6), sd1 = c(15, 3.1, 0.1, 14.5, 4.7), n = c(20, 50, 9, 10, 14), r = c(0.47, 0.64, 0.77, 0.89, 0.44)), .Names = c("study", "mean1", "mean2", "sd1", "n", "r"), class = "data.frame", row.names = c(NA, 5L))
+   expected <- structure(list(study = structure(1:3, .Label = c("2", "3", "4"), class = "factor"), mean1 = c(26.8, 0.7, 75.9), mean2 = c(23.5, 0.5, 53.4), sd1 = c(3.1, 0.1, 14.5), n = c(50, 9, 10), r = c(0.64, 0.77, 0.89)), .Names = c("study", "mean1", "mean2", "sd1", "n", "r"), class = "data.frame", row.names = c(NA, 3L))
    expect_equivalent(sav, expected)
 
 })
 
 test_that("to.table() works correctly for measure='SMCR'", {
 
-   sav <- to.table(measure="SMCR", m1i=m_post, m2i=m_pre, sd1i=sd_pre, ni=ni, ri=ri, data=datT)
+   sav <- to.table(measure="SMCR", m1i=m_post, m2i=m_pre, sd1i=sd_pre, ni=ni, ri=ri, data=datT, subset=2:4)
 
-   expected <- structure(c(38.5, 30.6, 15, 20, 0.47, 26.8, 23.5, 3.1, 50, 0.64, 0.7, 0.5, 0.1, 9, 0.77, 75.9, 53.4, 14.5, 10, 0.89, 36, 35.6, 4.7, 14, 0.44), .Dim = c(1L, 5L, 5L), .Dimnames = list("Grp", c("Mean1", "Mean2", "SD1", "n", "r"), c("1", "2", "3", "4", "5")))
+   expected <- structure(c(26.8, 23.5, 3.1, 50, 0.64, 0.7, 0.5, 0.1, 9, 0.77, 75.9, 53.4, 14.5, 10, 0.89), .Dim = c(1L, 5L, 3L), .Dimnames = list("Grp", c("Mean1", "Mean2", "SD1", "n", "r"), c("2", "3", "4")))
    expect_equivalent(sav, expected)
 
 })

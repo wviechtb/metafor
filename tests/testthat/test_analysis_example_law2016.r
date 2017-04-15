@@ -159,4 +159,9 @@ test_that("results are correct for example 2.", {
    expect_equivalent(sav[[2]]$intrcpt, c(-0.551, 0.152, 0.675, -0.119, -0.383, 0.104, -0.493, -0.699))
    expect_equivalent(sav[[2]]$se,      c(0.64, 0.619, 0.642, 0.518, 0.543, 0.53, 0.486, 0.54))
 
+   out <- capture.output(print(sav))
+
+   sav <- predict(modI)
+   expect_equivalent(round(sav$cr.lb, 3), c(-4.029, -1.285, -1.285, -1.285, -1.285, -1.285, -0.491, -0.491, -1.137, -1.137, -4.029, -2.77, -1.285, -0.491, -1.285, -0.491))
+
 })

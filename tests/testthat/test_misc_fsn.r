@@ -17,8 +17,12 @@ test_that("confint() gives correct results for the 'expectancy data' in Becker (
    ### note: Becker finds N = 4, but uses the FE model estimate with 1/vi weights for
    ### the average effect size, but Orwin's methods is based on units weighting
 
+   out <- capture.output(print(sav)) ### so that print.fsn() is run (at least once) with type="Orwin"
+
    sav <- fsn(yi, vi, data=dat.raudenbush1985, type="Rosenberg")
    expect_equivalent(sav$fsnum, 0)
+
+   out <- capture.output(print(sav)) ### so that print.fsn() is run (at least once) with type="Rosenberg"
 
 })
 

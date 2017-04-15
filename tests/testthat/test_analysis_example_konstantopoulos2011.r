@@ -64,6 +64,9 @@ test_that("results are correct for the three-level random-effects model fitted w
    expect_equivalent(round(res.ml$se,3), 0.080)
    expect_equivalent(round(res.ml$sigma2,3), c(0.058, 0.033))
 
+   sav <- predict(res.ml)
+   expect_equivalent(round(c(sav$cr.lb, sav$cr.ub),3), c(-0.426, 0.795))
+
 })
 
 test_that("results are correct for the three-level mixed-effects model fitted with rma.mv() using ML estimation.", {

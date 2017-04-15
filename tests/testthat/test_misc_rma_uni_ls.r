@@ -52,4 +52,21 @@ test_that("location-scale model results are correct for a continuous predictor",
    expect_equivalent(round(as.vector(coef(res)$alpha), 3), c(-0.887, 42.407))
    expect_equivalent(round(exp(c(res$beta, res$ci.lb, res$ci.ub)), 3), c(1.047, 0.624, 1.758))
 
+   sav <- coef(summary(res))
+   sav <- lapply(sav, round, 3)
+
+   expected <- structure(list(beta = structure(list(estimate = 0.046, se = 0.264, zval = 0.175, pval = 0.861, ci.lb = -0.471, ci.ub = 0.564),
+                  .Names = c("estimate", "se", "zval", "pval", "ci.lb", "ci.ub"), row.names = "intrcpt", class = "data.frame"),
+                  alpha = structure(list(estimate = c(-0.887, 42.407), se = c(1.239, 118.693), zval = c(-0.716, 0.357), pval = c(0.474, 0.721), ci.lb = c(-3.316, -190.228), ci.ub = c(1.542, 275.041)),
+                  .Names = c("estimate", "se", "zval", "pval", "ci.lb", "ci.ub"), row.names = c("intrcpt", "I(1/ni)"), class = "data.frame")),
+                  .Names = c("beta", "alpha"))
+
+   expect_equivalent(sav, expected)
+
+   sav <- model.matrix(res)$scale
+   expect_equivalent(sav, cbind(1, 1/dat$ni))
+
+   sav <- fitted(res)$scale
+   expect_equivalent(round(sav,3), c(-0.479, -0.588, -0.831, -0.711, -0.494, -0.254, -0.661, -0.458, -0.542, -0.039, -0.039, -0.13, -0.405, -0.764, -0.357))
+
 })
