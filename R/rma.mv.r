@@ -1377,6 +1377,8 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
    if (length(optcontrol) == 0)
       optcontrol <- list()
 
+   reml <- ifelse(method=="REML", TRUE, FALSE)
+
    ### set NLOPT_LN_BOBYQA as the default algorithm for nloptr optimizer
    ### and by default use a relative convergence criterion of 1e-8 on the function value
 
@@ -1387,8 +1389,6 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       optcontrol$ftol_rel <- 1e-8
 
    #return(list(con=con, optimizer=optimizer, optmethod=optmethod, tol=tol, posdefify=posdefify, optcontrol=optcontrol))
-
-   reml <- ifelse(method=="REML", TRUE, FALSE)
 
    if (is.element(optimizer, c("uobyqa","newuoa","bobyqa"))) {
       if (!requireNamespace("minqa", quietly=TRUE))

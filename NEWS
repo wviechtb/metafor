@@ -1,4 +1,4 @@
-Changes in Version 2.0-0 (2017-04-14)
+Changes in Version 2.0-0 (2017-04-15)
 =====================================
 
    o cooks.distance.rma.mv() now works properly even when there are missing
@@ -38,6 +38,9 @@ Changes in Version 2.0-0 (2017-04-14)
 
    o added a new dataset (dat.pagliaro1992) for another illustration of a
      network meta-analysis
+
+   o added a new dataset (dat.laopaiboon2015) on the effectiveness of
+     azithromycin for treating lower respiratory tract infections
 
    o rma.uni() and rma.mv() now check if the ratio of the largest to
      smallest sampling variance is extreme large; results may not be stable
