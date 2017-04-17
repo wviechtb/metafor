@@ -126,12 +126,19 @@ profile.rma.uni <- function(fitted, xlim, ylim, steps=20, progbar=TRUE, parallel
          if (is.null(cl)) {
             cl <- parallel::makePSOCKcluster(ncpus)
             res <- parallel::parLapply(cl, vcs, .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE)
+            #res <- parallel::parLapplyLB(cl, vcs, .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE)
+            #res <- parallel::clusterApply(cl, vcs, .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE)
+            #res <- parallel::clusterApplyLB(cl, vcs, .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE)
+            #res <- parallel::clusterMap(cl, .profile.rma.uni, vcs, MoreArgs=list(obj=x, parallel=parallel, profile=TRUE))
+            #res <- parallel::clusterMap(cl, .profile.rma.uni, vcs, MoreArgs=list(obj=x, parallel=parallel, profile=TRUE), .scheduling = "dynamic")
             parallel::stopCluster(cl)
          } else {
             res <- parallel::parLapply(cl, vcs, .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE)
          }
       }
 
+      return(res)
+      
       lls <- sapply(res, function(z) z$ll)
       beta  <- do.call("rbind", lapply(res, function(z) t(z$beta)))
       ci.lb <- do.call("rbind", lapply(res, function(z) t(z$ci.lb)))

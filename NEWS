@@ -1,4 +1,4 @@
-Changes in Version 2.0-0 (2017-04-15)
+Changes in Version 2.0-0 (2017-04-17)
 =====================================
 
    o cooks.distance.rma.mv() now works properly even when there are missing
@@ -39,6 +39,8 @@ Changes in Version 2.0-0 (2017-04-15)
      variable name information
 
    o added rbind() method for 'escalc' objects
+
+   o added as.data.frame() method for 'list.rma' objects
 
    o added a new dataset (dat.pagliaro1992) for another illustration of a
      network meta-analysis

@@ -1,5 +1,6 @@
 \name{print.list.rma}
 \alias{print.list.rma}
+\alias{as.data.frame.list.rma}
 \alias{[.list.rma}
 \alias{head.list.rma}
 \alias{tail.list.rma}
