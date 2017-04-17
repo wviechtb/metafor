@@ -31,3 +31,18 @@ test_that("tail.list.rma() works correctly.", {
    expect_equivalent(res, sav)
 
 })
+
+test_that("as.data.frame.list.rma() works correctly.", {
+
+   data(dat.bcg, package="metafor")
+   dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
+   res <- rma(yi, vi, mods = ~ ablat, data=dat)
+   res <- predict(res)
+   res <- as.data.frame(res)
+   res <- round(res[1:3,1:2], 4)
+
+   sav <- structure(list(pred = c(-1.029, -1.3491, -0.9708), se = c(0.1404, 0.2011, 0.1315)), .Names = c("pred", "se"), row.names = c(NA, 3L), class = "data.frame")
+
+   expect_equivalent(res, sav)
+
+})
