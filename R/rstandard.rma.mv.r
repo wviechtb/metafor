@@ -21,15 +21,20 @@ rstandard.rma.mv <- function(model, digits, ...) {
 
    #########################################################################
 
-   #ImH <- diag(x$k) - H
+   ImH <- diag(x$k) - H
    #ei <- ImH %*% cbind(x$yi)
    ei <- c(x$yi - x$X %*% x$beta)
 
    ei[abs(ei) < 100 * .Machine$double.eps] <- 0
    #ei[abs(ei) < 100 * .Machine$double.eps * median(abs(ei), na.rm=TRUE)] <- 0 ### see lm.influence
 
-   #ve <- ImH %*% tcrossprod(x$M,ImH)
-   ve  <- x$M + x$X %*% x$vb %*% t(x$X) - 2*H%*%x$M
+   if (inherits(x, "robust.rma")) {
+      ve <- ImH %*% tcrossprod(x$meat,ImH)
+   } else {
+      ve <- ImH %*% tcrossprod(x$M,ImH)
+   }
+
+   #ve <- x$M + x$X %*% x$vb %*% t(x$X) - 2*H%*%x$M
    sei <- sqrt(diag(ve))
 
    resid   <- rep(NA_real_, x$k.f)

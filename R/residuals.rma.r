@@ -58,6 +58,7 @@ residuals.rma <- function(object, type="response", ...) {
    if (type == "cholesky") {
 
       ### note: Cholesky residuals depend on the data order
+      ### but only for the Cholesky residuals is QE = sum(residuals(res, type="cholesky)^2) for models where M (or rather: V) is not diagonal
 
       if (inherits(object, c("rma.mh", "rma.peto", "rma.glmm")))
          stop("Extraction of Cholesky residuals not implemented for objects of class \"rma.mh\", \"rma.peto\", or \"rma.glmm\".")
@@ -66,6 +67,10 @@ residuals.rma <- function(object, type="response", ...) {
       out[abs(out) < 100 * .Machine$double.eps] <- 0
 
       L <- try(chol(chol2inv(chol(object$M))))
+
+      if (inherits(L, "try-error"))
+         stop("Could not take Cholesky decomposition of the marginal var-cov matrix.")
+
       tmp <- L %*% out
 
       out <- rep(NA_real_, object$k.f)

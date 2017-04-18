@@ -148,6 +148,8 @@ robust.rma.mv <- function(x, cluster, adjust=TRUE, digits, ...) {
    res$n     <- n
    res$tcl   <- tcl
    res$test  <- "t"
+   res$meat <- matrix(NA_real_, nrow=nrow(meat), ncol=ncol(meat))
+   res$meat[ocl,ocl] <- meat
 
    class(res) <- c("robust.rma", "rma", "rma.mv")
    return(res)

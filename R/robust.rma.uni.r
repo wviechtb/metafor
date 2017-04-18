@@ -156,6 +156,8 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, digits, ...) {
    res$tcl   <- tcl
    res$test  <- "t"
    res$s2w   <- 1 ### just in case test="knha" originally
+   res$meat <- matrix(NA_real_, nrow=nrow(meat), ncol=ncol(meat))
+   res$meat[ocl,ocl] <- meat
 
    class(res) <- c("robust.rma", "rma", "rma.uni")
    return(res)

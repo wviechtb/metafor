@@ -97,7 +97,7 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
 
          DZtW  <- D %*% t(x$Z.S[[j]]) %*% W
          pred  <- as.vector(DZtW %*% cbind(ei))
-         #vpred <- D - (D %*% t(x$Z.S[[j]]) %*% W %*% x$Z.S[[j]] %*% D - D %*% t(x$Z.S[[j]]) %*% W %*% x$X %*% stXWX %*% t(x$X) %*% W %*% x$Z.S[[j]] %*% D)
+         #vpred <- D - (DZtW %*% x$Z.S[[j]] %*% D - DZtW %*% x$X %*% stXWX %*% t(x$X) %*% W %*% x$Z.S[[j]] %*% D)
          vpred <- D - (DZtW %*% (I - Hmat) %*% x$Z.S[[j]] %*% D)
 
          se <- sqrt(diag(vpred))
@@ -155,7 +155,7 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
       G  <- ((x$Z.G1 %*% x$G %*% t(x$Z.G1)) * tcrossprod(x$Z.G2))
       GW <- G %*% W
       pred  <- as.vector(GW %*% cbind(ei))
-      #vpred <- G - (G %*% W %*% G - G %*% W %*% x$X %*% stXWX %*% t(x$X) %*% W %*% G)
+      #vpred <- G - (GW %*% G - GW %*% x$X %*% stXWX %*% t(x$X) %*% W %*% G)
       vpred <- G - (GW %*% (I - Hmat) %*% G)
 
       se <- sqrt(diag(vpred))
@@ -191,7 +191,7 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
       H  <- ((x$Z.H1 %*% x$H %*% t(x$Z.H1)) * tcrossprod(x$Z.H2))
       HW <- H %*% W
       pred  <- as.vector(HW %*% cbind(ei))
-      #vpred <- G - (G %*% W %*% G - G %*% W %*% x$X %*% stXWX %*% t(x$X) %*% W %*% G)
+      #vpred <- H - (HW %*% H - HW %*% x$X %*% stXWX %*% t(x$X) %*% W %*% H)
       vpred <- H - (HW %*% (I - Hmat) %*% H)
 
       se <- sqrt(diag(vpred))
