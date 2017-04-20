@@ -7,7 +7,7 @@ test_that("fit statistics are correct for rma.uni().", {
    ### load BCG dataset
    data(dat.bcg, package="metafor")
 
-   ### calculate log relative risks and corresponding sampling variances
+   ### calculate log risk ratios and corresponding sampling variances
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
    ### fit random- and mixed-effects models (with ML estimation)

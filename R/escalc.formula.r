@@ -13,6 +13,7 @@ add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("yi","vi"), digits=4,
 
    if (!is.element(measure, c("RR","OR","PETO","RD","AS","PHI","YUQ","YUY","RTET", ### 2x2 table measures
                               "PBIT","OR2D","OR2DN","OR2DL",                       ### - transformations to SMD
+                              "MPRD","MPRR","MPOR","MPORC","MPPETO",               ### - measures for matched pairs data
                               "IRR","IRD","IRSD",                                  ### two-group person-time data measures
                               "MD","SMD","SMDH","ROM",                             ### two-group mean/SD measures
                               "RPB","RBIS","D2OR","D2ORN","D2ORL",                 ### - transformations to r_PB, r_BIS, and log(OR)
@@ -23,7 +24,7 @@ add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("yi","vi"), digits=4,
                               "ARAW","AHW","ABT")))                                ### alpha (and transformations thereof)
       stop("Unknown 'measure' specified.")
 
-   if (is.element(measure, c("MC","SMCC","SMCR","SMCRH","ROMC")))
+   if (is.element(measure, c("MC","SMCC","SMCR","SMCRH","ROMC","MPRD","MPRR","MPOR","MPORC","MPPETO")))
       stop("Formula interface (currently) not implemented for these outcome measures.")
 
    if (!requireNamespace("Formula", quietly=TRUE))
@@ -358,6 +359,11 @@ add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("yi","vi"), digits=4,
    #########################################################################
 
    #if (is.element(measure, c("MC","SMCC","SMCR","SMCRH","ROMC"))) {
+   #}
+
+   #########################################################################
+
+   #if (is.element(measure, c("MPRD","MPRR","MPOR","MPORC","MPPETO"))) {
    #}
 
    #########################################################################

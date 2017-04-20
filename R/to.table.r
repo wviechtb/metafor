@@ -5,6 +5,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
 
    if (!is.element(measure, c("RR","OR","PETO","RD","AS","PHI","YUQ","YUY","RTET", ### 2x2 table measures
                               "PBIT","OR2D","OR2DN","OR2DL",                       ### - transformations to SMD
+                              "MPRD","MPRR","MPOR","MPORC","MPPETO",               ### - measures for matched pairs data
                               "IRR","IRD","IRSD",                                  ### two-group person-time data measures
                               "MD","SMD","SMDH","ROM",                             ### two-group mean/SD measures
                               "RPB","RBIS","D2OR","D2ORN","D2ORL",                 ### - transformations to r_PB, r_BIS, and log(OR)
@@ -48,7 +49,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
    #########################################################################
    #########################################################################
 
-   if (is.element(measure, c("RR","OR","RD","AS","PETO","PHI","YUQ","YUY","RTET","PBIT","OR2D","OR2DN","OR2DL"))) {
+   if (is.element(measure, c("RR","OR","RD","AS","PETO","PHI","YUQ","YUY","RTET","PBIT","OR2D","OR2DN","OR2DL","MPRD","MPRR","MPOR","MPORC","MPPETO"))) {
 
       mf.ai   <- mf[[match("ai",  names(mf))]]
       mf.bi   <- mf[[match("bi",  names(mf))]]
@@ -650,6 +651,122 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
       } else {
          if (length(cols) != 2)
             stop("Outcome names not of length 2.")
+      }
+
+      dat <- array(NA, dim=c(2,2,k), dimnames=list(rows, cols, slab))
+
+      for (i in seq_len(k)) {
+         tab.i <- rbind(c(ai[i],bi[i]), c(ci[i],di[i]))
+         dat[,,i] <- tab.i
+      }
+
+   }
+
+   #########################################################################
+
+   if (is.element(measure, c("MPRD","MPRR","MPOR"))) {
+
+      ### check for NAs in table data and act accordingly
+
+      has.na <- is.na(ai) | is.na(bi) | is.na(ci) | is.na(di)
+
+      if (any(has.na)) {
+
+         not.na <- !has.na
+
+         if (na.act == "na.omit") {
+            ai   <- ai[not.na]
+            bi   <- bi[not.na]
+            ci   <- ci[not.na]
+            di   <- di[not.na]
+            slab <- slab[not.na]
+            warning("Tables with NAs omitted.")
+         }
+
+         if (na.act == "na.fail")
+            stop("Missing values in tables.")
+
+      }
+
+      k <- length(ai)
+
+      ### at least one study left?
+
+      if (k < 1)
+         stop("Processing terminated since k = 0.")
+
+      ### row/group and column/outcome names
+
+      if (missing(rows)) {
+         rows <- c("Time1", "Time2")
+      } else {
+         if (length(rows) != 2)
+            stop("Time names not of length 2.")
+      }
+
+      if (missing(cols)) {
+         cols <- c("Out1", "Out2")
+      } else {
+         if (length(cols) != 2)
+            stop("Outcome names not of length 2.")
+      }
+
+      dat <- array(NA, dim=c(2,2,k), dimnames=list(rows, cols, slab))
+
+      for (i in seq_len(k)) {
+         tab.i <- rbind(c(ai[i]+bi[i],ci[i]+di[i]), c(ai[i]+ci[i],bi[i]+di[i]))
+         dat[,,i] <- tab.i
+      }
+
+   }
+
+   #########################################################################
+
+   if (is.element(measure, c("MPORC","MPPETO"))) {
+
+      ### check for NAs in table data and act accordingly
+
+      has.na <- is.na(ai) | is.na(bi) | is.na(ci) | is.na(di)
+
+      if (any(has.na)) {
+
+         not.na <- !has.na
+
+         if (na.act == "na.omit") {
+            ai   <- ai[not.na]
+            bi   <- bi[not.na]
+            ci   <- ci[not.na]
+            di   <- di[not.na]
+            slab <- slab[not.na]
+            warning("Tables with NAs omitted.")
+         }
+
+         if (na.act == "na.fail")
+            stop("Missing values in tables.")
+
+      }
+
+      k <- length(ai)
+
+      ### at least one study left?
+
+      if (k < 1)
+         stop("Processing terminated since k = 0.")
+
+      ### row/group and column/outcome names
+
+      if (missing(rows)) {
+         rows <- c("Time1.Out1", "Time1.Out2")
+      } else {
+         if (length(rows) != 2)
+            stop("Time1 names not of length 2.")
+      }
+
+      if (missing(cols)) {
+         cols <- c("Time2.Out1", "Time2.Out2")
+      } else {
+         if (length(cols) != 2)
+            stop("Time2 names not of length 2.")
       }
 
       dat <- array(NA, dim=c(2,2,k), dimnames=list(rows, cols, slab))

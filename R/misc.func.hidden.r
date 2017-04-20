@@ -1267,7 +1267,7 @@
    if (!is.null(measure)) {
 
       ######################################################################
-      if (measure == "RR") {
+      if (is.element(measure, c("RR","MPRR"))) {
          if (transf.char == "FALSE" && atransf.char == "FALSE") {
             lab <- "Log Relative Risk"
          } else {
@@ -1278,7 +1278,7 @@
                lab <- "Relative Risk"
          }
       }
-      if (is.element(measure, c("OR","PETO","D2OR","D2ORN","D2ORL"))) {
+      if (is.element(measure, c("OR","PETO","D2OR","D2ORN","D2ORL","MPOR","MPORC","MPPETO"))) {
          if (transf.char == "FALSE" && atransf.char == "FALSE") {
             lab <- "Log Odds Ratio"
          } else {
@@ -1289,7 +1289,7 @@
                lab <- "Odds Ratio"
          }
       }
-      if (measure == "RD") {
+      if (is.element(measure, c("RD","MPRD"))) {
          if (transf.char == "FALSE" && atransf.char == "FALSE") {
             lab <- "Risk Difference"
          } else {

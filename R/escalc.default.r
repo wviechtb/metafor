@@ -5,6 +5,7 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
    if (!is.element(measure, c("RR","OR","PETO","RD","AS","PHI","YUQ","YUY","RTET", ### 2x2 table measures
                               "PBIT","OR2D","OR2DN","OR2DL",                       ### - transformations to SMD
+                              "MPRD","MPRR","MPOR","MPORC","MPPETO",               ### - measures for matched pairs data
                               "IRR","IRD","IRSD",                                  ### two-group person-time data measures
                               "MD","SMD","SMDH","ROM",                             ### two-group mean/SD measures
                               "RPB","RBIS","D2OR","D2ORN","D2ORL",                 ### - transformations to r_PB, r_BIS, and log(OR)
@@ -88,7 +89,7 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
    if (is.null(yi)) {
 
-      if (is.element(measure, c("RR","OR","RD","AS","PETO","PHI","YUQ","YUY","RTET","PBIT","OR2D","OR2DN","OR2DL"))) {
+      if (is.element(measure, c("RR","OR","RD","AS","PETO","PHI","YUQ","YUY","RTET","PBIT","OR2D","OR2DN","OR2DL","MPRD","MPRR","MPOR","MPORC","MPPETO"))) {
 
          mf.ai   <- mf[[match("ai",  names(mf))]]
          mf.bi   <- mf[[match("bi",  names(mf))]]
@@ -190,29 +191,28 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
          p1i <- ai/n1i
          p2i <- ci/n2i
 
-         ### (log) relative risk
+         ### log risk ratios
 
          if (measure == "RR") {
             yi <- log(p1i) - log(p2i)
             vi <- 1/ai - 1/n1i + 1/ci - 1/n2i
          }
 
-         ### (log) odds ratio
+         ### log odds ratio
 
          if (is.element(measure, c("OR","OR2D","OR2DN","OR2DL"))) {
             yi <- log(p1i/(1-p1i)) - log(p2i/(1-p2i))
             vi <- 1/ai + 1/bi + 1/ci + 1/di
          }
 
-         ### (log) odds ratio (Peto's method)
+         ### log odds ratio (Peto's method)
 
          if (measure == "PETO") {
             xt <- ai + ci ### frequency of outcome1 in both groups combined
             yt <- bi + di ### frequency of outcome2 in both groups combined
-            Oi <- ai
             Ei <- xt * n1i / ni
             Vi <- xt * yt * (n1i/ni) * (n2i/ni) / (ni - 1) ### 0 when xt = 0 or yt = 0 in a table
-            yi <- (Oi - Ei) / Vi                           ### then yi and vi is Inf (set to NA at end)
+            yi <- (ai - Ei) / Vi                           ### then yi and vi is Inf (set to NA at end)
             vi <- 1/Vi
          }
 
@@ -259,11 +259,11 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
          if (measure == "PHI") {
             yi  <- (ai*di - bi*ci)/sqrt((ai+bi)*(ci+di)*(ai+ci)*(bi+di))
-            p1. <- (ai+bi)/ni
-            p2. <- (ci+di)/ni
-            p.1 <- (ai+ci)/ni
-            p.2 <- (bi+di)/ni
-            vi  <- 1/ni * (1 - yi^2 + yi*(1+1/2*yi^2) * (p1.-p2.)*(p.1-p.2) / sqrt(p1.*p2.*p.1*p.2) - 3/4 * yi^2 * ((p1.-p2.)^2/(p1.*p2.) + (p.1-p.2)^2/(p.1*p.2)))
+            pi1. <- (ai+bi)/ni
+            pi2. <- (ci+di)/ni
+            pi.1 <- (ai+ci)/ni
+            pi.2 <- (bi+di)/ni
+            vi  <- 1/ni * (1 - yi^2 + yi*(1+1/2*yi^2) * (pi1.-pi2.)*(pi.1-pi.2) / sqrt(pi1.*pi2.*pi.1*pi.2) - 3/4 * yi^2 * ((pi1.-pi2.)^2/(pi1.*pi2.) + (pi.1-pi.2)^2/(pi.1*pi.2)))
          }
 
          ### Yule's Q (vi equation in Yule, 1900, p.285, and Yule, 1912, p.593)
@@ -334,6 +334,44 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
             vi <- vi / 1.65^2
          }
 
+         if (is.element(measure, c("MPRD","MPRR","MPOR"))) {
+            pi12 <- bi/ni
+            pi21 <- ci/ni
+            pi1. <- (ai+bi)/ni
+            pi.1 <- (ai+ci)/ni
+         }
+
+         if (measure == "MPRD") {
+            yi <- pi1. - pi.1
+            vi <- pi12*(1-pi12)/ni + 2*pi12*pi21/ni + pi21*(1-pi21)/ni
+         }
+
+         if (measure == "MPRR") {
+            yi <- log(pi1.) - log(pi.1)
+            vi <- (pi12 + pi21) / (ni * pi1. * pi.1)
+         }
+
+         if (measure == "MPOR") {
+            yi <- log(pi1./(1-pi1.)) - log(pi.1/(1-pi.1))
+            vi <- (pi12*(1-pi12) + pi21*(1-pi21) + 2*pi12*pi21) / (ni * pi1.*(1-pi1.) * pi.1*(1-pi.1))
+         }
+
+         if (measure == "MPORC") {
+            yi <- log(bi) - log(ci)
+            vi <- 1/bi + 1/ci
+         }
+
+         if (measure == "MPPETO") {
+            Ei <- (bi + ci) / 2
+            Vi <- (bi + ci) / 4
+            yi <- (bi - Ei) / Vi
+            vi <- 1/Vi
+         }
+
+         ### Note: Could in principle also compute measures commonly used in diagnostic studies.
+         ### But need to take the sampling method into consideration when computing vi (so need
+         ### to give this some more thought).
+
          ### sensitivity
 
          #if (measure == "SENS") {
@@ -351,10 +389,6 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
          #}
 
          ### [...]
-
-         ### Note: Could in principle also compute measures commonly used in diagnostic studies.
-         ### But need to take the sampling method into consideration when computing vi (so need
-         ### to give this some more thought).
 
       }
 
@@ -443,7 +477,7 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
          ir1i <- x1i/t1i ### t1i is the total person-time in the 1st group
          ir2i <- x2i/t2i ### t2i is the total person-time in the 2nd group
 
-         ### (log) incidence rate ratio
+         ### log incidence rate ratio
 
          if (measure == "IRR") {
             yi <- log(ir1i) - log(ir2i)

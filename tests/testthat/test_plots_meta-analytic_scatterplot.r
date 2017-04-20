@@ -16,22 +16,22 @@ test_that("plot can be drawn.", {
    ### load BCG vaccine data
    data(dat.bcg, package="metafor")
 
-   ### calculate (log) relative risks and corresponding sampling variances
+   ### calculate log risk ratios and corresponding sampling variances
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
    ### fit mixed-effects model with absolute latitude as predictor
    res <- rma(yi, vi, mods = ~ ablat, data=dat)
 
-   ### calculate predicted relative risks for 0 to 60 degrees absolute latitude
+   ### calculate predicted risk ratios for 0 to 60 degrees absolute latitude
    preds <- predict(res, newmods=c(0:60), transf=exp)
 
    ### calculate point sizes by rescaling the standard errors
    wi    <- 1/sqrt(dat$vi)
    size  <- 0.5 + 3.0 * (wi - min(wi))/(max(wi) - min(wi))
 
-   ### plot the relative risks against absolute latitude
+   ### plot the risk ratios against absolute latitude
    plot(dat$ablat, exp(dat$yi), pch=19, cex=size,
-        xlab="Absolute Latitude", ylab="Relative Risk",
+        xlab="Absolute Latitude", ylab="Risk Ratio",
         las=1, bty="l", log="y")
 
    ### add predicted values (and corresponding CI bounds)

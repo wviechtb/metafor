@@ -73,9 +73,10 @@ escalc(measure, formula, \dots)
 
    To provide a structure to the various effect size or outcome measures that can be calculated with the \code{escalc} function, we can distinguish between measures that are used to:
    \itemize{
-   \item contrast two (either experimentally created or naturally occuring) groups,
+   \item contrast two independent (either experimentally created or naturally occuring) groups,
    \item describe the direction and strength of the association between two variables,
-   \item summarize some characteristic or attribute of individual groups.
+   \item summarize some characteristic or attribute of individual groups, or
+   \item quantify change within a single group or the difference between two matched pairs samples.
    } Furthermore, where appropriate, we can further distinguish between measures that are applicable when the characteristic, response, or dependent variable assessed in the individual studies is:
    \itemize{
    \item a dichotomous (binary) variable (e.g., remission versus no remission),
@@ -271,7 +272,46 @@ escalc(measure, formula, \dots)
          \item \code{"MN"} for the \emph{raw mean}.
          } Note that \code{sdi} is used to specify the standard deviations of the observed values of the response, characteristic, or dependent variable and not the standard errors of the means.
 
-         A more complicated situation arises when the purpose of the meta-analysis is to assess the amount of change within individual groups. In that case, either the raw mean change, standardized versions thereof, or the (log transformed) ratio of means (log response ratio) can be used as outcome measures (Becker, 1988; Gibbons et al., 1993; Lajeunesse, 2011; Morris, 2000). Here, one needs to specify \code{m1i} and \code{m2i}, the observed means at the two measurement occasions, \code{sd1i} and \code{sd2i} for the corresponding observed standard deviations, \code{ri} for the correlation between the scores observed at the two measurement occasions, and \code{ni} for the sample size. The options for the \code{measure} argument are then:
+      }
+
+   }
+
+   \subsection{Outcome Measures for Change or Matched Pairs.}{
+
+      A more complicated situation arises when the purpose of the meta-analysis is to assess the amount of change within individual groups (e.g., before and after a treatment or under two different treatments) or when dealing with matched pairs designs.
+
+      \subsection{Measures for Dichotomous Variables}{
+
+         For dichotomous variables, the data for a study of this type gives risk to a paired \eqn{2 \times 2}{2x2} table, which is of the form:
+         \tabular{lcc}{
+                         \tab trt 2 outcome 1 \tab trt 2 outcome 2 \cr
+         trt 1 outcome 1 \tab \code{ai}       \tab \code{bi} \cr
+         trt 1 outcome 2 \tab \code{ci}       \tab \code{di}
+         } where \code{ai}, \code{bi}, \code{ci}, and \code{di} denote the cell frequencies. Note that \code{trt1} and \code{trt2} may be applied to a single group of subjects or to matched pairs of subjects. The data from such a study can be rearranged into a marginal table of the form:
+         \tabular{lcc}{
+               \tab outcome 1    \tab outcome 2 \cr
+         trt 1 \tab \code{ai+bi} \tab \code{ci+di} \cr
+         trt 2 \tab \code{ai+ci} \tab \code{bi+di}
+         } which is of the same form as a \eqn{2 \times 2}{2x2} table that would arise in a study comparing/contrasting two independent groups.
+
+         The options for the \code{measure} argument that will compute outcome measures based on the marginal table are:
+         \itemize{
+         \item \code{"MPRR"} for the matched pairs \emph{marginal log risk ratio}.
+         \item \code{"MPOR"} for the matched pairs \emph{marginal log odds ratio}.
+         \item \code{"MPRD"} for the matched pairs \emph{marginal risk difference}.
+         } See Becker and Balagtas (1993), Curtin et al. (2002), Elbourne et al. (2002), Fagerland et al. (2014), May and Johnson (1997), Newcombe (1998), Stedman et al. (2011), and Zou (2007) for discussions of these measures.
+
+         The options for the \code{measure} argument that will compute outcome measures based on the paired table are:
+         \itemize{
+         \item \code{"MPORC"} for the \emph{conditional log odds ratio}.
+         \item \code{"MPPETO"} for the \emph{conditional log odds ratio} estimated with Peto's method.
+         } See Curtin et al. (2002) and Zou (2007) for discussions of these measures.
+
+      }
+
+      \subsection{Measures for Quantitative Variables}{
+
+         When the response or dependent variable assessed in the individual studies is measured on some quantitative scale, the raw mean change, standardized versions thereof, or the (log transformed) ratio of means (log response ratio) can be used as outcome measures (Becker, 1988; Gibbons et al., 1993; Lajeunesse, 2011; Morris, 2000). Here, one needs to specify \code{m1i} and \code{m2i}, the observed means at the two measurement occasions, \code{sd1i} and \code{sd2i} for the corresponding observed standard deviations, \code{ri} for the correlation between the scores observed at the two measurement occasions, and \code{ni} for the sample size. The options for the \code{measure} argument are then:
          \itemize{
          \item \code{"MC"} for the \emph{raw mean change}.
          \item \code{"SMCC"} for the \emph{standardized mean change} using change score standardization.
@@ -373,9 +413,13 @@ escalc(measure, formula, \dots)
 
             For this outcome measures, the \code{formula} argument takes the form \code{means/sds ~ 1 | study}, where \code{study} is a factor specifying the study factor. The left-hand side of the formula is composed of two parts, with the first variable for the means and the second variable for the standard deviations. The \code{weights} argument is used to specify the sample sizes.
 
-            Note: The formula interface is (currently) not implemented for the raw mean change and the standardized mean change measures.
-
          }
+
+      }
+
+      \subsection{Outcome Measures for Change or Matched Pairs.}{
+
+         The formula interface is currently not implemented for measures for change or matched pairs.
 
       }
 
@@ -424,6 +468,8 @@ escalc(measure, formula, \dots)
 
    Becker, B. J. (1988). Synthesizing standardized mean-change measures. \emph{British Journal of Mathematical and Statistical Psychology}, \bold{41}, 257--278.
 
+   Becker, M. P., & Balagtas, C. C. (1993). Marginal modeling of binary cross-over data. \emph{Biometrics}, \bold{49}, 997--1009.
+
    Bonett, D. G. (2002). Sample size requirements for testing and estimating coefficient alpha. \emph{Journal of Educational and Behavioral Statistics}, \bold{27}, 335--340.
 
    Bonett, D. G. (2008). Confidence intervals for standardized linear contrasts of means. \emph{Psychological Methods}, \bold{13}, 99--109.
@@ -437,6 +483,12 @@ escalc(measure, formula, \dots)
    Chinn, S. (2000). A simple method for converting an odds ratio to effect size for use in meta-analysis. \emph{Statistics in Medicine}, \bold{19}, 3127--3131.
 
    Cox, D. R., & Snell, E. J. (1989). \emph{Analysis of binary data} (2nd ed.). London: Chapman & Hall.
+
+   Curtin, F., Elbourne, D., & Altman, D. G. (2002). Meta-analysis combining parallel and cross-over clinical trials. II: Binary outcomes. \emph{Statistics in Medicine}, \bold{21}, 2145--2159.
+
+   Elbourne, D. R., Altman, D. G., Higgins, J. P. T., Curtin, F., Worthington, H. V., & Vail, A. (2002). Meta-analyses involving cross-over trials: Methodological issues. \emph{International Journal of Epidemiology}, \bold{31}, 140--149.
+
+   Fagerland, M. W., Lydersen, S., & Laake, P. (2014). Recommended tests and confidence intervals for paired binomial proportions. \emph{Statistics in Medicine}, \bold{33}, 2850--2875.
 
    Fisher, R. A. (1921). On the \dQuote{probable error} of a coefficient of correlation deduced from a small sample. \emph{Metron}, \bold{1}, 1--32.
 
@@ -462,9 +514,13 @@ escalc(measure, formula, \dots)
 
    Lajeunesse, M. J. (2011). On the meta-analysis of response ratios for studies with correlated and multi-group designs. \emph{Ecology}, \bold{92}, 2049--2055.
 
+   May, W. L., & Johnson, W. D. (1997). Confidence intervals for differences in correlated binary proportions. \emph{Statistics in Medicine}, \bold{16}, 2127--2136.
+
    Morris, S. B. (2000). Distribution of the standardized mean change effect size for meta-analysis on repeated measures. \emph{British Journal of Mathematical and Statistical Psychology}, \bold{53}, 17--29.
 
    Morris, S. B., & DeShon, R. P. (2002). Combining effect size estimates in meta-analysis with repeated measures and independent-groups designs. \emph{Psychological Methods}, \bold{7}, 105--125.
+
+   Newcombe, R. G. (1998). Improved confidence intervals for the difference between binomial proportions based on paired data. \emph{Statistics in Medicine}, \bold{17}, 2635--2650.
 
    Olkin, I., & Pratt, J. W. (1958). Unbiased estimation of certain correlation coefficients. \emph{Annals of Mathematical Statistics}, \bold{29}, 201--211.
 
@@ -480,6 +536,8 @@ escalc(measure, formula, \dots)
 
    Soper, H. E. (1914). On the probable error of the bi-serial expression for the correlation coefficient. \emph{Biometrika}, \bold{10}, 384--390.
 
+   Stedman, M. R., Curtin, F., Elbourne, D. R., Kesselheim, A. S., & Brookhart, M. A. (2011). Meta-analyses involving cross-over trials: Methodological issues. \emph{International Journal of Epidemiology}, \bold{40}, 1732--1734.
+
    Tate, R. F. (1954). Correlation between a discrete and a continuous variable: Point-biserial correlation. \emph{Annals of Mathematical Statistics}, \bold{25}, 603--607.
 
    Vacha-Haase, T. (1998). Reliability generalization: Exploring variance in measurement error affecting score reliability across studies. \emph{Educational and Psychological Measurement}, \bold{58}, 6--20.
@@ -489,6 +547,8 @@ escalc(measure, formula, \dots)
    Yule, G. U. (1912). On the methods of measuring association between two attributes. \emph{Journal of the Royal Statistical Society}, \bold{75}, 579--652.
 
    Yusuf, S., Peto, R., Lewis, J., Collins, R., & Sleight, P. (1985). Beta blockade during and after myocardial infarction: An overview of the randomized trials. \emph{Progress in Cardiovascular Disease}, \bold{27}, 335--371.
+
+   Zou, G. Y. (2007). One relative risk versus two odds ratios: Implications for meta-analyses involving paired and unpaired binary data. \emph{Clinical Trials}, \bold{4}, 25--31.
 }
 \seealso{
    \code{\link{print.escalc}}, \code{\link{summary.escalc}}, \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, \code{\link{rma.glmm}}

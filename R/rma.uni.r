@@ -14,6 +14,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
    if (!is.element(measure, c("RR","OR","PETO","RD","AS","PHI","YUQ","YUY","RTET", ### 2x2 table measures
                               "PBIT","OR2D","OR2DN","OR2DL",                       ### - transformations to SMD
+                              "MPRD","MPRR","MPOR","MPORC","MPPETO",               ### - measures for matched pairs data
                               "IRR","IRD","IRSD",                                  ### two-group person-time data measures
                               "MD","SMD","SMDH","ROM",                             ### two-group mean/SD measures
                               "RPB","RBIS","D2OR","D2ORN","D2ORL",                 ### - transformations to r_PB, r_BIS, and log(OR)
@@ -287,7 +288,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
       ### if yi is NULL, try to compute yi/vi based on specified measure and supplied data
 
-      if (is.element(measure, c("RR","OR","PETO","RD","AS","PHI","YUQ","YUY","RTET","PBIT","OR2D","OR2DN","OR2DL"))) {
+      if (is.element(measure, c("RR","OR","PETO","RD","AS","PHI","YUQ","YUY","RTET","PBIT","OR2D","OR2DN","OR2DL","MPRD","MPRR","MPOR","MPORC","MPPETO"))) {
 
          mf.ai   <- mf[[match("ai",  names(mf))]]
          mf.bi   <- mf[[match("bi",  names(mf))]]

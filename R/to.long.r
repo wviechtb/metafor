@@ -5,6 +5,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
    if (!is.element(measure, c("RR","OR","PETO","RD","AS","PHI","YUQ","YUY","RTET", ### 2x2 table measures
                               "PBIT","OR2D","OR2DN","OR2DL",                       ### - transformations to SMD
+                              "MPRD","MPRR","MPOR","MPORC","MPPETO",               ### - measures for matched pairs data
                               "IRR","IRD","IRSD",                                  ### two-group person-time data measures
                               "MD","SMD","SMDH","ROM",                             ### two-group mean/SD measures
                               "RPB","RBIS","D2OR","D2ORN","D2ORL",                 ### - transformations to r_PB, r_BIS, and log(OR)
@@ -52,7 +53,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
    #########################################################################
    #########################################################################
 
-   if (is.element(measure, c("RR","OR","RD","AS","PETO","PHI","YUQ","YUY","RTET","PBIT","OR2D","OR2DN","OR2DL"))) {
+   if (is.element(measure, c("RR","OR","RD","AS","PETO","PHI","YUQ","YUY","RTET","PBIT","OR2D","OR2DN","OR2DL","MPRD","MPRR","MPOR","MPORC","MPPETO"))) {
 
       mf.ai   <- mf[[match("ai",  names(mf))]]
       mf.bi   <- mf[[match("bi",  names(mf))]]
@@ -687,6 +688,194 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
          if (missing(var.names)) {
             colnames(dat) <- c("study", "group", "out1", "out2")
+         } else {
+            if (length(var.names) != 4)
+               stop("Variable names not of length 4.")
+            colnames(dat) <- var.names
+         }
+
+         dat <- data.frame(dat)
+         dat[,1] <- factor(dat[,1])
+         dat[,2] <- factor(dat[,2])
+
+         if (!no.data && append)
+            dat <- data.frame(data[rep(seq_len(k), each=2),], dat)
+
+      }
+
+   }
+
+   #########################################################################
+
+   if (is.element(measure, c("MPRD","MPRR","MPOR"))) {
+
+      ### check for NAs in table data and act accordingly
+
+      has.na <- is.na(ai) | is.na(bi) | is.na(ci) | is.na(di)
+
+      if (any(has.na)) {
+
+         not.na <- !has.na
+
+         if (na.act == "na.omit") {
+            ai   <- ai[not.na]
+            bi   <- bi[not.na]
+            ci   <- ci[not.na]
+            di   <- di[not.na]
+            slab <- slab[not.na]
+            if (!no.data)
+               data <- data[not.na,]
+            warning("Tables with NAs omitted.")
+         }
+
+         if (na.act == "na.fail")
+            stop("Missing values in tables.")
+
+      }
+
+      k <- length(ai)
+
+      ### at least one study left?
+
+      if (k < 1)
+         stop("Processing terminated since k = 0.")
+
+      ### create long format dataset
+
+      if (vlong) {
+
+         ### create very long format dataset
+
+         dat <- matrix(NA, nrow=4*k, ncol=4)
+
+         dat[,1] <- rep(slab, each=4)
+         dat[,2] <- rep(c(1,1,2,2), k)
+         dat[,3] <- rep(c(1,2,1,2), k)
+         dat[,4] <- c(rbind(ai+bi,ci+di,ai+ci,bi+di))
+
+         if (missing(var.names)) {
+            colnames(dat) <- c("study", "time", "outcome", "freq")
+         } else {
+            if (length(var.names) != 4)
+               stop("Variable names not of length 4.")
+            colnames(dat) <- var.names
+         }
+
+         dat <- data.frame(dat)
+         dat[,1] <- factor(dat[,1])
+         dat[,2] <- factor(dat[,2])
+         dat[,3] <- factor(dat[,3])
+
+         if (!no.data && append)
+            dat <- data.frame(data[rep(seq_len(k), each=4),], dat)
+
+      } else {
+
+         ### create regular long format dataset
+
+         dat <- matrix(NA, nrow=2*k, ncol=4)
+
+         dat[,1] <- rep(slab, each=2)
+         dat[,2] <- rep(c(1,2), k)
+         dat[,3] <- c(rbind(ai+bi,ai+ci))
+         dat[,4] <- c(rbind(ci+di,bi+di))
+
+         if (missing(var.names)) {
+            colnames(dat) <- c("study", "time", "out1", "out2")
+         } else {
+            if (length(var.names) != 4)
+               stop("Variable names not of length 4.")
+            colnames(dat) <- var.names
+         }
+
+         dat <- data.frame(dat)
+         dat[,1] <- factor(dat[,1])
+         dat[,2] <- factor(dat[,2])
+
+         if (!no.data && append)
+            dat <- data.frame(data[rep(seq_len(k), each=2),], dat)
+
+      }
+
+   }
+
+   #########################################################################
+
+   if (is.element(measure, c("MPORC","MPPETO"))) {
+
+      ### check for NAs in table data and act accordingly
+
+      has.na <- is.na(ai) | is.na(bi) | is.na(ci) | is.na(di)
+
+      if (any(has.na)) {
+
+         not.na <- !has.na
+
+         if (na.act == "na.omit") {
+            ai   <- ai[not.na]
+            bi   <- bi[not.na]
+            ci   <- ci[not.na]
+            di   <- di[not.na]
+            slab <- slab[not.na]
+            if (!no.data)
+               data <- data[not.na,]
+            warning("Tables with NAs omitted.")
+         }
+
+         if (na.act == "na.fail")
+            stop("Missing values in tables.")
+
+      }
+
+      k <- length(ai)
+
+      ### at least one study left?
+
+      if (k < 1)
+         stop("Processing terminated since k = 0.")
+
+      ### create long format dataset
+
+      if (vlong) {
+
+         ### create very long format dataset
+
+         dat <- matrix(NA, nrow=4*k, ncol=4)
+
+         dat[,1] <- rep(slab, each=4)
+         dat[,2] <- rep(c(1,1,2,2), k)
+         dat[,3] <- rep(c(1,2,1,2), k)
+         dat[,4] <- c(rbind(ai,bi,ci,di))
+
+         if (missing(var.names)) {
+            colnames(dat) <- c("study", "out.time1", "out.time2", "freq")
+         } else {
+            if (length(var.names) != 4)
+               stop("Variable names not of length 4.")
+            colnames(dat) <- var.names
+         }
+
+         dat <- data.frame(dat)
+         dat[,1] <- factor(dat[,1])
+         dat[,2] <- factor(dat[,2])
+         dat[,3] <- factor(dat[,3])
+
+         if (!no.data && append)
+            dat <- data.frame(data[rep(seq_len(k), each=4),], dat)
+
+      } else {
+
+         ### create regular long format dataset
+
+         dat <- matrix(NA, nrow=2*k, ncol=4)
+
+         dat[,1] <- rep(slab, each=2)
+         dat[,2] <- rep(c(1,2), k)
+         dat[,3] <- c(rbind(ai,ci))
+         dat[,4] <- c(rbind(bi,di))
+
+         if (missing(var.names)) {
+            colnames(dat) <- c("study", "out.time1", "out1.time2", "out2.time2")
          } else {
             if (length(var.names) != 4)
                stop("Variable names not of length 4.")
