@@ -50,7 +50,7 @@ trimfill(x, \dots)
    \code{\link{funnel.rma}}
 }
 \examples{
-### meta-analysis of the log relative risks using a fixed-effects model
+### meta-analysis of the log risk ratios using a fixed-effects model
 res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, method="FE")
 res.tf <- trimfill(res)
 res.tf
@@ -60,7 +60,7 @@ funnel(res.tf)
 res.tf <- trimfill(res, estimator="R0")
 res.tf
 
-### meta-analysis of the log relative risks using a random-effects model
+### meta-analysis of the log risk ratios using a random-effects model
 res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 res.tf <- trimfill(res)
 res.tf

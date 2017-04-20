@@ -109,7 +109,7 @@ funnel(x, \dots)
 ### load BCG vaccine data
 dat <- get(data(dat.bcg))
 
-### calculate log relative risks and corresponding sampling variances
+### calculate log risk ratios and corresponding sampling variances
 dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat)
 
 ### random-effects model
@@ -118,15 +118,15 @@ res <- rma(yi, vi, data=dat)
 ### standard funnel plot
 funnel(res)
 
-### show relative risk values on x-axis (log scale)
+### show risk ratio values on x-axis (log scale)
 funnel(res, atransf=exp)
 
-### passing log relative risks and sampling variances directly to the function
+### passing log risk ratios and sampling variances directly to the function
 ### note: essentially the same plot, except that reference line is centered at zero
 funnel(dat$yi, dat$vi)
 funnel(res, refline=0)
 
-### funnel plot with relative risk values on the x-axis
+### funnel plot with risk ratio values on the x-axis
 funnel(res, atransf=exp, at=log(c(.12, .25, .5, 1, 2)))
 
 ### contour-enhanced funnel plot centered at 0 (see Peters et al., 2008)

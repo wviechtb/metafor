@@ -53,7 +53,7 @@ fitstats(object, \dots)
    \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, \code{\link{rma.glmm}}, \code{\link{rma.mv}}, \code{\link{anova.rma}}
 }
 \examples{
-### meta-analysis of the log relative risks using a random-effects model
+### meta-analysis of the log risk ratios using a random-effects model
 res1 <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg,
             data=dat.bcg, method="ML")
 

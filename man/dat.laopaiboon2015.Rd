@@ -34,14 +34,14 @@ dat <- get(data(dat.laopaiboon2015))
 ### analysis using the Mantel-Haenszel method
 rma.mh(measure="RR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, digits=3)
 
-### calculate log relative risks and corresponding sampling variances
+### calculate log risk ratios and corresponding sampling variances
 dat <- escalc(measure="RR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat)
 
 ### random-effects model
 res <- rma(yi, vi, data=dat)
 res
 
-### average relative risk with 95\% CI
+### average risk ratio with 95\% CI
 predict(res, transf=exp)
 }
 \keyword{datasets}

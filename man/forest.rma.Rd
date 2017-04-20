@@ -104,11 +104,11 @@
    \code{\link{forest}}, \code{\link{forest.default}}, \code{\link{addpoly}}
 }
 \examples{
-### meta-analysis of the log relative risks using a random-effects model
+### meta-analysis of the log risk ratios using a random-effects model
 res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg,
            slab=paste(author, year, sep=", "))
 
-### default forest plot of the log relative risks and summary estimate
+### default forest plot of the log risk ratios and summary estimate
 forest(res)
 
 ### summary estimate in row -1; studies in rows k=13 through 1; horizontal
@@ -154,8 +154,8 @@ forest(res, atransf=exp, at=log(c(.05, .25, 1, 4)), xlim=c(-16,6),
 op <- par(cex=.75, font=2)
 text(c(-9.5,-8,-6,-4.5), 15, c("TB+", "TB-", "TB+", "TB-"))
 text(c(-8.75,-5.25),     16, c("Vaccinated", "Control"))
-text(-16,                15, "Author(s) and Year",     pos=4)
-text(6,                  15, "Relative Risk [95\% CI]", pos=2)
+text(-16,                15, "Author(s) and Year",   pos=4)
+text(6,                  15, "Risk Ratio [95\% CI]", pos=2)
 par(op)
 
 ### mixed-effects model with absolute latitude in the model
@@ -171,7 +171,7 @@ text( 5,   15, "Observed RR [95\% CI]",  pos=2, cex=.8)
 text(-3.5, 15, "Latitude",                     cex=.8)
 par(op)
 
-### meta-analysis of the log relative risks using a random-effects model
+### meta-analysis of the log risk ratios using a random-effects model
 res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg,
            slab=paste(author, year, sep=", "))
 
@@ -193,8 +193,8 @@ text(-16, c(18,12,3), c("Systematic Allocation", "Random Allocation",
 par(cex=.75, font=2)
 text(c(-9.5,-8,-6,-4.5), 20, c("TB+", "TB-", "TB+", "TB-"))
 text(c(-8.75,-5.25),     21, c("Vaccinated", "Control"))
-text(-16,                20, "Author(s) and Year",     pos=4)
-text(6,                  20, "Relative Risk [95\% CI]", pos=2)
+text(-16,                20, "Author(s) and Year",   pos=4)
+text(6,                  20, "Risk Ratio [95\% CI]", pos=2)
 par(op)
 
 ### see also the addpoly.rma function for an example where summaries

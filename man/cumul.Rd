@@ -61,7 +61,7 @@ cumul(x, \dots)
    \code{\link{forest.cumul.rma}}, \code{\link{plot.cumul.rma}}
 }
 \examples{
-### calculate log relative risks and corresponding sampling variances
+### calculate log risk ratios and corresponding sampling variances
 dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
 ### random-effects model
@@ -70,7 +70,7 @@ res <- rma(yi, vi, data=dat)
 ### cumulative meta-analysis (in the order of publication year)
 cumul(res, transf=exp, order=order(dat$year))
 
-### meta-analysis of the (log) relative risks using the Mantel-Haenszel method
+### meta-analysis of the (log) risk ratios using the Mantel-Haenszel method
 res <- rma.mh(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
 ### cumulative meta-analysis

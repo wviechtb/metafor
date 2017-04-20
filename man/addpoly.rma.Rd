@@ -41,14 +41,14 @@
    \code{\link{forest.rma}}, \code{\link{forest.default}}
 }
 \examples{
-### meta-analysis of the log relative risks using the Mantel-Haenszel method
+### meta-analysis of the log risk ratios using the Mantel-Haenszel method
 res <- rma.mh(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg,
               slab=paste(author, year, sep=", "))
 
-### forest plot of the observed relative risks with summary estimate
+### forest plot of the observed risk ratios with summary estimate
 forest(res, atransf=exp, xlim=c(-8,6), ylim=c(-2.5,16))
 
-### meta-analysis of the log relative risks using a random-effects model
+### meta-analysis of the log risk ratios using a random-effects model
 res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
 ### add summary estimate from the random-effects model to forest plot
@@ -69,8 +69,8 @@ text(-16, c(24,16,5), c("Systematic Allocation", "Random Allocation",
 par(font=2)
 text(c(-9.5,-8,-6,-4.5), 26, c("TB+", "TB-", "TB+", "TB-"))
 text(c(-8.75,-5.25),     27, c("Vaccinated", "Control"))
-text(-16,                26, "Author(s) and Year",     pos=4)
-text(6,                  26, "Relative Risk [95\% CI]", pos=2)
+text(-16,                26, "Author(s) and Year",   pos=4)
+text(6,                  26, "Risk Ratio [95\% CI]", pos=2)
 par(op)
 res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg,
            subset=(alloc=="systematic"))

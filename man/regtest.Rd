@@ -86,7 +86,7 @@ regtest(x, \dots)
    \code{\link{ranktest}}
 }
 \examples{
-### calculate log relative risks and corresponding sampling variances
+### calculate log risk ratios and corresponding sampling variances
 dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
 ### fit random-effects model

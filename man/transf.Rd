@@ -98,13 +98,13 @@ transf.ilogit.int(xi, targs, \dots)
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{http://www.jstatsoft.org/v36/i03/}.
 }
 \examples{
-### meta-analysis of the log relative risks using a random-effects model
+### meta-analysis of the log risk ratios using a random-effects model
 res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
-### average relative risk with 95\% CI
+### average risk ratio with 95\% CI
 predict(res, transf=exp)
 
-### average relative risk with 95\% CI using the integral transformation
+### average risk ratio with 95\% CI using the integral transformation
 predict(res, transf=transf.exp.int, targs=list(tau2=res$tau2, lower=-4, upper=4))
 }
 \keyword{manip}

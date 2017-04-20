@@ -19,7 +19,7 @@ rma.mh(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \item{x2i}{vector to specify the number of events (second group). See below and the documentation of the \code{\link{escalc}} function for more details.}
    \item{t1i}{vector to specify the total person-times (first group). See below and the documentation of the \code{\link{escalc}} function for more details.}
    \item{t2i}{vector to specify the total person-times (second group). See below and the documentation of the \code{\link{escalc}} function for more details.}
-   \item{measure}{character string indicating the outcome measure to use for the meta-analysis. Possible options are the odds ratio (\code{"OR"}), the relative risk (\code{"RR"}), the risk difference (\code{"RD"}), the incidence rate ratio (\code{"IRR"}), or the incidence rate difference (\code{"IRD"}).}
+   \item{measure}{character string indicating the outcome measure to use for the meta-analysis. Possible options are the risk ratio (\code{"RR"}), the odds ratio (\code{"OR"}), the risk difference (\code{"RD"}), the incidence rate ratio (\code{"IRR"}), or the incidence rate difference (\code{"IRD"}).}
    \item{data}{optional data frame containing the data supplied to the function.}
    \item{slab}{optional vector with labels for the \eqn{k} studies.}
    \item{subset}{optional vector indicating the subset of tables that should be used for the analysis. This can be a logical vector of length \eqn{k} or a numeric vector indicating the indices of the tables to include.}
@@ -36,7 +36,7 @@ rma.mh(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
    \bold{Specifying the Data}
 
-   When the outcome measure is either the odds ratio (measure=\code{"OR"}), relative risk (\code{measure="RR"}), or risk difference (\code{measure="RD"}), the studies are assumed to provide data in terms of \eqn{2 \times 2}{2x2} tables of the form:
+   When the outcome measure is either the risk ratio (measure=\code{"RR"}), odds ratio (\code{measure="OR"}), or risk difference (\code{measure="RD"}), the studies are assumed to provide data in terms of \eqn{2 \times 2}{2x2} tables of the form:
    \tabular{lccc}{
            \tab outcome 1 \tab outcome 2 \tab total      \cr
    group 1 \tab \code{ai} \tab \code{bi} \tab \code{n1i} \cr
@@ -54,7 +54,7 @@ rma.mh(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
    An approach for aggregating table data of these types was suggested by Mantel and Haenszel (1959) and later extended by various authors (see references). The Mantel-Haenszel method provides a weighted estimate under a fixed-effects model. The method is particularly advantageous when aggregating a large number of studies with small sample sizes (the so-called sparse data or increasing strata case).
 
-   When analyzing odds ratios, the Cochran-Mantel-Haenszel (CMH) test (Cochran, 1954; Mantel & Haenszel, 1959) and Tarone's test for heterogeneity (Tarone, 1985) are also provided (by default, the CMH test statistic is computed with the continuity correction; this can be switched off with \code{correct=FALSE}). When analyzing incidence rate ratios, the Mantel-Haenszel (MH) test (Rothman et al., 2008) for person-time data is also provided (again, the \code{correct} argument controls whether the continuity correction is applied). When analyzing odds ratios, relative risks, or incidence rate ratios, the printed results are given both in terms of the log and the raw units (for easier interpretation).
+   When analyzing odds ratios, the Cochran-Mantel-Haenszel (CMH) test (Cochran, 1954; Mantel & Haenszel, 1959) and Tarone's test for heterogeneity (Tarone, 1985) are also provided (by default, the CMH test statistic is computed with the continuity correction; this can be switched off with \code{correct=FALSE}). When analyzing incidence rate ratios, the Mantel-Haenszel (MH) test (Rothman et al., 2008) for person-time data is also provided (again, the \code{correct} argument controls whether the continuity correction is applied). When analyzing risk ratios, odds ratios, or incidence rate ratios, the printed results are given both in terms of the log and the raw units (for easier interpretation).
 
    \bold{Observed Outcomes of the Individual Studies}
 
@@ -66,7 +66,7 @@ rma.mh(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 }
 \value{
    An object of class \code{c("rma.mh","rma")}. The object is a list containing the following components:
-   \item{beta}{aggregated log odds ratio, log relative risk, risk difference, log rate ratio, or rate difference.}
+   \item{beta}{aggregated log risk ratio, log odds ratio, risk difference, log rate ratio, or rate difference.}
    \item{se}{standard error of the aggregated value.}
    \item{zval}{test statistics of the aggregated value.}
    \item{pval}{p-value for the test statistic.}
@@ -126,7 +126,7 @@ rma.mh(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 ### meta-analysis of the (log) odds ratios using the Mantel-Haenszel method
 rma.mh(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
-### meta-analysis of the (log) relative risks using the Mantel-Haenszel method
+### meta-analysis of the (log) risk ratios using the Mantel-Haenszel method
 rma.mh(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 }
 \keyword{models}

@@ -59,20 +59,20 @@ blup(x, \dots)
    \code{\link{rma.uni}}, \code{\link{predict.rma}}, \code{\link{fitted.rma}}, \code{\link{ranef.rma.uni}}
 }
 \examples{
-### calculate log relative risks and corresponding sampling variances
+### calculate log risk ratios and corresponding sampling variances
 dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
-### meta-analysis of the log relative risks using a random-effects model
+### meta-analysis of the log risk ratios using a random-effects model
 res <- rma(yi, vi, data=dat)
 
-### BLUPs of the true relative risks for each study
+### BLUPs of the true risk ratios for each study
 blup(res, transf=exp)
 
 ### illustrate shrinkage of BLUPs towards the (estimated) population average
 res <- rma(yi, vi, data=dat)
 blups <- blup(res)$pred
 plot(NA, NA, xlim=c(.8,2.4), ylim=c(-2,0.5), pch=19,
-     xaxt="n", bty="n", xlab="", ylab="Log Relative Risk")
+     xaxt="n", bty="n", xlab="", ylab="Log Risk Ratio")
 segments(rep(1,13), dat$yi, rep(2,13), blups, col="darkgray")
 points(rep(1,13), dat$yi, pch=19)
 points(rep(2,13), blups, pch=19)

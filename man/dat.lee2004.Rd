@@ -25,7 +25,7 @@
 ### load data
 dat <- get(data(dat.lee2004))
 
-### meta-analysis based on relative risks
+### meta-analysis based on log risk ratios
 res <- rma(measure="RR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat)
 res
 predict(res, transf=exp, digits=2)
