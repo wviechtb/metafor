@@ -8,13 +8,19 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
                               "MPRD","MPRR","MPOR","MPORC","MPPETO",               ### - measures for matched pairs data
                               "IRR","IRD","IRSD",                                  ### two-group person-time data measures
                               "MD","SMD","SMDH","ROM",                             ### two-group mean/SD measures
+                              "CVR","VR",                                          ### coefficient of variation ratio, variability ratio
                               "RPB","RBIS","D2OR","D2ORN","D2ORL",                 ### - transformations to r_PB, r_BIS, and log(OR)
                               "COR","UCOR","ZCOR",                                 ### correlations (raw and r-to-z transformed)
+                              "PCOR","ZPCOR","SPCOR",                              ### partial and semi-partial correlations
                               "PR","PLN","PLO","PAS","PFT",                        ### single proportions (and transformations thereof)
                               "IR","IRLN","IRS","IRFT",                            ### single-group person-time data (and transformations thereof)
-                              "MN","MC","SMCC","SMCR","SMCRH","ROMC",              ### raw/standardized mean change and log(ROM) for dependent samples
+                              "MN","CVLN","SDLN",                                  ### mean, log(CV), log(SD)
+                              "MC","SMCC","SMCR","SMCRH","ROMC",                   ### raw/standardized mean change and log(ROM) for dependent samples
                               "ARAW","AHW","ABT")))                                ### alpha (and transformations thereof)
       stop("Unknown 'measure' specified.")
+
+   if (is.element(measure, c("CVR","VR","PCOR","ZPCOR","SPCOR","CVLN","SDLN")))
+      stop("Function (currently) not implemented for this outcome measure.")
 
    na.act <- getOption("na.action")
 
@@ -247,7 +253,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
       n1i     <- eval(mf.n1i,  data, enclos=sys.frame(sys.parent()))
       n2i     <- eval(mf.n2i,  data, enclos=sys.frame(sys.parent()))
 
-      k <- length(m1i) ### number of outcomes before subsetting
+      k <- length(n1i) ### number of outcomes before subsetting
 
       if (!is.null(subset)) {
          m1i  <- m1i[subset]
@@ -452,7 +458,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
       sdi     <- eval(mf.sdi, data, enclos=sys.frame(sys.parent()))
       ni      <- eval(mf.ni,  data, enclos=sys.frame(sys.parent()))
 
-      k <- length(mi) ### number of outcomes before subsetting
+      k <- length(ni) ### number of outcomes before subsetting
 
       if (!is.null(subset)) {
          mi  <- mi[subset]

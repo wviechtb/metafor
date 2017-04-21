@@ -40,6 +40,12 @@ Changes in Version 2.0-0 (2017-04-21)
    o escalc() can now compute (semi-)partial correlation coefficients
      ("PCOR", "ZPCOR", "SPCOR")
 
+   o escalc() can now compute measures of variability for single groups
+     ("CVLN", "SDLN")
+
+   o escalc() can now compute measures that reflect the difference in the
+     variability of two groups ("CVR", "VR")
+
    o the `[` method for 'escalc' objects now properly handles the 'ni' and
      'slab' attributes and does a better job of cleaning out superfluous
      variable name information

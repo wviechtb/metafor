@@ -17,12 +17,14 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
                               "MPRD","MPRR","MPOR","MPORC","MPPETO",               ### - measures for matched pairs data
                               "IRR","IRD","IRSD",                                  ### two-group person-time data measures
                               "MD","SMD","SMDH","ROM",                             ### two-group mean/SD measures
+                              "CVR","VR",                                          ### coefficient of variation ratio, variability ratio
                               "RPB","RBIS","D2OR","D2ORN","D2ORL",                 ### - transformations to r_PB, r_BIS, and log(OR)
                               "COR","UCOR","ZCOR",                                 ### correlations (raw and r-to-z transformed)
                               "PCOR","ZPCOR","SPCOR",                              ### partial and semi-partial correlations
                               "PR","PLN","PLO","PAS","PFT",                        ### single proportions (and transformations thereof)
                               "IR","IRLN","IRS","IRFT",                            ### single-group person-time data (and transformations thereof)
-                              "MN","MC","SMCC","SMCR","SMCRH","ROMC",              ### raw/standardized mean change and log(ROM) for dependent samples
+                              "MN","CVLN","SDLN",                                  ### mean, log(CV), log(SD)
+                              "MC","SMCC","SMCR","SMCRH","ROMC",                   ### raw/standardized mean change and log(ROM) for dependent samples
                               "ARAW","AHW","ABT",                                  ### alpha (and transformations thereof)
                               "GEN")))
       stop("Unknown 'measure' specified.")
@@ -343,7 +345,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
       }
 
-      if (is.element(measure, c("MD","SMD","SMDH","ROM","RPB","RBIS","D2OR","D2ORN","D2ORL"))) {
+      if (is.element(measure, c("MD","SMD","SMDH","ROM","RPB","RBIS","D2OR","D2ORN","D2ORL","CVR","VR"))) {
 
          mf.m1i  <- mf[[match("m1i",  names(mf))]]
          mf.m2i  <- mf[[match("m2i",  names(mf))]]
@@ -358,7 +360,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
          n1i     <- eval(mf.n1i,  data, enclos=sys.frame(sys.parent()))
          n2i     <- eval(mf.n2i,  data, enclos=sys.frame(sys.parent()))
 
-         k <- length(m1i) ### number of outcomes before subsetting
+         k <- length(n1i) ### number of outcomes before subsetting
 
          if (!is.null(subset)) {
             m1i  <- m1i[subset]
@@ -454,7 +456,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
       }
 
-      if (is.element(measure, c("MN"))) {
+      if (is.element(measure, c("MN","CVLN","SDLN"))) {
 
          mf.mi   <- mf[[match("mi",  names(mf))]]
          mf.sdi  <- mf[[match("sdi", names(mf))]]
@@ -463,7 +465,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
          sdi     <- eval(mf.sdi, data, enclos=sys.frame(sys.parent()))
          ni      <- eval(mf.ni,  data, enclos=sys.frame(sys.parent()))
 
-         k <- length(mi) ### number of outcomes before subsetting
+         k <- length(ni) ### number of outcomes before subsetting
 
          if (!is.null(subset)) {
             mi  <- mi[subset]

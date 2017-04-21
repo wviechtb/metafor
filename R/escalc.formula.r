@@ -16,17 +16,19 @@ add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("yi","vi"), digits=4,
                               "MPRD","MPRR","MPOR","MPORC","MPPETO",               ### - measures for matched pairs data
                               "IRR","IRD","IRSD",                                  ### two-group person-time data measures
                               "MD","SMD","SMDH","ROM",                             ### two-group mean/SD measures
+                              "CVR","VR",                                          ### coefficient of variation ratio, variability ratio
                               "RPB","RBIS","D2OR","D2ORN","D2ORL",                 ### - transformations to r_PB, r_BIS, and log(OR)
                               "COR","UCOR","ZCOR",                                 ### correlations (raw and r-to-z transformed)
                               "PCOR","ZPCOR","SPCOR",                              ### partial and semi-partial correlations
                               "PR","PLN","PLO","PAS","PFT",                        ### single proportions (and transformations thereof)
                               "IR","IRLN","IRS","IRFT",                            ### single-group person-time data (and transformations thereof)
-                              "MN","MC","SMCC","SMCR","SMCRH","ROMC",              ### raw/standardized mean change and log(ROM) for dependent samples
+                              "MN","CVLN","SDLN",                                  ### mean, log(CV), log(SD)
+                              "MC","SMCC","SMCR","SMCRH","ROMC",                   ### raw/standardized mean change and log(ROM) for dependent samples
                               "ARAW","AHW","ABT")))                                ### alpha (and transformations thereof)
       stop("Unknown 'measure' specified.")
 
-   if (is.element(measure, c("MC","SMCC","SMCR","SMCRH","ROMC","MPRD","MPRR","MPOR","MPORC","MPPETO","PCOR","ZPCOR","SPCOR")))
-      stop("Formula interface (currently) not implemented for these outcome measures.")
+   if (is.element(measure, c("MPRD","MPRR","MPOR","MPORC","MPPETO","CVR","VR","PCOR","ZPCOR","SPCOR","CVLN","SDLN","MC","SMCC","SMCR","SMCRH","ROMC")))
+      stop("Formula interface (currently) not implemented for this outcome measure.")
 
    if (!requireNamespace("Formula", quietly=TRUE))
       stop("Please install the 'Formula' package to use the formula interface.")

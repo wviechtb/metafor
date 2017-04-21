@@ -8,12 +8,14 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
                               "MPRD","MPRR","MPOR","MPORC","MPPETO",               ### - measures for matched pairs data
                               "IRR","IRD","IRSD",                                  ### two-group person-time data measures
                               "MD","SMD","SMDH","ROM",                             ### two-group mean/SD measures
+                              "CVR","VR",                                          ### coefficient of variation ratio, variability ratio
                               "RPB","RBIS","D2OR","D2ORN","D2ORL",                 ### - transformations to r_PB, r_BIS, and log(OR)
                               "COR","UCOR","ZCOR",                                 ### correlations (raw and r-to-z transformed)
                               "PCOR","ZPCOR","SPCOR",                              ### partial and semi-partial correlations
                               "PR","PLN","PLO","PAS","PFT",                        ### single proportions (and transformations thereof)
                               "IR","IRLN","IRS","IRFT",                            ### single-group person-time data (and transformations thereof)
-                              "MN","MC","SMCC","SMCR","SMCRH","ROMC",              ### raw/standardized mean change and log(ROM) for dependent samples
+                              "MN","CVLN","SDLN",                                  ### mean, log(CV), log(SD)
+                              "MC","SMCC","SMCR","SMCRH","ROMC",                   ### raw/standardized mean change and log(ROM) for dependent samples
                               "ARAW","AHW","ABT",                                  ### alpha (and transformations thereof)
                               "GEN")))
       stop("Unknown 'measure' specified.")
@@ -504,10 +506,10 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
       ######################################################################
 
-      if (is.element(measure, c("MD","SMD","SMDH","ROM","RPB","RBIS","D2OR","D2ORN","D2ORL"))) {
+      if (is.element(measure, c("MD","SMD","SMDH","ROM","RPB","RBIS","D2OR","D2ORN","D2ORL","CVR","VR"))) {
 
-         mf.m1i  <- mf[[match("m1i",  names(mf))]]
-         mf.m2i  <- mf[[match("m2i",  names(mf))]]
+         mf.m1i  <- mf[[match("m1i",  names(mf))]] ### for VR, do not need to supply this
+         mf.m2i  <- mf[[match("m2i",  names(mf))]] ### for VR, do not need to supply this
          mf.sd1i <- mf[[match("sd1i", names(mf))]]
          mf.sd2i <- mf[[match("sd2i", names(mf))]]
          mf.n1i  <- mf[[match("n1i",  names(mf))]]
@@ -528,11 +530,29 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
             n2i  <- n2i[subset]
          }
 
-         if (length(m1i)==0L || length(m2i)==0L || length(sd1i)==0L || length(sd2i)==0L || length(n1i)==0L || length(n2i)==0L)
-            stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments.")
+         ### for these measures, need m1i, m2i, sd1i, sd2i, n1i, and n2i
 
-         if (!all(length(m1i) == c(length(m1i),length(m2i),length(sd1i),length(sd2i),length(n1i),length(n2i))))
-            stop("Supplied data vectors are not all of the same length.")
+         if (is.element(measure, c("MD","SMD","SMDH","ROM","RPB","RBIS","D2OR","D2ORN","D2ORL","CVR"))) {
+
+            if (length(m1i)==0L || length(m2i)==0L || length(sd1i)==0L || length(sd2i)==0L || length(n1i)==0L || length(n2i)==0L)
+               stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments.")
+
+            if (!all(length(m1i) == c(length(m1i),length(m2i),length(sd1i),length(sd2i),length(n1i),length(n2i))))
+               stop("Supplied data vectors are not all of the same length.")
+
+         }
+
+         ### for this measure, need sd1i, sd2i, n1i, and n2i
+
+         if (is.element(measure, c("VR"))) {
+
+            if (length(sd1i)==0L || length(sd2i)==0L || length(n1i)==0L || length(n2i)==0L)
+               stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments.")
+
+            if (!all(length(sd1i) == c(length(sd1i),length(sd2i),length(n1i),length(n2i))))
+               stop("Supplied data vectors are not all of the same length.")
+
+         }
 
          if (any(c(sd1i, sd2i) < 0, na.rm=TRUE))
             stop("One or more standard deviations are negative.")
@@ -542,7 +562,7 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
          ni.u <- n1i + n2i ### unadjusted total sample sizes
 
-         k <- length(m1i)
+         k <- length(n1i)
 
          ni <- ni.u
          mi <- ni - 2
@@ -710,6 +730,20 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
             vi <- 1.65^2 * (1/n1i + 1/n2i + di^2/(2*ni))
          }
 
+         ### coefficient of variation ratio
+
+         if (measure == "CVR") {
+            yi <- log(sd1i/m1i) + 1/(2*(n1i-1)) - log(sd2i/m2i) - 1/(2*(n2i-1))
+            vi <- 1/(2*(n1i-1)) + sd1i^2/(n1i*m1i^2) + 1/(2*(n2i-1)) + sd2i^2/(n2i*m2i^2)
+         }
+
+         ### variability ratio
+
+         if (measure == "VR") {
+            yi <- log(sd1i/sd2i) + 1/(2*(n1i-1)) - 1/(2*(n2i-1))
+            vi <- 1/(2*(n1i-1)) + 1/(2*(n2i-1))
+         }
+
       }
 
       ######################################################################
@@ -859,16 +893,22 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
          k <- length(ti)
 
+         ### partial correlation coefficient
+
          if (measure == "PCOR") {
             yi <- ti / sqrt(ti^2 + (ni - mi - 1))
             vi <- (1 - yi^2)^2 / (ni - mi - 1)
          }
+
+         ### r-to-z transformed partial correlation
 
          if (measure == "ZPCOR") {
             yi <- ti / sqrt(ti^2 + (ni - mi - 1))
             yi <- 1/2 * log((1+yi)/(1-yi))
             vi <- 1/(ni-mi-1)
          }
+
+         ### semi-partial correlation coefficient
 
          if (measure == "SPCOR") {
             yi <- ti * sqrt(1 - r2i) / sqrt(ni - mi - 1)
@@ -1146,9 +1186,9 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
       ######################################################################
 
-      if (is.element(measure, c("MN"))) {
+      if (is.element(measure, c("MN","CVLN","SDLN"))) {
 
-         mf.mi   <- mf[[match("mi",  names(mf))]]
+         mf.mi   <- mf[[match("mi",  names(mf))]] ### for SDLN, do not need to supply this
          mf.sdi  <- mf[[match("sdi", names(mf))]]
          mf.ni   <- mf[[match("ni",  names(mf))]]
          mi      <- eval(mf.mi,  data, enclos=sys.frame(sys.parent()))
@@ -1161,11 +1201,29 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
             ni  <- ni[subset]
          }
 
-         if (length(mi)==0L || length(sdi)==0L || length(ni)==0L)
-            stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments.")
+         ### for these measures, need mi, sdi, and ni
 
-         if (!all(length(mi) == c(length(mi),length(sdi),length(ni))))
-            stop("Supplied data vectors are not all of the same length.")
+         if (is.element(measure, c("MN","CVLN"))) {
+
+            if (length(mi)==0L || length(sdi)==0L || length(ni)==0L)
+               stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments.")
+
+            if (!all(length(mi) == c(length(mi),length(sdi),length(ni))))
+               stop("Supplied data vectors are not all of the same length.")
+
+         }
+
+         ### for this measure, need sdi and ni
+
+         if (is.element(measure, c("SDLN"))) {
+
+            if (length(sdi)==0L || length(ni)==0L)
+               stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments.")
+
+            if (length(sdi) != length(ni))
+               stop("Supplied data vectors are not all of the same length.")
+
+         }
 
          if (any(sdi < 0, na.rm=TRUE))
             stop("One or more standard deviations are negative.")
@@ -1173,13 +1231,30 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
          if (any(ni < 0, na.rm=TRUE))
             stop("One or more sample sizes are negative.")
 
+         if (measure=="CVLN" && any(mi < 0, na.rm=TRUE))
+            stop("One or more means are negative.")
+
          ni.u <- ni ### unadjusted total sample sizes
 
-         ### (raw) means
+         ### (raw) mean
 
          if (measure == "MN") {
             yi <- mi
             vi <- sdi^2/ni
+         }
+
+         ### log(CV) with bias correction
+
+         if (measure == "CVLN") {
+            yi <- log(sdi/mi) + 1/(2*(ni-1))
+            vi <- 1/(2*(ni-1)) + sdi^2/(ni*mi^2)
+         }
+
+         ### log(SD) with bias correction
+
+         if (measure == "SDLN") {
+            yi <- log(sdi) + 1/(2*(ni-1))
+            vi <- 1/(2*(ni-1))
          }
 
       }
@@ -1223,9 +1298,11 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
             if (any(c(sd1i, sd2i) < 0, na.rm=TRUE))
                stop("One or more standard deviations are negative.")
 
-         } else {
+         }
 
-            ### for SMCR, need m1i, m2i, sd1i, ni, and ri (do not need sd2i!)
+         if (is.element(measure, c("SMCR"))) {
+
+            ### for this measure, need m1i, m2i, sd1i, ni, and ri (do not need sd2i!)
 
             if (length(m1i)==0L || length(m2i)==0L || length(sd1i)==0L || length(ni)==0L || length(ri)==0L)
                stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments.")

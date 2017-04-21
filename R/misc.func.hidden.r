@@ -1383,6 +1383,28 @@
             lab <- "Transformed Point-Biserial Correlation"
          }
       }
+      if (measure == "CVR") {
+         if (transf.char == "FALSE" && atransf.char == "FALSE") {
+            lab <- "Log Coefficient of Variation Ratio"
+         } else {
+            lab <- "Transformed Log Coefficient of Variation Ratio"
+            if (atransf.char == "exp" || atransf.char == "transf.exp.int")
+               lab <- "Coefficient of Variation Ratio (log scale)"
+            if (transf.char == "exp" || transf.char == "transf.exp.int")
+               lab <- "Coefficient of Variation Ratio"
+         }
+      }
+      if (measure == "VR") {
+         if (transf.char == "FALSE" && atransf.char == "FALSE") {
+            lab <- "Log Variability Ratio"
+         } else {
+            lab <- "Transformed Log Variability Ratio"
+            if (atransf.char == "exp" || atransf.char == "transf.exp.int")
+               lab <- "Variability Ratio (log scale)"
+            if (transf.char == "exp" || transf.char == "transf.exp.int")
+               lab <- "Variability Ratio"
+         }
+      }
       ######################################################################
       if (is.element(measure, c("COR","UCOR","RTET","RBIS"))) {
          if (transf.char == "FALSE" && atransf.char == "FALSE") {
@@ -1527,6 +1549,28 @@
             lab <- "Mean"
          } else {
             lab <- "Transformed Mean"
+         }
+      }
+      if (measure == "CVLN") {
+         if (transf.char == "FALSE" && atransf.char == "FALSE") {
+            lab <- "Log Coefficient of Variation"
+         } else {
+            lab <- "Transformed Log Coefficient of Variation"
+            if (atransf.char == "exp" || atransf.char == "transf.exp.int")
+               lab <- "Coefficient of Variation (log scale)"
+            if (transf.char == "exp" || transf.char == "transf.exp.int")
+               lab <- "Coefficient of Variation"
+         }
+      }
+      if (measure == "SDLN") {
+         if (transf.char == "FALSE" && atransf.char == "FALSE") {
+            lab <- "Log Standard Deviation"
+         } else {
+            lab <- "Transformed Log Standard Deviation"
+            if (atransf.char == "exp" || atransf.char == "transf.exp.int")
+               lab <- "Standard Deviation (log scale)"
+            if (transf.char == "exp" || transf.char == "transf.exp.int")
+               lab <- "Standard Deviation"
          }
       }
       ######################################################################
