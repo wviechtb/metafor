@@ -22,7 +22,7 @@ add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("yi","vi"), digits=4,
                               "PCOR","ZPCOR","SPCOR",                              ### partial and semi-partial correlations
                               "PR","PLN","PLO","PAS","PFT",                        ### single proportions (and transformations thereof)
                               "IR","IRLN","IRS","IRFT",                            ### single-group person-time data (and transformations thereof)
-                              "MN","CVLN","SDLN",                                  ### mean, log(CV), log(SD)
+                              "MN","MNLN","CVLN","SDLN",                           ### mean, log(mean), log(CV), log(SD)
                               "MC","SMCC","SMCR","SMCRH","ROMC",                   ### raw/standardized mean change and log(ROM) for dependent samples
                               "ARAW","AHW","ABT")))                                ### alpha (and transformations thereof)
       stop("Unknown 'measure' specified.")
@@ -334,7 +334,7 @@ add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("yi","vi"), digits=4,
 
    #########################################################################
 
-   if (is.element(measure, c("MN"))) {
+   if (is.element(measure, c("MN","MNLN"))) {
 
       if (is.null(weights))
          stop("Must specify the 'weights' argument.")

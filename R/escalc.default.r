@@ -14,7 +14,7 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
                               "PCOR","ZPCOR","SPCOR",                              ### partial and semi-partial correlations
                               "PR","PLN","PLO","PAS","PFT",                        ### single proportions (and transformations thereof)
                               "IR","IRLN","IRS","IRFT",                            ### single-group person-time data (and transformations thereof)
-                              "MN","CVLN","SDLN",                                  ### mean, log(CV), log(SD)
+                              "MN","MNLN","CVLN","SDLN",                           ### mean, log(mean), log(CV), log(SD)
                               "MC","SMCC","SMCR","SMCRH","ROMC",                   ### raw/standardized mean change and log(ROM) for dependent samples
                               "ARAW","AHW","ABT",                                  ### alpha (and transformations thereof)
                               "GEN")))
@@ -1186,7 +1186,7 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
       ######################################################################
 
-      if (is.element(measure, c("MN","CVLN","SDLN"))) {
+      if (is.element(measure, c("MN","MNLN","CVLN","SDLN"))) {
 
          mf.mi   <- mf[[match("mi",  names(mf))]] ### for SDLN, do not need to supply this
          mf.sdi  <- mf[[match("sdi", names(mf))]]
@@ -1203,7 +1203,7 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
          ### for these measures, need mi, sdi, and ni
 
-         if (is.element(measure, c("MN","CVLN"))) {
+         if (is.element(measure, c("MN","MNLN","CVLN"))) {
 
             if (length(mi)==0L || length(sdi)==0L || length(ni)==0L)
                stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments.")
@@ -1231,7 +1231,7 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
          if (any(ni < 0, na.rm=TRUE))
             stop("One or more sample sizes are negative.")
 
-         if (measure=="CVLN" && any(mi < 0, na.rm=TRUE))
+         if (is.element(measure, c("MNLN","CVLN")) && any(mi < 0, na.rm=TRUE))
             stop("One or more means are negative.")
 
          ni.u <- ni ### unadjusted total sample sizes
@@ -1241,6 +1241,13 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
          if (measure == "MN") {
             yi <- mi
             vi <- sdi^2/ni
+         }
+
+         ### log(mean)
+
+         if (measure == "MNLN") {
+            yi <- log(mi)
+            vi <- sdi^2/(ni*mi^2)
          }
 
          ### log(CV) with bias correction

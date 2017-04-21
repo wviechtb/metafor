@@ -1551,6 +1551,17 @@
             lab <- "Transformed Mean"
          }
       }
+      if (measure == "MNLN") {
+         if (transf.char == "FALSE" && atransf.char == "FALSE") {
+            lab <- "Log Mean"
+         } else {
+            lab <- "Transformed Log Mean"
+            if (atransf.char == "exp" || atransf.char == "transf.exp.int")
+               lab <- "Mean (log scale)"
+            if (transf.char == "exp" || transf.char == "transf.exp.int")
+               lab <- "Mean"
+         }
+      }
       if (measure == "CVLN") {
          if (transf.char == "FALSE" && atransf.char == "FALSE") {
             lab <- "Log Coefficient of Variation"

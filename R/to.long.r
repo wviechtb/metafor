@@ -14,7 +14,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
                               "PCOR","ZPCOR","SPCOR",                              ### partial and semi-partial correlations
                               "PR","PLN","PLO","PAS","PFT",                        ### single proportions (and transformations thereof)
                               "IR","IRLN","IRS","IRFT",                            ### single-group person-time data (and transformations thereof)
-                              "MN","CVLN","SDLN",                                  ### mean, log(CV), log(SD)
+                              "MN","MNLN","CVLN","SDLN",                           ### mean, log(mean), log(CV), log(SD)
                               "MC","SMCC","SMCR","SMCRH","ROMC",                   ### raw/standardized mean change and log(ROM) for dependent samples
                               "ARAW","AHW","ABT")))                                ### alpha (and transformations thereof)
       stop("Unknown 'measure' specified.")
@@ -449,7 +449,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
    #########################################################################
 
-   if (is.element(measure, c("MN"))) {
+   if (is.element(measure, c("MN","MNLN"))) {
 
       mf.mi   <- mf[[match("mi",  names(mf))]]
       mf.sdi  <- mf[[match("sdi", names(mf))]]
@@ -477,6 +477,9 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
       if (any(ni < 0, na.rm=TRUE))
          stop("One or more sample sizes are negative.")
+
+      if (is.element(measure, c("MNLN","CVLN")) && any(mi < 0, na.rm=TRUE))
+         stop("One or more means are negative.")
 
       ni.u <- ni ### unadjusted total sample sizes
 
@@ -1227,7 +1230,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
    #########################################################################
 
-   if (is.element(measure, c("MN"))) {
+   if (is.element(measure, c("MN","MNLN"))) {
 
       ### check for NAs in table data and act accordingly
 
@@ -1252,7 +1255,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
       }
 
-      k <- length(mi)
+      k <- length(ni)
 
       ### at least one study left?
 

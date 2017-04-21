@@ -23,7 +23,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
                               "PCOR","ZPCOR","SPCOR",                              ### partial and semi-partial correlations
                               "PR","PLN","PLO","PAS","PFT",                        ### single proportions (and transformations thereof)
                               "IR","IRLN","IRS","IRFT",                            ### single-group person-time data (and transformations thereof)
-                              "MN","CVLN","SDLN",                                  ### mean, log(CV), log(SD)
+                              "MN","MNLN","CVLN","SDLN",                           ### mean, log(mean), log(CV), log(SD)
                               "MC","SMCC","SMCR","SMCRH","ROMC",                   ### raw/standardized mean change and log(ROM) for dependent samples
                               "ARAW","AHW","ABT",                                  ### alpha (and transformations thereof)
                               "GEN")))
@@ -456,7 +456,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
       }
 
-      if (is.element(measure, c("MN","CVLN","SDLN"))) {
+      if (is.element(measure, c("MN","MNLN","CVLN","SDLN"))) {
 
          mf.mi   <- mf[[match("mi",  names(mf))]]
          mf.sdi  <- mf[[match("sdi", names(mf))]]
