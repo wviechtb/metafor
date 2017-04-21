@@ -1,4 +1,4 @@
-escalc.default <- function(measure, formula, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, m1i, m2i, sd1i, sd2i, xi, mi, ri, ti, sdi, ni, yi, vi, sei,
+escalc.default <- function(measure, formula, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, m1i, m2i, sd1i, sd2i, xi, mi, ri, ti, sdi, r2i, ni, yi, vi, sei,
 data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("yi","vi"), add.measure=FALSE, append=TRUE, replace=TRUE, digits=4, ...) {
 
    ### check argument specifications
@@ -10,6 +10,7 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
                               "MD","SMD","SMDH","ROM",                             ### two-group mean/SD measures
                               "RPB","RBIS","D2OR","D2ORN","D2ORL",                 ### - transformations to r_PB, r_BIS, and log(OR)
                               "COR","UCOR","ZCOR",                                 ### correlations (raw and r-to-z transformed)
+                              "PCOR","ZPCOR","SPCOR",                              ### partial and semi-partial correlations
                               "PR","PLN","PLO","PAS","PFT",                        ### single proportions (and transformations thereof)
                               "IR","IRLN","IRS","IRFT",                            ### single-group person-time data (and transformations thereof)
                               "MN","MC","SMCC","SMCR","SMCRH","ROMC",              ### raw/standardized mean change and log(ROM) for dependent samples
@@ -807,6 +808,72 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
          ### set sampling variances for ni <= 4 to NA
 
          vi[ni <= 4] <- NA
+
+      }
+
+      ######################################################################
+
+      if (is.element(measure, c("PCOR","ZPCOR","SPCOR"))) {
+
+         mf.ti   <- mf[[match("ti",  names(mf))]]
+         mf.r2i  <- mf[[match("r2i", names(mf))]]
+         mf.mi   <- mf[[match("mi",  names(mf))]]
+         mf.ni   <- mf[[match("ni",  names(mf))]]
+         ti      <- eval(mf.ti,  data, enclos=sys.frame(sys.parent()))
+         r2i     <- eval(mf.r2i, data, enclos=sys.frame(sys.parent()))
+         mi      <- eval(mf.mi,  data, enclos=sys.frame(sys.parent()))
+         ni      <- eval(mf.ni,  data, enclos=sys.frame(sys.parent()))
+
+         if (!is.null(subset)) {
+            ti  <- ti[subset]
+            r2i <- r2i[subset]
+            mi  <- mi[subset]
+            ni  <- ni[subset]
+         }
+
+         if (measure=="PCOR" && (length(ti)==0L || length(ni)==0L || length(mi)==0L))
+            stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments.")
+
+         if (measure=="SPCOR" && (length(ti)==0L || length(ni)==0L || length(mi)==0L || length(r2i)==0L))
+            stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments.")
+
+         if (measure=="PCOR" && !all(length(ti) == c(length(ni),length(mi))))
+            stop("Supplied data vectors are not all of the same length.")
+
+         if (measure=="SPCOR" && !all(length(ti) == c(length(ni),length(mi),length(r2i))))
+            stop("Supplied data vectors are not all of the same length.")
+
+         if (measure=="SPCOR" && any(r2i > 1 | r2i < 0, na.rm=TRUE))
+            stop("One or more R^2 values are > 1 or < 0.")
+
+         if (any(ni < 0, na.rm=TRUE))
+            stop("One or more sample sizes are negative.")
+
+         if (any(mi < 0, na.rm=TRUE))
+            stop("One or more mi values are negative.")
+
+         if (any(ni - mi - 1 < 1, na.rm=TRUE))
+            stop("One or more dfs are < 1.")
+
+         ni.u <- ni ### unadjusted total sample sizes
+
+         k <- length(ti)
+
+         if (measure == "PCOR") {
+            yi <- ti / sqrt(ti^2 + (ni - mi - 1))
+            vi <- (1 - yi^2)^2 / (ni - mi - 1)
+         }
+
+         if (measure == "ZPCOR") {
+            yi <- ti / sqrt(ti^2 + (ni - mi - 1))
+            yi <- 1/2 * log((1+yi)/(1-yi))
+            vi <- 1/(ni-mi-1)
+         }
+
+         if (measure == "SPCOR") {
+            yi <- ti * sqrt(1 - r2i) / sqrt(ni - mi - 1)
+            vi <- (r2i^2 - 2*r2i + (r2i - yi^2) + 1 - (r2i - yi^2)^2) / ni
+         }
 
       }
 

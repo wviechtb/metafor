@@ -1403,6 +1403,32 @@
          }
       }
       ######################################################################
+      if (measure == "PCOR") {
+         if (transf.char == "FALSE" && atransf.char == "FALSE") {
+            lab <- "Partial Correlation Coefficient"
+         } else {
+            lab <- "Transformed Partial Correlation Coefficient"
+         }
+      }
+      if (measure == "ZPCOR") {
+         if (transf.char == "FALSE" && atransf.char == "FALSE") {
+            lab <- "Fisher's z Transformed Partial Correlation Coefficient"
+         } else {
+            lab <- "Transformed Fisher's z Transformed Partial Correlation Coefficient"
+            if (atransf.char == "transf.ztor" || atransf.char == "transf.ztor.int")
+               lab <- "Partial Correlation Coefficient"
+            if (transf.char == "transf.ztor" || transf.char == "transf.ztor.int")
+               lab <- "Partial Correlation Coefficient"
+         }
+      }
+      if (measure == "SPCOR") {
+         if (transf.char == "FALSE" && atransf.char == "FALSE") {
+            lab <- "Semi-Partial Correlation Coefficient"
+         } else {
+            lab <- "Transformed Semi-Partial Correlation Coefficient"
+         }
+      }
+      ######################################################################
       if (measure == "PR") {
          if (transf.char == "FALSE" && atransf.char == "FALSE") {
             lab <- "Proportion"

@@ -1,4 +1,4 @@
-rma <- rma.uni <- function(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, m1i, m2i, sd1i, sd2i, xi, mi, ri, ti, sdi, ni, mods, #scale,
+rma <- rma.uni <- function(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, m1i, m2i, sd1i, sd2i, xi, mi, ri, ti, sdi, r2i, ni, mods, #scale,
 measure="GEN", intercept=TRUE,
 data, slab, subset,
 add=1/2, to="only0", drop00=FALSE, vtype="LS",
@@ -19,6 +19,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
                               "MD","SMD","SMDH","ROM",                             ### two-group mean/SD measures
                               "RPB","RBIS","D2OR","D2ORN","D2ORL",                 ### - transformations to r_PB, r_BIS, and log(OR)
                               "COR","UCOR","ZCOR",                                 ### correlations (raw and r-to-z transformed)
+                              "PCOR","ZPCOR","SPCOR",                              ### partial and semi-partial correlations
                               "PR","PLN","PLO","PAS","PFT",                        ### single proportions (and transformations thereof)
                               "IR","IRLN","IRS","IRFT",                            ### single-group person-time data (and transformations thereof)
                               "MN","MC","SMCC","SMCR","SMCRH","ROMC",              ### raw/standardized mean change and log(ROM) for dependent samples
@@ -387,6 +388,30 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
          }
 
          dat <- escalc(measure=measure, ri=ri, ni=ni, vtype=vtype)
+
+      }
+
+      if (is.element(measure, c("PCOR","ZPCOR","SPCOR"))) {
+
+         mf.ti   <- mf[[match("ti",  names(mf))]]
+         mf.r2i  <- mf[[match("r2i", names(mf))]]
+         mf.mi   <- mf[[match("mi",  names(mf))]]
+         mf.ni   <- mf[[match("ni",  names(mf))]]
+         ti      <- eval(mf.ti,  data, enclos=sys.frame(sys.parent()))
+         r2i     <- eval(mf.r2i, data, enclos=sys.frame(sys.parent()))
+         mi      <- eval(mf.mi,  data, enclos=sys.frame(sys.parent()))
+         ni      <- eval(mf.ni,  data, enclos=sys.frame(sys.parent()))
+
+         k <- length(ti) ### number of outcomes before subsetting
+
+         if (!is.null(subset)) {
+            ti  <- ti[subset]
+            r2i <- r2i[subset]
+            mi  <- mi[subset]
+            ni  <- ni[subset]
+         }
+
+         dat <- escalc(measure=measure, ti=ti, r2i=r2i, mi=mi, ni=ni, vtype=vtype)
 
       }
 

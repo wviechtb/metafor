@@ -16,7 +16,8 @@
 escalc(measure, formula, \dots)
 
 \method{escalc}{default}(measure, formula, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
-       m1i, m2i, sd1i, sd2i, xi, mi, ri, ti, sdi, ni, yi, vi, sei, data, slab, subset,
+       m1i, m2i, sd1i, sd2i, xi, mi, ri, ti, sdi, r2i, ni, yi, vi, sei,
+       data, slab, subset,
        add=1/2, to="only0", drop00=FALSE, vtype="LS",
        var.names=c("yi","vi"), add.measure=FALSE,
        append=TRUE, replace=TRUE, digits=4, \dots)
@@ -48,6 +49,7 @@ escalc(measure, formula, \dots)
    \item{ri}{vector to specify the raw correlation coefficients.}
    \item{ti}{vector to specify the total person-times.}
    \item{sdi}{vector to specify the standard deviations.}
+   \item{r2i}{vector to specify the \eqn{R^2} values.}
    \item{ni}{vector to specify the sample/group sizes.}
    \item{yi}{vector to specify the observed effect size or outcomes.}
    \item{vi}{vector to specify the corresponding sampling variances.}
@@ -194,7 +196,7 @@ escalc(measure, formula, \dots)
          \itemize{
          \item \code{"COR"} for the \emph{raw correlation coefficient}.
          \item \code{"UCOR"} for the \emph{raw correlation coefficient} corrected for its slight negative bias (based on equation 2.3 in Olkin & Pratt, 1958).
-         \item \code{"ZCOR"} for the \emph{Fisher's r-to-z transformed correlation coefficient} (Fisher, 1921).
+         \item \code{"ZCOR"} for \emph{Fisher's r-to-z transformed correlation coefficient} (Fisher, 1921).
          } For \code{measure="UCOR"}, one can choose between \code{vtype="LS"} (the default) and \code{vtype="UB"}. The former uses the usual large-sample approximation to compute the sampling variances. The latter provides unbiased estimates of the sampling variances (see Hedges, 1989, but using the exact equation instead of the approximation).
 
          Datasets corresponding to data of this type are provided in \code{\link{dat.mcdaniel1994}} and \code{\link{dat.molloy2014}}.
@@ -276,7 +278,7 @@ escalc(measure, formula, \dots)
 
    }
 
-   \subsection{Outcome Measures for Change or Matched Pairs.}{
+   \subsection{Outcome Measures for Change or Matched Pairs}{
 
       A more complicated situation arises when the purpose of the meta-analysis is to assess the amount of change within individual groups (e.g., before and after a treatment or under two different treatments) or when dealing with matched pairs designs.
 
@@ -287,7 +289,7 @@ escalc(measure, formula, \dots)
                          \tab trt 2 outcome 1 \tab trt 2 outcome 2 \cr
          trt 1 outcome 1 \tab \code{ai}       \tab \code{bi} \cr
          trt 1 outcome 2 \tab \code{ci}       \tab \code{di}
-         } where \code{ai}, \code{bi}, \code{ci}, and \code{di} denote the cell frequencies. Note that \code{trt1} and \code{trt2} may be applied to a single group of subjects or to matched pairs of subjects. The data from such a study can be rearranged into a marginal table of the form:
+         } where \code{ai}, \code{bi}, \code{ci}, and \code{di} denote the cell frequencies. Note that \sQuote{trt1} and \sQuote{trt2} may be applied to a single group of subjects or to matched pairs of subjects. The data from such a study can be rearranged into a marginal table of the form:
          \tabular{lcc}{
                \tab outcome 1    \tab outcome 2 \cr
          trt 1 \tab \code{ai+bi} \tab \code{ci+di} \cr
@@ -340,6 +342,17 @@ escalc(measure, formula, \dots)
          } Note that the transformations implemented here are slightly different from the ones described by Hakstian and Whalen (1976) and Bonett (2002). In particular, for \code{"AHW"}, the transformation \eqn{1-(1-\alpha)^{1/3}}{1-(1-\alpha)^(1/3)} is used, while for \code{"ABT"}, the transformation \eqn{-ln(1-\alpha)} is used. This ensures that the transformed values are monotonically increasing functions of \eqn{\alpha}.
 
          A dataset corresponding to data of this type is provided in \code{\link{dat.bonett2010}}.
+
+      }
+
+      \subsection{Partial and Semi-Partial Correlations}{
+
+         Aloe and Becker (2012), Aloe and Thompson (2013), and Aloe (2014) describe the use of partial and semi-partial correlation coefficients as a method for meta-analyzing the results from regression models (when the focus is on a common regression coefficient of interest across studies). To compute these measures, one needs to specify \code{ti} for the test statistics (i.e., t-tests) of the regression coefficient of interest, \code{ni} for the sample sizes of the studies, \code{mi} for the number of predictors in the regression models, and \code{r2i} for the \eqn{R^2} value of the regression models (the latter is only needed when \code{measure="SPCOR"}). The options for the \code{measure} argument are then:
+         \itemize{
+         \item \code{"PCOR"} for the \emph{partial correlation coefficient}.
+         \item \code{"ZPCOR"} for \emph{Fisher's r-to-z transformed partial correlation coefficient}.
+         \item \code{"SPCOR"} for the \emph{semi-partial correlation coefficient}.
+         } Note that the sign of the (semi-)partial correlation coefficients is determined based on the signs of the values specified via the \code{ti} argument. Also, Fisher's variance stabilizing transformation can only be applied to partial correlation coefficient, not semi-partial coefficients.
 
       }
 
@@ -431,6 +444,12 @@ escalc(measure, formula, \dots)
 
          }
 
+         \subsection{Partial and Semi-Partial Correlations}{
+
+            The formula interface is currently not implemented for these measures.
+
+         }
+
       }
 
    }
@@ -464,6 +483,13 @@ escalc(measure, formula, \dots)
    author homepage: \url{http://www.wvbauer.com/}
 }
 \references{
+
+   Aloe, A. M. (2014). An empirical investigation of partial effect sizes in meta-analysis of correlational data. \emph{Journal of General Psychology}, \bold{141}, 47--64.
+
+   Aloe, A. M., & Becker, B. J. (2012). An effect size for regression predictors in meta-analysis. \emph{Journal of Educational and Behavioral Statistics}, \bold{37}, 278--297.
+
+   Aloe, A. M., & Thompson, C. G. (2013). The synthesis of partial effect sizes. \emph{Journal of the Society for Social Work and Research}, \bold{4}, 390--405.
+
    Bagos, P. G., & Nikolopoulos, G. K. (2009). Mixed-effects Poisson regression models for meta-analysis of follow-up studies with constant or varying durations. \emph{The International Journal of Biostatistics}, \bold{5}(1), article 21.
 
    Becker, B. J. (1988). Synthesizing standardized mean-change measures. \emph{British Journal of Mathematical and Statistical Psychology}, \bold{41}, 257--278.
