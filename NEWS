@@ -77,6 +77,8 @@ Changes in Version 2.0-0 (2017-04-23)
 
    o some general code cleanup
 
+   o renamed diagram_metafor.pdf vignette to just diagram.pdf
+
    o minor updates in the documentation
 
 

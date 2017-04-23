@@ -3,7 +3,7 @@ xlim, alim, clim, ylim, at, steps=5, level=95,      refline=0, digits=2L, width,
 xlab, slab,            ilab, ilab.xpos, ilab.pos, subset,
 transf, atransf, targs, rows,
 efac=1, pch=15, psize, col, lty,
-cex, cex.lab, cex.axis, ...) {
+cex, cex.lab, cex.axis, annosym, ...) {
 
    #########################################################################
 
@@ -75,6 +75,11 @@ cex, cex.lab, cex.axis, ...) {
 
    if (length(efac) == 1L)
       efac <- rep(efac, 2)
+
+   if (missing(annosym))
+      annosym <- c(" [", ", ", "]")
+   if (length(annosym) != 3)
+      stop("Argument 'annosym' must be a vector of length 3.")
 
    #########################################################################
 
@@ -544,9 +549,9 @@ cex, cex.lab, cex.axis, ...) {
       }
 
       if (showweights) {
-         annotext <- cbind(annotext[,1], "%   ", annotext[,2], " [", annotext[,3], ", ", annotext[,4], "]")
+         annotext <- cbind(annotext[,1], "%   ", annotext[,2], annosym[1], annotext[,3], annosym[2], annotext[,4], annosym[3])
       } else {
-         annotext <- cbind(annotext[,1], " [", annotext[,2], ", ", annotext[,3], "]")
+         annotext <- cbind(annotext[,1], annosym[1], annotext[,2], annosym[2], annotext[,3], annosym[3])
       }
 
       annotext <- apply(annotext, 1, paste, collapse="")

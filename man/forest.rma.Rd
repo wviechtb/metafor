@@ -9,7 +9,7 @@
        xlab, slab, mlab, ilab, ilab.xpos, ilab.pos,
        order, transf, atransf, targs, rows,
        efac=1, pch=15, psize, col, border, lty,
-       cex, cex.lab, cex.axis, \dots)
+       cex, cex.lab, cex.axis, annosym, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma"}.}
@@ -47,6 +47,7 @@
    \item{col}{optional character string specifying the name of a color to use for the summary polygon or fitted values. If unspecified, the function sets a default color.}
    \item{border}{optional character string specifying the name of a color to use for the border of the summary polygon or fitted values. If unspecified, the function sets a default color.}
    \item{lty}{optional character string specifying the line type for the confidence intervals (if unspecified, the function sets this to \code{"solid"} by default).}
+   \item{annosym}{optional vector of length 3 to change the left bracket, separation, and right bracket symbols for the annotations.}
    \item{\dots}{other arguments.}
 }
 \details{

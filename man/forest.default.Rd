@@ -9,7 +9,7 @@
        xlab, slab, ilab, ilab.xpos, ilab.pos,
        subset, transf, atransf, targs, rows,
        efac=1, pch=15, psize, col, lty,
-       cex, cex.lab, cex.axis, \dots)
+       cex, cex.lab, cex.axis, annosym, \dots)
 }
 \arguments{
    \item{x}{vector of length \eqn{k} with the observed effect sizes or outcomes.}
@@ -47,6 +47,7 @@
    \item{cex}{optional character and symbol expansion factor. If unspecified, the function tries to set this to a sensible value.}
    \item{cex.lab}{optional expansion factor for the x-axis title. If unspecified, the function tries to set this to a sensible value.}
    \item{cex.axis}{optional expansion factor for the x-axis labels. If unspecified, the function tries to set this to a sensible value.}
+   \item{annosym}{optional vector of length 3 to change the left bracket, separation, and right bracket symbols for the annotations.}
    \item{\dots}{other arguments.}
 }
 \details{

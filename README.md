@@ -2,7 +2,7 @@ metafor: A Meta-Analysis Package for R
 ======================================
 
 [![Build Status](https://travis-ci.org/wviechtb/metafor.svg?branch=master)](https://travis-ci.org/wviechtb/metafor)
-[![Code Coverage](https://img.shields.io/codecov/c/github/wviechtb/metafor.svg)](https://codecov.io/github/wviechtb/metafor?branch=master)
+[![Code Coverage](https://codecov.io/gh/wviechtb/metafor/branch/master/graph/badge.svg)](https://codecov.io/gh/wviechtb/metafor)
 [![CRAN Version](http://www.r-pkg.org/badges/version/metafor)](https://cran.r-project.org/package=metafor)
 [![Monthly Downloads](http://cranlogs.r-pkg.org/badges/metafor)](http://cranlogs.r-pkg.org/badges/metafor)
 [![Total Downloads](http://cranlogs.r-pkg.org/badges/grand-total/metafor)](http://cranlogs.r-pkg.org/badges/grand-total/metafor)
