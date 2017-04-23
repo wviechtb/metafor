@@ -1269,13 +1269,13 @@
       ######################################################################
       if (is.element(measure, c("RR","MPRR"))) {
          if (transf.char == "FALSE" && atransf.char == "FALSE") {
-            lab <- "Log Relative Risk"
+            lab <- "Log Risk Ratio"
          } else {
-            lab <- "Transformed Log Relative Risk"
+            lab <- "Transformed Log Risk Ratio"
             if (atransf.char == "exp" || atransf.char == "transf.exp.int")
-               lab <- "Relative Risk (log scale)"
+               lab <- "Risk Ratio (log scale)"
             if (transf.char == "exp" || transf.char == "transf.exp.int")
-               lab <- "Relative Risk"
+               lab <- "Risk Ratio"
          }
       }
       if (is.element(measure, c("OR","PETO","D2OR","D2ORN","D2ORL","MPOR","MPORC","MPPETO"))) {
@@ -1329,7 +1329,7 @@
          if (transf.char == "FALSE" && atransf.char == "FALSE") {
             lab <- "Log Incidence Rate Ratio"
          } else {
-            lab <- "Transformed Log Incidence Relative Risk"
+            lab <- "Transformed Log Incidence Rate Ratio"
             if (atransf.char == "exp" || atransf.char == "transf.exp.int")
                lab <- "Incidence Rate Ratio (log scale)"
             if (transf.char == "exp" || transf.char == "transf.exp.int")

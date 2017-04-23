@@ -26,7 +26,7 @@ test_that("plot can be drawn.", {
           ilab=cbind(dat.bcg$tpos, dat.bcg$tneg, dat.bcg$cpos, dat.bcg$cneg),
           ilab.xpos=c(-9.5,-8,-6,-4.5), cex=.75, ylim=c(-1, 27),
           order=order(dat.bcg$alloc), rows=c(3:4,9:15,20:23),
-          xlab="Relative Risk", mlab="RE Model for All Studies", psize=1)
+          xlab="Risk Ratio", mlab="RE Model for All Studies", psize=1)
 
    ### set font expansion factor (as in forest() above) and use bold italic
    ### font and save original settings in object 'op'
@@ -43,8 +43,8 @@ test_that("plot can be drawn.", {
    ### add column headings to the plot
    text(c(-9.5,-8,-6,-4.5), 26, c("TB+", "TB-", "TB+", "TB-"))
    text(c(-8.75,-5.25),     27, c("Vaccinated", "Control"))
-   text(-16,                26, "Author(s) and Year",     pos=4)
-   text(6,                  26, "Relative Risk [95% CI]", pos=2)
+   text(-16,                26, "Author(s) and Year",  pos=4)
+   text(6,                  26, "Risk Ratio [95% CI]", pos=2)
 
    ### set par back to the original settings
    par(op)

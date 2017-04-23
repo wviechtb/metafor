@@ -1,4 +1,4 @@
-Changes in Version 2.0-0 (2017-04-21)
+Changes in Version 2.0-0 (2017-04-23)
 =====================================
 
    o cooks.distance.rma.mv() now works properly even when there are missing
@@ -16,10 +16,10 @@ Changes in Version 2.0-0 (2017-04-21)
    o all functions that repeatedly refit models now have the option to show
      a progress bar
 
-   o added ranktest.default(), so user can now specify the outcomes and
+   o added ranktest.default(), so user can now pass the outcomes and
      corresponding sampling variances directly to the function
 
-   o added regtest.default(), so user can now specify the outcomes and
+   o added regtest.default(), so user can now pass the outcomes and
      corresponding sampling variances directly to the function
 
    o funnel.default() gains 'subset' argument
@@ -33,6 +33,9 @@ Changes in Version 2.0-0 (2017-04-21)
    o added location-scale model
 
    o added a print method for 'rma.gosh' objects
+
+   o the (log) relative risk is now called the (log) risk ratio in all help
+     files, plots, code, and comments
 
    o escalc() can now compute outcome measures based on paired binary data
      ("MPRR", "MPOR", "MPRD", "MPORC", and "MPPETO")
