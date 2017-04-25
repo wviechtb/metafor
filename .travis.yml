@@ -5,6 +5,9 @@ sudo: required
 cache: packages
 dist: trusty
 
+r_packages:
+  - R.rsp
+
 before_install:
   - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
   - chmod 755 ./travis-tool.sh
@@ -17,9 +20,6 @@ r_github_packages:
 
 #r_packages:
 #  - covr
-
-r_packages:
-  - R.rsp
 
 r_binary_packages:
   - gsl
