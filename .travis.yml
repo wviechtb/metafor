@@ -18,6 +18,9 @@ r_github_packages:
 #r_packages:
 #  - covr
 
+r_packages:
+  - R.rsp
+
 r_binary_packages:
   - gsl
 
