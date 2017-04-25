@@ -1,4 +1,4 @@
-Changes in Version 2.0-0 (2017-04-23)
+Changes in Version 2.0-0 (2017-04-25)
 =====================================
 
    o cooks.distance.rma.mv() now works properly even when there are missing
@@ -47,6 +47,9 @@ Changes in Version 2.0-0 (2017-04-23)
      ("CVLN", "SDLN") and for the difference in variability between two
      groups ("CVR", "VR"); also the log transformed mean ("MNLN") has been
      added for consistency
+
+   o escalc() can now compute the sampling variance for measure="PHI" for
+     studies using stratified sampling (vtpye="ST")
 
    o the `[` method for 'escalc' objects now properly handles the 'ni' and
      'slab' attributes and does a better job of cleaning out superfluous

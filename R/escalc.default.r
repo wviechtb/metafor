@@ -258,15 +258,38 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
             vi <- 1/(4*n1i) + 1/(4*n2i)
          }
 
-         ### phi coefficient (vi equation in Yule, 1912, p.603)
+         ### phi coefficient
 
          if (measure == "PHI") {
-            yi  <- (ai*di - bi*ci)/sqrt((ai+bi)*(ci+di)*(ai+ci)*(bi+di))
+
+            yi <- (ai*di - bi*ci)/sqrt((ai+bi)*(ci+di)*(ai+ci)*(bi+di))
+
+            if (length(vtype) == 1L)
+               vtype <- rep(vtype, k)
+
+            vi <- rep(NA_real_, k)
+
+            q1i <- 1 - p1i
+            q2i <- 1 - p2i
             pi1. <- (ai+bi)/ni
             pi2. <- (ci+di)/ni
             pi.1 <- (ai+ci)/ni
             pi.2 <- (bi+di)/ni
-            vi  <- 1/ni * (1 - yi^2 + yi*(1+1/2*yi^2) * (pi1.-pi2.)*(pi.1-pi.2) / sqrt(pi1.*pi2.*pi.1*pi.2) - 3/4 * yi^2 * ((pi1.-pi2.)^2/(pi1.*pi2.) + (pi.1-pi.2)^2/(pi.1*pi.2)))
+
+            for (i in seq_len(k)) {
+
+               ### estimate of the sampling variance for stratified sampling
+               if (vtype[i] == "ST") {
+                  vi[i] <- ((n1i[i]+n2i[i])^2*(4*n1i[i]^3*p1i[i]^2*p2i[i]*q1i[i]^2*q2i[i] + 4*n2i[i]^3*p1i[i]*p2i[i]^2*q1i[i]*q2i[i]^2 + n1i[i]*n2i[i]^2*p2i[i]*q2i[i]*(p2i[i]*q1i[i] + p1i[i]*q2i[i])*(p2i[i]*q1i[i] + p1i[i]*(4*q1i[i] + q2i[i])) + n1i[i]^2*n2i[i]*p1i[i]*q1i[i]*(p2i[i]*q1i[i] + p1i[i]*q2i[i])*(p1i[i]*q2i[i] + p2i[i]*(q1i[i] + 4*q2i[i]))))/(4*(ai[i]+ci[i])^3*(bi[i]+di[i])^3)
+               }
+
+               ### estimate of the sampling variance for cross-sectional/multinomial sampling (equation in Yule, 1912, p.603)
+               if (vtype[i] == "LS" || vtype[i] == "CS") {
+                  vi[i] <- 1/ni[i] * (1 - yi[i]^2 + yi[i]*(1+1/2*yi[i]^2) * (pi1.[i]-pi2.[i])*(pi.1[i]-pi.2[i]) / sqrt(pi1.[i]*pi2.[i]*pi.1[i]*pi.2[i]) - 3/4 * yi[i]^2 * ((pi1.[i]-pi2.[i])^2/(pi1.[i]*pi2.[i]) + (pi.1[i]-pi.2[i])^2/(pi.1[i]*pi.2[i])))
+               }
+
+            }
+
          }
 
          ### Yule's Q (vi equation in Yule, 1900, p.285, and Yule, 1912, p.593)

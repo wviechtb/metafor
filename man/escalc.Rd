@@ -222,7 +222,7 @@ escalc(measure, formula, \dots)
          \item \code{"YUQ"} for \emph{Yule's Q} (Yule, 1912).
          \item \code{"YUY"} for \emph{Yule's Y} (Yule, 1912).
          \item \code{"RTET"} for the \emph{tetrachoric correlation}.
-         } Tables with one or two zero counts are handled as described earlier.
+         } Tables with one or two zero counts are handled as described earlier. For \code{measure="PHI"}, one must indicate via \code{vtype="ST"} or \code{vtype="CS"} whether the data for the studies were obtained using stratified or cross-sectional (i.e., multinomial) sampling, respectively (it is also possible to specify an entire vector for the \code{vtype} argument in case the sampling schemes differed for the various studies).
 
          A dataset corresponding to data of this type is provided in \code{\link{dat.bourassa1996}}.
 

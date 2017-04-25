@@ -332,7 +332,7 @@
    ### turn each variable in mf.g into a factor (and turn the list into a data frame with 2 columns)
    ### if a variable was a factor to begin with, this drops any unused levels, but order of existing levels is preserved
 
-   mf.g <- data.frame(inner=factor(mf.g[[1]]),   outer=factor(mf.g[[2]]))
+   mf.g <- data.frame(inner=factor(mf.g[[1]]), outer=factor(mf.g[[2]]))
 
    ### check if there are any NAs anywhere in mf.g
 
