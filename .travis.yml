@@ -1,8 +1,9 @@
 language: r
-r: 3.3.3
+r: release
 warnings_are_errors: true
 sudo: required
 cache: packages
+dist: trusty
 
 r_github_packages:
   - jimhester/covr
