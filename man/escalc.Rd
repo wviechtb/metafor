@@ -282,7 +282,7 @@ escalc(measure, formula, \dots)
          \item \code{"MN"} for the \emph{raw mean}.
          \item \code{"MNLN"} for the \emph{log transformed mean}.
          \item \code{"CVLN"} for the \emph{log transformed coefficient of variation}.
-         \item \code{"LNSD"} for the \emph{log transformed standard deviation}.
+         \item \code{"SDLN"} for the \emph{log transformed standard deviation}.
          } Note that \code{sdi} is used to specify the standard deviations of the observed values of the response, characteristic, or dependent variable and not the standard errors of the means.
 
       }
