@@ -1,5 +1,8 @@
-Changes in Version 2.0-0 (2017-05-05)
+Changes in Version 2.0-0 (2017-05-06)
 =====================================
+
+   o added simulate() method for 'rma' objects; added MASS to 'Suggests'
+     (since simulating for 'rma.mv' objects requires mvrnorm() from MASS)
 
    o cooks.distance.rma.mv() now works properly even when there are missing
      values in the data

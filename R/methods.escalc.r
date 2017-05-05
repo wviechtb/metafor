@@ -355,36 +355,30 @@ rbind.escalc <- function (..., deparse.level=1) {
    yi.names <- attr(dat, "yi.names")
    yi.names <- yi.names[is.element(yi.names, names(dat))]
 
-   if (length(allargs) != length(yi.names)) {
-      for (i in seq_along(yi.names)) {
-         attr(dat[[yi.names[i]]], "ni") <- NULL
-         attr(dat[[yi.names[i]]], "slab") <- NULL
-      }
-      return(dat)
-   }
-
    for (i in seq_along(yi.names)) {
 
+      yi.pos <- which(names(allargs[[1]]) == yi.names[i])
+
       ### get 'ni' attribute from all arguments
-      ni <- lapply(allargs, function(x) attr(x[[yi.names[i]]], "ni"))
+      ni <- lapply(allargs, function(x) attr(x[[yi.pos]], "ni"))
 
       ### if none of them are missing, then combine and add back to variable
       ### otherwise remove 'ni' attribute, since it won't be of the right length
       if (all(sapply(ni, function(x) !is.null(x)))) {
-         attr(dat[[yi.names[i]]], "ni") <- unlist(ni)
+         attr(dat[[yi.pos]], "ni") <- unlist(ni)
       } else {
-         attr(dat[[yi.names[i]]], "ni") <- NULL
+         attr(dat[[yi.pos]], "ni") <- NULL
       }
 
       ### get 'slab' attribute from all arguments
-      slab <- lapply(allargs, function(x) attr(x[[yi.names[i]]], "slab"))
+      slab <- lapply(allargs, function(x) attr(x[[yi.pos]], "slab"))
 
       ### if none of them are missing, then combine and add back to variable (and make sure they are unique)
       ### otherwise remove 'slab' attribute, since it won't be of the right length
       if (all(sapply(slab, function(x) !is.null(x)))) {
-         attr(dat[[yi.names[i]]], "slab") <- .make.unique(unlist(slab))
+         attr(dat[[yi.pos]], "slab") <- .make.unique(unlist(slab))
       } else {
-         attr(dat[[yi.names[i]]], "slab") <- NULL
+         attr(dat[[yi.pos]], "slab") <- NULL
       }
 
    }
