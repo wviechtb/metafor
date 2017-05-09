@@ -148,7 +148,8 @@ level, digits, transf, targs, ...) {
             k.new <- nrow(newmods)                              #
             X.new <- cbind(newmods)                             #
          }                                                      #
-         if (!is.null(colnames(X.new)) && !is.null(colnames(x$X))) {
+         ### allow matching of terms by names (note: only possible if all columns in X.new and x$X have colnames)
+         if (!is.null(colnames(X.new)) && all(colnames(X.new) != "") && !is.null(colnames(x$X)) && all(colnames(x$X) != "")) {
             colnames.mod <- colnames(x$X)
             if (x$int.incl)
                colnames.mod <- colnames.mod[-1]
