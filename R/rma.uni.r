@@ -1087,7 +1087,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
          } else {
 
-            tau2 <- ifelse(tau2.fix, tau2.val, try(uniroot(.QE.func, interval=c(con$tau2.min, con$tau2.max), tol=con$threshold, maxiter=con$maxiter, Y=Y, vi=vi, X=X, k=k, objective=k-p, verbose=verbose, digits=digits, extendInt="upX")$root, silent=TRUE))
+            tau2 <- ifelse(tau2.fix, tau2.val, try(uniroot(.QE.func, interval=c(con$tau2.min, con$tau2.max), tol=con$threshold, maxiter=con$maxiter, Y=Y, vi=vi, X=X, k=k, objective=k-p, verbose=verbose, digits=digits, extendInt="no")$root, silent=TRUE))
 
             if (!is.numeric(tau2))
                stop("Error in iterative search for tau2. Try increasing 'tau2.max' or switch to another 'method'.")

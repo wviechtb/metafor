@@ -243,7 +243,7 @@
       ddd[okargs[i]] <- NULL
 
    if (length(ddd) > 0)
-      warning(paste0("Extra argument", ifelse(length(ddd) > 1, "s ", " "), paste0("'", names(ddd), "'", collapse=", "), " disregarded."), call.=FALSE)
+      warning(paste0("Extra argument", ifelse(length(ddd) > 1, "s ", " "), "(", paste0("'", names(ddd), "'", collapse=", "), ") disregarded."), call.=FALSE)
 
 }
 
