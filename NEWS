@@ -1,4 +1,4 @@
-Changes in Version 2.0-0 (2017-06-01)
+Changes in Version 2.0-0 (2017-06-21)
 =====================================
 
    o added simulate() method for 'rma' objects; added MASS to 'Suggests'
