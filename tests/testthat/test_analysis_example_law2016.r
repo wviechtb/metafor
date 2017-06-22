@@ -17,6 +17,8 @@ contrmat <- function(trt1, trt2, ref) {
 
 test_that("results are correct for example 1.", {
 
+   skip_on_cran()
+
    ### example 1
 
    EG1 <- read.table(header=TRUE, as.is=TRUE, text="
@@ -87,6 +89,8 @@ test_that("results are correct for example 1.", {
 })
 
 test_that("results are correct for example 2.", {
+
+   skip_on_cran()
 
    ### example 2
 

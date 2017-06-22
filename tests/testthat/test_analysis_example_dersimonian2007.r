@@ -12,6 +12,8 @@ ci  <- c(  8,  17,   9,   94,  11,  352)
 
 test_that("results are correct for the CLASP example.", {
 
+   skip_on_cran()
+
    ### calculate log(OR)s and corresponding sampling variances
    dat <- escalc(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i)
 

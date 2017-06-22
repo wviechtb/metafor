@@ -4,6 +4,8 @@ context("Checking analysis example: jackson2014")
 
 test_that("confint() gives correct results for example 1 in Jackson et al. (2014).", {
 
+   skip_on_cran()
+
    ### example 1 ###
 
    yi <- c(0.0267, 0.8242, 0.3930, 2.4405, 2.1401, 1.2528, 2.4849, 0.3087,
@@ -41,6 +43,8 @@ test_that("confint() gives correct results for example 1 in Jackson et al. (2014
 })
 
 test_that("confint() gives correct results for example 2 in Jackson et al. (2014).", {
+
+   skip_on_cran()
 
    ### example 2 ###
 
