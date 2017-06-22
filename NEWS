@@ -1,3 +1,7 @@
+Changes in Version 2.1-0 (2017-06-22)
+=====================================
+
+
 Changes in Version 2.0-0 (2017-06-22)
 =====================================
 
@@ -69,7 +73,7 @@ Changes in Version 2.0-0 (2017-06-22)
      azithromycin for treating lower respiratory tract infections
 
    o rma.uni() and rma.mv() now check if the ratio of the largest to
-     smallest sampling variance is extreme large; results may not be stable
+     smallest sampling variance is very large; results may not be stable
      then (and very large ratios typically indicate wrongly coded data)
 
    o model fitting functions now check if extra/superfluous arguments are
