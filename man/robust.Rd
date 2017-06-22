@@ -37,7 +37,7 @@ robust(x, cluster, \dots)
    \item{QMp}{p-value for the omnibus test of coefficients.}
    \item{\dots}{some additional elements/values.}
 
-   The results are formated and printed with the \code{\link{print.robust.rma}} function.
+   The results are formatted and printed with the \code{\link{print.robust.rma}} function.
 }
 \note{
    The variable specified via \code{cluster} is assumed to be of the same length as the data originally passed to the \code{rma.uni} or \code{rma.mv} function. Any subsetting and removal of studies with missing values as done when fitting the original model is also automatically applied to the variable specified via \code{cluster}.

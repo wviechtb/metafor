@@ -16,7 +16,7 @@
 \bold{version}  \tab \code{numeric}   \tab HRSD version (17 or 21 items) \cr
 \bold{duration} \tab \code{numeric}   \tab study duration (in weeks) \cr
 \bold{prep}     \tab \code{character} \tab Hypericum extract preparation \cr
-\bold{dosage}   \tab \code{numeric}   \tab doage (in mg) \cr
+\bold{dosage}   \tab \code{numeric}   \tab dosage (in mg) \cr
 \bold{response} \tab \code{numeric}   \tab definition of response (1 = HRSD score reduction of at least 50\% or HRSDscore after therapy <10; 2 = HRSDreduction of at least 50\%; 3 = based on HRSD scale but exact definition not reported; 4 = global patient assessment of efficacy; 5 = at least 'much improved' on the Clinical Global Impression sub-scale global improvement) \cr
 \bold{ai}       \tab \code{numeric}   \tab number of responses in treatment group \cr
 \bold{n1i}      \tab \code{numeric}   \tab number of patients in treatment group \cr

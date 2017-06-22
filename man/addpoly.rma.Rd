@@ -1,7 +1,7 @@
 \name{addpoly.rma}
 \alias{addpoly.rma}
 \title{Add Polygons to Forest Plots (Method for 'rma' Objects)}
-\description{Function to add a polygon to a forest plot showing the summary estimate with correspondong confidence interval based on an object of class \code{"rma"}.}
+\description{Function to add a polygon to a forest plot showing the summary estimate with corresponding confidence interval based on an object of class \code{"rma"}.}
 \usage{
 \method{addpoly}{rma}(x, row=-2, level=x$level,
         annotate=TRUE, digits=2, width, mlab, transf, atransf, targs,

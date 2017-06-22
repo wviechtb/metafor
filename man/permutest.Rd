@@ -51,7 +51,7 @@ permutest(x, \dots)
    \item{ci.ub}{upper bound of the confidence intervals for the coefficients (permutation-based when \code{permci=TRUE}).}
    \item{\dots}{some additional elements/values are passed on.}
 
-   The results are formated and printed with the \code{\link{print.permutest.rma.uni}} function. One can also use \code{\link{coef.permutest.rma.uni}} to obtain the table with the model coefficients, corresponding standard errors, test statistics, p-values, and confidence interval bounds.
+   The results are formatted and printed with the \code{\link{print.permutest.rma.uni}} function. One can also use \code{\link{coef.permutest.rma.uni}} to obtain the table with the model coefficients, corresponding standard errors, test statistics, p-values, and confidence interval bounds.
 }
 \note{
    It is important to note that the p-values obtained with permutation tests cannot reach conventional levels of statistical significance (i.e., \eqn{p \le .05}) when \eqn{k} is very small. In particular, for models without moderators, the smallest possible (two-sided) p-value is .0625 when \eqn{k=5} and .03125 when \eqn{k=6}. Therefore, the permutation test is only able to reject the null hypothesis at \eqn{\alpha=.05} when \eqn{k} is at least equal to 6. For models with moderators, the smallest possible (two-sided) p-value for a particular model coefficient is .0833 when \eqn{k=4} and .0167 when \eqn{k=5} (assuming that each row in the model matrix is unique). Therefore, the permutation test is only able to reject the null hypothesis at \eqn{\alpha=.05} when \eqn{k} is at least equal to 5. Consequently, permutation-based CIs can also only be obtained when \eqn{k} is sufficiently large.

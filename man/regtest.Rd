@@ -51,7 +51,7 @@ regtest(x, \dots)
    \item{dfs}{the degrees of freedom of the test stastistic (if the test is based on a t-distribution).}
    \item{fit}{the full results from the fitted model.}
 
-   The results are formated and printed with the \code{\link{print.regtest.rma}} function.
+   The results are formatted and printed with the \code{\link{print.regtest.rma}} function.
 }
 \note{
    The classical ``Egger test'' is obtained by setting \code{model="lm"} and \code{predictor="sei"}. For the random/mixed-effects version of the Egger test, one should first fit a random-effects model to the data and then set \code{model="rma"} and \code{predictor="sei"} when using the \code{regtest.rma} function. See Sterne and Egger (2005) for details on these two types of models/tests.
