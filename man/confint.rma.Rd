@@ -23,7 +23,7 @@
 }
 \arguments{
    \item{object}{an object of class \code{"rma.uni"}, \code{"rma.mh"}, \code{"rma.peto"}, or \code{"rma.mv"}. The method is not yet implemented for objects of class \code{"rma.glmm"}.}
-   \item{parm}{this argument is here for compatability with the generic function \code{\link{confint}}, but is (currently) ignored.}
+   \item{parm}{this argument is here for compatibility with the generic function \code{\link{confint}}, but is (currently) ignored.}
    \item{fixed}{logical indicating whether confidence intervals for the model coefficients should be returned (the default is \code{FALSE}).}
    \item{random}{logical indicating whether a confidence interval for the amount of (residual) heterogeneity should be returned (the default is \code{TRUE}) (only relevant for \code{"rma.uni"} objects).}
    \item{sigma2}{integer specifying for which \if{latex}{\eqn{\sigma^2}}\if{html}{\eqn{\sigma²}}\if{text}{\eqn{\sigma^2}} value a confidence interval should be obtained (only relevant for \code{"rma.mv"} objects).}
@@ -60,7 +60,7 @@
    \item{ci.lb}{lower bound of the confidence interval.}
    \item{ci.ub}{upper bound of the confidence interval.}
 
-   The results are formated and printed with the \code{\link{print.confint.rma}} function.
+   The results are formatted and printed with the \code{\link{print.confint.rma}} function.
 }
 \note{
    For objects of class \code{"rma.uni"} with \code{random=TRUE}, the function provides a confidence interval for \if{latex}{\eqn{\tau^2}}\if{html}{\eqn{\tau²}}\if{text}{\eqn{\tau^2}}. The upper end point of the interval to be searched for the confidence interval bounds is set to 100 (which should be large enough for most cases). The upper end point can be adjusted with \code{control=list(tau2.max=value)}. One can also adjust the lower end point of the interval to be searched with \code{control=list(tau2.min=value)} (the default is to take that value from the object, which is 0 by default). You should only play around with this value if you know what you are doing.

@@ -136,7 +136,7 @@ escalc(measure, formula, \dots)
          group 2 \tab \code{x2i}       \tab \code{t2i}
          } where \code{x1i} and \code{x2i} denote the total number of events in the first and the second group, respectively, and \code{t1i} and \code{t2i} the corresponding total person-times at risk. Often, the person-time is measured in years, so that \code{t1i} and \code{t2i} denote the total number of follow-up years in the two groups.
 
-         This form of data is fundamentally different from what was described in the previous section, since the total follow-up time may differ even for groups of the same size and the individuals studied may experience the event of interest multiple times. Hence, different outcome measures than the ones described in the previous section must be considered when data are reported in this format. These inlude the incidence rate ratio, the incidence rate difference, and the square root transformed incidence rate difference (Bagos & Nikolopoulos, 2009; Rothman et al., 2008). For any of these outcome measures, one needs to specify the total number of events via the \code{x1i} and \code{x2i} arguments and the corresponding total person-time values via the \code{t1i} and \code{t2i} arguments.
+         This form of data is fundamentally different from what was described in the previous section, since the total follow-up time may differ even for groups of the same size and the individuals studied may experience the event of interest multiple times. Hence, different outcome measures than the ones described in the previous section must be considered when data are reported in this format. These include the incidence rate ratio, the incidence rate difference, and the square root transformed incidence rate difference (Bagos & Nikolopoulos, 2009; Rothman et al., 2008). For any of these outcome measures, one needs to specify the total number of events via the \code{x1i} and \code{x2i} arguments and the corresponding total person-time values via the \code{t1i} and \code{t2i} arguments.
 
          The options for the \code{measure} argument are then:
          \itemize{
@@ -481,7 +481,7 @@ escalc(measure, formula, \dots)
 
    If the data frame already contains two variables with names as specified by the \code{var.names} argument, the values for these two variables will be overwritten when \code{replace=TRUE} (which is the default). By setting \code{replace=FALSE}, only values that are \code{NA} will be replaced.
 
-   The object is formated and printed with the \code{\link{print.escalc}} function. The \code{\link{summary.escalc}} function can be used to obtain confidence intervals for the individual outcomes.
+   The object is formatted and printed with the \code{\link{print.escalc}} function. The \code{\link{summary.escalc}} function can be used to obtain confidence intervals for the individual outcomes.
 }
 \note{
    The variable names specified under \code{var.names} should be syntactically valid variable names. If necessary, they are adjusted so that they are.
@@ -545,7 +545,7 @@ escalc(measure, formula, \dots)
 
    Hedges, L. V., Gurevitch, J., & Curtis, P. S. (1999). The meta-analysis of response ratios in experimental ecology. \emph{Ecology}, \bold{80}, 1150--1156.
 
-   Higgins, J. P. T., & Green, S. (Eds.) (2008). \emph{Cochrane handbook for systematic reviews of interventions}. Chichester, Englang: Wiley.
+   Higgins, J. P. T., & Green, S. (Eds.) (2008). \emph{Cochrane handbook for systematic reviews of interventions}. Chichester, England: Wiley.
 
    Kirk, D. B. (1973). On the numerical approximation of the bivariate normal (tetrachoric) correlation coefficient. \emph{Psychometrika}, \bold{38}, 259--268.
 

@@ -34,7 +34,7 @@ fsn(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, subset, digits=4)
    \item{meanes}{the average effect size of the observed results. \code{NA} for the Rosenthal method.}
    \item{target}{the target effect size. \code{NA} for the Rosenthal and Rosenberg methods.}
 
-   The results are formated and printed with the \code{\link{print.fsn}} function.
+   The results are formatted and printed with the \code{\link{print.fsn}} function.
 }
 \note{
    For the Rosenberg method, the p-value is calculated based on a standard normal distribution (instead of a t-distribution, as suggested by Rosenberg, 2005).

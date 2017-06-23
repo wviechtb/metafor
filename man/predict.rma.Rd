@@ -51,7 +51,7 @@
    \item{X}{the moderator value(s) used to calculate the predicted values (only when \code{addx=TRUE}).}
    \item{\dots}{some additional elements/values.}
 
-   The \code{"list.rma"} object is formated and printed with \code{\link{print.list.rma}}.
+   The \code{"list.rma"} object is formatted and printed with \code{\link{print.list.rma}}.
 }
 \note{
    The predicted values are based only on the fixed effects of the model. Best linear unbiased predictions (BLUPs) that combine the fitted values based on the fixed effects and the estimated contributions of the random effects can be obtained with \code{\link{blup.rma.uni}} (currently only for objects of class \code{"rma.uni"}).

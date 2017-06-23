@@ -50,7 +50,7 @@
    \item{se}{corresponding standard errors.}
    \item{z}{standardized residuals (internally standardized for \code{rstandard} or externally standardized for \code{rstudent}).}
 
-   The \code{"list.rma"} object is formated and printed with \code{\link{print.list.rma}}.
+   The \code{"list.rma"} object is formatted and printed with \code{\link{print.list.rma}}.
 }
 \note{
    Right now, the externally standardized residuals are calculated by refitting the model \eqn{k} times. Depending on how large \eqn{k} is, it may take a few moments to finish the calculations.
