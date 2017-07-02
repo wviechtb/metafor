@@ -189,6 +189,11 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    }
 
+   ### check if user constrained V to 0
+
+   if (is.vector(V) && length(V) == 1 && V == 0)
+      V0 <- TRUE
+
    ### turn V into a diagonal matrix if it is a column/row vector
    ### note: if V is a scalar (e.g., V=0), then this will turn V into a kxk
    ### matrix with the value of V along the diagonal
@@ -567,7 +572,8 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    if (any(vi <= 0, na.rm=TRUE)) {
       allvipos <- FALSE
-      warning("There are outcomes with non-positive sampling variances.")
+      if (!V0)
+         warning("There are outcomes with non-positive sampling variances.")
       vi.neg <- vi < 0
       if (any(vi.neg, na.rm=TRUE)) {
          V[vi.neg,] <- 0 ### note: entire row set to 0 (so covariances are also 0)
@@ -949,7 +955,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
    ### skipped: even if V is not positive definite, the marginal var-cov matrix can still be; so just check for pd during the optimization
    ### but at least issue a warning, since a fixed-effects model can then not be fitted and there is otherwise no indication why
 
-   if (any(eigen(V, symmetric=TRUE, only.values=TRUE)$values <= .Machine$double.eps)) ### any eigenvalue below double.eps is essentially 0
+   if (!V0 && any(eigen(V, symmetric=TRUE, only.values=TRUE)$values <= .Machine$double.eps)) ### any eigenvalue below double.eps is essentially 0
       warning("'V' appears to be not positive definite.")
 
    ### check ratio of largest to smallest sampling variance

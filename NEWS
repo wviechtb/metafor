@@ -1,5 +1,8 @@
-Changes in Version 2.1-0 (2017-06-22)
+Changes in Version 2.1-0 (2017-07-02)
 =====================================
+
+   o rma.uni() and rma.mv() no longer issue (obvious) warnings when user
+     constrains vi or V to 0 (i.e., vi=0 or V=0, respectively)
 
 
 Changes in Version 2.0-0 (2017-06-22)

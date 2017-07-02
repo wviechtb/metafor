@@ -231,6 +231,11 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
       if (is.matrix(vi))
          vi <- as.vector(vi)
 
+      ### check if user constrained vi to 0
+
+      if (length(vi) == 1 && vi == 0)
+         vi0 <- TRUE
+
       ### allow easy setting of vi to a single value
 
       if (length(vi) == 1)
@@ -667,7 +672,8 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
    if (any(vi <= 0, na.rm=TRUE)) {
       allvipos <- FALSE
-      warning("There are outcomes with non-positive sampling variances.")
+      if (!vi0)
+         warning("There are outcomes with non-positive sampling variances.")
       vi.neg <- vi < 0
       if (any(vi.neg, na.rm=TRUE)) {
          vi[vi.neg] <- 0
@@ -1698,7 +1704,8 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
    } else {
 
-      warning(paste0("Cannot compute ", ifelse(int.only, "Q", "QE"), "-test, I^2, or H^2 with non-positive sampling variances."))
+      if (!vi0)
+         warning(paste0("Cannot compute ", ifelse(int.only, "Q", "QE"), "-test, I^2, or H^2 with non-positive sampling variances."))
 
    }
 
