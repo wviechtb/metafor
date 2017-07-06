@@ -725,6 +725,11 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
                if (!Rfix[j])
                   next
 
+               ### even if isSymmetric() is TRUE, there may still be minor numerical differences between the lower and upper triangular
+               ### parts that could lead to isSymmetric() being FALSE once we do any potentially rescaling of the R matrices further
+               ### below; this ensures strict symmetry to avoid this issue
+               R[[j]][lower.tri(R[[j]])] <- t(R[[j]])[lower.tri(R[[j]])]
+
                ### if rownames are missing, copy colnames to rownames and vice-versa
 
                if (is.null(rownames(R[[j]])))

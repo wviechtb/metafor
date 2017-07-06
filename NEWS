@@ -4,6 +4,9 @@ Changes in Version 2.1-0 (2017-07-06)
    o rma.uni() and rma.mv() no longer issue (obvious) warnings when user
      constrains vi or V to 0 (i.e., vi=0 or V=0, respectively)
 
+   o rma.mv() now ensures strict symmetry of any (var-cov or correlation)
+     matrices specified via the 'R' argument
+
 
 Changes in Version 2.0-0 (2017-06-22)
 =====================================
