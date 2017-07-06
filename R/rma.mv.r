@@ -1115,7 +1115,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
          R[Rfix] <- lapply(R[Rfix], function(x) (x - min(x)))
 
    }
-return(R)
+
    #########################################################################
 
    ### create (kxk) indicator/correlation matrices for random intercepts

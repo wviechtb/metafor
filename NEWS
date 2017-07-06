@@ -1,4 +1,4 @@
-Changes in Version 2.1-0 (2017-07-02)
+Changes in Version 2.1-0 (2017-07-06)
 =====================================
 
    o rma.uni() and rma.mv() no longer issue (obvious) warnings when user
