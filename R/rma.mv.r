@@ -191,8 +191,11 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    ### check if user constrained V to 0
 
-   if (is.vector(V) && length(V) == 1 && V == 0)
+   if (is.vector(V) && length(V) == 1 && V == 0) {
       V0 <- TRUE
+   } else {
+      V0 <- FALSE
+   }
 
    ### turn V into a diagonal matrix if it is a column/row vector
    ### note: if V is a scalar (e.g., V=0), then this will turn V into a kxk
@@ -1112,7 +1115,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
          R[Rfix] <- lapply(R[Rfix], function(x) (x - min(x)))
 
    }
-
+return(R)
    #########################################################################
 
    ### create (kxk) indicator/correlation matrices for random intercepts

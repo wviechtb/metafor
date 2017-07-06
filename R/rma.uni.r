@@ -233,8 +233,11 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
       ### check if user constrained vi to 0
 
-      if (length(vi) == 1 && vi == 0)
+      if (length(vi) == 1 && vi == 0) {
          vi0 <- TRUE
+      } else {
+         vi0 <- FALSE
+      }
 
       ### allow easy setting of vi to a single value
 
