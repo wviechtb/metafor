@@ -1,4 +1,4 @@
-Changes in Version 2.1-0 (2017-07-06)
+Changes in Version 2.1-0 (2017-07-09)
 =====================================
 
    o rma.uni() and rma.mv() no longer issue (obvious) warnings when user
@@ -6,6 +6,8 @@ Changes in Version 2.1-0 (2017-07-06)
 
    o rma.mv() now ensures strict symmetry of any (var-cov or correlation)
      matrices specified via the 'R' argument
+
+   o suppressed showing calls on some warnings/errors in rma.mv()
 
 
 Changes in Version 2.0-0 (2017-06-22)

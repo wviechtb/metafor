@@ -327,7 +327,7 @@
    g.names <- names(mf.g) ### two names for inner and outer factor
 
    if (is.element(struct, c("CS","HCS","UN","ID","DIAG","UNHO")) && !is.factor(mf.g[[1]]) && !is.character(mf.g[[1]]))
-      stop("Inner variable in (~ inner | outer) must be a factor or character variable.")
+      stop("Inner variable in (~ inner | outer) must be a factor or character variable.", call.=FALSE)
 
    ### turn each variable in mf.g into a factor (and turn the list into a data frame with 2 columns)
    ### if a variable was a factor to begin with, this drops any unused levels, but order of existing levels is preserved
@@ -337,7 +337,7 @@
    ### check if there are any NAs anywhere in mf.g
 
    if (anyNA(mf.g))
-      stop("No NAs allowed in variables specified in the 'random' argument.")
+      stop("No NAs allowed in variables specified in the 'random' argument.", call.=FALSE)
 
    ### get number of levels of each variable in mf.g (vector with two values, for the inner and outer factor)
 
@@ -399,16 +399,16 @@
    ### check if tau2 and rho are of correct length
 
    if (length(tau2) != tau2s)
-      stop(paste0("Length of ", ifelse(isG, 'tau2', 'gamma2'), " argument (", length(tau2), ") does not match actual number of variance components (", tau2s, ")."))
+      stop(paste0("Length of ", ifelse(isG, 'tau2', 'gamma2'), " argument (", length(tau2), ") does not match actual number of variance components (", tau2s, ")."), call.=FALSE)
    if (length(rho) != rhos)
-      stop(paste0("Length of ", ifelse(isG, 'rho', 'phi'), " argument (", length(rho), ") does not match actual number of correlations (", rhos, ")."))
+      stop(paste0("Length of ", ifelse(isG, 'rho', 'phi'), " argument (", length(rho), ") does not match actual number of correlations (", rhos, ")."), call.=FALSE)
 
    ### checks on any fixed values of tau2 and rho arguments
 
    if (any(tau2 < 0, na.rm=TRUE))
-      stop(paste0("Specified value(s) of ", ifelse(isG, 'tau2', 'gamma2'), " must be non-negative."))
+      stop(paste0("Specified value(s) of ", ifelse(isG, 'tau2', 'gamma2'), " must be non-negative."), call.=FALSE)
    if (any(rho > 1 | rho < -1, na.rm=TRUE))
-      stop(paste0("Specified value(s) of ", ifelse(isG, 'rho', 'phi'), " must be in [-1,1]."))
+      stop(paste0("Specified value(s) of ", ifelse(isG, 'rho', 'phi'), " must be in [-1,1]."), call.=FALSE)
 
    ### create model matrix for inner and outer factors of mf.g
 
@@ -468,7 +468,7 @@
    ### warn if any levels were removed
 
    if (any(g.levels.r))
-      warning("One or more levels of inner factor removed due to NAs.")
+      warning("One or more levels of inner factor removed due to NAs.", call.=FALSE)
 
    ### for "ID" and "DIAG", fix rho to 0
 
@@ -479,7 +479,7 @@
 
    if (g.nlevels[1] == 1 && is.element(struct, c("CS","HCS","AR","HAR")) && is.na(rho)) {
       rho <- 0
-      warning(paste0("Inner factor has only a single level, so fixed value of ", ifelse(isG, 'rho', 'phi'), " to 0."))
+      warning(paste0("Inner factor has only a single level, so fixed value of ", ifelse(isG, 'rho', 'phi'), " to 0."), call.=FALSE)
    }
 
    ### k per level of the inner factor
@@ -508,7 +508,7 @@
    if (all(unlist(lapply(g.levels.comb.k, sum)) == 1)) {
       if (is.element(struct, c("CS","HCS","AR","HAR")) && is.na(rho)) {
          rho <- 0
-         warning(paste0("Each level of the outer factor contains only a single level of the inner factor, so fixed value of ", ifelse(isG, 'rho', 'phi'), " to 0."))
+         warning(paste0("Each level of the outer factor contains only a single level of the inner factor, so fixed value of ", ifelse(isG, 'rho', 'phi'), " to 0."), call.=FALSE)
       }
    }
 
@@ -525,7 +525,7 @@
 
    if (is.element(struct, c("UN","UNHO")) && any(g.levels.comb.k == 0 & is.na(rho))) {
       rho[g.levels.comb.k == 0] <- 0
-      warning(paste0("Some combinations of the levels of the inner factor never occurred. Corresponding ", ifelse(isG, 'rho', 'phi'), " value(s) fixed to 0."))
+      warning(paste0("Some combinations of the levels of the inner factor never occurred. Corresponding ", ifelse(isG, 'rho', 'phi'), " value(s) fixed to 0."), call.=FALSE)
    }
 
    ### if there was only a single arm for "UN/UNHO" to begin with, then fix rho to 0
@@ -534,7 +534,7 @@
 
    if (is.element(struct, c("UN","UNHO")) && g.nlevels.f[1] == 1 && is.na(rho)) {
       rho <- 0
-      warning(paste0("Inner factor has only a single level, so fixed value of ", ifelse(isG, 'rho', 'phi'), " to 0."))
+      warning(paste0("Inner factor has only a single level, so fixed value of ", ifelse(isG, 'rho', 'phi'), " to 0."), call.=FALSE)
    }
 
    ### construct G matrix for the various structures
@@ -611,7 +611,7 @@
       G[g.levels.r,] <- 0
       G[,g.levels.r] <- 0
       tau2[g.levels.r] <- 0
-      warning(paste0("Fixed ", ifelse(isG, 'tau2', 'gamma2'), " to 0 for removed level(s)."))
+      warning(paste0("Fixed ", ifelse(isG, 'tau2', 'gamma2'), " to 0 for removed level(s)."), call.=FALSE)
    }
 
    ### for "UN", set tau2 value(s) and corresponding rho(s) to 0 for any levels that were removed
@@ -621,7 +621,7 @@
       G[,g.levels.r] <- 0
       tau2[g.levels.r] <- 0
       rho <- G[upper.tri(G)]
-      warning(paste0("Fixed ", ifelse(isG, 'tau2', 'gamma2'), " and corresponding ", ifelse(isG, 'rho', 'phi'), " value(s) to 0 for removed level(s)."))
+      warning(paste0("Fixed ", ifelse(isG, 'tau2', 'gamma2'), " and corresponding ", ifelse(isG, 'rho', 'phi'), " value(s) to 0 for removed level(s)."), call.=FALSE)
    }
 
    ### for "UNHO", set rho(s) to 0 corresponding to any levels that were removed
@@ -631,7 +631,7 @@
       G[,g.levels.r] <- 0
       diag(G) <- tau2 ### don't really need this
       rho <- G[upper.tri(G)]
-      warning(paste0("Fixed ", ifelse(isG, 'rho', 'phi'), " value(s) to 0 corresponding to removed level(s)."))
+      warning(paste0("Fixed ", ifelse(isG, 'rho', 'phi'), " value(s) to 0 corresponding to removed level(s)."), call.=FALSE)
    }
 
    ### special handling for the bivariate model:
