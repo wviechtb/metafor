@@ -158,7 +158,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
    ### extract fitted values
 
-   options(na.action = "na.pass")               ### using na.exclude to get the entire vector (length of yi.f)
+   options(na.action = "na.pass")               ### using na.pass to get the entire vector (length of yi.f)
 
       if (x$int.only) {
          pred <- fitted(x)
@@ -752,9 +752,9 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
       if (showweights) {
          if (addfit && x$int.only) {
-            annotext <- cbind(c(weights,100), annotext)
+            annotext <- cbind(c(unname(weights),100), annotext)
          } else {
-            annotext <- cbind(weights, annotext)
+            annotext <- cbind(unname(weights), annotext)
          }
       }
 
@@ -778,6 +778,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
       }
 
       annotext <- apply(annotext, 1, paste, collapse="")
+      annotext[grepl("NA", annotext, fixed=TRUE)] <- ""
 
       if (addfit && x$int.only) {
          text(x=xlim[2], c(rows,-1), labels=annotext, pos=2, cex=cex, ...)

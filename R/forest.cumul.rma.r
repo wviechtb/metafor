@@ -472,6 +472,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
       annotext <- cbind(annotext[,1], annosym[1], annotext[,2], annosym[2], annotext[,3], annosym[3])
       annotext <- apply(annotext, 1, paste, collapse="")
+      annotext[grepl("NA", annotext, fixed=TRUE)] <- ""
       text(x=xlim[2], rows, labels=annotext, pos=2, cex=cex, ...)
 
    }

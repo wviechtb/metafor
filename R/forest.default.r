@@ -555,6 +555,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
       }
 
       annotext <- apply(annotext, 1, paste, collapse="")
+      annotext[grepl("NA", annotext, fixed=TRUE)] <- ""
       text(x=xlim[2], rows, labels=annotext, pos=2, cex=cex, col=col, ...)
 
    }
