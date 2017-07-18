@@ -153,13 +153,13 @@ level, digits, transf, targs, ...) {
             colnames.mod <- colnames(x$X)
             if (x$int.incl)
                colnames.mod <- colnames.mod[-1]
-            pos <- unlist(sapply(colnames(X.new), function(colname) grep(colname, colnames.mod, fixed=TRUE)))
+            pos <- unlist(sapply(colnames(X.new), function(colname) match(colname, colnames.mod)))
             if (anyDuplicated(pos))
                stop("Multiple matches for the same variable name.")
             if (length(pos) != ifelse(x$int.incl, x$p-1, x$p))
                stop("Could not find a matching name for all variables in the model.")
             colnames(X.new) <- colnames.mod[pos]
-            pos <- unlist(sapply(colnames.mod, function(colname) grep(colname, colnames(X.new), fixed=TRUE)))
+            pos <- unlist(sapply(colnames.mod, function(colname) match(colname, colnames(X.new))))
             X.new <- X.new[,pos,drop=FALSE]
          }
       }                                                         #
