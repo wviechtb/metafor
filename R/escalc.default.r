@@ -1653,7 +1653,9 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
    attr(dat, "ci.lb.names") <- attr(data, "ci.lb.names")
    attr(dat, "ci.ub.names") <- attr(data, "ci.ub.names")
 
-   ### TODO: clean up attribute elements that are no longer actually part of the object
+   ### keep only attribute elements from yi.names and vi.names that are actually part of the object
+   attr(dat, "yi.names") <- attr(dat, "yi.names")[attr(dat, "yi.names") %in% colnames(dat)]
+   attr(dat, "vi.names") <- attr(dat, "vi.names")[attr(dat, "vi.names") %in% colnames(dat)]
 
    class(dat) <- c("escalc", "data.frame")
    return(dat)

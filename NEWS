@@ -1,4 +1,4 @@
-Changes in Version 2.1-0 (2017-07-11)
+Changes in Version 2.1-0 (2017-07-18)
 =====================================
 
    o rma.uni() and rma.mv() no longer issue (obvious) warnings when user
@@ -9,9 +9,11 @@ Changes in Version 2.1-0 (2017-07-11)
 
    o suppressed showing calls on some warnings/errors in rma.mv()
 
-   o in the various forest() functions, when options(na.action="na.pass") or 
+   o in the various forest() functions, when options(na.action="na.pass") or
      options(na.action="na.exclude") and an annotation contains NA, this is
      now shown as a blank (instead of NA [NA, NA])
+
+   o escalc() does a bit more housekeeping
 
 
 Changes in Version 2.0-0 (2017-06-22)
