@@ -1,5 +1,9 @@
-Changes in Version 2.1-0 (2017-07-18)
+Changes in Version 2.1-0 (2017-07-19)
 =====================================
+
+   o smarter matching of elements in 'newmods' (when using a named vector)
+     in predict() that also works for models with interactions (thanks to
+     Nicole Erler for pointing out the problem)
 
    o rma.uni() and rma.mv() no longer issue (obvious) warnings when user
      constrains vi or V to 0 (i.e., vi=0 or V=0, respectively)

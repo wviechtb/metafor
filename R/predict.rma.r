@@ -153,16 +153,26 @@ level, digits, transf, targs, ...) {
             colnames.mod <- colnames(x$X)
             if (x$int.incl)
                colnames.mod <- colnames.mod[-1]
-            pos <- unlist(sapply(colnames(X.new), function(colname) grep(colname, colnames.mod, fixed=TRUE)))
-            if (anyDuplicated(pos))
+            pos <- sapply(colnames(X.new), function(colname) {
+                     d <- c(adist(colname, colnames.mod, costs=c(ins=1, sub=Inf, del=Inf))) # compute edit distances with Inf costs for substitutions/deletions
+                     if (all(is.infinite(d))) # if there is no match, then all elements are Inf
+                        stop(paste0("Could not find variable '", colname, "' in the model."), call. = FALSE)
+                     d <- which(d == min(d)) # don't use which.min() since that only finds the first minimum
+                     if (length(d) > 1) # if there is no unique match, then there is more than one minimum
+                        stop(paste0("Could not match up '", colname, "' uniquely to a variable in the model."), call. = FALSE)
+                     return(d)
+                     })
+            if (anyDuplicated(pos)) # if the same name is used more than once, then there will be duplicated pos values
                stop("Multiple matches for the same variable name.")
-            if (length(pos) != ifelse(x$int.incl, x$p-1, x$p))
-               stop("Could not find a matching name for all variables in the model.")
             colnames(X.new) <- colnames.mod[pos]
-            pos <- unlist(sapply(colnames.mod, function(colname) grep(colname, colnames(X.new), fixed=TRUE)))
+            pos <- sapply(colnames.mod, function(colname) {
+                     d <- c(adist(colname, colnames(X.new), costs=c(ins=1, sub=Inf, del=Inf))) # compute edit distances with Inf costs for substitutions/deletions
+                     d <- which(d == min(d)) # don't use which.min() since that only finds the first minimum
+                     return(d)
+                     })
             X.new <- X.new[,pos,drop=FALSE]
          }
-      }                                                         #
+      }
 
       ### if the user has specified newmods and an intercept was included in the original model, add the intercept to X.new
       ### but user can also decide to remove the intercept from the predictions with intercept=FALSE
