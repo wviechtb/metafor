@@ -1,4 +1,4 @@
-Changes in Version 2.1-0 (2017-07-19)
+Changes in Version 2.1-0 (2017-07-25)
 =====================================
 
    o smarter matching of elements in 'newmods' (when using a named vector)
@@ -18,6 +18,8 @@ Changes in Version 2.1-0 (2017-07-19)
      now shown as a blank (instead of NA [NA, NA])
 
    o escalc() does a bit more housekeeping
+
+   o labbe() gains 'lty' argument
 
 
 Changes in Version 2.0-0 (2017-06-22)

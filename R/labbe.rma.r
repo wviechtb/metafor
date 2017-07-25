@@ -1,5 +1,5 @@
 labbe.rma <- function(x, xlim, ylim, xlab, ylab,
-add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, ...) {
+add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, lty, ...) {
 
    if (!inherits(x, "rma"))
       stop("Argument 'x' must be an object of class \"rma\".")
@@ -37,6 +37,13 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, ...) {
 
    if (missing(psize))
       psize <- NULL
+
+   if (missing(lty)) {
+      lty <- c("solid", "dashed") ### 1st value = diagonal line, 2nd value = estimated effect line
+   } else {
+      if (length(lty) == 1L)
+         lty <- c(lty, lty)
+   }
 
    #########################################################################
 
@@ -244,8 +251,8 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, ...) {
       box(...)
    }
 
-   abline(a=0, b=1, ...)
-   lines(c.vals, t.vals, lty="dashed", ...)
+   abline(a=0, b=1, lty=lty[1], ...)
+   lines(c.vals, t.vals, lty=lty[2], ...)
    points(dat.c$yi, dat.t$yi, cex=psize, pch=pch, bg=bg, ...)
 
    #########################################################################
