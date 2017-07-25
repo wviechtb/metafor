@@ -21,6 +21,9 @@ Changes in Version 2.1-0 (2017-07-25)
 
    o labbe() gains 'lty' argument
 
+   o fixed an issue with robust.rma.mv() when the model was fitted with
+     sparse=TRUE (thanks to Roger Martineau for noting the problem)
+
 
 Changes in Version 2.0-0 (2017-06-22)
 =====================================

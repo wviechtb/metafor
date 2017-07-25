@@ -135,7 +135,6 @@ robust.rma.mv <- function(x, cluster, adjust=TRUE, digits, ...) {
    res$digits <- digits
 
    ### replace elements with robust results
-
    res$dfs   <- dfs
    res$vb    <- vb
    res$se    <- se
@@ -149,7 +148,7 @@ robust.rma.mv <- function(x, cluster, adjust=TRUE, digits, ...) {
    res$tcl   <- tcl
    res$test  <- "t"
    res$meat <- matrix(NA_real_, nrow=nrow(meat), ncol=ncol(meat))
-   res$meat[ocl,ocl] <- meat
+   res$meat[ocl,ocl] <- as.matrix(meat)
 
    class(res) <- c("robust.rma", "rma", "rma.mv")
    return(res)
