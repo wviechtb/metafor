@@ -911,11 +911,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    ### check for NAs and act accordingly
 
-   ### should only check the lower.tri part of V:
-   ### if Vi = matrix(c(1,NA,NA,NA), nrow=2, ncol=2), then only row/col 2 needs to be removed
-   ### but when checking for NAs in the entire V matrix, rows/cols 1 and 2 would be removed
-
-   has.na <- is.na(yi) | (if (is.null(mods)) FALSE else apply(is.na(mods), 1, any)) | .anyNAlt(V) | (if (is.null(A)) FALSE else apply(is.na(A), 1, any))
+   has.na <- is.na(yi) | (if (is.null(mods)) FALSE else apply(is.na(mods), 1, any)) | .anyNAv(V) | (if (is.null(A)) FALSE else apply(is.na(A), 1, any))
    not.na <- !has.na
 
    if (any(has.na)) {

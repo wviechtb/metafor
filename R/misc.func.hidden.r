@@ -158,14 +158,25 @@
 
 ############################################################################
 
+### function to test for missings in a var-cov matrix
+
+.anyNAv <- function(x) {
+   k <- nrow(x)
+   not.na <- not.na.diag <- !is.na(diag(x))
+   for (i in (1:k)[not.na.diag]) {
+      not.na[i] <- !anyNA(x[i, (1:k)[not.na.diag]])
+   }
+   return(!not.na)
+}
+
 ### function to test each row for any missings in the lower triangular part of a matrix
 
-.anyNAlt <- function(x)
-   return(sapply(seq_len(nrow(x)), FUN=function(i) anyNA(x[i,seq_len(i)])))
+#.anyNAv <- function(x)
+#   return(sapply(seq_len(nrow(x)), FUN=function(i) anyNA(x[i,seq_len(i)])))
 
 ### function above is faster (and does not require making a copy of the object)
 
-#.anyNAlt <- function(X) {
+#.anyNAv <- function(X) {
 #   X[upper.tri(X)] <- 0
 #   return(apply(is.na(X), 1, any))
 #}
