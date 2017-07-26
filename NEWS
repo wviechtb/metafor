@@ -1,4 +1,4 @@
-Changes in Version 2.1-0 (2017-07-25)
+Changes in Version 2.1-0 (2017-07-26)
 =====================================
 
    o smarter matching of elements in 'newmods' (when using a named vector)
@@ -25,6 +25,11 @@ Changes in Version 2.1-0 (2017-07-25)
      sparse=TRUE (thanks to Roger Martineau for noting the problem)
 
    o rma.mv() does more intelligent filtering based on NAs in V matrix
+
+   o various method functions (fitted(), resid(), predict(), etc.) behave
+     more consistently when model omitted studies with missings
+
+   o added more tests
 
 
 Changes in Version 2.0-0 (2017-06-22)

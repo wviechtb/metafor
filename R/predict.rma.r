@@ -450,16 +450,29 @@ level, digits, transf, targs, ...) {
 
    ### handle NAs
 
+   not.na <- rep(TRUE, k.new)
+
    if (na.act == "na.omit") {
-      not.na <- !is.na(pred)
-   } else {
-      not.na <- rep(TRUE, k.new)
+      if (is.null(newmods) && !x$int.only) {
+         not.na <- x$not.na
+      } else {
+         not.na <- !is.na(pred)
+      }
    }
+
+   #if (na.act == "na.omit") {
+   #   not.na <- !is.na(pred)
+   #} else {
+   #   not.na <- rep(TRUE, k.new)
+   #}
 
    if (na.act == "na.fail" && any(!x$not.na))
       stop("Missing values in results.")
 
    out <- list(pred=pred[not.na], se=se[not.na], ci.lb=ci.lb[not.na], ci.ub=ci.ub[not.na], cr.lb=cr.lb[not.na], cr.ub=cr.ub[not.na])
+
+   if (na.act == "na.exclude" && is.null(newmods) && !x$int.only)
+      out <- lapply(out, function(val) ifelse(x$not.na, val, NA))
 
    ### add tau2.levels values to list
 

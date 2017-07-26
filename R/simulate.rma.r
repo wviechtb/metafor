@@ -10,6 +10,11 @@ simulate.rma <- function (object, nsim = 1, seed = NULL, ...) {
    if (inherits(object, "rma.peto"))
       stop("Method not yet implemented for objects of class \"rma.peto\". Sorry!")
 
+   na.act <- getOption("na.action")
+
+   if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
+      stop("Unknown 'na.action' specified under options().")
+
    ### as in stats:::simulate.lm
    if (!exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE))
       runif(1)
@@ -44,13 +49,18 @@ simulate.rma <- function (object, nsim = 1, seed = NULL, ...) {
 
    }
 
-   val <- as.data.frame(val)
+   res <- matrix(NA_real_, nrow=object$k.f, ncol=nsim)
+   res[object$not.na,] <- val
+   res <- as.data.frame(res)
 
-   colnames(val) <- paste0("sim_", seq_len(nsim))
-   rownames(val) <- object$slab[object$not.na]
+   rownames(res) <- object$slab
+   colnames(res) <- paste0("sim_", seq_len(nsim))
 
-   attr(val, "seed") <- RNGstate
+   if (na.act == "na.omit")
+      res <- res[object$not.na,,drop=FALSE]
 
-   return(val)
+   attr(res, "seed") <- RNGstate
+
+   return(res)
 
 }
