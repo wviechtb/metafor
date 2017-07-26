@@ -1,4 +1,4 @@
-Changes in Version 2.1-0 (2017-07-26)
+Changes in Version 2.1-0 (2017-07-27)
 =====================================
 
    o smarter matching of elements in 'newmods' (when using a named vector)
@@ -28,6 +28,11 @@ Changes in Version 2.1-0 (2017-07-26)
 
    o various method functions (fitted(), resid(), predict(), etc.) behave
      more consistently when model omitted studies with missings
+
+   o overhauled plot.gosh.rma(); when 'out' is specified, it now shows two
+     distributions, one for the values when the outlier is included and
+     one for the values when for outlier is excluded; dropped the 'hcol'
+     argument and added 'border' argument
 
    o added more tests
 
