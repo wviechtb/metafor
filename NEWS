@@ -1,6 +1,14 @@
 Changes in Version 2.1-0 (2017-07-28)
 =====================================
 
+   o overhauled plot.gosh.rma(); when 'out' is specified, it now shows two
+     distributions, one for the values when the outlier is included and
+     one for the values when for outlier is excluded; dropped the 'hcol'
+     argument and added 'border' argument
+
+   o cooks.distance.rma.mv() gains 'cluster' argument, so that Cook's
+     distances can be computed for groups of estimates
+
    o smarter matching of elements in 'newmods' (when using a named vector)
      in predict() that also works for models with interactions (thanks to
      Nicole Erler for pointing out the problem)
@@ -28,11 +36,6 @@ Changes in Version 2.1-0 (2017-07-28)
 
    o various method functions (fitted(), resid(), predict(), etc.) behave
      more consistently when model omitted studies with missings
-
-   o overhauled plot.gosh.rma(); when 'out' is specified, it now shows two
-     distributions, one for the values when the outlier is included and
-     one for the values when for outlier is excluded; dropped the 'hcol'
-     argument and added 'border' argument
 
    o added more tests
 

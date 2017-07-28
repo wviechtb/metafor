@@ -157,6 +157,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
    ### number of outcomes before subsetting
 
    k <- length(yi)
+   k.all <- k
 
    ### set default measure argument
 
@@ -1877,7 +1878,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
       res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
                   sigma2=sigma2, tau2=tau2, rho=rho, gamma2=gamma2, phi=phi,
-                  k=k, k.f=k.f, k.eff=k.eff, p=p, p.eff=p.eff, parms=parms, m=m,
+                  k=k, k.f=k.f, k.eff=k.eff, k.all=k.all, p=p, p.eff=p.eff, parms=parms, m=m,
                   QE=QE, QEp=QEp, QM=QM, QMp=QMp,
                   int.only=int.only, int.incl=int.incl, allvipos=allvipos, coef.na=coef.na,
                   yi=yi, vi=vi, V=V, W=A, X=X, yi.f=yi.f, vi.f=vi.f, V.f=V.f, X.f=X.f, W.f=W.f, ni=ni, ni.f=ni.f, M=M, G=G, H=H, hessian=hessian,
@@ -1902,7 +1903,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    if (!is.null(ddd$outlist)) {
       if (ddd$outlist == "minimal") {
-         res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb, int.only=int.only, digits=digits, k=k, k.eff=k.eff, p=p, p.eff=p.eff, parms=parms, m=m, sigma2=sigma2, tau2=tau2, rho=rho, gamma2=gamma2, phi=phi, withR=withR, withS=withS, withG=withG, withH=withH, s.nlevels=s.nlevels, vc.fix=vc.fix, s.names=s.names, Rfix=Rfix, g.names=g.names, g.nlevels=g.nlevels, g.nlevels.f=g.nlevels.f, g.levels.k=g.levels.k, g.levels.f=g.levels.f, g.levels.comb.k=g.levels.comb.k, h.names=h.names, h.nlevels=h.nlevels, h.levels.k=h.levels.k, h.levels.f=h.levels.f, h.nlevels.f=h.nlevels.f, h.levels.comb.k=h.levels.comb.k, struct=struct, method=method, fit.stats=fit.stats, QE=QE, QEp=QEp, QM=QM, QMp=QMp, btt=btt, test=test, dfs=dfs)
+         res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb, int.only=int.only, digits=digits, k=k, k.eff=k.eff, k.all=k.all, p=p, p.eff=p.eff, parms=parms, m=m, sigma2=sigma2, tau2=tau2, rho=rho, gamma2=gamma2, phi=phi, withR=withR, withS=withS, withG=withG, withH=withH, s.nlevels=s.nlevels, vc.fix=vc.fix, s.names=s.names, Rfix=Rfix, g.names=g.names, g.nlevels=g.nlevels, g.nlevels.f=g.nlevels.f, g.levels.k=g.levels.k, g.levels.f=g.levels.f, g.levels.comb.k=g.levels.comb.k, h.names=h.names, h.nlevels=h.nlevels, h.levels.k=h.levels.k, h.levels.f=h.levels.f, h.nlevels.f=h.nlevels.f, h.levels.comb.k=h.levels.comb.k, struct=struct, method=method, fit.stats=fit.stats, QE=QE, QEp=QEp, QM=QM, QMp=QMp, btt=btt, test=test, dfs=dfs)
       } else {
          res <- eval(parse(text=paste0("list(", ddd$outlist, ")")))
       }
