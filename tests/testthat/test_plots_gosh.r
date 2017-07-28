@@ -23,7 +23,7 @@ test_that("plot can be drawn.", {
    ### create GOSH plot
    ### red points for subsets that include and blue points
    ### for subsets that exclude study 16 (the ISIS-4 trial)
-   plot(sav, out=16)
+   plot(sav, out=16, breaks=100)
 
    ### meta-analysis using MH method (using subset to speed things up)
    res <- rma.mh(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat.egger2001, subset=c(1:7,16))
