@@ -1098,7 +1098,7 @@
       if (comp == "phi")
          phi.arg[phi.pos] <- val
 
-      res <- try(suppressWarnings(rma.mv(obj$yi, obj$V, obj$W, mods=obj$X, intercept=FALSE, random=obj$random, struct=obj$struct, method=obj$method, test=obj$test, level=obj$level, R=obj$R, Rscale=obj$Rscale, data=obj$mf.r, sigma2=sigma2.arg, tau2=tau2.arg, rho=rho.arg, gamma2=gamma2.arg, phi=phi.arg, control=obj$control)), silent=TRUE)
+      res <- try(suppressWarnings(rma.mv(obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=sigma2.arg, tau2=tau2.arg, rho=rho.arg, gamma2=gamma2.arg, phi=phi.arg, sparse=obj$sparse, control=obj$control)), silent=TRUE)
 
       if (profile) {
 
@@ -1183,6 +1183,32 @@
    }
 
    return(sav)
+
+}
+
+.cooks.distance.rma.mv <- function(i, obj, parallel, svb, cluster, ids) {
+
+   if (parallel == "snow")
+      library(metafor)
+
+   incl <- cluster %in% ids[i]
+
+   ### note: not.na=FALSE only when there are missings in data, not when model below cannot be fitted or results in dropped coefficients
+
+   if (any(!obj$not.na[incl]))
+      return(list(cook.d = NA, not.na=FALSE))
+
+   res <- try(suppressWarnings(rma.mv(obj$yi.f, V=obj$V.f, W=obj$W.f, mods=obj$X.f, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r.f, method=obj$method, R=obj$R, Rscale=obj$Rscale, sigma2=ifelse(obj$vc.fix$sigma2, obj$sigma2, NA), tau2=ifelse(obj$vc.fix$tau2, obj$tau2, NA), rho=ifelse(obj$vc.fix$rho, obj$rho, NA), gamma2=ifelse(obj$vc.fix$gamma2, obj$gamma2, NA), phi=ifelse(obj$vc.fix$phi, obj$phi, NA), sparse=obj$sparse, control=obj$control, subset=!incl)), silent=TRUE)
+
+   if (inherits(res, "try-error"))
+      return(list(cook.d = NA, not.na=TRUE))
+
+   if (any(res$coef.na))
+      return(list(cook.d = NA, not.na=TRUE))
+
+   dfb <- obj$beta - res$beta
+
+   return(list(cook.d = crossprod(dfb,svb) %*% dfb, not.na=TRUE))
 
 }
 

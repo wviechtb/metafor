@@ -137,8 +137,6 @@ profile.rma.uni <- function(fitted, xlim, ylim, steps=20, progbar=TRUE, parallel
          }
       }
 
-      return(res)
-      
       lls <- sapply(res, function(z) z$ll)
       beta  <- do.call("rbind", lapply(res, function(z) t(z$beta)))
       ci.lb <- do.call("rbind", lapply(res, function(z) t(z$ci.lb)))
