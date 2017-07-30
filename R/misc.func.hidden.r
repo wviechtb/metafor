@@ -1198,7 +1198,7 @@
    if (any(!obj$not.na[incl]))
       return(list(cook.d = NA, not.na=FALSE))
 
-   res <- try(suppressWarnings(rma.mv(obj$yi.f, V=obj$V.f, W=obj$W.f, mods=obj$X.f, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r.f, method=obj$method, R=obj$R, Rscale=obj$Rscale, sigma2=ifelse(obj$vc.fix$sigma2, obj$sigma2, NA), tau2=ifelse(obj$vc.fix$tau2, obj$tau2, NA), rho=ifelse(obj$vc.fix$rho, obj$rho, NA), gamma2=ifelse(obj$vc.fix$gamma2, obj$gamma2, NA), phi=ifelse(obj$vc.fix$phi, obj$phi, NA), sparse=obj$sparse, control=obj$control, subset=!incl)), silent=TRUE)
+   res <- try(suppressWarnings(rma.mv(obj$yi.f, V=obj$V.f, W=obj$W.f, mods=obj$X.f, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r.f, method=obj$method, test=obj$test, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=ifelse(obj$vc.fix$sigma2, obj$sigma2, NA), tau2=ifelse(obj$vc.fix$tau2, obj$tau2, NA), rho=ifelse(obj$vc.fix$rho, obj$rho, NA), gamma2=ifelse(obj$vc.fix$gamma2, obj$gamma2, NA), phi=ifelse(obj$vc.fix$phi, obj$phi, NA), sparse=obj$sparse, control=obj$control, subset=!incl)), silent=TRUE)
 
    if (inherits(res, "try-error"))
       return(list(cook.d = NA, not.na=TRUE))

@@ -6,13 +6,16 @@
    The functions compute various outlier and influential case diagnostics (some of which indicate the influence of deleting one case/study at a time on the model fit and the fitted/residual values) for objects of class \code{"rma.mv"}. At the moment, only Cook's distances and hat values can be obtained.
 }
 \usage{
-\method{cooks.distance}{rma.mv}(model, progbar=FALSE, cluster, \dots)
+\method{cooks.distance}{rma.mv}(model, progbar=FALSE, cluster, parallel="no", ncpus=1, cl=NULL, \dots)
 \method{hatvalues}{rma.mv}(model, type="diagonal", \dots)
 }
 \arguments{
    \item{model}{an object of class \code{"rma.mv"}.}
    \item{progbar}{logical indicating whether a progress bar should be shown (the default is \code{FALSE}).}
    \item{cluster}{a vector specifying the clustering variable to use for computing the Cook's distances. If not specified, Cook's distances are computed for all individual observed outcomes.}
+   \item{parallel}{character string indicating whether parallel processing should be used (the default is \code{"no"}). For parallel processing, set to either \code{"snow"} or \code{"multicore"}. See \sQuote{Details}.}
+   \item{ncpus}{integer specifying the number of processes to be used in the parallel operation.}
+   \item{cl}{optional snow cluster to use if \code{parallel="snow"}. If not supplied, a cluster on the local machine is created for the duration of the call.}
    \item{type}{character string indicating whether to return only the diagonal of the hat matrix (\code{"diagonal"}) or the entire hat matrix (\code{"matrix"}).}
    \item{\dots}{other arguments.}
 }
