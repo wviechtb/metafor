@@ -1186,7 +1186,7 @@
 
 }
 
-.cooks.distance.rma.mv <- function(i, obj, parallel, svb, cluster, ids) {
+.cooks.distance.rma.mv <- function(i, obj, parallel, svb, cluster, ids, reestimate) {
 
    if (parallel == "snow")
       library(metafor)
@@ -1196,19 +1196,36 @@
    ### note: not.na=FALSE only when there are missings in data, not when model below cannot be fitted or results in dropped coefficients
 
    if (any(!obj$not.na[incl]))
-      return(list(cook.d = NA, not.na=FALSE))
+      return(list(cook.d = NA, k.id = NA, not.na=FALSE))
 
-   res <- try(suppressWarnings(rma.mv(obj$yi.f, V=obj$V.f, W=obj$W.f, mods=obj$X.f, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r.f, method=obj$method, test=obj$test, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=ifelse(obj$vc.fix$sigma2, obj$sigma2, NA), tau2=ifelse(obj$vc.fix$tau2, obj$tau2, NA), rho=ifelse(obj$vc.fix$rho, obj$rho, NA), gamma2=ifelse(obj$vc.fix$gamma2, obj$gamma2, NA), phi=ifelse(obj$vc.fix$phi, obj$phi, NA), sparse=obj$sparse, control=obj$control, subset=!incl)), silent=TRUE)
+   k.id <- sum(incl)
+
+   if (reestimate) {
+
+      control             <- obj$control
+      control$sigma2.init <- obj$sigma2
+      control$tau2.init   <- obj$tau2
+      control$rho.init    <- obj$rho
+      control$gamma2.init <- obj$gamma2
+      control$phi.init    <- obj$phi
+
+      res <- try(suppressWarnings(rma.mv(obj$yi.f, V=obj$V.f, W=obj$W.f, mods=obj$X.f, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r.f, method=obj$method, test=obj$test, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=ifelse(obj$vc.fix$sigma2, obj$sigma2, NA), tau2=ifelse(obj$vc.fix$tau2, obj$tau2, NA), rho=ifelse(obj$vc.fix$rho, obj$rho, NA), gamma2=ifelse(obj$vc.fix$gamma2, obj$gamma2, NA), phi=ifelse(obj$vc.fix$phi, obj$phi, NA), sparse=obj$sparse, control=control, subset=!incl)), silent=TRUE)
+
+   } else {
+
+      res <- try(suppressWarnings(rma.mv(obj$yi.f, V=obj$V.f, W=obj$W.f, mods=obj$X.f, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r.f, method=obj$method, test=obj$test, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=obj$sigma2, tau2=obj$tau2, rho=obj$rho, gamma2=obj$gamma2, phi=obj$phi, sparse=obj$sparse, control=obj$control, subset=!incl)), silent=TRUE)
+
+   }
 
    if (inherits(res, "try-error"))
-      return(list(cook.d = NA, not.na=TRUE))
+      return(list(cook.d = NA, k.id = k.id, not.na = TRUE))
 
    if (any(res$coef.na))
-      return(list(cook.d = NA, not.na=TRUE))
+      return(list(cook.d = NA, k.id = k.id, not.na = TRUE))
 
    dfb <- obj$beta - res$beta
 
-   return(list(cook.d = crossprod(dfb,svb) %*% dfb, not.na=TRUE))
+   return(list(cook.d = crossprod(dfb,svb) %*% dfb, k.id = k.id, not.na = TRUE))
 
 }
 

@@ -1,4 +1,4 @@
-Changes in Version 2.1-0 (2017-07-30)
+Changes in Version 2.1-0 (2017-07-31)
 =====================================
 
    o overhauled plot.gosh.rma(); when 'out' is specified, it now shows two
@@ -11,6 +11,13 @@ Changes in Version 2.1-0 (2017-07-30)
 
    o cooks.distance.rma.mv() gains 'parallel', 'ncpus', and 'cl' arguments
      and can now make use of parallel processing
+
+   o cooks.distance.rma.mv() gains 'reestimate' argument; when set to FALSE,
+     variance/correlation components are not reestimated
+
+   o cooks.distance.rma.mv() should be faster by using the estimates from
+     the full model as starting values when fitting the models with the ith
+     study/cluster deleted from the dataset
 
    o smarter matching of elements in 'newmods' (when using a named vector)
      in predict() that also works for models with interactions (thanks to

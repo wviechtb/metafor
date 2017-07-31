@@ -1,4 +1,4 @@
-cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, parallel="no", ncpus=1, cl=NULL, ...) {
+cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE, parallel="no", ncpus=1, cl=NULL, ...) {
 
    if (!inherits(model, "rma.mv"))
       stop("Argument 'model' must be an object of class \"rma.mv\".")
@@ -15,7 +15,9 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, parallel="no", 
 
    parallel <- match.arg(parallel, c("no", "snow", "multicore"))
 
-   if (missing(cluster))
+   misscluster <- ifelse(missing(cluster), TRUE, FALSE)
+
+   if (misscluster)
       cluster <- 1:x$k.all
 
    #########################################################################
@@ -43,9 +45,6 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, parallel="no", 
 
    #########################################################################
 
-   cook.d <- rep(NA_real_, n)
-   not.na <- rep(FALSE, n)
-
    ### calculate inverse of variance-covariance matrix under the full model (needed for the Cook's distances)
 
    svb <- chol2inv(chol(x$vb))
@@ -54,6 +53,10 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, parallel="no", 
    ### also: it is possible that model fitting fails, so that generates more NAs (these NAs will always be shown in output)
 
    if (parallel=="no") {
+
+      cook.d <- rep(NA_real_, n)
+      k.id   <- rep(NA_integer_, n)
+      not.na <- rep(FALSE, n)
 
       if (progbar)
          pbar <- txtProgressBar(min=0, max=n, style=3)
@@ -70,7 +73,25 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, parallel="no", 
 
          not.na[i] <- TRUE
 
-         res <- try(suppressWarnings(rma.mv(x$yi.f, V=x$V.f, W=x$W.f, mods=x$X.f, random=x$random, struct=x$struct, intercept=FALSE, data=x$mf.r.f, method=x$method, test=x$test, level=x$level, R=x$R, Rscale=x$Rscale, sigma2=ifelse(x$vc.fix$sigma2, x$sigma2, NA), tau2=ifelse(x$vc.fix$tau2, x$tau2, NA), rho=ifelse(x$vc.fix$rho, x$rho, NA), gamma2=ifelse(x$vc.fix$gamma2, x$gamma2, NA), phi=ifelse(x$vc.fix$phi, x$phi, NA), sparse=x$sparse, control=x$control, subset=!incl)), silent=TRUE)
+         k.id[i] <- sum(incl)
+
+         if (reestimate) {
+
+            ### set initial values to estimates from full model
+            control             <- x$control
+            control$sigma2.init <- x$sigma2
+            control$tau2.init   <- x$tau2
+            control$rho.init    <- x$rho
+            control$gamma2.init <- x$gamma2
+            control$phi.init    <- x$phi
+
+            res <- try(suppressWarnings(rma.mv(x$yi.f, V=x$V.f, W=x$W.f, mods=x$X.f, random=x$random, struct=x$struct, intercept=FALSE, data=x$mf.r.f, method=x$method, test=x$test, level=x$level, R=x$R, Rscale=x$Rscale, sigma2=ifelse(x$vc.fix$sigma2, x$sigma2, NA), tau2=ifelse(x$vc.fix$tau2, x$tau2, NA), rho=ifelse(x$vc.fix$rho, x$rho, NA), gamma2=ifelse(x$vc.fix$gamma2, x$gamma2, NA), phi=ifelse(x$vc.fix$phi, x$phi, NA), sparse=x$sparse, control=control, subset=!incl)), silent=TRUE)
+
+         } else {
+
+            res <- try(suppressWarnings(rma.mv(x$yi.f, V=x$V.f, W=x$W.f, mods=x$X.f, random=x$random, struct=x$struct, intercept=FALSE, data=x$mf.r.f, method=x$method, test=x$test, level=x$level, R=x$R, Rscale=x$Rscale, sigma2=x$sigma2, tau2=x$tau2, rho=x$rho, gamma2=x$gamma2, phi=x$phi, sparse=x$sparse, control=x$control, subset=!incl)), silent=TRUE)
+
+         }
 
          if (inherits(res, "try-error"))
             next
@@ -106,19 +127,20 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, parallel="no", 
          stop("Argument 'ncpus' must be >= 1.")
 
       if (parallel == "multicore")
-         res <- parallel::mclapply(seq_len(n), .cooks.distance.rma.mv, obj=x, mc.cores=ncpus, parallel=parallel, svb=svb, cluster=cluster, ids=ids)
+         res <- parallel::mclapply(seq_len(n), .cooks.distance.rma.mv, obj=x, mc.cores=ncpus, parallel=parallel, svb=svb, cluster=cluster, ids=ids, reestimate=reestimate)
 
       if (parallel == "snow") {
          if (is.null(cl)) {
             cl <- parallel::makePSOCKcluster(ncpus)
-            res <- parallel::parLapply(cl, seq_len(n), .cooks.distance.rma.mv, obj=x, parallel=parallel, svb=svb, cluster=cluster, ids=ids)
+            res <- parallel::parLapply(cl, seq_len(n), .cooks.distance.rma.mv, obj=x, parallel=parallel, svb=svb, cluster=cluster, ids=ids, reestimate=reestimate)
             parallel::stopCluster(cl)
          } else {
-            res <- parallel::parLapply(cl, seq_len(n), .cooks.distance.rma.mv, obj=x, parallel=parallel, svb=svb, cluster=cluster, ids=ids)
+            res <- parallel::parLapply(cl, seq_len(n), .cooks.distance.rma.mv, obj=x, parallel=parallel, svb=svb, cluster=cluster, ids=ids, reestimate=reestimate)
          }
       }
 
       cook.d <- sapply(res, function(z) z$cook.d)
+      k.id   <- sapply(res, function(z) z$k.id)
       not.na <- sapply(res, function(z) z$not.na)
 
    }
@@ -127,12 +149,20 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, parallel="no", 
 
    if (na.act == "na.omit") {
       out <- cook.d[not.na]
-      names(out) <- ids[not.na]
+      if (misscluster) {
+         names(out) <- x$slab[not.na]
+      } else {
+         names(out) <- ids[not.na]
+      }
    }
 
    if (na.act == "na.exclude" || na.act == "na.pass") {
       out <- cook.d
-      names(out) <- ids
+      if (misscluster) {
+         names(out) <- x$slab
+      } else {
+         names(out) <- ids
+      }
    }
 
    if (na.act == "na.fail" && any(!not.na))

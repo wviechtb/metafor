@@ -42,7 +42,13 @@ print.list.rma <- function(x, digits, ...) {
 
    sav <- out[,seq_len(min.pos-1)]
 
-   out[,seq_len(min.pos-1)] <- apply(out[,seq_len(min.pos-1), drop=FALSE], 2, formatC, digits=digits, format="f")
+   for (i in 1:(min.pos-1)) {
+      if (inherits(out[,i], "integer")) { ### do not apply formating to integers
+         out[,i] <- out[,i]
+      } else {
+         out[,i] <- formatC(out[,i], digits=digits, format="f")
+      }
+   }
 
    print(out, quote=FALSE, right=TRUE)
 
