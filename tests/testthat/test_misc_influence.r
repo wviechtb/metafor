@@ -15,7 +15,7 @@ test_that("influence() works for rma().", {
    inf$is.infl <- inf$is.infl[1]
    inf$not.na <- inf$not.na[1]
 
-   sav <- structure(list(inf = structure(list(rstudent = -0.2181, dffits = -0.0407, cook.d = 0.0017, cov.r = 1.1164, tau2.del = 0.3362, QE.del = 151.5826, hat = 0.0506, weight = 5.0595), .Names = c("rstudent", "dffits", "cook.d", "cov.r", "tau2.del", "QE.del", "hat", "weight"), row.names = 1L, class = "data.frame"), dfbs = structure(list(intrcpt = -0.0403), .Names = "intrcpt", row.names = 1L, class = "data.frame"), tau2 = 0.3132, QE = 152.233, ids = 1:13, not.na = TRUE, is.infl = FALSE, k = 13L, p = 1L, digits = 4), .Names = c("inf", "dfbs", "tau2", "QE", "ids", "not.na", "is.infl", "k", "p", "digits"), class = "infl.rma.uni")
+   sav <- structure(list(inf = structure(list(rstudent = -0.2181, dffits = -0.0407, cook.d = 0.0017, cov.r = 1.1164, tau2.del = 0.3362, QE.del = 151.5826, hat = 0.0506, weight = 5.0595), .Names = c("rstudent", "dffits", "cook.d", "cov.r", "tau2.del", "QE.del", "hat", "weight"), row.names = 1L, class = "data.frame"), dfbs = structure(list(intrcpt = -0.0403), .Names = "intrcpt", row.names = 1L, class = "data.frame"), tau2 = 0.3132, QE = 152.233, ids = 1:13, not.na = TRUE, is.infl = FALSE, k = 13L, p = 1L, m=1L, digits = 4), .Names = c("inf", "dfbs", "tau2", "QE", "ids", "not.na", "is.infl", "k", "p", "digits"), class = "infl.rma.uni")
 
    expect_equivalent(sav, inf)
 

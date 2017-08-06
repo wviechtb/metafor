@@ -1755,6 +1755,8 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    ###### compute Hessian
 
+   hessian <- NA
+
    if (con$hessian) {
 
       if (verbose > 1)
@@ -1772,59 +1774,60 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
          sparse=sparse, cholesky=ifelse(c(con$vctransf,con$vctransf) & cholesky, TRUE, FALSE), posdefify=posdefify, vctransf=con$vctransf,
          verbose=verbose, digits=digits, REMLf=con$REMLf), silent=TRUE)
 
-      if (inherits(hessian, "try-error"))
+      if (inherits(hessian, "try-error")) {
+
          warning("Error when trying to compute Hessian.")
 
-      ### row/column names
-
-      colnames(hessian) <- seq_len(ncol(hessian)) ### need to do this, so the subsetting of colnames below works
-
-      if (sigma2s == 1) {
-         colnames(hessian)[1] <- "sigma^2"
       } else {
-         colnames(hessian)[1:sigma2s] <- paste("sigma^2.", seq_len(sigma2s), sep="")
-      }
-      if (tau2s == 1) {
-         colnames(hessian)[sigma2s+1] <- "tau^2"
-      } else {
-         colnames(hessian)[(sigma2s+1):(sigma2s+tau2s)] <- paste("tau^2.", seq_len(tau2s), sep="")
-      }
-      if (rhos == 1) {
-         colnames(hessian)[sigma2s+tau2s+1] <- "rho"
-      } else {
-         colnames(hessian)[(sigma2s+tau2s+1):(sigma2s+tau2s+rhos)] <- paste("rho.", outer(seq_len(g.nlevels.f[1]), seq_len(g.nlevels.f), paste, sep=".")[upper.tri(matrix(NA,nrow=g.nlevels.f,ncol=g.nlevels.f))], sep="")
-      }
-      if (gamma2s == 1) {
-         colnames(hessian)[sigma2s+tau2s+rhos+1] <- "gamma^2"
-      } else {
-         colnames(hessian)[(sigma2s+tau2s+rhos+1):(sigma2s+tau2s+rhos+gamma2s)] <- paste("gamma^2.", seq_len(gamma2s), sep="")
-      }
-      if (phis == 1) {
-         colnames(hessian)[sigma2s+tau2s+rhos+gamma2s+1] <- "phi"
-      } else {
-         colnames(hessian)[(sigma2s+tau2s+rhos+gamma2s+1):(sigma2s+tau2s+rhos+gamma2s+phis)] <- paste("phi.", outer(seq_len(h.nlevels.f[1]), seq_len(h.nlevels.f), paste, sep=".")[upper.tri(matrix(NA,nrow=h.nlevels.f,ncol=h.nlevels.f))], sep="")
-      }
 
-      rownames(hessian) <- colnames(hessian)
+         ### row/column names
 
-      ### select correct rows/columns from Hessian depending on components in the model
+         colnames(hessian) <- seq_len(ncol(hessian)) ### need to do this, so the subsetting of colnames below works
 
-      #if (withS && withG && withH)
-         #hessian <- hessian[1:nrow(hessian),1:ncol(hessian), drop=FALSE]
-      if (withS && withG && !withH)
-         hessian <- hessian[1:(nrow(hessian)-2),1:(ncol(hessian)-2), drop=FALSE]
-      if (withS && !withG && !withH)
-         hessian <- hessian[1:(nrow(hessian)-4),1:(ncol(hessian)-4), drop=FALSE]
-      if (!withS && withG && withH)
-         hessian <- hessian[2:nrow(hessian),2:ncol(hessian), drop=FALSE]
-      if (!withS && withG && !withH)
-         hessian <- hessian[2:(nrow(hessian)-2),2:(ncol(hessian)-2), drop=FALSE]
-      if (!withS && !withG && !withH)
-         hessian <- NA
+         if (sigma2s == 1) {
+            colnames(hessian)[1] <- "sigma^2"
+         } else {
+            colnames(hessian)[1:sigma2s] <- paste("sigma^2.", seq_len(sigma2s), sep="")
+         }
+         if (tau2s == 1) {
+            colnames(hessian)[sigma2s+1] <- "tau^2"
+         } else {
+            colnames(hessian)[(sigma2s+1):(sigma2s+tau2s)] <- paste("tau^2.", seq_len(tau2s), sep="")
+         }
+         if (rhos == 1) {
+            colnames(hessian)[sigma2s+tau2s+1] <- "rho"
+         } else {
+            colnames(hessian)[(sigma2s+tau2s+1):(sigma2s+tau2s+rhos)] <- paste("rho.", outer(seq_len(g.nlevels.f[1]), seq_len(g.nlevels.f), paste, sep=".")[upper.tri(matrix(NA,nrow=g.nlevels.f,ncol=g.nlevels.f))], sep="")
+         }
+         if (gamma2s == 1) {
+            colnames(hessian)[sigma2s+tau2s+rhos+1] <- "gamma^2"
+         } else {
+            colnames(hessian)[(sigma2s+tau2s+rhos+1):(sigma2s+tau2s+rhos+gamma2s)] <- paste("gamma^2.", seq_len(gamma2s), sep="")
+         }
+         if (phis == 1) {
+            colnames(hessian)[sigma2s+tau2s+rhos+gamma2s+1] <- "phi"
+         } else {
+            colnames(hessian)[(sigma2s+tau2s+rhos+gamma2s+1):(sigma2s+tau2s+rhos+gamma2s+phis)] <- paste("phi.", outer(seq_len(h.nlevels.f[1]), seq_len(h.nlevels.f), paste, sep=".")[upper.tri(matrix(NA,nrow=h.nlevels.f,ncol=h.nlevels.f))], sep="")
+         }
 
-   } else {
+         rownames(hessian) <- colnames(hessian)
 
-      hessian <- NA
+         ### select correct rows/columns from Hessian depending on components in the model
+
+         #if (withS && withG && withH)
+            #hessian <- hessian[1:nrow(hessian),1:ncol(hessian), drop=FALSE]
+         if (withS && withG && !withH)
+            hessian <- hessian[1:(nrow(hessian)-2),1:(ncol(hessian)-2), drop=FALSE]
+         if (withS && !withG && !withH)
+            hessian <- hessian[1:(nrow(hessian)-4),1:(ncol(hessian)-4), drop=FALSE]
+         if (!withS && withG && withH)
+            hessian <- hessian[2:nrow(hessian),2:ncol(hessian), drop=FALSE]
+         if (!withS && withG && !withH)
+            hessian <- hessian[2:(nrow(hessian)-2),2:(ncol(hessian)-2), drop=FALSE]
+         if (!withS && !withG && !withH)
+            hessian <- NA
+
+      }
 
    }
 

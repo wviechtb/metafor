@@ -25,6 +25,11 @@ influence.rma.uni <- function(model, digits, progbar=FALSE, ...) {
    if (x$k == 1)
       stop("Stopped because k = 1.")
 
+   ddd <- list(...)
+
+   btt <- .set.btt(ddd$btt, x$p, int.incl=FALSE)
+   m <- length(btt)
+
    #########################################################################
 
    tau2.del <- rep(NA_real_, x$k.f)
@@ -42,22 +47,20 @@ influence.rma.uni <- function(model, digits, progbar=FALSE, ...) {
    pred.full <- x$X.f %*% x$beta
 
    ### calculate inverse of variance-covariance matrix under the full model (needed for the Cook's distances)
+
+   svb <- chol2inv(chol(x$vb[btt,btt,drop=FALSE]))
+
    ### also need H matrix for dffits calculation (when not using the standard weights)
 
    if (x$weighted) {
-      if (is.null(x$weights)) {
-         W   <- diag(1/(x$vi + x$tau2), nrow=x$k, ncol=x$k)
-         svb <- crossprod(x$X,W) %*% x$X / x$s2w
-      } else {
-         svb   <- chol2inv(chol(x$vb))
-         A     <- diag(x$weights, nrow=x$k, ncol=x$k)
+      if (!is.null(x$weights)) {
+         A <- diag(x$weights, nrow=x$k, ncol=x$k)
          stXAX <- .invcalc(X=x$X, W=A, k=x$k)
-         H     <- x$X %*% stXAX %*% t(x$X) %*% A
+         H <- x$X %*% stXAX %*% t(x$X) %*% A
       }
    } else {
-      svb  <- chol2inv(chol(x$vb))
       stXX <- .invcalc(X=x$X, W=diag(x$k), k=x$k)
-      H    <- x$X %*% stXX %*% t(x$X)
+      H <- x$X %*% stXX %*% t(x$X)
    }
 
    ### hat values
@@ -132,6 +135,10 @@ influence.rma.uni <- function(model, digits, progbar=FALSE, ...) {
       dfbs[i,] <- dfb / sqrt(res$s2w * diag(vb.del))
       #dfbs[i,] <- dfb / sqrt(diag(res$vb))
 
+      ### compute dfbeta value(s) (including coefficients as specified via btt)
+
+      dfb <- x$beta[btt] - res$beta[btt]
+
       ### compute Cook's distance
 
       cook.d[i]  <- crossprod(dfb,svb) %*% dfb # / x$p
@@ -139,7 +146,7 @@ influence.rma.uni <- function(model, digits, progbar=FALSE, ...) {
 
       ### compute covariance ratio
 
-      cov.r[i]   <- det(res$vb) / det(x$vb)
+      cov.r[i]   <- det(res$vb[btt,btt,drop=FALSE]) / det(x$vb[btt,btt,drop=FALSE])
 
    }
 
@@ -173,9 +180,9 @@ influence.rma.uni <- function(model, digits, progbar=FALSE, ...) {
    is.infl <-
       #abs(inf$standelres) > qnorm(.975) |
       abs(inf$dffits) > 3*sqrt(x$p/(x$k-x$p)) |
-      pchisq(inf$cook.d, df=x$p) > .50 |
-      #inf$cov.r > 1 + 3*x$p/(x$k-x$p) |
-      #inf$cov.r < 1 - 3*x$p/(x$k-x$p) |
+      pchisq(inf$cook.d, df=m) > .50 |
+      #inf$cov.r > 1 + 3*m/(x$k-m) |
+      #inf$cov.r < 1 - 3*m/(x$k-m) |
       inf$hii > 3*x$p/x$k |
       apply(abs(dfbs) > 1, 1, any) ### consider using rowAnys() from matrixStats package
 
@@ -183,7 +190,7 @@ influence.rma.uni <- function(model, digits, progbar=FALSE, ...) {
 
    #########################################################################
 
-   out <- list(inf=inf, dfbs=dfbs, tau2=x$tau2, QE=x$QE, ids=x$ids, not.na=x$not.na, is.infl=is.infl, k=x$k, p=x$p, digits=digits)
+   out <- list(inf=inf, dfbs=dfbs, tau2=x$tau2, QE=x$QE, ids=x$ids, not.na=x$not.na, is.infl=is.infl, k=x$k, p=x$p, m=m, digits=digits)
    rownames(out$inf) <- x$slab
    rownames(out$dfbs) <- x$slab
 

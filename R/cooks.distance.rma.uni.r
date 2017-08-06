@@ -19,13 +19,18 @@ cooks.distance.rma.uni <- function(model, progbar=FALSE, ...) {
    if (x$k == 1)
       stop("Stopped because k = 1.")
 
+   ddd <- list(...)
+
+   btt <- .set.btt(ddd$btt, x$p, int.incl=FALSE)
+   m <- length(btt)
+
    #########################################################################
 
    cook.d <- rep(NA_real_, x$k.f)
 
    ### calculate inverse of variance-covariance matrix under the full model (needed for the Cook's distances)
 
-   svb <- chol2inv(chol(x$vb))
+   svb <- chol2inv(chol(x$vb[btt,btt,drop=FALSE]))
 
    ### note: skipping NA cases
    ### also: it is possible that model fitting fails, so that generates more NAs (these NAs will always be shown in output)
@@ -51,9 +56,9 @@ cooks.distance.rma.uni <- function(model, progbar=FALSE, ...) {
       if (any(res$coef.na))
          next
 
-      ### compute dfbeta value(s)
+      ### compute dfbeta value(s) (including coefficients as specified via btt)
 
-      dfb <- x$beta - res$beta
+      dfb <- x$beta[btt] - res$beta[btt]
 
       ### compute Cook's distance
 

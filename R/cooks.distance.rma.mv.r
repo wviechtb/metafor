@@ -20,6 +20,11 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
    if (misscluster)
       cluster <- 1:x$k.all
 
+   ddd <- list(...)
+
+   btt <- .set.btt(ddd$btt, x$p, int.incl=FALSE)
+   m <- length(btt)
+
    #########################################################################
 
    ### process cluster variable
@@ -47,7 +52,7 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
 
    ### calculate inverse of variance-covariance matrix under the full model (needed for the Cook's distances)
 
-   svb <- chol2inv(chol(x$vb))
+   svb <- chol2inv(chol(x$vb[btt,btt,drop=FALSE]))
 
    ### note: skipping NA cases
    ### also: it is possible that model fitting fails, so that generates more NAs (these NAs will always be shown in output)
@@ -68,7 +73,8 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
 
          incl <- cluster %in% ids[i]
 
-         if (any(!x$not.na[incl]))
+         ### if all rows in cluster are NA, then skip it
+         if (all(!x$not.na[incl]))
             next
 
          not.na[i] <- TRUE
@@ -89,6 +95,7 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
 
          } else {
 
+            ### set values of variance/correlation components to those from the 'full' model
             res <- try(suppressWarnings(rma.mv(x$yi.f, V=x$V.f, W=x$W.f, mods=x$X.f, random=x$random, struct=x$struct, intercept=FALSE, data=x$mf.r.f, method=x$method, test=x$test, level=x$level, R=x$R, Rscale=x$Rscale, sigma2=x$sigma2, tau2=x$tau2, rho=x$rho, gamma2=x$gamma2, phi=x$phi, sparse=x$sparse, control=x$control, subset=!incl)), silent=TRUE)
 
          }
@@ -101,9 +108,9 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
          if (any(res$coef.na))
             next
 
-         ### compute dfbeta value(s)
+         ### compute dfbeta value(s) (including coefficients as specified via btt)
 
-         dfb <- x$beta - res$beta
+         dfb <- x$beta[btt] - res$beta[btt]
 
          ### compute Cook's distance
 
@@ -127,15 +134,15 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
          stop("Argument 'ncpus' must be >= 1.")
 
       if (parallel == "multicore")
-         res <- parallel::mclapply(seq_len(n), .cooks.distance.rma.mv, obj=x, mc.cores=ncpus, parallel=parallel, svb=svb, cluster=cluster, ids=ids, reestimate=reestimate)
+         res <- parallel::mclapply(seq_len(n), .cooks.distance.rma.mv, obj=x, mc.cores=ncpus, parallel=parallel, svb=svb, cluster=cluster, ids=ids, reestimate=reestimate, btt=btt)
 
       if (parallel == "snow") {
          if (is.null(cl)) {
             cl <- parallel::makePSOCKcluster(ncpus)
-            res <- parallel::parLapply(cl, seq_len(n), .cooks.distance.rma.mv, obj=x, parallel=parallel, svb=svb, cluster=cluster, ids=ids, reestimate=reestimate)
+            res <- parallel::parLapply(cl, seq_len(n), .cooks.distance.rma.mv, obj=x, parallel=parallel, svb=svb, cluster=cluster, ids=ids, reestimate=reestimate, btt=btt)
             parallel::stopCluster(cl)
          } else {
-            res <- parallel::parLapply(cl, seq_len(n), .cooks.distance.rma.mv, obj=x, parallel=parallel, svb=svb, cluster=cluster, ids=ids, reestimate=reestimate)
+            res <- parallel::parLapply(cl, seq_len(n), .cooks.distance.rma.mv, obj=x, parallel=parallel, svb=svb, cluster=cluster, ids=ids, reestimate=reestimate, btt=btt)
          }
       }
 

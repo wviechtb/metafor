@@ -1186,7 +1186,7 @@
 
 }
 
-.cooks.distance.rma.mv <- function(i, obj, parallel, svb, cluster, ids, reestimate) {
+.cooks.distance.rma.mv <- function(i, obj, parallel, svb, cluster, ids, reestimate, btt) {
 
    if (parallel == "snow")
       library(metafor)
@@ -1194,9 +1194,9 @@
    incl <- cluster %in% ids[i]
 
    ### note: not.na=FALSE only when there are missings in data, not when model below cannot be fitted or results in dropped coefficients
-
-   if (any(!obj$not.na[incl]))
-      return(list(cook.d = NA, k.id = NA, not.na=FALSE))
+   
+   if (all(!obj$not.na[incl]))
+      return(list(cook.d = NA, k.id = NA, not.na = FALSE))
 
    k.id <- sum(incl)
 
@@ -1223,7 +1223,7 @@
    if (any(res$coef.na))
       return(list(cook.d = NA, k.id = k.id, not.na = TRUE))
 
-   dfb <- obj$beta - res$beta
+   dfb <- obj$beta[btt] - res$beta[btt]
 
    return(list(cook.d = crossprod(dfb,svb) %*% dfb, k.id = k.id, not.na = TRUE))
 

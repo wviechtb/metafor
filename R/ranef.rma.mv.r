@@ -71,7 +71,8 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
 
    if (x$withS) {
 
-      # u = DZ'W(y - Xb) = DZ'We, where W = M^-1
+      # u^ = DZ'W(y - Xb) = DZ'We, where W = M^-1
+      # note: vpred = var(u^ - u)
 
       out <- vector(mode="list", length=x$sigma2s)
       names(out) <- x$s.names
