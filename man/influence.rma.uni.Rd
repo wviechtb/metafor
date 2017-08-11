@@ -69,7 +69,7 @@
    The results are printed with \code{print.infl.rma.uni} and plotted with \code{\link{plot.infl.rma.uni}}.
 }
 \note{
-   Right now, the leave-one-out diagnostics are calculated by refitting the model \eqn{k} times. Depending on how large \eqn{k} is, it may take a few moments to finish the calculations. There are shortcuts for calculating at least some of these values without refitting the model each time, but these are currently not implemented (and may not exist for all of the leave-one-out diagnostics calculated by the function).
+   Right now, leave-one-out diagnostics are calculated by refitting the model \eqn{k} times. Depending on how large \eqn{k} is, it may take a few moments to finish the calculations. There are shortcuts for calculating at least some of these values without refitting the model each time, but these are currently not implemented (and may not exist for all of the leave-one-out diagnostics calculated by the function).
 
    It may not be possible to fit the model after deletion of the \eqn{i}th study from the dataset. This will result in \code{NA} values for that study.
 

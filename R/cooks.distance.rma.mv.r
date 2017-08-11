@@ -74,6 +74,7 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
          incl <- cluster %in% ids[i]
 
          ### if all rows in cluster are NA, then skip it
+
          if (all(!x$not.na[incl]))
             next
 
@@ -84,6 +85,7 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
          if (reestimate) {
 
             ### set initial values to estimates from full model
+
             control             <- x$control
             control$sigma2.init <- x$sigma2
             control$tau2.init   <- x$tau2

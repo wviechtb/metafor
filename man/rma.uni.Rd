@@ -143,7 +143,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
    The results of the fitted model are formatted and printed with the \code{\link{print.rma.uni}} function. If fit statistics should also be given, use \code{\link{summary.rma}} (or use the \code{\link{fitstats.rma}} function to extract them). Full versus reduced model comparisons in terms of fit statistics and likelihoods can be obtained with \code{\link{anova.rma}}. Wald-type tests for sets of model coefficients or linear combinations thereof can be obtained with the same function. Permutation tests for the model coefficient(s) can be obtained with \code{\link{permutest.rma.uni}}. Tests and confidence intervals based on (cluster) robust methods can be obtained with \code{\link{robust.rma.uni}}.
 
-   Predicted/fitted values can be obtained with \code{\link{predict.rma}} and \code{\link{fitted.rma}}. For best linear unbiased predictions, see \code{\link{blup.rma.uni}}.
+   Predicted/fitted values can be obtained with \code{\link{predict.rma}} and \code{\link{fitted.rma}}. For best linear unbiased predictions, see \code{\link{blup.rma.uni}} and \code{\link{ranef.rma.uni}}.
 
    The \code{\link{residuals.rma}}, \code{\link{rstandard.rma.uni}}, and \code{\link{rstudent.rma.uni}} functions extract raw and standardized residuals. Additional case diagnostics (e.g., to determine influential studies) can be obtained with the \code{\link{influence.rma.uni}} function. For models without moderators, leave-one-out diagnostics can also be obtained with \code{\link{leave1out.rma.uni}}.
 

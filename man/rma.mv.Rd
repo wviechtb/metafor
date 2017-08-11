@@ -145,9 +145,9 @@ rma.mv(yi, V, W, mods, random, struct="CS", intercept=TRUE,
 
    The results of the fitted model are formatted and printed with the \code{\link{print.rma.mv}} function. If fit statistics should also be given, use \code{\link{summary.rma}} (or use the \code{\link{fitstats.rma}} function to extract them). Full versus reduced model comparisons in terms of fit statistics and likelihoods can be obtained with \code{\link{anova.rma}}. Wald-type tests for sets of model coefficients or linear combinations thereof can be obtained with the same function. Tests and confidence intervals based on (cluster) robust methods can be obtained with \code{\link{robust.rma.mv}}.
 
-   Predicted/fitted values can be obtained with \code{\link{predict.rma}} and \code{\link{fitted.rma}}.
+   Predicted/fitted values can be obtained with \code{\link{predict.rma}} and \code{\link{fitted.rma}}. For best linear unbiased predictions, see \code{\link{ranef.rma.mv}}.
 
-   The \code{\link{residuals.rma}} and \code{\link{rstandard.rma.mv}} functions extract raw and standardized residuals.
+   The \code{\link{residuals.rma}} and \code{\link{rstandard.rma.mv}} functions extract raw and standardized residuals. See \code{\link{influence.rma.mv}} for additional case diagnostics (e.g., to determine influential studies).
 
    Confidence intervals for any variance/correlation parameters in the model can be obtained with \code{\link{confint.rma.mv}}.
 

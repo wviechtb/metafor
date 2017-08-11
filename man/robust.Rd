@@ -12,7 +12,7 @@ robust(x, cluster, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma.uni"} or \code{"rma.mv"}.}
-   \item{cluster}{a vector specifying the clustering variable to use for constructing the sandwich estimator of the variance-covariance matrix.}
+   \item{cluster}{a vector specifying a clustering variable to use for constructing the sandwich estimator of the variance-covariance matrix.}
    \item{adjust}{logical indicating whether a small-sample correction should be applied to the variance-covariance matrix.}
    \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is to take the value from the object).}
    \item{\dots}{other arguments.}
@@ -20,7 +20,7 @@ robust(x, cluster, \dots)
 \details{
    The function constructs a (cluster) robust estimate of the variance-covariance matrix of the model coefficients based on a sandwich-type estimator and then computes tests and confidence intervals of the model coefficients.
 
-   Tests of individual coefficients and confidence intervals are based on a t-distribution with \eqn{n-p} degrees of freedom is used, while the omnibus test statistic then uses an F-distribution with \eqn{m} and \eqn{n-p} degrees of freedom, where \eqn{n} is the number of clusters, \eqn{p} denotes the total number of model coefficients (including the intercept if it is present), and \eqn{m} denotes the number of coefficients tested (in the omnibus test).
+   Tests of individual coefficients and confidence intervals are based on a t-distribution with \eqn{n-p} degrees of freedom is used, while the omnibus test statistic uses an F-distribution with \eqn{m} and \eqn{n-p} degrees of freedom, where \eqn{n} is the number of clusters, \eqn{p} denotes the total number of model coefficients (including the intercept if it is present), and \eqn{m} denotes the number of coefficients tested (in the omnibus test).
 
    When \code{adjust=TRUE} (the default), the (cluster) robust estimate of the variance-covariance matrix is multiplied by the factor \eqn{n/(n-p)}, which serves as a small-sample adjustment that tends to improve the performance of the method when the number of clusters is small.
 }
