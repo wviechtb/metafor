@@ -4,6 +4,7 @@
 \alias{[.list.rma}
 \alias{head.list.rma}
 \alias{tail.list.rma}
+\alias{$<-.list.rma}
 \title{Methods for 'list.rma' Objects}
 \description{
    Methods for objects of class \code{"list.rma"}.

@@ -50,6 +50,8 @@ Changes in Version 2.1-0 (2017-08-11)
    o various method functions (fitted(), resid(), predict(), etc.) behave
      more consistently when model omitted studies with missings
 
+   o added `$<-` method for 'list.rma' objects
+
    o added more tests
 
 

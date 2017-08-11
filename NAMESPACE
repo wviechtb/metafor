@@ -10,6 +10,7 @@ importFrom(nlme, ranef)
 export(ranef)
 
 S3method("[", list.rma)
+S3method("$<-", list.rma)
 S3method("[", escalc)
 S3method(addpoly, default)
 S3method(addpoly, rma)

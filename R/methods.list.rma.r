@@ -157,3 +157,30 @@ tail.list.rma <- function (x, n = 6L, ...) {
 }
 
 ############################################################################
+
+`$<-.list.rma` <- function(x, name, value) {
+
+   slab.pos <- which(names(x) == "slab")
+
+   out <- list()
+
+   for (i in 1:(slab.pos-1)) {
+      out[[i]] <- x[[i]]
+   }
+
+   names(out) <- names(x)[1:(slab.pos-1)]
+
+   out[[name]] <- value
+
+   for (i in (slab.pos:length(x))) {
+      out[[i+1]] <- x[[i]]
+   }
+
+   names(out)[(slab.pos+1):(length(x)+1)] <- names(x)[slab.pos:length(x)]
+
+   class(out) <- class(x)
+   return(out)
+
+}
+
+############################################################################
