@@ -39,21 +39,21 @@ rstandard.rma.uni <- function(model, digits, ...) {
 
    resid   <- rep(NA_real_, x$k.f)
    seresid <- rep(NA_real_, x$k.f)
-   stanres <- rep(NA_real_, x$k.f)
+   stresid <- rep(NA_real_, x$k.f)
 
    resid[x$not.na]   <- ei
    seresid[x$not.na] <- sei
-   stanres[x$not.na] <- ei / sei
+   stresid[x$not.na] <- ei / sei
 
    #########################################################################
 
    if (na.act == "na.omit") {
-      out <- list(resid=resid[x$not.na], se=seresid[x$not.na], z=stanres[x$not.na])
+      out <- list(resid=resid[x$not.na], se=seresid[x$not.na], z=stresid[x$not.na])
       out$slab <- x$slab[x$not.na]
    }
 
    if (na.act == "na.exclude" || na.act == "na.pass") {
-      out <- list(resid=resid, se=seresid, z=stanres)
+      out <- list(resid=resid, se=seresid, z=stresid)
       out$slab <- x$slab
    }
 

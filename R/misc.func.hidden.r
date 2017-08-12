@@ -1194,11 +1194,9 @@
    incl <- cluster %in% ids[i]
 
    ### note: not.na=FALSE only when there are missings in data, not when model below cannot be fitted or results in dropped coefficients
-   
-   if (all(!obj$not.na[incl]))
-      return(list(cook.d = NA, k.id = NA, not.na = FALSE))
 
-   k.id <- sum(incl)
+   if (all(!obj$not.na[incl]))
+      return(list(cook.d = NA, not.na = FALSE))
 
    if (reestimate) {
 
@@ -1218,14 +1216,65 @@
    }
 
    if (inherits(res, "try-error"))
-      return(list(cook.d = NA, k.id = k.id, not.na = TRUE))
+      return(list(cook.d = NA, not.na = TRUE))
 
    if (any(res$coef.na))
-      return(list(cook.d = NA, k.id = k.id, not.na = TRUE))
+      return(list(cook.d = NA, not.na = TRUE))
 
    dfb <- obj$beta[btt] - res$beta[btt]
 
-   return(list(cook.d = crossprod(dfb,svb) %*% dfb, k.id = k.id, not.na = TRUE))
+   return(list(cook.d = crossprod(dfb,svb) %*% dfb, not.na = TRUE))
+
+}
+
+.rstudent.rma.mv <- function(i, obj, parallel, cluster, ids, reestimate) {
+
+   if (parallel == "snow")
+      library(metafor)
+
+   incl <- cluster %in% ids[i]
+
+   k.id <- sum(incl)
+
+   if (reestimate) {
+
+      control             <- obj$control
+      control$sigma2.init <- obj$sigma2
+      control$tau2.init   <- obj$tau2
+      control$rho.init    <- obj$rho
+      control$gamma2.init <- obj$gamma2
+      control$phi.init    <- obj$phi
+
+      res <- try(suppressWarnings(rma.mv(obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=ifelse(obj$vc.fix$sigma2, obj$sigma2, NA), tau2=ifelse(obj$vc.fix$tau2, obj$tau2, NA), rho=ifelse(obj$vc.fix$rho, obj$rho, NA), gamma2=ifelse(obj$vc.fix$gamma2, obj$gamma2, NA), phi=ifelse(obj$vc.fix$phi, obj$phi, NA), sparse=obj$sparse, control=control, subset=!incl)), silent=TRUE)
+
+   } else {
+
+      res <- try(suppressWarnings(rma.mv(obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=obj$sigma2, tau2=obj$tau2, rho=obj$rho, gamma2=obj$gamma2, phi=obj$phi, sparse=obj$sparse, control=obj$control, subset=!incl)), silent=TRUE)
+
+   }
+
+   if (inherits(res, "try-error"))
+      return(list(delresid = rep(NA, k.id), sedelresid = rep(NA, k.id), X2 = NA, k.id = NA, pos = which(incl)))
+
+   if (any(res$coef.na))
+      return(list(delresid = rep(NA, k.id), sedelresid = rep(NA, k.id), X2 = NA, k.id = NA, pos = which(incl)))
+
+   tmp <- try(suppressWarnings(rma.mv(obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=res$sigma2, tau2=res$tau2, rho=res$rho, gamma2=res$gamma2, phi=res$phi, sparse=obj$sparse, control=obj$control)), silent=TRUE)
+
+   Xi <- obj$X[incl,,drop=FALSE]
+   delpred  <- Xi %*% res$beta
+   vdelpred <- Xi %*% res$vb %*% t(Xi)
+   delresid <- c(obj$yi[incl] - delpred)
+   sedelresid <- c(sqrt(diag(tmp$M[incl,incl,drop=FALSE] + vdelpred)))
+
+   sve <- try(chol2inv(chol(tmp$M[incl,incl,drop=FALSE] + vdelpred)), silent=TRUE)
+
+   if (inherits(sve, "try-error"))
+      return(list(delresid = delresid, sedelresid = sedelresid, X2 = NA, k.id = k.id, pos = which(incl)))
+
+   X2 <- c(rbind(delresid) %*% sve %*% cbind(delresid))
+
+   return(list(delresid = delresid, sedelresid = sedelresid, X2 = X2, k.id = k.id, pos = which(incl)))
 
 }
 

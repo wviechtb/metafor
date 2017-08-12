@@ -59,7 +59,6 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
    ### compute residuals
 
    ei <- c(x$yi - x$X %*% x$beta) ### use this instead of resid(), since this guarantees that the length is correct
-   ei[abs(ei) < 100 * .Machine$double.eps] <- 0
 
    ### create identity matrix
 
@@ -96,8 +95,9 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
             }
          }
 
-         DZtW  <- D %*% t(x$Z.S[[j]]) %*% W
-         pred  <- as.vector(DZtW %*% cbind(ei))
+         DZtW <- D %*% t(x$Z.S[[j]]) %*% W
+         pred <- as.vector(DZtW %*% cbind(ei))
+         pred[abs(pred) < 100 * .Machine$double.eps] <- 0
          #vpred <- D - (DZtW %*% x$Z.S[[j]] %*% D - DZtW %*% x$X %*% stXWX %*% t(x$X) %*% W %*% x$Z.S[[j]] %*% D)
          vpred <- D - (DZtW %*% (I - Hmat) %*% x$Z.S[[j]] %*% D)
 
@@ -156,6 +156,7 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
       G  <- ((x$Z.G1 %*% x$G %*% t(x$Z.G1)) * tcrossprod(x$Z.G2))
       GW <- G %*% W
       pred  <- as.vector(GW %*% cbind(ei))
+      pred[abs(pred) < 100 * .Machine$double.eps] <- 0
       #vpred <- G - (GW %*% G - GW %*% x$X %*% stXWX %*% t(x$X) %*% W %*% G)
       vpred <- G - (GW %*% (I - Hmat) %*% G)
 
@@ -192,6 +193,7 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
       H  <- ((x$Z.H1 %*% x$H %*% t(x$Z.H1)) * tcrossprod(x$Z.H2))
       HW <- H %*% W
       pred  <- as.vector(HW %*% cbind(ei))
+      pred[abs(pred) < 100 * .Machine$double.eps] <- 0
       #vpred <- H - (HW %*% H - HW %*% x$X %*% stXWX %*% t(x$X) %*% W %*% H)
       vpred <- H - (HW %*% (I - Hmat) %*% H)
 

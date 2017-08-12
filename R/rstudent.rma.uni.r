@@ -59,21 +59,21 @@ rstudent.rma.uni <- function(model, digits, progbar=FALSE, ...) {
    if (progbar)
       close(pbar)
 
-   delresid <- x$yi.f - delpred
-   delresid[abs(delresid) < 100 * .Machine$double.eps] <- 0
-   #delresid[abs(delresid) < 100 * .Machine$double.eps * median(abs(delresid), na.rm=TRUE)] <- 0 ### see lm.influence
-   sedelresid <- sqrt(x$vi.f + vdelpred + tau2.del)
-   standelres <- delresid / sedelresid
+   resid <- x$yi.f - delpred
+   resid[abs(resid) < 100 * .Machine$double.eps] <- 0
+   #resid[abs(resid) < 100 * .Machine$double.eps * median(abs(resid), na.rm=TRUE)] <- 0 ### see lm.influence
+   seresid <- sqrt(x$vi.f + vdelpred + tau2.del)
+   stresid <- resid / seresid
 
    #########################################################################
 
    if (na.act == "na.omit") {
-      out <- list(resid=delresid[x$not.na], se=sedelresid[x$not.na], z=standelres[x$not.na])
+      out <- list(resid=resid[x$not.na], se=seresid[x$not.na], z=stresid[x$not.na])
       out$slab <- x$slab[x$not.na]
    }
 
    if (na.act == "na.exclude" || na.act == "na.pass") {
-      out <- list(resid=delresid, se=sedelresid, z=standelres)
+      out <- list(resid=resid, se=seresid, z=stresid)
       out$slab <- x$slab
    }
 

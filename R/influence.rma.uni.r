@@ -155,9 +155,9 @@ influence.rma.uni <- function(model, digits, progbar=FALSE, ...) {
 
    ### calculate studentized residual
 
-   delresid   <- x$yi.f - delpred
-   sedelresid <- sqrt(x$vi.f + vdelpred + tau2.del)
-   standelres <- delresid / sedelresid
+   resid   <- x$yi.f - delpred
+   seresid <- sqrt(x$vi.f + vdelpred + tau2.del)
+   stresid <- resid / seresid
 
    ### extract weights
 
@@ -167,7 +167,7 @@ influence.rma.uni <- function(model, digits, progbar=FALSE, ...) {
 
    #########################################################################
 
-   inf <- cbind(standelres, dffits, cook.d, cov.r, tau2.del, QE.del, hii, weight)
+   inf <- cbind(stresid, dffits, cook.d, cov.r, tau2.del, QE.del, hii, weight)
    dfbs <- cbind(dfbs)
 
    inf <- data.frame(inf)

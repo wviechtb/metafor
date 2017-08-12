@@ -7,8 +7,8 @@
    The functions compute various outlier and influential case diagnostics (some of which indicate the influence of deleting one case/study at a time on the model fit and the fitted/residual values) for objects of class \code{"rma.mv"}. At the moment, only Cook's distances and hat values can be obtained.
 }
 \usage{
-\method{cooks.distance}{rma.mv}(model, progbar=FALSE, cluster, reestimate=TRUE,
-               parallel="no", ncpus=1, cl=NULL, \dots)
+\method{cooks.distance}{rma.mv}(model, progbar=FALSE, cluster,
+               reestimate=TRUE, parallel="no", ncpus=1, cl=NULL, \dots)
 \method{hatvalues}{rma.mv}(model, type="diagonal", \dots)
 }
 \arguments{

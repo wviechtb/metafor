@@ -118,8 +118,8 @@ test_that("cooks.distance() works for rma.mv().", {
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
    res <- rma.mv(yi, vi, mods = ~ ablat, random = ~ 1 | trial, data=dat)
 
-   expect_equivalent(round(cooks.distance(res), 4), c(0.0048, 0.0489, 0.0104, 0.2495, 0.0072, 0.2883, 0.3643, 0.2719, 0.02, 0.1645, 9e-04, 0.0404, 0.1434))
-   expect_equivalent(round(cooks.distance(res, cluster=dat$alloc), 4), c(2.4372, 0.2591, 0.1533))
-   expect_equivalent(round(cooks.distance(res, cluster=dat$alloc, reestimate=FALSE), 4), c(2.2194, 0.3199, 0.2421))
+   expect_equivalent(round(cooks.distance(res), 4), c(0.0048, 0.0489, 0.0104, 0.2495, 0.0072, 0.2883, 0.3643, 0.2719, 0.02, 0.1645, 0.0009, 0.0404, 0.1434))
+   expect_equivalent(round(cooks.distance(res, cluster=dat$alloc), 4), c(0.2591, 2.4372, 0.1533))
+   expect_equivalent(round(cooks.distance(res, cluster=dat$alloc, reestimate=FALSE), 4), c(0.3199, 2.2194, 0.2421))
 
 })

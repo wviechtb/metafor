@@ -33,7 +33,7 @@ rstandard.rma.mv <- function(model, digits, cluster, ...) {
 
    ### checks on cluster variable
 
-   if (anyNA(cluster))
+   if (anyNA(cluster.f))
       stop("No missing values allowed in 'cluster' variable.")
 
    if (length(cluster) != x$k)
@@ -81,11 +81,12 @@ rstandard.rma.mv <- function(model, digits, cluster, ...) {
          k.id[i] <- sum(incl)
 
          sve <- try(chol2inv(chol(ve[incl,incl,drop=FALSE])), silent=TRUE)
+         #sve <- try(solve(ve[incl,incl,drop=FALSE]), silent=TRUE)
 
          if (inherits(sve, "try-error"))
             next
 
-         X2[i] <- t(ei[incl]) %*% sve %*% ei[incl]
+         X2[i] <- rbind(ei[incl]) %*% sve %*% cbind(ei[incl])
 
       }
 
@@ -95,23 +96,23 @@ rstandard.rma.mv <- function(model, digits, cluster, ...) {
 
    resid   <- rep(NA_real_, x$k.f)
    seresid <- rep(NA_real_, x$k.f)
-   stanres <- rep(NA_real_, x$k.f)
+   stresid <- rep(NA_real_, x$k.f)
 
    resid[x$not.na]   <- ei
    seresid[x$not.na] <- sei
-   stanres[x$not.na] <- ei / sei
+   stresid[x$not.na] <- ei / sei
 
    #########################################################################
 
    if (na.act == "na.omit") {
-      out <- list(resid=resid[x$not.na], se=seresid[x$not.na], z=stanres[x$not.na])
+      out <- list(resid=resid[x$not.na], se=seresid[x$not.na], z=stresid[x$not.na])
       if (!misscluster)
          out$cluster <- cluster.f[x$not.na]
       out$slab <- x$slab[x$not.na]
    }
 
    if (na.act == "na.exclude" || na.act == "na.pass") {
-      out <- list(resid=resid, se=seresid, z=stanres)
+      out <- list(resid=resid, se=seresid, z=stresid)
       if (!misscluster)
          out$cluster <- cluster.f
       out$slab <- x$slab
@@ -125,22 +126,36 @@ rstandard.rma.mv <- function(model, digits, cluster, ...) {
       out$digits <- digits
 
       class(out) <- "list.rma"
-
       return(out)
 
    } else {
 
       out <- list(out)
-      out[[2]] <- list(X2=X2[order(ids)], k=k.id[order(ids)], slab=ids[order(ids)])
+
+      if (na.act == "na.omit") {
+         out[[2]] <- list(X2=X2[order(ids)], k=k.id[order(ids)], slab=ids[order(ids)])
+      }
+
+      if (na.act == "na.exclude" || na.act == "na.pass") {
+
+         ids.f <- unique(cluster.f)
+
+         X2.f <- rep(NA_real_, length(ids.f))
+         X2.f[match(ids, ids.f)] <- X2
+
+         k.id.f <- sapply(ids.f, function(id) sum((id == cluster.f) & x$not.na))
+
+         out[[2]] <- list(X2=X2.f[order(ids.f)], k=k.id.f[order(ids.f)], slab=ids.f[order(ids.f)])
+
+      }
 
       out[[1]]$digits <- digits
       out[[2]]$digits <- digits
 
-      class(out[[1]]) <- "list.rma"
-      class(out[[2]]) <- "list.rma"
-
       names(out) <- c("obs", "cluster")
 
+      class(out[[1]]) <- "list.rma"
+      class(out[[2]]) <- "list.rma"
       return(out)
 
    }

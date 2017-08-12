@@ -60,7 +60,6 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
    if (parallel=="no") {
 
       cook.d <- rep(NA_real_, n)
-      k.id   <- rep(NA_integer_, n)
       not.na <- rep(FALSE, n)
 
       if (progbar)
@@ -80,8 +79,6 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
 
          not.na[i] <- TRUE
 
-         k.id[i] <- sum(incl)
-
          if (reestimate) {
 
             ### set initial values to estimates from full model
@@ -98,6 +95,7 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
          } else {
 
             ### set values of variance/correlation components to those from the 'full' model
+
             res <- try(suppressWarnings(rma.mv(x$yi.f, V=x$V.f, W=x$W.f, mods=x$X.f, random=x$random, struct=x$struct, intercept=FALSE, data=x$mf.r.f, method=x$method, test=x$test, level=x$level, R=x$R, Rscale=x$Rscale, sigma2=x$sigma2, tau2=x$tau2, rho=x$rho, gamma2=x$gamma2, phi=x$phi, sparse=x$sparse, control=x$control, subset=!incl)), silent=TRUE)
 
          }
@@ -105,7 +103,7 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
          if (inherits(res, "try-error"))
             next
 
-         ### removing an observation could lead to a model coefficient becoming inestimable
+         ### removing a cluster could lead to a model coefficient becoming inestimable
 
          if (any(res$coef.na))
             next
@@ -149,7 +147,6 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
       }
 
       cook.d <- sapply(res, function(z) z$cook.d)
-      k.id   <- sapply(res, function(z) z$k.id)
       not.na <- sapply(res, function(z) z$not.na)
 
    }
@@ -162,6 +159,7 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
          names(out) <- x$slab[not.na]
       } else {
          names(out) <- ids[not.na]
+         out <- out[order(ids[not.na])]
       }
    }
 
@@ -171,6 +169,7 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
          names(out) <- x$slab
       } else {
          names(out) <- ids
+         out <- out[order(ids)]
       }
    }
 

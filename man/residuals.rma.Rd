@@ -6,6 +6,7 @@
 \alias{rstandard.rma.peto}
 \alias{rstudent.rma.uni}
 \alias{rstudent.rma.mh}
+\alias{rstudent.rma.mv}
 \alias{rstudent.rma.peto}
 \title{Residual Values based on 'rma' Objects}
 \description{
@@ -21,6 +22,8 @@
 
 \method{rstudent}{rma.uni}(model, digits, progbar=FALSE, \dots)
 \method{rstudent}{rma.mh}(model, digits, progbar=FALSE, \dots)
+\method{rstudent}{rma.mv}(model, digits, progbar=FALSE, cluster,
+         reestimate=TRUE, parallel="no", ncpus=1, cl=NULL, \dots)
 \method{rstudent}{rma.peto}(model, digits, progbar=FALSE, \dots)
 }
 \arguments{
@@ -28,6 +31,10 @@
    \item{type}{the type of residuals which should be returned (by \code{residuals}). The alternatives are: \code{"response"} (default), \code{"rstandard"}, \code{"rstudent"}, and \code{"pearson"}.}
    \item{model}{an object of class \code{"rma.uni"}, \code{"rma.mh"}, \code{"rma.peto"}, or \code{"rma.mv"} (for \code{rstandard} and \code{rstudent}).}
    \item{cluster}{optional vector specifying a clustering variable to use for computing cluster-level multivariate standardized residuals (only for \code{"rma.mv"} objects).}
+   \item{reestimate}{logical indicating whether variance/correlation components should be re-estimated after deletion of the \eqn{i}th study/cluster (the default is \code{TRUE}).}
+   \item{parallel}{character string indicating whether parallel processing should be used (the default is \code{"no"}). For parallel processing, set to either \code{"snow"} or \code{"multicore"}. See \sQuote{Details}.}
+   \item{ncpus}{integer specifying the number of processes to be used in the parallel operation.}
+   \item{cl}{optional snow cluster to use if \code{parallel="snow"}. If not supplied, a cluster on the local machine is created for the duration of the call.}
    \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is to take the value from the object).}
    \item{progbar}{logical indicating whether a progress bar should be shown (only for \code{rstudent}) (the default is \code{FALSE}).}
    \item{\dots}{other arguments.}
@@ -43,9 +50,9 @@
 
    If a particular study fits the model, its standardized residual follows (asymptotically) a standard normal distribution. A large standardized residual for a study therefore may suggest that the study does not fit the assumed model (i.e., it may be an outlier).
 
-   For \code{"rma.mv"} objects, one can also specify a clustering variable. Then \code{rstandard} also computes cluster-level multivariate standardized residuals. If all outcomes within a cluster fit the model, then the multivariate standardized residual follows (asymptotically) a chi-square distribution with \if{latex}{\eqn{k_i}}\if{html}{\eqn{kᵢ}}\if{text}{\eqn{k_i}} degrees of freedom (where \if{latex}{\eqn{k_i}}\if{html}{\eqn{kᵢ}}\if{text}{\eqn{k_i}} denotes the number of outcomes within the cluster).
+   For \code{"rma.mv"} objects, one can also specify a clustering variable. Then \code{rstandard} and \code{rstudent} also compute cluster-level multivariate (internally or externally) standardized residuals. If all outcomes within a cluster fit the model, then the multivariate standardized residual follows (asymptotically) a chi-square distribution with \if{latex}{\eqn{k_i}}\if{html}{\eqn{kᵢ}}\if{text}{\eqn{k_i}} degrees of freedom (where \if{latex}{\eqn{k_i}}\if{html}{\eqn{kᵢ}}\if{text}{\eqn{k_i}} denotes the number of outcomes within the cluster).
 
-   See also \code{\link{influence.rma.uni}} for other leave-one-out diagnostics that are useful for detecting influential cases in models fitted with the \code{\link{rma.uni}} function.
+   See also \code{\link{influence.rma.uni}} and \code{\link{influence.rma.mv}} for other leave-one-out diagnostics that are useful for detecting influential cases in models fitted with the \code{\link{rma.uni}} and \code{\link{rma.mv}} functions.
 }
 \value{
    Either a vector with the residuals of the requested type (for \code{residuals}) or an object of class \code{"list.rma"}, which is a list containing the following components:
@@ -60,9 +67,13 @@
    The \code{"list.rma"} object is formatted and printed with \code{\link{print.list.rma}}.
 }
 \note{
-   Right now, the externally standardized residuals are calculated by refitting the model \eqn{k} times. Depending on how large \eqn{k} is, it may take a few moments to finish the calculations.
+   Right now, the externally standardized residuals are calculated by refitting the model \eqn{k} times (where \eqn{k} is the number of studies/clusters). Depending on how large \eqn{k} is, it may take a few moments to finish the calculations.
 
-   It may not be possible to fit the model after deletion of the \eqn{i}th case from the dataset. This will result in \code{NA} values for that case when calling \code{rstudent}.
+   On machines with multiple cores, one can usually speed things up by delegating the model fitting to separate worker processes, that is, by setting \code{parallel="snow"} or \code{parallel="multicore"} and \code{ncpus} to some value larger than 1 (only for objects of class \code{"rma.mv"}). Parallel processing makes use of the \code{\link[parallel]{parallel}} package, using the \code{\link[parallel]{makePSOCKcluster}} and \code{\link[parallel]{parLapply}} functions when \code{parallel="snow"} or using the \code{\link[parallel]{mclapply}} function when \code{parallel="multicore"} (the latter only works on Unix/Linux-alikes). With \code{parallel::detectCores()}, one can check on the number of available cores on the local machine.
+
+   Alternatively (or in addition to using parallel processing), one can also set \code{reestimate=FALSE}, in which case any variance/correlation components in the model are not re-estimated after deleting the \eqn{i}th study/cluster from the dataset. Doing so only yields an approximation to the externally standardized residuals (and the cluster-level multivariate standardized residuals) that ignores the influence of the \eqn{i}th study/cluster on the variance/correlation components, but is considerably faster (and often yields similar results).
+
+   It may not be possible to fit the model after deletion of the \eqn{i}th study/cluster from the dataset. This will result in \code{NA} values for that study/cluster when calling \code{rstudent}.
 
    Also, for \code{"rma.mv"} objects with a clustering variable specified, it may not be possible to compute the cluster-level multivariate standardized residual for a particular cluster (if the var-cov matrix of the residuals within a cluster is not of full rank). This will result in \code{NA} for that cluster.
 

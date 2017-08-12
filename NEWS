@@ -1,4 +1,4 @@
-Changes in Version 2.1-0 (2017-08-11)
+Changes in Version 2.1-0 (2017-08-12)
 =====================================
 
    o overhauled plot.gosh.rma(); when 'out' is specified, it now shows two
@@ -21,6 +21,8 @@ Changes in Version 2.1-0 (2017-08-11)
 
    o rstandard.rma.mv() gains 'cluster' argument for computing cluster-level
      multivariate standardized residuals
+
+   o added rstudent.rma.mv()
 
    o smarter matching of elements in 'newmods' (when using a named vector)
      in predict() that also works for models with interactions (thanks to
