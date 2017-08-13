@@ -1576,7 +1576,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
          withS=withS, withG=withG, withH=withH,
          struct=struct, g.levels.r=g.levels.r, h.levels.r=h.levels.r,
          sparse=sparse, cholesky=cholesky, posdefify=posdefify, vctransf=TRUE,
-         verbose=verbose, digits=digits, REMLf=con$REMLf", ctrl.arg, ")\n", sep="")
+         verbose=verbose, digits=digits, REMLf=con$REMLf, dofit=FALSE", ctrl.arg, ")\n", sep="")
 
       #return(optcall)
       opt.res <- try(eval(parse(text=optcall)), silent=!verbose)

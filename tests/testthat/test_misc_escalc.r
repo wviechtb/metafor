@@ -86,6 +86,20 @@ test_that("escalc() works correctly for measure='SMD/SMDH/ROM'", {
 
 })
 
+test_that("escalc() works correctly for measure='CVR/VR'", {
+
+   dat <- get(data(dat.normand1999, package="metafor"))
+   dat <- escalc(measure="CVR", m1i=m1i, sd1i=sd1i, n1i=n1i, m2i=m2i, sd2i=sd2i, n2i=n2i, data=dat, subset=1)
+
+   expect_equivalent(round(c(dat$yi[1], dat$vi[1]), 4), c(0.0014, 0.0159))
+
+   dat <- get(data(dat.normand1999, package="metafor"))
+   dat <- escalc(measure="VR", sd1i=sd1i, n1i=n1i, sd2i=sd2i, n2i=n2i, data=dat, subset=1)
+
+   expect_equivalent(round(c(dat$yi[1], dat$vi[1]), 4), c(-0.3087, 0.0065))
+
+})
+
 test_that("escalc() works correctly for measure='RPB/RBIS'", {
 
    x <- c(20, 31, 18, 22, 30, 16, 28, 24, 23, 27,  1,  4,  8, 15,  9, 11, 11,  6,  8,  4)
@@ -156,10 +170,30 @@ test_that("escalc() works correctly for measure='PCOR/ZPCOR/SPCOR'", {
 
 })
 
-test_that("escalc() works correctly for measure='SMCRH'", {
+test_that("escalc() works correctly for measure='MC/SMCRH'", {
+
+   dat <- escalc(measure="MC", m1i=26, m2i=22, sd1i=sqrt(30), sd2i=sqrt(20), ni=60, ri=0.7)
+   expect_equivalent(round(c(dat$yi, dat$vi), 4), c(4.0000, 0.2618))
 
    dat <- escalc(measure="SMCRH", m1i=26, m2i=22, sd1i=sqrt(30), sd2i=sqrt(20), ni=60, ri=0.7)
    expect_equivalent(round(c(dat$yi, dat$vi), 4), c(0.7210, 0.0129))
+
+})
+
+test_that("escalc() works correctly for measure='PAS'", {
+
+   dat <- escalc(measure="PAS", xi=10, ni=20)
+   expect_equivalent(round(c(dat$yi, dat$vi), 4), c(0.7854, 0.0125))
+
+})
+
+test_that("escalc() works correctly for measure='IRS/IRFT'", {
+
+   dat <- escalc(measure="IRS", xi=10, ti=20)
+   expect_equivalent(round(c(dat$yi, dat$vi), 4), c(0.7071, 0.0125))
+
+   dat <- escalc(measure="IRFT", xi=10, ti=20)
+   expect_equivalent(round(c(dat$yi, dat$vi), 4), c(0.7244, 0.0125))
 
 })
 
@@ -167,6 +201,61 @@ test_that("escalc() works correctly for measure='ROMC'", {
 
    dat <- escalc(measure="ROMC", m1i=26, m2i=22, sd1i=sqrt(30), sd2i=sqrt(20), ni=60, ri=0.7)
    expect_equivalent(round(c(dat$yi, dat$vi), 4), c(0.1671, 0.0004))
+
+})
+
+test_that("escalc() works correctly for measure='MPRD'", {
+
+   dat <- escalc(measure="MPRD", ai=20, bi=10, ci=5, di=20)
+   expect_equivalent(round(c(dat$yi, dat$vi), 4), c(0.0909, 0.0048))
+
+})
+
+test_that("escalc() works correctly for measure='MPRR'", {
+
+   dat <- escalc(measure="MPRR", ai=20, bi=10, ci=5, di=20)
+   expect_equivalent(round(c(dat$yi, dat$vi), 4), c(0.1823, 0.0200))
+
+})
+
+test_that("escalc() works correctly for measure='MPOR'", {
+
+   dat <- escalc(measure="MPOR", ai=20, bi=10, ci=5, di=20)
+   expect_equivalent(round(c(dat$yi, dat$vi), 4), c(0.3646, 0.0782))
+
+})
+
+test_that("escalc() works correctly for measure='MPORC'", {
+
+   dat <- escalc(measure="MPORC", ai=20, bi=10, ci=5, di=20)
+   expect_equivalent(round(c(dat$yi, dat$vi), 4), c(0.6931, 0.3000))
+
+})
+
+test_that("escalc() works correctly for measure='MPPETO'", {
+
+   dat <- escalc(measure="MPPETO", ai=20, bi=10, ci=5, di=20)
+   expect_equivalent(round(c(dat$yi, dat$vi), 4), c(0.6667, 0.2667))
+
+})
+
+test_that("escalc() works correctly for measure='IRSD'", {
+
+   dat <- escalc(measure="IRSD", x1i=10, x2i=6, t1i=20, t2i=20)
+   expect_equivalent(round(c(dat$yi, dat$vi), 4), c(0.1594, 0.0250))
+
+})
+
+test_that("escalc() works correctly for measure='MNLN/CVLN/SDLN'", {
+
+   dat <- escalc(measure="MNLN", mi=10, sdi=2, ni=20)
+   expect_equivalent(round(c(dat$yi, dat$vi), 4), c(2.3026, 0.0020))
+
+   dat <- escalc(measure="CVLN", mi=10, sdi=2, ni=20)
+   expect_equivalent(round(c(dat$yi, dat$vi), 4), c(-1.5831, 0.0283))
+
+   dat <- escalc(measure="SDLN", sdi=2, ni=20)
+   expect_equivalent(round(c(dat$yi, dat$vi), 4), c(0.7195, 0.0263))
 
 })
 

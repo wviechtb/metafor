@@ -81,3 +81,39 @@ test_that("rma.mv() correctly computes the Hessian", {
    expect_equivalent(round(c(sqrt(1/res$hessian)), 4), 0.1678)
 
 })
+
+test_that("rma.mv() works correctly with test='t'", {
+
+   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, test="t")
+   expect_equivalent(round(res$pval, 4), 0.0018)
+
+})
+
+test_that("rma.mv() works correctly with different optimizers", {
+
+   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="optim", optmethod="BFGS"))
+   expect_equivalent(round(res$sigma2, 3), 0.313)
+   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="optim", optmethod="L-BFGS-B"))
+   expect_equivalent(round(res$sigma2, 3), 0.313)
+   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="optim", optmethod="Nelder-Mead"))
+   expect_equivalent(round(res$sigma2, 3), 0.313)
+   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="nlminb"))
+   expect_equivalent(round(res$sigma2, 3), 0.313)
+   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="uobyqa"))
+   expect_equivalent(round(res$sigma2, 3), 0.313)
+   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="newuoa"))
+   expect_equivalent(round(res$sigma2, 3), 0.313)
+   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="bobyqa"))
+   expect_equivalent(round(res$sigma2, 3), 0.313)
+   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="nloptr"))
+   expect_equivalent(round(res$sigma2, 3), 0.313)
+   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="nlm"))
+   expect_equivalent(round(res$sigma2, 3), 0.313)
+   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="hjk"))
+   expect_equivalent(round(res$sigma2, 3), 0.313)
+   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="nmk"))
+   expect_equivalent(round(res$sigma2, 3), 0.313)
+   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="ucminf"))
+   expect_equivalent(round(res$sigma2, 3), 0.313)
+
+})
