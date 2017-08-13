@@ -137,6 +137,39 @@ test_that("escalc() works correctly for measure='COR/UCOR/ZCOR'", {
 
 })
 
+test_that("escalc() works correctly for measure='PCOR/ZPCOR/SPCOR'", {
+
+   ### data from Aloe and Thompson (2013)
+   dat <- data.frame(ti = c(4.61, 6.19, 4.07, -0.77, 1.16),
+                     ni = c(218, 232, 156, 382, 259),
+                     mi = c(4, 7, 6, 19, 15),
+                     r2i = c(.240, .455, .500, .327, .117))
+
+   dat <- escalc(measure="PCOR", ti=ti, ni=ni, mi=mi, data=dat)
+   expect_equivalent(round(c(dat$yi[1], dat$vi[1]), 4), c(0.3012, 0.0039))
+
+   dat <- escalc(measure="ZPCOR", ti=ti, ni=ni, mi=mi, data=dat)
+   expect_equivalent(round(c(dat$yi[1], dat$vi[1]), 4), c(0.3108, 0.0047))
+
+   dat <- escalc(measure="SPCOR", ti=ti, ni=ni, mi=mi, r2i=r2i, data=dat)
+   expect_equivalent(round(c(dat$yi[1], dat$vi[1]), 4), c(0.2754, 0.0033))
+
+})
+
+test_that("escalc() works correctly for measure='SMCRH'", {
+
+   dat <- escalc(measure="SMCRH", m1i=26, m2i=22, sd1i=sqrt(30), sd2i=sqrt(20), ni=60, ri=0.7)
+   expect_equivalent(round(c(dat$yi, dat$vi), 4), c(0.7210, 0.0129))
+
+})
+
+test_that("escalc() works correctly for measure='ROMC'", {
+
+   dat <- escalc(measure="ROMC", m1i=26, m2i=22, sd1i=sqrt(30), sd2i=sqrt(20), ni=60, ri=0.7)
+   expect_equivalent(round(c(dat$yi, dat$vi), 4), c(0.1671, 0.0004))
+
+})
+
 test_that("escalc() with formula works correctly for measure='IRR'", {
 
    dat <- get(data(dat.nielweise2008, package="metafor"))
@@ -191,12 +224,19 @@ test_that("escalc() with formula works correctly for measure='MN'", {
 
 })
 
-test_that("escalc() with formula works correctly for measure='ARAW'", {
+test_that("escalc() with formula works correctly for measure='ARAW/AHW/ABT'", {
 
    dat <- get(data(dat.bonett2010, package="metafor"))
    dat <- to.long(measure="ARAW", ai=ai, mi=mi, ni=ni, data=dat)
    dat <- escalc(measure="ARAW", alpha/m ~ 1 | factor(study), weights=n, data=dat)
    expect_equivalent(round(c(dat$yi[1], dat$vi[1]), 4), c(0.9300, 0.0001))
+
+   dat <- get(data(dat.bonett2010, package="metafor"))
+   dat <- escalc(measure="AHW", ai=ai, mi=mi, ni=ni, data=dat)
+   expect_equivalent(round(c(dat$yi[1], dat$vi[1]), 4), c(0.5879, 0.0004))
+
+   dat <- escalc(measure="ABT", ai=ai, mi=mi, ni=ni, data=dat)
+   expect_equivalent(round(c(dat$yi[1], dat$vi[1]), 4), c(2.6593, 0.0208))
 
 })
 
