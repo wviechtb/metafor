@@ -1,4 +1,4 @@
-Changes in Version 2.1-0 (2017-08-12)
+Changes in Version 2.1-0 (2017-08-13)
 =====================================
 
    o overhauled plot.gosh.rma(); when 'out' is specified, it now shows two
@@ -54,7 +54,7 @@ Changes in Version 2.1-0 (2017-08-12)
 
    o added `$<-` method for 'list.rma' objects
 
-   o added more tests
+   o added more tests (also for parallel operations)
 
 
 Changes in Version 2.0-0 (2017-06-22)

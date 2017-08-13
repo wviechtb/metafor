@@ -33,7 +33,7 @@
    \item{cluster}{optional vector specifying a clustering variable to use for computing cluster-level multivariate standardized residuals (only for \code{"rma.mv"} objects).}
    \item{reestimate}{logical indicating whether variance/correlation components should be re-estimated after deletion of the \eqn{i}th study/cluster (the default is \code{TRUE}).}
    \item{parallel}{character string indicating whether parallel processing should be used (the default is \code{"no"}). For parallel processing, set to either \code{"snow"} or \code{"multicore"}. See \sQuote{Details}.}
-   \item{ncpus}{integer specifying the number of processes to be used in the parallel operation.}
+   \item{ncpus}{integer specifying the number of processes to be used in the parallel processing.}
    \item{cl}{optional snow cluster to use if \code{parallel="snow"}. If not supplied, a cluster on the local machine is created for the duration of the call.}
    \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is to take the value from the object).}
    \item{progbar}{logical indicating whether a progress bar should be shown (only for \code{rstudent}) (the default is \code{FALSE}).}
