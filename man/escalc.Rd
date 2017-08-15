@@ -2,12 +2,6 @@
 \alias{escalc}
 \alias{escalc.default}
 \alias{escalc.formula}
-\alias{[.escalc}
-\alias{[.summary.escalc}
-\alias{cbind.escalc}
-\alias{cbind.summary.escalc}
-\alias{rbind.escalc}
-\alias{rbind.summary.escalc}
 \title{Calculate Effect Sizes and Outcome Measures}
 \description{
    The function can be used to calculate various effect sizes or outcome measures (and the corresponding sampling variances) that are commonly used in meta-analyses.
@@ -489,9 +483,7 @@ escalc(measure, formula, \dots)
    For standard meta-analyses using the typical (wide-format) data layout (i.e., one row in the dataset per study), the default interface is typically easier to use. The advantage of the formula interface is that it can, in principle, handle more complicated data structures (e.g., studies with more than two treatment groups or more than two outcomes). While such functionality is currently not implemented, this may be the case in the future.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \cr
-   package website: \url{http://www.metafor-project.org/} \cr
-   author homepage: \url{http://www.wvbauer.com/}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
 }
 \references{
 
@@ -592,7 +584,7 @@ escalc(measure, formula, \dots)
    Zou, G. Y. (2007). One relative risk versus two odds ratios: Implications for meta-analyses involving paired and unpaired binary data. \emph{Clinical Trials}, \bold{4}, 25--31.
 }
 \seealso{
-   \code{\link{print.escalc}}, \code{\link{summary.escalc}}, \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, \code{\link{rma.glmm}}
+   \code{\link{print.escalc}}, \code{\link{summary.escalc}}, \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, \code{\link{rma.glmm}}, \code{\link{rma.mv}}
 }
 \examples{
 ### load BCG vaccine data

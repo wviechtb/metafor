@@ -54,4 +54,4 @@ test_that("predict() gives correct results when vcov=TRUE", {
    sav <- predict(res, vcov=TRUE)
    expect_equivalent(round(sav$pred$se, 4), round(c(sqrt(diag(sav$vcov))), 4))
 
-}
+})

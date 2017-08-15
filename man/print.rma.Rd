@@ -1,4 +1,5 @@
-\name{print.rma.uni}
+\name{print.rma}
+\alias{print.rma}
 \alias{print.rma.uni}
 \alias{print.rma.mh}
 \alias{print.rma.peto}
@@ -67,9 +68,7 @@
    The pseudo \if{latex}{\eqn{R^2}}\if{html}{\eqn{R²}}\if{text}{\eqn{R^2}} statistic (Raudenbush, 2009) is computed with \if{latex}{\deqn{R^2 = \frac{\hat{\tau}_{RE}^2 - \hat{\tau}_{ME}^2}{\hat{\tau}_{RE}^2},}}\if{html}{\deqn{R² = (hat(\tau)²_RE - hat(\tau)²_ME) / hat(\tau)²_RE,}}\if{text}{\deqn{R^2 = (hat(\tau)^2_RE - hat(\tau)^2_ME) / hat(\tau)^2_RE,}} where \if{latex}{\eqn{\hat{\tau}_{RE}^2}}\if{html}{\eqn{hat(\tau)²_RE}}\if{text}{\eqn{hat(\tau)^2_RE}} denotes the estimated value of \if{latex}{\eqn{\tau^2}}\if{html}{\eqn{\tau²}}\if{text}{\eqn{\tau^2}} based on the random-effects model (i.e., the total amount of heterogeneity) and \if{latex}{\eqn{\hat{\tau}_{ME}^2}}\if{html}{\eqn{hat(\tau)²_ME}}\if{text}{\eqn{hat(\tau)^2_ME}} denotes the estimated value of \if{latex}{\eqn{\tau^2}}\if{html}{\eqn{\tau²}}\if{text}{\eqn{\tau^2}} based on the mixed-effects model (i.e., the residual amount of heterogeneity). It can happen that \if{latex}{\eqn{\hat{\tau}_{RE}^2 < \hat{\tau}_{ME}^2}}\if{html}{\eqn{hat(\tau)²_RE < hat(\tau)²_ME}}\if{text}{\eqn{hat(\tau)^2_RE < hat(\tau)^2_ME}}, in which case \if{latex}{\eqn{R^2}}\if{html}{\eqn{R²}}\if{text}{\eqn{R^2}} is set to zero. Again, the value of \if{latex}{\eqn{R^2}}\if{html}{\eqn{R²}}\if{text}{\eqn{R^2}} will change depending on the estimator of \if{latex}{\eqn{\tau^2}}\if{html}{\eqn{\tau²}}\if{text}{\eqn{\tau^2}} used. Also note that this statistic is only computed when the mixed-effects model includes an intercept (so that the random-effects model is clearly nested within the mixed-effects model). You can also use the \code{\link{anova.rma}} function to compute \if{latex}{\eqn{R^2}}\if{html}{\eqn{R²}}\if{text}{\eqn{R^2}} for any two models that are known to be nested. Note that the pseudo \if{latex}{\eqn{R^2}}\if{html}{\eqn{R²}}\if{text}{\eqn{R^2}} statistic may not be very accurate unless \eqn{k} is large (Lopez-Lopez et al., 2014).
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \cr
-   package website: \url{http://www.metafor-project.org/} \cr
-   author homepage: \url{http://www.wvbauer.com/}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
 }
 \references{
    Higgins, J. P. T., & Thompson, S. G. (2002). Quantifying heterogeneity in a meta-analysis. \emph{Statistics in Medicine}, \bold{21}, 1539--1558.

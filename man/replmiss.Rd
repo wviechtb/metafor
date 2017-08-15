@@ -15,9 +15,7 @@ replmiss(x, y)
    Vector \code{x} with the missing values replaced based on the scalar or vector \code{y}.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \cr
-   package website: \url{http://www.metafor-project.org/} \cr
-   author homepage: \url{http://www.wvbauer.com/}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
 }
 \examples{
 x <- c(4,2,7,NA,1,NA,5)

@@ -29,16 +29,14 @@
    The \code{cooks.distance} function returns a vector. The \code{hatvalues} function returns either a vector with the diagonal elements of the hat matrix or the entire hat matrix.
 }
 \note{
-   Right now, leave-one-out diagnostics (at this moment, only Cook's distance) are calculated by refitting the model \eqn{k} times (where \eqn{k} is the number of studies/clusters). Depending on how large \eqn{k} is, it may take a few moments to finish the calculations. On machines with multiple cores, one can usually speed things up by delegating the model fitting to separate worker processes, that is, by setting \code{parallel="snow"} or \code{parallel="multicore"} and \code{ncpus} to some value larger than 1. Parallel processing makes use of the \code{\link[parallel]{parallel}} package, using the \code{\link[parallel]{makePSOCKcluster}} and \code{\link[parallel]{parLapply}} functions when \code{parallel="snow"} or using the \code{\link[parallel]{mclapply}} function when \code{parallel="multicore"} (the latter only works on Unix/Linux-alikes). With \code{parallel::detectCores()}, one can check on the number of available cores on the local machine.
+   Right now, leave-one-out diagnostics (at this moment, only Cook's distance) are calculated by refitting the model \eqn{k} times (where \eqn{k} is the number of studies/clusters). Depending on how large \eqn{k} is, it may take a few moments to finish the calculations. On machines with multiple cores, one can usually speed things up by delegating the model fitting to separate worker processes, that is, by setting \code{parallel="snow"} or \code{parallel="multicore"} and \code{ncpus} to some value larger than 1. Parallel processing makes use of the \code{\link[parallel]{parallel}} package, using the \code{\link[parallel]{makePSOCKcluster}} and \code{\link[parallel]{parLapply}} functions when \code{parallel="snow"} or using \code{\link[parallel]{mclapply}} when \code{parallel="multicore"} (the latter only works on Unix/Linux-alikes). With \code{parallel::detectCores()}, one can check on the number of available cores on the local machine.
 
    Alternatively (or in addition to using parallel processing), one can also set \code{reestimate=FALSE}, in which case any variance/correlation components in the model are not re-estimated after deleting the \eqn{i}th study/cluster from the dataset. Doing so only yields an approximation to the Cook's distances that ignores the influence of the \eqn{i}th study/cluster on the variance/correlation components, but is considerably faster (and often yields similar results).
 
    It may not be possible to fit the model after deletion of the \eqn{i}th study/cluster from the dataset. This will result in \code{NA} values for that study/cluster.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \cr
-   package website: \url{http://www.metafor-project.org/} \cr
-   author homepage: \url{http://www.wvbauer.com/}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
 }
 \references{
    Belsley, D. A., Kuh, E., & Welsch, R. E. (1980). \emph{Regression diagnostics}. New York: Wiley.
