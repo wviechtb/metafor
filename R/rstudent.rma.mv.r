@@ -51,9 +51,6 @@ rstudent.rma.mv <- function(model, digits, progbar=FALSE, cluster, reestimate=TR
 
    #########################################################################
 
-   ### note: skipping NA cases
-   ### also: it is possible that model fitting fails, so that generates more NAs (these NAs will always be shown in output)
-
    if (parallel=="no") {
 
       delresid   <- rep(NA_real_, x$k)

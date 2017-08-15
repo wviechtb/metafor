@@ -1195,9 +1195,6 @@
 
    ### note: not.na=FALSE only when there are missings in data, not when model below cannot be fitted or results in dropped coefficients
 
-   if (all(!obj$not.na[incl]))
-      return(list(cook.d = NA, not.na = FALSE))
-
    if (reestimate) {
 
       control             <- obj$control
@@ -1207,23 +1204,23 @@
       control$gamma2.init <- obj$gamma2
       control$phi.init    <- obj$phi
 
-      res <- try(suppressWarnings(rma.mv(obj$yi.f, V=obj$V.f, W=obj$W.f, mods=obj$X.f, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r.f, method=obj$method, test=obj$test, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=ifelse(obj$vc.fix$sigma2, obj$sigma2, NA), tau2=ifelse(obj$vc.fix$tau2, obj$tau2, NA), rho=ifelse(obj$vc.fix$rho, obj$rho, NA), gamma2=ifelse(obj$vc.fix$gamma2, obj$gamma2, NA), phi=ifelse(obj$vc.fix$phi, obj$phi, NA), sparse=obj$sparse, control=control, subset=!incl)), silent=TRUE)
+      res <- try(suppressWarnings(rma.mv(obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=ifelse(obj$vc.fix$sigma2, obj$sigma2, NA), tau2=ifelse(obj$vc.fix$tau2, obj$tau2, NA), rho=ifelse(obj$vc.fix$rho, obj$rho, NA), gamma2=ifelse(obj$vc.fix$gamma2, obj$gamma2, NA), phi=ifelse(obj$vc.fix$phi, obj$phi, NA), sparse=obj$sparse, control=control, subset=!incl)), silent=TRUE)
 
    } else {
 
-      res <- try(suppressWarnings(rma.mv(obj$yi.f, V=obj$V.f, W=obj$W.f, mods=obj$X.f, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r.f, method=obj$method, test=obj$test, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=obj$sigma2, tau2=obj$tau2, rho=obj$rho, gamma2=obj$gamma2, phi=obj$phi, sparse=obj$sparse, control=obj$control, subset=!incl)), silent=TRUE)
+      res <- try(suppressWarnings(rma.mv(obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=obj$sigma2, tau2=obj$tau2, rho=obj$rho, gamma2=obj$gamma2, phi=obj$phi, sparse=obj$sparse, control=obj$control, subset=!incl)), silent=TRUE)
 
    }
 
    if (inherits(res, "try-error"))
-      return(list(cook.d = NA, not.na = TRUE))
+      return(list(cook.d = NA))
 
    if (any(res$coef.na))
-      return(list(cook.d = NA, not.na = TRUE))
+      return(list(cook.d = NA))
 
    dfb <- obj$beta[btt] - res$beta[btt]
 
-   return(list(cook.d = crossprod(dfb,svb) %*% dfb, not.na = TRUE))
+   return(list(cook.d = crossprod(dfb,svb) %*% dfb))
 
 }
 

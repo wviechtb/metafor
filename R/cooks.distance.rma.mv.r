@@ -29,18 +29,21 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
 
    ### process cluster variable
    ### note: cluster variable is assumed to be of the same length as the original data passed to the model fitting function
-   ###       so we have to apply the same subsetting (if necessary) (note: not removing NAs, since we want those to be shown
-   ###       when options(na.action = "na.pass") or options(na.action = "na.exclude")
+   ###       so we have to apply the same subsetting (if necessary) and removing of missings as done during model fitting
 
    if (!is.null(x$subset))
       cluster <- cluster[x$subset]
 
+   cluster.f <- cluster
+
+   cluster <- cluster[x$not.na]
+
    ### checks on cluster variable
 
-   if (anyNA(cluster))
+   if (anyNA(cluster.f))
       stop("No missing values allowed in 'cluster' variable.")
 
-   if (length(cluster) != x$k.f)
+   if (length(cluster) != x$k)
       stop("Length of variable specified via 'cluster' does not match length of data.")
 
    ### cluster ids and number of clusters
@@ -50,17 +53,13 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
 
    #########################################################################
 
-   ### calculate inverse of variance-covariance matrix under the full model (needed for the Cook's distances)
+   ### calculate inverse of variance-covariance matrix under the full model
 
    svb <- chol2inv(chol(x$vb[btt,btt,drop=FALSE]))
-
-   ### note: skipping NA cases
-   ### also: it is possible that model fitting fails, so that generates more NAs (these NAs will always be shown in output)
 
    if (parallel=="no") {
 
       cook.d <- rep(NA_real_, n)
-      not.na <- rep(FALSE, n)
 
       if (progbar)
          pbar <- txtProgressBar(min=0, max=n, style=3)
@@ -71,13 +70,6 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
             setTxtProgressBar(pbar, i)
 
          incl <- cluster %in% ids[i]
-
-         ### if all rows in cluster are NA, then skip it
-
-         if (all(!x$not.na[incl]))
-            next
-
-         not.na[i] <- TRUE
 
          if (reestimate) {
 
@@ -90,13 +82,15 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
             control$gamma2.init <- x$gamma2
             control$phi.init    <- x$phi
 
-            res <- try(suppressWarnings(rma.mv(x$yi.f, V=x$V.f, W=x$W.f, mods=x$X.f, random=x$random, struct=x$struct, intercept=FALSE, data=x$mf.r.f, method=x$method, test=x$test, level=x$level, R=x$R, Rscale=x$Rscale, sigma2=ifelse(x$vc.fix$sigma2, x$sigma2, NA), tau2=ifelse(x$vc.fix$tau2, x$tau2, NA), rho=ifelse(x$vc.fix$rho, x$rho, NA), gamma2=ifelse(x$vc.fix$gamma2, x$gamma2, NA), phi=ifelse(x$vc.fix$phi, x$phi, NA), sparse=x$sparse, control=control, subset=!incl)), silent=TRUE)
+            ### fit model without data from ith cluster
+
+            res <- try(suppressWarnings(rma.mv(x$yi, V=x$V, W=x$W, mods=x$X, random=x$random, struct=x$struct, intercept=FALSE, data=x$mf.r, method=x$method, test=x$test, level=x$level, R=x$R, Rscale=x$Rscale, sigma2=ifelse(x$vc.fix$sigma2, x$sigma2, NA), tau2=ifelse(x$vc.fix$tau2, x$tau2, NA), rho=ifelse(x$vc.fix$rho, x$rho, NA), gamma2=ifelse(x$vc.fix$gamma2, x$gamma2, NA), phi=ifelse(x$vc.fix$phi, x$phi, NA), sparse=x$sparse, control=control, subset=!incl)), silent=TRUE)
 
          } else {
 
             ### set values of variance/correlation components to those from the 'full' model
 
-            res <- try(suppressWarnings(rma.mv(x$yi.f, V=x$V.f, W=x$W.f, mods=x$X.f, random=x$random, struct=x$struct, intercept=FALSE, data=x$mf.r.f, method=x$method, test=x$test, level=x$level, R=x$R, Rscale=x$Rscale, sigma2=x$sigma2, tau2=x$tau2, rho=x$rho, gamma2=x$gamma2, phi=x$phi, sparse=x$sparse, control=x$control, subset=!incl)), silent=TRUE)
+            res <- try(suppressWarnings(rma.mv(x$yi, V=x$V, W=x$W, mods=x$X, random=x$random, struct=x$struct, intercept=FALSE, data=x$mf.r, method=x$method, test=x$test, level=x$level, R=x$R, Rscale=x$Rscale, sigma2=x$sigma2, tau2=x$tau2, rho=x$rho, gamma2=x$gamma2, phi=x$phi, sparse=x$sparse, control=x$control, subset=!incl)), silent=TRUE)
 
          }
 
@@ -147,33 +141,38 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
       }
 
       cook.d <- sapply(res, function(z) z$cook.d)
-      not.na <- sapply(res, function(z) z$not.na)
 
    }
 
    #########################################################################
 
    if (na.act == "na.omit") {
-      out <- cook.d[not.na]
-      if (misscluster) {
-         names(out) <- x$slab[not.na]
-      } else {
-         names(out) <- ids[not.na]
-         out <- out[order(ids[not.na])]
-      }
-   }
-
-   if (na.act == "na.exclude" || na.act == "na.pass") {
       out <- cook.d
       if (misscluster) {
-         names(out) <- x$slab
+         names(out) <- x$slab[x$not.na]
       } else {
          names(out) <- ids
          out <- out[order(ids)]
       }
    }
 
-   if (na.act == "na.fail" && any(!not.na))
+   if (na.act == "na.exclude" || na.act == "na.pass") {
+
+      ids.f <- unique(cluster.f)
+
+      out <- rep(NA_real_, length(ids.f))
+      out[match(ids, ids.f)] <- cook.d
+
+      if (misscluster) {
+         names(out) <- x$slab
+      } else {
+         names(out) <- ids.f
+         out <- out[order(ids.f)]
+      }
+
+   }
+
+   if (na.act == "na.fail" && any(!x$not.na))
       stop("Missing values in results.")
 
    return(out)

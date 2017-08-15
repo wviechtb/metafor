@@ -3,9 +3,6 @@ cooks.distance.rma.uni <- function(model, progbar=FALSE, ...) {
    if (!inherits(model, "rma.uni"))
       stop("Argument 'model' must be an object of class \"rma.uni\".")
 
-   if (inherits(model, "robust.rma"))
-      stop("Method not yet implemented for objects of class \"robust.rma\". Sorry!")
-
    if (inherits(model, "rma.ls"))
       stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!")
 
@@ -28,7 +25,7 @@ cooks.distance.rma.uni <- function(model, progbar=FALSE, ...) {
 
    cook.d <- rep(NA_real_, x$k.f)
 
-   ### calculate inverse of variance-covariance matrix under the full model (needed for the Cook's distances)
+   ### calculate inverse of variance-covariance matrix under the full model
 
    svb <- chol2inv(chol(x$vb[btt,btt,drop=FALSE]))
 

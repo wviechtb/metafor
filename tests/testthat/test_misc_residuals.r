@@ -18,6 +18,28 @@ test_that("residuals are correct for rma().", {
 
 })
 
+test_that("rstudent() yields the same results as a mean shift outlier model for rma().", {
+
+   data(dat.bcg, package="metafor")
+   dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, subset=1:6)
+   dat$trial1 <- ifelse(dat$trial == 1, 1, 0)
+
+   res <- rma(yi, vi, data=dat)
+   sav <- rstudent(res)
+   res <- rma(yi, vi, mods = ~ trial1, data=dat)
+
+   expect_equivalent(round(coef(res)[2], 4), round(sav$resid[1], 4))
+   expect_equivalent(round(res$se[2], 4), round(sav$se[1], 4))
+
+   res <- rma(yi, vi, data=dat, test="knha")
+   sav <- rstudent(res)
+   res <- rma(yi, vi, mods = ~ trial1, data=dat, test="knha")
+
+   expect_equivalent(round(coef(res)[2], 4), round(sav$resid[1], 4))
+   expect_equivalent(round(res$se[2], 4), round(sav$se[1], 4))
+
+})
+
 test_that("residuals are correct for rma.mv().", {
 
    data(dat.bcg, package="metafor")

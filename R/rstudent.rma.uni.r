@@ -24,6 +24,7 @@ rstudent.rma.uni <- function(model, digits, progbar=FALSE, ...) {
    tau2.del <- rep(NA_real_, x$k.f)
    delpred  <- rep(NA_real_, x$k.f)
    vdelpred <- rep(NA_real_, x$k.f)
+   s2w.del  <- rep(NA_real_, x$k.f)
 
    ### note: skipping NA cases
    ### also: it is possible that model fitting fails, so that generates more NAs (these NAs will always be shown in output)
@@ -53,6 +54,7 @@ rstudent.rma.uni <- function(model, digits, progbar=FALSE, ...) {
       Xi          <- matrix(x$X.f[i,], nrow=1)
       delpred[i]  <- Xi %*% res$beta
       vdelpred[i] <- Xi %*% tcrossprod(res$vb,Xi)
+      s2w.del[i]  <- res$s2w
 
    }
 
@@ -62,7 +64,8 @@ rstudent.rma.uni <- function(model, digits, progbar=FALSE, ...) {
    resid <- x$yi.f - delpred
    resid[abs(resid) < 100 * .Machine$double.eps] <- 0
    #resid[abs(resid) < 100 * .Machine$double.eps * median(abs(resid), na.rm=TRUE)] <- 0 ### see lm.influence
-   seresid <- sqrt(x$vi.f + vdelpred + tau2.del)
+   #seresid <- sqrt(x$vi.f + vdelpred + tau2.del)
+   seresid <- sqrt(x$vi.f * s2w.del + vdelpred + tau2.del * s2w.del) ### this yields the same results as a mean shift outlier model when using test="knha"
    stresid <- resid / seresid
 
    #########################################################################

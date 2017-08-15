@@ -1,4 +1,4 @@
-Changes in Version 2.1-0 (2017-08-13)
+Changes in Version 2.1-0 (2017-08-14)
 =====================================
 
    o overhauled plot.gosh.rma(); when 'out' is specified, it now shows two
@@ -23,6 +23,10 @@ Changes in Version 2.1-0 (2017-08-13)
      multivariate standardized residuals
 
    o added rstudent.rma.mv()
+
+   o rstudent.rma.uni() now computes the SE of the deleted residuals in such
+     a way that it will yield identical results to a mean shift outlier
+     model even when that model is fitted with test="knha"
 
    o smarter matching of elements in 'newmods' (when using a named vector)
      in predict() that also works for models with interactions (thanks to

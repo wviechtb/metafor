@@ -32,73 +32,92 @@ test_that("model diagnostic functions work with 'na.omit'.", {
    sav2 <- sav2[match(sav1$slab, sav2$slab),]
 
    expect_equivalent(sav1, sav2)
+   expect_equivalent(is.na(sav1$resid), rep(FALSE,18))
 
    sav1 <- rstandard(res1, cluster=dat1$district)
    sav2 <- rstandard(res2, cluster=dat2$district)
    sav2$obs <- sav2$obs[match(sav1$obs$slab, sav2$obs$slab),]
 
    expect_equivalent(sav1, sav2)
+   expect_equivalent(is.na(sav1$obs$resid), rep(FALSE,18))
+   expect_equivalent(is.na(sav1$cluster$X2), c(TRUE, rep(FALSE,4)))
 
    sav1 <- rstudent(res1)
    sav2 <- rstudent(res2)
    sav2 <- sav2[match(sav1$slab, sav2$slab),]
 
    expect_equivalent(sav1, sav2)
+   expect_equivalent(is.na(sav1$resid), c(rep(FALSE,14), rep(TRUE,4)))
 
    sav1 <- rstudent(res1, cluster=dat1$district)
    sav2 <- rstudent(res2, cluster=dat2$district)
    sav2$obs <- sav2$obs[match(sav1$obs$slab, sav2$obs$slab),]
 
    expect_equivalent(sav1, sav2)
+   expect_equivalent(is.na(sav1$obs$resid), c(rep(TRUE,4), rep(FALSE,10), rep(TRUE,4)))
+   expect_equivalent(is.na(sav1$cluster$X2), c(TRUE, rep(FALSE,3), TRUE))
 
    sav1 <- rstudent(res1, cluster=dat1$district, parallel="snow")
    sav2 <- rstudent(res2, cluster=dat2$district, parallel="snow")
    sav2$obs <- sav2$obs[match(sav1$obs$slab, sav2$obs$slab),]
 
    expect_equivalent(sav1, sav2)
+   expect_equivalent(is.na(sav1$obs$resid), c(rep(TRUE,4), rep(FALSE,10), rep(TRUE,4)))
+   expect_equivalent(is.na(sav1$cluster$X2), c(TRUE, rep(FALSE,3), TRUE))
 
    sav1 <- rstudent(res1, cluster=dat1$district, reestimate=FALSE)
    sav2 <- rstudent(res2, cluster=dat2$district, reestimate=FALSE)
    sav2$obs <- sav2$obs[match(sav1$obs$slab, sav2$obs$slab),]
 
    expect_equivalent(sav1, sav2)
+   expect_equivalent(is.na(sav1$obs$resid), c(rep(TRUE,4), rep(FALSE,10), rep(TRUE,4)))
+   expect_equivalent(is.na(sav1$cluster$X2), c(TRUE, rep(FALSE,3), TRUE))
 
    sav1 <- rstudent(res1, cluster=dat1$district, parallel="snow", reestimate=FALSE)
    sav2 <- rstudent(res2, cluster=dat2$district, parallel="snow", reestimate=FALSE)
    sav2$obs <- sav2$obs[match(sav1$obs$slab, sav2$obs$slab),]
 
    expect_equivalent(sav1, sav2)
+   expect_equivalent(is.na(sav1$obs$resid), c(rep(TRUE,4), rep(FALSE,10), rep(TRUE,4)))
+   expect_equivalent(is.na(sav1$cluster$X2), c(TRUE, rep(FALSE,3), TRUE))
 
    sav1 <- cooks.distance(res1)
    sav2 <- cooks.distance(res2)
    sav2 <- sav2[match(names(sav1), names(sav2))]
 
    expect_equivalent(sav1, sav2)
+   expect_equivalent(is.na(sav1), c(rep(FALSE,14), rep(TRUE,4)))
 
    sav1 <- cooks.distance(res1, cluster=dat1$district)
    sav2 <- cooks.distance(res2, cluster=dat2$district)
 
    expect_equivalent(sav1, sav2)
+   expect_equivalent(is.na(sav1), c(TRUE, rep(FALSE,3), TRUE))
 
    sav1 <- cooks.distance(res1, cluster=dat1$district, parallel="snow")
    sav2 <- cooks.distance(res2, cluster=dat2$district, parallel="snow")
 
    expect_equivalent(sav1, sav2)
+   expect_equivalent(is.na(sav1), c(TRUE, rep(FALSE,3), TRUE))
 
    sav1 <- cooks.distance(res1, cluster=dat1$district, reestimate=FALSE)
    sav2 <- cooks.distance(res2, cluster=dat2$district, reestimate=FALSE)
 
    expect_equivalent(sav1, sav2)
+   expect_equivalent(is.na(sav1), c(TRUE, rep(FALSE,3), TRUE))
 
    sav1 <- cooks.distance(res1, cluster=dat1$district, parallel="snow", reestimate=FALSE)
    sav2 <- cooks.distance(res2, cluster=dat2$district, parallel="snow", reestimate=FALSE)
 
    expect_equivalent(sav1, sav2)
+   expect_equivalent(is.na(sav1), c(TRUE, rep(FALSE,3), TRUE))
 
    sav1 <- ranef(res1)
    sav2 <- ranef(res2)
 
    expect_equivalent(sav1, sav2)
+   expect_equivalent(is.na(sav1$district$intrcpt), rep(FALSE,5))
+   expect_equivalent(is.na(sav1$`district/school`$intrcpt), rep(FALSE,18))
 
 })
 
@@ -113,72 +132,91 @@ test_that("model diagnostic functions work with 'na.pass'.", {
    sav2 <- sav2[match(sav1$slab, sav2$slab),]
 
    expect_equivalent(sav1, sav2)
+   expect_equivalent(is.na(sav1$resid), c(rep(FALSE,4), rep(TRUE,4), FALSE, TRUE, rep(FALSE,13)))
 
    sav1 <- rstandard(res1, cluster=dat1$district)
    sav2 <- rstandard(res2, cluster=dat2$district)
    sav2$obs <- sav2$obs[match(sav1$obs$slab, sav2$obs$slab),]
 
    expect_equivalent(sav1, sav2)
+   expect_equivalent(is.na(sav1$obs$resid), c(rep(FALSE,4), rep(TRUE,4), FALSE, TRUE, rep(FALSE,13)))
+   expect_equivalent(is.na(sav1$cluster$X2), c(rep(TRUE,2), rep(FALSE,4)))
 
    sav1 <- rstudent(res1)
    sav2 <- rstudent(res2)
    sav2 <- sav2[match(sav1$slab, sav2$slab),]
 
    expect_equivalent(sav1, sav2)
+   expect_equivalent(is.na(sav1$resid), c(rep(FALSE,4), rep(TRUE,4), FALSE, TRUE, rep(FALSE,9), rep(TRUE,4)))
 
    sav1 <- rstudent(res1, cluster=dat1$district)
    sav2 <- rstudent(res2, cluster=dat2$district)
    sav2$obs <- sav2$obs[match(sav1$obs$slab, sav2$obs$slab),]
 
    expect_equivalent(sav1, sav2)
+   expect_equivalent(is.na(sav1$obs$resid), c(rep(TRUE,8), FALSE, TRUE, rep(FALSE,9), rep(TRUE,4)))
+   expect_equivalent(is.na(sav1$cluster$X2), c(rep(TRUE,2), rep(FALSE,3), TRUE))
 
    sav1 <- rstudent(res1, cluster=dat1$district, parallel="snow")
    sav2 <- rstudent(res2, cluster=dat2$district, parallel="snow")
    sav2$obs <- sav2$obs[match(sav1$obs$slab, sav2$obs$slab),]
 
    expect_equivalent(sav1, sav2)
+   expect_equivalent(is.na(sav1$obs$resid), c(rep(TRUE,8), FALSE, TRUE, rep(FALSE,9), rep(TRUE,4)))
+   expect_equivalent(is.na(sav1$cluster$X2), c(rep(TRUE,2), rep(FALSE,3), TRUE))
 
    sav1 <- rstudent(res1, cluster=dat1$district, reestimate=FALSE)
    sav2 <- rstudent(res2, cluster=dat2$district, reestimate=FALSE)
    sav2$obs <- sav2$obs[match(sav1$obs$slab, sav2$obs$slab),]
 
    expect_equivalent(sav1, sav2)
+   expect_equivalent(is.na(sav1$obs$resid), c(rep(TRUE,8), FALSE, TRUE, rep(FALSE,9), rep(TRUE,4)))
+   expect_equivalent(is.na(sav1$cluster$X2), c(rep(TRUE,2), rep(FALSE,3), TRUE))
 
    sav1 <- rstudent(res1, cluster=dat1$district, parallel="snow", reestimate=FALSE)
    sav2 <- rstudent(res2, cluster=dat2$district, parallel="snow", reestimate=FALSE)
    sav2$obs <- sav2$obs[match(sav1$obs$slab, sav2$obs$slab),]
 
    expect_equivalent(sav1, sav2)
+   expect_equivalent(is.na(sav1$obs$resid), c(rep(TRUE,8), FALSE, TRUE, rep(FALSE,9), rep(TRUE,4)))
+   expect_equivalent(is.na(sav1$cluster$X2), c(rep(TRUE,2), rep(FALSE,3), TRUE))
 
    sav1 <- cooks.distance(res1)
    sav2 <- cooks.distance(res2)
    sav2 <- sav2[match(names(sav1), names(sav2))]
 
    expect_equivalent(sav1, sav2)
+   expect_equivalent(is.na(sav1), c(rep(FALSE,4), rep(TRUE,4), FALSE, TRUE, rep(FALSE,9), rep(TRUE,4)))
 
    sav1 <- cooks.distance(res1, cluster=dat1$district)
    sav2 <- cooks.distance(res2, cluster=dat2$district)
 
    expect_equivalent(sav1, sav2)
+   expect_equivalent(is.na(sav1), c(rep(TRUE,2), rep(FALSE,3), TRUE))
 
    sav1 <- cooks.distance(res1, cluster=dat1$district, parallel="snow")
    sav2 <- cooks.distance(res2, cluster=dat2$district, parallel="snow")
 
    expect_equivalent(sav1, sav2)
+   expect_equivalent(is.na(sav1), c(rep(TRUE,2), rep(FALSE,3), TRUE))
 
    sav1 <- cooks.distance(res1, cluster=dat1$district, reestimate=FALSE)
    sav2 <- cooks.distance(res2, cluster=dat2$district, reestimate=FALSE)
 
    expect_equivalent(sav1, sav2)
+   expect_equivalent(is.na(sav1), c(rep(TRUE,2), rep(FALSE,3), TRUE))
 
    sav1 <- cooks.distance(res1, cluster=dat1$district, parallel="snow", reestimate=FALSE)
    sav2 <- cooks.distance(res2, cluster=dat2$district, parallel="snow", reestimate=FALSE)
 
    expect_equivalent(sav1, sav2)
+   expect_equivalent(is.na(sav1), c(rep(TRUE,2), rep(FALSE,3), TRUE))
 
    sav1 <- ranef(res1)
    sav2 <- ranef(res2)
 
    expect_equivalent(sav1, sav2)
+   expect_equivalent(is.na(sav1$district$intrcpt), c(FALSE, TRUE, rep(FALSE,4)))
+   expect_equivalent(is.na(sav1$`district/school`$intrcpt), c(rep(FALSE,4), rep(TRUE,4), FALSE, TRUE, rep(FALSE,13)))
 
 })

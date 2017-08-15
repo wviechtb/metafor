@@ -108,7 +108,7 @@ test_that("cooks.distance() works for rma().", {
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
    res <- rma(yi, vi, mods = ~ ablat, data=dat)
 
-   expect_equivalent(round(cooks.distance(res), 4), c(0.0048, 0.0489, 0.0104, 0.2495, 0.0072, 0.2883, 0.3643, 0.2719, 0.02, 0.1645, 9e-04, 0.0403, 0.1433))
+   expect_equivalent(round(cooks.distance(res), 4), c(0.0048, 0.0489, 0.0104, 0.2495, 0.0072, 0.2883, 0.3643, 0.2719, 0.02, 0.1645, 0.0009, 0.0403, 0.1433))
 
 })
 
