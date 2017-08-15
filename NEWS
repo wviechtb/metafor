@@ -60,7 +60,7 @@ Changes in Version 2.1-0 (2017-08-15)
      covariance matrix of the predicted values is also returned
 
    o vcov.rma() can now also return the variance-covariance matrix of the
-     fitted values (when type="fitted")
+     fitted values (type="fitted") and the residuals (type="resid")
 
    o added `$<-` method for 'list.rma' objects
 

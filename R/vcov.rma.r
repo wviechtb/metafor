@@ -8,7 +8,7 @@ vcov.rma <- function(object, type="fixed", ...) {
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
       stop("Unknown 'na.action' specified under options().")
 
-   type <- match.arg(type, c("fixed", "obs", "fitted"))
+   type <- match.arg(type, c("fixed", "obs", "fitted", "resid"))
 
    #########################################################################
 
@@ -70,5 +70,31 @@ vcov.rma <- function(object, type="fixed", ...) {
    }
 
    #########################################################################
+
+   if (type=="resid") {
+
+      options(na.action="na.omit")
+      H <- hatvalues(object, type="matrix")
+      options(na.action = na.act)
+
+      ImH <- diag(object$k) - H
+
+      if (inherits(object, "robust.rma")) {
+         ve <- ImH %*% tcrossprod(object$meat,ImH)
+      } else {
+         ve <- ImH %*% tcrossprod(object$M,ImH)
+      }
+
+      if (na.act == "na.omit")
+         out <- ve
+
+      if (na.act == "na.exclude" || na.act == "na.pass") {
+         out <- matrix(NA_real_, nrow=object$k.f, ncol=object$k.f)
+         out[object$not.na, object$not.na] <- ve
+      }
+
+      return(out)
+
+   }
 
 }
