@@ -40,3 +40,18 @@ test_that("predict() correctly matches named vectors in 'newmods'", {
    expect_equivalent(pred1, pred5)
 
 })
+
+test_that("predict() gives correct results when vcov=TRUE", {
+
+   data(dat.bcg, package="metafor")
+   dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
+
+   res <- rma(yi, vi, data=dat)
+   sav <- predict(res, vcov=TRUE)
+   expect_equivalent(round(sav$pred$se, 4), round(c(sqrt(sav$vcov)), 4))
+
+   res <- rma(yi, vi, mods = ~ ablat, data=dat)
+   sav <- predict(res, vcov=TRUE)
+   expect_equivalent(round(sav$pred$se, 4), round(c(sqrt(diag(sav$vcov))), 4))
+
+}

@@ -6,7 +6,7 @@
 }
 \usage{
 \method{predict}{rma}(object, newmods, intercept, tau2.levels, gamma2.levels,
-        addx=FALSE, level, digits, transf, targs, \dots)
+        addx=FALSE, level, digits, transf, targs, vcov=FALSE, \dots)
 }
 \arguments{
    \item{object}{an object of class \code{"rma"}.}
@@ -19,6 +19,7 @@
    \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is to take the value from the object).}
    \item{transf}{optional argument specifying the name of a function that should be used to transform the predicted values and interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified under \code{transf}.}
+   \item{vcov}{logical specifying whether the variance-covariance matrix of the predicted values should also be returned (the default is \code{FALSE}).}
    \item{\dots}{other arguments.}
 }
 \details{
@@ -51,12 +52,14 @@
    \item{X}{the moderator value(s) used to calculate the predicted values (only when \code{addx=TRUE}).}
    \item{\dots}{some additional elements/values.}
 
+   If \code{vcov=TRUE}, then the returned object is a list with the first element equal to the one as described above and the second element equal to the variance-covariance matrix of the predicted values.
+
    The \code{"list.rma"} object is formatted and printed with \code{\link{print.list.rma}}.
 }
 \note{
    The predicted values are based only on the fixed effects of the model. Best linear unbiased predictions (BLUPs) that combine the fitted values based on the fixed effects and the estimated contributions of the random effects can be obtained with \code{\link{blup.rma.uni}} (currently only for objects of class \code{"rma.uni"}).
 
-   When using the \code{transf} option, the transformation is applied to the predicted values and the corresponding interval bounds. The standard errors are then set equal to \code{NA} and are omitted from the printed output.
+   When using the \code{transf} option, the transformation is applied to the predicted values and the corresponding interval bounds. The standard errors are then set equal to \code{NA} and are omitted from the printed output. Also, \code{vcov=TRUE} is ignored when using the \code{transf} option.
 
    Confidence and credibility/prediction intervals are calculated based on the critical values from a standard normal distribution (i.e., \eqn{\pm 1.96}{+- 1.96} for \code{level=95}). When the model was fitted with the Knapp and Hartung (2003) method (i.e., \code{test="knha"} in the \code{\link{rma.uni}} function) or with \code{test="t"} in the \code{\link{rma.glmm}} and \code{\link{rma.mv}} functions, then the t-distribution with \eqn{k-p} degrees of freedom is used.
 }

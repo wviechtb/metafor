@@ -1,4 +1,4 @@
-Changes in Version 2.1-0 (2017-08-14)
+Changes in Version 2.1-0 (2017-08-15)
 =====================================
 
    o overhauled plot.gosh.rma(); when 'out' is specified, it now shows two
@@ -55,6 +55,9 @@ Changes in Version 2.1-0 (2017-08-14)
 
    o various method functions (fitted(), resid(), predict(), etc.) behave
      more consistently when model omitted studies with missings
+
+   o predict.rma() gains 'vcov' argument; when set to TRUE, the variance-
+     covariance matrix of the predicted values is also returned
 
    o added `$<-` method for 'list.rma' objects
 

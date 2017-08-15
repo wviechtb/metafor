@@ -1,5 +1,5 @@
 predict.rma <- function(object, newmods, intercept, tau2.levels, gamma2.levels, addx=FALSE,
-level, digits, transf, targs, ...) {
+level, digits, transf, targs, vcov=FALSE, ...) {
 
    #########################################################################
 
@@ -293,6 +293,9 @@ level, digits, transf, targs, ...) {
    ci.lb <- pred - crit * se
    ci.ub <- pred + crit * se
 
+   if (vcov)
+      vcovpred <- X.new %*% x$vb %*% t(X.new)
+
    #########################################################################
 
    ### credibility/prediction intervals
@@ -443,6 +446,11 @@ level, digits, transf, targs, ...) {
       slab <- seq_len(k.new)
    }
 
+   ### add row/colnames to vcovpred
+
+   if (vcov)
+      rownames(vcovpred) <- colnames(vcovpred) <- slab
+
    ### but when predicting just a single value, use "" as study label
 
    if (k.new == 1L)
@@ -471,8 +479,19 @@ level, digits, transf, targs, ...) {
 
    out <- list(pred=pred[not.na], se=se[not.na], ci.lb=ci.lb[not.na], ci.ub=ci.ub[not.na], cr.lb=cr.lb[not.na], cr.ub=cr.ub[not.na])
 
-   if (na.act == "na.exclude" && is.null(newmods) && !x$int.only)
+   if (vcov)
+      vcovpred <- vcovpred[not.na,not.na,drop=FALSE]
+
+   if (na.act == "na.exclude" && is.null(newmods) && !x$int.only) {
+
       out <- lapply(out, function(val) ifelse(x$not.na, val, NA))
+
+      if (vcov) {
+         vcovpred[!x$not.na,] <- NA
+         vcovpred[,!x$not.na] <- NA
+      }
+
+   }
 
    ### add tau2.levels values to list
 
@@ -508,6 +527,12 @@ level, digits, transf, targs, ...) {
    out$transf <- transf
 
    class(out) <- "list.rma"
+
+   if (vcov & !transf) {
+      out <- list(pred=out)
+      out$vcov <- vcovpred
+   }
+
    return(out)
 
 }
