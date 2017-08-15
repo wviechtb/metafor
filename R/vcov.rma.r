@@ -8,7 +8,7 @@ vcov.rma <- function(object, type="fixed", ...) {
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
       stop("Unknown 'na.action' specified under options().")
 
-   type <- match.arg(type, c("fixed", "obs"))
+   type <- match.arg(type, c("fixed", "obs", "fitted"))
 
    #########################################################################
 
@@ -46,6 +46,26 @@ vcov.rma <- function(object, type="fixed", ...) {
          stop("Extraction of marginal var-cov matrix not available for objects of this class.")
 
       }
+
+   }
+
+   #########################################################################
+
+   if (type=="fitted") {
+
+      out <- object$X.f %*% object$vb %*% t(object$X.f)
+
+      #rownames(out) <- colnames(out) <- object$slab
+
+      if (na.act == "na.omit")
+         out <- out[object$not.na, object$not.na]
+
+      if (na.act == "na.exclude") {
+         out[!object$not.na,] <- NA
+         out[,!object$not.na] <- NA
+      }
+
+      return(out)
 
    }
 

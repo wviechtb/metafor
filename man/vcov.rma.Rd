@@ -1,15 +1,15 @@
 \name{vcov.rma}
 \alias{vcov.rma}
-\title{Extract the Variance-Covariance Matrix of the Parameter Estimates from 'rma' Objects}
+\title{Extract Various Types of Variance-Covariance Matrices from 'rma' Objects}
 \description{
-   The function extracts the (estimated) variance-covariance matrix of the (fixed effects) parameter estimates from objects of class \code{"rma"} or the marginal variance-covariance matrix of the observed effect sizes or outcomes.
+   The function extracts various types of variance-covariance matrices from objects of class \code{"rma"}. By default, the variance-covariance matrix of the parameter estimates (fixed effects) is returned.
 }
 \usage{
 \method{vcov}{rma}(object, type="fixed", \dots)
 }
 \arguments{
    \item{object}{an object of class \code{"rma"}.}
-   \item{type}{character string indicating whether to return the variance-covariance matrix of the fixed effects (\code{type="fixed"}) or the marginal variance-covariance matrix of the observed effect sizes or outcomes (\code{type="obs"}).}
+   \item{type}{character string indicating the type of variance-covariance matrix to return; \code{type="fixed"} returns the variance-covariance matrix of the fixed effects (the default), \code{type="obs"} returns the marginal variance-covariance matrix of the observed effect sizes or outcomes, and \code{type="fitted"} returns the variance-covariance matrix of the fitted values.}
    \item{\dots}{other arguments.}
 }
 \details{
@@ -42,5 +42,8 @@ vcov(res)
 
 ### marginal var-cov matrix of the observed log risk ratios
 vcov(res, type="obs")
+
+### var-cov matrix of the fitted values
+vcov(res, type="fitted")
 }
 \keyword{models}
