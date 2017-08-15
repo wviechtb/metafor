@@ -22,7 +22,7 @@ Changes in Version 2.1-0 (2017-08-15)
    o rstandard.rma.mv() gains 'cluster' argument for computing cluster-level
      multivariate standardized residuals
 
-   o added rstudent.rma.mv()
+   o added rstudent.rma.mv() and dfbetas.rma.mv()
 
    o rstudent.rma.uni() now computes the SE of the deleted residuals in such
      a way that it will yield identical results to a mean shift outlier

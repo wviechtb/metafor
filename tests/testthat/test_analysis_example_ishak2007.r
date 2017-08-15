@@ -35,8 +35,7 @@ test_that("results are correct for diag(V) and struct='DIAG'.", {
 
 test_that("results are correct for diag(V) and random study effects.", {
 
-   res <- rma.mv(yi, diag(V), mods = ~ factor(time) - 1, random = ~ 1 | study,
-                 struct = "ID", data = dat.long)
+   res <- rma.mv(yi, diag(V), mods = ~ factor(time) - 1, random = ~ 1 | study, data = dat.long)
 
    ### Table 1, column "Random study effects"
    expect_equivalent(round(coef(res),1), c(-26.2, -27.2, -28.5, -25.6))

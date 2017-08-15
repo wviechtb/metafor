@@ -1,7 +1,10 @@
-cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE, parallel="no", ncpus=1, cl=NULL, ...) {
+dfbetas.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE, parallel="no", ncpus=1, cl=NULL, ...) {
 
    if (!inherits(model, "rma.mv"))
       stop("Argument 'model' must be an object of class \"rma.mv\".")
+
+   if (inherits(model, "robust.rma"))
+      stop("Method not yet implemented for objects of class \"robust.rma\". Sorry!")
 
    na.act <- getOption("na.action")
 
@@ -16,11 +19,6 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
 
    if (misscluster)
       cluster <- 1:x$k.all
-
-   ddd <- list(...)
-
-   btt <- .set.btt(ddd$btt, x$p, int.incl=FALSE)
-   m <- length(btt)
 
    #########################################################################
 
@@ -50,13 +48,9 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
 
    #########################################################################
 
-   ### calculate inverse of variance-covariance matrix under the full model
-
-   svb <- chol2inv(chol(x$vb[btt,btt,drop=FALSE]))
-
    if (parallel=="no") {
 
-      cook.d <- rep(NA_real_, n)
+      dfbs <- matrix(NA_real_, nrow=n, ncol=x$p)
 
       if (progbar)
          pbar <- txtProgressBar(min=0, max=n, style=3)
@@ -99,13 +93,17 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
          if (any(res$coef.na))
             next
 
-         ### compute dfbeta value(s) (including coefficients as specified via btt)
+         ### fit model based on all data but with var/cor components fixed to those from res
 
-         dfb <- x$beta[btt] - res$beta[btt]
+         tmp <- try(suppressWarnings(rma.mv(x$yi, V=x$V, W=x$W, mods=x$X, random=x$random, struct=x$struct, intercept=FALSE, data=x$mf.r, method=x$method, test=x$test, level=x$level, R=x$R, Rscale=x$Rscale, sigma2=res$sigma2, tau2=res$tau2, rho=res$rho, gamma2=res$gamma2, phi=res$phi, sparse=x$sparse, control=x$control)), silent=TRUE)
 
-         ### compute Cook's distance
+         ### compute dfbeta value(s)
 
-         cook.d[i]  <- crossprod(dfb,svb) %*% dfb
+         dfb <- x$beta - res$beta
+
+         ### compute dfbetas
+
+         dfbs[i,] <- dfb / sqrt(diag(tmp$vb))
 
       }
 
@@ -125,31 +123,32 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
          stop("Argument 'ncpus' must be >= 1.")
 
       if (parallel == "multicore")
-         res <- parallel::mclapply(seq_len(n), .cooks.distance.rma.mv, obj=x, mc.cores=ncpus, parallel=parallel, svb=svb, cluster=cluster, ids=ids, reestimate=reestimate, btt=btt)
+         res <- parallel::mclapply(seq_len(n), .dfbetas.rma.mv, obj=x, mc.cores=ncpus, parallel=parallel, cluster=cluster, ids=ids, reestimate=reestimate)
 
       if (parallel == "snow") {
          if (is.null(cl)) {
             cl <- parallel::makePSOCKcluster(ncpus)
-            res <- parallel::parLapply(cl, seq_len(n), .cooks.distance.rma.mv, obj=x, parallel=parallel, svb=svb, cluster=cluster, ids=ids, reestimate=reestimate, btt=btt)
+            res <- parallel::parLapply(cl, seq_len(n), .dfbetas.rma.mv, obj=x, parallel=parallel, cluster=cluster, ids=ids, reestimate=reestimate)
             parallel::stopCluster(cl)
          } else {
-            res <- parallel::parLapply(cl, seq_len(n), .cooks.distance.rma.mv, obj=x, parallel=parallel, svb=svb, cluster=cluster, ids=ids, reestimate=reestimate, btt=btt)
+            res <- parallel::parLapply(cl, seq_len(n), .dfbetas.rma.mv, obj=x, parallel=parallel, cluster=cluster, ids=ids, reestimate=reestimate)
          }
       }
 
-      cook.d <- sapply(res, function(z) z$cook.d)
+      dfbs <- lapply(res, function(z) z$dfbs)
+      dfbs <- do.call(rbind, dfbs)
 
    }
 
    #########################################################################
 
    if (na.act == "na.omit") {
-      out <- cook.d
+      out <- dfbs
       if (misscluster) {
-         names(out) <- x$slab[x$not.na]
+         rownames(out) <- x$slab[x$not.na]
       } else {
-         names(out) <- ids
-         out <- out[order(ids)]
+         rownames(out) <- ids
+         out <- out[order(ids),]
       }
    }
 
@@ -157,20 +156,24 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
 
       ids.f <- unique(cluster.f)
 
-      out <- rep(NA_real_, length(ids.f))
-      out[match(ids, ids.f)] <- cook.d
+      out <- matrix(NA_real_, nrow=length(ids.f), ncol=x$p)
+      out[match(ids, ids.f),] <- dfbs
 
       if (misscluster) {
-         names(out) <- x$slab
+         rownames(out) <- x$slab
       } else {
-         names(out) <- ids.f
-         out <- out[order(ids.f)]
+         rownames(out) <- ids.f
+         out <- out[order(ids.f),]
       }
 
    }
 
    if (na.act == "na.fail" && any(!x$not.na))
       stop("Missing values in results.")
+
+   colnames(out) <- rownames(x$beta)
+
+   out <- data.frame(out)
 
    return(out)
 

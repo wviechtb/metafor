@@ -112,6 +112,37 @@ test_that("model diagnostic functions work with 'na.omit'.", {
    expect_equivalent(sav1, sav2)
    expect_equivalent(is.na(sav1), c(TRUE, rep(FALSE,3), TRUE))
 
+   sav1 <- dfbetas(res1)
+   sav2 <- dfbetas(res2)
+   sav2 <- sav2[match(rownames(sav1), rownames(sav2)),]
+
+   expect_equivalent(sav1, sav2)
+   expect_equivalent(is.na(sav1$intrcpt), c(rep(FALSE,14), rep(TRUE,4)))
+
+   sav1 <- dfbetas(res1, cluster=dat1$district)
+   sav2 <- dfbetas(res2, cluster=dat2$district)
+
+   expect_equivalent(sav1, sav2)
+   expect_equivalent(is.na(sav1$intrcpt), c(TRUE, rep(FALSE,3), TRUE))
+
+   sav1 <- dfbetas(res1, cluster=dat1$district, parallel="snow")
+   sav2 <- dfbetas(res2, cluster=dat2$district, parallel="snow")
+
+   expect_equivalent(sav1, sav2)
+   expect_equivalent(is.na(sav1$intrcpt), c(TRUE, rep(FALSE,3), TRUE))
+
+   sav1 <- dfbetas(res1, cluster=dat1$district, reestimate=FALSE)
+   sav2 <- dfbetas(res2, cluster=dat2$district, reestimate=FALSE)
+
+   expect_equivalent(sav1, sav2)
+   expect_equivalent(is.na(sav1$intrcpt), c(TRUE, rep(FALSE,3), TRUE))
+
+   sav1 <- dfbetas(res1, cluster=dat1$district, parallel="snow", reestimate=FALSE)
+   sav2 <- dfbetas(res2, cluster=dat2$district, parallel="snow", reestimate=FALSE)
+
+   expect_equivalent(sav1, sav2)
+   expect_equivalent(is.na(sav1$intrcpt), c(TRUE, rep(FALSE,3), TRUE))
+
    sav1 <- ranef(res1)
    sav2 <- ranef(res2)
 
@@ -211,6 +242,37 @@ test_that("model diagnostic functions work with 'na.pass'.", {
 
    expect_equivalent(sav1, sav2)
    expect_equivalent(is.na(sav1), c(rep(TRUE,2), rep(FALSE,3), TRUE))
+
+   sav1 <- dfbetas(res1)
+   sav2 <- dfbetas(res2)
+   sav2 <- sav2[match(rownames(sav1), rownames(sav2)),]
+
+   expect_equivalent(sav1, sav2)
+   expect_equivalent(is.na(sav1$intrcpt), c(rep(FALSE,4), rep(TRUE,4), FALSE, TRUE, rep(FALSE,9), rep(TRUE,4)))
+
+   sav1 <- dfbetas(res1, cluster=dat1$district)
+   sav2 <- dfbetas(res2, cluster=dat2$district)
+
+   expect_equivalent(sav1, sav2)
+   expect_equivalent(is.na(sav1$intrcpt), c(rep(TRUE,2), rep(FALSE,3), TRUE))
+
+   sav1 <- dfbetas(res1, cluster=dat1$district, parallel="snow")
+   sav2 <- dfbetas(res2, cluster=dat2$district, parallel="snow")
+
+   expect_equivalent(sav1, sav2)
+   expect_equivalent(is.na(sav1$intrcpt), c(rep(TRUE,2), rep(FALSE,3), TRUE))
+
+   sav1 <- dfbetas(res1, cluster=dat1$district, reestimate=FALSE)
+   sav2 <- dfbetas(res2, cluster=dat2$district, reestimate=FALSE)
+
+   expect_equivalent(sav1, sav2)
+   expect_equivalent(is.na(sav1$intrcpt), c(rep(TRUE,2), rep(FALSE,3), TRUE))
+
+   sav1 <- dfbetas(res1, cluster=dat1$district, parallel="snow", reestimate=FALSE)
+   sav2 <- dfbetas(res2, cluster=dat2$district, parallel="snow", reestimate=FALSE)
+
+   expect_equivalent(sav1, sav2)
+   expect_equivalent(is.na(sav1$intrcpt), c(rep(TRUE,2), rep(FALSE,3), TRUE))
 
    sav1 <- ranef(res1)
    sav2 <- ranef(res2)
