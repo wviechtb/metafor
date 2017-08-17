@@ -1226,7 +1226,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    Y <- as.matrix(yi)
 
-   ### initial values for variance components (need to do something better here in the future; see rma.mv2() and rma.bv() for some general ideas; leave for now)
+   ### initial values for variance components (need to do something better here in the future; see rma.mv2() and rma.bv() for some general ideas)
 
    if (verbose > 1)
       message("Extracting/computing initial values ...")
@@ -1239,11 +1239,13 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    if (inherits(U, "try-error")) {
 
-      sigma2.init <- rep(.001, sigma2s)
-      tau2.init   <- rep(.001, tau2s)
-      rho.init    <- rep(.50,  rhos)
-      gamma2.init <- rep(.001, gamma2s)
-      phi.init    <- rep(.50,  rhos)
+      total <- sigma(lm(Y ~ X - 1))^2
+
+      #sigma2.init <- rep(.001, sigma2s)
+      #tau2.init   <- rep(.001, tau2s)
+      #gamma2.init <- rep(.001, gamma2s)
+      #rho.init    <- rep(.50,  rhos)
+      #phi.init    <- rep(.50,  phis)
 
       QE <- NA
       QEp <- NA
@@ -1258,20 +1260,21 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
          stop("Cannot compute initial values.")
 
       ### TODO: consider a better way to set initial values
-      #total      <- max(.001*(sigma2s + tau2s + gamma2s), var(c(Y - X %*% res.FE$beta)) - 1/mean(1/diag(V)))
-      #total      <- max(.001*(sigma2s + tau2s + gamma2s), var(as.vector(sY - sX %*% beta)) - 1/mean(1/diag(V)))
-      total       <- max(.001*(sigma2s + tau2s + gamma2s), var(as.vector(Y) - as.vector(X %*% beta.FE)) - 1/mean(1/diag(V)))
-      sigma2.init <- rep(total / (sigma2s + tau2s + gamma2s), sigma2s)
-      tau2.init   <- rep(total / (sigma2s + tau2s + gamma2s), tau2s)
-      gamma2.init <- rep(total / (sigma2s + tau2s + gamma2s), gamma2s)
-      rho.init    <- rep(.50, rhos)
-      phi.init    <- rep(.50, phis)
+      #total <- max(.001*(sigma2s + tau2s + gamma2s), var(c(Y - X %*% res.FE$beta)) - 1/mean(1/diag(V)))
+      #total <- max(.001*(sigma2s + tau2s + gamma2s), var(as.vector(sY - sX %*% beta)) - 1/mean(1/diag(V)))
+      total  <- max(.001*(sigma2s + tau2s + gamma2s), var(as.vector(Y) - as.vector(X %*% beta.FE)) - 1/mean(1/diag(V)))
 
       QE <- sum(as.vector(sY - sX %*% beta.FE)^2)
 
       ### QEp calculated below
 
    }
+
+   sigma2.init <- rep(total / (sigma2s + tau2s + gamma2s), sigma2s)
+   tau2.init   <- rep(total / (sigma2s + tau2s + gamma2s), tau2s)
+   gamma2.init <- rep(total / (sigma2s + tau2s + gamma2s), gamma2s)
+   rho.init    <- rep(.50, rhos)
+   phi.init    <- rep(.50, phis)
 
    #########################################################################
 
