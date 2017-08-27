@@ -12,7 +12,7 @@ print.list.rma <- function(x, digits, ...) {
 
    slab.pos <- which(names(x) == "slab")
    out <- x[seq_len(slab.pos-1)]
-   out <- data.frame(out, row.names=x$slab)
+   out <- data.frame(out, row.names=x$slab, stringsAsFactors=FALSE)
 
    ### in case all values were NA and have been omitted
 
@@ -41,7 +41,7 @@ print.list.rma <- function(x, digits, ...) {
    sav <- out[,seq_len(min.pos-1)]
 
    for (i in 1:(min.pos-1)) {
-      if (inherits(out[,i], "integer")) { ### do not apply formating to integers
+      if (inherits(out[,i], c("integer","logical","factor","character"))) { ### do not apply formating to these classes
          out[,i] <- out[,i]
       } else {
          out[,i] <- formatC(out[,i], digits=digits, format="f")

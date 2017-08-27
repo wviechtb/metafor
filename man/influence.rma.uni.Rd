@@ -60,10 +60,9 @@
    } Studies which are considered influential with respect to any of these measures are marked with an asterisk. Note that the chosen cut-offs are (somewhat) arbitrary. Substantively informed judgment should always be used when examining the influence of each study on the results.
 }
 \value{
-   An object of class \code{"infl.rma.uni"}. The object is a list containing the following components:
-   \item{inf}{a data frame with columns equal to the externally standardized residuals, DFFITS values, Cook's distances, covariance ratios, leave-one-out \if{latex}{\eqn{\tau^2}}\if{html}{\eqn{\tau²}}\if{text}{\eqn{\tau^2}} estimates, leave-one-out (residual) heterogeneity test statistics, hat values, and weights.}
-   \item{dfbs}{a data frame with columns equal to the DFBETAS values.}
-   \item{is.infl}{a logical vector indicating whether a particular study is considered to be \sQuote{influential}.}
+   An object of class \code{"infl.rma.uni"}, which is a list containing the following components:
+   \item{inf}{an element of class \code{"list.rma"} with the externally standardized residuals, DFFITS values, Cook's distances, covariance ratios, leave-one-out \if{latex}{\eqn{\tau^2}}\if{html}{\eqn{\tau²}}\if{text}{\eqn{\tau^2}} estimates, leave-one-out (residual) heterogeneity test statistics, hat values, weights, and an indicator whether a study is influential or not.}
+   \item{dfbs}{an element of class \code{"list.rma"} with the the DFBETAS values.}
    \item{\dots}{some additional elements/values.}
 
    The results are printed with \code{print.infl.rma.uni} and plotted with \code{\link{plot.infl.rma.uni}}.

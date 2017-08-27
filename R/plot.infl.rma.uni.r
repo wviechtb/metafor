@@ -14,7 +14,7 @@ col.na="lightgray", ...) {
 
    ### check for NAs and stop if there are any when na.act == "na.fail"
 
-   any.na <- is.na(cbind(x$inf, x$dfbs))
+   any.na <- is.na(as.data.frame(x$inf))
 
    if (any(any.na)) {
 
@@ -82,7 +82,7 @@ col.na="lightgray", ...) {
 
    #########################################################################
 
-   ids <- switch(slab.style, "1" = x$ids, "2" = rownames(x$inf), "3" = abbreviate(rownames(x$inf), ...))
+   ids <- switch(slab.style, "1" = x$ids, "2" = x$inf$slab, "3" = abbreviate(x$inf$slab, ...))
    #print(ids)
 
    #########################################################################
@@ -443,7 +443,7 @@ col.na="lightgray", ...) {
 
       for (i in seq_len(length(which.dfbs))) {
 
-         zi     <- x$dfbs[,which.dfbs[i]]
+         zi     <- x$dfbs[[which.dfbs[i]]]
          not.na <- !is.na(zi)
 
          if (na.act == "na.omit") {
@@ -457,7 +457,7 @@ col.na="lightgray", ...) {
             ids.infl <- x$is.infl
             lab.ids  <- ids
          }
-         lplot(NA, NA, xlim=c(1,len.ids), ylim=range(zi,na.rm=TRUE), xaxt="n", main=paste("dfbs: ", colnames(x$dfbs)[which.dfbs[i]]), xlab="", ylab="", las=las, ...)
+         lplot(NA, NA, xlim=c(1,len.ids), ylim=range(zi,na.rm=TRUE), xaxt="n", main=paste("dfbs: ", names(x$dfbs)[which.dfbs[i]]), xlab="", ylab="", las=las, ...)
          laxis(side=1, at=seq_len(len.ids), labels=lab.ids, xlab="", las=las, ...)
          labline(h= 0, lty="dashed", ...)
          labline(h= 1, lty="dotted", ...)

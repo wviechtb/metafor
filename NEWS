@@ -1,10 +1,19 @@
-Changes in Version 2.1-0 (2017-08-18)
+Changes in Version 2.1-0 (2017-08-27)
 =====================================
 
    o overhauled plot.gosh.rma(); when 'out' is specified, it now shows two
      distributions, one for the values when the outlier is included and
      one for the values when for outlier is excluded; dropped the 'hcol'
      argument and added 'border' argument
+
+   o refactored influence.rma.uni() to be more consistent internally with
+     other functions; print.infl.rma.uni() and plot.infl.rma.uni() adjusted
+     accordingly; functions cooks.distance.rma.uni(), dfbetas.rma.uni(), and
+     rstudent.rma.uni() now call influence.rma.uni() for the computations
+
+   o rstudent.rma.uni() now computes the SE of the deleted residuals in such
+     a way that it will yield identical results to a mean shift outlier
+     model even when that model is fitted with test="knha"
 
    o cooks.distance.rma.mv() gains 'cluster' argument, so that Cook's
      distances can be computed for groups of estimates
@@ -23,10 +32,6 @@ Changes in Version 2.1-0 (2017-08-18)
      multivariate standardized residuals
 
    o added rstudent.rma.mv() and dfbetas.rma.mv()
-
-   o rstudent.rma.uni() now computes the SE of the deleted residuals in such
-     a way that it will yield identical results to a mean shift outlier
-     model even when that model is fitted with test="knha"
 
    o smarter matching of elements in 'newmods' (when using a named vector)
      in predict() that also works for models with interactions (thanks to
