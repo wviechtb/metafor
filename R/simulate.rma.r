@@ -28,6 +28,7 @@ simulate.rma <- function (object, nsim = 1, seed = NULL, ...) {
    }
 
    ### fitted values
+
    ftd <- c(object$X %*% object$beta)
 
    ### for rma.uni objects, just need rnorm() (note: this also covers rma.ls objects)
@@ -45,7 +46,7 @@ simulate.rma <- function (object, nsim = 1, seed = NULL, ...) {
       if (!requireNamespace("MASS", quietly=TRUE))
          stop("Please install the 'MASS' package to simulate from this model.")
 
-      val <- replicate(nsim, MASS::mvrnorm(object$k, mu=ftd, Sigma=object$M))
+      val <- replicate(nsim, MASS::mvrnorm(1, mu=ftd, Sigma=object$M))
 
    }
 

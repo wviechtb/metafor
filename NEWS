@@ -1,4 +1,4 @@
-Changes in Version 2.1-0 (2017-08-27)
+Changes in Version 2.1-0 (2017-09-09)
 =====================================
 
    o overhauled plot.gosh.rma(); when 'out' is specified, it now shows two
@@ -68,6 +68,9 @@ Changes in Version 2.1-0 (2017-08-27)
      fitted values (type="fitted") and the residuals (type="resid")
 
    o added `$<-` method for 'list.rma' objects
+
+   o fixed error in simulate.rma() that would generate too many samples for
+     'rma.mv' models
 
    o added more tests (also for parallel operations)
 
@@ -186,7 +189,7 @@ Changes in Version 1.9-9 (2016-09-25)
 
    o one can now pass an 'escalc' object directly to rma.uni(), which then
      tries to automatically determine the 'yi' and 'vi' variables in the
-     data frame (thanks to Christian Röver for the suggestion)
+     data frame (thanks to Christian Roever for the suggestion)
 
    o escalc() can now also be used to convert a regular data frame to an
      'escalc' object
