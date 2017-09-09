@@ -26,4 +26,4 @@ env:
   - NOT_CRAN=true
 
 after_success:
-  - travis_wait 60 Rscript -e 'covr::codecov()'
+  - travis_wait 20 Rscript -e 'covr::codecov()'
