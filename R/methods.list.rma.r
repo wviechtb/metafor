@@ -65,6 +65,31 @@ as.data.frame.list.rma <- function(x, ...) {
 
 ############################################################################
 
+as.matrix.list.rma <- function(x, ...) {
+
+   if (!inherits(x, "list.rma"))
+      stop("Argument 'x' must be an object of class \"list.rma\".")
+
+   attr(x, "class") <- NULL
+
+   ### turn all vectors before the slab vector into a matrix
+
+   slab.pos <- which(names(x) == "slab")
+   out <- x[seq_len(slab.pos-1)]
+   out <- do.call(cbind, out)
+   rownames(out) <- x$slab
+
+   ### if transf exists and is TRUE, set SEs to NULL so that column is omitted from the output
+
+   if (exists("transf", where=x, inherits=FALSE) && x$transf)
+      out <- out[,-which(colnames(out) == "se")]
+
+   return(out)
+
+}
+
+############################################################################
+
 ### like utils:::head.data.frame and utils:::tail.data.frame,
 ### but with nrow(x) replaced by length(x[[1]])
 

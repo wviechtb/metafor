@@ -1,6 +1,7 @@
 \name{methods.list.rma}
 \alias{methods.list.rma}
 \alias{as.data.frame.list.rma}
+\alias{as.matrix.list.rma}
 \alias{[.list.rma}
 \alias{head.list.rma}
 \alias{tail.list.rma}
@@ -11,6 +12,7 @@
 }
 \usage{
 \method{as.data.frame}{list.rma}(x, \dots)
+\method{as.matrix}{list.rma}(x, \dots)
 \method{[}{list.rma}(x, i, \dots)
 \method{head}{list.rma}(x, n=6L, \dots)
 \method{tail}{list.rma}(x, n=6L, \dots)

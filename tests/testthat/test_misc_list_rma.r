@@ -46,3 +46,18 @@ test_that("as.data.frame.list.rma() works correctly.", {
    expect_equivalent(res, sav)
 
 })
+
+test_that("as.matrix.list.rma() works correctly.", {
+
+   data(dat.bcg, package="metafor")
+   dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
+   res <- rma(yi, vi, mods = ~ ablat, data=dat)
+   res <- predict(res)
+   res <- as.matrix(res)
+   res <- round(res[1:3,1:2], 4)
+
+   sav <- structure(c(-1.029, -1.3491, -0.9708, 0.1404, 0.2011, 0.1315), .Dim = c(3L, 2L), .Dimnames = list(c("1", "2", "3"), c("pred", "se")))
+
+   expect_equivalent(res, sav)
+
+})
