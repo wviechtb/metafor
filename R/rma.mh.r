@@ -45,7 +45,13 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("outlist"))
+   .chkdots(ddd, c("outlist", "onlyo1", "addyi", "addvi"))
+
+   ### set defaults or get onlyo1, addyi, and addvi arguments
+
+   onlyo1 <- ifelse(is.null(ddd$onlyo1), FALSE, ddd$onlyo1)
+   addyi  <- ifelse(is.null(ddd$addyi),  TRUE,  ddd$addyi)
+   addvi  <- ifelse(is.null(ddd$addvi),  TRUE,  ddd$addvi)
 
    #########################################################################
 
@@ -147,7 +153,7 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
 
       ### calculate observed effect estimates and sampling variances
 
-      dat <- escalc(measure=measure, ai=ai, bi=bi, ci=ci, di=di, add=add[1], to=to[1], drop00=drop00[1])
+      dat <- escalc(measure=measure, ai=ai, bi=bi, ci=ci, di=di, add=add[1], to=to[1], drop00=drop00[1], onlyo1=onlyo1, addyi=addyi, addvi=addvi)
       yi  <- dat$yi ### one or more yi/vi pairs may be NA/NA
       vi  <- dat$vi ### one or more yi/vi pairs may be NA/NA
 
@@ -350,7 +356,7 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
 
       ### calculate observed effect estimates and sampling variances
 
-      dat <- escalc(measure=measure, x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i, add=add[1], to=to[1], drop00=drop00[1])
+      dat <- escalc(measure=measure, x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i, add=add[1], to=to[1], drop00=drop00[1], onlyo1=onlyo1, addyi=addyi, addvi=addvi)
       yi  <- dat$yi ### one or more yi/vi pairs may be NA/NA
       vi  <- dat$vi ### one or more yi/vi pairs may be NA/NA
 

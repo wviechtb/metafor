@@ -45,6 +45,15 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, lty, ..
          lty <- c(lty, lty)
    }
 
+   ### get ... argument
+
+   ddd <- list(...)
+
+   ### set defaults or get addyi and addvi arguments
+
+   addyi <- ifelse(is.null(ddd$addyi), TRUE, ddd$addyi)
+   addvi <- ifelse(is.null(ddd$addvi), TRUE, ddd$addvi)
+
    #########################################################################
 
    k <- x$k.f
@@ -100,44 +109,44 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, lty, ..
 
    if (x$measure == "RR") {
       measure <- "PLN"
-      dat.t <- escalc(measure=measure, xi=ai, mi=bi, add=add, to=to)
-      dat.c <- escalc(measure=measure, xi=ci, mi=di, add=add, to=to)
+      dat.t <- escalc(measure=measure, xi=ai, mi=bi, add=add, to=to, addyi=addyi, addvi=addvi)
+      dat.c <- escalc(measure=measure, xi=ci, mi=di, add=add, to=to, addyi=addyi, addvi=addvi)
    }
 
    if (x$measure == "OR") {
       measure <- "PLO"
-      dat.t <- escalc(measure=measure, xi=ai, mi=bi, add=add, to=to)
-      dat.c <- escalc(measure=measure, xi=ci, mi=di, add=add, to=to)
+      dat.t <- escalc(measure=measure, xi=ai, mi=bi, add=add, to=to, addyi=addyi, addvi=addvi)
+      dat.c <- escalc(measure=measure, xi=ci, mi=di, add=add, to=to, addyi=addyi, addvi=addvi)
    }
 
    if (x$measure == "RD") {
       measure <- "PR"
-      dat.t <- escalc(measure=measure, xi=ai, mi=bi, add=add, to=to)
-      dat.c <- escalc(measure=measure, xi=ci, mi=di, add=add, to=to)
+      dat.t <- escalc(measure=measure, xi=ai, mi=bi, add=add, to=to, addyi=addyi, addvi=addvi)
+      dat.c <- escalc(measure=measure, xi=ci, mi=di, add=add, to=to, addyi=addyi, addvi=addvi)
    }
 
    if (x$measure == "AS") {
       measure <- "PAS"
-      dat.t <- escalc(measure=measure, xi=ai, mi=bi, add=add, to=to)
-      dat.c <- escalc(measure=measure, xi=ci, mi=di, add=add, to=to)
+      dat.t <- escalc(measure=measure, xi=ai, mi=bi, add=add, to=to, addyi=addyi, addvi=addvi)
+      dat.c <- escalc(measure=measure, xi=ci, mi=di, add=add, to=to, addyi=addyi, addvi=addvi)
    }
 
    if (x$measure == "IRR") {
       measure <- "IRLN"
-      dat.t <- escalc(measure=measure, xi=x1i, ti=t1i, add=add, to=to)
-      dat.c <- escalc(measure=measure, xi=x2i, ti=t2i, add=add, to=to)
+      dat.t <- escalc(measure=measure, xi=x1i, ti=t1i, add=add, to=to, addyi=addyi, addvi=addvi)
+      dat.c <- escalc(measure=measure, xi=x2i, ti=t2i, add=add, to=to, addyi=addyi, addvi=addvi)
    }
 
    if (x$measure == "IRD") {
       measure <- "IR"
-      dat.t <- escalc(measure=measure, xi=x1i, ti=t1i, add=add, to=to)
-      dat.c <- escalc(measure=measure, xi=x2i, ti=t2i, add=add, to=to)
+      dat.t <- escalc(measure=measure, xi=x1i, ti=t1i, add=add, to=to, addyi=addyi, addvi=addvi)
+      dat.c <- escalc(measure=measure, xi=x2i, ti=t2i, add=add, to=to, addyi=addyi, addvi=addvi)
    }
 
    if (x$measure == "IRSD") {
       measure <-
-      dat.t <- escalc(measure=measure, xi=x1i, ti=t1i, add=add, to=to)
-      dat.c <- escalc(measure=measure, xi=x2i, ti=t2i, add=add, to=to)
+      dat.t <- escalc(measure=measure, xi=x1i, ti=t1i, add=add, to=to, addyi=addyi, addvi=addvi)
+      dat.c <- escalc(measure=measure, xi=x2i, ti=t2i, add=add, to=to, addyi=addyi, addvi=addvi)
    }
 
    options(na.action = na.act)

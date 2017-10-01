@@ -54,6 +54,18 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
    }
 
+   ### get ... argument and check for extra/superfluous arguments
+
+   ddd <- list(...)
+
+   .chkdots(ddd, c("onlyo1", "addyi", "addvi"))
+
+   ### set defaults or get onlyo1, addyi, and addvi arguments
+
+   onlyo1 <- ifelse(is.null(ddd$onlyo1), FALSE, ddd$onlyo1)
+   addyi  <- ifelse(is.null(ddd$addyi),  TRUE,  ddd$addyi)
+   addvi  <- ifelse(is.null(ddd$addvi),  TRUE,  ddd$addvi)
+
    ### check if data argument has been specified
 
    if (missing(data))
@@ -84,7 +96,7 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
    ### get yi (in case it has been specified)
 
    mf.yi <- mf[[match("yi", names(mf))]]
-   yi <- eval(mf.yi, data, enclos=sys.frame(sys.parent()))
+   yi    <- eval(mf.yi, data, enclos=sys.frame(sys.parent()))
 
    #########################################################################
    #########################################################################
@@ -94,18 +106,18 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
       if (is.element(measure, c("RR","OR","RD","AS","PETO","PHI","YUQ","YUY","RTET","PBIT","OR2D","OR2DN","OR2DL","MPRD","MPRR","MPOR","MPORC","MPPETO"))) {
 
-         mf.ai   <- mf[[match("ai",  names(mf))]]
-         mf.bi   <- mf[[match("bi",  names(mf))]]
-         mf.ci   <- mf[[match("ci",  names(mf))]]
-         mf.di   <- mf[[match("di",  names(mf))]]
-         mf.n1i  <- mf[[match("n1i", names(mf))]]
-         mf.n2i  <- mf[[match("n2i", names(mf))]]
-         ai      <- eval(mf.ai,  data, enclos=sys.frame(sys.parent()))
-         bi      <- eval(mf.bi,  data, enclos=sys.frame(sys.parent()))
-         ci      <- eval(mf.ci,  data, enclos=sys.frame(sys.parent()))
-         di      <- eval(mf.di,  data, enclos=sys.frame(sys.parent()))
-         n1i     <- eval(mf.n1i, data, enclos=sys.frame(sys.parent()))
-         n2i     <- eval(mf.n2i, data, enclos=sys.frame(sys.parent()))
+         mf.ai  <- mf[[match("ai",  names(mf))]]
+         mf.bi  <- mf[[match("bi",  names(mf))]]
+         mf.ci  <- mf[[match("ci",  names(mf))]]
+         mf.di  <- mf[[match("di",  names(mf))]]
+         mf.n1i <- mf[[match("n1i", names(mf))]]
+         mf.n2i <- mf[[match("n2i", names(mf))]]
+         ai     <- eval(mf.ai,  data, enclos=sys.frame(sys.parent()))
+         bi     <- eval(mf.bi,  data, enclos=sys.frame(sys.parent()))
+         ci     <- eval(mf.ci,  data, enclos=sys.frame(sys.parent()))
+         di     <- eval(mf.di,  data, enclos=sys.frame(sys.parent()))
+         n1i    <- eval(mf.n1i, data, enclos=sys.frame(sys.parent()))
+         n2i    <- eval(mf.n2i, data, enclos=sys.frame(sys.parent()))
          if (is.null(bi)) bi <- n1i - ai
          if (is.null(di)) di <- n2i - ci
 
@@ -140,14 +152,36 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
             di[id00] <- NA
          }
 
+         ### save unadjusted counts
+
+         ai.u <- ai
+         bi.u <- bi
+         ci.u <- ci
+         di.u <- di
+         n1i.u <- ai + bi
+         n2i.u <- ci + di
+
          if (to == "all") {
 
             ### always add to all cells in all studies
 
-            ai  <- ai + add
-            ci  <- ci + add
-            bi  <- bi + add
-            di  <- di + add
+            ai <- ai + add
+            ci <- ci + add
+            if (!onlyo1) {
+               bi <- bi + add
+               di <- di + add
+            }
+
+         }
+
+         if (to == "only0" || to == "if0all") {
+
+            #if (onlyo1) {
+            #   id0 <- c(ai == 0L | ci == 0L)
+            #} else {
+               id0 <- c(ai == 0L | ci == 0L | bi == 0L | di == 0L)
+            #}
+            id0[is.na(id0)] <- FALSE
 
          }
 
@@ -155,13 +189,12 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
             ### add to cells in studies with at least one 0 entry
 
-            id0 <- c(ai == 0L | ci == 0L | bi == 0L | di == 0L)
-            id0[is.na(id0)] <- FALSE
-
             ai[id0] <- ai[id0] + add
             ci[id0] <- ci[id0] + add
-            bi[id0] <- bi[id0] + add
-            di[id0] <- di[id0] + add
+            if (!onlyo1) {
+               bi[id0] <- bi[id0] + add
+               di[id0] <- di[id0] + add
+            }
 
          }
 
@@ -169,15 +202,14 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
             ### add to cells in all studies if there is at least one 0 entry
 
-            id0 <- c(ai == 0L | ci == 0L | bi == 0L | di == 0L)
-            id0[is.na(id0)] <- FALSE
-
             if (any(id0)) {
 
                ai <- ai + add
                ci <- ci + add
-               bi <- bi + add
-               di <- di + add
+               if (!onlyo1) {
+                  bi <- bi + add
+                  di <- di + add
+               }
 
             }
 
@@ -189,24 +221,99 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
          n2i <- ci + di
          ni <- n1i + n2i ### ni.u computed earlier is always the 'unadjusted' total sample size
 
-         ### compute proportions for the two groups
+         ### compute proportions for the two groups (unadjusted and adjusted)
 
+         p1i.u <- ai.u/n1i.u
+         p2i.u <- ci.u/n2i.u
          p1i <- ai/n1i
          p2i <- ci/n2i
 
          ### log risk ratios
 
          if (measure == "RR") {
-            yi <- log(p1i) - log(p2i)
-            vi <- 1/ai - 1/n1i + 1/ci - 1/n2i
+            if (addyi) {
+               yi <- log(p1i) - log(p2i)
+            } else {
+               yi <- log(p1i.u) - log(p2i.u)
+            }
+            if (addvi) {
+               vi <- 1/ai - 1/n1i + 1/ci - 1/n2i
+            } else {
+               vi <- 1/ai.u - 1/n1i.u + 1/ci.u - 1/n2i.u
+            }
          }
 
          ### log odds ratio
 
          if (is.element(measure, c("OR","OR2D","OR2DN","OR2DL"))) {
-            yi <- log(p1i/(1-p1i)) - log(p2i/(1-p2i))
-            vi <- 1/ai + 1/bi + 1/ci + 1/di
+            if (addyi) {
+               yi <- log(p1i/(1-p1i)) - log(p2i/(1-p2i))
+            } else {
+               yi <- log(p1i.u/(1-p1i.u)) - log(p2i.u/(1-p2i.u))
+            }
+            if (addvi) {
+               vi <- 1/ai + 1/bi + 1/ci + 1/di
+            } else {
+               vi <- 1/ai.u + 1/bi.u + 1/ci.u + 1/di.u
+            }
          }
+
+         ### risk difference
+
+         if (measure == "RD") {
+
+            if (addyi) {
+               yi <- p1i - p2i
+            } else {
+               yi <- p1i.u - p2i.u
+            }
+            if (length(vtype) == 1L)
+               vtype <- rep(vtype, k)
+
+            vi <- rep(NA_real_, k)
+
+            if (addvi) {
+               mnwp1i <- sum(ai, na.rm=TRUE) / sum(n1i, na.rm=TRUE) ### sample size weighted average of proportions (same as sum(n1i*p1i)/sum(n1i))
+               mnwp2i <- sum(ci, na.rm=TRUE) / sum(n2i, na.rm=TRUE) ### sample size weighted average of proportions (same as sum(n2i*p2i)/sum(n2i))
+            } else {
+               mnwp1i.u <- sum(ai.u, na.rm=TRUE) / sum(n1i.u, na.rm=TRUE) ### sample size weighted average of proportions (same as sum(n1i.u*p1i.u)/sum(n1i.u))
+               mnwp2i.u <- sum(ci.u, na.rm=TRUE) / sum(n2i.u, na.rm=TRUE) ### sample size weighted average of proportions (same as sum(n2i.u*p2i.u)/sum(n2i.u))
+            }
+
+            for (i in seq_len(k)) {
+
+               ### unbiased estimate of the sampling variance
+               if (vtype[i] == "UB") {
+                  if (addvi) {
+                     vi[i] <- p1i[i]*(1-p1i[i])/(n1i[i]-1) + p2i[i]*(1-p2i[i])/(n2i[i]-1)
+                  } else {
+                     vi[i] <- p1i.u[i]*(1-p1i.u[i])/(n1i.u[i]-1) + p2i.u[i]*(1-p2i.u[i])/(n2i.u[i]-1)
+                  }
+               }
+
+               ### large sample approximation to the sampling variance
+               if (vtype[i] == "LS") {
+                  if (addvi) {
+                     vi[i] <- p1i[i]*(1-p1i[i])/n1i[i] + p2i[i]*(1-p2i[i])/n2i[i]
+                  } else {
+                     vi[i] <- p1i.u[i]*(1-p1i.u[i])/n1i.u[i] + p2i.u[i]*(1-p2i.u[i])/n2i.u[i]
+                  }
+               }
+
+               ### estimator assuming homogeneity (using the average proportions)
+               if (vtype[i] == "HO") {
+                  if (addvi) {
+                     vi[i] <- mnwp1i*(1-mnwp1i)/n1i[i] + mnwp2i*(1-mnwp2i)/n2i[i]
+                  } else {
+                     vi[i] <- mnwp1i.u*(1-mnwp1i.u)/n1i.u[i] + mnwp2i.u*(1-mnwp2i.u)/n2i.u[i]
+                  }
+               }
+
+            }
+
+         }
+
+         ### note: addyi and addvi only implemented for measures above
 
          ### log odds ratio (Peto's method)
 
@@ -217,38 +324,6 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
             Vi <- xt * yt * (n1i/ni) * (n2i/ni) / (ni - 1) ### 0 when xt = 0 or yt = 0 in a table
             yi <- (ai - Ei) / Vi                           ### then yi and vi is Inf (set to NA at end)
             vi <- 1/Vi
-         }
-
-         ### risk difference
-
-         if (measure == "RD") {
-
-            yi <- p1i - p2i
-
-            if (length(vtype) == 1L)
-               vtype <- rep(vtype, k)
-
-            vi <- rep(NA_real_, k)
-
-            mnwp1i <- sum(ai, na.rm=TRUE) / sum(n1i, na.rm=TRUE) ### sample size weighted average of proportions (same as sum(n1i*p1i)/sum(n1i))
-            mnwp2i <- sum(ci, na.rm=TRUE) / sum(n2i, na.rm=TRUE) ### sample size weighted average of proportions (same as sum(n2i*p2i)/sum(n2i))
-
-            for (i in seq_len(k)) {
-
-               ### unbiased estimate of the sampling variance
-               if (vtype[i] == "UB")
-                  vi[i] <- p1i[i]*(1-p1i[i])/(n1i[i]-1) + p2i[i]*(1-p2i[i])/(n2i[i]-1)
-
-               ### large sample approximation to the sampling variance
-               if (vtype[i] == "LS")
-                  vi[i] <- p1i[i]*(1-p1i[i])/n1i[i] + p2i[i]*(1-p2i[i])/n2i[i]
-
-               ### estimator assuming homogeneity (using the average proportions)
-               if (vtype[i] == "HO")
-                  vi[i] <- mnwp1i*(1-mnwp1i)/n1i[i] + mnwp2i*(1-mnwp2i)/n2i[i]
-
-            }
-
          }
 
          ### arcsine square root risk difference
@@ -422,14 +497,14 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
       if (is.element(measure, c("IRR","IRD","IRSD"))) {
 
-         mf.x1i  <- mf[[match("x1i", names(mf))]]
-         mf.x2i  <- mf[[match("x2i", names(mf))]]
-         mf.t1i  <- mf[[match("t1i", names(mf))]]
-         mf.t2i  <- mf[[match("t2i", names(mf))]]
-         x1i     <- eval(mf.x1i, data, enclos=sys.frame(sys.parent()))
-         x2i     <- eval(mf.x2i, data, enclos=sys.frame(sys.parent()))
-         t1i     <- eval(mf.t1i, data, enclos=sys.frame(sys.parent()))
-         t2i     <- eval(mf.t2i, data, enclos=sys.frame(sys.parent()))
+         mf.x1i <- mf[[match("x1i", names(mf))]]
+         mf.x2i <- mf[[match("x2i", names(mf))]]
+         mf.t1i <- mf[[match("t1i", names(mf))]]
+         mf.t2i <- mf[[match("t2i", names(mf))]]
+         x1i    <- eval(mf.x1i, data, enclos=sys.frame(sys.parent()))
+         x2i    <- eval(mf.x2i, data, enclos=sys.frame(sys.parent()))
+         t1i    <- eval(mf.t1i, data, enclos=sys.frame(sys.parent()))
+         t2i    <- eval(mf.t2i, data, enclos=sys.frame(sys.parent()))
 
          if (!is.null(subset)) {
             x1i <- x1i[subset]
@@ -461,6 +536,11 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
             x2i[id00] <- NA
          }
 
+         ### save unadjusted counts
+
+         x1i.u <- x1i
+         x2i.u <- x2i
+
          if (to == "all") {
 
             ### always add to all cells in all studies
@@ -470,12 +550,16 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
          }
 
-         if (to == "only0") {
-
-            ### add to cells in studies with at least one 0 entry
+         if (to == "only0" || to == "if0all") {
 
             id0 <- c(x1i == 0L | x2i == 0L)
             id0[is.na(id0)] <- FALSE
+
+         }
+
+         if (to == "only0") {
+
+            ### add to cells in studies with at least one 0 entry
 
             x1i[id0] <- x1i[id0] + add
             x2i[id0] <- x2i[id0] + add
@@ -486,9 +570,6 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
             ### add to cells in all studies if there is at least one 0 entry
 
-            id0 <- c(x1i == 0L | x2i == 0L)
-            id0[is.na(id0)] <- FALSE
-
             if (any(id0)) {
 
                x1i <- x1i + add
@@ -498,30 +579,53 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
          }
 
-         ### compute rates for the two groups
+         ### compute rates for the two groups (unadjusted and adjusted)
+         ### t1i and t2i are the total person-times in the 1st and 2nd group
 
-         ir1i <- x1i/t1i ### t1i is the total person-time in the 1st group
-         ir2i <- x2i/t2i ### t2i is the total person-time in the 2nd group
+         ir1i.u <- x1i.u/t1i
+         ir2i.u <- x2i.u/t2i
+         ir1i <- x1i/t1i
+         ir2i <- x2i/t2i
 
          ### log incidence rate ratio
 
          if (measure == "IRR") {
-            yi <- log(ir1i) - log(ir2i)
-            vi <- 1/x1i + 1/x2i
-            #vi <- 1/(x1i+1/2) + 1/(x2i+1/2)
+            if (addyi) {
+               yi <- log(ir1i) - log(ir2i)
+            } else {
+               yi <- log(ir1i.u) - log(ir2i.u)
+            }
+            if (addvi) {
+               vi <- 1/x1i + 1/x2i
+               #vi <- 1/(x1i+1/2) + 1/(x2i+1/2)
+            } else {
+               vi <- 1/x1i.u + 1/x2i.u
+            }
          }
 
          ### incidence rate difference
 
          if (measure == "IRD") {
-            yi <- ir1i - ir2i
-            vi <- ir1i/t1i + ir2i/t2i ### note: same as x1i/t1i^2 + x2i/t2i^2
+            if (addyi) {
+               yi <- ir1i - ir2i
+            } else {
+               yi <- ir1i.u - ir2i.u
+            }
+            if (addvi) {
+               vi <- ir1i/t1i + ir2i/t2i ### note: same as x1i/t1i^2 + x2i/t2i^2
+            } else {
+               vi <- ir1i.u/t1i + ir2i.u/t2i ### note: same as x1i.u/t1i^2 + x2i.u/t2i^2
+            }
          }
 
          ### square root transformed incidence rate difference
 
          if (measure == "IRSD") {
-            yi <- sqrt(ir1i) - sqrt(ir2i)
+            if (addyi) {
+               yi <- sqrt(ir1i) - sqrt(ir2i)
+            } else {
+               yi <- sqrt(ir1i.u) - sqrt(ir2i.u)
+            }
             vi <- 1/(4*t1i) + 1/(4*t2i)
          }
 
@@ -773,10 +877,10 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
       if (is.element(measure, c("COR","UCOR","ZCOR"))) {
 
-         mf.ri   <- mf[[match("ri", names(mf))]]
-         mf.ni   <- mf[[match("ni", names(mf))]]
-         ri      <- eval(mf.ri, data, enclos=sys.frame(sys.parent()))
-         ni      <- eval(mf.ni, data, enclos=sys.frame(sys.parent()))
+         mf.ri <- mf[[match("ri", names(mf))]]
+         mf.ni <- mf[[match("ni", names(mf))]]
+         ri    <- eval(mf.ri, data, enclos=sys.frame(sys.parent()))
+         ni    <- eval(mf.ni, data, enclos=sys.frame(sys.parent()))
 
          if (!is.null(subset)) {
             ri <- ri[subset]
@@ -843,9 +947,8 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
                }
 
                ### large sample approximation to the sampling variance
-               if (vtype[i] == "LS") {
+               if (vtype[i] == "LS")
                   vi[i] <- (1-yi[i]^2)^2/(ni[i]-1)
-               }
 
                ### estimator assuming homogeneity (using sample size weighted average of the yi's)
                if (vtype[i] == "HO")
@@ -872,14 +975,14 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
       if (is.element(measure, c("PCOR","ZPCOR","SPCOR"))) {
 
-         mf.ti   <- mf[[match("ti",  names(mf))]]
-         mf.r2i  <- mf[[match("r2i", names(mf))]]
-         mf.mi   <- mf[[match("mi",  names(mf))]]
-         mf.ni   <- mf[[match("ni",  names(mf))]]
-         ti      <- eval(mf.ti,  data, enclos=sys.frame(sys.parent()))
-         r2i     <- eval(mf.r2i, data, enclos=sys.frame(sys.parent()))
-         mi      <- eval(mf.mi,  data, enclos=sys.frame(sys.parent()))
-         ni      <- eval(mf.ni,  data, enclos=sys.frame(sys.parent()))
+         mf.ti  <- mf[[match("ti",  names(mf))]]
+         mf.r2i <- mf[[match("r2i", names(mf))]]
+         mf.mi  <- mf[[match("mi",  names(mf))]]
+         mf.ni  <- mf[[match("ni",  names(mf))]]
+         ti     <- eval(mf.ti,  data, enclos=sys.frame(sys.parent()))
+         r2i    <- eval(mf.r2i, data, enclos=sys.frame(sys.parent()))
+         mi     <- eval(mf.mi,  data, enclos=sys.frame(sys.parent()))
+         ni     <- eval(mf.ni,  data, enclos=sys.frame(sys.parent()))
 
          if (!is.null(subset)) {
             ti  <- ti[subset]
@@ -944,12 +1047,12 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
       if (is.element(measure, c("PR","PLN","PLO","PAS","PFT"))) {
 
-         mf.xi   <- mf[[match("xi", names(mf))]]
-         mf.mi   <- mf[[match("mi", names(mf))]]
-         mf.ni   <- mf[[match("ni", names(mf))]]
-         xi      <- eval(mf.xi, data, enclos=sys.frame(sys.parent()))
-         mi      <- eval(mf.mi, data, enclos=sys.frame(sys.parent()))
-         ni      <- eval(mf.ni, data, enclos=sys.frame(sys.parent()))
+         mf.xi <- mf[[match("xi", names(mf))]]
+         mf.mi <- mf[[match("mi", names(mf))]]
+         mf.ni <- mf[[match("ni", names(mf))]]
+         xi    <- eval(mf.xi, data, enclos=sys.frame(sys.parent()))
+         mi    <- eval(mf.mi, data, enclos=sys.frame(sys.parent()))
+         ni    <- eval(mf.ni, data, enclos=sys.frame(sys.parent()))
          if (is.null(mi)) mi <- ni - xi
 
          if (!is.null(subset)) {
@@ -968,6 +1071,11 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
          ni.u <- xi + mi ### unadjusted total sample sizes
 
+         ### save unadjusted counts
+
+         xi.u <- xi
+         mi.u <- mi
+
          k <- length(xi)
 
          if (to == "all") {
@@ -979,12 +1087,16 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
          }
 
-         if (to == "only0") {
-
-            ### add to cells in studies with at least one 0 entry
+         if (to == "only0" || to == "if0all") {
 
             id0 <- c(xi == 0L | mi == 0L)
             id0[is.na(id0)] <- FALSE
+
+         }
+
+         if (to == "only0") {
+
+            ### add to cells in studies with at least one 0 entry
 
             xi[id0] <- xi[id0] + add
             mi[id0] <- mi[id0] + add
@@ -995,9 +1107,6 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
             ### add to cells in all studies if there is at least one 0 entry
 
-            id0 <- c(xi == 0L | mi == 0L)
-            id0[is.na(id0)] <- FALSE
-
             if (any(id0)) {
 
                xi <- xi + add
@@ -1007,35 +1116,64 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
          }
 
-         ni  <- xi + mi
+         ### recompute sample sizes (after add/to adjustment)
+
+         ni <- xi + mi
+
+         ### compute proportions (unadjusted and adjusted)
+
+         pri.u <- xi.u/ni.u
          pri <- xi/ni
 
          ### raw proportion
 
          if (measure == "PR") {
 
-            yi <- pri
+            if (addyi) {
+               yi <- pri
+            } else {
+               yi <- pri.u
+            }
 
             if (length(vtype) == 1L)
                vtype <- rep(vtype, k)
 
             vi <- rep(NA_real_, k)
 
-            mnwpri <- sum(xi, na.rm=TRUE) / sum(ni, na.rm=TRUE) ### sample size weighted average of proportions (same as sum(ni*pi)/sum(ni))
+            if (addvi) {
+               mnwpri <- sum(xi, na.rm=TRUE) / sum(ni, na.rm=TRUE) ### sample size weighted average of proportions (same as sum(ni*pri)/sum(ni))
+            } else {
+               mnwpri.u <- sum(xi.u, na.rm=TRUE) / sum(ni.u, na.rm=TRUE) ### sample size weighted average of proportions (same as sum(ni.u*pri.u)/sum(ni.u))
+            }
 
             for (i in seq_len(k)) {
 
                ### unbiased estimate of the sampling variance
-               if (vtype[i] == "UB")
-                  vi[i] <- pri[i]*(1-pri[i])/(ni[i]-1)
+               if (vtype[i] == "UB") {
+                  if (addvi) {
+                     vi[i] <- pri[i]*(1-pri[i])/(ni[i]-1)
+                  } else {
+                     vi[i] <- pri.u[i]*(1-pri.u[i])/(ni.u[i]-1)
+                  }
+               }
 
                ### large sample approximation to the sampling variance
-               if (vtype[i] == "LS")
-                  vi[i] <- pri[i]*(1-pri[i])/ni[i]
+               if (vtype[i] == "LS") {
+                  if (addvi) {
+                     vi[i] <- pri[i]*(1-pri[i])/ni[i]
+                  } else {
+                     vi[i] <- pri.u[i]*(1-pri.u[i])/ni.u[i]
+                  }
+               }
 
                ### estimator assuming homogeneity (using the average proportion)
-               if (vtype[i] == "HO")
-                  vi[i] <- mnwpri*(1-mnwpri)/ni[i]
+               if (vtype[i] == "HO") {
+                  if (addvi) {
+                     vi[i] <- mnwpri*(1-mnwpri)/ni[i]
+                  } else {
+                     vi[i] <- mnwpri.u*(1-mnwpri.u)/ni.u[i]
+                  }
+               }
 
             }
 
@@ -1045,25 +1183,43 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
          if (measure == "PLN") {
 
-            yi <- log(pri)
+            if (addyi) {
+               yi <- log(pri)
+            } else {
+               yi <- log(pri.u)
+            }
 
             if (length(vtype) == 1L)
                vtype <- rep(vtype, k)
 
             vi <- rep(NA_real_, k)
 
-            mnwpri <- sum(xi, na.rm=TRUE) / sum(ni, na.rm=TRUE) ### sample size weighted average of proportions (same as sum(ni*pi)/sum(ni))
-            #mnwpri <- exp(sum(ni*yi)/sum(ni))                  ### alternative strategy (exp of the sample size weighted average of the log proportions)
+            if (addvi) {
+               mnwpri <- sum(xi, na.rm=TRUE) / sum(ni, na.rm=TRUE) ### sample size weighted average of proportions (same as sum(ni*pri)/sum(ni))
+               #mnwpri <- exp(sum(ni*yi)/sum(ni))                  ### alternative strategy (exp of the sample size weighted average of the log proportions)
+            } else {
+               mnwpri.u <- sum(xi.u, na.rm=TRUE) / sum(ni.u, na.rm=TRUE) ### sample size weighted average of proportions (same as sum(ni.u*pri.u)/sum(ni.u))
+            }
 
             for (i in seq_len(k)) {
 
                ### large sample approximation to the sampling variance
-               if (vtype[i] == "LS")
-                  vi[i] <- 1/xi[i] - 1/ni[i]
+               if (vtype[i] == "LS") {
+                  if (addvi) {
+                     vi[i] <- 1/xi[i] - 1/ni[i]
+                  } else {
+                     vi[i] <- 1/xi.u[i] - 1/ni.u[i]
+                  }
+               }
 
                ### estimator assuming homogeneity (using the average proportion)
-               if (vtype[i] == "HO")
-                  vi[i] <- 1/(mnwpri*ni[i]) - 1/ni[i]
+               if (vtype[i] == "HO") {
+                  if (addvi) {
+                     vi[i] <- 1/(mnwpri*ni[i]) - 1/ni[i]
+                  } else {
+                     vi[i] <- 1/(mnwpri.u*ni.u[i]) - 1/ni.u[i]
+                  }
+               }
 
             }
 
@@ -1073,29 +1229,49 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
          if (measure == "PLO") {
 
-            yi <- log(pri/(1-pri))
+            if (addyi) {
+               yi <- log(pri/(1-pri))
+            } else {
+               yi <- log(pri.u/(1-pri.u))
+            }
 
             if (length(vtype) == 1L)
                vtype <- rep(vtype, k)
 
             vi <- rep(NA_real_, k)
 
-            mnwpri <- sum(xi, na.rm=TRUE) / sum(ni, na.rm=TRUE) ### sample size weighted average of proportions (same as sum(ni*pi)/sum(ni))
-            #mnwpri <- transf.ilogit(sum(ni*yi)/sum(ni))        ### alternative strategy (inverse logit of the sample size weighted average of the logit transformed proportions)
+            if (addvi) {
+               mnwpri <- sum(xi, na.rm=TRUE) / sum(ni, na.rm=TRUE) ### sample size weighted average of proportions (same as sum(ni*pri)/sum(ni))
+               #mnwpri <- transf.ilogit(sum(ni*yi)/sum(ni))        ### alternative strategy (inverse logit of the sample size weighted average of the logit transformed proportions)
+            } else {
+               mnwpri.u <- sum(xi.u, na.rm=TRUE) / sum(ni.u, na.rm=TRUE) ### sample size weighted average of proportions (same as sum(ni.u*pri.u)/sum(ni.u))
+            }
 
             for (i in seq_len(k)) {
 
                ### large sample approximation to the sampling variance
-               if (vtype[i] == "LS")
-                  vi[i] <- 1/xi[i] + 1/mi[i]
+               if (vtype[i] == "LS") {
+                  if (addvi) {
+                     vi[i] <- 1/xi[i] + 1/mi[i]
+                  } else {
+                     vi[i] <- 1/xi.u[i] + 1/mi.u[i]
+                  }
+               }
 
                ### estimator assuming homogeneity (using the average proportion)
-               if (vtype[i] == "HO")
-                  vi[i] <- 1/(mnwpri*ni[i]) + 1/((1-mnwpri)*ni[i])
+               if (vtype[i] == "HO") {
+                  if (addvi) {
+                     vi[i] <- 1/(mnwpri*ni[i]) + 1/((1-mnwpri)*ni[i])
+                  } else {
+                     vi[i] <- 1/(mnwpri.u*ni.u[i]) + 1/((1-mnwpri.u)*ni.u[i])
+                  }
+               }
 
             }
 
          }
+
+         ### note: addyi and addvi only implemented for measures above
 
          ### proportion with arcsine square root (angular) transformation
 
@@ -1117,10 +1293,10 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
       if (is.element(measure, c("IR","IRLN","IRS","IRFT"))) {
 
-         mf.xi   <- mf[[match("xi", names(mf))]]
-         mf.ti   <- mf[[match("ti", names(mf))]]
-         xi      <- eval(mf.xi, data, enclos=sys.frame(sys.parent()))
-         ti      <- eval(mf.ti, data, enclos=sys.frame(sys.parent()))
+         mf.xi <- mf[[match("xi", names(mf))]]
+         mf.ti <- mf[[match("ti", names(mf))]]
+         xi    <- eval(mf.xi, data, enclos=sys.frame(sys.parent()))
+         ti    <- eval(mf.ti, data, enclos=sys.frame(sys.parent()))
 
          if (!is.null(subset)) {
             xi <- xi[subset]
@@ -1141,6 +1317,10 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
          ni.u <- ti ### unadjusted total sample sizes
 
+         ### save unadjusted counts
+
+         xi.u <- xi
+
          if (to == "all") {
 
             ### always add to all cells in all studies
@@ -1149,12 +1329,16 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
          }
 
-         if (to == "only0") {
-
-            ### add to cells in studies with at least one 0 entry
+         if (to == "only0" || to == "if0all") {
 
             id0 <- c(xi == 0L)
             id0[is.na(id0)] <- FALSE
+
+         }
+
+         if (to == "only0") {
+
+            ### add to cells in studies with at least one 0 entry
 
             xi[id0] <- xi[id0] + add
 
@@ -1164,9 +1348,6 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
             ### add to cells in all studies if there is at least one 0 entry
 
-            id0 <- c(xi == 0L)
-            id0[is.na(id0)] <- FALSE
-
             if (any(id0)) {
 
                xi <- xi + add
@@ -1175,28 +1356,53 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
          }
 
+         ### compute rates (unadjusted and adjusted)
+
+         iri.u <- xi.u/ti
          iri <- xi/ti
 
          ### raw incidence rate
 
          if (measure == "IR") {
-            yi <- iri
-            vi <- iri/ti ### note: same as xi/ti^2
+            if (addyi) {
+               yi <- iri
+            } else {
+               yi <- iri.u
+            }
+            if (addvi) {
+               vi <- iri/ti ### note: same as xi/ti^2
+            } else {
+               vi <- iri.u/ti ### note: same as xi.u/ti^2
+            }
          }
 
          ### log transformed incidence rate
 
          if (measure == "IRLN") {
-            yi <- log(iri)
-            vi <- 1/xi
+            if (addyi) {
+               yi <- log(iri)
+            } else {
+               yi <- log(iri.u)
+            }
+            if (addvi) {
+               vi <- 1/xi
+            } else {
+               vi <- 1/xi.u
+            }
          }
 
          ### square root transformed incidence rate
 
          if (measure == "IRS") {
-            yi <- sqrt(iri)
+            if (addyi) {
+               yi <- sqrt(iri)
+            } else {
+               yi <- sqrt(iri.u)
+            }
             vi <- 1/(4*ti)
          }
+
+         ### note: addyi and addvi only implemented for measures above
 
          ### incidence rate with Freeman-Tukey transformation
 
@@ -1211,12 +1417,12 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
       if (is.element(measure, c("MN","MNLN","CVLN","SDLN"))) {
 
-         mf.mi   <- mf[[match("mi",  names(mf))]] ### for SDLN, do not need to supply this
-         mf.sdi  <- mf[[match("sdi", names(mf))]]
-         mf.ni   <- mf[[match("ni",  names(mf))]]
-         mi      <- eval(mf.mi,  data, enclos=sys.frame(sys.parent()))
-         sdi     <- eval(mf.sdi, data, enclos=sys.frame(sys.parent()))
-         ni      <- eval(mf.ni,  data, enclos=sys.frame(sys.parent()))
+         mf.mi  <- mf[[match("mi",  names(mf))]] ### for SDLN, do not need to supply this
+         mf.sdi <- mf[[match("sdi", names(mf))]]
+         mf.ni  <- mf[[match("ni",  names(mf))]]
+         mi     <- eval(mf.mi,  data, enclos=sys.frame(sys.parent()))
+         sdi    <- eval(mf.sdi, data, enclos=sys.frame(sys.parent()))
+         ni     <- eval(mf.ni,  data, enclos=sys.frame(sys.parent()))
 
          if (!is.null(subset)) {
             mi  <- mi[subset]
@@ -1332,7 +1538,7 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
          if (is.element(measure, c("SMCR"))) {
 
-            ### for this measure, need m1i, m2i, sd1i, ni, and ri (do not need sd2i!)
+            ### for this measure, need m1i, m2i, sd1i, ni, and ri (do not need sd2i)
 
             if (length(m1i)==0L || length(m2i)==0L || length(sd1i)==0L || length(ni)==0L || length(ri)==0L)
                stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments.")
@@ -1396,7 +1602,7 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
          }
 
          ### ratio of means for pre-post or matched designs (eq. 6 in Lajeunesse, 2011)
-         ### to use with pooled SDs, simply set sd1i = sd2i = sdpi!
+         ### to use with pooled SDs, simply set sd1i = sd2i = sdpi
 
          if (measure == "ROMC") {
             yi <- log(m1i/m2i)

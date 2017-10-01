@@ -30,6 +30,16 @@ lty, lwd, col, level=99.99, refline=0, ...) {
 
    level <- ifelse(level > 1, (100-level)/100, ifelse(level > .5, 1-level, level))
 
+   ### get ... argument
+
+   ddd <- list(...)
+
+   ### set defaults or get onlyo1, addyi, and addvi arguments
+
+   onlyo1 <- ifelse(is.null(ddd$onlyo1), FALSE, ddd$onlyo1)
+   addyi  <- ifelse(is.null(ddd$addyi),  TRUE,  ddd$addyi)
+   addvi  <- ifelse(is.null(ddd$addvi),  TRUE,  ddd$addvi)
+
    #########################################################################
 
    ### check if data argument has been specified
@@ -101,7 +111,7 @@ lty, lwd, col, level=99.99, refline=0, ...) {
       di <- di[subset]
    }
 
-   dat <- escalc(measure="OR", ai=ai, bi=bi, ci=ci, di=di, drop00=drop00)
+   dat <- escalc(measure="OR", ai=ai, bi=bi, ci=ci, di=di, drop00=drop00, onlyo1=onlyo1, addyi=addyi, addvi=addvi)
 
    yi <- dat$yi ### one or more yi/vi pairs may be NA/NA
    vi <- dat$vi ### one or more yi/vi pairs may be NA/NA

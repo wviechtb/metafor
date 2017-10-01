@@ -1,4 +1,4 @@
-Changes in Version 2.1-0 (2017-09-10)
+Changes in Version 2.1-0 (2017-10-01)
 =====================================
 
    o overhauled plot.gosh.rma(); when 'out' is specified, it now shows two
@@ -50,6 +50,11 @@ Changes in Version 2.1-0 (2017-09-10)
      now shown as a blank (instead of NA [NA, NA])
 
    o escalc() does a bit more housekeeping
+
+   o added currently undocumented arguments 'onlyo1', 'addyi', and 'addvi'
+     to escalc() that allow for more flexibility when computing certain bias
+     corrections and when computing sampling variances for measures that
+     make use of the 'add' and 'to' arguments
 
    o labbe() gains 'lty' argument
 

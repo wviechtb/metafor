@@ -56,7 +56,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("knha", "scale", "link", "outlist"))
+   .chkdots(ddd, c("knha", "scale", "link", "outlist", "onlyo1", "addyi", "addvi"))
 
    ### handle 'knha' argument from ...
 
@@ -82,6 +82,12 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
    } else {
       link <- "log"
    }
+
+   ### set defaults or get onlyo1, addyi, and addvi arguments
+
+   onlyo1 <- ifelse(is.null(ddd$onlyo1), FALSE, ddd$onlyo1)
+   addyi  <- ifelse(is.null(ddd$addyi),  TRUE,  ddd$addyi)
+   addvi  <- ifelse(is.null(ddd$addvi),  TRUE,  ddd$addvi)
 
    #########################################################################
 
@@ -301,18 +307,18 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
       if (is.element(measure, c("RR","OR","PETO","RD","AS","PHI","YUQ","YUY","RTET","PBIT","OR2D","OR2DN","OR2DL","MPRD","MPRR","MPOR","MPORC","MPPETO"))) {
 
-         mf.ai   <- mf[[match("ai",  names(mf))]]
-         mf.bi   <- mf[[match("bi",  names(mf))]]
-         mf.ci   <- mf[[match("ci",  names(mf))]]
-         mf.di   <- mf[[match("di",  names(mf))]]
-         mf.n1i  <- mf[[match("n1i", names(mf))]]
-         mf.n2i  <- mf[[match("n2i", names(mf))]]
-         ai      <- eval(mf.ai,  data, enclos=sys.frame(sys.parent()))
-         bi      <- eval(mf.bi,  data, enclos=sys.frame(sys.parent()))
-         ci      <- eval(mf.ci,  data, enclos=sys.frame(sys.parent()))
-         di      <- eval(mf.di,  data, enclos=sys.frame(sys.parent()))
-         n1i     <- eval(mf.n1i, data, enclos=sys.frame(sys.parent()))
-         n2i     <- eval(mf.n2i, data, enclos=sys.frame(sys.parent()))
+         mf.ai  <- mf[[match("ai",  names(mf))]]
+         mf.bi  <- mf[[match("bi",  names(mf))]]
+         mf.ci  <- mf[[match("ci",  names(mf))]]
+         mf.di  <- mf[[match("di",  names(mf))]]
+         mf.n1i <- mf[[match("n1i", names(mf))]]
+         mf.n2i <- mf[[match("n2i", names(mf))]]
+         ai     <- eval(mf.ai,  data, enclos=sys.frame(sys.parent()))
+         bi     <- eval(mf.bi,  data, enclos=sys.frame(sys.parent()))
+         ci     <- eval(mf.ci,  data, enclos=sys.frame(sys.parent()))
+         di     <- eval(mf.di,  data, enclos=sys.frame(sys.parent()))
+         n1i    <- eval(mf.n1i, data, enclos=sys.frame(sys.parent()))
+         n2i    <- eval(mf.n2i, data, enclos=sys.frame(sys.parent()))
          if (is.null(bi)) bi <- n1i - ai
          if (is.null(di)) di <- n2i - ci
 
@@ -325,20 +331,20 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
             di <- di[subset]
          }
 
-         dat <- escalc(measure=measure, ai=ai, bi=bi, ci=ci, di=di, add=add, to=to, drop00=drop00, vtype=vtype)
+         dat <- escalc(measure=measure, ai=ai, bi=bi, ci=ci, di=di, add=add, to=to, drop00=drop00, vtype=vtype, onlyo1=onlyo1, addyi=addyi, addvi=addvi)
 
       }
 
       if (is.element(measure, c("IRR","IRD","IRSD"))) {
 
-         mf.x1i  <- mf[[match("x1i", names(mf))]]
-         mf.x2i  <- mf[[match("x2i", names(mf))]]
-         mf.t1i  <- mf[[match("t1i", names(mf))]]
-         mf.t2i  <- mf[[match("t2i", names(mf))]]
-         x1i     <- eval(mf.x1i, data, enclos=sys.frame(sys.parent()))
-         x2i     <- eval(mf.x2i, data, enclos=sys.frame(sys.parent()))
-         t1i     <- eval(mf.t1i, data, enclos=sys.frame(sys.parent()))
-         t2i     <- eval(mf.t2i, data, enclos=sys.frame(sys.parent()))
+         mf.x1i <- mf[[match("x1i", names(mf))]]
+         mf.x2i <- mf[[match("x2i", names(mf))]]
+         mf.t1i <- mf[[match("t1i", names(mf))]]
+         mf.t2i <- mf[[match("t2i", names(mf))]]
+         x1i    <- eval(mf.x1i, data, enclos=sys.frame(sys.parent()))
+         x2i    <- eval(mf.x2i, data, enclos=sys.frame(sys.parent()))
+         t1i    <- eval(mf.t1i, data, enclos=sys.frame(sys.parent()))
+         t2i    <- eval(mf.t2i, data, enclos=sys.frame(sys.parent()))
 
          k <- length(x1i) ### number of outcomes before subsetting
 
@@ -349,7 +355,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
             t2i <- t2i[subset]
          }
 
-         dat <- escalc(measure=measure, x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i, add=add, to=to, drop00=drop00, vtype=vtype)
+         dat <- escalc(measure=measure, x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i, add=add, to=to, drop00=drop00, vtype=vtype, addyi=addyi, addvi=addvi)
 
       }
 
@@ -385,10 +391,10 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
       if (is.element(measure, c("COR","UCOR","ZCOR"))) {
 
-         mf.ri   <- mf[[match("ri", names(mf))]]
-         mf.ni   <- mf[[match("ni", names(mf))]]
-         ri      <- eval(mf.ri, data, enclos=sys.frame(sys.parent()))
-         ni      <- eval(mf.ni, data, enclos=sys.frame(sys.parent()))
+         mf.ri <- mf[[match("ri", names(mf))]]
+         mf.ni <- mf[[match("ni", names(mf))]]
+         ri    <- eval(mf.ri, data, enclos=sys.frame(sys.parent()))
+         ni    <- eval(mf.ni, data, enclos=sys.frame(sys.parent()))
 
          k <- length(ri) ### number of outcomes before subsetting
 
@@ -403,14 +409,14 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
       if (is.element(measure, c("PCOR","ZPCOR","SPCOR"))) {
 
-         mf.ti   <- mf[[match("ti",  names(mf))]]
-         mf.r2i  <- mf[[match("r2i", names(mf))]]
-         mf.mi   <- mf[[match("mi",  names(mf))]]
-         mf.ni   <- mf[[match("ni",  names(mf))]]
-         ti      <- eval(mf.ti,  data, enclos=sys.frame(sys.parent()))
-         r2i     <- eval(mf.r2i, data, enclos=sys.frame(sys.parent()))
-         mi      <- eval(mf.mi,  data, enclos=sys.frame(sys.parent()))
-         ni      <- eval(mf.ni,  data, enclos=sys.frame(sys.parent()))
+         mf.ti  <- mf[[match("ti",  names(mf))]]
+         mf.r2i <- mf[[match("r2i", names(mf))]]
+         mf.mi  <- mf[[match("mi",  names(mf))]]
+         mf.ni  <- mf[[match("ni",  names(mf))]]
+         ti     <- eval(mf.ti,  data, enclos=sys.frame(sys.parent()))
+         r2i    <- eval(mf.r2i, data, enclos=sys.frame(sys.parent()))
+         mi     <- eval(mf.mi,  data, enclos=sys.frame(sys.parent()))
+         ni     <- eval(mf.ni,  data, enclos=sys.frame(sys.parent()))
 
          k <- length(ti) ### number of outcomes before subsetting
 
@@ -427,12 +433,12 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
       if (is.element(measure, c("PR","PLN","PLO","PAS","PFT"))) {
 
-         mf.xi   <- mf[[match("xi", names(mf))]]
-         mf.mi   <- mf[[match("mi", names(mf))]]
-         mf.ni   <- mf[[match("ni", names(mf))]]
-         xi      <- eval(mf.xi, data, enclos=sys.frame(sys.parent()))
-         mi      <- eval(mf.mi, data, enclos=sys.frame(sys.parent()))
-         ni      <- eval(mf.ni, data, enclos=sys.frame(sys.parent()))
+         mf.xi <- mf[[match("xi", names(mf))]]
+         mf.mi <- mf[[match("mi", names(mf))]]
+         mf.ni <- mf[[match("ni", names(mf))]]
+         xi    <- eval(mf.xi, data, enclos=sys.frame(sys.parent()))
+         mi    <- eval(mf.mi, data, enclos=sys.frame(sys.parent()))
+         ni    <- eval(mf.ni, data, enclos=sys.frame(sys.parent()))
          if (is.null(mi)) mi <- ni - xi
 
          k <- length(xi) ### number of outcomes before subsetting
@@ -442,16 +448,16 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
             mi <- mi[subset]
          }
 
-         dat <- escalc(measure=measure, xi=xi, mi=mi, add=add, to=to, vtype=vtype)
+         dat <- escalc(measure=measure, xi=xi, mi=mi, add=add, to=to, vtype=vtype, addyi=addyi, addvi=addvi)
 
       }
 
       if (is.element(measure, c("IR","IRLN","IRS","IRFT"))) {
 
-         mf.xi   <- mf[[match("xi", names(mf))]]
-         mf.ti   <- mf[[match("ti", names(mf))]]
-         xi      <- eval(mf.xi, data, enclos=sys.frame(sys.parent()))
-         ti      <- eval(mf.ti, data, enclos=sys.frame(sys.parent()))
+         mf.xi <- mf[[match("xi", names(mf))]]
+         mf.ti <- mf[[match("ti", names(mf))]]
+         xi    <- eval(mf.xi, data, enclos=sys.frame(sys.parent()))
+         ti    <- eval(mf.ti, data, enclos=sys.frame(sys.parent()))
 
          k <- length(xi) ### number of outcomes before subsetting
 
@@ -460,18 +466,18 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
             ti <- ti[subset]
          }
 
-         dat <- escalc(measure=measure, xi=xi, ti=ti, add=add, to=to, vtype=vtype)
+         dat <- escalc(measure=measure, xi=xi, ti=ti, add=add, to=to, vtype=vtype, addyi=addyi, addvi=addvi)
 
       }
 
       if (is.element(measure, c("MN","MNLN","CVLN","SDLN"))) {
 
-         mf.mi   <- mf[[match("mi",  names(mf))]]
-         mf.sdi  <- mf[[match("sdi", names(mf))]]
-         mf.ni   <- mf[[match("ni",  names(mf))]]
-         mi      <- eval(mf.mi,  data, enclos=sys.frame(sys.parent()))
-         sdi     <- eval(mf.sdi, data, enclos=sys.frame(sys.parent()))
-         ni      <- eval(mf.ni,  data, enclos=sys.frame(sys.parent()))
+         mf.mi  <- mf[[match("mi",  names(mf))]]
+         mf.sdi <- mf[[match("sdi", names(mf))]]
+         mf.ni  <- mf[[match("ni",  names(mf))]]
+         mi     <- eval(mf.mi,  data, enclos=sys.frame(sys.parent()))
+         sdi    <- eval(mf.sdi, data, enclos=sys.frame(sys.parent()))
+         ni     <- eval(mf.ni,  data, enclos=sys.frame(sys.parent()))
 
          k <- length(ni) ### number of outcomes before subsetting
 
@@ -517,12 +523,12 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
       if (is.element(measure, c("ARAW","AHW","ABT"))) {
 
-         mf.ai   <- mf[[match("ai",  names(mf))]]
-         mf.mi   <- mf[[match("mi",  names(mf))]]
-         mf.ni   <- mf[[match("ni",  names(mf))]]
-         ai      <- eval(mf.ai,  data, enclos=sys.frame(sys.parent()))
-         mi      <- eval(mf.mi,  data, enclos=sys.frame(sys.parent()))
-         ni      <- eval(mf.ni,  data, enclos=sys.frame(sys.parent()))
+         mf.ai <- mf[[match("ai",  names(mf))]]
+         mf.mi <- mf[[match("mi",  names(mf))]]
+         mf.ni <- mf[[match("ni",  names(mf))]]
+         ai    <- eval(mf.ai,  data, enclos=sys.frame(sys.parent()))
+         mi    <- eval(mf.mi,  data, enclos=sys.frame(sys.parent()))
+         ni    <- eval(mf.ni,  data, enclos=sys.frame(sys.parent()))
 
          k <- length(ai) ### number of outcomes before subsetting
 
