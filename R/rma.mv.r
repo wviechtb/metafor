@@ -766,7 +766,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
             #if (any(sapply(R[Rfix], function(x) any(eigen(x, symmetric=TRUE, only.values=TRUE)$values <= .Machine$double.eps)))) ### any eigenvalue below double.eps is essentially 0
             #   stop("Matrix in R is not positive definite.")
 
-            for (j in seq_along(length(R))) {
+            for (j in seq_along(R)) {
 
                if (!Rfix[j])
                   next

@@ -40,8 +40,12 @@ Changes in Version 2.1-0 (2017-10-01)
    o rma.uni() and rma.mv() no longer issue (obvious) warnings when user
      constrains vi or V to 0 (i.e., vi=0 or V=0, respectively)
 
+   o rma.mv() does more intelligent filtering based on NAs in V matrix
+
    o rma.mv() now ensures strict symmetry of any (var-cov or correlation)
      matrices specified via the 'R' argument
+
+   o fixed rma.mv() so checks on 'R' argument run as intended
 
    o suppressed showing calls on some warnings/errors in rma.mv()
 
@@ -60,8 +64,6 @@ Changes in Version 2.1-0 (2017-10-01)
 
    o fixed an issue with robust.rma.mv() when the model was fitted with
      sparse=TRUE (thanks to Roger Martineau for noting the problem)
-
-   o rma.mv() does more intelligent filtering based on NAs in V matrix
 
    o various method functions (fitted(), resid(), predict(), etc.) behave
      more consistently when model omitted studies with missings
