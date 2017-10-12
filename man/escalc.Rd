@@ -178,7 +178,7 @@ escalc(measure, formula, \dots)
          \itemize{
          \item \code{"CVR"} for the \emph{log transformed coefficient of variation ratio}.
          \item \code{"VR"} for the \emph{log transformed variability ratio}.
-         } Note that a slight bias correction is applied for both of these measures (Nakagawa et al., 2015).
+         } Note that a slight bias correction is applied for both of these measures (Nakagawa et al., 2015). Also, the sampling variance for \code{measure="CVR"} is computed as given by equation 12 in Nakagawa et al. (2015), but without the \sQuote{\eqn{-2 \rho \ldots}} terms, since for normally distributed data (which we assume here) the mean and variance (and transformations thereof) are independent.
 
       }
 
@@ -277,7 +277,7 @@ escalc(measure, formula, \dots)
          \item \code{"MNLN"} for the \emph{log transformed mean}.
          \item \code{"CVLN"} for the \emph{log transformed coefficient of variation}.
          \item \code{"SDLN"} for the \emph{log transformed standard deviation}.
-         } Note that \code{sdi} is used to specify the standard deviations of the observed values of the response, characteristic, or dependent variable and not the standard errors of the means.
+         } Note that \code{sdi} is used to specify the standard deviations of the observed values of the response, characteristic, or dependent variable and not the standard errors of the means. Also, the sampling variance for \code{measure="CVLN"} is computed as given by equation 27 in Nakagawa et al. (2015), but without the \sQuote{\eqn{-2 \rho \ldots}} term, since for normally distributed data (which we assume here) the mean and variance (and transformations thereof) are independent.
 
       }
 

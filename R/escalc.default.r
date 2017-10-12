@@ -858,6 +858,8 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
          }
 
          ### coefficient of variation ratio
+         ### note: vi computed as per eq. 12 from Nakagawa et al. (2015), but without the '-2 rho ...' terms,
+         ### since for normally distributed data the mean and variance (and transformations thereof) are independent
 
          if (measure == "CVR") {
             yi <- log(sd1i/m1i) + 1/(2*(n1i-1)) - log(sd2i/m2i) - 1/(2*(n2i-1))
@@ -1480,6 +1482,8 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
          }
 
          ### log(CV) with bias correction
+         ### note: vi computed as per eq. 27 from Nakagawa et al. (2015), but without the '-2 rho ...' term,
+         ### since for normally distributed data the mean and variance (and transformations thereof) are independent
 
          if (measure == "CVLN") {
             yi <- log(sdi/mi) + 1/(2*(ni-1))
