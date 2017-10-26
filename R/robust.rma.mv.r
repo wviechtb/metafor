@@ -107,6 +107,12 @@ robust.rma.mv <- function(x, cluster, adjust=TRUE, digits, ...) {
    if (is.character(adjust) && adjust=="Stata2")
       vb <- (n / (n-1)) * vb                       ### when the model was fitted with mixed
 
+   ### dim(vb) is pxp and not sparse, so this won't blow up
+   ### as.matrix() helps to avoid some issues with 'vb' appearing as non-symmetric (when it must be)
+
+   if (x$sparse)
+      vb <- as.matrix(vb)
+
    ### prepare results
 
    beta <- x$beta
@@ -118,7 +124,7 @@ robust.rma.mv <- function(x, cluster, adjust=TRUE, digits, ...) {
    ci.lb <- c(beta - crit * se)
    ci.ub <- c(beta + crit * se)
 
-   QM <- try(as.vector(t(beta)[x$btt] %*% chol2inv(chol(as.matrix(vb[x$btt,x$btt]))) %*% beta[x$btt]), silent=TRUE) ### as.matrix() helps to avoid some issues with 'vb' appearing as non-symmetric (when it must be)
+   QM <- try(as.vector(t(beta)[x$btt] %*% chol2inv(chol(vb[x$btt,x$btt])) %*% beta[x$btt]), silent=TRUE)
 
    if (inherits(QM, "try-error"))
       QM <- NA

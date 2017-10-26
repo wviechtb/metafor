@@ -729,7 +729,8 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
                ### even if isSymmetric() is TRUE, there may still be minor numerical differences between the lower and upper triangular
                ### parts that could lead to isSymmetric() being FALSE once we do any potentially rescaling of the R matrices further
                ### below; this ensures strict symmetry to avoid this issue
-               R[[j]][lower.tri(R[[j]])] <- t(R[[j]])[lower.tri(R[[j]])]
+               #R[[j]][lower.tri(R[[j]])] <- t(R[[j]])[lower.tri(R[[j]])]
+               R[[j]] <- symmpart(R[[j]])
 
                ### if rownames are missing, copy colnames to rownames and vice-versa
 
@@ -1294,8 +1295,8 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
                posdefify = FALSE,         # to force G and H matrix to become positive definite
                hessian = FALSE,           # to compute Hessian
                hessianCtrl=list(r=8),     # arguments passed on to 'method.args' of hessian()
-               vctransf = FALSE)          # if FALSE, Hessian is computed for untransformed (raw) variance components
-                                          # if TRUE,  Hessian is computed for transformed components (log and r-to-z space)
+               vctransf = FALSE)          # if FALSE, Hessian is computed for the untransformed (raw) variance components
+                                          # if TRUE,  Hessian is computed for the transformed components (log and r-to-z space)
 
    ### replace defaults with any user-defined values
 
@@ -1571,59 +1572,71 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    if (method != "FE" && !is.null(random)) {
 
-      optcall <- paste(optimizer, "(", par.arg, "=c(con$sigma2.init, con$tau2.init, con$rho.init, con$gamma2.init, con$phi.init),
-         .ll.rma.mv, reml=reml, ", ifelse(optimizer=="optim", "method=optmethod, ", ""), "Y=Y, M=V, A=NULL, X.fit=X, k=k, pX=p,
-         D.S=D.S, Z.G1=Z.G1, Z.G2=Z.G2, Z.H1=Z.H1, Z.H2=Z.H2,
-         sigma2.val=sigma2, tau2.val=tau2, rho.val=rho, gamma2.val=gamma2, phi.val=phi,
-         sigma2s=sigma2s, tau2s=tau2s, rhos=rhos, gamma2s=gamma2s, phis=phis,
-         withS=withS, withG=withG, withH=withH,
-         struct=struct, g.levels.r=g.levels.r, h.levels.r=h.levels.r,
-         sparse=sparse, cholesky=cholesky, posdefify=posdefify, vctransf=TRUE,
-         verbose=verbose, digits=digits, REMLf=con$REMLf, dofit=FALSE", ctrl.arg, ")\n", sep="")
+      ### if at least one parameter needs to be estimated
 
-      #return(optcall)
-      opt.res <- try(eval(parse(text=optcall)), silent=!verbose)
-      #return(opt.res)
+      if (any(is.na(c(sigma2, tau2, rho, gamma2, phi)))) {
 
-      if (inherits(opt.res, "try-error"))
-         stop("Error during optimization.")
+         optcall <- paste(optimizer, "(", par.arg, "=c(con$sigma2.init, con$tau2.init, con$rho.init, con$gamma2.init, con$phi.init),
+            .ll.rma.mv, reml=reml, ", ifelse(optimizer=="optim", "method=optmethod, ", ""), "Y=Y, M=V, A=NULL, X.fit=X, k=k, pX=p,
+            D.S=D.S, Z.G1=Z.G1, Z.G2=Z.G2, Z.H1=Z.H1, Z.H2=Z.H2,
+            sigma2.val=sigma2, tau2.val=tau2, rho.val=rho, gamma2.val=gamma2, phi.val=phi,
+            sigma2s=sigma2s, tau2s=tau2s, rhos=rhos, gamma2s=gamma2s, phis=phis,
+            withS=withS, withG=withG, withH=withH,
+            struct=struct, g.levels.r=g.levels.r, h.levels.r=h.levels.r,
+            sparse=sparse, cholesky=cholesky, posdefify=posdefify, vctransf=TRUE,
+            verbose=verbose, digits=digits, REMLf=con$REMLf, dofit=FALSE", ctrl.arg, ")\n", sep="")
 
-      ### convergence checks
+         #return(optcall)
+         opt.res <- try(eval(parse(text=optcall)), silent=!verbose)
+         #return(opt.res)
 
-      if (is.element(optimizer, c("optim","nlminb","dfoptim::hjk","dfoptim::nmk")) && opt.res$convergence != 0)
-         stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (convergence = ", opt.res$convergence, ")."))
+         if (inherits(opt.res, "try-error"))
+            stop("Error during optimization.")
 
-      if (is.element(optimizer, c("minqa::uobyqa","minqa::newuoa","minqa::bobyqa")) && opt.res$ierr != 0)
-         stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (ierr = ", opt.res$ierr, ")."))
+         ### convergence checks
 
-      if (optimizer=="nloptr::nloptr" && !(opt.res$status >= 1 && opt.res$status <= 4))
-         stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (status = ", opt.res$status, ")."))
+         if (is.element(optimizer, c("optim","nlminb","dfoptim::hjk","dfoptim::nmk")) && opt.res$convergence != 0)
+            stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (convergence = ", opt.res$convergence, ")."))
 
-      if (optimizer=="ucminf::ucminf" && !(opt.res$convergence == 1 || opt.res$convergence == 2))
-         stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (convergence = ", opt.res$convergence, ")."))
+         if (is.element(optimizer, c("minqa::uobyqa","minqa::newuoa","minqa::bobyqa")) && opt.res$ierr != 0)
+            stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (ierr = ", opt.res$ierr, ")."))
 
-      if (verbose > 1) {
-         cat("\n")
-         print(opt.res)
-      }
+         if (optimizer=="nloptr::nloptr" && !(opt.res$status >= 1 && opt.res$status <= 4))
+            stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (status = ", opt.res$status, ")."))
 
-      ### copy estimated values to 'par' so code below works
+         if (optimizer=="ucminf::ucminf" && !(opt.res$convergence == 1 || opt.res$convergence == 2))
+            stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (convergence = ", opt.res$convergence, ")."))
 
-      if (optimizer=="nloptr::nloptr")
-         opt.res$par <- opt.res$solution
-      if (optimizer=="nlm")
-         opt.res$par <- opt.res$estimate
+         if (verbose > 1) {
+            cat("\n")
+            print(opt.res)
+         }
 
-      if (p == k) {
+         ### copy estimated values to 'par' so code below works
 
-         ### when fitting a saturated model (with REML estimation), estimated values of variance components can remain stuck
-         ### at their initial values; this ensures that the values are fixed to zero (unless values were fixed by the user)
+         if (optimizer=="nloptr::nloptr")
+            opt.res$par <- opt.res$solution
+         if (optimizer=="nlm")
+            opt.res$par <- opt.res$estimate
 
-         sigma2[is.na(sigma2)] <- 0
-         tau2[is.na(tau2)]     <- 0
-         rho[is.na(rho)]       <- 0
-         gamma2[is.na(gamma2)] <- 0
-         phi[is.na(phi)]       <- 0
+         if (p == k) {
+
+            ### when fitting a saturated model (with REML estimation), estimated values of variance components can remain stuck
+            ### at their initial values; this ensures that the values are fixed to zero (unless values were fixed by the user)
+
+            sigma2[is.na(sigma2)] <- 0
+            tau2[is.na(tau2)]     <- 0
+            rho[is.na(rho)]       <- 0
+            gamma2[is.na(gamma2)] <- 0
+            phi[is.na(phi)]       <- 0
+
+         }
+
+      } else {
+
+         ### if all parameter are fixed to known values, can skip optimization
+
+         opt.res <- list(par=c(sigma2, tau2, rho, gamma2, phi))
 
       }
 
@@ -1768,7 +1781,8 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       if (!requireNamespace("numDeriv", quietly=TRUE))
          stop("Please install the 'numDeriv' package for Hessian computation.")
 
-      hessian <- try(numDeriv::hessian(func=.ll.rma.mv, x = if (con$vctransf) opt.res$par else c(sigma2, tau2, rho, gamma2, phi), method.args=con$hessianCtrl, reml=reml, Y=Y, M=V, A=NULL, X.fit=X, k=k, pX=p,
+      hessian <- try(numDeriv::hessian(func=.ll.rma.mv, x = if (con$vctransf) opt.res$par else c(sigma2, tau2, rho, gamma2, phi),
+         method.args=con$hessianCtrl, reml=reml, Y=Y, M=V, A=NULL, X.fit=X, k=k, pX=p,
          D.S=D.S, Z.G1=Z.G1, Z.G2=Z.G2, Z.H1=Z.H1, Z.H2=Z.H2,
          sigma2.val=sigma2.val, tau2.val=tau2.val, rho.val=rho.val, gamma2.val=gamma2.val, phi.val=phi.val,
          sigma2s=sigma2s, tau2s=tau2s, rhos=rhos, gamma2s=gamma2s, phis=phis,

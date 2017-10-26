@@ -1,4 +1,4 @@
-Changes in Version 2.1-0 (2017-10-01)
+Changes in Version 2.1-0 (2017-10-26)
 =====================================
 
    o overhauled plot.gosh.rma(); when 'out' is specified, it now shows two
@@ -981,7 +981,7 @@ Changes in Version 1.8-0 (2013-04-11)
    o added additional clarifications about the change score outcome measures
      ("MC", "SMCC", and "SMCR") to the help file for the escalc() function
      and changed the code so that "SMCR" no longer expects argument 'sd2i'
-     to be specified (which is not needed anyways) (thanks to Markus Kösters
+     to be specified (which is not needed anyways) (thanks to Markus KÃ¶sters
      for bringing this to my attention)
 
    o sampling variance for the biserial correlation coefficient ("RBIS") is
@@ -1126,7 +1126,7 @@ Changes in Version 1.7-0 (2013-02-06)
      unique permutations of the model matrix (which may be much smaller
      than the total number of permutations), making the exact permutation
      test feasible in a larger set of circumstances (thanks to John Hodgson
-     for making me aware of this issue and to Hans-Jörg Viechtbauer for
+     for making me aware of this issue and to Hans-JÃ¶rg Viechtbauer for
      coming up with a recursive algorithm for finding the unique
      permutations)
 
@@ -1274,7 +1274,7 @@ Changes in Version 1.5-0 (2010-12-16)
    o the 'metafor' package now has its own project website at:
      http://www.metafor-project.org/
 
-   o added labbe() function to create L’Abbe plots
+   o added labbe() function to create Lâ€™Abbe plots
 
    o the forest.default() and addpoly.default() functions now allow the user
      to directly specify the lower and upper confidence interval bounds

@@ -694,7 +694,7 @@
             ### correlation is optimized in r-to-z space, so use transf.ztor
             r  <- ifelse(is.na(r.val), transf.ztor(r), r.val)
          } else {
-            ### for Hessian computation, leave as is
+            ### for Hessian computation, can choose to leave as is
             v <- ifelse(is.na(v.val), v, v.val)
             r <- ifelse(is.na(r.val), r, r.val)
             v[v < 0] <- 0
@@ -806,7 +806,7 @@
          ### sigma2 is optimized in log-space, so exponentiate
          sigma2 <- ifelse(is.na(sigma2.val), exp(par[seq_len(sigma2s)]), sigma2.val)
       } else {
-         ### for Hessian computation, leave as is
+         ### for Hessian computation, can choose to leave as is
          sigma2 <- ifelse(is.na(sigma2.val), par[seq_len(sigma2s)], sigma2.val)
          sigma2[sigma2 < 0] <- 0
       }
@@ -848,6 +848,8 @@
       M <- M + (Z.H1 %*% H %*% t(Z.H1)) * tcrossprod(Z.H2)
 
    }
+
+   ### note: if M is sparse, then using nearPD() could blow up
 
    if (posdefify)
       M <- as.matrix(nearPD(M)$mat)
@@ -955,14 +957,14 @@
    if ((vctransf && verbose) || (!vctransf && (verbose > 1))) {
       if (withS)
          cat("sigma2 =", ifelse(is.na(sigma2), NA, paste(formatC(sigma2, digits=digits, format="f", flag=" "), " ", sep="")), "  ", sep="")
-      if (withG)
+      if (withG) {
          cat("tau2 =",   ifelse(is.na(tau2),   NA, paste(formatC(tau2,   digits=digits, format="f", flag=" "), " ", sep="")), "  ", sep="")
-      if (withG)
          cat("rho =",    ifelse(is.na(rho),    NA, paste(formatC(rho,    digits=digits, format="f", flag=" "), " ", sep="")), "  ", sep="")
-      if (withH)
+      }
+      if (withH) {
          cat("gamma2 =", ifelse(is.na(gamma2), NA, paste(formatC(gamma2, digits=digits, format="f", flag=" "), " ", sep="")), "  ", sep="")
-      if (withH)
          cat("phi =",    ifelse(is.na(phi),    NA, paste(formatC(phi,    digits=digits, format="f", flag=" "), " ", sep="")), "  ", sep="")
+      }
       cat("  ll = ", ifelse(is.na(llval), NA, formatC(llval, digits=digits, format="f", flag=" ")), sep="", "\n")
    }
 
