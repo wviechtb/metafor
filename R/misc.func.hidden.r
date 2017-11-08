@@ -340,7 +340,17 @@
    if (is.element(struct, c("CS","HCS","UN","ID","DIAG","UNHO")) && !is.factor(mf.g[[1]]) && !is.character(mf.g[[1]]))
       stop("Inner variable in (~ inner | outer) must be a factor or character variable.", call.=FALSE)
 
-   ### turn each variable in mf.g into a factor (and turn the list into a data frame with 2 columns)
+   ### for struct="CAR", check that inner term is numeric and get numeric values
+
+   if (struct == "CAR") {
+      if (!is.numeric(mf.g[[1]]))
+         stop("Innter variable in (~ inner | outer) must be numeric for 'struct=\"CAR\"'.")
+      g.values <- sort(unique(mf.g[[1]]))
+   } else {
+      g.values <- NULL
+   }
+
+   ### turn each variable in mf.g into a factor
    ### if a variable was a factor to begin with, this drops any unused levels, but order of existing levels is preserved
 
    mf.g <- data.frame(inner=factor(mf.g[[1]]), outer=factor(mf.g[[2]]))
@@ -380,6 +390,10 @@
    }
    if (struct == "HAR") {
       tau2s <- g.nlevels[1]
+      rhos  <- 1
+   }
+   if (struct == "CAR") {
+      tau2s <- 1
       rhos  <- 1
    }
    if (struct == "UNHO") {
@@ -449,11 +463,11 @@
    attr(Z.G2, "assign")    <- NULL
    attr(Z.G2, "contrasts") <- NULL
 
-   return(list(mf.g=mf.g, g.names=g.names, g.nlevels=g.nlevels, g.levels=g.levels, tau2s=tau2s, rhos=rhos, tau2=tau2, rho=rho, Z.G1=Z.G1, Z.G2=Z.G2))
+   return(list(mf.g=mf.g, g.names=g.names, g.nlevels=g.nlevels, g.levels=g.levels, g.values=g.values, tau2s=tau2s, rhos=rhos, tau2=tau2, rho=rho, Z.G1=Z.G1, Z.G2=Z.G2))
 
 }
 
-.process.G.afterrmna <- function(mf.g, g.nlevels, g.levels, struct, tau2, rho, Z.G1, Z.G2, isG) {
+.process.G.afterrmna <- function(mf.g, g.nlevels, g.levels, g.values, struct, tau2, rho, Z.G1, Z.G2, isG) {
 
    ### copy g.nlevels and g.levels
 
@@ -476,19 +490,23 @@
 
    g.levels.r <- !is.element(g.levels.f[[1]], g.levels[[1]])
 
-   ### warn if any levels were removed
+   ### warn if any levels were removed (not for AR and CAR structures)
 
-   if (any(g.levels.r))
+   if (any(g.levels.r) && !is.element(struct, c("AR","CAR")))
       warning("One or more levels of inner factor removed due to NAs.", call.=FALSE)
+
+   ### keep only g.values values that were not removed
+
+   #g.values <- g.values[!g.levels.r]
 
    ### for "ID" and "DIAG", fix rho to 0
 
    if (is.element(struct, c("ID","DIAG")))
       rho <- 0
 
-   ### if there is only a single arm for "CS","HCS","AR","HAR" (either to begin with or after removing NAs), then fix rho to 0
+   ### if there is only a single arm for "CS","HCS","AR","HAR","CAR" (either to begin with or after removing NAs), then fix rho to 0
 
-   if (g.nlevels[1] == 1 && is.element(struct, c("CS","HCS","AR","HAR")) && is.na(rho)) {
+   if (g.nlevels[1] == 1 && is.element(struct, c("CS","HCS","AR","HAR","CAR")) && is.na(rho)) {
       rho <- 0
       warning(paste0("Inner factor has only a single level, so fixed value of ", ifelse(isG, 'rho', 'phi'), " to 0."), call.=FALSE)
    }
@@ -514,10 +532,10 @@
    g.levels.comb.k <- split(g.levels.comb.k, seq_len(nrow(g.levels.comb.k)))
 
    ### check if each study has only a single arm (could be different arms!)
-   ### for "CS","HCS","AR","HAR", if yes, then must fix rho to 0 (if not already fixed)
+   ### for "CS","HCS","AR","HAR","CAR", if yes, then must fix rho to 0 (if not already fixed)
 
    if (all(unlist(lapply(g.levels.comb.k, sum)) == 1)) {
-      if (is.element(struct, c("CS","HCS","AR","HAR")) && is.na(rho)) {
+      if (is.element(struct, c("CS","HCS","AR","HAR","CAR")) && is.na(rho)) {
          rho <- 0
          warning(paste0("Each level of the outer factor contains only a single level of the inner factor, so fixed value of ", ifelse(isG, 'rho', 'phi'), " to 0."), call.=FALSE)
       }
@@ -609,9 +627,24 @@
       diag(G) <- tau2
    }
 
-   ### for "CS","AR","ID" set tau2 value to 0 for any levels that were removed
+   if (struct == "CAR") {
+      if (is.na(rho)) {
+         G <- matrix(NA_real_, nrow=g.nlevels.f[1], ncol=g.nlevels.f[1])
+      } else {
+         ### is g.nlevels.f[1] == 1 even possible here?
+         if (g.nlevels.f[1] > 1) {
+            G <- outer(g.values, g.values, function(x,y) rho^(abs(x-y)))
+         } else {
+            G <- diag(1)
+         }
+      }
+      G <- diag(sqrt(rep(tau2, g.nlevels.f[1])), nrow=g.nlevels.f[1], ncol=g.nlevels.f[1]) %*% G %*% diag(sqrt(rep(tau2, g.nlevels.f[1])), nrow=g.nlevels.f[1], ncol=g.nlevels.f[1])
+      diag(G) <- tau2
+   }
 
-   if (any(g.levels.r) && is.element(struct, c("CS","AR","ID"))) {
+   ### for "CS","AR","CAR","ID" set tau2 value to 0 for any levels that were removed
+
+   if (any(g.levels.r) && is.element(struct, c("CS","AR","CAR","ID"))) {
       G[g.levels.r,] <- 0
       G[,g.levels.r] <- 0
    }
@@ -646,16 +679,14 @@
    }
 
    ### special handling for the bivariate model:
-   ### if tau2 (for "CS","AR","UNHO") or either tau2.1 or tau2.2 (for "HCS","UN","HAR") is fixed to 0, then rho must be fixed to 0
+   ### if tau2 (for "CS","AR","CAR","UNHO") or either tau2.1 or tau2.2 (for "HCS","UN","HAR") is fixed to 0, then rho must be fixed to 0
 
    if (g.nlevels.f[1] == 2) {
-      if (is.element(struct, c("CS","AR","UNHO")) && !is.na(tau2) && tau2 == 0)
+      if (is.element(struct, c("CS","AR","CAR","UNHO")) && !is.na(tau2) && tau2 == 0)
          rho <- 0
       if (is.element(struct, c("HCS","UN","HAR")) && ((!is.na(tau2[1]) && tau2[1] == 0) || (!is.na(tau2[2]) && tau2[2] == 0)))
          rho <- 0
    }
-
-   #return(list(G=G, tau2=tau2, rho=rho, Z.G1=Z.G1, Z.G2=Z.G2))
 
    return(list(mf.g=mf.g, g.nlevels=g.nlevels, g.nlevels.f=g.nlevels.f, g.levels=g.levels, g.levels.f=g.levels.f, g.levels.r=g.levels.r, g.levels.k=g.levels.k, g.levels.comb.k=g.levels.comb.k, tau2=tau2, rho=rho, G=G))
 
@@ -684,7 +715,7 @@
 
 ### function to construct var-cov matrix (G or H) for '~ inner | outer' terms
 
-.con.E <- function(v, r, v.val, r.val, Z1, levels.r, struct, cholesky, vctransf, posdefify, sparse) {
+.con.E <- function(v, r, v.val, r.val, Z1, levels.r, values, struct, cholesky, vctransf, posdefify, sparse) {
 
       ### if cholesky=TRUE, back-transformation/substitution is done below; otherwise, back-transform and replace fixed values
       if (!cholesky) {
@@ -701,7 +732,7 @@
             r[r >  1] <-  1
             r[r < -1] <- -1
          }
-         v <- ifelse(v <= .Machine$double.eps*10, 0, v) ### don't do this with Cholesky factorization, since variance can be negative
+         v <- ifelse(v <= .Machine$double.eps*10, 0, v) ### don't do this with Cholesky factorization, since values can be negative
       }
 
       ncol.Z1 <- ncol(Z1)
@@ -771,6 +802,16 @@
          diag(E) <- v
       }
 
+      if (struct == "CAR") {
+         if (ncol.Z1 > 1) {
+            E <- outer(values, values, function(x,y) r^(abs(x-y)))
+         } else {
+            E <- diag(1)
+         }
+         E <- diag(sqrt(rep(v, ncol.Z1)), nrow=ncol.Z1, ncol=ncol.Z1) %*% E %*% diag(sqrt(rep(v, ncol.Z1)), nrow=ncol.Z1, ncol=ncol.Z1)
+         diag(E) <- v
+      }
+
       ### set variance and corresponding correlation value(s) to 0 for any levels that were removed
 
       if (any(levels.r)) {
@@ -794,7 +835,7 @@
                        sigma2.val, tau2.val, rho.val, gamma2.val, phi.val,
                        sigma2s, tau2s, rhos, gamma2s, phis,
                        withS, withG, withH,
-                       struct, g.levels.r, h.levels.r,
+                       struct, g.levels.r, h.levels.r, g.values, h.values,
                        sparse, cholesky, posdefify, vctransf,
                        verbose, digits, REMLf, dofit=FALSE) {
 
@@ -826,7 +867,7 @@
    if (withG) {
 
       resG <- .con.E(v=par[(sigma2s+1):(sigma2s+tau2s)], r=par[(sigma2s+tau2s+1):(sigma2s+tau2s+rhos)],
-                     v.val=tau2.val, r.val=rho.val, Z1=Z.G1, levels.r=g.levels.r,
+                     v.val=tau2.val, r.val=rho.val, Z1=Z.G1, levels.r=g.levels.r, values=g.values,
                      struct=struct[1], cholesky=cholesky[1], vctransf=vctransf, posdefify=posdefify, sparse=sparse)
       tau2 <- resG$v
       rho  <- resG$r
@@ -839,7 +880,7 @@
    if (withH) {
 
       resH <- .con.E(v=par[(sigma2s+tau2s+rhos+1):(sigma2s+tau2s+rhos+gamma2s)], r=par[(sigma2s+tau2s+rhos+gamma2s+1):(sigma2s+tau2s+rhos+gamma2s+phis)],
-                     v.val=gamma2.val, r.val=phi.val, Z1=Z.H1, levels.r=h.levels.r,
+                     v.val=gamma2.val, r.val=phi.val, Z1=Z.H1, levels.r=h.levels.r, values=h.values,
                      struct=struct[2], cholesky=cholesky[2], vctransf=vctransf, posdefify=posdefify, sparse=sparse)
       gamma2 <- resH$v
       phi    <- resH$r

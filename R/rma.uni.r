@@ -58,7 +58,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
    .chkdots(ddd, c("knha", "scale", "link", "outlist", "onlyo1", "addyi", "addvi"))
 
-   ### handle 'knha' argument from ...
+   ### handle 'knha' argument from ... (note: overrides test argument)
 
    if (is.logical(ddd$knha) && !ddd$knha)
       test <- "z"
@@ -133,8 +133,6 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
    ai <- bi <- ci <- di <- x1i <- x2i <- t1i <- t2i <- NA
 
-   #is.formula <- FALSE
-
    if (!is.null(yi)) {
 
       ### if yi is not NULL, then yi now either contains the yi values, a formula, or an escalc object
@@ -149,8 +147,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
          options(na.action = na.act)                      ### set na.action back to na.act
          names(yi) <- NULL                                ### strip names (1:k) from yi (so res$yi is the same whether yi is a formula or not)
          intercept <- FALSE                               ### set to FALSE since formula now controls whether the intercept is included or not
-         #is.formula <- TRUE                              ### note: code further below ([b]) actually checks whether intercept is included or not
-      }
+      }                                                   ### note: code further below ([b]) actually checks whether intercept is included or not
 
       ### if yi is an escalc object, try to extract yi and vi (note that moderators must then be specified via the mods argument)
 
@@ -280,10 +277,10 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
          if (!is.null(attr(yi, "slab")))
             slab <- attr(yi, "slab")
 
-         ### check length of yi and slab (only if slab is not NULL)
+         ### check length of yi and slab (only if slab is now not NULL)
          ### if there is a mismatch, then slab cannot be trusted, so set it to NULL
 
-         if (is.null(slab) && length(slab) != k)
+         if (!is.null(slab) && length(slab) != k)
             slab <- NULL
 
       }
@@ -584,8 +581,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
       attr(mods, "assign") <- NULL          ### strip assign attribute (not needed at the moment)
       options(na.action = na.act)           ### set na.action back to na.act
       intercept <- FALSE                    ### set to FALSE since formula now controls whether the intercept is included or not
-      #is.formula <- TRUE                    ### note: code further below ([b]) actually checks whether intercept is included or not
-   }
+   }                                        ### note: code further below ([b]) actually checks whether intercept is included or not
 
    ### turn a row vector for mods into a column vector
 
@@ -801,8 +797,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
       int.indx <- which(is.int, arr.ind=TRUE)
       X        <- cbind(intrcpt=1,   X[,-int.indx, drop=FALSE]) ### this removes any duplicate intercepts
       X.f      <- cbind(intrcpt=1, X.f[,-int.indx, drop=FALSE]) ### this removes any duplicate intercepts
-      #if (is.formula)
-         intercept <- TRUE ### set intercept appropriately so that the predict() function works
+      intercept <- TRUE ### set intercept appropriately so that the predict() function works
    } else {
       int.incl <- FALSE
    }

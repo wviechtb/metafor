@@ -62,6 +62,7 @@ test_that("results are correct for diag(V) and struct='HAR'.", {
    ### Table 1, column "Correlated random time effects"
    expect_equivalent(round(coef(res),1), c(-26.0, -27.3, -28.6, -25.8)) # -27.5 in Table vs -27.3
    expect_equivalent(round(res$tau2,1), c(20.3, 36.0, 26.4, 30.1)) # 20.4 in Table vs 20.3
+   expect_equivalent(round(res$rho,2), 1.00)
 
 })
 
@@ -85,6 +86,7 @@ test_that("results are correct for struct='AR'.", {
    ### not in paper
    expect_equivalent(round(coef(res),1), c(-25.9, -27.4, -28.7, -26.4))
    expect_equivalent(round(res$tau2,1), 26.7)
+   expect_equivalent(round(res$rho,2), 0.87)
 
 })
 
@@ -96,5 +98,34 @@ test_that("results are correct for struct='HCS'.", {
    ### not in paper
    expect_equivalent(round(coef(res),1), c(-25.9, -27.3, -28.7, -26.7))
    expect_equivalent(round(res$tau2,1), c(20.9, 32.7, 27.7, 32.2))
+
+})
+
+test_that("results are correct for struct='CAR'.", {
+
+   res <- rma.mv(yi, V, mods = ~ factor(time) - 1, random = ~ time | study,
+                 struct = "CAR", data = dat.long)
+
+   ### not in paper
+   expect_equivalent(round(coef(res),1), c(-25.9, -27.4, -28.7, -26.4))
+   expect_equivalent(round(res$tau2,1), 26.7)
+   expect_equivalent(round(res$rho,2), 0.87)
+
+})
+
+test_that("results are correct for struct='CAR' with unequally spaced time points.", {
+
+   dat.long$time[dat.long$time == 4] <- 24/3
+   dat.long$time[dat.long$time == 3] <- 12/3
+   dat.long$time[dat.long$time == 2] <-  6/3
+   dat.long$time[dat.long$time == 1] <-  3/3
+
+   res <- rma.mv(yi, V, mods = ~ factor(time) - 1, random = ~ time | study,
+                 struct = "CAR", data = dat.long)
+
+   ### not in paper
+   expect_equivalent(round(coef(res),1), c(-26.0, -27.4, -28.7, -26.1))
+   expect_equivalent(round(res$tau2,1), 27.0)
+   expect_equivalent(round(res$rho,2), 0.92)
 
 })

@@ -72,7 +72,7 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
 
          cat("\n")
 
-         if (is.element(x$struct[1], c("CS","AR","ID"))) {
+         if (is.element(x$struct[1], c("CS","AR","CAR","ID"))) {
 
             vc <- cbind(tau2, tau, ifelse(x$vc.fix$tau2, "yes", "no"))
             vc <- rbind(vc, c(rho, "", ifelse(x$vc.fix$rho, "yes", "no")))
@@ -159,7 +159,7 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
 
          cat("\n")
 
-         if (is.element(x$struct[2], c("CS","AR","ID"))) {
+         if (is.element(x$struct[2], c("CS","AR","CAR","ID"))) {
 
             vc <- cbind(gamma2, gamma, ifelse(x$vc.fix$gamma2, "yes", "no"))
             vc <- rbind(vc, c(phi, "", ifelse(x$vc.fix$phi, "yes", "no")))

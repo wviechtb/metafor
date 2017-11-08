@@ -28,7 +28,7 @@
 \details{
    Cook's distance for the \eqn{i}th study/cluster can be interpreted as the Mahalanobis distance between the entire set of predicted values once with the \eqn{i}th study/cluster included and once with the \eqn{i}th study/cluster excluded from the model fitting.
 
-    The DFBETAS value(s) essentially indicate(s) how many standard deviations the estimated coefficient(s) change(s) after excluding the \eqn{i}th study/cluster from the model fitting.
+   The DFBETAS value(s) essentially indicate(s) how many standard deviations the estimated coefficient(s) change(s) after excluding the \eqn{i}th study/cluster from the model fitting.
 }
 \value{
    The \code{cooks.distance} function returns a vector. The \code{dfbetas} function returns a data frame. The \code{hatvalues} function returns either a vector with the diagonal elements of the hat matrix or the entire hat matrix.

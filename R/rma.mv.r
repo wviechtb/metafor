@@ -17,6 +17,7 @@
 ### - UNHO (homoscedastic general positive-definite matrix with single tau2/gamma2 value and unstructured correlation matrix)
 ### - AR   (AR1 structure with a single tau2/gamma2 value and autocorrelation rho/phi)
 ### - HAR  (heteroscedastic AR1 structure with multiple tau2/gamma2 values and autocorrelation rho/phi)
+### - CAR  (continuous time AR1 structure)
 ### - ID   (same as CS but with rho/phi=0)
 ### - DIAG (same as HCS but with rho/phi=0)
 
@@ -32,7 +33,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
    if (!is.element(method, c("FE","ML","REML")))
       stop("Unknown 'method' specified.")
 
-   if (any(!is.element(struct, c("CS","HCS","UN","AR","HAR","UNHO","ID","DIAG"))))
+   if (any(!is.element(struct, c("CS","HCS","UN","AR","HAR","CAR","ID","DIAG")))) ### add UNHO later
       stop("Unknown 'struct' specified.")
 
    if (length(struct) == 1)
@@ -73,7 +74,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    .chkdots(ddd, c("tdist", "outlist"))
 
-   ### handle 'tdist' argument from ...
+   ### handle 'tdist' argument from ... (note: overrides test argument)
 
    if (is.logical(ddd$tdist) && !ddd$tdist)
       test <- "z"
@@ -83,7 +84,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
    if (!is.element(test, c("z","t","knha","adhoc")))
       stop("Invalid option selected for 'test' argument.")
 
-   ### deal with Rscale argument (either character, logical, or integer)
+   ### handle Rscale argument (either character, logical, or integer)
 
    if (is.character(Rscale))
       Rscale <- match.arg(Rscale, c("none", "cor", "cor0", "cov0"))
@@ -136,8 +137,6 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    ### if yi is a formula, extract yi and X (this overrides anything specified via the mods argument further below)
 
-   #is.formula <- FALSE
-
    if (inherits(yi, "formula")) {
       options(na.action = "na.pass")                   ### set na.action to na.pass, so that NAs are not filtered out (we'll do that later)
       mods <- model.matrix(yi, data=data)              ### extract model matrix (now mods is no longer a formula, so [a] further below is skipped)
@@ -146,8 +145,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       options(na.action = na.act)                      ### set na.action back to na.act
       names(yi) <- NULL                                ### strip names (1:k) from yi (so res$yi is the same whether yi is a formula or not)
       intercept <- FALSE                               ### set to FALSE since formula now controls whether the intercept is included or not
-      #is.formula <- TRUE                               ### note: code further below ([b]) actually checks whether intercept is included or not
-   }
+   }                                                   ### note: code further below ([b]) actually checks whether intercept is included or not
 
    ### in case user passed a matrix to yi, convert it to a vector
 
@@ -321,8 +319,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       attr(mods, "assign") <- NULL          ### strip assign attribute (not needed at the moment)
       options(na.action = na.act)           ### set na.action back to na.act
       intercept <- FALSE                    ### set to FALSE since formula now controls whether the intercept is included or not
-      #is.formula <- TRUE                    ### note: code further below ([b]) actually checks whether intercept is included or not
-   }
+   }                                        ### note: code further below ([b]) actually checks whether intercept is included or not
 
    ### turn a row vector for mods into a column vector
 
@@ -509,10 +506,10 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       if (!is.null(attr(yi, "slab")))
          slab <- attr(yi, "slab")
 
-      ### check length of yi and slab (only if slab is not NULL)
+      ### check length of yi and slab (only if slab is now not NULL)
       ### if there is a mismatch, then slab cannot be trusted, so set it to NULL
 
-      if (is.null(slab) && length(slab) != k)
+      if (!is.null(slab) && length(slab) != k)
          slab <- NULL
 
    }
@@ -837,6 +834,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       g.names   <- tmp$g.names
       g.nlevels <- tmp$g.nlevels
       g.levels  <- tmp$g.levels
+      g.values  <- tmp$g.values
       tau2s     <- tmp$tau2s
       rhos      <- tmp$rhos
       tau2      <- tmp$tau2
@@ -859,6 +857,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       Z.G2 <- NULL
       g.nlevels <- NULL
       g.levels  <- NULL
+      g.values  <- NULL
 
       g.names <- NULL
 
@@ -878,6 +877,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       h.names   <- tmp$g.names
       h.nlevels <- tmp$g.nlevels
       h.levels  <- tmp$g.levels
+      h.values  <- tmp$g.values
       gamma2s   <- tmp$tau2s
       phis      <- tmp$rhos
       gamma2    <- tmp$tau2
@@ -900,12 +900,16 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       Z.H2 <- NULL
       h.nlevels <- NULL
       h.levels  <- NULL
+      h.values  <- NULL
 
       h.names <- NULL
 
    }
 
    mf.h.f <- mf.h ### needed for predict()
+
+   # return(list(Z.G1=Z.G1, Z.G2=Z.G2, g.nlevels=g.nlevels, g.levels=g.levels, g.values=g.values, tau2=tau2, rho=rho,
+   #             Z.H1=Z.H1, Z.H2=Z.H2, h.nlevels=h.nlevels, h.levels=h.levels, h.values=h.values, gamma2=gamma2, phi=phi))
 
    #########################################################################
    #########################################################################
@@ -1009,8 +1013,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       int.indx <- which(is.int, arr.ind=TRUE)
       X        <- cbind(intrcpt=1,   X[,-int.indx, drop=FALSE]) ### this removes any duplicate intercepts
       X.f      <- cbind(intrcpt=1, X.f[,-int.indx, drop=FALSE]) ### this removes any duplicate intercepts
-      #if (is.formula)
-         intercept <- TRUE ### set intercept appropriately so that the predict() function works
+      intercept <- TRUE ### set intercept appropriately so that the predict() function works
    } else {
       int.incl <- FALSE
    }
@@ -1155,7 +1158,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    if (withG) {
 
-      tmp <- .process.G.afterrmna(mf.g, g.nlevels, g.levels, struct[1], tau2, rho, Z.G1, Z.G2, isG=TRUE)
+      tmp <- .process.G.afterrmna(mf.g, g.nlevels, g.levels, g.values, struct[1], tau2, rho, Z.G1, Z.G2, isG=TRUE)
 
       mf.g <- tmp$mf.g
 
@@ -1189,7 +1192,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    if (withH) {
 
-      tmp <- .process.G.afterrmna(mf.h, h.nlevels, h.levels, struct[2], gamma2, phi, Z.H1, Z.H2, isG=FALSE)
+      tmp <- .process.G.afterrmna(mf.h, h.nlevels, h.levels, h.values, struct[2], gamma2, phi, Z.H1, Z.H2, isG=FALSE)
 
       mf.h <- tmp$mf.g
 
@@ -1383,7 +1386,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
    }
 
    optimizer  <- match.arg(con$optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","ucminf"))
-   optmethod  <- match.arg(con$optmethod, c("Nelder-Mead", "BFGS", "CG", "L-BFGS-B", "SANN", "Brent"))
+   optmethod  <- match.arg(con$optmethod, c("Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent"))
    tol        <- con$tol
    posdefify  <- con$posdefify
    cholesky   <- con$cholesky
@@ -1582,7 +1585,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
             sigma2.val=sigma2, tau2.val=tau2, rho.val=rho, gamma2.val=gamma2, phi.val=phi,
             sigma2s=sigma2s, tau2s=tau2s, rhos=rhos, gamma2s=gamma2s, phis=phis,
             withS=withS, withG=withG, withH=withH,
-            struct=struct, g.levels.r=g.levels.r, h.levels.r=h.levels.r,
+            struct=struct, g.levels.r=g.levels.r, h.levels.r=h.levels.r, g.values=g.values, h.values=h.values,
             sparse=sparse, cholesky=cholesky, posdefify=posdefify, vctransf=TRUE,
             verbose=verbose, digits=digits, REMLf=con$REMLf, dofit=FALSE", ctrl.arg, ")\n", sep="")
 
@@ -1662,8 +1665,8 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       D.S=D.S, Z.G1=Z.G1, Z.G2=Z.G2, Z.H1=Z.H1, Z.H2=Z.H2,
       sigma2.val=sigma2, tau2.val=tau2, rho.val=rho, gamma2.val=gamma2, phi.val=phi,
       sigma2s=sigma2s, tau2s=tau2s, rhos=rhos, gamma2s=gamma2s, phis=phis,
-      withS=withS, withG=withG, withH=withH,
-      struct=struct, g.levels.r=g.levels.r, h.levels.r=h.levels.r,
+      withS=withS, withG=withG, withH=withH, struct=struct,
+      g.levels.r=g.levels.r, h.levels.r=h.levels.r, g.values=g.values, h.values=h.values,
       sparse=sparse, cholesky=cholesky, posdefify=posdefify, vctransf=TRUE,
       verbose=FALSE, digits=digits, REMLf=con$REMLf, dofit=TRUE)
 
@@ -1787,7 +1790,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
          sigma2.val=sigma2.val, tau2.val=tau2.val, rho.val=rho.val, gamma2.val=gamma2.val, phi.val=phi.val,
          sigma2s=sigma2s, tau2s=tau2s, rhos=rhos, gamma2s=gamma2s, phis=phis,
          withS=withS, withG=withG, withH=withH,
-         struct=struct, g.levels.r=g.levels.r, h.levels.r=h.levels.r,
+         struct=struct, g.levels.r=g.levels.r, h.levels.r=h.levels.r, g.values=g.values, h.values=h.values,
          sparse=sparse, cholesky=ifelse(c(con$vctransf,con$vctransf) & cholesky, TRUE, FALSE), posdefify=posdefify, vctransf=con$vctransf,
          verbose=verbose, digits=digits, REMLf=con$REMLf), silent=TRUE)
 

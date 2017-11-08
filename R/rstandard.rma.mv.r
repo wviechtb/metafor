@@ -80,7 +80,7 @@ rstandard.rma.mv <- function(model, digits, cluster, ...) {
          incl <- cluster %in% ids[i]
          k.id[i] <- sum(incl)
 
-         sve <- try(chol2inv(chol(ve[incl,incl,drop=FALSE])), silent=TRUE)
+         sve <- try(chol2inv(chol(as.matrix(ve[incl,incl,drop=FALSE]))), silent=TRUE)
          #sve <- try(solve(ve[incl,incl,drop=FALSE]), silent=TRUE)
 
          if (inherits(sve, "try-error"))

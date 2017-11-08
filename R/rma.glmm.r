@@ -62,7 +62,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    .chkdots(ddd, c("tdist", "outlist", "onlyo1", "addyi", "addvi"))
 
-   ### handle 'tdist' argument from ...
+   ### handle 'tdist' argument from ... (note: overrides test argument)
 
    if (is.logical(ddd$tdist) && !ddd$tdist)
       test <- "z"
@@ -218,7 +218,6 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    ### convert mods formula to X matrix and set intercept equal to FALSE
 
-   #is.formula <- inherits(mods, "formula")
    if (inherits(mods, "formula")) {
       options(na.action = "na.pass")        ### set na.action to na.pass, so that NAs are not filtered out (we'll do that later)
       mods <- model.matrix(mods, data=data) ### extract model matrix
@@ -528,8 +527,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       int.indx <- which(is.int, arr.ind=TRUE)
       X        <- cbind(intrcpt=1,   X[,-int.indx, drop=FALSE]) ### note: this removes any duplicate intercepts
       X.f      <- cbind(intrcpt=1, X.f[,-int.indx, drop=FALSE]) ### note: this removes any duplicate intercepts
-      #if (is.formula)
-         intercept <- TRUE ### set intercept appropriately so that the predict() function works
+      intercept <- TRUE ### set intercept appropriately so that the predict() function works
    } else {
       int.incl <- FALSE
    }

@@ -1,4 +1,4 @@
-Changes in Version 2.1-0 (2017-10-26)
+Changes in Version 2.1-0 (2017-11-08)
 =====================================
 
    o overhauled plot.gosh.rma(); when 'out' is specified, it now shows two
@@ -48,6 +48,9 @@ Changes in Version 2.1-0 (2017-10-26)
    o fixed rma.mv() so checks on 'R' argument run as intended
 
    o suppressed showing calls on some warnings/errors in rma.mv()
+
+   o rma.mv() now allows for continuous-time autoregressive random effects
+     structures (struct="CAR")
 
    o in the various forest() functions, when options(na.action="na.pass") or
      options(na.action="na.exclude") and an annotation contains NA, this is
