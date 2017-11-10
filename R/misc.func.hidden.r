@@ -344,7 +344,7 @@
 
    if (struct == "CAR") {
       if (!is.numeric(mf.g[[1]]))
-         stop("Innter variable in (~ inner | outer) must be numeric for 'struct=\"CAR\"'.")
+         stop("Inner variable in (~ inner | outer) must be numeric for 'struct=\"CAR\"'.")
       g.values <- sort(unique(mf.g[[1]]))
    } else {
       g.values <- NULL
@@ -432,6 +432,8 @@
 
    if (any(tau2 < 0, na.rm=TRUE))
       stop(paste0("Specified value(s) of ", ifelse(isG, 'tau2', 'gamma2'), " must be non-negative."), call.=FALSE)
+   if (struct == "CAR" && any(rho > 1 | rho < 0, na.rm=TRUE))
+      stop(paste0("Specified value(s) of ", ifelse(isG, 'rho', 'phi'), " must be in [0,1]."), call.=FALSE)
    if (any(rho > 1 | rho < -1, na.rm=TRUE))
       stop(paste0("Specified value(s) of ", ifelse(isG, 'rho', 'phi'), " must be in [-1,1]."), call.=FALSE)
 
@@ -720,17 +722,26 @@
       ### if cholesky=TRUE, back-transformation/substitution is done below; otherwise, back-transform and replace fixed values
       if (!cholesky) {
          if (vctransf) {
-            ### variance is optimized in log-space, so exponentiate
+            ### variance is optimized in log space, so exponentiate
             v <- ifelse(is.na(v.val), exp(v), v.val)
-            ### correlation is optimized in r-to-z space, so use transf.ztor
-            r  <- ifelse(is.na(r.val), transf.ztor(r), r.val)
+            if (struct == "CAR") {
+               ### CAR correlations are optimized in plogis space, so use qlogis
+               r  <- ifelse(is.na(r.val), plogis(r), r.val)
+            } else {
+               ### other correlations are optimized in atanh space, so use tanh
+               r  <- ifelse(is.na(r.val), tanh(r), r.val)
+            }
          } else {
             ### for Hessian computation, can choose to leave as is
             v <- ifelse(is.na(v.val), v, v.val)
             r <- ifelse(is.na(r.val), r, r.val)
             v[v < 0] <- 0
-            r[r >  1] <-  1
-            r[r < -1] <- -1
+            r[r > 1] <- 1
+            if (struct == "CAR") {
+               r[r < 0] <- 0
+            } else {
+               r[r < -1] <- -1
+            }
          }
          v <- ifelse(v <= .Machine$double.eps*10, 0, v) ### don't do this with Cholesky factorization, since values can be negative
       }
@@ -844,7 +855,7 @@
    if (withS) {
 
       if (vctransf) {
-         ### sigma2 is optimized in log-space, so exponentiate
+         ### sigma2 is optimized in log space, so exponentiate
          sigma2 <- ifelse(is.na(sigma2.val), exp(par[seq_len(sigma2s)]), sigma2.val)
       } else {
          ### for Hessian computation, can choose to leave as is

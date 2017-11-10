@@ -273,8 +273,8 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
          if (is.element(x$struct[1], c("CS", "HCS")))
             con$vc.min <- -1                                  ### this will fail most of the time but with retries, this may get closer to actual lower bound
             #con$vc.min <- min(-1/(x$g.nlevels.f[1] - 1), vc) ### this guarantees that cor matrix is semi-positive definite, but since V gets added, this is actually too strict
-         if (is.element(x$struct[1], c("AR", "HAR")))
-            con$vc.min <- min(0, vc)                          ### negative autocorrelation parameters not considered
+         if (is.element(x$struct[1], c("AR", "HAR", "CAR")))
+            con$vc.min <- min(0, vc)                          ### negative autocorrelation parameters not considered (not even sensible for CAR)
          if (is.element(x$struct[1], c("UN", "UNHO")))
             con$vc.min <- -1                                  ### TODO: this will often fail! (but with retries, this should still work)
          con$vc.max <- 1
@@ -283,8 +283,8 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
          if (is.element(x$struct[2], c("CS", "HCS")))
             con$vc.min <- -1                                  ### this will fail most of the time but with retries, this may get closer to actual lower bound
             #con$vc.min <- min(-1/(x$h.nlevels.f[1] - 1), vc) ### this guarantees that cor matrix is semi-positive definite, but since V gets added, this is actually too strict
-         if (is.element(x$struct[2], c("AR", "HAR")))
-            con$vc.min <- min(0, vc)                          ### negative autocorrelation parameters not considered
+         if (is.element(x$struct[2], c("AR", "HAR", "CAR")))
+            con$vc.min <- min(0, vc)                          ### negative autocorrelation parameters not considered (not even sensible for CAR)
          if (is.element(x$struct[2], c("UN", "UNHO")))
             con$vc.min <- -1                                  ### TODO: this will often fail! (but with retries, this should still work)
          con$vc.max <- 1

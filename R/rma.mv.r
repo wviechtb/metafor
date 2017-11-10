@@ -1299,7 +1299,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
                hessian = FALSE,           # to compute Hessian
                hessianCtrl=list(r=8),     # arguments passed on to 'method.args' of hessian()
                vctransf = FALSE)          # if FALSE, Hessian is computed for the untransformed (raw) variance components
-                                          # if TRUE,  Hessian is computed for the transformed components (log and r-to-z space)
+                                          # if TRUE,  Hessian is computed for the transformed components (log/atahn/qlogis space)
 
    ### replace defaults with any user-defined values
 
@@ -1314,15 +1314,19 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
    ### checks on initial values set by the user (the initial values computed by the function are replaced by the user defined ones at this point)
 
    if (withS && any(con$sigma2.init <= 0))
-      stop("Values of 'sigma2.init' must be positive.")
+      stop("Value(s) of 'sigma2.init' must be positive.")
    if (withG && any(con$tau2.init <= 0))
-      stop("Values of 'tau2.init' must be positive.")
+      stop("Value(s) of 'tau2.init' must be positive.")
+   if (withG && struct[1]=="CAR" && any(con$rho.init <= 0 | con$rho.init >= 1))
+      stop("Value(s) of 'rho.init' must be in (0,1).")
    if (withG && any(con$rho.init <= -1 | con$rho.init >= 1))
-      stop("Values of 'rho.init' must be in (-1,1).")
+      stop("Value(s) of 'rho.init' must be in (-1,1).")
    if (withH && any(con$gamma2.init <= 0))
-      stop("Values of 'gamma2.init' must be positive.")
+      stop("Value(s) of 'gamma2.init' must be positive.")
+   if (withH && struct[2]=="CAR" && any(con$phi.init <= 0 | con$phi.init >= 1))
+      stop("Value(s) of 'phi.init' must be in (0,1).")
    if (withH && any(con$phi.init <= -1 | con$phi.init >= 1))
-      stop("Values of 'phi.init' must be in (-1,1).")
+      stop("Value(s) of 'phi.init' must be in (-1,1).")
 
    ### in case user manually sets con$cholesky and specifies only a single value
 
@@ -1370,7 +1374,11 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       con$rho.init <- G[upper.tri(G)] ### contains the 'choled' covariances; and these values are also passed on the .ll.rma.mv as the initial values
    } else {
       con$tau2.init <- log(tau2.init)
-      con$rho.init  <- transf.rtoz(rho.init)
+      if (struct[1] == "CAR") {
+         con$rho.init  <- qlogis(rho.init)
+      } else {
+         con$rho.init  <- atanh(rho.init)
+      }
    }
 
    if (con$cholesky[2]) {
@@ -1382,7 +1390,11 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       con$phi.init <- H[upper.tri(H)] ### contains the 'choled' covariances; and these values are also passed on the .ll.rma.mv as the initial values
    } else {
       con$gamma2.init <- log(gamma2.init)
-      con$phi.init  <- transf.rtoz(phi.init)
+      if (struct[2] == "CAR") {
+         con$phi.init  <- qlogis(phi.init)
+      } else {
+         con$phi.init  <- atanh(phi.init)
+      }
    }
 
    optimizer  <- match.arg(con$optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","ucminf"))

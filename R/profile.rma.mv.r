@@ -245,15 +245,28 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi, xlim, ylim, s
    if (missing(xlim)) {
 
       ### if the user has not specified xlim argument, set automatically
-      ### TODO: try something based on CI later
+      ### TODO: maybe try something based on CI later
 
       if (is.element(comp, c("sigma2", "tau2", "gamma2"))) {
          #vc.lb <- max(.00001, log(vc)) ### old method
          #vc.ub <- max(.00001, exp(vc)) ### old method
          vc.lb <- max( 0, vc/4) ### new method
          vc.ub <- max(.1, vc*4) ### new method
-      } else {
-         vc.lb <- max(-.99999, vc-.5)
+      }
+      if (comp == "rho") {
+         if (x$struct[1] == "CAR") {
+            vc.lb <- max(0, vc-.5)
+         } else {
+            vc.lb <- max(-.99999, vc-.5)
+         }
+         vc.ub <- min(+.99999, vc+.5)
+      }
+      if (comp == "phi") {
+         if (x$struct[2] == "CAR") {
+            vc.lb <- max(0, vc-.5)
+         } else {
+            vc.lb <- max(-.99999, vc-.5)
+         }
          vc.ub <- min(+.99999, vc+.5)
       }
 
@@ -270,6 +283,27 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi, xlim, ylim, s
          stop("Argument 'xlim' should be a vector of length 2.")
 
       xlim <- sort(xlim)
+
+      if (is.element(comp, c("sigma2", "tau2", "gamma2"))) {
+         if (xlim[1] < 0)
+            stop("Lower bound for profiling must be >= 0.")
+      }
+      if (comp == "rho") {
+         if (x$struct[1] == "CAR" && xlim[1] < 0)
+            stop("Lower bound for profiling must be >= 0.")
+         if (xlim[1] < -1)
+            stop("Lower bound for profiling must be >= -1.")
+         if (xlim[2] > 1)
+            stop("Upper bound for profiling must be <= -1.")
+      }
+      if (comp == "phi") {
+         if (x$struct[2] == "CAR" && xlim[1] < 0)
+            stop("Lower bound for profiling must be >= 0.")
+         if (xlim[1] < -1)
+            stop("Lower bound for profiling must be >= -1.")
+         if (xlim[2] > 1)
+            stop("Upper bound for profiling must be <= -1.")
+      }
 
    }
 
