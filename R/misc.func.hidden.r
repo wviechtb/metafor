@@ -328,21 +328,32 @@
 
 ############################################################################
 
-.process.G.aftersub <- function(verbose, mf.g, struct, tau2, rho, isG, k, sparse) {
+.process.G.aftersub <- function(verbose, mf.g, struct, formula, tau2, rho, isG, k, sparse) {
 
    if (verbose > 1)
-      message(paste0("Processing '", paste0("~ ", names(mf.g)[1], " | ", names(mf.g)[2]), "' term ..."))
+      message(paste0("Processing '", paste0(formula, collapse=""), "' term ..."))
+
+   ### number of variables in model frame
+
+   nvars <- ncol(mf.g)
+
+   ### check that the number of variables is correct for the chosen structure
+
+   if (is.element(struct, c("CS","HCS","UN","UNHO","AR","HAR","CAR","ID","DIAG")) && nvars != 2)
+      stop(paste0("Only a single inner variable allowed for an (~ inner | outer) term when 'struct=\"", struct, "\"'."), call.=FALSE)
 
    ### get variables names in mf.g
 
-   g.names <- names(mf.g) ### two names for inner and outer factor
+   g.names <- names(mf.g) ### names for inner and outer factors/variables
 
-   if (is.element(struct, c("CS","HCS","UN","ID","DIAG","UNHO")) && !is.factor(mf.g[[1]]) && !is.character(mf.g[[1]]))
-      stop("Inner variable in (~ inner | outer) must be a factor or character variable.", call.=FALSE)
+   ### check that inner variable is a factor (or character variable) for structures that require this
 
-   ### for struct="CAR", check that inner term is numeric and get numeric values
+   if (is.element(struct, c("CS","HCS","UN","UNHO","ID","DIAG")) && !is.factor(mf.g[[1]]) && !is.character(mf.g[[1]]))
+      stop(paste0("Inner variable in (~ inner | outer) term must be a factor or character variable when 'struct=\"", struct, "\"'."), call.=FALSE)
 
-   if (struct == "CAR") {
+   ### for struct="CAR", check that inner term is numeric and get the unique numeric values
+
+   if (is.element(struct, c("CAR"))) {
       if (!is.numeric(mf.g[[1]]))
          stop("Inner variable in (~ inner | outer) must be numeric for 'struct=\"CAR\"'.")
       g.values <- sort(unique(mf.g[[1]]))
@@ -350,10 +361,14 @@
       g.values <- NULL
    }
 
-   ### turn each variable in mf.g into a factor
+   ### turn each variable in mf.g into a factor (not for SP structures)
    ### if a variable was a factor to begin with, this drops any unused levels, but order of existing levels is preserved
 
-   mf.g <- data.frame(inner=factor(mf.g[[1]]), outer=factor(mf.g[[2]]))
+   if (is.element(struct, c("SPEXP","SPGAU"))) {
+      mf.g <- data.frame(mf.g[-nvars], outer=factor(mf.g[[nvars]]))
+   } else {
+      mf.g <- data.frame(inner=factor(mf.g[[1]]), outer=factor(mf.g[[2]]))
+   }
 
    ### check if there are any NAs anywhere in mf.g
 
@@ -362,39 +377,37 @@
 
    ### get number of levels of each variable in mf.g (vector with two values, for the inner and outer factor)
 
-   g.nlevels <- c(nlevels(mf.g[[1]]), nlevels(mf.g[[2]]))
+   #g.nlevels <- c(nlevels(mf.g[[1]]), nlevels(mf.g[[2]]))
+   if (is.element(struct, c("SPEXP","SPGAU"))) {
+      g.nlevels <- c(length(unique(apply(mf.g[-nvars], 1, paste, collapse=" + "))), length(unique(mf.g[[nvars]])))
+   } else {
+      g.nlevels <- c(length(unique(mf.g[[1]])), length(unique(mf.g[[2]])))
+   }
 
    ### get levels of each variable in mf.g
 
-   g.levels <- list(levels(mf.g[[1]]), levels(mf.g[[2]]))
+   #g.levels <- list(levels(mf.g[[1]]), levels(mf.g[[2]]))
+   if (is.element(struct, c("SPEXP","SPGAU"))) {
+      g.levels <- list(sort(unique(apply(mf.g[-nvars], 1, paste, collapse=" + "))), sort(unique((mf.g[[nvars]]))))
+   } else {
+      g.levels <- list(sort(unique(mf.g[[1]])), sort(unique((mf.g[[2]]))))
+   }
 
    ### determine appropriate number of tau2 and rho values (care: this is done *after* subsetting)
-   ### care: if g.nlevels[1] is 1, then technically there is no correlation, but we need one rho
-   ### for the optimization function (this rho is fixed to 0 further in the rma.mv() function)
+   ### care: if g.nlevels[1] is 1, then technically there is no correlation, but we still need one
+   ### rho for the optimization function (this rho is fixed to 0 further in the rma.mv() function)
 
-   if (struct == "CS" || struct == "ID") {
+   if (is.element(struct, c("CS","ID","AR","CAR","SPEXP","SPGAU"))) {
       tau2s <- 1
       rhos  <- 1
    }
-   if (struct == "HCS" || struct == "DIAG") {
+   if (is.element(struct, c("HCS","DIAG","HAR"))) {
       tau2s <- g.nlevels[1]
       rhos  <- 1
    }
    if (struct == "UN") {
       tau2s <- g.nlevels[1]
       rhos  <- ifelse(g.nlevels[1] > 1, g.nlevels[1]*(g.nlevels[1]-1)/2, 1)
-   }
-   if (struct == "AR") {
-      tau2s <- 1
-      rhos  <- 1
-   }
-   if (struct == "HAR") {
-      tau2s <- g.nlevels[1]
-      rhos  <- 1
-   }
-   if (struct == "CAR") {
-      tau2s <- 1
-      rhos  <- 1
    }
    if (struct == "UNHO") {
       tau2s <- 1
@@ -431,75 +444,110 @@
    ### checks on any fixed values of tau2 and rho arguments
 
    if (any(tau2 < 0, na.rm=TRUE))
-      stop(paste0("Specified value(s) of ", ifelse(isG, 'tau2', 'gamma2'), " must be non-negative."), call.=FALSE)
-   if (struct == "CAR" && any(rho > 1 | rho < 0, na.rm=TRUE))
+      stop(paste0("Specified value(s) of ", ifelse(isG, 'tau2', 'gamma2'), " must be >= 0."), call.=FALSE)
+   if (is.element(struct, c("CAR")) && any(rho > 1 | rho < 0, na.rm=TRUE))
       stop(paste0("Specified value(s) of ", ifelse(isG, 'rho', 'phi'), " must be in [0,1]."), call.=FALSE)
-   if (any(rho > 1 | rho < -1, na.rm=TRUE))
+   if (is.element(struct, c("SPEXP","SPGAU")) && any(rho < 0, na.rm=TRUE))
+      stop(paste0("Specified value(s) of ", ifelse(isG, 'rho', 'phi'), " must be >= 0."), call.=FALSE)
+   if (!is.element(struct, c("CAR","SPEXP","SPGAU")) && any(rho > 1 | rho < -1, na.rm=TRUE))
       stop(paste0("Specified value(s) of ", ifelse(isG, 'rho', 'phi'), " must be in [-1,1]."), call.=FALSE)
 
    ### create model matrix for inner and outer factors of mf.g
 
-   if (g.nlevels[1] == 1) {
-      Z.G1 <- cbind(rep(1,k))
-   } else {
+   if (is.element(struct, c("SPEXP","SPGAU"))) {
+
       if (sparse) {
-         #Z.G1 <- Matrix(model.matrix(~ mf.g[[1]] - 1), sparse=TRUE, dimnames=list(NULL, NULL))
-         Z.G1 <- sparse.model.matrix(~ mf.g[[1]] - 1)
+         Z.G1 <- Diagonal(k)
       } else {
-         Z.G1 <- model.matrix(~ mf.g[[1]] - 1)
+         Z.G1 <- diag(1, nrow=k, ncol=k)
       }
+
+   } else {
+
+      if (g.nlevels[1] == 1) {
+         Z.G1 <- cbind(rep(1,k))
+      } else {
+         if (sparse) {
+            #Z.G1 <- Matrix(model.matrix(~ mf.g[[1]] - 1), sparse=TRUE, dimnames=list(NULL, NULL))
+            Z.G1 <- sparse.model.matrix(~ mf.g[[1]] - 1)
+         } else {
+            Z.G1 <- model.matrix(~ mf.g[[1]] - 1)
+         }
+      }
+
+      attr(Z.G1, "assign")    <- NULL
+      attr(Z.G1, "contrasts") <- NULL
+
    }
+
    if (g.nlevels[2] == 1) {
       Z.G2 <- cbind(rep(1,k))
    } else {
       if (sparse) {
-         #Z.G2 <- Matrix(model.matrix(~ mf.g[[2]] - 1), sparse=TRUE, dimnames=list(NULL, NULL))
-         Z.G2 <- sparse.model.matrix(~ mf.g[[2]] - 1)
+         #Z.G2 <- Matrix(model.matrix(~ mf.g[[nvars]] - 1), sparse=TRUE, dimnames=list(NULL, NULL))
+         Z.G2 <- sparse.model.matrix(~ mf.g[[nvars]] - 1)
       } else {
-         Z.G2 <- model.matrix(~ mf.g[[2]] - 1)
+         Z.G2 <- model.matrix(~ mf.g[[nvars]] - 1)
       }
    }
 
-   attr(Z.G1, "assign")    <- NULL
-   attr(Z.G1, "contrasts") <- NULL
    attr(Z.G2, "assign")    <- NULL
    attr(Z.G2, "contrasts") <- NULL
 
-   return(list(mf.g=mf.g, g.names=g.names, g.nlevels=g.nlevels, g.levels=g.levels, g.values=g.values, tau2s=tau2s, rhos=rhos, tau2=tau2, rho=rho, Z.G1=Z.G1, Z.G2=Z.G2))
+   return(list(mf.g=mf.g, g.names=g.names, g.nlevels=g.nlevels,
+               g.levels=g.levels, g.values=g.values,
+               tau2s=tau2s, rhos=rhos, tau2=tau2, rho=rho, Z.G1=Z.G1, Z.G2=Z.G2))
 
 }
 
-.process.G.afterrmna <- function(mf.g, g.nlevels, g.levels, g.values, struct, tau2, rho, Z.G1, Z.G2, isG) {
+############################################################################
+
+.process.G.afterrmna <- function(mf.g, g.nlevels, g.levels, g.values, struct, formula, tau2, rho, Z.G1, Z.G2, isG, sparse) {
+
+   ### number of variables in model frame
+
+   nvars <- ncol(mf.g)
 
    ### copy g.nlevels and g.levels
 
    g.nlevels.f <- g.nlevels
    g.levels.f  <- g.levels
 
-   ### redo: turn each variable in mf.g into a factor (reevaluates the levels present, but order of existing levels is preserved)
+   ### redo: turn each variable in mf.g into a factor (not for SP structures)
+   ### (reevaluates the levels present, but order of existing levels is preserved)
 
-   mf.g <- data.frame(inner=factor(mf.g[[1]]), outer=factor(mf.g[[2]]))
+   if (is.element(struct, c("SPEXP","SPGAU"))) {
+      mf.g <- data.frame(mf.g[-nvars], outer=factor(mf.g[[nvars]]))
+   } else {
+      mf.g <- data.frame(inner=factor(mf.g[[1]]), outer=factor(mf.g[[2]]))
+   }
 
    ### redo: get number of levels of each variable in mf.g (vector with two values, for the inner and outer factor)
 
-   g.nlevels <- c(nlevels(mf.g[[1]]), nlevels(mf.g[[2]]))
+   #g.nlevels <- c(nlevels(mf.g[[1]]), nlevels(mf.g[[2]]))
+   if (is.element(struct, c("SPEXP","SPGAU"))) {
+      g.nlevels <- c(length(unique(apply(mf.g[-nvars], 1, paste, collapse=" + "))), length(unique(mf.g[[nvars]])))
+   } else {
+      g.nlevels <- c(length(unique(mf.g[[1]])), length(unique(mf.g[[2]])))
+   }
 
    ### redo: get levels of each variable in mf.g
 
-   g.levels <- list(levels(mf.g[[1]]), levels(mf.g[[2]]))
+   #g.levels <- list(levels(mf.g[[1]]), levels(mf.g[[2]]))
+   if (is.element(struct, c("SPEXP","SPGAU"))) {
+      g.levels <- list(sort(unique(apply(mf.g[-nvars], 1, paste, collapse=" + "))), sort(unique((mf.g[[nvars]]))))
+   } else {
+      g.levels <- list(sort(unique(mf.g[[1]])), sort(unique((mf.g[[2]]))))
+   }
 
    ### determine which levels of the inner factor were removed
 
    g.levels.r <- !is.element(g.levels.f[[1]], g.levels[[1]])
 
-   ### warn if any levels were removed (not for AR and CAR structures)
+   ### warn if any levels were removed (not for "AR","CAR","SPEXP","SPGAU")
 
-   if (any(g.levels.r) && !is.element(struct, c("AR","CAR")))
+   if (any(g.levels.r) && !is.element(struct, c("AR","CAR","SPEXP","SPGAU")))
       warning("One or more levels of inner factor removed due to NAs.", call.=FALSE)
-
-   ### keep only g.values values that were not removed
-
-   #g.values <- g.values[!g.levels.r]
 
    ### for "ID" and "DIAG", fix rho to 0
 
@@ -513,9 +561,17 @@
       warning(paste0("Inner factor has only a single level, so fixed value of ", ifelse(isG, 'rho', 'phi'), " to 0."), call.=FALSE)
    }
 
-   ### k per level of the inner factor
+   ### if there is only a single arm for "SPEXP","SPGAU" (either to begin with or after removing NAs), cannot fit model
 
-   g.levels.k <- table(factor(mf.g[[1]], levels=g.levels.f[[1]]))
+   if (g.nlevels[1] == 1 && is.element(struct, c("SPEXP","SPGAU")))
+      stop("Cannot fit model since inner term only has a single level.", call.=FALSE)
+
+   ### k per level of the inner factor
+   if (is.element(struct, c("SPEXP","SPGAU"))) {
+      g.levels.k <- table(factor(apply(mf.g[-nvars], 1, paste, collapse=" + "), levels=g.levels.f[[1]]))
+   } else {
+      g.levels.k <- table(factor(mf.g[[1]], levels=g.levels.f[[1]]))
+   }
 
    ### for "HCS","UN","DIAG","HAR": if a particular level of the inner factor only occurs once, then set corresponding tau2 value to 0 (if not already fixed)
    ### note: no longer done; variance component should still be (weakly) identifiable
@@ -527,45 +583,64 @@
    #   }
    #}
 
-   ### create matrix where each row (= study) indicates how often each arm occurred
-   ### then turn this into a list (with each element equal to a row (= study))
-
-   g.levels.comb.k <- crossprod(Z.G2, Z.G1)
-   g.levels.comb.k <- split(g.levels.comb.k, seq_len(nrow(g.levels.comb.k)))
-
    ### check if each study has only a single arm (could be different arms!)
-   ### for "CS","HCS","AR","HAR","CAR", if yes, then must fix rho to 0 (if not already fixed)
+   ### for "CS","HCS","AR","HAR","CAR" must then fix rho to 0 (if not already fixed)
+   ### for "SPEXP","SPGAU" cannot fit model
 
-   if (all(unlist(lapply(g.levels.comb.k, sum)) == 1)) {
+   if (g.nlevels[2] == nrow(mf.g)) {
       if (is.element(struct, c("CS","HCS","AR","HAR","CAR")) && is.na(rho)) {
          rho <- 0
          warning(paste0("Each level of the outer factor contains only a single level of the inner factor, so fixed value of ", ifelse(isG, 'rho', 'phi'), " to 0."), call.=FALSE)
       }
+      if (is.element(struct, c("SPEXP","SPGAU")))
+         stop("Cannot fit model since each level of the outer factor contains only a single level of the inner term.", call.=FALSE)
    }
 
-   ### create matrix for each element (= study) that indicates which combinations occurred
-   ### sum up all matrices (numbers indicate in how many studies each combination occurred)
-   ### take upper triangle part that corresponds to the arm combinations (in order of rho)
+   g.levels.comb.k <- NULL
 
-   g.levels.comb.k <- lapply(g.levels.comb.k, function(x) outer(x,x, FUN="&"))
-   g.levels.comb.k <- Reduce("+", g.levels.comb.k)
-   g.levels.comb.k <- g.levels.comb.k[upper.tri(g.levels.comb.k)]
+   if (!is.element(struct, c("SPEXP","SPGAU"))) {
 
-   ### UN/UNHO: if a particular combination of arms never occurs in any of the studies, then must fix the corresponding rho to 0 (if not already fixed)
-   ### this also takes care of the case where each study has only a single arm
+      ### create matrix where each row (= study) indicates how often each arm occurred
+      ### then turn this into a list (with each element equal to a row (= study))
 
-   if (is.element(struct, c("UN","UNHO")) && any(g.levels.comb.k == 0 & is.na(rho))) {
-      rho[g.levels.comb.k == 0] <- 0
-      warning(paste0("Some combinations of the levels of the inner factor never occurred. Corresponding ", ifelse(isG, 'rho', 'phi'), " value(s) fixed to 0."), call.=FALSE)
-   }
+      g.levels.comb.k <- crossprod(Z.G2, Z.G1)
+      g.levels.comb.k <- split(g.levels.comb.k, seq_len(nrow(g.levels.comb.k)))
 
-   ### if there was only a single arm for "UN/UNHO" to begin with, then fix rho to 0
-   ### (technically there is then no rho at all to begin with, but rhos was still set to 1 earlier for the optimization routine)
-   ### (if there is a single arm after removing NAs, then this is dealt with below by setting tau2 and rho values to 0)
+      ### check if each study has only a single arm (could be different arms!)
+      ### this is now checked above (and in a much simpler way)
 
-   if (is.element(struct, c("UN","UNHO")) && g.nlevels.f[1] == 1 && is.na(rho)) {
-      rho <- 0
-      warning(paste0("Inner factor has only a single level, so fixed value of ", ifelse(isG, 'rho', 'phi'), " to 0."), call.=FALSE)
+      #if (all(unlist(lapply(g.levels.comb.k, sum)) == 1)) {
+      #   if (is.element(struct, c("CS","HCS","AR","HAR","CAR")) && is.na(rho)) {
+      #      rho <- 0
+      #      warning(paste0("Each level of the outer factor contains only a single level of the inner factor, so fixed value of ", ifelse(isG, 'rho', 'phi'), " to 0."), call.=FALSE)
+      #   }
+      #}
+
+      ### create matrix for each element (= study) that indicates which combinations occurred
+      ### sum up all matrices (numbers indicate in how many studies each combination occurred)
+      ### take upper triangle part that corresponds to the arm combinations (in order of rho)
+
+      g.levels.comb.k <- lapply(g.levels.comb.k, function(x) outer(x,x, FUN="&"))
+      g.levels.comb.k <- Reduce("+", g.levels.comb.k)
+      g.levels.comb.k <- g.levels.comb.k[upper.tri(g.levels.comb.k)]
+
+      ### UN/UNHO: if a particular combination of arms never occurs in any of the studies, then must fix the corresponding rho to 0 (if not already fixed)
+      ### this also takes care of the case where each study has only a single arm
+
+      if (is.element(struct, c("UN","UNHO")) && any(g.levels.comb.k == 0 & is.na(rho))) {
+         rho[g.levels.comb.k == 0] <- 0
+         warning(paste0("Some combinations of the levels of the inner factor never occurred. Corresponding ", ifelse(isG, 'rho', 'phi'), " value(s) fixed to 0."), call.=FALSE)
+      }
+
+      ### if there was only a single arm for "UN/UNHO" to begin with, then fix rho to 0
+      ### (technically there is then no rho at all to begin with, but rhos was still set to 1 earlier for the optimization routine)
+      ### (if there is a single arm after removing NAs, then this is dealt with below by setting tau2 and rho values to 0)
+
+      if (is.element(struct, c("UN","UNHO")) && g.nlevels.f[1] == 1 && is.na(rho)) {
+         rho <- 0
+         warning(paste0("Inner factor has only a single level, so fixed value of ", ifelse(isG, 'rho', 'phi'), " to 0."), call.=FALSE)
+      }
+
    }
 
    ### construct G matrix for the various structures
@@ -644,6 +719,29 @@
       diag(G) <- tau2
    }
 
+   if (is.element(struct, c("SPEXP","SPGAU"))) {
+      ### remove the '| outer' part from the formula and add '- 1'
+      formula <- as.formula(paste0(strsplit(paste0(formula, collapse=""), "|", fixed=TRUE)[[1]][1], "- 1", collapse=""))
+      ### distance matrix
+      if (sparse) {
+         Dmat <- Matrix(as.matrix(dist(model.matrix(formula, data=mf.g[-nvars]), method="euclidean")), sparse=TRUE)
+      } else {
+         Dmat <- as.matrix(dist(model.matrix(formula, data=mf.g[-nvars]), method="euclidean"))
+      }
+   } else {
+      Dmat <- NULL
+   }
+
+   if (struct == "SPEXP") {
+      Rmat <- tau2 * exp(-Dmat/rho)
+      G <- Rmat * tcrossprod(Z.G2)
+   }
+
+   if (struct == "SPGAU") {
+      Rmat <- tau2 * exp(-Dmat^2/rho^2)
+      G <- Rmat * tcrossprod(Z.G2)
+   }
+
    ### for "CS","AR","CAR","ID" set tau2 value to 0 for any levels that were removed
 
    if (any(g.levels.r) && is.element(struct, c("CS","AR","CAR","ID"))) {
@@ -690,9 +788,13 @@
          rho <- 0
    }
 
-   return(list(mf.g=mf.g, g.nlevels=g.nlevels, g.nlevels.f=g.nlevels.f, g.levels=g.levels, g.levels.f=g.levels.f, g.levels.r=g.levels.r, g.levels.k=g.levels.k, g.levels.comb.k=g.levels.comb.k, tau2=tau2, rho=rho, G=G))
+   return(list(mf.g=mf.g, g.nlevels=g.nlevels, g.nlevels.f=g.nlevels.f,
+               g.levels=g.levels, g.levels.f=g.levels.f, g.levels.r=g.levels.r, g.levels.k=g.levels.k, g.levels.comb.k=g.levels.comb.k,
+               tau2=tau2, rho=rho, G=G, Dmat=Dmat))
 
 }
+
+############################################################################
 
 ### function to construct var-cov matrix for struct="UN" given vector of variances and correlations
 
@@ -715,32 +817,41 @@
    return(crossprod(G))
 }
 
+############################################################################
+
 ### function to construct var-cov matrix (G or H) for '~ inner | outer' terms
 
-.con.E <- function(v, r, v.val, r.val, Z1, levels.r, values, struct, cholesky, vctransf, posdefify, sparse) {
+.con.E <- function(v, r, v.val, r.val, Z1, Z2, levels.r, values, Dmat, struct, cholesky, vctransf, posdefify, sparse) {
 
       ### if cholesky=TRUE, back-transformation/substitution is done below; otherwise, back-transform and replace fixed values
       if (!cholesky) {
          if (vctransf) {
-            ### variance is optimized in log space, so exponentiate
+            ### variances are optimized in log space, so exponentiate
             v <- ifelse(is.na(v.val), exp(v), v.val)
-            if (struct == "CAR") {
-               ### CAR correlations are optimized in plogis space, so use qlogis
-               r  <- ifelse(is.na(r.val), plogis(r), r.val)
-            } else {
+            if (struct == "CAR")
+               ### CAR correlation is optimized in qlogis space, so use plogis
+               r <- ifelse(is.na(r.val), plogis(r), r.val)
+            if (is.element(struct, c("SPEXP","SPGAU")))
+               ### SPEXP/SPGAU correlation is optimized in log space, so exponentiate
+               r <- ifelse(is.na(r.val), exp(r), r.val)
+            if (!is.element(struct, c("CAR","SPEXP","SPGAU")))
                ### other correlations are optimized in atanh space, so use tanh
-               r  <- ifelse(is.na(r.val), tanh(r), r.val)
-            }
+               r <- ifelse(is.na(r.val), tanh(r), r.val)
          } else {
             ### for Hessian computation, can choose to leave as is
             v <- ifelse(is.na(v.val), v, v.val)
             r <- ifelse(is.na(r.val), r, r.val)
             v[v < 0] <- 0
-            r[r > 1] <- 1
             if (struct == "CAR") {
                r[r < 0] <- 0
-            } else {
+               r[r > 1] <- 1
+            }
+            if (is.element(struct, c("SPEXP","SPGAU"))) {
+               r[r < 0] <- 0
+            }
+            if (!is.element(struct, c("CAR","SPEXP","SPGAU"))) {
                r[r < -1] <- -1
+               r[r > 1] <- 1
             }
          }
          v <- ifelse(v <= .Machine$double.eps*10, 0, v) ### don't do this with Cholesky factorization, since values can be negative
@@ -776,7 +887,7 @@
          }
       }
 
-      if (struct == "ID" || struct == "DIAG") {
+      if (is.element(struct, c("ID","DIAG"))) {
          E <- diag(v, nrow=ncol.Z1, ncol=ncol.Z1)
       }
 
@@ -823,11 +934,21 @@
          diag(E) <- v
       }
 
+      if (struct == "SPEXP") {
+         E <- v * exp(-Dmat/r) * tcrossprod(Z2)
+      }
+
+      if (struct == "SPGAU") {
+         E <- v * exp(-Dmat^2/r^2) * tcrossprod(Z2)
+      }
+
       ### set variance and corresponding correlation value(s) to 0 for any levels that were removed
 
-      if (any(levels.r)) {
-         E[levels.r,] <- 0
-         E[,levels.r] <- 0
+      if (!is.element(struct, c("SPEXP","SPGAU"))) {
+         if (any(levels.r)) {
+            E[levels.r,] <- 0
+            E[,levels.r] <- 0
+         }
       }
 
       if (sparse)
@@ -841,8 +962,8 @@
 
 ### -1 times the log likelihood (regular or restricted) for rma.mv models
 
-.ll.rma.mv <- function(par, reml, Y, M, A, X.fit, k, pX, # note: X.fit due to hessian(); pX due to nlm()
-                       D.S, Z.G1, Z.G2, Z.H1, Z.H2,
+.ll.rma.mv <- function(par, reml, Y, M, A, X.fit, k, pX, # note: X.fit due to hessian(); pX due to nlm(); M=V to begin with
+                       D.S, Z.G1, Z.G2, Z.H1, Z.H2, g.Dmat, h.Dmat,
                        sigma2.val, tau2.val, rho.val, gamma2.val, phi.val,
                        sigma2s, tau2s, rhos, gamma2s, phis,
                        withS, withG, withH,
@@ -878,7 +999,7 @@
    if (withG) {
 
       resG <- .con.E(v=par[(sigma2s+1):(sigma2s+tau2s)], r=par[(sigma2s+tau2s+1):(sigma2s+tau2s+rhos)],
-                     v.val=tau2.val, r.val=rho.val, Z1=Z.G1, levels.r=g.levels.r, values=g.values,
+                     v.val=tau2.val, r.val=rho.val, Z1=Z.G1, Z2=Z.G2, levels.r=g.levels.r, values=g.values, Dmat=g.Dmat,
                      struct=struct[1], cholesky=cholesky[1], vctransf=vctransf, posdefify=posdefify, sparse=sparse)
       tau2 <- resG$v
       rho  <- resG$r
@@ -891,7 +1012,7 @@
    if (withH) {
 
       resH <- .con.E(v=par[(sigma2s+tau2s+rhos+1):(sigma2s+tau2s+rhos+gamma2s)], r=par[(sigma2s+tau2s+rhos+gamma2s+1):(sigma2s+tau2s+rhos+gamma2s+phis)],
-                     v.val=gamma2.val, r.val=phi.val, Z1=Z.H1, levels.r=h.levels.r, values=h.values,
+                     v.val=gamma2.val, r.val=phi.val, Z1=Z.H1, Z2=Z.H2, levels.r=h.levels.r, values=h.values, Dmat=h.Dmat,
                      struct=struct[2], cholesky=cholesky[2], vctransf=vctransf, posdefify=posdefify, sparse=sparse)
       gamma2 <- resH$v
       phi    <- resH$r

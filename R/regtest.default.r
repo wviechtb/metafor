@@ -129,8 +129,8 @@ regtest.default <- function(x, vi, sei, ni, subset, model="rma", predictor="sei"
 
    } else {
 
-      fit <- lm(yi ~ X - 1, weights=1/vi)
-
+      yi   <- c(yi) ### to remove attributes
+      fit  <- lm(yi ~ X - 1, weights=1/vi)
       fit  <- summary(fit)
       zval <- coef(fit)[2,3]
       pval <- coef(fit)[2,4]

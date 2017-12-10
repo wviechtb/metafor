@@ -270,24 +270,32 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
          con$vc.max <- max(ifelse(vc <= .Machine$double.eps^0.5, 10, max(10, vc*100)), con$vc.min)
       }
       if (comp == "rho") {
-         if (is.element(x$struct[1], c("CS", "HCS")))
+         if (is.element(x$struct[1], c("CS","HCS")))
             con$vc.min <- -1                                  ### this will fail most of the time but with retries, this may get closer to actual lower bound
             #con$vc.min <- min(-1/(x$g.nlevels.f[1] - 1), vc) ### this guarantees that cor matrix is semi-positive definite, but since V gets added, this is actually too strict
-         if (is.element(x$struct[1], c("AR", "HAR", "CAR")))
+         if (is.element(x$struct[1], c("AR","HAR","CAR")))
             con$vc.min <- min(0, vc)                          ### negative autocorrelation parameters not considered (not even sensible for CAR)
-         if (is.element(x$struct[1], c("UN", "UNHO")))
+         if (is.element(x$struct[1], c("UN","UNHO")))
             con$vc.min <- -1                                  ### TODO: this will often fail! (but with retries, this should still work)
          con$vc.max <- 1
+         if (is.element(x$struct[1], c("SPEXP","SPGAU"))) {
+            con$vc.min <- 0                                   ### TODO: 0 basically always fails
+            con$vc.max <- max(10, vc*10)
+         }
       }
       if (comp == "phi") {
-         if (is.element(x$struct[2], c("CS", "HCS")))
+         if (is.element(x$struct[2], c("CS","HCS")))
             con$vc.min <- -1                                  ### this will fail most of the time but with retries, this may get closer to actual lower bound
             #con$vc.min <- min(-1/(x$h.nlevels.f[1] - 1), vc) ### this guarantees that cor matrix is semi-positive definite, but since V gets added, this is actually too strict
-         if (is.element(x$struct[2], c("AR", "HAR", "CAR")))
+         if (is.element(x$struct[2], c("AR","HAR","CAR")))
             con$vc.min <- min(0, vc)                          ### negative autocorrelation parameters not considered (not even sensible for CAR)
-         if (is.element(x$struct[2], c("UN", "UNHO")))
+         if (is.element(x$struct[2], c("UN","UNHO")))
             con$vc.min <- -1                                  ### TODO: this will often fail! (but with retries, this should still work)
          con$vc.max <- 1
+         if (is.element(x$struct[2], c("SPEXP","SPGAU"))) {
+            con$vc.min <- 0                                   ### TODO: 0 basically always fails
+            con$vc.max <- max(10, vc*10)
+         }
       }
 
       con[pmatch(names(control), names(con))] <- control

@@ -11,7 +11,7 @@
 \arguments{
    \item{object}{an object of class \code{"rma"}.}
    \item{newmods}{optional vector or matrix specifying the values of the moderator values for which the predicted values should be calculated. See \sQuote{Details}.}
-   \item{intercept}{logical specifying whether the intercept term should be included when calculating the predicted values for \code{newmods}. If unspecified, the intercept is automatically added when the original model also included an intercept.}
+   \item{intercept}{logical specifying whether the intercept should be included when calculating the predicted values for \code{newmods}. If unspecified, the intercept is automatically added when the original model also included an intercept.}
    \item{tau2.levels}{vector specifying the levels of the inner factor when computing credibility/prediction intervals. Only relevant for models of class \code{"rma.mv"} (see \code{\link{rma.mv}}) and when the model includes more than a single \if{latex}{\eqn{\tau^2}}\if{html}{\eqn{\tau²}}\if{text}{\eqn{\tau^2}} value. See \sQuote{Details}.}
    \item{gamma2.levels}{vector specifying the levels of the inner factor when computing credibility/prediction intervals. Only relevant for models of class \code{"rma.mv"} (see \code{\link{rma.mv}}) and when the model includes more than a single \if{latex}{\eqn{\gamma^2}}\if{html}{\eqn{\gamma²}}\if{text}{\eqn{\gamma^2}} value. See \sQuote{Details}.}
    \item{addx}{logical specifying whether the values of the moderator variables should be added to the returned object. See \sQuote{Examples}.}

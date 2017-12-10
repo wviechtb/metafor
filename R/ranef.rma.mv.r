@@ -166,19 +166,32 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
 
       pred <- data.frame(intrcpt=pred, se=se, pi.lb=pi.lb, pi.ub=pi.ub)
 
-      r.names <- paste(x$mf.g[[1]], x$mf.g[[2]], sep=" | ")
-      is.dup  <- duplicated(r.names)
+      nvars <- ncol(x$mf.g)
+
+      if (is.element(x$struct[1], c("SPEXP","SPGAU"))) {
+         r.names <- paste(x$ids[x$not.na], x$mf.g[[nvars]], sep=" | ")
+      } else {
+         r.names <- paste(x$mf.g[[1]], x$mf.g[[2]], sep=" | ")
+      }
+
+      is.dup <- duplicated(r.names)
 
       pred <- pred[!is.dup,]
 
       rownames(pred) <- r.names[!is.dup]
 
-      r.order <- order(x$mf.g[[2]][!is.dup], x$mf.g[[1]][!is.dup])
+      if (is.element(x$struct[1], c("SPEXP","SPGAU"))) {
+         #r.order <- order(x$mf.g[[nvars]][!is.dup], seq_len(x$k)[!is.dup])
+         r.order <- seq_len(x$k)
+      } else {
+         r.order <- order(x$mf.g[[2]][!is.dup], x$mf.g[[1]][!is.dup])
+      }
 
       pred <- pred[r.order,]
 
       out <- c(out, list(pred))
-      names(out)[length(out)] <- paste(x$g.names, collapse=" | ")
+      #names(out)[length(out)] <- paste(x$g.names, collapse=" | ")
+      names(out)[length(out)] <- paste0(x$formulas[[1]], collapse="")
 
       if (verbose)
          message("Done.\n")
@@ -203,19 +216,32 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
 
       pred <- data.frame(intrcpt=pred, se=se, pi.lb=pi.lb, pi.ub=pi.ub)
 
-      r.names <- paste(x$mf.h[[1]], x$mf.h[[2]], sep=" | ")
-      is.dup  <- duplicated(r.names)
+      nvars <- ncol(x$mf.h)
+
+      if (is.element(x$struct[2], c("SPEXP","SPGAU"))) {
+         r.names <- paste(x$ids[x$not.na], x$mf.h[[nvars]], sep=" | ")
+      } else {
+         r.names <- paste(x$mf.h[[1]], x$mf.h[[2]], sep=" | ")
+      }
+
+      is.dup <- duplicated(r.names)
 
       pred <- pred[!is.dup,]
 
       rownames(pred) <- r.names[!is.dup]
 
-      r.order <- order(x$mf.h[[2]][!is.dup], x$mf.h[[1]][!is.dup])
+      if (is.element(x$struct[2], c("SPEXP","SPGAU"))) {
+         #r.order <- order(x$mf.h[[nvars]][!is.dup], seq_len(x$k)[!is.dup])
+         r.order <- seq_len(x$k)
+      } else {
+         r.order <- order(x$mf.h[[2]][!is.dup], x$mf.h[[1]][!is.dup])
+      }
 
       pred <- pred[r.order,]
 
       out <- c(out, list(pred))
-      names(out)[length(out)] <- paste(x$h.names, collapse=" | ")
+      #names(out)[length(out)] <- paste(x$h.names, collapse=" | ")
+      names(out)[length(out)] <- paste0(x$formulas[[2]], collapse="")
 
       if (verbose)
          message("Done.\n")

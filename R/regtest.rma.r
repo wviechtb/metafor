@@ -74,8 +74,8 @@ regtest.rma <- function(x, model="rma", predictor="sei", ret.fit=FALSE, digits, 
 
    } else {
 
-      fit <- lm(yi ~ X - 1, weights=1/vi)
-
+      yi   <- c(yi) ### to remove attributes
+      fit  <- lm(yi ~ X - 1, weights=1/vi)
       fit  <- summary(fit)
       zval <- coef(fit)[p+1,3]
       pval <- coef(fit)[p+1,4]

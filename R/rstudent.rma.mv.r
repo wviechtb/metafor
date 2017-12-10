@@ -104,6 +104,7 @@ rstudent.rma.mv <- function(model, digits, progbar=FALSE, cluster, reestimate=TR
          ### fit model based on all data but with var/cor components fixed to those from res
 
          tmp <- try(suppressWarnings(rma.mv(x$yi, V=x$V, W=x$W, mods=x$X, random=x$random, struct=x$struct, intercept=FALSE, data=x$mf.r, method=x$method, test=x$test, level=x$level, R=x$R, Rscale=x$Rscale, sigma2=res$sigma2, tau2=res$tau2, rho=res$rho, gamma2=res$gamma2, phi=res$phi, sparse=x$sparse, control=x$control)), silent=TRUE)
+         #tmp <- try(rma.mv(x$yi, V=x$V, W=x$W, mods=x$X, random=x$random, struct=x$struct, intercept=FALSE, data=x$mf.r, method=x$method, test=x$test, level=x$level, R=x$R, Rscale=x$Rscale, sigma2=res$sigma2, tau2=res$tau2, rho=res$rho, gamma2=res$gamma2, phi=res$phi, sparse=x$sparse, control=x$control), silent=FALSE)
 
          Xi <- x$X[incl,,drop=FALSE]
          delpred  <- Xi %*% res$beta

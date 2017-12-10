@@ -65,14 +65,27 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
          ### note: use g.nlevels.f[1] since the number of arms is based on all data (i.e., including NAs), but use
          ### g.nlevels[2] since the number of studies is based on what is actually available (i.e., excluding NAs)
 
-         mng <- max(nchar(x$g.names))
+         if (is.element(x$struct[1], c("SPEXP","SPGAU"))) {
+            inner <- trimws(paste0(strsplit(paste0(x$formulas[[1]], collapse=""), "|", fixed=TRUE)[[1]][1], collapse=""))
+            if (nchar(inner) > 15)
+               inner <- paste0(substr(inner, 1, 15), "[...]", collapse="")
+         } else {
+            inner <- x$g.names[1]
+         }
+         outer <- tail(x$g.names, 1)
 
-         cat("outer factor: ", paste0(x$g.names[2], paste(rep(" ", max(0,mng-nchar(x$g.names[2]))), collapse=""), collapse=""), " (nlvls = ", x$g.nlevels[2], ")\n", sep="")
-         cat("inner factor: ", paste0(x$g.names[1], paste(rep(" ", max(0,mng-nchar(x$g.names[1]))), collapse=""), collapse=""), " (nlvls = ", x$g.nlevels.f[1], ")\n", sep="")
+         mng <- max(nchar(c(inner, outer)))
+
+         cat("outer factor: ", paste0(outer, paste(rep(" ", max(0,mng-nchar(outer))), collapse=""), collapse=""), " (nlvls = ", x$g.nlevels[2], ")\n", sep="")
+         if (is.element(x$struct[1], c("SPEXP","SPGAU"))) {
+            cat("inner term:   ", paste0(inner, paste(rep(" ", max(0,mng-nchar(inner))), collapse=""), collapse=""), " (nlvls = ", x$g.nlevels.f[1], ")\n", sep="")
+         } else {
+            cat("inner factor: ", paste0(inner, paste(rep(" ", max(0,mng-nchar(inner))), collapse=""), collapse=""), " (nlvls = ", x$g.nlevels.f[1], ")\n", sep="")
+         }
 
          cat("\n")
 
-         if (is.element(x$struct[1], c("CS","AR","CAR","ID"))) {
+         if (is.element(x$struct[1], c("CS","AR","CAR","ID","SPEXP","SPGAU"))) {
 
             vc <- cbind(tau2, tau, ifelse(x$vc.fix$tau2, "yes", "no"))
             vc <- rbind(vc, c(rho, "", ifelse(x$vc.fix$rho, "yes", "no")))
@@ -152,14 +165,27 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
          ### note: use h.nlevels.f[1] since the number of arms is based on all data (i.e., including NAs), but use
          ### h.nlevels[2] since the number of studies is based on what is actually available (i.e., excluding NAs)
 
-         mng <- max(nchar(x$h.names))
+         if (is.element(x$struct[2], c("SPEXP","SPGAU"))) {
+            inner <- trimws(paste0(strsplit(paste0(x$formulas[[2]], collapse=""), "|", fixed=TRUE)[[1]][1], collapse=""))
+            if (nchar(inner) > 15)
+               inner <- paste0(substr(inner, 1, 15), "[...]", collapse="")
+         } else {
+            inner <- x$h.names[1]
+         }
+         outer <- tail(x$h.names, 1)
 
-         cat("outer factor: ", paste0(x$h.names[2], paste(rep(" ", max(0,mng-nchar(x$h.names[2]))), collapse=""), collapse=""), " (nlvls = ", x$h.nlevels[2], ")\n", sep="")
-         cat("inner factor: ", paste0(x$h.names[1], paste(rep(" ", max(0,mng-nchar(x$h.names[1]))), collapse=""), collapse=""), " (nlvls = ", x$h.nlevels.f[1], ")\n", sep="")
+         mng <- max(nchar(c(inner, outer)))
+
+         cat("outer factor: ", paste0(outer, paste(rep(" ", max(0,mng-nchar(outer))), collapse=""), collapse=""), " (nlvls = ", x$h.nlevels[2], ")\n", sep="")
+         if (is.element(x$struct[2], c("SPEXP","SPGAU"))) {
+            cat("inner term:   ", paste0(inner, paste(rep(" ", max(0,mng-nchar(inner))), collapse=""), collapse=""), " (nlvls = ", x$h.nlevels.f[1], ")\n", sep="")
+         } else {
+            cat("inner factor: ", paste0(inner, paste(rep(" ", max(0,mng-nchar(inner))), collapse=""), collapse=""), " (nlvls = ", x$h.nlevels.f[1], ")\n", sep="")
+         }
 
          cat("\n")
 
-         if (is.element(x$struct[2], c("CS","AR","CAR","ID"))) {
+         if (is.element(x$struct[2], c("CS","AR","CAR","ID","SPEXP","SPGAU"))) {
 
             vc <- cbind(gamma2, gamma, ifelse(x$vc.fix$gamma2, "yes", "no"))
             vc <- rbind(vc, c(phi, "", ifelse(x$vc.fix$phi, "yes", "no")))
