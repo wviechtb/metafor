@@ -1,13 +1,15 @@
 permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=TRUE, retpermdist=FALSE, digits, tol, control, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(x, "rma.uni"))
-      stop("Argument 'x' must be an object of class \"rma.uni\".")
+      stop(mstyle$stop("Argument 'x' must be an object of class \"rma.uni\"."))
 
    if (inherits(x, "robust.rma"))
-      stop("Method not yet implemented for objects of class \"robust.rma\". Sorry!")
+      stop(mstyle$stop("Method not yet implemented for objects of class \"robust.rma\". Sorry!"))
 
    if (inherits(x, "rma.ls"))
-      stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!")
+      stop(mstyle$stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!"))
 
    if (missing(digits))
       digits <- x$digits
@@ -71,7 +73,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
    }
 
    if (iter == Inf)
-      stop("Too many iterations required for exact permutation test.\n")
+      stop(mstyle$stop("Too many iterations required for exact permutation test."))
 
    #########################################################################
 
@@ -97,7 +99,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
    #########################################################################
 
    if (progbar)
-      cat("Running ", iter, " iterations for ", ifelse(exact, "exact", "approximate"), " permutation test.\n", sep="")
+      cat(mstyle$verbose(paste0("Running ", iter, " iterations for ", ifelse(exact, "exact", "approximate"), " permutation test.\n")))
 
    if (x$int.only) {
 
@@ -106,17 +108,17 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
       zval.perm <- try(rep(NA_real_, iter), silent=TRUE)
 
       if (inherits(zval.perm, "try-error"))
-         stop("Number of iterations requested too large.")
+         stop(mstyle$stop("Number of iterations requested too large."))
 
       beta.perm <- try(rep(NA_real_, iter), silent=TRUE)
 
       if (inherits(beta.perm, "try-error"))
-         stop("Number of iterations requested too large.")
+         stop(mstyle$stop("Number of iterations requested too large."))
 
       QM.perm <- try(rep(NA_real_, iter), silent=TRUE)
 
       if (inherits(QM.perm, "try-error"))
-         stop("Number of iterations requested too large.")
+         stop(mstyle$stop("Number of iterations requested too large."))
 
       if (progbar)
          pbar <- txtProgressBar(min=0, max=iter, style=3)
@@ -241,17 +243,17 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
       zval.perm <- try(suppressWarnings(matrix(NA_real_, nrow=iter, ncol=x$p)), silent=TRUE)
 
       if (inherits(zval.perm, "try-error"))
-         stop("Number of iterations requested too large.")
+         stop(mstyle$stop("Number of iterations requested too large."))
 
       beta.perm <- try(suppressWarnings(matrix(NA_real_, nrow=iter, ncol=x$p)), silent=TRUE)
 
       if (inherits(beta.perm, "try-error"))
-         stop("Number of iterations requested too large.")
+         stop(mstyle$stop("Number of iterations requested too large."))
 
       QM.perm <- try(rep(NA_real_, iter), silent=TRUE)
 
       if (inherits(QM.perm, "try-error"))
-         stop("Number of iterations requested too large.")
+         stop(mstyle$stop("Number of iterations requested too large."))
 
       if (progbar)
          pbar <- txtProgressBar(min=0, max=iter, style=3)
@@ -390,7 +392,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
       if (1/iter > level / ifelse(con$cialt == "one.sided", 1, 2)) {
 
          permci <- FALSE
-         warning("Cannot obtain ", x$level, "% permutation-based CI; number of permutations (", iter, ") too low.")
+         warning(mstyle$warning("Cannot obtain ", x$level, "% permutation-based CI; number of permutations (", iter, ") too low."))
 
       } else {
 
@@ -400,7 +402,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
          if (is.numeric(permci)) {
             coefs <- unique(round(permci))
             if (any(coefs > x$p) || any(coefs < 1))
-               stop("Non-existent coefficients specified via 'permci'.")
+               stop(mstyle$stop("Non-existent coefficients specified via 'permci'."))
             permci <- TRUE
          } else {
             coefs <- seq_len(x$p)
@@ -412,7 +414,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
          for (j in coefs) {
 
             if (progbar)
-               cat("Searching for lower CI bound of coefficient ", j, ": \n", sep="")
+               cat(mstyle$verbose(paste0("Searching for lower CI bound of coefficient ", j, ": \n")))
 
             if (con$cialt == "one.sided") {
                con$alternative <- "greater"
@@ -430,7 +432,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
             }
 
             if (progbar)
-               cat("Searching for upper CI bound of coefficient ", j, ": \n", sep="")
+               cat(mstyle$verbose(paste0("Searching for upper CI bound of coefficient ", j, ": \n")))
 
             if (con$cialt == "one.sided") {
                con$alternative <- "less"

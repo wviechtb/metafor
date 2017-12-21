@@ -1,10 +1,12 @@
 robust.rma.mv <- function(x, cluster, adjust=TRUE, digits, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(x, "rma.mv"))
-      stop("Argument 'x' must be an object of class \"rma.mv\".")
+      stop(mstyle$stop("Argument 'x' must be an object of class \"rma.mv\"."))
 
    if (missing(cluster))
-      stop("Need to specify 'cluster' variable.")
+      stop(mstyle$stop("Need to specify 'cluster' variable."))
 
    if (missing(digits))
       digits <- x$digits
@@ -25,10 +27,10 @@ robust.rma.mv <- function(x, cluster, adjust=TRUE, digits, ...) {
    ### checks on cluster variable
 
    if (anyNA(cluster))
-      stop("No missing values allowed in 'cluster' variable.")
+      stop(mstyle$stop("No missing values allowed in 'cluster' variable."))
 
    if (length(cluster) != x$k)
-      stop("Length of variable specified via 'cluster' does not match length of data.")
+      stop(mstyle$stop("Length of variable specified via 'cluster' does not match length of data."))
 
    ### number of clusters
 
@@ -42,7 +44,7 @@ robust.rma.mv <- function(x, cluster, adjust=TRUE, digits, ...) {
    ### check if dfs are positive (note: this also handles the case where there is a single cluster)
 
    if (dfs <= 0)
-      stop(paste0("Number of clusters (", n, ") must be larger than the number of fixed effects (", x$p, ")."))
+      stop(mstyle$stop(paste0("Number of clusters (", n, ") must be larger than the number of fixed effects (", x$p, ").")))
 
    ### note: since we use split() below and then put things back together into a block-diagonal matrix,
    ### we have to make sure everything is properly ordered by the cluster variable; otherwise, the 'meat'
@@ -61,7 +63,7 @@ robust.rma.mv <- function(x, cluster, adjust=TRUE, digits, ...) {
       W <- try(chol2inv(chol(x$M[ocl,ocl])), silent=TRUE)
 
       if (inherits(W, "try-error"))
-         stop("Cannot invert marginal var-cov matrix.")
+         stop(mstyle$stop("Cannot invert marginal var-cov matrix."))
 
       bread <- x$vb %*% crossprod(x$X[ocl,], W)
 

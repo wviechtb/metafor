@@ -2,14 +2,16 @@
 
 update.rma <- function (object, formula., ..., evaluate=TRUE) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(object, "rma"))
-      stop("Argument 'object' must be an object of class \"rma\".")
+      stop(mstyle$stop("Argument 'object' must be an object of class \"rma\"."))
 
    if (inherits(object, "robust.rma"))
-      stop("Function not applicable to objects of class \"robust.rma\".")
+      stop(mstyle$stop("Function not applicable to objects of class \"robust.rma\"."))
 
    if (is.null(call <- getCall(object)))
-      stop("Need an object with call component.")
+      stop(mstyle$stop("Need an object with call component."))
 
    extras <- match.call(expand.dots = FALSE)$...
 
@@ -24,7 +26,7 @@ update.rma <- function (object, formula., ..., evaluate=TRUE) {
                call$mods <- update.formula(object$call$mods, formula.)
             } else {
                if (!any(grepl("~", object$call$mods))) {
-                  stop("The 'mods' argument in 'object' must be a formula for updating to work.")
+                  stop(mstyle$stop("The 'mods' argument in 'object' must be a formula for updating to work."))
                } else {
                   call$mods <- update.formula(object$call$mods, formula.)
                }

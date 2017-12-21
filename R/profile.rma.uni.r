@@ -1,13 +1,15 @@
 profile.rma.uni <- function(fitted, xlim, ylim, steps=20, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, plot=TRUE, pch=19, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(fitted, "rma.uni"))
-      stop("Argument 'fitted' must be an object of class \"rma.uni\".")
+      stop(mstyle$stop("Argument 'fitted' must be an object of class \"rma.uni\"."))
 
    if (inherits(fitted, "rma.ls"))
-      stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!")
+      stop(mstyle$stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!"))
 
    if (steps < 2)
-      stop("Argument 'steps' must be >= 2.")
+      stop(mstyle$stop("Argument 'steps' must be >= 2."))
 
    x <- fitted
 
@@ -59,14 +61,14 @@ profile.rma.uni <- function(fitted, xlim, ylim, steps=20, progbar=TRUE, parallel
       ### if all of that fails, throw an error
 
       if (is.na(vc.lb) || is.na(vc.ub))
-         stop("Cannot set 'xlim' automatically. Please set this argument manually.")
+         stop(mstyle$stop("Cannot set 'xlim' automatically. Please set this argument manually."))
 
       xlim <- c(vc.lb, vc.ub)
 
    } else {
 
       if (length(xlim) != 2L)
-         stop("Argument 'xlim' should be a vector of length 2.")
+         stop(mstyle$stop("Argument 'xlim' should be a vector of length 2."))
 
       xlim <- sort(xlim)
 
@@ -75,7 +77,7 @@ profile.rma.uni <- function(fitted, xlim, ylim, steps=20, progbar=TRUE, parallel
    vcs <- seq(xlim[1], xlim[2], length=steps)
 
    if (length(vcs) <= 1)
-      stop("Cannot set 'xlim' automatically. Please set this argument manually.")
+      stop(mstyle$stop("Cannot set 'xlim' automatically. Please set this argument manually."))
 
    if (parallel=="no") {
 
@@ -112,12 +114,12 @@ profile.rma.uni <- function(fitted, xlim, ylim, steps=20, progbar=TRUE, parallel
    if (parallel=="snow" || parallel == "multicore") {
 
       if (!requireNamespace("parallel", quietly=TRUE))
-         stop("Please install the 'parallel' package for parallel processing.")
+         stop(mstyle$stop("Please install the 'parallel' package for parallel processing."))
 
       ncpus <- as.integer(ncpus)
 
       if (ncpus < 1)
-         stop("Argument 'ncpus' must be >= 1.")
+         stop(mstyle$stop("Argument 'ncpus' must be >= 1."))
 
       if (parallel == "multicore")
          res <- parallel::mclapply(vcs, .profile.rma.uni, obj=x, mc.cores=ncpus, parallel=parallel, profile=TRUE)
@@ -162,7 +164,7 @@ profile.rma.uni <- function(fitted, xlim, ylim, steps=20, progbar=TRUE, parallel
    } else {
 
       if (length(ylim) != 2L)
-         stop("Argument 'ylim' should be a vector of length 2.")
+         stop(mstyle$stop("Argument 'ylim' should be a vector of length 2."))
 
       ylim <- sort(ylim)
 

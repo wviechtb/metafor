@@ -1,27 +1,29 @@
 gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(x, "rma"))
-      stop("Argument 'x' must be an object of class \"rma\".")
+      stop(mstyle$stop("Argument 'x' must be an object of class \"rma\"."))
 
    if (inherits(x, "rma.glmm"))
-      stop("Method not yet implemented for objects of class \"rma.glmm\". Sorry!")
+      stop(mstyle$stop("Method not yet implemented for objects of class \"rma.glmm\". Sorry!"))
 
    if (inherits(x, "rma.mv"))
-      stop("Method not yet implemented for objects of class \"rma.mv\". Sorry!")
+      stop(mstyle$stop("Method not yet implemented for objects of class \"rma.mv\". Sorry!"))
 
    if (inherits(x, "robust.rma"))
-      stop("Method not yet implemented for objects of class \"robust.rma\". Sorry!")
+      stop(mstyle$stop("Method not yet implemented for objects of class \"robust.rma\". Sorry!"))
 
    if (inherits(x, "rma.ls"))
-      stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!")
+      stop(mstyle$stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!"))
 
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
-      stop("Unknown 'na.action' specified under options().")
+      stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
    if (x$k == 1)
-      stop("Stopped because k = 1.")
+      stop(mstyle$stop("Stopped because k = 1."))
 
    parallel <- match.arg(parallel, c("no", "snow", "multicore"))
 
@@ -51,10 +53,10 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
    }
 
    if (N.tot == Inf)
-      stop("Too many iterations required for all combinations.\n")
+      stop(mstyle$stop("Too many iterations required for all combinations."))
 
    if (progbar)
-      cat("Fitting ", N.tot, " models (based on ", ifelse(exact, "all possible", "random"), " subsets).\n", sep="")
+      message(paste0("Fitting ", N.tot, " models (based on ", ifelse(exact, "all possible", "random"), " subsets)."))
 
    #########################################################################
 
@@ -95,12 +97,12 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
       beta <- try(matrix(NA_real_, nrow=N.tot, ncol=x$p), silent=TRUE)
 
       if (inherits(beta, "try-error"))
-         stop("Number of models requested too large.")
+         stop(mstyle$stop("Number of models requested too large."))
 
       het <- try(matrix(NA_real_, nrow=N.tot, ncol=5), silent=TRUE)
 
       if (inherits(het, "try-error"))
-         stop("Number of models requested too large.")
+         stop(mstyle$stop("Number of models requested too large."))
 
       if (progbar)
          pbar <- txtProgressBar(min=0, max=N.tot, style=3)
@@ -155,12 +157,12 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
    if (parallel=="snow" || parallel == "multicore") {
 
       if (!requireNamespace("parallel", quietly=TRUE))
-         stop("Please install the 'parallel' package for parallel processing.")
+         stop(mstyle$stop("Please install the 'parallel' package for parallel processing."))
 
       ncpus <- as.integer(ncpus)
 
       if (ncpus < 1)
-         stop("Argument 'ncpus' must be >= 1.")
+         stop(mstyle$stop("Argument 'ncpus' must be >= 1."))
 
       if (parallel == "multicore") {
 

@@ -2,10 +2,12 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, subset, 
 
    #########################################################################
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
-      stop("Unknown 'na.action' specified under options().")
+      stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
    type <- match.arg(type, c("Rosenthal", "Orwin", "Rosenberg"))
 
@@ -42,7 +44,7 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, subset, 
 
    if (is.null(vi)) {
       if (is.null(sei)) {
-         stop("Need to specify 'vi' or 'sei' argument.")
+         stop(mstyle$stop("Need to specify 'vi' or 'sei' argument."))
       } else {
          vi <- sei^2
       }
@@ -51,7 +53,7 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, subset, 
    ### check length of yi and vi
 
    if (length(yi) != length(vi))
-      stop("Length of 'yi' and 'vi' (or 'sei') vectors is not the same.")
+      stop(mstyle$stop("Length of 'yi' and 'vi' (or 'sei') vectors is not the same."))
 
    ### if a subset of studies is specified
 
@@ -74,7 +76,7 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, subset, 
       }
 
       if (na.act == "na.fail")
-         stop("Missing values in results.")
+         stop(mstyle$stop("Missing values in results."))
 
    }
 

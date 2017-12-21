@@ -1,7 +1,9 @@
 print.regtest.rma <- function(x, digits, ret.fit, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(x, "regtest.rma"))
-      stop("Argument 'x' must be an object of class \"regtest.rma\".")
+      stop(mstyle$stop("Argument 'x' must be an object of class \"regtest.rma\"."))
 
    if (missing(digits))
       digits <- x$digits
@@ -10,7 +12,8 @@ print.regtest.rma <- function(x, digits, ret.fit, ...) {
       ret.fit <- x$ret.fit
 
    cat("\n")
-   cat("Regression Test for Funnel Plot Asymmetry\n\n")
+   cat(mstyle$section("Regression Test for Funnel Plot Asymmetry"))
+   cat("\n\n")
    if (x$model == "lm") {
       cat("model:     weighted regression with multiplicative dispersion\n")
    } else {

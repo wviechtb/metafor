@@ -2,6 +2,8 @@
 
 replmiss <- function(x, y) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (length(y) == 0L)
       y <- NA
 
@@ -18,7 +20,7 @@ replmiss <- function(x, y) {
    ### check that x and y are of the same length
 
    if (length(x) != length(y))
-      stop("Length of 'x' and 'y' do not match.")
+      stop(mstyle$stop("Length of 'x' and 'y' do not match."))
 
    #x <- ifelse(is.na(x), y, x) ### this is quite a bit slower than the following
    x[is.na(x)] <- y[is.na(x)]

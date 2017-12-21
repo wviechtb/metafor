@@ -1,27 +1,29 @@
 baujat.rma <- function(x, xlim, ylim, xlab, ylab, cex, symbol, grid=TRUE, progbar=FALSE, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(x, "rma"))
-      stop("Argument 'x' must be an object of class \"rma\".")
+      stop(mstyle$stop("Argument 'x' must be an object of class \"rma\"."))
 
    if (inherits(x, "rma.glmm"))
-      stop("Method not yet implemented for objects of class \"rma.glmm\". Sorry!")
+      stop(mstyle$stop("Method not yet implemented for objects of class \"rma.glmm\". Sorry!"))
 
    if (inherits(x, "rma.mv"))
-      stop("Method not yet implemented for objects of class \"rma.mv\". Sorry!")
+      stop(mstyle$stop("Method not yet implemented for objects of class \"rma.mv\". Sorry!"))
 
    if (inherits(x, "robust.rma"))
-      stop("Method not yet implemented for objects of class \"robust.rma\". Sorry!")
+      stop(mstyle$stop("Method not yet implemented for objects of class \"robust.rma\". Sorry!"))
 
    if (inherits(x, "rma.ls"))
-      stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!")
+      stop(mstyle$stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!"))
 
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
-      stop("Unknown 'na.action' specified under options().")
+      stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
    if (x$k == 1)
-      stop("Stopped because k = 1.")
+      stop(mstyle$stop("Stopped because k = 1."))
 
    #########################################################################
 

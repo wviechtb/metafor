@@ -1,7 +1,9 @@
 print.rma.glmm <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.signif.stars"), signif.legend=signif.stars, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(x, "rma.glmm"))
-      stop("Argument 'x' must be an object of class \"rma.glmm\".")
+      stop(mstyle$stop("Argument 'x' must be an object of class \"rma.glmm\"."))
 
    if (missing(digits))
       digits <- x$digits
@@ -10,15 +12,15 @@ print.rma.glmm <- function(x, digits, showfit=FALSE, signif.stars=getOption("sho
 
    if (x$method == "FE") {
       if (x$int.only) {
-         cat("Fixed-Effects Model (k = ", x$k, ")", sep="")
+         cat(mstyle$section("Fixed-Effects Model"), " (k = ", x$k, ")", sep="")
       } else {
-         cat("Fixed-Effects with Moderators Model (k = ", x$k, ")", sep="")
+         cat(mstyle$section("Fixed-Effects with Moderators Model"), " (k = ", x$k, ")", sep="")
       }
    } else {
       if (x$int.only) {
-         cat("Random-Effects Model (k = ", x$k, "; ", sep="")
+         cat(mstyle$section("Random-Effects Model"), " (k = ", x$k, "; ", sep="")
       } else {
-         cat("Mixed-Effects Model (k = ", x$k, "; ", sep="")
+         cat(mstyle$section("Mixed-Effects Model"), " (k = ", x$k, "; ", sep="")
       }
       cat("tau^2 estimator: ", x$method, ")", sep="")
    }
@@ -40,7 +42,8 @@ print.rma.glmm <- function(x, digits, showfit=FALSE, signif.stars=getOption("sho
       fs <- c(formatC(round(x$fit.stats$ML, digits=digits), digits=digits, format="f")) ### formatC(round()) - see comment below
       names(fs) <- c("logLik", "deviance", "AIC", "BIC", "AICc")
       cat("\n")
-      print(fs, quote=FALSE, print.gap=2)
+      tmp <- capture.output(print(fs, quote=FALSE, print.gap=2))
+      .print.table(tmp, mstyle)
       cat("\n")
    } else {
       cat("\n\n")
@@ -76,18 +79,18 @@ print.rma.glmm <- function(x, digits, showfit=FALSE, signif.stars=getOption("sho
          QE.Wld <- paste0(paste(rep(" ", nchar(QE.LRT) - nchar(QE.Wld)), collapse=""), QE.Wld)
 
       if (x$int.only) {
-         cat("Tests for Heterogeneity: \n")
+         cat(mstyle$section("Tests for Heterogeneity:"), "\n")
          cat("Wld(df = ", x$QE.df, ") = ", QE.Wld, ", p-val ", .pval(x$QEp.Wld, digits=digits, showeq=TRUE, sep=" "), "\n", sep="")
          cat("LRT(df = ", x$QE.df, ") = ", QE.LRT, ", p-val ", .pval(x$QEp.LRT, digits=digits, showeq=TRUE, sep=" "), "\n\n", sep="")
       } else {
-         cat("Tests for Residual Heterogeneity: \n")
+         cat(mstyle$section("Tests for Residual Heterogeneity:"), "\n")
          cat("Wld(df = ", x$QE.df, ") = ", QE.Wld, ", p-val ", .pval(x$QEp.Wld, digits=digits, showeq=TRUE, sep=" "), "\n", sep="")
          cat("LRT(df = ", x$QE.df, ") = ", QE.LRT, ", p-val ", .pval(x$QEp.LRT, digits=digits, showeq=TRUE, sep=" "), "\n\n", sep="")
       }
    }
 
    if (x$p > 1 && !is.na(x$QM)) {
-      cat("Test of Moderators (coefficient(s) ", .format.btt(x$btt),"): \n", sep="")
+      cat(mstyle$section(paste0("Test of Moderators (coefficient", ifelse(x$m == 1, " ", "s "), .format.btt(x$btt),"):")), "\n")
       if (is.element(x$test, c("t"))) {
          cat("F(df1 = ", x$m, ", df2 = ", x$dfs, ") = ", formatC(x$QM, digits=digits, format="f"), ", p-val ", .pval(x$QMp, digits=digits, showeq=TRUE, sep=" "), "\n\n", sep="")
       } else {
@@ -111,17 +114,19 @@ print.rma.glmm <- function(x, digits, showfit=FALSE, signif.stars=getOption("sho
    if (x$int.only)
       res.table <- res.table[1,]
 
-   cat("Model Results:")
+   cat(mstyle$section("Model Results:"))
    cat("\n\n")
    if (x$int.only) {
-      .print.out(res.table)
-      #print(res.table, quote=FALSE, right=TRUE)
+      tmp <- capture.output(.print.vector(res.table))
    } else {
-      print(res.table, quote=FALSE, right=TRUE, print.gap=2)
+      tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE, print.gap=2))
    }
+   .print.table(tmp, mstyle)
+
    cat("\n")
    if (signif.legend)
-      cat("---\nSignif. codes: ", attr(signif, "legend"), "\n\n")
+      cat(mstyle$legend("---\nSignif. codes: "), mstyle$legend(attr(signif, "legend")))
+   cat("\n\n")
 
    invisible()
 

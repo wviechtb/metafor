@@ -1,14 +1,16 @@
 ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    x <- object
 
    if (!inherits(x, "rma.mv"))
-      stop("Argument 'x' must be an object of class \"rma.mv\".")
+      stop(mstyle$stop("Argument 'x' must be an object of class \"rma.mv\"."))
 
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
-      stop("Unknown 'na.action' specified under options().")
+      stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
    if (missing(level))
       level <- x$level
@@ -38,14 +40,14 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
    ### TODO: check computations for user-defined weights
 
    if (!is.null(x$W))
-      stop("Extraction of random effects for models with non-standard weights not currently implemented.")
+      stop(mstyle$stop("Extraction of random effects for models with non-standard weights not currently implemented."))
 
    #########################################################################
 
    out <- NULL
 
    if (verbose)
-      message("\nComputing inverse marginal var-cov and hat matrix ... ", appendLF = FALSE)
+      message(mstyle$message("\nComputing inverse marginal var-cov and hat matrix ... "), appendLF = FALSE)
 
    ### compute inverse marginal var-cov and hat matrix
 
@@ -54,7 +56,7 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
    Hmat  <- x$X %*% stXWX %*% crossprod(x$X,W)
 
    if (verbose)
-      message("Done.")
+      message(mstyle$message("Done!"))
 
    ### compute residuals
 
@@ -79,7 +81,7 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
       for (j in seq_len(x$sigma2s)) {
 
          if (verbose)
-            message(paste0("Computing BLUPs for '", paste0("~ 1 | ", x$s.names[j]), "' term ... "), appendLF = FALSE)
+            message(mstyle$message(paste0("Computing BLUPs for '", paste0("~ 1 | ", x$s.names[j]), "' term ... ")), appendLF = FALSE)
 
          if (x$Rfix[j]) {
             if (x$sparse) {
@@ -142,7 +144,7 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
          }
 
          if (verbose)
-            message("Done.")
+            message(mstyle$message("Done!"))
 
       }
 
@@ -151,7 +153,7 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
    if (x$withG) {
 
       if (verbose)
-         message(paste0("Computing BLUPs for '", paste(x$g.names, collapse=" | "), "' term ... "), appendLF = FALSE)
+         message(mstyle$message(paste0("Computing BLUPs for '", paste(x$g.names, collapse=" | "), "' term ... ")), appendLF = FALSE)
 
       G  <- ((x$Z.G1 %*% x$G %*% t(x$Z.G1)) * tcrossprod(x$Z.G2))
       GW <- G %*% W
@@ -194,14 +196,14 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
       names(out)[length(out)] <- paste0(x$formulas[[1]], collapse="")
 
       if (verbose)
-         message("Done.\n")
+         message(mstyle$message("Done!"))
 
    }
 
    if (x$withH) {
 
       if (verbose)
-         message(paste0("Computing BLUPs for '", paste(x$h.names, collapse=" | "), "' term ... "), appendLF = FALSE)
+         message(mstyle$message(paste0("Computing BLUPs for '", paste(x$h.names, collapse=" | "), "' term ... ")), appendLF = FALSE)
 
       H  <- ((x$Z.H1 %*% x$H %*% t(x$Z.H1)) * tcrossprod(x$Z.H2))
       HW <- H %*% W
@@ -244,9 +246,12 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
       names(out)[length(out)] <- paste0(x$formulas[[2]], collapse="")
 
       if (verbose)
-         message("Done.\n")
+         message(mstyle$message("Done!"))
 
    }
+
+   if (verbose)
+      cat("\n")
 
    #########################################################################
 

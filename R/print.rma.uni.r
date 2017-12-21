@@ -1,7 +1,9 @@
 print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.signif.stars"), signif.legend=signif.stars, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(x, "rma.uni"))
-      stop("Argument 'x' must be an object of class \"rma.uni\".")
+      stop(mstyle$stop("Argument 'x' must be an object of class \"rma.uni\"."))
 
    if (missing(digits))
       digits <- x$digits
@@ -16,15 +18,15 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
 
    if (x$method == "FE") {
       if (x$int.only) {
-         cat("Fixed-Effects Model (k = ", x$k, ")", sep="")
+         cat(mstyle$section("Fixed-Effects Model"), " (k = ", x$k, ")", sep="")
       } else {
-         cat("Fixed-Effects with Moderators Model (k = ", x$k, ")", sep="")
+         cat(mstyle$section("Fixed-Effects with Moderators Model"), " (k = ", x$k, ")", sep="")
       }
    } else {
       if (x$int.only) {
-         cat("Random-Effects Model (k = ", x$k, "; ", sep="")
+         cat(mstyle$section("Random-Effects Model"), " (k = ", x$k, "; ", sep="")
       } else {
-         cat("Mixed-Effects Model (k = ", x$k, "; ", sep="")
+         cat(mstyle$section("Mixed-Effects Model"), " (k = ", x$k, "; ", sep="")
       }
       if (x$tau2.fix) {
          cat("user-specified tau^2 value)", sep="")
@@ -42,7 +44,8 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
       }
       names(fs) <- c("logLik", "deviance", "AIC", "BIC", "AICc")
       cat("\n")
-      print(fs, quote=FALSE, print.gap=2)
+      tmp <- capture.output(print(fs, quote=FALSE, print.gap=2))
+      .print.table(tmp, mstyle)
       cat("\n")
    } else {
       cat("\n\n")
@@ -75,17 +78,16 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
 
    if (!is.na(x$QE)) {
       if (x$int.only) {
-         cat("Test for Heterogeneity: \n")
+         cat(mstyle$section("Test for Heterogeneity:"), "\n")
          cat("Q(df = ", x$k-x$p, ") = ", formatC(x$QE, digits=digits, format="f"), ", p-val ", .pval(x$QEp, digits=digits, showeq=TRUE, sep=" "), "\n\n", sep="")
       } else {
-         cat("Test for Residual Heterogeneity: \n")
+         cat(mstyle$section("Test for Residual Heterogeneity:"), "\n")
          cat("QE(df = ", x$k-x$p, ") = ", formatC(x$QE, digits=digits, format="f"), ", p-val ", .pval(x$QEp, digits=digits, showeq=TRUE, sep=" "), "\n\n", sep="")
       }
    }
 
    if (x$p > 1 && !is.na(x$QM)) {
-      cat("Test of Moderators (coefficient(s) ", .format.btt(x$btt),"): \n", sep="")
-      #cat("Test of Moderators (coefficient(s) ", paste(x$btt, collapse=","),"): \n", sep="")
+      cat(mstyle$section(paste0("Test of Moderators (coefficient", ifelse(x$m == 1, " ", "s "), .format.btt(x$btt),"):")), "\n")
       if (is.element(x$test, c("knha","adhoc","t"))) {
          cat("F(df1 = ", x$m, ", df2 = ", x$dfs, ") = ", formatC(x$QM, digits=digits, format="f"), ", p-val ", .pval(x$QMp, digits=digits, showeq=TRUE, sep=" "), "\n\n", sep="")
       } else {
@@ -110,16 +112,17 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
       res.table <- res.table[1,]
 
    if (x$model == "rma.uni") {
-      cat("Model Results:\n\n")
+      cat(mstyle$section("Model Results:"))
    } else {
-      cat("Model Results (Location):\n\n")
+      cat(mstyle$section("Model Results (Location):"))
    }
+   cat("\n\n")
    if (x$int.only) {
-      .print.out(res.table)
-      #print(res.table, quote=FALSE, right=TRUE)
+      tmp <- capture.output(.print.vector(res.table))
    } else {
-      print(res.table, quote=FALSE, right=TRUE, print.gap=2)
+      tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE, print.gap=2))
    }
+   .print.table(tmp, mstyle)
 
    if (x$model == "rma.ls") {
 
@@ -139,20 +142,23 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
       if (length(x$alpha) == 1)
          res.table <- res.table[1,]
 
-      cat("\nModel Results (Scale):\n\n")
+      cat("\n")
+      cat(mstyle$section("Model Results (Scale):"))
+      cat("\n\n")
 
       if (length(x$alpha) == 1) {
-         .print.out(res.table)
-         #print(res.table, quote=FALSE, right=TRUE)
+         tmp <- capture.output(.print.vector(res.table))
       } else {
-         print(res.table, quote=FALSE, right=TRUE, print.gap=2)
+         tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE, print.gap=2))
       }
+      .print.table(tmp, mstyle)
 
    }
 
    cat("\n")
    if (signif.legend)
-      cat("---\nSignif. codes: ", attr(signif, "legend"), "\n\n")
+      cat(mstyle$legend("---\nSignif. codes: "), mstyle$legend(attr(signif, "legend")))
+   cat("\n\n")
 
    invisible()
 

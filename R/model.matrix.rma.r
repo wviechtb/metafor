@@ -1,12 +1,14 @@
 model.matrix.rma <- function(object, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(object, "rma"))
-      stop("Argument 'object' must be an object of class \"rma\".")
+      stop(mstyle$stop("Argument 'object' must be an object of class \"rma\"."))
 
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
-      stop("Unknown 'na.action' specified under options().")
+      stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
    ### note: lm() always returns X (never the full model matrix, even with na.exclude or na.pass)
    ### but it seems a bit more logical to actually return X.f in that case
@@ -18,7 +20,7 @@ model.matrix.rma <- function(object, ...) {
       out <- object$X.f
 
    if (na.act == "na.fail" && any(!object$not.na))
-      stop("Missing values in results.")
+      stop(mstyle$stop("Missing values in results."))
 
    if (inherits(object, "rma.ls")) {
 
@@ -31,7 +33,7 @@ model.matrix.rma <- function(object, ...) {
          out$scale <- object$Z.f
 
       if (na.act == "na.fail" && any(!object$not.na))
-         stop("Missing values in results.")
+         stop(mstyle$stop("Missing values in results."))
 
    }
 

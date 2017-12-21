@@ -1,12 +1,14 @@
 weights.rma.mv <- function(object, type="diagonal", ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(object, "rma.mv"))
-      stop("Argument 'object' must be an object of class \"rma.mv\".")
+      stop(mstyle$stop("Argument 'object' must be an object of class \"rma.mv\"."))
 
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
-      stop("Unknown 'na.action' specified under options().")
+      stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
    type <- match.arg(type, c("diagonal", "matrix"))
 
@@ -33,7 +35,7 @@ weights.rma.mv <- function(object, type="diagonal", ...) {
          weight <- weight[x$not.na]
 
       if (na.act == "na.fail" && any(!x$not.na))
-         stop("Missing values in weights.")
+         stop(mstyle$stop("Missing values in weights."))
 
       return(weight)
 
@@ -51,7 +53,7 @@ weights.rma.mv <- function(object, type="diagonal", ...) {
          Wfull <- Wfull[x$not.na, x$not.na, drop=FALSE]
 
       if (na.act == "na.fail" && any(!x$not.na))
-         stop("Missing values in results.")
+         stop(mstyle$stop("Missing values in results."))
 
       return(Wfull)
 

@@ -5,8 +5,10 @@ refline, pch=19, pch.fill=21, col, bg, ci.res=1000, ...) {
 
    #########################################################################
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(x, "rma"))
-      stop("Argument 'x' must be an object of class \"rma\".")
+      stop(mstyle$stop("Argument 'x' must be an object of class \"rma\"."))
 
    na.act <- getOption("na.action")
 
@@ -22,9 +24,9 @@ refline, pch=19, pch.fill=21, col, bg, ci.res=1000, ...) {
 
    if (is.element(yaxis, c("ni", "ninv", "sqrtni", "sqrtninv", "lni"))) {
       if (is.null(x$ni))
-         stop("No sample size information stored in model object.")
+         stop(mstyle$stop("No sample size information stored in model object."))
       if (anyNA(x$ni))
-         warning("Sample size information stored in model object \n  contains NAs. Not all studies will be plotted.")
+         warning(mstyle$warning("Sample size information stored in model object \n  contains NAs. Not all studies will be plotted."))
    }
 
    ### set y-axis label if not specified
@@ -196,7 +198,7 @@ refline, pch=19, pch.fill=21, col, bg, ci.res=1000, ...) {
       ### infinite y-axis limits can happen with "seinv" and "vinv" when one or more sampling variances are 0
 
       if (any(is.infinite(ylim)))
-         stop("Setting 'ylim' automatically not possible (must set y-axis limits manually).")
+         stop(mstyle$stop("Setting 'ylim' automatically not possible (must set y-axis limits manually)."))
 
    } else {
 
@@ -212,17 +214,17 @@ refline, pch=19, pch.fill=21, col, bg, ci.res=1000, ...) {
 
       if (is.element(yaxis, c("sei", "vi", "ni", "ninv", "sqrtni", "sqrtninv", "lni"))) {
          if (ylim[1] < 0 || ylim[2] < 0)
-            stop("Both limits for the y axis must be >= 0.")
+            stop(mstyle$stop("Both limits for the y axis must be >= 0."))
       }
 
       if (is.element(yaxis, c("seinv", "vinv"))) {
          if (ylim[1] <= 0 || ylim[2] <= 0)
-            stop("Both limits for the y axis must be > 0.")
+            stop(mstyle$stop("Both limits for the y axis must be > 0."))
       }
 
       if (is.element(yaxis, c("wi"))) {
          if (ylim[1] < 0 || ylim[2] < 0)
-            stop("Both limits for the y axis must be >= 0.")
+            stop(mstyle$stop("Both limits for the y axis must be >= 0."))
       }
 
    }

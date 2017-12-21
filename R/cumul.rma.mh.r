@@ -1,12 +1,14 @@
 cumul.rma.mh <- function(x, order, digits, transf, targs, progbar=FALSE, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(x, "rma.mh"))
-      stop("Argument 'x' must be an object of class \"rma.mh\".")
+      stop(mstyle$stop("Argument 'x' must be an object of class \"rma.mh\"."))
 
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
-      stop("Unknown 'na.action' specified under options().")
+      stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
    if (missing(order))
       order <- NULL
@@ -124,7 +126,7 @@ cumul.rma.mh <- function(x, order, digits, transf, targs, progbar=FALSE, ...) {
    }
 
    if (na.act == "na.fail" && any(!x$not.na))
-      stop("Missing values in results.")
+      stop(mstyle$stop("Missing values in results."))
 
    out$digits    <- digits
    out$transf    <- transf

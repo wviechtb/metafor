@@ -11,6 +11,8 @@
 escalc.formula <- function(measure, formula, weights, data, # slab, subset,
 add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("yi","vi"), digits=4, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!is.element(measure, c("RR","OR","PETO","RD","AS","PHI","YUQ","YUY","RTET", ### 2x2 table measures
                               "PBIT","OR2D","OR2DN","OR2DL",                       ### - transformations to SMD
                               "MPRD","MPRR","MPOR","MPORC","MPPETO",               ### - measures for matched pairs data
@@ -25,13 +27,13 @@ add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("yi","vi"), digits=4,
                               "MN","MNLN","CVLN","SDLN",                           ### mean, log(mean), log(CV), log(SD)
                               "MC","SMCC","SMCR","SMCRH","ROMC",                   ### raw/standardized mean change and log(ROM) for dependent samples
                               "ARAW","AHW","ABT")))                                ### alpha (and transformations thereof)
-      stop("Unknown 'measure' specified.")
+      stop(mstyle$stop("Unknown 'measure' specified."))
 
    if (is.element(measure, c("MPRD","MPRR","MPOR","MPORC","MPPETO","CVR","VR","PCOR","ZPCOR","SPCOR","CVLN","SDLN","MC","SMCC","SMCR","SMCRH","ROMC")))
-      stop("Formula interface (currently) not implemented for this outcome measure.")
+      stop(mstyle$stop("Formula interface (currently) not implemented for this outcome measure."))
 
    if (!requireNamespace("Formula", quietly=TRUE))
-      stop("Please install the 'Formula' package to use the formula interface.")
+      stop(mstyle$stop("Please install the 'Formula' package to use the formula interface."))
 
    ### make sure that NAs are not dropped from model frame
 
@@ -50,7 +52,7 @@ add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("yi","vi"), digits=4,
    formula <- Formula::as.Formula(formula) ### make sure that formula is really a multi-part formula
 
    if (length(formula)[2] < 2L)
-      stop("Right-hand side of formula must specify both a grouping and a study factor (i.e., ~ group | study).")
+      stop(mstyle$stop("Right-hand side of formula must specify both a grouping and a study factor (i.e., ~ group | study)."))
 
    mf$formula <- formula
    mf[[1L]]   <- as.name("model.frame")
@@ -73,49 +75,49 @@ add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("yi","vi"), digits=4,
    study <- Formula::model.part(formula, data = mf, rhs = 2)
 
    if (length(study) != 1)
-      stop("A single study factor must be specified.")
+      stop(mstyle$stop("A single study factor must be specified."))
 
    if (!is.factor(study[[1]]))
-      stop("Study variable must be a factor.")
+      stop(mstyle$stop("Study variable must be a factor."))
 
    ### get study variable from the data.frame
 
    study <- study[[1]]
 
    if (anyNA(study))
-      stop("Study factor must not contain NAs.")
+      stop(mstyle$stop("Study factor must not contain NAs."))
 
    #########################################################################
 
    if (is.element(measure, c("RR","OR","RD","AS","PETO","PHI","YUQ","YUY","RTET","PBIT","OR2D","OR2DN","OR2DL"))) {
 
       if (is.null(weights))
-         stop("Must specify the 'weights' argument.")
+         stop(mstyle$stop("Must specify the 'weights' argument."))
 
       if (length(lhs) != 1)
-         stop("Left-hand side of formula must be a single outcome factor.")
+         stop(mstyle$stop("Left-hand side of formula must be a single outcome factor."))
 
       outcome <- lhs[[1]]
 
       if (!is.factor(outcome))
-         stop("Left-hand side of formula must be a factor.")
+         stop(mstyle$stop("Left-hand side of formula must be a factor."))
 
       if(nlevels(outcome) != 2)
-         stop("Outcome factor on left-hand side of formula should have two levels.")
+         stop(mstyle$stop("Outcome factor on left-hand side of formula should have two levels."))
 
       if (length(rhs1) != 1)
-         stop("A single grouping factor must be specified.")
+         stop(mstyle$stop("A single grouping factor must be specified."))
 
       if (!is.factor(rhs1[[1]]))
-         stop("Grouping variable must be a factor.")
+         stop(mstyle$stop("Grouping variable must be a factor."))
 
       group <- rhs1[[1]]
 
       if(nlevels(group) != 2)
-         stop("Grouping factor should have two levels.")
+         stop(mstyle$stop("Grouping factor should have two levels."))
 
       if (anyNA(group) || anyNA(outcome))
-         stop("Grouping and outcome factors must not contain NAs.")
+         stop(mstyle$stop("Grouping and outcome factors must not contain NAs."))
 
       ai <- weights[group == levels(group)[1] & outcome == levels(outcome)[1]]
       bi <- weights[group == levels(group)[1] & outcome == levels(outcome)[2]]
@@ -137,27 +139,27 @@ add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("yi","vi"), digits=4,
    if (is.element(measure, c("IRR","IRD","IRSD"))) {
 
       if (length(lhs) != 2)
-         stop("Left-hand side of formula must specify the number of events and the total person-time at risk (i.e., events/times ~).")
+         stop(mstyle$stop("Left-hand side of formula must specify the number of events and the total person-time at risk (i.e., events/times ~)."))
 
       events <- lhs[,1]
       times  <- lhs[,2]
 
       if (!is.vector(events) || !is.vector(times))
-         stop("The events and person-time at risk variables should be vectors.")
+         stop(mstyle$stop("The events and person-time at risk variables should be vectors."))
 
       if (length(rhs1) != 1)
-         stop("A single grouping factor must be specified.")
+         stop(mstyle$stop("A single grouping factor must be specified."))
 
       if (!is.factor(rhs1[[1]]))
-         stop("Grouping variable must be a factor.")
+         stop(mstyle$stop("Grouping variable must be a factor."))
 
       group <- rhs1[[1]]
 
       if(nlevels(group) != 2)
-         stop("Grouping factor should have two levels.")
+         stop(mstyle$stop("Grouping factor should have two levels."))
 
       if (anyNA(group))
-         stop("Grouping factor must not contain NAs.")
+         stop(mstyle$stop("Grouping factor must not contain NAs."))
 
       x1i <- events[group == levels(group)[1]]
       x2i <- events[group == levels(group)[2]]
@@ -177,30 +179,30 @@ add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("yi","vi"), digits=4,
    if (is.element(measure, c("MD","SMD","SMDH","ROM","RPB","RBIS","D2OR","D2ORN","D2ORL"))) {
 
       if (is.null(weights))
-         stop("Must specify the 'weights' argument.")
+         stop(mstyle$stop("Must specify the 'weights' argument."))
 
       if (length(lhs) != 2)
-         stop("Left-hand side of formula must specify the means and standard devations (i.e., means/sds ~).")
+         stop(mstyle$stop("Left-hand side of formula must specify the means and standard devations (i.e., means/sds ~)."))
 
       means <- lhs[,1]
       sds   <- lhs[,2]
 
       if (!is.vector(means) || !is.vector(sds))
-         stop("The mean and standard devation variables should be vectors.")
+         stop(mstyle$stop("The mean and standard devation variables should be vectors."))
 
       if (length(rhs1) != 1)
-         stop("A single grouping factor must be specified.")
+         stop(mstyle$stop("A single grouping factor must be specified."))
 
       if (!is.factor(rhs1[[1]]))
-         stop("Grouping variable must be a factor.")
+         stop(mstyle$stop("Grouping variable must be a factor."))
 
       group <- rhs1[[1]]
 
       if(nlevels(group) != 2)
-         stop("Grouping factor should have two levels.")
+         stop(mstyle$stop("Grouping factor should have two levels."))
 
       if (anyNA(group))
-         stop("Grouping factor must not contain NAs.")
+         stop(mstyle$stop("Grouping factor must not contain NAs."))
 
       m1i  <- means[group == levels(group)[1]]
       m2i  <- means[group == levels(group)[2]]
@@ -222,28 +224,28 @@ add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("yi","vi"), digits=4,
    if (is.element(measure, c("COR","UCOR","ZCOR"))) {
 
       if (is.null(weights))
-         stop("Must specify the 'weights' argument.")
+         stop(mstyle$stop("Must specify the 'weights' argument."))
 
       if (length(lhs) != 1)
-         stop("Left-hand side of formula must specify the correlations (i.e., cors ~).")
+         stop(mstyle$stop("Left-hand side of formula must specify the correlations (i.e., cors ~)."))
 
       ri <- lhs[[1]]
 
       if (!is.vector(ri))
-         stop("The variable specifying the correlation should be a vector.")
+         stop(mstyle$stop("The variable specifying the correlation should be a vector."))
 
       #if (length(rhs1) != 1)
-      #   stop("A single grouping factor must be specified.")
+      #   stop(mstyle$stop("A single grouping factor must be specified."))
       #if (!is.factor(rhs1[[1]]))
-      #   stop("Grouping variable must be a factor.")
+      #   stop(mstyle$stop("Grouping variable must be a factor."))
 
       #group <- rhs1[[1]]
 
       #if(nlevels(group) != 1)
-      #   stop("Grouping factor should have only one level.")
+      #   stop(mstyle$stop("Grouping factor should have only one level."))
 
       #if (anyNA(group))
-      #   stop("Grouping factor must not contain NAs.")
+      #   stop(mstyle$stop("Grouping factor must not contain NAs."))
 
       ni <- weights
 
@@ -259,31 +261,31 @@ add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("yi","vi"), digits=4,
    if (is.element(measure, c("PR","PLN","PLO","PAS","PFT"))) {
 
       if (length(lhs) != 1)
-         stop("Left-hand side of formula must be a single outcome factor.")
+         stop(mstyle$stop("Left-hand side of formula must be a single outcome factor."))
 
       outcome <- lhs[[1]]
 
       if (!is.factor(outcome))
-         stop("Left-hand side of formula must be a factor.")
+         stop(mstyle$stop("Left-hand side of formula must be a factor."))
 
       if(nlevels(outcome) != 2)
-         stop("Outcome factor on left-hand side of formula should have two levels.")
+         stop(mstyle$stop("Outcome factor on left-hand side of formula should have two levels."))
 
       #if (length(rhs1) != 1)
-      #   stop("A single grouping factor must be specified.")
+      #   stop(mstyle$stop("A single grouping factor must be specified."))
       #if (!is.factor(rhs1[[1]]))
-      #   stop("Grouping variable must be a factor.")
+      #   stop(mstyle$stop("Grouping variable must be a factor."))
 
       #group <- rhs1[[1]]
 
       #if(nlevels(group) != 1)
-      #   stop("Grouping factor should have only one level.")
+      #   stop(mstyle$stop("Grouping factor should have only one level."))
 
       #if (anyNA(group))
-      #   stop("Grouping factor must not contain NAs.")
+      #   stop(mstyle$stop("Grouping factor must not contain NAs."))
 
       if (anyNA(outcome))
-         stop("Outcome factor must not contain NAs.")
+         stop(mstyle$stop("Outcome factor must not contain NAs."))
 
       xi <- weights[outcome == levels(outcome)[1]]
       mi <- weights[outcome == levels(outcome)[2]]
@@ -301,26 +303,26 @@ add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("yi","vi"), digits=4,
    if (is.element(measure, c("IR","IRLN","IRS","IRFT"))) {
 
       if (length(lhs) != 2)
-         stop("Left-hand side of formula must specify the number of cases and the total person-time at risk (i.e., cases/times ~).")
+         stop(mstyle$stop("Left-hand side of formula must specify the number of cases and the total person-time at risk (i.e., cases/times ~)."))
 
       events <- lhs[,1]
       times  <- lhs[,2]
 
       if (!is.vector(events) || !is.vector(times))
-         stop("The events and person-time at risk variables should be vectors.")
+         stop(mstyle$stop("The events and person-time at risk variables should be vectors."))
 
       #if (length(rhs1) != 1)
-      #   stop("A single grouping factor must be specified.")
+      #   stop(mstyle$stop("A single grouping factor must be specified."))
       #if (!is.factor(rhs1[[1]]))
-      #   stop("Grouping variable must be a factor.")
+      #   stop(mstyle$stop("Grouping variable must be a factor."))
 
       #group <- rhs1[[1]]
 
       #if(nlevels(group) != 1)
-      #   stop("Grouping factor should have only one level.")
+      #   stop(mstyle$stop("Grouping factor should have only one level."))
 
       #if (anyNA(group))
-      #   stop("Grouping factor must not contain NAs.")
+      #   stop(mstyle$stop("Grouping factor must not contain NAs."))
 
       xi <- events
       ti <- times
@@ -337,16 +339,16 @@ add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("yi","vi"), digits=4,
    if (is.element(measure, c("MN","MNLN"))) {
 
       if (is.null(weights))
-         stop("Must specify the 'weights' argument.")
+         stop(mstyle$stop("Must specify the 'weights' argument."))
 
       if (length(lhs) != 2)
-         stop("Left-hand side of formula must specify the means and standard devations (i.e., means/sds ~).")
+         stop(mstyle$stop("Left-hand side of formula must specify the means and standard devations (i.e., means/sds ~)."))
 
       means <- lhs[,1]
       sds   <- lhs[,2]
 
       if (!is.vector(means) || !is.vector(sds))
-         stop("The mean and standard devation variables should be vectors.")
+         stop(mstyle$stop("The mean and standard devation variables should be vectors."))
 
       mi   <- means
       sdi  <- sds
@@ -374,16 +376,16 @@ add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("yi","vi"), digits=4,
    if (is.element(measure, c("ARAW","AHW","ABT"))) {
 
       if (is.null(weights))
-         stop("Must specify the 'weights' argument.")
+         stop(mstyle$stop("Must specify the 'weights' argument."))
 
       if (length(lhs) != 2)
-         stop("Left-hand side of formula must specify the alpha values and number of items (i.e., alphas/items ~).")
+         stop(mstyle$stop("Left-hand side of formula must specify the alpha values and number of items (i.e., alphas/items ~)."))
 
       alphas <- lhs[,1]
       items  <- lhs[,2]
 
       if (!is.vector(alphas) || !is.vector(items))
-         stop("The alpha and item variables should be vectors.")
+         stop(mstyle$stop("The alpha and item variables should be vectors."))
 
       ai <- alphas
       mi <- items

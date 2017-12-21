@@ -1,12 +1,14 @@
 blup.rma.uni <- function(x, level, digits, transf, targs, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(x, "rma.uni"))
-      stop("Argument 'x' must be an object of class \"rma.uni\".")
+      stop(mstyle$stop("Argument 'x' must be an object of class \"rma.uni\"."))
 
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
-      stop("Unknown 'na.action' specified under options().")
+      stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
    if (missing(level))
       level <- x$level
@@ -31,7 +33,7 @@ blup.rma.uni <- function(x, level, digits, transf, targs, ...) {
    ### TODO: check computations for user-defined weights
 
    if (!is.null(x$weights) || !x$weighted)
-      stop("Extraction of random effects for models with non-standard weights not currently implemented.")
+      stop(mstyle$stop("Extraction of random effects for models with non-standard weights not currently implemented."))
 
    #########################################################################
 
@@ -91,7 +93,7 @@ blup.rma.uni <- function(x, level, digits, transf, targs, ...) {
    }
 
    if (na.act == "na.fail" && any(!x$not.na))
-      stop("Missing values in results.")
+      stop(mstyle$stop("Missing values in results."))
 
    #########################################################################
 

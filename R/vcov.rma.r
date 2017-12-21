@@ -1,12 +1,14 @@
 vcov.rma <- function(object, type="fixed", ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(object, "rma"))
-      stop("Argument 'object' must be an object of class \"rma\".")
+      stop(mstyle$stop("Argument 'object' must be an object of class \"rma\"."))
 
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
-      stop("Unknown 'na.action' specified under options().")
+      stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
    type <- match.arg(type, c("fixed", "obs", "fitted", "resid"))
 
@@ -39,11 +41,11 @@ vcov.rma <- function(object, type="fixed", ...) {
          }
 
          if (na.act == "na.fail" && any(!object$not.na))
-            stop("Missing values in data.")
+            stop(mstyle$stop("Missing values in data."))
 
       } else {
 
-         stop("Extraction of marginal var-cov matrix not available for objects of this class.")
+         stop(mstyle$stop("Extraction of marginal var-cov matrix not available for objects of this class."))
 
       }
 

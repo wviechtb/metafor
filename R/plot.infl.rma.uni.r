@@ -2,13 +2,15 @@ plot.infl.rma.uni <- function(x, plotinf=TRUE, plotdfbs=FALSE, dfbsnew=FALSE, lo
 layout, slab.style=1, las=0, pch=21, bg="black", bg.infl="red",
 col.na="lightgray", ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(x, "infl.rma.uni"))
-      stop("Argument 'x' must be an object of class \"infl.rma.uni\".")
+      stop(mstyle$stop("Argument 'x' must be an object of class \"infl.rma.uni\"."))
 
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
-      stop("Unknown 'na.action' specified under options().")
+      stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
    #########################################################################
 
@@ -19,7 +21,7 @@ col.na="lightgray", ...) {
    if (any(any.na)) {
 
       if (na.act == "na.fail")
-         stop("Missing values in results.")
+         stop(mstyle$stop("Missing values in results."))
 
    }
 
@@ -36,7 +38,7 @@ col.na="lightgray", ...) {
       which.inf <- which.inf[(which.inf >= 1) & (which.inf <= 8)]
       which.inf <- unique(round(which.inf))
       if (length(which.inf) == 0L)
-         stop("Incorrect specification of 'plotinf' argument.")
+         stop(mstyle$stop("Incorrect specification of 'plotinf' argument."))
       plotinf <- TRUE
    }
 
@@ -51,14 +53,14 @@ col.na="lightgray", ...) {
       which.dfbs <- which.dfbs[(which.dfbs >= 1) & (which.dfbs <= x$p)]
       which.dfbs <- unique(round(which.dfbs))
       if (length(which.dfbs) == 0L)
-         stop("Incorrect specification of 'plotdfbs' argument.")
+         stop(mstyle$stop("Incorrect specification of 'plotdfbs' argument."))
       plotdfbs <- TRUE
    }
 
    #########################################################################
 
    if (!plotinf & !plotdfbs)
-      stop("At least one of the arguments 'plotinf' or 'plotdfbs' argument must be TRUE.")
+      stop(mstyle$stop("At least one of the arguments 'plotinf' or 'plotdfbs' argument must be TRUE."))
 
    if (!plotinf & dfbsnew)
       dfbsnew <- FALSE
@@ -123,7 +125,7 @@ col.na="lightgray", ...) {
          layout <- layout[layout >= 1]
          layout <- round(layout)
          if (length(layout) != 2L)
-            stop("Incorrect specification of 'layout' argument.")
+            stop(mstyle$stop("Incorrect specification of 'layout' argument."))
          par(mfrow=layout)
       }
 

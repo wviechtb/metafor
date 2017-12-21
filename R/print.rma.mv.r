@@ -1,14 +1,16 @@
 print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.signif.stars"), signif.legend=signif.stars, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(x, "rma.mv"))
-      stop("Argument 'x' must be an object of class \"rma.mv\".")
+      stop(mstyle$stop("Argument 'x' must be an object of class \"rma.mv\"."))
 
    if (missing(digits))
       digits <- x$digits
 
    cat("\n")
 
-   cat("Multivariate Meta-Analysis Model (k = ", x$k, "; ", sep="")
+   cat(mstyle$section("Multivariate Meta-Analysis Model"), " (k = ", x$k, "; ", sep="")
    cat("method: ", x$method, ")", sep="")
 
    if (showfit) {
@@ -20,7 +22,8 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
       }
       names(fs) <- c("logLik", "Deviance", "AIC", "BIC", "AICc")
       cat("\n")
-      print(fs, quote=FALSE, print.gap=2)
+      tmp <- capture.output(print(fs, quote=FALSE, print.gap=2))
+      .print.table(tmp, mstyle)
       cat("\n")
    } else {
       cat("\n\n")
@@ -35,12 +38,12 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
    tau    <- formatC(sqrt(x$tau2),   digits=digits, format="f")
    gamma  <- formatC(sqrt(x$gamma2), digits=digits, format="f")
 
-   cat("Variance Components: ")
+   cat(mstyle$section("Variance Components:"))
 
    right <- TRUE
 
    if (!x$withS && !x$withG && !x$withH) {
-      cat("none\n\n")
+      cat(" none\n\n")
    } else {
       cat("\n\n")
 
@@ -264,16 +267,16 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
 
    if (!is.na(x$QE)) {
       if (x$int.only) {
-         cat("Test for Heterogeneity: \n")
+         cat(mstyle$section("Test for Heterogeneity:"), "\n")
          cat("Q(df = ", x$k-x$p, ") = ", formatC(x$QE, digits=digits, format="f"), ", p-val ", .pval(x$QEp, digits=digits, showeq=TRUE, sep=" "), "\n\n", sep="")
       } else {
-         cat("Test for Residual Heterogeneity: \n")
+         cat(mstyle$section("Test for Residual Heterogeneity:"), "\n")
          cat("QE(df = ", x$k-x$p, ") = ", formatC(x$QE, digits=digits, format="f"), ", p-val ", .pval(x$QEp, digits=digits, showeq=TRUE, sep=" "), "\n\n", sep="")
       }
    }
 
    if (x$p > 1 && !is.na(x$QM)) {
-      cat("Test of Moderators (coefficient(s) ", .format.btt(x$btt),"): \n", sep="")
+      cat(mstyle$section(paste0("Test of Moderators (coefficient", ifelse(x$m == 1, " ", "s "), .format.btt(x$btt),"):")), "\n")
       if (is.element(x$test, c("t"))) {
          cat("F(df1 = ", x$m, ", df2 = ", x$dfs, ") = ", formatC(x$QM, digits=digits, format="f"), ", p-val ", .pval(x$QMp, digits=digits, showeq=TRUE, sep=" "), "\n\n", sep="")
       } else {
@@ -297,16 +300,19 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
    if (x$int.only)
       res.table <- res.table[1,]
 
-   cat("Model Results:\n\n")
+   cat(mstyle$section("Model Results:"))
+   cat("\n\n")
    if (x$int.only) {
-      .print.out(res.table)
-      #print(res.table, quote=FALSE, right=TRUE)
+      tmp <- capture.output(.print.vector(res.table))
    } else {
-      print(res.table, quote=FALSE, right=TRUE, print.gap=2)
+      tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE, print.gap=2))
    }
+   .print.table(tmp, mstyle)
+
    cat("\n")
    if (signif.legend)
-      cat("---\nSignif. codes: ", attr(signif, "legend"), "\n\n")
+      cat(mstyle$legend("---\nSignif. codes: "), mstyle$legend(attr(signif, "legend")))
+   cat("\n\n")
 
    invisible()
 

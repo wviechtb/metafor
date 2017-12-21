@@ -1,7 +1,9 @@
 coef.summary.rma <- function(object, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(object, "summary.rma"))
-      stop("Argument 'object' must be an object of class \"summary.rma\".")
+      stop(mstyle$stop("Argument 'object' must be an object of class \"summary.rma\"."))
 
    x <- object
 

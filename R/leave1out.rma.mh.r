@@ -1,18 +1,20 @@
 leave1out.rma.mh <- function(x, digits, transf, targs, progbar=FALSE, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(x, "rma.mh"))
-      stop("Argument 'x' must be an object of class \"rma.mh\".")
+      stop(mstyle$stop("Argument 'x' must be an object of class \"rma.mh\"."))
 
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
-      stop("Unknown 'na.action' specified under options().")
+      stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
    if (!x$int.only)
-      stop("Method only applicable for models without moderators.")
+      stop(mstyle$stop("Method only applicable for models without moderators."))
 
    if (x$k == 1)
-      stop("Stopped because k = 1.")
+      stop(mstyle$stop("Stopped because k = 1."))
 
    if (missing(digits))
       digits <- x$digits
@@ -117,7 +119,7 @@ leave1out.rma.mh <- function(x, digits, transf, targs, progbar=FALSE, ...) {
    }
 
    if (na.act == "na.fail" && any(!x$not.na))
-      stop("Missing values in results.")
+      stop(mstyle$stop("Missing values in results."))
 
    #out <- out[-c(2,3,4)]
    out$digits <- digits

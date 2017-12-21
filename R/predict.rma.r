@@ -3,16 +3,18 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
    #########################################################################
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(object, "rma"))
-      stop("Argument 'object' must be an object of class \"rma\".")
+      stop(mstyle$stop("Argument 'object' must be an object of class \"rma\"."))
 
    if (inherits(object, "rma.ls"))
-      stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!")
+      stop(mstyle$stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!"))
 
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
-      stop("Unknown 'na.action' specified under options().")
+      stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
    x <- object
 
@@ -51,7 +53,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
    }
 
    if (x$int.only && !is.null(newmods))
-      stop("Cannot specify new moderator values for models without moderators.")
+      stop(mstyle$stop("Cannot specify new moderator values for models without moderators."))
 
    #########################################################################
 
@@ -99,10 +101,10 @@ level, digits, transf, targs, vcov=FALSE, ...) {
                }                                                              #
                if ((!is.null(tau2.levels) && is.null(gamma2.levels)) ||       #   # if user specifies only one of tau2.levels and gamma2.levels, throw an error
                    (is.null(tau2.levels) && !is.null(gamma2.levels)))
-                  stop("Either specify both of 'tau2.levels' and 'gamma2.levels' or neither.")
+                  stop(mstyle$stop("Either specify both of 'tau2.levels' and 'gamma2.levels' or neither."))
                if (!is.null(tau2.levels) && !is.null(gamma2.levels)) {        #   # if user has specified both tau2s.levels and gamma2.levels
                   if (length(tau2.levels) != length(gamma2.levels))           #
-                     stop("Length of 'tau2.levels' and 'gamma2.levels' must be the same.")
+                     stop(mstyle$stop("Length of 'tau2.levels' and 'gamma2.levels' must be the same."))
                   k.new <- length(tau2.levels)                                #      # then we need to predict intercepts for those level combinations
                   X.new <- cbind(rep(1,k.new))                                #
                }                                                              #
@@ -126,7 +128,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
             k.new <- x$k.f                                                    #   # then predict for all k.f studies (including studies with NAs)
             X.new <- x$X.f                                                    #
             if (!is.null(tau2.levels) || !is.null(gamma2.levels))             #
-               warning("Arguments 'tau2.levels' and 'gamma2.levels' ignored when obtaining fitted values.")
+               warning(mstyle$warning("Arguments 'tau2.levels' and 'gamma2.levels' ignored when obtaining fitted values."))
             tau2.levels <- as.character(x$mf.g.f$inner)                       #
             gamma2.levels <- as.character(x$mf.h.f$inner)                     #
          }                                                                    #
@@ -156,14 +158,14 @@ level, digits, transf, targs, vcov=FALSE, ...) {
             pos <- sapply(colnames(X.new), function(colname) {
                      d <- c(adist(colname, colnames.mod, costs=c(ins=1, sub=Inf, del=Inf))) # compute edit distances with Inf costs for substitutions/deletions
                      if (all(is.infinite(d))) # if there is no match, then all elements are Inf
-                        stop(paste0("Could not find variable '", colname, "' in the model."), call. = FALSE)
+                        stop(mstyle$stop(paste0("Could not find variable '", colname, "' in the model.")), call. = FALSE)
                      d <- which(d == min(d)) # don't use which.min() since that only finds the first minimum
                      if (length(d) > 1) # if there is no unique match, then there is more than one minimum
-                        stop(paste0("Could not match up '", colname, "' uniquely to a variable in the model."), call. = FALSE)
+                        stop(mstyle$stop(paste0("Could not match up '", colname, "' uniquely to a variable in the model.")), call. = FALSE)
                      return(d)
                      })
             if (anyDuplicated(pos)) # if the same name is used more than once, then there will be duplicated pos values
-               stop("Multiple matches for the same variable name.")
+               stop(mstyle$stop("Multiple matches for the same variable name."))
             colnames(X.new) <- colnames.mod[pos]
             pos <- sapply(colnames.mod, function(colname) {
                      d <- c(adist(colname, colnames(X.new), costs=c(ins=1, sub=Inf, del=Inf))) # compute edit distances with Inf costs for substitutions/deletions
@@ -186,7 +188,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
       }
 
       if (ncol(X.new) != x$p)
-         stop("Dimensions of 'newmods' do not match dimensions of the model.")
+         stop(mstyle$stop("Dimensions of 'newmods' do not match dimensions of the model."))
 
    }
 
@@ -202,19 +204,19 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
          if (is.null(tau2.levels)) {
 
-            #warning("Need to specify 'tau2.levels' argument to obtain credibility intervals.")
+            #warning(mstyle$warning("Need to specify 'tau2.levels' argument to obtain credibility intervals."))
 
          } else {
 
             ### if tau2.levels argument is a character vector, check that specified tau^2 values actually exist
             if (!is.numeric(tau2.levels) && anyNA(pmatch(tau2.levels, x$g.levels.f[[1]], duplicates.ok=TRUE)))
-               stop("Non-existing levels specified via 'tau2.levels' argument.")
+               stop(mstyle$stop("Non-existing levels specified via 'tau2.levels' argument."))
 
             ### if tau2.levels argument is numeric, check that specified tau^2 values actually exist
             if (is.numeric(tau2.levels)) {
                tau2.levels <- round(tau2.levels)
                if (any(tau2.levels < 1) || any(tau2.levels > x$g.nlevels.f[1]))
-                  stop("Non-existing tau^2 values specified via 'tau2.levels' argument.")
+                  stop(mstyle$stop("Non-existing tau^2 values specified via 'tau2.levels' argument."))
             }
 
             ### allow quick setting of all levels
@@ -223,7 +225,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
             ### check length of tau2.levels argument
             if (length(tau2.levels) != k.new)
-               stop("Length of 'tau2.levels' does not match number of predicted values.")
+               stop(mstyle$stop("Length of 'tau2.levels' does not match number of predicted values."))
 
          }
 
@@ -243,19 +245,19 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
          if (is.null(gamma2.levels)) {
 
-            #warning("Need to specify 'gamma2.levels' argument to obtain credibility intervals.")
+            #warning(mstyle$warning("Need to specify 'gamma2.levels' argument to obtain credibility intervals."))
 
          } else {
 
             ### if gamma2.levels argument is a character vector, check that specified gamma^2 values actually exist
             if (!is.numeric(gamma2.levels) && anyNA(pmatch(gamma2.levels, x$h.levels.f[[1]], duplicates.ok=TRUE)))
-               stop("Non-existing levels specified via 'gamma2.levels' argument.")
+               stop(mstyle$stop("Non-existing levels specified via 'gamma2.levels' argument."))
 
             ### if gamma2.levels argument is numeric, check that specified gamma^2 values actually exist
             if (is.numeric(gamma2.levels)) {
                gamma2.levels <- round(gamma2.levels)
                if (any(gamma2.levels < 1) || any(gamma2.levels > x$h.nlevels.f[1]))
-                  stop("Non-existing gamma^2 values specified via 'gamma2.levels' argument.")
+                  stop(mstyle$stop("Non-existing gamma^2 values specified via 'gamma2.levels' argument."))
             }
 
             ### allow quick setting of all levels
@@ -264,7 +266,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
             ### check length of gamma2.levels argument
             if (length(gamma2.levels) != k.new)
-               stop("Length of 'gamma2.levels' does not match number of predicted values.")
+               stop(mstyle$stop("Length of 'gamma2.levels' does not match number of predicted values."))
 
          }
 
@@ -475,7 +477,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
    #}
 
    if (na.act == "na.fail" && any(!x$not.na))
-      stop("Missing values in results.")
+      stop(mstyle$stop("Missing values in results."))
 
    out <- list(pred=pred[not.na], se=se[not.na], ci.lb=ci.lb[not.na], ci.ub=ci.ub[not.na], cr.lb=cr.lb[not.na], cr.ub=cr.ub[not.na])
 

@@ -1,7 +1,9 @@
 print.hc.rma.uni <- function(x, digits, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(x, "hc.rma.uni"))
-      stop("Argument 'x' must be an object of class \"hc.rma.uni\".")
+      stop(mstyle$stop("Argument 'x' must be an object of class \"hc.rma.uni\"."))
 
    if (missing(digits))
       digits <- x$digits
@@ -19,7 +21,8 @@ print.hc.rma.uni <- function(x, digits, ...) {
 
    rownames(res.table) <- c("rma", "hc")
 
-   print(res.table, quote=FALSE, right=TRUE)
+   tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE))
+   .print.table(tmp, mstyle)
 
    invisible(res.table)
 

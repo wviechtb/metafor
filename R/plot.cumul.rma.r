@@ -3,11 +3,13 @@ digits, cols=c("gray90","gray10"), addgrid=TRUE, pch=19, cex=1, lwd=2, ...) {
 
    #########################################################################
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(x, "cumul.rma"))
-      stop("Argument 'x' must be an object of class \"cumul.rma\".")
+      stop(mstyle$stop("Argument 'x' must be an object of class \"cumul.rma\"."))
 
    if (is.null(x$tau2))
-      stop("Either a fixed-effects model or not sufficient data to estimate tau^2.")
+      stop(mstyle$stop("Either a fixed-effects model or not sufficient data to estimate tau^2."))
 
    yaxis <- match.arg(yaxis, c("tau2","I2","H2"))
 
@@ -21,7 +23,7 @@ digits, cols=c("gray90","gray10"), addgrid=TRUE, pch=19, cex=1, lwd=2, ...) {
    atransf.char <- deparse(substitute(atransf))
 
    if (is.function(transf) && is.function(atransf))
-      stop("Use either 'transf' or 'atransf' to specify a transformation (not both).")
+      stop(mstyle$stop("Use either 'transf' or 'atransf' to specify a transformation (not both)."))
 
    if (missing(xlab))
       xlab <- .setlab(x$measure, transf.char, atransf.char, gentype=2)

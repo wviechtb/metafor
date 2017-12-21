@@ -1,7 +1,9 @@
 confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, gamma2, phi, digits, transf, targs, verbose=FALSE, control, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(object, "rma.mv"))
-      stop("Argument 'object' must be an object of class \"rma.mv\".")
+      stop(mstyle$stop("Argument 'object' must be an object of class \"rma.mv\"."))
 
    x <- object
 
@@ -42,7 +44,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
                ifelse(x$withH, sum(!x$vc.fix$gamma2) + sum(!x$vc.fix$phi), 0)
 
       if (comps == 0)
-         stop("No components for which a CI can be obtained.")
+         stop(mstyle$stop("No components for which a CI can be obtained."))
 
       res.all <- list()
       j <- 0
@@ -54,7 +56,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
             cl.vc$sigma2 <- pos
             cl.vc$object <- quote(x)
             if (verbose)
-               cat("\nObtaining CI for sigma2 =", pos, "\n")
+               cat(mstyle$verbose(paste("\nObtaining CI for sigma2 =", pos, "\n")))
             res.all[[j]] <- eval(cl.vc)
          }
       }
@@ -67,7 +69,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
                cl.vc$tau2 <- pos
                cl.vc$object <- quote(x)
                if (verbose)
-                  cat("\nObtaining CI for tau2 =", pos, "\n")
+                  cat(mstyle$verbose(paste("\nObtaining CI for tau2 =", pos, "\n")))
                res.all[[j]] <- eval(cl.vc)
             }
          }
@@ -78,7 +80,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
                cl.vc$rho <- pos
                cl.vc$object <- quote(x)
                if (verbose)
-                  cat("\nObtaining CI for rho =", pos, "\n")
+                  cat(mstyle$verbose(paste("\nObtaining CI for rho =", pos, "\n")))
                res.all[[j]] <- eval(cl.vc)
             }
          }
@@ -92,7 +94,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
                cl.vc$gamma2 <- pos
                cl.vc$object <- quote(x)
                if (verbose)
-                  cat("\nObtaining CI for gamma2 =", pos, "\n")
+                  cat(mstyle$verbose(paste("\nObtaining CI for gamma2 =", pos, "\n")))
                res.all[[j]] <- eval(cl.vc)
             }
          }
@@ -103,7 +105,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
                cl.vc$phi <- pos
                cl.vc$object <- quote(x)
                if (verbose)
-                  cat("\nObtaining CI for phi =", pos, "\n")
+                  cat(mstyle$verbose(paste("\nObtaining CI for phi =", pos, "\n")))
                res.all[[j]] <- eval(cl.vc)
             }
          }
@@ -130,93 +132,93 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
       ### check if user has specified more than one of these arguments
 
       if (sum(!missing(sigma2), !missing(tau2), !missing(rho), !missing(gamma2), !missing(phi)) > 1L)
-         stop("Must specify only one of the arguments 'sigma2', 'tau2', 'rho', 'gamma2', or 'phi'.")
+         stop(mstyle$stop("Must specify only one of the arguments 'sigma2', 'tau2', 'rho', 'gamma2', or 'phi'."))
 
       ### check if model actually contains (at least one) such a component and that it was actually estimated
       ### note: a component that is not in the model is NA; components that are fixed are TRUE
 
       if (!missing(sigma2) && (all(is.na(x$vc.fix$sigma2)) || all(x$vc.fix$sigma2)))
-         stop("Model does not contain any (estimated) 'sigma2' components.")
+         stop(mstyle$stop("Model does not contain any (estimated) 'sigma2' components."))
 
       if (!missing(tau2) && (all(is.na(x$vc.fix$tau2)) || all(x$vc.fix$tau2)))
-         stop("Model does not contain any (estimated) 'tau2' components.")
+         stop(mstyle$stop("Model does not contain any (estimated) 'tau2' components."))
 
       if (!missing(rho) && c(all(is.na(x$vc.fix$rho)) || all(x$vc.fix$rho)))
-         stop("Model does not contain any (estimated) 'rho' components.")
+         stop(mstyle$stop("Model does not contain any (estimated) 'rho' components."))
 
       if (!missing(gamma2) && (all(is.na(x$vc.fix$gamma2)) || all(x$vc.fix$gamma2)))
-         stop("Model does not contain any (estimated) 'gamma2' components.")
+         stop(mstyle$stop("Model does not contain any (estimated) 'gamma2' components."))
 
       if (!missing(phi) && c(all(is.na(x$vc.fix$phi)) || all(x$vc.fix$phi)))
-         stop("Model does not contain any (estimated) 'phi' components.")
+         stop(mstyle$stop("Model does not contain any (estimated) 'phi' components."))
 
       ### check if user specified more than one sigma2, tau2, rho, gamma2, or rho component
 
       if (!missing(sigma2) && (length(sigma2) > 1L))
-         stop("Can only specify one 'sigma2' component.")
+         stop(mstyle$stop("Can only specify one 'sigma2' component."))
 
       if (!missing(tau2) && (length(tau2) > 1L))
-         stop("Can only specify one 'tau2' component.")
+         stop(mstyle$stop("Can only specify one 'tau2' component."))
 
       if (!missing(rho) && (length(rho) > 1L))
-         stop("Can only specify one 'rho' component.")
+         stop(mstyle$stop("Can only specify one 'rho' component."))
 
       if (!missing(gamma2) && (length(gamma2) > 1L))
-         stop("Can only specify one 'gamma2' component.")
+         stop(mstyle$stop("Can only specify one 'gamma2' component."))
 
       if (!missing(phi) && (length(phi) > 1L))
-         stop("Can only specify one 'phi' component.")
+         stop(mstyle$stop("Can only specify one 'phi' component."))
 
       ### check if user specified a logical
 
       if (!missing(sigma2) && is.logical(sigma2))
-         stop("Must specify the number for the 'sigma2' component.")
+         stop(mstyle$stop("Must specify the number for the 'sigma2' component."))
 
       if (!missing(tau2) && is.logical(tau2))
-         stop("Must specify the number for the 'tau2' component.")
+         stop(mstyle$stop("Must specify the number for the 'tau2' component."))
 
       if (!missing(rho) && is.logical(rho))
-         stop("Must specify the number for the 'rho' component.")
+         stop(mstyle$stop("Must specify the number for the 'rho' component."))
 
       if (!missing(gamma2) && is.logical(gamma2))
-         stop("Must specify the number for the 'gamma2' component.")
+         stop(mstyle$stop("Must specify the number for the 'gamma2' component."))
 
       if (!missing(phi) && is.logical(phi))
-         stop("Must specify the number for the 'phi' component.")
+         stop(mstyle$stop("Must specify the number for the 'phi' component."))
 
       ### check if user specified a component that does not exist
 
       if (!missing(sigma2) && (sigma2 > length(x$vc.fix$sigma2) || sigma2 <= 0))
-         stop("No such 'sigma2' component in the model.")
+         stop(mstyle$stop("No such 'sigma2' component in the model."))
 
       if (!missing(tau2) && (tau2 > length(x$vc.fix$tau2) || tau2 <= 0))
-         stop("No such 'tau2' component in the model.")
+         stop(mstyle$stop("No such 'tau2' component in the model."))
 
       if (!missing(rho) && (rho > length(x$vc.fix$rho) || rho <= 0))
-         stop("No such 'rho' component in the model.")
+         stop(mstyle$stop("No such 'rho' component in the model."))
 
       if (!missing(gamma2) && (gamma2 > length(x$vc.fix$gamma2) || gamma2 <= 0))
-         stop("No such 'gamma2' component in the model.")
+         stop(mstyle$stop("No such 'gamma2' component in the model."))
 
       if (!missing(phi) && (phi > length(x$vc.fix$phi) || phi <= 0))
-         stop("No such 'phi' component in the model.")
+         stop(mstyle$stop("No such 'phi' component in the model."))
 
       ### check if user specified a component that was fixed
 
       if (!missing(sigma2) && x$vc.fix$sigma2[sigma2])
-         stop("Specified 'sigma2' component was fixed.")
+         stop(mstyle$stop("Specified 'sigma2' component was fixed."))
 
       if (!missing(tau2) && x$vc.fix$tau2[tau2])
-         stop("Specified 'tau2' component was fixed.")
+         stop(mstyle$stop("Specified 'tau2' component was fixed."))
 
       if (!missing(rho) && x$vc.fix$rho[rho])
-         stop("Specified 'rho' component was fixed.")
+         stop(mstyle$stop("Specified 'rho' component was fixed."))
 
       if (!missing(gamma2) && x$vc.fix$gamma2[gamma2])
-         stop("Specified 'gamma2' component was fixed.")
+         stop(mstyle$stop("Specified 'gamma2' component was fixed."))
 
       if (!missing(phi) && x$vc.fix$phi[phi])
-         stop("Specified 'phi' component was fixed.")
+         stop(mstyle$stop("Specified 'phi' component was fixed."))
 
       ### if everything is good so far, get value of the variance component and set 'comp'
 
@@ -324,9 +326,9 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
       if (type == "PL") {
 
          if (con$vc.min > vc)
-            stop("Lower bound of interval to be searched must be <= estimated value of component.")
+            stop(mstyle$stop("Lower bound of interval to be searched must be <= estimated value of component."))
          if (con$vc.max < vc)
-            stop("Upper bound of interval to be searched must be >= estimated value of component.")
+            stop(mstyle$stop("Upper bound of interval to be searched must be >= estimated value of component."))
 
          objective <- qchisq(1-level, df=1)
 
@@ -436,10 +438,10 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
       ######################################################################
 
       if (!lb.conv)
-         warning("Cannot obtain lower bound of profile likelihood CI due to convergence problems.")
+         warning(mstyle$warning("Cannot obtain lower bound of profile likelihood CI due to convergence problems."))
 
       if (!ub.conv)
-         warning("Cannot obtain upper bound of profile likelihood CI due to convergence problems.")
+         warning(mstyle$warning("Cannot obtain upper bound of profile likelihood CI due to convergence problems."))
 
       ######################################################################
 

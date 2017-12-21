@@ -9,17 +9,20 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    ###### setup
 
+   withcrayon <- "crayon" %in% .packages()
+   mstyle <- .get.mstyle(withcrayon)
+
    ### check argument specifications
    ### (arguments "to" and "vtype" are checked inside escalc function)
 
    if (missing(measure))
-      stop("Need to specify 'measure' argument.")
+      stop(mstyle$stop("Need to specify 'measure' argument."))
 
    if (!is.element(measure, c("OR","IRR","PLO","IRLN")))
-      stop("Unknown 'measure' specified.")
+      stop(mstyle$stop("Unknown 'measure' specified."))
 
    if (!is.element(method, c("FE","ML")))
-      stop("Unknown 'method' specified.")
+      stop(mstyle$stop("Unknown 'method' specified."))
 
    ### in case user specifies more than one add/to value (as one can do with rma.mh() and rma.peto())
    ### (never apply any kind of continuity correction to the data used in the actual model fitting for models implemented in this function)
@@ -36,7 +39,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    ### BV/MV       = bi/multivariate model (logistic or poisson mixed-effects model with unstructured covariance matrix) -- not implemented
 
    if (!is.element(model, c("UM.FS","UM.RS","CM.EL","CM.AL")))
-      stop("Unknown 'model' specified.")
+      stop(mstyle$stop("Unknown 'model' specified."))
 
    ### no need for CM.AL for IRR -- use CM.EL
 
@@ -46,13 +49,13 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
-      stop("Unknown 'na.action' specified under options().")
+      stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
    if (missing(control))
       control <- list()
 
    if (is.element(measure, c("OR","IRR")) && model == "UM.RS" && method == "ML" && nAGQ > 1) {
-      warning("Currently not possible to fit RE/ME model='UM.RS' with nAGQ > 1. nAGQ automatically set to 1.")
+      warning(mstyle$warning("Currently not possible to fit RE/ME model='UM.RS' with nAGQ > 1. nAGQ automatically set to 1."))
       nAGQ <- 1
    }
 
@@ -75,7 +78,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       test <- "t"
 
    if (!is.element(test, c("z","t")))
-      stop("Invalid option selected for 'test' argument.")
+      stop(mstyle$stop("Invalid option selected for 'test' argument."))
 
    ### set defaults or get onlyo1, addyi, and addvi arguments
 
@@ -86,7 +89,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    #########################################################################
 
    if (verbose > 1)
-      message("Extracting data and computing yi/vi values ...")
+      message(mstyle$message("Extracting data and computing yi/vi values ..."))
 
    ### check if data argument has been specified
 
@@ -219,7 +222,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    #########################################################################
 
    if (verbose > 1)
-      message("Creating model matrix ...")
+      message(mstyle$message("Creating model matrix ..."))
 
    ### convert mods formula to X matrix and set intercept equal to FALSE
 
@@ -244,17 +247,17 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    ### check if model matrix contains character variables
 
    if (is.character(mods))
-      stop("Model matrix contains character variables.")
+      stop(mstyle$stop("Model matrix contains character variables."))
 
    ### check if mods matrix has the right number of rows
 
    if (!is.null(mods) && (nrow(mods) != k))
-      stop("Number of rows of the model matrix does not match length of the outcome vector.")
+      stop(mstyle$stop("Number of rows of the model matrix does not match length of the outcome vector."))
 
    ### generate study labels if none are specified
 
    if (verbose > 1)
-      message("Generating/extracting study labels ...")
+      message(mstyle$message("Generating/extracting study labels ..."))
 
    if (is.null(slab)) {
 
@@ -264,10 +267,10 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    } else {
 
       if (anyNA(slab))
-         stop("NAs in study labels.")
+         stop(mstyle$stop("NAs in study labels."))
 
       if (length(slab) != k)
-         stop("Study labels not of same length as data.")
+         stop(mstyle$stop("Study labels not of same length as data."))
 
       slab.null <- FALSE
 
@@ -278,7 +281,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    if (!is.null(subset)) {
 
       if (verbose > 1)
-         message("Subsetting ...")
+         message(mstyle$message("Subsetting ..."))
 
       mods <- mods[subset,,drop=FALSE]
       slab <- slab[subset]
@@ -349,7 +352,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       if (any(has.na)) {
 
          if (verbose > 1)
-            message("Handling NAs in table data ...")
+            message(mstyle$message("Handling NAs in table data ..."))
 
          if (na.act == "na.omit" || na.act == "na.exclude" || na.act == "na.pass") {
             ai   <- ai[not.na]
@@ -358,11 +361,11 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             di   <- di[not.na]
             mods <- mods[not.na,,drop=FALSE]
             k    <- length(ai)
-            warning("Studies with NAs omitted from model fitting.")
+            warning(mstyle$warning("Studies with NAs omitted from model fitting."))
          }
 
          if (na.act == "na.fail")
-            stop("Missing values in studies.")
+            stop(mstyle$stop("Missing values in studies."))
 
       }
 
@@ -376,7 +379,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       if (any(has.na)) {
 
          if (verbose > 1)
-            message("Handling NAs in table data ...")
+            message(mstyle$message("Handling NAs in table data ..."))
 
          if (na.act == "na.omit" || na.act == "na.exclude" || na.act == "na.pass") {
             x1i  <- x1i[not.na]
@@ -385,11 +388,11 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             t2i  <- t2i[not.na]
             mods <- mods[not.na,,drop=FALSE]
             k    <- length(x1i)
-            warning("Studies with NAs omitted from model fitting.")
+            warning(mstyle$warning("Studies with NAs omitted from model fitting."))
          }
 
          if (na.act == "na.fail")
-            stop("Missing values in studies.")
+            stop(mstyle$stop("Missing values in studies."))
 
       }
 
@@ -403,18 +406,18 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       if (any(has.na)) {
 
          if (verbose > 1)
-            message("Handling NAs in table data ...")
+            message(mstyle$message("Handling NAs in table data ..."))
 
          if (na.act == "na.omit" || na.act == "na.exclude" || na.act == "na.pass") {
             xi   <- xi[not.na]
             mi   <- mi[not.na]
             mods <- mods[not.na,,drop=FALSE]
             k    <- length(xi)
-            warning("Studies with NAs omitted from model fitting.")
+            warning(mstyle$warning("Studies with NAs omitted from model fitting."))
          }
 
          if (na.act == "na.fail")
-            stop("Missing values in studies.")
+            stop(mstyle$stop("Missing values in studies."))
 
       }
 
@@ -428,18 +431,18 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       if (any(has.na)) {
 
          if (verbose > 1)
-            message("Handling NAs in table data ...")
+            message(mstyle$message("Handling NAs in table data ..."))
 
          if (na.act == "na.omit" || na.act == "na.exclude" || na.act == "na.pass") {
             xi   <- xi[not.na]
             ti   <- ti[not.na]
             mods <- mods[not.na,,drop=FALSE]
             k    <- length(xi)
-            warning("Studies with NAs omitted from model fitting.")
+            warning(mstyle$warning("Studies with NAs omitted from model fitting."))
          }
 
          if (na.act == "na.fail")
-            stop("Missing values in studies.")
+            stop(mstyle$stop("Missing values in studies."))
 
       }
 
@@ -451,7 +454,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    ### at least one study left?
 
    if (k < 1)
-      stop("Processing terminated since k = 0.")
+      stop(mstyle$stop("Processing terminated since k = 0."))
 
    ### check for NAs in yi/vi and act accordingly (yi/vi pair can be NA/NA is add=0 is used)
    ### note: if a table was removed because of NAs in mods, must also remove the corresponding yi/vi pair;
@@ -465,7 +468,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    if (any(yivi.na)) {
 
       if (verbose > 1)
-         message("Handling NAs in yi/vi ...")
+         message(mstyle$message("Handling NAs in yi/vi ..."))
 
       if (na.act == "na.omit" || na.act == "na.exclude" || na.act == "na.pass") {
 
@@ -473,7 +476,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
          ni <- ni[not.na.yivi]
          vi <- vi[not.na.yivi]
          mods.yi <- mods.f[not.na.yivi,,drop=FALSE]
-         warning("Some yi/vi values are NA.")
+         warning(mstyle$warning("Some yi/vi values are NA."))
 
          attr(yi, "measure") <- measure ### add measure attribute back
          attr(yi, "ni")      <- ni      ### add ni attribute back
@@ -481,7 +484,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       }
 
       if (na.act == "na.fail")
-         stop("Missing yi/vi values.")
+         stop(mstyle$stop("Missing yi/vi values."))
 
    }
 
@@ -490,7 +493,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    ### make sure that there is at least one column in X
 
    if (is.null(mods) && !intercept) {
-      warning("Must either include an intercept and/or moderators in model.\n  Coerced intercept into the model.")
+      warning(mstyle$warning("Must either include an intercept and/or moderators in model.\n  Coerced intercept into the model."))
       intercept <- TRUE
    }
 
@@ -512,7 +515,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    tmp <- lm(rep(0,k) ~ X - 1)
    coef.na <- is.na(coef(tmp))
    if (any(coef.na)) {
-      warning("Redundant predictors dropped from the model.")
+      warning(mstyle$warning("Redundant predictors dropped from the model."))
       X    <- X[,!coef.na,drop=FALSE]
       X.f  <- X.f[,!coef.na,drop=FALSE]
    }
@@ -560,9 +563,9 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    ### check if there are too many parameters for given k
 
    if (method == "FE" && p > k)
-      stop("Number of parameters to be estimated is larger than the number of observations.")
+      stop(mstyle$stop("Number of parameters to be estimated is larger than the number of observations."))
    if (method != "FE" && (p+1) > k)
-      stop("Number of parameters to be estimated is larger than the number of observations.")
+      stop(mstyle$stop("Number of parameters to be estimated is larger than the number of observations."))
 
    ### set/check 'btt' argument
 
@@ -689,13 +692,13 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    #return(list(verbose=verbose, optimizer=con$optimizer, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, optCtrl=optCtrl, glmCtrl=glmCtrl, glmerCtrl=glmerCtrl, intCtrl=intCtrl, hessianCtrl=hessianCtrl))
 
    if (!is.element(con$optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","clogit","clogistic")))
-      stop("Unknown optimizer specified.")
+      stop(mstyle$stop("Unknown optimizer specified."))
 
    if (con$dnchgcalc != "dnoncenhypergeom" && con$dnchgcalc != "dFNCHypergeo")
-      stop("Unknown dnchgcalc method specified.")
+      stop(mstyle$stop("Unknown dnchgcalc method specified."))
 
    if (is.element(con$optimizer, c("clogit", "clogistic")) && method == "ML")
-      stop("Cannot use 'clogit' or 'clogistic' with method='ML'.")
+      stop(mstyle$stop("Cannot use 'clogit' or 'clogistic' with method='ML'."))
 
    #########################################################################
 
@@ -704,46 +707,46 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    if (is.element(measure, c("OR","IRR"))) {
       if ((model == "UM.FS" && method == "ML") || (model == "UM.RS") || (model == "CM.AL" && method == "ML") || (model == "CM.EL" && method == "ML")) {
          if (!requireNamespace("lme4", quietly=TRUE))
-            stop("Please install the 'lme4' package to fit this model.")
+            stop(mstyle$stop("Please install the 'lme4' package to fit this model."))
       }
    }
 
    if (is.element(measure, c("PLO","IRLN")) && method == "ML") {
       if (!requireNamespace("lme4", quietly=TRUE))
-         stop("Please install the 'lme4' package to fit this model.")
+         stop(mstyle$stop("Please install the 'lme4' package to fit this model."))
    }
 
    if (measure == "OR" && model == "CM.EL") {
       if (is.element(con$optimizer, c("uobyqa", "newuoa", "bobyqa"))) {
          if (!requireNamespace("minqa", quietly=TRUE))
-            stop("Please install the 'minqa' package to fit this model.")
+            stop(mstyle$stop("Please install the 'minqa' package to fit this model."))
          minqa <- get(con$optimizer, envir=loadNamespace("minqa"))
          con$optimizer <- "minqa"
       }
       if (con$optimizer == "optim" || con$optimizer == "nlminb" || con$optimizer == "minqa") {
          if (!requireNamespace("numDeriv", quietly=TRUE))
-            stop("Please install the 'numDeriv' package to fit this model.")
+            stop(mstyle$stop("Please install the 'numDeriv' package to fit this model."))
          if (con$dnchgcalc == "dFNCHypergeo") {
             if (!requireNamespace("BiasedUrn", quietly=TRUE))
-               stop("Please install the 'BiasedUrn' package to fit this model.")
+               stop(mstyle$stop("Please install the 'BiasedUrn' package to fit this model."))
          }
       }
       if (con$optimizer == "clogit") {
          if (!requireNamespace("survival", quietly=TRUE))
-            stop("Please install the 'survival' package to fit this model.")
+            stop(mstyle$stop("Please install the 'survival' package to fit this model."))
          coxph <- survival::coxph
          Surv  <- survival::Surv
       }
       if (con$optimizer == "clogistic") {
          if (!requireNamespace("Epi", quietly=TRUE))
-            stop("Please install the 'Epi' package to fit this model.")
+            stop(mstyle$stop("Please install the 'Epi' package to fit this model."))
       }
    }
 
    ### check whether model matrix is of full rank
 
    if (any(eigen(crossprod(X), symmetric=TRUE, only.values=TRUE)$values <= con$tol))
-      stop("Model matrix not of full rank. Cannot fit model.")
+      stop(mstyle$stop("Model matrix not of full rank. Cannot fit model."))
 
    #########################################################################
    #########################################################################
@@ -820,7 +823,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             ### fit FE model
 
             if (verbose)
-               message("Fitting FE model ...")
+               message(mstyle$message("Fitting FE model ..."))
 
             if (k > 1) {
                res.FE <- try(glm(dat.grp ~ -1 + X.fit + study, offset=dat.off, family=dat.fam, control=glmCtrl), silent=!verbose)
@@ -829,7 +832,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             }
 
             if (inherits(res.FE, "try-error"))
-               stop("Cannot fit FE model.")
+               stop(mstyle$stop("Cannot fit FE model."))
 
             ### log-likelihood
 
@@ -840,7 +843,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             ### fit saturated FE model (= QE model)
 
             if (verbose)
-               message("Fitting saturated model ...")
+               message(mstyle$message("Fitting saturated model ..."))
 
             if (k > 1) {
                X.QE <- model.matrix(~ -1 + X.fit + study + study:group1)
@@ -851,7 +854,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
             if (inherits(res.QE, "try-error")) {
 
-               warning("Cannot fit saturated model.")
+               warning(mstyle$warning("Cannot fit saturated model."))
                QEconv <- FALSE
                ll.QE <- NA
 
@@ -878,13 +881,13 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                ### notes: 1) not recommended alternative: using group1 instead of group12 for the random effect (since that forces the variance in group 2 to be lower)
 
                if (verbose)
-                  message("Fitting ML model ...")
+                  message(mstyle$message("Fitting ML model ..."))
 
                res.ML <- try(lme4::glmer(dat.grp ~ -1 + X.fit + study + (group12 - 1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
                #return(res.ML)
 
                if (inherits(res.ML, "try-error"))
-                  stop("Cannot fit ML model.")
+                  stop(mstyle$stop("Cannot fit ML model."))
 
                ### log-likelihood
 
@@ -934,12 +937,12 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             ### fit FE model
 
             if (verbose)
-               message("Fitting FE model ...")
+               message(mstyle$message("Fitting FE model ..."))
 
             res.FE <- try(lme4::glmer(dat.grp ~ -1 + X.fit + const + (1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
 
             if (inherits(res.FE, "try-error"))
-               stop("Cannot fit FE model.")
+               stop(mstyle$stop("Cannot fit FE model."))
 
             ### log-likelihood
 
@@ -950,7 +953,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             ###        2) sigma^2 for the study random effect must be close to the one from the FE model - so set start value to sigma from that model
 
             if (verbose)
-               message("Fitting saturated model ...")
+               message(mstyle$message("Fitting saturated model ..."))
 
             if (k > 1) {
                X.QE <- model.matrix(~ -1 + X.fit + const + study:group1)
@@ -963,7 +966,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
             if (inherits(res.QE, "try-error")) {
 
-               warning("Cannot fit saturated model.")
+               warning(mstyle$warning("Cannot fit saturated model."))
                QEconv <- FALSE
                ll.QE <- NA
 
@@ -990,14 +993,14 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                ###        3) start=c(sqrt(lme4::VarCorr(res.FE)[[1]][1])) has no effect, since the start value for tau^2 is not specified (and using 0 is probably not ideal for that)
 
                if (verbose)
-                  message("Fitting ML model ...")
+                  message(mstyle$message("Fitting ML model ..."))
 
                res.ML <- try(lme4::glmer(dat.grp ~ -1 + X.fit + const + (1 | study) + (group12 - 1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
                #res.ML <- try(lme4::glmer(dat.grp ~ -1 + X.fit + const + (group1 | study),                   offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
                #return(res.ML)
 
                if (inherits(res.ML, "try-error"))
-                  stop("Cannot fit ML model.")
+                  stop(mstyle$stop("Cannot fit ML model."))
 
                ### log-likelihood
 
@@ -1066,12 +1069,12 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
          ### fit FE model
 
          if (verbose)
-            message("Fitting FE model ...")
+            message(mstyle$message("Fitting FE model ..."))
 
          res.FE <- try(glm(dat.grp ~ -1 + X.fit, offset=dat.off, family=binomial, control=glmCtrl), silent=!verbose)
 
          if (inherits(res.FE, "try-error"))
-            stop("Cannot fit FE model.")
+            stop(mstyle$stop("Cannot fit FE model."))
 
          ### log-likelihood
 
@@ -1082,7 +1085,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
          ### fit saturated FE model (= QE model)
 
          if (verbose)
-            message("Fitting saturated model ...")
+            message(mstyle$message("Fitting saturated model ..."))
 
          if (k > 1) {
             X.QE <- model.matrix(~ -1 + X.fit + study)
@@ -1093,7 +1096,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
          if (inherits(res.QE, "try-error")) {
 
-            warning("Cannot fit saturated model.")
+            warning(mstyle$warning("Cannot fit saturated model."))
             QEconv <- FALSE
             ll.QE <- NA
 
@@ -1123,7 +1126,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             ### notes: 1) suppressMessages to suppress the 'one random effect per observation' warning
 
             if (verbose)
-               message("Fitting ML model ...")
+               message(mstyle$message("Fitting ML model ..."))
 
             if (verbose) {
                res.ML <- try(lme4::glmer(dat.grp ~ -1 + X.fit + (1 | study), offset=dat.off, family=binomial, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
@@ -1132,7 +1135,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             }
 
             if (inherits(res.ML, "try-error"))
-               stop("Cannot fit ML model.")
+               stop(mstyle$stop("Cannot fit ML model."))
 
             ### log-likelihood
 
@@ -1177,7 +1180,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
          ####################################################
 
          if (verbose)
-            message("Fitting FE model ...")
+            message(mstyle$message("Fitting FE model ..."))
 
          if (con$optimizer == "optim" || con$optimizer == "nlminb" || con$optimizer == "minqa") {
 
@@ -1202,15 +1205,15 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
             if (con$optimizer == "optim" || con$optimizer == "nlminb") {
                if (inherits(res.FE, "try-error") || res.FE$convergence != 0)
-                  stop("Cannot fit FE model.")
+                  stop(mstyle$stop("Cannot fit FE model."))
             }
             if (con$optimizer == "minqa") {
                if (inherits(res.FE, "try-error") || res.FE$ierr != 0)
-                  stop("Cannot fit FE model.")
+                  stop(mstyle$stop("Cannot fit FE model."))
             }
 
             if (verbose > 1)
-               message("Computing Hessian ...")
+               message(mstyle$message("Computing Hessian ..."))
 
             h.FE <- numDeriv::hessian(.dnchg, x=res.FE$par, method.args=hessianCtrl, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=FALSE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec)
             #return(list(res.FE, h.FE))
@@ -1233,7 +1236,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             if (QEconv) {
 
                if (verbose)
-                  message("Fitting saturated model ...")
+                  message(mstyle$message("Fitting saturated model ..."))
 
                if (k > 1) {
 
@@ -1255,14 +1258,14 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
                   if (con$optimizer == "optim" || con$optimizer == "nlminb") {
                      if (inherits(res.QE, "try-error") || res.QE$convergence != 0) {
-                        warning("Cannot fit saturated model.")
+                        warning(mstyle$warning("Cannot fit saturated model."))
                         QEconv <- FALSE
                         ll.QE <- NA
                      }
                   }
                   if (con$optimizer == "minqa") {
                      if (inherits(res.QE, "try-error") || res.QE$ierr != 0) {
-                        warning("Cannot fit saturated model.")
+                        warning(mstyle$warning("Cannot fit saturated model."))
                         QEconv <- FALSE
                         ll.QE <- NA
                      }
@@ -1270,7 +1273,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
                   if (QEconv) {
                      if (verbose > 1)
-                        message("Computing Hessian ...")
+                        message(mstyle$message("Computing Hessian ..."))
                      h.QE <- numDeriv::hessian(.dnchg, x=res.QE$par, method.args=hessianCtrl, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.QE, random=FALSE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec)
                   }
 
@@ -1314,7 +1317,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                h.D      <- hessian[-seq_len(p),-seq_len(p),drop=FALSE] ### lower right part of hessian (of which we need the inverse)
                chol.h.A <- try(chol(h.A), silent=!verbose)             ### see if h.A can be inverted with chol()
                if (inherits(chol.h.A, "try-error")) {
-                  warning("Cannot invert Hessian for saturated model.")
+                  warning(mstyle$warning("Cannot invert Hessian for saturated model."))
                } else {
                   Ivb2.QE  <- h.D-h.C%*%chol2inv(chol.h.A)%*%h.B       ### inverse of the inverse of the lower right part
                   QE.Wld   <- c(t(b2.QE) %*% Ivb2.QE %*% b2.QE)        ### Wald statistic (note: this approach only requires taking the inverse of h.A)
@@ -1364,11 +1367,11 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                }
 
             } else {
-               stop(paste("Cannot use '", con$optimizer, "' optimizer when k=1.", sep=""))
+               stop(mstyle$stop(paste0("Cannot use '", con$optimizer, "' optimizer when k=1.")))
             }
 
             if (inherits(res.FE, "try-error"))
-               stop("Cannot fit FE model.")
+               stop(mstyle$stop("Cannot fit FE model."))
 
             #return(res.FE)
 
@@ -1378,7 +1381,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             ###        3) however, for calculating the log likelihood, we need to go back to the conditional data, so we need to reconstruct X.QE (the study.l:group1 coefficients are the study coefficients)
 
             if (verbose)
-               message("Fitting saturated model ...")
+               message(mstyle$message("Fitting saturated model ..."))
 
             X.QE.l <- model.matrix(~ -1 + X.fit.l + study.l:group1)
             X.QE.l <- X.QE.l[,!is.na(coef(res.QE)),drop=FALSE]
@@ -1402,7 +1405,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             }
 
             if (inherits(res.QE, "try-error"))
-               stop("Cannot fit saturated model.")
+               stop(mstyle$stop("Cannot fit saturated model."))
 
             #return(res.QE)
 
@@ -1431,7 +1434,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             ###        5) results can be sensitive to the scaling of moderators
 
             if (verbose)
-               message("Fitting ML model ...")
+               message(mstyle$message("Fitting ML model ..."))
 
             if (con$optimizer == "optim") {
                res.ML <- try(optim(par=c(beta, log(tau2+.001)), .dnchg, method=con$optmethod, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=TRUE,
@@ -1448,15 +1451,15 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
             if (con$optimizer == "optim" || con$optimizer == "nlminb") {
                if (inherits(res.ML, "try-error") || res.ML$convergence != 0)
-                  stop("Cannot fit ML model.")
+                  stop(mstyle$stop("Cannot fit ML model."))
             }
             if (con$optimizer == "minqa") {
                if (inherits(res.ML, "try-error") || res.ML$ierr != 0)
-                  stop("Cannot fit ML model.")
+                  stop(mstyle$stop("Cannot fit ML model."))
             }
 
             if (verbose > 1)
-               message("Computing Hessian ...")
+               message(mstyle$message("Computing Hessian ..."))
 
             h.ML <- numDeriv::hessian(.dnchg, x=res.ML$par, method.args=hessianCtrl, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=TRUE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, intCtrl=intCtrl)
             #return(list(res.ML, h.ML))
@@ -1480,10 +1483,10 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                beta <- cbind(res.FE$par[seq_len(p)])
                chol.h <- try(chol(h.FE[seq_len(p),seq_len(p)]), silent=!verbose) ### see if Hessian can be inverted with chol()
                if (inherits(chol.h, "try-error")) {
-                  warning("Choleski factorization of Hessian failed. Trying inversion via QR decomposition.")
+                  warning(mstyle$warning("Choleski factorization of Hessian failed. Trying inversion via QR decomposition."))
                   vb <- try(qr.solve(h.FE[seq_len(p),seq_len(p)]), silent=!verbose) ### see if Hessian can be inverted with qr.solve()
                   if (inherits(vb, "try-error"))
-                     stop("Cannot invert Hessian for ML model.")
+                     stop(mstyle$stop("Cannot invert Hessian for ML model."))
                } else {
                   vb <- chol2inv(chol.h)
                }
@@ -1503,10 +1506,10 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             beta <- cbind(res.ML$par[seq_len(p)])
             chol.h <- try(chol(h.ML), silent=!verbose) ### see if Hessian can be inverted with chol()
             if (inherits(chol.h, "try-error")) {
-               warning("Choleski factorization of Hessian failed. Trying inversion via QR decomposition.")
+               warning(mstyle$warning("Choleski factorization of Hessian failed. Trying inversion via QR decomposition."))
                vb.f <- try(qr.solve(h.ML), silent=!verbose) ### see if Hessian can be inverted with qr.solve()
                if (inherits(vb.f, "try-error"))
-                  stop("Cannot invert Hessian for ML model.")
+                  stop(mstyle$stop("Cannot invert Hessian for ML model."))
             } else {
                vb.f <- chol2inv(chol.h)
             }
@@ -1559,12 +1562,12 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       ### fit FE model
 
       if (verbose)
-         message("Fitting FE model ...")
+         message(mstyle$message("Fitting FE model ..."))
 
       res.FE <- try(glm(dat.grp ~ -1 + X.fit, offset=dat.off, family=dat.fam, control=glmCtrl), silent=!verbose)
 
       if (inherits(res.FE, "try-error"))
-         stop("Cannot fit FE model.")
+         stop(mstyle$stop("Cannot fit FE model."))
 
       ### log-likelihood
 
@@ -1576,7 +1579,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       ### notes: 1) suppressWarnings() to suppress warning "glm.fit: fitted probabilities numerically 0 or 1 occurred"
 
       if (verbose)
-         message("Fitting saturated model ...")
+         message(mstyle$message("Fitting saturated model ..."))
 
       if (k > 1) {
          X.QE <- model.matrix(~ -1 + X.fit + study)
@@ -1591,7 +1594,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
       if (inherits(res.QE, "try-error")) {
 
-         warning("Cannot fit saturated model.")
+         warning(mstyle$warning("Cannot fit saturated model."))
          QEconv <- FALSE
          ll.QE <- NA
 
@@ -1618,7 +1621,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
          ### notes: 1) suppressMessages to suppress the 'one random effect per observation' warning
 
          if (verbose)
-            message("Fitting ML model ...")
+            message(mstyle$message("Fitting ML model ..."))
 
          if (verbose) {
             res.ML <- try(lme4::glmer(dat.grp ~ -1 + X.fit + (1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
@@ -1627,7 +1630,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
          }
 
          if (inherits(res.ML, "try-error"))
-            stop("Cannot fit ML model.")
+            stop(mstyle$stop("Cannot fit ML model."))
 
          ### log-likelihood
 
@@ -1673,7 +1676,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    ### heterogeneity tests (Wald-type and likelihood ratio tests of the extra coefficients in the saturated model)
 
    if (verbose > 1)
-      message("Heterogeneity testing ...")
+      message(mstyle$message("Heterogeneity testing ..."))
 
    if (QEconv) {
 
@@ -1686,7 +1689,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             chol.h <- try(chol(vb2.QE), silent=!verbose) ### see if Hessian can be inverted with chol()
 
             if (inherits(chol.h, "try-error")) {
-               warning("Cannot invert Hessian for saturated model.")
+               warning(mstyle$warning("Cannot invert Hessian for saturated model."))
                QE.Wld <- NA
             } else {
                QE.Wld <- c(t(b2.QE) %*% chol2inv(chol.h) %*% b2.QE)
@@ -1740,7 +1743,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    chol.h <- try(chol(vb[btt,btt]), silent=!verbose) ### see if Hessian can be inverted with chol()
 
    if (inherits(chol.h, "try-error")) {
-      warning("Cannot invert Hessian for QM test.")
+      warning(mstyle$warning("Cannot invert Hessian for QM test."))
       QM <- NA
    } else {
       QM <- as.vector(t(beta)[btt] %*% chol2inv(chol.h) %*% beta[btt])
@@ -1791,7 +1794,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    ###### fit statistics
 
    if (verbose > 1)
-      message("Computing fit statistics and log likelihood ...")
+      message(mstyle$message("Computing fit statistics and log likelihood ..."))
 
    ll.ML     <- ifelse(method == "FE", ll.FE, ll.ML)
    ll.REML   <- NA
@@ -1813,7 +1816,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    ###### prepare output
 
    if (verbose > 1)
-      message("Preparing output ...")
+      message(mstyle$message("Preparing output ..."))
 
    weighted  <- TRUE
 

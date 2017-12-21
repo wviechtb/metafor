@@ -1,7 +1,9 @@
 print.escalc <- function(x, digits, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(x, "escalc"))
-      stop("Argument 'x' must be an object of class \"escalc\".")
+      stop(mstyle$stop("Argument 'x' must be an object of class \"escalc\"."))
 
    attr(x, "class") <- NULL
 
@@ -48,6 +50,7 @@ print.escalc <- function(x, digits, ...) {
    if (length(ci.ub.pos) > 0)
       x[ci.ub.pos] <- apply(x[ci.ub.pos], 2, formatC, digits=digits, format="f")
 
-   print(x, ...)
+   tmp <- capture.output(print(x, ...))
+   .print.table(tmp, mstyle)
 
 }

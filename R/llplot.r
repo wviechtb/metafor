@@ -4,18 +4,20 @@ lty, lwd, col, level=99.99, refline=0, ...) {
 
    #########################################################################
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    ### data setup
 
    if (!is.element(measure, "OR"))
-      stop("Currently only measure=\"OR\" can be specified.")
+      stop(mstyle$stop("Currently only measure=\"OR\" can be specified."))
 
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
-      stop("Unknown 'na.action' specified under options().")
+      stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
    if (!requireNamespace("BiasedUrn", quietly=TRUE))
-      stop("Please install the 'BiasedUrn' package to use this function.")
+      stop(mstyle$stop("Please install the 'BiasedUrn' package to use this function."))
 
    if (missing(xlab))
       xlab <- "Log Odds Ratio"
@@ -130,7 +132,7 @@ lty, lwd, col, level=99.99, refline=0, ...) {
          lty <- rep(lty, k)
       } else {
          if (length(lty) != k)
-            stop("Length of 'lty' argument does not match data.")
+            stop(mstyle$stop("Length of 'lty' argument does not match data."))
       }
    }
 
@@ -139,7 +141,7 @@ lty, lwd, col, level=99.99, refline=0, ...) {
          lwd <- rep(lwd, k)
       } else {
          if (length(lwd) != k)
-            stop("Length of 'lwd' argument does not match data.")
+            stop(mstyle$stop("Length of 'lwd' argument does not match data."))
       }
    }
 
@@ -148,7 +150,7 @@ lty, lwd, col, level=99.99, refline=0, ...) {
          col <- rep(col, k)
       } else {
          if (length(col) != k)
-            stop("Length of 'col' argument does not match data.")
+            stop(mstyle$stop("Length of 'col' argument does not match data."))
       }
    }
 
@@ -188,18 +190,18 @@ lty, lwd, col, level=99.99, refline=0, ...) {
          id0  <- id0[not.na]
          id00 <- id00[not.na]
          k    <- length(ai)
-         warning("Studies with NAs omitted from plotting.")
+         warning(mstyle$warning("Studies with NAs omitted from plotting."))
       }
 
       if (na.act == "na.fail")
-         stop("Missing values in studies.")
+         stop(mstyle$stop("Missing values in studies."))
 
    }
 
    ### at least one study left?
 
    if (k < 1)
-      stop("Processing terminated since k = 0.")
+      stop(mstyle$stop("Processing terminated since k = 0."))
 
    #########################################################################
 
