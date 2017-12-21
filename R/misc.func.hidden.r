@@ -2571,7 +2571,7 @@
 
 .print.table <- function(x, mstyle) {
 
-   is.header <- !grepl(" [0-9]", x) & !grepl(" -[0-9]", x)
+   is.header <- !grepl(" [-0-9]", x)
 
    for (i in 1:length(x)) {
       if (is.header[i]) {
