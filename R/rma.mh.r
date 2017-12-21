@@ -52,7 +52,7 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
 
    ### handle 'time' argument from ...
 
-   if (is.logical(ddd$time) && ddd$time)
+   if (.isTRUE(ddd$time))
       time.start <- proc.time()
 
    ### set defaults or get onlyo1, addyi, and addvi arguments
@@ -64,7 +64,7 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
    #########################################################################
 
    if (verbose)
-      message(mstyle$message("Extracting data and computing yi/vi values ..."))
+      message(mstyle$message("\nExtracting data and computing yi/vi values ..."))
 
    ### check if data argument has been specified
 
@@ -766,11 +766,14 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
 
    }
 
-   if (is.logical(ddd$time) && ddd$time) {
+   if (.isTRUE(ddd$time)) {
       time.end <- proc.time()
       res$time <- unname(time.end - time.start)[3]
       .print.time(res$time)
    }
+
+   if (verbose || .isTRUE(ddd$time))
+      cat("\n")
 
    if (!is.null(ddd$outlist)) {
       if (ddd$outlist == "minimal") {

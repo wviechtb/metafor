@@ -30,7 +30,7 @@ confint.rma.peto <- function(object, parm, level, digits, transf, targs, ...) {
 
    ### if requested, apply transformation function
 
-   if (is.logical(transf) && transf) ### if transf=TRUE, apply exp transformation to ORs
+   if (.isTRUE(transf)) ### if transf=TRUE, apply exp transformation to ORs
       transf <- exp
 
    if (is.function(transf)) {

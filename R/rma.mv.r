@@ -80,14 +80,14 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    ### handle 'time' argument from ...
 
-   if (is.logical(ddd$time) && ddd$time)
+   if (.isTRUE(ddd$time))
       time.start <- proc.time()
 
    ### handle 'tdist' argument from ... (note: overrides test argument)
 
-   if (is.logical(ddd$tdist) && !ddd$tdist)
+   if (.isFALSE(ddd$tdist))
       test <- "z"
-   if (is.logical(ddd$tdist) && ddd$tdist)
+   if (.isTRUE(ddd$tdist))
       test <- "t"
 
    if (!is.element(test, c("z","t","knha","adhoc")))
@@ -111,7 +111,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
    #########################################################################
 
    if (verbose > 1)
-      message(mstyle$message("Extracting yi/V values ..."))
+      message(mstyle$message("\nExtracting yi/V values ..."))
 
    ### check if data argument has been specified
 
@@ -1616,7 +1616,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
    ###### model fitting, test statistics, and confidence intervals
 
    if (verbose > 1)
-      message(mstyle$message("Model fitting ..."))
+      message(mstyle$message("Model fitting ...\n"))
 
    ### estimate sigma2, tau2, rho, gamma2, and phi as needed
 
@@ -1692,7 +1692,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
          if (optimizer=="ucminf::ucminf" && !(opt.res$convergence == 1 || opt.res$convergence == 2))
             stop(mstyle$stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (convergence = ", opt.res$convergence, ").")))
 
-         if (verbose > 1) {
+         if (verbose > 2) {
             cat("\n")
             tmp <- capture.output(print(opt.res))
             .print.output(tmp, mstyle$verbose)
@@ -1833,7 +1833,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
    ### heterogeneity test (Wald-type test of the extra coefficients in the saturated model)
 
    if (verbose > 1)
-      message(mstyle$message("Heterogeneity testing ..."))
+      message(mstyle$message("\nHeterogeneity testing ..."))
 
    QE.df <- k-p
 
@@ -2015,11 +2015,14 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    }
 
-   if (is.logical(ddd$time) && ddd$time) {
+   if (.isTRUE(ddd$time)) {
       time.end <- proc.time()
       res$time <- unname(time.end - time.start)[3]
       .print.time(res$time)
    }
+
+   if (verbose || .isTRUE(ddd$time))
+      cat("\n")
 
    if (!is.null(ddd$outlist)) {
       if (ddd$outlist == "minimal") {

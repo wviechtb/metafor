@@ -383,7 +383,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
    ci.lb <- x$ci.lb
    ci.ub <- x$ci.ub
 
-   if ((is.logical(permci) && permci) || is.numeric(permci)) {
+   if (.isTRUE(permci) || is.numeric(permci)) {
 
       level <- ifelse(x$level > 1, (100-x$level)/100, ifelse(x$level > .5, 1-x$level, x$level))
 

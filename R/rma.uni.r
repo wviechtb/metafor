@@ -63,14 +63,14 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
    ### handle 'time' argument from ...
 
-   if (is.logical(ddd$time) && ddd$time)
+   if (.isTRUE(ddd$time))
       time.start <- proc.time()
 
    ### handle 'knha' argument from ... (note: overrides test argument)
 
-   if (is.logical(ddd$knha) && !ddd$knha)
+   if (.isFALSE(ddd$knha))
       test <- "z"
-   if (is.logical(ddd$knha) && ddd$knha)
+   if (.isTRUE(ddd$knha))
       test <- "knha"
 
    if (!is.element(test, c("z","t","knha","adhoc")))
@@ -98,6 +98,9 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
    addvi  <- ifelse(is.null(ddd$addvi),  TRUE,  ddd$addvi)
 
    #########################################################################
+
+   if (verbose)
+      cat("\n")
 
    if (verbose > 1)
       message(mstyle$message("Extracting/computing yi/vi values ..."))
@@ -917,7 +920,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
       }
 
       if ((verbose > 1) && !tau2.fix)
-         message(mstyle$message("Estimating tau^2 value ..."))
+         message(mstyle$message("Estimating tau^2 value ...\n"))
 
       ### Hunter & Schmidt (HS) estimator
 
@@ -1353,7 +1356,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
       }
 
       if (verbose > 1)
-         message(mstyle$message("Estimating scale parameters ..."))
+         message(mstyle$message("Estimating scale parameters ...\n"))
 
       ### obtain initial values for beta (only need this when optimizing over beta and alpha jointly)
 
@@ -1437,7 +1440,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
       if (optimizer=="ucminf::ucminf" && !(opt.res$convergence == 1 || opt.res$convergence == 2))
          stop(mstyle$stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (convergence = ", opt.res$convergence, ").")))
 
-      if (verbose > 1) {
+      if (verbose > 2) {
          cat("\n")
          tmp <- capture.output(print(opt.res))
          .print.output(tmp, mstyle$verbose)
@@ -1511,7 +1514,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
    ###### model fitting, test statistics, and confidence intervals
 
    if (verbose > 1)
-      message(mstyle$message("Model fitting ..."))
+      message(mstyle$message("\nModel fitting ..."))
 
    wi <- 1/(vi + tau2)
    W  <- diag(wi, nrow=k, ncol=k)
@@ -1827,11 +1830,14 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
    }
 
-   if (is.logical(ddd$time) && ddd$time) {
+   if (.isTRUE(ddd$time)) {
       time.end <- proc.time()
       res$time <- unname(time.end - time.start)[3]
       .print.time(res$time)
    }
+
+   if (verbose || .isTRUE(ddd$time))
+      cat("\n")
 
    if (!is.null(ddd$outlist)) {
       if (ddd$outlist == "minimal") {

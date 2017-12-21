@@ -67,14 +67,14 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    ### handle 'time' argument from ...
 
-   if (is.logical(ddd$time) && ddd$time)
+   if (.isTRUE(ddd$time))
       time.start <- proc.time()
 
    ### handle 'tdist' argument from ... (note: overrides test argument)
 
-   if (is.logical(ddd$tdist) && !ddd$tdist)
+   if (.isFALSE(ddd$tdist))
       test <- "z"
-   if (is.logical(ddd$tdist) && ddd$tdist)
+   if (.isTRUE(ddd$tdist))
       test <- "t"
 
    if (!is.element(test, c("z","t")))
@@ -87,6 +87,9 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    addvi  <- ifelse(is.null(ddd$addvi),  TRUE,  ddd$addvi)
 
    #########################################################################
+
+   if (verbose)
+      cat("\n")
 
    if (verbose > 1)
       message(mstyle$message("Extracting data and computing yi/vi values ..."))
@@ -1838,11 +1841,14 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    }
 
-   if (is.logical(ddd$time) && ddd$time) {
+   if (.isTRUE(ddd$time)) {
       time.end <- proc.time()
       res$time <- unname(time.end - time.start)[3]
       .print.time(res$time)
    }
+
+   if (verbose || .isTRUE(ddd$time))
+      cat("\n")
 
    if (!is.null(ddd$outlist)) {
       if (ddd$outlist == "minimal") {

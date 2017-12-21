@@ -105,7 +105,7 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, digits, ...) {
 
    ### suggested in Hedges, Tipton, & Johnson (2010) -- analogous to HC1 adjustment
 
-   if (is.logical(adjust) && adjust)
+   if (.isTRUE(adjust))
       vb <- (n / dfs) * vb
 
    ### what Stata does

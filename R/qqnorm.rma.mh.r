@@ -43,10 +43,10 @@ qqnorm.rma.mh <- function(y, type="rstandard", pch=19, label=FALSE, offset=0.3, 
 
    ### labeling of points
 
-   if ((is.character(label) && label=="none") || (is.logical(label) && !label))
+   if ((is.character(label) && label=="none") || .isFALSE(label))
       return(invisible(sav))
 
-   if ((is.character(label) && label=="all") || (is.logical(label) && label))
+   if ((is.character(label) && label=="all") || .isTRUE(label))
       label <- x$k
 
    if (is.numeric(label)) {

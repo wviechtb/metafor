@@ -1144,17 +1144,18 @@
    }
 
    if ((vctransf && verbose) || (!vctransf && (verbose > 1))) {
+      cat(mstyle$verbose(paste0("ll = ", ifelse(is.na(llval), NA, formatC(llval, digits=digits, format="f", flag=" ")))), "  ")
       if (withS)
-         cat(mstyle$verbose(paste0("sigma2 =", ifelse(is.na(sigma2), NA, paste(formatC(sigma2, digits=digits, format="f", flag=" "), " ", sep="")), "  ")))
+         cat(mstyle$verbose(paste0("sigma2 =", paste(ifelse(is.na(sigma2), NA, formatC(sigma2, digits=digits, format="f", flag=" ")), collapse=" "), "  ")))
       if (withG) {
-         cat(mstyle$verbose(paste0("tau2 =",   ifelse(is.na(tau2),   NA, paste(formatC(tau2,   digits=digits, format="f", flag=" "), " ", sep="")), "  ")))
-         cat(mstyle$verbose(paste0("rho =",    ifelse(is.na(rho),    NA, paste(formatC(rho,    digits=digits, format="f", flag=" "), " ", sep="")), "  ")))
+         cat(mstyle$verbose(paste0("tau2 =",   paste(ifelse(is.na(tau2),   NA, formatC(tau2,   digits=digits, format="f", flag=" ")), collapse=" "), "  ")))
+         cat(mstyle$verbose(paste0("rho =",    paste(ifelse(is.na(rho),    NA, formatC(rho,    digits=digits, format="f", flag=" ")), collapse=" "), "  ")))
       }
       if (withH) {
-         cat(mstyle$verbose(paste0("gamma2 =", ifelse(is.na(gamma2), NA, paste(formatC(gamma2, digits=digits, format="f", flag=" "), " ", sep="")), "  ")))
-         cat(mstyle$verbose(paste0("phi =",    ifelse(is.na(phi),    NA, paste(formatC(phi,    digits=digits, format="f", flag=" "), " ", sep="")), "  ")))
+         cat(mstyle$verbose(paste0("gamma2 =", paste(ifelse(is.na(gamma2), NA, formatC(gamma2, digits=digits, format="f", flag=" ")), collapse=" "), "  ")))
+         cat(mstyle$verbose(paste0("phi =",    paste(ifelse(is.na(phi),    NA, formatC(phi,    digits=digits, format="f", flag=" ")), collapse=" "), "  ")))
       }
-      cat(mstyle$verbose(paste0("  ll = ", ifelse(is.na(llval), NA, formatC(llval, digits=digits, format="f", flag=" ")), "\n")))
+      cat("\n")
    }
 
    return(-1 * c(llval))
@@ -2197,8 +2198,9 @@
    }
 
    if (verbose) {
-      cat(mstyle$verbose(paste0("ll = ",   ifelse(is.na(llval), NA, formatC(llval, digits=digits, format="f", flag=" ")), " ")))
-      cat(mstyle$verbose(paste0("alpha =", ifelse(is.na(alpha), NA, paste(formatC(alpha, digits=digits, format="f", flag=" "), " ", sep="")), "\n")))
+      cat(mstyle$verbose(paste0("ll = ", ifelse(is.na(llval), NA, formatC(llval, digits=digits, format="f", flag=" ")), "  ")))
+      cat(mstyle$verbose(paste0("alpha = ", paste(ifelse(is.na(alpha), NA, formatC(alpha, digits=digits, format="f", flag=" ")), collapse=" "))))
+      cat("\n")
    }
 
    return(-1 * llval)
@@ -2474,6 +2476,8 @@
 
 ############################################################################
 
+### function that prints the model fitting time
+
 .print.time <- function(x) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
@@ -2484,11 +2488,13 @@
 
    cat("\n")
    cat(mstyle$message(paste("Model fitting time:", hours, ifelse(hours == 0 || hours > 1, "hours,", "hour,"), minutes, ifelse(minutes == 0 || minutes > 1, "minutes,", "minute,"), seconds, ifelse(x < 60 || seconds == 0 || seconds > 1, "seconds", "second"))))
-   cat("\n\n")
+   cat("\n")
 
 }
 
 ############################################################################
+
+### stuff related to colored/styled output
 
 .get.mstyle <- function(withcrayon) {
 
@@ -2576,5 +2582,15 @@
    }
 
 }
+
+############################################################################
+
+### check if x is logical and TRUE/FALSE (NAs and NULL always evaluate as FALSE)
+
+.isTRUE <- function(x)
+   !is.null(x) && is.logical(x) && !is.na(x)  && x
+
+.isFALSE <- function(x)
+   !is.null(x) && is.logical(x) && !is.na(x) && !x
 
 ############################################################################
