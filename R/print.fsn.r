@@ -1,14 +1,17 @@
 print.fsn <- function(x, digits, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(x, "fsn"))
-      stop("Argument 'x' must be an object of class \"fsn\".")
+      stop(mstyle$stop("Argument 'x' must be an object of class \"fsn\"."))
 
    if (missing(digits))
       digits <- x$digits
 
    cat("\n")
 
-   cat("Fail-safe N Calculation Using the", x$type, "Approach", "\n\n")
+   cat(mstyle$section(paste("Fail-safe N Calculation Using the", x$type, "Approach")))
+   cat("\n\n")
 
    if (x$type == "Rosenthal") {
       cat("Observed Significance Level:", .pval(x$pval, digits=digits), "\n")

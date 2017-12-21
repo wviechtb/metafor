@@ -4,6 +4,8 @@
 
 .set.btt <- function(btt, p, int.incl) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (missing(btt) || is.null(btt)) {
 
       if (p > 1) {                        ### if the model matrix has more than one column
@@ -23,7 +25,7 @@
 
       ### check for mix of positive and negative values
       if (any(btt < 0) && any(btt > 0))
-         stop("Cannot mix positive and negative 'btt' values.")
+         stop(mstyle$stop("Cannot mix positive and negative 'btt' values."))
 
       ### keep/remove from 1:p vector as specified
       btt <- seq_len(p)[btt]
@@ -33,7 +35,7 @@
 
       ### make sure that at least one valid value is left
       if (length(btt) == 0L)
-         stop("Non-existent coefficients specified via 'btt'.")
+         stop(mstyle$stop("Non-existent coefficients specified via 'btt'."))
 
    }
 
@@ -152,6 +154,8 @@
 .is.intercept <- function(x, eps=1e-08)
    return(all(abs(x - 1) < eps))
 
+### function to test whether a vector is a dummy variable (i.e., consists of only 0s and 1s)
+
 .is.dummy <- function(x, eps=1e-08)
    return(all(abs(x) < eps | abs(x - 1) < eps))
    #return(all(sapply(x, identical, 0) | sapply(x, identical, 1)))
@@ -205,7 +209,7 @@
 ### function to print a named (character) vector right aligned with
 ### a gap of two spaces between adjacent values and no padding
 
-.print.out <- function(x) {
+.print.vector <- function(x) {
 
    if (is.null(names(x)))
       names(x) <- 1:length(x)
@@ -250,11 +254,13 @@
 
 .chkdots <- function(ddd, okargs) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    for (i in seq_along(okargs))
       ddd[okargs[i]] <- NULL
 
    if (length(ddd) > 0)
-      warning(paste0("Extra argument", ifelse(length(ddd) > 1, "s ", " "), "(", paste0("'", names(ddd), "'", collapse=", "), ") disregarded."), call.=FALSE)
+      warning(mstyle$warning(paste0("Extra argument", ifelse(length(ddd) > 1, "s ", " "), "(", paste0("'", names(ddd), "'", collapse=", "), ") disregarded.")), call.=FALSE)
 
 }
 
@@ -282,8 +288,10 @@
 
 .QE.func <- function(tau2val, Y, vi, X, k, objective, verbose=FALSE, digits=4) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (any(tau2val + vi < 0))
-      stop("Some marginal variances are negative.")
+      stop(mstyle$stop("Some marginal variances are negative."))
 
    W     <- diag(1/(vi + tau2val), nrow=k, ncol=k)
    stXWX <- .invcalc(X=X, W=W, k=k)
@@ -291,7 +299,7 @@
    RSS   <- crossprod(Y,P) %*% Y
 
    if (verbose)
-      cat("tau2 =", formatC(tau2val, digits=digits, width=digits+4, format="f"), " RSS - objective =", c(RSS - objective), "\n")
+      cat(mstyle$verbose(paste("tau2 =", formatC(tau2val, digits=digits, width=digits+4, format="f"), " RSS - objective =", c(RSS - objective), "\n")))
 
    return(RSS - objective)
 
@@ -302,6 +310,8 @@
 ### function for confint.rma.uni() with method="GENQ"
 
 .GENQ.func <- function(tau2val, P, vi, Q, level, k, p, getlower, verbose=FALSE, digits=4) {
+
+   mstyle <- .get.mstyle("crayon" %in% .packages())
 
    S <- diag(sqrt(vi + tau2val), nrow=k, ncol=k)
    lambda <- Re(eigen(S %*% P %*% S, symmetric=TRUE, only.values=TRUE)$values)
@@ -320,7 +330,7 @@
    }
 
    if (verbose)
-      cat("tau2 =", formatC(tau2val, digits=digits, width=digits+4, format="f"), " objective =", res, "\n")
+      cat(mstyle$verbose(paste("tau2 =", formatC(tau2val, digits=digits, width=digits+4, format="f"), " objective =", res, "\n")))
 
    return(res)
 
@@ -330,8 +340,10 @@
 
 .process.G.aftersub <- function(verbose, mf.g, struct, formula, tau2, rho, isG, k, sparse) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (verbose > 1)
-      message(paste0("Processing '", paste0(formula, collapse=""), "' term ..."))
+      message(mstyle$message(paste0("Processing '", paste0(formula, collapse=""), "' term ...")))
 
    ### number of variables in model frame
 
@@ -340,7 +352,7 @@
    ### check that the number of variables is correct for the chosen structure
 
    if (is.element(struct, c("CS","HCS","UN","UNHO","AR","HAR","CAR","ID","DIAG")) && nvars != 2)
-      stop(paste0("Only a single inner variable allowed for an (~ inner | outer) term when 'struct=\"", struct, "\"'."), call.=FALSE)
+      stop(mstyle$stop(paste0("Only a single inner variable allowed for an (~ inner | outer) term when 'struct=\"", struct, "\"'.")), call.=FALSE)
 
    ### get variables names in mf.g
 
@@ -349,13 +361,13 @@
    ### check that inner variable is a factor (or character variable) for structures that require this
 
    if (is.element(struct, c("CS","HCS","UN","UNHO","ID","DIAG")) && !is.factor(mf.g[[1]]) && !is.character(mf.g[[1]]))
-      stop(paste0("Inner variable in (~ inner | outer) term must be a factor or character variable when 'struct=\"", struct, "\"'."), call.=FALSE)
+      stop(mstyle$stop(paste0("Inner variable in (~ inner | outer) term must be a factor or character variable when 'struct=\"", struct, "\"'.")), call.=FALSE)
 
    ### for struct="CAR", check that inner term is numeric and get the unique numeric values
 
    if (is.element(struct, c("CAR"))) {
       if (!is.numeric(mf.g[[1]]))
-         stop("Inner variable in (~ inner | outer) must be numeric for 'struct=\"CAR\"'.")
+         stop(mstyle$stop("Inner variable in (~ inner | outer) must be numeric for 'struct=\"CAR\"'."), call.=FALSE)
       g.values <- sort(unique(mf.g[[1]]))
    } else {
       g.values <- NULL
@@ -373,7 +385,7 @@
    ### check if there are any NAs anywhere in mf.g
 
    if (anyNA(mf.g))
-      stop("No NAs allowed in variables specified in the 'random' argument.", call.=FALSE)
+      stop(mstyle$stop("No NAs allowed in variables specified in the 'random' argument."), call.=FALSE)
 
    ### get number of levels of each variable in mf.g (vector with two values, for the inner and outer factor)
 
@@ -437,20 +449,20 @@
    ### check if tau2 and rho are of correct length
 
    if (length(tau2) != tau2s)
-      stop(paste0("Length of ", ifelse(isG, 'tau2', 'gamma2'), " argument (", length(tau2), ") does not match actual number of variance components (", tau2s, ")."), call.=FALSE)
+      stop(mstyle$stop(paste0("Length of ", ifelse(isG, 'tau2', 'gamma2'), " argument (", length(tau2), ") does not match actual number of variance components (", tau2s, ").")), call.=FALSE)
    if (length(rho) != rhos)
-      stop(paste0("Length of ", ifelse(isG, 'rho', 'phi'), " argument (", length(rho), ") does not match actual number of correlations (", rhos, ")."), call.=FALSE)
+      stop(mstyle$stop(paste0("Length of ", ifelse(isG, 'rho', 'phi'), " argument (", length(rho), ") does not match actual number of correlations (", rhos, ").")), call.=FALSE)
 
    ### checks on any fixed values of tau2 and rho arguments
 
    if (any(tau2 < 0, na.rm=TRUE))
-      stop(paste0("Specified value(s) of ", ifelse(isG, 'tau2', 'gamma2'), " must be >= 0."), call.=FALSE)
+      stop(mstyle$stop(paste0("Specified value(s) of ", ifelse(isG, 'tau2', 'gamma2'), " must be >= 0.")), call.=FALSE)
    if (is.element(struct, c("CAR")) && any(rho > 1 | rho < 0, na.rm=TRUE))
-      stop(paste0("Specified value(s) of ", ifelse(isG, 'rho', 'phi'), " must be in [0,1]."), call.=FALSE)
+      stop(mstyle$stop(paste0("Specified value(s) of ", ifelse(isG, 'rho', 'phi'), " must be in [0,1].")), call.=FALSE)
    if (is.element(struct, c("SPEXP","SPGAU")) && any(rho < 0, na.rm=TRUE))
-      stop(paste0("Specified value(s) of ", ifelse(isG, 'rho', 'phi'), " must be >= 0."), call.=FALSE)
+      stop(mstyle$stop(paste0("Specified value(s) of ", ifelse(isG, 'rho', 'phi'), " must be >= 0.")), call.=FALSE)
    if (!is.element(struct, c("CAR","SPEXP","SPGAU")) && any(rho > 1 | rho < -1, na.rm=TRUE))
-      stop(paste0("Specified value(s) of ", ifelse(isG, 'rho', 'phi'), " must be in [-1,1]."), call.=FALSE)
+      stop(mstyle$stop(paste0("Specified value(s) of ", ifelse(isG, 'rho', 'phi'), " must be in [-1,1].")), call.=FALSE)
 
    ### create model matrix for inner and outer factors of mf.g
 
@@ -504,6 +516,8 @@
 
 .process.G.afterrmna <- function(mf.g, g.nlevels, g.levels, g.values, struct, formula, tau2, rho, Z.G1, Z.G2, isG, sparse) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    ### number of variables in model frame
 
    nvars <- ncol(mf.g)
@@ -547,7 +561,7 @@
    ### warn if any levels were removed (not for "AR","CAR","SPEXP","SPGAU")
 
    if (any(g.levels.r) && !is.element(struct, c("AR","CAR","SPEXP","SPGAU")))
-      warning("One or more levels of inner factor removed due to NAs.", call.=FALSE)
+      warning(mstyle$warning("One or more levels of inner factor removed due to NAs."), call.=FALSE)
 
    ### for "ID" and "DIAG", fix rho to 0
 
@@ -558,13 +572,13 @@
 
    if (g.nlevels[1] == 1 && is.element(struct, c("CS","HCS","AR","HAR","CAR")) && is.na(rho)) {
       rho <- 0
-      warning(paste0("Inner factor has only a single level, so fixed value of ", ifelse(isG, 'rho', 'phi'), " to 0."), call.=FALSE)
+      warning(mstyle$warning(paste0("Inner factor has only a single level, so fixed value of ", ifelse(isG, 'rho', 'phi'), " to 0.")), call.=FALSE)
    }
 
    ### if there is only a single arm for "SPEXP","SPGAU" (either to begin with or after removing NAs), cannot fit model
 
    if (g.nlevels[1] == 1 && is.element(struct, c("SPEXP","SPGAU")))
-      stop("Cannot fit model since inner term only has a single level.", call.=FALSE)
+      stop(mstyle$stop("Cannot fit model since inner term only has a single level."), call.=FALSE)
 
    ### k per level of the inner factor
    if (is.element(struct, c("SPEXP","SPGAU"))) {
@@ -579,7 +593,7 @@
    #if (is.element(struct, c("HCS","UN","DIAG","HAR"))) {
    #   if (any(is.na(tau2) & g.levels.k == 1)) {
    #      tau2[is.na(tau2) & g.levels.k == 1] <- 0
-   #      warning("Inner factor has k=1 for one or more levels. Corresponding 'tau2' value(s) fixed to 0.")
+   #      warning(mstyle$warning("Inner factor has k=1 for one or more levels. Corresponding 'tau2' value(s) fixed to 0."))
    #   }
    #}
 
@@ -590,10 +604,10 @@
    if (g.nlevels[2] == nrow(mf.g)) {
       if (is.element(struct, c("CS","HCS","AR","HAR","CAR")) && is.na(rho)) {
          rho <- 0
-         warning(paste0("Each level of the outer factor contains only a single level of the inner factor, so fixed value of ", ifelse(isG, 'rho', 'phi'), " to 0."), call.=FALSE)
+         warning(mstyle$warning(paste0("Each level of the outer factor contains only a single level of the inner factor, so fixed value of ", ifelse(isG, 'rho', 'phi'), " to 0.")), call.=FALSE)
       }
       if (is.element(struct, c("SPEXP","SPGAU")))
-         stop("Cannot fit model since each level of the outer factor contains only a single level of the inner term.", call.=FALSE)
+         stop(mstyle$stop("Cannot fit model since each level of the outer factor contains only a single level of the inner term."), call.=FALSE)
    }
 
    g.levels.comb.k <- NULL
@@ -612,7 +626,7 @@
       #if (all(unlist(lapply(g.levels.comb.k, sum)) == 1)) {
       #   if (is.element(struct, c("CS","HCS","AR","HAR","CAR")) && is.na(rho)) {
       #      rho <- 0
-      #      warning(paste0("Each level of the outer factor contains only a single level of the inner factor, so fixed value of ", ifelse(isG, 'rho', 'phi'), " to 0."), call.=FALSE)
+      #      warning(mstyle$warning(paste0("Each level of the outer factor contains only a single level of the inner factor, so fixed value of ", ifelse(isG, 'rho', 'phi'), " to 0.")), call.=FALSE)
       #   }
       #}
 
@@ -629,7 +643,7 @@
 
       if (is.element(struct, c("UN","UNHO")) && any(g.levels.comb.k == 0 & is.na(rho))) {
          rho[g.levels.comb.k == 0] <- 0
-         warning(paste0("Some combinations of the levels of the inner factor never occurred. Corresponding ", ifelse(isG, 'rho', 'phi'), " value(s) fixed to 0."), call.=FALSE)
+         warning(mstyle$warning(paste0("Some combinations of the levels of the inner factor never occurred. Corresponding ", ifelse(isG, 'rho', 'phi'), " value(s) fixed to 0.")), call.=FALSE)
       }
 
       ### if there was only a single arm for "UN/UNHO" to begin with, then fix rho to 0
@@ -638,7 +652,7 @@
 
       if (is.element(struct, c("UN","UNHO")) && g.nlevels.f[1] == 1 && is.na(rho)) {
          rho <- 0
-         warning(paste0("Inner factor has only a single level, so fixed value of ", ifelse(isG, 'rho', 'phi'), " to 0."), call.=FALSE)
+         warning(mstyle$warning(paste0("Inner factor has only a single level, so fixed value of ", ifelse(isG, 'rho', 'phi'), " to 0.")), call.=FALSE)
       }
 
    }
@@ -755,7 +769,7 @@
       G[g.levels.r,] <- 0
       G[,g.levels.r] <- 0
       tau2[g.levels.r] <- 0
-      warning(paste0("Fixed ", ifelse(isG, 'tau2', 'gamma2'), " to 0 for removed level(s)."), call.=FALSE)
+      warning(mstyle$warning(paste0("Fixed ", ifelse(isG, 'tau2', 'gamma2'), " to 0 for removed level(s).")), call.=FALSE)
    }
 
    ### for "UN", set tau2 value(s) and corresponding rho(s) to 0 for any levels that were removed
@@ -765,7 +779,7 @@
       G[,g.levels.r] <- 0
       tau2[g.levels.r] <- 0
       rho <- G[upper.tri(G)]
-      warning(paste0("Fixed ", ifelse(isG, 'tau2', 'gamma2'), " and corresponding ", ifelse(isG, 'rho', 'phi'), " value(s) to 0 for removed level(s)."), call.=FALSE)
+      warning(mstyle$warning(paste0("Fixed ", ifelse(isG, 'tau2', 'gamma2'), " and corresponding ", ifelse(isG, 'rho', 'phi'), " value(s) to 0 for removed level(s).")), call.=FALSE)
    }
 
    ### for "UNHO", set rho(s) to 0 corresponding to any levels that were removed
@@ -775,7 +789,7 @@
       G[,g.levels.r] <- 0
       diag(G) <- tau2 ### don't really need this
       rho <- G[upper.tri(G)]
-      warning(paste0("Fixed ", ifelse(isG, 'rho', 'phi'), " value(s) to 0 corresponding to removed level(s)."), call.=FALSE)
+      warning(mstyle$warning(paste0("Fixed ", ifelse(isG, 'rho', 'phi'), " value(s) to 0 corresponding to removed level(s).")), call.=FALSE)
    }
 
    ### special handling for the bivariate model:
@@ -971,6 +985,8 @@
                        sparse, cholesky, posdefify, vctransf,
                        verbose, digits, REMLf, dofit=FALSE) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    ### only NA values in sigma2.val, tau2.val, rho.val, gamma2.val, phi.val should be estimated; otherwise, replace with fixed values
 
    if (withS) {
@@ -1042,7 +1058,7 @@
       ### move the parameter estimates away from values that create the non-positive-definite M matrix)
 
       if (dofit) {
-         stop("Final variance-covariance matrix not positive definite.")
+         stop(mstyle$stop("Final variance-covariance matrix not positive definite."))
       } else {
          llval <- -Inf
       }
@@ -1061,7 +1077,7 @@
       if (inherits(U, "try-error")) {
 
          if (dofit) {
-            stop("Cannot fit model based on estimated marginal variance-covariance matrix.")
+            stop(mstyle$stop("Cannot fit model based on estimated marginal variance-covariance matrix."))
          } else {
             llval <- -Inf
          }
@@ -1129,16 +1145,16 @@
 
    if ((vctransf && verbose) || (!vctransf && (verbose > 1))) {
       if (withS)
-         cat("sigma2 =", ifelse(is.na(sigma2), NA, paste(formatC(sigma2, digits=digits, format="f", flag=" "), " ", sep="")), "  ", sep="")
+         cat(mstyle$verbose(paste0("sigma2 =", ifelse(is.na(sigma2), NA, paste(formatC(sigma2, digits=digits, format="f", flag=" "), " ", sep="")), "  ")))
       if (withG) {
-         cat("tau2 =",   ifelse(is.na(tau2),   NA, paste(formatC(tau2,   digits=digits, format="f", flag=" "), " ", sep="")), "  ", sep="")
-         cat("rho =",    ifelse(is.na(rho),    NA, paste(formatC(rho,    digits=digits, format="f", flag=" "), " ", sep="")), "  ", sep="")
+         cat(mstyle$verbose(paste0("tau2 =",   ifelse(is.na(tau2),   NA, paste(formatC(tau2,   digits=digits, format="f", flag=" "), " ", sep="")), "  ")))
+         cat(mstyle$verbose(paste0("rho =",    ifelse(is.na(rho),    NA, paste(formatC(rho,    digits=digits, format="f", flag=" "), " ", sep="")), "  ")))
       }
       if (withH) {
-         cat("gamma2 =", ifelse(is.na(gamma2), NA, paste(formatC(gamma2, digits=digits, format="f", flag=" "), " ", sep="")), "  ", sep="")
-         cat("phi =",    ifelse(is.na(phi),    NA, paste(formatC(phi,    digits=digits, format="f", flag=" "), " ", sep="")), "  ", sep="")
+         cat(mstyle$verbose(paste0("gamma2 =", ifelse(is.na(gamma2), NA, paste(formatC(gamma2, digits=digits, format="f", flag=" "), " ", sep="")), "  ")))
+         cat(mstyle$verbose(paste0("phi =",    ifelse(is.na(phi),    NA, paste(formatC(phi,    digits=digits, format="f", flag=" "), " ", sep="")), "  ")))
       }
-      cat("  ll = ", ifelse(is.na(llval), NA, formatC(llval, digits=digits, format="f", flag=" ")), sep="", "\n")
+      cat(mstyle$verbose(paste0("  ll = ", ifelse(is.na(llval), NA, formatC(llval, digits=digits, format="f", flag=" ")), "\n")))
    }
 
    return(-1 * c(llval))
@@ -1150,6 +1166,8 @@
 ### for profile(), confint(), and multicore processing
 
 .profile.rma.uni <- function(val, obj, parallel=FALSE, profile=FALSE, CI=FALSE, subset=FALSE, objective, sel, FE=FALSE, verbose=FALSE) {
+
+   mstyle <- .get.mstyle("crayon" %in% .packages())
 
    if (parallel == "snow")
       library(metafor)
@@ -1175,7 +1193,7 @@
          if (inherits(res, "try-error")) {
 
             if (verbose)
-               cat("tau2 =", formatC(val, digits=obj$digits, width=obj$digits+4, format="f"), " LRT - objective = NA", "\n")
+               cat(mstyle$verbose(paste("tau2 =", formatC(val, digits=obj$digits, width=obj$digits+4, format="f"), " LRT - objective = NA", "\n")))
 
             stop()
 
@@ -1184,7 +1202,7 @@
             sav <- -2*(logLik(res) - logLik(obj)) - objective
 
             if (verbose)
-               cat("tau2 =", formatC(val, digits=obj$digits, width=obj$digits+4, format="f"), " LRT - objective =", sav, "\n")
+               cat(mstyle$verbose(paste("tau2 =", formatC(val, digits=obj$digits, width=obj$digits+4, format="f"), " LRT - objective =", sav, "\n")))
 
          }
 
@@ -1244,6 +1262,8 @@
 
 .profile.rma.mv <- function(val, obj, comp, sigma2.pos, tau2.pos, rho.pos, gamma2.pos, phi.pos, parallel=FALSE, profile=FALSE, CI=FALSE, subset=FALSE, objective, verbose=FALSE) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (parallel == "snow")
       library(metafor)
 
@@ -1290,7 +1310,7 @@
          if (inherits(res, "try-error")) {
 
             if (verbose)
-               cat("vc =", formatC(val, digits=obj$digits, width=obj$digits+4, format="f"), " LRT - objective = NA", "\n")
+               cat(mstyle$verbose(paste("vc =", formatC(val, digits=obj$digits, width=obj$digits+4, format="f"), " LRT - objective = NA", "\n")))
 
             stop()
 
@@ -1299,7 +1319,7 @@
             sav <- -2*(logLik(res) - logLik(obj)) - objective
 
             if (verbose)
-               cat("vc =", formatC(val, digits=obj$digits, width=obj$digits+4, format="f"), " LRT - objective =", sav, "\n")
+               cat(mstyle$verbose(paste("vc =", formatC(val, digits=obj$digits, width=obj$digits+4, format="f"), " LRT - objective =", sav, "\n")))
 
          }
 
@@ -1543,6 +1563,8 @@
 
 .permci <- function(val, obj, j, exact, iter, progbar, comp.tol, level, digits, control) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    ### fit model with shifted outcome
    res <- try(suppressWarnings(rma.uni(obj$yi - c(val*obj$X[,j]), obj$vi, weights=obj$weights, mods=obj$X, intercept=FALSE, method=obj$method, weighted=obj$weighted, test=obj$test, tau2=ifelse(obj$tau2.fix, obj$tau2, NA), control=obj$control)), silent=TRUE)
 
@@ -1557,7 +1579,7 @@
 
    ### show progress
    if (progbar)
-      cat("pval =", formatC(pval, format="f", digits=digits), " diff =", formatC(diff, format="f", digits=digits, flag=" "), " val =", formatC(val, format="f", digits=digits, flag=" "), "\n")
+      cat(mstyle$verbose(paste("pval =", formatC(pval, format="f", digits=digits), " diff =", formatC(diff, format="f", digits=digits, flag=" "), " val =", formatC(val, format="f", digits=digits, flag=" "), "\n")))
 
    ### penalize negative differences, which should force the CI bound to correspond to a p-value of *at least* level
    diff <- ifelse(diff < 0, diff*10, diff)
@@ -1971,6 +1993,8 @@
 
 .dnoncenhypergeom <- function (x=NA, n1, n2, m1, psi) { ### x=ai, n1=ai+bi, n2=ci+di, m1=ai+ci, psi=ORi
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    mode.compute <- function(n1, n2, m1, psi, ll, uu) {
       a <- psi - 1
       b <- -((m1 + n1 + 2) * psi + n2 - m1)
@@ -1989,19 +2013,19 @@
    uu <- min(n1, m1)
 
    if (n1 < 0 | n2 < 0)
-      stop("'n1' or 'n2' negative in dnoncenhypergeom().\n")
+      stop(mstyle$stop("'n1' or 'n2' negative in dnoncenhypergeom()."))
 
    if (m1 < 0 | m1 > (n1 + n2))
-      stop("'m1' out of range in dnoncenhypergeom().\n")
+      stop(mstyle$stop("'m1' out of range in dnoncenhypergeom()."))
 
    if (psi <= 0)
-      stop("'psi' [odds ratio] negative in dnoncenhypergeom().\n")
+      stop(mstyle$stop("'psi' [odds ratio] negative in dnoncenhypergeom()."))
 
    if (!is.na(x) & (x < ll | x > uu))
-      stop("'x' out of bounds in dnoncenhypergeom().\n")
+      stop(mstyle$stop("'x' out of bounds in dnoncenhypergeom()."))
 
    if (!is.na(x) & length(x) > 1)
-      stop("'x' neither missing or scalar in dnoncenhypergeom().\n")
+      stop(mstyle$stop("'x' neither missing or scalar in dnoncenhypergeom()."))
 
    mode <- mode.compute(n1, n2, m1, psi, ll, uu)
    pi <- array(1, uu - ll + 1)
@@ -2030,6 +2054,8 @@
 
 .dnchgi <- function(logOR, ai, bi, ci, di, mu.i, tau2, random, dnchgcalc, dnchgprec) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    k <- length(logOR)
    dnchgi <- rep(NA_real_, k)
 
@@ -2051,7 +2077,7 @@
       }
 
       if (inherits(res, "try-error")) {
-         stop(paste0("Could not compute density of non-central hypergeometric distribution in study ", i, "."))
+         stop(mstyle$stop(paste0("Could not compute density of non-central hypergeometric distribution in study ", i, ".")))
       } else {
          dnchgi[i] <- res
       }
@@ -2071,6 +2097,8 @@
 
 .dnchg <- function(parms, ai, bi, ci, di, X.fit, random, verbose=FALSE, digits=4, dnchgcalc, dnchgprec, intCtrl) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    p    <- ncol(X.fit)
    k    <- length(ai)
    beta <- parms[seq_len(p)]                  ### first p elemenets in parms are the model coefficients
@@ -2086,7 +2114,7 @@
       }
 
       if (verbose)
-         cat("ll =", formatC(sum(lli), digits=digits, format="f"), " ", formatC(beta, digits=digits, format="f"), "\n")
+         cat(mstyle$verbose(paste("ll =", formatC(sum(lli), digits=digits, format="f"), " ", formatC(beta, digits=digits, format="f"), "\n")))
 
    }
 
@@ -2097,7 +2125,7 @@
          res <- try(integrate(.dnchgi, lower=intCtrl$lower, upper=intCtrl$upper, ai=ai[i], bi=bi[i], ci=ci[i], di=di[i], mu.i=mu.i[i], tau2=tau2, random=random, dnchgcalc=dnchgcalc, dnchgprec=dnchgprec, rel.tol=intCtrl$rel.tol, subdivisions=intCtrl$subdivisions, stop.on.error=FALSE), silent=!verbose)
 
          if (inherits(res, "try-error")) {
-            stop(paste0("Could not integrate over density of non-central hypergeometric distribution in study ", i, "."))
+            stop(mstyle$stop(paste0("Could not integrate over density of non-central hypergeometric distribution in study ", i, ".")))
          } else {
             if (res$value > 0) {
                lli[i] <- log(res$value)
@@ -2109,7 +2137,7 @@
       }
 
       if (verbose)
-         cat("ll = ", formatC(sum(lli), digits=digits, format="f"), " ", formatC(tau2, digits=digits, format="f"), " ", formatC(beta, digits=digits, format="f"), "\n")
+         cat(mstyle$verbose(paste("ll = ", formatC(sum(lli), digits=digits, format="f"), " ", formatC(tau2, digits=digits, format="f"), " ", formatC(beta, digits=digits, format="f"), "\n")))
 
    }
 
@@ -2122,6 +2150,8 @@
 ### -1 times the log likelihood (regular or restricted) for location-scale model
 
 .ll.rma.ls <- function(par, yi, vi, X, Z, reml, k, pX, verbose, digits, REMLf, link) {
+
+   mstyle <- .get.mstyle("crayon" %in% .packages())
 
    #beta  <- par[1:pX]
    #alpha <- par[-c(1:pX)]
@@ -2167,8 +2197,8 @@
    }
 
    if (verbose) {
-      cat("ll = ",   ifelse(is.na(llval), NA, formatC(llval, digits=digits, format="f", flag=" ")), " ", sep="")
-      cat("alpha =", ifelse(is.na(alpha), NA, paste(formatC(alpha, digits=digits, format="f", flag=" "), " ", sep="")), "\n", sep="")
+      cat(mstyle$verbose(paste0("ll = ",   ifelse(is.na(llval), NA, formatC(llval, digits=digits, format="f", flag=" ")), " ")))
+      cat(mstyle$verbose(paste0("alpha =", ifelse(is.na(alpha), NA, paste(formatC(alpha, digits=digits, format="f", flag=" "), " ", sep="")), "\n")))
    }
 
    return(-1 * llval)
@@ -2181,8 +2211,10 @@
 
 .rtet <- function(ai, bi, ci, di, maxcor=.9999) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!requireNamespace("mvtnorm", quietly=TRUE))
-      stop("Please install the 'mvtnorm' package to compute this measure.")
+      stop(mstyle$stop("Please install the 'mvtnorm' package to compute this measure."))
 
    fn <- function(par, ai, bi, ci, di, maxcor, fixcut=FALSE) {
 
@@ -2264,7 +2296,7 @@
 
    ### check for non-convergence
    if (inherits(res, "try-error")) {
-      warning("Could not estimate tetrachoric correlation coefficient.")
+      warning(mstyle$warning("Could not estimate tetrachoric correlation coefficient."))
       return(list(yi=NA, vi=NA))
    }
 
@@ -2275,7 +2307,7 @@
 
    ### check for non-convergence
    if (inherits(res, "try-error")) {
-      warning("Could not estimate tetrachoric correlation coefficient.")
+      warning(mstyle$warning("Could not estimate tetrachoric correlation coefficient."))
       return(list(yi=NA, vi=NA))
    }
 
@@ -2286,7 +2318,7 @@
 
    ### check for problems with computing the inverse
    if (inherits(vi, "try-error")) {
-      warning("Could not estimate sampling variance of tetrachoric correlation coefficient.")
+      warning(mstyle$warning("Could not estimate sampling variance of tetrachoric correlation coefficient."))
       vi <- NA
    }
 
@@ -2322,8 +2354,10 @@
 
 .Fcalc <- function(a, b, g, x) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!requireNamespace("gsl", quietly=TRUE))
-      stop("Please install the 'gsl' package to use measure='UCOR'.")
+      stop(mstyle$stop("Please install the 'gsl' package to use measure='UCOR'."))
 
    k.g <- length(g)
    k.x <- length(x)
@@ -2337,7 +2371,7 @@
       x <- rep(x, k)
 
    if (length(g) != length(x))
-      stop("Length of 'g' and 'x' arguments do not match.")
+      stop(mstyle$stop("Length of 'g' and 'x' arguments do not match."))
 
    for (i in seq_len(k)) {
 
@@ -2437,5 +2471,94 @@
 
 #integrate(function(x) .dzcor(x, n=5, rho=.8), lower=-100, upper=100)
 #integrate(function(x) x*.dzcor(x, n=5, rho=.8), lower=-100, upper=100)
+
+############################################################################
+
+.get.mstyle <- function(withcrayon) {
+
+   if (withcrayon) {
+
+      if (exists(".mstyle")) {
+         .mstyle <- get(".mstyle")
+         if (!is.list(.mstyle))
+            .mstyle <- list(.mstyle)
+      } else {
+         .mstyle <- list()
+      }
+
+      if (is.null(.mstyle$section)) {
+         section <- crayon::bold
+      } else {
+         section <- .mstyle$section
+      }
+      if (is.null(.mstyle$header)) {
+         header <- crayon::underline
+      } else {
+         header <- .mstyle$header
+      }
+      if (is.null(.mstyle$stop)) {
+         stop <- crayon::combine_styles(crayon::red, crayon::bold)
+      } else {
+         stop <- .mstyle$stop
+      }
+      if (is.null(.mstyle$warning)) {
+         warning <- crayon::yellow
+      } else {
+         warning <- .mstyle$warning
+      }
+      if (is.null(.mstyle$message)) {
+         message <- crayon::green
+      } else {
+         message <- .mstyle$message
+      }
+      if (is.null(.mstyle$verbose)) {
+         verbose <- crayon::cyan
+      } else {
+         verbose <- .mstyle$verbose
+      }
+      if (is.null(.mstyle$legend)) {
+         legend <- crayon::silver
+      } else {
+         legend <- .mstyle$legend
+      }
+
+   } else {
+
+      tmp <- function(...) paste0(...)
+      section <- tmp
+      header  <- tmp
+      error   <- tmp
+      warning <- tmp
+      message <- tmp
+      verbose <- tmp
+      legend  <- tmp
+
+   }
+
+   return(list(section=section, header=header, stop=stop, warning=warning, message=message, verbose=verbose, legend=legend))
+
+}
+
+.print.output <- function(x, mstyle) {
+
+   for (i in 1:length(x)) {
+      cat(mstyle(x[i]), "\n")
+   }
+
+}
+
+.print.table <- function(x, mstyle) {
+
+   is.header <- !grepl(" [0-9]", x) & !grepl(" -[0-9]", x)
+
+   for (i in 1:length(x)) {
+      if (is.header[i]) {
+         x[i] <- trimws(x[i], which="right")
+         x[i] <- mstyle$header(x[i])
+      }
+      cat(x[i], "\n")
+   }
+
+}
 
 ############################################################################

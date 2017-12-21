@@ -1,20 +1,22 @@
 influence.rma.uni <- function(model, digits, progbar=FALSE, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(model, "rma.uni"))
-      stop("Argument 'model' must be an object of class \"rma.uni\".")
+      stop(mstyle$stop("Argument 'model' must be an object of class \"rma.uni\"."))
 
    if (inherits(model, "rma.ls"))
-      stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!")
+      stop(mstyle$stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!"))
 
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
-      stop("Unknown 'na.action' specified under options().")
+      stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
    x <- model
 
    if (x$k == 1)
-      stop("Stopped because k = 1.")
+      stop(mstyle$stop("Stopped because k = 1."))
 
    ddd <- list(...)
 
@@ -31,7 +33,7 @@ influence.rma.uni <- function(model, digits, progbar=FALSE, ...) {
       digits <- x$digits
 
    if (!measure == "cooks.distance" && inherits(model, "robust.rma"))
-      stop("Method not yet implemented for objects of class \"robust.rma\". Sorry!")
+      stop(mstyle$stop("Method not yet implemented for objects of class \"robust.rma\". Sorry!"))
 
    #########################################################################
 
@@ -230,7 +232,7 @@ influence.rma.uni <- function(model, digits, progbar=FALSE, ...) {
    out <- c(out, list(tau2=x$tau2, QE=x$QE, k=x$k, p=x$p, m=m))
 
    if (na.act == "na.fail" && any(!x$not.na))
-      stop("Missing values in results.")
+      stop(mstyle$stop("Missing values in results."))
 
    class(out$inf)  <- c("list.rma")
    class(out$dfbs) <- c("list.rma")

@@ -1,12 +1,14 @@
 rstandard.rma.mv <- function(model, digits, cluster, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(model, "rma.mv"))
-      stop("Argument 'model' must be an object of class \"rma.mv\".")
+      stop(mstyle$stop("Argument 'model' must be an object of class \"rma.mv\"."))
 
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
-      stop("Unknown 'na.action' specified under options().")
+      stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
    x <- model
 
@@ -34,10 +36,10 @@ rstandard.rma.mv <- function(model, digits, cluster, ...) {
    ### checks on cluster variable
 
    if (anyNA(cluster.f))
-      stop("No missing values allowed in 'cluster' variable.")
+      stop(mstyle$stop("No missing values allowed in 'cluster' variable."))
 
    if (length(cluster) != x$k)
-      stop("Length of variable specified via 'cluster' does not match length of data.")
+      stop(mstyle$stop("Length of variable specified via 'cluster' does not match length of data."))
 
    #########################################################################
 
@@ -119,7 +121,7 @@ rstandard.rma.mv <- function(model, digits, cluster, ...) {
    }
 
    if (na.act == "na.fail" && any(!x$not.na))
-      stop("Missing values in results.")
+      stop(mstyle$stop("Missing values in results."))
 
    if (misscluster) {
 

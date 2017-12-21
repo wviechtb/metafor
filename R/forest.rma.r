@@ -7,16 +7,18 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
    #########################################################################
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(x, "rma"))
-      stop("Argument 'x' must be an object of class \"rma\".")
+      stop(mstyle$stop("Argument 'x' must be an object of class \"rma\"."))
 
    if (inherits(x, "rma.ls"))
-      stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!")
+      stop(mstyle$stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!"))
 
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
-      stop("Unknown 'na.action' specified under options().")
+      stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
    #if (!is.null(order))
    #   order <- match.arg(order, c("obs", "fit", "prec", "resid", "rstandard", "abs.resid", "abs.rstandard"))
@@ -31,7 +33,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
    atransf.char <- deparse(substitute(atransf))
 
    if (is.function(transf) && is.function(atransf))
-      stop("Use either 'transf' or 'atransf' to specify a transformation (not both).")
+      stop(mstyle$stop("Use either 'transf' or 'atransf' to specify a transformation (not both)."))
 
    if (missing(targs))
       targs <- NULL
@@ -107,13 +109,13 @@ cex, cex.lab, cex.axis, annosym, ...) {
    if (missing(annosym))
       annosym <- c(" [", ", ", "]")
    if (length(annosym) != 3)
-      stop("Argument 'annosym' must be a vector of length 3.")
+      stop(mstyle$stop("Argument 'annosym' must be a vector of length 3."))
 
    measure <- x$measure
 
    ### TODO: remove this when there is a weights() function for 'rma.glmm' objects
    if (inherits(x, "rma.glmm") && showweights)
-      stop("Option 'showweights=TRUE' currently not possible for 'rma.glmm' objects. Sorry!")
+      stop(mstyle$stop("Option 'showweights=TRUE' currently not possible for 'rma.glmm' objects. Sorry!"))
 
    #########################################################################
 
@@ -145,7 +147,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
    }
 
    if (length(yi) != length(slab))
-      stop("Number of outcomes does not correspond to the length of the 'slab' argument.")
+      stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'slab' argument."))
 
    if (is.null(dim(ilab)))                      ### note: ilab must have same length as yi.f in rma object
       ilab <- cbind(ilab)                       ### even when fewer studies used for model fitting
@@ -154,7 +156,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
       pch <- rep(pch, k)                        ### or be equal to a single value (which is then repeated)
 
    if (length(pch) != length(yi))
-      stop("Number of outcomes does not correspond to the length of the 'pch' argument.")
+      stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'pch' argument."))
 
    ### extract fitted values
 
@@ -190,7 +192,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
       if (length(psize) == 1L)                  ### or be equal to a single value (which is then repeated)
          psize <- rep(psize, k)
       if (length(psize) != length(yi))
-         stop("Number of outcomes does not correspond to the length of the 'psize' argument.")
+         stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'psize' argument."))
    }
 
    ### sort the data if requested
@@ -200,7 +202,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
       if (is.character(order)) {
 
          if (length(order) != 1)
-            stop("Incorrect length of 'order' argument.")
+            stop(mstyle$stop("Incorrect length of 'order' argument."))
 
          if (order == "obs")
             sort.vec <- order(yi)
@@ -248,7 +250,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
    }
 
    if (length(rows) != length(yi))
-      stop("Number of outcomes does not correspond to the length of the 'rows' argument.")
+      stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'rows' argument."))
 
    ### reverse order
 
@@ -296,7 +298,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
       }
 
       if (na.act == "na.fail")
-         stop("Missing values in results.")
+         stop(mstyle$stop("Missing values in results."))
 
    }                                            ### note: yi/vi may be NA if na.act == "na.exclude" or "na.pass"
 
@@ -342,7 +344,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
    if (!missing(clim)) {
       clim <- sort(clim)
       if (length(clim) != 2L)
-         stop("Argument 'clim' must be of length 2.")
+         stop(mstyle$stop("Argument 'clim' must be of length 2."))
       ci.lb[ci.lb < clim[1]] <- clim[1]
       ci.ub[ci.ub > clim[2]] <- clim[2]
       pred.ci.lb[pred.ci.lb < clim[1]] <- clim[1]
@@ -559,7 +561,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
          } else {
             if (addcred) {
                ### here addcred=TRUE, but user has not specified the level, so throw an error
-               stop("Need to specify the level of the inner factor(s) via the 'addcred' argument.")
+               stop(mstyle$stop("Need to specify the level of the inner factor(s) via the 'addcred' argument."))
             } else {
                ### here addcred=FALSE, so just use the first tau^2 and gamma^2 arbitrarily (so predict() works)
                temp <- predict(x, level=level, tau2.levels=1, gamma2.levels=1)
@@ -703,9 +705,9 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
    if (!is.null(ilab)) {
       if (is.null(ilab.xpos))
-         stop("Must specify 'ilab.xpos' argument when adding information with 'ilab'.")
+         stop(mstyle$stop("Must specify 'ilab.xpos' argument when adding information with 'ilab'."))
       if (length(ilab.xpos) != ncol(ilab))
-         stop(paste0("Number of 'ilab' columns (", ncol(ilab), ") does not match length of 'ilab.xpos' argument (", length(ilab.xpos), ")."))
+         stop(mstyle$stop(paste0("Number of 'ilab' columns (", ncol(ilab), ") does not match length of 'ilab.xpos' argument (", length(ilab.xpos), ").")))
       if (!is.null(ilab.pos) && length(ilab.pos) == 1)
          ilab.pos <- rep(ilab.pos, ncol(ilab))
       for (l in seq_len(ncol(ilab))) {

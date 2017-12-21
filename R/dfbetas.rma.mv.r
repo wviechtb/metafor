@@ -1,15 +1,17 @@
 dfbetas.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE, parallel="no", ncpus=1, cl=NULL, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(model, "rma.mv"))
-      stop("Argument 'model' must be an object of class \"rma.mv\".")
+      stop(mstyle$stop("Argument 'model' must be an object of class \"rma.mv\"."))
 
    if (inherits(model, "robust.rma"))
-      stop("Method not yet implemented for objects of class \"robust.rma\". Sorry!")
+      stop(mstyle$stop("Method not yet implemented for objects of class \"robust.rma\". Sorry!"))
 
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
-      stop("Unknown 'na.action' specified under options().")
+      stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
    x <- model
 
@@ -36,10 +38,10 @@ dfbetas.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE, paral
    ### checks on cluster variable
 
    if (anyNA(cluster.f))
-      stop("No missing values allowed in 'cluster' variable.")
+      stop(mstyle$stop("No missing values allowed in 'cluster' variable."))
 
    if (length(cluster) != x$k)
-      stop("Length of variable specified via 'cluster' does not match length of data.")
+      stop(mstyle$stop("Length of variable specified via 'cluster' does not match length of data."))
 
    ### cluster ids and number of clusters
 
@@ -115,12 +117,12 @@ dfbetas.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE, paral
    if (parallel=="snow" || parallel == "multicore") {
 
       if (!requireNamespace("parallel", quietly=TRUE))
-         stop("Please install the 'parallel' package for parallel processing.")
+         stop(mstyle$stop("Please install the 'parallel' package for parallel processing."))
 
       ncpus <- as.integer(ncpus)
 
       if (ncpus < 1)
-         stop("Argument 'ncpus' must be >= 1.")
+         stop(mstyle$stop("Argument 'ncpus' must be >= 1."))
 
       if (parallel == "multicore")
          res <- parallel::mclapply(seq_len(n), .dfbetas.rma.mv, obj=x, mc.cores=ncpus, parallel=parallel, cluster=cluster, ids=ids, reestimate=reestimate)
@@ -169,7 +171,7 @@ dfbetas.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE, paral
    }
 
    if (na.act == "na.fail" && any(!x$not.na))
-      stop("Missing values in results.")
+      stop(mstyle$stop("Missing values in results."))
 
    colnames(out) <- rownames(x$beta)
 

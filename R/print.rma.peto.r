@@ -1,14 +1,16 @@
 print.rma.peto <- function(x, digits, showfit=FALSE, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(x, "rma.peto"))
-      stop("Argument 'x' must be an object of class \"rma.peto\".")
+      stop(mstyle$stop("Argument 'x' must be an object of class \"rma.peto\"."))
 
    if (missing(digits))
       digits <- x$digits
 
    cat("\n")
 
-   cat("Fixed-Effects Model (k = ", x$k, ")", sep="")
+   cat(mstyle$section("Fixed-Effects Model"), " (k = ", x$k, ")", sep="")
 
    if (showfit) {
       cat("\n")
@@ -19,14 +21,15 @@ print.rma.peto <- function(x, digits, showfit=FALSE, ...) {
       }
       names(fs) <- c("logLik", "deviance", "AIC", "BIC", "AICc")
       cat("\n")
-      print(fs, quote=FALSE, print.gap=2)
+      tmp <- capture.output(print(fs, quote=FALSE, print.gap=2))
+      .print.table(tmp, mstyle)
       cat("\n")
    } else {
       cat("\n\n")
    }
 
    if (!is.na(x$QE)) {
-      cat("Test for Heterogeneity: \n")
+      cat(mstyle$section("Test for Heterogeneity:"), "\n")
       cat("Q(df = ", x$k.pos-1, ") = ", formatC(x$QE, digits=digits, format="f"), ", p-val ", .pval(x$QEp, digits=digits, showeq=TRUE, sep=" "), sep="")
    }
 
@@ -44,13 +47,17 @@ print.rma.peto <- function(x, digits, showfit=FALSE, ...) {
    names(res.table)     <- c("estimate", "se", "zval", "pval", "ci.lb", "ci.ub")
    names(res.table.exp) <- c("estimate", "ci.lb", "ci.ub")
 
-   cat("\n\nModel Results (log scale):\n\n")
-   .print.out(res.table)
-   #print(res.table, quote=FALSE, right=TRUE)
+   cat("\n\n")
+   cat(mstyle$section("Model Results (log scale):"))
+   cat("\n\n")
+   tmp <- capture.output(.print.vector(res.table))
+   .print.table(tmp, mstyle)
 
-   cat("\nModel Results (OR scale):\n\n")
-   .print.out(res.table.exp)
-   #print(res.table.exp, quote=FALSE, right=TRUE)
+   cat("\n")
+   cat(mstyle$section("Model Results (OR scale):"))
+   cat("\n\n")
+   tmp <- capture.output(.print.vector(res.table.exp))
+   .print.table(tmp, mstyle)
    cat("\n")
 
    invisible()

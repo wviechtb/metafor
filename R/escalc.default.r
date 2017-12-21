@@ -3,6 +3,8 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
    ### check argument specifications
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!is.element(measure, c("RR","OR","PETO","RD","AS","PHI","YUQ","YUY","RTET", ### 2x2 table measures
                               "PBIT","OR2D","OR2DN","OR2DL",                       ### - transformations to SMD
                               "MPRD","MPRR","MPOR","MPORC","MPPETO",               ### - measures for matched pairs data
@@ -18,13 +20,13 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
                               "MC","SMCC","SMCR","SMCRH","ROMC",                   ### raw/standardized mean change and log(ROM) for dependent samples
                               "ARAW","AHW","ABT",                                  ### alpha (and transformations thereof)
                               "GEN")))
-      stop("Unknown 'measure' specified.")
+      stop(mstyle$stop("Unknown 'measure' specified."))
 
    if (!is.element(to, c("all","only0","if0all","none")))
-      stop("Unknown 'to' argument specified.")
+      stop(mstyle$stop("Unknown 'to' argument specified."))
 
    if (any(!is.element(vtype, c("UB","LS","HO","ST","CS")), na.rm=TRUE)) ### vtype can be an entire vector, so use any() and na.rm=TRUE
-      stop("Unknown 'vtype' argument specified.")
+      stop(mstyle$stop("Unknown 'vtype' argument specified."))
 
    if (add.measure) {
 
@@ -32,11 +34,11 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
          var.names <- c(var.names, "measure")
 
       if (length(var.names) != 3)
-         stop("Argument 'var.names' must be of length 2 or 3.")
+         stop(mstyle$stop("Argument 'var.names' must be of length 2 or 3."))
 
       if (any(var.names != make.names(var.names, unique=TRUE))) {
          var.names <- make.names(var.names, unique=TRUE)
-         warning(paste0("Argument 'var.names' does not contain syntactically valid variable names.\n  Variable names adjusted to: var.names = c('", var.names[1], "', '", var.names[2], "', '", var.names[3], "')."))
+         warning(mstyle$warning(paste0("Argument 'var.names' does not contain syntactically valid variable names.\n  Variable names adjusted to: var.names = c('", var.names[1], "', '", var.names[2], "', '", var.names[3], "').")))
       }
 
    } else {
@@ -45,11 +47,11 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
          var.names <- var.names[1:2]
 
       if (length(var.names) != 2)
-         stop("Argument 'var.names' must be of length 2.")
+         stop(mstyle$stop("Argument 'var.names' must be of length 2."))
 
       if (any(var.names != make.names(var.names, unique=TRUE))) {
          var.names <- make.names(var.names, unique=TRUE)
-         warning(paste0("Argument 'var.names' does not contain syntactically valid variable names.\n  Variable names adjusted to: var.names = c('", var.names[1], "', '", var.names[2], "')."))
+         warning(mstyle$warning(paste0("Argument 'var.names' does not contain syntactically valid variable names.\n  Variable names adjusted to: var.names = c('", var.names[1], "', '", var.names[2], "').")))
       }
 
    }
@@ -129,13 +131,13 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
          }
 
          if (length(ai)==0L || length(bi)==0L || length(ci)==0L || length(di)==0L)
-            stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments.")
+            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments."))
 
          if (!all(length(ai) == c(length(ai),length(bi),length(ci),length(di))))
-            stop("Supplied data vectors are not all of the same length.")
+            stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
          if (any(c(ai, bi, ci, di) < 0, na.rm=TRUE))
-            stop("One or more counts are negative.")
+            stop(mstyle$stop("One or more counts are negative."))
 
          ni.u <- ai + bi + ci + di ### unadjusted total sample sizes
 
@@ -514,16 +516,16 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
          }
 
          if (length(x1i)==0L || length(x2i)==0L || length(t1i)==0L || length(t2i)==0L)
-            stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments.")
+            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments."))
 
          if (!all(length(x1i) == c(length(x1i),length(x2i),length(t1i),length(t2i))))
-            stop("Supplied data vectors are not all of the same length.")
+            stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
          if (any(c(x1i, x2i) < 0, na.rm=TRUE))
-            stop("One or more counts are negative.")
+            stop(mstyle$stop("One or more counts are negative."))
 
          if (any(c(t1i, t2i) < 0, na.rm=TRUE))
-            stop("One or more person-times are negative.")
+            stop(mstyle$stop("One or more person-times are negative."))
 
          ni.u <- t1i + t2i ### unadjusted total sample sizes
 
@@ -662,10 +664,10 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
          if (is.element(measure, c("MD","SMD","SMDH","ROM","RPB","RBIS","D2OR","D2ORN","D2ORL","CVR"))) {
 
             if (length(m1i)==0L || length(m2i)==0L || length(sd1i)==0L || length(sd2i)==0L || length(n1i)==0L || length(n2i)==0L)
-               stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments.")
+               stop(mstyle$stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments."))
 
             if (!all(length(m1i) == c(length(m1i),length(m2i),length(sd1i),length(sd2i),length(n1i),length(n2i))))
-               stop("Supplied data vectors are not all of the same length.")
+               stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
          }
 
@@ -674,18 +676,18 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
          if (is.element(measure, c("VR"))) {
 
             if (length(sd1i)==0L || length(sd2i)==0L || length(n1i)==0L || length(n2i)==0L)
-               stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments.")
+               stop(mstyle$stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments."))
 
             if (!all(length(sd1i) == c(length(sd1i),length(sd2i),length(n1i),length(n2i))))
-               stop("Supplied data vectors are not all of the same length.")
+               stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
          }
 
          if (any(c(sd1i, sd2i) < 0, na.rm=TRUE))
-            stop("One or more standard deviations are negative.")
+            stop(mstyle$stop("One or more standard deviations are negative."))
 
          if (any(c(n1i, n2i) < 0, na.rm=TRUE))
-            stop("One or more sample sizes are negative.")
+            stop(mstyle$stop("One or more sample sizes are negative."))
 
          ni.u <- n1i + n2i ### unadjusted total sample sizes
 
@@ -890,25 +892,25 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
          }
 
          if (length(ri)==0L || length(ni)==0L)
-            stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments.")
+            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments."))
 
          if (length(ri) != length(ni))
-            stop("Supplied data vectors are not of the same length.")
+            stop(mstyle$stop("Supplied data vectors are not of the same length."))
 
          if (any(abs(ri) > 1, na.rm=TRUE))
-            stop("One or more correlations are > 1 or < -1.")
+            stop(mstyle$stop("One or more correlations are > 1 or < -1."))
 
          if (any(ni < 0, na.rm=TRUE))
-            stop("One or more sample sizes are negative.")
+            stop(mstyle$stop("One or more sample sizes are negative."))
 
          if (measure != "UCOR" && vtype == "UB")
-            stop("Use of vtype='UB' only permitted when measure='UCOR'.")
+            stop(mstyle$stop("Use of vtype='UB' only permitted when measure='UCOR'."))
 
          if (any(ni <= 4, na.rm=TRUE)) {
             if (measure == "UCOR") {
-               warning("Cannot compute the bias-corrected correlation coefficient when ni <= 4.")
+               warning(mstyle$warning("Cannot compute the bias-corrected correlation coefficient when ni <= 4."))
             } else {
-               warning("Cannot estimate the sampling variance when ni <= 4.")
+               warning(mstyle$warning("Cannot estimate the sampling variance when ni <= 4."))
             }
          }
 
@@ -994,28 +996,28 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
          }
 
          if (measure=="PCOR" && (length(ti)==0L || length(ni)==0L || length(mi)==0L))
-            stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments.")
+            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments."))
 
          if (measure=="SPCOR" && (length(ti)==0L || length(ni)==0L || length(mi)==0L || length(r2i)==0L))
-            stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments.")
+            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments."))
 
          if (measure=="PCOR" && !all(length(ti) == c(length(ni),length(mi))))
-            stop("Supplied data vectors are not all of the same length.")
+            stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
          if (measure=="SPCOR" && !all(length(ti) == c(length(ni),length(mi),length(r2i))))
-            stop("Supplied data vectors are not all of the same length.")
+            stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
          if (measure=="SPCOR" && any(r2i > 1 | r2i < 0, na.rm=TRUE))
-            stop("One or more R^2 values are > 1 or < 0.")
+            stop(mstyle$stop("One or more R^2 values are > 1 or < 0."))
 
          if (any(ni < 0, na.rm=TRUE))
-            stop("One or more sample sizes are negative.")
+            stop(mstyle$stop("One or more sample sizes are negative."))
 
          if (any(mi < 0, na.rm=TRUE))
-            stop("One or more mi values are negative.")
+            stop(mstyle$stop("One or more mi values are negative."))
 
          if (any(ni - mi - 1 < 1, na.rm=TRUE))
-            stop("One or more dfs are < 1.")
+            stop(mstyle$stop("One or more dfs are < 1."))
 
          ni.u <- ni ### unadjusted total sample sizes
 
@@ -1063,13 +1065,13 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
          }
 
          if (length(xi)==0L || length(mi)==0L)
-            stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments.")
+            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments."))
 
          if (length(xi) != length(mi))
-            stop("Supplied data vectors are not all of the same length.")
+            stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
          if (any(c(xi, mi) < 0, na.rm=TRUE))
-            stop("One or more counts are negative.")
+            stop(mstyle$stop("One or more counts are negative."))
 
          ni.u <- xi + mi ### unadjusted total sample sizes
 
@@ -1306,16 +1308,16 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
          }
 
          if (length(xi)==0L || length(ti)==0L)
-            stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments.")
+            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments."))
 
          if (length(xi) != length(ti))
-            stop("Supplied data vectors are not all of the same length.")
+            stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
          if (any(xi < 0, na.rm=TRUE))
-            stop("One or more counts are negative.")
+            stop(mstyle$stop("One or more counts are negative."))
 
          if (any(ti < 0, na.rm=TRUE))
-            stop("One or more person-times are negative.")
+            stop(mstyle$stop("One or more person-times are negative."))
 
          ni.u <- ti ### unadjusted total sample sizes
 
@@ -1437,10 +1439,10 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
          if (is.element(measure, c("MN","MNLN","CVLN"))) {
 
             if (length(mi)==0L || length(sdi)==0L || length(ni)==0L)
-               stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments.")
+               stop(mstyle$stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments."))
 
             if (!all(length(mi) == c(length(mi),length(sdi),length(ni))))
-               stop("Supplied data vectors are not all of the same length.")
+               stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
          }
 
@@ -1449,21 +1451,21 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
          if (is.element(measure, c("SDLN"))) {
 
             if (length(sdi)==0L || length(ni)==0L)
-               stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments.")
+               stop(mstyle$stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments."))
 
             if (length(sdi) != length(ni))
-               stop("Supplied data vectors are not all of the same length.")
+               stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
          }
 
          if (any(sdi < 0, na.rm=TRUE))
-            stop("One or more standard deviations are negative.")
+            stop(mstyle$stop("One or more standard deviations are negative."))
 
          if (any(ni < 0, na.rm=TRUE))
-            stop("One or more sample sizes are negative.")
+            stop(mstyle$stop("One or more sample sizes are negative."))
 
          if (is.element(measure, c("MNLN","CVLN")) && any(mi < 0, na.rm=TRUE))
-            stop("One or more means are negative.")
+            stop(mstyle$stop("One or more means are negative."))
 
          ni.u <- ni ### unadjusted total sample sizes
 
@@ -1530,13 +1532,13 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
             ### for these measures, need m1i, m2i, sd1i, sd2i, ni, and ri
 
             if (length(m1i)==0L || length(m2i)==0L || length(sd1i)==0L || length(sd2i)==0L || length(ni)==0L || length(ri)==0L)
-               stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments.")
+               stop(mstyle$stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments."))
 
             if (!all(length(m1i) == c(length(m1i),length(m2i),length(sd1i),length(sd2i),length(ni),length(ri))))
-               stop("Supplied data vectors are not all of the same length.")
+               stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
             if (any(c(sd1i, sd2i) < 0, na.rm=TRUE))
-               stop("One or more standard deviations are negative.")
+               stop(mstyle$stop("One or more standard deviations are negative."))
 
          }
 
@@ -1545,21 +1547,21 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
             ### for this measure, need m1i, m2i, sd1i, ni, and ri (do not need sd2i)
 
             if (length(m1i)==0L || length(m2i)==0L || length(sd1i)==0L || length(ni)==0L || length(ri)==0L)
-               stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments.")
+               stop(mstyle$stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments."))
 
             if (!all(length(m1i) == c(length(m1i),length(m2i),length(sd1i),length(ni),length(ri))))
-               stop("Supplied data vectors are not all of the same length.")
+               stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
             if (any(sd1i < 0, na.rm=TRUE))
-               stop("One or more standard deviations are negative.")
+               stop(mstyle$stop("One or more standard deviations are negative."))
 
          }
 
          if (any(abs(ri) > 1, na.rm=TRUE))
-            stop("One or more correlations are > 1 or < -1.")
+            stop(mstyle$stop("One or more correlations are > 1 or < -1."))
 
          if (any(ni < 0, na.rm=TRUE))
-            stop("One or more sample sizes are negative.")
+            stop(mstyle$stop("One or more sample sizes are negative."))
 
          ni.u <- ni ### unadjusted total sample sizes
 
@@ -1633,19 +1635,19 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
          }
 
          if (length(ai)==0L || length(mi)==0L || length(ni)==0L)
-            stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments.")
+            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments."))
 
          if (!all(length(ai) == c(length(ai),length(mi),length(ni))))
-            stop("Supplied data vectors are not all of the same length.")
+            stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
          if (any(ai > 1, na.rm=TRUE))
-            stop("One or more alpha values are > 1.")
+            stop(mstyle$stop("One or more alpha values are > 1."))
 
          if (any(mi < 2, na.rm=TRUE))
-            stop("One or more mi values are < 2.")
+            stop(mstyle$stop("One or more mi values are < 2."))
 
          if (any(ni < 0, na.rm=TRUE))
-            stop("One or more sample sizes are negative.")
+            stop(mstyle$stop("One or more sample sizes are negative."))
 
          ni.u <- ni ### unadjusted total sample sizes
 
@@ -1696,7 +1698,7 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
       if (is.null(vi)) {
          if (is.null(sei)) {
-            stop("Need to specify 'vi' or 'sei' argument.")
+            stop(mstyle$stop("Need to specify 'vi' or 'sei' argument."))
          } else {
             vi <- sei^2
          }
@@ -1709,10 +1711,10 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
       }
 
       if (length(yi) != length(vi))
-         stop("Supplied data vectors are not of the same length.")
+         stop(mstyle$stop("Supplied data vectors are not of the same length."))
 
       if (!is.null(ni) && (length(yi) != length(ni)))
-         stop("Supplied data vectors are not of the same length.")
+         stop(mstyle$stop("Supplied data vectors are not of the same length."))
 
       ni.u <- ni ### unadjusted total sample sizes
 
@@ -1727,7 +1729,7 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
    is.inf <- is.infinite(yi) | is.infinite(vi)
 
    if (any(is.inf)) {
-      warning("Some 'yi' and/or 'vi' values equal to +-Inf. Recoded to NAs.")
+      warning(mstyle$warning("Some 'yi' and/or 'vi' values equal to +-Inf. Recoded to NAs."))
       yi[is.inf] <- NA
       vi[is.inf] <- NA
    }
@@ -1753,7 +1755,7 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
          slab <- slab[subset]
 
       if (anyNA(slab))
-         stop("NAs in study labels.")
+         stop(mstyle$stop("NAs in study labels."))
 
       ### check if study labels are unique; if not, make them unique
 
@@ -1761,7 +1763,7 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
          slab <- .make.unique(slab)
 
       if (length(slab) != length(yi))
-         stop("Study labels not of same length as data.")
+         stop(mstyle$stop("Study labels not of same length as data."))
 
       ### add slab attribute to the yi vector
       attr(yi, "slab") <- slab

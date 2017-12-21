@@ -1,8 +1,10 @@
 summary.escalc <- function(object, out.names=c("sei","zi","ci.lb","ci.ub"), var.names,
 H0=0, append=TRUE, replace=TRUE, level=95, digits, transf, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(object, "escalc"))
-      stop("Argument 'object' must be an object of class \"escalc\".")
+      stop(mstyle$stop("Argument 'object' must be an object of class \"escalc\"."))
 
    x <- object
 
@@ -11,11 +13,11 @@ H0=0, append=TRUE, replace=TRUE, level=95, digits, transf, ...) {
    crit <- qnorm(level/2, lower.tail=FALSE)
 
    if (length(out.names) != 4)
-      stop("Argument 'out.names' must be of length 4.")
+      stop(mstyle$stop("Argument 'out.names' must be of length 4."))
 
    if (any(out.names != make.names(out.names, unique=TRUE))) {
       out.names <- make.names(out.names, unique=TRUE)
-      warning(paste0("Argument 'out.names' does not contain syntactically valid variable names.\n  Variable names adjusted to: out.names = c('", out.names[1], "', '", out.names[2], "', '", out.names[3], "', '", out.names[4], "')."))
+      warning(mstyle$warning(paste0("Argument 'out.names' does not contain syntactically valid variable names.\n  Variable names adjusted to: out.names = c('", out.names[1], "', '", out.names[2], "', '", out.names[3], "', '", out.names[4], "').")))
    }
 
    if (missing(transf))
@@ -31,25 +33,25 @@ H0=0, append=TRUE, replace=TRUE, level=95, digits, transf, ...) {
          yi.name <- attr(x, "yi.names")[1] ### take the first entry to be the yi variable
       } else {                             ### if not, see if 'yi' is in the object and assume that is the yi variable
          if (!is.element("yi", names(x)))
-            stop("Cannot determine name of the 'yi' variable.")
+            stop(mstyle$stop("Cannot determine name of the 'yi' variable."))
          yi.name <- "yi"
       }
       if (!is.null(attr(x, "vi.names"))) { ### if vi.names attributes is available
          vi.name <- attr(x, "vi.names")[1] ### take the first entry to be the vi variable
       } else {                             ### if not, see if 'vi' is in the object and assume that is the vi variable
          if (!is.element("vi", names(x)))
-            stop("Cannot determine name of the 'vi' variable.")
+            stop(mstyle$stop("Cannot determine name of the 'vi' variable."))
          vi.name <- "vi"
       }
 
    } else {
 
       if (length(var.names) != 2)
-         stop("Argument 'var.names' must be of length 2.")
+         stop(mstyle$stop("Argument 'var.names' must be of length 2."))
 
       if (any(var.names != make.names(var.names, unique=TRUE))) {
          var.names <- make.names(var.names, unique=TRUE)
-         warning(paste0("Argument 'var.names' does not contain syntactically valid variable names.\n  Variable names adjusted to: var.names = c('", var.names[1], "', '", var.names[2], "')."))
+         warning(mstyle$warning(paste0("Argument 'var.names' does not contain syntactically valid variable names.\n  Variable names adjusted to: var.names = c('", var.names[1], "', '", var.names[2], "').")))
       }
 
       yi.name <- var.names[1]
@@ -61,7 +63,7 @@ H0=0, append=TRUE, replace=TRUE, level=95, digits, transf, ...) {
    vi <- x[[vi.name]]
 
    if (is.null(yi) || is.null(vi))
-      stop(paste0("Cannot find variables '", yi.name, "' and/or '", vi.name, "' in the data frame."))
+      stop(mstyle$stop(paste0("Cannot find variables '", yi.name, "' and/or '", vi.name, "' in the data frame.")))
 
    #########################################################################
 

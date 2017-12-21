@@ -1,13 +1,15 @@
 plot.gosh.rma <- function(x, het="I2", pch=16, cex=0.5, out, col, alpha, border,
 xlim, ylim, xhist=TRUE, yhist=TRUE, hh=.3, breaks, adjust, lwd, labels, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(x, "gosh.rma"))
-      stop("Argument 'x' must be an object of class \"gosh.rma\".")
+      stop(mstyle$stop("Argument 'x' must be an object of class \"gosh.rma\"."))
 
    het <- match.arg(het, c("QE", "I2", "H2", "tau2"))
 
    if (het == "tau2" && x$method == "FE")
-      stop("Cannot plot 'tau2' for fixed-effects models.")
+      stop(mstyle$stop("Cannot plot 'tau2' for fixed-effects models."))
 
    if (missing(alpha))
       alpha <- nrow(x$res)^(-0.2)
@@ -33,16 +35,16 @@ xlim, ylim, xhist=TRUE, yhist=TRUE, hh=.3, breaks, adjust, lwd, labels, ...) {
    } else {
 
       if (length(out) != 1)
-         stop("Argument 'out' should only specify a single study.")
+         stop(mstyle$stop("Argument 'out' should only specify a single study."))
 
       if (out > x$k || out < 1)
-         stop("Non-existing study chosen as potential outlier.")
+         stop(mstyle$stop("Non-existing study chosen as potential outlier."))
 
       if (missing(col))
          col <- c("red", "blue")
 
       if (length(col) != 2)
-         stop("Argument 'col' should specify two colors.")
+         stop(mstyle$stop("Argument 'col' should specify two colors."))
 
       col.o <- col2rgb(col[1]) / 255
       col.i <- col2rgb(col[2]) / 255
@@ -66,7 +68,7 @@ xlim, ylim, xhist=TRUE, yhist=TRUE, hh=.3, breaks, adjust, lwd, labels, ...) {
       hh <- c(hh, hh)
 
    if (x$int.only && (any(hh < 0) | any(hh > 1)))
-      stop("Invalid value(s) specified for 'hh' argument.")
+      stop(mstyle$stop("Invalid value(s) specified for 'hh' argument."))
 
    if (missing(breaks))
       breaks <- "Sturges"

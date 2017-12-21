@@ -7,36 +7,39 @@ level=95, digits=4, verbose=FALSE, ...) {
 
    ###### setup
 
+   withcrayon <- "crayon" %in% .packages()
+   mstyle <- .get.mstyle(withcrayon)
+
    ### check argument specifications
 
    if (length(add) == 1)
       add <- c(add, 0)
 
    if (length(add) != 2)
-      stop("Argument 'add' should specify one or two values (see 'help(rma.peto)').")
+      stop(mstyle$stop("Argument 'add' should specify one or two values (see 'help(rma.peto)')."))
 
    if (length(to) == 1)
       to <- c(to, "none")
 
    if (length(to) != 2)
-      stop("Argument 'to' should specify one or two values (see 'help(rma.peto)').")
+      stop(mstyle$stop("Argument 'to' should specify one or two values (see 'help(rma.peto)')."))
 
    if (length(drop00) == 1)
       drop00 <- c(drop00, FALSE)
 
    if (length(drop00) != 2)
-      stop("Argument 'drop00' should specify one or two values (see 'help(rma.peto)').")
+      stop(mstyle$stop("Argument 'drop00' should specify one or two values (see 'help(rma.peto)')."))
 
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
-      stop("Unknown 'na.action' specified under options().")
+      stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
    if (!is.element(to[1], c("all","only0","if0all","none")))
-      stop("Unknown 'to' argument specified.")
+      stop(mstyle$stop("Unknown 'to' argument specified."))
 
    if (!is.element(to[2], c("all","only0","if0all","none")))
-      stop("Unknown 'to' argument specified.")
+      stop(mstyle$stop("Unknown 'to' argument specified."))
 
    ### get ... argument and check for extra/superfluous arguments
 
@@ -49,7 +52,7 @@ level=95, digits=4, verbose=FALSE, ...) {
    #########################################################################
 
    if (verbose)
-      message("Extracting data and computing yi/vi values ...")
+      message(mstyle$message("Extracting data and computing yi/vi values ..."))
 
    ### check if data argument has been specified
 
@@ -96,7 +99,7 @@ level=95, digits=4, verbose=FALSE, ...) {
    ### generate study labels if none are specified
 
    if (verbose)
-      message("Generating/extracting study labels ...")
+      message(mstyle$message("Generating/extracting study labels ..."))
 
    if (is.null(slab)) {
 
@@ -106,10 +109,10 @@ level=95, digits=4, verbose=FALSE, ...) {
    } else {
 
       if (anyNA(slab))
-         stop("NAs in study labels.")
+         stop(mstyle$stop("NAs in study labels."))
 
       if (length(slab) != k)
-         stop("Study labels not of same length as data.")
+         stop(mstyle$stop("Study labels not of same length as data."))
 
       slab.null <- FALSE
 
@@ -120,7 +123,7 @@ level=95, digits=4, verbose=FALSE, ...) {
    if (!is.null(subset)) {
 
       if (verbose)
-         message("Subsetting ...")
+         message(mstyle$message("Subsetting ..."))
 
       ai   <- ai[subset]
       bi   <- bi[subset]
@@ -175,7 +178,7 @@ level=95, digits=4, verbose=FALSE, ...) {
    if (any(has.na)) {
 
       if (verbose)
-         message("Handling NAs in table data ...")
+         message(mstyle$message("Handling NAs in table data ..."))
 
       if (na.act == "na.omit" || na.act == "na.exclude" || na.act == "na.pass") {
          ai   <- ai[not.na]
@@ -183,18 +186,18 @@ level=95, digits=4, verbose=FALSE, ...) {
          ci   <- ci[not.na]
          di   <- di[not.na]
          k    <- length(ai)
-         warning("Tables with NAs omitted from model fitting.")
+         warning(mstyle$warning("Tables with NAs omitted from model fitting."))
       }
 
       if (na.act == "na.fail")
-         stop("Missing values in tables.")
+         stop(mstyle$stop("Missing values in tables."))
 
    }
 
    ### at least one study left?
 
    if (k < 1)
-      stop("Processing terminated since k = 0.")
+      stop(mstyle$stop("Processing terminated since k = 0."))
 
    ### check for NAs in yi/vi and act accordingly
 
@@ -204,14 +207,14 @@ level=95, digits=4, verbose=FALSE, ...) {
    if (any(yivi.na)) {
 
       if (verbose)
-         message("Handling NAs in yi/vi ...")
+         message(mstyle$message("Handling NAs in yi/vi ..."))
 
       if (na.act == "na.omit" || na.act == "na.exclude" || na.act == "na.pass") {
 
          yi <- yi[not.na.yivi]
          vi <- vi[not.na.yivi]
          ni <- ni[not.na.yivi]
-         warning("Some yi/vi values are NA.")
+         warning(mstyle$warning("Some yi/vi values are NA."))
 
          attr(yi, "measure") <- measure ### add measure attribute back
          attr(yi, "ni")      <- ni      ### add ni attribute back
@@ -219,7 +222,7 @@ level=95, digits=4, verbose=FALSE, ...) {
       }
 
       if (na.act == "na.fail")
-         stop("Missing yi/vi values.")
+         stop(mstyle$stop("Missing yi/vi values."))
 
    }
 
@@ -280,7 +283,7 @@ level=95, digits=4, verbose=FALSE, ...) {
    ###### model fitting, test statistics, and confidence intervals
 
    if (verbose)
-      message("Model fitting ...")
+      message(mstyle$message("Model fitting ..."))
 
    xt <- ai + ci ### frequency of outcome1 in both groups combined
    yt <- bi + di ### frequency of outcome2 in both groups combined
@@ -290,7 +293,7 @@ level=95, digits=4, verbose=FALSE, ...) {
    sumVi <- sum(Vi)
 
    if (sumVi == 0L) ### sumVi = 0 when xt or yt = 0 in *all* tables
-      stop("One of the two outcomes never occurred in any of the tables. Peto's method cannot be used.")
+      stop(mstyle$stop("One of the two outcomes never occurred in any of the tables. Peto's method cannot be used."))
 
    beta  <- sum(ai - Ei) / sumVi
    se    <- sqrt(1/sumVi)
@@ -307,7 +310,7 @@ level=95, digits=4, verbose=FALSE, ...) {
    ### heterogeneity test (Peto's method)
 
    if (verbose)
-      message("Heterogeneity testing ...")
+      message(mstyle$message("Heterogeneity testing ..."))
 
    k.pos <- sum(Vi > 0) ### number of tables with positive sampling variance
    Vi[Vi == 0] <- NA    ### set 0 sampling variances to NA
@@ -331,7 +334,7 @@ level=95, digits=4, verbose=FALSE, ...) {
    ###### fit statistics
 
    if (verbose)
-      message("Computing fit statistics and log likelihood ...")
+      message(mstyle$message("Computing fit statistics and log likelihood ..."))
 
    ll.ML     <- -1/2 * (k.yi)   * log(2*base::pi)                   - 1/2 * sum(log(vi))                      - 1/2 * RSS
    ll.REML   <- -1/2 * (k.yi-1) * log(2*base::pi) + 1/2 * log(k.yi) - 1/2 * sum(log(vi)) - 1/2 * log(sum(wi)) - 1/2 * RSS
@@ -353,7 +356,7 @@ level=95, digits=4, verbose=FALSE, ...) {
    ###### prepare output
 
    if (verbose)
-      message("Preparing output ...")
+      message(mstyle$message("Preparing output ..."))
 
    parms     <- 1
    p         <- 1

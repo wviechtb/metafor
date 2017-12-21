@@ -1,5 +1,7 @@
-Changes in Version 2.1-0 (2017-12-10)
+Changes in Version 2.1-0 (2017-12-21)
 =====================================
+
+   o output is now styled/colored when 'crayon' package is loaded
 
    o overhauled plot.gosh.rma(); when 'out' is specified, it now shows two
      distributions, one for the values when the outlier is included and

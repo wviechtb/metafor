@@ -4,11 +4,13 @@ efac=1, col, border, cex, ...) {
 
    #########################################################################
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(x, "rma"))
-      stop("Argument 'x' must be an object of class \"rma\".")
+      stop(mstyle$stop("Argument 'x' must be an object of class \"rma\"."))
 
    if (!x$int.only)
-      stop("Fitted model should not contain moderators.")
+      stop(mstyle$stop("Fitted model should not contain moderators."))
 
    if (missing(width))
       width <- NULL

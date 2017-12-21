@@ -1,7 +1,9 @@
 print.robust.rma <- function(x, digits, signif.stars=getOption("show.signif.stars"), signif.legend=signif.stars, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(x, "robust.rma"))
-      stop("Argument 'x' must be an object of class \"robust.rma\".")
+      stop(mstyle$stop("Argument 'x' must be an object of class \"robust.rma\"."))
 
    if (missing(digits))
       digits <- x$digits
@@ -19,7 +21,7 @@ print.robust.rma <- function(x, digits, signif.stars=getOption("show.signif.star
    cat("\n")
 
    if (x$p > 1 && !is.na(x$QM)) {
-      cat("Test of Moderators (coefficient(s) ", .format.btt(x$btt),"): \n", sep="")
+      cat(mstyle$section(paste0("Test of Moderators (coefficient", ifelse(x$m == 1, " ", "s "), .format.btt(x$btt),"):")), "\n")
       cat("F(df1 = ", x$m, ", df2 = ", x$dfs, ") = ", formatC(x$QM, digits=digits, format="f"), ", p-val ", .pval(x$QMp, digits=digits, showeq=TRUE, sep=" "), "\n\n", sep="")
    }
 
@@ -39,16 +41,19 @@ print.robust.rma <- function(x, digits, signif.stars=getOption("show.signif.star
    if (x$int.only)
       res.table <- res.table[1,]
 
-   cat("Model Results:\n\n")
+   cat(mstyle$section("Model Results:"))
+   cat("\n\n")
    if (x$int.only) {
-      .print.out(res.table)
-      #print(res.table, quote=FALSE, right=TRUE)
+      tmp <- capture.output(.print.vector(res.table))
    } else {
-      print(res.table, quote=FALSE, right=TRUE, print.gap=2)
+      tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE, print.gap=2))
    }
+   .print.table(tmp, mstyle)
+
    cat("\n")
    if (signif.legend)
-      cat("---\nSignif. codes: ", attr(signif, "legend"), "\n\n")
+      cat(mstyle$legend("---\nSignif. codes: "), mstyle$legend(attr(signif, "legend")))
+   cat("\n\n")
 
    invisible()
 

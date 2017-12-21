@@ -2,10 +2,12 @@ ranktest.default <- function(x, vi, sei, subset, digits, ...) {
 
    #########################################################################
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
-      stop("Unknown 'na.action' specified under options().")
+      stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
    if (missing(subset))
       subset <- NULL
@@ -29,7 +31,7 @@ ranktest.default <- function(x, vi, sei, subset, digits, ...) {
    }
 
    if (is.null(vi))
-      stop("Need to specify 'vi' or 'sei' argument.")
+      stop(mstyle$stop("Need to specify 'vi' or 'sei' argument."))
 
    yi <- x
 
@@ -54,12 +56,12 @@ ranktest.default <- function(x, vi, sei, subset, digits, ...) {
 
          yi <- yi[not.na]
          vi <- vi[not.na]
-         warning("Studies with NAs omitted from test.")
+         warning(mstyle$warning("Studies with NAs omitted from test."))
 
       }
 
       if (na.act == "na.fail")
-         stop("Missing values in data.")
+         stop(mstyle$stop("Missing values in data."))
 
    }
 

@@ -1,7 +1,9 @@
 print.list.rma <- function(x, digits, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(x, "list.rma"))
-      stop("Argument 'x' must be an object of class \"list.rma\".")
+      stop(mstyle$stop("Argument 'x' must be an object of class \"list.rma\"."))
 
    if (missing(digits))
       digits <- x$digits
@@ -17,7 +19,7 @@ print.list.rma <- function(x, digits, ...) {
    ### in case all values were NA and have been omitted
 
    if (nrow(out) == 0L)
-      stop("All values are NA.", call.=FALSE)
+      stop(mstyle$stop("All values are NA."), call.=FALSE)
 
    ### if transf exists and is TRUE, set SEs to NULL so that column is omitted from the output
 
@@ -48,7 +50,8 @@ print.list.rma <- function(x, digits, ...) {
       }
    }
 
-   print(out, quote=FALSE, right=TRUE)
+   tmp <- capture.output(print(out, quote=FALSE, right=TRUE))
+   .print.table(tmp, mstyle)
 
    invisible(sav)
 

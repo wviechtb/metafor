@@ -5,10 +5,12 @@ refline=0, pch=19, pch.fill=21, col, bg, ci.res=1000, ...) {
 
    #########################################################################
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
-      stop("Unknown 'na.action' specified under options().")
+      stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
    if (missing(subset))
       subset <- NULL
@@ -33,7 +35,7 @@ refline=0, pch=19, pch.fill=21, col, bg, ci.res=1000, ...) {
       if (!is.null(ni) && length(ni) != length(yi))
          ni <- NULL
       if (is.null(ni))
-         stop("No sample size information available.")
+         stop(mstyle$stop("No sample size information available."))
    }
 
    ### check if sampling variances and/or standard errors are available
@@ -54,7 +56,7 @@ refline=0, pch=19, pch.fill=21, col, bg, ci.res=1000, ...) {
    }
 
    if (is.element(yaxis, c("sei", "vi", "seinv", "vinv", "wi")) && is.null(vi))
-      stop("Need to specify 'vi' or 'sei' argument.")
+      stop(mstyle$stop("Need to specify 'vi' or 'sei' argument."))
 
    ### set negative variances and/or standard errors to 0
 
@@ -174,7 +176,7 @@ refline=0, pch=19, pch.fill=21, col, bg, ci.res=1000, ...) {
       }
 
       if (na.act == "na.fail")
-         stop("Missing values in data.")
+         stop(mstyle$stop("Missing values in data."))
 
    }
 
@@ -184,7 +186,7 @@ refline=0, pch=19, pch.fill=21, col, bg, ci.res=1000, ...) {
    ### at least two studies left?
 
    if (length(yi) < 2)
-      stop("Plotting terminated since k < 2.")
+      stop(mstyle$stop("Plotting terminated since k < 2."))
 
    ### get weights
 
@@ -226,7 +228,7 @@ refline=0, pch=19, pch.fill=21, col, bg, ci.res=1000, ...) {
       ### infinite y-axis limits can happen with "seinv" and "vinv" when one or more sampling variances are 0
 
       if (any(is.infinite(ylim)))
-         stop("Setting 'ylim' automatically not possible (must set y-axis limits manually).")
+         stop(mstyle$stop("Setting 'ylim' automatically not possible (must set y-axis limits manually)."))
 
    } else {
 
@@ -242,17 +244,17 @@ refline=0, pch=19, pch.fill=21, col, bg, ci.res=1000, ...) {
 
       if (is.element(yaxis, c("sei", "vi", "ni", "ninv", "sqrtni", "sqrtninv", "lni"))) {
          if (ylim[1] < 0 || ylim[2] < 0)
-            stop("Both limits for the y axis must be >= 0.")
+            stop(mstyle$stop("Both limits for the y axis must be >= 0."))
       }
 
       if (is.element(yaxis, c("seinv", "vinv"))) {
          if (ylim[1] <= 0 || ylim[2] <= 0)
-            stop("Both limits for the y axis must be > 0.")
+            stop(mstyle$stop("Both limits for the y axis must be > 0."))
       }
 
       if (is.element(yaxis, c("wi"))) {
          if (ylim[1] < 0 || ylim[2] < 0)
-            stop("Both limits for the y axis must be >= 0.")
+            stop(mstyle$stop("Both limits for the y axis must be >= 0."))
       }
 
    }

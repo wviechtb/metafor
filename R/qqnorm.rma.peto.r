@@ -1,17 +1,19 @@
 qqnorm.rma.peto <- function(y, type="rstandard", pch=19, label=FALSE, offset=0.3, pos=13, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(y, "rma.peto"))
-      stop("Argument 'y' must be an object of class \"rma.peto\".")
+      stop(mstyle$stop("Argument 'y' must be an object of class \"rma.peto\"."))
 
    x <- y
 
    type <- match.arg(type, c("rstandard", "rstudent"))
 
    if (x$k == 1)
-      stop("Stopped because k = 1.")
+      stop(mstyle$stop("Stopped because k = 1."))
 
    if (length(label) != 1)
-      stop("Argument 'label' should be of length 1.")
+      stop(mstyle$stop("Argument 'label' should be of length 1."))
 
    #########################################################################
 
@@ -52,7 +54,7 @@ qqnorm.rma.peto <- function(y, type="rstandard", pch=19, label=FALSE, offset=0.3
       label <- round(label)
 
       if (label < 1 | label > x$k)
-         stop("Out of range value for 'label' argument.")
+         stop(mstyle$stop("Out of range value for 'label' argument."))
 
       pos.x <- sav$x[ord]
       pos.y <- sav$y[ord]

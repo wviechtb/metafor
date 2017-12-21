@@ -4,14 +4,16 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
 
    #########################################################################
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(x, "rma"))
-      stop("Argument 'x' must be an object of class \"rma\".")
+      stop(mstyle$stop("Argument 'x' must be an object of class \"rma\"."))
 
    if (inherits(x, "robust.rma"))
-      stop("Function not applicable to objects of class \"robust.rma\".")
+      stop(mstyle$stop("Function not applicable to objects of class \"robust.rma\"."))
 
    if (inherits(x, "rma.ls"))
-      stop("Function not applicable to objects of class \"rma.ls\".")
+      stop(mstyle$stop("Function not applicable to objects of class \"rma.ls\"."))
 
    if (missing(transf))
       transf <- FALSE
@@ -47,7 +49,7 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
       }
 
    } else {
-      stop("Radial plots only applicable for models without moderators.")
+      stop(mstyle$stop("Radial plots only applicable for models without moderators."))
    }
 
    if (center) {
@@ -71,7 +73,7 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
    ### if vi=0 and tau2=0, then zi and xi will be Inf
 
    if (any(is.infinite(c(xi,zi))))
-      stop("Setting 'xlim' and 'zlim' automatically not possible (must set axis limits manually).")
+      stop(mstyle$stop("Setting 'xlim' and 'zlim' automatically not possible (must set axis limits manually)."))
 
    ### set x axis limits if none are specified
 

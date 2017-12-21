@@ -7,39 +7,42 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
 
    ###### setup
 
+   withcrayon <- "crayon" %in% .packages()
+   mstyle <- .get.mstyle(withcrayon)
+
    ### check argument specifications
 
    if (!is.element(measure, c("OR","RR","RD","IRR","IRD")))
-      stop("Mantel-Haenszel method can only be used with measures OR, RR, RD, IRR, and IRD.")
+      stop(mstyle$stop("Mantel-Haenszel method can only be used with measures OR, RR, RD, IRR, and IRD."))
 
    if (length(add) == 1)
       add <- c(add, 0)
 
    if (length(add) != 2)
-      stop("Argument 'add' should specify one or two values (see 'help(rma.mh)').")
+      stop(mstyle$stop("Argument 'add' should specify one or two values (see 'help(rma.mh)')."))
 
    if (length(to) == 1)
       to <- c(to, "none")
 
    if (length(to) != 2)
-      stop("Argument 'to' should specify one or two values (see 'help(rma.mh)').")
+      stop(mstyle$stop("Argument 'to' should specify one or two values (see 'help(rma.mh)')."))
 
    if (length(drop00) == 1)
       drop00 <- c(drop00, FALSE)
 
    if (length(drop00) != 2)
-      stop("Argument 'drop00' should specify one or two values (see 'help(rma.mh)').")
+      stop(mstyle$stop("Argument 'drop00' should specify one or two values (see 'help(rma.mh)')."))
 
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
-      stop("Unknown 'na.action' specified under options().")
+      stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
    if (!is.element(to[1], c("all","only0","if0all","none")))
-      stop("Unknown 'to' argument specified.")
+      stop(mstyle$stop("Unknown 'to' argument specified."))
 
    if (!is.element(to[2], c("all","only0","if0all","none")))
-      stop("Unknown 'to' argument specified.")
+      stop(mstyle$stop("Unknown 'to' argument specified."))
 
    ### get ... argument and check for extra/superfluous arguments
 
@@ -56,7 +59,7 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
    #########################################################################
 
    if (verbose)
-      message("Extracting data and computing yi/vi values ...")
+      message(mstyle$message("Extracting data and computing yi/vi values ..."))
 
    ### check if data argument has been specified
 
@@ -109,7 +112,7 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
       ### generate study labels if none are specified
 
       if (verbose)
-         message("Generating/extracting study labels ...")
+         message(mstyle$message("Generating/extracting study labels ..."))
 
       if (is.null(slab)) {
 
@@ -119,10 +122,10 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
       } else {
 
          if (anyNA(slab))
-            stop("NAs in study labels.")
+            stop(mstyle$stop("NAs in study labels."))
 
          if (length(slab) != k)
-            stop("Study labels not of same length as data.")
+            stop(mstyle$stop("Study labels not of same length as data."))
 
          slab.null <- FALSE
 
@@ -133,7 +136,7 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
       if (!is.null(subset)) {
 
          if (verbose)
-            message("Subsetting ...")
+            message(mstyle$message("Subsetting ..."))
 
          ai   <- ai[subset]
          bi   <- bi[subset]
@@ -188,7 +191,7 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
       if (any(has.na)) {
 
          if (verbose)
-            message("Handling NAs in table data ...")
+            message(mstyle$message("Handling NAs in table data ..."))
 
          if (na.act == "na.omit" || na.act == "na.exclude" || na.act == "na.pass") {
             ai <- ai[not.na]
@@ -196,18 +199,18 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
             ci <- ci[not.na]
             di <- di[not.na]
             k  <- length(ai)
-            warning("Tables with NAs omitted from model fitting.")
+            warning(mstyle$warning("Tables with NAs omitted from model fitting."))
          }
 
          if (na.act == "na.fail")
-            stop("Missing values in tables.")
+            stop(mstyle$stop("Missing values in tables."))
 
       }
 
       ### at least one study left?
 
       if (k < 1)
-         stop("Processing terminated since k = 0.")
+         stop(mstyle$stop("Processing terminated since k = 0."))
 
       ### check for NAs in yi/vi and act accordingly
 
@@ -217,14 +220,14 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
       if (any(yivi.na)) {
 
          if (verbose)
-            message("Handling NAs in yi/vi ...")
+            message(mstyle$message("Handling NAs in yi/vi ..."))
 
          if (na.act == "na.omit" || na.act == "na.exclude" || na.act == "na.pass") {
 
             yi <- yi[not.na.yivi]
             vi <- vi[not.na.yivi]
             ni <- ni[not.na.yivi]
-            warning("Some yi/vi values are NA.")
+            warning(mstyle$warning("Some yi/vi values are NA."))
 
             attr(yi, "measure") <- measure ### add measure attribute back
             attr(yi, "ni")      <- ni      ### add ni attribute back
@@ -232,7 +235,7 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
          }
 
          if (na.act == "na.fail")
-            stop("Missing yi/vi values.")
+            stop(mstyle$stop("Missing yi/vi values."))
 
       }
 
@@ -312,7 +315,7 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
       ### generate study labels if none are specified
 
       if (verbose)
-         message("Generating/extracting study labels ...")
+         message(mstyle$message("Generating/extracting study labels ..."))
 
       if (is.null(slab)) {
 
@@ -322,10 +325,10 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
       } else {
 
          if (anyNA(slab))
-            stop("NAs in study labels.")
+            stop(mstyle$stop("NAs in study labels."))
 
          if (length(slab) != k)
-            stop("Study labels not of same length as data.")
+            stop(mstyle$stop("Study labels not of same length as data."))
 
          slab.null <- FALSE
 
@@ -336,7 +339,7 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
       if (!is.null(subset)) {
 
          if (verbose)
-            message("Subsetting ...")
+            message(mstyle$message("Subsetting ..."))
 
          x1i  <- x1i[subset]
          x2i  <- x2i[subset]
@@ -389,7 +392,7 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
       if (any(has.na)) {
 
          if (verbose)
-            message("Handling NAs in table data ...")
+            message(mstyle$message("Handling NAs in table data ..."))
 
          if (na.act == "na.omit" || na.act == "na.exclude" || na.act == "na.pass") {
             x1i  <- x1i[not.na]
@@ -397,18 +400,18 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
             t1i  <- t1i[not.na]
             t2i  <- t2i[not.na]
             k    <- length(x1i)
-            warning("Tables with NAs omitted from model fitting.")
+            warning(mstyle$warning("Tables with NAs omitted from model fitting."))
          }
 
          if (na.act == "na.fail")
-            stop("Missing values in tables.")
+            stop(mstyle$stop("Missing values in tables."))
 
       }
 
       ### at least one study left?
 
       if (k < 1)
-         stop("Processing terminated since k = 0.")
+         stop(mstyle$stop("Processing terminated since k = 0."))
 
       ### check for NAs in yi/vi and act accordingly
 
@@ -418,14 +421,14 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
       if (any(yivi.na)) {
 
          if (verbose)
-            message("Handling NAs in yi/vi ...")
+            message(mstyle$message("Handling NAs in yi/vi ..."))
 
          if (na.act == "na.omit" || na.act == "na.exclude" || na.act == "na.pass") {
 
             yi <- yi[not.na.yivi]
             vi <- vi[not.na.yivi]
             ni <- ni[not.na.yivi]
-            warning("Some yi/vi values are NA.")
+            warning(mstyle$warning("Some yi/vi values are NA."))
 
             attr(yi, "measure") <- measure ### add measure attribute back
             attr(yi, "ni")      <- ni      ### add ni attribute back
@@ -433,7 +436,7 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
          }
 
          if (na.act == "na.fail")
-            stop("Missing yi/vi values.")
+            stop(mstyle$stop("Missing yi/vi values."))
 
       }
 
@@ -490,7 +493,7 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
    ###### model fitting, test statistics, and confidence intervals
 
    if (verbose)
-      message("Model fitting ...")
+      message(mstyle$message("Model fitting ..."))
 
    if (measure == "OR") {
 
@@ -675,7 +678,7 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
    ### heterogeneity test (inverse variance method)
 
    if (verbose)
-      message("Heterogeneity testing ...")
+      message(mstyle$message("Heterogeneity testing ..."))
 
    wi <- 1/vi
 
@@ -696,7 +699,7 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
    ###### fit statistics
 
    if (verbose)
-      message("Computing fit statistics and log likelihood ...")
+      message(mstyle$message("Computing fit statistics and log likelihood ..."))
 
    if (k.yi >= 1) {
 
@@ -725,7 +728,7 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
    ###### prepare output
 
    if (verbose)
-      message("Preparing output ...")
+      message(mstyle$message("Preparing output ..."))
 
    parms     <- 1
    p         <- 1

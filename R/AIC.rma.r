@@ -1,7 +1,9 @@
 AIC.rma <- function(object, ..., k=2, correct=FALSE) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(object, "rma"))
-      stop("Argument 'object' must be an object of class \"rma\".")
+      stop(mstyle$stop("Argument 'object' must be an object of class \"rma\"."))
 
    if (missing(...)) {
 
@@ -40,7 +42,7 @@ AIC.rma <- function(object, ..., k=2, correct=FALSE) {
 
       yis <- lapply(list(object, ...), function(x) as.vector(x$yi))
       if (!all(sapply(yis[-1], function(x) identical(x, yis[[1]]))))
-         warning("Models not all fitted to the same data.")
+         warning(mstyle$warning("Models not all fitted to the same data."))
 
    }
 

@@ -1,7 +1,9 @@
 print.gosh.rma <- function(x, digits, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(x, "gosh.rma"))
-      stop("Argument 'x' must be an object of class \"gosh.rma\".")
+      stop(mstyle$stop("Argument 'x' must be an object of class \"gosh.rma\"."))
 
    if (missing(digits))
       digits <- x$digits
@@ -38,7 +40,8 @@ print.gosh.rma <- function(x, digits, ...) {
    if (x$method == "FE")
       res.table <- res.table[-5,]
 
-   print(res.table, quote=FALSE, right=TRUE)
+   tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE))
+   .print.table(tmp, mstyle)
 
    cat("\n")
 

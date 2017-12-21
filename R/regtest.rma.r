@@ -2,20 +2,22 @@ regtest.rma <- function(x, model="rma", predictor="sei", ret.fit=FALSE, digits, 
 
    #########################################################################
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(x, "rma"))
-      stop("Argument 'x' must be an object of class \"rma\".")
+      stop(mstyle$stop("Argument 'x' must be an object of class \"rma\"."))
 
    if (inherits(x, "robust.rma"))
-      stop("Method not yet implemented for objects of class \"robust.rma\". Sorry!")
+      stop(mstyle$stop("Method not yet implemented for objects of class \"robust.rma\". Sorry!"))
 
    if (inherits(x, "rma.glmm"))
-      stop("Method not yet implemented for objects of class \"rma.glmm\". Sorry!")
+      stop(mstyle$stop("Method not yet implemented for objects of class \"rma.glmm\". Sorry!"))
 
    if (inherits(x, "rma.mv"))
-      stop("Method not yet implemented for objects of class \"rma.mv\". Sorry!")
+      stop(mstyle$stop("Method not yet implemented for objects of class \"rma.mv\". Sorry!"))
 
    if (inherits(x, "rma.ls"))
-      stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!")
+      stop(mstyle$stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!"))
 
    model <- match.arg(model, c("lm", "rma"))
    predictor <- match.arg(predictor, c("sei", "vi", "ni", "ninv", "sqrtni", "sqrtninv"))
@@ -41,7 +43,7 @@ regtest.rma <- function(x, model="rma", predictor="sei", ret.fit=FALSE, digits, 
    if (is.element(predictor, c("ni", "ninv", "sqrtni", "sqrtninv"))) {
 
       if (is.null(ni)) {
-         stop("No sample size information stored in model object.")
+         stop(mstyle$stop("No sample size information stored in model object."))
 
       } else {
 
@@ -63,7 +65,7 @@ regtest.rma <- function(x, model="rma", predictor="sei", ret.fit=FALSE, digits, 
    tmp <- lm(yi ~ X - 1)
    coef.na <- is.na(coef(tmp))
    if (any(coef.na))
-      stop("Model matrix no longer of full rank after addition of predictor. Cannot fit model.")
+      stop(mstyle$stop("Model matrix no longer of full rank after addition of predictor. Cannot fit model."))
 
    if (model == "rma") {
 

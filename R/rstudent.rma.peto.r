@@ -1,12 +1,14 @@
 rstudent.rma.peto <- function(model, digits, progbar=FALSE, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(model, "rma.peto"))
-      stop("Argument 'model' must be an object of class \"rma.peto\".")
+      stop(mstyle$stop("Argument 'model' must be an object of class \"rma.peto\"."))
 
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
-      stop("Unknown 'na.action' specified under options().")
+      stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
    x <- model
 
@@ -63,7 +65,7 @@ rstudent.rma.peto <- function(model, digits, progbar=FALSE, ...) {
    }
 
    if (na.act == "na.fail" && any(!x$not.na.yivi))
-      stop("Missing values in results.")
+      stop(mstyle$stop("Missing values in results."))
 
    out$digits <- digits
 

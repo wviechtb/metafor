@@ -2,17 +2,19 @@ trimfill.rma.uni <- function(x, side, estimator="L0", maxiter=100, verbose=FALSE
 
    #########################################################################
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(x, "rma.uni"))
-      stop("Argument 'x' must be an object of class \"rma.uni\".")
+      stop(mstyle$stop("Argument 'x' must be an object of class \"rma.uni\"."))
 
    if (inherits(x, "robust.rma"))
-      stop("Method not yet implemented for objects of class \"robust.rma\". Sorry!")
+      stop(mstyle$stop("Method not yet implemented for objects of class \"robust.rma\". Sorry!"))
 
    if (inherits(x, "rma.ls"))
-      stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!")
+      stop(mstyle$stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!"))
 
    if (!x$int.only)
-      stop("Trim-and-fill method only applicable for models without moderators.")
+      stop(mstyle$stop("Trim-and-fill method only applicable for models without moderators."))
 
    if (missing(side))
       side <- NULL
@@ -20,7 +22,7 @@ trimfill.rma.uni <- function(x, side, estimator="L0", maxiter=100, verbose=FALSE
    estimator <- match.arg(estimator, c("L0", "R0", "Q0"))
 
    if (x$k == 1)
-      stop("Stopped because k = 1.")
+      stop(mstyle$stop("Stopped because k = 1."))
 
    #########################################################################
 
@@ -72,7 +74,7 @@ trimfill.rma.uni <- function(x, side, estimator="L0", maxiter=100, verbose=FALSE
       iter <- iter + 1
 
       if (iter > maxiter)
-         stop("Trim and fill algorithm did not converge.")
+         stop(mstyle$stop("Trim and fill algorithm did not converge."))
 
       ### truncated data
 
@@ -122,7 +124,7 @@ trimfill.rma.uni <- function(x, side, estimator="L0", maxiter=100, verbose=FALSE
       se.k0 <- max(0, se.k0)
 
       if (verbose)
-         cat("Iteration:", iter, "\tmissing =", k0, "\t  beta =", ifelse(side == "right", -1*beta, beta), "\n")
+         cat(mstyle$verbose(paste("Iteration:", iter, "\tmissing =", k0, "\t  beta =", ifelse(side == "right", -1*beta, beta), "\n")))
 
    }
 

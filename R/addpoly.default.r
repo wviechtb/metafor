@@ -13,10 +13,12 @@ efac=1, col, border, cex, ...) {
 
    #########################################################################
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
-      stop("Unknown 'na.action' specified under options().")
+      stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
    if (missing(transf))
       transf <- FALSE
@@ -25,7 +27,7 @@ efac=1, col, border, cex, ...) {
       atransf <- FALSE
 
    if (is.function(transf) && is.function(atransf))
-      stop("Use either 'transf' or 'atransf' to specify a transformation (not both).")
+      stop(mstyle$stop("Use either 'transf' or 'atransf' to specify a transformation (not both)."))
 
    if (missing(targs))
       targs <- NULL
@@ -53,7 +55,7 @@ efac=1, col, border, cex, ...) {
       ### CI bounds are specified by user
 
       if (length(ci.lb) != length(ci.ub))
-         stop("Length of 'ci.lb' and 'ci.ub' do not match.")
+         stop(mstyle$stop("Length of 'ci.lb' and 'ci.ub' do not match."))
 
       if (missing(vi) && missing(sei)) {
 
@@ -73,7 +75,7 @@ efac=1, col, border, cex, ...) {
       }
 
       if (length(ci.lb) != length(vi))
-         stop("Length of 'vi' (or 'sei') does not match length of ('ci.lb', 'ci.ub') pairs.")
+         stop(mstyle$stop("Length of 'vi' (or 'sei') does not match length of ('ci.lb', 'ci.ub') pairs."))
 
    } else {
 
@@ -81,7 +83,7 @@ efac=1, col, border, cex, ...) {
 
       if (missing(vi)) {
          if (missing(sei)) {
-            stop("Must specify either 'vi', 'sei', or ('ci.lb', 'ci.ub') pairs.")
+            stop(mstyle$stop("Must specify either 'vi', 'sei', or ('ci.lb', 'ci.ub') pairs."))
          } else {
             vi <- sei^2
             ci.lb <- yi - qnorm(level/2, lower.tail=FALSE) * sei
@@ -106,7 +108,7 @@ efac=1, col, border, cex, ...) {
    }
 
    if (length(rows) != length(yi))
-      stop("Number of outcomes does not correspond to the length of the 'rows' argument.")
+      stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'rows' argument."))
 
    ### check for NAs in yi/vi and act accordingly
 
@@ -135,7 +137,7 @@ efac=1, col, border, cex, ...) {
       }
 
       if (na.act == "na.fail")
-         stop("Missing values in results.")
+         stop(mstyle$stop("Missing values in results."))
 
    }
 

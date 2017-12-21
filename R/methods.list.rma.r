@@ -38,9 +38,6 @@
 
 as.data.frame.list.rma <- function(x, ...) {
 
-   if (!inherits(x, "list.rma"))
-      stop("Argument 'x' must be an object of class \"list.rma\".")
-
    attr(x, "class") <- NULL
 
    ### turn all vectors before the slab vector into a data frame
@@ -66,9 +63,6 @@ as.data.frame.list.rma <- function(x, ...) {
 ############################################################################
 
 as.matrix.list.rma <- function(x, ...) {
-
-   if (!inherits(x, "list.rma"))
-      stop("Argument 'x' must be an object of class \"list.rma\".")
 
    attr(x, "class") <- NULL
 

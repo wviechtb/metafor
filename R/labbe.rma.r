@@ -1,22 +1,24 @@
 labbe.rma <- function(x, xlim, ylim, xlab, ylab,
 add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, lty, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(x, "rma"))
-      stop("Argument 'x' must be an object of class \"rma\".")
+      stop(mstyle$stop("Argument 'x' must be an object of class \"rma\"."))
 
    if (inherits(x, "rma.ls"))
-      stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!")
+      stop(mstyle$stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!"))
 
    if (!x$int.only)
-      stop("L'Abbe plot only applicable for models without moderators.")
+      stop(mstyle$stop("L'Abbe plot only applicable for models without moderators."))
 
    if (!is.element(x$measure, c("RR","OR","RD","AS","IRR","IRD","IRSD")))
-      stop("Argument 'measure' must be one of the following: 'RR','OR','RD','AS','IRR','IRD','IRSD'.")
+      stop(mstyle$stop("Argument 'measure' must be one of the following: 'RR','OR','RD','AS','IRR','IRD','IRSD'."))
 
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
-      stop("Unknown 'na.action' specified under options().")
+      stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
    if (length(add) == 2) ### for rma.mh and rma.peto objects (1st 'add' value applies to the individual outcomes)
       add <- add[1]
@@ -25,7 +27,7 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, lty, ..
       to <- to[1]
 
    if (!is.element(to, c("all","only0","if0all","none")))
-      stop("Unknown 'to' argument specified.")
+      stop(mstyle$stop("Unknown 'to' argument specified."))
 
    if (missing(transf))
       transf <- FALSE
@@ -62,7 +64,7 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, lty, ..
       pch <- rep(pch, k)                        ### or be equal to a single value (which is then repeated)
 
    if (length(pch) != k)
-      stop("Number of tables does not correspond to the length of the 'pch' argument.")
+      stop(mstyle$stop("Number of tables does not correspond to the length of the 'pch' argument."))
 
    ### if user has set the point sizes
 
@@ -70,14 +72,14 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, lty, ..
       if (length(psize) == 1L)                  ### or be equal to a single value (which is then repeated)
          psize <- rep(psize, k)
       if (length(psize) != k)
-         stop("Number of tables does not correspond to the length of the 'psize' argument.")
+         stop(mstyle$stop("Number of tables does not correspond to the length of the 'psize' argument."))
    }
 
    if (length(bg) == 1L)                        ### note: bg must have same length as number of tables (including NAs)
       bg <- rep(bg, k)                          ### or be equal to a single value (which is then repeated)
 
    if (length(bg) != k)
-      stop("Number of tables does not correspond to the length of the 'bg' argument.")
+      stop(mstyle$stop("Number of tables does not correspond to the length of the 'bg' argument."))
 
    #########################################################################
 
@@ -165,7 +167,7 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, lty, ..
    }
 
    if (length(dat.t$yi)==0 || length(dat.c$yi)==0)
-      stop("No information in object to compute arm-level outcomes.")
+      stop(mstyle$stop("No information in object to compute arm-level outcomes."))
 
    #########################################################################
 

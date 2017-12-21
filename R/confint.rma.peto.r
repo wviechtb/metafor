@@ -1,7 +1,9 @@
 confint.rma.peto <- function(object, parm, level, digits, transf, targs, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(object, "rma.peto"))
-      stop("Argument 'object' must be an object of class \"rma.peto\".")
+      stop(mstyle$stop("Argument 'object' must be an object of class \"rma.peto\"."))
 
    x <- object
 

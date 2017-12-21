@@ -1,19 +1,21 @@
 simulate.rma <- function (object, nsim = 1, seed = NULL, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(object, "rma"))
-      stop("Argument 'object' must be an object of class \"rma\".")
+      stop(mstyle$stop("Argument 'object' must be an object of class \"rma\"."))
 
    if (inherits(object, "rma.glmm"))
-      stop("Method not yet implemented for objects of class \"rma.glmm\". Sorry!")
+      stop(mstyle$stop("Method not yet implemented for objects of class \"rma.glmm\". Sorry!"))
    if (inherits(object, "rma.mh"))
-      stop("Method not yet implemented for objects of class \"rma.mh\". Sorry!")
+      stop(mstyle$stop("Method not yet implemented for objects of class \"rma.mh\". Sorry!"))
    if (inherits(object, "rma.peto"))
-      stop("Method not yet implemented for objects of class \"rma.peto\". Sorry!")
+      stop(mstyle$stop("Method not yet implemented for objects of class \"rma.peto\". Sorry!"))
 
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
-      stop("Unknown 'na.action' specified under options().")
+      stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
    ### as in stats:::simulate.lm
    if (!exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE))
@@ -44,7 +46,7 @@ simulate.rma <- function (object, nsim = 1, seed = NULL, ...) {
    if (inherits(object, "rma.mv")) {
 
       if (!requireNamespace("MASS", quietly=TRUE))
-         stop("Please install the 'MASS' package to simulate from this model.")
+         stop(mstyle$stop("Please install the 'MASS' package to simulate from this model."))
 
       val <- replicate(nsim, MASS::mvrnorm(1, mu=ftd, Sigma=object$M))
 

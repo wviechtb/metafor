@@ -2,8 +2,10 @@ plot.profile.rma <- function(x, ylim, pch=19, ylab, ...) {
 
    #########################################################################
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(x, "profile.rma"))
-      stop("Argument 'x' must be an object of class \"profile.rma\".")
+      stop(mstyle$stop("Argument 'x' must be an object of class \"profile.rma\"."))
 
    if (dev.cur() == 1) {
       par(mfrow=c(x$comps, 1))

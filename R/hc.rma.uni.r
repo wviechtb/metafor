@@ -1,15 +1,17 @@
 hc.rma.uni <- function(object, digits, transf, targs, control, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(object, "rma.uni"))
-      stop("Argument 'object' must be an object of class \"rma.uni\".")
+      stop(mstyle$stop("Argument 'object' must be an object of class \"rma.uni\"."))
 
    if (inherits(object, "rma.ls"))
-      stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!")
+      stop(mstyle$stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!"))
 
    x <- object
 
    if (!x$int.only)
-      stop("Method only applicable for models without moderators.")
+      stop(mstyle$stop("Method only applicable for models without moderators."))
 
    if (missing(digits))
       digits <- x$digits
@@ -25,10 +27,10 @@ hc.rma.uni <- function(object, digits, transf, targs, control, ...) {
    k  <- length(yi)
 
    if (k == 1)
-      stop("Stopped because k = 1.")
+      stop(mstyle$stop("Stopped because k = 1."))
 
    if (!x$allvipos)
-      stop("Cannot use method when one or more sampling variances are non-positive.")
+      stop(mstyle$stop("Cannot use method when one or more sampling variances are non-positive."))
 
    level <- ifelse(x$level > 1, (100-x$level)/100, ifelse(x$level > .5, 1-x$level, x$level))
 
@@ -103,7 +105,7 @@ hc.rma.uni <- function(object, digits, transf, targs, control, ...) {
    t0 <- try(uniroot(eqn, lower=0, upper=2, tol=con$tol, maxiter=con$maxiter))
 
    if (inherits(t0, "try-error"))
-      stop("Error in uniroot().")
+      stop(mstyle$stop("Error in uniroot()."))
 
    t0 <- t0$root
    u0 <- SDR * t0 ### (approximate) percentage point for the distribution of U

@@ -1,13 +1,15 @@
 anova.rma <- function(object, object2, btt, L, digits, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(object, "rma"))
-      stop("Argument 'object' must be an object of class \"rma\".")
+      stop(mstyle$stop("Argument 'object' must be an object of class \"rma\"."))
 
    if (inherits(object, c("rma.mh", "rma.peto")))
-      stop("Function not applicable for objects of class \"rma.mh\" or \"rma.peto\".")
+      stop(mstyle$stop("Function not applicable for objects of class \"rma.mh\" or \"rma.peto\"."))
 
    if (inherits(object, "rma.glmm"))
-      stop("Method not yet implemented for objects of class \"rma.glmm\". Sorry!")
+      stop(mstyle$stop("Method not yet implemented for objects of class \"rma.glmm\". Sorry!"))
 
    if (missing(digits))
       digits <- object$digits
@@ -54,7 +56,7 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
             L <- as.matrix(L)
 
          if (is.character(L))
-            stop("Argument 'L' must be a numeric vector/matrix.")
+            stop(mstyle$stop("Argument 'L' must be a numeric vector/matrix."))
 
          ### if model has an intercept term and L has p-1 columns, assume user left out the intercept and add it automatically
 
@@ -70,7 +72,7 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
          #}
 
          if (ncol(L) != p)
-            stop("Length or number of columns of 'L' does not match number of model coefficients.")
+            stop(mstyle$stop("Length or number of columns of 'L' does not match number of model coefficients."))
 
          m <- nrow(L)
 
@@ -139,16 +141,16 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
       ### do model comparisons via a likelihood ratio test (and fit indices)
 
       if (!inherits(object2, "rma"))
-         stop("Argument 'object2' must be an object of class \"rma\".")
+         stop(mstyle$stop("Argument 'object2' must be an object of class \"rma\"."))
 
       if (inherits(object2, c("rma.mh","rma.peto")))
-         stop("Function not applicable for objects of class \"rma.mh\" or \"rma.peto\".")
+         stop(mstyle$stop("Function not applicable for objects of class \"rma.mh\" or \"rma.peto\"."))
 
       if (inherits(object2, "rma.glmm"))
-         stop("Method not yet implemented for objects of class \"rma.glmm\". Sorry!")
+         stop(mstyle$stop("Method not yet implemented for objects of class \"rma.glmm\". Sorry!"))
 
       if (!identical(class(object), class(object2)))
-         stop("Class of 'object1' must be the same as class of 'object2'.")
+         stop(mstyle$stop("Class of 'object1' must be the same as class of 'object2'."))
 
       ### assume 'object' is the full model and 'object2' the reduced model
 
@@ -163,7 +165,7 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
       ### if they have the same number of parameters, they cannot be nested
 
       if (p.f == p.r)
-         stop("Models have the same number of parameters. LRT not meaningful.")
+         stop(mstyle$stop("Models have the same number of parameters. LRT not meaningful."))
 
       ### if p.f < p.r, then 'object' must be the reduced model and 'object2' the full model
 
@@ -178,21 +180,21 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
 
       if (inherits(object, "rma.uni")) {
          if (!(identical(as.vector(m.f$yi), as.vector(m.r$yi)) && identical(as.vector(m.f$vi), as.vector(m.r$vi)))) ### as.vector() to strip attributes/names
-            stop("Observed outcomes and/or sampling variances not equal in the full and reduced model.")
+            stop(mstyle$stop("Observed outcomes and/or sampling variances not equal in the full and reduced model."))
       }
 
       if (inherits(object, "rma.mv")) {
          if (!(identical(as.vector(m.f$yi), as.vector(m.r$yi)) && identical(m.f$V, m.r$V))) ### as.vector() to strip attributes/names
-            stop("Observed outcomes and/or sampling variances/covariances not equal in the full and reduced model.")
+            stop(mstyle$stop("Observed outcomes and/or sampling variances/covariances not equal in the full and reduced model."))
       }
 
       ### don't do this; reduced model may use method="FE" and full model method="(RE)ML", which is fine
 
       #if (m.f$method != m.r$method)
-      #   stop("Full and reduced model do not use the same 'method'.")
+      #   stop(mstyle$stop("Full and reduced model do not use the same 'method'."))
 
       if (m.f$method == "FE" && m.r$method != "FE")
-         stop("Full model uses a fixed- and reduced model uses random/mixed-effects model.")
+         stop(mstyle$stop("Full model uses a fixed- and reduced model uses random/mixed-effects model."))
 
       ### could do even more checks for cases where the models are clearly not nested ...
 
@@ -207,7 +209,7 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
          fit.stats.r <- t(m.r$fit.stats)["REML",] # to keep (row)names of fit.stats
 
          if (!identical(m.f$X, m.r$X))
-            warning("Models with different fixed effects. REML comparisons are not meaningful.")
+            warning(mstyle$warning("Models with different fixed effects. REML comparisons are not meaningful."))
 
          ### in this case, one could consider just taking the ML deviances, but this
          ### is really ad-hoc; there is some theory in Welham & Thompson (1997) about
