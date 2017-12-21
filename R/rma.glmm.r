@@ -60,7 +60,12 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("tdist", "outlist", "onlyo1", "addyi", "addvi"))
+   .chkdots(ddd, c("tdist", "outlist", "onlyo1", "addyi", "addvi", "time"))
+
+   ### handle 'time' argument from ...
+
+   if (is.logical(ddd$time) && ddd$time)
+      time.start <- proc.time()
 
    ### handle 'tdist' argument from ... (note: overrides test argument)
 
@@ -1828,6 +1833,12 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                   add=add, to=to, drop00=drop00,
                   fit.stats=fit.stats, version=packageVersion("metafor"), call=mf)
 
+   }
+
+   if (is.logical(ddd$time) && ddd$time) {
+      time.end <- proc.time()
+      res$time <- unname(time.end - time.start)[3]
+      .print.time(res$time)
    }
 
    if (!is.null(ddd$outlist)) {

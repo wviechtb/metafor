@@ -42,7 +42,12 @@ level=95, digits=4, verbose=FALSE, ...) {
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("outlist"))
+   .chkdots(ddd, c("outlist", "time"))
+
+   ### handle 'time' argument from ...
+
+   if (is.logical(ddd$time) && ddd$time)
+      time.start <- proc.time()
 
    measure <- "PETO" ### set measure here so that it can be added below
 
@@ -382,6 +387,12 @@ level=95, digits=4, verbose=FALSE, ...) {
                   add=add, to=to, drop00=drop00,
                   fit.stats=fit.stats, call=mf)
 
+   }
+
+   if (is.logical(ddd$time) && ddd$time) {
+      time.end <- proc.time()
+      res$time <- unname(time.end - time.start)[3]
+      .print.time(res$time)
    }
 
    if (!is.null(ddd$outlist)) {

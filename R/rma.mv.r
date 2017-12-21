@@ -73,7 +73,12 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("tdist", "outlist"))
+   .chkdots(ddd, c("tdist", "outlist", "time"))
+
+   ### handle 'time' argument from ...
+
+   if (is.logical(ddd$time) && ddd$time)
+      time.start <- proc.time()
 
    ### handle 'tdist' argument from ... (note: overrides test argument)
 
@@ -2001,6 +2006,12 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
                   mf.r=mf.r, mf.r.f=mf.r.f, mf.g=mf.g, mf.g.f=mf.g.f, mf.h=mf.h, mf.h.f=mf.h.f, Z.S=Z.S, Z.G1=Z.G1, Z.G2=Z.G2, Z.H1=Z.H1, Z.H2=Z.H2,
                   random=random, version=packageVersion("metafor"), call=mf)
 
+   }
+
+   if (is.logical(ddd$time) && ddd$time) {
+      time.end <- proc.time()
+      res$time <- unname(time.end - time.start)[3]
+      .print.time(res$time)
    }
 
    if (!is.null(ddd$outlist)) {

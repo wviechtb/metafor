@@ -56,7 +56,12 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("knha", "scale", "link", "outlist", "onlyo1", "addyi", "addvi"))
+   .chkdots(ddd, c("knha", "scale", "link", "outlist", "onlyo1", "addyi", "addvi", "time"))
+
+   ### handle 'time' argument from ...
+
+   if (is.logical(ddd$time) && ddd$time)
+      time.start <- proc.time()
 
    ### handle 'knha' argument from ... (note: overrides test argument)
 
@@ -1818,6 +1823,12 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
       }
 
+   }
+
+   if (is.logical(ddd$time) && ddd$time) {
+      time.end <- proc.time()
+      res$time <- unname(time.end - time.start)[3]
+      .print.time(res$time)
    }
 
    if (!is.null(ddd$outlist)) {
