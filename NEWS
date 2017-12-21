@@ -85,6 +85,9 @@ Changes in Version 2.1-0 (2017-12-21)
    o fixed error in simulate.rma() that would generate too many samples for
      'rma.mv' models
 
+   o added undocumented argument 'time' to model fitting functions; if set
+     to TRUE, the model fitting time is printed
+
    o added more tests (also for parallel operations)
 
    o reorganized the documentation a bit
