@@ -2567,7 +2567,7 @@
       body    <- tmp
       text    <- tmp
       result  <- tmp
-      error   <- tmp
+      stop    <- tmp
       warning <- tmp
       message <- tmp
       verbose <- tmp
