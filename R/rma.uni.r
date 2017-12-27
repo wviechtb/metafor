@@ -883,7 +883,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
       stop(mstyle$stop("Model matrix not of full rank. Cannot fit model."))
 
    ### check ratio of largest to smallest sampling variance
-   ### note: need to exclude some special cases (0/0 = Nan, max(vi)/0 = Inf)
+   ### note: need to exclude some special cases (0/0 = NaN, max(vi)/0 = Inf)
 
    vimaxmin <- max(vi) / min(vi)
 

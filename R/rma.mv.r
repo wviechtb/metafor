@@ -1026,7 +1026,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       warning(mstyle$warning("'V' appears to be not positive definite."))
 
    ### check ratio of largest to smallest sampling variance
-   ### note: need to exclude some special cases (0/0 = Nan, max(vi)/0 = Inf)
+   ### note: need to exclude some special cases (0/0 = NaN, max(vi)/0 = Inf)
 
    vimaxmin <- max(vi) / min(vi)
 
