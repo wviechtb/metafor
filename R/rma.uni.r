@@ -888,7 +888,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
    vimaxmin <- max(vi) / min(vi)
 
    if (!is.nan(vimaxmin) && !is.infinite(vimaxmin) && vimaxmin >= 1/con$tol)
-      stop(mstyle$stop("Ratio of largest to smallest sampling variance extremely large. Cannot obtain stable results."))
+      warning(mstyle$warning("Ratio of largest to smallest sampling variance extremely large. May not be able to obtain stable results."))
 
    ### iterations counter for iterative estimators
    ### (DLIT, SJIT, ML, REML, EB; PM is also iterative, but uniroot() handles that)

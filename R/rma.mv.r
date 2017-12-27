@@ -1031,7 +1031,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
    vimaxmin <- max(vi) / min(vi)
 
    if (!is.nan(vimaxmin) && !is.infinite(vimaxmin) && vimaxmin >= 1e7)
-      stop(mstyle$stop("Ratio of largest to smallest sampling variance extremely large. Cannot obtain stable results."))
+      warning(mstyle$warning("Ratio of largest to smallest sampling variance extremely large. May not be able to obtain stable results."))
 
    ### make sure that there is at least one column in X ([b])
 
