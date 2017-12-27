@@ -883,12 +883,12 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
       stop(mstyle$stop("Model matrix not of full rank. Cannot fit model."))
 
    ### check ratio of largest to smallest sampling variance
-   ### note: need to exclude some special cases (0/0 = Nan, max(vi)/0 = Inf)
+   ### note: need to exclude some special cases (0/0 = NaN, max(vi)/0 = Inf)
 
    vimaxmin <- max(vi) / min(vi)
 
    if (!is.nan(vimaxmin) && !is.infinite(vimaxmin) && vimaxmin >= 1/con$tol)
-      stop(mstyle$stop("Ratio of largest to smallest sampling variance extremely large. Cannot obtain stable results."))
+      warning(mstyle$warning("Ratio of largest to smallest sampling variance extremely large. May not be able to obtain stable results."))
 
    ### iterations counter for iterative estimators
    ### (DLIT, SJIT, ML, REML, EB; PM is also iterative, but uniroot() handles that)
