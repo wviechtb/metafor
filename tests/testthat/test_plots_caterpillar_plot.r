@@ -6,6 +6,8 @@ context("Checking plots example: Caterpillar plot")
 
 test_that("plot can be drawn.", {
 
+   expect_equivalent(TRUE, TRUE) # avoid 'Empty test' message
+
    skip_on_cran()
 
    ### simulate some data

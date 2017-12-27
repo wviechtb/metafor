@@ -4,7 +4,9 @@
 
 context("Checking plots example: normal QQ plots")
 
-test_that("plot can be drawn for rma().", {
+test_that("plot can be drawn for 'rma.uni' object.", {
+
+   expect_equivalent(TRUE, TRUE) # avoid 'Empty test' message
 
    skip_on_cran()
 
@@ -40,7 +42,9 @@ test_that("plot can be drawn for rma().", {
 
 })
 
-test_that("plot can be drawn for rma.mh().", {
+test_that("plot can be drawn for 'rma.mh' object.", {
+
+   expect_equivalent(TRUE, TRUE) # avoid 'Empty test' message
 
    skip_on_cran()
 
@@ -53,7 +57,9 @@ test_that("plot can be drawn for rma.mh().", {
 
 })
 
-test_that("plot can be drawn for rma.peto().", {
+test_that("plot can be drawn for 'rma.peto' object.", {
+
+   expect_equivalent(TRUE, TRUE) # avoid 'Empty test' message
 
    skip_on_cran()
 
@@ -66,7 +72,7 @@ test_that("plot can be drawn for rma.peto().", {
 
 })
 
-test_that("plot cannot be drawn for rma.mv().", {
+test_that("plot cannot be drawn for 'rma.mv' object.", {
 
    data(dat.bcg, package="metafor")
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)

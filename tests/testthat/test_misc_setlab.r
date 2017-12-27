@@ -7,6 +7,8 @@ vi <- rep(.02, length(yi))
 
 test_that(".setlab() works correctly together with forest().", {
 
+   expect_equivalent(TRUE, TRUE) # avoid 'Empty test' message
+
    opar <- par(no.readonly=TRUE)
 
    par(mfrow=c(5,3), mar=c(5,6,0,4))
