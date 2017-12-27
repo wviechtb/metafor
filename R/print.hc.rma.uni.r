@@ -21,8 +21,12 @@ print.hc.rma.uni <- function(x, digits, ...) {
 
    rownames(res.table) <- c("rma", "hc")
 
+   cat("\n")
+
    tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE))
    .print.table(tmp, mstyle)
+
+   cat("\n")
 
    invisible(res.table)
 

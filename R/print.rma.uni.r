@@ -9,29 +9,38 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
       digits <- x$digits
 
    if (inherits(x, "rma.uni.trimfill")) {
-      cat("\nEstimated number of missing studies on the ", x$side, " side: ", x$k0, " (SE = ", ifelse(is.na(x$se.k0), NA, formatC(x$se.k0, digits=digits, format="f")), ")\n", sep="")
-      if (x$k0.est == "R0")
-         cat("Test of H0: no missing studies on the ", x$side, " side: p-val ", .pval(x$p.k0, digits=digits, showeq=TRUE, sep=" "), "\n", sep="")
+      cat("\n")
+      cat(mstyle$text(paste0("Estimated number of missing studies on the ", x$side, " side: ")))
+      cat(mstyle$result(paste0(x$k0, " (SE = ", ifelse(is.na(x$se.k0), NA, formatC(x$se.k0, digits=digits, format="f")), ")")))
+      cat("\n")
+      if (x$k0.est == "R0") {
+         cat(mstyle$text(paste0("Test of H0: no missing studies on the ", x$side, " side:     ")))
+         cat(paste0(rep(" ", nchar(x$k0)), collapse=""))
+         cat(mstyle$result(paste0("p-val ", .pval(x$p.k0, digits=digits, showeq=TRUE, sep=" "))))
+         cat("\n")
+      }
    }
 
    cat("\n")
 
    if (x$method == "FE") {
       if (x$int.only) {
-         cat(mstyle$section("Fixed-Effects Model"), " (k = ", x$k, ")", sep="")
+         cat(mstyle$section("Fixed-Effects Model"))
       } else {
-         cat(mstyle$section("Fixed-Effects with Moderators Model"), " (k = ", x$k, ")", sep="")
+         cat(mstyle$section("Fixed-Effects with Moderators Model"))
       }
+      cat(mstyle$section(paste0(" (k = ", x$k, ")")))
    } else {
       if (x$int.only) {
-         cat(mstyle$section("Random-Effects Model"), " (k = ", x$k, "; ", sep="")
+         cat(mstyle$section("Random-Effects Model"))
       } else {
-         cat(mstyle$section("Mixed-Effects Model"), " (k = ", x$k, "; ", sep="")
+         cat(mstyle$section("Mixed-Effects Model"))
       }
+      cat(mstyle$section(paste0(" (k = ", x$k, "; ")))
       if (x$tau2.fix) {
-         cat("user-specified tau^2 value)", sep="")
+         cat(mstyle$section("user-specified tau^2 value)"))
       } else {
-         cat("tau^2 estimator: ", x$method, ")", sep="")
+         cat(mstyle$section(paste0("tau^2 estimator: ", x$method, ")")))
       }
    }
 
@@ -54,45 +63,73 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
    if (x$method != "FE") {
       if (x$int.only) {
          if (x$model == "rma.uni") {
-            cat("tau^2 (estimated amount of total heterogeneity): ", formatC(x$tau2, digits=ifelse(abs(x$tau2) <= .Machine$double.eps*10,0,digits), format="f"), ifelse(is.na(x$se.tau2), "", paste0(" (SE = " , formatC(x$se.tau2, digits=digits, format="f"), ")") ), "\n", sep = "")
-            cat("tau (square root of estimated tau^2 value):      ", ifelse(x$tau2>=0, formatC(sqrt(x$tau2), digits=ifelse(x$tau2 <= .Machine$double.eps*10,0,digits), format="f"), NA), "\n", sep = "")
+            cat(mstyle$text("tau^2 (estimated amount of total heterogeneity): "))
+            cat(mstyle$result(paste0(formatC(x$tau2, digits=ifelse(abs(x$tau2) <= .Machine$double.eps*10,0,digits), format="f"), ifelse(is.na(x$se.tau2), "", paste0(" (SE = " , formatC(x$se.tau2, digits=digits, format="f"), ")")))))
+            cat("\n")
+            cat(mstyle$text("tau (square root of estimated tau^2 value):      "))
+            cat(mstyle$result(paste0(ifelse(x$tau2>=0, formatC(sqrt(x$tau2), digits=ifelse(x$tau2 <= .Machine$double.eps*10,0,digits), format="f"), NA))))
+            cat("\n")
          }
-         if (!is.na(x$I2))
-            cat("I^2 (total heterogeneity / total variability):   ", ifelse(is.na(x$I2), NA, formatC(x$I2, digits=2, format="f")), "%", "\n", sep = "")
-         if (!is.na(x$H2))
-            cat("H^2 (total variability / sampling variability):  ", ifelse(is.na(x$H2), NA, formatC(x$H2, digits=2, format="f")), "\n", sep = "")
+         if (!is.na(x$I2)) {
+            cat(mstyle$text("I^2 (total heterogeneity / total variability):   "))
+            cat(mstyle$result(paste0(ifelse(is.na(x$I2), NA, formatC(x$I2, digits=2, format="f")), "%")))
+            cat("\n")
+         }
+         if (!is.na(x$H2)) {
+            cat(mstyle$text("H^2 (total variability / sampling variability):  "))
+            cat(mstyle$result(paste0(ifelse(is.na(x$H2), NA, formatC(x$H2, digits=2, format="f")))))
+            cat("\n")
+         }
       } else {
          if (x$model == "rma.uni") {
-            cat("tau^2 (estimated amount of residual heterogeneity):     ", formatC(x$tau2, digits=ifelse(abs(x$tau2) <= .Machine$double.eps*10,0,digits), format="f"), ifelse(is.na(x$se.tau2), "", paste0(" (SE = " , formatC(x$se.tau2, digits=digits, format="f"), ")") ), "\n", sep = "")
-            cat("tau (square root of estimated tau^2 value):             ", ifelse(x$tau2>=0, formatC(sqrt(x$tau2), digits=ifelse(x$tau2 <= .Machine$double.eps*10,0,digits), format="f"), NA), "\n", sep="")
+            cat(mstyle$text("tau^2 (estimated amount of residual heterogeneity):     "))
+            cat(mstyle$result(paste0(formatC(x$tau2, digits=ifelse(abs(x$tau2) <= .Machine$double.eps*10,0,digits), format="f"), ifelse(is.na(x$se.tau2), "", paste0(" (SE = " , formatC(x$se.tau2, digits=digits, format="f"), ")")))))
+            cat("\n")
+            cat(mstyle$text("tau (square root of estimated tau^2 value):             "))
+            cat(mstyle$result(paste0(ifelse(x$tau2>=0, formatC(sqrt(x$tau2), digits=ifelse(x$tau2 <= .Machine$double.eps*10,0,digits), format="f"), NA))))
+            cat("\n")
          }
-         if (!is.na(x$I2))
-            cat("I^2 (residual heterogeneity / unaccounted variability): ", ifelse(is.na(x$I2), NA, formatC(x$I2, digits=2, format="f")), "%", "\n", sep = "")
-         if (!is.na(x$H2))
-            cat("H^2 (unaccounted variability / sampling variability):   ", ifelse(is.na(x$H2), NA, formatC(x$H2, digits=2, format="f")), "\n", sep = "")
-         if (!is.null(x$R2))
-            cat("R^2 (amount of heterogeneity accounted for):            ", ifelse(is.na(x$R2), NA, formatC(x$R2, digits=2, format="f")), "%", "\n", sep = "")
+         if (!is.na(x$I2)) {
+            cat(mstyle$text("I^2 (residual heterogeneity / unaccounted variability): "))
+            cat(mstyle$result(paste0(ifelse(is.na(x$I2), NA, formatC(x$I2, digits=2, format="f")), "%")))
+            cat("\n")
+         }
+         if (!is.na(x$H2)) {
+            cat(mstyle$text("H^2 (unaccounted variability / sampling variability):   "))
+            cat(mstyle$result(paste0(ifelse(is.na(x$H2), NA, formatC(x$H2, digits=2, format="f")))))
+            cat("\n")
+         }
+         if (!is.null(x$R2)) {
+            cat(mstyle$text("R^2 (amount of heterogeneity accounted for):            "))
+            cat(mstyle$result(paste0(ifelse(is.na(x$R2), NA, formatC(x$R2, digits=2, format="f")), "%")))
+            cat("\n")
+         }
       }
       cat("\n")
    }
 
    if (!is.na(x$QE)) {
       if (x$int.only) {
-         cat(mstyle$section("Test for Heterogeneity:"), "\n")
-         cat("Q(df = ", x$k-x$p, ") = ", formatC(x$QE, digits=digits, format="f"), ", p-val ", .pval(x$QEp, digits=digits, showeq=TRUE, sep=" "), "\n\n", sep="")
+         cat(mstyle$section("Test for Heterogeneity:"))
+         cat("\n")
+         cat(mstyle$result(paste0("Q(df = ", x$k-x$p, ") = ", formatC(x$QE, digits=digits, format="f"), ", p-val ", .pval(x$QEp, digits=digits, showeq=TRUE, sep=" "))))
       } else {
-         cat(mstyle$section("Test for Residual Heterogeneity:"), "\n")
-         cat("QE(df = ", x$k-x$p, ") = ", formatC(x$QE, digits=digits, format="f"), ", p-val ", .pval(x$QEp, digits=digits, showeq=TRUE, sep=" "), "\n\n", sep="")
+         cat(mstyle$section("Test for Residual Heterogeneity:"))
+         cat("\n")
+         cat(mstyle$result(paste0("QE(df = ", x$k-x$p, ") = ", formatC(x$QE, digits=digits, format="f"), ", p-val ", .pval(x$QEp, digits=digits, showeq=TRUE, sep=" "))))
       }
+      cat("\n\n")
    }
 
    if (x$p > 1 && !is.na(x$QM)) {
-      cat(mstyle$section(paste0("Test of Moderators (coefficient", ifelse(x$m == 1, " ", "s "), .format.btt(x$btt),"):")), "\n")
+      cat(mstyle$section(paste0("Test of Moderators (coefficient", ifelse(x$m == 1, " ", "s "), .format.btt(x$btt),"):")))
+      cat("\n")
       if (is.element(x$test, c("knha","adhoc","t"))) {
-         cat("F(df1 = ", x$m, ", df2 = ", x$dfs, ") = ", formatC(x$QM, digits=digits, format="f"), ", p-val ", .pval(x$QMp, digits=digits, showeq=TRUE, sep=" "), "\n\n", sep="")
+         cat(mstyle$result(paste0("F(df1 = ", x$m, ", df2 = ", x$dfs, ") = ", formatC(x$QM, digits=digits, format="f"), ", p-val ", .pval(x$QMp, digits=digits, showeq=TRUE, sep=" "))))
       } else {
-         cat("QM(df = ", x$m, ") = ", formatC(x$QM, digits=digits, format="f"), ", p-val ", .pval(x$QMp, digits=digits, showeq=TRUE, sep=" "), "\n\n", sep="")
+         cat(mstyle$result(paste0("QM(df = ", x$m, ") = ", formatC(x$QM, digits=digits, format="f"), ", p-val ", .pval(x$QMp, digits=digits, showeq=TRUE, sep=" "))))
       }
+      cat("\n\n")
    }
 
    res.table <- cbind(estimate=c(x$beta), se=x$se, zval=x$zval, pval=x$pval, ci.lb=x$ci.lb, ci.ub=x$ci.ub)

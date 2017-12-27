@@ -10,7 +10,8 @@ print.rma.mh <- function(x, digits, showfit=FALSE, ...) {
 
    cat("\n")
 
-   cat(mstyle$section("Fixed-Effects Model"), " (k = ", x$k, ")", sep="")
+   cat(mstyle$section("Fixed-Effects Model"))
+   cat(mstyle$section(paste0(" (k = ", x$k, ")")))
 
    if (showfit) {
       cat("\n")
@@ -30,10 +31,10 @@ print.rma.mh <- function(x, digits, showfit=FALSE, ...) {
 
    if (!is.na(x$QE)) {
       cat(mstyle$section("Test for Heterogeneity:"), "\n")
-      cat("Q(df = ", ifelse(x$k.yi-1 >= 0, x$k.yi-1, 0), ") = ", formatC(x$QE, digits=digits, format="f"), ", p-val ", .pval(x$QEp, digits=digits, showeq=TRUE, sep=" "), sep="")
+      cat(mstyle$result(paste0("Q(df = ", ifelse(x$k.yi-1 >= 0, x$k.yi-1, 0), ") = ", formatC(x$QE, digits=digits, format="f"), ", p-val ", .pval(x$QEp, digits=digits, showeq=TRUE, sep=" "))))
    }
 
-   if (x$measure == "OR" || x$measure == "RR" || x$measure == "IRR") {
+   if (is.element(x$measure, c("OR","RR","IRR"))) {
 
       res.table     <- c(x$beta, x$se, x$zval, x$pval, x$ci.lb, x$ci.ub)
       res.table.exp <- c(exp(x$beta), exp(x$ci.lb), exp(x$ci.ub))
@@ -65,25 +66,39 @@ print.rma.mh <- function(x, digits, showfit=FALSE, ...) {
       if (x$measure == "OR") {
          MH <- ifelse(is.na(x$MH), NA, formatC(x$MH, digits=digits, format="f"))
          TA <- ifelse(is.na(x$TA), NA, formatC(x$TA, digits=digits, format="f"))
-         width <- max(nchar(MH), nchar(TA))
-         if (is.na(MH)) {
-            cat("Cochran-Mantel-Haenszel Test:    test value not computable for these data \n", sep="")
+         if (is.na(MH) && is.na(TA)) {
+            width <- 1
          } else {
-            cat("Cochran-Mantel-Haenszel Test:    CMH = ", formatC(MH, width=width), ", df = 1,", paste(rep(" ", nchar(x$k.pos)-1, collapse="")), " p-val ", .pval(x$MHp, digits=digits, showeq=TRUE, sep=" ", add0=TRUE), "\n", sep="")
+            width <- max(nchar(MH), nchar(TA), na.rm=TRUE)
+         }
+         if (is.na(MH)) {
+            cat(mstyle$text("Cochran-Mantel-Haenszel Test:    "))
+            cat(mstyle$result("test value not computable for these data"))
+            cat("\n")
+         } else {
+            cat(mstyle$text("Cochran-Mantel-Haenszel Test:    "))
+            cat(mstyle$result(paste0("CMH = ", formatC(MH, width=width), ", df = 1,", paste(rep(" ", nchar(x$k.pos)-1, collapse="")), " p-val ", .pval(x$MHp, digits=digits, showeq=TRUE, sep=" ", add0=TRUE))))
+            cat("\n")
          }
          if (is.na(TA)) {
-            cat("Tarone's Test for Heterogeneity: test value not computable for these data \n\n", sep="")
+            cat(mstyle$text("Tarone's Test for Heterogeneity: "))
+            cat(mstyle$result("test value not computable for these data"))
          } else {
-            cat("Tarone's Test for Heterogeneity: X^2 = ", formatC(TA, width=width), ", df = ", x$k.pos-1, ", p-val ", .pval(x$TAp, digits=digits, showeq=TRUE, sep=" ", add0=TRUE), "\n\n", sep="")
+            cat(mstyle$text("Tarone's Test for Heterogeneity: "))
+            cat(mstyle$result(paste0("X^2 = ", formatC(TA, width=width), ", df = ", x$k.pos-1, ", p-val ", .pval(x$TAp, digits=digits, showeq=TRUE, sep=" ", add0=TRUE))))
          }
+         cat("\n\n")
       }
 
       if (x$measure == "IRR") {
          if (is.na(x$MH)) {
-            cat("Mantel-Haenszel Test: test value not computable for these data \n", sep="")
+            cat(mstyle$text("Mantel-Haenszel Test: "))
+            cat(mstyle$result("test value not computable for these data"))
          } else {
-            cat("Mantel-Haenszel Test: MH = ", formatC(x$MH, digits, format="f"), ", df = 1, p-val ", .pval(x$MHp, digits=digits, showeq=TRUE, sep=" "), "\n\n", sep="")
+            cat(mstyle$text("Mantel-Haenszel Test: "))
+            cat(mstyle$result(paste0("MH = ", formatC(x$MH, digits, format="f"), ", df = 1, p-val ", .pval(x$MHp, digits=digits, showeq=TRUE, sep=" "))))
          }
+         cat("\n\n")
       }
 
    } else {

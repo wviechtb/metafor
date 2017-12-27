@@ -50,8 +50,12 @@ print.list.rma <- function(x, digits, ...) {
       }
    }
 
+   cat("\n")
+
    tmp <- capture.output(print(out, quote=FALSE, right=TRUE))
    .print.table(tmp, mstyle)
+
+   cat("\n")
 
    invisible(sav)
 

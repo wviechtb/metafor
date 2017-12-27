@@ -11,7 +11,8 @@ print.ranktest.rma <- function(x, digits, ...) {
    cat("\n")
    cat(mstyle$section("Rank Correlation Test for Funnel Plot Asymmetry"))
    cat("\n\n")
-   cat("Kendall's tau = ", formatC(x$tau, digits=digits, format="f"), ", p ", .pval(x$pval, digits=digits, showeq=TRUE, sep=" "), "\n\n", sep="")
+   cat(mstyle$result(paste0("Kendall's tau = ", formatC(x$tau, digits=digits, format="f"), ", p ", .pval(x$pval, digits=digits, showeq=TRUE, sep=" "))))
+   cat("\n\n")
    #cat("H0: true tau is equal to 0\n\n")
 
    invisible()

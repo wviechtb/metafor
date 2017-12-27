@@ -11,12 +11,14 @@ print.permutest.rma.uni <- function(x, digits, signif.stars=getOption("show.sign
    cat("\n")
 
    if (!x$int.only) {
-      cat(mstyle$section(paste0("Test of Moderators (coefficient", ifelse(x$m == 1, " ", "s "), .format.btt(x$btt),"):")), "\n")
+      cat(mstyle$section(paste0("Test of Moderators (coefficient", ifelse(x$m == 1, " ", "s "), .format.btt(x$btt),"):")))
+      cat("\n")
       if (is.element(x$test, c("knha","adhoc","t"))) {
-         cat("F(df1 = ", x$m, ", df2 = ", x$dfs, ") = ", formatC(x$QM, digits=digits, format="f"), ", p-val* ", .pval(x$QMp, digits=digits, showeq=TRUE, sep=" "), "\n\n", sep="")
+         cat(mstyle$result(paste0("F(df1 = ", x$m, ", df2 = ", x$dfs, ") = ", formatC(x$QM, digits=digits, format="f"), ", p-val* ", .pval(x$QMp, digits=digits, showeq=TRUE, sep=" "))))
       } else {
-         cat("QM(df = ", x$m, ") = ", formatC(x$QM, digits=digits, format="f"), ", p-val* ", .pval(x$QMp, digits=digits, showeq=TRUE, sep=" "), "\n\n", sep="")
+         cat(mstyle$result(paste0("QM(df = ", x$m, ") = ", formatC(x$QM, digits=digits, format="f"), ", p-val* ", .pval(x$QMp, digits=digits, showeq=TRUE, sep=" "))))
       }
+      cat("\n\n")
    }
 
    res.table <- cbind(estimate=c(x$beta), se=x$se, zval=x$zval, "pval*"=x$pval, ci.lb=x$ci.lb, ci.ub=x$ci.ub)

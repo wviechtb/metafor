@@ -10,8 +10,9 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
 
    cat("\n")
 
-   cat(mstyle$section("Multivariate Meta-Analysis Model"), " (k = ", x$k, "; ", sep="")
-   cat("method: ", x$method, ")", sep="")
+   cat(mstyle$section("Multivariate Meta-Analysis Model"))
+   cat(mstyle$section(paste0(" (k = ", x$k, "; ")))
+   cat(mstyle$section(paste0("method: ", x$method, ")")))
 
    if (showfit) {
       cat("\n")
@@ -43,7 +44,8 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
    right <- TRUE
 
    if (!x$withS && !x$withG && !x$withH) {
-      cat(" none\n\n")
+      cat(mstyle$text(" none"))
+      cat("\n\n")
    } else {
       cat("\n\n")
 
@@ -58,7 +60,8 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
          } else {
             rownames(vc) <- paste("sigma^2.", seq_along(x$sigma2), sep="")
          }
-         print(vc, quote=FALSE, right=right, print.gap=2)
+         tmp <- capture.output(print(vc, quote=FALSE, right=right, print.gap=2))
+         .print.table(tmp, mstyle)
          cat("\n")
 
       }
@@ -79,14 +82,15 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
 
          mng <- max(nchar(c(inner, outer)))
 
-         cat("outer factor: ", paste0(outer, paste(rep(" ", max(0,mng-nchar(outer))), collapse=""), collapse=""), " (nlvls = ", x$g.nlevels[2], ")\n", sep="")
+         cat(mstyle$text(paste0("outer factor: ", paste0(outer, paste(rep(" ", max(0,mng-nchar(outer))), collapse=""), collapse=""), " (nlvls = ", x$g.nlevels[2], ")")))
+         cat("\n")
          if (is.element(x$struct[1], c("SPEXP","SPGAU"))) {
-            cat("inner term:   ", paste0(inner, paste(rep(" ", max(0,mng-nchar(inner))), collapse=""), collapse=""), " (nlvls = ", x$g.nlevels.f[1], ")\n", sep="")
+            cat(mstyle$text(paste0("inner term:   ", paste0(inner, paste(rep(" ", max(0,mng-nchar(inner))), collapse=""), collapse=""), " (nlvls = ", x$g.nlevels.f[1], ")")))
          } else {
-            cat("inner factor: ", paste0(inner, paste(rep(" ", max(0,mng-nchar(inner))), collapse=""), collapse=""), " (nlvls = ", x$g.nlevels.f[1], ")\n", sep="")
+            cat(mstyle$text(paste0("inner factor: ", paste0(inner, paste(rep(" ", max(0,mng-nchar(inner))), collapse=""), collapse=""), " (nlvls = ", x$g.nlevels.f[1], ")")))
          }
 
-         cat("\n")
+         cat("\n\n")
 
          if (is.element(x$struct[1], c("CS","AR","CAR","ID","SPEXP","SPGAU"))) {
 
@@ -96,7 +100,8 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
             rownames(vc) <- c("tau^2    ", "rho")
             if (x$struct[1] == "ID")
                vc <- vc[1,,drop=FALSE]
-            print(vc, quote=FALSE, right=right, print.gap=2)
+            tmp <- capture.output(print(vc, quote=FALSE, right=right, print.gap=2))
+            .print.table(tmp, mstyle)
 
          }
 
@@ -112,7 +117,8 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
             }
             if (x$struct[1] == "DIAG")
                vc <- vc[seq_along(tau2),,drop=FALSE]
-            print(vc, quote=FALSE, right=right, print.gap=2)
+            tmp <- capture.output(print(vc, quote=FALSE, right=right, print.gap=2))
+            .print.table(tmp, mstyle)
 
          }
 
@@ -129,7 +135,8 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
             } else {
                rownames(vc) <- paste("tau^2.", seq_along(x$g.levels.k), "  ", sep="")
             }
-            print(vc, quote=FALSE, right=right, print.gap=2)
+            tmp <- capture.output(print(vc, quote=FALSE, right=right, print.gap=2))
+            .print.table(tmp, mstyle)
             cat("\n")
 
             if (length(x$rho) == 1) {
@@ -153,9 +160,10 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
             diag(G.info) <- "-"
 
             vc <- cbind(G, "", G.info)
-            colnames(vc) <- c(paste("rho.", abbreviate(x$g.levels.f[[1]]), sep=""), "", abbreviate(x$g.levels.f[[1]]))
+            colnames(vc) <- c(paste("rho.", abbreviate(x$g.levels.f[[1]]), sep=""), "", abbreviate(x$g.levels.f[[1]])) ### FIXME: x$g.levels.f[[1]] may be numeric, in which case a wrapping 'header' is not recognized
             rownames(vc) <- x$g.levels.f[[1]]
-            print(vc, quote=FALSE, right=right, print.gap=2)
+            tmp <- capture.output(print(vc, quote=FALSE, right=right, print.gap=2))
+            .print.table(tmp, mstyle)
 
          }
 
@@ -179,14 +187,15 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
 
          mng <- max(nchar(c(inner, outer)))
 
-         cat("outer factor: ", paste0(outer, paste(rep(" ", max(0,mng-nchar(outer))), collapse=""), collapse=""), " (nlvls = ", x$h.nlevels[2], ")\n", sep="")
+         cat(mstyle$text(paste0("outer factor: ", paste0(outer, paste(rep(" ", max(0,mng-nchar(outer))), collapse=""), collapse=""), " (nlvls = ", x$h.nlevels[2], ")")))
+         cat("\n")
          if (is.element(x$struct[2], c("SPEXP","SPGAU"))) {
-            cat("inner term:   ", paste0(inner, paste(rep(" ", max(0,mng-nchar(inner))), collapse=""), collapse=""), " (nlvls = ", x$h.nlevels.f[1], ")\n", sep="")
+            cat(mstyle$text(paste0("inner term:   ", paste0(inner, paste(rep(" ", max(0,mng-nchar(inner))), collapse=""), collapse=""), " (nlvls = ", x$h.nlevels.f[1], ")")))
          } else {
-            cat("inner factor: ", paste0(inner, paste(rep(" ", max(0,mng-nchar(inner))), collapse=""), collapse=""), " (nlvls = ", x$h.nlevels.f[1], ")\n", sep="")
+            cat(mstyle$text(paste0("inner factor: ", paste0(inner, paste(rep(" ", max(0,mng-nchar(inner))), collapse=""), collapse=""), " (nlvls = ", x$h.nlevels.f[1], ")")))
          }
 
-         cat("\n")
+         cat("\n\n")
 
          if (is.element(x$struct[2], c("CS","AR","CAR","ID","SPEXP","SPGAU"))) {
 
@@ -196,7 +205,8 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
             rownames(vc) <- c("gamma^2  ", "phi")
             if (x$struct[2] == "ID")
                vc <- vc[1,,drop=FALSE]
-            print(vc, quote=FALSE, right=right, print.gap=2)
+            tmp <- capture.output(print(vc, quote=FALSE, right=right, print.gap=2))
+            .print.table(tmp, mstyle)
 
          }
 
@@ -206,13 +216,14 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
             vc <- rbind(vc, c(phi, "", "", ifelse(x$vc.fix$phi, "yes", "no"), ""))
             colnames(vc) <- c("estim", "sqrt", "k.lvl", "fixed", "level")
             if (length(x$gamma2) == 1) {
-               rownames(vc) <- c("gamma^2 ", "rho")
+               rownames(vc) <- c("gamma^2 ", "phi")
             } else {
                rownames(vc) <- c(paste("gamma^2.", seq_along(x$gamma2), "  ", sep=""), "phi")
             }
             if (x$struct[2] == "DIAG")
                vc <- vc[seq_along(gamma2),,drop=FALSE]
-            print(vc, quote=FALSE, right=right, print.gap=2)
+            tmp <- capture.output(print(vc, quote=FALSE, right=right, print.gap=2))
+            .print.table(tmp, mstyle)
 
          }
 
@@ -229,7 +240,8 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
             } else {
                rownames(vc) <- paste("gamma^2.", seq_along(x$h.levels.k), "  ", sep="")
             }
-            print(vc, quote=FALSE, right=right, print.gap=2)
+            tmp <- capture.output(print(vc, quote=FALSE, right=right, print.gap=2))
+            .print.table(tmp, mstyle)
             cat("\n")
 
             if (length(x$phi) == 1) {
@@ -253,9 +265,10 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
             diag(H.info) <- "-"
 
             vc <- cbind(H, "", H.info)
-            colnames(vc) <- c(paste("phi.", abbreviate(x$h.levels.f[[1]]), sep=""), "", abbreviate(x$h.levels.f[[1]]))
+            colnames(vc) <- c(paste("phi.", abbreviate(x$h.levels.f[[1]]), sep=""), "", abbreviate(x$h.levels.f[[1]])) ### FIXME: x$h.levels.f[[1]] may be numeric, in which case a wrapping 'header' is not recognized
             rownames(vc) <- x$h.levels.f[[1]]
-            print(vc, quote=FALSE, right=right, print.gap=2)
+            tmp <- capture.output(print(vc, quote=FALSE, right=right, print.gap=2))
+            .print.table(tmp, mstyle)
 
          }
 
@@ -267,21 +280,26 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
 
    if (!is.na(x$QE)) {
       if (x$int.only) {
-         cat(mstyle$section("Test for Heterogeneity:"), "\n")
-         cat("Q(df = ", x$k-x$p, ") = ", formatC(x$QE, digits=digits, format="f"), ", p-val ", .pval(x$QEp, digits=digits, showeq=TRUE, sep=" "), "\n\n", sep="")
+         cat(mstyle$section("Test for Heterogeneity:"))
+         cat("\n")
+         cat(mstyle$result(paste0("Q(df = ", x$k-x$p, ") = ", formatC(x$QE, digits=digits, format="f"), ", p-val ", .pval(x$QEp, digits=digits, showeq=TRUE, sep=" "))))
       } else {
-         cat(mstyle$section("Test for Residual Heterogeneity:"), "\n")
-         cat("QE(df = ", x$k-x$p, ") = ", formatC(x$QE, digits=digits, format="f"), ", p-val ", .pval(x$QEp, digits=digits, showeq=TRUE, sep=" "), "\n\n", sep="")
+         cat(mstyle$section("Test for Residual Heterogeneity:"))
+         cat("\n")
+         cat(mstyle$result(paste0("QE(df = ", x$k-x$p, ") = ", formatC(x$QE, digits=digits, format="f"), ", p-val ", .pval(x$QEp, digits=digits, showeq=TRUE, sep=" "))))
       }
+      cat("\n\n")
    }
 
    if (x$p > 1 && !is.na(x$QM)) {
-      cat(mstyle$section(paste0("Test of Moderators (coefficient", ifelse(x$m == 1, " ", "s "), .format.btt(x$btt),"):")), "\n")
+      cat(mstyle$section(paste0("Test of Moderators (coefficient", ifelse(x$m == 1, " ", "s "), .format.btt(x$btt),"):")))
+      cat("\n")
       if (is.element(x$test, c("t"))) {
-         cat("F(df1 = ", x$m, ", df2 = ", x$dfs, ") = ", formatC(x$QM, digits=digits, format="f"), ", p-val ", .pval(x$QMp, digits=digits, showeq=TRUE, sep=" "), "\n\n", sep="")
+         cat(mstyle$result(paste0("F(df1 = ", x$m, ", df2 = ", x$dfs, ") = ", formatC(x$QM, digits=digits, format="f"), ", p-val ", .pval(x$QMp, digits=digits, showeq=TRUE, sep=" "))))
       } else {
-         cat("QM(df = ", x$m, ") = ", formatC(x$QM, digits=digits, format="f"), ", p-val ", .pval(x$QMp, digits=digits, showeq=TRUE, sep=" "), "\n\n", sep="")
+         cat(mstyle$result(paste0("QM(df = ", x$m, ") = ", formatC(x$QM, digits=digits, format="f"), ", p-val ", .pval(x$QMp, digits=digits, showeq=TRUE, sep=" "))))
       }
+      cat("\n\n")
    }
 
    res.table <- cbind(estimate=c(x$beta), se=x$se, zval=x$zval, pval=x$pval, ci.lb=x$ci.lb, ci.ub=x$ci.ub)

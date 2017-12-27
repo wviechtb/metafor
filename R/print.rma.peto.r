@@ -10,7 +10,8 @@ print.rma.peto <- function(x, digits, showfit=FALSE, ...) {
 
    cat("\n")
 
-   cat(mstyle$section("Fixed-Effects Model"), " (k = ", x$k, ")", sep="")
+   cat(mstyle$section("Fixed-Effects Model"))
+   cat(mstyle$section(paste0(" (k = ", x$k, ")")))
 
    if (showfit) {
       cat("\n")
@@ -30,7 +31,7 @@ print.rma.peto <- function(x, digits, showfit=FALSE, ...) {
 
    if (!is.na(x$QE)) {
       cat(mstyle$section("Test for Heterogeneity:"), "\n")
-      cat("Q(df = ", x$k.pos-1, ") = ", formatC(x$QE, digits=digits, format="f"), ", p-val ", .pval(x$QEp, digits=digits, showeq=TRUE, sep=" "), sep="")
+      cat(mstyle$result(paste0("Q(df = ", x$k.pos-1, ") = ", formatC(x$QE, digits=digits, format="f"), ", p-val ", .pval(x$QEp, digits=digits, showeq=TRUE, sep=" "))))
    }
 
    res.table     <- c(x$beta, x$se, x$zval, x$pval, x$ci.lb, x$ci.ub)

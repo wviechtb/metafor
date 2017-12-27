@@ -10,19 +10,26 @@ print.robust.rma <- function(x, digits, signif.stars=getOption("show.signif.star
 
    cat("\n")
 
-   cat("Number of outcomes:  ", x$k, "\n")
-   cat("Number of clusters:  ", x$n, "\n")
-
-   if (all(x$tcl[1] == x$tcl)) {
-      cat("Outcomes per cluster:", x$tcl[1], "\n")
-   } else {
-      cat("Outcomes per cluster: ", min(x$tcl), "-", max(x$tcl), " (mean: ", formatC(mean(x$tcl), format="f", digits=2), ", median: ", median(x$tcl), ")\n", sep="")
-   }
+   cat(mstyle$text("Number of outcomes:   "))
+   cat(mstyle$result(x$k))
+   cat("\n")
+   cat(mstyle$text("Number of clusters:   "))
+   cat(mstyle$result(x$n))
    cat("\n")
 
+   cat(mstyle$text("Outcomes per cluster: "))
+   if (all(x$tcl[1] == x$tcl)) {
+      cat(mstyle$result(x$tcl[1]))
+   } else {
+      cat(mstyle$result(paste0(min(x$tcl), "-", max(x$tcl), " (mean: ", formatC(mean(x$tcl), format="f", digits=2), ", median: ", median(x$tcl), ")")))
+   }
+   cat("\n\n")
+
    if (x$p > 1 && !is.na(x$QM)) {
-      cat(mstyle$section(paste0("Test of Moderators (coefficient", ifelse(x$m == 1, " ", "s "), .format.btt(x$btt),"):")), "\n")
-      cat("F(df1 = ", x$m, ", df2 = ", x$dfs, ") = ", formatC(x$QM, digits=digits, format="f"), ", p-val ", .pval(x$QMp, digits=digits, showeq=TRUE, sep=" "), "\n\n", sep="")
+      cat(mstyle$section(paste0("Test of Moderators (coefficient", ifelse(x$m == 1, " ", "s "), .format.btt(x$btt),"):")))
+      cat("\n")
+      cat(mstyle$result(paste0("F(df1 = ", x$m, ", df2 = ", x$dfs, ") = ", formatC(x$QM, digits=digits, format="f"), ", p-val ", .pval(x$QMp, digits=digits, showeq=TRUE, sep=" "))))
+      cat("\n\n")
    }
 
    res.table <- cbind(estimate=c(x$beta), se=x$se, zval=x$zval, pval=x$pval, ci.lb=x$ci.lb, ci.ub=x$ci.ub)

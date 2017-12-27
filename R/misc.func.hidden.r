@@ -2518,6 +2518,21 @@
       } else {
          header <- .mstyle$header
       }
+      if (is.null(.mstyle$body)) {
+         body <- crayon::reset
+      } else {
+         body <- .mstyle$body
+      }
+      if (is.null(.mstyle$text)) {
+         text <- crayon::reset
+      } else {
+         text <- .mstyle$text
+      }
+      if (is.null(.mstyle$result)) {
+         result <- crayon::reset
+      } else {
+         result <- .mstyle$result
+      }
       if (is.null(.mstyle$stop)) {
          stop <- crayon::combine_styles(crayon::red, crayon::bold)
       } else {
@@ -2549,6 +2564,9 @@
       tmp <- function(...) paste0(...)
       section <- tmp
       header  <- tmp
+      body    <- tmp
+      text    <- tmp
+      result  <- tmp
       error   <- tmp
       warning <- tmp
       message <- tmp
@@ -2557,7 +2575,7 @@
 
    }
 
-   return(list(section=section, header=header, stop=stop, warning=warning, message=message, verbose=verbose, legend=legend))
+   return(list(section=section, header=header, body=body, text=text, result=result, stop=stop, warning=warning, message=message, verbose=verbose, legend=legend))
 
 }
 
@@ -2577,6 +2595,8 @@
       if (is.header[i]) {
          x[i] <- trimws(x[i], which="right")
          x[i] <- mstyle$header(x[i])
+      } else {
+         x[i] <- mstyle$body(x[i])
       }
       cat(x[i], "\n")
    }

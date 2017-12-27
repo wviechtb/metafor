@@ -10,8 +10,12 @@ print.gosh.rma <- function(x, digits, ...) {
 
    cat("\n")
 
-   cat("Model fits attempted:", formatC(length(x$fit), format="f", digits=0), "\n")
-   cat("Model fits succeeded:", formatC(sum(x$fit), format="f", digits=0), "\n\n")
+   cat(mstyle$text("Model fits attempted: "))
+   cat(mstyle$result(formatC(length(x$fit), format="f", digits=0)))
+   cat("\n")
+   cat(mstyle$text("Model fits succeeded: "))
+   cat(mstyle$result(formatC(sum(x$fit), format="f", digits=0)))
+   cat("\n\n")
 
    res.table <- matrix(NA, nrow=ncol(x$res), ncol=6)
 
