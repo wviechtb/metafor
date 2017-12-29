@@ -1,21 +1,23 @@
 \name{profile.rma.uni}
 \alias{profile.rma.uni}
 \alias{profile.rma.mv}
+\alias{print.profile.rma}
 \alias{plot.profile.rma}
 \title{Profile Plots for 'rma' Objects}
 \description{Function to profile the (restricted) log-likelihood for objects of class \code{"rma.uni"} and \code{"rma.mv"}.}
 \usage{
 \method{profile}{rma.uni}(fitted, xlim, ylim, steps=20,
-        progbar=TRUE, parallel="no", ncpus=1, cl=NULL, plot=TRUE, pch=19, \ldots)
+        progbar=TRUE, parallel="no", ncpus=1, cl=NULL, plot=TRUE, pch=19, ciline=FALSE, \ldots)
 
 \method{profile}{rma.mv}(fitted, sigma2, tau2, rho, gamma2, phi, xlim, ylim, steps=20, startmethod="init",
-        progbar=TRUE, parallel="no", ncpus=1, cl=NULL, plot=TRUE, pch=19, \ldots)
+        progbar=TRUE, parallel="no", ncpus=1, cl=NULL, plot=TRUE, pch=19, ciline=FALSE, \ldots)
 
-\method{plot}{profile.rma}(x, ylim, pch=19, ylab, \ldots)
+\method{print}{profile.rma}(x, \ldots)
+\method{plot}{profile.rma}(x, ylim, pch=19, ylab, ciline=FALSE, \ldots)
 }
 \arguments{
    \item{fitted}{an object of class \code{"rma.uni"} or \code{"rma.mv"}.}
-   \item{x}{an object of class \code{"profile.rma"} (for \code{plot}).}
+   \item{x}{an object of class \code{"profile.rma"} (for \code{plot} and \code{print}).}
    \item{sigma2}{integer specifying for which \if{latex}{\eqn{\sigma^2}}\if{html}{\eqn{\sigma²}}\if{text}{\eqn{\sigma^2}} value the likelihood should be profiled (only relevant for \code{"rma.mv"} objects).}
    \item{tau2}{integer specifying for which \if{latex}{\eqn{\tau^2}}\if{html}{\eqn{\tau²}}\if{text}{\eqn{\tau^2}} value the likelihood should be profiled (only relevant for \code{"rma.mv"} objects).}
    \item{rho}{integer specifying for which \eqn{\rho} value the likelihood should be profiled (only relevant for \code{"rma.mv"} objects).}
@@ -31,6 +33,7 @@
    \item{cl}{optional snow cluster to use if \code{parallel="snow"}. If not supplied, a cluster on the local machine is created for the duration of the call.}
    \item{plot}{logical indicating whether the profile plot should be drawn after profiling is finished (the default is \code{TRUE}).}
    \item{pch}{plotting symbol to use. By default, a filled circle is used. See \code{\link{points}} for other options.}
+   \item{cline}{logical indicating whether a horizontal reference line should be added to the plot that indicates the log-likelihood value corresponding to the 95\% profile confidence interval (the default is \code{FALSE}).}
    \item{ylab}{title for the y-axis. If unspecified, the function tries to set an appropriate axis title.}
    \item{\dots}{other arguments.}
 }

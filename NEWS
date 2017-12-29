@@ -72,6 +72,10 @@ Changes in Version 2.1-0 (2017-12-29)
 
    o labbe() gains 'lty' argument
 
+   o added a print method for 'profile.rma' objects
+
+   o profile.rma() and plot.profile.rma() gain 'ciline' argument
+
    o fixed an issue with robust.rma.mv() when the model was fitted with
      sparse=TRUE (thanks to Roger Martineau for noting the problem)
 
