@@ -73,7 +73,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
    if (.isTRUE(ddd$knha))
       test <- "knha"
 
-   if (!is.element(test, c("z","t","knha","adhoc")))
+   if (!is.element(test, c("z", "t", "knha", "adhoc")))
       stop(mstyle$stop("Invalid option selected for 'test' argument."))
 
    if (!is.null(ddd$scale)) {

@@ -71,7 +71,7 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
          ### note: use g.nlevels.f[1] since the number of arms is based on all data (i.e., including NAs), but use
          ### g.nlevels[2] since the number of studies is based on what is actually available (i.e., excluding NAs)
 
-         if (is.element(x$struct[1], c("SPEXP","SPGAU"))) {
+         if (is.element(x$struct[1], c("SPEXP","SPGAU","GEN"))) {
             inner <- trimws(paste0(strsplit(paste0(x$formulas[[1]], collapse=""), "|", fixed=TRUE)[[1]][1], collapse=""))
             if (nchar(inner) > 15)
                inner <- paste0(substr(inner, 1, 15), "[...]", collapse="")
@@ -84,7 +84,7 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
 
          cat(mstyle$text(paste0("outer factor: ", paste0(outer, paste(rep(" ", max(0,mng-nchar(outer))), collapse=""), collapse=""), " (nlvls = ", x$g.nlevels[2], ")")))
          cat("\n")
-         if (is.element(x$struct[1], c("SPEXP","SPGAU"))) {
+         if (is.element(x$struct[1], c("SPEXP","SPGAU","GEN"))) {
             cat(mstyle$text(paste0("inner term:   ", paste0(inner, paste(rep(" ", max(0,mng-nchar(inner))), collapse=""), collapse=""), " (nlvls = ", x$g.nlevels.f[1], ")")))
          } else {
             cat(mstyle$text(paste0("inner factor: ", paste0(inner, paste(rep(" ", max(0,mng-nchar(inner))), collapse=""), collapse=""), " (nlvls = ", x$g.nlevels.f[1], ")")))
@@ -167,6 +167,22 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
 
          }
 
+         if (is.element(x$struct[1], c("GEN"))) {
+
+            vc <- cbind(tau2, tau, ifelse(x$vc.fix$tau2, "yes", "no"), "")
+            colnames(vc) <- c("estim", "sqrt", "fixed", "rho:")
+            rownames(vc) <- x$g.names[-length(x$g.names)]
+
+            G.info <- formatC(cov2cor(x$G), digits=digits, format="f")
+            diag(G.info) <- "-"
+            G.info[upper.tri(G.info)] <- ifelse(x$vc.fix$rho, "yes", "no")
+            colnames(G.info) <- abbreviate(x$g.names[-length(x$g.names)])
+            vc <- cbind(vc, G.info)
+            tmp <- capture.output(print(vc, quote=FALSE, right=right, print.gap=2))
+            .print.table(tmp, mstyle)
+
+         }
+
          cat("\n")
 
       }
@@ -176,7 +192,7 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
          ### note: use h.nlevels.f[1] since the number of arms is based on all data (i.e., including NAs), but use
          ### h.nlevels[2] since the number of studies is based on what is actually available (i.e., excluding NAs)
 
-         if (is.element(x$struct[2], c("SPEXP","SPGAU"))) {
+         if (is.element(x$struct[2], c("SPEXP","SPGAU","GEN"))) {
             inner <- trimws(paste0(strsplit(paste0(x$formulas[[2]], collapse=""), "|", fixed=TRUE)[[1]][1], collapse=""))
             if (nchar(inner) > 15)
                inner <- paste0(substr(inner, 1, 15), "[...]", collapse="")
@@ -189,7 +205,7 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
 
          cat(mstyle$text(paste0("outer factor: ", paste0(outer, paste(rep(" ", max(0,mng-nchar(outer))), collapse=""), collapse=""), " (nlvls = ", x$h.nlevels[2], ")")))
          cat("\n")
-         if (is.element(x$struct[2], c("SPEXP","SPGAU"))) {
+         if (is.element(x$struct[2], c("SPEXP","SPGAU","GEN"))) {
             cat(mstyle$text(paste0("inner term:   ", paste0(inner, paste(rep(" ", max(0,mng-nchar(inner))), collapse=""), collapse=""), " (nlvls = ", x$h.nlevels.f[1], ")")))
          } else {
             cat(mstyle$text(paste0("inner factor: ", paste0(inner, paste(rep(" ", max(0,mng-nchar(inner))), collapse=""), collapse=""), " (nlvls = ", x$h.nlevels.f[1], ")")))
@@ -267,6 +283,22 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
             vc <- cbind(H, "", H.info)
             colnames(vc) <- c(paste("phi.", abbreviate(x$h.levels.f[[1]]), sep=""), "", abbreviate(x$h.levels.f[[1]])) ### FIXME: x$h.levels.f[[1]] may be numeric, in which case a wrapping 'header' is not recognized
             rownames(vc) <- x$h.levels.f[[1]]
+            tmp <- capture.output(print(vc, quote=FALSE, right=right, print.gap=2))
+            .print.table(tmp, mstyle)
+
+         }
+
+         if (is.element(x$struct[2], c("GEN"))) {
+
+            vc <- cbind(gamma2, gamma, ifelse(x$vc.fix$gamma2, "yes", "no"), "")
+            colnames(vc) <- c("estim", "sqrt", "fixed", "phi:")
+            rownames(vc) <- x$h.names[-length(x$h.names)]
+
+            H.info <- formatC(cov2cor(x$H), digits=digits, format="f")
+            diag(H.info) <- "-"
+            H.info[upper.tri(H.info)] <- ifelse(x$vc.fix$phi, "yes", "no")
+            colnames(H.info) <- abbreviate(x$h.names[-length(x$h.names)])
+            vc <- cbind(vc, H.info)
             tmp <- capture.output(print(vc, quote=FALSE, right=right, print.gap=2))
             .print.table(tmp, mstyle)
 

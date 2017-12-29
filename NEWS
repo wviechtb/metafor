@@ -1,4 +1,4 @@
-Changes in Version 2.1-0 (2017-12-27)
+Changes in Version 2.1-0 (2017-12-29)
 =====================================
 
    o output is now styled/colored when 'crayon' package is loaded
@@ -54,6 +54,10 @@ Changes in Version 2.1-0 (2017-12-27)
    o rma.mv() now allows for continuous-time autoregressive random effects
      structures (struct="CAR") and spatial correlation structures
      (struct="SPEXP" and struct="SPGAU")
+
+   o rma.mv() now allows for struct="GEN" which models correlated random
+     effects for any number of predictors, including continuous ones (i.e.,
+     this allows for 'random slopes')
 
    o in the various forest() functions, when options(na.action="na.pass") or
      options(na.action="na.exclude") and an annotation contains NA, this is

@@ -338,12 +338,12 @@
 
 ############################################################################
 
-.process.G.aftersub <- function(verbose, mf.g, struct, formula, tau2, rho, isG, k, sparse) {
+.process.G.aftersub <- function(mf.g, struct, formula, tau2, rho, isG, k, sparse, verbose) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
    if (verbose > 1)
-      message(mstyle$message(paste0("Processing '", paste0(formula, collapse=""), "' term ...")))
+      message(mstyle$message(paste0("Processing '", paste0(formula, collapse=""), "' term (#1) ...")))
 
    ### number of variables in model frame
 
@@ -352,7 +352,7 @@
    ### check that the number of variables is correct for the chosen structure
 
    if (is.element(struct, c("CS","HCS","UN","UNHO","AR","HAR","CAR","ID","DIAG")) && nvars != 2)
-      stop(mstyle$stop(paste0("Only a single inner variable allowed for an (~ inner | outer) term when 'struct=\"", struct, "\"'.")), call.=FALSE)
+      stop(mstyle$stop(paste0("Only a single inner variable allowed for an '~ inner | outer' term when 'struct=\"", struct, "\"'.")), call.=FALSE)
 
    ### get variables names in mf.g
 
@@ -361,22 +361,22 @@
    ### check that inner variable is a factor (or character variable) for structures that require this
 
    if (is.element(struct, c("CS","HCS","UN","UNHO","ID","DIAG")) && !is.factor(mf.g[[1]]) && !is.character(mf.g[[1]]))
-      stop(mstyle$stop(paste0("Inner variable in (~ inner | outer) term must be a factor or character variable when 'struct=\"", struct, "\"'.")), call.=FALSE)
+      stop(mstyle$stop(paste0("Inner variable in '~ inner | outer' term must be a factor or character variable when 'struct=\"", struct, "\"'.")), call.=FALSE)
 
    ### for struct="CAR", check that inner term is numeric and get the unique numeric values
 
    if (is.element(struct, c("CAR"))) {
       if (!is.numeric(mf.g[[1]]))
-         stop(mstyle$stop("Inner variable in (~ inner | outer) must be numeric for 'struct=\"CAR\"'."), call.=FALSE)
+         stop(mstyle$stop("Inner variable in '~ inner | outer' term must be numeric for 'struct=\"CAR\"'."), call.=FALSE)
       g.values <- sort(unique(mf.g[[1]]))
    } else {
       g.values <- NULL
    }
 
-   ### turn each variable in mf.g into a factor (not for SP structures)
+   ### turn each variable in mf.g into a factor (not for SP structures or GEN)
    ### if a variable was a factor to begin with, this drops any unused levels, but order of existing levels is preserved
 
-   if (is.element(struct, c("SPEXP","SPGAU"))) {
+   if (is.element(struct, c("SPEXP","SPGAU","GEN"))) {
       mf.g <- data.frame(mf.g[-nvars], outer=factor(mf.g[[nvars]]))
    } else {
       mf.g <- data.frame(inner=factor(mf.g[[1]]), outer=factor(mf.g[[2]]))
@@ -385,12 +385,12 @@
    ### check if there are any NAs anywhere in mf.g
 
    if (anyNA(mf.g))
-      stop(mstyle$stop("No NAs allowed in variables specified in the 'random' argument."), call.=FALSE)
+      stop(mstyle$stop("No NAs allowed in variables specified via the 'random' argument."), call.=FALSE)
 
    ### get number of levels of each variable in mf.g (vector with two values, for the inner and outer factor)
 
-   #g.nlevels <- c(nlevels(mf.g[[1]]), nlevels(mf.g[[2]]))
-   if (is.element(struct, c("SPEXP","SPGAU"))) {
+   #g.nlevels <- c(nlevels(mf.g[[1]]), nlevels(mf.g[[2]])) ### works only for factors
+   if (is.element(struct, c("SPEXP","SPGAU","GEN"))) {
       g.nlevels <- c(length(unique(apply(mf.g[-nvars], 1, paste, collapse=" + "))), length(unique(mf.g[[nvars]])))
    } else {
       g.nlevels <- c(length(unique(mf.g[[1]])), length(unique(mf.g[[2]])))
@@ -398,11 +398,11 @@
 
    ### get levels of each variable in mf.g
 
-   #g.levels <- list(levels(mf.g[[1]]), levels(mf.g[[2]]))
-   if (is.element(struct, c("SPEXP","SPGAU"))) {
+   #g.levels <- list(levels(mf.g[[1]]), levels(mf.g[[2]])) ### works only for factors
+   if (is.element(struct, c("SPEXP","SPGAU","GEN"))) {
       g.levels <- list(sort(unique(apply(mf.g[-nvars], 1, paste, collapse=" + "))), sort(unique((mf.g[[nvars]]))))
    } else {
-      g.levels <- list(sort(unique(mf.g[[1]])), sort(unique((mf.g[[2]]))))
+      g.levels <- list(sort(unique(as.character(mf.g[[1]]))), sort(unique(as.character(mf.g[[2]]))))
    }
 
    ### determine appropriate number of tau2 and rho values (care: this is done *after* subsetting)
@@ -424,6 +424,11 @@
    if (struct == "UNHO") {
       tau2s <- 1
       rhos  <- ifelse(g.nlevels[1] > 1, g.nlevels[1]*(g.nlevels[1]-1)/2, 1)
+   }
+   if (struct == "GEN") {
+      p     <- nvars - 1
+      tau2s <- p
+      rhos  <- ifelse(p > 1, p*(p-1)/2, 1)
    }
 
    ### set default value(s) for tau2 if it is unspecified
@@ -466,6 +471,20 @@
 
    ### create model matrix for inner and outer factors of mf.g
 
+   if (is.element(struct, c("CS","HCS","UN","AR","HAR","CAR","ID","DIAG"))) {
+
+      if (g.nlevels[1] == 1) {
+         Z.G1 <- cbind(rep(1,k))
+      } else {
+         if (sparse) {
+            Z.G1 <- sparse.model.matrix(~ mf.g[[1]] - 1)
+         } else {
+            Z.G1 <- model.matrix(~ mf.g[[1]] - 1)
+         }
+      }
+
+   }
+
    if (is.element(struct, c("SPEXP","SPGAU"))) {
 
       if (sparse) {
@@ -474,21 +493,15 @@
          Z.G1 <- diag(1, nrow=k, ncol=k)
       }
 
-   } else {
+   }
 
-      if (g.nlevels[1] == 1) {
-         Z.G1 <- cbind(rep(1,k))
+   if (is.element(struct, c("GEN"))) {
+
+      if (sparse) {
+         Z.G1 <- Matrix(as.matrix(mf.g[-nvars]), sparse=TRUE)
       } else {
-         if (sparse) {
-            #Z.G1 <- Matrix(model.matrix(~ mf.g[[1]] - 1), sparse=TRUE, dimnames=list(NULL, NULL))
-            Z.G1 <- sparse.model.matrix(~ mf.g[[1]] - 1)
-         } else {
-            Z.G1 <- model.matrix(~ mf.g[[1]] - 1)
-         }
+         Z.G1 <- as.matrix(mf.g[-nvars])
       }
-
-      attr(Z.G1, "assign")    <- NULL
-      attr(Z.G1, "contrasts") <- NULL
 
    }
 
@@ -496,13 +509,14 @@
       Z.G2 <- cbind(rep(1,k))
    } else {
       if (sparse) {
-         #Z.G2 <- Matrix(model.matrix(~ mf.g[[nvars]] - 1), sparse=TRUE, dimnames=list(NULL, NULL))
          Z.G2 <- sparse.model.matrix(~ mf.g[[nvars]] - 1)
       } else {
          Z.G2 <- model.matrix(~ mf.g[[nvars]] - 1)
       }
    }
 
+   attr(Z.G1, "assign")    <- NULL
+   attr(Z.G1, "contrasts") <- NULL
    attr(Z.G2, "assign")    <- NULL
    attr(Z.G2, "contrasts") <- NULL
 
@@ -514,9 +528,12 @@
 
 ############################################################################
 
-.process.G.afterrmna <- function(mf.g, g.nlevels, g.levels, g.values, struct, formula, tau2, rho, Z.G1, Z.G2, isG, sparse) {
+.process.G.afterrmna <- function(mf.g, g.nlevels, g.levels, g.values, struct, formula, tau2, rho, Z.G1, Z.G2, isG, sparse, verbose) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
+
+   if (verbose > 1)
+      message(mstyle$message(paste0("Processing '", paste0(formula, collapse=""), "' term (#2) ...")))
 
    ### number of variables in model frame
 
@@ -527,10 +544,10 @@
    g.nlevels.f <- g.nlevels
    g.levels.f  <- g.levels
 
-   ### redo: turn each variable in mf.g into a factor (not for SP structures)
+   ### redo: turn each variable in mf.g into a factor (not for SP structures or GEN)
    ### (reevaluates the levels present, but order of existing levels is preserved)
 
-   if (is.element(struct, c("SPEXP","SPGAU"))) {
+   if (is.element(struct, c("SPEXP","SPGAU","GEN"))) {
       mf.g <- data.frame(mf.g[-nvars], outer=factor(mf.g[[nvars]]))
    } else {
       mf.g <- data.frame(inner=factor(mf.g[[1]]), outer=factor(mf.g[[2]]))
@@ -538,8 +555,8 @@
 
    ### redo: get number of levels of each variable in mf.g (vector with two values, for the inner and outer factor)
 
-   #g.nlevels <- c(nlevels(mf.g[[1]]), nlevels(mf.g[[2]]))
-   if (is.element(struct, c("SPEXP","SPGAU"))) {
+   #g.nlevels <- c(nlevels(mf.g[[1]]), nlevels(mf.g[[2]])) ### works only for factors
+   if (is.element(struct, c("SPEXP","SPGAU","GEN"))) {
       g.nlevels <- c(length(unique(apply(mf.g[-nvars], 1, paste, collapse=" + "))), length(unique(mf.g[[nvars]])))
    } else {
       g.nlevels <- c(length(unique(mf.g[[1]])), length(unique(mf.g[[2]])))
@@ -547,20 +564,20 @@
 
    ### redo: get levels of each variable in mf.g
 
-   #g.levels <- list(levels(mf.g[[1]]), levels(mf.g[[2]]))
-   if (is.element(struct, c("SPEXP","SPGAU"))) {
+   #g.levels <- list(levels(mf.g[[1]]), levels(mf.g[[2]])) ### works only for factors
+   if (is.element(struct, c("SPEXP","SPGAU","GEN"))) {
       g.levels <- list(sort(unique(apply(mf.g[-nvars], 1, paste, collapse=" + "))), sort(unique((mf.g[[nvars]]))))
    } else {
-      g.levels <- list(sort(unique(mf.g[[1]])), sort(unique((mf.g[[2]]))))
+      g.levels <- list(sort(unique(as.character(mf.g[[1]]))), sort(unique(as.character(mf.g[[2]]))))
    }
 
    ### determine which levels of the inner factor were removed
 
    g.levels.r <- !is.element(g.levels.f[[1]], g.levels[[1]])
 
-   ### warn if any levels were removed (not for "AR","CAR","SPEXP","SPGAU")
+   ### warn if any levels were removed (not for "AR","CAR","SPEXP","SPGAU","GEN")
 
-   if (any(g.levels.r) && !is.element(struct, c("AR","CAR","SPEXP","SPGAU")))
+   if (any(g.levels.r) && !is.element(struct, c("AR","CAR","SPEXP","SPGAU","GEN")))
       warning(mstyle$warning("One or more levels of inner factor removed due to NAs."), call.=FALSE)
 
    ### for "ID" and "DIAG", fix rho to 0
@@ -575,13 +592,14 @@
       warning(mstyle$warning(paste0("Inner factor has only a single level, so fixed value of ", ifelse(isG, 'rho', 'phi'), " to 0.")), call.=FALSE)
    }
 
-   ### if there is only a single arm for "SPEXP","SPGAU" (either to begin with or after removing NAs), cannot fit model
+   ### if there is only a single arm for SP structures or GEN (either to begin with or after removing NAs), cannot fit model
 
-   if (g.nlevels[1] == 1 && is.element(struct, c("SPEXP","SPGAU")))
+   if (g.nlevels[1] == 1 && is.element(struct, c("SPEXP","SPGAU","GEN")))
       stop(mstyle$stop("Cannot fit model since inner term only has a single level."), call.=FALSE)
 
    ### k per level of the inner factor
-   if (is.element(struct, c("SPEXP","SPGAU"))) {
+
+   if (is.element(struct, c("SPEXP","SPGAU","GEN"))) {
       g.levels.k <- table(factor(apply(mf.g[-nvars], 1, paste, collapse=" + "), levels=g.levels.f[[1]]))
    } else {
       g.levels.k <- table(factor(mf.g[[1]], levels=g.levels.f[[1]]))
@@ -599,7 +617,7 @@
 
    ### check if each study has only a single arm (could be different arms!)
    ### for "CS","HCS","AR","HAR","CAR" must then fix rho to 0 (if not already fixed)
-   ### for "SPEXP","SPGAU" cannot fit model
+   ### for SP structures cannot fit model; for GEN rho may still be (weakly) identifiable
 
    if (g.nlevels[2] == nrow(mf.g)) {
       if (is.element(struct, c("CS","HCS","AR","HAR","CAR")) && is.na(rho)) {
@@ -612,23 +630,13 @@
 
    g.levels.comb.k <- NULL
 
-   if (!is.element(struct, c("SPEXP","SPGAU"))) {
+   if (!is.element(struct, c("SPEXP","SPGAU","GEN"))) {
 
       ### create matrix where each row (= study) indicates how often each arm occurred
       ### then turn this into a list (with each element equal to a row (= study))
 
       g.levels.comb.k <- crossprod(Z.G2, Z.G1)
       g.levels.comb.k <- split(g.levels.comb.k, seq_len(nrow(g.levels.comb.k)))
-
-      ### check if each study has only a single arm (could be different arms!)
-      ### this is now checked above (and in a much simpler way)
-
-      #if (all(unlist(lapply(g.levels.comb.k, sum)) == 1)) {
-      #   if (is.element(struct, c("CS","HCS","AR","HAR","CAR")) && is.na(rho)) {
-      #      rho <- 0
-      #      warning(mstyle$warning(paste0("Each level of the outer factor contains only a single level of the inner factor, so fixed value of ", ifelse(isG, 'rho', 'phi'), " to 0.")), call.=FALSE)
-      #   }
-      #}
 
       ### create matrix for each element (= study) that indicates which combinations occurred
       ### sum up all matrices (numbers indicate in how many studies each combination occurred)
@@ -671,7 +679,7 @@
       diag(G) <- tau2
    }
 
-   if (struct == "UN") {
+   if (is.element(struct, c("UN","GEN"))) {
       G <- .con.vcov.UN(tau2, rho)
    }
 
@@ -736,7 +744,7 @@
    if (is.element(struct, c("SPEXP","SPGAU"))) {
       ### remove the '| outer' part from the formula and add '- 1'
       formula <- as.formula(paste0(strsplit(paste0(formula, collapse=""), "|", fixed=TRUE)[[1]][1], "- 1", collapse=""))
-      ### distance matrix
+      ### create distance matrix
       if (sparse) {
          Dmat <- Matrix(as.matrix(dist(model.matrix(formula, data=mf.g[-nvars]), method="euclidean")), sparse=TRUE)
       } else {
@@ -810,7 +818,7 @@
 
 ############################################################################
 
-### function to construct var-cov matrix for struct="UN" given vector of variances and correlations
+### function to construct var-cov matrix for "UN" and "GEN" structures given vector of variances and correlations
 
 .con.vcov.UN <- function(vars, cors) {
    dims <- length(vars)
@@ -821,7 +829,7 @@
    return(H %*% G %*% H)
 }
 
-### function to construct var-cov matrix for struct="UN" given vector of 'choled' variances and covariances
+### function to construct var-cov matrix for "UN" and "GEN" structures given vector of 'choled' variances and covariances
 
 .con.vcov.UN.chol <- function(vars, covs) {
    dims <- length(vars)
@@ -837,138 +845,130 @@
 
 .con.E <- function(v, r, v.val, r.val, Z1, Z2, levels.r, values, Dmat, struct, cholesky, vctransf, posdefify, sparse) {
 
-      ### if cholesky=TRUE, back-transformation/substitution is done below; otherwise, back-transform and replace fixed values
-      if (!cholesky) {
-         if (vctransf) {
-            ### variances are optimized in log space, so exponentiate
-            v <- ifelse(is.na(v.val), exp(v), v.val)
-            if (struct == "CAR")
-               ### CAR correlation is optimized in qlogis space, so use plogis
-               r <- ifelse(is.na(r.val), plogis(r), r.val)
-            if (is.element(struct, c("SPEXP","SPGAU")))
-               ### SPEXP/SPGAU correlation is optimized in log space, so exponentiate
-               r <- ifelse(is.na(r.val), exp(r), r.val)
-            if (!is.element(struct, c("CAR","SPEXP","SPGAU")))
-               ### other correlations are optimized in atanh space, so use tanh
-               r <- ifelse(is.na(r.val), tanh(r), r.val)
-         } else {
-            ### for Hessian computation, can choose to leave as is
-            v <- ifelse(is.na(v.val), v, v.val)
-            r <- ifelse(is.na(r.val), r, r.val)
-            v[v < 0] <- 0
-            if (struct == "CAR") {
-               r[r < 0] <- 0
-               r[r > 1] <- 1
-            }
-            if (is.element(struct, c("SPEXP","SPGAU"))) {
-               r[r < 0] <- 0
-            }
-            if (!is.element(struct, c("CAR","SPEXP","SPGAU"))) {
-               r[r < -1] <- -1
-               r[r > 1] <- 1
-            }
+   ### if cholesky=TRUE, back-transformation/substitution is done below; otherwise, back-transform and replace fixed values
+
+   if (!cholesky) {
+      if (vctransf) {
+         v <- ifelse(is.na(v.val), exp(v), v.val)           ### variances are optimized in log space, so exponentiate
+         if (struct == "CAR")
+            r <- ifelse(is.na(r.val), plogis(r), r.val)     ### CAR correlation is optimized in qlogis space, so use plogis
+         if (is.element(struct, c("SPEXP","SPGAU")))
+            r <- ifelse(is.na(r.val), exp(r), r.val)        ### SPEXP/SPGAU correlation is optimized in log space, so exponentiate
+         if (!is.element(struct, c("CAR","SPEXP","SPGAU")))
+            r <- ifelse(is.na(r.val), tanh(r), r.val)       ### other correlations are optimized in atanh space, so use tanh
+      } else {
+         ### for Hessian computation, can choose to leave as is
+         v <- ifelse(is.na(v.val), v, v.val)
+         r <- ifelse(is.na(r.val), r, r.val)
+         v[v < 0] <- 0
+         if (struct == "CAR") {
+            r[r < 0] <- 0
+            r[r > 1] <- 1
          }
-         v <- ifelse(v <= .Machine$double.eps*10, 0, v) ### don't do this with Cholesky factorization, since values can be negative
-      }
-
-      ncol.Z1 <- ncol(Z1)
-
-      if (struct == "CS") {
-         E <- matrix(r*v, nrow=ncol.Z1, ncol=ncol.Z1)
-         diag(E) <- v
-      }
-
-      if (struct == "HCS") {
-         E <- matrix(r, nrow=ncol.Z1, ncol=ncol.Z1)
-         diag(E) <- 1
-         E <- diag(sqrt(v), nrow=ncol.Z1, ncol=ncol.Z1) %*% E %*% diag(sqrt(v), nrow=ncol.Z1, ncol=ncol.Z1)
-         diag(E) <- v
-      }
-
-      if (struct == "UN") {
-         if (cholesky) {
-            E <- .con.vcov.UN.chol(v, r)
-            v <- diag(E)                  ### need this, so correct values are shown when verbose=TRUE
-            r <- cov2cor(E)[upper.tri(E)] ### need this, so correct values are shown when verbose=TRUE
-            v[!is.na(v.val)] <- v.val[!is.na(v.val)] ### replace any fixed values
-            r[!is.na(r.val)] <- r.val[!is.na(r.val)] ### replace any fixed values
+         if (is.element(struct, c("SPEXP","SPGAU"))) {
+            r[r < 0] <- 0
          }
-         E <- .con.vcov.UN(v, r)
-         if (posdefify) {
-            E <- as.matrix(nearPD(E)$mat) ### nearPD() in Matrix package
-            v <- diag(E)                  ### need this, so correct values are shown when verbose=TRUE
-            r <- cov2cor(E)[upper.tri(E)] ### need this, so correct values are shown when verbose=TRUE
+         if (!is.element(struct, c("CAR","SPEXP","SPGAU"))) {
+            r[r < -1] <- -1
+            r[r > 1] <- 1
          }
       }
+      v <- ifelse(v <= .Machine$double.eps*10, 0, v) ### don't do this with Cholesky factorization, since values can be negative
+   }
 
-      if (is.element(struct, c("ID","DIAG"))) {
-         E <- diag(v, nrow=ncol.Z1, ncol=ncol.Z1)
+   ncol.Z1 <- ncol(Z1)
+
+   if (struct == "CS") {
+      E <- matrix(r*v, nrow=ncol.Z1, ncol=ncol.Z1)
+      diag(E) <- v
+   }
+
+   if (struct == "HCS") {
+      E <- matrix(r, nrow=ncol.Z1, ncol=ncol.Z1)
+      diag(E) <- 1
+      E <- diag(sqrt(v), nrow=ncol.Z1, ncol=ncol.Z1) %*% E %*% diag(sqrt(v), nrow=ncol.Z1, ncol=ncol.Z1)
+      diag(E) <- v
+   }
+
+   if (is.element(struct, c("UN","GEN"))) {
+      if (cholesky) {
+         E <- .con.vcov.UN.chol(v, r)
+         v <- diag(E)                  ### need this, so correct values are shown when verbose=TRUE
+         r <- cov2cor(E)[upper.tri(E)] ### need this, so correct values are shown when verbose=TRUE
+         v[!is.na(v.val)] <- v.val[!is.na(v.val)] ### replace any fixed values
+         r[!is.na(r.val)] <- r.val[!is.na(r.val)] ### replace any fixed values
       }
-
-      if (struct == "UNHO") {
-         E <- matrix(NA_real_, nrow=ncol.Z1, ncol=ncol.Z1)
-         E[upper.tri(E)] <- r
-         E[lower.tri(E)] <- t(E)[lower.tri(E)]
-         diag(E) <- 1
-         E <- diag(sqrt(rep(v, ncol.Z1)), nrow=ncol.Z1, ncol=ncol.Z1) %*% E %*% diag(sqrt(rep(v, ncol.Z1)), nrow=ncol.Z1, ncol=ncol.Z1)
-         if (posdefify) {
-            E <- as.matrix(nearPD(E, keepDiag=TRUE)$mat) ### nearPD() in Matrix package
-            v <- E[1,1]                                  ### need this, so correct values are shown when verbose=TRUE
-            r <- cov2cor(E)[upper.tri(E)]                ### need this, so correct values are shown when verbose=TRUE
-         }
+      E <- .con.vcov.UN(v, r)
+      if (posdefify) {
+         E <- as.matrix(nearPD(E)$mat) ### nearPD() in Matrix package
+         v <- diag(E)                  ### need this, so correct values are shown when verbose=TRUE
+         r <- cov2cor(E)[upper.tri(E)] ### need this, so correct values are shown when verbose=TRUE
       }
+   }
 
-      if (struct == "AR") {
-         if (ncol.Z1 > 1) {
-            E <- toeplitz(ARMAacf(ar=r, lag.max=ncol.Z1-1))
-         } else {
-            E <- diag(1)
-         }
-         E <- diag(sqrt(rep(v, ncol.Z1)), nrow=ncol.Z1, ncol=ncol.Z1) %*% E %*% diag(sqrt(rep(v, ncol.Z1)), nrow=ncol.Z1, ncol=ncol.Z1)
-         diag(E) <- v
+   if (is.element(struct, c("ID","DIAG")))
+      E <- diag(v, nrow=ncol.Z1, ncol=ncol.Z1)
+
+   if (struct == "UNHO") {
+      E <- matrix(NA_real_, nrow=ncol.Z1, ncol=ncol.Z1)
+      E[upper.tri(E)] <- r
+      E[lower.tri(E)] <- t(E)[lower.tri(E)]
+      diag(E) <- 1
+      E <- diag(sqrt(rep(v, ncol.Z1)), nrow=ncol.Z1, ncol=ncol.Z1) %*% E %*% diag(sqrt(rep(v, ncol.Z1)), nrow=ncol.Z1, ncol=ncol.Z1)
+      if (posdefify) {
+         E <- as.matrix(nearPD(E, keepDiag=TRUE)$mat) ### nearPD() in Matrix package
+         v <- E[1,1]                                  ### need this, so correct values are shown when verbose=TRUE
+         r <- cov2cor(E)[upper.tri(E)]                ### need this, so correct values are shown when verbose=TRUE
       }
+   }
 
-      if (struct == "HAR") {
-         if (ncol.Z1 > 1) {
-            E <- toeplitz(ARMAacf(ar=r, lag.max=ncol.Z1-1))
-         } else {
-            E <- diag(1)
-         }
-         E <- diag(sqrt(v), nrow=ncol.Z1, ncol=ncol.Z1) %*% E %*% diag(sqrt(v), nrow=ncol.Z1, ncol=ncol.Z1)
-         diag(E) <- v
+   if (struct == "AR") {
+      if (ncol.Z1 > 1) {
+         E <- toeplitz(ARMAacf(ar=r, lag.max=ncol.Z1-1))
+      } else {
+         E <- diag(1)
       }
+      E <- diag(sqrt(rep(v, ncol.Z1)), nrow=ncol.Z1, ncol=ncol.Z1) %*% E %*% diag(sqrt(rep(v, ncol.Z1)), nrow=ncol.Z1, ncol=ncol.Z1)
+      diag(E) <- v
+   }
 
-      if (struct == "CAR") {
-         if (ncol.Z1 > 1) {
-            E <- outer(values, values, function(x,y) r^(abs(x-y)))
-         } else {
-            E <- diag(1)
-         }
-         E <- diag(sqrt(rep(v, ncol.Z1)), nrow=ncol.Z1, ncol=ncol.Z1) %*% E %*% diag(sqrt(rep(v, ncol.Z1)), nrow=ncol.Z1, ncol=ncol.Z1)
-         diag(E) <- v
+   if (struct == "HAR") {
+      if (ncol.Z1 > 1) {
+         E <- toeplitz(ARMAacf(ar=r, lag.max=ncol.Z1-1))
+      } else {
+         E <- diag(1)
       }
+      E <- diag(sqrt(v), nrow=ncol.Z1, ncol=ncol.Z1) %*% E %*% diag(sqrt(v), nrow=ncol.Z1, ncol=ncol.Z1)
+      diag(E) <- v
+   }
 
-      if (struct == "SPEXP") {
-         E <- v * exp(-Dmat/r) * tcrossprod(Z2)
+   if (struct == "CAR") {
+      if (ncol.Z1 > 1) {
+         E <- outer(values, values, function(x,y) r^(abs(x-y)))
+      } else {
+         E <- diag(1)
       }
+      E <- diag(sqrt(rep(v, ncol.Z1)), nrow=ncol.Z1, ncol=ncol.Z1) %*% E %*% diag(sqrt(rep(v, ncol.Z1)), nrow=ncol.Z1, ncol=ncol.Z1)
+      diag(E) <- v
+   }
 
-      if (struct == "SPGAU") {
-         E <- v * exp(-Dmat^2/r^2) * tcrossprod(Z2)
-      }
+   if (struct == "SPEXP")
+      E <- v * exp(-Dmat/r) * tcrossprod(Z2)
 
-      ### set variance and corresponding correlation value(s) to 0 for any levels that were removed
+   if (struct == "SPGAU")
+      E <- v * exp(-Dmat^2/r^2) * tcrossprod(Z2)
 
-      if (!is.element(struct, c("SPEXP","SPGAU"))) {
-         if (any(levels.r)) {
-            E[levels.r,] <- 0
-            E[,levels.r] <- 0
-         }
-      }
+   ### set variance and corresponding correlation value(s) to 0 for any levels that were removed
 
-      if (sparse)
-         E <- Matrix(E, sparse=TRUE)
+   if (!is.element(struct, c("SPEXP","SPGAU","GEN")) && any(levels.r)) {
+      E[levels.r,] <- 0
+      E[,levels.r] <- 0
+   }
 
-      return(list(v=v, r=r, E=E))
+   if (sparse)
+      E <- Matrix(E, sparse=TRUE)
+
+   return(list(v=v, r=r, E=E))
 
 }
 
@@ -992,11 +992,9 @@
    if (withS) {
 
       if (vctransf) {
-         ### sigma2 is optimized in log space, so exponentiate
-         sigma2 <- ifelse(is.na(sigma2.val), exp(par[seq_len(sigma2s)]), sigma2.val)
+         sigma2 <- ifelse(is.na(sigma2.val), exp(par[seq_len(sigma2s)]), sigma2.val) ### sigma2 is optimized in log space, so exponentiate
       } else {
-         ### for Hessian computation, can choose to leave as is
-         sigma2 <- ifelse(is.na(sigma2.val), par[seq_len(sigma2s)], sigma2.val)
+         sigma2 <- ifelse(is.na(sigma2.val), par[seq_len(sigma2s)], sigma2.val)      ### for Hessian computation, can choose to leave as is
          sigma2[sigma2 < 0] <- 0
       }
 

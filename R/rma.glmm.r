@@ -77,7 +77,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    if (.isTRUE(ddd$tdist))
       test <- "t"
 
-   if (!is.element(test, c("z","t")))
+   if (!is.element(test, c("z", "t")))
       stop(mstyle$stop("Invalid option selected for 'test' argument."))
 
    ### set defaults or get onlyo1, addyi, and addvi arguments

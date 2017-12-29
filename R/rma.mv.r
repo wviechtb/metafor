@@ -10,7 +10,7 @@
 # gamma2 = (preset) value(s) for the variance of the random effects
 # phi    = (preset) value(s) for the correlation(s) between random effects
 
-### structures when there is a (~ inner | outer) term in the random argument:
+### structures when there is an '~ inner | outer' term in the random argument:
 ### - CS   (compound symmetry)
 ### - HCS  (heteroscedastic compound symmetry)
 ### - UN   (general positive-definite matrix with no structure)
@@ -37,7 +37,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
    if (!is.element(method, c("FE","ML","REML")))
       stop(mstyle$stop("Unknown 'method' specified."))
 
-   if (any(!is.element(struct, c("CS","HCS","UN","AR","HAR","CAR","ID","DIAG","SPEXP","SPGAU")))) ### add UNHO later
+   if (any(!is.element(struct, c("CS","HCS","UN","AR","HAR","CAR","ID","DIAG","SPEXP","SPGAU","GEN")))) ### add UNHO later
       stop(mstyle$stop("Unknown 'struct' specified."))
 
    if (length(struct) == 1)
@@ -90,7 +90,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
    if (.isTRUE(ddd$tdist))
       test <- "t"
 
-   if (!is.element(test, c("z","t","knha","adhoc")))
+   if (!is.element(test, c("z", "t", "knha", "adhoc")))
       stop(mstyle$stop("Invalid option selected for 'test' argument."))
 
    ### handle Rscale argument (either character, logical, or integer)
@@ -397,21 +397,34 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       has.vbar <- sapply(random, function(f) grepl("|", paste0(f, collapse=""), fixed=TRUE))
 
       if (any(!has.vbar))
-         stop(mstyle$stop("All formulas in 'random' must contain a | symbol."))
+         stop(mstyle$stop("All formulas in 'random' must contain a grouping variable after the | symbol."))
 
-      ### check which formulas in random are (inner | outer) formulas and get those formulas
+      ### check which formulas in random are '~ inner | outer' formulas
 
       formulas <- list(NULL, NULL)
-      split.formulas <- sapply(random, function(f) strsplit(paste0(f, collapse=""), "|", fixed=TRUE))
-      is.inner.outer <- sapply(split.formulas, function(f) f[1] != "~1 ")
+      split.formulas <- sapply(random, function(f) strsplit(paste0(f, collapse=""), " | ", fixed=TRUE))
+      is.inner.outer <- sapply(split.formulas, function(f) f[1] != "~1")
+
+      ### make sure that there are only up to two '~ inner | outer' formulas
+
+      if (sum(is.inner.outer) > 2)
+         stop(mstyle$stop("Only up to two '~ inner | outer' formulas allowed in the 'random' argument."))
+
+      ### get '~ inner | outer' formulas
+
       if (any(is.inner.outer))
          formulas[[1]] <- random[is.inner.outer][1][[1]]
-      if (sum(is.inner.outer) >= 2)
+      if (sum(is.inner.outer) == 2)
          formulas[[2]] <- random[is.inner.outer][2][[1]]
 
-      ### figure out if a formulas has a slash (as in ~ 1 | study/id)
+      ### figure out if a formulas has a slash (as in '~ 1 | study/id')
 
       has.slash <- sapply(random, function(f) grepl("/", paste0(f, collapse=""), fixed=TRUE))
+
+      ### check if slash is used in combination with an '~ inner | outer' term
+
+      if (any(is.inner.outer & has.slash))
+         stop(mstyle$stop("Cannot use '~ inner | outer1/outer2' type terms in the 'random' argument."))
 
       ### substitute + for | in all formulas (so that model.frame() below works)
 
@@ -423,7 +436,45 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       ###       so use model.frame(), which allows for things like 'random = ~ factor(arm) | study'
       ###       need to use na.pass so that NAs are passed through (checks for NAs are done later)
 
-      mf.r <- lapply(random.plus, model.frame, data=data, na.action=na.pass)
+      #mf.r <- lapply(random.plus, model.frame, data=data, na.action=na.pass)
+
+      mf.r <- list()
+
+      for (j in seq_along(is.inner.outer)) {
+
+         io <- 0
+
+         if (is.inner.outer[j]) {
+
+            io <- io + 1
+
+            ### for an '~ inner | outer' term with struct="GEN", expand the inner formula to the
+            ### model matrix and re-combine this with the outer variable
+
+            if (struct[io] == "GEN") {
+
+               f.inner <- as.formula(strsplit(paste(random[[j]], collapse=""), " | ", fixed=TRUE)[[1]][1])
+               f.outer <- as.formula(paste("~", strsplit(paste(random[[j]], collapse=""), " | ", fixed=TRUE)[[1]][2]))
+               options(na.action = "na.pass")
+               X.inner <- model.matrix(f.inner, data=data)
+               options(na.action = na.act)
+               is.int <- apply(X.inner, 2, .is.intercept)
+               colnames(X.inner)[is.int] <- "intrcpt"
+               mf.r[[j]] <- cbind(X.inner, model.frame(f.outer, data=data, na.action=na.pass))
+
+            } else {
+
+               mf.r[[j]] <- model.frame(random.plus[[j]], data=data, na.action=na.pass)
+
+            }
+
+         } else {
+
+            mf.r[[j]] <- model.frame(random.plus[[j]], data=data, na.action=na.pass)
+
+         }
+
+      }
 
       ### count number of columns in each model frame
 
@@ -472,21 +523,11 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
       #return(mf.r)
 
-      ### make sure that each model frame has no more than 2 columns
-
-      #if (any(mf.r.ncols > 2))
-      #   stop(mstyle$stop("No more than two elements allowed in each formula of the 'random' argument."))
-
-      ### make sure that there are only up to 2 model frames with 2 columns
-
-      if (sum(mf.r.ncols >= 2) > 2)
-         stop(mstyle$stop("Only up to two '~ inner | outer' formulas allowed in the 'random' argument."))
-
       ### separate mf.r into mf.s (~ 1 | id), mf.g (~ inner | outer), and mf.h (~ inner | outer) parts
 
-      mf.s <- mf.r[which(mf.r.ncols == 1)]      ### if there is no (~ 1 | factor) term, this is list() ([] so that we get a list of data frames)
-      mf.g <- mf.r[[which(mf.r.ncols >= 2)[1]]] ### if there is no 1st (~ inner | outer) terms, this is NULL ([[]] so that we get a data frame, not a list)
-      mf.h <- mf.r[[which(mf.r.ncols >= 2)[2]]] ### if there is no 2nd (~ inner | outer) terms, this is NULL ([[]] so that we get a data frame, not a list)
+      mf.s <- mf.r[which(mf.r.ncols == 1)]      ### if there is no '~ 1 | factor' term, this is list() ([] so that we get a list of data frames)
+      mf.g <- mf.r[[which(mf.r.ncols >= 2)[1]]] ### if there is no 1st '~ inner | outer' terms, this is NULL ([[]] so that we get a data frame, not a list)
+      mf.h <- mf.r[[which(mf.r.ncols >= 2)[2]]] ### if there is no 2nd '~ inner | outer' terms, this is NULL ([[]] so that we get a data frame, not a list)
 
       ### if there is no (~ 1 | factor) term, then mf.s is list(), so turn that into NULL
 
@@ -497,7 +538,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
       withS <- !is.null(mf.s)
 
-      ### does the random argument include (~ inner | outer) terms?
+      ### does the random argument include '~ inner | outer' terms?
 
       withG <- !is.null(mf.g)
       withH <- !is.null(mf.h)
@@ -516,7 +557,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       ### careful: with ~ 1 | interaction(var1, var2), mf.r will have 2 columns, but is actually a 'one variable' term
       ###      and with ~ interaction(var1, var2) | var3, mf.r will have 3 columns, but is actually a 'two variable' term
       ### mf.r.ncols above is correct even in these cases (since it is based on the model.frame() results), but need
-      ### to be careful that this doesn't screw up anything in other functions
+      ### to be careful that this doesn't screw up anything in other functions (for now, mf.r.ncols not used in any other function)
 
       mf.r <- lapply(random.plus, get_all_vars, data=data)
 
@@ -647,7 +688,6 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
    W.f     <- A
    ni.f    <- ni
    mods.f  <- mods
-   mf.r.f  <- mf.r ### needed for cooks.distance()
    #mf.g.f <- mf.g ### copied further below
    #mf.h.f <- mf.h ### copied further below
    #mf.s.f <- mf.s ### copied further below
@@ -868,9 +908,9 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    }
 
-   mf.s.f <- mf.s
+   #mf.s.f <- mf.s ### not needed at the moment
 
-   ### copy s.nlevels and s.levels
+   ### copy s.nlevels and s.levels (needed for ranef())
 
    s.nlevels.f <- s.nlevels
    s.levels.f  <- s.levels
@@ -881,7 +921,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    if (withG) {
 
-      tmp <- .process.G.aftersub(verbose, mf.g, struct[1], formulas[[1]], tau2, rho, isG=TRUE, k, sparse)
+      tmp <- .process.G.aftersub(mf.g, struct[1], formulas[[1]], tau2, rho, isG=TRUE, k, sparse, verbose)
 
       mf.g      <- tmp$mf.g
       g.names   <- tmp$g.names
@@ -924,7 +964,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    if (withH) {
 
-      tmp <- .process.G.aftersub(verbose, mf.h, struct[2], formulas[[2]], gamma2, phi, isG=FALSE, k, sparse)
+      tmp <- .process.G.aftersub(mf.h, struct[2], formulas[[2]], gamma2, phi, isG=FALSE, k, sparse, verbose)
 
       mf.h      <- tmp$mf.g
       h.names   <- tmp$g.names
@@ -996,7 +1036,11 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
             Z.G1 <- Z.G1[not.na,,drop=FALSE]
          }
          Z.G2 <- Z.G2[not.na,,drop=FALSE]
-         Z.H1 <- Z.H1[not.na,,drop=FALSE]
+         if (is.element(struct[2], c("SPEXP","SPGAU"))) {
+            Z.H1 <- Z.H1[not.na,not.na,drop=FALSE]
+         } else {
+            Z.H1 <- Z.H1[not.na,,drop=FALSE]
+         }
          Z.H2 <- Z.H2[not.na,,drop=FALSE]
          k    <- length(yi)
          warning(mstyle$warning("Rows with NAs omitted from model fitting."))
@@ -1020,7 +1064,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    ### check for V being positive definite (this should also cover non-positive variances)
    ### skipped: even if V is not positive definite, the marginal var-cov matrix can still be; so just check for pd during the optimization
-   ### but at least issue a warning, since a fixed-effects model can then not be fitted and there is otherwise no indication why
+   ### but at least issue a warning, since a fixed-effects model can then not be fitted and there is otherwise no indication why this is the case
 
    if (!V0 && any(eigen(V, symmetric=TRUE, only.values=TRUE)$values <= .Machine$double.eps)) ### any eigenvalue below double.eps is essentially 0
       warning(mstyle$warning("'V' appears to be not positive definite."))
@@ -1128,8 +1172,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
             Z.S[[j]] <- cbind(rep(1,k))
          } else {
             if (sparse) {
-               #Z.S[[j]] <- Matrix(model.matrix(~ mf.s[[j]] - 1), sparse=TRUE, dimnames=list(NULL, NULL)) ### cannot use this for factors with a single level
-               Z.S[[j]] <- sparse.model.matrix(~ mf.s[[j]] - 1)
+               Z.S[[j]] <- sparse.model.matrix(~ mf.s[[j]] - 1) ### cannot use this for factors with a single level
             } else {
                Z.S[[j]] <- model.matrix(~ mf.s[[j]] - 1) ### cannot use this for factors with a single level
             }
@@ -1215,7 +1258,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    if (withG) {
 
-      tmp <- .process.G.afterrmna(mf.g, g.nlevels, g.levels, g.values, struct[1], formulas[[1]], tau2, rho, Z.G1, Z.G2, isG=TRUE, sparse)
+      tmp <- .process.G.afterrmna(mf.g, g.nlevels, g.levels, g.values, struct[1], formulas[[1]], tau2, rho, Z.G1, Z.G2, isG=TRUE, sparse, verbose)
 
       mf.g <- tmp$mf.g
 
@@ -1251,7 +1294,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    if (withH) {
 
-      tmp <- .process.G.afterrmna(mf.h, h.nlevels, h.levels, h.values, struct[2], formulas[[2]], gamma2, phi, Z.H1, Z.H2, isG=FALSE, sparse)
+      tmp <- .process.G.afterrmna(mf.h, h.nlevels, h.levels, h.values, struct[2], formulas[[2]], gamma2, phi, Z.H1, Z.H2, isG=FALSE, sparse, verbose)
 
       mf.h <- tmp$mf.g
 
@@ -1355,7 +1398,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
                phi.init = phi.init,       # initial value(s) for phi
                REMLf = TRUE,              # full REML likelihood (including all constants)
                tol = 1e-07,               # lower bound for eigenvalues to determine if var-cov matrix is positive definite
-               cholesky = ifelse(struct=="UN", TRUE, FALSE), # by default, use Cholesky factorization for G and H matrix when struct="UN" (struct has 2 elements)
+               cholesky = ifelse(is.element(struct, c("UN","GEN")), TRUE, FALSE), # by default, use Cholesky factorization for G and H matrix for "UN" and "GEN" structures
                posdefify = FALSE,         # to force G and H matrix to become positive definite
                hessian = FALSE,           # to compute Hessian
                hessianCtrl=list(r=8),     # arguments passed on to 'method.args' of hessian()
@@ -1398,18 +1441,18 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
    if (length(con$cholesky) == 1)
       con$cholesky <- rep(con$cholesky, 2)
 
-   ### use of Cholesky factorization only applicable for models with "UN" structure ("UNHO" may also be possible, but that still requires a fix; see below)
+   ### use of Cholesky factorization only applicable for models with "UN" or "GEN" structure ("UNHO" may also be possible, but that still requires a fix; see below)
 
-   if (!withG) ### in case user sets cholesky=TRUE and struct="UN" even though there is no 1st 'inner | outer' term
+   if (!withG) ### in case user sets cholesky=TRUE and struct="UN" or struct="GEN" even though there is no 1st 'inner | outer' term
       con$cholesky[1] <- FALSE
 
-   if (con$cholesky[1] && struct[1] != "UN")
+   if (con$cholesky[1] && !is.element(struct[1], c("UN","GEN")))
       con$cholesky[1] <- FALSE
 
-   if (!withH) ### in case user sets cholesky=TRUE and struct="UN" even though there is no 2nd 'inner | outer' term
+   if (!withH) ### in case user sets cholesky=TRUE and struct="UN" or struct="GEN" even though there is no 2nd 'inner | outer' term
       con$cholesky[2] <- FALSE
 
-   if (con$cholesky[2] && struct[2] != "UN")
+   if (con$cholesky[2] && !is.element(struct[2], c("UN","GEN")))
       con$cholesky[2] <- FALSE
 
    ### copy initial values back (in case they were replaced by user-defined values); those values are
@@ -1763,22 +1806,24 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    if (withG) {
       G <- as.matrix(fitcall$G)
-      if (is.element(struct[1], c("SPEXP","SPGAU"))) {
+      if (is.element(struct[1], c("SPEXP","SPGAU")))
          colnames(G) <- rownames(G) <- 1:nrow(G)
-      } else {
+      if (is.element(struct[1], c("CS","HCS","UN","AR","HAR","CAR","ID","DIAG")))
          colnames(G) <- rownames(G) <- g.levels.f[[1]]
-      }
+      if (is.element(struct[1], c("GEN")))
+         colnames(G) <- rownames(G) <- g.names[-length(g.names)]
       tau2 <- fitcall$tau2
       rho  <- fitcall$rho
    }
 
    if (withH) {
       H <- as.matrix(fitcall$H)
-      if (is.element(struct[2], c("SPEXP","SPGAU"))) {
+      if (is.element(struct[2], c("SPEXP","SPGAU")))
          colnames(H) <- rownames(H) <- 1:nrow(H)
-      } else {
+      if (is.element(struct[2], c("CS","HCS","UN","AR","HAR","CAR","ID","DIAG")))
          colnames(H) <- rownames(H) <- h.levels.f[[1]]
-      }
+      if (is.element(struct[2], c("GEN")))
+         colnames(H) <- rownames(H) <- h.names[-length(h.names)]
       gamma2 <- fitcall$gamma2
       phi    <- fitcall$phi
    }
@@ -2010,7 +2055,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
                   g.levels.f=g.levels.f, g.levels.k=g.levels.k, g.levels.comb.k=g.levels.comb.k,
                   h.levels.f=h.levels.f, h.levels.k=h.levels.k, h.levels.comb.k=h.levels.comb.k,
                   struct=struct, Rfix=Rfix, R=R, Rscale=Rscale,
-                  mf.r=mf.r, mf.r.f=mf.r.f, mf.g=mf.g, mf.g.f=mf.g.f, mf.h=mf.h, mf.h.f=mf.h.f, Z.S=Z.S, Z.G1=Z.G1, Z.G2=Z.G2, Z.H1=Z.H1, Z.H2=Z.H2,
+                  mf.r=mf.r, mf.g=mf.g, mf.g.f=mf.g.f, mf.h=mf.h, mf.h.f=mf.h.f, Z.S=Z.S, Z.G1=Z.G1, Z.G2=Z.G2, Z.H1=Z.H1, Z.H2=Z.H2,
                   random=random, version=packageVersion("metafor"), call=mf)
 
    }

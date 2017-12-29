@@ -155,7 +155,7 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
       if (verbose)
          message(mstyle$message(paste0("Computing BLUPs for '", paste(x$g.names, collapse=" | "), "' term ... ")), appendLF = FALSE)
 
-      G  <- ((x$Z.G1 %*% x$G %*% t(x$Z.G1)) * tcrossprod(x$Z.G2))
+      G  <- (x$Z.G1 %*% x$G %*% t(x$Z.G1)) * tcrossprod(x$Z.G2)
       GW <- G %*% W
       pred  <- as.vector(GW %*% cbind(ei))
       pred[abs(pred) < 100 * .Machine$double.eps] <- 0
@@ -170,10 +170,11 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
 
       nvars <- ncol(x$mf.g)
 
-      if (is.element(x$struct[1], c("SPEXP","SPGAU"))) {
-         r.names <- paste(x$ids[x$not.na], x$mf.g[[nvars]], sep=" | ")
+      if (is.element(x$struct[1], c("SPEXP","SPGAU","GEN"))) {
+         r.names <- paste(formatC(x$ids[x$not.na], format="f", digits=0, width=max(nchar(x$ids[x$not.na]))), x$mf.g[[nvars]], sep=" | ")
       } else {
-         r.names <- paste(x$mf.g[[1]], x$mf.g[[2]], sep=" | ")
+         #r.names <- paste(x$mf.g[[1]], x$mf.g[[2]], sep=" | ")
+         r.names <- paste(sprintf(paste0("%", max(nchar(paste(x$mf.g[[1]]))), "s", collapse=""), x$mf.g[[1]]), x$mf.g[[nvars]], sep=" | ")
       }
 
       is.dup <- duplicated(r.names)
@@ -182,7 +183,7 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
 
       rownames(pred) <- r.names[!is.dup]
 
-      if (is.element(x$struct[1], c("SPEXP","SPGAU"))) {
+      if (is.element(x$struct[1], c("SPEXP","SPGAU","GEN"))) {
          #r.order <- order(x$mf.g[[nvars]][!is.dup], seq_len(x$k)[!is.dup])
          r.order <- seq_len(x$k)
       } else {
@@ -205,7 +206,7 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
       if (verbose)
          message(mstyle$message(paste0("Computing BLUPs for '", paste(x$h.names, collapse=" | "), "' term ... ")), appendLF = FALSE)
 
-      H  <- ((x$Z.H1 %*% x$H %*% t(x$Z.H1)) * tcrossprod(x$Z.H2))
+      H  <- (x$Z.H1 %*% x$H %*% t(x$Z.H1)) * tcrossprod(x$Z.H2)
       HW <- H %*% W
       pred  <- as.vector(HW %*% cbind(ei))
       pred[abs(pred) < 100 * .Machine$double.eps] <- 0
@@ -220,10 +221,11 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
 
       nvars <- ncol(x$mf.h)
 
-      if (is.element(x$struct[2], c("SPEXP","SPGAU"))) {
-         r.names <- paste(x$ids[x$not.na], x$mf.h[[nvars]], sep=" | ")
+      if (is.element(x$struct[2], c("SPEXP","SPGAU","GEN"))) {
+         r.names <- paste(formatC(x$ids[x$not.na], format="f", digits=0, width=max(nchar(x$ids[x$not.na]))), x$mf.h[[nvars]], sep=" | ")
       } else {
-         r.names <- paste(x$mf.h[[1]], x$mf.h[[2]], sep=" | ")
+         #r.names <- paste(x$mf.h[[1]], x$mf.h[[2]], sep=" | ")
+         r.names <- paste(sprintf(paste0("%", max(nchar(paste(x$mf.h[[1]]))), "s", collapse=""), x$mf.h[[1]]), x$mf.h[[nvars]], sep=" | ")
       }
 
       is.dup <- duplicated(r.names)
@@ -232,7 +234,7 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
 
       rownames(pred) <- r.names[!is.dup]
 
-      if (is.element(x$struct[2], c("SPEXP","SPGAU"))) {
+      if (is.element(x$struct[2], c("SPEXP","SPGAU","GEN"))) {
          #r.order <- order(x$mf.h[[nvars]][!is.dup], seq_len(x$k)[!is.dup])
          r.order <- seq_len(x$k)
       } else {
