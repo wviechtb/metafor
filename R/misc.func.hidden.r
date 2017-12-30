@@ -748,11 +748,8 @@
       Cmat <- model.matrix(formula, data=mf.g[-nvars])
       if (is.element(dist, c("euclidean", "maximum", "manhattan")))
          Dmat <- as.matrix(dist(Cmat, method=dist))
-      if (dist=="gcd") {
-         if (!requireNamespace("sp", quietly=TRUE))
-            stop(mstyle$stop("Please install the 'sp' package to compute great-circle distances."))
+      if (dist == "gcd")
          Dmat <- sp::spDists(Cmat, longlat=TRUE)
-      }
       if (sparse)
          Dmat <- Matrix(Dmat, sparse=TRUE)
    } else {

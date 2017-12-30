@@ -118,6 +118,10 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       if (any(ddd$dist == 0))
          stop(mstyle$stop("Argument 'dist' must be one of 'euclidean', 'maximum', 'manhattan', or 'gcd'."))
       ddd$dist <- dist.methods[ddd$dist]
+      if (any(ddd$dist == "gcd")) {
+         if (!requireNamespace("sp", quietly=TRUE))
+            stop(mstyle$stop("Please install the 'sp' package to compute great-circle distances."))
+      }
    } else {
       ddd$dist <- c("euclidean", "euclidean")
    }
