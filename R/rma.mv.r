@@ -76,7 +76,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("tdist", "outlist", "time"))
+   .chkdots(ddd, c("tdist", "outlist", "time", "dist"))
 
    ### handle 'time' argument from ...
 
@@ -106,6 +106,20 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       if (Rscale > 3 | Rscale < 0)
          stop(mstyle$stop("Unknown 'Rscale' value specified."))
       Rscale <- switch(as.character(Rscale), "0"="none", "1"="cor", "2"="cor0", "3"="cov0")
+   }
+
+   ### handle 'dist' argument from ...
+
+   if (!is.null(ddd$dist)) {
+      dist.methods <- c("euclidean", "maximum", "manhattan", "gcd")
+      ddd$dist <- charmatch(ddd$dist, dist.methods, nomatch = 0)
+      if (length(ddd$dist) == 1)
+         ddd$dist <- c(ddd$dist, ddd$dist)
+      if (any(ddd$dist == 0))
+         stop(mstyle$stop("Argument 'dist' must be one of 'euclidean', 'maximum', 'manhattan', or 'gcd'."))
+      ddd$dist <- dist.methods[ddd$dist]
+   } else {
+      ddd$dist <- c("euclidean", "euclidean")
    }
 
    #########################################################################
@@ -1258,7 +1272,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    if (withG) {
 
-      tmp <- .process.G.afterrmna(mf.g, g.nlevels, g.levels, g.values, struct[1], formulas[[1]], tau2, rho, Z.G1, Z.G2, isG=TRUE, sparse, verbose)
+      tmp <- .process.G.afterrmna(mf.g, g.nlevels, g.levels, g.values, struct[1], formulas[[1]], tau2, rho, Z.G1, Z.G2, isG=TRUE, sparse, ddd$dist[1], verbose)
 
       mf.g <- tmp$mf.g
 
@@ -1274,6 +1288,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       rho    <- tmp$rho
       G      <- tmp$G
       g.Dmat <- tmp$Dmat
+      g.rho.init <- tmp$rho.init
 
    } else {
 
@@ -1285,6 +1300,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
       G <- NULL
       g.Dmat <- NULL
+      g.rho.init <- NULL
 
    }
 
@@ -1294,7 +1310,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    if (withH) {
 
-      tmp <- .process.G.afterrmna(mf.h, h.nlevels, h.levels, h.values, struct[2], formulas[[2]], gamma2, phi, Z.H1, Z.H2, isG=FALSE, sparse, verbose)
+      tmp <- .process.G.afterrmna(mf.h, h.nlevels, h.levels, h.values, struct[2], formulas[[2]], gamma2, phi, Z.H1, Z.H2, isG=FALSE, sparse, ddd$dist[2], verbose)
 
       mf.h <- tmp$mf.g
 
@@ -1310,6 +1326,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       phi    <- tmp$rho
       H      <- tmp$G
       h.Dmat <- tmp$Dmat
+      h.phi.init <- tmp$rho.init
 
    } else {
 
@@ -1321,6 +1338,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
       H <- NULL
       h.Dmat <- NULL
+      h.phi.init <- NULL
 
    }
 
@@ -1349,13 +1367,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
       total <- sigma(lm(Y ~ X - 1))^2
 
-      #sigma2.init <- rep(.001, sigma2s)
-      #tau2.init   <- rep(.001, tau2s)
-      #gamma2.init <- rep(.001, gamma2s)
-      #rho.init    <- rep(.50,  rhos)
-      #phi.init    <- rep(.50,  phis)
-
-      QE <- NA
+      QE  <- NA
       QEp <- NA
 
    } else {
@@ -1374,15 +1386,23 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
       QE <- sum(as.vector(sY - sX %*% beta.FE)^2)
 
-      ### QEp calculated below
+      ### QEp calculated further below
 
    }
 
    sigma2.init <- rep(total / (sigma2s + tau2s + gamma2s), sigma2s)
    tau2.init   <- rep(total / (sigma2s + tau2s + gamma2s), tau2s)
    gamma2.init <- rep(total / (sigma2s + tau2s + gamma2s), gamma2s)
-   rho.init    <- rep(.50, rhos)
-   phi.init    <- rep(.50, phis)
+   if (is.null(g.rho.init)) {
+      rho.init <- rep(.50, rhos)
+   } else {
+      rho.init <- g.rho.init
+   }
+   if (is.null(h.phi.init)) {
+      phi.init <- rep(.50, phis)
+   } else {
+      phi.init <- h.phi.init
+   }
 
    #########################################################################
 
@@ -2042,7 +2062,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
                   int.only=int.only, int.incl=int.incl, allvipos=allvipos, coef.na=coef.na,
                   yi=yi, vi=vi, V=V, W=A, X=X, yi.f=yi.f, vi.f=vi.f, V.f=V.f, X.f=X.f, W.f=W.f, ni=ni, ni.f=ni.f, M=M, G=G, H=H, hessian=hessian,
                   ids=ids, not.na=not.na, subset=subset, slab=slab, slab.null=slab.null,
-                  measure=measure, method=method, weighted=weighted, test=test, dfs=dfs, btt=btt, intercept=intercept, digits=digits, level=level, sparse=sparse, control=control,
+                  measure=measure, method=method, weighted=weighted, test=test, dfs=dfs, btt=btt, intercept=intercept, digits=digits, level=level, sparse=sparse, dist=ddd$dist, control=control,
                   fit.stats=fit.stats,
                   vc.fix=vc.fix,
                   withS=withS, withG=withG, withH=withH, withR=withR, formulas=formulas,
