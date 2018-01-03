@@ -306,7 +306,7 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi, xlim, ylim, s
             stop(mstyle$stop("Lower bound for profiling must be >= 0."))
          if (xlim[1] < -1)
             stop(mstyle$stop("Lower bound for profiling must be >= -1."))
-         if (xlim[2] > 1)
+         if (!is.element(x$struct[1], c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH")) && xlim[2] > 1)
             stop(mstyle$stop("Upper bound for profiling must be <= -1."))
       }
       if (comp == "phi") {
@@ -314,7 +314,7 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi, xlim, ylim, s
             stop(mstyle$stop("Lower bound for profiling must be >= 0."))
          if (xlim[1] < -1)
             stop(mstyle$stop("Lower bound for profiling must be >= -1."))
-         if (xlim[2] > 1)
+         if (!is.element(x$struct[2], c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH")) && xlim[2] > 1)
             stop(mstyle$stop("Upper bound for profiling must be <= -1."))
       }
 

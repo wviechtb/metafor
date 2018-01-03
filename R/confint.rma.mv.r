@@ -314,8 +314,8 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
       ci.null <- FALSE ### logical if CI is a null set
       lb.conv <- FALSE ### logical if search converged for lower bound (LB)
       ub.conv <- FALSE ### logical if search converged for upper bound (UB)
-      lb.sign <- ""    ### for sign in case LB must be below tau2.min ("<") or above tau2.max (">")
-      ub.sign <- ""    ### for sign in case UB must be below tau2.min ("<") or above tau2.max (">")
+      lb.sign <- ""    ### for sign in case LB must be below vc.min ("<") or above vc.max (">")
+      ub.sign <- ""    ### for sign in case UB must be below vc.min ("<") or above vc.max (">")
 
       ######################################################################
       ######################################################################
@@ -359,6 +359,9 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
                      lb.sign <- "<"
 
                   if (is.element(comp, c("rho", "phi")) && con$vc.min > -1)
+                     lb.sign <- "<"
+
+                  if (((comp == "rho" && is.element(x$struct[1], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH"))) || (comp == "phi" && is.element(x$struct[2], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH")))) && con$vc.min > 0)
                      lb.sign <- "<"
 
                } else {
@@ -409,6 +412,9 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
                      ub.sign <- ">"
 
                   if (is.element(comp, c("rho", "phi")) && con$vc.max < 1)
+                     ub.sign <- ">"
+
+                  if ((comp == "rho" && is.element(x$struct[1], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH"))) || (comp == "phi" && is.element(x$struct[2], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH"))))
                      ub.sign <- ">"
 
                } else {
