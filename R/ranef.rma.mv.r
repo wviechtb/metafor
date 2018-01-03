@@ -170,7 +170,7 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
 
       nvars <- ncol(x$mf.g)
 
-      if (is.element(x$struct[1], c("SPEXP","SPGAU","GEN"))) {
+      if (is.element(x$struct[1], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","GEN"))) {
          r.names <- paste(formatC(x$ids[x$not.na], format="f", digits=0, width=max(nchar(x$ids[x$not.na]))), x$mf.g[[nvars]], sep=" | ")
       } else {
          #r.names <- paste(x$mf.g[[1]], x$mf.g[[2]], sep=" | ")
@@ -183,7 +183,7 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
 
       rownames(pred) <- r.names[!is.dup]
 
-      if (is.element(x$struct[1], c("SPEXP","SPGAU","GEN"))) {
+      if (is.element(x$struct[1], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","GEN"))) {
          #r.order <- order(x$mf.g[[nvars]][!is.dup], seq_len(x$k)[!is.dup])
          r.order <- seq_len(x$k)
       } else {
@@ -221,7 +221,7 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
 
       nvars <- ncol(x$mf.h)
 
-      if (is.element(x$struct[2], c("SPEXP","SPGAU","GEN"))) {
+      if (is.element(x$struct[2], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","GEN"))) {
          r.names <- paste(formatC(x$ids[x$not.na], format="f", digits=0, width=max(nchar(x$ids[x$not.na]))), x$mf.h[[nvars]], sep=" | ")
       } else {
          #r.names <- paste(x$mf.h[[1]], x$mf.h[[2]], sep=" | ")
@@ -234,7 +234,7 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
 
       rownames(pred) <- r.names[!is.dup]
 
-      if (is.element(x$struct[2], c("SPEXP","SPGAU","GEN"))) {
+      if (is.element(x$struct[2], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","GEN"))) {
          #r.order <- order(x$mf.h[[nvars]][!is.dup], seq_len(x$k)[!is.dup])
          r.order <- seq_len(x$k)
       } else {

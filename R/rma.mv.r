@@ -20,7 +20,7 @@
 ### - CAR  (continuous time AR1 structure)
 ### - ID   (same as CS but with rho/phi=0)
 ### - DIAG (same as HCS but with rho/phi=0)
-### - SPEXP/SPGAU (spatial exponential and spatial Gaussian)
+### - SPEXP/SPGAU/SPLIN/SPRAT/SPSPH (spatial structures: exponential, gaussian, linear, rational quadratic, spherical)
 
 rma.mv <- function(yi, V, W, mods, random, struct="CS", intercept=TRUE, data, slab, subset, ### add ni as argument in the future
 method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2, rho, gamma2, phi, sparse=FALSE, verbose=FALSE, control, ...) {
@@ -37,7 +37,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
    if (!is.element(method, c("FE","ML","REML")))
       stop(mstyle$stop("Unknown 'method' specified."))
 
-   if (any(!is.element(struct, c("CS","HCS","UN","AR","HAR","CAR","ID","DIAG","SPEXP","SPGAU","GEN")))) ### add UNHO later
+   if (any(!is.element(struct, c("CS","HCS","UN","AR","HAR","CAR","ID","DIAG","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","GEN")))) ### add UNHO later
       stop(mstyle$stop("Unknown 'struct' specified."))
 
    if (length(struct) == 1)
@@ -1048,13 +1048,13 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
          mf.s <- lapply(mf.s, function(x) x[not.na]) ### note: mf.s is a list of vectors at this point
          mf.g <- mf.g[not.na,,drop=FALSE]
          mf.h <- mf.h[not.na,,drop=FALSE]
-         if (is.element(struct[1], c("SPEXP","SPGAU"))) {
+         if (is.element(struct[1], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH"))) {
             Z.G1 <- Z.G1[not.na,not.na,drop=FALSE]
          } else {
             Z.G1 <- Z.G1[not.na,,drop=FALSE]
          }
          Z.G2 <- Z.G2[not.na,,drop=FALSE]
-         if (is.element(struct[2], c("SPEXP","SPGAU"))) {
+         if (is.element(struct[2], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH"))) {
             Z.H1 <- Z.H1[not.na,not.na,drop=FALSE]
          } else {
             Z.H1 <- Z.H1[not.na,,drop=FALSE]
@@ -1447,17 +1447,17 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       stop(mstyle$stop("Value(s) of 'tau2.init' must be > 0."))
    if (withG && struct[1]=="CAR" && any(con$rho.init <= 0 | con$rho.init >= 1))
       stop(mstyle$stop("Value(s) of 'rho.init' must be in (0,1)."))
-   if (withG && is.element(struct[1], c("SPEXP","SPGAU")) && any(con$rho.init <= 0))
+   if (withG && is.element(struct[1], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH")) && any(con$rho.init <= 0))
       stop(mstyle$stop("Value(s) of 'rho.init' must be > 0."))
-   if (withG && !is.element(struct[1], c("CAR","SPEXP","SPGAU")) && any(con$rho.init <= -1 | con$rho.init >= 1))
+   if (withG && !is.element(struct[1], c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH")) && any(con$rho.init <= -1 | con$rho.init >= 1))
       stop(mstyle$stop("Value(s) of 'rho.init' must be in (-1,1)."))
    if (withH && any(con$gamma2.init <= 0))
       stop(mstyle$stop("Value(s) of 'gamma2.init' must be > 0."))
    if (withH && struct[2]=="CAR" && any(con$phi.init <= 0 | con$phi.init >= 1))
       stop(mstyle$stop("Value(s) of 'phi.init' must be in (0,1)."))
-   if (withH && is.element(struct[2], c("SPEXP","SPGAU")) && any(con$phi.init <= 0))
+   if (withH && is.element(struct[2], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH")) && any(con$phi.init <= 0))
       stop(mstyle$stop("Value(s) of 'phi.init' must be > 0."))
-   if (withH && !is.element(struct[2], c("CAR","SPEXP","SPGAU")) && any(con$phi.init <= -1 | con$phi.init >= 1))
+   if (withH && !is.element(struct[2], c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH")) && any(con$phi.init <= -1 | con$phi.init >= 1))
       stop(mstyle$stop("Value(s) of 'phi.init' must be in (-1,1)."))
 
    ### in case user manually sets con$cholesky and specifies only a single value
@@ -1508,9 +1508,9 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       con$tau2.init <- log(tau2.init)
       if (struct[1] == "CAR")
          con$rho.init  <- qlogis(rho.init)
-      if (is.element(struct[1], c("SPEXP","SPGAU")))
+      if (is.element(struct[1], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH")))
          con$rho.init  <- log(rho.init)
-      if (!is.element(struct[1], c("CAR","SPEXP","SPGAU")))
+      if (!is.element(struct[1], c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH")))
          con$rho.init  <- atanh(rho.init)
    }
 
@@ -1525,9 +1525,9 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       con$gamma2.init <- log(gamma2.init)
       if (struct[2] == "CAR")
          con$phi.init  <- qlogis(phi.init)
-      if (is.element(struct[2], c("SPEXP","SPGAU")))
+      if (is.element(struct[2], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH")))
          con$phi.init  <- log(phi.init)
-      if (!is.element(struct[2], c("CAR","SPEXP","SPGAU")))
+      if (!is.element(struct[2], c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH")))
          con$phi.init  <- atanh(phi.init)
    }
 
@@ -1830,7 +1830,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    if (withG) {
       G <- as.matrix(fitcall$G)
-      if (is.element(struct[1], c("SPEXP","SPGAU")))
+      if (is.element(struct[1], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH")))
          colnames(G) <- rownames(G) <- 1:nrow(G)
       if (is.element(struct[1], c("CS","HCS","UN","AR","HAR","CAR","ID","DIAG")))
          colnames(G) <- rownames(G) <- g.levels.f[[1]]
@@ -1842,7 +1842,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    if (withH) {
       H <- as.matrix(fitcall$H)
-      if (is.element(struct[2], c("SPEXP","SPGAU")))
+      if (is.element(struct[2], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH")))
          colnames(H) <- rownames(H) <- 1:nrow(H)
       if (is.element(struct[2], c("CS","HCS","UN","AR","HAR","CAR","ID","DIAG")))
          colnames(H) <- rownames(H) <- h.levels.f[[1]]

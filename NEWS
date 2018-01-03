@@ -1,4 +1,4 @@
-Changes in Version 2.1-0 (2017-12-30)
+Changes in Version 2.1-0 (2018-01-03)
 =====================================
 
    o output is now styled/colored when 'crayon' package is loaded
@@ -53,7 +53,8 @@ Changes in Version 2.1-0 (2017-12-30)
 
    o rma.mv() now allows for continuous-time autoregressive random effects
      structures (struct="CAR") and spatial correlation structures
-     (struct="SPEXP" and struct="SPGAU")
+     (struct="SPEXP", struct="SPGAU", struct="SPLIN", struct="SPRAT", and
+     struct="SPSPH")
 
    o rma.mv() now allows for struct="GEN" which models correlated random
      effects for any number of predictors, including continuous ones (i.e.,

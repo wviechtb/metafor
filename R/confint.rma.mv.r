@@ -280,7 +280,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
          if (is.element(x$struct[1], c("UN","UNHO","GEN")))
             con$vc.min <- -1                                  ### TODO: this will often fail! (but with retries, this should still work)
          con$vc.max <- 1
-         if (is.element(x$struct[1], c("SPEXP","SPGAU"))) {
+         if (is.element(x$struct[1], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH"))) {
             con$vc.min <- 0                                   ### TODO: 0 basically always fails
             con$vc.max <- max(10, vc*10)
          }
@@ -294,7 +294,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
          if (is.element(x$struct[2], c("UN","UNHO","GEN")))
             con$vc.min <- -1                                  ### TODO: this will often fail! (but with retries, this should still work)
          con$vc.max <- 1
-         if (is.element(x$struct[2], c("SPEXP","SPGAU"))) {
+         if (is.element(x$struct[2], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH"))) {
             con$vc.min <- 0                                   ### TODO: 0 basically always fails
             con$vc.max <- max(10, vc*10)
          }

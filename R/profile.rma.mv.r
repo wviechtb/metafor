@@ -259,11 +259,11 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi, xlim, ylim, s
             vc.lb <- max(0, vc-.5)
             vc.ub <- min(+.99999, vc+.5)
          }
-         if (is.element(x$struct[1], c("SPEXP","SPGAU"))) {
+         if (is.element(x$struct[1], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH"))) {
             vc.lb <- vc/4
             vc.ub <- vc*4
          }
-         if (!is.element(x$struct[1], c("CAR","SPEXP","SPGAU"))) {
+         if (!is.element(x$struct[1], c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH"))) {
             vc.lb <- max(-.99999, vc-.5)
             vc.ub <- min(+.99999, vc+.5)
          }
@@ -273,11 +273,11 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi, xlim, ylim, s
             vc.lb <- max(0, vc-.5)
             vc.ub <- min(+.99999, vc+.5)
          }
-         if (is.element(x$struct[2], c("SPEXP","SPGAU"))) {
+         if (is.element(x$struct[2], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH"))) {
             vc.lb <- vc/4
             vc.ub <- vc*4
          }
-         if (!is.element(x$struct[2], c("CAR","SPEXP","SPGAU"))) {
+         if (!is.element(x$struct[2], c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH"))) {
             vc.lb <- max(-.99999, vc-.5)
             vc.ub <- min(+.99999, vc+.5)
          }
@@ -302,7 +302,7 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi, xlim, ylim, s
             stop(mstyle$stop("Lower bound for profiling must be >= 0."))
       }
       if (comp == "rho") {
-         if (is.element(x$struct[1], c("CAR","SPEXP","SPGAU")) && xlim[1] < 0)
+         if (is.element(x$struct[1], c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH")) && xlim[1] < 0)
             stop(mstyle$stop("Lower bound for profiling must be >= 0."))
          if (xlim[1] < -1)
             stop(mstyle$stop("Lower bound for profiling must be >= -1."))
@@ -310,7 +310,7 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi, xlim, ylim, s
             stop(mstyle$stop("Upper bound for profiling must be <= -1."))
       }
       if (comp == "phi") {
-         if (is.element(x$struct[2], c("CAR","SPEXP","SPGAU")) && xlim[1] < 0)
+         if (is.element(x$struct[2], c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH")) && xlim[1] < 0)
             stop(mstyle$stop("Lower bound for profiling must be >= 0."))
          if (xlim[1] < -1)
             stop(mstyle$stop("Lower bound for profiling must be >= -1."))

@@ -376,7 +376,7 @@
    ### turn each variable in mf.g into a factor (not for SP structures or GEN)
    ### if a variable was a factor to begin with, this drops any unused levels, but order of existing levels is preserved
 
-   if (is.element(struct, c("SPEXP","SPGAU","GEN"))) {
+   if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","GEN"))) {
       mf.g <- data.frame(mf.g[-nvars], outer=factor(mf.g[[nvars]]))
    } else {
       mf.g <- data.frame(inner=factor(mf.g[[1]]), outer=factor(mf.g[[2]]))
@@ -390,7 +390,7 @@
    ### get number of levels of each variable in mf.g (vector with two values, for the inner and outer factor)
 
    #g.nlevels <- c(nlevels(mf.g[[1]]), nlevels(mf.g[[2]])) ### works only for factors
-   if (is.element(struct, c("SPEXP","SPGAU","GEN"))) {
+   if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","GEN"))) {
       g.nlevels <- c(length(unique(apply(mf.g[-nvars], 1, paste, collapse=" + "))), length(unique(mf.g[[nvars]])))
    } else {
       g.nlevels <- c(length(unique(mf.g[[1]])), length(unique(mf.g[[2]])))
@@ -399,7 +399,7 @@
    ### get levels of each variable in mf.g
 
    #g.levels <- list(levels(mf.g[[1]]), levels(mf.g[[2]])) ### works only for factors
-   if (is.element(struct, c("SPEXP","SPGAU","GEN"))) {
+   if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","GEN"))) {
       g.levels <- list(sort(unique(apply(mf.g[-nvars], 1, paste, collapse=" + "))), sort(unique((mf.g[[nvars]]))))
    } else {
       g.levels <- list(sort(unique(as.character(mf.g[[1]]))), sort(unique(as.character(mf.g[[2]]))))
@@ -409,7 +409,7 @@
    ### care: if g.nlevels[1] is 1, then technically there is no correlation, but we still need one
    ### rho for the optimization function (this rho is fixed to 0 further in the rma.mv() function)
 
-   if (is.element(struct, c("CS","ID","AR","CAR","SPEXP","SPGAU"))) {
+   if (is.element(struct, c("CS","ID","AR","CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH"))) {
       tau2s <- 1
       rhos  <- 1
    }
@@ -464,9 +464,9 @@
       stop(mstyle$stop(paste0("Specified value(s) of ", ifelse(isG, 'tau2', 'gamma2'), " must be >= 0.")), call.=FALSE)
    if (is.element(struct, c("CAR")) && any(rho > 1 | rho < 0, na.rm=TRUE))
       stop(mstyle$stop(paste0("Specified value(s) of ", ifelse(isG, 'rho', 'phi'), " must be in [0,1].")), call.=FALSE)
-   if (is.element(struct, c("SPEXP","SPGAU")) && any(rho < 0, na.rm=TRUE))
+   if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH")) && any(rho < 0, na.rm=TRUE))
       stop(mstyle$stop(paste0("Specified value(s) of ", ifelse(isG, 'rho', 'phi'), " must be >= 0.")), call.=FALSE)
-   if (!is.element(struct, c("CAR","SPEXP","SPGAU")) && any(rho > 1 | rho < -1, na.rm=TRUE))
+   if (!is.element(struct, c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH")) && any(rho > 1 | rho < -1, na.rm=TRUE))
       stop(mstyle$stop(paste0("Specified value(s) of ", ifelse(isG, 'rho', 'phi'), " must be in [-1,1].")), call.=FALSE)
 
    ### create model matrix for inner and outer factors of mf.g
@@ -485,7 +485,7 @@
 
    }
 
-   if (is.element(struct, c("SPEXP","SPGAU"))) {
+   if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH"))) {
 
       if (sparse) {
          Z.G1 <- Diagonal(k)
@@ -547,7 +547,7 @@
    ### redo: turn each variable in mf.g into a factor (not for SP structures or GEN)
    ### (reevaluates the levels present, but order of existing levels is preserved)
 
-   if (is.element(struct, c("SPEXP","SPGAU","GEN"))) {
+   if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","GEN"))) {
       mf.g <- data.frame(mf.g[-nvars], outer=factor(mf.g[[nvars]]))
    } else {
       mf.g <- data.frame(inner=factor(mf.g[[1]]), outer=factor(mf.g[[2]]))
@@ -556,7 +556,7 @@
    ### redo: get number of levels of each variable in mf.g (vector with two values, for the inner and outer factor)
 
    #g.nlevels <- c(nlevels(mf.g[[1]]), nlevels(mf.g[[2]])) ### works only for factors
-   if (is.element(struct, c("SPEXP","SPGAU","GEN"))) {
+   if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","GEN"))) {
       g.nlevels <- c(length(unique(apply(mf.g[-nvars], 1, paste, collapse=" + "))), length(unique(mf.g[[nvars]])))
    } else {
       g.nlevels <- c(length(unique(mf.g[[1]])), length(unique(mf.g[[2]])))
@@ -565,7 +565,7 @@
    ### redo: get levels of each variable in mf.g
 
    #g.levels <- list(levels(mf.g[[1]]), levels(mf.g[[2]])) ### works only for factors
-   if (is.element(struct, c("SPEXP","SPGAU","GEN"))) {
+   if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","GEN"))) {
       g.levels <- list(sort(unique(apply(mf.g[-nvars], 1, paste, collapse=" + "))), sort(unique((mf.g[[nvars]]))))
    } else {
       g.levels <- list(sort(unique(as.character(mf.g[[1]]))), sort(unique(as.character(mf.g[[2]]))))
@@ -575,9 +575,9 @@
 
    g.levels.r <- !is.element(g.levels.f[[1]], g.levels[[1]])
 
-   ### warn if any levels were removed (not for "AR","CAR","SPEXP","SPGAU","GEN")
+   ### warn if any levels were removed (not for "AR","CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","GEN")
 
-   if (any(g.levels.r) && !is.element(struct, c("AR","CAR","SPEXP","SPGAU","GEN")))
+   if (any(g.levels.r) && !is.element(struct, c("AR","CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","GEN")))
       warning(mstyle$warning("One or more levels of inner factor removed due to NAs."), call.=FALSE)
 
    ### for "ID" and "DIAG", fix rho to 0
@@ -594,12 +594,12 @@
 
    ### if there is only a single arm for SP structures or GEN (either to begin with or after removing NAs), cannot fit model
 
-   if (g.nlevels[1] == 1 && is.element(struct, c("SPEXP","SPGAU","GEN")))
+   if (g.nlevels[1] == 1 && is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","GEN")))
       stop(mstyle$stop("Cannot fit model since inner term only has a single level."), call.=FALSE)
 
    ### k per level of the inner factor
 
-   if (is.element(struct, c("SPEXP","SPGAU","GEN"))) {
+   if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","GEN"))) {
       g.levels.k <- table(factor(apply(mf.g[-nvars], 1, paste, collapse=" + "), levels=g.levels.f[[1]]))
    } else {
       g.levels.k <- table(factor(mf.g[[1]], levels=g.levels.f[[1]]))
@@ -624,13 +624,13 @@
          rho <- 0
          warning(mstyle$warning(paste0("Each level of the outer factor contains only a single level of the inner factor, so fixed value of ", ifelse(isG, 'rho', 'phi'), " to 0.")), call.=FALSE)
       }
-      if (is.element(struct, c("SPEXP","SPGAU")))
+      if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH")))
          stop(mstyle$stop("Cannot fit model since each level of the outer factor contains only a single level of the inner term."), call.=FALSE)
    }
 
    g.levels.comb.k <- NULL
 
-   if (!is.element(struct, c("SPEXP","SPGAU","GEN"))) {
+   if (!is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","GEN"))) {
 
       ### create matrix where each row (= study) indicates how often each arm occurred
       ### then turn this into a list (with each element equal to a row (= study))
@@ -741,7 +741,7 @@
       diag(G) <- tau2
    }
 
-   if (is.element(struct, c("SPEXP","SPGAU"))) {
+   if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH"))) {
       ### remove the '| outer' part from the formula and add '- 1'
       formula <- as.formula(paste0(strsplit(paste0(formula, collapse=""), "|", fixed=TRUE)[[1]][1], "- 1", collapse=""))
       ### create distance matrix
@@ -766,10 +766,25 @@
       G <- Rmat * tcrossprod(Z.G2)
    }
 
+   if (struct == "SPLIN") {
+      Rmat <- tau2 * ((1 - Dmat/rho) * I(Dmat < rho))
+      G <- Rmat * tcrossprod(Z.G2)
+   }
+
+   if (struct == "SPRAT") {
+      Rmat <- tau2 * (1 - (Dmat/rho)^2 / (1 + (Dmat/rho)^2))
+      G <- Rmat * tcrossprod(Z.G2)
+   }
+
+   if (struct == "SPSPH") {
+      Rmat <- tau2 * ((1 - 3/2*Dmat/rho + 1/2*(Dmat/rho)^3) * I(Dmat < rho))
+      G <- Rmat * tcrossprod(Z.G2)
+   }
+
    ### for spatial structures, compute a much more sensible initial value for rho
 
-   if (is.element(struct, c("SPEXP","SPGAU"))) {
-      rho.init <- median(Dmat[upper.tri(Dmat)])
+   if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH"))) {
+      rho.init <- suppressMessages(median(Dmat[upper.tri(Dmat)])) # suppressMessages() to avoid '<sparse>[ <logic> ] : .M.sub.i.logical() maybe inefficient' messages when sparse=TRUE
    } else {
       rho.init <- NULL
    }
@@ -862,9 +877,9 @@
          v <- ifelse(is.na(v.val), exp(v), v.val)           ### variances are optimized in log space, so exponentiate
          if (struct == "CAR")
             r <- ifelse(is.na(r.val), plogis(r), r.val)     ### CAR correlation is optimized in qlogis space, so use plogis
-         if (is.element(struct, c("SPEXP","SPGAU")))
-            r <- ifelse(is.na(r.val), exp(r), r.val)        ### SPEXP/SPGAU correlation is optimized in log space, so exponentiate
-         if (!is.element(struct, c("CAR","SPEXP","SPGAU")))
+         if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH")))
+            r <- ifelse(is.na(r.val), exp(r), r.val)        ### spatial 'correlation' is optimized in log space, so exponentiate
+         if (!is.element(struct, c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH")))
             r <- ifelse(is.na(r.val), tanh(r), r.val)       ### other correlations are optimized in atanh space, so use tanh
       } else {
          ### for Hessian computation, can choose to leave as is
@@ -875,10 +890,10 @@
             r[r < 0] <- 0
             r[r > 1] <- 1
          }
-         if (is.element(struct, c("SPEXP","SPGAU"))) {
+         if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH"))) {
             r[r < 0] <- 0
          }
-         if (!is.element(struct, c("CAR","SPEXP","SPGAU"))) {
+         if (!is.element(struct, c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH"))) {
             r[r < -1] <- -1
             r[r > 1] <- 1
          }
@@ -968,9 +983,18 @@
    if (struct == "SPGAU")
       E <- v * exp(-Dmat^2/r^2) * tcrossprod(Z2)
 
+   if (struct == "SPLIN")
+      E <- v * ((1 - Dmat/r) * I(Dmat < r)) * tcrossprod(Z2)
+
+   if (struct == "SPRAT")
+      E <- v * (1 - (Dmat/r)^2 / (1 + (Dmat/r)^2)) * tcrossprod(Z2)
+
+   if (struct == "SPSPH")
+      E <- v * ((1 - 3/2*Dmat/r + 1/2*(Dmat/r)^3) * I(Dmat < r)) * tcrossprod(Z2)
+
    ### set variance and corresponding correlation value(s) to 0 for any levels that were removed
 
-   if (!is.element(struct, c("SPEXP","SPGAU","GEN")) && any(levels.r)) {
+   if (!is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","GEN")) && any(levels.r)) {
       E[levels.r,] <- 0
       E[,levels.r] <- 0
    }
