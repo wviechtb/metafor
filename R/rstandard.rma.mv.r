@@ -18,7 +18,7 @@ rstandard.rma.mv <- function(model, digits, cluster, ...) {
    misscluster <- ifelse(missing(cluster), TRUE, FALSE)
 
    if (misscluster)
-      cluster <- 1:x$k.all
+      cluster <- seq_len(x$k.all)
 
    #########################################################################
 

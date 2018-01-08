@@ -167,8 +167,8 @@
 .anyNAv <- function(x) {
    k <- nrow(x)
    not.na <- not.na.diag <- !is.na(diag(x))
-   for (i in (1:k)[not.na.diag]) {
-      not.na[i] <- !anyNA(x[i, (1:k)[not.na.diag]])
+   for (i in seq_len(k)[not.na.diag]) {
+      not.na[i] <- !anyNA(x[i, seq_len(k)[not.na.diag]])
    }
    return(!not.na)
 }
@@ -212,7 +212,7 @@
 .print.vector <- function(x) {
 
    if (is.null(names(x)))
-      names(x) <- 1:length(x)
+      names(x) <- seq_along(x)
 
    len.n   <- nchar(names(x))
    len.x   <- nchar(x)
@@ -236,7 +236,7 @@
    x <- as.character(x)
    ux <- unique(x)
 
-   for (i in 1:length(ux)) {
+   for (i in seq_along(ux)) {
       xiTF <- x == ux[i]
       xi <- x[xiTF]
       if (length(xi) == 1L)
@@ -315,7 +315,7 @@
 
    S <- diag(sqrt(vi + tau2val), nrow=k, ncol=k)
    lambda <- Re(eigen(S %*% P %*% S, symmetric=TRUE, only.values=TRUE)$values)
-   tmp <- CompQuadForm::farebrother(Q, lambda[1:(k-p)])
+   tmp <- CompQuadForm::farebrother(Q, lambda[seq_len(k-p)])
 
    ### starting with version 1.4.2 of CompQuadForm, the element is called 'Qq' (before it was called 'res')
    ### this way, things should work regardless of the version of CompQuadForm that is installed
@@ -2186,8 +2186,8 @@
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   #beta  <- par[1:pX]
-   #alpha <- par[-c(1:pX)]
+   #beta  <- par[seq_len(pX)]
+   #alpha <- par[-seq_len(pX)]
 
    alpha <- par
 
@@ -2613,7 +2613,7 @@
 
 .print.output <- function(x, mstyle) {
 
-   for (i in 1:length(x)) {
+   for (i in seq_along(x)) {
       cat(mstyle(x[i]), "\n")
    }
 
@@ -2623,7 +2623,7 @@
 
    is.header <- !grepl(" [-0-9]", x)
 
-   for (i in 1:length(x)) {
+   for (i in seq_along(x)) {
       if (is.header[i]) {
          x[i] <- trimws(x[i], which="right")
          x[i] <- mstyle$header(x[i])

@@ -20,7 +20,7 @@ dfbetas.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE, paral
    misscluster <- ifelse(missing(cluster), TRUE, FALSE)
 
    if (misscluster)
-      cluster <- 1:x$k.all
+      cluster <- seq_len(x$k.all)
 
    #########################################################################
 

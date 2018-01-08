@@ -42,7 +42,7 @@ print.list.rma <- function(x, digits, ...) {
 
    sav <- out[,seq_len(min.pos-1)]
 
-   for (i in 1:(min.pos-1)) {
+   for (i in seq_len(min.pos-1)) {
       if (inherits(out[,i], c("integer","logical","factor","character"))) { ### do not apply formating to these classes
          out[,i] <- out[,i]
       } else {

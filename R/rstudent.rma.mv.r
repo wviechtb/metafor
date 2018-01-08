@@ -23,7 +23,7 @@ rstudent.rma.mv <- function(model, digits, progbar=FALSE, cluster, reestimate=TR
    misscluster <- ifelse(missing(cluster), TRUE, FALSE)
 
    if (misscluster)
-      cluster <- 1:x$k.all
+      cluster <- seq_len(x$k.all)
 
    #########################################################################
 

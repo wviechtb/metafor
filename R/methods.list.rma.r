@@ -125,11 +125,11 @@ tail.list.rma <- function (x, n = 6L, ...) {
 
    out <- list()
 
-   for (i in 1:(slab.pos-1)) {
+   for (i in seq_len(slab.pos-1)) {
       out[[i]] <- x[[i]]
    }
 
-   names(out) <- names(x)[1:(slab.pos-1)]
+   names(out) <- names(x)[seq_len(slab.pos-1)]
 
    out[[name]] <- value
 

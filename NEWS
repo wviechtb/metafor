@@ -1,4 +1,4 @@
-Changes in Version 2.1-0 (2018-01-03)
+Changes in Version 2.1-0 (2018-01-08)
 =====================================
 
    o output is now styled/colored when 'crayon' package is loaded

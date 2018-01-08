@@ -1831,7 +1831,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
    if (withG) {
       G <- as.matrix(fitcall$G)
       if (is.element(struct[1], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH")))
-         colnames(G) <- rownames(G) <- 1:nrow(G)
+         colnames(G) <- rownames(G) <- seq_len(nrow(G))
       if (is.element(struct[1], c("CS","HCS","UN","AR","HAR","CAR","ID","DIAG")))
          colnames(G) <- rownames(G) <- g.levels.f[[1]]
       if (is.element(struct[1], c("GEN")))
@@ -1843,7 +1843,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
    if (withH) {
       H <- as.matrix(fitcall$H)
       if (is.element(struct[2], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH")))
-         colnames(H) <- rownames(H) <- 1:nrow(H)
+         colnames(H) <- rownames(H) <- seq_len(nrow(H))
       if (is.element(struct[2], c("CS","HCS","UN","AR","HAR","CAR","ID","DIAG")))
          colnames(H) <- rownames(H) <- h.levels.f[[1]]
       if (is.element(struct[2], c("GEN")))
