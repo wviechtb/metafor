@@ -36,6 +36,13 @@ labbe(x, \dots)
 
    The size of the points is drawn proportional to the precision (inverse standard error) of the outcomes. The solid line corresponds to identical outcomes in the two groups (i.e., the absence of a difference between the two groups). The dashed line indicates the estimated effect based on the fitted model.
 }
+\value{
+   A data frame with components:
+   \item{x}{the x coordinates of the points that were plotted.}
+   \item{y}{the y coordinates of the points that were plotted.}
+   \item{psize}{the point sizes.}
+   Note that the data frame is returned invisibly.
+}
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
 }

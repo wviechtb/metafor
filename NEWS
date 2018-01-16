@@ -73,6 +73,10 @@ Changes in Version 2.1-0 (2018-01-16)
 
    o labbe() gains 'lty' argument
 
+   o labbe() now (invisibly) returns a data frame with the coordinates of
+     the points that were drawn (may be useful for manual labeling of points
+     in the plot)
+
    o added a print method for 'profile.rma' objects
 
    o profile.rma() and plot.profile.rma() gain 'cline' argument

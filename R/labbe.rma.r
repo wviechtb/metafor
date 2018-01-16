@@ -268,6 +268,9 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, lty, ..
 
    #########################################################################
 
-   invisible()
+   ### prepare data frame to return
+   sav <- data.frame(x=dat.c$yi, y=dat.t$yi, psize=psize)
+
+   invisible(sav)
 
 }
