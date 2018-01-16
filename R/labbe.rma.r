@@ -229,15 +229,15 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, lty, ..
    if (missing(ylim))
       ylim <- c(min.yi, max.yi)
 
-   #return(cbind(dat.c$yi, dat.t$yi))
-
    ### order points by psize
 
    order.vec <- order(psize, decreasing=TRUE)
-   dat.t$yi  <- dat.t$yi[order.vec]
-   dat.c$yi  <- dat.c$yi[order.vec]
-   psize     <- psize[order.vec]
-   pch       <- pch[order.vec]
+
+   dat.t$yi.o  <- dat.t$yi[order.vec]
+   dat.c$yi.o  <- dat.c$yi[order.vec]
+   psize.o     <- psize[order.vec]
+   pch.o       <- pch[order.vec]
+   bg.o        <- bg[order.vec]
 
    ### add x axis label
 
@@ -264,12 +264,12 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, lty, ..
 
    abline(a=0, b=1, lty=lty[1], ...)
    lines(c.vals, t.vals, lty=lty[2], ...)
-   points(dat.c$yi, dat.t$yi, cex=psize, pch=pch, bg=bg, ...)
+   points(dat.c$yi.o, dat.t$yi.o, cex=psize.o, pch=pch.o, bg=bg.o, ...)
 
    #########################################################################
 
    ### prepare data frame to return
-   sav <- data.frame(x=dat.c$yi, y=dat.t$yi, psize=psize)
+   sav <- data.frame(x=dat.c$yi, y=dat.t$yi, cex=psize, pch=pch, bg=bg)
 
    invisible(sav)
 
