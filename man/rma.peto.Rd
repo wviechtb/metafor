@@ -46,7 +46,7 @@ rma.peto(ai, bi, ci, di, n1i, n2i,
    Peto's method itself does not require the calculation of the observed (log) odds ratios of the individual studies and directly makes use of the \eqn{2 \times 2}{2x2} table counts. Zero cells are not a problem (except in extreme cases, such as when one of the two outcomes never occurs in any of the tables). Therefore, it is unnecessary to add some constant to the cell counts when there are zero cells.
 
    However, for plotting and various other functions, it is necessary to calculate the observed (log) odds ratios for the \eqn{k} studies. Here, zero cells can be problematic, so adding a constant value to the cell counts ensures that all \eqn{k} values can be calculated. The \code{add} and \code{to} arguments are used to specify what value should be added to the cell frequencies and under what circumstances when calculating the observed (log) odds ratios and when applying Peto's method. Similarly, the \code{drop00} argument is used to specify how studies with no cases (or only cases) in both groups should be handled. The documentation of the \code{\link{escalc}} function explains how the \code{add}, \code{to}, and \code{drop00} arguments work. If only a single value for these arguments is specified (as per default), then these values are used when calculating the observed (log) odds ratios and no adjustment to the cell counts is made when applying Peto's method. Alternatively, when specifying two values for these arguments, the first value applies when calculating the observed (log) odds ratios and the second value when applying Peto's method.
-   
+
    Note that \code{drop00} is set to \code{TRUE} by default. Therefore, the observed (log) odds ratios for studies where \code{ai=ci=0} or \code{bi=di=0} are set to \code{NA}. When applying Peto's method, such studies are not explicitly dropped (unless the second value of \code{drop00} argument is also set to \code{TRUE}), but this is practically not necessary, as they do not actually influence the results (assuming no adjustment to the cell/event counts are made when applying Peto's method).
 }
 \value{
@@ -68,7 +68,7 @@ rma.peto(ai, bi, ci, di, n1i, n2i,
 
    The \code{\link{residuals.rma}}, \code{\link{rstandard.rma.peto}}, and \code{\link{rstudent.rma.peto}} functions extract raw and standardized residuals. Leave-one-out diagnostics can be obtained with \code{\link{leave1out.rma.peto}}.
 
-   Forest, funnel, radial, L'abbé, and Baujat plots can be obtained with \code{\link{forest.rma}}, \code{\link{funnel.rma}}, \code{\link{radial.rma}}, \code{\link{labbe.rma}}, and \code{\link{baujat}}. The \code{\link{qqnorm.rma.peto}} function provides normal QQ plots of the standardized residuals. One can also just call \code{\link{plot.rma.peto}} on the fitted model object to obtain various plots at once.
+   Forest, funnel, radial, \enc{L'Abbé}{L'Abbe}, and Baujat plots can be obtained with \code{\link{forest.rma}}, \code{\link{funnel.rma}}, \code{\link{radial.rma}}, \code{\link{labbe.rma}}, and \code{\link{baujat}}. The \code{\link{qqnorm.rma.peto}} function provides normal QQ plots of the standardized residuals. One can also just call \code{\link{plot.rma.peto}} on the fitted model object to obtain various plots at once.
 
    A cumulative meta-analysis (i.e., adding one observation at a time) can be obtained with \code{\link{cumul.rma.peto}}.
 

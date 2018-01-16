@@ -95,14 +95,14 @@ escalc(measure, formula, \dots)
 
          For example, in a set of randomized clinical trials, group 1 and group 2 may refer to the treatment and placebo/control group, respectively, with outcome 1 denoting some event of interest (e.g., death, complications, failure to improve under the treatment) and outcome 2 its complement. Similarly, in a set of cohort studies, group 1 and group 2 may denote those who engage in and those who do not engage in a potentially harmful behavior (e.g., smoking), with outcome 1 denoting the development of a particular disease (e.g., lung cancer) during the follow-up period. Finally, in a set of case-control studies, group 1 and group 2 may refer to those with the disease (i.e., cases) and those free of the disease (i.e., controls), with outcome 1 denoting, for example, exposure to some risk environmental risk factor in the past and outcome 2 non-exposure. Note that in all of these examples, the stratified sampling scheme fixes the row totals (i.e., the group sizes) by design.
 
-         A meta-analysis of studies reporting results in terms of \eqn{2 \times 2}{2x2} tables can be based on one of several different outcome measures, including the risk ratio (also called the relative risk), the odds ratio, the risk difference, and the arcsine square root transformed risk difference (e.g., Fleiss & Berlin, 2009, Rücker et al., 2009). For any of these outcome measures, one needs to specify the cell frequencies via the \code{ai}, \code{bi}, \code{ci}, and \code{di} arguments (or alternatively, one can use the \code{ai}, \code{ci}, \code{n1i}, and \code{n2i} arguments).
+         A meta-analysis of studies reporting results in terms of \eqn{2 \times 2}{2x2} tables can be based on one of several different outcome measures, including the risk ratio (also called the relative risk), the odds ratio, the risk difference, and the arcsine square root transformed risk difference (e.g., Fleiss & Berlin, 2009, \enc{Rücker}{Ruecker} et al., 2009). For any of these outcome measures, one needs to specify the cell frequencies via the \code{ai}, \code{bi}, \code{ci}, and \code{di} arguments (or alternatively, one can use the \code{ai}, \code{ci}, \code{n1i}, and \code{n2i} arguments).
 
          The options for the \code{measure} argument are then:
          \itemize{
          \item \code{"RR"} for the \emph{log risk ratio}.
          \item \code{"OR"} for the \emph{log odds ratio}.
          \item \code{"RD"} for the \emph{risk difference}.
-         \item \code{"AS"} for the \emph{arcsine square root transformed risk difference} (Rücker et al., 2009).
+         \item \code{"AS"} for the \emph{arcsine square root transformed risk difference} (\enc{Rücker}{Ruecker} et al., 2009).
          \item \code{"PETO"} for the \emph{log odds ratio} estimated with Peto's method (Yusuf et al., 1985).
          } Note that the log is taken of the risk ratio and the odds ratio, which makes these outcome measures symmetric around 0 and yields corresponding sampling distributions that are closer to normality.
 
@@ -110,7 +110,7 @@ escalc(measure, formula, \dots)
 
          Datasets corresponding to data of this type are provided in \code{\link{dat.bcg}}, \code{\link{dat.collins1985a}}, \code{\link{dat.collins1985b}}, \code{\link{dat.egger2001}}, \code{\link{dat.hine1989}}, \code{\link{dat.laopaiboon2015}}, \code{\link{dat.lee2004}}, \code{\link{dat.li2007}}, \code{\link{dat.linde2005}}, \code{\link{dat.nielweise2007}}, and \code{\link{dat.yusuf1985}}.
 
-         Assuming that the dichotomous outcome is actually a dichotomized version of the responses on an underlying quantitative scale, it is also possible to estimate the standardized mean difference based on \eqn{2 \times 2}{2x2} table data, using either the probit transformed risk difference or a transformation of the odds ratio (e.g., Cox & Snell, 1989; Chinn, 2000; Hasselblad & Hedges, 1995; Sanchez-Meca et al., 2003). The options for the \code{measure} argument are then:
+         Assuming that the dichotomous outcome is actually a dichotomized version of the responses on an underlying quantitative scale, it is also possible to estimate the standardized mean difference based on \eqn{2 \times 2}{2x2} table data, using either the probit transformed risk difference or a transformation of the odds ratio (e.g., Cox & Snell, 1989; Chinn, 2000; Hasselblad & Hedges, 1995; \enc{Sánchez-Meca}{Sanchez-Meca} et al., 2003). The options for the \code{measure} argument are then:
          \itemize{
          \item \code{"PBIT"} for the \emph{probit transformed risk difference} as an estimate of the standardized mean difference.
          \item \code{"OR2DN"} for the \emph{transformed odds ratio} as an estimate of the standardized mean difference (normal distributions).
@@ -166,7 +166,7 @@ escalc(measure, formula, \dots)
 
          A dataset corresponding to data of this type is provided in \code{\link{dat.normand1999}} (for mean differences and standardized mean differences). A dataset showing the use of the ratio of means measure is provided in \code{\link{dat.curtis1998}}.
 
-         It is also possible to transform standardized mean differences into log odds ratios (e.g., Cox & Snell, 1989; Chinn, 2000; Hasselblad & Hedges, 1995; Sanchez-Meca et al., 2003). The options for the \code{measure} argument are then:
+         It is also possible to transform standardized mean differences into log odds ratios (e.g., Cox & Snell, 1989; Chinn, 2000; Hasselblad & Hedges, 1995; \enc{Sánchez-Meca}{Sanchez-Meca} et al., 2003). The options for the \code{measure} argument are then:
          \itemize{
          \item \code{"D2ORN"} for the \emph{transformed standardized mean difference} as an estimate of the log odds ratio (normal distributions).
          \item \code{"D2ORL"} for the \emph{transformed standardized mean difference} as an estimate of the log odds ratio (logistic distributions).
@@ -563,9 +563,9 @@ escalc(measure, formula, \dots)
 
    Rothman, K. J., Greenland, S., & Lash, T. L. (2008). \emph{Modern epidemiology} (3rd ed.). Philadelphia: Lippincott Williams & Wilkins.
 
-   Rücker, G., Schwarzer, G., Carpenter, J., & Olkin, I. (2009). Why add anything to nothing? The arcsine difference as a measure of treatment effect in meta-analysis with zero cells. \emph{Statistics in Medicine}, \bold{28}, 721--738.
+   \enc{Rücker}{Ruecker}, G., Schwarzer, G., Carpenter, J., & Olkin, I. (2009). Why add anything to nothing? The arcsine difference as a measure of treatment effect in meta-analysis with zero cells. \emph{Statistics in Medicine}, \bold{28}, 721--738.
 
-   Sánchez-Meca, J., Marín-Martínez, F., & Chacón-Moscoso, S. (2003). Effect-size indices for dichotomized outcomes in meta-analysis. \emph{Psychological Methods}, \bold{8}, 448--467.
+   \enc{Sánchez-Meca}{Sanchez-Meca}, J., \enc{Marín-Martínez}{Marin-Martinez}, F., & \enc{Chacón-Moscoso}{Chacon-Moscoso}, S. (2003). Effect-size indices for dichotomized outcomes in meta-analysis. \emph{Psychological Methods}, \bold{8}, 448--467.
 
    Soper, H. E. (1914). On the probable error of the bi-serial expression for the correlation coefficient. \emph{Biometrika}, \bold{10}, 384--390.
 

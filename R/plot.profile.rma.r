@@ -1,4 +1,4 @@
-plot.profile.rma <- function(x, ylim, pch=19, ylab, ciline=FALSE, ...) {
+plot.profile.rma <- function(x, ylim, pch=19, ylab, cline=FALSE, ...) {
 
    #########################################################################
 
@@ -38,7 +38,7 @@ plot.profile.rma <- function(x, ylim, pch=19, ylab, ciline=FALSE, ...) {
       abline(v=x$vc, lty="dotted")
       abline(h=x$maxll, lty="dotted")
 
-      if (ciline)
+      if (cline)
          abline(h=x$maxll - qchisq(0.95, df=1)/2, lty="dotted")
 
    } else {
@@ -51,7 +51,7 @@ plot.profile.rma <- function(x, ylim, pch=19, ylab, ciline=FALSE, ...) {
       if (missing.ylab)
          ylab <- paste(ifelse(x[[j]]$method=="REML", "Restricted ", ""), "Log-Likelihood", sep="")
 
-         plot(x[[j]], ylim=ylim, pch=pch, ylab=ylab, ciline=ciline, ...)
+         plot(x[[j]], ylim=ylim, pch=pch, ylab=ylab, cline=cline, ...)
 
       }
 

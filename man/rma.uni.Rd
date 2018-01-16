@@ -149,7 +149,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
    A confidence interval for the amount of (residual) heterogeneity in the random/mixed-effects model can be obtained with \code{\link{confint.rma.uni}}.
 
-   Forest, funnel, radial, L'abbé, and Baujat plots can be obtained with \code{\link{forest.rma}}, \code{\link{funnel.rma}}, \code{\link{radial.rma}}, \code{\link{labbe.rma}}, and \code{\link{baujat}} (radial and L'abbé plots only for models without moderators). The \code{\link{qqnorm.rma.uni}} function provides normal QQ plots of the standardized residuals. One can also just call \code{\link{plot.rma.uni}} on the fitted model object to obtain various plots at once. For random/mixed-effects models, the \code{\link{profile.rma.uni}} function can be used to obtain a plot of the (restricted) log-likelihood as a function of \if{latex}{\eqn{\tau^2}}\if{html}{\eqn{\tau²}}\if{text}{\eqn{\tau^2}}.
+   Forest, funnel, radial, \enc{L'Abbé}{L'Abbe}, and Baujat plots can be obtained with \code{\link{forest.rma}}, \code{\link{funnel.rma}}, \code{\link{radial.rma}}, \code{\link{labbe.rma}}, and \code{\link{baujat}} (radial and \enc{L'Abbé}{L'Abbe} plots only for models without moderators). The \code{\link{qqnorm.rma.uni}} function provides normal QQ plots of the standardized residuals. One can also just call \code{\link{plot.rma.uni}} on the fitted model object to obtain various plots at once. For random/mixed-effects models, the \code{\link{profile.rma.uni}} function can be used to obtain a plot of the (restricted) log-likelihood as a function of \if{latex}{\eqn{\tau^2}}\if{html}{\eqn{\tau²}}\if{text}{\eqn{\tau^2}}.
 
    Tests for funnel plot asymmetry (which may be indicative of publication bias) can be obtained with \code{\link{ranktest.rma}} and \code{\link{regtest.rma}}. For models without moderators, the \code{\link{trimfill.rma.uni}} method can be used to carry out a trim and fill analysis and \code{\link{hc.rma.uni}} provides a random-effects model analysis that is more robust to publication bias (based on the method by Henmi & Copas, 2010).
 
@@ -223,7 +223,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{http://www.jstatsoft.org/v36/i03/}.
 
-   Viechtbauer, W., López-López, J. A., Sánchez-Meca, J., & Marín-Martínez, F. (2015). A comparison of procedures to test for moderators in mixed-effects meta-regression models. \emph{Psychological Methods}, \bold{20}, 360--374.
+   Viechtbauer, W., \enc{López-López}{Lopez-Lopez}, J. A., \enc{Sánchez-Meca}{Sanchez-Meca}, J., & \enc{Marín-Martínez}{Marin-Martinez}, F. (2015). A comparison of procedures to test for moderators in mixed-effects meta-regression models. \emph{Psychological Methods}, \bold{20}, 360--374.
 }
 \seealso{
    \code{\link{rma.mh}}, \code{\link{rma.peto}}, \code{\link{rma.glmm}}, and \code{\link{rma.mv}} for other model fitting functions.

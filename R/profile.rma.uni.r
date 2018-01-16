@@ -1,4 +1,4 @@
-profile.rma.uni <- function(fitted, xlim, ylim, steps=20, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, plot=TRUE, pch=19, ciline=FALSE, ...) {
+profile.rma.uni <- function(fitted, xlim, ylim, steps=20, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, plot=TRUE, pch=19, cline=FALSE, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -179,7 +179,7 @@ profile.rma.uni <- function(fitted, xlim, ylim, steps=20, progbar=TRUE, parallel
    #########################################################################
 
    if (plot)
-      plot(sav, pch=pch, ciline=ciline, ...)
+      plot(sav, pch=pch, cline=cline, ...)
 
    #########################################################################
 

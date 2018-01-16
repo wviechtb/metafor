@@ -2,7 +2,7 @@
 \alias{labbe}
 \alias{labbe.rma}
 \title{L'Abbe Plots for 'rma' Objects}
-\description{Function to create L'Abbé plots for objects of class \code{"rma"}.}
+\description{Function to create \enc{L'Abbé}{L'Abbe} plots for objects of class \code{"rma"}.}
 \usage{
 labbe(x, \dots)
 
@@ -40,7 +40,7 @@ labbe(x, \dots)
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
 }
 \references{
-   L'Abbé, K. A., Detsky, A. S., & O'Rourke, K. (1987). Meta-analysis in clinical research. \emph{Annals of Internal Medicine}, \bold{107}, 224--233.
+   \enc{L'Abbé}{L'Abbe}, K. A., Detsky, A. S., & O'Rourke, K. (1987). Meta-analysis in clinical research. \emph{Annals of Internal Medicine}, \bold{107}, 224--233.
 
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{http://www.jstatsoft.org/v36/i03/}.
 }

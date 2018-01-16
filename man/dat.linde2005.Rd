@@ -34,7 +34,7 @@
    Linde, K., Berner, M., Egger, M., & Mulrow, C. (2005). St John's wort for depression: Meta-analysis of randomised controlled trials. \emph{British Journal of Psychiatry}, \bold{186}, 99--107.
 }
 \references{
-   Viechtbauer, W. (2007). Accounting for heterogeneity via random-effects models and moderator analyses in meta-analysis. \emph{Zeitschrift für Psychologie / Journal of Psychology}, \bold{215}, 104--121.
+   Viechtbauer, W. (2007). Accounting for heterogeneity via random-effects models and moderator analyses in meta-analysis. \emph{Zeitschrift \enc{für}{fuer} Psychologie / Journal of Psychology}, \bold{215}, 104--121.
 }
 \examples{
 ### load data
