@@ -99,7 +99,8 @@ transf.ilogit.int(xi, targs, \dots)
 ### meta-analysis of the log risk ratios using a random-effects model
 res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
-### average risk ratio with 95\% CI
+### average risk ratio with 95\% CI (but technically, this provides an
+### estimate of the median risk ratio, not the mean risk ratio!)
 predict(res, transf=exp)
 
 ### average risk ratio with 95\% CI using the integral transformation
