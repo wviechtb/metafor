@@ -63,7 +63,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
       ### if no new moderator values are specified
 
-      if (!inherits(object, "rma.mv")) {
+      if (!inherits(object, "rma.mv") || (inherits(object, "rma.mv") && any(object$struct=="GEN"))) {
 
          ### for rma.uni, rma.mh, rma.peto, and rma.glmm objects
 
@@ -504,6 +504,15 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
    if (inherits(object, "rma.mv") && x$withH && x$gamma2s > 1)
       out$gamma2.level <- gamma2.levels
+
+
+   ### remove cr part for models with a GEN structure
+   if (inherits(object, "rma.mv") && any(object$struct=="GEN")) {
+      out$cr.lb <- NULL
+      out$cr.ub <- NULL
+      out$tau2.level <- NULL
+      out$gamma2.level <- NULL
+   }
 
    ### add X matrix to list
 

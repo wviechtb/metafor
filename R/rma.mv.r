@@ -458,9 +458,9 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
       mf.r <- list()
 
-      for (j in seq_along(is.inner.outer)) {
+      io <- 0
 
-         io <- 0
+      for (j in seq_along(is.inner.outer)) {
 
          if (is.inner.outer[j]) {
 
@@ -1348,7 +1348,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    #########################################################################
 
-   # return(list(Z.S=Z.S, sigma2=sigma2, Z.G1=Z.G1, Z.G2=Z.G2, tau2=tau2, rho=rho, G=G, Z.H1=Z.H1, Z.H2=Z.H2, gamma2=gamma2, phi=phi, H=H, Rfix=Rfix, R=R))
+   #return(list(Z.S=Z.S, sigma2=sigma2, Z.G1=Z.G1, Z.G2=Z.G2, tau2=tau2, rho=rho, G=G, Z.H1=Z.H1, Z.H2=Z.H2, gamma2=gamma2, phi=phi, H=H, Rfix=Rfix, R=R))
 
    #########################################################################
    #########################################################################

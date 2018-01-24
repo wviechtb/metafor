@@ -155,7 +155,7 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
       if (verbose)
          message(mstyle$message(paste0("Computing BLUPs for '", paste(x$g.names, collapse=" | "), "' term ... ")), appendLF = FALSE)
 
-      G  <- (x$Z.G1 %*% x$G %*% t(x$Z.G1)) * tcrossprod(x$Z.G2)
+      G <- (x$Z.G1 %*% x$G %*% t(x$Z.G1)) * tcrossprod(x$Z.G2)
       GW <- G %*% W
       pred  <- as.vector(GW %*% cbind(ei))
       pred[abs(pred) < 100 * .Machine$double.eps] <- 0
@@ -206,7 +206,7 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
       if (verbose)
          message(mstyle$message(paste0("Computing BLUPs for '", paste(x$h.names, collapse=" | "), "' term ... ")), appendLF = FALSE)
 
-      H  <- (x$Z.H1 %*% x$H %*% t(x$Z.H1)) * tcrossprod(x$Z.H2)
+      H <- (x$Z.H1 %*% x$H %*% t(x$Z.H1)) * tcrossprod(x$Z.H2)
       HW <- H %*% W
       pred  <- as.vector(HW %*% cbind(ei))
       pred[abs(pred) < 100 * .Machine$double.eps] <- 0
