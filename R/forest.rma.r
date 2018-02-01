@@ -120,6 +120,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
    #########################################################################
 
    ### digits[1] for annotations, digits[2] for x-axis labels
+   ### note: digits can also be a list (e.g., digits=list(2L,3))
 
    if (length(digits) == 1L)
       digits <- c(digits,digits)
@@ -398,9 +399,9 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
    if (missing(xlim)) {
       xlim <- c(min(ci.lb, na.rm=TRUE) - rng * plot.multp.l, max(ci.ub, na.rm=TRUE) + rng * plot.multp.r)
-      xlim <- round(xlim, digits[2])
-      #xlim[1] <- xlim[1]*max(1, digits[2]/2)
-      #xlim[2] <- xlim[2]*max(1, digits[2]/2)
+      xlim <- round(xlim, digits[[2]])
+      #xlim[1] <- xlim[1]*max(1, digits[[2]]/2)
+      #xlim[2] <- xlim[2]*max(1, digits[[2]]/2)
    }
 
    ### set x axis limits (at argument overrides alim argument)
@@ -468,12 +469,12 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
    if (is.function(atransf)) {
       if (is.null(targs)) {
-         at.lab <- formatC(sapply(at.lab, atransf), digits=digits[2], format="f", drop0trailing=ifelse(class(digits) == "integer", TRUE, FALSE))
+         at.lab <- formatC(sapply(at.lab, atransf), digits=digits[[2]], format="f", drop0trailing=ifelse(class(digits[[2]]) == "integer", TRUE, FALSE))
       } else {
-         at.lab <- formatC(sapply(at.lab, atransf, targs), digits=digits[2], format="f", drop0trailing=ifelse(class(digits) == "integer", TRUE, FALSE))
+         at.lab <- formatC(sapply(at.lab, atransf, targs), digits=digits[[2]], format="f", drop0trailing=ifelse(class(digits[[2]]) == "integer", TRUE, FALSE))
       }
    } else {
-      at.lab <- formatC(at.lab, digits=digits[2], format="f", drop0trailing=ifelse(class(digits) == "integer", TRUE, FALSE))
+      at.lab <- formatC(at.lab, digits=digits[[2]], format="f", drop0trailing=ifelse(class(digits[[2]]) == "integer", TRUE, FALSE))
    }
 
    #########################################################################
@@ -760,7 +761,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
          }
       }
 
-      annotext <- formatC(annotext, format="f", digits=digits[1])
+      annotext <- formatC(annotext, format="f", digits=digits[[1]])
 
       if (missing(width)) {
          width <- apply(annotext, 2, function(x) max(nchar(x)))
