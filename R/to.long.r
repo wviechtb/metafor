@@ -17,11 +17,11 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
                               "PR","PLN","PLO","PAS","PFT",                        ### single proportions (and transformations thereof)
                               "IR","IRLN","IRS","IRFT",                            ### single-group person-time data (and transformations thereof)
                               "MN","MNLN","CVLN","SDLN",                           ### mean, log(mean), log(CV), log(SD)
-                              "MC","SMCC","SMCR","SMCRH","ROMC",                   ### raw/standardized mean change and log(ROM) for dependent samples
+                              "MC","SMCC","SMCR","SMCRH","ROMC","CVRC","VRC",      ### raw/standardized mean change, log(ROM), CVR, and VR for dependent samples
                               "ARAW","AHW","ABT")))                                ### alpha (and transformations thereof)
       stop(mstyle$stop("Unknown 'measure' specified."))
 
-   if (is.element(measure, c("CVR","VR","PCOR","ZPCOR","SPCOR","CVLN","SDLN")))
+   if (is.element(measure, c("CVR","VR","PCOR","ZPCOR","SPCOR","CVLN","SDLN","VRC")))
       stop(mstyle$stop("Function (currently) not implemented for this outcome measure."))
 
    na.act <- getOption("na.action")
@@ -489,7 +489,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
    #########################################################################
 
-   if (is.element(measure, c("MC","SMCC","SMCR","SMCRH","ROMC"))) {
+   if (is.element(measure, c("MC","SMCC","SMCR","SMCRH","ROMC","CVRC"))) {
 
       mf.m1i  <- mf[[match("m1i",  names(mf))]]
       mf.m2i  <- mf[[match("m2i",  names(mf))]]
@@ -515,7 +515,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
          ri   <- ri[subset]
       }
 
-      if (is.element(measure, c("MC","SMCC","SMCRH","ROMC"))) {
+      if (is.element(measure, c("MC","SMCC","SMCRH","ROMC","CVRC"))) {
 
          if (length(m1i)==0L || length(m2i)==0L || length(sd1i)==0L || length(sd2i)==0L || length(ni)==0L || length(ri)==0L)
             stop(mstyle$stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments."))
@@ -1291,11 +1291,11 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
    #########################################################################
 
-   if (is.element(measure, c("MC","SMCC","SMCR","SMCRH","ROMC"))) {
+   if (is.element(measure, c("MC","SMCC","SMCR","SMCRH","ROMC","CVRC"))) {
 
       ### check for NAs in table data and act accordingly
 
-      if (is.element(measure, c("MC","SMCC","SMCRH","ROMC"))) {
+      if (is.element(measure, c("MC","SMCC","SMCRH","ROMC","CVRC"))) {
          has.na <- is.na(m1i) | is.na(m2i) | is.na(sd1i) | is.na(sd2i) | is.na(ni) | is.na(ri)
       } else {
          has.na <- is.na(m1i) | is.na(m2i) | is.na(sd1i) | is.na(ni) | is.na(ri)
@@ -1309,7 +1309,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
             m1i  <- m1i[not.na]
             m2i  <- m2i[not.na]
             sd1i <- sd1i[not.na]
-            if (is.element(measure, c("MC","SMCC","SMCRH","ROMC")))
+            if (is.element(measure, c("MC","SMCC","SMCRH","ROMC","CVRC")))
                sd2i <- sd2i[not.na]
             ni   <- ni[not.na]
             ri   <- ri[not.na]
@@ -1333,7 +1333,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
       ### create long format dataset
 
-      if (is.element(measure, c("MC","SMCC","SMCRH","ROMC"))) {
+      if (is.element(measure, c("MC","SMCC","SMCRH","ROMC","CVRC"))) {
 
          dat <- matrix(NA, nrow=k, ncol=7)
 

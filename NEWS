@@ -64,6 +64,9 @@ Changes in Version 2.1-0 (2018-02-01)
      options(na.action="na.exclude") and an annotation contains NA, this is
      now shown as a blank (instead of NA [NA, NA])
 
+   o escalc() can now compute the coefficient of variation ratio and the
+     variability ratio for pre-post or matched designs ("CVRC", "VRC")
+
    o escalc() does a bit more housekeeping
 
    o added currently undocumented arguments 'onlyo1', 'addyi', and 'addvi'

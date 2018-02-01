@@ -27,7 +27,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
                               "PR","PLN","PLO","PAS","PFT",                        ### single proportions (and transformations thereof)
                               "IR","IRLN","IRS","IRFT",                            ### single-group person-time data (and transformations thereof)
                               "MN","MNLN","CVLN","SDLN",                           ### mean, log(mean), log(CV), log(SD)
-                              "MC","SMCC","SMCR","SMCRH","ROMC",                   ### raw/standardized mean change and log(ROM) for dependent samples
+                              "MC","SMCC","SMCR","SMCRH","ROMC","CVRC","VRC",      ### raw/standardized mean change, log(ROM), CVR, and VR for dependent samples
                               "ARAW","AHW","ABT",                                  ### alpha (and transformations thereof)
                               "GEN")))
       stop(mstyle$stop("Unknown 'measure' specified."))
@@ -499,7 +499,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
       }
 
-      if (is.element(measure, c("MC","SMCC","SMCR","SMCRH","ROMC"))) {
+      if (is.element(measure, c("MC","SMCC","SMCR","SMCRH","ROMC","CVRC","VRC"))) {
 
          mf.m1i  <- mf[[match("m1i",  names(mf))]]
          mf.m2i  <- mf[[match("m2i",  names(mf))]]

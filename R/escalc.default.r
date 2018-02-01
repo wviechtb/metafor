@@ -17,7 +17,7 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
                               "PR","PLN","PLO","PAS","PFT",                        ### single proportions (and transformations thereof)
                               "IR","IRLN","IRS","IRFT",                            ### single-group person-time data (and transformations thereof)
                               "MN","MNLN","CVLN","SDLN",                           ### mean, log(mean), log(CV), log(SD)
-                              "MC","SMCC","SMCR","SMCRH","ROMC",                   ### raw/standardized mean change and log(ROM) for dependent samples
+                              "MC","SMCC","SMCR","SMCRH","ROMC","CVRC","VRC",      ### raw/standardized mean change, log(ROM), CVR, and VR for dependent samples
                               "ARAW","AHW","ABT",                                  ### alpha (and transformations thereof)
                               "GEN")))
       stop(mstyle$stop("Unknown 'measure' specified."))
@@ -1503,7 +1503,7 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
       ######################################################################
 
-      if (is.element(measure, c("MC","SMCC","SMCR","SMCRH","ROMC"))) {
+      if (is.element(measure, c("MC","SMCC","SMCR","SMCRH","ROMC","CVRC","VRC"))) {
 
          mf.m1i  <- mf[[match("m1i",  names(mf))]]
          mf.m2i  <- mf[[match("m2i",  names(mf))]]
@@ -1527,7 +1527,7 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
             ri   <- ri[subset]
          }
 
-         if (is.element(measure, c("MC","SMCC","SMCRH","ROMC"))) {
+         if (is.element(measure, c("MC","SMCC","SMCRH","ROMC","CVRC"))) {
 
             ### for these measures, need m1i, m2i, sd1i, sd2i, ni, and ri
 
@@ -1553,6 +1553,21 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
                stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
             if (any(sd1i < 0, na.rm=TRUE))
+               stop(mstyle$stop("One or more standard deviations are negative."))
+
+         }
+
+         if (is.element(measure, c("VRC"))) {
+
+            ### for this measure, need sd1i, sd2i, ni, and ri
+
+            if (length(sd1i)==0L || length(sd2i)==0L || length(ni)==0L || length(ri)==0L)
+               stop(mstyle$stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments."))
+
+            if (!all(length(sd1i) == c(length(sd1i),length(sd2i),length(ni),length(ri))))
+               stop(mstyle$stop("Supplied data vectors are not all of the same length."))
+
+            if (any(c(sd1i, sd2i) < 0, na.rm=TRUE))
                stop(mstyle$stop("One or more standard deviations are negative."))
 
          }
@@ -1613,6 +1628,20 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
          if (measure == "ROMC") {
             yi <- log(m1i/m2i)
             vi <- sd1i^2/(ni*m1i^2) + sd2i^2/(ni*m2i^2) - 2*ri*sd1i*sd2i/(m1i*m2i*ni)
+         }
+
+         ### coefficient of variation ratio for pre-post or matched designs
+
+         if (measure == "CVRC") {
+            yi <- log(sd1i/m1i) - log(sd2i/m2i)
+            vi <- (1-ri^2)/(ni-1) + (m1i^2*sd2i^2 + m2i^2*sd1i^2 - 2*m1i*m2i*ri*sd1i*sd2i) / (m1i^2*m2i^2*ni)
+         }
+
+         ### variability ratio for pre-post or matched designs
+
+         if (measure == "VRC") {
+            yi <- log(sd1i/sd2i)
+            vi <- (1-ri^2)/(ni-1)
          }
 
       }

@@ -1980,6 +1980,28 @@
                lab <- "Ratio of Means"
          }
       }
+      if (measure == "CVRC") {
+         if (transf.char == "FALSE" && atransf.char == "FALSE") {
+            lab <- "Log Coefficient of Variation Ratio"
+         } else {
+            lab <- "Transformed Log Coefficient of Variation Ratio"
+            if (atransf.char == "exp" || atransf.char == "transf.exp.int")
+               lab <- "Coefficient of Variation Ratio (log scale)"
+            if (transf.char == "exp" || transf.char == "transf.exp.int")
+               lab <- "Coefficient of Variation Ratio"
+         }
+      }
+      if (measure == "VRC") {
+         if (transf.char == "FALSE" && atransf.char == "FALSE") {
+            lab <- "Log Variability Ratio"
+         } else {
+            lab <- "Transformed Log Variability Ratio"
+            if (atransf.char == "exp" || atransf.char == "transf.exp.int")
+               lab <- "Variability Ratio (log scale)"
+            if (transf.char == "exp" || transf.char == "transf.exp.int")
+               lab <- "Variability Ratio"
+         }
+      }
       ######################################################################
       if (measure == "ARAW") {
          if (transf.char == "FALSE" && atransf.char == "FALSE") {

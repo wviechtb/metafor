@@ -25,11 +25,11 @@ add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("yi","vi"), digits=4,
                               "PR","PLN","PLO","PAS","PFT",                        ### single proportions (and transformations thereof)
                               "IR","IRLN","IRS","IRFT",                            ### single-group person-time data (and transformations thereof)
                               "MN","MNLN","CVLN","SDLN",                           ### mean, log(mean), log(CV), log(SD)
-                              "MC","SMCC","SMCR","SMCRH","ROMC",                   ### raw/standardized mean change and log(ROM) for dependent samples
+                              "MC","SMCC","SMCR","SMCRH","ROMC","CVRC","VRC",      ### raw/standardized mean change, log(ROM), CVR, and VR for dependent samples
                               "ARAW","AHW","ABT")))                                ### alpha (and transformations thereof)
       stop(mstyle$stop("Unknown 'measure' specified."))
 
-   if (is.element(measure, c("MPRD","MPRR","MPOR","MPORC","MPPETO","CVR","VR","PCOR","ZPCOR","SPCOR","CVLN","SDLN","MC","SMCC","SMCR","SMCRH","ROMC")))
+   if (is.element(measure, c("MPRD","MPRR","MPOR","MPORC","MPPETO","CVR","VR","PCOR","ZPCOR","SPCOR","CVLN","SDLN","MC","SMCC","SMCR","SMCRH","ROMC","CVRC","VRC")))
       stop(mstyle$stop("Formula interface (currently) not implemented for this outcome measure."))
 
    if (!requireNamespace("Formula", quietly=TRUE))
@@ -363,7 +363,7 @@ add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("yi","vi"), digits=4,
 
    #########################################################################
 
-   #if (is.element(measure, c("MC","SMCC","SMCR","SMCRH","ROMC"))) {
+   #if (is.element(measure, c("MC","SMCC","SMCR","SMCRH","ROMC","CVRC","VRC"))) {
    #}
 
    #########################################################################
