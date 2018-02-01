@@ -238,8 +238,10 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
       ### proportional reduction in tau^2) comparing full vs. reduced model
 
       if (inherits(object, "rma.uni") && !inherits(object, "rma.ls") && !inherits(object2, "rma.ls")) {
-         if (m.f$method == "FE" || identical(m.r$tau2,0)) {
+         if (m.f$method == "FE") {
             R2 <- NA
+         } else if (identical(m.r$tau2,0)) {
+            R2 <- 0
          } else {
             R2 <- 100 * max(0, (m.r$tau2 - m.f$tau2)/m.r$tau2)
          }

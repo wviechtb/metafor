@@ -1741,7 +1741,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
          tau2.RE <- res.RE$tau2
 
          if (identical(tau2.RE,0)) {
-            R2 <- NA
+            R2 <- 0
          } else {
             R2 <- max(0, 100 * (tau2.RE - tau2) / tau2.RE)
          }
