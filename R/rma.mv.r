@@ -111,19 +111,36 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
    ### handle 'dist' argument from ...
 
    if (!is.null(ddd$dist)) {
-      dist.methods <- c("euclidean", "maximum", "manhattan", "gcd")
-      ddd$dist <- charmatch(ddd$dist, dist.methods, nomatch = 0)
+
       if (length(ddd$dist) == 1)
          ddd$dist <- c(ddd$dist, ddd$dist)
-      if (any(ddd$dist == 0))
+
+      if (!is.list(ddd$dist))
+         ddd$dist <- as.list(ddd$dist)
+
+      dist.methods <- c("euclidean", "maximum", "manhattan", "gcd")
+
+      if (!is.function(ddd$dist[[1]]))
+         ddd$dist[[1]] <- charmatch(ddd$dist[[1]], dist.methods, nomatch = 0)
+      if (!is.function(ddd$dist[[2]]))
+         ddd$dist[[2]] <- charmatch(ddd$dist[[2]], dist.methods, nomatch = 0)
+
+      if ((!is.function(ddd$dist[[1]]) && ddd$dist[[1]] == 0) ||
+          (!is.function(ddd$dist[[2]]) && ddd$dist[[2]] == 0))
          stop(mstyle$stop("Argument 'dist' must be one of 'euclidean', 'maximum', 'manhattan', or 'gcd'."))
-      ddd$dist <- dist.methods[ddd$dist]
+
+      if (!is.function(ddd$dist[[1]]))
+         ddd$dist[[1]] <- dist.methods[ddd$dist[[1]]]
+      if (!is.function(ddd$dist[[2]]))
+         ddd$dist[[2]] <- dist.methods[ddd$dist[[2]]]
+
       if (any(ddd$dist == "gcd")) {
          if (!requireNamespace("sp", quietly=TRUE))
             stop(mstyle$stop("Please install the 'sp' package to compute great-circle distances."))
       }
+
    } else {
-      ddd$dist <- c("euclidean", "euclidean")
+      ddd$dist <- list("euclidean", "euclidean")
    }
 
    #########################################################################
@@ -1276,7 +1293,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    if (withG) {
 
-      tmp <- .process.G.afterrmna(mf.g, g.nlevels, g.levels, g.values, struct[1], formulas[[1]], tau2, rho, Z.G1, Z.G2, isG=TRUE, sparse, ddd$dist[1], verbose)
+      tmp <- .process.G.afterrmna(mf.g, g.nlevels, g.levels, g.values, struct[1], formulas[[1]], tau2, rho, Z.G1, Z.G2, isG=TRUE, sparse, ddd$dist[[1]], verbose)
 
       mf.g <- tmp$mf.g
 
@@ -1314,7 +1331,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    if (withH) {
 
-      tmp <- .process.G.afterrmna(mf.h, h.nlevels, h.levels, h.values, struct[2], formulas[[2]], gamma2, phi, Z.H1, Z.H2, isG=FALSE, sparse, ddd$dist[2], verbose)
+      tmp <- .process.G.afterrmna(mf.h, h.nlevels, h.levels, h.values, struct[2], formulas[[2]], gamma2, phi, Z.H1, Z.H2, isG=FALSE, sparse, ddd$dist[[2]], verbose)
 
       mf.h <- tmp$mf.g
 

@@ -147,7 +147,7 @@ res.cb
 if (require(multcomp)) {
    contr <- contrMat(setNames(rep(1,res.cb$p), colnames(res.cb$X)), type="Tukey")
    sav <- predict(res.cb, newmods=contr)
-   sav$slab <- rownames(contr)
+   sav[["slab"]] <- rownames(contr)
    sav
 }
 }

@@ -528,7 +528,7 @@
 
 ############################################################################
 
-.process.G.afterrmna <- function(mf.g, g.nlevels, g.levels, g.values, struct, formula, tau2, rho, Z.G1, Z.G2, isG, sparse, dist, verbose) {
+.process.G.afterrmna <- function(mf.g, g.nlevels, g.levels, g.values, struct, formula, tau2, rho, Z.G1, Z.G2, isG, sparse, distspec, verbose) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -746,10 +746,14 @@
       formula <- as.formula(paste0(strsplit(paste0(formula, collapse=""), "|", fixed=TRUE)[[1]][1], "- 1", collapse=""))
       ### create distance matrix
       Cmat <- model.matrix(formula, data=mf.g[-nvars])
-      if (is.element(dist, c("euclidean", "maximum", "manhattan")))
-         Dmat <- as.matrix(dist(Cmat, method=dist))
-      if (dist == "gcd")
-         Dmat <- sp::spDists(Cmat, longlat=TRUE)
+      if (is.function(distspec)) {
+         Dmat <- distspec(Cmat)
+      } else {
+         if (is.element(distspec, c("euclidean", "maximum", "manhattan")))
+            Dmat <- as.matrix(dist(Cmat, method=distspec))
+         if (distspec == "gcd")
+            Dmat <- sp::spDists(Cmat, longlat=TRUE)
+      }
       if (sparse)
          Dmat <- Matrix(Dmat, sparse=TRUE)
    } else {

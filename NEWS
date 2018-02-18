@@ -1,7 +1,8 @@
-Changes in Version 2.1-0 (2018-02-01)
+Changes in Version 2.1-0 (2018-02-18)
 =====================================
 
-   o output is now styled/colored when 'crayon' package is loaded
+   o output is now styled/colored when 'crayon' package is loaded (this only
+     works on a 'proper' terminal with color support; also works in RStudio)
 
    o overhauled plot.gosh.rma(); when 'out' is specified, it now shows two
      distributions, one for the values when the outlier is included and
@@ -17,18 +18,18 @@ Changes in Version 2.1-0 (2018-02-01)
      a way that it will yield identical results to a mean shift outlier
      model even when that model is fitted with test="knha"
 
-   o cooks.distance.rma.mv() gains 'cluster' argument, so that Cook's
+   o cooks.distance.rma.mv() gains 'cluster' argument, so that the Cook's
      distances can be computed for groups of estimates
 
    o cooks.distance.rma.mv() gains 'parallel', 'ncpus', and 'cl' arguments
      and can now make use of parallel processing
 
-   o cooks.distance.rma.mv() gains 'reestimate' argument; when set to FALSE,
-     variance/correlation components are not reestimated
-
    o cooks.distance.rma.mv() should be faster by using the estimates from
      the full model as starting values when fitting the models with the ith
      study/cluster deleted from the dataset
+
+   o cooks.distance.rma.mv() gains 'reestimate' argument; when set to FALSE,
+     variance/correlation components are not reestimated
 
    o rstandard.rma.mv() gains 'cluster' argument for computing cluster-level
      multivariate standardized residuals
@@ -53,8 +54,7 @@ Changes in Version 2.1-0 (2018-02-01)
 
    o rma.mv() now allows for continuous-time autoregressive random effects
      structures (struct="CAR") and spatial correlation structures
-     (struct="SPEXP", struct="SPGAU", struct="SPLIN", struct="SPRAT", and
-     struct="SPSPH")
+     (struct="SPEXP", "SPGAU", "SPLIN", "SPRAT", and "SPSPH")
 
    o rma.mv() now allows for struct="GEN" which models correlated random
      effects for any number of predictors, including continuous ones (i.e.,
@@ -69,7 +69,7 @@ Changes in Version 2.1-0 (2018-02-01)
 
    o escalc() does a bit more housekeeping
 
-   o added currently undocumented arguments 'onlyo1', 'addyi', and 'addvi'
+   o added (currently undocumented) arguments 'onlyo1', 'addyi', and 'addvi'
      to escalc() that allow for more flexibility when computing certain bias
      corrections and when computing sampling variances for measures that
      make use of the 'add' and 'to' arguments
@@ -77,8 +77,8 @@ Changes in Version 2.1-0 (2018-02-01)
    o labbe() gains 'lty' argument
 
    o labbe() now (invisibly) returns a data frame with the coordinates of
-     the points that were drawn (may be useful for manual labeling of points
-     in the plot)
+     the points that were drawn (which may be useful for manual labeling of
+     points in the plot)
 
    o added a print method for 'profile.rma' objects
 
@@ -87,8 +87,8 @@ Changes in Version 2.1-0 (2018-02-01)
    o fixed an issue with robust.rma.mv() when the model was fitted with
      sparse=TRUE (thanks to Roger Martineau for noting the problem)
 
-   o various method functions (fitted(), resid(), predict(), etc.) behave
-     more consistently when model omitted studies with missings
+   o various method functions (fitted(), resid(), predict(), etc.) behave in
+     a more consistent manner when model omitted studies with missings
 
    o predict.rma() gains 'vcov' argument; when set to TRUE, the variance-
      covariance matrix of the predicted values is also returned
@@ -101,8 +101,8 @@ Changes in Version 2.1-0 (2018-02-01)
    o fixed error in simulate.rma() that would generate too many samples for
      'rma.mv' models
 
-   o added undocumented argument 'time' to model fitting functions; if set
-     to TRUE, the model fitting time is printed
+   o added undocumented argument 'time' to all model fitting functions; if
+     set to TRUE, the model fitting time is printed
 
    o added more tests (also for parallel operations)
 
