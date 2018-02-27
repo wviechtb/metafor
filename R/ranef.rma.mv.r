@@ -152,6 +152,11 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
 
    if (x$withG) {
 
+      if (x$struct[1] == "GEN") {
+         if (verbose)
+            message(mstyle$message("Computation of BLUPs not yet implemented for struct=\"GEN\"."))
+      } else {
+
       if (verbose)
          message(mstyle$message(paste0("Computing BLUPs for '", paste(x$g.names, collapse=" | "), "' term ... ")), appendLF = FALSE)
 
@@ -199,9 +204,16 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
       if (verbose)
          message(mstyle$message("Done!"))
 
+      }
+
    }
 
    if (x$withH) {
+
+      if (x$struct[2] == "GEN") {
+         if (verbose)
+            message(mstyle$message("Computation of BLUPs not yet implemented for struct=\"GEN\"."))
+      } else {
 
       if (verbose)
          message(mstyle$message(paste0("Computing BLUPs for '", paste(x$h.names, collapse=" | "), "' term ... ")), appendLF = FALSE)
@@ -249,6 +261,8 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
 
       if (verbose)
          message(mstyle$message("Done!"))
+
+      }
 
    }
 

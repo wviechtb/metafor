@@ -21,7 +21,7 @@
    \item the p-value for the likelihood ratio test.
    \item the test statistic for the test of (residual) heterogeneity for the full and the reduced model.
    \item the estimate of \if{latex}{\eqn{\tau^2}}\if{html}{\eqn{\tau²}}\if{text}{\eqn{\tau^2}} from the full and the reduced model. Suppressed for fixed-effects models.
-   \item{R2}{amount of (residual) heterogeneity in the reduced model that is accounted for in the full model (in percent). \code{NA} for fixed-effects models, if the amount of heterogeneity in the reduced model is equal to zero, or for \code{"rma.mv"} objects. This can be regarded as a pseudo \if{latex}{\eqn{R^2}}\if{html}{\eqn{R²}}\if{text}{\eqn{R^2}} statistic (Raudenbush, 2009). Note that the value may not be very accurate unless \eqn{k} is large (Lopez-Lopez et al., 2014).}
+   \item{R2}{amount (in percent) of heterogeneity in the reduced model that is accounted for in the full model (\code{NA} for fixed-effects models or for \code{"rma.mv"} objects). This can be regarded as a pseudo \if{latex}{\eqn{R^2}}\if{html}{\eqn{R²}}\if{text}{\eqn{R^2}} statistic (Raudenbush, 2009). Note that the value may not be very accurate unless \eqn{k} is large (Lopez-Lopez et al., 2014).}
    }
    The last two items are not provided when comparing \code{"rma.mv"} models.
 }
