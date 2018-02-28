@@ -873,8 +873,8 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
                ### extract coefficients and variance-covariance matrix for Wald-type test for heterogeneity
 
-               b2.QE  <- cbind(na.omit(coef(res.QE)[-seq_len(k+p)]))          ### coef() still includes aliased coefficients as NAs, so have to filter them out
-               vb2.QE <- vcov(res.QE)[-seq_len(k+p),-seq_len(k+p),drop=FALSE] ### aliased coefficients are already removed by vcov()
+               b2.QE  <- cbind(na.omit(coef(res.QE)[-seq_len(k+p)])) ### coef() still includes aliased coefficients as NAs, so have to filter them out
+               vb2.QE <- vcov(res.QE, complete=FALSE)[-seq_len(k+p),-seq_len(k+p),drop=FALSE] ### aliased coefficients are removed by vcov() when complete=FALSE
 
             }
 
@@ -1115,8 +1115,8 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
             ### extract coefficients and variance-covariance matrix for Wald-type test for heterogeneity
 
-            b2.QE  <- cbind(na.omit(coef(res.QE)[-seq_len(p)]))        ### coef() still includes aliased coefficients as NAs, so have to filter them out
-            vb2.QE <- vcov(res.QE)[-seq_len(p),-seq_len(p),drop=FALSE] ### aliased coefficients are already removed by vcov()
+            b2.QE  <- cbind(na.omit(coef(res.QE)[-seq_len(p)])) ### coef() still includes aliased coefficients as NAs, so have to filter them out
+            vb2.QE <- vcov(res.QE, complete=FALSE)[-seq_len(p),-seq_len(p),drop=FALSE] ### aliased coefficients are removed by vcov() when complete=FALSE
 
          }
 
@@ -1613,8 +1613,8 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
          ### extract coefficients and variance-covariance matrix for Wald-type test for heterogeneity
 
-         b2.QE  <- cbind(na.omit(coef(res.QE)[-seq_len(p)]))        ### coef() still includes aliased coefficients as NAs, so have to filter them out
-         vb2.QE <- vcov(res.QE)[-seq_len(p),-seq_len(p),drop=FALSE] ### aliased coefficients are already removed by vcov()
+         b2.QE  <- cbind(na.omit(coef(res.QE)[-seq_len(p)])) ### coef() still includes aliased coefficients as NAs, so have to filter them out
+         vb2.QE <- vcov(res.QE, complete=FALSE)[-seq_len(p),-seq_len(p),drop=FALSE] ### aliased coefficients are removed by vcov() when complete=FALSE
 
       }
 
