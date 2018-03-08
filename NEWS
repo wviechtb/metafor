@@ -1,4 +1,4 @@
-Changes in Version 2.1-0 (2018-02-28)
+Changes in Version 2.1-0 (2018-03-08)
 =====================================
 
    o output is now styled/colored when 'crayon' package is loaded (this only
@@ -63,6 +63,10 @@ Changes in Version 2.1-0 (2018-02-28)
    o in the various forest() functions, when options(na.action="na.pass") or
      options(na.action="na.exclude") and an annotation contains NA, this is
      now shown as a blank (instead of NA [NA, NA])
+
+   o removed 'formula interface' from escalc(); until this actually adds
+     some kind of extra functionality, this just makes escalc() more
+     confusing to use
 
    o escalc() can now compute the coefficient of variation ratio and the
      variability ratio for pre-post or matched designs ("CVRC", "VRC")

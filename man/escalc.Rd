@@ -1,29 +1,19 @@
 \name{escalc}
 \alias{escalc}
-\alias{escalc.default}
-\alias{escalc.formula}
 \title{Calculate Effect Sizes and Outcome Measures}
 \description{
    The function can be used to calculate various effect sizes or outcome measures (and the corresponding sampling variances) that are commonly used in meta-analyses.
 }
 \usage{
-escalc(measure, formula, \dots)
-
-\method{escalc}{default}(measure, formula, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
+escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
        m1i, m2i, sd1i, sd2i, xi, mi, ri, ti, sdi, r2i, ni, yi, vi, sei,
        data, slab, subset,
        add=1/2, to="only0", drop00=FALSE, vtype="LS",
        var.names=c("yi","vi"), add.measure=FALSE,
        append=TRUE, replace=TRUE, digits=4, \dots)
-
-\method{escalc}{formula}(measure, formula, weights, data,
-       add=1/2, to="only0", drop00=FALSE, vtype="LS",
-       var.names=c("yi","vi"), digits=4, \dots)
 }
 \arguments{
    \item{measure}{a character string indicating which effect size or outcome measure should be calculated. See \sQuote{Details} for possible options and how the data should be specified.}
-   \item{formula}{when using the formula interface of the function (see \sQuote{Details} below), a model formula specifying the data structure should be specified via this argument. When not using the formula interface, this argument should be ignored and the data required to calculate the effect sizes or outcomes are then passed to the function via the following set of arguments. See \sQuote{Details}.}
-   \item{weights}{vector of weights to specify the group sizes or cell frequencies (only needed when using the formula interface). See \sQuote{Details}.}
    \item{ai}{vector to specify the \eqn{2 \times 2}{2x2} table frequencies (upper left cell).}
    \item{bi}{vector to specify the \eqn{2 \times 2}{2x2} table frequencies (upper right cell).}
    \item{ci}{vector to specify the \eqn{2 \times 2}{2x2} table frequencies (lower left cell).}
@@ -91,7 +81,7 @@ escalc(measure, formula, \dots)
                  \tab outcome 1 \tab outcome 2 \tab total      \cr
          group 1 \tab \code{ai} \tab \code{bi} \tab \code{n1i} \cr
          group 2 \tab \code{ci} \tab \code{di} \tab \code{n2i}
-         } where \code{ai}, \code{bi}, \code{ci}, and \code{di} denote the cell frequencies (i.e., the number of people falling into a particular category) and \code{n1i} and \code{n2i} the row totals (i.e., the group sizes).
+         } where \code{ai}, \code{bi}, \code{ci}, and \code{di} denote the cell frequencies (i.e., the number of people falling into a particular category) and \code{n1i} and \code{n2i} are the row totals (i.e., the group sizes).
 
          For example, in a set of randomized clinical trials, group 1 and group 2 may refer to the treatment and placebo/control group, respectively, with outcome 1 denoting some event of interest (e.g., death, complications, failure to improve under the treatment) and outcome 2 its complement. Similarly, in a set of cohort studies, group 1 and group 2 may denote those who engage in and those who do not engage in a potentially harmful behavior (e.g., smoking), with outcome 1 denoting the development of a particular disease (e.g., lung cancer) during the follow-up period. Finally, in a set of case-control studies, group 1 and group 2 may refer to those with the disease (i.e., cases) and those free of the disease (i.e., controls), with outcome 1 denoting, for example, exposure to some risk environmental risk factor in the past and outcome 2 non-exposure. Note that in all of these examples, the stratified sampling scheme fixes the row totals (i.e., the group sizes) by design.
 
@@ -128,7 +118,7 @@ escalc(measure, formula, \dots)
                  \tab number of events \tab total person-time \cr
          group 1 \tab \code{x1i}       \tab \code{t1i} \cr
          group 2 \tab \code{x2i}       \tab \code{t2i}
-         } where \code{x1i} and \code{x2i} denote the total number of events in the first and the second group, respectively, and \code{t1i} and \code{t2i} the corresponding total person-times at risk. Often, the person-time is measured in years, so that \code{t1i} and \code{t2i} denote the total number of follow-up years in the two groups.
+         } where \code{x1i} and \code{x2i} denote the number of events in the first and the second group, respectively, and \code{t1i} and \code{t2i} the corresponding total person-times at risk. Often, the person-time is measured in years, so that \code{t1i} and \code{t2i} denote the total number of follow-up years in the two groups.
 
          This form of data is fundamentally different from what was described in the previous section, since the total follow-up time may differ even for groups of the same size and the individuals studied may experience the event of interest multiple times. Hence, different outcome measures than the ones described in the previous section must be considered when data are reported in this format. These include the incidence rate ratio, the incidence rate difference, and the square root transformed incidence rate difference (Bagos & Nikolopoulos, 2009; Rothman et al., 2008). For any of these outcome measures, one needs to specify the total number of events via the \code{x1i} and \code{x2i} arguments and the corresponding total person-time values via the \code{t1i} and \code{t2i} arguments.
 
@@ -147,12 +137,12 @@ escalc(measure, formula, \dots)
 
       \subsection{Measures for Quantitative Variables}{
 
-         When the response or dependent variable assessed in the individual studies is measured on some quantitative scale, it is customary to report certain summary statistics, such as the mean and standard deviation of the scores. The data layout for a study comparing two groups with respect to such a variable is then of the form:
+         When the response or dependent variable assessed in the individual studies is measured on some quantitative scale, it is customary to report certain summary statistics, such as the mean and standard deviation of the observations. The data layout for a study comparing two groups with respect to such a variable is then of the form:
          \tabular{lccc}{
                  \tab mean       \tab standard deviation \tab group size \cr
          group 1 \tab \code{m1i} \tab \code{sd1i}        \tab \code{n1i} \cr
          group 2 \tab \code{m2i} \tab \code{sd2i}        \tab \code{n2i}
-         } where \code{m1i} and \code{m2i} are the observed means of the two groups, \code{sd1i} and \code{sd2i} the observed standard deviations, and \code{n1i} and \code{n2i} the number of individuals in each group. Again, the two groups may be experimentally created (e.g., a treatment and control group based on random assignment) or naturally occurring (e.g., men and women). In either case, the raw mean difference, the standardized mean difference, and the (log transformed) ratio of means (also called log response ratio) are useful outcome measures when meta-analyzing studies of this type (e.g., Borenstein, 2009).
+         } where \code{m1i} and \code{m2i} are the observed means of the two groups, \code{sd1i} and \code{sd2i} are the observed standard deviations, and \code{n1i} and \code{n2i} denote the number of individuals in each group. Again, the two groups may be experimentally created (e.g., a treatment and control group based on random assignment) or naturally occurring (e.g., men and women). In either case, the raw mean difference, the standardized mean difference, and the (log transformed) ratio of means (also called log response ratio) are useful outcome measures when meta-analyzing studies of this type (e.g., Borenstein, 2009).
 
          The options for the \code{measure} argument are then:
          \itemize{
@@ -174,7 +164,7 @@ escalc(measure, formula, \dots)
 
          A dataset illustrating the combined analysis of standardized mean differences and probit transformed risk differences is provided in \code{\link{dat.gibson2002}}.
 
-         Finally, interest may also be focused on differences between the two groups with respect to their variability. Here, the (log transformed) ratio of the coefficient of variation of the two groups (also called the coefficient of variation ratio) can be useful measure (Nakagawa et al., 2015). If focus is solely on the variability of the measurements within the two groups, then the (log transformed) ratio of the standard deviations (also called the variability ratio) can be used (Nakagawa et al., 2015). For the latter, one only needs to specify \code{sd1i}, \code{sd2i}, \code{n1i}, and \code{n2i}. The options for the \code{measure} argument are:
+         Finally, interest may also be focused on differences between the two groups with respect to their variability. Here, the (log transformed) ratio of the coefficient of variation of the two groups (also called the coefficient of variation ratio) can be a useful measure (Nakagawa et al., 2015). If focus is solely on the variability of the measurements within the two groups, then the (log transformed) ratio of the standard deviations (also called the variability ratio) can be used (Nakagawa et al., 2015). For the latter, one only needs to specify \code{sd1i}, \code{sd2i}, \code{n1i}, and \code{n2i}. The options for the \code{measure} argument are:
          \itemize{
          \item \code{"CVR"} for the \emph{log transformed coefficient of variation ratio}.
          \item \code{"VR"} for the \emph{log transformed variability ratio}.
@@ -224,7 +214,7 @@ escalc(measure, formula, \dots)
 
       \subsection{Measures for Mixed Variable Types}{
 
-         Finally, we can consider outcome measures that can be used to describe the relationship between two variables, where one variable is dichotomous and the other variable measures some quantitative characteristic. In that case, it is likely that study authors again report summary statistics, such as the mean and standard deviation of the scores within the two groups (defined by the dichotomous variable). In that case, one can compute the point-biserial (Tate, 1954) as a measure of association between the two variables. If the dichotomous variable is actually a dichotomized version of the responses on an underlying quantitative scale (and assuming that the two variables follow a bivariate normal distribution), it is also possible to estimate the correlation between the two variables using the biserial correlation coefficient (Pearson, 1909; Soper, 1914).
+         Finally, we can consider outcome measures that can be used to describe the relationship between two variables, where one variable is dichotomous and the other variable measures some quantitative characteristic. In that case, it is likely that study authors again report summary statistics, such as the mean and standard deviation of the measurements within the two groups (defined by the dichotomous variable). In that case, one can compute the point-biserial correlation (Tate, 1954) as a measure of association between the two variables. If the dichotomous variable is actually a dichotomized version of the responses on an underlying quantitative scale (and assuming that the two variables follow a bivariate normal distribution), it is also possible to estimate the correlation between the two variables using the biserial correlation coefficient (Pearson, 1909; Soper, 1914; Jacobs & Viechtbauer, 2017).
 
          Here, one again needs to specify \code{m1i} and \code{m2i} for the observed means of the two groups, \code{sd1i} and \code{sd2i} for the observed standard deviations, and \code{n1i} and \code{n2i} for the number of individuals in each group. The options for the \code{measure} argument are then:
          \itemize{
@@ -257,7 +247,7 @@ escalc(measure, formula, \dots)
 
       \subsection{Measures for Event Counts}{
 
-         Various measures can be used to characterize individual groups when the dependent variable assessed is an event count. Here, one needs to specify \code{xi} and \code{ti}, denoting the total number of events that occurred and the total person-times at risk, respectively. The options for the \code{measure} argument are then:
+         Various measures can be used to characterize individual groups when the dependent variable assessed is an event count. Here, one needs to specify \code{xi} and \code{ti}, denoting the number of events that occurred and the total person-times at risk, respectively. The options for the \code{measure} argument are then:
          \itemize{
          \item \code{"IR"} for the \emph{raw incidence rate}.
          \item \code{"IRLN"} for the \emph{log transformed incidence rate}.
@@ -289,7 +279,7 @@ escalc(measure, formula, \dots)
 
       \subsection{Measures for Dichotomous Variables}{
 
-         For dichotomous variables, the data for a study of this type gives risk to a paired \eqn{2 \times 2}{2x2} table, which is of the form:
+         For dichotomous variables, the data for a study of this type gives rise to a paired \eqn{2 \times 2}{2x2} table, which is of the form:
          \tabular{lcc}{
                          \tab trt 2 outcome 1 \tab trt 2 outcome 2 \cr
          trt 1 outcome 1 \tab \code{ai}       \tab \code{bi} \cr
@@ -363,102 +353,6 @@ escalc(measure, formula, \dots)
 
    }
 
-   \subsection{Formula Interface}{
-
-      There are two general ways of specifying the data for computing the various effect size or outcome measures when using the \code{escalc} function, the default and a formula interface. When using the default interface, which is described above, the information needed to compute the various outcome measures is passed to the function via the various arguments outlined above (i.e., arguments \code{ai} through \code{ni}).
-
-      The formula interface works as follows. As above, the argument \code{measure} is a character string specifying which outcome measure should be calculated. The \code{formula} argument is then used to specify the data structure as a multipart formula. The \code{data} argument can be used to specify a data frame containing the variables in the formula. The \code{add}, \code{to}, and \code{vtype} arguments work as described above.
-
-      \subsection{Outcome Measures for Two-Group Comparisons}{
-
-         \subsection{Measures for Dichotomous Variables}{
-
-            For \eqn{2 \times 2}{2x2} table data, the \code{formula} argument takes the form \code{outcome ~ group | study}, where \code{group} is a two-level factor specifying the rows of the tables, \code{outcome} is a two-level factor specifying the columns of the tables (the two possible outcomes), and \code{study} is a factor specifying the study factor. The \code{weights} argument is used to specify the frequencies in the various cells.
-
-         }
-
-         \subsection{Measures for Event Counts}{
-
-            For two-group comparisons with event counts, the \code{formula} argument takes the form \code{events/times ~ group | study}, where \code{group} is a two-level factor specifying the group factor and \code{study} is a factor specifying the study factor. The left-hand side of the formula is composed of two parts, with the first variable for the number of events and the second variable for the person-times at risk.
-
-         }
-
-         \subsection{Measures for Quantitative Variables}{
-
-            For two-group comparisons with quantitative variables, the \code{formula} argument takes the form \code{means/sds ~ group | study}, where \code{group} is a two-level factor specifying the group factor and \code{study} is a factor specifying the study factor. The left-hand side of the formula is composed of two parts, with the first variable for the means and the second variable for the standard deviations. The \code{weights} argument is used to specify the sample sizes in the groups.
-
-         }
-
-      }
-
-      \subsection{Outcome Measures for Variable Association}{
-
-         \subsection{Measures for Two Quantitative Variables}{
-
-            For these outcome measures, the \code{formula} argument takes the form \code{outcome ~ 1 | study}, where \code{outcome} is used to specify the observed correlations and \code{study} is a factor specifying the study factor. The \code{weights} argument is used to specify the sample sizes.
-
-         }
-
-         \subsection{Measures for Two Dichotomous Variables}{
-
-            Here, the data layout is assumed to be the same as for two-group comparisons with dichotomous variables. Hence, the \code{formula} argument is specified in the same manner.
-
-         }
-
-         \subsection{Measures for Mixed Variable Types}{
-
-            Here, the data layout is assumed to be the same as for two-group comparisons with quantitative variables. Hence, the \code{formula} argument is specified in the same manner.
-
-         }
-
-      }
-
-      \subsection{Outcome Measures for Individual Groups}{
-
-         \subsection{Measures for Dichotomous Variables}{
-
-            For these outcome measures, the \code{formula} argument takes the form \code{outcome ~ 1 | study}, where \code{outcome} is a two-level factor specifying the columns of the tables (the two possible outcomes) and \code{study} is a factor specifying the study factor. The \code{weights} argument is used to specify the frequencies in the various cells.
-
-         }
-
-         \subsection{Measures for Event Counts}{
-
-            For these outcome measures, the \code{formula} argument takes the form \code{events/times ~ 1 | study}, where \code{study} is a factor specifying the study factor. The left-hand side of the formula is composed of two parts, with the first variable for the number of events and the second variable for the person-times at risk.
-
-         }
-
-         \subsection{Measures for Quantitative Variables}{
-
-            For this outcome measures, the \code{formula} argument takes the form \code{means/sds ~ 1 | study}, where \code{study} is a factor specifying the study factor. The left-hand side of the formula is composed of two parts, with the first variable for the means and the second variable for the standard deviations. The \code{weights} argument is used to specify the sample sizes.
-
-         }
-
-      }
-
-      \subsection{Outcome Measures for Change or Matched Pairs.}{
-
-         The formula interface is currently not implemented for measures for change or matched pairs.
-
-      }
-
-      \subsection{Other Outcome Measures for Meta-Analyses}{
-
-         \subsection{Cronbach's alpha and Transformations Thereof}{
-
-            For these outcome measures, the \code{formula} argument takes the form \code{alpha/items ~ 1 | study}, where \code{study} is a factor specifying the study factor. The left-hand side of the formula is composed of two parts, with the first variable for the Cronbach's alpha values and the second variable for the number of items.
-
-         }
-
-         \subsection{Partial and Semi-Partial Correlations}{
-
-            The formula interface is currently not implemented for these measures.
-
-         }
-
-      }
-
-   }
-
    \subsection{Converting a Data Frame to an 'escalc' Object}{
 
       The function can also be used to convert a regular data frame to an 'escalc' object. One simply sets the \code{measure} argument to one of the options described above (or to \code{measure="GEN"} for a generic outcome measure not further specified) and passes the observed effect sizes or outcomes via the \code{yi} argument and the corresponding sampling variances via the \code{vi} argument (or the standard errors via the \code{sei} argument).
@@ -479,8 +373,6 @@ escalc(measure, formula, \dots)
 }
 \note{
    The variable names specified under \code{var.names} should be syntactically valid variable names. If necessary, they are adjusted so that they are.
-
-   For standard meta-analyses using the typical (wide-format) data layout (i.e., one row in the dataset per study), the default interface is typically easier to use. The advantage of the formula interface is that it can, in principle, handle more complicated data structures (e.g., studies with more than two treatment groups or more than two outcomes). While such functionality is currently not implemented, this may be the case in the future.
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
@@ -538,6 +430,8 @@ escalc(measure, formula, \dots)
    Hedges, L. V., Gurevitch, J., & Curtis, P. S. (1999). The meta-analysis of response ratios in experimental ecology. \emph{Ecology}, \bold{80}, 1150--1156.
 
    Higgins, J. P. T., & Green, S. (Eds.) (2008). \emph{Cochrane handbook for systematic reviews of interventions}. Chichester, England: Wiley.
+
+   Jacobs, P., & Viechtbauer, W. (2017). Estimation of the biserial correlation and its sampling variance for use in meta-analysis. \emph{Research Synthesis Methods}, \bold{8}, 161--180.
 
    Kirk, D. B. (1973). On the numerical approximation of the bivariate normal (tetrachoric) correlation coefficient. \emph{Psychometrika}, \bold{38}, 259--268.
 
@@ -601,11 +495,6 @@ dat[1:12,10:11] <- NA
 dat[13,4:7] <- NA
 dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat, replace=FALSE)
 dat
-
-### using formula interface (first rearrange data into long format)
-dat.long <- to.long(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg,
-                    data=dat, append=FALSE, vlong=TRUE)
-escalc(measure="RR", outcome ~ group | study, weights=freq, data=dat.long)
 
 ### convert a regular data frame to an 'escalc' object
 ### dataset from Lipsey & Wilson (2001), Table 7.1, page 130
