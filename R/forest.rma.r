@@ -13,7 +13,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
       stop(mstyle$stop("Argument 'x' must be an object of class \"rma\"."))
 
    if (inherits(x, "rma.ls"))
-      stop(mstyle$stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!"))
+      stop(mstyle$stop("Method not available for objects of class \"rma.ls\"."))
 
    na.act <- getOption("na.action")
 
@@ -115,7 +115,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
    ### TODO: remove this when there is a weights() function for 'rma.glmm' objects
    if (inherits(x, "rma.glmm") && showweights)
-      stop(mstyle$stop("Option 'showweights=TRUE' currently not possible for 'rma.glmm' objects. Sorry!"))
+      stop(mstyle$stop("Option 'showweights=TRUE' not possible for 'rma.glmm' objects."))
 
    #########################################################################
 

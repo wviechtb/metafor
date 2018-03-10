@@ -17,10 +17,10 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
       stop(mstyle$stop("Argument 'object' must be an object of class \"rma.uni\"."))
 
    if (inherits(object, "robust.rma"))
-      stop(mstyle$stop("Method not yet implemented for objects of class \"robust.rma\". Sorry!"))
+      stop(mstyle$stop("Method not available for objects of class \"robust.rma\"."))
 
    if (inherits(object, "rma.ls"))
-      stop(mstyle$stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!"))
+      stop(mstyle$stop("Method not available for objects of class \"rma.ls\"."))
 
    x <- object
 

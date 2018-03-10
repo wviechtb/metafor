@@ -45,7 +45,7 @@ residuals.rma <- function(object, type="response", ...) {
    if (type == "pearson") {
 
       if (inherits(object, c("rma.mh", "rma.peto", "rma.glmm")))
-         stop(mstyle$stop("Extraction of Pearson residuals not implemented for objects of class \"rma.mh\", \"rma.peto\", or \"rma.glmm\"."))
+         stop(mstyle$stop("Extraction of Pearson residuals not available for objects of class \"rma.mh\", \"rma.peto\", or \"rma.glmm\"."))
 
       out <- c(object$yi.f - object$X.f %*% object$beta)
       out[abs(out) < 100 * .Machine$double.eps] <- 0
@@ -63,7 +63,7 @@ residuals.rma <- function(object, type="response", ...) {
       ### but only for the Cholesky residuals is QE = sum(residuals(res, type="cholesky)^2) for models where M (or rather: V) is not diagonal
 
       if (inherits(object, c("rma.mh", "rma.peto", "rma.glmm")))
-         stop(mstyle$stop("Extraction of Cholesky residuals not implemented for objects of class \"rma.mh\", \"rma.peto\", or \"rma.glmm\"."))
+         stop(mstyle$stop("Extraction of Cholesky residuals not available for objects of class \"rma.mh\", \"rma.peto\", or \"rma.glmm\"."))
 
       out <- c(object$yi - object$X %*% object$beta)
       out[abs(out) < 100 * .Machine$double.eps] <- 0

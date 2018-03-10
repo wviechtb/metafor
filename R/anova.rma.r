@@ -9,7 +9,7 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
       stop(mstyle$stop("Function not applicable for objects of class \"rma.mh\" or \"rma.peto\"."))
 
    if (inherits(object, "rma.glmm"))
-      stop(mstyle$stop("Method not yet implemented for objects of class \"rma.glmm\". Sorry!"))
+      stop(mstyle$stop("Method not available for objects of class \"rma.glmm\"."))
 
    if (missing(digits))
       digits <- object$digits
@@ -147,7 +147,7 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
          stop(mstyle$stop("Function not applicable for objects of class \"rma.mh\" or \"rma.peto\"."))
 
       if (inherits(object2, "rma.glmm"))
-         stop(mstyle$stop("Method not yet implemented for objects of class \"rma.glmm\". Sorry!"))
+         stop(mstyle$stop("Method not available for objects of class \"rma.glmm\"."))
 
       if (!identical(class(object), class(object2)))
          stop(mstyle$stop("Class of 'object1' must be the same as class of 'object2'."))

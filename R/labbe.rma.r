@@ -7,7 +7,7 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, lty, ..
       stop(mstyle$stop("Argument 'x' must be an object of class \"rma\"."))
 
    if (inherits(x, "rma.ls"))
-      stop(mstyle$stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!"))
+      stop(mstyle$stop("Method not available for objects of class \"rma.ls\"."))
 
    if (!x$int.only)
       stop(mstyle$stop("L'Abbe plot only applicable for models without moderators."))

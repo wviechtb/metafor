@@ -6,7 +6,7 @@ profile.rma.uni <- function(fitted, xlim, ylim, steps=20, progbar=TRUE, parallel
       stop(mstyle$stop("Argument 'fitted' must be an object of class \"rma.uni\"."))
 
    if (inherits(fitted, "rma.ls"))
-      stop(mstyle$stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!"))
+      stop(mstyle$stop("Method not available for objects of class \"rma.ls\"."))
 
    if (steps < 2)
       stop(mstyle$stop("Argument 'steps' must be >= 2."))

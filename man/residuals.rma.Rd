@@ -15,7 +15,7 @@
 \usage{
 \method{residuals}{rma}(object, type="response", \dots)
 
-\method{rstandard}{rma.uni}(model, digits, \dots)
+\method{rstandard}{rma.uni}(model, digits, type="marginal", \dots)
 \method{rstandard}{rma.mh}(model, digits, \dots)
 \method{rstandard}{rma.mv}(model, digits, cluster, \dots)
 \method{rstandard}{rma.peto}(model, digits, \dots)
@@ -28,12 +28,12 @@
 }
 \arguments{
    \item{object}{an object of class \code{"rma"} (for \code{residuals}).}
-   \item{type}{the type of residuals which should be returned (by \code{residuals}). The alternatives are: \code{"response"} (default), \code{"rstandard"}, \code{"rstudent"}, and \code{"pearson"}.}
+   \item{type}{the type of residuals which should be returned. For \code{residuals}), the alternatives are: \code{"response"} (default), \code{"rstandard"}, \code{"rstudent"}, and \code{"pearson"}. For \code{rstandard.rma.uni}, the alternatives ares: \code{"marginal"} (default) and \code{"conditional"}. See \sQuote{Details}.}
    \item{model}{an object of class \code{"rma.uni"}, \code{"rma.mh"}, \code{"rma.peto"}, or \code{"rma.mv"} (for \code{rstandard} and \code{rstudent}).}
    \item{cluster}{optional vector specifying a clustering variable to use for computing cluster-level multivariate standardized residuals (only for \code{"rma.mv"} objects).}
    \item{reestimate}{logical indicating whether variance/correlation components should be re-estimated after deletion of the \eqn{i}th study/cluster (the default is \code{TRUE}).}
    \item{parallel}{character string indicating whether parallel processing should be used (the default is \code{"no"}). For parallel processing, set to either \code{"snow"} or \code{"multicore"}. See \sQuote{Details}.}
-   \item{ncpus}{integer specifying the number of processes to be used in the parallel processing.}
+   \item{ncpus}{integer specifying the number of processes to use in the parallel processing.}
    \item{cl}{optional snow cluster to use if \code{parallel="snow"}. If not supplied, a cluster on the local machine is created for the duration of the call.}
    \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is to take the value from the object).}
    \item{progbar}{logical indicating whether a progress bar should be shown (only for \code{rstudent}) (the default is \code{FALSE}).}
@@ -50,7 +50,9 @@
 
    If a particular study fits the model, its standardized residual follows (asymptotically) a standard normal distribution. A large standardized residual for a study therefore may suggest that the study does not fit the assumed model (i.e., it may be an outlier).
 
-   For \code{"rma.mv"} objects, one can also specify a clustering variable. Then \code{rstandard} and \code{rstudent} also compute cluster-level multivariate (internally or externally) standardized residuals. If all outcomes within a cluster fit the model, then the multivariate standardized residual follows (asymptotically) a chi-square distribution with \if{latex}{\eqn{k_i}}\if{html}{\eqn{kᵢ}}\if{text}{\eqn{k_i}} degrees of freedom (where \if{latex}{\eqn{k_i}}\if{html}{\eqn{kᵢ}}\if{text}{\eqn{k_i}} denotes the number of outcomes within the cluster).
+   For \code{"rma.uni"} objects, \code{rstandard.rma.uni} also can compute conditional residuals (when \code{type="conditional"}), which are the deviations of the observed outcomes from the best linear unbiased predictions (BLUPs) of the study-specific true outcomes (see \code{\link{blup.rma.uni}}).
+
+   For \code{"rma.mv"} objects, one can specify a clustering variable (via the \code{cluster} argument). Then \code{rstandard} and \code{rstudent} also compute cluster-level multivariate (internally or externally) standardized residuals. If all outcomes within a cluster fit the model, then the multivariate standardized residual for the cluster follows (asymptotically) a chi-square distribution with \if{latex}{\eqn{k_i}}\if{html}{\eqn{kᵢ}}\if{text}{\eqn{k_i}} degrees of freedom (where \if{latex}{\eqn{k_i}}\if{html}{\eqn{kᵢ}}\if{text}{\eqn{k_i}} denotes the number of outcomes within the cluster).
 
    See also \code{\link{influence.rma.uni}} and \code{\link{influence.rma.mv}} for other leave-one-out diagnostics that are useful for detecting influential cases in models fitted with the \code{\link{rma.uni}} and \code{\link{rma.mv}} functions.
 }

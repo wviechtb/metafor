@@ -6,16 +6,16 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
       stop(mstyle$stop("Argument 'x' must be an object of class \"rma\"."))
 
    if (inherits(x, "rma.glmm"))
-      stop(mstyle$stop("Method not yet implemented for objects of class \"rma.glmm\". Sorry!"))
+      stop(mstyle$stop("Method not available for objects of class \"rma.glmm\"."))
 
    if (inherits(x, "rma.mv"))
-      stop(mstyle$stop("Method not yet implemented for objects of class \"rma.mv\". Sorry!"))
+      stop(mstyle$stop("Method not available for objects of class \"rma.mv\"."))
 
    if (inherits(x, "robust.rma"))
-      stop(mstyle$stop("Method not yet implemented for objects of class \"robust.rma\". Sorry!"))
+      stop(mstyle$stop("Method not available for objects of class \"robust.rma\"."))
 
    if (inherits(x, "rma.ls"))
-      stop(mstyle$stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!"))
+      stop(mstyle$stop("Method not available for objects of class \"rma.ls\"."))
 
    na.act <- getOption("na.action")
 

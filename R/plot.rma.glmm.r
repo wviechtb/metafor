@@ -7,6 +7,6 @@ plot.rma.glmm <- function(x, qqplot=FALSE, ...) {
    if (!inherits(x, "rma.glmm"))
       stop(mstyle$stop("Argument 'x' must be an object of class \"rma.glmm\"."))
 
-   stop(mstyle$stop("Method not yet implemented for objects of class \"rma.glmm\". Sorry!"))
+   stop(mstyle$stop("Method not available for objects of class \"rma.glmm\"."))
 
 }

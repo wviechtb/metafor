@@ -35,7 +35,7 @@ ranef.rma.uni <- function(object, level, digits, transf, targs, ...) {
    ### TODO: check computations for user-defined weights
 
    if (!is.null(x$weights) || !x$weighted)
-      stop(mstyle$stop("Extraction of random effects for models with non-standard weights not currently implemented."))
+      stop(mstyle$stop("Extraction of random effects not available for models with non-standard weights."))
 
    #########################################################################
 

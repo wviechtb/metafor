@@ -9,7 +9,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
       stop(mstyle$stop("Argument 'object' must be an object of class \"rma\"."))
 
    if (inherits(object, "rma.ls"))
-      stop(mstyle$stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!"))
+      stop(mstyle$stop("Method not available for objects of class \"rma.ls\"."))
 
    na.act <- getOption("na.action")
 

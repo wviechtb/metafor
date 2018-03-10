@@ -6,7 +6,7 @@ rstudent.rma.mv <- function(model, digits, progbar=FALSE, cluster, reestimate=TR
       stop(mstyle$stop("Argument 'model' must be an object of class \"rma.mv\"."))
 
    if (inherits(model, "robust.rma"))
-      stop(mstyle$stop("Method not yet implemented for objects of class \"robust.rma\". Sorry!"))
+      stop(mstyle$stop("Method not available for objects of class \"robust.rma\"."))
 
    na.act <- getOption("na.action")
 

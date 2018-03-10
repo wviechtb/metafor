@@ -1,4 +1,4 @@
-Changes in Version 2.1-0 (2018-03-08)
+Changes in Version 2.1-0 (2018-03-10)
 =====================================
 
    o output is now styled/colored when 'crayon' package is loaded (this only
@@ -17,6 +17,9 @@ Changes in Version 2.1-0 (2018-03-08)
    o rstudent.rma.uni() now computes the SE of the deleted residuals in such
      a way that it will yield identical results to a mean shift outlier
      model even when that model is fitted with test="knha"
+
+   o rstandard.rma.uni() gains 'type' argument, and can now also compute
+     conditional residuals (it still computes marginal residuals by default)
 
    o cooks.distance.rma.mv() gains 'cluster' argument, so that the Cook's
      distances can be computed for groups of estimates

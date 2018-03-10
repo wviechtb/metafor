@@ -6,11 +6,13 @@ simulate.rma <- function (object, nsim = 1, seed = NULL, ...) {
       stop(mstyle$stop("Argument 'object' must be an object of class \"rma\"."))
 
    if (inherits(object, "rma.glmm"))
-      stop(mstyle$stop("Method not yet implemented for objects of class \"rma.glmm\". Sorry!"))
+      stop(mstyle$stop("Method not available for objects of class \"rma.glmm\"."))
+
    if (inherits(object, "rma.mh"))
-      stop(mstyle$stop("Method not yet implemented for objects of class \"rma.mh\". Sorry!"))
+      stop(mstyle$stop("Method not available for objects of class \"rma.mh\"."))
+
    if (inherits(object, "rma.peto"))
-      stop(mstyle$stop("Method not yet implemented for objects of class \"rma.peto\". Sorry!"))
+      stop(mstyle$stop("Method not available for objects of class \"rma.peto\"."))
 
    na.act <- getOption("na.action")
 

@@ -6,10 +6,10 @@ leave1out.rma.uni <- function(x, digits, transf, targs, progbar=FALSE, ...) {
       stop(mstyle$stop("Argument 'x' must be an object of class \"rma.uni\"."))
 
    if (inherits(x, "robust.rma"))
-      stop(mstyle$stop("Method not yet implemented for objects of class \"robust.rma\". Sorry!"))
+      stop(mstyle$stop("Method not available for objects of class \"robust.rma\"."))
 
    if (inherits(x, "rma.ls"))
-      stop(mstyle$stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!"))
+      stop(mstyle$stop("Method not available for objects of class \"rma.ls\"."))
 
    na.act <- getOption("na.action")
 

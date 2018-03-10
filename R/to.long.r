@@ -22,7 +22,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
       stop(mstyle$stop("Unknown 'measure' specified."))
 
    if (is.element(measure, c("CVR","VR","PCOR","ZPCOR","SPCOR","CVLN","SDLN","VRC")))
-      stop(mstyle$stop("Function (currently) not implemented for this outcome measure."))
+      stop(mstyle$stop("Function not available for this outcome measure."))
 
    na.act <- getOption("na.action")
 

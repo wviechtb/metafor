@@ -40,7 +40,7 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
    ### TODO: check computations for user-defined weights
 
    if (!is.null(x$W))
-      stop(mstyle$stop("Extraction of random effects for models with non-standard weights not currently implemented."))
+      stop(mstyle$stop("Extraction of random effects not available for models with non-standard weights."))
 
    #########################################################################
 
@@ -154,7 +154,7 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
 
       if (x$struct[1] == "GEN") {
          if (verbose)
-            message(mstyle$message("Computation of BLUPs not yet implemented for struct=\"GEN\"."))
+            message(mstyle$message("Computation of BLUPs not available for struct=\"GEN\"."))
       } else {
 
       if (verbose)
@@ -212,7 +212,7 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
 
       if (x$struct[2] == "GEN") {
          if (verbose)
-            message(mstyle$message("Computation of BLUPs not yet implemented for struct=\"GEN\"."))
+            message(mstyle$message("Computation of BLUPs not available for struct=\"GEN\"."))
       } else {
 
       if (verbose)

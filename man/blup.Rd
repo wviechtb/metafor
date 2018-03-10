@@ -3,7 +3,7 @@
 \alias{blup.rma.uni}
 \title{Best Linear Unbiased Predictions for 'rma.uni' Objects}
 \description{
-   The function calculates best linear unbiased predictions (BLUPs) of the true outcomes by combining the fitted values based on the fixed effects and the estimated contributions of the random effects for objects of class \code{"rma.uni"}. Corresponding standard errors and prediction interval bounds are also provided.
+   The function calculates best linear unbiased predictions (BLUPs) of the study-specific true outcomes by combining the fitted values based on the fixed effects and the estimated contributions of the random effects for objects of class \code{"rma.uni"}. Corresponding standard errors and prediction interval bounds are also provided.
 }
 \usage{
 blup(x, \dots)
@@ -32,6 +32,8 @@ blup(x, \dots)
    For best linear unbiased predictions of only the random effects, see \code{\link{ranef}}.
 
    For predicted/fitted values that are based only on the fixed effects of the model, see \code{\link{fitted.rma}} and \code{\link{predict.rma}}.
+
+   For conditional residuals (the deviations of the observed outcomes from the BLUPs), see \code{rstandard.rma.uni} with \code{type="conditional"}.
 
    Fixed-effects models (with or without moderators) do not contain random study effects. The BLUPs for these models will therefore be equal to the usual fitted values, that is, those obtained with \code{\link{fitted.rma}} and \code{\link{predict.rma}}.
 

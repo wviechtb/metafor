@@ -6,7 +6,7 @@ influence.rma.uni <- function(model, digits, progbar=FALSE, ...) {
       stop(mstyle$stop("Argument 'model' must be an object of class \"rma.uni\"."))
 
    if (inherits(model, "rma.ls"))
-      stop(mstyle$stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!"))
+      stop(mstyle$stop("Method not available for objects of class \"rma.ls\"."))
 
    na.act <- getOption("na.action")
 
@@ -33,7 +33,7 @@ influence.rma.uni <- function(model, digits, progbar=FALSE, ...) {
       digits <- x$digits
 
    if (!measure == "cooks.distance" && inherits(model, "robust.rma"))
-      stop(mstyle$stop("Method not yet implemented for objects of class \"robust.rma\". Sorry!"))
+      stop(mstyle$stop("Method not available for objects of class \"robust.rma\"."))
 
    #########################################################################
 
