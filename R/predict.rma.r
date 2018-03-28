@@ -139,6 +139,9 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
       ### if new moderator values have been specified
 
+      if (!(inherits(newmods, "matrix") || inherits(newmods, "numeric")))
+         stop(mstyle$stop(paste0("Argument 'newmods' should be a vector or matrix, but is of class '", class(newmods), "'.")))
+
       if ((!x$int.incl && x$p == 1L) || (x$int.incl && x$p == 2L)) {
          k.new <- length(newmods)                               # if single moderator (multiple k.new possible) (either without or with intercept in the model)
          X.new <- cbind(c(newmods))                             #
@@ -175,6 +178,9 @@ level, digits, transf, targs, vcov=FALSE, ...) {
             X.new <- X.new[,pos,drop=FALSE]
          }
       }
+
+      if (any(apply(X.new, 2, class) != "numeric"))
+         stop(mstyle$stop(paste0("Argument 'newmods' should only contain numeric variables.")))
 
       ### if the user has specified newmods and an intercept was included in the original model, add the intercept to X.new
       ### but user can also decide to remove the intercept from the predictions with intercept=FALSE
