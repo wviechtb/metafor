@@ -2237,20 +2237,27 @@
       ### determined by the current value(s) of 'alpha'; this is actually also how the standard RE/ME model is fitted;
       ### but is this really the best way of doing this? one could also optimize over beta and alpha jointly
       W <- diag(wi, nrow=k, ncol=k)
+      stXWX <- try(.invcalc(X=X, W=W, k=k), silent=TRUE)
 
-      #print(any(wi <= 0))
-      stXWX <- .invcalc(X=X, W=W, k=k)
-      beta <- stXWX %*% crossprod(X,W) %*% as.matrix(yi)
+      if (inherits(stXWX, "try-error")) {
 
-      ### compute residual sum of squares
-      RSS <- sum(wi*(yi - X %*% beta)^2)
+         llval <- -Inf
 
-      ### log-likelihood (could leave out additive constants)
-      if (!reml) {
-         llval <- -1/2 * (k) * log(2*base::pi) - 1/2 * sum(log(vi + tau2)) - 1/2 * RSS
       } else {
-         llval <- -1/2 * (k-pX) * log(2*base::pi) + ifelse(REMLf, 1/2 * determinant(crossprod(X), logarithm=TRUE)$modulus, 0) +
-                  -1/2 * sum(log(vi + tau2)) - 1/2 * determinant(crossprod(X,W) %*% X, logarithm=TRUE)$modulus - 1/2 * RSS
+
+         beta <- stXWX %*% crossprod(X,W) %*% as.matrix(yi)
+
+         ### compute residual sum of squares
+         RSS <- sum(wi*(yi - X %*% beta)^2)
+
+         ### log-likelihood (could leave out additive constants)
+         if (!reml) {
+            llval <- -1/2 * (k) * log(2*base::pi) - 1/2 * sum(log(vi + tau2)) - 1/2 * RSS
+         } else {
+            llval <- -1/2 * (k-pX) * log(2*base::pi) + ifelse(REMLf, 1/2 * determinant(crossprod(X), logarithm=TRUE)$modulus, 0) +
+                     -1/2 * sum(log(vi + tau2)) - 1/2 * determinant(crossprod(X,W) %*% X, logarithm=TRUE)$modulus - 1/2 * RSS
+         }
+
       }
 
    }

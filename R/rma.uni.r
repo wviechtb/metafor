@@ -1283,7 +1283,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
       }
 
       if (!requireNamespace("numDeriv", quietly=TRUE))
-         stop(mstyle$stop("Please install the 'numDeriv' package to fit a location-scale model."))
+         stop(mstyle$stop("Please install the 'numDeriv' package to fit location-scale models."))
 
       ### drop redundant predictors
 
@@ -1358,7 +1358,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
       if (verbose > 1)
          message(mstyle$message("Estimating scale parameters ...\n"))
 
-      ### obtain initial values for beta (only need this when optimizing over beta and alpha jointly)
+      ### obtain initial values for beta (would only need this when optimizing over beta and alpha jointly)
 
       #wi <- 1/vi
       #W  <- diag(wi, nrow=k, ncol=k)
@@ -1404,8 +1404,9 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
       if (link == "log") {
 
-         optcall <- paste(optimizer, "(", par.arg, "=con$alpha.init, .ll.rma.ls, ", ifelse(optimizer=="optim", "method=optmethod, ", ""),
+         optcall <- paste(optimizer, "(", par.arg, "=c(con$alpha.init), .ll.rma.ls, ", ifelse(optimizer=="optim", "method=optmethod, ", ""),
                                                        "yi=yi, vi=vi, X=X, Z=Z, reml=reml, k=k, pX=p, verbose=verbose, digits=digits,
+                                                       #hessian=TRUE,
                                                        REMLf=con$REMLf, link=link", ctrl.arg, ")\n", sep="")
          #return(optcall)
          opt.res <- try(eval(parse(text=optcall)), silent=!verbose)
@@ -1473,7 +1474,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
          mZ <- rbind(c(1, -1*ifelse(is.d[-1], 0, meanZ/sdZ)), cbind(0, diag(ifelse(is.d[-1], 1, 1/sdZ), nrow=length(is.d)-1, ncol=length(is.d)-1)))
          alpha <- mZ %*% alpha
          vb.alpha <- mZ %*% vb.alpha %*% t(mZ)
-         Z  <- Zsave
+         Z <- Zsave
       }
 
       se.alpha <- sqrt(diag(vb.alpha))

@@ -19,7 +19,7 @@ vcov.rma <- function(object, type="fixed", ...) {
       out <- object$vb
 
       if (inherits(object, "rma.ls"))
-         out <- list(location = object$vb, scale = object$vb.alpha)
+         out <- list(beta = object$vb, alpha = object$vb.alpha)
 
       return(out)
 

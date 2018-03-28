@@ -607,7 +607,6 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    if (con$optimizer == "optim") {
       con.pos <- pmatch(names(optCtrl), "REPORT", nomatch=0) ### set REPORT to 1 if it is not already set by the user
       if (sum(con.pos) > 0) {
-         optCtrl[which(con.pos == 1)] <- 1
          names(optCtrl)[which(con.pos == 1)] <- "REPORT"
       } else {
          optCtrl$REPORT <- 1
@@ -658,28 +657,24 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    }
    con.pos <- pmatch(names(intCtrl), "lower", nomatch=0)
    if (sum(con.pos) > 0) {
-      intCtrl[which(con.pos == 1)] <- -Inf
       names(intCtrl)[which(con.pos == 1)] <- "lower"
    } else {
       intCtrl$lower <- -Inf
    }
    con.pos <- pmatch(names(intCtrl), "upper", nomatch=0)
    if (sum(con.pos) > 0) {
-      intCtrl[which(con.pos == 1)] <- Inf
       names(intCtrl)[which(con.pos == 1)] <- "upper"
    } else {
       intCtrl$upper <- Inf
    }
    con.pos <- pmatch(names(intCtrl), "subdivisions", nomatch=0)
    if (sum(con.pos) > 0) {
-      intCtrl[which(con.pos == 1)] <- 100L
       names(intCtrl)[which(con.pos == 1)] <- "subdivisions"
    } else {
       intCtrl$subdivisions <- 100L
    }
    con.pos <- pmatch(names(intCtrl), "rel.tol", nomatch=0)
    if (sum(con.pos) > 0) {
-      intCtrl[which(con.pos == 1)] <- .Machine$double.eps^0.25
       names(intCtrl)[which(con.pos == 1)] <- "rel.tol"
    } else {
       intCtrl$rel.tol <- .Machine$double.eps^0.25

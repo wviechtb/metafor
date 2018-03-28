@@ -28,7 +28,7 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
    if (!is.element(to, c("all","only0","if0all","none")))
       stop(mstyle$stop("Unknown 'to' argument specified."))
 
-   if (any(!is.element(vtype, c("UB","LS","HO","ST","CS")), na.rm=TRUE)) ### vtype can be an entire vector, so use any() and na.rm=TRUE
+   if (any(!is.element(vtype, c("UB","LS","HO","ST","CS","AV")), na.rm=TRUE)) ### vtype can be an entire vector, so use any() and na.rm=TRUE
       stop(mstyle$stop("Unknown 'vtype' argument specified."))
 
    if (add.measure) {
@@ -306,7 +306,7 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
                }
 
                ### estimator assuming homogeneity (using the average proportions)
-               if (vtype[i] == "HO") {
+               if (vtype[i] == "AV") {
                   if (addvi) {
                      vi[i] <- mnwp1i*(1-mnwp1i)/n1i[i] + mnwp2i*(1-mnwp2i)/n2i[i]
                   } else {
@@ -755,7 +755,7 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
                   vi[i] <- 1/n1i[i] + 1/n2i[i] + yi[i]^2/(2*ni[i])
 
                ### estimator assuming homogeneity (using sample size weighted average of the yi's)
-               if (vtype[i] == "HO")
+               if (vtype[i] == "AV")
                   vi[i] <- 1/n1i[i] + 1/n2i[i] + mnwyi^2/(2*ni[i])
 
             }
@@ -958,7 +958,7 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
                   vi[i] <- (1-yi[i]^2)^2/(ni[i]-1)
 
                ### estimator assuming homogeneity (using sample size weighted average of the yi's)
-               if (vtype[i] == "HO")
+               if (vtype[i] == "AV")
                   vi[i] <- (1-mnwyi^2)^2/(ni[i]-1)
 
             }
@@ -1174,7 +1174,7 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
                }
 
                ### estimator assuming homogeneity (using the average proportion)
-               if (vtype[i] == "HO") {
+               if (vtype[i] == "AV") {
                   if (addvi) {
                      vi[i] <- mnwpri*(1-mnwpri)/ni[i]
                   } else {
@@ -1220,7 +1220,7 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
                }
 
                ### estimator assuming homogeneity (using the average proportion)
-               if (vtype[i] == "HO") {
+               if (vtype[i] == "AV") {
                   if (addvi) {
                      vi[i] <- 1/(mnwpri*ni[i]) - 1/ni[i]
                   } else {
@@ -1266,7 +1266,7 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
                }
 
                ### estimator assuming homogeneity (using the average proportion)
-               if (vtype[i] == "HO") {
+               if (vtype[i] == "AV") {
                   if (addvi) {
                      vi[i] <- 1/(mnwpri*ni[i]) + 1/((1-mnwpri)*ni[i])
                   } else {
