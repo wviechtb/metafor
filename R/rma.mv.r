@@ -1521,6 +1521,8 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
          stop(mstyle$stop("Cannot take Choleski decomposition of initial 'G' matrix."))
       con$tau2.init <- diag(G)        ### note: con$tau2.init and con$rho.init are the 'choled' values of the initial G matrix, so con$rho.init really
       con$rho.init <- G[upper.tri(G)] ### contains the 'choled' covariances; and these values are also passed on the .ll.rma.mv as the initial values
+      if (length(con$rho.init) == 0L)
+         con$rho.init <- 0
    } else {
       con$tau2.init <- log(tau2.init)
       if (struct[1] == "CAR")
@@ -1538,6 +1540,8 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
          stop(mstyle$stop("Cannot take Choleski decomposition of initial 'H' matrix."))
       con$gamma2.init <- diag(H)      ### note: con$gamma2.init and con$phi.init are the 'choled' values of the initial H matrix, so con$phi.init really
       con$phi.init <- H[upper.tri(H)] ### contains the 'choled' covariances; and these values are also passed on the .ll.rma.mv as the initial values
+      if (length(con$phi.init) == 0L)
+         con$phi.init <- 0
    } else {
       con$gamma2.init <- log(gamma2.init)
       if (struct[2] == "CAR")
