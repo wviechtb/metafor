@@ -285,6 +285,9 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
                mnwp2i.u <- sum(ci.u, na.rm=TRUE) / sum(n2i.u, na.rm=TRUE) ### sample size weighted average of proportions (same as sum(n2i.u*p2i.u)/sum(n2i.u))
             }
 
+            if (!all(is.element(vtype, c("UB","LS","AV"))))
+               stop(mstyle$stop("For this outcome measure, 'vtype' must be either 'UB', 'LS', or 'AV'."))
+
             for (i in seq_len(k)) {
 
                ### unbiased estimate of the sampling variance
@@ -355,6 +358,9 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
             pi2. <- (ci+di)/ni
             pi.1 <- (ai+ci)/ni
             pi.2 <- (bi+di)/ni
+
+            if (!all(is.element(vtype, c("ST","LS","CS"))))
+               stop(mstyle$stop("For this outcome measure, 'vtype' must be either 'ST', 'LS', or 'CS'."))
 
             for (i in seq_len(k)) {
 
@@ -713,6 +719,9 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
             vi <- rep(NA_real_, k)
 
+            if (!all(is.element(vtype, c("UB","LS","HO"))))
+               stop(mstyle$stop("For this outcome measure, 'vtype' must be either 'UB', 'LS', or 'HO'."))
+
             for (i in seq_len(k)) {
 
                ### unbiased estimate of the sampling variance (does not assume homoscedasticity)
@@ -743,6 +752,9 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
             vi <- rep(NA_real_, k)
 
             mnwyi <- sum(ni*yi, na.rm=TRUE) / sum(ni, na.rm=TRUE) ### sample size weighted average of yi's
+
+            if (!all(is.element(vtype, c("UB","LS","AV"))))
+               stop(mstyle$stop("For this outcome measure, 'vtype' must be either 'UB', 'LS', or 'AV'."))
 
             for (i in seq_len(k)) {
 
@@ -786,6 +798,9 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
             vi <- rep(NA_real_, k)
 
+            if (!all(is.element(vtype, c("LS","HO"))))
+               stop(mstyle$stop("For this outcome measure, 'vtype' must be either 'LS' or 'HO'."))
+
             for (i in seq_len(k)) {
 
                ### large sample approximation to the sampling variance (does not assume homoscedasticity)
@@ -816,6 +831,9 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
                   vtype <- rep(vtype, k)
 
                vi <- rep(NA_real_, k)
+
+               if (!all(is.element(vtype, c("ST","LS","CS"))))
+                  stop(mstyle$stop("For this outcome measure, 'vtype' must be either 'ST', 'LS', or 'CS'."))
 
                for (i in seq_len(k)) {
 
@@ -944,6 +962,9 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
             vi <- rep(NA_real_, k)
 
             mnwyi <- sum(ni*yi, na.rm=TRUE) / sum(ni, na.rm=TRUE) ### sample size weighted average of yi's
+
+            if (!all(is.element(vtype, c("UB","LS","AV"))))
+               stop(mstyle$stop("For this outcome measure, 'vtype' must be either 'UB', 'LS', or 'AV'."))
 
             for (i in seq_len(k)) {
 
@@ -1153,6 +1174,9 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
                mnwpri.u <- sum(xi.u, na.rm=TRUE) / sum(ni.u, na.rm=TRUE) ### sample size weighted average of proportions (same as sum(ni.u*pri.u)/sum(ni.u))
             }
 
+            if (!all(is.element(vtype, c("UB","LS","AV"))))
+               stop(mstyle$stop("For this outcome measure, 'vtype' must be either 'UB', 'LS', or 'AV'."))
+
             for (i in seq_len(k)) {
 
                ### unbiased estimate of the sampling variance
@@ -1208,6 +1232,9 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
                mnwpri.u <- sum(xi.u, na.rm=TRUE) / sum(ni.u, na.rm=TRUE) ### sample size weighted average of proportions (same as sum(ni.u*pri.u)/sum(ni.u))
             }
 
+            if (!all(is.element(vtype, c("LS","AV"))))
+               stop(mstyle$stop("For this outcome measure, 'vtype' must be either 'LS' or 'AV'."))
+
             for (i in seq_len(k)) {
 
                ### large sample approximation to the sampling variance
@@ -1253,6 +1280,9 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
             } else {
                mnwpri.u <- sum(xi.u, na.rm=TRUE) / sum(ni.u, na.rm=TRUE) ### sample size weighted average of proportions (same as sum(ni.u*pri.u)/sum(ni.u))
             }
+
+            if (!all(is.element(vtype, c("LS","AV"))))
+               stop(mstyle$stop("For this outcome measure, 'vtype' must be either 'LS' or 'AV'."))
 
             for (i in seq_len(k)) {
 
