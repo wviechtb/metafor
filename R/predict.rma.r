@@ -139,7 +139,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
       ### if new moderator values have been specified
 
-      if (!(inherits(newmods, "matrix") || inherits(newmods, "numeric")))
+      if (!(is.vector(newmods) || inherits(newmods, "matrix")))
          stop(mstyle$stop(paste0("Argument 'newmods' should be a vector or matrix, but is of class '", class(newmods), "'.")))
 
       if ((!x$int.incl && x$p == 1L) || (x$int.incl && x$p == 2L)) {
@@ -179,7 +179,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
          }
       }
 
-      if (any(apply(X.new, 2, class) != "numeric"))
+      if (inherits(X.new[1,1], "character"))
          stop(mstyle$stop(paste0("Argument 'newmods' should only contain numeric variables.")))
 
       ### if the user has specified newmods and an intercept was included in the original model, add the intercept to X.new
