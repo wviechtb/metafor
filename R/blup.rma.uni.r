@@ -43,7 +43,7 @@ blup.rma.uni <- function(x, level, digits, transf, targs, ...) {
    ### see Appendix in: Raudenbush, S. W., & Bryk, A. S. (1985). Empirical
    ### Bayes meta-analysis. Journal of Educational Statistics, 10(2), 75-98
 
-   li <- x$tau2 / (x$tau2 + x$vi.f)
+   li <- x$tau2.f / (x$tau2.f + x$vi.f)
 
    for (i in seq_len(x$k.f)[x$not.na]) { ### note: skipping NA cases
       Xi <- matrix(x$X.f[i,], nrow=1)

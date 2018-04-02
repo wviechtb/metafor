@@ -88,7 +88,7 @@ baujat.rma <- function(x, xlim, ylim, xlab, ylab, cex, symbol, grid=TRUE, progba
    ### x-axis values (use 'na.pass' to make sure we get a vector of length k.f)
 
    options(na.action = "na.pass")
-   xhati <- 1/(x$tau2 + x$vi.f) * resid(x)^2
+   xhati <- 1/(x$tau2.f + x$vi.f) * resid(x)^2
    options(na.action = na.act)
 
    #########################################################################

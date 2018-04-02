@@ -1803,7 +1803,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
    if (is.null(ddd$outlist)) {
 
       res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
-                  tau2=tau2, se.tau2=se.tau2, tau2.fix=tau2.fix,
+                  tau2=tau2, se.tau2=se.tau2, tau2.fix=tau2.fix, tau2.f=tau2,
                   k=k, k.f=k.f, k.eff=k.eff, p=p, p.eff=p.eff, parms=parms, m=m,
                   QE=QE, QEp=QEp, QM=QM, QMp=QMp, I2=I2, H2=H2, R2=R2,
                   int.only=int.only, int.incl=int.incl, allvipos=allvipos, coef.na=coef.na,
@@ -1826,6 +1826,8 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
          res$ci.ub.alpha <- ci.ub.alpha
          res$Z   <- Z
          res$Z.f <- Z.f
+         res$tau2.f <- rep(NA, k.f)
+         res$tau2.f[not.na] <- tau2
 
       }
 
