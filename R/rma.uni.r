@@ -119,6 +119,13 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
    mf <- match.call()
 
+   ### for certain measures, set add=0 by default unless user explicitly sets the add argument
+
+   addval <- mf[[match("add", names(mf))]]
+
+   if (is.element(measure, c("AS","PHI","RTET","IRSD","PAS","PFT","IRS","IRFT")) && is.null(addval))
+      add <- 0
+
    ### extract yi (either NULL if not specified, a vector, a formula, or an escalc object)
 
    mf.yi <- mf[[match("yi", names(mf))]]

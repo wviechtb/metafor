@@ -10,7 +10,7 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
    if (!is.element(measure, c("RR","OR","PETO","RD","AS","PHI","YUQ","YUY","RTET", ### 2x2 table measures
                               "PBIT","OR2D","OR2DN","OR2DL",                       ### - transformations to SMD
-                              "MPRD","MPRR","MPOR","MPORC","MPPETO",               ### - measures for matched pairs data
+                              "MPRD","MPRR","MPOR","MPORC","MPPETO",               ### - measures for matched pairs / pre-post data
                               "IRR","IRD","IRSD",                                  ### two-group person-time data measures
                               "MD","SMD","SMDH","ROM",                             ### two-group mean/SD measures
                               "CVR","VR",                                          ### coefficient of variation ratio, variability ratio
@@ -71,6 +71,8 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
    addyi  <- ifelse(is.null(ddd$addyi),  TRUE,  ddd$addyi)
    addvi  <- ifelse(is.null(ddd$addvi),  TRUE,  ddd$addvi)
 
+   #if (is.element(measure, c("AS")) && is.null(ddd$addyi))
+
    ### check if data argument has been specified
 
    if (missing(data))
@@ -102,6 +104,13 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
    mf.yi <- mf[[match("yi", names(mf))]]
    yi    <- eval(mf.yi, data, enclos=sys.frame(sys.parent()))
+
+   ### for certain measures, set add=0 by default unless user explicitly sets the add argument
+
+   addval <- mf[[match("add", names(mf))]]
+
+   if (is.element(measure, c("AS","PHI","RTET","IRSD","PAS","PFT","IRS","IRFT")) && is.null(addval))
+      add <- 0
 
    #########################################################################
    #########################################################################
@@ -1723,7 +1732,7 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
          ### alphas transformed with Hakstian & Whalen (1976) transformation
 
          if (measure == "AHW") {
-            #yi <- (1-ai)^(1/3) ### technically this is the Hakstian & Whalen (1976) transformation
+            #yi <- (1-ai)^(1/3)    ### technically this is the Hakstian & Whalen (1976) transformation
             yi <- 1 - (1-ai)^(1/3) ### but with this, yi remains a monotonically increasing function of ai
             vi <- 18*mi*(ni-1)*(1-ai)^(2/3) / ((mi-1)*(9*ni-11)^2)
          }
