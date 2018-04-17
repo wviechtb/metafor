@@ -7,7 +7,6 @@ metafor: A Meta-Analysis Package for R
 [![devel Version](https://img.shields.io/badge/devel-2.1--0-brightgreen.svg)](http://www.metafor-project.org/doku.php/installation#development_version)
 [![Monthly Downloads](http://cranlogs.r-pkg.org/badges/metafor)](http://cranlogs.r-pkg.org/badges/metafor)
 [![Total Downloads](http://cranlogs.r-pkg.org/badges/grand-total/metafor)](http://cranlogs.r-pkg.org/badges/grand-total/metafor)
-[![Research software impact](http://depsy.org/api/package/cran/metafor/badge.svg)](http://depsy.org/package/r/metafor)
 
 ## Description
 
