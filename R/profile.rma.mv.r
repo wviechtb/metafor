@@ -1,4 +1,4 @@
-profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi, xlim, ylim, steps=20, startmethod="init", progbar=TRUE, parallel="no", ncpus=1, cl=NULL, plot=TRUE, pch=19, cline=FALSE, ...) {
+profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi, xlim, ylim, steps=20, lltol=1e-06, startmethod="init", progbar=TRUE, parallel="no", ncpus=1, cl=NULL, plot=TRUE, pch=19, cline=FALSE, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -486,6 +486,9 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi, xlim, ylim, s
    }
 
    #########################################################################
+
+   if (any(lls >= logLik(x) + lltol, na.rm=TRUE))
+      warning(mstyle$warning("At least one profiled log-likelihood value is larger than the log-likelihood of the fitted model."))
 
    beta  <- data.frame(beta)
    ci.lb <- data.frame(ci.lb)

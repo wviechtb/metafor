@@ -1,4 +1,4 @@
-Changes in Version 2.1-0 (2018-04-16)
+Changes in Version 2.1-0 (2018-04-17)
 =====================================
 
    o output is now styled/colored when 'crayon' package is loaded (this only
@@ -95,7 +95,12 @@ Changes in Version 2.1-0 (2018-04-16)
 
    o added a print method for 'profile.rma' objects
 
-   o profile.rma() and plot.profile.rma() gain 'cline' argument
+   o profile.rma.mv() now check whether any of the profiled log-likelihood
+     values is larger than the log-likelihood of the fitted model (using
+     numerical tolerance given by 'lltol') and issues a warning if so
+
+   o profile.rma.uni(), profile.rma.mv(), and plot.profile.rma() gain
+     'cline' argument
 
    o fixed an issue with robust.rma.mv() when the model was fitted with
      sparse=TRUE (thanks to Roger Martineau for noting the problem)
