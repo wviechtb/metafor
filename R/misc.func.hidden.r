@@ -745,14 +745,18 @@
       ### remove the '| outer' part from the formula and add '- 1'
       formula <- as.formula(paste0(strsplit(paste0(formula, collapse=""), "|", fixed=TRUE)[[1]][1], "- 1", collapse=""))
       ### create distance matrix
-      Cmat <- model.matrix(formula, data=mf.g[-nvars])
-      if (is.function(distspec)) {
-         Dmat <- distspec(Cmat)
+      if (is.matrix(distspec)) {
+         Dmat <- distspec[as.character(mf.g[[1]]), as.character(mf.g[[1]])]
       } else {
-         if (is.element(distspec, c("euclidean", "maximum", "manhattan")))
-            Dmat <- as.matrix(dist(Cmat, method=distspec))
-         if (distspec == "gcd")
-            Dmat <- sp::spDists(Cmat, longlat=TRUE)
+         Cmat <- model.matrix(formula, data=mf.g[-nvars])
+         if (is.function(distspec)) {
+            Dmat <- distspec(Cmat)
+         } else {
+            if (is.element(distspec, c("euclidean", "maximum", "manhattan")))
+               Dmat <- as.matrix(dist(Cmat, method=distspec))
+            if (distspec == "gcd")
+               Dmat <- sp::spDists(Cmat, longlat=TRUE)
+         }
       }
       if (sparse)
          Dmat <- Matrix(Dmat, sparse=TRUE)

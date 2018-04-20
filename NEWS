@@ -1,4 +1,4 @@
-Changes in Version 2.1-0 (2018-04-17)
+Changes in Version 2.1-0 (2018-04-20)
 =====================================
 
    o output is now styled/colored when 'crayon' package is loaded (this only
@@ -55,8 +55,8 @@ Changes in Version 2.1-0 (2018-04-17)
 
    o suppressed showing calls on some warnings/errors in rma.mv()
 
-   o rma.mv() now allows for continuous-time autoregressive random effects
-     structures (struct="CAR") and spatial correlation structures
+   o rma.mv() now allows for a continuous-time autoregressive random effects
+     structure (struct="CAR") and various spatial correlation structures
      (struct="SPEXP", "SPGAU", "SPLIN", "SPRAT", and "SPSPH")
 
    o rma.mv() now allows for struct="GEN" which models correlated random
@@ -84,8 +84,8 @@ Changes in Version 2.1-0 (2018-04-17)
    o escalc() now sets 'add=0' for measures where the use of such a bias
      correction makes little sense; this applies to the following measures:
      "AS", "PHI", "RTET", "IRSD", "PAS", "PFT", "IRS", and "IRFT"; one can
-     still force the use of the bias correction by explicitly setting the 'add'
-     argument to some non-zero value
+     still force the use of the bias correction by explicitly setting the
+     'add' argument to some non-zero value
 
    o labbe() gains 'lty' argument
 

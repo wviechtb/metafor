@@ -120,19 +120,18 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
       dist.methods <- c("euclidean", "maximum", "manhattan", "gcd")
 
-      if (!is.function(ddd$dist[[1]]))
-         ddd$dist[[1]] <- charmatch(ddd$dist[[1]], dist.methods, nomatch = 0)
-      if (!is.function(ddd$dist[[2]]))
-         ddd$dist[[2]] <- charmatch(ddd$dist[[2]], dist.methods, nomatch = 0)
+      for (j in 1:2) {
 
-      if ((!is.function(ddd$dist[[1]]) && ddd$dist[[1]] == 0) ||
-          (!is.function(ddd$dist[[2]]) && ddd$dist[[2]] == 0))
-         stop(mstyle$stop("Argument 'dist' must be one of 'euclidean', 'maximum', 'manhattan', or 'gcd'."))
+         if (!is.function(ddd$dist[[j]]) && !is.matrix(ddd$dist[[j]])) {
+            ddd$dist[[j]] <- charmatch(ddd$dist[[j]], dist.methods, nomatch = 0)
+            if (ddd$dist[[j]] == 0) {
+               stop(mstyle$stop("Argument 'dist' must be one of 'euclidean', 'maximum', 'manhattan', or 'gcd'."))
+            } else {
+               ddd$dist[[j]] <- dist.methods[ddd$dist[[j]]]
+            }
+         }
 
-      if (!is.function(ddd$dist[[1]]))
-         ddd$dist[[1]] <- dist.methods[ddd$dist[[1]]]
-      if (!is.function(ddd$dist[[2]]))
-         ddd$dist[[2]] <- dist.methods[ddd$dist[[2]]]
+      }
 
       if (any(ddd$dist == "gcd")) {
          if (!requireNamespace("sp", quietly=TRUE))
