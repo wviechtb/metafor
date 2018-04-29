@@ -147,13 +147,13 @@ influence.rma.uni <- function(model, digits, progbar=FALSE, ...) {
 
       ### compute Cook's distance
 
-      cook.d[i]  <- crossprod(dfb,svb) %*% dfb # / x$p
+      cook.d[i] <- crossprod(dfb,svb) %*% dfb # / x$p
 
       #cook.d[i] <- sum(1/(x$vi+tau2.del[i]) * (pred.full - x$X %*% res$beta)^2) / x$p
 
       ### compute covariance ratio
 
-      cov.r[i]   <- det(res$vb[btt,btt,drop=FALSE]) / det(x$vb[btt,btt,drop=FALSE])
+      cov.r[i] <- det(res$vb[btt,btt,drop=FALSE]) / det(x$vb[btt,btt,drop=FALSE])
 
    }
 

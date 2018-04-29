@@ -1,5 +1,8 @@
-Changes in Version 2.1-0 (2018-04-20)
+Changes in Version 2.1-0 (2018-04-29)
 =====================================
+
+   o added reporter() and reporter.rma.uni() for dynamically generating
+     analysis reports for objects of class 'rma.uni'
 
    o output is now styled/colored when 'crayon' package is loaded (this only
      works on a 'proper' terminal with color support; also works in RStudio)
@@ -1084,8 +1087,8 @@ Changes in Version 1.7-0 (2013-02-06)
      within rma.glmm() only when required (this makes for faster loading of
      the 'metafor' package)
 
-   o added several methods functions for objects of class 'rma.glmm' (not
-     all methods yet implemented; to be completed in the future)
+   o added several method functions for objects of class 'rma.glmm' (not all
+     methods yet implemented; to be completed in the future)
 
    o rma.uni() now allows the user to specify a formula for the 'yi'
      argument, so instead of rma(yi, vi, mods=~mod1+mod2), one can specify
