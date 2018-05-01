@@ -144,24 +144,48 @@ reporter.rma.uni <- function(x, dir, filename, format="pdf_document", open=TRUE,
 
    tau2.method <- c(FE = "", HS = "Hunter-Schmidt", HE = "Hedges'", DL = "DerSimonian-Laird", GENQ = "generalized Q-statistic", SJ = "Sidik-Jonkman", ML = "maximum-likelihood", REML = "restricted maximum-likelihood", EB = "empirical Bayes", PM = "Paule-Mandel")[x$method]
 
-   if (x$method == "HS")
+   if (x$method == "HS" && model == "RE")
       tau2.ref <- "[@hunter1990; @viechtbauer2005]"
-   if (x$method == "HE")
+   if (x$method == "HS" && model == "ME")
+      tau2.ref <- "[@hunter1990; @viechtbauer2015]"
+
+   if (x$method == "HE" && model == "RE")
       tau2.ref <- "[@hedges1985]"
-   if (x$method == "DL")
+   if (x$method == "HE" && model == "ME")
+      tau2.ref <- "[@hedges1992]"
+
+   if (x$method == "DL" && model == "RE")
       tau2.ref <- "[@dersimonian1986]"
-   if (x$method == "GENQ")
+   if (x$method == "DL" && model == "ME")
+      tau2.ref <- "[@raudenbush2009]"
+
+   if (x$method == "GENQ" && model == "RE")
       tau2.ref <- "[@dersimonian2007]"
+   if (x$method == "GENQ" && model == "ME")
+      tau2.ref <- "[@jackson2014]"
+
    if (x$method == "SJ")
       tau2.ref <- "[@sidik2005]"
-   if (x$method == "ML")
+
+   if (x$method == "ML" && model == "RE")
       tau2.ref <- "[@hardy1996]"
-   if (x$method == "REML")
+   if (x$method == "ML" && model == "ME")
+      tau2.ref <- "[@raudenbush2009]"
+
+   if (x$method == "REML" && model == "RE")
       tau2.ref <- "[@viechtbauer2005]"
-   if (x$method == "EB")
+   if (x$method == "REML" && model == "ME")
+      tau2.ref <- "[@raudenbush2009]"
+
+   if (x$method == "EB" && model == "RE")
       tau2.ref <- "[@morris1983]"
-   if (x$method == "PM")
+   if (x$method == "EB" && model == "ME")
+      tau2.ref <- "[@berkey1995]"
+
+   if (x$method == "PM" && model == "RE")
       tau2.ref <- "[@paule1982]"
+   if (x$method == "PM" && model == "ME")
+      tau2.ref <- "[@viechtbauer2015]"
 
    ### Q-test reference
 
@@ -175,11 +199,11 @@ reporter.rma.uni <- function(x, dir, filename, format="pdf_document", open=TRUE,
 
    level <- 100 * (1-x$level)
 
-   ### Bonferroni-corrected critical value
+   ### Bonferroni-corrected critical value for studentized residuals
 
    crit <- qnorm(x$level/(2*x$k), lower.tail=FALSE)
 
-   ### store influence results
+   ### get influence results
 
    infres <- influence(x)
 
@@ -195,13 +219,23 @@ reporter.rma.uni <- function(x, dir, filename, format="pdf_document", open=TRUE,
 
    ### yaml header
 
-   header <- paste0("---\noutput: ", format, "\ntitle: \"Analysis Report\"\nauthor: Generated with the reporter() Function of the metafor Package\nbibliography: references.bib\ncsl: apa.csl\ndate: \"`r format(Sys.time(), '%d %B, %Y')`\"\n---\n")
+   header <- paste0("---\n")
+   header <- paste0(header, "output: ", format, "\n")
+   header <- paste0(header, "title: Analysis Report\n")
+   header <- paste0(header, "author: Generated with the reporter() Function of the metafor Package\n")
+   header <- paste0(header, "bibliography: references.bib\n")
+   header <- paste0(header, "csl: apa.csl\n")
+   header <- paste0(header, "date: \"`r format(Sys.time(), '%d %B, %Y')`\"\n")
+   header <- paste0(header, "---\n")
 
    #########################################################################
 
    ### rsetup
 
-   rsetup <- paste0("```{r, setup, include=FALSE}\nlibrary(metafor)\nload('", file.path(dir, file.obj), "')\n```")
+   rsetup <- paste0("```{r, setup, include=FALSE}\n")
+   rsetup <- paste0(rsetup, "library(metafor)\n")
+   rsetup <- paste0(rsetup, "load('", file.path(dir, file.obj), "')\n")
+   rsetup <- paste0(rsetup, "```")
 
    #########################################################################
 
@@ -247,6 +281,9 @@ reporter.rma.uni <- function(x, dir, filename, format="pdf_document", open=TRUE,
 
    if (is.element(model, c("FE", "RE")))
       methods <- paste0(methods, "The rank correlation test [@begg1994] and the regression test [@sterne2005], using the standard error of the observed outcomes as predictor, are used to check for funnel plot asymmetry. ")
+
+   if (is.element(model, c("MR", "ME")))
+      methods <- paste0(methods, "The regression test [@sterne2005], using the standard error of the observed outcomes as predictor (in addition to the moderators already included in the model), is used to check for funnel plot asymmetry. ")
 
    methods <- paste0(methods, "The analysis was carried out using R (version ", getRversion(), ") [@rcore2018] and the **metafor** package (version ", x$version, ") [@viechtbauer2010a]. ")
 
@@ -385,13 +422,29 @@ reporter.rma.uni <- function(x, dir, filename, format="pdf_document", open=TRUE,
 
    }
 
+   if (is.element(model, c("MR", "ME"))) {
+
+      if (x$int.incl) {
+         mods <- colnames(x$X)[-1]
+         p <- x$p - 1
+      } else {
+         mods <- colnames(x$X)
+         p <- x$p
+      }
+
+      results <- paste0(results, "The meta-regression model included ", p, " predictor", ifelse(p > 1, "s ", " "))
+      if (p == 1)
+         results <- paste0(results, "(i.e., '", mods, "').")
+      if (p == 2)
+         results <- paste0(results, "(i.e., '", mods[1], "' and '", mods[2], "').")
+      if (p >= 3)
+         results <- paste0(results, "(i.e., ", paste0("'", mods[-p], "'", collapse=", "), " and ", mods[p], ").")
+
+   }
+
    # 95% CI for tau^2 and I^2
    # table for meta-regression model
    # links to help pages for functions used
-
-   if (is.element(model, c("MR", "ME"))) {
-
-   }
 
    #########################################################################
 

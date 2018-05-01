@@ -1634,6 +1634,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
          #ll.ML <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, fitted(res.ML), log=TRUE))) ### not correct (since it does not incorporate the random effects; same as ll.FE if tau^2=0)
          #ll.ML <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, plogis(qlogis(fitted(res.ML)) + group12*unlist(ranef(res.ML))), log=TRUE))) ### not correct (since one really has to integrate; same as ll.FE if tau^2=0)
+         #ll.ML <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, plogis(predict(res.ML))))) ### not correct (since one really has to integrate; same as ll.FE if tau^2=0)
          #ll.ML <- c(logLik(res.ML)) ### this is not the same as ll.FE when tau^2 = 0 (not sure why)
          #ll.ML <- ll.QE - 1/2 * lme4::deviance(res.ML) ### this makes ll.ML comparable to ll.FE (same as ll.FE when tau^2=0)
          ll.ML <- ll.QE - 1/2 * deviance(res.ML) ### this makes ll.ML comparable to ll.FE (same as ll.FE when tau^2=0)

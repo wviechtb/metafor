@@ -185,7 +185,7 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
 \seealso{
    \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, and \code{\link{rma.mv}} for other model fitting functions.
 
-   \code{\link{dat.nielweise2007}}, \code{\link{dat.nielweise2008}}, \code{\link{dat.collins1985a}}, and \code{link{dat.pritz1997}} for further examples of the use of the \code{rma.glmm} function.
+   \code{\link{dat.nielweise2007}}, \code{\link{dat.nielweise2008}}, \code{\link{dat.collins1985a}}, and \code{\link{dat.pritz1997}} for further examples of the use of the \code{rma.glmm} function.
 }
 \examples{
 ### random-effects model using rma.uni() (standard RE model analysis)
