@@ -1339,6 +1339,8 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
             tmp <- rma(yi, vi, mods=X, intercept=FALSE, method="HE")
             tmp <- rstandard(tmp)
             tmp <- rma(log(tmp$resid^2), tmp$se^2, mods=Z, intercept=FALSE, method="FE")
+            #tmp <- ranef(tmp)
+            #tmp <- rma(log(tmp$pred^2), tmp$se^2, mods=Z, intercept=FALSE, method="FE")
             #print(coef(tmp))
 
             con$alpha.init <- coef(tmp)

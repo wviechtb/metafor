@@ -40,7 +40,7 @@ reporter.rma.uni <- function(x, dir, filename, format="pdf_document", open=TRUE,
    ### set/get directory for generating the report
 
    if (missing(dir)) {
-      dir <- tempdir()
+      dir <- normalizePath(tempdir(), winslash="/")
       success <- file.exists(dir)
       if (!success)
          stop(mstyle$stop("No temporary directory available for creating the report."))
