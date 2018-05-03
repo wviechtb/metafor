@@ -1,4 +1,4 @@
-reporter.rma.uni <- function(x, dir, filename, format="pdf_document", open=TRUE, digits, forest, funnel, footnotes=FALSE, verbose=TRUE, ...) {
+reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE, digits, forest, funnel, footnotes=FALSE, verbose=TRUE, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -36,6 +36,9 @@ reporter.rma.uni <- function(x, dir, filename, format="pdf_document", open=TRUE,
       digits <- x$digits
 
    format <- match.arg(format, c("pdf_document", "html_document", "word_document")) # , "bookdown::pdf_document2"))
+
+   if (format == "pdf_document" && (Sys.which("pdflatex") == ""))
+      warning(mstyle$warning("Cannot detect pdflatex executable. Rendering pdf is likely to fail."), immediate.=TRUE)
 
    ### set/get directory for generating the report
 
@@ -503,23 +506,30 @@ reporter.rma.uni <- function(x, dir, filename, format="pdf_document", open=TRUE,
       file.out <- suppressWarnings(rmarkdown::render(file.path(dir, file.rmd), output_format=format, quiet=ifelse(verbose <= 1, TRUE, FALSE)))
    }
 
+   if (verbose)
+      message(mstyle$message(paste0("Generated ", file.out, " ...")))
+
    ### render() sometimes fails to delete the intermediate tex file, so in case this happens clean up
    ### see also: https://github.com/rstudio/rmarkdown/issues/1308
 
    if (file.exists(file.path(dir, file.tex)))
       unlink(file.path(dir, file.tex))
 
-   ### open output file
+   ### try to open output file
 
    if (open) {
 
       if (verbose)
          message(mstyle$message(paste0("Opening report ...\n")))
 
-      system(paste0(getOption("browser"), " '", file.out, "'"))
+      if (.Platform$OS.type == "windows") {
+         shell.exec(file.out)
+      } else {
+         system(paste0(getOption("browser"), " '", file.out, "'"))
+      }
 
    }
 
-   return(file.out)
+   invisible(file.out)
 
 }
