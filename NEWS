@@ -1,4 +1,4 @@
-Changes in Version 2.1-0 (2018-05-01)
+Changes in Version 2.1-0 (2018-05-03)
 =====================================
 
    o added reporter() and reporter.rma.uni() for dynamically generating

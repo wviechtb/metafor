@@ -62,21 +62,21 @@ dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 ### random-effects model
 res <- rma(yi, vi, data=dat)
 
-### cumulative meta-analysis
+### leave-one-out analysis
 leave1out(res)
 leave1out(res, transf=exp)
 
 ### meta-analysis of the (log) risk ratios using the Mantel-Haenszel method
 res <- rma.mh(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
-### cumulative meta-analysis
+### leave-one-out analysis
 leave1out(res)
 leave1out(res, transf=exp)
 
 ### meta-analysis of the (log) odds ratios using Peto's method
 res <- rma.peto(ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
-### cumulative meta-analysis
+### leave-one-out analysis
 leave1out(res)
 leave1out(res, transf=exp)
 }
