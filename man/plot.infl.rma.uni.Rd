@@ -58,6 +58,6 @@ res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg,
 plot(influence(res))
 plot(influence(res), plotinf=1:4)
 plot(influence(res), plotinf=1:4, layout=c(4,1))
-plot(influence(res), plotdfbs=TRUE)
+plot(influence(res), plotdfbs=TRUE, dfbsnew=TRUE)
 }
 \keyword{hplot}

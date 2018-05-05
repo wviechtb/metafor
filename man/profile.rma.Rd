@@ -8,15 +8,15 @@
 \usage{
 \method{profile}{rma.uni}(fitted, xlim, ylim, steps=20,
         progbar=TRUE, parallel="no", ncpus=1, cl=NULL,
-        plot=TRUE, pch=19, cline=FALSE, \ldots)
+        plot=TRUE, pch=19, cline=FALSE, \dots)
 
 \method{profile}{rma.mv}(fitted, sigma2, tau2, rho, gamma2, phi,
         xlim, ylim, steps=20, lltol=1e-06, startmethod="init",
         progbar=TRUE, parallel="no", ncpus=1, cl=NULL,
-        plot=TRUE, pch=19, cline=FALSE, \ldots)
+        plot=TRUE, pch=19, cline=FALSE, \dots)
 
-\method{print}{profile.rma}(x, \ldots)
-\method{plot}{profile.rma}(x, ylim, pch=19, ylab, cline=FALSE, \ldots)
+\method{print}{profile.rma}(x, \dots)
+\method{plot}{profile.rma}(x, ylim, pch=19, ylab, cline=FALSE, \dots)
 }
 \arguments{
    \item{fitted}{an object of class \code{"rma.uni"} or \code{"rma.mv"}.}

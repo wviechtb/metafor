@@ -6,7 +6,7 @@
 \usage{
 gosh(x, \dots)
 
-\method{gosh}{rma}(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, \ldots)
+\method{gosh}{rma}(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma"}.}

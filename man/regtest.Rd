@@ -9,7 +9,7 @@ regtest(x, \dots)
 
 \method{regtest}{rma}(x, model="rma", predictor="sei", ret.fit=FALSE, digits, \dots)
 
-\method{regtest}{default}(x, vi, sei, ni, subset, model="rma", predictor="sei", ret.fit=FALSE, digits, \ldots)
+\method{regtest}{default}(x, vi, sei, ni, subset, model="rma", predictor="sei", ret.fit=FALSE, digits, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma"} or a vector with the observed effect sizes or outcomes.}

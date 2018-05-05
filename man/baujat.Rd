@@ -6,7 +6,7 @@
 \usage{
 baujat(x, \dots)
 
-\method{baujat}{rma}(x, xlim, ylim, xlab, ylab, cex, symbol, grid=TRUE, progbar=FALSE, \ldots)
+\method{baujat}{rma}(x, xlim, ylim, xlab, ylab, cex, symbol, grid=TRUE, progbar=FALSE, \dots)
 
 }
 \arguments{

@@ -9,7 +9,7 @@ ranktest(x, \dots)
 
 \method{ranktest}{rma}(x, digits, \dots)
 
-\method{ranktest}{default}(x, vi, sei, subset, digits, \ldots)
+\method{ranktest}{default}(x, vi, sei, subset, digits, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma"} or a vector with the observed effect sizes or outcomes.}
