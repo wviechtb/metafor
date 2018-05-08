@@ -17,7 +17,7 @@
 \bold{t2i}      \tab \code{numeric}   \tab total person-time (in years) in the placebo/control group \cr
 \bold{compgrp}  \tab \code{character} \tab type of comparison group (placebo or control) \cr
 \bold{prevtype} \tab \code{character} \tab type of prevention (primary or secondary) \cr
-\bold{trinr}    \tab \code{character} \tab target range for the international normalized ratio (INR)
+\bold{trinr}    \tab \code{character} \tab target range for the international normalized ratio (INR) \cr
 }
 }
 \details{

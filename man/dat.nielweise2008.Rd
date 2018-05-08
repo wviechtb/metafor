@@ -12,7 +12,7 @@
 \bold{x1i}     \tab \code{numeric}   \tab number of CRBSIs in patients receiving an anti-infective catheter \cr
 \bold{t1i}     \tab \code{numeric}   \tab total number of catheter days for patients receiving an anti-infective catheter \cr
 \bold{x2i}     \tab \code{numeric}   \tab number of CRBSIs in patients receiving a standard catheter \cr
-\bold{t2i}     \tab \code{numeric}   \tab total number of catheter days for patients receiving a standard catheter
+\bold{t2i}     \tab \code{numeric}   \tab total number of catheter days for patients receiving a standard catheter \cr
 }
 }
 \details{

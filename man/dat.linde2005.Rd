@@ -22,7 +22,7 @@
 \bold{n1i}      \tab \code{numeric}   \tab number of patients in treatment group \cr
 \bold{ci}       \tab \code{numeric}   \tab number of responses in placebo group \cr
 \bold{n2i}      \tab \code{numeric}   \tab number of patients in placebo group \cr
-\bold{group}    \tab \code{numeric}   \tab stratification variable used by the authors (1 = smaller trials restricted to major depression; 2 = larger trials restricted to major depression; 3 = smaller trials not restricted to major depression; 4 = larger trials not restricted to major depression)
+\bold{group}    \tab \code{numeric}   \tab stratification variable used by the authors (1 = smaller trials restricted to major depression; 2 = larger trials restricted to major depression; 3 = smaller trials not restricted to major depression; 4 = larger trials not restricted to major depression) \cr
 }
 }
 \details{

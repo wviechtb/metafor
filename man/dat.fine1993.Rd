@@ -16,7 +16,7 @@
 \bold{e3i}        \tab \code{numeric}    \tab number of survivors at 18 months in the experimental group \cr
 \bold{c3i}        \tab \code{numeric}    \tab number of survivors at 18 months in the control group \cr
 \bold{e4i}        \tab \code{numeric}    \tab number of survivors at 24 months in the experimental group \cr
-\bold{c4i}        \tab \code{numeric}    \tab number of survivors at 24 months in the control group
+\bold{c4i}        \tab \code{numeric}    \tab number of survivors at 24 months in the control group \cr
 }
 }
 \details{
@@ -51,15 +51,15 @@ dat$v24i <- with(dat, nei / (e2i * (nei - e4i)) + nci / (c2i * (nci - c4i)))
 dat$v34i <- with(dat, nei / (e3i * (nei - e4i)) + nci / (c3i * (nci - c4i)))
 
 ### create dataset in long format
-dat.long <- data.frame(study=rep(1:nrow(dat), each=4), time=1:4, 
+dat.long <- data.frame(study=rep(1:nrow(dat), each=4), time=1:4,
                        yi=c(t(dat[,c("y1i","y2i","y3i","y4i")])),
                        vi=c(t(dat[,c("v1i","v2i","v3i","v4i")])))
 
 ### var-cov matrices of the sudies
-V <- lapply(split(dat, dat$study), 
-            function(x) matrix(c( x$v1i, x$v12i, x$v13i, x$v14i, 
-                                 x$v12i,  x$v2i, x$v23i, x$v24i, 
-                                 x$v13i, x$v23i,  x$v3i, x$v34i, 
+V <- lapply(split(dat, dat$study),
+            function(x) matrix(c( x$v1i, x$v12i, x$v13i, x$v14i,
+                                 x$v12i,  x$v2i, x$v23i, x$v24i,
+                                 x$v13i, x$v23i,  x$v3i, x$v34i,
                                  x$v14i, x$v24i, x$v34i,  x$v4i), nrow=4, ncol=4, byrow=TRUE))
 
 ### remove rows for the missing time points in study 17

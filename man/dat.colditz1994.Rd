@@ -18,7 +18,7 @@ dat.bcg
 \bold{cpos}   \tab \code{numeric}   \tab number of TB positive cases in the control (non-vaccinated) group \cr
 \bold{cneg}   \tab \code{numeric}   \tab number of TB negative cases in the control (non-vaccinated) group \cr
 \bold{ablat}  \tab \code{numeric}   \tab absolute latitude of the study location (in degrees) \cr
-\bold{alloc}  \tab \code{character} \tab method of treatment allocation (random, alternate, or systematic assignment)
+\bold{alloc}  \tab \code{character} \tab method of treatment allocation (random, alternate, or systematic assignment) \cr
 }
 }
 \details{
@@ -26,7 +26,7 @@ dat.bcg
    \tabular{lcc}{
                     \tab TB positive \tab TB negative \cr
    vaccinated group \tab \code{tpos} \tab \code{tneg} \cr
-   control group    \tab \code{cpos} \tab \code{cneg}
+   control group    \tab \code{cpos} \tab \code{cneg} \cr
    } The goal of the meta-analysis was to examine the overall effectiveness of the BCG vaccine for preventing tuberculosis and to examine moderators that may potentially influence the size of the effect.
 
    The dataset has been used in several publications to illustrate meta-analytic methods (see \sQuote{References}).

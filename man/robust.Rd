@@ -2,7 +2,7 @@
 \alias{robust}
 \alias{robust.rma.uni}
 \alias{robust.rma.mv}
-\title{Compute (Cluster) Robust Tests and Confidence Intervals for 'rma' Objects}
+\title{(Cluster) Robust Tests and Confidence Intervals for 'rma' Objects}
 \description{The function provides (cluster) robust tests and confidence intervals of the model coefficients for objects of class \code{"rma"}.}
 \usage{
 robust(x, cluster, \dots)

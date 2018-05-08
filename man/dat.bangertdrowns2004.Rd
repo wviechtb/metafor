@@ -21,7 +21,7 @@
 \bold{subject}  \tab \code{character} \tab subject matter \cr
 \bold{ni}       \tab \code{numeric}   \tab total sample size of the study \cr
 \bold{yi}       \tab \code{numeric}   \tab standardized mean difference \cr
-\bold{vi}       \tab \code{numeric}   \tab corresponding sampling variance
+\bold{vi}       \tab \code{numeric}   \tab corresponding sampling variance \cr
 }
 }
 \details{

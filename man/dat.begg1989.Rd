@@ -11,7 +11,7 @@
 \bold{arms}       \tab \code{numeric}    \tab number of arms in the study (1 = uncontrolled studies; 2 = controlled studies) \cr
 \bold{yi}         \tab \code{numeric}    \tab 2-year disease-free survival \cr
 \bold{sei}        \tab \code{numeric}    \tab corresponding standard error \cr
-\bold{vi}         \tab \code{numeric}    \tab corresponding sampling variance
+\bold{vi}         \tab \code{numeric}    \tab corresponding sampling variance \cr
 }
 }
 \details{

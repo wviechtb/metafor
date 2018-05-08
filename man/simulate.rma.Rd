@@ -44,5 +44,6 @@ res
 
 ### simulate outcomes from model
 newdat <- simulate(res, nsim=10, seed=1234)
+newdat
 }
 \keyword{datagen}

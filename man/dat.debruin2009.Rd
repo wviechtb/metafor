@@ -15,7 +15,7 @@
 \bold{ethnicity}   \tab \code{character} \tab dominant ethnicity of the patients in the standard care group \cr
 \bold{patients}    \tab \code{character} \tab inclusion of patients continuing or starting (a new) treatment \cr
 \bold{select}      \tab \code{character} \tab baseline selection of patients with adherence problems or no selection \cr
-\bold{sens}        \tab \code{character} \tab sensitivity of viral load assessments (<400 vs. >=400 copies/ml).
+\bold{sens}        \tab \code{character} \tab sensitivity of viral load assessments (<400 vs. >=400 copies/ml) \cr
 }
 }
 \details{

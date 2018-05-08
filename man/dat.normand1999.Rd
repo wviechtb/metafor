@@ -13,7 +13,7 @@
 \bold{sd1i}     \tab \code{numeric}   \tab standard deviation of the length of stay under specialized care \cr
 \bold{n2i}      \tab \code{numeric}   \tab number of patients under routine care \cr
 \bold{m2i}      \tab \code{numeric}   \tab mean length of stay (in days) under routine care \cr
-\bold{sd2i}     \tab \code{numeric}   \tab standard deviation of the length of stay under routine care
+\bold{sd2i}     \tab \code{numeric}   \tab standard deviation of the length of stay under routine care \cr
 }
 }
 \details{
@@ -35,7 +35,7 @@ res <- rma(yi, vi, data=dat)
 res
 
 ### meta-analysis of standardized mean differences using a random-effects model
-res <- rma(measure="SMD", m1i=m1i, sd1i=sd1i, n1i=n1i, m2i=m2i, sd2i=sd2i, n2i=n2i, 
+res <- rma(measure="SMD", m1i=m1i, sd1i=sd1i, n1i=n1i, m2i=m2i, sd2i=sd2i, n2i=n2i,
            data=dat, slab=source)
 res
 

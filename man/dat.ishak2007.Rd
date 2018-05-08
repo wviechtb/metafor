@@ -16,7 +16,7 @@
 \bold{y4i}        \tab \code{numeric}    \tab observed mean difference at the long-term follow-up \cr
 \bold{v4i}        \tab \code{numeric}    \tab sampling variance of the mean difference at the long-term follow-up \cr
 \bold{mdur}       \tab \code{numeric}    \tab mean disease duration (in years) \cr
-\bold{mbase}      \tab \code{numeric}    \tab mean baseline UPDRS score
+\bold{mbase}      \tab \code{numeric}    \tab mean baseline UPDRS score \cr
 }
 }
 \details{

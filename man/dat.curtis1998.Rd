@@ -25,7 +25,7 @@
 \bold{n1i}      \tab \code{numeric}   \tab number of observations under elevated CO2 level (treatment group) \cr
 \bold{m2i}      \tab \code{numeric}   \tab mean plant mass under ambient CO2 level (control group) \cr
 \bold{sd2i}     \tab \code{numeric}   \tab standard deviation of plant mass under ambient CO2 level (control group) \cr
-\bold{n2i}      \tab \code{numeric}   \tab number of observations under ambient CO2 level (control group)
+\bold{n2i}      \tab \code{numeric}   \tab number of observations under ambient CO2 level (control group) \cr
 }
 }
 \details{

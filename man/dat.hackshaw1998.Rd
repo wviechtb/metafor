@@ -13,7 +13,7 @@
 \bold{design}     \tab \code{character}  \tab study design (either cohort or case-control) \cr
 \bold{cases}      \tab \code{numeric}    \tab number of lung cancer cases \cr
 \bold{yi}         \tab \code{numeric}    \tab log odds ratio \cr
-\bold{vi}         \tab \code{numeric}    \tab corresponding sampling variance
+\bold{vi}         \tab \code{numeric}    \tab corresponding sampling variance \cr
 }
 }
 \details{

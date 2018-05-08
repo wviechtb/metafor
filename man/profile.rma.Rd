@@ -81,7 +81,7 @@ dat <- escalc(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 res <- rma(yi, vi, data=dat)
 
 ### profile over tau^2
-profile(res)
+profile(res, progbar=FALSE)
 
 ### change data into long format
 dat.long <- to.long(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
