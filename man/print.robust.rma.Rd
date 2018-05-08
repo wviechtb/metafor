@@ -24,7 +24,7 @@
    }
 }
 \value{
-   The \code{print} functions do not return an object.
+   The function does not return an object.
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
