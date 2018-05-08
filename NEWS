@@ -1,4 +1,4 @@
-Changes in Version 2.1-0 (2018-05-05)
+Changes in Version 2.1-0 (2018-05-08)
 =====================================
 
    o added reporter() and reporter.rma.uni() for dynamically generating
@@ -409,7 +409,7 @@ Changes in Version 1.9-8 (2015-09-28)
    o some (overdue) updates to the documentation
 
 
-Changes in Version 1.9-7 (2015-05-21)
+Changes in Version 1.9-7 (2015-05-22)
 =====================================
 
    o default optimizer for rma.mv() changed to nlminb() (instead of optim()
@@ -691,7 +691,7 @@ Changes in Version 1.9-3 (2014-05-05)
    o rma.mv() now has a new argument 'W' allowing the user to specify
      arbitrary user-defined weights or an arbitrary weight matrix
 
-   o rma.mv() now has a new argument 'sparse'; by setting this to true, the
+   o rma.mv() now has a new argument 'sparse'; by setting this to TRUE, the
      function uses sparse matrix objects to the extent possible; this can
      speed up model fitting substantially for certain models (hence, the
      'metafor' package now depends on the 'Matrix' package)
@@ -1064,7 +1064,7 @@ Changes in Version 1.8-0 (2013-04-11)
 
    o I^2 and H^2 statistics are now also calculated for mixed-effects models
      by the rma.uni() and rma.glmm() function; confint.rma.uni() provides
-     the corresponding confidence intervals for rma.uni() models
+     the corresponding confidence intervals for 'rma.uni' models
 
    o various print() methods now have a new argument called 'signif.stars',
      which defaults to getOption("show.signif.stars") (which by default is
@@ -1210,8 +1210,8 @@ Changes in Version 1.7-0 (2013-02-06)
      such studies are identified)
 
    o added additional extractor functions for some of the influence measures
-     (i.e., cooks.distance, dfbetas); unfortunately, the 'covratio' and
-     'dffits' functions in the 'stats' package are not generic; so, to avoid
+     (i.e., cooks.distance(), dfbetas()); unfortunately, the covratio() and
+     dffits() functions in the 'stats' package are not generic; so, to avoid
      masking, there are currently no extractor functions for these measures
 
    o better handling of missing values in some unusual situations
@@ -1320,7 +1320,7 @@ Changes in Version 1.5-0 (2010-12-16)
    o the 'metafor' package now has its own project website at:
      http://www.metafor-project.org/
 
-   o added labbe() function to create L’Abbe plots
+   o added labbe() function to create L'Abbe plots
 
    o the forest.default() and addpoly.default() functions now allow the user
      to directly specify the lower and upper confidence interval bounds
@@ -1354,7 +1354,7 @@ Changes in Version 1.5-0 (2010-12-16)
    o some improvements to the documentation
 
 
-Changes in Version 1.4-0 (2010-07-31)
+Changes in Version 1.4-0 (2010-07-30)
 =====================================
 
    o a papar about the package has now been published in the Journal of
