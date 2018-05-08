@@ -39,8 +39,7 @@ install.packages("metafor")
 
 After installing the [devtools](https://cran.r-project.org/package=devtools) package with ```install.packages("devtools")```, the development version of the metafor package can be installed with:
 ```r
-library("devtools")
-install_github("wviechtb/metafor")
+devtools::install_github("wviechtb/metafor")
 ```
 This approach builds the package from source based on the development branch on GitHub.
 
