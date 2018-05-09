@@ -30,6 +30,10 @@ navbar:
       href: reference/metafor-package.html
     - text: "Functions"
       href: reference/index.html
+    - text: "Diagram"
+      href: articles/pkgdown/diagram.html
+    - text: "JSS Article (pdf)"
+      href: https://www.jstatsoft.org/index.php/jss/article/view/v036i03/v36i03.pdf
     - text: "Changelog"
       href: news/index.html
   right:
