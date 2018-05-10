@@ -1,6 +1,6 @@
 addpoly.rma <- function(x, row=-2, level=x$level,
 annotate=TRUE, digits=2, width, mlab, transf, atransf, targs,
-efac=1, col, border, cex, ...) {
+efac=1, col, border, fonts, cex, ...) {
 
    #########################################################################
 
@@ -27,14 +27,17 @@ efac=1, col, border, cex, ...) {
    if (missing(targs))
       targs <- NULL
 
-   if (missing(cex))
-      cex <- NULL
-
    if (missing(col))
       col <- "black"
 
    if (missing(border))
       border <- "black"
+
+   if (missing(fonts))
+      fonts <- NULL
+
+   if (missing(cex))
+      cex <- NULL
 
    #########################################################################
 
@@ -48,6 +51,6 @@ efac=1, col, border, cex, ...) {
    addpoly(x$beta, ci.lb=x$ci.lb, ci.ub=x$ci.ub, rows=row, level=level,
            annotate=annotate, digits=digits, width=width, mlab=mlab,
            transf=transf, atransf=atransf, targs=targs,
-           efac=efac, col=col, border=border, cex=cex, ...)
+           efac=efac, col=col, border=border, fonts=fonts, cex=cex, ...)
 
 }

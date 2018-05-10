@@ -129,7 +129,7 @@ forest(x, vi, sei, ci.lb, ci.ub, annotate=TRUE, showweights=FALSE,
        level=95, refline=0, digits=2L, width,
        xlab, slab, ilab, ilab.xpos, ilab.pos,
        subset, transf, atransf, targs, rows,
-       efac=1, pch=15, psize, col, lty,
+       efac=1, pch=15, psize, col, lty, fonts,
        cex, cex.lab, cex.axis, annosym, &#8230;)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -262,6 +262,10 @@ forest(x, vi, sei, ci.lb, ci.ub, annotate=TRUE, showweights=FALSE,
     <tr>
       <th>lty</th>
       <td><p>optional character string specifying the line type for the confidence intervals (if unspecified, the function sets this to <code>"solid"</code> by default).</p></td>
+    </tr>
+    <tr>
+      <th>fonts</th>
+      <td><p>optional character string specifying the font to use for the study labels, annotations, and the extra information (if specified via <code>ilab</code>). If unspecified, the default font is used.</p></td>
     </tr>
     <tr>
       <th>cex</th>

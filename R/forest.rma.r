@@ -2,7 +2,7 @@ forest.rma <- function(x, annotate=TRUE, addfit=TRUE, addcred=FALSE, showweights
 xlim, alim, clim, ylim, at, steps=5, level=x$level, refline=0, digits=2L, width,
 xlab, slab, mlab, ilab, ilab.xpos, ilab.pos, order,
 transf, atransf, targs, rows,
-efac=1, pch=15, psize, col, border, lty,
+efac=1, pch=15, psize, col, border, lty, fonts,
 cex, cex.lab, cex.axis, annosym, ...) {
 
    #########################################################################
@@ -479,6 +479,19 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
    #########################################################################
 
+   ### set/get fonts
+
+   if (missing(fonts)) {
+      fonts <- rep(par("family"), 3)
+   } else {
+      if (length(fonts) == 1L)
+         fonts <- rep(fonts, 3)
+      if (length(fonts) == 2L)
+         fonts <- c(fonts, fonts[1])
+   }
+
+   par(family=fonts[1])
+
    ### adjust margins
 
    par.mar <- par("mar")
@@ -711,9 +724,11 @@ cex, cex.lab, cex.axis, annosym, ...) {
          stop(mstyle$stop(paste0("Number of 'ilab' columns (", ncol(ilab), ") does not match length of 'ilab.xpos' argument (", length(ilab.xpos), ").")))
       if (!is.null(ilab.pos) && length(ilab.pos) == 1)
          ilab.pos <- rep(ilab.pos, ncol(ilab))
+      par(family=fonts[3])
       for (l in seq_len(ncol(ilab))) {
          text(ilab.xpos[l], rows, ilab[,l], pos=ilab.pos[l], cex=cex, ...)
       }
+      par(family=fonts[1])
    }
 
    ### add study annotations on the right: yi [LB, UB]
@@ -783,11 +798,13 @@ cex, cex.lab, cex.axis, annosym, ...) {
       annotext <- apply(annotext, 1, paste, collapse="")
       annotext[grepl("NA", annotext, fixed=TRUE)] <- ""
 
+      par(family=fonts[2])
       if (addfit && x$int.only) {
          text(x=xlim[2], c(rows,-1), labels=annotext, pos=2, cex=cex, ...)
       } else {
          text(x=xlim[2], rows, labels=annotext, pos=2, cex=cex, ...)
       }
+      par(family=fonts[1])
 
    }
 

@@ -9,7 +9,7 @@
 
 addpoly.default <- function(x, vi, sei, ci.lb, ci.ub, rows=-1, level=95,
 annotate=TRUE, digits=2, width, mlab, transf, atransf, targs,
-efac=1, col, border, cex, ...) {
+efac=1, col, border, fonts, cex, ...) {
 
    #########################################################################
 
@@ -35,14 +35,23 @@ efac=1, col, border, cex, ...) {
    if (missing(mlab))
       mlab <- NULL
 
-   if (missing(cex))
-      cex <- NULL
-
    if (missing(col))
       col <- "black"
 
    if (missing(border))
       border <- "black"
+
+   if (missing(cex))
+      cex <- NULL
+
+   if (missing(fonts) || is.null(fonts)) {
+      fonts <- rep(par("family"), 2)
+   } else {
+      if (length(fonts) == 1L)
+         fonts <- rep(fonts, 2)
+   }
+
+   par(family=fonts[1])
 
    #########################################################################
 
@@ -213,7 +222,9 @@ efac=1, col, border, cex, ...) {
 
       annotext <- cbind(annotext[,1], " [", annotext[,2], ", ", annotext[,3], "]")
       annotext <- apply(annotext, 1, paste, collapse="")
+      par(family=fonts[2])
       text(x=xlim[2], rows, labels=annotext, pos=2, cex=cex, ...)
+      par(family=fonts[1])
 
    }
 

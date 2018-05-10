@@ -1,4 +1,4 @@
-# metafor 2.1-0 (2018-05-09)
+# metafor 2.1-0 (2018-05-11)
 
 - added `reporter()` and `reporter.rma.uni()` for dynamically generating analysis reports for objects of class `rma.uni`
 
@@ -41,6 +41,8 @@
 - `rma.mv()` now allows for `struct="GEN"` which models correlated random effects for any number of predictors, including continuous ones (i.e., this allows for 'random slopes')
 
 - in the various `forest()` functions, when `options(na.action="na.pass")` or `options(na.action="na.exclude")` and an annotation contains `NA`, this is now shown as a blank (instead of `NA [NA, NA]`)
+
+- the various `forest()` and `addpoly()` functions gain a `fonts` argument
 
 - removed 'formula interface' from `escalc()`; until this actually adds some kind of extra functionality, this just makes `escalc()` more confusing to use
 

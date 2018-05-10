@@ -5,7 +5,7 @@
 \usage{
 \method{addpoly}{rma}(x, row=-2, level=x$level,
         annotate=TRUE, digits=2, width, mlab, transf, atransf, targs,
-        efac=1, col, border, cex, \dots)
+        efac=1, col, border, fonts, cex, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma"}.}
@@ -21,6 +21,7 @@
    \item{efac}{vertical expansion factor for the polygon. The default value of 1 should usually work okay.}
    \item{col}{optional character string specifying the name of a color to use for the polygon. If unspecified, the function sets a default color.}
    \item{border}{optional character string specifying the name of a color to use for the border of the polygon. If unspecified, the function sets a default color.}
+   \item{fonts}{optional character string specifying the font to use for the label and annotations. If unspecified, the default font is used.}
    \item{cex}{optional symbol expansion factor. If unspecified, the function tries to set this to a sensible value.}
    \item{\dots}{other arguments.}
 }

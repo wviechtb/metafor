@@ -1,4 +1,4 @@
-Changes in Version 2.1-0 (2018-05-09)
+Changes in Version 2.1-0 (2018-05-11)
 =====================================
 
    o added reporter() and reporter.rma.uni() for dynamically generating
@@ -69,6 +69,8 @@ Changes in Version 2.1-0 (2018-05-09)
    o in the various forest() functions, when options(na.action="na.pass") or
      options(na.action="na.exclude") and an annotation contains NA, this is
      now shown as a blank (instead of NA [NA, NA])
+
+   o the various forest() and addpoly() functions gain a 'fonts' argument
 
    o removed 'formula interface' from escalc(); until this actually adds
      some kind of extra functionality, this just makes escalc() more
