@@ -1243,7 +1243,7 @@
             sav <- -2*(logLik(res) - logLik(obj)) - objective
 
             if (verbose)
-               cat(mstyle$verbose(paste("tau2 =", formatC(val, digits=obj$digits, width=obj$digits+4, format="f"), " LRT - objective =", sav, "\n")))
+               cat(mstyle$verbose(paste("tau2 =", formatC(val, digits=obj$digits, width=obj$digits+4, format="f"), " LRT - objective =", formatC(sav, digits=obj$digits, width=obj$digits+4, format="f"), "\n")))
 
          }
 
@@ -1360,7 +1360,7 @@
             sav <- -2*(logLik(res) - logLik(obj)) - objective
 
             if (verbose)
-               cat(mstyle$verbose(paste("vc =", formatC(val, digits=obj$digits, width=obj$digits+4, format="f"), " LRT - objective =", sav, "\n")))
+               cat(mstyle$verbose(paste("vc =", formatC(val, digits=obj$digits, width=obj$digits+4, format="f"), " LRT - objective =", formatC(sav, digits=obj$digits, width=obj$digits+4, format="f"), "\n")))
 
          }
 
