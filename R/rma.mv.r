@@ -904,7 +904,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
                ### check if there are levels in s.levels which are not in R (if yes, issue an error and stop)
 
                if (any(!is.element(s.levels[[j]], colnames(R[[j]]))))
-                  stop(mstyle$stop(paste0("There are levels in '", s.names[j], "' for which there are no rows/columns in the corresponding 'R' matrix.")))
+                  stop(mstyle$stop(paste0("There are levels in '", s.names[j], "' for which there are no matching rows/columns in the corresponding 'R' matrix.")))
 
                ### check if there are levels in R which are not in s.levels (if yes, issue a warning)
 

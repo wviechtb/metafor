@@ -742,11 +742,31 @@
    }
 
    if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH"))) {
+
       ### remove the '| outer' part from the formula and add '- 1'
       formula <- as.formula(paste0(strsplit(paste0(formula, collapse=""), "|", fixed=TRUE)[[1]][1], "- 1", collapse=""))
+
       ### create distance matrix
+
       if (is.matrix(distspec)) {
+
+         if (anyNA(distspec))
+            stop(mstyle$stop("No missing values allowed in matrices specified via 'dist'."))
+         if (!.is.square(distspec))
+            stop(mstyle$stop("Distance matrices specified via 'dist' must be square matrices."))
+         if (!isSymmetric(unname(distspec)))
+            stop(mstyle$stop("Distance matrices specified via 'dist' must be symmetric matrices."))
+         if (is.null(rownames(distspec)))
+            rownames(distspec) <- colnames(distspec)
+         if (is.null(colnames(distspec)))
+            colnames(distspec) <- rownames(distspec)
+         if (length(colnames(distspec)) != length(unique(colnames(distspec))))
+            stop(mstyle$stop("Distance matrices specified via 'dist' must have unique dimension names."))
+         if (any(!is.element(as.character(mf.g[[1]]), colnames(distspec))))
+            stop(mstyle$stop(paste0("There are levels in '", colnames(mf.g)[1], "' for which there are no matching rows/columns in the corresponding 'dist' matrix.")))
+
          Dmat <- distspec[as.character(mf.g[[1]]), as.character(mf.g[[1]])]
+
       } else {
          Cmat <- model.matrix(formula, data=mf.g[-nvars])
          if (is.function(distspec)) {
