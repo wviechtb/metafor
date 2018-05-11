@@ -17,6 +17,9 @@ rstudent.rma.mv <- function(model, digits, progbar=FALSE, cluster, reestimate=TR
 
    parallel <- match.arg(parallel, c("no", "snow", "multicore"))
 
+   if (parallel == "no" && ncpus > 1)
+      parallel <- "snow"
+
    if (missing(digits))
       digits <- x$digits
 

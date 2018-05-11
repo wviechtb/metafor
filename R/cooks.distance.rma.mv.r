@@ -17,6 +17,9 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
 
    parallel <- match.arg(parallel, c("no", "snow", "multicore"))
 
+   if (parallel == "no" && ncpus > 1)
+      parallel <- "snow"
+
    misscluster <- ifelse(missing(cluster), TRUE, FALSE)
 
    if (misscluster)

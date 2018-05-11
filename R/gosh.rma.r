@@ -27,6 +27,9 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
 
    parallel <- match.arg(parallel, c("no", "snow", "multicore"))
 
+   if (parallel == "no" && ncpus > 1)
+      parallel <- "snow"
+
    ### total number of possible subsets
 
    N.tot <- sum(choose(x$k, x$p:x$k))

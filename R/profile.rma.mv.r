@@ -12,6 +12,9 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi, xlim, ylim, s
 
    parallel <- match.arg(parallel, c("no", "snow", "multicore"))
 
+   if (parallel == "no" && ncpus > 1)
+      parallel <- "snow"
+
    #########################################################################
 
    ### check if user has specified one of the sigma2, tau2, rho, gamma2, or phi arguments

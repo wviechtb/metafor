@@ -15,6 +15,9 @@ profile.rma.uni <- function(fitted, xlim, ylim, steps=20, progbar=TRUE, parallel
 
    parallel <- match.arg(parallel, c("no", "snow", "multicore"))
 
+   if (parallel == "no" && ncpus > 1)
+      parallel <- "snow"
+
    #########################################################################
 
    if (missing(xlim)) {
