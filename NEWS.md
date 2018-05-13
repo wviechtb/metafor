@@ -1,4 +1,4 @@
-# metafor 2.1-0 (2018-05-12)
+# metafor 2.1-0 (2018-05-13)
 
 - added `reporter()` and `reporter.rma.uni()` for dynamically generating analysis reports for objects of class `rma.uni`
 
@@ -43,6 +43,8 @@
 - in the various `forest()` functions, when `options(na.action="na.pass")` or `options(na.action="na.exclude")` and an annotation contains `NA`, this is now shown as a blank (instead of `NA [NA, NA]`)
 
 - the various `forest()` and `addpoly()` functions gain a `fonts` argument
+
+- `addpoly()` functions can now also show credibility interval bounds
 
 - removed 'formula interface' from `escalc()`; until this actually adds some kind of extra functionality, this just makes `escalc()` more confusing to use
 

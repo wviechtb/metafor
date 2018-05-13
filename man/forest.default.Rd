@@ -15,8 +15,8 @@
    \item{x}{vector of length \eqn{k} with the observed effect sizes or outcomes.}
    \item{vi}{vector of length \eqn{k} with the corresponding sampling variances.}
    \item{sei}{vector of length \eqn{k} with the corresponding standard errors.\cr(note: only one of the two, \code{vi} or \code{sei}, needs to be specified)}
-   \item{ci.lb}{vector of length \eqn{k} with the corresponding lower confidence intervals bounds. Not needed if \code{vi} or \code{sei} is specified. See \sQuote{Details}.}
-   \item{ci.ub}{vector of length \eqn{k} with the corresponding upper confidence intervals bounds. Not needed if \code{vi} or \code{sei} is specified. See \sQuote{Details}.}
+   \item{ci.lb}{vector of length \eqn{k} with the corresponding lower confidence interval bounds. Not needed if \code{vi} or \code{sei} is specified. See \sQuote{Details}.}
+   \item{ci.ub}{vector of length \eqn{k} with the corresponding upper confidence interval bounds. Not needed if \code{vi} or \code{sei} is specified. See \sQuote{Details}.}
    \item{annotate}{logical specifying whether annotations should be added to the plot (the default is \code{TRUE}).}
    \item{showweights}{logical specifying whether the annotations should also include inverse variance weights (the default is \code{FALSE}).}
    \item{xlim}{horizontal limits of the plot region. If unspecified, the function tries to set the horizontal plot limits to some sensible values.}

@@ -1,5 +1,5 @@
-addpoly.rma <- function(x, row=-2, level=x$level,
-annotate=TRUE, digits=2, width, mlab, transf, atransf, targs,
+addpoly.rma <- function(x, row=-2, level=x$level, annotate=TRUE,
+addcred=FALSE, digits=2, width, mlab, transf, atransf, targs,
 efac=1, col, border, fonts, cex, ...) {
 
    #########################################################################
@@ -39,6 +39,15 @@ efac=1, col, border, fonts, cex, ...) {
    if (missing(cex))
       cex <- NULL
 
+   if (addcred) {
+      temp <- predict(x, level=level)
+      cr.lb <- temp$cr.lb
+      cr.ub <- temp$cr.ub
+   } else {
+      cr.lb <- NA
+      cr.ub <- NA
+   }
+
    #########################################################################
 
    ### label for model estimate (if not specified)
@@ -48,9 +57,9 @@ efac=1, col, border, fonts, cex, ...) {
 
    ### passing ci.lb and ci.ub, so that the bounds are correct when the model was fitted with test="knha"
 
-   addpoly(x$beta, ci.lb=x$ci.lb, ci.ub=x$ci.ub, rows=row, level=level,
-           annotate=annotate, digits=digits, width=width, mlab=mlab,
-           transf=transf, atransf=atransf, targs=targs,
+   addpoly(x$beta, ci.lb=x$ci.lb, ci.ub=x$ci.ub, cr.lb=cr.lb, cr.ub=cr.ub,
+           rows=row, level=level, annotate=annotate, digits=digits, width=width,
+           mlab=mlab, transf=transf, atransf=atransf, targs=targs,
            efac=efac, col=col, border=border, fonts=fonts, cex=cex, ...)
 
 }

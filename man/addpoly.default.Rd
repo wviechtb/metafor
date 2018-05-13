@@ -3,16 +3,18 @@
 \title{Add Polygons to Forest Plots (Default Method)}
 \description{Function to add one or more polygons to a forest plot.}
 \usage{
-\method{addpoly}{default}(x, vi, sei, ci.lb, ci.ub, rows=-1, level=95,
-        annotate=TRUE, digits=2, width, mlab, transf, atransf, targs,
-        efac=1, col, border, fonts, cex, \dots)
+\method{addpoly}{default}(x, vi, sei, ci.lb, ci.ub, cr.lb, cr.ub,
+        rows=-1, level=95, annotate=TRUE, digits=2, width, mlab,
+        transf, atransf, targs, efac=1, col, border, fonts, cex, \dots)
 }
 \arguments{
    \item{x}{vector with the values at which the polygons should be drawn.}
    \item{vi}{vector with the corresponding variances.}
    \item{sei}{vector with the corresponding standard errors.\cr(note: only one of the two, \code{vi} or \code{sei}, needs to be specified)}
-   \item{ci.lb}{vector with the corresponding lower confidence intervals bounds. Not needed if \code{vi} or \code{sei} is specified. See \sQuote{Details}.}
-   \item{ci.ub}{vector with the corresponding upper confidence intervals bounds. Not needed if \code{vi} or \code{sei} is specified. See \sQuote{Details}.}
+   \item{ci.lb}{vector with the corresponding lower confidence interval bounds. Not needed if \code{vi} or \code{sei} is specified. See \sQuote{Details}.}
+   \item{ci.ub}{vector with the corresponding upper confidence interval bounds. Not needed if \code{vi} or \code{sei} is specified. See \sQuote{Details}.}
+   \item{cr.lb}{optional vector with the corresponding lower credibility/prediction interval bounds.}
+   \item{cr.ub}{optional vector with the corresponding upper credibility/prediction interval bounds.}
    \item{rows}{vector specifying the rows (or more generally, the horizontal positions) for plotting the polygons (defaults is \code{-1}). Can also be a single value specifying the row (horizontal position) of the first polygon (the remaining polygons are then plotted below this starting row).}
    \item{level}{numerical value between 0 and 100 specifying the confidence interval level (the default is 95).}
    \item{annotate}{logical specifying whether annotations should be added to the plot for the polygons that are drawn (the default is \code{TRUE}).}
@@ -32,7 +34,7 @@
 \details{
    The function can be used to add one or more polygons to an existing forest plot created with the \code{\link{forest}} function. For example, summary estimates based on a model involving moderators can be added to the plot this way. See example below.
 
-   To use the function, one should specify the values at which the polygons should be drawn (via the \code{x} argument) together with the corresponding variances (via the \code{vi} argument) or with the corresponding standard errors (via the \code{sei} argument). Alternatively, one can specify the values at which the polygons should be drawn together with the corresponding confidence interval bounds (via the \code{ci.lb} and \code{ci.ub} arguments).
+   To use the function, one should specify the values at which the polygons should be drawn (via the \code{x} argument) together with the corresponding variances (via the \code{vi} argument) or with the corresponding standard errors (via the \code{sei} argument). Alternatively, one can specify the values at which the polygons should be drawn together with the corresponding confidence interval bounds (via the \code{ci.lb} and \code{ci.ub} arguments). Optionally, one can also specify the bounds of the corresponding credibility/prediction interval bounds via the \code{cr.lb} and \code{cr.ub} arguments.
 
    The arguments \code{transf}, \code{atransf}, \code{efac}, and \code{cex} should always be set equal to the same values used to create the forest plot.
 }

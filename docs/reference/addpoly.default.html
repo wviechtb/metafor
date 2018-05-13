@@ -124,9 +124,9 @@
     </div>
 
     <pre class="usage"># S3 method for default
-addpoly(x, vi, sei, ci.lb, ci.ub, rows=-1, level=95,
-        annotate=TRUE, digits=2, width, mlab, transf, atransf, targs,
-        efac=1, col, border, fonts, cex, &#8230;)</pre>
+addpoly(x, vi, sei, ci.lb, ci.ub, cr.lb, cr.ub,
+        rows=-1, level=95, annotate=TRUE, digits=2, width, mlab,
+        transf, atransf, targs, efac=1, col, border, fonts, cex, &#8230;)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -145,11 +145,19 @@ addpoly(x, vi, sei, ci.lb, ci.ub, rows=-1, level=95,
     </tr>
     <tr>
       <th>ci.lb</th>
-      <td><p>vector with the corresponding lower confidence intervals bounds. Not needed if <code>vi</code> or <code>sei</code> is specified. See &#8216;Details&#8217;.</p></td>
+      <td><p>vector with the corresponding lower confidence interval bounds. Not needed if <code>vi</code> or <code>sei</code> is specified. See &#8216;Details&#8217;.</p></td>
     </tr>
     <tr>
       <th>ci.ub</th>
-      <td><p>vector with the corresponding upper confidence intervals bounds. Not needed if <code>vi</code> or <code>sei</code> is specified. See &#8216;Details&#8217;.</p></td>
+      <td><p>vector with the corresponding upper confidence interval bounds. Not needed if <code>vi</code> or <code>sei</code> is specified. See &#8216;Details&#8217;.</p></td>
+    </tr>
+    <tr>
+      <th>cr.lb</th>
+      <td><p>optional vector with the corresponding lower credibility/prediction interval bounds.</p></td>
+    </tr>
+    <tr>
+      <th>cr.ub</th>
+      <td><p>optional vector with the corresponding upper credibility/prediction interval bounds.</p></td>
     </tr>
     <tr>
       <th>rows</th>
@@ -216,7 +224,7 @@ addpoly(x, vi, sei, ci.lb, ci.ub, rows=-1, level=95,
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The function can be used to add one or more polygons to an existing forest plot created with the <code><a href='forest.html'>forest</a></code> function. For example, summary estimates based on a model involving moderators can be added to the plot this way. See example below.</p>
-<p>To use the function, one should specify the values at which the polygons should be drawn (via the <code>x</code> argument) together with the corresponding variances (via the <code>vi</code> argument) or with the corresponding standard errors (via the <code>sei</code> argument). Alternatively, one can specify the values at which the polygons should be drawn together with the corresponding confidence interval bounds (via the <code>ci.lb</code> and <code>ci.ub</code> arguments).</p>
+<p>To use the function, one should specify the values at which the polygons should be drawn (via the <code>x</code> argument) together with the corresponding variances (via the <code>vi</code> argument) or with the corresponding standard errors (via the <code>sei</code> argument). Alternatively, one can specify the values at which the polygons should be drawn together with the corresponding confidence interval bounds (via the <code>ci.lb</code> and <code>ci.ub</code> arguments). Optionally, one can also specify the bounds of the corresponding credibility/prediction interval bounds via the <code>cr.lb</code> and <code>cr.ub</code> arguments.</p>
 <p>The arguments <code>transf</code>, <code>atransf</code>, <code>efac</code>, and <code>cex</code> should always be set equal to the same values used to create the forest plot.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>

@@ -124,8 +124,8 @@
     </div>
 
     <pre class="usage"># S3 method for rma
-addpoly(x, row=-2, level=x$level,
-        annotate=TRUE, digits=2, width, mlab, transf, atransf, targs,
+addpoly(x, row=-2, level=x$level, annotate=TRUE,
+        addcred=FALSE, digits=2, width, mlab, transf, atransf, targs,
         efac=1, col, border, fonts, cex, &#8230;)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -146,6 +146,10 @@ addpoly(x, row=-2, level=x$level,
     <tr>
       <th>annotate</th>
       <td><p>logical specifying whether annotations for the summary estimate should be added to the plot (the default is <code>TRUE</code>).</p></td>
+    </tr>
+    <tr>
+      <th>addcred</th>
+      <td><p>logical specifying whether the bounds of the credibility/prediction interval should be added to the plot (the default is <code>FALSE</code>).</p></td>
     </tr>
     <tr>
       <th>digits</th>

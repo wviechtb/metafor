@@ -113,9 +113,9 @@
       
     </div>
 
-    <div id="metafor-2-1-0-2018-05-11" class="section level1">
+    <div id="metafor-2-1-0-2018-05-13" class="section level1">
 <h1 class="page-header">
-<a href="#metafor-2-1-0-2018-05-11" class="anchor"></a>metafor 2.1-0 (2018-05-11)<small> Unreleased </small>
+<a href="#metafor-2-1-0-2018-05-13" class="anchor"></a>metafor 2.1-0 (2018-05-13)<small> Unreleased </small>
 </h1>
 <ul>
 <li><p>added <code><a href="../reference/reporter.html">reporter()</a></code> and <code><a href="../reference/reporter.html">reporter.rma.uni()</a></code> for dynamically generating analysis reports for objects of class <code>rma.uni</code></p></li>
@@ -140,6 +140,7 @@
 <li><p><code><a href="../reference/rma.mv.html">rma.mv()</a></code> now allows for <code>struct="GEN"</code> which models correlated random effects for any number of predictors, including continuous ones (i.e., this allows for ‘random slopes’)</p></li>
 <li><p>in the various <code><a href="../reference/forest.html">forest()</a></code> functions, when <code>options(na.action="na.pass")</code> or <code>options(na.action="na.exclude")</code> and an annotation contains <code>NA</code>, this is now shown as a blank (instead of <code>NA [NA, NA]</code>)</p></li>
 <li><p>the various <code><a href="../reference/forest.html">forest()</a></code> and <code><a href="../reference/addpoly.html">addpoly()</a></code> functions gain a <code>fonts</code> argument</p></li>
+<li><p><code><a href="../reference/addpoly.html">addpoly()</a></code> functions can now also show credibility interval bounds</p></li>
 <li><p>removed ‘formula interface’ from <code><a href="../reference/escalc.html">escalc()</a></code>; until this actually adds some kind of extra functionality, this just makes <code><a href="../reference/escalc.html">escalc()</a></code> more confusing to use</p></li>
 <li><p><code><a href="../reference/escalc.html">escalc()</a></code> can now compute the coefficient of variation ratio and the variability ratio for pre-post or matched designs (<code>"CVRC"</code>, <code>"VRC"</code>)</p></li>
 <li><p><code><a href="../reference/escalc.html">escalc()</a></code> does a bit more housekeeping</p></li>
@@ -759,7 +760,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#metafor-2-1-0-2018-05-11">2.1-0</a></li>
+        <li><a href="#metafor-2-1-0-2018-05-13">2.1-0</a></li>
         <li><a href="#metafor-2-0-0-2017-06-22">2.0-0</a></li>
         <li><a href="#metafor-1-9-9-2016-09-25">1.9-9</a></li>
         <li><a href="#metafor-1-9-8-2015-09-28">1.9-8</a></li>
