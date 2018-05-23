@@ -35,10 +35,10 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
    if (missing(digits))
       digits <- x$digits
 
-   format <- match.arg(format, c("pdf_document", "html_document", "word_document")) # , "bookdown::pdf_document2"))
+   format <- match.arg(format, c("html_document", "pdf_document", "word_document")) # , "bookdown::pdf_document2"))
 
    if (format == "pdf_document" && (Sys.which("pdflatex") == ""))
-      warning(mstyle$warning("Cannot detect pdflatex executable. Rendering pdf is likely to fail."), immediate.=TRUE)
+      warning(mstyle$warning("Cannot detect pdflatex executable. Rendering the pdf is likely to fail."), immediate.=TRUE)
 
    ### set/get directory for generating the report
 
@@ -76,9 +76,12 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
    ### set default filenames
 
    object.name <- deparse(substitute(x))
+   has.object.name <- TRUE
 
-   if (grepl("rma(", object.name, fixed=TRUE) || grepl("rma.uni(", object.name, fixed=TRUE)) # check for 'reporter(rma(yi, vi))' usage
+   if (grepl("rma(", object.name, fixed=TRUE) || grepl("rma.uni(", object.name, fixed=TRUE)) { # check for 'reporter(rma(yi, vi))' usage
+      has.object.name <- FALSE
       object.name <- "res"
+   }
 
    if (missing(filename)) {
       file.rmd <- paste0("report_", object.name, ".rmd")
@@ -97,6 +100,8 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
    if (missing(forest)) {
       args.forest <- ""
    } else {
+      if (!is.character(args.forest))
+         stop(mstyle$stop("Argument 'args.forest' must be a character string."))
       args.forest <- paste0(", ", forest)
    }
 
@@ -105,6 +110,8 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
    if (missing(funnel)) {
       args.funnel <- ""
    } else {
+      if (!is.character(args.funnel))
+         stop(mstyle$stop("Argument 'args.funnel' must be a character string."))
       args.funnel <- paste0(", ", funnel)
    }
 
@@ -455,7 +462,7 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
 
    notes <- "\n## Notes\n\n"
 
-   notes <- paste0(notes, "This analysis report was dynamically generated for model object '`", object.name, "`' with the `reporter()` function of the **metafor** package. ")
+   notes <- paste0(notes, "This analysis report was dynamically generated ", ifelse(has.object.name, paste0("for model object '`", object.name, "`'"), ""), " with the `reporter()` function of the **metafor** package. ")
 
    call <- capture.output(x$call)
    call <- trimws(call, which="left")
