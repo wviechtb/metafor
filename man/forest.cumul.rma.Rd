@@ -8,7 +8,7 @@
        level=x$level, refline=0, digits=2L, width,
        xlab, ilab, ilab.xpos, ilab.pos,
        transf, atransf, targs, rows,
-       efac=1, pch=15, psize=1, lty,
+       efac=1, pch=15, psize=1, lty, fonts,
        cex, cex.lab, cex.axis, annosym, \dots)
 }
 \arguments{
@@ -36,6 +36,7 @@
    \item{pch}{plotting symbol to use for the observed effect sizes or outcomes. By default, a filled square is used. See \code{\link{points}} for other options. Can also be a vector of values.}
    \item{psize}{optional vector with point sizes for the observed effect sizes or outcomes. Default is 1.}
    \item{lty}{optional character string specifying the line type for the confidence intervals (if unspecified, the function sets this to \code{"solid"} by default).}
+   \item{fonts}{optional character string specifying the font to use for the study labels, annotations, and the extra information (if specified via \code{ilab}). If unspecified, the default font is used.}
    \item{cex}{optional character and symbol expansion factor. If unspecified, the function tries to set this to a sensible value.}
    \item{cex.lab}{optional expansion factor for the x-axis title. If unspecified, the function tries to set this to a sensible value.}
    \item{cex.axis}{optional expansion factor for the x-axis labels. If unspecified, the function tries to set this to a sensible value.}
@@ -59,9 +60,7 @@
    The \code{lty} argument can also be a vector of two elements, the first for specifying the line type of the individual CIs (\code{"solid"} by default), the second for the line type of the horizontal line that is automatically added to the plot (\code{"solid"} by default; set to \code{"blank"} to remove it).
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \cr
-   package website: \url{http://www.metafor-project.org/} \cr
-   author homepage: \url{http://www.wvbauer.com/}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
 }
 \references{
    Chalmers, T. C., & Lau, J. (1993). Meta-analytic stimulus for changes in clinical trials. \emph{Statistical Methods in Medical Research}, \bold{2}, 161--172.

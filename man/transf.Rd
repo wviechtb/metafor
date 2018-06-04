@@ -80,9 +80,7 @@ transf.ilogit.int(xi, targs, \dots)
    A vector with the transformed values.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \cr
-   package website: \url{http://www.metafor-project.org/} \cr
-   author homepage: \url{http://www.wvbauer.com/}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
 }
 \references{
    Bonett, D. G. (2002). Sample size requirements for testing and estimating coefficient alpha. \emph{Journal of Educational and Behavioral Statistics}, \bold{27}, 335--340.
@@ -101,7 +99,8 @@ transf.ilogit.int(xi, targs, \dots)
 ### meta-analysis of the log risk ratios using a random-effects model
 res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
-### average risk ratio with 95\% CI
+### average risk ratio with 95\% CI (but technically, this provides an
+### estimate of the median risk ratio, not the mean risk ratio!)
 predict(res, transf=exp)
 
 ### average risk ratio with 95\% CI using the integral transformation

@@ -1,7 +1,9 @@
 print.regtest.rma <- function(x, digits, ret.fit, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(x, "regtest.rma"))
-      stop("Argument 'x' must be an object of class \"regtest.rma\".")
+      stop(mstyle$stop("Argument 'x' must be an object of class \"regtest.rma\"."))
 
    if (missing(digits))
       digits <- x$digits
@@ -10,24 +12,28 @@ print.regtest.rma <- function(x, digits, ret.fit, ...) {
       ret.fit <- x$ret.fit
 
    cat("\n")
-   cat("Regression Test for Funnel Plot Asymmetry\n\n")
+   cat(mstyle$section("Regression Test for Funnel Plot Asymmetry"))
+   cat("\n\n")
    if (x$model == "lm") {
-      cat("model:     weighted regression with multiplicative dispersion\n")
+      cat(mstyle$text("model:     weighted regression with multiplicative dispersion"))
    } else {
-      cat("model:    ", ifelse(x$method=="FE", "fixed-effects", "mixed-effects"), "meta-regression model\n")
+      cat(mstyle$text(paste("model:    ", ifelse(x$method=="FE", "fixed-effects", "mixed-effects"), "meta-regression model")))
    }
+   cat("\n")
    if (x$predictor == "sei")
-      cat("predictor: standard error\n")
+      cat(mstyle$text("predictor: standard error"))
    if (x$predictor == "vi")
-      cat("predictor: sampling variance\n")
+      cat(mstyle$text("predictor: sampling variance"))
    if (x$predictor == "ni")
-      cat("predictor: sample size\n")
+      cat(mstyle$text("predictor: sample size"))
    if (x$predictor == "ninv")
-      cat("predictor: inverse of the sample size\n")
+      cat(mstyle$text("predictor: inverse of the sample size"))
    if (x$predictor == "sqrtni")
-      cat("predictor: square root sample size\n")
+      cat(mstyle$text("predictor: square root sample size"))
    if (x$predictor == "sqrtninv")
-      cat("predictor: inverse of the square root sample size\n")
+      cat(mstyle$text("predictor: inverse of the square root sample size"))
+
+   cat("\n")
 
    if (ret.fit) {
       print(x$fit)
@@ -35,11 +41,13 @@ print.regtest.rma <- function(x, digits, ret.fit, ...) {
       cat("\n")
    }
 
+   cat(mstyle$text("test for funnel plot asymmetry: "))
    if (is.na(x$dfs)) {
-      cat("test for funnel plot asymmetry: z = ", formatC(x$zval, digits=digits, format="f"), ", p ", .pval(x$pval, digits=digits, showeq=TRUE, sep=" "), "\n\n", sep="")
+      cat(mstyle$result(paste0("z = ", formatC(x$zval, digits=digits, format="f"), ", p ", .pval(x$pval, digits=digits, showeq=TRUE, sep=" "))))
    } else {
-      cat("test for funnel plot asymmetry: t = ", formatC(x$zval, digits=digits, format="f"), ", df = ", x$dfs, ", p ", .pval(x$pval, digits=digits, showeq=TRUE, sep=" "), "\n\n", sep="")
+      cat(mstyle$result(paste0("t = ", formatC(x$zval, digits=digits, format="f"), ", df = ", x$dfs, ", p ", .pval(x$pval, digits=digits, showeq=TRUE, sep=" "))))
    }
+   cat("\n\n")
    #cat("H0: coefficient for predictor is equal to 0\n\n")
 
    invisible()

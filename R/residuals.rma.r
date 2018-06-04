@@ -1,12 +1,14 @@
 residuals.rma <- function(object, type="response", ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(object, "rma"))
-      stop("Argument 'object' must be an object of class \"rma\".")
+      stop(mstyle$stop("Argument 'object' must be an object of class \"rma\"."))
 
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
-      stop("Unknown 'na.action' specified under options().")
+      stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
    type <- match.arg(type, c("response", "rstandard", "rstudent", "pearson", "cholesky"))
 
@@ -43,7 +45,7 @@ residuals.rma <- function(object, type="response", ...) {
    if (type == "pearson") {
 
       if (inherits(object, c("rma.mh", "rma.peto", "rma.glmm")))
-         stop("Extraction of Pearson residuals not implemented for objects of class \"rma.mh\", \"rma.peto\", or \"rma.glmm\".")
+         stop(mstyle$stop("Extraction of Pearson residuals not available for objects of class \"rma.mh\", \"rma.peto\", or \"rma.glmm\"."))
 
       out <- c(object$yi.f - object$X.f %*% object$beta)
       out[abs(out) < 100 * .Machine$double.eps] <- 0
@@ -61,7 +63,7 @@ residuals.rma <- function(object, type="response", ...) {
       ### but only for the Cholesky residuals is QE = sum(residuals(res, type="cholesky)^2) for models where M (or rather: V) is not diagonal
 
       if (inherits(object, c("rma.mh", "rma.peto", "rma.glmm")))
-         stop("Extraction of Cholesky residuals not implemented for objects of class \"rma.mh\", \"rma.peto\", or \"rma.glmm\".")
+         stop(mstyle$stop("Extraction of Cholesky residuals not available for objects of class \"rma.mh\", \"rma.peto\", or \"rma.glmm\"."))
 
       out <- c(object$yi - object$X %*% object$beta)
       out[abs(out) < 100 * .Machine$double.eps] <- 0
@@ -69,7 +71,7 @@ residuals.rma <- function(object, type="response", ...) {
       L <- try(chol(chol2inv(chol(object$M))))
 
       if (inherits(L, "try-error"))
-         stop("Could not take Cholesky decomposition of the marginal var-cov matrix.")
+         stop(mstyle$stop("Could not take Cholesky decomposition of the marginal var-cov matrix."))
 
       tmp <- L %*% out
 
@@ -82,13 +84,16 @@ residuals.rma <- function(object, type="response", ...) {
 
       names(out) <- object$slab
 
-      not.na <- !is.na(out)
+      #not.na <- !is.na(out)
 
       if (na.act == "na.omit")
-         out <- out[not.na]
+         out <- out[object$not.na]
 
-      if (na.act == "na.fail" && any(!not.na))
-         stop("Missing values in results.")
+      if (na.act == "na.exclude")
+         out[!object$not.na] <- NA
+
+      if (na.act == "na.fail" && any(!object$not.na))
+         stop(mstyle$stop("Missing values in results."))
 
    }
 

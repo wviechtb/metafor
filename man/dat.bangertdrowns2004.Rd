@@ -21,13 +21,13 @@
 \bold{subject}  \tab \code{character} \tab subject matter \cr
 \bold{ni}       \tab \code{numeric}   \tab total sample size of the study \cr
 \bold{yi}       \tab \code{numeric}   \tab standardized mean difference \cr
-\bold{vi}       \tab \code{numeric}   \tab corresponding sampling variance
+\bold{vi}       \tab \code{numeric}   \tab corresponding sampling variance \cr
 }
 }
 \details{
    In each of the studies included in this meta-analysis, an experimental group (i.e., a group of students that received instruction with increased emphasis on writing tasks) was compared against a control group (i.e., a group of students that received conventional instruction) with respect to some content-related measure of academic achievement (e.g., final grade, an exam/quiz/test score). The effect size measure for this meta-analysis was the standardized mean difference (with positive scores indicating a higher mean level of academic achievement in the intervention group).
 
-   The standardized mean differences given here are bias-corrected and therefore differ slighty from the values reported in the article. Also, since only the total sample size is given in the article, the estimated sampling variances were computed under the assumption that \if{latex}{\eqn{n_{i1} = n_{i2} = n_i / 2}}\if{html}{\eqn{nᵢ₁ = nᵢ₁₂ = nᵢ / 2}}\if{text}{\eqn{n_i1 = n_i2 = n_i / 2}}.
+   The standardized mean differences given here are bias-corrected and therefore differ slighty from the values reported in the article. Also, since only the total sample size is given in the article, the estimated sampling variances were computed under the assumption that \if{latex}{\eqn{n_{i1} = n_{i2} = n_i / 2}}\if{html}{\eqn{nᵢ₁ = nᵢ₂ = nᵢ / 2}}\if{text}{\eqn{n_i1 = n_i2 = n_i / 2}}.
 }
 \source{
    Bangert-Drowns, R. L., Hurley, M. M., & Wilkinson, B. (2004). The effects of school-based writing-to-learn interventions on academic achievement: A meta-analysis. \emph{Review of Educational Research}, \bold{74}, 29--58.

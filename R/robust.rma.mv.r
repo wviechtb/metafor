@@ -1,10 +1,12 @@
 robust.rma.mv <- function(x, cluster, adjust=TRUE, digits, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(x, "rma.mv"))
-      stop("Argument 'x' must be an object of class \"rma.mv\".")
+      stop(mstyle$stop("Argument 'x' must be an object of class \"rma.mv\"."))
 
    if (missing(cluster))
-      stop("Need to specify 'cluster' variable.")
+      stop(mstyle$stop("Need to specify 'cluster' variable."))
 
    if (missing(digits))
       digits <- x$digits
@@ -25,10 +27,10 @@ robust.rma.mv <- function(x, cluster, adjust=TRUE, digits, ...) {
    ### checks on cluster variable
 
    if (anyNA(cluster))
-      stop("No missing values allowed in 'cluster' variable.")
+      stop(mstyle$stop("No missing values allowed in 'cluster' variable."))
 
    if (length(cluster) != x$k)
-      stop("Length of variable specified via 'cluster' does not match length of data.")
+      stop(mstyle$stop("Length of variable specified via 'cluster' does not match length of data."))
 
    ### number of clusters
 
@@ -42,7 +44,7 @@ robust.rma.mv <- function(x, cluster, adjust=TRUE, digits, ...) {
    ### check if dfs are positive (note: this also handles the case where there is a single cluster)
 
    if (dfs <= 0)
-      stop(paste0("Number of clusters (", n, ") must be larger than the number of fixed effects (", x$p, ")."))
+      stop(mstyle$stop(paste0("Number of clusters (", n, ") must be larger than the number of fixed effects (", x$p, ").")))
 
    ### note: since we use split() below and then put things back together into a block-diagonal matrix,
    ### we have to make sure everything is properly ordered by the cluster variable; otherwise, the 'meat'
@@ -61,7 +63,7 @@ robust.rma.mv <- function(x, cluster, adjust=TRUE, digits, ...) {
       W <- try(chol2inv(chol(x$M[ocl,ocl])), silent=TRUE)
 
       if (inherits(W, "try-error"))
-         stop("Cannot invert marginal var-cov matrix.")
+         stop(mstyle$stop("Cannot invert marginal var-cov matrix."))
 
       bread <- x$vb %*% crossprod(x$X[ocl,], W)
 
@@ -96,7 +98,7 @@ robust.rma.mv <- function(x, cluster, adjust=TRUE, digits, ...) {
 
    ### suggested in Hedges, Tipton, & Johnson (2010) -- analogous to HC1 adjustment
 
-   if (is.logical(adjust) && adjust)
+   if (.isTRUE(adjust))
       vb <- (n / dfs) * vb
 
    ### what Stata does
@@ -106,6 +108,12 @@ robust.rma.mv <- function(x, cluster, adjust=TRUE, digits, ...) {
 
    if (is.character(adjust) && adjust=="Stata2")
       vb <- (n / (n-1)) * vb                       ### when the model was fitted with mixed
+
+   ### dim(vb) is pxp and not sparse, so this won't blow up
+   ### as.matrix() helps to avoid some issues with 'vb' appearing as non-symmetric (when it must be)
+
+   if (x$sparse)
+      vb <- as.matrix(vb)
 
    ### prepare results
 
@@ -118,7 +126,7 @@ robust.rma.mv <- function(x, cluster, adjust=TRUE, digits, ...) {
    ci.lb <- c(beta - crit * se)
    ci.ub <- c(beta + crit * se)
 
-   QM <- try(as.vector(t(beta)[x$btt] %*% chol2inv(chol(as.matrix(vb[x$btt,x$btt]))) %*% beta[x$btt]), silent=TRUE) ### as.matrix() helps to avoid some issues with 'vb' appearing as non-symmetric (when it must be)
+   QM <- try(as.vector(t(beta)[x$btt] %*% chol2inv(chol(vb[x$btt,x$btt])) %*% beta[x$btt]), silent=TRUE)
 
    if (inherits(QM, "try-error"))
       QM <- NA
@@ -135,7 +143,6 @@ robust.rma.mv <- function(x, cluster, adjust=TRUE, digits, ...) {
    res$digits <- digits
 
    ### replace elements with robust results
-
    res$dfs   <- dfs
    res$vb    <- vb
    res$se    <- se
@@ -149,7 +156,7 @@ robust.rma.mv <- function(x, cluster, adjust=TRUE, digits, ...) {
    res$tcl   <- tcl
    res$test  <- "t"
    res$meat <- matrix(NA_real_, nrow=nrow(meat), ncol=ncol(meat))
-   res$meat[ocl,ocl] <- meat
+   res$meat[ocl,ocl] <- as.matrix(meat)
 
    class(res) <- c("robust.rma", "rma", "rma.mv")
    return(res)

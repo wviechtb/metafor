@@ -2,18 +2,20 @@ forest.cumul.rma <- function(x,          annotate=TRUE,
 xlim, alim, clim, ylim, at, steps=5, level=x$level, refline=0, digits=2L, width,
 xlab,                       ilab, ilab.xpos, ilab.pos,
 transf, atransf, targs, rows,
-efac=1, pch=15, psize=1, lty,
+efac=1, pch=15, psize=1, lty, fonts,
 cex, cex.lab, cex.axis, annosym, ...) {
 
    #########################################################################
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
-      stop("Unknown 'na.action' specified under options().")
+      stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
    if (!inherits(x, "cumul.rma"))
-      stop("Argument 'x' must be an object of class \"cumul.rma\".")
+      stop(mstyle$stop("Argument 'x' must be an object of class \"cumul.rma\"."))
 
    if (missing(transf))
       transf <- FALSE
@@ -25,7 +27,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
    atransf.char <- deparse(substitute(atransf))
 
    if (is.function(transf) && is.function(atransf))
-      stop("Use either 'transf' or 'atransf' to specify a transformation (not both).")
+      stop(mstyle$stop("Use either 'transf' or 'atransf' to specify a transformation (not both)."))
 
    if (missing(targs))
       targs <- NULL
@@ -66,11 +68,12 @@ cex, cex.lab, cex.axis, annosym, ...) {
    if (missing(annosym))
       annosym <- c(" [", ", ", "]")
    if (length(annosym) != 3)
-      stop("Argument 'annosym' must be a vector of length 3.")
+      stop(mstyle$stop("Argument 'annosym' must be a vector of length 3."))
 
    #########################################################################
 
    ### digits[1] for annotations, digits[2] for x-axis labels
+   ### note: digits can also be a list (e.g., digits=list(2L,3))
 
    if (length(digits) == 1L)
       digits <- c(digits,digits)
@@ -94,7 +97,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
    ### check length of yi and vi
 
    if (length(yi) != length(vi))
-      stop("Length of 'yi' and 'vi' (or 'sei') vectors are not the same.")
+      stop(mstyle$stop("Length of 'yi' and 'vi' (or 'sei') vectors are not the same."))
 
    k <- length(yi)
 
@@ -113,7 +116,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
       pch <- rep(pch, k)
 
    if (length(pch) != length(yi))
-      stop("Number of outcomes does not correspond to the length of the 'pch' argument.")
+      stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'pch' argument."))
 
    ### if user has set the point sizes
 
@@ -121,7 +124,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
       if (length(psize) == 1L)
          psize <- rep(psize, k)
       if (length(psize) != length(yi))
-         stop("Number of outcomes does not correspond to the length of the 'psize' argument.")
+         stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'psize' argument."))
    }
 
    ### set rows value
@@ -134,7 +137,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
    }
 
    if (length(rows) != length(yi))
-      stop("Number of outcomes does not correspond to the length of the 'rows' argument.")
+      stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'rows' argument."))
 
    ### reverse order
 
@@ -176,7 +179,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
       }
 
       if (na.act == "na.fail")
-         stop("Missing values in results.")
+         stop(mstyle$stop("Missing values in results."))
 
    }                                            ### note: yi/vi may be NA if na.act == "na.exclude" or "na.pass"
 
@@ -212,7 +215,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
    if (!missing(clim)) {
       clim <- sort(clim)
       if (length(clim) != 2L)
-         stop("Argument 'clim' must be of length 2.")
+         stop(mstyle$stop("Argument 'clim' must be of length 2."))
       ci.lb[ci.lb < clim[1]] <- clim[1]
       ci.ub[ci.ub > clim[2]] <- clim[2]
    }
@@ -250,9 +253,9 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
    if (missing(xlim)) {
       xlim <- c(min(ci.lb, na.rm=TRUE) - rng * plot.multp.l, max(ci.ub, na.rm=TRUE) + rng * plot.multp.r)
-      xlim <- round(xlim, digits[2])
-      #xlim[1] <- xlim[1]*max(1, digits[2]/2)
-      #xlim[2] <- xlim[2]*max(1, digits[2]/2)
+      xlim <- round(xlim, digits[[2]])
+      #xlim[1] <- xlim[1]*max(1, digits[[2]]/2)
+      #xlim[2] <- xlim[2]*max(1, digits[[2]]/2)
    }
 
    ### set x axis limits (at argument overrides alim argument)
@@ -316,15 +319,28 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
    if (is.function(atransf)) {
       if (is.null(targs)) {
-         at.lab <- formatC(sapply(at.lab, atransf), digits=digits[2], format="f", drop0trailing=ifelse(class(digits) == "integer", TRUE, FALSE))
+         at.lab <- formatC(sapply(at.lab, atransf), digits=digits[[2]], format="f", drop0trailing=ifelse(class(digits[[2]]) == "integer", TRUE, FALSE))
       } else {
-         at.lab <- formatC(sapply(at.lab, atransf, targs), digits=digits[2], format="f", drop0trailing=ifelse(class(digits) == "integer", TRUE, FALSE))
+         at.lab <- formatC(sapply(at.lab, atransf, targs), digits=digits[[2]], format="f", drop0trailing=ifelse(class(digits[[2]]) == "integer", TRUE, FALSE))
       }
    } else {
-      at.lab <- formatC(at.lab, digits=digits[2], format="f", drop0trailing=ifelse(class(digits) == "integer", TRUE, FALSE))
+      at.lab <- formatC(at.lab, digits=digits[[2]], format="f", drop0trailing=ifelse(class(digits[[2]]) == "integer", TRUE, FALSE))
    }
 
    #########################################################################
+
+   ### set/get fonts
+
+   if (missing(fonts)) {
+      fonts <- rep(par("family"), 3)
+   } else {
+      if (length(fonts) == 1L)
+         fonts <- rep(fonts, 3)
+      if (length(fonts) == 2L)
+         fonts <- c(fonts, fonts[1])
+   }
+
+   par(family=fonts[1])
 
    ### adjust margins
 
@@ -425,14 +441,16 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
    if (!is.null(ilab)) {
       if (is.null(ilab.xpos))
-         stop("Must specify 'ilab.xpos' argument when adding information with 'ilab'.")
+         stop(mstyle$stop("Must specify 'ilab.xpos' argument when adding information with 'ilab'."))
       if (length(ilab.xpos) != ncol(ilab))
-         stop(paste0("Number of 'ilab' columns (", ncol(ilab), ") does not match length of 'ilab.xpos' argument (", length(ilab.xpos), ")."))
+         stop(mstyle$stop(paste0("Number of 'ilab' columns (", ncol(ilab), ") does not match length of 'ilab.xpos' argument (", length(ilab.xpos), ").")))
       if (!is.null(ilab.pos) && length(ilab.pos) == 1)
          ilab.pos <- rep(ilab.pos, ncol(ilab))
+      par(family=fonts[3])
       for (l in seq_len(ncol(ilab))) {
          text(ilab.xpos[l], rows, ilab[,l], pos=ilab.pos[l], cex=cex, ...)
       }
+      par(family=fonts[1])
    }
 
    ### add study annotations on the right: yi [LB, UB]
@@ -457,7 +475,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
       }
 
-      annotext <- formatC(annotext, format="f", digits=digits[1])
+      annotext <- formatC(annotext, format="f", digits=digits[[1]])
 
       if (missing(width)) {
          width <- apply(annotext, 2, function(x) max(nchar(x)))
@@ -472,7 +490,10 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
       annotext <- cbind(annotext[,1], annosym[1], annotext[,2], annosym[2], annotext[,3], annosym[3])
       annotext <- apply(annotext, 1, paste, collapse="")
+      annotext[grepl("NA", annotext, fixed=TRUE)] <- ""
+      par(family=fonts[2])
       text(x=xlim[2], rows, labels=annotext, pos=2, cex=cex, ...)
+      par(family=fonts[1])
 
    }
 

@@ -11,7 +11,7 @@
 \bold{n1i}    \tab \code{numeric}   \tab number of patients in lidocaine group \cr
 \bold{n2i}    \tab \code{numeric}   \tab number of patients in control group \cr
 \bold{ai}     \tab \code{numeric}   \tab number of deaths in lidocaine group \cr
-\bold{ci}     \tab \code{numeric}   \tab number of deaths in control group
+\bold{ci}     \tab \code{numeric}   \tab number of deaths in control group \cr
 }
 }
 \details{

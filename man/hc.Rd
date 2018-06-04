@@ -8,7 +8,7 @@
 \usage{
 hc(object, \dots)
 
-\method{hc}{rma.uni}(object, digits, transf, targs, control, \ldots)
+\method{hc}{rma.uni}(object, digits, transf, targs, control, \dots)
 }
 \arguments{
    \item{object}{an object of class \code{"rma.uni"}.}

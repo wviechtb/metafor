@@ -8,15 +8,15 @@
        level=95, refline=0, digits=2L, width,
        xlab, slab, ilab, ilab.xpos, ilab.pos,
        subset, transf, atransf, targs, rows,
-       efac=1, pch=15, psize, col, lty,
+       efac=1, pch=15, psize, col, lty, fonts,
        cex, cex.lab, cex.axis, annosym, \dots)
 }
 \arguments{
    \item{x}{vector of length \eqn{k} with the observed effect sizes or outcomes.}
    \item{vi}{vector of length \eqn{k} with the corresponding sampling variances.}
    \item{sei}{vector of length \eqn{k} with the corresponding standard errors.\cr(note: only one of the two, \code{vi} or \code{sei}, needs to be specified)}
-   \item{ci.lb}{vector of length \eqn{k} with the corresponding lower confidence intervals bounds. Not needed if \code{vi} or \code{sei} is specified. See \sQuote{Details}.}
-   \item{ci.ub}{vector of length \eqn{k} with the corresponding upper confidence intervals bounds. Not needed if \code{vi} or \code{sei} is specified. See \sQuote{Details}.}
+   \item{ci.lb}{vector of length \eqn{k} with the corresponding lower confidence interval bounds. Not needed if \code{vi} or \code{sei} is specified. See \sQuote{Details}.}
+   \item{ci.ub}{vector of length \eqn{k} with the corresponding upper confidence interval bounds. Not needed if \code{vi} or \code{sei} is specified. See \sQuote{Details}.}
    \item{annotate}{logical specifying whether annotations should be added to the plot (the default is \code{TRUE}).}
    \item{showweights}{logical specifying whether the annotations should also include inverse variance weights (the default is \code{FALSE}).}
    \item{xlim}{horizontal limits of the plot region. If unspecified, the function tries to set the horizontal plot limits to some sensible values.}
@@ -44,6 +44,7 @@
    \item{psize}{optional vector with point sizes for the observed effect sizes or outcomes. If unspecified, the point sizes are drawn proportional to the precision of the estimates.}
    \item{col}{optional character string specifying the name of a color to use for plotting ("black" is used by default if not specified). Can also be a vector of color names.}
    \item{lty}{optional character string specifying the line type for the confidence intervals (if unspecified, the function sets this to \code{"solid"} by default).}
+   \item{fonts}{optional character string specifying the font to use for the study labels, annotations, and the extra information (if specified via \code{ilab}). If unspecified, the default font is used.}
    \item{cex}{optional character and symbol expansion factor. If unspecified, the function tries to set this to a sensible value.}
    \item{cex.lab}{optional expansion factor for the x-axis title. If unspecified, the function tries to set this to a sensible value.}
    \item{cex.axis}{optional expansion factor for the x-axis labels. If unspecified, the function tries to set this to a sensible value.}
@@ -73,9 +74,7 @@
    The \code{lty} argument can also be a vector of two elements, the first for specifying the line type of the individual CIs (\code{"solid"} by default), the second for the line type of the horizontal line that is automatically added to the plot (\code{"solid"} by default; set to \code{"blank"} to remove it).
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \cr
-   package website: \url{http://www.metafor-project.org/} \cr
-   author homepage: \url{http://www.wvbauer.com/}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
 }
 \references{
    Lewis, S., & Clarke, M. (2001). Forest plots: Trying to see the wood and the trees. \emph{British Medical Journal}, \bold{322}, 1479--1480.

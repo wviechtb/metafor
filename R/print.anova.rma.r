@@ -1,7 +1,9 @@
 print.anova.rma <- function(x, digits, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(x, "anova.rma"))
-      stop("Argument 'x' must be an object of class \"anova.rma\".")
+      stop(mstyle$stop("Argument 'x' must be an object of class \"anova.rma\"."))
 
    if (missing(digits))
       digits <- x$digits
@@ -10,12 +12,14 @@ print.anova.rma <- function(x, digits, ...) {
 
       cat("\n")
 
-      cat("Test of Moderators (coefficient(s) ", .format.btt(x$btt),"): \n", sep="")
+      cat(mstyle$section(paste0("Test of Moderators (coefficient", ifelse(x$m == 1, " ", "s "), .format.btt(x$btt),"):")))
+      cat("\n")
       if (is.element(x$test, c("knha","adhoc","t"))) {
-         cat("F(df1 = ", x$m, ", df2 = ", x$dfs, ") = ", formatC(x$QM, digits=digits, format="f"), ", p-val ", .pval(x$QMp, digits=digits, showeq=TRUE, sep=" "), "\n\n", sep="")
+         cat(mstyle$result(paste0("F(df1 = ", x$m, ", df2 = ", x$dfs, ") = ", formatC(x$QM, digits=digits, format="f"), ", p-val ", .pval(x$QMp, digits=digits, showeq=TRUE, sep=" "))))
       } else {
-         cat("QM(df = ", x$m, ") = ", formatC(x$QM, digits=digits, format="f"), ", p-val ", .pval(x$QMp, digits=digits, showeq=TRUE, sep=" "), "\n\n", sep="")
+         cat(mstyle$result(paste0("QM(df = ", x$m, ") = ", formatC(x$QM, digits=digits, format="f"), ", p-val ", .pval(x$QMp, digits=digits, showeq=TRUE, sep=" "))))
       }
+      cat("\n\n")
 
    }
 
@@ -24,14 +28,17 @@ print.anova.rma <- function(x, digits, ...) {
       cat("\n")
 
       if (x$m == 1) {
-         cat("Hypothesis:")
+         cat(mstyle$section("Hypothesis:"))
       } else {
-         cat("Hypotheses:")
+         cat(mstyle$section("Hypotheses:"))
       }
 
-      print(x$hyp)
+      tmp <- capture.output(print(x$hyp))
+      .print.output(tmp, mstyle$text)
 
-      cat("\nResults:\n")
+      cat("\n")
+      cat(mstyle$section("Results:"))
+      cat("\n")
 
       res.table <- cbind(estimate=c(x$Lb), se=x$se, zval=x$zval, pval=x$pval)
       if (is.element(x$test, c("knha","adhoc","t")))
@@ -39,21 +46,24 @@ print.anova.rma <- function(x, digits, ...) {
       rownames(res.table) <- paste0(seq_len(x$m), ":")
       res.table <- formatC(res.table, digits=digits, format="f")
       res.table[,4] <- .pval(x$pval, digits=digits)
-      print(res.table, quote=FALSE, right=TRUE)
+      tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE))
+      .print.table(tmp, mstyle)
 
       cat("\n")
 
       if (!is.na(x$QM)) {
          if (x$m == 1) {
-            cat("Test of Hypothesis:\n")
+            cat(mstyle$section("Test of Hypothesis:"))
          } else {
-            cat("Omnibus Test of Hypotheses:\n")
+            cat(mstyle$section("Omnibus Test of Hypotheses:"))
          }
+         cat("\n")
          if (is.element(x$test, c("knha","adhoc","t"))) {
-            cat("F(df1 = ", x$m, ", df2 = ", x$dfs, ") = ", formatC(x$QM, digits=digits, format="f"), ", p-val ", .pval(x$QMp, digits=digits, showeq=TRUE, sep=" "), "\n\n", sep="")
+            cat(mstyle$result(paste0("F(df1 = ", x$m, ", df2 = ", x$dfs, ") = ", formatC(x$QM, digits=digits, format="f"), ", p-val ", .pval(x$QMp, digits=digits, showeq=TRUE, sep=" "))))
          } else {
-            cat("QM(df = ", x$m, ") = ", formatC(x$QM, digits=digits, format="f"), ", p-val ", .pval(x$QMp, digits=digits, showeq=TRUE, sep=" "), "\n\n", sep="")
+            cat(mstyle$result(paste0("QM(df = ", x$m, ") = ", formatC(x$QM, digits=digits, format="f"), ", p-val ", .pval(x$QMp, digits=digits, showeq=TRUE, sep=" "))))
          }
+         cat("\n\n")
       }
 
    }
@@ -80,7 +90,12 @@ print.anova.rma <- function(x, digits, ...) {
       if (x$method == "FE" || is.element("rma.mv", x$class.f))
          res.table <- res.table[,seq_len(8)]
 
-      print(res.table, quote=FALSE, right=TRUE)
+      cat("\n")
+
+      tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE))
+      .print.table(tmp, mstyle)
+
+      cat("\n")
 
    }
 

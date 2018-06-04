@@ -11,7 +11,7 @@
 \bold{ni}         \tab \code{numeric}    \tab sample size \cr
 \bold{mi}         \tab \code{numeric}    \tab number of items in the scale \cr
 \bold{ai}         \tab \code{numeric}    \tab observed value of Cronbach's alpha \cr
-\bold{caregivers} \tab \code{character}  \tab gender of the children in the sample
+\bold{caregivers} \tab \code{character}  \tab gender of the children in the sample \cr
 }
 }
 \details{

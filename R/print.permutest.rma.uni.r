@@ -1,7 +1,9 @@
 print.permutest.rma.uni <- function(x, digits, signif.stars=getOption("show.signif.stars"), signif.legend=signif.stars, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(x, "permutest.rma.uni"))
-      stop("Argument 'x' must be an object of class \"permutest.rma.uni\".")
+      stop(mstyle$stop("Argument 'x' must be an object of class \"permutest.rma.uni\"."))
 
    if (missing(digits))
       digits <- x$digits
@@ -9,12 +11,14 @@ print.permutest.rma.uni <- function(x, digits, signif.stars=getOption("show.sign
    cat("\n")
 
    if (!x$int.only) {
-      cat("Test of Moderators (coefficient(s) ", .format.btt(x$btt),"): \n", sep="")
+      cat(mstyle$section(paste0("Test of Moderators (coefficient", ifelse(x$m == 1, " ", "s "), .format.btt(x$btt),"):")))
+      cat("\n")
       if (is.element(x$test, c("knha","adhoc","t"))) {
-         cat("F(df1 = ", x$m, ", df2 = ", x$dfs, ") = ", formatC(x$QM, digits=digits, format="f"), ", p-val* ", .pval(x$QMp, digits=digits, showeq=TRUE, sep=" "), "\n\n", sep="")
+         cat(mstyle$result(paste0("F(df1 = ", x$m, ", df2 = ", x$dfs, ") = ", formatC(x$QM, digits=digits, format="f"), ", p-val* ", .pval(x$QMp, digits=digits, showeq=TRUE, sep=" "))))
       } else {
-         cat("QM(df = ", x$m, ") = ", formatC(x$QM, digits=digits, format="f"), ", p-val* ", .pval(x$QMp, digits=digits, showeq=TRUE, sep=" "), "\n\n", sep="")
+         cat(mstyle$result(paste0("QM(df = ", x$m, ") = ", formatC(x$QM, digits=digits, format="f"), ", p-val* ", .pval(x$QMp, digits=digits, showeq=TRUE, sep=" "))))
       }
+      cat("\n\n")
    }
 
    res.table <- cbind(estimate=c(x$beta), se=x$se, zval=x$zval, "pval*"=x$pval, ci.lb=x$ci.lb, ci.ub=x$ci.ub)
@@ -35,17 +39,19 @@ print.permutest.rma.uni <- function(x, digits, signif.stars=getOption("show.sign
    if (x$int.only)
       res.table <- res.table[1,]
 
-   cat("Model Results:")
+   cat(mstyle$section("Model Results:"))
    cat("\n\n")
    if (x$int.only) {
-      .print.out(res.table)
-      #print(res.table, quote=FALSE, right=TRUE)
+      tmp <- capture.output(.print.vector(res.table))
    } else {
-      print(res.table, quote=FALSE, right=TRUE, print.gap=2)
+      tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE, print.gap=2))
    }
+   .print.table(tmp, mstyle)
+
    cat("\n")
    if (signif.legend)
-      cat("---\nSignif. codes: ", attr(signif, "legend"), "\n\n")
+      cat(mstyle$legend("---\nSignif. codes: "), mstyle$legend(attr(signif, "legend")))
+   cat("\n\n")
 
    invisible()
 

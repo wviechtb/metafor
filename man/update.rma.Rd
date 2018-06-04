@@ -10,7 +10,7 @@
 \arguments{
    \item{object}{an object of class \code{"rma"}.}
    \item{formula.}{changes to the formula. See \sQuote{Details}.}
-   \item{\ldots}{additional arguments to the call, or arguments with changed values.}
+   \item{\dots}{additional arguments to the call, or arguments with changed values.}
    \item{evaluate}{logical indicating whether to evaluate the new call or just return the call.}
 }
 \details{

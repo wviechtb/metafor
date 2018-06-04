@@ -1,18 +1,20 @@
 leave1out.rma.peto <- function(x, digits, transf, targs, progbar=FALSE, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(x, "rma.peto"))
-      stop("Argument 'x' must be an object of class \"rma.peto\".")
+      stop(mstyle$stop("Argument 'x' must be an object of class \"rma.peto\"."))
 
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
-      stop("Unknown 'na.action' specified under options().")
+      stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
    if (!x$int.only)
-      stop("Method only applicable for models without moderators.")
+      stop(mstyle$stop("Method only applicable for models without moderators."))
 
    if (x$k == 1)
-      stop("Stopped because k = 1.")
+      stop(mstyle$stop("Stopped because k = 1."))
 
    if (missing(digits))
       digits <- x$digits
@@ -76,7 +78,7 @@ leave1out.rma.peto <- function(x, digits, transf, targs, progbar=FALSE, ...) {
 
    ### if requested, apply transformation function
 
-   if (is.logical(transf) && transf) ### if transf=TRUE, apply exp transformation to ORs
+   if (.isTRUE(transf)) ### if transf=TRUE, apply exp transformation to ORs
       transf <- exp
 
    if (is.function(transf)) {
@@ -113,7 +115,7 @@ leave1out.rma.peto <- function(x, digits, transf, targs, progbar=FALSE, ...) {
    }
 
    if (na.act == "na.fail" && any(!x$not.na))
-      stop("Missing values in results.")
+      stop(mstyle$stop("Missing values in results."))
 
    #out <- out[-c(2,3,4)]
    out$digits <- digits

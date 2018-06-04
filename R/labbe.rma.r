@@ -1,22 +1,24 @@
 labbe.rma <- function(x, xlim, ylim, xlab, ylab,
-add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, ...) {
+add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, lty, ...) {
+
+   mstyle <- .get.mstyle("crayon" %in% .packages())
 
    if (!inherits(x, "rma"))
-      stop("Argument 'x' must be an object of class \"rma\".")
+      stop(mstyle$stop("Argument 'x' must be an object of class \"rma\"."))
 
    if (inherits(x, "rma.ls"))
-      stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!")
+      stop(mstyle$stop("Method not available for objects of class \"rma.ls\"."))
 
    if (!x$int.only)
-      stop("L'Abbe plot only applicable for models without moderators.")
+      stop(mstyle$stop("L'Abbe plot only applicable for models without moderators."))
 
    if (!is.element(x$measure, c("RR","OR","RD","AS","IRR","IRD","IRSD")))
-      stop("Argument 'measure' must be one of the following: 'RR','OR','RD','AS','IRR','IRD','IRSD'.")
+      stop(mstyle$stop("Argument 'measure' must be one of the following: 'RR','OR','RD','AS','IRR','IRD','IRSD'."))
 
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
-      stop("Unknown 'na.action' specified under options().")
+      stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
    if (length(add) == 2) ### for rma.mh and rma.peto objects (1st 'add' value applies to the individual outcomes)
       add <- add[1]
@@ -25,7 +27,7 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, ...) {
       to <- to[1]
 
    if (!is.element(to, c("all","only0","if0all","none")))
-      stop("Unknown 'to' argument specified.")
+      stop(mstyle$stop("Unknown 'to' argument specified."))
 
    if (missing(transf))
       transf <- FALSE
@@ -38,6 +40,22 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, ...) {
    if (missing(psize))
       psize <- NULL
 
+   if (missing(lty)) {
+      lty <- c("solid", "dashed") ### 1st value = diagonal line, 2nd value = estimated effect line
+   } else {
+      if (length(lty) == 1L)
+         lty <- c(lty, lty)
+   }
+
+   ### get ... argument
+
+   ddd <- list(...)
+
+   ### set defaults or get addyi and addvi arguments
+
+   addyi <- ifelse(is.null(ddd$addyi), TRUE, ddd$addyi)
+   addvi <- ifelse(is.null(ddd$addvi), TRUE, ddd$addvi)
+
    #########################################################################
 
    k <- x$k.f
@@ -46,7 +64,7 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, ...) {
       pch <- rep(pch, k)                        ### or be equal to a single value (which is then repeated)
 
    if (length(pch) != k)
-      stop("Number of tables does not correspond to the length of the 'pch' argument.")
+      stop(mstyle$stop("Number of tables does not correspond to the length of the 'pch' argument."))
 
    ### if user has set the point sizes
 
@@ -54,14 +72,14 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, ...) {
       if (length(psize) == 1L)                  ### or be equal to a single value (which is then repeated)
          psize <- rep(psize, k)
       if (length(psize) != k)
-         stop("Number of tables does not correspond to the length of the 'psize' argument.")
+         stop(mstyle$stop("Number of tables does not correspond to the length of the 'psize' argument."))
    }
 
    if (length(bg) == 1L)                        ### note: bg must have same length as number of tables (including NAs)
       bg <- rep(bg, k)                          ### or be equal to a single value (which is then repeated)
 
    if (length(bg) != k)
-      stop("Number of tables does not correspond to the length of the 'bg' argument.")
+      stop(mstyle$stop("Number of tables does not correspond to the length of the 'bg' argument."))
 
    #########################################################################
 
@@ -93,44 +111,44 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, ...) {
 
    if (x$measure == "RR") {
       measure <- "PLN"
-      dat.t <- escalc(measure=measure, xi=ai, mi=bi, add=add, to=to)
-      dat.c <- escalc(measure=measure, xi=ci, mi=di, add=add, to=to)
+      dat.t <- escalc(measure=measure, xi=ai, mi=bi, add=add, to=to, addyi=addyi, addvi=addvi)
+      dat.c <- escalc(measure=measure, xi=ci, mi=di, add=add, to=to, addyi=addyi, addvi=addvi)
    }
 
    if (x$measure == "OR") {
       measure <- "PLO"
-      dat.t <- escalc(measure=measure, xi=ai, mi=bi, add=add, to=to)
-      dat.c <- escalc(measure=measure, xi=ci, mi=di, add=add, to=to)
+      dat.t <- escalc(measure=measure, xi=ai, mi=bi, add=add, to=to, addyi=addyi, addvi=addvi)
+      dat.c <- escalc(measure=measure, xi=ci, mi=di, add=add, to=to, addyi=addyi, addvi=addvi)
    }
 
    if (x$measure == "RD") {
       measure <- "PR"
-      dat.t <- escalc(measure=measure, xi=ai, mi=bi, add=add, to=to)
-      dat.c <- escalc(measure=measure, xi=ci, mi=di, add=add, to=to)
+      dat.t <- escalc(measure=measure, xi=ai, mi=bi, add=add, to=to, addyi=addyi, addvi=addvi)
+      dat.c <- escalc(measure=measure, xi=ci, mi=di, add=add, to=to, addyi=addyi, addvi=addvi)
    }
 
    if (x$measure == "AS") {
       measure <- "PAS"
-      dat.t <- escalc(measure=measure, xi=ai, mi=bi, add=add, to=to)
-      dat.c <- escalc(measure=measure, xi=ci, mi=di, add=add, to=to)
+      dat.t <- escalc(measure=measure, xi=ai, mi=bi, add=add, to=to, addyi=addyi, addvi=addvi)
+      dat.c <- escalc(measure=measure, xi=ci, mi=di, add=add, to=to, addyi=addyi, addvi=addvi)
    }
 
    if (x$measure == "IRR") {
       measure <- "IRLN"
-      dat.t <- escalc(measure=measure, xi=x1i, ti=t1i, add=add, to=to)
-      dat.c <- escalc(measure=measure, xi=x2i, ti=t2i, add=add, to=to)
+      dat.t <- escalc(measure=measure, xi=x1i, ti=t1i, add=add, to=to, addyi=addyi, addvi=addvi)
+      dat.c <- escalc(measure=measure, xi=x2i, ti=t2i, add=add, to=to, addyi=addyi, addvi=addvi)
    }
 
    if (x$measure == "IRD") {
       measure <- "IR"
-      dat.t <- escalc(measure=measure, xi=x1i, ti=t1i, add=add, to=to)
-      dat.c <- escalc(measure=measure, xi=x2i, ti=t2i, add=add, to=to)
+      dat.t <- escalc(measure=measure, xi=x1i, ti=t1i, add=add, to=to, addyi=addyi, addvi=addvi)
+      dat.c <- escalc(measure=measure, xi=x2i, ti=t2i, add=add, to=to, addyi=addyi, addvi=addvi)
    }
 
    if (x$measure == "IRSD") {
       measure <-
-      dat.t <- escalc(measure=measure, xi=x1i, ti=t1i, add=add, to=to)
-      dat.c <- escalc(measure=measure, xi=x2i, ti=t2i, add=add, to=to)
+      dat.t <- escalc(measure=measure, xi=x1i, ti=t1i, add=add, to=to, addyi=addyi, addvi=addvi)
+      dat.c <- escalc(measure=measure, xi=x2i, ti=t2i, add=add, to=to, addyi=addyi, addvi=addvi)
    }
 
    options(na.action = na.act)
@@ -149,7 +167,7 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, ...) {
    }
 
    if (length(dat.t$yi)==0 || length(dat.c$yi)==0)
-      stop("No information in object to compute arm-level outcomes.")
+      stop(mstyle$stop("No information in object to compute arm-level outcomes."))
 
    #########################################################################
 
@@ -211,15 +229,15 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, ...) {
    if (missing(ylim))
       ylim <- c(min.yi, max.yi)
 
-   #return(cbind(dat.c$yi, dat.t$yi))
-
    ### order points by psize
 
    order.vec <- order(psize, decreasing=TRUE)
-   dat.t$yi  <- dat.t$yi[order.vec]
-   dat.c$yi  <- dat.c$yi[order.vec]
-   psize     <- psize[order.vec]
-   pch       <- pch[order.vec]
+
+   dat.t$yi.o  <- dat.t$yi[order.vec]
+   dat.c$yi.o  <- dat.c$yi[order.vec]
+   psize.o     <- psize[order.vec]
+   pch.o       <- pch[order.vec]
+   bg.o        <- bg[order.vec]
 
    ### add x axis label
 
@@ -244,12 +262,15 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, ...) {
       box(...)
    }
 
-   abline(a=0, b=1, ...)
-   lines(c.vals, t.vals, lty="dashed", ...)
-   points(dat.c$yi, dat.t$yi, cex=psize, pch=pch, bg=bg, ...)
+   abline(a=0, b=1, lty=lty[1], ...)
+   lines(c.vals, t.vals, lty=lty[2], ...)
+   points(dat.c$yi.o, dat.t$yi.o, cex=psize.o, pch=pch.o, bg=bg.o, ...)
 
    #########################################################################
 
-   invisible()
+   ### prepare data frame to return
+   sav <- data.frame(x=dat.c$yi, y=dat.t$yi, cex=psize, pch=pch, bg=bg)
+
+   invisible(sav)
 
 }

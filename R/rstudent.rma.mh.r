@@ -1,12 +1,14 @@
 rstudent.rma.mh <- function(model, digits, progbar=FALSE, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(model, "rma.mh"))
-      stop("Argument 'model' must be an object of class \"rma.mh\".")
+      stop(mstyle$stop("Argument 'model' must be an object of class \"rma.mh\"."))
 
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
-      stop("Unknown 'na.action' specified under options().")
+      stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
    x <- model
 
@@ -48,26 +50,26 @@ rstudent.rma.mh <- function(model, digits, progbar=FALSE, ...) {
    if (progbar)
       close(pbar)
 
-   delresid <- x$yi.f - delpred
-   delresid[abs(delresid) < 100 * .Machine$double.eps] <- 0
-   #delresid[abs(delresid) < 100 * .Machine$double.eps * median(abs(delresid), na.rm=TRUE)] <- 0 ### see lm.influence
-   sedelresid <- sqrt(x$vi.f + vdelpred)
-   standelres <- delresid / sedelresid
+   resid <- x$yi.f - delpred
+   resid[abs(resid) < 100 * .Machine$double.eps] <- 0
+   #resid[abs(resid) < 100 * .Machine$double.eps * median(abs(resid), na.rm=TRUE)] <- 0 ### see lm.influence
+   seresid <- sqrt(x$vi.f + vdelpred)
+   stresid <- resid / seresid
 
    #########################################################################
 
    if (na.act == "na.omit") {
-      out <- list(resid=delresid[x$not.na.yivi], se=sedelresid[x$not.na.yivi], z=standelres[x$not.na.yivi])
+      out <- list(resid=resid[x$not.na.yivi], se=seresid[x$not.na.yivi], z=stresid[x$not.na.yivi])
       out$slab <- x$slab[x$not.na.yivi]
    }
 
    if (na.act == "na.exclude" || na.act == "na.pass") {
-      out <- list(resid=delresid, se=sedelresid, z=standelres)
+      out <- list(resid=resid, se=seresid, z=stresid)
       out$slab <- x$slab
    }
 
    if (na.act == "na.fail" && any(!x$not.na.yivi))
-      stop("Missing values in results.")
+      stop(mstyle$stop("Missing values in results."))
 
    out$digits <- digits
 

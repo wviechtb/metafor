@@ -7,16 +7,18 @@
 # pass the CI bounds (that were calculated with 'test="knha"') directly to
 # the function via the 'ci.lb' and 'ci.ub' argument.
 
-addpoly.default <- function(x, vi, sei, ci.lb, ci.ub, rows=-1, level=95,
-annotate=TRUE, digits=2, width, mlab, transf, atransf, targs,
-efac=1, col, border, cex, ...) {
+addpoly.default <- function(x, vi, sei, ci.lb, ci.ub, cr.lb, cr.ub,
+rows=-1, level=95, annotate=TRUE, digits=2, width, mlab, transf,
+atransf, targs, efac=1, col, border, fonts, cex, ...) {
 
    #########################################################################
+
+   mstyle <- .get.mstyle("crayon" %in% .packages())
 
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
-      stop("Unknown 'na.action' specified under options().")
+      stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
    if (missing(transf))
       transf <- FALSE
@@ -25,7 +27,7 @@ efac=1, col, border, cex, ...) {
       atransf <- FALSE
 
    if (is.function(transf) && is.function(atransf))
-      stop("Use either 'transf' or 'atransf' to specify a transformation (not both).")
+      stop(mstyle$stop("Use either 'transf' or 'atransf' to specify a transformation (not both)."))
 
    if (missing(targs))
       targs <- NULL
@@ -33,14 +35,23 @@ efac=1, col, border, cex, ...) {
    if (missing(mlab))
       mlab <- NULL
 
-   if (missing(cex))
-      cex <- NULL
-
    if (missing(col))
       col <- "black"
 
    if (missing(border))
       border <- "black"
+
+   if (missing(cex))
+      cex <- NULL
+
+   if (missing(fonts) || is.null(fonts)) {
+      fonts <- rep(par("family"), 2)
+   } else {
+      if (length(fonts) == 1L)
+         fonts <- rep(fonts, 2)
+   }
+
+   par(family=fonts[1])
 
    #########################################################################
 
@@ -53,7 +64,7 @@ efac=1, col, border, cex, ...) {
       ### CI bounds are specified by user
 
       if (length(ci.lb) != length(ci.ub))
-         stop("Length of 'ci.lb' and 'ci.ub' do not match.")
+         stop(mstyle$stop("Length of 'ci.lb' and 'ci.ub' do not match."))
 
       if (missing(vi) && missing(sei)) {
 
@@ -73,7 +84,7 @@ efac=1, col, border, cex, ...) {
       }
 
       if (length(ci.lb) != length(vi))
-         stop("Length of 'vi' (or 'sei') does not match length of ('ci.lb', 'ci.ub') pairs.")
+         stop(mstyle$stop("Length of 'vi' (or 'sei') does not match length of ('ci.lb', 'ci.ub') pairs."))
 
    } else {
 
@@ -81,16 +92,32 @@ efac=1, col, border, cex, ...) {
 
       if (missing(vi)) {
          if (missing(sei)) {
-            stop("Must specify either 'vi', 'sei', or ('ci.lb', 'ci.ub') pairs.")
+            stop(mstyle$stop("Must specify either 'vi', 'sei', or ('ci.lb', 'ci.ub') pairs."))
          } else {
             vi <- sei^2
-            ci.lb <- yi - qnorm(level/2, lower.tail=FALSE) * sei
-            ci.ub <- yi + qnorm(level/2, lower.tail=FALSE) * sei
          }
-      } else {
-         ci.lb <- yi - qnorm(level/2, lower.tail=FALSE) * sqrt(vi)
-         ci.ub <- yi + qnorm(level/2, lower.tail=FALSE) * sqrt(vi)
       }
+
+      if (length(yi) != length(vi))
+         stop(mstyle$stop("Length of 'vi' (or 'sei') does not match length of 'x'."))
+
+      ci.lb <- yi - qnorm(level/2, lower.tail=FALSE) * sqrt(vi)
+      ci.ub <- yi + qnorm(level/2, lower.tail=FALSE) * sqrt(vi)
+
+   }
+
+   if (hasArg(cr.lb) && hasArg(cr.ub)) {
+
+      if (length(cr.lb) != length(cr.ub))
+         stop(mstyle$stop("Length of 'cr.lb' and 'cr.ub' do not match."))
+
+      if (length(cr.lb) != length(yi))
+         stop(mstyle$stop("Length of ('ci.lb', 'ci.ub') does not match length of 'x'."))
+
+   } else {
+
+      cr.lb <- rep(NA, length(yi))
+      cr.ub <- rep(NA, length(yi))
 
    }
 
@@ -106,7 +133,7 @@ efac=1, col, border, cex, ...) {
    }
 
    if (length(rows) != length(yi))
-      stop("Number of outcomes does not correspond to the length of the 'rows' argument.")
+      stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'rows' argument."))
 
    ### check for NAs in yi/vi and act accordingly
 
@@ -121,6 +148,8 @@ efac=1, col, border, cex, ...) {
          vi    <- vi[not.na]
          ci.lb <- ci.lb[not.na]
          ci.ub <- ci.ub[not.na]
+         cr.lb <- cr.lb[not.na]
+         cr.ub <- cr.ub[not.na]
          mlab  <- mlab[not.na]
 
          ### rearrange rows due to NAs being omitted
@@ -135,7 +164,7 @@ efac=1, col, border, cex, ...) {
       }
 
       if (na.act == "na.fail")
-         stop("Missing values in results.")
+         stop(mstyle$stop("Missing values in results."))
 
    }
 
@@ -148,10 +177,14 @@ efac=1, col, border, cex, ...) {
          yi    <- sapply(yi, transf)
          ci.lb <- sapply(ci.lb, transf)
          ci.ub <- sapply(ci.ub, transf)
+         cr.lb <- sapply(cr.lb, transf)
+         cr.ub <- sapply(cr.ub, transf)
       } else {
          yi    <- sapply(yi, transf, targs)
          ci.lb <- sapply(ci.lb, transf, targs)
          ci.ub <- sapply(ci.ub, transf, targs)
+         cr.lb <- sapply(cr.lb, transf, targs)
+         cr.ub <- sapply(cr.ub, transf, targs)
       }
    }
 
@@ -160,6 +193,9 @@ efac=1, col, border, cex, ...) {
    tmp <- .psort(ci.lb, ci.ub)
    ci.lb <- tmp[,1]
    ci.ub <- tmp[,2]
+   tmp <- .psort(cr.lb, cr.ub)
+   cr.lb <- tmp[,1]
+   cr.ub <- tmp[,2]
 
    ### determine height of plot and set cex accordingly (if not specified)
 
@@ -211,13 +247,19 @@ efac=1, col, border, cex, ...) {
 
       annotext <- cbind(annotext[,1], " [", annotext[,2], ", ", annotext[,3], "]")
       annotext <- apply(annotext, 1, paste, collapse="")
+      par(family=fonts[2])
       text(x=xlim[2], rows, labels=annotext, pos=2, cex=cex, ...)
+      par(family=fonts[1])
 
    }
 
    ### add polygon(s)
 
    for (i in seq_len(k)) {
+
+      segments(cr.lb[i], rows[i], cr.ub[i], rows[i], lty="dotted", col="gray50", ...)
+      segments(cr.lb[i], rows[i]-(height/150)*cex*efac, cr.lb[i], rows[i]+(height/150)*cex*efac, col="gray50", ...)
+      segments(cr.ub[i], rows[i]-(height/150)*cex*efac, cr.ub[i], rows[i]+(height/150)*cex*efac, col="gray50", ...)
 
       polygon(x=c(ci.lb[i], yi[i], ci.ub[i], yi[i]), y=c(rows[i], rows[i]+(height/100)*cex*efac, rows[i], rows[i]-(height/100)*cex*efac), col=col, border=border, ...)
 

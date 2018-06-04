@@ -63,9 +63,7 @@ permutest(x, \dots)
    When obtaining permutation-based CIs, the function makes use of \code{\link{uniroot}}. By default, the desired accuracy is set equal to \code{.Machine$double.eps^0.25} and the maximum number of iterations to \code{100}. The desired accuracy and the maximum number of iterations can be adjusted with the \code{control} argument (i.e., \code{control=list(tol=value, maxiter=value)}).
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \cr
-   package website: \url{http://www.metafor-project.org/} \cr
-   author homepage: \url{http://www.wvbauer.com/}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
 }
 \references{
    Follmann, D. A., & Proschan, M. A. (1999). Valid inference in random effects meta-analysis. \emph{Biometrics}, \bold{55}, 732--737.
@@ -76,7 +74,7 @@ permutest(x, \dots)
 
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{http://www.jstatsoft.org/v36/i03/}.
 
-   Viechtbauer, W., López-López, J. A., Sánchez-Meca, J., & Marín-Martínez, F. (2015). A comparison of procedures to test for moderators in mixed-effects meta-regression models. \emph{Psychological Methods}, \bold{20}, 360--374.
+   Viechtbauer, W., \enc{López-López}{Lopez-Lopez}, J. A., \enc{Sánchez-Meca}{Sanchez-Meca}, J., & \enc{Marín-Martínez}{Marin-Martinez}, F. (2015). A comparison of procedures to test for moderators in mixed-effects meta-regression models. \emph{Psychological Methods}, \bold{20}, 360--374.
 }
 \seealso{
    \code{\link{rma.uni}}, \code{\link{print.permutest.rma.uni}}

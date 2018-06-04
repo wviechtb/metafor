@@ -47,9 +47,7 @@ galbraith(x, \dots)
    Note that the data frame is returned invisibly.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \cr
-   package website: \url{http://www.metafor-project.org/} \cr
-   author homepage: \url{http://www.wvbauer.com/}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
 }
 \references{
    Galbraith, R. F. (1988). Graphical display of estimates having differing standard errors. \emph{Technometrics}, \bold{30}, 271--281.

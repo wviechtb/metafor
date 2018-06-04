@@ -9,7 +9,7 @@ regtest(x, \dots)
 
 \method{regtest}{rma}(x, model="rma", predictor="sei", ret.fit=FALSE, digits, \dots)
 
-\method{regtest}{default}(x, vi, sei, ni, subset, model="rma", predictor="sei", ret.fit=FALSE, digits, \ldots)
+\method{regtest}{default}(x, vi, sei, ni, subset, model="rma", predictor="sei", ret.fit=FALSE, digits, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma"} or a vector with the observed effect sizes or outcomes.}
@@ -24,7 +24,7 @@ regtest(x, \dots)
    \item{\dots}{other arguments.}
 }
 \details{
-   Various tests for funnel plot asymmetry have been suggested in the literature, including the rank correlation test by Begg and Mazumdar (1994) and the regression test by Egger et al. (1997). Extensions, modifications, and further developments of the regression test are described (among others) by Macaskill, Walter, and Irwig (2001), Sterne and Egger (2005), Harbord, Egger, and Sterne (2006), Peters et al. (2006), Rücker, Schwarzer, and Carpenter (2008), and Moreno et al. (2009). The various versions of the regression test differ in terms of the model (either a regular weighted regression with a multiplicative dispersion term or one of the meta-analytic models is used), in terms of the predictor variable that the observed outcomes are hypothesized to be related to when publication bias is present (suggested predictors include the standard error, the sampling variance, and the sample size or transformations thereof), and in terms of the outcome measure used (e.g., for \eqn{2 \times 2}{2x2} table data, one has the choice between various outcome measures). The idea behind the various tests is the same though: If there is a relationship between the observed outcomes and the chosen predictor, then this usually implies asymmetry in the funnel plot, which in turn may be an indication of publication bias.
+   Various tests for funnel plot asymmetry have been suggested in the literature, including the rank correlation test by Begg and Mazumdar (1994) and the regression test by Egger et al. (1997). Extensions, modifications, and further developments of the regression test are described (among others) by Macaskill, Walter, and Irwig (2001), Sterne and Egger (2005), Harbord, Egger, and Sterne (2006), Peters et al. (2006), \enc{Rücker}{Ruecker} et al. (2008), and Moreno et al. (2009). The various versions of the regression test differ in terms of the model (either a weighted regression model with a multiplicative dispersion term or a fixed/random/mixed-effects meta-regression model is used), in terms of the predictor variable that the observed outcomes are hypothesized to be related to when publication bias is present (suggested predictors include the standard error, the sampling variance, and the sample size -- or transformations thereof), and in terms of the outcome measure used (e.g., for \eqn{2 \times 2}{2x2} table data, one has the choice between various outcome measures). The idea behind the various tests is the same though: If there is a relationship between the observed outcomes and the chosen predictor, then this usually implies asymmetry in the funnel plot, which in turn may be an indication of publication bias.
 
    The \code{regtest.rma} function can be used to carry out various versions of the regression test. The model is chosen via the \code{model} argument, with \code{model="lm"} for weighted regression with a multiplicative dispersion term or \code{model="rma"} for the meta-analytic models. In the latter case, arguments such as \code{method}, \code{weighted}, and \code{test} used during the initial model fitting are also used for the regression test. Therefore, if one wants to conduct the regression test with a random/mixed-effects model, one should first fit a random-effects model with the \code{rma} function and then use the \code{regtest.rma} function on the fitted model object.
 
@@ -38,9 +38,11 @@ regtest(x, \dots)
    \item \code{predictor="sqrtninv"} for the inverse of the square root transformed sample size.
    } For predictors based on the sample size, the object \code{x} obviously must contain the information about the sample sizes. This will automatically be the case when \code{measure} was \emph{not} equal to \code{"GEN"} or the \code{ni} values were explicitly specified during the initial model fitting.
 
-   Finally, depending on what outcome measure was used for the model fitting will determine which outcome measure is used for the regression test.
+   If the model passed to the \code{regtest.rma} function already included one or more moderators, then \code{regtest.rma} will add the chosen \code{predictor} to the moderator(s) already included in the model. This way, one can test for funnel plot asymmetry after accounting first for the influence of the moderator(s) already included.
 
-   One can also pass a vector of observed effect sizes or outcomes (via \code{x}) and the corresponding sampling variances via \code{vi} (or the standard errors via \code{sei}) directly to the function. When the \code{predictor} is the sample size or a transformation thereof, then \code{ni} needs to be specified here as well.
+   One can also pass a vector of observed effect sizes or outcomes (via \code{x}) and the corresponding sampling variances via \code{vi} (or the standard errors via \code{sei}) directly to the function (in this case, the \code{regtest.default} function is used). When the \code{predictor} is the sample size or a transformation thereof, then \code{ni} needs to be specified here as well.
+
+   The outcome measure used for the regression test is simply determined by what measure was used in fitting the original model (or what values are passed to \code{regtest.default}).
 }
 \value{
    An object of class \code{"regtest.rma"}. The object is a list containing the following components:
@@ -59,9 +61,7 @@ regtest(x, \dots)
    All of the tests do not directly test for publication bias, but for a relationship between the observed outcomes and the chosen predictor. If such a relationship is present, then this usually implies asymmetry in the funnel plot, which in turn may be an indication of publication bias. However, it is important to keep in mind that there can be other reasons besides publication bias that could lead to asymmetry in the funnel plot.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \cr
-   package website: \url{http://www.metafor-project.org/} \cr
-   author homepage: \url{http://www.wvbauer.com/}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
 }
 \references{
    Begg, C. B., & Mazumdar, M. (1994). Operating characteristics of a rank correlation test for publication bias. \emph{Biometrics}, \bold{50}, 1088--1101.
@@ -76,7 +76,7 @@ regtest(x, \dots)
 
    Peters, J. L., Sutton, A. J., Jones, D. R., Abrams, K. R., & Rushton, L. (2006). Comparison of two methods to detect publication bias in meta-analysis. \emph{Journal of the American Medical Association}, \bold{295}, 676--680.
 
-   Rücker, G., Schwarzer, G., & Carpenter, J. (2008). Arcsine test for publication bias in meta-analyses with binary outcomes. \emph{Statistics in Medicine}, \bold{27}, 746--763.
+   \enc{Rücker}{Ruecker}, G., Schwarzer, G., & Carpenter, J. (2008). Arcsine test for publication bias in meta-analyses with binary outcomes. \emph{Statistics in Medicine}, \bold{27}, 746--763.
 
    Sterne, J. A. C., & Egger, M. (2005). Regression methods to detect publication and other bias in meta-analysis. In H. R. Rothstein, A. J. Sutton, & M. Borenstein (Eds.) \emph{Publication bias in meta-analysis: Prevention, assessment, and adjustments} (pp. 99--110). Chichester, England: Wiley.
 

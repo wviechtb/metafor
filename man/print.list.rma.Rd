@@ -1,12 +1,8 @@
 \name{print.list.rma}
 \alias{print.list.rma}
-\alias{as.data.frame.list.rma}
-\alias{[.list.rma}
-\alias{head.list.rma}
-\alias{tail.list.rma}
-\title{Methods for 'list.rma' Objects}
+\title{Print method for 'list.rma' Objects}
 \description{
-   Methods for objects of class \code{"list.rma"}.
+   Print method for objects of class \code{"list.rma"}.
 }
 \usage{
 \method{print}{list.rma}(x, digits, \dots)
@@ -20,9 +16,7 @@
    See the documentation of the function that creates the \code{"list.rma"} object for details on what is printed. Regardless of what is printed, a data frame with the results is also returned invisibly.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \cr
-   package website: \url{http://www.metafor-project.org/} \cr
-   author homepage: \url{http://www.wvbauer.com/}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
 }
 \references{
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{http://www.jstatsoft.org/v36/i03/}.

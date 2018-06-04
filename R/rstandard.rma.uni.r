@@ -1,4 +1,6 @@
-rstandard.rma.uni <- function(model, digits, ...) {
+rstandard.rma.uni <- function(model, digits, type="marginal", ...) {
+
+   mstyle <- .get.mstyle("crayon" %in% .packages())
 
    if (!inherits(model, "rma.uni"))
       stop("Argument 'model' must be an object of class \"rma.uni\".")
@@ -6,9 +8,17 @@ rstandard.rma.uni <- function(model, digits, ...) {
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
-      stop("Unknown 'na.action' specified under options().")
+      stop(mstyle$stop("Unknown 'na.action' specified under options()."))
+
+   type <- match.arg(type, c("marginal", "conditional"))
 
    x <- model
+
+   if (!is.null(x$weight) & type == "conditional")
+      stop(mstyle$stop("Extraction of conditional residuals not available for models with non-standard weights."))
+
+   if (type == "conditional" & inherits(x, "robust.rma"))
+      stop(mstyle$stop("Extraction of conditional residuals not available for objects of class \"robust.rma\"."))
 
    if (missing(digits))
       digits <- x$digits
@@ -23,42 +33,63 @@ rstandard.rma.uni <- function(model, digits, ...) {
 
    ImH <- diag(x$k) - H
    #ei <- ImH %*% cbind(x$yi)
-   ei <- c(x$yi - x$X %*% x$beta)
 
-   ei[abs(ei) < 100 * .Machine$double.eps] <- 0
-   #ei[abs(ei) < 100 * .Machine$double.eps * median(abs(ei), na.rm=TRUE)] <- 0 ### see lm.influence
+   if (type == "marginal") {
 
-   if (inherits(x, "robust.rma")) {
-      ve <- ImH %*% tcrossprod(x$meat,ImH)
-   } else {
-      ve <- ImH %*% tcrossprod(x$M,ImH)
+      ei <- c(x$yi - x$X %*% x$beta)
+
+      ei[abs(ei) < 100 * .Machine$double.eps] <- 0
+      #ei[abs(ei) < 100 * .Machine$double.eps * median(abs(ei), na.rm=TRUE)] <- 0 ### see lm.influence
+
+      if (inherits(x, "robust.rma")) {
+         ve <- ImH %*% tcrossprod(x$meat,ImH)
+      } else {
+         ve <- ImH %*% tcrossprod(x$M,ImH)
+      }
+
+      #ve <- x$M + x$X %*% x$vb %*% t(x$X) - 2*H%*%x$M
+      sei <- sqrt(diag(ve))
+
    }
 
-   #ve <- x$M + x$X %*% x$vb %*% t(x$X) - 2*H%*%x$M
-   sei <- sqrt(diag(ve))
+   if (type == "conditional") {
+
+      li <- x$tau2 / (x$tau2 + x$vi)
+
+      pred  <- rep(NA_real_, x$k)
+
+      for (i in seq_len(x$k)) {
+         Xi <- matrix(x$X[i,], nrow=1)
+         pred[i] <- li[i] * x$yi[i] + (1 - li[i]) * Xi %*% x$beta
+      }
+
+      ei <- x$yi - pred
+      sei <- sqrt(x$vi^2 * 1/(x$vi + x$tau2) * (1 - diag(H)))
+
+   }
 
    resid   <- rep(NA_real_, x$k.f)
    seresid <- rep(NA_real_, x$k.f)
-   stanres <- rep(NA_real_, x$k.f)
+   stresid <- rep(NA_real_, x$k.f)
 
    resid[x$not.na]   <- ei
    seresid[x$not.na] <- sei
-   stanres[x$not.na] <- ei / sei
+   stresid[x$not.na] <- ei / sei
 
    #########################################################################
 
    if (na.act == "na.omit") {
-      out <- list(resid=resid[x$not.na], se=seresid[x$not.na], z=stanres[x$not.na])
+      out <- list(resid=resid[x$not.na], se=seresid[x$not.na], z=stresid[x$not.na])
       out$slab <- x$slab[x$not.na]
    }
 
    if (na.act == "na.exclude" || na.act == "na.pass") {
-      out <- list(resid=resid, se=seresid, z=stanres)
+      out <- list(resid=resid, se=seresid, z=stresid)
       out$slab <- x$slab
    }
 
    if (na.act == "na.fail" && any(!x$not.na))
-      stop("Missing values in results.")
+      stop(mstyle$stop("Missing values in results."))
 
    out$digits <- digits
 

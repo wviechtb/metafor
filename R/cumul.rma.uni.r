@@ -1,21 +1,23 @@
 cumul.rma.uni <- function(x, order, digits, transf, targs, progbar=FALSE, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(x, "rma.uni"))
-      stop("Argument 'x' must be an object of class \"rma.uni\".")
+      stop(mstyle$stop("Argument 'x' must be an object of class \"rma.uni\"."))
 
    if (inherits(x, "robust.rma"))
-      stop("Method not yet implemented for objects of class \"robust.rma\". Sorry!")
+      stop(mstyle$stop("Method not available for objects of class \"robust.rma\"."))
 
    if (inherits(x, "rma.ls"))
-      stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!")
+      stop(mstyle$stop("Method not available for objects of class \"rma.ls\"."))
 
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
-      stop("Unknown 'na.action' specified under options().")
+      stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
    if (!x$int.only)
-      stop("Method only applicable for models without moderators.")
+      stop(mstyle$stop("Method only applicable for models without moderators."))
 
    if (missing(order))
       order <- NULL
@@ -132,7 +134,7 @@ cumul.rma.uni <- function(x, order, digits, transf, targs, progbar=FALSE, ...) {
    }
 
    if (na.act == "na.fail" && any(!x$not.na))
-      stop("Missing values in results.")
+      stop(mstyle$stop("Missing values in results."))
 
    if (is.element(x$test, c("knha","adhoc","t")))
       names(out)[3] <- "tval"

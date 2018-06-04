@@ -21,7 +21,7 @@
    \item{append}{logical indicating whether the data frame specified via the \code{object} argument should be returned together with the additional variables that are calculated by the \code{summary} function (the default is \code{TRUE}).}
    \item{replace}{logical indicating whether existing values for \code{sei}, \code{zi}, \code{ci.lb}, and \code{ci.ub} in the data frame should be replaced or not. Only relevant when the data frame already contains these variables. If \code{replace=TRUE} (the default), all of the existing values will be overwritten. If \code{replace=FALSE}, only \code{NA} values will be replaced.}
    \item{level}{numerical value between 0 and 100 specifying the confidence interval level (the default is 95).}
-   \item{transf}{optional argument specifying the name of a function that should be used to transform the observed outcomes and interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used. Any additional arguments needed for the function specified here can be passed via \code{\ldots}.}
+   \item{transf}{optional argument specifying the name of a function that should be used to transform the observed outcomes and interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used. Any additional arguments needed for the function specified here can be passed via \code{\dots}.}
    \item{\dots}{other arguments.}
 }
 \value{
@@ -45,9 +45,7 @@
    The \code{summary.escalc} function computes \code{level} \% Wald-type confidence intervals, which may or may not be the most accurate method for computing confidence intervals for the chosen outcome or effect size measure.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \cr
-   package website: \url{http://www.metafor-project.org/} \cr
-   author homepage: \url{http://www.wvbauer.com/}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
 }
 \references{
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{http://www.jstatsoft.org/v36/i03/}.

@@ -1,26 +1,35 @@
 print.robust.rma <- function(x, digits, signif.stars=getOption("show.signif.stars"), signif.legend=signif.stars, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(x, "robust.rma"))
-      stop("Argument 'x' must be an object of class \"robust.rma\".")
+      stop(mstyle$stop("Argument 'x' must be an object of class \"robust.rma\"."))
 
    if (missing(digits))
       digits <- x$digits
 
    cat("\n")
 
-   cat("Number of outcomes:  ", x$k, "\n")
-   cat("Number of clusters:  ", x$n, "\n")
-
-   if (all(x$tcl[1] == x$tcl)) {
-      cat("Outcomes per cluster:", x$tcl[1], "\n")
-   } else {
-      cat("Outcomes per cluster: ", min(x$tcl), "-", max(x$tcl), " (mean: ", formatC(mean(x$tcl), format="f", digits=2), ", median: ", median(x$tcl), ")\n", sep="")
-   }
+   cat(mstyle$text("Number of outcomes:   "))
+   cat(mstyle$result(x$k))
+   cat("\n")
+   cat(mstyle$text("Number of clusters:   "))
+   cat(mstyle$result(x$n))
    cat("\n")
 
+   cat(mstyle$text("Outcomes per cluster: "))
+   if (all(x$tcl[1] == x$tcl)) {
+      cat(mstyle$result(x$tcl[1]))
+   } else {
+      cat(mstyle$result(paste0(min(x$tcl), "-", max(x$tcl), " (mean: ", formatC(mean(x$tcl), format="f", digits=2), ", median: ", median(x$tcl), ")")))
+   }
+   cat("\n\n")
+
    if (x$p > 1 && !is.na(x$QM)) {
-      cat("Test of Moderators (coefficient(s) ", .format.btt(x$btt),"): \n", sep="")
-      cat("F(df1 = ", x$m, ", df2 = ", x$dfs, ") = ", formatC(x$QM, digits=digits, format="f"), ", p-val ", .pval(x$QMp, digits=digits, showeq=TRUE, sep=" "), "\n\n", sep="")
+      cat(mstyle$section(paste0("Test of Moderators (coefficient", ifelse(x$m == 1, " ", "s "), .format.btt(x$btt),"):")))
+      cat("\n")
+      cat(mstyle$result(paste0("F(df1 = ", x$m, ", df2 = ", x$dfs, ") = ", formatC(x$QM, digits=digits, format="f"), ", p-val ", .pval(x$QMp, digits=digits, showeq=TRUE, sep=" "))))
+      cat("\n\n")
    }
 
    res.table <- cbind(estimate=c(x$beta), se=x$se, zval=x$zval, pval=x$pval, ci.lb=x$ci.lb, ci.ub=x$ci.ub)
@@ -39,16 +48,19 @@ print.robust.rma <- function(x, digits, signif.stars=getOption("show.signif.star
    if (x$int.only)
       res.table <- res.table[1,]
 
-   cat("Model Results:\n\n")
+   cat(mstyle$section("Model Results:"))
+   cat("\n\n")
    if (x$int.only) {
-      .print.out(res.table)
-      #print(res.table, quote=FALSE, right=TRUE)
+      tmp <- capture.output(.print.vector(res.table))
    } else {
-      print(res.table, quote=FALSE, right=TRUE, print.gap=2)
+      tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE, print.gap=2))
    }
+   .print.table(tmp, mstyle)
+
    cat("\n")
    if (signif.legend)
-      cat("---\nSignif. codes: ", attr(signif, "legend"), "\n\n")
+      cat(mstyle$legend("---\nSignif. codes: "), mstyle$legend(attr(signif, "legend")))
+   cat("\n\n")
 
    invisible()
 

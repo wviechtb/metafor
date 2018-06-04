@@ -1,0 +1,157 @@
+template:
+  params:
+    bootswatch: cosmo
+
+home:
+  links:
+  - text: GitHub Repo
+    href: https://github.com/wviechtb/metafor
+  - text: Package Website
+    href: http://www.metafor-project.org/
+  - text: Author Website
+    href: http://www.wvbauer.com/
+
+figures:
+  dev: grDevices::png
+  dpi: 96
+  dev.args: []
+  fig.ext: png
+  fig.width: 8
+  fig.height: ~
+  fig.retina: 2
+  fig.asp: 0.8
+
+navbar:
+  title: "metafor"
+  left:
+    - icon: fa-home fa-lg
+      href: index.html
+    - text: Intro
+      href: reference/metafor-package.html
+    - text: "Functions"
+      href: reference/index.html
+    - text: "Diagram"
+      href: articles/pkgdown/diagram.html
+    - text: "JSS Article (pdf)"
+      href: https://www.jstatsoft.org/index.php/jss/article/view/v036i03/v36i03.pdf
+    - text: "Changelog"
+      href: news/index.html
+  right:
+   - icon: fa-twitter
+     href: https://twitter.com/wviechtb
+   - icon: fa-github
+     href: https://github.com/wviechtb/metafor
+
+reference:
+  - title: "Outcome Measures"
+    desc: >
+      Function to compute various effect sizes and outcome measures.
+    contents:
+      - escalc
+  - title: "Model Fitting"
+    desc: >
+      Main model fitting functions.
+    contents:
+      - rma.uni
+      - rma.mh
+      - rma.peto
+      - rma.glmm
+      - rma.mv
+  - title: "Plots"
+    desc: >
+      Functions for creating various types of plots.
+    contents:
+      - funnel
+      - starts_with("forest")
+      - starts_with("addpoly")
+      - baujat
+      - labbe
+      - radial
+      - llplot
+      - gosh
+      - plot.gosh.rma
+      - plot.rma
+      - plot.cumul.rma
+      - plot.infl.rma.uni
+      - plot.profile.rma
+      - starts_with("qqnorm")
+  - title: "Publication Bias"
+    desc: >
+      Functions related to publication bias.
+    contents:
+      - starts_with("ranktest")
+      - starts_with("regtest")
+      - starts_with("trimfill")
+      - starts_with("hc")
+      - starts_with("fsn")
+  - title: "Inference Methods"
+    desc: >
+      Functions for standard and advanced methods for drawing inferences based on meta-analytic data and for assessing the model fit.
+    contents:
+      - anova.rma
+      - confint.rma
+      - permutest
+      - robust
+      - cumul
+      - fitted.rma
+      - predict.rma
+      - ranef
+      - blup
+      - fitstats
+      - simulate.rma
+      - update.rma
+  - title: "Outlier / Influence Diagnostics"
+    desc: >
+      Functions for identifying outliers and/or influential studies and for conducting sensitivity analyses.
+    contents:
+      - residuals.rma
+      - influence.rma.uni
+      - influence.rma.mv
+      - starts_with("weights")
+      - leave1out
+  - title: "Print Methods"
+    desc: >
+      Print methods.
+    contents:
+      - print.rma.uni
+      - print.escalc
+      - print.anova.rma
+      - print.confint.rma
+      - print.fsn
+      - print.gosh.rma
+      - print.hc.rma.uni
+      - print.list.rma
+      - print.permutest.rma.uni
+      - print.ranktest.rma
+      - print.regtest.rma
+      - print.robust.rma
+  - title: "Datasets"
+    desc: >
+      Datasets included with the package.
+    contents:
+      - starts_with("dat")
+  - title: "Extractor Functions"
+    desc: >
+      Functions to extract various elements from model objects.
+    contents:
+      - coef.rma
+      - coef.permutest.rma.uni
+      - vcov.rma
+      - model.matrix.rma
+  - title: "Convenience Functions"
+    desc: >
+      Some miscellaneous convenience functions.
+    contents:
+      - bldiag
+      - replmiss
+      - to.long
+      - to.table
+      - metafor.news
+      - reporter
+      - transf
+  - title: "Other Methods"
+    desc: >
+      Other method functions.
+    contents:
+      - methods.escalc
+      - methods.list.rma

@@ -26,7 +26,7 @@ fitstats(object, \dots)
    \item{object}{an object of class \code{"rma"}.}
    \item{\dots}{optionally more fitted model objects.}
    \item{REML}{logical indicating whether the regular or restricted likelihood function should be used to obtain the fit statistics and information criteria. Defaults to the method of estimation used, that is \code{TRUE} if \code{object} was fitted with \code{method="REML"} and \code{FALSE} otherwise.}
-   \item{k}{numeric value specifying the penalty per parameter to be used. The default (\code{k=2}) is the classical AIC. See \code{\link{AIC}} for more details.}
+   \item{k}{numeric value specifying the penalty per parameter to use. The default (\code{k=2}) is the classical AIC. See \code{\link{AIC}} for more details.}
    \item{correct}{logical indicating whether the regular (default) or corrected (i.e., AICc) should be extracted.}
 }
 \value{
@@ -42,9 +42,7 @@ fitstats(object, \dots)
    Variance components in the model (e.g., \if{latex}{\eqn{\tau^2}}\if{html}{\eqn{\tau²}}\if{text}{\eqn{\tau^2}} in random/mixed-effects models) are counted as additional parameters in the calculation of the AIC, BIC, and AICc. Also, the fixed effects are counted as parameters in the calculation of the AIC, BIC, and AICc even when using REML estimation.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \cr
-   package website: \url{http://www.metafor-project.org/} \cr
-   author homepage: \url{http://www.wvbauer.com/}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
 }
 \references{
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{http://www.jstatsoft.org/v36/i03/}.

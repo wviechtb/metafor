@@ -1,0 +1,6 @@
+pandoc: 1.16.0.2
+pkgdown: 1.0.0.9000
+pkgdown_sha: d7c658122bfbd143552cd28585f867dd344302ad
+articles:
+  diagram: pkgdown/diagram.html
+

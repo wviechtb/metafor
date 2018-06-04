@@ -15,7 +15,7 @@
 \bold{a_measure} \tab \code{character} \tab type of adherence measure (self-report or other) \cr
 \bold{c_measure} \tab \code{character} \tab type of conscientiousness measure (NEO or other) \cr
 \bold{meanage}   \tab \code{numeric}   \tab mean age of the sample \cr
-\bold{quality}   \tab \code{numeric}   \tab methodological quality
+\bold{quality}   \tab \code{numeric}   \tab methodological quality \cr
 }
 }
 \details{
@@ -45,7 +45,7 @@ res
 predict(res, digits=3, transf=transf.ztor)
 
 ### forest plot
-forest(res, addcred=TRUE, xlim=c(-1.6,1.6), atransf=transf.ztor, 
+forest(res, addcred=TRUE, xlim=c(-1.6,1.6), atransf=transf.ztor,
        at=transf.rtoz(c(-.4,-.2,0,.2,.4,.6)), digits=c(2,1), cex=.8)
 text(-1.6, 18, "Author(s), Year", pos=4, cex=.8)
 text( 1.6, 18, "Correlation [95\% CI]", pos=2, cex=.8)

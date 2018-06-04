@@ -21,7 +21,7 @@
    \item{atransf}{optional argument specifying the name of a function that should be used to transform the x-axis labels (e.g., \code{atransf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified via \code{transf} or \code{atransf}.}
    \item{digits}{integer specifying the number of decimal places to which the tick mark labels of the x- and y-axis should be rounded. Can also be a vector of two integers, the first specifying the number of decimal places for the x-axis, the second for the y-axis labels (e.g., \code{c(2,3)}). If unspecified, the function tries to set the argument to some sensible values.}
-   \item{cols}{vector with two or more colors to be used for indicating the order of the cumulative results.}
+   \item{cols}{vector with two or more colors to use for indicating the order of the cumulative results.}
    \item{addgrid}{logical specifying whether a grid should be added to the plot (the default is \code{TRUE}).}
    \item{pch}{plotting symbol to use. By default, a solid circle is used. See \code{\link{points}} for other options.}
    \item{cex}{symbol expansion factor.}
@@ -33,12 +33,10 @@
 
    By default, the plot shows the model estimate on the x-axis and the corresponding estimate of \if{latex}{\eqn{\tau^2}}\if{html}{\eqn{\tau²}}\if{text}{\eqn{\tau^2}} on the y-axis in the cumulative order of the results in the \code{"cumul.rma"} object. Alternatively, one can also place the value of \if{latex}{\eqn{I^2}}\if{html}{\eqn{I²}}\if{text}{\eqn{I^2}} (\code{yaxis="I2"}) or \if{latex}{\eqn{H^2}}\if{html}{\eqn{H²}}\if{text}{\eqn{H^2}} (\code{yaxis="H2"}) on the y-axis.
 
-   The color gradient of the points/lines indicates the order of the cumulative results (by default, light gray at the beginning, dark gray at the end). A different set of colors to be used can be chosen via the \code{cols} argument. See \sQuote{Examples}.
+   The color gradient of the points/lines indicates the order of the cumulative results (by default, light gray at the beginning, dark gray at the end). A different set of colors can be chosen via the \code{cols} argument. See \sQuote{Examples}.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \cr
-   package website: \url{http://www.metafor-project.org/} \cr
-   author homepage: \url{http://www.wvbauer.com/}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
 }
 \references{
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{http://www.jstatsoft.org/v36/i03/}.

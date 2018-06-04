@@ -1,14 +1,23 @@
 simulate.rma <- function (object, nsim = 1, seed = NULL, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(object, "rma"))
-      stop("Argument 'object' must be an object of class \"rma\".")
+      stop(mstyle$stop("Argument 'object' must be an object of class \"rma\"."))
 
    if (inherits(object, "rma.glmm"))
-      stop("Method not yet implemented for objects of class \"rma.glmm\". Sorry!")
+      stop(mstyle$stop("Method not available for objects of class \"rma.glmm\"."))
+
    if (inherits(object, "rma.mh"))
-      stop("Method not yet implemented for objects of class \"rma.mh\". Sorry!")
+      stop(mstyle$stop("Method not available for objects of class \"rma.mh\"."))
+
    if (inherits(object, "rma.peto"))
-      stop("Method not yet implemented for objects of class \"rma.peto\". Sorry!")
+      stop(mstyle$stop("Method not available for objects of class \"rma.peto\"."))
+
+   na.act <- getOption("na.action")
+
+   if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
+      stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
    ### as in stats:::simulate.lm
    if (!exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE))
@@ -23,6 +32,7 @@ simulate.rma <- function (object, nsim = 1, seed = NULL, ...) {
    }
 
    ### fitted values
+
    ftd <- c(object$X %*% object$beta)
 
    ### for rma.uni objects, just need rnorm() (note: this also covers rma.ls objects)
@@ -38,19 +48,24 @@ simulate.rma <- function (object, nsim = 1, seed = NULL, ...) {
    if (inherits(object, "rma.mv")) {
 
       if (!requireNamespace("MASS", quietly=TRUE))
-         stop("Please install the 'MASS' package to simulate from this model.")
+         stop(mstyle$stop("Please install the 'MASS' package to simulate from this model."))
 
-      val <- replicate(nsim, MASS::mvrnorm(object$k, mu=ftd, Sigma=object$M))
+      val <- replicate(nsim, MASS::mvrnorm(1, mu=ftd, Sigma=object$M))
 
    }
 
-   val <- as.data.frame(val)
+   res <- matrix(NA_real_, nrow=object$k.f, ncol=nsim)
+   res[object$not.na,] <- val
+   res <- as.data.frame(res)
 
-   colnames(val) <- paste0("sim_", seq_len(nsim))
-   rownames(val) <- object$slab[object$not.na]
+   rownames(res) <- object$slab
+   colnames(res) <- paste0("sim_", seq_len(nsim))
 
-   attr(val, "seed") <- RNGstate
+   if (na.act == "na.omit")
+      res <- res[object$not.na,,drop=FALSE]
 
-   return(val)
+   attr(res, "seed") <- RNGstate
+
+   return(res)
 
 }

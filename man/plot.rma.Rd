@@ -1,4 +1,5 @@
-\name{plot.rma.uni}
+\name{plot.rma}
+\alias{plot.rma}
 \alias{plot.rma.uni}
 \alias{plot.rma.mh}
 \alias{plot.rma.peto}
@@ -30,9 +31,7 @@
    If the number of studies is large, the forest plot may become quite impossible to read due to the small font size. Stretching the plotting device vertically should provide more room.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \cr
-   package website: \url{http://www.metafor-project.org/} \cr
-   author homepage: \url{http://www.wvbauer.com/}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
 }
 \references{
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{http://www.jstatsoft.org/v36/i03/}.

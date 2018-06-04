@@ -18,6 +18,28 @@ test_that("residuals are correct for rma().", {
 
 })
 
+test_that("rstudent() yields the same results as a mean shift outlier model for rma().", {
+
+   data(dat.bcg, package="metafor")
+   dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, subset=1:6)
+   dat$trial1 <- ifelse(dat$trial == 1, 1, 0)
+
+   res <- rma(yi, vi, data=dat)
+   sav <- rstudent(res)
+   res <- rma(yi, vi, mods = ~ trial1, data=dat)
+
+   expect_equivalent(round(coef(res)[2], 4), round(sav$resid[1], 4))
+   expect_equivalent(round(res$se[2], 4), round(sav$se[1], 4))
+
+   res <- rma(yi, vi, data=dat, test="knha")
+   sav <- rstudent(res)
+   res <- rma(yi, vi, mods = ~ trial1, data=dat, test="knha")
+
+   expect_equivalent(round(coef(res)[2], 4), round(sav$resid[1], 4))
+   expect_equivalent(round(res$se[2], 4), round(sav$se[1], 4))
+
+})
+
 test_that("residuals are correct for rma.mv().", {
 
    data(dat.bcg, package="metafor")
@@ -26,6 +48,10 @@ test_that("residuals are correct for rma.mv().", {
    res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat)
    expect_equivalent(c(residuals(res)), c(dat$yi - coef(res)))
    expect_equivalent(round(rstandard(res)$z, 4), c(0.1401, -0.9930, -0.4719, -1.0476, 1.6462, 0.4825))
+   expect_equivalent(round(rstandard(res, cluster=dat$alloc)$cluster$X2, 4), c(3.7017, 3.6145))
+   expect_equivalent(round(rstudent(res)$z, 4), c(0.1426, -0.9957, -0.4591, -1.1949, 2.0949, 0.4330))
+   expect_equivalent(round(rstudent(res, cluster=dat$alloc)$cluster$X2, 4), c(27.4717, 5.2128))
+   expect_equivalent(round(rstudent(res, cluster=dat$alloc, reestimate=FALSE)$cluster$X2, 4), c(3.7017, 3.6145))
 
 })
 

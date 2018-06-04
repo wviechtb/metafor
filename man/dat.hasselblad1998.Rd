@@ -12,7 +12,7 @@
 \bold{year}       \tab \code{numeric}    \tab publication year \cr
 \bold{trt}        \tab \code{character}  \tab intervention group \cr
 \bold{xi}         \tab \code{numeric}    \tab number of individuals abstinent \cr
-\bold{ni}         \tab \code{numeric}    \tab number of individuals in group
+\bold{ni}         \tab \code{numeric}    \tab number of individuals in group \cr
 }
 }
 \details{

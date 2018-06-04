@@ -2,7 +2,7 @@
 \alias{robust}
 \alias{robust.rma.uni}
 \alias{robust.rma.mv}
-\title{Compute (Cluster) Robust Tests and Confidence Intervals for 'rma' Objects}
+\title{(Cluster) Robust Tests and Confidence Intervals for 'rma' Objects}
 \description{The function provides (cluster) robust tests and confidence intervals of the model coefficients for objects of class \code{"rma"}.}
 \usage{
 robust(x, cluster, \dots)
@@ -12,7 +12,7 @@ robust(x, cluster, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma.uni"} or \code{"rma.mv"}.}
-   \item{cluster}{a vector specifying the clustering variable to use for constructing the sandwich estimator of the variance-covariance matrix.}
+   \item{cluster}{a vector specifying a clustering variable to use for constructing the sandwich estimator of the variance-covariance matrix.}
    \item{adjust}{logical indicating whether a small-sample correction should be applied to the variance-covariance matrix.}
    \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is to take the value from the object).}
    \item{\dots}{other arguments.}
@@ -20,7 +20,7 @@ robust(x, cluster, \dots)
 \details{
    The function constructs a (cluster) robust estimate of the variance-covariance matrix of the model coefficients based on a sandwich-type estimator and then computes tests and confidence intervals of the model coefficients.
 
-   Tests of individual coefficients and confidence intervals are based on a t-distribution with \eqn{n-p} degrees of freedom is used, while the omnibus test statistic then uses an F-distribution with \eqn{m} and \eqn{n-p} degrees of freedom, where \eqn{n} is the number of clusters, \eqn{p} denotes the total number of model coefficients (including the intercept if it is present), and \eqn{m} denotes the number of coefficients tested (in the omnibus test).
+   Tests of individual coefficients and confidence intervals are based on a t-distribution with \eqn{n-p} degrees of freedom is used, while the omnibus test statistic uses an F-distribution with \eqn{m} and \eqn{n-p} degrees of freedom, where \eqn{n} is the number of clusters, \eqn{p} denotes the total number of model coefficients (including the intercept if it is present), and \eqn{m} denotes the number of coefficients tested (in the omnibus test).
 
    When \code{adjust=TRUE} (the default), the (cluster) robust estimate of the variance-covariance matrix is multiplied by the factor \eqn{n/(n-p)}, which serves as a small-sample adjustment that tends to improve the performance of the method when the number of clusters is small.
 }
@@ -45,9 +45,7 @@ robust(x, cluster, \dots)
    The idea of the robust (sandwich-type) estimator for models with unspecified heteroscedasticity can be traced back to Eicker (1967), Huber (1967), and White (1980). Hence, the method in general is often referred to as the Eicker-Huber-White method. Some small-sample improvements to the method are described by MacKinnon and White (1985). The extension to the cluster robust estimator can be found in Froot (1989) and Williams (2000). Cameron and Miller (2015) provide an extensive overview of cluster robust methods. Sidik and Jonkman (2005, 2006) introduced robust methods in the meta-analytic context for standard random/mixed-effects models. The use of the cluster robust estimator for multivariate/multilevel meta-analytic models is described in Hedges, Tipton, and Johnson (2010).
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \cr
-   package website: \url{http://www.metafor-project.org/} \cr
-   author homepage: \url{http://www.wvbauer.com/}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
 }
 \references{
    Cameron, A. C., & Miller, D. L. (2015). A practitioner's guide to cluster-robust inference. \emph{Journal of Human Resources}, \bold{50}, 317--372.

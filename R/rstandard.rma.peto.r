@@ -1,12 +1,14 @@
 rstandard.rma.peto <- function(model, digits, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(model, "rma.peto"))
-      stop("Argument 'model' must be an object of class \"rma.peto\".")
+      stop(mstyle$stop("Argument 'model' must be an object of class \"rma.peto\"."))
 
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
-      stop("Unknown 'na.action' specified under options().")
+      stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
    x <- model
 
@@ -15,30 +17,30 @@ rstandard.rma.peto <- function(model, digits, ...) {
 
    #########################################################################
 
-   ei <- c(x$yi.f - x$beta)
+   resid <- c(x$yi.f - x$beta)
 
-   ei[abs(ei) < 100 * .Machine$double.eps] <- 0
-   #ei[abs(ei) < 100 * .Machine$double.eps * median(abs(ei), na.rm=TRUE)] <- 0 ### see lm.influence
+   resid[abs(resid) < 100 * .Machine$double.eps] <- 0
+   #resid[abs(resid) < 100 * .Machine$double.eps * median(abs(resid), na.rm=TRUE)] <- 0 ### see lm.influence
 
    ### note: these are like Pearson (or semi-standardized) residuals
 
-   sei <- sqrt(x$vi.f)
-   zi <- ei / sei
+   seresid <- sqrt(x$vi.f)
+   stresid <- resid / seresid
 
    #########################################################################
 
    if (na.act == "na.omit") {
-      out <- list(resid=ei[x$not.na.yivi], se=sei[x$not.na.yivi], z=zi[x$not.na.yivi])
+      out <- list(resid=resid[x$not.na.yivi], se=seresid[x$not.na.yivi], z=stresid[x$not.na.yivi])
       out$slab <- x$slab[x$not.na.yivi]
    }
 
    if (na.act == "na.exclude" || na.act == "na.pass") {
-      out <- list(resid=ei, se=sei, z=zi)
+      out <- list(resid=resid, se=seresid, z=stresid)
       out$slab <- x$slab
    }
 
    if (na.act == "na.fail" && any(!x$not.na.yivi))
-      stop("Missing values in results.")
+      stop(mstyle$stop("Missing values in results."))
 
    out$digits <- digits
 

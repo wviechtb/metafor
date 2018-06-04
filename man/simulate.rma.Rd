@@ -22,9 +22,7 @@
    The data frame comes with an attribute \code{"seed"}. If argument \code{seed} is \code{NULL}, the attribute is the value of \code{\link{.Random.seed}} before the simulation was started; otherwise it is the value of the argument with a \code{"kind"} attribute with value \code{as.list(\link{RNGkind}())}.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \cr
-   package website: \url{http://www.metafor-project.org/} \cr
-   author homepage: \url{http://www.wvbauer.com/}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
 }
 \references{
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{http://www.jstatsoft.org/v36/i03/}.
@@ -46,5 +44,6 @@ res
 
 ### simulate outcomes from model
 newdat <- simulate(res, nsim=10, seed=1234)
+newdat
 }
-\keyword{models}
+\keyword{datagen}

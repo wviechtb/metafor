@@ -106,6 +106,8 @@ test_that("results are correct for the three-level random-effects model fitted w
 
 test_that("profiling works for the three-level random-effects model (multilevel parameterization).", {
 
+   expect_equivalent(TRUE, TRUE) # avoid 'Empty test' message
+
    skip_on_cran()
 
    ### three-level model (ml = multilevel parameterization)
@@ -137,6 +139,8 @@ test_that("results are correct for the three-level random-effects model when usi
 
 test_that("profiling works for the three-level random-effects model (multivariate parameterization).", {
 
+   expect_equivalent(TRUE, TRUE) # avoid 'Empty test' message
+
    skip_on_cran()
 
    ### three-level model (mv = multivariate parameterization)
@@ -145,7 +149,8 @@ test_that("profiling works for the three-level random-effects model (multivariat
    ### profile variance components
    opar <- par(no.readonly=TRUE)
    par(mfrow=c(2,1))
-   profile(res.mv, progbar=FALSE)
+   #profile(res.mv, progbar=FALSE)
+   profile(res.mv, progbar=FALSE, parallel="snow")
    par(opar)
 
 })

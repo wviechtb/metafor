@@ -13,20 +13,6 @@ test_that("escalc() works correctly for measure='RR'", {
 
 })
 
-test_that("escalc.formula() works correctly for measure='RR'", {
-
-   data(dat.bcg, package="metafor")
-
-   dat.long <- to.long(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg,
-                       data=dat.bcg, append=FALSE, vlong=TRUE)
-
-   dat <- escalc(measure="RR", outcome ~ group | study, weights=freq, data=dat.long)
-
-   expect_equivalent(round(dat$yi[1],4), -0.8893)
-   expect_equivalent(round(dat$vi[1],4),  0.3256)
-
-})
-
 test_that("escalc() works correctly for measure='PHI/YUQ/YUY/RTET/PBIT/OR2D/OR2DN'", {
 
    ### see Table 13.4 (p. 242) in the Handbook of Research Synthesis and Meta-Analysis
@@ -86,6 +72,20 @@ test_that("escalc() works correctly for measure='SMD/SMDH/ROM'", {
 
 })
 
+test_that("escalc() works correctly for measure='CVR/VR'", {
+
+   dat <- get(data(dat.normand1999, package="metafor"))
+   dat <- escalc(measure="CVR", m1i=m1i, sd1i=sd1i, n1i=n1i, m2i=m2i, sd2i=sd2i, n2i=n2i, data=dat, subset=1)
+
+   expect_equivalent(round(c(dat$yi[1], dat$vi[1]), 4), c(0.0014, 0.0159))
+
+   dat <- get(data(dat.normand1999, package="metafor"))
+   dat <- escalc(measure="VR", sd1i=sd1i, n1i=n1i, sd2i=sd2i, n2i=n2i, data=dat, subset=1)
+
+   expect_equivalent(round(c(dat$yi[1], dat$vi[1]), 4), c(-0.3087, 0.0065))
+
+})
+
 test_that("escalc() works correctly for measure='RPB/RBIS'", {
 
    x <- c(20, 31, 18, 22, 30, 16, 28, 24, 23, 27,  1,  4,  8, 15,  9, 11, 11,  6,  8,  4)
@@ -137,66 +137,111 @@ test_that("escalc() works correctly for measure='COR/UCOR/ZCOR'", {
 
 })
 
-test_that("escalc() with formula works correctly for measure='IRR'", {
+test_that("escalc() works correctly for measure='PCOR/ZPCOR/SPCOR'", {
 
-   dat <- get(data(dat.nielweise2008, package="metafor"))
-   dat <- to.long(measure="IRR", x1i=x1i, t1i=t1i, x2i=x2i, t2i=t2i, data=dat)
-   dat <- escalc(measure="IRR", events/ptime ~ group | factor(study), data=dat)
-   expect_equivalent(round(c(dat$yi[1], dat$vi[1]), 4), c(-0.0605, 0.2338))
+   ### data from Aloe and Thompson (2013)
+   dat <- data.frame(ti = c(4.61, 6.19, 4.07, -0.77, 1.16),
+                     ni = c(218, 232, 156, 382, 259),
+                     mi = c(4, 7, 6, 19, 15),
+                     r2i = c(.240, .455, .500, .327, .117))
 
-})
+   dat <- escalc(measure="PCOR", ti=ti, ni=ni, mi=mi, data=dat)
+   expect_equivalent(round(c(dat$yi[1], dat$vi[1]), 4), c(0.3012, 0.0039))
 
-test_that("escalc() with formula works correctly for measure='SMD'", {
+   dat <- escalc(measure="ZPCOR", ti=ti, ni=ni, mi=mi, data=dat)
+   expect_equivalent(round(c(dat$yi[1], dat$vi[1]), 4), c(0.3108, 0.0047))
 
-   dat <- get(data(dat.normand1999, package="metafor"))
-   dat <- to.long(measure="SMD", m1i=m1i, sd1i=sd1i, n1i=n1i, m2i=m2i, sd2i=sd2i, n2i=n2i, data=dat)
-   dat <- escalc(measure="SMD", mean/sd ~ group | factor(study), weights=n, data=dat)
-   expect_equivalent(round(c(dat$yi[1], dat$vi[1]), 4), c(-0.3552, 0.0131))
-
-})
-
-test_that("escalc() with formula works correctly for measure='COR'", {
-
-   dat <- get(data(dat.mcdaniel1994, package="metafor"))
-   dat <- to.long(measure="COR", ri=ri, ni=ni, data=dat)
-   dat <- escalc(measure="COR", ri ~ 1 | factor(study), weights=n, data=dat)
-   expect_equivalent(round(c(dat$yi[1], dat$vi[1]), 4), c(0.0000, 0.0082))
+   dat <- escalc(measure="SPCOR", ti=ti, ni=ni, mi=mi, r2i=r2i, data=dat)
+   expect_equivalent(round(c(dat$yi[1], dat$vi[1]), 4), c(0.2754, 0.0033))
 
 })
 
-test_that("escalc() with formula works correctly for measure='PR'", {
+test_that("escalc() works correctly for measure='MC/SMCRH'", {
 
-   dat <- get(data(dat.debruin2009, package="metafor"))
-   dat <- to.long(measure="PR", xi=xi, ni=ni, data=dat, vlong=TRUE)
-   dat <- escalc(measure="PR", outcome ~ 1 | factor(study), weights=freq, data=dat)
-   expect_equivalent(round(c(dat$yi[1], dat$vi[1]), 4), c(0.3793, 0.0081))
+   dat <- escalc(measure="MC", m1i=26, m2i=22, sd1i=sqrt(30), sd2i=sqrt(20), ni=60, ri=0.7)
+   expect_equivalent(round(c(dat$yi, dat$vi), 4), c(4.0000, 0.2618))
 
-})
-
-test_that("escalc() with formula works correctly for measure='IR'", {
-
-   dat <- get(data(dat.hart1999, package="metafor"))
-   dat <- to.long(measure="IR", xi=x1i, ti=t1i, data=dat)
-   dat <- escalc(measure="IR", events/ptime ~ 1 | factor(trial), data=dat)
-   expect_equivalent(round(c(dat$yi[1], dat$vi[1]), 4), c(0.0218, 0.0001))
+   dat <- escalc(measure="SMCRH", m1i=26, m2i=22, sd1i=sqrt(30), sd2i=sqrt(20), ni=60, ri=0.7)
+   expect_equivalent(round(c(dat$yi, dat$vi), 4), c(0.7210, 0.0129))
 
 })
 
-test_that("escalc() with formula works correctly for measure='MN'", {
+test_that("escalc() works correctly for measure='PAS'", {
 
-   dat <- get(data(dat.normand1999, package="metafor"))
-   dat <- to.long(measure="MN", mi=m1i, sdi=sd1i, ni=n1i, data=dat)
-   dat <- escalc(measure="MN", mean/sd ~ 1 | factor(study), weights=n, data=dat)
-   expect_equivalent(round(c(dat$yi[1], dat$vi[1]), 4), c(55.0000, 14.2516))
+   dat <- escalc(measure="PAS", xi=10, ni=20)
+   expect_equivalent(round(c(dat$yi, dat$vi), 4), c(0.7854, 0.0125))
 
 })
 
-test_that("escalc() with formula works correctly for measure='ARAW'", {
+test_that("escalc() works correctly for measure='IRS/IRFT'", {
 
-   dat <- get(data(dat.bonett2010, package="metafor"))
-   dat <- to.long(measure="ARAW", ai=ai, mi=mi, ni=ni, data=dat)
-   dat <- escalc(measure="ARAW", alpha/m ~ 1 | factor(study), weights=n, data=dat)
-   expect_equivalent(round(c(dat$yi[1], dat$vi[1]), 4), c(0.9300, 0.0001))
+   dat <- escalc(measure="IRS", xi=10, ti=20)
+   expect_equivalent(round(c(dat$yi, dat$vi), 4), c(0.7071, 0.0125))
+
+   dat <- escalc(measure="IRFT", xi=10, ti=20)
+   expect_equivalent(round(c(dat$yi, dat$vi), 4), c(0.7244, 0.0125))
+
+})
+
+test_that("escalc() works correctly for measure='ROMC'", {
+
+   dat <- escalc(measure="ROMC", m1i=26, m2i=22, sd1i=sqrt(30), sd2i=sqrt(20), ni=60, ri=0.7)
+   expect_equivalent(round(c(dat$yi, dat$vi), 4), c(0.1671, 0.0004))
+
+})
+
+test_that("escalc() works correctly for measure='MPRD'", {
+
+   dat <- escalc(measure="MPRD", ai=20, bi=10, ci=5, di=20)
+   expect_equivalent(round(c(dat$yi, dat$vi), 4), c(0.0909, 0.0048))
+
+})
+
+test_that("escalc() works correctly for measure='MPRR'", {
+
+   dat <- escalc(measure="MPRR", ai=20, bi=10, ci=5, di=20)
+   expect_equivalent(round(c(dat$yi, dat$vi), 4), c(0.1823, 0.0200))
+
+})
+
+test_that("escalc() works correctly for measure='MPOR'", {
+
+   dat <- escalc(measure="MPOR", ai=20, bi=10, ci=5, di=20)
+   expect_equivalent(round(c(dat$yi, dat$vi), 4), c(0.3646, 0.0782))
+
+})
+
+test_that("escalc() works correctly for measure='MPORC'", {
+
+   dat <- escalc(measure="MPORC", ai=20, bi=10, ci=5, di=20)
+   expect_equivalent(round(c(dat$yi, dat$vi), 4), c(0.6931, 0.3000))
+
+})
+
+test_that("escalc() works correctly for measure='MPPETO'", {
+
+   dat <- escalc(measure="MPPETO", ai=20, bi=10, ci=5, di=20)
+   expect_equivalent(round(c(dat$yi, dat$vi), 4), c(0.6667, 0.2667))
+
+})
+
+test_that("escalc() works correctly for measure='IRSD'", {
+
+   dat <- escalc(measure="IRSD", x1i=10, x2i=6, t1i=20, t2i=20)
+   expect_equivalent(round(c(dat$yi, dat$vi), 4), c(0.1594, 0.0250))
+
+})
+
+test_that("escalc() works correctly for measure='MNLN/CVLN/SDLN'", {
+
+   dat <- escalc(measure="MNLN", mi=10, sdi=2, ni=20)
+   expect_equivalent(round(c(dat$yi, dat$vi), 4), c(2.3026, 0.0020))
+
+   dat <- escalc(measure="CVLN", mi=10, sdi=2, ni=20)
+   expect_equivalent(round(c(dat$yi, dat$vi), 4), c(-1.5831, 0.0283))
+
+   dat <- escalc(measure="SDLN", sdi=2, ni=20)
+   expect_equivalent(round(c(dat$yi, dat$vi), 4), c(0.7195, 0.0263))
 
 })
 

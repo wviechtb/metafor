@@ -2,24 +2,26 @@ plot.infl.rma.uni <- function(x, plotinf=TRUE, plotdfbs=FALSE, dfbsnew=FALSE, lo
 layout, slab.style=1, las=0, pch=21, bg="black", bg.infl="red",
 col.na="lightgray", ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(x, "infl.rma.uni"))
-      stop("Argument 'x' must be an object of class \"infl.rma.uni\".")
+      stop(mstyle$stop("Argument 'x' must be an object of class \"infl.rma.uni\"."))
 
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
-      stop("Unknown 'na.action' specified under options().")
+      stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
    #########################################################################
 
    ### check for NAs and stop if there are any when na.act == "na.fail"
 
-   any.na <- is.na(cbind(x$inf, x$dfbs))
+   any.na <- is.na(as.data.frame(x$inf))
 
    if (any(any.na)) {
 
       if (na.act == "na.fail")
-         stop("Missing values in results.")
+         stop(mstyle$stop("Missing values in results."))
 
    }
 
@@ -36,7 +38,7 @@ col.na="lightgray", ...) {
       which.inf <- which.inf[(which.inf >= 1) & (which.inf <= 8)]
       which.inf <- unique(round(which.inf))
       if (length(which.inf) == 0L)
-         stop("Incorrect specification of 'plotinf' argument.")
+         stop(mstyle$stop("Incorrect specification of 'plotinf' argument."))
       plotinf <- TRUE
    }
 
@@ -51,14 +53,14 @@ col.na="lightgray", ...) {
       which.dfbs <- which.dfbs[(which.dfbs >= 1) & (which.dfbs <= x$p)]
       which.dfbs <- unique(round(which.dfbs))
       if (length(which.dfbs) == 0L)
-         stop("Incorrect specification of 'plotdfbs' argument.")
+         stop(mstyle$stop("Incorrect specification of 'plotdfbs' argument."))
       plotdfbs <- TRUE
    }
 
    #########################################################################
 
    if (!plotinf & !plotdfbs)
-      stop("At least one of the arguments 'plotinf' or 'plotdfbs' argument must be TRUE.")
+      stop(mstyle$stop("At least one of the arguments 'plotinf' or 'plotdfbs' argument must be TRUE."))
 
    if (!plotinf & dfbsnew)
       dfbsnew <- FALSE
@@ -82,7 +84,7 @@ col.na="lightgray", ...) {
 
    #########################################################################
 
-   ids <- switch(slab.style, "1" = x$ids, "2" = rownames(x$inf), "3" = abbreviate(rownames(x$inf), ...))
+   ids <- switch(slab.style, "1" = x$ids, "2" = x$inf$slab, "3" = abbreviate(x$inf$slab, ...))
    #print(ids)
 
    #########################################################################
@@ -123,7 +125,7 @@ col.na="lightgray", ...) {
          layout <- layout[layout >= 1]
          layout <- round(layout)
          if (length(layout) != 2L)
-            stop("Incorrect specification of 'layout' argument.")
+            stop(mstyle$stop("Incorrect specification of 'layout' argument."))
          par(mfrow=layout)
       }
 
@@ -225,7 +227,7 @@ col.na="lightgray", ...) {
                zi.max <- max(zi,na.rm=TRUE)
                lplot(NA, NA, xlim=c(1,len.ids), ylim=c(zi.min,zi.max), xaxt="n", main="cook.d", xlab="", ylab="", las=las, ...)
                laxis(side=1, at=seq_len(len.ids), labels=lab.ids, xlab="", las=las, ...)
-               labline(h=qchisq(.5, df=x$p), lty="dotted", ...)
+               labline(h=qchisq(0.5, df=x$m), lty="dotted", ...)
                if (na.act == "na.exclude" || na.act == "na.pass")
                   llines(seq_len(len.ids)[not.na], zi[not.na], col=col.na, ...)
                llines(seq_len(len.ids), zi, ...)
@@ -265,8 +267,8 @@ col.na="lightgray", ...) {
                }
                laxis(side=1, at=seq_len(len.ids), labels=lab.ids, xlab="", las=las, ...)
                labline(h=1, lty="dashed", ...)
-               #labline(h=1+3*x$p/(x$k-x$p), lty="dotted", ...)
-               #labline(h=1-3*x$p/(x$k-x$p), lty="dotted", ...)
+               #labline(h=1+3*x$m/(x$k-x$m), lty="dotted", ...)
+               #labline(h=1-3*x$m/(x$k-x$m), lty="dotted", ...)
                if (na.act == "na.exclude" || na.act == "na.pass")
                   llines(seq_len(len.ids)[not.na], zi[not.na], col=col.na, ...)
                llines(seq_len(len.ids), zi, ...)
@@ -443,7 +445,7 @@ col.na="lightgray", ...) {
 
       for (i in seq_len(length(which.dfbs))) {
 
-         zi     <- x$dfbs[,which.dfbs[i]]
+         zi     <- x$dfbs[[which.dfbs[i]]]
          not.na <- !is.na(zi)
 
          if (na.act == "na.omit") {
@@ -457,7 +459,7 @@ col.na="lightgray", ...) {
             ids.infl <- x$is.infl
             lab.ids  <- ids
          }
-         lplot(NA, NA, xlim=c(1,len.ids), ylim=range(zi,na.rm=TRUE), xaxt="n", main=paste("dfbs: ", colnames(x$dfbs)[which.dfbs[i]]), xlab="", ylab="", las=las, ...)
+         lplot(NA, NA, xlim=c(1,len.ids), ylim=range(zi,na.rm=TRUE), xaxt="n", main=paste("dfbs: ", names(x$dfbs)[which.dfbs[i]]), xlab="", ylab="", las=las, ...)
          laxis(side=1, at=seq_len(len.ids), labels=lab.ids, xlab="", las=las, ...)
          labline(h= 0, lty="dashed", ...)
          labline(h= 1, lty="dotted", ...)

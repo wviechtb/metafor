@@ -1,2 +1,2 @@
 metafor.news <- function()
-    news(package="metafor")
+   news(package="metafor")

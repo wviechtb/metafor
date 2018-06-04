@@ -12,7 +12,7 @@
 \bold{ai}     \tab \code{numeric}   \tab number of deaths/reinfarctions in treatment group \cr
 \bold{n1i}    \tab \code{numeric}   \tab number of patients in treatment group \cr
 \bold{ci}     \tab \code{numeric}   \tab number of deaths/reinfarctions in control group \cr
-\bold{n2i}    \tab \code{numeric}   \tab number of patients in control group
+\bold{n2i}    \tab \code{numeric}   \tab number of patients in control group \cr
 }
 }
 \details{

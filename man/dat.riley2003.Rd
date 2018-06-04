@@ -9,7 +9,7 @@
 \bold{study}      \tab \code{numeric}    \tab study number \cr
 \bold{yi}         \tab \code{numeric}    \tab log hazard ratio of the outcome in those with amplified versus normal MYC-N protein levels \cr
 \bold{sei}        \tab \code{numeric}    \tab standard error of the log hazard ratio \cr
-\bold{outcome}    \tab \code{character}  \tab outcome (OS = overall survival; DFS = disease-free survival)
+\bold{outcome}    \tab \code{character}  \tab outcome (OS = overall survival; DFS = disease-free survival) \cr
 }
 }
 \details{

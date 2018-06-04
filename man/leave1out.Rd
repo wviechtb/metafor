@@ -45,9 +45,7 @@ leave1out(x, \dots)
    When using the \code{transf} option, the transformation is applied to the estimated coefficients and the corresponding interval bounds. The standard errors are then set equal to \code{NA} and are omitted from the printed output.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \cr
-   package website: \url{http://www.metafor-project.org/} \cr
-   author homepage: \url{http://www.wvbauer.com/}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
 }
 \references{
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{http://www.jstatsoft.org/v36/i03/}.
@@ -64,21 +62,21 @@ dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 ### random-effects model
 res <- rma(yi, vi, data=dat)
 
-### cumulative meta-analysis
+### leave-one-out analysis
 leave1out(res)
 leave1out(res, transf=exp)
 
 ### meta-analysis of the (log) risk ratios using the Mantel-Haenszel method
 res <- rma.mh(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
-### cumulative meta-analysis
+### leave-one-out analysis
 leave1out(res)
 leave1out(res, transf=exp)
 
 ### meta-analysis of the (log) odds ratios using Peto's method
 res <- rma.peto(ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
-### cumulative meta-analysis
+### leave-one-out analysis
 leave1out(res)
 leave1out(res, transf=exp)
 }

@@ -40,14 +40,14 @@ rma.mh(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \tabular{lccc}{
            \tab outcome 1 \tab outcome 2 \tab total      \cr
    group 1 \tab \code{ai} \tab \code{bi} \tab \code{n1i} \cr
-   group 2 \tab \code{ci} \tab \code{di} \tab \code{n2i}
+   group 2 \tab \code{ci} \tab \code{di} \tab \code{n2i} \cr
    } where \code{ai}, \code{bi}, \code{ci}, and \code{di} denote the cell frequencies and \code{n1i} and \code{n2i} the row totals. For example, in a set of randomized clinical trials (RCTs) or cohort studies, group 1 and group 2 may refer to the treatment (exposed) and placebo/control (not exposed) group, with outcome 1 denoting some event of interest (e.g., death) and outcome 2 its complement. In a set of case-control studies, group 1 and group 2 may refer to the group of cases and the group of controls, with outcome 1 denoting, for example, exposure to some risk factor and outcome 2 non-exposure. For these outcome measures, one needs to specify either \code{ai}, \code{bi}, \code{ci}, and \code{di} or alternatively \code{ai}, \code{ci}, \code{n1i}, and \code{n2i}.
 
    Alternatively, when the outcome measure is the incidence rate ratio (\code{measure="IRR"}) or the incidence rate difference (\code{measure="IRD"}), the studies are assumed to provide data in terms of tables of the form:
    \tabular{lcc}{
            \tab events     \tab person-time \cr
    group 1 \tab \code{x1i} \tab \code{t1i}  \cr
-   group 2 \tab \code{x2i} \tab \code{t2i}
+   group 2 \tab \code{x2i} \tab \code{t2i}  \cr
    } where \code{x1i} and \code{x2i} denote the number of events in the first and the second group, respectively, and \code{t1i} and \code{t2i} the corresponding total person-times at risk.
 
    \bold{Mantel-Haenszel Method}
@@ -82,21 +82,20 @@ rma.mh(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \item{yi, vi}{the vector of outcomes and corresponding sampling variances.}
    \item{fit.stats}{a list with the log-likelihood, deviance, AIC, BIC, and AICc values under the unrestricted and restricted likelihood.}
    \item{\dots}{some additional elements/values.}
-
+}
+\section{Methods}{
    The results of the fitted model are formatted and printed with the \code{\link{print.rma.mh}} function. If fit statistics should also be given, use \code{\link{summary.rma}} (or use the \code{\link{fitstats.rma}} function to extract them).
 
    The \code{\link{residuals.rma}}, \code{\link{rstandard.rma.mh}}, and \code{\link{rstudent.rma.mh}} functions extract raw and standardized residuals. Leave-one-out diagnostics can be obtained with \code{\link{leave1out.rma.mh}}.
 
-   Forest, funnel, radial, L'Abbé, and Baujat plots can be obtained with \code{\link{forest.rma}}, \code{\link{funnel.rma}}, \code{\link{radial.rma}}, \code{\link{labbe.rma}}, and \code{\link{baujat}}. The \code{\link{qqnorm.rma.mh}} function provides normal QQ plots of the standardized residuals. One can also just call \code{\link{plot.rma.mh}} on the fitted model object to obtain various plots at once.
+   Forest, funnel, radial, \enc{L'Abbé}{L'Abbe}, and Baujat plots can be obtained with \code{\link{forest.rma}}, \code{\link{funnel.rma}}, \code{\link{radial.rma}}, \code{\link{labbe.rma}}, and \code{\link{baujat}}. The \code{\link{qqnorm.rma.mh}} function provides normal QQ plots of the standardized residuals. One can also just call \code{\link{plot.rma.mh}} on the fitted model object to obtain various plots at once.
 
    A cumulative meta-analysis (i.e., adding one observation at a time) can be obtained with \code{\link{cumul.rma.mh}}.
 
    Other extractor functions include \code{\link{coef.rma}}, \code{\link{vcov.rma}}, \code{\link{logLik.rma}}, \code{\link{deviance.rma}}, \code{\link{AIC.rma}}, and \code{\link{BIC.rma}}.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \cr
-   package website: \url{http://www.metafor-project.org/} \cr
-   author homepage: \url{http://www.wvbauer.com/}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
 }
 \references{
    Cochran, W. G. (1954). Some methods for strengthening the common \eqn{\chi^2} tests. \emph{Biometrics}, \bold{10}, 417--451.

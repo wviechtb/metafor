@@ -4,6 +4,8 @@
 
 .set.btt <- function(btt, p, int.incl) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (missing(btt) || is.null(btt)) {
 
       if (p > 1) {                        ### if the model matrix has more than one column
@@ -23,7 +25,7 @@
 
       ### check for mix of positive and negative values
       if (any(btt < 0) && any(btt > 0))
-         stop("Cannot mix positive and negative 'btt' values.")
+         stop(mstyle$stop("Cannot mix positive and negative 'btt' values."))
 
       ### keep/remove from 1:p vector as specified
       btt <- seq_len(p)[btt]
@@ -33,7 +35,7 @@
 
       ### make sure that at least one valid value is left
       if (length(btt) == 0L)
-         stop("Non-existent coefficients specified via 'btt'.")
+         stop(mstyle$stop("Non-existent coefficients specified via 'btt'."))
 
    }
 
@@ -152,20 +154,33 @@
 .is.intercept <- function(x, eps=1e-08)
    return(all(abs(x - 1) < eps))
 
+### function to test whether a vector is a dummy variable (i.e., consists of only 0s and 1s)
+
 .is.dummy <- function(x, eps=1e-08)
    return(all(abs(x) < eps | abs(x - 1) < eps))
    #return(all(sapply(x, identical, 0) | sapply(x, identical, 1)))
 
 ############################################################################
 
+### function to test for missings in a var-cov matrix
+
+.anyNAv <- function(x) {
+   k <- nrow(x)
+   not.na <- not.na.diag <- !is.na(diag(x))
+   for (i in seq_len(k)[not.na.diag]) {
+      not.na[i] <- !anyNA(x[i, seq_len(k)[not.na.diag]])
+   }
+   return(!not.na)
+}
+
 ### function to test each row for any missings in the lower triangular part of a matrix
 
-.anyNAlt <- function(x)
-   return(sapply(seq_len(nrow(x)), FUN=function(i) anyNA(x[i,seq_len(i)])))
+#.anyNAv <- function(x)
+#   return(sapply(seq_len(nrow(x)), FUN=function(i) anyNA(x[i,seq_len(i)])))
 
 ### function above is faster (and does not require making a copy of the object)
 
-#.anyNAlt <- function(X) {
+#.anyNAv <- function(X) {
 #   X[upper.tri(X)] <- 0
 #   return(apply(is.na(X), 1, any))
 #}
@@ -194,10 +209,10 @@
 ### function to print a named (character) vector right aligned with
 ### a gap of two spaces between adjacent values and no padding
 
-.print.out <- function(x) {
+.print.vector <- function(x) {
 
    if (is.null(names(x)))
-      names(x) <- 1:length(x)
+      names(x) <- seq_along(x)
 
    len.n   <- nchar(names(x))
    len.x   <- nchar(x)
@@ -221,7 +236,7 @@
    x <- as.character(x)
    ux <- unique(x)
 
-   for (i in 1:length(ux)) {
+   for (i in seq_along(ux)) {
       xiTF <- x == ux[i]
       xi <- x[xiTF]
       if (length(xi) == 1L)
@@ -239,11 +254,13 @@
 
 .chkdots <- function(ddd, okargs) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    for (i in seq_along(okargs))
       ddd[okargs[i]] <- NULL
 
    if (length(ddd) > 0)
-      warning(paste0("Extra argument", ifelse(length(ddd) > 1, "s ", " "), "(", paste0("'", names(ddd), "'", collapse=", "), ") disregarded."), call.=FALSE)
+      warning(mstyle$warning(paste0("Extra argument", ifelse(length(ddd) > 1, "s ", " "), "(", paste0("'", names(ddd), "'", collapse=", "), ") disregarded.")), call.=FALSE)
 
 }
 
@@ -271,8 +288,10 @@
 
 .QE.func <- function(tau2val, Y, vi, X, k, objective, verbose=FALSE, digits=4) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (any(tau2val + vi < 0))
-      stop("Some marginal variances are negative.")
+      stop(mstyle$stop("Some marginal variances are negative."))
 
    W     <- diag(1/(vi + tau2val), nrow=k, ncol=k)
    stXWX <- .invcalc(X=X, W=W, k=k)
@@ -280,7 +299,7 @@
    RSS   <- crossprod(Y,P) %*% Y
 
    if (verbose)
-      cat("tau2 =", formatC(tau2val, digits=digits, width=digits+4, format="f"), " RSS - objective =", c(RSS - objective), "\n")
+      cat(mstyle$verbose(paste("tau2 =", formatC(tau2val, digits=digits, width=digits+4, format="f"), " RSS - objective =", c(RSS - objective), "\n")))
 
    return(RSS - objective)
 
@@ -292,9 +311,11 @@
 
 .GENQ.func <- function(tau2val, P, vi, Q, level, k, p, getlower, verbose=FALSE, digits=4) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    S <- diag(sqrt(vi + tau2val), nrow=k, ncol=k)
    lambda <- Re(eigen(S %*% P %*% S, symmetric=TRUE, only.values=TRUE)$values)
-   tmp <- CompQuadForm::farebrother(Q, lambda[1:(k-p)])
+   tmp <- CompQuadForm::farebrother(Q, lambda[seq_len(k-p)])
 
    ### starting with version 1.4.2 of CompQuadForm, the element is called 'Qq' (before it was called 'res')
    ### this way, things should work regardless of the version of CompQuadForm that is installed
@@ -309,7 +330,7 @@
    }
 
    if (verbose)
-      cat("tau2 =", formatC(tau2val, digits=digits, width=digits+4, format="f"), " objective =", res, "\n")
+      cat(mstyle$verbose(paste("tau2 =", formatC(tau2val, digits=digits, width=digits+4, format="f"), " objective =", res, "\n")))
 
    return(res)
 
@@ -317,45 +338,82 @@
 
 ############################################################################
 
-.process.G.aftersub <- function(verbose, mf.g, struct, tau2, rho, isG, k, sparse) {
+.process.G.aftersub <- function(mf.g, struct, formula, tau2, rho, isG, k, sparse, verbose) {
+
+   mstyle <- .get.mstyle("crayon" %in% .packages())
 
    if (verbose > 1)
-      message(paste0("Processing '", paste0("~ ", names(mf.g)[1], " | ", names(mf.g)[2]), "' term ..."))
+      message(mstyle$message(paste0("Processing '", paste0(formula, collapse=""), "' term (#1) ...")))
+
+   ### number of variables in model frame
+
+   nvars <- ncol(mf.g)
+
+   ### check that the number of variables is correct for the chosen structure
+
+   if (is.element(struct, c("CS","HCS","UN","UNHO","AR","HAR","CAR","ID","DIAG")) && nvars != 2)
+      stop(mstyle$stop(paste0("Only a single inner variable allowed for an '~ inner | outer' term when 'struct=\"", struct, "\"'.")), call.=FALSE)
 
    ### get variables names in mf.g
 
-   g.names <- names(mf.g) ### two names for inner and outer factor
+   g.names <- names(mf.g) ### names for inner and outer factors/variables
 
-   if (is.element(struct, c("CS","HCS","UN","ID","DIAG","UNHO")) && !is.factor(mf.g[[1]]) && !is.character(mf.g[[1]]))
-      stop("Inner variable in (~ inner | outer) must be a factor or character variable.")
+   ### check that inner variable is a factor (or character variable) for structures that require this
 
-   ### turn each variable in mf.g into a factor (and turn the list into a data frame with 2 columns)
+   if (is.element(struct, c("CS","HCS","UN","UNHO","ID","DIAG")) && !is.factor(mf.g[[1]]) && !is.character(mf.g[[1]]))
+      stop(mstyle$stop(paste0("Inner variable in '~ inner | outer' term must be a factor or character variable when 'struct=\"", struct, "\"'.")), call.=FALSE)
+
+   ### for struct="CAR", check that inner term is numeric and get the unique numeric values
+
+   if (is.element(struct, c("CAR"))) {
+      if (!is.numeric(mf.g[[1]]))
+         stop(mstyle$stop("Inner variable in '~ inner | outer' term must be numeric for 'struct=\"CAR\"'."), call.=FALSE)
+      g.values <- sort(unique(mf.g[[1]]))
+   } else {
+      g.values <- NULL
+   }
+
+   ### turn each variable in mf.g into a factor (not for SP structures or GEN)
    ### if a variable was a factor to begin with, this drops any unused levels, but order of existing levels is preserved
 
-   mf.g <- data.frame(inner=factor(mf.g[[1]]), outer=factor(mf.g[[2]]))
+   if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","GEN"))) {
+      mf.g <- data.frame(mf.g[-nvars], outer=factor(mf.g[[nvars]]))
+   } else {
+      mf.g <- data.frame(inner=factor(mf.g[[1]]), outer=factor(mf.g[[2]]))
+   }
 
    ### check if there are any NAs anywhere in mf.g
 
    if (anyNA(mf.g))
-      stop("No NAs allowed in variables specified in the 'random' argument.")
+      stop(mstyle$stop("No NAs allowed in variables specified via the 'random' argument."), call.=FALSE)
 
    ### get number of levels of each variable in mf.g (vector with two values, for the inner and outer factor)
 
-   g.nlevels <- c(nlevels(mf.g[[1]]), nlevels(mf.g[[2]]))
+   #g.nlevels <- c(nlevels(mf.g[[1]]), nlevels(mf.g[[2]])) ### works only for factors
+   if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","GEN"))) {
+      g.nlevels <- c(length(unique(apply(mf.g[-nvars], 1, paste, collapse=" + "))), length(unique(mf.g[[nvars]])))
+   } else {
+      g.nlevels <- c(length(unique(mf.g[[1]])), length(unique(mf.g[[2]])))
+   }
 
    ### get levels of each variable in mf.g
 
-   g.levels <- list(levels(mf.g[[1]]), levels(mf.g[[2]]))
+   #g.levels <- list(levels(mf.g[[1]]), levels(mf.g[[2]])) ### works only for factors
+   if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","GEN"))) {
+      g.levels <- list(sort(unique(apply(mf.g[-nvars], 1, paste, collapse=" + "))), sort(unique((mf.g[[nvars]]))))
+   } else {
+      g.levels <- list(sort(unique(as.character(mf.g[[1]]))), sort(unique(as.character(mf.g[[2]]))))
+   }
 
    ### determine appropriate number of tau2 and rho values (care: this is done *after* subsetting)
-   ### care: if g.nlevels[1] is 1, then technically there is no correlation, but we need one rho
-   ### for the optimization function (this rho is fixed to 0 further in the rma.mv() function)
+   ### care: if g.nlevels[1] is 1, then technically there is no correlation, but we still need one
+   ### rho for the optimization function (this rho is fixed to 0 further in the rma.mv() function)
 
-   if (struct == "CS" || struct == "ID") {
+   if (is.element(struct, c("CS","ID","AR","CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH"))) {
       tau2s <- 1
       rhos  <- 1
    }
-   if (struct == "HCS" || struct == "DIAG") {
+   if (is.element(struct, c("HCS","DIAG","HAR"))) {
       tau2s <- g.nlevels[1]
       rhos  <- 1
    }
@@ -363,17 +421,14 @@
       tau2s <- g.nlevels[1]
       rhos  <- ifelse(g.nlevels[1] > 1, g.nlevels[1]*(g.nlevels[1]-1)/2, 1)
    }
-   if (struct == "AR") {
-      tau2s <- 1
-      rhos  <- 1
-   }
-   if (struct == "HAR") {
-      tau2s <- g.nlevels[1]
-      rhos  <- 1
-   }
    if (struct == "UNHO") {
       tau2s <- 1
       rhos  <- ifelse(g.nlevels[1] > 1, g.nlevels[1]*(g.nlevels[1]-1)/2, 1)
+   }
+   if (struct == "GEN") {
+      p     <- nvars - 1
+      tau2s <- p
+      rhos  <- ifelse(p > 1, p*(p-1)/2, 1)
    }
 
    ### set default value(s) for tau2 if it is unspecified
@@ -399,37 +454,64 @@
    ### check if tau2 and rho are of correct length
 
    if (length(tau2) != tau2s)
-      stop(paste0("Length of ", ifelse(isG, 'tau2', 'gamma2'), " argument (", length(tau2), ") does not match actual number of variance components (", tau2s, ")."))
+      stop(mstyle$stop(paste0("Length of ", ifelse(isG, 'tau2', 'gamma2'), " argument (", length(tau2), ") does not match actual number of variance components (", tau2s, ").")), call.=FALSE)
    if (length(rho) != rhos)
-      stop(paste0("Length of ", ifelse(isG, 'rho', 'phi'), " argument (", length(rho), ") does not match actual number of correlations (", rhos, ")."))
+      stop(mstyle$stop(paste0("Length of ", ifelse(isG, 'rho', 'phi'), " argument (", length(rho), ") does not match actual number of correlations (", rhos, ").")), call.=FALSE)
 
    ### checks on any fixed values of tau2 and rho arguments
 
    if (any(tau2 < 0, na.rm=TRUE))
-      stop(paste0("Specified value(s) of ", ifelse(isG, 'tau2', 'gamma2'), " must be non-negative."))
-   if (any(rho > 1 | rho < -1, na.rm=TRUE))
-      stop(paste0("Specified value(s) of ", ifelse(isG, 'rho', 'phi'), " must be in [-1,1]."))
+      stop(mstyle$stop(paste0("Specified value(s) of ", ifelse(isG, 'tau2', 'gamma2'), " must be >= 0.")), call.=FALSE)
+   if (is.element(struct, c("CAR")) && any(rho > 1 | rho < 0, na.rm=TRUE))
+      stop(mstyle$stop(paste0("Specified value(s) of ", ifelse(isG, 'rho', 'phi'), " must be in [0,1].")), call.=FALSE)
+   if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH")) && any(rho < 0, na.rm=TRUE))
+      stop(mstyle$stop(paste0("Specified value(s) of ", ifelse(isG, 'rho', 'phi'), " must be >= 0.")), call.=FALSE)
+   if (!is.element(struct, c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH")) && any(rho > 1 | rho < -1, na.rm=TRUE))
+      stop(mstyle$stop(paste0("Specified value(s) of ", ifelse(isG, 'rho', 'phi'), " must be in [-1,1].")), call.=FALSE)
 
    ### create model matrix for inner and outer factors of mf.g
 
-   if (g.nlevels[1] == 1) {
-      Z.G1 <- cbind(rep(1,k))
-   } else {
-      if (sparse) {
-         #Z.G1 <- Matrix(model.matrix(~ mf.g[[1]] - 1), sparse=TRUE, dimnames=list(NULL, NULL))
-         Z.G1 <- sparse.model.matrix(~ mf.g[[1]] - 1)
+   if (is.element(struct, c("CS","HCS","UN","AR","HAR","CAR","ID","DIAG"))) {
+
+      if (g.nlevels[1] == 1) {
+         Z.G1 <- cbind(rep(1,k))
       } else {
-         Z.G1 <- model.matrix(~ mf.g[[1]] - 1)
+         if (sparse) {
+            Z.G1 <- sparse.model.matrix(~ mf.g[[1]] - 1)
+         } else {
+            Z.G1 <- model.matrix(~ mf.g[[1]] - 1)
+         }
       }
+
    }
+
+   if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH"))) {
+
+      if (sparse) {
+         Z.G1 <- Diagonal(k)
+      } else {
+         Z.G1 <- diag(1, nrow=k, ncol=k)
+      }
+
+   }
+
+   if (is.element(struct, c("GEN"))) {
+
+      if (sparse) {
+         Z.G1 <- Matrix(as.matrix(mf.g[-nvars]), sparse=TRUE)
+      } else {
+         Z.G1 <- as.matrix(mf.g[-nvars])
+      }
+
+   }
+
    if (g.nlevels[2] == 1) {
       Z.G2 <- cbind(rep(1,k))
    } else {
       if (sparse) {
-         #Z.G2 <- Matrix(model.matrix(~ mf.g[[2]] - 1), sparse=TRUE, dimnames=list(NULL, NULL))
-         Z.G2 <- sparse.model.matrix(~ mf.g[[2]] - 1)
+         Z.G2 <- sparse.model.matrix(~ mf.g[[nvars]] - 1)
       } else {
-         Z.G2 <- model.matrix(~ mf.g[[2]] - 1)
+         Z.G2 <- model.matrix(~ mf.g[[nvars]] - 1)
       }
    }
 
@@ -438,53 +520,90 @@
    attr(Z.G2, "assign")    <- NULL
    attr(Z.G2, "contrasts") <- NULL
 
-   return(list(mf.g=mf.g, g.names=g.names, g.nlevels=g.nlevels, g.levels=g.levels, tau2s=tau2s, rhos=rhos, tau2=tau2, rho=rho, Z.G1=Z.G1, Z.G2=Z.G2))
+   return(list(mf.g=mf.g, g.names=g.names, g.nlevels=g.nlevels,
+               g.levels=g.levels, g.values=g.values,
+               tau2s=tau2s, rhos=rhos, tau2=tau2, rho=rho, Z.G1=Z.G1, Z.G2=Z.G2))
 
 }
 
-.process.G.afterrmna <- function(mf.g, g.nlevels, g.levels, struct, tau2, rho, Z.G1, Z.G2, isG) {
+############################################################################
+
+.process.G.afterrmna <- function(mf.g, g.nlevels, g.levels, g.values, struct, formula, tau2, rho, Z.G1, Z.G2, isG, sparse, distspec, verbose) {
+
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
+   if (verbose > 1)
+      message(mstyle$message(paste0("Processing '", paste0(formula, collapse=""), "' term (#2) ...")))
+
+   ### number of variables in model frame
+
+   nvars <- ncol(mf.g)
 
    ### copy g.nlevels and g.levels
 
    g.nlevels.f <- g.nlevels
    g.levels.f  <- g.levels
 
-   ### redo: turn each variable in mf.g into a factor (reevaluates the levels present, but order of existing levels is preserved)
+   ### redo: turn each variable in mf.g into a factor (not for SP structures or GEN)
+   ### (reevaluates the levels present, but order of existing levels is preserved)
 
-   mf.g <- data.frame(inner=factor(mf.g[[1]]), outer=factor(mf.g[[2]]))
+   if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","GEN"))) {
+      mf.g <- data.frame(mf.g[-nvars], outer=factor(mf.g[[nvars]]))
+   } else {
+      mf.g <- data.frame(inner=factor(mf.g[[1]]), outer=factor(mf.g[[2]]))
+   }
 
    ### redo: get number of levels of each variable in mf.g (vector with two values, for the inner and outer factor)
 
-   g.nlevels <- c(nlevels(mf.g[[1]]), nlevels(mf.g[[2]]))
+   #g.nlevels <- c(nlevels(mf.g[[1]]), nlevels(mf.g[[2]])) ### works only for factors
+   if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","GEN"))) {
+      g.nlevels <- c(length(unique(apply(mf.g[-nvars], 1, paste, collapse=" + "))), length(unique(mf.g[[nvars]])))
+   } else {
+      g.nlevels <- c(length(unique(mf.g[[1]])), length(unique(mf.g[[2]])))
+   }
 
    ### redo: get levels of each variable in mf.g
 
-   g.levels <- list(levels(mf.g[[1]]), levels(mf.g[[2]]))
+   #g.levels <- list(levels(mf.g[[1]]), levels(mf.g[[2]])) ### works only for factors
+   if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","GEN"))) {
+      g.levels <- list(sort(unique(apply(mf.g[-nvars], 1, paste, collapse=" + "))), sort(unique((mf.g[[nvars]]))))
+   } else {
+      g.levels <- list(sort(unique(as.character(mf.g[[1]]))), sort(unique(as.character(mf.g[[2]]))))
+   }
 
    ### determine which levels of the inner factor were removed
 
    g.levels.r <- !is.element(g.levels.f[[1]], g.levels[[1]])
 
-   ### warn if any levels were removed
+   ### warn if any levels were removed (not for "AR","CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","GEN")
 
-   if (any(g.levels.r))
-      warning("One or more levels of inner factor removed due to NAs.")
+   if (any(g.levels.r) && !is.element(struct, c("AR","CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","GEN")))
+      warning(mstyle$warning("One or more levels of inner factor removed due to NAs."), call.=FALSE)
 
    ### for "ID" and "DIAG", fix rho to 0
 
    if (is.element(struct, c("ID","DIAG")))
       rho <- 0
 
-   ### if there is only a single arm for "CS","HCS","AR","HAR" (either to begin with or after removing NAs), then fix rho to 0
+   ### if there is only a single arm for "CS","HCS","AR","HAR","CAR" (either to begin with or after removing NAs), then fix rho to 0
 
-   if (g.nlevels[1] == 1 && is.element(struct, c("CS","HCS","AR","HAR")) && is.na(rho)) {
+   if (g.nlevels[1] == 1 && is.element(struct, c("CS","HCS","AR","HAR","CAR")) && is.na(rho)) {
       rho <- 0
-      warning(paste0("Inner factor has only a single level, so fixed value of ", ifelse(isG, 'rho', 'phi'), " to 0."))
+      warning(mstyle$warning(paste0("Inner factor has only a single level, so fixed value of ", ifelse(isG, 'rho', 'phi'), " to 0.")), call.=FALSE)
    }
+
+   ### if there is only a single arm for SP structures or GEN (either to begin with or after removing NAs), cannot fit model
+
+   if (g.nlevels[1] == 1 && is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","GEN")))
+      stop(mstyle$stop("Cannot fit model since inner term only has a single level."), call.=FALSE)
 
    ### k per level of the inner factor
 
-   g.levels.k <- table(factor(mf.g[[1]], levels=g.levels.f[[1]]))
+   if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","GEN"))) {
+      g.levels.k <- table(factor(apply(mf.g[-nvars], 1, paste, collapse=" + "), levels=g.levels.f[[1]]))
+   } else {
+      g.levels.k <- table(factor(mf.g[[1]], levels=g.levels.f[[1]]))
+   }
 
    ### for "HCS","UN","DIAG","HAR": if a particular level of the inner factor only occurs once, then set corresponding tau2 value to 0 (if not already fixed)
    ### note: no longer done; variance component should still be (weakly) identifiable
@@ -492,49 +611,58 @@
    #if (is.element(struct, c("HCS","UN","DIAG","HAR"))) {
    #   if (any(is.na(tau2) & g.levels.k == 1)) {
    #      tau2[is.na(tau2) & g.levels.k == 1] <- 0
-   #      warning("Inner factor has k=1 for one or more levels. Corresponding 'tau2' value(s) fixed to 0.")
+   #      warning(mstyle$warning("Inner factor has k=1 for one or more levels. Corresponding 'tau2' value(s) fixed to 0."))
    #   }
    #}
 
-   ### create matrix where each row (= study) indicates how often each arm occurred
-   ### then turn this into a list (with each element equal to a row (= study))
-
-   g.levels.comb.k <- crossprod(Z.G2, Z.G1)
-   g.levels.comb.k <- split(g.levels.comb.k, seq_len(nrow(g.levels.comb.k)))
-
    ### check if each study has only a single arm (could be different arms!)
-   ### for "CS","HCS","AR","HAR", if yes, then must fix rho to 0 (if not already fixed)
+   ### for "CS","HCS","AR","HAR","CAR" must then fix rho to 0 (if not already fixed)
+   ### for SP structures cannot fit model; for GEN rho may still be (weakly) identifiable
 
-   if (all(unlist(lapply(g.levels.comb.k, sum)) == 1)) {
-      if (is.element(struct, c("CS","HCS","AR","HAR")) && is.na(rho)) {
+   if (g.nlevels[2] == nrow(mf.g)) {
+      if (is.element(struct, c("CS","HCS","AR","HAR","CAR")) && is.na(rho)) {
          rho <- 0
-         warning(paste0("Each level of the outer factor contains only a single level of the inner factor, so fixed value of ", ifelse(isG, 'rho', 'phi'), " to 0."))
+         warning(mstyle$warning(paste0("Each level of the outer factor contains only a single level of the inner factor, so fixed value of ", ifelse(isG, 'rho', 'phi'), " to 0.")), call.=FALSE)
       }
+      if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH")))
+         stop(mstyle$stop("Cannot fit model since each level of the outer factor contains only a single level of the inner term."), call.=FALSE)
    }
 
-   ### create matrix for each element (= study) that indicates which combinations occurred
-   ### sum up all matrices (numbers indicate in how many studies each combination occurred)
-   ### take upper triangle part that corresponds to the arm combinations (in order of rho)
+   g.levels.comb.k <- NULL
 
-   g.levels.comb.k <- lapply(g.levels.comb.k, function(x) outer(x,x, FUN="&"))
-   g.levels.comb.k <- Reduce("+", g.levels.comb.k)
-   g.levels.comb.k <- g.levels.comb.k[upper.tri(g.levels.comb.k)]
+   if (!is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","GEN"))) {
 
-   ### UN/UNHO: if a particular combination of arms never occurs in any of the studies, then must fix the corresponding rho to 0 (if not already fixed)
-   ### this also takes care of the case where each study has only a single arm
+      ### create matrix where each row (= study) indicates how often each arm occurred
+      ### then turn this into a list (with each element equal to a row (= study))
 
-   if (is.element(struct, c("UN","UNHO")) && any(g.levels.comb.k == 0 & is.na(rho))) {
-      rho[g.levels.comb.k == 0] <- 0
-      warning(paste0("Some combinations of the levels of the inner factor never occurred. Corresponding ", ifelse(isG, 'rho', 'phi'), " value(s) fixed to 0."))
-   }
+      g.levels.comb.k <- crossprod(Z.G2, Z.G1)
+      g.levels.comb.k <- split(g.levels.comb.k, seq_len(nrow(g.levels.comb.k)))
 
-   ### if there was only a single arm for "UN/UNHO" to begin with, then fix rho to 0
-   ### (technically there is then no rho at all to begin with, but rhos was still set to 1 earlier for the optimization routine)
-   ### (if there is a single arm after removing NAs, then this is dealt with below by setting tau2 and rho values to 0)
+      ### create matrix for each element (= study) that indicates which combinations occurred
+      ### sum up all matrices (numbers indicate in how many studies each combination occurred)
+      ### take upper triangle part that corresponds to the arm combinations (in order of rho)
 
-   if (is.element(struct, c("UN","UNHO")) && g.nlevels.f[1] == 1 && is.na(rho)) {
-      rho <- 0
-      warning(paste0("Inner factor has only a single level, so fixed value of ", ifelse(isG, 'rho', 'phi'), " to 0."))
+      g.levels.comb.k <- lapply(g.levels.comb.k, function(x) outer(x,x, FUN="&"))
+      g.levels.comb.k <- Reduce("+", g.levels.comb.k)
+      g.levels.comb.k <- g.levels.comb.k[upper.tri(g.levels.comb.k)]
+
+      ### UN/UNHO: if a particular combination of arms never occurs in any of the studies, then must fix the corresponding rho to 0 (if not already fixed)
+      ### this also takes care of the case where each study has only a single arm
+
+      if (is.element(struct, c("UN","UNHO")) && any(g.levels.comb.k == 0 & is.na(rho))) {
+         rho[g.levels.comb.k == 0] <- 0
+         warning(mstyle$warning(paste0("Some combinations of the levels of the inner factor never occurred. Corresponding ", ifelse(isG, 'rho', 'phi'), " value(s) fixed to 0.")), call.=FALSE)
+      }
+
+      ### if there was only a single arm for "UN/UNHO" to begin with, then fix rho to 0
+      ### (technically there is then no rho at all to begin with, but rhos was still set to 1 earlier for the optimization routine)
+      ### (if there is a single arm after removing NAs, then this is dealt with below by setting tau2 and rho values to 0)
+
+      if (is.element(struct, c("UN","UNHO")) && g.nlevels.f[1] == 1 && is.na(rho)) {
+         rho <- 0
+         warning(mstyle$warning(paste0("Inner factor has only a single level, so fixed value of ", ifelse(isG, 'rho', 'phi'), " to 0.")), call.=FALSE)
+      }
+
    }
 
    ### construct G matrix for the various structures
@@ -551,7 +679,7 @@
       diag(G) <- tau2
    }
 
-   if (struct == "UN") {
+   if (is.element(struct, c("UN","GEN"))) {
       G <- .con.vcov.UN(tau2, rho)
    }
 
@@ -598,9 +726,100 @@
       diag(G) <- tau2
    }
 
-   ### for "CS","AR","ID" set tau2 value to 0 for any levels that were removed
+   if (struct == "CAR") {
+      if (is.na(rho)) {
+         G <- matrix(NA_real_, nrow=g.nlevels.f[1], ncol=g.nlevels.f[1])
+      } else {
+         ### is g.nlevels.f[1] == 1 even possible here?
+         if (g.nlevels.f[1] > 1) {
+            G <- outer(g.values, g.values, function(x,y) rho^(abs(x-y)))
+         } else {
+            G <- diag(1)
+         }
+      }
+      G <- diag(sqrt(rep(tau2, g.nlevels.f[1])), nrow=g.nlevels.f[1], ncol=g.nlevels.f[1]) %*% G %*% diag(sqrt(rep(tau2, g.nlevels.f[1])), nrow=g.nlevels.f[1], ncol=g.nlevels.f[1])
+      diag(G) <- tau2
+   }
 
-   if (any(g.levels.r) && is.element(struct, c("CS","AR","ID"))) {
+   if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH"))) {
+
+      ### remove the '| outer' part from the formula and add '- 1'
+      formula <- as.formula(paste0(strsplit(paste0(formula, collapse=""), "|", fixed=TRUE)[[1]][1], "- 1", collapse=""))
+
+      ### create distance matrix
+
+      if (is.matrix(distspec)) {
+
+         if (anyNA(distspec))
+            stop(mstyle$stop("No missing values allowed in matrices specified via 'dist'."))
+         if (!.is.square(distspec))
+            stop(mstyle$stop("Distance matrices specified via 'dist' must be square matrices."))
+         if (!isSymmetric(unname(distspec)))
+            stop(mstyle$stop("Distance matrices specified via 'dist' must be symmetric matrices."))
+         if (is.null(rownames(distspec)))
+            rownames(distspec) <- colnames(distspec)
+         if (is.null(colnames(distspec)))
+            colnames(distspec) <- rownames(distspec)
+         if (length(colnames(distspec)) != length(unique(colnames(distspec))))
+            stop(mstyle$stop("Distance matrices specified via 'dist' must have unique dimension names."))
+         if (any(!is.element(as.character(mf.g[[1]]), colnames(distspec))))
+            stop(mstyle$stop(paste0("There are levels in '", colnames(mf.g)[1], "' for which there are no matching rows/columns in the corresponding 'dist' matrix.")))
+
+         Dmat <- distspec[as.character(mf.g[[1]]), as.character(mf.g[[1]])]
+
+      } else {
+         Cmat <- model.matrix(formula, data=mf.g[-nvars])
+         if (is.function(distspec)) {
+            Dmat <- distspec(Cmat)
+         } else {
+            if (is.element(distspec, c("euclidean", "maximum", "manhattan")))
+               Dmat <- as.matrix(dist(Cmat, method=distspec))
+            if (distspec == "gcd")
+               Dmat <- sp::spDists(Cmat, longlat=TRUE)
+         }
+      }
+      if (sparse)
+         Dmat <- Matrix(Dmat, sparse=TRUE)
+   } else {
+      Dmat <- NULL
+   }
+
+   if (struct == "SPEXP") {
+      Rmat <- tau2 * exp(-Dmat/rho)
+      G <- Rmat * tcrossprod(Z.G2)
+   }
+
+   if (struct == "SPGAU") {
+      Rmat <- tau2 * exp(-Dmat^2/rho^2)
+      G <- Rmat * tcrossprod(Z.G2)
+   }
+
+   if (struct == "SPLIN") {
+      Rmat <- tau2 * ((1 - Dmat/rho) * I(Dmat < rho))
+      G <- Rmat * tcrossprod(Z.G2)
+   }
+
+   if (struct == "SPRAT") {
+      Rmat <- tau2 * (1 - (Dmat/rho)^2 / (1 + (Dmat/rho)^2))
+      G <- Rmat * tcrossprod(Z.G2)
+   }
+
+   if (struct == "SPSPH") {
+      Rmat <- tau2 * ((1 - 3/2*Dmat/rho + 1/2*(Dmat/rho)^3) * I(Dmat < rho))
+      G <- Rmat * tcrossprod(Z.G2)
+   }
+
+   ### for spatial structures, compute a much more sensible initial value for rho
+
+   if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH"))) {
+      rho.init <- suppressMessages(median(Dmat[upper.tri(Dmat)])) # suppressMessages() to avoid '<sparse>[ <logic> ] : .M.sub.i.logical() maybe inefficient' messages when sparse=TRUE
+   } else {
+      rho.init <- NULL
+   }
+
+   ### for "CS","AR","CAR","ID" set tau2 value to 0 for any levels that were removed
+
+   if (any(g.levels.r) && is.element(struct, c("CS","AR","CAR","ID"))) {
       G[g.levels.r,] <- 0
       G[,g.levels.r] <- 0
    }
@@ -611,7 +830,7 @@
       G[g.levels.r,] <- 0
       G[,g.levels.r] <- 0
       tau2[g.levels.r] <- 0
-      warning(paste0("Fixed ", ifelse(isG, 'tau2', 'gamma2'), " to 0 for removed level(s)."))
+      warning(mstyle$warning(paste0("Fixed ", ifelse(isG, 'tau2', 'gamma2'), " to 0 for removed level(s).")), call.=FALSE)
    }
 
    ### for "UN", set tau2 value(s) and corresponding rho(s) to 0 for any levels that were removed
@@ -621,7 +840,7 @@
       G[,g.levels.r] <- 0
       tau2[g.levels.r] <- 0
       rho <- G[upper.tri(G)]
-      warning(paste0("Fixed ", ifelse(isG, 'tau2', 'gamma2'), " and corresponding ", ifelse(isG, 'rho', 'phi'), " value(s) to 0 for removed level(s)."))
+      warning(mstyle$warning(paste0("Fixed ", ifelse(isG, 'tau2', 'gamma2'), " and corresponding ", ifelse(isG, 'rho', 'phi'), " value(s) to 0 for removed level(s).")), call.=FALSE)
    }
 
    ### for "UNHO", set rho(s) to 0 corresponding to any levels that were removed
@@ -631,26 +850,28 @@
       G[,g.levels.r] <- 0
       diag(G) <- tau2 ### don't really need this
       rho <- G[upper.tri(G)]
-      warning(paste0("Fixed ", ifelse(isG, 'rho', 'phi'), " value(s) to 0 corresponding to removed level(s)."))
+      warning(mstyle$warning(paste0("Fixed ", ifelse(isG, 'rho', 'phi'), " value(s) to 0 corresponding to removed level(s).")), call.=FALSE)
    }
 
    ### special handling for the bivariate model:
-   ### if tau2 (for "CS","AR","UNHO") or either tau2.1 or tau2.2 (for "HCS","UN","HAR") is fixed to 0, then rho must be fixed to 0
+   ### if tau2 (for "CS","AR","CAR","UNHO") or either tau2.1 or tau2.2 (for "HCS","UN","HAR") is fixed to 0, then rho must be fixed to 0
 
    if (g.nlevels.f[1] == 2) {
-      if (is.element(struct, c("CS","AR","UNHO")) && !is.na(tau2) && tau2 == 0)
+      if (is.element(struct, c("CS","AR","CAR","UNHO")) && !is.na(tau2) && tau2 == 0)
          rho <- 0
       if (is.element(struct, c("HCS","UN","HAR")) && ((!is.na(tau2[1]) && tau2[1] == 0) || (!is.na(tau2[2]) && tau2[2] == 0)))
          rho <- 0
    }
 
-   #return(list(G=G, tau2=tau2, rho=rho, Z.G1=Z.G1, Z.G2=Z.G2))
-
-   return(list(mf.g=mf.g, g.nlevels=g.nlevels, g.nlevels.f=g.nlevels.f, g.levels=g.levels, g.levels.f=g.levels.f, g.levels.r=g.levels.r, g.levels.k=g.levels.k, g.levels.comb.k=g.levels.comb.k, tau2=tau2, rho=rho, G=G))
+   return(list(mf.g=mf.g, g.nlevels=g.nlevels, g.nlevels.f=g.nlevels.f,
+               g.levels=g.levels, g.levels.f=g.levels.f, g.levels.r=g.levels.r, g.levels.k=g.levels.k, g.levels.comb.k=g.levels.comb.k,
+               tau2=tau2, rho=rho, G=G, Dmat=Dmat, rho.init=rho.init))
 
 }
 
-### function to construct var-cov matrix for struct="UN" given vector of variances and correlations
+############################################################################
+
+### function to construct var-cov matrix for "UN" and "GEN" structures given vector of variances and correlations
 
 .con.vcov.UN <- function(vars, cors) {
    dims <- length(vars)
@@ -661,7 +882,7 @@
    return(H %*% G %*% H)
 }
 
-### function to construct var-cov matrix for struct="UN" given vector of 'choled' variances and covariances
+### function to construct var-cov matrix for "UN" and "GEN" structures given vector of 'choled' variances and covariances
 
 .con.vcov.UN.chol <- function(vars, covs) {
    dims <- length(vars)
@@ -671,106 +892,145 @@
    return(crossprod(G))
 }
 
+############################################################################
+
 ### function to construct var-cov matrix (G or H) for '~ inner | outer' terms
 
-.con.E <- function(v, r, v.val, r.val, Z1, levels.r, struct, cholesky, vctransf, posdefify, sparse) {
+.con.E <- function(v, r, v.val, r.val, Z1, Z2, levels.r, values, Dmat, struct, cholesky, vctransf, posdefify, sparse) {
 
-      ### if cholesky=TRUE, back-transformation/substitution is done below; otherwise, back-transform and replace fixed values
-      if (!cholesky) {
-         if (vctransf) {
-            ### variance is optimized in log-space, so exponentiate
-            v <- ifelse(is.na(v.val), exp(v), v.val)
-            ### correlation is optimized in r-to-z space, so use transf.ztor
-            r  <- ifelse(is.na(r.val), transf.ztor(r), r.val)
-         } else {
-            ### for Hessian computation, leave as is
-            v <- ifelse(is.na(v.val), v, v.val)
-            r <- ifelse(is.na(r.val), r, r.val)
-            v[v < 0] <- 0
-            r[r >  1] <-  1
+   ### if cholesky=TRUE, back-transformation/substitution is done below; otherwise, back-transform and replace fixed values
+
+   if (!cholesky) {
+      if (vctransf) {
+         v <- ifelse(is.na(v.val), exp(v), v.val)           ### variances are optimized in log space, so exponentiate
+         if (struct == "CAR")
+            r <- ifelse(is.na(r.val), plogis(r), r.val)     ### CAR correlation is optimized in qlogis space, so use plogis
+         if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH")))
+            r <- ifelse(is.na(r.val), exp(r), r.val)        ### spatial 'correlation' is optimized in log space, so exponentiate
+         if (!is.element(struct, c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH")))
+            r <- ifelse(is.na(r.val), tanh(r), r.val)       ### other correlations are optimized in atanh space, so use tanh
+      } else {
+         ### for Hessian computation, can choose to leave as is
+         v <- ifelse(is.na(v.val), v, v.val)
+         r <- ifelse(is.na(r.val), r, r.val)
+         v[v < 0] <- 0
+         if (struct == "CAR") {
+            r[r < 0] <- 0
+            r[r > 1] <- 1
+         }
+         if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH"))) {
+            r[r < 0] <- 0
+         }
+         if (!is.element(struct, c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH"))) {
             r[r < -1] <- -1
-         }
-         v <- ifelse(v <= .Machine$double.eps*10, 0, v) ### don't do this with Cholesky factorization, since variance can be negative
-      }
-
-      ncol.Z1 <- ncol(Z1)
-
-      if (struct == "CS") {
-         E <- matrix(r*v, nrow=ncol.Z1, ncol=ncol.Z1)
-         diag(E) <- v
-      }
-
-      if (struct == "HCS") {
-         E <- matrix(r, nrow=ncol.Z1, ncol=ncol.Z1)
-         diag(E) <- 1
-         E <- diag(sqrt(v), nrow=ncol.Z1, ncol=ncol.Z1) %*% E %*% diag(sqrt(v), nrow=ncol.Z1, ncol=ncol.Z1)
-         diag(E) <- v
-      }
-
-      if (struct == "UN") {
-         if (cholesky) {
-            E <- .con.vcov.UN.chol(v, r)
-            v <- diag(E)                  ### need this, so correct values are shown when verbose=TRUE
-            r <- cov2cor(E)[upper.tri(E)] ### need this, so correct values are shown when verbose=TRUE
-            v[!is.na(v.val)] <- v.val[!is.na(v.val)] ### replace any fixed values
-            r[!is.na(r.val)] <- r.val[!is.na(r.val)] ### replace any fixed values
-         }
-         E <- .con.vcov.UN(v, r)
-         if (posdefify) {
-            E <- as.matrix(nearPD(E)$mat) ### nearPD() in Matrix package
-            v <- diag(E)                  ### need this, so correct values are shown when verbose=TRUE
-            r <- cov2cor(E)[upper.tri(E)] ### need this, so correct values are shown when verbose=TRUE
+            r[r > 1] <- 1
          }
       }
+      v <- ifelse(v <= .Machine$double.eps*10, 0, v) ### don't do this with Cholesky factorization, since values can be negative
+   }
 
-      if (struct == "ID" || struct == "DIAG") {
-         E <- diag(v, nrow=ncol.Z1, ncol=ncol.Z1)
+   ncol.Z1 <- ncol(Z1)
+
+   if (struct == "CS") {
+      E <- matrix(r*v, nrow=ncol.Z1, ncol=ncol.Z1)
+      diag(E) <- v
+   }
+
+   if (struct == "HCS") {
+      E <- matrix(r, nrow=ncol.Z1, ncol=ncol.Z1)
+      diag(E) <- 1
+      E <- diag(sqrt(v), nrow=ncol.Z1, ncol=ncol.Z1) %*% E %*% diag(sqrt(v), nrow=ncol.Z1, ncol=ncol.Z1)
+      diag(E) <- v
+   }
+
+   if (is.element(struct, c("UN","GEN"))) {
+      if (cholesky) {
+         E <- .con.vcov.UN.chol(v, r)
+         v <- diag(E)                  ### need this, so correct values are shown when verbose=TRUE
+         r <- cov2cor(E)[upper.tri(E)] ### need this, so correct values are shown when verbose=TRUE
+         v[!is.na(v.val)] <- v.val[!is.na(v.val)] ### replace any fixed values
+         r[!is.na(r.val)] <- r.val[!is.na(r.val)] ### replace any fixed values
       }
-
-      if (struct == "UNHO") {
-         E <- matrix(NA_real_, nrow=ncol.Z1, ncol=ncol.Z1)
-         E[upper.tri(E)] <- r
-         E[lower.tri(E)] <- t(E)[lower.tri(E)]
-         diag(E) <- 1
-         E <- diag(sqrt(rep(v, ncol.Z1)), nrow=ncol.Z1, ncol=ncol.Z1) %*% E %*% diag(sqrt(rep(v, ncol.Z1)), nrow=ncol.Z1, ncol=ncol.Z1)
-         if (posdefify) {
-            E <- as.matrix(nearPD(E, keepDiag=TRUE)$mat) ### nearPD() in Matrix package
-            v <- E[1,1]                                  ### need this, so correct values are shown when verbose=TRUE
-            r <- cov2cor(E)[upper.tri(E)]                ### need this, so correct values are shown when verbose=TRUE
-         }
+      E <- .con.vcov.UN(v, r)
+      if (posdefify) {
+         E <- as.matrix(nearPD(E)$mat) ### nearPD() in Matrix package
+         v <- diag(E)                  ### need this, so correct values are shown when verbose=TRUE
+         r <- cov2cor(E)[upper.tri(E)] ### need this, so correct values are shown when verbose=TRUE
       }
+   }
 
-      if (struct == "AR") {
-         if (ncol.Z1 > 1) {
-            E <- toeplitz(ARMAacf(ar=r, lag.max=ncol.Z1-1))
-         } else {
-            E <- diag(1)
-         }
-         E <- diag(sqrt(rep(v, ncol.Z1)), nrow=ncol.Z1, ncol=ncol.Z1) %*% E %*% diag(sqrt(rep(v, ncol.Z1)), nrow=ncol.Z1, ncol=ncol.Z1)
-         diag(E) <- v
+   if (is.element(struct, c("ID","DIAG")))
+      E <- diag(v, nrow=ncol.Z1, ncol=ncol.Z1)
+
+   if (struct == "UNHO") {
+      E <- matrix(NA_real_, nrow=ncol.Z1, ncol=ncol.Z1)
+      E[upper.tri(E)] <- r
+      E[lower.tri(E)] <- t(E)[lower.tri(E)]
+      diag(E) <- 1
+      E <- diag(sqrt(rep(v, ncol.Z1)), nrow=ncol.Z1, ncol=ncol.Z1) %*% E %*% diag(sqrt(rep(v, ncol.Z1)), nrow=ncol.Z1, ncol=ncol.Z1)
+      if (posdefify) {
+         E <- as.matrix(nearPD(E, keepDiag=TRUE)$mat) ### nearPD() in Matrix package
+         v <- E[1,1]                                  ### need this, so correct values are shown when verbose=TRUE
+         r <- cov2cor(E)[upper.tri(E)]                ### need this, so correct values are shown when verbose=TRUE
       }
+   }
 
-      if (struct == "HAR") {
-         if (ncol.Z1 > 1) {
-            E <- toeplitz(ARMAacf(ar=r, lag.max=ncol.Z1-1))
-         } else {
-            E <- diag(1)
-         }
-         E <- diag(sqrt(v), nrow=ncol.Z1, ncol=ncol.Z1) %*% E %*% diag(sqrt(v), nrow=ncol.Z1, ncol=ncol.Z1)
-         diag(E) <- v
+   if (struct == "AR") {
+      if (ncol.Z1 > 1) {
+         E <- toeplitz(ARMAacf(ar=r, lag.max=ncol.Z1-1))
+      } else {
+         E <- diag(1)
       }
+      E <- diag(sqrt(rep(v, ncol.Z1)), nrow=ncol.Z1, ncol=ncol.Z1) %*% E %*% diag(sqrt(rep(v, ncol.Z1)), nrow=ncol.Z1, ncol=ncol.Z1)
+      diag(E) <- v
+   }
 
-      ### set variance and corresponding correlation value(s) to 0 for any levels that were removed
-
-      if (any(levels.r)) {
-         E[levels.r,] <- 0
-         E[,levels.r] <- 0
+   if (struct == "HAR") {
+      if (ncol.Z1 > 1) {
+         E <- toeplitz(ARMAacf(ar=r, lag.max=ncol.Z1-1))
+      } else {
+         E <- diag(1)
       }
+      E <- diag(sqrt(v), nrow=ncol.Z1, ncol=ncol.Z1) %*% E %*% diag(sqrt(v), nrow=ncol.Z1, ncol=ncol.Z1)
+      diag(E) <- v
+   }
 
-      if (sparse)
-         E <- Matrix(E, sparse=TRUE)
+   if (struct == "CAR") {
+      if (ncol.Z1 > 1) {
+         E <- outer(values, values, function(x,y) r^(abs(x-y)))
+      } else {
+         E <- diag(1)
+      }
+      E <- diag(sqrt(rep(v, ncol.Z1)), nrow=ncol.Z1, ncol=ncol.Z1) %*% E %*% diag(sqrt(rep(v, ncol.Z1)), nrow=ncol.Z1, ncol=ncol.Z1)
+      diag(E) <- v
+   }
 
-      return(list(v=v, r=r, E=E))
+   if (struct == "SPEXP")
+      E <- v * exp(-Dmat/r) * tcrossprod(Z2)
+
+   if (struct == "SPGAU")
+      E <- v * exp(-Dmat^2/r^2) * tcrossprod(Z2)
+
+   if (struct == "SPLIN")
+      E <- v * ((1 - Dmat/r) * I(Dmat < r)) * tcrossprod(Z2)
+
+   if (struct == "SPRAT")
+      E <- v * (1 - (Dmat/r)^2 / (1 + (Dmat/r)^2)) * tcrossprod(Z2)
+
+   if (struct == "SPSPH")
+      E <- v * ((1 - 3/2*Dmat/r + 1/2*(Dmat/r)^3) * I(Dmat < r)) * tcrossprod(Z2)
+
+   ### set variance and corresponding correlation value(s) to 0 for any levels that were removed
+
+   if (!is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","GEN")) && any(levels.r)) {
+      E[levels.r,] <- 0
+      E[,levels.r] <- 0
+   }
+
+   if (sparse)
+      E <- Matrix(E, sparse=TRUE)
+
+   return(list(v=v, r=r, E=E))
 
 }
 
@@ -778,25 +1038,25 @@
 
 ### -1 times the log likelihood (regular or restricted) for rma.mv models
 
-.ll.rma.mv <- function(par, reml, Y, M, A, X.fit, k, pX, # note: X.fit due to hessian(); pX due to nlm()
-                       D.S, Z.G1, Z.G2, Z.H1, Z.H2,
+.ll.rma.mv <- function(par, reml, Y, M, A, X.fit, k, pX, # note: X.fit due to hessian(); pX due to nlm(); M=V to begin with
+                       D.S, Z.G1, Z.G2, Z.H1, Z.H2, g.Dmat, h.Dmat,
                        sigma2.val, tau2.val, rho.val, gamma2.val, phi.val,
                        sigma2s, tau2s, rhos, gamma2s, phis,
                        withS, withG, withH,
-                       struct, g.levels.r, h.levels.r,
+                       struct, g.levels.r, h.levels.r, g.values, h.values,
                        sparse, cholesky, posdefify, vctransf,
                        verbose, digits, REMLf, dofit=FALSE) {
+
+   mstyle <- .get.mstyle("crayon" %in% .packages())
 
    ### only NA values in sigma2.val, tau2.val, rho.val, gamma2.val, phi.val should be estimated; otherwise, replace with fixed values
 
    if (withS) {
 
       if (vctransf) {
-         ### sigma2 is optimized in log-space, so exponentiate
-         sigma2 <- ifelse(is.na(sigma2.val), exp(par[seq_len(sigma2s)]), sigma2.val)
+         sigma2 <- ifelse(is.na(sigma2.val), exp(par[seq_len(sigma2s)]), sigma2.val) ### sigma2 is optimized in log space, so exponentiate
       } else {
-         ### for Hessian computation, leave as is
-         sigma2 <- ifelse(is.na(sigma2.val), par[seq_len(sigma2s)], sigma2.val)
+         sigma2 <- ifelse(is.na(sigma2.val), par[seq_len(sigma2s)], sigma2.val)      ### for Hessian computation, can choose to leave as is
          sigma2[sigma2 < 0] <- 0
       }
 
@@ -815,7 +1075,7 @@
    if (withG) {
 
       resG <- .con.E(v=par[(sigma2s+1):(sigma2s+tau2s)], r=par[(sigma2s+tau2s+1):(sigma2s+tau2s+rhos)],
-                     v.val=tau2.val, r.val=rho.val, Z1=Z.G1, levels.r=g.levels.r,
+                     v.val=tau2.val, r.val=rho.val, Z1=Z.G1, Z2=Z.G2, levels.r=g.levels.r, values=g.values, Dmat=g.Dmat,
                      struct=struct[1], cholesky=cholesky[1], vctransf=vctransf, posdefify=posdefify, sparse=sparse)
       tau2 <- resG$v
       rho  <- resG$r
@@ -828,7 +1088,7 @@
    if (withH) {
 
       resH <- .con.E(v=par[(sigma2s+tau2s+rhos+1):(sigma2s+tau2s+rhos+gamma2s)], r=par[(sigma2s+tau2s+rhos+gamma2s+1):(sigma2s+tau2s+rhos+gamma2s+phis)],
-                     v.val=gamma2.val, r.val=phi.val, Z1=Z.H1, levels.r=h.levels.r,
+                     v.val=gamma2.val, r.val=phi.val, Z1=Z.H1, Z2=Z.H2, levels.r=h.levels.r, values=h.values, Dmat=h.Dmat,
                      struct=struct[2], cholesky=cholesky[2], vctransf=vctransf, posdefify=posdefify, sparse=sparse)
       gamma2 <- resH$v
       phi    <- resH$r
@@ -837,6 +1097,8 @@
       M <- M + (Z.H1 %*% H %*% t(Z.H1)) * tcrossprod(Z.H2)
 
    }
+
+   ### note: if M is sparse, then using nearPD() could blow up
 
    if (posdefify)
       M <- as.matrix(nearPD(M)$mat)
@@ -856,7 +1118,7 @@
       ### move the parameter estimates away from values that create the non-positive-definite M matrix)
 
       if (dofit) {
-         stop("Final variance-covariance matrix not positive definite.")
+         stop(mstyle$stop("Final variance-covariance matrix not positive definite."))
       } else {
          llval <- -Inf
       }
@@ -875,7 +1137,7 @@
       if (inherits(U, "try-error")) {
 
          if (dofit) {
-            stop("Cannot fit model based on estimated marginal variance-covariance matrix.")
+            stop(mstyle$stop("Cannot fit model based on estimated marginal variance-covariance matrix."))
          } else {
             llval <- -Inf
          }
@@ -942,17 +1204,18 @@
    }
 
    if ((vctransf && verbose) || (!vctransf && (verbose > 1))) {
+      cat(mstyle$verbose(paste0("ll = ", ifelse(is.na(llval), NA, formatC(llval, digits=digits, format="f", flag=" ")))), "  ")
       if (withS)
-         cat("sigma2 =", ifelse(is.na(sigma2), NA, paste(formatC(sigma2, digits=digits, format="f", flag=" "), " ", sep="")), "  ", sep="")
-      if (withG)
-         cat("tau2 =",   ifelse(is.na(tau2),   NA, paste(formatC(tau2,   digits=digits, format="f", flag=" "), " ", sep="")), "  ", sep="")
-      if (withG)
-         cat("rho =",    ifelse(is.na(rho),    NA, paste(formatC(rho,    digits=digits, format="f", flag=" "), " ", sep="")), "  ", sep="")
-      if (withH)
-         cat("gamma2 =", ifelse(is.na(gamma2), NA, paste(formatC(gamma2, digits=digits, format="f", flag=" "), " ", sep="")), "  ", sep="")
-      if (withH)
-         cat("phi =",    ifelse(is.na(phi),    NA, paste(formatC(phi,    digits=digits, format="f", flag=" "), " ", sep="")), "  ", sep="")
-      cat("  ll = ", ifelse(is.na(llval), NA, formatC(llval, digits=digits, format="f", flag=" ")), sep="", "\n")
+         cat(mstyle$verbose(paste0("sigma2 =", paste(ifelse(is.na(sigma2), NA, formatC(sigma2, digits=digits, format="f", flag=" ")), collapse=" "), "  ")))
+      if (withG) {
+         cat(mstyle$verbose(paste0("tau2 =",   paste(ifelse(is.na(tau2),   NA, formatC(tau2,   digits=digits, format="f", flag=" ")), collapse=" "), "  ")))
+         cat(mstyle$verbose(paste0("rho =",    paste(ifelse(is.na(rho),    NA, formatC(rho,    digits=digits, format="f", flag=" ")), collapse=" "), "  ")))
+      }
+      if (withH) {
+         cat(mstyle$verbose(paste0("gamma2 =", paste(ifelse(is.na(gamma2), NA, formatC(gamma2, digits=digits, format="f", flag=" ")), collapse=" "), "  ")))
+         cat(mstyle$verbose(paste0("phi =",    paste(ifelse(is.na(phi),    NA, formatC(phi,    digits=digits, format="f", flag=" ")), collapse=" "), "  ")))
+      }
+      cat("\n")
    }
 
    return(-1 * c(llval))
@@ -964,6 +1227,8 @@
 ### for profile(), confint(), and multicore processing
 
 .profile.rma.uni <- function(val, obj, parallel=FALSE, profile=FALSE, CI=FALSE, subset=FALSE, objective, sel, FE=FALSE, verbose=FALSE) {
+
+   mstyle <- .get.mstyle("crayon" %in% .packages())
 
    if (parallel == "snow")
       library(metafor)
@@ -989,7 +1254,7 @@
          if (inherits(res, "try-error")) {
 
             if (verbose)
-               cat("tau2 =", formatC(val, digits=obj$digits, width=obj$digits+4, format="f"), " LRT - objective = NA", "\n")
+               cat(mstyle$verbose(paste("tau2 =", formatC(val, digits=obj$digits, width=obj$digits+4, format="f"), " LRT - objective = NA", "\n")))
 
             stop()
 
@@ -998,7 +1263,7 @@
             sav <- -2*(logLik(res) - logLik(obj)) - objective
 
             if (verbose)
-               cat("tau2 =", formatC(val, digits=obj$digits, width=obj$digits+4, format="f"), " LRT - objective =", sav, "\n")
+               cat(mstyle$verbose(paste("tau2 =", formatC(val, digits=obj$digits, width=obj$digits+4, format="f"), " LRT - objective =", formatC(sav, digits=obj$digits, width=obj$digits+4, format="f"), "\n")))
 
          }
 
@@ -1058,6 +1323,8 @@
 
 .profile.rma.mv <- function(val, obj, comp, sigma2.pos, tau2.pos, rho.pos, gamma2.pos, phi.pos, parallel=FALSE, profile=FALSE, CI=FALSE, subset=FALSE, objective, verbose=FALSE) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (parallel == "snow")
       library(metafor)
 
@@ -1087,7 +1354,7 @@
       if (comp == "phi")
          phi.arg[phi.pos] <- val
 
-      res <- try(suppressWarnings(rma.mv(obj$yi, obj$V, obj$W, mods=obj$X, intercept=FALSE, random=obj$random, struct=obj$struct, method=obj$method, test=obj$test, level=obj$level, R=obj$R, Rscale=obj$Rscale, data=obj$mf.r, sigma2=sigma2.arg, tau2=tau2.arg, rho=rho.arg, gamma2=gamma2.arg, phi=phi.arg, control=obj$control)), silent=TRUE)
+      res <- try(suppressWarnings(rma.mv(obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=sigma2.arg, tau2=tau2.arg, rho=rho.arg, gamma2=gamma2.arg, phi=phi.arg, sparse=obj$sparse, dist=obj$dist, control=obj$control)), silent=TRUE)
 
       if (profile) {
 
@@ -1104,7 +1371,7 @@
          if (inherits(res, "try-error")) {
 
             if (verbose)
-               cat("vc =", formatC(val, digits=obj$digits, width=obj$digits+4, format="f"), " LRT - objective = NA", "\n")
+               cat(mstyle$verbose(paste("vc =", formatC(val, digits=obj$digits, width=obj$digits+4, format="f"), " LRT - objective = NA", "\n")))
 
             stop()
 
@@ -1113,7 +1380,7 @@
             sav <- -2*(logLik(res) - logLik(obj)) - objective
 
             if (verbose)
-               cat("vc =", formatC(val, digits=obj$digits, width=obj$digits+4, format="f"), " LRT - objective =", sav, "\n")
+               cat(mstyle$verbose(paste("vc =", formatC(val, digits=obj$digits, width=obj$digits+4, format="f"), " LRT - objective =", formatC(sav, digits=obj$digits, width=obj$digits+4, format="f"), "\n")))
 
          }
 
@@ -1175,6 +1442,135 @@
 
 }
 
+.cooks.distance.rma.mv <- function(i, obj, parallel, svb, cluster, ids, reestimate, btt) {
+
+   if (parallel == "snow")
+      library(metafor)
+
+   incl <- cluster %in% ids[i]
+
+   ### note: not.na=FALSE only when there are missings in data, not when model below cannot be fitted or results in dropped coefficients
+
+   if (reestimate) {
+
+      control             <- obj$control
+      control$sigma2.init <- obj$sigma2
+      control$tau2.init   <- obj$tau2
+      control$rho.init    <- obj$rho
+      control$gamma2.init <- obj$gamma2
+      control$phi.init    <- obj$phi
+
+      res <- try(suppressWarnings(rma.mv(obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=ifelse(obj$vc.fix$sigma2, obj$sigma2, NA), tau2=ifelse(obj$vc.fix$tau2, obj$tau2, NA), rho=ifelse(obj$vc.fix$rho, obj$rho, NA), gamma2=ifelse(obj$vc.fix$gamma2, obj$gamma2, NA), phi=ifelse(obj$vc.fix$phi, obj$phi, NA), sparse=obj$sparse, dist=obj$dist, control=control, subset=!incl)), silent=TRUE)
+
+   } else {
+
+      res <- try(suppressWarnings(rma.mv(obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=obj$sigma2, tau2=obj$tau2, rho=obj$rho, gamma2=obj$gamma2, phi=obj$phi, sparse=obj$sparse, dist=obj$dist, control=obj$control, subset=!incl)), silent=TRUE)
+
+   }
+
+   if (inherits(res, "try-error"))
+      return(list(cook.d = NA))
+
+   if (any(res$coef.na))
+      return(list(cook.d = NA))
+
+   dfb <- obj$beta[btt] - res$beta[btt]
+
+   return(list(cook.d = crossprod(dfb,svb) %*% dfb))
+
+}
+
+.rstudent.rma.mv <- function(i, obj, parallel, cluster, ids, reestimate) {
+
+   if (parallel == "snow")
+      library(metafor)
+
+   incl <- cluster %in% ids[i]
+
+   k.id <- sum(incl)
+
+   if (reestimate) {
+
+      control             <- obj$control
+      control$sigma2.init <- obj$sigma2
+      control$tau2.init   <- obj$tau2
+      control$rho.init    <- obj$rho
+      control$gamma2.init <- obj$gamma2
+      control$phi.init    <- obj$phi
+
+      res <- try(suppressWarnings(rma.mv(obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=ifelse(obj$vc.fix$sigma2, obj$sigma2, NA), tau2=ifelse(obj$vc.fix$tau2, obj$tau2, NA), rho=ifelse(obj$vc.fix$rho, obj$rho, NA), gamma2=ifelse(obj$vc.fix$gamma2, obj$gamma2, NA), phi=ifelse(obj$vc.fix$phi, obj$phi, NA), sparse=obj$sparse, dist=obj$dist, control=control, subset=!incl)), silent=TRUE)
+
+   } else {
+
+      res <- try(suppressWarnings(rma.mv(obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=obj$sigma2, tau2=obj$tau2, rho=obj$rho, gamma2=obj$gamma2, phi=obj$phi, sparse=obj$sparse, dist=obj$dist, control=obj$control, subset=!incl)), silent=TRUE)
+
+   }
+
+   if (inherits(res, "try-error"))
+      return(list(delresid = rep(NA, k.id), sedelresid = rep(NA, k.id), X2 = NA, k.id = NA, pos = which(incl)))
+
+   if (any(res$coef.na))
+      return(list(delresid = rep(NA, k.id), sedelresid = rep(NA, k.id), X2 = NA, k.id = NA, pos = which(incl)))
+
+   tmp <- try(suppressWarnings(rma.mv(obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=res$sigma2, tau2=res$tau2, rho=res$rho, gamma2=res$gamma2, phi=res$phi, sparse=obj$sparse, dist=obj$dist, control=obj$control)), silent=TRUE)
+
+   Xi <- obj$X[incl,,drop=FALSE]
+   delpred  <- Xi %*% res$beta
+   vdelpred <- Xi %*% res$vb %*% t(Xi)
+   delresid <- c(obj$yi[incl] - delpred)
+   sedelresid <- c(sqrt(diag(tmp$M[incl,incl,drop=FALSE] + vdelpred)))
+
+   sve <- try(chol2inv(chol(tmp$M[incl,incl,drop=FALSE] + vdelpred)), silent=TRUE)
+
+   if (inherits(sve, "try-error"))
+      return(list(delresid = delresid, sedelresid = sedelresid, X2 = NA, k.id = k.id, pos = which(incl)))
+
+   X2 <- c(rbind(delresid) %*% sve %*% cbind(delresid))
+
+   return(list(delresid = delresid, sedelresid = sedelresid, X2 = X2, k.id = k.id, pos = which(incl)))
+
+}
+
+.dfbetas.rma.mv <- function(i, obj, parallel, cluster, ids, reestimate) {
+
+   if (parallel == "snow")
+      library(metafor)
+
+   incl <- cluster %in% ids[i]
+
+   if (reestimate) {
+
+      control             <- obj$control
+      control$sigma2.init <- obj$sigma2
+      control$tau2.init   <- obj$tau2
+      control$rho.init    <- obj$rho
+      control$gamma2.init <- obj$gamma2
+      control$phi.init    <- obj$phi
+
+      res <- try(suppressWarnings(rma.mv(obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=ifelse(obj$vc.fix$sigma2, obj$sigma2, NA), tau2=ifelse(obj$vc.fix$tau2, obj$tau2, NA), rho=ifelse(obj$vc.fix$rho, obj$rho, NA), gamma2=ifelse(obj$vc.fix$gamma2, obj$gamma2, NA), phi=ifelse(obj$vc.fix$phi, obj$phi, NA), sparse=obj$sparse, dist=obj$dist, control=control, subset=!incl)), silent=TRUE)
+
+   } else {
+
+      res <- try(suppressWarnings(rma.mv(obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=obj$sigma2, tau2=obj$tau2, rho=obj$rho, gamma2=obj$gamma2, phi=obj$phi, sparse=obj$sparse, dist=obj$dist, control=obj$control, subset=!incl)), silent=TRUE)
+
+   }
+
+   if (inherits(res, "try-error"))
+      return(list(dfbs = NA))
+
+   if (any(res$coef.na))
+      return(list(dfbs = NA))
+
+   tmp <- try(suppressWarnings(rma.mv(obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=res$sigma2, tau2=res$tau2, rho=res$rho, gamma2=res$gamma2, phi=res$phi, sparse=obj$sparse, dist=obj$dist, control=obj$control)), silent=TRUE)
+
+   dfb <- obj$beta - res$beta
+
+   dfbs <- c(dfb / sqrt(diag(tmp$vb)))
+
+   return(list(dfbs = dfbs))
+
+}
+
 ############################################################################
 
 ### generate all possible permutations
@@ -1228,6 +1624,8 @@
 
 .permci <- function(val, obj, j, exact, iter, progbar, comp.tol, level, digits, control) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    ### fit model with shifted outcome
    res <- try(suppressWarnings(rma.uni(obj$yi - c(val*obj$X[,j]), obj$vi, weights=obj$weights, mods=obj$X, intercept=FALSE, method=obj$method, weighted=obj$weighted, test=obj$test, tau2=ifelse(obj$tau2.fix, obj$tau2, NA), control=obj$control)), silent=TRUE)
 
@@ -1242,7 +1640,7 @@
 
    ### show progress
    if (progbar)
-      cat("pval =", formatC(pval, format="f", digits=digits), " diff =", formatC(diff, format="f", digits=digits, flag=" "), " val =", formatC(val, format="f", digits=digits, flag=" "), "\n")
+      cat(mstyle$verbose(paste("pval =", formatC(pval, format="f", digits=digits), " diff =", formatC(diff, format="f", digits=digits, flag=" "), " val =", formatC(val, format="f", digits=digits, flag=" "), "\n")))
 
    ### penalize negative differences, which should force the CI bound to correspond to a p-value of *at least* level
    diff <- ifelse(diff < 0, diff*10, diff)
@@ -1610,6 +2008,28 @@
                lab <- "Ratio of Means"
          }
       }
+      if (measure == "CVRC") {
+         if (transf.char == "FALSE" && atransf.char == "FALSE") {
+            lab <- "Log Coefficient of Variation Ratio"
+         } else {
+            lab <- "Transformed Log Coefficient of Variation Ratio"
+            if (atransf.char == "exp" || atransf.char == "transf.exp.int")
+               lab <- "Coefficient of Variation Ratio (log scale)"
+            if (transf.char == "exp" || transf.char == "transf.exp.int")
+               lab <- "Coefficient of Variation Ratio"
+         }
+      }
+      if (measure == "VRC") {
+         if (transf.char == "FALSE" && atransf.char == "FALSE") {
+            lab <- "Log Variability Ratio"
+         } else {
+            lab <- "Transformed Log Variability Ratio"
+            if (atransf.char == "exp" || atransf.char == "transf.exp.int")
+               lab <- "Variability Ratio (log scale)"
+            if (transf.char == "exp" || transf.char == "transf.exp.int")
+               lab <- "Variability Ratio"
+         }
+      }
       ######################################################################
       if (measure == "ARAW") {
          if (transf.char == "FALSE" && atransf.char == "FALSE") {
@@ -1656,6 +2076,8 @@
 
 .dnoncenhypergeom <- function (x=NA, n1, n2, m1, psi) { ### x=ai, n1=ai+bi, n2=ci+di, m1=ai+ci, psi=ORi
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    mode.compute <- function(n1, n2, m1, psi, ll, uu) {
       a <- psi - 1
       b <- -((m1 + n1 + 2) * psi + n2 - m1)
@@ -1674,19 +2096,19 @@
    uu <- min(n1, m1)
 
    if (n1 < 0 | n2 < 0)
-      stop("'n1' or 'n2' negative in dnoncenhypergeom().\n")
+      stop(mstyle$stop("'n1' or 'n2' negative in dnoncenhypergeom()."))
 
    if (m1 < 0 | m1 > (n1 + n2))
-      stop("'m1' out of range in dnoncenhypergeom().\n")
+      stop(mstyle$stop("'m1' out of range in dnoncenhypergeom()."))
 
    if (psi <= 0)
-      stop("'psi' [odds ratio] negative in dnoncenhypergeom().\n")
+      stop(mstyle$stop("'psi' [odds ratio] negative in dnoncenhypergeom()."))
 
    if (!is.na(x) & (x < ll | x > uu))
-      stop("'x' out of bounds in dnoncenhypergeom().\n")
+      stop(mstyle$stop("'x' out of bounds in dnoncenhypergeom()."))
 
    if (!is.na(x) & length(x) > 1)
-      stop("'x' neither missing or scalar in dnoncenhypergeom().\n")
+      stop(mstyle$stop("'x' neither missing or scalar in dnoncenhypergeom()."))
 
    mode <- mode.compute(n1, n2, m1, psi, ll, uu)
    pi <- array(1, uu - ll + 1)
@@ -1715,6 +2137,8 @@
 
 .dnchgi <- function(logOR, ai, bi, ci, di, mu.i, tau2, random, dnchgcalc, dnchgprec) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    k <- length(logOR)
    dnchgi <- rep(NA_real_, k)
 
@@ -1736,7 +2160,7 @@
       }
 
       if (inherits(res, "try-error")) {
-         stop(paste0("Could not compute density of non-central hypergeometric distribution in study ", i, "."))
+         stop(mstyle$stop(paste0("Could not compute density of non-central hypergeometric distribution in study ", i, ".")))
       } else {
          dnchgi[i] <- res
       }
@@ -1756,6 +2180,8 @@
 
 .dnchg <- function(parms, ai, bi, ci, di, X.fit, random, verbose=FALSE, digits=4, dnchgcalc, dnchgprec, intCtrl) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    p    <- ncol(X.fit)
    k    <- length(ai)
    beta <- parms[seq_len(p)]                  ### first p elemenets in parms are the model coefficients
@@ -1771,7 +2197,7 @@
       }
 
       if (verbose)
-         cat("ll =", formatC(sum(lli), digits=digits, format="f"), " ", formatC(beta, digits=digits, format="f"), "\n")
+         cat(mstyle$verbose(paste("ll =", formatC(sum(lli), digits=digits, format="f"), " ", formatC(beta, digits=digits, format="f"), "\n")))
 
    }
 
@@ -1782,7 +2208,7 @@
          res <- try(integrate(.dnchgi, lower=intCtrl$lower, upper=intCtrl$upper, ai=ai[i], bi=bi[i], ci=ci[i], di=di[i], mu.i=mu.i[i], tau2=tau2, random=random, dnchgcalc=dnchgcalc, dnchgprec=dnchgprec, rel.tol=intCtrl$rel.tol, subdivisions=intCtrl$subdivisions, stop.on.error=FALSE), silent=!verbose)
 
          if (inherits(res, "try-error")) {
-            stop(paste0("Could not integrate over density of non-central hypergeometric distribution in study ", i, "."))
+            stop(mstyle$stop(paste0("Could not integrate over density of non-central hypergeometric distribution in study ", i, ".")))
          } else {
             if (res$value > 0) {
                lli[i] <- log(res$value)
@@ -1794,7 +2220,7 @@
       }
 
       if (verbose)
-         cat("ll = ", formatC(sum(lli), digits=digits, format="f"), " ", formatC(tau2, digits=digits, format="f"), " ", formatC(beta, digits=digits, format="f"), "\n")
+         cat(mstyle$verbose(paste("ll = ", formatC(sum(lli), digits=digits, format="f"), " ", formatC(tau2, digits=digits, format="f"), " ", formatC(beta, digits=digits, format="f"), "\n")))
 
    }
 
@@ -1808,8 +2234,10 @@
 
 .ll.rma.ls <- function(par, yi, vi, X, Z, reml, k, pX, verbose, digits, REMLf, link) {
 
-   #beta  <- par[1:pX]
-   #alpha <- par[-c(1:pX)]
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
+   #beta  <- par[seq_len(pX)]
+   #alpha <- par[-seq_len(pX)]
 
    alpha <- par
 
@@ -1833,27 +2261,35 @@
       ### determined by the current value(s) of 'alpha'; this is actually also how the standard RE/ME model is fitted;
       ### but is this really the best way of doing this? one could also optimize over beta and alpha jointly
       W <- diag(wi, nrow=k, ncol=k)
+      stXWX <- try(.invcalc(X=X, W=W, k=k), silent=TRUE)
 
-      #print(any(wi <= 0))
-      stXWX <- .invcalc(X=X, W=W, k=k)
-      beta <- stXWX %*% crossprod(X,W) %*% as.matrix(yi)
+      if (inherits(stXWX, "try-error")) {
 
-      ### compute residual sum of squares
-      RSS <- sum(wi*(yi - X %*% beta)^2)
+         llval <- -Inf
 
-      ### log-likelihood (could leave out additive constants)
-      if (!reml) {
-         llval <- -1/2 * (k) * log(2*base::pi) - 1/2 * sum(log(vi + tau2)) - 1/2 * RSS
       } else {
-         llval <- -1/2 * (k-pX) * log(2*base::pi) + ifelse(REMLf, 1/2 * determinant(crossprod(X), logarithm=TRUE)$modulus, 0) +
-                  -1/2 * sum(log(vi + tau2)) - 1/2 * determinant(crossprod(X,W) %*% X, logarithm=TRUE)$modulus - 1/2 * RSS
+
+         beta <- stXWX %*% crossprod(X,W) %*% as.matrix(yi)
+
+         ### compute residual sum of squares
+         RSS <- sum(wi*(yi - X %*% beta)^2)
+
+         ### log-likelihood (could leave out additive constants)
+         if (!reml) {
+            llval <- -1/2 * (k) * log(2*base::pi) - 1/2 * sum(log(vi + tau2)) - 1/2 * RSS
+         } else {
+            llval <- -1/2 * (k-pX) * log(2*base::pi) + ifelse(REMLf, 1/2 * determinant(crossprod(X), logarithm=TRUE)$modulus, 0) +
+                     -1/2 * sum(log(vi + tau2)) - 1/2 * determinant(crossprod(X,W) %*% X, logarithm=TRUE)$modulus - 1/2 * RSS
+         }
+
       }
 
    }
 
    if (verbose) {
-      cat("ll = ",   ifelse(is.na(llval), NA, formatC(llval, digits=digits, format="f", flag=" ")), " ", sep="")
-      cat("alpha =", ifelse(is.na(alpha), NA, paste(formatC(alpha, digits=digits, format="f", flag=" "), " ", sep="")), "\n", sep="")
+      cat(mstyle$verbose(paste0("ll = ", ifelse(is.na(llval), NA, formatC(llval, digits=digits, format="f", flag=" ")), "  ")))
+      cat(mstyle$verbose(paste0("alpha = ", paste(ifelse(is.na(alpha), NA, formatC(alpha, digits=digits, format="f", flag=" ")), collapse=" "))))
+      cat("\n")
    }
 
    return(-1 * llval)
@@ -1866,8 +2302,10 @@
 
 .rtet <- function(ai, bi, ci, di, maxcor=.9999) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!requireNamespace("mvtnorm", quietly=TRUE))
-      stop("Please install the 'mvtnorm' package to compute this measure.")
+      stop(mstyle$stop("Please install the 'mvtnorm' package to compute this measure."))
 
    fn <- function(par, ai, bi, ci, di, maxcor, fixcut=FALSE) {
 
@@ -1949,7 +2387,7 @@
 
    ### check for non-convergence
    if (inherits(res, "try-error")) {
-      warning("Could not estimate tetrachoric correlation coefficient.")
+      warning(mstyle$warning("Could not estimate tetrachoric correlation coefficient."))
       return(list(yi=NA, vi=NA))
    }
 
@@ -1960,7 +2398,7 @@
 
    ### check for non-convergence
    if (inherits(res, "try-error")) {
-      warning("Could not estimate tetrachoric correlation coefficient.")
+      warning(mstyle$warning("Could not estimate tetrachoric correlation coefficient."))
       return(list(yi=NA, vi=NA))
    }
 
@@ -1971,7 +2409,7 @@
 
    ### check for problems with computing the inverse
    if (inherits(vi, "try-error")) {
-      warning("Could not estimate sampling variance of tetrachoric correlation coefficient.")
+      warning(mstyle$warning("Could not estimate sampling variance of tetrachoric correlation coefficient."))
       vi <- NA
    }
 
@@ -2007,8 +2445,10 @@
 
 .Fcalc <- function(a, b, g, x) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!requireNamespace("gsl", quietly=TRUE))
-      stop("Please install the 'gsl' package to use measure='UCOR'.")
+      stop(mstyle$stop("Please install the 'gsl' package to use measure='UCOR'."))
 
    k.g <- length(g)
    k.x <- length(x)
@@ -2022,7 +2462,7 @@
       x <- rep(x, k)
 
    if (length(g) != length(x))
-      stop("Length of 'g' and 'x' arguments do not match.")
+      stop(mstyle$stop("Length of 'g' and 'x' arguments do not match."))
 
    for (i in seq_len(k)) {
 
@@ -2122,5 +2562,144 @@
 
 #integrate(function(x) .dzcor(x, n=5, rho=.8), lower=-100, upper=100)
 #integrate(function(x) x*.dzcor(x, n=5, rho=.8), lower=-100, upper=100)
+
+############################################################################
+
+### function that prints the model fitting time
+
+.print.time <- function(x) {
+
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
+   hours   <- floor(x/60/60)
+   minutes <- floor(x/60) - hours*60
+   seconds <- round(x - minutes*60 - hours*60*60, ifelse(x > 60, 0, 2))
+
+   cat("\n")
+   cat(mstyle$message(paste("Model fitting time:", hours, ifelse(hours == 0 || hours > 1, "hours,", "hour,"), minutes, ifelse(minutes == 0 || minutes > 1, "minutes,", "minute,"), seconds, ifelse(x < 60 || seconds == 0 || seconds > 1, "seconds", "second"))))
+   cat("\n")
+
+}
+
+############################################################################
+
+### stuff related to colored/styled output
+
+.get.mstyle <- function(withcrayon) {
+
+   if (withcrayon) {
+
+      if (exists(".mstyle")) {
+         .mstyle <- get(".mstyle")
+         if (!is.list(.mstyle))
+            .mstyle <- list(.mstyle)
+      } else {
+         .mstyle <- list()
+      }
+
+      if (is.null(.mstyle$section)) {
+         section <- crayon::bold
+      } else {
+         section <- .mstyle$section
+      }
+      if (is.null(.mstyle$header)) {
+         header <- crayon::underline
+      } else {
+         header <- .mstyle$header
+      }
+      if (is.null(.mstyle$body)) {
+         body <- crayon::reset
+      } else {
+         body <- .mstyle$body
+      }
+      if (is.null(.mstyle$text)) {
+         text <- crayon::reset
+      } else {
+         text <- .mstyle$text
+      }
+      if (is.null(.mstyle$result)) {
+         result <- crayon::reset
+      } else {
+         result <- .mstyle$result
+      }
+      if (is.null(.mstyle$stop)) {
+         stop <- crayon::combine_styles(crayon::red, crayon::bold)
+      } else {
+         stop <- .mstyle$stop
+      }
+      if (is.null(.mstyle$warning)) {
+         warning <- crayon::yellow
+      } else {
+         warning <- .mstyle$warning
+      }
+      if (is.null(.mstyle$message)) {
+         message <- crayon::green
+      } else {
+         message <- .mstyle$message
+      }
+      if (is.null(.mstyle$verbose)) {
+         verbose <- crayon::cyan
+      } else {
+         verbose <- .mstyle$verbose
+      }
+      if (is.null(.mstyle$legend)) {
+         legend <- crayon::silver
+      } else {
+         legend <- .mstyle$legend
+      }
+
+   } else {
+
+      tmp <- function(...) paste0(...)
+      section <- tmp
+      header  <- tmp
+      body    <- tmp
+      text    <- tmp
+      result  <- tmp
+      stop    <- tmp
+      warning <- tmp
+      message <- tmp
+      verbose <- tmp
+      legend  <- tmp
+
+   }
+
+   return(list(section=section, header=header, body=body, text=text, result=result, stop=stop, warning=warning, message=message, verbose=verbose, legend=legend))
+
+}
+
+.print.output <- function(x, mstyle) {
+
+   for (i in seq_along(x)) {
+      cat(mstyle(x[i]), "\n")
+   }
+
+}
+
+.print.table <- function(x, mstyle) {
+
+   is.header <- !grepl(" [-0-9]", x)
+
+   for (i in seq_along(x)) {
+      if (is.header[i]) {
+         x[i] <- trimws(x[i], which="right")
+         x[i] <- mstyle$header(x[i])
+      } else {
+         x[i] <- mstyle$body(x[i])
+      }
+      cat(x[i], "\n")
+   }
+
+}
+
+############################################################################
+
+### check if x is logical and TRUE/FALSE (NAs and NULL always evaluate as FALSE)
+
+.isTRUE <- function(x)
+   !is.null(x) && is.logical(x) && !is.na(x)  && x
+
+.isFALSE <- function(x)
+   !is.null(x) && is.logical(x) && !is.na(x) && !x
 
 ############################################################################

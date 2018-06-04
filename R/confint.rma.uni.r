@@ -11,14 +11,16 @@
 
 confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digits, transf, targs, verbose=FALSE, control, ...) {
 
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
    if (!inherits(object, "rma.uni"))
-      stop("Argument 'object' must be an object of class \"rma.uni\".")
+      stop(mstyle$stop("Argument 'object' must be an object of class \"rma.uni\"."))
 
    if (inherits(object, "robust.rma"))
-      stop("Method not yet implemented for objects of class \"robust.rma\". Sorry!")
+      stop(mstyle$stop("Method not available for objects of class \"robust.rma\"."))
 
    if (inherits(object, "rma.ls"))
-      stop("Method not yet implemented for objects of class \"rma.ls\". Sorry!")
+      stop(mstyle$stop("Method not available for objects of class \"rma.ls\"."))
 
    x <- object
 
@@ -46,7 +48,7 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
       control <- list()
 
    if (!fixed && !random)
-      stop("At least one of the arguments 'fixed' and 'random' must be TRUE.")
+      stop(mstyle$stop("At least one of the arguments 'fixed' and 'random' must be TRUE."))
 
    if (x$method == "GENQ") {
       type <- "GENQ"
@@ -73,16 +75,16 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
    if (random) {
 
       if (k == 1)
-         stop("Stopped because k = 1.")
+         stop(mstyle$stop("Stopped because k = 1."))
 
       if (x$method == "FE")
-         stop("Model does not contain a random-effects component.")
+         stop(mstyle$stop("Model does not contain a random-effects component."))
 
       if (x$tau2.fix)
-         stop("Model does not contain an estimated random-effects component.")
+         stop(mstyle$stop("Model does not contain an estimated random-effects component."))
 
       if (type == "GENQ" && x$method != "GENQ")
-         stop("Model must be fitted with 'method=\"GENQ\" to use this option.")
+         stop(mstyle$stop("Model must be fitted with 'method=\"GENQ\" to use this option."))
 
       ######################################################################
 
@@ -126,7 +128,7 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
       if (type == "QP") {
 
          if (!x$allvipos)
-            stop("Cannot compute confidence interval for the amount of (residual)\n  heterogeneity with non-positive sampling variances in the data.")
+            stop(mstyle$stop("Cannot compute confidence interval for the amount of (residual)\n  heterogeneity with non-positive sampling variances in the data."))
 
          crit.u <- qchisq(level/2, k-p, lower.tail=FALSE) ### upper critical chi^2 value for df = k-p
          crit.l <- qchisq(level/2, k-p, lower.tail=TRUE)  ### lower critical chi^2 value for df = k-p
@@ -244,7 +246,7 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
       if (type == "GENQ") {
 
          if (!requireNamespace("CompQuadForm", quietly=TRUE))
-            stop("Please install the 'CompQuadForm' package when method='QGEN'.")
+            stop(mstyle$stop("Please install the 'CompQuadForm' package when method='QGEN'."))
 
          A <- diag(weights, nrow=k, ncol=k)
          stXAX <- .invcalc(X=X, W=A, k=k)
@@ -367,9 +369,9 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
       if (type == "PL") {
 
          if (con$tau2.min > x$tau2)
-            stop("Lower bound of interval to be searched must be <= actual value of component.")
+            stop(mstyle$stop("Lower bound of interval to be searched must be <= actual value of component."))
          if (con$tau2.max < x$tau2)
-            stop("Upper bound of interval to be searched must be >= actual value of component.")
+            stop(mstyle$stop("Upper bound of interval to be searched must be >= actual value of component."))
 
          objective <- qchisq(1-level, df=1)
 
@@ -450,15 +452,15 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
       ######################################################################
 
       if (!lb.conv)
-         warning("Error in iterative search for the lower bound.")
+         warning(mstyle$warning("Error in iterative search for the lower bound."))
 
       if (!ub.conv)
-         warning("Error in iterative search for the upper bound.")
+         warning(mstyle$warning("Error in iterative search for the upper bound."))
 
       #if (lb.sign == "<" && con$tau2.min > 0)
-      #   warning("Lower bound < tau2.min. Try decreasing tau2.min (via the 'control' argument).")
+      #   warning(mstyle$warning("Lower bound < tau2.min. Try decreasing tau2.min (via the 'control' argument)."))
       #if (ub.sign == ">")
-      #   warning("Upper bound > tau2.max. Try increasing tau2.max (via the 'control' argument).")
+      #   warning(mstyle$warning("Upper bound > tau2.max. Try increasing tau2.max (via the 'control' argument)."))
 
       ######################################################################
 

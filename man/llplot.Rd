@@ -37,9 +37,7 @@ llplot(measure="OR", ai, bi, ci, di, n1i, n2i, data, subset, drop00=TRUE,
    At the moment, the function only accepts \code{measure="OR"}. For each \eqn{2 \times 2}{2x2} table, the function then plots the log-likelihood of the (log) odds ratio based on the non-central hypergeometric distribution. Since studies with no cases (or only cases) in both groups have a flat likelihood and are not informative about the odds ratio, they are dropped by default (i.e., \code{drop00=TRUE}). For studies that have a single zero count, the MLE of the odds ratio is infinite and these likelihoods are indicated by a dashed line.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \cr
-   package website: \url{http://www.metafor-project.org/} \cr
-   author homepage: \url{http://www.wvbauer.com/}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
 }
 \references{
    van Houwelingen, H. C., Zwinderman, K. H., & Stijnen, T. (1993). A bivariate approach to meta-analysis. \emph{Statistics in Medicine}, \bold{12}, 2273--2284.

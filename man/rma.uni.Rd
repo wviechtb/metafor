@@ -45,7 +45,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \item{ni}{see below and the documentation of the \code{\link{escalc}} function for more details.}
    \item{mods}{optional argument to include one or more moderators in the model. A single moderator can be given as a vector of length \eqn{k} specifying the values of the moderator. Multiple moderators are specified by giving a matrix with \eqn{k} rows and as many columns as there are moderator variables. Alternatively, a model \code{\link{formula}} can be used to specify the model. See \sQuote{Details}.}
    \item{measure}{character string indicating the type of data supplied to the function. When \code{measure="GEN"} (default), the observed effect sizes or outcomes and corresponding sampling variances (or standard errors) should be supplied to the function via the \code{yi}, \code{vi}, and \code{sei} arguments (only one of the two, \code{vi} or \code{sei}, needs to be specified). Alternatively, one can set \code{measure} to one of the effect size or outcome measures described under the documentation for the \code{\link{escalc}} function and specify the needed data via the appropriate arguments.}
-   \item{intercept}{logical indicating whether an intercept term should be added to the model (the default is \code{TRUE}).}
+   \item{intercept}{logical indicating whether an intercept should be added to the model (the default is \code{TRUE}). Ignored when \code{mods} is a formula.}
    \item{data}{optional data frame containing the data supplied to the function.}
    \item{slab}{optional vector with labels for the \eqn{k} studies.}
    \item{subset}{optional vector indicating the subset of studies that should be used for the analysis. This can be a logical vector of length \eqn{k} or a numeric vector indicating the indices of the observations to include.}
@@ -93,11 +93,11 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
    One or more moderators can be included in these models via the \code{mods} argument. A single moderator can be given as a (row or column) vector of length \eqn{k} specifying the values of the moderator. Multiple moderators are specified by giving an appropriate model matrix (i.e., \eqn{\mathbf{X}}{X}) with \eqn{k} rows and as many columns as there are moderator variables (e.g., \code{mods = cbind(mod1, mod2, mod3)}, where \code{mod1}, \code{mod2}, and \code{mod3} correspond to the names of the variables for three moderator variables). The intercept is added to the model matrix by default unless \code{intercept=FALSE}.
 
-   Alternatively, one can use the standard \code{\link{formula}} syntax to specify the model. In this case, the \code{mods} argument should be set equal to a one-sided formula of the form \code{mods = ~ model} (e.g., \code{mods = ~ mod1 + mod2 + mod3}). Interactions, polynomial terms, and factors can be easily added to the model in this manner. When specifying a model formula via the \code{mods} argument, the \code{intercept} argument is ignored. Instead, the inclusion/exclusion of the intercept term is controlled by the specified formula (e.g., \code{mods = ~ mod1 + mod2 + mod3 - 1} would lead to the removal of the intercept term).
+   Alternatively, one can use the standard \code{\link{formula}} syntax to specify the model. In this case, the \code{mods} argument should be set equal to a one-sided formula of the form \code{mods = ~ model} (e.g., \code{mods = ~ mod1 + mod2 + mod3}). Interactions, polynomial terms, and factors can be easily added to the model in this manner. When specifying a model formula via the \code{mods} argument, the \code{intercept} argument is ignored. Instead, the inclusion/exclusion of the intercept is controlled by the specified formula (e.g., \code{mods = ~ mod1 + mod2 + mod3 - 1} would lead to the removal of the intercept).
 
    A \emph{fixed-effects with moderators model} is then fitted by setting \code{method="FE"}, while a \emph{mixed-effects model} is fitted by specifying one of the estimators for the amount of (residual) heterogeneity given earlier.
 
-   When the observed outcomes and corresponding sampling variances are supplied via the \code{yi} and \code{vi} (or \code{sei}) arguments, one can also directly specify moderators via the \code{yi} argument (e.g., \code{rma(yi ~ mod1 + mod2 + mod3, vi)}). In that case, the \code{mods} argument is ignored and the inclusion/exclusion of the intercept term again is controlled by the specified formula.
+   When the observed outcomes and corresponding sampling variances are supplied via the \code{yi} and \code{vi} (or \code{sei}) arguments, one can also specify moderators via the \code{yi} argument (e.g., \code{rma(yi ~ mod1 + mod2 + mod3, vi)}). In that case, the \code{mods} argument is ignored and the inclusion/exclusion of the intercept again is controlled by the specified formula.
 
    \bold{Omnibus Test of Parameters}
 
@@ -140,16 +140,17 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \item{yi, vi, X}{the vector of outcomes, the corresponding sampling variances, and the model matrix.}
    \item{fit.stats}{a list with the log-likelihood, deviance, AIC, BIC, and AICc values under the unrestricted and restricted likelihood.}
    \item{\dots}{some additional elements/values.}
-
+}
+\section{Methods}{
    The results of the fitted model are formatted and printed with the \code{\link{print.rma.uni}} function. If fit statistics should also be given, use \code{\link{summary.rma}} (or use the \code{\link{fitstats.rma}} function to extract them). Full versus reduced model comparisons in terms of fit statistics and likelihoods can be obtained with \code{\link{anova.rma}}. Wald-type tests for sets of model coefficients or linear combinations thereof can be obtained with the same function. Permutation tests for the model coefficient(s) can be obtained with \code{\link{permutest.rma.uni}}. Tests and confidence intervals based on (cluster) robust methods can be obtained with \code{\link{robust.rma.uni}}.
 
-   Predicted/fitted values can be obtained with \code{\link{predict.rma}} and \code{\link{fitted.rma}}. For best linear unbiased predictions, see \code{\link{blup.rma.uni}}.
+   Predicted/fitted values can be obtained with \code{\link{predict.rma}} and \code{\link{fitted.rma}}. For best linear unbiased predictions, see \code{\link{blup.rma.uni}} and \code{\link{ranef.rma.uni}}.
 
    The \code{\link{residuals.rma}}, \code{\link{rstandard.rma.uni}}, and \code{\link{rstudent.rma.uni}} functions extract raw and standardized residuals. Additional case diagnostics (e.g., to determine influential studies) can be obtained with the \code{\link{influence.rma.uni}} function. For models without moderators, leave-one-out diagnostics can also be obtained with \code{\link{leave1out.rma.uni}}.
 
    A confidence interval for the amount of (residual) heterogeneity in the random/mixed-effects model can be obtained with \code{\link{confint.rma.uni}}.
 
-   Forest, funnel, radial, L'abbé, and Baujat plots can be obtained with \code{\link{forest.rma}}, \code{\link{funnel.rma}}, \code{\link{radial.rma}}, \code{\link{labbe.rma}}, and \code{\link{baujat}} (radial and L'abbé plots only for models without moderators). The \code{\link{qqnorm.rma.uni}} function provides normal QQ plots of the standardized residuals. One can also just call \code{\link{plot.rma.uni}} on the fitted model object to obtain various plots at once. For random/mixed-effects models, the \code{\link{profile.rma.uni}} function can be used to obtain a plot of the (restricted) log-likelihood as a function of \if{latex}{\eqn{\tau^2}}\if{html}{\eqn{\tau²}}\if{text}{\eqn{\tau^2}}.
+   Forest, funnel, radial, \enc{L'Abbé}{L'Abbe}, and Baujat plots can be obtained with \code{\link{forest.rma}}, \code{\link{funnel.rma}}, \code{\link{radial.rma}}, \code{\link{labbe.rma}}, and \code{\link{baujat}} (radial and \enc{L'Abbé}{L'Abbe} plots only for models without moderators). The \code{\link{qqnorm.rma.uni}} function provides normal QQ plots of the standardized residuals. One can also just call \code{\link{plot.rma.uni}} on the fitted model object to obtain various plots at once. For random/mixed-effects models, the \code{\link{profile.rma.uni}} function can be used to obtain a plot of the (restricted) log-likelihood as a function of \if{latex}{\eqn{\tau^2}}\if{html}{\eqn{\tau²}}\if{text}{\eqn{\tau^2}}.
 
    Tests for funnel plot asymmetry (which may be indicative of publication bias) can be obtained with \code{\link{ranktest.rma}} and \code{\link{regtest.rma}}. For models without moderators, the \code{\link{trimfill.rma.uni}} method can be used to carry out a trim and fill analysis and \code{\link{hc.rma.uni}} provides a random-effects model analysis that is more robust to publication bias (based on the method by Henmi & Copas, 2010).
 
@@ -182,9 +183,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    }
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \cr
-   package website: \url{http://www.metafor-project.org/} \cr
-   author homepage: \url{http://www.wvbauer.com/}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
 }
 \references{
    Berkey, C. S., Hoaglin, D. C., Mosteller, F., & Colditz, G. A. (1995). A random-effects regression model for meta-analysis. \emph{Statistics in Medicine}, \bold{14}, 395--411.
@@ -225,7 +224,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{http://www.jstatsoft.org/v36/i03/}.
 
-   Viechtbauer, W., López-López, J. A., Sánchez-Meca, J., & Marín-Martínez, F. (2015). A comparison of procedures to test for moderators in mixed-effects meta-regression models. \emph{Psychological Methods}, \bold{20}, 360--374.
+   Viechtbauer, W., \enc{López-López}{Lopez-Lopez}, J. A., \enc{Sánchez-Meca}{Sanchez-Meca}, J., & \enc{Marín-Martínez}{Marin-Martinez}, F. (2015). A comparison of procedures to test for moderators in mixed-effects meta-regression models. \emph{Psychological Methods}, \bold{20}, 360--374.
 }
 \seealso{
    \code{\link{rma.mh}}, \code{\link{rma.peto}}, \code{\link{rma.glmm}}, and \code{\link{rma.mv}} for other model fitting functions.

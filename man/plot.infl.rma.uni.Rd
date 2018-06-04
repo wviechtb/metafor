@@ -40,9 +40,7 @@
    The chosen cut-offs are (somewhat) arbitrary. Substantively informed judgment should always be used when examining the influence of each study on the results.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \cr
-   package website: \url{http://www.metafor-project.org/} \cr
-   author homepage: \url{http://www.wvbauer.com/}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
 }
 \references{
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{http://www.jstatsoft.org/v36/i03/}.
@@ -60,6 +58,6 @@ res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg,
 plot(influence(res))
 plot(influence(res), plotinf=1:4)
 plot(influence(res), plotinf=1:4, layout=c(4,1))
-plot(influence(res), plotdfbs=TRUE)
+plot(influence(res), plotdfbs=TRUE, dfbsnew=TRUE)
 }
 \keyword{hplot}

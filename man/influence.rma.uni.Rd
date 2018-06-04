@@ -60,25 +60,22 @@
    } Studies which are considered influential with respect to any of these measures are marked with an asterisk. Note that the chosen cut-offs are (somewhat) arbitrary. Substantively informed judgment should always be used when examining the influence of each study on the results.
 }
 \value{
-   An object of class \code{"infl.rma.uni"}. The object is a list containing the following components:
-   \item{inf}{a data frame with columns equal to the externally standardized residuals, DFFITS values, Cook's distances, covariance ratios, leave-one-out \if{latex}{\eqn{\tau^2}}\if{html}{\eqn{\tau²}}\if{text}{\eqn{\tau^2}} estimates, leave-one-out (residual) heterogeneity test statistics, hat values, and weights.}
-   \item{dfbs}{a data frame with columns equal to the DFBETAS values.}
-   \item{is.infl}{a logical vector indicating whether a particular study is considered to be \sQuote{influential}.}
+   An object of class \code{"infl.rma.uni"}, which is a list containing the following components:
+   \item{inf}{an element of class \code{"list.rma"} with the externally standardized residuals, DFFITS values, Cook's distances, covariance ratios, leave-one-out \if{latex}{\eqn{\tau^2}}\if{html}{\eqn{\tau²}}\if{text}{\eqn{\tau^2}} estimates, leave-one-out (residual) heterogeneity test statistics, hat values, weights, and an indicator whether a study is influential or not.}
+   \item{dfbs}{an element of class \code{"list.rma"} with the the DFBETAS values.}
    \item{\dots}{some additional elements/values.}
 
    The results are printed with \code{print.infl.rma.uni} and plotted with \code{\link{plot.infl.rma.uni}}.
 }
 \note{
-   Right now, the leave-one-out diagnostics are calculated by refitting the model \eqn{k} times. Depending on how large \eqn{k} is, it may take a few moments to finish the calculations. There are shortcuts for calculating at least some of these values without refitting the model each time, but these are currently not implemented (and may not exist for all of the leave-one-out diagnostics calculated by the function).
+   Right now, leave-one-out diagnostics are calculated by refitting the model \eqn{k} times. Depending on how large \eqn{k} is, it may take a few moments to finish the calculations. There are shortcuts for calculating at least some of these values without refitting the model each time, but these are currently not implemented (and may not exist for all of the leave-one-out diagnostics calculated by the function).
 
    It may not be possible to fit the model after deletion of the \eqn{i}th study from the dataset. This will result in \code{NA} values for that study.
 
    Certain relationships between the leave-one-out diagnostics and the (internally or externally) standardized residuals (Belsley, Kuh, & Welsch, 1980; Cook & Weisberg, 1982) no longer hold for the meta-analytic models. Maybe there are other relationships. These remain to be determined.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \cr
-   package website: \url{http://www.metafor-project.org/} \cr
-   author homepage: \url{http://www.wvbauer.com/}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
 }
 \references{
    Belsley, D. A., Kuh, E., & Welsch, R. E. (1980). \emph{Regression diagnostics}. New York: Wiley.

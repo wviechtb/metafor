@@ -9,7 +9,7 @@
 \bold{study}    \tab \code{numeric}   \tab study number \cr
 \bold{authors}  \tab \code{character} \tab study authors \cr
 \bold{xi}       \tab \code{numeric}   \tab number of patients that improved with hyperdynamic therapy \cr
-\bold{ni}       \tab \code{numeric}   \tab total number of patients treated
+\bold{ni}       \tab \code{numeric}   \tab total number of patients treated \cr
 }
 }
 \details{
