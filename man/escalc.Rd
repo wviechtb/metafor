@@ -59,7 +59,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
    To provide a structure to the various effect size or outcome measures that can be calculated with the \code{escalc} function, we can distinguish between measures that are used to:
    \itemize{
-   \item contrast two independent (either experimentally created or naturally occuring) groups,
+   \item contrast two independent (either experimentally created or naturally occurring) groups,
    \item describe the direction and strength of the association between two variables,
    \item summarize some characteristic or attribute of individual groups, or
    \item quantify change within a single group or the difference between two matched pairs samples.
