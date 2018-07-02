@@ -14,4 +14,3 @@ Encoding: UTF-8
 VignetteBuilder: R.rsp
 URL: http://www.metafor-project.org https://github.com/wviechtb/metafor http://www.wvbauer.com
 BugReports: https://github.com/wviechtb/metafor/issues
-RoxygenNote: 6.0.1
