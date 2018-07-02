@@ -33,7 +33,4 @@ r_packages:
 #  - jimhester/covr
 
 #after_success:
-#  - Rscript -e 'covr::codecov()'
-
-#after_success:
 #  - travis_wait 60 Rscript -e 'covr::codecov()'
