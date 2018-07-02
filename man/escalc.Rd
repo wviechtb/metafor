@@ -323,7 +323,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
          \itemize{
          \item \code{"CVRC"} for the \emph{log transformed coefficient of variation ratio}.
          \item \code{"VRC"} for the \emph{log transformed variability ratio}.
-         } The definitions of these measures are the same as given in Nakagawa et al. (2015) but are here computed for two sets of dependent measurements. Hence, the computation of the sampling variances are also adjusted to take the correlation between the measurements into consideration.
+         } The definitions of these measures are the same as given in Nakagawa et al. (2015) but are here computed for two sets of dependent measurements. Hence, the computation of the sampling variances are adjusted to take the correlation between the measurements into consideration.
 
       }
 
@@ -348,7 +348,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
       \subsection{Partial and Semi-Partial Correlations}{
 
-         Aloe and Becker (2012), Aloe and Thompson (2013), and Aloe (2014) describe the use of partial and semi-partial correlation coefficients as a method for meta-analyzing the results from regression models (when the focus is on a common regression coefficient of interest across studies). To compute these measures, one needs to specify \code{ti} for the test statistics (i.e., t-tests) of the regression coefficient of interest, \code{ni} for the sample sizes of the studies, \code{mi} for the number of predictors in the regression models, and \code{r2i} for the \eqn{R^2} value of the regression models (the latter is only needed when \code{measure="SPCOR"}). The options for the \code{measure} argument are then:
+         Aloe and Becker (2012), Aloe and Thompson (2013), and Aloe (2014) describe the use of partial and semi-partial correlation coefficients as a method for meta-analyzing the results from regression models (when the focus is on a common regression coefficient of interest across studies). To compute these measures, one needs to specify \code{ti} for the test statistics (i.e., t-tests) of the regression coefficient of interest, \code{ni} for the sample sizes of the studies, \code{mi} for the number of predictors in the regression models, and \code{r2i} for the \if{latex}{\eqn{R^2}}\if{html}{\eqn{R²}}\if{text}{\eqn{R^2}} value of the regression models (the latter is only needed when \code{measure="SPCOR"}). The options for the \code{measure} argument are then:
          \itemize{
          \item \code{"PCOR"} for the \emph{partial correlation coefficient}.
          \item \code{"ZPCOR"} for \emph{Fisher's r-to-z transformed partial correlation coefficient}.
