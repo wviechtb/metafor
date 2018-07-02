@@ -15,8 +15,10 @@ env:
 #  - ./travis-tool.sh bootstrap
 #  - ./travis-tool.sh aptget_install libgsl0-dev
 
-apt_packages:
-  - libgsl0-dev
+addons:
+  apt:
+    packages:
+      - libgsl0-dev
 
 r_binary_packages:
   - gsl
