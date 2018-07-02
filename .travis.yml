@@ -9,9 +9,9 @@ r_check_args: --no-tests --as-cran --no-manual
 env:
   - NOT_CRAN=true
 
-#before_install:
-#  - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
-#  - chmod 755 ./travis-tool.sh
+before_install:
+  - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
+  - chmod 755 ./travis-tool.sh
 #  - ./travis-tool.sh bootstrap
 #  - ./travis-tool.sh aptget_install libgsl0-dev
 
@@ -30,8 +30,8 @@ r_packages:
 #r_github_packages:
 #  - jimhester/covr
 
-after_success:
-  - Rscript -e 'covr::codecov()'
-
 #after_success:
-#  - travis_wait 60 Rscript -e 'covr::codecov()'
+#  - Rscript -e 'covr::codecov()'
+
+after_success:
+  - travis_wait 60 Rscript -e 'covr::codecov()'
