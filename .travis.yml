@@ -35,5 +35,5 @@ r_packages:
 #after_success:
 #  - Rscript -e 'covr::codecov()'
 
-after_success:
-  - travis_wait 60 Rscript -e 'covr::codecov()'
+#after_success:
+#  - travis_wait 60 Rscript -e 'covr::codecov()'
