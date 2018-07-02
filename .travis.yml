@@ -1,29 +1,35 @@
 language: r
+cache: packages
+sudo: false
 r: release
 warnings_are_errors: true
-sudo: required
-cache: packages
-dist: trusty
+#dist: trusty
 r_check_args: --no-tests --as-cran --no-manual
 
-before_install:
-  - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
-  - chmod 755 ./travis-tool.sh
-  - ./travis-tool.sh bootstrap
-  - ./travis-tool.sh aptget_install libgsl0-dev
+env:
+  - NOT_CRAN=true
 
-#r_github_packages:
-#  - jimhester/covr
+#before_install:
+#  - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
+#  - chmod 755 ./travis-tool.sh
+#  - ./travis-tool.sh bootstrap
+#  - ./travis-tool.sh aptget_install libgsl0-dev
+
+apt_packages:
+  - libgsl0-dev
+
+r_binary_packages:
+  - gsl
 
 r_packages:
   - R.rsp
   - covr
 
-r_binary_packages:
-  - gsl
-
-env:
-  - NOT_CRAN=true
+#r_github_packages:
+#  - jimhester/covr
 
 after_success:
-  - travis_wait 60 Rscript -e 'covr::codecov()'
+  - Rscript -e 'covr::codecov()'
+
+#after_success:
+#  - travis_wait 60 Rscript -e 'covr::codecov()'
