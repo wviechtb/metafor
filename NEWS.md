@@ -1,4 +1,4 @@
-# metafor 2.1-0 (2018-07-02)
+# metafor 2.1-0 (2018-07-10)
 
 - added `reporter()` and `reporter.rma.uni()` for dynamically generating analysis reports for objects of class `rma.uni`
 
