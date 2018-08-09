@@ -128,7 +128,7 @@
 
     <pre class="usage"># S3 method for default
 forest(x, vi, sei, ci.lb, ci.ub, annotate=TRUE, showweights=FALSE,
-       xlim, alim, clim, ylim, at, steps=5,
+       xlim, alim, clim, ylim, top=3, at, steps=5,
        level=95, refline=0, digits=2L, width,
        xlab, slab, ilab, ilab.xpos, ilab.pos,
        subset, transf, atransf, targs, rows,
@@ -181,6 +181,10 @@ forest(x, vi, sei, ci.lb, ci.ub, annotate=TRUE, showweights=FALSE,
     <tr>
       <th>ylim</th>
       <td><p>the y limits of the plot. If unspecified, the function tries to set the y-axis limits to some sensible values.</p></td>
+    </tr>
+    <tr>
+      <th>top</th>
+      <td><p>the amount of space to leave empty at the top of the plot (e.g., for adding headers) (the default is 3 rows).</p></td>
     </tr>
     <tr>
       <th>at</th>

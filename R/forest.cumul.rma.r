@@ -1,5 +1,5 @@
 forest.cumul.rma <- function(x,          annotate=TRUE,
-xlim, alim, clim, ylim, at, steps=5, level=x$level, refline=0, digits=2L, width,
+xlim, alim, clim, ylim, top=3, at, steps=5, level=x$level, refline=0, digits=2L, width,
 xlab,                       ilab, ilab.xpos, ilab.pos,
 transf, atransf, targs, rows,
 efac=1, pch=15, psize=1, lty, fonts,
@@ -294,7 +294,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
    ### set y axis limits
 
    if (missing(ylim)) {
-      ylim <- c(0.5, k+3)
+      ylim <- c(0.5, k+top)
    } else {
       ylim <- sort(ylim)
    }
@@ -356,12 +356,12 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
    ### horizontal title line
 
-   abline(h=ylim[2]-2, lty=lty[2], ...)
+   abline(h=ylim[2]-(top-1), lty=lty[2], ...)
 
    ### add reference line
 
    if (is.numeric(refline))
-      segments(refline, ylim[1]-5, refline, ylim[2]-2, lty="dotted", ...)
+      segments(refline, ylim[1]-5, refline, ylim[2]-(top-1), lty="dotted", ...)
 
    ### set cex, cex.lab, and cex.axis sizes as a function of the height of the figure
 

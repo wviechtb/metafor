@@ -128,7 +128,7 @@
 
     <pre class="usage"># S3 method for cumul.rma
 forest(x, annotate=TRUE,
-       xlim, alim, clim, ylim, at, steps=5,
+       xlim, alim, clim, ylim, top=3, at, steps=5,
        level=x$level, refline=0, digits=2L, width,
        xlab, ilab, ilab.xpos, ilab.pos,
        transf, atransf, targs, rows,
@@ -161,6 +161,10 @@ forest(x, annotate=TRUE,
     <tr>
       <th>ylim</th>
       <td><p>the y limits of the plot. If unspecified, the function tries to set the y-axis limits to some sensible values.</p></td>
+    </tr>
+    <tr>
+      <th>top</th>
+      <td><p>the amount of space to leave empty at the top of the plot (e.g., for adding headers) (the default is 3 rows).</p></td>
     </tr>
     <tr>
       <th>at</th>

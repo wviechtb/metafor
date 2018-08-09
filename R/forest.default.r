@@ -1,5 +1,5 @@
 forest.default <- function(x, vi, sei, ci.lb, ci.ub, annotate=TRUE,  showweights=FALSE,
-xlim, alim, clim, ylim, at, steps=5, level=95,      refline=0, digits=2L, width,
+xlim, alim, clim, ylim, top=3, at, steps=5, level=95,      refline=0, digits=2L, width,
 xlab, slab,            ilab, ilab.xpos, ilab.pos, subset,
 transf, atransf, targs, rows,
 efac=1, pch=15, psize, col, lty, fonts,
@@ -369,7 +369,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
    ### set y axis limits
 
    if (missing(ylim)) {
-      ylim <- c(0.5, k+3)
+      ylim <- c(0.5, k+top)
    } else {
       ylim <- sort(ylim)
    }
@@ -431,12 +431,12 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
    ### horizontal title line
 
-   abline(h=ylim[2]-2, lty=lty[2], col="black", ...)
+   abline(h=ylim[2]-(top-1), lty=lty[2], col="black", ...)
 
    ### add reference line
 
    if (is.numeric(refline))
-      segments(refline, ylim[1]-5, refline, ylim[2]-2, lty="dotted", col="black", ...)
+      segments(refline, ylim[1]-5, refline, ylim[2]-(top-1), lty="dotted", col="black", ...)
 
    ### set cex, cex.lab, and cex.axis sizes as a function of the height of the figure
 
