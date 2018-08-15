@@ -9,7 +9,7 @@
 \bold{study}    \tab \code{numeric}   \tab study id \cr
 \bold{trt}      \tab \code{character} \tab either beta-blockers, sclerotherapy, or control \cr
 \bold{xi}       \tab \code{numeric}   \tab number of patients with first bleeding \cr
-\bold{ni}       \tab \code{numeric}   \tab number of patients treated \cr
+\bold{ni}       \tab \code{numeric}   \tab number of patients treated
 }
 }
 \details{

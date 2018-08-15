@@ -80,7 +80,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
          \tabular{lccc}{
                  \tab outcome 1 \tab outcome 2 \tab total      \cr
          group 1 \tab \code{ai} \tab \code{bi} \tab \code{n1i} \cr
-         group 2 \tab \code{ci} \tab \code{di} \tab \code{n2i} \cr
+         group 2 \tab \code{ci} \tab \code{di} \tab \code{n2i}
          } where \code{ai}, \code{bi}, \code{ci}, and \code{di} denote the cell frequencies (i.e., the number of people falling into a particular category) and \code{n1i} and \code{n2i} are the row totals (i.e., the group sizes).
 
          For example, in a set of randomized clinical trials, group 1 and group 2 may refer to the treatment and placebo/control group, respectively, with outcome 1 denoting some event of interest (e.g., death, complications, failure to improve under the treatment) and outcome 2 its complement. Similarly, in a set of cohort studies, group 1 and group 2 may denote those who engage in and those who do not engage in a potentially harmful behavior (e.g., smoking), with outcome 1 denoting the development of a particular disease (e.g., lung cancer) during the follow-up period. Finally, in a set of case-control studies, group 1 and group 2 may refer to those with the disease (i.e., cases) and those free of the disease (i.e., controls), with outcome 1 denoting, for example, exposure to some risk environmental risk factor in the past and outcome 2 non-exposure. Note that in all of these examples, the stratified sampling scheme fixes the row totals (i.e., the group sizes) by design.
@@ -117,7 +117,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
          \tabular{lcc}{
                  \tab number of events \tab total person-time \cr
          group 1 \tab \code{x1i}       \tab \code{t1i} \cr
-         group 2 \tab \code{x2i}       \tab \code{t2i} \cr
+         group 2 \tab \code{x2i}       \tab \code{t2i}
          } where \code{x1i} and \code{x2i} denote the number of events in the first and the second group, respectively, and \code{t1i} and \code{t2i} the corresponding total person-times at risk. Often, the person-time is measured in years, so that \code{t1i} and \code{t2i} denote the total number of follow-up years in the two groups.
 
          This form of data is fundamentally different from what was described in the previous section, since the total follow-up time may differ even for groups of the same size and the individuals studied may experience the event of interest multiple times. Hence, different outcome measures than the ones described in the previous section must be considered when data are reported in this format. These include the incidence rate ratio, the incidence rate difference, and the square root transformed incidence rate difference (Bagos & Nikolopoulos, 2009; Rothman et al., 2008). For any of these outcome measures, one needs to specify the total number of events via the \code{x1i} and \code{x2i} arguments and the corresponding total person-time values via the \code{t1i} and \code{t2i} arguments.
@@ -141,7 +141,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
          \tabular{lccc}{
                  \tab mean       \tab standard deviation \tab group size \cr
          group 1 \tab \code{m1i} \tab \code{sd1i}        \tab \code{n1i} \cr
-         group 2 \tab \code{m2i} \tab \code{sd2i}        \tab \code{n2i} \cr
+         group 2 \tab \code{m2i} \tab \code{sd2i}        \tab \code{n2i}
          } where \code{m1i} and \code{m2i} are the observed means of the two groups, \code{sd1i} and \code{sd2i} are the observed standard deviations, and \code{n1i} and \code{n2i} denote the number of individuals in each group. Again, the two groups may be experimentally created (e.g., a treatment and control group based on random assignment) or naturally occurring (e.g., men and women). In either case, the raw mean difference, the standardized mean difference, and the (log transformed) ratio of means (also called log response ratio) are useful outcome measures when meta-analyzing studies of this type (e.g., Borenstein, 2009).
 
          The options for the \code{measure} argument are then:
@@ -283,12 +283,12 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
          \tabular{lcc}{
                          \tab trt 2 outcome 1 \tab trt 2 outcome 2 \cr
          trt 1 outcome 1 \tab \code{ai}       \tab \code{bi} \cr
-         trt 1 outcome 2 \tab \code{ci}       \tab \code{di} \cr
+         trt 1 outcome 2 \tab \code{ci}       \tab \code{di}
          } where \code{ai}, \code{bi}, \code{ci}, and \code{di} denote the cell frequencies. Note that \sQuote{trt1} and \sQuote{trt2} may be applied to a single group of subjects or to matched pairs of subjects. The data from such a study can be rearranged into a marginal table of the form:
          \tabular{lcc}{
                \tab outcome 1    \tab outcome 2 \cr
          trt 1 \tab \code{ai+bi} \tab \code{ci+di} \cr
-         trt 2 \tab \code{ai+ci} \tab \code{bi+di} \cr
+         trt 2 \tab \code{ai+ci} \tab \code{bi+di}
          } which is of the same form as a \eqn{2 \times 2}{2x2} table that would arise in a study comparing/contrasting two independent groups.
 
          The options for the \code{measure} argument that will compute outcome measures based on the marginal table are:

@@ -11,7 +11,7 @@
 \bold{treatment} \tab \code{character} \tab treatment given \cr
 \bold{comment}   \tab \code{character} \tab whether figures given are based on raw values at outcome or on change from baseline \cr
 \bold{mi}        \tab \code{numeric}   \tab mean score \cr
-\bold{sdi}       \tab \code{numeric}   \tab standard deviation \cr
+\bold{sdi}       \tab \code{numeric}   \tab standard deviation
 }
 }
 \details{

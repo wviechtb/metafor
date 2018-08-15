@@ -21,7 +21,7 @@
 \bold{stb.xti} \tab \code{numeric}   \tab number of stillbirths in treatment group \cr
 \bold{stb.xci} \tab \code{numeric}   \tab number of stillbirths in control/placebo group \cr
 \bold{ned.xti} \tab \code{numeric}   \tab number of neonatal deaths in treatment group \cr
-\bold{ned.xci} \tab \code{numeric}   \tab number of neonatal deaths in control/placebo group \cr
+\bold{ned.xci} \tab \code{numeric}   \tab number of neonatal deaths in control/placebo group
 }
 }
 \details{

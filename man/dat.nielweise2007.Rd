@@ -12,7 +12,7 @@
 \bold{ai}     \tab \code{numeric}   \tab number of CRBSIs in patients receiving an anti-infective catheter \cr
 \bold{n1i}    \tab \code{numeric}   \tab number of patients receiving an anti-infective catheter \cr
 \bold{ci}     \tab \code{numeric}   \tab number of CRBSIs in patients receiving a standard catheter \cr
-\bold{n2i}    \tab \code{numeric}   \tab number of patients receiving a standard catheter \cr
+\bold{n2i}    \tab \code{numeric}   \tab number of patients receiving a standard catheter
 }
 }
 \details{

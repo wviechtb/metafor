@@ -10,7 +10,7 @@
 \bold{trial}      \tab \code{character}  \tab trial abbreviation \cr
 \bold{OmE}        \tab \code{numeric}    \tab observed minus expected number of deaths in the locoregional treatment plus chemotherapy group \cr
 \bold{V}          \tab \code{numeric}    \tab corresponding variance \cr
-\bold{grp}        \tab \code{numeric}    \tab timing of chemotherapy: 1 = adjuvant, 2 = neoadjuvant, 3 = concomitant \cr
+\bold{grp}        \tab \code{numeric}    \tab timing of chemotherapy: 1 = adjuvant, 2 = neoadjuvant, 3 = concomitant
 }
 }
 \details{

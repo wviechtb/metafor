@@ -16,7 +16,7 @@
 \bold{e3i}        \tab \code{numeric}    \tab number of survivors at 18 months in the experimental group \cr
 \bold{c3i}        \tab \code{numeric}    \tab number of survivors at 18 months in the control group \cr
 \bold{e4i}        \tab \code{numeric}    \tab number of survivors at 24 months in the experimental group \cr
-\bold{c4i}        \tab \code{numeric}    \tab number of survivors at 24 months in the control group \cr
+\bold{c4i}        \tab \code{numeric}    \tab number of survivors at 24 months in the control group
 }
 }
 \details{

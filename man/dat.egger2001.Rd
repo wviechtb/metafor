@@ -14,7 +14,7 @@ dat.egger2001
 \bold{ai}    \tab \code{numeric}   \tab number of deaths in the magnesium group \cr
 \bold{n1i}   \tab \code{numeric}   \tab number of patients in the magnesium group \cr
 \bold{ci}    \tab \code{numeric}   \tab number of deaths in the control group \cr
-\bold{n2i}   \tab \code{numeric}   \tab number of patients in the control group \cr
+\bold{n2i}   \tab \code{numeric}   \tab number of patients in the control group
 }
 }
 \details{

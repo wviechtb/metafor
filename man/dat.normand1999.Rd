@@ -13,7 +13,7 @@
 \bold{sd1i}     \tab \code{numeric}   \tab standard deviation of the length of stay under specialized care \cr
 \bold{n2i}      \tab \code{numeric}   \tab number of patients under routine care \cr
 \bold{m2i}      \tab \code{numeric}   \tab mean length of stay (in days) under routine care \cr
-\bold{sd2i}     \tab \code{numeric}   \tab standard deviation of the length of stay under routine care \cr
+\bold{sd2i}     \tab \code{numeric}   \tab standard deviation of the length of stay under routine care
 }
 }
 \details{

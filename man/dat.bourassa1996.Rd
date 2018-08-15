@@ -19,7 +19,7 @@
 \bold{lh.re}        \tab \code{numeric}   \tab number of left-handed right-eyed individuals \cr
 \bold{rh.le}        \tab \code{numeric}   \tab number of right-handed left-eyed individuals \cr
 \bold{rh.re}        \tab \code{numeric}   \tab number of right-handed right-eyed individuals \cr
-\bold{sex}          \tab \code{character} \tab sex of the sample (combined, male, or female) \cr
+\bold{sex}          \tab \code{character} \tab sex of the sample (combined, male, or female)
 }
 }
 \details{

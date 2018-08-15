@@ -15,7 +15,7 @@
 \bold{a_measure} \tab \code{character} \tab type of adherence measure (self-report or other) \cr
 \bold{c_measure} \tab \code{character} \tab type of conscientiousness measure (NEO or other) \cr
 \bold{meanage}   \tab \code{numeric}   \tab mean age of the sample \cr
-\bold{quality}   \tab \code{numeric}   \tab methodological quality \cr
+\bold{quality}   \tab \code{numeric}   \tab methodological quality
 }
 }
 \details{

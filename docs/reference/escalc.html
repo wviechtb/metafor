@@ -312,7 +312,6 @@
 <tr><td></td><td>outcome 1</td><td>outcome 2</td><td>total</td></tr>
 <tr><td>group 1</td><td><code>ai</code></td><td><code>bi</code></td><td><code>n1i</code></td></tr>
 <tr><td>group 2</td><td><code>ci</code></td><td><code>di</code></td><td><code>n2i</code></td></tr>
-<tr><td></td><td></td><td>outcome 1</td><td>outcome 2</td></tr>
 </table>
  where <code>ai</code>, <code>bi</code>, <code>ci</code>, and <code>di</code> denote the cell frequencies (i.e., the number of people falling into a particular category) and <code>n1i</code> and <code>n2i</code> are the row totals (i.e., the group sizes).
     For example, in a set of randomized clinical trials, group 1 and group 2 may refer to the treatment and placebo/control group, respectively, with outcome 1 denoting some event of interest (e.g., death, complications, failure to improve under the treatment) and outcome 2 its complement. Similarly, in a set of cohort studies, group 1 and group 2 may denote those who engage in and those who do not engage in a potentially harmful behavior (e.g., smoking), with outcome 1 denoting the development of a particular disease (e.g., lung cancer) during the follow-up period. Finally, in a set of case-control studies, group 1 and group 2 may refer to those with the disease (i.e., cases) and those free of the disease (i.e., controls), with outcome 1 denoting, for example, exposure to some risk environmental risk factor in the past and outcome 2 non-exposure. Note that in all of these examples, the stratified sampling scheme fixes the row totals (i.e., the group sizes) by design.
@@ -340,7 +339,6 @@
 <tr><td></td><td>number of events</td><td>total person-time</td></tr>
 <tr><td>group 1</td><td><code>x1i</code></td><td><code>t1i</code></td></tr>
 <tr><td>group 2</td><td><code>x2i</code></td><td><code>t2i</code></td></tr>
-<tr><td></td><td></td><td>number of events</td></tr>
 </table>
  where <code>x1i</code> and <code>x2i</code> denote the number of events in the first and the second group, respectively, and <code>t1i</code> and <code>t2i</code> the corresponding total person-times at risk. Often, the person-time is measured in years, so that <code>t1i</code> and <code>t2i</code> denote the total number of follow-up years in the two groups.
     This form of data is fundamentally different from what was described in the previous section, since the total follow-up time may differ even for groups of the same size and the individuals studied may experience the event of interest multiple times. Hence, different outcome measures than the ones described in the previous section must be considered when data are reported in this format. These include the incidence rate ratio, the incidence rate difference, and the square root transformed incidence rate difference (Bagos &amp; Nikolopoulos, 2009; Rothman et al., 2008). For any of these outcome measures, one needs to specify the total number of events via the <code>x1i</code> and <code>x2i</code> arguments and the corresponding total person-time values via the <code>t1i</code> and <code>t2i</code> arguments.
@@ -358,7 +356,6 @@
 <tr><td></td><td>mean</td><td>standard deviation</td><td>group size</td></tr>
 <tr><td>group 1</td><td><code>m1i</code></td><td><code>sd1i</code></td><td><code>n1i</code></td></tr>
 <tr><td>group 2</td><td><code>m2i</code></td><td><code>sd2i</code></td><td><code>n2i</code></td></tr>
-<tr><td></td><td></td><td>mean</td><td>standard deviation</td></tr>
 </table>
  where <code>m1i</code> and <code>m2i</code> are the observed means of the two groups, <code>sd1i</code> and <code>sd2i</code> are the observed standard deviations, and <code>n1i</code> and <code>n2i</code> denote the number of individuals in each group. Again, the two groups may be experimentally created (e.g., a treatment and control group based on random assignment) or naturally occurring (e.g., men and women). In either case, the raw mean difference, the standardized mean difference, and the (log transformed) ratio of means (also called log response ratio) are useful outcome measures when meta-analyzing studies of this type (e.g., Borenstein, 2009).
     The options for the <code>measure</code> argument are then:
@@ -448,14 +445,12 @@
 <tr><td></td><td>trt 2 outcome 1</td><td>trt 2 outcome 2</td></tr>
 <tr><td>trt 1 outcome 1</td><td><code>ai</code></td><td><code>bi</code></td></tr>
 <tr><td>trt 1 outcome 2</td><td><code>ci</code></td><td><code>di</code></td></tr>
-<tr><td></td><td></td><td>trt 2 outcome 1</td></tr>
 </table>
  where <code>ai</code>, <code>bi</code>, <code>ci</code>, and <code>di</code> denote the cell frequencies. Note that &#8216;trt1&#8217; and &#8216;trt2&#8217; may be applied to a single group of subjects or to matched pairs of subjects. The data from such a study can be rearranged into a marginal table of the form:
          <table class='table'>
 <tr><td></td><td>outcome 1</td><td>outcome 2</td></tr>
 <tr><td>trt 1</td><td><code>ai+bi</code></td><td><code>ci+di</code></td></tr>
 <tr><td>trt 2</td><td><code>ai+ci</code></td><td><code>bi+di</code></td></tr>
-<tr><td></td><td></td><td>outcome 1</td></tr>
 </table>
  which is of the same form as a \(2 \times 2\) table that would arise in a study comparing/contrasting two independent groups.
     The options for the <code>measure</code> argument that will compute outcome measures based on the marginal table are:

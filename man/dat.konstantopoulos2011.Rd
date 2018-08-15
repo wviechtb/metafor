@@ -11,7 +11,7 @@
 \bold{study}    \tab \code{numeric}   \tab study id number \cr
 \bold{yi}       \tab \code{numeric}   \tab standardized mean difference \cr
 \bold{vi}       \tab \code{numeric}   \tab corresponding sampling variance \cr
-\bold{year}     \tab \code{numeric}   \tab year of the study \cr
+\bold{year}     \tab \code{numeric}   \tab year of the study
 }
 }
 \details{

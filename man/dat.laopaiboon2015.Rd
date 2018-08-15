@@ -18,7 +18,7 @@ dat.laopaiboon2015
 \bold{diag.ab} \tab \code{numeric}   \tab trial included patients with a diagnosis of acute bacterial bronchitis \cr
 \bold{diag.cb} \tab \code{numeric}   \tab trial included patients with a diagnosis of chronic bronchitis with acute exacerbation \cr
 \bold{diag.pn} \tab \code{numeric}   \tab trial included patients with a diagnosis of pneumonia \cr
-\bold{ctrl}    \tab \code{character} \tab antibiotic in control group (amoxycillin or amoxyclav) \cr
+\bold{ctrl}    \tab \code{character} \tab antibiotic in control group (amoxycillin or amoxyclav)
 }
 }
 \details{

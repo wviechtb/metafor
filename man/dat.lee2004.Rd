@@ -12,7 +12,7 @@
 \bold{ai}     \tab \code{numeric}   \tab number of patients experiencing nausea in the treatment group \cr
 \bold{n1i}    \tab \code{numeric}   \tab total number of patients in treatment group \cr
 \bold{ci}     \tab \code{numeric}   \tab number of patients experiencing nausea in the sham group \cr
-\bold{n2i}    \tab \code{numeric}   \tab total number of patients in the sham group \cr
+\bold{n2i}    \tab \code{numeric}   \tab total number of patients in the sham group
 }
 }
 \details{

@@ -258,7 +258,6 @@
 <tr><td></td><td>outcome 1</td><td>outcome 2</td><td>total</td></tr>
 <tr><td>group 1</td><td><code>ai</code></td><td><code>bi</code></td><td><code>n1i</code></td></tr>
 <tr><td>group 2</td><td><code>ci</code></td><td><code>di</code></td><td><code>n2i</code></td></tr>
-<tr><td></td><td></td><td>outcome 1</td><td>outcome 2</td></tr>
 </table>
 <p>where <code>ai</code>, <code>bi</code>, <code>ci</code>, and <code>di</code> denote the cell frequencies (i.e., the number of people falling into a particular category) and <code>n1i</code> and <code>n2i</code> the row totals (i.e., the group sizes).</p>
 <p>The cell frequencies in \(k\) such \(2 \times 2\) tables can be specified via the <code>ai</code>, <code>bi</code>, <code>ci</code>, and <code>di</code> arguments (or alternatively, via the <code>ai</code>, <code>ci</code>, <code>n1i</code>, and <code>n2i</code> arguments). The function then creates the corresponding \(2 \times 2 \times k\) array of tables. The <code>measure</code> argument should then be set equal to one of the outcome measures that can be computed based on this type of data, such as <code>"RR"</code>, <code>"OR"</code>, <code>"RD"</code> (it is not relevant which specific measure is chosen, as long as it corresponds to the specified summary data). See the documentation of the <code><a href='escalc.html'>escalc</a></code> function for more details on the types of data formats available.</p>

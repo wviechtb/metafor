@@ -15,7 +15,7 @@
 \bold{n1i}        \tab \code{numeric}    \tab sample size of experimental group \cr
 \bold{n2i}        \tab \code{numeric}    \tab sample size of control group \cr
 \bold{yi}         \tab \code{numeric}    \tab standardized mean difference \cr
-\bold{vi}         \tab \code{numeric}    \tab corresponding sampling variance \cr
+\bold{vi}         \tab \code{numeric}    \tab corresponding sampling variance
 }
 }
 \details{

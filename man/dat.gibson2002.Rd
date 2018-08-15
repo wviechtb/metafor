@@ -18,7 +18,7 @@
 \bold{bi}       \tab \code{numeric}   \tab number of participants who no days off work/school in the intervention group \cr
 \bold{ci}       \tab \code{numeric}   \tab number of participants who had one or more days off work/school in the control/comparison group \cr
 \bold{di}       \tab \code{numeric}   \tab number of participants who no days off work/school in the control/comparison group \cr
-\bold{type}     \tab \code{numeric}   \tab numeric code for the intervention type (see below) \cr
+\bold{type}     \tab \code{numeric}   \tab numeric code for the intervention type (see below)
 }
 }
 \details{

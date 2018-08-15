@@ -19,7 +19,7 @@
 \bold{nci}   \tab \code{numeric}   \tab number of patients in control group \cr
 \bold{b.xci} \tab \code{numeric}   \tab number of patients in control group with persistent or recurrent bleedings \cr
 \bold{o.xci} \tab \code{numeric}   \tab number of patients in control group in need of operation \cr
-\bold{d.xci} \tab \code{numeric}   \tab number of patients in control group that died \cr
+\bold{d.xci} \tab \code{numeric}   \tab number of patients in control group that died
 }
 }
 \details{

@@ -10,7 +10,7 @@
 \bold{ni}       \tab \code{numeric}   \tab sample size of the study \cr
 \bold{ri}       \tab \code{numeric}   \tab observed correlation \cr
 \bold{type}     \tab \code{character} \tab interview type (j = job-related, s = situational, p = psychological) \cr
-\bold{struct}   \tab \code{character} \tab interview structure (u = unstructured, s = structured) \cr
+\bold{struct}   \tab \code{character} \tab interview structure (u = unstructured, s = structured)
 }
 }
 \details{
