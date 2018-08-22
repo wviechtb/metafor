@@ -3,9 +3,11 @@ bldiag <- function(...) {
    mlist <- list(...)
 
    ### handle case in which a list of matrices is given
-
-   if (length(mlist)==1L)
+   if (length(mlist)==1L && is.list(mlist[[1]]))
       mlist <- unlist(mlist, recursive=FALSE)
+
+   ### make sure each element is a matrix (so that bldiag(matrix(1, nrow=3, ncol=3), 2) also works)
+   mlist <- lapply(mlist, function(x) if (inherits(x, "matrix")) x else diag(x, nrow=length(x), ncol=length(x)))
 
    csdim <- rbind(c(0,0), apply(sapply(mlist,dim), 1, cumsum)) ### consider using rowCumsums() from matrixStats package
 
