@@ -56,6 +56,7 @@ Changes in Version 2.1-0 (2018-10-09)
 
    o fixed rma.mv() so checks on 'R' argument run as intended; also fixed an
      issue when multiple formulas with slashes are specified via 'random'
+     (thanks to Andrew Loignon for pointing out the problem)
 
    o suppressed showing calls on some warnings/errors in rma.mv()
 

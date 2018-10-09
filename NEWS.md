@@ -32,7 +32,7 @@
 
 - `rma.mv()` now ensures strict symmetry of any (var-cov or correlation) matrices specified via the `R` argument
 
-- fixed `rma.mv()` so checks on `R` argument run as intended; also fixed an issue when multiple formulas with slashes are specified via `random`
+- fixed `rma.mv()` so checks on `R` argument run as intended; also fixed an issue when multiple formulas with slashes are specified via `random` (thanks to Andrew Loignon for pointing out the problem)
 
 - suppressed showing calls on some warnings/errors in `rma.mv()`
 
