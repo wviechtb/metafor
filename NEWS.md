@@ -1,4 +1,4 @@
-# metafor 2.1-0 (2018-08-22)
+# metafor 2.1-0 (2018-10-09)
 
 - added `reporter()` and `reporter.rma.uni()` for dynamically generating analysis reports for objects of class `rma.uni`
 
@@ -32,7 +32,7 @@
 
 - `rma.mv()` now ensures strict symmetry of any (var-cov or correlation) matrices specified via the `R` argument
 
-- fixed `rma.mv()` so checks on `R` argument run as intended
+- fixed `rma.mv()` so checks on `R` argument run as intended; also fixed an issue when multiple formulas with slashes are specified via `random`
 
 - suppressed showing calls on some warnings/errors in `rma.mv()`
 

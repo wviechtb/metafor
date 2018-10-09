@@ -116,9 +116,9 @@
       
     </div>
 
-    <div id="metafor-2-1-0-2018-08-15" class="section level1">
+    <div id="metafor-2-1-0-2018-10-09" class="section level1">
 <h1 class="page-header">
-<a href="#metafor-2-1-0-2018-08-15" class="anchor"></a>metafor 2.1-0 (2018-08-15)<small> Unreleased </small>
+<a href="#metafor-2-1-0-2018-10-09" class="anchor"></a>metafor 2.1-0 (2018-10-09)<small> Unreleased </small>
 </h1>
 <ul>
 <li><p>added <code><a href="../reference/reporter.html">reporter()</a></code> and <code><a href="../reference/reporter.html">reporter.rma.uni()</a></code> for dynamically generating analysis reports for objects of class <code>rma.uni</code></p></li>
@@ -137,7 +137,7 @@
 <li><p><code><a href="../reference/rma.uni.html">rma.uni()</a></code> and <code><a href="../reference/rma.mv.html">rma.mv()</a></code> no longer issue (obvious) warnings when user constrains <code>vi</code> or <code>V</code> to 0 (i.e., <code>vi=0</code> or <code>V=0</code>, respectively)</p></li>
 <li><p><code><a href="../reference/rma.mv.html">rma.mv()</a></code> does more intelligent filtering based on <code>NA</code>s in <code>V</code> matrix</p></li>
 <li><p><code><a href="../reference/rma.mv.html">rma.mv()</a></code> now ensures strict symmetry of any (var-cov or correlation) matrices specified via the <code>R</code> argument</p></li>
-<li><p>fixed <code><a href="../reference/rma.mv.html">rma.mv()</a></code> so checks on <code>R</code> argument run as intended</p></li>
+<li><p>fixed <code><a href="../reference/rma.mv.html">rma.mv()</a></code> so checks on <code>R</code> argument run as intended; also fixed an issue when multiple formulas with slashes are specified via <code>random</code></p></li>
 <li><p>suppressed showing calls on some warnings/errors in <code><a href="../reference/rma.mv.html">rma.mv()</a></code></p></li>
 <li><p><code><a href="../reference/rma.mv.html">rma.mv()</a></code> now allows for a continuous-time autoregressive random effects structure (<code>struct="CAR"</code>) and various spatial correlation structures (<code>struct="SPEXP"</code>, <code>"SPGAU"</code>, <code>"SPLIN"</code>, <code>"SPRAT"</code>, and <code>"SPSPH"</code>)</p></li>
 <li><p><code><a href="../reference/rma.mv.html">rma.mv()</a></code> now allows for <code>struct="GEN"</code> which models correlated random effects for any number of predictors, including continuous ones (i.e., this allows for ‘random slopes’)</p></li>
@@ -764,7 +764,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#metafor-2-1-0-2018-08-15">2.1-0</a></li>
+        <li><a href="#metafor-2-1-0-2018-10-09">2.1-0</a></li>
         <li><a href="#metafor-2-0-0-2017-06-22">2.0-0</a></li>
         <li><a href="#metafor-1-9-9-2016-09-25">1.9-9</a></li>
         <li><a href="#metafor-1-9-8-2015-09-28">1.9-8</a></li>

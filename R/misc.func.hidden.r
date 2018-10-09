@@ -2697,7 +2697,7 @@
 ### check if x is logical and TRUE/FALSE (NAs and NULL always evaluate as FALSE)
 
 .isTRUE <- function(x)
-   !is.null(x) && is.logical(x) && !is.na(x)  && x
+   !is.null(x) && is.logical(x) && !is.na(x) && x
 
 .isFALSE <- function(x)
    !is.null(x) && is.logical(x) && !is.na(x) && !x

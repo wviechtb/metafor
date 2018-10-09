@@ -1,4 +1,4 @@
-Changes in Version 2.1-0 (2018-08-22)
+Changes in Version 2.1-0 (2018-10-09)
 =====================================
 
    o added reporter() and reporter.rma.uni() for dynamically generating
@@ -54,7 +54,8 @@ Changes in Version 2.1-0 (2018-08-22)
    o rma.mv() now ensures strict symmetry of any (var-cov or correlation)
      matrices specified via the 'R' argument
 
-   o fixed rma.mv() so checks on 'R' argument run as intended
+   o fixed rma.mv() so checks on 'R' argument run as intended; also fixed an
+     issue when multiple formulas with slashes are specified via 'random'
 
    o suppressed showing calls on some warnings/errors in rma.mv()
 

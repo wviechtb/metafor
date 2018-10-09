@@ -545,7 +545,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
             ### if there are non-slash elements, then this flattens things out (obviously ...)
 
-            mf.r <- unlist(mapply(function(mf, sl) if (sl) lapply(seq(mf), function(x) mf[x]) else list(mf), mf.r, has.slash), recursive=FALSE, use.names=FALSE)
+            mf.r <- unlist(mapply(function(mf, sl) if (sl) lapply(seq(mf), function(x) mf[x]) else list(mf), mf.r, has.slash, SIMPLIFY=FALSE), recursive=FALSE, use.names=FALSE)
 
          }
 
