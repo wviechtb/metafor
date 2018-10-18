@@ -1,7 +1,7 @@
 \name{dat.egger2001}
 \docType{data}
 \alias{dat.egger2001}
-\title{Studies on the Effectiveness of Intravenous Magnesium in Acute Myocardial Infarction.}
+\title{Studies on the Effectiveness of Intravenous Magnesium in Acute Myocardial Infarction}
 \description{Results from 16 trials examining the effectiveness of intravenous magnesium in the prevention of death following acute myocardial infarction.}
 \usage{
 dat.egger2001
