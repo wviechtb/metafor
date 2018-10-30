@@ -237,7 +237,13 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
    if (is.null(V))
       stop(mstyle$stop("Need to specify 'V' argument."))
 
-   if (is.list(V)) {
+   if (is.list(V) && !is.data.frame(V)) {
+
+      ### list elements may be data frames (or scalars), so coerce to matrices
+
+      V <- lapply(V, as.matrix)
+
+      ### check that all elements are square
 
       if (any(!sapply(V, .is.square)))
          stop(mstyle$stop("All list elements in 'V' must be square matrices."))
@@ -266,6 +272,8 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    if (is.vector(V) || nrow(V) == 1L || ncol(V) == 1L)
       V <- diag(as.vector(V), nrow=k, ncol=k)
+
+   ### turn V into a matrix if it is a data frame
 
    if (is.data.frame(V))
       V <- as.matrix(V)
