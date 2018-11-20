@@ -29,7 +29,7 @@ test_that("results are correct for the multiple-treatment studies example with r
 
    V <- bldiag(lapply(split(dat, dat$study), calc.v))
 
-   res <- rma.mv(yi, V, mods = ~ factor(trt) - 1, data=dat, method="FE")
+   res <- rma.mv(yi, V, mods = ~ factor(trt) - 1, data=dat)
 
    ### compare with results on page 361 (eq. 19.6)
    expect_equivalent(round(coef(res),4), c(0.0200, 0.0043, 0.0211))
@@ -60,7 +60,7 @@ test_that("results are correct for the multiple-treatment studies example with l
 
    V <- bldiag(lapply(split(dat, dat$study), calc.v))
 
-   res <- rma.mv(yi, V, mods = ~ factor(trt) - 1, data=dat, method="FE")
+   res <- rma.mv(yi, V, mods = ~ factor(trt) - 1, data=dat)
 
    ### compare with results on page 363
    expect_equivalent(round(coef(res),4), c(0.5099, 0.0044, 0.4301))
@@ -91,7 +91,7 @@ test_that("results are correct for the multiple-treatment studies example with l
 
    V <- bldiag(lapply(split(dat, dat$study), calc.v))
 
-   res <- rma.mv(yi, V, mods = ~ factor(trt) - 1, data=dat, method="FE")
+   res <- rma.mv(yi, V, mods = ~ factor(trt) - 1, data=dat)
 
    ### compare with results on page 363
    expect_equivalent(round(coef(res),4), c(0.4875, 0.0006, 0.4047))
@@ -122,7 +122,7 @@ test_that("results are correct for the multiple-treatment studies example with d
 
    V <- bldiag(lapply(split(dat, dat$study), calc.v))
 
-   res <- rma.mv(yi, V, mods = ~ factor(trt) - 1, data=dat, method="FE")
+   res <- rma.mv(yi, V, mods = ~ factor(trt) - 1, data=dat)
 
    ### compare with results on page 365
    expect_equivalent(round(coef(res)*2,4), c(0.1010, 0.0102, 0.0982))
@@ -166,7 +166,7 @@ test_that("results are correct for the multiple-treatment studies example with s
 
    V <- bldiag(lapply(split(dat, dat$study), calc.v))
 
-   res <- rma.mv(yi, V, mods = ~ factor(trt) - 1, data=dat, method="FE")
+   res <- rma.mv(yi, V, mods = ~ factor(trt) - 1, data=dat)
 
    ### compare with results on page 367
    expect_equivalent(round(coef(res),3), c(2.374, 1.570))
@@ -204,7 +204,7 @@ test_that("results are correct for the multiple-endpoint studies example with st
 
    ### fit model
 
-   res <- rma.mv(yi, V, mods = ~ outcome - 1, data=dat, method="FE")
+   res <- rma.mv(yi, V, mods = ~ outcome - 1, data=dat)
 
    ### (results for this not given in chapter)
    expect_equivalent(round(coef(res),3), c(0.362, 0.205))
