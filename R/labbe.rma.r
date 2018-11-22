@@ -176,7 +176,12 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, lty, ..
    if (is.null(psize)) {
       vi <- dat.t$vi + dat.c$vi
       wi <- 1/sqrt(vi)
-      psize <- 0.5 + 3 * (wi - min(wi))/(max(wi)-min(wi))
+      rng <- max(wi) - min(wi)
+      if (rng <= .Machine$double.eps^0.5) {
+         psize <- rep(1, length(wi))
+      } else {
+         psize <- 0.5 + 3 * (wi - min(wi))/rng
+      }
    }
 
    ### determine x/y values for line that indicates the estimated effect

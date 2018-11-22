@@ -46,6 +46,8 @@
 
 - the various `forest()` functions gain a `top` argument
 
+- the various `forest()` functions now show correct point sizes when the weights of the studies are exactly the same
+
 - `forest.cumul.rma()` gains a `col` argument
 
 - `addpoly()` functions can now also show credibility interval bounds

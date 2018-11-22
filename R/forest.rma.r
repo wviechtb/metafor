@@ -180,7 +180,8 @@ cex, cex.lab, cex.axis, annosym, ...) {
       }
 
       if (inherits(x, "rma.glmm")) {            ### TODO: change this when there is a weights() function for 'rma.glmm' objects
-         weights <- NULL
+         #weights <- NULL
+         weights <- rep(1, k)
       } else {
          weights <- weights(x)                  ### these are the weights used for the actual model fitting
       }
@@ -355,25 +356,30 @@ cex, cex.lab, cex.axis, annosym, ...) {
    ### set default point sizes (if not specified by user)
 
    if (is.null(psize)) {
-      if (is.null(weights)) {
-         if (any(vi <= 0, na.rm=TRUE)) {           ### in case any vi value is zero
-            psize <- rep(1, k)
-         } else {                                  ### default psize is proportional to inverse standard error
-            wi    <- 1/sqrt(vi)                    ### note: vi's that are NA are ignored (but vi's whose yi is
-            psize <- wi/sum(wi, na.rm=TRUE)        ### NA are NOT ignored; an unlikely case in practice)
-            psize <- (psize - min(psize, na.rm=TRUE)) / (max(psize, na.rm=TRUE) - min(psize, na.rm=TRUE))
-            psize <- (psize * 1.0) + 0.5           ### note: only vi's that are still in the subset are used for determining the default point sizes
-            if (all(is.na(psize)))                 ### if k=1, then psize is NA, so catch this (and maybe some other problems)
-               psize <- rep(1, k)
-         }
+      # if (is.null(weights)) {
+      #    if (any(vi <= 0, na.rm=TRUE)) {           ### in case any vi value is zero
+      #       psize <- rep(1, k)
+      #    } else {                                  ### default psize is proportional to inverse standard error
+      #       wi    <- 1/sqrt(vi)                    ### note: vi's that are NA are ignored (but vi's whose yi is
+      #       psize <- wi/sum(wi, na.rm=TRUE)        ### NA are NOT ignored; an unlikely case in practice)
+      #       psize <- (psize - min(psize, na.rm=TRUE)) / (max(psize, na.rm=TRUE) - min(psize, na.rm=TRUE))
+      #       psize <- (psize * 1.0) + 0.5           ### note: only vi's that are still in the subset are used for determining the default point sizes
+      #       if (all(is.na(psize)))                 ### if k=1, then psize is NA, so catch this (and maybe some other problems)
+      #          psize <- rep(1, k)
+      #    }
+      # } else {
+      wi    <- weights
+      psize <- wi/sum(wi, na.rm=TRUE)
+      rng   <- max(psize, na.rm=TRUE) - min(psize, na.rm=TRUE)
+      if (rng <= .Machine$double.eps^0.5) {
+         psize <- rep(1, k)
       } else {
-         wi <- weights
-         psize <- wi/sum(wi, na.rm=TRUE)
-         psize <- (psize - min(psize, na.rm=TRUE)) / (max(psize, na.rm=TRUE) - min(psize, na.rm=TRUE))
+         psize <- (psize - min(psize, na.rm=TRUE)) / rng
          psize <- (psize * 1.0) + 0.5
-         if (all(is.na(psize)))
-            psize <- rep(1, k)
       }
+      if (all(is.na(psize)))
+         psize <- rep(1, k)
+      # }
    }
 
    #########################################################################

@@ -76,6 +76,9 @@ Changes in Version 2.1-0 (2018-11-22)
 
    o the various forest() functions gain a 'top' argument
 
+   o the various forest() functions now show correct point sizes when the
+     weights of the studies are exactly the same
+
    o forest.cumul.rma() gains a 'col' argument
 
    o addpoly() functions can now also show credibility interval bounds
