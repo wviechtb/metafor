@@ -8,7 +8,7 @@
        level=x$level, refline=0, digits=2L, width,
        xlab, ilab, ilab.xpos, ilab.pos,
        transf, atransf, targs, rows,
-       efac=1, pch=15, psize=1, lty, fonts,
+       efac=1, pch=15, psize=1, col, lty, fonts,
        cex, cex.lab, cex.axis, annosym, \dots)
 }
 \arguments{
@@ -36,6 +36,7 @@
    \item{efac}{vertical expansion factor for confidence interval limits and arrows. The default value of 1 should usually work okay. Can also be a vector of two numbers, the first for CI limits, the second for arrows.}
    \item{pch}{plotting symbol to use for the observed effect sizes or outcomes. By default, a filled square is used. See \code{\link{points}} for other options. Can also be a vector of values.}
    \item{psize}{optional vector with point sizes for the observed effect sizes or outcomes. Default is 1.}
+   \item{col}{optional character string specifying the name of a color to use for plotting ("black" is used by default if not specified). Can also be a vector of color names.}
    \item{lty}{optional character string specifying the line type for the confidence intervals (if unspecified, the function sets this to \code{"solid"} by default).}
    \item{fonts}{optional character string specifying the font to use for the study labels, annotations, and the extra information (if specified via \code{ilab}). If unspecified, the default font is used.}
    \item{cex}{optional character and symbol expansion factor. If unspecified, the function tries to set this to a sensible value.}

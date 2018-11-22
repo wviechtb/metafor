@@ -76,6 +76,8 @@ Changes in Version 2.1-0 (2018-11-20)
 
    o the various forest() functions gain a 'top' argument
 
+   o forest.cumul.rma() gains a 'col' argument
+
    o addpoly() functions can now also show credibility interval bounds
 
    o removed 'formula interface' from escalc(); until this actually adds

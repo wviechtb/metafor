@@ -1,8 +1,8 @@
 forest.cumul.rma <- function(x,          annotate=TRUE,
 xlim, alim, clim, ylim, top=3, at, steps=5, level=x$level, refline=0, digits=2L, width,
-xlab,                       ilab, ilab.xpos, ilab.pos,
+xlab,             ilab, ilab.xpos, ilab.pos,
 transf, atransf, targs, rows,
-efac=1, pch=15, psize=1, lty, fonts,
+efac=1, pch=15, psize=1, col,       lty, fonts,
 cex, cex.lab, cex.axis, annosym, ...) {
 
    #########################################################################
@@ -43,6 +43,9 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
    if (missing(ilab.pos))
       ilab.pos <- NULL
+
+   if (missing(col))
+      col <- NULL
 
    if (missing(cex))
       cex <- NULL
@@ -127,6 +130,17 @@ cex, cex.lab, cex.axis, annosym, ...) {
          stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'psize' argument."))
    }
 
+   ### if user has set the col argument
+
+   if (!is.null(col)) {
+      if (length(col) == 1L)
+         col <- rep(col, k)
+      if (length(col) != length(yi))
+         stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'col' argument."))
+   } else {
+      col <- rep("black", k)
+   }
+
    ### set rows value
 
    if (missing(rows)) {
@@ -149,6 +163,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
    ilab    <- ilab[k:1,,drop=FALSE]               ### if ilab is still NULL, then this remains NULL
    pch     <- pch[k:1]
    psize   <- psize[k:1]                          ### if psize is still NULL, then this remains NULL
+   col     <- col[k:1]
    rows    <- rows[k:1]
 
    ### check for NAs in yi/vi and act accordingly
@@ -168,6 +183,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
          ilab    <- ilab[not.na,,drop=FALSE]    ### if ilab is still NULL, then this remains NULL
          pch     <- pch[not.na]
          psize   <- psize[not.na]               ### if psize is still NULL, then this remains NULL
+         col     <- col[not.na]
 
          rows.new <- rows                       ### rearrange rows due to NAs being omitted from plot
          rows.na  <- rows[!not.na]              ### shift higher rows down according to number of NAs omitted
@@ -407,35 +423,35 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
       ### if the lower bound is actually larger than upper x-axis limit, then everything is to the right and just draw a polygon pointing in that direction
       if (ci.lb[i] >= alim[2]) {
-         polygon(x=c(alim[2], alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]), y=c(rows[i], rows[i]+(height/150)*cex*efac[2], rows[i]-(height/150)*cex*efac[2], rows[i]), col="black", ...)
+         polygon(x=c(alim[2], alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]), y=c(rows[i], rows[i]+(height/150)*cex*efac[2], rows[i]-(height/150)*cex*efac[2], rows[i]), col=col[i], border=col[i], ...)
          next
       }
 
       ### if the upper bound is actually lower than lower x-axis limit, then everything is to the left and just draw a polygon pointing in that direction
       if (ci.ub[i] <= alim[1]) {
-         polygon(x=c(alim[1], alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]), y=c(rows[i], rows[i]+(height/150)*cex*efac[2], rows[i]-(height/150)*cex*efac[2], rows[i]), col="black", ...)
+         polygon(x=c(alim[1], alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]), y=c(rows[i], rows[i]+(height/150)*cex*efac[2], rows[i]-(height/150)*cex*efac[2], rows[i]), col=col[i], border=col[i], ...)
          next
       }
 
-      segments(max(ci.lb[i], alim[1]), rows[i], min(ci.ub[i], alim[2]), rows[i], lty=lty[1], ...)
+      segments(max(ci.lb[i], alim[1]), rows[i], min(ci.ub[i], alim[2]), rows[i], lty=lty[1], col=col[i], ...)
 
       if (ci.lb[i] >= alim[1]) {
-         segments(ci.lb[i], rows[i]-(height/150)*cex*efac[1], ci.lb[i], rows[i]+(height/150)*cex*efac[1], ...)
+         segments(ci.lb[i], rows[i]-(height/150)*cex*efac[1], ci.lb[i], rows[i]+(height/150)*cex*efac[1], col=col[i], ...)
       } else {
-         polygon(x=c(alim[1], alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]), y=c(rows[i], rows[i]+(height/150)*cex*efac[2], rows[i]-(height/150)*cex*efac[2], rows[i]), col="black", ...)
+         polygon(x=c(alim[1], alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]), y=c(rows[i], rows[i]+(height/150)*cex*efac[2], rows[i]-(height/150)*cex*efac[2], rows[i]), col=col[i], border=col[i], ...)
       }
 
       if (ci.ub[i] <= alim[2]) {
-         segments(ci.ub[i], rows[i]-(height/150)*cex*efac[1], ci.ub[i], rows[i]+(height/150)*cex*efac[1], ...)
+         segments(ci.ub[i], rows[i]-(height/150)*cex*efac[1], ci.ub[i], rows[i]+(height/150)*cex*efac[1], col=col[i], ...)
       } else {
-         polygon(x=c(alim[2], alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]), y=c(rows[i], rows[i]+(height/150)*cex*efac[2], rows[i]-(height/150)*cex*efac[2], rows[i]), col="black", ...)
+         polygon(x=c(alim[2], alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]), y=c(rows[i], rows[i]+(height/150)*cex*efac[2], rows[i]-(height/150)*cex*efac[2], rows[i]), col=col[i], border=col[i], ...)
       }
 
    }
 
    ### add study labels on the left
 
-   text(xlim[1], rows, slab, pos=4, cex=cex, ...)
+   text(xlim[1], rows, slab, pos=4, cex=cex, col=col, ...)
 
    ### add info labels
 
@@ -492,7 +508,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
       annotext <- apply(annotext, 1, paste, collapse="")
       annotext[grepl("NA", annotext, fixed=TRUE)] <- ""
       par(family=fonts[2])
-      text(x=xlim[2], rows, labels=annotext, pos=2, cex=cex, ...)
+      text(x=xlim[2], rows, labels=annotext, pos=2, cex=cex, col=col, ...)
       par(family=fonts[1])
 
    }
@@ -506,7 +522,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
          next
 
       if (yi[i] >= alim[1] && yi[i] <= alim[2])
-         points(yi[i], rows[i], pch=pch[i], cex=cex*psize[i], ...)
+         points(yi[i], rows[i], pch=pch[i], cex=cex*psize[i], col=col[i], ...)
 
    }
 

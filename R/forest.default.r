@@ -1,8 +1,8 @@
 forest.default <- function(x, vi, sei, ci.lb, ci.ub, annotate=TRUE,  showweights=FALSE,
 xlim, alim, clim, ylim, top=3, at, steps=5, level=95,      refline=0, digits=2L, width,
-xlab, slab,            ilab, ilab.xpos, ilab.pos, subset,
+xlab, slab,       ilab, ilab.xpos, ilab.pos, subset,
 transf, atransf, targs, rows,
-efac=1, pch=15, psize, col, lty, fonts,
+efac=1, pch=15, psize, col,         lty, fonts,
 cex, cex.lab, cex.axis, annosym, ...) {
 
    #########################################################################

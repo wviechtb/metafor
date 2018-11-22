@@ -46,6 +46,8 @@
 
 - the various `forest()` functions gain a `top` argument
 
+- `forest.cumul.rma()` gains a `col` argument
+
 - `addpoly()` functions can now also show credibility interval bounds
 
 - removed 'formula interface' from `escalc()`; until this actually adds some kind of extra functionality, this just makes `escalc()` more confusing to use
