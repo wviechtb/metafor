@@ -272,8 +272,7 @@ update(object, formula., &#8230;, evaluate = TRUE)</pre>
 #&gt; </div><div class='input'>
 <span class='co'>### example with rma.glmm()</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.glmm.html'>rma.glmm</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>3</span>)
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>update</span>(<span class='no'>res</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>ablat</span>)
-<span class='no'>res</span></div><div class='output co'>#&gt; 
+<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>update</span>(<span class='no'>res</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>ablat</span>)</div><div class='output co'>#&gt; <span class='message'>singular fit</span></div><div class='input'><span class='no'>res</span></div><div class='output co'>#&gt; 
 #&gt; Mixed-Effects Model (k = 13; tau^2 estimator: ML)
 #&gt; Model Type: Unconditional Model with Fixed Study Effects
 #&gt; 

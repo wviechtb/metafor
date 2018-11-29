@@ -444,7 +444,8 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
     <pre class="examples"><div class='input'><span class='co'>### calculate log risk ratios and corresponding sampling variances</span>
 <span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>)
 
-<span class='co'>### random-effects model (method="REML" is default, so technically not needed)</span>
+<span class='co'>### random-effects model, using log risk ratios and variances as input</span>
+<span class='co'>### note: method="REML" is the default, so one could leave this out</span>
 <span class='fu'>rma</span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"REML"</span>)</div><div class='output co'>#&gt; 
 #&gt; Random-Effects Model (k = 13; tau^2 estimator: REML)
 #&gt; 
@@ -463,7 +464,12 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 #&gt; 
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-#&gt; </div><div class='input'><span class='fu'>rma</span>(<span class='no'>yi</span>, <span class='kw'>sei</span><span class='kw'>=</span><span class='fu'>sqrt</span>(<span class='no'>vi</span>), <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"REML"</span>)</div><div class='output co'>#&gt; 
+#&gt; </div><div class='input'>
+<span class='co'>### random-effects model, using log risk ratios and standard errors as input</span>
+<span class='co'>### note: the second argument of rma() is for the *variances*, so we use the</span>
+<span class='co'>### named argument 'sei' to supply the standard errors to the function</span>
+<span class='no'>dat</span>$<span class='no'>sei</span> <span class='kw'>&lt;-</span> <span class='fu'>sqrt</span>(<span class='no'>dat</span>$<span class='no'>vi</span>)
+<span class='fu'>rma</span>(<span class='no'>yi</span>, <span class='kw'>sei</span><span class='kw'>=</span><span class='no'>sei</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)</div><div class='output co'>#&gt; 
 #&gt; Random-Effects Model (k = 13; tau^2 estimator: REML)
 #&gt; 
 #&gt; tau^2 (estimated amount of total heterogeneity): 0.3132 (SE = 0.1664)
@@ -483,7 +489,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### supplying the 2x2 table cell frequencies directly to the rma() function</span>
-<span class='fu'>rma</span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"REML"</span>)</div><div class='output co'>#&gt; 
+<span class='fu'>rma</span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)</div><div class='output co'>#&gt; 
 #&gt; Random-Effects Model (k = 13; tau^2 estimator: REML)
 #&gt; 
 #&gt; tau^2 (estimated amount of total heterogeneity): 0.3132 (SE = 0.1664)
@@ -503,7 +509,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### mixed-effects model with two moderators (absolute latitude and publication year)</span>
-<span class='fu'>rma</span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>mods</span><span class='kw'>=</span><span class='fu'>cbind</span>(<span class='no'>ablat</span>, <span class='no'>year</span>), <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"REML"</span>)</div><div class='output co'>#&gt; 
+<span class='fu'>rma</span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>mods</span><span class='kw'>=</span><span class='fu'>cbind</span>(<span class='no'>ablat</span>, <span class='no'>year</span>), <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)</div><div class='output co'>#&gt; 
 #&gt; Mixed-Effects Model (k = 13; tau^2 estimator: REML)
 #&gt; 
 #&gt; tau^2 (estimated amount of residual heterogeneity):     0.1108 (SE = 0.0845)
@@ -529,7 +535,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### using a model formula to specify the same model</span>
-<span class='fu'>rma</span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>ablat</span> + <span class='no'>year</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"REML"</span>)</div><div class='output co'>#&gt; 
+<span class='fu'>rma</span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>ablat</span> + <span class='no'>year</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)</div><div class='output co'>#&gt; 
 #&gt; Mixed-Effects Model (k = 13; tau^2 estimator: REML)
 #&gt; 
 #&gt; tau^2 (estimated amount of residual heterogeneity):     0.1108 (SE = 0.0845)
@@ -555,7 +561,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### using a model formula as part of the yi argument</span>
-<span class='fu'>rma</span>(<span class='no'>yi</span> ~ <span class='no'>ablat</span> + <span class='no'>year</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"REML"</span>)</div><div class='output co'>#&gt; 
+<span class='fu'>rma</span>(<span class='no'>yi</span> ~ <span class='no'>ablat</span> + <span class='no'>year</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)</div><div class='output co'>#&gt; 
 #&gt; Mixed-Effects Model (k = 13; tau^2 estimator: REML)
 #&gt; 
 #&gt; tau^2 (estimated amount of residual heterogeneity):     0.1108 (SE = 0.0845)
@@ -586,10 +592,12 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 <span class='no'>alloc.systematic</span> <span class='kw'>&lt;-</span> <span class='fu'>ifelse</span>(<span class='no'>dat</span>$<span class='no'>alloc</span> <span class='kw'>==</span> <span class='st'>"systematic"</span>, <span class='fl'>1</span>, <span class='fl'>0</span>)
 
 <span class='co'>### test the allocation factor (in the presence of the other moderators)</span>
-<span class='co'>### note: "alternate" is the reference level of the allocation factor</span>
-<span class='co'>### note: the intercept is the first coefficient, so btt=c(2,3)</span>
-<span class='fu'>rma</span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>alloc.random</span> + <span class='no'>alloc.systematic</span> + <span class='no'>year</span> + <span class='no'>ablat</span>,
-    <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"REML"</span>, <span class='kw'>btt</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>2</span>,<span class='fl'>3</span>))</div><div class='output co'>#&gt; 
+<span class='co'>### note: 'alternate' is the reference level of the allocation factor,</span>
+<span class='co'>###       since this is the dummy/level we leave out of the model</span>
+<span class='co'>### note: the intercept is the first coefficient, so with btt=2:3 we test</span>
+<span class='co'>###       coefficients 2 and 3, corresponding to the coefficients for the</span>
+<span class='co'>###       allocation factor</span>
+<span class='fu'>rma</span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>alloc.random</span> + <span class='no'>alloc.systematic</span> + <span class='no'>year</span> + <span class='no'>ablat</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>btt</span><span class='kw'>=</span><span class='fl'>2</span>:<span class='fl'>3</span>)</div><div class='output co'>#&gt; 
 #&gt; Mixed-Effects Model (k = 13; tau^2 estimator: REML)
 #&gt; 
 #&gt; tau^2 (estimated amount of residual heterogeneity):     0.1796 (SE = 0.1425)
@@ -617,7 +625,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### using a model formula to specify the same model</span>
-<span class='fu'>rma</span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='fu'>factor</span>(<span class='no'>alloc</span>) + <span class='no'>year</span> + <span class='no'>ablat</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"REML"</span>, <span class='kw'>btt</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>2</span>,<span class='fl'>3</span>))</div><div class='output co'>#&gt; 
+<span class='fu'>rma</span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='fu'>factor</span>(<span class='no'>alloc</span>) + <span class='no'>year</span> + <span class='no'>ablat</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>btt</span><span class='kw'>=</span><span class='fl'>2</span>:<span class='fl'>3</span>)</div><div class='output co'>#&gt; 
 #&gt; Mixed-Effects Model (k = 13; tau^2 estimator: REML)
 #&gt; 
 #&gt; tau^2 (estimated amount of residual heterogeneity):     0.1796 (SE = 0.1425)
@@ -651,7 +659,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### test all pairwise differences with Holm's method (using the 'multcomp' package if installed)</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>rma</span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='fu'>factor</span>(<span class='no'>alloc</span>) - <span class='fl'>1</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"REML"</span>)
+<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>rma</span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='fu'>factor</span>(<span class='no'>alloc</span>) - <span class='fl'>1</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
 <span class='no'>res</span></div><div class='output co'>#&gt; 
 #&gt; Mixed-Effects Model (k = 13; tau^2 estimator: REML)
 #&gt; 
@@ -687,8 +695,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 #&gt; Multiple Comparisons of Means: Tukey Contrasts
 #&gt; 
 #&gt; 
-#&gt; Fit: rma(yi = yi, vi = vi, mods = ~factor(alloc) - 1, data = dat, 
-#&gt;     method = "REML")
+#&gt; Fit: rma(yi = yi, vi = vi, mods = ~factor(alloc) - 1, data = dat)
 #&gt; 
 #&gt; Linear Hypotheses:
 #&gt;                             Estimate Std. Error z value Pr(&gt;|z|)

@@ -132,7 +132,7 @@ forest(x, annotate=TRUE,
        level=x$level, refline=0, digits=2L, width,
        xlab, ilab, ilab.xpos, ilab.pos,
        transf, atransf, targs, rows,
-       efac=1, pch=15, psize=1, lty, fonts,
+       efac=1, pch=15, psize=1, col, lty, fonts,
        cex, cex.lab, cex.axis, annosym, &#8230;)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -233,6 +233,10 @@ forest(x, annotate=TRUE,
     <tr>
       <th>psize</th>
       <td><p>optional vector with point sizes for the observed effect sizes or outcomes. Default is 1.</p></td>
+    </tr>
+    <tr>
+      <th>col</th>
+      <td><p>optional character string specifying the name of a color to use for plotting ("black" is used by default if not specified). Can also be a vector of color names.</p></td>
     </tr>
     <tr>
       <th>lty</th>

@@ -233,21 +233,27 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 ### calculate log risk ratios and corresponding sampling variances
 dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
-### random-effects model (method="REML" is default, so technically not needed)
+### random-effects model, using log risk ratios and variances as input
+### note: method="REML" is the default, so one could leave this out
 rma(yi, vi, data=dat, method="REML")
-rma(yi, sei=sqrt(vi), data=dat, method="REML")
+
+### random-effects model, using log risk ratios and standard errors as input
+### note: the second argument of rma() is for the *variances*, so we use the
+### named argument 'sei' to supply the standard errors to the function
+dat$sei <- sqrt(dat$vi)
+rma(yi, sei=sei, data=dat)
 
 ### supplying the 2x2 table cell frequencies directly to the rma() function
-rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat, method="REML")
+rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat)
 
 ### mixed-effects model with two moderators (absolute latitude and publication year)
-rma(yi, vi, mods=cbind(ablat, year), data=dat, method="REML")
+rma(yi, vi, mods=cbind(ablat, year), data=dat)
 
 ### using a model formula to specify the same model
-rma(yi, vi, mods = ~ ablat + year, data=dat, method="REML")
+rma(yi, vi, mods = ~ ablat + year, data=dat)
 
 ### using a model formula as part of the yi argument
-rma(yi ~ ablat + year, vi, data=dat, method="REML")
+rma(yi ~ ablat + year, vi, data=dat)
 
 ### manual dummy coding of the allocation factor
 alloc.random     <- ifelse(dat$alloc == "random",     1, 0)
@@ -255,16 +261,18 @@ alloc.alternate  <- ifelse(dat$alloc == "alternate",  1, 0)
 alloc.systematic <- ifelse(dat$alloc == "systematic", 1, 0)
 
 ### test the allocation factor (in the presence of the other moderators)
-### note: "alternate" is the reference level of the allocation factor
-### note: the intercept is the first coefficient, so btt=c(2,3)
-rma(yi, vi, mods = ~ alloc.random + alloc.systematic + year + ablat,
-    data=dat, method="REML", btt=c(2,3))
+### note: 'alternate' is the reference level of the allocation factor,
+###       since this is the dummy/level we leave out of the model
+### note: the intercept is the first coefficient, so with btt=2:3 we test
+###       coefficients 2 and 3, corresponding to the coefficients for the
+###       allocation factor
+rma(yi, vi, mods = ~ alloc.random + alloc.systematic + year + ablat, data=dat, btt=2:3)
 
 ### using a model formula to specify the same model
-rma(yi, vi, mods = ~ factor(alloc) + year + ablat, data=dat, method="REML", btt=c(2,3))
+rma(yi, vi, mods = ~ factor(alloc) + year + ablat, data=dat, btt=2:3)
 
 ### test all pairwise differences with Holm's method (using the 'multcomp' package if installed)
-res <- rma(yi, vi, mods = ~ factor(alloc) - 1, data=dat, method="REML")
+res <- rma(yi, vi, mods = ~ factor(alloc) - 1, data=dat)
 res
 if (require(multcomp))
    summary(glht(res, linfct=contrMat(c("alternate"=1,"random"=1,"systematic"=1),
