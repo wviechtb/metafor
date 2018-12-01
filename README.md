@@ -53,4 +53,4 @@ This approach builds the package from source based on the development branch on 
 
 ## Meta
 
-The metafor package was written by [Wolfgang Viechtbauer](http://www.wvbauer.com/). It is licensed under the [GNU General Public License Version 2](http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt). For citation info, type `citation(package='metafor')` in R. To report any issues or bugs, please go [here](https://github.com/wviechtb/metafor/issues).
+The metafor package was written by [Wolfgang Viechtbauer](http://www.wvbauer.com/). It is licensed under the [GNU General Public License](http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt). For citation info, type `citation(package='metafor')` in R. To report any issues or bugs or to suggest enhancements to the package, please go [here](https://github.com/wviechtb/metafor/issues).

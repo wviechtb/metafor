@@ -105,7 +105,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
    if (hasArg(ci.lb) && hasArg(ci.ub)) {     ### CI bounds are specified by user
       if (length(ci.lb) != length(ci.ub))
-         stop(mstyle$stop("Length of 'ci.lb' and 'ci.ub' do not match."))
+         stop(mstyle$stop("Length of 'ci.lb' and 'ci.ub' is not the same."))
       if (missing(vi) && missing(sei)) {     ### vi/sei not specified, so calculate vi based on CI
          vi <- ((ci.ub - ci.lb) / (2*qnorm(level/2, lower.tail=FALSE)))^2
       } else {

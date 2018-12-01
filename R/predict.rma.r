@@ -104,7 +104,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
                   stop(mstyle$stop("Either specify both of 'tau2.levels' and 'gamma2.levels' or neither."))
                if (!is.null(tau2.levels) && !is.null(gamma2.levels)) {        #   # if user has specified both tau2s.levels and gamma2.levels
                   if (length(tau2.levels) != length(gamma2.levels))           #
-                     stop(mstyle$stop("Length of 'tau2.levels' and 'gamma2.levels' must be the same."))
+                     stop(mstyle$stop("Length of 'tau2.levels' and 'gamma2.levels' is not the same."))
                   k.new <- length(tau2.levels)                                #      # then we need to predict intercepts for those level combinations
                   X.new <- cbind(rep(1,k.new))                                #
                }                                                              #

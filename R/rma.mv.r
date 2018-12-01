@@ -295,7 +295,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
    ### check length of yi and V
 
    if (nrow(V) != k)
-      stop(mstyle$stop("Length of 'yi' and length/dimensions of 'V' are not the same."))
+      stop(mstyle$stop("Length of 'yi' and length/dimensions of 'V' is not the same."))
 
    ### force V to be sparse when sparse=TRUE (and V is not yet sparse)
 
@@ -346,7 +346,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
       ### check length of yi and A
 
       if (nrow(A) != k)
-         stop(mstyle$stop("Length of 'yi' and length/dimensions of 'W' are not the same."))
+         stop(mstyle$stop("Length of 'yi' and length/dimensions of 'W' is not the same."))
 
       ### force A to be sparse when sparse=TRUE (and A is not yet sparse)
 

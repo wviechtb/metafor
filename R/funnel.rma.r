@@ -90,17 +90,55 @@ refline, pch=19, pch.fill=21, col, bg, ci.res=1000, ...) {
 
    ### note: digits can also be a list (e.g., digits=list(2L,3))
 
-   if (missing(col))
-      col <- "black"
+   ### note: 'pch', 'col', and 'bg' are assumed to be of the same length as the original data passed to rma()
+   ###       so we have to apply the same subsetting (if necessary) and removing of NAs as done during the
+   ###       model fitting (note: NAs are removed further below)
 
-   if (length(col) == 1L)
-      col <- c(col, col)
+   if (length(pch) == 1L)
+      pch <- rep(pch, x$k.all)
+   if (length(pch) != x$k.all)
+      stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'pch' argument."))
 
-   if (missing(bg))
-      bg <- "white"
+   if (!is.null(x$subset))
+      pch <- pch[x$subset]
 
-   if (length(bg) == 1L)
-      bg <- c(bg, bg)
+   if (!inherits(x, "rma.uni.trimfill")) {
+
+      if (missing(col))
+         col <- "black"
+      if (length(col) == 1L)
+         col <- rep(col, x$k.all)
+      if (length(col) != x$k.all)
+         stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'col' argument."))
+
+      if (!is.null(x$subset))
+         col <- col[x$subset]
+
+      if (missing(bg))
+         bg <- "white"
+      if (length(bg) == 1L)
+         bg <- rep(bg, x$k.all)
+      if (length(bg) != x$k.all)
+         stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'bg' argument."))
+
+      if (!is.null(x$subset))
+         bg <- bg[x$subset]
+
+   } else {
+
+      ### for trimfill objects, 'col' and 'bg' is used to specify the colors of the observed and imputed data
+
+      if (missing(col))
+         col <- c("black", "black")
+      if (length(col) == 1L)
+         col <- c(col, "black")
+
+      if (missing(bg))
+         bg <- c("white", "white")
+      if (length(bg) == 1L)
+         bg <- c(bg, "white")
+
+   }
 
    #########################################################################
 
@@ -112,16 +150,24 @@ refline, pch=19, pch.fill=21, col, bg, ci.res=1000, ...) {
       if (missing(refline))
          refline <- c(x$beta)
 
-      if (inherits(x, "rma.mv"))
+      if (inherits(x, "rma.mv") && addtau2) {
+         warning(mstyle$warning("Argument 'addtau2' ignored for 'rma.mv' models."))
          addtau2 <- FALSE
+      }
 
-      tau2 <- ifelse(addtau2, x$tau2, 0)
-
-      yi   <- x$yi             ### yi/vi does not contain any NAs, so no need to check for missing here
+      yi   <- x$yi             ### yi/vi/ni is already subsetted and NAs are removed
       vi   <- x$vi
-      ni   <- x$ni             ### ni can be NULL and can still include NAs
+      ni   <- x$ni             ### ni can be NULL (and there may be 'additional' NAs)
       sei  <- sqrt(vi)
-      slab <- x$slab[x$not.na]
+      slab <- x$slab[x$not.na] ### slab is subsetted but NAs are not removed, so still need to do this here
+      pch  <- pch[x$not.na]    ### same for pch
+
+      if (!inherits(x, "rma.uni.trimfill")) {
+         col <- col[x$not.na]
+         bg  <- bg[x$not.na]
+      } else {
+         fill <- x$fill[x$not.na]
+      }
 
       if (missing(xlab))
          xlab <- .setlab(x$measure, transf.char="FALSE", atransf.char, gentype=1)
@@ -131,11 +177,14 @@ refline, pch=19, pch.fill=21, col, bg, ci.res=1000, ...) {
       if (missing(refline))
          refline <- 0
 
-      tau2 <- 0 ### when plotting residuals, tau2 should not be added to the vars/SEs of the residuals
+      if (addtau2) {
+         warning(mstyle$warning("Argument 'addtau2' ignored for models that contain moderators."))
+         addtau2 <- FALSE
+      }
 
-      options(na.action = "na.pass")
-
-      if (type == "rstandard") {
+      options(na.action = "na.pass") ### note: subsetted but include the NAs (there may even more
+                                     ###       NAs than the ones in x$not.na (rstudent() can fail),
+      if (type == "rstandard") {     ###       so we don't use x$not.na below
          res <- rstandard(x)
       } else {
          res <- rstudent(x)
@@ -151,11 +200,16 @@ refline, pch=19, pch.fill=21, col, bg, ci.res=1000, ...) {
       ni     <- x$ni.f[not.na]    ### ni can be NULL and can still include NAs
       vi     <- sei^2
       slab   <- x$slab[not.na]
+      pch    <- pch[not.na]
+      col    <- col[not.na]
+      bg     <- bg[not.na]
 
       if (missing(xlab))
          xlab <- "Residual Value"
 
    }
+
+   tau2 <- ifelse(addtau2, x$tau2, 0)
 
    ### get weights (omit any NAs)
 
@@ -412,12 +466,16 @@ refline, pch=19, pch.fill=21, col, bg, ci.res=1000, ...) {
    if (yaxis == "wi")
       yaxis.vals <- weights
 
-   points(xaxis.vals, yaxis.vals, pch=pch, col=col[1], bg=bg[2], ...)
+   if (!inherits(x, "rma.uni.trimfill")) {
 
-   ### add trim-and-fill points
+      points(xaxis.vals, yaxis.vals, pch=pch, col=col, bg=bg, ...)
 
-   if (inherits(x, "rma.uni.trimfill"))
-      points(xaxis.vals[x$fill], yaxis.vals[x$fill], pch=pch.fill, col=col[2], bg=bg[2], ...)
+   } else {
+
+      points(xaxis.vals[!fill], yaxis.vals[!fill], pch=pch,      col=col[1], bg=bg[1], ...)
+      points(xaxis.vals[fill],  yaxis.vals[fill],  pch=pch.fill, col=col[2], bg=bg[2], ...)
+
+   }
 
    #########################################################################
 
@@ -455,7 +513,9 @@ refline, pch=19, pch.fill=21, col, bg, ci.res=1000, ...) {
    ### prepare data frame to return
 
    sav <- data.frame(x=xaxis.vals, y=yaxis.vals, slab=slab)
-   sav$fill <- x$fill
+
+   if (inherits(x, "rma.uni.trimfill"))
+      sav$fill <- fill
 
    invisible(sav)
 

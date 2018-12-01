@@ -111,7 +111,9 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
       if (is.null(di)) di <- n2i - ci
       ni     <- ai + bi + ci + di
 
-      k   <- length(ai)
+      k <- length(ai) ### number of outcomes before subsetting
+      k.all <- k
+
       ids <- seq_len(k)
 
       ### generate study labels if none are specified
@@ -314,7 +316,9 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
       t2i    <- eval(mf.t2i, data, enclos=sys.frame(sys.parent()))
       ni     <- t1i + t2i
 
-      k   <- length(x1i)
+      k <- length(x1i) ### number of outcomes before subsetting
+      k.all <- k
+
       ids <- seq_len(k)
 
       ### generate study labels if none are specified
@@ -753,13 +757,13 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
 
       res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
                   tau2=tau2,
-                  k=k, k.f=k.f, k.yi=k.yi, k.pos=k.pos, k.eff=k.eff, p=p, parms=parms,
+                  k=k, k.f=k.f, k.yi=k.yi, k.pos=k.pos, k.eff=k.eff, k.all=k.all, p=p, parms=parms,
                   QE=QE, QEp=QEp, CO=CO, COp=COp, MH=MH, MHp=MHp, BD=BD, BDp=BDp, TA=TA, TAp=TAp, I2=I2, H2=H2,
                   int.only=int.only,
                   yi=yi, vi=vi, yi.f=yi.f, vi.f=vi.f, X.f=X.f,
                   ai=ai, bi=bi, ci=ci, di=di, ai.f=ai.f, bi.f=bi.f, ci.f=ci.f, di.f=di.f,
                   x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i, x1i.f=x1i.f, x2i.f=x2i.f, t1i.f=t1i.f, t2i.f=t2i.f, ni=ni, ni.f=ni.f,
-                  ids=ids, not.na=not.na, not.na.yivi=not.na.yivi, slab=slab, slab.null=slab.null,
+                  ids=ids, not.na=not.na, subset=subset, not.na.yivi=not.na.yivi, slab=slab, slab.null=slab.null,
                   measure=measure, method=method, weighted=weighted, test=test, dfs=dfs, intercept=intercept, digits=digits, level=level,
                   add=add, to=to, drop00=drop00, correct=correct,
                   fit.stats=fit.stats, version=packageVersion("metafor"), call=mf)

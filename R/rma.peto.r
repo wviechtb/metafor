@@ -98,7 +98,9 @@ level=95, digits=4, verbose=FALSE, ...) {
    if (is.null(di)) di <- n2i - ci
    ni     <- ai + bi + ci + di
 
-   k   <- length(ai)
+   k <- length(ai) ### number of outcomes before subsetting
+   k.all <- k
+
    ids <- seq_len(k)
 
    ### generate study labels if none are specified
@@ -381,11 +383,11 @@ level=95, digits=4, verbose=FALSE, ...) {
 
       res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
                   tau2=tau2,
-                  k=k, k.f=k.f, k.yi=k.yi, k.pos=k.pos, k.eff=k.eff, p=p, parms=parms,
+                  k=k, k.f=k.f, k.yi=k.yi, k.pos=k.pos, k.eff=k.eff, k.all=k.all, p=p, parms=parms,
                   QE=QE, QEp=QEp, I2=I2, H2=H2,
                   int.only=int.only,
                   yi=yi, vi=vi, yi.f=yi.f, vi.f=vi.f, X.f=X.f, ai=ai, bi=bi, ci=ci, di=di, ai.f=ai.f, bi.f=bi.f, ci.f=ci.f, di.f=di.f, ni=ni, ni.f=ni.f,
-                  ids=ids, not.na=not.na, not.na.yivi=not.na.yivi, slab=slab, slab.null=slab.null,
+                  ids=ids, not.na=not.na, subset=subset, not.na.yivi=not.na.yivi, slab=slab, slab.null=slab.null,
                   measure=measure, method=method, weighted=weighted, test=test, dfs=dfs, intercept=intercept, digits=digits, level=level,
                   add=add, to=to, drop00=drop00,
                   fit.stats=fit.stats, call=mf)

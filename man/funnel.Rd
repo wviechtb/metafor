@@ -18,7 +18,7 @@ funnel(x, \dots)
        xlim, ylim, xlab, ylab,
        steps=5, at, atransf, targs, digits, level=95,
        back="lightgray", shade="white", hlines="white",
-       refline=0, pch=19, pch.fill=21, col, bg, ci.res=1000, \dots)
+       refline=0, pch=19, col, bg, ci.res=1000, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma"} or a vector with the observed effect sizes or outcomes.}
@@ -45,8 +45,8 @@ funnel(x, \dots)
    \item{refline}{value at which to draw the vertical reference line and, if drawn, where the pseudo confidence interval should be centered. If unspecified, the reference line is drawn at the fixed- or random-effects model estimate when the model does not include moderators and at zero when moderators are included (and therefore residuals are plotted) or when directly plotting observed effect sizes or outcomes.}
    \item{pch}{plotting symbol to use for the observed effect sizes or outcomes. By default, a solid circle is used. Can also be a vector of values. See \code{\link{points}} for other options.}
    \item{pch.fill}{plotting symbol to use for the effect sizes or outcomes filled in by the trim and fill method. By default, a circle is used. Only relevant when plotting an object created by the \code{\link{trimfill}} function.}
-   \item{col}{optional character string specifying the name of a color to use for the points.}
-   \item{bg}{optional character string specifying the name of a background color for open plot symbols.}
+   \item{col}{optional character string specifying the name of a color to use for the points ("black" is used by default if not specified). Can also be a vector of color names.}
+   \item{bg}{optional character string specifying the name of a background color for open plot symbols ("white" is used by default if not specified). Can also be a vector of color names.}
    \item{ci.res}{integer specifying the number of y-axis values at which to calculate the bounds of the pseudo confidence interval. The default is \code{1000}, which usually provides a sufficient resolution for the plotting.}
    \item{\dots}{other arguments.}
 }
@@ -80,6 +80,8 @@ funnel(x, \dots)
    Placing (a function of) the sample size on the y-axis (i.e., using \code{yaxis="ni"}, \code{yaxis="ninv"}, \code{yaxis="sqrtni"}, \code{yaxis="sqrtninv"}, or \code{yaxis="lni"}) is only possible when information about the sample sizes is actually stored within the object passed to the \code{funnel} function. That should automatically be the case when the observed outcomes were computed with the \code{escalc} function or when the observed outcomes were computed within the model fitting function. On the other hand, this will not automatically be the case when \code{rma.uni} was used together with the \code{yi} and \code{vi} arguments and the \code{yi} and \code{vi} values were \emph{not} computed with \code{escalc}. In that case, it is still possible to pass information about the sample sizes to the \code{rma.uni} function (i.e., use \code{rma.uni(yi, vi, ni)}).
 
    When using unweighted estimation, using \code{yaxis="wi"} will place all points on a horizontal line. When directly passing a vector of observed effect sizes or outcomes to the function, \code{yaxis="wi"} is equivalent to \code{yaxis="vinv"}, except that the weights are expressed in percent.
+
+   When specifying vectors for \code{pch}, \code{col}, and/or \code{bg}, the variables specified are assumed to be of the same length as the data passed to the funnel function or the model fitting function (when using \code{funnel} on a model object). Any subsetting and removal of studies with missing values is automatically applied to the variables specified via \code{pch}, \code{col}, and \code{bg}.
 }
 \value{
    A data frame with components:
@@ -124,12 +126,19 @@ funnel(res, atransf=exp)
 funnel(dat$yi, dat$vi)
 funnel(res, refline=0)
 
-### funnel plot with risk ratio values on the x-axis
+### funnel plot with risk ratio values on the x-axis (log scale)
 funnel(res, atransf=exp, at=log(c(.12, .25, .5, 1, 2)))
 
 ### contour-enhanced funnel plot centered at 0 (see Peters et al., 2008)
+funnel(res, level=c(90, 95, 99), shade=c("white", "gray", "darkgray"), refline=0)
+
+### same, but show risk ratio values on the x-axis
 funnel(res, level=c(90, 95, 99), shade=c("white", "gray", "darkgray"),
        refline=0, atransf=exp, at=log(c(.10, .25, .5, 1, 2, 4, 10)))
+
+### illustrate the use of vectors for 'pch' and 'col'
+res <- rma(yi, vi, data=dat, subset=2:10)
+funnel(res, pch=ifelse(dat$yi > -1, 19, 21), col=ifelse(sqrt(dat$vi) > .3, "red", "blue"))
 
 ### mixed-effects model with absolute latitude in the model
 res <- rma(yi, vi, mods = ~ ablat, data=dat)
@@ -148,6 +157,7 @@ gencor <- function(rhoi, ni) {
    cor(x1, x3)
 }
 
+set.seed(1234)
 k  <- 200                               ### number of studies to simulate
 ni <- round(rchisq(k, df=2) * 20 + 20)  ### simulate sample sizes (skewed distribution)
 ri <- mapply(gencor, rep(0.2,k), ni)    ### simulate correlations

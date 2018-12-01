@@ -139,6 +139,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       if (is.null(di)) di <- n2i - ci
 
       k <- length(ai) ### number of outcomes before subsetting
+      k.all <- k
 
       if (!is.null(subset)) {
          ai <- ai[subset]
@@ -163,6 +164,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       t2i    <- eval(mf.t2i, data, enclos=sys.frame(sys.parent()))
 
       k <- length(x1i) ### number of outcomes before subsetting
+      k.all <- k
 
       if (!is.null(subset)) {
          x1i <- x1i[subset]
@@ -186,6 +188,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       if (is.null(mi)) mi <- ni - xi
 
       k <- length(xi) ### number of outcomes before subsetting
+      k.all <- k
 
       if (!is.null(subset)) {
          xi <- xi[subset]
@@ -204,6 +207,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       ti    <- eval(mf.ti, data, enclos=sys.frame(sys.parent()))
 
       k <- length(xi) ### number of outcomes before subsetting
+      k.all <- k
 
       if (!is.null(subset)) {
          xi <- xi[subset]
@@ -1823,14 +1827,14 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
       res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
                   tau2=tau2, se.tau2=se.tau2, sigma2=sigma2,
-                  k=k, k.f=k.f, k.yi=k.yi, k.eff=k.eff, p=p, p.eff=p.eff, parms=parms, m=m,
+                  k=k, k.f=k.f, k.yi=k.yi, k.eff=k.eff, k.all=k.all, p=p, p.eff=p.eff, parms=parms, m=m,
                   QE.Wld=QE.Wld, QEp.Wld=QEp.Wld, QE.LRT=QE.LRT, QEp.LRT=QEp.LRT, QE.df=QE.df, QM=QM, QMp=QMp, I2=I2, H2=H2,
                   int.only=int.only, int.incl=int.incl,
                   yi=yi, vi=vi, X=X, yi.f=yi.f, vi.f=vi.f, X.f=X.f,
                   ai=ai, bi=bi, ci=ci, di=di, ai.f=ai.f, bi.f=bi.f, ci.f=ci.f, di.f=di.f,
                   x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i, x1i.f=x1i.f, x2i.f=x2i.f, t1i.f=t1i.f, t2i.f=t2i.f,
                   xi=xi, mi=mi, ti=ti, xi.f=xi.f, mi.f=mi.f, ti.f=ti.f, ni=ni, ni.f=ni.f,
-                  ids=ids, not.na=not.na, not.na.yivi=not.na.yivi, slab=slab, slab.null=slab.null,
+                  ids=ids, not.na=not.na, subset=subset, not.na.yivi=not.na.yivi, slab=slab, slab.null=slab.null,
                   measure=measure, method=method, model=model, weighted=weighted, test=test, dfs=dfs, btt=btt, intercept=intercept, digits=digits, level=level, control=control, verbose=verbose,
                   add=add, to=to, drop00=drop00,
                   fit.stats=fit.stats, version=packageVersion("metafor"), call=mf)

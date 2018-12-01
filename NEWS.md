@@ -1,4 +1,4 @@
-# metafor 2.1-0 (2018-11-29)
+# metafor 2.1-0 (2018-12-01)
 
 - added `reporter()` and `reporter.rma.uni()` for dynamically generating analysis reports for objects of class `rma.uni`
 
@@ -49,6 +49,8 @@
 - the various `forest()` functions now show correct point sizes when the weights of the studies are exactly the same
 
 - `forest.cumul.rma()` gains a `col` argument
+
+- `funnel.default()` and `funnel.rma()` can now take vectors as input for the `col` and `bg` arguments (and also for `pch`)
 
 - `addpoly()` functions can now also show credibility interval bounds
 

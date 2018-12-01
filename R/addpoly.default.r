@@ -64,7 +64,7 @@ atransf, targs, efac=1, col, border, fonts, cex, ...) {
       ### CI bounds are specified by user
 
       if (length(ci.lb) != length(ci.ub))
-         stop(mstyle$stop("Length of 'ci.lb' and 'ci.ub' do not match."))
+         stop(mstyle$stop("Length of 'ci.lb' and 'ci.ub' is not the same."))
 
       if (missing(vi) && missing(sei)) {
 
@@ -109,10 +109,10 @@ atransf, targs, efac=1, col, border, fonts, cex, ...) {
    if (hasArg(cr.lb) && hasArg(cr.ub)) {
 
       if (length(cr.lb) != length(cr.ub))
-         stop(mstyle$stop("Length of 'cr.lb' and 'cr.ub' do not match."))
+         stop(mstyle$stop("Length of 'cr.lb' and 'cr.ub' is not the same."))
 
       if (length(cr.lb) != length(yi))
-         stop(mstyle$stop("Length of ('ci.lb', 'ci.ub') does not match length of 'x'."))
+         stop(mstyle$stop("Length of ('cr.lb', 'cr.ub') does not match length of 'x'."))
 
    } else {
 

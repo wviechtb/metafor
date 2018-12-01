@@ -207,6 +207,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
       ### number of outcomes before subsetting
 
       k <- length(yi)
+      k.all <- k
 
       ### if the user has specified 'measure' to be something other than "GEN", then use that for the measure argument
       ### otherwise, if yi has a 'measure' attribute, use that to set the 'measure' argument
@@ -268,7 +269,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
       ### check length of yi and vi
 
       if (length(vi) != k)
-         stop(mstyle$stop("Length of 'yi' and 'vi' (or 'sei') vectors are not the same."))
+         stop(mstyle$stop("Length of 'yi' and 'vi' (or 'sei') is not the same."))
 
       ### if ni has not been specified but is an attribute of yi, get it
 
@@ -338,6 +339,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
          if (is.null(di)) di <- n2i - ci
 
          k <- length(ai) ### number of outcomes before subsetting
+         k.all <- k
 
          if (!is.null(subset)) {
             ai <- ai[subset]
@@ -362,6 +364,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
          t2i    <- eval(mf.t2i, data, enclos=sys.frame(sys.parent()))
 
          k <- length(x1i) ### number of outcomes before subsetting
+         k.all <- k
 
          if (!is.null(subset)) {
             x1i <- x1i[subset]
@@ -390,6 +393,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
          n2i     <- eval(mf.n2i,  data, enclos=sys.frame(sys.parent()))
 
          k <- length(n1i) ### number of outcomes before subsetting
+         k.all <- k
 
          if (!is.null(subset)) {
             m1i  <- m1i[subset]
@@ -412,6 +416,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
          ni    <- eval(mf.ni, data, enclos=sys.frame(sys.parent()))
 
          k <- length(ri) ### number of outcomes before subsetting
+         k.all <- k
 
          if (!is.null(subset)) {
             ri <- ri[subset]
@@ -434,6 +439,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
          ni     <- eval(mf.ni,  data, enclos=sys.frame(sys.parent()))
 
          k <- length(ti) ### number of outcomes before subsetting
+         k.all <- k
 
          if (!is.null(subset)) {
             ti  <- ti[subset]
@@ -457,6 +463,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
          if (is.null(mi)) mi <- ni - xi
 
          k <- length(xi) ### number of outcomes before subsetting
+         k.all <- k
 
          if (!is.null(subset)) {
             xi <- xi[subset]
@@ -475,6 +482,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
          ti    <- eval(mf.ti, data, enclos=sys.frame(sys.parent()))
 
          k <- length(xi) ### number of outcomes before subsetting
+         k.all <- k
 
          if (!is.null(subset)) {
             xi <- xi[subset]
@@ -495,6 +503,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
          ni     <- eval(mf.ni,  data, enclos=sys.frame(sys.parent()))
 
          k <- length(ni) ### number of outcomes before subsetting
+         k.all <- k
 
          if (!is.null(subset)) {
             mi  <- mi[subset]
@@ -522,6 +531,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
          ni      <- eval(mf.ni,   data, enclos=sys.frame(sys.parent()))
 
          k <- length(m1i) ### number of outcomes before subsetting
+         k.all <- k
 
          if (!is.null(subset)) {
             m1i  <- m1i[subset]
@@ -546,6 +556,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
          ni    <- eval(mf.ni,  data, enclos=sys.frame(sys.parent()))
 
          k <- length(ai) ### number of outcomes before subsetting
+         k.all <- k
 
          if (!is.null(subset)) {
             ai <- ai[subset]
@@ -578,7 +589,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
    ### check length of yi and weights (only if weights is not NULL)
 
    if (!is.null(weights) && (length(weights) != k))
-      stop(mstyle$stop("Length of 'yi' and 'weights' vectors are not the same."))
+      stop(mstyle$stop("Length of 'yi' and 'weights' is not the same."))
 
    ### subsetting of weights
 
@@ -1813,7 +1824,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
       res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
                   tau2=tau2, se.tau2=se.tau2, tau2.fix=tau2.fix, tau2.f=tau2,
-                  k=k, k.f=k.f, k.eff=k.eff, p=p, p.eff=p.eff, parms=parms, m=m,
+                  k=k, k.f=k.f, k.eff=k.eff, k.all=k.all, p=p, p.eff=p.eff, parms=parms, m=m,
                   QE=QE, QEp=QEp, QM=QM, QMp=QMp, I2=I2, H2=H2, R2=R2,
                   int.only=int.only, int.incl=int.incl, allvipos=allvipos, coef.na=coef.na,
                   yi=yi, vi=vi, X=X, weights=weights, yi.f=yi.f, vi.f=vi.f, X.f=X.f, weights.f=weights.f, M=M,

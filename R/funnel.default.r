@@ -1,7 +1,7 @@
 funnel.default <- function(x, vi, sei, ni, subset, yaxis="sei", xlim, ylim, xlab, ylab,
 steps=5, at, atransf, targs, digits, level=95,
 back="lightgray", shade="white", hlines="white",
-refline=0, pch=19, pch.fill=21, col, bg, ci.res=1000, ...) {
+refline=0, pch=19, col, bg, ci.res=1000, ...) {
 
    #########################################################################
 
@@ -24,7 +24,9 @@ refline=0, pch=19, pch.fill=21, col, bg, ci.res=1000, ...) {
 
    yi <- x
 
-   ### check if sample size information is available if plotting (some function of) sample sizes
+   k <- length(yi)
+
+   ### check if sample size information is available if plotting (some function of) of the sample sizes on the y-axis
 
    if (missing(ni))
       ni <- NULL
@@ -32,8 +34,8 @@ refline=0, pch=19, pch.fill=21, col, bg, ci.res=1000, ...) {
    if (is.element(yaxis, c("ni", "ninv", "sqrtni", "sqrtninv", "lni"))) {
       if (is.null(ni) && !is.null(attr(yi, "ni")))
          ni <- attr(yi, "ni")
-      if (!is.null(ni) && length(ni) != length(yi))
-         ni <- NULL
+      if (!is.null(ni) && length(ni) != k)
+         stop(mstyle$stop("Sample size information not of same length as data."))
       if (is.null(ni))
          stop(mstyle$stop("No sample size information available."))
    }
@@ -55,8 +57,12 @@ refline=0, pch=19, pch.fill=21, col, bg, ci.res=1000, ...) {
          sei <- sqrt(vi)
    }
 
-   if (is.element(yaxis, c("sei", "vi", "seinv", "vinv", "wi")) && is.null(vi))
-      stop(mstyle$stop("Need to specify 'vi' or 'sei' argument."))
+   if (is.element(yaxis, c("sei", "vi", "seinv", "vinv", "wi"))) {
+      if (is.null(vi))
+         stop(mstyle$stop("Need to specify 'vi' or 'sei' argument."))
+      if (length(vi) != k)
+         stop(mstyle$stop("Length of 'yi' and 'vi' (or 'sei') is not the same."))
+   }
 
    ### set negative variances and/or standard errors to 0
 
@@ -69,7 +75,7 @@ refline=0, pch=19, pch.fill=21, col, bg, ci.res=1000, ...) {
 
    slab <- attr(yi, "slab")
 
-   if (is.null(slab) || length(slab) != length(yi))
+   if (is.null(slab) || length(slab) != k)
       slab <- seq_along(yi)
 
    ### set y-axis label if not specified
@@ -133,17 +139,24 @@ refline=0, pch=19, pch.fill=21, col, bg, ci.res=1000, ...) {
 
    ### note: digits can also be a list (e.g., digits=list(2L,3))
 
+   if (length(pch) == 1L)
+      pch <- rep(pch, k)
+   if (length(pch) != k)
+      stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'pch' argument."))
+
    if (missing(col))
       col <- "black"
-
    if (length(col) == 1L)
-      col <- c(col, col)
+      col <- rep(col, k)
+   if (length(col) != k)
+      stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'col' argument."))
 
    if (missing(bg))
       bg <- "white"
-
    if (length(bg) == 1L)
-      bg <- c(bg, bg)
+      bg <- rep(bg, k)
+   if (length(bg) != k)
+      stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'bg' argument."))
 
    #########################################################################
 
@@ -155,6 +168,9 @@ refline=0, pch=19, pch.fill=21, col, bg, ci.res=1000, ...) {
       sei  <- sei[subset]
       ni   <- ni[subset]
       slab <- slab[subset]
+      pch  <- pch[subset]
+      col  <- col[subset]
+      bg   <- bg[subset]
    }
 
    ### check for NAs and act accordingly
@@ -172,6 +188,9 @@ refline=0, pch=19, pch.fill=21, col, bg, ci.res=1000, ...) {
          sei  <- sei[not.na]
          ni   <- ni[not.na]
          slab <- slab[not.na]
+         pch  <- pch[not.na]
+         col  <- col[not.na]
+         bg   <- bg[not.na]
 
       }
 
@@ -191,6 +210,8 @@ refline=0, pch=19, pch.fill=21, col, bg, ci.res=1000, ...) {
    ### get weights
 
    if (yaxis == "wi") {
+      if (any(vi <= 0))
+         stop(mstyle$stop("Cannot plot weights with non-positive sampling variances."))
       weights <- 1/vi
       weights <- weights / sum(weights) * 100
    }
@@ -442,7 +463,7 @@ refline=0, pch=19, pch.fill=21, col, bg, ci.res=1000, ...) {
    if (yaxis == "wi")
       yaxis.vals <- weights
 
-   points(xaxis.vals, yaxis.vals, pch=pch, col=col[1], bg=bg[1], ...)
+   points(xaxis.vals, yaxis.vals, pch=pch, col=col, bg=bg, ...)
 
    #########################################################################
 
