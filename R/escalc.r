@@ -148,6 +148,9 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
          if (!all(length(ai) == c(length(ai),length(bi),length(ci),length(di))))
             stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
+         if (any(c(ai > n1i, ci > n2i), na.rm=TRUE))
+            stop(mstyle$stop("One or more event counts are larger than the corresponding group sizes."))
+
          if (any(c(ai, bi, ci, di) < 0, na.rm=TRUE))
             stop(mstyle$stop("One or more counts are negative."))
 
@@ -1103,6 +1106,9 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
          if (length(xi) != length(mi))
             stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
+         if (any(xi > ni, na.rm=TRUE))
+            stop(mstyle$stop("One or more event counts are larger than the corresponding group sizes."))
+
          if (any(c(xi, mi) < 0, na.rm=TRUE))
             stop(mstyle$stop("One or more counts are negative."))
 
@@ -1547,8 +1553,8 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
       if (is.element(measure, c("MC","SMCC","SMCR","SMCRH","ROMC","CVRC","VRC"))) {
 
-         mf.m1i  <- mf[[match("m1i",  names(mf))]]
-         mf.m2i  <- mf[[match("m2i",  names(mf))]]
+         mf.m1i  <- mf[[match("m1i",  names(mf))]] ### for VRC, do not need to supply this
+         mf.m2i  <- mf[[match("m2i",  names(mf))]] ### for VRC, do not need to supply this
          mf.sd1i <- mf[[match("sd1i", names(mf))]]
          mf.sd2i <- mf[[match("sd2i", names(mf))]] ### for SMCR, do not need to supply this
          mf.ni   <- mf[[match("ni",   names(mf))]]
