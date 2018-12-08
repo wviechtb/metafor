@@ -33,8 +33,9 @@
    Fine, H. A., Dear, K. B., Loeffler, J. S., Black, P. M., & Canellos, G. P. (1993). Meta-analysis of radiation therapy with and without adjuvant chemotherapy for malignant gliomas in adults. \emph{Cancer}, \bold{71}, 2585--2597.
 }
 \examples{
-### load data
-dat <- get(data(dat.fine1993))
+### copy data into 'dat' and examine data
+dat <- dat.fine1993
+dat
 
 ### calculate log(ORs) and sampling variances for each time point
 dat <- escalc(measure="OR", ai=e1i, n1i=nei, ci=c1i, n2i=nci, data=dat, var.names=c("y1i","v1i"))

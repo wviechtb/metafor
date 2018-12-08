@@ -33,8 +33,9 @@
    Raudenbush, S. W., & Bryk, A. S. (1985). Empirical Bayes meta-analysis. \emph{Journal of Educational Statistics}, \bold{10}, 75--98.
 }
 \examples{
-### load data
-dat <- get(data(dat.raudenbush1985))
+### copy data into 'dat' and examine data
+dat <- dat.raudenbush1985
+dat
 
 ### random-effects model
 res <- rma(yi, vi, data=dat)

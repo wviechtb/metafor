@@ -157,9 +157,28 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>### load data</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'>get</span>(<span class='fu'>data</span>(<span class='no'>dat.raudenbush1985</span>))
-
+    <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat' and examine data</span>
+<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.raudenbush1985</span>
+<span class='no'>dat</span></div><div class='output co'>#&gt;    study               author year weeks setting tester n1i n2i      yi     vi 
+#&gt; 1      1     Rosenthal et al. 1974     2   group  aware  77 339  0.0300 0.0156 
+#&gt; 2      2          Conn et al. 1968    21   group  aware  60 198  0.1200 0.0216 
+#&gt; 3      3          Jose &amp; Cody 1971    19   group  aware  72  72 -0.1400 0.0279 
+#&gt; 4      4   Pellegrini &amp; Hicks 1972     0   group  aware  11  22  1.1800 0.1391 
+#&gt; 5      5   Pellegrini &amp; Hicks 1972     0   group  blind  11  22  0.2600 0.1362 
+#&gt; 6      6    Evans &amp; Rosenthal 1969     3   group  aware 129 348 -0.0600 0.0106 
+#&gt; 7      7       Fielder et al. 1971    17   group  blind 110 636 -0.0200 0.0106 
+#&gt; 8      8             Claiborn 1969    24   group  aware  26  99 -0.3200 0.0484 
+#&gt; 9      9               Kester 1969     0   group  aware  75  74  0.2700 0.0269 
+#&gt; 10    10              Maxwell 1970     1   indiv  blind  32  32  0.8000 0.0630 
+#&gt; 11    11               Carter 1970     0   group  blind  22  22  0.5400 0.0912 
+#&gt; 12    12              Flowers 1966     0   group  blind  43  38  0.1800 0.0497 
+#&gt; 13    13              Keshock 1970     1   indiv  blind  24  24 -0.0200 0.0835 
+#&gt; 14    14            Henrikson 1970     2   indiv  blind  19  32  0.2300 0.0841 
+#&gt; 15    15                 Fine 1972    17   group  aware  80  79 -0.1800 0.0253 
+#&gt; 16    16              Grieger 1970     5   group  blind  72  72 -0.0600 0.0279 
+#&gt; 17    17 Rosenthal &amp; Jacobson 1968     1   group  aware  65 255  0.3000 0.0193 
+#&gt; 18    18   Fleming &amp; Anttonen 1971     2   group  blind 233 224  0.0700 0.0088 
+#&gt; 19    19             Ginsburg 1970     7   group  aware  65  67 -0.0700 0.0303 </div><div class='input'>
 <span class='co'>### random-effects model</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
 <span class='no'>res</span></div><div class='output co'>#&gt; 

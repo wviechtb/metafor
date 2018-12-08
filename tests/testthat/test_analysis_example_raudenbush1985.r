@@ -5,7 +5,7 @@
 context("Checking analysis example: raudenbush1985")
 
 ### load data
-dat <- get(data(dat.raudenbush1985, package="metafor"))
+dat <- dat.raudenbush1985
 
 test_that("results are correct for the random-effects model.", {
 

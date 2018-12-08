@@ -160,9 +160,26 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>### load data</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'>get</span>(<span class='fu'>data</span>(<span class='no'>dat.fine1993</span>))
-
+    <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat' and examine data</span>
+<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.fine1993</span>
+<span class='no'>dat</span></div><div class='output co'>#&gt;    study nei nci e1i c1i e2i c2i e3i c3i e4i c4i
+#&gt; 1      1  19  22  16  20  11  12   4   8   4   3
+#&gt; 2      2  34  35  22  22  18  12  15   8  15   6
+#&gt; 3      3  72  68  44  40  21  15  10   3   3   0
+#&gt; 4      4  22  20  19  12  14   5   5   4   2   3
+#&gt; 5      5  70  32  62  27  42  13  26   6  15   5
+#&gt; 6      6 183  94 130  65  80  33  47  14  30  11
+#&gt; 7      7  26  50  24  30  13  18   5  10   3   9
+#&gt; 8      8  61  55  51  44  37  30  19  19  11  15
+#&gt; 9      9  36  25  30  17  23  12  13   4  10   4
+#&gt; 10    10  45  35  43  35  19  14   8   4   6   0
+#&gt; 11    11 246 208 169 139 106  76  67  42  51  35
+#&gt; 12    12 386 141 279  97 170  46  97  21  73   8
+#&gt; 13    13  59  32  56  30  34  17  21   9  20   7
+#&gt; 14    14  45  15  42  10  18   3   9   1   9   1
+#&gt; 15    15  14  18  14  18  13  14  12  13   9  12
+#&gt; 16    16  26  19  21  15  12  10   6   4   5   1
+#&gt; 17    17  74  75  NA  NA  42  40  NA  NA  23  30</div><div class='input'>
 <span class='co'>### calculate log(ORs) and sampling variances for each time point</span>
 <span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>e1i</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>nei</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>c1i</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>nci</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>var.names</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='st'>"y1i"</span>,<span class='st'>"v1i"</span>))
 <span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>e2i</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>nei</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>c2i</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>nci</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>var.names</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='st'>"y2i"</span>,<span class='st'>"v2i"</span>))

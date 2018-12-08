@@ -29,11 +29,12 @@
    Salanti, G., Higgins, J. P. T., Ades, A. E., & Ioannidis, J. P. A. (2008). Evaluation of networks of randomized trials. \emph{Statistical Methods in Medical Research}, \bold{17}, 279--301.
 }
 \examples{
-### load data
-dat <- get(data(dat.hasselblad1998))
+### copy data into 'dat'
+dat <- dat.hasselblad1998
 
 ### calculate log odds for each study arm
 dat <- escalc(measure="PLO", xi=xi, ni=ni, add=1/2, to="all", data=dat)
+dat
 
 ### create network graph ('plyr' and 'igraph' packages must be installed)
 \dontrun{

@@ -3,7 +3,7 @@
 context("Checking analysis example: ishak2007")
 
 ### load dataset
-dat <- get(data(dat.ishak2007, package="metafor"))
+dat <- dat.ishak2007
 
 ### create long format dataset
 dat.long <- reshape(dat, direction="long", idvar="study", v.names=c("yi","vi"),

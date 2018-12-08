@@ -48,11 +48,12 @@
    Curtis, P. S., & Wang, X. (1998). A meta-analysis of elevated CO2 effects on woody plant mass, form, and physiology. \emph{Oecologia}, \bold{113}, 299--313.
 }
 \examples{
-### load data
-dat <- get(data(dat.curtis1998))
+### copy data into 'dat'
+dat <- dat.curtis1998
 
 ### calculate log ratio of means and corresponding sampling variances
-dat <- escalc(measure="ROM", m1i=m1i, sd1i=sd1i, n1i=n1i, m2i=m2i, sd2i=sd2i, n2i=n2i, data=dat)
+dat <- escalc(measure="ROM", m1i=m1i, sd1i=sd1i, n1i=n1i,
+                             m2i=m2i, sd2i=sd2i, n2i=n2i, data=dat)
 dat
 
 ### meta-analysis of log ratio of means using a random-effects model

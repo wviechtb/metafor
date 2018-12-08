@@ -165,15 +165,62 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>### load data</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'>get</span>(<span class='fu'>data</span>(<span class='no'>dat.linde2005</span>))
+    <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat'</span>
+<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.linde2005</span>
 
 <span class='co'>### remove studies with no response information and study with no responses in either group</span>
 <span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat</span>[-<span class='fu'>c</span>(<span class='fl'>5</span>,<span class='fl'>6</span>,<span class='fl'>26</span>),]
 
 <span class='co'>### calculate log risk ratios and corresponding sampling variances</span>
 <span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>ai</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>ci</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>n1i</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>n2i</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
-
+<span class='no'>dat</span></div><div class='output co'>#&gt;    id             study year         country  ni major baseline version 
+#&gt; 1   1   Hoffman &amp; Kuehl 1979         Germany  60     0       NA      NA 
+#&gt; 2   2    Schlich et al. 1987         Germany  49     0     31.3      21 
+#&gt; 3   3    Schmidt et al. 1989         Germany  40     0     29.4      21 
+#&gt; 4   4            Halama 1991         Germany  50     0     18.2      17 
+#&gt; 7   7        Reh et al. 1992         Germany  50     0     19.5      21 
+#&gt; 8   8    Huebner et al. 1993         Germany  40     0     12.5      17 
+#&gt; 9   9     Lehrl &amp; Woelk 1993         Germany  50     1     22.7      21 
+#&gt; 10 10  Schmidt &amp; Sommer 1993         Germany  65     0     16.5      21 
+#&gt; 11 11     Quandt et al. 1993         Germany  88     0     17.6      21 
+#&gt; 12 12            Koenig 1993     Switzerland 112     0       NA      NA 
+#&gt; 13 13   Sommer &amp; Harrer 1994 Germany/Austria 105     0     15.8      21 
+#&gt; 14 14      Witte et al. 1995         Germany  97     1     23.6      21 
+#&gt; 15 15 Haensgen &amp; Vesper 1996         Germany 197     1     20.7      21 
+#&gt; 16 16   Laakmann et al. 1998         Germany 147     1     21.1      17 
+#&gt; 17 17   Schrader et al. 1998         Germany 162     1     19.4      21 
+#&gt; 18 18    Philipp et al. 1999         Germany 263     1     22.7      17 
+#&gt; 19 19     Winkel et al. 2000         Germany 119     0     16.7      21 
+#&gt; 20 20       Volz et al. 2000         Germany 140     1     20.9      21 
+#&gt; 21 21 Montgomery et al. 2000              UK 247     1     21.5      17 
+#&gt; 22 22       Kalb et al. 2001         Germany  72     1     19.9      17 
+#&gt; 23 23    Shelton et al. 2001             USA 200     1     22.5      17 
+#&gt; 24 24             HDTSG 2002             USA 340     1     22.9      17 
+#&gt; 25 25  Lecrubier et al. 2002          France 375     1     21.9      17 
+#&gt;    duration         prep dosage response ai n1i ci n2i group      yi     vi 
+#&gt; 1         6   Hyperforat     NA        4 19  30  3  30     3  1.8458 0.3193 
+#&gt; 2         4 PsychotoninM    350        1 15  25  3  24     3  1.5686 0.3183 
+#&gt; 3         4 PsychotoninM    500        1 10  20  4  20     3  0.9163 0.2500 
+#&gt; 4         4        LI160    900        1 10  25  0  25     3  3.0445 2.0183 
+#&gt; 7         8   Neuroplant    380        1 20  25 11  25     4  0.5978 0.0609 
+#&gt; 8         4        LI160    900        1 14  20  9  20     4  0.4418 0.0825 
+#&gt; 9         4        LI160    900        1  4  25  2  25     1  0.6931 0.6700 
+#&gt; 10        6        LI160    900        1 20  32  6  33     4  1.2347 0.1551 
+#&gt; 11        4 PsychotoninM    500        1 29  44  3  44     3  2.2687 0.3224 
+#&gt; 12        6       Z90017    750        4 29  55 31  57     4 -0.0310 0.0310 
+#&gt; 13        4        LI160    900        1 28  50 13  55     4  0.8626 0.0745 
+#&gt; 14        6 Psychotoninf    240        1 34  48 25  49     2  0.3281 0.0282 
+#&gt; 15        4        LI160    900        1 35  53 12  54     1  1.0891 0.0745 
+#&gt; 16        6       WS5572    900        2 24  49 16  49     1  0.4055 0.0634 
+#&gt; 17        6        ZE117    500        1 45  80 12  79     1  1.3092 0.0804 
+#&gt; 18        6     STEI3000   1050        1 67 106 22  47     2  0.3004 0.0297 
+#&gt; 19        6        LI160    900        3 34  60 17  59     4  0.6763 0.0546 
+#&gt; 20        6        D0496    500        5 46  70 34  70     2  0.3023 0.0226 
+#&gt; 21        6        LI160    900        1 55 123 57 124     2 -0.0276 0.0195 
+#&gt; 22        6       WS5572    900        2 23  37 15  35     1  0.3719 0.0545 
+#&gt; 23        8        LI160   1050        2 26  98 19 102     1  0.3537 0.0711 
+#&gt; 24        8        LI160   1200        1 46 113 56 116     2 -0.1705 0.0221 
+#&gt; 25        6       WS5570    900        2 98 186 80 189     2  0.2189 0.0120 </div><div class='input'>
 <span class='co'>### meta-analysis of the log risk ratios using a random-effects model</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"DL"</span>)
 <span class='no'>res</span></div><div class='output co'>#&gt; 

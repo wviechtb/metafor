@@ -154,9 +154,19 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>### load data</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'>get</span>(<span class='fu'>data</span>(<span class='no'>dat.berkey1998</span>))
-
+    <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat' and examine data</span>
+<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.berkey1998</span>
+<span class='no'>dat</span></div><div class='output co'>#&gt;    trial           author year ni outcome      yi     vi    v1i    v2i 
+#&gt; 1      1 Pihlstrom et al. 1983 14      PD  0.4700 0.0075 0.0075 0.0030 
+#&gt; 2      1 Pihlstrom et al. 1983 14      AL -0.3200 0.0077 0.0030 0.0077 
+#&gt; 3      2    Lindhe et al. 1982 15      PD  0.2000 0.0057 0.0057 0.0009 
+#&gt; 4      2    Lindhe et al. 1982 15      AL -0.6000 0.0008 0.0009 0.0008 
+#&gt; 5      3   Knowles et al. 1979 78      PD  0.4000 0.0021 0.0021 0.0007 
+#&gt; 6      3   Knowles et al. 1979 78      AL -0.1200 0.0014 0.0007 0.0014 
+#&gt; 7      4  Ramfjord et al. 1987 89      PD  0.2600 0.0029 0.0029 0.0009 
+#&gt; 8      4  Ramfjord et al. 1987 89      AL -0.3100 0.0015 0.0009 0.0015 
+#&gt; 9      5    Becker et al. 1988 16      PD  0.5600 0.0148 0.0148 0.0072 
+#&gt; 10     5    Becker et al. 1988 16      AL -0.3900 0.0304 0.0072 0.0304 </div><div class='input'>
 <span class='co'>### construct list of the variance-covariance matrices of the observed outcomes for the studies</span>
 <span class='no'>V</span> <span class='kw'>&lt;-</span> <span class='fu'>lapply</span>(<span class='fu'>split</span>(<span class='no'>dat</span>[,<span class='fu'>c</span>(<span class='st'>"v1i"</span>, <span class='st'>"v2i"</span>)], <span class='no'>dat</span>$<span class='no'>trial</span>), <span class='no'>as.matrix</span>)
 

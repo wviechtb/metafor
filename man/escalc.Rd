@@ -489,8 +489,8 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \code{\link{print.escalc}}, \code{\link{summary.escalc}}, \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, \code{\link{rma.glmm}}, \code{\link{rma.mv}}
 }
 \examples{
-### load BCG vaccine data
-dat <- get(data(dat.bcg))
+### copy BCG vaccine data into 'dat'
+dat <- dat.bcg
 
 ### calculate log risk ratios and corresponding sampling variances
 dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat)

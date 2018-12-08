@@ -27,8 +27,8 @@
    Hart, R. G., Benavente, O., McBride, R., & Pearce, L. A. (1999). Antithrombotic therapy to prevent stroke in patients with atrial fibrillation: A meta-analysis. \emph{Annals of Internal Medicine}, \bold{131}, 492--501.
 }
 \examples{
-### load data
-dat <- get(data(dat.hart1999))
+### copy data into 'dat'
+dat <- dat.hart1999
 
 ### calculate log incidence rate ratios and corresponding sampling variances
 dat <- escalc(measure="IRR", x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i, data=dat)

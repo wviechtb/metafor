@@ -28,8 +28,9 @@ dat.laopaiboon2015
    Laopaiboon, M., Panpanich, R., & Swa Mya, K. (2015). Azithromycin for acute lower respiratory tract infections. \emph{Cochrane Database of Systematic Reviews}, \bold{3}, CD001954.
 }
 \examples{
-### load data
-dat <- get(data(dat.laopaiboon2015))
+### copy data into 'dat' and examine data
+dat <- dat.laopaiboon2015
+dat
 
 ### analysis using the Mantel-Haenszel method
 rma.mh(measure="RR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, digits=3)

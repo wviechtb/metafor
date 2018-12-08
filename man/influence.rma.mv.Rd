@@ -56,8 +56,8 @@
    \code{\link{rstudent.rma.mv}}, \code{\link{weights.rma.mv}}
 }
 \examples{
-### load data
-dat <- get(data(dat.konstantopoulos2011))
+### copy data from Konstantopoulos (2011) into 'dat'
+dat <- dat.konstantopoulos2011
 
 ### multilevel random-effects model
 res <- rma.mv(yi, vi, random = ~ 1 | district/school, data=dat)

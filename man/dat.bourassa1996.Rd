@@ -33,11 +33,12 @@
    Bourassa, D. C., McManus, I. C., & Bryden, M. P. (1996). Handedness and eye-dominance: A meta-analysis of their relationship. \emph{Laterality}, \bold{1}, 5--34.
 }
 \examples{
-### load data
-dat <- get(data(dat.bourassa1996))
+### copy data into 'dat'
+dat <- dat.bourassa1996
 
 ### calculate log(OR) and corresponding sampling variance with 1/2 correction
 dat <- escalc(measure="OR", ai=lh.le, bi=lh.re, ci=rh.le, di=rh.re, data=dat, add=1/2, to="all")
+dat
 
 ### overall association between handedness and eyedness
 res <- rma(yi, vi, data=dat, subset=sex=="combined")

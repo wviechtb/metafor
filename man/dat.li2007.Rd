@@ -27,8 +27,9 @@ dat.li2007
    \code{\link{dat.egger2001}}
 }
 \examples{
-### load data
-dat <- get(data(dat.li2007))
+### copy data into 'dat' and examine data
+dat <- dat.li2007
+dat
 
 ### meta-analysis of all trials except ISIS-4
 res <- rma(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, method="FE", subset=-14)

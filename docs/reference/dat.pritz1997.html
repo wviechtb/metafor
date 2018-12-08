@@ -151,15 +151,29 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>### load data</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'>get</span>(<span class='fu'>data</span>(<span class='no'>dat.pritz1997</span>))
-
+    <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat' and examine data</span>
+<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.pritz1997</span>
+<span class='no'>dat</span></div><div class='output co'>#&gt;    study              authors xi ni
+#&gt; 1      1     Giannotta et al. 16 17
+#&gt; 2      2  Haraguchi and Ebina 10 12
+#&gt; 3      3    Swift and Solomon  4  8
+#&gt; 4      4       Kassell et al. 43 58
+#&gt; 5      5        Tanabe et al. 10 10
+#&gt; 6      6          Awad et al. 25 42
+#&gt; 7      7          Finn et al. 13 14
+#&gt; 8      8      Hadeishi et al. 12 12
+#&gt; 9      9        Otsubo et al. 22 41
+#&gt; 10    10 Muizelaar and Becker  4  5
+#&gt; 11    11    Rosenstein et al.  5  6
+#&gt; 12    12          Levy et al. 18 23
+#&gt; 13    13       Shimoda et al. 58 68
+#&gt; 14    14       Solomon et al.  6 10</div><div class='input'>
 <span class='co'>### computation of "weighted average" in Zhou et al. (1999), Table IV</span>
 <span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"PR"</span>, <span class='kw'>xi</span><span class='kw'>=</span><span class='no'>xi</span>, <span class='kw'>ni</span><span class='kw'>=</span><span class='no'>ni</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='fl'>0</span>)
 <span class='no'>theta.hat</span>    <span class='kw'>&lt;-</span> <span class='fu'>sum</span>(<span class='no'>dat</span>$<span class='no'>ni</span> * <span class='no'>dat</span>$<span class='no'>yi</span>) / <span class='fu'>sum</span>(<span class='no'>dat</span>$<span class='no'>ni</span>)
 <span class='no'>se.theta.hat</span> <span class='kw'>&lt;-</span> <span class='fu'>sqrt</span>(<span class='fu'>sum</span>(<span class='no'>dat</span>$<span class='no'>ni</span>^<span class='fl'>2</span> * <span class='no'>dat</span>$<span class='no'>vi</span>) / <span class='fu'>sum</span>(<span class='no'>dat</span>$<span class='no'>ni</span>)^<span class='fl'>2</span>)
-<span class='no'>ci.lb</span>        <span class='kw'>&lt;-</span> <span class='no'>theta.hat</span> - <span class='fl'>1.96</span>*<span class='no'>se.theta.hat</span>
-<span class='no'>ci.ub</span>        <span class='kw'>&lt;-</span> <span class='no'>theta.hat</span> + <span class='fl'>1.96</span>*<span class='no'>se.theta.hat</span>
+<span class='no'>ci.lb</span>        <span class='kw'>&lt;-</span> <span class='no'>theta.hat</span> - <span class='fl'>1.96</span> * <span class='no'>se.theta.hat</span>
+<span class='no'>ci.ub</span>        <span class='kw'>&lt;-</span> <span class='no'>theta.hat</span> + <span class='fl'>1.96</span> * <span class='no'>se.theta.hat</span>
 <span class='fu'>round</span>(<span class='fu'>c</span>(<span class='kw'>estimate</span> <span class='kw'>=</span> <span class='no'>theta.hat</span>, <span class='kw'>se</span> <span class='kw'>=</span> <span class='no'>se.theta.hat</span>, <span class='kw'>ci.lb</span> <span class='kw'>=</span> <span class='no'>ci.lb</span>, <span class='kw'>ci.ub</span> <span class='kw'>=</span> <span class='no'>ci.ub</span>), <span class='fl'>4</span>)</div><div class='output co'>#&gt; estimate       se    ci.lb    ci.ub 
 #&gt;   0.7546   0.0224   0.7106   0.7986 </div><div class='input'>
 <span class='co'>### this is identical to a FE model with sample size weights</span>

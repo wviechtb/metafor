@@ -28,8 +28,9 @@
    Berkey, C. S., Hoaglin, D. C., Antczak-Bouckoms, A., Mosteller, F., & Colditz, G. A. (1998). Meta-analysis of multiple outcomes by regression with random effects. \emph{Statistics in Medicine}, \bold{17}, 2537--2550.
 }
 \examples{
-### load data
-dat <- get(data(dat.berkey1998))
+### copy data into 'dat' and examine data
+dat <- dat.berkey1998
+dat
 
 ### construct list of the variance-covariance matrices of the observed outcomes for the studies
 V <- lapply(split(dat[,c("v1i", "v2i")], dat$trial), as.matrix)

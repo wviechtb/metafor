@@ -5,7 +5,7 @@
 context("Checking analysis example: vanhouwelingen1993")
 
 ### load data
-dat <- get(data(dat.collins1985a, package="metafor"))
+dat <- dat.collins1985a
 
 test_that("the log likelihood plot can be created.", {
 

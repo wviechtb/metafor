@@ -51,8 +51,8 @@ reporter(x, \dots)
    \code{\link{rma.uni}}
 }
 \examples{
-### load BCG vaccine data
-dat <- get(data(dat.bcg))
+### copy BCG vaccine data into 'dat'
+dat <- dat.bcg
 
 ### calculate log risk ratios and corresponding sampling variances
 dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat,

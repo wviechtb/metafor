@@ -53,7 +53,7 @@ test_that("fit statistics are correct for rma.uni().", {
 test_that("fit statistics are correct for rma.mv().", {
 
    ### load data
-   dat <- get(data(dat.berkey1998, package="metafor"))
+   dat <- dat.berkey1998
 
    ### construct variance-covariance matrix of the observed outcomes
    V <- bldiag(lapply(split(dat[,c("v1i", "v2i")], dat$trial), as.matrix))

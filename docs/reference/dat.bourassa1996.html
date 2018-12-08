@@ -159,12 +159,205 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>### load data</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'>get</span>(<span class='fu'>data</span>(<span class='no'>dat.bourassa1996</span>))
+    <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat'</span>
+<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.bourassa1996</span>
 
 <span class='co'>### calculate log(OR) and corresponding sampling variance with 1/2 correction</span>
 <span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>lh.le</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>lh.re</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>rh.le</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>rh.re</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='fl'>1</span>/<span class='fl'>2</span>, <span class='kw'>to</span><span class='kw'>=</span><span class='st'>"all"</span>)
-
+<span class='no'>dat</span></div><div class='output co'>#&gt;    study sample       author year selection   investigator   hand_assess 
+#&gt; 1      1      1        Mills 1925        no          other questionnaire 
+#&gt; 2      2      2       Downey 1927       yes   psychologist questionnaire 
+#&gt; 3      2      2       Downey 1927       yes   psychologist questionnaire 
+#&gt; 4      2      2       Downey 1927       yes   psychologist questionnaire 
+#&gt; 5      3      3        Miles 1930        no   psychologist questionnaire 
+#&gt; 6      4      4       Quinan 1931        no          other   performance 
+#&gt; 7      5      5       Jasper 1932       yes   psychologist questionnaire 
+#&gt; 8      6      6         Lund 1932        no   psychologist   performance 
+#&gt; 9      7      7         Eyre 1933        no   psychologist   performance 
+#&gt; 10     8      8    Updegraff 1933        no   psychologist   performance 
+#&gt; 11     9      9        Gates 1936        no educationalist   performance 
+#&gt; 12    10     10        Witty 1936        no educationalist questionnaire 
+#&gt; 13    11     11         Fink 1938        no          other   performance 
+#&gt; 14    12     12      Castner 1939        no   psychologist   performance 
+#&gt; 15    13     13     Schonell 1941        no educationalist   performance 
+#&gt; 16    14     14       Lavery 1944        no          other questionnaire 
+#&gt; 17    15     15     Hildreth 1945        no   psychologist   performance 
+#&gt; 18    16     16    Stevenson 1953        no educationalist   performance 
+#&gt; 19    17     17      Merrell 1957        no          other   performance 
+#&gt; 20    18     18        Meuhl 1963        no educationalist   performance 
+#&gt; 21    19     19       Harmon 1966       yes          other   performance 
+#&gt; 22    20     20   Rengstorff 1967        no          other questionnaire 
+#&gt; 23    21     21     Stephens 1967       yes educationalist   performance 
+#&gt; 24    21     21     Stephens 1967       yes educationalist   performance 
+#&gt; 25    21     21     Stephens 1967       yes educationalist   performance 
+#&gt; 26    21     22     Stephens 1967        no   psychologist   performance 
+#&gt; 27    21     22     Stephens 1967        no   psychologist   performance 
+#&gt; 28    21     22     Stephens 1967        no   psychologist   performance 
+#&gt; 29    22     23       Dawson 1972        no   psychologist   performance 
+#&gt; 30    22     23       Dawson 1972        no   psychologist   performance 
+#&gt; 31    22     23       Dawson 1972        no   psychologist   performance 
+#&gt; 32    23     24          Gur 1974       yes   psychologist questionnaire 
+#&gt; 33    23     24          Gur 1974       yes   psychologist questionnaire 
+#&gt; 34    23     24          Gur 1974       yes   psychologist questionnaire 
+#&gt; 35    24     25    Chaurasia 1976        no          other questionnaire 
+#&gt; 36    24     25    Chaurasia 1976        no          other questionnaire 
+#&gt; 37    24     25    Chaurasia 1976        no          other questionnaire 
+#&gt; 38    25     26      Hardyck 1976        no   psychologist   performance 
+#&gt; 39    26     27       Dawson 1977        no   psychologist   performance 
+#&gt; 40    27     28          Gur 1977        no   psychologist questionnaire 
+#&gt; 41    27     28          Gur 1977        no   psychologist questionnaire 
+#&gt; 42    27     28          Gur 1977        no   psychologist questionnaire 
+#&gt; 43    28     29     Van-Camp 1977        no   psychologist   performance 
+#&gt; 44    29     30      Birkett 1979       yes   psychologist questionnaire 
+#&gt; 45    29     30      Birkett 1979       yes   psychologist questionnaire 
+#&gt; 46    29     30      Birkett 1979       yes   psychologist questionnaire 
+#&gt; 47    30     31    Hovsepian 1980        no   psychologist questionnaire 
+#&gt; 48    31     32        Porac 1980        no   psychologist   performance 
+#&gt; 49    32     33        Porac 1981        no   psychologist questionnaire 
+#&gt; 50    32     33        Porac 1981        no   psychologist questionnaire 
+#&gt; 51    32     33        Porac 1981        no   psychologist questionnaire 
+#&gt; 52    33     34       Hebben 1981        no   psychologist questionnaire 
+#&gt; 53    33     34       Hebben 1981        no   psychologist questionnaire 
+#&gt; 54    33     34       Hebben 1981        no   psychologist questionnaire 
+#&gt; 55    34     35       Noonan 1981       yes   psychologist   performance 
+#&gt; 56    35     36     Van-Camp 1981        no   psychologist questionnaire 
+#&gt; 57    35     36     Van-Camp 1981        no   psychologist questionnaire 
+#&gt; 58    35     36     Van-Camp 1981        no   psychologist questionnaire 
+#&gt; 59    36     37        Combs 1983       yes   psychologist questionnaire 
+#&gt; 60    37     38        Rymar 1983        no          other   performance 
+#&gt; 61    37     39        Rymar 1983        no          other questionnaire 
+#&gt; 62    38     40      Nachson 1983        no   psychologist   performance 
+#&gt; 63    38     40      Nachson 1983        no   psychologist   performance 
+#&gt; 64    38     40      Nachson 1983        no   psychologist   performance 
+#&gt; 65    38     41      Nachson 1983        no   psychologist   performance 
+#&gt; 66    38     41      Nachson 1983        no   psychologist   performance 
+#&gt; 67    38     41      Nachson 1983        no   psychologist   performance 
+#&gt; 68    39     42    Shan-Ming 1985        no   psychologist   performance 
+#&gt; 69    39     42    Shan-Ming 1985        no   psychologist   performance 
+#&gt; 70    39     42    Shan-Ming 1985        no   psychologist   performance 
+#&gt; 71    40     43 Hoogmaartens 1987        no          other questionnaire 
+#&gt; 72    41     44  Whittington 1987        no          other   performance 
+#&gt; 73    42     45      Costeff 1988        no          other   performance 
+#&gt; 74    43     46        Brown 1988        no   psychologist   performance 
+#&gt; 75    44     47       Bryden 1988       yes   psychologist questionnaire 
+#&gt; 76    45     48       Bryden 1989       yes   psychologist questionnaire 
+#&gt; 77    45     48       Bryden 1989       yes   psychologist questionnaire 
+#&gt; 78    45     48       Bryden 1989       yes   psychologist questionnaire 
+#&gt; 79    46     49     Levander 1989       yes   psychologist questionnaire 
+#&gt; 80    46     49     Levander 1989       yes   psychologist questionnaire 
+#&gt; 81    46     49     Levander 1989       yes   psychologist questionnaire 
+#&gt; 82    47     50 Dargent-Pare 1992        no   psychologist questionnaire 
+#&gt; 83    47     50 Dargent-Pare 1992        no   psychologist questionnaire 
+#&gt; 84    47     50 Dargent-Pare 1992        no   psychologist questionnaire 
+#&gt; 85    47     51 Dargent-Pare 1992        no   psychologist questionnaire 
+#&gt; 86    47     51 Dargent-Pare 1992        no   psychologist questionnaire 
+#&gt; 87    47     51 Dargent-Pare 1992        no   psychologist questionnaire 
+#&gt; 88    47     52 Dargent-Pare 1992        no   psychologist questionnaire 
+#&gt; 89    47     52 Dargent-Pare 1992        no   psychologist questionnaire 
+#&gt; 90    47     52 Dargent-Pare 1992        no   psychologist questionnaire 
+#&gt; 91    47     53 Dargent-Pare 1992        no   psychologist questionnaire 
+#&gt; 92    47     53 Dargent-Pare 1992        no   psychologist questionnaire 
+#&gt; 93    47     53 Dargent-Pare 1992        no   psychologist questionnaire 
+#&gt; 94    47     54 Dargent-Pare 1992        no   psychologist questionnaire 
+#&gt; 95    47     54 Dargent-Pare 1992        no   psychologist questionnaire 
+#&gt; 96    47     54 Dargent-Pare 1992        no   psychologist questionnaire 
+#&gt;    eye_assess mage lh.le lh.re rh.le rh.re      sex      yi     vi 
+#&gt; 1       E.1.d   NA    93    17   130   760 combined  3.4384 0.0768 
+#&gt; 2       E.1.b   37   140    91   305   697 combined  1.2544 0.0228 
+#&gt; 3       E.1.b   37    74    57   158   427     male  1.2512 0.0395 
+#&gt; 4       E.1.b   37    66    34   147   270   female  1.2627 0.0545 
+#&gt; 5    E.1.a.ii   22    16    14    43   114 combined  1.0970 0.1613 
+#&gt; 6       E.1.b   25   102    97   597  1898 combined  1.2061 0.0222 
+#&gt; 7    E.1.a.ii   20    17    14    38    80 combined  0.9257 0.1645 
+#&gt; 8    E.1.a.ii   20    10     2    52   170 combined  2.6130 0.5202 
+#&gt; 9    E.1.a.ii   15     7     2    15   169 combined  3.4906 0.6037 
+#&gt; 10   E.1.a.ii    4     4     2    15    38 combined  1.4976 0.7127 
+#&gt; 11      E.1.c    5     2     3    24    39 combined  0.1412 0.7518 
+#&gt; 12      E.1.c   10     3     4    18    39 combined  0.5072 0.5873 
+#&gt; 13      E.1.d   NA     4     3    29    89 combined  1.3612 0.5530 
+#&gt; 14   E.1.a.ii   10     2     1    20    49 combined  1.3924 1.1356 
+#&gt; 15   E.1.a.ii   10     3     2    19    45 combined  1.1838 0.7590 
+#&gt; 16      E.1.d   31    27     0   101   261 combined  4.9537 2.0500 
+#&gt; 17   E.1.a.ii    9     9    11    59    98 combined  0.3130 0.2192 
+#&gt; 18      E.1.d    5     5     2    23    38 combined  1.2821 0.6503 
+#&gt; 19      E.1.c   22    20    13   137   327 combined  1.2856 0.1332 
+#&gt; 20   E.1.a.ii    5     6     8    14    34 combined  0.5985 0.3694 
+#&gt; 21      E.1.d   NA     8     5    31    56 combined  1.0196 0.3489 
+#&gt; 22   E.1.a.ii   24   241   211  1587  3440 combined  0.9061 0.0098 
+#&gt; 23      E.1.c    6    19    10    27    33 combined  0.8164 0.2127 
+#&gt; 24      E.1.c    6    11     6    11    16     male  0.9316 0.3884 
+#&gt; 25      E.1.c    6     8     4    16    17   female  0.6948 0.4576 
+#&gt; 26   E.1.a.ii   27     2     2    33    84 combined  0.9252 0.8417 
+#&gt; 27   E.1.a.ii   27     2     2    27    75     male  1.0099 0.8496 
+#&gt; 28   E.1.a.ii   27     0     0     6     9   female  0.3795 4.2591 
+#&gt; 29   E.1.a.ii   27     8     2    29    56 combined  1.8736 0.5692 
+#&gt; 30   E.1.a.ii   27     4     2    19    31     male  1.0674 0.7053 
+#&gt; 31   E.1.a.ii   27     4     0    10    25   female  3.0845 2.3567 
+#&gt; 32      E.1.b   22    13    15    17    42 combined  0.7492 0.2193 
+#&gt; 33      E.1.b   22     9     9     4    25     male  1.7346 0.4720 
+#&gt; 34      E.1.b   22     4     6    13    17   female -0.1082 0.5073 
+#&gt; 35      E.1.b   25    10    20    97   186 combined -0.0205 0.1596 
+#&gt; 36      E.1.b   25     8    14    69   146     male  0.2116 0.2078 
+#&gt; 37      E.1.b   25     2     6    28    40   female -0.6041 0.6136 
+#&gt; 38   E.1.a.ii    9   429   311  2528  4418 combined  0.8794 0.0062 
+#&gt; 39   E.1.a.ii   17    10    10    12    48 combined  1.3558 0.2911 
+#&gt; 40      E.1.c   35    11    11    56   122 combined  0.7739 0.1998 
+#&gt; 41      E.1.c   35    10     6    27    57     male  1.2172 0.3028 
+#&gt; 42      E.1.c   35     1     5    29    65   female -0.5016 0.8977 
+#&gt; 43      E.1.c    7    18    20   118   155 combined  0.1691 0.1177 
+#&gt; 44      E.1.b   23    38    14    39    34 combined  0.8412 0.1492 
+#&gt; 45      E.1.b   23    11    10    16    17     male  0.1498 0.2999 
+#&gt; 46      E.1.b   23    27     4    23    17   female  1.5153 0.3583 
+#&gt; 47    E.1.a.i   22    19     6    16    33 combined  1.8068 0.2956 
+#&gt; 48   E.1.a.ii   10    19    12   172   352 combined  1.1593 0.1399 
+#&gt; 49      E.2.a   21   411   198  1075  3463 combined  1.8985 0.0087 
+#&gt; 50      E.2.a   21   247   125   500  1884     male  2.0049 0.0145 
+#&gt; 51      E.2.a   21   164    73   575  1579   female  1.8152 0.0221 
+#&gt; 52      E.1.c    8     9     8    51   123 combined  0.9859 0.2504 
+#&gt; 53      E.1.c    8     4     5    22    63     male  0.8369 0.4642 
+#&gt; 54      E.1.c    8     5     3    29    60   female  1.1702 0.5180 
+#&gt; 55      E.1.c   22    26    34    42    90 combined  0.4920 0.1013 
+#&gt; 56   E.1.a.ii   75     4     2    43    65 combined  0.9971 0.6605 
+#&gt; 57   E.1.a.ii   75     1     1     8    11     male  0.3023 1.5379 
+#&gt; 58   E.1.a.ii   75     3     1    35    54   female  1.2760 0.9989 
+#&gt; 59      E.1.b   29    18    19    31    75 combined  0.8215 0.1503 
+#&gt; 60      E.1.c   10    31     8   271   543 combined  2.0040 0.1549 
+#&gt; 61      E.1.b   29    11    21   180   353 combined  0.0464 0.1418 
+#&gt; 62   E.1.a.ii    7    37    27   190   260 combined  0.6231 0.0721 
+#&gt; 63   E.1.a.ii    7    22    16    90   131     male  0.6838 0.1237 
+#&gt; 64   E.1.a.ii    7    15    11   100   129   female  0.5520 0.1691 
+#&gt; 65   E.1.a.ii    7   467   300  2501  3464 combined  0.7676 0.0062 
+#&gt; 66   E.1.a.ii    7   242   156  1203  1725     male  0.7982 0.0119 
+#&gt; 67   E.1.a.ii    7   225   144  1298  1739   female  0.7374 0.0127 
+#&gt; 68   E.1.a.ii   30    16    15    68   333 combined  1.6453 0.1427 
+#&gt; 69   E.1.a.ii   30     7    10    24   159     male  1.5369 0.2757 
+#&gt; 70   E.1.a.ii   30     9     5    44   174   female  1.9130 0.3153 
+#&gt; 71      E.2.a   23    10     2    32    84 combined  2.3906 0.5378 
+#&gt; 72    E.1.a.i   11   563   320  2703  6927 combined  1.5052 0.0054 
+#&gt; 73   E.1.a.ii   42     5     1    14    37 combined  2.2495 0.9441 
+#&gt; 74    E.1.a.i   23    19     6    29   132 combined  2.6008 0.2466 
+#&gt; 75   E.1.a.ii   22    46    32    48   171 combined  1.6212 0.0787 
+#&gt; 76      E.1.b   20    89    70   143   384 combined  1.2242 0.0349 
+#&gt; 77      E.1.b   20    43    44    78   193     male  0.8795 0.0634 
+#&gt; 78      E.1.b   20    46    26    65   191   female  1.6351 0.0797 
+#&gt; 79      E.1.c   22    25    53    16    68 combined  0.6825 0.1331 
+#&gt; 80      E.1.c   22    12    25     4    35     male  1.3525 0.3696 
+#&gt; 81      E.1.c   22    13    28    12    33   female  0.2386 0.2190 
+#&gt; 82      E.2.a   25   141    54   374  1519 combined  2.3546 0.0287 
+#&gt; 83      E.2.a   25    61    21   150   708     male  2.6002 0.0708 
+#&gt; 84      E.2.a   25    80    33   224   811   female  2.1617 0.0480 
+#&gt; 85      E.2.a   22    23    17    89   505 combined  2.0261 0.1128 
+#&gt; 86      E.2.a   22    11    11    50   280     male  1.7146 0.1973 
+#&gt; 87      E.2.a   22    12     6    39   225   female  2.3959 0.2636 
+#&gt; 88      E.2.a   30    32    13   128   440 combined  2.1105 0.1149 
+#&gt; 89      E.2.a   30    24    12    92   307     male  1.8742 0.1349 
+#&gt; 90      E.2.a   30     8     1    36   133   female  3.0314 0.8192 
+#&gt; 91      E.2.a   25    20    12   163   376 combined  1.3288 0.1376 
+#&gt; 92      E.2.a   25    11     2    70   198     male  2.5612 0.5062 
+#&gt; 93      E.2.a   25     9    10    93   178   female  0.5465 0.2168 
+#&gt; 94      E.2.a   25    30     8   129   447 combined  2.5177 0.1604 
+#&gt; 95      E.2.a   25    18     7    56   236     male  2.3346 0.2093 
+#&gt; 96      E.2.a   25    12     1    73   211   female  3.1772 0.7650 </div><div class='input'>
 <span class='co'>### overall association between handedness and eyedness</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>subset</span><span class='kw'>=</span><span class='no'>sex</span><span class='kw'>==</span><span class='st'>"combined"</span>)
 <span class='no'>res</span></div><div class='output co'>#&gt; 

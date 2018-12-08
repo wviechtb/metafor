@@ -156,13 +156,64 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>### load data</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'>get</span>(<span class='fu'>data</span>(<span class='no'>dat.hasselblad1998</span>))
+    <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat'</span>
+<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.hasselblad1998</span>
 
 <span class='co'>### calculate log odds for each study arm</span>
 <span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"PLO"</span>, <span class='kw'>xi</span><span class='kw'>=</span><span class='no'>xi</span>, <span class='kw'>ni</span><span class='kw'>=</span><span class='no'>ni</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='fl'>1</span>/<span class='fl'>2</span>, <span class='kw'>to</span><span class='kw'>=</span><span class='st'>"all"</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
-
-<span class='co'>### create network graph ('plyr' and 'igraph' packages must be installed)</span></div><span class='co'># NOT RUN {</span>
+<span class='no'>dat</span></div><div class='output co'>#&gt;    id study            authors year            trt  xi   ni      yi     vi 
+#&gt; 1   1     1        Reid et al. 1974     no_contact  75  731 -2.1628 0.0148 
+#&gt; 2   2     1        Reid et al. 1974 ind_counseling 363  714  0.0336 0.0056 
+#&gt; 3   3     2    Cottraux et al. 1983     no_contact   9  140 -2.6277 0.1129 
+#&gt; 4   4     2    Cottraux et al. 1983 ind_counseling  23  140 -1.6094 0.0511 
+#&gt; 5   5     2    Cottraux et al. 1983 grp_counseling  10  138 -2.5046 0.1030 
+#&gt; 6   6     3       Slama et al. 1990     no_contact   2  106 -3.7329 0.4096 
+#&gt; 7   7     3       Slama et al. 1990 ind_counseling   9  205 -3.0294 0.1104 
+#&gt; 8   8     4    Jamrozik et al. 1984     no_contact  58  549 -2.1284 0.0191 
+#&gt; 9   9     4    Jamrozik et al. 1984 ind_counseling 237 1561 -1.7186 0.0050 
+#&gt; 10 10     5      Rabkin et al. 1984     no_contact   0   33 -4.2047 2.0299 
+#&gt; 11 11     5      Rabkin et al. 1984 ind_counseling   9   48 -1.4250 0.1306 
+#&gt; 12 12     6   Decker and Evans 1989      self_help  20   49 -0.3640 0.0827 
+#&gt; 13 13     6   Decker and Evans 1989 ind_counseling  16   43 -0.5108 0.0970 
+#&gt; 14 14     7    Richmond et al. 1986     no_contact   3  100 -3.3271 0.2960 
+#&gt; 15 15     7    Richmond et al. 1986 ind_counseling  31   98 -0.7621 0.0466 
+#&gt; 16 16     8              Leung 1991     no_contact   1   31 -3.0123 0.6995 
+#&gt; 17 17     8              Leung 1991 ind_counseling  26   95 -0.9642 0.0521 
+#&gt; 18 18     9  Mothersill et al. 1988      self_help  11   78 -1.7698 0.1018 
+#&gt; 19 19     9  Mothersill et al. 1988 ind_counseling  12   85 -1.7716 0.0936 
+#&gt; 20 20     9  Mothersill et al. 1988 grp_counseling  29  170 -1.5679 0.0410 
+#&gt; 21 21    10    Langford et al. 1983     no_contact   6   39 -1.6397 0.1837 
+#&gt; 22 22    10    Langford et al. 1983 ind_counseling  17   77 -1.2404 0.0737 
+#&gt; 23 23    11       Gritz et al. 1992     no_contact  79  702 -2.0596 0.0142 
+#&gt; 24 24    11       Gritz et al. 1992      self_help  77  694 -2.0754 0.0145 
+#&gt; 25 25    12    Campbell et al. 1986     no_contact  18  671 -3.5646 0.0556 
+#&gt; 26 26    12    Campbell et al. 1986      self_help  21  535 -3.1751 0.0485 
+#&gt; 27 27    13     Sanders et al. 1989     no_contact  64  642 -2.1938 0.0172 
+#&gt; 28 28    13     Sanders et al. 1989 ind_counseling 107  761 -1.8064 0.0108 
+#&gt; 29 29    14    Hilleman et al. 1993 ind_counseling  12   76 -1.6409 0.0955 
+#&gt; 30 30    14    Hilleman et al. 1993 grp_counseling  20   74 -0.9778 0.0671 
+#&gt; 31 31    15     Gillams et al. 1984 ind_counseling   9   55 -1.5882 0.1268 
+#&gt; 32 32    15     Gillams et al. 1984 grp_counseling   3   26 -1.9042 0.3283 
+#&gt; 33 33    16 Mogielnicki et al. 1986      self_help   7   66 -2.0711 0.1501 
+#&gt; 34 34    16 Mogielnicki et al. 1986 grp_counseling  32  127 -1.0779 0.0412 
+#&gt; 35 35    17        Page et al. 1986     no_contact   5   62 -2.3470 0.1992 
+#&gt; 36 36    17        Page et al. 1986 ind_counseling   8   90 -2.2727 0.1298 
+#&gt; 37 37    18    Vetter and Ford 1990     no_contact  20  234 -2.3479 0.0534 
+#&gt; 38 38    18    Vetter and Ford 1990 ind_counseling  34  237 -1.7747 0.0339 
+#&gt; 39 39    19  Williams and Hall 1988     no_contact   0   20 -3.7136 2.0488 
+#&gt; 40 40    19  Williams and Hall 1988 grp_counseling   9   20 -0.1911 0.1922 
+#&gt; 41 41    20    Pallonen et al. 1994     no_contact   8  116 -2.5467 0.1269 
+#&gt; 42 42    20    Pallonen et al. 1994      self_help  19  149 -1.9010 0.0589 
+#&gt; 43 43    21     Russell et al. 1983     no_contact  95 1107 -2.3611 0.0115 
+#&gt; 44 44    21     Russell et al. 1983 ind_counseling 143 1031 -1.8232 0.0081 
+#&gt; 45 45    22 Stewart and Rosser 1982     no_contact  15  187 -2.4096 0.0703 
+#&gt; 46 46    22 Stewart and Rosser 1982 ind_counseling  36  504 -2.5522 0.0295 
+#&gt; 47 47    23     Russell et al. 1979     no_contact  78  584 -1.8644 0.0147 
+#&gt; 48 48    23     Russell et al. 1979 ind_counseling  73  675 -2.1038 0.0153 
+#&gt; 49 49    24    Kendrick et al. 1995     no_contact  69 1177 -2.7694 0.0153 
+#&gt; 50 50    24    Kendrick et al. 1995 ind_counseling  54  888 -2.7286 0.0195 </div><div class='input'>
+### create network graph ('plyr' and 'igraph' packages must be installed)
+</div><span class='co'># NOT RUN {</span>
 <span class='fu'>require</span>(<span class='no'>plyr</span>)
 <span class='fu'>require</span>(<span class='no'>igraph</span>)
 <span class='no'>pairs</span> <span class='kw'>&lt;-</span> <span class='fu'>do.call</span>(<span class='no'>rbind</span>, <span class='fu'>sapply</span>(<span class='fu'>split</span>(<span class='no'>dat</span>$<span class='no'>trt</span>, <span class='no'>dat</span>$<span class='no'>study</span>), <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'>t</span>(<span class='fu'>combn</span>(<span class='no'>x</span>,<span class='fl'>2</span>))))

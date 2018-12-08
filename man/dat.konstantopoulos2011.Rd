@@ -28,8 +28,9 @@
    Cooper, H., Valentine, J. C., Charlton, K., & Melson, A. (2003). The effects of modified school calendars on student achievement and on school and community attitudes. \emph{Review of Educational Research}, \bold{73}, 1--52.
 }
 \examples{
-### load data
-dat <- get(data(dat.konstantopoulos2011))
+### copy data into 'dat' and examine data
+dat <- dat.konstantopoulos2011
+dat
 
 ### regular random-effects model
 res <- rma(yi, vi, data=dat)

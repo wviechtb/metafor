@@ -22,15 +22,16 @@
    Pritz, M. B. (1997). Treatment of cerebral vasospasm due to aneurysmal subarachnoid hemorrhage: Past, present, and future of hyperdynamic therapy. \emph{Neurosurgery Quarterly}, \bold{7}, 273--285.
 }
 \examples{
-### load data
-dat <- get(data(dat.pritz1997))
+### copy data into 'dat' and examine data
+dat <- dat.pritz1997
+dat
 
 ### computation of "weighted average" in Zhou et al. (1999), Table IV
 dat <- escalc(measure="PR", xi=xi, ni=ni, data=dat, add=0)
 theta.hat    <- sum(dat$ni * dat$yi) / sum(dat$ni)
 se.theta.hat <- sqrt(sum(dat$ni^2 * dat$vi) / sum(dat$ni)^2)
-ci.lb        <- theta.hat - 1.96*se.theta.hat
-ci.ub        <- theta.hat + 1.96*se.theta.hat
+ci.lb        <- theta.hat - 1.96 * se.theta.hat
+ci.ub        <- theta.hat + 1.96 * se.theta.hat
 round(c(estimate = theta.hat, se = se.theta.hat, ci.lb = ci.lb, ci.ub = ci.ub), 4)
 
 ### this is identical to a FE model with sample size weights

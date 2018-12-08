@@ -154,9 +154,18 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>### load data</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'>get</span>(<span class='fu'>data</span>(<span class='no'>dat.bonett2010</span>))
-
+    <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat' and examine data</span>
+<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.bonett2010</span>
+<span class='no'>dat</span></div><div class='output co'>#&gt;   study                           source  ni   ai mi caregivers
+#&gt; 1     1 Atienza &amp; Parris Stephens (2000) 103 0.93 20      women
+#&gt; 2     2             Hooker et al. (2002)  64 0.91 20      mixed
+#&gt; 3     3            Martire et al. (1997) 118 0.94 20      women
+#&gt; 4     4               Bass et al. (1996) 401 0.89 20      mixed
+#&gt; 5     5             Miller et al. (1995) 215 0.90 20      mixed
+#&gt; 6     6             Hooker et al. (1992)  51 0.89 20      mixed
+#&gt; 7     7             Hooker et al. (2000) 175 0.86 20      mixed
+#&gt; 8     8              Brody et al. (1990) 311 0.91 20      mixed
+#&gt; 9     9              Brody et al. (1995) 492 0.90 20      women</div><div class='input'>
 <span class='co'>### meta-analysis using the raw alpha values</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"ARAW"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>ai</span>, <span class='kw'>mi</span><span class='kw'>=</span><span class='no'>mi</span>, <span class='kw'>ni</span><span class='kw'>=</span><span class='no'>ni</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
 <span class='no'>res</span></div><div class='output co'>#&gt; 

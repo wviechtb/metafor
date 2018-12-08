@@ -206,8 +206,8 @@ robust(x, cluster, adjust=TRUE, digits, &#8230;)</pre>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>### load data</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'>get</span>(<span class='fu'>data</span>(<span class='no'>dat.konstantopoulos2011</span>))
+    <pre class="examples"><div class='input'><span class='co'>### copy data from Konstantopoulos (2011) into 'dat'</span>
+<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.konstantopoulos2011</span>
 
 <span class='co'>### multilevel random-effects model</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>random</span> <span class='kw'>=</span> ~ <span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>district</span>/<span class='no'>school</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
@@ -245,8 +245,8 @@ robust(x, cluster, adjust=TRUE, digits, &#8230;)</pre>
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
-<span class='co'>### load data</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'>get</span>(<span class='fu'>data</span>(<span class='no'>dat.berkey1998</span>))
+<span class='co'>### copy data from Berkey et al. (1998) into 'dat'</span>
+<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.berkey1998</span>
 
 <span class='co'>### construct list of the variance-covariance matrices of the observed outcomes for the studies</span>
 <span class='no'>V</span> <span class='kw'>&lt;-</span> <span class='fu'>lapply</span>(<span class='fu'>split</span>(<span class='no'>dat</span>[,<span class='fu'>c</span>(<span class='st'>"v1i"</span>, <span class='st'>"v2i"</span>)], <span class='no'>dat</span>$<span class='no'>trial</span>), <span class='no'>as.matrix</span>)

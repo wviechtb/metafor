@@ -5,7 +5,7 @@
 context("Checking analysis example: vanhouwelingen2002")
 
 ### load data
-dat <- get(data(dat.colditz1994, package="metafor"))
+dat <- dat.colditz1994
 
 ### calculate log(OR)s and corresponding sampling variances
 dat <- escalc(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat)

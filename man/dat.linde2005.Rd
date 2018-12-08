@@ -37,14 +37,15 @@
    Viechtbauer, W. (2007). Accounting for heterogeneity via random-effects models and moderator analyses in meta-analysis. \emph{Zeitschrift \enc{für}{fuer} Psychologie / Journal of Psychology}, \bold{215}, 104--121.
 }
 \examples{
-### load data
-dat <- get(data(dat.linde2005))
+### copy data into 'dat'
+dat <- dat.linde2005
 
 ### remove studies with no response information and study with no responses in either group
 dat <- dat[-c(5,6,26),]
 
 ### calculate log risk ratios and corresponding sampling variances
 dat <- escalc(measure="RR", ai=ai, ci=ci, n1i=n1i, n2i=n2i, data=dat)
+dat
 
 ### meta-analysis of the log risk ratios using a random-effects model
 res <- rma(yi, vi, data=dat, method="DL")

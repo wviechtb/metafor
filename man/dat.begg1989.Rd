@@ -26,8 +26,9 @@
    Begg, C. B., Pilote, L., & McGlave, P. B. (1989). Bone marrow transplantation versus chemotherapy in acute non-lymphocytic leukemia: A meta-analytic review. \emph{European Journal of Cancer and Clinical Oncology}, \bold{25}, 1519--1523.
 }
 \examples{
-### load data
-dat <- get(data(dat.begg1989))
+### copy data into 'dat' and examine data
+dat <- dat.begg1989
+dat
 
 ### turn trt and arms into factors and set reference levels
 dat$trt  <- relevel(factor(dat$trt), ref="CMO")
@@ -36,6 +37,7 @@ dat$arms <- relevel(factor(dat$arms), ref="2")
 ### create data frame with the treatment differences for the controlled studies
 dat2 <- data.frame(yi = dat$yi[c(1,3,5,7)] - dat$yi[c(2,4,6,8)],
                    vi = dat$vi[c(1,3,5,7)] + dat$vi[c(2,4,6,8)])
+dat2
 
 ### DerSimonian and Laird method using the treatment differences
 res <- rma(yi, vi, data=dat2, method="DL", digits=2)

@@ -23,8 +23,9 @@
    Senn, S., Gavini, F., Magrez, D., & Scheen, A. (2013). Issues in performing a network meta-analysis. \emph{Statistical Methods in Medical Research}, \bold{22}, 169--189.
 }
 \examples{
-### load data
-dat <- get(data(dat.senn2013))
+### copy data into 'dat' and examine data
+dat <- dat.senn2013
+dat
 
 ### create network graph ('plyr' and 'igraph' packages must be installed)
 \dontrun{

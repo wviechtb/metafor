@@ -149,13 +149,78 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>### load data</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'>get</span>(<span class='fu'>data</span>(<span class='no'>dat.pignon2000</span>))
+    <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat'</span>
+<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.pignon2000</span>
 
 <span class='co'>### compute estimated log hazard ratios and sampling variances</span>
 <span class='no'>dat</span>$<span class='no'>yi</span> <span class='kw'>&lt;-</span> <span class='fu'>with</span>(<span class='no'>dat</span>, <span class='no'>OmE</span>/<span class='no'>V</span>)
 <span class='no'>dat</span>$<span class='no'>vi</span> <span class='kw'>&lt;-</span> <span class='fu'>with</span>(<span class='no'>dat</span>, <span class='fl'>1</span>/<span class='no'>V</span>)
-
+<span class='no'>dat</span></div><div class='output co'>#&gt;       id          trial   OmE     V grp           yi          vi
+#&gt; 1   44.0       Pitie-74  -1.8  14.5   1 -0.124137931 0.068965517
+#&gt; 2   45.0      GETTECadj  11.8  57.1   1  0.206654991 0.017513135
+#&gt; 3   46.0       Int 0034  -7.4  80.6   1 -0.091811414 0.012406948
+#&gt; 4  102.0         JHCFUS  -5.6   8.5   1 -0.658823529 0.117647059
+#&gt; 5   97.0        TMH R-4   0.4   6.4   1  0.062500000 0.156250000
+#&gt; 6  103.0         KKD-86   1.8   8.7   1  0.206896552 0.114942529
+#&gt; 7   10.0        HNU-87a  -0.2   5.0   1 -0.040000000 0.200000000
+#&gt; 8   47.0        HNU-87b  -3.9  30.2   1 -0.129139073 0.033112583
+#&gt; 9   14.0         IGR-65   0.0   7.8   2  0.000000000 0.128205128
+#&gt; 10  17.0      RTOG 6801  -0.8 125.9   2 -0.006354249 0.007942812
+#&gt; 11  33.0    EORTC 24771   2.2  27.9   2  0.078853047 0.035842294
+#&gt; 12  28.0      DENVER-77  -3.3  13.5   2 -0.244444444 0.074074074
+#&gt; 13  29.0           HNCP  -0.6  63.1   2 -0.009508716 0.015847861
+#&gt; 14  34.0   EORTC 78-OCP  -9.2  29.7   2 -0.309764310 0.033670034
+#&gt; 15  52.0          MCW-1   6.3  16.6   2  0.379518072 0.060240964
+#&gt; 16  31.0      SWOG 8006   2.6  36.6   2  0.071038251 0.027322404
+#&gt; 17  22.0       Pitie-81  -2.0  25.8   2 -0.077519380 0.038759690
+#&gt; 18  32.0   Buenos Aires  -2.1  18.1   2 -0.116022099 0.055248619
+#&gt; 19  36.0     Creteil-82   7.2  19.8   2  0.363636364 0.050505051
+#&gt; 20  23.0       HNCGICO2   2.7  22.2   2  0.121621622 0.045045045
+#&gt; 21  30.0          MCW-2   1.2   9.0   2  0.133333333 0.111111111
+#&gt; 22  26.1 AC CAMARGO (a)   0.4  11.9   2  0.033613445 0.084033613
+#&gt; 23  92.1   SECOG II (a)  -3.6  33.2   2 -0.108433735 0.030120482
+#&gt; 24  41.0    EORTC 24844  -0.3  13.4   2 -0.022388060 0.074626866
+#&gt; 25  90.0        SHNG 85  -4.2  92.2   2 -0.045553145 0.010845987
+#&gt; 26  24.0       HNCGICO3   1.6  19.6   2  0.081632653 0.051020408
+#&gt; 27  35.0     Creteil-86  -5.7  20.2   2 -0.282178218 0.049504950
+#&gt; 28  37.0       GSTTC-86  -8.5  47.4   2 -0.179324895 0.021097046
+#&gt; 29  27.0     GETTECneo1  -7.5  24.8   2 -0.302419355 0.040322581
+#&gt; 30  11.0     GETTECneo2  -6.5  15.9   2 -0.408805031 0.062893082
+#&gt; 31  96.0          AHNTG  -5.7  46.5   2 -0.122580645 0.021505376
+#&gt; 32  25.0     Las Palmas  -4.0   5.2   2 -0.769230769 0.192307692
+#&gt; 33  40.0      Rennes-87  -2.9  25.8   2 -0.112403101 0.038759690
+#&gt; 34  39.0          Parma   5.4   9.2   2  0.586956522 0.108695652
+#&gt; 35  78.0          CFHNS  -8.1  46.6   2 -0.173819742 0.021459227
+#&gt; 36 101.0        Cologne  -1.1   6.7   2 -0.164179104 0.149253731
+#&gt; 37  99.0        Songkla   0.6   9.0   2  0.066666667 0.111111111
+#&gt; 38  38.0        HNAP-02   4.6   5.9   2  0.779661017 0.169491525
+#&gt; 39  93.0        BNH 003  -7.1  16.4   2 -0.432926829 0.060975610
+#&gt; 40  55.0         MDA-70   1.8   8.0   3  0.225000000 0.125000000
+#&gt; 41  56.0       WIA-OC5a  -4.3   8.4   3 -0.511904762 0.119047619
+#&gt; 42 104.0       WIA-OC5b -17.9  14.1   3 -1.269503546 0.070921986
+#&gt; 43  62.0    EORTC 73-OC   1.2  40.0   3  0.030000000 0.025000000
+#&gt; 44  71.0         Bergen  -3.1   6.7   3 -0.462686567 0.149253731
+#&gt; 45  68.0      RT-BLM-73   2.1   5.5   3  0.381818182 0.181818182
+#&gt; 46 109.0       WIA-OC5c  -4.4   7.0   3 -0.628571429 0.142857143
+#&gt; 47  60.0          Turku  -2.0   9.9   3 -0.202020202 0.101010101
+#&gt; 48  48.0          UW-77 -12.0  10.4   3 -1.153846154 0.096153846
+#&gt; 49  59.0         NRH-78   4.5  45.6   3  0.098684211 0.021929825
+#&gt; 50  64.0      Barcelona -25.3 121.2   3 -0.208745875 0.008250825
+#&gt; 51  58.0          UW-79  -6.8   4.6   3 -1.478260870 0.217391304
+#&gt; 52  61.0     Manchester  -2.4  66.2   3 -0.036253776 0.015105740
+#&gt; 53  72.0        Yale 80   2.0  24.3   3  0.082304527 0.041152263
+#&gt; 54  69.0         PMHCGS  -4.3  41.2   3 -0.104368932 0.024271845
+#&gt; 55  65.0      ECOG 2382   5.4  79.4   3  0.068010076 0.012594458
+#&gt; 56  26.2 AC CAMARGO (b)   2.1  11.9   3  0.176470588 0.084033613
+#&gt; 57  73.0       Toulouse -13.5  16.6   3 -0.813253012 0.060240964
+#&gt; 58  92.2   SECOG II (b)  -8.7  31.7   3 -0.274447950 0.031545741
+#&gt; 59  74.0        CH-7401  -2.2  11.2   3 -0.196428571 0.089285714
+#&gt; 60  75.0        Yale 86  -0.8  12.2   3 -0.065573770 0.081967213
+#&gt; 61  70.0      INRC HN-8 -14.3  30.0   3 -0.476666667 0.033333333
+#&gt; 62  66.0        Ontario  -5.1  28.3   3 -0.180212014 0.035335689
+#&gt; 63 108.0     Kragujevac -13.3  21.9   3 -0.607305936 0.045662100
+#&gt; 64  91.0     Bavaria 89 -16.8  29.8   3 -0.563758389 0.033557047
+#&gt; 65  98.0       LOHNG 91  -5.3  12.3   3 -0.430894309 0.081300813</div><div class='input'>
 <span class='co'>### meta-analysis based on all 65 trials</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"FE"</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)
 <span class='no'>res</span></div><div class='output co'>#&gt; 

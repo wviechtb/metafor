@@ -5,7 +5,7 @@
 context("Checking analysis example: yusuf1985")
 
 ### create dataset for example
-dat <- get(data(dat.yusuf1985, package="metafor"))
+dat <- dat.yusuf1985
 dat$grp_ratios <- round(dat$n1i / dat$n2i, 2)
 
 test_that("log likelihood plot can be drawn.", {

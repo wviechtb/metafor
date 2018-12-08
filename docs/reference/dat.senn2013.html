@@ -150,10 +150,64 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>### load data</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'>get</span>(<span class='fu'>data</span>(<span class='no'>dat.senn2013</span>))
-
-<span class='co'>### create network graph ('plyr' and 'igraph' packages must be installed)</span></div><span class='co'># NOT RUN {</span>
+    <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat' and examine data</span>
+<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.senn2013</span>
+<span class='no'>dat</span></div><div class='output co'>#&gt;                    study  ni     treatment comment    mi   sdi
+#&gt; 1       De Fronzo (1995) 213     metformin  change -1.70 1.459
+#&gt; 2       De Fronzo (1995) 209       placebo  change  0.20 1.446
+#&gt; 3           Lewin (2007) 431     metformin  change -0.74 1.106
+#&gt; 4           Lewin (2007) 144       placebo  change  0.08 1.004
+#&gt; 5          Willms (1999)  29     metformin  change -2.50 0.862
+#&gt; 6          Willms (1999)  31      acarbose  change -2.30 1.782
+#&gt; 7          Willms (1999)  29       placebo  change -1.30 1.831
+#&gt; 8        Davidson (2007) 117 rosiglitazone  change -1.20 1.097
+#&gt; 9        Davidson (2007) 116       placebo  change  0.14 1.093
+#&gt; 10  Wolffenbuttel (1999) 183 rosiglitazone  change -0.90 1.100
+#&gt; 11  Wolffenbuttel (1999) 192       placebo  change  0.20 1.110
+#&gt; 12         Kipnes (2001) 182  pioglitazone  change -1.20 1.369
+#&gt; 13         Kipnes (2001) 181       placebo  change  0.10 1.024
+#&gt; 14        Kerenyi (2004) 160 rosiglitazone  change -0.91 0.990
+#&gt; 15        Kerenyi (2004) 154       placebo  change -0.14 0.920
+#&gt; 16       Hanefeld (2004) 319  pioglitazone     raw  7.61 1.072
+#&gt; 17       Hanefeld (2004) 320     metformin     raw  7.45 1.073
+#&gt; 18         Derosa (2004)  45  pioglitazone     raw  6.80 0.800
+#&gt; 19         Derosa (2004)  42 rosiglitazone     raw  6.70 0.900
+#&gt; 20          Baksi (2004) 218 rosiglitazone  change -1.20 1.112
+#&gt; 21          Baksi (2004) 233       placebo  change  0.10 1.036
+#&gt; 22     Rosenstock (2008)  59 rosiglitazone  change -1.17 1.229
+#&gt; 23     Rosenstock (2008)  57       placebo  change -0.08 1.208
+#&gt; 24            Zhu (2003) 210 rosiglitazone  change -1.90 1.470
+#&gt; 25            Zhu (2003) 105       placebo  change -0.40 1.300
+#&gt; 26           Yang (2003) 102 rosiglitazone  change -1.09 1.650
+#&gt; 27           Yang (2003)  96     metformin  change -0.95 1.500
+#&gt; 28 Vongthavaravat (2002) 164 rosiglitazone  change -1.10 1.559
+#&gt; 29 Vongthavaravat (2002) 170  sulfonylurea  change  0.10 0.992
+#&gt; 30          Oyama (2008)  41      acarbose  change -0.70 0.800
+#&gt; 31          Oyama (2008)  43  sulfonylurea  change -0.30 0.600
+#&gt; 32          Costa (1997)  36      acarbose  change -1.10 0.360
+#&gt; 33          Costa (1997)  29       placebo  change -0.30 0.700
+#&gt; 34      Hermansen (2007) 106   sitagliptin  change -0.30 0.940
+#&gt; 35      Hermansen (2007) 106       placebo  change  0.27 0.940
+#&gt; 36         Garber (2008) 132  vildagliptin  change -0.63 1.034
+#&gt; 37         Garber (2008) 144       placebo  change  0.07 1.080
+#&gt; 38           Alex (1998) 291     metformin  change  0.13 1.428
+#&gt; 39           Alex (1998) 300  sulfonylurea  change  0.50 1.450
+#&gt; 40       Johnston (1994)  68      miglitol  change -0.41 1.072
+#&gt; 41       Johnston (1994)  63       placebo  change  0.33 1.032
+#&gt; 42      Johnston (1998a)  91      miglitol  change -0.43 0.954
+#&gt; 43      Johnston (1998a)  43       placebo  change  0.98 1.311
+#&gt; 44            Kim (2007)  57 rosiglitazone  change -1.10 1.341
+#&gt; 45            Kim (2007)  56     metformin  change -1.10 1.139
+#&gt; 46      Johnston (1998b)  49      miglitol  change -0.12 1.400
+#&gt; 47      Johnston (1998b)  34       placebo  change  0.56 1.166
+#&gt; 48 Gonzalez-Ortiz (2004)  34     metformin  change -1.30 1.861
+#&gt; 49 Gonzalez-Ortiz (2004)  37       placebo  change -0.90 1.803
+#&gt; 50         Stucci (1996)  28    benfluorex     raw  8.03 1.290
+#&gt; 51         Stucci (1996)  30       placebo     raw  8.26 1.350
+#&gt; 52         Moulin (2006) 161    benfluorex  change -0.82 1.028
+#&gt; 53         Moulin (2006) 156       placebo  change  0.19 1.374</div><div class='input'>
+### create network graph ('plyr' and 'igraph' packages must be installed)
+</div><span class='co'># NOT RUN {</span>
 <span class='fu'>require</span>(<span class='no'>plyr</span>)
 <span class='fu'>require</span>(<span class='no'>igraph</span>)
 <span class='no'>pairs</span> <span class='kw'>&lt;-</span> <span class='fu'>do.call</span>(<span class='no'>rbind</span>, <span class='fu'>sapply</span>(<span class='fu'>split</span>(<span class='no'>dat</span>$<span class='no'>treatment</span>, <span class='no'>dat</span>$<span class='no'>study</span>), <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'>t</span>(<span class='fu'>combn</span>(<span class='no'>x</span>,<span class='fl'>2</span>))))

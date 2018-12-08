@@ -106,8 +106,8 @@ funnel(x, \dots)
    \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, \code{\link{rma.glmm}}, \code{\link{rma.mv}}, \code{\link{influence.rma.uni}}, \code{\link{trimfill}}
 }
 \examples{
-### load BCG vaccine data
-dat <- get(data(dat.bcg))
+### copy BCG vaccine data into 'dat'
+dat <- dat.bcg
 
 ### calculate log risk ratios and corresponding sampling variances
 dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat)

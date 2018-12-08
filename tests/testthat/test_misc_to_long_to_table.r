@@ -4,7 +4,7 @@ context("Checking misc: to.long() function")
 
 test_that("to.long() works correctly for measure='MD'", {
 
-   dat <- get(data(dat.normand1999, package="metafor"))
+   dat <- dat.normand1999
 
    sav <- to.long(measure="MD", m1i=m1i, sd1i=sd1i, n1i=n1i, m2i=m2i, sd2i=sd2i, n2i=n2i, data=dat, subset=1:4)
    sav <- sav[,c(1,10:13)]
@@ -16,7 +16,7 @@ test_that("to.long() works correctly for measure='MD'", {
 
 test_that("to.table() works correctly for measure='MD'", {
 
-   dat <- get(data(dat.normand1999, package="metafor"))
+   dat <- dat.normand1999
 
    sav <- to.table(measure="MD", m1i=m1i, sd1i=sd1i, n1i=n1i, m2i=m2i, sd2i=sd2i, n2i=n2i, data=dat, subset=1:4)
 
@@ -27,7 +27,7 @@ test_that("to.table() works correctly for measure='MD'", {
 
 test_that("to.long() works correctly for measure='COR'", {
 
-   dat <- get(data(dat.molloy2014, package="metafor"))
+   dat <- dat.molloy2014
 
    sav <- to.long(measure="COR", ri=ri, ni=ni, data=dat, subset=1:4)
    sav <- sav[,c(11:13)]
@@ -39,7 +39,7 @@ test_that("to.long() works correctly for measure='COR'", {
 
 test_that("to.table() works correctly for measure='COR'", {
 
-   dat <- get(data(dat.molloy2014, package="metafor"))
+   dat <- dat.molloy2014
 
    sav <- to.table(measure="COR", ri=ri, ni=ni, data=dat, subset=1:4)
 
@@ -50,7 +50,7 @@ test_that("to.table() works correctly for measure='COR'", {
 
 test_that("to.long() works correctly for measure='PR'", {
 
-   dat <- get(data(dat.debruin2009, package="metafor"))
+   dat <- dat.debruin2009
 
    sav <- to.long(measure="PR", xi=xi, ni=ni, data=dat, subset=1:4)
    sav <- sav[,c(11:13)]
@@ -62,7 +62,7 @@ test_that("to.long() works correctly for measure='PR'", {
 
 test_that("to.table() works correctly for measure='PR'", {
 
-   dat <- get(data(dat.debruin2009, package="metafor"))
+   dat <- dat.debruin2009
 
    sav <- to.table(measure="PR", xi=xi, ni=ni, data=dat, subset=1:4)
 
@@ -73,7 +73,7 @@ test_that("to.table() works correctly for measure='PR'", {
 
 test_that("to.long() works correctly for measure='IR'", {
 
-   dat <- get(data(dat.hart1999, package="metafor"))
+   dat <- dat.hart1999
 
    sav <- to.long(measure="IR", xi=x1i, ti=t1i, data=dat, subset=1:4)
    sav <- sav[,c(1,14:15)]
@@ -85,7 +85,7 @@ test_that("to.long() works correctly for measure='IR'", {
 
 test_that("to.table() works correctly for measure='IR'", {
 
-   dat <- get(data(dat.hart1999, package="metafor"))
+   dat <- dat.hart1999
 
    sav <- to.table(measure="IR", xi=x1i, ti=t1i, data=dat, subset=1:4)
 
@@ -96,7 +96,7 @@ test_that("to.table() works correctly for measure='IR'", {
 
 test_that("to.long() works correctly for measure='MN'", {
 
-   dat <- get(data(dat.normand1999, package="metafor"))
+   dat <- dat.normand1999
 
    sav <- to.long(measure="MN", mi=m1i, sdi=sd1i, ni=n1i, data=dat, subset=1:4)
    sav <- sav[,c(1,10:12)]
@@ -108,7 +108,7 @@ test_that("to.long() works correctly for measure='MN'", {
 
 test_that("to.table() works correctly for measure='MN'", {
 
-   dat <- get(data(dat.normand1999, package="metafor"))
+   dat <- dat.normand1999
 
    sav <- to.table(measure="MN", mi=m1i, sdi=sd1i, ni=n1i, data=dat, subset=1:4)
 
@@ -148,7 +148,7 @@ test_that("to.table() works correctly for measure='SMCR'", {
 
 test_that("to.long() works correctly for measure='ARAW'", {
 
-   dat <- get(data(dat.bonett2010, package="metafor"))
+   dat <- dat.bonett2010
 
    sav <- to.long(measure="AHW", ai=ai, mi=mi, ni=ni, data=dat, subset=1:4)
    sav <- sav[,c(1,8:10)]
@@ -160,7 +160,7 @@ test_that("to.long() works correctly for measure='ARAW'", {
 
 test_that("to.table() works correctly for measure='ARAW'", {
 
-   dat <- get(data(dat.bonett2010, package="metafor"))
+   dat <- dat.bonett2010
 
    sav <- to.table(measure="AHW", ai=ai, mi=mi, ni=ni, data=dat, subset=1:4)
 

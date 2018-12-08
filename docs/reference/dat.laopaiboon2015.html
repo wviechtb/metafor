@@ -154,9 +154,24 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>### load data</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'>get</span>(<span class='fu'>data</span>(<span class='no'>dat.laopaiboon2015</span>))
-
+    <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat' and examine data</span>
+<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.laopaiboon2015</span>
+<span class='no'>dat</span></div><div class='output co'>#&gt;       author year ai n1i ci n2i      age diag.ab diag.cb diag.pn        ctrl
+#&gt; 1     Balmes 1991  4  48  7  56   adults       1       0       0   amoxyclav
+#&gt; 2      Beghi 1995 22  69  2  73   adults       0       1       0   amoxyclav
+#&gt; 3   Biebuyck 1996 53 497 53 257   adults       1       1       0   amoxyclav
+#&gt; 4     Daniel 1991  5 121 10 120   adults       1       0       0 amoxycillin
+#&gt; 5   Ferwerda 2001  5  55  7  53 children       0       0       1   amoxyclav
+#&gt; 6       Gris 1996  6  34  2  33   adults       1       1       1   amoxyclav
+#&gt; 7     Harris 1998 11 125  4  63 children       0       0       1   amoxyclav
+#&gt; 8  Hoepelman 1993  4  48  4  51   adults       1       0       0   amoxyclav
+#&gt; 9  Hoepelman 1998  3  62  5  61   adults       0       1       0   amoxyclav
+#&gt; 10   Mertens 1992  1  25  5  25   adults       0       1       0 amoxycillin
+#&gt; 11   Sevieri 1993  5  25  2  25   adults       0       1       0   amoxyclav
+#&gt; 12  Whitlock 1995  0  29  2  27   adults       0       1       0   amoxyclav
+#&gt; 13    Wubbel 1999  1  39  2  49 children       0       0       1   amoxyclav
+#&gt; 14 Zachariah 1996  8 173  7 173   adults       1       1       1   amoxyclav
+#&gt; 15     Zheng 2002 12  38  2  42   adults       0       1       0   amoxyclav</div><div class='input'>
 <span class='co'>### analysis using the Mantel-Haenszel method</span>
 <span class='fu'><a href='rma.mh.html'>rma.mh</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>ai</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>n1i</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>ci</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>n2i</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>3</span>)</div><div class='output co'>#&gt; 
 #&gt; Fixed-Effects Model (k = 15)

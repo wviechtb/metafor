@@ -31,8 +31,8 @@
    Collins, R., Yusuf, S., & Peto, R. (1985). Overview of randomised trials of diuretics in pregnancy. \emph{British Medical Journal}, \bold{290}, 17--23.
 }
 \examples{
-### load data
-dat <- get(data(dat.collins1985b))
+### copy data into 'dat'
+dat <- dat.collins1985b
 
 ### calculate (log) odds ratio and sampling variance
 dat <- escalc(measure="OR", n1i=pre.nti, n2i=pre.nci, ai=pre.xti, ci=pre.xci, data=dat)

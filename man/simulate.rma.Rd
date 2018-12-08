@@ -31,18 +31,18 @@
    \code{\link{rma.uni}}, \code{\link{rma.mv}}
 }
 \examples{
-### load BCG vaccine data
-dat <- get(data(dat.bcg))
+### copy BCG vaccine data into 'dat'
+dat <- dat.bcg
 
 ### calculate log risk ratios and corresponding sampling variances
-dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
+dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat)
 dat
 
 ### random-effects model
 res <- rma(yi, vi, data=dat)
 res
 
-### simulate outcomes from model
+### simulate 10 sets of new outcomes based on the fitted model
 newdat <- simulate(res, nsim=10, seed=1234)
 newdat
 }

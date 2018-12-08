@@ -152,9 +152,46 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>### load data</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'>get</span>(<span class='fu'>data</span>(<span class='no'>dat.hackshaw1998</span>))
-
+    <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat' and examine data</span>
+<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.hackshaw1998</span>
+<span class='no'>dat</span></div><div class='output co'>#&gt;    study       author year   country       design cases      yi     vi 
+#&gt; 1      1    Garfinkel 1981       USA       cohort   153  0.1660 0.0188 
+#&gt; 2      2     Hirayama 1984     Japan       cohort   200  0.3720 0.0330 
+#&gt; 3      3       Butler 1988       USA       cohort     8  0.7030 0.5402 
+#&gt; 4      4     Cardenas 1997       USA       cohort   150  0.1820 0.0313 
+#&gt; 5      5         Chan 1982 Hong Kong case-control    84 -0.2880 0.0797 
+#&gt; 6      6       Correa 1983       USA case-control    22  0.7280 0.2273 
+#&gt; 7      7 Trichopolous 1983    Greece case-control    62  0.7560 0.0889 
+#&gt; 8      8      Buffler 1984       USA case-control    41 -0.2230 0.1927 
+#&gt; 9      9        Kabat 1984       USA case-control    24 -0.2360 0.3390 
+#&gt; 10    10          Lam 1985 Hong Kong case-control    60  0.6980 0.0981 
+#&gt; 11    11    Garfinkel 1985       USA case-control   134  0.2070 0.0456 
+#&gt; 12    12           Wu 1985       USA case-control    29  0.1820 0.2317 
+#&gt; 13    13        Akiba 1986     Japan case-control    94  0.4190 0.0796 
+#&gt; 14    14          Lee 1986        UK case-control    32  0.0300 0.2174 
+#&gt; 15    15          Koo 1987 Hong Kong case-control    86  0.4380 0.0770 
+#&gt; 16    16    Pershagen 1987    Sweden case-control    70  0.0300 0.0715 
+#&gt; 17    17       Humble 1987       USA case-control    20  0.8500 0.2926 
+#&gt; 18    18          Lam 1987 Hong Kong case-control   199  0.5010 0.0324 
+#&gt; 19    19          Gao 1987     China case-control   246  0.1740 0.0363 
+#&gt; 20    20     Brownson 1987       USA case-control    19  0.4190 0.4838 
+#&gt; 21    21         Geng 1988     China case-control    54  0.7700 0.1238 
+#&gt; 22    22      Shimizu 1988     Japan case-control    90  0.0770 0.0711 
+#&gt; 23    23        Inoue 1988     Japan case-control    22  0.9360 0.3982 
+#&gt; 24    24    Kalandidi 1990    Greece case-control    90  0.4820 0.0896 
+#&gt; 25    25        Sobue 1990     Japan case-control   144  0.0580 0.0337 
+#&gt; 26    26  Wu-Williams 1990     China case-control   417 -0.2360 0.0161 
+#&gt; 27    27          Liu 1991     China case-control    54 -0.3010 0.1802 
+#&gt; 28    28       Jockel 1991   Germany case-control    23  0.8200 0.3171 
+#&gt; 29    29     Brownson 1992       USA case-control   431 -0.0300 0.0125 
+#&gt; 30    30    Stockwell 1992       USA case-control   210  0.4700 0.1137 
+#&gt; 31    31           Du 1993     China case-control    75  0.1740 0.0893 
+#&gt; 32    32          Liu 1993     China case-control    38  0.5070 0.1760 
+#&gt; 33    33      Fontham 1994       USA case-control   651  0.2310 0.0100 
+#&gt; 34    34        Kabat 1995       USA case-control    67  0.0950 0.0862 
+#&gt; 35    35      Zaridze 1995    Russia case-control   162  0.5070 0.0399 
+#&gt; 36    36          Sun 1996     China case-control   230  0.1480 0.0364 
+#&gt; 37    37         Wang 1996     China case-control   135  0.1040 0.0664 </div><div class='input'>
 <span class='co'>### random-effects model using the log odds ratios</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"DL"</span>)
 <span class='no'>res</span></div><div class='output co'>#&gt; 

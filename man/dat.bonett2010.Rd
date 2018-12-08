@@ -26,8 +26,9 @@
    Hakstian, A. R., & Whalen, T. E. (1976). A k-sample significance test for independent alpha coefficients. \emph{Psychometrika}, \bold{41}, 219--231.
 }
 \examples{
-### load data
-dat <- get(data(dat.bonett2010))
+### copy data into 'dat' and examine data
+dat <- dat.bonett2010
+dat
 
 ### meta-analysis using the raw alpha values
 res <- rma(measure="ARAW", ai=ai, mi=mi, ni=ni, data=dat)

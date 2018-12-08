@@ -56,7 +56,7 @@ test_that("escalc() works correctly for measure='PHI/YUQ/YUY/RTET/PBIT/OR2D/OR2D
 
 test_that("escalc() works correctly for measure='SMD/SMDH/ROM'", {
 
-   dat <- get(data(dat.normand1999, package="metafor"))
+   dat <- dat.normand1999
 
    sav <- escalc(measure="SMD", m1i=m1i, sd1i=sd1i, n1i=n1i, m2i=m2i, sd2i=sd2i, n2i=n2i, data=dat, subset=1:4)
    expect_equivalent(c(round(sav$yi, 4)), c(-0.3552, -0.3479, -2.3176, -1.8880))
@@ -74,12 +74,12 @@ test_that("escalc() works correctly for measure='SMD/SMDH/ROM'", {
 
 test_that("escalc() works correctly for measure='CVR/VR'", {
 
-   dat <- get(data(dat.normand1999, package="metafor"))
+   dat <- dat.normand1999
    dat <- escalc(measure="CVR", m1i=m1i, sd1i=sd1i, n1i=n1i, m2i=m2i, sd2i=sd2i, n2i=n2i, data=dat, subset=1)
 
    expect_equivalent(round(c(dat$yi[1], dat$vi[1]), 4), c(0.0014, 0.0159))
 
-   dat <- get(data(dat.normand1999, package="metafor"))
+   dat <- dat.normand1999
    dat <- escalc(measure="VR", sd1i=sd1i, n1i=n1i, sd2i=sd2i, n2i=n2i, data=dat, subset=1)
 
    expect_equivalent(round(c(dat$yi[1], dat$vi[1]), 4), c(-0.3087, 0.0065))
@@ -104,7 +104,7 @@ test_that("escalc() works correctly for measure='RPB/RBIS'", {
 
 test_that("escalc() works correctly for measure='D2ORL/D2ORN'", {
 
-   dat <- get(data(dat.gibson2002, package="metafor"))
+   dat <- dat.gibson2002
 
    sav <- escalc(measure="D2ORL", m1i=m1i, sd1i=sd1i, n1i=n1i, m2i=m2i, sd2i=sd2i, n2i=n2i, data=dat, subset=1:4)
    expect_equivalent(c(round(sav$yi, 4)), c(-0.4315, -0.9285,  0.5932, -0.1890))
@@ -118,7 +118,7 @@ test_that("escalc() works correctly for measure='D2ORL/D2ORN'", {
 
 test_that("escalc() works correctly for measure='COR/UCOR/ZCOR'", {
 
-   dat <- get(data(dat.mcdaniel1994, package="metafor"))
+   dat <- dat.mcdaniel1994
 
    sav <- escalc(measure="COR", ri=ri, ni=ni, data=dat, subset=c(1,13,33,102))
    expect_equivalent(c(round(sav$yi, 4)), c(0.0000, 0.6200, 0.9900, -0.1300))
@@ -247,7 +247,7 @@ test_that("escalc() works correctly for measure='MNLN/CVLN/SDLN'", {
 
 test_that("'var.names' argument works correctly for 'escalc' objects.", {
 
-   dat <- get(data(dat.bcg, package="metafor"))
+   dat <- dat.bcg
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat, var.names=c("y1","v1"), slab=paste0(dat$author, ", ", dat$year))
    dat <- escalc(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat, var.names=c("y2","v2"), slab=paste0(dat$author, ", ", dat$year))
    expect_identical(tail(names(dat), 4), c("y1","v1","y2","v2"))
@@ -260,7 +260,7 @@ test_that("'var.names' argument works correctly for 'escalc' objects.", {
 
 test_that("`[`, cbind(), and rbind() work correctly for 'escalc' objects.", {
 
-   dat <- get(data(dat.bcg, package="metafor"))
+   dat <- dat.bcg
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat, var.names=c("y1","v1"), slab=paste0(dat$author, ", ", dat$year))
    dat <- escalc(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat, var.names=c("y2","v2"), slab=paste0(dat$author, ", ", dat$year))
    dat <- cbind(dat[,1:9], dat[,c(12:13,10:11)])
@@ -274,7 +274,7 @@ test_that("`[`, cbind(), and rbind() work correctly for 'escalc' objects.", {
    expect_equivalent(attr(dat$y2, "ni"), rowSums(dat[,c("tpos", "tneg", "cpos", "cneg")]))
    expect_identical(attr(dat$y2, "slab"), paste0(dat$author, ", ", dat$year))
 
-   dat <- get(data(dat.bcg, package="metafor"))
+   dat <- dat.bcg
    dat1 <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat, var.names=c("y1","v1"), slab=paste0(dat$author, ", ", dat$year))
    dat2 <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat, var.names=c("y1","v1"), slab=paste0(dat$author, ", ", dat$year))
    dat1 <- dat1[1:4,]
@@ -289,7 +289,7 @@ test_that("`[`, cbind(), and rbind() work correctly for 'escalc' objects.", {
 
 test_that("summary() of 'escalc' objects works correctly with the 'out.names' argument.", {
 
-   dat <- get(data(dat.bcg, package="metafor"))
+   dat <- dat.bcg
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat, var.names=c("y1","v1"), slab=paste0(dat$author, ", ", dat$year))
    dat <- escalc(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat, var.names=c("y2","v2"), slab=paste0(dat$author, ", ", dat$year))
    dat <- summary(dat, var.names=c("y1","v1"), out.names=c("sei1","zi1","ci.lb1","ci.ub1"))

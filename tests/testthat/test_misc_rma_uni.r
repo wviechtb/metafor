@@ -32,7 +32,7 @@ test_that("rma() works with method='DLIT' and method='SJIT'", {
 
 test_that("rma() works directly with input for measure='SMD'", {
 
-   dat <- get(data(dat.normand1999, package="metafor"))
+   dat <- dat.normand1999
    dat <- escalc(measure="SMD", m1i=m1i, sd1i=sd1i, n1i=n1i, m2i=m2i, sd2i=sd2i, n2i=n2i, data=dat, subset=1:4)
    res1 <- rma(yi, vi, data=dat)
    res2 <- rma(measure="SMD", m1i=m1i, sd1i=sd1i, n1i=n1i, m2i=m2i, sd2i=sd2i, n2i=n2i, data=dat, subset=1:4)
@@ -60,7 +60,7 @@ test_that("rma() works directly with input for measure='PCOR'", {
 
 test_that("rma() works directly with input for measure='MN'", {
 
-   dat <- get(data(dat.normand1999, package="metafor"))
+   dat <- dat.normand1999
    dat <- escalc(measure="MN", mi=m1i, sdi=sd1i, ni=n1i, data=dat)
    res1 <- rma(yi, vi, data=dat)
    res2 <- rma(measure="MN", mi=m1i, sdi=sd1i, ni=n1i, data=dat)
@@ -91,7 +91,7 @@ test_that("rma() works directly with input for measure='SMCR'", {
 
 test_that("rma() works directly with input for measure='AHW'", {
 
-   dat <- get(data(dat.bonett2010, package="metafor"))
+   dat <- dat.bonett2010
    dat <- escalc(measure="AHW", ai=ai, mi=mi, ni=ni, data=dat)
    res1 <- rma(yi, vi, data=dat)
    res2 <- rma(measure="AHW", ai=ai, mi=mi, ni=ni, data=dat)

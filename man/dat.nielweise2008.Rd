@@ -27,8 +27,9 @@
    Stijnen, T., Hamza, T. H., & Ozdemir, P. (2010). Random effects meta-analysis of event outcome in the framework of the generalized linear mixed model with applications in sparse data. \emph{Statistics in Medicine}, \bold{29}, 3046--3067.
 }
 \examples{
-### load data
-dat <- get(data(dat.nielweise2008))
+### copy data into 'dat' and examine data
+dat <- dat.nielweise2008
+dat
 
 ### standard (inverse-variance) random-effects model
 res <- rma(measure="IRR", x1i=x1i, t1i=t1i, x2i=x2i, t2i=t2i, data=dat)

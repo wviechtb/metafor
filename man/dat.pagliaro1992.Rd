@@ -19,8 +19,9 @@
    Pagliaro, L., D'Amico, G., \enc{Sörensen}{Soerensen}, T. I. A., Lebrec, D., Burroughs, A. K., Morabito, A., \enc{Tiné}{Tine}, F., Politi, F., & Traina, M. (1992). Prevention of first bleeding in cirrhosis: A meta-analysis of randomized trials of nonsurgical treatment. \emph{Annals of Internal Medicine}, \bold{117}, 59--70.
 }
 \examples{
-### load data
-dat <- get(data(dat.pagliaro1992))
+### copy data into 'dat' and examine data
+dat <- dat.pagliaro1992
+dat
 
 ### restructure dataset to a contrast-based format
 dat.c <- lapply(split(dat.pagliaro1992, dat.pagliaro1992$study),
@@ -39,6 +40,7 @@ rma.mh(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i,
 
 ### calculate log odds for each study arm
 dat <- escalc(measure="PLO", xi=xi, ni=ni, data=dat)
+dat
 
 ### turn treatment variable into factor and set reference level
 dat$trt <- relevel(factor(dat$trt), ref="control")
@@ -47,7 +49,7 @@ dat$trt <- relevel(factor(dat$trt), ref="control")
 levels(dat$trt) <- paste0(" ", levels(dat$trt))
 
 ### network meta-analysis using an arm-based random-effects model with fixed study effects
-### by setting rho=1/2, tau^2 reflects the amount of heterogeneity for all treatment comparisons
+### (by setting rho=1/2, tau^2 reflects the amount of heterogeneity for all treatment comparisons)
 res <- rma.mv(yi, vi, mods = ~ factor(study) + trt - 1, random = ~ trt | study, rho=1/2, data=dat)
 res
 

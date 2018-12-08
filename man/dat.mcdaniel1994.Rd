@@ -29,8 +29,8 @@
    McDaniel, M. A., Whetzel, D. L., Schmidt, F. L., & Maurer, S. D. (1994). The validity of employment interviews: A comprehensive review and meta-analysis. \emph{Journal of Applied Psychology}, \bold{79}, 599--616.
 }
 \examples{
-### load data
-dat <- get(data(dat.mcdaniel1994))
+### copy data into 'dat'
+dat <- dat.mcdaniel1994
 
 ### calculate r-to-z transformed correlations and corresponding sampling variances
 dat <- escalc(measure="ZCOR", ri=ri, ni=ni, data=dat)

@@ -5,7 +5,7 @@
 context("Checking analysis example: stijnen2010")
 
 ### load data
-dat <- get(data(dat.nielweise2007, package="metafor"))
+dat <- dat.nielweise2007
 
 test_that("results for the normal-normal model are correct (measure=='PLO')", {
 
@@ -114,7 +114,7 @@ test_that("results for the conditional logistic model with approximate likelihoo
 ############################################################################
 
 ### load data
-dat <- get(data(dat.nielweise2008, package="metafor"))
+dat <- dat.nielweise2008
 
 ### incidence rates reflect the expected number of events per 1000 days
 dat$t1i <- dat$t1i/1000

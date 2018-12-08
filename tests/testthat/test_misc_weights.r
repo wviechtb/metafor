@@ -100,7 +100,7 @@ test_that("weights are correct for rma.mv() with method='REML'.", {
 
 test_that("weights are correct for rma.mh() with measure='RD/RR/OR'.", {
 
-   dat <- get(data(dat.bcg, package="metafor"))
+   dat <- dat.bcg
 
    res <- rma.mh(measure="RD", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat)
    sav <- weights(res)
@@ -124,7 +124,7 @@ test_that("weights are correct for rma.mh() with measure='RD/RR/OR'.", {
 
 test_that("weights are correct for rma.mh() with measure='IRD/IRR'.", {
 
-   dat <- get(data(dat.nielweise2008, package="metafor"))
+   dat <- dat.nielweise2008
 
    res <- rma.mh(measure="IRD", x1i=x1i, t1i=t1i, x2i=x2i, t2i=t2i, data=dat)
    sav <- weights(res)
@@ -142,7 +142,7 @@ test_that("weights are correct for rma.mh() with measure='IRD/IRR'.", {
 
 test_that("weights are correct for rma.peto().", {
 
-   dat <- get(data(dat.bcg, package="metafor"))
+   dat <- dat.bcg
 
    res <- rma.peto(ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat)
    sav <- weights(res)

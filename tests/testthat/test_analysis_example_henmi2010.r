@@ -5,7 +5,7 @@
 context("Checking analysis example: henmi2010")
 
 ### load dataset
-dat <- get(data(dat.lee2004, package="metafor"))
+dat <- dat.lee2004
 
 ### calculate log odds ratios and corresponding sampling variances
 dat <- escalc(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat)

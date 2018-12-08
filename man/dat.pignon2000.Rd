@@ -22,12 +22,13 @@
    Pignon, J. P., Bourhis, J., Domenge, C., & Designe, L. (2000). Chemotherapy added to locoregional treatment for head and neck squamous-cell carcinoma: Three meta-analyses of updated individual data. \emph{Lancet}, \bold{355}(9208), 949--955.
 }
 \examples{
-### load data
-dat <- get(data(dat.pignon2000))
+### copy data into 'dat'
+dat <- dat.pignon2000
 
 ### compute estimated log hazard ratios and sampling variances
 dat$yi <- with(dat, OmE/V)
 dat$vi <- with(dat, 1/V)
+dat
 
 ### meta-analysis based on all 65 trials
 res <- rma(yi, vi, data=dat, method="FE", digits=2)

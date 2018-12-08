@@ -50,8 +50,8 @@ baujat(x, \dots)
    \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, \code{\link{influence.rma.uni}}, \code{\link{radial}}
 }
 \examples{
-### load data from Pignon et al. (2000)
-dat <- get(data(dat.pignon2000))
+### copy data from Pignon et al. (2000) into 'dat'
+dat <- dat.pignon2000
 
 ### compute estimated log hazard ratios and sampling variances
 dat$yi <- with(dat, OmE/V)

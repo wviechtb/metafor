@@ -2,7 +2,7 @@
 
 context("Checking misc: model diagnostic functions for rma.mv()")
 
-dat1 <- get(data(dat.konstantopoulos2011, package="metafor"))
+dat1 <- dat.konstantopoulos2011
 
 dat1 <- dat1[dat1$district %in% c(11, 12, 18, 71, 108, 644),]
 rownames(dat1) <- 1:nrow(dat1)

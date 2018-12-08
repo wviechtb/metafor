@@ -155,9 +155,102 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>### load data</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'>get</span>(<span class='fu'>data</span>(<span class='no'>dat.ishak2007</span>))
-
+    <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat' and examine data</span>
+<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.ishak2007</span>
+<span class='no'>dat</span></div><div class='output co'>#&gt;                           study   y1i  v1i   y2i   v2i   y3i   v3i   y4i   v4i 
+#&gt; 1                Alegret (2001) -33.4 14.3    NA    NA    NA    NA    NA    NA 
+#&gt; 2             Barichella (2003) -20.0  7.3    NA    NA -30.0   5.7    NA    NA 
+#&gt; 3                 Berney (2002) -21.1  7.3    NA    NA    NA    NA    NA    NA 
+#&gt; 4               Burchiel (1999) -20.0  8.0 -20.0   8.0 -18.0   5.0    NA    NA 
+#&gt; 5                   Chen (2003)    NA   NA -32.9 125.0    NA    NA    NA    NA 
+#&gt; 6  DBS for PD Study Grp. (2001) -25.6  4.2 -28.3   4.6    NA    NA    NA    NA 
+#&gt; 7               Dujardin (2001) -30.3 88.2    NA    NA -24.5 170.7    NA    NA 
+#&gt; 8               Esselink (2004)    NA   NA -25.0  17.0    NA    NA    NA    NA 
+#&gt; 9             Funkiewiez (2003)    NA   NA    NA    NA -36.0   5.0    NA    NA 
+#&gt; 10                Herzog (2003)    NA   NA -22.5   6.8 -25.2  11.0 -25.7  15.4 
+#&gt; 11                Iansek (2002)    NA   NA  -8.6  41.0    NA    NA    NA    NA 
+#&gt; 12                  Just (2002) -26.0 22.4 -30.0  20.6    NA    NA    NA    NA 
+#&gt; 13        Kleiner-Fisman (1999)    NA   NA    NA    NA -25.5   8.2 -19.5  13.0 
+#&gt; 14                 Krack (2003)    NA   NA    NA    NA -36.7   5.8 -32.9   6.1 
+#&gt; 15                Krause (2001) -27.5  3.8 -23.5   3.8 -29.0   3.8    NA    NA 
+#&gt; 16                Krause (2004)    NA   NA    NA    NA -25.0  13.0 -23.0  15.4 
+#&gt; 17                 Kumar (1998)    NA   NA -36.3  27.3    NA    NA    NA    NA 
+#&gt; 18              Lagrange (2002)    NA   NA    NA    NA -29.4  10.7    NA    NA 
+#&gt; 19              Limousin (1998) -31.0  2.6 -34.0   2.0 -32.5   2.0    NA    NA 
+#&gt; 20            Linazasoro (2003)    NA   NA    NA    NA -20.6  25.3    NA    NA 
+#&gt; 21               Lopiano (2001) -33.9 20.1    NA    NA    NA    NA    NA    NA 
+#&gt; 22                 Macia (2004)    NA   NA    NA    NA -35.4  21.2    NA    NA 
+#&gt; 23       Martinez-Martin (2002)    NA   NA -34.9  18.0    NA    NA    NA    NA 
+#&gt; 24             Molinuevo (2000)    NA   NA -32.7  16.3    NA    NA    NA    NA 
+#&gt; 25                  Moro (1999) -23.0 38.1 -24.1  32.9 -27.8  31.0 -28.3  34.6 
+#&gt; 26            Ostergaard (2002) -31.2 12.7    NA    NA -33.0   9.5    NA    NA 
+#&gt; 27                 Pahwa (2003) -16.2  5.9    NA    NA -16.3   7.0 -11.5  12.7 
+#&gt; 28                 Patel (2003)    NA   NA    NA    NA -29.2   5.8    NA    NA 
+#&gt; 29               Perozzo (2001)    NA   NA -31.7  12.4    NA    NA    NA    NA 
+#&gt; 30      Pinter (1999) - Long FU -32.2 26.5    NA    NA -32.9  29.0    NA    NA 
+#&gt; 31     Pinter (1999) - Short FU -31.7 19.1    NA    NA    NA    NA    NA    NA 
+#&gt; 32        Rodriguez-Oroz (2000) -29.3 22.9 -32.0  20.0 -36.7  17.8    NA    NA 
+#&gt; 33                Romito (2003) -30.1  9.4 -30.5   8.7 -29.7  10.4 -31.9  13.3 
+#&gt; 34             Rousseaux (2004) -17.6 28.4    NA    NA    NA    NA    NA    NA 
+#&gt; 35         Russman (2004) (21m)    NA   NA    NA    NA    NA    NA -22.9  20.0 
+#&gt; 36             Schneider (2003)    NA   NA    NA    NA -36.0  27.7    NA    NA 
+#&gt; 37          Seif (2004) (17.5m)    NA   NA    NA    NA    NA    NA -22.5  20.3 
+#&gt; 38                Simuni (2002) -19.4  1.6 -18.0   1.7 -20.5   1.5    NA    NA 
+#&gt; 39       Straits-Troster (2000)  -9.3 85.2    NA    NA    NA    NA    NA    NA 
+#&gt; 40               Thobois (2002)    NA   NA -24.7  15.5 -27.9  17.1    NA    NA 
+#&gt; 41               Troster (2003) -16.7  9.8    NA    NA    NA    NA    NA    NA 
+#&gt; 42          Valldeoriola (2002)    NA   NA -31.2 196.0    NA    NA -27.4 201.6 
+#&gt; 43                Vesper (2002) -27.0  5.5 -30.0   3.5    NA    NA    NA    NA 
+#&gt; 44           Vingerhoets (2002) -19.7 18.5 -22.1  18.1 -24.3  18.2 -21.9  16.7 
+#&gt; 45               Volkman (2001)    NA   NA -37.8  20.9 -34.0  26.4    NA    NA 
+#&gt; 46           Weselburger (2002) -22.1 40.8    NA    NA    NA    NA    NA    NA 
+#&gt;    mdur mbase 
+#&gt; 1  16.1  53.6 
+#&gt; 2  13.5  45.3 
+#&gt; 3  13.6  45.6 
+#&gt; 4  13.6  48.0 
+#&gt; 5  12.1  65.7 
+#&gt; 6  14.4  54.0 
+#&gt; 7  13.1  65.0 
+#&gt; 8  12.0  51.5 
+#&gt; 9  14.0  56.0 
+#&gt; 10 15.0  44.9 
+#&gt; 11 13.0  27.6 
+#&gt; 12 14.0  44.0 
+#&gt; 13 13.4  50.1 
+#&gt; 14 14.6  55.7 
+#&gt; 15 13.7  59.0 
+#&gt; 16 14.4  60.0 
+#&gt; 17 14.3  55.7 
+#&gt; 18 14.0  53.7 
+#&gt; 19 14.0  57.0 
+#&gt; 20 13.7  47.7 
+#&gt; 21 15.4  59.8 
+#&gt; 22 15.0  55.2 
+#&gt; 23 16.4  55.7 
+#&gt; 24 15.8  49.6 
+#&gt; 25 15.4  67.6 
+#&gt; 26 15.0  51.3 
+#&gt; 27 12.1  41.3 
+#&gt; 28 10.0  47.8 
+#&gt; 29 15.4  59.7 
+#&gt; 30 11.3  60.0 
+#&gt; 31 11.5  59.7 
+#&gt; 32 16.5  51.5 
+#&gt; 33 13.8  63.9 
+#&gt; 34 12.0  52.3 
+#&gt; 35 15.9  47.1 
+#&gt; 36 17.0  51.3 
+#&gt; 37 15.0  44.2 
+#&gt; 38 16.7  43.5 
+#&gt; 39  8.0  47.4 
+#&gt; 40 13.5  44.9 
+#&gt; 41  9.5  41.6 
+#&gt; 42 15.6  49.0 
+#&gt; 43 14.0  53.0 
+#&gt; 44 16.0  48.8 
+#&gt; 45 13.1  56.4 
+#&gt; 46 14.0  50.3 </div><div class='input'>
 <span class='co'>### create long format dataset</span>
 <span class='no'>dat.long</span> <span class='kw'>&lt;-</span> <span class='fu'>reshape</span>(<span class='no'>dat</span>, <span class='kw'>direction</span><span class='kw'>=</span><span class='st'>"long"</span>, <span class='kw'>idvar</span><span class='kw'>=</span><span class='st'>"study"</span>, <span class='kw'>v.names</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='st'>"yi"</span>,<span class='st'>"vi"</span>),
                     <span class='kw'>varying</span><span class='kw'>=</span><span class='fu'>list</span>(<span class='fu'>c</span>(<span class='fl'>2</span>,<span class='fl'>4</span>,<span class='fl'>6</span>,<span class='fl'>8</span>), <span class='fu'>c</span>(<span class='fl'>3</span>,<span class='fl'>5</span>,<span class='fl'>7</span>,<span class='fl'>9</span>)))

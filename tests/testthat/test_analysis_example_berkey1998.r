@@ -5,7 +5,7 @@
 context("Checking analysis example: berkey1998")
 
 ### load data
-dat <- get(data(dat.berkey1998, package="metafor"))
+dat <- dat.berkey1998
 
 ### construct variance-covariance matrix of the observed outcomes
 V <- bldiag(lapply(split(dat[,c("v1i", "v2i")], dat$trial), as.matrix))

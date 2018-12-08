@@ -25,11 +25,12 @@
    de Bruin, M., Viechtbauer, W., Hospers, H. J., Schaalma, H. P., & Kok, G. (2009). Standard care quality determines treatment outcomes in control groups of HAART-adherence intervention studies: Implications for the interpretation and comparison of intervention effects. \emph{Health Psychology}, \bold{28}, 668--674.
 }
 \examples{
-### load data
-dat <- get(data(dat.debruin2009))
+### copy data into 'dat'
+dat <- dat.debruin2009
 
 ### calculate proportions and corresponding sampling variances
 dat <- escalc(measure="PR", xi=xi, ni=ni, data=dat)
+dat
 
 ### random-effects model
 res <- rma(yi, vi, data=dat)

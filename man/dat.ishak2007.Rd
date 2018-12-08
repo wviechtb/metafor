@@ -28,8 +28,9 @@
    Ishak, K. J., Platt, R. W., Joseph, L., Hanley, J. A., & Caro, J. J. (2007). Meta-analysis of longitudinal studies. \emph{Clinical Trials}, \bold{4}, 525--539.
 }
 \examples{
-### load data
-dat <- get(data(dat.ishak2007))
+### copy data into 'dat' and examine data
+dat <- dat.ishak2007
+dat
 
 ### create long format dataset
 dat.long <- reshape(dat, direction="long", idvar="study", v.names=c("yi","vi"),

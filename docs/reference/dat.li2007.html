@@ -154,9 +154,31 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>### load data</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'>get</span>(<span class='fu'>data</span>(<span class='no'>dat.li2007</span>))
-
+    <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat' and examine data</span>
+<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.li2007</span>
+<span class='no'>dat</span></div><div class='output co'>#&gt;    id        study year   ai   n1i   ci   n2i
+#&gt; 1   1       Morton 1984    1    40    2    36
+#&gt; 2   2    Rasmussen 1986    4    56   14    74
+#&gt; 3   3        Smith 1986    2    92    7    93
+#&gt; 4   4      Abraham 1987    1    48    1    46
+#&gt; 5   5 Ceremuzynski 1989    1    25    3    23
+#&gt; 6   6     Shechter 1990    1    50    9    53
+#&gt; 7   7        Singh 1990    6    81   11    81
+#&gt; 8   8    Feldstedt 1991   10   150    8   148
+#&gt; 9   9     Shechter 1991    2    21    4    25
+#&gt; 10 10        Woods 1992   90  1150  118  1150
+#&gt; 11 11           Wu 1992    5   125   12   102
+#&gt; 12 12    Thogersen 1995    4   130    8   122
+#&gt; 13 13     Shechter 1995    4    96   17    98
+#&gt; 14 14       ISIS-4 1995 2216 29011 2103 29039
+#&gt; 15 15     Bhargava 1995    3    40    3    38
+#&gt; 16 16         Urek 1996    1    31    0    30
+#&gt; 17 17        Raghu 1999    6   169   18   181
+#&gt; 18 18        MAGIC 2000  475  3113  472  3100
+#&gt; 19 19     Gyamlani 2000    2    50   10    50
+#&gt; 20 20      Santoro 2000    0    75    1    75
+#&gt; 21 21          Zhu 2002  101  1691  134  1488
+#&gt; 22 22    Nakashima 2004    1    89    3    91</div><div class='input'>
 <span class='co'>### meta-analysis of all trials except ISIS-4</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>ai</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>n1i</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>ci</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>n2i</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"FE"</span>, <span class='kw'>subset</span><span class='kw'>=</span>-<span class='fl'>14</span>)
 <span class='fu'>print</span>(<span class='no'>res</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 

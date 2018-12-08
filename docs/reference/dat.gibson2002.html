@@ -164,9 +164,24 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>### load data</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'>get</span>(<span class='fu'>data</span>(<span class='no'>dat.gibson2002</span>))
-
+    <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat' and examine data</span>
+<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.gibson2002</span>
+<span class='no'>dat</span></div><div class='output co'>#&gt;            author year n1i   m1i  sd1i n2i   m2i  sd2i ai bi ci di type
+#&gt; 1            Cote 1997  50  2.20 12.73  54  5.20 12.50 NA NA NA NA    1
+#&gt; 2           Ghosh 1998 140 17.60 24.20 136 34.10 38.80 NA NA NA NA    1
+#&gt; 3         Hayward 1996  23  0.38  0.56  19  0.23  0.29 NA NA NA NA    1
+#&gt; 4           Heard 1999  97  2.09  5.93  94  2.66  4.95 34 63 36 58    1
+#&gt; 5  Ignacio-Garcia 1995  35  4.92  6.05  35 20.00 26.34 24 11 29  6    1
+#&gt; 6          Knoell 1998  45  0.85  4.75  55  2.31  9.16 NA NA NA NA    1
+#&gt; 7       Lahdensuo 1996  56  2.80  9.00  59  4.80  7.20 13 43 25 34    1
+#&gt; 8       Sommaruga 1995  20 24.10 11.80  20 31.80 17.90 NA NA NA NA    1
+#&gt; 9          Zeiger 1991 128  1.40  3.30 143  2.30  7.60 NA NA NA NA    1
+#&gt; 10         Garret 1994 119  6.23 12.20 100  5.71  8.57 58 42 57 33    2
+#&gt; 11           Neri 1996  32  2.10  8.00  33  5.10 14.00  7 25 13 20    3
+#&gt; 12         Hilton 1986  86  0.73  1.48 100  0.47  1.20 NA NA NA NA    4
+#&gt; 13      Gallefoss 1999  25  8.00 32.00  24 26.00 70.00 NA NA NA NA    5
+#&gt; 14           Yoon 1993  28    NA    NA  28    NA    NA  5 23  4 24    1
+#&gt; 15         Brewin 1995  12    NA    NA  33    NA    NA  0 12 16 17    3</div><div class='input'>
 <span class='co'>### fixed-effects model analysis of the standardized mean differences</span>
 <span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"SMD"</span>, <span class='kw'>m1i</span><span class='kw'>=</span><span class='no'>m1i</span>, <span class='kw'>sd1i</span><span class='kw'>=</span><span class='no'>sd1i</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>n1i</span>, <span class='kw'>m2i</span><span class='kw'>=</span><span class='no'>m2i</span>, <span class='kw'>sd2i</span><span class='kw'>=</span><span class='no'>sd2i</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>n2i</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"FE"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Studies with NAs omitted from model fitting.</span></div><div class='input'><span class='fu'>print</span>(<span class='no'>res</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 

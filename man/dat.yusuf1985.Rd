@@ -24,8 +24,8 @@
    Yusuf, S., Peto, R., Lewis, J., Collins, R., & Sleight, P. (1985). Beta blockade during and after myocardial infarction: An overview of the randomized trials. \emph{Progress in Cardiovascular Disease}, \bold{27}, 335--371.
 }
 \examples{
-### load data
-dat <- get(data(dat.yusuf1985))
+### copy data into 'dat'
+dat <- dat.yusuf1985
 
 ### to select a table for the analysis
 tab <- "6" ### either: 6, 9, 10, 11, 12a, 12b

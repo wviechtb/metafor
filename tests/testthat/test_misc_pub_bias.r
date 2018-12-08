@@ -5,7 +5,7 @@ context("Checking misc: regtest() and ranktest() functions")
 
 test_that("regtest() works correctly for rma().", {
 
-   dat <- get(data(dat.egger2001, package="metafor"))
+   dat <- dat.egger2001
    dat <- escalc(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat)
    res <- rma(yi, vi, data=dat)
    sav <- regtest(res)
@@ -26,7 +26,7 @@ test_that("regtest() works correctly for rma().", {
 
 test_that("ranktest() works correctly for rma().", {
 
-   dat <- get(data(dat.egger2001, package="metafor"))
+   dat <- dat.egger2001
    dat <- escalc(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat)
    res <- rma(yi, vi, data=dat)
    sav <- ranktest(res)

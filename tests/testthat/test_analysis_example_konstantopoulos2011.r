@@ -4,7 +4,7 @@
 
 context("Checking analysis example: konstantopoulos2011")
 
-dat <- get(data(dat.konstantopoulos2011, package="metafor"))
+dat <- dat.konstantopoulos2011
 
 test_that("results are correct for the two-level random-effects model fitted with rma().", {
 

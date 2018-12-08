@@ -23,8 +23,8 @@
    Normand, S. T. (1999). Meta-analysis: Formulating, evaluating, combining, and reporting. \emph{Statistics in Medicine}, \bold{18}, 321--359.
 }
 \examples{
-### load data
-dat <- get(data(dat.normand1999))
+### copy data into 'dat'
+dat <- dat.normand1999
 
 ### calculate mean differences and corresponding sampling variances
 dat <- escalc(measure="MD", m1i=m1i, sd1i=sd1i, n1i=n1i, m2i=m2i, sd2i=sd2i, n2i=n2i, data=dat)

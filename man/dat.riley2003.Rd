@@ -28,8 +28,9 @@
    Riley, R. D., Burchill, S. A., Abrams, K. R., Heney, D., Lambert, P. C., Jones, D. R., et al. (2003). A systematic review and evaluation of the use of tumour markers in paediatric oncology: Ewing's sarcoma and neuroblastoma. \emph{Health Technology Assessment}, \bold{7}, 1--162.
 }
 \examples{
-### load data
-dat <- get(data(dat.riley2003))
+### copy data into 'dat' and examine data
+dat <- dat.riley2003
+dat
 
 ### random-effects model analysis for outcome DFS
 res <- rma(yi, sei=sei, data=dat, subset=(outcome == "DFS"), method="DL")

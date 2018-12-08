@@ -147,9 +147,63 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>### load data</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'>get</span>(<span class='fu'>data</span>(<span class='no'>dat.pagliaro1992</span>))
-
+    <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat' and examine data</span>
+<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.pagliaro1992</span>
+<span class='no'>dat</span></div><div class='output co'>#&gt;    study           trt xi  ni
+#&gt; 1      1 beta-blockers  2  43
+#&gt; 2      1 sclerotherapy  9  42
+#&gt; 3      1       control 13  41
+#&gt; 4      2 beta-blockers 12  68
+#&gt; 5      2 sclerotherapy 13  73
+#&gt; 6      2       control 13  72
+#&gt; 7      3 beta-blockers  4  20
+#&gt; 8      3       control  4  16
+#&gt; 9      4 beta-blockers 20 116
+#&gt; 10     4       control 30 111
+#&gt; 11     5 beta-blockers  1  30
+#&gt; 12     5       control 11  49
+#&gt; 13     6 beta-blockers  7  53
+#&gt; 14     6       control 10  53
+#&gt; 15     7 beta-blockers 18  85
+#&gt; 16     7       control 31  89
+#&gt; 17     8 beta-blockers  2  51
+#&gt; 18     8       control 11  51
+#&gt; 19     9 beta-blockers  8  23
+#&gt; 20     9       control  2  25
+#&gt; 21    10 sclerotherapy  4  18
+#&gt; 22    10       control  0  19
+#&gt; 23    11 sclerotherapy  3  35
+#&gt; 24    11       control 22  36
+#&gt; 25    12 sclerotherapy  5  56
+#&gt; 26    12       control 30  53
+#&gt; 27    13 sclerotherapy  5  16
+#&gt; 28    13       control  6  18
+#&gt; 29    14 sclerotherapy  3  23
+#&gt; 30    14       control  9  22
+#&gt; 31    15 sclerotherapy 11  49
+#&gt; 32    15       control 31  46
+#&gt; 33    16 sclerotherapy 19  53
+#&gt; 34    16       control  9  60
+#&gt; 35    17 sclerotherapy 17  53
+#&gt; 36    17       control 26  60
+#&gt; 37    18 sclerotherapy 10  71
+#&gt; 38    18       control 29  69
+#&gt; 39    19 sclerotherapy 12  41
+#&gt; 40    19       control 14  41
+#&gt; 41    20 sclerotherapy  0  21
+#&gt; 42    20       control  3  20
+#&gt; 43    21 sclerotherapy 13  33
+#&gt; 44    21       control 14  35
+#&gt; 45    22 sclerotherapy 31 143
+#&gt; 46    22       control 23 138
+#&gt; 47    23 sclerotherapy 20  55
+#&gt; 48    23       control 19  51
+#&gt; 49    24 sclerotherapy  3  13
+#&gt; 50    24       control 12  16
+#&gt; 51    25 sclerotherapy  3  21
+#&gt; 52    25       control  5  28
+#&gt; 53    26 sclerotherapy  6  22
+#&gt; 54    26       control  2  24</div><div class='input'>
 <span class='co'>### restructure dataset to a contrast-based format</span>
 <span class='no'>dat.c</span> <span class='kw'>&lt;-</span> <span class='fu'>lapply</span>(<span class='fu'>split</span>(<span class='no'>dat.pagliaro1992</span>, <span class='no'>dat.pagliaro1992</span>$<span class='no'>study</span>),
                 <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'>cbind</span>(<span class='no'>x</span>[-<span class='fu'>nrow</span>(<span class='no'>x</span>),<span class='fl'>2</span>:<span class='fl'>4</span>], <span class='no'>x</span>[<span class='fu'>rep</span>(<span class='fu'>nrow</span>(<span class='no'>x</span>),<span class='fu'>nrow</span>(<span class='no'>x</span>)-<span class='fl'>1</span>),]))
@@ -228,7 +282,61 @@
 #&gt; </div><div class='input'>
 <span class='co'>### calculate log odds for each study arm</span>
 <span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"PLO"</span>, <span class='kw'>xi</span><span class='kw'>=</span><span class='no'>xi</span>, <span class='kw'>ni</span><span class='kw'>=</span><span class='no'>ni</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
-
+<span class='no'>dat</span></div><div class='output co'>#&gt;    study           trt xi  ni      yi     vi 
+#&gt; 1      1 beta-blockers  2  43 -3.0204 0.5244 
+#&gt; 2      1 sclerotherapy  9  42 -1.2993 0.1414 
+#&gt; 3      1       control 13  41 -0.7673 0.1126 
+#&gt; 4      2 beta-blockers 12  68 -1.5404 0.1012 
+#&gt; 5      2 sclerotherapy 13  73 -1.5294 0.0936 
+#&gt; 6      2       control 13  72 -1.5126 0.0939 
+#&gt; 7      3 beta-blockers  4  20 -1.3863 0.3125 
+#&gt; 8      3       control  4  16 -1.0986 0.3333 
+#&gt; 9      4 beta-blockers 20 116 -1.5686 0.0604 
+#&gt; 10     4       control 30 111 -0.9933 0.0457 
+#&gt; 11     5 beta-blockers  1  30 -3.3673 1.0345 
+#&gt; 12     5       control 11  49 -1.2397 0.1172 
+#&gt; 13     6 beta-blockers  7  53 -1.8827 0.1646 
+#&gt; 14     6       control 10  53 -1.4586 0.1233 
+#&gt; 15     7 beta-blockers 18  85 -1.3143 0.0705 
+#&gt; 16     7       control 31  89 -0.6265 0.0495 
+#&gt; 17     8 beta-blockers  2  51 -3.1987 0.5204 
+#&gt; 18     8       control 11  51 -1.2910 0.1159 
+#&gt; 19     9 beta-blockers  8  23 -0.6286 0.1917 
+#&gt; 20     9       control  2  25 -2.4423 0.5435 
+#&gt; 21    10 sclerotherapy  4  18 -1.2528 0.3214 
+#&gt; 22    10       control  0  19 -3.6636 2.0513 
+#&gt; 23    11 sclerotherapy  3  35 -2.3671 0.3646 
+#&gt; 24    11       control 22  36  0.4520 0.1169 
+#&gt; 25    12 sclerotherapy  5  56 -2.3224 0.2196 
+#&gt; 26    12       control 30  53  0.2657 0.0768 
+#&gt; 27    13 sclerotherapy  5  16 -0.7885 0.2909 
+#&gt; 28    13       control  6  18 -0.6931 0.2500 
+#&gt; 29    14 sclerotherapy  3  23 -1.8971 0.3833 
+#&gt; 30    14       control  9  22 -0.3677 0.1880 
+#&gt; 31    15 sclerotherapy 11  49 -1.2397 0.1172 
+#&gt; 32    15       control 31  46  0.7259 0.0989 
+#&gt; 33    16 sclerotherapy 19  53 -0.5819 0.0820 
+#&gt; 34    16       control  9  60 -1.7346 0.1307 
+#&gt; 35    17 sclerotherapy 17  53 -0.7503 0.0866 
+#&gt; 36    17       control 26  60 -0.2683 0.0679 
+#&gt; 37    18 sclerotherapy 10  71 -1.8083 0.1164 
+#&gt; 38    18       control 29  69 -0.3216 0.0595 
+#&gt; 39    19 sclerotherapy 12  41 -0.8824 0.1178 
+#&gt; 40    19       control 14  41 -0.6568 0.1085 
+#&gt; 41    20 sclerotherapy  0  21 -3.7612 2.0465 
+#&gt; 42    20       control  3  20 -1.7346 0.3922 
+#&gt; 43    21 sclerotherapy 13  33 -0.4308 0.1269 
+#&gt; 44    21       control 14  35 -0.4055 0.1190 
+#&gt; 45    22 sclerotherapy 31 143 -1.2845 0.0412 
+#&gt; 46    22       control 23 138 -1.6094 0.0522 
+#&gt; 47    23 sclerotherapy 20  55 -0.5596 0.0786 
+#&gt; 48    23       control 19  51 -0.5213 0.0839 
+#&gt; 49    24 sclerotherapy  3  13 -1.2040 0.4333 
+#&gt; 50    24       control 12  16  1.0986 0.3333 
+#&gt; 51    25 sclerotherapy  3  21 -1.7918 0.3889 
+#&gt; 52    25       control  5  28 -1.5261 0.2435 
+#&gt; 53    26 sclerotherapy  6  22 -0.9808 0.2292 
+#&gt; 54    26       control  2  24 -2.3979 0.5455 </div><div class='input'>
 <span class='co'>### turn treatment variable into factor and set reference level</span>
 <span class='no'>dat</span>$<span class='no'>trt</span> <span class='kw'>&lt;-</span> <span class='fu'>relevel</span>(<span class='fu'>factor</span>(<span class='no'>dat</span>$<span class='no'>trt</span>), <span class='kw'>ref</span><span class='kw'>=</span><span class='st'>"control"</span>)
 
@@ -236,7 +344,7 @@
 <span class='fu'>levels</span>(<span class='no'>dat</span>$<span class='no'>trt</span>) <span class='kw'>&lt;-</span> <span class='fu'>paste0</span>(<span class='st'>" "</span>, <span class='fu'>levels</span>(<span class='no'>dat</span>$<span class='no'>trt</span>))
 
 <span class='co'>### network meta-analysis using an arm-based random-effects model with fixed study effects</span>
-<span class='co'>### by setting rho=1/2, tau^2 reflects the amount of heterogeneity for all treatment comparisons</span>
+<span class='co'>### (by setting rho=1/2, tau^2 reflects the amount of heterogeneity for all treatment comparisons)</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='fu'>factor</span>(<span class='no'>study</span>) + <span class='no'>trt</span> - <span class='fl'>1</span>, <span class='kw'>random</span> <span class='kw'>=</span> ~ <span class='no'>trt</span> <span class='kw'>|</span> <span class='no'>study</span>, <span class='kw'>rho</span><span class='kw'>=</span><span class='fl'>1</span>/<span class='fl'>2</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
 <span class='no'>res</span></div><div class='output co'>#&gt; 
 #&gt; Multivariate Meta-Analysis Model (k = 54; method: REML)

@@ -160,9 +160,106 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>### load data</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'>get</span>(<span class='fu'>data</span>(<span class='no'>dat.bangertdrowns2004</span>))
-
+    <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat' and examine data</span>
+<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.bangertdrowns2004</span>
+<span class='no'>dat</span></div><div class='output co'>#&gt;    id            author year grade length minutes wic feedback info pers imag 
+#&gt; 1   1          Ashworth 1992     4     15      NA   1        1    1    1    0 
+#&gt; 2   2             Ayers 1993     2     10      NA   1       NA    1    1    1 
+#&gt; 3   3            Baisch 1990     2      2      NA   1        0    1    1    0 
+#&gt; 4   4             Baker 1994     4      9      10   1        1    1    0    0 
+#&gt; 5   5            Bauman 1992     1     14      10   1        1    1    1    0 
+#&gt; 6   6            Becker 1996     4      1      20   1        0    0    1    0 
+#&gt; 7   7       Bell &amp; Bell 1985     3      4      NA   1        1    1    1    0 
+#&gt; 8   8           Brodney 1994     1     15      NA   1        1    1    1    0 
+#&gt; 9   9            Burton 1986     4      4      NA   0        1    1    0    0 
+#&gt; 10 10         Davis, BH 1990     1      9      10   1        0    1    1    0 
+#&gt; 11 11         Davis, JJ 1996     4     15      NA   0        1    1    0    0 
+#&gt; 12 12               Day 1994     4     15      NA   0        1    1    1    0 
+#&gt; 13 13           Dipillo 1994     1      8       6   1        1    1    1    0 
+#&gt; 14 14           Ganguli 1989     4      4       4   1        0    1    0    0 
+#&gt; 15 15        Giovinazzo 1996     4     14      NA   0        1    1    0    0 
+#&gt; 16 16              Goss 1998     4     15      10   1        1    1    0    0 
+#&gt; 17 17     Greene et al. 1991     4      4      10   1        1    1    1    0 
+#&gt; 18 18            Guckin 1992     4     10       8   1        1   NA   NA    0 
+#&gt; 19 19            Guckin 1992     4     10       8   1        1   NA   NA    0 
+#&gt; 20 20     Horton et al. 1985     4      3      NA   0        1    1    0    0 
+#&gt; 21 21             Hyser 1992     1     24      10   1        0    1    1    1 
+#&gt; 22 22       Johnson, LA 1991     3     19      NA   0        1    1    0    0 
+#&gt; 23 23       Johnson, VM 1998     1      4      15   1        0    1    0    0 
+#&gt; 24 24          Kasparek 1993     3     12      NA   1        1    1    1    0 
+#&gt; 25 25   Konopack et al. 1990     2      1      NA   1        0    1    0    0 
+#&gt; 26 26 Langer &amp; Applebee 1987     3      1      35   1        0    1    0    0 
+#&gt; 27 27 Langer &amp; Applebee 1987     3      1      20   1        0    1    0    0 
+#&gt; 28 28            Licata 1993     3      1      15   1        1    1    0    0 
+#&gt; 29 29           Lodholz 1980     1     14      15   1        1    1    0    0 
+#&gt; 30 30            Madden 1993     1     20       8   1        0    1    1    0 
+#&gt; 31 31          Millican 1994     1     10      NA   1        1    1    1    1 
+#&gt; 32 32          Moynihan 1994     1      7      10   1        1    1    1    0 
+#&gt; 33 33          Mulvaney 1991     4     11      NA   1        1    1    0    0 
+#&gt; 34 34         Nieswandt 1997     3     NA      NA   0        1    1    0    0 
+#&gt; 35 35         Radmacher 1995     4     NA      NA   0        1    1    0    0 
+#&gt; 36 36            Reaves 1991     3      1      NA   1        0    1    0    0 
+#&gt; 37 37            Rivard 1996     2      6      55   1        0    1    0    0 
+#&gt; 38 38           Rodgers 1996     4     15      NA   0        1    1    0    0 
+#&gt; 39 39   Ross &amp; Faucette 1994     4     15      NA   0        1    1    0    0 
+#&gt; 40 40             Sharp 1987     4      2      15   1        0    0    1    0 
+#&gt; 41 41           Shepard 1992     2      4      NA   0        1    1    0    0 
+#&gt; 42 42           Stewart 1992     3     24       5   1        1    1    1    0 
+#&gt; 43 43           Ullrich 1926     4     11      NA   0        1    1    0    0 
+#&gt; 44 44   Weiss &amp; Walters 1980     4     15       3   1        0    1    0    0 
+#&gt; 45 45             Wells 1986     1      8      15   1        0    1    1    0 
+#&gt; 46 46            Willey 1988     3     15      NA  NA        0    1    1    0 
+#&gt; 47 47            Willey 1988     2     15      NA  NA        0    1    1    0 
+#&gt; 48 48         Youngberg 1989     4     15      10   1        1    1    0    0 
+#&gt;    meta                    subject  ni     yi    vi 
+#&gt; 1     1                    Nursing  60  0.650 0.070 
+#&gt; 2     0              Earth Science  34 -0.750 0.126 
+#&gt; 3     1                       Math  95 -0.210 0.042 
+#&gt; 4     0                    Algebra 209 -0.040 0.019 
+#&gt; 5     1                       Math 182  0.230 0.022 
+#&gt; 6     0                 Literature 462  0.030 0.009 
+#&gt; 7     1                       Math  38  0.260 0.106 
+#&gt; 8     1                       Math 542  0.060 0.007 
+#&gt; 9     0                       Math  99  0.060 0.040 
+#&gt; 10    0             Social Studies  77  0.120 0.052 
+#&gt; 11    0                 Statistics  40  0.770 0.107 
+#&gt; 12    1                  Sociology 190  0.000 0.021 
+#&gt; 13    1                       Math 113  0.520 0.037 
+#&gt; 14    0                       Math  50  0.540 0.083 
+#&gt; 15    0                    Algebra  47  0.200 0.086 
+#&gt; 16    0                   Calculus  44  0.200 0.091 
+#&gt; 17    0 Comp Science and Chemistry  24 -0.160 0.167 
+#&gt; 18   NA                    Algebra  78  0.420 0.052 
+#&gt; 19   NA                    Algebra  46  0.600 0.091 
+#&gt; 20    0                  Chemistry  64  0.510 0.065 
+#&gt; 21    0             Social Studies  57  0.580 0.073 
+#&gt; 22    0                    Algebra  68  0.540 0.061 
+#&gt; 23    0                       Math  40  0.090 0.100 
+#&gt; 24    1                    Algebra  68  0.370 0.060 
+#&gt; 25    0              World History  48 -0.010 0.083 
+#&gt; 26    0             Social Studies 107 -0.130 0.037 
+#&gt; 27    0             Social Studies  58  0.180 0.069 
+#&gt; 28    0            Math in Science 225  0.270 0.018 
+#&gt; 29    0                       Math 446 -0.020 0.009 
+#&gt; 30    1                       Math  77  0.330 0.053 
+#&gt; 31    1                       Math 243  0.590 0.017 
+#&gt; 32    1                       Math  39  0.840 0.112 
+#&gt; 33    0                 Management  67 -0.320 0.060 
+#&gt; 34    0                  Chemistry  91  0.120 0.044 
+#&gt; 35    1                 Psychology  36  1.120 0.129 
+#&gt; 36    0          Natural Resources 177 -0.120 0.023 
+#&gt; 37    0                    Science  20 -0.440 0.205 
+#&gt; 38    0                    Algebra 120 -0.070 0.033 
+#&gt; 39    0                    Algebra  16  0.700 0.265 
+#&gt; 40    1                    Biology 105  0.490 0.039 
+#&gt; 41    0                       Math 195  0.200 0.021 
+#&gt; 42    1                    Algebra  62  0.580 0.067 
+#&gt; 43    0     Educational Psychology 289  0.150 0.014 
+#&gt; 44    0                 Statistics  25  0.630 0.168 
+#&gt; 45    1                       Math 250  0.040 0.016 
+#&gt; 46    1                    Biology  51  1.460 0.099 
+#&gt; 47    1             Social Studies  46  0.040 0.087 
+#&gt; 48    0                    Algebra  56  0.250 0.072 </div><div class='input'>
 <span class='co'>### random-effects model</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
 <span class='no'>res</span></div><div class='output co'>#&gt; 

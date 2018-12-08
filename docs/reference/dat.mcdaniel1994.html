@@ -155,8 +155,8 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>### load data</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'>get</span>(<span class='fu'>data</span>(<span class='no'>dat.mcdaniel1994</span>))
+    <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat'</span>
+<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.mcdaniel1994</span>
 
 <span class='co'>### calculate r-to-z transformed correlations and corresponding sampling variances</span>
 <span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"ZCOR"</span>, <span class='kw'>ri</span><span class='kw'>=</span><span class='no'>ri</span>, <span class='kw'>ni</span><span class='kw'>=</span><span class='no'>ni</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)

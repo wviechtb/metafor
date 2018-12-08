@@ -3,7 +3,7 @@
 context("Checking misc: permutest() function")
 
 ### load data
-dat <- get(data(dat.hine1989, package="metafor"))
+dat <- dat.hine1989
 
 ### calculate risk differences and corresponding sampling variances
 dat <- escalc(measure="RD", n1i=n1i, n2i=n2i, ai=ai, ci=ci, data=dat)

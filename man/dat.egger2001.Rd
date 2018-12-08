@@ -42,8 +42,9 @@ dat.egger2001
    \code{\link{dat.li2007}}
 }
 \examples{
-### load data
-dat <- get(data(dat.egger2001))
+### copy data into 'dat' and examine data
+dat <- dat.egger2001
+dat
 
 ### meta-analysis of trials 1-7 using Peto's method (as in Teo et al., 1991)
 res <- rma.peto(ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, subset=1:7)

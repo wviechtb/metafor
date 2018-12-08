@@ -2,7 +2,7 @@
 
 context("Checking misc: rma.glmm() function")
 
-dat <- get(data(dat.nielweise2007, package="metafor"))
+dat <- dat.nielweise2007
 
 test_that("rma.glmm() works correctly for 'UM.RS' model.", {
 

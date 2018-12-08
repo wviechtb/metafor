@@ -33,8 +33,9 @@
    Bangert-Drowns, R. L., Hurley, M. M., & Wilkinson, B. (2004). The effects of school-based writing-to-learn interventions on academic achievement: A meta-analysis. \emph{Review of Educational Research}, \bold{74}, 29--58.
 }
 \examples{
-### load data
-dat <- get(data(dat.bangertdrowns2004))
+### copy data into 'dat' and examine data
+dat <- dat.bangertdrowns2004
+dat
 
 ### random-effects model
 res <- rma(yi, vi, data=dat)

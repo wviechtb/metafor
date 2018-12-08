@@ -161,9 +161,36 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>### load data</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'>get</span>(<span class='fu'>data</span>(<span class='no'>dat.collins1985a</span>))
-
+    <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat' and examine data</span>
+<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.collins1985a</span>
+<span class='no'>dat</span></div><div class='output co'>#&gt;    id       trial year ref trt ctrl nti b.xti o.xti d.xti nci b.xci o.xci d.xci
+#&gt; 1   1       Hoare 1979   3   C    P  50     8     5     1  50    16    12     1
+#&gt; 2   2    La Brooy 1979   4   C    P  56    11     6     1  53    12     7     0
+#&gt; 3   3     Macklon 1979   5   C    P  18     5    NA    NA  12     1    NA    NA
+#&gt; 4   4        Nair 1979   6   C   AA  14     2     2     0  15     6     3     4
+#&gt; 5   5     Pickard 1979   7   C    P  33    12    NA    NA  36    10    NA    NA
+#&gt; 6   6     Siddiqi 1979   8   C   UT  58    NA     8     4  55    NA     8     5
+#&gt; 7   7  Carstensen 1980   9   C    P  40     9    15     4  48    11    16     5
+#&gt; 8   8        Foco 1980  10   C    P  20     7     2     0  20     8     3     2
+#&gt; 9   9    Galmiche 1980  11   C    P  46     5     5     2  47    12     6     5
+#&gt; 10 10     Gilsanz 1980  12   C    P  18     0    NA     0  19     3    NA     1
+#&gt; 11 11    Meredith 1980  13   C    P  45     9     6     1  43     3     1     0
+#&gt; 12 12       Teres 1980  14   C    P  21    10     0     6  19     8     0     4
+#&gt; 13 13   Zuckerman 1984  15   C    P 153    44    NA    10 132    30    NA     4
+#&gt; 14 14   Colecchia 1981  16   C   UT  14     0     2     1  14     0     5     0
+#&gt; 15 15 Arvanitakis 1982  17   C   AA  10     1    NA    NA   9     4    NA    NA
+#&gt; 16 16     Hostein 1982  18   C   AA  24     4     2     3  24     5     3     1
+#&gt; 17 17      Dawson 1982  19   R    P  78    14    11     5  80    21    15     4
+#&gt; 18 18       Nowak 1984  20   R   AA  75    NA     5     1  75    NA    17     4
+#&gt; 19 19       Barer 1983  21   C    P 259    50    34    20 260    51    38    35
+#&gt; 20 20       Brown 1983  NA   C    P  10     3     2     1  11     1     0     0
+#&gt; 21 21       Stiel 1984  22   C    P  31     6     4     0  29    12     5     0
+#&gt; 22 22  Carr-Locke 1984  23   C    P  51    16     7     0  54    15     6     2
+#&gt; 23 23      Birnie 1984  24   C    P 106    16     2     4 107    15     7     4
+#&gt; 24 24       Darle 1984  25   C    P  33     6     6     1  39     7     7     5
+#&gt; 25 25   Karlstrom 1981  26   C   UT  36    11    10     3  26     5     3     2
+#&gt; 26 26     Londong 1982  27   C    P  34     3     3     1  31    13     8     7
+#&gt; 27 27        Foco 1984  28   R    P  15     2     0     0  14     3     0     0</div><div class='input'>
 <span class='co'>### meta-analysis of log ORs using Peto's method (outcome: persistent or recurrent bleedings)</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.peto.html'>rma.peto</a></span>(<span class='kw'>ai</span><span class='kw'>=</span><span class='no'>b.xti</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>nti</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>b.xci</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>nci</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Tables with NAs omitted from model fitting.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Some yi/vi values are NA.</span></div><div class='input'><span class='fu'>print</span>(<span class='no'>res</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
 #&gt; Fixed-Effects Model (k = 25)

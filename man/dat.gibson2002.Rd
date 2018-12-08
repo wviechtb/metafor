@@ -39,8 +39,9 @@
    Gibson, P. G., Powell, H., Wilson, A., Abramson, M. J., Haywood, P., Bauman, A., et al. (2002). Self-management education and regular practitioner review for adults with asthma. \emph{Cochrane Database of Systematic Reviews}, \bold{3}.
 }
 \examples{
-### load data
-dat <- get(data(dat.gibson2002))
+### copy data into 'dat' and examine data
+dat <- dat.gibson2002
+dat
 
 ### fixed-effects model analysis of the standardized mean differences
 dat <- escalc(measure="SMD", m1i=m1i, sd1i=sd1i, n1i=n1i, m2i=m2i, sd2i=sd2i, n2i=n2i, data=dat)

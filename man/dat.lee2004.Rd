@@ -22,8 +22,9 @@
    Lee, A., & Done, M. L. (2004). Stimulation of the wrist acupuncture point P6 for preventing postoperative nausea and vomiting. \emph{Cochrane Database of Systematic Reviews}, \bold{3}, CD003281.
 }
 \examples{
-### load data
-dat <- get(data(dat.lee2004))
+### copy data into 'dat' and examine data
+dat <- dat.lee2004
+dat
 
 ### meta-analysis based on log risk ratios
 res <- rma(measure="RR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat)

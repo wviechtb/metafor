@@ -25,8 +25,9 @@
    Hackshaw, A. K. (1998). Lung cancer and passive smoking. \emph{Statistical Methods in Medical Research}, \bold{7}, 119--136.
 }
 \examples{
-### load data
-dat <- get(data(dat.hackshaw1998))
+### copy data into 'dat' and examine data
+dat <- dat.hackshaw1998
+dat
 
 ### random-effects model using the log odds ratios
 res <- rma(yi, vi, data=dat, method="DL")
