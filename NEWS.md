@@ -1,4 +1,6 @@
-# metafor 2.1-0 (2018-12-08)
+# metafor 2.1-0 (2018-12-11)
+
+- added `.glmulti` object for making the interaction with `glmulti` easier
 
 - added `reporter()` and `reporter.rma.uni()` for dynamically generating analysis reports for objects of class `rma.uni`
 

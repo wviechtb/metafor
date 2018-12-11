@@ -9,6 +9,8 @@ import(Matrix)
 importFrom(nlme, ranef)
 export(ranef)
 
+export(.glmulti)
+
 S3method("[", list.rma)
 S3method("$<-", list.rma)
 S3method("[", escalc)
