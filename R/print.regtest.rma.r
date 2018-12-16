@@ -11,7 +11,9 @@ print.regtest.rma <- function(x, digits, ret.fit, ...) {
    if (missing(ret.fit))
       ret.fit <- x$ret.fit
 
-   cat("\n")
+   if (!exists(".rmspace"))
+      cat("\n")
+
    cat(mstyle$section("Regression Test for Funnel Plot Asymmetry"))
    cat("\n\n")
    if (x$model == "lm") {
@@ -36,7 +38,11 @@ print.regtest.rma <- function(x, digits, ret.fit, ...) {
    cat("\n")
 
    if (ret.fit) {
+      if (exists(".rmspace"))
+         cat("\n")
       print(x$fit)
+      if (exists(".rmspace"))
+         cat("\n")
    } else {
       cat("\n")
    }
@@ -47,8 +53,11 @@ print.regtest.rma <- function(x, digits, ret.fit, ...) {
    } else {
       cat(mstyle$result(paste0("t = ", formatC(x$zval, digits=digits, format="f"), ", df = ", x$dfs, ", p ", .pval(x$pval, digits=digits, showeq=TRUE, sep=" "))))
    }
-   cat("\n\n")
+   cat("\n")
    #cat("H0: coefficient for predictor is equal to 0\n\n")
+
+   if (!exists(".rmspace"))
+      cat("\n")
 
    invisible()
 

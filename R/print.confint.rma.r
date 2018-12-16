@@ -8,7 +8,8 @@ print.confint.rma <- function(x, digits, ...) {
    if (missing(digits))
       digits <- x$digits
 
-   cat("\n")
+   if (!exists(".rmspace"))
+      cat("\n")
 
    if (names(x)[1] == "fixed") {
 
@@ -36,7 +37,9 @@ print.confint.rma <- function(x, digits, ...) {
 
    }
 
-   cat("\n")
+   if (!exists(".rmspace"))
+      cat("\n")
+
    invisible()
 
 }

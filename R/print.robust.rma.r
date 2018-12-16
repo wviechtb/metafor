@@ -8,7 +8,8 @@ print.robust.rma <- function(x, digits, signif.stars=getOption("show.signif.star
    if (missing(digits))
       digits <- x$digits
 
-   cat("\n")
+   if (!exists(".rmspace"))
+      cat("\n")
 
    cat(mstyle$text("Number of outcomes:   "))
    cat(mstyle$result(x$k))
@@ -57,10 +58,14 @@ print.robust.rma <- function(x, digits, signif.stars=getOption("show.signif.star
    }
    .print.table(tmp, mstyle)
 
-   cat("\n")
-   if (signif.legend)
+   if (signif.legend) {
+      cat("\n")
       cat(mstyle$legend("---\nSignif. codes: "), mstyle$legend(attr(signif, "legend")))
-   cat("\n\n")
+      cat("\n")
+   }
+
+   if (!exists(".rmspace"))
+      cat("\n")
 
    invisible()
 

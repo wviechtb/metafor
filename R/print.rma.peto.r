@@ -8,7 +8,8 @@ print.rma.peto <- function(x, digits, showfit=FALSE, ...) {
    if (missing(digits))
       digits <- x$digits
 
-   cat("\n")
+   if (!exists(".rmspace"))
+      cat("\n")
 
    cat(mstyle$section("Fixed-Effects Model"))
    cat(mstyle$section(paste0(" (k = ", x$k, ")")))
@@ -59,7 +60,9 @@ print.rma.peto <- function(x, digits, showfit=FALSE, ...) {
    cat("\n\n")
    tmp <- capture.output(.print.vector(res.table.exp))
    .print.table(tmp, mstyle)
-   cat("\n")
+
+   if (!exists(".rmspace"))
+      cat("\n")
 
    invisible()
 

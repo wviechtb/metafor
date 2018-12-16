@@ -8,7 +8,8 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
    if (missing(digits))
       digits <- x$digits
 
-   cat("\n")
+   if (!exists(".rmspace"))
+      cat("\n")
 
    cat(mstyle$section("Multivariate Meta-Analysis Model"))
    cat(mstyle$section(paste0(" (k = ", x$k, "; ")))
@@ -359,10 +360,14 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
    }
    .print.table(tmp, mstyle)
 
-   cat("\n")
-   if (signif.legend)
+   if (signif.legend) {
+      cat("\n")
       cat(mstyle$legend("---\nSignif. codes: "), mstyle$legend(attr(signif, "legend")))
-   cat("\n\n")
+      cat("\n")
+   }
+
+   if (!exists(".rmspace"))
+      cat("\n")
 
    invisible()
 

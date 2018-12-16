@@ -8,7 +8,8 @@ print.rma.mh <- function(x, digits, showfit=FALSE, ...) {
    if (missing(digits))
       digits <- x$digits
 
-   cat("\n")
+   if (!exists(".rmspace"))
+      cat("\n")
 
    cat(mstyle$section("Fixed-Effects Model"))
    cat(mstyle$section(paste0(" (k = ", x$k, ")")))
@@ -87,7 +88,7 @@ print.rma.mh <- function(x, digits, showfit=FALSE, ...) {
             cat(mstyle$text("Tarone's Test for Heterogeneity: "))
             cat(mstyle$result(paste0("X^2 = ", formatC(TA, width=width), ", df = ", x$k.pos-1, ", p-val ", .pval(x$TAp, digits=digits, showeq=TRUE, sep=" ", add0=TRUE))))
          }
-         cat("\n\n")
+         cat("\n")
       }
 
       if (x$measure == "IRR") {
@@ -98,7 +99,7 @@ print.rma.mh <- function(x, digits, showfit=FALSE, ...) {
             cat(mstyle$text("Mantel-Haenszel Test: "))
             cat(mstyle$result(paste0("MH = ", formatC(x$MH, digits, format="f"), ", df = 1, p-val ", .pval(x$MHp, digits=digits, showeq=TRUE, sep=" "))))
          }
-         cat("\n\n")
+         cat("\n")
       }
 
    } else {
@@ -117,9 +118,11 @@ print.rma.mh <- function(x, digits, showfit=FALSE, ...) {
       cat("\n\n")
       tmp <- capture.output(.print.vector(res.table))
       .print.table(tmp, mstyle)
-      cat("\n")
 
    }
+
+   if (!exists(".rmspace"))
+      cat("\n")
 
    invisible()
 

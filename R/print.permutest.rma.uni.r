@@ -8,7 +8,8 @@ print.permutest.rma.uni <- function(x, digits, signif.stars=getOption("show.sign
    if (missing(digits))
       digits <- x$digits
 
-   cat("\n")
+   if (!exists(".rmspace"))
+      cat("\n")
 
    if (!x$int.only) {
       cat(mstyle$section(paste0("Test of Moderators (coefficient", ifelse(x$m == 1, " ", "s "), .format.btt(x$btt),"):")))
@@ -48,10 +49,14 @@ print.permutest.rma.uni <- function(x, digits, signif.stars=getOption("show.sign
    }
    .print.table(tmp, mstyle)
 
-   cat("\n")
-   if (signif.legend)
+   if (signif.legend) {
+      cat("\n")
       cat(mstyle$legend("---\nSignif. codes: "), mstyle$legend(attr(signif, "legend")))
-   cat("\n\n")
+      cat("\n")
+   }
+
+   if (!exists(".rmspace"))
+      cat("\n")
 
    invisible()
 

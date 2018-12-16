@@ -1,4 +1,4 @@
-# metafor 2.1-0 (2018-12-11)
+# metafor 2.1-0 (2018-12-16)
 
 - added `.glmulti` object for making the interaction with `glmulti` easier
 

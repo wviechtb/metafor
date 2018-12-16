@@ -8,9 +8,10 @@ print.anova.rma <- function(x, digits, ...) {
    if (missing(digits))
       digits <- x$digits
 
-   if (x$type == "Wald.b") {
-
+   if (!exists(".rmspace"))
       cat("\n")
+
+   if (x$type == "Wald.b") {
 
       cat(mstyle$section(paste0("Test of Moderators (coefficient", ifelse(x$m == 1, " ", "s "), .format.btt(x$btt),"):")))
       cat("\n")
@@ -19,13 +20,11 @@ print.anova.rma <- function(x, digits, ...) {
       } else {
          cat(mstyle$result(paste0("QM(df = ", x$m, ") = ", formatC(x$QM, digits=digits, format="f"), ", p-val ", .pval(x$QMp, digits=digits, showeq=TRUE, sep=" "))))
       }
-      cat("\n\n")
+      cat("\n")
 
    }
 
    if (x$type == "Wald.L") {
-
-      cat("\n")
 
       if (x$m == 1) {
          cat(mstyle$section("Hypothesis:"))
@@ -63,7 +62,7 @@ print.anova.rma <- function(x, digits, ...) {
          } else {
             cat(mstyle$result(paste0("QM(df = ", x$m, ") = ", formatC(x$QM, digits=digits, format="f"), ", p-val ", .pval(x$QMp, digits=digits, showeq=TRUE, sep=" "))))
          }
-         cat("\n\n")
+         cat("\n")
       }
 
    }
@@ -90,14 +89,13 @@ print.anova.rma <- function(x, digits, ...) {
       if (x$method == "FE" || is.element("rma.mv", x$class.f))
          res.table <- res.table[,seq_len(8)]
 
-      cat("\n")
-
       tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE))
       .print.table(tmp, mstyle)
 
-      cat("\n")
-
    }
+
+   if (!exists(".rmspace"))
+      cat("\n")
 
    invisible()
 

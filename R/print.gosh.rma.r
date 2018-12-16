@@ -8,7 +8,8 @@ print.gosh.rma <- function(x, digits, ...) {
    if (missing(digits))
       digits <- x$digits
 
-   cat("\n")
+   if (!exists(".rmspace"))
+      cat("\n")
 
    cat(mstyle$text("Model fits attempted: "))
    cat(mstyle$result(formatC(length(x$fit), format="f", digits=0)))
@@ -47,7 +48,8 @@ print.gosh.rma <- function(x, digits, ...) {
    tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE))
    .print.table(tmp, mstyle)
 
-   cat("\n")
+   if (!exists(".rmspace"))
+      cat("\n")
 
    invisible()
 

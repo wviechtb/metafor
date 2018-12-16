@@ -8,7 +8,8 @@ print.fsn <- function(x, digits, ...) {
    if (missing(digits))
       digits <- x$digits
 
-   cat("\n")
+   if (!exists(".rmspace"))
+      cat("\n")
 
    cat(mstyle$section(paste("Fail-safe N Calculation Using the", x$type, "Approach")))
    cat("\n\n")
@@ -43,7 +44,10 @@ print.fsn <- function(x, digits, ...) {
    cat("\n\n")
    cat(mstyle$text("Fail-safe N: "))
    cat(mstyle$result(x$fsnum))
-   cat("\n\n")
+   cat("\n")
+
+   if (!exists(".rmspace"))
+      cat("\n")
 
    invisible()
 

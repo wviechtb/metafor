@@ -50,12 +50,14 @@ print.list.rma <- function(x, digits, ...) {
       }
    }
 
-   cat("\n")
+   if (!exists(".rmspace"))
+      cat("\n")
 
    tmp <- capture.output(print(out, quote=FALSE, right=TRUE))
    .print.table(tmp, mstyle)
 
-   cat("\n")
+   if (!exists(".rmspace"))
+      cat("\n")
 
    invisible(sav)
 

@@ -9,7 +9,8 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
       digits <- x$digits
 
    if (inherits(x, "rma.uni.trimfill")) {
-      cat("\n")
+      if (!exists(".rmspace"))
+         cat("\n")
       cat(mstyle$text(paste0("Estimated number of missing studies on the ", x$side, " side: ")))
       cat(mstyle$result(paste0(x$k0, " (SE = ", ifelse(is.na(x$se.k0), NA, formatC(x$se.k0, digits=digits, format="f")), ")")))
       cat("\n")
@@ -19,9 +20,12 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
          cat(mstyle$result(paste0("p-val ", .pval(x$p.k0, digits=digits, showeq=TRUE, sep=" "))))
          cat("\n")
       }
+      if (exists(".rmspace"))
+         cat("\n")
    }
 
-   cat("\n")
+   if (!exists(".rmspace"))
+      cat("\n")
 
    if (x$method == "FE") {
       if (x$int.only) {
@@ -192,10 +196,14 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
 
    }
 
-   cat("\n")
-   if (signif.legend)
+   if (signif.legend) {
+      cat("\n")
       cat(mstyle$legend("---\nSignif. codes: "), mstyle$legend(attr(signif, "legend")))
-   cat("\n\n")
+      cat("\n")
+   }
+
+   if (!exists(".rmspace"))
+      cat("\n")
 
    invisible()
 

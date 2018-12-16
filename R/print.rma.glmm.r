@@ -8,7 +8,8 @@ print.rma.glmm <- function(x, digits, showfit=FALSE, signif.stars=getOption("sho
    if (missing(digits))
       digits <- x$digits
 
-   cat("\n")
+   if (!exists(".rmspace"))
+      cat("\n")
 
    if (x$method == "FE") {
       if (x$int.only) {
@@ -146,10 +147,14 @@ print.rma.glmm <- function(x, digits, showfit=FALSE, signif.stars=getOption("sho
    }
    .print.table(tmp, mstyle)
 
-   cat("\n")
-   if (signif.legend)
+   if (signif.legend) {
+      cat("\n")
       cat(mstyle$legend("---\nSignif. codes: "), mstyle$legend(attr(signif, "legend")))
-   cat("\n\n")
+      cat("\n")
+   }
+
+   if (!exists(".rmspace"))
+      cat("\n")
 
    invisible()
 
