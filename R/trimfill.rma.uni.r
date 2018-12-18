@@ -1,4 +1,4 @@
-trimfill.rma.uni <- function(x, side, estimator="L0", maxiter=100, verbose=FALSE, ...) {
+trimfill.rma.uni <- function(x, side, estimator="L0", maxiter=100, verbose=FALSE, ylim, ...) {
 
    #########################################################################
 
@@ -143,6 +143,17 @@ trimfill.rma.uni <- function(x, side, estimator="L0", maxiter=100, verbose=FALSE
       ### create filled-in data set
 
       yi.fill <- c(x$yi.f, -1*yi.c[(k-k0+1):k])
+
+      ### apply limits if specified
+
+      if (!missing(ylim)) {
+         ylim <- sort(ylim)
+         if (length(ylim) != 2L)
+            stop(mstyle$stop("Argument 'ylim' must be of length 2."))
+         yi.fill[yi.fill < ylim[1]] <- ylim[1]
+         yi.fill[yi.fill > ylim[2]] <- ylim[2]
+      }
+
       vi.fill <- c(x$vi.f, vi[(k-k0+1):k])
       wi.fill <- c(x$weights.f, wi[(k-k0+1):k])
       ni.fill <- c(x$ni.f, ni[(k-k0+1):k])

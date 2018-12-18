@@ -1,5 +1,5 @@
 summary.escalc <- function(object, out.names=c("sei","zi","ci.lb","ci.ub"), var.names,
-H0=0, append=TRUE, replace=TRUE, level=95, digits, transf, ...) {
+H0=0, append=TRUE, replace=TRUE, level=95, clim, digits, transf, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -92,6 +92,16 @@ H0=0, append=TRUE, replace=TRUE, level=95, digits, transf, ...) {
    tmp <- .psort(ci.lb, ci.ub)
    ci.lb <- tmp[,1]
    ci.ub <- tmp[,2]
+
+   ### apply ci limits if specified
+
+   if (!missing(clim)) {
+      clim <- sort(clim)
+      if (length(clim) != 2L)
+         stop(mstyle$stop("Argument 'clim' must be of length 2."))
+      ci.lb[ci.lb < clim[1]] <- clim[1]
+      ci.ub[ci.ub > clim[2]] <- clim[2]
+   }
 
    x[[yi.name]] <- yi
    x[[vi.name]] <- vi

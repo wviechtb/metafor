@@ -1,4 +1,4 @@
-Changes in Version 2.1-0 (2018-12-16)
+Changes in Version 2.1-0 (2018-12-18)
 =====================================
 
    o added .glmulti object for making the interaction with glmulti easier
@@ -107,6 +107,10 @@ Changes in Version 2.1-0 (2018-12-16)
      "AS", "PHI", "RTET", "IRSD", "PAS", "PFT", "IRS", and "IRFT"; one can
      still force the use of the bias correction by explicitly setting the
      'add' argument to some non-zero value
+
+   o added 'clim' argument to summary.escalc()
+
+   o added 'ylim' argument to trimfill()
 
    o labbe() gains 'lty' argument
 

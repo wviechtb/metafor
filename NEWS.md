@@ -1,4 +1,4 @@
-# metafor 2.1-0 (2018-12-16)
+# metafor 2.1-0 (2018-12-18)
 
 - added `.glmulti` object for making the interaction with `glmulti` easier
 
@@ -65,6 +65,10 @@
 - added (currently undocumented) arguments `onlyo1`, `addyi`, and `addvi` to `escalc()` that allow for more flexibility when computing certain bias corrections and when computing sampling variances for measures that make use of the `add` and `to` arguments
 
 - `escalc()` now sets `add=0` for measures where the use of such a bias correction makes little sense; this applies to the following measures: `"AS"`, `"PHI"`, `"RTET"`, `"IRSD"`, `"PAS"`, `"PFT"`, `"IRS"`, and `"IRFT"`; one can still force the use of the bias correction by explicitly setting the `add` argument to some non-zero value
+
+- added `clim` argument to `summary.escalc()`
+
+- added `ylim` argument to `trimfill()`
 
 - `labbe()` gains `lty` argument
 
