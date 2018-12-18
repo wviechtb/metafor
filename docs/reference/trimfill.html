@@ -129,7 +129,7 @@
     <pre class="usage">trimfill(x, &#8230;)
 
 # S3 method for rma.uni
-trimfill(x, side, estimator="L0", maxiter=100, verbose=FALSE, &#8230;)</pre>
+trimfill(x, side, estimator="L0", maxiter=100, verbose=FALSE, ylim, &#8230;)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -153,6 +153,10 @@ trimfill(x, side, estimator="L0", maxiter=100, verbose=FALSE, &#8230;)</pre>
     <tr>
       <th>verbose</th>
       <td><p>logical indicating whether output should be generated on the progress of the iterative algorithm used as part of the trim and fill method (the default is <code>FALSE</code>).</p></td>
+    </tr>
+    <tr>
+      <th>ylim</th>
+      <td><p>limits for the imputed values. If unspecified, no limits are used.</p></td>
     </tr>
     <tr>
       <th>&#8230;</th>
@@ -179,6 +183,7 @@ trimfill(x, side, estimator="L0", maxiter=100, verbose=FALSE, &#8230;)</pre>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>Three different estimators for the number of missing studies were proposed by Duval and Tweedie (2000a, 2000b). Based on these articles and Duval (2005), <code>"R0"</code> and <code>"L0"</code> are recommended. An advantage of estimator <code>"R0"</code> is that it provides a test of the null hypothesis that the number of missing studies (on the chosen side) is zero.</p>
+<p>If the outcome measure used for the analysis is bounded (e.g., correlations are bounded between <code>-1</code> and <code>1</code>, proportions are bounded between <code>0</code> and <code>1</code>), one can use the <code>ylim</code> argument to enforce those limits when imputing values (imputed values cannot exceed those bounds then).</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 

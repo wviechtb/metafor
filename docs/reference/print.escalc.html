@@ -131,7 +131,7 @@ print(x, digits, &#8230;)
 
 # S3 method for escalc
 summary(object, out.names=c("sei","zi","ci.lb","ci.ub"), var.names,
-        H0=0, append=TRUE, replace=TRUE, level=95, digits, transf, &#8230;)</pre>
+        H0=0, append=TRUE, replace=TRUE, level=95, clim, digits, transf, &#8230;)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -173,6 +173,10 @@ summary(object, out.names=c("sei","zi","ci.lb","ci.ub"), var.names,
       <td><p>numerical value between 0 and 100 specifying the confidence interval level (the default is 95).</p></td>
     </tr>
     <tr>
+      <th>clim</th>
+      <td><p>limits for the confidence intervals. If unspecified, no limits are used.</p></td>
+    </tr>
+    <tr>
       <th>transf</th>
       <td><p>optional argument specifying the name of a function that should be used to transform the observed outcomes and interval bounds (e.g., <code>transf=exp</code>; see also <a href='transf.html'>transf</a>). If unspecified, no transformation is used. Any additional arguments needed for the function specified here can be passed via <code>&#8230;</code>.</p></td>
     </tr>
@@ -202,6 +206,7 @@ summary(object, out.names=c("sei","zi","ci.lb","ci.ub"), var.names,
 
     <p>If some transformation function has been specified for the <code>transf</code> argument, then <code>yi</code>, <code>ci.lb</code>, and <code>ci.ub</code> will be transformed accordingly. However, <code>vi</code> and <code>sei</code> then still reflect the sampling variances and standard errors of the untransformed values.</p>
 <p>The <code>summary.escalc</code> function computes <code>level</code> % Wald-type confidence intervals, which may or may not be the most accurate method for computing confidence intervals for the chosen outcome or effect size measure.</p>
+<p>If the outcome measure used is bounded (e.g., correlations are bounded between <code>-1</code> and <code>1</code>, proportions are bounded between <code>0</code> and <code>1</code>), one can use the <code>clim</code> argument to enforce those limits (confidence intervals cannot exceed those bounds then).</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
