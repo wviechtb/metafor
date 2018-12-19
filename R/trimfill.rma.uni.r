@@ -122,7 +122,9 @@ trimfill.rma.uni <- function(x, side, estimator="L0", maxiter=100, verbose=FALSE
       se.k0 <- max(0, se.k0)
 
       if (verbose)
-         cat(mstyle$verbose(paste("Iteration:", iter, "\tmissing =", k0, "\t  beta =", ifelse(side == "right", -1*beta, beta), "\n")))
+         cat(mstyle$verbose(paste0("Iteration: ", formatC(iter, format="f", digits=0, width=nchar(maxiter), flag="-"),
+                                   "  missing = ", formatC(k0, format="f", digits=0, width=nchar(k), flag="-"),
+                                   "  beta = ",    formatC(ifelse(side == "right", -1*beta, beta), format="f", digits=x$digits), "\n")))
 
    }
 
