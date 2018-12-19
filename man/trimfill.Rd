@@ -6,7 +6,7 @@
 \usage{
 trimfill(x, \dots)
 
-\method{trimfill}{rma.uni}(x, side, estimator="L0", maxiter=100, verbose=FALSE, ylim, \dots)
+\method{trimfill}{rma.uni}(x, side, estimator="L0", maxiter=100, verbose=FALSE, ilim, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma.uni"}.}
@@ -14,7 +14,7 @@ trimfill(x, \dots)
    \item{estimator}{either \code{"L0"}, \code{"R0"}, or \code{"Q0"}, indicating the estimator to use for estimating the number of missing studies (the default is \code{"L0"}).}
    \item{maxiter}{integer indicating the maximum number of iterations to use for the trim and fill method (the default is \code{100}).}
    \item{verbose}{logical indicating whether output should be generated on the progress of the iterative algorithm used as part of the trim and fill method (the default is \code{FALSE}).}
-   \item{ylim}{limits for the imputed values. If unspecified, no limits are used.}
+   \item{ilim}{limits for the imputed values. If unspecified, no limits are used.}
    \item{\dots}{other arguments.}
 }
 \details{
@@ -33,7 +33,7 @@ trimfill(x, \dots)
 \note{
    Three different estimators for the number of missing studies were proposed by Duval and Tweedie (2000a, 2000b). Based on these articles and Duval (2005), \code{"R0"} and \code{"L0"} are recommended. An advantage of estimator \code{"R0"} is that it provides a test of the null hypothesis that the number of missing studies (on the chosen side) is zero.
 
-   If the outcome measure used for the analysis is bounded (e.g., correlations are bounded between \code{-1} and \code{1}, proportions are bounded between \code{0} and \code{1}), one can use the \code{ylim} argument to enforce those limits when imputing values (imputed values cannot exceed those bounds then).
+   If the outcome measure used for the analysis is bounded (e.g., correlations are bounded between \code{-1} and \code{1}, proportions are bounded between \code{0} and \code{1}), one can use the \code{ilim} argument to enforce those limits when imputing values (imputed values cannot exceed those bounds then).
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}

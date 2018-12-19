@@ -1,4 +1,4 @@
-trimfill.rma.uni <- function(x, side, estimator="L0", maxiter=100, verbose=FALSE, ylim, ...) {
+trimfill.rma.uni <- function(x, side, estimator="L0", maxiter=100, verbose=FALSE, ilim, ...) {
 
    #########################################################################
 
@@ -146,12 +146,12 @@ trimfill.rma.uni <- function(x, side, estimator="L0", maxiter=100, verbose=FALSE
 
       ### apply limits if specified
 
-      if (!missing(ylim)) {
-         ylim <- sort(ylim)
-         if (length(ylim) != 2L)
-            stop(mstyle$stop("Argument 'ylim' must be of length 2."))
-         yi.fill[yi.fill < ylim[1]] <- ylim[1]
-         yi.fill[yi.fill > ylim[2]] <- ylim[2]
+      if (!missing(ilim)) {
+         ilim <- sort(ilim)
+         if (length(ilim) != 2L)
+            stop(mstyle$stop("Argument 'ilim' must be of length 2."))
+         yi.fill[yi.fill < ilim[1]] <- ilim[1]
+         yi.fill[yi.fill > ilim[2]] <- ilim[2]
       }
 
       vi.fill <- c(x$vi.f, vi[(k-k0+1):k])

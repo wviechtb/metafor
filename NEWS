@@ -1,4 +1,4 @@
-Changes in Version 2.1-0 (2018-12-18)
+Changes in Version 2.1-0 (2018-12-19)
 =====================================
 
    o added .glmulti object for making the interaction with glmulti easier
@@ -110,7 +110,7 @@ Changes in Version 2.1-0 (2018-12-18)
 
    o added 'clim' argument to summary.escalc()
 
-   o added 'ylim' argument to trimfill()
+   o added 'ilim' argument to trimfill()
 
    o labbe() gains 'lty' argument
 

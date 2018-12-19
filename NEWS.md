@@ -1,4 +1,4 @@
-# metafor 2.1-0 (2018-12-18)
+# metafor 2.1-0 (2018-12-19)
 
 - added `.glmulti` object for making the interaction with `glmulti` easier
 
@@ -68,7 +68,7 @@
 
 - added `clim` argument to `summary.escalc()`
 
-- added `ylim` argument to `trimfill()`
+- added `ilim` argument to `trimfill()`
 
 - `labbe()` gains `lty` argument
 
