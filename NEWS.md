@@ -1,4 +1,6 @@
-# metafor 2.1-0 (2018-12-19)
+# metafor 2.1-0 (2018-12-23)
+
+- added `vif()` function to get variance inflation factors
 
 - added `.glmulti` object for making the interaction with `glmulti` easier
 

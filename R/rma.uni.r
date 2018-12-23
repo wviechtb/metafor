@@ -902,6 +902,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
    ### check ratio of largest to smallest sampling variance
    ### note: need to exclude some special cases (0/0 = NaN, max(vi)/0 = Inf)
+   ### TODO: use the condition number of diag(vi) here instead?
 
    vimaxmin <- max(vi) / min(vi)
 

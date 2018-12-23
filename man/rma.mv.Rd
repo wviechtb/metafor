@@ -159,7 +159,7 @@ rma.mv(yi, V, W, mods, random, struct="CS", intercept=TRUE,
 
    Predicted/fitted values can be obtained with \code{\link{predict.rma}} and \code{\link{fitted.rma}}. For best linear unbiased predictions, see \code{\link{ranef.rma.mv}}.
 
-   The \code{\link{residuals.rma}}, \code{\link{rstandard.rma.mv}}, and \code{\link{rstudent.rma.mv}} functions extract raw and standardized residuals. See \code{\link{influence.rma.mv}} for additional case diagnostics (e.g., to determine influential studies).
+   The \code{\link{residuals.rma}}, \code{\link{rstandard.rma.mv}}, and \code{\link{rstudent.rma.mv}} functions extract raw and standardized residuals. See \code{\link{influence.rma.mv}} for additional case diagnostics (e.g., to determine influential studies). For models with moderators, variance inflation factors can be obtained with \code{\link{vif.rma}}.
 
    Confidence intervals for any variance/correlation parameters in the model can be obtained with \code{\link{confint.rma.mv}}.
 

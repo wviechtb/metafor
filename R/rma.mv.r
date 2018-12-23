@@ -1113,6 +1113,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    ### check ratio of largest to smallest sampling variance
    ### note: need to exclude some special cases (0/0 = NaN, max(vi)/0 = Inf)
+   ### TODO: use the condition number of V here instead?
 
    vimaxmin <- max(vi) / min(vi)
 
