@@ -545,7 +545,7 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
          MH  <- NA
          MHp <- NA
       } else {
-         CO  <- sum(ai - (n1i/Ni)*xt)^2 / sum((n1i/Ni)*(n2i/Ni)*(xt*(yt/Ni)))
+         CO  <- (abs(sum(ai - (n1i/Ni)*xt)) - ifelse(correct, 0.5, 0))^2 / sum((n1i/Ni)*(n2i/Ni)*(xt*(yt/Ni)))
          COp <- pchisq(CO, df=1, lower.tail=FALSE)
          MH  <- (abs(sum(ai - (n1i/Ni)*xt)) - ifelse(correct, 0.5, 0))^2 / sum((n1i/Ni)*(n2i/Ni)*(xt*(yt/(Ni-1))))
          MHp <- pchisq(MH, df=1, lower.tail=FALSE)
