@@ -100,6 +100,7 @@ reference:
       - fitstats
       - simulate.rma
       - update.rma
+      - vif
   - title: "Outlier / Influence Diagnostics"
     desc: >
       Functions for identifying outliers and/or influential studies and for conducting sensitivity analyses.

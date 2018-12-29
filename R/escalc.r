@@ -140,6 +140,8 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
             bi <- bi[subset]
             ci <- ci[subset]
             di <- di[subset]
+            n1i <- n1i[subset]
+            n2i <- n2i[subset]
          }
 
          if (length(ai)==0L || length(bi)==0L || length(ci)==0L || length(di)==0L)
@@ -1098,6 +1100,7 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
          if (!is.null(subset)) {
             xi <- xi[subset]
             mi <- mi[subset]
+            ni <- ni[subset]
          }
 
          if (length(xi)==0L || length(mi)==0L)
