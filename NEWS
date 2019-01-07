@@ -1,4 +1,4 @@
-Changes in Version 2.1-0 (2018-12-29)
+Changes in Version 2.1-0 (2019-01-07)
 =====================================
 
    o added vif() function to get variance inflation factors

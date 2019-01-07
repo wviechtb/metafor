@@ -64,7 +64,7 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
 
    #########################################################################
 
-   level <- ifelse(level > 1, (100-level)/100, ifelse(level > .5, 1-level, level))
+   level <- ifelse(level == 0, 1, ifelse(level > 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
    zcrit <- qnorm(level/2, lower.tail=FALSE)
 
    zi <- yi / sqrt(vi+tau2)

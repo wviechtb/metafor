@@ -91,7 +91,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
    if (length(digits) == 1L)
       digits <- c(digits,digits)
 
-   level <- ifelse(level > 1, (100-level)/100, ifelse(level > .5, 1-level, level))
+   level <- ifelse(level == 0, 1, ifelse(level > 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
 
    yi <- x
 

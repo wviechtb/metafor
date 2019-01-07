@@ -66,7 +66,7 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
    #   type <- match.arg(type, c("QP", "GENQ", "PL"))
    #}
 
-   level <- ifelse(level > 1, (100-level)/100, ifelse(level > .5, 1-level, level))
+   level <- ifelse(level == 0, 1, ifelse(level > 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
 
    #########################################################################
    #########################################################################

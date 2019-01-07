@@ -32,7 +32,7 @@ hc.rma.uni <- function(object, digits, transf, targs, control, ...) {
    if (!x$allvipos)
       stop(mstyle$stop("Cannot use method when one or more sampling variances are non-positive."))
 
-   level <- ifelse(x$level > 1, (100-x$level)/100, ifelse(x$level > .5, 1-x$level, x$level))
+   level <- ifelse(x$level == 0, 1, ifelse(x$level > 1, (100-x$level)/100, ifelse(x$level > .5, 1-x$level, x$level)))
 
    if (missing(control))
       control <- list()

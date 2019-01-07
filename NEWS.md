@@ -1,4 +1,4 @@
-# metafor 2.1-0 (2018-12-29)
+# metafor 2.1-0 (2019-01-07)
 
 - added `vif()` function to get variance inflation factors
 
