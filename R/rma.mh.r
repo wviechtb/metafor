@@ -495,7 +495,7 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
 
    #########################################################################
 
-   level <- ifelse(level == 0, 1, ifelse(level > 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
+   level <- ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
 
    CO <- COp <- MH <- MHp <- BD <- BDp <- TA <- TAp <- k.pos <- NA
 

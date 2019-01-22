@@ -289,9 +289,9 @@ refline, pch=19, pch.fill=21, col, bg, ci.res=1000, ...) {
 
    if (is.element(yaxis, c("sei", "vi", "seinv", "vinv"))) {
 
-      level     <- ifelse(level == 0, 1, ifelse(level > 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
-      #level    <- ifelse(level > 1, (100-level)/100, ifelse(level > .5, 1-level, level)) ### note: there may be multiple level values
-      level.min <- min(level)                                                             ### note: smallest level is the widest CI
+      level     <- ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
+      #level    <- ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)) ### note: there may be multiple level values
+      level.min <- min(level)                                                              ### note: smallest level is the widest CI
       lvals     <- length(level)
 
       ### calculate the CI bounds at the bottom of the figure (for the widest CI if there are multiple)

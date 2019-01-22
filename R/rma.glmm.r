@@ -756,7 +756,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    se.tau2 <- I2 <- H2 <- QE <- QEp <- NA
 
-   level <- ifelse(level == 0, 1, ifelse(level > 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
+   level <- ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
 
    ###### model fitting, test statistics, and confidence intervals
 

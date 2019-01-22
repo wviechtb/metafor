@@ -25,7 +25,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
    if (missing(control))
       control <- list()
 
-   level <- ifelse(level == 0, 1, ifelse(level > 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
+   level <- ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
 
    ### check if user has specified one of the sigma2, tau2, rho, gamma2, or phi arguments
 

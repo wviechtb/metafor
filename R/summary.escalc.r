@@ -8,7 +8,7 @@ H0=0, append=TRUE, replace=TRUE, level=95, clim, digits, transf, ...) {
 
    x <- object
 
-   level <- ifelse(level == 0, 1, ifelse(level > 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
+   level <- ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
 
    crit <- qnorm(level/2, lower.tail=FALSE)
 

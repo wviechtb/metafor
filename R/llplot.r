@@ -30,7 +30,7 @@ lty, lwd, col, level=99.99, refline=0, ...) {
       }
    }
 
-   level <- ifelse(level == 0, 1, ifelse(level > 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
+   level <- ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
 
    ### get ... argument
 

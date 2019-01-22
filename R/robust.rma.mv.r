@@ -11,7 +11,7 @@ robust.rma.mv <- function(x, cluster, adjust=TRUE, digits, ...) {
    if (missing(digits))
       digits <- x$digits
 
-   level <- ifelse(x$level == 0, 1, ifelse(x$level > 1, (100-x$level)/100, ifelse(x$level > .5, 1-x$level, x$level)))
+   level <- ifelse(x$level == 0, 1, ifelse(x$level >= 1, (100-x$level)/100, ifelse(x$level > .5, 1-x$level, x$level)))
 
    #########################################################################
 

@@ -63,7 +63,7 @@ label=FALSE, offset=0.3, pos=13, lty, ...) {
 
    if (envelope) {
 
-      level <- ifelse(level == 0, 1, ifelse(level > 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
+      level <- ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
 
       dat <- matrix(rnorm(x$k*reps), nrow=x$k, ncol=reps)
 
