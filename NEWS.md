@@ -1,5 +1,9 @@
 # metafor 2.1-0 (2019-01-22)
 
+- `confint.rma.mv()` now returns an object of class `list.confint.rma` when obtaining CIs for all variance and correlation components of the model; added corresponding `print.list.confint.rma()` function
+
+- moved `tol` argument in `permutest()` to `control` and renamed to `comptol`
+
 - added `PMM` and `GENQM` estimators in `rma.uni()`
 
 - added `vif()` function to get variance inflation factors

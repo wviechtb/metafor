@@ -114,6 +114,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
       if (length(res.all) == 1) {
          return(res.all[[1]])
       } else {
+         class(res.all) <- "list.confint.rma"
          return(res.all)
       }
 

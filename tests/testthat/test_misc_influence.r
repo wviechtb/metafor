@@ -139,7 +139,7 @@ test_that("influence() correctly works with 'na.omit' and 'na.pass'.", {
 
    options(na.action="na.omit")
 
-   res <- rma(yi, vi, mods = ~ ablat + trial12, data=dat)
+   expect_warning(res <- rma(yi, vi, mods = ~ ablat + trial12, data=dat))
    sav <- influence(res)
 
    expect_equivalent(length(sav$inf$rstudent), 10)
@@ -149,7 +149,7 @@ test_that("influence() correctly works with 'na.omit' and 'na.pass'.", {
 
    options(na.action="na.pass")
 
-   res <- rma(yi, vi, mods = ~ ablat + trial12, data=dat)
+   expect_warning(res <- rma(yi, vi, mods = ~ ablat + trial12, data=dat))
    sav <- influence(res)
 
    expect_equivalent(length(sav$inf$rstudent), 13)

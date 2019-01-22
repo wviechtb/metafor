@@ -1,6 +1,10 @@
 Changes in Version 2.1-0 (2019-01-22)
 =====================================
 
+   o confint.rma.mv() now returns an object of class 'list.confint.rma' when
+     obtaining CIs for all variance and correlation components of the model;
+     added corresponding print.list.confint.rma() function
+
    o moved 'tol' argument in permutest() to 'control' and renamed to 'comptol'
 
    o added 'PMM' and 'GENQM' estimators in rma.uni()
