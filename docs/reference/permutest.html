@@ -130,7 +130,7 @@
 
 # S3 method for rma.uni
 permutest(x, exact=FALSE, iter=1000, permci=FALSE,
-          progbar=TRUE, retpermdist=FALSE, digits, tol, control, &#8230;)</pre>
+          progbar=TRUE, retpermdist=FALSE, digits, control, &#8230;)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -164,12 +164,8 @@ permutest(x, exact=FALSE, iter=1000, permci=FALSE,
       <td><p>integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is to take the value from the object).</p></td>
     </tr>
     <tr>
-      <th>tol</th>
-      <td><p>numerical tolerance used when making <code>&gt;=</code> or <code>&lt;=</code> comparisons between an observed test statistic and the test statistic under the permuted data. Defaults to <code>.Machine$double.eps^0.5</code> if unspecified. See &#8216;Note&#8217;.</p></td>
-    </tr>
-    <tr>
       <th>control</th>
-      <td><p>list of control values for <code>uniroot</code> (i.e., <code>tol</code> and <code>maxiter</code>). Only relevant when <code>permci=TRUE</code>. See &#8216;Note&#8217;.</p></td>
+      <td><p>list of control values for numerical comparisons (<code>comptol</code>) and for <code>uniroot</code> (i.e., <code>tol</code> and <code>maxiter</code>). The latter is only relevant when <code>permci=TRUE</code>. See &#8216;Note&#8217;.</p></td>
     </tr>
     <tr>
       <th>&#8230;</th>
@@ -207,7 +203,7 @@ permutest(x, exact=FALSE, iter=1000, permci=FALSE,
 
     <p>It is important to note that the p-values obtained with permutation tests cannot reach conventional levels of statistical significance (i.e., \(p \le .05\)) when \(k\) is very small. In particular, for models without moderators, the smallest possible (two-sided) p-value is .0625 when \(k=5\) and .03125 when \(k=6\). Therefore, the permutation test is only able to reject the null hypothesis at \(\alpha=.05\) when \(k\) is at least equal to 6. For models with moderators, the smallest possible (two-sided) p-value for a particular model coefficient is .0833 when \(k=4\) and .0167 when \(k=5\) (assuming that each row in the model matrix is unique). Therefore, the permutation test is only able to reject the null hypothesis at \(\alpha=.05\) when \(k\) is at least equal to 5. Consequently, permutation-based CIs can also only be obtained when \(k\) is sufficiently large.</p>
 <p>When the number of permutations required for the exact test is so large as to be essentially indistinguishable from infinity (e.g., <code>factorial(200)</code>), the function will terminate with an error.</p>
-<p>Determining whether a test statistic under the permuted data is as extreme or more extreme than under the actually observed data requires making <code>&gt;=</code> or <code>&lt;=</code> comparisons. To avoid problems due to the finite precision with which computers generally represent numbers, the function uses a numerical tolerance (argument <code>tol</code>) when making such comparisons (e.g., instead of <code>sqrt(3)^2 - 3 &gt;= 0</code>, which may evaluate to <code>FALSE</code>, we can use <code>sqrt(3)^2 - 3 &gt;= 0 - .Machine$double.eps^0.5</code>, which should evaluate to <code>TRUE</code>).</p>
+<p>Determining whether a test statistic under the permuted data is as extreme or more extreme than under the actually observed data requires making <code>&gt;=</code> or <code>&lt;=</code> comparisons. To avoid problems due to the finite precision with which computers generally represent numbers, the function uses a numerical tolerance (control argument <code>comptol</code>, which is set by default equal to <code>.Machine$double.eps^0.5</code>) when making such comparisons (e.g., instead of <code>sqrt(3)^2 - 3 &gt;= 0</code>, which may evaluate to <code>FALSE</code>, we can use <code>sqrt(3)^2 - 3 &gt;= 0 - .Machine$double.eps^0.5</code>, which should evaluate to <code>TRUE</code>).</p>
 <p>When obtaining permutation-based CIs, the function makes use of <code>uniroot</code>. By default, the desired accuracy is set equal to <code>.Machine$double.eps^0.25</code> and the maximum number of iterations to <code>100</code>. The desired accuracy and the maximum number of iterations can be adjusted with the <code>control</code> argument (i.e., <code>control=list(tol=value, maxiter=value)</code>).</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>

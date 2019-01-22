@@ -9,7 +9,7 @@
 permutest(x, \dots)
 
 \method{permutest}{rma.uni}(x, exact=FALSE, iter=1000, permci=FALSE,
-          progbar=TRUE, retpermdist=FALSE, digits, tol, control, \dots)
+          progbar=TRUE, retpermdist=FALSE, digits, control, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma.uni"}.}
@@ -19,8 +19,7 @@ permutest(x, \dots)
    \item{progbar}{logical indicating whether a progress bar should be shown (the default is \code{TRUE}).}
    \item{retpermdist}{logical indicating whether the permutation distributions of the test statistics should be returned (the default is \code{FALSE}).}
    \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is to take the value from the object).}
-   \item{tol}{numerical tolerance used when making \code{>=} or \code{<=} comparisons between an observed test statistic and the test statistic under the permuted data. Defaults to \code{.Machine$double.eps^0.5} if unspecified. See \sQuote{Note}.}
-   \item{control}{list of control values for \code{uniroot} (i.e., \code{tol} and \code{maxiter}). Only relevant when \code{permci=TRUE}. See \sQuote{Note}.}
+   \item{control}{list of control values for numerical comparisons (\code{comptol}) and for \code{uniroot} (i.e., \code{tol} and \code{maxiter}). The latter is only relevant when \code{permci=TRUE}. See \sQuote{Note}.}
    \item{\dots}{other arguments.}
 }
 \details{
@@ -58,7 +57,7 @@ permutest(x, \dots)
 
    When the number of permutations required for the exact test is so large as to be essentially indistinguishable from infinity (e.g., \code{factorial(200)}), the function will terminate with an error.
 
-   Determining whether a test statistic under the permuted data is as extreme or more extreme than under the actually observed data requires making \code{>=} or \code{<=} comparisons. To avoid problems due to the finite precision with which computers generally represent numbers, the function uses a numerical tolerance (argument \code{tol}) when making such comparisons (e.g., instead of \code{sqrt(3)^2 - 3 >= 0}, which may evaluate to \code{FALSE}, we can use \code{sqrt(3)^2 - 3 >= 0 - .Machine$double.eps^0.5}, which should evaluate to \code{TRUE}).
+   Determining whether a test statistic under the permuted data is as extreme or more extreme than under the actually observed data requires making \code{>=} or \code{<=} comparisons. To avoid problems due to the finite precision with which computers generally represent numbers, the function uses a numerical tolerance (control argument \code{comptol}, which is set by default equal to \code{.Machine$double.eps^0.5}) when making such comparisons (e.g., instead of \code{sqrt(3)^2 - 3 >= 0}, which may evaluate to \code{FALSE}, we can use \code{sqrt(3)^2 - 3 >= 0 - .Machine$double.eps^0.5}, which should evaluate to \code{TRUE}).
 
    When obtaining permutation-based CIs, the function makes use of \code{\link{uniroot}}. By default, the desired accuracy is set equal to \code{.Machine$double.eps^0.25} and the maximum number of iterations to \code{100}. The desired accuracy and the maximum number of iterations can be adjusted with the \code{control} argument (i.e., \code{control=list(tol=value, maxiter=value)}).
 }

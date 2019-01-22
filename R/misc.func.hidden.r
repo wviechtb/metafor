@@ -1622,7 +1622,7 @@
 
 }
 
-.permci <- function(val, obj, j, exact, iter, progbar, comp.tol, level, digits, control) {
+.permci <- function(val, obj, j, exact, iter, progbar, level, digits, control) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -1633,7 +1633,7 @@
       stop()
 
    ### p-value based on permutation test
-   pval <- permutest(res, exact=exact, iter=iter, progbar=FALSE, tol=comp.tol, control=control)$pval[j]
+   pval <- permutest(res, exact=exact, iter=iter, progbar=FALSE, control=control)$pval[j]
 
    ### get difference between p-value and level
    diff <- pval - level / ifelse(control$alternative == "two.sided", 1, 2)

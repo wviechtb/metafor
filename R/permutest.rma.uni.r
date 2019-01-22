@@ -1,4 +1,4 @@
-permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=TRUE, retpermdist=FALSE, digits, tol, control, ...) {
+permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=TRUE, retpermdist=FALSE, digits, control, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -13,14 +13,6 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
 
    if (missing(digits))
       digits <- x$digits
-
-   ### default numerical tolerance
-
-   if (missing(tol)) {
-      comp.tol <- .Machine$double.eps^0.5
-   } else {
-      comp.tol <- tol
-   }
 
    #########################################################################
 
@@ -90,7 +82,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
    if (missing(control))
       control <- list()
 
-   con <- list(tol=.Machine$double.eps^0.25, maxiter=100, alternative="two.sided", p2defn="abs", stat="test", cialt="one.sided", seed=seed, distfac=1)
+   con <- list(comptol=.Machine$double.eps^0.5, tol=.Machine$double.eps^0.25, maxiter=100, alternative="two.sided", p2defn="abs", stat="test", cialt="one.sided", seed=seed, distfac=1)
    con[pmatch(names(control), names(con))] <- control
 
    if (!exact)
@@ -187,9 +179,9 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
             ### absolute value definition of the two-sided p-value
 
             if (con$stat == "test") {
-               pval <- mean(abs(zval.perm) >= abs(x$zval) - comp.tol, na.rm=TRUE) ### based on test statistic
+               pval <- mean(abs(zval.perm) >= abs(x$zval) - con$comptol, na.rm=TRUE) ### based on test statistic
             } else {
-               pval <- mean(abs(beta.perm) >= abs(c(x$beta)) - comp.tol, na.rm=TRUE) ### based on coefficient
+               pval <- mean(abs(beta.perm) >= abs(c(x$beta)) - con$comptol, na.rm=TRUE) ### based on coefficient
             }
 
          } else {
@@ -198,15 +190,15 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
 
             if (con$stat == "test") {
                if (x$zval > 0) {
-                  pval <- 2*mean(zval.perm >= x$zval - comp.tol, na.rm=TRUE) ### based on test statistic
+                  pval <- 2*mean(zval.perm >= x$zval - con$comptol, na.rm=TRUE) ### based on test statistic
                } else {
-                  pval <- 2*mean(zval.perm <= x$zval + comp.tol, na.rm=TRUE) ### based on coefficient
+                  pval <- 2*mean(zval.perm <= x$zval + con$comptol, na.rm=TRUE) ### based on coefficient
                }
             } else {
                if (c(x$beta) > 0) {
-                  pval <- 2*mean(beta.perm >= c(x$beta) - comp.tol, na.rm=TRUE) ### based on test statistic
+                  pval <- 2*mean(beta.perm >= c(x$beta) - con$comptol, na.rm=TRUE) ### based on test statistic
                } else {
-                  pval <- 2*mean(beta.perm <= c(x$beta) + comp.tol, na.rm=TRUE) ### based on coefficient
+                  pval <- 2*mean(beta.perm <= c(x$beta) + con$comptol, na.rm=TRUE) ### based on coefficient
                }
             }
 
@@ -216,23 +208,23 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
 
       if (con$alternative == "less") {
          if (con$stat == "test") {
-            pval <- mean(zval.perm <= x$zval + comp.tol, na.rm=TRUE) ### based on test statistic
+            pval <- mean(zval.perm <= x$zval + con$comptol, na.rm=TRUE) ### based on test statistic
          } else {
-            pval <- mean(beta.perm <= c(x$beta) + comp.tol, na.rm=TRUE) ### based on coefficient
+            pval <- mean(beta.perm <= c(x$beta) + con$comptol, na.rm=TRUE) ### based on coefficient
          }
       }
 
       if (con$alternative == "greater") {
          if (con$stat == "test") {
-            pval <- mean(zval.perm >= x$zval - comp.tol, na.rm=TRUE) ### based on test statistic
+            pval <- mean(zval.perm >= x$zval - con$comptol, na.rm=TRUE) ### based on test statistic
          } else {
-            pval <- mean(beta.perm >= c(x$beta) - comp.tol, na.rm=TRUE) ### based on coefficient
+            pval <- mean(beta.perm >= c(x$beta) - con$comptol, na.rm=TRUE) ### based on coefficient
          }
       }
 
       pval[pval > 1] <- 1
 
-      QMp <- mean(QM.perm >= x$QM - comp.tol, na.rm=TRUE)
+      QMp <- mean(QM.perm >= x$QM - con$comptol, na.rm=TRUE)
 
    #########################################################################
 
@@ -318,9 +310,9 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
             ### absolute value definition of the two-sided p-value
 
             if (con$stat == "test") {
-               pval <- rowMeans(t(abs(zval.perm)) >= abs(x$zval) - comp.tol, na.rm=TRUE) ### based on test statistics
+               pval <- rowMeans(t(abs(zval.perm)) >= abs(x$zval) - con$comptol, na.rm=TRUE) ### based on test statistics
             } else {
-               pval <- rowMeans(t(abs(beta.perm)) >= abs(c(x$beta)) - comp.tol, na.rm=TRUE) ### based on coefficients
+               pval <- rowMeans(t(abs(beta.perm)) >= abs(c(x$beta)) - con$comptol, na.rm=TRUE) ### based on coefficients
             }
 
          } else {
@@ -332,17 +324,17 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
             if (con$stat == "test") {
                for (j in seq_len(x$p)) {
                   if (x$zval[j] > 0) {
-                     pval[j] <- 2*mean(zval.perm[,j] >= x$zval[j] - comp.tol, na.rm=TRUE)
+                     pval[j] <- 2*mean(zval.perm[,j] >= x$zval[j] - con$comptol, na.rm=TRUE)
                   } else {
-                     pval[j] <- 2*mean(zval.perm[,j] <= x$zval[j] + comp.tol, na.rm=TRUE)
+                     pval[j] <- 2*mean(zval.perm[,j] <= x$zval[j] + con$comptol, na.rm=TRUE)
                   }
                }
             } else {
                for (j in seq_len(x$p)) {
                   if (c(x$beta)[j] > 0) {
-                     pval[j] <- 2*mean(beta.perm[,j] >= c(x$beta)[j] - comp.tol, na.rm=TRUE)
+                     pval[j] <- 2*mean(beta.perm[,j] >= c(x$beta)[j] - con$comptol, na.rm=TRUE)
                   } else {
-                     pval[j] <- 2*mean(beta.perm[,j] <= c(x$beta)[j] + comp.tol, na.rm=TRUE)
+                     pval[j] <- 2*mean(beta.perm[,j] <= c(x$beta)[j] + con$comptol, na.rm=TRUE)
                   }
                }
             }
@@ -353,23 +345,23 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
 
       if (con$alternative == "less") {
          if (con$stat == "test") {
-            pval <- rowMeans(t(zval.perm) <= x$zval + comp.tol, na.rm=TRUE) ### based on test statistics
+            pval <- rowMeans(t(zval.perm) <= x$zval + con$comptol, na.rm=TRUE) ### based on test statistics
          } else {
-            pval <- rowMeans(t(beta.perm) <= c(x$beta) + comp.tol, na.rm=TRUE) ### based on coefficients
+            pval <- rowMeans(t(beta.perm) <= c(x$beta) + con$comptol, na.rm=TRUE) ### based on coefficients
          }
       }
 
       if (con$alternative == "greater") {
          if (con$stat == "test") {
-            pval <- rowMeans(t(zval.perm) >= x$zval - comp.tol, na.rm=TRUE) ### based on test statistics
+            pval <- rowMeans(t(zval.perm) >= x$zval - con$comptol, na.rm=TRUE) ### based on test statistics
          } else {
-            pval <- rowMeans(t(beta.perm) >= c(x$beta) - comp.tol, na.rm=TRUE) ### based on coefficients
+            pval <- rowMeans(t(beta.perm) >= c(x$beta) - con$comptol, na.rm=TRUE) ### based on coefficients
          }
       }
 
       pval[pval > 1] <- 1
 
-      QMp <- mean(QM.perm >= x$QM - comp.tol, na.rm=TRUE)
+      QMp <- mean(QM.perm >= x$QM - con$comptol, na.rm=TRUE)
 
    }
 
@@ -422,8 +414,8 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
                con$alternative <- "two.sided"
             }
 
-            #tmp <- try(uniroot(.permci, interval=c(x$ci.lb[j], coef(x)[j]), extendInt="upX", tol=con$tol, maxiter=con$maxiter, obj=x, j=j, exact=exact, iter=iter, progbar=progbar, comp.tol=comp.tol, level=level, digits=digits, control=con)$root, silent=TRUE)
-            tmp <- try(uniroot(.permci, interval=c(x$ci.lb[j] - con$distfac*(coef(x)[j] - x$ci.lb[j]), coef(x)[j]), extendInt="no", tol=con$tol, maxiter=con$maxiter, obj=x, j=j, exact=exact, iter=iter, progbar=progbar, comp.tol=comp.tol, level=level, digits=digits, control=con)$root, silent=TRUE)
+            #tmp <- try(uniroot(.permci, interval=c(x$ci.lb[j], coef(x)[j]), extendInt="upX", tol=con$tol, maxiter=con$maxiter, obj=x, j=j, exact=exact, iter=iter, progbar=progbar, level=level, digits=digits, control=con)$root, silent=TRUE)
+            tmp <- try(uniroot(.permci, interval=c(x$ci.lb[j] - con$distfac*(coef(x)[j] - x$ci.lb[j]), coef(x)[j]), extendInt="no", tol=con$tol, maxiter=con$maxiter, obj=x, j=j, exact=exact, iter=iter, progbar=progbar, level=level, digits=digits, control=con)$root, silent=TRUE)
 
             if (inherits(tmp, "try-error")) {
                ci.lb[j] <- NA
@@ -440,8 +432,8 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
                con$alternative <- "two.sided"
             }
 
-            #tmp <- try(uniroot(.permci, interval=c(coef(x)[j], x$ci.ub[j]), extendInt="downX", tol=con$tol, maxiter=con$maxiter, obj=x, j=j, exact=exact, iter=iter, progbar=progbar, comp.tol=comp.tol, level=level, digits=digits, control=con)$root, silent=TRUE)
-            tmp <- try(uniroot(.permci, interval=c(coef(x)[j], x$ci.ub[j] + con$distfac*(x$ci.ub[j] - coef(x)[j])), extendInt="no", tol=con$tol, maxiter=con$maxiter, obj=x, j=j, exact=exact, iter=iter, progbar=progbar, comp.tol=comp.tol, level=level, digits=digits, control=con)$root, silent=TRUE)
+            #tmp <- try(uniroot(.permci, interval=c(coef(x)[j], x$ci.ub[j]), extendInt="downX", tol=con$tol, maxiter=con$maxiter, obj=x, j=j, exact=exact, iter=iter, progbar=progbar, level=level, digits=digits, control=con)$root, silent=TRUE)
+            tmp <- try(uniroot(.permci, interval=c(coef(x)[j], x$ci.ub[j] + con$distfac*(x$ci.ub[j] - coef(x)[j])), extendInt="no", tol=con$tol, maxiter=con$maxiter, obj=x, j=j, exact=exact, iter=iter, progbar=progbar, level=level, digits=digits, control=con)$root, silent=TRUE)
 
             if (inherits(tmp, "try-error")) {
                ci.ub[j] <- NA
