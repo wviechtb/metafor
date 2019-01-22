@@ -385,14 +385,14 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
 
    if (.isTRUE(permci) || is.numeric(permci)) {
 
-      level <- ifelse(level == 0, 1, ifelse(level > 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
+      level <- ifelse(x$level == 0, 1, ifelse(x$level > 1, (100-x$level)/100, ifelse(x$level > .5, 1-x$level, x$level)))
 
       ### check if it is even possible to reject at level
 
       if (1/iter > level / ifelse(con$cialt == "one.sided", 1, 2)) {
 
          permci <- FALSE
-         warning(mstyle$warning("Cannot obtain ", x$level, "% permutation-based CI; number of permutations (", iter, ") too low."))
+         warning(mstyle$warning("Cannot obtain ", 100*(1-x$level), "% permutation-based CI; number of permutations (", iter, ") too low."))
 
       } else {
 

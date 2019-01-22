@@ -32,7 +32,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
                               "GEN")))
       stop(mstyle$stop("Unknown 'measure' specified."))
 
-   if (!is.element(method, c("FE","HS","HE","DL","GENQ","SJ","ML","REML","EB","DLIT","SJIT","PM")))
+   if (!is.element(method, c("FE","HS","HE","DL","DLIT","GENQ","GENQM","SJ","SJIT","PM","PMM","ML","REML","EB")))
       stop(mstyle$stop("Unknown 'method' specified."))
 
    ### in case user specifies more than one add/to value (as one can do with rma.mh() and rma.peto())
@@ -868,12 +868,13 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
    con <- list(verbose = FALSE,
                tau2.init = NULL,      # initial value for iterative estimators (ML, REML, EB, SJ, SJIT, DLIT)
                tau2.min = 0,          # lower bound for tau^2 value
-               tau2.max = 100,        # upper bound for tau^2 value (only needed for PM estimator; and passed down for tau^2 CI obtained with confint())
-               threshold = 10^-5,     # convergence threshold (for ML, REML, EB, SJIT, DLIT; also used for PM)
+               tau2.max = 100,        # upper bound for tau^2 value (for PM/PMM/GENQM estimators; and passed down for tau^2 CI obtained with confint())
+               threshold = 10^-5,     # convergence threshold (for ML, REML, EB, SJIT, DLIT)
+               tol = .Machine$double.eps^0.25, # convergence tolerance for uniroot() as used for PM, PMM, and GENQM
                maxiter = 100,         # maximum number of iterations (for ML, REML, EB, SJIT, DLIT)
                stepadj = 1,           # step size adjustment for Fisher scoring algorithm (for ML, REML, EB)
                REMLf = TRUE,          # should |X'X| term be included in the REML log likelihood?
-               tol = 1e-07,           # tolerance for checking whether X'X is of full rank
+               evtol = 1e-07,         # lower bound for eigenvalues to determine if model matrix is positive definite (also for checking if vimaxmin >= 1/con$evtol)
                alpha.init = NULL,     # initial values for scale parameters
                optimizer = "nlminb",  # optimizer to use ("optim", "nlminb", "uobyqa", "newuoa", "bobyqa", "nloptr", "nlm", "hjk", "nmk", "ucminf") for location-scale model
                optmethod = "BFGS",    # argument 'method' for optim() ("Nelder-Mead" and "BFGS" are sensible options)
@@ -890,6 +891,13 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
    verbose <- con$verbose
 
+   ### contrain negative tau2.min values to -min(vi) (to ensure that the marginal variance is always >= 0)
+
+   if (con$tau2.min < 0 && (-con$tau2.min > min(vi))) {
+      con$tau2.min <- -min(vi)
+      warning(mstyle$warning(paste0("Value of 'tau2.min' constrained to -min(vi) = ", formatC(-min(vi), format="f", digits=digits), ".")))
+   }
+
    ### convergence indicator and change variable (for iterative estimators)
 
    conv <- 1
@@ -897,7 +905,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
    ### check whether model matrix is of full rank
 
-   if (any(eigen(crossprod(X), symmetric=TRUE, only.values=TRUE)$values <= con$tol))
+   if (any(eigen(crossprod(X), symmetric=TRUE, only.values=TRUE)$values <= con$evtol))
       stop(mstyle$stop("Model matrix not of full rank. Cannot fit model."))
 
    ### check ratio of largest to smallest sampling variance
@@ -906,11 +914,11 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
    vimaxmin <- max(vi) / min(vi)
 
-   if (!is.nan(vimaxmin) && !is.infinite(vimaxmin) && vimaxmin >= 1/con$tol)
+   if (!is.nan(vimaxmin) && !is.infinite(vimaxmin) && vimaxmin >= 1/con$evtol)
       warning(mstyle$warning("Ratio of largest to smallest sampling variance extremely large. May not be able to obtain stable results."))
 
-   ### iterations counter for iterative estimators
-   ### (DLIT, SJIT, ML, REML, EB; PM is also iterative, but uniroot() handles that)
+   ### iterations counter for iterative estimators (i.e., DLIT, SJIT, ML, REML, EB)
+   ### (note: PM, PMM, and GENQM are also iterative, but uniroot() handles that)
 
    iter <- 0
 
@@ -988,47 +996,6 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
       }
 
-      if (method == "GENQ") {
-
-         #if (!allvipos)
-         #   stop(mstyle$stop("GENQ estimator cannot be used with non-positive sampling variances."))
-
-         if (is.null(weights))
-            stop(mstyle$stop("Must specify 'weights' when method='GENQ'."))
-
-         A     <- diag(weights, nrow=k, ncol=k)
-         stXAX <- .invcalc(X=X, W=A, k=k)
-         P     <- A - A %*% X %*% stXAX %*% t(X) %*% A
-         RSS   <- crossprod(Y,P) %*% Y
-         V     <- diag(vi, nrow=k, ncol=k)
-         PV    <- P %*% V ### careful: is not symmetric
-         trP   <- .tr(P)
-         trPV  <- .tr(PV)
-         tau2  <- ifelse(tau2.fix, tau2.val, (RSS - trPV) / trP)
-
-      }
-
-      ### Sidik-Jonkman (SJ) estimator
-
-      if (method == "SJ") {
-
-         if (is.null(con$tau2.init)) {
-            tau2.0 <- c(var(yi) * (k-1)/k)
-         } else {
-            tau2.0 <- con$tau2.init
-         }
-
-         wi    <- 1/(vi + tau2.0)
-         W     <- diag(wi, nrow=k, ncol=k)
-         stXWX <- .invcalc(X=X, W=W, k=k)
-         P     <- W - W %*% X %*% stXWX %*% crossprod(X,W)
-         RSS   <- crossprod(Y,P) %*% Y
-         V     <- diag(vi, nrow=k, ncol=k)
-         PV    <- P %*% V ### careful: is not symmetric
-         tau2  <- ifelse(tau2.fix, tau2.val, tau2.0 * RSS / (k-p))
-
-      }
-
       ### DerSimonian-Laird (DL) estimator with iteration
 
       if (method == "DLIT") {
@@ -1069,6 +1036,102 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
          if (conv == 0L)
             stop(mstyle$stop("Algorithm did not converge."))
+
+      }
+
+      ### generalized Q-statistic estimator
+
+      if (method == "GENQ") {
+
+         #if (!allvipos)
+         #   stop(mstyle$stop("GENQ estimator cannot be used with non-positive sampling variances."))
+
+         if (is.null(weights))
+            stop(mstyle$stop("Must specify 'weights' when method='GENQ'."))
+
+         A     <- diag(weights, nrow=k, ncol=k)
+         stXAX <- .invcalc(X=X, W=A, k=k)
+         P     <- A - A %*% X %*% stXAX %*% t(X) %*% A
+         RSS   <- crossprod(Y,P) %*% Y
+         V     <- diag(vi, nrow=k, ncol=k)
+         PV    <- P %*% V ### careful: is not symmetric
+         trP   <- .tr(P)
+         trPV  <- .tr(PV)
+         tau2  <- ifelse(tau2.fix, tau2.val, (RSS - trPV) / trP)
+
+      }
+
+      ### generalized Q-statistic estimator (median unbiased estimator version)
+
+      if (method == "GENQM") {
+
+         if (is.null(weights))
+            stop(mstyle$stop("Must specify 'weights' when method='GENQM'."))
+
+         if (!tau2.fix) {
+
+            A     <- diag(weights, nrow=k, ncol=k)
+            stXAX <- .invcalc(X=X, W=A, k=k)
+            P     <- A - A %*% X %*% stXAX %*% t(X) %*% A
+            RSS   <- crossprod(Y,P) %*% Y
+            V     <- diag(vi, nrow=k, ncol=k)
+            PV    <- P %*% V ### careful: is not symmetric
+            trP   <- .tr(P)
+            trPV  <- .tr(PV)
+
+            if (.GENQ.func(con$tau2.min, P=P, vi=vi, Q=RSS, level=0, k=k, p=p, getlower=TRUE, verbose=FALSE) > 0.5) {
+
+               ### if GENQ.tau2.min is > 0.5, then estimate < tau2.min
+
+               tau2 <- con$tau2.min
+
+            } else {
+
+               if (.GENQ.func(con$tau2.max, P=P, vi=vi, Q=RSS, level=0, k=k, p=p, getlower=TRUE, verbose=FALSE) < 0.5) {
+
+                  ### if GENQ.tau2.max is < 0.5, then estimate > tau2.max
+
+                  stop(mstyle$stop("Value of 'tau2.max' too low. Try increasing 'tau2.max' or switch to another 'method'."))
+
+               } else {
+
+                  tau2 <- try(uniroot(.GENQ.func, interval=c(con$tau2.min, con$tau2.max), tol=con$tol, maxiter=con$maxiter, P=P, vi=vi, Q=RSS, level=0.5, k=k, p=p, getlower=FALSE, verbose=verbose, digits=digits, extendInt="no")$root, silent=TRUE)
+
+                  if (inherits(tau2, "try-error"))
+                     stop(mstyle$stop("Error in iterative search for tau2 using uniroot()."))
+
+               }
+
+            }
+
+         } else {
+
+            tau2 <- tau2.val
+
+         }
+
+         wi <- 1/(vi + tau2)
+
+      }
+
+      ### Sidik-Jonkman (SJ) estimator
+
+      if (method == "SJ") {
+
+         if (is.null(con$tau2.init)) {
+            tau2.0 <- c(var(yi) * (k-1)/k)
+         } else {
+            tau2.0 <- con$tau2.init
+         }
+
+         wi    <- 1/(vi + tau2.0)
+         W     <- diag(wi, nrow=k, ncol=k)
+         stXWX <- .invcalc(X=X, W=W, k=k)
+         P     <- W - W %*% X %*% stXWX %*% crossprod(X,W)
+         RSS   <- crossprod(Y,P) %*% Y
+         V     <- diag(vi, nrow=k, ncol=k)
+         PV    <- P %*% V ### careful: is not symmetric
+         tau2  <- ifelse(tau2.fix, tau2.val, tau2.0 * RSS / (k-p))
 
       }
 
@@ -1121,23 +1184,80 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
          if (!allvipos)
             stop(mstyle$stop("PM estimator cannot be used with non-positive sampling variances."))
 
-         if (.QE.func(con$tau2.min, Y=Y, vi=vi, X=X, k=k, objective=k-p) < con$tau2.min) {
+         if (!tau2.fix) {
 
-            tau2 <- con$tau2.min
+            if (.QE.func(con$tau2.min, Y=Y, vi=vi, X=X, k=k, objective=0) < k-p) {
+
+               tau2 <- con$tau2.min
+
+            } else {
+
+               if (.QE.func(con$tau2.max, Y=Y, vi=vi, X=X, k=k, objective=0) > k-p) {
+
+                     stop(mstyle$stop("Value of 'tau2.max' too low. Try increasing 'tau2.max' or switch to another 'method'."))
+
+               } else {
+
+                  tau2 <- try(uniroot(.QE.func, interval=c(con$tau2.min, con$tau2.max), tol=con$tol, maxiter=con$maxiter, Y=Y, vi=vi, X=X, k=k, objective=k-p, verbose=verbose, digits=digits, extendInt="no")$root, silent=TRUE)
+
+                  if (inherits(tau2, "try-error"))
+                     stop(mstyle$stop("Error in iterative search for tau2 using uniroot()."))
+
+               }
+
+            }
+
+            #W <- diag(wi, nrow=k, ncol=k)
+            #stXWX <- .invcalc(X=X, W=W, k=k)
+            #P <- W - W %*% X %*% stXWX %*% crossprod(X,W) ### needed for se.tau2 computation below (not when using the simpler equation)
 
          } else {
 
-            tau2 <- ifelse(tau2.fix, tau2.val, try(uniroot(.QE.func, interval=c(con$tau2.min, con$tau2.max), tol=con$threshold, maxiter=con$maxiter, Y=Y, vi=vi, X=X, k=k, objective=k-p, verbose=verbose, digits=digits, extendInt="no")$root, silent=TRUE))
-
-            if (!is.numeric(tau2))
-               stop(mstyle$stop("Error in iterative search for tau2. Try increasing 'tau2.max' or switch to another 'method'."))
+            tau2 <- tau2.fix
 
          }
 
-         wi    <- 1/(vi + tau2)
-         #W     <- diag(wi, nrow=k, ncol=k)
-         #stXWX <- .invcalc(X=X, W=W, k=k)
-         #P     <- W - W %*% X %*% stXWX %*% crossprod(X,W) ### needed for se.tau2 computation below (not when using the simpler equation)
+         wi <- 1/(vi + tau2)
+
+      }
+
+      ### Paule-Mandel (PM) estimator (median unbiased estimator version)
+
+      if (method == "PMM") {
+
+         if (!allvipos)
+            stop(mstyle$stop("PMM estimator cannot be used with non-positive sampling variances."))
+
+         if (!tau2.fix) {
+
+            if (.QE.func(con$tau2.min, Y=Y, vi=vi, X=X, k=k, objective=0) < qchisq(.5, df=k-p)) {
+
+               tau2 <- con$tau2.min
+
+            } else {
+
+               if (.QE.func(con$tau2.max, Y=Y, vi=vi, X=X, k=k, objective=0) > qchisq(.5, df=k-p)) {
+
+                  stop(mstyle$stop("Value of 'tau2.max' too low. Try increasing 'tau2.max' or switch to another 'method'."))
+
+               } else {
+
+                  tau2 <- try(uniroot(.QE.func, interval=c(con$tau2.min, con$tau2.max), tol=con$tol, maxiter=con$maxiter, Y=Y, vi=vi, X=X, k=k, objective=qchisq(.5, df=k-p), verbose=verbose, digits=digits, extendInt="no")$root, silent=TRUE)
+
+                  if (inherits(tau2, "try-error"))
+                     stop(mstyle$stop("Error in iterative search for tau2. Try increasing 'tau2.max' or switch to another 'method'."))
+
+               }
+
+            }
+
+         } else {
+
+            tau2 <- tau2.fix
+
+         }
+
+         wi <- 1/(vi + tau2)
 
       }
 
@@ -1235,7 +1355,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
          se.tau2 <- sqrt(1/(k-p)^2 * (2*sum(PV*t(PV)) + 4*max(tau2,0)*trPV + 2*max(tau2,0)^2*(k-p)))
       if (method == "DL" || method == "DLIT")
          se.tau2 <- sqrt(1/trP^2 * (2*(k-p) + 4*max(tau2,0)*trP + 2*max(tau2,0)^2*sum(P*P)))
-      if (method == "GENQ")
+      if (method == "GENQ" || method == "GENQM")
          se.tau2 <- sqrt(1/trP^2 * (2*sum(PV*t(PV)) + 4*max(tau2,0)*sum(PV*P) + 2*max(tau2,0)^2*sum(P*P)))
       if (method == "SJ")
          se.tau2 <- sqrt(tau2.0^2/(k-p)^2 * (2*sum(PV*t(PV)) + 4*max(tau2,0)*sum(PV*P) + 2*max(tau2,0)^2*sum(P*P)))
@@ -1243,7 +1363,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
          se.tau2 <- sqrt(2/sum(wi^2)) ### note: wi = 1/(vi + tau2) for ML, REML, EB, PM, and SJIT
       if (method == "REML")
          se.tau2 <- sqrt(2/sum(P*P))
-      if (method == "EB" || method == "PM" || method == "SJIT") {
+      if (method == "EB" || method == "PM" || method == "PMM" || method == "SJIT") {
          #V  <- diag(vi, nrow=k, ncol=k)
          #PV <- P %*% V ### careful: is not symmetric
          #se.tau2 <- sqrt((k/(k-p))^2 / sum(wi)^2 * (2*sum(PV*t(PV)) + 4*max(tau2,0)*sum(PV*P) + 2*max(tau2,0)^2*sum(P*P)))
@@ -1316,7 +1436,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
       ### check whether model matrix is of full rank
 
-      if (any(eigen(crossprod(Z), symmetric=TRUE, only.values=TRUE)$values <= con$tol))
+      if (any(eigen(crossprod(Z), symmetric=TRUE, only.values=TRUE)$values <= con$evtol))
          stop(mstyle$stop("Model matrix for scale part of the model not of full rank. Cannot fit model."))
 
       q <- NCOL(Z)
@@ -1607,7 +1727,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
       ### fit model with unweighted estimation
       ### note: 1) if user has specified weights, they are ignored
-      ###       2) but if method="GENQ", they were used to estimate tau^2
+      ###       2) but if method="GENQ/GENQM", they were used to estimate tau^2
 
       stXX  <- .invcalc(X=X, W=diag(k), k=k)
       beta  <- stXX %*% crossprod(X,Y)

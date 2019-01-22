@@ -587,7 +587,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                optimizer = "optim",        # optimizer to use ("optim", "nlminb", "uobyqa", "newuoa", "bobyqa", "clogit", "clogistic")
                optmethod = "BFGS",         # argument 'method' for optim() ("Nelder-Mead" and "BFGS" are sensible options)
                scale = TRUE,               # should non-dummy variables in the X matrix be rescaled before model fitting?
-               tol = 1e-07,                # lower bound for eigenvalues to determine if var-cov matrix is positive definite
+               evtol = 1e-07,              # lower bound for eigenvalues to determine if model matrix is positive definite
                dnchgcalc = "dFNCHypergeo", # method for calculating dnchg ("dFNCHypergeo" from BiasedUrn package or "dnoncenhypergeom")
                dnchgprec = 1e-10)          # precision for dFNCHypergeo()
 
@@ -747,7 +747,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    ### check whether model matrix is of full rank
 
-   if (any(eigen(crossprod(X), symmetric=TRUE, only.values=TRUE)$values <= con$tol))
+   if (any(eigen(crossprod(X), symmetric=TRUE, only.values=TRUE)$values <= con$evtol))
       stop(mstyle$stop("Model matrix not of full rank. Cannot fit model."))
 
    #########################################################################

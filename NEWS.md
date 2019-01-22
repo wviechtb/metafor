@@ -1,4 +1,6 @@
-# metafor 2.1-0 (2019-01-07)
+# metafor 2.1-0 (2019-01-22)
+
+- added `PMM` and `GENQM` estimators in `rma.uni()`
 
 - added `vif()` function to get variance inflation factors
 

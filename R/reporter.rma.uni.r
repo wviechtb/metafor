@@ -152,7 +152,7 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
 
    ### get tau^2 estimator name and set reference
 
-   tau2.method <- c(FE = "", HS = "Hunter-Schmidt", HE = "Hedges'", DL = "DerSimonian-Laird", GENQ = "generalized Q-statistic", SJ = "Sidik-Jonkman", ML = "maximum-likelihood", REML = "restricted maximum-likelihood", EB = "empirical Bayes", PM = "Paule-Mandel")[x$method]
+   tau2.method <- c(FE = "", HS = "Hunter-Schmidt", HE = "Hedges'", DL = "DerSimonian-Laird", GENQ = "generalized Q-statistic", GENQM = "(median-unbiased) generalized Q-statistic", SJ = "Sidik-Jonkman", ML = "maximum-likelihood", REML = "restricted maximum-likelihood", EB = "empirical Bayes", PM = "Paule-Mandel", PMM = "(median-unbiased) Paule-Mandel")[x$method]
 
    if (x$method == "HS" && model == "RE")
       tau2.ref <- "[@hunter1990; @viechtbauer2005]"
@@ -172,6 +172,11 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
    if (x$method == "GENQ" && model == "RE")
       tau2.ref <- "[@dersimonian2007]"
    if (x$method == "GENQ" && model == "ME")
+      tau2.ref <- "[@jackson2014]"
+
+   if (x$method == "GENQM" && model == "RE")
+      tau2.ref <- "[@dersimonian2007]"
+   if (x$method == "GENQM" && model == "ME")
       tau2.ref <- "[@jackson2014]"
 
    if (x$method == "SJ")
@@ -195,6 +200,11 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
    if (x$method == "PM" && model == "RE")
       tau2.ref <- "[@paule1982]"
    if (x$method == "PM" && model == "ME")
+      tau2.ref <- "[@viechtbauer2015]"
+
+   if (x$method == "PMM" && model == "RE")
+      tau2.ref <- "[@paule1982]"
+   if (x$method == "PMM" && model == "ME")
       tau2.ref <- "[@viechtbauer2015]"
 
    ### Q-test reference

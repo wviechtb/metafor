@@ -1,13 +1,13 @@
 ### Note: There is code below to obtain a profile likelihood CI for tau^2, but then
 ### I may have to introduce a 'type' argument to specify which type of CI to obtain.
 ### Actually, what would be most consistent is this:
-### if method='ML/REML': profile likelihood (PL) CI (based on the ML/REML likelihood)
-### if method='EB/PM':   Q-profile (QP) CI
-### if method='GENQ':    generalized Q-statistic (GENQ) CI (which also covers method='DL/HE' as special cases)
-### if method='SJ':      method by Sidik & Jonkman (2005) (but this performs poorly, except if tau^2 is very large)
-### if method='HS':      not sure since this is an ad-hoc estimator with no obvious underlying statistical principle
+### if method='ML/REML':    profile likelihood (PL) CI (based on the ML/REML likelihood)
+### if method='EB/PM/PMM':  Q-profile (QP) CI
+### if method='GENQ/GENQM': generalized Q-statistic (GENQ) CI (which also covers method='DL/HE' as special cases)
+### if method='SJ':         method by Sidik & Jonkman (2005) (but this performs poorly, except if tau^2 is very large)
+### if method='HS':         not sure since this is an ad-hoc estimator with no obvious underlying statistical principle
 ### Also could in principle compute Wald-type CIs (but those perform poorly except when k is very large).
-### But it may be a bit late to change how the function works (right now, type="GENQ" if method="GENQ" and type="QP" otherwise).
+### But it may be a bit late to change how the function works (right now, type="GENQ" if method="GENQ/GENQM" and type="QP" otherwise).
 
 confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digits, transf, targs, verbose=FALSE, control, ...) {
 
@@ -50,14 +50,14 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
    if (!fixed && !random)
       stop(mstyle$stop("At least one of the arguments 'fixed' and 'random' must be TRUE."))
 
-   if (x$method == "GENQ") {
+   if (x$method == "GENQ" || x$method == "GENQM") {
       type <- "GENQ"
    } else {
       type <- "QP"
    }
 
    #if (missing(type)) {
-   #   if (x$method == "GENQ") {
+   #   if (x$method == "GENQ" || x$method == "GENQM") {
    #      type <- "GENQ"
    #   } else {
    #      type <- "QP"
@@ -83,8 +83,8 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
       if (x$tau2.fix)
          stop(mstyle$stop("Model does not contain an estimated random-effects component."))
 
-      if (type == "GENQ" && x$method != "GENQ")
-         stop(mstyle$stop("Model must be fitted with 'method=\"GENQ\" to use this option."))
+      if (type == "GENQ" && !(is.element(x$method, c("GENQ","GENQM"))))
+         stop(mstyle$stop("Model must be fitted with 'method=\"GENQ\" or 'method=\"GENQM\" to use this option."))
 
       ######################################################################
 

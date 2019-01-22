@@ -90,7 +90,8 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
    if (.isTRUE(ddd$tdist))
       test <- "t"
 
-   if (!is.element(test, c("z", "t", "knha", "adhoc")))
+   # if (!is.element(test, c("z", "t", "knha", "adhoc")))
+   if (!is.element(test, c("z", "t")))
       stop(mstyle$stop("Invalid option selected for 'test' argument."))
 
    ### handle Rscale argument (either character, logical, or integer)
@@ -1446,7 +1447,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
                gamma2.init = gamma2.init, # initial value(s) for gamma2
                phi.init = phi.init,       # initial value(s) for phi
                REMLf = TRUE,              # full REML likelihood (including all constants)
-               tol = 1e-07,               # lower bound for eigenvalues to determine if var-cov matrix is positive definite
+               evtol = 1e-07,             # lower bound for eigenvalues to determine if model matrix is positive definite
                cholesky = ifelse(is.element(struct, c("UN","GEN")), TRUE, FALSE), # by default, use Cholesky factorization for G and H matrix for "UN" and "GEN" structures
                posdefify = FALSE,         # to force G and H matrix to become positive definite
                hessian = FALSE,           # to compute Hessian
@@ -1562,7 +1563,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    optimizer  <- match.arg(con$optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","ucminf"))
    optmethod  <- match.arg(con$optmethod, c("Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent"))
-   tol        <- con$tol
+   evtol      <- con$evtol
    posdefify  <- con$posdefify
    cholesky   <- con$cholesky
    optcontrol <- control[is.na(con.pos)] ### get arguments that are control arguments for optimizer
@@ -1581,7 +1582,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
    if (optimizer=="nloptr" && !is.element("ftol_rel", names(optcontrol)))
       optcontrol$ftol_rel <- 1e-8
 
-   #return(list(con=con, optimizer=optimizer, optmethod=optmethod, tol=tol, posdefify=posdefify, optcontrol=optcontrol))
+   #return(list(con=con, optimizer=optimizer, optmethod=optmethod, evtol=evtol, posdefify=posdefify, optcontrol=optcontrol))
 
    if (is.element(optimizer, c("uobyqa","newuoa","bobyqa"))) {
       if (!requireNamespace("minqa", quietly=TRUE))
@@ -1645,7 +1646,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    ### check whether model matrix is of full rank
 
-   if (any(eigen(crossprod(X), symmetric=TRUE, only.values=TRUE)$values <= tol))
+   if (any(eigen(crossprod(X), symmetric=TRUE, only.values=TRUE)$values <= evtol))
       stop(mstyle$stop("Model matrix not of full rank. Cannot fit model."))
 
    ### which variance components are fixed? (TRUE/FALSE or NA if not applicable = not included)

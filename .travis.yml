@@ -9,11 +9,9 @@ r_check_args: --no-tests --as-cran --no-manual
 env:
   - NOT_CRAN=true
 
-addons:
-  apt:
-    packages:
-      - libgsl0ldbl
-      - libgsl0-dev
+apt_packages:
+  - libgsl0ldbl
+  - libgsl0-dev
 
 r_packages:
   - gsl

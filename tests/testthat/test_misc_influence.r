@@ -126,3 +126,35 @@ test_that("cooks.distance() works for rma.mv().", {
    expect_equivalent(round(cooks.distance(res, cluster=dat$alloc, reestimate=FALSE), 4), c(0.3199, 2.2194, 0.2421))
 
 })
+
+test_that("influence() correctly works with 'na.omit' and 'na.pass'.", {
+
+   data(dat.bcg, package="metafor")
+   dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, slab=paste0("Trial ", dat.bcg$trial))
+
+   dat$yi[2] <- NA
+   dat$vi[3] <- NA
+   dat$ablat[5] <- NA
+   dat$trial12 <- ifelse(dat$trial == 12, 1, 0)
+
+   options(na.action="na.omit")
+
+   res <- rma(yi, vi, mods = ~ ablat + trial12, data=dat)
+   sav <- influence(res)
+
+   expect_equivalent(length(sav$inf$rstudent), 10)
+   expect_equivalent(sum(is.na(sav$inf$rstudent)), 1)
+   expect_equivalent(sum(is.na(sav$inf$hat)), 0)
+   expect_equivalent(sum(is.na(sav$dfbs$intrcpt)), 1)
+
+   options(na.action="na.pass")
+
+   res <- rma(yi, vi, mods = ~ ablat + trial12, data=dat)
+   sav <- influence(res)
+
+   expect_equivalent(length(sav$inf$rstudent), 13)
+   expect_equivalent(sum(is.na(sav$inf$rstudent)), 4)
+   expect_equivalent(sum(is.na(sav$inf$hat)), 3)
+   expect_equivalent(sum(is.na(sav$dfbs$intrcpt)), 4)
+
+})
