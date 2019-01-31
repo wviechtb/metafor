@@ -14,6 +14,11 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
    if (missing(digits))
       digits <- x$digits
 
+   ddd <- list(...)
+
+   if (!is.null(ddd$tol)) # in case user specifies comptol in the old manner
+      comptol <- ddd$tol
+
    #########################################################################
 
    ### calculate number of permutations for an exact permutation test
@@ -84,6 +89,9 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
 
    con <- list(comptol=.Machine$double.eps^0.5, tol=.Machine$double.eps^0.25, maxiter=100, alternative="two.sided", p2defn="abs", stat="test", cialt="one.sided", seed=seed, distfac=1)
    con[pmatch(names(control), names(con))] <- control
+
+   if (exists("comptol", inherits=FALSE))
+      con$comptol <- comptol
 
    if (!exact)
       set.seed(con$seed)
