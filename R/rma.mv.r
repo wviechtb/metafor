@@ -259,7 +259,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    }
 
-   ### check if user constrained V to 0
+   ### check if user constrained V to 0 (can skip a lot of the steps below then)
 
    if (is.vector(V) && length(V) == 1 && V == 0) {
       V0 <- TRUE
@@ -271,8 +271,13 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
    ### note: if V is a scalar (e.g., V=0), then this will turn V into a kxk
    ### matrix with the value of V along the diagonal
 
-   if (is.vector(V) || nrow(V) == 1L || ncol(V) == 1L)
-      V <- diag(as.vector(V), nrow=k, ncol=k)
+   if (V0 || is.vector(V) || nrow(V) == 1L || ncol(V) == 1L) {
+      if (sparse) {
+         V <- Diagonal(k, as.vector(V))
+      } else {
+         V <- diag(as.vector(V), nrow=k, ncol=k)
+      }
+   }
 
    ### turn V into a matrix if it is a data frame
 
@@ -285,12 +290,12 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
    if (!is.null(dimnames(V)))
       V <- unname(V)
 
-   ### check whether V is square and symmetric
+   ### check whether V is square and symmetric (can skip when V0)
 
-   if (!.is.square(V))
+   if (!V0 && !.is.square(V))
       stop(mstyle$stop("'V' must be a square matrix."))
 
-   if (!isSymmetric(V)) ### note: copy of V is made when doing this
+   if (!V0 && !isSymmetric(V)) ### note: copy of V is made when doing this
       stop(mstyle$stop("'V' must be a symmetric matrix."))
 
    ### check length of yi and V
@@ -1053,7 +1058,7 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    ### check for NAs and act accordingly
 
-   has.na <- is.na(yi) | (if (is.null(mods)) FALSE else apply(is.na(mods), 1, any)) | .anyNAv(V) | (if (is.null(A)) FALSE else apply(is.na(A), 1, any))
+   has.na <- is.na(yi) | (if (is.null(mods)) FALSE else apply(is.na(mods), 1, any)) | (if (V0) FALSE else .anyNAv(V)) | (if (is.null(A)) FALSE else apply(is.na(A), 1, any))
    not.na <- !has.na
 
    if (any(has.na)) {
@@ -1387,13 +1392,17 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
    if (verbose > 1)
       message(mstyle$message("Extracting/computing initial values ..."))
 
-   if (verbose > 1) {
-      U <- try(chol(chol2inv(chol(V))), silent=FALSE)
-   } else {
-      U <- try(suppressWarnings(chol(chol2inv(chol(V)))), silent=TRUE)
+   if (!V0) { # for V0 case, this always fails, so can skip it
+
+      if (verbose > 1) {
+         U <- try(chol(chol2inv(chol(V))), silent=FALSE)
+      } else {
+         U <- try(suppressWarnings(chol(chol2inv(chol(V)))), silent=TRUE)
+      }
+
    }
 
-   if (inherits(U, "try-error")) {
+   if (V0 || inherits(U, "try-error")) {
 
       total <- sigma(lm(Y ~ X - 1))^2
 

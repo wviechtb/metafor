@@ -31,6 +31,8 @@ replmiss <- function(x, y) {
 
 ############################################################################
 
+### to register getfit method for 'rma.uni' objects: eval(.glmulti)
+
 .glmulti <- parse(text="
 
 if (!(\"glmulti\" %in% .packages()))

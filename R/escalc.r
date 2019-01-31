@@ -757,7 +757,6 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
             ### apply bias-correction to di values
 
             cmi <- .cmicalc(mi)
-            #cmi <- 1
             yi <- cmi * di
 
             if (length(vtype) == 1L)
