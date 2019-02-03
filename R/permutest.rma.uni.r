@@ -16,6 +16,8 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
 
    ddd <- list(...)
 
+   .chkdots(ddd, c("tol", "seed"))
+
    if (!is.null(ddd$tol)) # in case user specifies comptol in the old manner
       comptol <- ddd$tol
 
@@ -93,8 +95,13 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
    if (exists("comptol", inherits=FALSE))
       con$comptol <- comptol
 
-   if (!exact)
-      set.seed(con$seed)
+   if (!exact) {
+      if (!is.null(ddd$seed)) {
+         set.seed(ddd$seed)
+      } else {
+         set.seed(con$seed)
+      }
+   }
 
    #########################################################################
 

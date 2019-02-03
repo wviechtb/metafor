@@ -30,6 +30,10 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
    if (parallel == "no" && ncpus > 1)
       parallel <- "snow"
 
+   ddd <- list(...)
+
+   .chkdots(ddd, c("seed"))
+
    ### total number of possible subsets
 
    N.tot <- sum(choose(x$k, x$p:x$k))
@@ -75,6 +79,9 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
       #incl <- t(do.call(cbind, incl))
 
    } else {
+
+      if (!is.null(ddd$seed))
+         set.seed(ddd$seed)
 
       j <- sample(x$p:x$k, N.tot, replace=TRUE, prob=dbinom(x$p:x$k, x$k, 0.5))
       incl <- t(sapply(j, function(m) seq_len(x$k) %in% sample(x$k, m)))

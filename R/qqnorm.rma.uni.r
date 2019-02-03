@@ -33,6 +33,12 @@ label=FALSE, offset=0.3, pos=13, lty, ...) {
          lty <- c(lty, lty)
    }
 
+   ddd <- list(...)
+
+   lqqnorm <- function(..., seed) { qqnorm(...) }
+   labline <- function(..., seed) { abline(...) }
+   llines  <- function(..., seed) { lines(...) }
+
    #########################################################################
 
    if (type == "rstandard") {
@@ -51,8 +57,8 @@ label=FALSE, offset=0.3, pos=13, lty, ...) {
       slab   <- slab[ord]
    }
 
-   sav <- qqnorm(zi, pch=pch, bty="l", ...)
-   abline(a=0, b=1, lty=lty[1], ...)
+   sav <- lqqnorm(zi, pch=pch, bty="l", ...)
+   labline(a=0, b=1, lty=lty[1], ...)
    #qqline(zi, ...)
    #abline(h=0, lty="dotted", ...)
    #abline(v=0, lty="dotted", ...)
@@ -64,6 +70,9 @@ label=FALSE, offset=0.3, pos=13, lty, ...) {
    if (envelope) {
 
       level <- ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
+
+      if (!is.null(ddd$seed))
+         set.seed(ddd$seed)
 
       dat <- matrix(rnorm(x$k*reps), nrow=x$k, ncol=reps)
 
@@ -86,14 +95,14 @@ label=FALSE, offset=0.3, pos=13, lty, ...) {
       if (smooth)
          temp.lb <- supsmu(temp.lb$x, temp.lb$y, bass=bass)
       if (draw.envelope)
-         lines(temp.lb$x, temp.lb$y, lty=lty[2], ...)
-         #lines(temp.lb$x, temp.lb$y, lty="12", lwd=1.5, ...)
+         llines(temp.lb$x, temp.lb$y, lty=lty[2], ...)
+         #llines(temp.lb$x, temp.lb$y, lty="12", lwd=1.5, ...)
       temp.ub <- qqnorm(ub, plot.it=FALSE)
       if (smooth)
          temp.ub <- supsmu(temp.ub$x, temp.ub$y, bass=bass)
       if (draw.envelope)
-         lines(temp.ub$x, temp.ub$y, lty=lty[2], ...)
-         #lines(temp.ub$x, temp.ub$y, lty="12", lwd=1.5, , ...)
+         llines(temp.ub$x, temp.ub$y, lty=lty[2], ...)
+         #llines(temp.ub$x, temp.ub$y, lty="12", lwd=1.5, , ...)
 
    }
 
