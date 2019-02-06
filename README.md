@@ -26,7 +26,6 @@ The `metafor` package website can be found at [http://www.metafor-project.org](h
 * a little showcase of [plots and figures](http://www.metafor-project.org/doku.php/plots) that can be created with the package,
 * some [tips and notes](http://www.metafor-project.org/doku.php/tips) that may be useful when working with the package,
 * a list of people that have in some shape or form [contributed](http://www.metafor-project.org/doku.php/contributors) to the development of the package,
-* an (incomplete) [list of articles](http://www.metafor-project.org/doku.php/articles) that have used the package as part of the analyses,
 * a [frequently asked questions](http://www.metafor-project.org/doku.php/faq) section, and
 * some [links](http://www.metafor-project.org/doku.php/links) to other websites related to software for meta-analysis.
 

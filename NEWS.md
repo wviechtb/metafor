@@ -1,4 +1,4 @@
-# metafor 2.1-0 (2019-02-03)
+# metafor 2.1-0 (2019-02-06)
 
 - `confint.rma.mv()` now returns an object of class `list.confint.rma` when obtaining CIs for all variance and correlation components of the model; added corresponding `print.list.confint.rma()` function
 
