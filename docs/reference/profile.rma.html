@@ -142,7 +142,8 @@ profile(fitted, sigma2, tau2, rho, gamma2, phi,
 # S3 method for profile.rma
 print(x, &#8230;)
 # S3 method for profile.rma
-plot(x, ylim, pch=19, ylab, cline=FALSE, &#8230;)</pre>
+plot(x, xlim, ylim, pch=19,
+     xlab, ylab, main, cline=FALSE, &#8230;)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -224,8 +225,16 @@ plot(x, ylim, pch=19, ylab, cline=FALSE, &#8230;)</pre>
       <td><p>logical indicating whether a horizontal reference line should be added to the plot that indicates the log-likelihood value corresponding to the 95% profile confidence interval (the default is <code>FALSE</code>).</p></td>
     </tr>
     <tr>
+      <th>xlab</th>
+      <td><p>title for the x-axis. If unspecified, the function tries to set an appropriate axis title.</p></td>
+    </tr>
+    <tr>
       <th>ylab</th>
       <td><p>title for the y-axis. If unspecified, the function tries to set an appropriate axis title.</p></td>
+    </tr>
+    <tr>
+      <th>main</th>
+      <td><p>title for the plot. If unspecified, the function tries to set an appropriate title.</p></td>
     </tr>
     <tr>
       <th>&#8230;</th>

@@ -1,4 +1,4 @@
-Changes in Version 2.1-0 (2019-02-06)
+Changes in Version 2.1-0 (2019-02-11)
 =====================================
 
    o confint.rma.mv() now returns an object of class 'list.confint.rma' when
@@ -135,7 +135,8 @@ Changes in Version 2.1-0 (2019-02-06)
      numerical tolerance given by 'lltol') and issues a warning if so
 
    o profile.rma.uni(), profile.rma.mv(), and plot.profile.rma() gain
-     'cline' argument
+     'cline' argument; plot.profile.rma() gains 'xlim', 'ylab', and 'main'
+     arguments
 
    o fixed an issue with robust.rma.mv() when the model was fitted with
      sparse=TRUE (thanks to Roger Martineau for noting the problem)

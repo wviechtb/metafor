@@ -16,7 +16,8 @@
         plot=TRUE, pch=19, cline=FALSE, \dots)
 
 \method{print}{profile.rma}(x, \dots)
-\method{plot}{profile.rma}(x, ylim, pch=19, ylab, cline=FALSE, \dots)
+\method{plot}{profile.rma}(x, xlim, ylim, pch=19,
+     xlab, ylab, main, cline=FALSE, \dots)
 }
 \arguments{
    \item{fitted}{an object of class \code{"rma.uni"} or \code{"rma.mv"}.}
@@ -38,7 +39,9 @@
    \item{plot}{logical indicating whether the profile plot should be drawn after profiling is finished (the default is \code{TRUE}).}
    \item{pch}{plotting symbol to use. By default, a filled circle is used. See \code{\link{points}} for other options.}
    \item{cline}{logical indicating whether a horizontal reference line should be added to the plot that indicates the log-likelihood value corresponding to the 95\% profile confidence interval (the default is \code{FALSE}).}
+   \item{xlab}{title for the x-axis. If unspecified, the function tries to set an appropriate axis title.}
    \item{ylab}{title for the y-axis. If unspecified, the function tries to set an appropriate axis title.}
+   \item{main}{title for the plot. If unspecified, the function tries to set an appropriate title.}
    \item{\dots}{other arguments.}
 }
 \details{

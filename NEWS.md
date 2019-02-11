@@ -1,4 +1,4 @@
-# metafor 2.1-0 (2019-02-06)
+# metafor 2.1-0 (2019-02-11)
 
 - `confint.rma.mv()` now returns an object of class `list.confint.rma` when obtaining CIs for all variance and correlation components of the model; added corresponding `print.list.confint.rma()` function
 
@@ -86,7 +86,7 @@
 
 - `profile.rma.mv()` now check whether any of the profiled log-likelihood values is larger than the log-likelihood of the fitted model (using numerical tolerance given by `lltol`) and issues a warning if so
 
-- `profile.rma.uni()`, `profile.rma.mv()`, and `plot.profile.rma()` gain `cline` argument
+- `profile.rma.uni()`, `profile.rma.mv()`, and `plot.profile.rma()` gain `cline` argument; `plot.profile.rma()` gains `xlim`, `ylab`, and `main` arguments
 
 - fixed an issue with `robust.rma.mv()` when the model was fitted with `sparse=TRUE` (thanks to Roger Martineau for noting the problem)
 

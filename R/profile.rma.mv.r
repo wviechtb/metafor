@@ -1,4 +1,5 @@
-profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi, xlim, ylim, steps=20, lltol=1e-06, startmethod="init", progbar=TRUE, parallel="no", ncpus=1, cl=NULL, plot=TRUE, pch=19, cline=FALSE, ...) {
+profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
+   xlim, ylim, steps=20, lltol=1e-06, startmethod="init", progbar=TRUE, parallel="no", ncpus=1, cl=NULL, plot=TRUE, pch=19, cline=FALSE, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 

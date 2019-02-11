@@ -1,4 +1,4 @@
-plot.profile.rma <- function(x, ylim, pch=19, ylab, cline=FALSE, ...) {
+plot.profile.rma <- function(x, xlim, ylim, pch=19, xlab, ylab, main, cline=FALSE, ...) {
 
    #########################################################################
 
@@ -12,29 +12,32 @@ plot.profile.rma <- function(x, ylim, pch=19, ylab, cline=FALSE, ...) {
       #on.exit(par(mfrow=c(1,1)))
    }
 
-   if (missing(ylim)) {
-      missing.ylim <- TRUE
-   } else {
-      missing.ylim <- FALSE
-   }
-
-   if (missing(ylab)) {
-      missing.ylab <- TRUE
-   } else {
-      missing.ylab <- FALSE
-   }
+   missing.xlim <- missing(xlim)
+   missing.ylim <- missing(ylim)
+   missing.xlab <- missing(xlab)
+   missing.ylab <- missing(ylab)
+   missing.main <- missing(main)
 
    #########################################################################
 
    if (x$comps == 1) {
 
+      if (missing.xlim)
+         xlim <- x$xlim
+
       if (missing.ylim)
          ylim <- x$ylim
+
+      if (missing.xlab)
+         xlab <- x$xlab
 
       if (missing.ylab)
          ylab <- paste(ifelse(x$method=="REML", "Restricted ", ""), "Log-Likelihood", sep="")
 
-      plot(x[[1]], x[[2]], type="o", xlab=x$xlab, ylab=ylab, main=x$title, bty="l", pch=pch, ylim=ylim, ...)
+      if (missing.main)
+         main <- x$title
+
+      plot(x[[1]], x[[2]], type="o", xlab=xlab, ylab=ylab, main=main, bty="l", pch=pch, xlim=xlim, ylim=ylim, ...)
       abline(v=x$vc, lty="dotted")
       abline(h=x$maxll, lty="dotted")
 
@@ -45,13 +48,37 @@ plot.profile.rma <- function(x, ylim, pch=19, ylab, cline=FALSE, ...) {
 
       for (j in seq_len(x$comps)) {
 
+         if (missing.xlim)
+            xlim <- x[[j]]$xlim
+
          if (missing.ylim)
             ylim <- x[[j]]$ylim
 
-      if (missing.ylab)
-         ylab <- paste(ifelse(x[[j]]$method=="REML", "Restricted ", ""), "Log-Likelihood", sep="")
+         if (missing.xlab) {
+            xlab <- x[[j]]$xlab
+         } else {
+            if (length(xlab) == 1) {
+               xlab <- rep(xlab, x$comps)
+            }
+         }
 
-         plot(x[[j]], ylim=ylim, pch=pch, ylab=ylab, cline=cline, ...)
+         if (missing.ylab) {
+            ylab <- paste(ifelse(x[[j]]$method=="REML", "Restricted ", ""), "Log-Likelihood", sep="")
+         } else {
+            if (length(ylab) == 1) {
+               ylab <- rep(ylab, x$comps)
+            }
+         }
+
+         if (missing.main) {
+            main <- x[[j]]$title
+         } else {
+            if (length(main) == 1) {
+               main <- rep(main, x$comps)
+            }
+         }
+
+         plot(x[[j]], xlim=xlim, ylim=ylim, main=if (missing.main) main else main[j], pch=pch, xlab=if (missing.xlab) xlab else xlab[j], ylab=if (missing.ylab) ylab else ylab[j], cline=cline, ...)
 
       }
 

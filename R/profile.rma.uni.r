@@ -1,4 +1,5 @@
-profile.rma.uni <- function(fitted, xlim, ylim, steps=20, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, plot=TRUE, pch=19, cline=FALSE, ...) {
+profile.rma.uni <- function(fitted,
+   xlim, ylim, steps=20, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, plot=TRUE, pch=19, cline=FALSE, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -176,7 +177,7 @@ profile.rma.uni <- function(fitted, xlim, ylim, steps=20, progbar=TRUE, parallel
    xlab <- expression(paste(tau^2, " Value"))
    title <- expression(paste("Profile Plot for ", tau^2))
 
-   sav <- list(tau2=vcs, ll=lls, beta=beta, ci.lb=ci.lb, ci.ub=ci.ub, comps=1, ylim=ylim, method=x$method, vc=x$tau2, maxll=logLik(x), xlab=xlab, title=title)
+   sav <- list(tau2=vcs, ll=lls, beta=beta, ci.lb=ci.lb, ci.ub=ci.ub, comps=1, xlim=xlim, ylim=ylim, method=x$method, vc=x$tau2, maxll=logLik(x), xlab=xlab, title=title)
    class(sav) <- "profile.rma"
 
    #########################################################################

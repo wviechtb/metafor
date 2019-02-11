@@ -118,9 +118,9 @@
       <small>Source: <a href='https://github.com/wviechtb/metafor/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="metafor-21-0-2019-02-06" class="section level1">
+    <div id="metafor-21-0-2019-02-11" class="section level1">
 <h1 class="page-header">
-<a href="#metafor-21-0-2019-02-06" class="anchor"></a>metafor 2.1-0 (2019-02-06)<small> Unreleased </small>
+<a href="#metafor-21-0-2019-02-11" class="anchor"></a>metafor 2.1-0 (2019-02-11)<small> Unreleased </small>
 </h1>
 <ul>
 <li><p><code><a href="../reference/confint.rma.html">confint.rma.mv()</a></code> now returns an object of class <code>list.confint.rma</code> when obtaining CIs for all variance and correlation components of the model; added corresponding <code><a href="../reference/print.confint.rma.html">print.list.confint.rma()</a></code> function</p></li>
@@ -166,7 +166,7 @@
 <li><p><code><a href="../reference/labbe.html">labbe()</a></code> now (invisibly) returns a data frame with the coordinates of the points that were drawn (which may be useful for manual labeling of points in the plot)</p></li>
 <li><p>added a print method for <code>profile.rma</code> objects</p></li>
 <li><p><code><a href="../reference/profile.rma.html">profile.rma.mv()</a></code> now check whether any of the profiled log-likelihood values is larger than the log-likelihood of the fitted model (using numerical tolerance given by <code>lltol</code>) and issues a warning if so</p></li>
-<li><p><code><a href="../reference/profile.rma.html">profile.rma.uni()</a></code>, <code><a href="../reference/profile.rma.html">profile.rma.mv()</a></code>, and <code><a href="../reference/profile.rma.html">plot.profile.rma()</a></code> gain <code>cline</code> argument</p></li>
+<li><p><code><a href="../reference/profile.rma.html">profile.rma.uni()</a></code>, <code><a href="../reference/profile.rma.html">profile.rma.mv()</a></code>, and <code><a href="../reference/profile.rma.html">plot.profile.rma()</a></code> gain <code>cline</code> argument; <code><a href="../reference/profile.rma.html">plot.profile.rma()</a></code> gains <code>xlim</code>, <code>ylab</code>, and <code>main</code> arguments</p></li>
 <li><p>fixed an issue with <code><a href="../reference/robust.html">robust.rma.mv()</a></code> when the model was fitted with <code>sparse=TRUE</code> (thanks to Roger Martineau for noting the problem)</p></li>
 <li><p>various method functions (<code><a href="https://www.rdocumentation.org/packages/stats/topics/fitted.values">fitted()</a></code>, <code><a href="https://www.rdocumentation.org/packages/stats/topics/residuals">resid()</a></code>, <code><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict()</a></code>, etc.) behave in a more consistent manner when model omitted studies with missings</p></li>
 <li><p><code><a href="../reference/predict.rma.html">predict.rma()</a></code> gains <code>vcov</code> argument; when set to <code>TRUE</code>, the variance- covariance matrix of the predicted values is also returned</p></li>
@@ -779,7 +779,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#metafor-21-0-2019-02-06">2.1-0</a></li>
+        <li><a href="#metafor-21-0-2019-02-11">2.1-0</a></li>
         <li><a href="#metafor-20-0-2017-06-22">2.0-0</a></li>
         <li><a href="#metafor-19-9-2016-09-25">1.9-9</a></li>
         <li><a href="#metafor-19-8-2015-09-28">1.9-8</a></li>
