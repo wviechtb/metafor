@@ -1402,7 +1402,10 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    }
 
-   if (V0 || inherits(U, "try-error")) {
+   if (V0 || inherits(U, "try-error") || any(is.infinite(U))) {
+
+      ### note: if V is sparse diagonal with 0 along the diagonal, U will not be a 'try-error'
+      ### but have Inf along the diagonal, so need to check for this as well
 
       total <- sigma(lm(Y ~ X - 1))^2
 
@@ -1432,11 +1435,13 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
    sigma2.init <- rep(total / (sigma2s + tau2s + gamma2s), sigma2s)
    tau2.init   <- rep(total / (sigma2s + tau2s + gamma2s), tau2s)
    gamma2.init <- rep(total / (sigma2s + tau2s + gamma2s), gamma2s)
+
    if (is.null(g.rho.init)) {
       rho.init <- rep(.50, rhos)
    } else {
       rho.init <- g.rho.init
    }
+
    if (is.null(h.phi.init)) {
       phi.init <- rep(.50, phis)
    } else {
