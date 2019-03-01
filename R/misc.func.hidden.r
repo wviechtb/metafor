@@ -405,8 +405,8 @@
       g.levels <- list(sort(unique(as.character(mf.g[[1]]))), sort(unique(as.character(mf.g[[2]]))))
    }
 
-   ### determine appropriate number of tau2 and rho values (care: this is done *after* subsetting)
-   ### care: if g.nlevels[1] is 1, then technically there is no correlation, but we still need one
+   ### determine appropriate number of tau2 and rho values (note: this is done *after* subsetting)
+   ### note: if g.nlevels[1] is 1, then technically there is no correlation, but we still need one
    ### rho for the optimization function (this rho is fixed to 0 further in the rma.mv() function)
 
    if (is.element(struct, c("CS","ID","AR","CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH"))) {
@@ -1297,7 +1297,11 @@
             H2 <- 1
          }
          tau2 <- 0
-         sav <- list(beta=est, het = c(k=k, QE=Q, I2=I2, H2=H2, tau2=tau2))
+         if (parallel == "snow" || parallel == "multicore") {
+            sav <- list(beta = est, het = c(k = k, QE = Q, I2 = I2, H2 = H2, tau2 = tau2))
+         } else {
+            sav <- list(beta = est, k = k, QE = Q, I2 = I2, H2 = H2, tau2 = tau2)
+         }
 
       } else {
 

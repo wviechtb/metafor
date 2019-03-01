@@ -973,7 +973,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
          P     <- diag(k) - X %*% tcrossprod(stXX,X)
          RSS   <- crossprod(Y,P) %*% Y
          V     <- diag(vi, nrow=k, ncol=k)
-         PV    <- P %*% V ### careful: is not symmetric
+         PV    <- P %*% V ### note: this is not symmetric
          trPV  <- .tr(PV) ### since PV needs to be computed anyway, can use .tr()
          tau2  <- ifelse(tau2.fix, tau2.val, (RSS - trPV) / (k-p))
 
@@ -1053,7 +1053,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
          stXAX <- .invcalc(X=X, W=A, k=k)
          P     <- A - A %*% X %*% stXAX %*% t(X) %*% A
          V     <- diag(vi, nrow=k, ncol=k)
-         PV    <- P %*% V ### careful: is not symmetric
+         PV    <- P %*% V ### note: this is not symmetric
          trP   <- .tr(P)
          trPV  <- .tr(PV)
          RSS   <- crossprod(Y,P) %*% Y
@@ -1072,7 +1072,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
          stXAX <- .invcalc(X=X, W=A, k=k)
          P     <- A - A %*% X %*% stXAX %*% t(X) %*% A
          V     <- diag(vi, nrow=k, ncol=k)
-         PV    <- P %*% V ### careful: is not symmetric
+         PV    <- P %*% V ### note: this is not symmetric
          trP   <- .tr(P)
 
          if (!tau2.fix) {
@@ -1130,7 +1130,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
          P     <- W - W %*% X %*% stXWX %*% crossprod(X,W)
          RSS   <- crossprod(Y,P) %*% Y
          V     <- diag(vi, nrow=k, ncol=k)
-         PV    <- P %*% V ### careful: is not symmetric
+         PV    <- P %*% V ### note: this is not symmetric
          tau2  <- ifelse(tau2.fix, tau2.val, tau2.0 * RSS / (k-p))
 
       }
@@ -1161,7 +1161,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
             P      <- W - W %*% X %*% stXWX %*% crossprod(X,W)
             RSS    <- crossprod(Y,P) %*% Y
             V      <- diag(vi, nrow=k, ncol=k)
-            PV     <- P %*% V ### careful: is not symmetric
+            PV     <- P %*% V ### note: this is not symmetric
             tau2   <- ifelse(tau2.fix, tau2.val, tau2 * RSS / (k-p))
             change <- abs(old2 - tau2)
 
@@ -1365,7 +1365,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
          se.tau2 <- sqrt(2/sum(P*P))
       if (method == "EB" || method == "PM" || method == "PMM" || method == "SJIT") {
          #V  <- diag(vi, nrow=k, ncol=k)
-         #PV <- P %*% V ### careful: is not symmetric
+         #PV <- P %*% V ### note: this is not symmetric
          #se.tau2 <- sqrt((k/(k-p))^2 / sum(wi)^2 * (2*sum(PV*t(PV)) + 4*max(tau2,0)*sum(PV*P) + 2*max(tau2,0)^2*sum(P*P)))
          se.tau2 <- sqrt(2*k^2/(k-p) / sum(wi)^2) ### these two equations are actually identical, but this one is much simpler
       }
@@ -1673,6 +1673,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
       if (is.null(weights) || is.element(test, c("knha","adhoc"))) {
 
          ### if no weights are specified, use default inverse variance weights, that is, 1/vi or 1/(vi + tau2)
+         ### also, even with weights, if test="knha" or "adhoc", need to run this to get RSS.knha
 
          ### if any vi = 0 and tau^2 is estimated to be 0 (or is set to 0 for a FE model), then get Inf for wi
 
@@ -1691,7 +1692,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
       if (!is.null(weights)) {
 
-         ### if weights are specified, use them
+         ### if weights are specified, use them (note: RSS.f is recomputed if test="knha" or "adhoc")
 
          A     <- diag(weights, nrow=k, ncol=k)
          stXAX <- .invcalc(X=X, W=A, k=k)
@@ -1828,7 +1829,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
       if (k > p) {
 
          wi    <- 1/vi
-         W.FE  <- diag(wi, nrow=k, ncol=k) ### care: ll.REML below involves W, so cannot overwrite W
+         W.FE  <- diag(wi, nrow=k, ncol=k) ### note: ll.REML below involves W, so cannot overwrite W
          stXWX <- .invcalc(X=X, W=W.FE, k=k)
          P     <- W.FE - W.FE %*% X %*% stXWX %*% crossprod(X,W.FE) ### need P below for calculation of I^2
          QE    <- max(0, c(crossprod(Y,P) %*% Y))

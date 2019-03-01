@@ -517,7 +517,7 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    }
 
    ### drop redundant predictors
-   ### careful: yi may have become shorter than X due to the omission of NAs, so just use a fake yi vector here
+   ### note: yi may have become shorter than X due to the omission of NAs, so just use a fake yi vector here
 
    tmp <- lm(rep(0,k) ~ X - 1)
    coef.na <- is.na(coef(tmp))

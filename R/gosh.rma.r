@@ -149,8 +149,12 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
          if (any(res$coef.na))
             next
 
-         beta[j,] <- c(res$beta)
-         het[j,]  <- res$het
+         beta[j,]  <- c(res$beta)
+         het[j, 1] <- res$k
+         het[j, 2] <- res$QE
+         het[j, 3] <- res$I2
+         het[j, 4] <- res$H2
+         het[j, 5] <- res$tau2
 
       }
 

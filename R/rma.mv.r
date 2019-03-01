@@ -602,8 +602,8 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
       ### need this for profile(); with things like 'random = ~ factor(arm) | study', 'mf.r' contains variables 'factor(arm)' and 'study'
       ### but the former won't work when using the same formula for the refitting (same when using interaction() in the random formula)
-      ### careful: with ~ 1 | interaction(var1, var2), mf.r will have 2 columns, but is actually a 'one variable' term
-      ###      and with ~ interaction(var1, var2) | var3, mf.r will have 3 columns, but is actually a 'two variable' term
+      ### note: with ~ 1 | interaction(var1, var2), mf.r will have 2 columns, but is actually a 'one variable' term
+      ###   and with ~ interaction(var1, var2) | var3, mf.r will have 3 columns, but is actually a 'two variable' term
       ### mf.r.ncols above is correct even in these cases (since it is based on the model.frame() results), but need
       ### to be careful that this doesn't screw up anything in other functions (for now, mf.r.ncols not used in any other function)
 

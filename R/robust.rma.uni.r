@@ -132,7 +132,7 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, digits, ...) {
    if (inherits(QM, "try-error"))
       QM <- NA
 
-   QM <- QM / x$m ### careful: m is the number of coefficients in btt, not the number of unique clusters
+   QM <- QM / x$m ### note: m is the number of coefficients in btt, not the number of unique clusters
    QMp <- pf(QM, df1=x$m, df2=dfs, lower.tail=FALSE)
 
    #########################################################################

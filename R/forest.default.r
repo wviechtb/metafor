@@ -26,7 +26,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
    if (is.function(transf) && is.function(atransf))
       stop(mstyle$stop("Use either 'transf' or 'atransf' to specify a transformation (not both)."))
 
-   ### care: transf and atransf must be function names and cannot, for example, be arguments
+   ### note: transf and atransf must be function names and cannot, for example, be arguments
    ### passed down from other functions (i.e., deparse(substitute(...)) will grab exactly what
    ### is specified for the argument), so the following function would not work:
    ###
