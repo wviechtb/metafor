@@ -1052,32 +1052,32 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
          A     <- diag(weights, nrow=k, ncol=k)
          stXAX <- .invcalc(X=X, W=A, k=k)
          P     <- A - A %*% X %*% stXAX %*% t(X) %*% A
-         RSS   <- crossprod(Y,P) %*% Y
          V     <- diag(vi, nrow=k, ncol=k)
          PV    <- P %*% V ### careful: is not symmetric
          trP   <- .tr(P)
          trPV  <- .tr(PV)
+         RSS   <- crossprod(Y,P) %*% Y
          tau2  <- ifelse(tau2.fix, tau2.val, (RSS - trPV) / trP)
 
       }
 
-      ### generalized Q-statistic estimator (median unbiased estimator version)
+      ### generalized Q-statistic estimator (median unbiased version)
 
       if (method == "GENQM") {
 
          if (is.null(weights))
             stop(mstyle$stop("Must specify 'weights' when method='GENQM'."))
 
+         A     <- diag(weights, nrow=k, ncol=k)
+         stXAX <- .invcalc(X=X, W=A, k=k)
+         P     <- A - A %*% X %*% stXAX %*% t(X) %*% A
+         V     <- diag(vi, nrow=k, ncol=k)
+         PV    <- P %*% V ### careful: is not symmetric
+         trP   <- .tr(P)
+
          if (!tau2.fix) {
 
-            A     <- diag(weights, nrow=k, ncol=k)
-            stXAX <- .invcalc(X=X, W=A, k=k)
-            P     <- A - A %*% X %*% stXAX %*% t(X) %*% A
             RSS   <- crossprod(Y,P) %*% Y
-            V     <- diag(vi, nrow=k, ncol=k)
-            PV    <- P %*% V ### careful: is not symmetric
-            trP   <- .tr(P)
-            trPV  <- .tr(PV)
 
             if (.GENQ.func(con$tau2.min, P=P, vi=vi, Q=RSS, level=0, k=k, p=p, getlower=TRUE, verbose=FALSE) > 0.5) {
 
@@ -1213,7 +1213,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
          } else {
 
-            tau2 <- tau2.fix
+            tau2 <- tau2.val
 
          }
 
@@ -1221,7 +1221,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
       }
 
-      ### Paule-Mandel (PM) estimator (median unbiased estimator version)
+      ### Paule-Mandel (PM) estimator (median unbiased version)
 
       if (method == "PMM") {
 
@@ -1230,19 +1230,19 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
          if (!tau2.fix) {
 
-            if (.QE.func(con$tau2.min, Y=Y, vi=vi, X=X, k=k, objective=0) < qchisq(.5, df=k-p)) {
+            if (.QE.func(con$tau2.min, Y=Y, vi=vi, X=X, k=k, objective=0) < qchisq(0.5, df=k-p)) {
 
                tau2 <- con$tau2.min
 
             } else {
 
-               if (.QE.func(con$tau2.max, Y=Y, vi=vi, X=X, k=k, objective=0) > qchisq(.5, df=k-p)) {
+               if (.QE.func(con$tau2.max, Y=Y, vi=vi, X=X, k=k, objective=0) > qchisq(0.5, df=k-p)) {
 
                   stop(mstyle$stop("Value of 'tau2.max' too low. Try increasing 'tau2.max' or switch to another 'method'."))
 
                } else {
 
-                  tau2 <- try(uniroot(.QE.func, interval=c(con$tau2.min, con$tau2.max), tol=con$tol, maxiter=con$maxiter, Y=Y, vi=vi, X=X, k=k, objective=qchisq(.5, df=k-p), verbose=verbose, digits=digits, extendInt="no")$root, silent=TRUE)
+                  tau2 <- try(uniroot(.QE.func, interval=c(con$tau2.min, con$tau2.max), tol=con$tol, maxiter=con$maxiter, Y=Y, vi=vi, X=X, k=k, objective=qchisq(0.5, df=k-p), verbose=verbose, digits=digits, extendInt="no")$root, silent=TRUE)
 
                   if (inherits(tau2, "try-error"))
                      stop(mstyle$stop("Error in iterative search for tau2. Try increasing 'tau2.max' or switch to another 'method'."))
@@ -1253,7 +1253,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
          } else {
 
-            tau2 <- tau2.fix
+            tau2 <- tau2.val
 
          }
 
@@ -1319,14 +1319,14 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
          ### need to run this so that wi and P are based on the final tau^2 value
 
-         wi    <- 1/(vi + tau2)
+         wi <- 1/(vi + tau2)
          if (any(tau2 + vi < 0))
             stop(mstyle$stop("Some marginal variances are negative."))
          if (any(is.infinite(wi)))
             stop(mstyle$stop("Division by zero when computing the inverse variance weights."))
-         W     <- diag(wi, nrow=k, ncol=k)
+         W <- diag(wi, nrow=k, ncol=k)
          stXWX <- .invcalc(X=X, W=W, k=k)
-         P     <- W - W %*% X %*% stXWX %*% crossprod(X,W)
+         P <- W - W %*% X %*% stXWX %*% crossprod(X,W)
 
       }
 
