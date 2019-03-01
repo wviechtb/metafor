@@ -145,7 +145,7 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
          }
       }
 
-      cook.d <- sapply(res, function(z) z$cook.d)
+      cook.d <- sapply(res, function(x) x$cook.d)
 
    }
 

@@ -158,13 +158,13 @@ rstudent.rma.mv <- function(model, digits, progbar=FALSE, cluster, reestimate=TR
       delresid   <- rep(NA_real_, x$k)
       sedelresid <- rep(NA_real_, x$k)
 
-      pos <- unlist(sapply(res, function(z) z$pos))
+      pos <- unlist(sapply(res, function(x) x$pos))
 
-      delresid[pos]   <- unlist(sapply(res, function(z) z$delresid))
-      sedelresid[pos] <- unlist(sapply(res, function(z) z$sedelresid))
+      delresid[pos]   <- unlist(sapply(res, function(x) x$delresid))
+      sedelresid[pos] <- unlist(sapply(res, function(x) x$sedelresid))
 
-      X2   <- sapply(res, function(z) z$X2)
-      k.id <- sapply(res, function(z) z$k.id)
+      X2   <- sapply(res, function(x) x$X2)
+      k.id <- sapply(res, function(x) x$k.id)
 
    }
 

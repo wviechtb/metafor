@@ -1297,11 +1297,7 @@
             H2 <- 1
          }
          tau2 <- 0
-         if (parallel == "snow" || parallel == "multicore") {
-            sav <- list(beta=est, het = c(k=k, QE=Q, I2=I2, H2=H2, tau2=tau2))
-         } else {
-            sav <- list(beta=est, k=k, QE=Q, I2=I2, H2=H2, tau2=tau2)
-         }
+         sav <- list(beta=est, het = c(k=k, QE=Q, I2=I2, H2=H2, tau2=tau2))
 
       } else {
 

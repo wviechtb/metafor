@@ -150,12 +150,7 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
             next
 
          beta[j,] <- c(res$beta)
-
-         het[j,1] <- res$k
-         het[j,2] <- res$QE
-         het[j,3] <- res$I2
-         het[j,4] <- res$H2
-         het[j,5] <- res$tau2
+         het[j,]  <- res$het
 
       }
 
@@ -210,8 +205,8 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
 
       }
 
-      beta <- do.call("rbind", lapply(res, function(z) t(z$beta)))
-      het  <- do.call("rbind", lapply(res, function(z) z$het))
+      beta <- do.call("rbind", lapply(res, function(x) t(x$beta)))
+      het  <- do.call("rbind", lapply(res, function(x) x$het))
 
    }
 

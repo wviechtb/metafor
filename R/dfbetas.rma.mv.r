@@ -140,7 +140,7 @@ dfbetas.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE, paral
          }
       }
 
-      dfbs <- lapply(res, function(z) z$dfbs)
+      dfbs <- lapply(res, function(x) x$dfbs)
       dfbs <- do.call(rbind, dfbs)
 
    }
