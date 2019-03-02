@@ -56,7 +56,8 @@ vif(res)
 
 ### show that VIFs are not influenced by scaling of the predictors
 u <- scale # to standardize the predictors
-res <- rma(yi, vi, mods = ~ u(length) + u(wic) + u(feedback) + u(info) + u(pers) + u(imag) + u(meta), data=dat)
+res <- rma(yi, vi, mods = ~ u(length) + u(wic) + u(feedback) + u(info) +
+                            u(pers) + u(imag) + u(meta), data=dat)
 vif(res)
 
 ### get full table

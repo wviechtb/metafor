@@ -47,7 +47,7 @@ res <- rma.glmm(measure="OR", ai=b.xti, n1i=nti, ci=b.xci, n2i=nci, data=dat,
 summary(res)
 predict(res, transf=exp, digits=2)
 
-### plot the log-likelihoods of the odds ratios
+### plot the likelihoods of the odds ratios
 llplot(measure="OR", ai=b.xti, n1i=nti, ci=b.xci, n2i=nci, data=dat,
        lwd=1, refline=NA, xlim=c(-4,4), drop00=FALSE)
 

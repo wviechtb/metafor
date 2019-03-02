@@ -50,8 +50,8 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
 
    mf.slab   <- mf[[match("slab",   names(mf))]]
    mf.subset <- mf[[match("subset", names(mf))]]
-   slab      <- eval(mf.slab,   data, enclos=sys.frame(sys.parent()))
-   subset    <- eval(mf.subset, data, enclos=sys.frame(sys.parent()))
+   slab   <- eval(mf.slab,   data, enclos=sys.frame(sys.parent()))
+   subset <- eval(mf.subset, data, enclos=sys.frame(sys.parent()))
 
    #########################################################################
    #########################################################################
@@ -59,18 +59,18 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
 
    if (is.element(measure, c("RR","OR","RD","AS","PETO","PHI","YUQ","YUY","RTET","PBIT","OR2D","OR2DN","OR2DL","MPRD","MPRR","MPOR","MPORC","MPPETO"))) {
 
-      mf.ai   <- mf[[match("ai",  names(mf))]]
-      mf.bi   <- mf[[match("bi",  names(mf))]]
-      mf.ci   <- mf[[match("ci",  names(mf))]]
-      mf.di   <- mf[[match("di",  names(mf))]]
-      mf.n1i  <- mf[[match("n1i", names(mf))]]
-      mf.n2i  <- mf[[match("n2i", names(mf))]]
-      ai      <- eval(mf.ai,  data, enclos=sys.frame(sys.parent()))
-      bi      <- eval(mf.bi,  data, enclos=sys.frame(sys.parent()))
-      ci      <- eval(mf.ci,  data, enclos=sys.frame(sys.parent()))
-      di      <- eval(mf.di,  data, enclos=sys.frame(sys.parent()))
-      n1i     <- eval(mf.n1i, data, enclos=sys.frame(sys.parent()))
-      n2i     <- eval(mf.n2i, data, enclos=sys.frame(sys.parent()))
+      mf.ai  <- mf[[match("ai",  names(mf))]]
+      mf.bi  <- mf[[match("bi",  names(mf))]]
+      mf.ci  <- mf[[match("ci",  names(mf))]]
+      mf.di  <- mf[[match("di",  names(mf))]]
+      mf.n1i <- mf[[match("n1i", names(mf))]]
+      mf.n2i <- mf[[match("n2i", names(mf))]]
+      ai  <- eval(mf.ai,  data, enclos=sys.frame(sys.parent()))
+      bi  <- eval(mf.bi,  data, enclos=sys.frame(sys.parent()))
+      ci  <- eval(mf.ci,  data, enclos=sys.frame(sys.parent()))
+      di  <- eval(mf.di,  data, enclos=sys.frame(sys.parent()))
+      n1i <- eval(mf.n1i, data, enclos=sys.frame(sys.parent()))
+      n2i <- eval(mf.n2i, data, enclos=sys.frame(sys.parent()))
       if (is.null(bi)) bi <- n1i - ai
       if (is.null(di)) di <- n2i - ci
 
@@ -154,14 +154,14 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
 
    if (is.element(measure, c("IRR","IRD","IRSD"))) {
 
-      mf.x1i  <- mf[[match("x1i", names(mf))]]
-      mf.x2i  <- mf[[match("x2i", names(mf))]]
-      mf.t1i  <- mf[[match("t1i", names(mf))]]
-      mf.t2i  <- mf[[match("t2i", names(mf))]]
-      x1i     <- eval(mf.x1i, data, enclos=sys.frame(sys.parent()))
-      x2i     <- eval(mf.x2i, data, enclos=sys.frame(sys.parent()))
-      t1i     <- eval(mf.t1i, data, enclos=sys.frame(sys.parent()))
-      t2i     <- eval(mf.t2i, data, enclos=sys.frame(sys.parent()))
+      mf.x1i <- mf[[match("x1i", names(mf))]]
+      mf.x2i <- mf[[match("x2i", names(mf))]]
+      mf.t1i <- mf[[match("t1i", names(mf))]]
+      mf.t2i <- mf[[match("t2i", names(mf))]]
+      x1i <- eval(mf.x1i, data, enclos=sys.frame(sys.parent()))
+      x2i <- eval(mf.x2i, data, enclos=sys.frame(sys.parent()))
+      t1i <- eval(mf.t1i, data, enclos=sys.frame(sys.parent()))
+      t2i <- eval(mf.t2i, data, enclos=sys.frame(sys.parent()))
 
       k <- length(x1i) ### number of outcomes before subsetting
 
@@ -244,12 +244,12 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
       mf.sd2i <- mf[[match("sd2i", names(mf))]]
       mf.n1i  <- mf[[match("n1i",  names(mf))]]
       mf.n2i  <- mf[[match("n2i",  names(mf))]]
-      m1i     <- eval(mf.m1i,  data, enclos=sys.frame(sys.parent()))
-      m2i     <- eval(mf.m2i,  data, enclos=sys.frame(sys.parent()))
-      sd1i    <- eval(mf.sd1i, data, enclos=sys.frame(sys.parent()))
-      sd2i    <- eval(mf.sd2i, data, enclos=sys.frame(sys.parent()))
-      n1i     <- eval(mf.n1i,  data, enclos=sys.frame(sys.parent()))
-      n2i     <- eval(mf.n2i,  data, enclos=sys.frame(sys.parent()))
+      m1i  <- eval(mf.m1i,  data, enclos=sys.frame(sys.parent()))
+      m2i  <- eval(mf.m2i,  data, enclos=sys.frame(sys.parent()))
+      sd1i <- eval(mf.sd1i, data, enclos=sys.frame(sys.parent()))
+      sd2i <- eval(mf.sd2i, data, enclos=sys.frame(sys.parent()))
+      n1i  <- eval(mf.n1i,  data, enclos=sys.frame(sys.parent()))
+      n2i  <- eval(mf.n2i,  data, enclos=sys.frame(sys.parent()))
 
       k <- length(n1i) ### number of outcomes before subsetting
 
@@ -282,10 +282,10 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
 
    if (is.element(measure, c("COR","UCOR","ZCOR"))) {
 
-      mf.ri   <- mf[[match("ri", names(mf))]]
-      mf.ni   <- mf[[match("ni", names(mf))]]
-      ri      <- eval(mf.ri, data, enclos=sys.frame(sys.parent()))
-      ni      <- eval(mf.ni, data, enclos=sys.frame(sys.parent()))
+      mf.ri <- mf[[match("ri", names(mf))]]
+      mf.ni <- mf[[match("ni", names(mf))]]
+      ri <- eval(mf.ri, data, enclos=sys.frame(sys.parent()))
+      ni <- eval(mf.ni, data, enclos=sys.frame(sys.parent()))
 
       k <- length(ri) ### number of outcomes before subsetting
 
@@ -314,12 +314,12 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
 
    if (is.element(measure, c("PR","PLN","PLO","PAS","PFT"))) {
 
-      mf.xi   <- mf[[match("xi", names(mf))]]
-      mf.mi   <- mf[[match("mi", names(mf))]]
-      mf.ni   <- mf[[match("ni", names(mf))]]
-      xi      <- eval(mf.xi, data, enclos=sys.frame(sys.parent()))
-      mi      <- eval(mf.mi, data, enclos=sys.frame(sys.parent()))
-      ni      <- eval(mf.ni, data, enclos=sys.frame(sys.parent()))
+      mf.xi <- mf[[match("xi", names(mf))]]
+      mf.mi <- mf[[match("mi", names(mf))]]
+      mf.ni <- mf[[match("ni", names(mf))]]
+      xi <- eval(mf.xi, data, enclos=sys.frame(sys.parent()))
+      mi <- eval(mf.mi, data, enclos=sys.frame(sys.parent()))
+      ni <- eval(mf.ni, data, enclos=sys.frame(sys.parent()))
       if (is.null(mi)) mi <- ni - xi
 
       k <- length(xi) ### number of outcomes before subsetting
@@ -383,10 +383,10 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
 
    if (is.element(measure, c("IR","IRLN","IRS","IRFT"))) {
 
-      mf.xi   <- mf[[match("xi", names(mf))]]
-      mf.ti   <- mf[[match("ti", names(mf))]]
-      xi      <- eval(mf.xi, data, enclos=sys.frame(sys.parent()))
-      ti      <- eval(mf.ti, data, enclos=sys.frame(sys.parent()))
+      mf.xi <- mf[[match("xi", names(mf))]]
+      mf.ti <- mf[[match("ti", names(mf))]]
+      xi <- eval(mf.xi, data, enclos=sys.frame(sys.parent()))
+      ti <- eval(mf.ti, data, enclos=sys.frame(sys.parent()))
 
       k <- length(xi) ### number of outcomes before subsetting
 
@@ -449,12 +449,12 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
 
    if (is.element(measure, c("MN","MNLN"))) {
 
-      mf.mi   <- mf[[match("mi",  names(mf))]]
-      mf.sdi  <- mf[[match("sdi", names(mf))]]
-      mf.ni   <- mf[[match("ni",  names(mf))]]
-      mi      <- eval(mf.mi,  data, enclos=sys.frame(sys.parent()))
-      sdi     <- eval(mf.sdi, data, enclos=sys.frame(sys.parent()))
-      ni      <- eval(mf.ni,  data, enclos=sys.frame(sys.parent()))
+      mf.mi  <- mf[[match("mi",  names(mf))]]
+      mf.sdi <- mf[[match("sdi", names(mf))]]
+      mf.ni  <- mf[[match("ni",  names(mf))]]
+      mi  <- eval(mf.mi,  data, enclos=sys.frame(sys.parent()))
+      sdi <- eval(mf.sdi, data, enclos=sys.frame(sys.parent()))
+      ni  <- eval(mf.ni,  data, enclos=sys.frame(sys.parent()))
 
       k <- length(ni) ### number of outcomes before subsetting
 
@@ -493,12 +493,12 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
       mf.sd2i <- mf[[match("sd2i", names(mf))]] ### for SMCR, do not need to supply this
       mf.ni   <- mf[[match("ni",   names(mf))]]
       mf.ri   <- mf[[match("ri",   names(mf))]]
-      m1i     <- eval(mf.m1i,  data, enclos=sys.frame(sys.parent()))
-      m2i     <- eval(mf.m2i,  data, enclos=sys.frame(sys.parent()))
-      sd1i    <- eval(mf.sd1i, data, enclos=sys.frame(sys.parent()))
-      sd2i    <- eval(mf.sd2i, data, enclos=sys.frame(sys.parent()))
-      ni      <- eval(mf.ni,   data, enclos=sys.frame(sys.parent()))
-      ri      <- eval(mf.ri,   data, enclos=sys.frame(sys.parent()))
+      m1i  <- eval(mf.m1i,  data, enclos=sys.frame(sys.parent()))
+      m2i  <- eval(mf.m2i,  data, enclos=sys.frame(sys.parent()))
+      sd1i <- eval(mf.sd1i, data, enclos=sys.frame(sys.parent()))
+      sd2i <- eval(mf.sd2i, data, enclos=sys.frame(sys.parent()))
+      ni   <- eval(mf.ni,   data, enclos=sys.frame(sys.parent()))
+      ri   <- eval(mf.ri,   data, enclos=sys.frame(sys.parent()))
 
       k <- length(m1i) ### number of outcomes before subsetting
 
@@ -552,9 +552,9 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
       mf.ai <- mf[[match("ai", names(mf))]]
       mf.mi <- mf[[match("mi", names(mf))]]
       mf.ni <- mf[[match("ni", names(mf))]]
-      ai    <- eval(mf.ai, data, enclos=sys.frame(sys.parent()))
-      mi    <- eval(mf.mi, data, enclos=sys.frame(sys.parent()))
-      ni    <- eval(mf.ni, data, enclos=sys.frame(sys.parent()))
+      ai <- eval(mf.ai, data, enclos=sys.frame(sys.parent()))
+      mi <- eval(mf.mi, data, enclos=sys.frame(sys.parent()))
+      ni <- eval(mf.ni, data, enclos=sys.frame(sys.parent()))
 
       k <- length(ai) ### number of outcomes before subsetting
 

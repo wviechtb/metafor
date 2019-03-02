@@ -329,12 +329,12 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
          mf.di  <- mf[[match("di",  names(mf))]]
          mf.n1i <- mf[[match("n1i", names(mf))]]
          mf.n2i <- mf[[match("n2i", names(mf))]]
-         ai     <- eval(mf.ai,  data, enclos=sys.frame(sys.parent()))
-         bi     <- eval(mf.bi,  data, enclos=sys.frame(sys.parent()))
-         ci     <- eval(mf.ci,  data, enclos=sys.frame(sys.parent()))
-         di     <- eval(mf.di,  data, enclos=sys.frame(sys.parent()))
-         n1i    <- eval(mf.n1i, data, enclos=sys.frame(sys.parent()))
-         n2i    <- eval(mf.n2i, data, enclos=sys.frame(sys.parent()))
+         ai  <- eval(mf.ai,  data, enclos=sys.frame(sys.parent()))
+         bi  <- eval(mf.bi,  data, enclos=sys.frame(sys.parent()))
+         ci  <- eval(mf.ci,  data, enclos=sys.frame(sys.parent()))
+         di  <- eval(mf.di,  data, enclos=sys.frame(sys.parent()))
+         n1i <- eval(mf.n1i, data, enclos=sys.frame(sys.parent()))
+         n2i <- eval(mf.n2i, data, enclos=sys.frame(sys.parent()))
          if (is.null(bi)) bi <- n1i - ai
          if (is.null(di)) di <- n2i - ci
 
@@ -358,10 +358,10 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
          mf.x2i <- mf[[match("x2i", names(mf))]]
          mf.t1i <- mf[[match("t1i", names(mf))]]
          mf.t2i <- mf[[match("t2i", names(mf))]]
-         x1i    <- eval(mf.x1i, data, enclos=sys.frame(sys.parent()))
-         x2i    <- eval(mf.x2i, data, enclos=sys.frame(sys.parent()))
-         t1i    <- eval(mf.t1i, data, enclos=sys.frame(sys.parent()))
-         t2i    <- eval(mf.t2i, data, enclos=sys.frame(sys.parent()))
+         x1i <- eval(mf.x1i, data, enclos=sys.frame(sys.parent()))
+         x2i <- eval(mf.x2i, data, enclos=sys.frame(sys.parent()))
+         t1i <- eval(mf.t1i, data, enclos=sys.frame(sys.parent()))
+         t2i <- eval(mf.t2i, data, enclos=sys.frame(sys.parent()))
 
          k <- length(x1i) ### number of outcomes before subsetting
          k.all <- k
@@ -385,12 +385,12 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
          mf.sd2i <- mf[[match("sd2i", names(mf))]]
          mf.n1i  <- mf[[match("n1i",  names(mf))]]
          mf.n2i  <- mf[[match("n2i",  names(mf))]]
-         m1i     <- eval(mf.m1i,  data, enclos=sys.frame(sys.parent()))
-         m2i     <- eval(mf.m2i,  data, enclos=sys.frame(sys.parent()))
-         sd1i    <- eval(mf.sd1i, data, enclos=sys.frame(sys.parent()))
-         sd2i    <- eval(mf.sd2i, data, enclos=sys.frame(sys.parent()))
-         n1i     <- eval(mf.n1i,  data, enclos=sys.frame(sys.parent()))
-         n2i     <- eval(mf.n2i,  data, enclos=sys.frame(sys.parent()))
+         m1i  <- eval(mf.m1i,  data, enclos=sys.frame(sys.parent()))
+         m2i  <- eval(mf.m2i,  data, enclos=sys.frame(sys.parent()))
+         sd1i <- eval(mf.sd1i, data, enclos=sys.frame(sys.parent()))
+         sd2i <- eval(mf.sd2i, data, enclos=sys.frame(sys.parent()))
+         n1i  <- eval(mf.n1i,  data, enclos=sys.frame(sys.parent()))
+         n2i  <- eval(mf.n2i,  data, enclos=sys.frame(sys.parent()))
 
          k <- length(n1i) ### number of outcomes before subsetting
          k.all <- k
@@ -412,8 +412,8 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
          mf.ri <- mf[[match("ri", names(mf))]]
          mf.ni <- mf[[match("ni", names(mf))]]
-         ri    <- eval(mf.ri, data, enclos=sys.frame(sys.parent()))
-         ni    <- eval(mf.ni, data, enclos=sys.frame(sys.parent()))
+         ri <- eval(mf.ri, data, enclos=sys.frame(sys.parent()))
+         ni <- eval(mf.ni, data, enclos=sys.frame(sys.parent()))
 
          k <- length(ri) ### number of outcomes before subsetting
          k.all <- k
@@ -433,10 +433,10 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
          mf.r2i <- mf[[match("r2i", names(mf))]]
          mf.mi  <- mf[[match("mi",  names(mf))]]
          mf.ni  <- mf[[match("ni",  names(mf))]]
-         ti     <- eval(mf.ti,  data, enclos=sys.frame(sys.parent()))
-         r2i    <- eval(mf.r2i, data, enclos=sys.frame(sys.parent()))
-         mi     <- eval(mf.mi,  data, enclos=sys.frame(sys.parent()))
-         ni     <- eval(mf.ni,  data, enclos=sys.frame(sys.parent()))
+         ti  <- eval(mf.ti,  data, enclos=sys.frame(sys.parent()))
+         r2i <- eval(mf.r2i, data, enclos=sys.frame(sys.parent()))
+         mi  <- eval(mf.mi,  data, enclos=sys.frame(sys.parent()))
+         ni  <- eval(mf.ni,  data, enclos=sys.frame(sys.parent()))
 
          k <- length(ti) ### number of outcomes before subsetting
          k.all <- k
@@ -457,9 +457,9 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
          mf.xi <- mf[[match("xi", names(mf))]]
          mf.mi <- mf[[match("mi", names(mf))]]
          mf.ni <- mf[[match("ni", names(mf))]]
-         xi    <- eval(mf.xi, data, enclos=sys.frame(sys.parent()))
-         mi    <- eval(mf.mi, data, enclos=sys.frame(sys.parent()))
-         ni    <- eval(mf.ni, data, enclos=sys.frame(sys.parent()))
+         xi <- eval(mf.xi, data, enclos=sys.frame(sys.parent()))
+         mi <- eval(mf.mi, data, enclos=sys.frame(sys.parent()))
+         ni <- eval(mf.ni, data, enclos=sys.frame(sys.parent()))
          if (is.null(mi)) mi <- ni - xi
 
          k <- length(xi) ### number of outcomes before subsetting
@@ -478,8 +478,8 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
          mf.xi <- mf[[match("xi", names(mf))]]
          mf.ti <- mf[[match("ti", names(mf))]]
-         xi    <- eval(mf.xi, data, enclos=sys.frame(sys.parent()))
-         ti    <- eval(mf.ti, data, enclos=sys.frame(sys.parent()))
+         xi <- eval(mf.xi, data, enclos=sys.frame(sys.parent()))
+         ti <- eval(mf.ti, data, enclos=sys.frame(sys.parent()))
 
          k <- length(xi) ### number of outcomes before subsetting
          k.all <- k
@@ -498,9 +498,9 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
          mf.mi  <- mf[[match("mi",  names(mf))]]
          mf.sdi <- mf[[match("sdi", names(mf))]]
          mf.ni  <- mf[[match("ni",  names(mf))]]
-         mi     <- eval(mf.mi,  data, enclos=sys.frame(sys.parent()))
-         sdi    <- eval(mf.sdi, data, enclos=sys.frame(sys.parent()))
-         ni     <- eval(mf.ni,  data, enclos=sys.frame(sys.parent()))
+         mi  <- eval(mf.mi,  data, enclos=sys.frame(sys.parent()))
+         sdi <- eval(mf.sdi, data, enclos=sys.frame(sys.parent()))
+         ni  <- eval(mf.ni,  data, enclos=sys.frame(sys.parent()))
 
          k <- length(ni) ### number of outcomes before subsetting
          k.all <- k
@@ -523,12 +523,12 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
          mf.sd2i <- mf[[match("sd2i", names(mf))]]
          mf.ri   <- mf[[match("ri",   names(mf))]]
          mf.ni   <- mf[[match("ni",   names(mf))]]
-         m1i     <- eval(mf.m1i,  data, enclos=sys.frame(sys.parent()))
-         m2i     <- eval(mf.m2i,  data, enclos=sys.frame(sys.parent()))
-         sd1i    <- eval(mf.sd1i, data, enclos=sys.frame(sys.parent()))
-         sd2i    <- eval(mf.sd2i, data, enclos=sys.frame(sys.parent()))
-         ri      <- eval(mf.ri,   data, enclos=sys.frame(sys.parent()))
-         ni      <- eval(mf.ni,   data, enclos=sys.frame(sys.parent()))
+         m1i  <- eval(mf.m1i,  data, enclos=sys.frame(sys.parent()))
+         m2i  <- eval(mf.m2i,  data, enclos=sys.frame(sys.parent()))
+         sd1i <- eval(mf.sd1i, data, enclos=sys.frame(sys.parent()))
+         sd2i <- eval(mf.sd2i, data, enclos=sys.frame(sys.parent()))
+         ri   <- eval(mf.ri,   data, enclos=sys.frame(sys.parent()))
+         ni   <- eval(mf.ni,   data, enclos=sys.frame(sys.parent()))
 
          k <- length(m1i) ### number of outcomes before subsetting
          k.all <- k
@@ -551,9 +551,9 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
          mf.ai <- mf[[match("ai",  names(mf))]]
          mf.mi <- mf[[match("mi",  names(mf))]]
          mf.ni <- mf[[match("ni",  names(mf))]]
-         ai    <- eval(mf.ai,  data, enclos=sys.frame(sys.parent()))
-         mi    <- eval(mf.mi,  data, enclos=sys.frame(sys.parent()))
-         ni    <- eval(mf.ni,  data, enclos=sys.frame(sys.parent()))
+         ai <- eval(mf.ai,  data, enclos=sys.frame(sys.parent()))
+         mi <- eval(mf.mi,  data, enclos=sys.frame(sys.parent()))
+         ni <- eval(mf.ni,  data, enclos=sys.frame(sys.parent()))
 
          k <- length(ai) ### number of outcomes before subsetting
          k.all <- k

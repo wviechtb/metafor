@@ -1,5 +1,7 @@
 # metafor 2.1-0 (2019-03-02)
 
+- `llplot()` now also allows for `measure="GEN"`; also, the documentation and y-axis label have been corrected to indicate that the function plots likelihoods (not log likelihoods)
+
 - `confint.rma.mv()` now returns an object of class `list.confint.rma` when obtaining CIs for all variance and correlation components of the model; added corresponding `print.list.confint.rma()` function
 
 - moved `tol` argument in `permutest()` to `control` and renamed to `comptol`

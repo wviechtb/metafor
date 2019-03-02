@@ -88,15 +88,15 @@ level=95, digits=4, verbose=FALSE, ...) {
    mf.di  <- mf[[match("di",  names(mf))]]
    mf.n1i <- mf[[match("n1i", names(mf))]]
    mf.n2i <- mf[[match("n2i", names(mf))]]
-   ai     <- eval(mf.ai,  data, enclos=sys.frame(sys.parent()))
-   bi     <- eval(mf.bi,  data, enclos=sys.frame(sys.parent()))
-   ci     <- eval(mf.ci,  data, enclos=sys.frame(sys.parent()))
-   di     <- eval(mf.di,  data, enclos=sys.frame(sys.parent()))
-   n1i    <- eval(mf.n1i, data, enclos=sys.frame(sys.parent()))
-   n2i    <- eval(mf.n2i, data, enclos=sys.frame(sys.parent()))
+   ai  <- eval(mf.ai,  data, enclos=sys.frame(sys.parent()))
+   bi  <- eval(mf.bi,  data, enclos=sys.frame(sys.parent()))
+   ci  <- eval(mf.ci,  data, enclos=sys.frame(sys.parent()))
+   di  <- eval(mf.di,  data, enclos=sys.frame(sys.parent()))
+   n1i <- eval(mf.n1i, data, enclos=sys.frame(sys.parent()))
+   n2i <- eval(mf.n2i, data, enclos=sys.frame(sys.parent()))
    if (is.null(bi)) bi <- n1i - ai
    if (is.null(di)) di <- n2i - ci
-   ni     <- ai + bi + ci + di
+   ni <- ai + bi + ci + di
 
    k <- length(ai) ### number of outcomes before subsetting
    k.all <- k

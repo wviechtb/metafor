@@ -1,4 +1,4 @@
-llplot <- function(measure="OR", ai, bi, ci, di, n1i, n2i, data, subset, drop00=TRUE,
+llplot <- function(measure, yi, vi, ai, bi, ci, di, n1i, n2i, data, subset, drop00=TRUE,
 xvals=1000, xlim, ylim, xlab, ylab, scale=TRUE,
 lty, lwd, col, level=99.99, refline=0, ...) {
 
@@ -8,25 +8,29 @@ lty, lwd, col, level=99.99, refline=0, ...) {
 
    ### data setup
 
-   if (!is.element(measure, "OR"))
-      stop(mstyle$stop("Currently only measure=\"OR\" can be specified."))
+   if (!is.element(measure, c("GEN", "OR")))
+      stop(mstyle$stop("Currently only measure=\"GEN\" or measure=\"OR\" can be specified."))
 
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
-   if (!requireNamespace("BiasedUrn", quietly=TRUE))
+   if (measure == "OR" && !requireNamespace("BiasedUrn", quietly=TRUE))
       stop(mstyle$stop("Please install the 'BiasedUrn' package to use this function."))
 
-   if (missing(xlab))
-      xlab <- "Log Odds Ratio"
+   if (missing(xlab)) {
+      if (measure == "GEN")
+         xlab <- "Observed Outcome"
+      if (measure == "OR")
+         xlab <- "Log Odds Ratio"
+   }
 
    if (missing(ylab)) {
       if (scale) {
-         ylab <- "Scaled Log Likelihood"
+         ylab <- "Scaled Likelihood"
       } else {
-         ylab <- "Log Likelihood"
+         ylab <- "Likelihood"
       }
    }
 
@@ -56,67 +60,89 @@ lty, lwd, col, level=99.99, refline=0, ...) {
          data <- data.frame(data)
    }
 
-   ### extract slab, subset, and mods values, possibly from the data frame specified via data (arguments not specified are NULL)
+   ### extract values, possibly from the data frame specified via data (arguments not specified are NULL)
 
    mf <- match.call()
    mf.subset <- mf[[match("subset", names(mf))]]
-   mf.lty    <- mf[[match("lty",   names(mf))]]
-   mf.lwd    <- mf[[match("lwd",   names(mf))]]
-   mf.col    <- mf[[match("col",   names(mf))]]
+   mf.lty    <- mf[[match("lty",    names(mf))]]
+   mf.lwd    <- mf[[match("lwd",    names(mf))]]
+   mf.col    <- mf[[match("col",    names(mf))]]
    subset <- eval(mf.subset, data, enclos=sys.frame(sys.parent()))
-   lty    <- eval(mf.lty,   data, enclos=sys.frame(sys.parent()))
-   lwd    <- eval(mf.lwd,   data, enclos=sys.frame(sys.parent()))
-   col    <- eval(mf.col,   data, enclos=sys.frame(sys.parent()))
+   lty    <- eval(mf.lty,    data, enclos=sys.frame(sys.parent()))
+   lwd    <- eval(mf.lwd,    data, enclos=sys.frame(sys.parent()))
+   col    <- eval(mf.col,    data, enclos=sys.frame(sys.parent()))
 
-   mf.ai   <- mf[[match("ai",  names(mf))]]
-   mf.bi   <- mf[[match("bi",  names(mf))]]
-   mf.ci   <- mf[[match("ci",  names(mf))]]
-   mf.di   <- mf[[match("di",  names(mf))]]
-   mf.n1i  <- mf[[match("n1i", names(mf))]]
-   mf.n2i  <- mf[[match("n2i", names(mf))]]
-   ai      <- eval(mf.ai,  data, enclos=sys.frame(sys.parent()))
-   bi      <- eval(mf.bi,  data, enclos=sys.frame(sys.parent()))
-   ci      <- eval(mf.ci,  data, enclos=sys.frame(sys.parent()))
-   di      <- eval(mf.di,  data, enclos=sys.frame(sys.parent()))
-   n1i     <- eval(mf.n1i, data, enclos=sys.frame(sys.parent()))
-   n2i     <- eval(mf.n2i, data, enclos=sys.frame(sys.parent()))
-   if (is.null(bi)) bi <- n1i - ai
-   if (is.null(di)) di <- n2i - ci
+   if (measure == "GEN") {
 
-   k <- length(ai) ### number of outcomes before subsetting
+      mf.yi <- mf[[match("yi", names(mf))]]
+      mf.vi <- mf[[match("vi", names(mf))]]
+      yi <- eval(mf.yi, data, enclos=sys.frame(sys.parent()))
+      vi <- eval(mf.vi, data, enclos=sys.frame(sys.parent()))
 
-   ### note studies that have at least one zero cell
+      k <- length(yi) ### number of outcomes before subsetting
 
-   id0 <- c(ai == 0L | bi == 0L | ci == 0L | di == 0L)
-   id0[is.na(id0)] <- FALSE
+      ### subsetting
 
-   ### note studies that have no events or all events
+      if (!is.null(subset)) {
+         yi <- yi[subset]
+         vi <- vi[subset]
+      }
 
-   id00 <- c(ai == 0L & ci == 0L) | c(bi == 0L & di == 0L)
-   id00[is.na(id00)] <- FALSE
-
-   ### if drop00=TRUE, set counts to NA for studies that have no events (or all events) in both arms
-
-   if (drop00) {
-      ai[id00] <- NA
-      bi[id00] <- NA
-      ci[id00] <- NA
-      di[id00] <- NA
    }
 
-   ### subsetting
+   if (measure == "OR") {
 
-   if (!is.null(subset)) {
-      ai <- ai[subset]
-      bi <- bi[subset]
-      ci <- ci[subset]
-      di <- di[subset]
+      mf.ai  <- mf[[match("ai",  names(mf))]]
+      mf.bi  <- mf[[match("bi",  names(mf))]]
+      mf.ci  <- mf[[match("ci",  names(mf))]]
+      mf.di  <- mf[[match("di",  names(mf))]]
+      mf.n1i <- mf[[match("n1i", names(mf))]]
+      mf.n2i <- mf[[match("n2i", names(mf))]]
+      ai  <- eval(mf.ai,  data, enclos=sys.frame(sys.parent()))
+      bi  <- eval(mf.bi,  data, enclos=sys.frame(sys.parent()))
+      ci  <- eval(mf.ci,  data, enclos=sys.frame(sys.parent()))
+      di  <- eval(mf.di,  data, enclos=sys.frame(sys.parent()))
+      n1i <- eval(mf.n1i, data, enclos=sys.frame(sys.parent()))
+      n2i <- eval(mf.n2i, data, enclos=sys.frame(sys.parent()))
+      if (is.null(bi)) bi <- n1i - ai
+      if (is.null(di)) di <- n2i - ci
+
+      k <- length(ai) ### number of outcomes before subsetting
+
+      ### note studies that have at least one zero cell
+
+      id0 <- c(ai == 0L | bi == 0L | ci == 0L | di == 0L)
+      id0[is.na(id0)] <- FALSE
+
+      ### note studies that have no events or all events
+
+      id00 <- c(ai == 0L & ci == 0L) | c(bi == 0L & di == 0L)
+      id00[is.na(id00)] <- FALSE
+
+      ### if drop00=TRUE, set counts to NA for studies that have no events (or all events) in both arms
+
+      if (drop00) {
+         ai[id00] <- NA
+         bi[id00] <- NA
+         ci[id00] <- NA
+         di[id00] <- NA
+      }
+
+      ### subsetting
+
+      if (!is.null(subset)) {
+         ai <- ai[subset]
+         bi <- bi[subset]
+         ci <- ci[subset]
+         di <- di[subset]
+      }
+
+      dat <- escalc(measure="OR", ai=ai, bi=bi, ci=ci, di=di, drop00=drop00, onlyo1=onlyo1, addyi=addyi, addvi=addvi)
+
+      yi <- dat$yi ### one or more yi/vi pairs may be NA/NA
+      vi <- dat$vi ### one or more yi/vi pairs may be NA/NA
+
    }
-
-   dat <- escalc(measure="OR", ai=ai, bi=bi, ci=ci, di=di, drop00=drop00, onlyo1=onlyo1, addyi=addyi, addvi=addvi)
-
-   yi <- dat$yi ### one or more yi/vi pairs may be NA/NA
-   vi <- dat$vi ### one or more yi/vi pairs may be NA/NA
 
    #########################################################################
 
@@ -167,11 +193,17 @@ lty, lwd, col, level=99.99, refline=0, ...) {
 
    ### number of outcomes after subsetting
 
-   k <- length(ai)
+   k <- length(yi)
 
    ### check for NAs and act accordingly
 
-   has.na <- is.na(ai) | is.na(bi) | is.na(ci) | is.na(di)
+   if (measure == "GEN") {
+      has.na <- is.na(yi) | is.na(vi)
+   }
+   if (measure == "OR") {
+      has.na <- is.na(ai) | is.na(bi) | is.na(ci) | is.na(di)
+   }
+
    not.na <- !has.na
 
    if (any(has.na)) {
@@ -207,8 +239,15 @@ lty, lwd, col, level=99.99, refline=0, ...) {
 
    ### set default line types (id0 studies = dashed line, id00 studies = dotted line, all others = solid line)
 
-   if (is.null(lty))
-      lty <- ifelse(id0 | id00, ifelse(id00, "dotted", "dashed"), "solid")
+   if (measure == "GEN") {
+      if (is.null(lty))
+         lty <- rep("solid", k)
+   }
+
+   if (measure == "OR") {
+      if (is.null(lty))
+         lty <- ifelse(id0 | id00, ifelse(id00, "dotted", "dashed"), "solid")
+   }
 
    ### set default line widths (4.0 to 0.2 according to the rank of vi)
 
@@ -231,24 +270,40 @@ lty, lwd, col, level=99.99, refline=0, ...) {
       xlim <- sort(xlim)
    }
 
-   logORs <- seq(from=xlim[1], to=xlim[2], length.out=xvals)
+   xs <- seq(from=xlim[1], to=xlim[2], length.out=xvals)
 
    lls <- matrix(NA_real_, nrow=k, ncol=xvals)
    out <- matrix(TRUE, nrow=k, ncol=xvals)
 
-   for (i in seq_len(k)) {
-      for (j in seq_len(xvals)) {
-         lls[i,j] <- .dnchgi(logORs[j], ai=ai[i], bi=bi[i], ci=ci[i], di=di[i], random=FALSE, dnchgcalc="dFNCHypergeo", dnchgprec=1e-10)
-         if (logORs[j] >= ci.lb[i] & logORs[j] <= ci.ub[i])
-            out[i,j] <- FALSE
+   if (measure == "GEN") {
+
+      for (i in seq_len(k)) {
+         for (j in seq_len(xvals)) {
+            lls[i,j] <- dnorm(yi[i], xs[j], sqrt(vi[i]))
+            if (xs[j] >= ci.lb[i] & xs[j] <= ci.ub[i])
+               out[i,j] <- FALSE
+         }
       }
+
+   }
+
+   if (measure == "OR") {
+
+      for (i in seq_len(k)) {
+         for (j in seq_len(xvals)) {
+            lls[i,j] <- .dnchgi(xs[j], ai=ai[i], bi=bi[i], ci=ci[i], di=di[i], random=FALSE, dnchgcalc="dFNCHypergeo", dnchgprec=1e-10)
+            if (xs[j] >= ci.lb[i] & xs[j] <= ci.ub[i])
+               out[i,j] <- FALSE
+         }
+      }
+
    }
 
    if (scale) {
       trapezoid <- function(x,y) sum(diff(x)*(y[-1]+y[-length(y)]))/2
       lls.sum <- rep(NA_real_, k)
       for (i in seq_len(k)) {
-         lls.sum[i] <- trapezoid(logORs[!is.na(lls[i,])], lls[i,!is.na(lls[i,])])
+         lls.sum[i] <- trapezoid(xs[!is.na(lls[i,])], lls[i,!is.na(lls[i,])])
       }
       #lls.sum <- rowSums(lls, na.rm=TRUE)
       lls <- apply(lls, 2, "/", lls.sum)
@@ -267,7 +322,7 @@ lty, lwd, col, level=99.99, refline=0, ...) {
    plot(NA, NA, xlim=c(xlim[1], xlim[2]), ylim=ylim, xlab=xlab, ylab=ylab, ...)
 
    for (i in seq_len(k)[order(1/vi)]) {
-      lines(logORs, lls[i,], lty=lty[i], lwd=lwd[i], col=col[i], ...)
+      lines(xs, lls[i,], lty=lty[i], lwd=lwd[i], col=col[i], ...)
    }
 
    if (is.numeric(refline))

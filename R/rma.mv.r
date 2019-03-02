@@ -186,19 +186,19 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
    if (is.null(mf.mods))
       mods <- NULL
    if (!is.null(mf.yi) && !any(grepl("$", mf.yi, fixed=TRUE)))
-   yi     <- eval(mf.yi,     data, enclos=sys.frame(sys.parent())) ### NULL if user does not specify this
+      yi <- eval(mf.yi, data, enclos=sys.frame(sys.parent()))           ### NULL if user does not specify this
    if (!is.null(mf.V) && !any(grepl("$", mf.V, fixed=TRUE)))
-   V      <- eval(mf.V,      data, enclos=sys.frame(sys.parent())) ### NULL if user does not specify this
+      V <- eval(mf.V, data, enclos=sys.frame(sys.parent()))             ### NULL if user does not specify this
    if (!is.null(mf.W) && !any(grepl("$", mf.W, fixed=TRUE)))
-   W      <- eval(mf.W,      data, enclos=sys.frame(sys.parent())) ### NULL if user does not specify this
+      W <- eval(mf.W, data, enclos=sys.frame(sys.parent()))             ### NULL if user does not specify this
    if (!is.null(mf.ni) && !any(grepl("$", mf.ni, fixed=TRUE)))
-   ni     <- eval(mf.ni,     data, enclos=sys.frame(sys.parent())) ### NULL if user does not specify this
+      ni <- eval(mf.ni, data, enclos=sys.frame(sys.parent()))           ### NULL if user does not specify this
    if (!is.null(mf.slab) && !any(grepl("$", mf.slab, fixed=TRUE)))
-   slab   <- eval(mf.slab,   data, enclos=sys.frame(sys.parent())) ### NULL if user does not specify this
+      slab <- eval(mf.slab, data, enclos=sys.frame(sys.parent()))       ### NULL if user does not specify this
    if (!is.null(mf.subset) && !any(grepl("$", mf.subset, fixed=TRUE)))
-   subset <- eval(mf.subset, data, enclos=sys.frame(sys.parent())) ### NULL if user does not specify this
+      subset <- eval(mf.subset, data, enclos=sys.frame(sys.parent()))   ### NULL if user does not specify this
    if (!is.null(mf.mods) && !any(grepl("$", mf.mods, fixed=TRUE)))
-   mods   <- eval(mf.mods,   data, enclos=sys.frame(sys.parent())) ### NULL if user does not specify this
+      mods <- eval(mf.mods, data, enclos=sys.frame(sys.parent()))       ### NULL if user does not specify this
 
    ### if yi is a formula, extract yi and X (this overrides anything specified via the mods argument further below)
 
