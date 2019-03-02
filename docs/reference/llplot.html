@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Log-Likelihood Plot of a Parameter Corresponding to an Outcome or Effect Size Measure — llplot • metafor</title>
+<title>Likelihood Plot of a Parameter Corresponding to an Effect Size or Outcome Measure — llplot • metafor</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Log-Likelihood Plot of a Parameter Corresponding to an Outcome or Effect Size Measure — llplot" />
+<meta property="og:title" content="Likelihood Plot of a Parameter Corresponding to an Effect Size or Outcome Measure — llplot" />
 
-<meta property="og:description" content="Function to plot the log-likelihood of a certain parameter corresponding to an outcome or effect size measure given the study data." />
+<meta property="og:description" content="Function to plot the likelihood of a certain parameter corresponding to an effect size or outcome measure given the study data." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -117,18 +117,18 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Log-Likelihood Plot of a Parameter Corresponding to an Outcome or Effect Size Measure</h1>
+    <h1>Likelihood Plot of a Parameter Corresponding to an Effect Size or Outcome Measure</h1>
     
     <div class="hidden name"><code>llplot.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Function to plot the log-likelihood of a certain parameter corresponding to an outcome or effect size measure given the study data.</p>
+    <p>Function to plot the likelihood of a certain parameter corresponding to an effect size or outcome measure given the study data.</p>
     
     </div>
 
-    <pre class="usage">llplot(measure="OR", ai, bi, ci, di, n1i, n2i, data, subset, drop00=TRUE,
+    <pre class="usage">llplot(measure, yi, vi, ai, bi, ci, di, n1i, n2i, data, subset, drop00=TRUE,
        xvals=1000, xlim, ylim, xlab, ylab, scale=TRUE,
        lty, lwd, col, level=99.99, refline=0, &#8230;)</pre>
     
@@ -137,7 +137,15 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>measure</th>
-      <td><p>a character string indicating for which effect size or outcome measure the log-likelihood should be calculated. See &#8216;Details&#8217; for possible options and how the data should be specified.</p></td>
+      <td><p>a character string indicating for which effect size or outcome measure the likelihoods should be calculated. See &#8216;Details&#8217; for possible options and how the data should be specified.</p></td>
+    </tr>
+    <tr>
+      <th>yi</th>
+      <td><p>vector with the observed effect sizes or outcomes.</p></td>
+    </tr>
+    <tr>
+      <th>vi</th>
+      <td><p>vector with the corresponding sampling variances.</p></td>
     </tr>
     <tr>
       <th>ai</th>
@@ -177,7 +185,7 @@
     </tr>
     <tr>
       <th>xvals</th>
-      <td><p>integer specifying for how many distinct values of the (log) odds ratio the log-likelihood should be evaluated.</p></td>
+      <td><p>integer specifying for how many distinct values the likelihood should be evaluated.</p></td>
     </tr>
     <tr>
       <th>xlim</th>
@@ -197,23 +205,23 @@
     </tr>
     <tr>
       <th>scale</th>
-      <td><p>logical indicating whether the log-likelihood values should be scaled, so that the total area under each curve is (approximately) equal to 1.</p></td>
+      <td><p>logical indicating whether the likelihood values should be scaled, so that the total area under each curve is (approximately) equal to 1.</p></td>
     </tr>
     <tr>
       <th>lty</th>
-      <td><p>the line type (either a single value or a vector of length \(k\)). If unspecified, the function uses solid lines for tables where the MLE of the odds ratio is finite and dashed/dotted lines otherwise.</p></td>
+      <td><p>the line types (either a single value or a vector of length \(k\)). If unspecified, the function sets the line types according to some characteristics of the likelihood function. See &#8216;Details&#8217;.</p></td>
     </tr>
     <tr>
       <th>lwd</th>
-      <td><p>the line width (either a single value or a vector of length \(k\)). If unspecified, the function sets the widths according to the sampling variances (so that the line is thicker for more precise studies and vice-versa).</p></td>
+      <td><p>the line widths (either a single value or a vector of length \(k\)). If unspecified, the function sets the widths according to the sampling variances (so that the line is thicker for more precise studies and vice-versa).</p></td>
     </tr>
     <tr>
       <th>col</th>
-      <td><p>the line color (either a single value or a vector of length \(k\)). If unspecified, the function uses various gray shades according to the sampling variances (so that darher shades are used for more precise studies and vice-versa).</p></td>
+      <td><p>the line colors (either a single value or a vector of length \(k\)). If unspecified, the function uses various shades of gray according to the sampling variances (so that darker shades are used for more precise studies and vice-versa).</p></td>
     </tr>
     <tr>
       <th>level</th>
-      <td><p>numerical value between 0 and 100 specifying the plotting limits for each density line in terms of the confidence interval (the default is 99.99).</p></td>
+      <td><p>numerical value between 0 and 100 specifying the plotting limits for each likelihood line in terms of the confidence interval (the default is 99.99).</p></td>
     </tr>
     <tr>
       <th>refline</th>
@@ -227,7 +235,9 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>At the moment, the function only accepts <code>measure="OR"</code>. For each \(2 \times 2\) table, the function then plots the log-likelihood of the (log) odds ratio based on the non-central hypergeometric distribution. Since studies with no cases (or only cases) in both groups have a flat likelihood and are not informative about the odds ratio, they are dropped by default (i.e., <code>drop00=TRUE</code>). For studies that have a single zero count, the MLE of the odds ratio is infinite and these likelihoods are indicated by a dashed line.</p>
+    <p>At the moment, the function only accepts <code>measure="GEN"</code> or <code>measure="OR"</code>.</p>
+<p>For <code>measure="GEN"</code>, one must specify arguments <code>yi</code> for the observed effect sizes or outcomes and <code>vi</code> for the corresponding sampling variances. The function then plots the likelihood of the true outcome based on a normal distribution for each study with observed outcome as given by <code>yi</code> and variance as given by <code>vi</code>.</p>
+<p>For <code>measure="OR"</code>, one must specify arguments <code>ai</code>, <code>bi</code>, <code>ci</code>, and <code>di</code>, which denote the cell frequencies of the \(2 \times 2\) tables. Alternatively, one can specify <code>ai</code>, <code>ci</code>, <code>n1i</code>, and <code>n2i</code>. See <code><a href='escalc.html'>escalc</a></code> function for more details. The function then plots the likelihood of the true log odds ratio based on the non-central hypergeometric distribution for each \(2 \times 2\) table. Since studies with no cases (or only cases) in both groups have a flat likelihood and are not informative about the odds ratio, they are dropped by default (i.e., <code>drop00=TRUE</code>) and are hence not drawn (if <code>drop00=FALSE</code>, these likelihood are indicated by dotted lines). For studies that have a single zero count, the MLE of the odds ratio is infinite and these likelihoods are indicated by dashed lines.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
@@ -236,13 +246,18 @@
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='rma.glmm.html'>rma.glmm</a></code></p></div>
+    <div class='dont-index'><p><code><a href='rma.uni.html'>rma.uni</a></code>, <code><a href='rma.glmm.html'>rma.glmm</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>### create plot (Figure 2 in van Houwelingen, Zwinderman, &amp; Stijnen, 1993)</span>
+    <pre class="examples"><div class='input'><span class='co'>### calculate log risk ratios and corresponding sampling variances</span>
+<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>)
+
+<span class='co'>### draw likelihoods</span>
+<span class='fu'>llplot</span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"GEN"</span>, <span class='kw'>yi</span><span class='kw'>=</span><span class='no'>yi</span>, <span class='kw'>vi</span><span class='kw'>=</span><span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>refline</span><span class='kw'>=</span><span class='fl'>NA</span>, <span class='kw'>xlim</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(-<span class='fl'>3</span>,<span class='fl'>2</span>))</div><div class='img'><img src='llplot-1.png' alt='' width='768' height='614' /></div><div class='input'>
+<span class='co'>### create plot (Figure 2 in van Houwelingen, Zwinderman, &amp; Stijnen, 1993)</span>
 <span class='fu'>llplot</span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>b.xci</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>nci</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>b.xti</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>nti</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.collins1985a</span>,
-       <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>refline</span><span class='kw'>=</span><span class='fl'>NA</span>, <span class='kw'>xlim</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(-<span class='fl'>4</span>,<span class='fl'>4</span>), <span class='kw'>drop00</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Studies with NAs omitted from plotting.</span></div><div class='img'><img src='llplot-1.png' alt='' width='768' height='614' /></div></pre>
+       <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>refline</span><span class='kw'>=</span><span class='fl'>NA</span>, <span class='kw'>xlim</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(-<span class='fl'>4</span>,<span class='fl'>4</span>), <span class='kw'>drop00</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Studies with NAs omitted from plotting.</span></div><div class='img'><img src='llplot-2.png' alt='' width='768' height='614' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
