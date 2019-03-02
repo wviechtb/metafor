@@ -870,7 +870,8 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
                tau2.min = 0,          # lower bound for tau^2 value
                tau2.max = 100,        # upper bound for tau^2 value (for PM/PMM/GENQM estimators; and passed down for tau^2 CI obtained with confint())
                threshold = 10^-5,     # convergence threshold (for ML, REML, EB, SJIT, DLIT)
-               tol = .Machine$double.eps^0.25, # convergence tolerance for uniroot() as used for PM, PMM, and GENQM
+               tol = .Machine$double.eps^0.25, # convergence tolerance for uniroot() as used for PM, PMM, and GENQM (also used in 'll0 - ll > con$tol' check for ML/REML)
+               ll0check = TRUE,       # should the 'll0 - ll > con$tol' check be conducted for ML/REML?
                maxiter = 100,         # maximum number of iterations (for ML, REML, EB, SJIT, DLIT)
                stepadj = 1,           # step size adjustment for Fisher scoring algorithm (for ML, REML, EB)
                REMLf = TRUE,          # should |X'X| term be included in the REML log likelihood?
@@ -1317,16 +1318,52 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
          if (conv == 0L)
             stop(mstyle$stop("Fisher scoring algorithm did not converge. See 'help(rma)' for possible remedies."))
 
+         ### check if ll is larger when tau^2 = 0 (only if ll0check=TRUE and only possible/sensible if allvipos and !tau2.fix)
+         ### note: this doesn't catch the case where tau^2 = 0 is a local maximum
+
+         if (is.element(method, c("ML","REML")) && con$ll0check && allvipos && !tau2.fix) {
+
+            wi    <- 1/vi
+            W     <- diag(wi, nrow=k, ncol=k)
+            stXWX <- .invcalc(X=X, W=W, k=k)
+            beta  <- stXWX %*% crossprod(X,W) %*% Y
+            RSS   <- sum(wi*(yi - X %*% beta)^2)
+            if (method == "ML")
+               ll0 <- -1/2 * (k)   * log(2*base::pi) - 1/2 * sum(log(vi)) - 1/2 * RSS
+            if (method == "REML")
+               ll0 <- -1/2 * (k-p) * log(2*base::pi) - 1/2 * sum(log(vi)) - 1/2 * determinant(crossprod(X,W) %*% X, logarithm=TRUE)$modulus - 1/2 * RSS
+
+            wi    <- 1/(vi + tau2)
+            if (any(tau2 + vi < 0))
+               stop(mstyle$stop("Some marginal variances are negative."))
+            if (any(is.infinite(wi)))
+               stop(mstyle$stop("Division by zero when computing the inverse variance weights."))
+            W     <- diag(wi, nrow=k, ncol=k)
+            stXWX <- .invcalc(X=X, W=W, k=k)
+            beta  <- stXWX %*% crossprod(X,W) %*% Y
+            RSS   <- sum(wi*(yi - X %*% beta)^2)
+            if (method == "ML")
+               ll <- -1/2 * (k)   * log(2*base::pi) - 1/2 * sum(log(vi + tau2)) - 1/2 * RSS
+            if (method == "REML")
+               ll <- -1/2 * (k-p) * log(2*base::pi) - 1/2 * sum(log(vi + tau2)) - 1/2 * determinant(crossprod(X,W) %*% X, logarithm=TRUE)$modulus - 1/2 * RSS
+
+            if (ll0 - ll > con$tol && tau2 > con$threshold) {
+               warning(mstyle$warning("Fisher scoring algorithm may have gotten stuck at a local maximum.\n  Setting tau^2 = 0. Check the profile likelihood plot with profile()."))
+               tau2 <- 0
+            }
+
+         }
+
          ### need to run this so that wi and P are based on the final tau^2 value
 
-         wi <- 1/(vi + tau2)
+         wi     <- 1/(vi + tau2)
          if (any(tau2 + vi < 0))
             stop(mstyle$stop("Some marginal variances are negative."))
          if (any(is.infinite(wi)))
             stop(mstyle$stop("Division by zero when computing the inverse variance weights."))
-         W <- diag(wi, nrow=k, ncol=k)
+         W     <- diag(wi, nrow=k, ncol=k)
          stXWX <- .invcalc(X=X, W=W, k=k)
-         P <- W - W %*% X %*% stXWX %*% crossprod(X,W)
+         P     <- W - W %*% X %*% stXWX %*% crossprod(X,W)
 
       }
 

@@ -1,4 +1,4 @@
-Changes in Version 2.1-0 (2019-03-01)
+Changes in Version 2.1-0 (2019-03-02)
 =====================================
 
    o confint.rma.mv() now returns an object of class 'list.confint.rma' when
