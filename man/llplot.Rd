@@ -5,7 +5,7 @@
    Function to plot the likelihood of a certain parameter corresponding to an effect size or outcome measure given the study data.
 }
 \usage{
-llplot(measure, yi, vi, ai, bi, ci, di, n1i, n2i, data, subset, drop00=TRUE,
+llplot(measure, yi, vi, sei, ai, bi, ci, di, n1i, n2i, data, subset, drop00=TRUE,
        xvals=1000, xlim, ylim, xlab, ylab, scale=TRUE,
        lty, lwd, col, level=99.99, refline=0, \dots)
 }
@@ -13,6 +13,7 @@ llplot(measure, yi, vi, ai, bi, ci, di, n1i, n2i, data, subset, drop00=TRUE,
    \item{measure}{a character string indicating for which effect size or outcome measure the likelihoods should be calculated. See \sQuote{Details} for possible options and how the data should be specified.}
    \item{yi}{vector with the observed effect sizes or outcomes.}
    \item{vi}{vector with the corresponding sampling variances.}
+   \item{sei}{vector to specify the corresponding standard.}
    \item{ai}{vector to specify the \eqn{2 \times 2}{2x2} table frequencies (upper left cell).}
    \item{bi}{vector to specify the \eqn{2 \times 2}{2x2} table frequencies (upper right cell).}
    \item{ci}{vector to specify the \eqn{2 \times 2}{2x2} table frequencies (lower left cell).}
@@ -38,7 +39,7 @@ llplot(measure, yi, vi, ai, bi, ci, di, n1i, n2i, data, subset, drop00=TRUE,
 \details{
    At the moment, the function only accepts \code{measure="GEN"} or \code{measure="OR"}.
 
-   For \code{measure="GEN"}, one must specify arguments \code{yi} for the observed effect sizes or outcomes and \code{vi} for the corresponding sampling variances. The function then plots the likelihood of the true outcome based on a normal distribution for each study with observed outcome as given by \code{yi} and variance as given by \code{vi}.
+   For \code{measure="GEN"}, one must specify arguments \code{yi} for the observed effect sizes or outcomes and \code{vi} for the corresponding sampling variances (instead of specifying \code{vi}, one can specify the standard errors via the \code{sei} argument). The function then plots the likelihood of the true outcome based on a normal sampling distribution with observed outcome as given by \code{yi} and variance as given by \code{vi} for each study.
 
    For \code{measure="OR"}, one must specify arguments \code{ai}, \code{bi}, \code{ci}, and \code{di}, which denote the cell frequencies of the \eqn{2 \times 2}{2x2} tables. Alternatively, one can specify \code{ai}, \code{ci}, \code{n1i}, and \code{n2i}. See \code{\link{escalc}} function for more details. The function then plots the likelihood of the true log odds ratio based on the non-central hypergeometric distribution for each \eqn{2 \times 2}{2x2} table. Since studies with no cases (or only cases) in both groups have a flat likelihood and are not informative about the odds ratio, they are dropped by default (i.e., \code{drop00=TRUE}) and are hence not drawn (if \code{drop00=FALSE}, these likelihood are indicated by dotted lines). For studies that have a single zero count, the MLE of the odds ratio is infinite and these likelihoods are indicated by dashed lines.
 }

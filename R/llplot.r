@@ -1,4 +1,4 @@
-llplot <- function(measure, yi, vi, ai, bi, ci, di, n1i, n2i, data, subset, drop00=TRUE,
+llplot <- function(measure, yi, vi, sei, ai, bi, ci, di, n1i, n2i, data, subset, drop00=TRUE,
 xvals=1000, xlim, ylim, xlab, ylab, scale=TRUE,
 lty, lwd, col, level=99.99, refline=0, ...) {
 
@@ -7,6 +7,9 @@ lty, lwd, col, level=99.99, refline=0, ...) {
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
    ### data setup
+
+   if (missing(measure))
+      stop(mstyle$stop("Must specify an effect size or outcome measure via the 'measure' argument."))
 
    if (!is.element(measure, c("GEN", "OR")))
       stop(mstyle$stop("Currently only measure=\"GEN\" or measure=\"OR\" can be specified."))
@@ -74,10 +77,26 @@ lty, lwd, col, level=99.99, refline=0, ...) {
 
    if (measure == "GEN") {
 
-      mf.yi <- mf[[match("yi", names(mf))]]
-      mf.vi <- mf[[match("vi", names(mf))]]
-      yi <- eval(mf.yi, data, enclos=sys.frame(sys.parent()))
-      vi <- eval(mf.vi, data, enclos=sys.frame(sys.parent()))
+      mf.yi  <- mf[[match("yi",  names(mf))]]
+      mf.vi  <- mf[[match("vi",  names(mf))]]
+      mf.sei <- mf[[match("sei", names(mf))]]
+      yi  <- eval(mf.yi,  data, enclos=sys.frame(sys.parent()))
+      vi  <- eval(mf.vi,  data, enclos=sys.frame(sys.parent()))
+      sei <- eval(mf.sei, data, enclos=sys.frame(sys.parent()))
+
+      if (is.null(vi)) {
+         if (is.null(sei)) {
+            stop(mstyle$stop("Need to specify 'vi' or 'sei' argument."))
+         } else {
+            vi <- sei^2
+         }
+      }
+
+      if (length(yi)==0L || length(vi)==0L)
+         stop(mstyle$stop("Cannot extract outcomes. Check that all of the required \n  information is specified via the appropriate arguments."))
+
+      if (length(yi) != length(vi))
+         stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
       k <- length(yi) ### number of outcomes before subsetting
 
@@ -106,6 +125,18 @@ lty, lwd, col, level=99.99, refline=0, ...) {
       n2i <- eval(mf.n2i, data, enclos=sys.frame(sys.parent()))
       if (is.null(bi)) bi <- n1i - ai
       if (is.null(di)) di <- n2i - ci
+
+      if (length(ai)==0L || length(bi)==0L || length(ci)==0L || length(di)==0L)
+         stop(mstyle$stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments."))
+
+      if (!all(length(ai) == c(length(ai),length(bi),length(ci),length(di))))
+         stop(mstyle$stop("Supplied data vectors are not all of the same length."))
+
+      if (any(c(ai > n1i, ci > n2i), na.rm=TRUE))
+         stop(mstyle$stop("One or more event counts are larger than the corresponding group sizes."))
+
+      if (any(c(ai, bi, ci, di) < 0, na.rm=TRUE))
+         stop(mstyle$stop("One or more counts are negative."))
 
       k <- length(ai) ### number of outcomes before subsetting
 

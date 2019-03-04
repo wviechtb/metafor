@@ -14,7 +14,7 @@
 \arguments{
    \item{x}{vector of length \eqn{k} with the observed effect sizes or outcomes.}
    \item{vi}{vector of length \eqn{k} with the corresponding sampling variances.}
-   \item{sei}{vector of length \eqn{k} with the corresponding standard errors.\cr(note: only one of the two, \code{vi} or \code{sei}, needs to be specified)}
+   \item{sei}{vector of length \eqn{k} with the corresponding standard errors (note: only one of the two, \code{vi} or \code{sei}, needs to be specified).}
    \item{ci.lb}{vector of length \eqn{k} with the corresponding lower confidence interval bounds. Not needed if \code{vi} or \code{sei} is specified. See \sQuote{Details}.}
    \item{ci.ub}{vector of length \eqn{k} with the corresponding upper confidence interval bounds. Not needed if \code{vi} or \code{sei} is specified. See \sQuote{Details}.}
    \item{annotate}{logical specifying whether annotations should be added to the plot (the default is \code{TRUE}).}
