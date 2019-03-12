@@ -402,7 +402,8 @@
    if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","GEN"))) {
       g.levels <- list(sort(unique(apply(mf.g[-nvars], 1, paste, collapse=" + "))), sort(unique((mf.g[[nvars]]))))
    } else {
-      g.levels <- list(sort(unique(as.character(mf.g[[1]]))), sort(unique(as.character(mf.g[[2]]))))
+      #g.levels <- list(sort(unique(as.character(mf.g[[1]]))), sort(unique(as.character(mf.g[[2]]))))
+      g.levels <- list(as.character(sort(unique(mf.g[[1]]))), as.character(sort(unique(mf.g[[2]]))))
    }
 
    ### determine appropriate number of tau2 and rho values (note: this is done *after* subsetting)
@@ -568,7 +569,8 @@
    if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","GEN"))) {
       g.levels <- list(sort(unique(apply(mf.g[-nvars], 1, paste, collapse=" + "))), sort(unique((mf.g[[nvars]]))))
    } else {
-      g.levels <- list(sort(unique(as.character(mf.g[[1]]))), sort(unique(as.character(mf.g[[2]]))))
+      #g.levels <- list(sort(unique(as.character(mf.g[[1]]))), sort(unique(as.character(mf.g[[2]]))))
+      g.levels <- list(as.character(sort(unique(mf.g[[1]]))), as.character(sort(unique(mf.g[[2]]))))
    }
 
    ### determine which levels of the inner factor were removed

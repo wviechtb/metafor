@@ -170,3 +170,29 @@ test_that("BLUPs are calculated correctly for the three-level random-effects mod
    expect_equivalent(sav[[2]]$se,      c(0.164, 0.164, 0.166, 0.166, 0.122, 0.122, 0.123, 0.132, 0.137, 0.146, 0.129, 0.126, 0.103, 0.103, 0.109, 0.125, 0.109, 0.105, 0.103, 0.118, 0.115, 0.117, 0.121, 0.118, 0.119, 0.089, 0.092, 0.092, 0.092, 0.092, 0.127, 0.123, 0.122, 0.069, 0.069, 0.069, 0.069, 0.069, 0.069, 0.069, 0.069, 0.107, 0.109, 0.107, 0.106, 0.113, 0.113, 0.137, 0.137, 0.136, 0.136, 0.136, 0.159, 0.158, 0.155, 0.155))
 
 })
+
+test_that("results are correct when allowing for different tau^2 per district.", {
+
+   skip_on_cran()
+
+   ### shuffle up dat to make sure that this does not affect things
+   set.seed(1234)
+   dat <- dat[sample(nrow(dat)),]
+
+   res <- rma.mv(yi, vi, random = list(~ 1 | district, ~ factor(district) | study), struct="DIAG", data=dat, control=list(optimizer="optim"))
+   out <- capture.output(print(res, digits=3))
+   out <- capture.output(print(summary(res, digits=3)))
+
+   expect_equivalent(round(coef(res),3), 0.127)
+   expect_equivalent(round(res$se,3), 0.059)
+   expect_equivalent(round(res$tau2,3), c(0, 0.04, 0, 0.058, 0.008, 0, 0.538, 0.001, 0.061, 0.18, 0))
+
+   ### check that output is also correct
+   tau2 <- as.numeric(substr(out[grep("tau", out)], 13, 18))
+   expect_equivalent(tau2, c(0, 0.04, 0, 0.058, 0.008, 0, 0.538, 0.001, 0.061, 0.18, 0))
+   k.lvl <- as.numeric(substr(out[grep("tau", out)], 30, 31))
+   expect_equivalent(k.lvl, c(4, 4, 3, 4, 4, 11, 3, 8, 6, 5, 4))
+   level <- as.numeric(substr(out[grep("tau", out)], 43, 45))
+   expect_equivalent(level, c(11, 12, 18, 27, 56, 58, 71, 86, 91, 108, 644))
+
+})
