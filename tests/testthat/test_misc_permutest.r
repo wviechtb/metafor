@@ -12,6 +12,11 @@ test_that("permutest() gives correct results for a random-effects model.", {
 
    skip_on_cran()
 
+   maj <- as.numeric(R.Version()$major)
+   min <- as.numeric(R.Version()$minor)
+
+   skip_if(maj >= 3 && min >= 6, message = "Skip test for now due to changes in sampler in R-devel.")
+
    ### fit random-effects model
    res <- rma(yi, vi, data=dat)
 
@@ -42,6 +47,11 @@ test_that("permutest() gives correct results for a mixed-effects model.", {
 
    skip_on_cran()
 
+   maj <- as.numeric(R.Version()$major)
+   min <- as.numeric(R.Version()$minor)
+
+   skip_if(maj >= 3 && min >= 6, message = "Skip test for now due to changes in sampler in R-devel.")
+
    ### add a fake moderator
    dat$mod <- c(3,1,2,2,4,5)
 
@@ -65,6 +75,11 @@ test_that("permutest() gives correct results for a mixed-effects model.", {
 test_that("permutest() gives correct results for example in Follmann & Proschan (1999).", {
 
    skip_on_cran()
+
+   maj <- as.numeric(R.Version()$major)
+   min <- as.numeric(R.Version()$minor)
+
+   skip_if(maj >= 3 && min >= 6, message = "Skip test for now due to changes in sampler in R-devel.")
 
    ### data in Table 1
    dat <- read.table(header=TRUE, text = "
