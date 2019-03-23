@@ -75,8 +75,8 @@ test_that("results are correct for the mixed-effects model.", {
 
    skip_on_cran()
 
-   cexs <- 1/dat$vi
-   cexs <- 1 + (cexs - min(cexs)) / (max(cexs) - min(cexs))
+   size <- 1 / sqrt(dat$vi)
+   size <- 0.15 * size / max(size)
 
    modvals <- cbind(0, cbind(seq(12, 24, by=.1)) - 20, 0)
    preds   <- predict(res, modvals, transf=exp)
@@ -89,7 +89,7 @@ test_that("results are correct for the mixed-effects model.", {
    lines(modvals[,2] + 20, preds$pred, col="darkgray", lwd=2)
    lines(modvals[,2] + 20, preds$ci.lb, col="darkgray", lty="dashed", lwd=2)
    lines(modvals[,2] + 20, preds$ci.ub, col="darkgray", lty="dashed", lwd=2)
-   points(dat$baseline, exp(dat$yi), pch=19, cex=cexs)
+   symbols(dat$baseline, exp(dat$yi), circles=size, inches=FALSE, add=TRUE, bg="black")
 
    par(opar)
 

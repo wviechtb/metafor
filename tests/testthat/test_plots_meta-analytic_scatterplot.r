@@ -27,14 +27,18 @@ test_that("plot can be drawn.", {
    ### calculate predicted risk ratios for 0 to 60 degrees absolute latitude
    preds <- predict(res, newmods=c(0:60), transf=exp)
 
-   ### calculate point sizes by rescaling the standard errors
-   wi    <- 1/sqrt(dat$vi)
-   size  <- 0.5 + 3.0 * (wi - min(wi))/(max(wi) - min(wi))
+   ### radius of points will be proportional to the inverse standard errors
+   ### hence the area of the points will be proportional to inverse variances
+   size <- 1 / sqrt(dat$vi)
+   size <- size / max(size)
 
-   ### plot the risk ratios against absolute latitude
-   plot(dat$ablat, exp(dat$yi), pch=19, cex=size,
+   ### set up plot (risk ratios on y-axis, absolute latitude on x-axis)
+   plot(NA, NA, xlim=c(10,60), ylim=c(0.2,1.6),
         xlab="Absolute Latitude", ylab="Risk Ratio",
         las=1, bty="l", log="y")
+
+   ### add points
+   symbols(dat$ablat, exp(dat$yi), circles=size, inches=FALSE, add=TRUE, bg="black")
 
    ### add predicted values (and corresponding CI bounds)
    lines(0:60, preds$pred)
