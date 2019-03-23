@@ -117,18 +117,13 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
    if (length(pch) == 1L)
       pch <- rep(pch, k)
-
    if (length(pch) != length(yi))
       stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'pch' argument."))
 
-   ### if user has set the point sizes
-
-   if (!is.null(psize)) {
-      if (length(psize) == 1L)
-         psize <- rep(psize, k)
-      if (length(psize) != length(yi))
-         stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'psize' argument."))
-   }
+   if (length(psize) == 1L)
+      psize <- rep(psize, k)
+   if (length(psize) != length(yi))
+      stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'psize' argument."))
 
    ### if user has set the col argument
 
@@ -234,26 +229,6 @@ cex, cex.lab, cex.axis, annosym, ...) {
          stop(mstyle$stop("Argument 'clim' must be of length 2."))
       ci.lb[ci.lb < clim[1]] <- clim[1]
       ci.ub[ci.ub > clim[2]] <- clim[2]
-   }
-
-   ### set default point sizes (if not specified by user)
-
-   if (is.null(psize)) {
-      if (any(vi <= 0, na.rm=TRUE)) {           ### in case any vi value is zero
-         psize <- rep(1, k)
-      } else {                                  ### default psize is proportional to inverse standard error
-         wi    <- 1/sqrt(vi)                    ### note: vi's that are NA are ignored (but vi's whose yi is
-         psize <- wi/sum(wi, na.rm=TRUE)        ### NA are NOT ignored; an unlikely case in practice)
-         rng   <- max(psize, na.rm=TRUE) - min(psize, na.rm=TRUE)
-         if (rng <= .Machine$double.eps^0.5) {
-            psize <- rep(1, k)
-         } else {
-            psize <- (psize - min(psize, na.rm=TRUE)) / rng
-            psize <- (psize * 1.0) + 0.5        ### note: only vi's that are still in the subset are used for determining the default point sizes
-         }
-         if (all(is.na(psize)))                 ### if k=1, then psize is NA, so catch this (and maybe some other problems)
-            psize <- rep(1, k)
-      }
    }
 
    #########################################################################
