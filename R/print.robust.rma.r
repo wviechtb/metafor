@@ -22,7 +22,7 @@ print.robust.rma <- function(x, digits, signif.stars=getOption("show.signif.star
    if (all(x$tcl[1] == x$tcl)) {
       cat(mstyle$result(x$tcl[1]))
    } else {
-      cat(mstyle$result(paste0(min(x$tcl), "-", max(x$tcl), " (mean: ", formatC(mean(x$tcl), format="f", digits=2), ", median: ", median(x$tcl), ")")))
+      cat(mstyle$result(paste0(min(x$tcl), "-", max(x$tcl), " (mean: ", formatC(mean(x$tcl), format="f", digits=2), ", median: ", formatC(median(x$tcl), format="f", digits=2), ")")))
    }
    cat("\n\n")
 
