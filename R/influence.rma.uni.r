@@ -29,8 +29,11 @@ influence.rma.uni <- function(model, digits, progbar=FALSE, ...) {
       measure <- ddd$measure
    }
 
-   if (missing(digits))
-      digits <- x$digits
+   if (missing(digits)) {
+      digits <- .get.digits(xdigits=x$digits, dmiss=TRUE)
+   } else {
+      digits <- .get.digits(digits=digits, xdigits=x$digits, dmiss=FALSE)
+   }
 
    if (!measure == "cooks.distance" && inherits(model, "robust.rma"))
       stop(mstyle$stop("Method not available for objects of class \"robust.rma\"."))
@@ -229,7 +232,7 @@ influence.rma.uni <- function(model, digits, progbar=FALSE, ...) {
 
    }
 
-   out <- c(out, list(tau2=x$tau2, QE=x$QE, k=x$k, p=x$p, m=m))
+   out <- c(out, list(tau2=x$tau2, QE=x$QE, k=x$k, p=x$p, m=m, digits=digits))
 
    if (na.act == "na.fail" && any(!x$not.na))
       stop(mstyle$stop("Missing values in results."))

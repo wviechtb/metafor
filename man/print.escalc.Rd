@@ -6,7 +6,7 @@
    Print and summary methods for objects of class \code{"escalc"}.
 }
 \usage{
-\method{print}{escalc}(x, digits, \dots)
+\method{print}{escalc}(x, digits=attr(x,"digits"), \dots)
 
 \method{summary}{escalc}(object, out.names=c("sei","zi","ci.lb","ci.ub"), var.names,
         H0=0, append=TRUE, replace=TRUE, level=95, clim, digits, transf, \dots)
@@ -14,7 +14,7 @@
 \arguments{
    \item{x}{an object of class \code{"escalc"}.}
    \item{object}{an object of class \code{"escalc"}.}
-   \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (the default is to take the value from the object if possible).}
+   \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (the default is to take the value from the object).}
    \item{out.names}{character string with four elements, specifying the variable names for the standard errors, test statistics, and lower/upper confidence interval bounds.}
    \item{var.names}{character string with two elements, specifying the variable names for the observed outcomes and the sampling variances (the default is to take the value from the object if possible).}
    \item{H0}{numeric value specifying the value of the outcome under the null hypothesis.}

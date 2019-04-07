@@ -5,8 +5,11 @@ print.rma.peto <- function(x, digits, showfit=FALSE, ...) {
    if (!inherits(x, "rma.peto"))
       stop(mstyle$stop("Argument 'x' must be an object of class \"rma.peto\"."))
 
-   if (missing(digits))
-      digits <- x$digits
+   if (missing(digits)) {
+      digits <- .get.digits(xdigits=x$digits, dmiss=TRUE)
+   } else {
+      digits <- .get.digits(digits=digits, xdigits=x$digits, dmiss=FALSE)
+   }
 
    if (!exists(".rmspace"))
       cat("\n")
@@ -19,7 +22,7 @@ print.rma.peto <- function(x, digits, showfit=FALSE, ...) {
       if (anyNA(x$fit.stats$ML)) {
          fs <- x$fit.stats$ML
       } else {
-         fs <- c(formatC(x$fit.stats$ML, digits=digits, format="f"))
+         fs <- .fcf(x$fit.stats$ML, digits[["fit"]])
       }
       names(fs) <- c("logLik", "deviance", "AIC", "BIC", "AICc")
       cat("\n")
@@ -32,22 +35,11 @@ print.rma.peto <- function(x, digits, showfit=FALSE, ...) {
 
    if (!is.na(x$QE)) {
       cat(mstyle$section("Test for Heterogeneity:"), "\n")
-      cat(mstyle$result(paste0("Q(df = ", x$k.pos-1, ") = ", formatC(x$QE, digits=digits, format="f"), ", p-val ", .pval(x$QEp, digits=digits, showeq=TRUE, sep=" "))))
+      cat(mstyle$result(paste0("Q(df = ", x$k.pos-1, ") = ", .fcf(x$QE, digits[["test"]]), ", p-val ", .pval(x$QEp, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
    }
 
-   res.table     <- c(x$beta, x$se, x$zval, x$pval, x$ci.lb, x$ci.ub)
-   res.table.exp <- c(exp(x$beta), exp(x$ci.lb), exp(x$ci.ub))
-
-   if (!is.na(x$beta)) {
-      res.table    <- formatC(res.table, digits=digits, format="f")
-      res.table[4] <- .pval(x$pval, digits=digits)
-   }
-
-   if (!is.na(x$beta))
-      res.table.exp <- formatC(res.table.exp, digits=digits, format="f")
-
-   names(res.table)     <- c("estimate", "se", "zval", "pval", "ci.lb", "ci.ub")
-   names(res.table.exp) <- c("estimate", "ci.lb", "ci.ub")
+   res.table <- c(estimate=.fcf(unname(x$beta), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), zval=.fcf(x$zval, digits[["test"]]), pval=.pval(x$pval, digits[["pval"]]), ci.lb=.fcf(x$ci.lb, digits[["ci"]]), ci.ub=.fcf(x$ci.ub, digits[["ci"]]))
+   res.table.exp <- c(estimate=.fcf(exp(unname(x$beta)), digits[["est"]]), ci.lb=.fcf(exp(x$ci.lb), digits[["ci"]]), ci.ub=.fcf(exp(x$ci.ub), digits[["ci"]]))
 
    cat("\n\n")
    cat(mstyle$section("Model Results (log scale):"))

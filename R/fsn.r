@@ -1,4 +1,4 @@
-fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, subset, digits=4) {
+fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, subset, digits) {
 
    #########################################################################
 
@@ -13,6 +13,14 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, subset, 
 
    if (missing(target))
       target <- NULL
+
+   ### set defaults for digits
+
+   if (missing(digits)) {
+      digits <- .set.digits(dmiss=TRUE)
+   } else {
+      digits <- .set.digits(digits, dmiss=FALSE)
+   }
 
    #########################################################################
 

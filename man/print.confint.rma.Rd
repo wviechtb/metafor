@@ -6,12 +6,12 @@
    Print methods for objects of class \code{"confint.rma"} and \code{"list.confint.rma"}.
 }
 \usage{
-\method{print}{confint.rma}(x, digits, \dots)
-\method{print}{list.confint.rma}(x, digits, \dots)
+\method{print}{confint.rma}(x, digits=x$digits, \dots)
+\method{print}{list.confint.rma}(x, digits=x$digits, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"confint.rma"} or \code{"list.confint.rma"}.}
-   \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is to take the value from the object).}
+   \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (the default is to take the value from the object).}
    \item{\dots}{other arguments.}
 }
 \details{

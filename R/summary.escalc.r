@@ -171,7 +171,7 @@ H0=0, append=TRUE, replace=TRUE, level=95, clim, digits, transf, ...) {
    ### update existing digits attribute if digits is specified
 
    if (!missing(digits)) {
-      attr(dat, "digits") <- digits
+      attr(dat, "digits") <- .get.digits(digits=digits, xdigits=attr(x, "digits"), dmiss=FALSE)
    } else {
       attr(dat, "digits") <- attr(x, "digits")
    }

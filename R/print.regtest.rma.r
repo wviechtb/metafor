@@ -1,15 +1,11 @@
-print.regtest.rma <- function(x, digits, ret.fit, ...) {
+print.regtest.rma <- function(x, digits=x$digits, ret.fit=x$ret.fit, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
    if (!inherits(x, "regtest.rma"))
       stop(mstyle$stop("Argument 'x' must be an object of class \"regtest.rma\"."))
 
-   if (missing(digits))
-      digits <- x$digits
-
-   if (missing(ret.fit))
-      ret.fit <- x$ret.fit
+   digits <- .get.digits(digits=digits, xdigits=x$digits, dmiss=FALSE)
 
    if (!exists(".rmspace"))
       cat("\n")
@@ -49,9 +45,9 @@ print.regtest.rma <- function(x, digits, ret.fit, ...) {
 
    cat(mstyle$text("test for funnel plot asymmetry: "))
    if (is.na(x$dfs)) {
-      cat(mstyle$result(paste0("z = ", formatC(x$zval, digits=digits, format="f"), ", p ", .pval(x$pval, digits=digits, showeq=TRUE, sep=" "))))
+      cat(mstyle$result(paste0("z = ", .fcf(x$zval, digits[["test"]]), ", p ", .pval(x$pval, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
    } else {
-      cat(mstyle$result(paste0("t = ", formatC(x$zval, digits=digits, format="f"), ", df = ", x$dfs, ", p ", .pval(x$pval, digits=digits, showeq=TRUE, sep=" "))))
+      cat(mstyle$result(paste0("t = ", .fcf(x$zval, digits[["test"]]), ", df = ", x$dfs, ", p ", .pval(x$pval, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
    }
    cat("\n")
    #cat("H0: coefficient for predictor is equal to 0\n\n")

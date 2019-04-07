@@ -13,8 +13,11 @@ vif.rma <- function(x, intercept=FALSE, table=FALSE, digits, ...) {
    if (x$int.only)
       stop(mstyle$stop("VIF not applicable for intercept-only models."))
 
-   if (missing(digits))
-      digits <- x$digits
+   if (missing(digits)) {
+      digits <- .get.digits(xdigits=x$digits, dmiss=TRUE)
+   } else {
+      digits <- .get.digits(digits=digits, xdigits=x$digits, dmiss=FALSE)
+   }
 
    #########################################################################
 
@@ -46,7 +49,7 @@ vif.rma <- function(x, intercept=FALSE, table=FALSE, digits, ...) {
       names(vif) <- rownames(vb)
    }
 
-   vif <- round(vif, digits=digits)
+   vif <- round(vif, digits=digits[["est"]])
 
    return(vif)
 

@@ -23,7 +23,7 @@
 ### - SPEXP/SPGAU/SPLIN/SPRAT/SPSPH (spatial structures: exponential, gaussian, linear, rational quadratic, spherical)
 
 rma.mv <- function(yi, V, W, mods, random, struct="CS", intercept=TRUE, data, slab, subset, ### add ni as argument in the future
-method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2, rho, gamma2, phi, sparse=FALSE, verbose=FALSE, control, ...) {
+method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, rho, gamma2, phi, sparse=FALSE, verbose=FALSE, control, ...) {
 
    #########################################################################
 
@@ -71,6 +71,14 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
 
    if (missing(control))
       control <- list()
+
+   ### set defaults for digits
+
+   if (missing(digits)) {
+      digits <- .set.digits(dmiss=TRUE)
+   } else {
+      digits <- .set.digits(digits, dmiss=FALSE)
+   }
 
    ### get ... argument and check for extra/superfluous arguments
 
@@ -1697,16 +1705,16 @@ method="REML", test="z", level=95, digits=4, btt, R, Rscale="cor", sigma2, tau2,
          cat("\n\n")
       } else {
          cat("\n\n")
-         vcs <- rbind(c("sigma2" = if (withS) round(sigma2.init, digits=digits) else NA,
-                        "tau2"   = if (withG) round(tau2.init, digits=digits) else NA,
-                        "rho"    = if (withG) round(rho.init, digits=digits) else NA,
-                        "gamma2" = if (withH) round(gamma2.init, digits=digits) else NA,
-                        "phi"    = if (withH) round(phi.init, digits=digits) else NA),
+         vcs <- rbind(c("sigma2" = if (withS) round(sigma2.init, digits=digits[["var"]]) else NA,
+                        "tau2"   = if (withG) round(tau2.init, digits=digits[["var"]]) else NA,
+                        "rho"    = if (withG) round(rho.init, digits=digits[["var"]]) else NA,
+                        "gamma2" = if (withH) round(gamma2.init, digits=digits[["var"]]) else NA,
+                        "phi"    = if (withH) round(phi.init, digits=digits[["var"]]) else NA),
                         round(c(   if (withS) sigma2 else NA,
                                    if (withG) tau2 else NA,
                                    if (withG) rho else NA,
                                    if (withH) gamma2 else NA,
-                                   if (withH) phi else NA), digits=digits))
+                                   if (withH) phi else NA), digits=digits[["var"]]))
          vcs <- data.frame(vcs)
          rownames(vcs) <- c("initial", "specified")
          vcs <- rbind(included=ifelse(c(rep(withS, sigma2s), rep(withG, tau2s), rep(withG, rhos), rep(withH, gamma2s), rep(withH, phis)), "Yes", "No"), fixed=unlist(vc.fix), vcs)

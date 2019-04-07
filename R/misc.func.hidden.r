@@ -204,6 +204,18 @@
 
 }
 
+### function to format/round values in general
+
+.fcf <- function(x, digits) {
+
+   if (all(is.na(x))) { # since formatC(NA, format="f", digits=2) fails
+      x
+   } else {
+      formatC(x, format="f", digits=digits)
+   }
+
+}
+
 ############################################################################
 
 ### function to print a named (character) vector right aligned with
@@ -299,7 +311,7 @@
    RSS   <- crossprod(Y,P) %*% Y
 
    if (verbose)
-      cat(mstyle$verbose(paste("tau2 =", formatC(tau2val, digits=digits, width=digits+4, format="f"), "  RSS - objective =", formatC(RSS - objective, format="f", digits=digits, flag=" "), "\n")))
+      cat(mstyle$verbose(paste("tau2 =", formatC(tau2val, digits=digits[["var"]], width=digits[["var"]]+4, format="f"), "  RSS - objective =", formatC(RSS - objective, format="f", digits=digits[["var"]], flag=" "), "\n")))
 
    return(RSS - objective)
 
@@ -330,7 +342,7 @@
    }
 
    if (verbose)
-      cat(mstyle$verbose(paste("tau2 =", formatC(tau2val, digits=digits, width=digits+4, format="f"), "  objective =", formatC(res, format="f", digits=digits, flag=" "), "\n")))
+      cat(mstyle$verbose(paste("tau2 =", formatC(tau2val, digits=digits[["var"]], width=digits[["var"]]+4, format="f"), "  objective =", formatC(res, format="f", digits=digits[["var"]], flag=" "), "\n")))
 
    return(res)
 
@@ -814,7 +826,7 @@
    ### for spatial structures, compute a much more sensible initial value for rho
 
    if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH"))) {
-      rho.init <- suppressMessages(median(Dmat[upper.tri(Dmat)])) # suppressMessages() to avoid '<sparse>[ <logic> ] : .M.sub.i.logical() maybe inefficient' messages when sparse=TRUE
+      rho.init <- suppressMessages(quantile(Dmat[upper.tri(Dmat)], 0.25)) # suppressMessages() to avoid '<sparse>[ <logic> ] : .M.sub.i.logical() maybe inefficient' messages when sparse=TRUE
    } else {
       rho.init <- NULL
    }
@@ -1206,16 +1218,16 @@
    }
 
    if ((vctransf && verbose) || (!vctransf && (verbose > 1))) {
-      cat(mstyle$verbose(paste0("ll = ", ifelse(is.na(llval), NA, formatC(llval, digits=digits, format="f", flag=" ")))), "  ")
+      cat(mstyle$verbose(paste0("ll = ", ifelse(is.na(llval), NA, formatC(llval, digits=digits[["fit"]], format="f", flag=" ")))), "  ")
       if (withS)
-         cat(mstyle$verbose(paste0("sigma2 =", paste(ifelse(is.na(sigma2), NA, formatC(sigma2, digits=digits, format="f", flag=" ")), collapse=" "), "  ")))
+         cat(mstyle$verbose(paste0("sigma2 =", paste(ifelse(is.na(sigma2), NA, formatC(sigma2, digits=digits[["var"]], format="f", flag=" ")), collapse=" "), "  ")))
       if (withG) {
-         cat(mstyle$verbose(paste0("tau2 =",   paste(ifelse(is.na(tau2),   NA, formatC(tau2,   digits=digits, format="f", flag=" ")), collapse=" "), "  ")))
-         cat(mstyle$verbose(paste0("rho =",    paste(ifelse(is.na(rho),    NA, formatC(rho,    digits=digits, format="f", flag=" ")), collapse=" "), "  ")))
+         cat(mstyle$verbose(paste0("tau2 =",   paste(ifelse(is.na(tau2),   NA, formatC(tau2,   digits=digits[["var"]], format="f", flag=" ")), collapse=" "), "  ")))
+         cat(mstyle$verbose(paste0("rho =",    paste(ifelse(is.na(rho),    NA, formatC(rho,    digits=digits[["var"]], format="f", flag=" ")), collapse=" "), "  ")))
       }
       if (withH) {
-         cat(mstyle$verbose(paste0("gamma2 =", paste(ifelse(is.na(gamma2), NA, formatC(gamma2, digits=digits, format="f", flag=" ")), collapse=" "), "  ")))
-         cat(mstyle$verbose(paste0("phi =",    paste(ifelse(is.na(phi),    NA, formatC(phi,    digits=digits, format="f", flag=" ")), collapse=" "), "  ")))
+         cat(mstyle$verbose(paste0("gamma2 =", paste(ifelse(is.na(gamma2), NA, formatC(gamma2, digits=digits[["var"]], format="f", flag=" ")), collapse=" "), "  ")))
+         cat(mstyle$verbose(paste0("phi =",    paste(ifelse(is.na(phi),    NA, formatC(phi,    digits=digits[["var"]], format="f", flag=" ")), collapse=" "), "  ")))
       }
       cat("\n")
    }
@@ -1256,7 +1268,7 @@
          if (inherits(res, "try-error")) {
 
             if (verbose)
-               cat(mstyle$verbose(paste("tau2 =", formatC(val, digits=obj$digits, width=obj$digits+4, format="f"), "  LRT - objective = NA", "\n")))
+               cat(mstyle$verbose(paste("tau2 =", formatC(val, digits=obj$digits[["var"]], width=obj$digits[["var"]]+4, format="f"), "  LRT - objective = NA", "\n")))
 
             stop()
 
@@ -1265,7 +1277,7 @@
             sav <- -2*(logLik(res) - logLik(obj)) - objective
 
             if (verbose)
-               cat(mstyle$verbose(paste("tau2 =", formatC(val, digits=obj$digits, width=obj$digits+4, format="f"), "  LRT - objective =", formatC(sav, digits=obj$digits, width=obj$digits+4, format="f"), "\n")))
+               cat(mstyle$verbose(paste("tau2 =", formatC(val, digits=obj$digits[["var"]], width=obj$digits[["var"]]+4, format="f"), "  LRT - objective =", formatC(sav, digits=obj$digits[["test"]], width=obj$digits[["test"]]+4, format="f"), "\n")))
 
          }
 
@@ -1373,7 +1385,7 @@
          if (inherits(res, "try-error")) {
 
             if (verbose)
-               cat(mstyle$verbose(paste("vc =", formatC(val, digits=obj$digits, width=obj$digits+4, format="f"), "  LRT - objective = NA", "\n")))
+               cat(mstyle$verbose(paste("vc =", formatC(val, digits=obj$digits[["var"]], width=obj$digits[["var"]]+4, format="f"), "  LRT - objective = NA", "\n")))
 
             stop()
 
@@ -1382,7 +1394,7 @@
             sav <- -2*(logLik(res) - logLik(obj)) - objective
 
             if (verbose)
-               cat(mstyle$verbose(paste("vc =", formatC(val, digits=obj$digits, width=obj$digits+4, format="f"), "  LRT - objective =", formatC(sav, digits=obj$digits, width=obj$digits+4, format="f"), "\n")))
+               cat(mstyle$verbose(paste("vc =", formatC(val, digits=obj$digits[["var"]], width=obj$digits[["var"]]+4, format="f"), "  LRT - objective =", formatC(sav, digits=obj$digits[["fit"]], width=obj$digits[["fit"]]+4, format="f"), "\n")))
 
          }
 
@@ -1642,7 +1654,7 @@
 
    ### show progress
    if (progbar)
-      cat(mstyle$verbose(paste("pval =", formatC(pval, format="f", digits=digits), " diff =", formatC(diff, format="f", digits=digits, flag=" "), " val =", formatC(val, format="f", digits=digits, flag=" "), "\n")))
+      cat(mstyle$verbose(paste("pval =", formatC(pval, format="f", digits=digits[["pval"]]), " diff =", formatC(diff, format="f", digits=digits[["pval"]], flag=" "), " val =", formatC(val, format="f", digits=digits[["est"]], flag=" "), "\n")))
 
    ### penalize negative differences, which should force the CI bound to correspond to a p-value of *at least* level
    diff <- ifelse(diff < 0, diff*10, diff)
@@ -2180,7 +2192,7 @@
 
 ### joint density of k non-central hypergeometric distributions for fixed- and random/mixed-effects models
 
-.dnchg <- function(parms, ai, bi, ci, di, X.fit, random, verbose=FALSE, digits=4, dnchgcalc, dnchgprec, intCtrl) {
+.dnchg <- function(parms, ai, bi, ci, di, X.fit, random, verbose=FALSE, digits, dnchgcalc, dnchgprec, intCtrl) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -2199,7 +2211,7 @@
       }
 
       if (verbose)
-         cat(mstyle$verbose(paste("ll =", formatC(sum(lli), digits=digits, format="f"), " ", formatC(beta, digits=digits, format="f"), "\n")))
+         cat(mstyle$verbose(paste("ll =", .fcf(sum(lli), digits[["fit"]]), " ", .fcf(beta, digits[["est"]]), "\n")))
 
    }
 
@@ -2222,7 +2234,7 @@
       }
 
       if (verbose)
-         cat(mstyle$verbose(paste("ll = ", formatC(sum(lli), digits=digits, format="f"), " ", formatC(tau2, digits=digits, format="f"), " ", formatC(beta, digits=digits, format="f"), "\n")))
+         cat(mstyle$verbose(paste("ll = ", .fcf(sum(lli), digits[["fit"]]), " ", .fcf(tau2, digits[["var"]]), " ", .fcf(beta, digits[["est"]]), "\n")))
 
    }
 
@@ -2289,8 +2301,8 @@
    }
 
    if (verbose) {
-      cat(mstyle$verbose(paste0("ll = ",          ifelse(is.na(llval), NA, formatC(llval, digits=digits, format="f", flag=" ")), "  ")))
-      cat(mstyle$verbose(paste0("alpha = ", paste(ifelse(is.na(alpha), NA, formatC(alpha, digits=digits, format="f", flag=" ")), collapse=" "))))
+      cat(mstyle$verbose(paste0("ll = ",          ifelse(is.na(llval), NA, formatC(llval, digits=digits[["fit"]], format="f", flag=" ")), "  ")))
+      cat(mstyle$verbose(paste0("alpha = ", paste(ifelse(is.na(alpha), NA, formatC(alpha, digits=digits[["est"]], format="f", flag=" ")), collapse=" "))))
       cat("\n")
    }
 
@@ -2691,6 +2703,54 @@
       }
       cat(x[i], "\n")
    }
+
+}
+
+############################################################################
+
+.set.digits <- function(digits, dmiss) {
+
+   res <- c(est=4, se=4, test=4, pval=4, ci=4, var=4, sevar=4, fit=4, het=4)
+
+   if (exists(".digits")) {
+      .digits <- get(".digits")
+      pos <- pmatch(names(.digits), names(res))
+      res[c(na.omit(pos))] <- .digits[!is.na(pos)]
+   }
+
+   if (!dmiss) {
+      if (is.null(names(digits))) {
+         res <- c(est=digits[[1]], se=digits[[1]], test=digits[[1]], pval=digits[[1]], ci=digits[[1]], var=digits[[1]], sevar=digits[[1]], fit=digits[[1]], het=digits[[1]])
+      } else {
+         pos <- pmatch(names(digits), names(res))
+         res[c(na.omit(pos))] <- digits[!is.na(pos)]
+      }
+   }
+
+   res
+
+}
+
+.get.digits <- function(digits, xdigits, dmiss) {
+
+   res <- xdigits
+
+   if (exists(".digits")) {
+      .digits <- get(".digits")
+      pos <- pmatch(names(.digits), names(res))
+      res[c(na.omit(pos))] <- .digits[!is.na(pos)]
+   }
+
+   if (!dmiss) {
+      if (is.null(names(digits))) {
+         res <- c(est=digits[[1]], se=digits[[1]], test=digits[[1]], pval=digits[[1]], ci=digits[[1]], var=digits[[1]], sevar=digits[[1]], fit=digits[[1]], het=digits[[1]])
+      } else {
+         pos <- pmatch(names(digits), names(res))
+         res[c(na.omit(pos))] <- digits[!is.na(pos)]
+      }
+   }
+
+   res
 
 }
 

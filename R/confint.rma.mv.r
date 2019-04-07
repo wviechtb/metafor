@@ -13,8 +13,11 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
    if (missing(level))
       level <- x$level
 
-   if (missing(digits))
-      digits <- x$digits
+   if (missing(digits)) {
+      digits <- .get.digits(xdigits=x$digits, dmiss=TRUE)
+   } else {
+      digits <- .get.digits(digits=digits, xdigits=x$digits, dmiss=FALSE)
+   }
 
    if (missing(transf))
       transf <- FALSE
@@ -114,6 +117,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
       if (length(res.all) == 1) {
          return(res.all[[1]])
       } else {
+         res.all$digits <- digits
          class(res.all) <- "list.confint.rma"
          return(res.all)
       }

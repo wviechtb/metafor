@@ -1,4 +1,4 @@
-print.escalc <- function(x, digits, ...) {
+print.escalc <- function(x, digits=attr(x,"digits"), ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -7,11 +7,7 @@ print.escalc <- function(x, digits, ...) {
 
    attr(x, "class") <- NULL
 
-   if (missing(digits))
-      digits <- attr(x, "digits")
-
-   if (is.null(digits))
-      digits <- 4
+   digits <- .get.digits(digits=digits, xdigits=attr(x, "digits"), dmiss=FALSE)
 
    ### get positions of the variable names in the object
    ### note: if the object no longer contains a particular variable, match() returns NA;
@@ -33,22 +29,22 @@ print.escalc <- function(x, digits, ...) {
    ### round variables according to the digits argument
 
    if (length(yi.pos) > 0)
-      x[yi.pos] <- apply(x[yi.pos], 2, formatC, digits=digits, format="f")
+      x[yi.pos] <- apply(x[yi.pos], 2, .fcf, digits[["est"]])
 
    if (length(vi.pos) > 0)
-      x[vi.pos] <- apply(x[vi.pos], 2, formatC, digits=digits, format="f")
+      x[vi.pos] <- apply(x[vi.pos], 2, .fcf, digits[["var"]])
 
    if (length(sei.pos) > 0)
-      x[sei.pos] <- apply(x[sei.pos], 2, formatC, digits=digits, format="f")
+      x[sei.pos] <- apply(x[sei.pos], 2, .fcf, digits[["se"]])
 
    if (length(zi.pos) > 0)
-      x[zi.pos] <- apply(x[zi.pos], 2, formatC, digits=digits, format="f")
+      x[zi.pos] <- apply(x[zi.pos], 2, .fcf, digits[["test"]])
 
    if (length(ci.lb.pos) > 0)
-      x[ci.lb.pos] <- apply(x[ci.lb.pos], 2, formatC, digits=digits, format="f")
+      x[ci.lb.pos] <- apply(x[ci.lb.pos], 2, .fcf, digits[["ci"]])
 
    if (length(ci.ub.pos) > 0)
-      x[ci.ub.pos] <- apply(x[ci.ub.pos], 2, formatC, digits=digits, format="f")
+      x[ci.ub.pos] <- apply(x[ci.ub.pos], 2, .fcf, digits[["ci"]])
 
    tmp <- capture.output(print(x, ...))
    .print.table(tmp, mstyle)

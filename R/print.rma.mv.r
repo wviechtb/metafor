@@ -5,8 +5,11 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
    if (!inherits(x, "rma.mv"))
       stop(mstyle$stop("Argument 'x' must be an object of class \"rma.mv\"."))
 
-   if (missing(digits))
-      digits <- x$digits
+   if (missing(digits)) {
+      digits <- .get.digits(xdigits=x$digits, dmiss=TRUE)
+   } else {
+      digits <- .get.digits(digits=digits, xdigits=x$digits, dmiss=FALSE)
+   }
 
    if (!exists(".rmspace"))
       cat("\n")
@@ -18,9 +21,9 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
    if (showfit) {
       cat("\n")
       if (x$method == "REML") {
-         fs <- c(formatC(round(x$fit.stats$REML, digits=digits), digits=digits, format="f"))
+         fs <- .fcf(x$fit.stats$REML, digits[["fit"]])
       } else {
-         fs <- c(formatC(round(x$fit.stats$ML, digits=digits), digits=digits, format="f"))
+         fs <- .fcf(x$fit.stats$ML, digits[["fit"]])
       }
       names(fs) <- c("logLik", "Deviance", "AIC", "BIC", "AICc")
       cat("\n")
@@ -31,14 +34,14 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
       cat("\n\n")
    }
 
-   sigma2 <- formatC(x$sigma2, digits=digits, format="f")
-   tau2   <- formatC(x$tau2,   digits=digits, format="f")
-   rho    <- formatC(x$rho,    digits=digits, format="f")
-   gamma2 <- formatC(x$gamma2, digits=digits, format="f")
-   phi    <- formatC(x$phi,    digits=digits, format="f")
-   sigma  <- formatC(sqrt(x$sigma2), digits=digits, format="f")
-   tau    <- formatC(sqrt(x$tau2),   digits=digits, format="f")
-   gamma  <- formatC(sqrt(x$gamma2), digits=digits, format="f")
+   sigma2 <- .fcf(x$sigma2, digits[["var"]])
+   tau2   <- .fcf(x$tau2,   digits[["var"]])
+   rho    <- .fcf(x$rho,    digits[["var"]])
+   gamma2 <- .fcf(x$gamma2, digits[["var"]])
+   phi    <- .fcf(x$phi,    digits[["var"]])
+   sigma  <- .fcf(sqrt(x$sigma2), digits[["var"]])
+   tau    <- .fcf(sqrt(x$tau2),   digits[["var"]])
+   gamma  <- .fcf(sqrt(x$gamma2), digits[["var"]])
 
    cat(mstyle$section("Variance Components:"))
 
@@ -174,7 +177,7 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
             colnames(vc) <- c("estim", "sqrt", "fixed", "rho:")
             rownames(vc) <- x$g.names[-length(x$g.names)]
 
-            G.info <- formatC(cov2cor(x$G), digits=digits, format="f")
+            G.info <- .fcf(cov2cor(x$G), digits[["var"]])
             diag(G.info) <- "-"
             G.info[upper.tri(G.info)] <- ifelse(x$vc.fix$rho, "yes", "no")
             colnames(G.info) <- abbreviate(x$g.names[-length(x$g.names)])
@@ -295,7 +298,7 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
             colnames(vc) <- c("estim", "sqrt", "fixed", "phi:")
             rownames(vc) <- x$h.names[-length(x$h.names)]
 
-            H.info <- formatC(cov2cor(x$H), digits=digits, format="f")
+            H.info <- .fcf(cov2cor(x$H), digits[["var"]])
             diag(H.info) <- "-"
             H.info[upper.tri(H.info)] <- ifelse(x$vc.fix$phi, "yes", "no")
             colnames(H.info) <- abbreviate(x$h.names[-length(x$h.names)])
@@ -315,11 +318,11 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
       if (x$int.only) {
          cat(mstyle$section("Test for Heterogeneity:"))
          cat("\n")
-         cat(mstyle$result(paste0("Q(df = ", x$k-x$p, ") = ", formatC(x$QE, digits=digits, format="f"), ", p-val ", .pval(x$QEp, digits=digits, showeq=TRUE, sep=" "))))
+         cat(mstyle$result(paste0("Q(df = ", x$k-x$p, ") = ", .fcf(x$QE, digits[["test"]]), ", p-val ", .pval(x$QEp, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
       } else {
          cat(mstyle$section("Test for Residual Heterogeneity:"))
          cat("\n")
-         cat(mstyle$result(paste0("QE(df = ", x$k-x$p, ") = ", formatC(x$QE, digits=digits, format="f"), ", p-val ", .pval(x$QEp, digits=digits, showeq=TRUE, sep=" "))))
+         cat(mstyle$result(paste0("QE(df = ", x$k-x$p, ") = ", .fcf(x$QE, digits[["test"]]), ", p-val ", .pval(x$QEp, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
       }
       cat("\n\n")
    }
@@ -328,25 +331,23 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
       cat(mstyle$section(paste0("Test of Moderators (coefficient", ifelse(x$m == 1, " ", "s "), .format.btt(x$btt),"):")))
       cat("\n")
       if (is.element(x$test, c("t"))) {
-         cat(mstyle$result(paste0("F(df1 = ", x$m, ", df2 = ", x$dfs, ") = ", formatC(x$QM, digits=digits, format="f"), ", p-val ", .pval(x$QMp, digits=digits, showeq=TRUE, sep=" "))))
+         cat(mstyle$result(paste0("F(df1 = ", x$m, ", df2 = ", x$dfs, ") = ", .fcf(x$QM, digits[["test"]]), ", p-val ", .pval(x$QMp, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
       } else {
-         cat(mstyle$result(paste0("QM(df = ", x$m, ") = ", formatC(x$QM, digits=digits, format="f"), ", p-val ", .pval(x$QMp, digits=digits, showeq=TRUE, sep=" "))))
+         cat(mstyle$result(paste0("QM(df = ", x$m, ") = ", .fcf(x$QM, digits[["test"]]), ", p-val ", .pval(x$QMp, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
       }
       cat("\n\n")
    }
 
-   res.table <- cbind(estimate=c(x$beta), se=x$se, zval=x$zval, pval=x$pval, ci.lb=x$ci.lb, ci.ub=x$ci.ub)
+   res.table <- cbind(estimate=.fcf(c(x$beta), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), zval=.fcf(x$zval, digits[["test"]]), pval=.pval(x$pval, digits[["pval"]]), ci.lb=.fcf(x$ci.lb, digits[["ci"]]), ci.ub=.fcf(x$ci.ub, digits[["ci"]]))
+
    rownames(res.table) <- rownames(x$beta)
    if (is.element(x$test, c("t")))
       colnames(res.table)[3] <- "tval"
    signif <- symnum(x$pval, corr=FALSE, na=FALSE, cutpoints=c(0, 0.001, 0.01, 0.05, 0.1, 1), symbols = c("***", "**", "*", ".", " "))
    if (signif.stars) {
-      res.table <- cbind(formatC(res.table, digits=digits, format="f"), signif)
+      res.table <- cbind(res.table, signif)
       colnames(res.table)[7] <- ""
-   } else {
-      res.table <- formatC(res.table, digits=digits, format="f")
    }
-   res.table[,4] <- .pval(x$pval, digits=digits)
 
    if (x$int.only)
       res.table <- res.table[1,]

@@ -20,8 +20,11 @@ rstandard.rma.uni <- function(model, digits, type="marginal", ...) {
    if (type == "conditional" & inherits(x, "robust.rma"))
       stop(mstyle$stop("Extraction of conditional residuals not available for objects of class \"robust.rma\"."))
 
-   if (missing(digits))
-      digits <- x$digits
+   if (missing(digits)) {
+      digits <- .get.digits(xdigits=x$digits, dmiss=TRUE)
+   } else {
+      digits <- .get.digits(digits=digits, xdigits=x$digits, dmiss=FALSE)
+   }
 
    #########################################################################
 

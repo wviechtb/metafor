@@ -1,12 +1,11 @@
-print.robust.rma <- function(x, digits, signif.stars=getOption("show.signif.stars"), signif.legend=signif.stars, ...) {
+print.robust.rma <- function(x, digits=x$digits, signif.stars=getOption("show.signif.stars"), signif.legend=signif.stars, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
    if (!inherits(x, "robust.rma"))
       stop(mstyle$stop("Argument 'x' must be an object of class \"robust.rma\"."))
 
-   if (missing(digits))
-      digits <- x$digits
+   digits <- .get.digits(digits=digits, xdigits=x$digits, dmiss=FALSE)
 
    if (!exists(".rmspace"))
       cat("\n")
@@ -22,29 +21,26 @@ print.robust.rma <- function(x, digits, signif.stars=getOption("show.signif.star
    if (all(x$tcl[1] == x$tcl)) {
       cat(mstyle$result(x$tcl[1]))
    } else {
-      cat(mstyle$result(paste0(min(x$tcl), "-", max(x$tcl), " (mean: ", formatC(mean(x$tcl), format="f", digits=2), ", median: ", formatC(median(x$tcl), format="f", digits=2), ")")))
+      cat(mstyle$result(paste0(min(x$tcl), "-", max(x$tcl), " (mean: ", .fcf(mean(x$tcl), digits=2), ", median: ", round(median(x$tcl), digits=2), ")")))
    }
    cat("\n\n")
 
    if (x$p > 1 && !is.na(x$QM)) {
       cat(mstyle$section(paste0("Test of Moderators (coefficient", ifelse(x$m == 1, " ", "s "), .format.btt(x$btt),"):")))
       cat("\n")
-      cat(mstyle$result(paste0("F(df1 = ", x$m, ", df2 = ", x$dfs, ") = ", formatC(x$QM, digits=digits, format="f"), ", p-val ", .pval(x$QMp, digits=digits, showeq=TRUE, sep=" "))))
+      cat(mstyle$result(paste0("F(df1 = ", x$m, ", df2 = ", x$dfs, ") = ", .fcf(x$QM, digits[["test"]]), ", p-val ", .pval(x$QMp, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
       cat("\n\n")
    }
 
-   res.table <- cbind(estimate=c(x$beta), se=x$se, zval=x$zval, pval=x$pval, ci.lb=x$ci.lb, ci.ub=x$ci.ub)
+   res.table <- cbind(estimate=.fcf(c(x$beta), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), zval=.fcf(x$zval, digits[["test"]]), pval=.pval(x$pval, digits[["pval"]]), ci.lb=.fcf(x$ci.lb, digits[["ci"]]), ci.ub=.fcf(x$ci.ub, digits[["ci"]]))
    rownames(res.table) <- rownames(x$beta)
    if (is.element(x$test, c("knha","adhoc","t")))
       colnames(res.table)[3] <- "tval"
    signif <- symnum(x$pval, corr=FALSE, na=FALSE, cutpoints=c(0, 0.001, 0.01, 0.05, 0.1, 1), symbols = c("***", "**", "*", ".", " "))
    if (signif.stars) {
-      res.table <- cbind(formatC(res.table, digits=digits, format="f"), signif)
+      res.table <- cbind(res.table, signif)
       colnames(res.table)[7] <- ""
-   } else {
-      res.table <- formatC(res.table, digits=digits, format="f")
    }
-   res.table[,4] <- .pval(x$pval, digits=digits)
 
    if (x$int.only)
       res.table <- res.table[1,]

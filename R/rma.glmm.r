@@ -3,7 +3,7 @@ measure, intercept=TRUE,
 data, slab, subset,
 add=1/2, to="only0", drop00=TRUE, vtype="LS",
 model="UM.FS", method="ML", test="z", #tdist=FALSE, #weighted=TRUE,
-level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
+level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    #########################################################################
 
@@ -85,6 +85,14 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    onlyo1 <- ifelse(is.null(ddd$onlyo1), FALSE, ddd$onlyo1)
    addyi  <- ifelse(is.null(ddd$addyi),  TRUE,  ddd$addyi)
    addvi  <- ifelse(is.null(ddd$addvi),  TRUE,  ddd$addvi)
+
+   ### set defaults for digits
+
+   if (missing(digits)) {
+      digits <- .set.digits(dmiss=TRUE)
+   } else {
+      digits <- .set.digits(digits, dmiss=FALSE)
+   }
 
    #########################################################################
 
@@ -885,7 +893,11 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                if (verbose)
                   message(mstyle$message("Fitting ML model ..."))
 
-               res.ML <- try(lme4::glmer(dat.grp ~ -1 + X.fit + study + (group12 - 1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
+               if (verbose) {
+                  res.ML <- try(lme4::glmer(dat.grp ~ -1 + X.fit + study + (group12 - 1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
+               } else {
+                  res.ML <- suppressMessages(try(lme4::glmer(dat.grp ~ -1 + X.fit + study + (group12 - 1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose))
+               }
                #return(res.ML)
 
                if (inherits(res.ML, "try-error"))
@@ -941,7 +953,11 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             if (verbose)
                message(mstyle$message("Fitting FE model ..."))
 
-            res.FE <- try(lme4::glmer(dat.grp ~ -1 + X.fit + const + (1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
+            if (verbose) {
+               res.FE <- try(lme4::glmer(dat.grp ~ -1 + X.fit + const + (1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
+            } else {
+               res.FE <- suppressMessages(try(lme4::glmer(dat.grp ~ -1 + X.fit + const + (1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose))
+            }
 
             if (inherits(res.FE, "try-error"))
                stop(mstyle$stop("Cannot fit FE model."))
@@ -961,7 +977,11 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                X.QE <- model.matrix(~ -1 + X.fit + const + study:group1)
                res.QE <- try(glm(dat.grp ~ -1 + X.QE, offset=dat.off, family=dat.fam, control=glmCtrl), silent=!verbose)
                X.QE <- X.QE[,!is.na(coef(res.QE)),drop=FALSE]
-               res.QE <- try(lme4::glmer(dat.grp ~ -1 + X.QE + (1 | study), offset=dat.off, family=dat.fam, start=c(sqrt(lme4::VarCorr(res.FE)[[1]][1])), nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
+               if (verbose) {
+                  res.QE <- try(lme4::glmer(dat.grp ~ -1 + X.QE + (1 | study), offset=dat.off, family=dat.fam, start=c(sqrt(lme4::VarCorr(res.FE)[[1]][1])), nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
+               } else {
+                  res.QE <- suppressMessages(try(lme4::glmer(dat.grp ~ -1 + X.QE + (1 | study), offset=dat.off, family=dat.fam, start=c(sqrt(lme4::VarCorr(res.FE)[[1]][1])), nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose))
+               }
             } else {
                res.QE <- res.FE
             }
@@ -997,7 +1017,11 @@ level=95, digits=4, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                if (verbose)
                   message(mstyle$message("Fitting ML model ..."))
 
-               res.ML <- try(lme4::glmer(dat.grp ~ -1 + X.fit + const + (1 | study) + (group12 - 1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
+               if (verbose) {
+                  res.ML <- try(lme4::glmer(dat.grp ~ -1 + X.fit + const + (1 | study) + (group12 - 1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
+               } else {
+                  res.ML <- suppressMessages(try(lme4::glmer(dat.grp ~ -1 + X.fit + const + (1 | study) + (group12 - 1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose))
+               }
                #res.ML <- try(lme4::glmer(dat.grp ~ -1 + X.fit + const + (group1 | study),                   offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
                #return(res.ML)
 

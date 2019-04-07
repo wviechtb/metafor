@@ -252,11 +252,29 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
       ### if the user has not specified xlim argument, set automatically
       ### TODO: maybe try something based on CI later
 
-      if (is.element(comp, c("sigma2", "tau2", "gamma2"))) {
+      if (comp == "sigma2") {
          #vc.lb <- max(.00001, log(vc)) ### old method
          #vc.ub <- max(.00001, exp(vc)) ### old method
          vc.lb <- max( 0, vc/4) ### new method
          vc.ub <- max(.1, vc*4) ### new method
+      }
+      if (comp == "tau2") {
+         if (is.element(x$struct[1], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH"))) {
+            vc.lb <- max( 0, vc/2)
+            vc.ub <- max(.1, vc*2)
+         } else {
+            vc.lb <- max( 0, vc/4)
+            vc.ub <- max(.1, vc*4)
+         }
+      }
+      if (comp == "gamma2") {
+         if (is.element(x$struct[2], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH"))) {
+            vc.lb <- max( 0, vc/2)
+            vc.ub <- max(.1, vc*2)
+         } else {
+            vc.lb <- max( 0, vc/4)
+            vc.ub <- max(.1, vc*4)
+         }
       }
       if (comp == "rho") {
          if (x$struct[1] == "CAR") {
@@ -264,8 +282,8 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
             vc.ub <- min(+.99999, vc+.5)
          }
          if (is.element(x$struct[1], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH"))) {
-            vc.lb <- vc/4
-            vc.ub <- vc*4
+            vc.lb <- vc/2
+            vc.ub <- vc*2
          }
          if (!is.element(x$struct[1], c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH"))) {
             vc.lb <- max(-.99999, vc-.5)
@@ -278,8 +296,8 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
             vc.ub <- min(+.99999, vc+.5)
          }
          if (is.element(x$struct[2], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH"))) {
-            vc.lb <- vc/4
-            vc.ub <- vc*4
+            vc.lb <- vc/2
+            vc.ub <- vc*2
          }
          if (!is.element(x$struct[2], c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH"))) {
             vc.lb <- max(-.99999, vc-.5)

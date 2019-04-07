@@ -8,8 +8,11 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, digits, ...) {
    if (missing(cluster))
       stop(mstyle$stop("Need to specify 'cluster' variable."))
 
-   if (missing(digits))
-      digits <- x$digits
+   if (missing(digits)) {
+      digits <- .get.digits(xdigits=x$digits, dmiss=TRUE)
+   } else {
+      digits <- .get.digits(digits=digits, xdigits=x$digits, dmiss=FALSE)
+   }
 
    level <- ifelse(x$level == 0, 1, ifelse(x$level >= 1, (100-x$level)/100, ifelse(x$level > .5, 1-x$level, x$level)))
 

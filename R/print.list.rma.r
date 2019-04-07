@@ -1,12 +1,11 @@
-print.list.rma <- function(x, digits, ...) {
+print.list.rma <- function(x, digits=x$digits, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
    if (!inherits(x, "list.rma"))
       stop(mstyle$stop("Argument 'x' must be an object of class \"list.rma\"."))
 
-   if (missing(digits))
-      digits <- x$digits
+   digits <- .get.digits(digits=digits, xdigits=x$digits, dmiss=FALSE)
 
    attr(x, "class") <- NULL
 
@@ -46,7 +45,40 @@ print.list.rma <- function(x, digits, ...) {
       if (inherits(out[,i], c("integer","logical","factor","character"))) { ### do not apply formating to these classes
          out[,i] <- out[,i]
       } else {
-         out[,i] <- formatC(out[,i], digits=digits, format="f")
+         if (names(out)[i] %in% c("pred", "resid"))
+            out[,i] <- .fcf(out[,i], digits[["est"]])
+         if (names(out)[i] %in% c("se"))
+            out[,i] <- .fcf(out[,i], digits[["se"]])
+         if (names(out)[i] %in% c("ci.lb", "ci.ub", "cr.lb", "cr.ub", "pi.lb", "pi.ub"))
+            out[,i] <- .fcf(out[,i], digits[["ci"]])
+         if (names(out)[i] %in% c("zval", "Q", "z", "X2"))
+            out[,i] <- .fcf(out[,i], digits[["test"]])
+         if (names(out)[i] %in% c("pval", "Qp"))
+            out[,i] <- .fcf(out[,i], digits[["pval"]])
+         if (names(out)[i] %in% c("I2", "H2"))
+            out[,i] <- .fcf(out[,i], digits[["het"]])
+         if (names(out)[i] %in% c("tau2"))
+            out[,i] <- .fcf(out[,i], digits[["var"]])
+         # if (names(out)[i] == "rstudent")
+         #    out[,i] <- .fcf(out[,i], digits[["test"]])
+         # if (names(out)[i] == "dffits")
+         #    out[,i] <- .fcf(out[,i], digits[["test"]])
+         # if (names(out)[i] == "cook.d")
+         #    out[,i] <- .fcf(out[,i], digits[["test"]])
+         # if (names(out)[i] == "cov.r")
+         #    out[,i] <- .fcf(out[,i], digits[["test"]])
+         # if (names(out)[i] == "tau2.del")
+         #    out[,i] <- .fcf(out[,i], digits[["var"]])
+         # if (names(out)[i] == "QE.del")
+         #    out[,i] <- .fcf(out[,i], digits[["test"]])
+         # if (names(out)[i] == "hat")
+         #    out[,i] <- .fcf(out[,i], digits[["test"]])
+         # if (names(out)[i] == "weight")
+         #    out[,i] <- .fcf(out[,i], digits[["test"]])
+         # if (names(out)[i] == "dfbs")
+         #    out[,i] <- .fcf(out[,i], digits[["est"]])
+         if (!is.character(out[,i]))
+            out[,i] <- .fcf(out[,i], digits[["est"]])
       }
    }
 
@@ -56,7 +88,7 @@ print.list.rma <- function(x, digits, ...) {
    tmp <- capture.output(print(out, quote=FALSE, right=TRUE))
    .print.table(tmp, mstyle)
 
-   if (!exists(".rmspace"))
+   if (!exists(".rmspace") & is.null(attr(x, ".rmspace")))
       cat("\n")
 
    invisible(sav)

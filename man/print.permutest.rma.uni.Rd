@@ -5,12 +5,12 @@
    Print method for objects of class \code{"permutest.rma.uni"}.
 }
 \usage{
-\method{print}{permutest.rma.uni}(x, digits, signif.stars=getOption("show.signif.stars"),
+\method{print}{permutest.rma.uni}(x, digits=x$digits, signif.stars=getOption("show.signif.stars"),
       signif.legend=signif.stars, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"permutest.rma.uni"}.}
-   \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is to take the value from the object).}
+   \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (the default is to take the value from the object).}
    \item{signif.stars}{logical indicating whether p-values should be encoded visually with \sQuote{significance stars}. Defaults to the \code{show.signif.stars} slot of \code{\link{options}}.}
    \item{signif.legend}{logical indicating whether the legend for the \sQuote{significance stars} should be printed. Defaults to the value for \code{signif.stars}.}
    \item{\dots}{other arguments.}

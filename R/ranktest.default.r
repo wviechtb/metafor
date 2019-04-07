@@ -12,8 +12,13 @@ ranktest.default <- function(x, vi, sei, subset, digits, ...) {
    if (missing(subset))
       subset <- NULL
 
-   if (missing(digits))
-      digits <- 4
+   ### set defaults for digits
+
+   if (missing(digits)) {
+      digits <- .set.digits(dmiss=TRUE)
+   } else {
+      digits <- .set.digits(digits, dmiss=FALSE)
+   }
 
    #########################################################################
 

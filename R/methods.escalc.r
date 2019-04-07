@@ -57,7 +57,6 @@ cbind.escalc <- function (..., deparse.level=1) {
    zi.names    <- NULL
    ci.lb.names <- NULL
    ci.ub.names <- NULL
-   digits      <- NULL
 
    for (arg in allargs) {
       yi.names    <- c(attr(arg, "yi.names"),    yi.names)
@@ -66,7 +65,6 @@ cbind.escalc <- function (..., deparse.level=1) {
       zi.names    <- c(attr(arg, "zi.names"),    zi.names)
       ci.lb.names <- c(attr(arg, "ci.lb.names"), ci.lb.names)
       ci.ub.names <- c(attr(arg, "ci.ub.names"), ci.ub.names)
-      digits      <- c(attr(arg, "digits"),      digits)
    }
 
    ### but only keep unique variable names
@@ -78,9 +76,8 @@ cbind.escalc <- function (..., deparse.level=1) {
    attr(dat, "ci.lb.names") <- unique(ci.lb.names)
    attr(dat, "ci.ub.names") <- unique(ci.ub.names)
 
-   ### add 'digits' attribute back (use the first value)
-
-   attr(dat, "digits") <- digits[1]
+   ### add 'digits' attribute back (use the values from first element)
+   attr(dat, "digits") <- attr(arg[1], "digits")
 
    class(dat) <- c("escalc", "data.frame")
    return(dat)
@@ -100,10 +97,19 @@ rbind.escalc <- function (..., deparse.level=1) {
 
    for (i in seq_along(yi.names)) {
 
-      yi.pos <- which(names(allargs[[1]]) == yi.names[i])
+      ### get position (column number) of the 'yi' variable (in the first argument)
+      #yi.pos <- which(names(allargs[[1]]) == yi.names[i])
 
-      ### get 'ni' attribute from all arguments
-      ni <- lapply(allargs, function(x) attr(x[[yi.pos]], "ni"))
+      ### get position (column number) of the 'yi' variable
+      yi.pos <- sapply(allargs, function(x) which(names(x) == yi.names[i])[1])
+      yi.pos <- na.omit(yi.pos)[1]
+
+      ### just in case
+      if (length(yi.pos) == 0)
+         next
+
+      ### get 'ni' attribute from all arguments (but only if argument has 'yi' variable)
+      ni <- lapply(allargs, function(x) {if (isTRUE(names(x)[yi.pos] == yi.names[i])) attr(x[[yi.pos]], "ni")})
 
       ### if none of them are missing, then combine and add back to variable
       ### otherwise remove 'ni' attribute, since it won't be of the right length
@@ -113,8 +119,8 @@ rbind.escalc <- function (..., deparse.level=1) {
          attr(dat[[yi.pos]], "ni") <- NULL
       }
 
-      ### get 'slab' attribute from all arguments
-      slab <- lapply(allargs, function(x) attr(x[[yi.pos]], "slab"))
+      ### get 'slab' attribute from all arguments (but only if argument has 'yi' variable)
+      slab <- lapply(allargs, function(x) {if (isTRUE(names(x)[yi.pos] == yi.names[i])) attr(x[[yi.pos]], "slab")})
 
       ### if none of them are missing, then combine and add back to variable (and make sure they are unique)
       ### otherwise remove 'slab' attribute, since it won't be of the right length

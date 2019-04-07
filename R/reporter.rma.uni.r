@@ -32,8 +32,11 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
    if (inherits(x, "robust.rma"))
       stop(mstyle$stop("Cannot use reporter function for objects of class \"robust.rma\"."))
 
-   if (missing(digits))
-      digits <- x$digits
+   if (missing(digits)) {
+      digits <- .get.digits(xdigits=x$digits, dmiss=TRUE)
+   } else {
+      digits <- .get.digits(digits=digits, xdigits=x$digits, dmiss=FALSE)
+   }
 
    format <- match.arg(format, c("html_document", "pdf_document", "word_document")) # , "bookdown::pdf_document2"))
 
@@ -227,13 +230,11 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
 
    infres <- influence(x)
 
-   ### formating functions
+   ### formating function for p-values
 
-   fval <- function(x, digits=get("digits", envir = parent.frame()))
-      formatC(x, digits=digits, format="f")
-
-   fpval <- function(p)
-      paste0("$p ", ifelse(p < .001, "< .001", paste0("= ", formatC(p, format="f", digits=3))), "$")
+   fpval <- function(p, pdigits=digits[["pval"]])
+      paste0("$p ", ifelse(p < 10^(-pdigits), paste0("< ", .fcf(10^(-pdigits), pdigits)), paste0("= ", .fcf(p, pdigits))), "$")
+   # consider giving only 2 digits for p-value if p > .05 or p > .10
 
    #########################################################################
 
@@ -292,9 +293,9 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
    methods <- paste0(methods, "Studentized residuals and Cook's distances are used to examine whether studies may be outliers and/or influential in the context of the model [@viechtbauer2010b]. ")
 
    #methods <- paste0(methods, "Studies with a studentized residual larger than $\\pm 1.96$ are considered potential outliers. ")
-   methods <- paste0(methods, "Studies with a studentized residual larger than the $100 \\times (1 - ", x$level, "/(2 \\times k))$th percentile of a standard normal distribution are considered potential outliers (i.e., using a Bonferroni correction with two-sided $\\alpha = ", x$level, "$ for $k$ studies included in the meta-analysis). ") # $\\pm ", fval(crit, digits=2), "$ (
+   methods <- paste0(methods, "Studies with a studentized residual larger than the $100 \\times (1 - ", x$level, "/(2 \\times k))$th percentile of a standard normal distribution are considered potential outliers (i.e., using a Bonferroni correction with two-sided $\\alpha = ", x$level, "$ for $k$ studies included in the meta-analysis). ") # $\\pm ", .fcf(crit, digits[["test"]]), "$ (
 
-   #methods <- paste0(methods, "Studies with a Cook's distance larger than ", fval(qchisq(0.5, df=infres$m), digits=2), " (the 50th percentile of a $\\chi^2$-distribution with ", infres$m, " degree", ifelse(infres$m > 1, "s", ""), " of freedom) are considered to be influential. ")
+   #methods <- paste0(methods, "Studies with a Cook's distance larger than ", .fcf(qchisq(0.5, df=infres$m), digits[["test"]]), " (the 50th percentile of a $\\chi^2$-distribution with ", infres$m, " degree", ifelse(infres$m > 1, "s", ""), " of freedom) are considered to be influential. ")
    methods <- paste0(methods, "Studies with a Cook's distance larger than the median plus six times the interquartile range of the Cook's distances are considered to be influential.")
 
    methods <- if (footnotes) paste0(methods, "[^cook] ") else paste0(methods, " ")
@@ -314,10 +315,10 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
    results <- "\n## Results\n\n"
 
    ### number of studies
-   results <- paste0(results, "A total of ", x$k, " studies were included in the analysis. ")
+   results <- paste0(results, "A total of $k=", x$k, "$ studies were included in the analysis. ")
 
    ### range of observed outcomes
-   results <- paste0(results, "The observed ", measure, "s ranged from $", fval(min(x$yi)), "$ to $", fval(max(x$yi)), "$, ")
+   results <- paste0(results, "The observed ", measure, "s ranged from $", .fcf(min(x$yi), digits[["est"]]), "$ to $", .fcf(max(x$yi), digits[["est"]]), "$, ")
 
    ### percent positive/negative
    results <- paste0(results, "with the majority of estimates being ", ifelse(mean(x$yi > 0) > .50, "positive", "negative"), " (", ifelse(mean(x$yi > 0) > .50, round(100*mean(x$yi > 0)), round(100*mean(x$yi < 0))), "%). ")
@@ -325,11 +326,11 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
    if (is.element(model, c("FE", "RE"))) {
 
       ### estimated average outcome with CI
-      results <- paste0(results, "The estimated average ", measure, " based on the ", model.name, " model was ", ifelse(model == "FE", "$\\hat{\\theta} = ", "$\\hat{\\mu} = "), fval(c(x$beta)), "$ ")
-      results <- paste0(results, "(", level, "% CI: $", fval(x$ci.lb), "$ to $", fval(x$ci.ub), "$). ")
+      results <- paste0(results, "The estimated average ", measure, " based on the ", model.name, " model was ", ifelse(model == "FE", "$\\hat{\\theta} = ", "$\\hat{\\mu} = "), .fcf(c(x$beta), digits[["est"]]), "$ ")
+      results <- paste0(results, "(", level, "% CI: $", .fcf(x$ci.lb, digits[["ci"]]), "$ to $", .fcf(x$ci.ub, digits[["ci"]]), "$). ")
 
       ### note: for some outcome measures (e.g., proportions), the test H0: mu/theta = 0 is not really relevant; maybe check for this
-      results <- paste0(results, "Therefore, the average outcome ", ifelse(x$pval > 0.05, "did not differ", "differed"), " significantly from zero ($", ifelse(x$test == "z", "z", paste0("t(", x$k-1, ")")), " = ", fval(x$zval, digits=2), "$, ", fpval(x$pval), "). ")
+      results <- paste0(results, "Therefore, the average outcome ", ifelse(x$pval > 0.05, "did not differ", "differed"), " significantly from zero ($", ifelse(x$test == "z", "z", paste0("t(", x$k-1, ")")), " = ", .fcf(x$zval, digits[["test"]]), "$, ", fpval(x$pval), "). ")
 
       ### forest plot
       results <- paste0(results, "A forest plot showing the observed outcomes and the estimate based on the ", model.name, " model is shown in Figure 1.\n\n")
@@ -350,19 +351,19 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
          results <- paste0(results, "The $Q$-test for heterogeneity was not significant, but some heterogeneity may still be present in the true outcomes ")
       if (x$QEp <= 0.05)
          results <- paste0(results, "According to the $Q$-test, the true outcomes appear to be heterogeneous ")
-      results <- paste0(results, "($Q(", x$k-1, ") = ", fval(x$QE, digits=2), "$, ", fpval(x$QEp))
+      results <- paste0(results, "($Q(", x$k-1, ") = ", .fcf(x$QE, digits[["test"]]), "$, ", fpval(x$QEp))
 
       ### tau^2 estimate (only for RE models)
       if (model == "RE")
-         results <- paste0(results, ", $\\hat{\\tau}^2 = ", fval(x$tau2, digits=max(3,digits)), "$") ### for tau^2 report at least 3 digits
+         results <- paste0(results, ", $\\hat{\\tau}^2 = ", .fcf(x$tau2, digits[["var"]]), "$")
 
       ### I^2 statistic
-      results <- paste0(results, ", $I^2 = ", fval(x$I2, digits=1), "$%). ") ### for I^2, report always just 1 digit
+      results <- paste0(results, ", $I^2 = ", .fcf(x$I2, digits[["het"]]), "$%). ")
 
       ### for the RE model, when any amount of heterogeneity is detected, provide credibility/prediction interval and note whether the directionality of effects is consistent or not
       if (model == "RE" && x$tau2 > 0) {
          pred <- predict(x)
-         results <- paste0(results, "A ", level, "% credibility/prediction interval for the true outcomes is given by $", fval(pred$cr.lb), "$ to $", fval(pred$cr.ub), "$. ")
+         results <- paste0(results, "A ", level, "% credibility/prediction interval for the true outcomes is given by $", .fcf(pred$cr.lb, digits[["ci"]]), "$ to $", .fcf(pred$cr.ub, digits[["ci"]]), "$. ")
          if (c(x$beta) > 0 && pred$cr.lb < 0)
             results <- paste0(results, "Hence, although the average outcome is estimated to be positive, in some studies the true outcome may in fact be negative.")
          if (c(x$beta) < 0 && pred$cr.ub > 0)
@@ -390,13 +391,13 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
       abszi <- abs(zi)
       results <- paste0(results, "An examination of the studentized residuals revealed that ")
       if (all(abszi < crit, na.rm=TRUE))
-         results <- paste0(results, "none of the studies had a value larger than $\\pm ", fval(crit, digits=2), "$ and hence there was no indication of outliers  ")
+         results <- paste0(results, "none of the studies had a value larger than $\\pm ", .fcf(crit, digits[["test"]]), "$ and hence there was no indication of outliers ")
       if (sum(abszi >= crit, na.rm=TRUE) == 1)
-         results <- paste0(results, "one study (", infres$inf$slab[abszi >= crit & !is.na(abszi)], ") had a value larger than $\\pm ", fval(crit, digits=2), "$ and may be a potential outlier ")
+         results <- paste0(results, "one study (", infres$inf$slab[abszi >= crit & !is.na(abszi)], ") had a value larger than $\\pm ", .fcf(crit, digits[["test"]]), "$ and may be a potential outlier ")
       if (sum(abszi >= crit, na.rm=TRUE) == 2)
-         results <- paste0(results, "two studies (", paste(infres$inf$slab[abszi >= crit & !is.na(abszi)], collapse="; "), ") had values larger than $\\pm ", fval(crit, digits=2), "$ and may be potential outliers ")
+         results <- paste0(results, "two studies (", paste(infres$inf$slab[abszi >= crit & !is.na(abszi)], collapse="; "), ") had values larger than $\\pm ", .fcf(crit, digits[["test"]]), "$ and may be potential outliers ")
       if (sum(abszi >= crit, na.rm=TRUE) >= 3)
-         results <- paste0(results, "several studies (", paste(infres$inf$slab[abszi >= crit & !is.na(abszi)], collapse="; "), ") had values larger than $\\pm ", fval(crit, digits=2), "$ and may be potential outliers ")
+         results <- paste0(results, "several studies (", paste(infres$inf$slab[abszi >= crit & !is.na(abszi)], collapse="; "), ") had values larger than $\\pm ", .fcf(crit, digits[["test"]]), "$ and may be potential outliers ")
       results <- paste0(results, "in the context of this model. ")
 
       ### check for influential cases

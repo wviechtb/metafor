@@ -1,7 +1,7 @@
 rma.mh   <- function(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, measure="OR",
 data, slab, subset,
 add=1/2, to="only0", drop00=TRUE, ### for add/to/drop00, 1st element for escalc(), 2nd for MH method
-correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
+correct=TRUE, level=95, digits, verbose=FALSE, ...) {
 
    #########################################################################
 
@@ -60,6 +60,14 @@ correct=TRUE, level=95, digits=4, verbose=FALSE, ...) {
    onlyo1 <- ifelse(is.null(ddd$onlyo1), FALSE, ddd$onlyo1)
    addyi  <- ifelse(is.null(ddd$addyi),  TRUE,  ddd$addyi)
    addvi  <- ifelse(is.null(ddd$addvi),  TRUE,  ddd$addvi)
+
+   ### set defaults for digits
+
+   if (missing(digits)) {
+      digits <- .set.digits(dmiss=TRUE)
+   } else {
+      digits <- .set.digits(digits, dmiss=FALSE)
+   }
 
    #########################################################################
 

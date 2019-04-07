@@ -20,8 +20,11 @@ rstudent.rma.mv <- function(model, digits, progbar=FALSE, cluster, reestimate=TR
    if (parallel == "no" && ncpus > 1)
       parallel <- "snow"
 
-   if (missing(digits))
-      digits <- x$digits
+   if (missing(digits)) {
+      digits <- .get.digits(xdigits=x$digits, dmiss=TRUE)
+   } else {
+      digits <- .get.digits(digits=digits, xdigits=x$digits, dmiss=FALSE)
+   }
 
    misscluster <- ifelse(missing(cluster), TRUE, FALSE)
 
@@ -234,6 +237,8 @@ rstudent.rma.mv <- function(model, digits, progbar=FALSE, cluster, reestimate=TR
 
       class(out[[1]]) <- "list.rma"
       class(out[[2]]) <- "list.rma"
+      attr(out[[1]], ".rmspace") <- TRUE
+      attr(out[[2]], ".rmspace") <- TRUE
       return(out)
 
    }

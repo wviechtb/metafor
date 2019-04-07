@@ -12,8 +12,11 @@ rstandard.rma.mv <- function(model, digits, cluster, ...) {
 
    x <- model
 
-   if (missing(digits))
-      digits <- x$digits
+   if (missing(digits)) {
+      digits <- .get.digits(xdigits=x$digits, dmiss=TRUE)
+   } else {
+      digits <- .get.digits(digits=digits, xdigits=x$digits, dmiss=FALSE)
+   }
 
    misscluster <- ifelse(missing(cluster), TRUE, FALSE)
 
@@ -158,6 +161,8 @@ rstandard.rma.mv <- function(model, digits, cluster, ...) {
 
       class(out[[1]]) <- "list.rma"
       class(out[[2]]) <- "list.rma"
+      attr(out[[1]], ".rmspace") <- TRUE
+      attr(out[[2]], ".rmspace") <- TRUE
       return(out)
 
    }

@@ -35,8 +35,11 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
    if (missing(level))
       level <- x$level
 
-   if (missing(digits))
-      digits <- x$digits
+   if (missing(digits)) {
+      digits <- .get.digits(xdigits=x$digits, dmiss=TRUE)
+   } else {
+      digits <- .get.digits(digits=digits, xdigits=x$digits, dmiss=FALSE)
+   }
 
    if (missing(transf))
       transf <- FALSE
@@ -133,8 +136,8 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
          crit.u <- qchisq(level/2, k-p, lower.tail=FALSE) ### upper critical chi^2 value for df = k-p
          crit.l <- qchisq(level/2, k-p, lower.tail=TRUE)  ### lower critical chi^2 value for df = k-p
 
-         QE.tau2.max <- .QE.func(con$tau2.max, Y=Y, vi=vi, X=X, k=k, objective=0, verbose=FALSE)
-         QE.tau2.min <- .QE.func(con$tau2.min, Y=Y, vi=vi, X=X, k=k, objective=0, verbose=FALSE)
+         QE.tau2.max <- .QE.func(con$tau2.max, Y=Y, vi=vi, X=X, k=k, objective=0)
+         QE.tau2.min <- .QE.func(con$tau2.min, Y=Y, vi=vi, X=X, k=k, objective=0)
 
          #dfs <- 12; curve(dchisq(x, df=dfs), from=0, to=40, ylim=c(0,.1), xlab="", ylab=""); abline(v=qchisq(c(.025, .975), df=dfs)); text(qchisq(c(.025, .975), df=dfs)+1.6, .1, c("crit.l", "crit.u"))
 
@@ -256,8 +259,8 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
          ### note: .GENQ.func(tau2val, ..., Q=Q, level=0, getlower=TRUE) gives the area to the right of Q for a
          ### distribution with specified tau2val; and as we increase tau2val, so does the area to the right of Q
 
-         GENQ.tau2.max <- .GENQ.func(con$tau2.max, P=P, vi=vi, Q=Q, level=0, k=k, p=p, getlower=TRUE, verbose=FALSE)
-         GENQ.tau2.min <- .GENQ.func(con$tau2.min, P=P, vi=vi, Q=Q, level=0, k=k, p=p, getlower=TRUE, verbose=FALSE)
+         GENQ.tau2.max <- .GENQ.func(con$tau2.max, P=P, vi=vi, Q=Q, level=0, k=k, p=p, getlower=TRUE)
+         GENQ.tau2.min <- .GENQ.func(con$tau2.min, P=P, vi=vi, Q=Q, level=0, k=k, p=p, getlower=TRUE)
 
          ###################################################################
 

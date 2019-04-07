@@ -12,8 +12,11 @@ rstudent.rma.mh <- function(model, digits, progbar=FALSE, ...) {
 
    x <- model
 
-   if (missing(digits))
-      digits <- x$digits
+   if (missing(digits)) {
+      digits <- .get.digits(xdigits=x$digits, dmiss=TRUE)
+   } else {
+      digits <- .get.digits(digits=digits, xdigits=x$digits, dmiss=FALSE)
+   }
 
    #########################################################################
 

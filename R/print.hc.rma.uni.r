@@ -1,20 +1,18 @@
-print.hc.rma.uni <- function(x, digits, ...) {
+print.hc.rma.uni <- function(x, digits=x$digits, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
    if (!inherits(x, "hc.rma.uni"))
       stop(mstyle$stop("Argument 'x' must be an object of class \"hc.rma.uni\"."))
 
-   if (missing(digits))
-      digits <- x$digits
+   digits <- .get.digits(digits=digits, xdigits=x$digits, dmiss=FALSE)
 
-   res.table <- data.frame(method=c(x$method.rma, x$method),
-                           tau2=formatC(c(x$tau2.rma, x$tau2), digits=digits, format="f"),
-                           estimate=formatC(c(x$beta.rma, x$beta), digits=digits, format="f"),
-                           se=c(ifelse(is.na(x$se.rma), NA, formatC(x$se.rma, digits=digits, format="f")),
-                                ifelse(is.na(x$se), NA, formatC(x$se, digits=digits, format="f"))),
-                           ci.lb=formatC(c(x$ci.lb.rma, x$ci.lb), digits=digits, format="f"),
-                           ci.ub=formatC(c(x$ci.ub.rma, x$ci.ub), digits=digits, format="f"), stringsAsFactors=FALSE)
+   res.table <- data.frame(method   = c(x$method.rma, x$method),
+                           tau2     = .fcf(c(x$tau2.rma, x$tau2), digits[["var"]]),
+                           estimate = .fcf(c(x$beta.rma, x$beta), digits[["est"]]),
+                           se       = .fcf(c(x$se.rma, x$se), digits[["se"]]),
+                           ci.lb    = .fcf(c(x$ci.lb.rma, x$ci.lb), digits[["ci"]]),
+                           ci.ub    = .fcf(c(x$ci.ub.rma, x$ci.ub), digits[["ci"]]), stringsAsFactors=FALSE)
 
    if (is.na(res.table$se[1]))
       res.table$se <- NULL

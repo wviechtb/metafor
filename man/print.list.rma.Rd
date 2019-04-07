@@ -5,11 +5,11 @@
    Print method for objects of class \code{"list.rma"}.
 }
 \usage{
-\method{print}{list.rma}(x, digits, \dots)
+\method{print}{list.rma}(x, digits=x$digits, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"list.rma"}.}
-   \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is to take the value from the object).}
+   \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (the default is to take the value from the object).}
    \item{\dots}{other arguments.}
 }
 \value{

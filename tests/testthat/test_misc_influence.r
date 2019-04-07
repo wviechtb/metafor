@@ -17,8 +17,7 @@ test_that("influence() works for rma().", {
    sav$is.infl <- sav$is.infl[1]
    sav$not.na <- sav$not.na[1]
 
-   tmp <- structure(list(inf = structure(list(rstudent = -0.2181, dffits = -0.0407, cook.d = 0.0017, cov.r = 1.1164, tau2.del = 0.3362, QE.del = 151.5826,
-   hat = 0.0506, weight = 5.0595, inf = "", slab = 1L, digits = 4), .Names = c("rstudent", "dffits", "cook.d", "cov.r", "tau2.del", "QE.del", "hat", "weight", "inf", "slab", "digits")), dfbs = structure(list(intrcpt = -0.0403, slab = 1L, digits = 4), .Names = c("intrcpt", "slab", "digits")), ids = 1:13, not.na = TRUE, is.infl = FALSE, tau2 = 0.3132, QE = 152.233, k = 13L, p = 1L, m = 1L), .Names = c("inf", "dfbs", "ids", "not.na", "is.infl", "tau2", "QE", "k", "p", "m"), class = "infl.rma.uni")
+   tmp <- structure(list(inf = list(rstudent = -0.2181, dffits = -0.0407, cook.d = 0.0017, cov.r = 1.1164, tau2.del = 0.3362, QE.del = 151.5826, hat = 0.0506, weight = 5.0595, inf = "", slab = 1L, digits = c( est = 4, se = 4, test = 4, pval = 4, ci = 4, var = 4, sevar = 4, fit = 4, het = 4)), dfbs = list(intrcpt = -0.0403, slab = 1L, digits = c(est = 4, se = 4, test = 4, pval = 4, ci = 4, var = 4, sevar = 4, fit = 4, het = 4)), ids = 1:13, not.na = TRUE, is.infl = FALSE, tau2 = 0.3132, QE = 152.233, k = 13L, p = 1L, m = 1L, digits = c(est = 4, se = 4, test = 4, pval = 4, ci = 4, var = 4, sevar = 4, fit = 4, het = 4)), class = "infl.rma.uni")
 
    expect_equivalent(sav, tmp)
 
@@ -30,10 +29,10 @@ test_that("leave1out() works for rma().", {
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
    res <- rma(yi, vi, data=dat)
    inf <- leave1out(res)
-   inf <- lapply(inf[1:12], function(x) round(x[1], 4))
+   inf <- lapply(unclass(inf)[1:12], function(x) round(x[1], 4))
    class(inf) <- "list.rma"
 
-   sav <- structure(list(estimate = -0.7071, se = 0.19, zval = -3.7223, pval = 2e-04, ci.lb = -1.0794, ci.ub = -0.3348, Q = 151.5826, Qp = 0, tau2 = 0.3362, I2 = 93.2259, H2 = 14.7622, slab = 1, digits = 4, transf = 0), .Names = c("estimate", "se", "zval", "pval", "ci.lb", "ci.ub", "Q", "Qp", "tau2", "I2", "H2", "slab", "digits", "transf"), class = "list.rma")
+   sav <- structure(list(estimate = -0.7071, se = 0.19, zval = -3.7223, pval = 2e-04, ci.lb = -1.0794, ci.ub = -0.3348, Q = 151.5826, Qp = 0, tau2 = 0.3362, I2 = 93.2259, H2 = 14.7622, slab = 1), class = "list.rma")
 
    expect_equivalent(sav, inf)
 
@@ -44,10 +43,10 @@ test_that("leave1out() works for rma.mh().", {
    data(dat.bcg, package="metafor")
    res <- rma.mh(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
    inf <- leave1out(res)
-   inf <- lapply(inf[1:12], function(x) round(x[1], 4))
+   inf <- lapply(unclass(inf)[1:9], function(x) round(x[1], 4))
    class(inf) <- "list.rma"
 
-   sav <- structure(list(estimate = -0.4514, se = 0.0394, zval = -11.4462, pval = 0, ci.lb = -0.5287, ci.ub = -0.3741, Q = 151.9153, Qp = 0, slab = 1, digits = 4, transf = 0), .Names = c("estimate", "se", "zval", "pval", "ci.lb", "ci.ub", "Q", "Qp", "slab", "digits", "transf"), class = "list.rma")
+   sav <- structure(list(estimate = -0.4514, se = 0.0394, zval = -11.4462, pval = 0, ci.lb = -0.5287, ci.ub = -0.3741, Q = 151.9153, Qp = 0, slab = 1), class = "list.rma")
 
    expect_equivalent(sav, inf)
 
@@ -58,10 +57,10 @@ test_that("leave1out() works for rma.peto().", {
    data(dat.bcg, package="metafor")
    res <- rma.peto(ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
    inf <- leave1out(res)
-   inf <- lapply(inf[1:12], function(x) round(x[1], 4))
+   inf <- lapply(unclass(inf)[1:9], function(x) round(x[1], 4))
    class(inf) <- "list.rma"
 
-   sav <- structure(list(estimate = -0.4722, se = 0.0408, zval = -11.5791, pval = 0, ci.lb = -0.5521, ci.ub = -0.3923, Q = 167.2005, Qp = 0, slab = 1, digits = 4, transf = 0), .Names = c("estimate", "se", "zval", "pval", "ci.lb", "ci.ub", "Q", "Qp", "slab", "digits", "transf"), class = "list.rma")
+   sav <- structure(list(estimate = -0.4722, se = 0.0408, zval = -11.5791, pval = 0, ci.lb = -0.5521, ci.ub = -0.3923, Q = 167.2005, Qp = 0, slab = 1), class = "list.rma")
 
    expect_equivalent(sav, inf)
 

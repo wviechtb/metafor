@@ -1,12 +1,11 @@
-print.fsn <- function(x, digits, ...) {
+print.fsn <- function(x, digits=x$digits, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
    if (!inherits(x, "fsn"))
       stop(mstyle$stop("Argument 'x' must be an object of class \"fsn\"."))
 
-   if (missing(digits))
-      digits <- x$digits
+   digits <- .get.digits(digits=digits, xdigits=x$digits, dmiss=FALSE)
 
    if (!exists(".rmspace"))
       cat("\n")
@@ -16,7 +15,7 @@ print.fsn <- function(x, digits, ...) {
 
    if (x$type == "Rosenthal") {
       cat(mstyle$text("Observed Significance Level: "))
-      cat(mstyle$result(.pval(x$pval, digits=digits)))
+      cat(mstyle$result(.pval(x$pval, digits=digits[["pval"]])))
       cat("\n")
       cat(mstyle$text("Target Significance Level:   "))
       cat(mstyle$result(x$alpha))
@@ -24,18 +23,18 @@ print.fsn <- function(x, digits, ...) {
 
    if (x$type == "Orwin") {
       cat(mstyle$text("Average Effect Size: "))
-      cat(mstyle$result(formatC(x$meanes, digits=digits, format="f")))
+      cat(mstyle$result(.fcf(x$meanes, digits[["est"]])))
       cat("\n")
       cat(mstyle$text("Target Effect Size:  "))
-      cat(mstyle$result(formatC(x$target, digits=digits, format="f")))
+      cat(mstyle$result(.fcf(x$target, digits[["est"]])))
    }
 
    if (x$type == "Rosenberg") {
       cat(mstyle$text("Average Effect Size:        "))
-      cat(mstyle$result(formatC(x$meanes, digits=digits, format="f")))
+      cat(mstyle$result(.fcf(x$meanes, digits[["est"]])))
       cat("\n")
       cat(mstyle$text("Observed Significance Level: "))
-      cat(mstyle$result(.pval(x$pval, digits=digits)))
+      cat(mstyle$result(.pval(x$pval, digits=digits[["pval"]])))
       cat("\n")
       cat(mstyle$text("Target Significance Level:   "))
       cat(mstyle$result(x$alpha))

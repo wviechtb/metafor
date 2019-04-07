@@ -5,11 +5,11 @@
    Print method for objects of class \code{"fsn"}.
 }
 \usage{
-\method{print}{fsn}(x, digits, \dots)
+\method{print}{fsn}(x, digits=x$digits, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"fsn"}.}
-   \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is to take the value from the object).}
+   \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (the default is to take the value from the object).}
    \item{\dots}{other arguments.}
 }
 \details{

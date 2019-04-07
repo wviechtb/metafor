@@ -6,7 +6,7 @@
 rma.peto(ai, bi, ci, di, n1i, n2i,
          data, slab, subset,
          add=1/2, to="only0", drop00=TRUE,
-         level=95, digits=4, verbose=FALSE, \dots)
+         level=95, digits, verbose=FALSE, \dots)
 }
 \arguments{
    \item{ai}{vector to specify the \eqn{2 \times 2}{2x2} table frequencies (upper left cell). See below and the documentation of the \code{\link{escalc}} function for more details.}
@@ -22,7 +22,7 @@ rma.peto(ai, bi, ci, di, n1i, n2i,
    \item{to}{character string indicating when the values under \code{add} should be added (either \code{"only0"}, \code{"all"}, \code{"if0all"}, or \code{"none"}). Can also be a character vector, where the first string again applies when calculating the observed outcomes and the second string when applying Peto's method. See below and the documentation of the \code{\link{escalc}} function for more details.}
    \item{drop00}{logical indicating whether studies with no cases (or only cases) in both groups should be dropped when calculating the observed outcomes (the outcomes for such studies are set to \code{NA}). Can also be a vector of two logicals, where the first applies to the calculation of the observed outcomes and the second when applying Peto's method. See below and the documentation of the \code{\link{escalc}} function for more details.}
    \item{level}{numerical value between 0 and 100 specifying the confidence interval level (the default is 95).}
-   \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (the default is 4).}
+   \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is 4).}
    \item{verbose}{logical indicating whether output should be generated on the progress of the model fitting (the default is \code{FALSE}).}
    \item{\dots}{additional arguments.}
 }

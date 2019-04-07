@@ -11,8 +11,11 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
    if (inherits(object, "rma.glmm"))
       stop(mstyle$stop("Method not available for objects of class \"rma.glmm\"."))
 
-   if (missing(digits))
-      digits <- object$digits
+   if (missing(digits)) {
+      digits <- .get.digits(xdigits=object$digits, dmiss=TRUE)
+   } else {
+      digits <- .get.digits(digits=digits, xdigits=object$digits, dmiss=FALSE)
+   }
 
    if (missing(object2)) {
 
@@ -120,7 +123,7 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
 
          hyp <- rep("", m)
          for (j in seq_len(m)) {
-            Lj <- round(L[j,], digits=digits) ### coefficients for the jth contrast
+            Lj <- round(L[j,], digits=digits[["est"]]) ### coefficients for the jth contrast
             sel <- Lj != 0 ### TRUE if coefficient is != 0
             hyp[j] <- paste(paste(Lj[sel], rownames(beta)[sel], sep="*"), collapse=" + ") ### coefficient*variable + coefficient*variable ...
             hyp[j] <- gsub("1*", "", hyp[j], fixed=TRUE) ### turn '+1' into '+' and '-1' into '-'

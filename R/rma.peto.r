@@ -1,7 +1,7 @@
 rma.peto <- function(ai, bi, ci, di, n1i, n2i,
 data, slab, subset,
 add=1/2, to="only0", drop00=TRUE, ### for add/to/drop00, 1st element for escalc(), 2nd for Peto's method
-level=95, digits=4, verbose=FALSE, ...) {
+level=95, digits, verbose=FALSE, ...) {
 
    #########################################################################
 
@@ -53,6 +53,14 @@ level=95, digits=4, verbose=FALSE, ...) {
       time.start <- proc.time()
 
    measure <- "PETO" ### set measure here so that it can be added below
+
+   ### set defaults for digits
+
+   if (missing(digits)) {
+      digits <- .set.digits(dmiss=TRUE)
+   } else {
+      digits <- .set.digits(digits, dmiss=FALSE)
+   }
 
    #########################################################################
 

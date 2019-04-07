@@ -46,7 +46,7 @@ profile.rma.uni <- function(fitted,
 
          ### if the profile method fails, try a Wald-type CI for tau^2
 
-         vc.lb <- max(0, x$tau2 - 1.96 * x$se.tau2)
+         vc.lb <- max( 0, x$tau2 - 1.96 * x$se.tau2)
          vc.ub <- max(.1, x$tau2 + 1.96 * x$se.tau2)
 
       }

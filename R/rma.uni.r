@@ -3,7 +3,7 @@ measure="GEN", intercept=TRUE,
 data, slab, subset,
 add=1/2, to="only0", drop00=FALSE, vtype="LS",
 method="REML", weighted=TRUE, test="z", #knha=FALSE,
-level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
+level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
    #########################################################################
 
@@ -96,6 +96,14 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
    onlyo1 <- ifelse(is.null(ddd$onlyo1), FALSE, ddd$onlyo1)
    addyi  <- ifelse(is.null(ddd$addyi),  TRUE,  ddd$addyi)
    addvi  <- ifelse(is.null(ddd$addvi),  TRUE,  ddd$addvi)
+
+   ### set defaults for digits
+
+   if (missing(digits)) {
+      digits <- .set.digits(dmiss=TRUE)
+   } else {
+      digits <- .set.digits(digits, dmiss=FALSE)
+   }
 
    #########################################################################
 
@@ -896,7 +904,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
    if (con$tau2.min < 0 && (-con$tau2.min > min(vi))) {
       con$tau2.min <- -min(vi)
-      warning(mstyle$warning(paste0("Value of 'tau2.min' constrained to -min(vi) = ", formatC(-min(vi), format="f", digits=digits), ".")))
+      warning(mstyle$warning(paste0("Value of 'tau2.min' constrained to -min(vi) = ", .fcf(-min(vi), digits[["est"]]), ".")))
    }
 
    ### convergence indicator and change variable (for iterative estimators)
@@ -1010,7 +1018,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
          while (change > con$threshold) {
 
             if (verbose)
-               cat(mstyle$verbose(paste("Iteration", iter, "\ttau^2 =", formatC(tau2, format="f", digits=digits), "\n")))
+               cat(mstyle$verbose(paste("Iteration", iter, "\ttau^2 =", .fcf(tau2, digits[["var"]]), "\n")))
 
             iter <- iter + 1
             old2 <- tau2
@@ -1080,7 +1088,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
             RSS   <- crossprod(Y,P) %*% Y
 
-            if (.GENQ.func(con$tau2.min, P=P, vi=vi, Q=RSS, level=0, k=k, p=p, getlower=TRUE, verbose=FALSE) > 0.5) {
+            if (.GENQ.func(con$tau2.min, P=P, vi=vi, Q=RSS, level=0, k=k, p=p, getlower=TRUE) > 0.5) {
 
                ### if GENQ.tau2.min is > 0.5, then estimate < tau2.min
 
@@ -1088,7 +1096,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
 
             } else {
 
-               if (.GENQ.func(con$tau2.max, P=P, vi=vi, Q=RSS, level=0, k=k, p=p, getlower=TRUE, verbose=FALSE) < 0.5) {
+               if (.GENQ.func(con$tau2.max, P=P, vi=vi, Q=RSS, level=0, k=k, p=p, getlower=TRUE) < 0.5) {
 
                   ### if GENQ.tau2.max is < 0.5, then estimate > tau2.max
 
@@ -1151,7 +1159,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
          while (change > con$threshold) {
 
             if (verbose)
-               cat(mstyle$verbose(paste("Iteration", iter, "\ttau^2 =", formatC(tau2, format="f", digits=digits), "\n")))
+               cat(mstyle$verbose(paste("Iteration", iter, "\ttau^2 =", .fcf(tau2, digits[["var"]]), "\n")))
 
             iter <- iter + 1
             old2 <- tau2
@@ -1275,7 +1283,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
          while (change > con$threshold) {
 
             if (verbose)
-               cat(mstyle$verbose(paste(mstyle$verbose(paste("Iteration", iter, "\ttau^2 =", formatC(tau2, format="f", digits=digits), "\n")))))
+               cat(mstyle$verbose(paste(mstyle$verbose(paste("Iteration", iter, "\ttau^2 =", .fcf(tau2, digits[["var"]]), "\n")))))
 
             iter <- iter + 1
             old2 <- tau2
@@ -1379,7 +1387,7 @@ level=95, digits=4, btt, tau2, verbose=FALSE, control, ...) {
       ### verbose output upon convergence for ML/REML/EB estimators
 
       if (verbose && is.element(method, c("ML","REML","EB"))) {
-         cat(mstyle$verbose(paste("Iteration", iter, "\ttau^2 =", formatC(tau2, format="f", digits=digits), "\n")))
+         cat(mstyle$verbose(paste("Iteration", iter, "\ttau^2 =", .fcf(tau2, digits[["var"]]), "\n")))
          cat(mstyle$verbose(paste("Fisher scoring algorithm converged after", iter, "iterations.\n")))
       }
 

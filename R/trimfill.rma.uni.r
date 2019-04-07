@@ -66,6 +66,9 @@ trimfill.rma.uni <- function(x, side, estimator="L0", maxiter=100, verbose=FALSE
    k0     <-  0 ### estimated number of missing studies
    iter   <-  0 ### iteration counter
 
+   if (verbose)
+      cat("\n")
+
    while (abs(k0 - k0.sav) > 0) {
 
       k0.sav <- k0 ### save current value of k0
@@ -124,7 +127,7 @@ trimfill.rma.uni <- function(x, side, estimator="L0", maxiter=100, verbose=FALSE
       if (verbose)
          cat(mstyle$verbose(paste0("Iteration: ", formatC(iter, format="f", digits=0, width=nchar(maxiter), flag="-"),
                                    "  missing = ", formatC(k0, format="f", digits=0, width=nchar(k), flag="-"),
-                                   "  beta = ",    formatC(ifelse(side == "right", -1*beta, beta), format="f", digits=x$digits), "\n")))
+                                   "  beta = ",    formatC(ifelse(side == "right", -1*beta, beta), format="f", digits=x$digits[["est"]]), "\n")))
 
    }
 
