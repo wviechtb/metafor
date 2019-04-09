@@ -543,7 +543,12 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
       if (.Platform$OS.type == "windows") {
          shell.exec(file.out)
       } else {
-         system(paste0(getOption("browser"), " '", file.out, "'"))
+         optb <- getOption("browser")
+         if (is.function(optb)) {
+            invisible(optb(file.out))
+         } else {
+            system(paste0(getOption("browser"), " '", file.out, "'"))
+         }
       }
 
    }
