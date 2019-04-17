@@ -1261,10 +1261,18 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
 
       ### TODO: allow Rscale to be a vector so that different Rs can be scaled differently
 
-      ### force each element of R to be a correlation matrix
+      ### force each element of R to be a correlation matrix (and do some checks on that)
 
-      if (Rscale=="cor" || Rscale=="cor0")
-         R[Rfix] <- lapply(R[Rfix], cov2cor)
+      if (Rscale=="cor" || Rscale=="cor0") {
+         R[Rfix] <- lapply(R[Rfix], function(x) {
+            if (any(diag(x) <= 0))
+               stop(mstyle$stop("Cannot use Rscale=\"cor\" or Rscale=\"cor0\" with non-positive values on the diagonal of an 'R' matrix."), call.=FALSE)
+            tmp <- cov2cor(x)
+            if (any(abs(tmp) > 1))
+               warning(mstyle$warning("Some values are larger than +-1 in an 'R' matrix after cov2cor() (see 'Rscale' argument)."), call.=FALSE)
+            return(tmp)
+         })
+      }
 
       ### rescale R so that entries are 0 to (max(R) - min(R)) / (1 - min(R))
       ### this preserves the ultrametric properties of R and makes levels split at the root uncorrelated
