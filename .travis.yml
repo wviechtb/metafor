@@ -1,6 +1,5 @@
 language: r
 cache: packages
-sudo: false
 r: release
 dist: trusty
 warnings_are_errors: true
@@ -10,6 +9,7 @@ env:
   - NOT_CRAN=true
 
 apt_packages:
+  - libgsl0ldbl
   - libgsl0-dev
 
 r_packages:
