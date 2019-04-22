@@ -15,7 +15,7 @@ dat1$study54 <- ifelse(dat1$study == 54, 1, 0) ### dummies for studies in distri
 dat1$study55 <- ifelse(dat1$study == 55, 1, 0) ### dummies for studies in district 644
 dat1$study56 <- ifelse(dat1$study == 56, 1, 0) ### dummies for studies in district 644
 
-set.seed(123213)
+set.seed(123214)
 dat2 <- dat1[sample(nrow(dat1)),] ### reshuffled dataset
 
 res1 <- suppressWarnings(rma.mv(yi, vi, mods = ~ district11 + study53 + study54 + study55 + study56, random = ~ 1 | district/school, data=dat1, slab=study))

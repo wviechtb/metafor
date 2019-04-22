@@ -289,6 +289,10 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
             con$vc.min <- 0                                   ### TODO: 0 basically always fails
             con$vc.max <- max(10, vc*10)
          }
+         if (is.element(x$struct[1], c("PHYPL"))) {
+            con$vc.min <- 0
+            con$vc.max <- max(2, vc*2)
+         }
       }
       if (comp == "phi") {
          if (is.element(x$struct[2], c("CS","HCS")))
@@ -302,6 +306,10 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
          if (is.element(x$struct[2], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH"))) {
             con$vc.min <- 0                                   ### TODO: 0 basically always fails
             con$vc.max <- max(10, vc*10)
+         }
+         if (is.element(x$struct[2], c("PHYPL"))) {
+            con$vc.min <- 0
+            con$vc.max <- max(2, vc*2)
          }
       }
 
@@ -366,7 +374,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
                   if (is.element(comp, c("rho", "phi")) && con$vc.min > -1)
                      lb.sign <- "<"
 
-                  if (((comp == "rho" && is.element(x$struct[1], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH"))) || (comp == "phi" && is.element(x$struct[2], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH")))) && con$vc.min > 0)
+                  if (((comp == "rho" && is.element(x$struct[1], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYPL"))) || (comp == "phi" && is.element(x$struct[2], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYPL")))) && con$vc.min > 0)
                      lb.sign <- "<"
 
                } else {
@@ -419,7 +427,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
                   if (is.element(comp, c("rho", "phi")) && con$vc.max < 1)
                      ub.sign <- ">"
 
-                  if ((comp == "rho" && is.element(x$struct[1], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH"))) || (comp == "phi" && is.element(x$struct[2], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH"))))
+                  if ((comp == "rho" && is.element(x$struct[1], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYPL"))) || (comp == "phi" && is.element(x$struct[2], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYPL"))))
                      ub.sign <- ">"
 
                } else {

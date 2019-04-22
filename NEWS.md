@@ -1,4 +1,4 @@
-# metafor 2.1-0 (2019-04-17)
+# metafor 2.1-0 (2019-04-22)
 
 - `llplot()` now also allows for `measure="GEN"`; also, the documentation and y-axis label have been corrected to indicate that the function plots likelihoods (not log likelihoods)
 

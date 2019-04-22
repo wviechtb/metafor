@@ -1719,7 +1719,11 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                warning(mstyle$warning("Cannot invert Hessian for saturated model."))
                QE.Wld <- NA
             } else {
-               QE.Wld <- c(t(b2.QE) %*% chol2inv(chol.h) %*% b2.QE)
+               QE.Wld <- try(c(t(b2.QE) %*% chol2inv(chol.h) %*% b2.QE), silent=!verbose)
+               if (inherits(QE.Wld, "try-error")) {
+                  warning(mstyle$warning("Cannot invert Hessian for saturated model."))
+                  QE.Wld <- NA
+               }
             }
 
          } else {

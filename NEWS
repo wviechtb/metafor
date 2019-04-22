@@ -1,4 +1,4 @@
-Changes in Version 2.1-0 (2019-04-17)
+Changes in Version 2.1-0 (2019-04-22)
 =====================================
 
    o llplot() now also allows for measure="GEN"; also, the documentation and

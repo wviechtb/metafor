@@ -381,8 +381,8 @@ test_that("results are correct for Mantel-Haenszel method.", {
    expect_equivalent(round(coef(res),3), 1.326)
    expect_equivalent(round(res$ci.lb,2), 0.36) ### rounded a bit more heavily, so 32-bit and 64-bit versions give same result
    expect_equivalent(round(res$ci.ub,3), 2.296)
-   expect_equivalent(round(res$QE.Wld,2),  0.13) ### rounded a bit more heavily, so 32-bit and 64-bit versions give same result
-   expect_equivalent(round(res$QEp.Wld,2), 0.72) ### rounded a bit more heavily, so 32-bit and 64-bit versions give same result
+   expect_equivalent(res$QE.Wld,  0.13, tolerance=.01) ### rounded a bit more heavily, so 32-bit and 64-bit versions give same result
+   expect_equivalent(res$QEp.Wld, 0.72, tolerance=.01) ### rounded a bit more heavily, so 32-bit and 64-bit versions give same result
    expect_equivalent(round(res$QE.LRT,3),  0.119)
    expect_equivalent(round(res$QEp.LRT,3), 0.730)
 
