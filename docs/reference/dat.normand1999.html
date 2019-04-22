@@ -16,7 +16,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -133,25 +134,14 @@
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
     <p>The data frame contains the following columns:</p><table class='table'>
-<tr><td></td><td><b>study</b></td><td></td></tr>
-<tr><td></td><td><code>numeric</code></td><td></td></tr>
-<tr><td>study number</td><td></td><td><b>source</b></td></tr>
-<tr><td></td><td></td><td><code>character</code></td></tr>
-<tr><td></td><td>source of data</td><td></td></tr>
-<tr><td><b>n1i</b></td><td></td><td></td></tr>
-<tr><td><code>numeric</code></td><td></td><td>number of patients under specialized care</td></tr>
-<tr><td></td><td><b>m1i</b></td><td></td></tr>
-<tr><td></td><td><code>numeric</code></td><td></td></tr>
-<tr><td>mean length of stay (in days) under specialized care</td><td></td><td><b>sd1i</b></td></tr>
-<tr><td></td><td></td><td><code>numeric</code></td></tr>
-<tr><td></td><td>standard deviation of the length of stay under specialized care</td><td></td></tr>
-<tr><td><b>n2i</b></td><td></td><td></td></tr>
-<tr><td><code>numeric</code></td><td></td><td>number of patients under routine care</td></tr>
-<tr><td></td><td><b>m2i</b></td><td></td></tr>
-<tr><td></td><td><code>numeric</code></td><td></td></tr>
-<tr><td>mean length of stay (in days) under routine care</td><td></td><td><b>sd2i</b></td></tr>
-<tr><td></td><td></td><td><code>numeric</code></td></tr>
-<tr><td></td><td>standard deviation of the length of stay under routine care</td><td></td></tr>
+<tr><td><b>study</b></td><td><code>numeric</code></td><td>study number</td></tr>
+<tr><td><b>source</b></td><td><code>character</code></td><td>source of data</td></tr>
+<tr><td><b>n1i</b></td><td><code>numeric</code></td><td>number of patients under specialized care</td></tr>
+<tr><td><b>m1i</b></td><td><code>numeric</code></td><td>mean length of stay (in days) under specialized care</td></tr>
+<tr><td><b>sd1i</b></td><td><code>numeric</code></td><td>standard deviation of the length of stay under specialized care</td></tr>
+<tr><td><b>n2i</b></td><td><code>numeric</code></td><td>number of patients under routine care</td></tr>
+<tr><td><b>m2i</b></td><td><code>numeric</code></td><td>mean length of stay (in days) under routine care</td></tr>
+<tr><td><b>sd2i</b></td><td><code>numeric</code></td><td>standard deviation of the length of stay under routine care</td></tr>
 </table>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
@@ -223,7 +213,7 @@
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### draw forest plot</span>
-<span class='fu'><a href='forest.html'>forest</a></span>(<span class='no'>res</span>, <span class='kw'>xlim</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(-<span class='fl'>7</span>,<span class='fl'>5</span>), <span class='kw'>alim</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(-<span class='fl'>3</span>,<span class='fl'>1</span>), <span class='kw'>cex</span><span class='kw'>=</span><span class='fl'>.8</span>)</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/text'>text</a></span>(-<span class='fl'>7</span>, <span class='fl'>11</span>, <span class='st'>"Study/Source"</span>,          <span class='kw'>pos</span><span class='kw'>=</span><span class='fl'>4</span>, <span class='kw'>cex</span><span class='kw'>=</span><span class='fl'>.8</span>)</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/text'>text</a></span>( <span class='fl'>5</span>, <span class='fl'>11</span>, <span class='st'>"Observed SMD [95% CI]"</span>, <span class='kw'>pos</span><span class='kw'>=</span><span class='fl'>2</span>, <span class='kw'>cex</span><span class='kw'>=</span><span class='fl'>.8</span>)</div><div class='img'><img src='dat.normand1999-1.png' alt='' width='768' height='614' /></div></pre>
+<span class='fu'><a href='forest.html'>forest</a></span>(<span class='no'>res</span>, <span class='kw'>xlim</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>7</span>,<span class='fl'>5</span>), <span class='kw'>alim</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>3</span>,<span class='fl'>1</span>), <span class='kw'>cex</span><span class='kw'>=</span><span class='fl'>.8</span>)</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/text.html'>text</a></span>(-<span class='fl'>7</span>, <span class='fl'>11</span>, <span class='st'>"Study/Source"</span>,          <span class='kw'>pos</span><span class='kw'>=</span><span class='fl'>4</span>, <span class='kw'>cex</span><span class='kw'>=</span><span class='fl'>.8</span>)</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/text.html'>text</a></span>( <span class='fl'>5</span>, <span class='fl'>11</span>, <span class='st'>"Observed SMD [95% CI]"</span>, <span class='kw'>pos</span><span class='kw'>=</span><span class='fl'>2</span>, <span class='kw'>cex</span><span class='kw'>=</span><span class='fl'>.8</span>)</div><div class='img'><img src='dat.normand1999-1.png' alt='' width='768' height='614' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -247,7 +237,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
 </div>
       </footer>
    </div>

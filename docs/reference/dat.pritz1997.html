@@ -16,7 +16,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -133,16 +134,10 @@
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
     <p>The data frame contains the following columns:</p><table class='table'>
-<tr><td></td><td><b>study</b></td><td></td></tr>
-<tr><td></td><td><code>numeric</code></td><td></td></tr>
-<tr><td>study number</td><td></td><td><b>authors</b></td></tr>
-<tr><td></td><td></td><td><code>character</code></td></tr>
-<tr><td></td><td>study authors</td><td></td></tr>
-<tr><td><b>xi</b></td><td></td><td></td></tr>
-<tr><td><code>numeric</code></td><td></td><td>number of patients that improved with hyperdynamic therapy</td></tr>
-<tr><td></td><td><b>ni</b></td><td></td></tr>
-<tr><td></td><td><code>numeric</code></td><td></td></tr>
-<tr><td>total number of patients treated</td><td></td><td><b>study</b></td></tr>
+<tr><td><b>study</b></td><td><code>numeric</code></td><td>study number</td></tr>
+<tr><td><b>authors</b></td><td><code>character</code></td><td>study authors</td></tr>
+<tr><td><b>xi</b></td><td><code>numeric</code></td><td>number of patients that improved with hyperdynamic therapy</td></tr>
+<tr><td><b>ni</b></td><td><code>numeric</code></td><td>total number of patients treated</td></tr>
 </table>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
@@ -178,11 +173,11 @@
 #&gt; 14    14       Solomon et al.  6 10</div><div class='input'>
 <span class='co'>### computation of "weighted average" in Zhou et al. (1999), Table IV</span>
 <span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"PR"</span>, <span class='kw'>xi</span><span class='kw'>=</span><span class='no'>xi</span>, <span class='kw'>ni</span><span class='kw'>=</span><span class='no'>ni</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='fl'>0</span>)
-<span class='no'>theta.hat</span>    <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sum'>sum</a></span>(<span class='no'>dat</span>$<span class='no'>ni</span> * <span class='no'>dat</span>$<span class='no'>yi</span>) / <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sum'>sum</a></span>(<span class='no'>dat</span>$<span class='no'>ni</span>)
-<span class='no'>se.theta.hat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/MathFun'>sqrt</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sum'>sum</a></span>(<span class='no'>dat</span>$<span class='no'>ni</span>^<span class='fl'>2</span> * <span class='no'>dat</span>$<span class='no'>vi</span>) / <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sum'>sum</a></span>(<span class='no'>dat</span>$<span class='no'>ni</span>)^<span class='fl'>2</span>)
+<span class='no'>theta.hat</span>    <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>dat</span>$<span class='no'>ni</span> * <span class='no'>dat</span>$<span class='no'>yi</span>) / <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>dat</span>$<span class='no'>ni</span>)
+<span class='no'>se.theta.hat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>dat</span>$<span class='no'>ni</span>^<span class='fl'>2</span> * <span class='no'>dat</span>$<span class='no'>vi</span>) / <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>dat</span>$<span class='no'>ni</span>)^<span class='fl'>2</span>)
 <span class='no'>ci.lb</span>        <span class='kw'>&lt;-</span> <span class='no'>theta.hat</span> - <span class='fl'>1.96</span> * <span class='no'>se.theta.hat</span>
 <span class='no'>ci.ub</span>        <span class='kw'>&lt;-</span> <span class='no'>theta.hat</span> + <span class='fl'>1.96</span> * <span class='no'>se.theta.hat</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Round'>round</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='kw'>estimate</span> <span class='kw'>=</span> <span class='no'>theta.hat</span>, <span class='kw'>se</span> <span class='kw'>=</span> <span class='no'>se.theta.hat</span>, <span class='kw'>ci.lb</span> <span class='kw'>=</span> <span class='no'>ci.lb</span>, <span class='kw'>ci.ub</span> <span class='kw'>=</span> <span class='no'>ci.ub</span>), <span class='fl'>4</span>)</div><div class='output co'>#&gt; estimate       se    ci.lb    ci.ub 
+<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>estimate</span> <span class='kw'>=</span> <span class='no'>theta.hat</span>, <span class='kw'>se</span> <span class='kw'>=</span> <span class='no'>se.theta.hat</span>, <span class='kw'>ci.lb</span> <span class='kw'>=</span> <span class='no'>ci.lb</span>, <span class='kw'>ci.ub</span> <span class='kw'>=</span> <span class='no'>ci.ub</span>), <span class='fl'>4</span>)</div><div class='output co'>#&gt; estimate       se    ci.lb    ci.ub 
 #&gt;   0.7546   0.0224   0.7106   0.7986 </div><div class='input'>
 <span class='co'>### this is identical to a FE model with sample size weights</span>
 <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>weights</span><span class='kw'>=</span><span class='no'>ni</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"FE"</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: There are outcomes with non-positive sampling variances.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Cannot compute Q-test, I^2, or H^2 with non-positive sampling variances.</span></div><div class='output co'>#&gt; 
@@ -199,20 +194,20 @@
 <span class='co'>### random-effects model with raw proportions</span>
 <span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"PR"</span>, <span class='kw'>xi</span><span class='kw'>=</span><span class='no'>xi</span>, <span class='kw'>ni</span><span class='kw'>=</span><span class='no'>ni</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; 
+<span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; 
 #&gt;    pred     se  ci.lb  ci.ub  cr.lb  cr.ub 
 #&gt;  0.7968 0.0423 0.7138 0.8797 0.5306 1.0629 
 #&gt; </div><div class='input'>
 <span class='co'>### random-effects model with logit transformed proportions</span>
 <span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"PLO"</span>, <span class='kw'>xi</span><span class='kw'>=</span><span class='no'>xi</span>, <span class='kw'>ni</span><span class='kw'>=</span><span class='no'>ni</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>transf.ilogit</span>)</div><div class='output co'>#&gt; 
+<span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>transf.ilogit</span>)</div><div class='output co'>#&gt; 
 #&gt;    pred  ci.lb  ci.ub  cr.lb  cr.ub 
 #&gt;  0.7575 0.6605 0.8337 0.4661 0.9179 
 #&gt; </div><div class='input'>
 <span class='co'>### mixed-effects logistic regression model</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.glmm.html'>rma.glmm</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"PLO"</span>, <span class='kw'>xi</span><span class='kw'>=</span><span class='no'>xi</span>, <span class='kw'>ni</span><span class='kw'>=</span><span class='no'>ni</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>transf.ilogit</span>)</div><div class='output co'>#&gt; 
+<span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>transf.ilogit</span>)</div><div class='output co'>#&gt; 
 #&gt;    pred  ci.lb  ci.ub  cr.lb  cr.ub 
 #&gt;  0.7984 0.6924 0.8746 0.4426 0.9518 
 #&gt; </div></pre>
@@ -241,7 +236,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
 </div>
       </footer>
    </div>

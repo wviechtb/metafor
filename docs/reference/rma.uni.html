@@ -16,7 +16,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -133,13 +134,13 @@
         measure="GEN", intercept=TRUE, data, slab, subset,
         add=1/2, to="only0", drop00=FALSE, vtype="LS",
         method="REML", weighted=TRUE, test="z",
-        level=95, digits=4, btt, tau2, verbose=FALSE, control, &#8230;)
+        level=95, digits, btt, tau2, verbose=FALSE, control, &#8230;)
 rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
         m1i, m2i, sd1i, sd2i, xi, mi, ri, ti, sdi, r2i, ni, mods,
         measure="GEN", intercept=TRUE, data, slab, subset,
         add=1/2, to="only0", drop00=FALSE, vtype="LS",
         method="REML", weighted=TRUE, test="z",
-        level=95, digits=4, btt, tau2, verbose=FALSE, control, &#8230;)</pre>
+        level=95, digits, btt, tau2, verbose=FALSE, control, &#8230;)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -246,7 +247,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
     </tr>
     <tr>
       <th>mods</th>
-      <td><p>optional argument to include one or more moderators in the model. A single moderator can be given as a vector of length \(k\) specifying the values of the moderator. Multiple moderators are specified by giving a matrix with \(k\) rows and as many columns as there are moderator variables. Alternatively, a model <code><a href='https://www.rdocumentation.org/packages/stats/topics/formula'>formula</a></code> can be used to specify the model. See &#8216;Details&#8217;.</p></td>
+      <td><p>optional argument to include one or more moderators in the model. A single moderator can be given as a vector of length \(k\) specifying the values of the moderator. Multiple moderators are specified by giving a matrix with \(k\) rows and as many columns as there are moderator variables. Alternatively, a model <code><a href='https://rdrr.io/r/stats/formula.html'>formula</a></code> can be used to specify the model. See &#8216;Details&#8217;.</p></td>
     </tr>
     <tr>
       <th>measure</th>
@@ -302,7 +303,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
     </tr>
     <tr>
       <th>digits</th>
-      <td><p>integer specifying the number of decimal places to which the printed results should be rounded (the default is 4).</p></td>
+      <td><p>integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is 4).</p></td>
     </tr>
     <tr>
       <th>btt</th>
@@ -347,13 +348,13 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 <li><p><code>method="GENQ"</code> = generalized Q-statistic estimator</p></li>
 </ul><p>For a description of the various estimators, see DerSimonian and Kacker (2007), Raudenbush (2009), Viechtbauer (2005), and Viechtbauer et al. (2015). Note that the Hedges estimator is also called the &#8216;variance component estimator&#8217; or &#8216;Cochran estimator&#8217;, the Sidik-Jonkman estimator is also called the &#8216;model error variance estimator&#8217;, and the empirical Bayes estimator is actually identical to the Paule-Mandel estimator (Paule &amp; Mandel, 1982). Finally, the generalized Q-statistic estimator is a general method-of-moments estimator (DerSimonian &amp; Kacker, 2007) requiring the specification of weights (the HE and DL estimators are just special cases with equal and inverse variance weights, respectively).</p>
 <p>One or more moderators can be included in these models via the <code>mods</code> argument. A single moderator can be given as a (row or column) vector of length \(k\) specifying the values of the moderator. Multiple moderators are specified by giving an appropriate model matrix (i.e., \(X\)) with \(k\) rows and as many columns as there are moderator variables (e.g., <code>mods = cbind(mod1, mod2, mod3)</code>, where <code>mod1</code>, <code>mod2</code>, and <code>mod3</code> correspond to the names of the variables for three moderator variables). The intercept is added to the model matrix by default unless <code>intercept=FALSE</code>.</p>
-<p>Alternatively, one can use the standard <code><a href='https://www.rdocumentation.org/packages/stats/topics/formula'>formula</a></code> syntax to specify the model. In this case, the <code>mods</code> argument should be set equal to a one-sided formula of the form <code>mods = ~ model</code> (e.g., <code>mods = ~ mod1 + mod2 + mod3</code>). Interactions, polynomial terms, and factors can be easily added to the model in this manner. When specifying a model formula via the <code>mods</code> argument, the <code>intercept</code> argument is ignored. Instead, the inclusion/exclusion of the intercept is controlled by the specified formula (e.g., <code>mods = ~ mod1 + mod2 + mod3 - 1</code> would lead to the removal of the intercept).</p>
+<p>Alternatively, one can use the standard <code><a href='https://rdrr.io/r/stats/formula.html'>formula</a></code> syntax to specify the model. In this case, the <code>mods</code> argument should be set equal to a one-sided formula of the form <code>mods = ~ model</code> (e.g., <code>mods = ~ mod1 + mod2 + mod3</code>). Interactions, polynomial terms, and factors can be easily added to the model in this manner. When specifying a model formula via the <code>mods</code> argument, the <code>intercept</code> argument is ignored. Instead, the inclusion/exclusion of the intercept is controlled by the specified formula (e.g., <code>mods = ~ mod1 + mod2 + mod3 - 1</code> would lead to the removal of the intercept).</p>
 <p>A <em>fixed-effects with moderators model</em> is then fitted by setting <code>method="FE"</code>, while a <em>mixed-effects model</em> is fitted by specifying one of the estimators for the amount of (residual) heterogeneity given earlier.</p>
 <p>When the observed outcomes and corresponding sampling variances are supplied via the <code>yi</code> and <code>vi</code> (or <code>sei</code>) arguments, one can also specify moderators via the <code>yi</code> argument (e.g., <code>rma(yi ~ mod1 + mod2 + mod3, vi)</code>). In that case, the <code>mods</code> argument is ignored and the inclusion/exclusion of the intercept again is controlled by the specified formula.</p>
 <p><b>Omnibus Test of Parameters</b></p>
 <p>For models including moderators, an omnibus test of all the model coefficients is conducted that excludes the intercept (the first coefficient) if it is included in the model. If no intercept is included in the model, then the omnibus test includes all of the coefficients in the model including the first. Alternatively, one can manually specify the indices of the coefficients to test via the <code>btt</code> argument. For example, with <code>btt=c(3,4)</code>, only the third and fourth coefficient from the model would be included in the test (if an intercept is included in the model, then it corresponds to the first coefficient in the model).</p>
 <p><b>Categorical Moderators</b></p>
-<p>Categorical moderator variables can be included in the model via the <code>mods</code> argument in the same way that appropriately (dummy) coded categorical independent variables can be included in linear models. One can either do the dummy coding manually or use a model formula together with the <code><a href='https://www.rdocumentation.org/packages/base/topics/factor'>factor</a></code> function to let <span style="R">R</span> handle the coding automatically. An example to illustrate these different approaches is provided below.</p>
+<p>Categorical moderator variables can be included in the model via the <code>mods</code> argument in the same way that appropriately (dummy) coded categorical independent variables can be included in linear models. One can either do the dummy coding manually or use a model formula together with the <code><a href='https://rdrr.io/r/base/factor.html'>factor</a></code> function to let <span style="R">R</span> handle the coding automatically. An example to illustrate these different approaches is provided below.</p>
 <p><b>Knapp &amp; Hartung Adjustment</b></p>
 <p>By default, the test statistics of the individual coefficients in the model (and the corresponding confidence intervals) are based on a standard normal distribution, while the omnibus test is based on a chi-square distribution with \(m\) degrees of freedom (\(m\) being the number of coefficients tested). The Knapp and Hartung (2003) method (<code>test="knha"</code>) is an adjustment to the standard errors of the estimated coefficients, which helps to account for the uncertainty in the estimate of the amount of (residual) heterogeneity and leads to different reference distributions. Tests of individual coefficients and confidence intervals are then based on the t-distribution with \(k-p\) degrees of freedom, while the omnibus test statistic then uses an F-distribution with \(m\) and \(k-p\) degrees of freedom (\(p\) being the total number of model coefficients including the intercept if it is present). The Knapp and Hartung (2003) adjustment is only meant to be used in the context of random- or mixed-effects models.</p>
 <p><b>Test for (Residual) Heterogeneity</b></p>
@@ -361,7 +362,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An object of class <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c("rma.uni","rma")</a></code>. The object is a list containing the following components:</p>
+    <p>An object of class <code><a href='https://rdrr.io/r/base/c.html'>c("rma.uni","rma")</a></code>. The object is a list containing the following components:</p>
 <dt>beta</dt><dd><p>estimated coefficients of the model.</p></dd>
    <dt>se</dt><dd><p>standard errors of the coefficients.</p></dd>
    <dt>zval</dt><dd><p>test statistics of the coefficients.</p></dd>
@@ -402,7 +403,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
     <p>While the HS, HE, DL, SJ, and GENQ estimators of \(\tau^2\) are based on closed-form solutions, the ML, REML, and EB estimators must be obtained numerically. For this, the function makes use of the Fisher scoring algorithm, which is robust to poor starting values and usually converges quickly (Harville, 1977; Jennrich &amp; Sampson, 1976). By default, the starting value is set equal to the value of the Hedges (HE) estimator and the algorithm terminates when the change in the estimated value of \(\tau^2\) is smaller than \(10⁻⁵\) from one iteration to the next. The maximum number of iterations is 100 by default (which should be sufficient in most cases). Information on the progress of the algorithm can be obtained by setting <code>verbose=TRUE</code> or with <code>control=list(verbose=TRUE)</code>.</p>
 <p>A different starting value, threshold, and maximum number of iterations can be specified via the <code>control</code> argument by setting <code>control=list(tau2.init=value, threshold=value, maxiter=value)</code>. The step length of the Fisher scoring algorithm can also be manually adjusted by a desired factor with <code>control=list(stepadj=value)</code> (values below 1 will reduce the step length). If using <code>verbose=TRUE</code> shows the estimate jumping around erratically (or cycling through a few values), decreasing the step length (and increasing the maximum number of iterations) can often help with convergence (e.g., <code>control=list(stepadj=0.5, maxiter=1000)</code>).</p>
-<p>The PM estimator also involves an iterative algorithm, which makes use of the <code><a href='https://www.rdocumentation.org/packages/stats/topics/uniroot'>uniroot</a></code> function. By default, the desired accuracy (<code>tol</code>) is set equal to <code>.Machine$double.eps^0.25</code> and the maximum number of iterations (<code>maxiter</code>) to <code>100</code> (as above). The upper bound of the interval searched (<code>tau2.max</code>) is set to 100 (which should be large enough for most cases). These values can be adjusted with <code>control=list(tol=value, maxiter=value, tau2.max=value)</code>.</p>
+<p>The PM estimator also involves an iterative algorithm, which makes use of the <code><a href='https://rdrr.io/r/stats/uniroot.html'>uniroot</a></code> function. By default, the desired accuracy (<code>tol</code>) is set equal to <code>.Machine$double.eps^0.25</code> and the maximum number of iterations (<code>maxiter</code>) to <code>100</code> (as above). The upper bound of the interval searched (<code>tau2.max</code>) is set to 100 (which should be large enough for most cases). These values can be adjusted with <code>control=list(tol=value, maxiter=value, tau2.max=value)</code>.</p>
 <p>All of the heterogeneity estimators except SJ can in principle yield negative estimates for the amount of (residual) heterogeneity. However, negative estimates of \(\tau^2\) are outside of the parameter space. For the HS, HE, DL, and GENQ estimators, negative estimates are therefore truncated to zero. For the ML, REML, and EB estimators, the Fisher scoring algorithm makes use of step halving (Jennrich &amp; Sampson, 1976) to guarantee a non-negative estimate. Finally, for the PM estimator, the lower bound of the interval searched is set by default to zero. For those brave enough to step into risky territory, there is the option to set the lower bound for all these estimators equal to some other value besides zero (even a negative one) with <code>control=list(tau2.min=value)</code>, but the lowest value permitted is <code>-min(vi)</code> (to ensure that the marginal variances are always non-negative).</p>
 <p>The Hunter-Schmidt estimator for the amount of heterogeneity is defined in Hunter and Schmidt (1990) only in the context of the random-effects model when analyzing correlation coefficients. A general version of this estimator for random- and mixed-effects models not specific to any particular outcome measure is described in Viechtbauer (2005) and Viechtbauer et al. (2015) and is implemented here.</p>
 <p>The Sidik-Jonkman estimator starts with a crude estimate of \(\tau^2\), which is then updated as described in Sidik and Jonkman (2005b, 2007). If, instead of the crude estimate, one wants to use a better a priori estimate, one can do so by passing this value via <code>control=list(tau2.init=value)</code>.</p>
@@ -470,7 +471,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 <span class='co'>### random-effects model, using log risk ratios and standard errors as input</span>
 <span class='co'>### note: the second argument of rma() is for the *variances*, so we use the</span>
 <span class='co'>### named argument 'sei' to supply the standard errors to the function</span>
-<span class='no'>dat</span>$<span class='no'>sei</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/MathFun'>sqrt</a></span>(<span class='no'>dat</span>$<span class='no'>vi</span>)
+<span class='no'>dat</span>$<span class='no'>sei</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span>(<span class='no'>dat</span>$<span class='no'>vi</span>)
 <span class='fu'>rma</span>(<span class='no'>yi</span>, <span class='kw'>sei</span><span class='kw'>=</span><span class='no'>sei</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)</div><div class='output co'>#&gt; 
 #&gt; Random-Effects Model (k = 13; tau^2 estimator: REML)
 #&gt; 
@@ -511,7 +512,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### mixed-effects model with two moderators (absolute latitude and publication year)</span>
-<span class='fu'>rma</span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>mods</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/cbind'>cbind</a></span>(<span class='no'>ablat</span>, <span class='no'>year</span>), <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)</div><div class='output co'>#&gt; 
+<span class='fu'>rma</span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>mods</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span>(<span class='no'>ablat</span>, <span class='no'>year</span>), <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)</div><div class='output co'>#&gt; 
 #&gt; Mixed-Effects Model (k = 13; tau^2 estimator: REML)
 #&gt; 
 #&gt; tau^2 (estimated amount of residual heterogeneity):     0.1108 (SE = 0.0845)
@@ -589,9 +590,9 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### manual dummy coding of the allocation factor</span>
-<span class='no'>alloc.random</span>     <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/ifelse'>ifelse</a></span>(<span class='no'>dat</span>$<span class='no'>alloc</span> <span class='kw'>==</span> <span class='st'>"random"</span>,     <span class='fl'>1</span>, <span class='fl'>0</span>)
-<span class='no'>alloc.alternate</span>  <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/ifelse'>ifelse</a></span>(<span class='no'>dat</span>$<span class='no'>alloc</span> <span class='kw'>==</span> <span class='st'>"alternate"</span>,  <span class='fl'>1</span>, <span class='fl'>0</span>)
-<span class='no'>alloc.systematic</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/ifelse'>ifelse</a></span>(<span class='no'>dat</span>$<span class='no'>alloc</span> <span class='kw'>==</span> <span class='st'>"systematic"</span>, <span class='fl'>1</span>, <span class='fl'>0</span>)
+<span class='no'>alloc.random</span>     <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='no'>dat</span>$<span class='no'>alloc</span> <span class='kw'>==</span> <span class='st'>"random"</span>,     <span class='fl'>1</span>, <span class='fl'>0</span>)
+<span class='no'>alloc.alternate</span>  <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='no'>dat</span>$<span class='no'>alloc</span> <span class='kw'>==</span> <span class='st'>"alternate"</span>,  <span class='fl'>1</span>, <span class='fl'>0</span>)
+<span class='no'>alloc.systematic</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='no'>dat</span>$<span class='no'>alloc</span> <span class='kw'>==</span> <span class='st'>"systematic"</span>, <span class='fl'>1</span>, <span class='fl'>0</span>)
 
 <span class='co'>### test the allocation factor (in the presence of the other moderators)</span>
 <span class='co'>### note: 'alternate' is the reference level of the allocation factor,</span>
@@ -627,7 +628,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### using a model formula to specify the same model</span>
-<span class='fu'>rma</span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/factor'>factor</a></span>(<span class='no'>alloc</span>) + <span class='no'>year</span> + <span class='no'>ablat</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>btt</span><span class='kw'>=</span><span class='fl'>2</span>:<span class='fl'>3</span>)</div><div class='output co'>#&gt; 
+<span class='fu'>rma</span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>alloc</span>) + <span class='no'>year</span> + <span class='no'>ablat</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>btt</span><span class='kw'>=</span><span class='fl'>2</span>:<span class='fl'>3</span>)</div><div class='output co'>#&gt; 
 #&gt; Mixed-Effects Model (k = 13; tau^2 estimator: REML)
 #&gt; 
 #&gt; tau^2 (estimated amount of residual heterogeneity):     0.1796 (SE = 0.1425)
@@ -661,7 +662,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### test all pairwise differences with Holm's method (using the 'multcomp' package if installed)</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>rma</span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/factor'>factor</a></span>(<span class='no'>alloc</span>) - <span class='fl'>1</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
+<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>rma</span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>alloc</span>) - <span class='fl'>1</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
 <span class='no'>res</span></div><div class='output co'>#&gt; 
 #&gt; Mixed-Effects Model (k = 13; tau^2 estimator: REML)
 #&gt; 
@@ -689,9 +690,9 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 #&gt; 
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-#&gt; </div><div class='input'><span class='kw'>if</span> (<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>require</a></span>(<span class='no'>multcomp</span>))
-   <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/multcomp/topics/glht'>glht</a></span>(<span class='no'>res</span>, <span class='kw'>linfct</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/multcomp/topics/contrMat'>contrMat</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"alternate"</span><span class='kw'>=</span><span class='fl'>1</span>,<span class='st'>"random"</span><span class='kw'>=</span><span class='fl'>1</span>,<span class='st'>"systematic"</span><span class='kw'>=</span><span class='fl'>1</span>),
-           <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"Tukey"</span>)), <span class='kw'>test</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/multcomp/topics/methods'>adjusted</a></span>(<span class='st'>"holm"</span>))</div><div class='output co'>#&gt; 
+#&gt; </div><div class='input'><span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='no'>multcomp</span>))
+   <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/multcomp/man/glht.html'>glht</a></span>(<span class='no'>res</span>, <span class='kw'>linfct</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/pkg/multcomp/man/contrMat.html'>contrMat</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"alternate"</span><span class='kw'>=</span><span class='fl'>1</span>,<span class='st'>"random"</span><span class='kw'>=</span><span class='fl'>1</span>,<span class='st'>"systematic"</span><span class='kw'>=</span><span class='fl'>1</span>),
+           <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"Tukey"</span>)), <span class='kw'>test</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/pkg/multcomp/man/methods.html'>adjusted</a></span>(<span class='st'>"holm"</span>))</div><div class='output co'>#&gt; 
 #&gt; 	 Simultaneous Tests for General Linear Hypotheses
 #&gt; 
 #&gt; Multiple Comparisons of Means: Tukey Contrasts
@@ -768,7 +769,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 #&gt; 
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-#&gt; </div><div class='input'><span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>rma</span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/factor'>factor</a></span>(<span class='no'>alloc</span>) - <span class='fl'>1</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
+#&gt; </div><div class='input'><span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>rma</span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>alloc</span>) - <span class='fl'>1</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
 <span class='no'>res</span></div><div class='output co'>#&gt; 
 #&gt; Mixed-Effects Model (k = 13; tau^2 estimator: REML)
 #&gt; 
@@ -836,7 +837,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'><span class='no'>res</span>$<span class='no'>QE</span> + <span class='no'>res</span>$<span class='no'>QM</span></div><div class='output co'>#&gt; [1] 152.233</div><div class='input'>
 <span class='co'>### decomposition of Q_E into subgroup Q-values</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>rma</span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/factor'>factor</a></span>(<span class='no'>alloc</span>), <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
+<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>rma</span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>alloc</span>), <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
 <span class='no'>res</span></div><div class='output co'>#&gt; 
 #&gt; Mixed-Effects Model (k = 13; tau^2 estimator: REML)
 #&gt; 
@@ -900,7 +901,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
 </div>
       </footer>
    </div>

@@ -16,7 +16,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -229,7 +230,7 @@ hatvalues(model, type="diagonal", &#8230;)</pre>
 <span class='co'>### with two moderators (absolute latitude and publication year)</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>,
            <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>ablat</span> + <span class='no'>year</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm.influence'>influence</a></span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; $inf
+<span class='fu'><a href='https://rdrr.io/r/stats/lm.influence.html'>influence</a></span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; $inf
 #&gt; 
 #&gt;    rstudent  dffits cook.d  cov.r tau2.del  QE.del    hat  weight inf 
 #&gt; 1    0.2978  0.1785 0.0348 1.8003   0.1317 28.3142 0.1725  3.3664     
@@ -245,7 +246,6 @@ hatvalues(model, type="diagonal", &#8230;)</pre>
 #&gt; 11  -0.1197 -0.0030 0.0052 2.8336   0.1583 25.5103 0.2214 11.9238     
 #&gt; 12   1.4677  0.2171 0.0469 0.9274   0.1059 26.1197 0.0235  2.2836     
 #&gt; 13   2.1302  0.8150 0.4994 0.2178   0.0498 21.4920 0.1612  8.0630     
-#&gt; 
 #&gt; 
 #&gt; $dfbs
 #&gt; 
@@ -263,14 +263,13 @@ hatvalues(model, type="diagonal", &#8230;)</pre>
 #&gt; 11  0.0631 -0.0343 -0.0631 
 #&gt; 12 -0.0413  0.0465  0.0419 
 #&gt; 13 -0.8276  0.6269  0.8279 
-#&gt; 
-#&gt; </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm.influence'>influence</a></span>(<span class='no'>res</span>))</div><div class='img'><img src='influence.rma.uni-1.png' alt='' width='768' height='614' /></div><div class='input'>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/influence.measures'>cooks.distance</a></span>(<span class='no'>res</span>)</div><div class='output co'>#&gt;           1           2           3           4           5           6 
+#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/lm.influence.html'>influence</a></span>(<span class='no'>res</span>))</div><div class='img'><img src='influence.rma.uni-1.png' alt='' width='768' height='614' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>cooks.distance</a></span>(<span class='no'>res</span>)</div><div class='output co'>#&gt;           1           2           3           4           5           6 
 #&gt; 0.034763870 0.061956371 0.012503192 7.317914072 0.003236974 0.720524896 
 #&gt;           7           8           9          10          11          12 
 #&gt; 0.417263935 0.189852980 0.023722929 0.146959603 0.005232795 0.046915399 
 #&gt;          13 
-#&gt; 0.499370066 </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/influence.measures'>dfbetas</a></span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; 
+#&gt; 0.499370065 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>dfbetas</a></span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; 
 #&gt;    intrcpt   ablat    year 
 #&gt; 1   0.1492 -0.0622 -0.1491 
 #&gt; 2  -0.0949 -0.1001  0.0963 
@@ -285,7 +284,7 @@ hatvalues(model, type="diagonal", &#8230;)</pre>
 #&gt; 11  0.0631 -0.0343 -0.0631 
 #&gt; 12 -0.0413  0.0465  0.0419 
 #&gt; 13 -0.8276  0.6269  0.8279 
-#&gt; </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/influence.measures'>hatvalues</a></span>(<span class='no'>res</span>)</div><div class='output co'>#&gt;          1          2          3          4          5          6          7 
+#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>hatvalues</a></span>(<span class='no'>res</span>)</div><div class='output co'>#&gt;          1          2          3          4          5          6          7 
 #&gt; 0.17250070 0.23668273 0.04870101 0.80821407 0.24826116 0.40606407 0.07657599 
 #&gt;          8          9         10         11         12         13 
 #&gt; 0.36274386 0.10304034 0.13102564 0.22140605 0.02353859 0.16124580 </div></pre>
@@ -319,7 +318,7 @@ hatvalues(model, type="diagonal", &#8230;)</pre>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
 </div>
       </footer>
    </div>

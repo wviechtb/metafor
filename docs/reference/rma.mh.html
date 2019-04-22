@@ -16,7 +16,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -131,7 +132,7 @@
     <pre class="usage">rma.mh(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
        measure="OR", data, slab, subset,
        add=1/2, to="only0", drop00=TRUE,
-       correct=TRUE, level=95, digits=4, verbose=FALSE, &#8230;)</pre>
+       correct=TRUE, level=95, digits, verbose=FALSE, &#8230;)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -214,7 +215,7 @@
     </tr>
     <tr>
       <th>digits</th>
-      <td><p>integer specifying the number of decimal places to which the printed results should be rounded (the default is 4).</p></td>
+      <td><p>integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is 4).</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -231,23 +232,15 @@
     
     <p><b>Specifying the Data</b></p>
 <p>When the outcome measure is either the risk ratio (measure=<code>"RR"</code>), odds ratio (<code>measure="OR"</code>), or risk difference (<code>measure="RD"</code>), the studies are assumed to provide data in terms of \(2 \times 2\) tables of the form:</p><table class='table'>
-<tr><td></td><td></td><td>outcome 1</td><td>outcome 2</td></tr>
-<tr><td>total</td><td></td><td>group 1</td><td></td></tr>
-<tr><td><code>ai</code></td><td></td><td></td><td><code>bi</code></td></tr>
-<tr><td></td><td></td><td><code>n1i</code></td><td></td></tr>
-<tr><td></td><td>group 2</td><td></td><td><code>ci</code></td></tr>
-<tr><td></td><td></td><td><code>di</code></td><td></td></tr>
-<tr><td></td><td><code>n2i</code></td><td></td><td></td></tr>
+<tr><td></td><td>outcome 1</td><td>outcome 2</td><td>total</td></tr>
+<tr><td>group 1</td><td><code>ai</code></td><td><code>bi</code></td><td><code>n1i</code></td></tr>
+<tr><td>group 2</td><td><code>ci</code></td><td><code>di</code></td><td><code>n2i</code></td></tr>
 </table>
 <p>where <code>ai</code>, <code>bi</code>, <code>ci</code>, and <code>di</code> denote the cell frequencies and <code>n1i</code> and <code>n2i</code> the row totals. For example, in a set of randomized clinical trials (RCTs) or cohort studies, group 1 and group 2 may refer to the treatment (exposed) and placebo/control (not exposed) group, with outcome 1 denoting some event of interest (e.g., death) and outcome 2 its complement. In a set of case-control studies, group 1 and group 2 may refer to the group of cases and the group of controls, with outcome 1 denoting, for example, exposure to some risk factor and outcome 2 non-exposure. For these outcome measures, one needs to specify either <code>ai</code>, <code>bi</code>, <code>ci</code>, and <code>di</code> or alternatively <code>ai</code>, <code>ci</code>, <code>n1i</code>, and <code>n2i</code>.</p>
 <p>Alternatively, when the outcome measure is the incidence rate ratio (<code>measure="IRR"</code>) or the incidence rate difference (<code>measure="IRD"</code>), the studies are assumed to provide data in terms of tables of the form:</p><table class='table'>
-<tr><td></td><td></td><td>events</td></tr>
-<tr><td>person-time</td><td></td><td>group 1</td></tr>
-<tr><td></td><td><code>x1i</code></td><td></td></tr>
-<tr><td></td><td><code>t1i</code></td><td></td></tr>
-<tr><td></td><td>group 2</td><td></td></tr>
-<tr><td><code>x2i</code></td><td></td><td></td></tr>
-<tr><td><code>t2i</code></td><td></td><td></td></tr>
+<tr><td></td><td>events</td><td>person-time</td></tr>
+<tr><td>group 1</td><td><code>x1i</code></td><td><code>t1i</code></td></tr>
+<tr><td>group 2</td><td><code>x2i</code></td><td><code>t2i</code></td></tr>
 </table>
 <p>where <code>x1i</code> and <code>x2i</code> denote the number of events in the first and the second group, respectively, and <code>t1i</code> and <code>t2i</code> the corresponding total person-times at risk.</p>
 <p><b>Mantel-Haenszel Method</b></p>
@@ -260,7 +253,7 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An object of class <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c("rma.mh","rma")</a></code>. The object is a list containing the following components:</p>
+    <p>An object of class <code><a href='https://rdrr.io/r/base/c.html'>c("rma.mh","rma")</a></code>. The object is a list containing the following components:</p>
 <dt>beta</dt><dd><p>aggregated log risk ratio, log odds ratio, risk difference, log rate ratio, or rate difference.</p></dd>
    <dt>se</dt><dd><p>standard error of the aggregated value.</p></dd>
    <dt>zval</dt><dd><p>test statistics of the aggregated value.</p></dd>
@@ -342,7 +335,6 @@
 #&gt; 
 #&gt; estimate   ci.lb   ci.ub 
 #&gt;   0.6353  0.5881  0.6862 
-#&gt; 
 #&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -374,7 +366,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
 </div>
       </footer>
    </div>

@@ -16,7 +16,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -178,7 +179,7 @@ plot(x, yaxis="tau2", xlim, ylim, xlab, ylab,
     </tr>
     <tr>
       <th>digits</th>
-      <td><p>integer specifying the number of decimal places to which the tick mark labels of the x- and y-axis should be rounded. Can also be a vector of two integers, the first specifying the number of decimal places for the x-axis, the second for the y-axis labels (e.g., <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c(2,3)</a></code>). If unspecified, the function tries to set the argument to some sensible values.</p></td>
+      <td><p>integer specifying the number of decimal places to which the tick mark labels of the x- and y-axis should be rounded. Can also be a vector of two integers, the first specifying the number of decimal places for the x-axis, the second for the y-axis labels (e.g., <code><a href='https://rdrr.io/r/base/c.html'>c(2,3)</a></code>). If unspecified, the function tries to set the argument to some sensible values.</p></td>
     </tr>
     <tr>
       <th>cols</th>
@@ -190,7 +191,7 @@ plot(x, yaxis="tau2", xlim, ylim, xlab, ylab,
     </tr>
     <tr>
       <th>pch</th>
-      <td><p>plotting symbol to use. By default, a solid circle is used. See <code><a href='https://www.rdocumentation.org/packages/graphics/topics/points'>points</a></code> for other options.</p></td>
+      <td><p>plotting symbol to use. By default, a solid circle is used. See <code><a href='https://rdrr.io/r/graphics/points.html'>points</a></code> for other options.</p></td>
     </tr>
     <tr>
       <th>cex</th>
@@ -229,13 +230,13 @@ plot(x, yaxis="tau2", xlim, ylim, xlab, ylab,
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
 
 <span class='co'>### cumulative meta-analysis (in the order of publication year)</span>
-<span class='no'>sav</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='cumul.html'>cumul</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>order</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/order'>order</a></span>(<span class='no'>dat</span>$<span class='no'>year</span>))
+<span class='no'>sav</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='cumul.html'>cumul</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>order</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/order.html'>order</a></span>(<span class='no'>dat</span>$<span class='no'>year</span>))
 
 <span class='co'>### plot of model estimate and tau^2 over time</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>sav</span>)</div><div class='img'><img src='plot.cumul.rma-1.png' alt='' width='768' height='614' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>sav</span>)</div><div class='img'><img src='plot.cumul.rma-1.png' alt='' width='768' height='614' /></div><div class='input'>
 <span class='co'>### illustrate some other plot options</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>sav</span>, <span class='kw'>yaxis</span><span class='kw'>=</span><span class='st'>"I2"</span>, <span class='kw'>ylim</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>100</span>), <span class='kw'>atransf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>at</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Log'>log</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/seq'>seq</a></span>(<span class='fl'>1.3</span>, <span class='fl'>1.6</span>, <span class='kw'>by</span><span class='kw'>=</span><span class='fl'>.1</span>)),
-     <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>5</span>, <span class='kw'>cex</span><span class='kw'>=</span><span class='fl'>0</span>, <span class='kw'>cols</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"green"</span>,<span class='st'>"blue"</span>,<span class='st'>"red"</span>))</div><div class='img'><img src='plot.cumul.rma-2.png' alt='' width='768' height='614' /></div></pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>sav</span>, <span class='kw'>yaxis</span><span class='kw'>=</span><span class='st'>"I2"</span>, <span class='kw'>ylim</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>100</span>), <span class='kw'>atransf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>at</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>1.3</span>, <span class='fl'>1.6</span>, <span class='kw'>by</span><span class='kw'>=</span><span class='fl'>.1</span>)),
+     <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>5</span>, <span class='kw'>cex</span><span class='kw'>=</span><span class='fl'>0</span>, <span class='kw'>cols</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"green"</span>,<span class='st'>"blue"</span>,<span class='st'>"red"</span>))</div><div class='img'><img src='plot.cumul.rma-2.png' alt='' width='768' height='614' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -262,7 +263,7 @@ plot(x, yaxis="tau2", xlim, ylim, xlab, ylab,
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
 </div>
       </footer>
    </div>
