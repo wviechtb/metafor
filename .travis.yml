@@ -10,7 +10,6 @@ env:
   - NOT_CRAN=true
 
 apt_packages:
-  - libgsl0ldbl
   - libgsl0-dev
 
 r_packages:
