@@ -190,9 +190,7 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
 
          if (is.null(cl)) {
             cl <- parallel::makePSOCKcluster(ncpus)
-            clnew <- TRUE
-         } else {
-            clnew <- FALSE
+            on.exit(parallel::stopCluster(cl))
          }
 
          if (inherits(x, "rma.uni"))
@@ -203,9 +201,6 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
 
          if (inherits(x, "rma.peto"))
             res <- parallel::parLapply(cl, seq_len(N.tot), .profile.rma.peto, obj=x, parallel=parallel, subset=TRUE, sel=incl)
-
-         if (clnew)
-            parallel::stopCluster(cl)
 
       }
 

@@ -138,11 +138,9 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
       if (parallel == "snow") {
          if (is.null(cl)) {
             cl <- parallel::makePSOCKcluster(ncpus)
-            res <- parallel::parLapply(cl, seq_len(n), .cooks.distance.rma.mv, obj=x, parallel=parallel, svb=svb, cluster=cluster, ids=ids, reestimate=reestimate, btt=btt)
-            parallel::stopCluster(cl)
-         } else {
-            res <- parallel::parLapply(cl, seq_len(n), .cooks.distance.rma.mv, obj=x, parallel=parallel, svb=svb, cluster=cluster, ids=ids, reestimate=reestimate, btt=btt)
+            on.exit(parallel::stopCluster(cl))
          }
+         res <- parallel::parLapply(cl, seq_len(n), .cooks.distance.rma.mv, obj=x, parallel=parallel, svb=svb, cluster=cluster, ids=ids, reestimate=reestimate, btt=btt)
       }
 
       cook.d <- sapply(res, function(x) x$cook.d)

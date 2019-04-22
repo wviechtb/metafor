@@ -151,11 +151,9 @@ rstudent.rma.mv <- function(model, digits, progbar=FALSE, cluster, reestimate=TR
       if (parallel == "snow") {
          if (is.null(cl)) {
             cl <- parallel::makePSOCKcluster(ncpus)
-            res <- parallel::parLapply(cl, seq_len(n), .rstudent.rma.mv, obj=x, parallel=parallel, cluster=cluster, ids=ids, reestimate=reestimate)
-            parallel::stopCluster(cl)
-         } else {
-            res <- parallel::parLapply(cl, seq_len(n), .rstudent.rma.mv, obj=x, parallel=parallel, cluster=cluster, ids=ids, reestimate=reestimate)
+            on.exit(parallel::stopCluster(cl))
          }
+         res <- parallel::parLapply(cl, seq_len(n), .rstudent.rma.mv, obj=x, parallel=parallel, cluster=cluster, ids=ids, reestimate=reestimate)
       }
 
       delresid   <- rep(NA_real_, x$k)
