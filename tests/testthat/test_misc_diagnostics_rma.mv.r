@@ -41,7 +41,7 @@ test_that("model diagnostic functions work with 'na.omit'.", {
 
    expect_equivalent(sav1, sav2)
    expect_equivalent(is.na(sav1$obs$resid), rep(FALSE,18))
-   expect_equivalent(is.na(sav1$cluster$X2), c(TRUE, rep(FALSE,4)))
+   expect_equivalent(is.na(sav1$cluster$X2), c(TRUE, rep(FALSE,3), TRUE))
 
    sav1 <- rstudent(res1)
    sav2 <- rstudent(res2)
