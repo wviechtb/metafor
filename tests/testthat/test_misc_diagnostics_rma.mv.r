@@ -172,7 +172,7 @@ test_that("model diagnostic functions work with 'na.pass'.", {
 
    expect_equivalent(sav1, sav2)
    expect_equivalent(is.na(sav1$obs$resid), c(rep(FALSE,4), rep(TRUE,4), FALSE, TRUE, rep(FALSE,13)))
-   expect_equivalent(is.na(sav1$cluster$X2), c(rep(TRUE,2), rep(FALSE,4)))
+   expect_equivalent(is.na(sav1$cluster$X2), c(rep(TRUE,2), rep(FALSE,3), TRUE))
 
    sav1 <- rstudent(res1)
    sav2 <- rstudent(res2)
