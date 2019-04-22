@@ -1,7 +1,7 @@
 language: r
 cache: packages
 r: release
-dist: trusty
+dist: xenial
 warnings_are_errors: true
 r_check_args: --no-tests --as-cran --no-manual
 
