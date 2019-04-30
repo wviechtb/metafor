@@ -1,4 +1,4 @@
-# metafor 2.1-0 (2019-04-22)
+# metafor 2.1-0 (2019-04-30)
 
 - `llplot()` now also allows for `measure="GEN"`; also, the documentation and y-axis label have been corrected to indicate that the function plots likelihoods (not log likelihoods)
 
@@ -62,7 +62,7 @@
 
 - `forest.cumul.rma()` gains a `col` argument
 
-- `funnel.default()` and `funnel.rma()` can now take vectors as input for the `col` and `bg` arguments (and also for `pch`)
+- `funnel.default()` and `funnel.rma()` can now take vectors as input for the `col` and `bg` arguments (and also for `pch`); both functions also gain a `legend` argument
 
 - `addpoly()` functions can now also show credibility interval bounds
 

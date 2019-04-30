@@ -15,31 +15,39 @@ test_that("permutest() gives correct results for a random-effects model.", {
    maj <- as.numeric(R.Version()$major)
    min <- as.numeric(R.Version()$minor)
 
-   skip_if(maj >= 3 && min >= 6, message = "Skip test for now due to changes in sampler in R-devel.")
+   ### run test only on R versions 3.6.x (due to change in sampler)
 
-   ### fit random-effects model
-   res <- rma(yi, vi, data=dat)
+   if (maj >= 3 && min >= 6) {
 
-   ### exact permutation test
-   sav <- permutest(res, progbar=FALSE)
+      ### fit random-effects model
+      res <- rma(yi, vi, data=dat)
 
-   expect_equivalent(sav$pval, 0.0625)
+      ### exact permutation test
+      sav <- permutest(res, progbar=FALSE)
 
-   out <- capture.output(print(sav)) ### so that print.permutest.rma.uni() is run (at least once)
+      expect_equivalent(sav$pval, 0.0625)
 
-   tmp <- round(coef(sav), 4)
-   expected <- structure(list(estimate = 0.0294, se = 0.0131, zval = 2.2531, pval = 0.0625, ci.lb = 0.0038, ci.ub = 0.0551),
-                         .Names = c("estimate", "se", "zval", "pval", "ci.lb", "ci.ub"), row.names = "intrcpt", class = "data.frame")
+      out <- capture.output(print(sav)) ### so that print.permutest.rma.uni() is run (at least once)
 
-   expect_equivalent(tmp, expected)
+      tmp <- round(coef(sav), 4)
+      expected <- structure(list(estimate = 0.0294, se = 0.0131, zval = 2.2531, pval = 0.0625, ci.lb = 0.0038, ci.ub = 0.0551),
+                            .Names = c("estimate", "se", "zval", "pval", "ci.lb", "ci.ub"), row.names = "intrcpt", class = "data.frame")
 
-   ### approximate permutation test
-   set.seed(1234)
-   sav <- permutest(res, iter=50, progbar=FALSE, control=list(p2defn="px2"))
-   expect_equivalent(sav$pval, 0.04)
-   set.seed(1234)
-   sav <- permutest(res, iter=50, progbar=FALSE, control=list(p2defn="px2", stat="coef"))
-   expect_equivalent(sav$pval, 0.04)
+      expect_equivalent(tmp, expected)
+
+      ### approximate permutation test
+      set.seed(1234)
+      sav <- permutest(res, iter=50, progbar=FALSE, control=list(p2defn="px2"))
+      expect_equivalent(sav$pval, 0.08)
+      set.seed(1234)
+      sav <- permutest(res, iter=50, progbar=FALSE, control=list(p2defn="px2", stat="coef"))
+      expect_equivalent(sav$pval, 0.08)
+
+   } else {
+
+      expect_true(TRUE)
+
+   }
 
 })
 
@@ -50,25 +58,33 @@ test_that("permutest() gives correct results for a mixed-effects model.", {
    maj <- as.numeric(R.Version()$major)
    min <- as.numeric(R.Version()$minor)
 
-   skip_if(maj >= 3 && min >= 6, message = "Skip test for now due to changes in sampler in R-devel.")
+   ### run test only on R versions 3.6.x (due to change in sampler)
 
-   ### add a fake moderator
-   dat$mod <- c(3,1,2,2,4,5)
+   if (maj >= 3 && min >= 6) {
 
-   ### fit mixed-effects model
-   res <- rma(yi, vi, mods = ~ mod, data=dat)
+      ### add a fake moderator
+      dat$mod <- c(3,1,2,2,4,5)
 
-   ### exact permutation test
-   sav <- permutest(res, progbar=FALSE)
+      ### fit mixed-effects model
+      res <- rma(yi, vi, mods = ~ mod, data=dat)
 
-   expect_equivalent(round(sav$pval, 4), c(1, 0.0028))
+      ### exact permutation test
+      sav <- permutest(res, progbar=FALSE)
 
-   ### approximate permutation test
-   set.seed(1234)
-   sav <- permutest(res, iter=50, progbar=FALSE, control=list(p2defn="px2"))
-   expect_equivalent(sav$pval, c(.04, .04))
-   sav <- permutest(res, iter=50, progbar=FALSE, control=list(p2defn="px2", stat="coef"))
-   expect_equivalent(sav$pval, c(.08, .08))
+      expect_equivalent(round(sav$pval, 4), c(1, 0.0028))
+
+      ### approximate permutation test
+      set.seed(1234)
+      sav <- permutest(res, iter=50, progbar=FALSE, control=list(p2defn="px2"))
+      expect_equivalent(sav$pval, c(.04, .04))
+      sav <- permutest(res, iter=50, progbar=FALSE, control=list(p2defn="px2", stat="coef"))
+      expect_equivalent(sav$pval, c(.04, .04))
+
+   } else {
+
+      expect_true(TRUE)
+
+   }
 
 })
 
@@ -79,27 +95,35 @@ test_that("permutest() gives correct results for example in Follmann & Proschan 
    maj <- as.numeric(R.Version()$major)
    min <- as.numeric(R.Version()$minor)
 
-   skip_if(maj >= 3 && min >= 6, message = "Skip test for now due to changes in sampler in R-devel.")
+   ### run test only on R versions 3.6.x (due to change in sampler)
 
-   ### data in Table 1
-   dat <- read.table(header=TRUE, text = "
-   ai n1i ci n2i
-   173 5331 210 5296
-   157 1906 193 1900
-   131 4541 121 4516
-   56 2051 84 2030
-   52 424 65 422
-   36 1149 42 1129
-   62 6582 20 1663
-   2 88 2 30")
+   if (maj >= 3 && min >= 6) {
 
-   dat <- escalc(measure="PETO", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat)
+      ### data in Table 1
+      dat <- read.table(header=TRUE, text = "
+      ai n1i ci n2i
+      173 5331 210 5296
+      157 1906 193 1900
+      131 4541 121 4516
+      56 2051 84 2030
+      52 424 65 422
+      36 1149 42 1129
+      62 6582 20 1663
+      2 88 2 30")
 
-   res <- rma(yi, vi, data=dat, method="DL")
-   sav <- permutest(res, permci=TRUE, progbar=FALSE, retpermdist=TRUE, control=list(stat="coef"))
+      dat <- escalc(measure="PETO", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat)
 
-   expect_equivalent(sav$pval, 10/256)
-   expect_equivalent(round(sav$ci.lb, 4), -0.3677)
-   expect_equivalent(round(sav$ci.ub, 4), -0.0020)
+      res <- rma(yi, vi, data=dat, method="DL")
+      sav <- permutest(res, permci=TRUE, progbar=FALSE, retpermdist=TRUE, control=list(stat="coef"))
+
+      expect_equivalent(sav$pval, 10/256)
+      expect_equivalent(round(sav$ci.lb, 4), -0.3677)
+      expect_equivalent(round(sav$ci.ub, 4), -0.0020)
+
+   } else {
+
+      expect_true(TRUE)
+
+   }
 
 })

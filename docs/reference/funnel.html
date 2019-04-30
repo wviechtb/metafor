@@ -137,14 +137,14 @@ funnel(x, yaxis="sei",
        steps=5, at, atransf, targs, digits, level=x$level,
        addtau2=FALSE, type="rstandard",
        back="lightgray", shade="white", hlines="white",
-       refline, pch=19, pch.fill=21, col, bg, ci.res=1000, &#8230;)
+       refline, pch=19, pch.fill=21, col, bg, legend=FALSE, ci.res=1000, &#8230;)
 
 # S3 method for default
 funnel(x, vi, sei, ni, subset, yaxis="sei",
        xlim, ylim, xlab, ylab,
        steps=5, at, atransf, targs, digits, level=95,
        back="lightgray", shade="white", hlines="white",
-       refline=0, pch=19, col, bg, ci.res=1000, &#8230;)</pre>
+       refline=0, pch=19, col, bg, legend=FALSE, ci.res=1000, &#8230;)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -254,6 +254,10 @@ funnel(x, vi, sei, ni, subset, yaxis="sei",
       <td><p>optional character string specifying the name of a background color for open plot symbols ("white" is used by default if not specified). Can also be a vector of color names.</p></td>
     </tr>
     <tr>
+      <th>legend</th>
+      <td><p>logical to indicate whether a legend should be added to the plot (can also be a keyword to indicate the position of the legend; see as in <code><a href='https://rdrr.io/r/graphics/legend.html'>legend</a></code>).</p></td>
+    </tr>
+    <tr>
       <th>ci.res</th>
       <td><p>integer specifying the number of y-axis values at which to calculate the bounds of the pseudo confidence interval. The default is <code>1000</code>, which usually provides a sufficient resolution for the plotting.</p></td>
     </tr>
@@ -330,10 +334,10 @@ funnel(x, vi, sei, ni, subset, yaxis="sei",
 <span class='co'>### funnel plot with risk ratio values on the x-axis (log scale)</span>
 <span class='fu'>funnel</span>(<span class='no'>res</span>, <span class='kw'>atransf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>at</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.12</span>, <span class='fl'>.25</span>, <span class='fl'>.5</span>, <span class='fl'>1</span>, <span class='fl'>2</span>)))</div><div class='img'><img src='funnel-4.png' alt='' width='768' height='614' /></div><div class='input'>
 <span class='co'>### contour-enhanced funnel plot centered at 0 (see Peters et al., 2008)</span>
-<span class='fu'>funnel</span>(<span class='no'>res</span>, <span class='kw'>level</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>90</span>, <span class='fl'>95</span>, <span class='fl'>99</span>), <span class='kw'>shade</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"white"</span>, <span class='st'>"gray"</span>, <span class='st'>"darkgray"</span>), <span class='kw'>refline</span><span class='kw'>=</span><span class='fl'>0</span>)</div><div class='img'><img src='funnel-5.png' alt='' width='768' height='614' /></div><div class='input'>
+<span class='fu'>funnel</span>(<span class='no'>res</span>, <span class='kw'>level</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>90</span>, <span class='fl'>95</span>, <span class='fl'>99</span>), <span class='kw'>shade</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"white"</span>, <span class='st'>"gray55"</span>, <span class='st'>"gray75"</span>), <span class='kw'>refline</span><span class='kw'>=</span><span class='fl'>0</span>, <span class='kw'>legend</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='funnel-5.png' alt='' width='768' height='614' /></div><div class='input'>
 <span class='co'>### same, but show risk ratio values on the x-axis</span>
-<span class='fu'>funnel</span>(<span class='no'>res</span>, <span class='kw'>level</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>90</span>, <span class='fl'>95</span>, <span class='fl'>99</span>), <span class='kw'>shade</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"white"</span>, <span class='st'>"gray"</span>, <span class='st'>"darkgray"</span>),
-       <span class='kw'>refline</span><span class='kw'>=</span><span class='fl'>0</span>, <span class='kw'>atransf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>at</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.10</span>, <span class='fl'>.25</span>, <span class='fl'>.5</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>4</span>, <span class='fl'>10</span>)))</div><div class='img'><img src='funnel-6.png' alt='' width='768' height='614' /></div><div class='input'>
+<span class='fu'>funnel</span>(<span class='no'>res</span>, <span class='kw'>level</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>90</span>, <span class='fl'>95</span>, <span class='fl'>99</span>), <span class='kw'>shade</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"white"</span>, <span class='st'>"gray55"</span>, <span class='st'>"gray75"</span>),
+       <span class='kw'>refline</span><span class='kw'>=</span><span class='fl'>0</span>, <span class='kw'>legend</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>atransf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>at</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.10</span>, <span class='fl'>.25</span>, <span class='fl'>.5</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>4</span>, <span class='fl'>10</span>)))</div><div class='img'><img src='funnel-6.png' alt='' width='768' height='614' /></div><div class='input'>
 <span class='co'>### illustrate the use of vectors for 'pch' and 'col'</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>subset</span><span class='kw'>=</span><span class='fl'>2</span>:<span class='fl'>10</span>)
 <span class='fu'>funnel</span>(<span class='no'>res</span>, <span class='kw'>pch</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='no'>dat</span>$<span class='no'>yi</span> <span class='kw'>&gt;</span> -<span class='fl'>1</span>, <span class='fl'>19</span>, <span class='fl'>21</span>), <span class='kw'>col</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span>(<span class='no'>dat</span>$<span class='no'>vi</span>) <span class='kw'>&gt;</span> <span class='fl'>.3</span>, <span class='st'>"red"</span>, <span class='st'>"blue"</span>))</div><div class='img'><img src='funnel-7.png' alt='' width='768' height='614' /></div><div class='input'>

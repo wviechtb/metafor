@@ -1,4 +1,4 @@
-Changes in Version 2.1-0 (2019-04-22)
+Changes in Version 2.1-0 (2019-04-30)
 =====================================
 
    o llplot() now also allows for measure="GEN"; also, the documentation and
@@ -99,7 +99,8 @@ Changes in Version 2.1-0 (2019-04-22)
    o forest.cumul.rma() gains a 'col' argument
 
    o funnel.default() and funnel.rma() can now take vectors as input for the
-     'col' and 'bg' arguments (and also for 'pch')
+     'col' and 'bg' arguments (and also for 'pch'); both functions also gain
+     a 'legend' argument
 
    o addpoly() functions can now also show credibility interval bounds
 

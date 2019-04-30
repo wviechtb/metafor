@@ -137,19 +137,27 @@ test_that("CI is correct for the non-parametric bootstrap method.", {
    maj <- as.numeric(R.Version()$major)
    min <- as.numeric(R.Version()$minor)
 
-   skip_if(maj >= 3 && min >= 6, message = "Skip test for now due to changes in sampler in R-devel.")
+   ### run test only on R versions 3.6.x (due to change in sampler)
 
-   library(boot)
+   if (maj >= 3 && min >= 6) {
 
-   boot.func <- function(dat, indices) {
-      res <- rma(yi, vi, data=dat, subset=indices, method="DL")
-      c(res$tau2, res$se.tau2^2)
+      library(boot)
+
+      boot.func <- function(dat, indices) {
+         res <- rma(yi, vi, data=dat, subset=indices, method="DL")
+         c(res$tau2, res$se.tau2^2)
+      }
+
+      set.seed(12345)
+      sav <- boot(dat, boot.func, R=1000)
+      sav <- boot.ci(sav)
+      sav <- round(sav$percent[4:5], 3)
+      expect_equivalent(sav, c(.022, .514))
+
+   } else {
+
+      expect_true(TRUE)
+
    }
-
-   set.seed(12345)
-   sav <- boot(dat, boot.func, R=1000)
-   sav <- boot.ci(sav)
-   sav <- round(sav$percent[4:5], 3)
-   expect_equivalent(sav, c(.024, .540))
 
 })

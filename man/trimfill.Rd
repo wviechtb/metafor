@@ -55,7 +55,7 @@ trimfill(x, \dots)
 res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, method="FE")
 res.tf <- trimfill(res)
 res.tf
-funnel(res.tf)
+funnel(res.tf, legend=TRUE, cex=1.2)
 
 ### estimator "R0" also provides test
 res.tf <- trimfill(res, estimator="R0")
@@ -65,6 +65,6 @@ res.tf
 res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 res.tf <- trimfill(res)
 res.tf
-funnel(res.tf)
+funnel(res.tf, legend=TRUE, cex=1.2)
 }
 \keyword{models}

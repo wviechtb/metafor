@@ -12,13 +12,13 @@ funnel(x, \dots)
        steps=5, at, atransf, targs, digits, level=x$level,
        addtau2=FALSE, type="rstandard",
        back="lightgray", shade="white", hlines="white",
-       refline, pch=19, pch.fill=21, col, bg, ci.res=1000, \dots)
+       refline, pch=19, pch.fill=21, col, bg, legend=FALSE, ci.res=1000, \dots)
 
 \method{funnel}{default}(x, vi, sei, ni, subset, yaxis="sei",
        xlim, ylim, xlab, ylab,
        steps=5, at, atransf, targs, digits, level=95,
        back="lightgray", shade="white", hlines="white",
-       refline=0, pch=19, col, bg, ci.res=1000, \dots)
+       refline=0, pch=19, col, bg, legend=FALSE, ci.res=1000, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma"} or a vector with the observed effect sizes or outcomes.}
@@ -47,6 +47,7 @@ funnel(x, \dots)
    \item{pch.fill}{plotting symbol to use for the effect sizes or outcomes filled in by the trim and fill method. By default, a circle is used. Only relevant when plotting an object created by the \code{\link{trimfill}} function.}
    \item{col}{optional character string specifying the name of a color to use for the points ("black" is used by default if not specified). Can also be a vector of color names.}
    \item{bg}{optional character string specifying the name of a background color for open plot symbols ("white" is used by default if not specified). Can also be a vector of color names.}
+   \item{legend}{logical to indicate whether a legend should be added to the plot (can also be a keyword to indicate the position of the legend; see as in \code{\link{legend}}).}
    \item{ci.res}{integer specifying the number of y-axis values at which to calculate the bounds of the pseudo confidence interval. The default is \code{1000}, which usually provides a sufficient resolution for the plotting.}
    \item{\dots}{other arguments.}
 }
@@ -130,11 +131,11 @@ funnel(res, refline=0)
 funnel(res, atransf=exp, at=log(c(.12, .25, .5, 1, 2)))
 
 ### contour-enhanced funnel plot centered at 0 (see Peters et al., 2008)
-funnel(res, level=c(90, 95, 99), shade=c("white", "gray", "darkgray"), refline=0)
+funnel(res, level=c(90, 95, 99), shade=c("white", "gray55", "gray75"), refline=0, legend=TRUE)
 
 ### same, but show risk ratio values on the x-axis
-funnel(res, level=c(90, 95, 99), shade=c("white", "gray", "darkgray"),
-       refline=0, atransf=exp, at=log(c(.10, .25, .5, 1, 2, 4, 10)))
+funnel(res, level=c(90, 95, 99), shade=c("white", "gray55", "gray75"),
+       refline=0, legend=TRUE, atransf=exp, at=log(c(.10, .25, .5, 1, 2, 4, 10)))
 
 ### illustrate the use of vectors for 'pch' and 'col'
 res <- rma(yi, vi, data=dat, subset=2:10)

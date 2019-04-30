@@ -1,7 +1,7 @@
 funnel.default <- function(x, vi, sei, ni, subset, yaxis="sei", xlim, ylim, xlab, ylab,
 steps=5, at, atransf, targs, digits, level=95,
 back="lightgray", shade="white", hlines="white",
-refline=0, pch=19, col, bg, ci.res=1000, ...) {
+refline=0, pch=19, col, bg, legend=FALSE, ci.res=1000, ...) {
 
    #########################################################################
 
@@ -139,22 +139,34 @@ refline=0, pch=19, col, bg, ci.res=1000, ...) {
 
    ### note: digits can also be a list (e.g., digits=list(2L,3))
 
-   if (length(pch) == 1L)
+   if (length(pch) == 1L) {
+      pch.vec <- FALSE
       pch <- rep(pch, k)
+   } else {
+      pch.vec <- TRUE
+   }
    if (length(pch) != k)
       stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'pch' argument."))
 
    if (missing(col))
       col <- "black"
-   if (length(col) == 1L)
+   if (length(col) == 1L) {
+      col.vec <- FALSE
       col <- rep(col, k)
+   } else {
+      col.vec <- TRUE
+   }
    if (length(col) != k)
       stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'col' argument."))
 
    if (missing(bg))
       bg <- "white"
-   if (length(bg) == 1L)
+   if (length(bg) == 1L) {
+      bg.vec <- FALSE
       bg <- rep(bg, k)
+   } else {
+      bg.vec <- TRUE
+   }
    if (length(bg) != k)
       stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'bg' argument."))
 
@@ -498,6 +510,63 @@ refline=0, pch=19, col, bg, ci.res=1000, ...) {
    ### add x-axis
 
    axis(side=1, at=at, labels=at.lab, ...)
+
+   ############################################################################
+
+   ### add legend (if requested)
+
+   if (is.logical(legend) && isTRUE(legend))
+      lpos <- "topright"
+
+   if (is.character(legend)) {
+      lpos <- legend
+      legend <- TRUE
+   }
+
+   if (legend && !is.element(yaxis, c("sei", "vi", "seinv", "vinv"))) {
+      legend <- FALSE
+      warning(mstyle$warning("Argument 'legend' only applicable if 'yaxis' is 'sei', 'vi', 'seinv', or 'vinv'."))
+   }
+
+   if (legend) {
+
+      level <- c(level, 0)
+      lvals <- length(level)
+
+      add.studies <- !pch.vec && !col.vec && !bg.vec # only add 'Studies' to legend if pch, col, and bg were not vectors to begin with
+
+      scipen <- options(scipen=100)
+      lchars <- max(nchar(level))-2
+      options(scipen=scipen$scipen)
+
+      ltext <- sapply(1:lvals, function(i) {
+         if (i == 1)
+            return(as.expression(bquote(paste(.(pval1) < p, phantom() <= .(pval2)), list(pval1=.fcf(level[i], lchars), pval2=.fcf(1, lchars)))))
+            #return(as.expression(bquote(p > .(pval), list(pval=.fcf(level[i], lchars)))))
+         if (i > 1 && i < lvals)
+            return(as.expression(bquote(paste(.(pval1) < p, phantom() <= .(pval2)), list(pval1=.fcf(level[i], lchars), pval2=.fcf(level[i-1], lchars)))))
+         if (i == lvals)
+            return(as.expression(bquote(paste(.(pval1) < p, phantom() <= .(pval2)), list(pval1=.fcf(0, lchars), pval2=.fcf(level[i-1], lchars)))))
+      })
+
+      pch.l  <- rep(22, lvals)
+      col.l  <- rep("black", lvals)
+      pt.cex <- rep(2, lvals)
+      pt.bg  <- c(shade, back)
+
+      if (add.studies) {
+         ltext  <- c(ltext, expression(plain(Studies)))
+         pch.l  <- c(pch.l, pch[1])
+         col.l  <- c(col.l, col[1])
+         pt.cex <- c(pt.cex, 1)
+         pt.bg  <- c(pt.bg, bg[1])
+      }
+
+      legend(lpos, inset=.01, bg="white", pch=pch.l, col=col.l, pt.cex=pt.cex, pt.bg=pt.bg, legend=ltext)
+
+   }
+
+   ############################################################################
 
    ### prepare data frame to return
 

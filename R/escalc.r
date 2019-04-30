@@ -1811,6 +1811,11 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
    #########################################################################
    #########################################################################
 
+   ### make sure yi and vi are really vectors (and not arrays)
+
+   yi <- as.vector(yi)
+   vi <- as.vector(vi)
+
    ### check for infinite values and set them to NA
 
    is.inf <- is.infinite(yi) | is.infinite(vi)
