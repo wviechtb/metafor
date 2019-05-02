@@ -16,8 +16,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -134,26 +133,53 @@
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
     <p>The data frame contains the following columns:</p><table class='table'>
-<tr><td><b>id</b></td><td><code>numeric</code></td><td>observation number</td></tr>
-<tr><td><b>paper</b></td><td><code>numeric</code></td><td>paper number</td></tr>
-<tr><td><b>genus</b></td><td><code>character</code></td><td>genus name</td></tr>
-<tr><td><b>species</b></td><td><code>character</code></td><td>species name</td></tr>
-<tr><td><b>fungrp</b></td><td><code>character</code></td><td>plant functional group</td></tr>
-<tr><td><b>co2.ambi</b></td><td><code>numeric</code></td><td>ambient CO2 level (control group)</td></tr>
-<tr><td><b>co2.elev</b></td><td><code>numeric</code></td><td>elevated CO2 level (treatment group)</td></tr>
-<tr><td><b>units</b></td><td><code>character</code></td><td>units for CO2 exposure levels</td></tr>
-<tr><td><b>time</b></td><td><code>numeric</code></td><td>maximum length of time (days) of CO2 exposure</td></tr>
-<tr><td><b>pot</b></td><td><code>character</code></td><td>growing method (see below)</td></tr>
-<tr><td><b>method</b></td><td><code>character</code></td><td>CO2 exposure facility (see below)</td></tr>
-<tr><td><b>stock</b></td><td><code>character</code></td><td>planting stock code</td></tr>
-<tr><td><b>xtrt</b></td><td><code>character</code></td><td>interacting treatment code (see below)</td></tr>
-<tr><td><b>level</b></td><td><code>character</code></td><td>interacting treatment level codes (see below)</td></tr>
-<tr><td><b>m1i</b></td><td><code>numeric</code></td><td>mean plant mass under elevated CO2 level (treatment group)</td></tr>
-<tr><td><b>sd1i</b></td><td><code>numeric</code></td><td>standard deviation of plant mass underelevated CO2 level (treatment group)</td></tr>
-<tr><td><b>n1i</b></td><td><code>numeric</code></td><td>number of observations under elevated CO2 level (treatment group)</td></tr>
-<tr><td><b>m2i</b></td><td><code>numeric</code></td><td>mean plant mass under ambient CO2 level (control group)</td></tr>
-<tr><td><b>sd2i</b></td><td><code>numeric</code></td><td>standard deviation of plant mass under ambient CO2 level (control group)</td></tr>
-<tr><td><b>n2i</b></td><td><code>numeric</code></td><td>number of observations under ambient CO2 level (control group)</td></tr>
+<tr><td></td><td><b>id</b></td><td></td></tr>
+<tr><td></td><td><code>numeric</code></td><td></td></tr>
+<tr><td>observation number</td><td></td><td><b>paper</b></td></tr>
+<tr><td></td><td></td><td><code>numeric</code></td></tr>
+<tr><td></td><td>paper number</td><td></td></tr>
+<tr><td><b>genus</b></td><td></td><td></td></tr>
+<tr><td><code>character</code></td><td></td><td>genus name</td></tr>
+<tr><td></td><td><b>species</b></td><td></td></tr>
+<tr><td></td><td><code>character</code></td><td></td></tr>
+<tr><td>species name</td><td></td><td><b>fungrp</b></td></tr>
+<tr><td></td><td></td><td><code>character</code></td></tr>
+<tr><td></td><td>plant functional group</td><td></td></tr>
+<tr><td><b>co2.ambi</b></td><td></td><td></td></tr>
+<tr><td><code>numeric</code></td><td></td><td>ambient CO2 level (control group)</td></tr>
+<tr><td></td><td><b>co2.elev</b></td><td></td></tr>
+<tr><td></td><td><code>numeric</code></td><td></td></tr>
+<tr><td>elevated CO2 level (treatment group)</td><td></td><td><b>units</b></td></tr>
+<tr><td></td><td></td><td><code>character</code></td></tr>
+<tr><td></td><td>units for CO2 exposure levels</td><td></td></tr>
+<tr><td><b>time</b></td><td></td><td></td></tr>
+<tr><td><code>numeric</code></td><td></td><td>maximum length of time (days) of CO2 exposure</td></tr>
+<tr><td></td><td><b>pot</b></td><td></td></tr>
+<tr><td></td><td><code>character</code></td><td></td></tr>
+<tr><td>growing method (see below)</td><td></td><td><b>method</b></td></tr>
+<tr><td></td><td></td><td><code>character</code></td></tr>
+<tr><td></td><td>CO2 exposure facility (see below)</td><td></td></tr>
+<tr><td><b>stock</b></td><td></td><td></td></tr>
+<tr><td><code>character</code></td><td></td><td>planting stock code</td></tr>
+<tr><td></td><td><b>xtrt</b></td><td></td></tr>
+<tr><td></td><td><code>character</code></td><td></td></tr>
+<tr><td>interacting treatment code (see below)</td><td></td><td><b>level</b></td></tr>
+<tr><td></td><td></td><td><code>character</code></td></tr>
+<tr><td></td><td>interacting treatment level codes (see below)</td><td></td></tr>
+<tr><td><b>m1i</b></td><td></td><td></td></tr>
+<tr><td><code>numeric</code></td><td></td><td>mean plant mass under elevated CO2 level (treatment group)</td></tr>
+<tr><td></td><td><b>sd1i</b></td><td></td></tr>
+<tr><td></td><td><code>numeric</code></td><td></td></tr>
+<tr><td>standard deviation of plant mass underelevated CO2 level (treatment group)</td><td></td><td><b>n1i</b></td></tr>
+<tr><td></td><td></td><td><code>numeric</code></td></tr>
+<tr><td></td><td>number of observations under elevated CO2 level (treatment group)</td><td></td></tr>
+<tr><td><b>m2i</b></td><td></td><td></td></tr>
+<tr><td><code>numeric</code></td><td></td><td>mean plant mass under ambient CO2 level (control group)</td></tr>
+<tr><td></td><td><b>sd2i</b></td><td></td></tr>
+<tr><td></td><td><code>numeric</code></td><td></td></tr>
+<tr><td>standard deviation of plant mass under ambient CO2 level (control group)</td><td></td><td><b>n2i</b></td></tr>
+<tr><td></td><td></td><td><code>numeric</code></td></tr>
+<tr><td></td><td>number of observations under ambient CO2 level (control group)</td><td></td></tr>
 </table>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
@@ -516,19 +542,19 @@
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### average ratio of means with 95% CI</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
+<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
 #&gt;  pred ci.lb ci.ub cr.lb cr.ub 
 #&gt;  1.29  1.24  1.34  0.96  1.72 
 #&gt; </div><div class='input'>
 <span class='co'>### meta-analysis for plants grown under nutrient stress</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"DL"</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>subset</span><span class='kw'>=</span>(<span class='no'>xtrt</span><span class='kw'>==</span><span class='st'>"FERT"</span> <span class='kw'>&amp;</span> <span class='no'>level</span><span class='kw'>==</span><span class='st'>"LOW"</span>))
-<span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
+<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
 #&gt;  pred ci.lb ci.ub cr.lb cr.ub 
 #&gt;  1.14  1.04  1.26  0.82  1.59 
 #&gt; </div><div class='input'>
 <span class='co'>### meta-analysis for plants grown under low light conditions</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"DL"</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>subset</span><span class='kw'>=</span>(<span class='no'>xtrt</span><span class='kw'>==</span><span class='st'>"LIGHT"</span> <span class='kw'>&amp;</span> <span class='no'>level</span><span class='kw'>==</span><span class='st'>"LOW"</span>))
-<span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
+<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
 #&gt;  pred ci.lb ci.ub cr.lb cr.ub 
 #&gt;  1.57  1.34  1.85  0.94  2.63 
 #&gt; </div></pre>
@@ -557,7 +583,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
 </div>
       </footer>
    </div>

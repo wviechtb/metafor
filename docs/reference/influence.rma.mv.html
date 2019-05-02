@@ -16,8 +16,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -191,7 +190,7 @@ hatvalues(model, type="diagonal", &#8230;)</pre>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>Right now, leave-one-out diagnostics are calculated by refitting the model \(k\) times (where \(k\) is the number of studies/clusters). Depending on how large \(k\) is, it may take a few moments to finish the calculations. For complex models fitted with <code><a href='rma.mv.html'>rma.mv</a></code>, this can become computationally expensive.</p>
-<p>On machines with multiple cores, one can usually speed things up by delegating the model fitting to separate worker processes, that is, by setting <code>parallel="snow"</code> or <code>parallel="multicore"</code> and <code>ncpus</code> to some value larger than 1. Parallel processing makes use of the <code><a href='https://rdrr.io/r/parallel/parallel-package.html'>parallel</a></code> package, using the <code><a href='https://rdrr.io/r/parallel/makeCluster.html'>makePSOCKcluster</a></code> and <code><a href='https://rdrr.io/r/parallel/clusterApply.html'>parLapply</a></code> functions when <code>parallel="snow"</code> or using <code><a href='https://rdrr.io/r/parallel/mclapply.html'>mclapply</a></code> when <code>parallel="multicore"</code> (the latter only works on Unix/Linux-alikes). With <code><a href='https://rdrr.io/r/parallel/detectCores.html'>parallel::detectCores()</a></code>, one can check on the number of available cores on the local machine.</p>
+<p>On machines with multiple cores, one can usually speed things up by delegating the model fitting to separate worker processes, that is, by setting <code>parallel="snow"</code> or <code>parallel="multicore"</code> and <code>ncpus</code> to some value larger than 1. Parallel processing makes use of the <code><a href='https://www.rdocumentation.org/packages/parallel/topics/parallel-package'>parallel</a></code> package, using the <code><a href='https://www.rdocumentation.org/packages/parallel/topics/makeCluster'>makePSOCKcluster</a></code> and <code><a href='https://www.rdocumentation.org/packages/parallel/topics/clusterApply'>parLapply</a></code> functions when <code>parallel="snow"</code> or using <code><a href='https://www.rdocumentation.org/packages/parallel/topics/mclapply'>mclapply</a></code> when <code>parallel="multicore"</code> (the latter only works on Unix/Linux-alikes). With <code><a href='https://www.rdocumentation.org/packages/parallel/topics/detectCores'>parallel::detectCores()</a></code>, one can check on the number of available cores on the local machine.</p>
 <p>Alternatively (or in addition to using parallel processing), one can also set <code>reestimate=FALSE</code>, in which case any variance/correlation components in the model are not re-estimated after deleting the \(i\)th study/cluster from the dataset. Doing so only yields an approximation to the Cook's distances and DFBETAS values that ignores the influence of the \(i\)th study/cluster on the variance/correlation components, but is considerably faster (and often yields similar results).</p>
 <p>It may not be possible to fit the model after deletion of the \(i\)th study/cluster from the dataset. This will result in <code>NA</code> values for that study/cluster.</p>
     
@@ -213,7 +212,7 @@ hatvalues(model, type="diagonal", &#8230;)</pre>
 
 <span class='co'>### multilevel random-effects model</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>random</span> <span class='kw'>=</span> ~ <span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>district</span>/<span class='no'>school</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>res</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>3</span>)</div><div class='output co'>#&gt; 
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>res</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>3</span>)</div><div class='output co'>#&gt; 
 #&gt; Multivariate Meta-Analysis Model (k = 56; method: REML)
 #&gt; 
 #&gt; Variance Components:
@@ -234,7 +233,7 @@ hatvalues(model, type="diagonal", &#8230;)</pre>
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### Cook's distances for each observed outcome</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>cooks.distance</a></span>(<span class='no'>res</span>)
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/influence.measures'>cooks.distance</a></span>(<span class='no'>res</span>)
 <span class='no'>x</span></div><div class='output co'>#&gt;            1            2            3            4            5            6 
 #&gt; 1.965212e-03 2.989768e-03 2.638140e-03 3.873368e-03 1.954562e-04 2.049672e-02 
 #&gt;            7            8            9           10           11           12 
@@ -254,15 +253,15 @@ hatvalues(model, type="diagonal", &#8230;)</pre>
 #&gt;           49           50           51           52           53           54 
 #&gt; 2.281846e-02 2.803636e-04 3.453698e-03 1.101867e-02 1.405349e-04 1.257869e-02 
 #&gt;           55           56 
-#&gt; 1.606173e-03 4.733739e-03 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"o"</span>, <span class='kw'>pch</span><span class='kw'>=</span><span class='fl'>19</span>, <span class='kw'>xlab</span><span class='kw'>=</span><span class='st'>"Observed Outcome"</span>, <span class='kw'>ylab</span><span class='kw'>=</span><span class='st'>"Cook's Distance"</span>)</div><div class='img'><img src='influence.rma.mv-1.png' alt='' width='768' height='614' /></div><div class='input'>
+#&gt; 1.606173e-03 4.733739e-03 </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>x</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"o"</span>, <span class='kw'>pch</span><span class='kw'>=</span><span class='fl'>19</span>, <span class='kw'>xlab</span><span class='kw'>=</span><span class='st'>"Observed Outcome"</span>, <span class='kw'>ylab</span><span class='kw'>=</span><span class='st'>"Cook's Distance"</span>)</div><div class='img'><img src='influence.rma.mv-1.png' alt='' width='768' height='614' /></div><div class='input'>
 <span class='co'>### Cook's distances for each district</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>cooks.distance</a></span>(<span class='no'>res</span>, <span class='kw'>cluster</span><span class='kw'>=</span><span class='no'>dat</span>$<span class='no'>district</span>)
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/influence.measures'>cooks.distance</a></span>(<span class='no'>res</span>, <span class='kw'>cluster</span><span class='kw'>=</span><span class='no'>dat</span>$<span class='no'>district</span>)
 <span class='no'>x</span></div><div class='output co'>#&gt;           11           12           18           27           56           58 
 #&gt; 0.0693784140 0.0161880606 0.0419849759 0.1192089452 0.0213566370 0.1014506985 
 #&gt;           71           86           91          108          644 
-#&gt; 0.5585174853 0.0656500671 0.0037438517 0.0548839759 0.0003441647 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"o"</span>, <span class='kw'>pch</span><span class='kw'>=</span><span class='fl'>19</span>, <span class='kw'>xlab</span><span class='kw'>=</span><span class='st'>"District"</span>, <span class='kw'>ylab</span><span class='kw'>=</span><span class='st'>"Cook's Distance"</span>, <span class='kw'>xaxt</span><span class='kw'>=</span><span class='st'>"n"</span>)</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/axis.html'>axis</a></span>(<span class='kw'>side</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>at</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_along</a></span>(<span class='no'>x</span>), <span class='kw'>labels</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>x</span>)))</div><div class='img'><img src='influence.rma.mv-2.png' alt='' width='768' height='614' /></div><div class='input'>
+#&gt; 0.5585174853 0.0656500671 0.0037438517 0.0548839759 0.0003441647 </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>x</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"o"</span>, <span class='kw'>pch</span><span class='kw'>=</span><span class='fl'>19</span>, <span class='kw'>xlab</span><span class='kw'>=</span><span class='st'>"District"</span>, <span class='kw'>ylab</span><span class='kw'>=</span><span class='st'>"Cook's Distance"</span>, <span class='kw'>xaxt</span><span class='kw'>=</span><span class='st'>"n"</span>)</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/axis'>axis</a></span>(<span class='kw'>side</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>at</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/seq'>seq_along</a></span>(<span class='no'>x</span>), <span class='kw'>labels</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>as.numeric</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/names'>names</a></span>(<span class='no'>x</span>)))</div><div class='img'><img src='influence.rma.mv-2.png' alt='' width='768' height='614' /></div><div class='input'>
 <span class='co'>### hat values</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>hatvalues</a></span>(<span class='no'>res</span>)</div><div class='output co'>#&gt;           1           2           3           4           5           6 
+<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/influence.measures'>hatvalues</a></span>(<span class='no'>res</span>)</div><div class='output co'>#&gt;           1           2           3           4           5           6 
 #&gt; 0.018246414 0.018246414 0.015562154 0.015562154 0.024305990 0.024305990 
 #&gt;           7           8           9          10          11          12 
 #&gt; 0.023796820 0.020021978 0.028628711 0.021068630 0.035668057 0.018288352 
@@ -312,7 +311,7 @@ hatvalues(model, type="diagonal", &#8230;)</pre>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
 </div>
       </footer>
    </div>

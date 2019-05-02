@@ -105,6 +105,12 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
       digits <- .set.digits(digits, dmiss=FALSE)
    }
 
+   ### set defaults for formulas
+
+   formula.yi <- NULL
+   formula.mods <- NULL
+   formula.scale <- NULL
+
    #########################################################################
 
    if (verbose)
@@ -166,6 +172,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
       ### if yi is a formula, extract yi and X (this overrides anything specified via the mods argument further below)
 
       if (inherits(yi, "formula")) {
+         formula.yi <- yi
          options(na.action = "na.pass")                   ### set na.action to na.pass, so that NAs are not filtered out (we'll do that later)
          mods <- model.matrix(yi, data=data)              ### extract model matrix (now mods is no longer a formula, so [a] further below is skipped)
          attr(mods, "assign") <- NULL                     ### strip assign attribute (not needed at the moment)
@@ -613,6 +620,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
    ### skipped if formula has already been specified via yi argument, since mods is then no longer a formula (see [a])
 
    if (inherits(mods, "formula")) {
+      formula.mods <- mods
       options(na.action = "na.pass")        ### set na.action to na.pass, so that NAs are not filtered out (we'll do that later)
       mods <- model.matrix(mods, data=data) ### extract model matrix
       attr(mods, "assign") <- NULL          ### strip assign attribute (not needed at the moment)
@@ -643,6 +651,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
    ### in case scale is a formula, get model matrix for it
 
    if (inherits(scale, "formula")) {
+      formula.scale <- scale
       options(na.action = "na.pass")
       Z <- model.matrix(scale, data=data)
       colnames(Z)[grep("(Intercept)", colnames(Z))] <- "intrcpt"
@@ -2000,7 +2009,8 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
                   ids=ids, not.na=not.na, subset=subset, slab=slab, slab.null=slab.null,
                   measure=measure, method=method, weighted=weighted, test=test, dfs=dfs, s2w=s2w, btt=btt, intercept=intercept, digits=digits, level=level, control=control, verbose=verbose,
                   add=add, to=to, drop00=drop00,
-                  fit.stats=fit.stats, version=packageVersion("metafor"), model=model, call=mf)
+                  fit.stats=fit.stats, formula.yi=formula.yi, formula.mods=formula.mods,
+                  version=packageVersion("metafor"), model=model, call=mf)
 
       if (model == "rma.ls") {
 
@@ -2015,6 +2025,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
          res$Z.f <- Z.f
          res$tau2.f <- rep(NA, k.f)
          res$tau2.f[not.na] <- tau2
+         res$formula.scale <- formula.scale
 
       }
 

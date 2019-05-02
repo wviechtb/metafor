@@ -2783,3 +2783,58 @@
    !is.null(x) && is.logical(x) && !is.na(x) && !x
 
 ############################################################################
+
+### to register getfit method for 'rma.uni' and 'rma.mv' objects: eval(metafor:::.glmulti)
+
+.glmulti <- parse(text="
+
+if (!(\"glmulti\" %in% .packages()))
+   stop(\"Need to load the 'glmulti' package first to use this code.\")
+
+setOldClass(\"rma.uni\")
+
+setMethod(\"getfit\", \"rma.uni\", function(object, ...) {
+   if (object$test==\"z\") {
+      cbind(estimate=coef(object), se=sqrt(diag(vcov(object))), df=Inf)
+   } else {
+      cbind(estimate=coef(object), se=sqrt(diag(vcov(object))), df=object$k-object$p)
+   }
+})
+
+setOldClass(\"rma.mv\")
+
+setMethod(\"getfit\", \"rma.mv\", function(object, ...) {
+   if (object$test==\"z\") {
+      cbind(estimate=coef(object), se=sqrt(diag(vcov(object))), df=Inf)
+   } else {
+      cbind(estimate=coef(object), se=sqrt(diag(vcov(object))), df=object$k-object$p)
+   }
+})
+
+setOldClass(\"rma.glmm\")
+
+setMethod(\"getfit\", \"rma.glmm\", function(object, ...) {
+   if (object$test==\"z\") {
+      cbind(estimate=coef(object), se=sqrt(diag(vcov(object))), df=Inf)
+   } else {
+      cbind(estimate=coef(object), se=sqrt(diag(vcov(object))), df=object$k-object$p)
+   }
+})
+
+")
+
+.MuMIn <- parse(text="
+
+makeArgs.rma <- function (obj, termNames, comb, opt, ...) {
+   ret <- MuMIn:::makeArgs.default(obj, termNames, comb, opt)
+   names(ret)[1L] <- \"mods\"
+   ret
+}
+
+coefTable.rma <- function (model, ...) {
+  MuMIn:::.makeCoefTable(model$b, model$se, coefNames = rownames(model$b))
+}
+
+")
+
+############################################################################

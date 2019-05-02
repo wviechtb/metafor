@@ -16,8 +16,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -134,13 +133,23 @@
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
     <p>The data frame contains the following columns:</p><table class='table'>
-<tr><td><b>id</b></td><td><code>numeric</code></td><td>trial id number</td></tr>
-<tr><td><b>study</b></td><td><code>character</code></td><td>first author or trial name</td></tr>
-<tr><td><b>year</b></td><td><code>numeric</code></td><td>publication year</td></tr>
-<tr><td><b>ai</b></td><td><code>numeric</code></td><td>number of deaths in the magnesium group</td></tr>
-<tr><td><b>n1i</b></td><td><code>numeric</code></td><td>number of patients in the magnesium group</td></tr>
-<tr><td><b>ci</b></td><td><code>numeric</code></td><td>number of deaths in the control group</td></tr>
-<tr><td><b>n2i</b></td><td><code>numeric</code></td><td>number of patients in the control group</td></tr>
+<tr><td></td><td><b>id</b></td><td></td></tr>
+<tr><td></td><td><code>numeric</code></td><td></td></tr>
+<tr><td>trial id number</td><td></td><td><b>study</b></td></tr>
+<tr><td></td><td></td><td><code>character</code></td></tr>
+<tr><td></td><td>first author or trial name</td><td></td></tr>
+<tr><td><b>year</b></td><td></td><td></td></tr>
+<tr><td><code>numeric</code></td><td></td><td>publication year</td></tr>
+<tr><td></td><td><b>ai</b></td><td></td></tr>
+<tr><td></td><td><code>numeric</code></td><td></td></tr>
+<tr><td>number of deaths in the magnesium group</td><td></td><td><b>n1i</b></td></tr>
+<tr><td></td><td></td><td><code>numeric</code></td></tr>
+<tr><td></td><td>number of patients in the magnesium group</td><td></td></tr>
+<tr><td><b>ci</b></td><td></td><td></td></tr>
+<tr><td><code>numeric</code></td><td></td><td>number of deaths in the control group</td></tr>
+<tr><td></td><td><b>n2i</b></td><td></td></tr>
+<tr><td></td><td><code>numeric</code></td><td></td></tr>
+<tr><td>number of patients in the control group</td><td></td><td><b>id</b></td></tr>
 </table>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
@@ -188,7 +197,7 @@
 #&gt; 16 16       ISIS-4 1995 2216 29011 2103 29039</div><div class='input'>
 <span class='co'>### meta-analysis of trials 1-7 using Peto's method (as in Teo et al., 1991)</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.peto.html'>rma.peto</a></span>(<span class='kw'>ai</span><span class='kw'>=</span><span class='no'>ai</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>n1i</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>ci</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>n2i</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>subset</span><span class='kw'>=</span><span class='fl'>1</span>:<span class='fl'>7</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>res</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>res</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
 #&gt; Fixed-Effects Model (k = 7)
 #&gt; 
 #&gt; Test for Heterogeneity: 
@@ -205,8 +214,8 @@
 #&gt;     0.45   0.28   0.71 
 #&gt; </div><div class='input'>
 <span class='co'>### meta-analysis of trials 1-7 and LIMIT-2 (as in Yusuf et al., 1993)</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.peto.html'>rma.peto</a></span>(<span class='kw'>ai</span><span class='kw'>=</span><span class='no'>ai</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>n1i</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>ci</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>n2i</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>subset</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>:<span class='fl'>7</span>,<span class='fl'>14</span>))
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>res</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
+<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.peto.html'>rma.peto</a></span>(<span class='kw'>ai</span><span class='kw'>=</span><span class='no'>ai</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>n1i</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>ci</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>n2i</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>subset</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>:<span class='fl'>7</span>,<span class='fl'>14</span>))
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>res</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
 #&gt; Fixed-Effects Model (k = 8)
 #&gt; 
 #&gt; Test for Heterogeneity: 
@@ -224,7 +233,7 @@
 #&gt; </div><div class='input'>
 <span class='co'>### meta-analysis of all trials except ISIS-4</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.peto.html'>rma.peto</a></span>(<span class='kw'>ai</span><span class='kw'>=</span><span class='no'>ai</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>n1i</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>ci</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>n2i</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>subset</span><span class='kw'>=</span>-<span class='fl'>16</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>res</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>res</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
 #&gt; Fixed-Effects Model (k = 15)
 #&gt; 
 #&gt; Test for Heterogeneity: 
@@ -239,13 +248,13 @@
 #&gt; 
 #&gt; estimate  ci.lb  ci.ub 
 #&gt;     0.55   0.44   0.68 
-#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
+#&gt; </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
 #&gt;  pred ci.lb ci.ub 
 #&gt;  0.55  0.44  0.68 
 #&gt; </div><div class='input'>
 <span class='co'>### meta-analysis of all trials including ISIS-4</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.peto.html'>rma.peto</a></span>(<span class='kw'>ai</span><span class='kw'>=</span><span class='no'>ai</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>n1i</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>ci</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>n2i</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>res</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>res</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
 #&gt; Fixed-Effects Model (k = 16)
 #&gt; 
 #&gt; Test for Heterogeneity: 
@@ -260,12 +269,12 @@
 #&gt; 
 #&gt; estimate  ci.lb  ci.ub 
 #&gt;     1.01   0.95   1.07 
-#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
+#&gt; </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
 #&gt;  pred ci.lb ci.ub 
 #&gt;  1.01  0.95  1.07 
 #&gt; </div><div class='input'>
 <span class='co'>### contour-enhanced funnel plot centered at 0</span>
-<span class='fu'><a href='funnel.html'>funnel</a></span>(<span class='no'>res</span>, <span class='kw'>refline</span><span class='kw'>=</span><span class='fl'>0</span>, <span class='kw'>level</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>90</span>, <span class='fl'>95</span>, <span class='fl'>99</span>), <span class='kw'>shade</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"white"</span>, <span class='st'>"gray"</span>, <span class='st'>"darkgray"</span>))</div><div class='img'><img src='dat.egger2001-1.png' alt='' width='768' height='614' /></div></pre>
+<span class='fu'><a href='funnel.html'>funnel</a></span>(<span class='no'>res</span>, <span class='kw'>refline</span><span class='kw'>=</span><span class='fl'>0</span>, <span class='kw'>level</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>90</span>, <span class='fl'>95</span>, <span class='fl'>99</span>), <span class='kw'>shade</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"white"</span>, <span class='st'>"gray"</span>, <span class='st'>"darkgray"</span>))</div><div class='img'><img src='dat.egger2001-1.png' alt='' width='768' height='614' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -293,7 +302,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
 </div>
       </footer>
    </div>

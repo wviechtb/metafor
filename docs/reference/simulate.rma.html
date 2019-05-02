@@ -16,8 +16,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -145,7 +144,7 @@ simulate(object, nsim = 1, seed = NULL, &#8230;)</pre>
     </tr>
     <tr>
       <th>seed</th>
-      <td><p>an object specifying if and how the random number generator should be initialized (&#8216;seeded&#8217;). Either <code>NULL</code> or an integer that will be used in a call to <code>set.seed</code> before simulating the response vectors. If set, the value is saved as the <code>"seed"</code> attribute of the returned value. The default, <code>NULL</code> will not change the random generator state, and return <code><a href='https://rdrr.io/r/base/Random.html'>.Random.seed</a></code> as the <code>"seed"</code> attribute; see &#8216;Value&#8217;.</p></td>
+      <td><p>an object specifying if and how the random number generator should be initialized (&#8216;seeded&#8217;). Either <code>NULL</code> or an integer that will be used in a call to <code>set.seed</code> before simulating the response vectors. If set, the value is saved as the <code>"seed"</code> attribute of the returned value. The default, <code>NULL</code> will not change the random generator state, and return <code><a href='https://www.rdocumentation.org/packages/base/topics/Random'>.Random.seed</a></code> as the <code>"seed"</code> attribute; see &#8216;Value&#8217;.</p></td>
     </tr>
     <tr>
       <th>&#8230;</th>
@@ -160,7 +159,7 @@ simulate(object, nsim = 1, seed = NULL, &#8230;)</pre>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data frame with <code>nsim</code> columns with the simulated outcomes.</p>
-<p>The data frame comes with an attribute <code>"seed"</code>. If argument <code>seed</code> is <code>NULL</code>, the attribute is the value of <code><a href='https://rdrr.io/r/base/Random.html'>.Random.seed</a></code> before the simulation was started; otherwise it is the value of the argument with a <code>"kind"</code> attribute with value <code>as.list(<a href='https://rdrr.io/r/base/Random.html'>RNGkind</a>())</code>.</p>
+<p>The data frame comes with an attribute <code>"seed"</code>. If argument <code>seed</code> is <code>NULL</code>, the attribute is the value of <code><a href='https://www.rdocumentation.org/packages/base/topics/Random'>.Random.seed</a></code> before the simulation was started; otherwise it is the value of the argument with a <code>"kind"</code> attribute with value <code>as.list(<a href='https://www.rdocumentation.org/packages/base/topics/Random'>RNGkind</a>())</code>.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
@@ -227,7 +226,7 @@ simulate(object, nsim = 1, seed = NULL, &#8230;)</pre>
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### simulate 10 sets of new outcomes based on the fitted model</span>
-<span class='no'>newdat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/simulate.html'>simulate</a></span>(<span class='no'>res</span>, <span class='kw'>nsim</span><span class='kw'>=</span><span class='fl'>10</span>, <span class='kw'>seed</span><span class='kw'>=</span><span class='fl'>1234</span>)
+<span class='no'>newdat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/simulate'>simulate</a></span>(<span class='no'>res</span>, <span class='kw'>nsim</span><span class='kw'>=</span><span class='fl'>10</span>, <span class='kw'>seed</span><span class='kw'>=</span><span class='fl'>1234</span>)
 <span class='no'>newdat</span></div><div class='output co'>#&gt;         sim_1       sim_2       sim_3      sim_4      sim_5       sim_6
 #&gt; 1  -1.6793004 -0.66301253 -0.25514894 -1.0869090 -1.6008315  0.70583300
 #&gt; 2  -0.5168313 -0.03077959 -1.44400787  0.3184048 -1.4378126 -1.52592474
@@ -284,7 +283,7 @@ simulate(object, nsim = 1, seed = NULL, &#8230;)</pre>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
 </div>
       </footer>
    </div>

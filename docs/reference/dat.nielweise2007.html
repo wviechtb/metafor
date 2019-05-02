@@ -16,8 +16,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -134,13 +133,23 @@
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
     <p>The data frame contains the following columns:</p><table class='table'>
-<tr><td><b>study</b></td><td><code>numeric</code></td><td>study number</td></tr>
-<tr><td><b>author</b></td><td><code>character</code></td><td>(first) author</td></tr>
-<tr><td><b>year</b></td><td><code>numeric</code></td><td>publication year</td></tr>
-<tr><td><b>ai</b></td><td><code>numeric</code></td><td>number of CRBSIs in patients receiving an anti-infective catheter</td></tr>
-<tr><td><b>n1i</b></td><td><code>numeric</code></td><td>number of patients receiving an anti-infective catheter</td></tr>
-<tr><td><b>ci</b></td><td><code>numeric</code></td><td>number of CRBSIs in patients receiving a standard catheter</td></tr>
-<tr><td><b>n2i</b></td><td><code>numeric</code></td><td>number of patients receiving a standard catheter</td></tr>
+<tr><td></td><td><b>study</b></td><td></td></tr>
+<tr><td></td><td><code>numeric</code></td><td></td></tr>
+<tr><td>study number</td><td></td><td><b>author</b></td></tr>
+<tr><td></td><td></td><td><code>character</code></td></tr>
+<tr><td></td><td>(first) author</td><td></td></tr>
+<tr><td><b>year</b></td><td></td><td></td></tr>
+<tr><td><code>numeric</code></td><td></td><td>publication year</td></tr>
+<tr><td></td><td><b>ai</b></td><td></td></tr>
+<tr><td></td><td><code>numeric</code></td><td></td></tr>
+<tr><td>number of CRBSIs in patients receiving an anti-infective catheter</td><td></td><td><b>n1i</b></td></tr>
+<tr><td></td><td></td><td><code>numeric</code></td></tr>
+<tr><td></td><td>number of patients receiving an anti-infective catheter</td><td></td></tr>
+<tr><td><b>ci</b></td><td></td><td></td></tr>
+<tr><td><code>numeric</code></td><td></td><td>number of CRBSIs in patients receiving a standard catheter</td></tr>
+<tr><td></td><td><b>n2i</b></td><td></td></tr>
+<tr><td></td><td><code>numeric</code></td><td></td></tr>
+<tr><td>number of patients receiving a standard catheter</td><td></td><td><b>study</b></td></tr>
 </table>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
@@ -180,7 +189,7 @@
 #&gt; 17    17           Rupp 2005  1 345  3 362
 #&gt; 18    18           Osma 2006  4  64  1  69</div><div class='input'>
 <span class='co'>### standard (inverse-variance) random-effects model</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>ai</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>n1i</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>ci</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>n2i</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>drop00</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Studies with NAs omitted from model fitting.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>res</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>3</span>)</div><div class='output co'>#&gt; 
+<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>ai</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>n1i</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>ci</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>n2i</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>drop00</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Studies with NAs omitted from model fitting.</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>res</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>3</span>)</div><div class='output co'>#&gt; 
 #&gt; Random-Effects Model (k = 17; tau^2 estimator: REML)
 #&gt; 
 #&gt; tau^2 (estimated amount of total heterogeneity): 0.036 (SE = 0.299)
@@ -198,15 +207,15 @@
 #&gt; 
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
+#&gt; </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
 #&gt;  pred ci.lb ci.ub cr.lb cr.ub 
 #&gt;  0.38  0.23  0.60  0.21  0.69 
 #&gt; </div><div class='input'>
 ### random-effects conditional logistic model
 </div><span class='co'># NOT RUN {</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.glmm.html'>rma.glmm</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>ai</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>n1i</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>ci</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>n2i</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>model</span><span class='kw'>=</span><span class='st'>"CM.EL"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>res</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>3</span>)
-<span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>res</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>3</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -233,7 +242,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
 </div>
       </footer>
    </div>

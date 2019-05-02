@@ -94,6 +94,10 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       digits <- .set.digits(digits, dmiss=FALSE)
    }
 
+   ### set default for formula.mods
+
+   formula.mods <- NULL
+
    #########################################################################
 
    if (verbose)
@@ -242,6 +246,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    ### convert mods formula to X matrix and set intercept equal to FALSE
 
    if (inherits(mods, "formula")) {
+      formula.mods <- mods
       options(na.action = "na.pass")        ### set na.action to na.pass, so that NAs are not filtered out (we'll do that later)
       mods <- model.matrix(mods, data=data) ### extract model matrix
       attr(mods, "assign") <- NULL          ### strip assign attribute (not needed at the moment)
@@ -1865,7 +1870,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                   ids=ids, not.na=not.na, subset=subset, not.na.yivi=not.na.yivi, slab=slab, slab.null=slab.null,
                   measure=measure, method=method, model=model, weighted=weighted, test=test, dfs=dfs, btt=btt, intercept=intercept, digits=digits, level=level, control=control, verbose=verbose,
                   add=add, to=to, drop00=drop00,
-                  fit.stats=fit.stats, version=packageVersion("metafor"), call=mf)
+                  fit.stats=fit.stats, formula.yi=NULL, formula.mods=formula.mods, version=packageVersion("metafor"), call=mf)
 
    }
 

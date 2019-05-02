@@ -774,7 +774,7 @@ correct=TRUE, level=95, digits, verbose=FALSE, ...) {
                   ids=ids, not.na=not.na, subset=subset, not.na.yivi=not.na.yivi, slab=slab, slab.null=slab.null,
                   measure=measure, method=method, weighted=weighted, test=test, dfs=dfs, intercept=intercept, digits=digits, level=level,
                   add=add, to=to, drop00=drop00, correct=correct,
-                  fit.stats=fit.stats, version=packageVersion("metafor"), call=mf)
+                  fit.stats=fit.stats, formula.yi=NULL, formula.mods=NULL, version=packageVersion("metafor"), call=mf)
 
    }
 

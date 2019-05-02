@@ -152,6 +152,11 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
       ddd$dist <- list("euclidean", "euclidean")
    }
 
+   ### set defaults for formulas
+
+   formula.yi <- NULL
+   formula.mods <- NULL
+
    #########################################################################
 
    if (verbose > 1)
@@ -212,6 +217,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
    ### if yi is a formula, extract yi and X (this overrides anything specified via the mods argument further below)
 
    if (inherits(yi, "formula")) {
+      formula.yi <- yi
       options(na.action = "na.pass")                   ### set na.action to na.pass, so that NAs are not filtered out (we'll do that later)
       mods <- model.matrix(yi, data=data)              ### extract model matrix (now mods is no longer a formula, so [a] further below is skipped)
       attr(mods, "assign") <- NULL                     ### strip assign attribute (not needed at the moment)
@@ -401,6 +407,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
    ### skipped if formula has already been specified via yi argument, since mods is then no longer a formula (see [a])
 
    if (inherits(mods, "formula")) {
+      formula.mods <- mods
       options(na.action = "na.pass")        ### set na.action to na.pass, so that NAs are not filtered out (we'll do that later)
       mods <- model.matrix(mods, data=data) ### extract model matrix
       attr(mods, "assign") <- NULL          ### strip assign attribute (not needed at the moment)
@@ -2145,7 +2152,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
                   h.levels.f=h.levels.f, h.levels.k=h.levels.k, h.levels.comb.k=h.levels.comb.k,
                   struct=struct, Rfix=Rfix, R=R, Rscale=Rscale,
                   mf.r=mf.r, mf.g=mf.g, mf.g.f=mf.g.f, mf.h=mf.h, mf.h.f=mf.h.f, Z.S=Z.S, Z.G1=Z.G1, Z.G2=Z.G2, Z.H1=Z.H1, Z.H2=Z.H2,
-                  random=random, version=packageVersion("metafor"), call=mf)
+                  random=random, formula.yi=formula.yi, formula.mods=formula.mods, version=packageVersion("metafor"), call=mf)
 
    }
 
