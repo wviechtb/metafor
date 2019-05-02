@@ -2823,6 +2823,8 @@ setMethod(\"getfit\", \"rma.glmm\", function(object, ...) {
 
 ")
 
+### helper functions to make MuMIn work together with metafor
+
 .MuMIn <- parse(text="
 
 makeArgs.rma <- function (obj, termNames, comb, opt, ...) {
@@ -2833,6 +2835,22 @@ makeArgs.rma <- function (obj, termNames, comb, opt, ...) {
 
 coefTable.rma <- function (model, ...) {
   MuMIn:::.makeCoefTable(model$b, model$se, coefNames = rownames(model$b))
+}
+
+")
+
+### helper functions to make mice work together with metafor
+
+.mice <- parse(text="
+
+glance.rma <- function (x, ...)
+   data.frame(df.residual=df.residual(x))
+
+tidy.rma <- function (x, ...) {
+   ret <- coef(summary(x))
+   colnames(ret)[2] <- \"std.error\"
+   ret$term <- rownames(ret)
+   return(ret)
 }
 
 ")

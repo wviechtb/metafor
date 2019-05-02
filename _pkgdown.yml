@@ -139,6 +139,7 @@ reference:
       - coef.permutest.rma.uni
       - vcov.rma
       - model.matrix.rma
+      - formula.rma
   - title: "Convenience Functions"
     desc: >
       Some miscellaneous convenience functions.
