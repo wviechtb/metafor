@@ -2768,6 +2768,10 @@
       }
    }
 
+   ### so we can still print objects created with older metafor versions (where xdigit will be just an unnamed scalar)
+   if (length(res) == 1 && is.null(names(res)))
+      res <- c(est=res[[1]], se=res[[1]], test=res[[1]], pval=res[[1]], ci=res[[1]], var=res[[1]], sevar=res[[1]], fit=res[[1]], het=res[[1]])
+
    res
 
 }
