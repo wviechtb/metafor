@@ -21,7 +21,7 @@
 ### - ID   (same as CS but with rho/phi=0)
 ### - DIAG (same as HCS but with rho/phi=0)
 ### - SPEXP/SPGAU/SPLIN/SPRAT/SPSPH (spatial structures: exponential, gaussian, linear, rational quadratic, spherical)
-### - PHYPL (phylogenetic structures: Pagel's lambda)
+### - PHYBM/PHYPL (phylogenetic structures: Brownian motion, Pagel's lambda)
 
 rma.mv <- function(yi, V, W, mods, random, struct="CS", intercept=TRUE, data, slab, subset, ### add ni as argument in the future
 method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, rho, gamma2, phi, sparse=FALSE, verbose=FALSE, control, ...) {
@@ -38,7 +38,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
    if (!is.element(method, c("FE","ML","REML")))
       stop(mstyle$stop("Unknown 'method' specified."))
 
-   if (any(!is.element(struct, c("CS","HCS","UN","AR","HAR","CAR","ID","DIAG","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYPL","GEN")))) ### add UNHO later
+   if (any(!is.element(struct, c("CS","HCS","UN","AR","HAR","CAR","ID","DIAG","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","GEN")))) ### "PHYPL", add UNHO later
       stop(mstyle$stop("Unknown 'struct' specified."))
 
    if (length(struct) == 1)

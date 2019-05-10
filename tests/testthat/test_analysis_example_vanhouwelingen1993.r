@@ -4,6 +4,8 @@
 
 context("Checking analysis example: vanhouwelingen1993")
 
+source("tolerances.r") # read in tolerances
+
 ### load data
 dat <- dat.collins1985a
 
@@ -25,21 +27,21 @@ test_that("results of the fixed-effects conditional logistic model are correct."
    expect_warning(res <- rma.glmm(measure="OR", ai=b.xci, n1i=nci, ci=b.xti, n2i=nti, data=dat, model="CM.EL", method="FE"))
 
    ### compare with results on page 2275 (in text)
-   expect_equivalent(round(coef(res),3), 0.122)
-   expect_equivalent(round(res$se,3), 0.099)
-   expect_equivalent(round(res$ci.lb,3), -0.073)
-   expect_equivalent(round(res$ci.ub,2), 0.32) ### 0.31 in paper (rounded a bit more heavily, so 32-bit and 64-bit versions give same result)
-   expect_equivalent(round(c(logLik(res)), 3), -53.679)
+   expect_equivalent(coef(res), 0.1216, tolerance=.tol[["coef"]])
+   expect_equivalent(res$se, 0.0993, tolerance=.tol[["se"]])
+   expect_equivalent(res$ci.lb, -0.0730, tolerance=.tol[["ci"]])
+   expect_equivalent(res$ci.ub, 0.3162, tolerance=.tol[["ci"]]) ### 0.31 in paper (rounded a bit more heavily, so 32-bit and 64-bit versions give same result)
+   expect_equivalent(c(logLik(res)), -53.6789, tolerance=.tol[["fit"]])
 
    ### run with control(dnchgcalc="dnoncenhypergeom")
    expect_warning(res <- rma.glmm(measure="OR", ai=b.xci, n1i=nci, ci=b.xti, n2i=nti, data=dat, model="CM.EL", method="FE", control=list(dnchgcalc="dnoncenhypergeom")))
 
    ### some very minor discrepancies
-   expect_equivalent(round(coef(res),3), 0.122)
-   expect_equivalent(round(res$se,3), 0.100)
-   expect_equivalent(round(res$ci.lb,3), -0.074)
-   expect_equivalent(round(res$ci.ub,2), 0.32)
-   expect_equivalent(round(c(logLik(res)), 3), -53.679)
+   expect_equivalent(coef(res), 0.1216, tolerance=.tol[["coef"]])
+   expect_equivalent(res$se, 0.0996, tolerance=.tol[["se"]])
+   expect_equivalent(res$ci.lb, -0.0735, tolerance=.tol[["ci"]])
+   expect_equivalent(res$ci.ub, 0.3167, tolerance=.tol[["ci"]])
+   expect_equivalent(c(logLik(res)), -53.6789, tolerance=.tol[["fit"]])
 
 })
 
@@ -50,22 +52,22 @@ test_that("results of the random-effects conditional logistic model are correct.
    expect_warning(res <- rma.glmm(measure="OR", ai=b.xci, n1i=nci, ci=b.xti, n2i=nti, data=dat, model="CM.EL", method="ML"))
 
    ### compare with results on page 2277 (in text)
-   expect_equivalent(round(coef(res),3), 0.175)
-   expect_equivalent(round(res$se,3), 0.136)
-   expect_equivalent(round(res$ci.lb,3), -0.092)
-   expect_equivalent(round(res$ci.ub,3), 0.441)
-   expect_equivalent(round(c(logLik(res)), 3), -52.989)
-   expect_equivalent(round(res$tau2,3), 0.119)
+   expect_equivalent(coef(res), 0.1745, tolerance=.tol[["coef"]])
+   expect_equivalent(res$se, 0.1360, tolerance=.tol[["se"]])
+   expect_equivalent(res$ci.lb, -0.0919, tolerance=.tol[["ci"]])
+   expect_equivalent(res$ci.ub, 0.4410, tolerance=.tol[["ci"]])
+   expect_equivalent(c(logLik(res)), -52.9890, tolerance=.tol[["fit"]])
+   expect_equivalent(res$tau2, 0.1195, tolerance=.tol[["var"]])
 
-   ### run with control(dnchgcalc="dnoncenhypergeom") (skip this for now)
+   ### run with control(dnchgcalc="dnoncenhypergeom")
    expect_warning(res <- rma.glmm(measure="OR", ai=b.xci, n1i=nci, ci=b.xti, n2i=nti, data=dat, model="CM.EL", method="ML", control=list(dnchgcalc="dnoncenhypergeom")))
 
    ### no discrepancies
-   expect_equivalent(round(coef(res),3), 0.175)
-   expect_equivalent(round(res$se,3), 0.136)
-   expect_equivalent(round(res$ci.lb,3), -0.092)
-   expect_equivalent(round(res$ci.ub,3), 0.441)
-   expect_equivalent(round(c(logLik(res)), 3), -52.989)
-   expect_equivalent(round(res$tau2,3), 0.119)
+   expect_equivalent(coef(res), 0.1745, tolerance=.tol[["coef"]])
+   expect_equivalent(res$se, 0.1360, tolerance=.tol[["se"]])
+   expect_equivalent(res$ci.lb, -0.0921, tolerance=.tol[["ci"]])
+   expect_equivalent(res$ci.ub, 0.4411, tolerance=.tol[["ci"]])
+   expect_equivalent(c(logLik(res)), -52.9890, tolerance=.tol[["fit"]])
+   expect_equivalent(res$tau2, 0.1195, tolerance=.tol[["var"]])
 
 })

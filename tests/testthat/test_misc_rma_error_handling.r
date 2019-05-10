@@ -2,6 +2,8 @@
 
 context("Checking misc: proper handling of errors in rma()")
 
+source("tolerances.r") # read in tolerances
+
 test_that("rma() handles NAs correctly.", {
 
    data(dat.bcg, package="metafor")
@@ -19,5 +21,7 @@ test_that("rma() handles NAs correctly.", {
    expect_equivalent(res$not.na, rep(c(FALSE,TRUE),times=c(2,11)))
 
    dat$ablat[3] <- NA
+
+   ### TODO: complete this ...
 
 })

@@ -2,6 +2,8 @@
 
 context("Checking misc: proper handling of missing values")
 
+source("tolerances.r") # read in tolerances
+
 test_that("rma.glmm() handles NAs correctly.", {
 
    skip_on_cran()

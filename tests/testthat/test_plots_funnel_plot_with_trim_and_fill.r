@@ -25,7 +25,7 @@ test_that("plot can be drawn.", {
    taf <- trimfill(res)
 
    ### draw funnel plot with missing studies filled in
-   funnel(taf)
+   funnel(taf, legend=TRUE)
 
    par(opar)
 

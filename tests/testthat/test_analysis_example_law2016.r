@@ -2,6 +2,8 @@
 
 context("Checking analysis example: law2016")
 
+source("tolerances.r") # read in tolerances
+
 ### function for creating the contrast matrix X
 
 contrmat <- function(trt1, trt2, ref) {
@@ -68,23 +70,23 @@ test_that("results are correct for example 1.", {
    modC <- rma.mv(y, S1, mods=X, intercept=FALSE, random = ~ contr | study, rho=1/2, data=EG1)
    ci <- confint(modC)
 
-   expect_equivalent(round(modC$tau2, digits=3), 0)
-   expect_equivalent(round(coef(modC), digits=3), c(-0.224, -0.167, -0.327, -0.315, -0.352, -0.649, -0.276))
-   expect_equivalent(round(ci$random[1,2:3], digits=3), c(0.000, 0.071))
+   expect_equivalent(modC$tau2, 0.0000, tolerance=.tol[["var"]])
+   expect_equivalent(coef(modC), c(-0.2243, -0.1667, -0.3274, -0.3152, -0.3520, -0.6489, -0.2758), tolerance=.tol[["coef"]])
+   expect_equivalent(ci$random[1,2:3], c(0.0000, 0.0708), tolerance=.tol[["var"]])
 
    ### fit Jackson's model
    modI <- rma.mv(y, S1, mods=X, intercept=FALSE, random = list(~ contr | study, ~ contr | design), rho=1/2, phi=1/2, data=EG1)
    ci <- confint(modI)
 
-   expect_equivalent(round(modI$tau2, digits=3), 0)
-   expect_equivalent(round(modI$gamma2, digits=3), 0)
-   expect_equivalent(round(coef(modI), digits=3), c(-0.224, -0.167, -0.327, -0.315, -0.352, -0.649, -0.276))
-   expect_equivalent(round(ci[[1]]$random[1,2:3], digits=3), c(0.000, 0.071))
-   expect_equivalent(round(ci[[2]]$random[1,2:3], digits=3), c(0.000, 0.615))
+   expect_equivalent(modI$tau2, 0.0000, tolerance=.tol[["var"]])
+   expect_equivalent(modI$gamma2, 0.0000, tolerance=.tol[["var"]])
+   expect_equivalent(coef(modI), c(-0.2243, -0.1667, -0.3274, -0.3152, -0.3520, -0.6489, -0.2758), tolerance=.tol[["coef"]])
+   expect_equivalent(ci[[1]]$random[1,2:3], c(0.0000, 0.0708), tolerance=.tol[["var"]])
+   expect_equivalent(ci[[2]]$random[1,2:3], c(0.0000, 0.6153), tolerance=.tol[["var"]])
 
    sav <- predict(modI, newmods=c(1,0,0,0,0,0,0), transf=exp)
-   sav <- round(c(sav[[1]], sav[[3]], sav[[4]], sav[[5]], sav[[6]]), 4)
-   expect_equivalent(sav, c(0.7991, 0.6477, 0.9859, 0.6477, 0.9859))
+   sav <- c(sav[[1]], sav[[3]], sav[[4]], sav[[5]], sav[[6]])
+   expect_equivalent(sav, c(0.7991, 0.6477, 0.9859, 0.6477, 0.9859), tolerance=.tol[["pred"]])
 
 })
 
@@ -138,34 +140,34 @@ test_that("results are correct for example 2.", {
    modC <- rma.mv(y, S2, mods=X, intercept=FALSE, random = ~ contr | study, rho=1/2, data=EG2)
    ci <- confint(modC)
 
-   expect_equivalent(round(modC$tau2, digits=3), 0.548)
-   expect_equivalent(round(coef(modC), digits=3), c(-1.885, -1.337, -0.740))
-   expect_equivalent(round(ci$random[1,2:3], digits=3), c(0.079, 2.016))
+   expect_equivalent(modC$tau2, 0.5482, tolerance=.tol[["var"]])
+   expect_equivalent(coef(modC), c(-1.8847, -1.3366, -0.7402), tolerance=.tol[["coef"]])
+   expect_equivalent(ci$random[1,2:3], c(0.0788, 2.0156), tolerance=.tol[["var"]])
 
    ### fit Jackson's model
    modI <- rma.mv(y, S2, mods=X, intercept=FALSE, random = list(~ contr | study, ~ contr | design), rho=1/2, phi=1/2, data=EG2)
    ci <- confint(modI)
 
-   expect_equivalent(round(modI$tau2, digits=3), 0.104)
-   expect_equivalent(round(modI$gamma2, digits=3), 0.539)
-   expect_equivalent(round(coef(modI), digits=3), c(-1.973, -1.396, -0.657))
-   expect_equivalent(round(ci[[1]]$random[1,2:3], digits=3), c(0.000, 1.666))
-   expect_equivalent(round(ci[[2]]$random[1,2:3], digits=3), c(0.000, 3.960))
+   expect_equivalent(modI$tau2, 0.1036, tolerance=.tol[["var"]])
+   expect_equivalent(modI$gamma2, 0.5391, tolerance=.tol[["var"]])
+   expect_equivalent(coef(modI), c(-1.9735, -1.3957, -0.6572), tolerance=.tol[["coef"]])
+   expect_equivalent(ci[[1]]$random[1,2:3], c(0.0000, 1.6661), tolerance=.tol[["var"]])
+   expect_equivalent(ci[[2]]$random[1,2:3], c(0.0000, 3.9602), tolerance=.tol[["var"]])
 
    sav <- predict(modI, newmods=c(1,0,0), transf=exp)
-   sav <- round(c(sav[[1]], sav[[3]], sav[[4]], sav[[5]], sav[[6]]), 4)
-   expect_equivalent(sav, c(0.1390, 0.0369, 0.5230, 0.0178, 1.0856))
+   sav <- c(sav[[1]], sav[[3]], sav[[4]], sav[[5]], sav[[6]])
+   expect_equivalent(sav, c(0.1390, 0.0369, 0.5230, 0.0178, 1.0856), tolerance=.tol[["pred"]])
 
-   sav <- lapply(ranef(modI), round, 3)
+   sav <- ranef(modI)
 
-   expect_equivalent(sav[[1]]$intrcpt, c(-0.106, -0.094, -0.078, 0.335, -0.058, -0.128, 0.026, -0.121, 0.013, -0.148, 0.029, 0.13, 0.027, 0.084, -0.101, -0.064))
-   expect_equivalent(sav[[1]]$se,      c(0.314, 0.293, 0.283, 0.301, 0.285, 0.282, 0.286, 0.297, 0.297, 0.304, 0.313, 0.315, 0.301, 0.304, 0.302, 0.305))
-   expect_equivalent(sav[[2]]$intrcpt, c(-0.551, 0.152, 0.675, -0.119, -0.383, 0.104, -0.493, -0.699))
-   expect_equivalent(sav[[2]]$se,      c(0.64, 0.619, 0.642, 0.518, 0.543, 0.53, 0.486, 0.54))
+   expect_equivalent(sav[[1]]$intrcpt, c(-0.106, -0.094, -0.078, 0.335, -0.058, -0.128, 0.026, -0.121, 0.013, -0.148, 0.029, 0.13, 0.027, 0.084, -0.101, -0.064), tolerance=.tol[["pred"]])
+   expect_equivalent(sav[[1]]$se,      c(0.314, 0.293, 0.283, 0.301, 0.285, 0.282, 0.286, 0.297, 0.297, 0.304, 0.313, 0.315, 0.301, 0.304, 0.302, 0.305), tolerance=.tol[["se"]])
+   expect_equivalent(sav[[2]]$intrcpt, c(-0.551, 0.152, 0.675, -0.119, -0.383, 0.104, -0.493, -0.699), tolerance=.tol[["pred"]])
+   expect_equivalent(sav[[2]]$se,      c(0.64, 0.619, 0.642, 0.518, 0.543, 0.53, 0.486, 0.54), tolerance=.tol[["se"]])
 
    out <- capture.output(print(sav))
 
    sav <- predict(modI)
-   expect_equivalent(round(sav$cr.lb, 3), c(-4.029, -1.285, -1.285, -1.285, -1.285, -1.285, -0.491, -0.491, -1.137, -1.137, -4.029, -2.77, -1.285, -0.491, -1.285, -0.491))
+   expect_equivalent(round(sav$cr.lb, 3), c(-4.029, -1.2853, -1.2853, -1.2853, -1.2853, -1.2853, -0.4911, -0.4911, -1.137, -1.137, -4.029, -2.7699, -1.2853, -0.4911, -1.2853, -0.4911), tolerance=.tol[["pred"]])
 
 })

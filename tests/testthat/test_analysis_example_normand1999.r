@@ -4,6 +4,8 @@
 
 context("Checking analysis example: normand1999")
 
+source("tolerances.r") # read in tolerances
+
 test_that("results are correct for the first example (using dat.hine1989).", {
 
    ### load data
@@ -19,41 +21,41 @@ test_that("results are correct for the first example (using dat.hine1989).", {
    out <- capture.output(print(dat)) ### so that print.escalc() is run (at least once)
 
    ### compare with results on page 330 (Table III)
-   expect_equivalent(round(dat$yi,4), c(2.8026, 0.0000, 1.9711, 1.7961, 3.5334, 4.4031))
-   expect_equivalent(round(dat$vi,4), c(17.7575, 37.5657, 8.1323, 10.8998, 8.0114, 6.1320))
+   expect_equivalent(dat$yi, c(2.8026, 0.0000, 1.9711, 1.7961, 3.5334, 4.4031), tolerance=.tol[["est"]])
+   expect_equivalent(dat$vi, c(17.7575, 37.5657, 8.1323, 10.8998, 8.0114, 6.1320), tolerance=.tol[["var"]])
 
    ### CIs for individual studies
    tmp <- summary(dat)
 
    ### compare with results on page 330 (Table III)
-   expect_equivalent(round(tmp$ci.lb,1), c(-5.5, -12.0, -3.6, -4.7, -2.0, -0.5))
-   expect_equivalent(round(tmp$ci.ub,1), c(11.1, 12.0, 7.6, 8.3, 9.1, 9.3))
+   expect_equivalent(tmp$ci.lb, c(-5.4566, -12.0128, -3.6182, -4.6747, -2.0141, -0.4503), tolerance=.tol[["ci"]])
+   expect_equivalent(tmp$ci.ub, c(11.0618, 12.0128, 7.5604, 8.2669, 9.0810, 9.2566), tolerance=.tol[["ci"]])
 
    ### fit fixed-effects model
    res <- rma(yi, vi, data=dat, method="FE", digits=2)
 
    ### compare with results on page 349 (Table VII)
-   expect_equivalent(round(coef(res),2), 2.94)
-   expect_equivalent(round(res$ci.lb,1), 0.4)
-   expect_equivalent(round(res$ci.ub,1), 5.5)
+   expect_equivalent(coef(res), 2.9444, tolerance=.tol[["coef"]])
+   expect_equivalent(res$ci.lb, 0.3831, tolerance=.tol[["ci"]])
+   expect_equivalent(res$ci.ub, 5.5058, tolerance=.tol[["ci"]])
 
    ### fit random-effects model (REML estimator)
    res <- rma(yi, vi, data=dat, digits=2)
 
    ### compare with results on page 349 (Table VII)
-   expect_equivalent(round(coef(res),2), 2.94)
-   expect_equivalent(round(res$ci.lb,1), 0.4)
-   expect_equivalent(round(res$ci.ub,1), 5.5)
-   expect_equivalent(round(res$tau2,3), 0.000)
+   expect_equivalent(coef(res), 2.9444, tolerance=.tol[["coef"]])
+   expect_equivalent(res$ci.lb, 0.3831, tolerance=.tol[["ci"]])
+   expect_equivalent(res$ci.ub, 5.5058, tolerance=.tol[["ci"]])
+   expect_equivalent(res$tau2,  0.0000, tolerance=.tol[["var"]])
 
    ### fit random-effects model (DL estimator)
    res <- rma(yi, vi, data=dat, method="DL", digits=2)
 
    ### compare with results on page 349 (Table VII)
-   expect_equivalent(round(coef(res),2), 2.94)
-   expect_equivalent(round(res$ci.lb,1), 0.4)
-   expect_equivalent(round(res$ci.ub,1), 5.5)
-   expect_equivalent(round(res$tau2,3), 0.000)
+   expect_equivalent(coef(res), 2.9444, tolerance=.tol[["coef"]])
+   expect_equivalent(res$ci.lb, 0.3831, tolerance=.tol[["ci"]])
+   expect_equivalent(res$ci.ub, 5.5058, tolerance=.tol[["ci"]])
+   expect_equivalent(res$tau2,  0.0000, tolerance=.tol[["var"]])
 
 })
 
@@ -70,39 +72,39 @@ test_that("results are correct for the second example (using dat.normand1999).",
 
    ### compare with results on page 351 (Table VIII)
    expect_equivalent(dat$yi, c(-20, -2, -55, -71, -4, 1, 11, -10, 7))
-   expect_equivalent(round(dat$vi,2), c(40.59, 2.05, 15.28, 150.22, 20.19, 1.22, 95.38, 8.03, 20.69))
+   expect_equivalent(dat$vi, c(40.5863, 2.0468, 15.2809, 150.2222, 20.1923, 1.2235, 95.3756, 8.0321, 20.6936), tolerance=.tol[["var"]])
 
    ### CIs for individual studies
    tmp <- summary(dat)
 
    ### (results for this not given in paper)
-   expect_equivalent(round(tmp$ci.lb,1), c(-32.5, -4.8, -62.7, -95.0, -12.8, -1.2, -8.1, -15.6, -1.9))
-   expect_equivalent(round(tmp$ci.ub,1), c(-7.5, 0.8, -47.3, -47.0, 4.8, 3.2, 30.1, -4.4, 15.9))
+   expect_equivalent(tmp$ci.lb, c(-32.4864, -4.8041, -62.6616, -95.0223, -12.8073, -1.168, -8.1411, -15.5547, -1.9159), tolerance=.tol[["ci"]])
+   expect_equivalent(tmp$ci.ub, c(-7.5136, 0.8041, -47.3384, -46.9777, 4.8073, 3.168, 30.1411, -4.4453, 15.9159), tolerance=.tol[["ci"]])
 
    ### fit fixed-effects model
    res <- rma(yi, vi, data=dat, method="FE", digits=2)
 
    ### compare with results on page 352 (Table IX)
-   expect_equivalent(round(coef(res),2), -3.49)
-   expect_equivalent(round(res$ci.lb,2), -5.03)
-   expect_equivalent(round(res$ci.ub,2), -1.96)
+   expect_equivalent(coef(res), -3.4939, tolerance=.tol[["coef"]])
+   expect_equivalent(res$ci.lb, -5.0265, tolerance=.tol[["ci"]])
+   expect_equivalent(res$ci.ub, -1.9613, tolerance=.tol[["ci"]])
 
    ### fit random-effects model (DL estimator)
    res <- rma(yi, vi, data=dat, method="DL", digits=2)
 
    ### compare with results on page 352 (Table IX)
-   expect_equivalent(round(coef(res),2), -14.10)
-   expect_equivalent(round(res$ci.lb,2), -24.45)
-   expect_equivalent(round(res$ci.ub,2),  -3.75)
-   expect_equivalent(round(res$tau2,2), 218.72)
+   expect_equivalent(coef(res), -14.0972, tolerance=.tol[["coef"]])
+   expect_equivalent(res$ci.lb, -24.4454, tolerance=.tol[["ci"]])
+   expect_equivalent(res$ci.ub,  -3.7490, tolerance=.tol[["ci"]])
+   expect_equivalent(res$tau2,  218.7216, tolerance=.tol[["var"]])
 
    ### fit random-effects model (REML estimator)
    res <- rma(yi, vi, data=dat, digits=2)
 
    ### compare with results on page 352 (Table IX)
-   expect_equivalent(round(coef(res),2), -15.12)
-   expect_equivalent(round(res$ci.lb,2), -32.67)
-   expect_equivalent(round(res$ci.ub,2),   2.43)
-   expect_equivalent(round(res$tau2,2), 685.20)
+   expect_equivalent(coef(res), -15.1217, tolerance=.tol[["est"]])
+   expect_equivalent(res$ci.lb, -32.6716, tolerance=.tol[["ci"]])
+   expect_equivalent(res$ci.ub,   2.4282, tolerance=.tol[["ci"]])
+   expect_equivalent(res$tau2,  685.1965, tolerance=.tol[["var"]])
 
 })

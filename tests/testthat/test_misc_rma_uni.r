@@ -2,6 +2,8 @@
 
 context("Checking misc: rma() function")
 
+source("tolerances.r") # read in tolerances
+
 data(dat.bcg, package="metafor")
 dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
@@ -9,7 +11,7 @@ test_that("rma() correctly handles a formula for the 'yi' argument", {
 
    res1 <- rma(yi ~ ablat, vi, data=dat)
    res2 <- rma(yi, vi, mods = ~ ablat, data=dat)
-   expect_equivalent(round(coef(res1), 4), round(coef(res2), 4))
+   expect_equivalent(coef(res1), coef(res2))
 
 })
 
@@ -17,16 +19,16 @@ test_that("rma() correctly handles an 'escalc' object", {
 
    res1 <- rma(yi, vi, data=dat)
    res2 <- rma(dat)
-   expect_equivalent(round(coef(res1), 4), round(coef(res2), 4))
+   expect_equivalent(coef(res1), coef(res2))
 
 })
 
 test_that("rma() works with method='DLIT' and method='SJIT'", {
 
    res <- rma(yi, vi, data=dat, method="DLIT", control=list(maxiter=500))
-   expect_equivalent(round(res$tau2, 4), 0.1576)
+   expect_equivalent(res$tau2, 0.1576, tolerance=.tol[["var"]])
    res <- rma(yi, vi, data=dat, method="SJIT")
-   expect_equivalent(round(res$tau2, 4), 0.3181)
+   expect_equivalent(res$tau2, 0.3181, tolerance=.tol[["var"]])
 
 })
 
@@ -37,8 +39,8 @@ test_that("rma() works directly with input for measure='SMD'", {
    res1 <- rma(yi, vi, data=dat)
    res2 <- rma(measure="SMD", m1i=m1i, sd1i=sd1i, n1i=n1i, m2i=m2i, sd2i=sd2i, n2i=n2i, data=dat, subset=1:4)
 
-   expect_equivalent(round(res1$tau2, 4), 1.0090)
-   expect_equivalent(round(res2$tau2, 4), 1.0090)
+   expect_equivalent(res1$tau2, 1.0090, tolerance=.tol[["var"]])
+   expect_equivalent(res2$tau2, 1.0090, tolerance=.tol[["var"]])
 
 })
 
@@ -53,8 +55,8 @@ test_that("rma() works directly with input for measure='PCOR'", {
    res1 <- rma(yi, vi, data=dat)
    res2 <- rma(measure="PCOR", ti=ti, ni=ni, mi=mi, data=dat)
 
-   expect_equivalent(round(res1$tau2, 4), 0.0297)
-   expect_equivalent(round(res2$tau2, 4), 0.0297)
+   expect_equivalent(res1$tau2, 0.0297, tolerance=.tol[["var"]])
+   expect_equivalent(res2$tau2, 0.0297, tolerance=.tol[["var"]])
 
 })
 
@@ -65,8 +67,8 @@ test_that("rma() works directly with input for measure='MN'", {
    res1 <- rma(yi, vi, data=dat)
    res2 <- rma(measure="MN", mi=m1i, sdi=sd1i, ni=n1i, data=dat)
 
-   expect_equivalent(round(res1$tau2, 4), 408.9277)
-   expect_equivalent(round(res2$tau2, 4), 408.9277)
+   expect_equivalent(res1$tau2, 408.9277, tolerance=.tol[["var"]])
+   expect_equivalent(res2$tau2, 408.9277, tolerance=.tol[["var"]])
 
 })
 
@@ -84,8 +86,8 @@ test_that("rma() works directly with input for measure='SMCR'", {
    res1 <- rma(yi, vi, data=dat)
    res2 <- rma(measure="SMCR", m1i=m_post, m2i=m_pre, sd1i=sd_pre, ni=ni, ri=ri, data=datT)
 
-   expect_equivalent(round(res1$tau2, 4), 0.3164)
-   expect_equivalent(round(res2$tau2, 4), 0.3164)
+   expect_equivalent(res1$tau2, 0.3164, tolerance=.tol[["var"]])
+   expect_equivalent(res2$tau2, 0.3164, tolerance=.tol[["var"]])
 
 })
 
@@ -96,7 +98,7 @@ test_that("rma() works directly with input for measure='AHW'", {
    res1 <- rma(yi, vi, data=dat)
    res2 <- rma(measure="AHW", ai=ai, mi=mi, ni=ni, data=dat)
 
-   expect_equivalent(round(res1$tau2, 4), 0.0011)
-   expect_equivalent(round(res2$tau2, 4), 0.0011)
+   expect_equivalent(res1$tau2, 0.0011, tolerance=.tol[["var"]])
+   expect_equivalent(res2$tau2, 0.0011, tolerance=.tol[["var"]])
 
 })

@@ -4,6 +4,8 @@
 
 context("Checking analysis example: rothman2008")
 
+source("tolerances.r") # read in tolerances
+
 ############################################################################
 
 ### create dataset (Table 15-1)
@@ -45,21 +47,21 @@ test_that("the stratum-specific and crude risk differences are computed correctl
 
    ### stratum-specific risk differences
    tmp <- summary(escalc(ai=ai, bi=bi, ci=ci, di=di, data=dat, measure="RD", digits=3, append=FALSE))
-   tmp <- round(as.matrix(tmp[1:4]), 4)
+   tmp <- as.matrix(tmp[1:4])
 
    expected <- structure(c(0.0338, 0.0363, 0.001, 0.0036, 0.0315, 0.0598, 1.0738, 0.6064), .Dim = c(2L, 4L), .Dimnames = list(NULL, c("yi", "vi", "sei", "zi")))
 
    ### compare with data in Table 15-1
-   expect_equivalent(tmp, expected)
+   expect_equivalent(tmp, expected, tolerance=.tol[["misc"]])
 
    ### crude risk difference
    tmp <- summary(escalc(ai=sum(ai), bi=sum(bi), ci=sum(ci), di=sum(di), data=dat, measure="RD", digits=3, append=FALSE))
-   tmp <- round(as.matrix(tmp[1:4]), 4)
+   tmp <- as.matrix(tmp[1:4])
 
    expected <- structure(c(0.0446, 0.0011, 0.0326, 1.3683), .Dim = c(1L, 4L), .Dimnames = list(NULL, c("yi", "vi", "sei", "zi")))
 
    ### compare with data in Table 15-1
-   expect_equivalent(tmp, expected)
+   expect_equivalent(tmp, expected, tolerance=.tol[["misc"]])
 
 })
 
@@ -67,21 +69,21 @@ test_that("the stratum-specific and crude risk ratios are computed correctly.", 
 
    ### stratum-specific risk ratios
    tmp <- summary(escalc(ai=ai, bi=bi, ci=ci, di=di, data=dat, measure="RR", digits=2), transf=exp, append=FALSE)
-   tmp <- round(as.matrix(tmp[1:4]), 2)
+   tmp <- as.matrix(tmp[1:4])
 
-   expected <- structure(c(1.81, 1.19, 0.31, 0.09, 0.55, 0.29, 1.07, 0.6), .Dim = c(2L, 4L), .Dimnames = list(NULL, c("yi", "vi", "sei", "zi")))
+   expected <- structure(c(1.8113, 1.1926, 0.3072, 0.086, 0.5543, 0.2932, 1.0718, 0.6007), .Dim = c(2L, 4L), .Dimnames = list(NULL, c("yi", "vi", "sei", "zi")))
 
    ### compare with data in Table 15-1
-   expect_equivalent(tmp, expected)
+   expect_equivalent(tmp, expected, tolerance=.tol[["misc"]])
 
    ### crude risk ratio
    tmp <- summary(escalc(ai=sum(ai), bi=sum(bi), ci=sum(ci), di=sum(di), data=dat, measure="RR", digits=2, append=FALSE), transf=exp)
-   tmp <- round(as.matrix(tmp[1:4]), 2)
+   tmp <- as.matrix(tmp[1:4])
 
-   expected <- structure(c(1.44, 0.07, 0.27, 1.36), .Dim = c(1L, 4L), .Dimnames = list(NULL, c("yi", "vi", "sei", "zi")))
+   expected <- structure(c(1.4356, 0.0712, 0.2668, 1.3553), .Dim = c(1L, 4L), .Dimnames = list(NULL, c("yi", "vi", "sei", "zi")))
 
    ### compare with data in Table 15-1
-   expect_equivalent(tmp, expected)
+   expect_equivalent(tmp, expected, tolerance=.tol[["misc"]])
 
 })
 
@@ -91,61 +93,61 @@ test_that("results are correct for Mantel-Haenszel method.", {
    res <- rma.mh(ai=ai, bi=bi, ci=ci, di=di, data=dat, measure="RD", digits=3, level=90)
    out <- capture.output(print(res)) ### so that print.rma.mh() is used
 
-   expect_equivalent(round(coef(res),3),  0.035)
-   expect_equivalent(round(res$ci.lb,3), -0.018)
-   expect_equivalent(round(res$ci.ub,3),  0.087) ### 0.088 in chapter
-   expect_equivalent(round(res$QE,3),  0.002) ### 0.001 in chapter
-   expect_equivalent(round(res$QEp,3), 0.967)
+   expect_equivalent(coef(res),  0.0349, tolerance=.tol[["coef"]])
+   expect_equivalent(res$ci.lb, -0.0176, tolerance=.tol[["ci"]])
+   expect_equivalent(res$ci.ub,  0.0874, tolerance=.tol[["ci"]]) ### 0.088 in chapter
+   expect_equivalent(res$QE,  0.0017, tolerance=.tol[["test"]]) ### 0.001 in chapter
+   expect_equivalent(res$QEp, 0.9669, tolerance=.tol[["pval"]])
 
    ### Mantel-Haenszel method with risk ratios
    res <- rma.mh(ai=ai, bi=bi, ci=ci, di=di, data=dat, measure="RR", digits=2, level=90)
    out <- capture.output(print(res)) ### so that print.rma.mh() is used
 
-   expect_equivalent(round(coef(res),2),  0.28)
-   expect_equivalent(round(res$ci.lb,2), -0.14)
-   expect_equivalent(round(res$ci.ub,2),  0.71)
-   expect_equivalent(round(res$QE,3),  0.447)
-   expect_equivalent(round(res$QEp,3), 0.504)
+   expect_equivalent(coef(res),  0.2818, tolerance=.tol[["coef"]])
+   expect_equivalent(res$ci.lb, -0.1442, tolerance=.tol[["ci"]])
+   expect_equivalent(res$ci.ub,  0.7078, tolerance=.tol[["ci"]])
+   expect_equivalent(res$QE,  0.4472, tolerance=.tol[["test"]])
+   expect_equivalent(res$QEp, 0.5037, tolerance=.tol[["pval"]])
 
-   tmp <- c(round(confint(res, transf=exp)$fixed, 2))
-   expect_equivalent(tmp, c(1.33, 0.87, 2.03))
+   tmp <- c(confint(res, transf=exp)$fixed)
+   expect_equivalent(tmp, c(1.3256, 0.8658, 2.0296), tolerance=.tol[["ci"]])
 
    ### Mantel-Haenszel method with odds ratios
    res <- rma.mh(ai=ai, bi=bi, ci=ci, di=di, data=dat, measure="OR", correct=FALSE, digits=2, level=90)
    out <- capture.output(print(res)) ### so that print.rma.mh() is used
 
-   expect_equivalent(round(coef(res),2),  0.34)
-   expect_equivalent(round(res$ci.lb,2), -0.17)
-   expect_equivalent(round(res$ci.ub,2),  0.85)
-   expect_equivalent(round(res$QE,3),  0.347)
-   expect_equivalent(round(res$QEp,3), 0.556)
-   expect_equivalent(round(res$CO,3),  1.198)
-   expect_equivalent(round(res$COp,3), 0.274)
-   expect_equivalent(round(res$MH,3),  1.191)
-   expect_equivalent(round(res$MHp,3), 0.275)
-   expect_equivalent(round(res$TA,3),  0.349)
-   expect_equivalent(round(res$TAp,3), 0.555)
+   expect_equivalent(coef(res),  0.3387, tolerance=.tol[["coef"]])
+   expect_equivalent(res$ci.lb, -0.1731, tolerance=.tol[["ci"]])
+   expect_equivalent(res$ci.ub,  0.8505, tolerance=.tol[["ci"]])
+   expect_equivalent(res$QE,  0.3474, tolerance=.tol[["test"]])
+   expect_equivalent(res$QEp, 0.5556, tolerance=.tol[["pval"]])
+   expect_equivalent(res$CO,  1.1976, tolerance=.tol[["test"]])
+   expect_equivalent(res$COp, 0.2738, tolerance=.tol[["pval"]])
+   expect_equivalent(res$MH,  1.1914, tolerance=.tol[["test"]])
+   expect_equivalent(res$MHp, 0.2750, tolerance=.tol[["pval"]])
+   expect_equivalent(res$TA,  0.3489, tolerance=.tol[["test"]])
+   expect_equivalent(res$TAp, 0.5547, tolerance=.tol[["pval"]])
 
-   tmp <- c(round(confint(res, transf=exp)$fixed, 2))
-   expect_equivalent(tmp, c(1.40, 0.84, 2.34))
+   tmp <- c(confint(res, transf=exp)$fixed)
+   expect_equivalent(tmp, c(1.4031, 0.8411, 2.3409), tolerance=.tol[["ci"]])
 
    skip_on_cran()
 
    ### conditional MLE of the odds ratio
    res <- rma.glmm(ai=ai, bi=bi, ci=ci, di=di, data=dat, measure="OR", model="CM.EL", method="FE")
 
-   expect_equivalent(round(coef(res),3),  0.338)
-   expect_equivalent(round(res$ci.lb,3), -0.271)
-   expect_equivalent(round(res$ci.ub,3),  0.947)
-   expect_equivalent(round(res$QE.Wld,2),  0.35) ### rounded a bit more heavily, so 32-bit and 64-bit versions give same result
-   expect_equivalent(round(res$QEp.Wld,2), 0.56) ### rounded a bit more heavily, so OS X version gives same result
-   expect_equivalent(round(res$QE.LRT,3),  0.350)
-   expect_equivalent(round(res$QEp.LRT,3), 0.554)
+   expect_equivalent(coef(res),  0.3381, tolerance=.tol[["coef"]])
+   expect_equivalent(res$ci.lb, -0.2707, tolerance=.tol[["ci"]])
+   expect_equivalent(res$ci.ub,  0.9468, tolerance=.tol[["ci"]])
+   expect_equivalent(res$QE.Wld,  0.3484, tolerance=.tol[["test"]])
+   expect_equivalent(res$QEp.Wld, 0.5550, tolerance=.tol[["pval"]])
+   expect_equivalent(res$QE.LRT,  0.3502, tolerance=.tol[["test"]])
+   expect_equivalent(res$QEp.LRT, 0.5540, tolerance=.tol[["pval"]])
 
    tmp <- predict(res, transf=exp)
-   expect_equivalent(round(tmp$pred,3),  1.402)
-   expect_equivalent(round(tmp$ci.lb,3), 0.763)
-   expect_equivalent(round(tmp$ci.ub,2), 2.58) ### rounded a bit more heavily, so 32-bit and 64-bit versions give same result
+   expect_equivalent(tmp$pred,  1.4022, tolerance=.tol[["pred"]])
+   expect_equivalent(tmp$ci.lb, 0.7629, tolerance=.tol[["ci"]])
+   expect_equivalent(tmp$ci.ub, 2.5774, tolerance=.tol[["ci"]])
 
 })
 
@@ -193,21 +195,21 @@ test_that("the stratum-specific and crude rate differences are computed correctl
 
    ### stratum-specific rate differences
    tmp <- summary(escalc(x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i, data=dat, measure="IRD", digits=1, append=FALSE))
-   tmp <- round(as.matrix(tmp[1:4]), 4)
+   tmp <- as.matrix(tmp[1:4])
 
    expected <- structure(c(5.0417, 12.804, 22.961, 38.5674, -20.2008, 1.7316, 16.0947, 111.0423, 535.0172, 1811.1307, 1.3159, 4.0118, 10.5377, 23.1304, 42.5574, 3.8313, 3.1916, 2.1789, 1.6674, -0.4747), .Dim = c(5L, 4L), .Dimnames = list(NULL, c("yi", "vi", "sei", "zi")))
 
    ### compare with data in Table 15-2
-   expect_equivalent(tmp, expected)
+   expect_equivalent(tmp, expected, tolerance=.tol[["misc"]])
 
    ### crude rate difference
    tmp <- summary(escalc(x1i=sum(x1i), x2i=sum(x2i), t1i=sum(t1i), t2i=sum(t2i), data=dat, measure="IRD", digits=1, append=FALSE))
-   tmp <- round(as.matrix(tmp[1:4]), 4)
+   tmp <- as.matrix(tmp[1:4])
 
    expected <- structure(c(18.537, 9.6796, 3.1112, 5.9581), .Dim = c(1L, 4L), .Dimnames = list(NULL, c("yi", "vi", "sei", "zi")))
 
    ### compare with data in Table 15-2
-   expect_equivalent(tmp, expected)
+   expect_equivalent(tmp, expected, tolerance=.tol[["misc"]])
 
 })
 
@@ -215,21 +217,21 @@ test_that("the stratum-specific and crude rate ratios are computed correctly.", 
 
    ### stratum-specific rate ratios
    tmp <- summary(escalc(x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i, data=dat, measure="IRR", digits=1, append=FALSE), transf=exp)
-   tmp <- round(as.matrix(tmp[1:4]), 2)
+   tmp <- round(as.matrix(tmp[1:4]), 4)
 
-   expected <- structure(c(5.74, 2.14, 1.47, 1.36, 0.9, 0.53, 0.09, 0.04, 0.04, 0.04, 0.73, 0.3, 0.2, 0.2, 0.21, 2.4, 2.49, 1.91, 1.5, -0.49), .Dim = c(5L, 4L), .Dimnames = list(NULL, c("yi", "vi", "sei", "zi")))
+   expected <- structure(c(5.7366, 2.1388, 1.4682, 1.3561, 0.9047, 0.5312, 0.0929, 0.0406, 0.0411, 0.0421, 0.7289, 0.3049, 0.2014, 0.2027, 0.2051, 2.3967, 2.4936, 1.9068, 1.5026, -0.4882), .Dim = c(5L, 4L), .Dimnames = list(NULL, c("yi", "vi", "sei", "zi")))
 
    ### compare with data in Table 15-2
-   expect_equivalent(tmp, expected)
+   expect_equivalent(tmp, expected, tolerance=.tol[["misc"]])
 
    ### crude rate ratio
    tmp <- summary(escalc(x1i=sum(x1i), x2i=sum(x2i), t1i=sum(t1i), t2i=sum(t2i), data=dat, measure="IRR", digits=1, append=FALSE), transf=exp)
-   tmp <- round(as.matrix(tmp[1:4]), 2)
+   tmp <- round(as.matrix(tmp[1:4]), 4)
 
-   expected <- structure(c(1.72, 0.01, 0.11, 5.06), .Dim = c(1L, 4L), .Dimnames = list(NULL, c("yi", "vi", "sei", "zi")))
+   expected <- structure(c(1.7198, 0.0115, 0.1072, 5.0588), .Dim = c(1L, 4L), .Dimnames = list(NULL, c("yi", "vi", "sei", "zi")))
 
    ### compare with data in Table 15-2
-   expect_equivalent(tmp, expected)
+   expect_equivalent(tmp, expected, tolerance=.tol[["misc"]])
 
 })
 
@@ -238,65 +240,65 @@ test_that("results are correct for Mantel-Haenszel method.", {
    ### Mantel-Haenszel method with rate differences
    res <- rma.mh(x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i, data=dat, measure="IRD", digits=2, level=90)
 
-   expect_equivalent(round(coef(res),2), 11.44)
-   expect_equivalent(round(res$ci.lb,2),  6.35)
-   expect_equivalent(round(res$ci.ub,2), 16.53)
-   expect_equivalent(round(res$QE,3), 26.876)
-   expect_equivalent(round(res$QEp,3), 0)
+   expect_equivalent(coef(res), 11.4392, tolerance=.tol[["coef"]])
+   expect_equivalent(res$ci.lb,  6.3498, tolerance=.tol[["ci"]])
+   expect_equivalent(res$ci.ub, 16.5286, tolerance=.tol[["ci"]])
+   expect_equivalent(res$QE, 26.8758, tolerance=.tol[["test"]])
+   expect_equivalent(res$QEp, 0.0000, tolerance=.tol[["pval"]])
 
    ### Mantel-Haenszel method with rate ratios
    res <- rma.mh(x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i, data=dat, measure="IRR", digits=2, level=90)
 
-   expect_equivalent(round(coef(res),2), 0.35)
-   expect_equivalent(round(res$ci.lb,2), 0.18)
-   expect_equivalent(round(res$ci.ub,2), 0.53)
-   expect_equivalent(round(res$QE,3), 10.412)
-   expect_equivalent(round(res$QEp,3), 0.034)
-   expect_equivalent(round(res$MH,3), 10.702)
-   expect_equivalent(round(res$MHp,3), 0.001)
+   expect_equivalent(coef(res), 0.3539, tolerance=.tol[["coef"]])
+   expect_equivalent(res$ci.lb, 0.1776, tolerance=.tol[["ci"]])
+   expect_equivalent(res$ci.ub, 0.5303, tolerance=.tol[["ci"]])
+   expect_equivalent(res$QE, 10.4117, tolerance=.tol[["test"]])
+   expect_equivalent(res$QEp, 0.0340, tolerance=.tol[["pval"]])
+   expect_equivalent(res$MH, 10.7021, tolerance=.tol[["test"]])
+   expect_equivalent(res$MHp, 0.0011, tolerance=.tol[["pval"]])
 
-   tmp <- c(round(confint(res, transf=exp)$fixed, 2))
-   expect_equivalent(tmp, c(1.42, 1.19, 1.70))
+   tmp <- c(confint(res, transf=exp)$fixed)
+   expect_equivalent(tmp, c(1.4247, 1.1944, 1.6994), tolerance=.tol[["ci"]])
 
    ### Mantel-Haenszel test without continuity correction
    res <- rma.mh(x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i, data=dat, measure="IRR", level=90, correct=FALSE)
 
-   expect_equivalent(round(res$MH,3), 11.016)
-   expect_equivalent(round(res$MHp,3), 0.001)
+   expect_equivalent(res$MH, 11.0162, tolerance=.tol[["test"]])
+   expect_equivalent(res$MHp, 0.0009, tolerance=.tol[["pval"]])
 
    skip_on_cran()
 
    ### unconditional MLE of the rate ratio
    res <- rma.glmm(x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i, data=dat, measure="IRR", digits=2, level=90, model="UM.FS", method="FE")
 
-   expect_equivalent(round(coef(res),3), 0.355)
-   expect_equivalent(round(res$ci.lb,3), 0.178)
-   expect_equivalent(round(res$ci.ub,3), 0.531)
-   expect_equivalent(round(res$QE.Wld,3), 10.199)
-   expect_equivalent(round(res$QEp.Wld,3), 0.037)
-   expect_equivalent(round(res$QE.LRT,3), 12.132)
-   expect_equivalent(round(res$QEp.LRT,3), 0.016)
+   expect_equivalent(coef(res), 0.3545, tolerance=.tol[["coef"]])
+   expect_equivalent(res$ci.lb, 0.1779, tolerance=.tol[["ci"]])
+   expect_equivalent(res$ci.ub, 0.5312, tolerance=.tol[["ci"]])
+   expect_equivalent(res$QE.Wld, 10.1991, tolerance=.tol[["test"]])
+   expect_equivalent(res$QEp.Wld, 0.0372, tolerance=.tol[["pval"]])
+   expect_equivalent(res$QE.LRT, 12.1324, tolerance=.tol[["test"]])
+   expect_equivalent(res$QEp.LRT, 0.0164, tolerance=.tol[["pval"]])
 
    tmp <- predict(res, transf=exp)
-   expect_equivalent(round(tmp$pred,3), 1.426)
-   expect_equivalent(round(tmp$ci.lb,3), 1.195)
-   expect_equivalent(round(tmp$ci.ub,3), 1.701)
+   expect_equivalent(tmp$pred, 1.4255, tolerance=.tol[["pred"]])
+   expect_equivalent(tmp$ci.lb, 1.1947, tolerance=.tol[["ci"]])
+   expect_equivalent(tmp$ci.ub, 1.7009, tolerance=.tol[["ci"]])
 
    ### conditional MLE of the rate ratio
    res <- rma.glmm(x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i, data=dat, measure="IRR", digits=2, level=90, model="CM.EL", method="FE")
 
-   expect_equivalent(round(coef(res),3), 0.355)
-   expect_equivalent(round(res$ci.lb,3), 0.178)
-   expect_equivalent(round(res$ci.ub,3), 0.531)
-   expect_equivalent(round(res$QE.Wld,3), 10.199)
-   expect_equivalent(round(res$QEp.Wld,3), 0.037)
-   expect_equivalent(round(res$QE.LRT,3), 12.132)
-   expect_equivalent(round(res$QEp.LRT,3), 0.016)
+   expect_equivalent(coef(res), 0.3545, tolerance=.tol[["coef"]])
+   expect_equivalent(res$ci.lb, 0.1779, tolerance=.tol[["ci"]])
+   expect_equivalent(res$ci.ub, 0.5312, tolerance=.tol[["ci"]])
+   expect_equivalent(res$QE.Wld, 10.1991, tolerance=.tol[["test"]])
+   expect_equivalent(res$QEp.Wld, 0.0372, tolerance=.tol[["pval"]])
+   expect_equivalent(res$QE.LRT, 12.1324, tolerance=.tol[["test"]])
+   expect_equivalent(res$QEp.LRT, 0.0164, tolerance=.tol[["pval"]])
 
    tmp <- predict(res, transf=exp)
-   expect_equivalent(round(tmp$pred,3), 1.426)
-   expect_equivalent(round(tmp$ci.lb,3), 1.195)
-   expect_equivalent(round(tmp$ci.ub,3), 1.701)
+   expect_equivalent(tmp$pred, 1.4255, tolerance=.tol[["pred"]])
+   expect_equivalent(tmp$ci.lb, 1.1947, tolerance=.tol[["ci"]])
+   expect_equivalent(tmp$ci.ub, 1.7009, tolerance=.tol[["ci"]])
 
 })
 
@@ -342,54 +344,54 @@ test_that("results are correct for Mantel-Haenszel method.", {
    ### Mantel-Haenszel method with odds ratios
    res <- rma.mh(ai=ai, bi=bi, ci=ci, di=di, data=dat, measure="OR", digits=2, level=90, correct=FALSE)
 
-   expect_equivalent(round(coef(res),3), 1.330)
-   expect_equivalent(round(res$ci.lb,3), 0.358)
-   expect_equivalent(round(res$ci.ub,3), 2.302)
-   expect_equivalent(round(res$QE,3),  0.138)
-   expect_equivalent(round(res$QEp,3), 0.711)
-   expect_equivalent(round(res$CO,3),  5.825)
-   expect_equivalent(round(res$COp,3), 0.016)
-   expect_equivalent(round(res$MH,3),  5.809)
-   expect_equivalent(round(res$MHp,3), 0.016)
-   expect_equivalent(round(res$TA,3),  0.139)
-   expect_equivalent(round(res$TAp,3), 0.709)
+   expect_equivalent(coef(res), 1.3300, tolerance=.tol[["coef"]])
+   expect_equivalent(res$ci.lb, 0.3579, tolerance=.tol[["ci"]])
+   expect_equivalent(res$ci.ub, 2.3021, tolerance=.tol[["ci"]])
+   expect_equivalent(res$QE,  0.1378, tolerance=.tol[["test"]])
+   expect_equivalent(res$QEp, 0.7105, tolerance=.tol[["pval"]])
+   expect_equivalent(res$CO,  5.8248, tolerance=.tol[["test"]])
+   expect_equivalent(res$COp, 0.0158, tolerance=.tol[["pval"]])
+   expect_equivalent(res$MH,  5.8092, tolerance=.tol[["test"]])
+   expect_equivalent(res$MHp, 0.0159, tolerance=.tol[["pval"]])
+   expect_equivalent(res$TA,  0.1391, tolerance=.tol[["test"]])
+   expect_equivalent(res$TAp, 0.7092, tolerance=.tol[["pval"]])
 
-   tmp <- c(round(confint(res, transf=exp)$fixed, 2))
-   expect_equivalent(tmp, c(3.78, 1.43, 10.00))
+   tmp <- c(confint(res, transf=exp)$fixed)
+   expect_equivalent(tmp, c(3.7812, 1.4304, 9.9954), tolerance=.tol[["ci"]])
 
    skip_on_cran()
 
    ### unconditional MLE of the odds ratio
    res <- rma.glmm(ai=ai, bi=bi, ci=ci, di=di, data=dat, measure="OR", digits=2, level=90, model="UM.FS", method="FE")
 
-   expect_equivalent(round(coef(res),3), 1.332)
-   expect_equivalent(round(res$ci.lb,3), 0.358)
-   expect_equivalent(round(res$ci.ub,3), 2.305)
-   expect_equivalent(round(res$QE.Wld,3),  0.137)
-   expect_equivalent(round(res$QEp.Wld,3), 0.711)
-   expect_equivalent(round(res$QE.LRT,3),  0.132)
-   expect_equivalent(round(res$QEp.LRT,3), 0.716)
+   expect_equivalent(coef(res), 1.3318, tolerance=.tol[["coef"]])
+   expect_equivalent(res$ci.lb, 0.3582, tolerance=.tol[["ci"]])
+   expect_equivalent(res$ci.ub, 2.3053, tolerance=.tol[["ci"]])
+   expect_equivalent(res$QE.Wld,  0.1374, tolerance=.tol[["test"]])
+   expect_equivalent(res$QEp.Wld, 0.7109, tolerance=.tol[["pval"]])
+   expect_equivalent(res$QE.LRT,  0.1324, tolerance=.tol[["test"]])
+   expect_equivalent(res$QEp.LRT, 0.7160, tolerance=.tol[["pval"]])
 
    tmp <- predict(res, transf=exp)
-   expect_equivalent(round(tmp$pred,3),   3.788)
-   expect_equivalent(round(tmp$ci.lb,3),  1.431)
-   expect_equivalent(round(tmp$ci.ub,3), 10.028)
+   expect_equivalent(tmp$pred,   3.7878, tolerance=.tol[["pred"]])
+   expect_equivalent(tmp$ci.lb,  1.4308, tolerance=.tol[["ci"]])
+   expect_equivalent(tmp$ci.ub, 10.0276, tolerance=.tol[["ci"]])
 
    ### conditional MLE of the odds ratio
    res <- rma.glmm(ai=ai, bi=bi, ci=ci, di=di, data=dat, measure="OR", digits=2, level=90, model="CM.EL", method="FE")
 
-   expect_equivalent(round(coef(res),3), 1.326)
-   expect_equivalent(round(res$ci.lb,2), 0.36) ### rounded a bit more heavily, so 32-bit and 64-bit versions give same result
-   expect_equivalent(round(res$ci.ub,3), 2.296)
-   expect_equivalent(res$QE.Wld,  0.13, tolerance=.01) ### rounded a bit more heavily, so 32-bit and 64-bit versions give same result
-   expect_equivalent(res$QEp.Wld, 0.72, tolerance=.01) ### rounded a bit more heavily, so 32-bit and 64-bit versions give same result
-   expect_equivalent(round(res$QE.LRT,3),  0.119)
-   expect_equivalent(round(res$QEp.LRT,3), 0.730)
+   expect_equivalent(coef(res), 1.3257, tolerance=.tol[["coef"]])
+   expect_equivalent(res$ci.lb, 0.3551, tolerance=.tol[["ci"]])
+   expect_equivalent(res$ci.ub, 2.2962, tolerance=.tol[["ci"]])
+   expect_equivalent(res$QE.Wld,  0.1237, tolerance=.tol[["test"]])
+   expect_equivalent(res$QEp.Wld, 0.7250, tolerance=.tol[["pval"]])
+   expect_equivalent(res$QE.LRT,  0.1188, tolerance=.tol[["test"]])
+   expect_equivalent(res$QEp.LRT, 0.7304, tolerance=.tol[["pval"]])
 
    tmp <- predict(res, transf=exp)
-   expect_equivalent(round(tmp$pred,3),  3.765)
-   expect_equivalent(round(tmp$ci.lb,2), 1.43) ### rounded a bit more heavily, so 32-bit and 64-bit versions give same result
-   expect_equal(tmp$ci.ub, 9.936, tolerance=.001) ### need to use tolerance so 32-bit and 64-bit versions give same result
+   expect_equivalent(tmp$pred,  3.7647, tolerance=.tol[["pred"]])
+   expect_equivalent(tmp$ci.lb, 1.4264, tolerance=.tol[["ci"]])
+   expect_equivalent(tmp$ci.ub, 9.9361, tolerance=.tol[["ci"]])
 
 })
 

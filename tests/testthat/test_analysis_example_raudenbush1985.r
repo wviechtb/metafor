@@ -4,6 +4,8 @@
 
 context("Checking analysis example: raudenbush1985")
 
+source("tolerances.r") # read in tolerances
+
 ### load data
 dat <- dat.raudenbush1985
 
@@ -13,10 +15,10 @@ test_that("results are correct for the random-effects model.", {
    res <- rma(yi, vi, data=dat, digits=3)
 
    ### compare with results on pages 83, 85, and 86 (in text)
-   expect_equivalent(round(res$tau2,3), 0.019)
-   expect_equivalent(round(coef(res),3), 0.084)
-   expect_equivalent(round(res$QE,2), 35.83) ### 35.85 in paper
-   expect_equivalent(round(res$zval,2), 1.62)
+   expect_equivalent(res$tau2,   0.0188, tolerance=.tol[["var"]])
+   expect_equivalent(coef(res),  0.0837, tolerance=.tol[["coef"]])
+   expect_equivalent(res$QE,    35.8295, tolerance=.tol[["test"]]) ### 35.85 in paper
+   expect_equivalent(res$zval,   1.6208, tolerance=.tol[["test"]])
 
    ### empirical Bayes estimates
    tmp <- blup(res)
@@ -24,16 +26,16 @@ test_that("results are correct for the random-effects model.", {
    out <- capture.output(print(tmp)) ### so that print.list.rma() is run (at least once)
 
    ### compare with results in Figure 2
-   expect_equivalent(round(tmp$pred,3), c(0.054, 0.101, -0.006, 0.214, 0.105, -0.008, 0.017, -0.029, 0.16, 0.249, 0.162, 0.11, 0.065, 0.11, -0.029, 0.026, 0.191, 0.074, 0.025))
-   expect_equivalent(round(tmp$pi.lb,3), c(-0.132, -0.103, -0.223, -0.053, -0.162, -0.174, -0.148, -0.269, -0.054, 0, -0.097, -0.13, -0.192, -0.146, -0.241, -0.191, -0.008, -0.081, -0.195))
-   expect_equivalent(round(tmp$pi.ub,3), c(0.241, 0.304, 0.21, 0.482, 0.372, 0.157, 0.183, 0.21, 0.375, 0.497, 0.421, 0.351, 0.321, 0.367, 0.183, 0.242, 0.389, 0.23, 0.245))
+   expect_equivalent(tmp$pred,  c(0.0543, 0.1006, -0.0064, 0.2144, 0.1051, -0.0082, 0.0174, -0.0293, 0.1604, 0.2485, 0.1618, 0.1102, 0.0646, 0.1105, -0.0288, 0.0258, 0.1905, 0.0744, 0.0248), tolerance=.tol[["pred"]])
+   expect_equivalent(tmp$pi.lb, c(-0.1324, -0.1033, -0.2228, -0.0533, -0.1622, -0.1737, -0.1481, -0.2689, -0.0543, 0, -0.097, -0.1303, -0.192, -0.1463, -0.2405, -0.1906, -0.0076, -0.0808, -0.1954), tolerance=.tol[["ci"]])
+   expect_equivalent(tmp$pi.ub, c(0.2411, 0.3045, 0.21, 0.4821, 0.3724, 0.1572, 0.1828, 0.2102, 0.3751, 0.497, 0.4206, 0.3507, 0.3212, 0.3672, 0.1829, 0.2422, 0.3886, 0.2295, 0.245), tolerance=.tol[["ci"]])
 
    ### empirical Bayes estimates (just the random effects)
    tmp <- ranef(res)
 
-   expect_equivalent(round(tmp$pred,3), c(-0.029, 0.017, -0.09, 0.131, 0.021, -0.092, -0.066, -0.113, 0.077, 0.165, 0.078, 0.026, -0.019, 0.027, -0.113, -0.058, 0.107, -0.009, -0.059))
-   expect_equivalent(round(tmp$pi.lb,3), c(-0.219, -0.185, -0.302, -0.122, -0.231, -0.266, -0.24, -0.343, -0.134, -0.072, -0.167, -0.204, -0.263, -0.217, -0.321, -0.27, -0.091, -0.176, -0.274))
-   expect_equivalent(round(tmp$pi.ub,3), c(0.16, 0.219, 0.122, 0.383, 0.274, 0.082, 0.108, 0.117, 0.287, 0.402, 0.324, 0.257, 0.225, 0.271, 0.096, 0.154, 0.305, 0.157, 0.156))
+   expect_equivalent(tmp$pred, c(-0.0294, 0.0169, -0.0901, 0.1307, 0.0214, -0.0919, -0.0664, -0.1131, 0.0767, 0.1648, 0.0781, 0.0265, -0.0191, 0.0268, -0.1125, -0.0579, 0.1068, -0.0093, -0.0589), tolerance=.tol[["pred"]])
+   expect_equivalent(tmp$pi.lb, c(-0.2187, -0.1852, -0.3019, -0.122, -0.231, -0.2659, -0.2403, -0.343, -0.1337, -0.0723, -0.1674, -0.2043, -0.2627, -0.217, -0.3207, -0.2697, -0.091, -0.1761, -0.2736), tolerance=.tol[["ci"]])
+   expect_equivalent(tmp$pi.ub, c(0.1599, 0.219, 0.1216, 0.3834, 0.2738, 0.082, 0.1076, 0.1169, 0.2871, 0.4019, 0.3235, 0.2572, 0.2246, 0.2706, 0.0956, 0.1539, 0.3046, 0.1574, 0.1558), tolerance=.tol[["ci"]])
 
    skip_on_cran()
 
@@ -63,33 +65,33 @@ test_that("results are correct for the mixed-effects model.", {
    res <- rma(yi, vi, mods = ~ weeks.c, data=dat, digits=3)
 
    ### compare with results on pages 90 and 92 (in text)
-   expect_equivalent(round(res$tau2,3), 0)
-   expect_equivalent(round(coef(res),3), c(0.407, -0.157))
-   expect_equivalent(round(res$QE,2), 16.57) ### 16.58 in paper
-   expect_equivalent(round(res$zval,2), c(4.68, -4.39))
+   expect_equivalent(res$tau2, 0.0000, tolerance=.tol[["var"]])
+   expect_equivalent(coef(res), c(0.4072, -0.1572), tolerance=.tol[["coef"]])
+   expect_equivalent(res$QE, 16.5708, tolerance=.tol[["test"]]) ### 16.58 in paper
+   expect_equivalent(res$zval, c(4.6782, -4.3884), tolerance=.tol[["test"]])
 
    ### empirical Bayes estimates
    tmp <- blup(res)
 
    ### (results for this not given in chapter)
-   expect_equivalent(round(tmp$pred,3), c(0.093, -0.065, -0.065, 0.407, 0.407, -0.065, -0.065, -0.065, 0.407, 0.25, 0.407, 0.407, 0.25, 0.093, -0.065, -0.065, 0.25, 0.093, -0.065))
-   expect_equivalent(round(tmp$pi.lb,3), c(0.02, -0.155, -0.155, 0.237, 0.237, -0.155, -0.155, -0.155, 0.237, 0.139, 0.237, 0.237, 0.139, 0.02, -0.155, -0.155, 0.139, 0.02, -0.155))
-   expect_equivalent(round(tmp$pi.ub,3), c(0.166, 0.026, 0.026, 0.578, 0.578, 0.026, 0.026, 0.026, 0.578, 0.361, 0.578, 0.578, 0.361, 0.166, 0.026, 0.026, 0.361, 0.166, 0.026))
+   expect_equivalent(tmp$pred,  c(0.0927, -0.0645, -0.0646, 0.4072, 0.4072, -0.0645, -0.0645, -0.0646, 0.4072, 0.2499, 0.4072, 0.4072, 0.2499, 0.0927, -0.0646, -0.0645, 0.2499, 0.0927, -0.0645), tolerance=.tol[["pred"]])
+   expect_equivalent(tmp$pi.lb, c(0.0198, -0.1552, -0.1552, 0.2366, 0.2366, -0.1552, -0.1552, -0.1552, 0.2366, 0.1391, 0.2366, 0.2366, 0.1391, 0.0198, -0.1552, -0.1552, 0.1391, 0.0198, -0.1552), tolerance=.tol[["ci"]])
+   expect_equivalent(tmp$pi.ub, c(0.1656, 0.0261, 0.0261, 0.5778, 0.5778, 0.0261, 0.0261, 0.0261, 0.5778, 0.3608, 0.5778, 0.5778, 0.3608, 0.1656, 0.0261, 0.0261, 0.3608, 0.1656, 0.0261), tolerance=.tol[["ci"]])
 
    ### empirical Bayes estimates (just the random effects)
    tmp <- ranef(res)
 
-   expect_equivalent(round(tmp$pred,3), c(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0))
-   expect_equivalent(round(tmp$pi.lb,3), c(-0.002, -0.002, -0.002, -0.002, -0.002, -0.002, -0.002, -0.002, -0.002, -0.002, -0.002, -0.002, -0.002, -0.002, -0.002, -0.002, -0.002, -0.002, -0.002))
-   expect_equivalent(round(tmp$pi.ub,3), c(0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002))
+   expect_equivalent(tmp$pred,  c(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), tolerance=.tol[["pred"]])
+   expect_equivalent(tmp$pi.lb, c(-0.0016, -0.0016, -0.0016, -0.0016, -0.0016, -0.0016, -0.0016, -0.0016, -0.0016, -0.0016, -0.0016, -0.0016, -0.0016, -0.0016, -0.0016, -0.0016, -0.0016, -0.0016, -0.0016), tolerance=.tol[["ci"]])
+   expect_equivalent(tmp$pi.ub, c(0.0016, 0.0016, 0.0016, 0.0016, 0.0016, 0.0016, 0.0016, 0.0016, 0.0016, 0.0016, 0.0016, 0.0016, 0.0016, 0.0016, 0.0016, 0.0016, 0.0016, 0.0016, 0.0016), tolerance=.tol[["ci"]])
 
    ### predicted/fitted values
    tmp <- predict(res)
 
    ### (results for this not given in chapter)
-   expect_equivalent(round(tmp$pred,3), c(0.093, -0.065, -0.065, 0.407, 0.407, -0.065, -0.065, -0.065, 0.407, 0.25, 0.407, 0.407, 0.25, 0.093, -0.065, -0.065, 0.25, 0.093, -0.065))
-   expect_equivalent(round(tmp$ci.lb,3), c(0.02, -0.155, -0.155, 0.237, 0.237, -0.155, -0.155, -0.155, 0.237, 0.139, 0.237, 0.237, 0.139, 0.02, -0.155, -0.155, 0.139, 0.02, -0.155))
-   expect_equivalent(round(tmp$ci.ub,3), c(0.166, 0.026, 0.026, 0.578, 0.578, 0.026, 0.026, 0.026, 0.578, 0.361, 0.578, 0.578, 0.361, 0.166, 0.026, 0.026, 0.361, 0.166, 0.026))
+   expect_equivalent(tmp$pred,  c(0.0927, -0.0645, -0.0645, 0.4072, 0.4072, -0.0645, -0.0645, -0.0645, 0.4072, 0.2499, 0.4072, 0.4072, 0.2499, 0.0927, -0.0645, -0.0645, 0.2499, 0.0927, -0.0645), tolerance=.tol[["pred"]])
+   expect_equivalent(tmp$ci.lb, c(0.0198, -0.1552, -0.1552, 0.2366, 0.2366, -0.1552, -0.1552, -0.1552, 0.2366, 0.1391, 0.2366, 0.2366, 0.1391, 0.0198, -0.1552, -0.1552, 0.1391, 0.0198, -0.1552), tolerance=.tol[["ci"]])
+   expect_equivalent(tmp$ci.ub, c(0.1656, 0.0261, 0.0261, 0.5778, 0.5778, 0.0261, 0.0261, 0.0261, 0.5778, 0.3607, 0.5778, 0.5778, 0.3607, 0.1656, 0.0261, 0.0261, 0.3607, 0.1656, 0.0261), tolerance=.tol[["ci"]])
 
    skip_on_cran()
 

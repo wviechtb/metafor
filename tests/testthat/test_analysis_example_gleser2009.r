@@ -2,6 +2,8 @@
 
 ### see also: http://www.metafor-project.org/doku.php/analyses:gleser2009
 
+source("tolerances.r") # read in tolerances
+
 context("Checking analysis example: gleser2009")
 
 ############################################################################
@@ -19,7 +21,7 @@ test_that("results are correct for the multiple-treatment studies example with r
    dat <- escalc(measure="RD", ai=ai, ci=ci, n1i=n1i, n2i=n2i, data=dat)
 
    ### compare with results on page 360 (Table 19.2)
-   expect_equivalent(round(dat$yi,4), c(0.0150, 0.0025, 0.0125, 0.0350, -0.0050, 0.0250))
+   expect_equivalent(dat$yi, c(0.0150, 0.0025, 0.0125, 0.0350, -0.0050, 0.0250), tolerance=.tol[["est"]])
 
    calc.v <- function(x) {
       v <- matrix(x$pci[1]*(1-x$pci[1])/x$n1i[1], nrow=nrow(x), ncol=nrow(x))
@@ -32,16 +34,16 @@ test_that("results are correct for the multiple-treatment studies example with r
    res <- rma.mv(yi, V, mods = ~ factor(trt) - 1, data=dat)
 
    ### compare with results on page 361 (eq. 19.6)
-   expect_equivalent(round(coef(res),4), c(0.0200, 0.0043, 0.0211))
+   expect_equivalent(coef(res), c(0.0200, 0.0043, 0.0211), tolerance=.tol[["coef"]])
 
    ### compare with results on page 361 (eq. 19.7)
-   tmp <- round(vcov(res) * 10^6, 3)
+   tmp <- vcov(res) * 10^6
    expected <- structure(c(24.612, 19.954, 13.323, 19.954, 28.538, 13.255, 13.323, 13.255, 69.806), .Dim = c(3L, 3L),
                          .Dimnames = list(c("factor(trt)1", "factor(trt)2", "factor(trt)3"), c("factor(trt)1", "factor(trt)2", "factor(trt)3")))
-   expect_equivalent(tmp, expected)
+   expect_equivalent(tmp, expected, tolerance=.tol[["var"]])
 
    ### compare with results on page 362 (eq. 19.8)
-   expect_equivalent(round(res$QE,3), 7.191)
+   expect_equivalent(res$QE, 7.1907, tolerance=.tol[["test"]])
 
 })
 
@@ -50,7 +52,7 @@ test_that("results are correct for the multiple-treatment studies example with l
    dat <- escalc(measure="OR", ai=ai, ci=ci, n1i=n1i, n2i=n2i, data=dat)
 
    ### compare with results on page 362
-   expect_equivalent(round(dat$yi,4), c(0.4855, 0.0671, 0.3008, 0.6657, -0.0700, 0.4321))
+   expect_equivalent(dat$yi, c(0.4855, 0.0671, 0.3008, 0.6657, -0.0700, 0.4321), tolerance=.tol[["est"]])
 
    calc.v <- function(x) {
       v <- matrix(1/(x$n1i[1]*x$pci[1]*(1-x$pci[1])), nrow=nrow(x), ncol=nrow(x))
@@ -63,16 +65,16 @@ test_that("results are correct for the multiple-treatment studies example with l
    res <- rma.mv(yi, V, mods = ~ factor(trt) - 1, data=dat)
 
    ### compare with results on page 363
-   expect_equivalent(round(coef(res),4), c(0.5099, 0.0044, 0.4301))
+   expect_equivalent(coef(res), c(0.5099, 0.0044, 0.4301), tolerance=.tol[["coef"]])
 
    ### compare with results on page 363
-   tmp <- round(vcov(res), 5)
+   tmp <- vcov(res)
    expected <- structure(c(0.01412, 0.00712, 0.00425, 0.00712, 0.01178, 0.00455, 0.00425, 0.00455, 0.02703), .Dim = c(3L, 3L),
                          .Dimnames = list(c("factor(trt)1", "factor(trt)2", "factor(trt)3"), c("factor(trt)1", "factor(trt)2", "factor(trt)3")))
-   expect_equivalent(tmp, expected)
+   expect_equivalent(tmp, expected, tolerance=.tol[["var"]]/10)
 
    ### compare with results on page 363
-   expect_equivalent(round(res$QE,3), 2.056) ### 2.057 in chapter
+   expect_equivalent(res$QE, 2.0563, tolerance=.tol[["test"]]) ### 2.057 in chapter
 
 })
 
@@ -81,7 +83,7 @@ test_that("results are correct for the multiple-treatment studies example with l
    dat <- escalc(measure="RR", ai=ai, ci=ci, n1i=n1i, n2i=n2i, data=dat)
 
    ### compare with results on page 364
-   expect_equivalent(round(dat$yi,4), c(0.4700, 0.0645, 0.2877, 0.6286, -0.0645, 0.4055))
+   expect_equivalent(dat$yi, c(0.4700, 0.0645, 0.2877, 0.6286, -0.0645, 0.4055), tolerance=.tol[["est"]])
 
    calc.v <- function(x) {
       v <- matrix((1-x$pci[1])/(x$n1i[1]*x$pci[1]), nrow=nrow(x), ncol=nrow(x))
@@ -94,16 +96,16 @@ test_that("results are correct for the multiple-treatment studies example with l
    res <- rma.mv(yi, V, mods = ~ factor(trt) - 1, data=dat)
 
    ### compare with results on page 363
-   expect_equivalent(round(coef(res),4), c(0.4875, 0.0006, 0.4047))
+   expect_equivalent(coef(res), c(0.4875, 0.0006, 0.4047), tolerance=.tol[["coef"]])
 
    ### (results for this not given in chapter)
-   tmp <- round(vcov(res), 5)
+   tmp <- vcov(res)
    expected <- structure(c(0.01287, 0.00623, 0.00371, 0.00623, 0.01037, 0.00399, 0.00371, 0.00399, 0.02416), .Dim = c(3L, 3L),
                          .Dimnames = list(c("factor(trt)1", "factor(trt)2", "factor(trt)3"), c("factor(trt)1", "factor(trt)2", "factor(trt)3")))
-   expect_equivalent(tmp, expected)
+   expect_equivalent(tmp, expected, tolerance=.tol[["var"]]/10)
 
    ### (results for this not given in chapter)
-   expect_equivalent(round(res$QE,3), 1.895)
+   expect_equivalent(res$QE, 1.8954, tolerance=.tol[["test"]])
 
 })
 
@@ -112,7 +114,7 @@ test_that("results are correct for the multiple-treatment studies example with d
    dat <- escalc(measure="AS", ai=ai, ci=ci, n1i=n1i, n2i=n2i, data=dat)
 
    ### compare with results on page 364
-   expect_equivalent(round(dat$yi*2,4), c(0.0852, 0.0130, 0.0613, 0.1521, -0.0187, 0.1038)) ### need *2 factor due to difference in definition of measure
+   expect_equivalent(dat$yi*2, c(0.0852, 0.0130, 0.0613, 0.1521, -0.0187, 0.1038), tolerance=.tol[["est"]]) ### need *2 factor due to difference in definition of measure
 
    calc.v <- function(x) {
       v <- matrix(1/(4*x$n1i[1]), nrow=nrow(x), ncol=nrow(x))
@@ -125,16 +127,16 @@ test_that("results are correct for the multiple-treatment studies example with d
    res <- rma.mv(yi, V, mods = ~ factor(trt) - 1, data=dat)
 
    ### compare with results on page 365
-   expect_equivalent(round(coef(res)*2,4), c(0.1010, 0.0102, 0.0982))
+   expect_equivalent(coef(res)*2, c(0.1010, 0.0102, 0.0982), tolerance=.tol[["coef"]])
 
    ### compare with results on page 365
-   tmp <- round(vcov(res)*2^2, 5)
+   tmp <- vcov(res)*2^2
    expected <- structure(c(0.00058, 4e-04, 0.00024, 4e-04, 0.00061, 0.00025, 0.00024, 0.00025, 0.00137), .Dim = c(3L, 3L),
                          .Dimnames = list(c("factor(trt)1", "factor(trt)2", "factor(trt)3"), c("factor(trt)1", "factor(trt)2", "factor(trt)3")))
-   expect_equivalent(tmp, expected)
+   expect_equivalent(tmp, expected, tolerance=.tol[["var"]]/10)
 
    ### compare with results on page 365
-   expect_equivalent(round(res$QE,3), 4.263) ### 4.264 in chapter
+   expect_equivalent(res$QE, 4.2634, tolerance=.tol[["test"]]) ### 4.264 in chapter
 
 })
 
@@ -156,7 +158,7 @@ test_that("results are correct for the multiple-treatment studies example with s
    dat$vi <- with(dat, 1/n1i + 1/n2i + yi^2/(2*Ni))
 
    ### compare with results on page 364
-   expect_equivalent(round(dat$yi,4), c(2.1670, 1.3406, 2.8927, 2.1754, 2.3821, 1.6664))
+   expect_equivalent(dat$yi, c(2.1670, 1.3406, 2.8927, 2.1754, 2.3821, 1.6664), tolerance=.tol[["est"]])
 
    calc.v <- function(x) {
       v <- matrix(1/x$n2i[1] + outer(x$yi, x$yi, "*")/(2*x$Ni[1]), nrow=nrow(x), ncol=nrow(x))
@@ -169,15 +171,15 @@ test_that("results are correct for the multiple-treatment studies example with s
    res <- rma.mv(yi, V, mods = ~ factor(trt) - 1, data=dat)
 
    ### compare with results on page 367
-   expect_equivalent(round(coef(res),3), c(2.374, 1.570))
+   expect_equivalent(coef(res), c(2.3743, 1.5702), tolerance=.tol[["coef"]])
 
    ### compare with results on page 367
-   tmp <- round(vcov(res), 5)
+   tmp <- vcov(res)
    expected <- structure(c(0.02257, 0.01244, 0.01244, 0.03554), .Dim = c(2L, 2L), .Dimnames = list(c("factor(trt)1", "factor(trt)2"), c("factor(trt)1", "factor(trt)2")))
-   expect_equivalent(tmp, expected)
+   expect_equivalent(tmp, expected, tolerance=.tol[["var"]]/10)
 
    ### compare with results on page 367
-   expect_equivalent(round(res$QE,3), 3.945)
+   expect_equivalent(res$QE, 3.9447, tolerance=.tol[["test"]])
 
 })
 
@@ -207,15 +209,15 @@ test_that("results are correct for the multiple-endpoint studies example with st
    res <- rma.mv(yi, V, mods = ~ outcome - 1, data=dat)
 
    ### (results for this not given in chapter)
-   expect_equivalent(round(coef(res),3), c(0.362, 0.205))
+   expect_equivalent(coef(res), c(0.3617, 0.2051), tolerance=.tol[["coef"]])
 
    ### (results for this not given in chapter)
-   tmp <- round(vcov(res), 5)
+   tmp <- vcov(res)
    expected <- structure(c(0.01008, 0.00537, 0.00537, 0.00989), .Dim = c(2L, 2L), .Dimnames = list(c("outcomemath", "outcomereading"), c("outcomemath", "outcomereading")))
-   expect_equivalent(tmp, expected)
+   expect_equivalent(tmp, expected, tolerance=.tol[["var"]]/10)
 
    ### compare with results on page 371
-   expect_equivalent(round(res$QE,2), 19.63) ### 19.62 in chapter
+   expect_equivalent(res$QE, 19.6264, tolerance=.tol[["test"]]) ### 19.62 in chapter
 
 })
 

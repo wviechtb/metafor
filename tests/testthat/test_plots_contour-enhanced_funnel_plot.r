@@ -23,7 +23,7 @@ test_that("plot can be drawn.", {
               slab=paste(author, year, sep=", "), method="REML")
 
    ### create contour enhanced funnel plot (with funnel centered at 0)
-   funnel(res, level=c(90, 95, 99), shade=c("white", "gray", "darkgray"), refline=0)
+   funnel(res, level=c(90, 95, 99), shade=c("white", "gray55", "gray75"), refline=0, legend=TRUE)
 
    par(opar)
 

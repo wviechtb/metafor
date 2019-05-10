@@ -2,6 +2,8 @@
 
 context("Checking misc: rma.peto() against metan with 'dat.bcg'")
 
+source("tolerances.r") # read in tolerances
+
 test_that("results match (FE model, measure='OR').", {
 
    data(dat.bcg, package="metafor")
@@ -10,18 +12,18 @@ test_that("results match (FE model, measure='OR').", {
 
    res <- rma.peto(ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
-   expect_equivalent(round(res$beta,  digits=3), -0.474)
-   expect_equivalent(round(res$ci.lb, digits=3), -0.554)
-   expect_equivalent(round(res$ci.ub, digits=3), -0.395)
-   expect_equivalent(round(res$zval,  digits=2), -11.67) ### 11.67 in Stata
-   expect_equivalent(round(res$QE,    digits=2), 167.73)
+   expect_equivalent(res$beta,  -0.4744, tolerance=.tol[["coef"]])
+   expect_equivalent(res$ci.lb, -0.5541, tolerance=.tol[["ci"]])
+   expect_equivalent(res$ci.ub, -0.3948, tolerance=.tol[["ci"]])
+   expect_equivalent(res$zval,  -11.6689, tolerance=.tol[["test"]]) ### 11.67 in Stata
+   expect_equivalent(res$QE,    167.7302, tolerance=.tol[["test"]])
 
    ### compare results with: metan tpos tneg cpos cneg, peto nograph or
 
    sav <- predict(res, transf=exp)
 
-   expect_equivalent(round(sav$pred,  digits=3), 0.622)
-   expect_equivalent(round(sav$ci.lb, digits=3), 0.575)
-   expect_equivalent(round(sav$ci.ub, digits=3), 0.674)
+   expect_equivalent(sav$pred,  0.6222, tolerance=.tol[["pred"]])
+   expect_equivalent(sav$ci.lb, 0.5746, tolerance=.tol[["ci"]])
+   expect_equivalent(sav$ci.ub, 0.6738, tolerance=.tol[["ci"]])
 
 })

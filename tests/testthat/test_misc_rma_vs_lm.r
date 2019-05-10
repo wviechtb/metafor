@@ -2,6 +2,8 @@
 
 context("Checking tip: rma() results match up with those from lm()")
 
+source("tolerances.r") # read in tolerances
+
 test_that("results for rma() and lm() match.", {
 
    data(dat.molloy2014, package="metafor")
@@ -35,7 +37,7 @@ test_that("results for rma.mv() and lm() match.", {
 
    ### get profile likelihood CI for sigma^2
    sav <- confint(res1)
-   expect_equivalent(round(sav$random[1,2:3], 4), c(.0111, .0474))
+   expect_equivalent(sav$random[1,2:3], c(.0111, .0474), tolerance=.tol[["var"]])
 
    ### fit with sparse=TRUE
    res1 <- rma.mv(yi, 0, random = ~ 1 | id, data=dat, sparse=TRUE)
@@ -48,6 +50,6 @@ test_that("results for rma.mv() and lm() match.", {
 
    ### get profile likelihood CI for sigma^2
    sav <- confint(res1)
-   expect_equivalent(round(sav$random[1,2:3], 4), c(.0111, .0474))
+   expect_equivalent(sav$random[1,2:3], c(.0111, .0474), tolerance=.tol[["var"]])
 
 })

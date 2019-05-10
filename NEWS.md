@@ -1,4 +1,4 @@
-# metafor 2.1-0 (2019-05-02)
+# metafor 2.1-0 (2019-05-10)
 
 - added `formula()` method for objects of class `rma`
 
@@ -106,7 +106,7 @@
 
 - added undocumented argument `time` to all model fitting functions; if set to `TRUE`, the model fitting time is printed
 
-- added more tests (also for parallel operations)
+- added more tests (also for parallel operations); also, all tests updated to use proper tolerances instead of rounding
 
 - reorganized the documentation a bit
 

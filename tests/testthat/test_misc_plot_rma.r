@@ -2,6 +2,8 @@
 
 context("Checking misc: plot() function")
 
+source("tolerances.r") # read in tolerances
+
 test_that("plot can be drawn for rma().", {
 
    expect_equivalent(TRUE, TRUE) # avoid 'Empty test' message

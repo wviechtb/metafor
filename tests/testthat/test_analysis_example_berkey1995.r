@@ -2,6 +2,8 @@
 
 ### see also: http://www.metafor-project.org/doku.php/analyses:berkey1995
 
+source("tolerances.r") # read in tolerances
+
 context("Checking analysis example: berkey1995")
 
 ### load BCG dataset
@@ -22,9 +24,9 @@ test_that("results are correct for the random-effects model.", {
    out <- capture.output(print(summary(res.RE))) ### so that print.summary.rma() is run (at least once)
 
    ### compare with results on page 408
-   expect_equivalent(round(coef(res.RE),4), -0.5429)
-   expect_equivalent(round(res.RE$se,4), 0.1842)
-   expect_equivalent(round(res.RE$tau2,3), 0.268)
+   expect_equivalent(coef(res.RE), -0.5429, tolerance=.tol[["coef"]])
+   expect_equivalent(res.RE$se, 0.1842, tolerance=.tol[["se"]])
+   expect_equivalent(res.RE$tau2, 0.2682, tolerance=.tol[["var"]])
 
 })
 
@@ -38,16 +40,16 @@ test_that("results are correct for the mixed-effects meta-regression model.", {
    out <- capture.output(print(res.ME))
 
    ### compare with results on page 408
-   expect_equivalent(round(coef(res.ME),4), c(-0.6303, -0.0268)) ### -0.6304 in article
-   expect_equivalent(round(res.ME$se,4), c(0.1591, 0.0110))
-   expect_equivalent(round(res.ME$tau2,3), 0.157)
-   expect_equivalent(round(anova(res.RE, res.ME)$R2,0), 41)
+   expect_equivalent(coef(res.ME), c(-0.6303, -0.0268), tolerance=.tol[["coef"]]) ### -0.6304 in article
+   expect_equivalent(res.ME$se, c(0.1591, 0.0110), tolerance=.tol[["se"]])
+   expect_equivalent(res.ME$tau2, 0.1572, tolerance=.tol[["var"]])
+   expect_equivalent(anova(res.RE, res.ME)$R2, 41.3844, tolerance=.tol[["r2"]])
 
    ### predicted average risk ratios
    tmp <- predict(res.ME, newmods=c(33.46,42)-33.46, transf=exp, digits=2)
 
    ### compare with results on page 408
-   expect_equivalent(round(tmp$pred,2), c(0.53, 0.42))
+   expect_equivalent(tmp$pred, c(0.5324, 0.4236), tolerance=.tol[["pred"]])
 
 })
 
@@ -57,13 +59,13 @@ test_that("results are correct for the fixed-effects meta-regression model.", {
    res.FE <- rma(yi, vi, mods=~I(ablat-33.46), data=dat, method="FE")
 
    ### compare with results on page 408
-   expect_equivalent(round(coef(res.FE),4), c(-0.5949, -0.0282)) ### -0.5950 in article
-   expect_equivalent(round(res.FE$se,4), c(0.0696, 0.0040)) ### 0.0039 in article
+   expect_equivalent(coef(res.FE), c(-0.5949, -0.0282), tolerance=.tol[["coef"]]) ### -0.5950 in article
+   expect_equivalent(res.FE$se, c(0.0696, 0.0040), tolerance=.tol[["se"]]) ### 0.0039 in article
 
    ### predicted risk ratios based on the fixed-effects model
    tmp <- predict(res.FE, newmods=c(33.46,42)-33.46, transf=exp, digits=2)
 
    ### compare with results on page 408
-   expect_equivalent(round(tmp$pred,2), c(0.55, 0.43))
+   expect_equivalent(tmp$pred, c(0.5516, 0.4336), tolerance=.tol[["pred"]])
 
 })

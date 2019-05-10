@@ -4,6 +4,8 @@
 
 context("Checking analysis example: miller1978")
 
+source("tolerances.r") # read in tolerances
+
 ### create dataset
 dat <- data.frame(xi=c(3, 6, 10, 1), ni=c(11, 17, 21, 6))
 dat$pi <- with(dat, xi/ni)
@@ -12,8 +14,8 @@ dat <- escalc(measure="PFT", xi=xi, ni=ni, data=dat)
 test_that("calculations of escalc() for measure='PFT' are correct.", {
 
    ### compare with results on page 138
-   expect_equivalent(round(dat$yi*2,4), c(1.1391, 1.2888, 1.5253, 0.9515)) ### need *2 factor due to difference in definition of measure
-   expect_equivalent(round(dat$vi*4,4), c(0.0870, 0.0571, 0.0465, 0.1538))
+   expect_equivalent(dat$yi*2, c(1.1391, 1.2888, 1.5253, 0.9515), tolerance=.tol[["est"]]) ### need *2 factor due to difference in definition of measure
+   expect_equivalent(dat$vi*4, c(0.0870, 0.0571, 0.0465, 0.1538), tolerance=.tol[["var"]])
 
 })
 
@@ -22,10 +24,10 @@ test_that("results are correct for the fixed-effects model using unweighted esti
    res <- rma(yi, vi, method="FE", data=dat, weighted=FALSE)
 
    pred <- predict(res, transf=function(x) x*2)
-   expect_equivalent(round(pred$pred, 4), 1.2262)
+   expect_equivalent(pred$pred, 1.2262, tolerance=.tol[["pred"]])
 
    pred <- predict(res, transf=transf.ipft.hm, targs=list(ni=dat$ni))
-   expect_equivalent(round(pred$pred, 4), 0.3164)
+   expect_equivalent(pred$pred, 0.3164, tolerance=.tol[["pred"]])
 
 })
 
@@ -34,10 +36,10 @@ test_that("results are correct for the fixed-effects model using weighted estima
    res <- rma(yi, vi, method="FE", data=dat)
 
    pred <- predict(res, transf=function(x) x*2)
-   expect_equivalent(round(pred$pred, 4), 1.3093)
+   expect_equivalent(pred$pred, 1.3093, tolerance=.tol[["pred"]])
 
    pred <- predict(res, transf=transf.ipft.hm, targs=list(ni=dat$ni))
-   expect_equivalent(round(pred$pred, 4), 0.3595)
+   expect_equivalent(pred$pred, 0.3595, tolerance=.tol[["pred"]])
 
 })
 
@@ -68,9 +70,9 @@ test_that("back-transformations work as intended for individual studies and the 
    res <- rma(yi, vi, method="FE", data=dat)
    pred <- predict(res, transf=transf.ipft.hm, targs=list(ni=dat$ni))
 
-   expect_equivalent(round(pred$pred, 4), 0.6886)
-   expect_equivalent(round(pred$ci.lb, 4), 0.5734)
-   expect_equivalent(round(pred$ci.ub, 4), 0.7943)
+   expect_equivalent(pred$pred,  0.6886, tolerance=.tol[["pred"]])
+   expect_equivalent(pred$ci.lb, 0.5734, tolerance=.tol[["ci"]])
+   expect_equivalent(pred$ci.ub, 0.7943, tolerance=.tol[["ci"]])
 
    ### calculate back-transformed CI bounds
    dat.back <- summary(dat, transf=transf.ipft, ni=dat$ni)

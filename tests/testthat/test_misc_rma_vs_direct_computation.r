@@ -2,6 +2,8 @@
 
 context("Checking misc: rma.uni() against direct computations")
 
+source("tolerances.r") # read in tolerances
+
 test_that("results match (FE model).", {
 
    data(dat.bcg, package="metafor")

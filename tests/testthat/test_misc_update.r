@@ -2,6 +2,8 @@
 
 context("Checking misc: update() function")
 
+source("tolerances.r") # read in tolerances
+
 test_that("update() works for rma().", {
 
    data(dat.bcg, package="metafor")

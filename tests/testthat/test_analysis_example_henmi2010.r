@@ -2,6 +2,8 @@
 
 ### see also: http://www.metafor-project.org/doku.php/analyses:henmi2010
 
+source("tolerances.r") # read in tolerances
+
 context("Checking analysis example: henmi2010")
 
 ### load dataset
@@ -16,10 +18,10 @@ test_that("results are correct for the random-effects model.", {
    res <- rma(yi, vi, data=dat, method="DL")
 
    ### compare with results on page 2978
-   expect_equivalent(round(res$tau2,3), 0.333)
-   expect_equivalent(round(coef(res),3), -0.679)
-   expect_equivalent(round(res$ci.lb,3), -1.066)
-   expect_equivalent(round(res$ci.ub,3), -0.291)
+   expect_equivalent(res$tau2,   0.3325, tolerance=.tol[["var"]])
+   expect_equivalent(coef(res), -0.6787, tolerance=.tol[["coef"]])
+   expect_equivalent(res$ci.lb, -1.0664, tolerance=.tol[["ci"]])
+   expect_equivalent(res$ci.ub, -0.2911, tolerance=.tol[["ci"]])
 
 })
 
@@ -33,8 +35,8 @@ test_that("results are correct for the Henmi & Copas method.", {
    out <- capture.output(print(sav)) ### so that print.hc.rma.uni() is run (at least once)
 
    ### compare with results on page 2978
-   expect_equivalent(round(sav$beta,3), -0.514)
-   expect_equivalent(round(sav$ci.lb,3), -0.999)
-   expect_equivalent(round(sav$ci.ub,3), -0.030)
+   expect_equivalent(sav$beta,  -0.5145, tolerance=.tol[["coef"]])
+   expect_equivalent(sav$ci.lb, -0.9994, tolerance=.tol[["ci"]])
+   expect_equivalent(sav$ci.ub, -0.0295, tolerance=.tol[["ci"]])
 
 })

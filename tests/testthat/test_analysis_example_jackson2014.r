@@ -2,6 +2,8 @@
 
 context("Checking analysis example: jackson2014")
 
+source("tolerances.r") # read in tolerances
+
 test_that("confint() gives correct results for example 1 in Jackson et al. (2014).", {
 
    skip_on_cran()
@@ -19,26 +21,26 @@ test_that("confint() gives correct results for example 1 in Jackson et al. (2014
 
    ### approximate 95% CI for tau^2 based on REML estimate and its SE
    ci <- exp(log(res$tau2) + c(-1.96,1.96)*(1/res$tau2 * res$se.tau2))
-   expect_equivalent(round(ci[1], digits=3), 0.011)
-   expect_equivalent(round(ci[2], digits=3), 0.633)
+   expect_equivalent(ci[1], 0.0110, tolerance=.tol[["var"]])
+   expect_equivalent(ci[2], 0.6330, tolerance=.tol[["var"]])
 
    ### generalised Cochran heterogeneity estimate and CI (inverse variance weights)
    res <- rma(yi, vi, mods = ~ xi, method="GENQ", weights=1/vi, digits=3)
    ci <- confint(res)
-   expect_equivalent(round(ci$random[1,2], digits=3), 0.003)
-   expect_equivalent(round(ci$random[1,3], digits=3), 0.691)
+   expect_equivalent(ci$random[1,2], 0.0029, tolerance=.tol[["var"]])
+   expect_equivalent(ci$random[1,3], 0.6907, tolerance=.tol[["var"]])
 
    ### generalised Cochran heterogeneity estimate and CI (inverse SE weights)
    res <- rma(yi, vi, mods = ~ xi, method="GENQ", weights=1/sqrt(vi), digits=3)
    ci <- confint(res)
-   expect_equivalent(round(ci$random[1,2], digits=3), 0.000)
-   expect_equivalent(round(ci$random[1,3], digits=3), 1.125)
+   expect_equivalent(ci$random[1,2], 0.0000, tolerance=.tol[["var"]])
+   expect_equivalent(ci$random[1,3], 1.1245, tolerance=.tol[["var"]])
 
    ### Paule-Mandel estimate and CI
    res <- rma(yi, vi, mods = ~ xi, method="PM", digits=3)
    ci <- confint(res)
-   expect_equivalent(round(ci$random[1,2], digits=3), 0.002)
-   expect_equivalent(round(ci$random[1,3], digits=3), 1.487)
+   expect_equivalent(ci$random[1,2], 0.0023, tolerance=.tol[["var"]])
+   expect_equivalent(ci$random[1,3], 1.4871, tolerance=.tol[["var"]])
 
 })
 
@@ -61,25 +63,25 @@ test_that("confint() gives correct results for example 2 in Jackson et al. (2014
 
    ### approximate 95% CI for tau^2 based on REML estimate and its SE
    ci <- exp(log(res$tau2) + c(-1.96,1.96)*(1/res$tau2 * res$se.tau2))
-   expect_equivalent(round(ci[1], digits=3), 0.016)
-   expect_equivalent(round(ci[2], digits=3), 0.111)
+   expect_equivalent(ci[1], 0.0163, tolerance=.tol[["var"]])
+   expect_equivalent(ci[2], 0.1108, tolerance=.tol[["var"]])
 
    ### generalised Cochran heterogeneity estimate and CI (inverse variance weights)
    res <- rma(yi, vi, mods = ~ xi, method="GENQ", weights=1/vi, digits=3)
    ci <- confint(res)
-   expect_equivalent(round(ci$random[1,2], digits=3), 0.017)
-   expect_equivalent(round(ci$random[1,3], digits=3), 0.139)
+   expect_equivalent(ci$random[1,2], 0.0170, tolerance=.tol[["var"]])
+   expect_equivalent(ci$random[1,3], 0.1393, tolerance=.tol[["var"]])
 
    ### generalised Cochran heterogeneity estimate and CI (inverse SE weights)
    res <- rma(yi, vi, mods = ~ xi, method="GENQ", weights=1/sqrt(vi), digits=3)
    ci <- confint(res)
-   expect_equivalent(round(ci$random[1,2], digits=3), 0.018)
-   expect_equivalent(round(ci$random[1,3], digits=3), 0.138)
+   expect_equivalent(ci$random[1,2], 0.0180, tolerance=.tol[["var"]])
+   expect_equivalent(ci$random[1,3], 0.1375, tolerance=.tol[["var"]])
 
    ### Paule-Mandel estimate and CI
    res <- rma(yi, vi, mods = ~ xi, method="PM", digits=3)
    ci <- confint(res)
-   expect_equivalent(round(ci$random[1,2], digits=3), 0.018)
-   expect_equivalent(round(ci$random[1,3], digits=3), 0.156)
+   expect_equivalent(ci$random[1,2], 0.0178, tolerance=.tol[["var"]])
+   expect_equivalent(ci$random[1,3], 0.1564, tolerance=.tol[["var"]])
 
 })

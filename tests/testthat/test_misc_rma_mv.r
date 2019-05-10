@@ -2,6 +2,8 @@
 
 context("Checking misc: rma.mv() function")
 
+source("tolerances.r") # read in tolerances
+
 data(dat.bcg, package="metafor")
 dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
@@ -9,15 +11,15 @@ test_that("rma.mv() correctly handles a formula for the 'yi' argument", {
 
    res1 <- rma.mv(yi ~ ablat, vi, random = ~ 1 | trial, data=dat)
    res2 <- rma.mv(yi, vi, mods = ~ ablat, random = ~ 1 | trial, data=dat)
-   expect_equivalent(round(coef(res1), 4), round(coef(res2), 4))
+   expect_equivalent(coef(res1), coef(res2), tolerance=.tol[["coef"]])
 
 })
 
 test_that("rma.mv() works correctly when using user-defined weights", {
 
    res <- rma.mv(yi, vi, W=1, random = ~ 1 | trial, data=dat)
-   expect_equivalent(round(coef(res), 4), round(mean(dat$yi), 4))
-   expect_equivalent(round(c(vcov(res)), 4), 0.0358)
+   expect_equivalent(coef(res), mean(dat$yi), tolerance=.tol[["coef"]])
+   expect_equivalent(c(vcov(res)), 0.0358, tolerance=.tol[["var"]])
 
 })
 
@@ -25,8 +27,8 @@ test_that("rma.mv() correctly handles negative sampling variances", {
 
    dat$vi[1] <- -.01
    expect_warning(res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat))
-   expect_equivalent(round(coef(res), 4), -0.7220)
-   expect_equivalent(round(c(vcov(res)), 4),  0.0293)
+   expect_equivalent(coef(res), -0.7220, tolerance=.tol[["coef"]])
+   expect_equivalent(c(vcov(res)), 0.0293, tolerance=.tol[["var"]])
 
 })
 
@@ -34,8 +36,8 @@ test_that("rma.mv() correctly handles a missing value", {
 
    dat$vi[1] <- NA
    expect_warning(res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat))
-   expect_equivalent(round(coef(res), 4), -0.7071)
-   expect_equivalent(round(c(vcov(res)), 4),  0.0361)
+   expect_equivalent(coef(res), -0.7071, tolerance=.tol[["coef"]])
+   expect_equivalent(c(vcov(res)), 0.0361, tolerance=.tol[["var"]])
 
 })
 
@@ -66,9 +68,9 @@ test_that("rma.mv() correctly handles the R argument", {
 
    res <- rma.mv(yi, vi, random = list(~ 1 | study, ~ 1 | species, ~ 1 | phylogeny), R = list(phylogeny=P), data=dat)
 
-   expect_equivalent(round(coef(res), 4), .5504)
-   expect_equivalent(round(res$sigma2, 4), c(0.1763, 0.5125, 0.1062))
-   expect_equivalent(c(round(logLik(res), 4)), -54.6272)
+   expect_equivalent(coef(res), .5504, tolerance=.tol[["coef"]])
+   expect_equivalent(res$sigma2, c(0.1763, 0.5125, 0.1062), tolerance=.tol[["var"]])
+   expect_equivalent(c(logLik(res)), -54.6272, tolerance=.tol[["fit"]])
 
 })
 
@@ -78,42 +80,42 @@ dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 test_that("rma.mv() correctly computes the Hessian", {
 
    res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(hessian=TRUE))
-   expect_equivalent(round(c(sqrt(1/res$hessian)), 4), 0.1678)
+   expect_equivalent(c(sqrt(1/res$hessian)), 0.1678, tolerance=.tol[["se"]])
 
 })
 
 test_that("rma.mv() works correctly with test='t'", {
 
    res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, test="t")
-   expect_equivalent(round(res$pval, 4), 0.0018)
+   expect_equivalent(res$pval, 0.0018, tolerance=.tol[["pval"]])
 
 })
 
 test_that("rma.mv() works correctly with different optimizers", {
 
    res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="optim", optmethod="BFGS"))
-   expect_equivalent(round(res$sigma2, 3), 0.313)
+   expect_equivalent(res$sigma2, 0.3132, tolerance=.tol[["var"]])
    res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="optim", optmethod="L-BFGS-B"))
-   expect_equivalent(round(res$sigma2, 3), 0.313)
+   expect_equivalent(res$sigma2, 0.3132, tolerance=.tol[["var"]])
    res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="optim", optmethod="Nelder-Mead"))
-   expect_equivalent(round(res$sigma2, 3), 0.313)
+   expect_equivalent(res$sigma2, 0.3133, tolerance=.tol[["var"]])
    res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="nlminb"))
-   expect_equivalent(round(res$sigma2, 3), 0.313)
+   expect_equivalent(res$sigma2, 0.3132, tolerance=.tol[["var"]])
    res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="uobyqa"))
-   expect_equivalent(round(res$sigma2, 3), 0.313)
+   expect_equivalent(res$sigma2, 0.3132, tolerance=.tol[["var"]])
    res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="newuoa"))
-   expect_equivalent(round(res$sigma2, 3), 0.313)
+   expect_equivalent(res$sigma2, 0.3132, tolerance=.tol[["var"]])
    res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="bobyqa"))
-   expect_equivalent(round(res$sigma2, 3), 0.313)
+   expect_equivalent(res$sigma2, 0.3132, tolerance=.tol[["var"]])
    res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="nloptr"))
-   expect_equivalent(round(res$sigma2, 3), 0.313)
+   expect_equivalent(res$sigma2, 0.3132, tolerance=.tol[["var"]])
    res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="nlm"))
-   expect_equivalent(round(res$sigma2, 3), 0.313)
+   expect_equivalent(res$sigma2, 0.3132, tolerance=.tol[["var"]])
    res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="hjk"))
-   expect_equivalent(round(res$sigma2, 3), 0.313)
+   expect_equivalent(res$sigma2, 0.3132, tolerance=.tol[["var"]])
    res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="nmk"))
-   expect_equivalent(round(res$sigma2, 3), 0.313)
+   expect_equivalent(res$sigma2, 0.3131, tolerance=.tol[["var"]])
    res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="ucminf"))
-   expect_equivalent(round(res$sigma2, 3), 0.313)
+   expect_equivalent(res$sigma2, 0.3132, tolerance=.tol[["var"]])
 
 })

@@ -2,6 +2,8 @@
 
 context("Checking misc: fsn() function")
 
+source("tolerances.r") # read in tolerances
+
 test_that("confint() gives correct results for the 'expectancy data' in Becker (2005).", {
 
    data(dat.raudenbush1985, package="metafor")

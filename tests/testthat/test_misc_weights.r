@@ -2,6 +2,8 @@
 
 context("Checking misc: weights() function")
 
+source("tolerances.r") # read in tolerances
+
 test_that("weights are correct for rma() with method='FE'.", {
 
    data(dat.bcg, package="metafor")
@@ -104,19 +106,19 @@ test_that("weights are correct for rma.mh() with measure='RD/RR/OR'.", {
 
    res <- rma.mh(measure="RD", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat)
    sav <- weights(res)
-   expect_equivalent(round(coef(res), 6), round(sum(res$yi * sav/100), 6))
+   expect_equivalent(coef(res), sum(res$yi * sav/100), tolerance=.tol[["coef"]])
    tmp <- diag(weights(res, type="matrix"))
    expect_equivalent(sav, tmp/sum(tmp)*100)
 
    res <- rma.mh(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat)
    sav <- weights(res)
-   expect_equivalent(round(exp(coef(res)), 6), round(sum(exp(res$yi) * sav/100), 6))
+   expect_equivalent(exp(coef(res)), sum(exp(res$yi) * sav/100), tolerance=.tol[["coef"]])
    tmp <- diag(weights(res, type="matrix"))
    expect_equivalent(sav, tmp/sum(tmp)*100)
 
    res <- rma.mh(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat)
    sav <- weights(res)
-   expect_equivalent(round(exp(coef(res)), 6), round(sum(exp(res$yi) * sav/100), 6))
+   expect_equivalent(exp(coef(res)), sum(exp(res$yi) * sav/100), tolerance=.tol[["coef"]])
    tmp <- diag(weights(res, type="matrix"))
    expect_equivalent(sav, tmp/sum(tmp)*100)
 
@@ -128,13 +130,13 @@ test_that("weights are correct for rma.mh() with measure='IRD/IRR'.", {
 
    res <- rma.mh(measure="IRD", x1i=x1i, t1i=t1i, x2i=x2i, t2i=t2i, data=dat)
    sav <- weights(res)
-   expect_equivalent(round(coef(res), 6), round(sum(res$yi * sav/100), 6))
+   expect_equivalent(coef(res), sum(res$yi * sav/100), tolerance=.tol[["coef"]])
    tmp <- diag(weights(res, type="matrix"))
    expect_equivalent(sav, tmp/sum(tmp)*100)
 
    res <- rma.mh(measure="IRR", x1i=x1i, t1i=t1i, x2i=x2i, t2i=t2i, data=dat)
    sav <- weights(res)
-   expect_equivalent(round(exp(coef(res)), 6), round(sum(exp(res$yi) * sav/100), 6))
+   expect_equivalent(exp(coef(res)), sum(exp(res$yi) * sav/100), tolerance=.tol[["coef"]])
    tmp <- diag(weights(res, type="matrix"))
    expect_equivalent(sav, tmp/sum(tmp)*100)
 
@@ -146,7 +148,7 @@ test_that("weights are correct for rma.peto().", {
 
    res <- rma.peto(ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat)
    sav <- weights(res)
-   expect_equivalent(round(coef(res), 6), round(sum(res$yi * sav/100), 6))
+   expect_equivalent(coef(res), sum(res$yi * sav/100), tolerance=.tol[["coef"]])
    tmp <- diag(weights(res, type="matrix"))
    expect_equivalent(sav, tmp/sum(tmp)*100)
 

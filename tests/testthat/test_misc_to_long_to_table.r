@@ -2,6 +2,8 @@
 
 context("Checking misc: to.long() function")
 
+source("tolerances.r") # read in tolerances
+
 test_that("to.long() works correctly for measure='MD'", {
 
    dat <- dat.normand1999

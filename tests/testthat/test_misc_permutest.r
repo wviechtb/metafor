@@ -2,6 +2,8 @@
 
 context("Checking misc: permutest() function")
 
+source("tolerances.r") # read in tolerances
+
 ### load data
 dat <- dat.hine1989
 
@@ -29,11 +31,11 @@ test_that("permutest() gives correct results for a random-effects model.", {
 
       out <- capture.output(print(sav)) ### so that print.permutest.rma.uni() is run (at least once)
 
-      tmp <- round(coef(sav), 4)
-      expected <- structure(list(estimate = 0.0294, se = 0.0131, zval = 2.2531, pval = 0.0625, ci.lb = 0.0038, ci.ub = 0.0551),
+      tmp <- coef(sav)
+      expected <- structure(list(estimate = 0.029444, se = 0.013068, zval = 2.253107, pval = 0.0625, ci.lb = 0.003831, ci.ub = 0.055058),
                             .Names = c("estimate", "se", "zval", "pval", "ci.lb", "ci.ub"), row.names = "intrcpt", class = "data.frame")
 
-      expect_equivalent(tmp, expected)
+      expect_equivalent(tmp, expected, tolerance=.tol[["misc"]])
 
       ### approximate permutation test
       set.seed(1234)
@@ -71,7 +73,7 @@ test_that("permutest() gives correct results for a mixed-effects model.", {
       ### exact permutation test
       sav <- permutest(res, progbar=FALSE)
 
-      expect_equivalent(round(sav$pval, 4), c(1, 0.0028))
+      expect_equivalent(sav$pval, c(1, 0.0028), tolerance=.tol[["pval"]])
 
       ### approximate permutation test
       set.seed(1234)
@@ -117,8 +119,8 @@ test_that("permutest() gives correct results for example in Follmann & Proschan 
       sav <- permutest(res, permci=TRUE, progbar=FALSE, retpermdist=TRUE, control=list(stat="coef"))
 
       expect_equivalent(sav$pval, 10/256)
-      expect_equivalent(round(sav$ci.lb, 4), -0.3677)
-      expect_equivalent(round(sav$ci.ub, 4), -0.0020)
+      expect_equivalent(sav$ci.lb, -0.3677, tolerance=.tol[["ci"]])
+      expect_equivalent(sav$ci.ub, -0.0020, tolerance=.tol[["ci"]])
 
    } else {
 

@@ -2,6 +2,8 @@
 
 context("Checking misc: rma.mh() against metan with 'dat.bcg'")
 
+source("tolerances.r") # read in tolerances
+
 test_that("results match (FE model, measure='RR').", {
 
    data(dat.bcg, package="metafor")
@@ -10,19 +12,19 @@ test_that("results match (FE model, measure='RR').", {
 
    res <- rma.mh(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
-   expect_equivalent(round(res$beta,  digits=3), -0.454)
-   expect_equivalent(round(res$ci.lb, digits=3), -0.531)
-   expect_equivalent(round(res$ci.ub, digits=3), -0.377)
-   expect_equivalent(round(res$zval,  digits=2), -11.53) ### 11.53 in Stata
-   expect_equivalent(round(res$QE,    digits=2), 152.57)
+   expect_equivalent(res$beta,  -0.4537, tolerance=.tol[["coef"]])
+   expect_equivalent(res$ci.lb, -0.5308, tolerance=.tol[["ci"]])
+   expect_equivalent(res$ci.ub, -0.3766, tolerance=.tol[["ci"]])
+   expect_equivalent(res$zval,  -11.5338, tolerance=.tol[["test"]]) ### 11.53 in Stata
+   expect_equivalent(res$QE,    152.5676, tolerance=.tol[["test"]])
 
    ### compare results with: metan tpos tneg cpos cneg, fixed nograph rr
 
    sav <- predict(res, transf=exp)
 
-   expect_equivalent(round(sav$pred,  digits=3), 0.635)
-   expect_equivalent(round(sav$ci.lb, digits=3), 0.588)
-   expect_equivalent(round(sav$ci.ub, digits=3), 0.686)
+   expect_equivalent(sav$pred,  0.6353, tolerance=.tol[["est"]])
+   expect_equivalent(sav$ci.lb, 0.5881, tolerance=.tol[["ci"]])
+   expect_equivalent(sav$ci.ub, 0.6862, tolerance=.tol[["ci"]])
 
 })
 
@@ -34,19 +36,19 @@ test_that("results match (FE model, measure='OR').", {
 
    res <- rma.mh(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
-   expect_equivalent(round(res$beta,  digits=3), -0.473)
-   expect_equivalent(round(res$ci.lb, digits=3), -0.554)
-   expect_equivalent(round(res$ci.ub, digits=3), -0.393)
-   expect_equivalent(round(res$zval,  digits=2), -11.54) ### 11.54 in Stata
-   expect_equivalent(round(res$QE,    digits=2), 163.94)
+   expect_equivalent(res$beta,  -0.4734, tolerance=.tol[["coef"]])
+   expect_equivalent(res$ci.lb, -0.5538, tolerance=.tol[["ci"]])
+   expect_equivalent(res$ci.ub, -0.3930, tolerance=.tol[["ci"]])
+   expect_equivalent(res$zval,  -11.5444, tolerance=.tol[["test"]]) ### 11.54 in Stata
+   expect_equivalent(res$QE,    163.9426, tolerance=.tol[["test"]])
 
    ### compare results with: metan tpos tneg cpos cneg, fixed nograph or
 
    sav <- predict(res, transf=exp)
 
-   expect_equivalent(round(sav$pred,  digits=3), 0.623)
-   expect_equivalent(round(sav$ci.lb, digits=3), 0.575)
-   expect_equivalent(round(sav$ci.ub, digits=3), 0.675)
+   expect_equivalent(sav$pred,  0.6229, tolerance=.tol[["pred"]])
+   expect_equivalent(sav$ci.lb, 0.5748, tolerance=.tol[["ci"]])
+   expect_equivalent(sav$ci.ub, 0.6750, tolerance=.tol[["ci"]])
 
 })
 
@@ -58,14 +60,15 @@ test_that("results match (FE model, measure='RD').", {
 
    res <- rma.mh(measure="RD", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
-   expect_equivalent(round(res$beta,  digits=3), -0.003)
-   expect_equivalent(round(res$ci.lb, digits=3), -0.004)
-   expect_equivalent(round(res$ci.ub, digits=3), -0.003)
-   expect_equivalent(round(res$zval,  digits=2), -11.47) ### 11.56 in Stata
-   expect_equivalent(round(res$QE,    digits=2), 386.78)
+   expect_equivalent(res$beta,  -0.0033, tolerance=.tol[["coef"]])
+   expect_equivalent(res$ci.lb, -0.0039, tolerance=.tol[["ci"]])
+   expect_equivalent(res$ci.ub, -0.0027, tolerance=.tol[["ci"]])
+   expect_equivalent(res$zval,  -11.4708, tolerance=.tol[["test"]]) ### 11.56 in Stata
+   expect_equivalent(res$QE,    386.7759, tolerance=.tol[["test"]])
 
-   ### zval is slightly different, as metan apparently computes the SE as described in Greenland & Robins (1985)
-   ### while metafor uses the equation given in Sato, Greenland, & Robins (1989) (only the latter is asymptotically
-   ### correct in both the sparse-data and large-strata case)
+   # zval is slightly different, as metan apparently computes the SE as
+   # described in Greenland & Robins (1985) while metafor uses the equation
+   # given in Sato, Greenland, & Robins (1989) (only the latter is
+   # asymptotically correct in both the sparse-data and large-strata case)
 
 })

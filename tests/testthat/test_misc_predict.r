@@ -2,6 +2,8 @@
 
 context("Checking misc: predict() function")
 
+source("tolerances.r") # read in tolerances
+
 test_that("predict() correctly matches named vectors in 'newmods'", {
 
    data(dat.bcg, package="metafor")
@@ -48,10 +50,10 @@ test_that("predict() gives correct results when vcov=TRUE", {
 
    res <- rma(yi, vi, data=dat)
    sav <- predict(res, vcov=TRUE)
-   expect_equivalent(round(sav$pred$se, 4), round(c(sqrt(sav$vcov)), 4))
+   expect_equivalent(sav$pred$se, c(sqrt(sav$vcov)), tolerance=.tol[["se"]])
 
    res <- rma(yi, vi, mods = ~ ablat, data=dat)
    sav <- predict(res, vcov=TRUE)
-   expect_equivalent(round(sav$pred$se, 4), round(c(sqrt(diag(sav$vcov))), 4))
+   expect_equivalent(sav$pred$se, c(sqrt(diag(sav$vcov))), tolerance=.tol[["se"]])
 
 })

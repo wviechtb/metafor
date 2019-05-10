@@ -2,6 +2,8 @@
 
 context("Checking misc: model diagnostic functions for rma.mv()")
 
+source("tolerances.r") # read in tolerances
+
 dat1 <- dat.konstantopoulos2011
 
 dat1 <- dat1[dat1$district %in% c(11, 12, 18, 71, 108, 644),]

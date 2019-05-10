@@ -2,6 +2,8 @@
 
 context("Checking tip: rma() results match up with those from lm() and lme()")
 
+source("tolerances.r") # read in tolerances
+
 ### this is essentially checking the equivalence of the results as explained here:
 ### http://www.metafor-project.org/doku.php/tips:rma_vs_lm_and_lme
 
@@ -15,19 +17,19 @@ test_that("results for rma() and lm() match for method='FE'.", {
    res.lm <- lm(yi ~ 1, weights = 1/vi, data=dat)
 
    ### coefficients should be the same
-   expect_equivalent(coef(res.fe), coef(res.lm))
+   expect_equivalent(coef(res.fe), coef(res.lm), tolerance=.tol[["coef"]])
 
    ### standard errors should be the same after adjusting the 'lm' one for sigma
-   expect_equivalent(res.fe$se, coef(summary(res.lm))[1,2] / summary(res.lm)$sigma)
+   expect_equivalent(res.fe$se, coef(summary(res.lm))[1,2] / summary(res.lm)$sigma, tolerance=.tol[["se"]])
 
    ### fit the same model as is fitted by lm() with rma() function
    res.fe <- rma(yi, vi*summary(res.lm)$sigma^2, data=dat, method="FE")
 
    ### coefficients should still be the same
-   expect_equivalent(coef(res.fe), coef(res.lm))
+   expect_equivalent(coef(res.fe), coef(res.lm), tolerance=.tol[["coef"]])
 
    ### standard errors should be the same
-   expect_equivalent(res.fe$se, coef(summary(res.lm))[1,2])
+   expect_equivalent(res.fe$se, coef(summary(res.lm))[1,2], tolerance=.tol[["se"]])
 
 })
 
@@ -44,13 +46,13 @@ test_that("results for rma() and lme() match for method='ML'.", {
    res.re <- rma(yi, vi*res.lme$sigma^2, data=dat, method="ML")
 
    ### coefficients should be the same
-   expect_equivalent(round(coef(res.re),4), round(fixef(res.lme),4))
+   expect_equivalent(coef(res.re), fixef(res.lme), tolerance=.tol[["coef"]])
 
    ### standard errors should be the same after adjusting the 'rma' one by the factor sqrt(k/(k-p))
-   expect_equivalent(round(res.re$se * sqrt(res.re$k / (res.re$k - res.re$p)),4), round(summary(res.lme)$tTable[1,2],4))
+   expect_equivalent(res.re$se * sqrt(res.re$k / (res.re$k - res.re$p)), summary(res.lme)$tTable[1,2], tolerance=.tol[["se"]])
 
    ### check that BLUPs are the same
-   expect_equivalent(round(blup(res.re)$pred,4), round(coef(res.lme)$"(Intercept)",4))
+   expect_equivalent(blup(res.re)$pred, coef(res.lme)$"(Intercept)", tolerance=.tol[["pred"]])
 
 })
 
@@ -67,12 +69,12 @@ test_that("results for rma() and lme() match for method='REML'.", {
    res.re <- rma(yi, vi*res.lme$sigma^2, data=dat, method="REML")
 
    ### coefficients should be the same
-   expect_equivalent(round(coef(res.re),4), round(fixef(res.lme),4))
+   expect_equivalent(coef(res.re), fixef(res.lme), tolerance=.tol[["coef"]])
 
    ### standard errors should be the same
-   expect_equivalent(round(res.re$se,4), round(summary(res.lme)$tTable[1,2],4))
+   expect_equivalent(res.re$se, summary(res.lme)$tTable[1,2], tolerance=.tol[["se"]])
 
    ### check that BLUPs are the same
-   expect_equivalent(round(blup(res.re)$pred,4), round(coef(res.lme)$"(Intercept)",4))
+   expect_equivalent(blup(res.re)$pred, coef(res.lme)$"(Intercept)", tolerance=.tol[["pred"]])
 
 })

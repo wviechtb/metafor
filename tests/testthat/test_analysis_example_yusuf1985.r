@@ -4,6 +4,8 @@
 
 context("Checking analysis example: yusuf1985")
 
+source("tolerances.r") # read in tolerances
+
 ### create dataset for example
 dat <- dat.yusuf1985
 dat$grp_ratios <- round(dat$n1i / dat$n2i, 2)
@@ -29,10 +31,10 @@ test_that("results are correct for the analysis using Peto's method.", {
    out <- capture.output(print(summary(res))) ### so that print.rma.peto() is run (at least once) with showfit=TRUE
 
    sav <- predict(res, transf=exp)
-   tmp <- round(c(sav$pred, sav$ci.lb, sav$ci.ub), 2)
+   tmp <- c(sav$pred, sav$ci.lb, sav$ci.ub)
 
    ### compare with results on page 107
-   expect_equivalent(tmp, c(.93, .74, 1.18))
+   expect_equivalent(tmp, c(.9332, .7385, 1.1792), tolerance=.tol[["pred"]])
 
 })
 
@@ -43,9 +45,9 @@ test_that("results are correct for the analysis using the inverse-variance metho
 
    expect_warning(res <- rma(yi, vi, data=dat, method="FE"))
    sav <- predict(res, transf=exp)
-   tmp <- round(c(sav$pred, sav$ci.lb, sav$ci.ub), 2)
+   tmp <- c(sav$pred, sav$ci.lb, sav$ci.ub)
 
    ### compare with results on page 107
-   expect_equivalent(tmp, c(.93, .74, 1.18))
+   expect_equivalent(tmp, c(.9332, .7385, 1.1792), tolerance=.tol[["pred"]])
 
 })

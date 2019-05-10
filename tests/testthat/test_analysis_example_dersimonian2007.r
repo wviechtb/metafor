@@ -2,6 +2,8 @@
 
 ### see also: http://www.metafor-project.org/doku.php/analyses:dersimonian2007
 
+source("tolerances.r") # read in tolerances
+
 context("Checking analysis example: dersimonian2007")
 
 ### data for the CLASP example
@@ -46,10 +48,12 @@ test_that("results are correct for the CLASP example.", {
    tmp <- round(t(results), 4)
 
    ### compare with results on page 111-112 (Tables 3 and 4)
-   expected <- structure(c( 0.3681,  0.441,   0.2323,  0.3831,  0.3254,  0.3681,  0.0023,  0.1843,  0.1330,  0.4572,  0.4084,
+   expected <- structure(c( 0.3681,  0.4410,  0.2323,  0.3831,  0.3254,  0.3681,  0.0023,  0.1843,  0.1330,  0.4572,  0.4084,
                            -0.3811, -0.4035, -0.3240, -0.3861, -0.3655, -0.3811, -0.1974, -0.2980, -0.2666, -0.4079, -0.3941,
                             0.2060,  0.2327,  0.1540,  0.2115,  0.1901,  0.2060,  0.0694,  0.1343,  0.1125,  0.2386,  0.2208),
                           .Dim = c(11L, 3L), .Dimnames = list(c("PM", "CA", "DL", "CA2", "DL2", "EB", "ML", "REML", "HS", "SJ", "SJ2"), c("tau", "mu", "se")))
-   expect_equivalent(tmp, expected)
+   expect_equivalent(tmp[,1], expected[,1], tolerance=.tol[["var"]])
+   expect_equivalent(tmp[,2], expected[,2], tolerance=.tol[["coef"]])
+   expect_equivalent(tmp[,3], expected[,3], tolerance=.tol[["se"]])
 
 })

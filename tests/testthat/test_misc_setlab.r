@@ -2,6 +2,8 @@
 
 context("Checking misc: .setlab() function")
 
+source("tolerances.r") # read in tolerances
+
 yi <- c(-.3, -.1, 0, .2, .2)
 vi <- rep(.02, length(yi))
 

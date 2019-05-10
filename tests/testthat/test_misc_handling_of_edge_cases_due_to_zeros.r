@@ -2,6 +2,8 @@
 
 context("Checking misc: handling of edge cases due to zeros")
 
+source("tolerances.r") # read in tolerances
+
 test_that("rma.peto(), rma.mh(), and rma.glmm() handle outcome1 never occurring properly.", {
 
    ai <- c(0,0,0,0)

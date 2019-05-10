@@ -4,6 +4,8 @@
 
 context("Checking analysis example: viechtbauer2005")
 
+source("tolerances.r") # read in tolerances
+
 ### create dataset for example 1
 dat <- data.frame(
 id=1:10,
@@ -22,16 +24,16 @@ test_that("results are correct for example 1.", {
 
    res <- list(res.HS, res.HE, res.DL, res.ML, res.REML, res.EB, res.SJ)
    res <- data.frame(method=sapply(res, function(x) x$method),
-                     tau2=sapply(res, function(x) round(x$tau2,3)),
-                     I2=sapply(res, function(x) round(x$I2,2)),
-                     H2=sapply(res, function(x) round(x$H2,2)),
-                     se.tau2=sapply(res, function(x) round(x$se.tau2, 4)))
+                     tau2=sapply(res, function(x) x$tau2),
+                     I2=sapply(res, function(x) x$I2),
+                     H2=sapply(res, function(x) x$H2),
+                     se.tau2=sapply(res, function(x) x$se.tau2))
 
    ### compare with results on page 271
-   expect_equivalent(res$tau2,    c(0.228, 0.148, 0.277, 0.197, 0.223, 0.192, 0.199))
-   expect_equivalent(res$I2,      c(77.23, 68.80, 80.44, 74.51, 76.84, 74.05, 74.75))
-   expect_equivalent(res$H2,      c(4.39, 3.21, 5.11, 3.92, 4.32, 3.85, 3.96))
-   expect_equivalent(res$se.tau2, c(0.1328, 0.1234, 0.1841, 0.1255, 0.1464, 0.133, 0.0979))
+   expect_equivalent(res$tau2,    c(0.2282, 0.1484, 0.2768, 0.1967, 0.2232, 0.192, 0.1992), tolerance=.tol[["var"]])
+   expect_equivalent(res$I2,      c(77.2284, 68.7988, 80.4447, 74.5098, 76.8399, 74.0511, 74.7545), tolerance=.tol[["het"]])
+   expect_equivalent(res$H2,      c(4.3914, 3.205, 5.1137, 3.9231, 4.3178, 3.8537, 3.9611), tolerance=.tol[["het"]])
+   expect_equivalent(res$se.tau2, c(0.1328, 0.1234, 0.1841, 0.1255, 0.1464, 0.133, 0.0979), tolerance=.tol[["sevar"]])
 
 })
 
@@ -54,15 +56,15 @@ test_that("results are correct for example 2.", {
    res <- list(res.HS, res.HE, res.DL, res.ML, res.REML, res.EB, res.SJ)
 
    res <- data.frame(method=sapply(res, function(x) x$method),
-                     tau2=sapply(res, function(x) round(x$tau2,3)),
-                     I2=sapply(res, function(x) round(x$I2,2)),
-                     H2=sapply(res, function(x) round(x$H2,2)),
+                     tau2=sapply(res, function(x) round(x$tau2,4)),
+                     I2=sapply(res, function(x) round(x$I2,4)),
+                     H2=sapply(res, function(x) round(x$H2,4)),
                      se.tau2=sapply(res, function(x) round(x$se.tau2, 4)))
 
    ### compare with results on page 272
-   expect_equivalent(res$tau2,    c(0.010, 0.000, 0.013, 0.013, 0.016, 0.010, 0.025))
-   expect_equivalent(res$I2,      c(22.93, 0.00, 27.53, 28.45, 32.02, 23.72, 42.67))
-   expect_equivalent(res$H2,      c(1.30, 1.00, 1.38, 1.40, 1.47, 1.31, 1.74))
-   expect_equivalent(res$se.tau2, c(0.0138, 0.0217, 0.0159, 0.0151, 0.0167, 0.0156, 0.0118))
+   expect_equivalent(res$tau2,    c(0.0099, 0, 0.0126, 0.0132, 0.0157, 0.0104, 0.0248), tolerance=.tol[["var"]])
+   expect_equivalent(res$I2,      c(22.9266, 0, 27.5275, 28.4505, 32.0203, 23.7198, 42.6734), tolerance=.tol[["het"]])
+   expect_equivalent(res$H2,      c(1.2975, 1, 1.3798, 1.3976, 1.471, 1.311, 1.7444), tolerance=.tol[["het"]])
+   expect_equivalent(res$se.tau2, c(0.0138, 0.0217, 0.0159, 0.0151, 0.0167, 0.0156, 0.0118), tolerance=.tol[["sevar"]])
 
 })

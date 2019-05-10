@@ -2,6 +2,8 @@
 
 context("Checking misc: rma() function with location-scale models")
 
+source("tolerances.r") # read in tolerances
+
 test_that("location-scale model results are correct for in intercept-only model", {
 
    data(dat.bcg, package="metafor")
@@ -10,8 +12,8 @@ test_that("location-scale model results are correct for in intercept-only model"
    res1 <- rma(yi, vi, data=dat, test="t")
    res2 <- rma(yi, vi, scale = ~ 1, data=dat, test="t", control=list(optimizer="optim"))
    res3 <- suppressWarnings(rma(yi, vi, scale = ~ 1, link="identity", data=dat, test="t", control=list(optimizer="optim", optmethod="Nelder-Mead")))
-   expect_equivalent(round(res1$tau2, 3), round(as.vector(exp(coef(res2)$alpha)), 3))
-   expect_equivalent(round(res1$tau2, 3), round(as.vector(coef(res3)$alpha), 3))
+   expect_equivalent(res1$tau2, as.vector(exp(coef(res2)$alpha)), tolerance=.tol[["var"]])
+   expect_equivalent(res1$tau2, as.vector(coef(res3)$alpha), tolerance=.tol[["var"]])
 
 })
 
@@ -23,8 +25,8 @@ test_that("location-scale model results are correct for a categorical predictor"
    res1 <- rma(yi ~ alloc, vi, scale = ~ alloc - 1, data=dat)
    res2 <- rma(yi ~ alloc, vi, scale = ~ alloc - 1, link = "identity", data=dat)
    res3 <- rma.mv(yi ~ alloc, vi, random = ~ alloc | trial, struct="DIAG", data=dat)
-   expect_equivalent(round(as.vector(exp(coef(res1)$alpha)), 3), round(as.vector(coef(res2)$alpha), 3))
-   expect_equivalent(round(as.vector(exp(coef(res1)$alpha)), 3), round(res3$tau2, 3))
+   expect_equivalent(as.vector(exp(coef(res1)$alpha)), as.vector(coef(res2)$alpha), tolerance=.tol[["var"]])
+   expect_equivalent(as.vector(exp(coef(res1)$alpha)), res3$tau2, tolerance=.tol[["var"]])
 
 })
 
@@ -37,36 +39,31 @@ test_that("location-scale model results are correct for a continuous predictor",
    dat$ni[dat$study == "Whitlock"] <- dat$ni[dat$study == "Whitlock"] + 2
 
    res <- suppressWarnings(rma(yi, vi, scale = ~ I(1/ni) - 1, link="identity", data=dat, method="ML"))
-   expect_equivalent(round(as.vector(coef(res)$alpha), 3), 79.108)
-   expect_equivalent(round(exp(c(res$beta, res$ci.lb, res$ci.ub)), 3), c(0.854, 0.548, 1.330))
+   expect_equivalent(round(as.vector(coef(res)$alpha), 4), 79.1084)
+   expect_equivalent(round(exp(c(res$beta, res$ci.lb, res$ci.ub)), 4), c(0.8539, 0.5482, 1.3302))
 
    res <- rma(yi, vi, scale = ~ I(1/ni), link="identity", data=dat, method="ML")
-   expect_equivalent(round(as.vector(coef(res)$alpha), 3), c(0.275, 31.513))
-   expect_equivalent(round(exp(c(res$beta, res$ci.lb, res$ci.ub)), 3), c(1.016, 0.621, 1.662))
+   expect_equivalent(round(as.vector(coef(res)$alpha), 4), c(0.2750, 31.5127))
+   expect_equivalent(round(exp(c(res$beta, res$ci.lb, res$ci.ub)), 4), c(1.0163, 0.6215, 1.6618))
 
    res <- rma(yi, vi, scale = ~ I(1/ni) - 1, data=dat)
-   expect_equivalent(round(as.vector(coef(res)$alpha), 3), -34.519)
-   expect_equivalent(round(exp(c(res$beta, res$ci.lb, res$ci.ub)), 3), c(1.125, 0.638, 1.984))
+   expect_equivalent(round(as.vector(coef(res)$alpha), 4), -34.5187)
+   expect_equivalent(round(exp(c(res$beta, res$ci.lb, res$ci.ub)), 4), c(1.1251, 0.6381, 1.9839))
 
    res <- rma(yi, vi, scale = ~ I(1/ni), data=dat)
-   expect_equivalent(round(as.vector(coef(res)$alpha), 3), c(-0.887, 42.407))
-   expect_equivalent(round(exp(c(res$beta, res$ci.lb, res$ci.ub)), 3), c(1.047, 0.624, 1.758))
+   expect_equivalent(round(as.vector(coef(res)$alpha), 4), c(-0.8868, 42.4065))
+   expect_equivalent(round(exp(c(res$beta, res$ci.lb, res$ci.ub)), 4), c(1.0474, 0.6242, 1.7577))
 
    sav <- coef(summary(res))
-   sav <- lapply(sav, round, 3)
 
-   expected <- structure(list(beta = structure(list(estimate = 0.046, se = 0.264, zval = 0.175, pval = 0.861, ci.lb = -0.471, ci.ub = 0.564),
-                  .Names = c("estimate", "se", "zval", "pval", "ci.lb", "ci.ub"), row.names = "intrcpt", class = "data.frame"),
-                  alpha = structure(list(estimate = c(-0.887, 42.407), se = c(1.239, 118.693), zval = c(-0.716, 0.357), pval = c(0.474, 0.721), ci.lb = c(-3.316, -190.228), ci.ub = c(1.542, 275.041)),
-                  .Names = c("estimate", "se", "zval", "pval", "ci.lb", "ci.ub"), row.names = c("intrcpt", "I(1/ni)"), class = "data.frame")),
-                  .Names = c("beta", "alpha"))
+   expected <- list(beta = structure(list(estimate = 0.0463, se = 0.2641, zval = 0.1755, pval = 0.8607, ci.lb = -0.4713, ci.ub = 0.564), row.names = "intrcpt", class = "data.frame"), alpha = structure(list(estimate = c(-0.8868, 42.4065), se = c(1.2392, 118.6932), zval = c(-0.7156, 0.3573), pval = c(0.4742, 0.7209 ), ci.lb = c(-3.3156, -190.228), ci.ub = c(1.542, 275.041 )), row.names = c("intrcpt", "I(1/ni)"), class = "data.frame"))
 
-   expect_equivalent(sav, expected)
+   expect_equivalent(sav, expected, tolerance=.tol[["misc"]])
 
    sav <- model.matrix(res)$scale
    expect_equivalent(sav, cbind(1, 1/dat$ni))
 
    sav <- fitted(res)$scale
-   expect_equivalent(round(sav,3), c(-0.479, -0.588, -0.831, -0.711, -0.494, -0.254, -0.661, -0.458, -0.542, -0.039, -0.039, -0.13, -0.405, -0.764, -0.357))
+   expect_equivalent(sav, c(-0.479, -0.588, -0.831, -0.711, -0.494, -0.254, -0.661, -0.458, -0.542, -0.039, -0.039, -0.13, -0.405, -0.764, -0.357), tolerance=.tol[["var"]])
 
 })
