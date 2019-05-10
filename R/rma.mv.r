@@ -463,6 +463,13 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
       if (any(!has.vbar))
          stop(mstyle$stop("All formulas in 'random' must contain a grouping variable after the | symbol."))
 
+      ### check if any formula have a $
+
+      has.dollar <- sapply(random, function(f) grepl("$", paste0(f, collapse=""), fixed=TRUE))
+
+      if (any(has.dollar))
+         stop(mstyle$stop("Cannot use '$' notation in formulas in the 'random' argument (use the 'data' argument instead)."))
+
       ### check which formulas in random are '~ inner | outer' formulas
 
       formulas <- list(NULL, NULL)
