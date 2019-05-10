@@ -510,6 +510,9 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
    if (any(lls >= logLik(x) + lltol, na.rm=TRUE))
       warning(mstyle$warning("At least one profiled log-likelihood value is larger than the log-likelihood of the fitted model."))
 
+   if (all(is.na(lls)))
+      warning(mstyle$warning("All model fits failed. Cannot draw profile likelihood plot."))
+
    beta  <- data.frame(beta)
    ci.lb <- data.frame(ci.lb)
    ci.ub <- data.frame(ci.ub)
@@ -519,7 +522,11 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
 
    if (missing(ylim)) {
 
-      ylim <- range(lls, na.rm=TRUE)
+      if (any(!is.na(lls))) {
+         ylim <- range(lls, na.rm=TRUE)
+      } else {
+         ylim <- rep(logLik(x), 2)
+      }
       ylim[1] <- ylim[1] - .1
       ylim[2] <- ylim[2] + .1
 
