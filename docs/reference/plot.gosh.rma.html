@@ -16,7 +16,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -146,7 +147,7 @@ plot(x, het="I2", pch=16, cex=0.5, out, col, alpha, border,
     </tr>
     <tr>
       <th>pch</th>
-      <td><p>plotting symbol to use. By default, a borderless filled circle is used. See <code><a href='https://www.rdocumentation.org/packages/graphics/topics/points'>points</a></code> for other options.</p></td>
+      <td><p>plotting symbol to use. By default, a borderless filled circle is used. See <code><a href='https://rdrr.io/r/graphics/points.html'>points</a></code> for other options.</p></td>
     </tr>
     <tr>
       <th>cex</th>
@@ -190,11 +191,11 @@ plot(x, het="I2", pch=16, cex=0.5, out, col, alpha, border,
     </tr>
     <tr>
       <th>breaks</th>
-      <td><p>optional argument passed on to <code><a href='https://www.rdocumentation.org/packages/graphics/topics/hist'>hist</a></code> for choosing the (number of) breakpoints of the histogram(s).</p></td>
+      <td><p>optional argument passed on to <code><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></code> for choosing the (number of) breakpoints of the histogram(s).</p></td>
     </tr>
     <tr>
       <th>adjust</th>
-      <td><p>optional argument passed on to <code><a href='https://www.rdocumentation.org/packages/stats/topics/density'>density</a></code> for adjusting the bandwidth of the kernel density estimate(s) (values larger than 1 result in more smoothing).</p></td>
+      <td><p>optional argument passed on to <code><a href='https://rdrr.io/r/stats/density.html'>density</a></code> for adjusting the bandwidth of the kernel density estimate(s) (values larger than 1 result in more smoothing).</p></td>
     </tr>
     <tr>
       <th>lwd</th>
@@ -202,7 +203,7 @@ plot(x, het="I2", pch=16, cex=0.5, out, col, alpha, border,
     </tr>
     <tr>
       <th>labels</th>
-      <td><p>optional argument to specify the x-axis and y-axis labels (or passed on to <code><a href='https://www.rdocumentation.org/packages/graphics/topics/pairs'>pairs</a></code> for specifying the names of the variables in the scatterplot matrix).</p></td>
+      <td><p>optional argument to specify the x-axis and y-axis labels (or passed on to <code><a href='https://rdrr.io/r/graphics/pairs.html'>pairs</a></code> for specifying the names of the variables in the scatterplot matrix).</p></td>
     </tr>
     <tr>
       <th>&#8230;</th>
@@ -213,7 +214,7 @@ plot(x, het="I2", pch=16, cex=0.5, out, col, alpha, border,
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>For models without moderators, the function draws a scatterplot of the model estimates on the x-axis against the chosen measure of heterogeneity on the y-axis. Histograms of the respective distributions (with kernel density estimates superimposed) are shown in the margins (when <code>xhist=TRUE</code> and <code>yhist=TRUE</code>).</p>
-<p>For models with moderators, the function draws a scatterplot matrix (with the <code><a href='https://www.rdocumentation.org/packages/graphics/topics/pairs'>pairs</a></code> function) of the chosen measure of heterogeneity and each of the model coefficients. Histograms of the variables plotted are shown along the diagonal, with kernel density estimates of the distributions superimposed. Arguments <code>xlim</code>, <code>ylim</code>, <code>xhist</code>, and <code>yhist</code> are then ignored (argument <code>hh</code> can then be used to compress/stretch the height of the distributions shown along the diagonal).</p>
+<p>For models with moderators, the function draws a scatterplot matrix (with the <code><a href='https://rdrr.io/r/graphics/pairs.html'>pairs</a></code> function) of the chosen measure of heterogeneity and each of the model coefficients. Histograms of the variables plotted are shown along the diagonal, with kernel density estimates of the distributions superimposed. Arguments <code>xlim</code>, <code>ylim</code>, <code>xhist</code>, and <code>yhist</code> are then ignored (argument <code>hh</code> can then be used to compress/stretch the height of the distributions shown along the diagonal).</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
@@ -234,7 +235,7 @@ plot(x, het="I2", pch=16, cex=0.5, out, col, alpha, border,
 <span class='co'>### create GOSH plot</span>
 <span class='co'>### red points for subsets that include and blue points</span>
 <span class='co'>### for subsets that exclude study 16 (the ISIS-4 trial)</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>sav</span>, <span class='kw'>out</span><span class='kw'>=</span><span class='fl'>16</span>, <span class='kw'>breaks</span><span class='kw'>=</span><span class='fl'>100</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>sav</span>, <span class='kw'>out</span><span class='kw'>=</span><span class='fl'>16</span>, <span class='kw'>breaks</span><span class='kw'>=</span><span class='fl'>100</span>)
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -262,7 +263,7 @@ plot(x, het="I2", pch=16, cex=0.5, out, col, alpha, border,
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
 </div>
       </footer>
    </div>

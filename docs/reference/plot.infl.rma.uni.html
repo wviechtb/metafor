@@ -16,7 +16,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -166,11 +167,11 @@ plot(x, plotinf=TRUE, plotdfbs=FALSE, dfbsnew=FALSE, logcov=TRUE,
     </tr>
     <tr>
       <th>las</th>
-      <td><p>integer between 0 and 3 to specify the alignment of the axis labels (see <code><a href='https://www.rdocumentation.org/packages/graphics/topics/par'>par</a></code>). The most useful alternative to 0 is 3, so that the x-axis labels are drawn vertical to the axis.</p></td>
+      <td><p>integer between 0 and 3 to specify the alignment of the axis labels (see <code><a href='https://rdrr.io/r/graphics/par.html'>par</a></code>). The most useful alternative to 0 is 3, so that the x-axis labels are drawn vertical to the axis.</p></td>
     </tr>
     <tr>
       <th>pch</th>
-      <td><p>plotting symbol to use. By default, a filled circle is used. See <code><a href='https://www.rdocumentation.org/packages/graphics/topics/points'>points</a></code> for other options.</p></td>
+      <td><p>plotting symbol to use. By default, a filled circle is used. See <code><a href='https://rdrr.io/r/graphics/points.html'>points</a></code> for other options.</p></td>
     </tr>
     <tr>
       <th>bg</th>
@@ -217,7 +218,7 @@ plot(x, plotinf=TRUE, plotdfbs=FALSE, dfbsnew=FALSE, logcov=TRUE,
 <span class='co'>### with two moderators (absolute latitude and publication year)</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>,
            <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>ablat</span> + <span class='no'>year</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm.influence'>influence</a></span>(<span class='no'>res</span>))</div><div class='img'><img src='plot.infl.rma.uni-1.png' alt='' width='768' height='614' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm.influence'>influence</a></span>(<span class='no'>res</span>), <span class='kw'>plotinf</span><span class='kw'>=</span><span class='fl'>1</span>:<span class='fl'>4</span>)</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm.influence'>influence</a></span>(<span class='no'>res</span>), <span class='kw'>plotinf</span><span class='kw'>=</span><span class='fl'>1</span>:<span class='fl'>4</span>, <span class='kw'>layout</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>4</span>,<span class='fl'>1</span>))</div><div class='img'><img src='plot.infl.rma.uni-2.png' alt='' width='768' height='614' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm.influence'>influence</a></span>(<span class='no'>res</span>), <span class='kw'>plotdfbs</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>dfbsnew</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='message'>dev.new(): using pdf(file="Rplots45.pdf")</span></div></pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/lm.influence.html'>influence</a></span>(<span class='no'>res</span>))</div><div class='img'><img src='plot.infl.rma.uni-1.png' alt='' width='768' height='614' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/lm.influence.html'>influence</a></span>(<span class='no'>res</span>), <span class='kw'>plotinf</span><span class='kw'>=</span><span class='fl'>1</span>:<span class='fl'>4</span>)</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/lm.influence.html'>influence</a></span>(<span class='no'>res</span>), <span class='kw'>plotinf</span><span class='kw'>=</span><span class='fl'>1</span>:<span class='fl'>4</span>, <span class='kw'>layout</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>4</span>,<span class='fl'>1</span>))</div><div class='img'><img src='plot.infl.rma.uni-2.png' alt='' width='768' height='614' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/lm.influence.html'>influence</a></span>(<span class='no'>res</span>), <span class='kw'>plotdfbs</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>dfbsnew</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='message'>dev.new(): using pdf(file="Rplots45.pdf")</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -244,7 +245,7 @@ plot(x, plotinf=TRUE, plotdfbs=FALSE, dfbsnew=FALSE, logcov=TRUE,
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
 </div>
       </footer>
    </div>

@@ -352,12 +352,9 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
          ### get diff value when setting component to vc.min; this value should be positive (i.e., discrepancy must be larger than critical value)
          ### if it is not, then the lower bound must be below vc.min
 
-         epdiff <- seq(0, abs(con$vc.min - vc), length=con$eptries+1) ### e.g., if vc.min=0, vc=.5, and eptries=10, then get 0, .05, .10, ..., .50
-         epdiff <- epdiff[-(con$eptries+1)]                           ### this then strips the last entry (.50), so we get 0, .05, .10, ..., .45
+         epdiff <- abs(con$vc.min - vc) / con$eptries
 
          for (i in seq_len(con$eptries)) {
-
-            con$vc.min <- con$vc.min + epdiff[i]
 
             res <- try(.profile.rma.mv(val = con$vc.min, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, CI=TRUE, objective=objective, verbose=verbose), silent=TRUE)
 
@@ -393,6 +390,8 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
 
             }
 
+            con$vc.min <- con$vc.min + epdiff
+
          }
 
          if (verbose)
@@ -405,12 +404,9 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
          ### get diff value when setting component to vc.max; this value should be positive (i.e., discrepancy must be larger than critical value)
          ### if it is not, then the upper bound must be above vc.max
 
-         epdiff <- seq(0, abs(con$vc.max - vc), length=con$eptries+1) ### e.g., if vc.max=1, vc=.5, and eptries=10, then get 0, .05, .10, ..., .50
-         epdiff <- epdiff[-(con$eptries+1)]                           ### this then strips the last entry (.50), so we get 0, .05, .10, ..., .45
+         epdiff <- abs(con$vc.max - vc) / con$eptries
 
          for (i in seq_len(con$eptries)) {
-
-            con$vc.max <- con$vc.max - epdiff[i]
 
             res <- try(.profile.rma.mv(val = con$vc.max, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, CI=TRUE, objective=objective, verbose=verbose), silent=TRUE)
 
@@ -445,6 +441,8 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
                break
 
             }
+
+            con$vc.max <- con$vc.max - epdiff
 
          }
 

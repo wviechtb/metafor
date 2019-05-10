@@ -16,7 +16,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -167,16 +168,16 @@ formula(x, type="mods", &#8230;)</pre>
 
 <span class='co'>### calculate log risk ratios and corresponding sampling variances</span>
 <span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>,
-              <span class='kw'>slab</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste</a></span>(<span class='no'>dat</span>$<span class='no'>author</span>, <span class='st'>", "</span>, <span class='no'>dat</span>$<span class='no'>year</span>, <span class='kw'>sep</span><span class='kw'>=</span><span class='st'>""</span>))
+              <span class='kw'>slab</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='no'>dat</span>$<span class='no'>author</span>, <span class='st'>", "</span>, <span class='no'>dat</span>$<span class='no'>year</span>, <span class='kw'>sep</span><span class='kw'>=</span><span class='st'>""</span>))
 
 <span class='co'>### mixed-effects meta-regression model</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>ablat</span> + <span class='no'>alloc</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/formula'>formula</a></span>(<span class='no'>res</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"mods"</span>)</div><div class='output co'>#&gt; ~ablat + alloc
-#&gt; &lt;environment: 0xfdb2570&gt;</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/stats/formula.html'>formula</a></span>(<span class='no'>res</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"mods"</span>)</div><div class='output co'>#&gt; ~ablat + alloc
+#&gt; &lt;environment: 0xcc21318&gt;</div><div class='input'>
 <span class='co'>### specify moderators via 'yi' argument</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span> ~ <span class='no'>ablat</span> + <span class='no'>alloc</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/formula'>formula</a></span>(<span class='no'>res</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"yi"</span>)</div><div class='output co'>#&gt; yi ~ ablat + alloc
-#&gt; &lt;environment: 0xe1cbcc8&gt;</div></pre>
+<span class='fu'><a href='https://rdrr.io/r/stats/formula.html'>formula</a></span>(<span class='no'>res</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"yi"</span>)</div><div class='output co'>#&gt; yi ~ ablat + alloc
+#&gt; &lt;environment: 0xe5c8550&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -203,7 +204,7 @@ formula(x, type="mods", &#8230;)</pre>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
 </div>
       </footer>
    </div>
