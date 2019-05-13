@@ -11,7 +11,7 @@ data(dat.collins1985b, package="metafor")
 dat <- dat.collins1985b[,1:7]
 dat <- escalc(measure="OR", ai=pre.xti, n1i=pre.nti, ci=pre.xci, n2i=pre.nci, data=dat)
 
-### note: results are compared with those in Table II on page 44 (but with less rounding below)
+### note: results are compared with those in Table II on page 44 (but without rounding)
 
 test_that("the heterogeneity estimates are correct.", {
 

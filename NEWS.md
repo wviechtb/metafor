@@ -1,4 +1,4 @@
-# metafor 2.1-0 (2019-05-10)
+# metafor 2.1-0 (2019-05-13)
 
 - added `formula()` method for objects of class `rma`
 

@@ -56,10 +56,10 @@ test_that("results are correct for example 2.", {
    res <- list(res.HS, res.HE, res.DL, res.ML, res.REML, res.EB, res.SJ)
 
    res <- data.frame(method=sapply(res, function(x) x$method),
-                     tau2=sapply(res, function(x) round(x$tau2,4)),
-                     I2=sapply(res, function(x) round(x$I2,4)),
-                     H2=sapply(res, function(x) round(x$H2,4)),
-                     se.tau2=sapply(res, function(x) round(x$se.tau2, 4)))
+                     tau2=sapply(res, function(x) x$tau2),
+                     I2=sapply(res, function(x) x$I2),
+                     H2=sapply(res, function(x) x$H2),
+                     se.tau2=sapply(res, function(x) x$se.tau2))
 
    ### compare with results on page 272
    expect_equivalent(res$tau2,    c(0.0099, 0, 0.0126, 0.0132, 0.0157, 0.0104, 0.0248), tolerance=.tol[["var"]])

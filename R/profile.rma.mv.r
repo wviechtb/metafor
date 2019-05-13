@@ -259,7 +259,7 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
          vc.ub <- max(.1, vc*4) ### new method
       }
       if (comp == "tau2") {
-         if (is.element(x$struct[1], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYPL"))) {
+         if (is.element(x$struct[1], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYPL","PHYPD"))) {
             vc.lb <- max( 0, vc/2)
             vc.ub <- max(.1, vc*2)
          } else {
@@ -268,7 +268,7 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
          }
       }
       if (comp == "gamma2") {
-         if (is.element(x$struct[2], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYPL"))) {
+         if (is.element(x$struct[2], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYPL","PHYPD"))) {
             vc.lb <- max( 0, vc/2)
             vc.ub <- max(.1, vc*2)
          } else {
@@ -281,11 +281,11 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
             vc.lb <- max(0, vc-.5)
             vc.ub <- min(+.99999, vc+.5)
          }
-         if (is.element(x$struct[1], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYPL"))) {
+         if (is.element(x$struct[1], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYPL","PHYPD"))) {
             vc.lb <- vc/2
             vc.ub <- vc*2
          }
-         if (!is.element(x$struct[1], c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYPL"))) {
+         if (!is.element(x$struct[1], c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYPL","PHYPD"))) {
             vc.lb <- max(-.99999, vc-.5)
             vc.ub <- min(+.99999, vc+.5)
          }
@@ -295,11 +295,11 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
             vc.lb <- max(0, vc-.5)
             vc.ub <- min(+.99999, vc+.5)
          }
-         if (is.element(x$struct[2], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYPL"))) {
+         if (is.element(x$struct[2], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYPL","PHYPD"))) {
             vc.lb <- vc/2
             vc.ub <- vc*2
          }
-         if (!is.element(x$struct[2], c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYPL"))) {
+         if (!is.element(x$struct[2], c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYPL","PHYPD"))) {
             vc.lb <- max(-.99999, vc-.5)
             vc.ub <- min(+.99999, vc+.5)
          }
@@ -324,19 +324,19 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
             stop(mstyle$stop("Lower bound for profiling must be >= 0."))
       }
       if (comp == "rho") {
-         if (is.element(x$struct[1], c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYPL")) && xlim[1] < 0)
+         if (is.element(x$struct[1], c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYPL","PHYPD")) && xlim[1] < 0)
             stop(mstyle$stop("Lower bound for profiling must be >= 0."))
          if (xlim[1] < -1)
             stop(mstyle$stop("Lower bound for profiling must be >= -1."))
-         if (!is.element(x$struct[1], c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYPL")) && xlim[2] > 1)
+         if (!is.element(x$struct[1], c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYPL","PHYPD")) && xlim[2] > 1)
             stop(mstyle$stop("Upper bound for profiling must be <= -1."))
       }
       if (comp == "phi") {
-         if (is.element(x$struct[2], c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYPL")) && xlim[1] < 0)
+         if (is.element(x$struct[2], c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYPL","PHYPD")) && xlim[1] < 0)
             stop(mstyle$stop("Lower bound for profiling must be >= 0."))
          if (xlim[1] < -1)
             stop(mstyle$stop("Lower bound for profiling must be >= -1."))
-         if (!is.element(x$struct[2], c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYPL")) && xlim[2] > 1)
+         if (!is.element(x$struct[2], c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYPL","PHYPD")) && xlim[2] > 1)
             stop(mstyle$stop("Upper bound for profiling must be <= -1."))
       }
 

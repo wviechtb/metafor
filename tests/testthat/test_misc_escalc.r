@@ -239,7 +239,6 @@ test_that("escalc() works correctly for measure='MPORC'", {
 test_that("escalc() works correctly for measure='MPPETO'", {
 
    dat <- escalc(measure="MPPETO", ai=20, bi=10, ci=5, di=20)
-   expect_equivalent(round(c(dat$yi, dat$vi), 4), c(0.6667, 0.2667))
    expect_equivalent(dat$yi, 0.6667, tolerance=.tol[["est"]])
    expect_equivalent(dat$vi, 0.2667, tolerance=.tol[["var"]])
 

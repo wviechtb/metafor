@@ -35,7 +35,7 @@ test_that("transformations work correctly.", {
 
    expect_equivalent(transf.exp.int(log(.5), targs=list(tau2=0)), .5)
    expect_equivalent(transf.exp.int(log(.5), targs=list(tau2=0.1)), 0.525635, tolerance=.tol[["est"]])
-   expect_equivalent(transf.exp.int(log(.5), targs=list(tau2=0.1, lower=-10, upper=10)), round(exp(log(.5) + 0.1/2), 6), tolerance=.tol[["est"]])
+   expect_equivalent(transf.exp.int(log(.5), targs=list(tau2=0.1, lower=-10, upper=10)), exp(log(.5) + 0.1/2), tolerance=.tol[["est"]])
 
    expect_equivalent(transf.ilogit.int(transf.logit(.1), targs=list(tau2=0)), .1)
    expect_equivalent(transf.ilogit.int(transf.logit(.1), targs=list(tau2=0.1)), 0.103591, tolerance=.tol[["est"]])

@@ -168,6 +168,6 @@ test_that("results are correct for example 2.", {
    out <- capture.output(print(sav))
 
    sav <- predict(modI)
-   expect_equivalent(round(sav$cr.lb, 3), c(-4.029, -1.2853, -1.2853, -1.2853, -1.2853, -1.2853, -0.4911, -0.4911, -1.137, -1.137, -4.029, -2.7699, -1.2853, -0.4911, -1.2853, -0.4911), tolerance=.tol[["pred"]])
+   expect_equivalent(sav$cr.lb, c(-4.029, -1.2853, -1.2853, -1.2853, -1.2853, -1.2853, -0.4911, -0.4911, -1.137, -1.137, -4.029, -2.7699, -1.2853, -0.4911, -1.2853, -0.4911), tolerance=.tol[["pred"]])
 
 })

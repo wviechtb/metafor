@@ -39,20 +39,20 @@ test_that("location-scale model results are correct for a continuous predictor",
    dat$ni[dat$study == "Whitlock"] <- dat$ni[dat$study == "Whitlock"] + 2
 
    res <- suppressWarnings(rma(yi, vi, scale = ~ I(1/ni) - 1, link="identity", data=dat, method="ML"))
-   expect_equivalent(round(as.vector(coef(res)$alpha), 4), 79.1084)
-   expect_equivalent(round(exp(c(res$beta, res$ci.lb, res$ci.ub)), 4), c(0.8539, 0.5482, 1.3302))
+   expect_equivalent(as.vector(coef(res)$alpha), 79.1084, tolerance=.tol[["var"]])
+   expect_equivalent(exp(c(res$beta, res$ci.lb, res$ci.ub)), c(0.8539, 0.5482, 1.3302), tolerance=.tol[["coef"]])
 
    res <- rma(yi, vi, scale = ~ I(1/ni), link="identity", data=dat, method="ML")
-   expect_equivalent(round(as.vector(coef(res)$alpha), 4), c(0.2750, 31.5127))
-   expect_equivalent(round(exp(c(res$beta, res$ci.lb, res$ci.ub)), 4), c(1.0163, 0.6215, 1.6618))
+   expect_equivalent(as.vector(coef(res)$alpha), c(0.2750, 31.5127), tolerance=.tol[["var"]])
+   expect_equivalent(exp(c(res$beta, res$ci.lb, res$ci.ub)), c(1.0163, 0.6215, 1.6618), tolerance=.tol[["coef"]])
 
    res <- rma(yi, vi, scale = ~ I(1/ni) - 1, data=dat)
-   expect_equivalent(round(as.vector(coef(res)$alpha), 4), -34.5187)
-   expect_equivalent(round(exp(c(res$beta, res$ci.lb, res$ci.ub)), 4), c(1.1251, 0.6381, 1.9839))
+   expect_equivalent(as.vector(coef(res)$alpha), -34.5187, tolerance=.tol[["var"]])
+   expect_equivalent(exp(c(res$beta, res$ci.lb, res$ci.ub)), c(1.1251, 0.6381, 1.9839), tolerance=.tol[["coef"]])
 
    res <- rma(yi, vi, scale = ~ I(1/ni), data=dat)
-   expect_equivalent(round(as.vector(coef(res)$alpha), 4), c(-0.8868, 42.4065))
-   expect_equivalent(round(exp(c(res$beta, res$ci.lb, res$ci.ub)), 4), c(1.0474, 0.6242, 1.7577))
+   expect_equivalent(as.vector(coef(res)$alpha), c(-0.8868, 42.4065), tolerance=.tol[["var"]])
+   expect_equivalent(exp(c(res$beta, res$ci.lb, res$ci.ub)), c(1.0474, 0.6242, 1.7577), tolerance=.tol[["coef"]])
 
    sav <- coef(summary(res))
 

@@ -45,7 +45,7 @@ test_that("results are correct for the CLASP example.", {
    mu  = sapply(res.all, coef),
    se  = sapply(res.all, function(x) sqrt(vcov(x))))
    colnames(results) <- c("PM", "CA", "DL", "CA2", "DL2", "EB", "ML", "REML", "HS", "SJ", "SJ2")
-   tmp <- round(t(results), 4)
+   tmp <- t(results)
 
    ### compare with results on page 111-112 (Tables 3 and 4)
    expected <- structure(c( 0.3681,  0.4410,  0.2323,  0.3831,  0.3254,  0.3681,  0.0023,  0.1843,  0.1330,  0.4572,  0.4084,
