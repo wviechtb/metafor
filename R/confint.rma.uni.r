@@ -131,7 +131,7 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
       if (type == "QP") {
 
          if (!x$allvipos)
-            stop(mstyle$stop("Cannot compute confidence interval for the amount of (residual)\n  heterogeneity with non-positive sampling variances in the data."))
+            stop(mstyle$stop("Cannot compute CI for tau^2 when there are non-positive sampling variances in the data."))
 
          crit.u <- qchisq(level/2, k-p, lower.tail=FALSE) ### upper critical chi^2 value for df = k-p
          crit.l <- qchisq(level/2, k-p, lower.tail=TRUE)  ### lower critical chi^2 value for df = k-p
@@ -467,14 +467,10 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
 
       ######################################################################
 
-      W      <- diag(1/vi, nrow=k, ncol=k)
-      stXWX  <- .invcalc(X=X, W=W, k=k)
-      P      <- W - W %*% X %*% stXWX %*% crossprod(X,W)
-      vi.avg <- (k-p) / .tr(P)
-      I2.lb  <- 100 * tau2.lb / (vi.avg + tau2.lb)
-      I2.ub  <- 100 * tau2.ub / (vi.avg + tau2.ub)
-      H2.lb  <- tau2.lb / vi.avg + 1
-      H2.ub  <- tau2.ub / vi.avg + 1
+      I2.lb <- 100 * tau2.lb / (x$vt + tau2.lb)
+      I2.ub <- 100 * tau2.ub / (x$vt + tau2.ub)
+      H2.lb <- tau2.lb / x$vt + 1
+      H2.ub <- tau2.ub / x$vt + 1
 
       tau2 <- c(x$tau2, tau2.lb, tau2.ub)
       tau  <- sqrt(c(ifelse(x$tau2 >= 0, x$tau2, NA), ifelse(tau2.lb >= 0, tau2.lb, NA), ifelse(tau2.ub >= 0, tau2.ub, NA)))

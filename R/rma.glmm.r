@@ -476,7 +476,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    if (k < 1)
       stop(mstyle$stop("Processing terminated since k = 0."))
 
-   ### check for NAs in yi/vi and act accordingly (yi/vi pair can be NA/NA is add=0 is used)
+   ### check for NAs in yi/vi and act accordingly (yi/vi pair can be NA/NA if add=0 is used)
    ### note: if a table was removed because of NAs in mods, must also remove the corresponding yi/vi pair;
    ###       also, must use mods.f here, since NAs in mods were already removed above (and need a separate
    ###       mods.yi element, so that dimensions of the model matrix and vi are guaranteed to match up)
@@ -1766,15 +1766,15 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    ### calculation of I^2 and H^2
 
-   wi      <- 1/vi
-   W       <- diag(wi, nrow=k.yi, ncol=k.yi)
-   stXWX   <- .invcalc(X=X.yi, W=W, k=k.yi)
-   P       <- W - W %*% X.yi %*% stXWX %*% crossprod(X.yi,W)
-   #vi.avg <- (k-1) / (sum(wi) - sum(wi^2)/sum(wi)) ### this only applies to the RE model
-   #vi.avg <- 1/mean(wi) ### harmonic mean of vi's (see Takkouche et al., 1999)
-   vi.avg  <- (k.yi-p) / .tr(P)
-   I2      <- 100 * tau2 / (vi.avg + tau2)
-   H2      <- tau2 / vi.avg + 1
+   wi    <- 1/vi
+   W     <- diag(wi, nrow=k.yi, ncol=k.yi)
+   stXWX <- .invcalc(X=X.yi, W=W, k=k.yi)
+   P     <- W - W %*% X.yi %*% stXWX %*% crossprod(X.yi,W)
+   #vt   <- (k-1) / (sum(wi) - sum(wi^2)/sum(wi)) ### this only applies to the RE model
+   #vt   <- 1/mean(wi) ### harmonic mean of vi's (see Takkouche et al., 1999)
+   vt    <- (k.yi-p) / .tr(P)
+   I2    <- 100 * tau2 / (vt + tau2)
+   H2    <- tau2 / vt + 1
 
    chol.h <- try(chol(vb[btt,btt]), silent=!verbose) ### see if Hessian can be inverted with chol()
 
@@ -1861,7 +1861,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
                   tau2=tau2, se.tau2=se.tau2, sigma2=sigma2,
                   k=k, k.f=k.f, k.yi=k.yi, k.eff=k.eff, k.all=k.all, p=p, p.eff=p.eff, parms=parms, m=m,
-                  QE.Wld=QE.Wld, QEp.Wld=QEp.Wld, QE.LRT=QE.LRT, QEp.LRT=QEp.LRT, QE.df=QE.df, QM=QM, QMp=QMp, I2=I2, H2=H2,
+                  QE.Wld=QE.Wld, QEp.Wld=QEp.Wld, QE.LRT=QE.LRT, QEp.LRT=QEp.LRT, QE.df=QE.df, QM=QM, QMp=QMp, I2=I2, H2=H2, vt=vt,
                   int.only=int.only, int.incl=int.incl,
                   yi=yi, vi=vi, X=X, yi.f=yi.f, vi.f=vi.f, X.f=X.f,
                   ai=ai, bi=bi, ci=ci, di=di, ai.f=ai.f, bi.f=bi.f, ci.f=ci.f, di.f=di.f,

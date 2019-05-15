@@ -972,7 +972,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
       if (method == "HS") {
 
          if (!allvipos)
-            stop(mstyle$stop("HS estimator cannot be used with non-positive sampling variances."))
+            stop(mstyle$stop("HS estimator cannot be used when there are non-positive sampling variances in the data."))
 
          wi    <- 1/vi
          W     <- diag(wi, nrow=k, ncol=k)
@@ -1002,7 +1002,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
       if (method == "DL") {
 
          if (!allvipos)
-            stop(mstyle$stop("DL estimator cannot be used with non-positive sampling variances."))
+            stop(mstyle$stop("DL estimator cannot be used when there are non-positive sampling variances in the data."))
 
          wi    <- 1/vi
          W     <- diag(wi, nrow=k, ncol=k)
@@ -1062,7 +1062,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
       if (method == "GENQ") {
 
          #if (!allvipos)
-         #   stop(mstyle$stop("GENQ estimator cannot be used with non-positive sampling variances."))
+         #   stop(mstyle$stop("GENQ estimator cannot be used when there are non-positive sampling variances in the data."))
 
          if (is.null(weights))
             stop(mstyle$stop("Must specify 'weights' when method='GENQ'."))
@@ -1200,7 +1200,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
       if (method == "PM") {
 
          if (!allvipos)
-            stop(mstyle$stop("PM estimator cannot be used with non-positive sampling variances."))
+            stop(mstyle$stop("PM estimator cannot be used when there are non-positive sampling variances in the data."))
 
          if (!tau2.fix) {
 
@@ -1244,7 +1244,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
       if (method == "PMM") {
 
          if (!allvipos)
-            stop(mstyle$stop("PMM estimator cannot be used with non-positive sampling variances."))
+            stop(mstyle$stop("PMM estimator cannot be used when there are non-positive sampling variances in the data."))
 
          if (!tau2.fix) {
 
@@ -1891,17 +1891,20 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
          #QE    <- max(0, sum(wi*(yi - X %*% beta.FE)^2))
          QEp   <- pchisq(QE, df=k-p, lower.tail=FALSE)
 
+         ### calculation of 'typical' sampling variance
+
+         #vt <- (k-1) / (sum(wi) - sum(wi^2)/sum(wi)) ### this only applies to the RE model
+         #vt <- 1/mean(wi) ### harmonic mean of vi's (see Takkouche et al., 1999)
+         vt <- (k-p) / .tr(P)
+
          ### calculation of I^2 and H^2
 
          if (method == "FE") {
             I2 <- max(0, 100 * (QE - (k-p)) / QE)
             H2 <- QE / (k-p)
          } else {
-            #vi.avg <- (k-1) / (sum(wi) - sum(wi^2)/sum(wi)) ### this only applies to the RE model
-            #vi.avg <- 1/mean(wi) ### harmonic mean of vi's (see Takkouche et al., 1999)
-            vi.avg  <- (k-p) / .tr(P)
-            I2      <- 100 * mean(tau2) / (vi.avg + mean(tau2)) ### must use mean(tau2) in case tau2 is vector from location-scale model
-            H2      <- mean(tau2) / vi.avg + 1                  ### must use mean(tau2) in case tau2 is vector from location-scale model
+            I2 <- 100 * mean(tau2) / (vt + mean(tau2)) ### must use mean(tau2) in case tau2 is vector from location-scale model
+            H2 <- mean(tau2) / vt + 1                  ### must use mean(tau2) in case tau2 is vector from location-scale model
          }
 
       } else {
@@ -1910,13 +1913,16 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
          QEp <- 1
          I2  <- 0
          H2  <- 1
+         vt  <- 0
 
       }
 
    } else {
 
       if (!vi0)
-         warning(mstyle$warning(paste0("Cannot compute ", ifelse(int.only, "Q", "QE"), "-test, I^2, or H^2 with non-positive sampling variances.")))
+         warning(mstyle$warning(paste0("Cannot compute ", ifelse(int.only, "Q", "QE"), "-test, I^2, or H^2 when there are non-positive sampling variances in the data.")))
+
+      vt <- NA
 
    }
 
@@ -2001,7 +2007,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
       res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
                   tau2=tau2, se.tau2=se.tau2, tau2.fix=tau2.fix, tau2.f=tau2,
                   k=k, k.f=k.f, k.eff=k.eff, k.all=k.all, p=p, p.eff=p.eff, parms=parms, m=m,
-                  QE=QE, QEp=QEp, QM=QM, QMp=QMp, I2=I2, H2=H2, R2=R2,
+                  QE=QE, QEp=QEp, QM=QM, QMp=QMp, I2=I2, H2=H2, R2=R2, vt=vt,
                   int.only=int.only, int.incl=int.incl, allvipos=allvipos, coef.na=coef.na,
                   yi=yi, vi=vi, X=X, weights=weights, yi.f=yi.f, vi.f=vi.f, X.f=X.f, weights.f=weights.f, M=M,
                   ai.f=ai.f, bi.f=bi.f, ci.f=ci.f, di.f=di.f,

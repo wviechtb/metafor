@@ -223,7 +223,7 @@ refline=0, pch=19, col, bg, legend=FALSE, ci.res=1000, ...) {
 
    if (yaxis == "wi") {
       if (any(vi <= 0))
-         stop(mstyle$stop("Cannot plot weights with non-positive sampling variances."))
+         stop(mstyle$stop("Cannot plot weights when there are non-positive sampling variances in the data."))
       weights <- 1/vi
       weights <- weights / sum(weights) * 100
    }
