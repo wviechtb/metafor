@@ -1,3 +1,9 @@
+Changes in Version 2.2-0 (2019-05-15)
+=====================================
+
+   o version increase
+
+
 Changes in Version 2.1-0 (2019-05-13)
 =====================================
 
@@ -166,8 +172,8 @@ Changes in Version 2.1-0 (2019-05-13)
    o added undocumented argument 'time' to all model fitting functions; if
      set to TRUE, the model fitting time is printed
 
-   o added more tests (also for parallel operations); also, all tests updated
-     to use proper tolerances instead of rounding
+   o added more tests (also for parallel operations); also, all tests
+     updated to use proper tolerances instead of rounding
 
    o reorganized the documentation a bit
 
