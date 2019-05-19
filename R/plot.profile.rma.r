@@ -18,6 +18,10 @@ plot.profile.rma <- function(x, xlim, ylim, pch=19, xlab, ylab, main, cline=FALS
    missing.ylab <- missing(ylab)
    missing.main <- missing(main)
 
+   ### filter out 'time' argument for plot() function
+
+   lplot <- function(..., time) plot(...)
+
    #########################################################################
 
    if (x$comps == 1) {
@@ -37,7 +41,7 @@ plot.profile.rma <- function(x, xlim, ylim, pch=19, xlab, ylab, main, cline=FALS
       if (missing.main)
          main <- x$title
 
-      plot(x[[1]], x[[2]], type="o", xlab=xlab, ylab=ylab, main=main, bty="l", pch=pch, xlim=xlim, ylim=ylim, ...)
+      lplot(x[[1]], x[[2]], type="o", xlab=xlab, ylab=ylab, main=main, bty="l", pch=pch, xlim=xlim, ylim=ylim, ...)
       abline(v=x$vc, lty="dotted")
       abline(h=x$maxll, lty="dotted")
 
@@ -78,7 +82,7 @@ plot.profile.rma <- function(x, xlim, ylim, pch=19, xlab, ylab, main, cline=FALS
             }
          }
 
-         plot(x[[j]], xlim=xlim, ylim=ylim, main=if (missing.main) main else main[j], pch=pch, xlab=if (missing.xlab) xlab else xlab[j], ylab=if (missing.ylab) ylab else ylab[j], cline=cline, ...)
+         lplot(x[[j]], xlim=xlim, ylim=ylim, main=if (missing.main) main else main[j], pch=pch, xlab=if (missing.xlab) xlab else xlab[j], ylab=if (missing.ylab) ylab else ylab[j], cline=cline, ...)
 
       }
 

@@ -34,6 +34,11 @@ cumul.rma.uni <- function(x, order, digits, transf, targs, progbar=FALSE, ...) {
    if (missing(targs))
       targs <- NULL
 
+   ddd <- list(...)
+
+   if (.isTRUE(ddd$time))
+      time.start <- proc.time()
+
    #########################################################################
 
    if (is.null(order))
@@ -155,6 +160,11 @@ cumul.rma.uni <- function(x, order, digits, transf, targs, progbar=FALSE, ...) {
    out$test      <- x$test
 
    attr(out$estimate, "measure") <- x$measure
+
+   if (.isTRUE(ddd$time)) {
+      time.end <- proc.time()
+      .print.time(unname(time.end - time.start)[3])
+   }
 
    class(out) <- c("list.rma", "cumul.rma")
    return(out)

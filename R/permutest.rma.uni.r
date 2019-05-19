@@ -19,10 +19,13 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("tol", "seed"))
+   .chkdots(ddd, c("tol", "seed", "time"))
 
    if (!is.null(ddd$tol)) # in case user specifies comptol in the old manner
       comptol <- ddd$tol
+
+   if (.isTRUE(ddd$time))
+      time.start <- proc.time()
 
    #########################################################################
 
@@ -476,6 +479,11 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
       out$zval.perm <- data.frame(zval.perm)
       out$beta.perm <- data.frame(beta.perm)
       names(out$zval.perm) <- names(out$beta.perm) <- colnames(x$X)
+   }
+
+   if (.isTRUE(ddd$time)) {
+      time.end <- proc.time()
+      .print.time(unname(time.end - time.start)[3])
    }
 
    class(out) <- "permutest.rma.uni"

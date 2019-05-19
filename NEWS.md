@@ -1,6 +1,7 @@
-# metafor 2.2-0 (2019-05-15)
+# metafor 2.2-0 (2019-05-19)
 
-- version increase
+- added (for now undocumented) `time` argument to more functions that are computationally expensive
+
 
 # metafor 2.1-0 (2019-05-13)
 

@@ -16,6 +16,11 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
    if (parallel == "no" && ncpus > 1)
       parallel <- "snow"
 
+   ddd <- list(...)
+
+   if (.isTRUE(ddd$time))
+      time.start <- proc.time()
+
    #########################################################################
 
    ### check if user has specified one of the sigma2, tau2, rho, gamma2, or phi arguments
@@ -46,6 +51,7 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
             j <- j + 1
             mc.vc <- mc
             mc.vc$sigma2 <- pos
+            mc.vc$time <- FALSE
             mc.vc$fitted <- quote(x)
             if (progbar)
                cat(mstyle$verbose(paste("Profiling sigma2 =", pos, "\n")))
@@ -59,6 +65,7 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
                j <- j + 1
                mc.vc <- mc
                mc.vc$tau2 <- pos
+               mc.vc$time <- FALSE
                mc.vc$fitted <- quote(x)
                if (progbar)
                   cat(mstyle$verbose(paste("Profiling tau2 =", pos, "\n")))
@@ -70,6 +77,7 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
                j <- j + 1
                mc.vc <- mc
                mc.vc$rho <- pos
+               mc.vc$time <- FALSE
                mc.vc$fitted <- quote(x)
                if (progbar)
                   cat(mstyle$verbose(paste("Profiling rho =", pos, "\n")))
@@ -84,6 +92,7 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
                j <- j + 1
                mc.vc <- mc
                mc.vc$gamma2 <- pos
+               mc.vc$time <- FALSE
                mc.vc$fitted <- quote(x)
                if (progbar)
                   cat(mstyle$verbose(paste("Profiling gamma2 =", pos, "\n")))
@@ -95,6 +104,7 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
                j <- j + 1
                mc.vc <- mc
                mc.vc$phi <- pos
+               mc.vc$time <- FALSE
                mc.vc$fitted <- quote(x)
                if (progbar)
                   cat(mstyle$verbose(paste("Profiling phi =", pos, "\n")))
@@ -107,6 +117,11 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
          sav <- sav[[1]]
 
       sav$comps <- comps
+
+      if (.isTRUE(ddd$time)) {
+         time.end <- proc.time()
+         .print.time(unname(time.end - time.start)[3])
+      }
 
       class(sav) <- "profile.rma"
       return(invisible(sav))
@@ -595,6 +610,11 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
       plot(sav, pch=pch, cline=cline, ...)
 
    #########################################################################
+
+   if (.isTRUE(ddd$time)) {
+      time.end <- proc.time()
+      .print.time(unname(time.end - time.start)[3])
+   }
 
    invisible(sav)
 

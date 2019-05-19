@@ -30,6 +30,9 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
    btt <- .set.btt(ddd$btt, x$p, int.incl=FALSE)
    m <- length(btt)
 
+   if (.isTRUE(ddd$time))
+      time.start <- proc.time()
+
    #########################################################################
 
    ### process cluster variable
@@ -177,6 +180,11 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
 
    if (na.act == "na.fail" && any(!x$not.na))
       stop(mstyle$stop("Missing values in results."))
+
+   if (.isTRUE(ddd$time)) {
+      time.end <- proc.time()
+      .print.time(unname(time.end - time.start)[3])
+   }
 
    return(out)
 

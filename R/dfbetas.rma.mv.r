@@ -25,6 +25,11 @@ dfbetas.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE, paral
    if (misscluster)
       cluster <- seq_len(x$k.all)
 
+   ddd <- list(...)
+
+   if (.isTRUE(ddd$time))
+      time.start <- proc.time()
+
    #########################################################################
 
    ### process cluster variable
@@ -177,6 +182,11 @@ dfbetas.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE, paral
    colnames(out) <- rownames(x$beta)
 
    out <- data.frame(out)
+
+   if (.isTRUE(ddd$time)) {
+      time.end <- proc.time()
+      .print.time(unname(time.end - time.start)[3])
+   }
 
    return(out)
 

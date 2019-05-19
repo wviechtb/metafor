@@ -113,7 +113,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
    #########################################################################
 
-   if (verbose)
+   if (verbose && !exists(".rmspace"))
       cat("\n")
 
    if (verbose > 1)

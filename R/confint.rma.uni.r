@@ -71,6 +71,11 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
 
    level <- ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
 
+   ddd <- list(...)
+
+   if (.isTRUE(ddd$time))
+      time.start <- proc.time()
+
    #########################################################################
    #########################################################################
    #########################################################################
@@ -94,7 +99,7 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
       ### set control parameters for uniroot() and possibly replace with user-defined values
       ### set tau2.min and tau2.max and possibly replace with user-defined values
       ### note: default tau2.min is smaller of 0 or tau2, since tau2 could in principle be negative
-      ### note: default tau2.max must be larger than tau2 and tau2.min and really should be much larger (at least 100 ...)
+      ### note: default tau2.max must be larger than tau2 and tau2.min and really should be much larger (at least 100)
 
       tau2.min <- ifelse(is.null(x$control$tau2.min), min(0, x$tau2), x$control$tau2.min)
       tau2.max <- ifelse(is.null(x$control$tau2.max), max(100, x$tau2*10, tau2.min*10), x$control$tau2.max)
@@ -534,6 +539,11 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
       res$lb.sign <- lb.sign
       res$ub.sign <- ub.sign
       res$tau2.min <- con$tau2.min
+   }
+
+   if (.isTRUE(ddd$time)) {
+      time.end <- proc.time()
+      .print.time(unname(time.end - time.start)[3])
    }
 
    class(res) <- "confint.rma"

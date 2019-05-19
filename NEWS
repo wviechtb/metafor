@@ -1,7 +1,8 @@
-Changes in Version 2.2-0 (2019-05-15)
+Changes in Version 2.2-0 (2019-05-19)
 =====================================
 
-   o version increase
+   o added (for now undocumented) 'time' argument to more functions that are
+     computationally expensive
 
 
 Changes in Version 2.1-0 (2019-05-13)

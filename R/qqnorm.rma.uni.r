@@ -35,9 +35,10 @@ label=FALSE, offset=0.3, pos=13, lty, ...) {
 
    ddd <- list(...)
 
-   lqqnorm <- function(..., seed) { qqnorm(...) }
-   labline <- function(..., seed) { abline(...) }
-   llines  <- function(..., seed) { lines(...) }
+   lqqnorm <- function(..., seed) qqnorm(...)
+   labline <- function(..., seed) abline(...)
+   llines  <- function(..., seed) lines(...)
+   ltext   <- function(..., seed) text(...)
 
    #########################################################################
 
@@ -132,12 +133,12 @@ label=FALSE, offset=0.3, pos=13, lty, ...) {
 
          if (sum(dev > dev[i]) < label) {
             if (pos <= 4)
-               text(pos.x[i], pos.y[i], slab[i], pos=pos, offset=offset, ...)
+               ltext(pos.x[i], pos.y[i], slab[i], pos=pos, offset=offset, ...)
             if (pos == 13)
-               text(pos.x[i], pos.y[i], slab[i], pos=ifelse(pos.x[i]-pos.y[i] >= 0, 1, 3), offset=offset, ...)
+               ltext(pos.x[i], pos.y[i], slab[i], pos=ifelse(pos.x[i]-pos.y[i] >= 0, 1, 3), offset=offset, ...)
             if (pos == 24)
-               text(pos.x[i], pos.y[i], slab[i], pos=ifelse(pos.x[i]-pos.y[i] <= 0, 2, 4), offset=offset, ...)
-               #text(pos.x[i], pos.y[i], slab[i], pos=ifelse(pos.x[i] >= 0, 2, 4), offset=offset, ...)
+               ltext(pos.x[i], pos.y[i], slab[i], pos=ifelse(pos.x[i]-pos.y[i] <= 0, 2, 4), offset=offset, ...)
+               #ltext(pos.x[i], pos.y[i], slab[i], pos=ifelse(pos.x[i] >= 0, 2, 4), offset=offset, ...)
          }
 
       }
@@ -151,11 +152,11 @@ label=FALSE, offset=0.3, pos=13, lty, ...) {
 
          if (pos.y[i] < temp.lb$y[i] || pos.y[i] > temp.ub$y[i]) {
             if (pos <= 4)
-               text(pos.x[i], pos.y[i], slab[i], pos=pos, offset=offset, ...)
+               ltext(pos.x[i], pos.y[i], slab[i], pos=pos, offset=offset, ...)
             if (pos == 13)
-               text(pos.x[i], pos.y[i], slab[i], pos=ifelse(pos.x[i]-pos.y[i] >= 0, 1, 3), offset=offset, ...)
+               ltext(pos.x[i], pos.y[i], slab[i], pos=ifelse(pos.x[i]-pos.y[i] >= 0, 1, 3), offset=offset, ...)
             if (pos == 24)
-               text(pos.x[i], pos.y[i], slab[i], pos=ifelse(pos.x[i]-pos.y[i] <= 0, 2, 4), offset=offset, ...)
+               ltext(pos.x[i], pos.y[i], slab[i], pos=ifelse(pos.x[i]-pos.y[i] <= 0, 2, 4), offset=offset, ...)
          }
 
       }

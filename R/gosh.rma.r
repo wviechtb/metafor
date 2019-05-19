@@ -32,7 +32,10 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("seed"))
+   .chkdots(ddd, c("seed", "time"))
+
+   if (.isTRUE(ddd$time))
+      time.start <- proc.time()
 
    ### total number of possible subsets
 
@@ -240,6 +243,13 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
    ### was model fitted successfully / all values are not NA?
 
    fit <- apply(res, 1, function(x) all(!is.na(x)))
+
+   ### print processing time
+
+   if (.isTRUE(ddd$time)) {
+      time.end <- proc.time()
+      .print.time(unname(time.end - time.start)[3])
+   }
 
    ### list to return
 

@@ -38,6 +38,9 @@ influence.rma.uni <- function(model, digits, progbar=FALSE, ...) {
    if (!measure == "cooks.distance" && inherits(model, "robust.rma"))
       stop(mstyle$stop("Method not available for objects of class \"robust.rma\"."))
 
+   if (.isTRUE(ddd$time))
+      time.start <- proc.time()
+
    #########################################################################
 
    tau2.del <- rep(NA_real_, x$k)
@@ -270,6 +273,11 @@ influence.rma.uni <- function(model, digits, progbar=FALSE, ...) {
 
       class(out) <- c("list.rma")
 
+   }
+
+   if (.isTRUE(ddd$time)) {
+      time.end <- proc.time()
+      .print.time(unname(time.end - time.start)[3])
    }
 
    return(out)

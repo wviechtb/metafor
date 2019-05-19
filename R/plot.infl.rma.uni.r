@@ -73,14 +73,13 @@ col.na="lightgray", ...) {
 
    #########################################################################
 
-   ### filter out potential arguments for abbreviate() (which would cause problems with the various plot functions)
-   ### see: http://ucfagls.wordpress.com/2011/07/23/passing-non-graphical-parameters-to-graphical-functions-using/
+   ### filter out potential arguments to abbreviate() (which cause problems with the various plot functions)
 
-   lplot   <- function(..., minlength, strict) { plot(...) }
-   lpoints <- function(..., minlength, strict) { points(...) }
-   llines  <- function(..., minlength, strict) { lines(...) }
-   laxis   <- function(..., minlength, strict) { axis(...) }
-   labline <- function(..., minlength, strict) { abline(...) }
+   lplot   <- function(..., minlength, strict) plot(...)
+   lpoints <- function(..., minlength, strict) points(...)
+   llines  <- function(..., minlength, strict) lines(...)
+   laxis   <- function(..., minlength, strict) axis(...)
+   labline <- function(..., minlength, strict) abline(...)
 
    #########################################################################
 

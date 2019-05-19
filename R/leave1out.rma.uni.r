@@ -34,6 +34,11 @@ leave1out.rma.uni <- function(x, digits, transf, targs, progbar=FALSE, ...) {
    if (missing(targs))
       targs <- NULL
 
+   ddd <- list(...)
+
+   if (.isTRUE(ddd$time))
+      time.start <- proc.time()
+
    #########################################################################
 
    beta  <- rep(NA_real_, x$k.f)
@@ -130,6 +135,11 @@ leave1out.rma.uni <- function(x, digits, transf, targs, progbar=FALSE, ...) {
    #out <- out[-c(2,3,4)]
    out$digits <- digits
    out$transf <- transf
+
+   if (.isTRUE(ddd$time)) {
+      time.end <- proc.time()
+      .print.time(unname(time.end - time.start)[3])
+   }
 
    class(out) <- "list.rma"
    return(out)

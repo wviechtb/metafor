@@ -19,6 +19,11 @@ profile.rma.uni <- function(fitted,
    if (parallel == "no" && ncpus > 1)
       parallel <- "snow"
 
+   ddd <- list(...)
+
+   if (.isTRUE(ddd$time))
+      time.start <- proc.time()
+
    #########################################################################
 
    if (missing(xlim)) {
@@ -184,6 +189,11 @@ profile.rma.uni <- function(fitted,
       plot(sav, pch=pch, cline=cline, ...)
 
    #########################################################################
+
+   if (.isTRUE(ddd$time)) {
+      time.end <- proc.time()
+      .print.time(unname(time.end - time.start)[3])
+   }
 
    invisible(sav)
 

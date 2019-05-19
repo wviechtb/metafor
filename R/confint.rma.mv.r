@@ -30,6 +30,11 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
 
    level <- ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
 
+   ddd <- list(...)
+
+   if (.isTRUE(ddd$time))
+      time.start <- proc.time()
+
    ### check if user has specified one of the sigma2, tau2, rho, gamma2, or phi arguments
 
    random <- !all(missing(sigma2), missing(tau2), missing(rho), missing(gamma2), missing(phi))
@@ -57,6 +62,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
             j <- j + 1
             cl.vc <- cl
             cl.vc$sigma2 <- pos
+            cl.vc$time <- FALSE
             cl.vc$object <- quote(x)
             if (verbose)
                cat(mstyle$verbose(paste("\nObtaining CI for sigma2 =", pos, "\n")))
@@ -70,6 +76,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
                j <- j + 1
                cl.vc <- cl
                cl.vc$tau2 <- pos
+               cl.vc$time <- FALSE
                cl.vc$object <- quote(x)
                if (verbose)
                   cat(mstyle$verbose(paste("\nObtaining CI for tau2 =", pos, "\n")))
@@ -81,6 +88,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
                j <- j + 1
                cl.vc <- cl
                cl.vc$rho <- pos
+               cl.vc$time <- FALSE
                cl.vc$object <- quote(x)
                if (verbose)
                   cat(mstyle$verbose(paste("\nObtaining CI for rho =", pos, "\n")))
@@ -95,6 +103,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
                j <- j + 1
                cl.vc <- cl
                cl.vc$gamma2 <- pos
+               cl.vc$time <- FALSE
                cl.vc$object <- quote(x)
                if (verbose)
                   cat(mstyle$verbose(paste("\nObtaining CI for gamma2 =", pos, "\n")))
@@ -106,12 +115,18 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
                j <- j + 1
                cl.vc <- cl
                cl.vc$phi <- pos
+               cl.vc$time <- FALSE
                cl.vc$object <- quote(x)
                if (verbose)
                   cat(mstyle$verbose(paste("\nObtaining CI for phi =", pos, "\n")))
                res.all[[j]] <- eval(cl.vc)
             }
          }
+      }
+
+      if (.isTRUE(ddd$time)) {
+         time.end <- proc.time()
+         .print.time(unname(time.end - time.start)[3])
       }
 
       if (length(res.all) == 1) {
@@ -562,6 +577,11 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
       res$lb.sign <- lb.sign
       res$ub.sign <- ub.sign
       #res$vc.min <- con$vc.min
+   }
+
+   if (.isTRUE(ddd$time)) {
+      time.end <- proc.time()
+      .print.time(unname(time.end - time.start)[3])
    }
 
    class(res) <- "confint.rma"

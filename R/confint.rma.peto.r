@@ -22,6 +22,11 @@ confint.rma.peto <- function(object, parm, level, digits, transf, targs, ...) {
    if (missing(targs))
       targs <- NULL
 
+   ddd <- list(...)
+
+   if (.isTRUE(ddd$time))
+      time.start <- proc.time()
+
    #########################################################################
 
    level <- ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
@@ -55,6 +60,11 @@ confint.rma.peto <- function(object, parm, level, digits, transf, targs, ...) {
    rownames(res$fixed) <- ""
 
    res$digits <- digits
+
+   if (.isTRUE(ddd$time)) {
+      time.end <- proc.time()
+      .print.time(unname(time.end - time.start)[3])
+   }
 
    class(res) <- "confint.rma"
    return(res)

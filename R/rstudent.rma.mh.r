@@ -18,6 +18,11 @@ rstudent.rma.mh <- function(model, digits, progbar=FALSE, ...) {
       digits <- .get.digits(digits=digits, xdigits=x$digits, dmiss=FALSE)
    }
 
+   ddd <- list(...)
+
+   if (.isTRUE(ddd$time))
+      time.start <- proc.time()
+
    #########################################################################
 
    delpred  <- rep(NA_real_, x$k.f)
@@ -75,6 +80,11 @@ rstudent.rma.mh <- function(model, digits, progbar=FALSE, ...) {
       stop(mstyle$stop("Missing values in results."))
 
    out$digits <- digits
+
+   if (.isTRUE(ddd$time)) {
+      time.end <- proc.time()
+      .print.time(unname(time.end - time.start)[3])
+   }
 
    class(out) <- "list.rma"
    return(out)
