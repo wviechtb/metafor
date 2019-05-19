@@ -20,6 +20,11 @@ dfbetas.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE, paral
    if (parallel == "no" && ncpus > 1)
       parallel <- "snow"
 
+   if (!is.null(cl) && inherits(cl, "SOCKcluster")) {
+      parallel <- "snow"
+      ncpus <- length(cl)
+   }
+
    misscluster <- ifelse(missing(cluster), TRUE, FALSE)
 
    if (misscluster)
@@ -140,7 +145,11 @@ dfbetas.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE, paral
             cl <- parallel::makePSOCKcluster(ncpus)
             on.exit(parallel::stopCluster(cl))
          }
-         res <- parallel::parLapply(cl, seq_len(n), .dfbetas.rma.mv, obj=x, parallel=parallel, cluster=cluster, ids=ids, reestimate=reestimate)
+         if (.isTRUE(ddd$LB)) {
+            res <- parallel::parLapplyLB(cl, seq_len(n), .dfbetas.rma.mv, obj=x, parallel=parallel, cluster=cluster, ids=ids, reestimate=reestimate)
+         } else {
+            res <- parallel::parLapply(cl, seq_len(n), .dfbetas.rma.mv, obj=x, parallel=parallel, cluster=cluster, ids=ids, reestimate=reestimate)
+         }
       }
 
       dfbs <- lapply(res, function(x) x$dfbs)

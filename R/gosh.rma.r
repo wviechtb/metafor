@@ -30,9 +30,14 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
    if (parallel == "no" && ncpus > 1)
       parallel <- "snow"
 
+   if (!is.null(cl) && inherits(cl, "SOCKcluster")) {
+      parallel <- "snow"
+      ncpus <- length(cl)
+   }
+
    ddd <- list(...)
 
-   .chkdots(ddd, c("seed", "time"))
+   .chkdots(ddd, c("seed", "time", "LB"))
 
    if (.isTRUE(ddd$time))
       time.start <- proc.time()
@@ -196,14 +201,29 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
             on.exit(parallel::stopCluster(cl))
          }
 
-         if (inherits(x, "rma.uni"))
-            res <- parallel::parLapply(cl, seq_len(N.tot), .profile.rma.uni, obj=x, parallel=parallel, subset=TRUE, sel=incl, FE=FE)
+         if (inherits(x, "rma.uni")) {
+            if (.isTRUE(ddd$LB)) {
+               res <- parallel::parLapplyLB(cl, seq_len(N.tot), .profile.rma.uni, obj=x, parallel=parallel, subset=TRUE, sel=incl, FE=FE)
+            } else {
+               res <- parallel::parLapply(cl, seq_len(N.tot), .profile.rma.uni, obj=x, parallel=parallel, subset=TRUE, sel=incl, FE=FE)
+            }
+         }
 
-         if (inherits(x, "rma.mh"))
-            res <- parallel::parLapply(cl, seq_len(N.tot), .profile.rma.mh, obj=x, parallel=parallel, subset=TRUE, sel=incl)
+         if (inherits(x, "rma.mh")) {
+            if (.isTRUE(ddd$LB)) {
+               res <- parallel::parLapplyLB(cl, seq_len(N.tot), .profile.rma.mh, obj=x, parallel=parallel, subset=TRUE, sel=incl)
+            } else {
+               res <- parallel::parLapply(cl, seq_len(N.tot), .profile.rma.mh, obj=x, parallel=parallel, subset=TRUE, sel=incl)
+            }
+         }
 
-         if (inherits(x, "rma.peto"))
-            res <- parallel::parLapply(cl, seq_len(N.tot), .profile.rma.peto, obj=x, parallel=parallel, subset=TRUE, sel=incl)
+         if (inherits(x, "rma.peto")) {
+            if (.isTRUE(ddd$LB)) {
+               res <- parallel::parLapplyLB(cl, seq_len(N.tot), .profile.rma.peto, obj=x, parallel=parallel, subset=TRUE, sel=incl)
+            } else {
+               res <- parallel::parLapply(cl, seq_len(N.tot), .profile.rma.peto, obj=x, parallel=parallel, subset=TRUE, sel=incl)
+            }
+         }
 
       }
 

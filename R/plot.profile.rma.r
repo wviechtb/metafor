@@ -18,9 +18,9 @@ plot.profile.rma <- function(x, xlim, ylim, pch=19, xlab, ylab, main, cline=FALS
    missing.ylab <- missing(ylab)
    missing.main <- missing(main)
 
-   ### filter out 'time' argument for plot() function
+   ### filter out 'time' and 'LB' arguments for plot() function
 
-   lplot <- function(..., time) plot(...)
+   lplot <- function(..., time, LB) plot(...)
 
    #########################################################################
 

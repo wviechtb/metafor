@@ -20,6 +20,11 @@ rstudent.rma.mv <- function(model, digits, progbar=FALSE, cluster, reestimate=TR
    if (parallel == "no" && ncpus > 1)
       parallel <- "snow"
 
+   if (!is.null(cl) && inherits(cl, "SOCKcluster")) {
+      parallel <- "snow"
+      ncpus <- length(cl)
+   }
+
    if (missing(digits)) {
       digits <- .get.digits(xdigits=x$digits, dmiss=TRUE)
    } else {
@@ -158,7 +163,11 @@ rstudent.rma.mv <- function(model, digits, progbar=FALSE, cluster, reestimate=TR
             cl <- parallel::makePSOCKcluster(ncpus)
             on.exit(parallel::stopCluster(cl))
          }
-         res <- parallel::parLapply(cl, seq_len(n), .rstudent.rma.mv, obj=x, parallel=parallel, cluster=cluster, ids=ids, reestimate=reestimate)
+         if (.isTRUE(ddd$LB)) {
+            res <- parallel::parLapplyLB(cl, seq_len(n), .rstudent.rma.mv, obj=x, parallel=parallel, cluster=cluster, ids=ids, reestimate=reestimate)
+         } else {
+            res <- parallel::parLapply(cl, seq_len(n), .rstudent.rma.mv, obj=x, parallel=parallel, cluster=cluster, ids=ids, reestimate=reestimate)
+         }
       }
 
       delresid   <- rep(NA_real_, x$k)
