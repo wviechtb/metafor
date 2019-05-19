@@ -122,3 +122,25 @@ test_that("NAs are correctly handled by various method functions for rma.uni() m
    expect_equivalent(weights(res), c(NA, NA, NA, 25, 25, 25, 25))
 
 })
+
+test_that("NAs are correctly handled by rma.mv() intercept-only models.", {
+
+   dat <- get(data(dat.konstantopoulos2011, package="metafor"))
+
+   res1 <- rma.mv(yi, vi, random = ~ 1 | district/study, data=dat)
+   res2 <- rma.mv(yi, vi, random = ~ factor(study) | district, data=dat)
+   expect_equivalent(logLik(res1), logLik(res2), tolerance=.tol[["fit"]])
+
+   dat$yi[1:2] <- NA
+
+   expect_warning(res1 <- rma.mv(yi, vi, random = ~ 1 | district/study, data=dat))
+   expect_warning(res2 <- rma.mv(yi, vi, random = ~ factor(study) | district, data=dat))
+   expect_equivalent(logLik(res1), logLik(res2), tolerance=.tol[["fit"]])
+
+   dat$yi[1:4] <- NA # entire district 11 is missing
+
+   expect_warning(res1 <- rma.mv(yi, vi, random = ~ 1 | district/study, data=dat))
+   expect_warning(res2 <- rma.mv(yi, vi, random = ~ factor(study) | district, data=dat))
+   expect_equivalent(logLik(res1), logLik(res2), tolerance=.tol[["fit"]])
+
+})

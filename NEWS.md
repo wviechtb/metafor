@@ -2,6 +2,8 @@
 
 - added (for now undocumented) `time` argument to more functions that are computationally expensive
 
+- added more tests
+
 
 # metafor 2.1-0 (2019-05-13)
 

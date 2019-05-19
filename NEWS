@@ -4,6 +4,8 @@ Changes in Version 2.2-0 (2019-05-19)
    o added (for now undocumented) 'time' argument to more functions that are
      computationally expensive
 
+   o added more tests
+
 
 Changes in Version 2.1-0 (2019-05-13)
 =====================================
