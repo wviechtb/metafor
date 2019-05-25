@@ -1,5 +1,8 @@
-Changes in Version 2.2-0 (2019-05-19)
+Changes in Version 2.2-0 (2019-05-21)
 =====================================
+
+   o added phylogenetic correlation structures ("PHYBM","PHYPL","PHYPD") to
+     rma.mv() (for Brownian motion, Pagel's lambda, and Pagel's delta)
 
    o added (for now undocumented) 'time' argument to more functions that are
      computationally expensive

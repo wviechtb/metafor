@@ -1,4 +1,6 @@
-# metafor 2.2-0 (2019-05-19)
+# metafor 2.2-0 (2019-05-25)
+
+- added phylogenetic correlation structures (`"PHYBM"`,`"PHYPL"`,`"PHYPD"`) to `rma.mv()` (for Brownian motion, Pagel's lambda, and Pagel's delta)
 
 - added (for now undocumented) `time` argument to more functions that are computationally expensive
 

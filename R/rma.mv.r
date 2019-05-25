@@ -38,7 +38,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
    if (!is.element(method, c("FE","ML","REML")))
       stop(mstyle$stop("Unknown 'method' specified."))
 
-   if (any(!is.element(struct, c("CS","HCS","UN","AR","HAR","CAR","ID","DIAG","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","GEN")))) ### "PHYBM","PHYPL","PHYPD", "UNHO"
+   if (any(!is.element(struct, c("CS","HCS","UN","AR","HAR","CAR","ID","DIAG","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD","GEN")))) ### "UNHO"
       stop(mstyle$stop("Unknown 'struct' specified."))
 
    if (length(struct) == 1)
@@ -1101,13 +1101,13 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
          mf.s <- lapply(mf.s, function(x) x[not.na]) ### note: mf.s is a list of vectors at this point
          mf.g <- mf.g[not.na,,drop=FALSE]
          mf.h <- mf.h[not.na,,drop=FALSE]
-         if (is.element(struct[1], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYPL","PHYPD"))) {
+         if (is.element(struct[1], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD"))) {
             Z.G1 <- Z.G1[not.na,not.na,drop=FALSE]
          } else {
             Z.G1 <- Z.G1[not.na,,drop=FALSE]
          }
          Z.G2 <- Z.G2[not.na,,drop=FALSE]
-         if (is.element(struct[2], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYPL","PHYPD"))) {
+         if (is.element(struct[2], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD"))) {
             Z.H1 <- Z.H1[not.na,not.na,drop=FALSE]
          } else {
             Z.H1 <- Z.H1[not.na,,drop=FALSE]
@@ -1522,7 +1522,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
       stop(mstyle$stop("Value(s) of 'rho.init' must be > 0."))
    if (withG && is.element(struct[1], c("PHYPL","PHYPD")) && con$rho.init < 0)
       stop(mstyle$stop("Value(s) of 'rho.init' must be in >= 0."))
-   if (withG && !is.element(struct[1], c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYPL","PHYPD")) && any(con$rho.init <= -1 | con$rho.init >= 1))
+   if (withG && !is.element(struct[1], c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD")) && any(con$rho.init <= -1 | con$rho.init >= 1))
       stop(mstyle$stop("Value(s) of 'rho.init' must be in (-1,1)."))
    if (withH && any(con$gamma2.init <= 0))
       stop(mstyle$stop("Value(s) of 'gamma2.init' must be > 0."))
@@ -1532,7 +1532,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
       stop(mstyle$stop("Value(s) of 'phi.init' must be > 0."))
    if (withH && is.element(struct[2], c("PHYPL","PHYPD")) && con$phi.init < 0)
       stop(mstyle$stop("Value(s) of 'phi.init' must be in >= 0."))
-   if (withH && !is.element(struct[2], c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYPL","PHYPD")) && any(con$phi.init <= -1 | con$phi.init >= 1))
+   if (withH && !is.element(struct[2], c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD")) && any(con$phi.init <= -1 | con$phi.init >= 1))
       stop(mstyle$stop("Value(s) of 'phi.init' must be in (-1,1)."))
 
    ### in case user manually sets con$cholesky and specifies only a single value
@@ -1585,9 +1585,9 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
       con$tau2.init <- log(tau2.init)
       if (struct[1] == "CAR")
          con$rho.init  <- qlogis(rho.init)
-      if (is.element(struct[1], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYPL","PHYPD")))
+      if (is.element(struct[1], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD")))
          con$rho.init  <- log(rho.init)
-      if (!is.element(struct[1], c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYPL","PHYPD")))
+      if (!is.element(struct[1], c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD")))
          con$rho.init  <- atanh(rho.init)
    }
 
@@ -1604,9 +1604,9 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
       con$gamma2.init <- log(gamma2.init)
       if (struct[2] == "CAR")
          con$phi.init  <- qlogis(phi.init)
-      if (is.element(struct[2], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYPL","PHYPD")))
+      if (is.element(struct[2], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD")))
          con$phi.init  <- log(phi.init)
-      if (!is.element(struct[2], c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYPL","PHYPD")))
+      if (!is.element(struct[2], c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD")))
          con$phi.init  <- atanh(phi.init)
    }
 
@@ -1909,7 +1909,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
 
    if (withG) {
       G <- as.matrix(fitcall$G)
-      if (is.element(struct[1], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYPL","PHYPD")))
+      if (is.element(struct[1], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD")))
          colnames(G) <- rownames(G) <- seq_len(nrow(G))
       if (is.element(struct[1], c("CS","HCS","UN","AR","HAR","CAR","ID","DIAG")))
          colnames(G) <- rownames(G) <- g.levels.f[[1]]
@@ -1921,7 +1921,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
 
    if (withH) {
       H <- as.matrix(fitcall$H)
-      if (is.element(struct[2], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYPL","PHYPD")))
+      if (is.element(struct[2], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD")))
          colnames(H) <- rownames(H) <- seq_len(nrow(H))
       if (is.element(struct[2], c("CS","HCS","UN","AR","HAR","CAR","ID","DIAG")))
          colnames(H) <- rownames(H) <- h.levels.f[[1]]

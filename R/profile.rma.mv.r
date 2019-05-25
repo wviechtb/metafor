@@ -279,7 +279,7 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
          vc.ub <- max(.1, vc*4) ### new method
       }
       if (comp == "tau2") {
-         if (is.element(x$struct[1], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYPL","PHYPD"))) {
+         if (is.element(x$struct[1], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD"))) {
             vc.lb <- max( 0, vc/2)
             vc.ub <- max(.1, vc*2)
          } else {
@@ -288,7 +288,7 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
          }
       }
       if (comp == "gamma2") {
-         if (is.element(x$struct[2], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYPL","PHYPD"))) {
+         if (is.element(x$struct[2], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD"))) {
             vc.lb <- max( 0, vc/2)
             vc.ub <- max(.1, vc*2)
          } else {
