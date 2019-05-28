@@ -1,4 +1,5 @@
-.git
+^\.git$
+^\.github$
 ^\.travis\.yml$
 ^_pkgdown\.yml$
 ^docs$
