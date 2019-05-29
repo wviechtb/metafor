@@ -25,6 +25,15 @@ baujat.rma <- function(x, xlim, ylim, xlab, ylab, cex, symbol, grid=TRUE, progba
    if (x$k == 1)
       stop(mstyle$stop("Stopped because k = 1."))
 
+   ### grid argument can either be a logical or a color
+
+   if (is.logical(grid))
+      gridcol <- "lightgray"
+   if (is.character(grid)) {
+      gridcol <- grid
+      grid <- TRUE
+   }
+
    #########################################################################
 
    ### set up vectors to store results in
@@ -123,8 +132,8 @@ baujat.rma <- function(x, xlim, ylim, xlab, ylab, cex, symbol, grid=TRUE, progba
 
    ### add grid (and redraw box)
 
-   if (grid) {
-      grid()
+   if (.isTRUE(grid)) {
+      grid(col=gridcol)
       box(...)
    }
 

@@ -1,4 +1,6 @@
-# metafor 2.2-0 (2019-05-25)
+# metafor 2.2-0 (2019-05-29)
+
+- argument `grid` in `baujat()` can now also be a color name
 
 - added phylogenetic correlation structures (`"PHYBM"`,`"PHYPL"`,`"PHYPD"`) to `rma.mv()` (for Brownian motion, Pagel's lambda, and Pagel's delta)
 

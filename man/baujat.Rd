@@ -17,7 +17,7 @@ baujat(x, \dots)
    \item{ylab}{title for the y-axis. If unspecified, the function tries to set an appropriate axis title.}
    \item{cex}{optional character expansion factor. If unspecified, the function tries to set this to a sensible value.}
    \item{symbol}{either an integer to specify the \code{pch} value (i.e., plotting symbol), or \code{"slab"} to plot the study labels (if specified), or \code{"ids"} to plot the study id numbers (if unspecified, this is the default).}
-   \item{grid}{logical indicating whether a grid should be added to the plot.}
+   \item{grid}{logical indicating whether a grid should be added to the plot (can also be a color name).}
    \item{progbar}{logical indicating whether a progress bar should be shown (the default is \code{FALSE}).}
    \item{\dots}{other arguments.}
 }
