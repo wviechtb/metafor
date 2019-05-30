@@ -1,4 +1,4 @@
-Changes in Version 2.2-0 (2019-05-29)
+Changes in Version 2.2-0 (2019-05-30)
 =====================================
 
    o argument 'grid' in baujat() can now also be a color name

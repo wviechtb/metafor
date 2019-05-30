@@ -2743,8 +2743,14 @@
 
 .print.output <- function(x, mstyle) {
 
-   for (i in seq_along(x)) {
-      cat(mstyle(x[i]), "\n")
+   if (missing(mstyle)) {
+      for (i in seq_along(x)) {
+         cat(x[i], "\n")
+      }
+   } else {
+      for (i in seq_along(x)) {
+         cat(mstyle(x[i]), "\n")
+      }
    }
 
 }
