@@ -1,4 +1,4 @@
-# metafor 2.2-0 (2019-05-30)
+# metafor 2.2-0 (2019-06-03)
 
 - argument `grid` in `baujat()` can now also be a color name
 
@@ -6,8 +6,9 @@
 
 - added (for now undocumented) `time` argument to more functions that are computationally expensive
 
-- added more tests
+- added a new dataset (`dat.graves2010`)
 
+- added more tests
 
 # metafor 2.1-0 (2019-05-13)
 

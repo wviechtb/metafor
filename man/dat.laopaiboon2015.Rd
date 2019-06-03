@@ -2,7 +2,7 @@
 \docType{data}
 \alias{dat.laopaiboon2015}
 \title{Studies on the Effectiveness of Azithromycin for Treating Lower Respiratory Tract Infections}
-\description{Results from 15 studies the effectiveness of azithromycin versus amoxycillin or amoxycillin/clavulanic acid (amoxyclav) in the treatment of acute lower respiratory tract infections.}
+\description{Results from 15 studies on the effectiveness of azithromycin versus amoxycillin or amoxycillin/clavulanic acid (amoxyclav) in the treatment of acute lower respiratory tract infections.}
 \usage{
 dat.laopaiboon2015
 }

@@ -1,4 +1,4 @@
-Changes in Version 2.2-0 (2019-05-30)
+Changes in Version 2.2-0 (2019-06-03)
 =====================================
 
    o argument 'grid' in baujat() can now also be a color name
@@ -8,6 +8,8 @@ Changes in Version 2.2-0 (2019-05-30)
 
    o added (for now undocumented) 'time' argument to more functions that are
      computationally expensive
+
+   o added a new dataset (dat.graves2010)
 
    o added more tests
 
