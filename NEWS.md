@@ -1,4 +1,4 @@
-# metafor 2.2-0 (2019-06-03)
+# metafor 2.2-0 (2019-06-11)
 
 - argument `grid` in `baujat()` can now also be a color name
 

@@ -16,6 +16,14 @@ If applicable, please provide a minimal and fully reproducible example. Remove a
 - https://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example
 - https://cran.r-project.org/web/packages/reprex/vignettes/reprex-dos-and-donts.html
 
+```r
+# use this for posting code (if applicable)
+```
+
+```
+# use this for posting output (if applicable)
+```
+
 ## Notes
 
 Describe any debugging steps you've taken yourself. If you've found a workaround, please provide it here.
