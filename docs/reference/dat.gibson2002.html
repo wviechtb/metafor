@@ -190,6 +190,9 @@
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"FE"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Studies with NAs omitted from model fitting.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>res</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
 #&gt; Fixed-Effects Model (k = 13)
 #&gt; 
+#&gt; I^2 (total heterogeneity / total variability):   55.36%
+#&gt; H^2 (total variability / sampling variability):  2.24
+#&gt; 
 #&gt; Test for Heterogeneity:
 #&gt; Q(df = 12) = 26.88, p-val &lt; .01
 #&gt; 
@@ -205,6 +208,9 @@
 <span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>ai</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>bi</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>ci</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>di</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"FE"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Studies with NAs omitted from model fitting.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>res</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
 #&gt; Fixed-Effects Model (k = 7)
+#&gt; 
+#&gt; I^2 (total heterogeneity / total variability):   18.22%
+#&gt; H^2 (total variability / sampling variability):  1.22
 #&gt; 
 #&gt; Test for Heterogeneity:
 #&gt; Q(df = 6) = 7.34, p-val = 0.29
@@ -258,6 +264,9 @@
 #&gt; 15 0.4546 </div><div class='input'><span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"FE"</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>res</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
 #&gt; Fixed-Effects Model (k = 15)
+#&gt; 
+#&gt; I^2 (total heterogeneity / total variability):   57.35%
+#&gt; H^2 (total variability / sampling variability):  2.34
 #&gt; 
 #&gt; Test for Heterogeneity:
 #&gt; Q(df = 14) = 32.82, p-val &lt; .01

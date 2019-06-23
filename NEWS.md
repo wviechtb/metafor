@@ -1,4 +1,6 @@
-# metafor 2.2-0 (2019-06-11)
+# metafor 2.2-0 (2019-06-23)
+
+- `I^2` and `H^2` are also shown in output for fixed-effects models
 
 - argument `grid` in `baujat()` can now also be a color name
 

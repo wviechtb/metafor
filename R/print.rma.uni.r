@@ -51,8 +51,9 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
       }
    }
 
+   cat("\n")
+
    if (showfit) {
-      cat("\n")
       if (x$method == "REML") {
          fs <- .fcf(x$fit.stats$REML, digits[["fit"]])
       } else {
@@ -62,21 +63,31 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
       cat("\n")
       tmp <- capture.output(print(fs, quote=FALSE, print.gap=2))
       .print.table(tmp, mstyle)
-      cat("\n")
-   } else {
-      cat("\n\n")
    }
 
-   if (x$method != "FE") {
-      if (x$int.only) {
-         if (x$model == "rma.uni") {
+   cat("\n")
+
+   if (x$model == "rma.uni") {
+
+      if (x$method != "FE") {
+         if (x$int.only) {
             cat(mstyle$text("tau^2 (estimated amount of total heterogeneity): "))
             cat(mstyle$result(paste0(.fcf(x$tau2, ifelse(abs(x$tau2) <= .Machine$double.eps*10,0,digits[["var"]])), ifelse(is.na(x$se.tau2), "", paste0(" (SE = " , .fcf(x$se.tau2, digits[["sevar"]]), ")")))))
             cat("\n")
             cat(mstyle$text("tau (square root of estimated tau^2 value):      "))
             cat(mstyle$result(paste0(ifelse(x$tau2>=0, .fcf(sqrt(x$tau2), ifelse(x$tau2 <= .Machine$double.eps*10,0,digits[["var"]])), NA))))
             cat("\n")
+         } else {
+            cat(mstyle$text("tau^2 (estimated amount of residual heterogeneity):     "))
+            cat(mstyle$result(paste0(.fcf(x$tau2, ifelse(abs(x$tau2) <= .Machine$double.eps*10,0,digits[["var"]])), ifelse(is.na(x$se.tau2), "", paste0(" (SE = " , .fcf(x$se.tau2, digits[["sevar"]]), ")")))))
+            cat("\n")
+            cat(mstyle$text("tau (square root of estimated tau^2 value):             "))
+            cat(mstyle$result(paste0(ifelse(x$tau2>=0, .fcf(sqrt(x$tau2), ifelse(x$tau2 <= .Machine$double.eps*10,0,digits[["var"]])), NA))))
+            cat("\n")
          }
+      }
+
+      if (x$int.only) {
          if (!is.na(x$I2)) {
             cat(mstyle$text("I^2 (total heterogeneity / total variability):   "))
             cat(mstyle$result(paste0(ifelse(is.na(x$I2), NA, .fcf(x$I2, 2)), "%")))
@@ -88,14 +99,6 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
             cat("\n")
          }
       } else {
-         if (x$model == "rma.uni") {
-            cat(mstyle$text("tau^2 (estimated amount of residual heterogeneity):     "))
-            cat(mstyle$result(paste0(.fcf(x$tau2, ifelse(abs(x$tau2) <= .Machine$double.eps*10,0,digits[["var"]])), ifelse(is.na(x$se.tau2), "", paste0(" (SE = " , .fcf(x$se.tau2, digits[["sevar"]]), ")")))))
-            cat("\n")
-            cat(mstyle$text("tau (square root of estimated tau^2 value):             "))
-            cat(mstyle$result(paste0(ifelse(x$tau2>=0, .fcf(sqrt(x$tau2), ifelse(x$tau2 <= .Machine$double.eps*10,0,digits[["var"]])), NA))))
-            cat("\n")
-         }
          if (!is.na(x$I2)) {
             cat(mstyle$text("I^2 (residual heterogeneity / unaccounted variability): "))
             cat(mstyle$result(paste0(ifelse(is.na(x$I2), NA, .fcf(x$I2, 2)), "%")))
@@ -106,13 +109,16 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
             cat(mstyle$result(paste0(ifelse(is.na(x$H2), NA, .fcf(x$H2, 2)))))
             cat("\n")
          }
-         if (!is.null(x$R2)) {
-            cat(mstyle$text("R^2 (amount of heterogeneity accounted for):            "))
-            cat(mstyle$result(paste0(ifelse(is.na(x$R2), NA, .fcf(x$R2, 2)), "%")))
-            cat("\n")
-         }
       }
+
+      if (x$method != "FE" && !x$int.only && !is.null(x$R2)) {
+         cat(mstyle$text("R^2 (amount of heterogeneity accounted for):            "))
+         cat(mstyle$result(paste0(ifelse(is.na(x$R2), NA, .fcf(x$R2, 2)), "%")))
+         cat("\n")
+      }
+
       cat("\n")
+
    }
 
    if (!is.na(x$QE)) {

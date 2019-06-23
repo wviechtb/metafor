@@ -409,7 +409,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 <p>The Sidik-Jonkman estimator starts with a crude estimate of \(\tau^2\), which is then updated as described in Sidik and Jonkman (2005b, 2007). If, instead of the crude estimate, one wants to use a better a priori estimate, one can do so by passing this value via <code>control=list(tau2.init=value)</code>.</p>
 <p>Outcomes with non-positive sampling variances are problematic. If a sampling variance is equal to zero, then its weight will be \(1/0\) for fixed-effects models when using weighted estimation. Switching to unweighted estimation is a possible solution then. For random/mixed-effects model, some estimators of \(\tau^2\) are undefined when there is at least one sampling variance equal to zero. Other estimators may work, but it may still be necessary to switch to unweighted model fitting, especially when the estimate of \(\tau^2\) turns out to be zero.</p>
 <p>When including moderators in the model, it is possible that the model matrix is not of full rank (i.e., there is a linear relationship between the moderator variables included in the model). The function automatically tries to reduce the model matrix to full rank by removing redundant predictors, but if this fails the model cannot be fitted and an error will be issued. Deleting (redundant) moderator variables from the model as needed should solve this problem.</p>
-<p>Finally, some general words of caution about the assumptions underlying the models are warranted:</p><ul>
+<p>Finally, some general words of caution about the assumptions underlying the models:</p><ul>
 <li><p>The sampling variances (i.e., the <code>vi</code> values) are treated as if they are known constants. This (usually) implies that the distributions of the test statistics and corresponding confidence intervals are only exact and have nominal coverage when the within-study sample sizes are large (i.e., when the error in the sampling variance estimates is small). Certain outcome measures (e.g., the arcsine square root transformed risk difference and Fisher's r-to-z transformed correlation coefficient) are based on variance stabilizing transformations that also help to make the assumption of known sampling variances much more reasonable.</p></li>
 <li><p>When fitting a mixed/random-effects model, \(\tau^2\) is estimated and then treated as a known constant thereafter. This ignores the uncertainty in the estimate of \(\tau^2\). As a consequence, the standard errors of the parameter estimates tend to be too small, yielding test statistics that are too large and confidence intervals that are not wide enough. The Knapp and Hartung (2003) adjustment can be used to counter this problem, yielding test statistics and confidence intervals whose properties are closer to nominal.</p></li>
 <li><p>Most effect size measures are not exactly normally distributed as assumed under the various models. However, the normal approximation usually becomes more accurate for most effect size or outcome measures as the within-study sample sizes increase. Therefore, sufficiently large within-study sample sizes are (usually) needed to be certain that the tests and confidence intervals have nominal levels/coverage. Again, certain outcome measures (e.g., Fisher's r-to-z transformed correlation coefficient) may be preferable from this perspective as well.</p></li>
@@ -806,6 +806,9 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 <span class='no'>res</span> <span class='co'>### this gives Q_Total</span></div><div class='output co'>#&gt; 
 #&gt; Fixed-Effects Model (k = 13)
 #&gt; 
+#&gt; I^2 (total heterogeneity / total variability):   92.12%
+#&gt; H^2 (total variability / sampling variability):  12.69
+#&gt; 
 #&gt; Test for Heterogeneity:
 #&gt; Q(df = 12) = 152.2330, p-val &lt; .0001
 #&gt; 
@@ -819,6 +822,9 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 #&gt; </div><div class='input'><span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>rma</span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>ablat</span> + <span class='no'>year</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"FE"</span>)
 <span class='no'>res</span> <span class='co'>### this gives Q_E and Q_M</span></div><div class='output co'>#&gt; 
 #&gt; Fixed-Effects with Moderators Model (k = 13)
+#&gt; 
+#&gt; I^2 (residual heterogeneity / unaccounted variability): 64.70%
+#&gt; H^2 (unaccounted variability / sampling variability):   2.83
 #&gt; 
 #&gt; Test for Residual Heterogeneity:
 #&gt; QE(df = 10) = 28.3251, p-val = 0.0016

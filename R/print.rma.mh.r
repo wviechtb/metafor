@@ -17,23 +17,31 @@ print.rma.mh <- function(x, digits, showfit=FALSE, ...) {
    cat(mstyle$section("Fixed-Effects Model"))
    cat(mstyle$section(paste0(" (k = ", x$k, ")")))
 
+   cat("\n")
+
    if (showfit) {
-      cat("\n")
-      if (anyNA(x$fit.stats$ML)) {
-         fs <- x$fit.stats$ML
-      } else {
-         fs <- .fcf(x$fit.stats$ML, digits[["fit"]])
-      }
+      fs <- .fcf(x$fit.stats$ML, digits[["fit"]])
       names(fs) <- c("logLik", "deviance", "AIC", "BIC", "AICc")
       cat("\n")
       tmp <- capture.output(print(fs, quote=FALSE, print.gap=2))
       .print.table(tmp, mstyle)
+   }
+
+   cat("\n")
+
+   if (!is.na(x$I2)) {
+      cat(mstyle$text("I^2 (total heterogeneity / total variability):  "))
+      cat(mstyle$result(paste0(ifelse(is.na(x$I2), NA, .fcf(x$I2, 2)), "%")))
       cat("\n")
-   } else {
-      cat("\n\n")
+   }
+   if (!is.na(x$H2)) {
+      cat(mstyle$text("H^2 (total variability / sampling variability): "))
+      cat(mstyle$result(paste0(ifelse(is.na(x$H2), NA, .fcf(x$H2, 2)))))
+      cat("\n")
    }
 
    if (!is.na(x$QE)) {
+      cat("\n")
       cat(mstyle$section("Test for Heterogeneity:"), "\n")
       cat(mstyle$result(paste0("Q(df = ", ifelse(x$k.yi-1 >= 0, x$k.yi-1, 0), ") = ", .fcf(x$QE, digits[["test"]]), ", p-val ", .pval(x$QEp, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
    }

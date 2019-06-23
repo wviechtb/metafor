@@ -201,6 +201,9 @@
 <span class='fu'><a href='rma.peto.html'>rma.peto</a></span>(<span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>pre.nti</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>pre.nci</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>pre.xti</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>pre.xci</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
 #&gt; Fixed-Effects Model (k = 9)
 #&gt; 
+#&gt; I^2 (total heterogeneity / total variability):  72.74%
+#&gt; H^2 (total variability / sampling variability): 3.67
+#&gt; 
 #&gt; Test for Heterogeneity: 
 #&gt; Q(df = 8) = 29.34, p-val &lt; .01
 #&gt; 
@@ -217,6 +220,9 @@
 <span class='co'>### meta-analysis including only studies where oedema was not a diagnostic criterion</span>
 <span class='fu'><a href='rma.peto.html'>rma.peto</a></span>(<span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>pre.nti</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>pre.nci</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>pre.xti</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>pre.xci</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>, <span class='kw'>subset</span><span class='kw'>=</span>(<span class='no'>oedema</span><span class='kw'>==</span><span class='fl'>0</span>))</div><div class='output co'>#&gt; 
 #&gt; Fixed-Effects Model (k = 7)
+#&gt; 
+#&gt; I^2 (total heterogeneity / total variability):  60.84%
+#&gt; H^2 (total variability / sampling variability): 2.55
 #&gt; 
 #&gt; Test for Heterogeneity: 
 #&gt; Q(df = 6) = 15.32, p-val = 0.02
@@ -235,6 +241,9 @@
 <span class='fu'><a href='rma.peto.html'>rma.peto</a></span>(<span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>fup.nti</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>fup.nci</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>ped.xti</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>ped.xci</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Some yi/vi values are NA.</span></div><div class='output co'>#&gt; 
 #&gt; Fixed-Effects Model (k = 9)
 #&gt; 
+#&gt; I^2 (total heterogeneity / total variability):  0.00%
+#&gt; H^2 (total variability / sampling variability): 0.58
+#&gt; 
 #&gt; Test for Heterogeneity: 
 #&gt; Q(df = 6) = 3.49, p-val = 0.75
 #&gt; 
@@ -250,6 +259,9 @@
 #&gt; </div><div class='input'><span class='fu'><a href='rma.peto.html'>rma.peto</a></span>(<span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>fup.nti</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>fup.nci</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>stb.xti</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>stb.xci</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Tables with NAs omitted from model fitting.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Some yi/vi values are NA.</span></div><div class='output co'>#&gt; 
 #&gt; Fixed-Effects Model (k = 8)
 #&gt; 
+#&gt; I^2 (total heterogeneity / total variability):  0.00%
+#&gt; H^2 (total variability / sampling variability): 0.20
+#&gt; 
 #&gt; Test for Heterogeneity: 
 #&gt; Q(df = 5) = 0.99, p-val = 0.96
 #&gt; 
@@ -264,6 +276,9 @@
 #&gt;     0.68   0.35   1.31 
 #&gt; </div><div class='input'><span class='fu'><a href='rma.peto.html'>rma.peto</a></span>(<span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>fup.nti</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>fup.nci</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>ned.xti</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>ned.xci</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Tables with NAs omitted from model fitting.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Some yi/vi values are NA.</span></div><div class='output co'>#&gt; 
 #&gt; Fixed-Effects Model (k = 8)
+#&gt; 
+#&gt; I^2 (total heterogeneity / total variability):  0.00%
+#&gt; H^2 (total variability / sampling variability): 0.51
 #&gt; 
 #&gt; Test for Heterogeneity: 
 #&gt; Q(df = 5) = 2.54, p-val = 0.77
