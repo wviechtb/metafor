@@ -96,11 +96,13 @@ print.rma.glmm <- function(x, digits, showfit=FALSE, signif.stars=getOption("sho
    if (!is.na(x$QE.Wld) || !is.na(x$QE.LRT)) {
       QE.Wld <- .fcf(x$QE.Wld, digits[["test"]])
       QE.LRT <- .fcf(x$QE.LRT, digits[["test"]])
+      nchar.Wld <- nchar(QE.Wld, keepNA=FALSE)
+      nchar.LRT <- nchar(QE.LRT, keepNA=FALSE)
 
-      if (nchar(QE.Wld) > nchar(QE.LRT))
-         QE.LRT <- paste0(paste(rep(" ", nchar(QE.Wld) - nchar(QE.LRT)), collapse=""), QE.LRT)
-      if (nchar(QE.LRT) > nchar(QE.Wld))
-         QE.Wld <- paste0(paste(rep(" ", nchar(QE.LRT) - nchar(QE.Wld)), collapse=""), QE.Wld)
+      if (nchar.Wld > nchar.LRT)
+         QE.LRT <- paste0(paste(rep(" ", nchar.Wld - nchar.LRT), collapse=""), QE.LRT)
+      if (nchar.LRT > nchar.Wld)
+         QE.Wld <- paste0(paste(rep(" ", nchar.LRT - nchar.Wld), collapse=""), QE.Wld)
 
       if (x$int.only) {
          cat(mstyle$section("Tests for Heterogeneity:"))

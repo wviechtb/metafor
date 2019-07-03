@@ -1,4 +1,4 @@
-# metafor 2.2-0 (2019-06-23)
+# metafor 2.2-0 (2019-07-03)
 
 - `I^2` and `H^2` are also shown in output for fixed-effects models
 

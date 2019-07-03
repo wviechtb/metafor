@@ -126,7 +126,7 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
 
          }
 
-         if (is.element(x$struct[1], c("UN","UNHO"))) {
+         if (is.element(x$struct[1], c("UN","UNR"))) {
 
             if (x$struct[1] == "UN") {
                vc <- cbind(tau2, tau, x$g.levels.k, ifelse(x$vc.fix$tau2, "yes", "no"), x$g.levels.f[[1]])
@@ -247,7 +247,7 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
 
          }
 
-         if (is.element(x$struct[2], c("UN","UNHO"))) {
+         if (is.element(x$struct[2], c("UN","UNR"))) {
 
             if (x$struct[2] == "UN") {
                vc <- cbind(gamma2, gamma, x$h.levels.k, ifelse(x$vc.fix$gamma2, "yes", "no"), x$h.levels.f[[1]])

@@ -63,7 +63,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("tdist", "outlist", "onlyo1", "addyi", "addvi", "time"))
+   .chkdots(ddd, c("tdist", "outlist", "onlyo1", "addyi", "addvi", "time", "retdat"))
 
    ### handle 'time' argument from ...
 
@@ -825,7 +825,9 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
          row.names(X.fit) <- seq_len(2*k)
 
-         #return(data.frame(dat.grp, X.fit, study, dat.off=ifelse(!is.null(dat.off), dat.off, NA), const, group1, group2, group12))
+         if (.isTRUE(ddd$retdat))
+            return(list(dat.grp=dat.grp, X.fit=X.fit, study=study, dat.off = if (!is.null(dat.off)) dat.off else NULL, const=const, group1=group1, group2=group2, group12=group12, dat.fam=dat.fam))
+            #return(data.frame(dat.grp, X.fit, study, dat.off=ifelse(!is.null(dat.off), dat.off, NA), const, group1, group2, group12))
 
          ###################################################################
 
@@ -1089,7 +1091,9 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
          study <- factor(seq_len(k))         ### study factor
          X.fit <- X
 
-         #return(data.frame(dat.grp, X.fit, study, dat.off=ifelse(!is.null(dat.off), dat.off, NA)))
+         if (.isTRUE(ddd$retdat))
+            return(list(dat.grp=dat.grp, X.fit=X.fit, study=study, dat.off = if (!is.null(dat.off)) dat.off else NULL))
+            #return(data.frame(dat.grp, X.fit, study, dat.off=ifelse(!is.null(dat.off), dat.off, NA)))
 
          ###################################################################
 
@@ -1349,6 +1353,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                chol.h.A <- try(chol(h.A), silent=!verbose)             ### see if h.A can be inverted with chol()
                if (inherits(chol.h.A, "try-error")) {
                   warning(mstyle$warning("Cannot invert Hessian for saturated model."))
+                  QE.Wld <- NA
                } else {
                   Ivb2.QE  <- h.D-h.C%*%chol2inv(chol.h.A)%*%h.B       ### inverse of the inverse of the lower right part
                   QE.Wld   <- c(t(b2.QE) %*% Ivb2.QE %*% b2.QE)        ### Wald statistic (note: this approach only requires taking the inverse of h.A)
@@ -1588,7 +1593,9 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       study <- factor(seq_len(k)) ### study factor
       X.fit <- X
 
-      #return(data.frame(study, dat.grp, dat.off=ifelse(!is.null(dat.off), dat.off, NA), X.fit))
+      if (.isTRUE(ddd$retdat))
+         return(list(dat.grp=dat.grp, X.fit=X.fit, study=study, dat.off = if (!is.null(dat.off)) dat.off else NULL, dat.fam=dat.fam))
+         #return(data.frame(dat.grp, X.fit, study, dat.off=ifelse(!is.null(dat.off), dat.off, NA)))
 
       ### fit FE model
 

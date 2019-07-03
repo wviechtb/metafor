@@ -14,7 +14,7 @@
 ### - CS   (compound symmetry)
 ### - HCS  (heteroscedastic compound symmetry)
 ### - UN   (general positive-definite matrix with no structure)
-### - UNHO (homoscedastic general positive-definite matrix with single tau2/gamma2 value and unstructured correlation matrix)
+### - UNR  (general positive-definite correlation matrix with a single tau2/gamma2 value)
 ### - AR   (AR1 structure with a single tau2/gamma2 value and autocorrelation rho/phi)
 ### - HAR  (heteroscedastic AR1 structure with multiple tau2/gamma2 values and autocorrelation rho/phi)
 ### - CAR  (continuous time AR1 structure)
@@ -38,7 +38,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
    if (!is.element(method, c("FE","ML","REML")))
       stop(mstyle$stop("Unknown 'method' specified."))
 
-   if (any(!is.element(struct, c("CS","HCS","UN","AR","HAR","CAR","ID","DIAG","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD","GEN")))) ### "UNHO"
+   if (any(!is.element(struct, c("CS","HCS","UN","AR","HAR","CAR","ID","DIAG","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD","GEN")))) # "UNR",
       stop(mstyle$stop("Unknown 'struct' specified."))
 
    if (length(struct) == 1)
@@ -628,7 +628,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
       ### note: with ~ 1 | interaction(var1, var2), mf.r will have 2 columns, but is actually a 'one variable' term
       ###   and with ~ interaction(var1, var2) | var3, mf.r will have 3 columns, but is actually a 'two variable' term
       ### mf.r.ncols above is correct even in these cases (since it is based on the model.frame() results), but need
-      ### to be careful that this doesn't screw up anything in other functions (for now, mf.r.ncols not used in any other function)
+      ### to be careful that this doesn't screw up anything in other functions (for now, mf.r.ncols is not used in any other function)
 
       mf.r <- lapply(random.plus, get_all_vars, data=data)
 
@@ -1493,7 +1493,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
                phi.init = phi.init,       # initial value(s) for phi
                REMLf = TRUE,              # full REML likelihood (including all constants)
                evtol = 1e-07,             # lower bound for eigenvalues to determine if model matrix is positive definite
-               cholesky = ifelse(is.element(struct, c("UN","GEN")), TRUE, FALSE), # by default, use Cholesky factorization for G and H matrix for "UN" and "GEN" structures
+               cholesky = ifelse(is.element(struct, c("UN","UNR","GEN")), TRUE, FALSE), # by default, use Cholesky factorization for G and H matrix for "UN", "UNR", and "GEN" structures
                posdefify = FALSE,         # to force G and H matrix to become positive definite
                hessian = FALSE,           # to compute Hessian
                hessianCtrl=list(r=8),     # arguments passed on to 'method.args' of hessian()
@@ -1514,6 +1514,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
 
    if (withS && any(con$sigma2.init <= 0))
       stop(mstyle$stop("Value(s) of 'sigma2.init' must be > 0"))
+
    if (withG && any(con$tau2.init <= 0))
       stop(mstyle$stop("Value(s) of 'tau2.init' must be > 0."))
    if (withG && struct[1]=="CAR" && (con$rho.init <= 0 | con$rho.init >= 1))
@@ -1524,6 +1525,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
       stop(mstyle$stop("Value(s) of 'rho.init' must be in >= 0."))
    if (withG && !is.element(struct[1], c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD")) && any(con$rho.init <= -1 | con$rho.init >= 1))
       stop(mstyle$stop("Value(s) of 'rho.init' must be in (-1,1)."))
+
    if (withH && any(con$gamma2.init <= 0))
       stop(mstyle$stop("Value(s) of 'gamma2.init' must be > 0."))
    if (withH && struct[2]=="CAR" && (con$phi.init <= 0 | con$phi.init >= 1))
@@ -1540,18 +1542,18 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
    if (length(con$cholesky) == 1)
       con$cholesky <- rep(con$cholesky, 2)
 
-   ### use of Cholesky factorization only applicable for models with "UN" or "GEN" structure ("UNHO" may also be possible, but that still requires a fix; see below)
+   ### use of Cholesky factorization only applicable for models with "UN", "UNR", and "GEN" structure
 
-   if (!withG) ### in case user sets cholesky=TRUE and struct="UN" or struct="GEN" even though there is no 1st 'inner | outer' term
+   if (!withG) ### in case user sets cholesky=TRUE and struct="UN", struct="UNR", or struct="GEN" even though there is no 1st 'inner | outer' term
       con$cholesky[1] <- FALSE
 
-   if (con$cholesky[1] && !is.element(struct[1], c("UN","GEN")))
+   if (con$cholesky[1] && !is.element(struct[1], c("UN","UNR","GEN")))
       con$cholesky[1] <- FALSE
 
-   if (!withH) ### in case user sets cholesky=TRUE and struct="UN" or struct="GEN" even though there is no 2nd 'inner | outer' term
+   if (!withH) ### in case user sets cholesky=TRUE and struct="UN", struct="UNR", or struct="GEN" even though there is no 2nd 'inner | outer' term
       con$cholesky[2] <- FALSE
 
-   if (con$cholesky[2] && !is.element(struct[2], c("UN","GEN")))
+   if (con$cholesky[2] && !is.element(struct[2], c("UN","UNR","GEN")))
       con$cholesky[2] <- FALSE
 
    ### copy initial values back (in case they were replaced by user-defined values); those values are
@@ -1573,12 +1575,20 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
    con$sigma2.init <- log(sigma2.init)
 
    if (con$cholesky[1]) {
-      G <- .con.vcov.UN(tau2.init, rho.init)
+      if (struct[1] == "UNR") {
+         G <- .con.vcov.UNR(tau2.init, rho.init)
+      } else {
+         G <- .con.vcov.UN(tau2.init, rho.init)
+      }
       G <- try(chol(G), silent=TRUE)
       if (inherits(G, "try-error"))
          stop(mstyle$stop("Cannot take Choleski decomposition of initial 'G' matrix."))
-      con$tau2.init <- diag(G)        ### note: con$tau2.init and con$rho.init are the 'choled' values of the initial G matrix, so con$rho.init really
-      con$rho.init <- G[upper.tri(G)] ### contains the 'choled' covariances; and these values are also passed on the .ll.rma.mv as the initial values
+      if (struct[1] == "UNR") {
+         con$tau2.init <- log(tau2.init)
+      } else {
+         con$tau2.init <- diag(G)        ### note: con$tau2.init and con$rho.init are the 'choled' values of the initial G matrix, so con$rho.init really
+         con$rho.init <- G[upper.tri(G)] ### contains the 'choled' covariances; and these values are also passed on the .ll.rma.mv as the initial values
+      }
       if (length(con$rho.init) == 0L)
          con$rho.init <- 0
    } else {
@@ -1911,7 +1921,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
       G <- as.matrix(fitcall$G)
       if (is.element(struct[1], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD")))
          colnames(G) <- rownames(G) <- seq_len(nrow(G))
-      if (is.element(struct[1], c("CS","HCS","UN","AR","HAR","CAR","ID","DIAG")))
+      if (is.element(struct[1], c("CS","HCS","UN","UNR","AR","HAR","CAR","ID","DIAG")))
          colnames(G) <- rownames(G) <- g.levels.f[[1]]
       if (is.element(struct[1], c("GEN")))
          colnames(G) <- rownames(G) <- g.names[-length(g.names)]
@@ -1923,7 +1933,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
       H <- as.matrix(fitcall$H)
       if (is.element(struct[2], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD")))
          colnames(H) <- rownames(H) <- seq_len(nrow(H))
-      if (is.element(struct[2], c("CS","HCS","UN","AR","HAR","CAR","ID","DIAG")))
+      if (is.element(struct[2], c("CS","HCS","UN","UNR","AR","HAR","CAR","ID","DIAG")))
          colnames(H) <- rownames(H) <- h.levels.f[[1]]
       if (is.element(struct[2], c("GEN")))
          colnames(H) <- rownames(H) <- h.names[-length(h.names)]

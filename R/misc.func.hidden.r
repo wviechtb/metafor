@@ -363,7 +363,7 @@
 
    ### check that the number of variables is correct for the chosen structure
 
-   if (is.element(struct, c("CS","HCS","UN","UNHO","AR","HAR","CAR","ID","DIAG","PHYBM","PHYPL","PHYPD")) && nvars != 2)
+   if (is.element(struct, c("CS","HCS","UN","UNR","AR","HAR","CAR","ID","DIAG","PHYBM","PHYPL","PHYPD")) && nvars != 2)
       stop(mstyle$stop(paste0("Only a single inner variable allowed for an '~ inner | outer' term when 'struct=\"", struct, "\"'.")), call.=FALSE)
 
    ### get variables names in mf.g
@@ -372,7 +372,7 @@
 
    ### check that inner variable is a factor (or character variable) for structures that require this
 
-   if (is.element(struct, c("CS","HCS","UN","UNHO","ID","DIAG")) && !is.factor(mf.g[[1]]) && !is.character(mf.g[[1]]))
+   if (is.element(struct, c("CS","HCS","UN","UNR","ID","DIAG")) && !is.factor(mf.g[[1]]) && !is.character(mf.g[[1]]))
       stop(mstyle$stop(paste0("Inner variable in '~ inner | outer' term must be a factor or character variable when 'struct=\"", struct, "\"'.")), call.=FALSE)
 
    ### for struct="CAR", check that inner term is numeric and get the unique numeric values
@@ -434,7 +434,7 @@
       tau2s <- g.nlevels[1]
       rhos  <- ifelse(g.nlevels[1] > 1, g.nlevels[1]*(g.nlevels[1]-1)/2, 1)
    }
-   if (struct == "UNHO") {
+   if (struct == "UNR") {
       tau2s <- 1
       rhos  <- ifelse(g.nlevels[1] > 1, g.nlevels[1]*(g.nlevels[1]-1)/2, 1)
    }
@@ -484,7 +484,7 @@
 
    ### create model matrix for inner and outer factors of mf.g
 
-   if (is.element(struct, c("CS","HCS","UN","AR","HAR","CAR","ID","DIAG"))) {
+   if (is.element(struct, c("CS","HCS","UN","UNR","AR","HAR","CAR","ID","DIAG"))) {
 
       if (g.nlevels[1] == 1) {
          Z.G1 <- cbind(rep(1,k))
@@ -660,19 +660,19 @@
       g.levels.comb.k <- Reduce("+", g.levels.comb.k)
       g.levels.comb.k <- g.levels.comb.k[upper.tri(g.levels.comb.k)]
 
-      ### UN/UNHO: if a particular combination of arms never occurs in any of the studies, then must fix the corresponding rho to 0 (if not already fixed)
+      ### UN/UNR: if a particular combination of arms never occurs in any of the studies, then must fix the corresponding rho to 0 (if not already fixed)
       ### this also takes care of the case where each study has only a single arm
 
-      if (is.element(struct, c("UN","UNHO")) && any(g.levels.comb.k == 0 & is.na(rho))) {
+      if (is.element(struct, c("UN","UNR")) && any(g.levels.comb.k == 0 & is.na(rho))) {
          rho[g.levels.comb.k == 0] <- 0
          warning(mstyle$warning(paste0("Some combinations of the levels of the inner factor never occurred. Corresponding ", ifelse(isG, 'rho', 'phi'), " value(s) fixed to 0.")), call.=FALSE)
       }
 
-      ### if there was only a single arm for "UN/UNHO" to begin with, then fix rho to 0
+      ### if there was only a single arm for "UN" or "UNR" to begin with, then fix rho to 0
       ### (technically there is then no rho at all to begin with, but rhos was still set to 1 earlier for the optimization routine)
       ### (if there is a single arm after removing NAs, then this is dealt with below by setting tau2 and rho values to 0)
 
-      if (is.element(struct, c("UN","UNHO")) && g.nlevels.f[1] == 1 && is.na(rho)) {
+      if (is.element(struct, c("UN","UNR")) && g.nlevels.f[1] == 1 && is.na(rho)) {
          rho <- 0
          warning(mstyle$warning(paste0("Inner factor has only a single level, so fixed value of ", ifelse(isG, 'rho', 'phi'), " to 0.")), call.=FALSE)
       }
@@ -697,17 +697,12 @@
       G <- .con.vcov.UN(tau2, rho)
    }
 
-   if (struct == "ID" || struct == "DIAG" ) {
-      G <- diag(tau2, nrow=g.nlevels.f[1], ncol=g.nlevels.f[1])
+   if (struct == "UNR") {
+      G <- .con.vcov.UNR(tau2, rho)
    }
 
-   if (struct == "UNHO") {
-      G <- matrix(NA_real_, nrow=g.nlevels.f[1], ncol=g.nlevels.f[1])
-      G[upper.tri(G)] <- rho
-      G[lower.tri(G)] <- t(G)[lower.tri(G)]
-      diag(G) <- 1
-      G <- diag(sqrt(rep(tau2, g.nlevels.f[1])), nrow=g.nlevels.f[1], ncol=g.nlevels.f[1]) %*% G %*% diag(sqrt(rep(tau2, g.nlevels.f[1])), nrow=g.nlevels.f[1], ncol=g.nlevels.f[1])
-      diag(G) <- tau2
+   if (is.element(struct, c("ID","DIAG"))) {
+      G <- diag(tau2, nrow=g.nlevels.f[1], ncol=g.nlevels.f[1])
    }
 
    if (struct == "AR") {
@@ -898,21 +893,21 @@
       warning(mstyle$warning(paste0("Fixed ", ifelse(isG, 'tau2', 'gamma2'), " and corresponding ", ifelse(isG, 'rho', 'phi'), " value(s) to 0 for removed level(s).")), call.=FALSE)
    }
 
-   ### for "UNHO", set rho(s) to 0 corresponding to any levels that were removed
+   ### for "UNR", set rho(s) to 0 corresponding to any levels that were removed
 
-   if (any(g.levels.r) && struct == "UNHO") {
+   if (any(g.levels.r) && struct == "UNR") {
       G[g.levels.r,] <- 0
       G[,g.levels.r] <- 0
       diag(G) <- tau2 ### don't really need this
       rho <- G[upper.tri(G)]
-      warning(mstyle$warning(paste0("Fixed ", ifelse(isG, 'rho', 'phi'), " value(s) to 0 corresponding to removed level(s).")), call.=FALSE)
+      warning(mstyle$warning(paste0("Fixed ", ifelse(isG, 'rho', 'phi'), " value(s) to 0 for removed level(s).")), call.=FALSE)
    }
 
    ### special handling for the bivariate model:
-   ### if tau2 (for "CS","AR","CAR","UNHO") or either tau2.1 or tau2.2 (for "HCS","UN","HAR") is fixed to 0, then rho must be fixed to 0
+   ### if tau2 (for "CS","AR","CAR","UNR") or either tau2.1 or tau2.2 (for "HCS","UN","HAR") is fixed to 0, then rho must be fixed to 0
 
    if (g.nlevels.f[1] == 2) {
-      if (is.element(struct, c("CS","AR","CAR","UNHO")) && !is.na(tau2) && tau2 == 0)
+      if (is.element(struct, c("CS","AR","CAR","UNR")) && !is.na(tau2) && tau2 == 0)
          rho <- 0
       if (is.element(struct, c("HCS","UN","HAR")) && ((!is.na(tau2[1]) && tau2[1] == 0) || (!is.na(tau2[2]) && tau2[2] == 0)))
          rho <- 0
@@ -945,6 +940,26 @@
    G[upper.tri(G)] <- covs
    diag(G) <- vars
    return(crossprod(G))
+}
+
+### function to construct var-cov matrix for "UNR" structure given the variance and correlations
+
+.con.vcov.UNR <- function(var, cors) {
+   dims <- round((1 + sqrt(1 + 8*length(cors)))/2)
+   G <- matrix(1, nrow=dims, ncol=dims)
+   G[upper.tri(G)] <- cors
+   G[lower.tri(G)] <- t(G)[lower.tri(G)]
+   return(var * G)
+}
+
+### function to construct var-cov matrix for "UNR" structure given the variance and vector of 'choled' correlations
+
+.con.vcov.UNR.chol <- function(var, cors) {
+   dims <- round((1 + sqrt(1 + 8*length(cors)))/2)
+   G <- matrix(0, nrow=dims, ncol=dims)
+   G[upper.tri(G)] <- cors
+   diag(G) <- 1
+   return(var * crossprod(G))
 }
 
 ############################################################################
@@ -1014,21 +1029,24 @@
       }
    }
 
-   if (is.element(struct, c("ID","DIAG")))
-      E <- diag(v, nrow=ncol.Z1, ncol=ncol.Z1)
-
-   if (struct == "UNHO") {
-      E <- matrix(NA_real_, nrow=ncol.Z1, ncol=ncol.Z1)
-      E[upper.tri(E)] <- r
-      E[lower.tri(E)] <- t(E)[lower.tri(E)]
-      diag(E) <- 1
-      E <- diag(sqrt(rep(v, ncol.Z1)), nrow=ncol.Z1, ncol=ncol.Z1) %*% E %*% diag(sqrt(rep(v, ncol.Z1)), nrow=ncol.Z1, ncol=ncol.Z1)
+   if (struct == "UNR") {
+      if (cholesky) {
+         E <- .con.vcov.UNR.chol(v, r)
+         v <- diag(E)[1,1]             ### need this, so correct values are shown when verbose=TRUE
+         r <- cov2cor(E)[upper.tri(E)] ### need this, so correct values are shown when verbose=TRUE
+         v[!is.na(v.val)] <- v.val[!is.na(v.val)] ### replace any fixed values
+         r[!is.na(r.val)] <- r.val[!is.na(r.val)] ### replace any fixed values
+      }
+      E <- .con.vcov.UNR(v, r)
       if (posdefify) {
          E <- as.matrix(nearPD(E, keepDiag=TRUE)$mat) ### nearPD() in Matrix package
-         v <- E[1,1]                                  ### need this, so correct values are shown when verbose=TRUE
-         r <- cov2cor(E)[upper.tri(E)]                ### need this, so correct values are shown when verbose=TRUE
+         v <- E[1,1]                   ### need this, so correct values are shown when verbose=TRUE
+         r <- cov2cor(E)[upper.tri(E)] ### need this, so correct values are shown when verbose=TRUE
       }
    }
+
+   if (is.element(struct, c("ID","DIAG")))
+      E <- diag(v, nrow=ncol.Z1, ncol=ncol.Z1)
 
    if (struct == "AR") {
       if (ncol.Z1 > 1) {
