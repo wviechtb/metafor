@@ -83,6 +83,17 @@ cex, cex.lab, cex.axis, annosym, ...) {
    if (length(annosym) != 3)
       stop(mstyle$stop("Argument 'annosym' must be a vector of length 3."))
 
+   ddd <- list(...)
+
+   lplot     <- function(..., textpos) plot(...)
+   labline   <- function(..., textpos) abline(...)
+   lsegments <- function(..., textpos) segments(...)
+   laxis     <- function(..., textpos) axis(...)
+   lmtext    <- function(..., textpos) mtext(...)
+   lpolygon  <- function(..., textpos) polygon(...)
+   ltext     <- function(..., textpos) text(...)
+   lpoints   <- function(..., textpos) points(...)
+
    #########################################################################
 
    ### digits[1] for annotations, digits[2] for x-axis labels
@@ -371,6 +382,20 @@ cex, cex.lab, cex.axis, annosym, ...) {
    if (alim[1] < xlim[1]) { xlim[1] <- alim[1] }
    if (alim[2] > xlim[2]) { xlim[2] <- alim[2] }
 
+   ### allow adjustment of position of study labels and annotations via textpos argument
+
+   if (is.null(ddd$textpos))
+      ddd$textpos <- c(xlim[1], xlim[2])
+
+   if (length(ddd$textpos) != 2)
+      stop(mstyle$stop("Argument 'textpos' must be of length 2."))
+
+   if (is.na(ddd$textpos[1]))
+      ddd$textpos[1] <- xlim[1]
+
+   if (is.na(ddd$textpos[2]))
+      ddd$textpos[2] <- xlim[2]
+
    ### set y axis limits
 
    if (missing(ylim)) {
@@ -432,16 +457,16 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
    ### start plot
 
-   plot(NA, NA, xlim=xlim, ylim=ylim, xlab="", ylab="", yaxt="n", xaxt="n", xaxs="i", bty="n", col="black", ...)
+   lplot(NA, NA, xlim=xlim, ylim=ylim, xlab="", ylab="", yaxt="n", xaxt="n", xaxs="i", bty="n", col="black", ...)
 
    ### horizontal title line
 
-   abline(h=ylim[2]-(top-1), lty=lty[2], col="black", ...)
+   labline(h=ylim[2]-(top-1), lty=lty[2], col="black", ...)
 
    ### add reference line
 
    if (is.numeric(refline))
-      segments(refline, ylim[1]-5, refline, ylim[2]-(top-1), lty="dotted", col="black", ...)
+      lsegments(refline, ylim[1]-5, refline, ylim[2]-(top-1), lty="dotted", col="black", ...)
 
    ### set cex, cex.lab, and cex.axis sizes as a function of the height of the figure
 
@@ -468,14 +493,14 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
    ### add x axis
 
-   axis(side=1, at=at, labels=at.lab, cex.axis=cex.axis, col="black", ...)
+   laxis(side=1, at=at, labels=at.lab, cex.axis=cex.axis, col="black", ...)
 
    ### add x axis label
 
    if (missing(xlab))
       xlab <- .setlab(measure, transf.char, atransf.char, gentype=1)
 
-   mtext(xlab, side=1, at=min(at) + (max(at)-min(at))/2, line=par("mgp")[1]-0.5, cex=cex.lab, col="black", ...)
+   lmtext(xlab, side=1, at=min(at) + (max(at)-min(at))/2, line=par("mgp")[1]-0.5, cex=cex.lab, col="black", ...)
 
    ### add CI ends (either | or <> if outside of axis limits)
 
@@ -487,35 +512,35 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
       ### if the lower bound is actually larger than upper x-axis limit, then everything is to the right and just draw a polygon pointing in that direction
       if (ci.lb[i] >= alim[2]) {
-         polygon(x=c(alim[2], alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]), y=c(rows[i], rows[i]+(height/150)*cex*efac[2], rows[i]-(height/150)*cex*efac[2], rows[i]), col=col[i], border=col[i], ...)
+         lpolygon(x=c(alim[2], alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]), y=c(rows[i], rows[i]+(height/150)*cex*efac[2], rows[i]-(height/150)*cex*efac[2], rows[i]), col=col[i], border=col[i], ...)
          next
       }
 
       ### if the upper bound is actually lower than lower x-axis limit, then everything is to the left and just draw a polygon pointing in that direction
       if (ci.ub[i] <= alim[1]) {
-         polygon(x=c(alim[1], alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]), y=c(rows[i], rows[i]+(height/150)*cex*efac[2], rows[i]-(height/150)*cex*efac[2], rows[i]), col=col[i], border=col[i], ...)
+         lpolygon(x=c(alim[1], alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]), y=c(rows[i], rows[i]+(height/150)*cex*efac[2], rows[i]-(height/150)*cex*efac[2], rows[i]), col=col[i], border=col[i], ...)
          next
       }
 
-      segments(max(ci.lb[i], alim[1]), rows[i], min(ci.ub[i], alim[2]), rows[i], lty=lty[1], col=col[i], ...)
+      lsegments(max(ci.lb[i], alim[1]), rows[i], min(ci.ub[i], alim[2]), rows[i], lty=lty[1], col=col[i], ...)
 
       if (ci.lb[i] >= alim[1]) {
-         segments(ci.lb[i], rows[i]-(height/150)*cex*efac[1], ci.lb[i], rows[i]+(height/150)*cex*efac[1], col=col[i], ...)
+         lsegments(ci.lb[i], rows[i]-(height/150)*cex*efac[1], ci.lb[i], rows[i]+(height/150)*cex*efac[1], col=col[i], ...)
       } else {
-         polygon(x=c(alim[1], alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]), y=c(rows[i], rows[i]+(height/150)*cex*efac[2], rows[i]-(height/150)*cex*efac[2], rows[i]), col=col[i], border=col[i], ...)
+         lpolygon(x=c(alim[1], alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]), y=c(rows[i], rows[i]+(height/150)*cex*efac[2], rows[i]-(height/150)*cex*efac[2], rows[i]), col=col[i], border=col[i], ...)
       }
 
       if (ci.ub[i] <= alim[2]) {
-         segments(ci.ub[i], rows[i]-(height/150)*cex*efac[1], ci.ub[i], rows[i]+(height/150)*cex*efac[1], col=col[i], ...)
+         lsegments(ci.ub[i], rows[i]-(height/150)*cex*efac[1], ci.ub[i], rows[i]+(height/150)*cex*efac[1], col=col[i], ...)
       } else {
-         polygon(x=c(alim[2], alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]), y=c(rows[i], rows[i]+(height/150)*cex*efac[2], rows[i]-(height/150)*cex*efac[2], rows[i]), col=col[i], border=col[i], ...)
+         lpolygon(x=c(alim[2], alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]), y=c(rows[i], rows[i]+(height/150)*cex*efac[2], rows[i]-(height/150)*cex*efac[2], rows[i]), col=col[i], border=col[i], ...)
       }
 
    }
 
    ### add study labels on the left
 
-   text(xlim[1], rows, slab, pos=4, cex=cex, col=col, ...)
+   ltext(ddd$textpos[1], rows, slab, pos=4, cex=cex, col=col, ...)
 
    ### add info labels
 
@@ -528,7 +553,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
          ilab.pos <- rep(ilab.pos, ncol(ilab))
       par(family=fonts[3])
       for (l in seq_len(ncol(ilab))) {
-         text(ilab.xpos[l], rows, ilab[,l], pos=ilab.pos[l], cex=cex, ...)
+         ltext(ilab.xpos[l], rows, ilab[,l], pos=ilab.pos[l], cex=cex, ...)
       }
       par(family=fonts[1])
    }
@@ -580,7 +605,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
       annotext <- apply(annotext, 1, paste, collapse="")
       annotext[grepl("NA", annotext, fixed=TRUE)] <- ""
       par(family=fonts[2])
-      text(x=xlim[2], rows, labels=annotext, pos=2, cex=cex, col=col, ...)
+      ltext(ddd$textpos[2], rows, labels=annotext, pos=2, cex=cex, col=col, ...)
       par(family=fonts[1])
 
    }
@@ -594,11 +619,11 @@ cex, cex.lab, cex.axis, annosym, ...) {
          next
 
       if (yi[i] >= alim[1] && yi[i] <= alim[2])
-         points(yi[i], rows[i], pch=pch[i], cex=cex*psize[i], col=col[i], ...)
+         lpoints(yi[i], rows[i], pch=pch[i], cex=cex*psize[i], col=col[i], ...)
 
    }
 
-   #points(yi, rows, pch=pch, cex=cex*psize, ...)
+   #lpoints(yi, rows, pch=pch, cex=cex*psize, ...)
 
    #########################################################################
 

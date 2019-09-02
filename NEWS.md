@@ -1,4 +1,4 @@
-# metafor 2.2-0 (2019-07-03)
+# metafor 2.2-0 (2019-08-02)
 
 - `I^2` and `H^2` are also shown in output for fixed-effects models
 
@@ -7,6 +7,8 @@
 - added phylogenetic correlation structures (`"PHYBM"`,`"PHYPL"`,`"PHYPD"`) to `rma.mv()` (for Brownian motion, Pagel's lambda, and Pagel's delta)
 
 - added (for now undocumented) `time` argument to more functions that are computationally expensive
+
+- added (for now undocumented) `textpos` argument to the various forest functions
 
 - added a new dataset (`dat.graves2010`)
 

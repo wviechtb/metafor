@@ -1,4 +1,4 @@
-Changes in Version 2.2-0 (2019-07-03)
+Changes in Version 2.2-0 (2019-08-02)
 =====================================
 
    o I^2 and H^2 are also shown in output for fixed-effects models
@@ -10,6 +10,9 @@ Changes in Version 2.2-0 (2019-07-03)
 
    o added (for now undocumented) 'time' argument to more functions that are
      computationally expensive
+
+   o added (for now undocumented) 'textpos' argument to the various forest
+     functions
 
    o added a new dataset (dat.graves2010)
 

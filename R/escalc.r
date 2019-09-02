@@ -453,7 +453,7 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
             yi <- z1i - z2i
             vi <- 2*pi*p1i*(1-p1i)*exp(z1i^2)/n1i + 2*pi*p2i*(1-p2i)*exp(z2i^2)/n2i ### from Sanchez-Meca et al. (2003) and Rosenthal (1994; Handbook chapter)
          }                                                                          ### seems to be right for stratified and cross-sectional/multinomial sampling
-                                                                                    ### see code/probit directory
+                                                                                    ### see code/probit_transformation directory
          ### log(OR) transformation to SMD based on logistic distribution
 
          if (is.element(measure, c("OR2D","OR2DL"))) {
