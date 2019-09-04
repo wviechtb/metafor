@@ -63,7 +63,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("tdist", "outlist", "onlyo1", "addyi", "addvi", "time", "retdat"))
+   .chkdots(ddd, c("tdist", "outlist", "onlyo1", "addyi", "addvi", "time", "retdat", "family"))
 
    ### handle 'time' argument from ...
 
@@ -804,14 +804,24 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
          if (measure == "OR") {                                      ###                           xi   mi   study   group1  group2  group12  offset  intrcpt  mod1
             dat.grp <- cbind(xi=c(rbind(ai,ci)), mi=c(rbind(bi,di))) ### grp-level outcome data    ai   bi   i       1       0       +1/2     NULL    1        x1i
-            dat.fam <- binomial                                      ###                           ci   di   i       0       1       -1/2     NULL    0        0
+                                                                     ###                           ci   di   i       0       1       -1/2     NULL    0        0
+            if (is.null(ddd$family)) {
+               dat.fam <- binomial
+            } else {
+               dat.fam <- ddd$family
+            }
             dat.off <- NULL
          }
 
          if (measure == "IRR") {                                     ###                           xi   ti   study   group1  group2  group12  offset  intrcpt  mod1
             dat.grp <- cbind(xi=c(rbind(x1i,x2i)))                   ### grp-level outcome data    x1i  t1i  i       1       0       +1/2     t1i     1        x1i
-            dat.fam <- poisson                                       ### log(ti) for offset        x2i  t2i  i       0       1       -1/2     t2i     0        0
-            dat.off <- log(c(rbind(t1i,t2i)))                        ###
+                                                                     ### log(ti) for offset        x2i  t2i  i       0       1       -1/2     t2i     0        0
+            if (is.null(ddd$family)) {
+               dat.fam <- poisson
+            } else {
+               dat.fam <- ddd$family
+            }
+            dat.off <- log(c(rbind(t1i,t2i)))
          }
 
          group1  <- rep(c(1,0), times=k)                             ### group dummy for 1st group (ai,bi for group 1)
@@ -1580,13 +1590,21 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
       if (measure == "PLO") {
          dat.grp <- cbind(xi=xi,mi=mi)
-         dat.fam <- binomial
+         if (is.null(ddd$family)) {
+            dat.fam <- binomial
+         } else {
+            dat.fam <- ddd$family
+         }
          dat.off <- NULL
       }
 
       if (measure == "IRLN") {
          dat.grp <- xi
-         dat.fam <- poisson
+         if (is.null(ddd$family)) {
+            dat.fam <- poisson
+         } else {
+            dat.fam <- ddd$family
+         }
          dat.off <- log(ti)
       }
 
