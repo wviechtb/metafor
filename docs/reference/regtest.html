@@ -8,10 +8,12 @@
 
 <title>Regression Test for Funnel Plot Asymmetry — regtest • metafor</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -22,8 +24,9 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -31,10 +34,11 @@
 
 
 
-<meta property="og:title" content="Regression Test for Funnel Plot Asymmetry — regtest" />
 
+<meta property="og:title" content="Regression Test for Funnel Plot Asymmetry — regtest" />
 <meta property="og:description" content="The function can be used to carry out (various versions of) Egger's regression test for funnel plot asymmetry." />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -46,6 +50,7 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
 
 
   </head>
@@ -64,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.1</span>
       </span>
     </div>
 
@@ -92,7 +97,6 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://twitter.com/wviechtb">
@@ -113,6 +117,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -124,19 +129,17 @@
     </div>
 
     <div class="ref-description">
-    
     <p>The function can be used to carry out (various versions of) Egger's regression test for funnel plot asymmetry.</p>
-    
     </div>
 
-    <pre class="usage">regtest(x, &#8230;)
+    <pre class="usage"><span class='fu'>regtest</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
-# S3 method for rma
-regtest(x, model="rma", predictor="sei", ret.fit=FALSE, digits, &#8230;)
+<span class='co'># S3 method for rma</span>
+<span class='fu'>regtest</span>(<span class='no'>x</span>, <span class='kw'>model</span><span class='kw'>=</span><span class='st'>"rma"</span>, <span class='kw'>predictor</span><span class='kw'>=</span><span class='st'>"sei"</span>, <span class='kw'>ret.fit</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>digits</span>, <span class='no'>...</span>)
 
-# S3 method for default
-regtest(x, vi, sei, ni, subset, model="rma", predictor="sei", ret.fit=FALSE, digits, &#8230;)</pre>
-    
+<span class='co'># S3 method for default</span>
+<span class='fu'>regtest</span>(<span class='no'>x</span>, <span class='no'>vi</span>, <span class='no'>sei</span>, <span class='no'>ni</span>, <span class='no'>subset</span>, <span class='kw'>model</span><span class='kw'>=</span><span class='st'>"rma"</span>, <span class='kw'>predictor</span><span class='kw'>=</span><span class='st'>"sei"</span>, <span class='kw'>ret.fit</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>digits</span>, <span class='no'>...</span>)</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -177,11 +180,11 @@ regtest(x, vi, sei, ni, subset, model="rma", predictor="sei", ret.fit=FALSE, dig
       <td><p>integer specifying the number of decimal places to which the printed results should be rounded (the default is 4).</p></td>
     </tr>
     <tr>
-      <th>&#8230;</th>
+      <th>...</th>
       <td><p>other arguments.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Various tests for funnel plot asymmetry have been suggested in the literature, including the rank correlation test by Begg and Mazumdar (1994) and the regression test by Egger et al. (1997). Extensions, modifications, and further developments of the regression test are described (among others) by Macaskill, Walter, and Irwig (2001), Sterne and Egger (2005), Harbord, Egger, and Sterne (2006), Peters et al. (2006), Rücker et al. (2008), and Moreno et al. (2009). The various versions of the regression test differ in terms of the model (either a weighted regression model with a multiplicative dispersion term or a fixed/random/mixed-effects meta-regression model is used), in terms of the predictor variable that the observed outcomes are hypothesized to be related to when publication bias is present (suggested predictors include the standard error, the sampling variance, and the sample size -- or transformations thereof), and in terms of the outcome measure used (e.g., for \(2 \times 2\) table data, one has the choice between various outcome measures). The idea behind the various tests is the same though: If there is a relationship between the observed outcomes and the chosen predictor, then this usually implies asymmetry in the funnel plot, which in turn may be an indication of publication bias.</p>
@@ -197,7 +200,6 @@ regtest(x, vi, sei, ni, subset, model="rma", predictor="sei", ret.fit=FALSE, dig
 <p>If the model passed to the <code>regtest.rma</code> function already included one or more moderators, then <code>regtest.rma</code> will add the chosen <code>predictor</code> to the moderator(s) already included in the model. This way, one can test for funnel plot asymmetry after accounting first for the influence of the moderator(s) already included.</p>
 <p>One can also pass a vector of observed effect sizes or outcomes (via <code>x</code>) and the corresponding sampling variances via <code>vi</code> (or the standard errors via <code>sei</code>) directly to the function (in this case, the <code>regtest.default</code> function is used). When the <code>predictor</code> is the sample size or a transformation thereof, then <code>ni</code> needs to be specified here as well.</p>
 <p>The outcome measure used for the regression test is simply determined by what measure was used in fitting the original model (or what values are passed to <code>regtest.default</code>).</p>
-    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class <code>"regtest.rma"</code>. The object is a list containing the following components:</p>
@@ -210,12 +212,10 @@ regtest(x, vi, sei, ni, subset, model="rma", predictor="sei", ret.fit=FALSE, dig
 
    The results are formatted and printed with the <a href='print.regtest.rma.html'>print.regtest.rma</a> function.
 
-    
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>The classical ``Egger test'' is obtained by setting <code>model="lm"</code> and <code>predictor="sei"</code>. For the random/mixed-effects version of the Egger test, one should first fit a random-effects model to the data and then set <code>model="rma"</code> and <code>predictor="sei"</code> when using the <code>regtest.rma</code> function. See Sterne and Egger (2005) for details on these two types of models/tests.</p>
 <p>All of the tests do not directly test for publication bias, but for a relationship between the observed outcomes and the chosen predictor. If such a relationship is present, then this usually implies asymmetry in the funnel plot, which in turn may be an indication of publication bias. However, it is important to keep in mind that there can be other reasons besides publication bias that could lead to asymmetry in the funnel plot.</p>
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Begg, C. B., &amp; Mazumdar, M. (1994). Operating characteristics of a rank correlation test for publication bias. <em>Biometrics</em>, <b>50</b>, 1088--1101.</p>
@@ -227,11 +227,9 @@ regtest(x, vi, sei, ni, subset, model="rma", predictor="sei", ret.fit=FALSE, dig
 <p>Rücker, G., Schwarzer, G., &amp; Carpenter, J. (2008). Arcsine test for publication bias in meta-analyses with binary outcomes. <em>Statistics in Medicine</em>, <b>27</b>, 746--763.</p>
 <p>Sterne, J. A. C., &amp; Egger, M. (2005). Regression methods to detect publication and other bias in meta-analysis. In H. R. Rothstein, A. J. Sutton, &amp; M. Borenstein (Eds.) <em>Publication bias in meta-analysis: Prevention, assessment, and adjustments</em> (pp. 99--110). Chichester, England: Wiley.</p>
 <p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='http://www.jstatsoft.org/v36/i03/'>http://www.jstatsoft.org/v36/i03/</a>.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='ranktest.html'>ranktest</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### calculate log risk ratios and corresponding sampling variances</span>
@@ -354,17 +352,11 @@ regtest(x, vi, sei, ni, subset, model="rma", predictor="sei", ret.fit=FALSE, dig
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#details">Details</a></li>
-
       <li><a href="#value">Value</a></li>
-
       <li><a href="#note">Note</a></li>
-
       <li><a href="#references">References</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -373,19 +365,23 @@ regtest(x, vi, sei, ni, subset, model="rma", predictor="sei", ret.fit=FALSE, dig
   </div>
 </div>
 
+
       <footer>
       <div class="copyright">
   <p>Developed by Wolfgang Viechtbauer.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

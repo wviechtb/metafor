@@ -75,36 +75,33 @@ forest(c(0,res$beta[25:27]), sei=c(0,res$se[25:27]), psize=1, xlim=c(-3,4), digi
 text(-3, 6, "Intervention", pos=4)
 text( 4, 6, "Odds Ratio [95\% CI]",  pos=2)
 
+############################################################################
+
 ### restructure dataset to a contrast-based format
-dat.c <- lapply(split(dat.hasselblad1998, dat.hasselblad1998$study),
-                function(x) cbind(x[rep(1,nrow(x)-1),], x[-1,5:7]))
-dat.c <- do.call(rbind, dat.c)
-dat.c <- dat.c[,c(1:5,8,6:7,9:10)]
-names(dat.c)[5:10] <- c("trt1", "trt2", "ai", "n1i", "ci", "n2i")
-rownames(dat.c) <- 1:nrow(dat.c)
-dat.c$id <- 1:nrow(dat.c)
-dat.c
+dat.c <- to.wide(dat.hasselblad1998, study="study", group="trt", ref="no_contact", grpvars=6:7)
 
 ### calculate log odds ratios for each treatment comparison
-dat.c <- escalc(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, add=1/2, to="all", data=dat.c)
+dat.c <- escalc(measure="OR", ai=xi.1, n1i=ni.1,
+                              ci=xi.2, n2i=ni.2, add=1/2, to="all", data=dat.c)
 dat.c
 
 ### calculate the variance-covariance matrix of the log odds ratios for multitreatment studies
 ### see Gleser & Olkin (2009), equation (19.11), for the covariance equation
 calc.v <- function(x) {
-   v <- matrix(1/(x$ai[1]+1/2) + 1/(x$n1i[1] - x$ai[1] + 1/2), nrow=nrow(x), ncol=nrow(x))
+   #v <- matrix(1/(x$ai[1]+1/2) + 1/(x$n1i[1] - x$ai[1] + 1/2), nrow=nrow(x), ncol=nrow(x))
+   v <- matrix(1/(x$xi.2[1]+1/2) + 1/(x$ni.2[1] - x$xi.2[1] + 1/2), nrow=nrow(x), ncol=nrow(x))
    diag(v) <- x$vi
    v
 }
 V <- bldiag(lapply(split(dat.c, dat.c$study), calc.v))
 
 ### convert trt1 and trt2 variables to factors with desired ordering of levels
-lvls <- c("no_contact", "self_help", "ind_counseling", "grp_counseling")
-dat.c$trt1 <- factor(dat.c$trt1, levels=lvls)
-dat.c$trt2 <- factor(dat.c$trt2, levels=lvls)
+lvls <- c("self_help", "ind_counseling", "grp_counseling", "no_contact")
+dat.c$trt.1 <- factor(dat.c$trt.1, levels=lvls)
+dat.c$trt.2 <- factor(dat.c$trt.2, levels=lvls)
 
 ### create variables to indicate the contrast examined
-dat.c <- cbind(dat.c, model.matrix(~ dat.c$trt1 - 1) - model.matrix(~ dat.c$trt2 - 1))
+dat.c <- cbind(dat.c, model.matrix(~ dat.c$trt.1 - 1) - model.matrix(~ dat.c$trt.2 - 1))
 names(dat.c)[(ncol(dat.c)-3):ncol(dat.c)] <- lvls
 
 ### network meta-analysis using a contrast-based random-effects model

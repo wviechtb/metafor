@@ -8,10 +8,12 @@
 
 <title>Variance Inflation Factors for 'rma' Objects — vif • metafor</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -22,8 +24,9 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -31,10 +34,11 @@
 
 
 
-<meta property="og:title" content="Variance Inflation Factors for 'rma' Objects — vif" />
 
+<meta property="og:title" content="Variance Inflation Factors for 'rma' Objects — vif" />
 <meta property="og:description" content="Compute variance inflation factors (VIFs) for objects of class &quot;rma&quot;." />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -46,6 +50,7 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
 
 
   </head>
@@ -64,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.1</span>
       </span>
     </div>
 
@@ -92,7 +97,6 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://twitter.com/wviechtb">
@@ -113,6 +117,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -124,16 +129,14 @@
     </div>
 
     <div class="ref-description">
-    
     <p>Compute variance inflation factors (VIFs) for objects of class <code>"rma"</code>.</p>
-    
     </div>
 
-    <pre class="usage">vif(x, &#8230;)
+    <pre class="usage"><span class='fu'>vif</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
-# S3 method for rma
-vif(x, intercept=FALSE, table=FALSE, digits, &#8230;)</pre>
-    
+<span class='co'># S3 method for rma</span>
+<span class='fu'>vif</span>(<span class='no'>x</span>, <span class='kw'>intercept</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>table</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>digits</span>, <span class='no'>...</span>)</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -154,15 +157,14 @@ vif(x, intercept=FALSE, table=FALSE, digits, &#8230;)</pre>
       <td><p>integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is to take the value from the object).</p></td>
     </tr>
     <tr>
-      <th>&#8230;</th>
+      <th>...</th>
       <td><p>other arguments.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The function computes variance inflation factors (VIFs) for meta-regression models. Hence, the model specified via <code>x</code> must include moderator variables. VIFs indicate the inflation in the variance of a model coefficient due to collinearity among the predictor variables.</p>
-    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Either a vector (if <code>table=FALSE</code>) with the VIFs or a data frame (if <code>table=TRUE</code>) with the following elements:</p>
@@ -174,21 +176,17 @@ vif(x, intercept=FALSE, table=FALSE, digits, &#8230;)</pre>
    <dt>ci.ub</dt><dd><p>corresponding upper bound of the confidence intervals.</p></dd>
    <dt>vif</dt><dd><p>corresponding variance inflation factors.</p></dd>
 
-    
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>The values of the VIFs are invariant to the scaling of the predictor variables if the model includes an intercept that is removed when inverting the correlation matrix of the model coefficients to compute the VIFs. This is the default behavior. See &#8216;Examples&#8217;.</p>
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Davis, C. E., Hyde, J. E., Bangdiwala, S. I., &amp; Nelson, J. J. (1986). An example of dependencies among variables in a conditional logistic regression. In S. H. Moolgavkar &amp; R. L. Prentice (Eds.), <em>Modern statistical methods in chronic disease epidemiology</em> (pp. 140--147). New York: Wiley.</p>
 <p>Wax, Y. (1992). Collinearity diagnosis for a relative risk regression-analysis: An application to assessment of diet cancer relationship in epidemiologic studies. <em>Statistics in Medicine</em>, <b>11</b>, 1273--1287.</p>
 <p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='http://www.jstatsoft.org/v36/i03/'>http://www.jstatsoft.org/v36/i03/</a>.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='rma.uni.html'>rma.uni</a></code>, <code><a href='rma.mv.html'>rma.mv</a></code>, <code><a href='rma.glmm.html'>rma.glmm</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### copy data from Bangert-Drowns et al. (2004) into 'dat'</span>
@@ -221,17 +219,11 @@ vif(x, intercept=FALSE, table=FALSE, digits, &#8230;)</pre>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#details">Details</a></li>
-
       <li><a href="#value">Value</a></li>
-
       <li><a href="#note">Note</a></li>
-
       <li><a href="#references">References</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -240,19 +232,23 @@ vif(x, intercept=FALSE, table=FALSE, digits, &#8230;)</pre>
   </div>
 </div>
 
+
       <footer>
       <div class="copyright">
   <p>Developed by Wolfgang Viechtbauer.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

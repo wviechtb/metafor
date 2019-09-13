@@ -147,6 +147,7 @@ reference:
       - bldiag
       - replmiss
       - to.long
+      - to.wide
       - to.table
       - metafor.news
       - reporter

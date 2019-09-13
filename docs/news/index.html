@@ -8,10 +8,12 @@
 
 <title>Changelog • metafor</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -22,8 +24,9 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -31,7 +34,9 @@
 
 
 
+
 <meta property="og:title" content="Changelog" />
+
 
 
 
@@ -43,6 +48,7 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
 
 
   </head>
@@ -61,7 +67,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.1</span>
       </span>
     </div>
 
@@ -89,7 +95,6 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://twitter.com/wviechtb">
@@ -110,6 +115,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -119,22 +125,25 @@
       <small>Source: <a href='https://github.com/wviechtb/metafor/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="metafor-22-0-2019-06-23" class="section level1">
+    <div id="metafor-2-2-1-2019-08-13" class="section level1">
 <h1 class="page-header">
-<a href="#metafor-22-0-2019-06-23" class="anchor"></a>metafor 2.2-0 (2019-06-23)<small> Unreleased </small>
+<a href="#metafor-2-2-1-2019-08-13" class="anchor"></a>metafor 2.2-1 (2019-08-13)<small> Unreleased </small>
 </h1>
 <ul>
+<li><p>started to use numbering scheme for <code>devel</code> version (the number after the dash indicates the devel version)</p></li>
+<li><p>added <code><a href="../reference/to.wide.html">to.wide()</a></code> function (for restructuring long format datasets into the wide format needed for contrast-based analyses)</p></li>
 <li><p><code>I^2</code> and <code>H^2</code> are also shown in output for fixed-effects models</p></li>
 <li><p>argument <code>grid</code> in <code><a href="../reference/baujat.html">baujat()</a></code> can now also be a color name</p></li>
 <li><p>added phylogenetic correlation structures (<code>"PHYBM"</code>,<code>"PHYPL"</code>,<code>"PHYPD"</code>) to <code><a href="../reference/rma.mv.html">rma.mv()</a></code> (for Brownian motion, Pagel’s lambda, and Pagel’s delta)</p></li>
 <li><p>added (for now undocumented) <code>time</code> argument to more functions that are computationally expensive</p></li>
+<li><p>added (for now undocumented) <code>textpos</code> argument to the various forest functions</p></li>
 <li><p>added a new dataset (<code>dat.graves2010</code>)</p></li>
 <li><p>added more tests</p></li>
 </ul>
 </div>
-    <div id="metafor-21-0-2019-05-13" class="section level1">
+    <div id="metafor-2-1-0-2019-05-13" class="section level1">
 <h1 class="page-header">
-<a href="#metafor-21-0-2019-05-13" class="anchor"></a>metafor 2.1-0 (2019-05-13)<small> 2019-05-14 </small>
+<a href="#metafor-2-1-0-2019-05-13" class="anchor"></a>metafor 2.1-0 (2019-05-13)<small> 2019-05-14 </small>
 </h1>
 <ul>
 <li><p>added <code><a href="https://rdrr.io/r/stats/formula.html">formula()</a></code> method for objects of class <code>rma</code></p></li>
@@ -194,9 +203,9 @@
 <li><p>reorganized the documentation a bit</p></li>
 </ul>
 </div>
-    <div id="metafor-20-0-2017-06-22" class="section level1">
+    <div id="metafor-2-0-0-2017-06-22" class="section level1">
 <h1 class="page-header">
-<a href="#metafor-20-0-2017-06-22" class="anchor"></a>metafor 2.0-0 (2017-06-22)<small> 2017-06-22 </small>
+<a href="#metafor-2-0-0-2017-06-22" class="anchor"></a>metafor 2.0-0 (2017-06-22)<small> 2017-06-22 </small>
 </h1>
 <ul>
 <li><p>added <code><a href="https://rdrr.io/r/stats/simulate.html">simulate()</a></code> method for <code>rma</code> objects; added <code>MASS</code> to <code>Suggests</code> (since simulating for <code>rma.mv</code> objects requires <code>mvrnorm()</code> from <code>MASS</code>)</p></li>
@@ -218,7 +227,7 @@
 <li><p><code><a href="../reference/escalc.html">escalc()</a></code> can now compute (semi-)partial correlation coefficients (<code>"PCOR"</code>, <code>"ZPCOR"</code>, <code>"SPCOR"</code>)</p></li>
 <li><p><code><a href="../reference/escalc.html">escalc()</a></code> can now compute measures of variability for single groups (<code>"CVLN"</code>, <code>"SDLN"</code>) and for the difference in variability between two groups (<code>"CVR"</code>, <code>"VR"</code>); also the log transformed mean (<code>"MNLN"</code>) has been added for consistency</p></li>
 <li><p><code><a href="../reference/escalc.html">escalc()</a></code> can now compute the sampling variance for <code>measure="PHI"</code> for studies using stratified sampling (<code>vtpye="ST"</code>)</p></li>
-<li><p>the <code>[</code> method for <code>escalc</code> objects now properly handles the <code>ni</code> and <code>slab</code> attributes and does a better job of cleaning out superfluous variable name information</p></li>
+<li><p>the <code><a href="https://rdrr.io/r/base/Extract.html">[</a></code> method for <code>escalc</code> objects now properly handles the <code>ni</code> and <code>slab</code> attributes and does a better job of cleaning out superfluous variable name information</p></li>
 <li><p>added <code><a href="https://rdrr.io/r/base/cbind.html">rbind()</a></code> method for <code>escalc</code> objects</p></li>
 <li><p>added <code><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame()</a></code> method for <code>list.rma</code> objects</p></li>
 <li><p>added a new dataset (<code>dat.pagliaro1992</code>) for another illustration of a network meta-analysis</p></li>
@@ -233,9 +242,9 @@
 <li><p>minor updates in the documentation</p></li>
 </ul>
 </div>
-    <div id="metafor-19-9-2016-09-25" class="section level1">
+    <div id="metafor-1-9-9-2016-09-25" class="section level1">
 <h1 class="page-header">
-<a href="#metafor-19-9-2016-09-25" class="anchor"></a>metafor 1.9-9 (2016-09-25)<small> 2016-09-25 </small>
+<a href="#metafor-1-9-9-2016-09-25" class="anchor"></a>metafor 1.9-9 (2016-09-25)<small> 2016-09-25 </small>
 </h1>
 <ul>
 <li><p>started to use git as version control system, GitHub to host the repository (<a href="https://github.com/wviechtb/metafor" class="uri">https://github.com/wviechtb/metafor</a>) for the development version of the package, Travis CI as continuous integration service (<a href="https://travis-ci.org/wviechtb/metafor" class="uri">https://travis-ci.org/wviechtb/metafor</a>), and Codecov for automated code coverage reporting (<a href="https://codecov.io/github/wviechtb/metafor" class="uri">https://codecov.io/github/wviechtb/metafor</a>)</p></li>
@@ -264,7 +273,7 @@
 <li><p><code><a href="../reference/labbe.html">labbe()</a></code> gains a <code>grid</code> argument</p></li>
 <li><p>more logical placement of labels in <code><a href="../reference/qqnorm.rma.html">qqnorm.rma.uni()</a></code>, <code><a href="../reference/qqnorm.rma.html">qqnorm.rma.mh()</a></code>, and <code><a href="../reference/qqnorm.rma.html">qqnorm.rma.peto()</a></code> functions (and more control thereof)</p></li>
 <li><p><code><a href="../reference/qqnorm.rma.html">qqnorm.rma.uni()</a></code> gains <code>lty</code> argument</p></li>
-<li><p>added <code><a href="../reference/gosh.html">gosh.rma()</a></code> and <code><a href="../reference/plot.gosh.rma.html">plot.gosh.rma()</a></code> for creating GOSH (i.e., graphical display of study heterogeneity) plots based on Olkin et al. (2012)</p></li>
+<li><p>added <code><a href="../reference/gosh.html">gosh.rma()</a></code> and <code><a href="../reference/plot.gosh.rma.html">plot.gosh.rma()</a></code> for creating GOSH (i.e., graphical display of study heterogeneity) plots based on Olkin et al. (2012)</p></li>
 <li><p>in the (rare) case where all observed outcomes are exactly equal to each other, <code>test="knha"</code> (i.e., <code>knha=TRUE</code>) in <code><a href="../reference/rma.uni.html">rma()</a></code> now leads to more appropriate results</p></li>
 <li><p>updated datasets so those containing precomputed effect size estimates or observed outcomes are already declared to be <code>escalc</code> objects</p></li>
 <li><p>added new datasets (<code>dat.egger2001</code> and <code>dat.li2007</code>) on the effectiveness of intravenous magnesium in acute myocardial infarction</p></li>
@@ -273,9 +282,9 @@
 <li><p>added more tests (and used a more consistent naming scheme for tests)</p></li>
 </ul>
 </div>
-    <div id="metafor-19-8-2015-09-28" class="section level1">
+    <div id="metafor-1-9-8-2015-09-28" class="section level1">
 <h1 class="page-header">
-<a href="#metafor-19-8-2015-09-28" class="anchor"></a>metafor 1.9-8 (2015-09-28)<small> 2015-09-28 </small>
+<a href="#metafor-1-9-8-2015-09-28" class="anchor"></a>metafor 1.9-8 (2015-09-28)<small> 2015-09-28 </small>
 </h1>
 <ul>
 <li><p>due to more stringent package testing, it is increasingly difficult to ensure that the package passes all checks on older versions of R; from now on, the package will therefore require, and be checked under, only the current (and the development) version of R</p></li>
@@ -295,9 +304,9 @@
 <li><p>some (overdue) updates to the documentation</p></li>
 </ul>
 </div>
-    <div id="metafor-19-7-2015-05-22" class="section level1">
+    <div id="metafor-1-9-7-2015-05-22" class="section level1">
 <h1 class="page-header">
-<a href="#metafor-19-7-2015-05-22" class="anchor"></a>metafor 1.9-7 (2015-05-22)<small> 2015-05-22 </small>
+<a href="#metafor-1-9-7-2015-05-22" class="anchor"></a>metafor 1.9-7 (2015-05-22)<small> 2015-05-22 </small>
 </h1>
 <ul>
 <li><p>default optimizer for <code><a href="../reference/rma.mv.html">rma.mv()</a></code> changed to <code><a href="https://rdrr.io/r/stats/nlminb.html">nlminb()</a></code> (instead of <code><a href="https://rdrr.io/r/stats/optim.html">optim()</a></code> with <code>"Nelder-Mead"</code>); extensive testing indicated that <code><a href="https://rdrr.io/r/stats/nlminb.html">nlminb()</a></code> (and also <code><a href="https://rdrr.io/r/stats/optim.html">optim()</a></code> with <code>"BFGS"</code>) is typically quicker and more robust; note that this is in principle a non-backwards compatible change, but really a necessary one; and you can always revert to the old behavior with <code>control=list(optimizer="optim", optmethod="Nelder-Mead")</code></p></li>
@@ -305,9 +314,9 @@
 <li><p>changed a few <code>is_identical_to()</code> comparisons to <code>expect_equivalent()</code> ones (that failed on Sparc Solaris)</p></li>
 </ul>
 </div>
-    <div id="metafor-19-6-2015-05-07" class="section level1">
+    <div id="metafor-1-9-6-2015-05-07" class="section level1">
 <h1 class="page-header">
-<a href="#metafor-19-6-2015-05-07" class="anchor"></a>metafor 1.9-6 (2015-05-07)<small> 2015-05-07 </small>
+<a href="#metafor-1-9-6-2015-05-07" class="anchor"></a>metafor 1.9-6 (2015-05-07)<small> 2015-05-07 </small>
 </h1>
 <ul>
 <li><p><code><a href="../reference/funnel.html">funnel()</a></code> now works again for <code>rma.glmm</code> objects (note to self: quit breaking things that work!)</p></li>
@@ -335,9 +344,9 @@
 <li><p>metafor now depends on at least version 3.1.0 of R</p></li>
 </ul>
 </div>
-    <div id="metafor-19-5-2014-11-24" class="section level1">
+    <div id="metafor-1-9-5-2014-11-24" class="section level1">
 <h1 class="page-header">
-<a href="#metafor-19-5-2014-11-24" class="anchor"></a>metafor 1.9-5 (2014-11-24)<small> 2014-11-24 </small>
+<a href="#metafor-1-9-5-2014-11-24" class="anchor"></a>metafor 1.9-5 (2014-11-24)<small> 2014-11-24 </small>
 </h1>
 <ul>
 <li><p>moved the <code>stats</code> and <code>Matrix</code> packages from <code>Depends</code> to <code>Imports</code>; as a result, had to add <code>utils</code> to <code>Imports</code>; moved the <code>Formula</code> package from <code>Depends</code> to <code>Suggests</code></p></li>
@@ -347,7 +356,7 @@
 <li><p><code><a href="../reference/rma.mv.html">rma.mv()</a></code> now requires the <code>inner</code> variable in an <code>~ inner | outer</code> formula to be a factor or character variable (except when <code>struct</code> is <code>"AR"</code> or <code>"HAR"</code>); use <code>~ factor(inner) | outer</code> in case it isn’t</p></li>
 <li><p><code>anova.rma.uni()</code> function changed to <code><a href="../reference/anova.rma.html">anova.rma()</a></code> that works now for both <code>rma.uni</code> and <code>rma.mv</code> objects</p></li>
 <li><p>the <code><a href="../reference/profile.rma.html">profile.rma.mv()</a></code> function now omits the number of the variance or correlation component from the plot title and x-axis label when the model only includes one of the respective parameters</p></li>
-<li><p><code><a href="https://rdrr.io/r/stats/profile.html">profile()</a></code> functions now pass on the <code>...</code> argument also to the <code><a href="https://rdrr.io/r/graphics/title.html">title()</a></code> function used to create the figure titles (esp. relevant when using the <code>cex.main</code> argument)</p></li>
+<li><p><code><a href="https://rdrr.io/r/stats/profile.html">profile()</a></code> functions now pass on the <code>...</code> argument also to the <code><a href="https://rdrr.io/r/graphics/title.html">title()</a></code> function used to create the figure titles (esp. relevant when using the <code>cex.main</code> argument)</p></li>
 <li><p>the <code>drop00</code> argument of the <code><a href="../reference/rma.mh.html">rma.mh()</a></code> and <code><a href="../reference/rma.peto.html">rma.peto()</a></code> functions now also accepts a vector with two logicals, the first applies when calculating the observed outcomes, the second when applying the Mantel-Haenszel or Peto’s method</p></li>
 <li><p><code><a href="../reference/weights.rma.html">weights.rma.uni()</a></code> now shows the correct weights when <code>weighted=FALSE</code></p></li>
 <li><p>argument <code>showweight</code> renamed to <code>showweights</code> in the <code><a href="../reference/forest.default.html">forest.default()</a></code> and <code><a href="../reference/forest.rma.html">forest.rma()</a></code> functions (more consistent with the naming of the various <code><a href="https://rdrr.io/r/stats/weights.html">weights()</a></code> functions)</p></li>
@@ -361,9 +370,9 @@
 <li><p>oh, and guess what? I updated the documentation …</p></li>
 </ul>
 </div>
-    <div id="metafor-19-4-2014-07-30" class="section level1">
+    <div id="metafor-1-9-4-2014-07-30" class="section level1">
 <h1 class="page-header">
-<a href="#metafor-19-4-2014-07-30" class="anchor"></a>metafor 1.9-4 (2014-07-30)<small> 2014-07-30 </small>
+<a href="#metafor-1-9-4-2014-07-30" class="anchor"></a>metafor 1.9-4 (2014-07-30)<small> 2014-07-30 </small>
 </h1>
 <ul>
 <li><p>added <code>method="GENQ"</code> to <code><a href="../reference/rma.uni.html">rma.uni()</a></code> for the generalized Q-statistic estimator of tau^2, which allows for used-defined weights (note: the DL and HE estimators are just special cases of this method)</p></li>
@@ -384,9 +393,9 @@
 <li><p>some improvements to the documentation (do I still need to mention this every time?)</p></li>
 </ul>
 </div>
-    <div id="metafor-19-3-2014-05-05" class="section level1">
+    <div id="metafor-1-9-3-2014-05-05" class="section level1">
 <h1 class="page-header">
-<a href="#metafor-19-3-2014-05-05" class="anchor"></a>metafor 1.9-3 (2014-05-05)<small> 2014-05-05 </small>
+<a href="#metafor-1-9-3-2014-05-05" class="anchor"></a>metafor 1.9-3 (2014-05-05)<small> 2014-05-05 </small>
 </h1>
 <ul>
 <li><p>some minor tweaks to <code><a href="../reference/rma.uni.html">rma.uni()</a></code> that should be user transparent</p></li>
@@ -431,15 +440,15 @@
 <li><p>for <code><a href="../reference/rma.glmm.html">rma.glmm()</a></code>, the control argument <code>optCtrl</code> is now used for passing control arguments to all of the optimizers (hence, control arguments <code>nlminbCtrl</code> and <code>minqaCtrl</code> are now defunct)</p></li>
 <li><p><code><a href="../reference/rma.glmm.html">rma.glmm()</a></code> should not throw an error anymore when including only a single moderator/predictor in the model</p></li>
 <li><p><code><a href="../reference/predict.rma.html">predict.rma()</a></code> now returns an object of class <code>list.rma</code> (therefore, function <code>print.predict.rma()</code> has been removed)</p></li>
-<li><p>for <code>rma.list</code> objects, added <code>[</code>, <code><a href="https://rdrr.io/r/utils/head.html">head()</a></code>, and <code><a href="https://rdrr.io/r/utils/head.html">tail()</a></code> methods</p></li>
+<li><p>for <code>rma.list</code> objects, added <code><a href="https://rdrr.io/r/base/Extract.html">[</a></code>, <code><a href="https://rdrr.io/r/utils/head.html">head()</a></code>, and <code><a href="https://rdrr.io/r/utils/head.html">tail()</a></code> methods</p></li>
 <li><p>automated testing using the <code>testthat</code> package (still many more tests to add, but finally made a start on this)</p></li>
 <li><p>encoding changed to UTF-8 (to use ‘foreign characters’ in the docs and to make the HTML help files look a bit nicer)</p></li>
 <li><p>guess what? some improvements to the documentation! (also combined some of the help files to reduce the size of the manual a bit; and yes, it’s still way too big)</p></li>
 </ul>
 </div>
-    <div id="metafor-19-2-2013-10-07" class="section level1">
+    <div id="metafor-1-9-2-2013-10-07" class="section level1">
 <h1 class="page-header">
-<a href="#metafor-19-2-2013-10-07" class="anchor"></a>metafor 1.9-2 (2013-10-07)<small> 2013-10-07 </small>
+<a href="#metafor-1-9-2-2013-10-07" class="anchor"></a>metafor 1.9-2 (2013-10-07)<small> 2013-10-07 </small>
 </h1>
 <ul>
 <li><p>added function <code><a href="../reference/rma.mv.html">rma.mv()</a></code> to fit multivariate/multilevel meta-analytic models via appropriate linear (mixed-effects) models; this function allows for modeling of non-independent sampling errors and/or true effects and can be used for network meta-analyses, meta-analyses accounting for phylogenetic relatedness, and other complicated meta-analytic data structures</p></li>
@@ -458,9 +467,9 @@
 <li><p>some improvements to the documentation (as always)</p></li>
 </ul>
 </div>
-    <div id="metafor-19-1-2013-07-20" class="section level1">
+    <div id="metafor-1-9-1-2013-07-20" class="section level1">
 <h1 class="page-header">
-<a href="#metafor-19-1-2013-07-20" class="anchor"></a>metafor 1.9-1 (2013-07-20)<small> 2013-07-20 </small>
+<a href="#metafor-1-9-1-2013-07-20" class="anchor"></a>metafor 1.9-1 (2013-07-20)<small> 2013-07-20 </small>
 </h1>
 <ul>
 <li><p><code><a href="../reference/rma.mh.html">rma.mh()</a></code> now also implements the Mantel-Haenszel method for incidence rate differences (<code>measure="IRD"</code>)</p></li>
@@ -478,9 +487,9 @@
 <li><p>some improvements to the documentation</p></li>
 </ul>
 </div>
-    <div id="metafor-19-0-2013-06-21" class="section level1">
+    <div id="metafor-1-9-0-2013-06-21" class="section level1">
 <h1 class="page-header">
-<a href="#metafor-19-0-2013-06-21" class="anchor"></a>metafor 1.9-0 (2013-06-21)<small> 2013-06-21 </small>
+<a href="#metafor-1-9-0-2013-06-21" class="anchor"></a>metafor 1.9-0 (2013-06-21)<small> 2013-06-21 </small>
 </h1>
 <ul>
 <li><p>vignette renamed to <code>metafor</code> so <code>vignette("metafor")</code> works now</p></li>
@@ -503,9 +512,9 @@
 <li><p>some improvements to the documentation</p></li>
 </ul>
 </div>
-    <div id="metafor-18-0-2013-04-11" class="section level1">
+    <div id="metafor-1-8-0-2013-04-11" class="section level1">
 <h1 class="page-header">
-<a href="#metafor-18-0-2013-04-11" class="anchor"></a>metafor 1.8-0 (2013-04-11)<small> 2013-04-11 </small>
+<a href="#metafor-1-8-0-2013-04-11" class="anchor"></a>metafor 1.8-0 (2013-04-11)<small> 2013-04-11 </small>
 </h1>
 <ul>
 <li><p>added additional clarifications about the change score outcome measures (<code>"MC"</code>, <code>"SMCC"</code>, and <code>"SMCR"</code>) to the help file for the <code><a href="../reference/escalc.html">escalc()</a></code> function and changed the code so that <code>"SMCR"</code> no longer expects argument <code>sd2i</code> to be specified (which is not needed anyways) (thanks to Markus Kösters for bringing this to my attention)</p></li>
@@ -515,7 +524,7 @@
 <li><p>labeling of the axes in <code><a href="../reference/labbe.html">labbe()</a></code> plots is now correct for odds ratios (and transformations thereof)</p></li>
 <li><p>added two new datasets (<code>dat.nielweise2007</code> and <code>dat.nielweise2008</code>) to illustrate some methods/models from the <code><a href="../reference/rma.glmm.html">rma.glmm()</a></code> function</p></li>
 <li><p>added a new dataset (<code>dat.yusuf1985</code>) to illustrate the use of <code><a href="../reference/rma.peto.html">rma.peto()</a></code></p></li>
-<li><p>test for heterogeneity is now conducted by the <code><a href="../reference/rma.peto.html">rma.peto()</a></code> function exactly as described by Yusuf et al. (1985)</p></li>
+<li><p>test for heterogeneity is now conducted by the <code><a href="../reference/rma.peto.html">rma.peto()</a></code> function exactly as described by Yusuf et al. (1985)</p></li>
 <li><p>in <code><a href="../reference/rma.glmm.html">rma.glmm()</a></code>, default number of quadrature points (<code>nAGQ</code>) is now 100 (which is quite a bit slower, but should provide more than sufficient accuracy in most cases)</p></li>
 <li><p>the standard errors of the HS and DL estimators of tau^2 are now correctly computed when tau^2 is prespecified by the user in the <code><a href="../reference/rma.uni.html">rma()</a></code> function; in addition, the standard error of the SJ estimator is also now provided when tau^2 is prespecified</p></li>
 <li><p><code><a href="../reference/rma.uni.html">rma.uni()</a></code> and <code><a href="../reference/rma.glmm.html">rma.glmm()</a></code> now use a better method to check whether the model matrix is of full rank</p></li>
@@ -525,9 +534,9 @@
 <li><p>some improvements to the documentation</p></li>
 </ul>
 </div>
-    <div id="metafor-17-0-2013-02-06" class="section level1">
+    <div id="metafor-1-7-0-2013-02-06" class="section level1">
 <h1 class="page-header">
-<a href="#metafor-17-0-2013-02-06" class="anchor"></a>metafor 1.7-0 (2013-02-06)<small> 2013-02-06 </small>
+<a href="#metafor-1-7-0-2013-02-06" class="anchor"></a>metafor 1.7-0 (2013-02-06)<small> 2013-02-06 </small>
 </h1>
 <ul>
 <li><p>added <code><a href="../reference/rma.glmm.html">rma.glmm()</a></code> function for fitting of appropriate generalized linear (mixed-effects) models when analyzing odds ratios, incidence rate ratios, proportions, or rates; the function makes use of the <code>lme4</code> and <code>BiasedUrn</code> packages; these are now suggested packages and loaded within <code><a href="../reference/rma.glmm.html">rma.glmm()</a></code> only when required (this makes for faster loading of the <code>metafor</code> package)</p></li>
@@ -541,7 +550,7 @@
 <li><p><code>append</code> argument is now <code>TRUE</code> by default in the <code><a href="../reference/escalc.html">escalc()</a></code> function</p></li>
 <li><p>objects generated by the <code><a href="../reference/escalc.html">escalc()</a></code> function now have their own class</p></li>
 <li><p>added <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> and <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> methods for objects of class <code>escalc</code></p></li>
-<li><p>added <code>[</code> and <code><a href="https://rdrr.io/r/base/cbind.html">cbind()</a></code> methods for objects of class <code>escalc</code></p></li>
+<li><p>added <code><a href="https://rdrr.io/r/base/Extract.html">[</a></code> and <code><a href="https://rdrr.io/r/base/cbind.html">cbind()</a></code> methods for objects of class <code>escalc</code></p></li>
 <li><p>added a few additional arguments to the <code><a href="../reference/escalc.html">escalc()</a></code> function (i.e., <code>slab</code>, <code>subset</code>, <code>var.names</code>, <code>replace</code>, <code>digits</code>)</p></li>
 <li><p>added <code>drop00</code> argument to the <code><a href="../reference/escalc.html">escalc()</a></code>, <code><a href="../reference/rma.uni.html">rma.uni()</a></code>, <code><a href="../reference/rma.mh.html">rma.mh()</a></code>, and <code><a href="../reference/rma.peto.html">rma.peto()</a></code> functions</p></li>
 <li><p>added <code>"MN"</code>, <code>"MC"</code>, <code>"SMCC"</code>, and <code>"SMCR"</code> measures to the <code><a href="../reference/escalc.html">escalc()</a></code> and <code><a href="../reference/rma.uni.html">rma.uni()</a></code> functions for the raw mean, the raw mean change, and the standardized mean change (with change score or raw score standardization) as possible outcome measures</p></li>
@@ -573,15 +582,12 @@
 <li><p><code><a href="../reference/rma.mh.html">rma.mh()</a></code> with <code>measure="RD"</code> now computes the standard error of the estimated risk difference based on Sato, Greenland, &amp; Robins (1989), which provides a consistent estimate under both large-stratum and sparse-data limiting models</p></li>
 <li><p>the restricted maximum likelihood (REML) is now calculated using the full likelihood equation (without leaving out additive constants)</p></li>
 <li><p>the model deviance is now calculated as -2 times the difference between the model log-likelihood and the log-likelihood under the saturated model (this is a more appropriate definition of the deviance than just taking -2 times the model log-likelihood)</p></li>
-<li>naming scheme of illustrative datasets bundled with the package has been changed; now datasets are called <code>&lt;dat.authoryear&gt;</code>; therefore, the datasets are now called (<code>old name -&gt; new name</code>):
-<ul>
+<li>naming scheme of illustrative datasets bundled with the package has been changed; now datasets are called <code>&lt;dat.authoryear&gt;</code>; therefore, the datasets are now called (<code>old name -&gt; new name</code>):</li>
 <li><code>dat.bcg      -&gt; dat.colditz1994</code></li>
 <li><code>dat.warfarin -&gt; dat.hart1999</code></li>
 <li><code>dat.los      -&gt; dat.normand1999</code></li>
 <li><code>dat.co2      -&gt; dat.curtis1998</code></li>
-<li><code>dat.empint   -&gt; dat.mcdaniel1994</code></li>
-</ul>
-</li>
+<li><p><code>dat.empint   -&gt; dat.mcdaniel1994</code></p></li>
 <li><p>but <code>dat.bcg</code> has been kept as an alias for <code>dat.colditz1994</code>, as it has been referenced under that name in some publications</p></li>
 <li><p>added new dataset (<code>dat.pritz1997</code>) to illustrate the meta-analysis of proportions (raw values and transformations thereof)</p></li>
 <li><p>added new dataset (<code>dat.bonett2010</code>) to illustrate the meta-analysis of Cronbach’s alpha values (raw values and transformations thereof)</p></li>
@@ -595,9 +601,9 @@
 <li><p>some improvements to the documentation</p></li>
 </ul>
 </div>
-    <div id="metafor-16-0-2011-04-13" class="section level1">
+    <div id="metafor-1-6-0-2011-04-13" class="section level1">
 <h1 class="page-header">
-<a href="#metafor-16-0-2011-04-13" class="anchor"></a>metafor 1.6-0 (2011-04-13)<small> 2011-04-13 </small>
+<a href="#metafor-1-6-0-2011-04-13" class="anchor"></a>metafor 1.6-0 (2011-04-13)<small> 2011-04-13 </small>
 </h1>
 <ul>
 <li><p><code><a href="../reference/trimfill.html">trimfill.rma.uni()</a></code> now returns a proper object even when the number of missing studies is estimated to be zero</p></li>
@@ -609,9 +615,9 @@
 <li><p>some improvements to the documentation</p></li>
 </ul>
 </div>
-    <div id="metafor-15-0-2010-12-16" class="section level1">
+    <div id="metafor-1-5-0-2010-12-16" class="section level1">
 <h1 class="page-header">
-<a href="#metafor-15-0-2010-12-16" class="anchor"></a>metafor 1.5-0 (2010-12-16)<small> 2010-12-16 </small>
+<a href="#metafor-1-5-0-2010-12-16" class="anchor"></a>metafor 1.5-0 (2010-12-16)<small> 2010-12-16 </small>
 </h1>
 <ul>
 <li><p>the <code>metafor</code> package now has its own project website at: <a href="http://www.metafor-project.org/" class="uri">http://www.metafor-project.org/</a></p></li>
@@ -628,9 +634,9 @@
 <li><p>some improvements to the documentation</p></li>
 </ul>
 </div>
-    <div id="metafor-14-0-2010-07-30" class="section level1">
+    <div id="metafor-1-4-0-2010-07-30" class="section level1">
 <h1 class="page-header">
-<a href="#metafor-14-0-2010-07-30" class="anchor"></a>metafor 1.4-0 (2010-07-30)<small> 2010-07-30 </small>
+<a href="#metafor-1-4-0-2010-07-30" class="anchor"></a>metafor 1.4-0 (2010-07-30)<small> 2010-07-30 </small>
 </h1>
 <ul>
 <li><p>a papar about the package has now been published in the Journal of Statistical Software (<a href="http://www.jstatsoft.org/v36/i03/" class="uri">http://www.jstatsoft.org/v36/i03/</a>)</p></li>
@@ -640,9 +646,9 @@
 <li><p>some updates to the documentation</p></li>
 </ul>
 </div>
-    <div id="metafor-13-0-2010-06-25" class="section level1">
+    <div id="metafor-1-3-0-2010-06-25" class="section level1">
 <h1 class="page-header">
-<a href="#metafor-13-0-2010-06-25" class="anchor"></a>metafor 1.3-0 (2010-06-25)<small> 2010-06-25 </small>
+<a href="#metafor-1-3-0-2010-06-25" class="anchor"></a>metafor 1.3-0 (2010-06-25)<small> 2010-06-25 </small>
 </h1>
 <ul>
 <li><p>the <code>metafor</code> package now depends on the <code>Formula</code> package</p></li>
@@ -650,9 +656,9 @@
 <li><p>added the (inverse) arcsine transformation to the set of transformation functions</p></li>
 </ul>
 </div>
-    <div id="metafor-12-0-2010-05-18" class="section level1">
+    <div id="metafor-1-2-0-2010-05-18" class="section level1">
 <h1 class="page-header">
-<a href="#metafor-12-0-2010-05-18" class="anchor"></a>metafor 1.2-0 (2010-05-18)<small> Unreleased </small>
+<a href="#metafor-1-2-0-2010-05-18" class="anchor"></a>metafor 1.2-0 (2010-05-18)<small> Unreleased </small>
 </h1>
 <ul>
 <li><p>cases where k is very small (e.g., k equal to 1 or 2) are now handled more gracefully</p></li>
@@ -668,9 +674,9 @@
 <li><p><code><a href="../reference/fitstats.html">logLik.rma()</a></code> function now behaves more like other <code><a href="https://rdrr.io/r/stats/logLik.html">logLik()</a></code> functions (such as <code><a href="https://rdrr.io/r/stats/logLik.html">logLik.lm()</a></code> and <code>logLik.lme()</code>)</p></li>
 </ul>
 </div>
-    <div id="metafor-11-0-2010-04-28" class="section level1">
+    <div id="metafor-1-1-0-2010-04-28" class="section level1">
 <h1 class="page-header">
-<a href="#metafor-11-0-2010-04-28" class="anchor"></a>metafor 1.1-0 (2010-04-28)<small> 2010-04-28 </small>
+<a href="#metafor-1-1-0-2010-04-28" class="anchor"></a>metafor 1.1-0 (2010-04-28)<small> 2010-04-28 </small>
 </h1>
 <ul>
 <li><p><code>cint()</code> generic removed and replaced with <code><a href="https://rdrr.io/r/stats/confint.html">confint()</a></code> method for objects of class <code>rma.uni</code></p></li>
@@ -685,9 +691,9 @@
 <li><p>changed the default number of iterations for the ML, REML, and EB estimators from 50 to 100</p></li>
 </ul>
 </div>
-    <div id="metafor-10-1-2010-02-02" class="section level1">
+    <div id="metafor-1-0-1-2010-02-02" class="section level1">
 <h1 class="page-header">
-<a href="#metafor-10-1-2010-02-02" class="anchor"></a>metafor 1.0-1 (2010-02-02)<small> 2010-02-02 </small>
+<a href="#metafor-1-0-1-2010-02-02" class="anchor"></a>metafor 1.0-1 (2010-02-02)<small> 2010-02-02 </small>
 </h1>
 <ul>
 <li><p>version jump in conjunction with the upcoming publication of a paper in the Journal of Statistical Software describing the <code>metafor</code> package</p></li>
@@ -703,9 +709,9 @@
 <li><p>some small improvements to the documentation</p></li>
 </ul>
 </div>
-    <div id="metafor-05-7-2009-12-06" class="section level1">
+    <div id="metafor-0-5-7-2009-12-06" class="section level1">
 <h1 class="page-header">
-<a href="#metafor-05-7-2009-12-06" class="anchor"></a>metafor 0.5-7 (2009-12-06)<small> 2009-12-06 </small>
+<a href="#metafor-0-5-7-2009-12-06" class="anchor"></a>metafor 0.5-7 (2009-12-06)<small> 2009-12-06 </small>
 </h1>
 <ul>
 <li><p>added <code><a href="../reference/permutest.html">permutest()</a></code> function for permutation tests</p></li>
@@ -714,9 +720,9 @@
 <li><p>a bit of code reorganization (nothing that affects how the functions work)</p></li>
 </ul>
 </div>
-    <div id="metafor-05-6-2009-10-19" class="section level1">
+    <div id="metafor-0-5-6-2009-10-19" class="section level1">
 <h1 class="page-header">
-<a href="#metafor-05-6-2009-10-19" class="anchor"></a>metafor 0.5-6 (2009-10-19)<small> Unreleased </small>
+<a href="#metafor-0-5-6-2009-10-19" class="anchor"></a>metafor 0.5-6 (2009-10-19)<small> Unreleased </small>
 </h1>
 <ul>
 <li><p>small changes to the computation of the DFFITS and DFBETAS values in the <code><a href="https://rdrr.io/r/stats/lm.influence.html">influence()</a></code> function, so that these statistics are more in line with their definitions in regular linear regression models</p></li>
@@ -725,9 +731,9 @@
 <li><p>added a control option to <code><a href="../reference/rma.uni.html">rma()</a></code> to adjust the step length of the Fisher scoring algorithm by a constant factor (this may be useful when the algorithm does not converge)</p></li>
 </ul>
 </div>
-    <div id="metafor-05-5-2009-10-08" class="section level1">
+    <div id="metafor-0-5-5-2009-10-08" class="section level1">
 <h1 class="page-header">
-<a href="#metafor-05-5-2009-10-08" class="anchor"></a>metafor 0.5-5 (2009-10-08)<small> 2009-10-08 </small>
+<a href="#metafor-0-5-5-2009-10-08" class="anchor"></a>metafor 0.5-5 (2009-10-08)<small> 2009-10-08 </small>
 </h1>
 <ul>
 <li><p>added the phi coefficient (<code>measure="PHI"</code>), Yule’s Q (<code>"YUQ"</code>), and Yule’s Y (<code>"YUY"</code>) as additional measures to the <code><a href="../reference/escalc.html">escalc()</a></code> function for 2x2 table data</p></li>
@@ -739,9 +745,9 @@
 <li><p>some small corrections to the documentation</p></li>
 </ul>
 </div>
-    <div id="metafor-05-4-2009-09-18" class="section level1">
+    <div id="metafor-0-5-4-2009-09-18" class="section level1">
 <h1 class="page-header">
-<a href="#metafor-05-4-2009-09-18" class="anchor"></a>metafor 0.5-4 (2009-09-18)<small> 2009-09-18 </small>
+<a href="#metafor-0-5-4-2009-09-18" class="anchor"></a>metafor 0.5-4 (2009-09-18)<small> 2009-09-18 </small>
 </h1>
 <ul>
 <li><p>corrected the <code><a href="../reference/trimfill.html">trimfill()</a></code> function</p></li>
@@ -755,35 +761,35 @@
 <li><p>some small corrections to the documentation</p></li>
 </ul>
 </div>
-    <div id="metafor-05-3-2009-07-31" class="section level1">
+    <div id="metafor-0-5-3-2009-07-31" class="section level1">
 <h1 class="page-header">
-<a href="#metafor-05-3-2009-07-31" class="anchor"></a>metafor 0.5-3 (2009-07-31)<small> 2009-07-31 </small>
+<a href="#metafor-0-5-3-2009-07-31" class="anchor"></a>metafor 0.5-3 (2009-07-31)<small> 2009-07-31 </small>
 </h1>
 <ul>
 <li><p>small changes to some of the examples</p></li>
 <li><p>added the log transformed proportion (<code>measure="PLN"</code>) as another measure to the <code><a href="../reference/escalc.html">escalc()</a></code> function; changed <code>"PL"</code> to <code>"PLO"</code> for the logit (i.e., log odds) transformation for proportions</p></li>
 </ul>
 </div>
-    <div id="metafor-05-2-2009-07-06" class="section level1">
+    <div id="metafor-0-5-2-2009-07-06" class="section level1">
 <h1 class="page-header">
-<a href="#metafor-05-2-2009-07-06" class="anchor"></a>metafor 0.5-2 (2009-07-06)<small> Unreleased </small>
+<a href="#metafor-0-5-2-2009-07-06" class="anchor"></a>metafor 0.5-2 (2009-07-06)<small> Unreleased </small>
 </h1>
 <ul>
 <li><p>added an option in <code><a href="../reference/plot.infl.rma.uni.html">plot.infl.rma.uni()</a></code> to open a new device for plotting the DFBETAS values</p></li>
 <li><p>thanks to Jim Lemon, added a much better method for adjusting the size of the labels, annotations, and symbols in the <code><a href="../reference/forest.html">forest()</a></code> function when the number of studies is large</p></li>
 </ul>
 </div>
-    <div id="metafor-05-1-2009-06-14" class="section level1">
+    <div id="metafor-0-5-1-2009-06-14" class="section level1">
 <h1 class="page-header">
-<a href="#metafor-05-1-2009-06-14" class="anchor"></a>metafor 0.5-1 (2009-06-14)<small> Unreleased </small>
+<a href="#metafor-0-5-1-2009-06-14" class="anchor"></a>metafor 0.5-1 (2009-06-14)<small> Unreleased </small>
 </h1>
 <ul>
 <li>made some small changes to the documentation (some typos corrected, some confusing points clarified)</li>
 </ul>
 </div>
-    <div id="metafor-05-0-2009-06-05" class="section level1">
+    <div id="metafor-0-5-0-2009-06-05" class="section level1">
 <h1 class="page-header">
-<a href="#metafor-05-0-2009-06-05" class="anchor"></a>metafor 0.5-0 (2009-06-05)<small> 2009-06-05 </small>
+<a href="#metafor-0-5-0-2009-06-05" class="anchor"></a>metafor 0.5-0 (2009-06-05)<small> 2009-06-05 </small>
 </h1>
 <ul>
 <li>first version released on CRAN</li>
@@ -795,41 +801,42 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#metafor-22-0-2019-06-23">2.2-0</a></li>
-        <li><a href="#metafor-21-0-2019-05-13">2.1-0</a></li>
-        <li><a href="#metafor-20-0-2017-06-22">2.0-0</a></li>
-        <li><a href="#metafor-19-9-2016-09-25">1.9-9</a></li>
-        <li><a href="#metafor-19-8-2015-09-28">1.9-8</a></li>
-        <li><a href="#metafor-19-7-2015-05-22">1.9-7</a></li>
-        <li><a href="#metafor-19-6-2015-05-07">1.9-6</a></li>
-        <li><a href="#metafor-19-5-2014-11-24">1.9-5</a></li>
-        <li><a href="#metafor-19-4-2014-07-30">1.9-4</a></li>
-        <li><a href="#metafor-19-3-2014-05-05">1.9-3</a></li>
-        <li><a href="#metafor-19-2-2013-10-07">1.9-2</a></li>
-        <li><a href="#metafor-19-1-2013-07-20">1.9-1</a></li>
-        <li><a href="#metafor-19-0-2013-06-21">1.9-0</a></li>
-        <li><a href="#metafor-18-0-2013-04-11">1.8-0</a></li>
-        <li><a href="#metafor-17-0-2013-02-06">1.7-0</a></li>
-        <li><a href="#metafor-16-0-2011-04-13">1.6-0</a></li>
-        <li><a href="#metafor-15-0-2010-12-16">1.5-0</a></li>
-        <li><a href="#metafor-14-0-2010-07-30">1.4-0</a></li>
-        <li><a href="#metafor-13-0-2010-06-25">1.3-0</a></li>
-        <li><a href="#metafor-12-0-2010-05-18">1.2-0</a></li>
-        <li><a href="#metafor-11-0-2010-04-28">1.1-0</a></li>
-        <li><a href="#metafor-10-1-2010-02-02">1.0-1</a></li>
-        <li><a href="#metafor-05-7-2009-12-06">0.5-7</a></li>
-        <li><a href="#metafor-05-6-2009-10-19">0.5-6</a></li>
-        <li><a href="#metafor-05-5-2009-10-08">0.5-5</a></li>
-        <li><a href="#metafor-05-4-2009-09-18">0.5-4</a></li>
-        <li><a href="#metafor-05-3-2009-07-31">0.5-3</a></li>
-        <li><a href="#metafor-05-2-2009-07-06">0.5-2</a></li>
-        <li><a href="#metafor-05-1-2009-06-14">0.5-1</a></li>
-        <li><a href="#metafor-05-0-2009-06-05">0.5-0</a></li>
+        <li><a href="#metafor-2-2-1-2019-08-13">2.2-1</a></li>
+        <li><a href="#metafor-2-1-0-2019-05-13">2.1-0</a></li>
+        <li><a href="#metafor-2-0-0-2017-06-22">2.0-0</a></li>
+        <li><a href="#metafor-1-9-9-2016-09-25">1.9-9</a></li>
+        <li><a href="#metafor-1-9-8-2015-09-28">1.9-8</a></li>
+        <li><a href="#metafor-1-9-7-2015-05-22">1.9-7</a></li>
+        <li><a href="#metafor-1-9-6-2015-05-07">1.9-6</a></li>
+        <li><a href="#metafor-1-9-5-2014-11-24">1.9-5</a></li>
+        <li><a href="#metafor-1-9-4-2014-07-30">1.9-4</a></li>
+        <li><a href="#metafor-1-9-3-2014-05-05">1.9-3</a></li>
+        <li><a href="#metafor-1-9-2-2013-10-07">1.9-2</a></li>
+        <li><a href="#metafor-1-9-1-2013-07-20">1.9-1</a></li>
+        <li><a href="#metafor-1-9-0-2013-06-21">1.9-0</a></li>
+        <li><a href="#metafor-1-8-0-2013-04-11">1.8-0</a></li>
+        <li><a href="#metafor-1-7-0-2013-02-06">1.7-0</a></li>
+        <li><a href="#metafor-1-6-0-2011-04-13">1.6-0</a></li>
+        <li><a href="#metafor-1-5-0-2010-12-16">1.5-0</a></li>
+        <li><a href="#metafor-1-4-0-2010-07-30">1.4-0</a></li>
+        <li><a href="#metafor-1-3-0-2010-06-25">1.3-0</a></li>
+        <li><a href="#metafor-1-2-0-2010-05-18">1.2-0</a></li>
+        <li><a href="#metafor-1-1-0-2010-04-28">1.1-0</a></li>
+        <li><a href="#metafor-1-0-1-2010-02-02">1.0-1</a></li>
+        <li><a href="#metafor-0-5-7-2009-12-06">0.5-7</a></li>
+        <li><a href="#metafor-0-5-6-2009-10-19">0.5-6</a></li>
+        <li><a href="#metafor-0-5-5-2009-10-08">0.5-5</a></li>
+        <li><a href="#metafor-0-5-4-2009-09-18">0.5-4</a></li>
+        <li><a href="#metafor-0-5-3-2009-07-31">0.5-3</a></li>
+        <li><a href="#metafor-0-5-2-2009-07-06">0.5-2</a></li>
+        <li><a href="#metafor-0-5-1-2009-06-14">0.5-1</a></li>
+        <li><a href="#metafor-0-5-0-2009-06-05">0.5-0</a></li>
       </ul>
     </div>
   </div>
 
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -837,13 +844,16 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

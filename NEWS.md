@@ -1,4 +1,8 @@
-# metafor 2.2-0 (2019-08-04)
+# metafor 2.2-1 (2019-08-13)
+
+- started to use numbering scheme for `devel` version (the number after the dash indicates the devel version)
+
+- added `to.wide()` function (for restructuring long format datasets into the wide format needed for contrast-based analyses)
 
 - `I^2` and `H^2` are also shown in output for fixed-effects models
 

@@ -2797,8 +2797,19 @@
 
    if (exists(".digits")) {
       .digits <- get(".digits")
-      pos <- pmatch(names(.digits), names(res))
-      res[c(na.omit(pos))] <- .digits[!is.na(pos)]
+      if (is.null(names(.digits)) && length(.digits) == 1) {
+         # if .digits is a single unnamed scalar, set all digit values to that value
+         res <- c(est=.digits, se=.digits, test=.digits, pval=.digits, ci=.digits, var=.digits, sevar=.digits, fit=.digits, het=.digits)
+      } else if (any(names(.digits) != "") && any(names(.digits) == "")) {
+         # if .digits has (at least) one unnamed element, use it to set all unnamed elements to that digits value
+         pos <- pmatch(names(.digits), names(res))
+         res[c(na.omit(pos))] <- .digits[!is.na(pos)]
+         otherval <- .digits[names(.digits) == ""][1]
+         res[(1:9)[-c(na.omit(pos))]] <- otherval
+      } else {
+         pos <- pmatch(names(.digits), names(res))
+         res[c(na.omit(pos))] <- .digits[!is.na(pos)]
+      }
    }
 
    if (!dmiss) {
@@ -2838,7 +2849,6 @@
       res <- c(est=res[[1]], se=res[[1]], test=res[[1]], pval=res[[1]], ci=res[[1]], var=res[[1]], sevar=res[[1]], fit=res[[1]], het=res[[1]])
 
    res
-
 }
 
 ############################################################################
@@ -2923,5 +2933,35 @@ tidy.rma <- function (x, ...) {
 }
 
 ")
+
+############################################################################
+
+### shorten a string vector so that elements remain distinguishable
+
+.shorten <- function(x, minlen) {
+
+   y <- x
+
+   x <- c(na.omit(x))
+
+   n <- length(unique(x))
+
+   maxlen <- max(nchar(unique(x)))
+
+   for (l in 1:maxlen) {
+      tab <- table(x, substr(x, 1, l))
+      if (nrow(tab) == n && ncol(tab) == n && sum(tab[upper.tri(tab)]) == 0 && sum(tab[lower.tri(tab)]) == 0)
+         break
+   }
+
+   if (!missing(minlen) && l < minlen) {
+      if (minlen > maxlen)
+         minlen <- maxlen
+      l <- minlen
+   }
+
+   return(substr(y, 1, l))
+
+}
 
 ############################################################################

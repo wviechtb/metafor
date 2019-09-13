@@ -105,35 +105,33 @@ axis(side=1)
 axis(side=2, at=1:s, labels=names(qi), las=1, tcl=0)
 segments(rep(0,s), 1:s, qi, 1:s)
 
+############################################################################
+
 ### restructure dataset to a contrast-based format
-dat <- dat.senn2013[,c(1,4,3,2,5,6)]
-dat.c <- lapply(split(dat, dat$study),
-                function(x) cbind(x[rep(1,nrow(x)-1),], x[-1,c(3:6)]))
-dat.c <- do.call(rbind, dat.c)
-names(dat.c)[3:10] <- c("trt1", "n1i", "m1i", "sd1i", "trt2", "n2i", "m2i", "sd2i")
-rownames(dat.c) <- 1:nrow(dat.c)
-dat.c$id <- 1:nrow(dat.c)
+dat <- dat.senn2013[,c(1,4:2,5:6)]
+dat.c <- to.wide(dat, study="study", group="treatment", ref="placebo", grpvars=4:6)
 dat.c
 
 ### calculate mean difference and corresponding sampling variance for each treatment comparison
-dat.c <- escalc(measure="MD", m1i=m1i, sd1i=sd1i, n1i=n1i, m2i=m2i, sd2i=sd2i, n2i=n2i, data=dat.c)
+dat.c <- escalc(measure="MD", m1i=mi.1, sd1i=sdi.1, n1i=ni.1,
+                              m2i=mi.2, sd2i=sdi.2, n2i=ni.2, data=dat.c)
 dat.c
 
 ### calculate the variance-covariance matrix of the mean differences for the multitreatment studies
 calc.v <- function(x) {
-   v <- matrix(x$sd1i[1]^2 / x$n1i[1], nrow=nrow(x), ncol=nrow(x))
+   v <- matrix(x$sdi.2[1]^2 / x$ni.2[1], nrow=nrow(x), ncol=nrow(x))
    diag(v) <- x$vi
    v
 }
 V <- bldiag(lapply(split(dat.c, dat.c$study), calc.v))
 
 ### convert trt1 and trt2 variables to factors and set levels
-lvls <- levels(factor(dat$treatment))
-dat.c$trt1 <- factor(dat.c$trt1, levels=lvls)
-dat.c$trt2 <- factor(dat.c$trt2, levels=lvls)
+lvls <- levels(factor(c(dat.c$treatment.1, dat.c$treatment.2)))
+dat.c$treatment.1 <- factor(dat.c$treatment.1, levels=lvls)
+dat.c$treatment.2 <- factor(dat.c$treatment.2, levels=lvls)
 
 ### create variables to indicate the contrast examined
-dat.c <- cbind(dat.c, model.matrix(~ dat.c$trt1 - 1) - model.matrix(~ dat.c$trt2 - 1))
+dat.c <- cbind(dat.c, model.matrix(~ dat.c$treatment.1 - 1) - model.matrix(~ dat.c$treatment.2 - 1))
 names(dat.c)[(ncol(dat.c)-9):ncol(dat.c)] <- lvls
 
 ### network meta-analysis using a contrast-based random-effects model

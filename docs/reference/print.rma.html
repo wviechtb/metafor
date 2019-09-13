@@ -8,10 +8,12 @@
 
 <title>Print and Summary Methods for 'rma' Objects — print.rma • metafor</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -22,8 +24,9 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -31,10 +34,11 @@
 
 
 
-<meta property="og:title" content="Print and Summary Methods for 'rma' Objects — print.rma" />
 
+<meta property="og:title" content="Print and Summary Methods for 'rma' Objects — print.rma" />
 <meta property="og:description" content="Print and summary methods for objects of class &quot;rma.uni&quot;, &quot;rma.mh&quot;, &quot;rma.peto&quot;, &quot;rma.glmm&quot;, and &quot;rma.glmm&quot;." />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -46,6 +50,7 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
 
 
   </head>
@@ -64,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.1</span>
       </span>
     </div>
 
@@ -92,7 +97,6 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://twitter.com/wviechtb">
@@ -113,6 +117,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -124,36 +129,34 @@
     </div>
 
     <div class="ref-description">
-    
     <p>Print and summary methods for objects of class <code>"rma.uni"</code>, <code>"rma.mh"</code>, <code>"rma.peto"</code>, <code>"rma.glmm"</code>, and <code>"rma.glmm"</code>.</p>
-    
     </div>
 
-    <pre class="usage"># S3 method for rma.uni
-print(x, digits, showfit=FALSE, signif.stars=getOption("show.signif.stars"),
-      signif.legend=signif.stars, &#8230;)
+    <pre class="usage"><span class='co'># S3 method for rma.uni</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='no'>digits</span>, <span class='kw'>showfit</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>signif.stars</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"show.signif.stars"</span>),
+      <span class='kw'>signif.legend</span><span class='kw'>=</span><span class='no'>signif.stars</span>, <span class='no'>...</span>)
 
-# S3 method for rma.mh
-print(x, digits, showfit=FALSE, &#8230;)
+<span class='co'># S3 method for rma.mh</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='no'>digits</span>, <span class='kw'>showfit</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
-# S3 method for rma.peto
-print(x, digits, showfit=FALSE, &#8230;)
+<span class='co'># S3 method for rma.peto</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='no'>digits</span>, <span class='kw'>showfit</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
-# S3 method for rma.glmm
-print(x, digits, showfit=FALSE, signif.stars=getOption("show.signif.stars"),
-      signif.legend=signif.stars, &#8230;)
+<span class='co'># S3 method for rma.glmm</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='no'>digits</span>, <span class='kw'>showfit</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>signif.stars</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"show.signif.stars"</span>),
+      <span class='kw'>signif.legend</span><span class='kw'>=</span><span class='no'>signif.stars</span>, <span class='no'>...</span>)
 
-# S3 method for rma.mv
-print(x, digits, showfit=FALSE, signif.stars=getOption("show.signif.stars"),
-      signif.legend=signif.stars, &#8230;)
+<span class='co'># S3 method for rma.mv</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='no'>digits</span>, <span class='kw'>showfit</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>signif.stars</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"show.signif.stars"</span>),
+      <span class='kw'>signif.legend</span><span class='kw'>=</span><span class='no'>signif.stars</span>, <span class='no'>...</span>)
 
-# S3 method for rma
-summary(object, digits, showfit=TRUE, &#8230;)
+<span class='co'># S3 method for rma</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>object</span>, <span class='no'>digits</span>, <span class='kw'>showfit</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
-# S3 method for summary.rma
-print(x, digits, showfit=TRUE, signif.stars=getOption("show.signif.stars"),
-      signif.legend=signif.stars, &#8230;)</pre>
-    
+<span class='co'># S3 method for summary.rma</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='no'>digits</span>, <span class='kw'>showfit</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>signif.stars</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"show.signif.stars"</span>),
+      <span class='kw'>signif.legend</span><span class='kw'>=</span><span class='no'>signif.stars</span>, <span class='no'>...</span>)</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -182,11 +185,11 @@ print(x, digits, showfit=TRUE, signif.stars=getOption("show.signif.stars"),
       <td><p>logical indicating whether the legend for the &#8216;significance stars&#8217; should be printed. Defaults to the value for <code>signif.stars</code>.</p></td>
     </tr>
     <tr>
-      <th>&#8230;</th>
+      <th>...</th>
       <td><p>other arguments.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The output includes:</p><ul>
@@ -202,51 +205,43 @@ print(x, digits, showfit=TRUE, signif.stars=getOption("show.signif.stars"),
 <li><p>a table with the estimated coefficients, corresponding standard errors, test statistics, p-values, and confidence interval bounds.</p></li>
 <li><p>the Cochran-Mantel-Haenszel test and Tarone's test for heterogeneity (only when analyzing odds ratios using the Mantel-Haenszel method, i.e., <code>"rma.mh"</code>).</p></li>
 </ul>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>The <code>print</code> functions do not return an object. The <code>summary</code> function returns the object passed to it (with additional class <code>"summary.rma"</code>).</p>
-    
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>For random-effects models, the \(I^2\) statistic is computed with $$I^2 = 100\% \times \hat{\tau}^2 / (\hat{\tau}^2 + s^2),$$ where \(\hat{\tau}^2\) is the estimated value of \(\tau^2\) and $$s^2 = ((k-1) \sum w_i) / ((\sum w_i)^2 - \sum w_i^2),$$ where \(w_i\) is the inverse of the sampling variance of the \(i\)th study (\(s^2\) is equation 9 in Higgins &amp; Thompson, 2002, and can be regarded as the &#8216;typical&#8217; within-study variance of the observed effect sizes or outcomes). The \(H^2\) statistic is computed with $$H^2 = (\hat{\tau}^2 + s^2) / s^2.$$ Analogous equations are used for mixed-effects models.</p>
 <p>Therefore, depending on the estimator of \(\tau^2\) used, the values of \(I^2\) and \(H^2\) will change. For random-effects models, \(I^2\) and \(H^2\) are typically computed in practice with \(I^2 = (Q-(k-1))/Q\) and \(H^2 = Q/(k-1)\), where \(Q\) denotes the statistic for the test of heterogeneity and \(k\) the number of studies (i.e., observed effects or outcomes) included in the meta-analysis. The equations used in the metafor package to compute these statistics are more general and have the advantage that the values of \(I^2\) and \(H^2\) will be consistent with the estimated value of \(\tau^2\) (i.e., if \(\hat{\tau}^2 = 0\), then \(I^2 = 0\) and \(H^2 = 1\) and if \(\hat{\tau}^2 &gt; 0\), then \(I^2 &gt; 0\) and \(H^2 &gt; 1\)).</p>
 <p>The two definitions of \(I^2\) and \(H^2\) actually coincide when using the DerSimonian-Laird estimator of \(\tau^2\) (i.e., the commonly used equations are actually special cases of the more general definitions given above). Therefore, if you prefer the more conventional definitions of these statistics, use <code>method="DL"</code> when fitting the random/mixed-effects model with the <code><a href='rma.uni.html'>rma.uni</a></code> function.</p>
 <p>The pseudo \(R^2\) statistic (Raudenbush, 2009) is computed with $$R^2 = (\hat{\tau}^2_{RE} - \hat{\tau}^2_{ME}) / \hat{\tau}^2_{RE},$$ where \(\hat{\tau}^2_{RE}\) denotes the estimated value of \(\tau^2\) based on the random-effects model (i.e., the total amount of heterogeneity) and \(\hat{\tau}^2_{ME}\) denotes the estimated value of \(\tau^2\) based on the mixed-effects model (i.e., the residual amount of heterogeneity). It can happen that \(\hat{\tau}^2_{RE} &lt; \hat{\tau}^2_{ME}\), in which case \(R^2\) is set to zero (also if \(\hat{\tau}^2_{RE} = 0\)). Again, the value of \(R^2\) will change depending on the estimator of \(\tau^2\) used. Also note that this statistic is only computed when the mixed-effects model includes an intercept (so that the random-effects model is clearly nested within the mixed-effects model). You can also use the <code><a href='anova.rma.html'>anova.rma</a></code> function to compute \(R^2\) for any two models that are known to be nested. Note that the pseudo \(R^2\) statistic may not be very accurate unless \(k\) is large (Lopez-Lopez et al., 2014).</p>
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Higgins, J. P. T., &amp; Thompson, S. G. (2002). Quantifying heterogeneity in a meta-analysis. <em>Statistics in Medicine</em>, <b>21</b>, 1539--1558.</p>
 <p>López-López, J. A., Marín-Martínez, F., Sánchez-Meca, J., Van den Noortgate, W., &amp; Viechtbauer, W. (2014). Estimation of the predictive power of the model in mixed-effects meta-regression: A simulation study. <em>British Journal of Mathematical and Statistical Psychology</em>, <b>67</b>, 30--48.</p>
 <p>Raudenbush, S. W. (2009). Analyzing effect sizes: Random effects models. In H. Cooper, L. V. Hedges, &amp; J. C. Valentine (Eds.), <em>The handbook of research synthesis and meta-analysis</em> (2nd ed., pp. 295--315). New York: Russell Sage Foundation.</p>
 <p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='http://www.jstatsoft.org/v36/i03/'>http://www.jstatsoft.org/v36/i03/</a>.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='rma.uni.html'>rma.uni</a></code>, <code><a href='rma.mh.html'>rma.mh</a></code>, <code><a href='rma.peto.html'>rma.peto</a></code>, <code><a href='rma.glmm.html'>rma.glmm</a></code>, <code><a href='rma.mv.html'>rma.mv</a></code></p></div>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#details">Details</a></li>
-
       <li><a href="#value">Value</a></li>
-
       <li><a href="#note">Note</a></li>
-
       <li><a href="#references">References</a></li>
-
       <li><a href="#see-also">See also</a></li>
-          </ul>
+    </ul>
 
     <h2>Author</h2>
     <p>Wolfgang Viechtbauer <a href='mailto:wvb@metafor-project.org'>wvb@metafor-project.org</a> <a href='http://www.metafor-project.org/'>http://www.metafor-project.org/</a></p>
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -254,13 +249,16 @@ print(x, digits, showfit=TRUE, signif.stars=getOption("show.signif.stars"),
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

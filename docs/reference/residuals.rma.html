@@ -8,10 +8,12 @@
 
 <title>Residual Values based on 'rma' Objects — residuals.rma • metafor</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -22,8 +24,9 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -31,10 +34,11 @@
 
 
 
-<meta property="og:title" content="Residual Values based on 'rma' Objects — residuals.rma" />
 
+<meta property="og:title" content="Residual Values based on 'rma' Objects — residuals.rma" />
 <meta property="og:description" content="The residuals, rstandard, and rstudent functions can be used to compute residuals, corresponding standard errors, and standardized residuals for models fitted with the rma.uni, rma.mh, rma.peto, and rma.mv functions." />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -46,6 +50,7 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
 
 
   </head>
@@ -64,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.1</span>
       </span>
     </div>
 
@@ -92,7 +97,6 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://twitter.com/wviechtb">
@@ -113,6 +117,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -124,33 +129,31 @@
     </div>
 
     <div class="ref-description">
-    
     <p>The <code>residuals</code>, <code>rstandard</code>, and <code>rstudent</code> functions can be used to compute residuals, corresponding standard errors, and standardized residuals for models fitted with the <code><a href='rma.uni.html'>rma.uni</a></code>, <code><a href='rma.mh.html'>rma.mh</a></code>, <code><a href='rma.peto.html'>rma.peto</a></code>, and <code><a href='rma.mv.html'>rma.mv</a></code> functions.</p>
-    
     </div>
 
-    <pre class="usage"># S3 method for rma
-residuals(object, type="response", &#8230;)
+    <pre class="usage"><span class='co'># S3 method for rma</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/residuals.html'>residuals</a></span>(<span class='no'>object</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"response"</span>, <span class='no'>...</span>)
 
-# S3 method for rma.uni
-rstandard(model, digits, type="marginal", &#8230;)
-# S3 method for rma.mh
-rstandard(model, digits, &#8230;)
-# S3 method for rma.peto
-rstandard(model, digits, &#8230;)
-# S3 method for rma.mv
-rstandard(model, digits, cluster, &#8230;)
+<span class='co'># S3 method for rma.uni</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>rstandard</a></span>(<span class='no'>model</span>, <span class='no'>digits</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"marginal"</span>, <span class='no'>...</span>)
+<span class='co'># S3 method for rma.mh</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>rstandard</a></span>(<span class='no'>model</span>, <span class='no'>digits</span>, <span class='no'>...</span>)
+<span class='co'># S3 method for rma.peto</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>rstandard</a></span>(<span class='no'>model</span>, <span class='no'>digits</span>, <span class='no'>...</span>)
+<span class='co'># S3 method for rma.mv</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>rstandard</a></span>(<span class='no'>model</span>, <span class='no'>digits</span>, <span class='no'>cluster</span>, <span class='no'>...</span>)
 
-# S3 method for rma.uni
-rstudent(model, digits, progbar=FALSE, &#8230;)
-# S3 method for rma.mh
-rstudent(model, digits, progbar=FALSE, &#8230;)
-# S3 method for rma.peto
-rstudent(model, digits, progbar=FALSE, &#8230;)
-# S3 method for rma.mv
-rstudent(model, digits, progbar=FALSE, cluster,
-         reestimate=TRUE, parallel="no", ncpus=1, cl=NULL, &#8230;)</pre>
-    
+<span class='co'># S3 method for rma.uni</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>rstudent</a></span>(<span class='no'>model</span>, <span class='no'>digits</span>, <span class='kw'>progbar</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='co'># S3 method for rma.mh</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>rstudent</a></span>(<span class='no'>model</span>, <span class='no'>digits</span>, <span class='kw'>progbar</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='co'># S3 method for rma.peto</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>rstudent</a></span>(<span class='no'>model</span>, <span class='no'>digits</span>, <span class='kw'>progbar</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='co'># S3 method for rma.mv</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>rstudent</a></span>(<span class='no'>model</span>, <span class='no'>digits</span>, <span class='kw'>progbar</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>cluster</span>,
+         <span class='kw'>reestimate</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>parallel</span><span class='kw'>=</span><span class='st'>"no"</span>, <span class='kw'>ncpus</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>cl</span><span class='kw'>=</span><span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -195,11 +198,11 @@ rstudent(model, digits, progbar=FALSE, cluster,
       <td><p>logical indicating whether a progress bar should be shown (only for <code>rstudent</code>) (the default is <code>FALSE</code>).</p></td>
     </tr>
     <tr>
-      <th>&#8230;</th>
+      <th>...</th>
       <td><p>other arguments.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The observed residuals (obtained with <code>residuals</code>) are simply equal to the &#8216;observed - fitted&#8217; values. These can be obtained with <code><a href='https://rdrr.io/r/stats/residuals.html'>residuals(object)</a></code> (using the default <code>type="response"</code>).</p>
@@ -210,7 +213,6 @@ rstudent(model, digits, progbar=FALSE, cluster,
 <p>For <code>"rma.uni"</code> objects, <code>rstandard.rma.uni</code> also can compute conditional residuals (when <code>type="conditional"</code>), which are the deviations of the observed outcomes from the best linear unbiased predictions (BLUPs) of the study-specific true outcomes (see <code><a href='blup.html'>blup.rma.uni</a></code>).</p>
 <p>For <code>"rma.mv"</code> objects, one can specify a clustering variable (via the <code>cluster</code> argument). If specified, <code>rstandard</code> and <code>rstudent</code> also compute cluster-level multivariate (internally or externally) standardized residuals. If all outcomes within a cluster fit the model, then the multivariate standardized residual for the cluster follows (asymptotically) a chi-square distribution with \(kᵢ\) degrees of freedom (where \(kᵢ\) denotes the number of outcomes within the cluster).</p>
 <p>See also <code><a href='influence.rma.uni.html'>influence.rma.uni</a></code> and <code><a href='influence.rma.mv.html'>influence.rma.mv</a></code> for other leave-one-out diagnostics that are useful for detecting influential cases in models fitted with the <code><a href='rma.uni.html'>rma.uni</a></code> and <code><a href='rma.mv.html'>rma.mv</a></code> functions.</p>
-    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Either a vector with the residuals of the requested type (for <code>residuals</code>) or an object of class <code>"list.rma"</code>, which is a list containing the following components:</p>
@@ -224,7 +226,6 @@ rstudent(model, digits, progbar=FALSE, cluster,
 
    The "list.rma" object is formatted and printed with <a href='print.list.rma.html'>print.list.rma</a>.
 
-    
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>Right now, the externally standardized residuals (obtained with <code>rstudent</code>) are calculated by refitting the model \(k\) times (where \(k\) is the number of studies/clusters). Depending on how large \(k\) is, it may take a few moments to finish the calculations. For complex models fitted with <code><a href='rma.mv.html'>rma.mv</a></code>, this can become computationally expensive.</p>
@@ -233,17 +234,14 @@ rstudent(model, digits, progbar=FALSE, cluster,
 <p>It may not be possible to fit the model after deletion of the \(i\)th study/cluster from the dataset. This will result in <code>NA</code> values for that study/cluster when calling <code>rstudent</code>.</p>
 <p>Also, for <code>"rma.mv"</code> objects with a clustering variable specified, it may not be possible to compute the cluster-level multivariate standardized residual for a particular cluster (if the var-cov matrix of the residuals within a cluster is not of full rank). This will result in <code>NA</code> for that cluster.</p>
 <p>For objects of class <code>"rma.mh"</code> and <code>"rma.peto"</code>, <code>rstandard</code> actually computes Pearson (or semi-standardized) residuals.</p>
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Hedges, L. V., &amp; Olkin, I. (1985). <em>Statistical methods for meta-analysis</em>. San Diego, CA: Academic Press.</p>
 <p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='http://www.jstatsoft.org/v36/i03/'>http://www.jstatsoft.org/v36/i03/</a>.</p>
 <p>Viechtbauer, W., &amp; Cheung, M. W.-L. (2010). Outlier and influence diagnostics for meta-analysis. <em>Research Synthesis Methods</em>, <b>1</b>, 112--125.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='rma.uni.html'>rma.uni</a></code>, <code><a href='rma.mh.html'>rma.mh</a></code>, <code><a href='rma.peto.html'>rma.peto</a></code>, <code><a href='rma.glmm.html'>rma.glmm</a></code>, <code><a href='rma.mv.html'>rma.mv</a></code>, <code><a href='influence.rma.uni.html'>influence.rma.uni</a></code>, <code><a href='influence.rma.mv.html'>influence.rma.mv</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### meta-analysis of the log risk ratios using a random-effects model</span>
@@ -288,17 +286,11 @@ rstudent(model, digits, progbar=FALSE, cluster,
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#details">Details</a></li>
-
       <li><a href="#value">Value</a></li>
-
       <li><a href="#note">Note</a></li>
-
       <li><a href="#references">References</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -307,19 +299,23 @@ rstudent(model, digits, progbar=FALSE, cluster,
   </div>
 </div>
 
+
       <footer>
       <div class="copyright">
   <p>Developed by Wolfgang Viechtbauer.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

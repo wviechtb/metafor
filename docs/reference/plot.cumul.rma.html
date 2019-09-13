@@ -8,10 +8,12 @@
 
 <title>Plot Method for 'cumul.rma' Objects — plot.cumul.rma • metafor</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -22,8 +24,9 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -31,10 +34,11 @@
 
 
 
-<meta property="og:title" content="Plot Method for 'cumul.rma' Objects — plot.cumul.rma" />
 
+<meta property="og:title" content="Plot Method for 'cumul.rma' Objects — plot.cumul.rma" />
 <meta property="og:description" content="Plot method for objects of class &quot;cumul.rma&quot;." />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -46,6 +50,7 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
 
 
   </head>
@@ -64,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.1</span>
       </span>
     </div>
 
@@ -92,7 +97,6 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://twitter.com/wviechtb">
@@ -113,6 +117,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -124,16 +129,14 @@
     </div>
 
     <div class="ref-description">
-    
     <p>Plot method for objects of class <code>"cumul.rma"</code>.</p>
-    
     </div>
 
-    <pre class="usage"># S3 method for cumul.rma
-plot(x, yaxis="tau2", xlim, ylim, xlab, ylab,
-     at, transf, atransf, targs, digits, cols=c("gray90","gray10"),
-     addgrid=TRUE, pch=19, cex=1, lwd=2, &#8230;)</pre>
-    
+    <pre class="usage"><span class='co'># S3 method for cumul.rma</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='kw'>yaxis</span><span class='kw'>=</span><span class='st'>"tau2"</span>, <span class='no'>xlim</span>, <span class='no'>ylim</span>, <span class='no'>xlab</span>, <span class='no'>ylab</span>,
+     <span class='no'>at</span>, <span class='no'>transf</span>, <span class='no'>atransf</span>, <span class='no'>targs</span>, <span class='no'>digits</span>, <span class='kw'>cols</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"gray90"</span>,<span class='st'>"gray10"</span>),
+     <span class='kw'>addgrid</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>pch</span><span class='kw'>=</span><span class='fl'>19</span>, <span class='kw'>cex</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>2</span>, <span class='no'>...</span>)</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -202,25 +205,22 @@ plot(x, yaxis="tau2", xlim, ylim, xlab, ylab,
       <td><p>line width.</p></td>
     </tr>
     <tr>
-      <th>&#8230;</th>
+      <th>...</th>
       <td><p>other arguments.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The function is meant to be used for cumulative random-effects models results as obtained with the <code><a href='cumul.html'>cumul.rma.uni</a></code> function.</p>
 <p>By default, the plot shows the model estimate on the x-axis and the corresponding estimate of \(\tau^2\) on the y-axis in the cumulative order of the results in the <code>"cumul.rma"</code> object. Alternatively, one can also place the value of \(I^2\) (<code>yaxis="I2"</code>) or \(H^2\) (<code>yaxis="H2"</code>) on the y-axis.</p>
 <p>The color gradient of the points/lines indicates the order of the cumulative results (by default, light gray at the beginning, dark gray at the end). A different set of colors can be chosen via the <code>cols</code> argument. See &#8216;Examples&#8217;.</p>
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='http://www.jstatsoft.org/v36/i03/'>http://www.jstatsoft.org/v36/i03/</a>.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='cumul.html'>cumul.rma.uni</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### calculate log risk ratios and corresponding sampling variances</span>
@@ -242,13 +242,9 @@ plot(x, yaxis="tau2", xlim, ylim, xlab, ylab,
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#details">Details</a></li>
-
       <li><a href="#references">References</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -257,19 +253,23 @@ plot(x, yaxis="tau2", xlim, ylim, xlab, ylab,
   </div>
 </div>
 
+
       <footer>
       <div class="copyright">
   <p>Developed by Wolfgang Viechtbauer.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

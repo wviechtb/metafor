@@ -8,10 +8,12 @@
 
 <title>Studies on the Treatment of Upper Gastrointestinal Bleeding by a Histamine H2 Antagonist — dat.collins1985a • metafor</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -22,8 +24,9 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -31,10 +34,11 @@
 
 
 
-<meta property="og:title" content="Studies on the Treatment of Upper Gastrointestinal Bleeding by a Histamine H2 Antagonist — dat.collins1985a" />
 
+<meta property="og:title" content="Studies on the Treatment of Upper Gastrointestinal Bleeding by a Histamine H2 Antagonist — dat.collins1985a" />
 <meta property="og:description" content="Results from studies examining the effectiveness of histamine H2 antagonists (cimetidine or ranitidine) in treating patients with acute upper gastrointestinal hemorrhage." />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -46,6 +50,7 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
 
 
   </head>
@@ -64,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.1</span>
       </span>
     </div>
 
@@ -92,7 +97,6 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://twitter.com/wviechtb">
@@ -113,6 +117,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -124,13 +129,12 @@
     </div>
 
     <div class="ref-description">
-    
     <p>Results from studies examining the effectiveness of histamine H2 antagonists (cimetidine or ranitidine) in treating patients with acute upper gastrointestinal hemorrhage.</p>
-    
     </div>
 
     <pre class="usage"><span class='no'>dat.collins1985a</span></pre>
-        
+
+
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
     <p>The data frame contains the following columns:</p><table class='table'>
@@ -149,19 +153,17 @@
 <tr><td><b>o.xci</b></td><td><code>numeric</code></td><td>number of patients in control group in need of operation</td></tr>
 <tr><td><b>d.xci</b></td><td><code>numeric</code></td><td>number of patients in control group that died</td></tr>
 </table>
-    
+
+
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The data were obtained from Tables 1 and 2 in Collins and Langman (1985). The authors used Peto's (one-step) method for meta-analyzing the 27 trials. This approach is implemented in the <code><a href='rma.peto.html'>rma.peto</a></code> function. Using the same dataset, van Houwelingen, Zwinderman, and Stijnen (1993) describe some alternative approaches for analyzing these data, including fixed and random-effects conditional logistic models. Those are implemented in the <code><a href='rma.glmm.html'>rma.glmm</a></code> function.</p>
-    
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
     <p>Collins, R., &amp; Langman, M. (1985). Treatment with histamine H2 antagonists in acute upper gastrointestinal hemorrhage. <em>New England Journal of Medicine</em>, <b>313</b>, 660--666.</p>
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>van Houwelingen, H. C., Zwinderman, K. H., &amp; Stijnen, T. (1993). A bivariate approach to meta-analysis. <em>Statistics in Medicine</em>, <b>12</b>, 2273--2284.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat' and examine data</span>
@@ -214,7 +216,7 @@
 #&gt; estimate  ci.lb  ci.ub 
 #&gt;     0.89   0.73   1.08 
 #&gt; </div><div class='input'>
-</div><span class='co'># NOT RUN {</span>
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'>### meta-analysis of log ORs using a conditional logistic regression model (FE model)</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.glmm.html'>rma.glmm</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>b.xti</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>nti</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>b.xci</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>nci</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>,
                 <span class='kw'>model</span><span class='kw'>=</span><span class='st'>"CM.EL"</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"FE"</span>)
@@ -230,7 +232,8 @@
                 <span class='kw'>model</span><span class='kw'>=</span><span class='st'>"CM.EL"</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"ML"</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>res</span>)
 <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)
-<span class='co'># }</span><div class='input'>
+}
+
 <span class='co'>### meta-analysis of log ORs using Peto's method (outcome: need for surgery)</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.peto.html'>rma.peto</a></span>(<span class='kw'>ai</span><span class='kw'>=</span><span class='no'>o.xti</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>nti</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>o.xci</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>nci</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Tables with NAs omitted from model fitting.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Some yi/vi values are NA.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>res</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
 #&gt; Fixed-Effects Model (k = 22)
@@ -275,20 +278,16 @@
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      
       <li><a href="#format">Format</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#source">Source</a></li>
-
       <li><a href="#references">References</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -296,13 +295,16 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 
