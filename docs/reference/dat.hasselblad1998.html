@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.2</span>
       </span>
     </div>
 
@@ -317,12 +317,12 @@
 <span class='co'>############################################################################</span>
 
 <span class='co'>### restructure dataset to a contrast-based format</span>
-<span class='no'>dat.c</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='to.wide.html'>to.wide</a></span>(<span class='no'>dat.hasselblad1998</span>, <span class='kw'>study</span><span class='kw'>=</span><span class='st'>"study"</span>, <span class='kw'>group</span><span class='kw'>=</span><span class='st'>"trt"</span>, <span class='kw'>ref</span><span class='kw'>=</span><span class='st'>"no_contact"</span>, <span class='kw'>grpvars</span><span class='kw'>=</span><span class='fl'>6</span>:<span class='fl'>7</span>)
+<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='to.wide.html'>to.wide</a></span>(<span class='no'>dat.hasselblad1998</span>, <span class='kw'>study</span><span class='kw'>=</span><span class='st'>"study"</span>, <span class='kw'>grp</span><span class='kw'>=</span><span class='st'>"trt"</span>, <span class='kw'>ref</span><span class='kw'>=</span><span class='st'>"no_contact"</span>, <span class='kw'>grpvars</span><span class='kw'>=</span><span class='fl'>6</span>:<span class='fl'>7</span>)
 
 <span class='co'>### calculate log odds ratios for each treatment comparison</span>
-<span class='no'>dat.c</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>xi.1</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>ni.1</span>,
-                              <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>xi.2</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>ni.2</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='fl'>1</span>/<span class='fl'>2</span>, <span class='kw'>to</span><span class='kw'>=</span><span class='st'>"all"</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.c</span>)
-<span class='no'>dat.c</span></div><div class='output co'>#&gt;    id study            authors year          trt.1 xi.1 ni.1          trt.2 
+<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>xi.1</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>ni.1</span>,
+                            <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>xi.2</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>ni.2</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='fl'>1</span>/<span class='fl'>2</span>, <span class='kw'>to</span><span class='kw'>=</span><span class='st'>"all"</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
+<span class='no'>dat</span></div><div class='output co'>#&gt;    id study            authors year          trt.1 xi.1 ni.1          trt.2 
 #&gt; 1   1     1        Reid et al. 1974 ind_counseling  363  714     no_contact 
 #&gt; 2   2     2    Cottraux et al. 1983 grp_counseling   10  138     no_contact 
 #&gt; 3   3     2    Cottraux et al. 1983 ind_counseling   23  140     no_contact 
@@ -379,26 +379,99 @@
 <span class='co'>### calculate the variance-covariance matrix of the log odds ratios for multitreatment studies</span>
 <span class='co'>### see Gleser &amp; Olkin (2009), equation (19.11), for the covariance equation</span>
 <span class='no'>calc.v</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>) {
-   <span class='co'>#v &lt;- matrix(1/(x$ai[1]+1/2) + 1/(x$n1i[1] - x$ai[1] + 1/2), nrow=nrow(x), ncol=nrow(x))</span>
    <span class='no'>v</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>1</span>/(<span class='no'>x</span>$<span class='no'>xi.2</span>[<span class='fl'>1</span>]+<span class='fl'>1</span>/<span class='fl'>2</span>) + <span class='fl'>1</span>/(<span class='no'>x</span>$<span class='no'>ni.2</span>[<span class='fl'>1</span>] - <span class='no'>x</span>$<span class='no'>xi.2</span>[<span class='fl'>1</span>] + <span class='fl'>1</span>/<span class='fl'>2</span>), <span class='kw'>nrow</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>x</span>), <span class='kw'>ncol</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>x</span>))
    <span class='fu'><a href='https://rdrr.io/r/base/diag.html'>diag</a></span>(<span class='no'>v</span>) <span class='kw'>&lt;-</span> <span class='no'>x</span>$<span class='no'>vi</span>
    <span class='no'>v</span>
 }
-<span class='no'>V</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bldiag.html'>bldiag</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/split.html'>split</a></span>(<span class='no'>dat.c</span>, <span class='no'>dat.c</span>$<span class='no'>study</span>), <span class='no'>calc.v</span>))
+<span class='no'>V</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bldiag.html'>bldiag</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/split.html'>split</a></span>(<span class='no'>dat</span>, <span class='no'>dat</span>$<span class='no'>study</span>), <span class='no'>calc.v</span>))
 
-<span class='co'>### convert trt1 and trt2 variables to factors with desired ordering of levels</span>
-<span class='no'>lvls</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"self_help"</span>, <span class='st'>"ind_counseling"</span>, <span class='st'>"grp_counseling"</span>, <span class='st'>"no_contact"</span>)
-<span class='no'>dat.c</span>$<span class='no'>trt.1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>dat.c</span>$<span class='no'>trt.1</span>, <span class='kw'>levels</span><span class='kw'>=</span><span class='no'>lvls</span>)
-<span class='no'>dat.c</span>$<span class='no'>trt.2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>dat.c</span>$<span class='no'>trt.2</span>, <span class='kw'>levels</span><span class='kw'>=</span><span class='no'>lvls</span>)
-
-<span class='co'>### create variables to indicate the contrast examined</span>
-<span class='no'>dat.c</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span>(<span class='no'>dat.c</span>, <span class='fu'><a href='https://rdrr.io/r/stats/model.matrix.html'>model.matrix</a></span>(~ <span class='no'>dat.c</span>$<span class='no'>trt.1</span> - <span class='fl'>1</span>) - <span class='fu'><a href='https://rdrr.io/r/stats/model.matrix.html'>model.matrix</a></span>(~ <span class='no'>dat.c</span>$<span class='no'>trt.2</span> - <span class='fl'>1</span>))
-<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>dat.c</span>)[(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>dat.c</span>)-<span class='fl'>3</span>):<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>dat.c</span>)] <span class='kw'>&lt;-</span> <span class='no'>lvls</span>
-
+<span class='co'>### add contrast matrix to dataset</span>
+<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='contrmat.html'>contrmat</a></span>(<span class='no'>dat</span>, <span class='kw'>grp1</span><span class='kw'>=</span><span class='st'>"trt.1"</span>, <span class='kw'>grp2</span><span class='kw'>=</span><span class='st'>"trt.2"</span>)
+<span class='no'>dat</span></div><div class='output co'>#&gt;    id study            authors year          trt.1 xi.1 ni.1          trt.2 
+#&gt; 1   1     1        Reid et al. 1974 ind_counseling  363  714     no_contact 
+#&gt; 2   2     2    Cottraux et al. 1983 grp_counseling   10  138     no_contact 
+#&gt; 3   3     2    Cottraux et al. 1983 ind_counseling   23  140     no_contact 
+#&gt; 4   4     3       Slama et al. 1990 ind_counseling    9  205     no_contact 
+#&gt; 5   5     4    Jamrozik et al. 1984 ind_counseling  237 1561     no_contact 
+#&gt; 6   6     5      Rabkin et al. 1984 ind_counseling    9   48     no_contact 
+#&gt; 7   7     6   Decker and Evans 1989 ind_counseling   16   43      self_help 
+#&gt; 8   8     7    Richmond et al. 1986 ind_counseling   31   98     no_contact 
+#&gt; 9   9     8              Leung 1991 ind_counseling   26   95     no_contact 
+#&gt; 10 10     9  Mothersill et al. 1988 grp_counseling   29  170      self_help 
+#&gt; 11 11     9  Mothersill et al. 1988 ind_counseling   12   85      self_help 
+#&gt; 12 12    10    Langford et al. 1983 ind_counseling   17   77     no_contact 
+#&gt; 13 13    11       Gritz et al. 1992      self_help   77  694     no_contact 
+#&gt; 14 14    12    Campbell et al. 1986      self_help   21  535     no_contact 
+#&gt; 15 15    13     Sanders et al. 1989 ind_counseling  107  761     no_contact 
+#&gt; 16 16    14    Hilleman et al. 1993 grp_counseling   20   74 ind_counseling 
+#&gt; 17 17    15     Gillams et al. 1984 grp_counseling    3   26 ind_counseling 
+#&gt; 18 18    16 Mogielnicki et al. 1986 grp_counseling   32  127      self_help 
+#&gt; 19 19    17        Page et al. 1986 ind_counseling    8   90     no_contact 
+#&gt; 20 20    18    Vetter and Ford 1990 ind_counseling   34  237     no_contact 
+#&gt; 21 21    19  Williams and Hall 1988 grp_counseling    9   20     no_contact 
+#&gt; 22 22    20    Pallonen et al. 1994      self_help   19  149     no_contact 
+#&gt; 23 23    21     Russell et al. 1983 ind_counseling  143 1031     no_contact 
+#&gt; 24 24    22 Stewart and Rosser 1982 ind_counseling   36  504     no_contact 
+#&gt; 25 25    23     Russell et al. 1979 ind_counseling   73  675     no_contact 
+#&gt; 26 26    24    Kendrick et al. 1995 ind_counseling   54  888     no_contact 
+#&gt;    xi.2 ni.2  comp   design      yi     vi grp_counseling ind_counseling 
+#&gt; 1    75  731 in-no    in-no  2.1964 0.0204              0              1 
+#&gt; 2     9  140 gr-no gr-in-no  0.1232 0.2159              1              0 
+#&gt; 3     9  140 in-no gr-in-no  1.0183 0.1639              0              1 
+#&gt; 4     2  106 in-no    in-no  0.7035 0.5199              0              1 
+#&gt; 5    58  549 in-no    in-no  0.4098 0.0241              0              1 
+#&gt; 6     0   33 in-no    in-no  2.7797 2.1604              0              1 
+#&gt; 7    20   49 in-se    in-se -0.1469 0.1796              0              1 
+#&gt; 8     3  100 in-no    in-no  2.5649 0.3425              0              1 
+#&gt; 9     1   31 in-no    in-no  2.0481 0.7516              0              1 
+#&gt; 10   11   78 gr-se gr-in-se  0.2019 0.1427              1              0 
+#&gt; 11   11   78 in-se gr-in-se -0.0018 0.1954              0              1 
+#&gt; 12    6   39 in-no    in-no  0.3993 0.2574              0              1 
+#&gt; 13   79  702 se-no    se-no -0.0158 0.0287              0              0 
+#&gt; 14   18  671 se-no    se-no  0.3894 0.1040              0              0 
+#&gt; 15   64  642 in-no    in-no  0.3874 0.0281              0              1 
+#&gt; 16   12   76 gr-in    gr-in  0.6632 0.1626              1             -1 
+#&gt; 17    9   55 gr-in    gr-in -0.3161 0.4550              1             -1 
+#&gt; 18    7   66 gr-se    gr-se  0.9932 0.1914              1              0 
+#&gt; 19    5   62 in-no    in-no  0.0743 0.3290              0              1 
+#&gt; 20   20  234 in-no    in-no  0.5732 0.0873              0              1 
+#&gt; 21    0   20 gr-no    gr-no  3.5225 2.2410              1              0 
+#&gt; 22    8  116 se-no    se-no  0.6457 0.1858              0              0 
+#&gt; 23   95 1107 in-no    in-no  0.5379 0.0196              0              1 
+#&gt; 24   15  187 in-no    in-no -0.1427 0.0998              0              1 
+#&gt; 25   78  584 in-no    in-no -0.2394 0.0300              0              1 
+#&gt; 26   69 1177 in-no    in-no  0.0408 0.0348              0              1 
+#&gt;    self_help no_contact 
+#&gt; 1          0         -1 
+#&gt; 2          0         -1 
+#&gt; 3          0         -1 
+#&gt; 4          0         -1 
+#&gt; 5          0         -1 
+#&gt; 6          0         -1 
+#&gt; 7         -1          0 
+#&gt; 8          0         -1 
+#&gt; 9          0         -1 
+#&gt; 10        -1          0 
+#&gt; 11        -1          0 
+#&gt; 12         0         -1 
+#&gt; 13         1         -1 
+#&gt; 14         1         -1 
+#&gt; 15         0         -1 
+#&gt; 16         0          0 
+#&gt; 17         0          0 
+#&gt; 18        -1          0 
+#&gt; 19         0         -1 
+#&gt; 20         0         -1 
+#&gt; 21         0         -1 
+#&gt; 22         1         -1 
+#&gt; 23         0         -1 
+#&gt; 24         0         -1 
+#&gt; 25         0         -1 
+#&gt; 26         0         -1 </div><div class='input'>
 <span class='co'>### network meta-analysis using a contrast-based random-effects model</span>
 <span class='co'>### by setting rho=1/2, tau^2 reflects the amount of heterogeneity for all treatment comparisons</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span>(<span class='no'>yi</span>, <span class='no'>V</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>self_help</span> + <span class='no'>ind_counseling</span> + <span class='no'>grp_counseling</span> - <span class='fl'>1</span>,
-              <span class='kw'>random</span> <span class='kw'>=</span> ~ <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>id</span>) <span class='kw'>|</span> <span class='no'>study</span>, <span class='kw'>rho</span><span class='kw'>=</span><span class='fl'>1</span>/<span class='fl'>2</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.c</span>)
+              <span class='kw'>random</span> <span class='kw'>=</span> ~ <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>id</span>) <span class='kw'>|</span> <span class='no'>study</span>, <span class='kw'>rho</span><span class='kw'>=</span><span class='fl'>1</span>/<span class='fl'>2</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
 <span class='no'>res</span></div><div class='output co'>#&gt; 
 #&gt; Multivariate Meta-Analysis Model (k = 26; method: REML)
 #&gt; 
@@ -426,6 +499,13 @@
 #&gt; 
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+#&gt; </div><div class='input'>
+<span class='co'>### predicted odds ratios of interventions versus no contact</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>newmods</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/diag.html'>diag</a></span>(<span class='fl'>3</span>), <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
+#&gt;   pred ci.lb ci.ub cr.lb cr.ub 
+#&gt; 1 1.48  0.78  2.77  0.35  6.20 
+#&gt; 2 1.99  1.37  2.89  0.52  7.60 
+#&gt; 3 2.33  1.14  4.75  0.53 10.14 
 #&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

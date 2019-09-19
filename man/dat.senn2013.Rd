@@ -15,7 +15,7 @@
 }
 }
 \details{
-   The dataset includes the results from 26 randomized controlled trials examining the effectiveness of adding various oral glucose-lowering agents to a baseline sulfonylurea therapy in patients with type 2 diabetes. The outcome measured in the studies was either the mean HbA1c level at follow-up or the mean change in HbA1c level from baseline to follow-up. A total of 10 different treatment types were examined in these studies: acarbose, benfluorex, metformin, miglitol, pioglitazone, placebo, rosiglitazone, sitagliptin, sulfonylurea alone, and vildagliptin. One study included three treatment arms, while the rest of the studies included two treatment arms (hence, the dataset includes the results from 53 treatment arms).
+   The dataset includes the results from 26 randomized controlled trials examining the effectiveness of adding various oral glucose-lowering agents to a baseline sulfonylurea therapy in patients with type 2 diabetes. The outcome measured in the studies was either the mean HbA1c level at follow-up or the mean change in HbA1c level from baseline to follow-up. A total of 10 different treatment types were examined in these studies: acarbose, benfluorex, metformin, miglitol, pioglitazone, placebo, rosiglitazone, sitagliptin, sulfonylurea alone, and vildagliptin. One study included three treatment arms (Willms, 1999), while the rest of the studies included two treatment arms (hence, the dataset includes the results from 53 treatment arms).
 
    The data can be used for a network meta-analysis, either using an arm-based or a contrast-based model. See \sQuote{Examples} below.
 }
@@ -80,6 +80,7 @@ heatmap(w, Rowv=NA, Colv=NA, scale="none", margins=c(6,11), col=cols,
 ### by setting rho=1/2, tau^2 reflects the amount of heterogeneity for all treatment comparisons
 res.re <- rma.mv(yi, vi, mods = ~ study + treatment - 1, random = ~ treatment | study, rho=1/2,
                  data=dat, slab=paste0(study, treatment))
+res.re
 
 ### test if treatment factor as a whole is significant
 anova(res.re, btt=(res.re$p-8):res.re$p)
@@ -108,14 +109,14 @@ segments(rep(0,s), 1:s, qi, 1:s)
 ############################################################################
 
 ### restructure dataset to a contrast-based format
-dat <- dat.senn2013[,c(1,4:2,5:6)]
-dat.c <- to.wide(dat, study="study", group="treatment", ref="placebo", grpvars=4:6)
-dat.c
+dat <- dat.senn2013[c(1,4:2,5:6)] # reorder variables first
+dat <- to.wide(dat, study="study", grp="treatment", ref="placebo", grpvars=4:6)
+dat
 
 ### calculate mean difference and corresponding sampling variance for each treatment comparison
-dat.c <- escalc(measure="MD", m1i=mi.1, sd1i=sdi.1, n1i=ni.1,
-                              m2i=mi.2, sd2i=sdi.2, n2i=ni.2, data=dat.c)
-dat.c
+dat <- escalc(measure="MD", m1i=mi.1, sd1i=sdi.1, n1i=ni.1,
+                            m2i=mi.2, sd2i=sdi.2, n2i=ni.2, data=dat)
+dat
 
 ### calculate the variance-covariance matrix of the mean differences for the multitreatment studies
 calc.v <- function(x) {
@@ -123,23 +124,18 @@ calc.v <- function(x) {
    diag(v) <- x$vi
    v
 }
-V <- bldiag(lapply(split(dat.c, dat.c$study), calc.v))
+V <- bldiag(lapply(split(dat, dat$study), calc.v))
 
-### convert trt1 and trt2 variables to factors and set levels
-lvls <- levels(factor(c(dat.c$treatment.1, dat.c$treatment.2)))
-dat.c$treatment.1 <- factor(dat.c$treatment.1, levels=lvls)
-dat.c$treatment.2 <- factor(dat.c$treatment.2, levels=lvls)
-
-### create variables to indicate the contrast examined
-dat.c <- cbind(dat.c, model.matrix(~ dat.c$treatment.1 - 1) - model.matrix(~ dat.c$treatment.2 - 1))
-names(dat.c)[(ncol(dat.c)-9):ncol(dat.c)] <- lvls
+### add contrast matrix to dataset
+dat <- contrmat(dat, grp1="treatment.1", grp2="treatment.2")
+dat
 
 ### network meta-analysis using a contrast-based random-effects model
 ### by setting rho=1/2, tau^2 reflects the amount of heterogeneity for all treatment comparisons
 ### the treatment left out (placebo) becomes the reference level for the treatment comparisons
 res.cb <- rma.mv(yi, V, mods = ~ acarbose + benfluorex + metformin + miglitol + pioglitazone +
                                  rosiglitazone + sitagliptin + sulfonylurea + vildagliptin - 1,
-                 random = ~ factor(id) | study, rho=1/2, data=dat.c)
+                 random = ~ factor(id) | study, rho=1/2, data=dat)
 res.cb
 
 ### estimate all pairwise differences between treatments (using the 'multcomp' package)

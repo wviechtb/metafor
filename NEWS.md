@@ -1,6 +1,8 @@
-# metafor 2.2-1 (2019-08-13)
+# metafor 2.2-2 (2019-09-19)
 
 - started to use numbering scheme for `devel` version (the number after the dash indicates the devel version)
+
+- added `contrmat` function (for creating a matrix that indicates which two groups have been compared against each other in each row of a dataset)
 
 - added `to.wide()` function (for restructuring long format datasets into the wide format needed for contrast-based analyses)
 

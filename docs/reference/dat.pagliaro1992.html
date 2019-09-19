@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.2</span>
       </span>
     </div>
 
@@ -211,44 +211,39 @@
 #&gt; 53    26 sclerotherapy  6  22
 #&gt; 54    26       control  2  24</div><div class='input'>
 <span class='co'>### restructure dataset to a contrast-based format</span>
-<span class='no'>dat.c</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/split.html'>split</a></span>(<span class='no'>dat.pagliaro1992</span>, <span class='no'>dat.pagliaro1992</span>$<span class='no'>study</span>),
-                <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span>(<span class='no'>x</span>[-<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>x</span>),<span class='fl'>2</span>:<span class='fl'>4</span>], <span class='no'>x</span>[<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>x</span>),<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>x</span>)-<span class='fl'>1</span>),]))
-<span class='no'>dat.c</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/do.call.html'>do.call</a></span>(<span class='no'>rbind</span>, <span class='no'>dat.c</span>)
-<span class='no'>dat.c</span> <span class='kw'>&lt;-</span> <span class='no'>dat.c</span>[,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>4</span>,<span class='fl'>1</span>,<span class='fl'>5</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>6</span>,<span class='fl'>7</span>)]
-<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>dat.c</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"study"</span>, <span class='st'>"trt1"</span>, <span class='st'>"trt2"</span>, <span class='st'>"ai"</span>, <span class='st'>"n1i"</span>, <span class='st'>"ci"</span>, <span class='st'>"n2i"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span>(<span class='no'>dat.c</span>) <span class='kw'>&lt;-</span> <span class='fl'>1</span>:<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>dat.c</span>)
-<span class='no'>dat.c</span></div><div class='output co'>#&gt;    study          trt1    trt2 ai n1i ci n2i
-#&gt; 1      1 beta-blockers control  2  43 13  41
-#&gt; 2      1 sclerotherapy control  9  42 13  41
-#&gt; 3      2 beta-blockers control 12  68 13  72
-#&gt; 4      2 sclerotherapy control 13  73 13  72
-#&gt; 5      3 beta-blockers control  4  20  4  16
-#&gt; 6      4 beta-blockers control 20 116 30 111
-#&gt; 7      5 beta-blockers control  1  30 11  49
-#&gt; 8      6 beta-blockers control  7  53 10  53
-#&gt; 9      7 beta-blockers control 18  85 31  89
-#&gt; 10     8 beta-blockers control  2  51 11  51
-#&gt; 11     9 beta-blockers control  8  23  2  25
-#&gt; 12    10 sclerotherapy control  4  18  0  19
-#&gt; 13    11 sclerotherapy control  3  35 22  36
-#&gt; 14    12 sclerotherapy control  5  56 30  53
-#&gt; 15    13 sclerotherapy control  5  16  6  18
-#&gt; 16    14 sclerotherapy control  3  23  9  22
-#&gt; 17    15 sclerotherapy control 11  49 31  46
-#&gt; 18    16 sclerotherapy control 19  53  9  60
-#&gt; 19    17 sclerotherapy control 17  53 26  60
-#&gt; 20    18 sclerotherapy control 10  71 29  69
-#&gt; 21    19 sclerotherapy control 12  41 14  41
-#&gt; 22    20 sclerotherapy control  0  21  3  20
-#&gt; 23    21 sclerotherapy control 13  33 14  35
-#&gt; 24    22 sclerotherapy control 31 143 23 138
-#&gt; 25    23 sclerotherapy control 20  55 19  51
-#&gt; 26    24 sclerotherapy control  3  13 12  16
-#&gt; 27    25 sclerotherapy control  3  21  5  28
-#&gt; 28    26 sclerotherapy control  6  22  2  24</div><div class='input'>
+<span class='no'>dat.c</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='to.wide.html'>to.wide</a></span>(<span class='no'>dat</span>, <span class='kw'>study</span><span class='kw'>=</span><span class='st'>"study"</span>, <span class='kw'>grp</span><span class='kw'>=</span><span class='st'>"trt"</span>, <span class='kw'>grpvars</span><span class='kw'>=</span><span class='fl'>3</span>:<span class='fl'>4</span>)
+<span class='no'>dat.c</span></div><div class='output co'>#&gt;    study         trt.1 xi.1 ni.1   trt.2 xi.2 ni.2 id  comp   design
+#&gt; 1      1 beta-blockers    2   43 control   13   41  1 be-co be-sc-co
+#&gt; 2      1 sclerotherapy    9   42 control   13   41  2 sc-co be-sc-co
+#&gt; 3      2 beta-blockers   12   68 control   13   72  3 be-co be-sc-co
+#&gt; 4      2 sclerotherapy   13   73 control   13   72  4 sc-co be-sc-co
+#&gt; 5      3 beta-blockers    4   20 control    4   16  5 be-co    be-co
+#&gt; 6      4 beta-blockers   20  116 control   30  111  6 be-co    be-co
+#&gt; 7      5 beta-blockers    1   30 control   11   49  7 be-co    be-co
+#&gt; 8      6 beta-blockers    7   53 control   10   53  8 be-co    be-co
+#&gt; 9      7 beta-blockers   18   85 control   31   89  9 be-co    be-co
+#&gt; 10     8 beta-blockers    2   51 control   11   51 10 be-co    be-co
+#&gt; 11     9 beta-blockers    8   23 control    2   25 11 be-co    be-co
+#&gt; 12    10 sclerotherapy    4   18 control    0   19 12 sc-co    sc-co
+#&gt; 13    11 sclerotherapy    3   35 control   22   36 13 sc-co    sc-co
+#&gt; 14    12 sclerotherapy    5   56 control   30   53 14 sc-co    sc-co
+#&gt; 15    13 sclerotherapy    5   16 control    6   18 15 sc-co    sc-co
+#&gt; 16    14 sclerotherapy    3   23 control    9   22 16 sc-co    sc-co
+#&gt; 17    15 sclerotherapy   11   49 control   31   46 17 sc-co    sc-co
+#&gt; 18    16 sclerotherapy   19   53 control    9   60 18 sc-co    sc-co
+#&gt; 19    17 sclerotherapy   17   53 control   26   60 19 sc-co    sc-co
+#&gt; 20    18 sclerotherapy   10   71 control   29   69 20 sc-co    sc-co
+#&gt; 21    19 sclerotherapy   12   41 control   14   41 21 sc-co    sc-co
+#&gt; 22    20 sclerotherapy    0   21 control    3   20 22 sc-co    sc-co
+#&gt; 23    21 sclerotherapy   13   33 control   14   35 23 sc-co    sc-co
+#&gt; 24    22 sclerotherapy   31  143 control   23  138 24 sc-co    sc-co
+#&gt; 25    23 sclerotherapy   20   55 control   19   51 25 sc-co    sc-co
+#&gt; 26    24 sclerotherapy    3   13 control   12   16 26 sc-co    sc-co
+#&gt; 27    25 sclerotherapy    3   21 control    5   28 27 sc-co    sc-co
+#&gt; 28    26 sclerotherapy    6   22 control    2   24 28 sc-co    sc-co</div><div class='input'>
 <span class='co'>### Mantel-Haenszel results for beta-blockers and sclerotherapy versus control, respectively</span>
-<span class='fu'><a href='rma.mh.html'>rma.mh</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>ai</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>n1i</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>ci</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>n2i</span>,
-       <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.c</span>, <span class='kw'>subset</span><span class='kw'>=</span>(<span class='no'>trt1</span><span class='kw'>==</span><span class='st'>"beta-blockers"</span>), <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
+<span class='fu'><a href='rma.mh.html'>rma.mh</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>xi.1</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>ni.1</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>xi.2</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>ni.2</span>,
+       <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.c</span>, <span class='kw'>subset</span><span class='kw'>=</span>(<span class='no'>trt.1</span><span class='kw'>==</span><span class='st'>"beta-blockers"</span>), <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
 #&gt; Fixed-Effects Model (k = 9)
 #&gt; 
 #&gt; I^2 (total heterogeneity / total variability):  57.85%
@@ -269,8 +264,8 @@
 #&gt; 
 #&gt; Cochran-Mantel-Haenszel Test:    CMH = 14.14, df = 1, p-val &lt; 0.01
 #&gt; Tarone's Test for Heterogeneity: X^2 = 22.76, df = 8, p-val &lt; 0.01
-#&gt; </div><div class='input'><span class='fu'><a href='rma.mh.html'>rma.mh</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>ai</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>n1i</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>ci</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>n2i</span>,
-       <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.c</span>, <span class='kw'>subset</span><span class='kw'>=</span>(<span class='no'>trt1</span><span class='kw'>==</span><span class='st'>"sclerotherapy"</span>), <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
+#&gt; </div><div class='input'><span class='fu'><a href='rma.mh.html'>rma.mh</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>xi.1</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>ni.1</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>xi.2</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>ni.2</span>,
+       <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.c</span>, <span class='kw'>subset</span><span class='kw'>=</span>(<span class='no'>trt.1</span><span class='kw'>==</span><span class='st'>"sclerotherapy"</span>), <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
 #&gt; Fixed-Effects Model (k = 19)
 #&gt; 
 #&gt; I^2 (total heterogeneity / total variability):  77.94%

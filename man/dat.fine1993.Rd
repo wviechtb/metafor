@@ -53,8 +53,8 @@ dat$v34i <- with(dat, nei / (e3i * (nei - e4i)) + nci / (c3i * (nci - c4i)))
 
 ### create dataset in long format
 dat.long <- data.frame(study=rep(1:nrow(dat), each=4), time=1:4,
-                       yi=c(t(dat[,c("y1i","y2i","y3i","y4i")])),
-                       vi=c(t(dat[,c("v1i","v2i","v3i","v4i")])))
+                       yi=c(t(dat[c("y1i","y2i","y3i","y4i")])),
+                       vi=c(t(dat[c("v1i","v2i","v3i","v4i")])))
 
 ### var-cov matrices of the sudies
 V <- lapply(split(dat, dat$study),

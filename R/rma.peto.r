@@ -7,8 +7,7 @@ level=95, digits, verbose=FALSE, ...) {
 
    ###### setup
 
-   withcrayon <- "crayon" %in% .packages()
-   mstyle <- .get.mstyle(withcrayon)
+   mstyle <- .get.mstyle("crayon" %in% .packages())
 
    ### check argument specifications
 

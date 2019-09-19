@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.2</span>
       </span>
     </div>
 
@@ -250,7 +250,7 @@
 <span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.berkey1998</span>
 
 <span class='co'>### construct list of the variance-covariance matrices of the observed outcomes for the studies</span>
-<span class='no'>V</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/split.html'>split</a></span>(<span class='no'>dat</span>[,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"v1i"</span>, <span class='st'>"v2i"</span>)], <span class='no'>dat</span>$<span class='no'>trial</span>), <span class='no'>as.matrix</span>)
+<span class='no'>V</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/split.html'>split</a></span>(<span class='no'>dat</span>[<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"v1i"</span>, <span class='st'>"v2i"</span>)], <span class='no'>dat</span>$<span class='no'>trial</span>), <span class='no'>as.matrix</span>)
 
 <span class='co'>### construct block diagonal matrix</span>
 <span class='no'>V</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bldiag.html'>bldiag</a></span>(<span class='no'>V</span>)

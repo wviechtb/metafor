@@ -32,8 +32,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
 
    ### check argument specifications
 
-   withcrayon <- "crayon" %in% .packages()
-   mstyle <- .get.mstyle(withcrayon)
+   mstyle <- .get.mstyle("crayon" %in% .packages())
 
    if (!is.element(method, c("FE","ML","REML")))
       stop(mstyle$stop("Unknown 'method' specified."))

@@ -2,7 +2,7 @@
 \alias{update.rma}
 \title{Model Updating for 'rma' Objects}
 \description{
-   The function is used to update and (by default) re-fit \code{"rma"} models. It does this by extracting the call stored in the object, updating the call and (by default) evaluating that call.
+   The function can be used to update and (by default) re-fit \code{"rma"} models. It does this by extracting the call stored in the object, updating the call and (by default) evaluating that call.
 }
 \usage{
 \method{update}{rma}(object, formula., \dots, evaluate = TRUE)

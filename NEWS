@@ -1,8 +1,11 @@
-Changes in Version 2.2-1 (2019-08-13)
+Changes in Version 2.2-2 (2019-09-19)
 =====================================
 
    o started to use numbering scheme for 'devel' version (the number after
      the dash indicates the devel version)
+
+   o added 'contrmat' function (for creating a matrix that indicates which two
+     groups have been compared against each other in each row of a dataset)
 
    o added 'to.wide()' function (for restructuring long format datasets into
      the wide format needed for contrast-based analyses)

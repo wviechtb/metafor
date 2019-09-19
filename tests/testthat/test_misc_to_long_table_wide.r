@@ -174,7 +174,7 @@ test_that("to.table() works correctly for measure='ARAW'", {
 test_that("to.wide() works correctly.", {
 
    dat.l <- dat.hasselblad1998
-   dat.c <- to.wide(dat.l, study="study", group="trt", ref="no_contact", grpvars=6:7)
+   dat.c <- to.wide(dat.l, study="study", grp="trt", ref="no_contact", grpvars=6:7)
 
    expect_equivalent(dat.c$xi.1, c(363, 10, 23, 9, 237, 9, 16, 31, 26, 29, 12, 17, 77, 21, 107, 20, 3, 32, 8, 34, 9, 19, 143, 36, 73, 54))
    expect_equivalent(dat.c$xi.2, c(75, 9, 9, 2, 58, 0, 20, 3, 1, 11, 11, 6, 79, 18, 64, 12, 9, 7, 5, 20, 0, 8, 95, 15, 78, 69))
@@ -182,7 +182,7 @@ test_that("to.wide() works correctly.", {
    expect_equivalent(dat.c$design, c("in-no", "gr-in-no", "gr-in-no", "in-no", "in-no", "in-no", "in-se", "in-no", "in-no", "gr-in-se", "gr-in-se", "in-no", "se-no", "se-no", "in-no", "gr-in", "gr-in", "gr-se", "in-no", "in-no", "gr-no", "se-no", "in-no", "in-no", "in-no", "in-no"))
 
    dat.l$trt <- factor(dat.l$trt, levels=c("no_contact", "ind_counseling", "grp_counseling", "self_help"))
-   dat.c <- to.wide(dat.l, study="study", group="trt", grpvars=5:7, postfix=c(".T",".C"), minlen=1)
+   dat.c <- to.wide(dat.l, study="study", grp="trt", grpvars=5:7, postfix=c(".T",".C"), minlen=1)
 
    expect_equivalent(dat.c$xi.T, c(363, 23, 10, 9, 237, 9, 16, 31, 26, 12, 29, 17, 77, 21, 107, 12, 9, 32, 8, 34, 9, 19, 143, 36, 73, 54))
    expect_equivalent(dat.c$xi.C, c(75, 9, 9, 2, 58, 0, 20, 3, 1, 11, 11, 6, 79, 18, 64, 20, 3, 7, 5, 20, 0, 8, 95, 15, 78, 69))

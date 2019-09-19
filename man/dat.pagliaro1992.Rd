@@ -24,19 +24,14 @@ dat <- dat.pagliaro1992
 dat
 
 ### restructure dataset to a contrast-based format
-dat.c <- lapply(split(dat.pagliaro1992, dat.pagliaro1992$study),
-                function(x) cbind(x[-nrow(x),2:4], x[rep(nrow(x),nrow(x)-1),]))
-dat.c <- do.call(rbind, dat.c)
-dat.c <- dat.c[,c(4,1,5,2,3,6,7)]
-names(dat.c) <- c("study", "trt1", "trt2", "ai", "n1i", "ci", "n2i")
-rownames(dat.c) <- 1:nrow(dat.c)
+dat.c <- to.wide(dat, study="study", grp="trt", grpvars=3:4)
 dat.c
 
 ### Mantel-Haenszel results for beta-blockers and sclerotherapy versus control, respectively
-rma.mh(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i,
-       data=dat.c, subset=(trt1=="beta-blockers"), digits=2)
-rma.mh(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i,
-       data=dat.c, subset=(trt1=="sclerotherapy"), digits=2)
+rma.mh(measure="OR", ai=xi.1, n1i=ni.1, ci=xi.2, n2i=ni.2,
+       data=dat.c, subset=(trt.1=="beta-blockers"), digits=2)
+rma.mh(measure="OR", ai=xi.1, n1i=ni.1, ci=xi.2, n2i=ni.2,
+       data=dat.c, subset=(trt.1=="sclerotherapy"), digits=2)
 
 ### calculate log odds for each study arm
 dat <- escalc(measure="PLO", xi=xi, ni=ni, data=dat)

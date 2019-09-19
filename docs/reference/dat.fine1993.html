@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.2</span>
       </span>
     </div>
 
@@ -201,8 +201,8 @@
 
 <span class='co'>### create dataset in long format</span>
 <span class='no'>dat.long</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>study</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>1</span>:<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>dat</span>), <span class='kw'>each</span><span class='kw'>=</span><span class='fl'>4</span>), <span class='kw'>time</span><span class='kw'>=</span><span class='fl'>1</span>:<span class='fl'>4</span>,
-                       <span class='kw'>yi</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/t.html'>t</a></span>(<span class='no'>dat</span>[,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"y1i"</span>,<span class='st'>"y2i"</span>,<span class='st'>"y3i"</span>,<span class='st'>"y4i"</span>)])),
-                       <span class='kw'>vi</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/t.html'>t</a></span>(<span class='no'>dat</span>[,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"v1i"</span>,<span class='st'>"v2i"</span>,<span class='st'>"v3i"</span>,<span class='st'>"v4i"</span>)])))
+                       <span class='kw'>yi</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/t.html'>t</a></span>(<span class='no'>dat</span>[<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"y1i"</span>,<span class='st'>"y2i"</span>,<span class='st'>"y3i"</span>,<span class='st'>"y4i"</span>)])),
+                       <span class='kw'>vi</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/t.html'>t</a></span>(<span class='no'>dat</span>[<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"v1i"</span>,<span class='st'>"v2i"</span>,<span class='st'>"v3i"</span>,<span class='st'>"v4i"</span>)])))
 
 <span class='co'>### var-cov matrices of the sudies</span>
 <span class='no'>V</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/split.html'>split</a></span>(<span class='no'>dat</span>, <span class='no'>dat</span>$<span class='no'>study</span>),

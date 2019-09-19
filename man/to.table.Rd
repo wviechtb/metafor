@@ -2,7 +2,7 @@
 \alias{to.table}
 \title{Convert Data from Vector to Table Format}
 \description{
-   The function can be used to convert summary data in vector format to the corresponding table format.
+   The function converts summary data in vector format to the corresponding table format.
 }
 \usage{
 to.table(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,

@@ -1,4 +1,5 @@
-to.wide <- function(data, study, group, ref, grpvars, postfix=c(".1",".2"), addid=TRUE, addcomp=TRUE, adddesign=TRUE, minlen=2) {
+to.wide <- function(data, study, grp, ref, grpvars, postfix=c(".1",".2"),
+addid=TRUE, addcomp=TRUE, adddesign=TRUE, minlen=2, var.names=c("id","comp","design")) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -12,6 +13,19 @@ to.wide <- function(data, study, group, ref, grpvars, postfix=c(".1",".2"), addi
    ### number of variables
 
    nvars <- length(varnames)
+
+   ### checks on 'var.names' argument
+
+   if (length(var.names) != 3L)
+      stop(mstyle$stop("Argument 'var.names' must of length 3."))
+
+   if (class(var.names) != "character")
+      stop(mstyle$stop("Argument 'var.names' must of vector with character strings."))
+
+   if (any(var.names != make.names(var.names, unique=TRUE))) {
+      var.names <- make.names(var.names, unique=TRUE)
+      warning(mstyle$warning(paste0("Argument 'var.names' does not contain syntactically valid variable names.\n  Variable names adjusted to: var.names = c('", var.names[1], "', '", var.names[2], "', '", var.names[3], "').")))
+   }
 
    ############################################################################
 
@@ -53,58 +67,58 @@ to.wide <- function(data, study, group, ref, grpvars, postfix=c(".1",".2"), addi
 
    ############################################################################
 
-   ### checks on 'group' argument
+   ### checks on 'grp' argument
 
-   if (length(group) != 1L)
-      stop(mstyle$stop("Argument 'group' must of length 1."))
+   if (length(grp) != 1L)
+      stop(mstyle$stop("Argument 'grp' must of length 1."))
 
-   if (!(is.character(group) | is.numeric(group)))
-      stop(mstyle$stop("Argument 'group' must either be a character string or a scalar."))
+   if (!(is.character(grp) | is.numeric(grp)))
+      stop(mstyle$stop("Argument 'grp' must either be a character string or a scalar."))
 
-   if (is.character(group)) {
+   if (is.character(grp)) {
 
-      group.pos <- charmatch(group, varnames)
+      grp.pos <- charmatch(grp, varnames)
 
-      if (is.na(group.pos))
-         stop(mstyle$stop("Argument 'group' must be the name of a variable in the data frame."))
+      if (is.na(grp.pos))
+         stop(mstyle$stop("Argument 'grp' must be the name of a variable in the data frame."))
 
-      if (group.pos == 0L)
-         stop(mstyle$stop("No ambiguous match found for variable name specified via 'group' argument."))
+      if (grp.pos == 0L)
+         stop(mstyle$stop("No ambiguous match found for variable name specified via 'grp' argument."))
 
    } else {
 
-      group.pos <- round(group)
+      grp.pos <- round(grp)
 
-      if (group.pos < 1 | group.pos > nvars)
-         stop(mstyle$stop("Specified position of 'group' variable does not exist in the data frame."))
+      if (grp.pos < 1 | grp.pos > nvars)
+         stop(mstyle$stop("Specified position of 'grp' variable does not exist in the data frame."))
 
    }
 
-   ### get group variable
+   ### get grp variable
 
-   group <- data[[group.pos]]
+   grp <- data[[grp.pos]]
 
    ### make sure there are no missing values in group variable
 
-   if (anyNA(group))
-      stop(mstyle$stop("Variable specified via 'group' argument should not contain missing values."))
+   if (anyNA(grp))
+      stop(mstyle$stop("Variable specified via 'grp' argument should not contain missing values."))
 
    ### get levels of the group variable
 
-   if (is.factor(group)) {
-      lvls <- levels(group)
+   if (is.factor(grp)) {
+      lvls <- levels(grp)
    } else {
-      lvls <- sort(unique(group))
+      lvls <- sort(unique(grp))
    }
 
    ############################################################################
 
    ### checks on 'ref' argument
 
-   ### if ref is not specified, use first group as the reference group
+   ### if ref is not specified, use the most common group as the reference group
 
    if (missing(ref))
-      ref <- lvls[1]
+      ref <- names(sort(table(grp), decreasing=TRUE)[1])
 
    if (length(ref) != 1L)
       stop(mstyle$stop("Argument 'ref' must be of length one."))
@@ -112,22 +126,22 @@ to.wide <- function(data, study, group, ref, grpvars, postfix=c(".1",".2"), addi
    ref.pos <- charmatch(ref, lvls)
 
    if (is.na(ref.pos))
-      stop(mstyle$stop("Could not find specified reference level in 'group' variable."))
+      stop(mstyle$stop("Could not find specified reference group in 'grp' variable."))
 
    if (ref.pos == 0L)
-      stop(mstyle$stop("No ambiguous match found for reference level specified via 'ref' argument."))
+      stop(mstyle$stop("No ambiguous match found for reference group specified via 'ref' argument."))
 
    ############################################################################
 
    ### reorder levels and data so that the reference level is always last
 
    lvls <- c(lvls[-ref.pos], lvls[ref.pos])
-   data <- data[order(study, factor(group, levels=lvls)),]
+   data <- data[order(study, factor(grp, levels=lvls)),]
 
    ### get study and group variables again
 
    study <- data[[study.pos]]
-   group <- data[[group.pos]]
+   grp   <- data[[grp.pos]]
 
    ############################################################################
 
@@ -157,12 +171,12 @@ to.wide <- function(data, study, group, ref, grpvars, postfix=c(".1",".2"), addi
 
    ### in case the group variable is not specified as part of the group variables, add it
 
-   if (!(group.pos %in% grpvars.pos))
-      grpvars.pos <- c(group.pos, grpvars.pos)
+   if (!(grp.pos %in% grpvars.pos))
+      grpvars.pos <- c(grp.pos, grpvars.pos)
 
-   ### and make sure that group.pos is always in the first position of grpvars.pos
+   ### and make sure that grp.pos is always in the first position of grpvars.pos
 
-   grpvars.pos <- unique(c(group.pos, grpvars.pos))
+   grpvars.pos <- unique(c(grp.pos, grpvars.pos))
 
    ############################################################################
 
@@ -193,7 +207,7 @@ to.wide <- function(data, study, group, ref, grpvars, postfix=c(".1",".2"), addi
 
    ### generate comp variable
 
-   grps <- .shorten(as.character(data[[group.pos]]), minlen=minlen)
+   grps <- .shorten(as.character(data[[grp.pos]]), minlen=minlen)
 
    restruct <- function(x) {
       if (length(x) > 1L) {
@@ -222,21 +236,24 @@ to.wide <- function(data, study, group, ref, grpvars, postfix=c(".1",".2"), addi
    ### add row id to dataset
 
    if (addid) {
-      dat$id <- 1:nrow(dat)
+
+      dat[[var.names[1]]] <- 1:nrow(dat)
+
       ### make sure that row id variable is always the first variable in the dataset
       #id.pos <- which(names(dat) == "id")
       #dat <- dat[c(id.pos, seq_along(names(dat))[-id.pos])]
+
    }
 
    ### add comp variable to dataset
 
    if (addcomp)
-      dat$comp <- comp
+      dat[[var.names[2]]] <- comp
 
    ### add design variable to dataset
 
    if (adddesign)
-      dat$design <- design
+      dat[[var.names[3]]] <- design
 
    ############################################################################
 

@@ -78,36 +78,33 @@ text( 4, 6, "Odds Ratio [95\% CI]",  pos=2)
 ############################################################################
 
 ### restructure dataset to a contrast-based format
-dat.c <- to.wide(dat.hasselblad1998, study="study", group="trt", ref="no_contact", grpvars=6:7)
+dat <- to.wide(dat.hasselblad1998, study="study", grp="trt", ref="no_contact", grpvars=6:7)
 
 ### calculate log odds ratios for each treatment comparison
-dat.c <- escalc(measure="OR", ai=xi.1, n1i=ni.1,
-                              ci=xi.2, n2i=ni.2, add=1/2, to="all", data=dat.c)
-dat.c
+dat <- escalc(measure="OR", ai=xi.1, n1i=ni.1,
+                            ci=xi.2, n2i=ni.2, add=1/2, to="all", data=dat)
+dat
 
 ### calculate the variance-covariance matrix of the log odds ratios for multitreatment studies
 ### see Gleser & Olkin (2009), equation (19.11), for the covariance equation
 calc.v <- function(x) {
-   #v <- matrix(1/(x$ai[1]+1/2) + 1/(x$n1i[1] - x$ai[1] + 1/2), nrow=nrow(x), ncol=nrow(x))
    v <- matrix(1/(x$xi.2[1]+1/2) + 1/(x$ni.2[1] - x$xi.2[1] + 1/2), nrow=nrow(x), ncol=nrow(x))
    diag(v) <- x$vi
    v
 }
-V <- bldiag(lapply(split(dat.c, dat.c$study), calc.v))
+V <- bldiag(lapply(split(dat, dat$study), calc.v))
 
-### convert trt1 and trt2 variables to factors with desired ordering of levels
-lvls <- c("self_help", "ind_counseling", "grp_counseling", "no_contact")
-dat.c$trt.1 <- factor(dat.c$trt.1, levels=lvls)
-dat.c$trt.2 <- factor(dat.c$trt.2, levels=lvls)
-
-### create variables to indicate the contrast examined
-dat.c <- cbind(dat.c, model.matrix(~ dat.c$trt.1 - 1) - model.matrix(~ dat.c$trt.2 - 1))
-names(dat.c)[(ncol(dat.c)-3):ncol(dat.c)] <- lvls
+### add contrast matrix to dataset
+dat <- contrmat(dat, grp1="trt.1", grp2="trt.2")
+dat
 
 ### network meta-analysis using a contrast-based random-effects model
 ### by setting rho=1/2, tau^2 reflects the amount of heterogeneity for all treatment comparisons
 res <- rma.mv(yi, V, mods = ~ self_help + ind_counseling + grp_counseling - 1,
-              random = ~ factor(id) | study, rho=1/2, data=dat.c)
+              random = ~ factor(id) | study, rho=1/2, data=dat)
 res
+
+### predicted odds ratios of interventions versus no contact
+predict(res, newmods=diag(3), transf=exp, digits=2)
 }
 \keyword{datasets}

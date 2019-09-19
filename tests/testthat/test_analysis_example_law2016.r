@@ -4,19 +4,6 @@ context("Checking analysis example: law2016")
 
 source("tolerances.r") # read in tolerances
 
-### function for creating the contrast matrix X
-
-contrmat <- function(trt1, trt2, ref) {
-   all.lvls <- sort(unique(c(levels(factor(trt1)), levels(factor(trt2)))))
-   trt1 <- factor(trt1, levels=all.lvls)
-   trt2 <- factor(trt2, levels=all.lvls)
-   X <- model.matrix(~ trt2 - 1) - model.matrix(~ trt1 - 1)
-   colnames(X) <- all.lvls
-   if (missing(ref))
-      ref <- all.lvls[1]
-   X[, colnames(X) != ref]
-}
-
 test_that("results are correct for example 1.", {
 
    skip_on_cran()
@@ -64,7 +51,7 @@ test_that("results are correct for example 1.", {
    ), .Dim = c(17, 17))
 
    ### create contrast matrix
-   X <- contrmat(EG1$ref, EG1$trt)
+   X <- contrmat(EG1, grp1="trt", grp2="ref", append=FALSE, last=NA)[,-1] # remove 'A' to make it the reference level
 
    ### fit model assuming consistency (tau^2_omega=0)
    modC <- rma.mv(y, S1, mods=X, intercept=FALSE, random = ~ contr | study, rho=1/2, data=EG1)
@@ -134,7 +121,7 @@ test_that("results are correct for example 2.", {
    ), .Dim = c(16, 16))
 
    ### create contrast matrix
-   X <- contrmat(EG2$ref, EG2$trt)
+   X <- contrmat(EG2, grp1="trt", grp2="ref", append=FALSE, last=NA)[,-1] # remove 'A' to make it the reference level
 
    ### fit model assuming consistency (tau^2_omega=0)
    modC <- rma.mv(y, S2, mods=X, intercept=FALSE, random = ~ contr | study, rho=1/2, data=EG2)

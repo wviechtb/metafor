@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.2</span>
       </span>
     </div>
 
@@ -149,7 +149,7 @@
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The dataset includes the results from 26 randomized controlled trials examining the effectiveness of adding various oral glucose-lowering agents to a baseline sulfonylurea therapy in patients with type 2 diabetes. The outcome measured in the studies was either the mean HbA1c level at follow-up or the mean change in HbA1c level from baseline to follow-up. A total of 10 different treatment types were examined in these studies: acarbose, benfluorex, metformin, miglitol, pioglitazone, placebo, rosiglitazone, sitagliptin, sulfonylurea alone, and vildagliptin. One study included three treatment arms, while the rest of the studies included two treatment arms (hence, the dataset includes the results from 53 treatment arms).</p>
+    <p>The dataset includes the results from 26 randomized controlled trials examining the effectiveness of adding various oral glucose-lowering agents to a baseline sulfonylurea therapy in patients with type 2 diabetes. The outcome measured in the studies was either the mean HbA1c level at follow-up or the mean change in HbA1c level from baseline to follow-up. A total of 10 different treatment types were examined in these studies: acarbose, benfluorex, metformin, miglitol, pioglitazone, placebo, rosiglitazone, sitagliptin, sulfonylurea alone, and vildagliptin. One study included three treatment arms (Willms, 1999), while the rest of the studies included two treatment arms (hence, the dataset includes the results from 53 treatment arms).</p>
 <p>The data can be used for a network meta-analysis, either using an arm-based or a contrast-based model. See &#8216;Examples&#8217; below.</p>
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
@@ -459,7 +459,102 @@
 <span class='co'>### by setting rho=1/2, tau^2 reflects the amount of heterogeneity for all treatment comparisons</span>
 <span class='no'>res.re</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>study</span> + <span class='no'>treatment</span> - <span class='fl'>1</span>, <span class='kw'>random</span> <span class='kw'>=</span> ~ <span class='no'>treatment</span> <span class='kw'>|</span> <span class='no'>study</span>, <span class='kw'>rho</span><span class='kw'>=</span><span class='fl'>1</span>/<span class='fl'>2</span>,
                  <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>slab</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='no'>study</span>, <span class='no'>treatment</span>))
-
+<span class='no'>res.re</span></div><div class='output co'>#&gt; 
+#&gt; Multivariate Meta-Analysis Model (k = 53; method: REML)
+#&gt; 
+#&gt; Variance Components:
+#&gt; 
+#&gt; outer factor: study     (nlvls = 26)
+#&gt; inner factor: treatment (nlvls = 10)
+#&gt; 
+#&gt;             estim    sqrt  fixed 
+#&gt; tau^2      0.0999  0.3161     no 
+#&gt; rho        0.5000            yes 
+#&gt; 
+#&gt; Test for Residual Heterogeneity:
+#&gt; QE(df = 18) = 96.9841, p-val &lt; .0001
+#&gt; 
+#&gt; Test of Moderators (coefficients 1:35):
+#&gt; QM(df = 35) = 2237.5843, p-val &lt; .0001
+#&gt; 
+#&gt; Model Results:
+#&gt; 
+#&gt;                             estimate      se     zval    pval    ci.lb    ci.ub 
+#&gt; studyAlex (1998)              1.0880  0.3221   3.3777  0.0007   0.4567   1.7193 
+#&gt; studyBaksi (2004)             0.0672  0.2850   0.2357  0.8136  -0.4915   0.6258 
+#&gt; studyCosta (1997)            -0.2770  0.3118  -0.8885  0.3743  -0.8881   0.3341 
+#&gt; studyDavidson (2007)          0.0869  0.2896   0.2999  0.7643  -0.4808   0.6546 
+#&gt; studyDe Fronzo (1995)        -0.1858  0.2924  -0.6355  0.5251  -0.7590   0.3873 
+#&gt; studyDerosa (2004)            7.9315  0.3197  24.8072  &lt;.0001   7.3048   8.5581 
+#&gt; studyGarber (2008)            0.0700  0.3287   0.2130  0.8313  -0.5742   0.7142 
+#&gt; studyGonzalez-Ortiz (2004)   -0.5534  0.3567  -1.5514  0.1208  -1.2526   0.1458 
+#&gt; studyHanefeld (2004)          8.6589  0.3139  27.5871  &lt;.0001   8.0437   9.2741 
+#&gt; studyHermansen (2007)         0.2700  0.3290   0.8206  0.4119  -0.3749   0.9149 
+#&gt; studyJohnston (1994)          0.4349  0.3100   1.4033  0.1605  -0.1726   1.0424 
+#&gt; studyJohnston (1998a)         0.7039  0.3228   2.1808  0.0292   0.0713   1.3366 
+#&gt; studyJohnston (1998b)         0.6949  0.3280   2.1184  0.0341   0.0520   1.3379 
+#&gt; studyKerenyi (2004)           0.0906  0.2857   0.3170  0.7512  -0.4693   0.6505 
+#&gt; studyKim (2007)               0.0782  0.3180   0.2460  0.8057  -0.5450   0.7014 
+#&gt; studyKipnes (2001)            0.0180  0.2988   0.0603  0.9519  -0.5676   0.6037 
+#&gt; studyLewin (2007)             0.2400  0.2887   0.8314  0.4058  -0.3259   0.8060 
+#&gt; studyMoulin (2006)            0.0471  0.3172   0.1484  0.8820  -0.5747   0.6689 
+#&gt; studyOyama (2008)             0.1287  0.3461   0.3720  0.7099  -0.5496   0.8071 
+#&gt; studyRosenstock (2008)       -0.0081  0.3026  -0.0269  0.9786  -0.6012   0.5849 
+#&gt; studyStucci (1996)            8.5150  0.3528  24.1346  &lt;.0001   7.8235   9.2065 
+#&gt; studyVongthavaravat (2002)    0.3400  0.3210   1.0594  0.2894  -0.2890   0.9691 
+#&gt; studyWillms (1999)           -1.3770  0.3168  -4.3471  &lt;.0001  -1.9978  -0.7561 
+#&gt; studyWolffenbuttel (1999)     0.2668  0.2863   0.9316  0.3515  -0.2945   0.8280 
+#&gt; studyYang (2003)              0.1614  0.3161   0.5108  0.6095  -0.4581   0.7810 
+#&gt; studyZhu (2003)              -0.5392  0.2926  -1.8427  0.0654  -1.1128   0.0343 
+#&gt; treatment acarbose           -0.8414  0.2384  -3.5288  0.0004  -1.3087  -0.3741 
+#&gt; treatment benfluorex         -0.7369  0.2776  -2.6545  0.0079  -1.2810  -0.1928 
+#&gt; treatment metformin          -1.1284  0.1494  -7.5528  &lt;.0001  -1.4212  -0.8356 
+#&gt; treatment miglitol           -0.9499  0.2253  -4.2170  &lt;.0001  -1.3914  -0.5084 
+#&gt; treatment pioglitazone       -1.1294  0.2119  -5.3295  &lt;.0001  -1.5448  -0.7141 
+#&gt; treatment rosiglitazone      -1.2337  0.1235  -9.9933  &lt;.0001  -1.4757  -0.9918 
+#&gt; treatment sitagliptin        -0.5700  0.3414  -1.6694  0.0950  -1.2392   0.0992 
+#&gt; treatment sulfonylurea       -0.4175  0.2326  -1.7950  0.0727  -0.8734   0.0384 
+#&gt; treatment vildagliptin       -0.7000  0.3408  -2.0543  0.0400  -1.3679  -0.0321 
+#&gt;  
+#&gt; studyAlex (1998)            *** 
+#&gt; studyBaksi (2004) 
+#&gt; studyCosta (1997) 
+#&gt; studyDavidson (2007) 
+#&gt; studyDe Fronzo (1995) 
+#&gt; studyDerosa (2004)          *** 
+#&gt; studyGarber (2008) 
+#&gt; studyGonzalez-Ortiz (2004) 
+#&gt; studyHanefeld (2004)        *** 
+#&gt; studyHermansen (2007) 
+#&gt; studyJohnston (1994) 
+#&gt; studyJohnston (1998a)         * 
+#&gt; studyJohnston (1998b)         * 
+#&gt; studyKerenyi (2004) 
+#&gt; studyKim (2007) 
+#&gt; studyKipnes (2001) 
+#&gt; studyLewin (2007) 
+#&gt; studyMoulin (2006) 
+#&gt; studyOyama (2008) 
+#&gt; studyRosenstock (2008) 
+#&gt; studyStucci (1996)          *** 
+#&gt; studyVongthavaravat (2002) 
+#&gt; studyWillms (1999)          *** 
+#&gt; studyWolffenbuttel (1999) 
+#&gt; studyYang (2003) 
+#&gt; studyZhu (2003)               . 
+#&gt; treatment acarbose          *** 
+#&gt; treatment benfluorex         ** 
+#&gt; treatment metformin         *** 
+#&gt; treatment miglitol          *** 
+#&gt; treatment pioglitazone      *** 
+#&gt; treatment rosiglitazone     *** 
+#&gt; treatment sitagliptin         . 
+#&gt; treatment sulfonylurea        . 
+#&gt; treatment vildagliptin        * 
+#&gt; 
+#&gt; ---
+#&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+#&gt; </div><div class='input'>
 <span class='co'>### test if treatment factor as a whole is significant</span>
 <span class='fu'><a href='https://rdrr.io/r/stats/anova.html'>anova</a></span>(<span class='no'>res.re</span>, <span class='kw'>btt</span><span class='kw'>=</span>(<span class='no'>res.re</span>$<span class='no'>p</span>-<span class='fl'>8</span>):<span class='no'>res.re</span>$<span class='no'>p</span>)</div><div class='output co'>#&gt; 
 #&gt; Test of Moderators (coefficients 27:35):
@@ -487,9 +582,9 @@
 <span class='co'>############################################################################</span>
 
 <span class='co'>### restructure dataset to a contrast-based format</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.senn2013</span>[,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>4</span>:<span class='fl'>2</span>,<span class='fl'>5</span>:<span class='fl'>6</span>)]
-<span class='no'>dat.c</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='to.wide.html'>to.wide</a></span>(<span class='no'>dat</span>, <span class='kw'>study</span><span class='kw'>=</span><span class='st'>"study"</span>, <span class='kw'>group</span><span class='kw'>=</span><span class='st'>"treatment"</span>, <span class='kw'>ref</span><span class='kw'>=</span><span class='st'>"placebo"</span>, <span class='kw'>grpvars</span><span class='kw'>=</span><span class='fl'>4</span>:<span class='fl'>6</span>)
-<span class='no'>dat.c</span></div><div class='output co'>#&gt;                    study comment   treatment.1 ni.1  mi.1 sdi.1   treatment.2
+<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.senn2013</span>[<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>4</span>:<span class='fl'>2</span>,<span class='fl'>5</span>:<span class='fl'>6</span>)] <span class='co'># reorder variables first</span>
+<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='to.wide.html'>to.wide</a></span>(<span class='no'>dat</span>, <span class='kw'>study</span><span class='kw'>=</span><span class='st'>"study"</span>, <span class='kw'>grp</span><span class='kw'>=</span><span class='st'>"treatment"</span>, <span class='kw'>ref</span><span class='kw'>=</span><span class='st'>"placebo"</span>, <span class='kw'>grpvars</span><span class='kw'>=</span><span class='fl'>4</span>:<span class='fl'>6</span>)
+<span class='no'>dat</span></div><div class='output co'>#&gt;                    study comment   treatment.1 ni.1  mi.1 sdi.1   treatment.2
 #&gt; 1            Alex (1998)  change     metformin  291  0.13 1.428  sulfonylurea
 #&gt; 2           Baksi (2004)  change rosiglitazone  218 -1.20 1.112       placebo
 #&gt; 3           Costa (1997)  change      acarbose   36 -1.10 0.360       placebo
@@ -546,9 +641,9 @@
 #&gt; 26  102 -1.09 1.650 26 me-ro    me-ro
 #&gt; 27  105 -0.40 1.300 27 ro-pl    ro-pl</div><div class='input'>
 <span class='co'>### calculate mean difference and corresponding sampling variance for each treatment comparison</span>
-<span class='no'>dat.c</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"MD"</span>, <span class='kw'>m1i</span><span class='kw'>=</span><span class='no'>mi.1</span>, <span class='kw'>sd1i</span><span class='kw'>=</span><span class='no'>sdi.1</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>ni.1</span>,
-                              <span class='kw'>m2i</span><span class='kw'>=</span><span class='no'>mi.2</span>, <span class='kw'>sd2i</span><span class='kw'>=</span><span class='no'>sdi.2</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>ni.2</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.c</span>)
-<span class='no'>dat.c</span></div><div class='output co'>#&gt;                    study comment   treatment.1 ni.1  mi.1 sdi.1   treatment.2 
+<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"MD"</span>, <span class='kw'>m1i</span><span class='kw'>=</span><span class='no'>mi.1</span>, <span class='kw'>sd1i</span><span class='kw'>=</span><span class='no'>sdi.1</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>ni.1</span>,
+                            <span class='kw'>m2i</span><span class='kw'>=</span><span class='no'>mi.2</span>, <span class='kw'>sd2i</span><span class='kw'>=</span><span class='no'>sdi.2</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>ni.2</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
+<span class='no'>dat</span></div><div class='output co'>#&gt;                    study comment   treatment.1 ni.1  mi.1 sdi.1   treatment.2 
 #&gt; 1            Alex (1998)  change     metformin  291  0.13 1.428  sulfonylurea 
 #&gt; 2           Baksi (2004)  change rosiglitazone  218 -1.20 1.112       placebo 
 #&gt; 3           Costa (1997)  change      acarbose   36 -1.10 0.360       placebo 
@@ -610,23 +705,128 @@
    <span class='fu'><a href='https://rdrr.io/r/base/diag.html'>diag</a></span>(<span class='no'>v</span>) <span class='kw'>&lt;-</span> <span class='no'>x</span>$<span class='no'>vi</span>
    <span class='no'>v</span>
 }
-<span class='no'>V</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bldiag.html'>bldiag</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/split.html'>split</a></span>(<span class='no'>dat.c</span>, <span class='no'>dat.c</span>$<span class='no'>study</span>), <span class='no'>calc.v</span>))
+<span class='no'>V</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bldiag.html'>bldiag</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/split.html'>split</a></span>(<span class='no'>dat</span>, <span class='no'>dat</span>$<span class='no'>study</span>), <span class='no'>calc.v</span>))
 
-<span class='co'>### convert trt1 and trt2 variables to factors and set levels</span>
-<span class='no'>lvls</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>dat.c</span>$<span class='no'>treatment.1</span>, <span class='no'>dat.c</span>$<span class='no'>treatment.2</span>)))
-<span class='no'>dat.c</span>$<span class='no'>treatment.1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>dat.c</span>$<span class='no'>treatment.1</span>, <span class='kw'>levels</span><span class='kw'>=</span><span class='no'>lvls</span>)
-<span class='no'>dat.c</span>$<span class='no'>treatment.2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>dat.c</span>$<span class='no'>treatment.2</span>, <span class='kw'>levels</span><span class='kw'>=</span><span class='no'>lvls</span>)
-
-<span class='co'>### create variables to indicate the contrast examined</span>
-<span class='no'>dat.c</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span>(<span class='no'>dat.c</span>, <span class='fu'><a href='https://rdrr.io/r/stats/model.matrix.html'>model.matrix</a></span>(~ <span class='no'>dat.c</span>$<span class='no'>treatment.1</span> - <span class='fl'>1</span>) - <span class='fu'><a href='https://rdrr.io/r/stats/model.matrix.html'>model.matrix</a></span>(~ <span class='no'>dat.c</span>$<span class='no'>treatment.2</span> - <span class='fl'>1</span>))
-<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>dat.c</span>)[(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>dat.c</span>)-<span class='fl'>9</span>):<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>dat.c</span>)] <span class='kw'>&lt;-</span> <span class='no'>lvls</span>
-
+<span class='co'>### add contrast matrix to dataset</span>
+<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='contrmat.html'>contrmat</a></span>(<span class='no'>dat</span>, <span class='kw'>grp1</span><span class='kw'>=</span><span class='st'>"treatment.1"</span>, <span class='kw'>grp2</span><span class='kw'>=</span><span class='st'>"treatment.2"</span>)
+<span class='no'>dat</span></div><div class='output co'>#&gt;                    study comment   treatment.1 ni.1  mi.1 sdi.1   treatment.2 
+#&gt; 1            Alex (1998)  change     metformin  291  0.13 1.428  sulfonylurea 
+#&gt; 2           Baksi (2004)  change rosiglitazone  218 -1.20 1.112       placebo 
+#&gt; 3           Costa (1997)  change      acarbose   36 -1.10 0.360       placebo 
+#&gt; 4        Davidson (2007)  change rosiglitazone  117 -1.20 1.097       placebo 
+#&gt; 5       De Fronzo (1995)  change     metformin  213 -1.70 1.459       placebo 
+#&gt; 6          Derosa (2004)     raw  pioglitazone   45  6.80 0.800 rosiglitazone 
+#&gt; 7          Garber (2008)  change  vildagliptin  132 -0.63 1.034       placebo 
+#&gt; 8  Gonzalez-Ortiz (2004)  change     metformin   34 -1.30 1.861       placebo 
+#&gt; 9        Hanefeld (2004)     raw     metformin  320  7.45 1.073  pioglitazone 
+#&gt; 10      Hermansen (2007)  change   sitagliptin  106 -0.30 0.940       placebo 
+#&gt; 11       Johnston (1994)  change      miglitol   68 -0.41 1.072       placebo 
+#&gt; 12      Johnston (1998a)  change      miglitol   91 -0.43 0.954       placebo 
+#&gt; 13      Johnston (1998b)  change      miglitol   49 -0.12 1.400       placebo 
+#&gt; 14        Kerenyi (2004)  change rosiglitazone  160 -0.91 0.990       placebo 
+#&gt; 15            Kim (2007)  change     metformin   56 -1.10 1.139 rosiglitazone 
+#&gt; 16         Kipnes (2001)  change  pioglitazone  182 -1.20 1.369       placebo 
+#&gt; 17          Lewin (2007)  change     metformin  431 -0.74 1.106       placebo 
+#&gt; 18         Moulin (2006)  change    benfluorex  161 -0.82 1.028       placebo 
+#&gt; 19          Oyama (2008)  change      acarbose   41 -0.70 0.800  sulfonylurea 
+#&gt; 20     Rosenstock (2008)  change rosiglitazone   59 -1.17 1.229       placebo 
+#&gt; 21         Stucci (1996)     raw    benfluorex   28  8.03 1.290       placebo 
+#&gt; 22 Vongthavaravat (2002)  change rosiglitazone  164 -1.10 1.559  sulfonylurea 
+#&gt; 23         Willms (1999)  change      acarbose   31 -2.30 1.782       placebo 
+#&gt; 24         Willms (1999)  change     metformin   29 -2.50 0.862       placebo 
+#&gt; 25  Wolffenbuttel (1999)  change rosiglitazone  183 -0.90 1.100       placebo 
+#&gt; 26           Yang (2003)  change     metformin   96 -0.95 1.500 rosiglitazone 
+#&gt; 27            Zhu (2003)  change rosiglitazone  210 -1.90 1.470       placebo 
+#&gt;    ni.2  mi.2 sdi.2 id  comp   design      yi     vi acarbose benfluorex 
+#&gt; 1   300  0.50 1.450  1 me-su    me-su -0.3700 0.0140        0          0 
+#&gt; 2   233  0.10 1.036  2 ro-pl    ro-pl -1.3000 0.0103        0          0 
+#&gt; 3    29 -0.30 0.700  3 ac-pl    ac-pl -0.8000 0.0205        1          0 
+#&gt; 4   116  0.14 1.093  4 ro-pl    ro-pl -1.3400 0.0206        0          0 
+#&gt; 5   209  0.20 1.446  5 me-pl    me-pl -1.9000 0.0200        0          0 
+#&gt; 6    42  6.70 0.900  6 pi-ro    pi-ro  0.1000 0.0335        0          0 
+#&gt; 7   144  0.07 1.080  7 vi-pl    vi-pl -0.7000 0.0162        0          0 
+#&gt; 8    37 -0.90 1.803  8 me-pl    me-pl -0.4000 0.1897        0          0 
+#&gt; 9   319  7.61 1.072  9 me-pi    me-pi -0.1600 0.0072        0          0 
+#&gt; 10  106  0.27 0.940 10 si-pl    si-pl -0.5700 0.0167        0          0 
+#&gt; 11   63  0.33 1.032 11 mi-pl    mi-pl -0.7400 0.0338        0          0 
+#&gt; 12   43  0.98 1.311 12 mi-pl    mi-pl -1.4100 0.0500        0          0 
+#&gt; 13   34  0.56 1.166 13 mi-pl    mi-pl -0.6800 0.0800        0          0 
+#&gt; 14  154 -0.14 0.920 14 ro-pl    ro-pl -0.7700 0.0116        0          0 
+#&gt; 15   57 -1.10 1.341 15 me-ro    me-ro  0.0000 0.0547        0          0 
+#&gt; 16  181  0.10 1.024 16 pi-pl    pi-pl -1.3000 0.0161        0          0 
+#&gt; 17  144  0.08 1.004 17 me-pl    me-pl -0.8200 0.0098        0          0 
+#&gt; 18  156  0.19 1.374 18 be-pl    be-pl -1.0100 0.0187        0          1 
+#&gt; 19   43 -0.30 0.600 19 ac-su    ac-su -0.4000 0.0240        1          0 
+#&gt; 20   57 -0.08 1.208 20 ro-pl    ro-pl -1.0900 0.0512        0          0 
+#&gt; 21   30  8.26 1.350 21 be-pl    be-pl -0.2300 0.1202        0          1 
+#&gt; 22  170  0.10 0.992 22 ro-su    ro-su -1.2000 0.0206        0          0 
+#&gt; 23   29 -1.30 1.831 23 ac-pl ac-me-pl -1.0000 0.2180        1          0 
+#&gt; 24   29 -1.30 1.831 24 me-pl ac-me-pl -1.2000 0.1412        0          0 
+#&gt; 25  192  0.20 1.110 25 ro-pl    ro-pl -1.1000 0.0130        0          0 
+#&gt; 26  102 -1.09 1.650 26 me-ro    me-ro  0.1400 0.0501        0          0 
+#&gt; 27  105 -0.40 1.300 27 ro-pl    ro-pl -1.5000 0.0264        0          0 
+#&gt;    metformin miglitol pioglitazone rosiglitazone sitagliptin sulfonylurea 
+#&gt; 1          1        0            0             0           0           -1 
+#&gt; 2          0        0            0             1           0            0 
+#&gt; 3          0        0            0             0           0            0 
+#&gt; 4          0        0            0             1           0            0 
+#&gt; 5          1        0            0             0           0            0 
+#&gt; 6          0        0            1            -1           0            0 
+#&gt; 7          0        0            0             0           0            0 
+#&gt; 8          1        0            0             0           0            0 
+#&gt; 9          1        0           -1             0           0            0 
+#&gt; 10         0        0            0             0           1            0 
+#&gt; 11         0        1            0             0           0            0 
+#&gt; 12         0        1            0             0           0            0 
+#&gt; 13         0        1            0             0           0            0 
+#&gt; 14         0        0            0             1           0            0 
+#&gt; 15         1        0            0            -1           0            0 
+#&gt; 16         0        0            1             0           0            0 
+#&gt; 17         1        0            0             0           0            0 
+#&gt; 18         0        0            0             0           0            0 
+#&gt; 19         0        0            0             0           0           -1 
+#&gt; 20         0        0            0             1           0            0 
+#&gt; 21         0        0            0             0           0            0 
+#&gt; 22         0        0            0             1           0           -1 
+#&gt; 23         0        0            0             0           0            0 
+#&gt; 24         1        0            0             0           0            0 
+#&gt; 25         0        0            0             1           0            0 
+#&gt; 26         1        0            0            -1           0            0 
+#&gt; 27         0        0            0             1           0            0 
+#&gt;    vildagliptin placebo 
+#&gt; 1             0       0 
+#&gt; 2             0      -1 
+#&gt; 3             0      -1 
+#&gt; 4             0      -1 
+#&gt; 5             0      -1 
+#&gt; 6             0       0 
+#&gt; 7             1      -1 
+#&gt; 8             0      -1 
+#&gt; 9             0       0 
+#&gt; 10            0      -1 
+#&gt; 11            0      -1 
+#&gt; 12            0      -1 
+#&gt; 13            0      -1 
+#&gt; 14            0      -1 
+#&gt; 15            0       0 
+#&gt; 16            0      -1 
+#&gt; 17            0      -1 
+#&gt; 18            0      -1 
+#&gt; 19            0       0 
+#&gt; 20            0      -1 
+#&gt; 21            0      -1 
+#&gt; 22            0       0 
+#&gt; 23            0      -1 
+#&gt; 24            0      -1 
+#&gt; 25            0      -1 
+#&gt; 26            0       0 
+#&gt; 27            0      -1 </div><div class='input'>
 <span class='co'>### network meta-analysis using a contrast-based random-effects model</span>
 <span class='co'>### by setting rho=1/2, tau^2 reflects the amount of heterogeneity for all treatment comparisons</span>
 <span class='co'>### the treatment left out (placebo) becomes the reference level for the treatment comparisons</span>
 <span class='no'>res.cb</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span>(<span class='no'>yi</span>, <span class='no'>V</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>acarbose</span> + <span class='no'>benfluorex</span> + <span class='no'>metformin</span> + <span class='no'>miglitol</span> + <span class='no'>pioglitazone</span> +
                                  <span class='no'>rosiglitazone</span> + <span class='no'>sitagliptin</span> + <span class='no'>sulfonylurea</span> + <span class='no'>vildagliptin</span> - <span class='fl'>1</span>,
-                 <span class='kw'>random</span> <span class='kw'>=</span> ~ <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>id</span>) <span class='kw'>|</span> <span class='no'>study</span>, <span class='kw'>rho</span><span class='kw'>=</span><span class='fl'>1</span>/<span class='fl'>2</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.c</span>)
+                 <span class='kw'>random</span> <span class='kw'>=</span> ~ <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>id</span>) <span class='kw'>|</span> <span class='no'>study</span>, <span class='kw'>rho</span><span class='kw'>=</span><span class='fl'>1</span>/<span class='fl'>2</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
 <span class='no'>res.cb</span></div><div class='output co'>#&gt; 
 #&gt; Multivariate Meta-Analysis Model (k = 27; method: REML)
 #&gt; 
