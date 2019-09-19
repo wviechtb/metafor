@@ -144,7 +144,7 @@
     </tr>
     <tr>
       <th>type</th>
-      <td><p>the formula which should be returned; either <code>"mods"</code> (default), <code>"yi"</code> (in case argument <code>yi</code> was used to specify a formula), or <code>"scale"</code> (only for location-scale models.</p></td>
+      <td><p>the formula which should be returned; either <code>"mods"</code> (default), <code>"yi"</code> (in case argument <code>yi</code> was used to specify a formula), or <code>"scale"</code> (only for location-scale models).</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -173,11 +173,11 @@
 <span class='co'>### mixed-effects meta-regression model</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>ablat</span> + <span class='no'>alloc</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
 <span class='fu'><a href='https://rdrr.io/r/stats/formula.html'>formula</a></span>(<span class='no'>res</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"mods"</span>)</div><div class='output co'>#&gt; ~ablat + alloc
-#&gt; &lt;environment: 0x8a132e8&gt;</div><div class='input'>
+#&gt; &lt;environment: 0x8937708&gt;</div><div class='input'>
 <span class='co'>### specify moderators via 'yi' argument</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span> ~ <span class='no'>ablat</span> + <span class='no'>alloc</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
 <span class='fu'><a href='https://rdrr.io/r/stats/formula.html'>formula</a></span>(<span class='no'>res</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"yi"</span>)</div><div class='output co'>#&gt; yi ~ ablat + alloc
-#&gt; &lt;environment: 0x7bdba08&gt;</div></pre>
+#&gt; &lt;environment: 0x7c12660&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

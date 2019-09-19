@@ -9,7 +9,7 @@
 }
 \arguments{
    \item{x}{an object of class \code{"rma"}.}
-   \item{type}{the formula which should be returned; either \code{"mods"} (default), \code{"yi"} (in case argument \code{yi} was used to specify a formula), or \code{"scale"} (only for location-scale models.}
+   \item{type}{the formula which should be returned; either \code{"mods"} (default), \code{"yi"} (in case argument \code{yi} was used to specify a formula), or \code{"scale"} (only for location-scale models).}
    \item{\dots}{other arguments.}
 }
 \value{

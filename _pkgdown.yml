@@ -149,6 +149,7 @@ reference:
       - to.long
       - to.wide
       - to.table
+      - contrmat
       - metafor.news
       - reporter
       - transf
