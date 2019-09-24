@@ -43,16 +43,13 @@ correct=TRUE, level=95, digits, verbose=FALSE, ...) {
    if (!is.element(to[2], c("all","only0","if0all","none")))
       stop(mstyle$stop("Unknown 'to' argument specified."))
 
+   time.start <- proc.time()
+
    ### get ... argument and check for extra/superfluous arguments
 
    ddd <- list(...)
 
    .chkdots(ddd, c("outlist", "onlyo1", "addyi", "addvi", "time"))
-
-   ### handle 'time' argument from ...
-
-   if (.isTRUE(ddd$time))
-      time.start <- proc.time()
 
    ### set defaults or get onlyo1, addyi, and addvi arguments
 
@@ -777,11 +774,11 @@ correct=TRUE, level=95, digits, verbose=FALSE, ...) {
 
    }
 
-   if (.isTRUE(ddd$time)) {
-      time.end <- proc.time()
-      res$time <- unname(time.end - time.start)[3]
+   time.end <- proc.time()
+   res$time <- unname(time.end - time.start)[3]
+
+   if (.isTRUE(ddd$time))
       .print.time(res$time)
-   }
 
    if (verbose || .isTRUE(ddd$time))
       cat("\n")

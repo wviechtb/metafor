@@ -58,16 +58,13 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       nAGQ <- 1
    }
 
+   time.start <- proc.time()
+
    ### get ... argument and check for extra/superfluous arguments
 
    ddd <- list(...)
 
    .chkdots(ddd, c("tdist", "outlist", "onlyo1", "addyi", "addvi", "time", "retdat", "family"))
-
-   ### handle 'time' argument from ...
-
-   if (.isTRUE(ddd$time))
-      time.start <- proc.time()
 
    ### handle 'tdist' argument from ... (note: overrides test argument)
 
@@ -1898,11 +1895,11 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    }
 
-   if (.isTRUE(ddd$time)) {
-      time.end <- proc.time()
-      res$time <- unname(time.end - time.start)[3]
+   time.end <- proc.time()
+   res$time <- unname(time.end - time.start)[3]
+
+   if (.isTRUE(ddd$time))
       .print.time(res$time)
-   }
 
    if (verbose || .isTRUE(ddd$time))
       cat("\n")
