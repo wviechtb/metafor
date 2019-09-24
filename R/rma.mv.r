@@ -2062,7 +2062,8 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
          if (rhos == 1) {
             colnames(hessian)[sigma2s+tau2s+1] <- "rho"
          } else {
-            colnames(hessian)[(sigma2s+tau2s+1):(sigma2s+tau2s+rhos)] <- paste("rho.", outer(seq_len(g.nlevels.f[1]), seq_len(g.nlevels.f), paste, sep=".")[upper.tri(matrix(NA,nrow=g.nlevels.f,ncol=g.nlevels.f))], sep="")
+            #colnames(hessian)[(sigma2s+tau2s+1):(sigma2s+tau2s+rhos)] <- paste("rho.", outer(seq_len(g.nlevels.f[1]), seq_len(g.nlevels.f), paste, sep=".")[upper.tri(matrix(NA,nrow=g.nlevels.f,ncol=g.nlevels.f))], sep="")
+            colnames(hessian)[(sigma2s+tau2s+1):(sigma2s+tau2s+rhos)] <- paste("rho.", seq_len(rhos), sep="")
          }
          if (gamma2s == 1) {
             colnames(hessian)[sigma2s+tau2s+rhos+1] <- "gamma^2"
@@ -2072,12 +2073,15 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
          if (phis == 1) {
             colnames(hessian)[sigma2s+tau2s+rhos+gamma2s+1] <- "phi"
          } else {
-            colnames(hessian)[(sigma2s+tau2s+rhos+gamma2s+1):(sigma2s+tau2s+rhos+gamma2s+phis)] <- paste("phi.", outer(seq_len(h.nlevels.f[1]), seq_len(h.nlevels.f), paste, sep=".")[upper.tri(matrix(NA,nrow=h.nlevels.f,ncol=h.nlevels.f))], sep="")
+            #colnames(hessian)[(sigma2s+tau2s+rhos+gamma2s+1):(sigma2s+tau2s+rhos+gamma2s+phis)] <- paste("phi.", outer(seq_len(h.nlevels.f[1]), seq_len(h.nlevels.f), paste, sep=".")[upper.tri(matrix(NA,nrow=h.nlevels.f,ncol=h.nlevels.f))], sep="")
+            colnames(hessian)[(sigma2s+tau2s+rhos+gamma2s+1):(sigma2s+tau2s+rhos+gamma2s+phis)] <- paste("phi.", seq_len(phis), sep="")
          }
 
          rownames(hessian) <- colnames(hessian)
 
          ### select correct rows/columns from Hessian depending on components in the model
+         ### FIXME: this isn't quite right, since "DIAG" and "ID" have a rho/phi element, but this is fixed at 0, so should also exclude this
+         ###        in fact, all fixed elements should be filtered out
 
          #if (withS && withG && withH)
             #hessian <- hessian[1:nrow(hessian),1:ncol(hessian), drop=FALSE]
