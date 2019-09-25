@@ -45,9 +45,8 @@ print.anova.rma <- function(x, digits=x$digits, ...) {
       tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE))
       .print.table(tmp, mstyle)
 
-      cat("\n")
-
       if (!is.na(x$QM)) {
+         cat("\n")
          if (x$m == 1) {
             cat(mstyle$section("Test of Hypothesis:"))
          } else {

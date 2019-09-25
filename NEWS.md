@@ -1,4 +1,4 @@
-# metafor 2.2-3 (2019-09-24)
+# metafor 2.2-3 (2019-09-25)
 
 - started to use numbering scheme for `devel` version (the number after the dash indicates the devel version)
 
