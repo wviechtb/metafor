@@ -1853,8 +1853,13 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
       if (is.null(parallel$forward))
          parallel$forward <- FALSE
 
-      if (is.null(parallel$loginfo))
-         parallel$loginfo <- FALSE
+      if (is.null(parallel$loginfo)) {
+         if (verbose) {
+            parallel$loginfo <- TRUE
+         } else {
+            parallel$loginfo <- FALSE
+         }
+      }
 
    }
 
@@ -1877,6 +1882,11 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
          #return(optcall)
          opt.res <- try(eval(parse(text=optcall)), silent=!verbose)
          #return(opt.res)
+
+         if (optimizer == "optimParallel::optimParallel" && verbose) {
+            tmp <- capture.output(print(opt.res$loginfo))
+            .print.output(tmp, mstyle$verbose)
+         }
 
          if (inherits(opt.res, "try-error"))
             stop(mstyle$stop("Error during optimization."))
