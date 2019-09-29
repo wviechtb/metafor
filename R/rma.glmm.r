@@ -53,11 +53,6 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    if (missing(control))
       control <- list()
 
-   if (is.element(measure, c("OR","IRR")) && model == "UM.RS" && method == "ML" && nAGQ > 1) {
-      warning(mstyle$warning("Currently not possible to fit RE/ME model='UM.RS' with nAGQ > 1. nAGQ automatically set to 1."))
-      nAGQ <- 1
-   }
-
    time.start <- proc.time()
 
    ### get ... argument and check for extra/superfluous arguments
@@ -593,6 +588,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    ### set default control parameters
 
    con <- list(verbose = FALSE,            # also passed on to glm/glmer/optim/nlminb/minqa (uobyqa/newuoa/bobyqa)
+               package="lme4",             # package for fitting logistic mixed-effects models ("lme4" or "GLMMadaptive")
                optimizer = "optim",        # optimizer to use ("optim", "nlminb", "uobyqa", "newuoa", "bobyqa", "clogit", "clogistic")
                optmethod = "BFGS",         # argument 'method' for optim() ("Nelder-Mead" and "BFGS" are sensible options)
                scale = TRUE,               # should non-dummy variables in the X matrix be rescaled before model fitting?
@@ -662,6 +658,13 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       glmerCtrl <- list()
    }
 
+   pos.mmCtrl <- pmatch(names(control), "mmCtrl", nomatch=0)
+   if (sum(pos.mmCtrl) > 0) {
+      mmCtrl <- control[[which(pos.mmCtrl == 1)]]
+   } else {
+      mmCtrl <- list()
+   }
+
    pos.intCtrl <- pmatch(names(control), "intCtrl", nomatch=0)
    if (sum(pos.intCtrl) > 0) {
       intCtrl <- control[[which(pos.intCtrl == 1)]]
@@ -700,7 +703,10 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       hessianCtrl <- list(r=16)
    }
 
-   #return(list(verbose=verbose, optimizer=con$optimizer, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, optCtrl=optCtrl, glmCtrl=glmCtrl, glmerCtrl=glmerCtrl, intCtrl=intCtrl, hessianCtrl=hessianCtrl))
+   #return(list(verbose=verbose, optimizer=con$optimizer, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, optCtrl=optCtrl, glmCtrl=glmCtrl, glmerCtrl=glmerCtrl, mmCtrl=mmCtrl, intCtrl=intCtrl, hessianCtrl=hessianCtrl))
+
+   if (!is.element(con$package, c("lme4", "GLMMadaptive")))
+      stop(mstyle$stop("Unknown package specified."))
 
    if (!is.element(con$optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","clogit","clogistic")))
       stop(mstyle$stop("Unknown optimizer specified."))
@@ -711,20 +717,25 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    if (is.element(con$optimizer, c("clogit", "clogistic")) && method == "ML")
       stop(mstyle$stop("Cannot use 'clogit' or 'clogistic' with method='ML'."))
 
+   if (con$package == "lme4" && is.element(measure, c("OR","IRR")) && model == "UM.RS" && method == "ML" && nAGQ > 1) {
+      warning(mstyle$warning("Currently not possible to fit RE/ME model='UM.RS' with nAGQ > 1. nAGQ automatically set to 1."))
+      nAGQ <- 1
+   }
+
    #########################################################################
 
    ### check that required packages are available
 
    if (is.element(measure, c("OR","IRR"))) {
       if ((model == "UM.FS" && method == "ML") || (model == "UM.RS") || (model == "CM.AL" && method == "ML") || (model == "CM.EL" && method == "ML")) {
-         if (!requireNamespace("lme4", quietly=TRUE))
-            stop(mstyle$stop("Please install the 'lme4' package to fit this model."))
+         if (!requireNamespace(con$package, quietly=TRUE))
+            stop(mstyle$stop(paste0("Please install the '", con$package, "' package to fit this model.")))
       }
    }
 
    if (is.element(measure, c("PLO","IRLN")) && method == "ML") {
-      if (!requireNamespace("lme4", quietly=TRUE))
-         stop(mstyle$stop("Please install the 'lme4' package to fit this model."))
+      if (!requireNamespace(con$package, quietly=TRUE))
+         stop(mstyle$stop(paste0("Please install the '", con$package, "' package to fit this model.")))
    }
 
    if (measure == "OR" && model == "CM.EL") {
@@ -833,7 +844,6 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
          if (.isTRUE(ddd$retdat))
             return(list(dat.grp=dat.grp, X.fit=X.fit, study=study, dat.off = if (!is.null(dat.off)) dat.off else NULL, const=const, group1=group1, group2=group2, group12=group12, dat.fam=dat.fam))
-            #return(data.frame(dat.grp, X.fit, study, dat.off=ifelse(!is.null(dat.off), dat.off, NA), const, group1, group2, group12))
 
          ###################################################################
 
@@ -906,11 +916,24 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                if (verbose)
                   message(mstyle$message("Fitting ML model ..."))
 
-               if (verbose) {
-                  res.ML <- try(lme4::glmer(dat.grp ~ -1 + X.fit + study + (group12 - 1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
-               } else {
-                  res.ML <- suppressMessages(try(lme4::glmer(dat.grp ~ -1 + X.fit + study + (group12 - 1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose))
+               if (con$package == "lme4") {
+                  if (verbose) {
+                     res.ML <- try(lme4::glmer(dat.grp ~ -1 + X.fit + study + (group12 - 1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
+                  } else {
+                     res.ML <- suppressMessages(try(lme4::glmer(dat.grp ~ -1 + X.fit + study + (group12 - 1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose))
+                  }
                }
+
+               if (con$package == "GLMMadaptive") {
+                  if (measure == "OR") {
+                     dat.mm <- data.frame(xi=dat.grp[,"xi"], mi=dat.grp[,"mi"], study=study, group12=group12)
+                     res.ML <- try(GLMMadaptive::mixed_model(cbind(xi,mi) ~ -1 + X.fit + study, random = ~ group12 - 1 | study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=mmCtrl), silent=!verbose)
+                  } else {
+                     dat.mm <- data.frame(xi=dat.grp, study=study, group12=group12)
+                     res.ML <- try(GLMMadaptive::mixed_model(xi ~ -1 + X.fit + study + offset(dat.off), random = ~ group12 - 1 | study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=mmCtrl), silent=!verbose)
+                  }
+               }
+
                #return(res.ML)
 
                if (inherits(res.ML, "try-error"))
@@ -921,8 +944,12 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                #ll.ML <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, fitted(res.ML), log=TRUE))) ### not correct (since it does not incorporate the random effects; same as ll.FE if tau^2=0)
                #ll.ML <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, plogis(qlogis(fitted(res.ML)) + group12*unlist(ranef(res.ML))), log=TRUE))) ### not correct (since one really has to integrate; same as ll.FE if tau^2=0)
                #ll.ML <- c(logLik(res.ML)) ### this is not the same as ll.FE when tau^2 = 0 (not sure why)
-               ll.ML <- ll.QE - 1/2 * deviance(res.ML) ### this makes ll.ML comparable to ll.FE (same as ll.FE when tau^2=0)
-
+               if (con$package == "lme4") {
+                  ll.ML <- ll.QE - 1/2 * deviance(res.ML) ### this makes ll.ML comparable to ll.FE (same as ll.FE when tau^2=0)
+               } else {
+                  ### FIXME: When using GLMMadaptive, ll is not comparable for FE model when tau^2 = 0
+                  ll.ML <- c(logLik(res.ML))
+               }
             }
 
             #return(list(res.FE, res.QE, ll.FE=ll.FE, ll.QE=ll.QE))
@@ -940,13 +967,24 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             }
 
             if (method == "ML") {
-               beta   <- cbind(lme4::fixef(res.ML)[seq_len(p)])
-               vb     <- as.matrix(vcov(res.ML))[seq_len(p),seq_len(p),drop=FALSE]
-               tau2   <- lme4::VarCorr(res.ML)[[1]][1]
+
+               if (con$package == "lme4") {
+                  beta   <- cbind(lme4::fixef(res.ML)[seq_len(p)])
+                  vb     <- as.matrix(vcov(res.ML))[seq_len(p),seq_len(p),drop=FALSE]
+                  tau2   <- lme4::VarCorr(res.ML)[[1]][1]
+               }
+
+               if (con$package == "GLMMadaptive") {
+                  beta   <- cbind(GLMMadaptive::fixef(res.ML)[seq_len(p)])
+                  vb     <- as.matrix(vcov(res.ML))[seq_len(p),seq_len(p),drop=FALSE]
+                  tau2   <- res.ML$D[1,1]
+               }
+
                sigma2 <- NA
                parms  <- p + k + 1
                p.eff  <- p + k
                k.eff  <- 2*k
+
             }
 
             #return(list(beta=beta, vb=vb, tau2=tau2, sigma2=sigma2, parms=parms, p.eff=p.eff, k.eff=k.eff, b2.QE=b2.QE, vb2.QE=vb2.QE))
@@ -966,10 +1004,22 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             if (verbose)
                message(mstyle$message("Fitting FE model ..."))
 
-            if (verbose) {
-               res.FE <- try(lme4::glmer(dat.grp ~ -1 + X.fit + const + (1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
-            } else {
-               res.FE <- suppressMessages(try(lme4::glmer(dat.grp ~ -1 + X.fit + const + (1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose))
+            if (con$package == "lme4") {
+               if (verbose) {
+                  res.FE <- try(lme4::glmer(dat.grp ~ -1 + X.fit + const + (1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
+               } else {
+                  res.FE <- suppressMessages(try(lme4::glmer(dat.grp ~ -1 + X.fit + const + (1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose))
+               }
+            }
+
+            if (con$package == "GLMMadaptive") {
+               if (measure == "OR") {
+                  dat.mm <- data.frame(xi=dat.grp[,"xi"], mi=dat.grp[,"mi"], study=study, const=const)
+                  res.FE <- try(GLMMadaptive::mixed_model(cbind(xi,mi) ~ -1 + X.fit + const, random = ~ 1 | study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=mmCtrl), silent=!verbose)
+               } else {
+                  dat.mm <- data.frame(xi=dat.grp, study=study, const=const)
+                  res.FE <- try(GLMMadaptive::mixed_model(xi ~ -1 + X.fit + const + offset(dat.off), random = ~ 1 | study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=mmCtrl), silent=!verbose)
+               }
             }
 
             if (inherits(res.FE, "try-error"))
@@ -987,14 +1037,30 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                message(mstyle$message("Fitting saturated model ..."))
 
             if (k > 1) {
+
                X.QE <- model.matrix(~ -1 + X.fit + const + study:group1)
                res.QE <- try(glm(dat.grp ~ -1 + X.QE, offset=dat.off, family=dat.fam, control=glmCtrl), silent=!verbose)
                X.QE <- X.QE[,!is.na(coef(res.QE)),drop=FALSE]
-               if (verbose) {
-                  res.QE <- try(lme4::glmer(dat.grp ~ -1 + X.QE + (1 | study), offset=dat.off, family=dat.fam, start=c(sqrt(lme4::VarCorr(res.FE)[[1]][1])), nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
-               } else {
-                  res.QE <- suppressMessages(try(lme4::glmer(dat.grp ~ -1 + X.QE + (1 | study), offset=dat.off, family=dat.fam, start=c(sqrt(lme4::VarCorr(res.FE)[[1]][1])), nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose))
+
+               if (con$package == "lme4") {
+                  if (verbose) {
+                     res.QE <- try(lme4::glmer(dat.grp ~ -1 + X.QE + (1 | study), offset=dat.off, family=dat.fam, start=c(sqrt(lme4::VarCorr(res.FE)[[1]][1])), nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
+                  } else {
+                     res.QE <- suppressMessages(try(lme4::glmer(dat.grp ~ -1 + X.QE + (1 | study), offset=dat.off, family=dat.fam, start=c(sqrt(lme4::VarCorr(res.FE)[[1]][1])), nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose))
+                  }
                }
+
+               if (con$package == "GLMMadaptive") {
+                  mmCtrl$max_coef_value <- 50
+                  if (measure == "OR") {
+                     dat.mm <- data.frame(xi=dat.grp[,"xi"], mi=dat.grp[,"mi"], study=study)
+                     res.QE <- try(GLMMadaptive::mixed_model(cbind(xi,mi) ~ -1 + X.QE, random = ~ 1 | study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=mmCtrl, initial_values=list(D=matrix(res.FE$D[1,1]))), silent=!verbose)
+                  } else {
+                     dat.mm <- data.frame(xi=dat.grp, study=study)
+                     res.QE <- try(GLMMadaptive::mixed_model(xi ~ -1 + X.QE + offset(dat.off), random = ~ 1 | study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=mmCtrl), silent=!verbose)
+                  }
+               }
+
             } else {
                res.QE <- res.FE
             }
@@ -1015,8 +1081,16 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
                ### extract coefficients and variance-covariance matrix for Wald-type test for heterogeneity
 
-               b2.QE  <- cbind(lme4::fixef(res.QE)[-seq_len(p+1)])                       ### aliased coefficients are already removed
-               vb2.QE <- as.matrix(vcov(res.QE))[-seq_len(p+1),-seq_len(p+1),drop=FALSE] ### aliased coefficients are already removed
+               if (con$package == "lme4") {
+                  b2.QE  <- cbind(lme4::fixef(res.QE)[-seq_len(p+1)])                       ### aliased coefficients are already removed
+                  vb2.QE <- as.matrix(vcov(res.QE))[-seq_len(p+1),-seq_len(p+1),drop=FALSE] ### aliased coefficients are already removed
+               }
+
+               if (con$package == "GLMMadaptive") {
+                  b2.QE  <- cbind(GLMMadaptive::fixef(res.QE)[-seq_len(p+1)])               ### aliased coefficients are already removed
+                  vb2.QE <- as.matrix(vcov(res.QE))[-seq_len(p+1),-seq_len(p+1),drop=FALSE] ### aliased coefficients are already removed
+                  vb2.QE <- vb2.QE[-nrow(vb2.QE), -ncol(vb2.QE)]
+               }
 
             }
 
@@ -1030,13 +1104,27 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                if (verbose)
                   message(mstyle$message("Fitting ML model ..."))
 
-               if (verbose) {
-                  res.ML <- try(lme4::glmer(dat.grp ~ -1 + X.fit + const + (1 | study) + (group12 - 1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
-               } else {
-                  res.ML <- suppressMessages(try(lme4::glmer(dat.grp ~ -1 + X.fit + const + (1 | study) + (group12 - 1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose))
+               if (con$package == "lme4") {
+                  if (verbose) {
+                     res.ML <- try(lme4::glmer(dat.grp ~ -1 + X.fit + const + (1 | study) + (group12 - 1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
+                     #res.ML <- try(lme4::glmer(dat.grp ~ -1 + X.fit + const + (group1 | study),                   offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
+                     #return(res.ML)
+                  } else {
+                     res.ML <- suppressMessages(try(lme4::glmer(dat.grp ~ -1 + X.fit + const + (1 | study) + (group12 - 1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose))
+                     # this is identical to:
+                     #res.ML <- suppressMessages(try(lme4::glmer(dat.grp ~ -1 + X.fit + const + (1 + group12 || study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose))
+                  }
                }
-               #res.ML <- try(lme4::glmer(dat.grp ~ -1 + X.fit + const + (group1 | study),                   offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
-               #return(res.ML)
+
+               if (con$package == "GLMMadaptive") {
+                  if (measure == "OR") {
+                     dat.mm <- data.frame(xi=dat.grp[,"xi"], mi=dat.grp[,"mi"], study=study, const=const, group12=group12)
+                     res.ML <- try(GLMMadaptive::mixed_model(cbind(xi,mi) ~ -1 + X.fit + const, random = ~ 1 + group12 || study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=mmCtrl), silent=!verbose)
+                  } else {
+                     dat.mm <- data.frame(xi=dat.grp, study=study, const=const, group12=group12)
+                     res.ML <- try(GLMMadaptive::mixed_model(xi ~ -1 + X.fit + const + offset(dat.off), random = ~ 1 + group12 || study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=mmCtrl), silent=!verbose)
+                  }
+               }
 
                if (inherits(res.ML, "try-error"))
                   stop(mstyle$stop("Cannot fit ML model."))
@@ -1051,23 +1139,46 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             #res.FE <- res[[1]]; res.QE <- res[[2]]; res.ML <- res[[3]]
 
             if (method == "FE") {
-               beta   <- cbind(lme4::fixef(res.FE)[seq_len(p)])
-               vb     <- as.matrix(vcov(res.FE))[seq_len(p),seq_len(p),drop=FALSE]
-               tau2   <- 0
-               sigma2 <- lme4::VarCorr(res.FE)[[1]][1]
+
+               if (con$package == "lme4") {
+                  beta   <- cbind(lme4::fixef(res.FE)[seq_len(p)])
+                  vb     <- as.matrix(vcov(res.FE))[seq_len(p),seq_len(p),drop=FALSE]
+                  tau2   <- 0
+                  sigma2 <- lme4::VarCorr(res.FE)[[1]][1]
+               }
+
+               if (con$package == "GLMMadaptive") {
+                  beta   <- cbind(GLMMadaptive::fixef(res.FE)[seq_len(p)])
+                  vb     <- as.matrix(vcov(res.FE))[seq_len(p),seq_len(p),drop=FALSE]
+                  tau2   <- 0
+                  sigma2 <- res.FE$D[1,1]
+               }
+
                parms  <- p + 1 + 1
                p.eff  <- p + 1
                k.eff  <- 2*k
             }
 
             if (method == "ML") {
-               beta   <- cbind(lme4::fixef(res.ML)[seq_len(p)])
-               vb     <- as.matrix(vcov(res.ML))[seq_len(p),seq_len(p),drop=FALSE]
-               tau2   <- lme4::VarCorr(res.ML)[[2]][1]
-               sigma2 <- lme4::VarCorr(res.ML)[[1]][1]
+
+               if (con$package == "lme4") {
+                  beta   <- cbind(lme4::fixef(res.ML)[seq_len(p)])
+                  vb     <- as.matrix(vcov(res.ML))[seq_len(p),seq_len(p),drop=FALSE]
+                  tau2   <- lme4::VarCorr(res.ML)[[2]][1]
+                  sigma2 <- lme4::VarCorr(res.ML)[[1]][1]
+               }
+
+               if (con$package == "GLMMadaptive") {
+                  beta   <- cbind(GLMMadaptive::fixef(res.ML)[seq_len(p)])
+                  vb     <- as.matrix(vcov(res.ML))[seq_len(p),seq_len(p),drop=FALSE]
+                  tau2   <- res.ML$D[2,2]
+                  sigma2 <- res.ML$D[1,1]
+               }
+
                parms  <- p + 1 + 2
                p.eff  <- p + 1
                k.eff  <- 2*k
+
             }
 
             #return(list(beta=beta, vb=vb, tau2=tau2, sigma2=sigma2, parms=parms, p.eff=p.eff, k.eff=k.eff, b2.QE=b2.QE, vb2.QE=vb2.QE))
@@ -1099,7 +1210,6 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
          if (.isTRUE(ddd$retdat))
             return(list(dat.grp=dat.grp, X.fit=X.fit, study=study, dat.off = if (!is.null(dat.off)) dat.off else NULL))
-            #return(data.frame(dat.grp, X.fit, study, dat.off=ifelse(!is.null(dat.off), dat.off, NA)))
 
          ###################################################################
 
@@ -1169,10 +1279,17 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             if (verbose)
                message(mstyle$message("Fitting ML model ..."))
 
-            if (verbose) {
-               res.ML <- try(lme4::glmer(dat.grp ~ -1 + X.fit + (1 | study), offset=dat.off, family=binomial, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
-            } else {
-               res.ML <- suppressMessages(try(lme4::glmer(dat.grp ~ -1 + X.fit + (1 | study), offset=dat.off, family=binomial, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose))
+            if (con$package == "lme4") {
+               if (verbose) {
+                  res.ML <- try(lme4::glmer(dat.grp ~ -1 + X.fit + (1 | study), offset=dat.off, family=binomial, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
+               } else {
+                  res.ML <- suppressMessages(try(lme4::glmer(dat.grp ~ -1 + X.fit + (1 | study), offset=dat.off, family=binomial, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose))
+               }
+            }
+
+            if (con$package == "GLMMadaptive") {
+               dat.mm <- data.frame(xi=dat.grp[,"xi"], mi=dat.grp[,"mi"], study=study)
+               res.ML <- try(GLMMadaptive::mixed_model(cbind(xi,mi) ~ -1 + X.fit + offset(dat.off), random = ~ 1 | study, data=dat.mm, family=binomial, nAGQ=nAGQ, verbose=verbose, control=mmCtrl), silent=!verbose)
             }
 
             if (inherits(res.ML, "try-error"))
@@ -1180,7 +1297,12 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
             ### log-likelihood
 
-            ll.ML  <- ll.QE - 1/2 * deviance(res.ML) ### makes ll.ML comparable to ll.FE (same as ll.FE when tau^2=0)
+            if (con$package == "lme4") {
+               ll.ML <- ll.QE - 1/2 * deviance(res.ML) ### this makes ll.ML comparable to ll.FE (same as ll.FE when tau^2=0)
+            } else {
+               ### FIXME: When using GLMMadaptive, ll is not comparable for FE model when tau^2 = 0
+               ll.ML <- c(logLik(res.ML))
+            }
 
          }
 
@@ -1199,13 +1321,24 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
          }
 
          if (method == "ML") {
-            beta   <- cbind(lme4::fixef(res.ML)[seq_len(p)])
-            vb     <- as.matrix(vcov(res.ML))[seq_len(p),seq_len(p),drop=FALSE]
-            tau2   <- lme4::VarCorr(res.ML)[[1]][1]
+
+            if (con$package == "lme4") {
+               beta   <- cbind(lme4::fixef(res.ML)[seq_len(p)])
+               vb     <- as.matrix(vcov(res.ML))[seq_len(p),seq_len(p),drop=FALSE]
+               tau2   <- lme4::VarCorr(res.ML)[[1]][1]
+            }
+
+            if (con$package == "GLMMadaptive") {
+               beta   <- cbind(GLMMadaptive::fixef(res.ML)[seq_len(p)])
+               vb     <- as.matrix(vcov(res.ML))[seq_len(p),seq_len(p),drop=FALSE]
+               tau2   <- res.ML$D[1,1]
+            }
+
             sigma2 <- NA
             parms  <- p + 1
             p.eff  <- p
             k.eff  <- k
+
          }
 
          #return(list(beta=beta, vb=vb, tau2=tau2, sigma2=sigma2, parms=parms, p.eff=p.eff, k.eff=k.eff, b2.QE=b2.QE, vb2.QE=vb2.QE))
@@ -1609,7 +1742,6 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
       if (.isTRUE(ddd$retdat))
          return(list(dat.grp=dat.grp, X.fit=X.fit, study=study, dat.off = if (!is.null(dat.off)) dat.off else NULL, dat.fam=dat.fam))
-         #return(data.frame(dat.grp, X.fit, study, dat.off=ifelse(!is.null(dat.off), dat.off, NA)))
 
       ### fit FE model
 
@@ -1675,14 +1807,28 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
          if (verbose)
             message(mstyle$message("Fitting ML model ..."))
 
-         if (verbose) {
-            res.ML <- try(lme4::glmer(dat.grp ~ -1 + X.fit + (1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
-         } else {
-            res.ML <- suppressMessages(try(lme4::glmer(dat.grp ~ -1 + X.fit + (1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose))
+         if (con$package == "lme4") {
+            if (verbose) {
+               res.ML <- try(lme4::glmer(dat.grp ~ -1 + X.fit + (1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
+            } else {
+               res.ML <- suppressMessages(try(lme4::glmer(dat.grp ~ -1 + X.fit + (1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose))
+            }
+         }
+
+         if (con$package == "GLMMadaptive") {
+            if (measure == "PLO") {
+               dat.mm <- data.frame(xi=dat.grp[,"xi"], mi=dat.grp[,"mi"], study=study)
+               res.ML <- try(GLMMadaptive::mixed_model(cbind(xi,mi) ~ -1 + X.fit, random = ~ 1 | study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=mmCtrl), silent=!verbose)
+            } else {
+               dat.mm <- data.frame(xi=dat.grp, study=study)
+               res.ML <- try(GLMMadaptive::mixed_model(xi ~ -1 + X.fit + offset(dat.off), random = ~ 1 | study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=mmCtrl), silent=!verbose)
+            }
          }
 
          if (inherits(res.ML, "try-error"))
             stop(mstyle$stop("Cannot fit ML model."))
+
+         #return(res.ML)
 
          ### log-likelihood
 
@@ -1690,8 +1836,12 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
          #ll.ML <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, plogis(qlogis(fitted(res.ML)) + group12*unlist(ranef(res.ML))), log=TRUE))) ### not correct (since one really has to integrate; same as ll.FE if tau^2=0)
          #ll.ML <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, plogis(predict(res.ML))))) ### not correct (since one really has to integrate; same as ll.FE if tau^2=0)
          #ll.ML <- c(logLik(res.ML)) ### this is not the same as ll.FE when tau^2 = 0 (not sure why)
-         #ll.ML <- ll.QE - 1/2 * lme4::deviance(res.ML) ### this makes ll.ML comparable to ll.FE (same as ll.FE when tau^2=0)
-         ll.ML <- ll.QE - 1/2 * deviance(res.ML) ### this makes ll.ML comparable to ll.FE (same as ll.FE when tau^2=0)
+         if (con$package == "lme4") {
+            ll.ML <- ll.QE - 1/2 * deviance(res.ML) ### this makes ll.ML comparable to ll.FE (same as ll.FE when tau^2=0)
+         } else {
+            ### FIXME: When using GLMMadaptive, ll is not comparable for FE model when tau^2 = 0
+            ll.ML <- c(logLik(res.ML))
+         }
 
       }
 
@@ -1709,13 +1859,24 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       }
 
       if (method == "ML") {
-         beta   <- cbind(lme4::fixef(res.ML)[seq_len(p)])
-         vb     <- as.matrix(vcov(res.ML))[seq_len(p),seq_len(p),drop=FALSE]
-         tau2   <- lme4::VarCorr(res.ML)[[1]][1]
+
+         if (con$package == "lme4") {
+            beta   <- cbind(lme4::fixef(res.ML)[seq_len(p)])
+            vb     <- as.matrix(vcov(res.ML))[seq_len(p),seq_len(p),drop=FALSE]
+            tau2   <- lme4::VarCorr(res.ML)[[1]][1]
+         }
+
+         if (con$package == "GLMMadaptive") {
+            beta   <- cbind(GLMMadaptive::fixef(res.ML)[seq_len(p)])
+            vb     <- as.matrix(vcov(res.ML))[seq_len(p),seq_len(p),drop=FALSE]
+            tau2   <- res.ML$D[1,1]
+         }
+
          sigma2 <- NA
          parms  <- p + 1
          p.eff  <- p
          k.eff  <- k
+
       }
 
       #return(list(beta=beta, vb=vb, tau2=tau2, sigma2=sigma2, parms=parms, p.eff=p.eff, k.eff=k.eff, b2.QE=b2.QE, vb2.QE=vb2.QE))
@@ -1762,8 +1923,8 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
       QE.LRT <- -2 * (ll.FE - ll.QE)
 
-      QE.Wld[QE.Wld < 0] <- 0
-      QE.LRT[QE.LRT < 0] <- 0
+      QE.Wld[QE.Wld <= 0] <- 0
+      QE.LRT[QE.LRT <= 0] <- 0
 
       #QE.df <- length(b2.QE) ### removed coefficients are not counted if dfs are determined like this
       QE.df <- k-p            ### this yields always the same dfs regardless of how many coefficients are removed

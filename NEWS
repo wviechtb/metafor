@@ -1,10 +1,14 @@
-Changes in Version 2.2-3 (2019-09-25)
+Changes in Version 2.2-4 (2019-09-29)
 =====================================
+
+   o added (for now undocumented) option to fit models in 'rma.glmm()' via
+     the 'GLMMadaptive' package (instead of 'lme4'); to try this, use:
+     'control=list(package="GLMMadaptive")'
 
    o started to use numbering scheme for 'devel' version (the number after
      the dash indicates the devel version)
 
-   o added 'contrmat' function (for creating a matrix that indicates which two
+   o added 'contrmat()' function (for creating a matrix that indicates which
      groups have been compared against each other in each row of a dataset)
 
    o added 'to.wide()' function (for restructuring long format datasets into

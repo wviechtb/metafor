@@ -1,8 +1,10 @@
-# metafor 2.2-3 (2019-09-25)
+# metafor 2.2-4 (2019-09-29)
+
+- added (for now undocumented) option to fit models in `rma.glmm()` via the `GLMMadaptive` package (instead of `lme4`); to try this, use: `control=list(package="GLMMadaptive")`
 
 - started to use numbering scheme for `devel` version (the number after the dash indicates the devel version)
 
-- added `contrmat` function (for creating a matrix that indicates which two groups have been compared against each other in each row of a dataset)
+- added `contrmat()` function (for creating a matrix that indicates which groups have been compared against each other in each row of a dataset)
 
 - added `to.wide()` function (for restructuring long format datasets into the wide format needed for contrast-based analyses)
 
