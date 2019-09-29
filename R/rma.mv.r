@@ -1480,8 +1480,11 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
    ### set default control parameters
 
    con <- list(verbose = FALSE,
-               optimizer = "nlminb",      # optimizer to use ("optim", "nlminb", "uobyqa", "newuoa", "bobyqa", "nloptr", "nlm", "hjk", "nmk", "ucminf")
+               optimizer = "nlminb",      # optimizer to use ("optim", "nlminb", "uobyqa", "newuoa", "bobyqa", "nloptr", "nlm", "hjk", "nmk", "ucminf", "optimParallel")
                optmethod = "BFGS",        # argument 'method' for optim() ("Nelder-Mead" and "BFGS" are sensible options)
+               parallel = list(),         # parallel argument for optimParallel() (note: 'cl' argument in parallel is not passed; this is directly specified via 'cl')
+               cl = NULL,                 # arguments for optimParallel()
+               ncpus = 1L,                # arguments for optimParallel()
                sigma2.init = sigma2.init, # initial value(s) for sigma2
                tau2.init = tau2.init,     # initial value(s) for tau2
                rho.init = rho.init,       # initial value(s) for rho
@@ -1616,12 +1619,21 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
          con$phi.init  <- atanh(phi.init)
    }
 
-   optimizer  <- match.arg(con$optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","ucminf"))
+   optimizer  <- match.arg(con$optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","ucminf","optimParallel"))
    optmethod  <- match.arg(con$optmethod, c("Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent"))
    evtol      <- con$evtol
    posdefify  <- con$posdefify
    cholesky   <- con$cholesky
+   parallel   <- con$parallel
+   cl         <- con$cl
+   ncpus      <- con$ncpus
    optcontrol <- control[is.na(con.pos)] ### get arguments that are control arguments for optimizer
+
+   ### if control argument 'ncpus' is larger than 1, automatically switch to optimParallel optimizer
+   if (ncpus > 1L) {
+      con$optimizer <- "optimParallel"
+      optimizer <- "optimParallel"
+   }
 
    if (length(optcontrol) == 0)
       optcontrol <- list()
@@ -1637,7 +1649,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
    if (optimizer=="nloptr" && !is.element("ftol_rel", names(optcontrol)))
       optcontrol$ftol_rel <- 1e-8
 
-   #return(list(con=con, optimizer=optimizer, optmethod=optmethod, evtol=evtol, posdefify=posdefify, optcontrol=optcontrol))
+   #return(list(con=con, optimizer=optimizer, optmethod=optmethod, parallel=parallel, cl=cl, ncpus=ncpus, evtol=evtol, posdefify=posdefify, optcontrol=optcontrol))
 
    if (is.element(optimizer, c("uobyqa","newuoa","bobyqa"))) {
       if (!requireNamespace("minqa", quietly=TRUE))
@@ -1657,6 +1669,11 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
    if (optimizer == "ucminf") {
       if (!requireNamespace("ucminf", quietly=TRUE))
          stop(mstyle$stop("Please install the 'ucminf' package to use this optimizer."))
+   }
+
+   if (optimizer == "optimParallel") {
+      if (!requireNamespace("optimParallel", quietly=TRUE))
+         stop(mstyle$stop("Please install the 'optimParallel' package to use this optimizer."))
    }
 
    ### check if length of sigma2.init, tau2.init, rho.init, gamma2.init, and phi.init matches number of variance components
@@ -1805,6 +1822,40 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
       par.arg <- "par"
       optimizer <- paste0("ucminf::ucminf") ### need to use this due to requireNamespace()
       ctrl.arg <- ", control=optcontrol"
+   }
+   if (optimizer=="optimParallel") {
+
+      par.arg <- "par"
+      optimizer <- paste0("optimParallel::optimParallel") ### need to use this due to requireNamespace()
+      ctrl.arg <- ", control=optcontrol, parallel=parallel"
+
+      parallel$cl <- NULL
+
+      if (is.null(cl)) {
+
+         ncpus <- as.integer(ncpus)
+
+         if (ncpus < 1)
+            stop(mstyle$stop("Control argument 'ncpus' must be >= 1."))
+
+         cl <- parallel::makePSOCKcluster(ncpus)
+         on.exit(parallel::stopCluster(cl))
+
+      } else {
+
+         if (!inherits(cl, "SOCKcluster"))
+            stop(mstyle$stop("Specified cluster is not of class 'SOCKcluster'."))
+
+      }
+
+      parallel$cl <- cl
+
+      if (is.null(parallel$forward))
+         parallel$forward <- FALSE
+
+      if (is.null(parallel$loginfo))
+         parallel$loginfo <- FALSE
+
    }
 
    if (method != "FE" && !is.null(random)) {

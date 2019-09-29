@@ -1,4 +1,6 @@
-# metafor 2.2-4 (2019-09-29)
+# metafor 2.2-5 (2019-09-29)
+
+- added `optimParallel` as possible optimizer in `rma.mv()`
 
 - added (for now undocumented) option to fit models in `rma.glmm()` via the `GLMMadaptive` package (instead of `lme4`); to try this, use: `control=list(package="GLMMadaptive")`
 
