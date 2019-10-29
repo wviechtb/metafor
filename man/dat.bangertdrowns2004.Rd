@@ -12,8 +12,8 @@
 \bold{grade}    \tab \code{numeric}   \tab grade level (1 = elementary; 2 = middle; 3 = high-school; 4 = college) \cr
 \bold{length}   \tab \code{numeric}   \tab treatment length (in weeks) \cr
 \bold{minutes}  \tab \code{numeric}   \tab minutes per assignment \cr
-\bold{wic}      \tab \code{numeric}   \tab writing in class (0 = no; 1 = yes) \cr
-\bold{feedback} \tab \code{numeric}   \tab feedback (0 = no; 1 = yes) \cr
+\bold{wic}      \tab \code{numeric}   \tab writing tasks were completed in class (0 = no; 1 = yes) \cr
+\bold{feedback} \tab \code{numeric}   \tab feedback on writing was provided (0 = no; 1 = yes) \cr
 \bold{info}     \tab \code{numeric}   \tab writing contained informational components (0 = no; 1 = yes) \cr
 \bold{pers}     \tab \code{numeric}   \tab writing contained personal components (0 = no; 1 = yes) \cr
 \bold{imag}     \tab \code{numeric}   \tab writing contained imaginative components (0 = no; 1 = yes) \cr

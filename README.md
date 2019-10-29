@@ -3,10 +3,10 @@ metafor: A Meta-Analysis Package for R
 
 [![Build Status](https://travis-ci.org/wviechtb/metafor.svg?branch=master)](https://travis-ci.org/wviechtb/metafor)
 [![Code Coverage](https://codecov.io/gh/wviechtb/metafor/branch/master/graph/badge.svg)](https://codecov.io/gh/wviechtb/metafor)
-[![CRAN Version](http://www.r-pkg.org/badges/version/metafor)](https://cran.r-project.org/package=metafor)
-[![devel Version](https://img.shields.io/badge/devel-2.2--5-brightgreen.svg)](http://www.metafor-project.org/doku.php/installation#development_version)
-[![Monthly Downloads](http://cranlogs.r-pkg.org/badges/metafor)](http://cranlogs.r-pkg.org/badges/metafor)
-[![Total Downloads](http://cranlogs.r-pkg.org/badges/grand-total/metafor)](http://cranlogs.r-pkg.org/badges/grand-total/metafor)
+[![CRAN Version](https://www.r-pkg.org/badges/version/metafor)](https://cran.r-project.org/package=metafor)
+[![devel Version](https://img.shields.io/badge/devel-2.2--6-brightgreen.svg)](http://www.metafor-project.org/doku.php/installation#development_version)
+[![Monthly Downloads](https://cranlogs.r-pkg.org/badges/metafor)](https://cranlogs.r-pkg.org/badges/metafor)
+[![Total Downloads](https://cranlogs.r-pkg.org/badges/grand-total/metafor)](https://cranlogs.r-pkg.org/badges/grand-total/metafor)
 
 ## Description
 
@@ -33,7 +33,7 @@ The `metafor` package website can be found at [http://www.metafor-project.org](h
 
 A good starting place for those interested in using the `metafor` package is the following paper:
 
-Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. *Journal of Statistical Software, 36*(3), 1-48. [http://www.jstatsoft.org/v36/i03/](http://www.jstatsoft.org/v36/i03/).
+Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. *Journal of Statistical Software, 36*(3), 1-48. [https://www.jstatsoft.org/v36/i03/](https://www.jstatsoft.org/v36/i03/).
 
 In addition to reading the paper, carefully read the [package intro](https://wviechtb.github.io/metafor/reference/metafor-package.html) and then the help pages for the [escalc](https://wviechtb.github.io/metafor/reference/escalc.html) and the [rma.uni](https://wviechtb.github.io/metafor/reference/rma.uni.html) functions (or the [rma.mh](https://wviechtb.github.io/metafor/reference/rma.mh.html), [rma.peto](https://wviechtb.github.io/metafor/reference/rma.peto.html), [rma.glmm](https://wviechtb.github.io/metafor/reference/rma.glmm.html), [rma.mv](https://wviechtb.github.io/metafor/reference/rma.mv.html) functions if you intend to use these methods). The help pages for these functions provide links to many additional functions, which can be used after fitting a model. You can also read the entire documentation online at [https://wviechtb.github.io/metafor/](https://wviechtb.github.io/metafor/) (where it is nicely formatted, equations are shown correctly, and the output from all examples is provided).
 
@@ -44,12 +44,12 @@ The current official (i.e., [CRAN](https://cran.r-project.org/package=metafor)) 
 install.packages("metafor")
 ```
 
-After installing the [devtools](https://cran.r-project.org/package=devtools) package with ```install.packages("devtools")```, the development version of the metafor package can be installed with:
+After installing the [remotes](https://cran.r-project.org/package=remotes) package with ```install.packages("remotes")```, the development version of the metafor package can be installed with:
 ```r
-devtools::install_github("wviechtb/metafor")
+remotes::install_github("wviechtb/metafor")
 ```
 This builds the package from source based on the current version on [GitHub](https://github.com/wviechtb/metafor).
 
 ## Meta
 
-The metafor package was written by [Wolfgang Viechtbauer](http://www.wvbauer.com/). It is licensed under the [GNU General Public License](http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt). For citation info, type `citation(package='metafor')` in R. To report any issues or bugs or to suggest enhancements to the package, please go [here](https://github.com/wviechtb/metafor/issues).
+The metafor package was written by [Wolfgang Viechtbauer](http://www.wvbauer.com/). It is licensed under the [GNU General Public License](https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt). For citation info, type `citation(package='metafor')` in R. To report any issues or bugs or to suggest enhancements to the package, please go [here](https://github.com/wviechtb/metafor/issues).

@@ -1,4 +1,4 @@
-# metafor 2.2-5 (2019-09-29)
+# metafor 2.2-6 (2019-10-29)
 
 - added `optimParallel` as possible optimizer in `rma.mv()`
 

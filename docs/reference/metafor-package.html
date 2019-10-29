@@ -71,7 +71,7 @@ The package also provides functions for creating forest, funnel, radial (Galbrai
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.6</span>
       </span>
     </div>
 
@@ -138,9 +138,12 @@ The package also provides functions for creating forest, funnel, radial (Galbrai
 
 
 
+    <h2 class="hasAnchor" id="the-escalc-function"><a class="anchor" href="#the-escalc-function"></a>The escalc Function</h2>
+
+    <p>[<code><a href='escalc.html'>escalc</a></code>] Before a meta-analysis can be conducted, the relevant results from each study must be quantified in such a way that the resulting values can be further aggregated and compared. The <code><a href='escalc.html'>escalc</a></code> function can be used to compute a wide variety of effect size or outcome measures (and the corresponding sampling variances) that are often used in meta-analyses (e.g., risk ratios, odds ratios, risk differences, mean differences, standardized mean differences, ratios of means, correlation coefficients). Measures for quantifying some outcome for individual groups (e.g., proportions and incidence rates and transformations thereof), measures of change (e.g., raw and standardized mean changes), and measures of variability (e.g., standard deviations and coefficients of variation) are also available.</p>
     <h2 class="hasAnchor" id="the-rma-uni-function"><a class="anchor" href="#the-rma-uni-function"></a>The rma.uni Function</h2>
 
-    <p>[<code><a href='rma.uni.html'>rma.uni</a></code>] The various meta-analytic models that are typically used in practice are special cases of the general linear (mixed-effects) model. The <code><a href='rma.uni.html'>rma.uni</a></code> function (with alias <code><a href='rma.uni.html'>rma</a></code>) provides a general framework for fitting such models. The function can be used in conjunction with any of the usual effect size or outcome measures used in meta-analyses (e.g., log risk ratios, log odds ratios, risk differences, mean differences, standardized mean differences, raw correlation coefficients, correlation coefficients transformed with Fisher's r-to-z transformation, and so on). For details on these effect size or outcome measures, see the documentation of the <code><a href='escalc.html'>escalc</a></code> function. The notation and models underlying the <code><a href='rma.uni.html'>rma.uni</a></code> function are explained below.</p>
+    <p>[<code><a href='rma.uni.html'>rma.uni</a></code>] The various meta-analytic models that are typically used in practice are special cases of the general linear (mixed-effects) model. The <code><a href='rma.uni.html'>rma.uni</a></code> function (with alias <code><a href='rma.uni.html'>rma</a></code>) provides a general framework for fitting such models. The function can be used in conjunction with any of the usual effect size or outcome measures used in meta-analyses (e.g., as computed using the <code><a href='escalc.html'>escalc</a></code> function). The notation and models underlying the <code><a href='rma.uni.html'>rma.uni</a></code> function are explained below.</p>
 <p>For a set of \(i = 1, \ldots, k\) independent studies, let \(y_i\) denote the observed value of the effect size or outcome measure in the \(i\)th study. Let \(\theta_i\) denote the corresponding (unknown) true effect or outcome, such that $$y_i | \theta_i \sim N(\theta_i, v_i).$$ In other words, the observed effects or outcomes are assumed to be unbiased and normally distributed estimates of the corresponding true effects or outcomes with sampling variances equal to \(v_i\). The \(v_i\) values are assumed to be known. Depending on the outcome measure used, a bias correction, normalizing, and/or variance stabilizing transformation may be necessary to ensure that these assumptions are (approximately) true (e.g., the log transformation for odds ratios, the bias correction for standardized mean differences, Fisher's r-to-z transformation for correlations; see <code><a href='escalc.html'>escalc</a></code> for more details).</p>
 <p>The <b>fixed-effects model</b> conditions on the true effects/outcomes and therefore provides a <em>conditional inference</em> about the set of \(k\) studies included in the meta-analysis. When using weighted estimation, this implies that the fitted model provides an estimate of $$\theta_w = \sum w_i \theta_i / \sum w_i,$$ that is, the <em>weighted average</em> of the true effects/outcomes in the set of \(k\) studies, with weights equal to \(w_i = 1/v_i\) (this is what is often described as the &#8216;inverse-variance&#8217; method in the meta-analytic literature). One can also employ an unweighted estimation method, which provides an estimate of the <em>unweighted average</em> of the true effects/outcomes in the set of \(k\) studies, that is, an estimate of $$\theta_u = \sum \theta_i / k.$$</p>
 <p>For weighted estimation, one could also choose to estimate \(\bar{\theta}_w\), where the \(w_i\) values are user-defined weights (inverse-variance weights or unity weights as in unweighted estimation are just special cases). It is up to the user to decide to what extent \(\bar{\theta}_w\) is a meaningful parameter to estimate (regardless of the weights used).</p>
@@ -191,6 +194,7 @@ The package also provides functions for creating forest, funnel, radial (Galbrai
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#the-escalc-function">The escalc Function</a></li>
       <li><a href="#the-rma-uni-function">The rma.uni Function</a></li>
       <li><a href="#the-rma-mh-function">The rma.mh Function</a></li>
       <li><a href="#the-rma-peto-function">The rma.peto Function</a></li>
