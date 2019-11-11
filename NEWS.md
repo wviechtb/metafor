@@ -1,4 +1,4 @@
-# metafor 2.2-7 (2019-11-11)
+# metafor 2.2-8 (2019-11-11)
 
 - argument `btt` can now also take a string to grep for
 

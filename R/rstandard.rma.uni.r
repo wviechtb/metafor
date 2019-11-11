@@ -3,7 +3,7 @@ rstandard.rma.uni <- function(model, digits, type="marginal", ...) {
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
    if (!inherits(model, "rma.uni"))
-      stop("Argument 'model' must be an object of class \"rma.uni\".")
+      stop(mstyle$stop("Argument 'model' must be an object of class \"rma.uni\"."))
 
    na.act <- getOption("na.action")
 
