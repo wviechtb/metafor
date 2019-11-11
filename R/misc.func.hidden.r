@@ -2,7 +2,7 @@
 
 ### function to set default 'btt' value(s) or check specified 'btt' values
 
-.set.btt <- function(btt, p, int.incl) {
+.set.btt <- function(btt, p, int.incl, X) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -20,22 +20,33 @@
 
    } else {
 
-      ### round, take unique values, and sort
-      btt <- sort(unique(round(btt)))
+      if (is.character(btt)) {
 
-      ### check for mix of positive and negative values
-      if (any(btt < 0) && any(btt > 0))
-         stop(mstyle$stop("Cannot mix positive and negative 'btt' values."))
+         btt <- grep(btt, colnames(X))
 
-      ### keep/remove from 1:p vector as specified
-      btt <- seq_len(p)[btt]
+         if (length(btt) == 0L)
+            stop(mstyle$stop("Cannot identify coefficient(s) corresponding to the specified 'btt' string."))
 
-      ### (1:5)[5:6] yields c(5, NA) so remove NAs if this happens
-      btt <- btt[!is.na(btt)]
+      } else {
 
-      ### make sure that at least one valid value is left
-      if (length(btt) == 0L)
-         stop(mstyle$stop("Non-existent coefficients specified via 'btt'."))
+         ### round, take unique values, and sort
+         btt <- sort(unique(round(btt)))
+
+         ### check for mix of positive and negative values
+         if (any(btt < 0) && any(btt > 0))
+            stop(mstyle$stop("Cannot mix positive and negative 'btt' values."))
+
+         ### keep/remove from 1:p vector as specified
+         btt <- seq_len(p)[btt]
+
+         ### (1:5)[5:6] yields c(5, NA) so remove NAs if this happens
+         btt <- btt[!is.na(btt)]
+
+         ### make sure that at least one valid value is left
+         if (length(btt) == 0L)
+            stop(mstyle$stop("Non-existent coefficients specified via 'btt'."))
+
+      }
 
    }
 

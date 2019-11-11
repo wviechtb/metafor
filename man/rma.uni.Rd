@@ -58,7 +58,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \item{test}{character string specifying how test statistics and confidence intervals for the fixed effects should be computed. By default (\code{test="z"}), Wald-type tests and CIs are obtained, which are based on a standard normal distribution. When \code{test="knha"}, the method by Knapp and Hartung (2003) is used for adjusting test statistics and confidence intervals. See \sQuote{Details}.}
    \item{level}{numerical value between 0 and 100 specifying the confidence interval level (the default is 95).}
    \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is 4).}
-   \item{btt}{optional vector of indices specifying which coefficients to include in the omnibus test of moderators. See \sQuote{Details}.}
+   \item{btt}{optional vector of indices specifying which coefficients to include in the omnibus test of moderators. Can also be a string to grep for. See \sQuote{Details}.}
    \item{tau2}{optional numerical value to specify the amount of (residual) heterogeneity in a random- or mixed-effects model (instead of estimating it). Useful for sensitivity analyses (e.g., for plotting results as a function of \if{latex}{\eqn{\tau^2}}\if{html}{\eqn{\tau²}}\if{text}{\eqn{\tau^2}}). When unspecified, the value of \if{latex}{\eqn{\tau^2}}\if{html}{\eqn{\tau²}}\if{text}{\eqn{\tau^2}} is estimated from the data.}
    \item{verbose}{logical indicating whether output should be generated on the progress of the model fitting (the default is \code{FALSE}). Can also be an integer. Values > 1 generate more verbose output. See \sQuote{Note}.}
    \item{control}{optional list of control values for the iterative estimation algorithms. If unspecified, default values are defined inside the function. See \sQuote{Note}.}
@@ -101,7 +101,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
    \bold{Omnibus Test of Parameters}
 
-   For models including moderators, an omnibus test of all the model coefficients is conducted that excludes the intercept (the first coefficient) if it is included in the model. If no intercept is included in the model, then the omnibus test includes all of the coefficients in the model including the first. Alternatively, one can manually specify the indices of the coefficients to test via the \code{btt} argument. For example, with \code{btt=c(3,4)}, only the third and fourth coefficient from the model would be included in the test (if an intercept is included in the model, then it corresponds to the first coefficient in the model).
+   For models including moderators, an omnibus test of all the model coefficients is conducted that excludes the intercept (the first coefficient) if it is included in the model. If no intercept is included in the model, then the omnibus test includes all of the coefficients in the model including the first. Alternatively, one can manually specify the indices of the coefficients to test via the \code{btt} argument. For example, with \code{btt=c(3,4)}, only the third and fourth coefficient from the model would be included in the test (if an intercept is included in the model, then it corresponds to the first coefficient in the model). Instead of specifying the coefficient numbers, one can specify a string for \code{btt}. In that case, \code{\link{grep}} will be used to search for all coefficient names that match the string.
 
    \bold{Categorical Moderators}
 

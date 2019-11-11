@@ -56,7 +56,7 @@ res.fe <- rma.mv(yi, vi, mods = ~ study + treatment - 1, data=dat, slab=paste0(s
 res.fe
 
 ### test if treatment factor as a whole is significant
-anova(res.fe, btt=(res.fe$p-8):res.fe$p)
+anova(res.fe, btt="treatment")
 
 ### forest plot of the contrast estimates (treatments versus placebos)
 dev.new(width=7, height=5)
@@ -83,7 +83,7 @@ res.re <- rma.mv(yi, vi, mods = ~ study + treatment - 1, random = ~ treatment | 
 res.re
 
 ### test if treatment factor as a whole is significant
-anova(res.re, btt=(res.re$p-8):res.re$p)
+anova(res.re, btt="treatment")
 
 ### forest plot of the contrast estimates (treatments versus placebos)
 forest(tail(coef(res.re), 9), tail(diag(vcov(res.re)), 9), slab=levels(dat$treatment)[-1],

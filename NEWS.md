@@ -1,4 +1,6 @@
-# metafor 2.2-6 (2019-10-29)
+# metafor 2.2-7 (2019-11-11)
+
+- argument `btt` can now also take a string to grep for
 
 - added `optimParallel` as possible optimizer in `rma.mv()`
 

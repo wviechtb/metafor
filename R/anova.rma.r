@@ -34,7 +34,7 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
 
          ### set/check 'btt' argument
 
-         btt <- .set.btt(btt, p, x$int.incl)
+         btt <- .set.btt(btt, p, x$int.incl, x$X)
          m <- length(btt) ### number of betas to test (m = p if all betas are tested)
 
          QM <- as.vector(t(beta)[btt] %*% chol2inv(chol(vb[btt,btt])) %*% beta[btt])

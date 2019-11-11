@@ -55,7 +55,7 @@ levels(dat$trt) <- paste0(" ", levels(dat$trt))
 ### network meta-analysis using an arm-based model with fixed study effects
 ### by setting rho=1/2, tau^2 reflects the amount of heterogeneity for all treatment comparisons
 res <- rma.mv(yi, vi, mods = ~ factor(study) + trt - 1,
-              random = ~ trt | study, rho=1/2, data=dat, btt=25:27)
+              random = ~ trt | study, rho=1/2, data=dat, btt="trt")
 res
 
 ### all pairwise odds ratios of interventions versus no contact

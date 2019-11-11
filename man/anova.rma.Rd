@@ -10,7 +10,7 @@
 \arguments{
    \item{object}{an object of class \code{"rma.uni"} or \code{"rma.mv"}.}
    \item{object2}{an (optional) object of class \code{"rma.uni"} or \code{"rma.mv"}. See \sQuote{Details}.}
-   \item{btt}{optional vector of indices specifying which coefficients to include in the Wald-type test. See \sQuote{Details}.}
+   \item{btt}{optional vector of indices specifying which coefficients to include in the Wald-type test. Can also be a string to grep for. See \sQuote{Details}.}
    \item{L}{optional numeric vector or matrix specifying linear combinations of the coefficients in the model that should be tested to be zero. See \sQuote{Details}.}
    \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is to take the value from the object).}
    \item{\dots}{other arguments.}
@@ -20,7 +20,7 @@
 
    In particular, for a fixed- or random-effects model (i.e., a model without moderators), this is just the test of the single coefficient of the model. For models including moderators, an omnibus test of all the model coefficients is conducted that excludes the intercept (the first coefficient) if it is included in the model. If no intercept is included in the model, then the omnibus test includes all of the coefficients in the model including the first.
 
-   Alternatively, one can manually specify the indices of the coefficients to test via the \code{btt} argument. For example, with \code{btt=c(3,4)}, only the third and fourth coefficient from the model would be included in the test (if an intercept is included in the model, then it corresponds to the first coefficient in the model).
+   Alternatively, one can manually specify the indices of the coefficients to test via the \code{btt} argument. For example, with \code{btt=c(3,4)}, only the third and fourth coefficient from the model would be included in the test (if an intercept is included in the model, then it corresponds to the first coefficient in the model). Instead of specifying the coefficient numbers, one can specify a string for \code{btt}. In that case, \code{\link{grep}} will be used to search for all coefficient names that match the string.
 
    Instead, one can also specify one or multiple linear combinations of the coefficients in the model that should be tested to be zero via the \code{L} argument. If given as a matrix, its rows define the linear combinations to be tested. If the matrix is of full rank, an omnibus Wald-type test of all linear combinations is also provided.
 
@@ -102,5 +102,15 @@ anova(res1, res2)
 
 ### test of a linear combination
 anova(res2, L=c(1,35,1970))
+
+### mixed-effects model with three moderators
+res3 <- rma(yi, vi, mods = ~ ablat + year + alloc, data=dat, method="ML")
+res3
+
+### test the 'alloc' factor
+anova(res3, btt=4:5)
+
+### instead of specifying the coefficient numbers, grep for "alloc"
+anova(res3, btt="alloc")
 }
 \keyword{models}

@@ -1,5 +1,7 @@
-Changes in Version 2.2-6 (2019-10-29)
+Changes in Version 2.2-7 (2019-11-11)
 =====================================
+
+   o argument 'btt' can now also take a string to grep for
 
    o added 'optimParallel' as possible optimizer in rma.mv()
 

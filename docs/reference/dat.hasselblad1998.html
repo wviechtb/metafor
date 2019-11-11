@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.7</span>
       </span>
     </div>
 
@@ -236,7 +236,7 @@
 <span class='co'>### network meta-analysis using an arm-based model with fixed study effects</span>
 <span class='co'>### by setting rho=1/2, tau^2 reflects the amount of heterogeneity for all treatment comparisons</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>study</span>) + <span class='no'>trt</span> - <span class='fl'>1</span>,
-              <span class='kw'>random</span> <span class='kw'>=</span> ~ <span class='no'>trt</span> <span class='kw'>|</span> <span class='no'>study</span>, <span class='kw'>rho</span><span class='kw'>=</span><span class='fl'>1</span>/<span class='fl'>2</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>btt</span><span class='kw'>=</span><span class='fl'>25</span>:<span class='fl'>27</span>)
+              <span class='kw'>random</span> <span class='kw'>=</span> ~ <span class='no'>trt</span> <span class='kw'>|</span> <span class='no'>study</span>, <span class='kw'>rho</span><span class='kw'>=</span><span class='fl'>1</span>/<span class='fl'>2</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>btt</span><span class='kw'>=</span><span class='st'>"trt"</span>)
 <span class='no'>res</span></div><div class='output co'>#&gt; 
 #&gt; Multivariate Meta-Analysis Model (k = 50; method: REML)
 #&gt; 

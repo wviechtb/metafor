@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.7</span>
       </span>
     </div>
 
@@ -148,7 +148,7 @@
     </tr>
     <tr>
       <th>btt</th>
-      <td><p>optional vector of indices specifying which coefficients to include in the Wald-type test. See &#8216;Details&#8217;.</p></td>
+      <td><p>optional vector of indices specifying which coefficients to include in the Wald-type test. Can also be a string to grep for. See &#8216;Details&#8217;.</p></td>
     </tr>
     <tr>
       <th>L</th>
@@ -168,7 +168,7 @@
 
     <p>When a single model is specified, the function provides Wald-type tests of one or more model coefficients or linear combinations thereof.</p>
 <p>In particular, for a fixed- or random-effects model (i.e., a model without moderators), this is just the test of the single coefficient of the model. For models including moderators, an omnibus test of all the model coefficients is conducted that excludes the intercept (the first coefficient) if it is included in the model. If no intercept is included in the model, then the omnibus test includes all of the coefficients in the model including the first.</p>
-<p>Alternatively, one can manually specify the indices of the coefficients to test via the <code>btt</code> argument. For example, with <code>btt=c(3,4)</code>, only the third and fourth coefficient from the model would be included in the test (if an intercept is included in the model, then it corresponds to the first coefficient in the model).</p>
+<p>Alternatively, one can manually specify the indices of the coefficients to test via the <code>btt</code> argument. For example, with <code>btt=c(3,4)</code>, only the third and fourth coefficient from the model would be included in the test (if an intercept is included in the model, then it corresponds to the first coefficient in the model). Instead of specifying the coefficient numbers, one can specify a string for <code>btt</code>. In that case, <code><a href='https://rdrr.io/r/base/grep.html'>grep</a></code> will be used to search for all coefficient names that match the string.</p>
 <p>Instead, one can also specify one or multiple linear combinations of the coefficients in the model that should be tested to be zero via the <code>L</code> argument. If given as a matrix, its rows define the linear combinations to be tested. If the matrix is of full rank, an omnibus Wald-type test of all linear combinations is also provided.</p>
 <p>When specifying two models for comparison, the function provides a likelihood ratio test comparing the two models. The two models must be based on the same set of data, must be of the same class, and should be nested for the likelihood ratio test to make sense. Note that likelihood ratio tests are not meaningful when using REML estimation and the two models have different fixed effects.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -269,6 +269,45 @@
 #&gt; 
 #&gt; Test of Hypothesis:
 #&gt; QM(df = 1) = 81.0700, p-val &lt; .0001
+#&gt; </div><div class='input'>
+<span class='co'>### mixed-effects model with three moderators</span>
+<span class='no'>res3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>ablat</span> + <span class='no'>year</span> + <span class='no'>alloc</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"ML"</span>)
+<span class='no'>res3</span></div><div class='output co'>#&gt; 
+#&gt; Mixed-Effects Model (k = 13; tau^2 estimator: ML)
+#&gt; 
+#&gt; tau^2 (estimated amount of residual heterogeneity):     0.0329 (SE = 0.0272)
+#&gt; tau (square root of estimated tau^2 value):             0.1814
+#&gt; I^2 (residual heterogeneity / unaccounted variability): 33.24%
+#&gt; H^2 (unaccounted variability / sampling variability):   1.50
+#&gt; R^2 (amount of heterogeneity accounted for):            88.24%
+#&gt; 
+#&gt; Test for Residual Heterogeneity:
+#&gt; QE(df = 8) = 26.2030, p-val = 0.0010
+#&gt; 
+#&gt; Test of Moderators (coefficients 2:5):
+#&gt; QM(df = 4) = 31.2609, p-val &lt; .0001
+#&gt; 
+#&gt; Model Results:
+#&gt; 
+#&gt;                  estimate       se     zval    pval     ci.lb    ci.ub 
+#&gt; intrcpt          -10.0824  23.9973  -0.4201  0.6744  -57.1162  36.9514      
+#&gt; ablat             -0.0277   0.0071  -3.9298  &lt;.0001   -0.0416  -0.0139  *** 
+#&gt; year               0.0053   0.0122   0.4371  0.6620   -0.0185   0.0292      
+#&gt; allocrandom       -0.2826   0.2540  -1.1127  0.2658   -0.7804   0.2152      
+#&gt; allocsystematic   -0.1104   0.2551  -0.4330  0.6650   -0.6104   0.3895      
+#&gt; 
+#&gt; ---
+#&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+#&gt; </div><div class='input'>
+<span class='co'>### test the 'alloc' factor</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/anova.html'>anova</a></span>(<span class='no'>res3</span>, <span class='kw'>btt</span><span class='kw'>=</span><span class='fl'>4</span>:<span class='fl'>5</span>)</div><div class='output co'>#&gt; 
+#&gt; Test of Moderators (coefficients 4:5):
+#&gt; QM(df = 2) = 1.4674, p-val = 0.4801
+#&gt; </div><div class='input'>
+<span class='co'>### instead of specifying the coefficient numbers, grep for "alloc"</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/anova.html'>anova</a></span>(<span class='no'>res3</span>, <span class='kw'>btt</span><span class='kw'>=</span><span class='st'>"alloc"</span>)</div><div class='output co'>#&gt; 
+#&gt; Test of Moderators (coefficients 4:5):
+#&gt; QM(df = 2) = 1.4674, p-val = 0.4801
 #&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

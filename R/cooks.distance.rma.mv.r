@@ -32,7 +32,7 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
 
    ddd <- list(...)
 
-   btt <- .set.btt(ddd$btt, x$p, int.incl=FALSE)
+   btt <- .set.btt(ddd$btt, x$p, int.incl=FALSE, X=x$X)
    m <- length(btt)
 
    if (.isTRUE(ddd$time))

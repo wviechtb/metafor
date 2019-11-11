@@ -34,6 +34,12 @@ test_that("anova() works correctly when using the 'btt' argument.", {
    expect_equivalent(sav$QM, 1.2850, tolerance=.tol[["test"]])
    expect_equivalent(sav$QMp, 0.5260, tolerance=.tol[["pval"]])
 
+   sav <- anova(res, btt="alloc")
+   out <- capture.output(print(sav))
+
+   expect_equivalent(sav$QM, 1.2850, tolerance=.tol[["test"]])
+   expect_equivalent(sav$QMp, 0.5260, tolerance=.tol[["pval"]])
+
    res <- rma(yi, vi, mods = ~ ablat + alloc, data=dat, test="knha")
    sav <- anova(res, btt=3:4)
    out <- capture.output(print(sav))

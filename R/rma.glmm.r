@@ -580,7 +580,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    ### set/check 'btt' argument
 
-   btt <- .set.btt(btt, p, int.incl)
+   btt <- .set.btt(btt, p, int.incl, X)
    m <- length(btt) ### number of betas to test (m = p if all betas are tested)
 
    #########################################################################

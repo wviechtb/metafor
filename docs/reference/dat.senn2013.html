@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.7</span>
       </span>
     </div>
 
@@ -435,7 +435,7 @@
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### test if treatment factor as a whole is significant</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/anova.html'>anova</a></span>(<span class='no'>res.fe</span>, <span class='kw'>btt</span><span class='kw'>=</span>(<span class='no'>res.fe</span>$<span class='no'>p</span>-<span class='fl'>8</span>):<span class='no'>res.fe</span>$<span class='no'>p</span>)</div><div class='output co'>#&gt; 
+<span class='fu'><a href='https://rdrr.io/r/stats/anova.html'>anova</a></span>(<span class='no'>res.fe</span>, <span class='kw'>btt</span><span class='kw'>=</span><span class='st'>"treatment"</span>)</div><div class='output co'>#&gt; 
 #&gt; Test of Moderators (coefficients 27:35):
 #&gt; QM(df = 9) = 1060.3371, p-val &lt; .0001
 #&gt; </div><div class='input'>
@@ -556,7 +556,7 @@
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### test if treatment factor as a whole is significant</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/anova.html'>anova</a></span>(<span class='no'>res.re</span>, <span class='kw'>btt</span><span class='kw'>=</span>(<span class='no'>res.re</span>$<span class='no'>p</span>-<span class='fl'>8</span>):<span class='no'>res.re</span>$<span class='no'>p</span>)</div><div class='output co'>#&gt; 
+<span class='fu'><a href='https://rdrr.io/r/stats/anova.html'>anova</a></span>(<span class='no'>res.re</span>, <span class='kw'>btt</span><span class='kw'>=</span><span class='st'>"treatment"</span>)</div><div class='output co'>#&gt; 
 #&gt; Test of Moderators (coefficients 27:35):
 #&gt; QM(df = 9) = 167.9616, p-val &lt; .0001
 #&gt; </div><div class='input'>
