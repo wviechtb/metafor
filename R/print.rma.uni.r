@@ -155,6 +155,11 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
       colnames(res.table)[7] <- ""
    }
 
+   ddd <- list(...)
+
+   if (.isTRUE(ddd$num))
+      rownames(res.table) <- paste0(1:nrow(res.table), ") ", rownames(res.table))
+
    if (x$int.only)
       res.table <- res.table[1,]
 
@@ -182,6 +187,11 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
          res.table <- cbind(res.table, signif)
          colnames(res.table)[7] <- ""
       }
+
+      ddd <- list(...)
+
+      if (.isTRUE(ddd$num))
+         rownames(res.table) <- paste0(1:nrow(res.table), ") ", rownames(res.table))
 
       if (length(x$alpha) == 1)
          res.table <- res.table[1,]

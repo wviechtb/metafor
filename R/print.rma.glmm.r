@@ -137,6 +137,11 @@ print.rma.glmm <- function(x, digits, showfit=FALSE, signif.stars=getOption("sho
       colnames(res.table)[7] <- ""
    }
 
+   ddd <- list(...)
+
+   if (.isTRUE(ddd$num))
+      rownames(res.table) <- paste0(1:nrow(res.table), ") ", rownames(res.table))
+
    if (x$int.only)
       res.table <- res.table[1,]
 
