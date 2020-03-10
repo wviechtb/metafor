@@ -93,6 +93,7 @@ col.na="lightgray", ...) {
    if (plotinf) {
 
       ### set layout (either defaults or user-specified)
+      ### note: could also use n2mfrow() here, but this behaves slightly differently
 
       par.mfrow <- par("mfrow")
       on.exit(par(mfrow = par.mfrow), add=TRUE)

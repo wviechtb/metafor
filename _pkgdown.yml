@@ -4,8 +4,8 @@ template:
 
 home:
   links:
-  - text: GitHub Repo
-    href: https://github.com/wviechtb/metafor
+  # - text: GitHub Repo
+    # href: https://github.com/wviechtb/metafor
   - text: Package Website
     href: http://www.metafor-project.org/
   - text: Author Website

@@ -350,7 +350,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
    #########################################################################
 
-   ### set/get fonts
+   ### set/get fonts (1st for study labels, 2nd for annotations, 3rd for ilab)
 
    if (missing(fonts)) {
       fonts <- rep(par("family"), 3)

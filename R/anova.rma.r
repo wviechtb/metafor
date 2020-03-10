@@ -195,7 +195,7 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
       }
 
       if (inherits(object, "rma.mv")) {
-         if (!(identical(as.vector(m.f$yi), as.vector(m.r$yi)) && identical(m.f$V, m.r$V))) ### as.vector() to strip attributes/names
+         if (!(identical(as.vector(m.f$yi), as.vector(m.r$yi)) && identical(as.matrix(m.f$V), as.matrix(m.r$V)))) ### as.vector() to strip attributes/names, as.matrix() to make both V matrices non-sparse
             stop(mstyle$stop("Observed outcomes and/or sampling variances/covariances not equal in the full and reduced model."))
       }
 
