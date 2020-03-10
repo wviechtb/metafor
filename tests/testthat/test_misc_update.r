@@ -14,6 +14,10 @@ test_that("update() works for rma().", {
    res3 <- rma(yi, vi, data=dat, method="DL")
    res4 <- update(res3, ~ ablat)
    res5 <- rma(yi, vi, mods = ~ ablat, data=dat, method="DL")
+   res2$time <- NULL
+   res3$time <- NULL
+   res4$time <- NULL
+   res5$time <- NULL
    expect_equivalent(res2, res3)
    expect_equivalent(res4, res5)
 
@@ -29,6 +33,10 @@ test_that("update() works for rma.mv().", {
    res3 <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, method="REML")
    res4 <- update(res3, ~ ablat)
    res5 <- rma.mv(yi, vi, random = ~ 1 | trial, mods = ~ ablat, data=dat, method="REML")
+   res2$time <- NULL
+   res3$time <- NULL
+   res4$time <- NULL
+   res5$time <- NULL
    expect_equivalent(res2, res3)
    expect_equivalent(res4, res5)
 
@@ -46,6 +54,10 @@ test_that("update() works for rma.glmm().", {
    res3 <- rma.glmm(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, method="ML")
    res4 <- update(res3, mods = ~ ablat)
    res5 <- rma.glmm(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, mods = ~ ablat, data=dat.bcg, method="ML")
+   res2$time <- NULL
+   res3$time <- NULL
+   res4$time <- NULL
+   res5$time <- NULL
    expect_equivalent(res2, res3)
    expect_equivalent(res4, res5)
 

@@ -193,14 +193,14 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
       if (.isTRUE(ddd$num))
          rownames(res.table) <- paste0(1:nrow(res.table), ") ", rownames(res.table))
 
-      if (length(x$alpha) == 1)
+      if (length(x$alpha) == 1L)
          res.table <- res.table[1,]
 
       cat("\n")
       cat(mstyle$section("Model Results (Scale):"))
       cat("\n\n")
 
-      if (length(x$alpha) == 1) {
+      if (length(x$alpha) == 1L) {
          tmp <- capture.output(.print.vector(res.table))
       } else {
          tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE, print.gap=2))

@@ -26,10 +26,10 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    ### in case user specifies more than one add/to value (as one can do with rma.mh() and rma.peto())
    ### (never apply any kind of continuity correction to the data used in the actual model fitting for models implemented in this function)
 
-   if (length(add) > 1)
+   if (length(add) > 1L)
       add <- add[1]
 
-   if (length(to) > 1)
+   if (length(to) > 1L)
       to <- to[1]
 
    ### model argument only relevant for 2x2 table data (measure="OR") and for 2-group rate data (measure="IRR")
@@ -245,9 +245,9 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       intercept <- FALSE                    ### set to FALSE since formula now controls whether the intercept is included or not
    }
 
-   ### turn a row vector for mods into a column vector
+   ### turn a vector for mods into a column vector
 
-   if (is.vector(mods))
+   if (.is.vector(mods))
       mods <- cbind(mods)
 
    ### turn a mods data frame into a matrix
@@ -282,6 +282,9 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
       if (length(slab) != k)
          stop(mstyle$stop("Study labels not of same length as data."))
+
+      if (is.factor(slab))
+         slab <- as.character(slab)
 
       slab.null <- FALSE
 

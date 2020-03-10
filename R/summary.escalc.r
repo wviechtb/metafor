@@ -12,7 +12,7 @@ H0=0, append=TRUE, replace=TRUE, level=95, clim, digits, transf, ...) {
 
    crit <- qnorm(level/2, lower.tail=FALSE)
 
-   if (length(out.names) != 4)
+   if (length(out.names) != 4L)
       stop(mstyle$stop("Argument 'out.names' must be of length 4."))
 
    if (any(out.names != make.names(out.names, unique=TRUE))) {
@@ -46,7 +46,7 @@ H0=0, append=TRUE, replace=TRUE, level=95, clim, digits, transf, ...) {
 
    } else {
 
-      if (length(var.names) != 2)
+      if (length(var.names) != 2L)
          stop(mstyle$stop("Argument 'var.names' must be of length 2."))
 
       if (any(var.names != make.names(var.names, unique=TRUE))) {
@@ -69,7 +69,7 @@ H0=0, append=TRUE, replace=TRUE, level=95, clim, digits, transf, ...) {
 
    k <- length(yi)
 
-   if (length(H0) == 1)
+   if (length(H0) == 1L)
       H0 <- rep(H0, k)
 
    ### compute sei, zi, and lower/upper CI bounds; when applying a transformation, compute the transformed outcome and CI bounds

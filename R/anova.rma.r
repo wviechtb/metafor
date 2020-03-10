@@ -52,7 +52,7 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
 
          ### if 'L' has been specified, then do Wald-type test(s) via 'L' argument
 
-         if (is.vector(L))
+         if (.is.vector(L))
             L <- rbind(L)
 
          if (is.data.frame(L))
@@ -130,7 +130,7 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
             hyp[j] <- gsub("+ -", "- ", hyp[j], fixed=TRUE) ### turn '+ -' into '-'
          }
          hyp <- paste0(hyp, " = 0") ### add '= 0' at the right
-         hyp <- data.frame(hyp)
+         hyp <- data.frame(hyp, stringsAsFactors=FALSE)
          colnames(hyp) <- ""
          rownames(hyp) <- paste0(seq_len(m), ":") ### add '1:', '2:', ... as row names
 
@@ -286,7 +286,7 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
 
          btt <- setdiff(colnames(m.f$X), colnames(m.r$X))
 
-         if (length(setdiff(colnames(m.r$X), colnames(m.f$X))) != 0)
+         if (length(setdiff(colnames(m.r$X), colnames(m.f$X))) != 0L)
             stop(mstyle$stop("There are coefficients in the reduced model that are not in the full model."))
 
          btt <- charmatch(btt, colnames(m.f$X))

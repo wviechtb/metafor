@@ -61,7 +61,7 @@ plot.profile.rma <- function(x, xlim, ylim, pch=19, xlab, ylab, main, cline=FALS
          if (missing.xlab) {
             xlab <- x[[j]]$xlab
          } else {
-            if (length(xlab) == 1) {
+            if (length(xlab) == 1L) {
                xlab <- rep(xlab, x$comps)
             }
          }
@@ -69,7 +69,7 @@ plot.profile.rma <- function(x, xlim, ylim, pch=19, xlab, ylab, main, cline=FALS
          if (missing.ylab) {
             ylab <- paste(ifelse(x[[j]]$method=="REML", "Restricted ", ""), "Log-Likelihood", sep="")
          } else {
-            if (length(ylab) == 1) {
+            if (length(ylab) == 1L) {
                ylab <- rep(ylab, x$comps)
             }
          }
@@ -77,7 +77,7 @@ plot.profile.rma <- function(x, xlim, ylim, pch=19, xlab, ylab, main, cline=FALS
          if (missing.main) {
             main <- x[[j]]$title
          } else {
-            if (length(main) == 1) {
+            if (length(main) == 1L) {
                main <- rep(main, x$comps)
             }
          }

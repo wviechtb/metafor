@@ -28,22 +28,22 @@ print.escalc <- function(x, digits=attr(x,"digits"), ...) {
 
    ### round variables according to the digits argument
 
-   if (length(yi.pos) > 0)
+   if (length(yi.pos) > 0L)
       x[yi.pos] <- apply(x[yi.pos], 2, .fcf, digits[["est"]])
 
-   if (length(vi.pos) > 0)
+   if (length(vi.pos) > 0L)
       x[vi.pos] <- apply(x[vi.pos], 2, .fcf, digits[["var"]])
 
-   if (length(sei.pos) > 0)
+   if (length(sei.pos) > 0L)
       x[sei.pos] <- apply(x[sei.pos], 2, .fcf, digits[["se"]])
 
-   if (length(zi.pos) > 0)
+   if (length(zi.pos) > 0L)
       x[zi.pos] <- apply(x[zi.pos], 2, .fcf, digits[["test"]])
 
-   if (length(ci.lb.pos) > 0)
+   if (length(ci.lb.pos) > 0L)
       x[ci.lb.pos] <- apply(x[ci.lb.pos], 2, .fcf, digits[["ci"]])
 
-   if (length(ci.ub.pos) > 0)
+   if (length(ci.ub.pos) > 0L)
       x[ci.ub.pos] <- apply(x[ci.ub.pos], 2, .fcf, digits[["ci"]])
 
    tmp <- capture.output(print(x, ...))

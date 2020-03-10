@@ -23,7 +23,7 @@ label=FALSE, offset=0.3, pos=13, lty, ...) {
       draw.envelope <- FALSE
    }
 
-   if (length(label) != 1)
+   if (length(label) != 1L)
       stop(mstyle$stop("Argument 'label' should be of length 1."))
 
    if (missing(lty)) {

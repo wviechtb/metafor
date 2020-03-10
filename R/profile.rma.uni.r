@@ -88,9 +88,9 @@ profile.rma.uni <- function(fitted,
 
    }
 
-   vcs <- seq(xlim[1], xlim[2], length=steps)
+   vcs <- seq(xlim[1], xlim[2], length.out=steps)
 
-   if (length(vcs) <= 1)
+   if (length(vcs) <= 1L)
       stop(mstyle$stop("Cannot set 'xlim' automatically. Please set this argument manually."))
 
    if (parallel=="no") {

@@ -283,12 +283,12 @@ lty, lwd, col, level=99.99, refline=0, ...) {
    ### set default line widths (4.0 to 0.2 according to the rank of vi)
 
    if (is.null(lwd))
-      lwd <- seq(from=4.0, to=0.2, length=k)[rank(vi)]
+      lwd <- seq(from=4.0, to=0.2, length.out=k)[rank(vi)]
 
    ### set default line color (gray0 to gray80 according to the rank of vi)
 
    if (is.null(col))
-      col <- paste0("gray", round(seq(from=0, to=80, length=k))[rank(vi)])
+      col <- paste0("gray", round(seq(from=0, to=80, length.out=k))[rank(vi)])
 
    ### set x axis limits
 

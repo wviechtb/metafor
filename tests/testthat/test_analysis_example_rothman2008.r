@@ -14,7 +14,8 @@ age = c("Age <55", "Age 55+"),
 ai = c(8,22),
 bi = c(98,76),
 ci = c(5,16),
-di = c(115,69))
+di = c(115,69),
+stringsAsFactors=FALSE)
 
 test_that("the to.table() function works.", {
 
@@ -29,15 +30,13 @@ test_that("the to.table() function works.", {
 
 test_that("the to.long() function works.", {
 
-   tmp <- to.long(ai=ai, bi=bi, ci=ci, di=di, data=dat, measure="OR", slab=as.character(age))
+   tmp <- to.long(ai=ai, bi=bi, ci=ci, di=di, data=dat, measure="OR", slab=age)
 
-   expected <- structure(list(age = structure(c(1L, 1L, 2L, 2L), .Label = c("Age <55", "Age 55+"), class = "factor"),
-                         ai = c(8, 8, 22, 22), bi = c(98, 98, 76, 76), ci = c(5, 5, 16, 16), di = c(115, 115, 69, 69),
-                         study = structure(c(1L, 1L, 2L, 2L), .Label = c("Age <55", "Age 55+"), class = "factor"),
-                         group = structure(c(1L, 2L, 1L, 2L), .Label = c("1", "2"), class = "factor"),
-                         out1 = structure(c(4L, 3L, 2L, 1L), .Label = c("16", "22", "5", "8"), class = "factor"),
-                         out2 = structure(c(4L, 1L, 3L, 2L), .Label = c("115", "69", "76", "98"), class = "factor")),
-                         .Names = c("age", "ai", "bi", "ci", "di", "study", "group", "out1", "out2"), row.names = c(NA, 4L), class = "data.frame")
+   expected <- structure(list(age = c("Age <55", "Age <55", "Age 55+", "Age 55+"),
+      ai = c(8, 8, 22, 22), bi = c(98, 98, 76, 76), ci = c(5, 5, 16, 16), di = c(115, 115, 69, 69),
+      study = structure(c(2L, 2L, 1L, 1L), .Label = c("Age 55+", "Age <55"), class = "factor"),
+      group = structure(c(1L, 2L, 1L, 2L), .Label = c("1", "2"), class = "factor"),
+      out1 = c(8, 5, 22, 16), out2 = c(98, 115, 76, 69)), class = "data.frame", row.names = c(NA, 4L))
 
    expect_equivalent(tmp, expected)
 
@@ -159,7 +158,8 @@ age = c("35-44", "45-54", "55-64", "65-74", "75-84"),
 x1i = c(32, 104, 206, 186, 102),
 t1i = c(52407, 43248, 28612, 12663, 5317) / 10000,
 x2i = c(2, 12, 28, 28, 31),
-t2i = c(18790, 10673, 5710, 2585, 1462) / 10000)
+t2i = c(18790, 10673, 5710, 2585, 1462) / 10000,
+stringsAsFactors=FALSE)
 
 test_that("the to.table() function works.", {
 
@@ -174,18 +174,18 @@ test_that("the to.table() function works.", {
 
 test_that("the to.long() function works.", {
 
-   tmp <- to.long(x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i, data=dat, measure="IRR", slab=as.character(age))
+   tmp <- to.long(x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i, data=dat, measure="IRR", slab=age)
 
-   expected <- structure(list(age = structure(c(1L, 1L, 2L, 2L, 3L, 3L, 4L, 4L, 5L, 5L), .Label = c("35-44", "45-54", "55-64", "65-74", "75-84"), class = "factor"),
-                         x1i = c(32, 32, 104, 104, 206, 206, 186, 186, 102, 102),
-                         t1i = c(5.2407, 5.2407, 4.3248, 4.3248, 2.8612, 2.8612, 1.2663, 1.2663, 0.5317, 0.5317),
-                         x2i = c(2, 2, 12, 12, 28, 28, 28, 28, 31, 31),
-                         t2i = c(1.879, 1.879, 1.0673, 1.0673, 0.571, 0.571, 0.2585, 0.2585, 0.1462, 0.1462),
-                         study = structure(c(1L, 1L, 2L, 2L, 3L, 3L, 4L, 4L, 5L, 5L), .Label = c("35-44", "45-54", "55-64", "65-74", "75-84"), class = "factor"),
-                         group = structure(c(1L, 2L, 1L, 2L, 1L, 2L, 1L, 2L, 1L, 2L), .Label = c("1", "2"), class = "factor"),
-                         events = structure(c(9L, 5L, 2L, 3L, 6L, 7L, 4L, 7L, 1L, 8L), .Label = c("102", "104", "12", "186", "2", "206", "28", "31", "32"), class = "factor"),
-                         ptime = structure(c(10L, 7L, 9L, 5L, 8L, 4L, 6L, 2L, 3L, 1L), .Label = c("0.1462", "0.2585", "0.5317", "0.571", "1.0673", "1.2663", "1.879", "2.8612", "4.3248", "5.2407"), class = "factor")),
-                         .Names = c("age", "x1i", "t1i", "x2i", "t2i", "study", "group", "events", "ptime"), row.names = c(NA, 10L), class = "data.frame")
+   expected <- structure(list(age = c("35-44", "35-44", "45-54", "45-54", "55-64", "55-64", "65-74", "65-74", "75-84", "75-84"),
+      x1i = c(32, 32, 104, 104, 206, 206, 186, 186, 102, 102),
+      t1i = c(5.2407, 5.2407, 4.3248, 4.3248, 2.8612, 2.8612, 1.2663, 1.2663, 0.5317, 0.5317),
+      x2i = c(2, 2, 12, 12, 28, 28, 28, 28, 31, 31),
+      t2i = c(1.879, 1.879, 1.0673, 1.0673, 0.571, 0.571, 0.2585, 0.2585, 0.1462, 0.1462),
+      study = structure(c(1L, 1L, 2L, 2L, 3L, 3L, 4L, 4L, 5L, 5L), .Label = c("35-44", "45-54", "55-64", "65-74", "75-84"), class = "factor"),
+      group = structure(c(1L, 2L, 1L, 2L, 1L, 2L, 1L, 2L, 1L, 2L), .Label = c("1", "2"), class = "factor"),
+      events = c(32, 2, 104, 12, 206, 28, 186, 28, 102, 31),
+      ptime = c(5.2407, 1.879, 4.3248, 1.0673, 2.8612, 0.571, 1.2663, 0.2585, 0.5317, 0.1462)),
+      class = "data.frame", row.names = c(NA, 10L))
 
    expect_equivalent(tmp, expected)
 
@@ -280,7 +280,7 @@ test_that("results are correct for Mantel-Haenszel method.", {
    expect_equivalent(res$QEp.LRT, 0.0164, tolerance=.tol[["pval"]])
 
    tmp <- predict(res, transf=exp)
-   expect_equivalent(tmp$pred, 1.4255, tolerance=.tol[["pred"]])
+   expect_equivalent(tmp$pred,  1.4255, tolerance=.tol[["pred"]])
    expect_equivalent(tmp$ci.lb, 1.1947, tolerance=.tol[["ci"]])
    expect_equivalent(tmp$ci.ub, 1.7009, tolerance=.tol[["ci"]])
 
@@ -296,7 +296,7 @@ test_that("results are correct for Mantel-Haenszel method.", {
    expect_equivalent(res$QEp.LRT, 0.0164, tolerance=.tol[["pval"]])
 
    tmp <- predict(res, transf=exp)
-   expect_equivalent(tmp$pred, 1.4255, tolerance=.tol[["pred"]])
+   expect_equivalent(tmp$pred,  1.4255, tolerance=.tol[["pred"]])
    expect_equivalent(tmp$ci.lb, 1.1947, tolerance=.tol[["ci"]])
    expect_equivalent(tmp$ci.ub, 1.7009, tolerance=.tol[["ci"]])
 
@@ -310,7 +310,8 @@ age = c("<35", "35+"),
 ai = c(3,1),
 bi = c(9,3),
 ci = c(104,5),
-di = c(1059,86))
+di = c(1059,86),
+stringsAsFactors=FALSE)
 
 test_that("the to.table() function works.", {
 
@@ -325,15 +326,15 @@ test_that("the to.table() function works.", {
 
 test_that("the to.long() function works.", {
 
-   tmp <- to.long(ai=ai, bi=bi, ci=ci, di=di, data=dat, measure="OR", slab=as.character(age))
+   tmp <- to.long(ai=ai, bi=bi, ci=ci, di=di, data=dat, measure="OR", slab=age)
 
-   expected <- structure(list(age = structure(c(1L, 1L, 2L, 2L), .Label = c("<35", "35+"), class = "factor"),
-                         ai = c(3, 3, 1, 1), bi = c(9, 9, 3, 3), ci = c(104, 104, 5, 5), di = c(1059, 1059, 86, 86),
-                         study = structure(c(1L, 1L, 2L, 2L), .Label = c("<35", "35+"), class = "factor"),
-                         group = structure(c(1L, 2L, 1L, 2L), .Label = c("1", "2"), class = "factor"),
-                         out1 = structure(c(3L, 2L, 1L, 4L), .Label = c("1", "104", "3", "5"), class = "factor"),
-                         out2 = structure(c(4L, 1L, 2L, 3L), .Label = c("1059", "3", "86", "9"), class = "factor")),
-                         .Names = c("age", "ai", "bi", "ci", "di", "study", "group", "out1", "out2"), row.names = c(NA, 4L), class = "data.frame")
+   expected <- structure(list(age = c("<35", "<35", "35+", "35+"),
+      ai = c(3, 3, 1, 1), bi = c(9, 9, 3, 3),
+      ci = c(104, 104, 5, 5), di = c(1059, 1059, 86, 86),
+      study = structure(c(2L, 2L, 1L, 1L), .Label = c("35+", "<35"), class = "factor"),
+      group = structure(c(1L, 2L, 1L, 2L), .Label = c("1", "2"), class = "factor"),
+      out1 = c(3, 104, 1, 5), out2 = c(9, 1059, 3, 86)),
+      class = "data.frame", row.names = c(NA, 4L))
 
    expect_equivalent(tmp, expected)
 

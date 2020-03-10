@@ -45,7 +45,7 @@ test_that("to.table() works correctly for measure='COR'", {
 
    sav <- to.table(measure="COR", ri=ri, ni=ni, data=dat, subset=1:4)
 
-   expected <- structure(c(0.187, 109, 0.162, 749, 0.34, 55, 0.32, 107), .Dim = c(1, 2, 4), .Dimnames = list("Grp", c("r", "n"), c("1", "2", "3", "4")))
+   expected <- structure(c(0.187, 109, 0.162, 749, 0.34, 55, 0.32, 107), .Dim = c(1L, 2L, 4L), .Dimnames = list("Grp", c("r", "n"), c("1", "2", "3", "4")))
    expect_equivalent(sav, expected)
 
 })
@@ -57,7 +57,7 @@ test_that("to.long() works correctly for measure='PR'", {
    sav <- to.long(measure="PR", xi=xi, ni=ni, data=dat, subset=1:4)
    sav <- sav[,c(11:13)]
 
-   expected <- structure(list(study = 1:4, out1 = c(11, 24, 179, 82), out2 = c(18, 9, 147, 158)), .Names = c("study", "out1", "out2"), class = "data.frame", row.names = c(NA, 4))
+   expected <- structure(list(study = structure(1:4, .Label = c("1", "2", "3", "4"), class = "factor"), out1 = c(11L, 24L, 179L, 82L), out2 = c(18L, 9L, 147L, 158L)), class = "data.frame", row.names = c(NA, 4L))
    expect_equivalent(sav, expected)
 
 })

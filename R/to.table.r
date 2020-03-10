@@ -598,13 +598,11 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
       if (anyNA(slab))
          stop(mstyle$stop("NAs in study labels."))
 
-      ### check if study labels are unique; if not, make them unique
-
-      if (anyDuplicated(slab))
-         slab <- .make.unique(slab)
-
       if (length(slab) != k)
          stop(mstyle$stop("Study labels not of same length as data."))
+
+      if (is.factor(slab))
+         slab <- as.character(slab)
 
    }
 
@@ -612,6 +610,11 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
 
    if (!is.null(subset))
       slab <- slab[subset]
+
+   ### check if study labels are unique; if not, make them unique
+
+   if (anyDuplicated(slab))
+      slab <- .make.unique(slab)
 
    #########################################################################
    #########################################################################
@@ -653,14 +656,14 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
       if (missing(rows)) {
          rows <- c("Grp1", "Grp2")
       } else {
-         if (length(rows) != 2)
+         if (length(rows) != 2L)
             stop(mstyle$stop("Group names not of length 2."))
       }
 
       if (missing(cols)) {
          cols <- c("Out1", "Out2")
       } else {
-         if (length(cols) != 2)
+         if (length(cols) != 2L)
             stop(mstyle$stop("Outcome names not of length 2."))
       }
 
@@ -711,14 +714,14 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
       if (missing(rows)) {
          rows <- c("Time1", "Time2")
       } else {
-         if (length(rows) != 2)
+         if (length(rows) != 2L)
             stop(mstyle$stop("Time names not of length 2."))
       }
 
       if (missing(cols)) {
          cols <- c("Out1", "Out2")
       } else {
-         if (length(cols) != 2)
+         if (length(cols) != 2L)
             stop(mstyle$stop("Outcome names not of length 2."))
       }
 
@@ -769,14 +772,14 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
       if (missing(rows)) {
          rows <- c("Time1.Out1", "Time1.Out2")
       } else {
-         if (length(rows) != 2)
+         if (length(rows) != 2L)
             stop(mstyle$stop("Time1 names not of length 2."))
       }
 
       if (missing(cols)) {
          cols <- c("Time2.Out1", "Time2.Out2")
       } else {
-         if (length(cols) != 2)
+         if (length(cols) != 2L)
             stop(mstyle$stop("Time2 names not of length 2."))
       }
 
@@ -827,14 +830,14 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
       if (missing(rows)) {
          rows <- c("Grp1", "Grp2")
       } else {
-         if (length(rows) != 2)
+         if (length(rows) != 2L)
             stop(mstyle$stop("Group names not of length 2."))
       }
 
       if (missing(cols)) {
          cols <- c("Events", "Person-Time")
       } else {
-         if (length(cols) != 2)
+         if (length(cols) != 2L)
             stop(mstyle$stop("Outcome names not of length 2."))
       }
 
@@ -887,14 +890,14 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
       if (missing(rows)) {
          rows <- c("Grp1", "Grp2")
       } else {
-         if (length(rows) != 2)
+         if (length(rows) != 2L)
             stop(mstyle$stop("Group names not of length 2."))
       }
 
       if (missing(cols)) {
          cols <- c("Mean", "SD", "n")
       } else {
-         if (length(cols) != 3)
+         if (length(cols) != 3L)
             stop(mstyle$stop("Outcome names not of length 3."))
       }
 
@@ -943,14 +946,14 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
       if (missing(rows)) {
          rows <- c("Grp")
       } else {
-         if (length(rows) != 1)
+         if (length(rows) != 1L)
             stop(mstyle$stop("Group names not of length 1."))
       }
 
       if (missing(cols)) {
          cols <- c("r", "n")
       } else {
-         if (length(cols) != 2)
+         if (length(cols) != 2L)
             stop(mstyle$stop("Outcome names not of length 2."))
       }
 
@@ -999,14 +1002,14 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
       if (missing(rows)) {
          rows <- c("Grp")
       } else {
-         if (length(rows) != 1)
+         if (length(rows) != 1L)
             stop(mstyle$stop("Group names not of length 1."))
       }
 
       if (missing(cols)) {
          cols <- c("Out1", "Out2")
       } else {
-         if (length(cols) != 2)
+         if (length(cols) != 2L)
             stop(mstyle$stop("Outcome names not of length 2."))
       }
 
@@ -1055,14 +1058,14 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
       if (missing(rows)) {
          rows <- c("Grp")
       } else {
-         if (length(rows) != 1)
+         if (length(rows) != 1L)
             stop(mstyle$stop("Group names not of length 1."))
       }
 
       if (missing(cols)) {
          cols <- c("Events", "Person-Time")
       } else {
-         if (length(cols) != 2)
+         if (length(cols) != 2L)
             stop(mstyle$stop("Outcome names not of length 2."))
       }
 
@@ -1112,14 +1115,14 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
       if (missing(rows)) {
          rows <- c("Grp")
       } else {
-         if (length(rows) != 1)
+         if (length(rows) != 1L)
             stop(mstyle$stop("Group names not of length 1."))
       }
 
       if (missing(cols)) {
          cols <- c("Mean", "SD", "n")
       } else {
-         if (length(cols) != 3)
+         if (length(cols) != 3L)
             stop(mstyle$stop("Outcome names not of length 3."))
       }
 
@@ -1177,7 +1180,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
       if (missing(rows)) {
          rows <- c("Grp")
       } else {
-         if (length(rows) != 1)
+         if (length(rows) != 1L)
             stop(mstyle$stop("Group names not of length 1."))
       }
 
@@ -1185,14 +1188,14 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
          if (missing(cols)) {
             cols <- c("Mean1", "Mean2", "SD1", "SD2", "n", "r")
          } else {
-            if (length(cols) != 6)
+            if (length(cols) != 6L)
                stop(mstyle$stop("Outcome names not of length 6."))
          }
       } else {
          if (missing(cols)) {
             cols <- c("Mean1", "Mean2", "SD1", "n", "r")
          } else {
-            if (length(cols) != 5)
+            if (length(cols) != 5L)
                stop(mstyle$stop("Outcome names not of length 5."))
          }
       }
@@ -1256,14 +1259,14 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
       if (missing(rows)) {
          rows <- c("Grp")
       } else {
-         if (length(rows) != 1)
+         if (length(rows) != 1L)
             stop(mstyle$stop("Group names not of length 1."))
       }
 
       if (missing(cols)) {
          cols <- c("alpha", "m", "n")
       } else {
-         if (length(cols) != 3)
+         if (length(cols) != 3L)
             stop(mstyle$stop("Outcome names not of length 3."))
       }
 

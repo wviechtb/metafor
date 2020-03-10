@@ -602,13 +602,11 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
       if (anyNA(slab))
          stop(mstyle$stop("NAs in study labels."))
 
-      ### check if study labels are unique; if not, make them unique
-
-      if (anyDuplicated(slab))
-         slab <- .make.unique(slab)
-
       if (length(slab) != k)
          stop(mstyle$stop("Study labels not of same length as data."))
+
+      if (is.factor(slab))
+         slab <- as.character(slab)
 
    }
 
@@ -619,6 +617,11 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
       if (!no.data)
          data <- data[subset,]
    }
+
+   ### check if study labels are unique; if not, make them unique
+
+   if (anyDuplicated(slab))
+      slab <- .make.unique(slab)
 
    #########################################################################
    #########################################################################
@@ -663,54 +666,50 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
          ### create very long format dataset
 
-         dat <- matrix(NA, nrow=4*k, ncol=4)
+         dat <- data.frame(rep(slab, each=4), stringsAsFactors=FALSE)
 
-         dat[,1] <- rep(slab, each=4)
-         dat[,2] <- rep(c(1,1,2,2), k)
-         dat[,3] <- rep(c(1,2,1,2), k)
-         dat[,4] <- c(rbind(ai,bi,ci,di))
+         dat[[2]] <- rep(c(1,1,2,2), k)
+         dat[[3]] <- rep(c(1,2,1,2), k)
+         dat[[4]] <- c(rbind(ai,bi,ci,di))
 
          if (missing(var.names)) {
-            colnames(dat) <- c("study", "group", "outcome", "freq")
+            names(dat) <- c("study", "group", "outcome", "freq")
          } else {
-            if (length(var.names) != 4)
+            if (length(var.names) != 4L)
                stop(mstyle$stop("Variable names not of length 4."))
-            colnames(dat) <- var.names
+            names(dat) <- var.names
          }
 
-         dat <- data.frame(dat)
-         dat[,1] <- factor(dat[,1])
-         dat[,2] <- factor(dat[,2])
-         dat[,3] <- factor(dat[,3])
+         dat[[1]] <- factor(dat[[1]])
+         dat[[2]] <- factor(dat[[2]])
+         dat[[3]] <- factor(dat[[3]])
 
          if (!no.data && append)
-            dat <- data.frame(data[rep(seq_len(k), each=4),], dat)
+            dat <- cbind(data[rep(seq_len(k), each=4),], dat)
 
       } else {
 
          ### create regular long format dataset
 
-         dat <- matrix(NA, nrow=2*k, ncol=4)
+         dat <- data.frame(rep(slab, each=2), stringsAsFactors=FALSE)
 
-         dat[,1] <- rep(slab, each=2)
-         dat[,2] <- rep(c(1,2), k)
-         dat[,3] <- c(rbind(ai,ci))
-         dat[,4] <- c(rbind(bi,di))
+         dat[[2]] <- rep(c(1,2), k)
+         dat[[3]] <- c(rbind(ai,ci))
+         dat[[4]] <- c(rbind(bi,di))
 
          if (missing(var.names)) {
-            colnames(dat) <- c("study", "group", "out1", "out2")
+            names(dat) <- c("study", "group", "out1", "out2")
          } else {
-            if (length(var.names) != 4)
+            if (length(var.names) != 4L)
                stop(mstyle$stop("Variable names not of length 4."))
-            colnames(dat) <- var.names
+            names(dat) <- var.names
          }
 
-         dat <- data.frame(dat)
-         dat[,1] <- factor(dat[,1])
-         dat[,2] <- factor(dat[,2])
+         dat[[1]] <- factor(dat[[1]])
+         dat[[2]] <- factor(dat[[2]])
 
          if (!no.data && append)
-            dat <- data.frame(data[rep(seq_len(k), each=2),], dat)
+            dat <- cbind(data[rep(seq_len(k), each=2),], dat)
 
       }
 
@@ -757,25 +756,23 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
          ### create very long format dataset
 
-         dat <- matrix(NA, nrow=4*k, ncol=4)
+         dat <- data.frame(rep(slab, each=4), stringsAsFactors=FALSE)
 
-         dat[,1] <- rep(slab, each=4)
-         dat[,2] <- rep(c(1,1,2,2), k)
-         dat[,3] <- rep(c(1,2,1,2), k)
-         dat[,4] <- c(rbind(ai+bi,ci+di,ai+ci,bi+di))
+         dat[[2]] <- rep(c(1,1,2,2), k)
+         dat[[3]] <- rep(c(1,2,1,2), k)
+         dat[[4]] <- c(rbind(ai+bi,ci+di,ai+ci,bi+di))
 
          if (missing(var.names)) {
-            colnames(dat) <- c("study", "time", "outcome", "freq")
+            names(dat) <- c("study", "time", "outcome", "freq")
          } else {
-            if (length(var.names) != 4)
+            if (length(var.names) != 4L)
                stop(mstyle$stop("Variable names not of length 4."))
-            colnames(dat) <- var.names
+            names(dat) <- var.names
          }
 
-         dat <- data.frame(dat)
-         dat[,1] <- factor(dat[,1])
-         dat[,2] <- factor(dat[,2])
-         dat[,3] <- factor(dat[,3])
+         dat[[1]] <- factor(dat[[1]])
+         dat[[2]] <- factor(dat[[2]])
+         dat[[3]] <- factor(dat[[3]])
 
          if (!no.data && append)
             dat <- data.frame(data[rep(seq_len(k), each=4),], dat)
@@ -784,27 +781,25 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
          ### create regular long format dataset
 
-         dat <- matrix(NA, nrow=2*k, ncol=4)
+         dat <- data.frame(rep(slab, each=2), stringsAsFactors=FALSE)
 
-         dat[,1] <- rep(slab, each=2)
-         dat[,2] <- rep(c(1,2), k)
-         dat[,3] <- c(rbind(ai+bi,ai+ci))
-         dat[,4] <- c(rbind(ci+di,bi+di))
+         dat[[2]] <- rep(c(1,2), k)
+         dat[[3]] <- c(rbind(ai+bi,ai+ci))
+         dat[[4]] <- c(rbind(ci+di,bi+di))
 
          if (missing(var.names)) {
-            colnames(dat) <- c("study", "time", "out1", "out2")
+            names(dat) <- c("study", "time", "out1", "out2")
          } else {
-            if (length(var.names) != 4)
+            if (length(var.names) != 4L)
                stop(mstyle$stop("Variable names not of length 4."))
-            colnames(dat) <- var.names
+            names(dat) <- var.names
          }
 
-         dat <- data.frame(dat)
-         dat[,1] <- factor(dat[,1])
-         dat[,2] <- factor(dat[,2])
+         dat[[1]] <- factor(dat[[1]])
+         dat[[2]] <- factor(dat[[2]])
 
          if (!no.data && append)
-            dat <- data.frame(data[rep(seq_len(k), each=2),], dat)
+            dat <- cbind(data[rep(seq_len(k), each=2),], dat)
 
       }
 
@@ -851,54 +846,50 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
          ### create very long format dataset
 
-         dat <- matrix(NA, nrow=4*k, ncol=4)
+         dat <- data.frame(rep(slab, each=4), stringsAsFactors=FALSE)
 
-         dat[,1] <- rep(slab, each=4)
-         dat[,2] <- rep(c(1,1,2,2), k)
-         dat[,3] <- rep(c(1,2,1,2), k)
-         dat[,4] <- c(rbind(ai,bi,ci,di))
+         dat[[2]] <- rep(c(1,1,2,2), k)
+         dat[[3]] <- rep(c(1,2,1,2), k)
+         dat[[4]] <- c(rbind(ai,bi,ci,di))
 
          if (missing(var.names)) {
-            colnames(dat) <- c("study", "out.time1", "out.time2", "freq")
+            names(dat) <- c("study", "out.time1", "out.time2", "freq")
          } else {
-            if (length(var.names) != 4)
+            if (length(var.names) != 4L)
                stop(mstyle$stop("Variable names not of length 4."))
-            colnames(dat) <- var.names
+            names(dat) <- var.names
          }
 
-         dat <- data.frame(dat)
-         dat[,1] <- factor(dat[,1])
-         dat[,2] <- factor(dat[,2])
-         dat[,3] <- factor(dat[,3])
+         dat[[1]] <- factor(dat[[1]])
+         dat[[2]] <- factor(dat[[2]])
+         dat[[3]] <- factor(dat[[3]])
 
          if (!no.data && append)
-            dat <- data.frame(data[rep(seq_len(k), each=4),], dat)
+            dat <- cbind(data[rep(seq_len(k), each=4),], dat)
 
       } else {
 
          ### create regular long format dataset
 
-         dat <- matrix(NA, nrow=2*k, ncol=4)
+         dat <- data.frame(rep(slab, each=2), stringsAsFactors=FALSE)
 
-         dat[,1] <- rep(slab, each=2)
-         dat[,2] <- rep(c(1,2), k)
-         dat[,3] <- c(rbind(ai,ci))
-         dat[,4] <- c(rbind(bi,di))
+         dat[[2]] <- rep(c(1,2), k)
+         dat[[3]] <- c(rbind(ai,ci))
+         dat[[4]] <- c(rbind(bi,di))
 
          if (missing(var.names)) {
-            colnames(dat) <- c("study", "out.time1", "out1.time2", "out2.time2")
+            names(dat) <- c("study", "out.time1", "out1.time2", "out2.time2")
          } else {
-            if (length(var.names) != 4)
+            if (length(var.names) != 4L)
                stop(mstyle$stop("Variable names not of length 4."))
-            colnames(dat) <- var.names
+            names(dat) <- var.names
          }
 
-         dat <- data.frame(dat)
-         dat[,1] <- factor(dat[,1])
-         dat[,2] <- factor(dat[,2])
+         dat[[1]] <- factor(dat[[1]])
+         dat[[2]] <- factor(dat[[2]])
 
          if (!no.data && append)
-            dat <- data.frame(data[rep(seq_len(k), each=2),], dat)
+            dat <- cbind(data[rep(seq_len(k), each=2),], dat)
 
       }
 
@@ -941,27 +932,25 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
       ### create long format dataset
 
-      dat <- matrix(NA, nrow=2*k, ncol=4)
+      dat <- data.frame(rep(slab, each=2), stringsAsFactors=FALSE)
 
-      dat[,1] <- rep(slab, each=2)
-      dat[,2] <- rep(c(1,2), k)
-      dat[,3] <- c(rbind(x1i,x2i))
-      dat[,4] <- c(rbind(t1i,t2i))
+      dat[[2]] <- rep(c(1,2), k)
+      dat[[3]] <- c(rbind(x1i,x2i))
+      dat[[4]] <- c(rbind(t1i,t2i))
 
       if (missing(var.names)) {
-         colnames(dat) <- c("study", "group", "events", "ptime")
+         names(dat) <- c("study", "group", "events", "ptime")
       } else {
-         if (length(var.names) != 4)
+         if (length(var.names) != 4L)
             stop(mstyle$stop("Variable names not of length 4."))
-         colnames(dat) <- var.names
+         names(dat) <- var.names
       }
 
-      dat <- data.frame(dat)
-      dat[,1] <- factor(dat[,1])
-      dat[,2] <- factor(dat[,2])
+      dat[[1]] <- factor(dat[[1]])
+      dat[[2]] <- factor(dat[[2]])
 
       if (!no.data && append)
-         dat <- data.frame(data[rep(seq_len(k), each=2),], dat)
+         dat <- cbind(data[rep(seq_len(k), each=2),], dat)
 
    }
 
@@ -1004,28 +993,26 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
       ### create long format dataset
 
-      dat <- matrix(NA, nrow=2*k, ncol=5)
+      dat <- data.frame(rep(slab, each=2), stringsAsFactors=FALSE)
 
-      dat[,1] <- rep(slab, each=2)
-      dat[,2] <- rep(c(1,2), k)
-      dat[,3] <- c(rbind(m1i,m2i))
-      dat[,4] <- c(rbind(sd1i,sd2i))
-      dat[,5] <- c(rbind(n1i,n2i))
+      dat[[2]] <- rep(c(1,2), k)
+      dat[[3]] <- c(rbind(m1i,m2i))
+      dat[[4]] <- c(rbind(sd1i,sd2i))
+      dat[[5]] <- c(rbind(n1i,n2i))
 
       if (missing(var.names)) {
-         colnames(dat) <- c("study", "group", "mean", "sd", "n")
+         names(dat) <- c("study", "group", "mean", "sd", "n")
       } else {
-         if (length(var.names) != 5)
+         if (length(var.names) != 5L)
             stop(mstyle$stop("Variable names not of length 5."))
-         colnames(dat) <- var.names
+         names(dat) <- var.names
       }
 
-      dat <- data.frame(dat)
-      dat[,1] <- factor(dat[,1])
-      dat[,2] <- factor(dat[,2])
+      dat[[1]] <- factor(dat[[1]])
+      dat[[2]] <- factor(dat[[2]])
 
       if (!no.data && append)
-         dat <- data.frame(data[rep(seq_len(k), each=2),], dat)
+         dat <- cbind(data[rep(seq_len(k), each=2),], dat)
 
    }
 
@@ -1064,25 +1051,23 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
       ### create long format dataset
 
-      dat <- matrix(NA, nrow=k, ncol=3)
+      dat <- data.frame(slab, stringsAsFactors=FALSE)
 
-      dat[,1] <- slab
-      dat[,2] <- ri
-      dat[,3] <- ni
+      dat[[2]] <- ri
+      dat[[3]] <- ni
 
       if (missing(var.names)) {
-         colnames(dat) <- c("study", "r", "n")
+         names(dat) <- c("study", "r", "n")
       } else {
-         if (length(var.names) != 3)
+         if (length(var.names) != 3L)
             stop(mstyle$stop("Variable names not of length 3."))
-         colnames(dat) <- var.names
+         names(dat) <- var.names
       }
 
-      dat <- data.frame(dat)
-      dat[,1] <- factor(dat[,1])
+      dat[[1]] <- factor(dat[[1]])
 
       if (!no.data && append)
-         dat <- data.frame(data, dat)
+         dat <- cbind(data, dat)
 
    }
 
@@ -1125,49 +1110,46 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
          ### create very long format dataset
 
-         dat <- matrix(NA, nrow=2*k, ncol=3)
+         dat <- data.frame(rep(slab, each=2), stringsAsFactors=FALSE)
 
-         dat[,1] <- rep(slab, each=2)
-         dat[,2] <- rep(c(1,2), k)
-         dat[,3] <- c(rbind(xi,mi))
+         dat[[2]] <- rep(c(1,2), k)
+         dat[[3]] <- c(rbind(xi,mi))
 
          if (missing(var.names)) {
-            colnames(dat) <- c("study", "outcome", "freq")
+            names(dat) <- c("study", "outcome", "freq")
          } else {
-            if (length(var.names) != 3)
+            if (length(var.names) != 3L)
                stop(mstyle$stop("Variable names not of length 3."))
-         colnames(dat) <- var.names
+            names(dat) <- var.names
          }
 
-         dat <- data.frame(dat)
-         dat[,1] <- factor(dat[,1])
-         dat[,2] <- factor(dat[,2])
+         dat[[1]] <- factor(dat[[1]])
+         dat[[2]] <- factor(dat[[2]])
 
          if (!no.data && append)
-            dat <- data.frame(data[rep(seq_len(k), each=2),], dat)
+            dat <- cbind(data[rep(seq_len(k), each=2),], dat)
 
       } else {
 
          ### create regular long format dataset
 
-         dat <- matrix(NA, nrow=k, ncol=3)
+         dat <- data.frame(slab, stringsAsFactors=FALSE)
 
-         dat[,1] <- slab
-         dat[,2] <- xi
-         dat[,3] <- mi
+         dat[[2]] <- xi
+         dat[[3]] <- mi
 
          if (missing(var.names)) {
-            colnames(dat) <- c("study", "out1", "out2")
+            names(dat) <- c("study", "out1", "out2")
          } else {
-            if (length(var.names) != 3)
+            if (length(var.names) != 3L)
                stop(mstyle$stop("Variable names not of length 3."))
-            colnames(dat) <- var.names
+            names(dat) <- var.names
          }
 
-         dat <- data.frame(dat)
+         dat[[1]] <- factor(dat[[1]])
 
          if (!no.data && append)
-            dat <- data.frame(data, dat)
+            dat <- cbind(data, dat)
 
       }
 
@@ -1208,25 +1190,23 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
       ### create long format dataset
 
-      dat <- matrix(NA, nrow=k, ncol=3)
+      dat <- data.frame(slab, stringsAsFactors=FALSE)
 
-      dat[,1] <- slab
-      dat[,2] <- xi
-      dat[,3] <- ti
+      dat[[2]] <- xi
+      dat[[3]] <- ti
 
       if (missing(var.names)) {
-         colnames(dat) <- c("study", "events", "ptime")
+         names(dat) <- c("study", "events", "ptime")
       } else {
-         if (length(var.names) != 3)
+         if (length(var.names) != 3L)
             stop(mstyle$stop("Variable names not of length 3."))
-         colnames(dat) <- var.names
+         names(dat) <- var.names
       }
 
-      dat <- data.frame(dat)
-      dat[,1] <- factor(dat[,1])
+      dat[[1]] <- factor(dat[[1]])
 
       if (!no.data && append)
-         dat <- data.frame(data, dat)
+         dat <- cbind(data, dat)
 
    }
 
@@ -1266,26 +1246,24 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
       ### create long format dataset
 
-      dat <- matrix(NA, nrow=k, ncol=4)
+      dat <- data.frame(slab, stringsAsFactors=FALSE)
 
-      dat[,1] <- slab
-      dat[,2] <- mi
-      dat[,3] <- sdi
-      dat[,4] <- ni
+      dat[[2]] <- mi
+      dat[[3]] <- sdi
+      dat[[4]] <- ni
 
       if (missing(var.names)) {
-         colnames(dat) <- c("study", "mean", "sd", "n")
+         names(dat) <- c("study", "mean", "sd", "n")
       } else {
-         if (length(var.names) != 4)
+         if (length(var.names) != 4L)
             stop(mstyle$stop("Variable names not of length 4."))
-         colnames(dat) <- var.names
+         names(dat) <- var.names
       }
 
-      dat <- data.frame(dat)
-      dat[,1] <- factor(dat[,1])
+      dat[[1]] <- factor(dat[[1]])
 
       if (!no.data && append)
-         dat <- data.frame(data, dat)
+         dat <- cbind(data, dat)
 
    }
 
@@ -1335,54 +1313,50 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
       if (is.element(measure, c("MC","SMCC","SMCRH","ROMC","CVRC"))) {
 
-         dat <- matrix(NA, nrow=k, ncol=7)
+         dat <- data.frame(slab, stringsAsFactors=FALSE)
 
-         dat[,1] <- slab
-         dat[,2] <- m1i
-         dat[,3] <- m2i
-         dat[,4] <- sd1i
-         dat[,5] <- sd2i
-         dat[,6] <- ni
-         dat[,7] <- ri
+         dat[[2]] <- m1i
+         dat[[3]] <- m2i
+         dat[[4]] <- sd1i
+         dat[[5]] <- sd2i
+         dat[[6]] <- ni
+         dat[[7]] <- ri
 
          if (missing(var.names)) {
-            colnames(dat) <- c("study", "mean1", "mean2", "sd1", "sd2", "n", "r")
+            names(dat) <- c("study", "mean1", "mean2", "sd1", "sd2", "n", "r")
          } else {
-            if (length(var.names) != 7)
+            if (length(var.names) != 7L)
                stop(mstyle$stop("Variable names not of length 7."))
-            colnames(dat) <- var.names
+            names(dat) <- var.names
          }
 
-         dat <- data.frame(dat)
-         dat[,1] <- factor(dat[,1])
+         dat[[1]] <- factor(dat[[1]])
 
          if (!no.data && append)
-            dat <- data.frame(data, dat)
+            dat <- cbind(data, dat)
 
       } else {
 
-         dat <- matrix(NA, nrow=k, ncol=6)
+         dat <- data.frame(slab, stringsAsFactors=FALSE)
 
-         dat[,1] <- slab
-         dat[,2] <- m1i
-         dat[,3] <- m2i
-         dat[,4] <- sd1i
-         dat[,5] <- ni
-         dat[,6] <- ri
+         dat[[2]] <- m1i
+         dat[[3]] <- m2i
+         dat[[4]] <- sd1i
+         dat[[5]] <- ni
+         dat[[6]] <- ri
 
          if (missing(var.names)) {
-            colnames(dat) <- c("study", "mean1", "mean2", "sd1", "n", "r")
+            names(dat) <- c("study", "mean1", "mean2", "sd1", "n", "r")
          } else {
-            if (length(var.names) != 6)
+            if (length(var.names) != 6L)
                stop(mstyle$stop("Variable names not of length 6."))
-            colnames(dat) <- var.names
+            names(dat) <- var.names
          }
 
-         dat <- data.frame(dat)
-         dat[,1] <- factor(dat[,1])
+         dat[[1]] <- factor(dat[[1]])
 
          if (!no.data && append)
-            dat <- data.frame(data, dat)
+            dat <- cbind(data, dat)
 
       }
 
@@ -1424,23 +1398,21 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
       ### create long format dataset
 
-      dat <- matrix(NA, nrow=k, ncol=4)
+      dat <- data.frame(slab, stringsAsFactors=FALSE)
 
-      dat[,1] <- slab
-      dat[,2] <- ai
-      dat[,3] <- mi
-      dat[,4] <- ni
+      dat[[2]] <- ai
+      dat[[3]] <- mi
+      dat[[4]] <- ni
 
       if (missing(var.names)) {
-         colnames(dat) <- c("study", "alpha", "m", "n")
+         names(dat) <- c("study", "alpha", "m", "n")
       } else {
-         if (length(var.names) != 4)
+         if (length(var.names) != 4L)
             stop(mstyle$stop("Variable names not of length 4."))
-         colnames(dat) <- var.names
+         names(dat) <- var.names
       }
 
-      dat <- data.frame(dat)
-      dat[,1] <- factor(dat[,1])
+      dat[[1]] <- factor(dat[[1]])
 
       if (!no.data && append)
          dat <- data.frame(data, dat)

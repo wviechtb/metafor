@@ -216,7 +216,7 @@ refline=0, pch=19, col, bg, legend=FALSE, ci.res=1000, ...) {
 
    ### at least two studies left?
 
-   if (length(yi) < 2)
+   if (length(yi) < 2L)
       stop(mstyle$stop("Plotting terminated since k < 2."))
 
    ### get weights
@@ -570,7 +570,7 @@ refline=0, pch=19, col, bg, legend=FALSE, ci.res=1000, ...) {
 
    ### prepare data frame to return
 
-   sav <- data.frame(x=xaxis.vals, y=yaxis.vals, slab=slab)
+   sav <- data.frame(x=xaxis.vals, y=yaxis.vals, slab=slab, stringsAsFactors=FALSE)
 
    invisible(sav)
 

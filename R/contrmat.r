@@ -2,7 +2,7 @@ contrmat <- function(data, grp1, grp2, last, shorten=FALSE, minlen=2, append=TRU
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!(is.data.frame(data)))
+   if (!is.data.frame(data))
       data <- data.frame(data)
 
    ### get variable names
@@ -21,7 +21,7 @@ contrmat <- function(data, grp1, grp2, last, shorten=FALSE, minlen=2, append=TRU
       stop(mstyle$stop("Argument 'grp1' must of length 1."))
 
    if (!(is.character(grp1) | is.numeric(grp1)))
-      stop(mstyle$stop("Argument 'grp1' must either be a character string or a scalar."))
+      stop(mstyle$stop("Argument 'grp1' must either be a character string or a number."))
 
    if (is.character(grp1)) {
 
@@ -59,7 +59,7 @@ contrmat <- function(data, grp1, grp2, last, shorten=FALSE, minlen=2, append=TRU
       stop(mstyle$stop("Argument 'grp2' must of length 1."))
 
    if (!(is.character(grp2) | is.numeric(grp2)))
-      stop(mstyle$stop("Argument 'grp2' must either be a character string or a scalar."))
+      stop(mstyle$stop("Argument 'grp2' must either be a character string or a number."))
 
    if (is.character(grp2)) {
 
@@ -139,7 +139,7 @@ contrmat <- function(data, grp1, grp2, last, shorten=FALSE, minlen=2, append=TRU
 
    ### create contrast matrix
 
-   X <- model.matrix(~ grp1 - 1, contrasts = list(grp1 = "contr.treatment")) - model.matrix(~ grp2 - 1, contrasts = list(grp2 = "contr.treatment"))
+   X <- model.matrix(~ grp1 - 1, contrasts.arg = list(grp1 = "contr.treatment")) - model.matrix(~ grp2 - 1, contrasts.arg = list(grp2 = "contr.treatment"))
    attr(X, "assign") <- NULL
    attr(X, "contrasts") <- NULL
 

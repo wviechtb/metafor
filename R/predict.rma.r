@@ -142,14 +142,14 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
       ### if new moderator values have been specified
 
-      if (!(is.vector(newmods) || inherits(newmods, "matrix")))
+      if (!(.is.vector(newmods) || inherits(newmods, "matrix")))
          stop(mstyle$stop(paste0("Argument 'newmods' should be a vector or matrix, but is of class '", class(newmods), "'.")))
 
       if ((!x$int.incl && x$p == 1L) || (x$int.incl && x$p == 2L)) {
          k.new <- length(newmods)                               # if single moderator (multiple k.new possible) (either without or with intercept in the model)
          X.new <- cbind(c(newmods))                             #
       } else {                                                  # in case the model has more than one predictor:
-         if (is.vector(newmods) || nrow(newmods) == 1L) {       #   # if user gives one vector or one row matrix (only one k.new):
+         if (.is.vector(newmods) || nrow(newmods) == 1L) {      #   # if user gives one vector or one row matrix (only one k.new):
             k.new <- 1                                          #
             X.new <- rbind(newmods)                             #
          } else {                                               #   # if user gives multiple rows and columns (multiple k.new):
@@ -166,7 +166,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
                      if (all(is.infinite(d))) # if there is no match, then all elements are Inf
                         stop(mstyle$stop(paste0("Could not find variable '", colname, "' in the model.")), call. = FALSE)
                      d <- which(d == min(d)) # don't use which.min() since that only finds the first minimum
-                     if (length(d) > 1) # if there is no unique match, then there is more than one minimum
+                     if (length(d) > 1L) # if there is no unique match, then there is more than one minimum
                         stop(mstyle$stop(paste0("Could not match up '", colname, "' uniquely to a variable in the model.")), call. = FALSE)
                      return(d)
                      })

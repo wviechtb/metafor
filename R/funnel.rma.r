@@ -592,7 +592,7 @@ refline, pch=19, pch.fill=21, col, bg, legend=FALSE, ci.res=1000, ...) {
 
    ### prepare data frame to return
 
-   sav <- data.frame(x=xaxis.vals, y=yaxis.vals, slab=slab)
+   sav <- data.frame(x=xaxis.vals, y=yaxis.vals, slab=slab, stringsAsFactors=FALSE)
 
    if (inherits(x, "rma.uni.trimfill"))
       sav$fill <- fill

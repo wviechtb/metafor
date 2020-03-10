@@ -59,7 +59,7 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
          colnames(vc) <- c("estim", "sqrt", "nlvls", "fixed", "factor", "R")
          if (!x$withR)
             vc <- vc[,-6,drop=FALSE]
-         if (length(x$sigma2) == 1) {
+         if (length(x$sigma2) == 1L) {
             rownames(vc) <- "sigma^2  "
          } else {
             rownames(vc) <- paste("sigma^2.", seq_along(x$sigma2), sep="")
@@ -114,7 +114,7 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
             vc <- cbind(tau2, tau, x$g.levels.k, ifelse(x$vc.fix$tau2, "yes", "no"), x$g.levels.f[[1]])
             vc <- rbind(vc, c(rho, "", "", ifelse(x$vc.fix$rho, "yes", "no"), ""))
             colnames(vc) <- c("estim", "sqrt", "k.lvl", "fixed", "level")
-            if (length(x$tau2) == 1) {
+            if (length(x$tau2) == 1L) {
                rownames(vc) <- c("tau^2   ", "rho")
             } else {
                rownames(vc) <- c(paste("tau^2.", seq_along(x$tau2), "  ", sep=""), "rho")
@@ -134,7 +134,7 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
                vc <- cbind(rep(tau2, length(x$g.levels.k)), rep(tau, length(x$g.levels.k)), x$g.levels.k, ifelse(rep(x$vc.fix$tau2,length(x$g.levels.k)), "yes", "no"), x$g.levels.f[[1]])
             }
             colnames(vc) <- c("estim", "sqrt", "k.lvl", "fixed", "level")
-            if (length(x$g.levels.k) == 1) {
+            if (length(x$g.levels.k) == 1L) {
                rownames(vc) <- c("tau^2")
             } else {
                rownames(vc) <- paste("tau^2.", seq_along(x$g.levels.k), "  ", sep="")
@@ -143,7 +143,7 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
             .print.table(tmp, mstyle)
             cat("\n")
 
-            if (length(x$rho) == 1) {
+            if (length(x$rho) == 1L) {
                G <- matrix(NA_real_, nrow=2, ncol=2)
             } else {
                G <- matrix(NA_real_, nrow=x$g.nlevels.f[1], ncol=x$g.nlevels.f[1])
@@ -153,7 +153,7 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
             diag(G) <- 1
             #G[upper.tri(G)] <- ""
 
-            if (length(x$rho) == 1) {
+            if (length(x$rho) == 1L) {
                G.info <- matrix(NA_real_, nrow=2, ncol=2)
             } else {
                G.info <- matrix(NA_real_, nrow=x$g.nlevels.f[1], ncol=x$g.nlevels.f[1])
@@ -235,7 +235,7 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
             vc <- cbind(gamma2, gamma, x$h.levels.k, ifelse(x$vc.fix$gamma2, "yes", "no"), x$h.levels.f[[1]])
             vc <- rbind(vc, c(phi, "", "", ifelse(x$vc.fix$phi, "yes", "no"), ""))
             colnames(vc) <- c("estim", "sqrt", "k.lvl", "fixed", "level")
-            if (length(x$gamma2) == 1) {
+            if (length(x$gamma2) == 1L) {
                rownames(vc) <- c("gamma^2 ", "phi")
             } else {
                rownames(vc) <- c(paste("gamma^2.", seq_along(x$gamma2), "  ", sep=""), "phi")
@@ -255,7 +255,7 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
                vc <- cbind(rep(gamma2, length(x$h.levels.k)), rep(gamma, length(x$h.levels.k)), x$h.levels.k, ifelse(rep(x$vc.fix$gamma2,length(x$h.levels.k)), "yes", "no"), x$h.levels.f[[1]])
             }
             colnames(vc) <- c("estim", "sqrt", "k.lvl", "fixed", "level")
-            if (length(x$h.levels.k) == 1) {
+            if (length(x$h.levels.k) == 1L) {
                rownames(vc) <- c("gamma^2")
             } else {
                rownames(vc) <- paste("gamma^2.", seq_along(x$h.levels.k), "  ", sep="")
@@ -264,7 +264,7 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
             .print.table(tmp, mstyle)
             cat("\n")
 
-            if (length(x$phi) == 1) {
+            if (length(x$phi) == 1L) {
                H <- matrix(NA_real_, nrow=2, ncol=2)
             } else {
                H <- matrix(NA_real_, nrow=x$h.nlevels.f[1], ncol=x$h.nlevels.f[1])
@@ -274,7 +274,7 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
             diag(H) <- 1
             #H[upper.tri(H)] <- ""
 
-            if (length(x$phi) == 1) {
+            if (length(x$phi) == 1L) {
                H.info <- matrix(NA_real_, nrow=2, ncol=2)
             } else {
                H.info <- matrix(NA_real_, nrow=x$h.nlevels.f[1], ncol=x$h.nlevels.f[1])

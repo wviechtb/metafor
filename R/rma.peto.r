@@ -11,22 +11,22 @@ level=95, digits, verbose=FALSE, ...) {
 
    ### check argument specifications
 
-   if (length(add) == 1)
+   if (length(add) == 1L)
       add <- c(add, 0)
 
-   if (length(add) != 2)
+   if (length(add) != 2L)
       stop(mstyle$stop("Argument 'add' should specify one or two values (see 'help(rma.peto)')."))
 
-   if (length(to) == 1)
+   if (length(to) == 1L)
       to <- c(to, "none")
 
-   if (length(to) != 2)
+   if (length(to) != 2L)
       stop(mstyle$stop("Argument 'to' should specify one or two values (see 'help(rma.peto)')."))
 
-   if (length(drop00) == 1)
+   if (length(drop00) == 1L)
       drop00 <- c(drop00, FALSE)
 
-   if (length(drop00) != 2)
+   if (length(drop00) != 2L)
       stop(mstyle$stop("Argument 'drop00' should specify one or two values (see 'help(rma.peto)')."))
 
    na.act <- getOption("na.action")
@@ -124,6 +124,9 @@ level=95, digits, verbose=FALSE, ...) {
 
       if (length(slab) != k)
          stop(mstyle$stop("Study labels not of same length as data."))
+
+      if (is.factor(slab))
+         slab <- as.character(slab)
 
       slab.null <- FALSE
 

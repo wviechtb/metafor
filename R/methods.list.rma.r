@@ -44,7 +44,7 @@ as.data.frame.list.rma <- function(x, ...) {
 
    slab.pos <- which(names(x) == "slab")
    out <- x[seq_len(slab.pos-1)]
-   out <- data.frame(out, row.names=x$slab)
+   out <- data.frame(out, row.names=x$slab, stringsAsFactors=FALSE)
 
    ### in case all values were NA and have been omitted
 

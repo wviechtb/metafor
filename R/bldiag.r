@@ -14,7 +14,7 @@ bldiag <- function(...) {
    out  <- array(0, dim=csdim[length(mlist) + 1,])
    add1 <- matrix(rep(1:0,2), ncol=2)
 
-   for (i in seq(along=mlist)) {
+   for (i in seq(along.with=mlist)) {
 
       indx <- apply(csdim[i:(i+1),] + add1, 2, function(x) x[1]:x[2])
 

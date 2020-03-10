@@ -154,7 +154,7 @@ digits, cols=c("gray90","gray10"), addgrid=TRUE, pch=19, cex=1, lwd=2, ...) {
 
    cols.points <- colorRampPalette(cols)(k)
 
-   #gray.vals.points <- seq(from=.9, to=.1, length=k)
+   #gray.vals.points <- seq(from=.9, to=.1, length.out=k)
    #cols.points <- gray(gray.vals.points)
    #cols <- colorRampPalette(c("yellow","red"))(k)
    #cols <- colorRampPalette(c("blue","red"))(k)
@@ -186,6 +186,8 @@ digits, cols=c("gray90","gray10"), addgrid=TRUE, pch=19, cex=1, lwd=2, ...) {
    box()
 
    ### return data frame invisibly
+
+   dat$col <- cols.points
 
    invisible(dat)
 

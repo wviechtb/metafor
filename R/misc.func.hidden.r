@@ -60,13 +60,13 @@
 
    sav <- c()
 
-   if (length(btt) > 1) {
+   if (length(btt) > 1L) {
 
-      while (length(btt) > 0) {
+      while (length(btt) > 0L) {
 
          x <- rle(diff(btt))
 
-         if (x$values[1] == 1 && length(x$values) != 0) {
+         if (x$values[1] == 1 && length(x$values) != 0L) {
             sav <- c(sav, c(btt[1], ":", btt[x$lengths[1] + 1]))
             btt <- btt[-c(1:(x$lengths[1] + 1))]
             sav <- c(sav, ", ")
@@ -100,7 +100,7 @@
    ### first/last (na.last=FALSE/TRUE); but we just want to leave the NAs in
    ### their position!
 
-   if (is.null(x) || length(x) == 0) ### need to catch this
+   if (is.null(x) || length(x) == 0L) ### need to catch this
       return(NULL)
 
    if (missing(y)) {
@@ -170,6 +170,11 @@
 .is.dummy <- function(x, eps=1e-08)
    return(all(abs(x) < eps | abs(x - 1) < eps))
    #return(all(sapply(x, identical, 0) | sapply(x, identical, 1)))
+
+### function to test whether something is a vector (in the sense of being atomic, not a matrix, and not NULL)
+
+.is.vector <- function(x)
+   is.atomic(x) && !is.matrix(x) && !is.null(x)
 
 ############################################################################
 
@@ -282,8 +287,8 @@
    for (i in seq_along(okargs))
       ddd[okargs[i]] <- NULL
 
-   if (length(ddd) > 0)
-      warning(mstyle$warning(paste0("Extra argument", ifelse(length(ddd) > 1, "s ", " "), "(", paste0("'", names(ddd), "'", collapse=", "), ") disregarded.")), call.=FALSE)
+   if (length(ddd) > 0L)
+      warning(mstyle$warning(paste0("Extra argument", ifelse(length(ddd) > 1L, "s ", " "), "(", paste0("'", names(ddd), "'", collapse=", "), ") disregarded.")), call.=FALSE)
 
 }
 
@@ -467,12 +472,12 @@
 
    ### allow quickly setting all tau2 values to a fixed value
 
-   if (length(tau2) == 1)
+   if (length(tau2) == 1L)
       tau2 <- rep(tau2, tau2s)
 
    ### allow quickly setting all rho values to a fixed value
 
-   if (length(rho) == 1)
+   if (length(rho) == 1L)
       rho <- rep(rho, rhos)
 
    ### check if tau2 and rho are of correct length
@@ -2209,7 +2214,7 @@
    if (!is.na(x) & (x < ll | x > uu))
       stop(mstyle$stop("'x' out of bounds in dnoncenhypergeom()."))
 
-   if (!is.na(x) & length(x) > 1)
+   if (!is.na(x) & length(x) > 1L)
       stop(mstyle$stop("'x' neither missing or scalar in dnoncenhypergeom()."))
 
    mode <- mode.compute(n1, n2, m1, psi, ll, uu)
@@ -2808,7 +2813,7 @@
 
    if (exists(".digits")) {
       .digits <- get(".digits")
-      if (is.null(names(.digits)) && length(.digits) == 1) {
+      if (is.null(names(.digits)) && length(.digits) == 1L) {
          # if .digits is a single unnamed scalar, set all digit values to that value
          res <- c(est=.digits, se=.digits, test=.digits, pval=.digits, ci=.digits, var=.digits, sevar=.digits, fit=.digits, het=.digits)
       } else if (any(names(.digits) != "") && any(names(.digits) == "")) {
@@ -2856,7 +2861,7 @@
    }
 
    ### so we can still print objects created with older metafor versions (where xdigit will be just an unnamed scalar)
-   if (length(res) == 1 && is.null(names(res)))
+   if (length(res) == 1L && is.null(names(res)))
       res <- c(est=res[[1]], se=res[[1]], test=res[[1]], pval=res[[1]], ci=res[[1]], var=res[[1]], sevar=res[[1]], fit=res[[1]], het=res[[1]])
 
    res

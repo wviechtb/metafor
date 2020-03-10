@@ -12,7 +12,7 @@ qqnorm.rma.mh <- function(y, type="rstandard", pch=19, label=FALSE, offset=0.3, 
    if (x$k == 1)
       stop(mstyle$stop("Stopped because k = 1."))
 
-   if (length(label) != 1)
+   if (length(label) != 1L)
       stop(mstyle$stop("Argument 'label' should be of length 1."))
 
    #########################################################################

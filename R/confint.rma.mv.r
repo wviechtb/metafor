@@ -129,7 +129,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
          .print.time(unname(time.end - time.start)[3])
       }
 
-      if (length(res.all) == 1) {
+      if (length(res.all) == 1L) {
          return(res.all[[1]])
       } else {
          res.all$digits <- digits

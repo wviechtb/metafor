@@ -40,7 +40,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
    if (any(!is.element(struct, c("CS","HCS","UN","AR","HAR","CAR","ID","DIAG","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD","GEN")))) # "UNR",
       stop(mstyle$stop("Unknown 'struct' specified."))
 
-   if (length(struct) == 1)
+   if (length(struct) == 1L)
       struct <- c(struct, struct)
 
    na.act <- getOption("na.action")
@@ -118,7 +118,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
 
    if (!is.null(ddd$dist)) {
 
-      if (length(ddd$dist) == 1)
+      if (length(ddd$dist) == 1L)
          ddd$dist <- c(ddd$dist, ddd$dist)
 
       if (!is.list(ddd$dist))
@@ -260,7 +260,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
       if (any(!sapply(V, .is.square)))
          stop(mstyle$stop("All list elements in 'V' must be square matrices."))
 
-      ### need to do this first, since is.vector(V) is TRUE for lists and so that further code works
+      ### turn list into block-diagonal (sparse) matrix
 
       if (sparse) {
          V <- bdiag(V)
@@ -272,7 +272,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
 
    ### check if user constrained V to 0 (can skip a lot of the steps below then)
 
-   if (is.vector(V) && length(V) == 1 && V == 0) {
+   if (.is.vector(V) && length(V) == 1L && V == 0) {
       V0 <- TRUE
    } else {
       V0 <- FALSE
@@ -282,7 +282,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
    ### note: if V is a scalar (e.g., V=0), then this will turn V into a kxk
    ### matrix with the value of V along the diagonal
 
-   if (V0 || is.vector(V) || nrow(V) == 1L || ncol(V) == 1L) {
+   if (V0 || .is.vector(V) || nrow(V) == 1L || ncol(V) == 1L) {
       if (sparse) {
          V <- Diagonal(k, as.vector(V))
       } else {
@@ -326,7 +326,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
       ### turn W into a diagonal matrix if it is a column/row vector
       ### in general, turn W into A (arbitrary weight matrix)
 
-      if (is.vector(W) || nrow(W) == 1L || ncol(W) == 1L) {
+      if (.is.vector(W) || nrow(W) == 1L || ncol(W) == 1L) {
 
          W <- as.vector(W)
 
@@ -411,9 +411,9 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
       intercept <- FALSE                    ### set to FALSE since formula now controls whether the intercept is included or not
    }                                        ### note: code further below ([b]) actually checks whether intercept is included or not
 
-   ### turn a row vector for mods into a column vector
+   ### turn a vector for mods into a column vector
 
-   if (is.vector(mods))
+   if (.is.vector(mods))
       mods <- cbind(mods)
 
    ### turn a mods data frame into a matrix
@@ -568,7 +568,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
 
       if (any(has.slash)) {
 
-         if (length(mf.r) == 1) {
+         if (length(mf.r) == 1L) {
 
             ### if formula only has one element of the form ~ 1 | var1/var2/..., create a list of the data frames (each with one column)
 
@@ -598,7 +598,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
 
       ### if there is no (~ 1 | factor) term, then mf.s is list(), so turn that into NULL
 
-      if (length(mf.s) == 0)
+      if (length(mf.s) == 0L)
          mf.s <- NULL
 
       ### does the random argument include at least one (~ 1 | id) term?
@@ -687,6 +687,9 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
 
       if (length(slab) != k)
          stop(mstyle$stop("Study labels not of same length as data."))
+
+      if (is.factor(slab))
+         slab <- as.character(slab)
 
       slab.null <- FALSE
 
@@ -797,7 +800,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
 
       ### allow quickly setting all sigma2 values to a fixed value
 
-      if (length(sigma2) == 1)
+      if (length(sigma2) == 1L)
          sigma2 <- rep(sigma2, sigma2s)
 
       ### check if sigma2 is of the correct length
@@ -1538,7 +1541,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
 
    ### in case user manually sets con$cholesky and specifies only a single value
 
-   if (length(con$cholesky) == 1)
+   if (length(con$cholesky) == 1L)
       con$cholesky <- rep(con$cholesky, 2)
 
    ### use of Cholesky factorization only applicable for models with "UN", "UNR", and "GEN" structure
@@ -1635,7 +1638,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
       optimizer <- "optimParallel"
    }
 
-   if (length(optcontrol) == 0)
+   if (length(optcontrol) == 0L)
       optcontrol <- list()
 
    reml <- ifelse(method=="REML", TRUE, FALSE)
@@ -1765,7 +1768,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
                                    if (withG) rho else NA,
                                    if (withH) gamma2 else NA,
                                    if (withH) phi else NA), digits=digits[["var"]]))
-         vcs <- data.frame(vcs)
+         vcs <- data.frame(vcs, stringsAsFactors=FALSE)
          rownames(vcs) <- c("initial", "specified")
          vcs <- rbind(included=ifelse(c(rep(withS, sigma2s), rep(withG, tau2s), rep(withG, rhos), rep(withH, gamma2s), rep(withH, phis)), "Yes", "No"), fixed=unlist(vc.fix), vcs)
          tmp <- capture.output(print(vcs, na.print="---"))

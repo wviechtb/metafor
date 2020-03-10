@@ -80,7 +80,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
    if (missing(annosym))
       annosym <- c(" [", ", ", "]")
-   if (length(annosym) != 3)
+   if (length(annosym) != 3L)
       stop(mstyle$stop("Argument 'annosym' must be a vector of length 3."))
 
    ddd <- list(...)
@@ -154,7 +154,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
          slab <- paste("Study", seq_len(k))
       }
    } else {
-      if (length(slab) == 1 && is.na(slab))
+      if (length(slab) == 1L && is.na(slab))
          slab <- rep("", k)
    }
 
@@ -387,7 +387,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
    if (is.null(ddd$textpos))
       ddd$textpos <- c(xlim[1], xlim[2])
 
-   if (length(ddd$textpos) != 2)
+   if (length(ddd$textpos) != 2L)
       stop(mstyle$stop("Argument 'textpos' must be of length 2."))
 
    if (is.na(ddd$textpos[1]))
@@ -549,7 +549,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
          stop(mstyle$stop("Must specify 'ilab.xpos' argument when adding information with 'ilab'."))
       if (length(ilab.xpos) != ncol(ilab))
          stop(mstyle$stop(paste0("Number of 'ilab' columns (", ncol(ilab), ") does not match length of 'ilab.xpos' argument (", length(ilab.xpos), ").")))
-      if (!is.null(ilab.pos) && length(ilab.pos) == 1)
+      if (!is.null(ilab.pos) && length(ilab.pos) == 1L)
          ilab.pos <- rep(ilab.pos, ncol(ilab))
       par(family=fonts[3])
       for (l in seq_len(ncol(ilab))) {

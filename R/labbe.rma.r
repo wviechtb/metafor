@@ -20,10 +20,10 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, lty, ..
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
-   if (length(add) == 2) ### for rma.mh and rma.peto objects (1st 'add' value applies to the individual outcomes)
+   if (length(add) == 2L) ### for rma.mh and rma.peto objects (1st 'add' value applies to the individual outcomes)
       add <- add[1]
 
-   if (length(to) == 2)  ### for rma.mh and rma.peto objects (1st 'to' value applies to the individual outcomes)
+   if (length(to) == 2L)  ### for rma.mh and rma.peto objects (1st 'to' value applies to the individual outcomes)
       to <- to[1]
 
    if (!is.element(to, c("all","only0","if0all","none")))
@@ -166,7 +166,7 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, lty, ..
 
    }
 
-   if (length(dat.t$yi)==0 || length(dat.c$yi)==0)
+   if (length(dat.t$yi)==0L || length(dat.c$yi)==0L)
       stop(mstyle$stop("No information in object to compute arm-level outcomes."))
 
    #########################################################################
@@ -274,7 +274,7 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, lty, ..
    #########################################################################
 
    ### prepare data frame to return
-   sav <- data.frame(x=dat.c$yi, y=dat.t$yi, cex=psize, pch=pch, bg=bg)
+   sav <- data.frame(x=dat.c$yi, y=dat.t$yi, cex=psize, pch=pch, bg=bg, stringsAsFactors=FALSE)
 
    invisible(sav)
 

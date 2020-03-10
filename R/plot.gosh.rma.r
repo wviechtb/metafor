@@ -14,10 +14,10 @@ xlim, ylim, xhist=TRUE, yhist=TRUE, hh=.3, breaks, adjust, lwd, labels, ...) {
    if (missing(alpha))
       alpha <- nrow(x$res)^(-0.2)
 
-   if (length(alpha) == 1)
+   if (length(alpha) == 1L)
       alpha <- c(alpha, 0.5, 0.9) ### 1st for points, 2nd for histograms, 3rd for density lines
 
-   if (length(alpha) == 2)
+   if (length(alpha) == 2L)
       alpha <- c(alpha[1], alpha[2], 0.9)
 
    missout <- ifelse(missing(out), TRUE, FALSE) ### need this for panel.hist()
@@ -34,7 +34,7 @@ xlim, ylim, xhist=TRUE, yhist=TRUE, hh=.3, breaks, adjust, lwd, labels, ...) {
 
    } else {
 
-      if (length(out) != 1)
+      if (length(out) != 1L)
          stop(mstyle$stop("Argument 'out' should only specify a single study."))
 
       if (out > x$k || out < 1)
@@ -43,7 +43,7 @@ xlim, ylim, xhist=TRUE, yhist=TRUE, hh=.3, breaks, adjust, lwd, labels, ...) {
       if (missing(col))
          col <- c("red", "blue")
 
-      if (length(col) != 2)
+      if (length(col) != 2L)
          stop(mstyle$stop("Argument 'col' should specify two colors."))
 
       col.o <- col2rgb(col[1]) / 255
@@ -61,10 +61,10 @@ xlim, ylim, xhist=TRUE, yhist=TRUE, hh=.3, breaks, adjust, lwd, labels, ...) {
    if (missing(border))
       border <- "white"
 
-   if (length(border) == 1)
+   if (length(border) == 1L)
       border <- c(border, border)
 
-   if (length(hh) == 1)
+   if (length(hh) == 1L)
       hh <- c(hh, hh)
 
    if (x$int.only && (any(hh < 0) | any(hh > 1)))
@@ -73,19 +73,19 @@ xlim, ylim, xhist=TRUE, yhist=TRUE, hh=.3, breaks, adjust, lwd, labels, ...) {
    if (missing(breaks))
       breaks <- "Sturges"
 
-   if (length(breaks) == 1)
+   if (length(breaks) == 1L)
       breaks <- list(breaks, breaks) ### use list so can also specify two vectors
 
    if (missing(adjust))
       adjust <- 1
 
-   if (length(adjust) == 1)
+   if (length(adjust) == 1L)
       adjust <- c(adjust, adjust)
 
    if (missing(lwd))
       lwd <- 2
 
-   if (length(lwd) == 1)
+   if (length(lwd) == 1L)
       lwd <- c(lwd, lwd)
 
    if (missing(labels)) {

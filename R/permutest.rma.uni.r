@@ -56,7 +56,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
 
       ### this turns 1,1,1,2,2,3,4,4,4 into 1,1,1,4,4,6,7,7,7 so that the actual row numbers can be permutated
 
-      indices <- rep(cumsum(rle(indices)$length) - (rle(indices)$length - 1), rle(indices)$length)
+      indices <- rep(cumsum(rle(indices)$lengths) - (rle(indices)$lengths - 1), rle(indices)$lengths)
 
       ### determine exact number of unique permutations
       ### code below cancels largest ind.table value, which reduces overflow problems

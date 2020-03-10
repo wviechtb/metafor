@@ -105,7 +105,7 @@ rbind.escalc <- function (..., deparse.level=1) {
       yi.pos <- na.omit(yi.pos)[1]
 
       ### just in case
-      if (length(yi.pos) == 0)
+      if (length(yi.pos) == 0L)
          next
 
       ### get 'ni' attribute from all arguments (but only if argument has 'yi' variable)

@@ -362,9 +362,9 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
 
    }
 
-   vcs <- seq(xlim[1], xlim[2], length=steps)
+   vcs <- seq(xlim[1], xlim[2], length.out=steps)
 
-   if (length(vcs) <= 1)
+   if (length(vcs) <= 1L)
       stop(mstyle$stop("Cannot set 'xlim' automatically. Please set this argument manually."))
 
    #return(vcs)
@@ -375,7 +375,7 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
    ### if not an empty list(), get position of sigma2.init, tau2.init, rho.init, gamma2.init, or phi.init arguments
    ### if these arguments were not specified, then the respective con.pos values are NA
 
-   if (length(x.control) > 0) {
+   if (length(x.control) > 0L) {
       con.pos.sigma2.init <- pmatch("sigma2.init", names(x.control))
       con.pos.tau2.init   <- pmatch("tau2.init",   names(x.control))
       con.pos.rho.init    <- pmatch("rho.init",    names(x.control))

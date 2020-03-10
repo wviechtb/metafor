@@ -3,7 +3,7 @@ addid=TRUE, addcomp=TRUE, adddesign=TRUE, minlen=2, var.names=c("id","comp","des
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!(is.data.frame(data)))
+   if (!is.data.frame(data))
       data <- data.frame(data)
 
    ### get variable names

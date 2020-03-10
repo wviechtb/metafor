@@ -3,7 +3,7 @@
 \alias{dat.begg1989}
 \title{Studies on Bone-Marrow Transplantation versus Chemotherapy for the Treatment of Leukemia}
 \description{Results from controlled and uncontrolled studies on the effectiveness of allogeneic bone-marrow transplantation (BMT) and conventional chemotherapy (CMO) in the treatment of acute nonlymphocytic leukemia.}
-\usage{dat.berkey1989}
+\usage{dat.begg1989}
 \format{The data frame contains the following columns:
 \tabular{lll}{
 \bold{study}      \tab \code{numeric}    \tab study number \cr

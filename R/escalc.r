@@ -33,10 +33,10 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
    if (add.measure) {
 
-      if (length(var.names) == 2)
+      if (length(var.names) == 2L)
          var.names <- c(var.names, "measure")
 
-      if (length(var.names) != 3)
+      if (length(var.names) != 3L)
          stop(mstyle$stop("Argument 'var.names' must be of length 2 or 3."))
 
       if (any(var.names != make.names(var.names, unique=TRUE))) {
@@ -46,10 +46,10 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
    } else {
 
-      if (length(var.names) == 3)
+      if (length(var.names) == 3L)
          var.names <- var.names[1:2]
 
-      if (length(var.names) != 2)
+      if (length(var.names) != 2L)
          stop(mstyle$stop("Argument 'var.names' must be of length 2."))
 
       if (any(var.names != make.names(var.names, unique=TRUE))) {
@@ -1842,6 +1842,9 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
    ### add study labels if specified
 
    if (!is.null(slab)) {
+
+      if (is.factor(slab))
+         slab <- as.character(slab)
 
       if (!is.null(subset))
          slab <- slab[subset]

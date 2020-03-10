@@ -142,8 +142,8 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
    ### add z axis
 
    if (is.null(atz)) {
-      axis(side=2, at=seq(-4,4, length=9), labels=NA, las=1, tcl=par("tcl")/2, ...)
-      axis(side=2, at=seq(-2,2, length=3), las=1, ...)
+      axis(side=2, at=seq(-4, 4, length.out=9), labels=NA, las=1, tcl=par("tcl")/2, ...)
+      axis(side=2, at=seq(-2, 2, length.out=3), las=1, ...)
    } else {
       axis(side=2, at=atz, labels=atz, las=1, ...)
    }
@@ -186,9 +186,9 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
    ### add y axis arc
 
    if (is.null(aty)) {
-      atyis <- seq(min(yi), max(yi), length=arc.res[1])
+      atyis <- seq(min(yi), max(yi), length.out=arc.res[1])
    } else {
-      atyis <- seq(min(aty), max(aty), length=arc.res[1])
+      atyis <- seq(min(aty), max(aty), length.out=arc.res[1])
    }
 
    len <- ya.xpos
@@ -205,7 +205,7 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
    ### add y axis tick marks
 
    if (is.null(aty)) {
-      atyis <- seq(min(yi), max(yi), length=steps)
+      atyis <- seq(min(yi), max(yi), length.out=steps)
    } else {
       atyis <- aty
    }
@@ -231,8 +231,8 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
    ### add y axis labels
 
    if (is.null(aty)) {
-      atyis     <- seq(min(yi),   max(yi),   length=steps)
-      atyis.lab <- seq(min(yi.c), max(yi.c), length=steps)
+      atyis     <- seq(min(yi),   max(yi),   length.out=steps)
+      atyis.lab <- seq(min(yi.c), max(yi.c), length.out=steps)
    } else {
       atyis     <- aty
       atyis.lab <- aty.c
@@ -261,7 +261,7 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
 
    ### add CI arc
 
-   atyis <- seq(ci.lb, ci.ub, length=arc.res[2])
+   atyis <- seq(ci.lb, ci.ub, length.out=arc.res[2])
    len <- ci.xpos
    xis <- rep(NA_real_,length(atyis))
    zis <- rep(NA_real_,length(atyis))
@@ -304,6 +304,6 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
 
    points(xi, zi, pch=pch, cex=cex, ...)
 
-   invisible(data.frame(x=xi, y=zi, slab=x$slab[x$not.na]))
+   invisible(data.frame(x=xi, y=zi, slab=x$slab[x$not.na], stringsAsFactors=FALSE))
 
 }

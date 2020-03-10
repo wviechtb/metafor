@@ -108,7 +108,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
    if (missing(annosym))
       annosym <- c(" [", ", ", "]")
-   if (length(annosym) != 3)
+   if (length(annosym) != 3L)
       stop(mstyle$stop("Argument 'annosym' must be a vector of length 3."))
 
    measure <- x$measure
@@ -154,7 +154,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
          slab <- x$slab                         ### note: slab must have same length as yi.f in rma object
       }                                         ### even when fewer studies used for model fitting (due to NAs)
    } else {
-      if (length(slab) == 1 && is.na(slab))
+      if (length(slab) == 1L && is.na(slab))
          slab <- rep("", k)
    }
 
@@ -214,7 +214,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
       if (is.character(order)) {
 
-         if (length(order) != 1)
+         if (length(order) != 1L)
             stop(mstyle$stop("Incorrect length of 'order' argument."))
 
          if (order == "obs")
@@ -459,7 +459,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
    if (is.null(ddd$textpos))
       ddd$textpos <- c(xlim[1], xlim[2])
 
-   if (length(ddd$textpos) != 2)
+   if (length(ddd$textpos) != 2L)
       stop(mstyle$stop("Argument 'textpos' must be of length 2."))
 
    if (is.na(ddd$textpos[1]))
@@ -599,7 +599,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
          if (!is.logical(addcred)) {
             ### for multiple tau^2 (and gamma^2) values, need to specify level(s) of the inner factor(s) to compute the credibility interval
             ### this can be done via the addcred argument (i.e., instead of using a logical, one specifies the level(s))
-            if (length(addcred) == 1)
+            if (length(addcred) == 1L)
                addcred <- c(addcred, addcred)
             temp <- predict(x, level=level, tau2.levels=addcred[1], gamma2.levels=addcred[2])
             addcred <- TRUE ### set addcred to TRUE, so if (x$method != "FE" && addcred) further below works
@@ -753,7 +753,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
          stop(mstyle$stop("Must specify 'ilab.xpos' argument when adding information with 'ilab'."))
       if (length(ilab.xpos) != ncol(ilab))
          stop(mstyle$stop(paste0("Number of 'ilab' columns (", ncol(ilab), ") does not match length of 'ilab.xpos' argument (", length(ilab.xpos), ").")))
-      if (!is.null(ilab.pos) && length(ilab.pos) == 1)
+      if (!is.null(ilab.pos) && length(ilab.pos) == 1L)
          ilab.pos <- rep(ilab.pos, ncol(ilab))
       par(family=fonts[3])
       for (l in seq_len(ncol(ilab))) {

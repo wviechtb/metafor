@@ -37,10 +37,10 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
    ### in case user specifies more than one add/to value (as one can do with rma.mh() and rma.peto())
    ### (any kind of continuity correction is directly applied to the outcomes, which are then analyzed as such)
 
-   if (length(add) > 1)
+   if (length(add) > 1L)
       add <- add[1]
 
-   if (length(to) > 1)
+   if (length(to) > 1L)
       to <- to[1]
 
    na.act <- getOption("na.action")
@@ -266,7 +266,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
       ### check if user constrained vi to 0
 
-      if (length(vi) == 1 && vi == 0) {
+      if (length(vi) == 1L && vi == 0) {
          vi0 <- TRUE
       } else {
          vi0 <- FALSE
@@ -274,7 +274,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
       ### allow easy setting of vi to a single value
 
-      if (length(vi) == 1)
+      if (length(vi) == 1L)
          vi <- rep(vi, k) ### note: k is number of outcomes before subsetting
 
       ### check length of yi and vi
@@ -594,7 +594,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
    ### allow easy setting of weights to a single value
 
-   if (length(weights) == 1)
+   if (length(weights) == 1L)
       weights <- rep(weights, k) ### note: k is number of outcomes before subsetting
 
    ### check length of yi and weights (only if weights is not NULL)
@@ -624,9 +624,9 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
       intercept <- FALSE                    ### set to FALSE since formula now controls whether the intercept is included or not
    }                                        ### note: code further below ([b]) actually checks whether intercept is included or not
 
-   ### turn a row vector for mods into a column vector
+   ### turn a vector for mods into a column vector
 
-   if (is.vector(mods))
+   if (.is.vector(mods))
       mods <- cbind(mods)
 
    ### turn a mods data frame into a matrix
@@ -1437,7 +1437,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
       optmethod  <- match.arg(con$optmethod, c("Nelder-Mead", "BFGS", "CG", "L-BFGS-B", "SANN", "Brent"))
       optcontrol <- control[is.na(con.pos)] ### get arguments that are control arguments for optimizer
 
-      if (length(optcontrol) == 0)
+      if (length(optcontrol) == 0L)
          optcontrol <- list()
 
       reml <- ifelse(method=="REML", TRUE, FALSE)
