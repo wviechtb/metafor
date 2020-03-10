@@ -1,7 +1,0 @@
-\documentclass{article}
-\usepackage{pdfpages}
-%\VignetteIndexEntry{Conducting Meta-Analyses in R with the metafor Package}
-
-\begin{document}
-\includepdf[pages=-, fitpaper=true]{metafor_static.pdf}
-\end{document}

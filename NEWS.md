@@ -1,6 +1,6 @@
-# metafor 2.2-10 (2020-03-10)
+# metafor 2.2-12 (2020-03-10)
 
-- removed `R.rsp` from `Suggests` (can add static pdf vignettes without it)
+- removed `MASS` from `Suggests` (no longer needed)
 
 - argument `btt` can now also take a string to grep for
 

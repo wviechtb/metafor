@@ -1,7 +1,0 @@
-\documentclass{article}
-\usepackage{pdfpages}
-%\VignetteIndexEntry{Diagram of Functions in the metafor Package}
-
-\begin{document}
-\includepdf[pages=-, fitpaper=true]{diagram_static.pdf}
-\end{document}

@@ -2981,3 +2981,21 @@ tidy.rma <- function (x, ...) {
 }
 
 ############################################################################
+
+### simplified version of what mvtnorm::rmvnorm() does
+
+.mvrnorm <- function(n, mu, Sigma) {
+
+   p <- nrow(Sigma)
+   eS <- eigen(Sigma, symmetric = TRUE)
+   eval <- eS$values
+   evec <- eS$vectors
+
+   Y <- matrix(rnorm(p * n), nrow = n, byrow = TRUE) %*% t(evec %*% (t(evec) * sqrt(pmax(eval, 0))))
+   Y <- sweep(Y, 2, mu, "+")
+
+   return(Y)
+
+}
+
+############################################################################

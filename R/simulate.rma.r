@@ -31,28 +31,23 @@ simulate.rma <- function (object, nsim = 1, seed = NULL, ...) {
       on.exit(assign(".Random.seed", R.seed, envir = .GlobalEnv))
    }
 
+   #########################################################################
+
    ### fitted values
 
    ftd <- c(object$X %*% object$beta)
 
-   ### for rma.uni objects, just need rnorm() (note: this also covers rma.ls objects)
+   ### simulate for rma.uni (and rma.ls) objects
 
-   if (inherits(object, "rma.uni")) {
-
+   if (inherits(object, "rma.uni"))
       val <- replicate(nsim, rnorm(object$k, mean=ftd, sd=sqrt(object$vi + object$tau2)))
 
-   }
+   ### simulate for rma.mv objects
 
-   ### for rma.mv objects, need mvrnorm() from MASS
+   if (inherits(object, "rma.mv"))
+      val <- t(.mvrnorm(nsim, mu=ftd, Sigma=object$M))
 
-   if (inherits(object, "rma.mv")) {
-
-      if (!requireNamespace("MASS", quietly=TRUE))
-         stop(mstyle$stop("Please install the 'MASS' package to simulate from this model."))
-
-      val <- replicate(nsim, MASS::mvrnorm(1, mu=ftd, Sigma=object$M))
-
-   }
+   #########################################################################
 
    res <- matrix(NA_real_, nrow=object$k.f, ncol=nsim)
    res[object$not.na,] <- val
