@@ -1,4 +1,4 @@
-# metafor 2.2-14 (2020-03-16)
+# metafor 2.2-15 (2020-03-16)
 
 - fixed failing tests due to the `stringsAsFactors=FALSE` change in the upcoming version of R
 

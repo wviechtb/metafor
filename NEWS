@@ -1,5 +1,8 @@
-Changes in Version 2.2-14 (2020-03-16)
+Changes in Version 2.2-15 (2020-03-16)
 =====================================
+
+   o plot.profile.rma() now always includes the actual value of the variance
+     or correlation component as an additional point in the plot
 
    o fixed failing tests due to the 'stringsAsFactors=FALSE' change in the
      upcoming version of R
