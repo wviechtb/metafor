@@ -67,7 +67,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.13</span>
       </span>
     </div>
 
@@ -125,11 +125,13 @@
       <small>Source: <a href='https://github.com/wviechtb/metafor/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="metafor-2-2-12-2020-03-10" class="section level1">
+    <div id="metafor-2-2-13-2020-03-16" class="section level1">
 <h1 class="page-header">
-<a href="#metafor-2-2-12-2020-03-10" class="anchor"></a>metafor 2.2-12 (2020-03-10)<small> Unreleased </small>
+<a href="#metafor-2-2-13-2020-03-16" class="anchor"></a>metafor 2.2-13 (2020-03-16)<small> Unreleased </small>
 </h1>
 <ul>
+<li><p>fixed failing tests due to the <code>stringsAsFactors=FALSE</code> change in the upcoming version of R</p></li>
+<li><p><code><a href="../reference/influence.rma.uni.html">print.infl.rma.uni()</a></code> gains <code>infonly</code> argument, to only show the influential studies</p></li>
 <li><p>removed <code>MASS</code> from <code>Suggests</code> (no longer needed)</p></li>
 <li><p>argument <code>btt</code> can now also take a string to grep for</p></li>
 <li><p>added <code>optimParallel</code> as possible optimizer in <code><a href="../reference/rma.mv.html">rma.mv()</a></code></p></li>
@@ -139,7 +141,6 @@
 <li><p>added <code><a href="../reference/to.wide.html">to.wide()</a></code> function (for restructuring long format datasets into the wide format needed for contrast-based analyses)</p></li>
 <li><p><code>I^2</code> and <code>H^2</code> are also shown in output for fixed-effects models</p></li>
 <li><p>argument <code>grid</code> in <code><a href="../reference/baujat.html">baujat()</a></code> can now also be a color name</p></li>
-<li><p>added phylogenetic correlation structures (<code>"PHYBM"</code>,<code>"PHYPL"</code>,<code>"PHYPD"</code>) to <code><a href="../reference/rma.mv.html">rma.mv()</a></code> (for Brownian motion, Pagel’s lambda, and Pagel’s delta)</p></li>
 <li><p>added (for now undocumented) <code>time</code> argument to more functions that are computationally expensive</p></li>
 <li><p>added (for now undocumented) <code>textpos</code> argument to the various forest functions</p></li>
 <li><p>added a new dataset (<code>dat.graves2010</code>)</p></li>
@@ -806,7 +807,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#metafor-2-2-12-2020-03-10">2.2-12</a></li>
+        <li><a href="#metafor-2-2-13-2020-03-16">2.2-13</a></li>
         <li><a href="#metafor-2-1-0-2019-05-13">2.1-0</a></li>
         <li><a href="#metafor-2-0-0-2017-06-22">2.0-0</a></li>
         <li><a href="#metafor-1-9-9-2016-09-25">1.9-9</a></li>

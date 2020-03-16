@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.13</span>
       </span>
     </div>
 
@@ -136,7 +136,7 @@
 <span class='fu'><a href='https://rdrr.io/r/stats/lm.influence.html'>influence</a></span>(<span class='no'>model</span>, <span class='no'>digits</span>, <span class='kw'>progbar</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for infl.rma.uni</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='no'>digits</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='no'>x</span>$<span class='no'>digits</span>, <span class='kw'>infonly</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for rma.uni</span>
 <span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>cooks.distance</a></span>(<span class='no'>model</span>, <span class='kw'>progbar</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>...</span>)
@@ -163,6 +163,10 @@
     <tr>
       <th>progbar</th>
       <td><p>logical indicating whether a progress bar should be shown (the default is <code>FALSE</code>).</p></td>
+    </tr>
+    <tr>
+      <th>infonly</th>
+      <td><p>logical indicating whether only the influential cases should be printed (the default is <code>FALSE</code>).</p></td>
     </tr>
     <tr>
       <th>type</th>

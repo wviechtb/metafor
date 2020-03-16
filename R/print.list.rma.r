@@ -20,6 +20,16 @@ print.list.rma <- function(x, digits=x$digits, ...) {
    if (nrow(out) == 0L)
       stop(mstyle$stop("All values are NA."), call.=FALSE)
 
+   ### in case there is a select element, apply it
+
+   if (exists("select", where=x, inherits=FALSE))
+      out <- out[x$select,]
+
+   if (nrow(out) == 0L) {
+      message(mstyle$message("No values to print."))
+      return(invisible())
+   }
+
    ### if transf exists and is TRUE, set SEs to NULL so that column is omitted from the output
 
    transf.true <- 0

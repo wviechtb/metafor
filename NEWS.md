@@ -1,4 +1,8 @@
-# metafor 2.2-12 (2020-03-10)
+# metafor 2.2-13 (2020-03-16)
+
+- fixed failing tests due to the `stringsAsFactors=FALSE` change in the upcoming version of R
+
+- `print.infl.rma.uni()` gains `infonly` argument, to only show the influential studies
 
 - removed `MASS` from `Suggests` (no longer needed)
 
@@ -17,8 +21,6 @@
 - `I^2` and `H^2` are also shown in output for fixed-effects models
 
 - argument `grid` in `baujat()` can now also be a color name
-
-- added phylogenetic correlation structures (`"PHYBM"`,`"PHYPL"`,`"PHYPD"`) to `rma.mv()` (for Brownian motion, Pagel's lambda, and Pagel's delta)
 
 - added (for now undocumented) `time` argument to more functions that are computationally expensive
 
