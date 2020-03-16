@@ -95,7 +95,9 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
    if (missing(control))
       control <- list()
 
-   con <- list(comptol=.Machine$double.eps^0.5, tol=.Machine$double.eps^0.25, maxiter=100, alternative="two.sided", p2defn="abs", stat="test", cialt="one.sided", seed=seed, distfac=1)
+   con <- list(comptol=.Machine$double.eps^0.5, tol=.Machine$double.eps^0.25,
+               maxiter=100, alternative="two.sided", p2defn="abs", stat="test",
+               cialt="one.sided", seed=seed, distfac=1)
    con[pmatch(names(control), names(con))] <- control
 
    if (exists("comptol", inherits=FALSE))
@@ -210,16 +212,16 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
             ### two times the one-sided p-value definition of the two-sided p-value
 
             if (con$stat == "test") {
-               if (x$zval > 0) {
+               if (x$zval > median(zval.perm, na.rm=TRUE)) {
                   pval <- 2*mean(zval.perm >= x$zval - con$comptol, na.rm=TRUE) ### based on test statistic
                } else {
-                  pval <- 2*mean(zval.perm <= x$zval + con$comptol, na.rm=TRUE) ### based on coefficient
+                  pval <- 2*mean(zval.perm <= x$zval + con$comptol, na.rm=TRUE)
                }
             } else {
-               if (c(x$beta) > 0) {
-                  pval <- 2*mean(beta.perm >= c(x$beta) - con$comptol, na.rm=TRUE) ### based on test statistic
+               if (c(x$beta) > median(beta.perm, na.rm=TRUE)) {
+                  pval <- 2*mean(beta.perm >= c(x$beta) - con$comptol, na.rm=TRUE) ### based on coefficient
                } else {
-                  pval <- 2*mean(beta.perm <= c(x$beta) + con$comptol, na.rm=TRUE) ### based on coefficient
+                  pval <- 2*mean(beta.perm <= c(x$beta) + con$comptol, na.rm=TRUE)
                }
             }
 
@@ -344,7 +346,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
 
             if (con$stat == "test") {
                for (j in seq_len(x$p)) {
-                  if (x$zval[j] > 0) {
+                  if (x$zval[j] > median(zval.perm[,j], na.rm=TRUE)) {
                      pval[j] <- 2*mean(zval.perm[,j] >= x$zval[j] - con$comptol, na.rm=TRUE)
                   } else {
                      pval[j] <- 2*mean(zval.perm[,j] <= x$zval[j] + con$comptol, na.rm=TRUE)
@@ -352,7 +354,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
                }
             } else {
                for (j in seq_len(x$p)) {
-                  if (c(x$beta)[j] > 0) {
+                  if (c(x$beta)[j] > median(beta.perm[,j], na.rm=TRUE)) {
                      pval[j] <- 2*mean(beta.perm[,j] >= c(x$beta)[j] - con$comptol, na.rm=TRUE)
                   } else {
                      pval[j] <- 2*mean(beta.perm[,j] <= c(x$beta)[j] + con$comptol, na.rm=TRUE)

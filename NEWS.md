@@ -1,4 +1,4 @@
-# metafor 2.2-15 (2020-03-16)
+# metafor 2.2-16 (2020-03-16)
 
 - fixed failing tests due to the `stringsAsFactors=FALSE` change in the upcoming version of R
 
@@ -821,7 +821,7 @@
 
 # metafor 1.4-0 (2010-07-30)
 
-- a papar about the package has now been published in the Journal of Statistical Software (http://www.jstatsoft.org/v36/i03/)
+- a papar about the package has now been published in the Journal of Statistical Software (https://www.jstatsoft.org/v36/i03/)
 
 - added citation info; see: `citation("metafor")`
 

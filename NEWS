@@ -1,4 +1,4 @@
-Changes in Version 2.2-15 (2020-03-16)
+Changes in Version 2.2-16 (2020-03-16)
 =====================================
 
    o plot.profile.rma() now always includes the actual value of the variance
@@ -1446,7 +1446,7 @@ Changes in Version 1.4-0 (2010-07-30)
 =====================================
 
    o a papar about the package has now been published in the Journal of
-     Statistical Software (http://www.jstatsoft.org/v36/i03/)
+     Statistical Software (https://www.jstatsoft.org/v36/i03/)
 
    o added citation info; see: citation("metafor")
 

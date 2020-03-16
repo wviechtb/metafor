@@ -44,6 +44,9 @@ atransf, targs, efac=1, col, border, fonts, cex, ...) {
    if (missing(cex))
       cex <- NULL
 
+   ### set/get fonts (1st for labels, 2nd for annotations)
+   ### when passing a named vector, the names are for 'family' and the values are for 'font'
+
    if (missing(fonts) || is.null(fonts)) {
       fonts <- rep(par("family"), 2)
    } else {
@@ -51,7 +54,10 @@ atransf, targs, efac=1, col, border, fonts, cex, ...) {
          fonts <- rep(fonts, 2)
    }
 
-   par(family=fonts[1])
+   if (is.null(names(fonts)))
+      fonts <- structure(c(1L,1L), names=fonts)
+
+   par(family=names(fonts)[1], font=fonts[1])
 
    #########################################################################
 
@@ -247,9 +253,9 @@ atransf, targs, efac=1, col, border, fonts, cex, ...) {
 
       annotext <- cbind(annotext[,1], " [", annotext[,2], ", ", annotext[,3], "]")
       annotext <- apply(annotext, 1, paste, collapse="")
-      par(family=fonts[2])
+      par(family=names(fonts)[2], font=fonts[2])
       text(x=xlim[2], rows, labels=annotext, pos=2, cex=cex, ...)
-      par(family=fonts[1])
+      par(family=names(fonts)[1], font=fonts[1])
 
    }
 

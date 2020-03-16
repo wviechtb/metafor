@@ -161,9 +161,9 @@ test_that("'infonly' argument works correctly with influence().", {
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, slab=paste0("Trial ", dat.bcg$trial))
    res <- rma(yi, vi, data=dat, method="FE")
    sav <- influence(res)
-   tmp <- print(sav)
-   expect_equivalent(length(tmp$rstudent), 13)
-   tmp <- print(sav, infonly=TRUE)
-   expect_equivalent(length(tmp$rstudent), 3)
+   tmp <- capture.output(print(sav))
+   expect_equivalent(length(tmp), 16)
+   tmp <- capture.output(print(sav, infonly=TRUE))
+   expect_equivalent(length(tmp), 6)
 
 })

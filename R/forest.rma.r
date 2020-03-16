@@ -511,6 +511,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
    #########################################################################
 
    ### set/get fonts (1st for study labels, 2nd for annotations, 3rd for ilab)
+   ### when passing a named vector, the names are for 'family' and the values are for 'font'
 
    if (missing(fonts)) {
       fonts <- rep(par("family"), 3)
@@ -521,7 +522,10 @@ cex, cex.lab, cex.axis, annosym, ...) {
          fonts <- c(fonts, fonts[1])
    }
 
-   par(family=fonts[1])
+   if (is.null(names(fonts)))
+      fonts <- structure(c(1L,1L,1L), names=fonts)
+
+   par(family=names(fonts)[1], font=fonts[1])
 
    ### adjust margins
 
@@ -755,11 +759,11 @@ cex, cex.lab, cex.axis, annosym, ...) {
          stop(mstyle$stop(paste0("Number of 'ilab' columns (", ncol(ilab), ") does not match length of 'ilab.xpos' argument (", length(ilab.xpos), ").")))
       if (!is.null(ilab.pos) && length(ilab.pos) == 1L)
          ilab.pos <- rep(ilab.pos, ncol(ilab))
-      par(family=fonts[3])
+      par(family=names(fonts)[3], font=fonts[3])
       for (l in seq_len(ncol(ilab))) {
          ltext(ilab.xpos[l], rows, ilab[,l], pos=ilab.pos[l], cex=cex, ...)
       }
-      par(family=fonts[1])
+      par(family=names(fonts)[1], font=fonts[1])
    }
 
    ### add study annotations on the right: yi [LB, UB]
@@ -829,13 +833,13 @@ cex, cex.lab, cex.axis, annosym, ...) {
       annotext <- apply(annotext, 1, paste, collapse="")
       annotext[grepl("NA", annotext, fixed=TRUE)] <- ""
 
-      par(family=fonts[2])
+      par(family=names(fonts)[2], font=fonts[2])
       if (addfit && x$int.only) {
          ltext(ddd$textpos[2], c(rows,-1), labels=annotext, pos=2, cex=cex, ...)
       } else {
          ltext(ddd$textpos[2], rows, labels=annotext, pos=2, cex=cex, ...)
       }
-      par(family=fonts[1])
+      par(family=names(fonts)[1], font=fonts[1])
 
    }
 
