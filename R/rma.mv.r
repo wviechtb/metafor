@@ -643,6 +643,12 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
 
    }
 
+   ### warn user that 'struct' argument is disregarded if it has been changed
+   ### from the default, but the model doesn't contain '~ inner | outer' terms
+
+   if (!withG && struct[1] != "CS")
+      warning(mstyle$warning(paste0("Model does not contain an '~ inner | outer' term, so 'struct' argument is disregaded.")), call.=FALSE)
+
    #return(list(mf.r=mf.r, mf.s=mf.s, mf.g=mf.g, mf.h=mf.h))
 
    ### note: checks on NAs in mf.s, mf.g, and mf.h after subsetting (since NAs may be removed by subsetting)
