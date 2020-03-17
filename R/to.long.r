@@ -39,7 +39,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
    ### need this at the end to check if append=TRUE can actually be done
 
-   no.data <- is.null(data)
+   has.data <- !is.null(data)
 
    if (is.null(data)) {
       data <- sys.frame(sys.parent())
@@ -614,7 +614,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
    if (!is.null(subset)) {
       slab <- slab[subset]
-      if (!no.data)
+      if (has.data)
          data <- data[subset,]
    }
 
@@ -643,7 +643,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
             ci   <- ci[not.na]
             di   <- di[not.na]
             slab <- slab[not.na]
-            if (!no.data)
+            if (has.data)
                data <- data[not.na,]
             warning(mstyle$warning("Tables with NAs omitted."))
          }
@@ -684,7 +684,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
          dat[[2]] <- factor(dat[[2]])
          dat[[3]] <- factor(dat[[3]])
 
-         if (!no.data && append)
+         if (has.data && append)
             dat <- cbind(data[rep(seq_len(k), each=4),], dat)
 
       } else {
@@ -708,7 +708,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
          dat[[1]] <- factor(dat[[1]])
          dat[[2]] <- factor(dat[[2]])
 
-         if (!no.data && append)
+         if (has.data && append)
             dat <- cbind(data[rep(seq_len(k), each=2),], dat)
 
       }
@@ -733,7 +733,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
             ci   <- ci[not.na]
             di   <- di[not.na]
             slab <- slab[not.na]
-            if (!no.data)
+            if (has.data)
                data <- data[not.na,]
             warning(mstyle$warning("Tables with NAs omitted."))
          }
@@ -774,7 +774,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
          dat[[2]] <- factor(dat[[2]])
          dat[[3]] <- factor(dat[[3]])
 
-         if (!no.data && append)
+         if (has.data && append)
             dat <- data.frame(data[rep(seq_len(k), each=4),], dat)
 
       } else {
@@ -798,7 +798,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
          dat[[1]] <- factor(dat[[1]])
          dat[[2]] <- factor(dat[[2]])
 
-         if (!no.data && append)
+         if (has.data && append)
             dat <- cbind(data[rep(seq_len(k), each=2),], dat)
 
       }
@@ -823,7 +823,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
             ci   <- ci[not.na]
             di   <- di[not.na]
             slab <- slab[not.na]
-            if (!no.data)
+            if (has.data)
                data <- data[not.na,]
             warning(mstyle$warning("Tables with NAs omitted."))
          }
@@ -864,7 +864,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
          dat[[2]] <- factor(dat[[2]])
          dat[[3]] <- factor(dat[[3]])
 
-         if (!no.data && append)
+         if (has.data && append)
             dat <- cbind(data[rep(seq_len(k), each=4),], dat)
 
       } else {
@@ -888,7 +888,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
          dat[[1]] <- factor(dat[[1]])
          dat[[2]] <- factor(dat[[2]])
 
-         if (!no.data && append)
+         if (has.data && append)
             dat <- cbind(data[rep(seq_len(k), each=2),], dat)
 
       }
@@ -913,7 +913,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
             t1i  <- t1i[not.na]
             t2i  <- t2i[not.na]
             slab <- slab[not.na]
-            if (!no.data)
+            if (has.data)
                data <- data[not.na,]
             warning(mstyle$warning("Tables with NAs omitted."))
          }
@@ -949,7 +949,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
       dat[[1]] <- factor(dat[[1]])
       dat[[2]] <- factor(dat[[2]])
 
-      if (!no.data && append)
+      if (has.data && append)
          dat <- cbind(data[rep(seq_len(k), each=2),], dat)
 
    }
@@ -974,7 +974,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
             n1i  <- n1i[not.na]
             n2i  <- n2i[not.na]
             slab <- slab[not.na]
-            if (!no.data)
+            if (has.data)
                data <- data[not.na,]
             warning(mstyle$warning("Tables with NAs omitted."))
          }
@@ -1011,7 +1011,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
       dat[[1]] <- factor(dat[[1]])
       dat[[2]] <- factor(dat[[2]])
 
-      if (!no.data && append)
+      if (has.data && append)
          dat <- cbind(data[rep(seq_len(k), each=2),], dat)
 
    }
@@ -1032,7 +1032,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
             ri   <- ri[not.na]
             ni   <- ni[not.na]
             slab <- slab[not.na]
-            if (!no.data)
+            if (has.data)
                data <- data[not.na,]
             warning(mstyle$warning("Tables with NAs omitted."))
          }
@@ -1066,7 +1066,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
       dat[[1]] <- factor(dat[[1]])
 
-      if (!no.data && append)
+      if (has.data && append)
          dat <- cbind(data, dat)
 
    }
@@ -1087,7 +1087,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
             xi   <- xi[not.na]
             mi   <- mi[not.na]
             slab <- slab[not.na]
-            if (!no.data)
+            if (has.data)
                data <- data[not.na,]
             warning(mstyle$warning("Tables with NAs omitted."))
          }
@@ -1126,7 +1126,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
          dat[[1]] <- factor(dat[[1]])
          dat[[2]] <- factor(dat[[2]])
 
-         if (!no.data && append)
+         if (has.data && append)
             dat <- cbind(data[rep(seq_len(k), each=2),], dat)
 
       } else {
@@ -1148,7 +1148,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
          dat[[1]] <- factor(dat[[1]])
 
-         if (!no.data && append)
+         if (has.data && append)
             dat <- cbind(data, dat)
 
       }
@@ -1171,7 +1171,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
             xi   <- xi[not.na]
             ti   <- ti[not.na]
             slab <- slab[not.na]
-            if (!no.data)
+            if (has.data)
                data <- data[not.na,]
             warning(mstyle$warning("Tables with NAs omitted."))
          }
@@ -1205,7 +1205,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
       dat[[1]] <- factor(dat[[1]])
 
-      if (!no.data && append)
+      if (has.data && append)
          dat <- cbind(data, dat)
 
    }
@@ -1227,7 +1227,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
             sdi  <- sdi[not.na]
             ni   <- ni[not.na]
             slab <- slab[not.na]
-            if (!no.data)
+            if (has.data)
                data <- data[not.na,]
             warning(mstyle$warning("Tables with NAs omitted."))
          }
@@ -1262,7 +1262,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
       dat[[1]] <- factor(dat[[1]])
 
-      if (!no.data && append)
+      if (has.data && append)
          dat <- cbind(data, dat)
 
    }
@@ -1292,7 +1292,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
             ni   <- ni[not.na]
             ri   <- ri[not.na]
             slab <- slab[not.na]
-            if (!no.data)
+            if (has.data)
                data <- data[not.na,]
             warning(mstyle$warning("Tables with NAs omitted."))
          }
@@ -1332,7 +1332,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
          dat[[1]] <- factor(dat[[1]])
 
-         if (!no.data && append)
+         if (has.data && append)
             dat <- cbind(data, dat)
 
       } else {
@@ -1355,7 +1355,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
          dat[[1]] <- factor(dat[[1]])
 
-         if (!no.data && append)
+         if (has.data && append)
             dat <- cbind(data, dat)
 
       }
@@ -1379,7 +1379,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
             mi   <- mi[not.na]
             ni   <- ni[not.na]
             slab <- slab[not.na]
-            if (!no.data)
+            if (has.data)
                data <- data[not.na,]
             warning(mstyle$warning("Tables with NAs omitted."))
          }
@@ -1414,7 +1414,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
       dat[[1]] <- factor(dat[[1]])
 
-      if (!no.data && append)
+      if (has.data && append)
          dat <- data.frame(data, dat)
 
    }

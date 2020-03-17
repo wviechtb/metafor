@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.19</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.20</span>
       </span>
     </div>
 
@@ -134,7 +134,7 @@
 
     <pre class="usage"><span class='fu'>escalc</span>(<span class='no'>measure</span>, <span class='no'>ai</span>, <span class='no'>bi</span>, <span class='no'>ci</span>, <span class='no'>di</span>, <span class='no'>n1i</span>, <span class='no'>n2i</span>, <span class='no'>x1i</span>, <span class='no'>x2i</span>, <span class='no'>t1i</span>, <span class='no'>t2i</span>,
        <span class='no'>m1i</span>, <span class='no'>m2i</span>, <span class='no'>sd1i</span>, <span class='no'>sd2i</span>, <span class='no'>xi</span>, <span class='no'>mi</span>, <span class='no'>ri</span>, <span class='no'>ti</span>, <span class='no'>sdi</span>, <span class='no'>r2i</span>, <span class='no'>ni</span>, <span class='no'>yi</span>, <span class='no'>vi</span>, <span class='no'>sei</span>,
-       <span class='no'>data</span>, <span class='no'>slab</span>, <span class='no'>subset</span>,
+       <span class='no'>data</span>, <span class='no'>slab</span>, <span class='no'>subset</span>, <span class='no'>include</span>,
        <span class='kw'>add</span><span class='kw'>=</span><span class='fl'>1</span>/<span class='fl'>2</span>, <span class='kw'>to</span><span class='kw'>=</span><span class='st'>"only0"</span>, <span class='kw'>drop00</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>vtype</span><span class='kw'>=</span><span class='st'>"LS"</span>,
        <span class='kw'>var.names</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"yi"</span>,<span class='st'>"vi"</span>), <span class='kw'>add.measure</span><span class='kw'>=</span><span class='fl'>FALSE</span>,
        <span class='kw'>append</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>replace</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='no'>digits</span>, <span class='no'>...</span>)</pre>
@@ -252,7 +252,11 @@
     </tr>
     <tr>
       <th>subset</th>
-      <td><p>optional vector indicating the subset of studies that should be used. This can be a logical vector or a numeric vector indicating the indices of the studies to include.</p></td>
+      <td><p>optional (logical or numeric) vector indicating the subset of studies that will be included in the data frame returned by the function.</p></td>
+    </tr>
+    <tr>
+      <th>include</th>
+      <td><p>optional (logical or numeric) vector indicating the subset of studies for which the measure should be calculated. See the &#8216;Value&#8217; section for more details.</p></td>
     </tr>
     <tr>
       <th>add</th>
@@ -284,7 +288,7 @@
     </tr>
     <tr>
       <th>replace</th>
-      <td><p>logical indicating whether existing values for <code>yi</code> and <code>vi</code> in the data frame should be replaced or not. Only relevant when <code>append=TRUE</code> and the data frame already contains the <code>yi</code> and <code>vi</code> variables. If <code>replace=TRUE</code> (the default), all of the existing values will be overwritten. If <code>replace=FALSE</code>, only <code>NA</code> values will be replaced. See &#8216;Value&#8217; section below for more details.</p></td>
+      <td><p>logical indicating whether existing values for <code>yi</code> and <code>vi</code> in the data frame should be replaced or not. Only relevant when <code>append=TRUE</code> and the data frame already contains the <code>yi</code> and <code>vi</code> variables. If <code>replace=TRUE</code> (the default), all of the existing values will be overwritten. If <code>replace=FALSE</code>, only <code>NA</code> values will be replaced. See the &#8216;Value&#8217; section for more details.</p></td>
     </tr>
     <tr>
       <th>digits</th>
@@ -569,6 +573,8 @@
 
    If the data frame already contains two variables with names as specified by the var.names argument, the values for these two variables will be overwritten when replace=TRUE (which is the default). By setting replace=FALSE, only values that are NA will be replaced.
 
+   The subset argument can be used to select the studies that will be included in the data frame returned by the function. On the other hand, the include argument simply selects for which studies the measure will be computed (if it shouldn't be computed for all of them).
+
    The object is formatted and printed with the <a href='print.escalc.html'>print.escalc</a> function. The <a href='print.escalc.html'>summary.escalc</a> function can be used to obtain confidence intervals for the individual outcomes.
 
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
@@ -633,11 +639,8 @@
     <div class='dont-index'><p><code><a href='print.escalc.html'>print.escalc</a></code>, <code><a href='print.escalc.html'>summary.escalc</a></code>, <code><a href='rma.uni.html'>rma.uni</a></code>, <code><a href='rma.mh.html'>rma.mh</a></code>, <code><a href='rma.peto.html'>rma.peto</a></code>, <code><a href='rma.glmm.html'>rma.glmm</a></code>, <code><a href='rma.mv.html'>rma.mv</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>### copy BCG vaccine data into 'dat'</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.bcg</span>
-
-<span class='co'>### calculate log risk ratios and corresponding sampling variances</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'>escalc</span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
+    <pre class="examples"><div class='input'><span class='co'>### calculate log risk ratios and corresponding sampling variances</span>
+<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'>escalc</span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>)
 <span class='no'>dat</span></div><div class='output co'>#&gt;    trial               author year tpos  tneg cpos  cneg ablat      alloc 
 #&gt; 1      1              Aronson 1948    4   119   11   128    44     random 
 #&gt; 2      2     Ferguson &amp; Simes 1949    6   300   29   274    55     random 
@@ -671,7 +674,34 @@
 <span class='co'>### replace=FALSE, the yi and vi values for that study are not replaced</span>
 <span class='no'>dat</span>[<span class='fl'>1</span>:<span class='fl'>12</span>,<span class='fl'>10</span>:<span class='fl'>11</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
 <span class='no'>dat</span>[<span class='fl'>13</span>,<span class='fl'>4</span>:<span class='fl'>7</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'>escalc</span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>replace</span><span class='kw'>=</span><span class='fl'>FALSE</span>)
+<span class='no'>dat</span></div><div class='output co'>#&gt;    trial               author year tpos  tneg cpos  cneg ablat      alloc 
+#&gt; 1      1              Aronson 1948    4   119   11   128    44     random 
+#&gt; 2      2     Ferguson &amp; Simes 1949    6   300   29   274    55     random 
+#&gt; 3      3      Rosenthal et al 1960    3   228   11   209    42     random 
+#&gt; 4      4    Hart &amp; Sutherland 1977   62 13536  248 12619    52     random 
+#&gt; 5      5 Frimodt-Moller et al 1973   33  5036   47  5761    13  alternate 
+#&gt; 6      6      Stein &amp; Aronson 1953  180  1361  372  1079    44  alternate 
+#&gt; 7      7     Vandiviere et al 1973    8  2537   10   619    19     random 
+#&gt; 8      8           TPT Madras 1980  505 87886  499 87892    13     random 
+#&gt; 9      9     Coetzee &amp; Berjak 1968   29  7470   45  7232    27     random 
+#&gt; 10    10      Rosenthal et al 1961   17  1699   65  1600    42 systematic 
+#&gt; 11    11       Comstock et al 1974  186 50448  141 27197    18 systematic 
+#&gt; 12    12   Comstock &amp; Webster 1969    5  2493    3  2338    33 systematic 
+#&gt; 13    13       Comstock et al 1976   NA    NA   NA    NA    33 systematic 
+#&gt;         yi     vi 
+#&gt; 1       NA     NA 
+#&gt; 2       NA     NA 
+#&gt; 3       NA     NA 
+#&gt; 4       NA     NA 
+#&gt; 5       NA     NA 
+#&gt; 6       NA     NA 
+#&gt; 7       NA     NA 
+#&gt; 8       NA     NA 
+#&gt; 9       NA     NA 
+#&gt; 10      NA     NA 
+#&gt; 11      NA     NA 
+#&gt; 12      NA     NA 
+#&gt; 13 -0.0173 0.0714 </div><div class='input'><span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'>escalc</span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>replace</span><span class='kw'>=</span><span class='fl'>FALSE</span>)
 <span class='no'>dat</span></div><div class='output co'>#&gt;    trial               author year tpos  tneg cpos  cneg ablat      alloc 
 #&gt; 1      1              Aronson 1948    4   119   11   128    44     random 
 #&gt; 2      2     Ferguson &amp; Simes 1949    6   300   29   274    55     random 
@@ -700,6 +730,48 @@
 #&gt; 11 -0.3394 0.0124 
 #&gt; 12  0.4459 0.5325 
 #&gt; 13 -0.0173 0.0714 </div><div class='input'>
+<span class='co'>### illustrate difference between 'subset' and 'include' arguments</span>
+<span class='fu'>escalc</span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>, <span class='kw'>subset</span><span class='kw'>=</span><span class='fl'>1</span>:<span class='fl'>6</span>)</div><div class='output co'>#&gt;   trial               author year tpos  tneg cpos  cneg ablat     alloc      yi 
+#&gt; 1     1              Aronson 1948    4   119   11   128    44    random -0.8893 
+#&gt; 2     2     Ferguson &amp; Simes 1949    6   300   29   274    55    random -1.5854 
+#&gt; 3     3      Rosenthal et al 1960    3   228   11   209    42    random -1.3481 
+#&gt; 4     4    Hart &amp; Sutherland 1977   62 13536  248 12619    52    random -1.4416 
+#&gt; 5     5 Frimodt-Moller et al 1973   33  5036   47  5761    13 alternate -0.2175 
+#&gt; 6     6      Stein &amp; Aronson 1953  180  1361  372  1079    44 alternate -0.7861 
+#&gt;       vi 
+#&gt; 1 0.3256 
+#&gt; 2 0.1946 
+#&gt; 3 0.4154 
+#&gt; 4 0.0200 
+#&gt; 5 0.0512 
+#&gt; 6 0.0069 </div><div class='input'><span class='fu'>escalc</span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>, <span class='kw'>include</span><span class='kw'>=</span><span class='fl'>1</span>:<span class='fl'>6</span>)</div><div class='output co'>#&gt;    trial               author year tpos  tneg cpos  cneg ablat      alloc 
+#&gt; 1      1              Aronson 1948    4   119   11   128    44     random 
+#&gt; 2      2     Ferguson &amp; Simes 1949    6   300   29   274    55     random 
+#&gt; 3      3      Rosenthal et al 1960    3   228   11   209    42     random 
+#&gt; 4      4    Hart &amp; Sutherland 1977   62 13536  248 12619    52     random 
+#&gt; 5      5 Frimodt-Moller et al 1973   33  5036   47  5761    13  alternate 
+#&gt; 6      6      Stein &amp; Aronson 1953  180  1361  372  1079    44  alternate 
+#&gt; 7      7     Vandiviere et al 1973    8  2537   10   619    19     random 
+#&gt; 8      8           TPT Madras 1980  505 87886  499 87892    13     random 
+#&gt; 9      9     Coetzee &amp; Berjak 1968   29  7470   45  7232    27     random 
+#&gt; 10    10      Rosenthal et al 1961   17  1699   65  1600    42 systematic 
+#&gt; 11    11       Comstock et al 1974  186 50448  141 27197    18 systematic 
+#&gt; 12    12   Comstock &amp; Webster 1969    5  2493    3  2338    33 systematic 
+#&gt; 13    13       Comstock et al 1976   27 16886   29 17825    33 systematic 
+#&gt;         yi     vi 
+#&gt; 1  -0.8893 0.3256 
+#&gt; 2  -1.5854 0.1946 
+#&gt; 3  -1.3481 0.4154 
+#&gt; 4  -1.4416 0.0200 
+#&gt; 5  -0.2175 0.0512 
+#&gt; 6  -0.7861 0.0069 
+#&gt; 7       NA     NA 
+#&gt; 8       NA     NA 
+#&gt; 9       NA     NA 
+#&gt; 10      NA     NA 
+#&gt; 11      NA     NA 
+#&gt; 12      NA     NA 
+#&gt; 13      NA     NA </div><div class='input'>
 <span class='co'>### convert a regular data frame to an 'escalc' object</span>
 <span class='co'>### dataset from Lipsey &amp; Wilson (2001), Table 7.1, page 130</span>
 <span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>100</span>, <span class='fl'>308</span>, <span class='fl'>1596</span>, <span class='fl'>2479</span>, <span class='fl'>9021</span>, <span class='fl'>9028</span>, <span class='fl'>161</span>, <span class='fl'>172</span>, <span class='fl'>537</span>, <span class='fl'>7049</span>),

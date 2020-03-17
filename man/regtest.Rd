@@ -16,7 +16,7 @@ regtest(x, \dots)
    \item{vi}{vector with the corresponding sampling variances.}
    \item{sei}{vector with the corresponding standard errors.}
    \item{ni}{vector with the corresponding sample sizes.}
-   \item{subset}{optional vector indicating the subset of studies that should be included in the test. This can be a logical vector of the same length as \code{x} or a numeric vector indicating the indices of the observations to include. Only relevant when passing a vector via \code{x}.}
+   \item{subset}{optional (logical or numeric) vector indicating the subset of studies that should be included in the test. Only relevant when passing a vector via \code{x}.}
    \item{model}{either \code{"rma"} or \code{"lm"} to indicate the type of model to use for the regression test. See \sQuote{Details}.}
    \item{predictor}{either \code{"sei"} \code{"vi"}, \code{"ni"}, \code{"ninv"}, \code{"sqrtni"}, or \code{"sqrtninv"} to indicate the predictor to use for the regression test. See \sQuote{Details}.}
    \item{ret.fit}{logical indicating whether the full results from the fitted model should also be returned.}

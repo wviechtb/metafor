@@ -33,7 +33,7 @@ to.table(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \item{ni}{vector to specify the sample/group sizes.}
    \item{data}{optional data frame containing the variables given to the arguments above.}
    \item{slab}{optional vector with labels for the studies.}
-   \item{subset}{optional vector indicating the subset of studies that should be used. This can be a logical vector or a numeric vector indicating the indices of the studies to include.}
+   \item{subset}{optional (logical or numeric) vector indicating the subset of studies that should be included in the array returned by the function.}
    \item{add}{see the documentation of the \code{\link{escalc}} function.}
    \item{to}{see the documentation of the \code{\link{escalc}} function.}
    \item{drop00}{see the documentation of the \code{\link{escalc}} function.}
@@ -55,7 +55,7 @@ to.table(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    The examples below illustrate the use of this function.
 }
 \value{
-   An array with k elements each consisting of either 1 or 2 rows and an appropriate number of columns.
+   An array with \eqn{k} elements each consisting of either 1 or 2 rows and an appropriate number of columns.
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}

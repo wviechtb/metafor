@@ -56,7 +56,7 @@ dat <- dat.bcg
 
 ### calculate log risk ratios and corresponding sampling variances
 dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat,
-              slab=paste(dat$author, ", ", dat$year, sep=""))
+              slab=paste(author, ", ", year, sep=""))
 
 ### random-effects model
 res <- rma(yi, vi, data=dat)

@@ -13,7 +13,7 @@ fsn(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, subset, digits)
    \item{type}{character string indicating the method to use for the calculation of the fail-safe N. Possible options are \code{"Rosenthal"}, \code{"Orwin"}, or \code{"Rosenberg"}. See below for more details.}
    \item{alpha}{target alpha level to use for the Rosenthal and Rosenberg methods (.05 by default).}
    \item{target}{target average effect size to use for the Orwin method. If undefined, then the target average effect size will be equal to the observed average effect size divided by 2.}
-   \item{subset}{optional vector indicating the subset of studies that should be used for the calculation. This can be a logical vector of length \eqn{k} or a numeric vector indicating the indices of the observations to include.}
+   \item{subset}{optional (logical or numeric) vector indicating the subset of studies that should be used for the calculation.}
    \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is 4).}
 }
 \details{

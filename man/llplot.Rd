@@ -21,7 +21,7 @@ llplot(measure, yi, vi, sei, ai, bi, ci, di, n1i, n2i, data, subset, drop00=TRUE
    \item{n1i}{vector to specify the group sizes or row totals (first group/row).}
    \item{n2i}{vector to specify the group sizes or row totals (second group/row).}
    \item{data}{optional data frame containing the variables given to the arguments above.}
-   \item{subset}{optional vector indicating the subset of studies that should be used. This can be a logical vector or a numeric vector indicating the indices of the studies to include.}
+   \item{subset}{optional (logical or numeric) vector indicating the subset of studies that should be included in the plot.}
    \item{drop00}{logical indicating whether studies with no cases (or only cases) in both groups should be dropped. See \sQuote{Details}.}
    \item{xvals}{integer specifying for how many distinct values the likelihood should be evaluated.}
    \item{xlim}{x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.}

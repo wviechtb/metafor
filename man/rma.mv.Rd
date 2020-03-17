@@ -18,7 +18,7 @@ rma.mv(yi, V, W, mods, random, struct="CS", intercept=TRUE,
    \item{intercept}{logical indicating whether an intercept should be added to the model (the default is \code{TRUE}). Ignored when \code{mods} is a formula.}
    \item{data}{optional data frame containing the data supplied to the function.}
    \item{slab}{optional vector with labels for the \eqn{k} outcomes/studies.}
-   \item{subset}{optional vector indicating the subset of outcomes/studies that should be used for the analysis. This can be a logical vector of length \eqn{k} or a numeric vector indicating the indices of the observations to include.}
+   \item{subset}{optional (logical or numeric) vector indicating the subset of studies (or more precisely, rows of the dataset) that should be used for the analysis.}
    \item{method}{character string specifying whether the model should be fitted via maximum-likelihood (\code{"ML"}) or via restricted maximum-likelihood (\code{"REML"}) estimation. Default is \code{"REML"}.}
    \item{test}{character string specifying how test statistics and confidence intervals for the fixed effects should be computed. By default (\code{test="z"}), Wald-type tests and CIs are obtained, which are based on a standard normal distribution. When \code{test="t"}, a t-distribution is used instead. See \sQuote{Details}.}
    \item{level}{numerical value between 0 and 100 specifying the confidence interval level (the default is 95).}

@@ -271,8 +271,8 @@ test_that("escalc() works correctly for measure='MNLN/CVLN/SDLN'", {
 test_that("'var.names' argument works correctly for 'escalc' objects.", {
 
    dat <- dat.bcg
-   dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat, var.names=c("y1","v1"), slab=paste0(dat$author, ", ", dat$year))
-   dat <- escalc(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat, var.names=c("y2","v2"), slab=paste0(dat$author, ", ", dat$year))
+   dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat, var.names=c("y1","v1"), slab=paste0(author, ", ", year))
+   dat <- escalc(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat, var.names=c("y2","v2"), slab=paste0(author, ", ", year))
    expect_identical(tail(names(dat), 4), c("y1","v1","y2","v2"))
    expect_identical(attributes(dat)$yi.names, c("y2","y1"))
    expect_identical(attributes(dat)$vi.names, c("v2","v1"))
@@ -284,8 +284,8 @@ test_that("'var.names' argument works correctly for 'escalc' objects.", {
 test_that("`[`, cbind(), and rbind() work correctly for 'escalc' objects.", {
 
    dat <- dat.bcg
-   dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat, var.names=c("y1","v1"), slab=paste0(dat$author, ", ", dat$year))
-   dat <- escalc(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat, var.names=c("y2","v2"), slab=paste0(dat$author, ", ", dat$year))
+   dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat, var.names=c("y1","v1"), slab=paste0(author, ", ", year))
+   dat <- escalc(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat, var.names=c("y2","v2"), slab=paste0(author, ", ", year))
    dat <- cbind(dat[,1:9], dat[,c(12:13,10:11)])
    expect_identical(tail(names(dat), 4), c("y2","v2","y1","v1"))
    expect_identical(attributes(dat)$yi.names, c("y2","y1"))
@@ -298,8 +298,8 @@ test_that("`[`, cbind(), and rbind() work correctly for 'escalc' objects.", {
    expect_identical(attr(dat$y2, "slab"), paste0(dat$author, ", ", dat$year))
 
    dat <- dat.bcg
-   dat1 <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat, var.names=c("y1","v1"), slab=paste0(dat$author, ", ", dat$year))
-   dat2 <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat, var.names=c("y1","v1"), slab=paste0(dat$author, ", ", dat$year))
+   dat1 <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat, var.names=c("y1","v1"), slab=paste0(author, ", ", year))
+   dat2 <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat, var.names=c("y1","v1"), slab=paste0(author, ", ", year))
    dat1 <- dat1[1:4,]
    dat2 <- dat2[4:1,]
    dat <- rbind(dat1, dat2)
@@ -313,8 +313,8 @@ test_that("`[`, cbind(), and rbind() work correctly for 'escalc' objects.", {
 test_that("summary() of 'escalc' objects works correctly with the 'out.names' argument.", {
 
    dat <- dat.bcg
-   dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat, var.names=c("y1","v1"), slab=paste0(dat$author, ", ", dat$year))
-   dat <- escalc(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat, var.names=c("y2","v2"), slab=paste0(dat$author, ", ", dat$year))
+   dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat, var.names=c("y1","v1"), slab=paste0(author, ", ", year))
+   dat <- escalc(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat, var.names=c("y2","v2"), slab=paste0(author, ", ", year))
    dat <- summary(dat, var.names=c("y1","v1"), out.names=c("sei1","zi1","ci.lb1","ci.ub1"))
    dat <- summary(dat, var.names=c("y2","v2"), out.names=c("sei2","zi2","ci.lb2","ci.ub2"))
    expect_equivalent(with(dat, c(zi1[1], sei1[1], ci.lb1[1], ci.ub1[1])), c(-1.5586, 0.5706, -2.0077, 0.2290), tolerance=.tol[["est"]])
@@ -323,5 +323,38 @@ test_that("summary() of 'escalc' objects works correctly with the 'out.names' ar
    dat <- dat[,1:11]
    expect_identical(attr(dat, "yi.names"), "y1")
    expect_identical(attr(dat, "vi.names"), "v1")
+
+})
+
+test_that("'subset' and 'include' arguments work correctly in 'escalc'.", {
+
+   all <- dat.bcg
+   all$tpos[1] <- NA
+
+   dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=all, subset=1:4)
+   expect_equivalent(c(dat$yi), c(NA, -1.5854, -1.3481, -1.4416), tolerance=.tol[["est"]])
+
+   dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=all, subset=1:4, include=1:3)
+   expect_equivalent(c(dat$yi), c(NA, -1.5854, -1.3481, NA), tolerance=.tol[["est"]])
+   expect_identical(attributes(dat$yi)$ni, c(NA, 609L, 451L, NA))
+
+   dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=all, subset=1:4, include=1:3, add.measure=TRUE)
+   expect_identical(dat$measure, c("", "RR", "RR", ""))
+   attributes(dat$yi)$ni[3] <- 1L
+   dat <- escalc(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat, include=3:4, add.measure=TRUE)
+   expect_equivalent(c(dat$yi), c(NA, -1.5854, -1.3863, -1.4564), tolerance=.tol[["est"]])
+   expect_identical(dat$measure, c("", "RR", "OR", "OR"))
+   expect_identical(attributes(dat$yi)$ni, c(NA, 609L, 451L, 26465L))
+
+   dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=all, subset=1:4, include=1:3, add.measure=TRUE)
+   attributes(dat$yi)$ni[3] <- 1L
+   dat <- escalc(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat, include=3:4, replace=FALSE, add.measure=TRUE)
+   expect_equivalent(c(dat$yi), c(NA, -1.5854, -1.3481, -1.4564), tolerance=.tol[["est"]])
+   expect_identical(dat$measure, c("", "RR", "RR", "OR"))
+   expect_identical(attributes(dat$yi)$ni, c(NA, 609L, 1L, 26465L))
+
+   dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=all, subset=1:4, include=1:3, append=FALSE, add.measure=TRUE)
+   expect_equivalent(c(dat$yi), c(NA, -1.5854, -1.3481, NA), tolerance=.tol[["est"]])
+   expect_identical(dat$measure, c("", "RR", "RR", ""))
 
 })

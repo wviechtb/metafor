@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.19</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.20</span>
       </span>
     </div>
 
@@ -161,7 +161,7 @@
     </tr>
     <tr>
       <th>subset</th>
-      <td><p>optional vector indicating the subset of studies that should be included in the test. This can be a logical vector of the same length as <code>x</code> or a numeric vector indicating the indices of the observations to include. Only relevant when passing a vector via <code>x</code>.</p></td>
+      <td><p>optional (logical or numeric) vector indicating the subset of studies that should be included in the test. Only relevant when passing a vector via <code>x</code>.</p></td>
     </tr>
     <tr>
       <th>model</th>
@@ -306,11 +306,11 @@
 <span class='no'>dat</span>$<span class='no'>yi</span></div><div class='output co'>#&gt;  [1] -0.88931133 -1.58538866 -1.34807315 -1.44155119 -0.21754732 -0.78611559
 #&gt;  [7] -1.62089822  0.01195233 -0.46941765 -1.37134480 -0.33935883  0.44591340
 #&gt; [13] -0.01731395
-#&gt; attr(,"measure")
-#&gt; [1] "RR"
 #&gt; attr(,"ni")
 #&gt;  [1]    262    609    451  26465  10877   2992   3174 176782  14776   3381
-#&gt; [11]  77972   4839  34767</div><div class='input'>
+#&gt; [11]  77972   4839  34767
+#&gt; attr(,"measure")
+#&gt; [1] "RR"</div><div class='input'>
 <span class='co'>### then this will work</span>
 <span class='fu'>regtest</span>(<span class='no'>dat</span>$<span class='no'>yi</span>, <span class='no'>dat</span>$<span class='no'>vi</span>, <span class='kw'>predictor</span><span class='kw'>=</span><span class='st'>"ni"</span>)</div><div class='output co'>#&gt; 
 #&gt; Regression Test for Funnel Plot Asymmetry

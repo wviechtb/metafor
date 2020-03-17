@@ -1,5 +1,5 @@
 escalc <- function(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, m1i, m2i, sd1i, sd2i, xi, mi, ri, ti, sdi, r2i, ni, yi, vi, sei,
-data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("yi","vi"), add.measure=FALSE, append=TRUE, replace=TRUE, digits, ...) {
+data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("yi","vi"), add.measure=FALSE, append=TRUE, replace=TRUE, digits, ...) {
 
    ### check argument specifications
 
@@ -79,8 +79,6 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
       digits <- .set.digits(digits, dmiss=FALSE)
    }
 
-   #if (is.element(measure, c("AS")) && is.null(ddd$addyi))
-
    ### check if data argument has been specified
 
    if (missing(data))
@@ -88,7 +86,7 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
    ### need this at the end to check if append=TRUE can actually be done
 
-   no.data <- is.null(data)
+   has.data <- !is.null(data)
 
    ### check if data argument has been specified
 
@@ -103,10 +101,12 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
 
    ### get slab and subset arguments (will be NULL when unspecified)
 
-   mf.slab   <- mf[[match("slab",   names(mf))]]
-   mf.subset <- mf[[match("subset", names(mf))]]
-   slab      <- eval(mf.slab,   data, enclos=sys.frame(sys.parent()))
-   subset    <- eval(mf.subset, data, enclos=sys.frame(sys.parent()))
+   mf.slab    <- mf[[match("slab",    names(mf))]]
+   mf.subset  <- mf[[match("subset",  names(mf))]]
+   mf.include <- mf[[match("include", names(mf))]]
+   slab       <- eval(mf.slab,    data, enclos=sys.frame(sys.parent()))
+   subset     <- eval(mf.subset,  data, enclos=sys.frame(sys.parent()))
+   include    <- eval(mf.include, data, enclos=sys.frame(sys.parent()))
 
    ### get yi (in case it has been specified)
 
@@ -142,6 +142,8 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
          n2i    <- eval(mf.n2i, data, enclos=sys.frame(sys.parent()))
          if (is.null(bi)) bi <- n1i - ai
          if (is.null(di)) di <- n2i - ci
+
+         k.all <- length(ai)
 
          if (!is.null(subset)) {
             ai <- ai[subset]
@@ -539,6 +541,8 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
          t1i    <- eval(mf.t1i, data, enclos=sys.frame(sys.parent()))
          t2i    <- eval(mf.t2i, data, enclos=sys.frame(sys.parent()))
 
+         k.all <- length(x1i)
+
          if (!is.null(subset)) {
             x1i <- x1i[subset]
             x2i <- x2i[subset]
@@ -559,6 +563,8 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
             stop(mstyle$stop("One or more person-times are negative."))
 
          ni.u <- t1i + t2i ### unadjusted total sample sizes
+
+         k <- length(x1i)
 
          ### if drop00=TRUE, set counts to NA for studies that have no events in both arms
 
@@ -680,6 +686,8 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
          sd2i    <- eval(mf.sd2i, data, enclos=sys.frame(sys.parent()))
          n1i     <- eval(mf.n1i,  data, enclos=sys.frame(sys.parent()))
          n2i     <- eval(mf.n2i,  data, enclos=sys.frame(sys.parent()))
+
+         k.all <- length(n1i)
 
          if (!is.null(subset)) {
             m1i  <- m1i[subset]
@@ -928,6 +936,8 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
          ri    <- eval(mf.ri, data, enclos=sys.frame(sys.parent()))
          ni    <- eval(mf.ni, data, enclos=sys.frame(sys.parent()))
 
+         k.all <- length(ri)
+
          if (!is.null(subset)) {
             ri <- ri[subset]
             ni <- ni[subset]
@@ -1033,6 +1043,8 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
          mi     <- eval(mf.mi,  data, enclos=sys.frame(sys.parent()))
          ni     <- eval(mf.ni,  data, enclos=sys.frame(sys.parent()))
 
+         k.all <- length(ti)
+
          if (!is.null(subset)) {
             ti  <- ti[subset]
             r2i <- r2i[subset]
@@ -1104,6 +1116,8 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
          ni    <- eval(mf.ni, data, enclos=sys.frame(sys.parent()))
          if (is.null(mi)) mi <- ni - xi
 
+         k.all <- length(xi)
+
          if (!is.null(subset)) {
             xi <- xi[subset]
             mi <- mi[subset]
@@ -1123,6 +1137,8 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
             stop(mstyle$stop("One or more counts are negative."))
 
          ni.u <- xi + mi ### unadjusted total sample sizes
+
+         k <- length(xi)
 
          ### save unadjusted counts
 
@@ -1360,6 +1376,8 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
          xi    <- eval(mf.xi, data, enclos=sys.frame(sys.parent()))
          ti    <- eval(mf.ti, data, enclos=sys.frame(sys.parent()))
 
+         k.all <- length(xi)
+
          if (!is.null(subset)) {
             xi <- xi[subset]
             ti <- ti[subset]
@@ -1378,6 +1396,8 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
             stop(mstyle$stop("One or more person-times are negative."))
 
          ni.u <- ti ### unadjusted total sample sizes
+
+         k <- length(xi)
 
          ### save unadjusted counts
 
@@ -1486,6 +1506,8 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
          sdi    <- eval(mf.sdi, data, enclos=sys.frame(sys.parent()))
          ni     <- eval(mf.ni,  data, enclos=sys.frame(sys.parent()))
 
+         k.all <- length(ni)
+
          if (!is.null(subset)) {
             mi  <- mi[subset]
             sdi <- sdi[subset]
@@ -1526,6 +1548,8 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
             stop(mstyle$stop("One or more means are negative."))
 
          ni.u <- ni ### unadjusted total sample sizes
+
+         k <- length(ni)
 
          ### (raw) mean
 
@@ -1575,6 +1599,8 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
          sd2i    <- eval(mf.sd2i, data, enclos=sys.frame(sys.parent()))
          ni      <- eval(mf.ni,   data, enclos=sys.frame(sys.parent()))
          ri      <- eval(mf.ri,   data, enclos=sys.frame(sys.parent()))
+
+         k.all <- length(ni)
 
          if (!is.null(subset)) {
             m1i  <- m1i[subset]
@@ -1637,6 +1663,8 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
             stop(mstyle$stop("One or more sample sizes are negative."))
 
          ni.u <- ni ### unadjusted total sample sizes
+
+         k <- length(ni)
 
          ni <- ni.u
          mi <- ni - 1
@@ -1715,6 +1743,8 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
          mi    <- eval(mf.mi, data, enclos=sys.frame(sys.parent()))
          ni    <- eval(mf.ni, data, enclos=sys.frame(sys.parent()))
 
+         k.all <- length(ai)
+
          if (!is.null(subset)) {
             ai <- ai[subset]
             mi <- mi[subset]
@@ -1737,6 +1767,8 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
             stop(mstyle$stop("One or more sample sizes are negative."))
 
          ni.u <- ni ### unadjusted total sample sizes
+
+         k <- length(ai)
 
          ### raw alpha values
 
@@ -1779,6 +1811,8 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
       sei    <- eval(mf.sei, data, enclos=sys.frame(sys.parent()))
       ni     <- eval(mf.ni,  data, enclos=sys.frame(sys.parent()))
 
+      k.all <- length(yi)
+
       ### if neither vi nor sei is specified, then throw an error
       ### if only sei is specified, then square those values to get vi
       ### if vi is specified, use those values
@@ -1804,6 +1838,8 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
          stop(mstyle$stop("Supplied data vectors are not of the same length."))
 
       ni.u <- ni ### unadjusted total sample sizes
+
+      k <- length(yi)
 
    }
 
@@ -1860,94 +1896,104 @@ data, slab, subset, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("
       if (length(slab) != length(yi))
          stop(mstyle$stop("Study labels not of same length as data."))
 
-      ### add slab attribute to the yi vector
-      attr(yi, "slab") <- slab
-
    }
 
-   ### if a subset of studies is specified (note: subsetting of other parts already done above, so yi/vi/ni.u/slab are already subsetted)
+   ### if include/subset is NULL, set to TRUE vector
 
-   if (!is.null(subset)) {
-      if (!no.data)
-         data <- data[subset,,drop=FALSE]
+   if (is.null(include))
+      include <- rep(TRUE, k.all)
+   if (is.null(subset))
+      subset <- rep(TRUE, k.all)
+
+   ### turn numeric include/subset vectors into logical vectors
+
+   if (is.numeric(include)) {
+      include.logical <- rep(FALSE, k.all)
+      include.logical[include] <- TRUE
+      include <- include.logical
    }
 
-   ### add measure attribute to the yi vector
+   if (is.numeric(subset)) {
+      subset.logical <- rep(FALSE, k.all)
+      subset.logical[subset] <- TRUE
+      subset <- subset.logical
+   }
 
-   attr(yi, "measure") <- measure
+   ### apply subset to include
+
+   include <- include[subset]
+
+   ### subset data frame (note: subsetting of other parts already done above, so yi/vi/ni.u/slab are already subsetted)
+
+   if (has.data && any(!subset))
+      data <- data[subset,,drop=FALSE]
 
    ### put together dataset
 
-   if (!no.data && append) {
+   if (has.data && append) {
 
       ### if data argument has been specified and user wants to append
 
       dat <- data.frame(data)
 
-      if (replace) {
-
-         ### and wants to replace all values
-
-         dat[[var.names[1]]] <- yi ### if yi variable does not exists in dat, it will be added; otherwise it will be overwritten
-         dat[[var.names[2]]] <- vi ### if vi variable does not exists in dat, it will be added; otherwise it will be overwritten
-
-         if (add.measure) {
-            dat[[var.names[3]]] <- ""
-            dat[[var.names[3]]][!is.na(yi)] <- measure
-         }
-
-         attr(dat[[var.names[1]]], "ni") <- ni.u
-
+      if (replace || !is.element(var.names[1], names(dat))) {
+         yi.replace <- rep(TRUE, k)
       } else {
-
-         ### and only wants to replace any NA values
-
-         if (is.element(var.names[1], names(dat))) { ### if yi variable is in data frame, replace NA values with newly calculated values
-            is.na.yi <- is.na(dat[[var.names[1]]])
-            dat[[var.names[1]]][is.na.yi] <- yi[is.na.yi]
-            attributes(dat[[var.names[1]]])$ni[is.na.yi] <- ni.u[is.na.yi]
-         } else {
-            dat[[var.names[1]]] <- yi                ### if yi variable does not exist in dat, just add as new variable
-            attr(dat[[var.names[1]]], "ni") <- ni.u
-         }
-
-         if (is.element(var.names[2], names(dat))) { ### if vi variable is in data frame, replace NA values with newly calculated values
-            is.na.vi <- is.na(dat[[var.names[2]]])
-            dat[[var.names[2]]][is.na.vi] <- vi[is.na.vi]
-         } else {
-            dat[[var.names[2]]] <- vi                ### if vi variable does not exist in dat, just add as new variable
-         }
-
-         if (add.measure) {
-            if (is.element(var.names[3], names(dat))) {    ### if measure variable is in data frame, replace NA values with newly calculated values
-               is.na.measure <- c(dat[[var.names[3]]] == "") & !is.na(yi)
-               dat[[var.names[3]]][is.na.measure] <- measure
-            } else {
-               dat[[var.names[3]]] <- ""                   ### if measure variable does not exist in dat, just add as new variable
-               dat[[var.names[3]]][!is.na(yi)] <- measure
-            }
-         }
-
+         yi.replace <- is.na(dat[[var.names[1]]])
       }
+
+      if (replace || !is.element(var.names[2], names(dat))) {
+         vi.replace <- rep(TRUE, k)
+      } else {
+         vi.replace <- is.na(dat[[var.names[2]]])
+      }
+
+      if (replace || !is.element(var.names[3], names(dat))) {
+         measure.replace <- rep(TRUE, k)
+      } else {
+         measure.replace <- is.na(dat[[var.names[3]]]) | dat[[var.names[3]]] == ""
+      }
+
+      dat[[var.names[1]]][include & yi.replace] <- yi[include & yi.replace]
+      dat[[var.names[2]]][include & vi.replace] <- vi[include & vi.replace]
+
+      if (add.measure)
+         dat[[var.names[3]]][!is.na(yi) & include & measure.replace] <- measure
+
+      attributes(dat[[var.names[1]]])$ni[include & yi.replace] <- ni.u[include & yi.replace]
 
    } else {
 
       ### if data argument has not been specified or user does not want to append
 
+      dat <- data.frame(yi=rep(NA_real_, k), vi=rep(NA_real_, k))
+      dat$yi[include] <- yi[include]
+      dat$vi[include] <- vi[include]
+
+      if (add.measure)
+         dat$measure[!is.na(yi) & include] <- measure
+
+      attributes(dat$yi)$ni[include] <- ni.u[include]
+
       if (add.measure) {
-         dat <- data.frame(yi, vi)
-         dat$measure <- ""
-         dat$measure[!is.na(yi)] <- measure
          names(dat) <- var.names
       } else {
-         dat <- data.frame(yi, vi)
          names(dat) <- var.names[1:2]
       }
 
-      attr(dat[,1], "ni") <- ni.u
-
    }
 
+   ### replace missings in measure with ""
+   if (add.measure)
+      dat[[var.names[3]]][is.na(dat[[var.names[3]]])] <- ""
+
+   ### add slab attribute to the yi vector
+   attr(dat[[var.names[1]]], "slab") <- slab
+
+   ### add measure attribute to the yi vector
+   attr(dat[[var.names[1]]], "measure") <- measure
+
+   ### add digits attribute
    attr(dat, "digits") <- digits
 
    ### add 'yi.names' and 'vi.names' to the first position of the corresponding attributes
