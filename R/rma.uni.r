@@ -886,20 +886,23 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
    ### set default control parameters
 
    con <- list(verbose = FALSE,
-               tau2.init = NULL,      # initial value for iterative estimators (ML, REML, EB, SJ, SJIT, DLIT)
-               tau2.min = 0,          # lower bound for tau^2 value
-               tau2.max = 100,        # upper bound for tau^2 value (for PM/PMM/GENQM estimators; and passed down for tau^2 CI obtained with confint())
-               threshold = 10^-5,     # convergence threshold (for ML, REML, EB, SJIT, DLIT)
+               tau2.init = NULL,          # initial value for iterative estimators (ML, REML, EB, SJ, SJIT, DLIT)
+               tau2.min = 0,              # lower bound for tau^2 value
+               tau2.max = 100,            # upper bound for tau^2 value (for PM/PMM/GENQM estimators; and passed down for tau^2 CI obtained with confint())
+               threshold = 10^-5,         # convergence threshold (for ML, REML, EB, SJIT, DLIT)
                tol = .Machine$double.eps^0.25, # convergence tolerance for uniroot() as used for PM, PMM, and GENQM (also used in 'll0 - ll > con$tol' check for ML/REML)
-               ll0check = TRUE,       # should the 'll0 - ll > con$tol' check be conducted for ML/REML?
-               maxiter = 100,         # maximum number of iterations (for ML, REML, EB, SJIT, DLIT)
-               stepadj = 1,           # step size adjustment for Fisher scoring algorithm (for ML, REML, EB)
-               REMLf = TRUE,          # should |X'X| term be included in the REML log likelihood?
-               evtol = 1e-07,         # lower bound for eigenvalues to determine if model matrix is positive definite (also for checking if vimaxmin >= 1/con$evtol)
-               alpha.init = NULL,     # initial values for scale parameters
-               optimizer = "nlminb",  # optimizer to use ("optim", "nlminb", "uobyqa", "newuoa", "bobyqa", "nloptr", "nlm", "hjk", "nmk", "ucminf") for location-scale model
-               optmethod = "BFGS",    # argument 'method' for optim() ("Nelder-Mead" and "BFGS" are sensible options)
-               hessianCtrl=list(r=8), # arguments passed on to 'method.args' of hessian()
+               ll0check = TRUE,           # should the 'll0 - ll > con$tol' check be conducted for ML/REML?
+               maxiter = 100,             # maximum number of iterations (for ML, REML, EB, SJIT, DLIT)
+               stepadj = 1,               # step size adjustment for Fisher scoring algorithm (for ML, REML, EB)
+               REMLf = TRUE,              # should |X'X| term be included in the REML log likelihood?
+               evtol = 1e-07,             # lower bound for eigenvalues to determine if model matrix is positive definite (also for checking if vimaxmin >= 1/con$evtol)
+               alpha.init = NULL,         # initial values for scale parameters
+               optimizer = "nlminb",      # optimizer to use ("optim", "nlminb", "uobyqa", "newuoa", "bobyqa", "nloptr", "nlm", "hjk", "nmk", "ucminf", "optimParallel") for location-scale model
+               optmethod = "BFGS",        # argument 'method' for optim() ("Nelder-Mead" and "BFGS" are sensible options)
+               parallel = list(),         # parallel argument for optimParallel() (note: 'cl' argument in parallel is not passed; this is directly specified via 'cl')
+               cl = NULL,                 # arguments for optimParallel()
+               ncpus = 1L,                # arguments for optimParallel()
+               hessianCtrl=list(r=8),     # arguments passed on to 'method.args' of hessian()
                scaleZ = TRUE)
 
    ### replace defaults with any user-defined values
@@ -1440,12 +1443,21 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
       ### get optimizer arguments from control argument
 
-      optimizer  <- match.arg(con$optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","ucminf"))
-      optmethod  <- match.arg(con$optmethod, c("Nelder-Mead", "BFGS", "CG", "L-BFGS-B", "SANN", "Brent"))
+      optimizer  <- match.arg(con$optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","ucminf","optimParallel"))
+      optmethod  <- match.arg(con$optmethod, c("Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent"))
+      parallel   <- con$parallel
+      cl         <- con$cl
+      ncpus      <- con$ncpus
       optcontrol <- control[is.na(con.pos)] ### get arguments that are control arguments for optimizer
 
       if (length(optcontrol) == 0L)
          optcontrol <- list()
+
+      ### if control argument 'ncpus' is larger than 1, automatically switch to optimParallel optimizer
+      if (ncpus > 1L) {
+         con$optimizer <- "optimParallel"
+         optimizer <- "optimParallel"
+      }
 
       reml <- ifelse(method=="REML", TRUE, FALSE)
 
@@ -1476,6 +1488,11 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
       if (optimizer == "ucminf") {
          if (!requireNamespace("ucminf", quietly=TRUE))
             stop(mstyle$stop("Please install the 'ucminf' package to use this optimizer."))
+      }
+
+      if (optimizer == "optimParallel") {
+         if (!requireNamespace("optimParallel", quietly=TRUE))
+            stop(mstyle$stop("Please install the 'optimParallel' package to use this optimizer."))
       }
 
       if (!requireNamespace("numDeriv", quietly=TRUE))
@@ -1597,6 +1614,45 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
          optimizer <- paste0("ucminf::ucminf") ### need to use this due to requireNamespace()
          ctrl.arg <- ", control=optcontrol"
       }
+      if (optimizer=="optimParallel") {
+
+         par.arg <- "par"
+         optimizer <- paste0("optimParallel::optimParallel") ### need to use this due to requireNamespace()
+         ctrl.arg <- ", control=optcontrol, parallel=parallel"
+
+         parallel$cl <- NULL
+
+         if (is.null(cl)) {
+
+            ncpus <- as.integer(ncpus)
+
+            if (ncpus < 1)
+               stop(mstyle$stop("Control argument 'ncpus' must be >= 1."))
+
+            cl <- parallel::makePSOCKcluster(ncpus)
+            on.exit(parallel::stopCluster(cl), add=TRUE)
+
+         } else {
+
+            if (!inherits(cl, "SOCKcluster"))
+               stop(mstyle$stop("Specified cluster is not of class 'SOCKcluster'."))
+
+         }
+
+         parallel$cl <- cl
+
+         if (is.null(parallel$forward))
+            parallel$forward <- FALSE
+
+         if (is.null(parallel$loginfo)) {
+            if (verbose) {
+               parallel$loginfo <- TRUE
+            } else {
+               parallel$loginfo <- FALSE
+            }
+         }
+
+      }
 
       #return(list(con=con, optimizer=optimizer, optmethod=optmethod, optcontrol=optcontrol, ctrl.arg=ctrl.arg))
 
@@ -1622,12 +1678,17 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
       #return(opt.res)
 
+      if (optimizer == "optimParallel::optimParallel" && verbose) {
+         tmp <- capture.output(print(opt.res$loginfo))
+         .print.output(tmp, mstyle$verbose)
+      }
+
       if (inherits(opt.res, "try-error"))
          stop(mstyle$stop("Error during optimization for scale model."))
 
       ### convergence checks
 
-      if (is.element(optimizer, c("optim","nlminb","dfoptim::hjk","dfoptim::nmk")) && opt.res$convergence != 0)
+      if (is.element(optimizer, c("optim","nlminb","dfoptim::hjk","dfoptim::nmk","optimParallel::optimParallel")) && opt.res$convergence != 0)
          stop(mstyle$stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (convergence = ", opt.res$convergence, ").")))
 
       if (is.element(optimizer, c("minqa::uobyqa","minqa::newuoa","minqa::bobyqa")) && opt.res$ierr != 0)

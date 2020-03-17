@@ -1,4 +1,4 @@
-# metafor 2.2-20 (2020-03-17)
+# metafor 2.2-21 (2020-03-17)
 
 - `escalc()` gains `include` argument
 

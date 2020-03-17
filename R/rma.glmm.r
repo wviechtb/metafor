@@ -599,7 +599,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    con <- list(verbose = FALSE,            # also passed on to glm/glmer/optim/nlminb/minqa (uobyqa/newuoa/bobyqa)
                package="lme4",             # package for fitting logistic mixed-effects models ("lme4" or "GLMMadaptive")
-               optimizer = "optim",        # optimizer to use ("optim", "nlminb", "uobyqa", "newuoa", "bobyqa", "clogit", "clogistic")
+               optimizer = "optim",        # optimizer to use for CM.EL+OR ("optim", "nlminb", "uobyqa", "newuoa", "bobyqa", "clogit", "clogistic")
                optmethod = "BFGS",         # argument 'method' for optim() ("Nelder-Mead" and "BFGS" are sensible options)
                scale = TRUE,               # should non-dummy variables in the X matrix be rescaled before model fitting?
                evtol = 1e-07,              # lower bound for eigenvalues to determine if model matrix is positive definite
