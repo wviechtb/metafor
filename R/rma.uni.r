@@ -107,6 +107,13 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
    formula.mods <- NULL
    formula.scale <- NULL
 
+   ### set options(warn=1) if verbose > 2
+
+   if (verbose > 2) {
+      opwarn <- options(warn=1)
+      on.exit(options(warn=opwarn$warn))
+   }
+
    #########################################################################
 
    if (verbose && !exists(".rmspace"))

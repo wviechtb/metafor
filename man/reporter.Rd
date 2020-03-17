@@ -19,7 +19,7 @@ reporter(x, \dots)
    \item{forest}{optional character string with arguments to be added to the call to \code{\link{forest.rma}} for generating the forest plot.}
    \item{funnel}{optional character string with arguments to be added to the call to \code{\link{funnel.rma}} for generating the funnel plot.}
    \item{footnotes}{logical indicating whether additional explanatory footnotes should be added to the report (default is \code{FALSE}).}
-   \item{verbose}{logical indicating whether information on the progress of generating the report should be provided (default is \code{TRUE}).}
+   \item{verbose}{logical indicating whether information on the progress of the report generation should be provided (default is \code{TRUE}).}
    \item{\dots}{other arguments.}
 }
 \details{

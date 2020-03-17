@@ -153,6 +153,13 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
    formula.yi <- NULL
    formula.mods <- NULL
 
+   ### set options(warn=1) if verbose > 2
+
+   if (verbose > 2) {
+      opwarn <- options(warn=1)
+      on.exit(options(warn=opwarn$warn))
+   }
+
    #########################################################################
 
    if (verbose > 1)
@@ -1848,7 +1855,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
             stop(mstyle$stop("Control argument 'ncpus' must be >= 1."))
 
          cl <- parallel::makePSOCKcluster(ncpus)
-         on.exit(parallel::stopCluster(cl))
+         on.exit(parallel::stopCluster(cl), add=TRUE)
 
       } else {
 

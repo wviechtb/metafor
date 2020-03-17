@@ -24,9 +24,6 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
    if (missing(targs))
       targs <- NULL
 
-   if (missing(verbose))
-      verbose <- FALSE
-
    expand <- FALSE # TODO: make this an option?
 
    level <- ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))

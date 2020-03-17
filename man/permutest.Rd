@@ -37,7 +37,7 @@ permutest(x, \dots)
 
    When using random permutations, the function ensures that the very first permutation will always correspond to the original data. This avoids p-values equal to 0.
 
-   When \code{permci=TRUE}, the function also tries to obtain permutation-based CIs of the model coefficient(s). This is done by shifting the observed effect sizes or outcomes and finding the most extreme values for which the permutation-based test would just lead to non-rejection. This is computationally very demanding and may take a long time to complete. For models with moderators, one can also set \code{permci} to a vector of indices specifying for which coefficient(s) a permutation-based CI should be obtained. When the algorithm fails to determine a particular CI bound, it will be shown as \code{NA} in the output.
+   When \code{permci=TRUE}, the function also tries to obtain permutation-based CIs of the model coefficient(s). This is done by shifting the observed effect sizes or outcomes and finding the most extreme values for which the permutation-based test would just lead to non-rejection. This is computationally expensive and may take a long time to complete. For models with moderators, one can also set \code{permci} to a vector of indices specifying for which coefficient(s) a permutation-based CI should be obtained. When the algorithm fails to determine a particular CI bound, it will be shown as \code{NA} in the output.
 }
 \value{
    An object of class \code{"permutest.rma.uni"}. The object is a list containing the following components:

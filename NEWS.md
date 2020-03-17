@@ -1,4 +1,7 @@
-# metafor 2.2-18 (2020-03-17)
+# metafor 2.2-19 (2020-03-17)
+
+- setting `verbose=3` in model fitting functions sets `options(warn=1)`
+
 
 - `forest.rma()` and `forest.default()` now throw informative errors when misusing `order` and `subset` arguments
 

@@ -89,6 +89,13 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    formula.mods <- NULL
 
+   ### set options(warn=1) if verbose > 2
+
+   if (verbose > 2) {
+      opwarn <- options(warn=1)
+      on.exit(options(warn=opwarn$warn))
+   }
+
    #########################################################################
 
    if (verbose)

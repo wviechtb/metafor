@@ -58,6 +58,13 @@ level=95, digits, verbose=FALSE, ...) {
       digits <- .set.digits(digits, dmiss=FALSE)
    }
 
+   ### set options(warn=1) if verbose > 2
+
+   if (verbose > 2) {
+      opwarn <- options(warn=1)
+      on.exit(options(warn=opwarn$warn))
+   }
+
    #########################################################################
 
    if (verbose)
