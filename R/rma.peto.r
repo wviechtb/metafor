@@ -247,7 +247,7 @@ level=95, digits, verbose=FALSE, ...) {
 
    }
 
-   k.yi <- length(yi) ### number of yi/vi pairs that are not NA (needed for QE df and fitstats calculation)
+   k.yi <- length(yi) ### number of yi/vi pairs that are not NA (needed for QE df and fit.stats calculation)
 
    ### add/to procedures for the 2x2 tables for the actual meta-analysis
    ### note: technically, nothing needs to be added, but Stata/RevMan add 1/2 by default for only0 studies (but drop studies with no/all events)

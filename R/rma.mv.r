@@ -1525,6 +1525,19 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
 
    verbose <- con$verbose
 
+   ### expand initial values to correct length
+
+   if (length(con$sigma2.init) == 1L)
+      con$sigma2.init <- rep(con$sigma2.init, sigma2s)
+   if (length(con$tau2.init) == 1L)
+      con$tau2.init <- rep(con$tau2.init, tau2s)
+   if (length(con$rho.init) == 1L)
+      con$rho.init <- rep(con$rho.init, rhos)
+   if (length(con$gamma2.init) == 1L)
+      con$gamma2.init <- rep(con$gamma2.init, gamma2s)
+   if (length(con$phi.init) == 1L)
+      con$phi.init <- rep(con$phi.init, phis)
+
    ### checks on initial values set by the user (the initial values computed by the function are replaced by the user defined ones at this point)
 
    if (withS && any(con$sigma2.init <= 0))
