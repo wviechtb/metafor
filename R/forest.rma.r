@@ -128,6 +128,9 @@ cex, cex.lab, cex.axis, annosym, ...) {
    if (inherits(x, "rma.glmm") && showweights)
       stop(mstyle$stop("Option 'showweights=TRUE' not possible for 'rma.glmm' objects."))
 
+   if (!is.null(ddd$subset))
+      stop(mstyle$stop("Function does not have a 'subset' argument (could use 'order' argument instead)."))
+
    #########################################################################
 
    ### digits[1] for annotations, digits[2] for x-axis labels

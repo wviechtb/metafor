@@ -1,4 +1,6 @@
-# metafor 2.2-17 (2020-03-16)
+# metafor 2.2-18 (2020-03-17)
+
+- `forest.rma()` and `forest.default()` now throw informative errors when misusing `order` and `subset` arguments
 
 - fixed failing tests due to the `stringsAsFactors=FALSE` change in the upcoming version of R
 

@@ -1,5 +1,8 @@
-Changes in Version 2.2-17 (2020-03-16)
+Changes in Version 2.2-18 (2020-03-17)
 =====================================
+
+   o forest.rma() and forest.default() now throw informative errors when
+     misusing 'order' and 'subset' arguments
 
    o plot.profile.rma() now always includes the actual value of the variance
      or correlation component as an additional point in the plot

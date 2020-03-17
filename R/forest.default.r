@@ -94,6 +94,9 @@ cex, cex.lab, cex.axis, annosym, ...) {
    ltext     <- function(..., textpos) text(...)
    lpoints   <- function(..., textpos) points(...)
 
+   if (!is.null(ddd$order))
+      stop(mstyle$stop("Function does not have an 'order' argument (could use 'subset' argument instead)."))
+
    #########################################################################
 
    ### digits[1] for annotations, digits[2] for x-axis labels
