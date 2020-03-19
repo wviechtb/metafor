@@ -1,4 +1,6 @@
-# metafor 2.2-22 (2020-03-19)
+# metafor 2.4-0 (2020-03-19)
+
+- version jump to 2.4-0 for CRAN release (from now on, even minor numbers for CRAN releases, odd numbers for development versions)
 
 - the various `forest()` functions gain `header` argument
 
