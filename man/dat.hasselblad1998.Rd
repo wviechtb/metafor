@@ -71,9 +71,8 @@ dev.new(width=7, height=4)
 par(mar=c(5,4,1,2))
 forest(c(0,res$beta[25:27]), sei=c(0,res$se[25:27]), psize=1, xlim=c(-3,4), digits=c(2,1), efac=2,
        slab=c("No Contact", "Self-Help", "Individual Counseling", "Group Counseling"),
-       atransf=exp, at=log(c(.5, 1, 2, 4, 8)), xlab="Odds Ratio for Intervention vs. No Contact")
-text(-3, 6, "Intervention", pos=4)
-text( 4, 6, "Odds Ratio [95\% CI]",  pos=2)
+       atransf=exp, at=log(c(.5, 1, 2, 4, 8)), xlab="Odds Ratio for Intervention vs. No Contact",
+       header=c("Intervention", "Odds Ratio [95\% CI]"))
 
 ############################################################################
 

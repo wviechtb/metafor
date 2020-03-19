@@ -1,4 +1,5 @@
-forest.default <- function(x, vi, sei, ci.lb, ci.ub, annotate=TRUE,  showweights=FALSE,
+forest.default <- function(x, vi, sei, ci.lb, ci.ub,
+annotate=TRUE,                             showweights=FALSE, header=FALSE,
 xlim, alim, clim, ylim, top=3, at, steps=5, level=95,      refline=0, digits=2L, width,
 xlab, slab,       ilab, ilab.xpos, ilab.pos, subset,
 transf, atransf, targs, rows,
@@ -25,6 +26,8 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
    if (is.function(transf) && is.function(atransf))
       stop(mstyle$stop("Use either 'transf' or 'atransf' to specify a transformation (not both)."))
+
+   yi <- x
 
    ### note: transf and atransf must be function names and cannot, for example, be arguments
    ### passed down from other functions (i.e., deparse(substitute(...)) will grab exactly what
@@ -78,10 +81,49 @@ cex, cex.lab, cex.axis, annosym, ...) {
    if (length(efac) == 1L)
       efac <- rep(efac, 2)
 
+   ### annotation symbols vector
+
    if (missing(annosym))
       annosym <- c(" [", ", ", "]")
    if (length(annosym) != 3L)
       stop(mstyle$stop("Argument 'annosym' must be a vector of length 3."))
+
+   level <- ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
+
+   ### set measure based on the measure attribute of yi
+
+   if (is.null(attr(yi, "measure"))) {
+      measure <- "GEN"
+   } else {
+      measure <- attr(yi, "measure")
+   }
+
+   ### column header
+
+   estlab <- .setlab(measure, transf.char, atransf.char, gentype=3, short=TRUE)
+   if (is.expression(estlab)) {
+      header.right <- parse(text=paste0("bold(", estlab, " * '", annosym[1], "' * '", 100*(1-level), "% CI'", " * '", annosym[3], "')"))
+   } else {
+      header.right <- paste0(estlab, annosym[1], 100*(1-level), "% CI", annosym[3])
+   }
+
+   if (is.logical(header)) {
+      if (header) {
+         header.left <- "Study"
+      } else {
+         header.left <- NULL
+         header.right <- NULL
+      }
+   } else {
+      if (!is.character(header))
+         stop(mstyle$stop("Argument 'header' must either be a logical or character vector."))
+      if (length(header) == 1L) {
+         header.left <- header
+      } else {
+         header.left <- header[1]
+         header.right <- header[2]
+      }
+   }
 
    ddd <- list(...)
 
@@ -104,18 +146,6 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
    if (length(digits) == 1L)
       digits <- c(digits,digits)
-
-   level <- ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
-
-   yi <- x
-
-   ### set measure based on the measure attribute of yi
-
-   if (is.null(attr(yi, "measure"))) {
-      measure <- "GEN"
-   } else {
-      measure <- attr(yi, "measure")
-   }
 
    if (hasArg(ci.lb) && hasArg(ci.ub)) {     ### CI bounds are specified by user
       if (length(ci.lb) != length(ci.ub))
@@ -562,7 +592,6 @@ cex, cex.lab, cex.axis, annosym, ...) {
       for (l in seq_len(ncol(ilab))) {
          ltext(ilab.xpos[l], rows, ilab[,l], pos=ilab.pos[l], cex=cex, ...)
       }
-      par(family=fonts[1])
       par(family=names(fonts)[1], font=fonts[1])
    }
 
@@ -632,6 +661,11 @@ cex, cex.lab, cex.axis, annosym, ...) {
    }
 
    #lpoints(yi, rows, pch=pch, cex=cex*psize, ...)
+
+   ### add header
+
+   ltext(ddd$textpos[1], ylim[2]-(top-1)+1, header.left, pos=4, font=2, cex=cex, ...)
+   ltext(ddd$textpos[2], ylim[2]-(top-1)+1, header.right, pos=2, font=2, cex=cex, ...)
 
    #########################################################################
 

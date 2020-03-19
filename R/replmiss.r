@@ -1,5 +1,3 @@
-############################################################################
-
 replmiss <- function(x, y) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
@@ -22,11 +20,9 @@ replmiss <- function(x, y) {
    if (length(x) != length(y))
       stop(mstyle$stop("Length of 'x' and 'y' is not the same."))
 
-   #x <- ifelse(is.na(x), y, x) ### this is quite a bit slower than the following
+   #x <- ifelse(is.na(x), y, x) # this is quite a bit slower than the following
    x[is.na(x)] <- y[is.na(x)]
 
    return(x)
 
 }
-
-############################################################################

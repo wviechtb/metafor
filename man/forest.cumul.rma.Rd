@@ -3,7 +3,7 @@
 \title{Forest Plots (Method for 'cumul.rma' Objects)}
 \description{Function to create forest plots for objects of class \code{"cumul.rma"}.}
 \usage{
-\method{forest}{cumul.rma}(x, annotate=TRUE,
+\method{forest}{cumul.rma}(x, annotate=TRUE, header=FALSE,
        xlim, alim, clim, ylim, top=3, at, steps=5,
        level=x$level, refline=0, digits=2L, width,
        xlab, ilab, ilab.xpos, ilab.pos,
@@ -14,6 +14,7 @@
 \arguments{
    \item{x}{an object of class \code{"cumul.rma"}.}
    \item{annotate}{logical specifying whether annotations should be added to the plot (the default is \code{TRUE}).}
+   \item{header}{logical specifying whether column headings should be added to the plot (the default is \code{FALSE}). Can also be a character vector to specify the left and right headings.}
    \item{xlim}{horizontal limits of the plot region. If unspecified, the function tries to set the horizontal plot limits to some sensible values.}
    \item{alim}{the actual x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.}
    \item{clim}{limits for the confidence intervals. If unspecified, no limits are used.}

@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.21</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.22</span>
       </span>
     </div>
 
@@ -133,7 +133,8 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for default</span>
-<span class='fu'><a href='forest.html'>forest</a></span>(<span class='no'>x</span>, <span class='no'>vi</span>, <span class='no'>sei</span>, <span class='no'>ci.lb</span>, <span class='no'>ci.ub</span>, <span class='kw'>annotate</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>showweights</span><span class='kw'>=</span><span class='fl'>FALSE</span>,
+<span class='fu'><a href='forest.html'>forest</a></span>(<span class='no'>x</span>, <span class='no'>vi</span>, <span class='no'>sei</span>, <span class='no'>ci.lb</span>, <span class='no'>ci.ub</span>,
+       <span class='kw'>annotate</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>showweights</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>header</span><span class='kw'>=</span><span class='fl'>FALSE</span>,
        <span class='no'>xlim</span>, <span class='no'>alim</span>, <span class='no'>clim</span>, <span class='no'>ylim</span>, <span class='kw'>top</span><span class='kw'>=</span><span class='fl'>3</span>, <span class='no'>at</span>, <span class='kw'>steps</span><span class='kw'>=</span><span class='fl'>5</span>,
        <span class='kw'>level</span><span class='kw'>=</span><span class='fl'>95</span>, <span class='kw'>refline</span><span class='kw'>=</span><span class='fl'>0</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2L</span>, <span class='no'>width</span>,
        <span class='no'>xlab</span>, <span class='no'>slab</span>, <span class='no'>ilab</span>, <span class='no'>ilab.xpos</span>, <span class='no'>ilab.pos</span>,
@@ -171,6 +172,10 @@
     <tr>
       <th>showweights</th>
       <td><p>logical specifying whether the annotations should also include inverse variance weights (the default is <code>FALSE</code>).</p></td>
+    </tr>
+    <tr>
+      <th>header</th>
+      <td><p>logical specifying whether column headings should be added to the plot (the default is <code>FALSE</code>). Can also be a character vector to specify the left and right headings.</p></td>
     </tr>
     <tr>
       <th>xlim</th>

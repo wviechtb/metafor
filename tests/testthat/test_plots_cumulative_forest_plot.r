@@ -29,14 +29,7 @@ test_that("plot can be drawn for 'rma.uni' object.", {
 
    ### cumulative forest plot
    forest(tmp, xlim=c(-4,2), at=log(c(.125, .25, .5, 1, 2)),
-          atransf=exp, digits=c(2,3), cex=.75)
-
-   ### switch to bold font
-   par(cex=.75, font=2)
-
-   ### add column headings to the plot
-   text(-4, 15, "Author(s) and Year",  pos=4)
-   text( 2, 15, "Risk Ratio [95% CI]", pos=2)
+          atransf=exp, digits=c(2,3), cex=.75, header="Author(s) and Year")
 
    par(opar)
 
@@ -64,14 +57,7 @@ test_that("plot can be drawn for 'rma.mh' object.", {
 
    ### cumulative forest plot
    forest(tmp, xlim=c(-4,2), at=log(c(.125, .25, .5, 1, 2)),
-          atransf=exp, digits=c(2,3), cex=.75)
-
-   ### switch to bold font
-   par(cex=.75, font=2)
-
-   ### add column headings to the plot
-   text(-4, 15, "Author(s) and Year",  pos=4)
-   text( 2, 15, "Risk Ratio [95% CI]", pos=2)
+          atransf=exp, digits=c(2,3), cex=.75, header="Author(s) and Year")
 
    par(opar)
 
@@ -99,14 +85,7 @@ test_that("plot can be drawn for 'rma.peto' object.", {
 
    ### cumulative forest plot
    forest(tmp, xlim=c(-4,2), at=log(c(.125, .25, .5, 1, 2)),
-          atransf=exp, digits=c(2,3), cex=.75)
-
-   ### switch to bold font
-   par(cex=.75, font=2)
-
-   ### add column headings to the plot
-   text(-4, 15, "Author(s) and Year",  pos=4)
-   text( 2, 15, "Risk Ratio [95% CI]", pos=2)
+          atransf=exp, digits=c(2,3), cex=.75, header="Author(s) and Year")
 
    par(opar)
 

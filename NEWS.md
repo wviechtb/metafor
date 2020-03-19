@@ -1,4 +1,6 @@
-# metafor 2.2-21 (2020-03-17)
+# metafor 2.2-22 (2020-03-19)
+
+- the various `forest()` functions gain `header` argument
 
 - `escalc()` gains `include` argument
 

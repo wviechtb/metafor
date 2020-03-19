@@ -40,8 +40,6 @@ res <- rma(measure="SMD", m1i=m1i, sd1i=sd1i, n1i=n1i, m2i=m2i, sd2i=sd2i, n2i=n
 res
 
 ### draw forest plot
-forest(res, xlim=c(-7,5), alim=c(-3,1), cex=.8)
-text(-7, 11, "Study/Source",          pos=4, cex=.8)
-text( 5, 11, "Observed SMD [95\% CI]", pos=2, cex=.8)
+forest(res, xlim=c(-7,5), alim=c(-3,1), cex=.8, header="Study/Source")
 }
 \keyword{datasets}

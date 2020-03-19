@@ -82,11 +82,9 @@ test_that("forest plot of observed log(OR)s and corresponding BLUPs can be drawn
    par(family="mono", mar=c(5,4,1,2))
    forest(res, refline=res$beta, addcred=TRUE, xlim=c(-7,8), alim=c(-3,3), slab=1:13, psize=.8,
           ilab=paste0("(n = ", formatC(apply(dat[,c(4:7)], 1, sum), width=7, big.mark=","), ")"),
-          ilab.xpos=-3.5, ilab.pos=2, rows=13:1+.15)
+          ilab.xpos=-3.5, ilab.pos=2, rows=13:1+.15, header="Trial (total n)")
    arrows(sav$pi.lb, 13:1 - .15, sav$pi.ub, 13:1 -.15, length=.03, angle=90, code=3, lty="dotted")
    points(sav$pred, 13:1 - .15, pch=15, cex=.8)
-   text(-7, 15, "Trial (total n)", pos=4)
-   text( 8, 15, "Log Odds Ratio [95% CI]", pos=2)
    par(opar)
 
 })

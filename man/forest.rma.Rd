@@ -3,7 +3,8 @@
 \title{Forest Plots (Method for 'rma' Objects)}
 \description{Function to create forest plots for objects of class \code{"rma"}.}
 \usage{
-\method{forest}{rma}(x, annotate=TRUE, addfit=TRUE, addcred=FALSE, showweights=FALSE,
+\method{forest}{rma}(x, annotate=TRUE, addfit=TRUE, addcred=FALSE,
+       showweights=FALSE, header=FALSE,
        xlim, alim, clim, ylim, top=3, at, steps=5,
        level=x$level, refline=0, digits=2L, width,
        xlab, slab, mlab, ilab, ilab.xpos, ilab.pos,
@@ -14,9 +15,10 @@
 \arguments{
    \item{x}{an object of class \code{"rma"}.}
    \item{annotate}{logical specifying whether annotations should be added to the plot (the default is \code{TRUE}).}
-   \item{addfit}{logical specifying whether the summary estimate (for models without moderators) or fitted values (for models with moderators) should be added to the plot. See \sQuote{Details}.}
-   \item{addcred}{logical specifying whether the bounds of the credibility/prediction interval should be added to the plot. See \sQuote{Details}.}
+   \item{addfit}{logical specifying whether the summary estimate (for models without moderators) or fitted values (for models with moderators) should be added to the plot (the default is \code{TRUE}). See \sQuote{Details}.}
+   \item{addcred}{logical specifying whether the bounds of the credibility/prediction interval should be added to the plot (the default is \code{FALSE}). See \sQuote{Details}.}
    \item{showweights}{logical specifying whether the annotations should also include the weights given to the observed effects or outcomes during the model fitting (the default is \code{FALSE}).}
+   \item{header}{logical specifying whether column headings should be added to the plot (the default is \code{FALSE}). Can also be a character vector to specify the left and right headings.}
    \item{xlim}{horizontal limits of the plot region. If unspecified, the function tries to set the horizontal plot limits to some sensible values.}
    \item{alim}{the actual x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.}
    \item{clim}{limits for the confidence/credibility/prediction intervals. If unspecified, no limits are used.}
@@ -110,11 +112,11 @@ res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg,
            slab=paste(author, year, sep=", "))
 
 ### default forest plot of the log risk ratios and summary estimate
-forest(res)
+forest(res, header=TRUE)
 
 ### summary estimate in row -1; studies in rows k=13 through 1; horizontal
-### lines in rows 0 and k+1; and two extra lines of space at the top for
-### headings or other annotations
+### lines in rows 0 and k+1; two extra lines of space at the top for headings,
+### and other annotations; headings (if requested) in line k+2
 op <- par(xpd=TRUE)
 text(x=-8.5, y=-1:16, -1:16, pos=4, cex=.5)
 par(op)
@@ -138,10 +140,10 @@ forest(res, xlim=c(-18,10))
 forest(res, xlim=c(-10,10))
 
 ### illustrate transf argument
-forest(res, transf=exp, at=c(0,1,2,4,6), xlim=c(-8,12), cex=.8, refline=1)
+forest(res, transf=exp, at=c(0,1,2,4,6), xlim=c(-8,12), cex=.8, refline=1, header=TRUE)
 
 ### illustrate atransf argument
-forest(res, atransf=exp, at=log(c(.05,.25,1,4,20)), xlim=c(-8,7), cex=.8)
+forest(res, atransf=exp, at=log(c(.05,.25,1,4,20)), xlim=c(-8,7), cex=.8, header=TRUE)
 
 ### showweights argument
 forest(res, atransf=exp, at=log(c(.05,.25,1,4,20)), xlim=c(-8,8),
@@ -151,12 +153,10 @@ forest(res, atransf=exp, at=log(c(.05,.25,1,4,20)), xlim=c(-8,8),
 ### note: may need to widen plotting device to avoid overlapping text
 forest(res, atransf=exp, at=log(c(.05, .25, 1, 4)), xlim=c(-16,6),
        ilab=cbind(dat.bcg$tpos, dat.bcg$tneg, dat.bcg$cpos, dat.bcg$cneg),
-       ilab.xpos=c(-9.5,-8,-6,-4.5), cex=.75)
+       ilab.xpos=c(-9.5,-8,-6,-4.5), cex=.75, header="Author(s) and Year")
 op <- par(cex=.75, font=2)
 text(c(-9.5,-8,-6,-4.5), 15, c("TB+", "TB-", "TB+", "TB-"))
 text(c(-8.75,-5.25),     16, c("Vaccinated", "Control"))
-text(-16,                15, "Author(s) and Year",   pos=4)
-text(6,                  15, "Risk Ratio [95\% CI]", pos=2)
 par(op)
 
 ### mixed-effects model with absolute latitude in the model
@@ -165,12 +165,9 @@ res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, mods = ~ ablat,
 
 ### forest plot with observed and fitted values
 forest(res, xlim=c(-9,5), order="fit", cex=.8, ilab=dat.bcg$ablat,
-       ilab.xpos=-3.5, atransf=exp, at=log(c(.05,.25,1,4)))
-op <- par(font=2)
-text(-9,   15, "Author(s) and Year",    pos=4, cex=.8)
-text( 5,   15, "Observed RR [95\% CI]",  pos=2, cex=.8)
-text(-3.5, 15, "Latitude",                     cex=.8)
-par(op)
+       ilab.xpos=-4, atransf=exp, at=log(c(.05,.25,1,4)),
+       header="Author(s) and Year")
+text(-4, 15, "Latitude", cex=.8, font=2)
 
 ### meta-analysis of the log risk ratios using a random-effects model
 res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg,
@@ -187,15 +184,14 @@ forest(res, ylim=c(-1.5, 20), rows=c(17:15, 12:6, 3:1)) ### set positions
 forest(res, xlim=c(-16, 6), at=log(c(.05, .25, 1, 4)), atransf=exp,
        ilab=cbind(dat.bcg$tpos, dat.bcg$tneg, dat.bcg$cpos, dat.bcg$cneg),
        ilab.xpos=c(-9.5,-8,-6,-4.5), cex=.75, ylim=c(-1, 21),
-       order=order(dat.bcg$alloc), rows=c(1:2,5:11,14:17))
+       order=order(dat.bcg$alloc), rows=c(1:2,5:11,14:17),
+       header="Author(s) and Year")
 op <- par(cex=.75, font=4)
 text(-16, c(18,12,3), c("Systematic Allocation", "Random Allocation",
                         "Alternate Allocation"), pos=4)
 par(cex=.75, font=2)
 text(c(-9.5,-8,-6,-4.5), 20, c("TB+", "TB-", "TB+", "TB-"))
 text(c(-8.75,-5.25),     21, c("Vaccinated", "Control"))
-text(-16,                20, "Author(s) and Year",   pos=4)
-text(6,                  20, "Risk Ratio [95\% CI]", pos=2)
 par(op)
 
 ### see also the addpoly.rma function for an example where summaries
@@ -206,8 +202,6 @@ par(op)
 ### CIs would have upper bounds larger than 1
 dat <- escalc(measure="PR", xi=xi, ni=ni, data=dat.pritz1997)
 res <- rma(yi, vi, data=dat, slab=paste0(study, ") ", authors))
-forest(res, xlim=c(-1,2), alim=c(0,1), psize=1, refline=coef(res), clim=c(0,1))
-text(-1, 16, "Author(s)", pos=4)
-text( 2, 16, "Proportion [95\% CI]", pos=2)
+forest(res, xlim=c(-1,2), alim=c(0,1), psize=1, refline=coef(res), clim=c(0,1), header=TRUE)
 }
 \keyword{hplot}

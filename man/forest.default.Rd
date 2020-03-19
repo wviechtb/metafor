@@ -3,7 +3,8 @@
 \title{Forest Plots (Default Method)}
 \description{Function to create forest plots for a given set of data.}
 \usage{
-\method{forest}{default}(x, vi, sei, ci.lb, ci.ub, annotate=TRUE, showweights=FALSE,
+\method{forest}{default}(x, vi, sei, ci.lb, ci.ub,
+       annotate=TRUE, showweights=FALSE, header=FALSE,
        xlim, alim, clim, ylim, top=3, at, steps=5,
        level=95, refline=0, digits=2L, width,
        xlab, slab, ilab, ilab.xpos, ilab.pos,
@@ -19,6 +20,7 @@
    \item{ci.ub}{vector of length \eqn{k} with the corresponding upper confidence interval bounds. Not needed if \code{vi} or \code{sei} is specified. See \sQuote{Details}.}
    \item{annotate}{logical specifying whether annotations should be added to the plot (the default is \code{TRUE}).}
    \item{showweights}{logical specifying whether the annotations should also include inverse variance weights (the default is \code{FALSE}).}
+   \item{header}{logical specifying whether column headings should be added to the plot (the default is \code{FALSE}). Can also be a character vector to specify the left and right headings.}
    \item{xlim}{horizontal limits of the plot region. If unspecified, the function tries to set the horizontal plot limits to some sensible values.}
    \item{alim}{the actual x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.}
    \item{clim}{limits for the confidence intervals. If unspecified, no limits are used.}
