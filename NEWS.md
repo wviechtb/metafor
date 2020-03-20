@@ -1,3 +1,7 @@
+# metafor 2.5-0 (2020-03-20)
+
+- show nicer network graps for `dat.hasselblad1998` and `dat.senn2013` in help files
+
 # metafor 2.4-0 (2020-03-19)
 
 - version jump to 2.4-0 for CRAN release (from now on, even minor numbers for CRAN releases, odd numbers for development versions)
@@ -22,7 +26,7 @@
 
 - added (for now undocumented) option to fit models in `rma.glmm()` via the `GLMMadaptive` package (instead of `lme4`); to try this, use: `control=list(package="GLMMadaptive")`
 
-- started to use numbering scheme for `devel` version (the number after the dash indicates the devel version)
+- started to use numbering scheme for devel version (the number after the dash indicates the devel version)
 
 - added `contrmat()` function (for creating a matrix that indicates which groups have been compared against each other in each row of a dataset)
 

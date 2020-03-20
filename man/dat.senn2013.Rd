@@ -29,12 +29,15 @@ dat
 
 ### create network graph ('plyr' and 'igraph' packages must be installed)
 \dontrun{
-require(plyr)
 require(igraph)
-pairs <- do.call(rbind, sapply(split(dat$treatment, dat$study), function(x) t(combn(x,2))))
-pairs <- ddply(data.frame(pairs), .(X1, X2), count)
-g <- graph.edgelist(as.matrix(pairs[,1:2]), directed=FALSE)
-plot(g, edge.curved=FALSE, edge.width=pairs$freq, vertex.label.dist=.8)}
+pairs <- data.frame(do.call(rbind, sapply(split(dat$treatment, dat$study), function(x) t(combn(x,2)))), stringsAsFactors=FALSE)
+pairs$X1 <- factor(pairs$X1, levels=sort(unique(dat$treatment)))
+pairs$X2 <- factor(pairs$X2, levels=sort(unique(dat$treatment)))
+tab <- table(pairs[,1], pairs[,2])
+tab # adjacency matrix
+g <- graph_from_adjacency_matrix(tab, mode = "plus", weighted=TRUE, diag=FALSE)
+plot(g, edge.curved=FALSE, edge.width=E(g)$weight, layout=layout_as_star(g, center="placebo"),
+     vertex.size=35, vertex.color="lightgray", vertex.label.color="black", vertex.label.font=2)}
 
 ### table of studies versus treatments examined
 print(addmargins(table(dat$study, dat$treatment)), zero.print="")

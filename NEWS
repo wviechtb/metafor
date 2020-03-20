@@ -1,3 +1,10 @@
+Changes in Version 2.5-0 (2020-03-20)
+=====================================
+
+   o show nicer network graps for 'dat.hasselblad1998' and 'dat.senn2013' in
+     help files
+
+
 Changes in Version 2.4-0 (2020-03-19)
 =====================================
 
@@ -32,7 +39,7 @@ Changes in Version 2.4-0 (2020-03-19)
      the 'GLMMadaptive' package (instead of 'lme4'); to try this, use:
      'control=list(package="GLMMadaptive")'
 
-   o started to use numbering scheme for 'devel' version (the number after
+   o started to use numbering scheme for devel version (the number after
      the dash indicates the devel version)
 
    o added contrmat() function (for creating a matrix that indicates which
