@@ -1,4 +1,6 @@
-# metafor 2.5-0 (2020-03-20)
+# metafor 2.5-1 (2020-03-21)
+
+- `regtest()` now shows the 'limit estimate' of the (average) true effect when using `sei`, `vi`, `ninv`, or `sqrtninv` as predictor (and the model does not contain any other moderators)
 
 - show nicer network graps for `dat.hasselblad1998` and `dat.senn2013` in help files
 

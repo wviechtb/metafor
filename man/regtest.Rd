@@ -20,7 +20,7 @@ regtest(x, \dots)
    \item{model}{either \code{"rma"} or \code{"lm"} to indicate the type of model to use for the regression test. See \sQuote{Details}.}
    \item{predictor}{either \code{"sei"} \code{"vi"}, \code{"ni"}, \code{"ninv"}, \code{"sqrtni"}, or \code{"sqrtninv"} to indicate the predictor to use for the regression test. See \sQuote{Details}.}
    \item{ret.fit}{logical indicating whether the full results from the fitted model should also be returned.}
-   \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (the default is 4).}
+   \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (the default is to take the value from the object or is 4 for the default method).}
    \item{\dots}{other arguments.}
 }
 \details{
@@ -38,11 +38,13 @@ regtest(x, \dots)
    \item \code{predictor="sqrtninv"} for the inverse of the square root transformed sample size.
    } For predictors based on the sample size, the object \code{x} obviously must contain the information about the sample sizes. This will automatically be the case when \code{measure} was \emph{not} equal to \code{"GEN"} or the \code{ni} values were explicitly specified during the initial model fitting.
 
-   If the model passed to the \code{regtest.rma} function already included one or more moderators, then \code{regtest.rma} will add the chosen \code{predictor} to the moderator(s) already included in the model. This way, one can test for funnel plot asymmetry after accounting first for the influence of the moderator(s) already included.
+   If the model passed to the \code{regtest.rma} function already included one or more moderators, then \code{regtest.rma} will add the chosen predictor to the moderator(s) already included in the model. This way, one can test for funnel plot asymmetry after accounting first for the influence of the moderator(s) already included.
 
-   One can also pass a vector of observed effect sizes or outcomes (via \code{x}) and the corresponding sampling variances via \code{vi} (or the standard errors via \code{sei}) directly to the function (in this case, the \code{regtest.default} function is used). When the \code{predictor} is the sample size or a transformation thereof, then \code{ni} needs to be specified here as well.
+   One can also pass a vector of observed effect sizes or outcomes (via \code{x}) and the corresponding sampling variances via \code{vi} (or the standard errors via \code{sei}) directly to the function (in this case, the \code{regtest.default} function is used). When the predictor is the sample size or a transformation thereof, then \code{ni} needs to be specified here as well.
 
    The outcome measure used for the regression test is simply determined by what measure was used in fitting the original model (or what values are passed to \code{regtest.default}).
+
+   The model used for conducting the regression test can also be used to obtain a \sQuote{limit estimate} of the (average) true effect. In particular, when the standard error, sampling variance, or inverse (square root) sample size is used as the predictor, the model intercept in essence reflects the estimate under infinite precision. This is sometimes (cautiously) interpreted as an estimate of the (average) true effect that is adjusted for publication bias.
 }
 \value{
    An object of class \code{"regtest.rma"}. The object is a list containing the following components:
@@ -50,8 +52,11 @@ regtest(x, \dots)
    \item{predictor}{the predictor used for the regression test.}
    \item{zval}{the value of the test statistic.}
    \item{pval}{the corresponding p-value}
-   \item{dfs}{the degrees of freedom of the test stastistic (if the test is based on a t-distribution).}
+   \item{dfs}{the degrees of freedom of the test statistic (if the test is based on a t-distribution).}
    \item{fit}{the full results from the fitted model.}
+   \item{est}{the limit estimate (only for predictors \code{"sei"} \code{"vi"}, \code{"ninv"}, or \code{"sqrtninv"} and when the model does not contain any additional moderators; \code{NULL} otherwise)}
+   \item{ci.lb}{lower bound of the confidence interval for the limit estimate.}
+   \item{ci.ub}{upper bound of the confidence intervals for the limit estimate.}
 
    The results are formatted and printed with the \code{\link{print.regtest.rma}} function.
 }
@@ -116,7 +121,8 @@ regtest(dat$yi, dat$vi, predictor="ni")
 
 ### otherwise have to supply sample sizes manually
 dat$ni <- with(dat, tpos + tneg + cpos + cneg)
-regtest(dat$yi, dat$vi, dat$ni, predictor="ni")
+dat$yi <- c(dat$yi) # this removes the 'ni' attribute from 'yi'
+regtest(dat$yi, dat$vi, ni=dat$ni, predictor="ni")
 
 ### testing for asymmetry after accounting for the influence of a moderator
 res <- rma(yi, vi, mods = ~ ablat, data=dat)

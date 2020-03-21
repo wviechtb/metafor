@@ -22,6 +22,7 @@
    \item the value of the test statistic for the test that the predictor is unreleated to the outcomes
    \item the degrees of freedom of the test statistic (only if the test statistic follows a t-distribution)
    \item the p-value for the test statistic
+   \item the \sQuote{limit estimate} and its corresponding CI (only for predictors \code{"sei"} \code{"vi"}, \code{"ninv"}, or \code{"sqrtninv"} and when the model does not contain any additional moderators)
    }
 }
 \value{

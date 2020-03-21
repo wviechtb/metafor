@@ -26,6 +26,14 @@ regtest.default <- function(x, vi, sei, ni, subset, model="rma", predictor="sei"
    model <- match.arg(model, c("lm", "rma"))
    predictor <- match.arg(predictor, c("sei", "vi", "ni", "ninv", "sqrtni", "sqrtninv"))
 
+   ddd <- list(...)
+
+   if (!is.null(ddd$level)) {
+      level <- ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
+   } else {
+      level <- .05
+   }
+
    #########################################################################
 
    ### check if sampling variances and/or standard errors are available
@@ -145,7 +153,24 @@ regtest.default <- function(x, vi, sei, ni, subset, model="rma", predictor="sei"
 
    }
 
-   res <- list(model=model, predictor=predictor, zval=zval, pval=pval, dfs=dfs, method=fit$method, digits=digits, ret.fit=ret.fit, fit=fit)
+   if (predictor %in% c("sei", "vi", "ninv", "sqrtninv")) {
+
+      est <- coef(fit)[[1]]
+
+      if (model=="lm") {
+         ci.lb <- est - qt(level/2, df=dfs, lower.tail=FALSE) * coef(fit)[1,2]
+         ci.ub <- est + qt(level/2, df=dfs, lower.tail=FALSE) * coef(fit)[1,2]
+      } else {
+         ci.lb <- fit$ci.lb[1]
+         ci.ub <- fit$ci.ub[1]
+      }
+
+   } else {
+
+      est <- ci.lb <- ci.ub <- NULL
+   }
+
+   res <- list(model=model, predictor=predictor, zval=zval, pval=pval, dfs=dfs, method=fit$method, digits=digits, ret.fit=ret.fit, fit=fit, est=est, ci.lb=ci.lb, ci.ub=ci.ub)
 
    class(res) <- "regtest.rma"
    return(res)

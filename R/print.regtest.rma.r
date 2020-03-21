@@ -50,7 +50,17 @@ print.regtest.rma <- function(x, digits=x$digits, ret.fit=x$ret.fit, ...) {
       cat(mstyle$result(paste0("t = ", .fcf(x$zval, digits[["test"]]), ", df = ", x$dfs, ", p ", .pval(x$pval, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
    }
    cat("\n")
-   #cat("H0: coefficient for predictor is equal to 0\n\n")
+
+   if (!is.null(x$est)) {
+      if (x$predictor == "sei")
+         cat(mstyle$text("limit estimate (as sei -> 0):   "))
+      if (x$predictor == "vi")
+         cat(mstyle$text("limit estimate (as vi -> 0):    "))
+      if (x$predictor %in% c("ninv", "sqrtninv"))
+         cat(mstyle$text("limit estimate (as ni -> inf):  "))
+      cat(mstyle$result(paste0("b = ", .fcf(x$est, digits[["est"]]), " (CI: ", .fcf(x$ci.lb, digits[["est"]]), ", ", .fcf(x$ci.ub, digits[["est"]]), ")")))
+      cat("\n")
+   }
 
    if (!exists(".rmspace"))
       cat("\n")
