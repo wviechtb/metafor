@@ -1,5 +1,7 @@
-Changes in Version 2.5-5 (2020-03-22)
+Changes in Version 2.5-6 (2020-03-22)
 =====================================
+
+   o funnel.default() and funnel.rma() gain 'label' and 'offset' arguments
 
    o funnel.default() and funnel.rma() gain 'lty' argument; reference line
      is now drawn by default as a dotted line (like the line for the pseudo

@@ -1,7 +1,8 @@
 funnel.default <- function(x, vi, sei, ni, subset, yaxis="sei", xlim, ylim, xlab, ylab,
 steps=5, at, atransf, targs, digits, level=95,
 back="lightgray", shade="white", hlines="white",
-refline=0, lty=3, pch=19, col, bg, legend=FALSE, ci.res=1000, ...) {
+refline=0, lty=3, pch=19, col, bg,
+label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
 
    #########################################################################
 
@@ -139,6 +140,9 @@ refline=0, lty=3, pch=19, col, bg, legend=FALSE, ci.res=1000, ...) {
 
    ### note: digits can also be a list (e.g., digits=list(2L,3))
 
+   if (length(lty) == 1L)
+      lty <- rep(lty, 2)
+
    if (length(pch) == 1L) {
       pch.vec <- FALSE
       pch <- rep(pch, k)
@@ -170,8 +174,8 @@ refline=0, lty=3, pch=19, col, bg, legend=FALSE, ci.res=1000, ...) {
    if (length(bg) != k)
       stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'bg' argument."))
 
-   if (length(lty) == 1L)
-      lty <- rep(lty, 2)
+   if (length(label) != 1L)
+      stop(mstyle$stop("Argument 'label' should be of length 1."))
 
    ddd <- list(...)
 
@@ -183,6 +187,7 @@ refline=0, lty=3, pch=19, col, bg, legend=FALSE, ci.res=1000, ...) {
    llines    <- function(..., refline2, level2, lty2) lines(...)
    lpoints   <- function(..., refline2, level2, lty2) points(...)
    lrect     <- function(..., refline2, level2, lty2) rect(...)
+   ltext     <- function(..., refline2, level2, lty2) text(...)
 
    if (!is.null(ddd$refline2)) {
       refline2 <- ddd$refline2
@@ -555,6 +560,36 @@ refline=0, lty=3, pch=19, col, bg, legend=FALSE, ci.res=1000, ...) {
 
    ############################################################################
 
+   ### labeling of points
+
+   k <- length(yi)
+
+   if (is.numeric(label) || is.character(label) || .isTRUE(label)) {
+
+      if (is.numeric(label)) {
+         label <- round(label)
+         if (label < 1 | label > k)
+            stop(mstyle$stop("Out of range value for 'label' argument."))
+         label <- order(abs(yi - refline), decreasing=TRUE)[seq_len(label)]
+      } else if ((is.character(label) && label == "all") || .isTRUE(label)) {
+         label <- seq_len(k)
+      } else if ((is.character(label) && label == "out")) {
+         if (!is.element(yaxis, c("sei", "vi", "seinv", "vinv"))) {
+            label <- seq_len(k)
+         } else {
+            label <- which(abs(yi - refline) / sqrt(vi) >= qnorm(level.min/2, lower.tail=FALSE))
+         }
+      } else {
+         label <- NULL
+      }
+
+      for (i in label)
+            ltext(yi[i], yaxis.vals[i], slab[i], pos=ifelse(yi[i]-refline >= 0, 4, 2), offset=offset, ...)
+
+   }
+
+   #########################################################################
+
    ### add legend (if requested)
 
    if (is.logical(legend) && isTRUE(legend))
@@ -581,7 +616,7 @@ refline=0, lty=3, pch=19, col, bg, legend=FALSE, ci.res=1000, ...) {
       lchars <- max(nchar(level))-2
       options(scipen=scipen$scipen)
 
-      ltext <- sapply(1:lvals, function(i) {
+      ltxt <- sapply(1:lvals, function(i) {
          if (i == 1)
             return(as.expression(bquote(paste(.(pval1) < p, phantom() <= .(pval2)), list(pval1=.fcf(level[i], lchars), pval2=.fcf(1, lchars)))))
             #return(as.expression(bquote(p > .(pval), list(pval=.fcf(level[i], lchars)))))
@@ -597,14 +632,14 @@ refline=0, lty=3, pch=19, col, bg, legend=FALSE, ci.res=1000, ...) {
       pt.bg  <- c(shade, back)
 
       if (add.studies) {
-         ltext  <- c(ltext, expression(plain(Studies)))
+         ltxt   <- c(ltxt, expression(plain(Studies)))
          pch.l  <- c(pch.l, pch[1])
          col.l  <- c(col.l, col[1])
          pt.cex <- c(pt.cex, 1)
          pt.bg  <- c(pt.bg, bg[1])
       }
 
-      legend(lpos, inset=.01, bg="white", pch=pch.l, col=col.l, pt.cex=pt.cex, pt.bg=pt.bg, legend=ltext)
+      legend(lpos, inset=.01, bg="white", pch=pch.l, col=col.l, pt.cex=pt.cex, pt.bg=pt.bg, legend=ltxt)
 
    }
 

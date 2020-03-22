@@ -12,13 +12,15 @@ funnel(x, \dots)
        steps=5, at, atransf, targs, digits, level=x$level,
        addtau2=FALSE, type="rstandard",
        back="lightgray", shade="white", hlines="white",
-       refline, lty=3, pch=19, pch.fill=21, col, bg, legend=FALSE, ci.res=1000, \dots)
+       refline, lty=3, pch=19, pch.fill=21, col, bg,
+       label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, \dots)
 
 \method{funnel}{default}(x, vi, sei, ni, subset, yaxis="sei",
        xlim, ylim, xlab, ylab,
        steps=5, at, atransf, targs, digits, level=95,
        back="lightgray", shade="white", hlines="white",
-       refline=0, lty=3, pch=19, col, bg, legend=FALSE, ci.res=1000, \dots)
+       refline=0, lty=3, pch=19, col, bg,
+       label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma"} or a vector with the observed effect sizes or outcomes.}
@@ -48,6 +50,8 @@ funnel(x, \dots)
    \item{pch.fill}{plotting symbol to use for the effect sizes or outcomes filled in by the trim and fill method. By default, a circle is used. Only relevant when plotting an object created by the \code{\link{trimfill}} function.}
    \item{col}{optional character string specifying the name of a color to use for the points ("black" is used by default if not specified). Can also be a vector of color names.}
    \item{bg}{optional character string specifying the name of a background color for open plot symbols ("white" is used by default if not specified). Can also be a vector of color names.}
+   \item{label}{argument to control the labeling of the points (the default is \code{FALSE}). See \sQuote{Details}.}
+   \item{offset}{argument to control the distance between the points and the corresponding labels.}
    \item{legend}{logical to indicate whether a legend should be added to the plot (can also be a keyword to indicate the position of the legend; see as in \code{\link{legend}}).}
    \item{ci.res}{integer specifying the number of y-axis values at which to calculate the bounds of the pseudo confidence interval. The default is \code{1000}, which usually provides a sufficient resolution for the plotting.}
    \item{\dots}{other arguments.}
@@ -77,6 +81,8 @@ funnel(x, \dots)
    One can also directly pass a vector of observed effect sizes or outcomes (via \code{x}) and the corresponding sampling variances (via \code{vi}), standard errors (via \code{sei}), and/or sample sizes (via \code{ni}) to the function. By default, the vertical reference line is then drawn at zero.
 
    The arguments \code{back}, \code{shade}, and \code{hlines} can be set to \code{NULL} to suppress the shading and the horizontal reference lines.
+
+   With the \code{label} argument, one can control whether points in the plot will be labeled. If \code{label="all"} (or \code{label=TRUE}), all points in the plot will be labeled. If \code{label="out"}, points falling outside of the pseudo confidence region will be labeled. Finally, one can also set this argument to a numeric value (between 1 and \eqn{k}), indicating how many of the most extreme points should be labeled (for example, with \code{label=1} only the most extreme point would be labeled, while with \code{label=3}, the most extreme, and the second and third most extreme points would be labeled). With the \code{offset} argument, the distance between the labels and the corresponding points can be controlled.
 }
 \note{
    Placing (a function of) the sample size on the y-axis (i.e., using \code{yaxis="ni"}, \code{yaxis="ninv"}, \code{yaxis="sqrtni"}, \code{yaxis="sqrtninv"}, or \code{yaxis="lni"}) is only possible when information about the sample sizes is actually stored within the object passed to the \code{funnel} function. That should automatically be the case when the observed outcomes were computed with the \code{escalc} function or when the observed outcomes were computed within the model fitting function. On the other hand, this will not automatically be the case when \code{rma.uni} was used together with the \code{yi} and \code{vi} arguments and the \code{yi} and \code{vi} values were \emph{not} computed with \code{escalc}. In that case, it is still possible to pass information about the sample sizes to the \code{rma.uni} function (i.e., use \code{rma.uni(yi, vi, ni)}).
@@ -115,7 +121,7 @@ dat <- dat.bcg
 dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat)
 
 ### random-effects model
-res <- rma(yi, vi, data=dat)
+res <- rma(yi, vi, data=dat, slab=paste(dat$author, dat$year, sep=", "))
 
 ### standard funnel plot
 funnel(res)
@@ -123,9 +129,14 @@ funnel(res)
 ### show risk ratio values on x-axis (log scale)
 funnel(res, atransf=exp)
 
+### label points outside of the pseudo confidence interval region
+funnel(res, atransf=exp, label="out")
+
 ### passing log risk ratios and sampling variances directly to the function
-### note: essentially the same plot, except that reference line is centered at zero
+### note: same plot, except that reference line is centered at zero
 funnel(dat$yi, dat$vi)
+
+### can accomplish the same by setting refline=0
 funnel(res, refline=0)
 
 ### funnel plot with risk ratio values on the x-axis (log scale)

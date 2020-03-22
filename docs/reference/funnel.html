@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5.6</span>
       </span>
     </div>
 
@@ -140,14 +140,16 @@
        <span class='kw'>steps</span><span class='kw'>=</span><span class='fl'>5</span>, <span class='no'>at</span>, <span class='no'>atransf</span>, <span class='no'>targs</span>, <span class='no'>digits</span>, <span class='kw'>level</span><span class='kw'>=</span><span class='no'>x</span>$<span class='no'>level</span>,
        <span class='kw'>addtau2</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"rstandard"</span>,
        <span class='kw'>back</span><span class='kw'>=</span><span class='st'>"lightgray"</span>, <span class='kw'>shade</span><span class='kw'>=</span><span class='st'>"white"</span>, <span class='kw'>hlines</span><span class='kw'>=</span><span class='st'>"white"</span>,
-       <span class='no'>refline</span>, <span class='kw'>lty</span><span class='kw'>=</span><span class='fl'>3</span>, <span class='kw'>pch</span><span class='kw'>=</span><span class='fl'>19</span>, <span class='kw'>pch.fill</span><span class='kw'>=</span><span class='fl'>21</span>, <span class='no'>col</span>, <span class='no'>bg</span>, <span class='kw'>legend</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>ci.res</span><span class='kw'>=</span><span class='fl'>1000</span>, <span class='no'>...</span>)
+       <span class='no'>refline</span>, <span class='kw'>lty</span><span class='kw'>=</span><span class='fl'>3</span>, <span class='kw'>pch</span><span class='kw'>=</span><span class='fl'>19</span>, <span class='kw'>pch.fill</span><span class='kw'>=</span><span class='fl'>21</span>, <span class='no'>col</span>, <span class='no'>bg</span>,
+       <span class='kw'>label</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>offset</span><span class='kw'>=</span><span class='fl'>0.4</span>, <span class='kw'>legend</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>ci.res</span><span class='kw'>=</span><span class='fl'>1000</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for default</span>
 <span class='fu'>funnel</span>(<span class='no'>x</span>, <span class='no'>vi</span>, <span class='no'>sei</span>, <span class='no'>ni</span>, <span class='no'>subset</span>, <span class='kw'>yaxis</span><span class='kw'>=</span><span class='st'>"sei"</span>,
        <span class='no'>xlim</span>, <span class='no'>ylim</span>, <span class='no'>xlab</span>, <span class='no'>ylab</span>,
        <span class='kw'>steps</span><span class='kw'>=</span><span class='fl'>5</span>, <span class='no'>at</span>, <span class='no'>atransf</span>, <span class='no'>targs</span>, <span class='no'>digits</span>, <span class='kw'>level</span><span class='kw'>=</span><span class='fl'>95</span>,
        <span class='kw'>back</span><span class='kw'>=</span><span class='st'>"lightgray"</span>, <span class='kw'>shade</span><span class='kw'>=</span><span class='st'>"white"</span>, <span class='kw'>hlines</span><span class='kw'>=</span><span class='st'>"white"</span>,
-       <span class='kw'>refline</span><span class='kw'>=</span><span class='fl'>0</span>, <span class='kw'>lty</span><span class='kw'>=</span><span class='fl'>3</span>, <span class='kw'>pch</span><span class='kw'>=</span><span class='fl'>19</span>, <span class='no'>col</span>, <span class='no'>bg</span>, <span class='kw'>legend</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>ci.res</span><span class='kw'>=</span><span class='fl'>1000</span>, <span class='no'>...</span>)</pre>
+       <span class='kw'>refline</span><span class='kw'>=</span><span class='fl'>0</span>, <span class='kw'>lty</span><span class='kw'>=</span><span class='fl'>3</span>, <span class='kw'>pch</span><span class='kw'>=</span><span class='fl'>19</span>, <span class='no'>col</span>, <span class='no'>bg</span>,
+       <span class='kw'>label</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>offset</span><span class='kw'>=</span><span class='fl'>0.4</span>, <span class='kw'>legend</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>ci.res</span><span class='kw'>=</span><span class='fl'>1000</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -261,6 +263,14 @@
       <td><p>optional character string specifying the name of a background color for open plot symbols ("white" is used by default if not specified). Can also be a vector of color names.</p></td>
     </tr>
     <tr>
+      <th>label</th>
+      <td><p>argument to control the labeling of the points (the default is <code>FALSE</code>). See &#8216;Details&#8217;.</p></td>
+    </tr>
+    <tr>
+      <th>offset</th>
+      <td><p>argument to control the distance between the points and the corresponding labels.</p></td>
+    </tr>
+    <tr>
       <th>legend</th>
       <td><p>logical to indicate whether a legend should be added to the plot (can also be a keyword to indicate the position of the legend; see as in <code><a href='https://rdrr.io/r/graphics/legend.html'>legend</a></code>).</p></td>
     </tr>
@@ -293,6 +303,7 @@
 <p>If the object passed to the function comes from the <code><a href='trimfill.html'>trimfill</a></code> function, the effect sizes or outcomes that are filled in by the trim and fill method are also added to the funnel plot. The symbol to use for plotting the filled in values can then be specified via the <code>pch.fill</code> argument.</p>
 <p>One can also directly pass a vector of observed effect sizes or outcomes (via <code>x</code>) and the corresponding sampling variances (via <code>vi</code>), standard errors (via <code>sei</code>), and/or sample sizes (via <code>ni</code>) to the function. By default, the vertical reference line is then drawn at zero.</p>
 <p>The arguments <code>back</code>, <code>shade</code>, and <code>hlines</code> can be set to <code>NULL</code> to suppress the shading and the horizontal reference lines.</p>
+<p>With the <code>label</code> argument, one can control whether points in the plot will be labeled. If <code>label="all"</code> (or <code>label=TRUE</code>), all points in the plot will be labeled. If <code>label="out"</code>, points falling outside of the pseudo confidence region will be labeled. Finally, one can also set this argument to a numeric value (between 1 and \(k\)), indicating how many of the most extreme points should be labeled (for example, with <code>label=1</code> only the most extreme point would be labeled, while with <code>label=3</code>, the most extreme, and the second and third most extreme points would be labeled). With the <code>offset</code> argument, the distance between the labels and the corresponding points can be controlled.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>Placing (a function of) the sample size on the y-axis (i.e., using <code>yaxis="ni"</code>, <code>yaxis="ninv"</code>, <code>yaxis="sqrtni"</code>, <code>yaxis="sqrtninv"</code>, or <code>yaxis="lni"</code>) is only possible when information about the sample sizes is actually stored within the object passed to the <code>funnel</code> function. That should automatically be the case when the observed outcomes were computed with the <code>escalc</code> function or when the observed outcomes were computed within the model fitting function. On the other hand, this will not automatically be the case when <code>rma.uni</code> was used together with the <code>yi</code> and <code>vi</code> arguments and the <code>yi</code> and <code>vi</code> values were <em>not</em> computed with <code>escalc</code>. In that case, it is still possible to pass information about the sample sizes to the <code>rma.uni</code> function (i.e., use <code><a href='rma.uni.html'>rma.uni(yi, vi, ni)</a></code>).</p>
@@ -324,15 +335,19 @@
 <span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
 
 <span class='co'>### random-effects model</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
+<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>slab</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='no'>dat</span>$<span class='no'>author</span>, <span class='no'>dat</span>$<span class='no'>year</span>, <span class='kw'>sep</span><span class='kw'>=</span><span class='st'>", "</span>))
 
 <span class='co'>### standard funnel plot</span>
 <span class='fu'>funnel</span>(<span class='no'>res</span>)</div><div class='img'><img src='funnel-1.png' alt='' width='768' height='614' /></div><div class='input'>
 <span class='co'>### show risk ratio values on x-axis (log scale)</span>
-<span class='fu'>funnel</span>(<span class='no'>res</span>, <span class='kw'>atransf</span><span class='kw'>=</span><span class='no'>exp</span>)</div><div class='img'><img src='funnel-2.png' alt='' width='768' height='614' /></div><div class='input'>
+<span class='fu'>funnel</span>(<span class='no'>res</span>, <span class='kw'>atransf</span><span class='kw'>=</span><span class='no'>exp</span>)</div><div class='input'>
+<span class='co'>### label points outside of the pseudo confidence interval region</span>
+<span class='fu'>funnel</span>(<span class='no'>res</span>, <span class='kw'>atransf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>label</span><span class='kw'>=</span><span class='st'>"out"</span>)</div><div class='img'><img src='funnel-2.png' alt='' width='768' height='614' /></div><div class='input'>
 <span class='co'>### passing log risk ratios and sampling variances directly to the function</span>
-<span class='co'>### note: essentially the same plot, except that reference line is centered at zero</span>
-<span class='fu'>funnel</span>(<span class='no'>dat</span>$<span class='no'>yi</span>, <span class='no'>dat</span>$<span class='no'>vi</span>)</div><div class='input'><span class='fu'>funnel</span>(<span class='no'>res</span>, <span class='kw'>refline</span><span class='kw'>=</span><span class='fl'>0</span>)</div><div class='img'><img src='funnel-3.png' alt='' width='768' height='614' /></div><div class='input'>
+<span class='co'>### note: same plot, except that reference line is centered at zero</span>
+<span class='fu'>funnel</span>(<span class='no'>dat</span>$<span class='no'>yi</span>, <span class='no'>dat</span>$<span class='no'>vi</span>)</div><div class='input'>
+<span class='co'>### can accomplish the same by setting refline=0</span>
+<span class='fu'>funnel</span>(<span class='no'>res</span>, <span class='kw'>refline</span><span class='kw'>=</span><span class='fl'>0</span>)</div><div class='img'><img src='funnel-3.png' alt='' width='768' height='614' /></div><div class='input'>
 <span class='co'>### funnel plot with risk ratio values on the x-axis (log scale)</span>
 <span class='fu'>funnel</span>(<span class='no'>res</span>, <span class='kw'>atransf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>at</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.12</span>, <span class='fl'>.25</span>, <span class='fl'>.5</span>, <span class='fl'>1</span>, <span class='fl'>2</span>)))</div><div class='img'><img src='funnel-4.png' alt='' width='768' height='614' /></div><div class='input'>
 <span class='co'>### contour-enhanced funnel plot centered at 0 (see Peters et al., 2008)</span>
