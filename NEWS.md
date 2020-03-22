@@ -1,4 +1,4 @@
-# metafor 2.5-4 (2020-03-22)
+# metafor 2.5-5 (2020-03-22)
 
 - `funnel.default()` and `funnel.rma()` gain `lty` argument; reference line is now drawn by default as a dotted line (like the line for the pseudo confidence region)
 
