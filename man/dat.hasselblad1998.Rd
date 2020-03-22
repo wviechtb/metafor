@@ -26,6 +26,8 @@
 \references{
    Gleser, L. J., & Olkin, I. (2009). Stochastically dependent effect sizes. In H. Cooper, L. V. Hedges, & J. C. Valentine (Eds.), \emph{The handbook of research synthesis and meta-analysis} (2nd ed., pp. 357--376). New York: Russell Sage Foundation.
 
+   Law, M., Jackson, D., Turner, R., Rhodes, K., & Viechtbauer, W. (2016). Two new methods to fit models for network meta-analysis with random inconsistency effects. \emph{BMC Medical Research Methodology, 16}(1), 87.
+
    Salanti, G., Higgins, J. P. T., Ades, A. E., & Ioannidis, J. P. A. (2008). Evaluation of networks of randomized trials. \emph{Statistical Methods in Medical Research}, \bold{17}, 279--301.
 }
 \examples{
@@ -107,10 +109,15 @@ dat
 ### network meta-analysis using a contrast-based random-effects model
 ### by setting rho=1/2, tau^2 reflects the amount of heterogeneity for all treatment comparisons
 res <- rma.mv(yi, V, mods = ~ self_help + ind_counseling + grp_counseling - 1,
-              random = ~ factor(id) | study, rho=1/2, data=dat)
+              random = ~ comp | study, rho=1/2, data=dat)
 res
 
 ### predicted odds ratios of interventions versus no contact
 predict(res, newmods=diag(3), transf=exp, digits=2)
+
+### fit random inconsistency effects model (see Law et al., 2016)
+res <- rma.mv(yi, V, mods = ~ self_help + ind_counseling + grp_counseling - 1,
+              random = list(~ comp | study, ~ comp | design), rho=1/2, phi=1/2, data=dat)
+res
 }
 \keyword{datasets}

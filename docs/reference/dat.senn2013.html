@@ -153,7 +153,8 @@
 <p>The data can be used for a network meta-analysis, either using an arm-based or a contrast-based model. See &#8216;Examples&#8217; below.</p>
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-    <p>Senn, S., Gavini, F., Magrez, D., &amp; Scheen, A. (2013). Issues in performing a network meta-analysis. <em>Statistical Methods in Medical Research</em>, <b>22</b>, 169--189.</p>
+    <p>Law, M., Jackson, D., Turner, R., Rhodes, K., &amp; Viechtbauer, W. (2016). Two new methods to fit models for network meta-analysis with random inconsistency effects. <em>BMC Medical Research Methodology, 16</em>(1), 87.</p>
+<p>Senn, S., Gavini, F., Magrez, D., &amp; Scheen, A. (2013). Issues in performing a network meta-analysis. <em>Statistical Methods in Medical Research</em>, <b>22</b>, 169--189.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat' and examine data</span>
@@ -824,16 +825,16 @@
 <span class='co'>### network meta-analysis using a contrast-based random-effects model</span>
 <span class='co'>### by setting rho=1/2, tau^2 reflects the amount of heterogeneity for all treatment comparisons</span>
 <span class='co'>### the treatment left out (placebo) becomes the reference level for the treatment comparisons</span>
-<span class='no'>res.cb</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span>(<span class='no'>yi</span>, <span class='no'>V</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>acarbose</span> + <span class='no'>benfluorex</span> + <span class='no'>metformin</span> + <span class='no'>miglitol</span> + <span class='no'>pioglitazone</span> +
-                                 <span class='no'>rosiglitazone</span> + <span class='no'>sitagliptin</span> + <span class='no'>sulfonylurea</span> + <span class='no'>vildagliptin</span> - <span class='fl'>1</span>,
-                 <span class='kw'>random</span> <span class='kw'>=</span> ~ <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>id</span>) <span class='kw'>|</span> <span class='no'>study</span>, <span class='kw'>rho</span><span class='kw'>=</span><span class='fl'>1</span>/<span class='fl'>2</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
-<span class='no'>res.cb</span></div><div class='output co'>#&gt; 
+<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span>(<span class='no'>yi</span>, <span class='no'>V</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>acarbose</span> + <span class='no'>benfluorex</span> + <span class='no'>metformin</span> + <span class='no'>miglitol</span> + <span class='no'>pioglitazone</span> +
+                              <span class='no'>rosiglitazone</span> + <span class='no'>sitagliptin</span> + <span class='no'>sulfonylurea</span> + <span class='no'>vildagliptin</span> - <span class='fl'>1</span>,
+              <span class='kw'>random</span> <span class='kw'>=</span> ~ <span class='no'>comp</span> <span class='kw'>|</span> <span class='no'>study</span>, <span class='kw'>rho</span><span class='kw'>=</span><span class='fl'>1</span>/<span class='fl'>2</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
+<span class='no'>res</span></div><div class='output co'>#&gt; 
 #&gt; Multivariate Meta-Analysis Model (k = 27; method: REML)
 #&gt; 
 #&gt; Variance Components:
 #&gt; 
-#&gt; outer factor: study      (nlvls = 26)
-#&gt; inner factor: factor(id) (nlvls = 27)
+#&gt; outer factor: study (nlvls = 26)
+#&gt; inner factor: comp  (nlvls = 14)
 #&gt; 
 #&gt;             estim    sqrt  fixed 
 #&gt; tau^2      0.0999  0.3161     no 
@@ -863,8 +864,8 @@
 #&gt; </div><div class='input'>
 <span class='co'>### estimate all pairwise differences between treatments (using the 'multcomp' package)</span>
 <span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='no'>multcomp</span>)) {
-   <span class='no'>contr</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/multcomp/man/contrMat.html'>contrMat</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/setNames.html'>setNames</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>1</span>,<span class='no'>res.cb</span>$<span class='no'>p</span>), <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>res.cb</span>$<span class='no'>X</span>)), <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"Tukey"</span>)
-   <span class='no'>sav</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>res.cb</span>, <span class='kw'>newmods</span><span class='kw'>=</span><span class='no'>contr</span>)
+   <span class='no'>contr</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/multcomp/man/contrMat.html'>contrMat</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/setNames.html'>setNames</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>1</span>,<span class='no'>res</span>$<span class='no'>p</span>), <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>res</span>$<span class='no'>X</span>)), <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"Tukey"</span>)
+   <span class='no'>sav</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>newmods</span><span class='kw'>=</span><span class='no'>contr</span>)
    <span class='no'>sav</span><span class='kw'>[[</span><span class='st'>"slab"</span>]] <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span>(<span class='no'>contr</span>)
    <span class='no'>sav</span>
 }</div><div class='output co'>#&gt; <span class='message'>Loading required package: multcomp</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: mvtnorm</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: survival</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: TH.data</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: MASS</span></div><div class='output co'>#&gt; <span class='message'></span>
@@ -908,6 +909,51 @@
 #&gt; sulfonylurea - sitagliptin    0.1525 0.4132 -0.6573 0.9622 -0.8671 1.1720 
 #&gt; vildagliptin - sitagliptin   -0.1300 0.4824 -1.0755 0.8155 -1.2604 1.0004 
 #&gt; vildagliptin - sulfonylurea  -0.2825 0.4126 -1.0911 0.5262 -1.3012 0.7362 
+#&gt; </div><div class='input'>
+<span class='co'>### fit random inconsistency effects model (see Law et al., 2016)</span>
+<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span>(<span class='no'>yi</span>, <span class='no'>V</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>acarbose</span> + <span class='no'>benfluorex</span> + <span class='no'>metformin</span> + <span class='no'>miglitol</span> + <span class='no'>pioglitazone</span> +
+                              <span class='no'>rosiglitazone</span> + <span class='no'>sitagliptin</span> + <span class='no'>sulfonylurea</span> + <span class='no'>vildagliptin</span> - <span class='fl'>1</span>,
+              <span class='kw'>random</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(~ <span class='no'>comp</span> <span class='kw'>|</span> <span class='no'>study</span>, ~ <span class='no'>comp</span> <span class='kw'>|</span> <span class='no'>design</span>), <span class='kw'>rho</span><span class='kw'>=</span><span class='fl'>1</span>/<span class='fl'>2</span>, <span class='kw'>phi</span><span class='kw'>=</span><span class='fl'>1</span>/<span class='fl'>2</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
+<span class='no'>res</span></div><div class='output co'>#&gt; 
+#&gt; Multivariate Meta-Analysis Model (k = 27; method: REML)
+#&gt; 
+#&gt; Variance Components:
+#&gt; 
+#&gt; outer factor: study (nlvls = 26)
+#&gt; inner factor: comp  (nlvls = 14)
+#&gt; 
+#&gt;             estim    sqrt  fixed 
+#&gt; tau^2      0.0999  0.3161     no 
+#&gt; rho        0.5000            yes 
+#&gt; 
+#&gt; outer factor: design (nlvls = 15)
+#&gt; inner factor: comp   (nlvls = 14)
+#&gt; 
+#&gt;             estim    sqrt  fixed 
+#&gt; gamma^2    0.0000  0.0000     no 
+#&gt; phi        0.5000            yes 
+#&gt; 
+#&gt; Test for Residual Heterogeneity:
+#&gt; QE(df = 18) = 96.9841, p-val &lt; .0001
+#&gt; 
+#&gt; Test of Moderators (coefficients 1:9):
+#&gt; QM(df = 9) = 167.9616, p-val &lt; .0001
+#&gt; 
+#&gt; Model Results:
+#&gt; 
+#&gt;                estimate      se     zval    pval    ci.lb    ci.ub 
+#&gt; acarbose        -0.8414  0.2384  -3.5288  0.0004  -1.3087  -0.3741  *** 
+#&gt; benfluorex      -0.7369  0.2776  -2.6545  0.0079  -1.2810  -0.1928   ** 
+#&gt; metformin       -1.1284  0.1494  -7.5528  &lt;.0001  -1.4212  -0.8356  *** 
+#&gt; miglitol        -0.9499  0.2253  -4.2170  &lt;.0001  -1.3914  -0.5084  *** 
+#&gt; pioglitazone    -1.1294  0.2119  -5.3295  &lt;.0001  -1.5448  -0.7141  *** 
+#&gt; rosiglitazone   -1.2337  0.1235  -9.9933  &lt;.0001  -1.4757  -0.9918  *** 
+#&gt; sitagliptin     -0.5700  0.3414  -1.6694  0.0950  -1.2392   0.0992    . 
+#&gt; sulfonylurea    -0.4175  0.2326  -1.7950  0.0727  -0.8734   0.0384    . 
+#&gt; vildagliptin    -0.7000  0.3408  -2.0543  0.0400  -1.3679  -0.0321    * 
+#&gt; 
+#&gt; ---
+#&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

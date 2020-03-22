@@ -20,6 +20,8 @@
    The data can be used for a network meta-analysis, either using an arm-based or a contrast-based model. See \sQuote{Examples} below.
 }
 \source{
+   Law, M., Jackson, D., Turner, R., Rhodes, K., & Viechtbauer, W. (2016). Two new methods to fit models for network meta-analysis with random inconsistency effects. \emph{BMC Medical Research Methodology, 16}(1), 87.
+
    Senn, S., Gavini, F., Magrez, D., & Scheen, A. (2013). Issues in performing a network meta-analysis. \emph{Statistical Methods in Medical Research}, \bold{22}, 169--189.
 }
 \examples{
@@ -133,17 +135,23 @@ dat
 ### network meta-analysis using a contrast-based random-effects model
 ### by setting rho=1/2, tau^2 reflects the amount of heterogeneity for all treatment comparisons
 ### the treatment left out (placebo) becomes the reference level for the treatment comparisons
-res.cb <- rma.mv(yi, V, mods = ~ acarbose + benfluorex + metformin + miglitol + pioglitazone +
-                                 rosiglitazone + sitagliptin + sulfonylurea + vildagliptin - 1,
-                 random = ~ factor(id) | study, rho=1/2, data=dat)
-res.cb
+res <- rma.mv(yi, V, mods = ~ acarbose + benfluorex + metformin + miglitol + pioglitazone +
+                              rosiglitazone + sitagliptin + sulfonylurea + vildagliptin - 1,
+              random = ~ comp | study, rho=1/2, data=dat)
+res
 
 ### estimate all pairwise differences between treatments (using the 'multcomp' package)
 if (require(multcomp)) {
-   contr <- contrMat(setNames(rep(1,res.cb$p), colnames(res.cb$X)), type="Tukey")
-   sav <- predict(res.cb, newmods=contr)
+   contr <- contrMat(setNames(rep(1,res$p), colnames(res$X)), type="Tukey")
+   sav <- predict(res, newmods=contr)
    sav[["slab"]] <- rownames(contr)
    sav
 }
+
+### fit random inconsistency effects model (see Law et al., 2016)
+res <- rma.mv(yi, V, mods = ~ acarbose + benfluorex + metformin + miglitol + pioglitazone +
+                              rosiglitazone + sitagliptin + sulfonylurea + vildagliptin - 1,
+              random = list(~ comp | study, ~ comp | design), rho=1/2, phi=1/2, data=dat)
+res
 }
 \keyword{datasets}
