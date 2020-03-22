@@ -1,4 +1,4 @@
-Changes in Version 2.5-2 (2020-03-22)
+Changes in Version 2.5-4 (2020-03-22)
 =====================================
 
    o funnel.default() and funnel.rma() gain 'lty' argument; reference line
