@@ -155,12 +155,12 @@ regtest.default <- function(x, vi, sei, ni, subset, model="rma", predictor="sei"
 
    if (predictor %in% c("sei", "vi", "ninv", "sqrtninv")) {
 
-      est <- coef(fit)[[1]]
-
       if (model=="lm") {
+         est <- coef(fit)[1,1]
          ci.lb <- est - qt(level/2, df=dfs, lower.tail=FALSE) * coef(fit)[1,2]
          ci.ub <- est + qt(level/2, df=dfs, lower.tail=FALSE) * coef(fit)[1,2]
       } else {
+         est <- coef(fit)[1]
          ci.lb <- fit$ci.lb[1]
          ci.ub <- fit$ci.ub[1]
       }
@@ -168,6 +168,7 @@ regtest.default <- function(x, vi, sei, ni, subset, model="rma", predictor="sei"
    } else {
 
       est <- ci.lb <- ci.ub <- NULL
+
    }
 
    res <- list(model=model, predictor=predictor, zval=zval, pval=pval, dfs=dfs, method=fit$method, digits=digits, ret.fit=ret.fit, fit=fit, est=est, ci.lb=ci.lb, ci.ub=ci.ub)

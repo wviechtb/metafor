@@ -91,11 +91,15 @@ regtest(x, \dots)
    \code{\link{ranktest}}
 }
 \examples{
-### calculate log risk ratios and corresponding sampling variances
-dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
+### copy data into 'dat' and examine data
+dat <- dat.egger2001
+
+### calculate log odds ratios and corresponding sampling variances (but remove ISIS-4 trial)
+dat <- escalc(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, subset=-16)
 
 ### fit random-effects model
 res <- rma(yi, vi, data=dat)
+res
 
 ### classical Egger test
 regtest(res, model="lm")
@@ -120,12 +124,29 @@ dat$yi
 regtest(dat$yi, dat$vi, predictor="ni")
 
 ### otherwise have to supply sample sizes manually
-dat$ni <- with(dat, tpos + tneg + cpos + cneg)
+dat$ni <- with(dat, n1i + n2i)
 dat$yi <- c(dat$yi) # this removes the 'ni' attribute from 'yi'
 regtest(dat$yi, dat$vi, ni=dat$ni, predictor="ni")
 
+### standard funnel plot (with standard error on y-axis)
+funnel(res, refline=0)
+
+### regression test (by default, standard error is used as predictor)
+reg <- regtest(res)
+reg
+
+### add regression line to funnel plot
+se <- seq(0,1.8,length=100)
+lines(coef(reg$fit)[1] + coef(reg$fit)[2]*se, se, lwd=2)
+
+### regression test (using the sampling variance as predictor)
+reg <- regtest(res, predictor="vi")
+
+### add regression line to funnel plot (using the sampling variance as predictor)
+lines(coef(reg$fit)[1] + coef(reg$fit)[2]*se^2, se, lwd=2)
+
 ### testing for asymmetry after accounting for the influence of a moderator
-res <- rma(yi, vi, mods = ~ ablat, data=dat)
+res <- rma(yi, vi, mods = ~ year, data=dat)
 regtest(res, model="lm")
 regtest(res)
 }

@@ -90,12 +90,12 @@ regtest.rma <- function(x, model="rma", predictor="sei", ret.fit=FALSE, digits, 
 
    if (predictor %in% c("sei", "vi", "ninv", "sqrtninv") && p == 1L && .is.intercept(X[,1])) {
 
-      est <- coef(fit)[[1]]
-
       if (model=="lm") {
+         est <- coef(fit)[1,1]
          ci.lb <- est - qt(x$level/2, df=dfs, lower.tail=FALSE) * coef(fit)[1,2]
          ci.ub <- est + qt(x$level/2, df=dfs, lower.tail=FALSE) * coef(fit)[1,2]
       } else {
+         est <- coef(fit)[1]
          ci.lb <- fit$ci.lb[1]
          ci.ub <- fit$ci.ub[1]
       }
@@ -103,6 +103,7 @@ regtest.rma <- function(x, model="rma", predictor="sei", ret.fit=FALSE, digits, 
    } else {
 
       est <- ci.lb <- ci.ub <- NULL
+
    }
 
    res <- list(model=model, predictor=predictor, zval=zval, pval=pval, dfs=dfs, method=x$method, digits=digits, ret.fit=ret.fit, fit=fit, est=est, ci.lb=ci.lb, ci.ub=ci.ub)

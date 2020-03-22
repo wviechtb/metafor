@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5.7</span>
       </span>
     </div>
 
@@ -236,12 +236,33 @@
     <div class='dont-index'><p><code><a href='ranktest.html'>ranktest</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>### calculate log risk ratios and corresponding sampling variances</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>)
+    <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat' and examine data</span>
+<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.egger2001</span>
+
+<span class='co'>### calculate log odds ratios and corresponding sampling variances (but remove ISIS-4 trial)</span>
+<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>ai</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>n1i</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>ci</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>n2i</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>subset</span><span class='kw'>=</span>-<span class='fl'>16</span>)
 
 <span class='co'>### fit random-effects model</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
-
+<span class='no'>res</span></div><div class='output co'>#&gt; 
+#&gt; Random-Effects Model (k = 15; tau^2 estimator: REML)
+#&gt; 
+#&gt; tau^2 (estimated amount of total heterogeneity): 0.1911 (SE = 0.2106)
+#&gt; tau (square root of estimated tau^2 value):      0.4371
+#&gt; I^2 (total heterogeneity / total variability):   38.19%
+#&gt; H^2 (total variability / sampling variability):  1.62
+#&gt; 
+#&gt; Test for Heterogeneity:
+#&gt; Q(df = 14) = 20.9184, p-val = 0.1037
+#&gt; 
+#&gt; Model Results:
+#&gt; 
+#&gt; estimate      se     zval    pval    ci.lb    ci.ub 
+#&gt;  -0.8745  0.2080  -4.2049  &lt;.0001  -1.2822  -0.4669  *** 
+#&gt; 
+#&gt; ---
+#&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+#&gt; </div><div class='input'>
 <span class='co'>### classical Egger test</span>
 <span class='fu'>regtest</span>(<span class='no'>res</span>, <span class='kw'>model</span><span class='kw'>=</span><span class='st'>"lm"</span>)</div><div class='output co'>#&gt; 
 #&gt; Regression Test for Funnel Plot Asymmetry
@@ -249,8 +270,8 @@
 #&gt; model:     weighted regression with multiplicative dispersion
 #&gt; predictor: standard error
 #&gt; 
-#&gt; test for funnel plot asymmetry: t = -1.4013, df = 11, p = 0.1887
-#&gt; limit estimate (as sei -&gt; 0):   b = -0.1909 (CI: -0.6753, 0.2935)
+#&gt; test for funnel plot asymmetry: t = -3.1783, df = 13, p = 0.0073
+#&gt; limit estimate (as sei -&gt; 0):   b = -0.1512 (CI: -0.5130, 0.2106)
 #&gt; </div><div class='input'>
 <span class='co'>### random/mixed-effects version of the Egger test</span>
 <span class='fu'>regtest</span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; 
@@ -259,8 +280,8 @@
 #&gt; model:     mixed-effects meta-regression model
 #&gt; predictor: standard error
 #&gt; 
-#&gt; test for funnel plot asymmetry: z = -0.8033, p = 0.4218
-#&gt; limit estimate (as sei -&gt; 0):   b = -0.5104 (CI: -1.1182, 0.0974)
+#&gt; test for funnel plot asymmetry: z = -2.8062, p = 0.0050
+#&gt; limit estimate (as sei -&gt; 0):   b = -0.1639 (CI: -0.5681, 0.2402)
 #&gt; </div><div class='input'>
 <span class='co'>### same tests, but passing outcomes directly</span>
 <span class='fu'>regtest</span>(<span class='no'>dat</span>$<span class='no'>yi</span>, <span class='no'>dat</span>$<span class='no'>vi</span>, <span class='kw'>model</span><span class='kw'>=</span><span class='st'>"lm"</span>)</div><div class='output co'>#&gt; 
@@ -269,16 +290,16 @@
 #&gt; model:     weighted regression with multiplicative dispersion
 #&gt; predictor: standard error
 #&gt; 
-#&gt; test for funnel plot asymmetry: t = -1.4013, df = 11, p = 0.1887
-#&gt; limit estimate (as sei -&gt; 0):   b = -0.1909 (CI: -0.6753, 0.2935)
+#&gt; test for funnel plot asymmetry: t = -3.1783, df = 13, p = 0.0073
+#&gt; limit estimate (as sei -&gt; 0):   b = -0.1512 (CI: -0.5130, 0.2106)
 #&gt; </div><div class='input'><span class='fu'>regtest</span>(<span class='no'>dat</span>$<span class='no'>yi</span>, <span class='no'>dat</span>$<span class='no'>vi</span>)</div><div class='output co'>#&gt; 
 #&gt; Regression Test for Funnel Plot Asymmetry
 #&gt; 
 #&gt; model:     mixed-effects meta-regression model
 #&gt; predictor: standard error
 #&gt; 
-#&gt; test for funnel plot asymmetry: z = -0.8033, p = 0.4218
-#&gt; limit estimate (as sei -&gt; 0):   b = -0.5104 (CI: -1.1182, 0.0974)
+#&gt; test for funnel plot asymmetry: z = -2.8062, p = 0.0050
+#&gt; limit estimate (as sei -&gt; 0):   b = -0.1639 (CI: -0.5681, 0.2402)
 #&gt; </div><div class='input'>
 <span class='co'>### examples using the sample size (or a transformation thereof) as predictor</span>
 <span class='fu'>regtest</span>(<span class='no'>res</span>, <span class='kw'>model</span><span class='kw'>=</span><span class='st'>"lm"</span>, <span class='kw'>predictor</span><span class='kw'>=</span><span class='st'>"ni"</span>)</div><div class='output co'>#&gt; 
@@ -287,40 +308,39 @@
 #&gt; model:     weighted regression with multiplicative dispersion
 #&gt; predictor: sample size
 #&gt; 
-#&gt; test for funnel plot asymmetry: t = 4.4112, df = 11, p = 0.0010
+#&gt; test for funnel plot asymmetry: t = 2.8955, df = 13, p = 0.0125
 #&gt; </div><div class='input'><span class='fu'>regtest</span>(<span class='no'>res</span>, <span class='kw'>model</span><span class='kw'>=</span><span class='st'>"lm"</span>, <span class='kw'>predictor</span><span class='kw'>=</span><span class='st'>"ninv"</span>)</div><div class='output co'>#&gt; 
 #&gt; Regression Test for Funnel Plot Asymmetry
 #&gt; 
 #&gt; model:     weighted regression with multiplicative dispersion
 #&gt; predictor: inverse of the sample size
 #&gt; 
-#&gt; test for funnel plot asymmetry: t = -1.4485, df = 11, p = 0.1754
-#&gt; limit estimate (as ni -&gt; inf):  b = -0.3491 (CI: -0.6771, -0.0211)
+#&gt; test for funnel plot asymmetry: t = -2.3230, df = 13, p = 0.0370
+#&gt; limit estimate (as ni -&gt; inf):  b = -0.3731 (CI: -0.6872, -0.0591)
 #&gt; </div><div class='input'><span class='fu'>regtest</span>(<span class='no'>res</span>, <span class='kw'>model</span><span class='kw'>=</span><span class='st'>"rma"</span>, <span class='kw'>predictor</span><span class='kw'>=</span><span class='st'>"ni"</span>)</div><div class='output co'>#&gt; 
 #&gt; Regression Test for Funnel Plot Asymmetry
 #&gt; 
 #&gt; model:     mixed-effects meta-regression model
 #&gt; predictor: sample size
 #&gt; 
-#&gt; test for funnel plot asymmetry: z = 2.0488, p = 0.0405
+#&gt; test for funnel plot asymmetry: z = 1.7938, p = 0.0728
 #&gt; </div><div class='input'><span class='fu'>regtest</span>(<span class='no'>res</span>, <span class='kw'>model</span><span class='kw'>=</span><span class='st'>"rma"</span>, <span class='kw'>predictor</span><span class='kw'>=</span><span class='st'>"ninv"</span>)</div><div class='output co'>#&gt; 
 #&gt; Regression Test for Funnel Plot Asymmetry
 #&gt; 
 #&gt; model:     mixed-effects meta-regression model
 #&gt; predictor: inverse of the sample size
 #&gt; 
-#&gt; test for funnel plot asymmetry: z = -1.2566, p = 0.2089
-#&gt; limit estimate (as ni -&gt; inf):  b = -0.5972 (CI: -0.9825, -0.2118)
+#&gt; test for funnel plot asymmetry: z = -1.4313, p = 0.1524
+#&gt; limit estimate (as ni -&gt; inf):  b = -0.5636 (CI: -1.0712, -0.0559)
 #&gt; </div><div class='input'>
 <span class='co'>### if dat$yi is computed with escalc(), sample size information is stored in attributes</span>
-<span class='no'>dat</span>$<span class='no'>yi</span></div><div class='output co'>#&gt;  [1] -0.88931133 -1.58538866 -1.34807315 -1.44155119 -0.21754732 -0.78611559
-#&gt;  [7] -1.62089822  0.01195233 -0.46941765 -1.37134480 -0.33935883  0.44591340
-#&gt; [13] -0.01731395
+<span class='no'>dat</span>$<span class='no'>yi</span></div><div class='output co'>#&gt;  [1] -0.83034830 -1.05605267 -1.27833981 -0.04348511  0.22314355 -2.40751999
+#&gt;  [7] -1.28093385 -1.19170271 -0.69574796 -2.20827441 -2.03815988 -0.85015093
+#&gt; [13] -0.79323064 -0.29933987 -1.57078846
 #&gt; attr(,"ni")
-#&gt;  [1]    262    609    451  26465  10877   2992   3174 176782  14776   3381
-#&gt; [11]  77972   4839  34767
+#&gt;  [1]   76  270  400   94  298  115   48   43  151   54  169   56  252 2316  215
 #&gt; attr(,"measure")
-#&gt; [1] "RR"</div><div class='input'>
+#&gt; [1] "OR"</div><div class='input'>
 <span class='co'>### then this will work</span>
 <span class='fu'>regtest</span>(<span class='no'>dat</span>$<span class='no'>yi</span>, <span class='no'>dat</span>$<span class='no'>vi</span>, <span class='kw'>predictor</span><span class='kw'>=</span><span class='st'>"ni"</span>)</div><div class='output co'>#&gt; 
 #&gt; Regression Test for Funnel Plot Asymmetry
@@ -328,10 +348,10 @@
 #&gt; model:     mixed-effects meta-regression model
 #&gt; predictor: sample size
 #&gt; 
-#&gt; test for funnel plot asymmetry: z = 2.0488, p = 0.0405
+#&gt; test for funnel plot asymmetry: z = 1.7938, p = 0.0728
 #&gt; </div><div class='input'>
 <span class='co'>### otherwise have to supply sample sizes manually</span>
-<span class='no'>dat</span>$<span class='no'>ni</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>dat</span>, <span class='no'>tpos</span> + <span class='no'>tneg</span> + <span class='no'>cpos</span> + <span class='no'>cneg</span>)
+<span class='no'>dat</span>$<span class='no'>ni</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>dat</span>, <span class='no'>n1i</span> + <span class='no'>n2i</span>)
 <span class='no'>dat</span>$<span class='no'>yi</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>dat</span>$<span class='no'>yi</span>) <span class='co'># this removes the 'ni' attribute from 'yi'</span>
 <span class='fu'>regtest</span>(<span class='no'>dat</span>$<span class='no'>yi</span>, <span class='no'>dat</span>$<span class='no'>vi</span>, <span class='kw'>ni</span><span class='kw'>=</span><span class='no'>dat</span>$<span class='no'>ni</span>, <span class='kw'>predictor</span><span class='kw'>=</span><span class='st'>"ni"</span>)</div><div class='output co'>#&gt; 
 #&gt; Regression Test for Funnel Plot Asymmetry
@@ -339,24 +359,45 @@
 #&gt; model:     mixed-effects meta-regression model
 #&gt; predictor: sample size
 #&gt; 
-#&gt; test for funnel plot asymmetry: z = 2.0488, p = 0.0405
+#&gt; test for funnel plot asymmetry: z = 1.7938, p = 0.0728
 #&gt; </div><div class='input'>
+<span class='co'>### standard funnel plot (with standard error on y-axis)</span>
+<span class='fu'><a href='funnel.html'>funnel</a></span>(<span class='no'>res</span>, <span class='kw'>refline</span><span class='kw'>=</span><span class='fl'>0</span>)</div><div class='input'>
+<span class='co'>### regression test (by default, standard error is used as predictor)</span>
+<span class='no'>reg</span> <span class='kw'>&lt;-</span> <span class='fu'>regtest</span>(<span class='no'>res</span>)
+<span class='no'>reg</span></div><div class='output co'>#&gt; 
+#&gt; Regression Test for Funnel Plot Asymmetry
+#&gt; 
+#&gt; model:     mixed-effects meta-regression model
+#&gt; predictor: standard error
+#&gt; 
+#&gt; test for funnel plot asymmetry: z = -2.8062, p = 0.0050
+#&gt; limit estimate (as sei -&gt; 0):   b = -0.1639 (CI: -0.5681, 0.2402)
+#&gt; </div><div class='input'>
+<span class='co'>### add regression line to funnel plot</span>
+<span class='no'>se</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>0</span>,<span class='fl'>1.8</span>,<span class='kw'>length</span><span class='kw'>=</span><span class='fl'>100</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span>(<span class='no'>reg</span>$<span class='no'>fit</span>)[<span class='fl'>1</span>] + <span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span>(<span class='no'>reg</span>$<span class='no'>fit</span>)[<span class='fl'>2</span>]*<span class='no'>se</span>, <span class='no'>se</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='input'>
+<span class='co'>### regression test (using the sampling variance as predictor)</span>
+<span class='no'>reg</span> <span class='kw'>&lt;-</span> <span class='fu'>regtest</span>(<span class='no'>res</span>, <span class='kw'>predictor</span><span class='kw'>=</span><span class='st'>"vi"</span>)
+
+<span class='co'>### add regression line to funnel plot (using the sampling variance as predictor)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span>(<span class='no'>reg</span>$<span class='no'>fit</span>)[<span class='fl'>1</span>] + <span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span>(<span class='no'>reg</span>$<span class='no'>fit</span>)[<span class='fl'>2</span>]*<span class='no'>se</span>^<span class='fl'>2</span>, <span class='no'>se</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='img'><img src='regtest-1.png' alt='' width='768' height='614' /></div><div class='input'>
 <span class='co'>### testing for asymmetry after accounting for the influence of a moderator</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>ablat</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
+<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>year</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
 <span class='fu'>regtest</span>(<span class='no'>res</span>, <span class='kw'>model</span><span class='kw'>=</span><span class='st'>"lm"</span>)</div><div class='output co'>#&gt; 
 #&gt; Regression Test for Funnel Plot Asymmetry
 #&gt; 
 #&gt; model:     weighted regression with multiplicative dispersion
 #&gt; predictor: standard error
 #&gt; 
-#&gt; test for funnel plot asymmetry: t = -1.0876, df = 10, p = 0.3023
+#&gt; test for funnel plot asymmetry: t = -3.1057, df = 12, p = 0.0091
 #&gt; </div><div class='input'><span class='fu'>regtest</span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; 
 #&gt; Regression Test for Funnel Plot Asymmetry
 #&gt; 
 #&gt; model:     mixed-effects meta-regression model
 #&gt; predictor: standard error
 #&gt; 
-#&gt; test for funnel plot asymmetry: z = -0.5990, p = 0.5492
+#&gt; test for funnel plot asymmetry: z = -2.3198, p = 0.0204
 #&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
