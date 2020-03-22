@@ -30,7 +30,8 @@ dat
 ### create network graph ('plyr' and 'igraph' packages must be installed)
 \dontrun{
 require(igraph)
-pairs <- data.frame(do.call(rbind, sapply(split(dat$treatment, dat$study), function(x) t(combn(x,2)))), stringsAsFactors=FALSE)
+pairs <- data.frame(do.call(rbind,
+   sapply(split(dat$treatment, dat$study), function(x) t(combn(x,2)))), stringsAsFactors=FALSE)
 pairs$X1 <- factor(pairs$X1, levels=sort(unique(dat$treatment)))
 pairs$X2 <- factor(pairs$X2, levels=sort(unique(dat$treatment)))
 tab <- table(pairs[,1], pairs[,2])

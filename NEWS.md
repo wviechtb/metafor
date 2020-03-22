@@ -1,4 +1,6 @@
-# metafor 2.5-1 (2020-03-21)
+# metafor 2.5-2 (2020-03-22)
+
+- `funnel.default()` and `funnel.rma()` gain `lty` argument; reference line is now drawn by default as a dotted line (like the line for the pseudo confidence region)
 
 - `regtest()` now shows the 'limit estimate' of the (average) true effect when using `sei`, `vi`, `ninv`, or `sqrtninv` as predictor (and the model does not contain any other moderators)
 

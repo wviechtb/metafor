@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5.2</span>
       </span>
     </div>
 
@@ -140,14 +140,14 @@
        <span class='kw'>steps</span><span class='kw'>=</span><span class='fl'>5</span>, <span class='no'>at</span>, <span class='no'>atransf</span>, <span class='no'>targs</span>, <span class='no'>digits</span>, <span class='kw'>level</span><span class='kw'>=</span><span class='no'>x</span>$<span class='no'>level</span>,
        <span class='kw'>addtau2</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"rstandard"</span>,
        <span class='kw'>back</span><span class='kw'>=</span><span class='st'>"lightgray"</span>, <span class='kw'>shade</span><span class='kw'>=</span><span class='st'>"white"</span>, <span class='kw'>hlines</span><span class='kw'>=</span><span class='st'>"white"</span>,
-       <span class='no'>refline</span>, <span class='kw'>pch</span><span class='kw'>=</span><span class='fl'>19</span>, <span class='kw'>pch.fill</span><span class='kw'>=</span><span class='fl'>21</span>, <span class='no'>col</span>, <span class='no'>bg</span>, <span class='kw'>legend</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>ci.res</span><span class='kw'>=</span><span class='fl'>1000</span>, <span class='no'>...</span>)
+       <span class='no'>refline</span>, <span class='kw'>lty</span><span class='kw'>=</span><span class='fl'>3</span>, <span class='kw'>pch</span><span class='kw'>=</span><span class='fl'>19</span>, <span class='kw'>pch.fill</span><span class='kw'>=</span><span class='fl'>21</span>, <span class='no'>col</span>, <span class='no'>bg</span>, <span class='kw'>legend</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>ci.res</span><span class='kw'>=</span><span class='fl'>1000</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for default</span>
 <span class='fu'>funnel</span>(<span class='no'>x</span>, <span class='no'>vi</span>, <span class='no'>sei</span>, <span class='no'>ni</span>, <span class='no'>subset</span>, <span class='kw'>yaxis</span><span class='kw'>=</span><span class='st'>"sei"</span>,
        <span class='no'>xlim</span>, <span class='no'>ylim</span>, <span class='no'>xlab</span>, <span class='no'>ylab</span>,
        <span class='kw'>steps</span><span class='kw'>=</span><span class='fl'>5</span>, <span class='no'>at</span>, <span class='no'>atransf</span>, <span class='no'>targs</span>, <span class='no'>digits</span>, <span class='kw'>level</span><span class='kw'>=</span><span class='fl'>95</span>,
        <span class='kw'>back</span><span class='kw'>=</span><span class='st'>"lightgray"</span>, <span class='kw'>shade</span><span class='kw'>=</span><span class='st'>"white"</span>, <span class='kw'>hlines</span><span class='kw'>=</span><span class='st'>"white"</span>,
-       <span class='kw'>refline</span><span class='kw'>=</span><span class='fl'>0</span>, <span class='kw'>pch</span><span class='kw'>=</span><span class='fl'>19</span>, <span class='no'>col</span>, <span class='no'>bg</span>, <span class='kw'>legend</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>ci.res</span><span class='kw'>=</span><span class='fl'>1000</span>, <span class='no'>...</span>)</pre>
+       <span class='kw'>refline</span><span class='kw'>=</span><span class='fl'>0</span>, <span class='kw'>lty</span><span class='kw'>=</span><span class='fl'>3</span>, <span class='kw'>pch</span><span class='kw'>=</span><span class='fl'>19</span>, <span class='no'>col</span>, <span class='no'>bg</span>, <span class='kw'>legend</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>ci.res</span><span class='kw'>=</span><span class='fl'>1000</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -238,7 +238,11 @@
     </tr>
     <tr>
       <th>refline</th>
-      <td><p>value at which to draw the vertical reference line and, if drawn, where the pseudo confidence interval should be centered. If unspecified, the reference line is drawn at the fixed- or random-effects model estimate when the model does not include moderators and at zero when moderators are included (and therefore residuals are plotted) or when directly plotting observed effect sizes or outcomes.</p></td>
+      <td><p>value at which to draw the vertical reference line and where the pseudo confidence interval should be centered. If unspecified, the reference line is drawn at the fixed- or random-effects model estimate when the model does not include moderators and at zero when moderators are included (and therefore residuals are plotted) or when directly plotting observed effect sizes or outcomes.</p></td>
+    </tr>
+    <tr>
+      <th>lty</th>
+      <td><p>line type for the pseudo confidence interval region and reference line. The default is to draw dotted lines (see <code><a href='https://rdrr.io/r/graphics/par.html'>par</a></code> for other options). Can also be a vector to specify the two line types separately.</p></td>
     </tr>
     <tr>
       <th>pch</th>

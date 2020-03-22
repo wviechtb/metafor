@@ -12,13 +12,13 @@ funnel(x, \dots)
        steps=5, at, atransf, targs, digits, level=x$level,
        addtau2=FALSE, type="rstandard",
        back="lightgray", shade="white", hlines="white",
-       refline, pch=19, pch.fill=21, col, bg, legend=FALSE, ci.res=1000, \dots)
+       refline, lty=3, pch=19, pch.fill=21, col, bg, legend=FALSE, ci.res=1000, \dots)
 
 \method{funnel}{default}(x, vi, sei, ni, subset, yaxis="sei",
        xlim, ylim, xlab, ylab,
        steps=5, at, atransf, targs, digits, level=95,
        back="lightgray", shade="white", hlines="white",
-       refline=0, pch=19, col, bg, legend=FALSE, ci.res=1000, \dots)
+       refline=0, lty=3, pch=19, col, bg, legend=FALSE, ci.res=1000, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma"} or a vector with the observed effect sizes or outcomes.}
@@ -42,7 +42,8 @@ funnel(x, \dots)
    \item{back}{color to use for the background of the plotting region.}
    \item{shade}{color to use for shading the pseudo confidence interval region. When \code{level} is a vector of values, different shading colors can be specified for each region.}
    \item{hlines}{color of the horizontal reference lines.}
-   \item{refline}{value at which to draw the vertical reference line and, if drawn, where the pseudo confidence interval should be centered. If unspecified, the reference line is drawn at the fixed- or random-effects model estimate when the model does not include moderators and at zero when moderators are included (and therefore residuals are plotted) or when directly plotting observed effect sizes or outcomes.}
+   \item{refline}{value at which to draw the vertical reference line and where the pseudo confidence interval should be centered. If unspecified, the reference line is drawn at the fixed- or random-effects model estimate when the model does not include moderators and at zero when moderators are included (and therefore residuals are plotted) or when directly plotting observed effect sizes or outcomes.}
+   \item{lty}{line type for the pseudo confidence interval region and reference line. The default is to draw dotted lines (see \code{\link{par}} for other options). Can also be a vector to specify the two line types separately.}
    \item{pch}{plotting symbol to use for the observed effect sizes or outcomes. By default, a solid circle is used. Can also be a vector of values. See \code{\link{points}} for other options.}
    \item{pch.fill}{plotting symbol to use for the effect sizes or outcomes filled in by the trim and fill method. By default, a circle is used. Only relevant when plotting an object created by the \code{\link{trimfill}} function.}
    \item{col}{optional character string specifying the name of a color to use for the points ("black" is used by default if not specified). Can also be a vector of color names.}

@@ -36,13 +36,16 @@ dat
 ### create network graph ('plyr' and 'igraph' packages must be installed)
 \dontrun{
 require(igraph)
-pairs <- data.frame(do.call(rbind, sapply(split(dat$trt, dat$study), function(x) t(combn(x,2)))), stringsAsFactors=FALSE)
-pairs$X1 <- factor(pairs$X1, levels=c("no_contact", "self_help", "ind_counseling", "grp_counseling"))
-pairs$X2 <- factor(pairs$X2, levels=c("no_contact", "self_help", "ind_counseling", "grp_counseling"))
+pairs <- data.frame(do.call(rbind,
+   sapply(split(dat$trt, dat$study), function(x) t(combn(x,2)))), stringsAsFactors=FALSE)
+lvls <- c("no_contact", "self_help", "ind_counseling", "grp_counseling")
+pairs$X1 <- factor(pairs$X1, levels=lvls)
+pairs$X2 <- factor(pairs$X2, levels=lvls)
 tab <- table(pairs[,1], pairs[,2])
 tab # adjacency matrix
 g <- graph_from_adjacency_matrix(tab, mode = "plus", weighted=TRUE, diag=FALSE)
-vertex_attr(g, "name") <- c("No Contact", "Self-Help", "Individual\nCounseling", "Group\nCounseling")
+vertex_attr(g, "name") <- c("No Contact", "Self-Help",
+                            "Individual\nCounseling", "Group\nCounseling")
 plot(g, edge.curved=FALSE, edge.width=E(g)$weight, layout=layout_on_grid,
      vertex.size=35, vertex.color="lightgray", vertex.label.color="black", vertex.label.font=2)}
 

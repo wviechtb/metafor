@@ -1,7 +1,7 @@
 funnel.default <- function(x, vi, sei, ni, subset, yaxis="sei", xlim, ylim, xlab, ylab,
 steps=5, at, atransf, targs, digits, level=95,
 back="lightgray", shade="white", hlines="white",
-refline=0, pch=19, col, bg, legend=FALSE, ci.res=1000, ...) {
+refline=0, lty=3, pch=19, col, bg, legend=FALSE, ci.res=1000, ...) {
 
    #########################################################################
 
@@ -26,7 +26,7 @@ refline=0, pch=19, col, bg, legend=FALSE, ci.res=1000, ...) {
 
    k <- length(yi)
 
-   ### check if sample size information is available if plotting (some function of) of the sample sizes on the y-axis
+   ### check if sample size information is available if plotting (some function of) of the the sample sizes on the y-axis
 
    if (missing(ni))
       ni <- NULL
@@ -170,6 +170,38 @@ refline=0, pch=19, col, bg, legend=FALSE, ci.res=1000, ...) {
    if (length(bg) != k)
       stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'bg' argument."))
 
+   if (length(lty) == 1L)
+      lty <- rep(lty, 2)
+
+   ddd <- list(...)
+
+   lplot     <- function(..., refline2, level2, lty2) plot(...)
+   labline   <- function(..., refline2, level2, lty2) abline(...)
+   lsegments <- function(..., refline2, level2, lty2) segments(...)
+   laxis     <- function(..., refline2, level2, lty2) axis(...)
+   lpolygon  <- function(..., refline2, level2, lty2) polygon(...)
+   llines    <- function(..., refline2, level2, lty2) lines(...)
+   lpoints   <- function(..., refline2, level2, lty2) points(...)
+   lrect     <- function(..., refline2, level2, lty2) rect(...)
+
+   if (!is.null(ddd$refline2)) {
+      refline2 <- ddd$refline2
+   } else {
+      refline2 <- NULL
+   }
+
+   if (!is.null(ddd$level2)) {
+      level2 <- ddd$level2
+   } else {
+      level2 <- 95
+   }
+
+   if (!is.null(ddd$lty2)) {
+      lty2 <- ddd$lty2
+   } else {
+      lty2 <- 3
+   }
+
    #########################################################################
 
    ### if a subset of studies is specified
@@ -299,6 +331,7 @@ refline=0, pch=19, col, bg, legend=FALSE, ci.res=1000, ...) {
    if (is.element(yaxis, c("sei", "vi", "seinv", "vinv"))) {
 
       level     <- ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
+      level2    <- ifelse(level2 == 0, 1, ifelse(level2 >= 1, (100-level2)/100, ifelse(level2 > .5, 1-level2, level2)))
       #level    <- ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)) ### note: there may be multiple level values
       level.min <- min(level)                                                              ### note: smallest level is the widest CI
       lvals     <- length(level)
@@ -357,20 +390,20 @@ refline=0, pch=19, col, bg, legend=FALSE, ci.res=1000, ...) {
 
    ### set up plot
 
-   plot(NA, NA, xlim=xlim, ylim=ylim, xlab=xlab, ylab=ylab, xaxt="n", yaxt="n", bty="n", ...)
+   lplot(NA, NA, xlim=xlim, ylim=ylim, xlab=xlab, ylab=ylab, xaxt="n", yaxt="n", bty="n", ...)
 
    ### add background shading
 
    par.usr <- par("usr")
-   rect(par.usr[1], par.usr[3], par.usr[2], par.usr[4], col=back, border=NA, ...)
+   lrect(par.usr[1], par.usr[3], par.usr[2], par.usr[4], col=back, border=NA, ...)
 
    ### add y-axis
 
-   axis(side=2, at=seq(from=ylim[1], to=ylim[2], length.out=steps), labels=formatC(seq(from=ylim[1], to=ylim[2], length.out=steps), digits=digits[[2]], format="f", drop0trailing=ifelse(class(digits[[2]]) == "integer", TRUE, FALSE)), ...)
+   laxis(side=2, at=seq(from=ylim[1], to=ylim[2], length.out=steps), labels=formatC(seq(from=ylim[1], to=ylim[2], length.out=steps), digits=digits[[2]], format="f", drop0trailing=ifelse(class(digits[[2]]) == "integer", TRUE, FALSE)), ...)
 
    ### add horizontal lines
 
-   abline(h=seq(from=ylim[1], to=ylim[2], length.out=steps), col=hlines, ...)
+   labline(h=seq(from=ylim[1], to=ylim[2], length.out=steps), col=hlines, ...)
 
    #########################################################################
 
@@ -423,9 +456,18 @@ refline=0, pch=19, col, bg, legend=FALSE, ci.res=1000, ...) {
          ci.left  <- refline - qnorm(level[m]/2, lower.tail=FALSE) * sqrt(vi.vals)
          ci.right <- refline + qnorm(level[m]/2, lower.tail=FALSE) * sqrt(vi.vals)
 
-         polygon(c(ci.left,ci.right[ci.res:1]), c(yi.vals,yi.vals[ci.res:1]), border=NA, col=shade[m], ...)
-         lines(ci.left,  yi.vals, lty="dotted", ...)
-         lines(ci.right, yi.vals, lty="dotted", ...)
+         lpolygon(c(ci.left,ci.right[ci.res:1]), c(yi.vals,yi.vals[ci.res:1]), border=NA, col=shade[m], ...)
+         llines(ci.left,  yi.vals, lty=lty[1], ...)
+         llines(ci.right, yi.vals, lty=lty[1], ...)
+
+      }
+
+      if (!is.null(refline2)) {
+
+         ci.left  <- refline2 - qnorm(level2/2, lower.tail=FALSE) * sqrt(vi.vals)
+         ci.right <- refline2 + qnorm(level2/2, lower.tail=FALSE) * sqrt(vi.vals)
+         llines(ci.left,  yi.vals, lty=lty2, ...)
+         llines(ci.right, yi.vals, lty=lty2, ...)
 
       }
 
@@ -435,10 +477,10 @@ refline=0, pch=19, col, bg, legend=FALSE, ci.res=1000, ...) {
    ### use segments so that line does not extent beyond tip of CI region
 
    if (is.element(yaxis, c("sei", "vi", "seinv", "vinv")))
-      segments(refline, ylim[1], refline, ylim[2], ...)
+      lsegments(refline, ylim[1], refline, ylim[2], lty=lty[2], ...)
 
    if (is.element(yaxis, c("ni", "ninv", "sqrtni", "sqrtninv", "lni", "wi")))
-      abline(v=refline, ...)
+      labline(v=refline, lty=lty[2], ...)
 
    #########################################################################
 
@@ -476,7 +518,7 @@ refline=0, pch=19, col, bg, legend=FALSE, ci.res=1000, ...) {
    if (yaxis == "wi")
       yaxis.vals <- weights
 
-   points(xaxis.vals, yaxis.vals, pch=pch, col=col, bg=bg, ...)
+   lpoints(xaxis.vals, yaxis.vals, pch=pch, col=col, bg=bg, ...)
 
    #########################################################################
 
@@ -509,7 +551,7 @@ refline=0, pch=19, col, bg, legend=FALSE, ci.res=1000, ...) {
 
    ### add x-axis
 
-   axis(side=1, at=at, labels=at.lab, ...)
+   laxis(side=1, at=at, labels=at.lab, ...)
 
    ############################################################################
 
