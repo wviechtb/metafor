@@ -10,23 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -53,7 +57,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -67,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-8</span>
       </span>
     </div>
 
@@ -121,13 +125,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Changelog <small></small></h1>
+      <h1 data-toc-skip>Changelog <small></small></h1>
       <small>Source: <a href='https://github.com/wviechtb/metafor/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="metafor-2-5-7-2020-03-22" class="section level1">
-<h1 class="page-header">
-<a href="#metafor-2-5-7-2020-03-22" class="anchor"></a>metafor 2.5-7 (2020-03-22)<small> Unreleased </small>
+    <div id="metafor-2-5-8-2020-04-23" class="section level1">
+<h1 class="page-header" data-toc-text="2.5-8">
+<a href="#metafor-2-5-8-2020-04-23" class="anchor"></a>metafor 2.5-8 (2020-04-23)<small> Unreleased </small>
 </h1>
 <ul>
 <li><p><code><a href="../reference/funnel.html">funnel.default()</a></code> and <code><a href="../reference/funnel.html">funnel.rma()</a></code> gain <code>label</code> and <code>offset</code> arguments</p></li>
@@ -137,7 +141,7 @@
 </ul>
 </div>
     <div id="metafor-2-4-0-2020-03-19" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.4-0">
 <a href="#metafor-2-4-0-2020-03-19" class="anchor"></a>metafor 2.4-0 (2020-03-19)<small> 2020-03-19 </small>
 </h1>
 <ul>
@@ -164,7 +168,7 @@
 </ul>
 </div>
     <div id="metafor-2-1-0-2019-05-13" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.1-0">
 <a href="#metafor-2-1-0-2019-05-13" class="anchor"></a>metafor 2.1-0 (2019-05-13)<small> 2019-05-14 </small>
 </h1>
 <ul>
@@ -226,7 +230,7 @@
 </ul>
 </div>
     <div id="metafor-2-0-0-2017-06-22" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.0-0">
 <a href="#metafor-2-0-0-2017-06-22" class="anchor"></a>metafor 2.0-0 (2017-06-22)<small> 2017-06-22 </small>
 </h1>
 <ul>
@@ -265,7 +269,7 @@
 </ul>
 </div>
     <div id="metafor-1-9-9-2016-09-25" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="1.9-9">
 <a href="#metafor-1-9-9-2016-09-25" class="anchor"></a>metafor 1.9-9 (2016-09-25)<small> 2016-09-25 </small>
 </h1>
 <ul>
@@ -305,7 +309,7 @@
 </ul>
 </div>
     <div id="metafor-1-9-8-2015-09-28" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="1.9-8">
 <a href="#metafor-1-9-8-2015-09-28" class="anchor"></a>metafor 1.9-8 (2015-09-28)<small> 2015-09-28 </small>
 </h1>
 <ul>
@@ -327,7 +331,7 @@
 </ul>
 </div>
     <div id="metafor-1-9-7-2015-05-22" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="1.9-7">
 <a href="#metafor-1-9-7-2015-05-22" class="anchor"></a>metafor 1.9-7 (2015-05-22)<small> 2015-05-22 </small>
 </h1>
 <ul>
@@ -337,7 +341,7 @@
 </ul>
 </div>
     <div id="metafor-1-9-6-2015-05-07" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="1.9-6">
 <a href="#metafor-1-9-6-2015-05-07" class="anchor"></a>metafor 1.9-6 (2015-05-07)<small> 2015-05-07 </small>
 </h1>
 <ul>
@@ -367,7 +371,7 @@
 </ul>
 </div>
     <div id="metafor-1-9-5-2014-11-24" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="1.9-5">
 <a href="#metafor-1-9-5-2014-11-24" class="anchor"></a>metafor 1.9-5 (2014-11-24)<small> 2014-11-24 </small>
 </h1>
 <ul>
@@ -386,14 +390,14 @@
 <li><p><code><a href="../reference/funnel.html">funnel()</a></code> and <code><a href="../reference/radial.html">radial()</a></code> now (invisibly) return data frames with the coordinates of the points that were drawn (may be useful for manual labeling of points in the plots)</p></li>
 <li><p><code><a href="../reference/permutest.html">permutest.rma.uni()</a></code> function now uses a numerical tolerance when making comparisons (&gt;= or &lt;=) between an observed test statistic and the test statistic under the permuted data; when using random permutations, the function now ensures that the very first permutation correspond to the original data</p></li>
 <li><p>corrected some missing/redundant row/column labels in some output</p></li>
-<li><p>most <code><a href="https://rdrr.io/r/base/library.html">require()</a></code> calls replaced with <code><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace()</a></code> to avoid altering the search path (hopefully this won’t break stuff …)</p></li>
+<li><p>most <code>require()</code> calls replaced with <code>requireNamespace()</code> to avoid altering the search path (hopefully this won’t break stuff …)</p></li>
 <li><p>some non-visible changes including more use of some (non-exported) helper functions for common tasks</p></li>
 <li><p>dataset <code>dat.collins91985a</code> updated (including all reported outcomes and some more information about the various trials)</p></li>
 <li><p>oh, and guess what? I updated the documentation …</p></li>
 </ul>
 </div>
     <div id="metafor-1-9-4-2014-07-30" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="1.9-4">
 <a href="#metafor-1-9-4-2014-07-30" class="anchor"></a>metafor 1.9-4 (2014-07-30)<small> 2014-07-30 </small>
 </h1>
 <ul>
@@ -416,7 +420,7 @@
 </ul>
 </div>
     <div id="metafor-1-9-3-2014-05-05" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="1.9-3">
 <a href="#metafor-1-9-3-2014-05-05" class="anchor"></a>metafor 1.9-3 (2014-05-05)<small> 2014-05-05 </small>
 </h1>
 <ul>
@@ -469,7 +473,7 @@
 </ul>
 </div>
     <div id="metafor-1-9-2-2013-10-07" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="1.9-2">
 <a href="#metafor-1-9-2-2013-10-07" class="anchor"></a>metafor 1.9-2 (2013-10-07)<small> 2013-10-07 </small>
 </h1>
 <ul>
@@ -490,7 +494,7 @@
 </ul>
 </div>
     <div id="metafor-1-9-1-2013-07-20" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="1.9-1">
 <a href="#metafor-1-9-1-2013-07-20" class="anchor"></a>metafor 1.9-1 (2013-07-20)<small> 2013-07-20 </small>
 </h1>
 <ul>
@@ -510,7 +514,7 @@
 </ul>
 </div>
     <div id="metafor-1-9-0-2013-06-21" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="1.9-0">
 <a href="#metafor-1-9-0-2013-06-21" class="anchor"></a>metafor 1.9-0 (2013-06-21)<small> 2013-06-21 </small>
 </h1>
 <ul>
@@ -535,7 +539,7 @@
 </ul>
 </div>
     <div id="metafor-1-8-0-2013-04-11" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="1.8-0">
 <a href="#metafor-1-8-0-2013-04-11" class="anchor"></a>metafor 1.8-0 (2013-04-11)<small> 2013-04-11 </small>
 </h1>
 <ul>
@@ -557,7 +561,7 @@
 </ul>
 </div>
     <div id="metafor-1-7-0-2013-02-06" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="1.7-0">
 <a href="#metafor-1-7-0-2013-02-06" class="anchor"></a>metafor 1.7-0 (2013-02-06)<small> 2013-02-06 </small>
 </h1>
 <ul>
@@ -567,7 +571,7 @@
 <li><p><code><a href="../reference/rma.uni.html">rma.uni()</a></code> now has a <code>weights</code> argument to specify the inverse of the sampling variances (instead of using the <code>vi</code> or <code>sei</code> arguments); for now, this is all this argument should be used for (in the future, this argument may potentially be used to allow the user to define alternative weights)</p></li>
 <li><p><code><a href="../reference/rma.uni.html">rma.uni()</a></code> now checks whether the model matrix is not of full rank and issues an error accordingly (instead of the rather cryptic error that was issued before)</p></li>
 <li><p><code><a href="../reference/rma.uni.html">rma.uni()</a></code> now has a <code>verbose</code> argument</p></li>
-<li><p><code><a href="../reference/coef.rma.html">coef.rma()</a></code> now returns only the model coefficients (this change was necessary to make the package compatible with the <code>multcomp</code> package; see <code><a href="https://rdrr.io/r/utils/help.html">help(rma)</a></code> for an example); use <code><a href="https://rdrr.io/r/stats/coef.html">coef(summary())</a></code> to obtain the full table of results</p></li>
+<li><p><code><a href="../reference/coef.rma.html">coef.rma()</a></code> now returns only the model coefficients (this change was necessary to make the package compatible with the <code>multcomp</code> package; see <code><a href="../reference/rma.uni.html">help(rma)</a></code> for an example); use <code><a href="https://rdrr.io/r/stats/coef.html">coef(summary())</a></code> to obtain the full table of results</p></li>
 <li><p>the <code><a href="../reference/escalc.html">escalc()</a></code> function now does some more extensive error checking for misspecified data and some unusual cases</p></li>
 <li><p><code>append</code> argument is now <code>TRUE</code> by default in the <code><a href="../reference/escalc.html">escalc()</a></code> function</p></li>
 <li><p>objects generated by the <code><a href="../reference/escalc.html">escalc()</a></code> function now have their own class</p></li>
@@ -582,7 +586,7 @@
 <li><p>added <code>"PBIT"</code> and <code>"OR2D"</code> measures to the <code><a href="../reference/escalc.html">escalc()</a></code> and <code><a href="../reference/rma.uni.html">rma.uni()</a></code> functions to compute the standardized mean difference based on 2x2 table data</p></li>
 <li><p>added the <code>"D2OR"</code> measure to the <code><a href="../reference/escalc.html">escalc()</a></code> and <code><a href="../reference/rma.uni.html">rma.uni()</a></code> functions to compute the log odds ratio based on the standardized mean difference</p></li>
 <li><p>added <code>"SMDH"</code> measure to the <code><a href="../reference/escalc.html">escalc()</a></code> and <code><a href="../reference/rma.uni.html">rma.uni()</a></code> functions to compute the standardized mean difference without assuming equal population variances</p></li>
-<li><p>added <code>"ARAW"</code>, <code>"AHW"</code>, and <code>"ABT"</code> measures to the <code><a href="../reference/escalc.html">escalc()</a></code> and <code><a href="../reference/rma.uni.html">rma.uni()</a></code> functions for the raw value of Cronbach’s alpha, the transformation suggested by Hakstian &amp; Whalen (1976), and the transformation suggested by Bonett (2002) for the meta-analysis of reliability coefficients (see <code><a href="https://rdrr.io/r/utils/help.html">help(escalc)</a></code> for details)</p></li>
+<li><p>added <code>"ARAW"</code>, <code>"AHW"</code>, and <code>"ABT"</code> measures to the <code><a href="../reference/escalc.html">escalc()</a></code> and <code><a href="../reference/rma.uni.html">rma.uni()</a></code> functions for the raw value of Cronbach’s alpha, the transformation suggested by Hakstian &amp; Whalen (1976), and the transformation suggested by Bonett (2002) for the meta-analysis of reliability coefficients (see <code><a href="../reference/escalc.html">help(escalc)</a></code> for details)</p></li>
 <li><p>corrected a small mistake in the equation used to compute the sampling variance of the phi coefficient (<code>measure="PHI"</code>) in the <code><a href="../reference/escalc.html">escalc()</a></code> function</p></li>
 <li><p>the <code><a href="../reference/permutest.html">permutest.rma.uni()</a></code> function now uses an algorithm to find only the unique permutations of the model matrix (which may be much smaller than the total number of permutations), making the exact permutation test feasible in a larger set of circumstances (thanks to John Hodgson for making me aware of this issue and to Hans-Jörg Viechtbauer for coming up with a recursive algorithm for finding the unique permutations)</p></li>
 <li><p>credibility interval in <code><a href="../reference/forest.rma.html">forest.rma()</a></code> is now indicated with a dotted (instead of a dashed) line; ends of the interval are now marked with vertical bars</p></li>
@@ -624,7 +628,7 @@
 </ul>
 </div>
     <div id="metafor-1-6-0-2011-04-13" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="1.6-0">
 <a href="#metafor-1-6-0-2011-04-13" class="anchor"></a>metafor 1.6-0 (2011-04-13)<small> 2011-04-13 </small>
 </h1>
 <ul>
@@ -638,7 +642,7 @@
 </ul>
 </div>
     <div id="metafor-1-5-0-2010-12-16" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="1.5-0">
 <a href="#metafor-1-5-0-2010-12-16" class="anchor"></a>metafor 1.5-0 (2010-12-16)<small> 2010-12-16 </small>
 </h1>
 <ul>
@@ -657,7 +661,7 @@
 </ul>
 </div>
     <div id="metafor-1-4-0-2010-07-30" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="1.4-0">
 <a href="#metafor-1-4-0-2010-07-30" class="anchor"></a>metafor 1.4-0 (2010-07-30)<small> 2010-07-30 </small>
 </h1>
 <ul>
@@ -669,7 +673,7 @@
 </ul>
 </div>
     <div id="metafor-1-3-0-2010-06-25" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="1.3-0">
 <a href="#metafor-1-3-0-2010-06-25" class="anchor"></a>metafor 1.3-0 (2010-06-25)<small> 2010-06-25 </small>
 </h1>
 <ul>
@@ -679,7 +683,7 @@
 </ul>
 </div>
     <div id="metafor-1-2-0-2010-05-18" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="1.2-0">
 <a href="#metafor-1-2-0-2010-05-18" class="anchor"></a>metafor 1.2-0 (2010-05-18)<small> Unreleased </small>
 </h1>
 <ul>
@@ -697,7 +701,7 @@
 </ul>
 </div>
     <div id="metafor-1-1-0-2010-04-28" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="1.1-0">
 <a href="#metafor-1-1-0-2010-04-28" class="anchor"></a>metafor 1.1-0 (2010-04-28)<small> 2010-04-28 </small>
 </h1>
 <ul>
@@ -714,7 +718,7 @@
 </ul>
 </div>
     <div id="metafor-1-0-1-2010-02-02" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="1.0-1">
 <a href="#metafor-1-0-1-2010-02-02" class="anchor"></a>metafor 1.0-1 (2010-02-02)<small> 2010-02-02 </small>
 </h1>
 <ul>
@@ -732,7 +736,7 @@
 </ul>
 </div>
     <div id="metafor-0-5-7-2009-12-06" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.5-7">
 <a href="#metafor-0-5-7-2009-12-06" class="anchor"></a>metafor 0.5-7 (2009-12-06)<small> 2009-12-06 </small>
 </h1>
 <ul>
@@ -743,7 +747,7 @@
 </ul>
 </div>
     <div id="metafor-0-5-6-2009-10-19" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.5-6">
 <a href="#metafor-0-5-6-2009-10-19" class="anchor"></a>metafor 0.5-6 (2009-10-19)<small> Unreleased </small>
 </h1>
 <ul>
@@ -754,7 +758,7 @@
 </ul>
 </div>
     <div id="metafor-0-5-5-2009-10-08" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.5-5">
 <a href="#metafor-0-5-5-2009-10-08" class="anchor"></a>metafor 0.5-5 (2009-10-08)<small> 2009-10-08 </small>
 </h1>
 <ul>
@@ -768,7 +772,7 @@
 </ul>
 </div>
     <div id="metafor-0-5-4-2009-09-18" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.5-4">
 <a href="#metafor-0-5-4-2009-09-18" class="anchor"></a>metafor 0.5-4 (2009-09-18)<small> 2009-09-18 </small>
 </h1>
 <ul>
@@ -784,7 +788,7 @@
 </ul>
 </div>
     <div id="metafor-0-5-3-2009-07-31" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.5-3">
 <a href="#metafor-0-5-3-2009-07-31" class="anchor"></a>metafor 0.5-3 (2009-07-31)<small> 2009-07-31 </small>
 </h1>
 <ul>
@@ -793,7 +797,7 @@
 </ul>
 </div>
     <div id="metafor-0-5-2-2009-07-06" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.5-2">
 <a href="#metafor-0-5-2-2009-07-06" class="anchor"></a>metafor 0.5-2 (2009-07-06)<small> Unreleased </small>
 </h1>
 <ul>
@@ -802,7 +806,7 @@
 </ul>
 </div>
     <div id="metafor-0-5-1-2009-06-14" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.5-1">
 <a href="#metafor-0-5-1-2009-06-14" class="anchor"></a>metafor 0.5-1 (2009-06-14)<small> Unreleased </small>
 </h1>
 <ul>
@@ -810,7 +814,7 @@
 </ul>
 </div>
     <div id="metafor-0-5-0-2009-06-05" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.5-0">
 <a href="#metafor-0-5-0-2009-06-05" class="anchor"></a>metafor 0.5-0 (2009-06-05)<small> 2009-06-05 </small>
 </h1>
 <ul>
@@ -819,43 +823,10 @@
 </div>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <div id="tocnav">
-      <h2>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="#metafor-2-5-7-2020-03-22">2.5-7</a></li>
-        <li><a href="#metafor-2-4-0-2020-03-19">2.4-0</a></li>
-        <li><a href="#metafor-2-1-0-2019-05-13">2.1-0</a></li>
-        <li><a href="#metafor-2-0-0-2017-06-22">2.0-0</a></li>
-        <li><a href="#metafor-1-9-9-2016-09-25">1.9-9</a></li>
-        <li><a href="#metafor-1-9-8-2015-09-28">1.9-8</a></li>
-        <li><a href="#metafor-1-9-7-2015-05-22">1.9-7</a></li>
-        <li><a href="#metafor-1-9-6-2015-05-07">1.9-6</a></li>
-        <li><a href="#metafor-1-9-5-2014-11-24">1.9-5</a></li>
-        <li><a href="#metafor-1-9-4-2014-07-30">1.9-4</a></li>
-        <li><a href="#metafor-1-9-3-2014-05-05">1.9-3</a></li>
-        <li><a href="#metafor-1-9-2-2013-10-07">1.9-2</a></li>
-        <li><a href="#metafor-1-9-1-2013-07-20">1.9-1</a></li>
-        <li><a href="#metafor-1-9-0-2013-06-21">1.9-0</a></li>
-        <li><a href="#metafor-1-8-0-2013-04-11">1.8-0</a></li>
-        <li><a href="#metafor-1-7-0-2013-02-06">1.7-0</a></li>
-        <li><a href="#metafor-1-6-0-2011-04-13">1.6-0</a></li>
-        <li><a href="#metafor-1-5-0-2010-12-16">1.5-0</a></li>
-        <li><a href="#metafor-1-4-0-2010-07-30">1.4-0</a></li>
-        <li><a href="#metafor-1-3-0-2010-06-25">1.3-0</a></li>
-        <li><a href="#metafor-1-2-0-2010-05-18">1.2-0</a></li>
-        <li><a href="#metafor-1-1-0-2010-04-28">1.1-0</a></li>
-        <li><a href="#metafor-1-0-1-2010-02-02">1.0-1</a></li>
-        <li><a href="#metafor-0-5-7-2009-12-06">0.5-7</a></li>
-        <li><a href="#metafor-0-5-6-2009-10-19">0.5-6</a></li>
-        <li><a href="#metafor-0-5-5-2009-10-08">0.5-5</a></li>
-        <li><a href="#metafor-0-5-4-2009-09-18">0.5-4</a></li>
-        <li><a href="#metafor-0-5-3-2009-07-31">0.5-3</a></li>
-        <li><a href="#metafor-0-5-2-2009-07-06">0.5-2</a></li>
-        <li><a href="#metafor-0-5-1-2009-06-14">0.5-1</a></li>
-        <li><a href="#metafor-0-5-0-2009-06-05">0.5-0</a></li>
-      </ul>
-    </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 
 </div>
@@ -867,7 +838,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

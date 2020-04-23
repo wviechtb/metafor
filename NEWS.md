@@ -1,4 +1,4 @@
-# metafor 2.5-7 (2020-03-22)
+# metafor 2.5-8 (2020-04-23)
 
 - `funnel.default()` and `funnel.rma()` gain `label` and `offset` arguments
 

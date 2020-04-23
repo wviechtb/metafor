@@ -2000,7 +2000,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
          message(mstyle$message("Fitting RE model for R^2 computation ..."))
          res.RE <- try(rma.uni(yi, vi, weights=weights, method=method, weighted=weighted, test=test, verbose=ifelse(verbose, TRUE, FALSE), control=con, digits=digits), silent=FALSE)
       } else {
-         res.RE <- try(suppressWarnings(rma.uni(yi, vi, weights=weights, method=method, weighted=weighted, test=test, verbose=ifelse(verbose, TRUE, FALSE), control=con, digits=digits)), silent=FALSE)
+         res.RE <- try(suppressWarnings(rma.uni(yi, vi, weights=weights, method=method, weighted=weighted, test=test, verbose=ifelse(verbose, TRUE, FALSE), control=con, digits=digits)), silent=TRUE)
       }
 
       if (!inherits(res.RE, "try-error")) {
