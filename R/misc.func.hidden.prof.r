@@ -13,7 +13,7 @@
 
       ### for profiling and CI construction, fit model with tau2 fixed to 'val'
 
-      res <- try(suppressWarnings(rma.uni(obj$yi, obj$vi, weights=obj$weights, mods=obj$X, intercept=FALSE, method=obj$method, weighted=obj$weighted, test=obj$test, level=obj$level, control=obj$control, tau2=val)), silent=TRUE)
+      res <- try(suppressWarnings(rma.uni(obj$yi, obj$vi, weights=obj$weights, mods=obj$X, intercept=FALSE, method=obj$method, weighted=obj$weighted, test=obj$test, level=obj$level, control=obj$control, tau2=val, skipr2=TRUE)), silent=TRUE)
 
       if (profile) {
 
@@ -81,7 +81,7 @@
 
       } else {
 
-         res <- try(suppressWarnings(rma.uni(obj$yi, obj$vi, weights=obj$weights, mods=obj$X, intercept=FALSE, method=obj$method, weighted=obj$weighted, test=obj$test, level=obj$level, control=obj$control, tau2=ifelse(obj$tau2.fix, obj$tau2, NA), subset=sel[val,])), silent=TRUE)
+         res <- try(suppressWarnings(rma.uni(obj$yi, obj$vi, weights=obj$weights, mods=obj$X, intercept=FALSE, method=obj$method, weighted=obj$weighted, test=obj$test, level=obj$level, control=obj$control, tau2=ifelse(obj$tau2.fix, obj$tau2, NA), subset=sel[val,], skipr2=TRUE)), silent=TRUE)
 
          if (inherits(res, "try-error") || any(res$coef.na)) {
             sav <- list(beta = matrix(NA, nrow=nrow(obj$beta), ncol=1), het = rep(NA, 5))

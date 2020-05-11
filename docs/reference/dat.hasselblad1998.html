@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-9</span>
       </span>
     </div>
 
@@ -231,7 +231,7 @@
 <span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/igraph/man/graph_from_adjacency_matrix.html'>graph_from_adjacency_matrix</a></span>(<span class='no'>tab</span>, <span class='kw'>mode</span> <span class='kw'>=</span> <span class='st'>"plus"</span>, <span class='kw'>weighted</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>diag</span><span class='kw'>=</span><span class='fl'>FALSE</span>)
 <span class='fu'><a href='https://rdrr.io/pkg/igraph/man/vertex_attr.html'>vertex_attr</a></span>(<span class='no'>g</span>, <span class='st'>"name"</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"No Contact"</span>, <span class='st'>"Self-Help"</span>,
                             <span class='st'>"Individual\nCounseling"</span>, <span class='st'>"Group\nCounseling"</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>g</span>, <span class='kw'>edge.curved</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>edge.width</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/E.html'>E</a></span>(<span class='no'>g</span>)$<span class='no'>weight</span>, <span class='kw'>layout</span><span class='kw'>=</span><span class='no'>layout_on_grid</span>,
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>g</span>, <span class='kw'>edge.curved</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>edge.width</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/E.html'>E</a></span>(<span class='no'>g</span>)$<span class='no'>weight</span>, <span class='kw'>layout</span><span class='kw'>=</span><span class='no'>layout_on_grid</span>,
      <span class='kw'>vertex.size</span><span class='kw'>=</span><span class='fl'>35</span>, <span class='kw'>vertex.color</span><span class='kw'>=</span><span class='st'>"lightgray"</span>, <span class='kw'>vertex.label.color</span><span class='kw'>=</span><span class='st'>"black"</span>, <span class='kw'>vertex.label.font</span><span class='kw'>=</span><span class='fl'>2</span>)}
 
 <span class='co'>### calculate log odds for each study arm</span>

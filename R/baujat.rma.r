@@ -60,7 +60,7 @@ baujat.rma <- function(x, xlim, ylim, xlab, ylab, cex, symbol, grid=TRUE, progba
          next
 
       if (inherits(x, "rma.uni"))
-         res <- try(suppressWarnings(rma.uni(x$yi.f, x$vi.f, weights=x$weights.f, mods=x$X.f, intercept=FALSE, method=x$method, weighted=x$weighted, test=x$test, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, subset=-i)), silent=TRUE)
+         res <- try(suppressWarnings(rma.uni(x$yi.f, x$vi.f, weights=x$weights.f, mods=x$X.f, intercept=FALSE, method=x$method, weighted=x$weighted, test=x$test, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, subset=-i, skipr2=TRUE)), silent=TRUE)
 
       if (inherits(x, "rma.mh")) {
          if (is.element(x$measure, c("RR","OR","RD"))) {

@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-9</span>
       </span>
     </div>
 
@@ -136,16 +136,16 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for rma.uni</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='kw'>qqplot</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='kw'>qqplot</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for rma.mh</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='kw'>qqplot</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='kw'>qqplot</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for rma.peto</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='kw'>qqplot</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='kw'>qqplot</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for rma.glmm</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='kw'>qqplot</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='kw'>qqplot</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -181,11 +181,11 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### meta-analysis of the log risk ratios using a random-effects model</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>res</span>, <span class='kw'>qqplot</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='plot.rma-1.png' alt='' width='768' height='614' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>res</span>, <span class='kw'>qqplot</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='plot.rma-1.png' alt='' width='768' height='614' /></div><div class='input'>
 <span class='co'>### mixed-effects model with two moderators (absolute latitude and publication year)</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>,
            <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>ablat</span> + <span class='no'>year</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>res</span>, <span class='kw'>qqplot</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='plot.rma-2.png' alt='' width='768' height='614' /></div></pre>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>res</span>, <span class='kw'>qqplot</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='plot.rma-2.png' alt='' width='768' height='614' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

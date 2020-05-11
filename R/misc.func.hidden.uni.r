@@ -126,7 +126,7 @@
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
    ### fit model with shifted outcome
-   res <- try(suppressWarnings(rma.uni(obj$yi - c(val*obj$X[,j]), obj$vi, weights=obj$weights, mods=obj$X, intercept=FALSE, method=obj$method, weighted=obj$weighted, test=obj$test, tau2=ifelse(obj$tau2.fix, obj$tau2, NA), control=obj$control)), silent=TRUE)
+   res <- try(suppressWarnings(rma.uni(obj$yi - c(val*obj$X[,j]), obj$vi, weights=obj$weights, mods=obj$X, intercept=FALSE, method=obj$method, weighted=obj$weighted, test=obj$test, tau2=ifelse(obj$tau2.fix, obj$tau2, NA), control=obj$control, skipr2=TRUE)), silent=TRUE)
 
    if (inherits(res, "try-error"))
       stop()

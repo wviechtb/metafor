@@ -1,4 +1,6 @@
-# metafor 2.5-8 (2020-04-23)
+# metafor 2.5-9 (2020-05-11)
+
+- slight speedup in functions that repeatedly fit `rma.uni()` models by skipping the computation of `R2`
 
 - `funnel.default()` and `funnel.rma()` gain `label` and `offset` arguments
 

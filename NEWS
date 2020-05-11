@@ -1,5 +1,8 @@
-Changes in Version 2.5-8 (2020-04-23)
+Changes in Version 2.5-9 (2020-05-11)
 =====================================
+
+   o slight speedup in functions that repeatedly fit rma.uni() models by
+     skipping the computation of 'R2'
 
    o funnel.default() and funnel.rma() gain 'label' and 'offset' arguments
 

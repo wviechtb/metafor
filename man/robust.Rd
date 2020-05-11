@@ -23,6 +23,8 @@ robust(x, cluster, \dots)
    Tests of individual coefficients and confidence intervals are based on a t-distribution with \eqn{n-p} degrees of freedom is used, while the omnibus test statistic uses an F-distribution with \eqn{m} and \eqn{n-p} degrees of freedom, where \eqn{n} is the number of clusters, \eqn{p} denotes the total number of model coefficients (including the intercept if it is present), and \eqn{m} denotes the number of coefficients tested (in the omnibus test).
 
    When \code{adjust=TRUE} (the default), the (cluster) robust estimate of the variance-covariance matrix is multiplied by the factor \eqn{n/(n-p)}, which serves as a small-sample adjustment that tends to improve the performance of the method when the number of clusters is small.
+
+   For even better small-sample adjustments (Pustejovsky & Tipton, 2018), see the \pkg{clubSandwich} package, which nicely works together with the \pkg{metafor} package (see Examples).
 }
 \value{
    An object of class \code{"robust.rma"}. The object is a list containing the following components:
@@ -58,7 +60,10 @@ robust(x, cluster, \dots)
 
    Huber, P. (1967). The behavior of maximum-likelihood estimates under nonstandard conditions. In L. M. LeCam & J. Neyman (Eds.), \emph{Proceedings of the Fifth Berkeley Symposium on Mathematical Statistics and Probability} (pp. 221--233). Berkeley: University of California Press.
 
-   MacKinnon, J. G., & White, H. (1985). Some heteroskedasticity-consistent covariance matrix estimators with improved finite sample properties. \emph{Journal of Econometrics}, 29, 305--325.
+   MacKinnon, J. G., & White, H. (1985). Some heteroskedasticity-consistent covariance matrix estimators with improved finite sample properties. \emph{Journal of Econometrics}, \bold{29}, 305--325.
+
+   Pustejovsky, J. E., & Tipton, E. (2018). Small-sample methods for cluster-robust variance estimation and hypothesis testing in fixed effects models. \emph{Journal of Business & Economic Statistics}, \bold{36}, 672--683.
+
 
    Sidik, K., & Jonkman, J. N. (2005). A note on variance estimation in random effects meta-regression. \emph{Journal of Biopharmaceutical Statistics}, \bold{15}, 823--838.
 
@@ -81,8 +86,14 @@ dat <- dat.konstantopoulos2011
 res <- rma.mv(yi, vi, random = ~ 1 | district/school, data=dat)
 res
 
-### results based on sandwich method
+### results based on the sandwich method
 robust(res, cluster=dat$district)
+
+### illustrate use of the clubSandwich package together with metafor
+\dontrun{
+require(clubSandwich)
+coef_test(res, vcov="CR2", cluster=dat$district)
+}
 
 ### copy data from Berkey et al. (1998) into 'dat'
 dat <- dat.berkey1998
@@ -99,5 +110,11 @@ res
 
 ### results based on sandwich method
 robust(res, cluster=dat$trial)
+
+### illustrate use of the clubSandwich package together with metafor
+\dontrun{
+require(clubSandwich)
+coef_test(res, vcov="CR2", cluster=dat$trial)
+}
 }
 \keyword{htest}

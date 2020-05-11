@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-9</span>
       </span>
     </div>
 
@@ -129,11 +129,12 @@
       <small>Source: <a href='https://github.com/wviechtb/metafor/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="metafor-2-5-8-2020-04-23" class="section level1">
-<h1 class="page-header" data-toc-text="2.5-8">
-<a href="#metafor-2-5-8-2020-04-23" class="anchor"></a>metafor 2.5-8 (2020-04-23)<small> Unreleased </small>
+    <div id="metafor-2-5-9-2020-05-11" class="section level1">
+<h1 class="page-header" data-toc-text="2.5-9">
+<a href="#metafor-2-5-9-2020-05-11" class="anchor"></a>metafor 2.5-9 (2020-05-11)<small> Unreleased </small>
 </h1>
 <ul>
+<li><p>slight speedup in functions that repeatedly fit <code><a href="../reference/rma.uni.html">rma.uni()</a></code> models by skipping the computation of <code>R2</code></p></li>
 <li><p><code><a href="../reference/funnel.html">funnel.default()</a></code> and <code><a href="../reference/funnel.html">funnel.rma()</a></code> gain <code>label</code> and <code>offset</code> arguments</p></li>
 <li><p><code><a href="../reference/funnel.html">funnel.default()</a></code> and <code><a href="../reference/funnel.html">funnel.rma()</a></code> gain <code>lty</code> argument; reference line is now drawn by default as a dotted line (like the line for the pseudo confidence region)</p></li>
 <li><p><code><a href="../reference/regtest.html">regtest()</a></code> now shows the ‘limit estimate’ of the (average) true effect when using <code>sei</code>, <code>vi</code>, <code>ninv</code>, or <code>sqrtninv</code> as predictor (and the model does not contain any other moderators)</p></li>
@@ -411,7 +412,7 @@
 <li><p>more optimizers are now available for the <code><a href="../reference/rma.mv.html">rma.mv()</a></code> function via the <code>nloptr</code> package by setting <code>control = list(optimizer="nloptr")</code>; when using this optimizer, the default is to use the BOBYQA implementation from that package with a relative convergence criterion of 1e-8 on the function value (see documentation on how to change these defaults)</p></li>
 <li><p><code><a href="../reference/predict.rma.html">predict.rma()</a></code> function now works for <code>rma.mv</code> objects with multiple tau^2 values even if the user specifies the <code>newmods</code> argument but not the <code>tau2.levels</code> argument (but a warning is issued and the credibility/prediction intervals are not computed)</p></li>
 <li><p>argument <code>var.names</code> now works properly in <code><a href="../reference/escalc.html">escalc()</a></code> when the user has not made use of the <code>data</code> argument (thanks to Jarrett Byrnes for bringing this to my attention)</p></li>
-<li><p>added <code><a href="https://rdrr.io/r/graphics/plot.html">plot()</a></code> function for cumulative random-effects models results as obtained with the <code><a href="../reference/cumul.html">cumul.rma.uni()</a></code> function; the plot shows the model estimate on the x-axis and the corresponding tau^2 estimate on the y-axis in the cumulative order of the results</p></li>
+<li><p>added <code><a href="https://rdrr.io/r/base/plot.html">plot()</a></code> function for cumulative random-effects models results as obtained with the <code><a href="../reference/cumul.html">cumul.rma.uni()</a></code> function; the plot shows the model estimate on the x-axis and the corresponding tau^2 estimate on the y-axis in the cumulative order of the results</p></li>
 <li><p>fixed the omitted offset term in the underlying model fitted by the <code><a href="../reference/rma.glmm.html">rma.glmm()</a></code> function when <code>method="ML"</code>, <code>measure="IRR"</code>, and <code>model="UM.FS"</code>, that is, when fitting a mixed-effects Poisson regression model with fixed study effects to two-group event count data (thanks to Peter Konings for pointing out this error)</p></li>
 <li><p>added two new datasets (<code>dat.bourassa1996</code>, <code>dat.riley2003</code>)</p></li>
 <li><p>added function <code><a href="../reference/replmiss.html">replmiss()</a></code> (just a useful helper function)</p></li>

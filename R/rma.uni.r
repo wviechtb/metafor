@@ -60,7 +60,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("knha", "scale", "link", "outlist", "onlyo1", "addyi", "addvi", "time"))
+   .chkdots(ddd, c("knha", "scale", "link", "outlist", "onlyo1", "addyi", "addvi", "time", "skipr2"))
 
    ### handle 'knha' argument from ... (note: overrides test argument)
 
@@ -1994,7 +1994,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
    ### compute pseudo R^2 statistic for mixed-effects models with an intercept
 
-   if (!int.only && int.incl && method != "FE" && model == "rma.uni") {
+   if (!int.only && int.incl && method != "FE" && model == "rma.uni" && !isTRUE(ddd$skipr2)) {
 
       if (verbose > 1) {
          message(mstyle$message("Fitting RE model for R^2 computation ..."))

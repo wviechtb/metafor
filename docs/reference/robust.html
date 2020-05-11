@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-9</span>
       </span>
     </div>
 
@@ -172,6 +172,7 @@
     <p>The function constructs a (cluster) robust estimate of the variance-covariance matrix of the model coefficients based on a sandwich-type estimator and then computes tests and confidence intervals of the model coefficients.</p>
 <p>Tests of individual coefficients and confidence intervals are based on a t-distribution with \(n-p\) degrees of freedom is used, while the omnibus test statistic uses an F-distribution with \(m\) and \(n-p\) degrees of freedom, where \(n\) is the number of clusters, \(p\) denotes the total number of model coefficients (including the intercept if it is present), and \(m\) denotes the number of coefficients tested (in the omnibus test).</p>
 <p>When <code>adjust=TRUE</code> (the default), the (cluster) robust estimate of the variance-covariance matrix is multiplied by the factor \(n/(n-p)\), which serves as a small-sample adjustment that tends to improve the performance of the method when the number of clusters is small.</p>
+<p>For even better small-sample adjustments (Pustejovsky &amp; Tipton, 2018), see the <span class="pkg">clubSandwich</span> package, which nicely works together with the <span class="pkg">metafor</span> package (see Examples).</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class <code>"robust.rma"</code>. The object is a list containing the following components:</p>
@@ -199,7 +200,9 @@
 <p>Froot, K. A. (1989). Consistent covariance matrix estimation with cross-sectional dependence and heteroskedasticity in financial data. <em>Journal of Financial and Quantitative Analysis</em>, <b>24</b>, 333--355.</p>
 <p>Hedges, L. V., Tipton, E., &amp; Johnson, M. C. (2010). Robust variance estimation in meta-regression with dependent effect size estimates. <em>Research Synthesis Methods</em>, <b>1</b>, 39--65.</p>
 <p>Huber, P. (1967). The behavior of maximum-likelihood estimates under nonstandard conditions. In L. M. LeCam &amp; J. Neyman (Eds.), <em>Proceedings of the Fifth Berkeley Symposium on Mathematical Statistics and Probability</em> (pp. 221--233). Berkeley: University of California Press.</p>
-<p>MacKinnon, J. G., &amp; White, H. (1985). Some heteroskedasticity-consistent covariance matrix estimators with improved finite sample properties. <em>Journal of Econometrics</em>, 29, 305--325.</p>
+<p>MacKinnon, J. G., &amp; White, H. (1985). Some heteroskedasticity-consistent covariance matrix estimators with improved finite sample properties. <em>Journal of Econometrics</em>, <b>29</b>, 305--325.</p>
+<p>Pustejovsky, J. E., &amp; Tipton, E. (2018). Small-sample methods for cluster-robust variance estimation and hypothesis testing in fixed effects models. <em>Journal of Business &amp; Economic Statistics</em>, <b>36</b>, 672--683.</p>
+
 <p>Sidik, K., &amp; Jonkman, J. N. (2005). A note on variance estimation in random effects meta-regression. <em>Journal of Biopharmaceutical Statistics</em>, <b>15</b>, 823--838.</p>
 <p>Sidik, K., &amp; Jonkman, J. N. (2006). Robust variance estimation for random effects meta-analysis. <em>Computational Statistics &amp; Data Analysis</em>, <b>50</b>, 3681--3701.</p>
 <p>White, H. (1980). A heteroskedasticity-consistent covariance matrix estimator and a direct test for heteroskedasticity. <em>Econometrica</em>, <b>48</b>, 817--838.</p>
@@ -235,7 +238,7 @@
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
-<span class='co'>### results based on sandwich method</span>
+<span class='co'>### results based on the sandwich method</span>
 <span class='fu'>robust</span>(<span class='no'>res</span>, <span class='kw'>cluster</span><span class='kw'>=</span><span class='no'>dat</span>$<span class='no'>district</span>)</div><div class='output co'>#&gt; 
 #&gt; Number of outcomes:   56
 #&gt; Number of clusters:   11
@@ -249,6 +252,12 @@
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
+<span class='co'>### illustrate use of the clubSandwich package together with metafor</span>
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='no'>clubSandwich</span>)
+<span class='fu'>coef_test</span>(<span class='no'>res</span>, <span class='kw'>vcov</span><span class='kw'>=</span><span class='st'>"CR2"</span>, <span class='kw'>cluster</span><span class='kw'>=</span><span class='no'>dat</span>$<span class='no'>district</span>)
+}
+
 <span class='co'>### copy data from Berkey et al. (1998) into 'dat'</span>
 <span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.berkey1998</span>
 
@@ -308,7 +317,12 @@
 #&gt; 
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-#&gt; </div></pre>
+#&gt; </div><div class='input'>
+<span class='co'>### illustrate use of the clubSandwich package together with metafor</span>
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='no'>clubSandwich</span>)
+<span class='fu'>coef_test</span>(<span class='no'>res</span>, <span class='kw'>vcov</span><span class='kw'>=</span><span class='st'>"CR2"</span>, <span class='kw'>cluster</span><span class='kw'>=</span><span class='no'>dat</span>$<span class='no'>trial</span>)
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
