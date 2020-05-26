@@ -1,4 +1,4 @@
-# metafor 2.5-9 (2020-05-11)
+# metafor 2.5-9 (2020-05-26)
 
 - slight speedup in functions that repeatedly fit `rma.uni()` models by skipping the computation of `R2`
 

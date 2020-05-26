@@ -547,7 +547,7 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
          if (is.function(optb)) {
             invisible(optb(file.out))
          } else {
-            system(paste0(getOption("browser"), " '", file.out, "'"))
+            system(paste0(optb, " '", file.out, "'"))
          }
       }
 
