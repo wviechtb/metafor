@@ -3,7 +3,7 @@
 \alias{summary.escalc}
 \title{Print and Summary Methods for 'escalc' Objects}
 \description{
-   Print and summary methods for objects of class \code{"escalc"}.
+   Print and summary methods for objects of class \code{"escalc"}. \loadmathjax
 }
 \usage{
 \method{print}{escalc}(x, digits=attr(x,"digits"), \dots)
@@ -32,7 +32,7 @@
    \item{yi}{observed outcomes or effect size estimates (transformed if \code{transf} is specified).}
    \item{vi}{corresponding (estimated) sampling variances.}
    \item{sei}{standard errors of the observed outcomes or effect size estimates.}
-   \item{zi}{test statistics for testing \if{latex}{\eqn{H_0: \theta_i = H0}}\if{html}{\eqn{H₀: \thetaᵢ = H0}}\if{text}{\eqn{H_0: \theta_i = H0}} (i.e., \code{(yi-H0)/sei}).}
+   \item{zi}{test statistics for testing \mjeqn{H_0: \theta_i = \mbox{H0}}{H_0: \theta_i = H0} (i.e., \code{(yi-H0)/sei}).}
    \item{ci.lb}{lower confidence interval bounds (transformed if \code{transf} is specified).}
    \item{ci.ub}{upper confidence interval bounds (transformed if \code{transf} is specified).}
 
@@ -48,7 +48,7 @@
    If the outcome measure used is bounded (e.g., correlations are bounded between \code{-1} and \code{1}, proportions are bounded between \code{0} and \code{1}), one can use the \code{clim} argument to enforce those limits (confidence intervals cannot exceed those bounds then).
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
 }
 \references{
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{https://www.jstatsoft.org/v036/i03}.

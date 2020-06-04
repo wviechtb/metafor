@@ -1,7 +1,9 @@
 \name{forest.default}
 \alias{forest.default}
 \title{Forest Plots (Default Method)}
-\description{Function to create forest plots for a given set of data.}
+\description{
+   Function to create forest plots for a given set of data. \loadmathjax
+}
 \usage{
 \method{forest}{default}(x, vi, sei, ci.lb, ci.ub,
        annotate=TRUE, showweights=FALSE, header=FALSE,
@@ -13,11 +15,11 @@
        cex, cex.lab, cex.axis, annosym, \dots)
 }
 \arguments{
-   \item{x}{vector of length \eqn{k} with the observed effect sizes or outcomes.}
-   \item{vi}{vector of length \eqn{k} with the corresponding sampling variances.}
-   \item{sei}{vector of length \eqn{k} with the corresponding standard errors (note: only one of the two, \code{vi} or \code{sei}, needs to be specified).}
-   \item{ci.lb}{vector of length \eqn{k} with the corresponding lower confidence interval bounds. Not needed if \code{vi} or \code{sei} is specified. See \sQuote{Details}.}
-   \item{ci.ub}{vector of length \eqn{k} with the corresponding upper confidence interval bounds. Not needed if \code{vi} or \code{sei} is specified. See \sQuote{Details}.}
+   \item{x}{vector of length \mjseqn{k} with the observed effect sizes or outcomes.}
+   \item{vi}{vector of length \mjseqn{k} with the corresponding sampling variances.}
+   \item{sei}{vector of length \mjseqn{k} with the corresponding standard errors (note: only one of the two, \code{vi} or \code{sei}, needs to be specified).}
+   \item{ci.lb}{vector of length \mjseqn{k} with the corresponding lower confidence interval bounds. Not needed if \code{vi} or \code{sei} is specified. See \sQuote{Details}.}
+   \item{ci.ub}{vector of length \mjseqn{k} with the corresponding upper confidence interval bounds. Not needed if \code{vi} or \code{sei} is specified. See \sQuote{Details}.}
    \item{annotate}{logical specifying whether annotations should be added to the plot (the default is \code{TRUE}).}
    \item{showweights}{logical specifying whether the annotations should also include inverse variance weights (the default is \code{FALSE}).}
    \item{header}{logical specifying whether column headings should be added to the plot (the default is \code{FALSE}). Can also be a character vector to specify the left and right headings.}
@@ -33,7 +35,7 @@
    \item{digits}{integer specifying the number of decimal places to which the tick mark labels of the x-axis and the annotations should be rounded (the default is \code{2L}). Can also be a vector of two integers, the first specifying the number of decimal places for the annotations, the second for the x-axis labels. When specifying an integer (e.g., \code{2L}), trailing zeros after the decimal mark are dropped for the x-axis labels. When specifying a numerical value (e.g., \code{2}), trailing zeros are retained.}
    \item{width}{optional integer to manually adjust the width of the columns for the annotations.}
    \item{xlab}{title for the x-axis. If unspecified, the function tries to set an appropriate axis title.}
-   \item{slab}{optional vector with labels for the \eqn{k} studies. If unspecified, simple labels are created within the function. To suppress labels, set this argument to \code{NA}.}
+   \item{slab}{optional vector with labels for the \mjseqn{k} studies. If unspecified, simple labels are created within the function. To suppress labels, set this argument to \code{NA}.}
    \item{ilab}{optional vector, matrix, or data frame providing additional information about the studies that should be added to the plot.}
    \item{ilab.xpos}{vector of numerical value(s) specifying the x-axis position(s) of the variable(s) given via \code{ilab} (must be specified if \code{ilab} is specified).}
    \item{ilab.pos}{integer(s) (either 1, 2, 3, or 4) specifying the alignment of the vector(s) given via \code{ilab} (2 means right, 4 mean left aligned). If unspecified, the default is to center the labels.}
@@ -59,7 +61,7 @@
 
    With the \code{transf} argument, the observed effect sizes or outcomes and corresponding confidence interval bounds can be transformed with some suitable function. For example, when plotting log odds ratios, then one could use \code{transf=exp} to obtain a forest plot showing the odds ratios. Alternatively, one can use the \code{atransf} argument to transform the x-axis labels and annotations (e.g., \code{atransf=exp}). See also \link{transf} for some transformation functions useful for meta-analyses. The examples below illustrate the use of these arguments.
 
-   By default, the studies are ordered from top to bottom (i.e., the first study in the dataset will be placed in row \eqn{k}, the second study in row \eqn{k-1}, and so on, until the last study, which is placed in the first row). The studies can be reordered with the \code{subset} argument (by specifying a vector with indices with the desired order).
+   By default, the studies are ordered from top to bottom (i.e., the first study in the dataset will be placed in row \mjseqn{k}, the second study in row \mjseqn{k-1}, and so on, until the last study, which is placed in the first row). The studies can be reordered with the \code{subset} argument (by specifying a vector with indices with the desired order).
 
    Summary estimates can also be added to the plot with the \code{\link{addpoly}} function. See the documentation for that function for examples.
 }
@@ -77,7 +79,7 @@
    The \code{lty} argument can also be a vector of two elements, the first for specifying the line type of the individual CIs (\code{"solid"} by default), the second for the line type of the horizontal line that is automatically added to the plot (\code{"solid"} by default; set to \code{"blank"} to remove it).
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
 }
 \references{
    Lewis, S., & Clarke, M. (2001). Forest plots: Trying to see the wood and the trees. \emph{British Medical Journal}, \bold{322}, 1479--1480.

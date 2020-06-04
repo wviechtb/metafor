@@ -2,7 +2,7 @@
 \docType{data}
 \alias{dat.bourassa1996}
 \title{Studies on the Association between Handedness and Eye-Dominance}
-\description{Results from 47 studies on the association between handedness and eye-dominance.}
+\description{Results from 47 studies on the association between handedness and eye-dominance. \loadmathjax}
 \usage{dat.bourassa1996}
 \format{The data frame contains the following columns:
 \tabular{lll}{
@@ -23,7 +23,7 @@
 }
 }
 \details{
-   The 47 studies included in this meta-analysis examined the association between handedness and eye-dominance (ocular dominance or eyedness). Results are given in terms of \eqn{2 \times 2}{2x2} tables, indicating the number of left-handed left-eyed, left-handed right-eyed, right-handed left-eyed, and right-handed right-eyed individuals. Note that some studies included multiple (independent) samples, so that the meta-analysis included 54 samples in total. Also, for some studies, the combined data of the males and females are further broken down into the two subgroups.
+   The 47 studies included in this meta-analysis examined the association between handedness and eye-dominance (ocular dominance or eyedness). Results are given in terms of \mjeqn{2 \times 2}{2x2} tables, indicating the number of left-handed left-eyed, left-handed right-eyed, right-handed left-eyed, and right-handed right-eyed individuals. Note that some studies included multiple (independent) samples, so that the meta-analysis included 54 samples in total. Also, for some studies, the combined data of the males and females are further broken down into the two subgroups.
 
    In some studies, there was indication that the selection of subjects was not random with respect to handedness and/or eyedness. While this should not influence the size of the association as measured with the odds ratio, this invalidates those studies for assessing the overall percentage of left-eyed and left-handed individuals.
 

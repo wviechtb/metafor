@@ -3,7 +3,9 @@
 \alias{galbraith}
 \alias{radial.rma}
 \title{Radial (Galbraith) Plots for 'rma' Objects}
-\description{Function to create radial (also called Galbraith) plots for objects of class \code{"rma"}.}
+\description{
+   Function to create radial (also called Galbraith) plots for objects of class \code{"rma"}. \loadmathjax
+}
 \usage{
 radial(x, \dots)
 galbraith(x, \dots)
@@ -35,7 +37,7 @@ galbraith(x, \dots)
 \details{
    For a fixed-effects model, the plot shows the inverse of the standard errors on the horizontal axis against the individual observed effect sizes or outcomes standardized by their corresponding standard errors on the vertical axis. Since the vertical axis corresponds to standardized values, it is referred to as the z-axis within this function. On the right hand side of the plot, an arc is drawn (referred to as the y-axis within this function) corresponding to the individual observed effect sizes or outcomes. A line projected from (0,0) through a particular point within the plot onto this arc indicates the value of the individual observed effect size or outcome for that point.
 
-   For a random-effects model, the function uses \if{latex}{\eqn{1/\sqrt{v_i + \tau^2}}}\if{html}{\eqn{1/\sqrt(vᵢ + \tau²)}}\if{text}{\eqn{1/\sqrt(v_i + \tau^2)}} for the horizontal axis, where \if{latex}{\eqn{v_i}}\if{html}{\eqn{vᵢ}}\if{text}{\eqn{v_i}} is the sampling variance of the observed effect size or outcome and \if{latex}{\eqn{\tau^2}}\if{html}{\eqn{\tau²}}\if{text}{\eqn{\tau^2}} is the amount of heterogeneity as estimated based on the model. For the z-axis, \if{latex}{\eqn{\sqrt{v_i + \tau^2}}}\if{html}{\eqn{\sqrt(vᵢ + \tau²)}}\if{text}{\eqn{\sqrt(v_i + \tau^2)}} is used to standardize the individual observed effect sizes or outcomes.
+   For a random-effects model, the function uses \mjeqn{1/\sqrt{v_i + \tau^2}}{1/\sqrt(v_i + \tau^2)} for the horizontal axis, where \mjseqn{v_i} is the sampling variance of the observed effect size or outcome and \mjseqn{\tau^2} is the amount of heterogeneity as estimated based on the model. For the z-axis, \mjeqn{\sqrt{v_i + \tau^2}}{\sqrt(v_i + \tau^2)} is used to standardize the individual observed effect sizes or outcomes.
 
    If the model contains moderators, the function returns an error.
 }
@@ -47,7 +49,7 @@ galbraith(x, \dots)
    Note that the data frame is returned invisibly.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
 }
 \references{
    Galbraith, R. F. (1988). Graphical display of estimates having differing standard errors. \emph{Technometrics}, \bold{30}, 271--281.

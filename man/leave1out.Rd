@@ -5,7 +5,7 @@
 \alias{leave1out.rma.peto}
 \title{Leave-One-Out Diagnostics for 'rma' Objects}
 \description{
-   The functions repeatedly fit the specified model, leaving out one observation/study at a time.
+   The functions repeatedly fit the specified model, leaving out one observation/study at a time. \loadmathjax
 }
 \usage{
 leave1out(x, \dots)
@@ -36,8 +36,8 @@ leave1out(x, \dots)
    \item{Q}{test statistics for the tests of heterogeneity.}
    \item{Qp}{p-values for the tests of heterogeneity.}
    \item{tau2}{estimated amounts of (residual) heterogeneity (only for random-effects models).}
-   \item{I2}{values of \if{latex}{\eqn{I^2}}\if{html}{\eqn{I²}}\if{text}{\eqn{I^2}} (only for random-effects models).}
-   \item{H2}{values of \if{latex}{\eqn{H^2}}\if{html}{\eqn{H²}}\if{text}{\eqn{H^2}} (only for random-effects models).}
+   \item{I2}{values of \mjseqn{I^2} (only for random-effects models).}
+   \item{H2}{values of \mjseqn{H^2} (only for random-effects models).}
 
    The \code{"list.rma"} object is formatted and printed with \code{\link{print.list.rma}}.
 }
@@ -45,7 +45,7 @@ leave1out(x, \dots)
    When using the \code{transf} option, the transformation is applied to the estimated coefficients and the corresponding interval bounds. The standard errors are then set equal to \code{NA} and are omitted from the printed output.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
 }
 \references{
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{https://www.jstatsoft.org/v036/i03}.

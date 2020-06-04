@@ -9,7 +9,7 @@
 \alias{df.residual.rma}
 \title{Fit Statistics and Information Criteria for 'rma' Objects}
 \description{
-   Functions to extract the log-likelihood, deviance, AIC, BIC, and AICc values from objects of class \code{"rma"}.
+   Functions to extract the log-likelihood, deviance, AIC, BIC, and AICc values from objects of class \code{"rma"}. \loadmathjax
 }
 \usage{
 fitstats(object, \dots)
@@ -39,10 +39,10 @@ fitstats(object, \dots)
    For \code{AIC} and \code{BIC}, either a numeric value with the corresponding AIC, AICc, or BIC or a data frame with rows corresponding to the models and columns representing the number of parameters in the model (\code{df}) and the AIC, AICc, or BIC.
 }
 \note{
-   Variance components in the model (e.g., \if{latex}{\eqn{\tau^2}}\if{html}{\eqn{\tau²}}\if{text}{\eqn{\tau^2}} in random/mixed-effects models) are counted as additional parameters in the calculation of the AIC, BIC, and AICc. Also, the fixed effects are counted as parameters in the calculation of the AIC, BIC, and AICc even when using REML estimation.
+   Variance components in the model (e.g., \mjseqn{\tau^2} in random/mixed-effects models fitted with \code{\link{rma.uni}}) are counted as additional parameters in the calculation of the AIC, BIC, and AICc. Also, the fixed effects are counted as parameters in the calculation of the AIC, BIC, and AICc even when using REML estimation.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
 }
 \references{
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{https://www.jstatsoft.org/v036/i03}.

@@ -2,7 +2,7 @@
 \alias{contrmat}
 \title{Construct Contrast Matrix for Two-Group Comparisons}
 \description{
-   The function constructs a matrix that indicates which two groups have been contrasted against each other in each row of the dataset.
+   The function constructs a matrix that indicates which two groups have been contrasted against each other in each row of a dataset.
 }
 \usage{
 contrmat(data, grp1, grp2, last, shorten=FALSE, minlen=2, append=TRUE)
@@ -17,7 +17,7 @@ contrmat(data, grp1, grp2, last, shorten=FALSE, minlen=2, append=TRUE)
    \item{append}{logical indicating whether the contrast matrix should be appended to the data frame specified via the \code{data} argument (default is \code{TRUE}). If \code{append=FALSE}, only the contrast matrix is returned.}
 }
 \details{
-   The function can be used to construct a matrix that indicates which two groups have been contrasted against each other in each row of the data frame (with \code{1} for the first group, \code{-1} for the second group, and \code{0} otherwise).
+   The function can be used to construct a matrix that indicates which two groups have been contrasted against each other in each row of a data frame (with \code{1} for the first group, \code{-1} for the second group, and \code{0} otherwise).
 
    The \code{grp1} and \code{grp2} arguments are used to specify the group variables in the dataset (either as character strings or as numbers indicating the column positions of these variables in the dataset). Optional argument \code{last} is used to specify which group will be placed in the last column of the matrix.
 
@@ -29,7 +29,7 @@ contrmat(data, grp1, grp2, last, shorten=FALSE, minlen=2, append=TRUE)
    A matrix with as many variables as there are groups.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
 }
 \references{
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{https://www.jstatsoft.org/v036/i03}.

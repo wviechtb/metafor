@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Outlier and Influential Case Diagnostics for 'rma.uni' Objects — influence.rma.uni" />
-<meta property="og:description" content="The functions compute various outlier and influential case diagnostics (some of which indicate the influence of deleting one case/study at a time on the model fit and the fitted/residual values) for objects of class &quot;rma.uni&quot;." />
+<meta property="og:description" content="The functions can be used to compute various outlier and influential case diagnostics (some of which indicate the influence of deleting one case/study at a time on the model fit or the fitted/residual values) for objects of class &quot;rma.uni&quot;. " />
 
 
 
@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-10</span>
       </span>
     </div>
 
@@ -132,7 +132,7 @@
     </div>
 
     <div class="ref-description">
-    <p>The functions compute various outlier and influential case diagnostics (some of which indicate the influence of deleting one case/study at a time on the model fit and the fitted/residual values) for objects of class <code>"rma.uni"</code>.</p>
+    <p>The functions can be used to compute various outlier and influential case diagnostics (some of which indicate the influence of deleting one case/study at a time on the model fit or the fitted/residual values) for objects of class <code>"rma.uni"</code>. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for rma.uni</span>
@@ -200,9 +200,9 @@
 <p>Similarly, the leave-one-out test statistic for the test of (residual) heterogeneity is the value of the test statistic of the test for (residual) heterogeneity calculated based on the dataset with the \(i\)th study removed.</p>
 <p>Finally, the DFBETAS value(s) essentially indicate(s) how many standard deviations the estimated coefficient(s) change(s) after excluding the \(i\)th study from the model fitting.</p>
 <p>A study may be considered to be &#8216;influential&#8217; if at least one of the following is true:</p><ul>
-<li><p>The absolute DFFITS value is larger than \(3\sqrt{p/(k-p)}\), where \(p\) is the number of model coefficients and \(k\) the number of studies.</p></li>
+<li><p>The absolute DFFITS value is larger than \(3 \times \sqrt{p/(k-p)}\), where \(p\) is the number of model coefficients and \(k\) the number of studies.</p></li>
 <li><p>The lower tail area of a chi-square distribution with \(p\) degrees of freedom cut off by the Cook's distance is larger than 50%.</p></li>
-<li><p>The hat value is larger than \(3(p/k)\).</p></li>
+<li><p>The hat value is larger than \(3 \times (p/k)\).</p></li>
 <li><p>Any DFBETAS value is larger than \(1\).</p></li>
 </ul><p>Studies which are considered influential with respect to any of these measures are marked with an asterisk. Note that the chosen cut-offs are (somewhat) arbitrary. Substantively informed judgment should always be used when examining the influence of each study on the results.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -235,7 +235,9 @@
 <span class='co'>### with two moderators (absolute latitude and publication year)</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>,
            <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>ablat</span> + <span class='no'>year</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>)
-<span class='fu'><a href='https://rdrr.io/r/stats/lm.influence.html'>influence</a></span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; $inf
+
+<span class='no'>inf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.influence.html'>influence</a></span>(<span class='no'>res</span>)
+<span class='no'>inf</span></div><div class='output co'>#&gt; $inf
 #&gt; 
 #&gt;    rstudent  dffits cook.d  cov.r tau2.del  QE.del    hat  weight inf 
 #&gt; 1    0.2978  0.1785 0.0348 1.8003   0.1317 28.3142 0.1725  3.3664     
@@ -268,7 +270,8 @@
 #&gt; 11  0.0631 -0.0343 -0.0631 
 #&gt; 12 -0.0413  0.0465  0.0419 
 #&gt; 13 -0.8276  0.6269  0.8279 
-#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/lm.influence.html'>influence</a></span>(<span class='no'>res</span>))</div><div class='img'><img src='influence.rma.uni-1.png' alt='' width='768' height='614' /></div><div class='input'>
+#&gt; </div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>inf</span>)</div><div class='img'><img src='influence.rma.uni-1.png' alt='' width='768' height='614' /></div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>cooks.distance</a></span>(<span class='no'>res</span>)</div><div class='output co'>#&gt;           1           2           3           4           5           6 
 #&gt; 0.034763870 0.061956371 0.012503192 7.317914072 0.003236974 0.720524896 
 #&gt;           7           8           9          10          11          12 

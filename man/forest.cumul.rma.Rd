@@ -1,7 +1,9 @@
 \name{forest.cumul.rma}
 \alias{forest.cumul.rma}
 \title{Forest Plots (Method for 'cumul.rma' Objects)}
-\description{Function to create forest plots for objects of class \code{"cumul.rma"}.}
+\description{
+   Function to create forest plots for objects of class \code{"cumul.rma"}.
+}
 \usage{
 \method{forest}{cumul.rma}(x, annotate=TRUE, header=FALSE,
        xlim, alim, clim, ylim, top=3, at, steps=5,
@@ -63,7 +65,7 @@
    The \code{lty} argument can also be a vector of two elements, the first for specifying the line type of the individual CIs (\code{"solid"} by default), the second for the line type of the horizontal line that is automatically added to the plot (\code{"solid"} by default; set to \code{"blank"} to remove it).
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
 }
 \references{
    Chalmers, T. C., & Lau, J. (1993). Meta-analytic stimulus for changes in clinical trials. \emph{Statistical Methods in Medical Research}, \bold{2}, 161--172.

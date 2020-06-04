@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Calculate Effect Sizes and Outcome Measures — escalc" />
-<meta property="og:description" content="The function can be used to calculate various effect sizes or outcome measures (and the corresponding sampling variances) that are commonly used in meta-analyses." />
+<meta property="og:description" content="The function can be used to calculate various effect sizes or outcome measures (and the corresponding sampling variances) that are commonly used in meta-analyses. " />
 
 
 
@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-10</span>
       </span>
     </div>
 
@@ -132,7 +132,7 @@
     </div>
 
     <div class="ref-description">
-    <p>The function can be used to calculate various effect sizes or outcome measures (and the corresponding sampling variances) that are commonly used in meta-analyses.</p>
+    <p>The function can be used to calculate various effect sizes or outcome measures (and the corresponding sampling variances) that are commonly used in meta-analyses. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
     </div>
 
     <pre class="usage"><span class='fu'>escalc</span>(<span class='no'>measure</span>, <span class='no'>ai</span>, <span class='no'>bi</span>, <span class='no'>ci</span>, <span class='no'>di</span>, <span class='no'>n1i</span>, <span class='no'>n2i</span>, <span class='no'>x1i</span>, <span class='no'>x2i</span>, <span class='no'>t1i</span>, <span class='no'>t2i</span>,
@@ -543,7 +543,7 @@
 <li><p><code>"ARAW"</code> for <em>raw alpha</em> values.</p></li>
 <li><p><code>"AHW"</code> for <em>transformed alpha values</em> (Hakstian &amp; Whalen, 1976).</p></li>
 <li><p><code>"ABT"</code> for <em>transformed alpha values</em> (Bonett, 2002).</p></li>
-</ul><p>Note that the transformations implemented here are slightly different from the ones described by Hakstian and Whalen (1976) and Bonett (2002). In particular, for <code>"AHW"</code>, the transformation \(1-(1-\alpha)^{1/3}\) is used, while for <code>"ABT"</code>, the transformation \(-ln(1-\alpha)\) is used. This ensures that the transformed values are monotonically increasing functions of \(\alpha\).</p>
+</ul><p>Note that the transformations implemented here are slightly different from the ones described by Hakstian and Whalen (1976) and Bonett (2002). In particular, for <code>"AHW"</code>, the transformation \(1-(1-\alpha)^{1/3}\) is used, while for <code>"ABT"</code>, the transformation \(-\ln(1-\alpha)\) is used. This ensures that the transformed values are monotonically increasing functions of \(\alpha\).</p>
 <p>A dataset corresponding to data of this type is provided in <code><a href='dat.bonett2010.html'>dat.bonett2010</a></code>.</p>
 <p></p>
 

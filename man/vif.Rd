@@ -2,7 +2,9 @@
 \alias{vif}
 \alias{vif.rma}
 \title{Variance Inflation Factors for 'rma' Objects}
-\description{Compute variance inflation factors (VIFs) for objects of class \code{"rma"}.}
+\description{
+   Compute variance inflation factors (VIFs) for objects of class \code{"rma"}.
+}
 \usage{
 vif(x, \dots)
 
@@ -32,7 +34,7 @@ vif(x, \dots)
    The values of the VIFs are invariant to the scaling of the predictor variables if the model includes an intercept that is removed when inverting the correlation matrix of the model coefficients to compute the VIFs. This is the default behavior. See \sQuote{Examples}.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
 }
 \references{
    Davis, C. E., Hyde, J. E., Bangdiwala, S. I., & Nelson, J. J. (1986). An example of dependencies among variables in a conditional logistic regression. In S. H. Moolgavkar & R. L. Prentice (Eds.), \emph{Modern statistical methods in chronic disease epidemiology} (pp. 140--147). New York: Wiley.

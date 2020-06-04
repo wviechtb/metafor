@@ -2,7 +2,7 @@
 \alias{plot.cumul.rma}
 \title{Plot Method for 'cumul.rma' Objects}
 \description{
-   Plot method for objects of class \code{"cumul.rma"}.
+   Plot method for objects of class \code{"cumul.rma"}. \loadmathjax
 }
 \usage{
 \method{plot}{cumul.rma}(x, yaxis="tau2", xlim, ylim, xlab, ylab,
@@ -31,12 +31,12 @@
 \details{
    The function is meant to be used for cumulative random-effects models results as obtained with the \code{\link{cumul.rma.uni}} function.
 
-   By default, the plot shows the model estimate on the x-axis and the corresponding estimate of \if{latex}{\eqn{\tau^2}}\if{html}{\eqn{\tau²}}\if{text}{\eqn{\tau^2}} on the y-axis in the cumulative order of the results in the \code{"cumul.rma"} object. Alternatively, one can also place the value of \if{latex}{\eqn{I^2}}\if{html}{\eqn{I²}}\if{text}{\eqn{I^2}} (\code{yaxis="I2"}) or \if{latex}{\eqn{H^2}}\if{html}{\eqn{H²}}\if{text}{\eqn{H^2}} (\code{yaxis="H2"}) on the y-axis.
+   By default, the plot shows the model estimate on the x-axis and the corresponding estimate of \mjseqn{\tau^2} on the y-axis in the cumulative order of the results in the \code{"cumul.rma"} object. Alternatively, one can also place the value of \mjseqn{I^2} (\code{yaxis="I2"}) or \mjseqn{H^2} (\code{yaxis="H2"}) on the y-axis.
 
    The color gradient of the points/lines indicates the order of the cumulative results (by default, light gray at the beginning, dark gray at the end). A different set of colors can be chosen via the \code{cols} argument. See \sQuote{Examples}.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
 }
 \references{
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{https://www.jstatsoft.org/v036/i03}.

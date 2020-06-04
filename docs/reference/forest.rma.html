@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Forest Plots (Method for 'rma' Objects) — forest.rma" />
-<meta property="og:description" content="Function to create forest plots for objects of class &quot;rma&quot;." />
+<meta property="og:description" content="Function to create forest plots for objects of class &quot;rma&quot;. " />
 
 
 
@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-10</span>
       </span>
     </div>
 
@@ -132,7 +132,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Function to create forest plots for objects of class <code>"rma"</code>.</p>
+    <p>Function to create forest plots for objects of class <code>"rma"</code>. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for rma</span>
@@ -313,8 +313,8 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The plot shows the individual observed effect sizes or outcomes with corresponding confidence intervals.</p>
-<p>For fixed- and random-effects models (i.e., for models without moderators), a polygon is added to the bottom of the forest plot, showing the summary estimate based on the model (with the outer edges of the polygon indicating the confidence interval limits). The <code>col</code> and <code>border</code> arguments can be used to adjust the (border) color of the polygon.</p>
-<p>For random-effects models and if <code>addcred=TRUE</code>, a dotted line indicates the (approximate) bounds of the credibility/credible or prediction interval (the interval indicates where <code>level</code> % of the true effects are expected to fall) (Riley et al., 2011). For random-effects models of class <code>"rma.mv"</code> (see <code><a href='rma.mv.html'>rma.mv</a></code>) with multiple \(\tau^2\) values, the <code>addcred</code> argument can be used to specify for which level of the inner factor the credibility/prediction intervals should be provided (since the credibility/prediction intervals differ depending on the \(\tau^2\) value). If the model should also contain multiple multiple \(\gamma^2\) values, the <code>addcred</code> argument should then be of length 2 to specify the levels of both inner factors.</p>
+<p>For fixed- and random-effects models (i.e., for models without moderators), a four-sided polygon, sometimes called a summary &#8216;diamond&#8217;, is added to the bottom of the forest plot, showing the summary estimate based on the model (with the center of the polygon corresponding to the estimate and the left/right edges indicating the confidence interval limits). The <code>col</code> and <code>border</code> arguments can be used to adjust the (border) color of the polygon. Drawing of the polgyon can be suppressed by setting <code>addfit=FALSE</code>.</p>
+<p>For random-effects models and if <code>addcred=TRUE</code>, a dotted line is added to the summary polygon which indicates the (approximate) bounds of the credibility/prediction interval (the interval indicates where <code>level</code> % of the true effects are expected to fall) (Riley et al., 2011). For random-effects models of class <code>"rma.mv"</code> (see <code><a href='rma.mv.html'>rma.mv</a></code>) with multiple \(\tau^2\) values, the <code>addcred</code> argument can be used to specify for which level of the inner factor the credibility/prediction interval should be provided (since the intervals differ depending on the \(\tau^2\) value). If the model should also contain multiple \(\gamma^2\) values, the <code>addcred</code> argument should then be of length 2 to specify the levels of both inner factors. See also <code><a href='predict.rma.html'>predict.rma</a></code>, which is used to compute these interval bounds.</p>
 <p>For models involving moderators, the fitted value for each study is added as a polygon to the plot. By default, the width of the polygons corresponds to the confidence interval limits for the fitted values. By setting <code>addcred=TRUE</code>, the width reflects the credibility/prediction interval limits. Again, the <code>col</code> and <code>border</code> arguments can be used to adjust the (border) color of the polygons. These polygons can be suppressed by setting <code>addfit=FALSE</code>.</p>
 <p>With the <code>transf</code> argument, the observed effect sizes or outcomes, summary estimate, fitted values, confidence interval bounds, and credibility/prediction interval bounds can be transformed with some suitable function. For example, when plotting log odds ratios, one could use <code>transf=exp</code> to obtain a forest plot showing the odds ratios. Alternatively, one can use the <code>atransf</code> argument to transform the x-axis labels and annotations (e.g., <code>atransf=exp</code>). See also <a href='transf.html'>transf</a> for some transformation functions useful for meta-analyses. The examples below illustrate the use of these arguments.</p>
 <p>By default, the studies are ordered from top to bottom (i.e., the first study in the dataset will be placed in row \(k\), the second study in row \(k-1\), and so on, until the last study, which is placed in the first row). The studies can be reordered with the <code>order</code> argument:</p><ul>

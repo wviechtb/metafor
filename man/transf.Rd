@@ -21,7 +21,7 @@
 \alias{transf.ilogit.int}
 \title{Transformation Function}
 \description{
-   A set of transformation functions useful for meta-analyses.
+   A set of transformation functions useful for meta-analyses. \loadmathjax
 }
 \usage{
 transf.rtoz(xi, \dots)
@@ -74,13 +74,13 @@ transf.ilogit.int(xi, targs, \dots)
    \item \code{transf.exp.int}: integral transformation method for the exponential transformation.
    \item \code{transf.ilogit.int}: integral transformation method for the inverse of the logit transformation.
    }
-   The integral transformation method for a transformation function \eqn{h(z)} integrates \eqn{h(z) f(z)} over \eqn{z} using the limits \code{targs$lower} and \code{targs$upper}, where \eqn{f(z)} is the density of a normal distribution with mean equal to \code{xi} and variance equal to \code{targs$tau2}. An example is provided below.
+   The integral transformation method for a transformation function \mjseqn{h(z)} integrates \mjseqn{h(z) f(z)} over \mjseqn{z} using the limits \code{targs$lower} and \code{targs$upper}, where \mjseqn{f(z)} is the density of a normal distribution with mean equal to \code{xi} and variance equal to \code{targs$tau2}. An example is provided below.
 }
 \value{
    A vector with the transformed values.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
 }
 \references{
    Bonett, D. G. (2002). Sample size requirements for testing and estimating coefficient alpha. \emph{Journal of Educational and Behavioral Statistics}, \bold{27}, 335--340.

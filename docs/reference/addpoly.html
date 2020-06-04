@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Add Polygons to Forest Plots — addpoly" />
-<meta property="og:description" content="The function addpoly is generic. It can be used to add polygons to a forest plot, for example, to indicate summary estimates for all or subgroups of studies and to indicate fitted/predicted values based on models involving moderators." />
+<meta property="og:description" content="The addpoly function can be used to add polygons, sometimes called &amp;#8216;diamonds&amp;#8217;, to a forest plot, for example to indicate summary estimates for subgroups of studies or to indicate fitted/predicted values based on models involving moderators." />
 
 
 
@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-10</span>
       </span>
     </div>
 
@@ -132,7 +132,7 @@
     </div>
 
     <div class="ref-description">
-    <p>The function <code>addpoly</code> is generic. It can be used to add polygons to a forest plot, for example, to indicate summary estimates for all or subgroups of studies and to indicate fitted/predicted values based on models involving moderators.</p>
+    <p>The <code>addpoly</code> function can be used to add polygons, sometimes called &#8216;diamonds&#8217;, to a forest plot, for example to indicate summary estimates for subgroups of studies or to indicate fitted/predicted values based on models involving moderators.</p>
     </div>
 
     <pre class="usage"><span class='fu'>addpoly</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -153,7 +153,7 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Currently, methods exist for two types of situations.</p>
-<p>In the first case, object <code>x</code> is a fitted model coming from the <code><a href='rma.uni.html'>rma.uni</a></code>, <code><a href='rma.mh.html'>rma.mh</a></code>, <code><a href='rma.peto.html'>rma.peto</a></code>, or <code><a href='rma.glmm.html'>rma.glmm</a></code> functions. The model must either be a fixed- or random-effects model, that is, the model should not contain any moderators. The corresponding method is called <code><a href='addpoly.rma.html'>addpoly.rma</a></code>. It can be used to add a polygon to an existing forest plot (often at the bottom), showing the summary estimate with corresponding confidence interval based on the fitted model.</p>
+<p>In the first case, object <code>x</code> is a fitted model coming from the <code><a href='rma.uni.html'>rma.uni</a></code>, <code><a href='rma.mh.html'>rma.mh</a></code>, <code><a href='rma.peto.html'>rma.peto</a></code>, or <code><a href='rma.glmm.html'>rma.glmm</a></code> functions. The model must either be a fixed- or random-effects model, that is, the model should not contain any moderators. The corresponding method is called <code><a href='addpoly.rma.html'>addpoly.rma</a></code>. It can be used to add a polygon to an existing forest plot (usually at the bottom), showing the summary estimate (with its confidence interval) based on the fitted model.</p>
 <p>Alternatively, object <code>x</code> can be a vector with values at which one or more polygons should be drawn. The corresponding method is then <code><a href='addpoly.default.html'>addpoly.default</a></code>.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 

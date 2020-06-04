@@ -2,7 +2,7 @@
 \alias{plot.infl.rma.uni}
 \title{Plot Method for 'infl.rma.uni' Objects}
 \description{
-   Plot method for objects of class \code{"infl.rma.uni"}.
+   Plot method for objects of class \code{"infl.rma.uni"}. \loadmathjax
 }
 \usage{
 \method{plot}{infl.rma.uni}(x, plotinf=TRUE, plotdfbs=FALSE, dfbsnew=FALSE, logcov=TRUE,
@@ -25,22 +25,22 @@
    \item{\dots}{other arguments.}
 }
 \details{
-   When \code{plotinf=TRUE}, the function plots the (1) externally standardized residuals, (2) DFFITS values, (3) Cook's distances, (4) covariance ratios, (5) leave-one-out \if{latex}{\eqn{\tau^2}}\if{html}{\eqn{\tau²}}\if{text}{\eqn{\tau^2}} estimates, (6) leave-one-out (residual) heterogeneity test statistics, (7) hat values, and (8) weights. If \code{plotdfbs=TRUE}, the DFBETAS values are also plotted either after confirming the page change (if \code{dfbsnew=FALSE}) or on a separate device (if \code{dfbsnew=TRUE}).
+   When \code{plotinf=TRUE}, the function plots the (1) externally standardized residuals, (2) DFFITS values, (3) Cook's distances, (4) covariance ratios, (5) leave-one-out \mjseqn{\tau^2} estimates, (6) leave-one-out (residual) heterogeneity test statistics, (7) hat values, and (8) weights. If \code{plotdfbs=TRUE}, the DFBETAS values are also plotted either after confirming the page change (if \code{dfbsnew=FALSE}) or on a separate device (if \code{dfbsnew=TRUE}).
 
    A study may be considered to be \sQuote{influential} if at least one of the following is true:
    \itemize{
-   \item The absolute DFFITS value is larger than \eqn{3\sqrt{p/(k-p)}}{3\sqrt(p/(k-p))}, where \eqn{p} is the number of model coefficients and \eqn{k} the number of studies.
-   \item The lower tail area of a chi-square distribution with \eqn{p} degrees of freedom cut off by the Cook's distance is larger than 50\%.
-   \item The hat value is larger than \eqn{3(p/k)}.
-   \item Any DFBETAS value is larger than \eqn{1}.
+   \item The absolute DFFITS value is larger than \mjeqn{3 \times \sqrt{p/(k-p)}}{3*\sqrt(p/(k-p))}, where \mjseqn{p} is the number of model coefficients and \mjseqn{k} the number of studies.
+   \item The lower tail area of a chi-square distribution with \mjseqn{p} degrees of freedom cut off by the Cook's distance is larger than 50\%.
+   \item The hat value is larger than \mjeqn{3 \times (p/k)}{3*(p/k)}.
+   \item Any DFBETAS value is larger than \mjseqn{1}.
    } Studies which are considered influential with respect to any of these measures are indicated by the color specified for the \code{bg.infl} argument (the default is \code{"red"}).
 
-   The cut-offs described above are indicated in the plot with horizontal reference lines. In addition, on the plot of the externally standardized residuals, horizontal reference lines are drawn at -1.96, 0, and 1.96. On the plot of the hat values, a horizontal reference line is drawn at \eqn{p/k}. Since the sum of the hat values is equal to \eqn{p}, the value \eqn{p/k} indicates equal hat values for all \eqn{k} studies. Finally, on the plot of weights, a horizontal reference line is drawn at \eqn{100/k}, corresponding to the value for equal weights (in \%) for all \eqn{k} studies. Note that all weights will automatically be equal to each other when using unweighted model fitting. Also, the hat values will be equal to the weights values (except for their scaling) in models without moderators.
+   The cut-offs described above are indicated in the plot with horizontal reference lines. In addition, on the plot of the externally standardized residuals, horizontal reference lines are drawn at -1.96, 0, and 1.96. On the plot of the hat values, a horizontal reference line is drawn at \mjseqn{p/k}. Since the sum of the hat values is equal to \mjseqn{p}, the value \mjseqn{p/k} indicates equal hat values for all \mjseqn{k} studies. Finally, on the plot of weights, a horizontal reference line is drawn at \mjseqn{100/k}, corresponding to the value for equal weights (in \%) for all \mjseqn{k} studies. Note that all weights will automatically be equal to each other when using unweighted model fitting. Also, the hat values will be equal to the weights values (except for their scaling) in models without moderators.
 
    The chosen cut-offs are (somewhat) arbitrary. Substantively informed judgment should always be used when examining the influence of each study on the results.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
 }
 \references{
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{https://www.jstatsoft.org/v036/i03}.
@@ -55,9 +55,11 @@
 ### with two moderators (absolute latitude and publication year)
 res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg,
            mods = ~ ablat + year, data=dat.bcg)
-plot(influence(res))
-plot(influence(res), plotinf=1:4)
-plot(influence(res), plotinf=1:4, layout=c(4,1))
-plot(influence(res), plotdfbs=TRUE, dfbsnew=TRUE)
+
+inf <- influence(res)
+plot(inf)
+plot(inf, plotinf=1:4)
+plot(inf, plotinf=1:4, layout=c(4,1))
+plot(inf, plotinf=FALSE, plotdfbs=TRUE)
 }
 \keyword{hplot}

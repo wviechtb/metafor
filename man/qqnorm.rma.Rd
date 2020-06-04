@@ -5,7 +5,9 @@
 \alias{qqnorm.rma.glmm}
 \alias{qqnorm.rma.mv}
 \title{Normal QQ Plots for 'rma' Objects}
-\description{Function to create normal QQ plots for objects of class \code{"rma.uni"}, \code{"rma.mh"}, and \code{"rma.peto"}.}
+\description{
+   Function to create normal QQ plots for objects of class \code{"rma.uni"}, \code{"rma.mh"}, and \code{"rma.peto"}. \loadmathjax
+}
 \usage{
 \method{qqnorm}{rma.uni}(y, type="rstandard", pch=19, envelope=TRUE,
        level=y$level, bonferroni=FALSE, reps=1000, smooth=TRUE, bass=0,
@@ -36,9 +38,9 @@
 
    For reference, a line is added to the plot with slope of 1, going through the (0,0) point.
 
-   For objects of class \code{"rma.uni"}, it is also possible to add a pseudo confidence envelope to the plot. The envelope is created based on the quantiles of sets of pseudo residuals simulated from the given model (for details, see Cook & Weisberg, 1982). The number of sets simulated can be controlled with the \code{reps} argument. When \code{smooth=TRUE}, the simulated bounds are smoothed with Friedman's SuperSmoother (see \code{\link{supsmu}}). The \code{bass} argument can be set to a number between 0 and 10, with higher numbers indicating increasing smoothness. If \code{bonferroni=TRUE}, the envelope bounds are Bonferroni corrected, so that the envelope can be regarded as a confidence region for all \eqn{k} residuals simultaneously. The default however is \code{bonferroni=FALSE}, which makes the plot more sensitive to deviations from normality.
+   For objects of class \code{"rma.uni"}, it is also possible to add a pseudo confidence envelope to the plot. The envelope is created based on the quantiles of sets of pseudo residuals simulated from the given model (for details, see Cook & Weisberg, 1982). The number of sets simulated can be controlled with the \code{reps} argument. When \code{smooth=TRUE}, the simulated bounds are smoothed with Friedman's SuperSmoother (see \code{\link{supsmu}}). The \code{bass} argument can be set to a number between 0 and 10, with higher numbers indicating increasing smoothness. If \code{bonferroni=TRUE}, the envelope bounds are Bonferroni corrected, so that the envelope can be regarded as a confidence region for all \mjseqn{k} residuals simultaneously. The default however is \code{bonferroni=FALSE}, which makes the plot more sensitive to deviations from normality.
 
-   With the \code{label} argument, one can control whether points in the plot will be labeled (e.g., to identify outliers). If \code{label="all"} (or \code{label=TRUE}), all points in the plot will be labeled. If \code{label="out"}, points falling outside of the confidence envelope will be labeled (only available for objects of class \code{"rma.uni"}). Finally, one can also set this argument to a numeric value (between 1 and \eqn{k}), indicating how many of the most extreme points should be labeled (for example, with \code{label=1} only the most extreme point would be labeled, while with \code{label=3}, the most extreme, and the second and third most extreme points would be labeled). With the \code{offset} argument, the distance between the labels and the corresponding points can be controlled. The \code{pos} argument is the position specifier for the labels (\code{1}, \code{2}, \code{3}, and \code{4}, respectively indicate positions below, to the left of, above, and to the right of the points; \code{13} places the labels below the points for points that fall below the reference line and above otherwise; \code{24} places the labels to the left of the points for points that fall above the reference line and to the right otherwise).
+   With the \code{label} argument, one can control whether points in the plot will be labeled (e.g., to identify outliers). If \code{label="all"} (or \code{label=TRUE}), all points in the plot will be labeled. If \code{label="out"}, points falling outside of the confidence envelope will be labeled (only available for objects of class \code{"rma.uni"}). Finally, one can also set this argument to a numeric value (between 1 and \mjseqn{k}), indicating how many of the most extreme points should be labeled (for example, with \code{label=1} only the most extreme point would be labeled, while with \code{label=3}, the most extreme, and the second and third most extreme points would be labeled). With the \code{offset} argument, the distance between the labels and the corresponding points can be controlled. The \code{pos} argument is the position specifier for the labels (\code{1}, \code{2}, \code{3}, and \code{4}, respectively indicate positions below, to the left of, above, and to the right of the points; \code{13} places the labels below the points for points that fall below the reference line and above otherwise; \code{24} places the labels to the left of the points for points that fall above the reference line and to the right otherwise).
 }
 \value{
    A list with components:
@@ -47,7 +49,7 @@
    Note that the list is returned invisibly.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
 }
 \references{
    Cook, R. D., & Weisberg, S. (1982). \emph{Residuals and influence in regression}. London: Chapman and Hall.

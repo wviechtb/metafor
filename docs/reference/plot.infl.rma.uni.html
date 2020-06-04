@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Plot Method for 'infl.rma.uni' Objects — plot.infl.rma.uni" />
-<meta property="og:description" content="Plot method for objects of class &quot;infl.rma.uni&quot;." />
+<meta property="og:description" content="Plot method for objects of class &quot;infl.rma.uni&quot;. " />
 
 
 
@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-10</span>
       </span>
     </div>
 
@@ -132,7 +132,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Plot method for objects of class <code>"infl.rma.uni"</code>.</p>
+    <p>Plot method for objects of class <code>"infl.rma.uni"</code>. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for infl.rma.uni</span>
@@ -201,9 +201,9 @@
 
     <p>When <code>plotinf=TRUE</code>, the function plots the (1) externally standardized residuals, (2) DFFITS values, (3) Cook's distances, (4) covariance ratios, (5) leave-one-out \(\tau^2\) estimates, (6) leave-one-out (residual) heterogeneity test statistics, (7) hat values, and (8) weights. If <code>plotdfbs=TRUE</code>, the DFBETAS values are also plotted either after confirming the page change (if <code>dfbsnew=FALSE</code>) or on a separate device (if <code>dfbsnew=TRUE</code>).</p>
 <p>A study may be considered to be &#8216;influential&#8217; if at least one of the following is true:</p><ul>
-<li><p>The absolute DFFITS value is larger than \(3\sqrt{p/(k-p)}\), where \(p\) is the number of model coefficients and \(k\) the number of studies.</p></li>
+<li><p>The absolute DFFITS value is larger than \(3 \times \sqrt{p/(k-p)}\), where \(p\) is the number of model coefficients and \(k\) the number of studies.</p></li>
 <li><p>The lower tail area of a chi-square distribution with \(p\) degrees of freedom cut off by the Cook's distance is larger than 50%.</p></li>
-<li><p>The hat value is larger than \(3(p/k)\).</p></li>
+<li><p>The hat value is larger than \(3 \times (p/k)\).</p></li>
 <li><p>Any DFBETAS value is larger than \(1\).</p></li>
 </ul><p>Studies which are considered influential with respect to any of these measures are indicated by the color specified for the <code>bg.infl</code> argument (the default is <code>"red"</code>).</p>
 <p>The cut-offs described above are indicated in the plot with horizontal reference lines. In addition, on the plot of the externally standardized residuals, horizontal reference lines are drawn at -1.96, 0, and 1.96. On the plot of the hat values, a horizontal reference line is drawn at \(p/k\). Since the sum of the hat values is equal to \(p\), the value \(p/k\) indicates equal hat values for all \(k\) studies. Finally, on the plot of weights, a horizontal reference line is drawn at \(100/k\), corresponding to the value for equal weights (in %) for all \(k\) studies. Note that all weights will automatically be equal to each other when using unweighted model fitting. Also, the hat values will be equal to the weights values (except for their scaling) in models without moderators.</p>
@@ -221,7 +221,9 @@
 <span class='co'>### with two moderators (absolute latitude and publication year)</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>,
            <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>ablat</span> + <span class='no'>year</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/lm.influence.html'>influence</a></span>(<span class='no'>res</span>))</div><div class='img'><img src='plot.infl.rma.uni-1.png' alt='' width='768' height='614' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/lm.influence.html'>influence</a></span>(<span class='no'>res</span>), <span class='kw'>plotinf</span><span class='kw'>=</span><span class='fl'>1</span>:<span class='fl'>4</span>)</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/lm.influence.html'>influence</a></span>(<span class='no'>res</span>), <span class='kw'>plotinf</span><span class='kw'>=</span><span class='fl'>1</span>:<span class='fl'>4</span>, <span class='kw'>layout</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>4</span>,<span class='fl'>1</span>))</div><div class='img'><img src='plot.infl.rma.uni-2.png' alt='' width='768' height='614' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/lm.influence.html'>influence</a></span>(<span class='no'>res</span>), <span class='kw'>plotdfbs</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>dfbsnew</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='message'>dev.new(): using pdf(file="Rplots44.pdf")</span></div></pre>
+
+<span class='no'>inf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.influence.html'>influence</a></span>(<span class='no'>res</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>inf</span>)</div><div class='img'><img src='plot.infl.rma.uni-1.png' alt='' width='768' height='614' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>inf</span>, <span class='kw'>plotinf</span><span class='kw'>=</span><span class='fl'>1</span>:<span class='fl'>4</span>)</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>inf</span>, <span class='kw'>plotinf</span><span class='kw'>=</span><span class='fl'>1</span>:<span class='fl'>4</span>, <span class='kw'>layout</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>4</span>,<span class='fl'>1</span>))</div><div class='img'><img src='plot.infl.rma.uni-2.png' alt='' width='768' height='614' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>inf</span>, <span class='kw'>plotinf</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>plotdfbs</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='plot.infl.rma.uni-3.png' alt='' width='768' height='614' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

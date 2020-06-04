@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="L'Abbe Plots for 'rma' Objects — labbe" />
-<meta property="og:description" content="Function to create L'Abbé plots for objects of class &quot;rma&quot;." />
+<meta property="og:description" content="Function to create L'Abbé plots for objects of class &quot;rma&quot;. " />
 
 
 
@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-10</span>
       </span>
     </div>
 
@@ -132,7 +132,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Function to create L'Abbé plots for objects of class <code>"rma"</code>.</p>
+    <p>Function to create L'Abbé plots for objects of class <code>"rma"</code>. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
     </div>
 
     <pre class="usage"><span class='fu'>labbe</span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -210,7 +210,7 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The model specified via <code>x</code> must be a model without moderators (i.e., either a fixed- or a random-effects model) fitted with either the <code><a href='rma.uni.html'>rma.uni</a></code>, <code><a href='rma.mh.html'>rma.mh</a></code>, <code><a href='rma.peto.html'>rma.peto</a></code>, or <code><a href='rma.glmm.html'>rma.glmm</a></code> function. Moreover, the model must be fitted with <code>measure</code> set equal to <code>"RD"</code> (for risk differences), <code>"RR"</code> (for risk ratios), <code>"OR"</code> (for odds ratios), <code>"AS"</code> (for arcsine square root transformed risk differences), <code>"IRR"</code> (for incidence rate ratios), <code>"IRD"</code> (for incidence rate differences), or <code>"IRSD"</code> (for square root transformed incidence rate differences).</p>
-<p>The function calculates the arm-level outcomes for the two experimental groups (e.g., treatment and control groups) and plots them against each other. In particular, the function plots the raw proportions of the two groups again each other when analyzing risk differences, the log of the proportions when analyzing (log) risk ratios, the log odds when analyzing (log) odds ratios, the arcsine square root transformed proportions when analyzing arcsine square root transformed risk differences, the raw incidence rates when analyzing incidence rate differences, the log of the incidence rates when analyzing (log) incidence rate ratios, and the square root transformed incidence rates when analyzing square root transformed incidence rate differences. The <code>transf</code> argument can be used to transform these values (for example, <code>transf=exp</code> to transform the log of the proportions back to raw proportions; see also <a href='transf.html'>transf</a>).</p>
+<p>The function calculates the arm-level outcomes for the two experimental groups (e.g., treatment and control groups) and plots them against each other. In particular, the function plots the raw proportions of the two groups against each other when analyzing risk differences, the log of the proportions when analyzing (log) risk ratios, the log odds when analyzing (log) odds ratios, the arcsine square root transformed proportions when analyzing arcsine square root transformed risk differences, the raw incidence rates when analyzing incidence rate differences, the log of the incidence rates when analyzing (log) incidence rate ratios, and the square root transformed incidence rates when analyzing square root transformed incidence rate differences. The <code>transf</code> argument can be used to transform these values (e.g., <code>transf=exp</code> to transform the log of the proportions back to raw proportions; see also <a href='transf.html'>transf</a>).</p>
 <p>As described under the documentation for the <code><a href='escalc.html'>escalc</a></code> function, zero cells can lead to problems when calculating particular outcomes. Adding a small constant to the cells of the \(2 \times 2\) tables is a common solution to this problem. By default, the functions adopts the same method for handling zero cells as was done when fitting the model.</p>
 <p>By default (i.e., if <code>psize</code> is not specified), the size of the points is an inverse function of the precision (inverse standard errors) of the outcomes. The solid line corresponds to identical outcomes in the two groups (i.e., the absence of a difference between the two groups). The dashed line indicates the estimated effect based on the fitted model.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>

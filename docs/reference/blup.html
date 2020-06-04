@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Best Linear Unbiased Predictions for 'rma.uni' Objects — blup" />
-<meta property="og:description" content="The function calculates best linear unbiased predictions (BLUPs) of the study-specific true outcomes by combining the fitted values based on the fixed effects and the estimated contributions of the random effects for objects of class &quot;rma.uni&quot;. Corresponding standard errors and prediction interval bounds are also provided." />
+<meta property="og:description" content="The function calculates best linear unbiased predictions (BLUPs) of the study-specific true outcomes by combining the fitted values based on the fixed effects and the estimated contributions of the random effects for objects of class &quot;rma.uni&quot;. Corresponding standard errors and prediction interval bounds are also provided. " />
 
 
 
@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-10</span>
       </span>
     </div>
 
@@ -132,7 +132,7 @@
     </div>
 
     <div class="ref-description">
-    <p>The function calculates best linear unbiased predictions (BLUPs) of the study-specific true outcomes by combining the fitted values based on the fixed effects and the estimated contributions of the random effects for objects of class <code>"rma.uni"</code>. Corresponding standard errors and prediction interval bounds are also provided.</p>
+    <p>The function calculates best linear unbiased predictions (BLUPs) of the study-specific true outcomes by combining the fitted values based on the fixed effects and the estimated contributions of the random effects for objects of class <code>"rma.uni"</code>. Corresponding standard errors and prediction interval bounds are also provided. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
     </div>
 
     <pre class="usage"><span class='fu'>blup</span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -185,9 +185,9 @@
     <p>For best linear unbiased predictions of only the random effects, see <code><a href='ranef.html'>ranef</a></code>.</p>
 <p>For predicted/fitted values that are based only on the fixed effects of the model, see <code><a href='fitted.rma.html'>fitted.rma</a></code> and <code><a href='predict.rma.html'>predict.rma</a></code>.</p>
 <p>For conditional residuals (the deviations of the observed outcomes from the BLUPs), see <code>rstandard.rma.uni</code> with <code>type="conditional"</code>.</p>
-<p>Fixed-effects models (with or without moderators) do not contain random study effects. The BLUPs for these models will therefore be equal to the usual fitted values, that is, those obtained with <code><a href='fitted.rma.html'>fitted.rma</a></code> and <code><a href='predict.rma.html'>predict.rma</a></code>.</p>
+<p>Fixed-effects models (with or without moderators) do not contain random study effects. The BLUPs for these models will therefore be equal to the fitted values, that is, those obtained with <code><a href='fitted.rma.html'>fitted.rma</a></code> and <code><a href='predict.rma.html'>predict.rma</a></code>.</p>
 <p>When using the <code>transf</code> argument, the transformation is applied to the predicted values and the corresponding interval bounds. The standard errors are then set equal to <code>NA</code> and are omitted from the printed output.</p>
-<p>The normal distribution is used to calculate the prediction intervals. When the model was fitted with the Knapp and Hartung (2003) method (i.e., <code>test="knha"</code> in the <code><a href='rma.uni.html'>rma.uni</a></code> function), then the t-distribution with \(k-p\) degrees of freedom is used.</p>
+<p>A normal distribution is used to calculate the prediction intervals. When the model was fitted with the Knapp and Hartung (2003) method (i.e., <code>test="knha"</code> in the <code><a href='rma.uni.html'>rma.uni</a></code> function), then a t-distribution with \(k-p\) degrees of freedom is used.</p>
 <p>To be precise, it should be noted that the function actually calculates empirical BLUPs (eBLUPs), since the predicted values are a function of the estimated value of \(\tau^2\).</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 

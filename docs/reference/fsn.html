@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Fail-Safe N Analysis (File Drawer Analysis) — fsn" />
-<meta property="og:description" content="Function to compute the fail-safe N (also called file drawer analysis)." />
+<meta property="og:description" content="Function to compute the fail-safe N (also called a file drawer analysis)." />
 
 
 
@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-10</span>
       </span>
     </div>
 
@@ -132,7 +132,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Function to compute the fail-safe N (also called file drawer analysis).</p>
+    <p>Function to compute the fail-safe N (also called a file drawer analysis).</p>
     </div>
 
     <pre class="usage"><span class='fu'>fsn</span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='no'>sei</span>, <span class='no'>data</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"Rosenthal"</span>, <span class='kw'>alpha</span><span class='kw'>=</span><span class='fl'>.05</span>, <span class='no'>target</span>, <span class='no'>subset</span>, <span class='no'>digits</span>)</pre>
@@ -180,7 +180,7 @@
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The function can be used in conjunction with any of the usual effect size or outcome measures used in meta-analyses (e.g., log risk ratios, log odds ratios, risk differences, mean differences, standardized mean differences, raw correlation coefficients, correlation coefficients transformed with Fisher's r-to-z transformation, and so on). Simply specify the observed outcomes via the <code>yi</code> argument and the corresponding sampling variances via the <code>vi</code> argument (instead of specifying <code>vi</code>, one can specify the standard errors via the <code>sei</code> argument). The <code><a href='escalc.html'>escalc</a></code> function can be used to compute a wide variety of effect size and outcome measures (and the corresponding sampling variances) based on summary statistics.</p>
+    <p>The function can be used in conjunction with any of the usual effect size / outcome measures used in meta-analyses (e.g., log risk ratios, log odds ratios, risk differences, mean differences, standardized mean differences, raw correlation coefficients, correlation coefficients transformed with Fisher's r-to-z transformation, and so on). Simply specify the observed outcomes via the <code>yi</code> argument and the corresponding sampling variances via the <code>vi</code> argument (instead of specifying <code>vi</code>, one can specify the standard errors via the <code>sei</code> argument). The <code><a href='escalc.html'>escalc</a></code> function can be used to compute a wide variety of effect size / outcome measures (and the corresponding sampling variances) based on summary statistics.</p>
 <p>The Rosenthal method (sometimes called a &#8216;file drawer analysis&#8217;) calculates the number of studies averaging null results that would have to be added to the given set of observed outcomes to reduce the combined significance level (p-value) to a target alpha level (e.g., .05). The calculation is based on Stouffer's method to combine p-values and is described in Rosenthal (1979).</p>
 <p>The Orwin method calculates the number of studies averaging null results that would have to be added to the given set of observed outcomes to reduce the (unweighted) average effect size to a target (unweighted) average effect size. The method is described in Orwin (1983).</p>
 <p>The Rosenberg method calculates the number of studies averaging null results that would have to be added to the given set of observed outcomes to reduce significance level (p-value) of the (weighted) average effect size (based on a fixed-effects model) to a target alpha level (e.g., .05). The method is described in Rosenberg (2005).</p>

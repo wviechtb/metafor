@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Extract Various Types of Variance-Covariance Matrices from 'rma' Objects — vcov.rma" />
-<meta property="og:description" content="The function extracts various types of variance-covariance matrices from objects of class &quot;rma&quot;. By default, the variance-covariance matrix of the parameter estimates (fixed effects) is returned." />
+<meta property="og:description" content="The function extracts various types of variance-covariance matrices from objects of class &quot;rma&quot;. By default, the variance-covariance matrix of the parameter estimates (fixed effects) is returned. " />
 
 
 
@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-10</span>
       </span>
     </div>
 
@@ -132,7 +132,7 @@
     </div>
 
     <div class="ref-description">
-    <p>The function extracts various types of variance-covariance matrices from objects of class <code>"rma"</code>. By default, the variance-covariance matrix of the parameter estimates (fixed effects) is returned.</p>
+    <p>The function extracts various types of variance-covariance matrices from objects of class <code>"rma"</code>. By default, the variance-covariance matrix of the parameter estimates (fixed effects) is returned. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for rma</span>
@@ -158,7 +158,7 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Note that <code>type="obs"</code> currently only works for object of class <code>"rma.uni"</code> and <code>"rma.mv"</code>.</p>
-<p>For objects of class <code>"rma.uni"</code>, the marginal variance-covariance matrix is just a diagonal matrix with \(\tau^2 + v_i\) along the diagonal, where \(\tau^2\) is the estimated amount of (residual) heterogeneity (set to 0 in fixed-effects models) and \(v_i\) is the sampling variance of the \(i\)th study.</p>
+<p>For objects of class <code>"rma.uni"</code>, the marginal variance-covariance matrix is just a diagonal matrix with \(\hat{\tau}^2 + v_i\) along the diagonal, where \(\hat{\tau}^2\) is the estimated amount of (residual) heterogeneity (set to 0 in fixed-effects models) and \(v_i\) is the sampling variance of the \(i\)th study.</p>
 <p>For objects of class <code>"rma.mv"</code>, the structure can be more complex and depends on the types of random effects included in the model.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 

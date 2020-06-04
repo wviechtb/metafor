@@ -1,7 +1,9 @@
 \name{addpoly.rma}
 \alias{addpoly.rma}
 \title{Add Polygons to Forest Plots (Method for 'rma' Objects)}
-\description{Function to add a polygon to a forest plot showing the summary estimate with corresponding confidence interval based on an object of class \code{"rma"}.}
+\description{
+   Function to add a polygon to a forest plot showing the summary estimate with corresponding confidence interval based on an object of class \code{"rma"}.
+}
 \usage{
 \method{addpoly}{rma}(x, row=-2, level=x$level, annotate=TRUE,
         addcred=FALSE, digits=2, width, mlab, transf, atransf, targs,
@@ -27,12 +29,12 @@
    \item{\dots}{other arguments.}
 }
 \details{
-   The function can be used to add a polygon to an existing forest plot created with the \code{\link{forest}} function. The polygon shows the summary estimate based on a fixed- or random-effects model. Using this function, summary estimates based on different types of models can be shown in the same plot. Also, summary estimates based on a subgrouping of the studies can be added to the plot this way. See examples below.
+   The function can be used to add a four-sided polygon, sometimes called a summary \sQuote{diamond}, to an existing forest plot created with the \code{\link{forest}} function. The polygon shows the summary estimate (with its confidence interval bounds) based on a fixed- or random-effects model. Using this function, summary estimates based on different types of models can be shown in the same plot. Also, summary estimates based on a subgrouping of the studies can be added to the plot this way. See \sQuote{Examples}.
 
    The arguments \code{transf}, \code{atransf}, \code{efac}, and \code{cex} should always be set equal to the same values used to create the forest plot.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
 }
 \references{
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{https://www.jstatsoft.org/v036/i03}.
@@ -51,7 +53,7 @@ forest(res, atransf=exp, xlim=c(-8,6), ylim=c(-2.5,16), header=TRUE)
 ### meta-analysis of the log risk ratios using a random-effects model
 res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
-### add summary estimate from the random-effects model to forest plot
+### add summary estimate from the random-effects model to the forest plot
 addpoly(res, atransf=exp)
 
 ### forest plot with subgrouping of studies and summaries per subgroup

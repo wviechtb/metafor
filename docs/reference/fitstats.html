@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Fit Statistics and Information Criteria for 'rma' Objects — fitstats" />
-<meta property="og:description" content="Functions to extract the log-likelihood, deviance, AIC, BIC, and AICc values from objects of class &quot;rma&quot;." />
+<meta property="og:description" content="Functions to extract the log-likelihood, deviance, AIC, BIC, and AICc values from objects of class &quot;rma&quot;. " />
 
 
 
@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-10</span>
       </span>
     </div>
 
@@ -132,7 +132,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Functions to extract the log-likelihood, deviance, AIC, BIC, and AICc values from objects of class <code>"rma"</code>.</p>
+    <p>Functions to extract the log-likelihood, deviance, AIC, BIC, and AICc values from objects of class <code>"rma"</code>. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
     </div>
 
     <pre class="usage"><span class='fu'>fitstats</span>(<span class='no'>object</span>, <span class='no'>...</span>)
@@ -183,7 +183,7 @@
 <p>For <code>AIC</code> and <code>BIC</code>, either a numeric value with the corresponding AIC, AICc, or BIC or a data frame with rows corresponding to the models and columns representing the number of parameters in the model (<code>df</code>) and the AIC, AICc, or BIC.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>Variance components in the model (e.g., \(\tau^2\) in random/mixed-effects models) are counted as additional parameters in the calculation of the AIC, BIC, and AICc. Also, the fixed effects are counted as parameters in the calculation of the AIC, BIC, and AICc even when using REML estimation.</p>
+    <p>Variance components in the model (e.g., \(\tau^2\) in random/mixed-effects models fitted with <code><a href='rma.uni.html'>rma.uni</a></code>) are counted as additional parameters in the calculation of the AIC, BIC, and AICc. Also, the fixed effects are counted as parameters in the calculation of the AIC, BIC, and AICc even when using REML estimation.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='https://www.jstatsoft.org/v036/i03'>https://www.jstatsoft.org/v036/i03</a>.</p>

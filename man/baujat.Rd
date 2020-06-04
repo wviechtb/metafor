@@ -2,7 +2,9 @@
 \alias{baujat}
 \alias{baujat.rma}
 \title{Baujat Plots for 'rma' Objects}
-\description{Function to create Baujat plots for objects of class \code{"rma"}.}
+\description{
+   Function to create Baujat plots for objects of class \code{"rma"}.
+}
 \usage{
 baujat(x, \dots)
 
@@ -39,7 +41,7 @@ baujat(x, \dots)
    Note that the data frame is returned invisibly.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
 }
 \references{
    Baujat, B., Mahe, C., Pignon, J.-P., & Hill, C. (2002). A graphical method for exploring heterogeneity in meta-analyses: Application to a meta-analysis of 65 trials. \emph{Statistics in Medicine}, \bold{21}(18), 2641--2652.

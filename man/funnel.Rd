@@ -3,7 +3,9 @@
 \alias{funnel.rma}
 \alias{funnel.default}
 \title{Funnel Plots}
-\description{Function to create funnel plots.}
+\description{
+   Function to create funnel plots. \loadmathjax
+}
 \usage{
 funnel(x, \dots)
 
@@ -57,35 +59,35 @@ funnel(x, \dots)
    \item{\dots}{other arguments.}
 }
 \details{
-   For fixed- and random-effects models (i.e., models not involving moderators), the plot shows the individual observed effect sizes or outcomes on the x-axis against the corresponding standard errors (i.e., the square root of the sampling variances) on the y-axis. A vertical line indicates the estimate based on the model. A pseudo confidence interval region is drawn around this value with bounds equal to \if{latex}{\eqn{\pm 1.96 SE}}\if{html}{\eqn{± 1.96 SE}}\if{text}{\eqn{+- 1.96 SE}}, where \eqn{SE} is the standard error value from the y-axis (assuming \code{level=95}). If \code{addtau2=TRUE} (only for models of class \code{"rma.uni"}), then the bounds of the pseudo confidence interval region are equal to \if{latex}{\eqn{\pm 1.96 \sqrt{SE^2 + \tau^2}}}\if{html}{\eqn{± 1.96 \sqrt(SE² + \tau²)}}\if{text}{\eqn{+- 1.96 \sqrt(SE^2 + \tau^2)}}, where \if{latex}{\eqn{\tau^2}}\if{html}{\eqn{\tau²}}\if{text}{\eqn{\tau^2}} is the amount of heterogeneity as estimated by the model.
+   For fixed- and random-effects models (i.e., models not involving moderators), the plot shows the individual observed effect sizes or outcomes on the x-axis against the corresponding standard errors (i.e., the square root of the sampling variances) on the y-axis. A vertical line indicates the estimate based on the model. A pseudo confidence interval region is drawn around this value with bounds equal to \mjeqn{\pm 1.96 \mbox{SE}}{±1.96*SE}, where \mjeqn{\mbox{SE}}{SE} is the standard error value from the y-axis (assuming \code{level=95}). If \code{addtau2=TRUE} (only for models of class \code{"rma.uni"}), then the bounds of the pseudo confidence interval region are equal to \mjeqn{\pm 1.96 \sqrt{\mbox{SE}^2 + \hat{\tau}^2}}{±1.96*\sqrt(SE^2 + \tau^2)}, where \mjeqn{\hat{\tau}^2}{\tau^2} is the amount of heterogeneity as estimated by the model.
 
    For models involving moderators, the plot shows the residuals on the x-axis against their corresponding standard errors. Either the usual or deleted residuals can be used for that purpose (set via the \code{type} argument). See \code{\link{residuals.rma}} for more details on the different types of residuals.
 
    With the \code{atransf} argument, the labels of the observed effect sizes or outcomes on the x-axis can be transformed with some suitable function. For example, when plotting log odds ratios, one could use \code{transf=exp} to obtain a funnel plot with the values on the x-axis corresponding to the odds ratios. See also \link{transf} for some transformation functions useful for meta-analyses.
 
-   Instead of placing the standard error value on the y-axis, several other options are available by setting the \code{yaxis} argument to:
+   Instead of placing the standard errors on the y-axis, several other options are available by setting the \code{yaxis} argument to:
    \itemize{
-   \item \code{yaxis="vi"} for the sampling variance,
-   \item \code{yaxis="seinv"} for the inverse of the standard error,
-   \item \code{yaxis="vinv"} for the inverse of the sampling variance,
-   \item \code{yaxis="ni"} for the sample size,
-   \item \code{yaxis="ninv"} for the inverse of the sample size,
-   \item \code{yaxis="sqrtni"} for the square root sample size,
-   \item \code{yaxis="sqrtninv"} for the inverse of the square root sample size,
-   \item \code{yaxis="lni"} for the log of the sample size,
+   \item \code{yaxis="vi"} for the sampling variances,
+   \item \code{yaxis="seinv"} for the inverse of the standard errors,
+   \item \code{yaxis="vinv"} for the inverse of the sampling variances,
+   \item \code{yaxis="ni"} for the sample sizes,
+   \item \code{yaxis="ninv"} for the inverse of the sample sizes,
+   \item \code{yaxis="sqrtni"} for the square root of the sample sizes,
+   \item \code{yaxis="sqrtninv"} for the inverse square root of the sample sizes,
+   \item \code{yaxis="lni"} for the log of the sample sizes,
    \item \code{yaxis="wi"} for the weights.
    } However, only when \code{yaxis="sei"} (the default) will the pseudo confidence region have the expected (upside-down) funnel shape with straight lines. Also, when placing (a function of) the sample size on the y-axis or the weights, then the pseudo confidence region cannot be drawn. See Sterne and Egger (2001) for more details on the choice of the y-axis.
 
-   If the object passed to the function comes from the \code{\link{trimfill}} function, the effect sizes or outcomes that are filled in by the trim and fill method are also added to the funnel plot. The symbol to use for plotting the filled in values can then be specified via the \code{pch.fill} argument.
+   If the object passed to the function comes from the \code{\link{trimfill}} function, the effect sizes or outcomes that are filled in by the trim and fill method are also added to the funnel plot. The symbol to use for plotting the filled in values can be specified via the \code{pch.fill} argument.
 
    One can also directly pass a vector of observed effect sizes or outcomes (via \code{x}) and the corresponding sampling variances (via \code{vi}), standard errors (via \code{sei}), and/or sample sizes (via \code{ni}) to the function. By default, the vertical reference line is then drawn at zero.
 
    The arguments \code{back}, \code{shade}, and \code{hlines} can be set to \code{NULL} to suppress the shading and the horizontal reference lines.
 
-   With the \code{label} argument, one can control whether points in the plot will be labeled. If \code{label="all"} (or \code{label=TRUE}), all points in the plot will be labeled. If \code{label="out"}, points falling outside of the pseudo confidence region will be labeled. Finally, one can also set this argument to a numeric value (between 1 and \eqn{k}), indicating how many of the most extreme points should be labeled (for example, with \code{label=1} only the most extreme point would be labeled, while with \code{label=3}, the most extreme, and the second and third most extreme points would be labeled). With the \code{offset} argument, the distance between the labels and the corresponding points can be controlled.
+   With the \code{label} argument, one can control whether points in the plot will be labeled. If \code{label="all"} (or \code{label=TRUE}), all points in the plot will be labeled. If \code{label="out"}, points falling outside of the pseudo confidence region will be labeled. Finally, one can also set this argument to a numeric value (between 1 and \mjseqn{k}), indicating how many of the most extreme points should be labeled (for example, with \code{label=1} only the most extreme point would be labeled, while with \code{label=3}, the most extreme, and the second and third most extreme points would be labeled). With the \code{offset} argument, the distance between the labels and the corresponding points can be controlled.
 }
 \note{
-   Placing (a function of) the sample size on the y-axis (i.e., using \code{yaxis="ni"}, \code{yaxis="ninv"}, \code{yaxis="sqrtni"}, \code{yaxis="sqrtninv"}, or \code{yaxis="lni"}) is only possible when information about the sample sizes is actually stored within the object passed to the \code{funnel} function. That should automatically be the case when the observed outcomes were computed with the \code{escalc} function or when the observed outcomes were computed within the model fitting function. On the other hand, this will not automatically be the case when \code{rma.uni} was used together with the \code{yi} and \code{vi} arguments and the \code{yi} and \code{vi} values were \emph{not} computed with \code{escalc}. In that case, it is still possible to pass information about the sample sizes to the \code{rma.uni} function (i.e., use \code{rma.uni(yi, vi, ni)}).
+   Placing (a function of) the sample size on the y-axis (i.e., using \code{yaxis="ni"}, \code{yaxis="ninv"}, \code{yaxis="sqrtni"}, \code{yaxis="sqrtninv"}, or \code{yaxis="lni"}) is only possible when information about the sample sizes is actually stored within the object passed to the \code{funnel} function. That should automatically be the case when the observed outcomes were computed with the \code{escalc} function or when the observed outcomes were computed within the model fitting function. On the other hand, this will not be the case when \code{rma.uni} was used together with the \code{yi} and \code{vi} arguments and the \code{yi} and \code{vi} values were \emph{not} computed with \code{escalc}. In that case, it is still possible to pass information about the sample sizes to the \code{rma.uni} function (e.g., use \code{rma.uni(yi, vi, ni=ni, data=dat)}, where data frame \code{dat} includes a variable called \code{ni} with the sample sizes).
 
    When using unweighted estimation, using \code{yaxis="wi"} will place all points on a horizontal line. When directly passing a vector of observed effect sizes or outcomes to the function, \code{yaxis="wi"} is equivalent to \code{yaxis="vinv"}, except that the weights are expressed in percent.
 
@@ -99,7 +101,7 @@ funnel(x, \dots)
    Note that the data frame is returned invisibly.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
 }
 \references{
    Light, R. J., & Pillemer, D. B. (1984). \emph{Summing up: The science of reviewing research}. Cambridge, MA: Harvard University Press.

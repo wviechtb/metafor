@@ -3,7 +3,7 @@
 \alias{dat.colditz1994}
 \alias{dat.bcg}
 \title{Studies on the Effectiveness of the BCG Vaccine Against Tuberculosis}
-\description{Results from 13 studies examining the effectiveness of the Bacillus Calmette-Guerin (BCG) vaccine against tuberculosis.}
+\description{Results from 13 studies examining the effectiveness of the Bacillus Calmette-Guerin (BCG) vaccine against tuberculosis. \loadmathjax}
 \usage{
 dat.colditz1994
 dat.bcg
@@ -22,7 +22,7 @@ dat.bcg
 }
 }
 \details{
-   The 13 studies provide data in terms of \eqn{2 \times 2}{2x2} tables in the form:
+   The 13 studies provide data in terms of \mjeqn{2 \times 2}{2x2} tables in the form:
    \tabular{lcc}{
                     \tab TB positive \tab TB negative \cr
    vaccinated group \tab \code{tpos} \tab \code{tneg} \cr

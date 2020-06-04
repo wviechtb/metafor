@@ -6,7 +6,7 @@
 \alias{hatvalues.rma.uni}
 \title{Outlier and Influential Case Diagnostics for 'rma.uni' Objects}
 \description{
-   The functions compute various outlier and influential case diagnostics (some of which indicate the influence of deleting one case/study at a time on the model fit and the fitted/residual values) for objects of class \code{"rma.uni"}.
+   The functions can be used to compute various outlier and influential case diagnostics (some of which indicate the influence of deleting one case/study at a time on the model fit or the fitted/residual values) for objects of class \code{"rma.uni"}. \loadmathjax
 }
 \usage{
 \method{influence}{rma.uni}(model, digits, progbar=FALSE, \dots)
@@ -40,43 +40,43 @@
 
    For details on externally standardized residuals, see \code{\link{rstudent.rma.uni}}.
 
-   The DFFITS value essentially indicates how many standard deviations the predicted (average) effect for the \eqn{i}th study changes after excluding the \eqn{i}th study from the model fitting.
+   The DFFITS value essentially indicates how many standard deviations the predicted (average) effect for the \mjseqn{i}th study changes after excluding the \mjseqn{i}th study from the model fitting.
 
-   Cook's distance can be interpreted as the Mahalanobis distance between the entire set of predicted values once with the \eqn{i}th study included and once with the \eqn{i}th study excluded from the model fitting.
+   Cook's distance can be interpreted as the Mahalanobis distance between the entire set of predicted values once with the \mjseqn{i}th study included and once with the \mjseqn{i}th study excluded from the model fitting.
 
-   The covariance ratio is defined as the determinant of the variance-covariance matrix of the parameter estimates based on the dataset with the \eqn{i}th study removed divided by the determinant of the variance-covariance matrix of the parameter estimates based on the complete dataset. A value below 1 therefore indicates that removal of the \eqn{i}th study yields more precise estimates of the model coefficients.
+   The covariance ratio is defined as the determinant of the variance-covariance matrix of the parameter estimates based on the dataset with the \mjseqn{i}th study removed divided by the determinant of the variance-covariance matrix of the parameter estimates based on the complete dataset. A value below 1 therefore indicates that removal of the \mjseqn{i}th study yields more precise estimates of the model coefficients.
 
-   The leave-one-out amount of (residual) heterogeneity is the estimated value of \if{latex}{\eqn{\tau^2}}\if{html}{\eqn{\tau²}}\if{text}{\eqn{\tau^2}} based on the dataset with the \eqn{i}th study removed. Note that this is always equal to \code{0} for fixed-effects models.
+   The leave-one-out amount of (residual) heterogeneity is the estimated value of \mjseqn{\tau^2} based on the dataset with the \mjseqn{i}th study removed. Note that this is always equal to \code{0} for fixed-effects models.
 
-   Similarly, the leave-one-out test statistic for the test of (residual) heterogeneity is the value of the test statistic of the test for (residual) heterogeneity calculated based on the dataset with the \eqn{i}th study removed.
+   Similarly, the leave-one-out test statistic for the test of (residual) heterogeneity is the value of the test statistic of the test for (residual) heterogeneity calculated based on the dataset with the \mjseqn{i}th study removed.
 
-   Finally, the DFBETAS value(s) essentially indicate(s) how many standard deviations the estimated coefficient(s) change(s) after excluding the \eqn{i}th study from the model fitting.
+   Finally, the DFBETAS value(s) essentially indicate(s) how many standard deviations the estimated coefficient(s) change(s) after excluding the \mjseqn{i}th study from the model fitting.
 
    A study may be considered to be \sQuote{influential} if at least one of the following is true:
    \itemize{
-   \item The absolute DFFITS value is larger than \eqn{3\sqrt{p/(k-p)}}{3\sqrt(p/(k-p))}, where \eqn{p} is the number of model coefficients and \eqn{k} the number of studies.
-   \item The lower tail area of a chi-square distribution with \eqn{p} degrees of freedom cut off by the Cook's distance is larger than 50\%.
-   \item The hat value is larger than \eqn{3(p/k)}.
-   \item Any DFBETAS value is larger than \eqn{1}.
+   \item The absolute DFFITS value is larger than \mjeqn{3 \times \sqrt{p/(k-p)}}{3*\sqrt(p/(k-p))}, where \mjseqn{p} is the number of model coefficients and \mjseqn{k} the number of studies.
+   \item The lower tail area of a chi-square distribution with \mjseqn{p} degrees of freedom cut off by the Cook's distance is larger than 50\%.
+   \item The hat value is larger than \mjeqn{3 \times (p/k)}{3*(p/k)}.
+   \item Any DFBETAS value is larger than \mjseqn{1}.
    } Studies which are considered influential with respect to any of these measures are marked with an asterisk. Note that the chosen cut-offs are (somewhat) arbitrary. Substantively informed judgment should always be used when examining the influence of each study on the results.
 }
 \value{
    An object of class \code{"infl.rma.uni"}, which is a list containing the following components:
-   \item{inf}{an element of class \code{"list.rma"} with the externally standardized residuals, DFFITS values, Cook's distances, covariance ratios, leave-one-out \if{latex}{\eqn{\tau^2}}\if{html}{\eqn{\tau²}}\if{text}{\eqn{\tau^2}} estimates, leave-one-out (residual) heterogeneity test statistics, hat values, weights, and an indicator whether a study is influential or not.}
+   \item{inf}{an element of class \code{"list.rma"} with the externally standardized residuals, DFFITS values, Cook's distances, covariance ratios, leave-one-out \mjseqn{\tau^2} estimates, leave-one-out (residual) heterogeneity test statistics, hat values, weights, and an indicator whether a study is influential or not.}
    \item{dfbs}{an element of class \code{"list.rma"} with the the DFBETAS values.}
    \item{\dots}{some additional elements/values.}
 
    The results are printed with \code{print.infl.rma.uni} and plotted with \code{\link{plot.infl.rma.uni}}.
 }
 \note{
-   Right now, leave-one-out diagnostics are calculated by refitting the model \eqn{k} times. Depending on how large \eqn{k} is, it may take a few moments to finish the calculations. There are shortcuts for calculating at least some of these values without refitting the model each time, but these are currently not implemented (and may not exist for all of the leave-one-out diagnostics calculated by the function).
+   Right now, leave-one-out diagnostics are calculated by refitting the model \mjseqn{k} times. Depending on how large \mjseqn{k} is, it may take a few moments to finish the calculations. There are shortcuts for calculating at least some of these values without refitting the model each time, but these are currently not implemented (and may not exist for all of the leave-one-out diagnostics calculated by the function).
 
-   It may not be possible to fit the model after deletion of the \eqn{i}th study from the dataset. This will result in \code{NA} values for that study.
+   It may not be possible to fit the model after deletion of the \mjseqn{i}th study from the dataset. This will result in \code{NA} values for that study.
 
    Certain relationships between the leave-one-out diagnostics and the (internally or externally) standardized residuals (Belsley, Kuh, & Welsch, 1980; Cook & Weisberg, 1982) no longer hold for the meta-analytic models. Maybe there are other relationships. These remain to be determined.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
 }
 \references{
    Belsley, D. A., Kuh, E., & Welsch, R. E. (1980). \emph{Regression diagnostics}. New York: Wiley.
@@ -97,8 +97,11 @@
 ### with two moderators (absolute latitude and publication year)
 res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg,
            mods = ~ ablat + year, data=dat.bcg)
-influence(res)
-plot(influence(res))
+
+inf <- influence(res)
+inf
+
+plot(inf)
 
 cooks.distance(res)
 dfbetas(res)

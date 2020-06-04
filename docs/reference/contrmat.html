@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Construct Contrast Matrix for Two-Group Comparisons — contrmat" />
-<meta property="og:description" content="The function constructs a matrix that indicates which two groups have been contrasted against each other in each row of the dataset." />
+<meta property="og:description" content="The function constructs a matrix that indicates which two groups have been contrasted against each other in each row of a dataset." />
 
 
 
@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-10</span>
       </span>
     </div>
 
@@ -132,7 +132,7 @@
     </div>
 
     <div class="ref-description">
-    <p>The function constructs a matrix that indicates which two groups have been contrasted against each other in each row of the dataset.</p>
+    <p>The function constructs a matrix that indicates which two groups have been contrasted against each other in each row of a dataset.</p>
     </div>
 
     <pre class="usage"><span class='fu'>contrmat</span>(<span class='no'>data</span>, <span class='no'>grp1</span>, <span class='no'>grp2</span>, <span class='no'>last</span>, <span class='kw'>shorten</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>minlen</span><span class='kw'>=</span><span class='fl'>2</span>, <span class='kw'>append</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</pre>
@@ -172,7 +172,7 @@
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The function can be used to construct a matrix that indicates which two groups have been contrasted against each other in each row of the data frame (with <code>1</code> for the first group, <code>-1</code> for the second group, and <code>0</code> otherwise).</p>
+    <p>The function can be used to construct a matrix that indicates which two groups have been contrasted against each other in each row of a data frame (with <code>1</code> for the first group, <code>-1</code> for the second group, and <code>0</code> otherwise).</p>
 <p>The <code>grp1</code> and <code>grp2</code> arguments are used to specify the group variables in the dataset (either as character strings or as numbers indicating the column positions of these variables in the dataset). Optional argument <code>last</code> is used to specify which group will be placed in the last column of the matrix.</p>
 <p>If <code>shorten=TRUE</code>, the variable names corresponding to the group names are shortened (to at least <code>minlen</code>; the actual length might be longer to ensure uniqueness of the variable names).</p>
 <p>The examples below illustrate the use of this function.</p>

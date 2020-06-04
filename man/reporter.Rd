@@ -2,7 +2,9 @@
 \alias{reporter}
 \alias{reporter.rma.uni}
 \title{Dynamically Generated Analysis Reports for 'rma.uni' Objects}
-\description{The function dynamically generates analysis reports for objects of class \code{"rma.uni"}.}
+\description{
+   The function dynamically generates analysis reports for objects of class \code{"rma.uni"}.
+}
 \usage{
 reporter(x, \dots)
 
@@ -42,7 +44,7 @@ reporter(x, \dots)
    The generated report provides an illustration of how the results of the model can be reported, but is not a substitute for a careful examination of the results.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
 }
 \references{
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{https://www.jstatsoft.org/v036/i03}.

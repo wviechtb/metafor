@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Likelihood Ratio and Wald-Type Tests for 'rma' Objects — anova.rma" />
-<meta property="og:description" content="For two (nested) models of class &quot;rma.uni&quot; or &quot;rma.mv&quot;, the function provides a full versus reduced model comparison in terms of model fit statistics and a likelihood ratio test. When a single model is specified, a Wald-type test of one or more model coefficients or linear combinations thereof is carried out." />
+<meta property="og:description" content="For two (nested) models of class &quot;rma.uni&quot; or &quot;rma.mv&quot;, the function provides a full versus reduced model comparison in terms of model fit statistics and a likelihood ratio test. When a single model is specified, a Wald-type test of one or more model coefficients or linear combinations thereof is carried out. " />
 
 
 
@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-10</span>
       </span>
     </div>
 
@@ -132,7 +132,7 @@
     </div>
 
     <div class="ref-description">
-    <p>For two (nested) models of class <code>"rma.uni"</code> or <code>"rma.mv"</code>, the function provides a full versus reduced model comparison in terms of model fit statistics and a likelihood ratio test. When a single model is specified, a Wald-type test of one or more model coefficients or linear combinations thereof is carried out.</p>
+    <p>For two (nested) models of class <code>"rma.uni"</code> or <code>"rma.mv"</code>, the function provides a full versus reduced model comparison in terms of model fit statistics and a likelihood ratio test. When a single model is specified, a Wald-type test of one or more model coefficients or linear combinations thereof is carried out. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for rma</span>
@@ -171,20 +171,20 @@
 
     <p>When a single model is specified, the function provides Wald-type tests of one or more model coefficients or linear combinations thereof.</p>
 <p>In particular, for a fixed- or random-effects model (i.e., a model without moderators), this is just the test of the single coefficient of the model. For models including moderators, an omnibus test of all the model coefficients is conducted that excludes the intercept (the first coefficient) if it is included in the model. If no intercept is included in the model, then the omnibus test includes all of the coefficients in the model including the first.</p>
-<p>Alternatively, one can manually specify the indices of the coefficients to test via the <code>btt</code> argument. For example, with <code>btt=c(3,4)</code>, only the third and fourth coefficient from the model would be included in the test (if an intercept is included in the model, then it corresponds to the first coefficient in the model). Instead of specifying the coefficient numbers, one can specify a string for <code>btt</code>. In that case, <code><a href='https://rdrr.io/r/base/grep.html'>grep</a></code> will be used to search for all coefficient names that match the string.</p>
-<p>Instead, one can also specify one or multiple linear combinations of the coefficients in the model that should be tested to be zero via the <code>L</code> argument. If given as a matrix, its rows define the linear combinations to be tested. If the matrix is of full rank, an omnibus Wald-type test of all linear combinations is also provided.</p>
+<p>Alternatively, one can manually specify the indices of the coefficients to test via the <code>btt</code> argument. For example, with <code>btt=c(3,4)</code>, only the third and fourth coefficient from the model would be included in the test (if an intercept is included in the model, then it corresponds to the first coefficient in the model). Instead of specifying the coefficient numbers, one can specify a string for <code>btt</code>. In that case, <code><a href='https://rdrr.io/r/base/grep.html'>grep</a></code> will be used to search for all coefficient names that match the string. Using the <code>btt</code> argument, one can for example select all coefficients corresponding to a particular factor to test if the factor as a whole is significant. See &#8216;Examples&#8217;.</p>
+<p>Instead, one can use the <code>L</code> argument to specify a linear combination of the coefficients in the model that should be tested (i.e., whether the linear combination is significantly different from zero). If a matrix of linear combinations is specified, each row defines a particular linear combination to be tested. If the matrix is of full rank, an omnibus Wald-type test of all linear combinations is also provided. Linear combinations can also be obtained with the <code><a href='predict.rma.html'>predict.rma</a></code> function, which will provide corresponding confidence intervals.</p>
 <p>When specifying two models for comparison, the function provides a likelihood ratio test comparing the two models. The two models must be based on the same set of data, must be of the same class, and should be nested for the likelihood ratio test to make sense. Note that likelihood ratio tests are not meaningful when using REML estimation and the two models have different fixed effects.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class <code>"anova.rma"</code>. When a single model is specified (without any further arguments or together with the <code>btt</code> argument), the object is a list containing the following components:</p>
-<dt>QM</dt><dd><p>test statistic for the Wald-type test of model coefficients.</p></dd>
-   <dt>QMp</dt><dd><p>p-value for the Wald-type test of model coefficients.</p></dd>
+<dt>QM</dt><dd><p>test statistic for the Wald-type test of the model coefficients.</p></dd>
+   <dt>QMp</dt><dd><p>p-value for the Wald-type test of the model coefficients.</p></dd>
    <dt>btt</dt><dd><p>indices of the coefficients tested by the Wald-type test.</p></dd>
    <dt>k</dt><dd><p>number of outcomes included in the model fitting.</p></dd>
    <dt>p</dt><dd><p>number of coefficients in the model (including the intercept).</p></dd>
-   <dt>m</dt><dd><p>number of coefficients included in the Wald-type test of coefficients.</p></dd>
+   <dt>m</dt><dd><p>number of coefficients included in the Wald-type test.</p></dd>
    <dt>...</dt><dd><p>some additional elements/values.</p></dd>
-   When argument L is specified, the object is a list containing the following components:
+   When argument L is used, the object is a list containing the following components:
    <dt>QM</dt><dd><p>test statistic for the omnibus Wald-type test of all linear combinations.</p></dd>
    <dt>QMp</dt><dd><p>p-value for the omnibus Wald-type test.</p></dd>
    <dt>hyp</dt><dd><p>description of the linear combinations tested.</p></dd>
@@ -272,6 +272,11 @@
 #&gt; 
 #&gt; Test of Hypothesis:
 #&gt; QM(df = 1) = 81.0700, p-val &lt; .0001
+#&gt; </div><div class='input'>
+<span class='co'>### use predict() to obtain the same linear combination (with its CI)</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>res2</span>, <span class='kw'>newmods</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>35</span>,<span class='fl'>1970</span>))</div><div class='output co'>#&gt; 
+#&gt;     pred     se   ci.lb   ci.ub   cr.lb   cr.ub 
+#&gt;  -0.7533 0.0837 -0.9173 -0.5893 -1.1142 -0.3925 
 #&gt; </div><div class='input'>
 <span class='co'>### mixed-effects model with three moderators</span>
 <span class='no'>res3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>ablat</span> + <span class='no'>year</span> + <span class='no'>alloc</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"ML"</span>)

@@ -1,4 +1,6 @@
-# metafor 2.5-9 (2020-05-26)
+# metafor 2.5-10 (2020-06-04)
+
+- the `metafor` package now makes use of the `mathjaxr` package to nicely render equations shown in the HTML help pages
 
 - slight speedup in functions that repeatedly fit `rma.uni()` models by skipping the computation of `R2`
 

@@ -3,7 +3,9 @@
 \alias{ranktest.rma}
 \alias{ranktest.default}
 \title{Rank Correlation Test for Funnel Plot Asymmetry}
-\description{The function can be used to carry out the rank correlation test for funnel plot asymmetry.}
+\description{
+   The function can be used to carry out the rank correlation test for funnel plot asymmetry.
+}
 \usage{
 ranktest(x, \dots)
 
@@ -37,7 +39,7 @@ ranktest(x, \dots)
    The function makes use of the \code{\link{cor.test}} function with \code{method="kendall"}. If possible, an exact p-value is provided; otherwise, a large-sample approximation is used.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
 }
 \references{
    Begg, C. B., & Mazumdar, M. (1994). Operating characteristics of a rank correlation test for publication bias. \emph{Biometrics}, \bold{50}, 1088--1101.

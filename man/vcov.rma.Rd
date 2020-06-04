@@ -2,7 +2,7 @@
 \alias{vcov.rma}
 \title{Extract Various Types of Variance-Covariance Matrices from 'rma' Objects}
 \description{
-   The function extracts various types of variance-covariance matrices from objects of class \code{"rma"}. By default, the variance-covariance matrix of the parameter estimates (fixed effects) is returned.
+   The function extracts various types of variance-covariance matrices from objects of class \code{"rma"}. By default, the variance-covariance matrix of the parameter estimates (fixed effects) is returned. \loadmathjax
 }
 \usage{
 \method{vcov}{rma}(object, type="fixed", \dots)
@@ -15,7 +15,7 @@
 \details{
    Note that \code{type="obs"} currently only works for object of class \code{"rma.uni"} and \code{"rma.mv"}.
 
-   For objects of class \code{"rma.uni"}, the marginal variance-covariance matrix is just a diagonal matrix with \if{latex}{\eqn{\tau^2 + v_i}}\if{html}{\eqn{\tau² + vᵢ}}\if{text}{\eqn{\tau^2 + v_i}} along the diagonal, where \if{latex}{\eqn{\tau^2}}\if{html}{\eqn{\tau²}}\if{text}{\eqn{\tau^2}} is the estimated amount of (residual) heterogeneity (set to 0 in fixed-effects models) and \if{latex}{\eqn{v_i}}\if{html}{\eqn{vᵢ}}\if{text}{\eqn{v_i}} is the sampling variance of the \eqn{i}th study.
+   For objects of class \code{"rma.uni"}, the marginal variance-covariance matrix is just a diagonal matrix with \mjeqn{\hat{\tau}^2 + v_i}{\tau^2 + v_i} along the diagonal, where \mjeqn{\hat{\tau}^2}{\tau^2} is the estimated amount of (residual) heterogeneity (set to 0 in fixed-effects models) and \mjseqn{v_i} is the sampling variance of the \mjseqn{i}th study.
 
    For objects of class \code{"rma.mv"}, the structure can be more complex and depends on the types of random effects included in the model.
 }
@@ -23,7 +23,7 @@
    A matrix corresponding to the requested variance-covariance matrix.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
 }
 \references{
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{https://www.jstatsoft.org/v036/i03}.

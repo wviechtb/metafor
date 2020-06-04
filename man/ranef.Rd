@@ -4,7 +4,7 @@
 \alias{ranef.rma.mv}
 \title{Best Linear Unbiased Predictions for 'rma.uni' and 'rma.mv' Objects}
 \description{
-   The function calculates best linear unbiased predictions (BLUPs) of the random effects for objects of class \code{"rma.uni"} and \code{"rma.mv"}. Corresponding standard errors and prediction interval bounds are also provided.
+   The function calculates best linear unbiased predictions (BLUPs) of the random effects for objects of class \code{"rma.uni"} and \code{"rma.mv"}. Corresponding standard errors and prediction interval bounds are also provided. \loadmathjax
 }
 \usage{
 \method{ranef}{rma.uni}(object, level, digits, transf, targs, \dots)
@@ -40,12 +40,12 @@
 
    When using the \code{transf} argument, the transformation is applied to the predicted values and the corresponding interval bounds. The standard errors are then set equal to \code{NA} and are omitted from the printed output.
 
-   The normal distribution is used to calculate the prediction intervals. When the model was fitted with the Knapp and Hartung (2003) method (i.e., \code{test="knha"} in the \code{\link{rma.uni}} function), then the t-distribution with \eqn{k-p} degrees of freedom is used.
+   The normal distribution is used to calculate the prediction intervals. When the model was fitted with the Knapp and Hartung (2003) method (i.e., \code{test="knha"} in the \code{\link{rma.uni}} function), then the t-distribution with \mjseqn{k-p} degrees of freedom is used.
 
    To be precise, it should be noted that the function actually calculates empirical BLUPs (eBLUPs), since the predicted values are a function of the estimated variance component(s).
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
 }
 \references{
    Kackar, R. N., & Harville, D. A. (1981). Unbiasedness of two-stage estimation and prediction procedures for mixed linear models. Communications in Statistics, Theory and Methods, \bold{10}, 1249--1261.

@@ -2,7 +2,7 @@
 \alias{anova.rma}
 \title{Likelihood Ratio and Wald-Type Tests for 'rma' Objects}
 \description{
-   For two (nested) models of class \code{"rma.uni"} or \code{"rma.mv"}, the function provides a full versus reduced model comparison in terms of model fit statistics and a likelihood ratio test. When a single model is specified, a Wald-type test of one or more model coefficients or linear combinations thereof is carried out.
+   For two (nested) models of class \code{"rma.uni"} or \code{"rma.mv"}, the function provides a full versus reduced model comparison in terms of model fit statistics and a likelihood ratio test. When a single model is specified, a Wald-type test of one or more model coefficients or linear combinations thereof is carried out. \loadmathjax
 }
 \usage{
 \method{anova}{rma}(object, object2, btt, L, digits, \dots)
@@ -20,22 +20,22 @@
 
    In particular, for a fixed- or random-effects model (i.e., a model without moderators), this is just the test of the single coefficient of the model. For models including moderators, an omnibus test of all the model coefficients is conducted that excludes the intercept (the first coefficient) if it is included in the model. If no intercept is included in the model, then the omnibus test includes all of the coefficients in the model including the first.
 
-   Alternatively, one can manually specify the indices of the coefficients to test via the \code{btt} argument. For example, with \code{btt=c(3,4)}, only the third and fourth coefficient from the model would be included in the test (if an intercept is included in the model, then it corresponds to the first coefficient in the model). Instead of specifying the coefficient numbers, one can specify a string for \code{btt}. In that case, \code{\link{grep}} will be used to search for all coefficient names that match the string.
+   Alternatively, one can manually specify the indices of the coefficients to test via the \code{btt} argument. For example, with \code{btt=c(3,4)}, only the third and fourth coefficient from the model would be included in the test (if an intercept is included in the model, then it corresponds to the first coefficient in the model). Instead of specifying the coefficient numbers, one can specify a string for \code{btt}. In that case, \code{\link{grep}} will be used to search for all coefficient names that match the string. Using the \code{btt} argument, one can for example select all coefficients corresponding to a particular factor to test if the factor as a whole is significant. See \sQuote{Examples}.
 
-   Instead, one can also specify one or multiple linear combinations of the coefficients in the model that should be tested to be zero via the \code{L} argument. If given as a matrix, its rows define the linear combinations to be tested. If the matrix is of full rank, an omnibus Wald-type test of all linear combinations is also provided.
+   Instead, one can use the \code{L} argument to specify a linear combination of the coefficients in the model that should be tested (i.e., whether the linear combination is significantly different from zero). If a matrix of linear combinations is specified, each row defines a particular linear combination to be tested. If the matrix is of full rank, an omnibus Wald-type test of all linear combinations is also provided. Linear combinations can also be obtained with the \code{\link{predict.rma}} function, which will provide corresponding confidence intervals.
 
    When specifying two models for comparison, the function provides a likelihood ratio test comparing the two models. The two models must be based on the same set of data, must be of the same class, and should be nested for the likelihood ratio test to make sense. Note that likelihood ratio tests are not meaningful when using REML estimation and the two models have different fixed effects.
 }
 \value{
    An object of class \code{"anova.rma"}. When a single model is specified (without any further arguments or together with the \code{btt} argument), the object is a list containing the following components:
-   \item{QM}{test statistic for the Wald-type test of model coefficients.}
-   \item{QMp}{p-value for the Wald-type test of model coefficients.}
+   \item{QM}{test statistic for the Wald-type test of the model coefficients.}
+   \item{QMp}{p-value for the Wald-type test of the model coefficients.}
    \item{btt}{indices of the coefficients tested by the Wald-type test.}
    \item{k}{number of outcomes included in the model fitting.}
    \item{p}{number of coefficients in the model (including the intercept).}
-   \item{m}{number of coefficients included in the Wald-type test of coefficients.}
+   \item{m}{number of coefficients included in the Wald-type test.}
    \item{\dots}{some additional elements/values.}
-   When argument \code{L} is specified, the object is a list containing the following components:
+   When argument \code{L} is used, the object is a list containing the following components:
    \item{QM}{test statistic for the omnibus Wald-type test of all linear combinations.}
    \item{QMp}{p-value for the omnibus Wald-type test.}
    \item{hyp}{description of the linear combinations tested.}
@@ -52,18 +52,18 @@
    \item{pval}{p-value for the likelihood ratio test.}
    \item{QE.f}{test statistic for the test of (residual) heterogeneity from the full model.}
    \item{QE.r}{test statistic for the test of (residual) heterogeneity from the reduced model.}
-   \item{tau2.f}{estimated \if{latex}{\eqn{\tau^2}}\if{html}{\eqn{\tau²}}\if{text}{\eqn{\tau^2}} value from the full model. \code{NA} for \code{"rma.mv"} objects.}
-   \item{tau2.r}{estimated \if{latex}{\eqn{\tau^2}}\if{html}{\eqn{\tau²}}\if{text}{\eqn{\tau^2}} value from the reduced model. \code{NA} for \code{"rma.mv"} objects.}
-   \item{R2}{amount (in percent) of the heterogeneity in the reduced model that is accounted for in the full model (\code{NA} for fixed-effects models or for \code{"rma.mv"} objects). This can be regarded as a pseudo \if{latex}{\eqn{R^2}}\if{html}{\eqn{R²}}\if{text}{\eqn{R^2}} statistic (Raudenbush, 2009). Note that the value may not be very accurate unless \eqn{k} is large (Lopez-Lopez et al., 2014).}
+   \item{tau2.f}{estimated \mjseqn{\tau^2} value from the full model. \code{NA} for \code{"rma.mv"} objects.}
+   \item{tau2.r}{estimated \mjseqn{\tau^2} value from the reduced model. \code{NA} for \code{"rma.mv"} objects.}
+   \item{R2}{amount (in percent) of the heterogeneity in the reduced model that is accounted for in the full model (\code{NA} for fixed-effects models or for \code{"rma.mv"} objects). This can be regarded as a pseudo \mjseqn{R^2} statistic (Raudenbush, 2009). Note that the value may not be very accurate unless \mjseqn{k} is large (Lopez-Lopez et al., 2014).}
    \item{\dots}{some additional elements/values.}
 
    The results are formatted and printed with the \code{\link{print.anova.rma}} function.
 }
 \note{
-   In principle, one can consider likelihood ratio tests for the amount of (residual) heterogeneity in random- and mixed-effects models. The full model should then be fitted with either \code{method="ML"} or \code{method="REML"} and the reduced model with \code{method="FE"}. The p-value from that test is based on a chi-square distribution with 1 degree of freedom, but actually needs to be adjusted for the fact that the parameter (i.e., \if{latex}{\eqn{\tau^2}}\if{html}{\eqn{\tau²}}\if{text}{\eqn{\tau^2}}) falls on the boundary of the parameter space under the null hypothesis. Moreover, the Q-test usually keeps better control of the Type I error rate and therefore should be preferred (see Viechtbauer, 2007, for more details).
+   In principle, one can consider likelihood ratio tests for the amount of (residual) heterogeneity in random- and mixed-effects models. The full model should then be fitted with either \code{method="ML"} or \code{method="REML"} and the reduced model with \code{method="FE"}. The p-value from that test is based on a chi-square distribution with 1 degree of freedom, but actually needs to be adjusted for the fact that the parameter (i.e., \mjseqn{\tau^2}) falls on the boundary of the parameter space under the null hypothesis. Moreover, the Q-test usually keeps better control of the Type I error rate and therefore should be preferred (see Viechtbauer, 2007, for more details).
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
 }
 \references{
    Hardy, R. J., & Thompson, S. G. (1996). A likelihood approach to meta-analysis with random effects. \emph{Statistics in Medicine}, \bold{15}, 619--629.
@@ -102,6 +102,9 @@ anova(res1, res2)
 
 ### test of a linear combination
 anova(res2, L=c(1,35,1970))
+
+### use predict() to obtain the same linear combination (with its CI)
+predict(res2, newmods=c(35,1970))
 
 ### mixed-effects model with three moderators
 res3 <- rma(yi, vi, mods = ~ ablat + year + alloc, data=dat, method="ML")

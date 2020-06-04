@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Funnel Plots — funnel" />
-<meta property="og:description" content="Function to create funnel plots." />
+<meta property="og:description" content="Function to create funnel plots. " />
 
 
 
@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-10</span>
       </span>
     </div>
 
@@ -132,7 +132,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Function to create funnel plots.</p>
+    <p>Function to create funnel plots. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
     </div>
 
     <pre class="usage"><span class='fu'>funnel</span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -289,27 +289,27 @@
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>For fixed- and random-effects models (i.e., models not involving moderators), the plot shows the individual observed effect sizes or outcomes on the x-axis against the corresponding standard errors (i.e., the square root of the sampling variances) on the y-axis. A vertical line indicates the estimate based on the model. A pseudo confidence interval region is drawn around this value with bounds equal to \(± 1.96 SE\), where \(SE\) is the standard error value from the y-axis (assuming <code>level=95</code>). If <code>addtau2=TRUE</code> (only for models of class <code>"rma.uni"</code>), then the bounds of the pseudo confidence interval region are equal to \(± 1.96 \sqrt{SE^2 + \tau^2}\), where \(\tau^2\) is the amount of heterogeneity as estimated by the model.</p>
+    <p>For fixed- and random-effects models (i.e., models not involving moderators), the plot shows the individual observed effect sizes or outcomes on the x-axis against the corresponding standard errors (i.e., the square root of the sampling variances) on the y-axis. A vertical line indicates the estimate based on the model. A pseudo confidence interval region is drawn around this value with bounds equal to \(\pm 1.96 \mbox{SE}\), where \(\mbox{SE}\) is the standard error value from the y-axis (assuming <code>level=95</code>). If <code>addtau2=TRUE</code> (only for models of class <code>"rma.uni"</code>), then the bounds of the pseudo confidence interval region are equal to \(\pm 1.96 \sqrt{\mbox{SE}^2 + \hat{\tau}^2}\), where \(\hat{\tau}^2\) is the amount of heterogeneity as estimated by the model.</p>
 <p>For models involving moderators, the plot shows the residuals on the x-axis against their corresponding standard errors. Either the usual or deleted residuals can be used for that purpose (set via the <code>type</code> argument). See <code><a href='residuals.rma.html'>residuals.rma</a></code> for more details on the different types of residuals.</p>
 <p>With the <code>atransf</code> argument, the labels of the observed effect sizes or outcomes on the x-axis can be transformed with some suitable function. For example, when plotting log odds ratios, one could use <code>transf=exp</code> to obtain a funnel plot with the values on the x-axis corresponding to the odds ratios. See also <a href='transf.html'>transf</a> for some transformation functions useful for meta-analyses.</p>
-<p>Instead of placing the standard error value on the y-axis, several other options are available by setting the <code>yaxis</code> argument to:</p><ul>
-<li><p><code>yaxis="vi"</code> for the sampling variance,</p></li>
-<li><p><code>yaxis="seinv"</code> for the inverse of the standard error,</p></li>
-<li><p><code>yaxis="vinv"</code> for the inverse of the sampling variance,</p></li>
-<li><p><code>yaxis="ni"</code> for the sample size,</p></li>
-<li><p><code>yaxis="ninv"</code> for the inverse of the sample size,</p></li>
-<li><p><code>yaxis="sqrtni"</code> for the square root sample size,</p></li>
-<li><p><code>yaxis="sqrtninv"</code> for the inverse of the square root sample size,</p></li>
-<li><p><code>yaxis="lni"</code> for the log of the sample size,</p></li>
+<p>Instead of placing the standard errors on the y-axis, several other options are available by setting the <code>yaxis</code> argument to:</p><ul>
+<li><p><code>yaxis="vi"</code> for the sampling variances,</p></li>
+<li><p><code>yaxis="seinv"</code> for the inverse of the standard errors,</p></li>
+<li><p><code>yaxis="vinv"</code> for the inverse of the sampling variances,</p></li>
+<li><p><code>yaxis="ni"</code> for the sample sizes,</p></li>
+<li><p><code>yaxis="ninv"</code> for the inverse of the sample sizes,</p></li>
+<li><p><code>yaxis="sqrtni"</code> for the square root of the sample sizes,</p></li>
+<li><p><code>yaxis="sqrtninv"</code> for the inverse square root of the sample sizes,</p></li>
+<li><p><code>yaxis="lni"</code> for the log of the sample sizes,</p></li>
 <li><p><code>yaxis="wi"</code> for the weights.</p></li>
 </ul><p>However, only when <code>yaxis="sei"</code> (the default) will the pseudo confidence region have the expected (upside-down) funnel shape with straight lines. Also, when placing (a function of) the sample size on the y-axis or the weights, then the pseudo confidence region cannot be drawn. See Sterne and Egger (2001) for more details on the choice of the y-axis.</p>
-<p>If the object passed to the function comes from the <code><a href='trimfill.html'>trimfill</a></code> function, the effect sizes or outcomes that are filled in by the trim and fill method are also added to the funnel plot. The symbol to use for plotting the filled in values can then be specified via the <code>pch.fill</code> argument.</p>
+<p>If the object passed to the function comes from the <code><a href='trimfill.html'>trimfill</a></code> function, the effect sizes or outcomes that are filled in by the trim and fill method are also added to the funnel plot. The symbol to use for plotting the filled in values can be specified via the <code>pch.fill</code> argument.</p>
 <p>One can also directly pass a vector of observed effect sizes or outcomes (via <code>x</code>) and the corresponding sampling variances (via <code>vi</code>), standard errors (via <code>sei</code>), and/or sample sizes (via <code>ni</code>) to the function. By default, the vertical reference line is then drawn at zero.</p>
 <p>The arguments <code>back</code>, <code>shade</code>, and <code>hlines</code> can be set to <code>NULL</code> to suppress the shading and the horizontal reference lines.</p>
 <p>With the <code>label</code> argument, one can control whether points in the plot will be labeled. If <code>label="all"</code> (or <code>label=TRUE</code>), all points in the plot will be labeled. If <code>label="out"</code>, points falling outside of the pseudo confidence region will be labeled. Finally, one can also set this argument to a numeric value (between 1 and \(k\)), indicating how many of the most extreme points should be labeled (for example, with <code>label=1</code> only the most extreme point would be labeled, while with <code>label=3</code>, the most extreme, and the second and third most extreme points would be labeled). With the <code>offset</code> argument, the distance between the labels and the corresponding points can be controlled.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>Placing (a function of) the sample size on the y-axis (i.e., using <code>yaxis="ni"</code>, <code>yaxis="ninv"</code>, <code>yaxis="sqrtni"</code>, <code>yaxis="sqrtninv"</code>, or <code>yaxis="lni"</code>) is only possible when information about the sample sizes is actually stored within the object passed to the <code>funnel</code> function. That should automatically be the case when the observed outcomes were computed with the <code>escalc</code> function or when the observed outcomes were computed within the model fitting function. On the other hand, this will not automatically be the case when <code>rma.uni</code> was used together with the <code>yi</code> and <code>vi</code> arguments and the <code>yi</code> and <code>vi</code> values were <em>not</em> computed with <code>escalc</code>. In that case, it is still possible to pass information about the sample sizes to the <code>rma.uni</code> function (i.e., use <code><a href='rma.uni.html'>rma.uni(yi, vi, ni)</a></code>).</p>
+    <p>Placing (a function of) the sample size on the y-axis (i.e., using <code>yaxis="ni"</code>, <code>yaxis="ninv"</code>, <code>yaxis="sqrtni"</code>, <code>yaxis="sqrtninv"</code>, or <code>yaxis="lni"</code>) is only possible when information about the sample sizes is actually stored within the object passed to the <code>funnel</code> function. That should automatically be the case when the observed outcomes were computed with the <code>escalc</code> function or when the observed outcomes were computed within the model fitting function. On the other hand, this will not be the case when <code>rma.uni</code> was used together with the <code>yi</code> and <code>vi</code> arguments and the <code>yi</code> and <code>vi</code> values were <em>not</em> computed with <code>escalc</code>. In that case, it is still possible to pass information about the sample sizes to the <code>rma.uni</code> function (e.g., use <code><a href='rma.uni.html'>rma.uni(yi, vi, ni=ni, data=dat)</a></code>, where data frame <code>dat</code> includes a variable called <code>ni</code> with the sample sizes).</p>
 <p>When using unweighted estimation, using <code>yaxis="wi"</code> will place all points on a horizontal line. When directly passing a vector of observed effect sizes or outcomes to the function, <code>yaxis="wi"</code> is equivalent to <code>yaxis="vinv"</code>, except that the weights are expressed in percent.</p>
 <p>When specifying vectors for <code>pch</code>, <code>col</code>, and/or <code>bg</code>, the variables specified are assumed to be of the same length as the data passed to the funnel function or the model fitting function (when using <code>funnel</code> on a model object). Any subsetting and removal of studies with missing values is automatically applied to the variables specified via <code>pch</code>, <code>col</code>, and <code>bg</code>.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>

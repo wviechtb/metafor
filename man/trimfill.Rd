@@ -2,7 +2,9 @@
 \alias{trimfill}
 \alias{trimfill.rma.uni}
 \title{Trim and Fill Analysis for 'rma.uni' Objects}
-\description{Carry out a trim and fill analysis for objects of class \code{"rma.uni"}.}
+\description{
+   Carry out a trim and fill analysis for objects of class \code{"rma.uni"}.
+}
 \usage{
 trimfill(x, \dots)
 
@@ -36,7 +38,7 @@ trimfill(x, \dots)
    If the outcome measure used for the analysis is bounded (e.g., correlations are bounded between \code{-1} and \code{1}, proportions are bounded between \code{0} and \code{1}), one can use the \code{ilim} argument to enforce those limits when imputing values (imputed values cannot exceed those bounds then).
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org/}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
 }
 \references{
    Duval, S. J., & Tweedie, R. L. (2000a). Trim and fill: A simple funnel-plot-based method of testing and adjusting for publication bias in meta-analysis. \emph{Biometrics}, \bold{56}, 455--463.
