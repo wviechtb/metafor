@@ -525,7 +525,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
    ### add X matrix to list
 
-   if(addx)
+   if (addx)
       out$X <- matrix(X.new[not.na,], ncol=x$p)
 
    if (addx)

@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-11</span>
       </span>
     </div>
 
@@ -142,8 +142,8 @@
        <span class='kw'>level</span><span class='kw'>=</span><span class='no'>x</span>$<span class='no'>level</span>, <span class='kw'>refline</span><span class='kw'>=</span><span class='fl'>0</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2L</span>, <span class='no'>width</span>,
        <span class='no'>xlab</span>, <span class='no'>slab</span>, <span class='no'>mlab</span>, <span class='no'>ilab</span>, <span class='no'>ilab.xpos</span>, <span class='no'>ilab.pos</span>,
        <span class='no'>order</span>, <span class='no'>transf</span>, <span class='no'>atransf</span>, <span class='no'>targs</span>, <span class='no'>rows</span>,
-       <span class='kw'>efac</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>pch</span><span class='kw'>=</span><span class='fl'>15</span>, <span class='no'>psize</span>, <span class='no'>col</span>, <span class='no'>border</span>, <span class='no'>lty</span>, <span class='no'>fonts</span>,
-       <span class='no'>cex</span>, <span class='no'>cex.lab</span>, <span class='no'>cex.axis</span>, <span class='no'>annosym</span>, <span class='no'>...</span>)</pre>
+       <span class='kw'>efac</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>pch</span><span class='kw'>=</span><span class='fl'>15</span>, <span class='no'>psize</span>, <span class='no'>colout</span>, <span class='no'>col</span>, <span class='no'>border</span>, <span class='no'>lty</span>,
+       <span class='no'>fonts</span>, <span class='no'>cex</span>, <span class='no'>cex.lab</span>, <span class='no'>cex.axis</span>, <span class='no'>annosym</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -270,19 +270,11 @@
     </tr>
     <tr>
       <th>psize</th>
-      <td><p>optional vector with point sizes for the observed effect sizes or outcomes. If unspecified, the point sizes are an inverse function of the model weights.</p></td>
+      <td><p>optional vector with point sizes for the observed effect sizes or outcomes. If unspecified, the point sizes are an inverse function of the model weights. Can also be a vector of values.</p></td>
     </tr>
     <tr>
-      <th>cex</th>
-      <td><p>optional character and symbol expansion factor. If unspecified, the function tries to set this to a sensible value.</p></td>
-    </tr>
-    <tr>
-      <th>cex.lab</th>
-      <td><p>optional expansion factor for the x-axis title. If unspecified, the function tries to set this to a sensible value.</p></td>
-    </tr>
-    <tr>
-      <th>cex.axis</th>
-      <td><p>optional expansion factor for the x-axis labels. If unspecified, the function tries to set this to a sensible value.</p></td>
+      <th>colout</th>
+      <td><p>optional character string specifying the name of a color to use for plotting the observed effect sizes or outcomes ("black" is used by default if not specified). Can also be a vector of color names.</p></td>
     </tr>
     <tr>
       <th>col</th>
@@ -299,6 +291,18 @@
     <tr>
       <th>fonts</th>
       <td><p>optional character string specifying the font to use for the study labels, annotations, and the extra information (if specified via <code>ilab</code>). If unspecified, the default font is used.</p></td>
+    </tr>
+    <tr>
+      <th>cex</th>
+      <td><p>optional character and symbol expansion factor. If unspecified, the function tries to set this to a sensible value.</p></td>
+    </tr>
+    <tr>
+      <th>cex.lab</th>
+      <td><p>optional expansion factor for the x-axis title. If unspecified, the function tries to set this to a sensible value.</p></td>
+    </tr>
+    <tr>
+      <th>cex.axis</th>
+      <td><p>optional expansion factor for the x-axis labels. If unspecified, the function tries to set this to a sensible value.</p></td>
     </tr>
     <tr>
       <th>annosym</th>

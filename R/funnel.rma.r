@@ -33,25 +33,25 @@ label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
    ### set y-axis label if not specified
 
    if (missing(ylab)) {
-      if(yaxis == "sei")
+      if (yaxis == "sei")
          ylab <- "Standard Error"
-      if(yaxis == "vi")
+      if (yaxis == "vi")
          ylab <- "Variance"
-      if(yaxis == "seinv")
+      if (yaxis == "seinv")
          ylab <- "Inverse Standard Error"
-      if(yaxis == "vinv")
+      if (yaxis == "vinv")
          ylab <- "Inverse Variance"
-      if(yaxis == "ni")
+      if (yaxis == "ni")
          ylab <- "Sample Size"
-      if(yaxis == "ninv")
+      if (yaxis == "ninv")
          ylab <- "Inverse Sample Size"
-      if(yaxis == "sqrtni")
+      if (yaxis == "sqrtni")
          ylab <- "Square Root Sample Size"
-      if(yaxis == "sqrtninv")
+      if (yaxis == "sqrtninv")
          ylab <- "Inverse Square Root Sample Size"
-      if(yaxis == "lni")
+      if (yaxis == "lni")
          ylab <- "Log Sample Size"
-      if(yaxis == "wi")
+      if (yaxis == "wi")
          ylab <- "Weight (in %)"
    }
 
@@ -64,25 +64,25 @@ label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
    ### default number of digits (if not specified)
 
    if (missing(digits)) {
-      if(yaxis == "sei")
+      if (yaxis == "sei")
          digits <- c(2L,3L)
-      if(yaxis == "vi")
+      if (yaxis == "vi")
          digits <- c(2L,3L)
-      if(yaxis == "seinv")
+      if (yaxis == "seinv")
          digits <- c(2L,3L)
-      if(yaxis == "vinv")
+      if (yaxis == "vinv")
          digits <- c(2L,3L)
-      if(yaxis == "ni")
+      if (yaxis == "ni")
          digits <- c(2L,0L)
-      if(yaxis == "ninv")
+      if (yaxis == "ninv")
          digits <- c(2L,3L)
-      if(yaxis == "sqrtni")
+      if (yaxis == "sqrtni")
          digits <- c(2L,3L)
-      if(yaxis == "sqrtninv")
+      if (yaxis == "sqrtninv")
          digits <- c(2L,3L)
-      if(yaxis == "lni")
+      if (yaxis == "lni")
          digits <- c(2L,3L)
-      if(yaxis == "wi")
+      if (yaxis == "wi")
          digits <- c(2L,2L)
    } else {
       if (length(digits) == 1L)     ### digits[1] for x-axis labels

@@ -3,7 +3,7 @@ annotate=TRUE,                             showweights=FALSE, header=FALSE,
 xlim, alim, clim, ylim, top=3, at, steps=5, level=95,      refline=0, digits=2L, width,
 xlab, slab,       ilab, ilab.xpos, ilab.pos, subset,
 transf, atransf, targs, rows,
-efac=1, pch=15, psize, col,         lty, fonts,
+efac=1, pch=15, psize, col,                 lty, fonts,
 cex, cex.lab, cex.axis, annosym, ...) {
 
    #########################################################################
@@ -543,7 +543,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
    for (i in seq_len(k)) {
 
-      ### need to skip missings, as if() check below will otherwise throw an error
+      ### need to skip missings (if check below will otherwise throw an error)
       if (is.na(yi[i]) || is.na(ci.lb[i]) || is.na(ci.ub[i]))
          next
 
@@ -651,7 +651,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
    for (i in seq_len(k)) {
 
-      ### need to skip missings, as if() check below will otherwise throw an error
+      ### need to skip missings (if check below will otherwise throw an error)
       if (is.na(yi[i]))
          next
 

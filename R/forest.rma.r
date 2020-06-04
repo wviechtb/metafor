@@ -3,7 +3,7 @@ annotate=TRUE, addfit=TRUE, addcred=FALSE, showweights=FALSE, header=FALSE,
 xlim, alim, clim, ylim, top=3, at, steps=5, level=x$level, refline=0, digits=2L, width,
 xlab, slab, mlab, ilab, ilab.xpos, ilab.pos, order,
 transf, atransf, targs, rows,
-efac=1, pch=15, psize, col, border, lty, fonts,
+efac=1, pch=15, psize, colout, col, border, lty, fonts,
 cex, cex.lab, cex.axis, annosym, ...) {
 
    #########################################################################
@@ -20,9 +20,6 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))
-
-   #if (!is.null(order))
-   #   order <- match.arg(order, c("obs", "fit", "prec", "resid", "rstandard", "abs.resid", "abs.rstandard"))
 
    if (missing(transf))
       transf <- FALSE
@@ -53,6 +50,9 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
    if (missing(order))
       order <- NULL
+
+   if (missing(colout))
+      colout <- "black"
 
    if (missing(psize))
       psize <- NULL
@@ -203,6 +203,12 @@ cex, cex.lab, cex.axis, annosym, ...) {
    if (length(pch) != length(yi))
       stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'pch' argument."))
 
+   if (length(colout) == 1L)                    ### note: colout must have same length as yi.f in rma object
+      colout <- rep(colout, k)                  ### or be equal to a single value (which is then repeated)
+
+   if (length(colout) != length(yi))
+      stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'colout' argument."))
+
    ### extract fitted values
 
    options(na.action = "na.pass")               ### using na.pass to get the entire vector (length of yi.f)
@@ -247,6 +253,8 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
       if (is.character(order)) {
 
+         order <- match.arg(order, c("obs", "fit", "prec", "resid", "rstandard", "abs.resid", "abs.rstandard"))
+
          if (length(order) != 1L)
             stop(mstyle$stop("Incorrect length of 'order' argument."))
 
@@ -279,6 +287,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
       pred.ci.ub <- pred.ci.ub[sort.vec]
       weights    <- weights[sort.vec]
       pch        <- pch[sort.vec]
+      colout     <- colout[sort.vec]
       psize      <- psize[sort.vec]             ### if psize is still NULL, then this remains NULL
 
    }
@@ -310,6 +319,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
    pred.ci.ub <- pred.ci.ub[k:1]
    weights    <- weights[k:1]
    pch        <- pch[k:1]
+   colout     <- colout[k:1]
    psize      <- psize[k:1]                     ### if psize is still NULL, then this remains NULL
    rows       <- rows[k:1]
 
@@ -332,6 +342,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
          pred.ci.ub <- pred.ci.ub[not.na]
          weights    <- weights[not.na]
          pch        <- pch[not.na]
+         colout     <- colout[not.na]
          psize      <- psize[not.na]            ### if psize is still NULL, then this remains NULL
 
          rows.new <- rows                       ### rearrange rows due to NAs being omitted from plot
@@ -747,34 +758,34 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
    for (i in seq_len(k)) {
 
-      ### need to skip missings, as if() check below will otherwise throw an error
+      ### need to skip missings (if check below will otherwise throw an error)
       if (is.na(yi[i]) || is.na(vi[i]))
          next
 
       ### if the lower bound is actually larger than upper x-axis limit, then everything is to the right and just draw a polygon pointing in that direction
       if (ci.lb[i] >= alim[2]) {
-         lpolygon(x=c(alim[2], alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]), y=c(rows[i], rows[i]+(height/150)*cex*efac[2], rows[i]-(height/150)*cex*efac[2], rows[i]), col="black", ...)
+         lpolygon(x=c(alim[2], alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]), y=c(rows[i], rows[i]+(height/150)*cex*efac[2], rows[i]-(height/150)*cex*efac[2], rows[i]), col=colout[i], ...)
          next
       }
 
       ### if the upper bound is actually lower than lower x-axis limit, then everything is to the left and just draw a polygon pointing in that direction
       if (ci.ub[i] <= alim[1]) {
-         lpolygon(x=c(alim[1], alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]), y=c(rows[i], rows[i]+(height/150)*cex*efac[2], rows[i]-(height/150)*cex*efac[2], rows[i]), col="black", ...)
+         lpolygon(x=c(alim[1], alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]), y=c(rows[i], rows[i]+(height/150)*cex*efac[2], rows[i]-(height/150)*cex*efac[2], rows[i]), col=colout[i], ...)
          next
       }
 
-      lsegments(max(ci.lb[i], alim[1]), rows[i], min(ci.ub[i], alim[2]), rows[i], lty=lty[1], ...)
+      lsegments(max(ci.lb[i], alim[1]), rows[i], min(ci.ub[i], alim[2]), rows[i], lty=lty[1], col=colout[i], ...)
 
       if (ci.lb[i] >= alim[1]) {
-         lsegments(ci.lb[i], rows[i]-(height/150)*cex*efac[1], ci.lb[i], rows[i]+(height/150)*cex*efac[1], ...)
+         lsegments(ci.lb[i], rows[i]-(height/150)*cex*efac[1], ci.lb[i], rows[i]+(height/150)*cex*efac[1], col=colout[i], ...)
       } else {
-         lpolygon(x=c(alim[1], alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]), y=c(rows[i], rows[i]+(height/150)*cex*efac[2], rows[i]-(height/150)*cex*efac[2], rows[i]), col="black", ...)
+         lpolygon(x=c(alim[1], alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]), y=c(rows[i], rows[i]+(height/150)*cex*efac[2], rows[i]-(height/150)*cex*efac[2], rows[i]), col=colout[i], ...)
       }
 
       if (ci.ub[i] <= alim[2]) {
-         lsegments(ci.ub[i], rows[i]-(height/150)*cex*efac[1], ci.ub[i], rows[i]+(height/150)*cex*efac[1], ...)
+         lsegments(ci.ub[i], rows[i]-(height/150)*cex*efac[1], ci.ub[i], rows[i]+(height/150)*cex*efac[1], col=colout[i], ...)
       } else {
-         lpolygon(x=c(alim[2], alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]), y=c(rows[i], rows[i]+(height/150)*cex*efac[2], rows[i]-(height/150)*cex*efac[2], rows[i]), col="black", ...)
+         lpolygon(x=c(alim[2], alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]), y=c(rows[i], rows[i]+(height/150)*cex*efac[2], rows[i]-(height/150)*cex*efac[2], rows[i]), col=colout[i], ...)
       }
 
    }
@@ -880,12 +891,12 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
    for (i in seq_len(k)) {
 
-      ### need to skip missings, as if() check below will otherwise throw an error
+      ### need to skip missings, as if () check below will otherwise throw an error
       if (is.na(yi[i]))
          next
 
       if (yi[i] >= alim[1] && yi[i] <= alim[2])
-         lpoints(yi[i], rows[i], pch=pch[i], cex=cex*psize[i], ...)
+         lpoints(yi[i], rows[i], pch=pch[i], col=colout[i], cex=cex*psize[i], ...)
 
    }
 

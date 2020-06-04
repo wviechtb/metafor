@@ -456,7 +456,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
    for (i in seq_len(k)) {
 
-      ### need to skip missings, as if() check below will otherwise throw an error
+      ### need to skip missings (if check below will otherwise throw an error)
       if (is.na(yi[i]) || is.na(vi[i]))
          next
 
@@ -556,7 +556,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
    for (i in seq_len(k)) {
 
-      ### need to skip missings, as if() check below will otherwise throw an error
+      ### need to skip missings (if check below will otherwise throw an error)
       if (is.na(yi[i]))
          next
 

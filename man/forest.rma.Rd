@@ -11,8 +11,8 @@
        level=x$level, refline=0, digits=2L, width,
        xlab, slab, mlab, ilab, ilab.xpos, ilab.pos,
        order, transf, atransf, targs, rows,
-       efac=1, pch=15, psize, col, border, lty, fonts,
-       cex, cex.lab, cex.axis, annosym, \dots)
+       efac=1, pch=15, psize, colout, col, border, lty,
+       fonts, cex, cex.lab, cex.axis, annosym, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma"}.}
@@ -45,14 +45,15 @@
    \item{rows}{optional vector specifying the rows (or more generally, the horizontal positions) for plotting the outcomes. If unspecified, the function sets this value automatically. Can also be a single value specifying the row (horizontal position) of the first outcome (the remaining outcomes are then plotted below this starting row).}
    \item{efac}{vertical expansion factor for confidence interval limits, arrows, and the symbol used to denote summary estimates. The default value of 1 should usually work okay. Can also be a vector of two numbers, the first for CI limits and arrows, the second for summary estimates. Can also be a vector of three numbers, the first for CI limits, the second for arrows, the third for summary estimates.}
    \item{pch}{plotting symbol to use for the observed effect sizes or outcomes. By default, a filled square is used. See \code{\link{points}} for other options. Can also be a vector of values.}
-   \item{psize}{optional vector with point sizes for the observed effect sizes or outcomes. If unspecified, the point sizes are an inverse function of the model weights.}
-   \item{cex}{optional character and symbol expansion factor. If unspecified, the function tries to set this to a sensible value.}
-   \item{cex.lab}{optional expansion factor for the x-axis title. If unspecified, the function tries to set this to a sensible value.}
-   \item{cex.axis}{optional expansion factor for the x-axis labels. If unspecified, the function tries to set this to a sensible value.}
+   \item{psize}{optional vector with point sizes for the observed effect sizes or outcomes. If unspecified, the point sizes are an inverse function of the model weights. Can also be a vector of values.}
+   \item{colout}{optional character string specifying the name of a color to use for plotting the observed effect sizes or outcomes ("black" is used by default if not specified). Can also be a vector of color names.}
    \item{col}{optional character string specifying the name of a color to use for the summary polygon or fitted values. If unspecified, the function sets a default color.}
    \item{border}{optional character string specifying the name of a color to use for the border of the summary polygon or fitted values. If unspecified, the function sets a default color.}
    \item{lty}{optional character string specifying the line type for the confidence intervals (if unspecified, the function sets this to \code{"solid"} by default).}
    \item{fonts}{optional character string specifying the font to use for the study labels, annotations, and the extra information (if specified via \code{ilab}). If unspecified, the default font is used.}
+   \item{cex}{optional character and symbol expansion factor. If unspecified, the function tries to set this to a sensible value.}
+   \item{cex.lab}{optional expansion factor for the x-axis title. If unspecified, the function tries to set this to a sensible value.}
+   \item{cex.axis}{optional expansion factor for the x-axis labels. If unspecified, the function tries to set this to a sensible value.}
    \item{annosym}{optional vector of length 3 to change the left bracket, separation, and right bracket symbols for the annotations.}
    \item{\dots}{other arguments.}
 }

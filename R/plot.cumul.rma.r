@@ -29,11 +29,11 @@ digits, cols=c("gray90","gray10"), addgrid=TRUE, pch=19, cex=1, lwd=2, ...) {
       xlab <- .setlab(x$measure, transf.char, atransf.char, gentype=2)
 
    if (missing(ylab)) {
-      if(yaxis == "tau2")
+      if (yaxis == "tau2")
          ylab <- "Amount of Heterogeneity (tau^2)"
-      if(yaxis == "I2")
+      if (yaxis == "I2")
          ylab <- "Percentage of Variability due to Heterogeneity (I^2)"
-      if(yaxis == "H2")
+      if (yaxis == "H2")
          ylab <- "Ratio of Total Variability to Sampling Variability (H^2)"
    }
 
@@ -44,11 +44,11 @@ digits, cols=c("gray90","gray10"), addgrid=TRUE, pch=19, cex=1, lwd=2, ...) {
       targs <- NULL
 
    if (missing(digits)) {
-      if(yaxis == "tau2")
+      if (yaxis == "tau2")
          digits <- c(2L,3L)
-      if(yaxis == "I2")
+      if (yaxis == "I2")
          digits <- c(2L,1L)
-      if(yaxis == "H2")
+      if (yaxis == "H2")
          digits <- c(2L,1L)
    } else {
       if (length(digits) == 1L)     ### digits[1] for x-axis labels
@@ -104,7 +104,7 @@ digits, cols=c("gray90","gray10"), addgrid=TRUE, pch=19, cex=1, lwd=2, ...) {
 
    ### if user has specified 'at' argument, make sure xlim actually contains the min and max 'at' values
 
-   if(!is.null(at)) {
+   if (!is.null(at)) {
       xlim[1] <- min(c(xlim[1], at), na.rm=TRUE)
       xlim[2] <- max(c(xlim[2], at), na.rm=TRUE)
    }
