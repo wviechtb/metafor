@@ -31,17 +31,18 @@ vcov.rma <- function(object, type="fixed", ...) {
 
       if (inherits(object, c("rma.uni","rma.mv"))) {
 
-         if (na.act == "na.omit")
-            return(object$M)
+         out <- matrix(NA_real_, nrow=object$k.f, ncol=object$k.f)
+         out[object$not.na, object$not.na] <- object$M
 
-         if (na.act == "na.pass" || na.act == "na.exclude") {
-            M <- matrix(NA_real_, nrow=object$k.f, ncol=object$k.f)
-            M[object$not.na,object$not.na] <- object$M
-            return(M)
-         }
+         rownames(out) <- colnames(out) <- object$slab
+
+         if (na.act == "na.omit")
+            out <- out[object$not.na, object$not.na]
 
          if (na.act == "na.fail" && any(!object$not.na))
             stop(mstyle$stop("Missing values in data."))
+
+         return(out)
 
       } else {
 
@@ -57,12 +58,12 @@ vcov.rma <- function(object, type="fixed", ...) {
 
       out <- object$X.f %*% object$vb %*% t(object$X.f)
 
-      #rownames(out) <- colnames(out) <- object$slab
+      rownames(out) <- colnames(out) <- object$slab
 
       if (na.act == "na.omit")
          out <- out[object$not.na, object$not.na]
 
-      if (na.act == "na.exclude") {
+      if (na.act == "na.exclude" || na.act == "na.pass") {
          out[!object$not.na,] <- NA
          out[,!object$not.na] <- NA
       }
@@ -87,12 +88,15 @@ vcov.rma <- function(object, type="fixed", ...) {
          ve <- ImH %*% tcrossprod(object$M,ImH)
       }
 
-      if (na.act == "na.omit")
+      if (na.act == "na.omit") {
          out <- ve
+         rownames(out) <- colnames(out) <- object$slab[object$not.na]
+      }
 
       if (na.act == "na.exclude" || na.act == "na.pass") {
          out <- matrix(NA_real_, nrow=object$k.f, ncol=object$k.f)
          out[object$not.na, object$not.na] <- ve
+         rownames(out) <- colnames(out) <- object$slab
       }
 
       return(out)

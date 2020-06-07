@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-12</span>
       </span>
     </div>
 
@@ -129,12 +129,13 @@
       <small>Source: <a href='https://github.com/wviechtb/metafor/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="metafor-2-5-11-2020-06-04" class="section level1">
-<h1 class="page-header" data-toc-text="2.5-11">
-<a href="#metafor-2-5-11-2020-06-04" class="anchor"></a>metafor 2.5-11 (2020-06-04)<small> Unreleased </small>
+    <div id="metafor-2-5-12-2020-06-07" class="section level1">
+<h1 class="page-header" data-toc-text="2.5-12">
+<a href="#metafor-2-5-12-2020-06-07" class="anchor"></a>metafor 2.5-12 (2020-06-07)<small> Unreleased </small>
 </h1>
 <ul>
 <li><p>the <code>metafor</code> package now makes use of the <code>mathjaxr</code> package to nicely render equations shown in the HTML help pages</p></li>
+<li><p>one can now use <code><a href="https://rdrr.io/r/stats/weights.html">weights(...,  type="rowsum")</a></code> for intercept-only <code>rma.mv</code> models (to obtain ‘row-sum weights’)</p></li>
 <li><p><code><a href="../reference/forest.rma.html">forest.rma()</a></code> gains <code>colout</code> argument (to adjust the color of the observed effect sizes or outcomes)</p></li>
 <li><p>slight speedup in functions that repeatedly fit <code><a href="../reference/rma.uni.html">rma.uni()</a></code> models by skipping the computation of <code>R2</code></p></li>
 <li><p><code><a href="../reference/funnel.html">funnel.default()</a></code> and <code><a href="../reference/funnel.html">funnel.rma()</a></code> gain <code>label</code> and <code>offset</code> arguments</p></li>

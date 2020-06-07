@@ -17,11 +17,17 @@
 }
 \arguments{
    \item{object}{an object of class \code{"rma.uni"}, \code{"rma.mh"}, \code{"rma.peto"}, or \code{"rma.mv"}. The method is not yet implemented for objects of class \code{"rma.glmm"}.}
-   \item{type}{character string indicating whether to return only the diagonal of the weight matrix (\code{"diagonal"}) or the entire weight matrix (\code{"matrix"}).}
+   \item{type}{character string indicating whether to return only the diagonal of the weight matrix (\code{"diagonal"}) or the entire weight matrix (\code{"matrix"}). For \code{"rma.mv"}, this can also be \code{"rowsum"} for \sQuote{row-sum weights} (for intercept-only models).}
    \item{\dots}{other arguments.}
 }
 \value{
-   Either a vector with the diagonal elements of the weight matrix or the entire weight matrix. When only the diagonal elements are returned, they are given in \% (and they add up to 100\%). When the entire weight matrix is requested, this is always a diagonal matrix for objects of class \code{"rma.uni"}, \code{"rma.mh"}, \code{"rma.peto"}.
+   Either a vector with the diagonal elements of the weight matrix or the entire weight matrix. When only the diagonal elements are returned, they are given in \% (and they add up to 100\%).
+
+   When the entire weight matrix is requested, this is always a diagonal matrix for objects of class \code{"rma.uni"}, \code{"rma.mh"}, \code{"rma.peto"}.
+
+   For \code{"rma.mv"}, the structure of the weight matrix depends on the model fitted (i.e., the random effects included and the variance-covariance matrix of the sampling errors) but is often more complex and not just diagonal.
+
+   For \code{"rma.mv"} intercept-only models, one can also take the sum over the rows in the weight matrix, which are actually the weights assigned to the observed effects / outcomes when estimating the model intercept. These weights can be obtained with \code{type="rowsum"} (as with \code{type="diagonal"}, they are also given in \%).
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}

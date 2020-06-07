@@ -1,6 +1,8 @@
-# metafor 2.5-11 (2020-06-04)
+# metafor 2.5-12 (2020-06-07)
 
 - the `metafor` package now makes use of the `mathjaxr` package to nicely render equations shown in the HTML help pages
+
+- one can now use `weights(...,  type="rowsum")` for intercept-only `rma.mv` models (to obtain 'row-sum weights')
 
 - `forest.rma()` gains `colout` argument (to adjust the color of the observed effect sizes or outcomes)
 
