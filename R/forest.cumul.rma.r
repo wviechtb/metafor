@@ -115,6 +115,9 @@ cex, cex.lab, cex.axis, annosym, ...) {
       }
    }
 
+   if (!annotate)
+      header.right <- NULL
+
    ddd <- list(...)
 
    lplot     <- function(..., textpos) plot(...)

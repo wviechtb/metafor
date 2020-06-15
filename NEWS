@@ -1,8 +1,11 @@
-Changes in Version 2.5-15 (2020-06-15)
+Changes in Version 2.5-16 (2020-06-15)
 =====================================
 
    o the metafor package now makes use of the 'mathjaxr' package to nicely
      render equations shown in the HTML help pages
+
+   o in the various forest() functions, when 'header=TRUE', suppress the right
+     header when 'annotate=FALSE'
 
    o the 'forest' and 'funnel' arguments of reporter.rma.uni() can now also be
      logicals to suppress the drawing of these plots

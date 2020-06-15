@@ -367,7 +367,8 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
             results <- paste0(results, "```{r, forestplot, echo=FALSE, fig.align=\"center\", fig.cap=\"Figure ", num.forest, ": Forest plot showing the observed outcomes and the estimate of the ", model.name, " model\"")
          if (format == "word_document")
             results <- paste0(results, "```{r, forestplot, echo=FALSE, fig.cap=\"Figure ", num.forest, ": Forest plot showing the observed outcomes and the estimate of the ", model.name, " model\"")
-         results <- paste0(results, ", dev.args=list(pointsize=9)}\npar(family=\"mono\")\ntmp <- metafor::forest(x, addcred=TRUE", args.forest, ")\ntext(tmp$xlim[1], x$k+2, \"Study\", pos=4, font=2, cex=tmp$cex)\ntext(tmp$xlim[2], x$k+2, \"Outcome [", level, "% CI]\", pos=2, font=2, cex=tmp$cex)\n```")
+         results <- paste0(results, ", dev.args=list(pointsize=9)}\npar(family=\"mono\")\ntmp <- metafor::forest(x, addcred=TRUE, header=TRUE", args.forest, ")\n```")
+         #text(tmp$xlim[1], x$k+2, \"Study\", pos=4, font=2, cex=tmp$cex)\ntext(tmp$xlim[2], x$k+2, \"Outcome [", level, "% CI]\", pos=2, font=2, cex=tmp$cex)\n
       }
 
       results <- paste0(results, "\n\n")
