@@ -100,22 +100,41 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
 
    ### process forest argument
 
-   if (missing(forest)) {
-      args.forest <- ""
-   } else {
-      if (!is.character(args.forest))
-         stop(mstyle$stop("Argument 'args.forest' must be a character string."))
-      args.forest <- paste0(", ", forest)
+   plot.forest <- TRUE
+   args.forest <- ""
+   if (!missing(forest)) {
+      if (is.logical(forest)) {
+         if (isFALSE(forest))
+            plot.forest <- FALSE
+      } else {
+         if (!is.character(forest))
+            stop(mstyle$stop("Argument 'forest' must be a character string."))
+         args.forest <- paste0(", ", forest)
+      }
    }
 
    ### process funnel argument
 
-   if (missing(funnel)) {
-      args.funnel <- ""
+   plot.funnel <- TRUE
+   args.funnel <- ""
+   if (!missing(funnel)) {
+      if (is.logical(funnel)) {
+         if (isFALSE(funnel))
+            plot.funnel <- FALSE
+      } else {
+         if (!is.character(funnel))
+            stop(mstyle$stop("Argument 'funnel' must be a character string."))
+         args.funnel <- paste0(", ", funnel)
+      }
+   }
+
+   ### forest and funnel plot numbers
+   if (plot.forest) {
+      num.forest <- 1
+      num.funnel <- 2
    } else {
-      if (!is.character(args.funnel))
-         stop(mstyle$stop("Argument 'args.funnel' must be a character string."))
-      args.funnel <- paste0(", ", funnel)
+      num.forest <- NA
+      num.funnel <- 1
    }
 
    ### save model object
@@ -241,8 +260,15 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
    ### yaml header
 
    header <- paste0("---\n")
-   header <- paste0(header, "output: ", format, "\n")
+   header <- paste0(header, "output:\n")
+   if (format == "html_document")
+      header <- paste0(header, "  html_document:\n    toc: true\n    toc_float:\n      collapsed: false\n")
+   if (format == "pdf_document")
+      header <- paste0(header, "  pdf_document:\n    toc: true\n")
+   if (format == "word_document")
+      header <- paste0(header, "  word_document\n")
    header <- paste0(header, "title: Analysis Report\n")
+   header <- paste0(header, "toc-title: Table of Contents\n")
    header <- paste0(header, "author: Generated with the reporter() Function of the metafor Package\n")
    header <- paste0(header, "bibliography: references.bib\n")
    header <- paste0(header, "csl: apa.csl\n")
@@ -333,14 +359,16 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
       results <- paste0(results, "Therefore, the average outcome ", ifelse(x$pval > 0.05, "did not differ", "differed"), " significantly from zero ($", ifelse(x$test == "z", "z", paste0("t(", x$k-1, ")")), " = ", .fcf(x$zval, digits[["test"]]), "$, ", fpval(x$pval), "). ")
 
       ### forest plot
-      results <- paste0(results, "A forest plot showing the observed outcomes and the estimate based on the ", model.name, " model is shown in Figure 1.\n\n")
-      if (is.element(format, c("pdf_document", "bookdown::pdf_document2")))
-         results <- paste0(results, "```{r, forestplot, echo=FALSE, fig.align=\"center\", fig.cap=\"Forest plot showing the observed outcomes and the estimate of the ", model.name, " model\"")
-      if (format == "html_document")
-         results <- paste0(results, "```{r, forestplot, echo=FALSE, fig.align=\"center\", fig.cap=\"Figure 1: Forest plot showing the observed outcomes and the estimate of the ", model.name, " model\"")
-      if (format == "word_document")
-         results <- paste0(results, "```{r, forestplot, echo=FALSE, fig.cap=\"Figure 1: Forest plot showing the observed outcomes and the estimate of the ", model.name, " model\"")
-      results <- paste0(results, ", dev.args=list(pointsize=9)}\npar(family=\"mono\")\ntmp <- metafor::forest(x, addcred=TRUE", args.forest, ")\ntext(tmp$xlim[1], x$k+2, \"Study\", pos=4, font=2, cex=tmp$cex)\ntext(tmp$xlim[2], x$k+2, \"Outcome [", level, "% CI]\", pos=2, font=2, cex=tmp$cex)\n```")
+      if (plot.forest) {
+         results <- paste0(results, "A forest plot showing the observed outcomes and the estimate based on the ", model.name, " model is shown in Figure ", num.forest, ".\n\n")
+         if (is.element(format, c("pdf_document", "bookdown::pdf_document2")))
+            results <- paste0(results, "```{r, forestplot, echo=FALSE, fig.align=\"center\", fig.cap=\"Forest plot showing the observed outcomes and the estimate of the ", model.name, " model\"")
+         if (format == "html_document")
+            results <- paste0(results, "```{r, forestplot, echo=FALSE, fig.align=\"center\", fig.cap=\"Figure ", num.forest, ": Forest plot showing the observed outcomes and the estimate of the ", model.name, " model\"")
+         if (format == "word_document")
+            results <- paste0(results, "```{r, forestplot, echo=FALSE, fig.cap=\"Figure ", num.forest, ": Forest plot showing the observed outcomes and the estimate of the ", model.name, " model\"")
+         results <- paste0(results, ", dev.args=list(pointsize=9)}\npar(family=\"mono\")\ntmp <- metafor::forest(x, addcred=TRUE", args.forest, ")\ntext(tmp$xlim[1], x$k+2, \"Study\", pos=4, font=2, cex=tmp$cex)\ntext(tmp$xlim[2], x$k+2, \"Outcome [", level, "% CI]\", pos=2, font=2, cex=tmp$cex)\n```")
+      }
 
       results <- paste0(results, "\n\n")
 
@@ -419,7 +447,8 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
       ### publication bias
       ranktest <- suppressWarnings(ranktest(x))
       regtest  <- regtest(x)
-      results <- paste0(results, "A funnel plot of the estimates is shown in Figure 2. ")
+      if (plot.funnel)
+         results <- paste0(results, "A funnel plot of the estimates is shown in Figure ", num.funnel, ". ")
       if (ranktest$pval > .05 && regtest$pval > .05) {
          results <- paste0(results, "Neither the rank correlation nor the regression test indicated any funnel plot asymmetry ")
          results <- paste0(results, "(", fpval(ranktest$pval), " and ", fpval(regtest$pval), ", respectively). ")
@@ -434,12 +463,14 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
          results <- paste0(results, "The rank correlation test indicated funnel plot asymmetry ($", fpval(ranktest$pval), ") but not the regression test (", fpval(regtest$pval), "). ")
 
       ### funnel plot
-      if (is.element(format, c("pdf_document", "bookdown::pdf_document2")))
-         results <- paste0(results, "\n\n```{r, funnelplot, echo=FALSE, fig.align=\"center\", fig.cap=\"Funnel plot\", dev.args=list(pointsize=9)}\nmetafor::funnel(x", args.funnel, ")\n```")
-      if (format == "html_document")
-         results <- paste0(results, "\n\n```{r, funnelplot, echo=FALSE, fig.align=\"center\", fig.cap=\"Figure 2: Funnel plot\", dev.args=list(pointsize=9)}\nmetafor::funnel(x", args.funnel, ")\n```")
-      if (format == "word_document")
-         results <- paste0(results, "\n\n```{r, funnelplot, echo=FALSE, fig.cap=\"Figure 2: Funnel plot\", dev.args=list(pointsize=9)}\nmetafor::funnel(x", args.funnel, ")\n```")
+      if (plot.funnel) {
+         if (is.element(format, c("pdf_document", "bookdown::pdf_document2")))
+            results <- paste0(results, "\n\n```{r, funnelplot, echo=FALSE, fig.align=\"center\", fig.cap=\"Funnel plot\", dev.args=list(pointsize=9)}\nmetafor::funnel(x", args.funnel, ")\n```")
+         if (format == "html_document")
+            results <- paste0(results, "\n\n```{r, funnelplot, echo=FALSE, fig.align=\"center\", fig.cap=\"Figure ", num.funnel, ": Funnel plot\", dev.args=list(pointsize=9)}\nmetafor::funnel(x", args.funnel, ")\n```")
+         if (format == "word_document")
+            results <- paste0(results, "\n\n```{r, funnelplot, echo=FALSE, fig.cap=\"Figure ", num.funnel, ": Funnel plot\", dev.args=list(pointsize=9)}\nmetafor::funnel(x", args.funnel, ")\n```")
+      }
 
    }
 
