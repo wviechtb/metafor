@@ -167,7 +167,7 @@
 
 .pval <- function(p, digits=4, showeq=FALSE, sep="", add0=FALSE) {
 
-   digits <- max(digits, 1)
+   digits  <- max(digits, 1)
    cutoff  <- paste(c(".", rep(0,digits-1),1), collapse="")
    ncutoff <- as.numeric(cutoff)
 
@@ -200,7 +200,7 @@
       names(x) <- seq_along(x)
 
    len.n   <- nchar(names(x))
-   len.x   <- nchar(x)
+   len.x   <- nchar(x, keepNA=FALSE)
    len.max <- pmax(len.n, len.x)
    format  <- sapply(len.max, function(x) paste("%", x, "s", sep=""))
 
