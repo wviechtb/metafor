@@ -35,7 +35,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \item{sdi}{vector to specify the standard deviations.}
    \item{r2i}{vector to specify the \mjseqn{R^2} values.}
    \item{ni}{vector to specify the sample/group sizes.}
-   \item{yi}{vector to specify the observed effect size or outcomes.}
+   \item{yi}{vector to specify the observed effects or outcomes.}
    \item{vi}{vector to specify the corresponding sampling variances.}
    \item{sei}{vector to specify the corresponding standard errors.}
    \item{data}{optional data frame containing the variables given to the arguments above.}
@@ -362,7 +362,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
    \subsection{Converting a Data Frame to an 'escalc' Object}{
 
-      The function can also be used to convert a regular data frame to an 'escalc' object. One simply sets the \code{measure} argument to one of the options described above (or to \code{measure="GEN"} for a generic outcome measure not further specified) and passes the observed effect sizes or outcomes via the \code{yi} argument and the corresponding sampling variances via the \code{vi} argument (or the standard errors via the \code{sei} argument).
+      The function can also be used to convert a regular data frame to an 'escalc' object. One simply sets the \code{measure} argument to one of the options described above (or to \code{measure="GEN"} for a generic outcome measure not further specified) and passes the observed effects or outcomes via the \code{yi} argument and the corresponding sampling variances via the \code{vi} argument (or the standard errors via the \code{sei} argument).
 
    }
 

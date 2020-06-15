@@ -42,7 +42,7 @@ to.long(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \item{var.names}{optional vector with variable names (length depends on the data type). If unspecified, the function sets appropriate variable names by default.}
 }
 \details{
-   The \code{\link{escalc}} function describes a wide variety of effect size and outcome measures that can be computed for a meta-analysis. The summary data used to compute those measures are typically contained in vectors, each element corresponding to a study. The \code{to.long} function takes this information and constructs a long format dataset from these data.
+   The \code{\link{escalc}} function describes a wide variety of effect size or outcome measures that can be computed for a meta-analysis. The summary data used to compute those measures are typically contained in vectors, each element corresponding to a study. The \code{to.long} function takes this information and constructs a long format dataset from these data.
 
    For example, in various fields (such as the health and medical sciences), the response variable measured is often dichotomous (binary), so that the data from a study comparing two different groups can be expressed in terms of a \mjeqn{2 \times 2}{2x2} table, such as:
    \tabular{lccc}{
