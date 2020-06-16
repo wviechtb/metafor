@@ -46,12 +46,14 @@ print.rma.mh <- function(x, digits, showfit=FALSE, ...) {
       cat(mstyle$result(paste0("Q(df = ", ifelse(x$k.yi-1 >= 0, x$k.yi-1, 0), ") = ", .fcf(x$QE, digits[["test"]]), ", p-val ", .pval(x$QEp, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
    }
 
+   if (any(!is.na(c(x$I2, x$H2, x$QE))))
+      cat("\n\n")
+
    if (is.element(x$measure, c("OR","RR","IRR"))) {
 
       res.table <- c(estimate=.fcf(unname(x$beta), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), zval=.fcf(x$zval, digits[["test"]]), pval=.pval(x$pval, digits[["pval"]]), ci.lb=.fcf(x$ci.lb, digits[["ci"]]), ci.ub=.fcf(x$ci.ub, digits[["ci"]]))
       res.table.exp <- c(estimate=.fcf(exp(unname(x$beta)), digits[["est"]]), ci.lb=.fcf(exp(x$ci.lb), digits[["ci"]]), ci.ub=.fcf(exp(x$ci.ub), digits[["ci"]]))
 
-      cat("\n\n")
       cat(mstyle$section("Model Results (log scale):"))
       cat("\n\n")
       tmp <- capture.output(.print.vector(res.table))
@@ -104,7 +106,6 @@ print.rma.mh <- function(x, digits, showfit=FALSE, ...) {
 
       res.table <- c(estimate=.fcf(unname(x$beta), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), zval=.fcf(x$zval, digits[["test"]]), pval=.pval(x$pval, digits[["pval"]]), ci.lb=.fcf(x$ci.lb, digits[["ci"]]), ci.ub=.fcf(x$ci.ub, digits[["ci"]]))
 
-      cat("\n\n")
       cat(mstyle$section("Model Results:"))
       cat("\n\n")
       tmp <- capture.output(.print.vector(res.table))

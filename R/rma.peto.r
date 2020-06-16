@@ -339,12 +339,12 @@ level=95, digits, verbose=FALSE, ...) {
 
    if (k.pos > 1) {
       QEp <- pchisq(QE, df=k.yi-1, lower.tail=FALSE)
-      I2 <- max(0, 100 * (QE - (k.yi-1)) / QE)
-      H2 <- QE / (k.yi-1)
+      I2  <- max(0, 100 * (QE - (k.yi-1)) / QE)
+      H2  <- QE / (k.yi-1)
    } else {
       QEp <- 1
-      I2 <- 0
-      H2 <- 1
+      I2  <- 0
+      H2  <- 1
    }
 
    wi  <- 1/vi

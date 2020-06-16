@@ -527,7 +527,7 @@ correct=TRUE, level=95, digits, verbose=FALSE, ...) {
       R  <- sum(Ri)
       S  <- sum(Si)
 
-      if (identical(R,0) || identical(S,0)) {
+      if (identical(R,0) || identical(S,0) || identical(R,0L) || identical(S,0L)) {
          beta.exp <- NA
          beta     <- NA
          se       <- NA
@@ -553,7 +553,7 @@ correct=TRUE, level=95, digits, verbose=FALSE, ...) {
       xt <- ai + ci
       yt <- bi + di
 
-      if (identical(sum(xt),0) || identical(sum(yt),0)) {
+      if (identical(sum(xt),0) || identical(sum(yt),0) || identical(sum(xt),0L) || identical(sum(yt),0L)) {
          CO  <- NA
          COp <- NA
          MH  <- NA
@@ -574,7 +574,7 @@ correct=TRUE, level=95, digits, verbose=FALSE, ...) {
          TAp   <- NA
          k.pos <- 0
       } else {
-         if (identical(beta.exp,1)) {
+         if (identical(beta.exp,1) || identical(beta.exp,1L)) {
             N11 <- (n1i/Ni)*xt
          } else {
             A   <- beta.exp * (n1i + xt) + (n2i - xt)
@@ -605,7 +605,7 @@ correct=TRUE, level=95, digits, verbose=FALSE, ...) {
       R <- sum(ai * (n2i/Ni))
       S <- sum(ci * (n1i/Ni))
 
-      if (identical(sum(ai),0) || identical(sum(ci),0)) {
+      if (identical(sum(ai),0) || identical(sum(ci),0) || identical(sum(ai),0L) || identical(sum(ci),0L)) {
          beta.exp <- NA
          beta     <- NA
          se       <- NA
@@ -648,7 +648,7 @@ correct=TRUE, level=95, digits, verbose=FALSE, ...) {
       R <- sum(x1i * (t2i/Ti))
       S <- sum(x2i * (t1i/Ti))
 
-      if (identical(sum(x1i),0) || identical(sum(x2i),0)) {
+      if (identical(sum(x1i),0) || identical(sum(x2i),0) || identical(sum(x1i),0L) || identical(sum(x2i),0L)) {
          beta.exp <- NA
          beta     <- NA
          se       <- NA
@@ -672,7 +672,7 @@ correct=TRUE, level=95, digits, verbose=FALSE, ...) {
       ### Mantel-Haenszel Statistic
 
       xt <- x1i + x2i
-      if (identical(sum(xt),0)) {
+      if (identical(sum(xt),0) || identical(sum(xt),0L)) {
          MH  <- NA
          MHp <- NA
       } else {
@@ -705,16 +705,16 @@ correct=TRUE, level=95, digits, verbose=FALSE, ...) {
 
    wi <- 1/vi
 
-   QE <- max(0, sum(wi*(yi-beta)^2))
-
    if (k.yi > 1) {
+      QE  <- max(0, sum(wi*(yi-beta)^2))
       QEp <- pchisq(QE, df=k.yi-1, lower.tail=FALSE)
-      I2 <- max(0, 100 * (QE - (k.yi-1)) / QE)
-      H2 <- QE / (k.yi-1)
+      I2  <- max(0, 100 * (QE - (k.yi-1)) / QE)
+      H2  <- QE / (k.yi-1)
    } else {
+      QE  <- 0
       QEp <- 1
-      I2 <- 0
-      H2 <- 1
+      I2  <- 0
+      H2  <- 1
    }
 
    #########################################################################
