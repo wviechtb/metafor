@@ -5,6 +5,9 @@ rstandard.rma.mv <- function(model, digits, cluster, ...) {
    if (!inherits(model, "rma.mv"))
       stop(mstyle$stop("Argument 'model' must be an object of class \"rma.mv\"."))
 
+   if (inherits(model, "robust.rma"))
+      stop(mstyle$stop("Method not available for objects of class \"robust.rma\"."))
+
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
@@ -59,11 +62,14 @@ rstandard.rma.mv <- function(model, digits, cluster, ...) {
    ei[abs(ei) < 100 * .Machine$double.eps] <- 0
    #ei[abs(ei) < 100 * .Machine$double.eps * median(abs(ei), na.rm=TRUE)] <- 0 ### see lm.influence
 
-   if (inherits(x, "robust.rma")) {
-      ve <- ImH %*% tcrossprod(x$meat,ImH)
-   } else {
-      ve <- ImH %*% tcrossprod(x$M,ImH)
-   }
+   ### don't allow this; the SEs of the residuals cannot be estimated consistently for "robust.rma" objects
+   #if (inherits(x, "robust.rma")) {
+   #   ve <- ImH %*% tcrossprod(x$meat,ImH)
+   #} else {
+   #   ve <- ImH %*% tcrossprod(x$M,ImH)
+   #}
+
+   ve <- ImH %*% tcrossprod(x$M,ImH)
 
    #ve <- x$M + x$X %*% x$vb %*% t(x$X) - 2*H%*%x$M
    sei <- sqrt(diag(ve))
