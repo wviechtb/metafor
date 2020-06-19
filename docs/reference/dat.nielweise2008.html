@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-19</span>
       </span>
     </div>
 
@@ -157,10 +157,10 @@
 <p>The dataset was used in the article by Stijnen et al. (2010) to illustrate various generalized linear mixed-effects models for the meta-analysis of incidence rates and incidence rate ratios (see &#8216;References&#8217;).</p>
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-    <p>Niel-Weise, B. S., Stijnen, T., &amp; van den Broek, P. J. (2008). Anti-infective-treated central venous catheters for total parenteral nutrition or chemotherapy: A systematic review. <em>Journal of Hospital Infection</em>, <b>69</b>, 114--123.</p>
+    <p>Niel-Weise, B. S., Stijnen, T., &amp; van den Broek, P. J. (2008). Anti-infective-treated central venous catheters for total parenteral nutrition or chemotherapy: A systematic review. <em>Journal of Hospital Infection</em>, <b>69</b>(2), 114--123. <a href='https://doi.org/10.1016/j.jhin.2008.02.020'>https://doi.org/10.1016/j.jhin.2008.02.020</a></p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Stijnen, T., Hamza, T. H., &amp; Ozdemir, P. (2010). Random effects meta-analysis of event outcome in the framework of the generalized linear mixed model with applications in sparse data. <em>Statistics in Medicine</em>, <b>29</b>, 3046--3067.</p>
+    <p>Stijnen, T., Hamza, T. H., &amp; Ozdemir, P. (2010). Random effects meta-analysis of event outcome in the framework of the generalized linear mixed model with applications in sparse data. <em>Statistics in Medicine</em>, <b>29</b>(29), 3046--3067. <a href='https://doi.org/10.1002/sim.4040'>https://doi.org/10.1002/sim.4040</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat' and examine data</span>
@@ -195,7 +195,7 @@
 #&gt; 
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
+#&gt; </div><div class='input'><span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
 #&gt;  pred ci.lb ci.ub cr.lb cr.ub 
 #&gt;  0.67  0.43  1.05  0.32  1.42 
 #&gt; </div><div class='input'>
@@ -203,7 +203,7 @@
 <span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.glmm.html'>rma.glmm</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"IRR"</span>, <span class='kw'>x1i</span><span class='kw'>=</span><span class='no'>x1i</span>, <span class='kw'>t1i</span><span class='kw'>=</span><span class='no'>t1i</span>, <span class='kw'>x2i</span><span class='kw'>=</span><span class='no'>x2i</span>, <span class='kw'>t2i</span><span class='kw'>=</span><span class='no'>t2i</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>model</span><span class='kw'>=</span><span class='st'>"CM.EL"</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>res</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>3</span>)
-<span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)}</div></pre>
+<span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-19</span>
       </span>
     </div>
 
@@ -157,12 +157,12 @@
 <p>The data can be used for a &#8216;network meta-analysis&#8217; (also called &#8216;mixed treatment comparison meta-analysis&#8217;). The code below shows how such an analysis can be conducted using an arm-based and a contrast-based model (see Salanti et al., 2008, for more details).</p>
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-    <p>Hasselblad, V. (1998). Meta-analysis of multitreatment studies. <em>Medical Decision Making</em>, <b>18</b>, 37--43.</p>
+    <p>Hasselblad, V. (1998). Meta-analysis of multitreatment studies. <em>Medical Decision Making</em>, <b>18</b>(1), 37--43. <a href='https://doi.org/10.1177/0272989X9801800110'>https://doi.org/10.1177/0272989X9801800110</a></p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Gleser, L. J., &amp; Olkin, I. (2009). Stochastically dependent effect sizes. In H. Cooper, L. V. Hedges, &amp; J. C. Valentine (Eds.), <em>The handbook of research synthesis and meta-analysis</em> (2nd ed., pp. 357--376). New York: Russell Sage Foundation.</p>
-<p>Law, M., Jackson, D., Turner, R., Rhodes, K., &amp; Viechtbauer, W. (2016). Two new methods to fit models for network meta-analysis with random inconsistency effects. <em>BMC Medical Research Methodology</em>, <b>16</b>(1), 87.</p>
-<p>Salanti, G., Higgins, J. P. T., Ades, A. E., &amp; Ioannidis, J. P. A. (2008). Evaluation of networks of randomized trials. <em>Statistical Methods in Medical Research</em>, <b>17</b>, 279--301.</p>
+<p>Law, M., Jackson, D., Turner, R., Rhodes, K., &amp; Viechtbauer, W. (2016). Two new methods to fit models for network meta-analysis with random inconsistency effects. <em>BMC Medical Research Methodology</em>, <b>16</b>, 87. <a href='https://doi.org/10.1186/s12874-016-0184-5'>https://doi.org/10.1186/s12874-016-0184-5</a></p>
+<p>Salanti, G., Higgins, J. P. T., Ades, A. E., &amp; Ioannidis, J. P. A. (2008). Evaluation of networks of randomized trials. <em>Statistical Methods in Medical Research</em>, <b>17</b>(3), 279--301. <a href='https://doi.org/10.1177/0962280207080643'>https://doi.org/10.1177/0962280207080643</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat'</span>
@@ -350,7 +350,7 @@
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### all pairwise odds ratios of interventions versus no contact</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>newmods</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>0</span>, <span class='kw'>nrow</span><span class='kw'>=</span><span class='fl'>3</span>, <span class='kw'>ncol</span><span class='kw'>=</span><span class='fl'>24</span>), <span class='fu'><a href='https://rdrr.io/r/base/diag.html'>diag</a></span>(<span class='fl'>3</span>)),
+<span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>newmods</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>0</span>, <span class='kw'>nrow</span><span class='kw'>=</span><span class='fl'>3</span>, <span class='kw'>ncol</span><span class='kw'>=</span><span class='fl'>24</span>), <span class='fu'><a href='https://rdrr.io/r/base/diag.html'>diag</a></span>(<span class='fl'>3</span>)),
         <span class='kw'>intercept</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
 #&gt;   pred ci.lb ci.ub cr.lb cr.ub 
 #&gt; 1 1.48  0.78  2.77  0.35  6.20 
@@ -358,7 +358,7 @@
 #&gt; 3 2.33  1.14  4.75  0.53 10.14 
 #&gt; </div><div class='input'>
 <span class='co'>### all pairwise odds ratios comparing interventions (ic vs sh, gc vs sh, and gc vs ic)</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>newmods</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>0</span>, <span class='kw'>nrow</span><span class='kw'>=</span><span class='fl'>3</span>, <span class='kw'>ncol</span><span class='kw'>=</span><span class='fl'>24</span>), <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>0</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>1</span>,<span class='fl'>0</span>,<span class='fl'>1</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>,-<span class='fl'>1</span>,<span class='fl'>1</span>))),
+<span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>newmods</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>0</span>, <span class='kw'>nrow</span><span class='kw'>=</span><span class='fl'>3</span>, <span class='kw'>ncol</span><span class='kw'>=</span><span class='fl'>24</span>), <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>0</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>1</span>,<span class='fl'>0</span>,<span class='fl'>1</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>,-<span class='fl'>1</span>,<span class='fl'>1</span>))),
         <span class='kw'>intercept</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
 #&gt;   pred ci.lb ci.ub cr.lb cr.ub 
 #&gt; 1 1.35  0.70  2.58  0.32  5.71 
@@ -560,7 +560,7 @@
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### predicted odds ratios of interventions versus no contact</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>newmods</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/diag.html'>diag</a></span>(<span class='fl'>3</span>), <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
+<span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>newmods</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/diag.html'>diag</a></span>(<span class='fl'>3</span>), <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
 #&gt;   pred ci.lb ci.ub cr.lb cr.ub 
 #&gt; 1 1.48  0.78  2.77  0.35  6.20 
 #&gt; 2 1.99  1.37  2.89  0.52  7.60 

@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-19</span>
       </span>
     </div>
 
@@ -160,7 +160,7 @@
     <p>Azithromycin is an antibiotic useful for the treatment of a number of bacterial infections. Laopaiboon et al. (2015) conducted a meta-analysis of trials comparing the effectiveness of azithromycin versus amoxycillin or amoxycillin/clavulanic acid (amoxyclav) in the treatment of acute lower respiratory tract infections, including acute bacterial bronchitis, acute exacerbations of chronic bronchitis, and pneumonia. The results from 15 trials are included in this dataset.</p>
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-    <p>Laopaiboon, M., Panpanich, R., &amp; Swa Mya, K. (2015). Azithromycin for acute lower respiratory tract infections. <em>Cochrane Database of Systematic Reviews</em>, <b>3</b>, CD001954.</p>
+    <p>Laopaiboon, M., Panpanich, R., &amp; Swa Mya, K. (2015). Azithromycin for acute lower respiratory tract infections. <em>Cochrane Database of Systematic Reviews</em>, <b>3</b>, CD001954. <a href='https://doi.org/10.1002/14651858.CD001954.pub4'>https://doi.org/10.1002/14651858.CD001954.pub4</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat' and examine data</span>
@@ -226,7 +226,7 @@
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### average risk ratio with 95% CI</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>)</div><div class='output co'>#&gt; 
+<span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>)</div><div class='output co'>#&gt; 
 #&gt;    pred  ci.lb  ci.ub  cr.lb  cr.ub 
 #&gt;  1.0889 0.6448 1.8389 0.2218 5.3447 
 #&gt; </div></pre>

@@ -1,4 +1,4 @@
-Changes in Version 2.5-18 (2020-06-16)
+Changes in Version 2.5-19 (2020-06-19)
 =====================================
 
    o the metafor package now makes use of the 'mathjaxr' package to nicely
@@ -31,6 +31,8 @@ Changes in Version 2.5-18 (2020-06-16)
 
    o show nicer network graps for 'dat.hasselblad1998' and 'dat.senn2013' in
      help files
+
+   o improved the documentation a bit
 
 
 Changes in Version 2.4-0 (2020-03-19)

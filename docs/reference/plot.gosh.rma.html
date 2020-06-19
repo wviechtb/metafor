@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-19</span>
       </span>
     </div>
 
@@ -223,8 +223,8 @@
 <p>For models with moderators, the function draws a scatterplot matrix (with the <code><a href='https://rdrr.io/r/graphics/pairs.html'>pairs</a></code> function) of the chosen measure of heterogeneity and each of the model coefficients. Histograms of the variables plotted are shown along the diagonal, with kernel density estimates of the distributions superimposed. Arguments <code>xlim</code>, <code>ylim</code>, <code>xhist</code>, and <code>yhist</code> are then ignored (argument <code>hh</code> can then be used to compress/stretch the height of the distributions shown along the diagonal).</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Olkin, I., Dahabreh, I. J., &amp; Trikalinos, T. A. (2012). GOSH - a graphical display of study heterogeneity. <em>Research Synthesis Methods</em>, <b>3</b>, 214--223.</p>
-<p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='https://www.jstatsoft.org/v036/i03'>https://www.jstatsoft.org/v036/i03</a>.</p>
+    <p>Olkin, I., Dahabreh, I. J., &amp; Trikalinos, T. A. (2012). GOSH - a graphical display of study heterogeneity. <em>Research Synthesis Methods</em>, <b>3</b>(3), 214--223. <a href='https://doi.org/10.1002/jrsm.1053'>https://doi.org/10.1002/jrsm.1053</a></p>
+<p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='https://doi.org/10.18637/jss.v036.i03'>https://doi.org/10.18637/jss.v036.i03</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='gosh.html'>gosh.rma</a></code></p></div>
@@ -233,14 +233,13 @@
     <pre class="examples"><div class='input'><span class='co'>### meta-analysis of all trials including ISIS-4 using a FE model</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>ai</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>n1i</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>ci</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>n2i</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.egger2001</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"FE"</span>)
 
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'>### fit FE model to all possible subsets (65535 models)</span>
-<span class='no'>sav</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='gosh.html'>gosh</a></span>(<span class='no'>res</span>)
+<span class='no'>sav</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='gosh.html'>gosh</a></span>(<span class='no'>res</span>, <span class='kw'>progbar</span><span class='kw'>=</span><span class='fl'>FALSE</span>)
 
 <span class='co'>### create GOSH plot</span>
 <span class='co'>### red points for subsets that include and blue points</span>
 <span class='co'>### for subsets that exclude study 16 (the ISIS-4 trial)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>sav</span>, <span class='kw'>out</span><span class='kw'>=</span><span class='fl'>16</span>, <span class='kw'>breaks</span><span class='kw'>=</span><span class='fl'>100</span>)}</div></pre>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>sav</span>, <span class='kw'>out</span><span class='kw'>=</span><span class='fl'>16</span>, <span class='kw'>breaks</span><span class='kw'>=</span><span class='fl'>100</span>)</div><div class='img'><img src='plot.gosh.rma-1.png' alt='' width='768' height='614' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

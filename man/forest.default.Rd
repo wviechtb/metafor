@@ -82,9 +82,9 @@
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
 }
 \references{
-   Lewis, S., & Clarke, M. (2001). Forest plots: Trying to see the wood and the trees. \emph{British Medical Journal}, \bold{322}(7300), 1479--1480. \url{https://doi.org/10.1136/bmj.322.7300.1479}
+   Lewis, S., & Clarke, M. (2001). Forest plots: Trying to see the wood and the trees. \emph{British Medical Journal}, \bold{322}(7300), 1479--1480. \verb{https://doi.org/10.1136/bmj.322.7300.1479}
 
-   Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{https://doi.org/10.18637/jss.v036.i03}
+   Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}
 }
 \seealso{
    \code{\link{forest}}, \code{\link{forest.rma}}, \code{\link{addpoly}}

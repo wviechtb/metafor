@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-19</span>
       </span>
     </div>
 
@@ -253,7 +253,7 @@
     </tr>
     <tr>
       <th>mods</th>
-      <td><p>optional argument to include one or more moderators in the model. A single moderator can be given as a vector of length \(k\) specifying the values of the moderator. Multiple moderators are specified by giving a matrix with \(k\) rows and as many columns as there are moderator variables. Alternatively, a model <code><a href='https://rdrr.io/r/stats/formula.html'>formula</a></code> can be used to specify the model. See &#8216;Details&#8217;.</p></td>
+      <td><p>optional argument to include one or more moderators in the model. A single moderator can be given as a vector of length \(k\) specifying the values of the moderator. Multiple moderators are specified by giving a matrix with \(k\) rows and as many columns as there are moderator variables. Alternatively, a model <code><a href='formula.rma.html'>formula</a></code> can be used to specify the model. See &#8216;Details&#8217;.</p></td>
     </tr>
     <tr>
       <th>measure</th>
@@ -355,7 +355,7 @@
 <li><p><code>method="GENQ"</code> = generalized Q-statistic estimator</p></li>
 </ul><p>For a description of the various estimators, see DerSimonian and Kacker (2007), Raudenbush (2009), Viechtbauer (2005), and Viechtbauer et al. (2015). Note that the Hedges estimator is also called the &#8216;variance component estimator&#8217; or &#8216;Cochran estimator&#8217;, the Sidik-Jonkman estimator is also called the &#8216;model error variance estimator&#8217;, and the empirical Bayes estimator is actually identical to the Paule-Mandel estimator (Paule &amp; Mandel, 1982). Finally, the generalized Q-statistic estimator is a general method-of-moments estimator (DerSimonian &amp; Kacker, 2007) requiring the specification of weights (the HE and DL estimators are just special cases with equal and inverse variance weights, respectively).</p>
 <p>One or more moderators can be included in these models via the <code>mods</code> argument. A single moderator can be given as a (row or column) vector of length \(k\) specifying the values of the moderator. Multiple moderators are specified by giving an appropriate model matrix (i.e., \(X\)) with \(k\) rows and as many columns as there are moderator variables (e.g., <code>mods = cbind(mod1, mod2, mod3)</code>, where <code>mod1</code>, <code>mod2</code>, and <code>mod3</code> correspond to the names of the variables for three moderator variables). The intercept is added to the model matrix by default unless <code>intercept=FALSE</code>.</p>
-<p>Alternatively, one can use the standard <code><a href='https://rdrr.io/r/stats/formula.html'>formula</a></code> syntax to specify the model. In this case, the <code>mods</code> argument should be set equal to a one-sided formula of the form <code>mods = ~ model</code> (e.g., <code>mods = ~ mod1 + mod2 + mod3</code>). Interactions, polynomial terms, and factors can be easily added to the model in this manner. When specifying a model formula via the <code>mods</code> argument, the <code>intercept</code> argument is ignored. Instead, the inclusion/exclusion of the intercept is controlled by the specified formula (e.g., <code>mods = ~ mod1 + mod2 + mod3 - 1</code> would lead to the removal of the intercept).</p>
+<p>Alternatively, one can use the standard <code><a href='formula.rma.html'>formula</a></code> syntax to specify the model. In this case, the <code>mods</code> argument should be set equal to a one-sided formula of the form <code>mods = ~ model</code> (e.g., <code>mods = ~ mod1 + mod2 + mod3</code>). Interactions, polynomial terms, and factors can be easily added to the model in this manner. When specifying a model formula via the <code>mods</code> argument, the <code>intercept</code> argument is ignored. Instead, the inclusion/exclusion of the intercept is controlled by the specified formula (e.g., <code>mods = ~ mod1 + mod2 + mod3 - 1</code> would lead to the removal of the intercept).</p>
 <p>A <em>fixed-effects with moderators model</em> is then fitted by setting <code>method="FE"</code>, while a <em>mixed-effects model</em> is fitted by specifying one of the estimators for the amount of (residual) heterogeneity given earlier.</p>
 <p>When the observed outcomes and corresponding sampling variances are supplied via the <code>yi</code> and <code>vi</code> (or <code>sei</code>) arguments, one can also specify moderators via the <code>yi</code> argument (e.g., <code>rma(yi ~ mod1 + mod2 + mod3, vi)</code>). In that case, the <code>mods</code> argument is ignored and the inclusion/exclusion of the intercept again is controlled by the specified formula.</p>
 <p><b>Omnibus Test of Parameters</b></p>
@@ -421,26 +421,26 @@
 
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Berkey, C. S., Hoaglin, D. C., Mosteller, F., &amp; Colditz, G. A. (1995). A random-effects regression model for meta-analysis. <em>Statistics in Medicine</em>, <b>14</b>, 395--411.</p>
-<p>Cochran, W. G. (1954). The combination of estimates from different experiments. <em>Biometrics</em>, <b>10</b>, 101--129.</p>
-<p>DerSimonian, R., &amp; Laird, N. (1986). Meta-analysis in clinical trials. <em>Controlled Clinical Trials</em>, <b>7</b>, 177--188.</p>
-<p>DerSimonian, R., &amp; Kacker, R. (2007). Random-effects model for meta-analysis of clinical trials: An update. <em>Contemporary Clinical Trials</em>, <b>28</b>, 105--114.</p>
-<p>Harville, D. A. (1977). Maximum likelihood approaches to variance component estimation and to related problems. <em>Journal of the American Statistical Association</em>, <b>72</b>, 320--338.</p>
-<p>Hedges, L. V. (1983). A random effects model for effect sizes. <em>Psychological Bulletin</em>, <b>93</b>, 388--395.</p>
+    <p>Berkey, C. S., Hoaglin, D. C., Mosteller, F., &amp; Colditz, G. A. (1995). A random-effects regression model for meta-analysis. <em>Statistics in Medicine</em>, <b>14</b>(4), 395--411. <a href='https://doi.org/10.1002/sim.4780140406'>https://doi.org/10.1002/sim.4780140406</a></p>
+<p>Cochran, W. G. (1954). The combination of estimates from different experiments. <em>Biometrics</em>, <b>10</b>(1), 101--129. <a href='https://doi.org/10.2307/3001666'>https://doi.org/10.2307/3001666</a></p>
+<p>DerSimonian, R., &amp; Laird, N. (1986). Meta-analysis in clinical trials. <em>Controlled Clinical Trials</em>, <b>7</b>(3), 177--188. <a href='https://doi.org/10.1016/0197-2456(86)90046-2'>https://doi.org/10.1016/0197-2456(86)90046-2</a></p>
+<p>DerSimonian, R., &amp; Kacker, R. (2007). Random-effects model for meta-analysis of clinical trials: An update. <em>Contemporary Clinical Trials</em>, <b>28</b>(2), 105--114. <a href='https://doi.org/10.1016/j.cct.2006.04.004'>https://doi.org/10.1016/j.cct.2006.04.004</a></p>
+<p>Harville, D. A. (1977). Maximum likelihood approaches to variance component estimation and to related problems. <em>Journal of the American Statistical Association</em>, <b>72</b>(358), 320--338. <a href='https://doi.org/10.2307/2286796'>https://doi.org/10.2307/2286796</a></p>
+<p>Hedges, L. V. (1983). A random effects model for effect sizes. <em>Psychological Bulletin</em>, <b>93</b>(2), 388--395. <a href='https://doi.org/10.1037/0033-2909.93.2.388'>https://doi.org/10.1037/0033-2909.93.2.388</a></p>
 <p>Hedges, L. V., &amp; Olkin, I. (1985). <em>Statistical methods for meta-analysis</em>. San Diego, CA: Academic Press.</p>
-<p>Henmi, M., &amp; Copas, J. B. (2010). Confidence intervals for random effects meta-analysis and robustness to publication bias. <em>Statistics in Medicine</em>, <b>29</b>, 2969--2983.</p>
+<p>Henmi, M., &amp; Copas, J. B. (2010). Confidence intervals for random effects meta-analysis and robustness to publication bias. <em>Statistics in Medicine</em>, <b>29</b>(29), 2969--2983. <a href='https://doi.org/10.1002/sim.4029'>https://doi.org/10.1002/sim.4029</a></p>
 <p>Hunter, J. E., &amp; Schmidt, F. L. (2004). <em>Methods of meta-analysis: Correcting error and bias in research findings</em> (2nd ed.). Thousand Oaks, CA: Sage.</p>
-<p>Jennrich, R. I., &amp; Sampson, P. F. (1976). Newton-Raphson and related algorithms for maximum likelihood variance component estimation. <em>Technometrics</em>, <b>18</b>, 11--17.</p>
-<p>Knapp, G., &amp; Hartung, J. (2003). Improved tests for a random effects meta-regression with a single covariate. <em>Statistics in Medicine</em>, <b>22</b>, 2693--2710.</p>
-<p>Morris, C. N. (1983). Parametric empirical Bayes inference: Theory and applications (with discussion). <em>Journal of the American Statistical Association</em>, <b>78</b>, 47--65.</p>
-<p>Paule, R. C., &amp; Mandel, J. (1982). Consensus values and weighting factors. <em>Journal of Research of the National Bureau of Standards</em>, <b>87</b>, 377--385.</p>
+<p>Jennrich, R. I., &amp; Sampson, P. F. (1976). Newton-Raphson and related algorithms for maximum likelihood variance component estimation. <em>Technometrics</em>, <b>18</b>(1), 11--17. <a href='https://doi.org/10.2307/1267911'>https://doi.org/10.2307/1267911</a></p>
+<p>Knapp, G., &amp; Hartung, J. (2003). Improved tests for a random effects meta-regression with a single covariate. <em>Statistics in Medicine</em>, <b>22</b>(17), 2693--2710. <a href='https://doi.org/10.1002/sim.1482'>https://doi.org/10.1002/sim.1482</a></p>
+<p>Morris, C. N. (1983). Parametric empirical Bayes inference: Theory and applications. <em>Journal of the American Statistical Association</em>, <b>78</b>(381), 47--55. <a href='https://doi.org/10.2307/2287098'>https://doi.org/10.2307/2287098</a></p>
+<p>Paule, R. C., &amp; Mandel, J. (1982). Consensus values and weighting factors. <em>Journal of Research of the National Bureau of Standards</em>, <b>87</b>(5), 377--385. <a href='https://doi.org/10.6028/jres.087.022'>https://doi.org/10.6028/jres.087.022</a></p>
 <p>Raudenbush, S. W. (2009). Analyzing effect sizes: Random effects models. In H. Cooper, L. V. Hedges, &amp; J. C. Valentine (Eds.), <em>The handbook of research synthesis and meta-analysis</em> (2nd ed., pp. 295--315). New York: Russell Sage Foundation.</p>
-<p>Sidik, K., &amp; Jonkman, J. N. (2005a). A note on variance estimation in random effects meta-regression. <em>Journal of Biopharmaceutical Statistics</em>, <b>15</b>, 823--838.</p>
-<p>Sidik, K., &amp; Jonkman, J. N. (2005b). Simple heterogeneity variance estimation for meta-analysis. <em>Journal of the Royal Statistical Society, Series C</em>, <b>54</b>, 367--384.</p>
-<p>Sidik, K., &amp; Jonkman, J. N. (2007). A comparison of heterogeneity variance estimators in combining results of studies. <em>Statistics in Medicine</em>, <b>26</b>, 1964--1981.</p>
-<p>Viechtbauer, W. (2005). Bias and efficiency of meta-analytic variance estimators in the random-effects model. <em>Journal of Educational and Behavioral Statistics</em>, <b>30</b>, 261--293.</p>
-<p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='https://www.jstatsoft.org/v036/i03'>https://www.jstatsoft.org/v036/i03</a>.</p>
-<p>Viechtbauer, W., López-López, J. A., Sánchez-Meca, J., &amp; Marín-Martínez, F. (2015). A comparison of procedures to test for moderators in mixed-effects meta-regression models. <em>Psychological Methods</em>, <b>20</b>, 360--374.</p>
+<p>Sidik, K., &amp; Jonkman, J. N. (2005a). A note on variance estimation in random effects meta-regression. <em>Journal of Biopharmaceutical Statistics</em>, <b>15</b>(5), 823--838. <a href='https://doi.org/10.1081/BIP-200067915'>https://doi.org/10.1081/BIP-200067915</a></p>
+<p>Sidik, K., &amp; Jonkman, J. N. (2005b). Simple heterogeneity variance estimation for meta-analysis. <em>Journal of the Royal Statistical Society, Series C</em>, <b>54</b>(2), 367--384. <a href='https://doi.org/10.1111/j.1467-9876.2005.00489.x'>https://doi.org/10.1111/j.1467-9876.2005.00489.x</a></p>
+<p>Sidik, K., &amp; Jonkman, J. N. (2007). A comparison of heterogeneity variance estimators in combining results of studies. <em>Statistics in Medicine</em>, <b>26</b>(9), 1964--1981. <a href='https://doi.org/10.1002/sim.2688'>https://doi.org/10.1002/sim.2688</a></p>
+<p>Viechtbauer, W. (2005). Bias and efficiency of meta-analytic variance estimators in the random-effects model. <em>Journal of Educational and Behavioral Statistics</em>, <b>30</b>(3), 261--293. <a href='https://doi.org/10.3102/10769986030003261'>https://doi.org/10.3102/10769986030003261</a></p>
+<p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='https://doi.org/10.18637/jss.v036.i03'>https://doi.org/10.18637/jss.v036.i03</a></p>
+<p>Viechtbauer, W., López-López, J. A., Sánchez-Meca, J., &amp; Marín-Martínez, F. (2015). A comparison of procedures to test for moderators in mixed-effects meta-regression models. <em>Psychological Methods</em>, <b>20</b>(3), 360--374. <a href='https://doi.org/10.1037/met0000023'>https://doi.org/10.1037/met0000023</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='rma.mh.html'>rma.mh</a></code>, <code><a href='rma.peto.html'>rma.peto</a></code>, <code><a href='rma.glmm.html'>rma.glmm</a></code>, and <code><a href='rma.mv.html'>rma.mv</a></code> for other model fitting functions.</p></div>

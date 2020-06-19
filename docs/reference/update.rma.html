@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-19</span>
       </span>
     </div>
 
@@ -136,7 +136,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for rma</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/update.html'>update</a></span>(<span class='no'>object</span>, <span class='no'>formula.</span>, <span class='no'>...</span>, <span class='kw'>evaluate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+<span class='fu'>update</span>(<span class='no'>object</span>, <span class='no'>formula.</span>, <span class='no'>...</span>, <span class='kw'>evaluate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -167,7 +167,7 @@
     <p>If <code>evaluate=TRUE</code> the fitted object, otherwise the updated call.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='https://www.jstatsoft.org/v036/i03'>https://www.jstatsoft.org/v036/i03</a>.</p>
+    <p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='https://doi.org/10.18637/jss.v036.i03'>https://doi.org/10.18637/jss.v036.i03</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='rma.uni.html'>rma.uni</a></code>, <code><a href='rma.mh.html'>rma.mh</a></code>, <code><a href='rma.peto.html'>rma.peto</a></code>, <code><a href='rma.glmm.html'>rma.glmm</a></code>, <code><a href='rma.mv.html'>rma.mv</a></code></p></div>
@@ -198,7 +198,7 @@
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### mixed-effects model with two moderators (absolute latitude and publication year)</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/update.html'>update</a></span>(<span class='no'>res</span>, ~ <span class='no'>ablat</span> + <span class='no'>year</span>)
+<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>update</span>(<span class='no'>res</span>, ~ <span class='no'>ablat</span> + <span class='no'>year</span>)
 <span class='no'>res</span></div><div class='output co'>#&gt; 
 #&gt; Mixed-Effects Model (k = 13; tau^2 estimator: REML)
 #&gt; 
@@ -225,7 +225,7 @@
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### remove 'year' moderator</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/update.html'>update</a></span>(<span class='no'>res</span>, ~ <span class='no'>.</span> - <span class='no'>year</span>)
+<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>update</span>(<span class='no'>res</span>, ~ <span class='no'>.</span> - <span class='no'>year</span>)
 <span class='no'>res</span></div><div class='output co'>#&gt; 
 #&gt; Mixed-Effects Model (k = 13; tau^2 estimator: REML)
 #&gt; 
@@ -251,7 +251,7 @@
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### fit model with ML estimation</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/update.html'>update</a></span>(<span class='no'>res</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"ML"</span>)</div><div class='output co'>#&gt; 
+<span class='fu'>update</span>(<span class='no'>res</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"ML"</span>)</div><div class='output co'>#&gt; 
 #&gt; Mixed-Effects Model (k = 13; tau^2 estimator: ML)
 #&gt; 
 #&gt; tau^2 (estimated amount of residual heterogeneity):     0.034 (SE = 0.028)
@@ -277,7 +277,7 @@
 #&gt; </div><div class='input'>
 <span class='co'>### example with rma.glmm()</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.glmm.html'>rma.glmm</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>3</span>)
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/update.html'>update</a></span>(<span class='no'>res</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>ablat</span>)
+<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>update</span>(<span class='no'>res</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>ablat</span>)
 <span class='no'>res</span></div><div class='output co'>#&gt; 
 #&gt; Mixed-Effects Model (k = 13; tau^2 estimator: ML)
 #&gt; Model Type: Unconditional Model with Fixed Study Effects
@@ -304,7 +304,7 @@
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### conditional model with approximate likelihood</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/update.html'>update</a></span>(<span class='no'>res</span>, <span class='kw'>model</span><span class='kw'>=</span><span class='st'>"CM.AL"</span>)</div><div class='output co'>#&gt; 
+<span class='fu'>update</span>(<span class='no'>res</span>, <span class='kw'>model</span><span class='kw'>=</span><span class='st'>"CM.AL"</span>)</div><div class='output co'>#&gt; 
 #&gt; Mixed-Effects Model (k = 13; tau^2 estimator: ML)
 #&gt; Model Type: Conditional Model with Approximate Likelihood
 #&gt; 

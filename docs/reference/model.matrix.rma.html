@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-19</span>
       </span>
     </div>
 
@@ -136,7 +136,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for rma</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/model.matrix.html'>model.matrix</a></span>(<span class='no'>object</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>model.matrix</span>(<span class='no'>object</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -156,7 +156,7 @@
     <p>The model matrix.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='https://www.jstatsoft.org/v036/i03'>https://www.jstatsoft.org/v036/i03</a>.</p>
+    <p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='https://doi.org/10.18637/jss.v036.i03'>https://doi.org/10.18637/jss.v036.i03</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='fitted.rma.html'>fitted.rma</a></code></p></div>
@@ -166,7 +166,7 @@
 <span class='co'>### with multiple moderators (absolute latitude, publication year, and allocation method)</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>,
            <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>ablat</span> + <span class='no'>year</span> + <span class='no'>alloc</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>)
-<span class='fu'><a href='https://rdrr.io/r/stats/model.matrix.html'>model.matrix</a></span>(<span class='no'>res</span>)</div><div class='output co'>#&gt;    intrcpt ablat year allocrandom allocsystematic
+<span class='fu'>model.matrix</span>(<span class='no'>res</span>)</div><div class='output co'>#&gt;    intrcpt ablat year allocrandom allocsystematic
 #&gt; 1        1    44 1948           1               0
 #&gt; 2        1    55 1949           1               0
 #&gt; 3        1    42 1960           1               0

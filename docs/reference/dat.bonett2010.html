@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-19</span>
       </span>
     </div>
 
@@ -155,11 +155,11 @@
     <p>The Center for Epidemiologic Studies Depression (CES-D) Scale is a 20-item questionnaire assessing various symptoms of depression, with each item scored on a 4-point scale. The scale has been used in several studies to examine depressive symptoms in children providing care to an elderly parent. The dataset includes information on the reliability of the scale as measured with Cronbach's alpha in 9 such studies. Also, the gender composition of the children in each sample is indicated.</p>
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-    <p>Bonett, D. G. (2010). Varying coefficient meta-analytic methods for alpha reliability. <em>Psychological Methods</em>, <b>15</b>, 368--385.</p>
+    <p>Bonett, D. G. (2010). Varying coefficient meta-analytic methods for alpha reliability. <em>Psychological Methods</em>, <b>15</b>(4), 368--385. <a href='https://doi.org/10.1037/a0020142'>https://doi.org/10.1037/a0020142</a></p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Bonett, D. G. (2002). Sample size requirements for testing and estimating coefficient alpha. <em>Journal of Educational and Behavioral Statistics</em>, <b>27</b>, 335--340.</p>
-<p>Hakstian, A. R., &amp; Whalen, T. E. (1976). A k-sample significance test for independent alpha coefficients. <em>Psychometrika</em>, <b>41</b>, 219--231.</p>
+    <p>Bonett, D. G. (2002). Sample size requirements for testing and estimating coefficient alpha. <em>Journal of Educational and Behavioral Statistics</em>, <b>27</b>(4), 335--340. <a href='https://doi.org/10.3102/10769986027004335'>https://doi.org/10.3102/10769986027004335</a></p>
+<p>Hakstian, A. R., &amp; Whalen, T. E. (1976). A k-sample significance test for independent alpha coefficients. <em>Psychometrika</em>, <b>41</b>(2), 219--231. <a href='https://doi.org/10.1007/BF02291840'>https://doi.org/10.1007/BF02291840</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat' and examine data</span>
@@ -216,7 +216,7 @@
 #&gt; 
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>transf.iahw</span>)</div><div class='output co'>#&gt; 
+#&gt; </div><div class='input'><span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>transf.iahw</span>)</div><div class='output co'>#&gt; 
 #&gt;    pred  ci.lb  ci.ub  cr.lb  cr.ub 
 #&gt;  0.9052 0.8891 0.9197 0.8555 0.9420 
 #&gt; </div><div class='input'>
@@ -241,7 +241,7 @@
 #&gt; 
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>transf.iabt</span>)</div><div class='output co'>#&gt; 
+#&gt; </div><div class='input'><span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>transf.iabt</span>)</div><div class='output co'>#&gt; 
 #&gt;    pred  ci.lb  ci.ub  cr.lb  cr.ub 
 #&gt;  0.9052 0.8886 0.9193 0.8512 0.9396 
 #&gt; </div><div class='input'>
@@ -270,7 +270,7 @@
 #&gt; 
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>newmods</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>1</span>), <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
+#&gt; </div><div class='input'><span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>newmods</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>1</span>), <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
 #&gt;   pred   se ci.lb ci.ub cr.lb cr.ub 
 #&gt; 1 0.89 0.01  0.88  0.91  0.86  0.93 
 #&gt; 2 0.92 0.01  0.90  0.94  0.89  0.96 

@@ -28,9 +28,9 @@
    The data in this dataset were obtained from Raudenbush and Bryk (1985) with information on the \code{setting} and \code{tester} variables extracted from Raudenbush (1984).
 }
 \source{
-   Raudenbush, S. W. (1984). Magnitude of teacher expectancy effects on pupil IQ as a function of the credibility of expectancy induction: A synthesis of findings from 18 experiments. \emph{Journal of Educational Psychology}, \bold{76}(1), 85--97. \url{https://doi.org/10.1037/0022-0663.76.1.85}
+   Raudenbush, S. W. (1984). Magnitude of teacher expectancy effects on pupil IQ as a function of the credibility of expectancy induction: A synthesis of findings from 18 experiments. \emph{Journal of Educational Psychology}, \bold{76}(1), 85--97. \verb{https://doi.org/10.1037/0022-0663.76.1.85}
 
-   Raudenbush, S. W., & Bryk, A. S. (1985). Empirical Bayes meta-analysis. \emph{Journal of Educational Statistics}, \bold{10}(2), 75--98. \url{https://doi.org/10.3102/10769986010002075}
+   Raudenbush, S. W., & Bryk, A. S. (1985). Empirical Bayes meta-analysis. \emph{Journal of Educational Statistics}, \bold{10}(2), 75--98. \verb{https://doi.org/10.3102/10769986010002075}
 }
 \examples{
 ### copy data into 'dat' and examine data

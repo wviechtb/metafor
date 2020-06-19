@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-19</span>
       </span>
     </div>
 
@@ -157,8 +157,8 @@
     <p>The dataset includes the results from 37 studies (4 cohort, 33 case-control) on the risk of lung cancer from environmental tobacco smoke (ETS) exposure from the spouse in women who are lifelong nonsmokers. Values of the log odds ratio greater than 0 indicate an increased risk of cancer in exposed women compared to women not exposed to ETS from their spouse.</p>
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-    <p>Hackshaw, A. K., Law, M. R., &amp; Wald, N. J. (1997). The accumulated evidence on lung cancer and environmental tobacco smoke. <em>British Medical Journal</em>, <b>315</b>, 980--988.</p>
-<p>Hackshaw, A. K. (1998). Lung cancer and passive smoking. <em>Statistical Methods in Medical Research</em>, <b>7</b>, 119--136.</p>
+    <p>Hackshaw, A. K., Law, M. R., &amp; Wald, N. J. (1997). The accumulated evidence on lung cancer and environmental tobacco smoke. <em>British Medical Journal</em>, <b>315</b>(7114), 980--988. <a href='https://doi.org/10.1136/bmj.315.7114.980'>https://doi.org/10.1136/bmj.315.7114.980</a></p>
+<p>Hackshaw, A. K. (1998). Lung cancer and passive smoking. <em>Statistical Methods in Medical Research</em>, <b>7</b>(2), 119--136. <a href='https://doi.org/10.1177/096228029800700203'>https://doi.org/10.1177/096228029800700203</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat' and examine data</span>
@@ -223,7 +223,7 @@
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### estimated average odds ratio with CI (and credibility/prediction interval)</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
+<span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
 #&gt;  pred ci.lb ci.ub cr.lb cr.ub 
 #&gt;  1.24  1.13  1.36  0.94  1.63 
 #&gt; </div></pre>

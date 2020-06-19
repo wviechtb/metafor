@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-19</span>
       </span>
     </div>
 
@@ -235,12 +235,12 @@
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The function can be used to add one or more polygons to an existing forest plot created with the <code><a href='forest.html'>forest</a></code> function. For example, summary estimates based on a model involving moderators can be added to the plot this way. See example below.</p>
+    <p>The function can be used to add one or more polygons to an existing forest plot created with the <code><a href='forest.html'>forest</a></code> function. For example, summary estimates based on a model involving moderators can be added to the plot this way (see &#8216;Examples&#8217;).</p>
 <p>To use the function, one should specify the values at which the polygons should be drawn (via the <code>x</code> argument) together with the corresponding variances (via the <code>vi</code> argument) or with the corresponding standard errors (via the <code>sei</code> argument). Alternatively, one can specify the values at which the polygons should be drawn together with the corresponding confidence interval bounds (via the <code>ci.lb</code> and <code>ci.ub</code> arguments). Optionally, one can also specify the bounds of the corresponding credibility/prediction interval bounds via the <code>cr.lb</code> and <code>cr.ub</code> arguments.</p>
 <p>The arguments <code>transf</code>, <code>atransf</code>, <code>efac</code>, and <code>cex</code> should always be set equal to the same values used to create the forest plot.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='https://www.jstatsoft.org/v036/i03'>https://www.jstatsoft.org/v036/i03</a>.</p>
+    <p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='https://doi.org/10.18637/jss.v036.i03'>https://doi.org/10.18637/jss.v036.i03</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='forest.rma.html'>forest.rma</a></code>, <code><a href='forest.default.html'>forest.default</a></code></p></div>
@@ -256,7 +256,7 @@
        <span class='kw'>order</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/order.html'>order</a></span>(<span class='no'>dat.bcg</span>$<span class='no'>ablat</span>), <span class='kw'>ilab</span><span class='kw'>=</span><span class='no'>dat.bcg</span>$<span class='no'>ablat</span>, <span class='kw'>ilab.xpos</span><span class='kw'>=</span>-<span class='fl'>4</span>,
        <span class='kw'>header</span><span class='kw'>=</span><span class='st'>"Author(s) and Year"</span>)</div><div class='input'>
 <span class='co'>### predicted average log risk ratios for 10, 30, and 50 degrees absolute latitude</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>newmods</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>10</span>, <span class='fl'>30</span>, <span class='fl'>50</span>))
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>newmods</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>10</span>, <span class='fl'>30</span>, <span class='fl'>50</span>))
 
 <span class='co'>### add predicted average risk ratios to forest plot</span>
 <span class='fu'><a href='addpoly.html'>addpoly</a></span>(<span class='no'>x</span>$<span class='no'>pred</span>, <span class='kw'>sei</span><span class='kw'>=</span><span class='no'>x</span>$<span class='no'>se</span>, <span class='kw'>atransf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>"white"</span>, <span class='kw'>rows</span><span class='kw'>=</span>-<span class='fl'>2</span>,

@@ -18,14 +18,14 @@
    The dataset given here was extracted from Riley (2011) and has been used in several other publications (e.g., Riley et al., 2004, 2007). The dataset provides the (log) hazard ratios (and corresponding standard errors) with respect to these two outcomes in 81 studies, with positive values indicating a greater risk of death (for OS) or disease recurrence/death (for DFS) for patients with high MYC-N levels compared to those with normal/low levels. Note that information on both outcomes could only be extracted from 17 studies (39 studies only provided sufficient information to extract the OS estimate, while 25 studies only allowed for extraction of the DFS estimate).
 }
 \source{
-   Riley, R. D., Sutton, A. J., Abrams, K. R., & Lambert, P. C. (2004). Sensitivity analyses allowed more appropriate and reliable meta-analysis conclusions for multiple outcomes when missing data was present. \emph{Journal of Clinical Epidemiology}, \bold{57}(9), 911--924. \url{https://doi.org/10.1016/j.jclinepi.2004.01.018}
+   Riley, R. D., Sutton, A. J., Abrams, K. R., & Lambert, P. C. (2004). Sensitivity analyses allowed more appropriate and reliable meta-analysis conclusions for multiple outcomes when missing data was present. \emph{Journal of Clinical Epidemiology}, \bold{57}(9), 911--924. \verb{https://doi.org/10.1016/j.jclinepi.2004.01.018}
 
-   Riley, R. D., Abrams, K. R., Lambert, P. C., Sutton, A. J., & Thompson, J. R. (2007). An evaluation of bivariate random-effects meta-analysis for the joint synthesis of two correlated outcomes. \emph{Statistics in Medicine}, \bold{26}(1), 78--97. \url{https://doi.org/10.1002/sim.2524}
+   Riley, R. D., Abrams, K. R., Lambert, P. C., Sutton, A. J., & Thompson, J. R. (2007). An evaluation of bivariate random-effects meta-analysis for the joint synthesis of two correlated outcomes. \emph{Statistics in Medicine}, \bold{26}(1), 78--97. \verb{https://doi.org/10.1002/sim.2524}
 
-   Riley, R. D. (2011). Erratum: An evaluation of bivariate random-effects meta-analysis for the joint synthesis of two correlated outcomes. \emph{Statistics in Medicine}, \bold{30}(4), 400. \url{https://doi.org/10.1002/sim.4100}
+   Riley, R. D. (2011). Erratum: An evaluation of bivariate random-effects meta-analysis for the joint synthesis of two correlated outcomes. \emph{Statistics in Medicine}, \bold{30}(4), 400. \verb{https://doi.org/10.1002/sim.4100}
 }
 \references{
-   Riley, R. D., Burchill, S. A., Abrams, K. R., Heney, D., Lambert, P. C., Jones, D. R., Sutton, A. J., Young, B., Wailoo, A. J., & Lewis, I. J. (2003). A systematic review and evaluation of the use of tumour markers in paediatric oncology: Ewing's sarcoma and neuroblastoma. \emph{Health Technology Assessment}, \bold{7}(5), 1--162. \url{https://doi.org/10.3310/hta7050}
+   Riley, R. D., Burchill, S. A., Abrams, K. R., Heney, D., Lambert, P. C., Jones, D. R., Sutton, A. J., Young, B., Wailoo, A. J., & Lewis, I. J. (2003). A systematic review and evaluation of the use of tumour markers in paediatric oncology: Ewing's sarcoma and neuroblastoma. \emph{Health Technology Assessment}, \bold{7}(5), 1--162. \verb{https://doi.org/10.3310/hta7050}
 }
 \examples{
 ### copy data into 'dat' and examine data

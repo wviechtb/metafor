@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-19</span>
       </span>
     </div>
 
@@ -136,10 +136,10 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for rma</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span>(<span class='no'>object</span>, <span class='no'>...</span>)
+<span class='fu'>coef</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for summary.rma</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span>(<span class='no'>object</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>coef</span>(<span class='no'>object</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -168,7 +168,7 @@
 
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='https://www.jstatsoft.org/v036/i03'>https://www.jstatsoft.org/v036/i03</a>.</p>
+    <p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='https://doi.org/10.18637/jss.v036.i03'>https://doi.org/10.18637/jss.v036.i03</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='rma.uni.html'>rma.uni</a></code>, <code><a href='rma.mh.html'>rma.mh</a></code>, <code><a href='rma.peto.html'>rma.peto</a></code>, <code><a href='rma.glmm.html'>rma.glmm</a></code>, <code><a href='rma.mv.html'>rma.mv</a></code></p></div>
@@ -178,8 +178,8 @@
 <span class='co'>### with two moderators (absolute latitude and publication year)</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>,
            <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>ablat</span> + <span class='no'>year</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>)
-<span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span>(<span class='no'>res</span>)</div><div class='output co'>#&gt;      intrcpt        ablat         year 
-#&gt; -3.545505079 -0.028011275  0.001907557 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>res</span>))</div><div class='output co'>#&gt;             estimate          se       zval        pval        ci.lb
+<span class='fu'>coef</span>(<span class='no'>res</span>)</div><div class='output co'>#&gt;      intrcpt        ablat         year 
+#&gt; -3.545505079 -0.028011275  0.001907557 </div><div class='input'><span class='fu'>coef</span>(<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>res</span>))</div><div class='output co'>#&gt;             estimate          se       zval        pval        ci.lb
 #&gt; intrcpt -3.545505079 29.09587983 -0.1218559 0.903013130 -60.57238164
 #&gt; ablat   -0.028011275  0.01023404 -2.7370689 0.006198931  -0.04806963
 #&gt; year     0.001907557  0.01468382  0.1299088 0.896638598  -0.02687219

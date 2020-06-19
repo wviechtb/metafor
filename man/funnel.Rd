@@ -106,11 +106,11 @@ funnel(x, \dots)
 \references{
    Light, R. J., & Pillemer, D. B. (1984). \emph{Summing up: The science of reviewing research}. Cambridge, MA: Harvard University Press.
 
-   Peters, J. L., Sutton, A. J., Jones, D. R., Abrams, K. R., & Rushton, L. (2008). Contour-enhanced meta-analysis funnel plots help distinguish publication bias from other causes of asymmetry. \emph{Journal of Clinical Epidemiology}, \bold{61}(10), 991--996. \url{https://doi.org/10.1016/j.jclinepi.2007.11.010}
+   Peters, J. L., Sutton, A. J., Jones, D. R., Abrams, K. R., & Rushton, L. (2008). Contour-enhanced meta-analysis funnel plots help distinguish publication bias from other causes of asymmetry. \emph{Journal of Clinical Epidemiology}, \bold{61}(10), 991--996. \verb{https://doi.org/10.1016/j.jclinepi.2007.11.010}
 
-   Sterne, J. A. C., & Egger, M. (2001). Funnel plots for detecting bias in meta-analysis: Guidelines on choice of axis. \emph{Journal of Clinical Epidemiology}, \bold{54}(10), 1046--1055. \url{https://doi.org/10.1016/s0895-4356(01)00377-8}
+   Sterne, J. A. C., & Egger, M. (2001). Funnel plots for detecting bias in meta-analysis: Guidelines on choice of axis. \emph{Journal of Clinical Epidemiology}, \bold{54}(10), 1046--1055. \verb{https://doi.org/10.1016/s0895-4356(01)00377-8}
 
-   Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{https://doi.org/10.18637/jss.v036.i03}
+   Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}
 }
 \seealso{
    \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, \code{\link{rma.glmm}}, \code{\link{rma.mv}}, \code{\link{trimfill}}, \code{\link{regtest}}

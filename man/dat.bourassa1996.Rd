@@ -30,7 +30,7 @@
    Handedness was assessed in the individual studies either based on a questionnaire or inventory or based on task performance. Eyedness was assessed based on various methods: \code{E.1} methods are based on task performance, while \code{E.2.a} denotes assessment based on a questionnaire. The performance based methods could be further broken down into: \code{E.1.a.i} (monocular procedure with object/instrument held in one hand), \code{E.1.a.ii} (monocular procedure with object/instrument held in both hands), \code{E.1.b} (binocular procedure), \code{E.1.c} (a combination of the previous methods), and \code{E.1.d} (some other method).
 }
 \source{
-   Bourassa, D. C., McManus, I. C., & Bryden, M. P. (1996). Handedness and eye-dominance: A meta-analysis of their relationship. \emph{Laterality}, \bold{1}(1), 5--34. \url{https://doi.org/10.1080/713754206}
+   Bourassa, D. C., McManus, I. C., & Bryden, M. P. (1996). Handedness and eye-dominance: A meta-analysis of their relationship. \emph{Laterality}, \bold{1}(1), 5--34. \verb{https://doi.org/10.1080/713754206}
 }
 \examples{
 ### copy data into 'dat'

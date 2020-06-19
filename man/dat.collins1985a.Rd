@@ -26,10 +26,10 @@
    The data were obtained from Tables 1 and 2 in Collins and Langman (1985). The authors used Peto's (one-step) method for meta-analyzing the 27 trials. This approach is implemented in the \code{\link{rma.peto}} function. Using the same dataset, van Houwelingen, Zwinderman, and Stijnen (1993) describe some alternative approaches for analyzing these data, including fixed and random-effects conditional logistic models. Those are implemented in the \code{\link{rma.glmm}} function.
 }
 \source{
-   Collins, R., & Langman, M. (1985). Treatment with histamine H2 antagonists in acute upper gastrointestinal hemorrhage. \emph{New England Journal of Medicine}, \bold{313}(11), 660--666. \url{https://doi.org/10.1056/NEJM198509123131104}
+   Collins, R., & Langman, M. (1985). Treatment with histamine H2 antagonists in acute upper gastrointestinal hemorrhage. \emph{New England Journal of Medicine}, \bold{313}(11), 660--666. \verb{https://doi.org/10.1056/NEJM198509123131104}
 }
 \references{
-   van Houwelingen, H. C., Zwinderman, K. H., & Stijnen, T. (1993). A bivariate approach to meta-analysis. \emph{Statistics in Medicine}, \bold{12}(24), 2273--2284. \url{https://doi.org/10.1002/sim.4780122405}
+   van Houwelingen, H. C., Zwinderman, K. H., & Stijnen, T. (1993). A bivariate approach to meta-analysis. \emph{Statistics in Medicine}, \bold{12}(24), 2273--2284. \verb{https://doi.org/10.1002/sim.4780122405}
 }
 \examples{
 ### copy data into 'dat' and examine data

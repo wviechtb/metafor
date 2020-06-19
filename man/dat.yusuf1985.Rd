@@ -21,7 +21,7 @@
    The article also describes what is sometimes called Peto's one-step method for meta-analyzing \mjeqn{2 \times 2}{2x2} table data. This method is implemented in the \code{\link{rma.peto}} function.
 }
 \source{
-   Yusuf, S., Peto, R., Lewis, J., Collins, R., & Sleight, P. (1985). Beta blockade during and after myocardial infarction: An overview of the randomized trials. \emph{Progress in Cardiovascular Disease}, \bold{27}(5), 335--371. \url{https://doi.org/10.1016/s0033-0620(85)80003-7}
+   Yusuf, S., Peto, R., Lewis, J., Collins, R., & Sleight, P. (1985). Beta blockade during and after myocardial infarction: An overview of the randomized trials. \emph{Progress in Cardiovascular Disease}, \bold{27}(5), 335--371. \verb{https://doi.org/10.1016/s0033-0620(85)80003-7}
 }
 \examples{
 ### copy data into 'dat'

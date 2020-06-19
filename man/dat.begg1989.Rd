@@ -20,10 +20,10 @@
    The data in this dataset were obtained from Table 1 in Begg & Pilote (1991, p. 902).
 }
 \source{
-   Begg, C. B., & Pilote, L. (1991). A model for incorporating historical controls into a meta-analysis. \emph{Biometrics}, \bold{47}(3), 899--906. \url{https://doi.org/10.2307/2532647}
+   Begg, C. B., & Pilote, L. (1991). A model for incorporating historical controls into a meta-analysis. \emph{Biometrics}, \bold{47}(3), 899--906. \verb{https://doi.org/10.2307/2532647}
 }
 \references{
-   Begg, C. B., Pilote, L., & McGlave, P. B. (1989). Bone marrow transplantation versus chemotherapy in acute non-lymphocytic leukemia: A meta-analytic review. \emph{European Journal of Cancer and Clinical Oncology}, \bold{25}(11), 1519--1523. \url{https://doi.org/10.1016/0277-5379(89)90291-5}
+   Begg, C. B., Pilote, L., & McGlave, P. B. (1989). Bone marrow transplantation versus chemotherapy in acute non-lymphocytic leukemia: A meta-analytic review. \emph{European Journal of Cancer and Clinical Oncology}, \bold{25}(11), 1519--1523. \verb{https://doi.org/10.1016/0277-5379(89)90291-5}
 }
 \examples{
 ### copy data into 'dat' and examine data

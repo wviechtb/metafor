@@ -25,12 +25,12 @@
    The data were reconstructed by Trikalinos and Olkin (2012) based on Table 2 in Fine et al. (1993) and Table 3 in Dear (1994). The data can be used to illustrate how a meta-analysis can be conducted of effect sizes reported at multiple time points using a multivariate model.
 }
 \source{
-   Dear, K. B. G. (1994). Iterative generalized least squares for meta-analysis of survival data at multiple times. \emph{Biometrics}, \bold{50}(4), 989--1002. \url{https://doi.org/10.2307/2533438}
+   Dear, K. B. G. (1994). Iterative generalized least squares for meta-analysis of survival data at multiple times. \emph{Biometrics}, \bold{50}(4), 989--1002. \verb{https://doi.org/10.2307/2533438}
 
-   Trikalinos, T. A., & Olkin, I. (2012). Meta-analysis of effect sizes reported at multiple time points: A multivariate approach. \emph{Clinical Trials}, \bold{9}(5), 610--620. \url{https://doi.org/10.1177/1740774512453218}
+   Trikalinos, T. A., & Olkin, I. (2012). Meta-analysis of effect sizes reported at multiple time points: A multivariate approach. \emph{Clinical Trials}, \bold{9}(5), 610--620. \verb{https://doi.org/10.1177/1740774512453218}
 }
 \references{
-   Fine, H. A., Dear, K. B., Loeffler, J. S., Black, P. M., & Canellos, G. P. (1993). Meta-analysis of radiation therapy with and without adjuvant chemotherapy for malignant gliomas in adults. \emph{Cancer}, \bold{71}(8), 2585--2597. \url{https://doi.org/10.1002/1097-0142(19930415)71:8<2585::aid-cncr2820710825>3.0.co;2-s}
+   Fine, H. A., Dear, K. B., Loeffler, J. S., Black, P. M., & Canellos, G. P. (1993). Meta-analysis of radiation therapy with and without adjuvant chemotherapy for malignant gliomas in adults. \emph{Cancer}, \bold{71}(8), 2585--2597. \verb{https://doi.org/10.1002/1097-0142(19930415)71:8<2585::aid-cncr2820710825>3.0.co;2-s}
 }
 \examples{
 ### copy data into 'dat' and examine data

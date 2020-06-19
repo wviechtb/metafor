@@ -21,7 +21,7 @@ dat.li2007
    The dataset includes the results from 22 randomized clinical trials that examined the effectiveness of intravenous magnesium in the prevention of death following acute myocardial infarction. It is similar to the dataset \code{\link{dat.egger2001}}, with some slight differences in the included trials and data used.
 }
 \source{
-   Li, J., Zhang, Q., Zhang, M., & Egger, M. (2007). Intravenous magnesium for acute myocardial infarction. \emph{Cochrane Database of Systematic Reviews}, \bold{2}, CD002755. \url{https://doi.org/10.1002/14651858.CD002755.pub2}
+   Li, J., Zhang, Q., Zhang, M., & Egger, M. (2007). Intravenous magnesium for acute myocardial infarction. \emph{Cochrane Database of Systematic Reviews}, \bold{2}, CD002755. \verb{https://doi.org/10.1002/14651858.CD002755.pub2}
 }
 \seealso{
    \code{\link{dat.egger2001}}

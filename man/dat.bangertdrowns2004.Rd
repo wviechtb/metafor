@@ -30,7 +30,7 @@
    The standardized mean differences given here are bias-corrected and therefore differ slighty from the values reported in the article. Also, since only the total sample size is given in the article, the estimated sampling variances were computed under the assumption that \mjeqn{n_{i1} = n_{i2} = n_i / 2}{n_i1 = n_i2 = n_i / 2}.
 }
 \source{
-   Bangert-Drowns, R. L., Hurley, M. M., & Wilkinson, B. (2004). The effects of school-based writing-to-learn interventions on academic achievement: A meta-analysis. \emph{Review of Educational Research}, \bold{74}(1), 29--58. \url{https://doi.org/10.3102/00346543074001029}
+   Bangert-Drowns, R. L., Hurley, M. M., & Wilkinson, B. (2004). The effects of school-based writing-to-learn interventions on academic achievement: A meta-analysis. \emph{Review of Educational Research}, \bold{74}(1), 29--58. \verb{https://doi.org/10.3102/00346543074001029}
 }
 \examples{
 ### copy data into 'dat' and examine data

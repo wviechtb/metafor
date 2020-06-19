@@ -102,11 +102,11 @@
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
 }
 \references{
-   Lewis, S., & Clarke, M. (2001). Forest plots: Trying to see the wood and the trees. \emph{British Medical Journal}, \bold{322}(7300), 1479--1480. \url{https://doi.org/10.1136/bmj.322.7300.1479}
+   Lewis, S., & Clarke, M. (2001). Forest plots: Trying to see the wood and the trees. \emph{British Medical Journal}, \bold{322}(7300), 1479--1480. \verb{https://doi.org/10.1136/bmj.322.7300.1479}
 
-   Riley, R. D., Higgins, J. P. T., & Deeks, J. J. (2011). Interpretation of random effects meta-analyses. \emph{British Medical Journal}, \bold{342}, d549. \url{https://doi.org/10.1136/bmj.d549}
+   Riley, R. D., Higgins, J. P. T., & Deeks, J. J. (2011). Interpretation of random effects meta-analyses. \emph{British Medical Journal}, \bold{342}, d549. \verb{https://doi.org/10.1136/bmj.d549}
 
-   Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{https://doi.org/10.18637/jss.v036.i03}
+   Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}
 }
 \seealso{
    \code{\link{forest}}, \code{\link{forest.default}}, \code{\link{addpoly}}
@@ -213,11 +213,11 @@ forest(res, xlim=c(-1,2), alim=c(0,1), psize=1, refline=coef(res), clim=c(0,1), 
 ### we want to reflect this by grouping together estimates from the same cluster
 dat <- dat.konstantopoulos2011
 res <- rma.mv(yi, vi, random = ~ 1 | district/school, data=dat,
-              slab=paste0("Distrct ", district, ", School: ", school))
+              slab=paste0("District ", district, ", School: ", school))
 dd <- c(0,diff(dat$district))
 dd[dd > 0] <- 1
 rows <- (1:res$k) + cumsum(dd)
-par(tck=-.01, mgp = c(1.8,.2,0))
+par(tck=-.01, mgp = c(1.6,.2,0))
 forest(res, cex=0.5, header=TRUE, rows=rows, ylim=c(0.5,max(rows)+3))
 abline(h = rows[c(1,diff(rows)) == 2] - 1, lty="dotted")
 }

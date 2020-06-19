@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-19</span>
       </span>
     </div>
 
@@ -165,12 +165,12 @@
 <p>The dataset has been used in several publications to illustrate meta-analytic methods (see &#8216;References&#8217;).</p>
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-    <p>Colditz, G. A., Brewer, T. F., Berkey, C. S., Wilson, M. E., Burdick, E., Fineberg, H. V., &amp; Mosteller, F. (1994). Efficacy of BCG vaccine in the prevention of tuberculosis: Meta-analysis of the published literature. <em>Journal of the American Medical Association</em>, <b>271</b>, 698--702.</p>
+    <p>Colditz, G. A., Brewer, T. F., Berkey, C. S., Wilson, M. E., Burdick, E., Fineberg, H. V., &amp; Mosteller, F. (1994). Efficacy of BCG vaccine in the prevention of tuberculosis: Meta-analysis of the published literature. <em>Journal of the American Medical Association</em>, <b>271</b>(9), 698--702. <a href='https://doi.org/10.1001/jama.1994.03510330076038'>https://doi.org/10.1001/jama.1994.03510330076038</a></p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Berkey, C. S., Hoaglin, D. C., Mosteller, F., &amp; Colditz, G. A. (1995). A random-effects regression model for meta-analysis. <em>Statistics in Medicine</em>, <b>14</b>, 395--411.</p>
-<p>van Houwelingen, H. C., Arends, L. R., &amp; Stijnen, T. (2002). Advanced methods in meta-analysis: Multivariate approach and meta-regression. <em>Statistics in Medicine</em>, <b>21</b>, 589--624.</p>
-<p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='https://www.jstatsoft.org/v036/i03'>https://www.jstatsoft.org/v036/i03</a>.</p>
+    <p>Berkey, C. S., Hoaglin, D. C., Mosteller, F., &amp; Colditz, G. A. (1995). A random-effects regression model for meta-analysis. <em>Statistics in Medicine</em>, <b>14</b>(4), 395--411. <a href='https://doi.org/10.1002/sim.4780140406'>https://doi.org/10.1002/sim.4780140406</a></p>
+<p>van Houwelingen, H. C., Arends, L. R., &amp; Stijnen, T. (2002). Advanced methods in meta-analysis: Multivariate approach and meta-regression. <em>Statistics in Medicine</em>, <b>21</b>(4), 589--624. <a href='https://doi.org/10.1002/sim.1040'>https://doi.org/10.1002/sim.1040</a></p>
+<p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='https://doi.org/10.18637/jss.v036.i03'>https://doi.org/10.18637/jss.v036.i03</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat'</span>
@@ -228,7 +228,7 @@
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### average risk ratio with 95% CI</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>)</div><div class='output co'>#&gt; 
+<span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>)</div><div class='output co'>#&gt; 
 #&gt;    pred  ci.lb  ci.ub  cr.lb  cr.ub 
 #&gt;  0.4894 0.3441 0.6962 0.1546 1.5490 
 #&gt; </div><div class='input'>
@@ -261,7 +261,7 @@
 #&gt; </div><div class='input'>
 <span class='co'>### predicted average risk ratios for 10-60 degrees absolute latitude</span>
 <span class='co'>### holding the publication year constant at 1970</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>newmods</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='kw'>from</span><span class='kw'>=</span><span class='fl'>10</span>, <span class='kw'>to</span><span class='kw'>=</span><span class='fl'>60</span>, <span class='kw'>by</span><span class='kw'>=</span><span class='fl'>10</span>), <span class='fl'>1970</span>), <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>)</div><div class='output co'>#&gt; 
+<span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>newmods</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='kw'>from</span><span class='kw'>=</span><span class='fl'>10</span>, <span class='kw'>to</span><span class='kw'>=</span><span class='fl'>60</span>, <span class='kw'>by</span><span class='kw'>=</span><span class='fl'>10</span>), <span class='fl'>1970</span>), <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>)</div><div class='output co'>#&gt; 
 #&gt;     pred  ci.lb  ci.ub  cr.lb  cr.ub 
 #&gt; 1 0.9345 0.5833 1.4973 0.4179 2.0899 
 #&gt; 2 0.7062 0.5149 0.9686 0.3421 1.4579 

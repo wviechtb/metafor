@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-19</span>
       </span>
     </div>
 
@@ -136,20 +136,20 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for rma.uni</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/confint.html'>confint</a></span>(<span class='no'>object</span>, <span class='no'>parm</span>, <span class='no'>level</span>, <span class='kw'>fixed</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>random</span><span class='kw'>=</span><span class='fl'>TRUE</span>,
+<span class='fu'>confint</span>(<span class='no'>object</span>, <span class='no'>parm</span>, <span class='no'>level</span>, <span class='kw'>fixed</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>random</span><span class='kw'>=</span><span class='fl'>TRUE</span>,
         <span class='no'>digits</span>, <span class='no'>transf</span>, <span class='no'>targs</span>, <span class='kw'>verbose</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>control</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for rma.mh</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/confint.html'>confint</a></span>(<span class='no'>object</span>, <span class='no'>parm</span>, <span class='no'>level</span>, <span class='no'>digits</span>, <span class='no'>transf</span>, <span class='no'>targs</span>, <span class='no'>...</span>)
+<span class='fu'>confint</span>(<span class='no'>object</span>, <span class='no'>parm</span>, <span class='no'>level</span>, <span class='no'>digits</span>, <span class='no'>transf</span>, <span class='no'>targs</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for rma.peto</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/confint.html'>confint</a></span>(<span class='no'>object</span>, <span class='no'>parm</span>, <span class='no'>level</span>, <span class='no'>digits</span>, <span class='no'>transf</span>, <span class='no'>targs</span>, <span class='no'>...</span>)
+<span class='fu'>confint</span>(<span class='no'>object</span>, <span class='no'>parm</span>, <span class='no'>level</span>, <span class='no'>digits</span>, <span class='no'>transf</span>, <span class='no'>targs</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for rma.glmm</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/confint.html'>confint</a></span>(<span class='no'>object</span>, <span class='no'>parm</span>, <span class='no'>level</span>, <span class='no'>digits</span>, <span class='no'>transf</span>, <span class='no'>targs</span>, <span class='no'>...</span>)
+<span class='fu'>confint</span>(<span class='no'>object</span>, <span class='no'>parm</span>, <span class='no'>level</span>, <span class='no'>digits</span>, <span class='no'>transf</span>, <span class='no'>targs</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for rma.mv</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/confint.html'>confint</a></span>(<span class='no'>object</span>, <span class='no'>parm</span>, <span class='no'>level</span>, <span class='kw'>fixed</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>sigma2</span>, <span class='no'>tau2</span>, <span class='no'>rho</span>, <span class='no'>gamma2</span>, <span class='no'>phi</span>,
+<span class='fu'>confint</span>(<span class='no'>object</span>, <span class='no'>parm</span>, <span class='no'>level</span>, <span class='kw'>fixed</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>sigma2</span>, <span class='no'>tau2</span>, <span class='no'>rho</span>, <span class='no'>gamma2</span>, <span class='no'>phi</span>,
         <span class='no'>digits</span>, <span class='no'>transf</span>, <span class='no'>targs</span>, <span class='kw'>verbose</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>control</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -161,7 +161,7 @@
     </tr>
     <tr>
       <th>parm</th>
-      <td><p>this argument is here for compatibility with the generic function <code><a href='https://rdrr.io/r/stats/confint.html'>confint</a></code>, but is (currently) ignored.</p></td>
+      <td><p>this argument is here for compatibility with the generic function <code>confint</code>, but is (currently) ignored.</p></td>
     </tr>
     <tr>
       <th>fixed</th>
@@ -248,14 +248,14 @@
 <p>The Q-profile and generalized Q-statistic methods are both exact under the assumptions of the random- and mixed-effects models (i.e., normally distributed observed and true outcomes and known sampling variances). In practice, these assumptions are usually only approximately true, turning confidence intervals for \(\tau^2\) also into approximations. Profile likelihood confidence intervals are not exact by construction and rely on the asymptotic behavior of the likelihood ratio statistic, so they may be inaccurate in small samples.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Hartung, J., &amp; Knapp, G. (2005). On confidence intervals for the among-group variance in the one-way random effects model with unequal error variances. <em>Journal of Statistical Planning and Inference</em>, <b>127</b>, 157--177.</p>
-<p>Higgins, J. P. T., &amp; Thompson, S. G. (2002). Quantifying heterogeneity in a meta-analysis. <em>Statistics in Medicine</em>, <b>21</b>, 1539--1558.</p>
-<p>Jackson, D. (2013). Confidence intervals for the between-study variance in random effects meta-analysis using generalised Cochran heterogeneity statistics. <em>Research Synthesis Methods</em>, <b>4</b>, 220--229.</p>
-<p>Jackson, D., Turner, R., Rhodes, K., &amp; Viechtbauer, W. (2014). Methods for calculating confidence and credible intervals for the residual between-study variance in random effects meta-regression models. <em>BMC Medical Research Methodology</em>, <b>14</b>, 103.</p>
-<p>Mantel, N., &amp; Haenszel, W. (1959). Statistical aspects of the analysis of data from retrospective studies of disease. <em>Journal of the National Cancer Institute</em>, <b>22</b>, 719--748.</p>
-<p>Viechtbauer, W. (2007). Confidence intervals for the amount of heterogeneity in meta-analysis. <em>Statistics in Medicine</em>, <b>26</b>, 37--52.</p>
-<p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='https://www.jstatsoft.org/v036/i03'>https://www.jstatsoft.org/v036/i03</a>.</p>
-<p>Yusuf, S., Peto, R., Lewis, J., Collins, R., &amp; Sleight, P. (1985). Beta blockade during and after myocardial infarction: An overview of the randomized trials. <em>Progress in Cardiovascular Disease</em>, <b>27</b>, 335--371.</p>
+    <p>Hartung, J., &amp; Knapp, G. (2005). On confidence intervals for the among-group variance in the one-way random effects model with unequal error variances. <em>Journal of Statistical Planning and Inference</em>, <b>127</b>(1-2), 157--177. <a href='https://doi.org/10.1016/j.jspi.2003.09.032'>https://doi.org/10.1016/j.jspi.2003.09.032</a></p>
+<p>Higgins, J. P. T., &amp; Thompson, S. G. (2002). Quantifying heterogeneity in a meta-analysis. <em>Statistics in Medicine</em>, <b>21</b>(11), 1539--1558. <a href='https://doi.org/10.1002/sim.1186'>https://doi.org/10.1002/sim.1186</a></p>
+<p>Jackson, D. (2013). Confidence intervals for the between-study variance in random effects meta-analysis using generalised Cochran heterogeneity statistics. <em>Research Synthesis Methods</em>, <b>4</b>(3), 220--229. <a href='https://doi.org/10.1186/s12874-016-0219-y'>https://doi.org/10.1186/s12874-016-0219-y</a></p>
+<p>Jackson, D., Turner, R., Rhodes, K., &amp; Viechtbauer, W. (2014). Methods for calculating confidence and credible intervals for the residual between-study variance in random effects meta-regression models. <em>BMC Medical Research Methodology</em>, <b>14</b>, 103. <a href='https://doi.org/10.1186/1471-2288-14-103'>https://doi.org/10.1186/1471-2288-14-103</a></p>
+<p>Mantel, N., &amp; Haenszel, W. (1959). Statistical aspects of the analysis of data from retrospective studies of disease. <em>Journal of the National Cancer Institute</em>, <b>22</b>(4), 719--748. <a href='https://doi.org/10.1093/jnci/22.4.719'>https://doi.org/10.1093/jnci/22.4.719</a></p>
+<p>Viechtbauer, W. (2007). Confidence intervals for the amount of heterogeneity in meta-analysis. <em>Statistics in Medicine</em>, <b>26</b>(1), 37--52. <a href='https://doi.org/10.1002/sim.2514'>https://doi.org/10.1002/sim.2514</a></p>
+<p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='https://doi.org/10.18637/jss.v036.i03'>https://doi.org/10.18637/jss.v036.i03</a></p>
+<p>Yusuf, S., Peto, R., Lewis, J., Collins, R., &amp; Sleight, P. (1985). Beta blockade during and after myocardial infarction: An overview of the randomized trials. <em>Progress in Cardiovascular Disease</em>, <b>27</b>(5), 335--371. <a href='https://doi.org/10.1016/s0033-0620(85)80003-7'>https://doi.org/10.1016/s0033-0620(85)80003-7</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='rma.uni.html'>rma.uni</a></code>, <code><a href='rma.mh.html'>rma.mh</a></code>, <code><a href='rma.peto.html'>rma.peto</a></code>, <code><a href='rma.glmm.html'>rma.glmm</a></code>, <code><a href='rma.mv.html'>rma.mv</a></code></p></div>
@@ -265,7 +265,7 @@
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>)
 
 <span class='co'>### confidence interval for the total amount of heterogeneity</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/confint.html'>confint</a></span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; 
+<span class='fu'>confint</span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; 
 #&gt;        estimate   ci.lb   ci.ub 
 #&gt; tau^2    0.3132  0.1197  1.1115 
 #&gt; tau      0.5597  0.3460  1.0543 
@@ -277,7 +277,7 @@
            <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>ablat</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>)
 
 <span class='co'>### confidence interval for the residual amount of heterogeneity</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/confint.html'>confint</a></span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; 
+<span class='fu'>confint</span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; 
 #&gt;        estimate   ci.lb   ci.ub 
 #&gt; tau^2    0.0764  0.0167  0.7849 
 #&gt; tau      0.2763  0.1292  0.8859 
@@ -292,12 +292,12 @@
 <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span>(<span class='kw'>mfrow</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>,<span class='fl'>1</span>))
 <span class='fu'><a href='https://rdrr.io/r/stats/profile.html'>profile</a></span>(<span class='no'>res</span>, <span class='kw'>sigma2</span><span class='kw'>=</span><span class='fl'>1</span>)
 <span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span>(<span class='kw'>h</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/stats/logLik.html'>logLik</a></span>(<span class='no'>res</span>) - <span class='fu'><a href='https://rdrr.io/r/stats/Chisquare.html'>qchisq</a></span>(<span class='fl'>.95</span>, <span class='kw'>df</span><span class='kw'>=</span><span class='fl'>1</span>)/<span class='fl'>2</span>, <span class='kw'>lty</span><span class='kw'>=</span><span class='st'>"dotted"</span>)
-<span class='no'>sav</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/confint.html'>confint</a></span>(<span class='no'>res</span>, <span class='kw'>sigma2</span><span class='kw'>=</span><span class='fl'>1</span>)
+<span class='no'>sav</span> <span class='kw'>&lt;-</span> <span class='fu'>confint</span>(<span class='no'>res</span>, <span class='kw'>sigma2</span><span class='kw'>=</span><span class='fl'>1</span>)
 <span class='no'>sav</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span>(<span class='kw'>v</span><span class='kw'>=</span><span class='no'>sav</span>$<span class='no'>random</span>[<span class='fl'>1</span>,<span class='fl'>2</span>:<span class='fl'>3</span>], <span class='kw'>lty</span><span class='kw'>=</span><span class='st'>"dotted"</span>)
 <span class='fu'><a href='https://rdrr.io/r/stats/profile.html'>profile</a></span>(<span class='no'>res</span>, <span class='kw'>sigma2</span><span class='kw'>=</span><span class='fl'>2</span>)
 <span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span>(<span class='kw'>h</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/stats/logLik.html'>logLik</a></span>(<span class='no'>res</span>) - <span class='fu'><a href='https://rdrr.io/r/stats/Chisquare.html'>qchisq</a></span>(<span class='fl'>.95</span>, <span class='kw'>df</span><span class='kw'>=</span><span class='fl'>1</span>)/<span class='fl'>2</span>, <span class='kw'>lty</span><span class='kw'>=</span><span class='st'>"dotted"</span>)
-<span class='no'>sav</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/confint.html'>confint</a></span>(<span class='no'>res</span>, <span class='kw'>sigma2</span><span class='kw'>=</span><span class='fl'>2</span>)
+<span class='no'>sav</span> <span class='kw'>&lt;-</span> <span class='fu'>confint</span>(<span class='no'>res</span>, <span class='kw'>sigma2</span><span class='kw'>=</span><span class='fl'>2</span>)
 <span class='no'>sav</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span>(<span class='kw'>v</span><span class='kw'>=</span><span class='no'>sav</span>$<span class='no'>random</span>[<span class='fl'>1</span>,<span class='fl'>2</span>:<span class='fl'>3</span>], <span class='kw'>lty</span><span class='kw'>=</span><span class='st'>"dotted"</span>)}
 
@@ -309,12 +309,12 @@
 <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span>(<span class='kw'>mfrow</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>,<span class='fl'>1</span>))
 <span class='fu'><a href='https://rdrr.io/r/stats/profile.html'>profile</a></span>(<span class='no'>res</span>, <span class='kw'>tau2</span><span class='kw'>=</span><span class='fl'>1</span>)
 <span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span>(<span class='kw'>h</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/stats/logLik.html'>logLik</a></span>(<span class='no'>res</span>) - <span class='fu'><a href='https://rdrr.io/r/stats/Chisquare.html'>qchisq</a></span>(<span class='fl'>.95</span>, <span class='kw'>df</span><span class='kw'>=</span><span class='fl'>1</span>)/<span class='fl'>2</span>, <span class='kw'>lty</span><span class='kw'>=</span><span class='st'>"dotted"</span>)
-<span class='no'>sav</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/confint.html'>confint</a></span>(<span class='no'>res</span>, <span class='kw'>tau2</span><span class='kw'>=</span><span class='fl'>1</span>)
+<span class='no'>sav</span> <span class='kw'>&lt;-</span> <span class='fu'>confint</span>(<span class='no'>res</span>, <span class='kw'>tau2</span><span class='kw'>=</span><span class='fl'>1</span>)
 <span class='no'>sav</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span>(<span class='kw'>v</span><span class='kw'>=</span><span class='no'>sav</span>$<span class='no'>random</span>[<span class='fl'>1</span>,<span class='fl'>2</span>:<span class='fl'>3</span>], <span class='kw'>lty</span><span class='kw'>=</span><span class='st'>"dotted"</span>)
 <span class='fu'><a href='https://rdrr.io/r/stats/profile.html'>profile</a></span>(<span class='no'>res</span>, <span class='kw'>rho</span><span class='kw'>=</span><span class='fl'>1</span>)
 <span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span>(<span class='kw'>h</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/stats/logLik.html'>logLik</a></span>(<span class='no'>res</span>) - <span class='fu'><a href='https://rdrr.io/r/stats/Chisquare.html'>qchisq</a></span>(<span class='fl'>.95</span>, <span class='kw'>df</span><span class='kw'>=</span><span class='fl'>1</span>)/<span class='fl'>2</span>, <span class='kw'>lty</span><span class='kw'>=</span><span class='st'>"dotted"</span>)
-<span class='no'>sav</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/confint.html'>confint</a></span>(<span class='no'>res</span>, <span class='kw'>rho</span><span class='kw'>=</span><span class='fl'>1</span>)
+<span class='no'>sav</span> <span class='kw'>&lt;-</span> <span class='fu'>confint</span>(<span class='no'>res</span>, <span class='kw'>rho</span><span class='kw'>=</span><span class='fl'>1</span>)
 <span class='no'>sav</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span>(<span class='kw'>v</span><span class='kw'>=</span><span class='no'>sav</span>$<span class='no'>random</span>[<span class='fl'>1</span>,<span class='fl'>2</span>:<span class='fl'>3</span>], <span class='kw'>lty</span><span class='kw'>=</span><span class='st'>"dotted"</span>)}</div></pre>
   </div>

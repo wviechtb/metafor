@@ -22,10 +22,10 @@
    The studies were conducted at various schools that were clustered within districts. The data therefore have a multilevel structure, with schools nested within districts. A multilevel meta-analysis of these data can be used to estimate and account for the amount of heterogeneity between districts and between schools within districts.
 }
 \source{
-   Konstantopoulos, S. (2011). Fixed effects and variance components estimation in three-level meta-analysis. \emph{Research Synthesis Methods}, \bold{2}(1), 61--76. \url{https://doi.org/10.1002/jrsm.35}
+   Konstantopoulos, S. (2011). Fixed effects and variance components estimation in three-level meta-analysis. \emph{Research Synthesis Methods}, \bold{2}(1), 61--76. \verb{https://doi.org/10.1002/jrsm.35}
 }
 \references{
-   Cooper, H., Valentine, J. C., Charlton, K., & Melson, A. (2003). The effects of modified school calendars on student achievement and on school and community attitudes. \emph{Review of Educational Research}, \bold{73}(1), 1--52. \url{https://doi.org/10.3102/00346543073001001}
+   Cooper, H., Valentine, J. C., Charlton, K., & Melson, A. (2003). The effects of modified school calendars on student achievement and on school and community attitudes. \emph{Review of Educational Research}, \bold{73}(1), 1--52. \verb{https://doi.org/10.3102/00346543073001001}
 }
 \examples{
 ### copy data into 'dat' and examine data

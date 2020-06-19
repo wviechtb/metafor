@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-19</span>
       </span>
     </div>
 
@@ -172,7 +172,7 @@
     <p>The function constructs a (cluster) robust estimate of the variance-covariance matrix of the model coefficients based on a sandwich-type estimator and then computes tests and confidence intervals of the model coefficients.</p>
 <p>Tests of individual coefficients and confidence intervals are based on a t-distribution with \(n-p\) degrees of freedom is used, while the omnibus test statistic uses an F-distribution with \(m\) and \(n-p\) degrees of freedom, where \(n\) is the number of clusters, \(p\) denotes the total number of model coefficients (including the intercept if it is present), and \(m\) denotes the number of coefficients tested (in the omnibus test).</p>
 <p>When <code>adjust=TRUE</code> (the default), the (cluster) robust estimate of the variance-covariance matrix is multiplied by the factor \(n/(n-p)\), which serves as a small-sample adjustment that tends to improve the performance of the method when the number of clusters is small.</p>
-<p>For even better small-sample adjustments (Pustejovsky &amp; Tipton, 2018), see the <span class="pkg">clubSandwich</span> package, which nicely works together with the <span class="pkg">metafor</span> package (see Examples).</p>
+<p>For even better small-sample adjustments (Pustejovsky &amp; Tipton, 2018), see the <span class="pkg">clubSandwich</span> package, which nicely works together with the <span class="pkg">metafor</span> package (see &#8216;Examples&#8217;).</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class <code>"robust.rma"</code>. The object is a list containing the following components:</p>
@@ -195,19 +195,18 @@
 <p>The idea of the robust (sandwich-type) estimator for models with unspecified heteroscedasticity can be traced back to Eicker (1967), Huber (1967), and White (1980). Hence, the method in general is often referred to as the Eicker-Huber-White method. Some small-sample improvements to the method are described by MacKinnon and White (1985). The extension to the cluster robust estimator can be found in Froot (1989) and Williams (2000). Cameron and Miller (2015) provide an extensive overview of cluster robust methods. Sidik and Jonkman (2005, 2006) introduced robust methods in the meta-analytic context for standard random/mixed-effects models. The use of the cluster robust estimator for multivariate/multilevel meta-analytic models is described in Hedges, Tipton, and Johnson (2010).</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Cameron, A. C., &amp; Miller, D. L. (2015). A practitioner's guide to cluster-robust inference. <em>Journal of Human Resources</em>, <b>50</b>, 317--372.</p>
+    <p>Cameron, A. C., &amp; Miller, D. L. (2015). A practitioner's guide to cluster-robust inference. <em>Journal of Human Resources</em>, <b>50</b>(2), 317--372. <a href='https://doi.org/10.3368/jhr.50.2.317'>https://doi.org/10.3368/jhr.50.2.317</a></p>
 <p>Eicker, F. (1967). Limit theorems for regressions with unequal and dependent errors. In L. M. LeCam &amp; J. Neyman (Eds.), <em>Proceedings of the Fifth Berkeley Symposium on Mathematical Statistics and Probability</em> (pp. 59--82). Berkeley: University of California Press.</p>
-<p>Froot, K. A. (1989). Consistent covariance matrix estimation with cross-sectional dependence and heteroskedasticity in financial data. <em>Journal of Financial and Quantitative Analysis</em>, <b>24</b>, 333--355.</p>
-<p>Hedges, L. V., Tipton, E., &amp; Johnson, M. C. (2010). Robust variance estimation in meta-regression with dependent effect size estimates. <em>Research Synthesis Methods</em>, <b>1</b>, 39--65.</p>
+<p>Froot, K. A. (1989). Consistent covariance matrix estimation with cross-sectional dependence and heteroskedasticity in financial data. <em>Journal of Financial and Quantitative Analysis</em>, <b>24</b>(3), 333--355. <a href='https://doi.org/10.2307/2330815'>https://doi.org/10.2307/2330815</a></p>
+<p>Hedges, L. V., Tipton, E., &amp; Johnson, M. C. (2010). Robust variance estimation in meta-regression with dependent effect size estimates. <em>Research Synthesis Methods</em>, <b>1</b>(1), 39--65. <a href='https://doi.org/10.1002/jrsm.5'>https://doi.org/10.1002/jrsm.5</a></p>
 <p>Huber, P. (1967). The behavior of maximum-likelihood estimates under nonstandard conditions. In L. M. LeCam &amp; J. Neyman (Eds.), <em>Proceedings of the Fifth Berkeley Symposium on Mathematical Statistics and Probability</em> (pp. 221--233). Berkeley: University of California Press.</p>
-<p>MacKinnon, J. G., &amp; White, H. (1985). Some heteroskedasticity-consistent covariance matrix estimators with improved finite sample properties. <em>Journal of Econometrics</em>, <b>29</b>, 305--325.</p>
-<p>Pustejovsky, J. E., &amp; Tipton, E. (2018). Small-sample methods for cluster-robust variance estimation and hypothesis testing in fixed effects models. <em>Journal of Business &amp; Economic Statistics</em>, <b>36</b>, 672--683.</p>
-
-<p>Sidik, K., &amp; Jonkman, J. N. (2005). A note on variance estimation in random effects meta-regression. <em>Journal of Biopharmaceutical Statistics</em>, <b>15</b>, 823--838.</p>
-<p>Sidik, K., &amp; Jonkman, J. N. (2006). Robust variance estimation for random effects meta-analysis. <em>Computational Statistics &amp; Data Analysis</em>, <b>50</b>, 3681--3701.</p>
-<p>White, H. (1980). A heteroskedasticity-consistent covariance matrix estimator and a direct test for heteroskedasticity. <em>Econometrica</em>, <b>48</b>, 817--838.</p>
-<p>Williams, R. L. (2000). A note on robust variance estimation for cluster-correlated data. <em>Biometrics</em>, <b>56</b>, 645--646.</p>
-<p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='https://www.jstatsoft.org/v036/i03'>https://www.jstatsoft.org/v036/i03</a>.</p>
+<p>MacKinnon, J. G., &amp; White, H. (1985). Some heteroskedasticity-consistent covariance matrix estimators with improved finite sample properties. <em>Journal of Econometrics</em>, <b>29</b>(3), 305--325. <a href='https://doi.org/10.1016/0304-4076(85)90158-7'>https://doi.org/10.1016/0304-4076(85)90158-7</a></p>
+<p>Pustejovsky, J. E., &amp; Tipton, E. (2018). Small-sample methods for cluster-robust variance estimation and hypothesis testing in fixed effects models. <em>Journal of Business &amp; Economic Statistics</em>, <b>36</b>(4), 672--683. <a href='https://doi.org/10.1080/07350015.2016.1247004'>https://doi.org/10.1080/07350015.2016.1247004</a></p>
+<p>Sidik, K., &amp; Jonkman, J. N. (2005). A note on variance estimation in random effects meta-regression. <em>Journal of Biopharmaceutical Statistics</em>, <b>15</b>(5), 823--838. <a href='https://doi.org/10.1081/BIP-200067915'>https://doi.org/10.1081/BIP-200067915</a></p>
+<p>Sidik, K., &amp; Jonkman, J. N. (2006). Robust variance estimation for random effects meta-analysis. <em>Computational Statistics &amp; Data Analysis</em>, <b>50</b>(12), 3681--3701. <a href='https://doi.org/10.1016/j.csda.2005.07.019'>https://doi.org/10.1016/j.csda.2005.07.019</a></p>
+<p>White, H. (1980). A heteroskedasticity-consistent covariance matrix estimator and a direct test for heteroskedasticity. <em>Econometrica</em>, <b>48</b>(4), 817--838. <a href='https://doi.org/10.2307/1912934'>https://doi.org/10.2307/1912934</a></p>
+<p>Williams, R. L. (2000). A note on robust variance estimation for cluster-correlated data. <em>Biometrics</em>, <b>56</b>(2), 645--646. <a href='https://doi.org/10.1111/j.0006-341x.2000.00645.x'>https://doi.org/10.1111/j.0006-341x.2000.00645.x</a></p>
+<p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='https://doi.org/10.18637/jss.v036.i03'>https://doi.org/10.18637/jss.v036.i03</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='rma.uni.html'>rma.uni</a></code>, <code><a href='rma.mv.html'>rma.mv</a></code></p></div>

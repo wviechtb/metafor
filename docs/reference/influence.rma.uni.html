@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Outlier and Influential Case Diagnostics for 'rma.uni' Objects — influence.rma.uni" />
-<meta property="og:description" content="The functions can be used to compute various outlier and influential case diagnostics (some of which indicate the influence of deleting one case/study at a time on the model fit or the fitted/residual values) for objects of class &quot;rma.uni&quot;. " />
+<meta property="og:description" content="The functions can be used to compute various outlier and influential case diagnostics (some of which indicate the influence of deleting one case/study at a time on the model fit or the fitted/residual values) for objects of class &quot;rma.uni&quot;. For the corresponding help file for &quot;rma.mv&quot; objects, see influence.rma.mv. " />
 
 
 
@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-19</span>
       </span>
     </div>
 
@@ -132,21 +132,21 @@
     </div>
 
     <div class="ref-description">
-    <p>The functions can be used to compute various outlier and influential case diagnostics (some of which indicate the influence of deleting one case/study at a time on the model fit or the fitted/residual values) for objects of class <code>"rma.uni"</code>. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
+    <p>The functions can be used to compute various outlier and influential case diagnostics (some of which indicate the influence of deleting one case/study at a time on the model fit or the fitted/residual values) for objects of class <code>"rma.uni"</code>. For the corresponding help file for <code>"rma.mv"</code> objects, see <code><a href='influence.rma.mv.html'>influence.rma.mv</a></code>. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for rma.uni</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/lm.influence.html'>influence</a></span>(<span class='no'>model</span>, <span class='no'>digits</span>, <span class='kw'>progbar</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'>influence</span>(<span class='no'>model</span>, <span class='no'>digits</span>, <span class='kw'>progbar</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for infl.rma.uni</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='no'>x</span>$<span class='no'>digits</span>, <span class='kw'>infonly</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for rma.uni</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>cooks.distance</a></span>(<span class='no'>model</span>, <span class='kw'>progbar</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'>cooks.distance</span>(<span class='no'>model</span>, <span class='kw'>progbar</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>...</span>)
 <span class='co'># S3 method for rma.uni</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>dfbetas</a></span>(<span class='no'>model</span>, <span class='kw'>progbar</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'>dfbetas</span>(<span class='no'>model</span>, <span class='kw'>progbar</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>...</span>)
 <span class='co'># S3 method for rma.uni</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>hatvalues</a></span>(<span class='no'>model</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"diagonal"</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>hatvalues</span>(<span class='no'>model</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"diagonal"</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -224,8 +224,8 @@
     <p>Belsley, D. A., Kuh, E., &amp; Welsch, R. E. (1980). <em>Regression diagnostics</em>. New York: Wiley.</p>
 <p>Cook, R. D., &amp; Weisberg, S. (1982). <em>Residuals and influence in regression</em>. London: Chapman and Hall.</p>
 <p>Hedges, L. V., &amp; Olkin, I. (1985). <em>Statistical methods for meta-analysis</em>. San Diego, CA: Academic Press.</p>
-<p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='https://www.jstatsoft.org/v036/i03'>https://www.jstatsoft.org/v036/i03</a>.</p>
-<p>Viechtbauer, W., &amp; Cheung, M. W.-L. (2010). Outlier and influence diagnostics for meta-analysis. <em>Research Synthesis Methods</em>, <b>1</b>, 112--125.</p>
+<p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='https://doi.org/10.18637/jss.v036.i03'>https://doi.org/10.18637/jss.v036.i03</a></p>
+<p>Viechtbauer, W., &amp; Cheung, M. W.-L. (2010). Outlier and influence diagnostics for meta-analysis. <em>Research Synthesis Methods</em>, <b>1</b>(2), 112--125. <a href='https://doi.org/10.1002/jrsm.11'>https://doi.org/10.1002/jrsm.11</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='plot.infl.rma.uni.html'>plot.infl.rma.uni</a></code>, <code><a href='residuals.rma.html'>rstudent.rma.uni</a></code>, <code><a href='weights.rma.html'>weights.rma.uni</a></code></p></div>
@@ -236,7 +236,7 @@
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>,
            <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>ablat</span> + <span class='no'>year</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>)
 
-<span class='no'>inf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.influence.html'>influence</a></span>(<span class='no'>res</span>)
+<span class='no'>inf</span> <span class='kw'>&lt;-</span> <span class='fu'>influence</span>(<span class='no'>res</span>)
 <span class='no'>inf</span></div><div class='output co'>#&gt; $inf
 #&gt; 
 #&gt;    rstudent  dffits cook.d  cov.r tau2.del  QE.del    hat  weight inf 
@@ -272,12 +272,12 @@
 #&gt; 13 -0.8276  0.6269  0.8279 
 #&gt; </div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>inf</span>)</div><div class='img'><img src='influence.rma.uni-1.png' alt='' width='768' height='614' /></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>cooks.distance</a></span>(<span class='no'>res</span>)</div><div class='output co'>#&gt;           1           2           3           4           5           6 
+<span class='fu'>cooks.distance</span>(<span class='no'>res</span>)</div><div class='output co'>#&gt;           1           2           3           4           5           6 
 #&gt; 0.034763870 0.061956371 0.012503192 7.317914072 0.003236974 0.720524896 
 #&gt;           7           8           9          10          11          12 
 #&gt; 0.417263935 0.189852980 0.023722929 0.146959603 0.005232795 0.046915399 
 #&gt;          13 
-#&gt; 0.499370065 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>dfbetas</a></span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; 
+#&gt; 0.499370065 </div><div class='input'><span class='fu'>dfbetas</span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; 
 #&gt;    intrcpt   ablat    year 
 #&gt; 1   0.1492 -0.0622 -0.1491 
 #&gt; 2  -0.0949 -0.1001  0.0963 
@@ -292,7 +292,7 @@
 #&gt; 11  0.0631 -0.0343 -0.0631 
 #&gt; 12 -0.0413  0.0465  0.0419 
 #&gt; 13 -0.8276  0.6269  0.8279 
-#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>hatvalues</a></span>(<span class='no'>res</span>)</div><div class='output co'>#&gt;          1          2          3          4          5          6          7 
+#&gt; </div><div class='input'><span class='fu'>hatvalues</span>(<span class='no'>res</span>)</div><div class='output co'>#&gt;          1          2          3          4          5          6          7 
 #&gt; 0.17250070 0.23668273 0.04870101 0.80821407 0.24826116 0.40606407 0.07657599 
 #&gt;          8          9         10         11         12         13 
 #&gt; 0.36274386 0.10304034 0.13102564 0.22140605 0.02353859 0.16124580 </div></pre>

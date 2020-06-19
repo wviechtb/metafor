@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-19</span>
       </span>
     </div>
 
@@ -315,7 +315,7 @@
     <p>The plot shows the individual observed effect sizes or outcomes with corresponding confidence intervals. To use the function, one should specify the observed effect sizes or outcomes (via the <code>x</code> argument) together with the corresponding sampling variances (via the <code>vi</code> argument) or with the corresponding standard errors (via the <code>sei</code> argument). Alternatively, one can specify the observed effect sizes or outcomes together with the corresponding confidence interval bounds (via the <code>ci.lb</code> and <code>ci.ub</code> arguments).</p>
 <p>With the <code>transf</code> argument, the observed effect sizes or outcomes and corresponding confidence interval bounds can be transformed with some suitable function. For example, when plotting log odds ratios, then one could use <code>transf=exp</code> to obtain a forest plot showing the odds ratios. Alternatively, one can use the <code>atransf</code> argument to transform the x-axis labels and annotations (e.g., <code>atransf=exp</code>). See also <a href='transf.html'>transf</a> for some transformation functions useful for meta-analyses. The examples below illustrate the use of these arguments.</p>
 <p>By default, the studies are ordered from top to bottom (i.e., the first study in the dataset will be placed in row \(k\), the second study in row \(k-1\), and so on, until the last study, which is placed in the first row). The studies can be reordered with the <code>subset</code> argument (by specifying a vector with indices with the desired order).</p>
-<p>Summary estimates can also be added to the plot with the <code><a href='addpoly.html'>addpoly</a></code> function. See the documentation for that function for examples.</p>
+<p>Summary estimates can be added to the plot with the <code><a href='addpoly.html'>addpoly</a></code> function. See the documentation for that function for examples.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>The function tries to set some sensible values for the optional arguments, but it may be necessary to tweak these in certain circumstances.</p>
@@ -326,8 +326,8 @@
 <p>The <code>lty</code> argument can also be a vector of two elements, the first for specifying the line type of the individual CIs (<code>"solid"</code> by default), the second for the line type of the horizontal line that is automatically added to the plot (<code>"solid"</code> by default; set to <code>"blank"</code> to remove it).</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Lewis, S., &amp; Clarke, M. (2001). Forest plots: Trying to see the wood and the trees. <em>British Medical Journal</em>, <b>322</b>, 1479--1480.</p>
-<p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='https://www.jstatsoft.org/v036/i03'>https://www.jstatsoft.org/v036/i03</a>.</p>
+    <p>Lewis, S., &amp; Clarke, M. (2001). Forest plots: Trying to see the wood and the trees. <em>British Medical Journal</em>, <b>322</b>(7300), 1479--1480. <a href='https://doi.org/10.1136/bmj.322.7300.1479'>https://doi.org/10.1136/bmj.322.7300.1479</a></p>
+<p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='https://doi.org/10.18637/jss.v036.i03'>https://doi.org/10.18637/jss.v036.i03</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='forest.html'>forest</a></code>, <code><a href='forest.rma.html'>forest.rma</a></code>, <code><a href='addpoly.html'>addpoly</a></code></p></div>

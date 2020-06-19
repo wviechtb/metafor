@@ -39,9 +39,9 @@ vif(x, \dots)
 \references{
    Davis, C. E., Hyde, J. E., Bangdiwala, S. I., & Nelson, J. J. (1986). An example of dependencies among variables in a conditional logistic regression. In S. H. Moolgavkar & R. L. Prentice (Eds.), \emph{Modern statistical methods in chronic disease epidemiology} (pp. 140--147). New York: Wiley.
 
-   Wax, Y. (1992). Collinearity diagnosis for a relative risk regression-analysis: An application to assessment of diet cancer relationship in epidemiologic studies. \emph{Statistics in Medicine}, \bold{11}(10), 1273--1287. \url{https://doi.org/10.1002/sim.4780111003}
+   Wax, Y. (1992). Collinearity diagnosis for a relative risk regression-analysis: An application to assessment of diet cancer relationship in epidemiologic studies. \emph{Statistics in Medicine}, \bold{11}(10), 1273--1287. \verb{https://doi.org/10.1002/sim.4780111003}
 
-   Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{https://doi.org/10.18637/jss.v036.i03}
+   Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}
 }
 \seealso{
    \code{\link{rma.uni}}, \code{\link{rma.mv}}, \code{\link{rma.glmm}}

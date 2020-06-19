@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-19</span>
       </span>
     </div>
 
@@ -136,7 +136,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for rma</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/residuals.html'>residuals</a></span>(<span class='no'>object</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"response"</span>, <span class='no'>...</span>)
+<span class='fu'>residuals</span>(<span class='no'>object</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"response"</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for rma.uni</span>
 <span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>rstandard</a></span>(<span class='no'>model</span>, <span class='no'>digits</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"marginal"</span>, <span class='no'>...</span>)
@@ -208,10 +208,10 @@
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The observed residuals (obtained with <code>residuals</code>) are simply equal to the &#8216;observed - fitted&#8217; values. These can be obtained with <code><a href='https://rdrr.io/r/stats/residuals.html'>residuals(object)</a></code> (using the default <code>type="response"</code>).</p>
-<p>Dividing the observed residuals by the model-implied standard errors of the observed effect sizes or outcomes yields Pearson (or semi-standardized) residuals. These can be obtained with <code><a href='https://rdrr.io/r/stats/residuals.html'>residuals(object, type="pearson")</a></code>.</p>
-<p>Dividing the observed residuals by their corresponding standard errors yields (internally) standardized residuals. These can be obtained with <code>rstandard</code> or <code><a href='https://rdrr.io/r/stats/residuals.html'>residuals(object, type="rstandard")</a></code>.</p>
-<p>The <code>rstudent</code> function (or <code><a href='https://rdrr.io/r/stats/residuals.html'>residuals(object, type="rstudent")</a></code>) calculates externally standardized residuals (also called standardized deleted residuals or (externally) studentized residuals). The externally standardized residual for the \(i\)th case is obtained by deleting the \(i\)th case from the dataset, fitting the model based on the remaining cases, calculating the predicted value for the \(i\)th case based on the fitted model, taking the difference between the observed and the predicted value for the \(i\)th case (which yields the deleted residual), and then standardizing the deleted residual based on its standard error.</p>
+    <p>The observed residuals (obtained with <code>residuals</code>) are simply equal to the &#8216;observed - fitted&#8217; values. These can be obtained with <code>residuals(object)</code> (using the default <code>type="response"</code>).</p>
+<p>Dividing the observed residuals by the model-implied standard errors of the observed effect sizes or outcomes yields Pearson (or semi-standardized) residuals. These can be obtained with <code>residuals(object, type="pearson")</code>.</p>
+<p>Dividing the observed residuals by their corresponding standard errors yields (internally) standardized residuals. These can be obtained with <code>rstandard</code> or <code>residuals(object, type="rstandard")</code>.</p>
+<p>The <code>rstudent</code> function (or <code>residuals(object, type="rstudent")</code>) calculates externally standardized residuals (also called standardized deleted residuals or (externally) studentized residuals). The externally standardized residual for the \(i\)th case is obtained by deleting the \(i\)th case from the dataset, fitting the model based on the remaining cases, calculating the predicted value for the \(i\)th case based on the fitted model, taking the difference between the observed and the predicted value for the \(i\)th case (which yields the deleted residual), and then standardizing the deleted residual based on its standard error.</p>
 <p>If a particular study fits the model, its standardized residual follows (asymptotically) a standard normal distribution. A large standardized residual for a study therefore may suggest that the study does not fit the assumed model (i.e., it may be an outlier).</p>
 <p>For <code>"rma.uni"</code> objects, <code>rstandard.rma.uni</code> also can compute conditional residuals (when <code>type="conditional"</code>), which are the deviations of the observed outcomes from the best linear unbiased predictions (BLUPs) of the study-specific true outcomes (see <code><a href='blup.html'>blup.rma.uni</a></code>).</p>
 <p>For <code>"rma.mv"</code> objects, one can specify a clustering variable (via the <code>cluster</code> argument). If specified, <code>rstandard</code> and <code>rstudent</code> also compute cluster-level multivariate (internally or externally) standardized residuals. If all outcomes within a cluster fit the model, then the multivariate standardized residual for the cluster follows (asymptotically) a chi-square distribution with \(k_i\) degrees of freedom (where \(k_i\) denotes the number of outcomes within the cluster).</p>
@@ -240,8 +240,8 @@
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Hedges, L. V., &amp; Olkin, I. (1985). <em>Statistical methods for meta-analysis</em>. San Diego, CA: Academic Press.</p>
-<p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='https://www.jstatsoft.org/v036/i03'>https://www.jstatsoft.org/v036/i03</a>.</p>
-<p>Viechtbauer, W., &amp; Cheung, M. W.-L. (2010). Outlier and influence diagnostics for meta-analysis. <em>Research Synthesis Methods</em>, <b>1</b>, 112--125.</p>
+<p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='https://doi.org/10.18637/jss.v036.i03'>https://doi.org/10.18637/jss.v036.i03</a></p>
+<p>Viechtbauer, W., &amp; Cheung, M. W.-L. (2010). Outlier and influence diagnostics for meta-analysis. <em>Research Synthesis Methods</em>, <b>1</b>(2), 112--125. <a href='https://doi.org/10.1002/jrsm.11'>https://doi.org/10.1002/jrsm.11</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='rma.uni.html'>rma.uni</a></code>, <code><a href='rma.mh.html'>rma.mh</a></code>, <code><a href='rma.peto.html'>rma.peto</a></code>, <code><a href='rma.glmm.html'>rma.glmm</a></code>, <code><a href='rma.mv.html'>rma.mv</a></code>, <code><a href='influence.rma.uni.html'>influence.rma.uni</a></code>, <code><a href='influence.rma.mv.html'>influence.rma.mv</a></code></p></div>

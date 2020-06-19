@@ -19,7 +19,7 @@ dat.graves2010
    Cholera is an infection caused by certain strains of the bacterium \emph{Vibrio cholerae}. When untreated, mortality rates can be as high as 50-60\%. Proper sanitation practices are usually effective in preventing outbreaks, but a number of oral and injectable vaccines have also been developed. The Cochrane review by Graves et al. (2010) examined the effectiveness of injectable vaccines for preventing cholera cases and death. The present dataset includes results from 17 studies that reported the number of cholera cases in vaccinated and placebo/comparison groups up to 7 months after the treatment.
 }
 \source{
-   Graves, P. M., Deeks, J. J., Demicheli, V., & Jefferson, T. (2010). Vaccines for preventing cholera: Killed whole cell or other subunit vaccines (injected). \emph{Cochrane Database of Systematic Reviews}, \bold{8}, CD000974. \url{https://doi.org/10.1002/14651858.CD000974.pub2}
+   Graves, P. M., Deeks, J. J., Demicheli, V., & Jefferson, T. (2010). Vaccines for preventing cholera: Killed whole cell or other subunit vaccines (injected). \emph{Cochrane Database of Systematic Reviews}, \bold{8}, CD000974. \verb{https://doi.org/10.1002/14651858.CD000974.pub2}
 }
 \examples{
 ### copy data into 'dat' and examine data

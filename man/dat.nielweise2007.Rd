@@ -21,10 +21,10 @@
    The dataset was used in the article by Stijnen et al. (2010) to illustrate various generalized linear mixed-effects models for the meta-analysis of proportions and odds ratios (see \sQuote{References}).
 }
 \source{
-   Niel-Weise, B. S., Stijnen, T., & van den Broek, P. J. (2007). Anti-infective-treated central venous catheters: A systematic review of randomized controlled trials. \emph{Intensive Care Medicine}, \bold{33}(12), 2058--2068. \url{https://doi.org/10.1007/s00134-007-0897-3}
+   Niel-Weise, B. S., Stijnen, T., & van den Broek, P. J. (2007). Anti-infective-treated central venous catheters: A systematic review of randomized controlled trials. \emph{Intensive Care Medicine}, \bold{33}(12), 2058--2068. \verb{https://doi.org/10.1007/s00134-007-0897-3}
 }
 \references{
-   Stijnen, T., Hamza, T. H., & Ozdemir, P. (2010). Random effects meta-analysis of event outcome in the framework of the generalized linear mixed model with applications in sparse data. \emph{Statistics in Medicine}, \bold{29}(29), 3046--3067. \url{https://doi.org/10.1002/sim.4040}
+   Stijnen, T., Hamza, T. H., & Ozdemir, P. (2010). Random effects meta-analysis of event outcome in the framework of the generalized linear mixed model with applications in sparse data. \emph{Statistics in Medicine}, \bold{29}(29), 3046--3067. \verb{https://doi.org/10.1002/sim.4040}
 }
 \examples{
 ### copy data into 'dat' and examine data

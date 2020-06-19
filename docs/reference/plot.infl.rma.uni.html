@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-19</span>
       </span>
     </div>
 
@@ -210,8 +210,8 @@
 <p>The chosen cut-offs are (somewhat) arbitrary. Substantively informed judgment should always be used when examining the influence of each study on the results.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='https://www.jstatsoft.org/v036/i03'>https://www.jstatsoft.org/v036/i03</a>.</p>
-<p>Viechtbauer, W., &amp; Cheung, M. W.-L. (2010). Outlier and influence diagnostics for meta-analysis. <em>Research Synthesis Methods</em>, <b>1</b>, 112--125.</p>
+    <p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='https://doi.org/10.18637/jss.v036.i03'>https://doi.org/10.18637/jss.v036.i03</a></p>
+<p>Viechtbauer, W., &amp; Cheung, M. W.-L. (2010). Outlier and influence diagnostics for meta-analysis. <em>Research Synthesis Methods</em>, <b>1</b>(2), 112--125. <a href='https://doi.org/10.1002/jrsm.11'>https://doi.org/10.1002/jrsm.11</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='influence.rma.uni.html'>influence.rma.uni</a></code></p></div>
@@ -222,7 +222,7 @@
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>,
            <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>ablat</span> + <span class='no'>year</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>)
 
-<span class='no'>inf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.influence.html'>influence</a></span>(<span class='no'>res</span>)
+<span class='no'>inf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='influence.rma.uni.html'>influence</a></span>(<span class='no'>res</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>inf</span>)</div><div class='img'><img src='plot.infl.rma.uni-1.png' alt='' width='768' height='614' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>inf</span>, <span class='kw'>plotinf</span><span class='kw'>=</span><span class='fl'>1</span>:<span class='fl'>4</span>)</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>inf</span>, <span class='kw'>plotinf</span><span class='kw'>=</span><span class='fl'>1</span>:<span class='fl'>4</span>, <span class='kw'>layout</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>4</span>,<span class='fl'>1</span>))</div><div class='img'><img src='plot.infl.rma.uni-2.png' alt='' width='768' height='614' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>inf</span>, <span class='kw'>plotinf</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>plotdfbs</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='plot.infl.rma.uni-3.png' alt='' width='768' height='614' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

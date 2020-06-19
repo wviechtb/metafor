@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-19</span>
       </span>
     </div>
 
@@ -136,7 +136,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for rma</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/simulate.html'>simulate</a></span>(<span class='no'>object</span>, <span class='kw'>nsim</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>simulate</span>(<span class='no'>object</span>, <span class='kw'>nsim</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -165,10 +165,10 @@
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data frame with <code>nsim</code> columns with the simulated outcomes.</p>
-<p>The data frame comes with an attribute <code>"seed"</code>. If argument <code>seed</code> is <code>NULL</code>, the attribute is the value of <code><a href='https://rdrr.io/r/base/Random.html'>.Random.seed</a></code> before the simulation was started; otherwise it is the value of the argument with a <code>"kind"</code> attribute with value <code>as.list(<a href='https://rdrr.io/r/base/Random.html'>RNGkind</a>())</code>.</p>
+<p>The data frame comes with an attribute <code>"seed"</code>. If argument <code>seed</code> is <code>NULL</code>, the attribute is the value of <code><a href='https://rdrr.io/r/base/Random.html'>.Random.seed</a></code> before the simulation was started; otherwise it is the value of the <code>seed</code> argument with a <code>"kind"</code> attribute with value <code><a href='https://rdrr.io/r/base/list.html'>as.list(RNGkind())</a></code>.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='https://www.jstatsoft.org/v036/i03'>https://www.jstatsoft.org/v036/i03</a>.</p>
+    <p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='https://doi.org/10.18637/jss.v036.i03'>https://doi.org/10.18637/jss.v036.i03</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='rma.uni.html'>rma.uni</a></code>, <code><a href='rma.mv.html'>rma.mv</a></code></p></div>
@@ -229,7 +229,7 @@
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### simulate 10 sets of new outcomes based on the fitted model</span>
-<span class='no'>newdat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/simulate.html'>simulate</a></span>(<span class='no'>res</span>, <span class='kw'>nsim</span><span class='kw'>=</span><span class='fl'>10</span>, <span class='kw'>seed</span><span class='kw'>=</span><span class='fl'>1234</span>)
+<span class='no'>newdat</span> <span class='kw'>&lt;-</span> <span class='fu'>simulate</span>(<span class='no'>res</span>, <span class='kw'>nsim</span><span class='kw'>=</span><span class='fl'>10</span>, <span class='kw'>seed</span><span class='kw'>=</span><span class='fl'>1234</span>)
 <span class='no'>newdat</span></div><div class='output co'>#&gt;         sim_1       sim_2       sim_3      sim_4      sim_5       sim_6
 #&gt; 1  -1.6793004 -0.66301253 -0.25514894 -1.0869090 -1.6008315  0.70583300
 #&gt; 2  -0.5168313 -0.03077959 -1.44400787  0.3184048 -1.4378126 -1.52592474

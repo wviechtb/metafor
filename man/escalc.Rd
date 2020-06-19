@@ -389,105 +389,105 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
 }
 \references{
-   Aloe, A. M. (2014). An empirical investigation of partial effect sizes in meta-analysis of correlational data. \emph{Journal of General Psychology}, \bold{141}(1), 47--64. \url{https://doi.org/10.1080/00221309.2013.853021}
+   Aloe, A. M. (2014). An empirical investigation of partial effect sizes in meta-analysis of correlational data. \emph{Journal of General Psychology}, \bold{141}(1), 47--64. \verb{https://doi.org/10.1080/00221309.2013.853021}
 
-   Aloe, A. M., & Becker, B. J. (2012). An effect size for regression predictors in meta-analysis. \emph{Journal of Educational and Behavioral Statistics}, \bold{37}(2), 278--297. \url{https://doi.org/10.3102/1076998610396901}
+   Aloe, A. M., & Becker, B. J. (2012). An effect size for regression predictors in meta-analysis. \emph{Journal of Educational and Behavioral Statistics}, \bold{37}(2), 278--297. \verb{https://doi.org/10.3102/1076998610396901}
 
-   Aloe, A. M., & Thompson, C. G. (2013). The synthesis of partial effect sizes. \emph{Journal of the Society for Social Work and Research}, \bold{4}(4), 390--405. \url{https://doi.org/10.5243/jsswr.2013.24}
+   Aloe, A. M., & Thompson, C. G. (2013). The synthesis of partial effect sizes. \emph{Journal of the Society for Social Work and Research}, \bold{4}(4), 390--405. \verb{https://doi.org/10.5243/jsswr.2013.24}
 
-   Bagos, P. G., & Nikolopoulos, G. K. (2009). Mixed-effects Poisson regression models for meta-analysis of follow-up studies with constant or varying durations. \emph{The International Journal of Biostatistics}, \bold{5}(1). \url{https://doi.org/10.2202/1557-4679.1168}
+   Bagos, P. G., & Nikolopoulos, G. K. (2009). Mixed-effects Poisson regression models for meta-analysis of follow-up studies with constant or varying durations. \emph{The International Journal of Biostatistics}, \bold{5}(1). \verb{https://doi.org/10.2202/1557-4679.1168}
 
-   Becker, B. J. (1988). Synthesizing standardized mean-change measures. \emph{British Journal of Mathematical and Statistical Psychology}, \bold{41}(2), 257--278.  \url{https://doi.org/10.1111/j.2044-8317.1988.tb00901.x}
+   Becker, B. J. (1988). Synthesizing standardized mean-change measures. \emph{British Journal of Mathematical and Statistical Psychology}, \bold{41}(2), 257--278.  \verb{https://doi.org/10.1111/j.2044-8317.1988.tb00901.x}
 
-   Becker, M. P., & Balagtas, C. C. (1993). Marginal modeling of binary cross-over data. \emph{Biometrics}, \bold{49}(4), 997--1009. \url{https://doi.org/10.2307/2532242}
+   Becker, M. P., & Balagtas, C. C. (1993). Marginal modeling of binary cross-over data. \emph{Biometrics}, \bold{49}(4), 997--1009. \verb{https://doi.org/10.2307/2532242}
 
-   Bonett, D. G. (2002). Sample size requirements for testing and estimating coefficient alpha. \emph{Journal of Educational and Behavioral Statistics}, \bold{27}(4), 335--340. \url{https://doi.org/10.3102/10769986027004335}
+   Bonett, D. G. (2002). Sample size requirements for testing and estimating coefficient alpha. \emph{Journal of Educational and Behavioral Statistics}, \bold{27}(4), 335--340. \verb{https://doi.org/10.3102/10769986027004335}
 
-   Bonett, D. G. (2008). Confidence intervals for standardized linear contrasts of means. \emph{Psychological Methods}, \bold{13}(2), 99--109. \url{https://doi.org/10.1037/1082-989X.13.2.99}
+   Bonett, D. G. (2008). Confidence intervals for standardized linear contrasts of means. \emph{Psychological Methods}, \bold{13}(2), 99--109. \verb{https://doi.org/10.1037/1082-989X.13.2.99}
 
-   Bonett, D. G. (2009). Meta-analytic interval estimation for standardized and unstandardized mean differences. \emph{Psychological Methods}, \bold{14}(3), 225--238. \url{https://doi.org/10.1037/a0016619}
+   Bonett, D. G. (2009). Meta-analytic interval estimation for standardized and unstandardized mean differences. \emph{Psychological Methods}, \bold{14}(3), 225--238. \verb{https://doi.org/10.1037/a0016619}
 
-   Bonett, D. G. (2010). Varying coefficient meta-analytic methods for alpha reliability. \emph{Psychological Methods}, \bold{15}(4), 368--385. \url{https://doi.org/10.1037/a0020142}
+   Bonett, D. G. (2010). Varying coefficient meta-analytic methods for alpha reliability. \emph{Psychological Methods}, \bold{15}(4), 368--385. \verb{https://doi.org/10.1037/a0020142}
 
    Borenstein, M. (2009). Effect sizes for continuous data. In H. Cooper, L. V. Hedges, & J. C. Valentine (Eds.), \emph{The handbook of research synthesis and meta-analysis} (2nd ed., pp. 221--235). New York: Russell Sage Foundation.
 
-   Chinn, S. (2000). A simple method for converting an odds ratio to effect size for use in meta-analysis. \emph{Statistics in Medicine}, \bold{19}(22), 3127--3131. \url{https://doi.org/10.1002/1097-0258(20001130)19:22<3127::aid-sim784>3.0.co;2-m}
+   Chinn, S. (2000). A simple method for converting an odds ratio to effect size for use in meta-analysis. \emph{Statistics in Medicine}, \bold{19}(22), 3127--3131. \verb{https://doi.org/10.1002/1097-0258(20001130)19:22<3127::aid-sim784>3.0.co;2-m}
 
    Cox, D. R., & Snell, E. J. (1989). \emph{Analysis of binary data} (2nd ed.). London: Chapman & Hall.
 
-   Curtin, F., Elbourne, D., & Altman, D. G. (2002). Meta-analysis combining parallel and cross-over clinical trials. II: Binary outcomes. \emph{Statistics in Medicine}, \bold{21}(15), 2145--2159. \url{https://doi.org/10.1002/sim.1206}
+   Curtin, F., Elbourne, D., & Altman, D. G. (2002). Meta-analysis combining parallel and cross-over clinical trials. II: Binary outcomes. \emph{Statistics in Medicine}, \bold{21}(15), 2145--2159. \verb{https://doi.org/10.1002/sim.1206}
 
-   Elbourne, D. R., Altman, D. G., Higgins, J. P. T., Curtin, F., Worthington, H. V., & Vail, A. (2002). Meta-analyses involving cross-over trials: Methodological issues. \emph{International Journal of Epidemiology}, \bold{31}(1), 140--149. \url{https://doi.org/10.1093/ije/31.1.140}
+   Elbourne, D. R., Altman, D. G., Higgins, J. P. T., Curtin, F., Worthington, H. V., & Vail, A. (2002). Meta-analyses involving cross-over trials: Methodological issues. \emph{International Journal of Epidemiology}, \bold{31}(1), 140--149. \verb{https://doi.org/10.1093/ije/31.1.140}
 
-   Fagerland, M. W., Lydersen, S., & Laake, P. (2014). Recommended tests and confidence intervals for paired binomial proportions. \emph{Statistics in Medicine}, \bold{33}(16), 2850--2875. \url{https://doi.org/10.1002/sim.6148}
+   Fagerland, M. W., Lydersen, S., & Laake, P. (2014). Recommended tests and confidence intervals for paired binomial proportions. \emph{Statistics in Medicine}, \bold{33}(16), 2850--2875. \verb{https://doi.org/10.1002/sim.6148}
 
-   Fisher, R. A. (1921). On the \dQuote{probable error} of a coefficient of correlation deduced from a small sample. \emph{Metron}, \bold{1}, 1--32. \url{http://hdl.handle.net/2440/15169}
+   Fisher, R. A. (1921). On the \dQuote{probable error} of a coefficient of correlation deduced from a small sample. \emph{Metron}, \bold{1}, 1--32. \verb{http://hdl.handle.net/2440/15169}
 
    Fleiss, J. L., & Berlin, J. (2009). Effect sizes for dichotomous data. In H. Cooper, L. V. Hedges, & J. C. Valentine (Eds.), \emph{The handbook of research synthesis and meta-analysis} (2nd ed., pp. 237--253). New York: Russell Sage Foundation.
 
-   Freeman, M. F., & Tukey, J. W. (1950). Transformations related to the angular and the square root. \emph{Annals of Mathematical Statistics}, \bold{21}(4), 607--611. \url{https://doi.org/10.1214/aoms/1177729756}
+   Freeman, M. F., & Tukey, J. W. (1950). Transformations related to the angular and the square root. \emph{Annals of Mathematical Statistics}, \bold{21}(4), 607--611. \verb{https://doi.org/10.1214/aoms/1177729756}
 
-   Gibbons, R. D., Hedeker, D. R., & Davis, J. M. (1993). Estimation of effect size from a series of experiments involving paired comparisons. \emph{Journal of Educational Statistics}, \bold{18}(3), 271--279. \url{https://doi.org/10.3102/10769986018003271}
+   Gibbons, R. D., Hedeker, D. R., & Davis, J. M. (1993). Estimation of effect size from a series of experiments involving paired comparisons. \emph{Journal of Educational Statistics}, \bold{18}(3), 271--279. \verb{https://doi.org/10.3102/10769986018003271}
 
-   Hakstian, A. R., & Whalen, T. E. (1976). A k-sample significance test for independent alpha coefficients. \emph{Psychometrika}, \bold{41}(2), 219--231. \url{https://doi.org/10.1007/BF02291840}
+   Hakstian, A. R., & Whalen, T. E. (1976). A k-sample significance test for independent alpha coefficients. \emph{Psychometrika}, \bold{41}(2), 219--231. \verb{https://doi.org/10.1007/BF02291840}
 
-   Hasselblad, V., & Hedges, L. V. (1995). Meta-analysis of screening and diagnostic tests. Psychological Bulletin, 117(1), 167-178. \url{https://doi.org/10.1037/0033-2909.117.1.167}
+   Hasselblad, V., & Hedges, L. V. (1995). Meta-analysis of screening and diagnostic tests. Psychological Bulletin, 117(1), 167-178. \verb{https://doi.org/10.1037/0033-2909.117.1.167}
 
-   Hedges, L. V. (1981). Distribution theory for Glass's estimator of effect size and related estimators. \emph{Journal of Educational Statistics}, \bold{6}(2), 107--128. \url{https://doi.org/10.3102/10769986006002107}
+   Hedges, L. V. (1981). Distribution theory for Glass's estimator of effect size and related estimators. \emph{Journal of Educational Statistics}, \bold{6}(2), 107--128. \verb{https://doi.org/10.3102/10769986006002107}
 
-   Hedges, L. V. (1989). An unbiased correction for sampling error in validity generalization studies. \emph{Journal of Applied Psychology}, \bold{74}(3), 469--477. \url{https://doi.org/10.1037/0021-9010.74.3.469}
+   Hedges, L. V. (1989). An unbiased correction for sampling error in validity generalization studies. \emph{Journal of Applied Psychology}, \bold{74}(3), 469--477. \verb{https://doi.org/10.1037/0021-9010.74.3.469}
 
-   Hedges, L. V. (1983). A random effects model for effect sizes. \emph{Psychological Bulletin}, \bold{93}(2), 388--395. \url{https://doi.org/10.1037/0033-2909.93.2.388}
+   Hedges, L. V. (1983). A random effects model for effect sizes. \emph{Psychological Bulletin}, \bold{93}(2), 388--395. \verb{https://doi.org/10.1037/0033-2909.93.2.388}
 
-   Hedges, L. V., Gurevitch, J., & Curtis, P. S. (1999). The meta-analysis of response ratios in experimental ecology. \emph{Ecology}, \bold{80}(4), 1150--1156. \url{https://doi.org/10.1890/0012-9658(1999)080[1150:TMAORR]2.0.CO;2}
+   Hedges, L. V., Gurevitch, J., & Curtis, P. S. (1999). The meta-analysis of response ratios in experimental ecology. \emph{Ecology}, \bold{80}(4), 1150--1156. \verb{https://doi.org/10.1890/0012-9658(1999)080[1150:TMAORR]2.0.CO;2}
 
-   Higgins, J. P. T., Thomas, J., Chandler, J., Cumpston, M., Li, T., Page, M. J., & Welch, V. A. (Eds.) (2019). \emph{Cochrane handbook for systematic reviews of interventions} (2nd ed.). Chichester, UK: Wiley. \url{https://training.cochrane.org/handbook}
+   Higgins, J. P. T., Thomas, J., Chandler, J., Cumpston, M., Li, T., Page, M. J., & Welch, V. A. (Eds.) (2019). \emph{Cochrane handbook for systematic reviews of interventions} (2nd ed.). Chichester, UK: Wiley. \verb{https://training.cochrane.org/handbook}
 
-   Jacobs, P., & Viechtbauer, W. (2017). Estimation of the biserial correlation and its sampling variance for use in meta-analysis. \emph{Research Synthesis Methods}, \bold{8}(2), 161--180. \url{https://doi.org/10.1002/jrsm.1218}
+   Jacobs, P., & Viechtbauer, W. (2017). Estimation of the biserial correlation and its sampling variance for use in meta-analysis. \emph{Research Synthesis Methods}, \bold{8}(2), 161--180. \verb{https://doi.org/10.1002/jrsm.1218}
 
-   Kirk, D. B. (1973). On the numerical approximation of the bivariate normal (tetrachoric) correlation coefficient. \emph{Psychometrika}, \bold{38}(2), 259--268. \url{https://doi.org/10.1007/BF02291118}
+   Kirk, D. B. (1973). On the numerical approximation of the bivariate normal (tetrachoric) correlation coefficient. \emph{Psychometrika}, \bold{38}(2), 259--268. \verb{https://doi.org/10.1007/BF02291118}
 
-   Lajeunesse, M. J. (2011). On the meta-analysis of response ratios for studies with correlated and multi-group designs. \emph{Ecology}, \bold{92}(11), 2049--2055. \url{https://doi.org/10.1890/11-0423.1}
+   Lajeunesse, M. J. (2011). On the meta-analysis of response ratios for studies with correlated and multi-group designs. \emph{Ecology}, \bold{92}(11), 2049--2055. \verb{https://doi.org/10.1890/11-0423.1}
 
-   May, W. L., & Johnson, W. D. (1997). Confidence intervals for differences in correlated binary proportions. \emph{Statistics in Medicine}, \bold{16}(18), 2127--2136. \url{https://doi.org/10.1002/(SICI)1097-0258(19970930)16:18<2127::AID-SIM633>3.0.CO;2-W}
+   May, W. L., & Johnson, W. D. (1997). Confidence intervals for differences in correlated binary proportions. \emph{Statistics in Medicine}, \bold{16}(18), 2127--2136. \verb{https://doi.org/10.1002/(SICI)1097-0258(19970930)16:18<2127::AID-SIM633>3.0.CO;2-W}
 
-   Morris, S. B. (2000). Distribution of the standardized mean change effect size for meta-analysis on repeated measures. \emph{British Journal of Mathematical and Statistical Psychology}, \bold{53}(1), 17--29. \url{https://doi.org/10.1348/000711000159150}
+   Morris, S. B. (2000). Distribution of the standardized mean change effect size for meta-analysis on repeated measures. \emph{British Journal of Mathematical and Statistical Psychology}, \bold{53}(1), 17--29. \verb{https://doi.org/10.1348/000711000159150}
 
-   Morris, S. B., & DeShon, R. P. (2002). Combining effect size estimates in meta-analysis with repeated measures and independent-groups designs. \emph{Psychological Methods}, \bold{7}(1), 105--125. \url{https://doi.org/10.1037/1082-989x.7.1.105}
+   Morris, S. B., & DeShon, R. P. (2002). Combining effect size estimates in meta-analysis with repeated measures and independent-groups designs. \emph{Psychological Methods}, \bold{7}(1), 105--125. \verb{https://doi.org/10.1037/1082-989x.7.1.105}
 
-   Nakagawa, S., Poulin, R., Mengersen, K., Reinhold, K., Engqvist, L., Lagisz, M., & Senior, A. M. (2015). Meta-analysis of variation: Ecological and evolutionary applications and beyond. \emph{Methods in Ecology and Evolution}, \bold{6}(2), 143--152. \url{https://doi.org/10.1111/2041-210x.12309}
+   Nakagawa, S., Poulin, R., Mengersen, K., Reinhold, K., Engqvist, L., Lagisz, M., & Senior, A. M. (2015). Meta-analysis of variation: Ecological and evolutionary applications and beyond. \emph{Methods in Ecology and Evolution}, \bold{6}(2), 143--152. \verb{https://doi.org/10.1111/2041-210x.12309}
 
-   Newcombe, R. G. (1998). Improved confidence intervals for the difference between binomial proportions based on paired data. \emph{Statistics in Medicine}, \bold{17}(22), 2635--2650. \url{https://doi.org/10.1002/(SICI)1097-0258(19981130)17:22<2635::AID-SIM954>3.0.CO;2-C}
+   Newcombe, R. G. (1998). Improved confidence intervals for the difference between binomial proportions based on paired data. \emph{Statistics in Medicine}, \bold{17}(22), 2635--2650. \verb{https://doi.org/10.1002/(SICI)1097-0258(19981130)17:22<2635::AID-SIM954>3.0.CO;2-C}
 
-   Olkin, I., & Pratt, J. W. (1958). Unbiased estimation of certain correlation coefficients. \emph{Annals of Mathematical Statistics}, \bold{29}(1), 201--211. \url{https://doi.org/10.1214/aoms/1177706717}
+   Olkin, I., & Pratt, J. W. (1958). Unbiased estimation of certain correlation coefficients. \emph{Annals of Mathematical Statistics}, \bold{29}(1), 201--211. \verb{https://doi.org/10.1214/aoms/1177706717}
 
-   Pearson, K. (1900). Mathematical contributions to the theory of evolution. VII. On the correlation of characters not quantitatively measurable. \emph{Philosophical Transactions of the Royal Society of London, Series A}, \bold{195}, 1--47. \url{https://doi.org/10.1098/rsta.1900.0022}
+   Pearson, K. (1900). Mathematical contributions to the theory of evolution. VII. On the correlation of characters not quantitatively measurable. \emph{Philosophical Transactions of the Royal Society of London, Series A}, \bold{195}, 1--47. \verb{https://doi.org/10.1098/rsta.1900.0022}
 
-   Pearson, K. (1909). On a new method of determining correlation between a measured character A, and a character B, of which only the percentage of cases wherein B exceeds (or falls short of) a given intensity is recorded for each grade of A. \emph{Biometrika}, \bold{7}(1/2), 96--105. \url{https://doi.org/10.1093/biomet/7.1-2.96}
+   Pearson, K. (1909). On a new method of determining correlation between a measured character A, and a character B, of which only the percentage of cases wherein B exceeds (or falls short of) a given intensity is recorded for each grade of A. \emph{Biometrika}, \bold{7}(1/2), 96--105. \verb{https://doi.org/10.1093/biomet/7.1-2.96}
 
-   Raudenbush, S. W., & Bryk, A. S. (1987). Examining correlates of diversity. \emph{Journal of Educational Statistics}, \bold{12}(3), 241--269. \url{https://doi.org/10.3102/10769986012003241}
+   Raudenbush, S. W., & Bryk, A. S. (1987). Examining correlates of diversity. \emph{Journal of Educational Statistics}, \bold{12}(3), 241--269. \verb{https://doi.org/10.3102/10769986012003241}
 
    Rothman, K. J., Greenland, S., & Lash, T. L. (2008). \emph{Modern epidemiology} (3rd ed.). Philadelphia: Lippincott Williams & Wilkins.
 
-   \enc{Rücker}{Ruecker}, G., Schwarzer, G., Carpenter, J., & Olkin, I. (2009). Why add anything to nothing? The arcsine difference as a measure of treatment effect in meta-analysis with zero cells. \emph{Statistics in Medicine}, \bold{28}(5), 721--738. \url{https://doi.org/10.1002/sim.3511}
+   \enc{Rücker}{Ruecker}, G., Schwarzer, G., Carpenter, J., & Olkin, I. (2009). Why add anything to nothing? The arcsine difference as a measure of treatment effect in meta-analysis with zero cells. \emph{Statistics in Medicine}, \bold{28}(5), 721--738. \verb{https://doi.org/10.1002/sim.3511}
 
-   \enc{Sánchez-Meca}{Sanchez-Meca}, J., \enc{Marín-Martínez}{Marin-Martinez}, F., & \enc{Chacón-Moscoso}{Chacon-Moscoso}, S. (2003). Effect-size indices for dichotomized outcomes in meta-analysis. \emph{Psychological Methods}, \bold{8}(4), 448--467. \url{https://doi.org/10.1037/1082-989X.8.4.448}
+   \enc{Sánchez-Meca}{Sanchez-Meca}, J., \enc{Marín-Martínez}{Marin-Martinez}, F., & \enc{Chacón-Moscoso}{Chacon-Moscoso}, S. (2003). Effect-size indices for dichotomized outcomes in meta-analysis. \emph{Psychological Methods}, \bold{8}(4), 448--467. \verb{https://doi.org/10.1037/1082-989X.8.4.448}
 
-   Soper, H. E. (1914). On the probable error of the bi-serial expression for the correlation coefficient. \emph{Biometrika}, \bold{10}(2/3), 384--390. \url{https://doi.org/10.1093/biomet/10.2-3.384}
+   Soper, H. E. (1914). On the probable error of the bi-serial expression for the correlation coefficient. \emph{Biometrika}, \bold{10}(2/3), 384--390. \verb{https://doi.org/10.1093/biomet/10.2-3.384}
 
-   Stedman, M. R., Curtin, F., Elbourne, D. R., Kesselheim, A. S., & Brookhart, M. A. (2011). Meta-analyses involving cross-over trials: Methodological issues. \emph{International Journal of Epidemiology}, \bold{40}(6), 1732--1734. \url{https://doi.org/10.1093/ije/dyp345}
+   Stedman, M. R., Curtin, F., Elbourne, D. R., Kesselheim, A. S., & Brookhart, M. A. (2011). Meta-analyses involving cross-over trials: Methodological issues. \emph{International Journal of Epidemiology}, \bold{40}(6), 1732--1734. \verb{https://doi.org/10.1093/ije/dyp345}
 
-   Tate, R. F. (1954). Correlation between a discrete and a continuous variable: Point-biserial correlation. \emph{Annals of Mathematical Statistics}, \bold{25}(3), 603--607. \url{https://doi.org/10.1214/aoms/1177728730}
+   Tate, R. F. (1954). Correlation between a discrete and a continuous variable: Point-biserial correlation. \emph{Annals of Mathematical Statistics}, \bold{25}(3), 603--607. \verb{https://doi.org/10.1214/aoms/1177728730}
 
-   Vacha-Haase, T. (1998). Reliability generalization: Exploring variance in measurement error affecting score reliability across studies. \emph{Educational and Psychological Measurement}, \bold{58}(1), 6--20. \url{https://doi.org/10.1177/0013164498058001002}
+   Vacha-Haase, T. (1998). Reliability generalization: Exploring variance in measurement error affecting score reliability across studies. \emph{Educational and Psychological Measurement}, \bold{58}(1), 6--20. \verb{https://doi.org/10.1177/0013164498058001002}
 
-   Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{https://doi.org/10.18637/jss.v036.i03}
+   Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}
 
-   Yule, G. U. (1912). On the methods of measuring association between two attributes. \emph{Journal of the Royal Statistical Society}, \bold{75}(6), 579--652. \url{https://doi.org/10.2307/2340126}
+   Yule, G. U. (1912). On the methods of measuring association between two attributes. \emph{Journal of the Royal Statistical Society}, \bold{75}(6), 579--652. \verb{https://doi.org/10.2307/2340126}
 
-   Yusuf, S., Peto, R., Lewis, J., Collins, R., & Sleight, P. (1985). Beta blockade during and after myocardial infarction: An overview of the randomized trials. \emph{Progress in Cardiovascular Disease}, \bold{27}(5), 335--371. \url{https://doi.org/10.1016/s0033-0620(85)80003-7}
+   Yusuf, S., Peto, R., Lewis, J., Collins, R., & Sleight, P. (1985). Beta blockade during and after myocardial infarction: An overview of the randomized trials. \emph{Progress in Cardiovascular Disease}, \bold{27}(5), 335--371. \verb{https://doi.org/10.1016/s0033-0620(85)80003-7}
 
-   Zou, G. Y. (2007). One relative risk versus two odds ratios: Implications for meta-analyses involving paired and unpaired binary data. \emph{Clinical Trials}, \bold{4}(1), 25--31. \url{https://doi.org/10.1177/1740774506075667}
+   Zou, G. Y. (2007). One relative risk versus two odds ratios: Implications for meta-analyses involving paired and unpaired binary data. \emph{Clinical Trials}, \bold{4}(1), 25--31. \verb{https://doi.org/10.1177/1740774506075667}
 }
 \seealso{
    \code{\link{print.escalc}}, \code{\link{summary.escalc}}, \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, \code{\link{rma.glmm}}, \code{\link{rma.mv}}

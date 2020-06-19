@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-19</span>
       </span>
     </div>
 
@@ -202,7 +202,7 @@
     </tr>
     <tr>
       <th>mods</th>
-      <td><p>optional argument to include one or more moderators in the model. A single moderator can be given as a vector of length \(k\) specifying the values of the moderator. Multiple moderators are specified by giving a matrix with \(k\) rows and as many columns as there are moderator variables. Alternatively, a model <code><a href='https://rdrr.io/r/stats/formula.html'>formula</a></code> can be used to specify the model. See &#8216;Details&#8217;.</p></td>
+      <td><p>optional argument to include one or more moderators in the model. A single moderator can be given as a vector of length \(k\) specifying the values of the moderator. Multiple moderators are specified by giving a matrix with \(k\) rows and as many columns as there are moderator variables. Alternatively, a model <code><a href='formula.rma.html'>formula</a></code> can be used to specify the model. See &#8216;Details&#8217;.</p></td>
     </tr>
     <tr>
       <th>measure</th>
@@ -304,7 +304,7 @@
 <p>When analyzing proportions (i.e., <code>measure="PLO"</code>) or incidence rates (i.e., <code>measure="IRLN"</code>) of individual groups, the model type is always a (mixed-effects) logistic or Poisson regression model, respectively (i.e., the <code>model</code> argument is not relevant here).</p>
 <p>Aside from choosing the general model type, one has to decide whether to fit a fixed- or random-effects model to the data. A <em>fixed-effects model</em> is fitted by setting <code>method="FE"</code>. A <em>random-effects model</em> is fitted by setting <code>method="ML"</code> (the default). Note that random-effects models with dichotomous data are often referred to as &#8216;binomial-normal&#8217; models in the meta-analytic literature. Analogously, for event count data, such models could be referred to as &#8216;Poisson-normal&#8217; models.</p>
 <p>One or more moderators can be included in all of these models via the <code>mods</code> argument. A single moderator can be given as a (row or column) vector of length \(k\) specifying the values of the moderator. Multiple moderators are specified by giving an appropriate model matrix (i.e., \(X\)) with \(k\) rows and as many columns as there are moderator variables (e.g., <code>mods = cbind(mod1, mod2, mod3)</code>, where <code>mod1</code>, <code>mod2</code>, and <code>mod3</code> correspond to the names of the variables for three moderator variables). The intercept is added to the model matrix by default unless <code>intercept=FALSE</code>.</p>
-<p>Alternatively, one can use the standard <code><a href='https://rdrr.io/r/stats/formula.html'>formula</a></code> syntax to specify the model. In this case, the <code>mods</code> argument should be set equal to a one-sided formula of the form <code>mods = ~ model</code> (e.g., <code>mods = ~ mod1 + mod2 + mod3</code>). Interactions, polynomial terms, and factors can be easily added to the model in this manner. When specifying a model formula via the <code>mods</code> argument, the <code>intercept</code> argument is ignored. Instead, the inclusion/exclusion of the intercept is controlled by the specified formula (e.g., <code>mods = ~ mod1 + mod2 + mod3 - 1</code> would lead to the removal of the intercept). With moderators, a <em>fixed-effects with moderators model</em> is then fitted by setting <code>method="FE"</code>, while a <em>mixed-effects model</em> is fitted by setting <code>method="ML"</code>.</p>
+<p>Alternatively, one can use the standard <code><a href='formula.rma.html'>formula</a></code> syntax to specify the model. In this case, the <code>mods</code> argument should be set equal to a one-sided formula of the form <code>mods = ~ model</code> (e.g., <code>mods = ~ mod1 + mod2 + mod3</code>). Interactions, polynomial terms, and factors can be easily added to the model in this manner. When specifying a model formula via the <code>mods</code> argument, the <code>intercept</code> argument is ignored. Instead, the inclusion/exclusion of the intercept is controlled by the specified formula (e.g., <code>mods = ~ mod1 + mod2 + mod3 - 1</code> would lead to the removal of the intercept). With moderators, a <em>fixed-effects with moderators model</em> is then fitted by setting <code>method="FE"</code>, while a <em>mixed-effects model</em> is fitted by setting <code>method="ML"</code>.</p>
 <p><b>Fixed-, Saturated-, and Random/Mixed-Effects Models</b></p>
 <p>When fitting a particular model, actually up to three different models are fitted within the function:</p><ul>
 <li><p>the fixed-effects model (i.e., where \(\tau^2\) is set to 0),</p></li>
@@ -374,12 +374,12 @@
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Agresti, A. (2002). <em>Categorical data analysis</em> (2nd. ed). Hoboken, NJ: Wiley.</p>
-<p>Bagos, P. G., &amp; Nikolopoulos, G. K. (2009). Mixed-effects Poisson regression models for meta-analysis of follow-up studies with constant or varying durations. <em>The International Journal of Biostatistics</em>, <b>5</b>(1), article 21.</p>
-<p>van Houwelingen, H. C., Zwinderman, K. H., &amp; Stijnen, T. (1993). A bivariate approach to meta-analysis. <em>Statistics in Medicine</em>, <b>12</b>, 2273--2284.</p>
-<p>Liao, J. G., &amp; Rosen, O. (2001). Fast and stable algorithms for computing and sampling from the noncentral hypergeometric distribution. <em>American Statistician</em>, <b>55</b>, 366--369.</p>
-<p>Stijnen, T., Hamza, T. H., &amp; Ozdemir, P. (2010). Random effects meta-analysis of event outcome in the framework of the generalized linear mixed model with applications in sparse data. <em>Statistics in Medicine</em>, <b>29</b>, 3046--3067.</p>
-<p>Turner, R. M., Omar, R. Z., Yang, M., Goldstein, H., &amp; Thompson, S. G. (2000). A multilevel model framework for meta-analysis of clinical trials with binary outcomes. <em>Statistics in Medicine</em>, <b>19</b>, 3417--3432.</p>
-<p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='https://www.jstatsoft.org/v036/i03'>https://www.jstatsoft.org/v036/i03</a>.</p>
+<p>Bagos, P. G., &amp; Nikolopoulos, G. K. (2009). Mixed-effects Poisson regression models for meta-analysis of follow-up studies with constant or varying durations. <em>The International Journal of Biostatistics</em>, <b>5</b>(1). <a href='https://doi.org/10.2202/1557-4679.1168'>https://doi.org/10.2202/1557-4679.1168</a></p>
+<p>van Houwelingen, H. C., Zwinderman, K. H., &amp; Stijnen, T. (1993). A bivariate approach to meta-analysis. <em>Statistics in Medicine</em>, <b>12</b>(24), 2273--2284. <a href='https://doi.org/10.1002/sim.4780122405'>https://doi.org/10.1002/sim.4780122405</a></p>
+<p>Liao, J. G., &amp; Rosen, O. (2001). Fast and stable algorithms for computing and sampling from the noncentral hypergeometric distribution. <em>American Statistician</em>, <b>55</b>(4), 366--369. <a href='https://doi.org/10.1198/000313001753272547'>https://doi.org/10.1198/000313001753272547</a></p>
+<p>Stijnen, T., Hamza, T. H., &amp; Ozdemir, P. (2010). Random effects meta-analysis of event outcome in the framework of the generalized linear mixed model with applications in sparse data. <em>Statistics in Medicine</em>, <b>29</b>(29), 3046--3067. <a href='https://doi.org/10.1002/sim.4040'>https://doi.org/10.1002/sim.4040</a></p>
+<p>Turner, R. M., Omar, R. Z., Yang, M., Goldstein, H., &amp; Thompson, S. G. (2000). A multilevel model framework for meta-analysis of clinical trials with binary outcomes. <em>Statistics in Medicine</em>, <b>19</b>(24), 3417--3432. <a href='https://doi.org/10.1002/1097-0258(20001230)19:24&lt;3417::aid-sim614&gt;3.0.co;2-l'>https://doi.org/10.1002/1097-0258(20001230)19:24&lt;3417::aid-sim614&gt;3.0.co;2-l</a></p>
+<p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='https://doi.org/10.18637/jss.v036.i03'>https://doi.org/10.18637/jss.v036.i03</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='rma.uni.html'>rma.uni</a></code>, <code><a href='rma.mh.html'>rma.mh</a></code>, <code><a href='rma.peto.html'>rma.peto</a></code>, and <code><a href='rma.mv.html'>rma.mv</a></code> for other model fitting functions.</p>

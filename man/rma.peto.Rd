@@ -81,15 +81,15 @@ rma.peto(ai, bi, ci, di, n1i, n2i,
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
 }
 \references{
-   Bradburn, M. J., Deeks, J. J., Berlin, J. A., & Localio, A. R. (2007). Much ado about nothing: A comparison of the performance of meta-analytical methods with rare events. \emph{Statistics in Medicine}, \bold{26}(1), 53--77. \url{https://doi.org/10.1002/sim.2528}
+   Bradburn, M. J., Deeks, J. J., Berlin, J. A., & Localio, A. R. (2007). Much ado about nothing: A comparison of the performance of meta-analytical methods with rare events. \emph{Statistics in Medicine}, \bold{26}(1), 53--77. \verb{https://doi.org/10.1002/sim.2528}
 
-   Greenland, S., & Salvan, A. (1990). Bias in the one-step method for pooling study results. \emph{Statistics in Medicine}, \bold{9}(3), 247--252. \url{https://doi.org/10.1002/sim.4780090307}
+   Greenland, S., & Salvan, A. (1990). Bias in the one-step method for pooling study results. \emph{Statistics in Medicine}, \bold{9}(3), 247--252. \verb{https://doi.org/10.1002/sim.4780090307}
 
-   Sweeting, M. J., Sutton, A. J., & Lambert, P. C. (2004). What to add to nothing? Use and avoidance of continuity corrections in meta-analysis of sparse data. \emph{Statistics in Medicine}, \bold{23}(9), 1351--1375. \url{https://doi.org/10.1002/sim.1761}
+   Sweeting, M. J., Sutton, A. J., & Lambert, P. C. (2004). What to add to nothing? Use and avoidance of continuity corrections in meta-analysis of sparse data. \emph{Statistics in Medicine}, \bold{23}(9), 1351--1375. \verb{https://doi.org/10.1002/sim.1761}
 
-   Yusuf, S., Peto, R., Lewis, J., Collins, R., & Sleight, P. (1985). Beta blockade during and after myocardial infarction: An overview of the randomized trials. \emph{Progress in Cardiovascular Disease}, \bold{27}(5), 335--371. \url{https://doi.org/10.1016/s0033-0620(85)80003-7}
+   Yusuf, S., Peto, R., Lewis, J., Collins, R., & Sleight, P. (1985). Beta blockade during and after myocardial infarction: An overview of the randomized trials. \emph{Progress in Cardiovascular Disease}, \bold{27}(5), 335--371. \verb{https://doi.org/10.1016/s0033-0620(85)80003-7}
 
-   Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{https://doi.org/10.18637/jss.v036.i03}
+   Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}
 }
 \seealso{
    \code{\link{rma.uni}}, \code{\link{rma.glmm}}, \code{\link{rma.mh}}, and \code{\link{rma.mv}} for other model fitting functions.

@@ -26,17 +26,17 @@ dat.egger2001
    Egger, M., Davey Smith, G., & Altman, D. G. (Eds.) (2001). \emph{Systematic reviews in health care: Meta-analysis in context} (2nd ed.). London: BMJ Books.
 }
 \references{
-   Egger, M., & Davey Smith, G. (1995). Misleading meta-analysis: Lessons from \dQuote{an effective, safe, simple} intervention that wasn't. \emph{British Medical Journal}, \bold{310}(6982), 752--754. \url{https://doi.org/10.1136/bmj.310.6982.752}
+   Egger, M., & Davey Smith, G. (1995). Misleading meta-analysis: Lessons from \dQuote{an effective, safe, simple} intervention that wasn't. \emph{British Medical Journal}, \bold{310}(6982), 752--754. \verb{https://doi.org/10.1136/bmj.310.6982.752}
 
-   Horner, S. M. (1992). Efficacy of intravenous magnesium in acute myocardial infarction in reducing arrhythmias and mortality: Meta-analysis of magnesium in acute myocardial infarction. \emph{Circulation}, \bold{86}(3), 774--779. \url{https://doi.org/10.1161/01.cir.86.3.774}
+   Horner, S. M. (1992). Efficacy of intravenous magnesium in acute myocardial infarction in reducing arrhythmias and mortality: Meta-analysis of magnesium in acute myocardial infarction. \emph{Circulation}, \bold{86}(3), 774--779. \verb{https://doi.org/10.1161/01.cir.86.3.774}
 
-   ISIS-4 Collaborative Group (1995). ISIS-4: A randomised factorial trial assessing early oral captopril, oral mononitrate, and intravenous magnesium sulphate in 58,050 patients with suspected acute myocardial infarction. \emph{Lancet}, \bold{345}(8951), 669--685. \url{https://doi.org/10.1016/S0140-6736(95)90865-X}
+   ISIS-4 Collaborative Group (1995). ISIS-4: A randomised factorial trial assessing early oral captopril, oral mononitrate, and intravenous magnesium sulphate in 58,050 patients with suspected acute myocardial infarction. \emph{Lancet}, \bold{345}(8951), 669--685. \verb{https://doi.org/10.1016/S0140-6736(95)90865-X}
 
-   Teo, K. K., Yusuf, S., Collins, R., Held, P. H., & Peto, R. (1991). Effects of intravenous magnesium in suspected acute myocardial infarction: Overview of randomised trials. \emph{British Medical Journal}, \bold{303}(6816), 1499--1503. \url{https://doi.org/10.1136/bmj.303.6816.1499}
+   Teo, K. K., Yusuf, S., Collins, R., Held, P. H., & Peto, R. (1991). Effects of intravenous magnesium in suspected acute myocardial infarction: Overview of randomised trials. \emph{British Medical Journal}, \bold{303}(6816), 1499--1503. \verb{https://doi.org/10.1136/bmj.303.6816.1499}
 
-   Woods, K. L., Fletcher, S., Roffe, C., & Haider, Y. (1992). Intravenous magnesium sulphate in suspected acute myocardial infarction: Results of the second Leicester Intravenous Magnesium Intervention Trial (LIMIT-2). \emph{Lancet}, \bold{339}(8809), 1553--1558. \url{https://doi.org/10.1016/0140-6736(92)91828-v}
+   Woods, K. L., Fletcher, S., Roffe, C., & Haider, Y. (1992). Intravenous magnesium sulphate in suspected acute myocardial infarction: Results of the second Leicester Intravenous Magnesium Intervention Trial (LIMIT-2). \emph{Lancet}, \bold{339}(8809), 1553--1558. \verb{https://doi.org/10.1016/0140-6736(92)91828-v}
 
-   Yusuf, S., Teo, K., & Woods, K. (1993). Intravenous magnesium in acute myocardial infarction: An effective, safe, simple, and inexpensive treatment. \emph{Circulation}, \bold{87}(6), 2043--2046. \url{https://doi.org/10.1161/01.cir.87.6.2043}
+   Yusuf, S., Teo, K., & Woods, K. (1993). Intravenous magnesium in acute myocardial infarction: An effective, safe, simple, and inexpensive treatment. \emph{Circulation}, \bold{87}(6), 2043--2046. \verb{https://doi.org/10.1161/01.cir.87.6.2043}
 }
 \seealso{
    \code{\link{dat.li2007}}

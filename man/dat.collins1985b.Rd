@@ -28,7 +28,7 @@
    The 9 studies in this dataset examined the effects of diuretics in pregnancy on various outcomes, including the presence of any form of pre-eclampsia, perinatal death, stillbirth, and neonatal death.
 }
 \source{
-   Collins, R., Yusuf, S., & Peto, R. (1985). Overview of randomised trials of diuretics in pregnancy. \emph{British Medical Journal}, \bold{290}(6461), 17--23. \url{https://doi.org/10.1136/bmj.290.6461.17}
+   Collins, R., Yusuf, S., & Peto, R. (1985). Overview of randomised trials of diuretics in pregnancy. \emph{British Medical Journal}, \bold{290}(6461), 17--23. \verb{https://doi.org/10.1136/bmj.290.6461.17}
 }
 \examples{
 ### copy data into 'dat'

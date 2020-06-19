@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-19</span>
       </span>
     </div>
 
@@ -136,7 +136,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for rma</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/anova.html'>anova</a></span>(<span class='no'>object</span>, <span class='no'>object2</span>, <span class='no'>btt</span>, <span class='no'>L</span>, <span class='no'>digits</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>anova</span>(<span class='no'>object</span>, <span class='no'>object2</span>, <span class='no'>btt</span>, <span class='no'>L</span>, <span class='no'>digits</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -213,12 +213,12 @@
     <p>In principle, one can consider likelihood ratio tests for the amount of (residual) heterogeneity in random- and mixed-effects models. The full model should then be fitted with either <code>method="ML"</code> or <code>method="REML"</code> and the reduced model with <code>method="FE"</code>. The p-value from that test is based on a chi-square distribution with 1 degree of freedom, but actually needs to be adjusted for the fact that the parameter (i.e., \(\tau^2\)) falls on the boundary of the parameter space under the null hypothesis. Moreover, the Q-test usually keeps better control of the Type I error rate and therefore should be preferred (see Viechtbauer, 2007, for more details).</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Hardy, R. J., &amp; Thompson, S. G. (1996). A likelihood approach to meta-analysis with random effects. <em>Statistics in Medicine</em>, <b>15</b>, 619--629.</p>
-<p>Huizenga, H. M., Visser, I., &amp; Dolan, C. V. (2011). Testing overall and moderator effects in random effects meta-regression. <em>British Journal of Mathematical and Statistical Psychology</em>, <b>64</b>, 1--19.</p>
-<p>López-López, J. A., Marín-Martínez, F., Sánchez-Meca, J., Van den Noortgate, W., &amp; Viechtbauer, W. (2014). Estimation of the predictive power of the model in mixed-effects meta-regression: A simulation study. <em>British Journal of Mathematical and Statistical Psychology</em>, <b>67</b>, 30--48.</p>
+    <p>Hardy, R. J., &amp; Thompson, S. G. (1996). A likelihood approach to meta-analysis with random effects. <em>Statistics in Medicine</em>, <b>15</b>(6), 619--629. <a href='https://doi.org/10.1002/(sici)1097-0258(19960330)15:6%3C619::aid-sim188%3E3.0.co;2-a'>https://doi.org/10.1002/(sici)1097-0258(19960330)15:6%3C619::aid-sim188%3E3.0.co;2-a</a></p>
+<p>Huizenga, H. M., Visser, I., &amp; Dolan, C. V. (2011). Testing overall and moderator effects in random effects meta-regression. <em>British Journal of Mathematical and Statistical Psychology</em>, <b>64</b>(1), 1--19. <a href='https://doi.org/10.1348/000711010X522687'>https://doi.org/10.1348/000711010X522687</a></p>
+<p>López-López, J. A., Marín-Martínez, F., Sánchez-Meca, J., Van den Noortgate, W., &amp; Viechtbauer, W. (2014). Estimation of the predictive power of the model in mixed-effects meta-regression: A simulation study. <em>British Journal of Mathematical and Statistical Psychology</em>, <b>67</b>(1), 30--48. <a href='https://doi.org/10.1111/bmsp.12002'>https://doi.org/10.1111/bmsp.12002</a></p>
 <p>Raudenbush, S. W. (2009). Analyzing effect sizes: Random effects models. In H. Cooper, L. V. Hedges, &amp; J. C. Valentine (Eds.), <em>The handbook of research synthesis and meta-analysis</em> (2nd ed., pp. 295--315). New York: Russell Sage Foundation.</p>
-<p>Viechtbauer, W. (2007). Hypothesis tests for population heterogeneity in meta-analysis. <em>British Journal of Mathematical and Statistical Psychology</em>, <b>60</b>, 29--60.</p>
-<p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='https://www.jstatsoft.org/v036/i03'>https://www.jstatsoft.org/v036/i03</a>.</p>
+<p>Viechtbauer, W. (2007). Hypothesis tests for population heterogeneity in meta-analysis. <em>British Journal of Mathematical and Statistical Psychology</em>, <b>60</b>(1), 29--60. <a href='https://doi.org/10.1348/000711005X64042'>https://doi.org/10.1348/000711005X64042</a></p>
+<p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='https://doi.org/10.18637/jss.v036.i03'>https://doi.org/10.18637/jss.v036.i03</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='rma.uni.html'>rma.uni</a></code>, <code><a href='print.anova.rma.html'>print.anova.rma</a></code></p></div>
@@ -234,12 +234,12 @@
 <span class='no'>res2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>ablat</span> + <span class='no'>year</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"ML"</span>)
 
 <span class='co'>### Wald-type test of the two moderators</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/anova.html'>anova</a></span>(<span class='no'>res2</span>)</div><div class='output co'>#&gt; 
+<span class='fu'>anova</span>(<span class='no'>res2</span>)</div><div class='output co'>#&gt; 
 #&gt; Test of Moderators (coefficients 2:3):
 #&gt; QM(df = 2) = 33.9192, p-val &lt; .0001
 #&gt; </div><div class='input'>
 <span class='co'>### alternative way of specifying the same test</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/anova.html'>anova</a></span>(<span class='no'>res2</span>, <span class='kw'>L</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>0</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>1</span>)))</div><div class='output co'>#&gt; 
+<span class='fu'>anova</span>(<span class='no'>res2</span>, <span class='kw'>L</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>0</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>1</span>)))</div><div class='output co'>#&gt; 
 #&gt; Hypotheses:             
 #&gt; 1: ablat = 0 
 #&gt; 2:  year = 0 
@@ -253,7 +253,7 @@
 #&gt; QM(df = 2) = 33.9192, p-val &lt; .0001
 #&gt; </div><div class='input'>
 <span class='co'>### corresponding likelihood ratio test</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/anova.html'>anova</a></span>(<span class='no'>res1</span>, <span class='no'>res2</span>)</div><div class='output co'>#&gt; 
+<span class='fu'>anova</span>(<span class='no'>res1</span>, <span class='no'>res2</span>)</div><div class='output co'>#&gt; 
 #&gt;         df     AIC     BIC    AICc   logLik     LRT   pval       QE  tau^2 
 #&gt; Full     4 23.2922 25.5520 28.2922  -7.6461                 28.3251 0.0269 
 #&gt; Reduced  2 29.3302 30.4601 30.5302 -12.6651 10.0379 0.0066 152.2330 0.2800 
@@ -262,7 +262,7 @@
 #&gt; Reduced 90.3948% 
 #&gt; </div><div class='input'>
 <span class='co'>### test of a linear combination</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/anova.html'>anova</a></span>(<span class='no'>res2</span>, <span class='kw'>L</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>35</span>,<span class='fl'>1970</span>))</div><div class='output co'>#&gt; 
+<span class='fu'>anova</span>(<span class='no'>res2</span>, <span class='kw'>L</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>35</span>,<span class='fl'>1970</span>))</div><div class='output co'>#&gt; 
 #&gt; Hypothesis:                                      
 #&gt; 1: intrcpt + 35*ablat + 1970*year = 0 
 #&gt; 
@@ -274,7 +274,7 @@
 #&gt; QM(df = 1) = 81.0700, p-val &lt; .0001
 #&gt; </div><div class='input'>
 <span class='co'>### use predict() to obtain the same linear combination (with its CI)</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>res2</span>, <span class='kw'>newmods</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>35</span>,<span class='fl'>1970</span>))</div><div class='output co'>#&gt; 
+<span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res2</span>, <span class='kw'>newmods</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>35</span>,<span class='fl'>1970</span>))</div><div class='output co'>#&gt; 
 #&gt;     pred     se   ci.lb   ci.ub   cr.lb   cr.ub 
 #&gt;  -0.7533 0.0837 -0.9173 -0.5893 -1.1142 -0.3925 
 #&gt; </div><div class='input'>
@@ -308,12 +308,12 @@
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### test the 'alloc' factor</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/anova.html'>anova</a></span>(<span class='no'>res3</span>, <span class='kw'>btt</span><span class='kw'>=</span><span class='fl'>4</span>:<span class='fl'>5</span>)</div><div class='output co'>#&gt; 
+<span class='fu'>anova</span>(<span class='no'>res3</span>, <span class='kw'>btt</span><span class='kw'>=</span><span class='fl'>4</span>:<span class='fl'>5</span>)</div><div class='output co'>#&gt; 
 #&gt; Test of Moderators (coefficients 4:5):
 #&gt; QM(df = 2) = 1.4674, p-val = 0.4801
 #&gt; </div><div class='input'>
 <span class='co'>### instead of specifying the coefficient numbers, grep for "alloc"</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/anova.html'>anova</a></span>(<span class='no'>res3</span>, <span class='kw'>btt</span><span class='kw'>=</span><span class='st'>"alloc"</span>)</div><div class='output co'>#&gt; 
+<span class='fu'>anova</span>(<span class='no'>res3</span>, <span class='kw'>btt</span><span class='kw'>=</span><span class='st'>"alloc"</span>)</div><div class='output co'>#&gt; 
 #&gt; Test of Moderators (coefficients 4:5):
 #&gt; QM(df = 2) = 1.4674, p-val = 0.4801
 #&gt; </div></pre>

@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-19</span>
       </span>
     </div>
 
@@ -153,10 +153,10 @@
     <p>As described in Zhou et al. (1999), "hyperdynamic therapy refers to induced hypertension and hypervolaemia (volume expansion) to treat ischaemic symptoms due to vasospasm, and the success of this therapy is defined as clinical improvement in terms of neurologic deficits." For each study that was included in the meta-analysis, the dataset includes information on the number of patients that improved under this form of therapy and the total number of patients that were treated. The goal of the meta-analysis is to estimate the true (average) success rate of hyperdynamic therapy.</p>
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-    <p>Zhou, X.-H., Brizendine, E. J., &amp; Pritz, M. B. (1999). Methods for combining rates from several studies. <em>Statistics in Medicine</em>, <b>18</b>, 557--566.</p>
+    <p>Zhou, X.-H., Brizendine, E. J., &amp; Pritz, M. B. (1999). Methods for combining rates from several studies. <em>Statistics in Medicine</em>, <b>18</b>(5), 557--566. <a href='https://doi.org/10.1002/(SICI)1097-0258(19990315)18:5&lt;557::AID-SIM53&gt;3.0.CO;2-F'>https://doi.org/10.1002/(SICI)1097-0258(19990315)18:5&lt;557::AID-SIM53&gt;3.0.CO;2-F</a></p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Pritz, M. B. (1997). Treatment of cerebral vasospasm due to aneurysmal subarachnoid hemorrhage: Past, present, and future of hyperdynamic therapy. <em>Neurosurgery Quarterly</em>, <b>7</b>, 273--285.</p>
+    <p>Pritz, M. B. (1997). Treatment of cerebral vasospasm due to aneurysmal subarachnoid hemorrhage: Past, present, and future of hyperdynamic therapy. <em>Neurosurgery Quarterly</em>, <b>7</b>(4), 273--285.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat' and examine data</span>
@@ -200,20 +200,20 @@
 <span class='co'>### random-effects model with raw proportions</span>
 <span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"PR"</span>, <span class='kw'>xi</span><span class='kw'>=</span><span class='no'>xi</span>, <span class='kw'>ni</span><span class='kw'>=</span><span class='no'>ni</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
-<span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; 
+<span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; 
 #&gt;    pred     se  ci.lb  ci.ub  cr.lb  cr.ub 
 #&gt;  0.7968 0.0423 0.7138 0.8797 0.5306 1.0629 
 #&gt; </div><div class='input'>
 <span class='co'>### random-effects model with logit transformed proportions</span>
 <span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"PLO"</span>, <span class='kw'>xi</span><span class='kw'>=</span><span class='no'>xi</span>, <span class='kw'>ni</span><span class='kw'>=</span><span class='no'>ni</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
-<span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>transf.ilogit</span>)</div><div class='output co'>#&gt; 
+<span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>transf.ilogit</span>)</div><div class='output co'>#&gt; 
 #&gt;    pred  ci.lb  ci.ub  cr.lb  cr.ub 
 #&gt;  0.7575 0.6605 0.8337 0.4661 0.9179 
 #&gt; </div><div class='input'>
 <span class='co'>### mixed-effects logistic regression model</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.glmm.html'>rma.glmm</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"PLO"</span>, <span class='kw'>xi</span><span class='kw'>=</span><span class='no'>xi</span>, <span class='kw'>ni</span><span class='kw'>=</span><span class='no'>ni</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
-<span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>transf.ilogit</span>)</div><div class='output co'>#&gt; 
+<span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>transf.ilogit</span>)</div><div class='output co'>#&gt; 
 #&gt;    pred  ci.lb  ci.ub  cr.lb  cr.ub 
 #&gt;  0.7984 0.6924 0.8746 0.4426 0.9518 
 #&gt; </div></pre>

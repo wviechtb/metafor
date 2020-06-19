@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-19</span>
       </span>
     </div>
 
@@ -163,10 +163,10 @@
     <p>The data were obtained from Tables 1 and 2 in Collins and Langman (1985). The authors used Peto's (one-step) method for meta-analyzing the 27 trials. This approach is implemented in the <code><a href='rma.peto.html'>rma.peto</a></code> function. Using the same dataset, van Houwelingen, Zwinderman, and Stijnen (1993) describe some alternative approaches for analyzing these data, including fixed and random-effects conditional logistic models. Those are implemented in the <code><a href='rma.glmm.html'>rma.glmm</a></code> function.</p>
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-    <p>Collins, R., &amp; Langman, M. (1985). Treatment with histamine H2 antagonists in acute upper gastrointestinal hemorrhage. <em>New England Journal of Medicine</em>, <b>313</b>, 660--666.</p>
+    <p>Collins, R., &amp; Langman, M. (1985). Treatment with histamine H2 antagonists in acute upper gastrointestinal hemorrhage. <em>New England Journal of Medicine</em>, <b>313</b>(11), 660--666. <a href='https://doi.org/10.1056/NEJM198509123131104'>https://doi.org/10.1056/NEJM198509123131104</a></p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>van Houwelingen, H. C., Zwinderman, K. H., &amp; Stijnen, T. (1993). A bivariate approach to meta-analysis. <em>Statistics in Medicine</em>, <b>12</b>, 2273--2284.</p>
+    <p>van Houwelingen, H. C., Zwinderman, K. H., &amp; Stijnen, T. (1993). A bivariate approach to meta-analysis. <em>Statistics in Medicine</em>, <b>12</b>(24), 2273--2284. <a href='https://doi.org/10.1002/sim.4780122405'>https://doi.org/10.1002/sim.4780122405</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat' and examine data</span>
@@ -224,7 +224,7 @@
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.glmm.html'>rma.glmm</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>b.xti</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>nti</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>b.xci</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>nci</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>,
                 <span class='kw'>model</span><span class='kw'>=</span><span class='st'>"CM.EL"</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"FE"</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>res</span>)
-<span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)
+<span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)
 
 <span class='co'>### plot the likelihoods of the odds ratios</span>
 <span class='fu'><a href='llplot.html'>llplot</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>b.xti</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>nti</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>b.xci</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>nci</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>,
@@ -234,7 +234,7 @@
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.glmm.html'>rma.glmm</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>b.xti</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>nti</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>b.xci</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>nci</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>,
                 <span class='kw'>model</span><span class='kw'>=</span><span class='st'>"CM.EL"</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"ML"</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>res</span>)
-<span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)
+<span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)
 }
 
 <span class='co'>### meta-analysis of log ORs using Peto's method (outcome: need for surgery)</span>

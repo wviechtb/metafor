@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-19</span>
       </span>
     </div>
 
@@ -154,12 +154,12 @@
 <p>The dataset given here was extracted from Riley (2011) and has been used in several other publications (e.g., Riley et al., 2004, 2007). The dataset provides the (log) hazard ratios (and corresponding standard errors) with respect to these two outcomes in 81 studies, with positive values indicating a greater risk of death (for OS) or disease recurrence/death (for DFS) for patients with high MYC-N levels compared to those with normal/low levels. Note that information on both outcomes could only be extracted from 17 studies (39 studies only provided sufficient information to extract the OS estimate, while 25 studies only allowed for extraction of the DFS estimate).</p>
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-    <p>Riley, R. D., Sutton, A. J., Abrams, K. R., &amp; Lambert, P. C. (2004). Sensitivity analyses allowed more appropriate and reliable meta-analysis conclusions for multiple outcomes when missing data was present. <em>Journal of Clinical Epidemiology</em>, <b>57</b>, 911--924.</p>
-<p>Riley, R. D., Abrams, K. R., Lambert, P. C., Sutton, A. J., &amp; Thompson, J. R. (2007). An evaluation of bivariate random-effects meta-analysis for the joint synthesis of two correlated outcomes. <em>Statistics in Medicine</em>, <b>26</b>, 78--97.</p>
-<p>Riley, R. D. (2011). Erratum. <em>Statistics in Medicine</em>, <b>30</b>, 400.</p>
+    <p>Riley, R. D., Sutton, A. J., Abrams, K. R., &amp; Lambert, P. C. (2004). Sensitivity analyses allowed more appropriate and reliable meta-analysis conclusions for multiple outcomes when missing data was present. <em>Journal of Clinical Epidemiology</em>, <b>57</b>(9), 911--924. <a href='https://doi.org/10.1016/j.jclinepi.2004.01.018'>https://doi.org/10.1016/j.jclinepi.2004.01.018</a></p>
+<p>Riley, R. D., Abrams, K. R., Lambert, P. C., Sutton, A. J., &amp; Thompson, J. R. (2007). An evaluation of bivariate random-effects meta-analysis for the joint synthesis of two correlated outcomes. <em>Statistics in Medicine</em>, <b>26</b>(1), 78--97. <a href='https://doi.org/10.1002/sim.2524'>https://doi.org/10.1002/sim.2524</a></p>
+<p>Riley, R. D. (2011). Erratum: An evaluation of bivariate random-effects meta-analysis for the joint synthesis of two correlated outcomes. <em>Statistics in Medicine</em>, <b>30</b>(4), 400. <a href='https://doi.org/10.1002/sim.4100'>https://doi.org/10.1002/sim.4100</a></p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Riley, R. D., Burchill, S. A., Abrams, K. R., Heney, D., Lambert, P. C., Jones, D. R., et al. (2003). A systematic review and evaluation of the use of tumour markers in paediatric oncology: Ewing's sarcoma and neuroblastoma. <em>Health Technology Assessment</em>, <b>7</b>, 1--162.</p>
+    <p>Riley, R. D., Burchill, S. A., Abrams, K. R., Heney, D., Lambert, P. C., Jones, D. R., Sutton, A. J., Young, B., Wailoo, A. J., &amp; Lewis, I. J. (2003). A systematic review and evaluation of the use of tumour markers in paediatric oncology: Ewing's sarcoma and neuroblastoma. <em>Health Technology Assessment</em>, <b>7</b>(5), 1--162. <a href='https://doi.org/10.3310/hta7050'>https://doi.org/10.3310/hta7050</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat' and examine data</span>
@@ -283,7 +283,7 @@
 #&gt; 
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
+#&gt; </div><div class='input'><span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
 #&gt;  pred ci.lb ci.ub cr.lb cr.ub 
 #&gt;  4.41  3.42  5.70  1.21 16.15 
 #&gt; </div><div class='input'>
@@ -307,7 +307,7 @@
 #&gt; 
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
+#&gt; </div><div class='input'><span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
 #&gt;  pred ci.lb ci.ub cr.lb cr.ub 
 #&gt;  5.13  4.04  6.52  1.40 18.76 
 #&gt; </div></pre>

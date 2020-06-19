@@ -20,13 +20,13 @@
 \value{
    A data frame with \code{nsim} columns with the simulated outcomes.
 
-   The data frame comes with an attribute \code{"seed"}. If argument \code{seed} is \code{NULL}, the attribute is the value of \code{\link{.Random.seed}} before the simulation was started; otherwise it is the value of the argument with a \code{"kind"} attribute with value \code{as.list(\link{RNGkind}())}.
+   The data frame comes with an attribute \code{"seed"}. If argument \code{seed} is \code{NULL}, the attribute is the value of \code{\link{.Random.seed}} before the simulation was started; otherwise it is the value of the \code{seed} argument with a \code{"kind"} attribute with value \code{as.list(RNGkind())}.
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
 }
 \references{
-   Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{https://doi.org/10.18637/jss.v036.i03}
+   Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}
 }
 \seealso{
    \code{\link{rma.uni}}, \code{\link{rma.mv}}

@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-19</span>
       </span>
     </div>
 
@@ -157,7 +157,7 @@
 <p>The article also describes what is sometimes called Peto's one-step method for meta-analyzing \(2 \times 2\) table data. This method is implemented in the <code><a href='rma.peto.html'>rma.peto</a></code> function.</p>
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-    <p>Yusuf, S., Peto, R., Lewis, J., Collins, R., &amp; Sleight, P. (1985). Beta blockade during and after myocardial infarction: An overview of the randomized trials. <em>Progress in Cardiovascular Disease</em>, <b>27</b>, 335--371.</p>
+    <p>Yusuf, S., Peto, R., Lewis, J., Collins, R., &amp; Sleight, P. (1985). Beta blockade during and after myocardial infarction: An overview of the randomized trials. <em>Progress in Cardiovascular Disease</em>, <b>27</b>(5), 335--371. <a href='https://doi.org/10.1016/s0033-0620(85)80003-7'>https://doi.org/10.1016/s0033-0620(85)80003-7</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat'</span>
@@ -188,7 +188,7 @@
 #&gt; 
 #&gt; estimate   ci.lb   ci.ub 
 #&gt;   0.9332  0.7385  1.1792 
-#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
+#&gt; </div><div class='input'><span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
 #&gt;  pred ci.lb ci.ub 
 #&gt;  0.93  0.74  1.18 
 #&gt; </div></pre>
