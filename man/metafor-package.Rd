@@ -52,7 +52,7 @@
 \section{Citing the Package}{
    To cite the package, please use the following reference:
 
-   Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{https://www.jstatsoft.org/v036/i03}.
+   Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{https://doi.org/10.18637/jss.v036.i03}
 }
 \section{Getting Started with the Package}{
    The paper mentioned above is a good starting place for those interested in using the \pkg{metafor} package. The purpose of the article is to provide a general overview of the package and its capabilities (as of version 1.4-0). Not all of the functions and options are described in the paper, but it should provide a useful introduction to the package. The paper can be freely downloaded from the URL given above or can be directly loaded with the command \code{vignette("metafor")}.
@@ -77,14 +77,14 @@
 
    Hedges, L. V., & Olkin, I. (1985). \emph{Statistical methods for meta-analysis}. San Diego, CA: Academic Press.
 
-   Hedges, L. V., & Vevea, J. L. (1998). Fixed- and random-effects models in meta-analysis. \emph{Psychological Methods}, \bold{3}, 486--504.
+   Hedges, L. V., & Vevea, J. L. (1998). Fixed- and random-effects models in meta-analysis. \emph{Psychological Methods}, \bold{3}(4), 486--504. \url{https://doi.org/10.1037/1082-989X.3.4.486}
 
-   Laird, N. M., & Mosteller, F. (1990). Some statistical methods for combining experimental results. \emph{International Journal of Technology Assessment in Health Care}, \bold{6}, 5--30.
+   Laird, N. M., & Mosteller, F. (1990). Some statistical methods for combining experimental results. \emph{International Journal of Technology Assessment in Health Care}, \bold{6}(1), 5--30. \url{https://doi.org/10.1017/S0266462300008916}
 
-   Mantel, N., & Haenszel, W. (1959). Statistical aspects of the analysis of data from retrospective studies of disease. \emph{Journal of the National Cancer Institute}, \bold{22}, 719--748.
+   Mantel, N., & Haenszel, W. (1959). Statistical aspects of the analysis of data from retrospective studies of disease. \emph{Journal of the National Cancer Institute}, \bold{22}(4), 719--748. \url{https://doi.org/10.1093/jnci/22.4.719}
 
-   Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{https://www.jstatsoft.org/v036/i03}.
+   Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{https://doi.org/10.18637/jss.v036.i03}
 
-   Yusuf, S., Peto, R., Lewis, J., Collins, R., & Sleight, P. (1985). Beta blockade during and after myocardial infarction: An overview of the randomized trials. \emph{Progress in Cardiovascular Disease}, \bold{27}, 335--371.
+   Yusuf, S., Peto, R., Lewis, J., Collins, R., & Sleight, P. (1985). Beta blockade during and after myocardial infarction: An overview of the randomized trials. \emph{Progress in Cardiovascular Disease}, \bold{27}(5), 335--371. \url{https://doi.org/10.1016/s0033-0620(85)80003-7}
 }
 \keyword{package}

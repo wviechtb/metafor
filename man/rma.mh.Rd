@@ -100,25 +100,25 @@ rma.mh(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
 }
 \references{
-   Cochran, W. G. (1954). Some methods for strengthening the common \mjseqn{\chi^2} tests. \emph{Biometrics}, \bold{10}, 417--451.
+   Cochran, W. G. (1954). Some methods for strengthening the common \mjseqn{\chi^2} tests. \emph{Biometrics}, \bold{10}(4), 417--451. \url{https://doi.org/10.2307/3001616}
 
-   Greenland, S., & Robins, J. M. (1985). Estimation of a common effect parameter from sparse follow-up data. \emph{Biometrics}, \bold{41}, 55--68.
+   Greenland, S., & Robins, J. M. (1985). Estimation of a common effect parameter from sparse follow-up data. \emph{Biometrics}, \bold{41}(1), 55--68. \url{https://doi.org/10.2307/2530643}
 
-   Mantel, N., & Haenszel, W. (1959). Statistical aspects of the analysis of data from retrospective studies of disease. \emph{Journal of the National Cancer Institute}, \bold{22}, 719--748.
+   Mantel, N., & Haenszel, W. (1959). Statistical aspects of the analysis of data from retrospective studies of disease. \emph{Journal of the National Cancer Institute}, \bold{22}(4), 719--748. \url{https://doi.org/10.1093/jnci/22.4.719}
 
-   Nurminen, M. (1981). Asymptotic efficiency of general noniterative estimators of common relative risk. \emph{Biometrika}, \bold{68}, 525--530.
+   Nurminen, M. (1981). Asymptotic efficiency of general noniterative estimators of common relative risk. \emph{Biometrika}, \bold{68}(2), 525--530. \url{https://doi.org/10.1093/biomet/68.2.525}
 
-   Robins, J., Breslow, N., & Greenland, S. (1986). Estimators of the Mantel-Haenszel variance consistent in both sparse data and large-strata limiting models. \emph{Biometrics}, \bold{42}, 311--323.
+   Robins, J., Breslow, N., & Greenland, S. (1986). Estimators of the Mantel-Haenszel variance consistent in both sparse data and large-strata limiting models. \emph{Biometrics}, \bold{42}(2), 311--323. \url{https://doi.org/10.2307/2531052 }
 
    Rothman, K. J., Greenland, S., & Lash, T. L. (2008). \emph{Modern epidemiology} (3rd ed.). Philadelphia: Lippincott Williams & Wilkins.
 
-   Sato, T., Greenland, S., & Robins, J. M. (1989). On the variance estimator for the Mantel-Haenszel risk difference. \emph{Biometrics}, \bold{45}, 1323--1324.
+   Sato, T., Greenland, S., & Robins, J. M. (1989). On the variance estimator for the Mantel-Haenszel risk difference. \emph{Biometrics}, \bold{45}(4), 1323--1324. \url{https://www.jstor.org/stable/2531784}
 
-   Tarone, R. E. (1981). On summary estimators of relative risk. \emph{Journal of Chronic Diseases}, \bold{34}, 463--468.
+   Tarone, R. E. (1981). On summary estimators of relative risk. \emph{Journal of Chronic Diseases}, \bold{34}(9-10), 463--468. \url{https://doi.org/10.1016/0021-9681(81)90006-0}
 
-   Tarone, R. E. (1985). On heterogeneity tests based on efficient scores. \emph{Biometrika}, \bold{72}, 91--95.
+   Tarone, R. E. (1985). On heterogeneity tests based on efficient scores. \emph{Biometrika}, \bold{72}(1), 91--95. \url{https://doi.org/10.1093/biomet/72.1.91}
 
-   Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{https://www.jstatsoft.org/v036/i03}.
+   Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{https://doi.org/10.18637/jss.v036.i03}
 }
 \seealso{
    \code{\link{rma.uni}}, \code{\link{rma.glmm}}, \code{\link{rma.peto}}, and \code{\link{rma.mv}} for other model fitting functions.

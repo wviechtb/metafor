@@ -1,4 +1,8 @@
 \name{influence.rma.uni}
+\alias{influence}
+\alias{cooks.distance}
+\alias{dfbetas}
+\alias{hatvalues}
 \alias{influence.rma.uni}
 \alias{print.infl.rma.uni}
 \alias{cooks.distance.rma.uni}
@@ -6,7 +10,7 @@
 \alias{hatvalues.rma.uni}
 \title{Outlier and Influential Case Diagnostics for 'rma.uni' Objects}
 \description{
-   The functions can be used to compute various outlier and influential case diagnostics (some of which indicate the influence of deleting one case/study at a time on the model fit or the fitted/residual values) for objects of class \code{"rma.uni"}. \loadmathjax
+   The functions can be used to compute various outlier and influential case diagnostics (some of which indicate the influence of deleting one case/study at a time on the model fit or the fitted/residual values) for objects of class \code{"rma.uni"}. For the corresponding help file for \code{"rma.mv"} objects, see \code{\link{influence.rma.mv}}. \loadmathjax
 }
 \usage{
 \method{influence}{rma.uni}(model, digits, progbar=FALSE, \dots)
@@ -85,9 +89,9 @@
 
    Hedges, L. V., & Olkin, I. (1985). \emph{Statistical methods for meta-analysis}. San Diego, CA: Academic Press.
 
-   Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{https://www.jstatsoft.org/v036/i03}.
+   Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{https://doi.org/10.18637/jss.v036.i03}
 
-   Viechtbauer, W., & Cheung, M. W.-L. (2010). Outlier and influence diagnostics for meta-analysis. \emph{Research Synthesis Methods}, \bold{1}, 112--125.
+   Viechtbauer, W., & Cheung, M. W.-L. (2010). Outlier and influence diagnostics for meta-analysis. \emph{Research Synthesis Methods}, \bold{1}(2), 112--125. \url{https://doi.org/10.1002/jrsm.11}
 }
 \seealso{
    \code{\link{plot.infl.rma.uni}}, \code{\link{rstudent.rma.uni}}, \code{\link{weights.rma.uni}}

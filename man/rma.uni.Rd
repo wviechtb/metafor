@@ -188,45 +188,45 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
 }
 \references{
-   Berkey, C. S., Hoaglin, D. C., Mosteller, F., & Colditz, G. A. (1995). A random-effects regression model for meta-analysis. \emph{Statistics in Medicine}, \bold{14}, 395--411.
+   Berkey, C. S., Hoaglin, D. C., Mosteller, F., & Colditz, G. A. (1995). A random-effects regression model for meta-analysis. \emph{Statistics in Medicine}, \bold{14}(4), 395--411. \url{https://doi.org/10.1002/sim.4780140406}
 
-   Cochran, W. G. (1954). The combination of estimates from different experiments. \emph{Biometrics}, \bold{10}, 101--129.
+   Cochran, W. G. (1954). The combination of estimates from different experiments. \emph{Biometrics}, \bold{10}(1), 101--129. \url{https://doi.org/10.2307/3001666}
 
-   DerSimonian, R., & Laird, N. (1986). Meta-analysis in clinical trials. \emph{Controlled Clinical Trials}, \bold{7}, 177--188.
+   DerSimonian, R., & Laird, N. (1986). Meta-analysis in clinical trials. \emph{Controlled Clinical Trials}, \bold{7}(3), 177--188. \url{https://doi.org/10.1016/0197-2456(86)90046-2}
 
-   DerSimonian, R., & Kacker, R. (2007). Random-effects model for meta-analysis of clinical trials: An update. \emph{Contemporary Clinical Trials}, \bold{28}, 105--114.
+   DerSimonian, R., & Kacker, R. (2007). Random-effects model for meta-analysis of clinical trials: An update. \emph{Contemporary Clinical Trials}, \bold{28}(2), 105--114. \url{https://doi.org/10.1016/j.cct.2006.04.004}
 
-   Harville, D. A. (1977). Maximum likelihood approaches to variance component estimation and to related problems. \emph{Journal of the American Statistical Association}, \bold{72}, 320--338.
+   Harville, D. A. (1977). Maximum likelihood approaches to variance component estimation and to related problems. \emph{Journal of the American Statistical Association}, \bold{72}(358), 320--338. \url{https://doi.org/10.2307/2286796}
 
-   Hedges, L. V. (1983). A random effects model for effect sizes. \emph{Psychological Bulletin}, \bold{93}, 388--395.
+   Hedges, L. V. (1983). A random effects model for effect sizes. \emph{Psychological Bulletin}, \bold{93}(2), 388--395. \url{https://doi.org/10.1037/0033-2909.93.2.388}
 
    Hedges, L. V., & Olkin, I. (1985). \emph{Statistical methods for meta-analysis}. San Diego, CA: Academic Press.
 
-   Henmi, M., & Copas, J. B. (2010). Confidence intervals for random effects meta-analysis and robustness to publication bias. \emph{Statistics in Medicine}, \bold{29}, 2969--2983.
+   Henmi, M., & Copas, J. B. (2010). Confidence intervals for random effects meta-analysis and robustness to publication bias. \emph{Statistics in Medicine}, \bold{29}(29), 2969--2983. \url{https://doi.org/10.1002/sim.4029}
 
    Hunter, J. E., & Schmidt, F. L. (2004). \emph{Methods of meta-analysis: Correcting error and bias in research findings} (2nd ed.). Thousand Oaks, CA: Sage.
 
-   Jennrich, R. I., & Sampson, P. F. (1976). Newton-Raphson and related algorithms for maximum likelihood variance component estimation. \emph{Technometrics}, \bold{18}, 11--17.
+   Jennrich, R. I., & Sampson, P. F. (1976). Newton-Raphson and related algorithms for maximum likelihood variance component estimation. \emph{Technometrics}, \bold{18}(1), 11--17. \url{https://doi.org/10.2307/1267911}
 
-   Knapp, G., & Hartung, J. (2003). Improved tests for a random effects meta-regression with a single covariate. \emph{Statistics in Medicine}, \bold{22}, 2693--2710.
+   Knapp, G., & Hartung, J. (2003). Improved tests for a random effects meta-regression with a single covariate. \emph{Statistics in Medicine}, \bold{22}(17), 2693--2710. \url{https://doi.org/10.1002/sim.1482}
 
-   Morris, C. N. (1983). Parametric empirical Bayes inference: Theory and applications (with discussion). \emph{Journal of the American Statistical Association}, \bold{78}, 47--65.
+   Morris, C. N. (1983). Parametric empirical Bayes inference: Theory and applications. \emph{Journal of the American Statistical Association}, \bold{78}(381), 47--55. \url{https://doi.org/10.2307/2287098}
 
-   Paule, R. C., & Mandel, J. (1982). Consensus values and weighting factors. \emph{Journal of Research of the National Bureau of Standards}, \bold{87}, 377--385.
+   Paule, R. C., & Mandel, J. (1982). Consensus values and weighting factors. \emph{Journal of Research of the National Bureau of Standards}, \bold{87}(5), 377--385. \url{https://doi.org/10.6028/jres.087.022}
 
    Raudenbush, S. W. (2009). Analyzing effect sizes: Random effects models. In H. Cooper, L. V. Hedges, & J. C. Valentine (Eds.), \emph{The handbook of research synthesis and meta-analysis} (2nd ed., pp. 295--315). New York: Russell Sage Foundation.
 
-   Sidik, K., & Jonkman, J. N. (2005a). A note on variance estimation in random effects meta-regression. \emph{Journal of Biopharmaceutical Statistics}, \bold{15}, 823--838.
+   Sidik, K., & Jonkman, J. N. (2005a). A note on variance estimation in random effects meta-regression. \emph{Journal of Biopharmaceutical Statistics}, \bold{15}(5), 823--838. \url{https://doi.org/10.1081/BIP-200067915}
 
-   Sidik, K., & Jonkman, J. N. (2005b). Simple heterogeneity variance estimation for meta-analysis. \emph{Journal of the Royal Statistical Society, Series C}, \bold{54}, 367--384.
+   Sidik, K., & Jonkman, J. N. (2005b). Simple heterogeneity variance estimation for meta-analysis. \emph{Journal of the Royal Statistical Society, Series C}, \bold{54}(2), 367--384. \url{https://doi.org/10.1111/j.1467-9876.2005.00489.x}
 
-   Sidik, K., & Jonkman, J. N. (2007). A comparison of heterogeneity variance estimators in combining results of studies. \emph{Statistics in Medicine}, \bold{26}, 1964--1981.
+   Sidik, K., & Jonkman, J. N. (2007). A comparison of heterogeneity variance estimators in combining results of studies. \emph{Statistics in Medicine}, \bold{26}(9), 1964--1981. \url{https://doi.org/10.1002/sim.2688}
 
-   Viechtbauer, W. (2005). Bias and efficiency of meta-analytic variance estimators in the random-effects model. \emph{Journal of Educational and Behavioral Statistics}, \bold{30}, 261--293.
+   Viechtbauer, W. (2005). Bias and efficiency of meta-analytic variance estimators in the random-effects model. \emph{Journal of Educational and Behavioral Statistics}, \bold{30}(3), 261--293. \url{https://doi.org/10.3102/10769986030003261}
 
-   Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{https://www.jstatsoft.org/v036/i03}.
+   Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{https://doi.org/10.18637/jss.v036.i03}
 
-   Viechtbauer, W., \enc{López-López}{Lopez-Lopez}, J. A., \enc{Sánchez-Meca}{Sanchez-Meca}, J., & \enc{Marín-Martínez}{Marin-Martinez}, F. (2015). A comparison of procedures to test for moderators in mixed-effects meta-regression models. \emph{Psychological Methods}, \bold{20}, 360--374.
+   Viechtbauer, W., \enc{López-López}{Lopez-Lopez}, J. A., \enc{Sánchez-Meca}{Sanchez-Meca}, J., & \enc{Marín-Martínez}{Marin-Martinez}, F. (2015). A comparison of procedures to test for moderators in mixed-effects meta-regression models. \emph{Psychological Methods}, \bold{20}(3), 360--374. \url{https://doi.org/10.1037/met0000023}
 }
 \seealso{
    \code{\link{rma.mh}}, \code{\link{rma.peto}}, \code{\link{rma.glmm}}, and \code{\link{rma.mv}} for other model fitting functions.

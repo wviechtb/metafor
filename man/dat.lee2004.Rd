@@ -19,7 +19,7 @@
    Postoperative nausea and vomiting are common complications following surgery and anaesthesia. As an alternative to drug therapy, acupuncture has been studied as a potential treatment in several trials. The dataset contains the results from 16 clinical trials examining the effectiveness of wrist acupuncture point P6 stimulation for preventing postoperative nausea.
 }
 \source{
-   Lee, A., & Done, M. L. (2004). Stimulation of the wrist acupuncture point P6 for preventing postoperative nausea and vomiting. \emph{Cochrane Database of Systematic Reviews}, \bold{3}, CD003281.
+   Lee, A., & Done, M. L. (2004). Stimulation of the wrist acupuncture point P6 for preventing postoperative nausea and vomiting. \emph{Cochrane Database of Systematic Reviews}, \bold{3}, CD003281. \url{https://doi.org/10.1002/14651858.CD003281.pub2}
 }
 \examples{
 ### copy data into 'dat' and examine data

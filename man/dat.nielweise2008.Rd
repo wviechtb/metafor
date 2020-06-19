@@ -21,10 +21,10 @@
    The dataset was used in the article by Stijnen et al. (2010) to illustrate various generalized linear mixed-effects models for the meta-analysis of incidence rates and incidence rate ratios (see \sQuote{References}).
 }
 \source{
-   Niel-Weise, B. S., Stijnen, T., & van den Broek, P. J. (2008). Anti-infective-treated central venous catheters for total parenteral nutrition or chemotherapy: A systematic review. \emph{Journal of Hospital Infection}, \bold{69}, 114--123.
+   Niel-Weise, B. S., Stijnen, T., & van den Broek, P. J. (2008). Anti-infective-treated central venous catheters for total parenteral nutrition or chemotherapy: A systematic review. \emph{Journal of Hospital Infection}, \bold{69}(2), 114--123. \url{https://doi.org/10.1016/j.jhin.2008.02.020}
 }
 \references{
-   Stijnen, T., Hamza, T. H., & Ozdemir, P. (2010). Random effects meta-analysis of event outcome in the framework of the generalized linear mixed model with applications in sparse data. \emph{Statistics in Medicine}, \bold{29}, 3046--3067.
+   Stijnen, T., Hamza, T. H., & Ozdemir, P. (2010). Random effects meta-analysis of event outcome in the framework of the generalized linear mixed model with applications in sparse data. \emph{Statistics in Medicine}, \bold{29}(29), 3046--3067. \url{https://doi.org/10.1002/sim.4040}
 }
 \examples{
 ### copy data into 'dat' and examine data

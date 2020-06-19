@@ -20,9 +20,9 @@
    The dataset includes the results from 37 studies (4 cohort, 33 case-control) on the risk of lung cancer from environmental tobacco smoke (ETS) exposure from the spouse in women who are lifelong nonsmokers. Values of the log odds ratio greater than 0 indicate an increased risk of cancer in exposed women compared to women not exposed to ETS from their spouse.
 }
 \source{
-   Hackshaw, A. K., Law, M. R., & Wald, N. J. (1997). The accumulated evidence on lung cancer and environmental tobacco smoke. \emph{British Medical Journal}, \bold{315}, 980--988.
+   Hackshaw, A. K., Law, M. R., & Wald, N. J. (1997). The accumulated evidence on lung cancer and environmental tobacco smoke. \emph{British Medical Journal}, \bold{315}(7114), 980--988. \url{https://doi.org/10.1136/bmj.315.7114.980}
 
-   Hackshaw, A. K. (1998). Lung cancer and passive smoking. \emph{Statistical Methods in Medical Research}, \bold{7}, 119--136.
+   Hackshaw, A. K. (1998). Lung cancer and passive smoking. \emph{Statistical Methods in Medical Research}, \bold{7}(2), 119--136. \url{https://doi.org/10.1177/096228029800700203}
 }
 \examples{
 ### copy data into 'dat' and examine data

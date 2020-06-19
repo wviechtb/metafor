@@ -23,9 +23,9 @@
    The \code{v1i} and \code{v2i} values are the variances and covariances of the observed effects. In particular, for each study, variables \code{v1i} and \code{v2i} form a \mjeqn{2 \times 2}{2x2} variance-covariance matrix of the observed effects, with the diagonal elements corresponding to the sampling variances of the mean differences (the first for probing depth, the second for attachment level) and the off-diagonal value corresponding to the covariance of the two mean differences. Below, the full (block diagonal) variance-covariance for all studies is constructed from these two variables.
 }
 \source{
-   Berkey, C. S., Antczak-Bouckoms, A., Hoaglin, D. C., Mosteller, F., & Pihlstrom, B. L. (1995). Multiple-outcomes meta-analysis of treatments for periodontal disease. \emph{Journal of Dental Research}, \bold{74}, 1030--1039.
+   Berkey, C. S., Antczak-Bouckoms, A., Hoaglin, D. C., Mosteller, F., & Pihlstrom, B. L. (1995). Multiple-outcomes meta-analysis of treatments for periodontal disease. \emph{Journal of Dental Research}, \bold{74}(4), 1030--1039. \url{https://doi.org/10.1177/00220345950740040201}
 
-   Berkey, C. S., Hoaglin, D. C., Antczak-Bouckoms, A., Mosteller, F., & Colditz, G. A. (1998). Meta-analysis of multiple outcomes by regression with random effects. \emph{Statistics in Medicine}, \bold{17}, 2537--2550.
+   Berkey, C. S., Hoaglin, D. C., Antczak-Bouckoms, A., Mosteller, F., & Colditz, G. A. (1998). Meta-analysis of multiple outcomes by regression with random effects. \emph{Statistics in Medicine}, \bold{17}(22), 2537--2550. \url{https://doi.org/10.1002/(sici)1097-0258(19981130)17:22<2537::aid-sim953>3.0.co;2-c}
 }
 \examples{
 ### copy data into 'dat' and examine data

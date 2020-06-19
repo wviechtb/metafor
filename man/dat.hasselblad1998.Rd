@@ -21,14 +21,14 @@
    The data can be used for a \sQuote{network meta-analysis} (also called \sQuote{mixed treatment comparison meta-analysis}). The code below shows how such an analysis can be conducted using an arm-based and a contrast-based model (see Salanti et al., 2008, for more details).
 }
 \source{
-   Hasselblad, V. (1998). Meta-analysis of multitreatment studies. \emph{Medical Decision Making}, \bold{18}, 37--43.
+   Hasselblad, V. (1998). Meta-analysis of multitreatment studies. \emph{Medical Decision Making}, \bold{18}(1), 37--43. \url{https://doi.org/10.1177/0272989X9801800110}
 }
 \references{
    Gleser, L. J., & Olkin, I. (2009). Stochastically dependent effect sizes. In H. Cooper, L. V. Hedges, & J. C. Valentine (Eds.), \emph{The handbook of research synthesis and meta-analysis} (2nd ed., pp. 357--376). New York: Russell Sage Foundation.
 
-   Law, M., Jackson, D., Turner, R., Rhodes, K., & Viechtbauer, W. (2016). Two new methods to fit models for network meta-analysis with random inconsistency effects. \emph{BMC Medical Research Methodology}, \bold{16}(1), 87.
+   Law, M., Jackson, D., Turner, R., Rhodes, K., & Viechtbauer, W. (2016). Two new methods to fit models for network meta-analysis with random inconsistency effects. \emph{BMC Medical Research Methodology}, \bold{16}, 87. \url{https://doi.org/10.1186/s12874-016-0184-5}
 
-   Salanti, G., Higgins, J. P. T., Ades, A. E., & Ioannidis, J. P. A. (2008). Evaluation of networks of randomized trials. \emph{Statistical Methods in Medical Research}, \bold{17}, 279--301.
+   Salanti, G., Higgins, J. P. T., Ades, A. E., & Ioannidis, J. P. A. (2008). Evaluation of networks of randomized trials. \emph{Statistical Methods in Medical Research}, \bold{17}(3), 279--301. \url{https://doi.org/10.1177/0962280207080643}
 }
 \examples{
 ### copy data into 'dat'

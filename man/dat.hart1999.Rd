@@ -24,7 +24,7 @@
    The 6 studies provide data with respect to the number of strokes in the warfarin and the comparison (placebo or control) group. In addition, the number of patients and the total person-time (in years) is provided for the two groups. The goal of the meta-analysis was to examine the effectiveness of adjusted-dose warfarin for preventing strokes in patients with atrial fibrillation.
 }
 \source{
-   Hart, R. G., Benavente, O., McBride, R., & Pearce, L. A. (1999). Antithrombotic therapy to prevent stroke in patients with atrial fibrillation: A meta-analysis. \emph{Annals of Internal Medicine}, \bold{131}, 492--501.
+   Hart, R. G., Benavente, O., McBride, R., & Pearce, L. A. (1999). Antithrombotic therapy to prevent stroke in patients with atrial fibrillation: A meta-analysis. \emph{Annals of Internal Medicine}, \bold{131}(7), 492--501. \url{https://doi.org/10.7326/0003-4819-131-7-199910050-00003}
 }
 \examples{
 ### copy data into 'dat'

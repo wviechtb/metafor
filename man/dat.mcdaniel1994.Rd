@@ -26,7 +26,7 @@
    Rothstein, H. R., Sutton, A. J., & Borenstein, M. (Eds.). (2005). \emph{Publication bias in meta-analysis: Prevention, assessment, and adjustments}. Chichester, England: Wiley.
 }
 \references{
-   McDaniel, M. A., Whetzel, D. L., Schmidt, F. L., & Maurer, S. D. (1994). The validity of employment interviews: A comprehensive review and meta-analysis. \emph{Journal of Applied Psychology}, \bold{79}, 599--616.
+   McDaniel, M. A., Whetzel, D. L., Schmidt, F. L., & Maurer, S. D. (1994). The validity of employment interviews: A comprehensive review and meta-analysis. \emph{Journal of Applied Psychology}, \bold{79}(4), 599--616. \url{https://doi.org/10.1037/0021-9010.79.4.599}
 }
 \examples{
 ### copy data into 'dat'

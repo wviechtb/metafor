@@ -25,7 +25,7 @@ dat.laopaiboon2015
    Azithromycin is an antibiotic useful for the treatment of a number of bacterial infections. Laopaiboon et al. (2015) conducted a meta-analysis of trials comparing the effectiveness of azithromycin versus amoxycillin or amoxycillin/clavulanic acid (amoxyclav) in the treatment of acute lower respiratory tract infections, including acute bacterial bronchitis, acute exacerbations of chronic bronchitis, and pneumonia. The results from 15 trials are included in this dataset.
 }
 \source{
-   Laopaiboon, M., Panpanich, R., & Swa Mya, K. (2015). Azithromycin for acute lower respiratory tract infections. \emph{Cochrane Database of Systematic Reviews}, \bold{3}, CD001954.
+   Laopaiboon, M., Panpanich, R., & Swa Mya, K. (2015). Azithromycin for acute lower respiratory tract infections. \emph{Cochrane Database of Systematic Reviews}, \bold{3}, CD001954. \url{https://doi.org/10.1002/14651858.CD001954.pub4}
 }
 \examples{
 ### copy data into 'dat' and examine data

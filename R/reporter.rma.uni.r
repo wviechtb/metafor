@@ -332,7 +332,7 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
    if (is.element(model, c("MR", "ME")))
       methods <- paste0(methods, "The regression test [@sterne2005], using the standard error of the observed outcomes as predictor (in addition to the moderators already included in the model), is used to check for funnel plot asymmetry. ")
 
-   methods <- paste0(methods, "The analysis was carried out using R (version ", getRversion(), ") [@rcore2018] and the **metafor** package (version ", x$version, ") [@viechtbauer2010a]. ")
+   methods <- paste0(methods, "The analysis was carried out using R (version ", getRversion(), ") [@rcore2020] and the **metafor** package (version ", x$version, ") [@viechtbauer2010a]. ")
 
    #########################################################################
 

@@ -48,15 +48,15 @@
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
 }
 \references{
-   Kackar, R. N., & Harville, D. A. (1981). Unbiasedness of two-stage estimation and prediction procedures for mixed linear models. Communications in Statistics, Theory and Methods, \bold{10}, 1249--1261.
+   Kackar, R. N., & Harville, D. A. (1981). Unbiasedness of two-stage estimation and prediction procedures for mixed linear models. Communications in Statistics, Theory and Methods, \bold{10}(13), 1249--1261. \url{https://doi.org/10.1080/03610928108828108}
 
-   Raudenbush, S. W., & Bryk, A. S. (1985). Empirical Bayes meta-analysis. \emph{Journal of Educational Statistics}, \bold{10}, 75--98.
+   Raudenbush, S. W., & Bryk, A. S. (1985). Empirical Bayes meta-analysis. \emph{Journal of Educational Statistics}, \bold{10}(2), 75--98. \url{https://doi.org/10.3102/10769986010002075}
 
-   Robinson, G. K. (1991). That BLUP is a good thing: The estimation of random effects. \emph{Statistical Science}, \bold{6}, 15--32.
+   Robinson, G. K. (1991). That BLUP is a good thing: The estimation of random effects. \emph{Statistical Science}, \bold{6}(1), 15--32. \url{https://doi.org/10.1214/ss/1177011926}
 
    Searle, S. R., Casella, G., & McCulloch, C. E. (1992). \emph{Variance components}. Hoboken, NJ: Wiley.
 
-   Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{https://www.jstatsoft.org/v036/i03}.
+   Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{https://doi.org/10.18637/jss.v036.i03}
 }
 \seealso{
    \code{\link{rma.uni}}, \code{\link{predict.rma}}, \code{\link{fitted.rma}}, \code{\link{blup.rma.uni}}

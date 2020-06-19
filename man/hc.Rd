@@ -42,9 +42,9 @@ hc(object, \dots)
    Original code by Henmi and Copas (2010). Corrected for typos by Michael Dewey (\email{lists@dewey.myzen.co.uk}). Incorporated into the package with some small adjustments for consistency with the other functions in the package by Wolfgang Viechtbauer (\email{wvb@metafor-project.org}).
 }
 \references{
-   Henmi, M., & Copas, J. B. (2010). Confidence intervals for random effects meta-analysis and robustness to publication bias. \emph{Statistics in Medicine}, \bold{29}, 2969--2983.
+   Henmi, M., & Copas, J. B. (2010). Confidence intervals for random effects meta-analysis and robustness to publication bias. \emph{Statistics in Medicine}, \bold{29}(29), 2969--2983. \url{https://doi.org/10.1002/sim.4029}
 
-   Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{https://www.jstatsoft.org/v036/i03}.
+   Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{https://doi.org/10.18637/jss.v036.i03}
 }
 \seealso{
    \code{\link{rma.uni}}

@@ -26,7 +26,7 @@ robust(x, cluster, \dots)
 
    When \code{adjust=TRUE} (the default), the (cluster) robust estimate of the variance-covariance matrix is multiplied by the factor \mjseqn{n/(n-p)}, which serves as a small-sample adjustment that tends to improve the performance of the method when the number of clusters is small.
 
-   For even better small-sample adjustments (Pustejovsky & Tipton, 2018), see the \pkg{clubSandwich} package, which nicely works together with the \pkg{metafor} package (see Examples).
+   For even better small-sample adjustments (Pustejovsky & Tipton, 2018), see the \pkg{clubSandwich} package, which nicely works together with the \pkg{metafor} package (see \sQuote{Examples}).
 }
 \value{
    An object of class \code{"robust.rma"}. The object is a list containing the following components:
@@ -52,30 +52,29 @@ robust(x, cluster, \dots)
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
 }
 \references{
-   Cameron, A. C., & Miller, D. L. (2015). A practitioner's guide to cluster-robust inference. \emph{Journal of Human Resources}, \bold{50}, 317--372.
+   Cameron, A. C., & Miller, D. L. (2015). A practitioner's guide to cluster-robust inference. \emph{Journal of Human Resources}, \bold{50}(2), 317--372. \url{https://doi.org/10.3368/jhr.50.2.317}
 
    Eicker, F. (1967). Limit theorems for regressions with unequal and dependent errors. In L. M. LeCam & J. Neyman (Eds.), \emph{Proceedings of the Fifth Berkeley Symposium on Mathematical Statistics and Probability} (pp. 59--82). Berkeley: University of California Press.
 
-   Froot, K. A. (1989). Consistent covariance matrix estimation with cross-sectional dependence and heteroskedasticity in financial data. \emph{Journal of Financial and Quantitative Analysis}, \bold{24}, 333--355.
+   Froot, K. A. (1989). Consistent covariance matrix estimation with cross-sectional dependence and heteroskedasticity in financial data. \emph{Journal of Financial and Quantitative Analysis}, \bold{24}(3), 333--355. \url{https://doi.org/10.2307/2330815}
 
-   Hedges, L. V., Tipton, E., & Johnson, M. C. (2010). Robust variance estimation in meta-regression with dependent effect size estimates. \emph{Research Synthesis Methods}, \bold{1}, 39--65.
+   Hedges, L. V., Tipton, E., & Johnson, M. C. (2010). Robust variance estimation in meta-regression with dependent effect size estimates. \emph{Research Synthesis Methods}, \bold{1}(1), 39--65. \url{https://doi.org/10.1002/jrsm.5}
 
    Huber, P. (1967). The behavior of maximum-likelihood estimates under nonstandard conditions. In L. M. LeCam & J. Neyman (Eds.), \emph{Proceedings of the Fifth Berkeley Symposium on Mathematical Statistics and Probability} (pp. 221--233). Berkeley: University of California Press.
 
-   MacKinnon, J. G., & White, H. (1985). Some heteroskedasticity-consistent covariance matrix estimators with improved finite sample properties. \emph{Journal of Econometrics}, \bold{29}, 305--325.
+   MacKinnon, J. G., & White, H. (1985). Some heteroskedasticity-consistent covariance matrix estimators with improved finite sample properties. \emph{Journal of Econometrics}, \bold{29}(3), 305--325. \url{https://doi.org/10.1016/0304-4076(85)90158-7}
 
-   Pustejovsky, J. E., & Tipton, E. (2018). Small-sample methods for cluster-robust variance estimation and hypothesis testing in fixed effects models. \emph{Journal of Business & Economic Statistics}, \bold{36}, 672--683.
+   Pustejovsky, J. E., & Tipton, E. (2018). Small-sample methods for cluster-robust variance estimation and hypothesis testing in fixed effects models. \emph{Journal of Business & Economic Statistics}, \bold{36}(4), 672--683. \url{https://doi.org/10.1080/07350015.2016.1247004}
 
+   Sidik, K., & Jonkman, J. N. (2005). A note on variance estimation in random effects meta-regression. \emph{Journal of Biopharmaceutical Statistics}, \bold{15}(5), 823--838. \url{https://doi.org/10.1081/BIP-200067915}
 
-   Sidik, K., & Jonkman, J. N. (2005). A note on variance estimation in random effects meta-regression. \emph{Journal of Biopharmaceutical Statistics}, \bold{15}, 823--838.
+   Sidik, K., & Jonkman, J. N. (2006). Robust variance estimation for random effects meta-analysis. \emph{Computational Statistics & Data Analysis}, \bold{50}(12), 3681--3701. \url{https://doi.org/10.1016/j.csda.2005.07.019}
 
-   Sidik, K., & Jonkman, J. N. (2006). Robust variance estimation for random effects meta-analysis. \emph{Computational Statistics & Data Analysis}, \bold{50}, 3681--3701.
+   White, H. (1980). A heteroskedasticity-consistent covariance matrix estimator and a direct test for heteroskedasticity. \emph{Econometrica}, \bold{48}(4), 817--838. \url{https://doi.org/10.2307/1912934}
 
-   White, H. (1980). A heteroskedasticity-consistent covariance matrix estimator and a direct test for heteroskedasticity. \emph{Econometrica}, \bold{48}, 817--838.
+   Williams, R. L. (2000). A note on robust variance estimation for cluster-correlated data. \emph{Biometrics}, \bold{56}(2), 645--646. \url{https://doi.org/10.1111/j.0006-341x.2000.00645.x}
 
-   Williams, R. L. (2000). A note on robust variance estimation for cluster-correlated data. \emph{Biometrics}, \bold{56}, 645--646.
-
-   Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{https://www.jstatsoft.org/v036/i03}.
+   Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{https://doi.org/10.18637/jss.v036.i03}
 }
 \seealso{
    \code{\link{rma.uni}}, \code{\link{rma.mv}}

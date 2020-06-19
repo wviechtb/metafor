@@ -19,7 +19,7 @@
    \item{annotate}{logical specifying whether annotations should be added to the plot (the default is \code{TRUE}).}
    \item{addfit}{logical specifying whether the summary estimate (for models without moderators) or fitted values (for models with moderators) should be added to the plot (the default is \code{TRUE}). See \sQuote{Details}.}
    \item{addcred}{logical specifying whether the bounds of the credibility/prediction interval should be added to the plot (the default is \code{FALSE}). See \sQuote{Details}.}
-   \item{showweights}{logical specifying whether the annotations should also include the weights given to the observed effects or outcomes during the model fitting (the default is \code{FALSE}).}
+   \item{showweights}{logical specifying whether the annotations should also include the weights given to the observed effects or outcomes during the model fitting (the default is \code{FALSE}). See \sQuote{Details}.}
    \item{header}{logical specifying whether column headings should be added to the plot (the default is \code{FALSE}). Can also be a character vector to specify the left and right headings.}
    \item{xlim}{horizontal limits of the plot region. If unspecified, the function tries to set the horizontal plot limits to some sensible values.}
    \item{alim}{the actual x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.}
@@ -77,14 +77,16 @@
    \item \code{order="rstandard"}: the studies are ordered by the size of their standardized residuals,
    \item \code{order="abs.resid"}: the studies are ordered by the size of their absolute residuals,
    \item \code{order="abs.rstandard"}: the studies are ordered by the size of their absolute standardized residuals.
-   } Alternatively, it is also possible to set \code{order} equal to a vector with indices specifying the desired order (see examples below).
+   } Alternatively, it is also possible to set \code{order} equal to a vector with indices specifying the desired order (see \sQuote{Examples}).
 
-   Additional summary estimates can also be added to the plot with the \code{\link{addpoly}} function. See the documentation for that function for examples.
+   Additional summary estimates can be added to the plot with the \code{\link{addpoly}} function. See the documentation for that function for examples.
+
+   When \code{showweights=TRUE}, the annotations will include information about the weights given to the observed effects or outcomes during the model fitting. For simple models (such as those fitted with the \code{\link{rma.uni}} function), these weights correspond to the \sQuote{inverse-variance weights} (but are given in percent). For models fitted with the \code{\link{rma.mv}} function, the weights are based on the diagonal of the weight matrix. Note that the weighting structure is typically more complex in such models (i.e., the weight matrix is usually not just a diagonal matrix) and the weights shown therefore do not reflect this complexity. See \code{\link{weights.rma}} for more details.
 }
 \note{
    The function tries to set some sensible values for the optional arguments, but it may be necessary to tweak these in certain circumstances.
 
-   The function actually returns some information about the chosen defaults invisibly. Printing this information is useful as a starting point to make adjustments to the plot (see examples below).
+   The function actually returns some information about the chosen defaults invisibly. Printing this information is useful as a starting point to make adjustments to the plot (see \sQuote{Examples}).
 
    If the number of studies is quite large, the labels, annotations, and symbols may become quite small and impossible to read. Stretching the plot window vertically may then provide a more readable figure (one should call the function again after adjusting the window size, so that the label/symbol sizes can be properly adjusted). Also, the \code{cex}, \code{cex.lab}, and \code{cex.axis} arguments are then useful to adjust the symbol and text sizes.
 
@@ -100,11 +102,11 @@
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
 }
 \references{
-   Lewis, S., & Clarke, M. (2001). Forest plots: Trying to see the wood and the trees. \emph{British Medical Journal}, \bold{322}, 1479--1480.
+   Lewis, S., & Clarke, M. (2001). Forest plots: Trying to see the wood and the trees. \emph{British Medical Journal}, \bold{322}(7300), 1479--1480. \url{https://doi.org/10.1136/bmj.322.7300.1479}
 
-   Riley, R. D., Higgins, J. P. T., & Deeks, J. J. (2011). Interpretation of random effects meta-analyses. \emph{British Medical Journal}, \bold{342}, d549.
+   Riley, R. D., Higgins, J. P. T., & Deeks, J. J. (2011). Interpretation of random effects meta-analyses. \emph{British Medical Journal}, \bold{342}, d549. \url{https://doi.org/10.1136/bmj.d549}
 
-   Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{https://www.jstatsoft.org/v036/i03}.
+   Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{https://doi.org/10.18637/jss.v036.i03}
 }
 \seealso{
    \code{\link{forest}}, \code{\link{forest.default}}, \code{\link{addpoly}}
@@ -206,5 +208,17 @@ par(op)
 dat <- escalc(measure="PR", xi=xi, ni=ni, data=dat.pritz1997)
 res <- rma(yi, vi, data=dat, slab=paste0(study, ") ", authors))
 forest(res, xlim=c(-1,2), alim=c(0,1), psize=1, refline=coef(res), clim=c(0,1), header=TRUE)
+
+### an example of a forest plot where the data have a multilevel structure and
+### we want to reflect this by grouping together estimates from the same cluster
+dat <- dat.konstantopoulos2011
+res <- rma.mv(yi, vi, random = ~ 1 | district/school, data=dat,
+              slab=paste0("Distrct ", district, ", School: ", school))
+dd <- c(0,diff(dat$district))
+dd[dd > 0] <- 1
+rows <- (1:res$k) + cumsum(dd)
+par(tck=-.01, mgp = c(1.8,.2,0))
+forest(res, cex=0.5, header=TRUE, rows=rows, ylim=c(0.5,max(rows)+3))
+abline(h = rows[c(1,diff(rows)) == 2] - 1, lty="dotted")
 }
 \keyword{hplot}

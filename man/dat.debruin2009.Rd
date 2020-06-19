@@ -22,7 +22,7 @@
    Highly active antiretroviral therapy (HAART) refers to a combination of multiple antiretroviral drugs that can effectively suppress the HIV virus. However, achieving viral suppression (to the point that the virus becomes essentially undetectable in a blood sample) requires high levels of adherence to an often complicated medication regimen. A number of trials have examined various interventions that aim to increase adherence levels. In each trial, patients receiving the intervention are compared to patients in a control group receiving standard care (often referred to as \sQuote{care as usual}). However, the quality of standard care can vary substantially between these studies. de Bruin et al. (2009) assessed the quality of standard care provided (based on a quantification of the number of behavior change techniques applied) and examined to what extent the quality of standard care was related to the proportion of patients achieving effective viral suppression in the control groups.
 }
 \source{
-   de Bruin, M., Viechtbauer, W., Hospers, H. J., Schaalma, H. P., & Kok, G. (2009). Standard care quality determines treatment outcomes in control groups of HAART-adherence intervention studies: Implications for the interpretation and comparison of intervention effects. \emph{Health Psychology}, \bold{28}, 668--674.
+   de Bruin, M., Viechtbauer, W., Hospers, H. J., Schaalma, H. P., & Kok, G. (2009). Standard care quality determines treatment outcomes in control groups of HAART-adherence intervention studies: Implications for the interpretation and comparison of intervention effects. \emph{Health Psychology}, \bold{28}(6), 668--674. \url{https://doi.org/10.1037/a0015989}
 }
 \examples{
 ### copy data into 'dat'

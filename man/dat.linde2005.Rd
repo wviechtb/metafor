@@ -31,10 +31,10 @@
    Data were extracted from Table 1 and Figure 3. For study duration, the assessment week (instead of the total study duration) was coded for Philipp et al. (1999) and Montgomery et al. (2000). For dosage, the midpoint was coded when a range of values was given.
 }
 \source{
-   Linde, K., Berner, M., Egger, M., & Mulrow, C. (2005). St John's wort for depression: Meta-analysis of randomised controlled trials. \emph{British Journal of Psychiatry}, \bold{186}, 99--107.
+   Linde, K., Berner, M., Egger, M., & Mulrow, C. (2005). St John's wort for depression: Meta-analysis of randomised controlled trials. \emph{British Journal of Psychiatry}, \bold{186}(2), 99--107. \url{https://doi.org/10.1192/bjp.186.2.99}
 }
 \references{
-   Viechtbauer, W. (2007). Accounting for heterogeneity via random-effects models and moderator analyses in meta-analysis. \emph{Zeitschrift \enc{für}{fuer} Psychologie / Journal of Psychology}, \bold{215}, 104--121.
+   Viechtbauer, W. (2007). Accounting for heterogeneity via random-effects models and moderator analyses in meta-analysis. \emph{Zeitschrift \enc{für}{fuer} Psychologie / Journal of Psychology}, \bold{215}(2), 104--121. \url{https://doi.org/10.1027/0044-3409.215.2.104}
 }
 \examples{
 ### copy data into 'dat'

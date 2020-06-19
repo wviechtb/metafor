@@ -20,10 +20,10 @@
    The data in this dataset were obtained from Table I in Normand (1999, p. 322).
 }
 \source{
-   Normand, S. T. (1999). Meta-analysis: Formulating, evaluating, combining, and reporting. \emph{Statistics in Medicine}, \bold{18}, 321--359.
+   Normand, S. T. (1999). Meta-analysis: Formulating, evaluating, combining, and reporting. \emph{Statistics in Medicine}, \bold{18}(3), 321--359. \url{https://doi.org/10.1002/(sici)1097-0258(19990215)18:3<321::aid-sim28>3.0.co;2-p}
 }
 \references{
-   Hine, L. K., Laird, N., Hewitt, P., & Chalmers, T. C. (1989). Meta-analytic evidence against prophylactic use of lidocaine in acute myocardial infarction. \emph{Archives of Internal Medicine}, \bold{149}, 2694--2698.
+   Hine, L. K., Laird, N., Hewitt, P., & Chalmers, T. C. (1989). Meta-analytic evidence against prophylactic use of lidocaine in acute myocardial infarction. \emph{Archives of Internal Medicine}, \bold{149}(12), 2694--2698. \url{https://doi.org/10.1001/archinte.1989.00390120056011}
 }
 \examples{
 ### copy data into 'dat'

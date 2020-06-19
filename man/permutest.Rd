@@ -65,15 +65,15 @@ permutest(x, \dots)
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
 }
 \references{
-   Follmann, D. A., & Proschan, M. A. (1999). Valid inference in random effects meta-analysis. \emph{Biometrics}, \bold{55}, 732--737.
+   Follmann, D. A., & Proschan, M. A. (1999). Valid inference in random effects meta-analysis. \emph{Biometrics}, \bold{55}(3), 732--737. \url{https://doi.org/10.1111/j.0006-341x.1999.00732.x}
 
    Good, P. I. (2009). \emph{Permutation, parametric, and bootstrap tests of hypotheses} (3rd ed.). New York: Springer.
 
-   Higgins, J. P. T., & Thompson, S. G. (2004). Controlling the risk of spurious findings from meta-regression. \emph{Statistics in Medicine}, \bold{23}, 1663--1682.
+   Higgins, J. P. T., & Thompson, S. G. (2004). Controlling the risk of spurious findings from meta-regression. \emph{Statistics in Medicine}, \bold{23}(11), 1663--1682. \url{https://doi.org/10.1002/sim.1752}
 
-   Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{https://www.jstatsoft.org/v036/i03}.
+   Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \url{https://doi.org/10.18637/jss.v036.i03}
 
-   Viechtbauer, W., \enc{López-López}{Lopez-Lopez}, J. A., \enc{Sánchez-Meca}{Sanchez-Meca}, J., & \enc{Marín-Martínez}{Marin-Martinez}, F. (2015). A comparison of procedures to test for moderators in mixed-effects meta-regression models. \emph{Psychological Methods}, \bold{20}, 360--374.
+   Viechtbauer, W., \enc{López-López}{Lopez-Lopez}, J. A., \enc{Sánchez-Meca}{Sanchez-Meca}, J., & \enc{Marín-Martínez}{Marin-Martinez}, F. (2015). A comparison of procedures to test for moderators in mixed-effects meta-regression models. \emph{Psychological Methods}, \bold{20}(3), 360--374. \url{https://doi.org/10.1037/met0000023}
 }
 \seealso{
    \code{\link{rma.uni}}, \code{\link{print.permutest.rma.uni}}
