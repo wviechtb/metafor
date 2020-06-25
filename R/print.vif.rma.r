@@ -18,6 +18,12 @@ print.vif.rma <- function(x, digits=x$digits, ...) {
          rownames(res.table) <- rownames(x$vif)
          if (is.element(x$test, c("knha","adhoc","t")))
             colnames(res.table)[3] <- "tval"
+
+         ddd <- list(...)
+
+         if (.isTRUE(ddd$num))
+            rownames(res.table) <- paste0(1:nrow(res.table), ") ", rownames(res.table))
+
          tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE, print.gap=2))
          .print.table(tmp, mstyle)
 

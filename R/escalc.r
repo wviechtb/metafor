@@ -138,7 +138,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
       if (is.element(measure, c("RR","OR","RD","AS","PETO","PHI","YUQ","YUY","RTET","PBIT","OR2D","OR2DN","OR2DL","MPRD","MPRR","MPOR","MPORC","MPPETO"))) {
 
          mf.ai  <- mf[[match("ai",  names(mf))]]
-         if (inherits(mf.ai, "call"))
+         if (any("~" %in% as.character(mf.ai)))
             stop(mstyle$stop("The 'formula interface' to escalc() has been deprecated."))
          mf.bi  <- mf[[match("bi",  names(mf))]]
          mf.ci  <- mf[[match("ci",  names(mf))]]
