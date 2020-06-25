@@ -751,13 +751,13 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
    if (any(vi <= 0, na.rm=TRUE)) {
       allvipos <- FALSE
       if (!V0)
-         warning(mstyle$warning("There are outcomes with non-positive sampling variances."))
+         warning(mstyle$warning("There are outcomes with non-positive sampling variances."), call.=FALSE)
       vi.neg <- vi < 0
       if (any(vi.neg, na.rm=TRUE)) {
          V[vi.neg,] <- 0 ### note: entire row set to 0 (so covariances are also 0)
          V[,vi.neg] <- 0 ### note: entire col set to 0 (so covariances are also 0)
          vi[vi.neg] <- 0
-         warning(mstyle$warning("Negative sampling variances constrained to zero."))
+         warning(mstyle$warning("Negative sampling variances constrained to zero."), call.=FALSE)
       }
    } else {
       allvipos <- TRUE
@@ -964,7 +964,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
 
          } else {
 
-            warning(mstyle$warning("Argument 'R' specified, but list name(s) not in 'random'."))
+            warning(mstyle$warning("Argument 'R' specified, but list name(s) not in 'random'."), call.=FALSE)
 
             withR <- FALSE
             Rfix  <- rep(FALSE, sigma2s)
@@ -1126,7 +1126,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
          }
          Z.H2 <- Z.H2[not.na,,drop=FALSE]
          k    <- length(yi)
-         warning(mstyle$warning("Rows with NAs omitted from model fitting."))
+         warning(mstyle$warning("Rows with NAs omitted from model fitting."), call.=FALSE)
 
          attr(yi, "measure") <- measure ### add measure attribute back
          attr(yi, "ni")      <- ni      ### add ni attribute back
@@ -1150,7 +1150,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
    ### but at least issue a warning, since a fixed-effects model can then not be fitted and there is otherwise no indication why this is the case
 
    if (!V0 && any(eigen(V, symmetric=TRUE, only.values=TRUE)$values <= .Machine$double.eps)) ### any eigenvalue below double.eps is essentially 0
-      warning(mstyle$warning("'V' appears to be not positive definite."))
+      warning(mstyle$warning("'V' appears to be not positive definite."), call.=FALSE)
 
    ### check ratio of largest to smallest sampling variance
    ### note: need to exclude some special cases (0/0 = NaN, max(vi)/0 = Inf)
@@ -1159,12 +1159,12 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
    vimaxmin <- max(vi) / min(vi)
 
    if (!is.nan(vimaxmin) && !is.infinite(vimaxmin) && vimaxmin >= 1e7)
-      warning(mstyle$warning("Ratio of largest to smallest sampling variance extremely large. May not be able to obtain stable results."))
+      warning(mstyle$warning("Ratio of largest to smallest sampling variance extremely large. May not be able to obtain stable results."), call.=FALSE)
 
    ### make sure that there is at least one column in X ([b])
 
    if (is.null(mods) && !intercept) {
-      warning(mstyle$warning("Must either include an intercept and/or moderators in model.\n  Coerced intercept into the model."))
+      warning(mstyle$warning("Must either include an intercept and/or moderators in model.\n  Coerced intercept into the model."), call.=FALSE)
       intercept <- TRUE
    }
 
@@ -1185,7 +1185,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
    tmp <- lm(yi ~ X - 1)
    coef.na <- is.na(coef(tmp))
    if (any(coef.na)) {
-      warning(mstyle$warning("Redundant predictors dropped from the model."))
+      warning(mstyle$warning("Redundant predictors dropped from the model."), call.=FALSE)
       X   <- X[,!coef.na,drop=FALSE]
       X.f <- X.f[,!coef.na,drop=FALSE]
    }
@@ -1217,7 +1217,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
 
    ### set/check 'btt' argument
 
-   btt <- .set.btt(btt, p, int.incl, X)
+   btt <- .set.btt(btt, p, int.incl, colnames(X))
    m <- length(btt) ### number of betas to test (m = p if all betas are tested)
 
    #########################################################################
@@ -1244,7 +1244,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
 
       if (any(is.na(sigma2) & s.nlevels == 1)) {
          sigma2[is.na(sigma2) & s.nlevels == 1] <- 0
-         warning(mstyle$warning("Single-level factor(s) found in 'random' argument. Corresponding 'sigma2' value(s) fixed to 0."))
+         warning(mstyle$warning("Single-level factor(s) found in 'random' argument. Corresponding 'sigma2' value(s) fixed to 0."), call.=FALSE)
       }
 
       ### create model matrix for each element in mf.s
@@ -2131,7 +2131,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
 
       if (inherits(hessian, "try-error")) {
 
-         warning(mstyle$warning("Error when trying to compute Hessian."))
+         warning(mstyle$warning("Error when trying to compute Hessian."), call.=FALSE)
 
       } else {
 

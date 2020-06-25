@@ -131,7 +131,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
             k.new <- x$k.f                                                    #   # then predict for all k.f studies (including studies with NAs)
             X.new <- x$X.f                                                    #
             if (!is.null(tau2.levels) || !is.null(gamma2.levels))             #
-               warning(mstyle$warning("Arguments 'tau2.levels' and 'gamma2.levels' ignored when obtaining fitted values."))
+               warning(mstyle$warning("Arguments 'tau2.levels' and 'gamma2.levels' ignored when obtaining fitted values."), call.=FALSE)
             tau2.levels <- as.character(x$mf.g.f$inner)                       #
             gamma2.levels <- as.character(x$mf.h.f$inner)                     #
          }                                                                    #
@@ -213,7 +213,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
          if (is.null(tau2.levels)) {
 
-            #warning(mstyle$warning("Need to specify 'tau2.levels' argument to obtain credibility intervals."))
+            #warning(mstyle$warning("Need to specify 'tau2.levels' argument to obtain credibility intervals."), call.=FALSE)
 
          } else {
 
@@ -254,7 +254,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
          if (is.null(gamma2.levels)) {
 
-            #warning(mstyle$warning("Need to specify 'gamma2.levels' argument to obtain credibility intervals."))
+            #warning(mstyle$warning("Need to specify 'gamma2.levels' argument to obtain credibility intervals."), call.=FALSE)
 
          } else {
 

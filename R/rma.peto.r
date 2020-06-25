@@ -207,7 +207,7 @@ level=95, digits, verbose=FALSE, ...) {
          ci   <- ci[not.na]
          di   <- di[not.na]
          k    <- length(ai)
-         warning(mstyle$warning("Tables with NAs omitted from model fitting."))
+         warning(mstyle$warning("Tables with NAs omitted from model fitting."), call.=FALSE)
       }
 
       if (na.act == "na.fail")
@@ -235,7 +235,7 @@ level=95, digits, verbose=FALSE, ...) {
          yi <- yi[not.na.yivi]
          vi <- vi[not.na.yivi]
          ni <- ni[not.na.yivi]
-         warning(mstyle$warning("Some yi/vi values are NA."))
+         warning(mstyle$warning("Some yi/vi values are NA."), call.=FALSE)
 
          attr(yi, "measure") <- measure ### add measure attribute back
          attr(yi, "ni")      <- ni      ### add ni attribute back

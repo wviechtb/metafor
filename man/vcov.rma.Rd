@@ -16,7 +16,7 @@
 \details{
    Note that \code{type="obs"} currently only works for object of class \code{"rma.uni"} and \code{"rma.mv"}.
 
-   For objects of class \code{"rma.uni"}, the marginal variance-covariance matrix is just a diagonal matrix with \mjeqn{\hat{\tau}^2 + v_i}{\tau^2 + v_i} along the diagonal, where \mjeqn{\hat{\tau}^2}{\tau^2} is the estimated amount of (residual) heterogeneity (set to 0 in fixed-effects models) and \mjseqn{v_i} is the sampling variance of the \mjseqn{i}th study.
+   For objects of class \code{"rma.uni"}, the marginal variance-covariance matrix of the observed effect sizes or outcomes is just a diagonal matrix with \mjeqn{\hat{\tau}^2 + v_i}{\tau^2 + v_i} along the diagonal, where \mjeqn{\hat{\tau}^2}{\tau^2} is the estimated amount of (residual) heterogeneity (set to 0 in fixed-effects models) and \mjseqn{v_i} is the sampling variance of the \mjseqn{i}th study.
 
    For objects of class \code{"rma.mv"}, the structure can be more complex and depends on the types of random effects included in the model.
 }
@@ -37,6 +37,8 @@
 ### with two moderators (absolute latitude and publication year)
 res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg,
            mods = ~ ablat + year, data=dat.bcg)
+
+### var-cov matrix of the fixed effects (i.e., the model coefficients)
 vcov(res)
 
 ### marginal var-cov matrix of the observed log risk ratios

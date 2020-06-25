@@ -602,7 +602,7 @@ label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
 
    if (legend && !is.element(yaxis, c("sei", "vi", "seinv", "vinv"))) {
       legend <- FALSE
-      warning(mstyle$warning("Argument 'legend' only applicable if 'yaxis' is 'sei', 'vi', 'seinv', or 'vinv'."))
+      warning(mstyle$warning("Argument 'legend' only applicable if 'yaxis' is 'sei', 'vi', 'seinv', or 'vinv'."), call.=FALSE)
    }
 
    if (legend) {

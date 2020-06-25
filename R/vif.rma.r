@@ -1,4 +1,4 @@
-vif.rma <- function(x, intercept=FALSE, table=FALSE, digits, ...) {
+vif.rma <- function(x, btt, intercept=FALSE, table=FALSE, digits, ...) {
 
    #########################################################################
 
@@ -26,31 +26,59 @@ vif.rma <- function(x, intercept=FALSE, table=FALSE, digits, ...) {
    if (inherits(x, "rma.ls"))
       vb <- vb$vb
 
-   ### remove intercept row/colum from vb if model includes one and intercept=FALSE
-   if (x$intercept && !intercept)
-     vb <- vb[-1,-1,drop=FALSE]
+   if (missing(btt)) {
 
-   ### rescale vb to correlation matrix
-   rb <- cov2cor(vb)
+      ### remove intercept row/colum from vb if model includes one and intercept=FALSE
+      if (x$intercept && !intercept)
+         vb <- vb[-1,-1,drop=FALSE]
 
-   ### try computing the VIFs
-   vif <- try(diag(chol2inv(chol(rb))), silent=TRUE)
+      ### rescale vb to correlation matrix
+      rb <- cov2cor(vb)
 
-   if (inherits(vif, "try-error"))
-      stop(mstyle$stop("Cannot invert var-cov matrix to compute VIFs."))
+      ### try computing the VIFs
+      vif <- try(diag(chol2inv(chol(rb))), silent=TRUE)
 
-   ### add NA for intercept if model includes one and intercept=FALSE
-   if (x$intercept && !intercept && table)
-      vif <- c(NA, vif)
+      if (inherits(vif, "try-error"))
+         stop(mstyle$stop("Cannot invert var-cov matrix to compute VIFs."))
 
-   if (table) {
-      vif <- cbind(coef(summary(x)), vif=vif)
+      ### add NA for intercept if model includes one and intercept=FALSE
+      if (x$intercept && !intercept && table)
+         vif <- c(NA, vif)
+
+      if (table) {
+         vif <- cbind(coef(summary(x)), vif=vif, sif=sqrt(vif))
+      } else {
+         names(vif) <- rownames(vb)
+      }
+
+      res <- list(vif=vif, digits=digits, table=table, test=x$test)
+
    } else {
-      names(vif) <- rownames(vb)
+
+      btt <- .set.btt(btt, x$p, x$int.incl, colnames(x$X))
+
+      if (x$intercept && !intercept) {
+         vb <- vb[-1,-1,drop=FALSE]
+         btt <- btt - 1
+         if (any(btt < 1))
+            warning(mstyle$warning("Intercept term not included in GVIF computation."), call.=FALSE)
+         btt <- btt[btt > 0]
+      }
+      m <- length(btt)
+
+      rb <- cov2cor(vb)
+      detrv <- det(rb)
+      gvif <- det(as.matrix(rb[btt,btt])) * det(as.matrix(rb[-btt,-btt])) / detrv
+      gsif <- gvif^(1/(2*m))
+
+      if (x$intercept && !intercept)
+         btt <- btt + 1
+
+      res <- list(gvif=gvif, gsif=gsif, btt=btt, m=m, digits=digits)
+
    }
 
-   vif <- round(vif, digits=digits[["est"]])
-
-   return(vif)
+   class(res) <- "vif.rma"
+   return(res)
 
 }

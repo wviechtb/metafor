@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-19</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-20</span>
       </span>
     </div>
 
@@ -117,14 +117,14 @@
 <a href="#documentation" class="anchor"></a>Documentation</h2>
 <p>A good starting place for those interested in using the <code>metafor</code> package is the following paper:</p>
 <p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software, 36</em>(3), 1-48. <a href="https://www.jstatsoft.org/v36/i03/" class="uri">https://www.jstatsoft.org/v36/i03/</a>.</p>
-<p>In addition to reading the paper, carefully read the <a href="https://wviechtb.github.io/metafor/reference/metafor-package.html">package intro</a> and then the help pages for the <a href="https://wviechtb.github.io/metafor/reference/escalc.html">escalc</a> and the <a href="https://wviechtb.github.io/metafor/reference/rma.uni.html">rma.uni</a> functions (or the <a href="https://wviechtb.github.io/metafor/reference/rma.mh.html">rma.mh</a>, <a href="https://wviechtb.github.io/metafor/reference/rma.peto.html">rma.peto</a>, <a href="https://wviechtb.github.io/metafor/reference/rma.glmm.html">rma.glmm</a>, <a href="https://wviechtb.github.io/metafor/reference/rma.mv.html">rma.mv</a> functions if you intend to use these methods). The help pages for these functions provide links to many additional functions, which can be used after fitting a model. You can also read the entire documentation online at <a href="https://wviechtb.github.io/metafor/" class="uri">https://wviechtb.github.io/metafor/</a> (where it is nicely formatted, equations are shown correctly, and the output from all examples is provided).</p>
+<p>In addition to reading the paper, carefully read the <a href="https://wviechtb.github.io/metafor/reference/metafor-package.html">package intro</a> and then the help pages for the <a href="https://wviechtb.github.io/metafor/reference/escalc.html"><code>escalc</code></a> and the <a href="https://wviechtb.github.io/metafor/reference/rma.uni.html"><code>rma.uni</code></a> functions (or the <a href="https://wviechtb.github.io/metafor/reference/rma.mh.html"><code>rma.mh</code></a>, <a href="https://wviechtb.github.io/metafor/reference/rma.peto.html"><code>rma.peto</code></a>, <a href="https://wviechtb.github.io/metafor/reference/rma.glmm.html"><code>rma.glmm</code></a>, <a href="https://wviechtb.github.io/metafor/reference/rma.mv.html"><code>rma.mv</code></a> functions if you intend to use these methods). The help pages for these functions provide links to many additional functions, which can be used after fitting a model. You can also read the entire documentation online at <a href="https://wviechtb.github.io/metafor/" class="uri">https://wviechtb.github.io/metafor/</a> (where it is nicely formatted, equations are shown correctly, and the output from all examples is provided).</p>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>The current official (i.e., <a href="https://cran.r-project.org/package=metafor">CRAN</a>) release can be installed directly within R with:</p>
 <div class="sourceCode"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"metafor"</span>)</pre></div>
-<p>After installing the <a href="https://cran.r-project.org/package=remotes">remotes</a> package with <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages("remotes")</a></code>, the development version of the metafor package can be installed with:</p>
+<p>After installing the <a href="https://cran.r-project.org/package=remotes"><code>remotes</code></a> package with <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages("remotes")</a></code>, the development version of the metafor package can be installed with:</p>
 <div class="sourceCode"><pre class="r"><span class="kw pkg">remotes</span><span class="kw ns">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span>(<span class="st">"wviechtb/metafor"</span>)</pre></div>
 <p>This builds the package from source based on the current version on <a href="https://github.com/wviechtb/metafor">GitHub</a>.</p>
 </div>
@@ -178,7 +178,7 @@
 <li><a href="https://travis-ci.org/wviechtb/metafor"><img src="https://travis-ci.org/wviechtb/metafor.svg?branch=master" alt="Build Status"></a></li>
 <li><a href="https://codecov.io/gh/wviechtb/metafor"><img src="https://codecov.io/gh/wviechtb/metafor/branch/master/graph/badge.svg" alt="Code Coverage"></a></li>
 <li><a href="https://cran.r-project.org/package=metafor"><img src="https://www.r-pkg.org/badges/version/metafor" alt="CRAN Version"></a></li>
-<li><a href="http://www.metafor-project.org/doku.php/installation#development_version"><img src="https://img.shields.io/badge/devel-2.5--19-brightgreen.svg" alt="devel Version"></a></li>
+<li><a href="http://www.metafor-project.org/doku.php/installation#development_version"><img src="https://img.shields.io/badge/devel-2.5--20-brightgreen.svg" alt="devel Version"></a></li>
 <li><a href="https://cranlogs.r-pkg.org/badges/metafor"><img src="https://cranlogs.r-pkg.org/badges/metafor" alt="Monthly Downloads"></a></li>
 <li><a href="https://cranlogs.r-pkg.org/badges/grand-total/metafor"><img src="https://cranlogs.r-pkg.org/badges/grand-total/metafor" alt="Total Downloads"></a></li>
 </ul>

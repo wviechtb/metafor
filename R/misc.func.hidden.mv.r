@@ -300,7 +300,7 @@
    #if (is.element(struct, c("HCS","UN","DIAG","HAR"))) {
    #   if (any(is.na(tau2) & g.levels.k == 1)) {
    #      tau2[is.na(tau2) & g.levels.k == 1] <- 0
-   #      warning(mstyle$warning("Inner factor has k=1 for one or more levels. Corresponding 'tau2' value(s) fixed to 0."))
+   #      warning(mstyle$warning("Inner factor has k=1 for one or more levels. Corresponding 'tau2' value(s) fixed to 0."), call.=FALSE)
    #   }
    #}
 

@@ -107,7 +107,7 @@
 
    ### check for non-convergence
    if (inherits(res, "try-error")) {
-      warning(mstyle$warning("Could not estimate tetrachoric correlation coefficient."))
+      warning(mstyle$warning("Could not estimate tetrachoric correlation coefficient."), call.=FALSE)
       return(list(yi=NA, vi=NA))
    }
 
@@ -118,7 +118,7 @@
 
    ### check for non-convergence
    if (inherits(res, "try-error")) {
-      warning(mstyle$warning("Could not estimate tetrachoric correlation coefficient."))
+      warning(mstyle$warning("Could not estimate tetrachoric correlation coefficient."), call.=FALSE)
       return(list(yi=NA, vi=NA))
    }
 
@@ -129,7 +129,7 @@
 
    ### check for problems with computing the inverse
    if (inherits(vi, "try-error")) {
-      warning(mstyle$warning("Could not estimate sampling variance of tetrachoric correlation coefficient."))
+      warning(mstyle$warning("Could not estimate sampling variance of tetrachoric correlation coefficient."), call.=FALSE)
       vi <- NA
    }
 

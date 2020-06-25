@@ -20,7 +20,7 @@ influence.rma.uni <- function(model, digits, progbar=FALSE, ...) {
 
    ddd <- list(...)
 
-   btt <- .set.btt(ddd$btt, x$p, int.incl=FALSE, X=x$X)
+   btt <- .set.btt(ddd$btt, x$p, int.incl=FALSE, Xnames=colnames(x$X))
    m <- length(btt)
 
    if (is.null(ddd$measure)) {

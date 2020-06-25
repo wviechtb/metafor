@@ -61,7 +61,7 @@ ranktest.default <- function(x, vi, sei, subset, digits, ...) {
 
          yi <- yi[not.na]
          vi <- vi[not.na]
-         warning(mstyle$warning("Studies with NAs omitted from test."))
+         warning(mstyle$warning("Studies with NAs omitted from test."), call.=FALSE)
 
       }
 

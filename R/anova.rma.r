@@ -34,7 +34,7 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
 
          ### set/check 'btt' argument
 
-         btt <- .set.btt(btt, p, x$int.incl, x$X)
+         btt <- .set.btt(btt, p, x$int.incl, colnames(x$X))
          m <- length(btt) ### number of betas to test (m = p if all betas are tested)
 
          QM <- as.vector(t(beta)[btt] %*% chol2inv(chol(vb[btt,btt])) %*% beta[btt])
@@ -250,7 +250,7 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
             fit.stats.r <- t(m.r$fit.stats)["REML",] # to keep (row)names of fit.stats
 
             if (!identical(m.f$X, m.r$X))
-               warning(mstyle$warning("Models with different fixed effects. REML comparisons are not meaningful."))
+               warning(mstyle$warning("Models with different fixed effects. REML comparisons are not meaningful."), call.=FALSE)
 
             ### in this case, one could consider just taking the ML deviances, but this
             ### is really ad-hoc; there is some theory in Welham & Thompson (1997) about

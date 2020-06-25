@@ -253,7 +253,7 @@ lty, lwd, col, level=99.99, refline=0, ...) {
          id0  <- id0[not.na]
          id00 <- id00[not.na]
          k    <- length(ai)
-         warning(mstyle$warning("Studies with NAs omitted from plotting."))
+         warning(mstyle$warning("Studies with NAs omitted from plotting."), call.=FALSE)
       }
 
       if (na.act == "na.fail")

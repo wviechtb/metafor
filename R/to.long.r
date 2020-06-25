@@ -645,7 +645,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
             slab <- slab[not.na]
             if (has.data)
                data <- data[not.na,]
-            warning(mstyle$warning("Tables with NAs omitted."))
+            warning(mstyle$warning("Tables with NAs omitted."), call.=FALSE)
          }
 
          if (na.act == "na.fail")
@@ -735,7 +735,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
             slab <- slab[not.na]
             if (has.data)
                data <- data[not.na,]
-            warning(mstyle$warning("Tables with NAs omitted."))
+            warning(mstyle$warning("Tables with NAs omitted."), call.=FALSE)
          }
 
          if (na.act == "na.fail")
@@ -825,7 +825,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
             slab <- slab[not.na]
             if (has.data)
                data <- data[not.na,]
-            warning(mstyle$warning("Tables with NAs omitted."))
+            warning(mstyle$warning("Tables with NAs omitted."), call.=FALSE)
          }
 
          if (na.act == "na.fail")
@@ -915,7 +915,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
             slab <- slab[not.na]
             if (has.data)
                data <- data[not.na,]
-            warning(mstyle$warning("Tables with NAs omitted."))
+            warning(mstyle$warning("Tables with NAs omitted."), call.=FALSE)
          }
 
          if (na.act == "na.fail")
@@ -976,7 +976,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
             slab <- slab[not.na]
             if (has.data)
                data <- data[not.na,]
-            warning(mstyle$warning("Tables with NAs omitted."))
+            warning(mstyle$warning("Tables with NAs omitted."), call.=FALSE)
          }
 
          if (na.act == "na.fail")
@@ -1034,7 +1034,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
             slab <- slab[not.na]
             if (has.data)
                data <- data[not.na,]
-            warning(mstyle$warning("Tables with NAs omitted."))
+            warning(mstyle$warning("Tables with NAs omitted."), call.=FALSE)
          }
 
          if (na.act == "na.fail")
@@ -1089,7 +1089,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
             slab <- slab[not.na]
             if (has.data)
                data <- data[not.na,]
-            warning(mstyle$warning("Tables with NAs omitted."))
+            warning(mstyle$warning("Tables with NAs omitted."), call.=FALSE)
          }
 
          if (na.act == "na.fail")
@@ -1173,7 +1173,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
             slab <- slab[not.na]
             if (has.data)
                data <- data[not.na,]
-            warning(mstyle$warning("Tables with NAs omitted."))
+            warning(mstyle$warning("Tables with NAs omitted."), call.=FALSE)
          }
 
          if (na.act == "na.fail")
@@ -1229,7 +1229,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
             slab <- slab[not.na]
             if (has.data)
                data <- data[not.na,]
-            warning(mstyle$warning("Tables with NAs omitted."))
+            warning(mstyle$warning("Tables with NAs omitted."), call.=FALSE)
          }
 
          if (na.act == "na.fail")
@@ -1294,7 +1294,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
             slab <- slab[not.na]
             if (has.data)
                data <- data[not.na,]
-            warning(mstyle$warning("Tables with NAs omitted."))
+            warning(mstyle$warning("Tables with NAs omitted."), call.=FALSE)
          }
 
          if (na.act == "na.fail")
@@ -1381,7 +1381,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
             slab <- slab[not.na]
             if (has.data)
                data <- data[not.na,]
-            warning(mstyle$warning("Tables with NAs omitted."))
+            warning(mstyle$warning("Tables with NAs omitted."), call.=FALSE)
          }
 
          if (na.act == "na.fail")

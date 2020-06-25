@@ -2,7 +2,7 @@
 
 ### function to set default 'btt' value(s) or check specified 'btt' values
 
-.set.btt <- function(btt, p, int.incl, X) {
+.set.btt <- function(btt, p, int.incl, Xnames) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -22,7 +22,7 @@
 
       if (is.character(btt)) {
 
-         btt <- grep(btt, colnames(X))
+         btt <- grep(btt, Xnames)
 
          if (length(btt) == 0L)
             stop(mstyle$stop("Cannot identify coefficient(s) corresponding to the specified 'btt' string."))
@@ -69,7 +69,8 @@
          if (x$values[1] == 1 && length(x$values) != 0L) {
             sav <- c(sav, c(btt[1], ":", btt[x$lengths[1] + 1]))
             btt <- btt[-c(1:(x$lengths[1] + 1))]
-            sav <- c(sav, ", ")
+            #sav <- c(sav, ", ") # this adds a space between multiple a:b sets
+            sav <- c(sav, ",")
          } else {
             sav <- c(sav, btt[1], ",")
             btt <- btt[-1]
@@ -786,6 +787,9 @@
    }
 
 }
+
+#.set.mstyle.1 <- parse(text=".mstyle <- list(section=make_style(\"gray90\")$bold, header=make_style(\"skyblue1\")$bold$underline, body=make_style(\"skyblue2\"), text=make_style(\"slateblue3\"), result=make_style(\"slateblue1\"))")
+#eval(metafor:::.set.mstyle.1)
 
 ############################################################################
 

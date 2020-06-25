@@ -460,15 +460,15 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
       ######################################################################
 
       if (!lb.conv)
-         warning(mstyle$warning("Error in iterative search for the lower bound."))
+         warning(mstyle$warning("Error in iterative search for the lower bound."), call.=FALSE)
 
       if (!ub.conv)
-         warning(mstyle$warning("Error in iterative search for the upper bound."))
+         warning(mstyle$warning("Error in iterative search for the upper bound."), call.=FALSE)
 
       #if (lb.sign == "<" && con$tau2.min > 0)
-      #   warning(mstyle$warning("Lower bound < tau2.min. Try decreasing tau2.min (via the 'control' argument)."))
+      #   warning(mstyle$warning("Lower bound < tau2.min. Try decreasing tau2.min (via the 'control' argument)."), call.=FALSE)
       #if (ub.sign == ">")
-      #   warning(mstyle$warning("Upper bound > tau2.max. Try increasing tau2.max (via the 'control' argument)."))
+      #   warning(mstyle$warning("Upper bound > tau2.max. Try increasing tau2.max (via the 'control' argument)."), call.=FALSE)
 
       ######################################################################
 

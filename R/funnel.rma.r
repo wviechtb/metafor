@@ -27,7 +27,7 @@ label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
       if (is.null(x$ni))
          stop(mstyle$stop("No sample size information stored in model object."))
       if (anyNA(x$ni))
-         warning(mstyle$warning("Sample size information stored in model object \n  contains NAs. Not all studies will be plotted."))
+         warning(mstyle$warning("Sample size information stored in model object \n  contains NAs. Not all studies will be plotted."), call.=FALSE)
    }
 
    ### set y-axis label if not specified
@@ -202,7 +202,7 @@ label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
          refline <- c(x$beta)
 
       if (inherits(x, "rma.mv") && addtau2) {
-         warning(mstyle$warning("Argument 'addtau2' ignored for 'rma.mv' models."))
+         warning(mstyle$warning("Argument 'addtau2' ignored for 'rma.mv' models."), call.=FALSE)
          addtau2 <- FALSE
       }
 
@@ -229,7 +229,7 @@ label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
          refline <- 0
 
       if (addtau2) {
-         warning(mstyle$warning("Argument 'addtau2' ignored for models that contain moderators."))
+         warning(mstyle$warning("Argument 'addtau2' ignored for models that contain moderators."), call.=FALSE)
          addtau2 <- FALSE
       }
 
@@ -618,7 +618,7 @@ label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
 
    if (legend && !is.element(yaxis, c("sei", "vi", "seinv", "vinv"))) {
       legend <- FALSE
-      warning(mstyle$warning("Argument 'legend' only applicable if 'yaxis' is 'sei', 'vi', 'seinv', or 'vinv'."))
+      warning(mstyle$warning("Argument 'legend' only applicable if 'yaxis' is 'sei', 'vi', 'seinv', or 'vinv'."), call.=FALSE)
    }
 
    if (legend) {

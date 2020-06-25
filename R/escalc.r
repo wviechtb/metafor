@@ -971,9 +971,9 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
          if (any(ni <= 4, na.rm=TRUE)) {
             if (measure == "UCOR") {
-               warning(mstyle$warning("Cannot compute the bias-corrected correlation coefficient when ni <= 4."))
+               warning(mstyle$warning("Cannot compute the bias-corrected correlation coefficient when ni <= 4."), call.=FALSE)
             } else {
-               warning(mstyle$warning("Cannot estimate the sampling variance when ni <= 4."))
+               warning(mstyle$warning("Cannot estimate the sampling variance when ni <= 4."), call.=FALSE)
             }
          }
 
@@ -1868,7 +1868,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
    is.inf <- is.infinite(yi) | is.infinite(vi)
 
    if (any(is.inf)) {
-      warning(mstyle$warning("Some 'yi' and/or 'vi' values equal to +-Inf. Recoded to NAs."))
+      warning(mstyle$warning("Some 'yi' and/or 'vi' values equal to +-Inf. Recoded to NAs."), call.=FALSE)
       yi[is.inf] <- NA
       vi[is.inf] <- NA
    }

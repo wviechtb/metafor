@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-19</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-20</span>
       </span>
     </div>
 
@@ -158,7 +158,7 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Note that <code>type="obs"</code> currently only works for object of class <code>"rma.uni"</code> and <code>"rma.mv"</code>.</p>
-<p>For objects of class <code>"rma.uni"</code>, the marginal variance-covariance matrix is just a diagonal matrix with \(\hat{\tau}^2 + v_i\) along the diagonal, where \(\hat{\tau}^2\) is the estimated amount of (residual) heterogeneity (set to 0 in fixed-effects models) and \(v_i\) is the sampling variance of the \(i\)th study.</p>
+<p>For objects of class <code>"rma.uni"</code>, the marginal variance-covariance matrix of the observed effect sizes or outcomes is just a diagonal matrix with \(\hat{\tau}^2 + v_i\) along the diagonal, where \(\hat{\tau}^2\) is the estimated amount of (residual) heterogeneity (set to 0 in fixed-effects models) and \(v_i\) is the sampling variance of the \(i\)th study.</p>
 <p>For objects of class <code>"rma.mv"</code>, the structure can be more complex and depends on the types of random effects included in the model.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -175,6 +175,8 @@
 <span class='co'>### with two moderators (absolute latitude and publication year)</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>,
            <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>ablat</span> + <span class='no'>year</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>)
+
+<span class='co'>### var-cov matrix of the fixed effects (i.e., the model coefficients)</span>
 <span class='fu'>vcov</span>(<span class='no'>res</span>)</div><div class='output co'>#&gt;             intrcpt         ablat          year
 #&gt; intrcpt 846.5702228 -0.1783751581 -0.4272176864
 #&gt; ablat    -0.1783752  0.0001047356  0.0000889397

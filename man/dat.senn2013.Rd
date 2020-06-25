@@ -65,7 +65,6 @@ res.fe
 anova(res.fe, btt="treatment")
 
 ### forest plot of the contrast estimates (treatments versus placebos)
-dev.new(width=7, height=5)
 forest(tail(coef(res.fe), 9), tail(diag(vcov(res.fe)), 9), slab=levels(dat$treatment)[-1],
        xlim=c(-2.5, 2.0), alim=c(-1.5, 0.5), psize=1, xlab="Estimate", header="Treatment")
 
@@ -75,7 +74,6 @@ rownames(w) <- res.fe$slab
 
 ### create shade plot for the diabetes network with placebo as the reference treatment
 ### negative values in blue shades, positive values in red shades
-dev.new()
 cols <- colorRampPalette(c("blue", "gray95", "red"))(9)
 heatmap(w, Rowv=NA, Colv=NA, scale="none", margins=c(6,11), col=cols,
         cexRow=.7, cexCol=1, labCol=levels(dat$treatment)[-1])

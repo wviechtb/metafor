@@ -382,7 +382,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             di   <- di[not.na]
             mods <- mods[not.na,,drop=FALSE]
             k    <- length(ai)
-            warning(mstyle$warning("Studies with NAs omitted from model fitting."))
+            warning(mstyle$warning("Studies with NAs omitted from model fitting."), call.=FALSE)
          }
 
          if (na.act == "na.fail")
@@ -409,7 +409,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             t2i  <- t2i[not.na]
             mods <- mods[not.na,,drop=FALSE]
             k    <- length(x1i)
-            warning(mstyle$warning("Studies with NAs omitted from model fitting."))
+            warning(mstyle$warning("Studies with NAs omitted from model fitting."), call.=FALSE)
          }
 
          if (na.act == "na.fail")
@@ -434,7 +434,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             mi   <- mi[not.na]
             mods <- mods[not.na,,drop=FALSE]
             k    <- length(xi)
-            warning(mstyle$warning("Studies with NAs omitted from model fitting."))
+            warning(mstyle$warning("Studies with NAs omitted from model fitting."), call.=FALSE)
          }
 
          if (na.act == "na.fail")
@@ -459,7 +459,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             ti   <- ti[not.na]
             mods <- mods[not.na,,drop=FALSE]
             k    <- length(xi)
-            warning(mstyle$warning("Studies with NAs omitted from model fitting."))
+            warning(mstyle$warning("Studies with NAs omitted from model fitting."), call.=FALSE)
          }
 
          if (na.act == "na.fail")
@@ -497,7 +497,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
          ni <- ni[not.na.yivi]
          vi <- vi[not.na.yivi]
          mods.yi <- mods.f[not.na.yivi,,drop=FALSE]
-         warning(mstyle$warning("Some yi/vi values are NA."))
+         warning(mstyle$warning("Some yi/vi values are NA."), call.=FALSE)
 
          attr(yi, "measure") <- measure ### add measure attribute back
          attr(yi, "ni")      <- ni      ### add ni attribute back
@@ -514,7 +514,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    ### make sure that there is at least one column in X
 
    if (is.null(mods) && !intercept) {
-      warning(mstyle$warning("Must either include an intercept and/or moderators in model.\n  Coerced intercept into the model."))
+      warning(mstyle$warning("Must either include an intercept and/or moderators in model.\n  Coerced intercept into the model."), call.=FALSE)
       intercept <- TRUE
    }
 
@@ -536,7 +536,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    tmp <- lm(rep(0,k) ~ X - 1)
    coef.na <- is.na(coef(tmp))
    if (any(coef.na)) {
-      warning(mstyle$warning("Redundant predictors dropped from the model."))
+      warning(mstyle$warning("Redundant predictors dropped from the model."), call.=FALSE)
       X    <- X[,!coef.na,drop=FALSE]
       X.f  <- X.f[,!coef.na,drop=FALSE]
    }
@@ -590,7 +590,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    ### set/check 'btt' argument
 
-   btt <- .set.btt(btt, p, int.incl, X)
+   btt <- .set.btt(btt, p, int.incl, colnames(X))
    m <- length(btt) ### number of betas to test (m = p if all betas are tested)
 
    #########################################################################
@@ -728,7 +728,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       stop(mstyle$stop("Cannot use 'clogit' or 'clogistic' with method='ML'."))
 
    if (con$package == "lme4" && is.element(measure, c("OR","IRR")) && model == "UM.RS" && method == "ML" && nAGQ > 1) {
-      warning(mstyle$warning("Currently not possible to fit RE/ME model='UM.RS' with nAGQ > 1. nAGQ automatically set to 1."))
+      warning(mstyle$warning("Currently not possible to fit RE/ME model='UM.RS' with nAGQ > 1. nAGQ automatically set to 1."), call.=FALSE)
       nAGQ <- 1
    }
 
@@ -897,7 +897,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
             if (inherits(res.QE, "try-error")) {
 
-               warning(mstyle$warning("Cannot fit saturated model."))
+               warning(mstyle$warning("Cannot fit saturated model."), call.=FALSE)
                QEconv <- FALSE
                ll.QE <- NA
 
@@ -1077,7 +1077,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
             if (inherits(res.QE, "try-error")) {
 
-               warning(mstyle$warning("Cannot fit saturated model."))
+               warning(mstyle$warning("Cannot fit saturated model."), call.=FALSE)
                QEconv <- FALSE
                ll.QE <- NA
 
@@ -1257,7 +1257,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
          if (inherits(res.QE, "try-error")) {
 
-            warning(mstyle$warning("Cannot fit saturated model."))
+            warning(mstyle$warning("Cannot fit saturated model."), call.=FALSE)
             QEconv <- FALSE
             ll.QE <- NA
 
@@ -1442,14 +1442,14 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
                   if (con$optimizer == "optim" || con$optimizer == "nlminb") {
                      if (inherits(res.QE, "try-error") || res.QE$convergence != 0) {
-                        warning(mstyle$warning("Cannot fit saturated model."))
+                        warning(mstyle$warning("Cannot fit saturated model."), call.=FALSE)
                         QEconv <- FALSE
                         ll.QE <- NA
                      }
                   }
                   if (con$optimizer == "minqa") {
                      if (inherits(res.QE, "try-error") || res.QE$ierr != 0) {
-                        warning(mstyle$warning("Cannot fit saturated model."))
+                        warning(mstyle$warning("Cannot fit saturated model."), call.=FALSE)
                         QEconv <- FALSE
                         ll.QE <- NA
                      }
@@ -1501,7 +1501,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                h.D      <- hessian[-seq_len(p),-seq_len(p),drop=FALSE] ### lower right part of hessian (of which we need the inverse)
                chol.h.A <- try(chol(h.A), silent=!verbose)             ### see if h.A can be inverted with chol()
                if (inherits(chol.h.A, "try-error")) {
-                  warning(mstyle$warning("Cannot invert Hessian for saturated model."))
+                  warning(mstyle$warning("Cannot invert Hessian for saturated model."), call.=FALSE)
                   QE.Wld <- NA
                } else {
                   Ivb2.QE  <- h.D-h.C%*%chol2inv(chol.h.A)%*%h.B       ### inverse of the inverse of the lower right part
@@ -1668,7 +1668,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                beta <- cbind(res.FE$par[seq_len(p)])
                chol.h <- try(chol(h.FE[seq_len(p),seq_len(p)]), silent=!verbose) ### see if Hessian can be inverted with chol()
                if (inherits(chol.h, "try-error")) {
-                  warning(mstyle$warning("Choleski factorization of Hessian failed. Trying inversion via QR decomposition."))
+                  warning(mstyle$warning("Choleski factorization of Hessian failed. Trying inversion via QR decomposition."), call.=FALSE)
                   vb <- try(qr.solve(h.FE[seq_len(p),seq_len(p)]), silent=!verbose) ### see if Hessian can be inverted with qr.solve()
                   if (inherits(vb, "try-error"))
                      stop(mstyle$stop("Cannot invert Hessian for ML model."))
@@ -1691,7 +1691,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             beta <- cbind(res.ML$par[seq_len(p)])
             chol.h <- try(chol(h.ML), silent=!verbose) ### see if Hessian can be inverted with chol()
             if (inherits(chol.h, "try-error")) {
-               warning(mstyle$warning("Choleski factorization of Hessian failed. Trying inversion via QR decomposition."))
+               warning(mstyle$warning("Choleski factorization of Hessian failed. Trying inversion via QR decomposition."), call.=FALSE)
                vb.f <- try(qr.solve(h.ML), silent=!verbose) ### see if Hessian can be inverted with qr.solve()
                if (inherits(vb.f, "try-error"))
                   stop(mstyle$stop("Cannot invert Hessian for ML model."))
@@ -1788,7 +1788,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
       if (inherits(res.QE, "try-error")) {
 
-         warning(mstyle$warning("Cannot fit saturated model."))
+         warning(mstyle$warning("Cannot fit saturated model."), call.=FALSE)
          QEconv <- FALSE
          ll.QE <- NA
 
@@ -1913,12 +1913,12 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             chol.h <- try(chol(vb2.QE), silent=!verbose) ### see if Hessian can be inverted with chol()
 
             if (inherits(chol.h, "try-error")) {
-               warning(mstyle$warning("Cannot invert Hessian for saturated model."))
+               warning(mstyle$warning("Cannot invert Hessian for saturated model."), call.=FALSE)
                QE.Wld <- NA
             } else {
                QE.Wld <- try(c(t(b2.QE) %*% chol2inv(chol.h) %*% b2.QE), silent=!verbose)
                if (inherits(QE.Wld, "try-error")) {
-                  warning(mstyle$warning("Cannot invert Hessian for saturated model."))
+                  warning(mstyle$warning("Cannot invert Hessian for saturated model."), call.=FALSE)
                   QE.Wld <- NA
                }
             }
@@ -1971,7 +1971,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    chol.h <- try(chol(vb[btt,btt]), silent=!verbose) ### see if Hessian can be inverted with chol()
 
    if (inherits(chol.h, "try-error")) {
-      warning(mstyle$warning("Cannot invert Hessian for QM test."))
+      warning(mstyle$warning("Cannot invert Hessian for QM test."), call.=FALSE)
       QM <- NA
    } else {
       QM <- as.vector(t(beta)[btt] %*% chol2inv(chol.h) %*% beta[btt])

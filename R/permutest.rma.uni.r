@@ -407,7 +407,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
       if (1/iter > level / ifelse(con$cialt == "one.sided", 1, 2)) {
 
          permci <- FALSE
-         warning(mstyle$warning("Cannot obtain ", 100*(1-x$level), "% permutation-based CI; number of permutations (", iter, ") too low."))
+         warning(mstyle$warning("Cannot obtain ", 100*(1-x$level), "% permutation-based CI; number of permutations (", iter, ") too low."), call.=FALSE)
 
       } else {
 

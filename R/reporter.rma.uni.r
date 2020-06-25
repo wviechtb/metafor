@@ -41,7 +41,7 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
    format <- match.arg(format, c("html_document", "pdf_document", "word_document")) # , "bookdown::pdf_document2"))
 
    if (format == "pdf_document" && (Sys.which("pdflatex") == ""))
-      warning(mstyle$warning("Cannot detect pdflatex executable. Rendering the pdf is likely to fail."), immediate.=TRUE)
+      warning(mstyle$warning("Cannot detect pdflatex executable. Rendering the pdf is likely to fail."), call.=FALSE, immediate.=TRUE)
 
    ### set/get directory for generating the report
 

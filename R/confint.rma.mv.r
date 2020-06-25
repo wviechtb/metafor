@@ -470,10 +470,10 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
       ######################################################################
 
       if (!lb.conv)
-         warning(mstyle$warning("Cannot obtain lower bound of profile likelihood CI due to convergence problems."))
+         warning(mstyle$warning("Cannot obtain lower bound of profile likelihood CI due to convergence problems."), call.=FALSE)
 
       if (!ub.conv)
-         warning(mstyle$warning("Cannot obtain upper bound of profile likelihood CI due to convergence problems."))
+         warning(mstyle$warning("Cannot obtain upper bound of profile likelihood CI due to convergence problems."), call.=FALSE)
 
       ######################################################################
 

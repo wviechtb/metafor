@@ -727,11 +727,11 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
    if (any(vi <= 0, na.rm=TRUE)) {
       allvipos <- FALSE
       if (!vi0)
-         warning(mstyle$warning("There are outcomes with non-positive sampling variances."))
+         warning(mstyle$warning("There are outcomes with non-positive sampling variances."), call.=FALSE)
       vi.neg <- vi < 0
       if (any(vi.neg, na.rm=TRUE)) {
          vi[vi.neg] <- 0
-         warning(mstyle$warning("Negative sampling variances constrained to zero."))
+         warning(mstyle$warning("Negative sampling variances constrained to zero."), call.=FALSE)
       }
    } else {
       allvipos <- TRUE
@@ -783,7 +783,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
          mods    <- mods[not.na,,drop=FALSE]
          Z       <- Z[not.na,,drop=FALSE]
          k       <- length(yi)
-         warning(mstyle$warning("Studies with NAs omitted from model fitting."))
+         warning(mstyle$warning("Studies with NAs omitted from model fitting."), call.=FALSE)
 
          attr(yi, "measure") <- measure ### add measure attribute back
          attr(yi, "ni")      <- ni      ### add ni attribute back
@@ -812,7 +812,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
    ### make sure that there is at least one column in X ([b])
 
    if (is.null(mods) && !intercept) {
-      warning(mstyle$warning("Must either include an intercept and/or moderators in model.\n  Coerced intercept into the model."))
+      warning(mstyle$warning("Must either include an intercept and/or moderators in model.\n  Coerced intercept into the model."), call.=FALSE)
       intercept <- TRUE
    }
 
@@ -833,7 +833,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
    tmp <- lm(yi ~ X - 1)
    coef.na <- is.na(coef(tmp))
    if (any(coef.na)) {
-      warning(mstyle$warning("Redundant predictors dropped from the model."))
+      warning(mstyle$warning("Redundant predictors dropped from the model."), call.=FALSE)
       X   <- X[,!coef.na,drop=FALSE]
       X.f <- X.f[,!coef.na,drop=FALSE]
    }
@@ -878,7 +878,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
    ### set/check 'btt' argument
 
-   btt <- .set.btt(btt, p, int.incl, X)
+   btt <- .set.btt(btt, p, int.incl, colnames(X))
    m <- length(btt) ### number of betas to test (m = p if all betas are tested)
 
    #########################################################################
@@ -939,7 +939,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
    vimaxmin <- max(vi) / min(vi)
 
    if (!is.nan(vimaxmin) && !is.infinite(vimaxmin) && vimaxmin >= 1/con$evtol)
-      warning(mstyle$warning("Ratio of largest to smallest sampling variance extremely large. May not be able to obtain stable results."))
+      warning(mstyle$warning("Ratio of largest to smallest sampling variance extremely large. May not be able to obtain stable results."), call.=FALSE)
 
    ### iterations counter for iterative estimators (i.e., DLIT, SJIT, ML, REML, EB)
    ### (note: PM, PMM, and GENQM are also iterative, but uniroot() handles that)
@@ -1371,7 +1371,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
                ll <- -1/2 * (k-p) * log(2*base::pi) - 1/2 * sum(log(vi + tau2)) - 1/2 * determinant(crossprod(X,W) %*% X, logarithm=TRUE)$modulus - 1/2 * RSS
 
             if (ll0 - ll > con$tol && tau2 > con$threshold) {
-               warning(mstyle$warning("Fisher scoring algorithm may have gotten stuck at a local maximum.\n  Setting tau^2 = 0. Check the profile likelihood plot with profile()."))
+               warning(mstyle$warning("Fisher scoring algorithm may have gotten stuck at a local maximum.\n  Setting tau^2 = 0. Check the profile likelihood plot with profile()."), call.=FALSE)
                tau2 <- 0
             }
 
@@ -1503,7 +1503,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
       tmp <- lm(yi ~ Z - 1)
       coef.na.Z <- is.na(coef(tmp))
       if (any(coef.na.Z)) {
-         warning(mstyle$warning("Redundant predictors dropped from the scale model."))
+         warning(mstyle$warning("Redundant predictors dropped from the scale model."), call.=FALSE)
          Z   <- Z[,!coef.na.Z,drop=FALSE]
          Z.f <- Z.f[,!coef.na.Z,drop=FALSE]
       }
@@ -1881,7 +1881,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
    ### the Knapp & Hartung method as described in the literature is for random/mixed-effects models
 
    if (method == "FE" && is.element(test, c("knha","adhoc")))
-      warning(mstyle$warning("Knapp & Hartung method is not meant to be used in the context of FE models."))
+      warning(mstyle$warning("Knapp & Hartung method is not meant to be used in the context of FE models."), call.=FALSE)
 
    ### Knapp & Hartung method with ad-hoc correction so that the scale factor is always >= 1
 

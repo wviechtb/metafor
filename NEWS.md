@@ -1,6 +1,8 @@
-# metafor 2.5-19 (2020-06-19)
+# metafor 2.5-20 (2020-06-25)
 
 - the `metafor` package now makes use of the `mathjaxr` package to nicely render equations shown in the HTML help pages
+
+- `vif()` gains `btt` argument and can now also compute generalized variance inflation factors; a proper `print.vif.rma()` function was added
 
 - in the various `forest()` functions, when `header=TRUE`, suppress the right header when `annotate=FALSE`
 
