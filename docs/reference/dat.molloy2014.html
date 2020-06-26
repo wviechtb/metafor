@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-20</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-21</span>
       </span>
     </div>
 
@@ -228,11 +228,11 @@
 #&gt; </div><div class='input'>
 <span class='co'>### average correlation with 95% CI</span>
 <span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>3</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>transf.ztor</span>)</div><div class='output co'>#&gt; 
-#&gt;   pred ci.lb ci.ub  cr.lb cr.ub 
+#&gt;   pred ci.lb ci.ub  pi.lb pi.ub 
 #&gt;  0.149 0.088 0.209 -0.037 0.325 
 #&gt; </div><div class='input'>
 <span class='co'>### forest plot</span>
-<span class='fu'><a href='forest.html'>forest</a></span>(<span class='no'>res</span>, <span class='kw'>addcred</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>xlim</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>1.6</span>,<span class='fl'>1.6</span>), <span class='kw'>atransf</span><span class='kw'>=</span><span class='no'>transf.ztor</span>,
+<span class='fu'><a href='forest.html'>forest</a></span>(<span class='no'>res</span>, <span class='kw'>addpred</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>xlim</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>1.6</span>,<span class='fl'>1.6</span>), <span class='kw'>atransf</span><span class='kw'>=</span><span class='no'>transf.ztor</span>,
        <span class='kw'>at</span><span class='kw'>=</span><span class='fu'><a href='transf.html'>transf.rtoz</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>.4</span>,-<span class='fl'>.2</span>,<span class='fl'>0</span>,<span class='fl'>.2</span>,<span class='fl'>.4</span>,<span class='fl'>.6</span>)), <span class='kw'>digits</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>,<span class='fl'>1</span>), <span class='kw'>cex</span><span class='kw'>=</span><span class='fl'>.8</span>,
        <span class='kw'>header</span><span class='kw'>=</span><span class='st'>"Author(s), Year"</span>)</div><div class='img'><img src='dat.molloy2014-1.png' alt='' width='768' height='614' /></div><div class='input'>
 <span class='co'>### funnel plot</span>

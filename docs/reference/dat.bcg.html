@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-20</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-21</span>
       </span>
     </div>
 
@@ -229,7 +229,7 @@
 #&gt; </div><div class='input'>
 <span class='co'>### average risk ratio with 95% CI</span>
 <span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>)</div><div class='output co'>#&gt; 
-#&gt;    pred  ci.lb  ci.ub  cr.lb  cr.ub 
+#&gt;    pred  ci.lb  ci.ub  pi.lb  pi.ub 
 #&gt;  0.4894 0.3441 0.6962 0.1546 1.5490 
 #&gt; </div><div class='input'>
 <span class='co'>### mixed-effects model with absolute latitude and publication year as moderators</span>
@@ -262,7 +262,7 @@
 <span class='co'>### predicted average risk ratios for 10-60 degrees absolute latitude</span>
 <span class='co'>### holding the publication year constant at 1970</span>
 <span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>newmods</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='kw'>from</span><span class='kw'>=</span><span class='fl'>10</span>, <span class='kw'>to</span><span class='kw'>=</span><span class='fl'>60</span>, <span class='kw'>by</span><span class='kw'>=</span><span class='fl'>10</span>), <span class='fl'>1970</span>), <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>)</div><div class='output co'>#&gt; 
-#&gt;     pred  ci.lb  ci.ub  cr.lb  cr.ub 
+#&gt;     pred  ci.lb  ci.ub  pi.lb  pi.ub 
 #&gt; 1 0.9345 0.5833 1.4973 0.4179 2.0899 
 #&gt; 2 0.7062 0.5149 0.9686 0.3421 1.4579 
 #&gt; 3 0.5337 0.4196 0.6789 0.2663 1.0697 

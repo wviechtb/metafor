@@ -205,7 +205,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
    #########################################################################
 
-   ### for rma.mv models with multiple tau^2 values, must use tau2.levels argument when using newmods to obtain credibility intervals
+   ### for rma.mv models with multiple tau^2 values, must use tau2.levels argument when using newmods to obtain prediction interval
 
    if (inherits(object, "rma.mv") && x$withG) {
 
@@ -213,7 +213,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
          if (is.null(tau2.levels)) {
 
-            #warning(mstyle$warning("Need to specify 'tau2.levels' argument to obtain credibility intervals."), call.=FALSE)
+            #warning(mstyle$warning("Need to specify 'tau2.levels' argument to obtain prediction interval."), call.=FALSE)
 
          } else {
 
@@ -246,7 +246,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
    }
 
-   ### for rma.mv models with multiple gamma^2 values, must use gamma.levels argument when using newmods to obtain credibility intervals
+   ### for rma.mv models with multiple gamma^2 values, must use gamma.levels argument when using newmods to obtain prediction intervals
 
    if (inherits(object, "rma.mv") && x$withH) {
 
@@ -254,7 +254,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
          if (is.null(gamma2.levels)) {
 
-            #warning(mstyle$warning("Need to specify 'gamma2.levels' argument to obtain credibility intervals."), call.=FALSE)
+            #warning(mstyle$warning("Need to specify 'gamma2.levels' argument to obtain prediction interval."), call.=FALSE)
 
          } else {
 
@@ -309,14 +309,14 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
    #########################################################################
 
-   ### credibility/prediction intervals
+   ### prediction intervals
 
    if (!inherits(object, "rma.mv")) {
 
       ### for rma.uni, rma.mh, rma.peto, and rma.glmm objects (in rma.mh and rma.peto, tau2 = 0 by default and stored as such)
 
-      cr.lb <- pred - crit * sqrt(vpred + x$tau2)
-      cr.ub <- pred + crit * sqrt(vpred + x$tau2)
+      pi.lb <- pred - crit * sqrt(vpred + x$tau2)
+      pi.ub <- pred + crit * sqrt(vpred + x$tau2)
 
    } else {
 
@@ -326,8 +326,8 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
          ### if there is no G structure (and hence no H structure), there are no tau2 and gamma2 values, so just add the sum of all of the sigma2 values
 
-         cr.lb <- pred - crit * sqrt(vpred + sum(x$sigma2))
-         cr.ub <- pred + crit * sqrt(vpred + sum(x$sigma2))
+         pi.lb <- pred - crit * sqrt(vpred + sum(x$sigma2))
+         pi.ub <- pred + crit * sqrt(vpred + sum(x$sigma2))
 
       }
 
@@ -339,8 +339,8 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
             ### if there is only a single tau^2 value, always add that (in addition to the sum of all of the sigma^2 values)
 
-            cr.lb <- pred - crit * sqrt(vpred + sum(x$sigma2) + x$tau2)
-            cr.ub <- pred + crit * sqrt(vpred + sum(x$sigma2) + x$tau2)
+            pi.lb <- pred - crit * sqrt(vpred + sum(x$sigma2) + x$tau2)
+            pi.ub <- pred + crit * sqrt(vpred + sum(x$sigma2) + x$tau2)
 
          } else {
 
@@ -348,8 +348,8 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
                ### if user has not specified tau2.levels, cannot compute bounds
 
-               cr.lb <- rep(NA, k.new)
-               cr.ub <- rep(NA, k.new)
+               pi.lb <- rep(NA, k.new)
+               pi.ub <- rep(NA, k.new)
                tau2.levels <- rep(NA, k.new)
 
             } else {
@@ -360,8 +360,8 @@ level, digits, transf, targs, vcov=FALSE, ...) {
                if (!is.numeric(tau2.levels))
                   tau2.levels <- pmatch(tau2.levels, x$g.levels.f[[1]], duplicates.ok=TRUE)
 
-               cr.lb <- pred - crit * sqrt(vpred + sum(x$sigma2) + x$tau2[tau2.levels])
-               cr.ub <- pred + crit * sqrt(vpred + sum(x$sigma2) + x$tau2[tau2.levels])
+               pi.lb <- pred - crit * sqrt(vpred + sum(x$sigma2) + x$tau2[tau2.levels])
+               pi.ub <- pred + crit * sqrt(vpred + sum(x$sigma2) + x$tau2[tau2.levels])
                tau2.levels <- x$g.levels.f[[1]][tau2.levels]
 
             }
@@ -378,8 +378,8 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
             ### if there is only a single tau^2 and gamma^2 value, always add that (in addition to the sum of all of the sigma^2 values)
 
-            cr.lb <- pred - crit * sqrt(vpred + sum(x$sigma2) + x$tau2 + x$gamma2)
-            cr.ub <- pred + crit * sqrt(vpred + sum(x$sigma2) + x$tau2 + x$gamma2)
+            pi.lb <- pred - crit * sqrt(vpred + sum(x$sigma2) + x$tau2 + x$gamma2)
+            pi.ub <- pred + crit * sqrt(vpred + sum(x$sigma2) + x$tau2 + x$gamma2)
 
          } else {
 
@@ -387,8 +387,8 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
                ### if user has not specified tau2.levels and gamma2.levels, cannot compute bounds
 
-               cr.lb <- rep(NA, k.new)
-               cr.ub <- rep(NA, k.new)
+               pi.lb <- rep(NA, k.new)
+               pi.ub <- rep(NA, k.new)
                tau2.levels <- rep(NA, k.new)
                gamma2.levels <- rep(NA, k.new)
 
@@ -402,8 +402,8 @@ level, digits, transf, targs, vcov=FALSE, ...) {
                if (!is.numeric(gamma2.levels))
                   gamma2.levels <- pmatch(gamma2.levels, x$h.levels.f[[1]], duplicates.ok=TRUE)
 
-               cr.lb <- pred - crit * sqrt(vpred + sum(x$sigma2) + x$tau2[tau2.levels] + x$gamma2[gamma2.levels])
-               cr.ub <- pred + crit * sqrt(vpred + sum(x$sigma2) + x$tau2[tau2.levels] + x$gamma2[gamma2.levels])
+               pi.lb <- pred - crit * sqrt(vpred + sum(x$sigma2) + x$tau2[tau2.levels] + x$gamma2[gamma2.levels])
+               pi.ub <- pred + crit * sqrt(vpred + sum(x$sigma2) + x$tau2[tau2.levels] + x$gamma2[gamma2.levels])
                tau2.levels <- x$g.levels.f[[1]][tau2.levels]
                gamma2.levels <- x$h.levels.f[[1]][gamma2.levels]
 
@@ -425,15 +425,15 @@ level, digits, transf, targs, vcov=FALSE, ...) {
          se    <- rep(NA,k.new)
          ci.lb <- sapply(ci.lb, transf)
          ci.ub <- sapply(ci.ub, transf)
-         cr.lb <- sapply(cr.lb, transf)
-         cr.ub <- sapply(cr.ub, transf)
+         pi.lb <- sapply(pi.lb, transf)
+         pi.ub <- sapply(pi.ub, transf)
       } else {
          pred  <- sapply(pred, transf, targs)
          se    <- rep(NA,k.new)
          ci.lb <- sapply(ci.lb, transf, targs)
          ci.ub <- sapply(ci.ub, transf, targs)
-         cr.lb <- sapply(cr.lb, transf, targs)
-         cr.ub <- sapply(cr.ub, transf, targs)
+         pi.lb <- sapply(pi.lb, transf, targs)
+         pi.ub <- sapply(pi.ub, transf, targs)
       }
       transf <- TRUE
    }
@@ -444,9 +444,9 @@ level, digits, transf, targs, vcov=FALSE, ...) {
    ci.lb <- tmp[,1]
    ci.ub <- tmp[,2]
 
-   tmp <- .psort(cr.lb, cr.ub)
-   cr.lb <- tmp[,1]
-   cr.ub <- tmp[,2]
+   tmp <- .psort(pi.lb, pi.ub)
+   pi.lb <- tmp[,1]
+   pi.ub <- tmp[,2]
 
    ### use study labels from the object when the model has moderators and no new moderators have been specified
    ### otherwise, just use consecutive numbers to label the predicted values
@@ -488,7 +488,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
    if (na.act == "na.fail" && any(!x$not.na))
       stop(mstyle$stop("Missing values in results."))
 
-   out <- list(pred=pred[not.na], se=se[not.na], ci.lb=ci.lb[not.na], ci.ub=ci.ub[not.na], cr.lb=cr.lb[not.na], cr.ub=cr.ub[not.na])
+   out <- list(pred=pred[not.na], se=se[not.na], ci.lb=ci.lb[not.na], ci.ub=ci.ub[not.na], pi.lb=pi.lb[not.na], pi.ub=pi.ub[not.na], cr.lb=pi.lb[not.na], cr.ub=pi.ub[not.na])
 
    if (vcov)
       vcovpred <- vcovpred[not.na,not.na,drop=FALSE]
@@ -514,11 +514,12 @@ level, digits, transf, targs, vcov=FALSE, ...) {
    if (inherits(object, "rma.mv") && x$withH && x$gamma2s > 1)
       out$gamma2.level <- gamma2.levels
 
-
    ### remove cr part for models with a GEN structure
    if (inherits(object, "rma.mv") && any(object$struct=="GEN")) {
       out$cr.lb <- NULL
       out$cr.ub <- NULL
+      out$pi.lb <- NULL
+      out$pi.ub <- NULL
       out$tau2.level <- NULL
       out$gamma2.level <- NULL
    }
@@ -535,11 +536,13 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
    out$slab <- slab[not.na]
 
-   ### for FE models, remove the columns corresponding to the credibility interval bounds
+   ### for FE models, remove the columns corresponding to the prediction interval bounds
 
    if (x$method == "FE") {
       out$cr.lb <- NULL
       out$cr.ub <- NULL
+      out$pi.lb <- NULL
+      out$pi.ub <- NULL
    }
 
    out$digits <- digits

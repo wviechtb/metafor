@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-20</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-21</span>
       </span>
     </div>
 
@@ -136,7 +136,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for default</span>
-<span class='fu'><a href='addpoly.html'>addpoly</a></span>(<span class='no'>x</span>, <span class='no'>vi</span>, <span class='no'>sei</span>, <span class='no'>ci.lb</span>, <span class='no'>ci.ub</span>, <span class='no'>cr.lb</span>, <span class='no'>cr.ub</span>,
+<span class='fu'><a href='addpoly.html'>addpoly</a></span>(<span class='no'>x</span>, <span class='no'>vi</span>, <span class='no'>sei</span>, <span class='no'>ci.lb</span>, <span class='no'>ci.ub</span>, <span class='no'>pi.lb</span>, <span class='no'>pi.ub</span>,
         <span class='kw'>rows</span><span class='kw'>=</span>-<span class='fl'>1</span>, <span class='kw'>level</span><span class='kw'>=</span><span class='fl'>95</span>, <span class='kw'>annotate</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>, <span class='no'>width</span>, <span class='no'>mlab</span>,
         <span class='no'>transf</span>, <span class='no'>atransf</span>, <span class='no'>targs</span>, <span class='kw'>efac</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='no'>col</span>, <span class='no'>border</span>, <span class='no'>fonts</span>, <span class='no'>cex</span>, <span class='no'>...</span>)</pre>
 
@@ -164,12 +164,12 @@
       <td><p>vector with the corresponding upper confidence interval bounds. Not needed if <code>vi</code> or <code>sei</code> is specified. See &#8216;Details&#8217;.</p></td>
     </tr>
     <tr>
-      <th>cr.lb</th>
-      <td><p>optional vector with the corresponding lower credibility/prediction interval bounds.</p></td>
+      <th>pi.lb</th>
+      <td><p>optional vector with the corresponding lower prediction interval bounds.</p></td>
     </tr>
     <tr>
-      <th>cr.ub</th>
-      <td><p>optional vector with the corresponding upper credibility/prediction interval bounds.</p></td>
+      <th>pi.ub</th>
+      <td><p>optional vector with the corresponding upper prediction interval bounds.</p></td>
     </tr>
     <tr>
       <th>rows</th>
@@ -236,7 +236,7 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The function can be used to add one or more polygons to an existing forest plot created with the <code><a href='forest.html'>forest</a></code> function. For example, summary estimates based on a model involving moderators can be added to the plot this way (see &#8216;Examples&#8217;).</p>
-<p>To use the function, one should specify the values at which the polygons should be drawn (via the <code>x</code> argument) together with the corresponding variances (via the <code>vi</code> argument) or with the corresponding standard errors (via the <code>sei</code> argument). Alternatively, one can specify the values at which the polygons should be drawn together with the corresponding confidence interval bounds (via the <code>ci.lb</code> and <code>ci.ub</code> arguments). Optionally, one can also specify the bounds of the corresponding credibility/prediction interval bounds via the <code>cr.lb</code> and <code>cr.ub</code> arguments.</p>
+<p>To use the function, one should specify the values at which the polygons should be drawn (via the <code>x</code> argument) together with the corresponding variances (via the <code>vi</code> argument) or with the corresponding standard errors (via the <code>sei</code> argument). Alternatively, one can specify the values at which the polygons should be drawn together with the corresponding confidence interval bounds (via the <code>ci.lb</code> and <code>ci.ub</code> arguments). Optionally, one can also specify the bounds of the corresponding prediction interval bounds via the <code>pi.lb</code> and <code>pi.ub</code> arguments.</p>
 <p>The arguments <code>transf</code>, <code>atransf</code>, <code>efac</code>, and <code>cex</code> should always be set equal to the same values used to create the forest plot.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 

@@ -1,5 +1,5 @@
 forest.rma <- function(x,
-annotate=TRUE, addfit=TRUE, addcred=FALSE, showweights=FALSE, header=FALSE,
+annotate=TRUE, addfit=TRUE, addpred=FALSE, showweights=FALSE, header=FALSE,
 xlim, alim, clim, ylim, top=3, at, steps=5, level=x$level, refline=0, digits=2L, width,
 xlab, slab, mlab, ilab, ilab.xpos, ilab.pos, order,
 transf, atransf, targs, rows,
@@ -71,9 +71,9 @@ cex, cex.lab, cex.axis, annosym, ...) {
    if (x$int.only) {
 
       if (missing(col)) {
-         col <- c("black", "gray50") ### 1st color for summary polygon, 2nd color for credibility interval
+         col <- c("black", "gray50") ### 1st color for summary polygon, 2nd color for prediction interval
       } else {
-         if (length(col) == 1L)      ### if user only specified one value, assume it is for summary polygon
+         if (length(col) == 1L)      ### if user only specified one value, assume it is for the summary polygon
             col <- c(col, "gray50")
       }
 
@@ -91,7 +91,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
    }
 
    if (missing(lty)) {
-      lty <- c("solid", "dotted", "solid") ### 1st value = CIs, 2nd value = credibility interval, 3rd = horizontal line(s)
+      lty <- c("solid", "dotted", "solid") ### 1st value = CIs, 2nd value = prediction interval, 3rd = horizontal line(s)
    } else {
       if (length(lty) == 1L)
          lty <- c(lty, "dotted", "solid")
@@ -150,14 +150,17 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
    ddd <- list(...)
 
-   lplot     <- function(..., textpos) plot(...)
-   labline   <- function(..., textpos) abline(...)
-   lsegments <- function(..., textpos) segments(...)
-   laxis     <- function(..., textpos) axis(...)
-   lmtext    <- function(..., textpos) mtext(...)
-   lpolygon  <- function(..., textpos) polygon(...)
-   ltext     <- function(..., textpos) text(...)
-   lpoints   <- function(..., textpos) points(...)
+   if (!is.null(ddd$addcred))
+      addpred <- ddd$addcred
+
+   lplot     <- function(..., textpos, addcred) plot(...)
+   labline   <- function(..., textpos, addcred) abline(...)
+   lsegments <- function(..., textpos, addcred) segments(...)
+   laxis     <- function(..., textpos, addcred) axis(...)
+   lmtext    <- function(..., textpos, addcred) mtext(...)
+   lpolygon  <- function(..., textpos, addcred) polygon(...)
+   ltext     <- function(..., textpos, addcred) text(...)
+   lpoints   <- function(..., textpos, addcred) points(...)
 
    ### TODO: remove this when there is a weights() function for 'rma.glmm' objects
    if (inherits(x, "rma.glmm") && showweights)
@@ -223,9 +226,9 @@ cex, cex.lab, cex.axis, annosym, ...) {
       } else {
          temp <- predict(x, level=level)
          pred <- temp$pred
-         if (addcred) {
-            pred.ci.lb <- temp$cr.lb
-            pred.ci.ub <- temp$cr.ub
+         if (addpred) {
+            pred.ci.lb <- temp$pi.lb
+            pred.ci.ub <- temp$pi.ub
          } else {
             pred.ci.lb <- temp$ci.lb
             pred.ci.ub <- temp$ci.ub
@@ -647,19 +650,19 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
       if (inherits(x, "rma.mv") && x$withG && x$tau2s > 1) {
 
-         if (!is.logical(addcred)) {
-            ### for multiple tau^2 (and gamma^2) values, need to specify level(s) of the inner factor(s) to compute the credibility interval
-            ### this can be done via the addcred argument (i.e., instead of using a logical, one specifies the level(s))
-            if (length(addcred) == 1L)
-               addcred <- c(addcred, addcred)
-            temp <- predict(x, level=level, tau2.levels=addcred[1], gamma2.levels=addcred[2])
-            addcred <- TRUE ### set addcred to TRUE, so if (x$method != "FE" && addcred) further below works
+         if (!is.logical(addpred)) {
+            ### for multiple tau^2 (and gamma^2) values, need to specify level(s) of the inner factor(s) to compute the prediction interval
+            ### this can be done via the addpred argument (i.e., instead of using a logical, one specifies the level(s))
+            if (length(addpred) == 1L)
+               addpred <- c(addpred, addpred)
+            temp <- predict(x, level=level, tau2.levels=addpred[1], gamma2.levels=addpred[2])
+            addpred <- TRUE ### set addpred to TRUE, so if (x$method != "FE" && addpred) further below works
          } else {
-            if (addcred) {
-               ### here addcred=TRUE, but user has not specified the level, so throw an error
-               stop(mstyle$stop("Need to specify the level of the inner factor(s) via the 'addcred' argument."))
+            if (addpred) {
+               ### here addpred=TRUE, but user has not specified the level, so throw an error
+               stop(mstyle$stop("Need to specify the level of the inner factor(s) via the 'addpred' argument."))
             } else {
-               ### here addcred=FALSE, so just use the first tau^2 and gamma^2 arbitrarily (so predict() works)
+               ### here addpred=FALSE, so just use the first tau^2 and gamma^2 arbitrarily (so predict() works)
                temp <- predict(x, level=level, tau2.levels=1, gamma2.levels=1)
             }
          }
@@ -673,22 +676,22 @@ cex, cex.lab, cex.axis, annosym, ...) {
       beta       <- temp$pred
       beta.ci.lb <- temp$ci.lb
       beta.ci.ub <- temp$ci.ub
-      beta.cr.lb <- temp$cr.lb
-      beta.cr.ub <- temp$cr.ub
+      beta.pi.lb <- temp$pi.lb
+      beta.pi.ub <- temp$pi.ub
 
       if (is.function(transf)) {
          if (is.null(targs)) {
             beta       <- sapply(beta, transf)
             beta.ci.lb <- sapply(beta.ci.lb, transf)
             beta.ci.ub <- sapply(beta.ci.ub, transf)
-            beta.cr.lb <- sapply(beta.cr.lb, transf)
-            beta.cr.ub <- sapply(beta.cr.ub, transf)
+            beta.pi.lb <- sapply(beta.pi.lb, transf)
+            beta.pi.ub <- sapply(beta.pi.ub, transf)
          } else {
             beta       <- sapply(beta, transf, targs)
             beta.ci.lb <- sapply(beta.ci.lb, transf, targs)
             beta.ci.ub <- sapply(beta.ci.ub, transf, targs)
-            beta.cr.lb <- sapply(beta.cr.lb, transf, targs)
-            beta.cr.ub <- sapply(beta.cr.ub, transf, targs)
+            beta.pi.lb <- sapply(beta.pi.lb, transf, targs)
+            beta.pi.ub <- sapply(beta.pi.ub, transf, targs)
          }
       }
 
@@ -698,33 +701,33 @@ cex, cex.lab, cex.axis, annosym, ...) {
       beta.ci.lb <- tmp[,1]
       beta.ci.ub <- tmp[,2]
 
-      tmp <- .psort(beta.cr.lb, beta.cr.ub)
-      beta.cr.lb <- tmp[,1]
-      beta.cr.ub <- tmp[,2]
+      tmp <- .psort(beta.pi.lb, beta.pi.ub)
+      beta.pi.lb <- tmp[,1]
+      beta.pi.ub <- tmp[,2]
 
       ### apply ci limits if specified
 
       if (!missing(clim)) {
          beta.ci.lb[beta.ci.lb < clim[1]] <- clim[1]
          beta.ci.ub[beta.ci.ub > clim[2]] <- clim[2]
-         beta.cr.lb[beta.cr.lb < clim[1]] <- clim[1]
-         beta.cr.ub[beta.cr.ub > clim[2]] <- clim[2]
+         beta.pi.lb[beta.pi.lb < clim[1]] <- clim[1]
+         beta.pi.ub[beta.pi.ub > clim[2]] <- clim[2]
       }
 
-      ### add credibility interval
+      ### add prediction interval
 
-      if (x$method != "FE" && addcred) {
+      if (x$method != "FE" && addpred) {
 
-         lsegments(max(beta.cr.lb, alim[1]), -1, min(beta.cr.ub, alim[2]), -1, lty=lty[2], col=col[2], ...)
+         lsegments(max(beta.pi.lb, alim[1]), -1, min(beta.pi.ub, alim[2]), -1, lty=lty[2], col=col[2], ...)
 
-         if (beta.cr.lb >= alim[1]) {
-            lsegments(beta.cr.lb, -1-(height/150)*cex*efac[1], beta.cr.lb, -1+(height/150)*cex*efac[1], col=col[2], ...)
+         if (beta.pi.lb >= alim[1]) {
+            lsegments(beta.pi.lb, -1-(height/150)*cex*efac[1], beta.pi.lb, -1+(height/150)*cex*efac[1], col=col[2], ...)
          } else {
             lpolygon(x=c(alim[1], alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]), y=c(-1, -1+(height/150)*cex*efac[2], -1-(height/150)*cex*efac[2], -1), col=col[2], border=col[2], ...)
          }
 
-         if (beta.cr.ub <= alim[2]) {
-            lsegments(beta.cr.ub, -1-(height/150)*cex*efac[1], beta.cr.ub, -1+(height/150)*cex*efac[1], col=col[2], ...)
+         if (beta.pi.ub <= alim[2]) {
+            lsegments(beta.pi.ub, -1-(height/150)*cex*efac[1], beta.pi.ub, -1+(height/150)*cex*efac[1], col=col[2], ...)
          } else {
             lpolygon(x=c(alim[2], alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]), y=c(-1, -1+(height/150)*cex*efac[2], -1-(height/150)*cex*efac[2], -1), col=col[2], border=col[2], ...)
          }

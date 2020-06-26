@@ -5,7 +5,7 @@
    Function to create forest plots for objects of class \code{"rma"}. \loadmathjax
 }
 \usage{
-\method{forest}{rma}(x, annotate=TRUE, addfit=TRUE, addcred=FALSE,
+\method{forest}{rma}(x, annotate=TRUE, addfit=TRUE, addpred=FALSE,
        showweights=FALSE, header=FALSE,
        xlim, alim, clim, ylim, top=3, at, steps=5,
        level=x$level, refline=0, digits=2L, width,
@@ -18,12 +18,12 @@
    \item{x}{an object of class \code{"rma"}.}
    \item{annotate}{logical specifying whether annotations should be added to the plot (the default is \code{TRUE}).}
    \item{addfit}{logical specifying whether the summary estimate (for models without moderators) or fitted values (for models with moderators) should be added to the plot (the default is \code{TRUE}). See \sQuote{Details}.}
-   \item{addcred}{logical specifying whether the bounds of the credibility/prediction interval should be added to the plot (the default is \code{FALSE}). See \sQuote{Details}.}
+   \item{addpred}{logical specifying whether the bounds of the prediction interval should be added to the plot (the default is \code{FALSE}). See \sQuote{Details}.}
    \item{showweights}{logical specifying whether the annotations should also include the weights given to the observed effects or outcomes during the model fitting (the default is \code{FALSE}). See \sQuote{Details}.}
    \item{header}{logical specifying whether column headings should be added to the plot (the default is \code{FALSE}). Can also be a character vector to specify the left and right headings.}
    \item{xlim}{horizontal limits of the plot region. If unspecified, the function tries to set the horizontal plot limits to some sensible values.}
    \item{alim}{the actual x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.}
-   \item{clim}{limits for the confidence/credibility/prediction intervals. If unspecified, no limits are used.}
+   \item{clim}{limits for the confidence/prediction intervals. If unspecified, no limits are used.}
    \item{ylim}{the y limits of the plot. If unspecified, the function tries to set the y-axis limits to some sensible values.}
    \item{top}{the amount of space to leave empty at the top of the plot (e.g., for adding headers) (the default is 3 rows).}
    \item{at}{position of the x-axis tick marks and corresponding labels. If unspecified, the function tries to set the tick mark positions/labels to some sensible values.}
@@ -62,11 +62,11 @@
 
    For fixed- and random-effects models (i.e., for models without moderators), a four-sided polygon, sometimes called a summary \sQuote{diamond}, is added to the bottom of the forest plot, showing the summary estimate based on the model (with the center of the polygon corresponding to the estimate and the left/right edges indicating the confidence interval limits). The \code{col} and \code{border} arguments can be used to adjust the (border) color of the polygon. Drawing of the polgyon can be suppressed by setting \code{addfit=FALSE}.
 
-   For random-effects models and if \code{addcred=TRUE}, a dotted line is added to the summary polygon which indicates the (approximate) bounds of the credibility/prediction interval (the interval indicates where \code{level} \% of the true effects are expected to fall) (Riley et al., 2011). For random-effects models of class \code{"rma.mv"} (see \code{\link{rma.mv}}) with multiple \mjseqn{\tau^2} values, the \code{addcred} argument can be used to specify for which level of the inner factor the credibility/prediction interval should be provided (since the intervals differ depending on the \mjseqn{\tau^2} value). If the model should also contain multiple \mjseqn{\gamma^2} values, the \code{addcred} argument should then be of length 2 to specify the levels of both inner factors. See also \code{\link{predict.rma}}, which is used to compute these interval bounds.
+   For random-effects models and if \code{addpred=TRUE}, a dotted line is added to the summary polygon which indicates the (approximate) bounds of the prediction interval (the interval indicates where \code{level} \% of the true effects are expected to fall) (Riley et al., 2011). For random-effects models of class \code{"rma.mv"} (see \code{\link{rma.mv}}) with multiple \mjseqn{\tau^2} values, the \code{addpred} argument can be used to specify for which level of the inner factor the prediction interval should be provided (since the intervals differ depending on the \mjseqn{\tau^2} value). If the model should also contain multiple \mjseqn{\gamma^2} values, the \code{addpred} argument should then be of length 2 to specify the levels of both inner factors. See also \code{\link{predict.rma}}, which is used to compute these interval bounds.
 
-   For models involving moderators, the fitted value for each study is added as a polygon to the plot. By default, the width of the polygons corresponds to the confidence interval limits for the fitted values. By setting \code{addcred=TRUE}, the width reflects the credibility/prediction interval limits. Again, the \code{col} and \code{border} arguments can be used to adjust the (border) color of the polygons. These polygons can be suppressed by setting \code{addfit=FALSE}.
+   For models involving moderators, the fitted value for each study is added as a polygon to the plot. By default, the width of the polygons corresponds to the confidence interval limits for the fitted values. By setting \code{addpred=TRUE}, the width reflects the prediction interval limits. Again, the \code{col} and \code{border} arguments can be used to adjust the (border) color of the polygons. These polygons can be suppressed by setting \code{addfit=FALSE}.
 
-   With the \code{transf} argument, the observed effect sizes or outcomes, summary estimate, fitted values, confidence interval bounds, and credibility/prediction interval bounds can be transformed with some suitable function. For example, when plotting log odds ratios, one could use \code{transf=exp} to obtain a forest plot showing the odds ratios. Alternatively, one can use the \code{atransf} argument to transform the x-axis labels and annotations (e.g., \code{atransf=exp}). See also \link{transf} for some transformation functions useful for meta-analyses. The examples below illustrate the use of these arguments.
+   With the \code{transf} argument, the observed effect sizes or outcomes, summary estimate, fitted values, confidence interval bounds, and prediction interval bounds can be transformed with some suitable function. For example, when plotting log odds ratios, one could use \code{transf=exp} to obtain a forest plot showing the odds ratios. Alternatively, one can use the \code{atransf} argument to transform the x-axis labels and annotations (e.g., \code{atransf=exp}). See also \link{transf} for some transformation functions useful for meta-analyses. The examples below illustrate the use of these arguments.
 
    By default, the studies are ordered from top to bottom (i.e., the first study in the dataset will be placed in row \mjseqn{k}, the second study in row \mjseqn{k-1}, and so on, until the last study, which is placed in the first row). The studies can be reordered with the \code{order} argument:
    \itemize{
@@ -92,11 +92,11 @@
 
    If the horizontal plot and/or x-axis limits are set by the user, then the horizontal plot limits (\code{xlim}) must be at least as wide as the x-axis limits (\code{alim}). This restriction is enforced inside the function.
 
-   If the outcome measure used for creating the plot is bounded (e.g., correlations are bounded between \code{-1} and \code{1}, proportions are bounded between \code{0} and \code{1}), one can use the \code{clim} argument to enforce those limits (confidence/credibility/prediction intervals cannot exceed those bounds then).
+   If the outcome measure used for creating the plot is bounded (e.g., correlations are bounded between \code{-1} and \code{1}, proportions are bounded between \code{0} and \code{1}), one can use the \code{clim} argument to enforce those limits (confidence/prediction intervals cannot exceed those bounds then).
 
-   The models without moderators, the \code{col} argument can also be a vector of two elements, the first for specifying the color of the summary polygon, the second for specifying the color of the line for the credibility/prediction interval.
+   The models without moderators, the \code{col} argument can also be a vector of two elements, the first for specifying the color of the summary polygon, the second for specifying the color of the line for the prediction interval.
 
-   The \code{lty} argument can also be a vector of up to three elements, the first for specifying the line type of the individual CIs (\code{"solid"} by default), the second for the line type of the credibility/prediction interval (\code{"dotted"} by default), the third for the line type of the horizontal lines that are automatically added to the plot (\code{"solid"} by default; set to \code{"blank"} to remove them).
+   The \code{lty} argument can also be a vector of up to three elements, the first for specifying the line type of the individual CIs (\code{"solid"} by default), the second for the line type of the prediction interval (\code{"dotted"} by default), the third for the line type of the horizontal lines that are automatically added to the plot (\code{"solid"} by default; set to \code{"blank"} to remove them).
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
@@ -132,10 +132,10 @@ defaults
 
 ### several forest plots illustrating the use of various arguments
 forest(res, cex=.8)
-forest(res, cex=.8, addcred=TRUE)
+forest(res, cex=.8, addpred=TRUE)
 forest(res, cex=.8, alim=c(-3,3))
 forest(res, cex=.8, order="prec", alim=c(-3,3))
-forest(res, cex=.8, order=order(dat.bcg$ablat), addcred=TRUE)
+forest(res, cex=.8, order=order(dat.bcg$ablat), addpred=TRUE)
 
 ### adjust xlim values to see how that changes the plot
 forest(res)

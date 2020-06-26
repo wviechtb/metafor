@@ -6,7 +6,7 @@
 }
 \usage{
 \method{addpoly}{rma}(x, row=-2, level=x$level, annotate=TRUE,
-        addcred=FALSE, digits=2, width, mlab, transf, atransf, targs,
+        addpred=FALSE, digits=2, width, mlab, transf, atransf, targs,
         efac=1, col, border, fonts, cex, \dots)
 }
 \arguments{
@@ -14,7 +14,7 @@
    \item{row}{value specifying the row (or more generally, the horizontal position) for plotting the polygon (the default is \code{-2}).}
    \item{level}{numerical value between 0 and 100 specifying the confidence interval level (the default is to take the value from the object).}
    \item{annotate}{logical specifying whether annotations for the summary estimate should be added to the plot (the default is \code{TRUE}).}
-   \item{addcred}{logical specifying whether the bounds of the credibility/prediction interval should be added to the plot (the default is \code{FALSE}).}
+   \item{addpred}{logical specifying whether the bounds of the prediction interval should be added to the plot (the default is \code{FALSE}).}
    \item{digits}{integer specifying the number of decimal places to which the annotations should be rounded (the default is 2).}
    \item{width}{optional integer to manually adjust the width of the columns for the annotations.}
    \item{mlab}{optional character string giving a label for the summary estimate polygon. If unspecified, the function sets a default label.}

@@ -31,12 +31,12 @@ test_that("results are correct for the random-effects model.", {
    expect_equivalent(res.RE$zval,  1.6208, tolerance=.tol[["test"]])
    expect_equivalent(res.RE$tau2,  0.0188, tolerance=.tol[["var"]])
 
-   ### credibility/prediction interval
+   ### prediction interval
    tmp <- predict(res.RE)
 
    ### compare with results on page 301 (Table 16.2) and page 302
-   expect_equivalent(tmp$cr.lb, -0.2036, tolerance=.tol[["ci"]]) ### -0.19 in chapter but computed in a slightly different way
-   expect_equivalent(tmp$cr.ub,  0.3711, tolerance=.tol[["ci"]]) ###  0.35 in chapter but computed in a slightly different way
+   expect_equivalent(tmp$pi.lb, -0.2036, tolerance=.tol[["ci"]]) ### -0.19 in chapter but computed in a slightly different way
+   expect_equivalent(tmp$pi.ub,  0.3711, tolerance=.tol[["ci"]]) ###  0.35 in chapter but computed in a slightly different way
 
    ### range of BLUPs
    tmp <- range(blup(res.RE)$pred)

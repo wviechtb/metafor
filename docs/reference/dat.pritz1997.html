@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-20</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-21</span>
       </span>
     </div>
 
@@ -201,20 +201,20 @@
 <span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"PR"</span>, <span class='kw'>xi</span><span class='kw'>=</span><span class='no'>xi</span>, <span class='kw'>ni</span><span class='kw'>=</span><span class='no'>ni</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
 <span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; 
-#&gt;    pred     se  ci.lb  ci.ub  cr.lb  cr.ub 
+#&gt;    pred     se  ci.lb  ci.ub  pi.lb  pi.ub 
 #&gt;  0.7968 0.0423 0.7138 0.8797 0.5306 1.0629 
 #&gt; </div><div class='input'>
 <span class='co'>### random-effects model with logit transformed proportions</span>
 <span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"PLO"</span>, <span class='kw'>xi</span><span class='kw'>=</span><span class='no'>xi</span>, <span class='kw'>ni</span><span class='kw'>=</span><span class='no'>ni</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
 <span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>transf.ilogit</span>)</div><div class='output co'>#&gt; 
-#&gt;    pred  ci.lb  ci.ub  cr.lb  cr.ub 
+#&gt;    pred  ci.lb  ci.ub  pi.lb  pi.ub 
 #&gt;  0.7575 0.6605 0.8337 0.4661 0.9179 
 #&gt; </div><div class='input'>
 <span class='co'>### mixed-effects logistic regression model</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.glmm.html'>rma.glmm</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"PLO"</span>, <span class='kw'>xi</span><span class='kw'>=</span><span class='no'>xi</span>, <span class='kw'>ni</span><span class='kw'>=</span><span class='no'>ni</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
 <span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>transf.ilogit</span>)</div><div class='output co'>#&gt; 
-#&gt;    pred  ci.lb  ci.ub  cr.lb  cr.ub 
+#&gt;    pred  ci.lb  ci.ub  pi.lb  pi.ub 
 #&gt;  0.7984 0.6924 0.8746 0.4426 0.9518 
 #&gt; </div></pre>
   </div>

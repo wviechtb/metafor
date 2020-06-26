@@ -1,4 +1,4 @@
-Changes in Version 2.5-20 (2020-06-25)
+Changes in Version 2.5-21 (2020-06-26)
 =====================================
 
    o the metafor package now makes use of the 'mathjaxr' package to nicely
@@ -202,7 +202,7 @@ Changes in Version 2.1-0 (2019-05-13)
      'col' and 'bg' arguments (and also for 'pch'); both functions also gain
      a 'legend' argument
 
-   o addpoly() functions can now also show credibility interval bounds
+   o addpoly() functions can now also show prediction interval bounds
 
    o removed 'formula interface' from escalc(); until this actually adds
      some kind of extra functionality, this just makes escalc() more
@@ -778,8 +778,8 @@ Changes in Version 1.9-4 (2014-07-30)
 
    o predict.rma() function now works for 'rma.mv' objects with multiple
      tau^2 values even if the user specifies the 'newmods' argument but not
-     the 'tau2.levels' argument (but a warning is issued and the
-     credibility/prediction intervals are not computed)
+     the 'tau2.levels' argument (but a warning is issued and the prediction
+     intervals are not computed)
 
    o argument 'var.names' now works properly in escalc() when the user has
      not made use of the 'data' argument (thanks to Jarrett Byrnes for
@@ -875,13 +875,12 @@ Changes in Version 1.9-3 (2014-05-05)
 
    o predict.rma() function now works properly for 'rma.mv' objects (also
      has a new argument 'tau2.levels' to specify, where applicable, the
-     levels of the inner factor when computing credibility/prediction
-     intervals)
+     levels of the inner factor when computing prediction intervals)
 
    o forest.rma() function now provides a bit more control over the color of
      the summary polygon and is now compatible with 'rma.mv' objects; also,
      has a new argument 'lty', which provides more control over the line
-     type for the individual CIs and the credibility interval
+     type for the individual CIs and the prediction interval
 
    o addpoly.default() and addpoly.rma() now have a 'border' argument (for
      consistency with the forest.rma() function); addpoly.rma() now yields
@@ -897,7 +896,7 @@ Changes in Version 1.9-3 (2014-05-05)
      Michael Dewey for the suggestion
 
    o the various forest() functions now have a new argument, clim, to set
-     limits for the confidence/credibility/prediction interval bounds
+     limits for the confidence/prediction interval bounds
 
    o cumul.mh() and cumul.peto() now get the order of the studies right when
      there are missing values in the data
@@ -1316,7 +1315,7 @@ Changes in Version 1.7-0 (2013-02-06)
      coming up with a recursive algorithm for finding the unique
      permutations)
 
-   o credibility interval in forest.rma() is now indicated with a dotted
+   o prediction interval in forest.rma() is now indicated with a dotted
      (instead of a dashed) line; ends of the interval are now marked with
      vertical bars
 
@@ -1368,9 +1367,9 @@ Changes in Version 1.7-0 (2013-02-06)
      confint.rma.uni(), confint.rma.mh(), and confint.rma.peto() functions
 
    o when 'transf' or 'atransf' argument was a monotonically *decreasing*
-     function, then confidence, prediction, and credibility interval bounds
-     were in reversed order; various functions now check for this and order
-     the bounds correctly
+     function, then confidence and prediction interval bounds were in
+     reversed order; various functions now check for this and order the
+     bounds correctly
 
    o trimfill.rma.uni() now only prints information about the number of
      imputed studies when actually printing the model object
@@ -1618,7 +1617,7 @@ Changes in Version 1.0-1 (2010-02-02)
      CI level of the summary estimate for models without moderators (i.e.,
      for fixed- and random-effets models)
 
-   o forest() function can now also show the credibility interval as a
+   o forest() function can now also show the prediction interval as a
      dashed line for a random-effects model
 
    o information about the measure used is now passed on to the forest() and

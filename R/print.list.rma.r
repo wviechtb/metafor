@@ -9,6 +9,11 @@ print.list.rma <- function(x, digits=x$digits, ...) {
 
    attr(x, "class") <- NULL
 
+   ### remove cr.lb and cr.ub elements (if they are there)
+
+   x$cr.lb <- NULL
+   x$cr.ub <- NULL
+
    ### turn all vectors before the slab vector into a data frame
 
    slab.pos <- which(names(x) == "slab")

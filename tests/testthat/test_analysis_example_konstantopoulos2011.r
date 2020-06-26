@@ -67,7 +67,7 @@ test_that("results are correct for the three-level random-effects model fitted w
    expect_equivalent(res.ml$sigma2, c(0.0577, 0.0329), tolerance=.tol[["var"]])
 
    sav <- predict(res.ml)
-   expect_equivalent(c(sav$cr.lb, sav$cr.ub), c(-0.4262, 0.7951), tolerance=.tol[["pred"]])
+   expect_equivalent(c(sav$pi.lb, sav$pi.ub), c(-0.4262, 0.7951), tolerance=.tol[["pred"]])
 
 })
 

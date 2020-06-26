@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-20</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-21</span>
       </span>
     </div>
 
@@ -411,15 +411,15 @@
 #&gt; </div><div class='input'>
 <span class='co'>### average odds ratio comparing beta-blockers and sclerotherapy versus control, respectively</span>
 <span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>newmods</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>0</span>,<span class='fl'>26</span>), <span class='fl'>1</span>, <span class='fl'>0</span>), <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
-#&gt;  pred ci.lb ci.ub cr.lb cr.ub 
+#&gt;  pred ci.lb ci.ub pi.lb pi.ub 
 #&gt;  0.49  0.23  1.04  0.06  3.96 
 #&gt; </div><div class='input'><span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>newmods</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>0</span>,<span class='fl'>26</span>), <span class='fl'>0</span>, <span class='fl'>1</span>), <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
-#&gt;  pred ci.lb ci.ub cr.lb cr.ub 
+#&gt;  pred ci.lb ci.ub pi.lb pi.ub 
 #&gt;  0.56  0.33  0.94  0.07  4.21 
 #&gt; </div><div class='input'>
 <span class='co'>### average odds ratio comparing beta-blockers versus sclerotherapy</span>
 <span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>newmods</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>0</span>,<span class='fl'>26</span>), <span class='fl'>1</span>, -<span class='fl'>1</span>), <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
-#&gt;  pred ci.lb ci.ub cr.lb cr.ub 
+#&gt;  pred ci.lb ci.ub pi.lb pi.ub 
 #&gt;  0.88  0.36  2.11  0.10  7.45 
 #&gt; </div></pre>
   </div>

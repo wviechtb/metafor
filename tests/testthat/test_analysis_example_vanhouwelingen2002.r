@@ -80,7 +80,7 @@ test_that("forest plot of observed log(OR)s and corresponding BLUPs can be drawn
 
    opar <- par(no.readonly=TRUE)
    par(family="mono", mar=c(5,4,1,2))
-   forest(res, refline=res$beta, addcred=TRUE, xlim=c(-7,8), alim=c(-3,3), slab=1:13, psize=.8,
+   forest(res, refline=res$beta, addpred=TRUE, xlim=c(-7,8), alim=c(-3,3), slab=1:13, psize=.8,
           ilab=paste0("(n = ", formatC(apply(dat[,c(4:7)], 1, sum), width=7, big.mark=","), ")"),
           ilab.xpos=-3.5, ilab.pos=2, rows=13:1+.15, header="Trial (total n)")
    arrows(sav$pi.lb, 13:1 - .15, sav$pi.ub, 13:1 -.15, length=.03, angle=90, code=3, lty="dotted")
@@ -89,7 +89,7 @@ test_that("forest plot of observed log(OR)s and corresponding BLUPs can be drawn
 
 })
 
-test_that("the credibility/prediction interval is correct.", {
+test_that("the prediction interval is correct.", {
 
    res <- rma(yi, vi, data=dat, method="ML")
 
@@ -103,8 +103,8 @@ test_that("the credibility/prediction interval is correct.", {
    tmp <- predict(res, digits=3)
 
    ### (results for this not given in paper)
-   expect_equivalent(tmp$cr.lb, -1.875, tolerance=.tol[["ci"]])
-   expect_equivalent(tmp$cr.ub,  0.391, tolerance=.tol[["ci"]])
+   expect_equivalent(tmp$pi.lb, -1.875, tolerance=.tol[["ci"]])
+   expect_equivalent(tmp$pi.ub,  0.391, tolerance=.tol[["ci"]])
 
 })
 

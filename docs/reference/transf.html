@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-20</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-21</span>
       </span>
     </div>
 
@@ -222,12 +222,12 @@
 <span class='co'>### average risk ratio with 95% CI (but technically, this provides an</span>
 <span class='co'>### estimate of the median risk ratio, not the mean risk ratio!)</span>
 <span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>)</div><div class='output co'>#&gt; 
-#&gt;    pred  ci.lb  ci.ub  cr.lb  cr.ub 
+#&gt;    pred  ci.lb  ci.ub  pi.lb  pi.ub 
 #&gt;  0.4894 0.3441 0.6962 0.1546 1.5490 
 #&gt; </div><div class='input'>
 <span class='co'>### average risk ratio with 95% CI using the integral transformation</span>
 <span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>transf.exp.int</span>, <span class='kw'>targs</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>tau2</span><span class='kw'>=</span><span class='no'>res</span>$<span class='no'>tau2</span>, <span class='kw'>lower</span><span class='kw'>=</span>-<span class='fl'>4</span>, <span class='kw'>upper</span><span class='kw'>=</span><span class='fl'>4</span>))</div><div class='output co'>#&gt; 
-#&gt;    pred  ci.lb  ci.ub  cr.lb  cr.ub 
+#&gt;    pred  ci.lb  ci.ub  pi.lb  pi.ub 
 #&gt;  0.5724 0.4024 0.8142 0.1809 1.8117 
 #&gt; </div></pre>
   </div>

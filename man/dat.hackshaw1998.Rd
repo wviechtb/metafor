@@ -33,7 +33,7 @@ dat
 res <- rma(yi, vi, data=dat, method="DL")
 res
 
-### estimated average odds ratio with CI (and credibility/prediction interval)
+### estimated average odds ratio with CI (and prediction interval)
 predict(res, transf=exp, digits=2)
 }
 \keyword{datasets}

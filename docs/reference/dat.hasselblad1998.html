@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-20</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-21</span>
       </span>
     </div>
 
@@ -352,7 +352,7 @@
 <span class='co'>### all pairwise odds ratios of interventions versus no contact</span>
 <span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>newmods</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>0</span>, <span class='kw'>nrow</span><span class='kw'>=</span><span class='fl'>3</span>, <span class='kw'>ncol</span><span class='kw'>=</span><span class='fl'>24</span>), <span class='fu'><a href='https://rdrr.io/r/base/diag.html'>diag</a></span>(<span class='fl'>3</span>)),
         <span class='kw'>intercept</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
-#&gt;   pred ci.lb ci.ub cr.lb cr.ub 
+#&gt;   pred ci.lb ci.ub pi.lb pi.ub 
 #&gt; 1 1.48  0.78  2.77  0.35  6.20 
 #&gt; 2 1.99  1.37  2.89  0.52  7.60 
 #&gt; 3 2.33  1.14  4.75  0.53 10.14 
@@ -360,7 +360,7 @@
 <span class='co'>### all pairwise odds ratios comparing interventions (ic vs sh, gc vs sh, and gc vs ic)</span>
 <span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>newmods</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>0</span>, <span class='kw'>nrow</span><span class='kw'>=</span><span class='fl'>3</span>, <span class='kw'>ncol</span><span class='kw'>=</span><span class='fl'>24</span>), <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>0</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>1</span>,<span class='fl'>0</span>,<span class='fl'>1</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>,-<span class='fl'>1</span>,<span class='fl'>1</span>))),
         <span class='kw'>intercept</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
-#&gt;   pred ci.lb ci.ub cr.lb cr.ub 
+#&gt;   pred ci.lb ci.ub pi.lb pi.ub 
 #&gt; 1 1.35  0.70  2.58  0.32  5.71 
 #&gt; 2 1.58  0.72  3.43  0.35  7.10 
 #&gt; 3 1.17  0.59  2.30  0.27  5.02 
@@ -561,7 +561,7 @@
 #&gt; </div><div class='input'>
 <span class='co'>### predicted odds ratios of interventions versus no contact</span>
 <span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>newmods</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/diag.html'>diag</a></span>(<span class='fl'>3</span>), <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
-#&gt;   pred ci.lb ci.ub cr.lb cr.ub 
+#&gt;   pred ci.lb ci.ub pi.lb pi.ub 
 #&gt; 1 1.48  0.78  2.77  0.35  6.20 
 #&gt; 2 1.99  1.37  2.89  0.52  7.60 
 #&gt; 3 2.33  1.14  4.75  0.53 10.14 

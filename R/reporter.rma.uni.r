@@ -311,7 +311,7 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
       methods <- paste0(methods, "In addition to the estimate of $\\tau^2$, the $Q$-test for residual heterogeneity ", qtest.ref, " is reported. ")
 
    if (model == "RE")
-      methods <- paste0(methods, "In case any amount of heterogeneity is detected (i.e., $\\hat{\\tau}^2 > 0$, regardless of the results of the $Q$-test), a credibility/prediction interval for the true outcomes is also provided [@riley2011]. ")
+      methods <- paste0(methods, "In case any amount of heterogeneity is detected (i.e., $\\hat{\\tau}^2 > 0$, regardless of the results of the $Q$-test), a prediction interval for the true outcomes is also provided [@riley2011]. ")
 
    if (x$test == "knha")
       methods <- paste0(methods, "Tests and confidence intervals were computed using the Knapp and Hartung method [@knapp2003]. ")
@@ -367,7 +367,7 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
             results <- paste0(results, "```{r, forestplot, echo=FALSE, fig.align=\"center\", fig.cap=\"Figure ", num.forest, ": Forest plot showing the observed outcomes and the estimate of the ", model.name, " model\"")
          if (format == "word_document")
             results <- paste0(results, "```{r, forestplot, echo=FALSE, fig.cap=\"Figure ", num.forest, ": Forest plot showing the observed outcomes and the estimate of the ", model.name, " model\"")
-         results <- paste0(results, ", dev.args=list(pointsize=9)}\npar(family=\"mono\")\ntmp <- metafor::forest(x, addcred=TRUE, header=TRUE", args.forest, ")\n```")
+         results <- paste0(results, ", dev.args=list(pointsize=9)}\npar(family=\"mono\")\ntmp <- metafor::forest(x, addpred=TRUE, header=TRUE", args.forest, ")\n```")
          #text(tmp$xlim[1], x$k+2, \"Study\", pos=4, font=2, cex=tmp$cex)\ntext(tmp$xlim[2], x$k+2, \"Outcome [", level, "% CI]\", pos=2, font=2, cex=tmp$cex)\n
       }
 
@@ -389,15 +389,15 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
       ### I^2 statistic
       results <- paste0(results, ", $I^2 = ", .fcf(x$I2, digits[["het"]]), "$%). ")
 
-      ### for the RE model, when any amount of heterogeneity is detected, provide credibility/prediction interval and note whether the directionality of effects is consistent or not
+      ### for the RE model, when any amount of heterogeneity is detected, provide prediction interval and note whether the directionality of effects is consistent or not
       if (model == "RE" && x$tau2 > 0) {
          pred <- predict(x)
-         results <- paste0(results, "A ", level, "% credibility/prediction interval for the true outcomes is given by $", .fcf(pred$cr.lb, digits[["ci"]]), "$ to $", .fcf(pred$cr.ub, digits[["ci"]]), "$. ")
-         if (c(x$beta) > 0 && pred$cr.lb < 0)
+         results <- paste0(results, "A ", level, "% prediction interval for the true outcomes is given by $", .fcf(pred$pi.lb, digits[["ci"]]), "$ to $", .fcf(pred$pi.ub, digits[["ci"]]), "$. ")
+         if (c(x$beta) > 0 && pred$pi.lb < 0)
             results <- paste0(results, "Hence, although the average outcome is estimated to be positive, in some studies the true outcome may in fact be negative.")
-         if (c(x$beta) < 0 && pred$cr.ub > 0)
+         if (c(x$beta) < 0 && pred$pi.ub > 0)
             results <- paste0(results, "Hence, although the average outcome is estimated to be negative, in some studies the true outcome may in fact be positive.")
-         if ((c(x$beta) > 0 && pred$cr.lb > 0) || (c(x$beta) < 0 && pred$cr.ub < 0))
+         if ((c(x$beta) > 0 && pred$pi.lb > 0) || (c(x$beta) < 0 && pred$pi.ub < 0))
             results <- paste0(results, "Hence, even though there may be some heterogeneity, the true outcomes of the studies are generally in the same direction as the estimated average outcome.")
       }
 

@@ -44,7 +44,7 @@ test_that("results are correct for the random-effects model.", {
    ### compare with results on page 109
    tmp <- c(sav$pred, sav$ci.lb, sav$ci.ub)
    expect_equivalent(tmp, c(1.5722, 1.3103, 1.8864), tolerance=.tol[["pred"]]) ### 1.90 in article
-   tmp <- c(sav$cr.lb, sav$cr.ub)
+   tmp <- c(sav$pi.lb, sav$pi.ub)
    expect_equivalent(tmp, c(.8488, 2.9120), tolerance=.tol[["ci"]]) ### .87, 2.83 in article (but this was calculated without taking Var[hat(mu)] into consideration)
    expect_equivalent(res$tau2, .0903, tolerance=.tol[["var"]]) ### .091 in article
 

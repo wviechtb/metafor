@@ -45,7 +45,7 @@ res
 predict(res, digits=3, transf=transf.ztor)
 
 ### forest plot
-forest(res, addcred=TRUE, xlim=c(-1.6,1.6), atransf=transf.ztor,
+forest(res, addpred=TRUE, xlim=c(-1.6,1.6), atransf=transf.ztor,
        at=transf.rtoz(c(-.4,-.2,0,.2,.4,.6)), digits=c(2,1), cex=.8,
        header="Author(s), Year")
 
