@@ -2,6 +2,8 @@
 
 - the `metafor` package now makes use of the `mathjaxr` package to nicely render equations shown in the HTML help pages
 
+- to avoid potential confusion, all references to 'credibility intervals' have been removed from the documentation; these intervals are now exclusively referred to as 'prediction intervals'; in the output, the bounds are therefore indicated now as `pi.lb` and `pi.ub` (instead of `cr.lb` and `cr.ub`); the corresponding argument names were changed in `addpoly.default()`; argument `addcred` was changed to `addpred` in `addpoly.rma()` and `forest.rma()`; however, code using the old arguments names should continue to work
+
 - `vif()` gains `btt` argument and can now also compute generalized variance inflation factors; a proper `print.vif.rma()` function was added
 
 - in the various `forest()` functions, when `header=TRUE`, suppress the right header when `annotate=FALSE`
@@ -20,7 +22,7 @@
 
 - `regtest()` now shows the 'limit estimate' of the (average) true effect when using `sei`, `vi`, `ninv`, or `sqrtninv` as predictor (and the model does not contain any other moderators)
 
-- show nicer network graps for `dat.hasselblad1998` and `dat.senn2013` in help files
+- show nicer network graphs for `dat.hasselblad1998` and `dat.senn2013` in help files
 
 - improved the documentation a bit
 
@@ -857,7 +859,7 @@
 
 # metafor 1.4-0 (2010-07-30)
 
-- a papar about the package has now been published in the Journal of Statistical Software (https://www.jstatsoft.org/v36/i03/)
+- a paper about the package has now been published in the Journal of Statistical Software (https://www.jstatsoft.org/v36/i03/)
 
 - added citation info; see: `citation("metafor")`
 

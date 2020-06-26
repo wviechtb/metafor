@@ -135,6 +135,7 @@
 </h1>
 <ul>
 <li><p>the <code>metafor</code> package now makes use of the <code>mathjaxr</code> package to nicely render equations shown in the HTML help pages</p></li>
+<li><p>to avoid potential confusion, all references to ‘credibility intervals’ have been removed from the documentation; these intervals are now exclusively referred to as ‘prediction intervals’; in the output, the bounds are therefore indicated now as <code>pi.lb</code> and <code>pi.ub</code> (instead of <code>cr.lb</code> and <code>cr.ub</code>); the corresponding argument names were changed in <code><a href="../reference/addpoly.default.html">addpoly.default()</a></code>; argument <code>addcred</code> was changed to <code>addpred</code> in <code><a href="../reference/addpoly.rma.html">addpoly.rma()</a></code> and <code><a href="../reference/forest.rma.html">forest.rma()</a></code>; however, code using the old arguments names should continue to work</p></li>
 <li><p><code><a href="../reference/vif.html">vif()</a></code> gains <code>btt</code> argument and can now also compute generalized variance inflation factors; a proper <code><a href="../reference/vif.html">print.vif.rma()</a></code> function was added</p></li>
 <li><p>in the various <code><a href="../reference/forest.html">forest()</a></code> functions, when <code>header=TRUE</code>, suppress the right header when <code>annotate=FALSE</code></p></li>
 <li><p>the <code>forest</code> and <code>funnel</code> arguments of <code><a href="../reference/reporter.html">reporter.rma.uni()</a></code> can now also be logicals to suppress the drawing of these plots</p></li>
@@ -144,7 +145,7 @@
 <li><p><code><a href="../reference/funnel.html">funnel.default()</a></code> and <code><a href="../reference/funnel.html">funnel.rma()</a></code> gain <code>label</code> and <code>offset</code> arguments</p></li>
 <li><p><code><a href="../reference/funnel.html">funnel.default()</a></code> and <code><a href="../reference/funnel.html">funnel.rma()</a></code> gain <code>lty</code> argument; reference line is now drawn by default as a dotted line (like the line for the pseudo confidence region)</p></li>
 <li><p><code><a href="../reference/regtest.html">regtest()</a></code> now shows the ‘limit estimate’ of the (average) true effect when using <code>sei</code>, <code>vi</code>, <code>ninv</code>, or <code>sqrtninv</code> as predictor (and the model does not contain any other moderators)</p></li>
-<li><p>show nicer network graps for <code>dat.hasselblad1998</code> and <code>dat.senn2013</code> in help files</p></li>
+<li><p>show nicer network graphs for <code>dat.hasselblad1998</code> and <code>dat.senn2013</code> in help files</p></li>
 <li><p>improved the documentation a bit</p></li>
 </ul>
 </div>
@@ -673,7 +674,7 @@
 <a href="#metafor-1-4-0-2010-07-30" class="anchor"></a>metafor 1.4-0 (2010-07-30)<small> 2010-07-30 </small>
 </h1>
 <ul>
-<li><p>a papar about the package has now been published in the Journal of Statistical Software (<a href="https://www.jstatsoft.org/v36/i03/" class="uri">https://www.jstatsoft.org/v36/i03/</a>)</p></li>
+<li><p>a paper about the package has now been published in the Journal of Statistical Software (<a href="https://www.jstatsoft.org/v36/i03/" class="uri">https://www.jstatsoft.org/v36/i03/</a>)</p></li>
 <li><p>added citation info; see: <code><a href="https://rdrr.io/r/utils/citation.html">citation("metafor")</a></code></p></li>
 <li><p>the <code>metafor</code> package now depends on the <code>nlme</code> package</p></li>
 <li><p>added extractor functions for the AIC, BIC, and deviance</p></li>
