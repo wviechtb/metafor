@@ -4,7 +4,7 @@ context("Checking misc: vcov() function")
 
 source("tolerances.r") # read in tolerances
 
-test_that("vcov() works correctly for rma().", {
+test_that("vcov() works correctly for 'rma.uni' objects.", {
 
    data(dat.bcg, package="metafor")
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
@@ -17,7 +17,7 @@ test_that("vcov() works correctly for rma().", {
 
 })
 
-test_that("vcov() works correctly for rma.mv().", {
+test_that("vcov() works correctly for 'rma.mv' objects.", {
 
    data(dat.bcg, package="metafor")
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)

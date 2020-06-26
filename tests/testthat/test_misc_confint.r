@@ -4,7 +4,7 @@ context("Checking misc: confint() function")
 
 source("tolerances.r") # read in tolerances
 
-test_that("confint() works correctly for rma().", {
+test_that("confint() works correctly for 'rma.uni' objects.", {
 
    data(dat.bcg, package="metafor")
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
@@ -18,7 +18,7 @@ test_that("confint() works correctly for rma().", {
 
 })
 
-test_that("confint() works correctly for rma.mh().", {
+test_that("confint() works correctly for 'rma.mh' objects.", {
 
    data(dat.bcg, package="metafor")
    res <- rma.mh(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
@@ -28,7 +28,7 @@ test_that("confint() works correctly for rma.mh().", {
 
 })
 
-test_that("confint() works correctly for rma.peto().", {
+test_that("confint() works correctly for 'rma.peto' objects.", {
 
    data(dat.bcg, package="metafor")
    res <- rma.peto(ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)

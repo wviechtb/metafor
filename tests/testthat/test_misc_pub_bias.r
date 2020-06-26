@@ -4,7 +4,7 @@ context("Checking misc: regtest() and ranktest() functions")
 
 source("tolerances.r") # read in tolerances
 
-test_that("regtest() works correctly for rma().", {
+test_that("regtest() works correctly for 'rma.uni' objects.", {
 
    dat <- dat.egger2001
    dat <- escalc(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat)
@@ -25,7 +25,7 @@ test_that("regtest() works correctly for rma().", {
 
 })
 
-test_that("ranktest() works correctly for rma().", {
+test_that("ranktest() works correctly for 'rma.uni' objects.", {
 
    dat <- dat.egger2001
    dat <- escalc(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat)

@@ -65,6 +65,8 @@ test_that("results are correct for example 1.", {
    modI <- rma.mv(y, S1, mods=X, intercept=FALSE, random = list(~ contr | study, ~ contr | design), rho=1/2, phi=1/2, data=EG1)
    ci <- confint(modI)
 
+   out <- capture.output(print(ci))
+
    expect_equivalent(modI$tau2, 0.0000, tolerance=.tol[["var"]])
    expect_equivalent(modI$gamma2, 0.0000, tolerance=.tol[["var"]])
    expect_equivalent(coef(modI), c(-0.2243, -0.1667, -0.3274, -0.3152, -0.3520, -0.6489, -0.2758), tolerance=.tol[["coef"]])
