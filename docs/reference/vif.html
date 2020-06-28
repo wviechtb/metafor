@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-21</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-22</span>
       </span>
     </div>
 
@@ -174,9 +174,9 @@
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The function computes variance inflation factors (VIFs) for meta-regression models. Hence, the model specified via <code>x</code> must include moderator variables.</p>
-<p>Let \(b_j\) denote the estimate of the \(j\)th model coefficient of a particular meta-regression model and \(\mbox{Var}[b_j]\) the corresponding variance (i.e., the corresponding diagonal element from the matrix obtained with the <code><a href='vcov.rma.html'>vcov.rma</a></code> function). Moreover, let \(b'_j\) denote the estimate of the same model coefficient if the other moderator variables in the model had <em>not</em> been included in the model and \(\mbox{Var}[b'_j]\) the corresponding variance. Then the VIF for the model coefficient is given by \[\mbox{VIF}[b_j] = \frac{\mbox{Var}[b_j]}{\mbox{Var}[b'_j]},\] which indicates the inflation in the variance of the estimated model coefficient due to collinearity among the predictor variables. Taking the square root of a VIF gives the standard error inflation factor (SIF).</p>
-<p>If <code>btt</code> is not specified, then the VIF is computed for each individual model coefficient. However, if the model includes factors (coded in terms of multiple dummy variables), one may want to compute a generalized variance inflation factor (GVIF) that indicates the inflation in the confidence ellipse/ellipsoid for the entire set of coefficients corresponding to a factor (Fox &amp; Monette, 1992). This can be done by setting the <code>btt</code> argument equal to the indices of those coefficients for which a GVIF should be computed. Raising the GVIF to the power of \(1/(2m)\) (where \(m\) denotes the number of coefficients in the set) then provides the generalized standard error inflation factor (GSIF) that is more directly comparable to SIFs or other GSIFs based on a different number of coefficients.</p>
+    <p>The function computes variance inflation factors (VIFs) for meta-regression models. Hence, the model specified via argument <code>x</code> must include moderator variables (and more than one for this to be useful, as the VIF for a model with a single moderator variable will always be equal to 1).</p>
+<p>Let \(b_j\) denote the estimate of the \(j\)th model coefficient of a particular meta-regression model and \(\mbox{Var}[b_j]\) its variance (i.e., the corresponding diagonal element from the matrix obtained with the <code><a href='vcov.rma.html'>vcov.rma</a></code> function). Moreover, let \(b'_j\) denote the estimate of the same model coefficient if the other moderator variables in the model had <em>not</em> been included in the model and \(\mbox{Var}[b'_j]\) the corresponding variance. Then the VIF for the model coefficient is given by \[\mbox{VIF}[b_j] = \frac{\mbox{Var}[b_j]}{\mbox{Var}[b'_j]},\] which indicates the inflation in the variance of the estimated model coefficient due to potential collinearity of the \(j\)th moderator variable with the other moderator variables in the model. Taking the square root of a VIF gives the corresponding standard error inflation factor (SIF).</p>
+<p>If <code>btt</code> is not specified, then the VIF is computed for each individual model coefficient. However, if the model includes factors (coded in terms of multiple dummy variables) or other sets of moderator variables that belong together (e.g., for polynomials or cubic splines), one may want to examine how much the variance in all of the coefficients in the set is jointly impacted by collinearity with the other moderator variables in the model. For this, we can compute a generalized variance inflation factor (GVIF) (Fox &amp; Monette, 1992) by setting the <code>btt</code> argument equal to the indices of those coefficients for which the GVIF should be computed. The square root of a GVIF indicates the inflation in the confidence ellipse/(hyper)ellipsoid for the set of coefficients corresponding to the set due to collinearity. However, to make this value more directly comparable to SIFs (based on single coefficients) or when the set includes a different number of coefficients, the function computes the generalized standard error inflation factor (GSIF) by raising the GVIF to the power of \(1/(2m)\) (where \(m\) denotes the number of coefficients in the set).</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>If <code>btt</code> is not specified, either a vector (if <code>table=FALSE</code>) with the VIFs or a data frame (if <code>table=TRUE</code>) with the following elements:</p>
@@ -255,7 +255,7 @@
 #&gt; allocrandom      1.3124 
 #&gt; allocsystematic  1.3081 
 #&gt; </div><div class='input'>
-<span class='co'>### generalized variance inflation factor for the alloc factor</span>
+<span class='co'>### generalized variance inflation factor for the 'alloc' factor</span>
 <span class='fu'>vif</span>(<span class='no'>res</span>, <span class='kw'>btt</span><span class='kw'>=</span><span class='fl'>3</span>:<span class='fl'>4</span>)</div><div class='output co'>#&gt; 
 #&gt; Collinearity Diagnostics (coefficients 3:4):
 #&gt; GVIF = 1.0151, GSIF = 1.0038

@@ -1,5 +1,5 @@
 profile.rma.uni <- function(fitted,
-   xlim, ylim, steps=20, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, plot=TRUE, pch=19, cline=FALSE, ...) {
+   xlim, ylim, steps=20, lltol=1e-06, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, plot=TRUE, pch=19, cline=FALSE, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -163,6 +163,12 @@ profile.rma.uni <- function(fitted,
 
    #########################################################################
 
+   if (x$method %in% c("ML", "REML") && any(lls >= logLik(x) + lltol, na.rm=TRUE))
+      warning(mstyle$warning("At least one profiled log-likelihood value is larger than the log-likelihood of the fitted model."), call.=FALSE)
+
+   if (all(is.na(lls)))
+      warning(mstyle$warning("All model fits failed. Cannot draw profile likelihood plot."), call.=FALSE)
+
    beta  <- data.frame(beta)
    ci.lb <- data.frame(ci.lb)
    ci.ub <- data.frame(ci.ub)
@@ -172,7 +178,11 @@ profile.rma.uni <- function(fitted,
 
    if (missing(ylim)) {
 
-      ylim <- range(lls, na.rm=TRUE)
+      if (any(!is.na(lls))) {
+         ylim <- range(lls, na.rm=TRUE)
+      } else {
+         ylim <- rep(logLik(x), 2)
+      }
       ylim[1] <- ylim[1] - .1
       ylim[2] <- ylim[2] + .1
 
