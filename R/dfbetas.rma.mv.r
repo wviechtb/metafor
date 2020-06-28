@@ -165,7 +165,7 @@ dfbetas.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE, paral
          rownames(out) <- x$slab[x$not.na]
       } else {
          rownames(out) <- ids
-         out <- out[order(ids),]
+         out <- out[order(ids),,drop=FALSE]
       }
    }
 
@@ -180,7 +180,7 @@ dfbetas.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE, paral
          rownames(out) <- x$slab
       } else {
          rownames(out) <- ids.f
-         out <- out[order(ids.f),]
+         out <- out[order(ids.f),,drop=FALSE]
       }
 
    }
