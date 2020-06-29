@@ -31,12 +31,12 @@ rstudent.rma.peto <- function(model, digits, progbar=FALSE, ...) {
    ### note: skipping NA tables
 
    if (progbar)
-      pbar <- txtProgressBar(min=0, max=x$k.f, style=3)
+      pbar <- pbapply::startpb(min=0, max=x$k.f)
 
    for (i in seq_len(x$k.f)) {
 
       if (progbar)
-         setTxtProgressBar(pbar, i)
+         pbapply::setpb(pbar, i)
 
       if (!x$not.na[i])
          next
@@ -52,7 +52,7 @@ rstudent.rma.peto <- function(model, digits, progbar=FALSE, ...) {
    }
 
    if (progbar)
-      close(pbar)
+      pbapply::closepb(pbar)
 
    resid <- x$yi.f - delpred
    resid[abs(resid) < 100 * .Machine$double.eps] <- 0

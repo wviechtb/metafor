@@ -77,12 +77,12 @@ rstudent.rma.mv <- function(model, digits, progbar=FALSE, cluster, reestimate=TR
       k.id <- rep(NA_integer_, n)
 
       if (progbar)
-         pbar <- txtProgressBar(min=0, max=n, style=3)
+         pbar <- pbapply::startpb(min=0, max=n)
 
       for (i in seq_len(n)) {
 
          if (progbar)
-            setTxtProgressBar(pbar, i)
+            pbapply::setpb(pbar, i)
 
          incl <- cluster %in% ids[i]
 
@@ -141,7 +141,7 @@ rstudent.rma.mv <- function(model, digits, progbar=FALSE, cluster, reestimate=TR
       }
 
       if (progbar)
-         close(pbar)
+         pbapply::closepb(pbar)
 
    }
 

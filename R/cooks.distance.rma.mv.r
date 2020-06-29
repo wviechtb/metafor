@@ -75,12 +75,12 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
       cook.d <- rep(NA_real_, n)
 
       if (progbar)
-         pbar <- txtProgressBar(min=0, max=n, style=3)
+         pbar <- pbapply::startpb(min=0, max=n)
 
       for (i in seq_len(n)) {
 
          if (progbar)
-            setTxtProgressBar(pbar, i)
+            pbapply::setpb(pbar, i)
 
          incl <- cluster %in% ids[i]
 
@@ -126,7 +126,7 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
       }
 
       if (progbar)
-         close(pbar)
+         pbapply::closepb(pbar)
 
    }
 

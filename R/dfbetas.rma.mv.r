@@ -68,12 +68,12 @@ dfbetas.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE, paral
       dfbs <- matrix(NA_real_, nrow=n, ncol=x$p)
 
       if (progbar)
-         pbar <- txtProgressBar(min=0, max=n, style=3)
+         pbar <- pbapply::startpb(min=0, max=n)
 
       for (i in seq_len(n)) {
 
          if (progbar)
-            setTxtProgressBar(pbar, i)
+            pbapply::setpb(pbar, i)
 
          incl <- cluster %in% ids[i]
 
@@ -123,7 +123,7 @@ dfbetas.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE, paral
       }
 
       if (progbar)
-         close(pbar)
+         pbapply::closepb(pbar)
 
    }
 

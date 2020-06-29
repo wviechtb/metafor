@@ -67,12 +67,12 @@ cumul.rma.uni <- function(x, order, digits, transf, targs, progbar=FALSE, ...) {
    ### also: it is possible that model fitting fails, so that generates more NAs (these NAs will always be shown in output)
 
    if (progbar)
-      pbar <- txtProgressBar(min=0, max=x$k.f, style=3)
+      pbar <- pbapply::startpb(min=0, max=x$k.f)
 
    for (i in seq_len(x$k.f)) {
 
       if (progbar)
-         setTxtProgressBar(pbar, i)
+         pbapply::setpb(pbar, i)
 
       if (!not.na[i])
          next
@@ -97,7 +97,7 @@ cumul.rma.uni <- function(x, order, digits, transf, targs, progbar=FALSE, ...) {
    }
 
    if (progbar)
-      close(pbar)
+      pbapply::closepb(pbar)
 
    ### for first 'not.na' element, I2 and H2 would be NA (since k=1), but set to 0 and 1, respectively
 

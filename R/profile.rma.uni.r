@@ -24,6 +24,9 @@ profile.rma.uni <- function(fitted,
       ncpus <- length(cl)
    }
 
+   if (parallel == "snow" && ncpus < 2)
+      parallel <- "no"
+
    if (parallel == "snow" || parallel == "multicore") {
 
       if (!requireNamespace("parallel", quietly=TRUE))
@@ -37,8 +40,8 @@ profile.rma.uni <- function(fitted,
    }
 
    if (!progbar) {
-      pbo <- pbapply::pboptions(type = "none")
-      on.exit(pbapply::pboptions(pbo), add = TRUE)
+      pbo <- pbapply::pboptions(type="none")
+      on.exit(pbapply::pboptions(pbo))
    }
 
    ddd <- list(...)
@@ -110,26 +113,26 @@ profile.rma.uni <- function(fitted,
       stop(mstyle$stop("Cannot set 'xlim' automatically. Please set this argument manually."))
 
    if (parallel == "no")
-      res <- pbapply::pblapply(seq_len(steps), .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE, vcs=vcs)
+      res <- pbapply::pblapply(vcs, .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE)
 
    if (parallel == "multicore")
-      res <- pbapply::pblapply(seq_len(steps), .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE, vcs=vcs, cl=ncpus)
-      #res <- parallel::mclapply(seq_len(steps), .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE, vcs=vcs, mc.cores=ncpus)
+      res <- pbapply::pblapply(vcs, .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE, cl=ncpus)
+      #res <- parallel::mclapply(vcs, .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE, mc.cores=ncpus)
 
    if (parallel == "snow") {
       if (is.null(cl)) {
          cl <- parallel::makePSOCKcluster(ncpus)
-         on.exit(parallel::stopCluster(cl))
+         on.exit(parallel::stopCluster(cl), add=TRUE)
       }
       if (.isTRUE(ddd$LB)) {
-         res <- parallel::parLapplyLB(cl, seq_len(steps), .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE, vcs=vcs)
-         #res <- parallel::clusterApplyLB(cl, seq_len(steps), .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE, vcs=vcs)
-         #res <- parallel::clusterMap(cl, .profile.rma.uni, seq_len(steps), MoreArgs=list(obj=x, parallel=parallel, profile=TRUE, vcs=vcs), .scheduling = "dynamic")
+         res <- parallel::parLapplyLB(cl, vcs, .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE)
+         #res <- parallel::clusterApplyLB(cl, vcs, .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE)
+         #res <- parallel::clusterMap(cl, .profile.rma.uni, vcs, MoreArgs=list(obj=x, parallel=parallel, profile=TRUE), .scheduling = "dynamic")
       } else {
-         res <- pbapply::pblapply(seq_len(steps), .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE, vcs=vcs, cl=cl)
-         #res <- parallel::parLapply(cl, seq_len(steps), .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE, vcs=vcs)
-         #res <- parallel::clusterApply(cl, seq_len(steps), .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE, vcs=vcs)
-         #res <- parallel::clusterMap(cl, .profile.rma.uni, seq_len(steps), MoreArgs=list(obj=x, parallel=parallel, profile=TRUE, vcs=vcs))
+         res <- pbapply::pblapply(vcs, .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE, cl=cl)
+         #res <- parallel::parLapply(cl, vcs, .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE)
+         #res <- parallel::clusterApply(cl, vcs, .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE)
+         #res <- parallel::clusterMap(cl, .profile.rma.uni, vcs, MoreArgs=list(obj=x, parallel=parallel, profile=TRUE))
       }
    }
 

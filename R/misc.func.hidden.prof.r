@@ -2,18 +2,22 @@
 
 ### for profile(), confint(), and gosh()
 
-.profile.rma.uni <- function(val, obj, parallel=FALSE, profile=FALSE, confint=FALSE, subset=FALSE, vcs, objective, sel, FE=FALSE, verbose=FALSE) {
+.profile.rma.uni <- function(val, obj, parallel=FALSE, profile=FALSE, confint=FALSE, subset=FALSE, objective, sel, FE=FALSE, verbose=FALSE) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
    if (parallel == "snow")
       library(metafor)
 
+   if (profile || confint) {
+
+      ### for profile and confint, fit model with tau2 fixed to 'val'
+
+      res <- try(suppressWarnings(rma.uni(obj$yi, obj$vi, weights=obj$weights, mods=obj$X, intercept=FALSE, method=obj$method, weighted=obj$weighted, test=obj$test, level=obj$level, control=obj$control, tau2=val, skipr2=TRUE, outlist="minimal")), silent=TRUE)
+
+   }
+
    if (profile) {
-
-      ### for profiling, fit model with tau2 fixed to the val-th value of 'vcs'
-
-      res <- try(suppressWarnings(rma.uni(obj$yi, obj$vi, weights=obj$weights, mods=obj$X, intercept=FALSE, method=obj$method, weighted=obj$weighted, test=obj$test, level=obj$level, control=obj$control, tau2=vcs[val], skipr2=TRUE)), silent=TRUE)
 
       if (inherits(res, "try-error")) {
          sav <- list(ll = NA, beta = matrix(NA, nrow=nrow(obj$beta), ncol=1), ci.lb = rep(NA, length(obj$ci.lb)), ci.ub = rep(NA, length(obj$ci.ub)))
@@ -24,10 +28,6 @@
    }
 
    if (confint) {
-
-      ### for CI construction, fit model with tau2 fixed to 'val'
-
-      res <- try(suppressWarnings(rma.uni(obj$yi, obj$vi, weights=obj$weights, mods=obj$X, intercept=FALSE, method=obj$method, weighted=obj$weighted, test=obj$test, level=obj$level, control=obj$control, tau2=val, skipr2=TRUE)), silent=TRUE)
 
       if (inherits(res, "try-error")) {
 
@@ -49,7 +49,7 @@
 
    if (subset) {
 
-      ### for subsetting, fit model to subset as specified in row 'val' of 'sel'
+      ### for subset, fit model to subset as specified in row 'val' of 'sel'
 
       if (FE) {
 
@@ -72,7 +72,7 @@
 
       } else {
 
-         res <- try(suppressWarnings(rma.uni(obj$yi, obj$vi, weights=obj$weights, mods=obj$X, intercept=FALSE, method=obj$method, weighted=obj$weighted, test=obj$test, level=obj$level, control=obj$control, tau2=ifelse(obj$tau2.fix, obj$tau2, NA), subset=sel[val,], skipr2=TRUE)), silent=TRUE)
+         res <- try(suppressWarnings(rma.uni(obj$yi, obj$vi, weights=obj$weights, mods=obj$X, intercept=FALSE, method=obj$method, weighted=obj$weighted, test=obj$test, level=obj$level, control=obj$control, tau2=ifelse(obj$tau2.fix, obj$tau2, NA), subset=sel[val,], skipr2=TRUE, outlist="minimal")), silent=TRUE)
 
          if (inherits(res, "try-error") || any(res$coef.na)) {
             sav <- list(beta = matrix(NA, nrow=nrow(obj$beta), ncol=1), het = rep(NA, 5))
@@ -88,52 +88,23 @@
 
 }
 
-.profile.rma.mv <- function(val, obj, comp, sigma2.pos, tau2.pos, rho.pos, gamma2.pos, phi.pos, parallel=FALSE, profile=FALSE, confint=FALSE, subset=FALSE, vcs, objective, verbose=FALSE) {
+.profile.rma.mv <- function(val, obj, comp, sigma2.pos, tau2.pos, rho.pos, gamma2.pos, phi.pos, parallel=FALSE, profile=FALSE, confint=FALSE, subset=FALSE, objective, verbose=FALSE) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
    if (parallel == "snow")
       library(metafor)
 
-   ### set any fixed components to their values
-   sigma2.arg <- ifelse(obj$vc.fix$sigma2, obj$sigma2, NA)
-   tau2.arg   <- ifelse(obj$vc.fix$tau2, obj$tau2, NA)
-   rho.arg    <- ifelse(obj$vc.fix$rho, obj$rho, NA)
-   gamma2.arg <- ifelse(obj$vc.fix$gamma2, obj$gamma2, NA)
-   phi.arg    <- ifelse(obj$vc.fix$phi, obj$phi, NA)
+   if (profile || confint) {
 
-   if (profile) {
+      ### for profile and confint, fit model with component fixed to 'val'
 
-      ### for profiling, fit model with component fixed to the val-th value of 'vcs'
-
-      if (comp == "sigma2")
-         sigma2.arg[sigma2.pos] <- vcs[val]
-
-      if (comp == "tau2")
-         tau2.arg[tau2.pos] <- vcs[val]
-
-      if (comp == "rho")
-         rho.arg[rho.pos] <- vcs[val]
-
-      if (comp == "gamma2")
-         gamma2.arg[gamma2.pos] <- vcs[val]
-
-      if (comp == "phi")
-         phi.arg[phi.pos] <- vcs[val]
-
-      res <- try(suppressWarnings(rma.mv(obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=sigma2.arg, tau2=tau2.arg, rho=rho.arg, gamma2=gamma2.arg, phi=phi.arg, sparse=obj$sparse, dist=obj$dist, control=obj$control)), silent=TRUE)
-
-      if (inherits(res, "try-error")) {
-         sav <- list(ll = NA, beta = matrix(NA, nrow=nrow(obj$beta), ncol=1), ci.lb = rep(NA, length(obj$ci.lb)), ci.ub = rep(NA, length(obj$ci.ub)))
-      } else {
-         sav <- list(ll = logLik(res), beta = res$beta, ci.lb = res$ci.lb, ci.ub = res$ci.ub)
-      }
-
-   }
-
-   if (confint) {
-
-      ### for CI construction, fit model with component fixed to 'val'
+      ### set any fixed components to their values
+      sigma2.arg <- ifelse(obj$vc.fix$sigma2, obj$sigma2, NA)
+      tau2.arg   <- ifelse(obj$vc.fix$tau2, obj$tau2, NA)
+      rho.arg    <- ifelse(obj$vc.fix$rho, obj$rho, NA)
+      gamma2.arg <- ifelse(obj$vc.fix$gamma2, obj$gamma2, NA)
+      phi.arg    <- ifelse(obj$vc.fix$phi, obj$phi, NA)
 
       if (comp == "sigma2")
          sigma2.arg[sigma2.pos] <- val
@@ -150,12 +121,26 @@
       if (comp == "phi")
          phi.arg[phi.pos] <- val
 
-      res <- try(suppressWarnings(rma.mv(obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=sigma2.arg, tau2=tau2.arg, rho=rho.arg, gamma2=gamma2.arg, phi=phi.arg, sparse=obj$sparse, dist=obj$dist, control=obj$control)), silent=TRUE)
+      res <- try(suppressWarnings(rma.mv(obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=sigma2.arg, tau2=tau2.arg, rho=rho.arg, gamma2=gamma2.arg, phi=phi.arg, sparse=obj$sparse, dist=obj$dist, control=obj$control, outlist="minimal")), silent=TRUE)
+
+   }
+
+   if (profile) {
+
+      if (inherits(res, "try-error")) {
+         sav <- list(ll = NA, beta = matrix(NA, nrow=nrow(obj$beta), ncol=1), ci.lb = rep(NA, length(obj$ci.lb)), ci.ub = rep(NA, length(obj$ci.ub)))
+      } else {
+         sav <- list(ll = logLik(res), beta = res$beta, ci.lb = res$ci.lb, ci.ub = res$ci.ub)
+      }
+
+   }
+
+   if (confint) {
 
       if (inherits(res, "try-error")) {
 
          if (verbose)
-            cat(mstyle$verbose(paste("vc =", formatC(val, digits=obj$digits[["var"]], width=obj$digits[["var"]]+4, format="f"), "  LRT - objective = NA", "\n")))
+            cat(mstyle$verbose(paste("val =", formatC(val, digits=obj$digits[["var"]], width=obj$digits[["var"]]+4, format="f"), "  LRT - objective = NA", "\n")))
 
          stop()
 
@@ -164,7 +149,7 @@
          sav <- -2*(logLik(res) - logLik(obj)) - objective
 
          if (verbose)
-            cat(mstyle$verbose(paste("vc =", formatC(val, digits=obj$digits[["var"]], width=obj$digits[["var"]]+4, format="f"), "  LRT - objective =", formatC(sav, digits=obj$digits[["fit"]], width=obj$digits[["fit"]]+4, format="f"), "\n")))
+            cat(mstyle$verbose(paste("val =", formatC(val, digits=obj$digits[["var"]], width=obj$digits[["var"]]+4, format="f"), "  LRT - objective =", formatC(sav, digits=obj$digits[["fit"]], width=obj$digits[["fit"]]+4, format="f"), "\n")))
 
       }
 
@@ -181,7 +166,7 @@
 
    if (subset) {
 
-      ### for subsetting, fit model to subset as specified in row 'val' of 'sel'
+      ### for subset, fit model to subset as specified in row 'val' of 'sel'
 
       if (is.element(obj$measure, c("RR","OR","RD"))) {
          res <- try(suppressWarnings(rma.mh(ai=obj$ai, bi=obj$bi, ci=obj$ci, di=obj$di, measure=obj$measure, add=obj$add, to=obj$to, drop00=obj$drop00, correct=obj$correct, subset=sel[val,])), silent=TRUE)
@@ -208,7 +193,7 @@
 
    if (subset) {
 
-      ### for subsetting, fit model to subset as specified in row 'val' of 'sel'
+      ### for subset, fit model to subset as specified in row 'val' of 'sel'
 
       res <- try(suppressWarnings(rma.peto(ai=obj$ai, bi=obj$bi, ci=obj$ci, di=obj$di, add=obj$add, to=obj$to, drop00=obj$drop00, subset=sel[val,])), silent=TRUE)
 

@@ -21,6 +21,9 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
       ncpus <- length(cl)
    }
 
+   if (parallel == "snow" && ncpus < 2)
+      parallel <- "no"
+
    if (parallel == "snow" || parallel == "multicore") {
 
       if (!requireNamespace("parallel", quietly=TRUE))
@@ -34,8 +37,8 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
    }
 
    if (!progbar) {
-      pbo <- pbapply::pboptions(type = "none")
-      on.exit(pbapply::pboptions(pbo), add = TRUE)
+      pbo <- pbapply::pboptions(type="none")
+      on.exit(pbapply::pboptions(pbo))
    }
 
    ddd <- list(...)
@@ -64,7 +67,7 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
       if (plot) {
          if (dev.cur() == 1) {
             par(mfrow=c(comps, 1))
-            #on.exit(par(mfrow=c(1,1)))
+            #on.exit(par(mfrow=c(1,1)), add=TRUE)
          }
       }
 
@@ -409,24 +412,24 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
    }
 
    if (parallel == "no")
-      res <- pbapply::pblapply(seq_len(steps), .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE, vcs=vcs)
+      res <- pbapply::pblapply(vcs, .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE)
 
    if (parallel == "multicore")
-      res <- pbapply::pblapply(seq_len(steps), .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE, vcs=vcs, cl=ncpus)
-      #res <- parallel::mclapply(seq_len(steps), .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE, vcs=vcs, mc.cores=ncpus)
+      res <- pbapply::pblapply(vcs, .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE, cl=ncpus)
+      #res <- parallel::mclapply(vcs, .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE, mc.cores=ncpus)
 
    if (parallel == "snow") {
       if (is.null(cl)) {
          cl <- parallel::makePSOCKcluster(ncpus)
-         on.exit(parallel::stopCluster(cl))
+         on.exit(parallel::stopCluster(cl), add=TRUE)
       }
       if (.isTRUE(ddd$LB)) {
-         res <- parallel::parLapplyLB(cl, seq_len(steps), .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE, vcs=vcs)
-         #res <- parallel::clusterApplyLB(cl, seq_len(steps), .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE, vcs=vcs)
+         res <- parallel::parLapplyLB(cl, vcs, .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE)
+         #res <- parallel::clusterApplyLB(cl, vcs, .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE)
       } else {
-         res <- pbapply::pblapply(seq_len(steps), .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE, vcs=vcs, cl=cl)
-         #res <- parallel::parLapply(cl, seq_len(steps), .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE, vcs=vcs)
-         #res <- parallel::clusterApply(cl, seq_len(steps), .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE, vcs=vcs)
+         res <- pbapply::pblapply(vcs, .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE, cl=cl)
+         #res <- parallel::parLapply(cl, vcs, .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE)
+         #res <- parallel::clusterApply(cl, vcs, .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE)
       }
    }
 

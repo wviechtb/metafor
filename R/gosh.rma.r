@@ -35,6 +35,9 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
       ncpus <- length(cl)
    }
 
+   if (parallel == "snow" && ncpus < 2)
+      parallel <- "no"
+
    if (parallel == "snow" || parallel == "multicore") {
 
       if (!requireNamespace("parallel", quietly=TRUE))
@@ -48,8 +51,8 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
    }
 
    if (!progbar) {
-      pbo <- pbapply::pboptions(type = "none")
-      on.exit(pbapply::pboptions(pbo), add = TRUE)
+      pbo <- pbapply::pboptions(type="none")
+      on.exit(pbapply::pboptions(pbo))
    }
 
    ddd <- list(...)
@@ -157,7 +160,7 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
 
       if (is.null(cl)) {
          cl <- parallel::makePSOCKcluster(ncpus)
-         on.exit(parallel::stopCluster(cl))
+         on.exit(parallel::stopCluster(cl), add=TRUE)
       }
 
       if (inherits(x, "rma.uni")) {

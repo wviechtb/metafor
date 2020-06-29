@@ -56,12 +56,12 @@ cumul.rma.peto <- function(x, order, digits, transf, targs, progbar=FALSE, ...) 
    ### note: skipping NA cases
 
    if (progbar)
-      pbar <- txtProgressBar(min=0, max=x$k.f, style=3)
+      pbar <- pbapply::startpb(min=0, max=x$k.f)
 
    for (i in seq_len(x$k.f)) {
 
       if (progbar)
-         setTxtProgressBar(pbar, i)
+         pbapply::setpb(pbar, i)
 
       if (!not.na[i])
          next
@@ -83,7 +83,7 @@ cumul.rma.peto <- function(x, order, digits, transf, targs, progbar=FALSE, ...) 
    }
 
    if (progbar)
-      close(pbar)
+      pbapply::closepb(pbar)
 
    #########################################################################
 

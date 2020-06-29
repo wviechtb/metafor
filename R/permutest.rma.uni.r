@@ -136,7 +136,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
          stop(mstyle$stop("Number of iterations requested too large."))
 
       if (progbar)
-         pbar <- txtProgressBar(min=0, max=iter, style=3)
+         pbar <- pbapply::startpb(min=0, max=iter)
 
       if (exact) { ### exact permutation test for intercept-only models
 
@@ -154,7 +154,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
             QM.perm[i]   <- res$QM
 
             if (progbar)
-               setTxtProgressBar(pbar, i)
+               pbapply::setpb(pbar, i)
 
          }
 
@@ -179,7 +179,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
             i <- i + 1
 
             if (progbar)
-               setTxtProgressBar(pbar, i)
+               pbapply::setpb(pbar, i)
 
          }
 
@@ -269,7 +269,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
          stop(mstyle$stop("Number of iterations requested too large."))
 
       if (progbar)
-         pbar <- txtProgressBar(min=0, max=iter, style=3)
+         pbar <- pbapply::startpb(min=0, max=iter)
 
       if (exact) { ### exact permutation test for meta-regression models
 
@@ -288,7 +288,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
             QM.perm[i]    <- res$QM
 
             if (progbar)
-               setTxtProgressBar(pbar, i)
+               pbapply::setpb(pbar, i)
 
          }
 
@@ -310,7 +310,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
             i <- i + 1
 
             if (progbar)
-               setTxtProgressBar(pbar, i)
+               pbapply::setpb(pbar, i)
 
          }
 
@@ -387,7 +387,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
    }
 
    if (progbar)
-      close(pbar)
+      pbapply::closepb(pbar)
 
    #########################################################################
 

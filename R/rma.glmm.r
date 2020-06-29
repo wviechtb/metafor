@@ -2066,6 +2066,14 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    }
 
+   if (!is.null(ddd$outlist)) {
+      if (ddd$outlist == "minimal") {
+         res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb, int.only=int.only, digits=digits, k=k, k.eff=k.eff, p=p, p.eff=p.eff, parms=parms, m=m, tau2=tau2, se.tau2=se.tau2, sigma2=sigma2, method=method, fit.stats=fit.stats, model=model, QE.Wld=QE.Wld, QEp.Wld=QEp.Wld, QE.LRT=QE.LRT, QEp.LRT=QEp.LRT, QE.df=QE.df, QEp=QEp, QM=QM, QMp=QMp, I2=I2, H2=H2, btt=btt, test=test, dfs=dfs, measure=measure)
+      } else {
+         res <- eval(parse(text=paste0("list(", ddd$outlist, ")")))
+      }
+   }
+
    time.end <- proc.time()
    res$time <- unname(time.end - time.start)[3]
 
@@ -2074,14 +2082,6 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    if (verbose || .isTRUE(ddd$time))
       cat("\n")
-
-   if (!is.null(ddd$outlist)) {
-      if (ddd$outlist == "minimal") {
-         res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb, int.only=int.only, digits=digits, k=k, k.eff=k.eff, p=p, p.eff=p.eff, parms=parms, m=m, tau2=tau2, se.tau2=se.tau2, sigma2=sigma2, method=method, fit.stats=fit.stats, model=model, QE.Wld=QE.Wld, QEp.Wld=QEp.Wld, QE.LRT=QE.LRT, QEp.LRT=QEp.LRT, QE.df=QE.df, QEp=QEp, QM=QM, QMp=QMp, I2=I2, H2=H2, btt=btt, test=test, dfs=dfs, measure=measure)
-      } else {
-         res <- eval(parse(text=paste0("list(", ddd$outlist, ")")))
-      }
-   }
 
    class(res) <- c("rma.glmm", "rma")
    return(res)

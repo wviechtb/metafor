@@ -408,6 +408,14 @@ level=95, digits, verbose=FALSE, ...) {
 
    }
 
+   if (!is.null(ddd$outlist)) {
+      if (ddd$outlist == "minimal") {
+         res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb, digits=digits, k=k, k.pos=k.pos, k.eff=k.eff, p=p, parms=parms, fit.stats=fit.stats, QE=QE, QEp=QEp)
+      } else {
+         res <- eval(parse(text=paste0("list(", ddd$outlist, ")")))
+      }
+   }
+
    time.end <- proc.time()
    res$time <- unname(time.end - time.start)[3]
 
@@ -416,14 +424,6 @@ level=95, digits, verbose=FALSE, ...) {
 
    if (verbose || .isTRUE(ddd$time))
       cat("\n")
-
-   if (!is.null(ddd$outlist)) {
-      if (ddd$outlist == "minimal") {
-         res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb, digits=digits, k=k, k.pos=k.pos, k.eff=k.eff, p=p, parms=parms, fit.stats=fit.stats, QE=QE, QEp=QEp)
-      } else {
-         res <- eval(parse(text=paste0("list(", ddd$outlist, ")")))
-      }
-   }
 
    class(res) <- c("rma.peto", "rma")
    return(res)

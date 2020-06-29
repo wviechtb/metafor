@@ -57,12 +57,12 @@ leave1out.rma.uni <- function(x, digits, transf, targs, progbar=FALSE, ...) {
    ### also: it is possible that model fitting fails, so that generates more NAs (these NAs will always be shown in output)
 
    if (progbar)
-      pbar <- txtProgressBar(min=0, max=x$k.f, style=3)
+      pbar <- pbapply::startpb(min=0, max=x$k.f)
 
    for (i in seq_len(x$k.f)) {
 
       if (progbar)
-         setTxtProgressBar(pbar, i)
+         pbapply::setpb(pbar, i)
 
       if (!x$not.na[i])
          next
@@ -87,7 +87,7 @@ leave1out.rma.uni <- function(x, digits, transf, targs, progbar=FALSE, ...) {
    }
 
    if (progbar)
-      close(pbar)
+      pbapply::closepb(pbar)
 
    #########################################################################
 
@@ -132,7 +132,6 @@ leave1out.rma.uni <- function(x, digits, transf, targs, progbar=FALSE, ...) {
    if (x$method == "FE")
       out <- out[-c(9,10,11)]
 
-   #out <- out[-c(2,3,4)]
    out$digits <- digits
    out$transf <- transf
 

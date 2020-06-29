@@ -85,12 +85,12 @@ influence.rma.uni <- function(model, digits, progbar=FALSE, ...) {
    ### also: it is possible that model fitting fails, so that generates more NAs (these NAs will always be shown in output)
 
    if (progbar)
-      pbar <- txtProgressBar(min=0, max=x$k, style=3)
+      pbar <- pbapply::startpb(min=0, max=x$k)
 
    for (i in seq_len(x$k)) {
 
       if (progbar)
-         setTxtProgressBar(pbar, i)
+         pbapply::setpb(pbar, i)
 
       res <- try(suppressWarnings(rma.uni(x$yi, x$vi, weights=x$weights, mods=x$X, intercept=FALSE, method=x$method, weighted=x$weighted, test=x$test, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, subset=-i, skipr2=TRUE)), silent=TRUE)
 
@@ -164,7 +164,7 @@ influence.rma.uni <- function(model, digits, progbar=FALSE, ...) {
    }
 
    if (progbar)
-      close(pbar)
+      pbapply::closepb(pbar)
 
    ### calculate studentized residual
 
