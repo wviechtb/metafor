@@ -69,7 +69,7 @@ rstudent.rma.mv <- function(model, digits, progbar=FALSE, cluster, reestimate=TR
 
    #########################################################################
 
-   if (parallel=="no") {
+   if (parallel == "no") {
 
       delresid   <- rep(NA_real_, x$k)
       sedelresid <- rep(NA_real_, x$k)

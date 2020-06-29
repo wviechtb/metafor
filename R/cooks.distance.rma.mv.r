@@ -70,7 +70,7 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
 
    svb <- chol2inv(chol(x$vb[btt,btt,drop=FALSE]))
 
-   if (parallel=="no") {
+   if (parallel == "no") {
 
       cook.d <- rep(NA_real_, n)
 

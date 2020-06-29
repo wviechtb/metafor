@@ -49,12 +49,12 @@ baujat.rma <- function(x, xlim, ylim, xlab, ylab, cex, symbol, grid=TRUE, progba
    ### also: it is possible that model fitting fails, so that generates more NAs (these NAs will always be shown in output)
 
    if (progbar)
-      pbar <- txtProgressBar(min=0, max=x$k.f, style=3)
+      pbar <- pbapply::startpb(min=0, max=x$k.f)
 
    for (i in seq_len(x$k.f)) {
 
       if (progbar)
-         setTxtProgressBar(pbar, i)
+         pbapply::setpb(pbar, i)
 
       if (!x$not.na[i])
          next
@@ -88,7 +88,7 @@ baujat.rma <- function(x, xlim, ylim, xlab, ylab, cex, symbol, grid=TRUE, progba
    }
 
    if (progbar)
-      close(pbar)
+      pbapply::closepb(pbar)
 
    yhati <- (delpred - pred.full)^2 / vdelpred
 
@@ -97,7 +97,7 @@ baujat.rma <- function(x, xlim, ylim, xlab, ylab, cex, symbol, grid=TRUE, progba
    ### x-axis values (use 'na.pass' to make sure we get a vector of length k.f)
 
    options(na.action = "na.pass")
-   xhati <- 1/(x$tau2.f + x$vi.f) * resid(x)^2
+   xhati <- resid(x)^2 / (x$tau2.f + x$vi.f)
    options(na.action = na.act)
 
    #########################################################################

@@ -396,7 +396,7 @@ level=95, digits, verbose=FALSE, ...) {
    if (is.null(ddd$outlist)) {
 
       res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
-                  tau2=tau2,
+                  tau2=tau2, tau2.f=tau2,
                   k=k, k.f=k.f, k.yi=k.yi, k.pos=k.pos, k.eff=k.eff, k.all=k.all, p=p, parms=parms,
                   QE=QE, QEp=QEp, I2=I2, H2=H2,
                   int.only=int.only,

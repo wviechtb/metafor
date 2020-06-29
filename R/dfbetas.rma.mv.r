@@ -63,7 +63,7 @@ dfbetas.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE, paral
 
    #########################################################################
 
-   if (parallel=="no") {
+   if (parallel == "no") {
 
       dfbs <- matrix(NA_real_, nrow=n, ncol=x$p)
 
