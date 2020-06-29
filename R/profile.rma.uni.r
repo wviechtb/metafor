@@ -36,9 +36,6 @@ profile.rma.uni <- function(fitted,
 
    }
 
-   if (progbar && !requireNamespace("pbapply", quietly=TRUE))
-      stop(mstyle$stop("Please install the 'pbapply' package to obtain a progress bar."))
-
    if (!progbar) {
       pbo <- pbapply::pboptions(type = "none")
       on.exit(pbapply::pboptions(pbo), add = TRUE)

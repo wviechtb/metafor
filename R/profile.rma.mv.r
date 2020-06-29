@@ -33,9 +33,6 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
 
    }
 
-   if (progbar && !requireNamespace("pbapply", quietly=TRUE))
-      stop(mstyle$stop("Please install the 'pbapply' package to obtain a progress bar."))
-
    if (!progbar) {
       pbo <- pbapply::pboptions(type = "none")
       on.exit(pbapply::pboptions(pbo), add = TRUE)
@@ -411,7 +408,7 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
       con.pos.phi.init    <- NA
    }
 
-   if (parallel=="no")
+   if (parallel == "no")
       res <- pbapply::pblapply(seq_len(steps), .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE, vcs=vcs)
 
    if (parallel == "multicore")

@@ -35,6 +35,23 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
       ncpus <- length(cl)
    }
 
+   if (parallel == "snow" || parallel == "multicore") {
+
+      if (!requireNamespace("parallel", quietly=TRUE))
+         stop(mstyle$stop("Please install the 'parallel' package for parallel processing."))
+
+      ncpus <- as.integer(ncpus)
+
+      if (ncpus < 1L)
+         stop(mstyle$stop("Argument 'ncpus' must be >= 1."))
+
+   }
+
+   if (!progbar) {
+      pbo <- pbapply::pboptions(type = "none")
+      on.exit(pbapply::pboptions(pbo), add = TRUE)
+   }
+
    ddd <- list(...)
 
    .chkdots(ddd, c("seed", "time", "LB"))
@@ -48,8 +65,7 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
 
    ### if 'subsets' is missing, include all possible subsets if N.tot is <= 10^6
    ### and otherwise include 10^6 random subsets; if the user specifies 'subsets'
-   ### and N.tot is actually <= than what was specified, then again include all
-   ### possible subsets
+   ### and N.tot <= subsets, then again include all possible subsets
 
    if (missing(subsets)) {
       if (N.tot <= 10^6) {
@@ -108,129 +124,73 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
 
    #########################################################################
 
-   if (parallel=="no") {
+   if (parallel == "no") {
 
-      ### set up vectors to store results in
+      if (inherits(x, "rma.uni"))
+         res <- pbapply::pblapply(seq_len(N.tot), .profile.rma.uni, obj=x, parallel=parallel, subset=TRUE, sel=incl, FE=FE)
 
-      beta <- try(matrix(NA_real_, nrow=N.tot, ncol=x$p), silent=TRUE)
+      if (inherits(x, "rma.mh"))
+         res <- pbapply::pblapply(seq_len(N.tot), .profile.rma.mh, obj=x, parallel=parallel, subset=TRUE, sel=incl)
 
-      if (inherits(beta, "try-error"))
-         stop(mstyle$stop("Number of models requested too large."))
-
-      het <- try(matrix(NA_real_, nrow=N.tot, ncol=5), silent=TRUE)
-
-      if (inherits(het, "try-error"))
-         stop(mstyle$stop("Number of models requested too large."))
-
-      if (progbar)
-         pbar <- txtProgressBar(min=0, max=N.tot, style=3)
-
-      for (j in seq_len(N.tot)) {
-
-         if (progbar)
-            setTxtProgressBar(pbar, j)
-
-         if (inherits(x, "rma.uni")) {
-            if (FE) {
-               res <- .profile.rma.uni(val=1, obj=x, subset=TRUE, sel=incl[j,], FE=TRUE)
-            } else {
-               res <- try(suppressWarnings(rma.uni(x$yi, x$vi, weights=x$weights, mods=x$X, method=x$method, weighted=x$weighted, intercept=FALSE, test=x$test, control=x$control, subset=incl[j,], skipr2=TRUE)), silent=TRUE)
-            }
-         }
-
-         if (inherits(x, "rma.mh")) {
-            if (is.element(x$measure, c("RR","OR","RD"))) {
-               res <- try(suppressWarnings(rma.mh(ai=x$ai, bi=x$bi, ci=x$ci, di=x$di, measure=x$measure, add=x$add, to=x$to, drop00=x$drop00, correct=x$correct, subset=incl[j,])), silent=TRUE)
-            } else {
-               res <- try(suppressWarnings(rma.mh(x1i=x$x1i, x2i=x$x2i, t1i=x$t1i, t2i=x$t2i, measure=x$measure, add=x$add, to=x$to, drop00=x$drop00, correct=x$correct, subset=incl[j,])), silent=TRUE)
-            }
-         }
-
-         if (inherits(x, "rma.peto"))
-            res <- try(suppressWarnings(rma.peto(ai=x$ai, bi=x$bi, ci=x$ci, di=x$di, add=x$add, to=x$to, drop00=x$drop00, subset=incl[j,])), silent=TRUE)
-
-         if (inherits(res, "try-error"))
-            next
-
-         ### removing an observation could lead to a model coefficient becoming inestimable (for 'rma.uni' objects)
-
-         if (any(res$coef.na))
-            next
-
-         beta[j,]  <- c(res$beta)
-         het[j, 1] <- res$k
-         het[j, 2] <- res$QE
-         het[j, 3] <- res$I2
-         het[j, 4] <- res$H2
-         het[j, 5] <- res$tau2
-
-      }
-
-      if (progbar)
-         close(pbar)
+      if (inherits(x, "rma.peto"))
+         res <- pbapply::pblapply(seq_len(N.tot), .profile.rma.peto, obj=x, parallel=parallel, subset=TRUE, sel=incl)
 
    }
 
-   if (parallel == "snow" || parallel == "multicore") {
+   if (parallel == "multicore") {
 
-      if (!requireNamespace("parallel", quietly=TRUE))
-         stop(mstyle$stop("Please install the 'parallel' package for parallel processing."))
+      if (inherits(x, "rma.uni"))
+         res <- pbapply::pblapply(seq_len(N.tot), .profile.rma.uni, obj=x, parallel=parallel, subset=TRUE, sel=incl, FE=FE, cl=ncpus)
+         #res <- parallel::mclapply(seq_len(N.tot), .profile.rma.uni, obj=x, mc.cores=ncpus, parallel=parallel, subset=TRUE, sel=incl, FE=FE)
 
-      ncpus <- as.integer(ncpus)
+      if (inherits(x, "rma.mh"))
+         res <- pbapply::pblapply(seq_len(N.tot), .profile.rma.mh, obj=x, parallel=parallel, subset=TRUE, sel=incl, cl=ncpus)
+         #res <- parallel::mclapply(seq_len(N.tot), .profile.rma.mh, obj=x, mc.cores=ncpus, parallel=parallel, subset=TRUE, sel=incl)
 
-      if (ncpus < 1L)
-         stop(mstyle$stop("Argument 'ncpus' must be >= 1."))
-
-      if (parallel == "multicore") {
-
-         if (inherits(x, "rma.uni"))
-            res <- parallel::mclapply(seq_len(N.tot), .profile.rma.uni, obj=x, mc.cores=ncpus, parallel=parallel, subset=TRUE, sel=incl, FE=FE)
-
-         if (inherits(x, "rma.mh"))
-            res <- parallel::mclapply(seq_len(N.tot), .profile.rma.mh, obj=x, mc.cores=ncpus, parallel=parallel, subset=TRUE, sel=incl)
-
-         if (inherits(x, "rma.peto"))
-            res <- parallel::mclapply(seq_len(N.tot), .profile.rma.peto, obj=x, mc.cores=ncpus, parallel=parallel, subset=TRUE, sel=incl)
-
-      }
-
-      if (parallel == "snow") {
-
-         if (is.null(cl)) {
-            cl <- parallel::makePSOCKcluster(ncpus)
-            on.exit(parallel::stopCluster(cl))
-         }
-
-         if (inherits(x, "rma.uni")) {
-            if (.isTRUE(ddd$LB)) {
-               res <- parallel::parLapplyLB(cl, seq_len(N.tot), .profile.rma.uni, obj=x, parallel=parallel, subset=TRUE, sel=incl, FE=FE)
-            } else {
-               res <- parallel::parLapply(cl, seq_len(N.tot), .profile.rma.uni, obj=x, parallel=parallel, subset=TRUE, sel=incl, FE=FE)
-            }
-         }
-
-         if (inherits(x, "rma.mh")) {
-            if (.isTRUE(ddd$LB)) {
-               res <- parallel::parLapplyLB(cl, seq_len(N.tot), .profile.rma.mh, obj=x, parallel=parallel, subset=TRUE, sel=incl)
-            } else {
-               res <- parallel::parLapply(cl, seq_len(N.tot), .profile.rma.mh, obj=x, parallel=parallel, subset=TRUE, sel=incl)
-            }
-         }
-
-         if (inherits(x, "rma.peto")) {
-            if (.isTRUE(ddd$LB)) {
-               res <- parallel::parLapplyLB(cl, seq_len(N.tot), .profile.rma.peto, obj=x, parallel=parallel, subset=TRUE, sel=incl)
-            } else {
-               res <- parallel::parLapply(cl, seq_len(N.tot), .profile.rma.peto, obj=x, parallel=parallel, subset=TRUE, sel=incl)
-            }
-         }
-
-      }
-
-      beta <- do.call("rbind", lapply(res, function(x) t(x$beta)))
-      het  <- do.call("rbind", lapply(res, function(x) x$het))
+      if (inherits(x, "rma.peto"))
+         res <- pbapply::pblapply(seq_len(N.tot), .profile.rma.peto, obj=x, parallel=parallel, subset=TRUE, sel=incl, cl=ncpus)
+         #res <- parallel::mclapply(seq_len(N.tot), .profile.rma.peto, obj=x, mc.cores=ncpus, parallel=parallel, subset=TRUE, sel=incl)
 
    }
+
+   if (parallel == "snow") {
+
+      if (is.null(cl)) {
+         cl <- parallel::makePSOCKcluster(ncpus)
+         on.exit(parallel::stopCluster(cl))
+      }
+
+      if (inherits(x, "rma.uni")) {
+         if (.isTRUE(ddd$LB)) {
+            res <- parallel::parLapplyLB(cl, seq_len(N.tot), .profile.rma.uni, obj=x, parallel=parallel, subset=TRUE, sel=incl, FE=FE)
+         } else {
+            res <- pbapply::pblapply(seq_len(N.tot), .profile.rma.uni, obj=x, parallel=parallel, subset=TRUE, sel=incl, FE=FE, cl=cl)
+            #res <- parallel::parLapply(cl, seq_len(N.tot), .profile.rma.uni, obj=x, parallel=parallel, subset=TRUE, sel=incl, FE=FE)
+         }
+      }
+
+      if (inherits(x, "rma.mh")) {
+         if (.isTRUE(ddd$LB)) {
+            res <- parallel::parLapplyLB(cl, seq_len(N.tot), .profile.rma.mh, obj=x, parallel=parallel, subset=TRUE, sel=incl)
+         } else {
+            res <- pbapply::pblapply(seq_len(N.tot), .profile.rma.mh, obj=x, parallel=parallel, subset=TRUE, sel=incl, cl=cl)
+            #res <- parallel::parLapply(cl, seq_len(N.tot), .profile.rma.mh, obj=x, parallel=parallel, subset=TRUE, sel=incl)
+         }
+      }
+
+      if (inherits(x, "rma.peto")) {
+         if (.isTRUE(ddd$LB)) {
+            res <- parallel::parLapplyLB(cl, seq_len(N.tot), .profile.rma.peto, obj=x, parallel=parallel, subset=TRUE, sel=incl)
+         } else {
+            res <- pbapply::pblapply(seq_len(N.tot), .profile.rma.peto, obj=x, parallel=parallel, subset=TRUE, sel=incl, cl=cl)
+            #res <- parallel::parLapply(cl, seq_len(N.tot), .profile.rma.peto, obj=x, parallel=parallel, subset=TRUE, sel=incl)
+         }
+      }
+
+   }
+
+   beta <- do.call("rbind", lapply(res, function(x) t(x$beta)))
+   het  <- do.call("rbind", lapply(res, function(x) x$het))
 
    #########################################################################
 
@@ -257,7 +217,7 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
 
    ### fix rownames
 
-   rownames(res) <- seq_len(nrow(res))
+   rownames(res)  <- seq_len(nrow(res))
    rownames(incl) <- seq_len(nrow(incl))
 
    ### was model fitted successfully / all values are not NA?

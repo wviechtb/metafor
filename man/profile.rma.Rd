@@ -9,11 +9,11 @@
 }
 \usage{
 \method{profile}{rma.uni}(fitted, xlim, ylim, steps=20,
-        lltol=1e-06, progbar=TRUE, parallel="no", ncpus=1, cl=NULL,
+        lltol=1e-04, progbar=TRUE, parallel="no", ncpus=1, cl=NULL,
         plot=TRUE, pch=19, cline=FALSE, \dots)
 
 \method{profile}{rma.mv}(fitted, sigma2, tau2, rho, gamma2, phi,
-        xlim, ylim, steps=20, lltol=1e-06, progbar=TRUE,
+        xlim, ylim, steps=20, lltol=1e-04, progbar=TRUE,
         parallel="no", ncpus=1, cl=NULL,
         plot=TRUE, pch=19, cline=FALSE, \dots)
 
@@ -33,7 +33,7 @@
    \item{ylim}{optional vector specifying the y-axis limits when plotting the profiled likelihood. If unspecified, the function tries to set these limits automatically.}
    \item{steps}{number of points between \code{xlim[1]} and \code{xlim[2]} (inclusive) for which the likelihood should be evaluated (the default is 20).}
    \item{lltol}{numerical tolerance used when comparing values of the profiled log-likelihood with the log-likelihood of the fitted model (the default is 1e-06).}
-   \item{progbar}{logical indicating whether a progress bar should be shown (the default is \code{TRUE}). Ignored when using parallel processing.}
+   \item{progbar}{logical indicating whether a progress bar should be shown (the default is \code{TRUE}).}
    \item{parallel}{character string indicating whether parallel processing should be used (the default is \code{"no"}). For parallel processing, set to either \code{"snow"} or \code{"multicore"}. See \sQuote{Details}.}
    \item{ncpus}{integer specifying the number of processes to use in the parallel processing.}
    \item{cl}{optional snow cluster to use if \code{parallel="snow"}. If not supplied, a cluster on the local machine is created for the duration of the call.}

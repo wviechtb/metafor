@@ -53,13 +53,8 @@
 
       if (FE) {
 
-         if (parallel == "snow" || parallel == "multicore") {
-            yi <- obj$yi[sel[val,]]
-            vi <- obj$vi[sel[val,]]
-         } else {
-            yi <- obj$yi[sel]
-            vi <- obj$vi[sel]
-         }
+         yi <- obj$yi[sel[val,]]
+         vi <- obj$vi[sel[val,]]
          k <- length(yi)
          wi <- 1/vi
          est <- sum(wi*yi)/sum(wi)
@@ -73,11 +68,7 @@
             H2 <- 1
          }
          tau2 <- 0
-         if (parallel == "snow" || parallel == "multicore") {
-            sav <- list(beta = est, het = c(k = k, QE = Q, I2 = I2, H2 = H2, tau2 = tau2))
-         } else {
-            sav <- list(beta = est, k = k, QE = Q, I2 = I2, H2 = H2, tau2 = tau2)
-         }
+         sav <- list(beta = est, het = c(k = k, QE = Q, I2 = I2, H2 = H2, tau2 = tau2))
 
       } else {
 
