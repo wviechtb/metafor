@@ -214,6 +214,24 @@
 
 ############################################################################
 
+### function that prints the model fitting time
+
+.print.time <- function(x) {
+
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
+   hours   <- floor(x/60/60)
+   minutes <- floor(x/60) - hours*60
+   seconds <- round(x - minutes*60 - hours*60*60, ifelse(x > 60, 0, 2))
+
+   cat("\n")
+   cat(mstyle$message(paste("Processing time:", hours, ifelse(hours == 0 || hours > 1, "hours,", "hour,"), minutes, ifelse(minutes == 0 || minutes > 1, "minutes,", "minute,"), seconds, ifelse(x < 60 || seconds == 0 || seconds > 1, "seconds", "second"))))
+   cat("\n")
+
+}
+
+############################################################################
+
 ### function like make.unique(), but starts at .1 for the first instance
 ### of a repeated element
 

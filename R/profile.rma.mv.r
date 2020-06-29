@@ -1,5 +1,5 @@
 profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
-   xlim, ylim, steps=20, lltol=1e-06, startmethod="init", progbar=TRUE, parallel="no", ncpus=1, cl=NULL, plot=TRUE, pch=19, cline=FALSE, ...) {
+   xlim, ylim, steps=20, lltol=1e-04, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, plot=TRUE, pch=19, cline=FALSE, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -21,10 +21,33 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
       ncpus <- length(cl)
    }
 
+   if (parallel == "snow" || parallel == "multicore") {
+
+      if (!requireNamespace("parallel", quietly=TRUE))
+         stop(mstyle$stop("Please install the 'parallel' package for parallel processing."))
+
+      ncpus <- as.integer(ncpus)
+
+      if (ncpus < 1L)
+         stop(mstyle$stop("Argument 'ncpus' must be >= 1."))
+
+   }
+
+   if (progbar && !requireNamespace("pbapply", quietly=TRUE))
+      stop(mstyle$stop("Please install the 'pbapply' package to obtain a progress bar."))
+
+   if (!progbar) {
+      pbo <- pbapply::pboptions(type = "none")
+      on.exit(pbapply::pboptions(pbo), add = TRUE)
+   }
+
    ddd <- list(...)
 
    if (.isTRUE(ddd$time))
       time.start <- proc.time()
+
+   if (!is.null(ddd$startmethod))
+      warning(mstyle$warning("Argument 'startmethod' has been deprecated."))
 
    #########################################################################
 
@@ -39,7 +62,7 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
       comps <- ifelse(x$withS, sum(!x$vc.fix$sigma2), 0) + ifelse(x$withG, sum(!x$vc.fix$tau2) + sum(!x$vc.fix$rho), 0) + ifelse(x$withH, sum(!x$vc.fix$gamma2) + sum(!x$vc.fix$phi), 0)
 
       if (comps == 0)
-         stop(mstyle$stop("No components to profile."))
+         stop(mstyle$stop("No components in the model for which a profile likelihood can be constructed."))
 
       if (plot) {
          if (dev.cur() == 1) {
@@ -117,6 +140,8 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
             }
          }
       }
+
+      ### if there is just one component, turn the list of lists into a simple list
 
       if (comps == 1)
          sav <- sav[[1]]
@@ -269,14 +294,12 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
 
    if (missing(xlim)) {
 
-      ### if the user has not specified xlim argument, set automatically
+      ### if the user has not specified xlim, set it automatically
       ### TODO: maybe try something based on CI later
 
       if (comp == "sigma2") {
-         #vc.lb <- max(.00001, log(vc)) ### old method
-         #vc.ub <- max(.00001, exp(vc)) ### old method
-         vc.lb <- max( 0, vc/4) ### new method
-         vc.ub <- max(.1, vc*4) ### new method
+         vc.lb <- max( 0, vc/4)
+         vc.ub <- max(.1, vc*4)
       }
       if (comp == "tau2") {
          if (is.element(x$struct[1], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD"))) {
@@ -349,7 +372,7 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
          if (xlim[1] < -1)
             stop(mstyle$stop("Lower bound for profiling must be >= -1."))
          if (!is.element(x$struct[1], c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYPL","PHYPD")) && xlim[2] > 1)
-            stop(mstyle$stop("Upper bound for profiling must be <= -1."))
+            stop(mstyle$stop("Upper bound for profiling must be <= 1."))
       }
       if (comp == "phi") {
          if (is.element(x$struct[2], c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYPL","PHYPD")) && xlim[1] < 0)
@@ -357,17 +380,16 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
          if (xlim[1] < -1)
             stop(mstyle$stop("Lower bound for profiling must be >= -1."))
          if (!is.element(x$struct[2], c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYPL","PHYPD")) && xlim[2] > 1)
-            stop(mstyle$stop("Upper bound for profiling must be <= -1."))
+            stop(mstyle$stop("Upper bound for profiling must be <= 1."))
       }
 
    }
 
    vcs <- seq(xlim[1], xlim[2], length.out=steps)
+   #return(vcs)
 
    if (length(vcs) <= 1L)
       stop(mstyle$stop("Cannot set 'xlim' automatically. Please set this argument manually."))
-
-   #return(vcs)
 
    ### extract control argument
    x.control <- x$control
@@ -389,144 +411,32 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
       con.pos.phi.init    <- NA
    }
 
-   if (parallel=="no") {
+   if (parallel=="no")
+      res <- pbapply::pblapply(seq_len(steps), .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE, vcs=vcs)
 
-      lls   <- rep(NA_real_, length(vcs))
-      beta  <- matrix(NA_real_, nrow=length(vcs), ncol=x$p)
-      ci.lb <- matrix(NA_real_, nrow=length(vcs), ncol=x$p)
-      ci.ub <- matrix(NA_real_, nrow=length(vcs), ncol=x$p)
+   if (parallel == "multicore")
+      res <- pbapply::pblapply(seq_len(steps), .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE, vcs=vcs, cl=ncpus)
+      #res <- parallel::mclapply(seq_len(steps), .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE, vcs=vcs, mc.cores=ncpus)
 
-      if (progbar)
-         pbar <- txtProgressBar(min=0, max=steps, style=3)
-
-      ### set any fixed components to their values
-
-      sigma2.arg <- ifelse(x$vc.fix$sigma2, x$sigma2, NA)
-      tau2.arg   <- ifelse(x$vc.fix$tau2, x$tau2, NA)
-      rho.arg    <- ifelse(x$vc.fix$rho, x$rho, NA)
-      gamma2.arg <- ifelse(x$vc.fix$gamma2, x$gamma2, NA)
-      phi.arg    <- ifelse(x$vc.fix$phi, x$phi, NA)
-
-      for (i in seq_along(vcs)) {
-
-         if (comp == "sigma2")
-            sigma2.arg[sigma2] <- vcs[i]
-
-         if (comp == "tau2")
-            tau2.arg[tau2] <- vcs[i]
-
-         if (comp == "rho")
-            rho.arg[rho] <- vcs[i]
-
-         if (comp == "gamma2")
-            gamma2.arg[gamma2] <- vcs[i]
-
-         if (comp == "phi")
-            phi.arg[phi] <- vcs[i]
-
-         ### if this is the second model fit and the previous model fit was not a try-error
-
-         if (startmethod == "prev" && i > 1 && !inherits(res, "try-error")) {
-
-            ### set the sigma2.init argument to the estimated sigma2 value(s) from the previous model fit
-
-            if (is.na(con.pos.sigma2.init)) {
-               x.control$sigma2.init <- res$sigma2
-            } else {
-               x.control[[con.pos.sigma2.init]] <- res$sigma2
-            }
-
-            ### set the tau2.init argument to the estimated tau2 value(s) from the previous model fit
-
-            if (is.na(con.pos.tau2.init)) {
-               x.control$tau2.init <- res$tau2
-            } else {
-               x.control[[con.pos.tau2.init]] <- res$tau2
-            }
-
-            ### set the rho.init argument to the estimated rho value(s) from the previous model fit
-
-            if (is.na(con.pos.rho.init)) {
-               x.control$rho.init <- res$rho
-            } else {
-               x.control[[con.pos.rho.init]] <- res$rho
-            }
-
-            ### set the gamma2.init argument to the estimated gamma2 value(s) from the previous model fit
-
-            if (is.na(con.pos.gamma2.init)) {
-               x.control$gamma2.init <- res$gamma2
-            } else {
-               x.control[[con.pos.gamma2.init]] <- res$gamma2
-            }
-
-            ### set the phi.init argument to the estimated phi value(s) from the previous model fit
-
-            if (is.na(con.pos.phi.init)) {
-               x.control$phi.init <- res$phi
-            } else {
-               x.control[[con.pos.phi.init]] <- res$phi
-            }
-
-            res <- try(suppressWarnings(rma.mv(x$yi, V=x$V, W=x$W, mods=x$X, random=x$random, struct=x$struct, intercept=FALSE, data=x$mf.r, method=x$method, test=x$test, level=x$level, R=x$R, Rscale=x$Rscale, sigma2=sigma2.arg, tau2=tau2.arg, rho=rho.arg, gamma2=gamma2.arg, phi=phi.arg, sparse=x$sparse, dist=x$dist, control=x.control)), silent=TRUE)
-
-         } else {
-
-            res <- try(suppressWarnings(rma.mv(x$yi, V=x$V, W=x$W, mods=x$X, random=x$random, struct=x$struct, intercept=FALSE, data=x$mf.r, method=x$method, test=x$test, level=x$level, R=x$R, Rscale=x$Rscale, sigma2=sigma2.arg, tau2=tau2.arg, rho=rho.arg, gamma2=gamma2.arg, phi=phi.arg, sparse=x$sparse, dist=x$dist, control=x$control)), silent=TRUE)
-
-         }
-
-         if (progbar)
-            setTxtProgressBar(pbar, i)
-
-         if (inherits(res, "try-error"))
-            next
-
-         lls[i] <- c(logLik(res))
-         beta[i,]  <- c(res$beta)
-         ci.lb[i,] <- c(res$ci.lb)
-         ci.ub[i,] <- c(res$ci.ub)
-
+   if (parallel == "snow") {
+      if (is.null(cl)) {
+         cl <- parallel::makePSOCKcluster(ncpus)
+         on.exit(parallel::stopCluster(cl))
       }
-
-      if (progbar)
-         close(pbar)
-
+      if (.isTRUE(ddd$LB)) {
+         res <- parallel::parLapplyLB(cl, seq_len(steps), .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE, vcs=vcs)
+         #res <- parallel::clusterApplyLB(cl, seq_len(steps), .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE, vcs=vcs)
+      } else {
+         res <- pbapply::pblapply(seq_len(steps), .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE, vcs=vcs, cl=cl)
+         #res <- parallel::parLapply(cl, seq_len(steps), .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE, vcs=vcs)
+         #res <- parallel::clusterApply(cl, seq_len(steps), .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE, vcs=vcs)
+      }
    }
 
-   if (parallel=="snow" || parallel == "multicore") {
-
-      if (!requireNamespace("parallel", quietly=TRUE))
-         stop(mstyle$stop("Please install the 'parallel' package for parallel processing."))
-
-      ncpus <- as.integer(ncpus)
-
-      if (ncpus < 1)
-         stop(mstyle$stop("Argument 'ncpus' must be >= 1."))
-
-      if (parallel == "multicore")
-         res <- parallel::mclapply(vcs, .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, mc.cores=ncpus, parallel=parallel, profile=TRUE)
-
-      if (parallel == "snow") {
-         if (is.null(cl)) {
-            cl <- parallel::makePSOCKcluster(ncpus)
-            on.exit(parallel::stopCluster(cl))
-         }
-         if (.isTRUE(ddd$LB)) {
-            res <- parallel::parLapplyLB(cl, vcs, .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE)
-            #res <- parallel::clusterApplyLB(cl, vcs, .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE)
-         } else {
-            res <- parallel::parLapply(cl, vcs, .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE)
-            #res <- parallel::clusterApply(cl, vcs, .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE)
-         }
-      }
-
-      lls <- sapply(res, function(x) x$ll)
-      beta  <- do.call("rbind", lapply(res, function(x) t(x$beta)))
-      ci.lb <- do.call("rbind", lapply(res, function(x) t(x$ci.lb)))
-      ci.ub <- do.call("rbind", lapply(res, function(x) t(x$ci.ub)))
-
-   }
+   lls <- sapply(res, function(x) x$ll)
+   beta  <- do.call("rbind", lapply(res, function(x) t(x$beta)))
+   ci.lb <- do.call("rbind", lapply(res, function(x) t(x$ci.lb)))
+   ci.ub <- do.call("rbind", lapply(res, function(x) t(x$ci.ub)))
 
    #########################################################################
 

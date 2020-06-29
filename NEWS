@@ -1,8 +1,11 @@
-Changes in Version 2.5-22 (2020-06-28)
+Changes in Version 2.5-23 (2020-06-29)
 =====================================
 
    o the metafor package now makes use of the 'mathjaxr' package to nicely
      render equations shown in the HTML help pages
+
+   o started using the 'pbapply' package for showing progress bars, also when
+     using parallel processing
 
    o to avoid potential confusion, all references to 'credibility intervals'
      have been removed from the documentation; these intervals are now
@@ -43,6 +46,8 @@ Changes in Version 2.5-22 (2020-06-28)
 
    o show nicer network graphs for 'dat.hasselblad1998' and 'dat.senn2013' in
      help files
+
+   o refactored various functions (for cleaner/simpler code)
 
    o improved the documentation a bit
 

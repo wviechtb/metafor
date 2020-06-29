@@ -257,7 +257,7 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
    valid <- zis > zlims[1] & zis < zlims[2]
 
    if (any(valid))
-      text(xis[valid], zis[valid], formatC(atyis.lab[valid], digits=digits, format="f"), pos=4, cex=cex, ...)
+      text(xis[valid], zis[valid], .fcf(atyis.lab[valid], digits), pos=4, cex=cex, ...)
 
    ### add CI arc
 

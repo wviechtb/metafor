@@ -1626,7 +1626,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
             ncpus <- as.integer(ncpus)
 
-            if (ncpus < 1)
+            if (ncpus < 1L)
                stop(mstyle$stop("Control argument 'ncpus' must be >= 1."))
 
             cl <- parallel::makePSOCKcluster(ncpus)

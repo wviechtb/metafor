@@ -1864,7 +1864,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
 
          ncpus <- as.integer(ncpus)
 
-         if (ncpus < 1)
+         if (ncpus < 1L)
             stop(mstyle$stop("Control argument 'ncpus' must be >= 1."))
 
          cl <- parallel::makePSOCKcluster(ncpus)

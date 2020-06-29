@@ -284,21 +284,3 @@
 #integrate(function(x) x*.dzcor(x, n=5, rho=.8), lower=-100, upper=100)
 
 ############################################################################
-
-### function that prints the model fitting time
-
-.print.time <- function(x) {
-
-   mstyle <- .get.mstyle("crayon" %in% .packages())
-
-   hours   <- floor(x/60/60)
-   minutes <- floor(x/60) - hours*60
-   seconds <- round(x - minutes*60 - hours*60*60, ifelse(x > 60, 0, 2))
-
-   cat("\n")
-   cat(mstyle$message(paste("Processing time:", hours, ifelse(hours == 0 || hours > 1, "hours,", "hour,"), minutes, ifelse(minutes == 0 || minutes > 1, "minutes,", "minute,"), seconds, ifelse(x < 60 || seconds == 0 || seconds > 1, "seconds", "second"))))
-   cat("\n")
-
-}
-
-############################################################################

@@ -1,47 +1,47 @@
 ############################################################################
 
-### for profile(), confint(), and multicore processing
+### for profile(), confint(), and gosh()
 
-.profile.rma.uni <- function(val, obj, parallel=FALSE, profile=FALSE, CI=FALSE, subset=FALSE, objective, sel, FE=FALSE, verbose=FALSE) {
+.profile.rma.uni <- function(val, obj, parallel=FALSE, profile=FALSE, confint=FALSE, subset=FALSE, vcs, objective, sel, FE=FALSE, verbose=FALSE) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
    if (parallel == "snow")
       library(metafor)
 
-   if (profile || CI) {
+   if (profile) {
 
-      ### for profiling and CI construction, fit model with tau2 fixed to 'val'
+      ### for profiling, fit model with tau2 fixed to the val-th value of 'vcs'
+
+      res <- try(suppressWarnings(rma.uni(obj$yi, obj$vi, weights=obj$weights, mods=obj$X, intercept=FALSE, method=obj$method, weighted=obj$weighted, test=obj$test, level=obj$level, control=obj$control, tau2=vcs[val], skipr2=TRUE)), silent=TRUE)
+
+      if (inherits(res, "try-error")) {
+         sav <- list(ll = NA, beta = matrix(NA, nrow=nrow(obj$beta), ncol=1), ci.lb = rep(NA, length(obj$ci.lb)), ci.ub = rep(NA, length(obj$ci.ub)))
+      } else {
+         sav <- list(ll = logLik(res), beta = res$beta, ci.lb = res$ci.lb, ci.ub = res$ci.ub)
+      }
+
+   }
+
+   if (confint) {
+
+      ### for CI construction, fit model with tau2 fixed to 'val'
 
       res <- try(suppressWarnings(rma.uni(obj$yi, obj$vi, weights=obj$weights, mods=obj$X, intercept=FALSE, method=obj$method, weighted=obj$weighted, test=obj$test, level=obj$level, control=obj$control, tau2=val, skipr2=TRUE)), silent=TRUE)
 
-      if (profile) {
+      if (inherits(res, "try-error")) {
 
-         if (inherits(res, "try-error")) {
-            sav <- list(ll = NA, beta = matrix(NA, nrow=nrow(obj$beta), ncol=1), ci.lb = rep(NA, length(obj$ci.lb)), ci.ub = rep(NA, length(obj$ci.ub)))
-         } else {
-            sav <- list(ll = logLik(res), beta = res$beta, ci.lb = res$ci.lb, ci.ub = res$ci.ub)
-         }
+         if (verbose)
+            cat(mstyle$verbose(paste("tau2 =", formatC(val, digits=obj$digits[["var"]], width=obj$digits[["var"]]+4, format="f"), "  LRT - objective = NA", "\n")))
 
-      }
+         stop()
 
-      if (CI) {
+      } else {
 
-         if (inherits(res, "try-error")) {
+         sav <- -2*(logLik(res) - logLik(obj)) - objective
 
-            if (verbose)
-               cat(mstyle$verbose(paste("tau2 =", formatC(val, digits=obj$digits[["var"]], width=obj$digits[["var"]]+4, format="f"), "  LRT - objective = NA", "\n")))
-
-            stop()
-
-         } else {
-
-            sav <- -2*(logLik(res) - logLik(obj)) - objective
-
-            if (verbose)
-               cat(mstyle$verbose(paste("tau2 =", formatC(val, digits=obj$digits[["var"]], width=obj$digits[["var"]]+4, format="f"), "  LRT - objective =", formatC(sav, digits=obj$digits[["test"]], width=obj$digits[["test"]]+4, format="f"), "\n")))
-
-         }
+         if (verbose)
+            cat(mstyle$verbose(paste("tau2 =", formatC(val, digits=obj$digits[["var"]], width=obj$digits[["var"]]+4, format="f"), "  LRT - objective =", formatC(sav, digits=obj$digits[["test"]], width=obj$digits[["test"]]+4, format="f"), "\n")))
 
       }
 
@@ -97,23 +97,52 @@
 
 }
 
-.profile.rma.mv <- function(val, obj, comp, sigma2.pos, tau2.pos, rho.pos, gamma2.pos, phi.pos, parallel=FALSE, profile=FALSE, CI=FALSE, subset=FALSE, objective, verbose=FALSE) {
+.profile.rma.mv <- function(val, obj, comp, sigma2.pos, tau2.pos, rho.pos, gamma2.pos, phi.pos, parallel=FALSE, profile=FALSE, confint=FALSE, subset=FALSE, vcs, objective, verbose=FALSE) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
    if (parallel == "snow")
       library(metafor)
 
-   if (profile || CI) {
+   ### set any fixed components to their values
+   sigma2.arg <- ifelse(obj$vc.fix$sigma2, obj$sigma2, NA)
+   tau2.arg   <- ifelse(obj$vc.fix$tau2, obj$tau2, NA)
+   rho.arg    <- ifelse(obj$vc.fix$rho, obj$rho, NA)
+   gamma2.arg <- ifelse(obj$vc.fix$gamma2, obj$gamma2, NA)
+   phi.arg    <- ifelse(obj$vc.fix$phi, obj$phi, NA)
 
-      ### for profiling and CI construction, fit model with variance component fixed to 'val'
+   if (profile) {
 
-      ### set any fixed components to their values
-      sigma2.arg <- ifelse(obj$vc.fix$sigma2, obj$sigma2, NA)
-      tau2.arg   <- ifelse(obj$vc.fix$tau2, obj$tau2, NA)
-      rho.arg    <- ifelse(obj$vc.fix$rho, obj$rho, NA)
-      gamma2.arg <- ifelse(obj$vc.fix$gamma2, obj$gamma2, NA)
-      phi.arg    <- ifelse(obj$vc.fix$phi, obj$phi, NA)
+      ### for profiling, fit model with component fixed to the val-th value of 'vcs'
+
+      if (comp == "sigma2")
+         sigma2.arg[sigma2.pos] <- vcs[val]
+
+      if (comp == "tau2")
+         tau2.arg[tau2.pos] <- vcs[val]
+
+      if (comp == "rho")
+         rho.arg[rho.pos] <- vcs[val]
+
+      if (comp == "gamma2")
+         gamma2.arg[gamma2.pos] <- vcs[val]
+
+      if (comp == "phi")
+         phi.arg[phi.pos] <- vcs[val]
+
+      res <- try(suppressWarnings(rma.mv(obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=sigma2.arg, tau2=tau2.arg, rho=rho.arg, gamma2=gamma2.arg, phi=phi.arg, sparse=obj$sparse, dist=obj$dist, control=obj$control)), silent=TRUE)
+
+      if (inherits(res, "try-error")) {
+         sav <- list(ll = NA, beta = matrix(NA, nrow=nrow(obj$beta), ncol=1), ci.lb = rep(NA, length(obj$ci.lb)), ci.ub = rep(NA, length(obj$ci.ub)))
+      } else {
+         sav <- list(ll = logLik(res), beta = res$beta, ci.lb = res$ci.lb, ci.ub = res$ci.ub)
+      }
+
+   }
+
+   if (confint) {
+
+      ### for CI construction, fit model with component fixed to 'val'
 
       if (comp == "sigma2")
          sigma2.arg[sigma2.pos] <- val
@@ -132,33 +161,19 @@
 
       res <- try(suppressWarnings(rma.mv(obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=sigma2.arg, tau2=tau2.arg, rho=rho.arg, gamma2=gamma2.arg, phi=phi.arg, sparse=obj$sparse, dist=obj$dist, control=obj$control)), silent=TRUE)
 
-      if (profile) {
+      if (inherits(res, "try-error")) {
 
-         if (inherits(res, "try-error")) {
-            sav <- list(ll = NA, beta = matrix(NA, nrow=nrow(obj$beta), ncol=1), ci.lb = rep(NA, length(obj$ci.lb)), ci.ub = rep(NA, length(obj$ci.ub)))
-         } else {
-            sav <- list(ll = logLik(res), beta = res$beta, ci.lb = res$ci.lb, ci.ub = res$ci.ub)
-         }
+         if (verbose)
+            cat(mstyle$verbose(paste("vc =", formatC(val, digits=obj$digits[["var"]], width=obj$digits[["var"]]+4, format="f"), "  LRT - objective = NA", "\n")))
 
-      }
+         stop()
 
-      if (CI) {
+      } else {
 
-         if (inherits(res, "try-error")) {
+         sav <- -2*(logLik(res) - logLik(obj)) - objective
 
-            if (verbose)
-               cat(mstyle$verbose(paste("vc =", formatC(val, digits=obj$digits[["var"]], width=obj$digits[["var"]]+4, format="f"), "  LRT - objective = NA", "\n")))
-
-            stop()
-
-         } else {
-
-            sav <- -2*(logLik(res) - logLik(obj)) - objective
-
-            if (verbose)
-               cat(mstyle$verbose(paste("vc =", formatC(val, digits=obj$digits[["var"]], width=obj$digits[["var"]]+4, format="f"), "  LRT - objective =", formatC(sav, digits=obj$digits[["fit"]], width=obj$digits[["fit"]]+4, format="f"), "\n")))
-
-         }
+         if (verbose)
+            cat(mstyle$verbose(paste("vc =", formatC(val, digits=obj$digits[["var"]], width=obj$digits[["var"]]+4, format="f"), "  LRT - objective =", formatC(sav, digits=obj$digits[["fit"]], width=obj$digits[["fit"]]+4, format="f"), "\n")))
 
       }
 

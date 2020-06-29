@@ -371,7 +371,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
 
          for (i in seq_len(con$eptries)) {
 
-            res <- try(.profile.rma.mv(val = con$vc.min, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, CI=TRUE, objective=objective, verbose=verbose), silent=TRUE)
+            res <- try(.profile.rma.mv(val = con$vc.min, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, confint=TRUE, objective=objective, verbose=verbose), silent=TRUE)
 
             if (!inherits(res, "try-error")) {
 
@@ -391,7 +391,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
 
                } else {
 
-                  res <- try(uniroot(.profile.rma.mv, interval=c(con$vc.min, vc), tol=con$tol, maxiter=con$maxiter, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, CI=TRUE, objective=objective, verbose=verbose, check.conv=TRUE)$root, silent=TRUE)
+                  res <- try(uniroot(.profile.rma.mv, interval=c(con$vc.min, vc), tol=con$tol, maxiter=con$maxiter, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, confint=TRUE, objective=objective, verbose=verbose, check.conv=TRUE)$root, silent=TRUE)
 
                   ### check if uniroot method converged
                   if (!inherits(res, "try-error")) {
@@ -423,7 +423,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
 
          for (i in seq_len(con$eptries)) {
 
-            res <- try(.profile.rma.mv(val = con$vc.max, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, CI=TRUE, objective=objective, verbose=verbose), silent=TRUE)
+            res <- try(.profile.rma.mv(val = con$vc.max, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, confint=TRUE, objective=objective, verbose=verbose), silent=TRUE)
 
             if (!inherits(res, "try-error")) {
 
@@ -443,7 +443,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
 
                } else {
 
-                  res <- try(uniroot(.profile.rma.mv, interval=c(vc, con$vc.max), tol=con$tol, maxiter=con$maxiter, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, CI=TRUE, objective=objective, verbose=verbose, check.conv=TRUE)$root, silent=TRUE)
+                  res <- try(uniroot(.profile.rma.mv, interval=c(vc, con$vc.max), tol=con$tol, maxiter=con$maxiter, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, confint=TRUE, objective=objective, verbose=verbose, check.conv=TRUE)$root, silent=TRUE)
 
                   ### check if uniroot method converged
                   if (!inherits(res, "try-error")) {

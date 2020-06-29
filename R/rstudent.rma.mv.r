@@ -145,14 +145,14 @@ rstudent.rma.mv <- function(model, digits, progbar=FALSE, cluster, reestimate=TR
 
    }
 
-   if (parallel=="snow" || parallel == "multicore") {
+   if (parallel == "snow" || parallel == "multicore") {
 
       if (!requireNamespace("parallel", quietly=TRUE))
          stop(mstyle$stop("Please install the 'parallel' package for parallel processing."))
 
       ncpus <- as.integer(ncpus)
 
-      if (ncpus < 1)
+      if (ncpus < 1L)
          stop(mstyle$stop("Argument 'ncpus' must be >= 1."))
 
       if (parallel == "multicore")

@@ -1,6 +1,8 @@
-# metafor 2.5-22 (2020-06-28)
+# metafor 2.5-23 (2020-06-29)
 
 - the `metafor` package now makes use of the `mathjaxr` package to nicely render equations shown in the HTML help pages
+
+- started using the `pbapply` package for showing progress bars, also when using parallel processing
 
 - to avoid potential confusion, all references to 'credibility intervals' have been removed from the documentation; these intervals are now exclusively referred to as 'prediction intervals'; in the output, the bounds are therefore indicated now as `pi.lb` and `pi.ub` (instead of `cr.lb` and `cr.ub`); the corresponding argument names were changed in `addpoly.default()`; argument `addcred` was changed to `addpred` in `addpoly.rma()` and `forest.rma()`; however, code using the old arguments names should continue to work
 
@@ -23,6 +25,8 @@
 - `regtest()` now shows the 'limit estimate' of the (average) true effect when using `sei`, `vi`, `ninv`, or `sqrtninv` as predictor (and the model does not contain any other moderators)
 
 - show nicer network graphs for `dat.hasselblad1998` and `dat.senn2013` in help files
+
+- refactored various functions (for cleaner/simpler code)
 
 - improved the documentation a bit
 

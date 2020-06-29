@@ -53,6 +53,13 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
    if (!fixed && !random)
       stop(mstyle$stop("At least one of the arguments 'fixed' and 'random' must be TRUE."))
 
+   level <- ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
+
+   ddd <- list(...)
+
+   if (.isTRUE(ddd$time))
+      time.start <- proc.time()
+
    if (x$method == "GENQ" || x$method == "GENQM") {
       type <- "GENQ"
    } else {
@@ -69,12 +76,8 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
    #   type <- match.arg(type, c("QP", "GENQ", "PL"))
    #}
 
-   level <- ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
-
-   ddd <- list(...)
-
-   if (.isTRUE(ddd$time))
-      time.start <- proc.time()
+   if (!is.null(ddd$type)) # can override with 'type' argument
+      type <- ddd$type
 
    #########################################################################
    #########################################################################
@@ -390,7 +393,7 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
          ### get diff value when setting component to tau2.min; this value should be positive (i.e., discrepancy must be larger than critical value)
          ### if it is not, then the lower bound must be below tau2.min
 
-         res <- try(.profile.rma.uni(val = con$tau2.min, obj=x, CI=TRUE, objective=objective, verbose=verbose), silent=TRUE)
+         res <- try(.profile.rma.uni(con$tau2.min, obj=x, confint=TRUE, objective=objective, verbose=verbose), silent=TRUE)
 
          if (!inherits(res, "try-error")) {
 
@@ -404,7 +407,7 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
 
             } else {
 
-               res <- try(uniroot(.profile.rma.uni, interval=c(con$tau2.min, x$tau2), tol=con$tol, maxiter=con$maxiter, obj=x, CI=TRUE, objective=objective, verbose=verbose, check.conv=TRUE)$root, silent=TRUE)
+               res <- try(uniroot(.profile.rma.uni, interval=c(con$tau2.min, x$tau2), tol=con$tol, maxiter=con$maxiter, obj=x, confint=TRUE, objective=objective, verbose=verbose, check.conv=TRUE)$root, silent=TRUE)
 
                ### check if uniroot method converged
 
@@ -426,7 +429,7 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
          ### get diff value when setting component to tau2.max; this value should be positive (i.e., discrepancy must be larger than critical value)
          ### if it is not, then the upper bound must be above tau2.max
 
-         res <- try(.profile.rma.uni(val = con$tau2.max, obj=x, CI=TRUE, objective=objective, verbose=verbose), silent=TRUE)
+         res <- try(.profile.rma.uni(con$tau2.max, obj=x, confint=TRUE, objective=objective, verbose=verbose), silent=TRUE)
 
          if (!inherits(res, "try-error")) {
 
@@ -438,7 +441,7 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
 
             } else {
 
-               res <- try(uniroot(.profile.rma.uni, interval=c(x$tau2, con$tau2.max), tol=con$tol, maxiter=con$maxiter, obj=x, CI=TRUE, objective=objective, verbose=verbose, check.conv=TRUE)$root, silent=TRUE)
+               res <- try(uniroot(.profile.rma.uni, interval=c(x$tau2, con$tau2.max), tol=con$tol, maxiter=con$maxiter, obj=x, confint=TRUE, objective=objective, verbose=verbose, check.conv=TRUE)$root, silent=TRUE)
 
                ### check if uniroot method converged
 

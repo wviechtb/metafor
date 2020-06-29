@@ -1,5 +1,5 @@
 profile.rma.uni <- function(fitted,
-   xlim, ylim, steps=20, lltol=1e-06, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, plot=TRUE, pch=19, cline=FALSE, ...) {
+   xlim, ylim, steps=20, lltol=1e-04, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, plot=TRUE, pch=19, cline=FALSE, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -24,6 +24,26 @@ profile.rma.uni <- function(fitted,
       ncpus <- length(cl)
    }
 
+   if (parallel == "snow" || parallel == "multicore") {
+
+      if (!requireNamespace("parallel", quietly=TRUE))
+         stop(mstyle$stop("Please install the 'parallel' package for parallel processing."))
+
+      ncpus <- as.integer(ncpus)
+
+      if (ncpus < 1L)
+         stop(mstyle$stop("Argument 'ncpus' must be >= 1."))
+
+   }
+
+   if (progbar && !requireNamespace("pbapply", quietly=TRUE))
+      stop(mstyle$stop("Please install the 'pbapply' package to obtain a progress bar."))
+
+   if (!progbar) {
+      pbo <- pbapply::pboptions(type = "none")
+      on.exit(pbapply::pboptions(pbo), add = TRUE)
+   }
+
    ddd <- list(...)
 
    if (.isTRUE(ddd$time))
@@ -33,7 +53,7 @@ profile.rma.uni <- function(fitted,
 
    if (missing(xlim)) {
 
-      ### if the user has not specified the xlim, get CI xlim for tau^2 (suppress warnings)
+      ### if the user has not specified xlim, get CI for tau^2 (suppress warnings)
 
       vc.ci <- try(suppressWarnings(confint(x)), silent=TRUE)
 
@@ -54,7 +74,7 @@ profile.rma.uni <- function(fitted,
 
       if (is.na(vc.lb) || is.na(vc.ub)) {
 
-         ### if the profile method fails, try a Wald-type CI for tau^2
+         ### if the CI method fails, try a Wald-type CI for tau^2
 
          vc.lb <- max( 0, x$tau2 - 1.96 * x$se.tau2)
          vc.ub <- max(.1, x$tau2 + 1.96 * x$se.tau2)
@@ -65,10 +85,8 @@ profile.rma.uni <- function(fitted,
 
          ### if this still results in NA bounds, use simple method
 
-         #vc.lb <- max(0, log(x$tau2)) ### old method
-         #vc.ub <- max(0, exp(x$tau2)) ### old method
-         vc.lb <- max( 0, x$tau2/4) ### new method
-         vc.ub <- max(.1, x$tau2*4) ### new method
+         vc.lb <- max( 0, x$tau2/4)
+         vc.ub <- max(.1, x$tau2*4)
 
       }
 
@@ -89,77 +107,39 @@ profile.rma.uni <- function(fitted,
    }
 
    vcs <- seq(xlim[1], xlim[2], length.out=steps)
+   #return(vcs)
 
    if (length(vcs) <= 1L)
       stop(mstyle$stop("Cannot set 'xlim' automatically. Please set this argument manually."))
 
-   if (parallel=="no") {
+   if (parallel == "no")
+      res <- pbapply::pblapply(seq_len(steps), .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE, vcs=vcs)
 
-      lls   <- rep(NA_real_, length(vcs))
-      beta  <- matrix(NA_real_, nrow=length(vcs), ncol=x$p)
-      ci.lb <- matrix(NA_real_, nrow=length(vcs), ncol=x$p)
-      ci.ub <- matrix(NA_real_, nrow=length(vcs), ncol=x$p)
+   if (parallel == "multicore")
+      res <- pbapply::pblapply(seq_len(steps), .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE, vcs=vcs, cl=ncpus)
+      #res <- parallel::mclapply(seq_len(steps), .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE, vcs=vcs, mc.cores=ncpus)
 
-      if (progbar)
-         pbar <- txtProgressBar(min=0, max=steps, style=3)
-
-      for (i in seq_along(vcs)) {
-
-         res <- try(suppressWarnings(rma.uni(x$yi, x$vi, weights=x$weights, mods=x$X, intercept=FALSE, method=x$method, weighted=x$weighted, test=x$test, level=x$level, control=x$control, tau2=vcs[i], skipr2=TRUE)), silent=TRUE)
-
-         if (progbar)
-            setTxtProgressBar(pbar, i)
-
-         if (inherits(res, "try-error"))
-            next
-
-         lls[i] <- c(logLik(res))
-         beta[i,]  <- c(res$beta)
-         ci.lb[i,] <- c(res$ci.lb)
-         ci.ub[i,] <- c(res$ci.ub)
-
+   if (parallel == "snow") {
+      if (is.null(cl)) {
+         cl <- parallel::makePSOCKcluster(ncpus)
+         on.exit(parallel::stopCluster(cl))
       }
-
-      if (progbar)
-         close(pbar)
-
+      if (.isTRUE(ddd$LB)) {
+         res <- parallel::parLapplyLB(cl, seq_len(steps), .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE, vcs=vcs)
+         #res <- parallel::clusterApplyLB(cl, seq_len(steps), .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE, vcs=vcs)
+         #res <- parallel::clusterMap(cl, .profile.rma.uni, seq_len(steps), MoreArgs=list(obj=x, parallel=parallel, profile=TRUE, vcs=vcs), .scheduling = "dynamic")
+      } else {
+         res <- pbapply::pblapply(seq_len(steps), .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE, vcs=vcs, cl=cl)
+         #res <- parallel::parLapply(cl, seq_len(steps), .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE, vcs=vcs)
+         #res <- parallel::clusterApply(cl, seq_len(steps), .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE, vcs=vcs)
+         #res <- parallel::clusterMap(cl, .profile.rma.uni, seq_len(steps), MoreArgs=list(obj=x, parallel=parallel, profile=TRUE, vcs=vcs))
+      }
    }
 
-   if (parallel=="snow" || parallel == "multicore") {
-
-      if (!requireNamespace("parallel", quietly=TRUE))
-         stop(mstyle$stop("Please install the 'parallel' package for parallel processing."))
-
-      ncpus <- as.integer(ncpus)
-
-      if (ncpus < 1)
-         stop(mstyle$stop("Argument 'ncpus' must be >= 1."))
-
-      if (parallel == "multicore")
-         res <- parallel::mclapply(vcs, .profile.rma.uni, obj=x, mc.cores=ncpus, parallel=parallel, profile=TRUE)
-
-      if (parallel == "snow") {
-         if (is.null(cl)) {
-            cl <- parallel::makePSOCKcluster(ncpus)
-            on.exit(parallel::stopCluster(cl))
-         }
-         if (.isTRUE(ddd$LB)) {
-            res <- parallel::parLapplyLB(cl, vcs, .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE)
-            #res <- parallel::clusterApplyLB(cl, vcs, .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE)
-            #res <- parallel::clusterMap(cl, .profile.rma.uni, vcs, MoreArgs=list(obj=x, parallel=parallel, profile=TRUE), .scheduling = "dynamic")
-         } else {
-            res <- parallel::parLapply(cl, vcs, .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE)
-            #res <- parallel::clusterApply(cl, vcs, .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE)
-            #res <- parallel::clusterMap(cl, .profile.rma.uni, vcs, MoreArgs=list(obj=x, parallel=parallel, profile=TRUE))
-         }
-      }
-
-      lls <- sapply(res, function(x) x$ll)
-      beta  <- do.call("rbind", lapply(res, function(x) t(x$beta)))
-      ci.lb <- do.call("rbind", lapply(res, function(x) t(x$ci.lb)))
-      ci.ub <- do.call("rbind", lapply(res, function(x) t(x$ci.ub)))
-
-   }
+   lls <- sapply(res, function(x) x$ll)
+   beta  <- do.call("rbind", lapply(res, function(x) t(x$beta)))
+   ci.lb <- do.call("rbind", lapply(res, function(x) t(x$ci.lb)))
+   ci.ub <- do.call("rbind", lapply(res, function(x) t(x$ci.ub)))
 
    #########################################################################
 

@@ -533,7 +533,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
       }
 
-      annotext <- formatC(annotext, format="f", digits=digits[[1]])
+      annotext <- .fcf(annotext, digits[[1]])
 
       if (missing(width)) {
          width <- apply(annotext, 2, function(x) max(nchar(x)))

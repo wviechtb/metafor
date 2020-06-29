@@ -13,8 +13,8 @@
         plot=TRUE, pch=19, cline=FALSE, \dots)
 
 \method{profile}{rma.mv}(fitted, sigma2, tau2, rho, gamma2, phi,
-        xlim, ylim, steps=20, lltol=1e-06, startmethod="init",
-        progbar=TRUE, parallel="no", ncpus=1, cl=NULL,
+        xlim, ylim, steps=20, lltol=1e-06, progbar=TRUE,
+        parallel="no", ncpus=1, cl=NULL,
         plot=TRUE, pch=19, cline=FALSE, \dots)
 
 \method{print}{profile.rma}(x, \dots)
@@ -33,7 +33,6 @@
    \item{ylim}{optional vector specifying the y-axis limits when plotting the profiled likelihood. If unspecified, the function tries to set these limits automatically.}
    \item{steps}{number of points between \code{xlim[1]} and \code{xlim[2]} (inclusive) for which the likelihood should be evaluated (the default is 20).}
    \item{lltol}{numerical tolerance used when comparing values of the profiled log-likelihood with the log-likelihood of the fitted model (the default is 1e-06).}
-   \item{startmethod}{method for picking starting values for the optimization. Default is \code{"init"}, which starts each model fit at the default initial values. The alternative is \code{"prev"}, which starts at the estimates from the previous model fit (usually faster, but also less stable for ill-defined models).}
    \item{progbar}{logical indicating whether a progress bar should be shown (the default is \code{TRUE}). Ignored when using parallel processing.}
    \item{parallel}{character string indicating whether parallel processing should be used (the default is \code{"no"}). For parallel processing, set to either \code{"snow"} or \code{"multicore"}. See \sQuote{Details}.}
    \item{ncpus}{integer specifying the number of processes to use in the parallel processing.}
@@ -53,7 +52,7 @@
 
    For objects of class \code{"rma.mv"} obtained with the \code{\link{rma.mv}} function, profiling is done by default over all (non-fixed) variance and correlation components of the model. Alternatively, one can use the \code{sigma2}, \code{tau2}, \code{rho}, \code{gamma2}, or \code{phi} arguments to specify over which parameter the profiling should be done. Only one of these arguments can be used at a time. A single integer is used to specify the number of the parameter. Each profile plot should show a peak at the corresponding ML/REML estimate (as described above, the function checks for this). If the profiled likelihood is flat (over the entire parameter space or large portions of it), then this suggests that at least some of the parameters of the model are not identifiable (and the parameter estimates obtained are to some extent arbitrary).
 
-   Profiling requires repeatedly refitting the same model, which can be slow when \mjseqn{k} is large and/or the model is complex (the latter especially applies to \code{"rma.mv"} objects). On machines with multiple cores, one can usually speed things up by delegating the model fitting to separate worker processes, that is, by setting \code{parallel="snow"} or \code{parallel="multicore"} and \code{ncpus} to some value larger than 1. Parallel processing makes use of the \code{\link[parallel]{parallel}} package, using the \code{\link[parallel]{makePSOCKcluster}} and \code{\link[parallel]{parLapply}} functions when \code{parallel="snow"} or using \code{\link[parallel]{mclapply}} when \code{parallel="multicore"} (the latter only works on Unix/Linux-alikes). With \code{parallel::detectCores()}, one can check on the number of available cores on the local machine. Note that argument \code{startmethod} is ignored when using parallel processing and no progress bar will be shown.
+   Profiling requires repeatedly refitting the same model, which can be slow when \mjseqn{k} is large and/or the model is complex (the latter especially applies to \code{"rma.mv"} objects). On machines with multiple cores, one can usually speed things up by delegating the model fitting to separate worker processes, that is, by setting \code{parallel="snow"} or \code{parallel="multicore"} and \code{ncpus} to some value larger than 1. Parallel processing makes use of the \code{\link[parallel]{parallel}} package, using the \code{\link[parallel]{makePSOCKcluster}} and \code{\link[parallel]{parLapply}} functions when \code{parallel="snow"} or using \code{\link[parallel]{mclapply}} when \code{parallel="multicore"} (the latter only works on Unix/Linux-alikes). With \code{parallel::detectCores()}, one can check on the number of available cores on the local machine.
 }
 \value{
    An object of class \code{"profile.rma"}. The object is a list (or list of lists) containing the following components:

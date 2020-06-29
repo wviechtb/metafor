@@ -249,7 +249,7 @@ atransf, targs, efac=1, col, border, fonts, cex, ...) {
 
       }
 
-      annotext <- formatC(annotext, format="f", digits=digits)
+      annotext <- .fcf(annotext, digits)
 
       if (missing(width) || is.null(width)) {
          width <- apply(annotext, 2, function(x) max(nchar(x)))
