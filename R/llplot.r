@@ -11,6 +11,9 @@ lty, lwd, col, level=99.99, refline=0, ...) {
    if (missing(measure))
       stop(mstyle$stop("Must specify an effect size or outcome measure via the 'measure' argument."))
 
+   if (inherits(measure, "rma"))
+      stop(mstyle$stop("Function not applicable to 'rma' objects."))
+
    if (!is.element(measure, c("GEN", "OR")))
       stop(mstyle$stop("Currently only measure=\"GEN\" or measure=\"OR\" can be specified."))
 
@@ -280,15 +283,15 @@ lty, lwd, col, level=99.99, refline=0, ...) {
          lty <- ifelse(id0 | id00, ifelse(id00, "dotted", "dashed"), "solid")
    }
 
-   ### set default line widths (4.0 to 0.2 according to the rank of vi)
+   ### set default line widths (4.0 to 0.4 according to the rank of vi)
 
    if (is.null(lwd))
-      lwd <- seq(from=4.0, to=0.2, length.out=k)[rank(vi)]
+      lwd <- seq(from=4.0, to=0.4, length.out=k)[rank(vi)]
 
-   ### set default line color (gray0 to gray80 according to the rank of vi)
+   ### set default line color (gray0 to gray60 according to the rank of vi)
 
    if (is.null(col))
-      col <- paste0("gray", round(seq(from=0, to=80, length.out=k))[rank(vi)])
+      col <- paste0("gray", round(seq(from=0, to=60, length.out=k))[rank(vi)])
 
    ### set x axis limits
 
