@@ -553,6 +553,12 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
          }
       }
 
+      ### make sure order of intervals is always increasing
+
+      tmp <- .psort(ci.lb, ci.ub)
+      ci.lb <- tmp[,1]
+      ci.ub <- tmp[,2]
+
       res.fixed <- cbind(estimate=beta, ci.lb=ci.lb, ci.ub=ci.ub)
       rownames(res.fixed) <- rownames(x$beta)
 

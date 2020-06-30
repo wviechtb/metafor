@@ -53,6 +53,12 @@ confint.rma.peto <- function(object, parm, level, digits, transf, targs, ...) {
       }
    }
 
+   ### make sure order of intervals is always increasing
+
+   tmp <- .psort(ci.lb, ci.ub)
+   ci.lb <- tmp[,1]
+   ci.ub <- tmp[,2]
+
    #########################################################################
 
    res <- cbind(estimate=beta, ci.lb, ci.ub)

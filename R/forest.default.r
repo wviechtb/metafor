@@ -306,13 +306,13 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
    if (is.function(transf)) {
       if (is.null(targs)) {
-         yi         <- sapply(yi, transf)
-         ci.lb      <- sapply(ci.lb, transf)
-         ci.ub      <- sapply(ci.ub, transf)
+         yi    <- sapply(yi, transf)
+         ci.lb <- sapply(ci.lb, transf)
+         ci.ub <- sapply(ci.ub, transf)
       } else {
-         yi         <- sapply(yi, transf, targs)
-         ci.lb      <- sapply(ci.lb, transf, targs)
-         ci.ub      <- sapply(ci.ub, transf, targs)
+         yi    <- sapply(yi, transf, targs)
+         ci.lb <- sapply(ci.lb, transf, targs)
+         ci.ub <- sapply(ci.ub, transf, targs)
       }
    }
 
