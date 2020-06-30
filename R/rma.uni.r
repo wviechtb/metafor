@@ -2070,17 +2070,21 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
       res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
                   tau2=tau2, se.tau2=se.tau2, tau2.fix=tau2.fix, tau2.f=tau2,
-                  k=k, k.f=k.f, k.eff=k.eff, k.all=k.all, p=p, p.eff=p.eff, parms=parms, m=m,
-                  QE=QE, QEp=QEp, QM=QM, QMp=QMp, I2=I2, H2=H2, R2=R2, vt=vt,
-                  int.only=int.only, int.incl=int.incl, allvipos=allvipos, coef.na=coef.na,
+                  I2=I2, H2=H2, R2=R2, vt=vt,
+                  QE=QE, QEp=QEp, QM=QM, QMp=QMp,
+                  k=k, k.f=k.f, k.eff=k.eff, k.all=k.all, p=p, p.eff=p.eff, parms=parms,
+                  int.only=int.only, int.incl=int.incl, intercept=intercept, allvipos=allvipos, coef.na=coef.na,
                   yi=yi, vi=vi, X=X, weights=weights, yi.f=yi.f, vi.f=vi.f, X.f=X.f, weights.f=weights.f, M=M,
                   ai.f=ai.f, bi.f=bi.f, ci.f=ci.f, di.f=di.f,
                   x1i.f=x1i.f, x2i.f=x2i.f, t1i.f=t1i.f, t2i.f=t2i.f, ni=ni, ni.f=ni.f,
                   ids=ids, not.na=not.na, subset=subset, slab=slab, slab.null=slab.null,
-                  measure=measure, method=method, weighted=weighted, test=test, dfs=dfs, s2w=s2w, btt=btt, intercept=intercept, digits=digits, level=level, control=control, verbose=verbose,
+                  measure=measure, method=method, model=model, weighted=weighted,
+                  test=test, dfs=dfs, s2w=s2w, btt=btt, m=m,
+                  digits=digits, level=level, control=control, verbose=verbose,
                   add=add, to=to, drop00=drop00,
-                  fit.stats=fit.stats, formula.yi=formula.yi, formula.mods=formula.mods,
-                  version=packageVersion("metafor"), model=model, call=mf)
+                  fit.stats=fit.stats,
+                  formula.yi=formula.yi, formula.mods=formula.mods,
+                  version=packageVersion("metafor"), call=mf)
 
       if (model == "rma.ls") {
 
@@ -2103,7 +2107,16 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
    if (!is.null(ddd$outlist)) {
       if (ddd$outlist == "minimal") {
-         res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb, int.only=int.only, digits=digits, k=k, k.eff=k.eff, p=p, p.eff=p.eff, parms=parms, m=m, tau2=tau2, se.tau2=se.tau2, tau2.fix=tau2.fix, method=method, fit.stats=fit.stats, model=model, QE=QE, QEp=QEp, QM=QM, QMp=QMp, I2=I2, H2=H2, R2=R2, btt=btt, test=test, dfs=dfs)
+         res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
+                     tau2=tau2, se.tau2=se.tau2, tau2.fix=tau2.fix,
+                     I2=I2, H2=H2, R2=R2,
+                     QE=QE, QEp=QEp, QM=QM, QMp=QMp,
+                     k=k, k.eff=k.eff, p=p, p.eff=p.eff, parms=parms,
+                     int.only=int.only,
+                     measure=measure, method=method, model=model,
+                     test=test, dfs=dfs, btt=btt, m=m,
+                     digits=digits,
+                     fit.stats=fit.stats)
       } else {
          res <- eval(parse(text=paste0("list(", ddd$outlist, ")")))
       }

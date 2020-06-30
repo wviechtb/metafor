@@ -2,7 +2,7 @@
 
 ### for profile(), confint(), and gosh()
 
-.profile.rma.uni <- function(val, obj, parallel=FALSE, profile=FALSE, confint=FALSE, subset=FALSE, objective, sel, FE=FALSE, verbose=FALSE) {
+.profile.rma.uni <- function(val, obj, parallel=FALSE, profile=FALSE, confint=FALSE, subset=FALSE, objective, FE=FALSE, verbose=FALSE) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -49,12 +49,14 @@
 
    if (subset) {
 
-      ### for subset, fit model to subset as specified in row 'val' of 'sel'
+      ### for subset, fit model to subset as specified by 'val'
 
       if (FE) {
 
-         yi <- obj$yi[sel[val,]]
-         vi <- obj$vi[sel[val,]]
+         # special case for gosh() when an intercept-only FE model is used
+
+         yi <- obj$yi[val]
+         vi <- obj$vi[val]
          k <- length(yi)
          wi <- 1/vi
          est <- sum(wi*yi)/sum(wi)
@@ -72,7 +74,7 @@
 
       } else {
 
-         res <- try(suppressWarnings(rma.uni(obj$yi, obj$vi, weights=obj$weights, mods=obj$X, intercept=FALSE, method=obj$method, weighted=obj$weighted, test=obj$test, level=obj$level, control=obj$control, tau2=ifelse(obj$tau2.fix, obj$tau2, NA), subset=sel[val,], skipr2=TRUE, outlist="minimal")), silent=TRUE)
+         res <- try(suppressWarnings(rma.uni(obj$yi, obj$vi, weights=obj$weights, mods=obj$X, intercept=FALSE, method=obj$method, weighted=obj$weighted, test=obj$test, level=obj$level, control=obj$control, tau2=ifelse(obj$tau2.fix, obj$tau2, NA), subset=val, skipr2=TRUE, outlist="minimal")), silent=TRUE)
 
          if (inherits(res, "try-error") || any(res$coef.na)) {
             sav <- list(beta = matrix(NA, nrow=nrow(obj$beta), ncol=1), het = rep(NA, 5))
@@ -159,19 +161,19 @@
 
 }
 
-.profile.rma.mh <- function(val, obj, parallel=FALSE, subset=FALSE, sel) {
+.profile.rma.mh <- function(val, obj, parallel=FALSE, subset=FALSE) {
 
    if (parallel == "snow")
       library(metafor)
 
    if (subset) {
 
-      ### for subset, fit model to subset as specified in row 'val' of 'sel'
+      ### for subset, fit model to subset as specified by 'val'
 
       if (is.element(obj$measure, c("RR","OR","RD"))) {
-         res <- try(suppressWarnings(rma.mh(ai=obj$ai, bi=obj$bi, ci=obj$ci, di=obj$di, measure=obj$measure, add=obj$add, to=obj$to, drop00=obj$drop00, correct=obj$correct, subset=sel[val,])), silent=TRUE)
+         res <- try(suppressWarnings(rma.mh(ai=obj$ai, bi=obj$bi, ci=obj$ci, di=obj$di, measure=obj$measure, add=obj$add, to=obj$to, drop00=obj$drop00, correct=obj$correct, subset=val, outlist="minimal")), silent=TRUE)
       } else {
-         res <- try(suppressWarnings(rma.mh(x1i=obj$x1i, x2i=obj$x2i, t1i=obj$t1i, t2i=obj$t2i, measure=obj$measure, add=obj$add, to=obj$to, drop00=obj$drop00, correct=obj$correct, subset=sel[val,])), silent=TRUE)
+         res <- try(suppressWarnings(rma.mh(x1i=obj$x1i, x2i=obj$x2i, t1i=obj$t1i, t2i=obj$t2i, measure=obj$measure, add=obj$add, to=obj$to, drop00=obj$drop00, correct=obj$correct, subset=val, outlist="minimal")), silent=TRUE)
       }
 
       if (inherits(res, "try-error")) {
@@ -186,16 +188,16 @@
 
 }
 
-.profile.rma.peto <- function(val, obj, parallel=FALSE, subset=FALSE, sel) {
+.profile.rma.peto <- function(val, obj, parallel=FALSE, subset=FALSE) {
 
    if (parallel == "snow")
       library(metafor)
 
    if (subset) {
 
-      ### for subset, fit model to subset as specified in row 'val' of 'sel'
+      ### for subset, fit model to subset as specified by 'val'
 
-      res <- try(suppressWarnings(rma.peto(ai=obj$ai, bi=obj$bi, ci=obj$ci, di=obj$di, add=obj$add, to=obj$to, drop00=obj$drop00, subset=sel[val,])), silent=TRUE)
+      res <- try(suppressWarnings(rma.peto(ai=obj$ai, bi=obj$bi, ci=obj$ci, di=obj$di, add=obj$add, to=obj$to, drop00=obj$drop00, subset=val, outlist="minimal")), silent=TRUE)
 
       if (inherits(res, "try-error")) {
          sav <- list(beta = NA, het = rep(NA, 5))

@@ -130,29 +130,29 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
    if (parallel == "no") {
 
       if (inherits(x, "rma.uni"))
-         res <- pbapply::pblapply(seq_len(N.tot), .profile.rma.uni, obj=x, parallel=parallel, subset=TRUE, sel=incl, FE=FE)
+         res <- pbapply::pbapply(incl, 1, .profile.rma.uni, obj=x, parallel=parallel, subset=TRUE, FE=FE)
 
       if (inherits(x, "rma.mh"))
-         res <- pbapply::pblapply(seq_len(N.tot), .profile.rma.mh, obj=x, parallel=parallel, subset=TRUE, sel=incl)
+         res <- pbapply::pbapply(incl, 1, .profile.rma.mh, obj=x, parallel=parallel, subset=TRUE)
 
       if (inherits(x, "rma.peto"))
-         res <- pbapply::pblapply(seq_len(N.tot), .profile.rma.peto, obj=x, parallel=parallel, subset=TRUE, sel=incl)
+         res <- pbapply::pbapply(incl, 1, .profile.rma.peto, obj=x, parallel=parallel, subset=TRUE)
 
    }
 
    if (parallel == "multicore") {
 
       if (inherits(x, "rma.uni"))
-         res <- pbapply::pblapply(seq_len(N.tot), .profile.rma.uni, obj=x, parallel=parallel, subset=TRUE, sel=incl, FE=FE, cl=ncpus)
-         #res <- parallel::mclapply(seq_len(N.tot), .profile.rma.uni, obj=x, mc.cores=ncpus, parallel=parallel, subset=TRUE, sel=incl, FE=FE)
+         res <- pbapply::pbapply(incl, 1, .profile.rma.uni, obj=x, parallel=parallel, subset=TRUE, FE=FE, cl=ncpus)
+         #res <- parallel::mclapply(asplit(incl, 1), .profile.rma.uni, obj=x, mc.cores=ncpus, parallel=parallel, subset=TRUE, FE=FE)
 
       if (inherits(x, "rma.mh"))
-         res <- pbapply::pblapply(seq_len(N.tot), .profile.rma.mh, obj=x, parallel=parallel, subset=TRUE, sel=incl, cl=ncpus)
-         #res <- parallel::mclapply(seq_len(N.tot), .profile.rma.mh, obj=x, mc.cores=ncpus, parallel=parallel, subset=TRUE, sel=incl)
+         res <- pbapply::pbapply(incl, 1, .profile.rma.mh, obj=x, parallel=parallel, subset=TRUE, cl=ncpus)
+         #res <- parallel::mclapply(asplit(incl, 1), .profile.rma.mh, obj=x, mc.cores=ncpus, parallel=parallel, subset=TRUE)
 
       if (inherits(x, "rma.peto"))
-         res <- pbapply::pblapply(seq_len(N.tot), .profile.rma.peto, obj=x, parallel=parallel, subset=TRUE, sel=incl, cl=ncpus)
-         #res <- parallel::mclapply(seq_len(N.tot), .profile.rma.peto, obj=x, mc.cores=ncpus, parallel=parallel, subset=TRUE, sel=incl)
+         res <- pbapply::pbapply(incl, 1, .profile.rma.peto, obj=x, parallel=parallel, subset=TRUE, cl=ncpus)
+         #res <- parallel::mclapply(asplit(incl, 1), .profile.rma.peto, obj=x, mc.cores=ncpus, parallel=parallel, subset=TRUE)
 
    }
 
@@ -165,28 +165,28 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
 
       if (inherits(x, "rma.uni")) {
          if (.isTRUE(ddd$LB)) {
-            res <- parallel::parLapplyLB(cl, seq_len(N.tot), .profile.rma.uni, obj=x, parallel=parallel, subset=TRUE, sel=incl, FE=FE)
+            res <- parallel::parLapplyLB(cl, asplit(incl, 1), .profile.rma.uni, obj=x, parallel=parallel, subset=TRUE, FE=FE)
          } else {
-            res <- pbapply::pblapply(seq_len(N.tot), .profile.rma.uni, obj=x, parallel=parallel, subset=TRUE, sel=incl, FE=FE, cl=cl)
-            #res <- parallel::parLapply(cl, seq_len(N.tot), .profile.rma.uni, obj=x, parallel=parallel, subset=TRUE, sel=incl, FE=FE)
+            res <- pbapply::pbapply(incl, 1, .profile.rma.uni, obj=x, parallel=parallel, subset=TRUE, FE=FE, cl=cl)
+            #res <- parallel::parLapply(cl, asplit(incl, 1), .profile.rma.uni, obj=x, parallel=parallel, subset=TRUE, FE=FE)
          }
       }
 
       if (inherits(x, "rma.mh")) {
          if (.isTRUE(ddd$LB)) {
-            res <- parallel::parLapplyLB(cl, seq_len(N.tot), .profile.rma.mh, obj=x, parallel=parallel, subset=TRUE, sel=incl)
+            res <- parallel::parLapplyLB(cl, asplit(incl, 1), .profile.rma.mh, obj=x, parallel=parallel, subset=TRUE)
          } else {
-            res <- pbapply::pblapply(seq_len(N.tot), .profile.rma.mh, obj=x, parallel=parallel, subset=TRUE, sel=incl, cl=cl)
-            #res <- parallel::parLapply(cl, seq_len(N.tot), .profile.rma.mh, obj=x, parallel=parallel, subset=TRUE, sel=incl)
+            res <- pbapply::pbapply(incl, 1, .profile.rma.mh, obj=x, parallel=parallel, subset=TRUE, cl=cl)
+            #res <- parallel::parLapply(cl, asplit(incl, 1), .profile.rma.mh, obj=x, parallel=parallel, subset=TRUE)
          }
       }
 
       if (inherits(x, "rma.peto")) {
          if (.isTRUE(ddd$LB)) {
-            res <- parallel::parLapplyLB(cl, seq_len(N.tot), .profile.rma.peto, obj=x, parallel=parallel, subset=TRUE, sel=incl)
+            res <- parallel::parLapplyLB(cl, asplit(incl, 1), .profile.rma.peto, obj=x, parallel=parallel, subset=TRUE)
          } else {
-            res <- pbapply::pblapply(seq_len(N.tot), .profile.rma.peto, obj=x, parallel=parallel, subset=TRUE, sel=incl, cl=cl)
-            #res <- parallel::parLapply(cl, seq_len(N.tot), .profile.rma.peto, obj=x, parallel=parallel, subset=TRUE, sel=incl)
+            res <- pbapply::pbapply(incl, 1, .profile.rma.peto, obj=x, parallel=parallel, subset=TRUE, cl=cl)
+            #res <- parallel::parLapply(cl, asplit(incl, 1), .profile.rma.peto, obj=x, parallel=parallel, subset=TRUE)
          }
       }
 

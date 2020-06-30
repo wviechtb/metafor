@@ -387,6 +387,8 @@ level=95, digits, verbose=FALSE, ...) {
    X.f       <- cbind(rep(1,k.f))
    intercept <- TRUE
    int.only  <- TRUE
+   btt       <- 1
+   m         <- 1
 
    method    <- "FE"
    weighted  <- TRUE
@@ -397,20 +399,33 @@ level=95, digits, verbose=FALSE, ...) {
 
       res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
                   tau2=tau2, tau2.f=tau2,
-                  k=k, k.f=k.f, k.yi=k.yi, k.pos=k.pos, k.eff=k.eff, k.all=k.all, p=p, parms=parms,
-                  QE=QE, QEp=QEp, I2=I2, H2=H2,
-                  int.only=int.only,
+                  I2=I2, H2=H2,
+                  QE=QE, QEp=QEp,
+                  k=k, k.f=k.f, k.yi=k.yi, k.pos=k.pos, k.eff=k.eff, k.all=k.all, p=p, p.eff=p.eff, parms=parms,
+                  int.only=int.only, intercept=intercept,
                   yi=yi, vi=vi, yi.f=yi.f, vi.f=vi.f, X.f=X.f, ai=ai, bi=bi, ci=ci, di=di, ai.f=ai.f, bi.f=bi.f, ci.f=ci.f, di.f=di.f, ni=ni, ni.f=ni.f,
                   ids=ids, not.na=not.na, subset=subset, not.na.yivi=not.na.yivi, slab=slab, slab.null=slab.null,
-                  measure=measure, method=method, weighted=weighted, test=test, dfs=dfs, intercept=intercept, digits=digits, level=level,
+                  measure=measure, method=method, weighted=weighted,
+                  test=test, dfs=dfs, btt=btt, m=m,
+                  digits=digits, level=level,
                   add=add, to=to, drop00=drop00,
-                  fit.stats=fit.stats, formula.yi=NULL, formula.mods=NULL, version=packageVersion("metafor"), call=mf)
+                  fit.stats=fit.stats,
+                  formula.yi=NULL, formula.mods=NULL, version=packageVersion("metafor"), call=mf)
 
    }
 
    if (!is.null(ddd$outlist)) {
       if (ddd$outlist == "minimal") {
-         res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb, digits=digits, k=k, k.pos=k.pos, k.eff=k.eff, p=p, parms=parms, fit.stats=fit.stats, QE=QE, QEp=QEp)
+         res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
+                     tau2=tau2,
+                     I2=I2, H2=H2,
+                     QE=QE, QEp=QEp,
+                     k=k, k.pos=k.pos, k.eff=k.eff, p=p, p.eff=p.eff, parms=parms,
+                     int.only=int.only,
+                     measure=measure, method=method,
+                     test=test, dfs=dfs, btt=btt, m=m,
+                     digits=digits,
+                     fit.stats=fit.stats)
       } else {
          res <- eval(parse(text=paste0("list(", ddd$outlist, ")")))
       }
