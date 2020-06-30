@@ -99,7 +99,7 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
    if (exact) {
 
       incl <- as.matrix(expand.grid(replicate(x$k, list(c(FALSE,TRUE))), KEEP.OUT.ATTRS=FALSE))
-      incl <- incl[rowSums(incl) >= x$p,]
+      incl <- incl[rowSums(incl) >= x$p,,drop=FALSE]
 
       ### slower, but does not generate rows that need to be filtered out (as above)
       #incl <- lapply(x$p:x$k, function(m) apply(combn(x$k,m), 2, function(l) 1:x$k %in% l))
@@ -127,32 +127,34 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
 
    #########################################################################
 
+   outlist <- "beta=beta, k=k, QE=QE, I2=I2, H2=H2, tau2=tau2, coef.na=coef.na"
+
    if (parallel == "no") {
 
       if (inherits(x, "rma.uni"))
-         res <- pbapply::pbapply(incl, 1, .profile.rma.uni, obj=x, parallel=parallel, subset=TRUE, FE=FE)
+         res <- pbapply::pbapply(incl, 1, .profile.rma.uni, obj=x, parallel=parallel, subset=TRUE, FE=FE, outlist=outlist)
 
       if (inherits(x, "rma.mh"))
-         res <- pbapply::pbapply(incl, 1, .profile.rma.mh, obj=x, parallel=parallel, subset=TRUE)
+         res <- pbapply::pbapply(incl, 1, .profile.rma.mh, obj=x, parallel=parallel, subset=TRUE, outlist=outlist)
 
       if (inherits(x, "rma.peto"))
-         res <- pbapply::pbapply(incl, 1, .profile.rma.peto, obj=x, parallel=parallel, subset=TRUE)
+         res <- pbapply::pbapply(incl, 1, .profile.rma.peto, obj=x, parallel=parallel, subset=TRUE, outlist=outlist)
 
    }
 
    if (parallel == "multicore") {
 
       if (inherits(x, "rma.uni"))
-         res <- pbapply::pbapply(incl, 1, .profile.rma.uni, obj=x, parallel=parallel, subset=TRUE, FE=FE, cl=ncpus)
-         #res <- parallel::mclapply(asplit(incl, 1), .profile.rma.uni, obj=x, mc.cores=ncpus, parallel=parallel, subset=TRUE, FE=FE)
+         res <- pbapply::pbapply(incl, 1, .profile.rma.uni, obj=x, parallel=parallel, subset=TRUE, FE=FE, outlist=outlist, cl=ncpus)
+         #res <- parallel::mclapply(asplit(incl, 1), .profile.rma.uni, obj=x, mc.cores=ncpus, parallel=parallel, subset=TRUE, FE=FE, outlist=outlist)
 
       if (inherits(x, "rma.mh"))
-         res <- pbapply::pbapply(incl, 1, .profile.rma.mh, obj=x, parallel=parallel, subset=TRUE, cl=ncpus)
-         #res <- parallel::mclapply(asplit(incl, 1), .profile.rma.mh, obj=x, mc.cores=ncpus, parallel=parallel, subset=TRUE)
+         res <- pbapply::pbapply(incl, 1, .profile.rma.mh, obj=x, parallel=parallel, subset=TRUE, outlist=outlist, cl=ncpus)
+         #res <- parallel::mclapply(asplit(incl, 1), .profile.rma.mh, obj=x, mc.cores=ncpus, parallel=parallel, subset=TRUE, outlist=outlist)
 
       if (inherits(x, "rma.peto"))
-         res <- pbapply::pbapply(incl, 1, .profile.rma.peto, obj=x, parallel=parallel, subset=TRUE, cl=ncpus)
-         #res <- parallel::mclapply(asplit(incl, 1), .profile.rma.peto, obj=x, mc.cores=ncpus, parallel=parallel, subset=TRUE)
+         res <- pbapply::pbapply(incl, 1, .profile.rma.peto, obj=x, parallel=parallel, subset=TRUE, outlist=outlist, cl=ncpus)
+         #res <- parallel::mclapply(asplit(incl, 1), .profile.rma.peto, obj=x, mc.cores=ncpus, parallel=parallel, subset=TRUE, outlist=outlist)
 
    }
 
@@ -165,35 +167,38 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
 
       if (inherits(x, "rma.uni")) {
          if (.isTRUE(ddd$LB)) {
-            res <- parallel::parLapplyLB(cl, asplit(incl, 1), .profile.rma.uni, obj=x, parallel=parallel, subset=TRUE, FE=FE)
+            res <- parallel::parLapplyLB(cl, asplit(incl, 1), .profile.rma.uni, obj=x, parallel=parallel, subset=TRUE, FE=FE, outlist=outlist)
          } else {
-            res <- pbapply::pbapply(incl, 1, .profile.rma.uni, obj=x, parallel=parallel, subset=TRUE, FE=FE, cl=cl)
-            #res <- parallel::parLapply(cl, asplit(incl, 1), .profile.rma.uni, obj=x, parallel=parallel, subset=TRUE, FE=FE)
+            res <- pbapply::pbapply(incl, 1, .profile.rma.uni, obj=x, parallel=parallel, subset=TRUE, FE=FE, outlist=outlist, cl=cl)
+            #res <- parallel::parLapply(cl, asplit(incl, 1), .profile.rma.uni, obj=x, parallel=parallel, subset=TRUE, FE=FE, outlist=outlist)
          }
       }
 
       if (inherits(x, "rma.mh")) {
          if (.isTRUE(ddd$LB)) {
-            res <- parallel::parLapplyLB(cl, asplit(incl, 1), .profile.rma.mh, obj=x, parallel=parallel, subset=TRUE)
+            res <- parallel::parLapplyLB(cl, asplit(incl, 1), .profile.rma.mh, obj=x, parallel=parallel, subset=TRUE, outlist=outlist)
          } else {
-            res <- pbapply::pbapply(incl, 1, .profile.rma.mh, obj=x, parallel=parallel, subset=TRUE, cl=cl)
-            #res <- parallel::parLapply(cl, asplit(incl, 1), .profile.rma.mh, obj=x, parallel=parallel, subset=TRUE)
+            res <- pbapply::pbapply(incl, 1, .profile.rma.mh, obj=x, parallel=parallel, subset=TRUE, outlist=outlist, cl=cl)
+            #res <- parallel::parLapply(cl, asplit(incl, 1), .profile.rma.mh, obj=x, parallel=parallel, subset=TRUE, outlist=outlist)
          }
       }
 
       if (inherits(x, "rma.peto")) {
          if (.isTRUE(ddd$LB)) {
-            res <- parallel::parLapplyLB(cl, asplit(incl, 1), .profile.rma.peto, obj=x, parallel=parallel, subset=TRUE)
+            res <- parallel::parLapplyLB(cl, asplit(incl, 1), .profile.rma.peto, obj=x, parallel=parallel, subset=TRUE, outlist=outlist)
          } else {
-            res <- pbapply::pbapply(incl, 1, .profile.rma.peto, obj=x, parallel=parallel, subset=TRUE, cl=cl)
-            #res <- parallel::parLapply(cl, asplit(incl, 1), .profile.rma.peto, obj=x, parallel=parallel, subset=TRUE)
+            res <- pbapply::pbapply(incl, 1, .profile.rma.peto, obj=x, parallel=parallel, subset=TRUE, outlist=outlist, cl=cl)
+            #res <- parallel::parLapply(cl, asplit(incl, 1), .profile.rma.peto, obj=x, parallel=parallel, subset=TRUE, outlist=outlist)
          }
       }
 
    }
 
-   beta <- do.call("rbind", lapply(res, function(x) t(x$beta)))
-   het  <- do.call("rbind", lapply(res, function(x) x$het))
+   beta <- do.call("rbind", lapply(res, function(x) if (inherits(x, "try-error") || any(x$coef.na)) NA else t(x$beta)))
+   het  <- do.call("rbind", lapply(res, function(x) if (inherits(x, "try-error") || any(x$coef.na)) NA else c(x$k, x$QE, x$I2, x$H2, x$tau2)))
+
+   if (all(is.na(het)))
+      stop(mstyle$stop("All model fits failed."))
 
    #########################################################################
 
@@ -215,8 +220,8 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
    ### combine het and beta objects and order incl and res by k
 
    res <- data.frame(het, beta)
-   incl <- incl[order(res$k),]
-   res <- res[order(res$k),]
+   incl <- incl[order(res$k),,drop=FALSE]
+   res <- res[order(res$k),,drop=FALSE]
 
    ### fix rownames
 

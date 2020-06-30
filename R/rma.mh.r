@@ -763,6 +763,7 @@ correct=TRUE, level=95, digits, verbose=FALSE, ...) {
    int.only  <- TRUE
    btt       <- 1
    m         <- 1
+   coef.na   <- c(X=FALSE)
 
    method    <- "FE"
    weighted  <- TRUE
@@ -776,7 +777,7 @@ correct=TRUE, level=95, digits, verbose=FALSE, ...) {
                   I2=I2, H2=H2,
                   QE=QE, QEp=QEp, CO=CO, COp=COp, MH=MH, MHp=MHp, BD=BD, BDp=BDp, TA=TA, TAp=TAp,
                   k=k, k.f=k.f, k.yi=k.yi, k.pos=k.pos, k.eff=k.eff, k.all=k.all, p=p, p.eff=p.eff, parms=parms,
-                  int.only=int.only, intercept=intercept,
+                  int.only=int.only, intercept=intercept, coef.na=coef.na,
                   yi=yi, vi=vi, yi.f=yi.f, vi.f=vi.f, X.f=X.f,
                   ai=ai, bi=bi, ci=ci, di=di, ai.f=ai.f, bi.f=bi.f, ci.f=ci.f, di.f=di.f,
                   x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i, x1i.f=x1i.f, x2i.f=x2i.f, t1i.f=t1i.f, t2i.f=t2i.f, ni=ni, ni.f=ni.f,

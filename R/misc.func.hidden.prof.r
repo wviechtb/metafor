@@ -2,7 +2,7 @@
 
 ### for profile(), confint(), and gosh()
 
-.profile.rma.uni <- function(val, obj, parallel=FALSE, profile=FALSE, confint=FALSE, subset=FALSE, objective, FE=FALSE, verbose=FALSE) {
+.profile.rma.uni <- function(val, obj, parallel=FALSE, profile=FALSE, confint=FALSE, subset=FALSE, objective, FE=FALSE, verbose=FALSE, outlist=NULL) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -13,7 +13,9 @@
 
       ### for profile and confint, fit model with tau2 fixed to 'val'
 
-      res <- try(suppressWarnings(rma.uni(obj$yi, obj$vi, weights=obj$weights, mods=obj$X, intercept=FALSE, method=obj$method, weighted=obj$weighted, test=obj$test, level=obj$level, control=obj$control, tau2=val, skipr2=TRUE, outlist="minimal")), silent=TRUE)
+      res <- try(suppressWarnings(rma.uni(obj$yi, obj$vi, weights=obj$weights, mods=obj$X, intercept=FALSE,
+                                          method=obj$method, weighted=obj$weighted, test=obj$test, level=obj$level,
+                                          control=obj$control, tau2=val, skipr2=TRUE, outlist="minimal")), silent=TRUE)
 
    }
 
@@ -70,17 +72,14 @@
             H2 <- 1
          }
          tau2 <- 0
-         sav <- list(beta = est, het = c(k = k, QE = Q, I2 = I2, H2 = H2, tau2 = tau2))
+         sav <- list(beta = est, k = k, QE = Q, I2 = I2, H2 = H2, tau2 = tau2)
 
       } else {
 
-         res <- try(suppressWarnings(rma.uni(obj$yi, obj$vi, weights=obj$weights, mods=obj$X, intercept=FALSE, method=obj$method, weighted=obj$weighted, test=obj$test, level=obj$level, control=obj$control, tau2=ifelse(obj$tau2.fix, obj$tau2, NA), subset=val, skipr2=TRUE, outlist="minimal")), silent=TRUE)
-
-         if (inherits(res, "try-error") || any(res$coef.na)) {
-            sav <- list(beta = matrix(NA, nrow=nrow(obj$beta), ncol=1), het = rep(NA, 5))
-         } else {
-            sav <- list(beta = res$beta, het = c(res$k, res$QE, res$I2, res$H2, res$tau2))
-         }
+         sav <- try(suppressWarnings(rma.uni(obj$yi, obj$vi, weights=obj$weights, mods=obj$X, intercept=FALSE,
+                                             method=obj$method, weighted=obj$weighted, test=obj$test, level=obj$level,
+                                             control=obj$control, tau2=ifelse(obj$tau2.fix, obj$tau2, NA),
+                                             subset=val, skipr2=TRUE, outlist=outlist)), silent=TRUE)
 
       }
 
@@ -123,7 +122,10 @@
       if (comp == "phi")
          phi.arg[phi.pos] <- val
 
-      res <- try(suppressWarnings(rma.mv(obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=sigma2.arg, tau2=tau2.arg, rho=rho.arg, gamma2=gamma2.arg, phi=phi.arg, sparse=obj$sparse, dist=obj$dist, control=obj$control, outlist="minimal")), silent=TRUE)
+      res <- try(suppressWarnings(rma.mv(obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE,
+                                         data=obj$mf.r, method=obj$method, test=obj$test, level=obj$level, R=obj$R, Rscale=obj$Rscale,
+                                         sigma2=sigma2.arg, tau2=tau2.arg, rho=rho.arg, gamma2=gamma2.arg, phi=phi.arg, sparse=obj$sparse,
+                                         dist=obj$dist, control=obj$control, outlist="minimal")), silent=TRUE)
 
    }
 
@@ -161,7 +163,7 @@
 
 }
 
-.profile.rma.mh <- function(val, obj, parallel=FALSE, subset=FALSE) {
+.profile.rma.mh <- function(val, obj, parallel=FALSE, subset=FALSE, outlist=NULL) {
 
    if (parallel == "snow")
       library(metafor)
@@ -171,15 +173,13 @@
       ### for subset, fit model to subset as specified by 'val'
 
       if (is.element(obj$measure, c("RR","OR","RD"))) {
-         res <- try(suppressWarnings(rma.mh(ai=obj$ai, bi=obj$bi, ci=obj$ci, di=obj$di, measure=obj$measure, add=obj$add, to=obj$to, drop00=obj$drop00, correct=obj$correct, subset=val, outlist="minimal")), silent=TRUE)
+         sav <- try(suppressWarnings(rma.mh(ai=obj$ai, bi=obj$bi, ci=obj$ci, di=obj$di, measure=obj$measure,
+                                            add=obj$add, to=obj$to, drop00=obj$drop00, correct=obj$correct,
+                                            subset=val, outlist=outlist)), silent=TRUE)
       } else {
-         res <- try(suppressWarnings(rma.mh(x1i=obj$x1i, x2i=obj$x2i, t1i=obj$t1i, t2i=obj$t2i, measure=obj$measure, add=obj$add, to=obj$to, drop00=obj$drop00, correct=obj$correct, subset=val, outlist="minimal")), silent=TRUE)
-      }
-
-      if (inherits(res, "try-error")) {
-         sav <- list(beta = NA, het = rep(NA, 5))
-      } else {
-         sav <- list(beta = res$beta, het = c(res$k, res$QE, res$I2, res$H2, res$tau2))
+         sav <- try(suppressWarnings(rma.mh(x1i=obj$x1i, x2i=obj$x2i, t1i=obj$t1i, t2i=obj$t2i, measure=obj$measure,
+                                            add=obj$add, to=obj$to, drop00=obj$drop00, correct=obj$correct,
+                                            subset=val, outlist=outlist)), silent=TRUE)
       }
 
    }
@@ -188,7 +188,7 @@
 
 }
 
-.profile.rma.peto <- function(val, obj, parallel=FALSE, subset=FALSE) {
+.profile.rma.peto <- function(val, obj, parallel=FALSE, subset=FALSE, outlist=NULL) {
 
    if (parallel == "snow")
       library(metafor)
@@ -197,13 +197,9 @@
 
       ### for subset, fit model to subset as specified by 'val'
 
-      res <- try(suppressWarnings(rma.peto(ai=obj$ai, bi=obj$bi, ci=obj$ci, di=obj$di, add=obj$add, to=obj$to, drop00=obj$drop00, subset=val, outlist="minimal")), silent=TRUE)
-
-      if (inherits(res, "try-error")) {
-         sav <- list(beta = NA, het = rep(NA, 5))
-      } else {
-         sav <- list(beta = res$beta, het = c(res$k, res$QE, res$I2, res$H2, res$tau2))
-      }
+      sav <- try(suppressWarnings(rma.peto(ai=obj$ai, bi=obj$bi, ci=obj$ci, di=obj$di,
+                                           add=obj$add, to=obj$to, drop00=obj$drop00,
+                                           subset=val, outlist=outlist)), silent=TRUE)
 
    }
 
