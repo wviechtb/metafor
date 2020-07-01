@@ -33,12 +33,12 @@ robust(x, cluster, \dots)
    \item{beta}{estimated coefficients of the model.}
    \item{se}{robust standard errors of the coefficients.}
    \item{zval}{test statistics of the coefficients.}
-   \item{pval}{p-values for the test statistics.}
+   \item{pval}{corresponding p-values.}
    \item{ci.lb}{lower bound of the confidence intervals for the coefficients.}
    \item{ci.ub}{upper bound of the confidence intervals for the coefficients.}
    \item{vb}{robust variance-covariance matrix of the estimated coefficients.}
-   \item{QM}{test statistic for the omnibus test of coefficients.}
-   \item{QMp}{p-value for the omnibus test of coefficients.}
+   \item{QM}{test statistic of the omnibus test of moderators.}
+   \item{QMp}{corresponding p-value.}
    \item{\dots}{some additional elements/values.}
 
    The results are formatted and printed with the \code{\link{print.robust.rma}} function.

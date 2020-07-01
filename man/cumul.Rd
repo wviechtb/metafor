@@ -31,11 +31,11 @@ cumul(x, \dots)
    \item{estimate}{estimated coefficients of the model.}
    \item{se}{standard errors of the coefficients.}
    \item{zval}{test statistics of the coefficients.}
-   \item{pval}{p-values for the test statistics.}
+   \item{pval}{corresponding p-values.}
    \item{ci.lb}{lower bounds of the confidence intervals for the coefficients.}
    \item{ci.ub}{upper bounds of the confidence intervals for the coefficients.}
    \item{QE}{test statistics for the tests of heterogeneity.}
-   \item{QEp}{p-values for the tests of heterogeneity.}
+   \item{QEp}{corresponding p-values.}
    \item{tau2}{estimated amounts of (residual) heterogeneity (only for random-effects models).}
    \item{I2}{values of \mjseqn{I^2} (only for random-effects models).}
    \item{H2}{values of \mjseqn{H^2} (only for random-effects models).}

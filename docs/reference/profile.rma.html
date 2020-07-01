@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-23</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-24</span>
       </span>
     </div>
 
@@ -137,12 +137,12 @@
 
     <pre class="usage"><span class='co'># S3 method for rma.uni</span>
 <span class='fu'><a href='https://rdrr.io/r/stats/profile.html'>profile</a></span>(<span class='no'>fitted</span>, <span class='no'>xlim</span>, <span class='no'>ylim</span>, <span class='kw'>steps</span><span class='kw'>=</span><span class='fl'>20</span>,
-        <span class='kw'>lltol</span><span class='kw'>=</span><span class='fl'>1e-06</span>, <span class='kw'>progbar</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>parallel</span><span class='kw'>=</span><span class='st'>"no"</span>, <span class='kw'>ncpus</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>cl</span><span class='kw'>=</span><span class='kw'>NULL</span>,
+        <span class='kw'>lltol</span><span class='kw'>=</span><span class='fl'>1e-04</span>, <span class='kw'>progbar</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>parallel</span><span class='kw'>=</span><span class='st'>"no"</span>, <span class='kw'>ncpus</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>cl</span><span class='kw'>=</span><span class='kw'>NULL</span>,
         <span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>pch</span><span class='kw'>=</span><span class='fl'>19</span>, <span class='kw'>cline</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for rma.mv</span>
 <span class='fu'><a href='https://rdrr.io/r/stats/profile.html'>profile</a></span>(<span class='no'>fitted</span>, <span class='no'>sigma2</span>, <span class='no'>tau2</span>, <span class='no'>rho</span>, <span class='no'>gamma2</span>, <span class='no'>phi</span>,
-        <span class='no'>xlim</span>, <span class='no'>ylim</span>, <span class='kw'>steps</span><span class='kw'>=</span><span class='fl'>20</span>, <span class='kw'>lltol</span><span class='kw'>=</span><span class='fl'>1e-06</span>, <span class='kw'>progbar</span><span class='kw'>=</span><span class='fl'>TRUE</span>,
+        <span class='no'>xlim</span>, <span class='no'>ylim</span>, <span class='kw'>steps</span><span class='kw'>=</span><span class='fl'>20</span>, <span class='kw'>lltol</span><span class='kw'>=</span><span class='fl'>1e-04</span>, <span class='kw'>progbar</span><span class='kw'>=</span><span class='fl'>TRUE</span>,
         <span class='kw'>parallel</span><span class='kw'>=</span><span class='st'>"no"</span>, <span class='kw'>ncpus</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>cl</span><span class='kw'>=</span><span class='kw'>NULL</span>,
         <span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>pch</span><span class='kw'>=</span><span class='fl'>19</span>, <span class='kw'>cline</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
@@ -201,7 +201,7 @@
     </tr>
     <tr>
       <th>progbar</th>
-      <td><p>logical indicating whether a progress bar should be shown (the default is <code>TRUE</code>). Ignored when using parallel processing.</p></td>
+      <td><p>logical indicating whether a progress bar should be shown (the default is <code>TRUE</code>).</p></td>
     </tr>
     <tr>
       <th>parallel</th>

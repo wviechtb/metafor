@@ -90,9 +90,9 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
    \item the random/mixed-effects model (i.e., where \mjseqn{\tau^2} is estimated) (only if \code{method="ML"}).
    } The saturated model is obtained by adding as many dummy variables to the model as needed so that the model deviance is equal to zero. Even when \code{method="ML"}, the fixed-effects and saturated models are fitted, as they are used to compute the test statistics for the Wald-type and likelihood ratio tests for (residual) heterogeneity (see below).
 
-   \bold{Omnibus Test of Parameters}
+   \bold{Omnibus Test of Moderators}
 
-   For models including moderators, an omnibus test of all the model coefficients is conducted that excludes the intercept (the first coefficient) if it is included in the model. If no intercept is included in the model, then the omnibus test includes all of the coefficients in the model including the first. Alternatively, one can manually specify the indices of the coefficients to test via the \code{btt} argument. For example, with \code{btt=c(3,4)}, only the third and fourth coefficient from the model would be included in the test (if an intercept is included in the model, then it corresponds to the first coefficient in the model). Instead of specifying the coefficient numbers, one can specify a string for \code{btt}. In that case, \code{\link{grep}} will be used to search for all coefficient names that match the string.
+   For models including moderators, an omnibus test of all model coefficients is conducted that excludes the intercept (the first coefficient) if it is included in the model. If no intercept is included in the model, then the omnibus test includes all of the coefficients in the model including the first. Alternatively, one can manually specify the indices of the coefficients to test via the \code{btt} argument. For example, with \code{btt=c(3,4)}, only the third and fourth coefficient from the model would be included in the test (if an intercept is included in the model, then it corresponds to the first coefficient in the model). Instead of specifying the coefficient numbers, one can specify a string for \code{btt}. In that case, \code{\link{grep}} will be used to search for all coefficient names that match the string. The omnibus test is called the \mjseqn{Q_M}-test in the output and follows, under the assumptions of the model, a chi-square distribution with \mjseqn{m} degrees of freedom (with \mjseqn{m} denoting the number of coefficients tested) under the null hypothesis (that the true value of all coefficients tested is equal to 0).
 
    \bold{Categorical Moderators}
 
@@ -100,7 +100,7 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
 
    \bold{Tests and Confidence Intervals}
 
-   By default, the test statistics of the individual coefficients in the model (and the corresponding confidence intervals) are based on a standard normal distribution, while the omnibus test is based on a chi-square distribution with \mjseqn{m} degrees of freedom (\mjseqn{m} being the number of coefficients tested). As an alternative, one can set \code{test="t"}, which slightly mimics the Knapp and Hartung (2003) method by using a t-distribution with \mjseqn{k-p} degrees of freedom for tests of individual coefficients and confidence intervals and an F-distribution with \mjseqn{m} and \mjseqn{k-p} degrees of freedom (\mjseqn{p} being the total number of model coefficients including the intercept if it is present) for the omnibus test statistic (but note that \code{test="t"} is not the same as \code{test="knha"} in \code{\link{rma.uni}}, as no adjustment to the standard errors of the estimated coefficients is made).
+   By default, tests of individual coefficients in the model (and the corresponding confidence intervals) are based on a standard normal distribution, while the omnibus test is based on a chi-square distribution (see above). As an alternative, one can set \code{test="t"}, which slightly mimics the Knapp and Hartung (2003) method by using a t-distribution with \mjseqn{k-p} degrees of freedom for tests of individual coefficients and confidence intervals and an F-distribution with \mjseqn{m} and \mjseqn{k-p} degrees of freedom (with \mjseqn{p} denoting the total number of model coefficients including the intercept if it is present) for the omnibus test statistic (but note that \code{test="t"} is not the same as \code{test="knha"} in \code{\link{rma.uni}}, as no adjustment to the standard errors of the estimated coefficients is made).
 
    \bold{Tests for (Residual) Heterogeneity}
 
@@ -117,21 +117,21 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
    \item{beta}{estimated coefficients of the model.}
    \item{se}{standard errors of the coefficients.}
    \item{zval}{test statistics of the coefficients.}
-   \item{pval}{p-values for the test statistics.}
+   \item{pval}{corresponding p-values.}
    \item{ci.lb}{lower bound of the confidence intervals for the coefficients.}
    \item{ci.ub}{upper bound of the confidence intervals for the coefficients.}
    \item{vb}{variance-covariance matrix of the estimated coefficients.}
    \item{tau2}{estimated amount of (residual) heterogeneity. Always \code{0} when \code{method="FE"}.}
    \item{sigma2}{estimated amount of study level variability (only for \code{model="UM.RS"}).}
-   \item{k}{number of studies included in the model.}
+   \item{k}{number of studies included in the analysis.}
    \item{p}{number of coefficients in the model (including the intercept).}
-   \item{m}{number of coefficients included in the omnibus test of coefficients.}
-   \item{QE.Wld}{Wald-type test statistic for the test of (residual) heterogeneity.}
-   \item{QEp.Wld}{p-value for the Wald-type test of (residual) heterogeneity.}
-   \item{QE.LRT}{likelihood ratio test statistic for the test of (residual) heterogeneity.}
-   \item{QEp.LRT}{p-value for the likelihood ratio test of (residual) heterogeneity.}
-   \item{QM}{test statistic for the omnibus test of coefficients.}
-   \item{QMp}{p-value for the omnibus test of coefficients.}
+   \item{m}{number of coefficients included in the omnibus test of moderators.}
+   \item{QE.Wld}{Wald-type test statistic of the test for (residual) heterogeneity.}
+   \item{QEp.Wld}{corresponding p-value.}
+   \item{QE.LRT}{likelihood ratio test statistic of the test for (residual) heterogeneity.}
+   \item{QEp.LRT}{corresponding p-value.}
+   \item{QM}{test statistic of the omnibus test of moderators.}
+   \item{QMp}{corresponding p-value.}
    \item{I2}{value of \mjseqn{I^2}.}
    \item{H2}{value of \mjseqn{H^2}.}
    \item{int.only}{logical that indicates whether the model is an intercept-only model.}

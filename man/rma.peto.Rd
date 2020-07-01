@@ -56,12 +56,12 @@ rma.peto(ai, bi, ci, di, n1i, n2i,
    \item{beta}{aggregated log odds ratio.}
    \item{se}{standard error of the aggregated value.}
    \item{zval}{test statistics of the aggregated value.}
-   \item{pval}{p-value for the test statistic.}
+   \item{pval}{corresponding p-value.}
    \item{ci.lb}{lower bound of the confidence interval.}
    \item{ci.ub}{upper bound of the confidence interval.}
-   \item{QE}{test statistic for the test of heterogeneity.}
-   \item{QEp}{p-value for the test of heterogeneity.}
-   \item{k}{number of tables included in the analysis.}
+   \item{QE}{test statistic of the test for heterogeneity.}
+   \item{QEp}{corresponding p-value.}
+   \item{k}{number of studies included in the analysis.}
    \item{yi, vi}{the vector of individual log odds ratios and corresponding sampling variances.}
    \item{fit.stats}{a list with the log-likelihood, deviance, AIC, BIC, and AICc values under the unrestricted and restricted likelihood.}
    \item{\dots}{some additional elements/values.}

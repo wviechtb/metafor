@@ -65,7 +65,7 @@
 
    When a clustering variable is specified for \code{"rma.mv"} objects, the returned object is a list with the first element (named \code{obs}) as described above and a second element (named \code{cluster} of class \code{"list.rma"} with:
    \item{X2}{cluster-level multivariate standardized residuals.}
-   \item{k}{number of outcomes within the clusters.}
+   \item{k}{number of observed outcomes within the clusters.}
 
    The \code{"list.rma"} object is formatted and printed with \code{\link{print.list.rma}}.
 }

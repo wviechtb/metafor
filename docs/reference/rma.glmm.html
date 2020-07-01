@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-23</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-24</span>
       </span>
     </div>
 
@@ -311,12 +311,12 @@
 <li><p>the saturated model (i.e., the model with a deviance of 0), and</p></li>
 <li><p>the random/mixed-effects model (i.e., where \(\tau^2\) is estimated) (only if <code>method="ML"</code>).</p></li>
 </ul><p>The saturated model is obtained by adding as many dummy variables to the model as needed so that the model deviance is equal to zero. Even when <code>method="ML"</code>, the fixed-effects and saturated models are fitted, as they are used to compute the test statistics for the Wald-type and likelihood ratio tests for (residual) heterogeneity (see below).</p>
-<p><b>Omnibus Test of Parameters</b></p>
-<p>For models including moderators, an omnibus test of all the model coefficients is conducted that excludes the intercept (the first coefficient) if it is included in the model. If no intercept is included in the model, then the omnibus test includes all of the coefficients in the model including the first. Alternatively, one can manually specify the indices of the coefficients to test via the <code>btt</code> argument. For example, with <code>btt=c(3,4)</code>, only the third and fourth coefficient from the model would be included in the test (if an intercept is included in the model, then it corresponds to the first coefficient in the model). Instead of specifying the coefficient numbers, one can specify a string for <code>btt</code>. In that case, <code><a href='https://rdrr.io/r/base/grep.html'>grep</a></code> will be used to search for all coefficient names that match the string.</p>
+<p><b>Omnibus Test of Moderators</b></p>
+<p>For models including moderators, an omnibus test of all model coefficients is conducted that excludes the intercept (the first coefficient) if it is included in the model. If no intercept is included in the model, then the omnibus test includes all of the coefficients in the model including the first. Alternatively, one can manually specify the indices of the coefficients to test via the <code>btt</code> argument. For example, with <code>btt=c(3,4)</code>, only the third and fourth coefficient from the model would be included in the test (if an intercept is included in the model, then it corresponds to the first coefficient in the model). Instead of specifying the coefficient numbers, one can specify a string for <code>btt</code>. In that case, <code><a href='https://rdrr.io/r/base/grep.html'>grep</a></code> will be used to search for all coefficient names that match the string. The omnibus test is called the \(Q_M\)-test in the output and follows, under the assumptions of the model, a chi-square distribution with \(m\) degrees of freedom (with \(m\) denoting the number of coefficients tested) under the null hypothesis (that the true value of all coefficients tested is equal to 0).</p>
 <p><b>Categorical Moderators</b></p>
 <p>Categorical moderator variables can be included in the model via the <code>mods</code> argument in the same way that appropriately (dummy) coded categorical independent variables can be included in linear models. One can either do the dummy coding manually or use a model formula together with the <code><a href='https://rdrr.io/r/base/factor.html'>factor</a></code> function to let <span style="R">R</span> handle the coding automatically.</p>
 <p><b>Tests and Confidence Intervals</b></p>
-<p>By default, the test statistics of the individual coefficients in the model (and the corresponding confidence intervals) are based on a standard normal distribution, while the omnibus test is based on a chi-square distribution with \(m\) degrees of freedom (\(m\) being the number of coefficients tested). As an alternative, one can set <code>test="t"</code>, which slightly mimics the Knapp and Hartung (2003) method by using a t-distribution with \(k-p\) degrees of freedom for tests of individual coefficients and confidence intervals and an F-distribution with \(m\) and \(k-p\) degrees of freedom (\(p\) being the total number of model coefficients including the intercept if it is present) for the omnibus test statistic (but note that <code>test="t"</code> is not the same as <code>test="knha"</code> in <code><a href='rma.uni.html'>rma.uni</a></code>, as no adjustment to the standard errors of the estimated coefficients is made).</p>
+<p>By default, tests of individual coefficients in the model (and the corresponding confidence intervals) are based on a standard normal distribution, while the omnibus test is based on a chi-square distribution (see above). As an alternative, one can set <code>test="t"</code>, which slightly mimics the Knapp and Hartung (2003) method by using a t-distribution with \(k-p\) degrees of freedom for tests of individual coefficients and confidence intervals and an F-distribution with \(m\) and \(k-p\) degrees of freedom (with \(p\) denoting the total number of model coefficients including the intercept if it is present) for the omnibus test statistic (but note that <code>test="t"</code> is not the same as <code>test="knha"</code> in <code><a href='rma.uni.html'>rma.uni</a></code>, as no adjustment to the standard errors of the estimated coefficients is made).</p>
 <p><b>Tests for (Residual) Heterogeneity</b></p>
 <p>Two different tests for (residual) heterogeneity are automatically carried out by the function. The first is a Wald-type test, which tests the coefficients corresponding to the dummy variables added in the saturated model for significance. The second is a likelihood ratio test, which tests the same set of coefficients, but does so by computing \(-2\) times the difference in the log-likelihood of the fixed-effects and the saturated model. These two tests are not identical for the types of models fitted by the <code>rma.glmm</code> function and may even lead to conflicting conclusions.</p>
 <p><b>Observed Outcomes of the Individual Studies</b></p>
@@ -328,21 +328,21 @@
 <dt>beta</dt><dd><p>estimated coefficients of the model.</p></dd>
    <dt>se</dt><dd><p>standard errors of the coefficients.</p></dd>
    <dt>zval</dt><dd><p>test statistics of the coefficients.</p></dd>
-   <dt>pval</dt><dd><p>p-values for the test statistics.</p></dd>
+   <dt>pval</dt><dd><p>corresponding p-values.</p></dd>
    <dt>ci.lb</dt><dd><p>lower bound of the confidence intervals for the coefficients.</p></dd>
    <dt>ci.ub</dt><dd><p>upper bound of the confidence intervals for the coefficients.</p></dd>
    <dt>vb</dt><dd><p>variance-covariance matrix of the estimated coefficients.</p></dd>
    <dt>tau2</dt><dd><p>estimated amount of (residual) heterogeneity. Always <code>0</code> when <code>method="FE"</code>.</p></dd>
    <dt>sigma2</dt><dd><p>estimated amount of study level variability (only for <code>model="UM.RS"</code>).</p></dd>
-   <dt>k</dt><dd><p>number of studies included in the model.</p></dd>
+   <dt>k</dt><dd><p>number of studies included in the analysis.</p></dd>
    <dt>p</dt><dd><p>number of coefficients in the model (including the intercept).</p></dd>
-   <dt>m</dt><dd><p>number of coefficients included in the omnibus test of coefficients.</p></dd>
-   <dt>QE.Wld</dt><dd><p>Wald-type test statistic for the test of (residual) heterogeneity.</p></dd>
-   <dt>QEp.Wld</dt><dd><p>p-value for the Wald-type test of (residual) heterogeneity.</p></dd>
-   <dt>QE.LRT</dt><dd><p>likelihood ratio test statistic for the test of (residual) heterogeneity.</p></dd>
-   <dt>QEp.LRT</dt><dd><p>p-value for the likelihood ratio test of (residual) heterogeneity.</p></dd>
-   <dt>QM</dt><dd><p>test statistic for the omnibus test of coefficients.</p></dd>
-   <dt>QMp</dt><dd><p>p-value for the omnibus test of coefficients.</p></dd>
+   <dt>m</dt><dd><p>number of coefficients included in the omnibus test of moderators.</p></dd>
+   <dt>QE.Wld</dt><dd><p>Wald-type test statistic of the test for (residual) heterogeneity.</p></dd>
+   <dt>QEp.Wld</dt><dd><p>corresponding p-value.</p></dd>
+   <dt>QE.LRT</dt><dd><p>likelihood ratio test statistic of the test for (residual) heterogeneity.</p></dd>
+   <dt>QEp.LRT</dt><dd><p>corresponding p-value.</p></dd>
+   <dt>QM</dt><dd><p>test statistic of the omnibus test of moderators.</p></dd>
+   <dt>QMp</dt><dd><p>corresponding p-value.</p></dd>
    <dt>I2</dt><dd><p>value of \(I^2\).</p></dd>
    <dt>H2</dt><dd><p>value of \(H^2\).</p></dd>
    <dt>int.only</dt><dd><p>logical that indicates whether the model is an intercept-only model.</p></dd>

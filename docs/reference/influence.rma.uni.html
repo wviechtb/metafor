@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-23</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-24</span>
       </span>
     </div>
 
@@ -189,7 +189,7 @@
 <li><p>Cook's distance,</p></li>
 <li><p>covariance ratio,</p></li>
 <li><p>the leave-one-out amount of (residual) heterogeneity,</p></li>
-<li><p>the leave-one-out test statistic for the test of (residual) heterogeneity,</p></li>
+<li><p>the leave-one-out test statistic of the test for (residual) heterogeneity,</p></li>
 <li><p>DFBETAS value(s).</p></li>
 </ul><p>The diagonal elements of the hat matrix and the weights (in %) given to the observed effects or outcomes during the model fitting are also provided (except for their scaling, the hat values and weights are the same for models without moderators, but will differ when moderators are included).</p>
 <p>For details on externally standardized residuals, see <code><a href='residuals.rma.html'>rstudent.rma.uni</a></code>.</p>
@@ -197,7 +197,7 @@
 <p>Cook's distance can be interpreted as the Mahalanobis distance between the entire set of predicted values once with the \(i\)th study included and once with the \(i\)th study excluded from the model fitting.</p>
 <p>The covariance ratio is defined as the determinant of the variance-covariance matrix of the parameter estimates based on the dataset with the \(i\)th study removed divided by the determinant of the variance-covariance matrix of the parameter estimates based on the complete dataset. A value below 1 therefore indicates that removal of the \(i\)th study yields more precise estimates of the model coefficients.</p>
 <p>The leave-one-out amount of (residual) heterogeneity is the estimated value of \(\tau^2\) based on the dataset with the \(i\)th study removed. Note that this is always equal to <code>0</code> for fixed-effects models.</p>
-<p>Similarly, the leave-one-out test statistic for the test of (residual) heterogeneity is the value of the test statistic of the test for (residual) heterogeneity calculated based on the dataset with the \(i\)th study removed.</p>
+<p>Similarly, the leave-one-out test statistic of the test for (residual) heterogeneity is the value of the test statistic of the test for (residual) heterogeneity calculated based on the dataset with the \(i\)th study removed.</p>
 <p>Finally, the DFBETAS value(s) essentially indicate(s) how many standard deviations the estimated coefficient(s) change(s) after excluding the \(i\)th study from the model fitting.</p>
 <p>A study may be considered to be &#8216;influential&#8217; if at least one of the following is true:</p><ul>
 <li><p>The absolute DFFITS value is larger than \(3 \times \sqrt{p/(k-p)}\), where \(p\) is the number of model coefficients and \(k\) the number of studies.</p></li>

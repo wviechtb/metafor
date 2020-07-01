@@ -2,7 +2,7 @@
 \alias{coef.permutest.rma.uni}
 \title{Extract the Model Coefficient Table from 'permutest.rma.uni' Objects}
 \description{
-   The function extracts the estimated model coefficients, corresponding standard errors, test statistics, p-values (based on the permutation test), and confidence interval bounds from objects of class \code{"permutest.rma.uni"}.
+   The function extracts the estimated model coefficients, corresponding standard errors, test statistics, p-values (based on the permutation tests), and confidence interval bounds from objects of class \code{"permutest.rma.uni"}.
 }
 \usage{
 \method{coef}{permutest.rma.uni}(object, \dots)
@@ -16,7 +16,7 @@
    \item{estimate}{estimated model coefficient(s).}
    \item{se}{corresponding standard error(s).}
    \item{zval}{corresponding test statistic(s).}
-   \item{pval}{p-value(s) based on the permutation test.}
+   \item{pval}{p-value(s) based on the permutation test(s).}
    \item{ci.lb}{lower bound of the (permutation-based) confidence interval(s).}
    \item{ci.ub}{upper bound of the (permutation-based) confidence interval(s).}
 

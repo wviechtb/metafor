@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-23</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-24</span>
       </span>
     </div>
 
@@ -234,12 +234,13 @@
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>ai</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>n1i</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>ci</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>n2i</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.egger2001</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"FE"</span>)
 
 <span class='co'>### fit FE model to all possible subsets (65535 models)</span>
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='no'>sav</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='gosh.html'>gosh</a></span>(<span class='no'>res</span>, <span class='kw'>progbar</span><span class='kw'>=</span><span class='fl'>FALSE</span>)
 
 <span class='co'>### create GOSH plot</span>
 <span class='co'>### red points for subsets that include and blue points</span>
 <span class='co'>### for subsets that exclude study 16 (the ISIS-4 trial)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>sav</span>, <span class='kw'>out</span><span class='kw'>=</span><span class='fl'>16</span>, <span class='kw'>breaks</span><span class='kw'>=</span><span class='fl'>100</span>)</div><div class='img'><img src='plot.gosh.rma-1.png' alt='' width='768' height='614' /></div></pre>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>sav</span>, <span class='kw'>out</span><span class='kw'>=</span><span class='fl'>16</span>, <span class='kw'>breaks</span><span class='kw'>=</span><span class='fl'>100</span>)}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

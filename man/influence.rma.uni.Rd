@@ -38,7 +38,7 @@
    \item Cook's distance,
    \item covariance ratio,
    \item the leave-one-out amount of (residual) heterogeneity,
-   \item the leave-one-out test statistic for the test of (residual) heterogeneity,
+   \item the leave-one-out test statistic of the test for (residual) heterogeneity,
    \item DFBETAS value(s).
    } The diagonal elements of the hat matrix and the weights (in \%) given to the observed effects or outcomes during the model fitting are also provided (except for their scaling, the hat values and weights are the same for models without moderators, but will differ when moderators are included).
 
@@ -52,7 +52,7 @@
 
    The leave-one-out amount of (residual) heterogeneity is the estimated value of \mjseqn{\tau^2} based on the dataset with the \mjseqn{i}th study removed. Note that this is always equal to \code{0} for fixed-effects models.
 
-   Similarly, the leave-one-out test statistic for the test of (residual) heterogeneity is the value of the test statistic of the test for (residual) heterogeneity calculated based on the dataset with the \mjseqn{i}th study removed.
+   Similarly, the leave-one-out test statistic of the test for (residual) heterogeneity is the value of the test statistic of the test for (residual) heterogeneity calculated based on the dataset with the \mjseqn{i}th study removed.
 
    Finally, the DFBETAS value(s) essentially indicate(s) how many standard deviations the estimated coefficient(s) change(s) after excluding the \mjseqn{i}th study from the model fitting.
 

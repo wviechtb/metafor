@@ -3,7 +3,7 @@
 \alias{trimfill.rma.uni}
 \title{Trim and Fill Analysis for 'rma.uni' Objects}
 \description{
-   Carry out a trim and fill analysis for objects of class \code{"rma.uni"}.
+   Carry out a trim and fill analysis for objects of class \code{"rma.uni"}. \loadmathjax
 }
 \usage{
 trimfill(x, \dots)
@@ -27,7 +27,7 @@ trimfill(x, \dots)
    \item{k0}{estimated number of missing studies.}
    \item{side}{either \code{"left"} or \code{"right"}, indicating on which side of the funnel plot the missing studies (if any) were imputed.}
    \item{se.k0}{estimated standard error of k0.}
-   \item{p.k0}{p-value for the test of H_0: no missing studies on the chosen side (only when \code{estimator="R0"}; \code{NA} otherwise).}
+   \item{p.k0}{p-value for the test of \mjseqn{H_0}: no missing studies on the chosen side (only when \code{estimator="R0"}; \code{NA} otherwise).}
    \item{fill}{a logical vector, indicating which of the data are the observed (\code{FALSE}) and the augmented (\code{TRUE}) data.}
 
    The results of the fitted model after the data augmentation are printed with the \code{\link{print.rma.uni}} function. Calling \code{\link{funnel.rma}} on the object provides a funnel plot of the observed and augmented data.

@@ -101,9 +101,9 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
    When the observed outcomes and corresponding sampling variances are supplied via the \code{yi} and \code{vi} (or \code{sei}) arguments, one can also specify moderators via the \code{yi} argument (e.g., \code{rma(yi ~ mod1 + mod2 + mod3, vi)}). In that case, the \code{mods} argument is ignored and the inclusion/exclusion of the intercept again is controlled by the specified formula.
 
-   \bold{Omnibus Test of Parameters}
+   \bold{Omnibus Test of Moderators}
 
-   For models including moderators, an omnibus test of all the model coefficients is conducted that excludes the intercept (the first coefficient) if it is included in the model. If no intercept is included in the model, then the omnibus test includes all of the coefficients in the model including the first. Alternatively, one can manually specify the indices of the coefficients to test via the \code{btt} argument. For example, with \code{btt=c(3,4)}, only the third and fourth coefficient from the model would be included in the test (if an intercept is included in the model, then it corresponds to the first coefficient in the model). Instead of specifying the coefficient numbers, one can specify a string for \code{btt}. In that case, \code{\link{grep}} will be used to search for all coefficient names that match the string.
+   For models including moderators, an omnibus test of all model coefficients is conducted that excludes the intercept (the first coefficient) if it is included in the model. If no intercept is included in the model, then the omnibus test includes all of the coefficients in the model including the first. Alternatively, one can manually specify the indices of the coefficients to test via the \code{btt} argument. For example, with \code{btt=c(3,4)}, only the third and fourth coefficient from the model would be included in the test (if an intercept is included in the model, then it corresponds to the first coefficient in the model). Instead of specifying the coefficient numbers, one can specify a string for \code{btt}. In that case, \code{\link{grep}} will be used to search for all coefficient names that match the string. The omnibus test is called the \mjseqn{Q_M}-test in the output and follows, under the assumptions of the model, a chi-square distribution with \mjseqn{m} degrees of freedom (with \mjseqn{m} denoting the number of coefficients tested) under the null hypothesis (that the true value of all coefficients tested is equal to 0).
 
    \bold{Categorical Moderators}
 
@@ -111,7 +111,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
    \bold{Knapp & Hartung Adjustment}
 
-   By default, the test statistics of the individual coefficients in the model (and the corresponding confidence intervals) are based on a standard normal distribution, while the omnibus test is based on a chi-square distribution with \mjseqn{m} degrees of freedom (\mjseqn{m} being the number of coefficients tested). The Knapp and Hartung (2003) method (\code{test="knha"}) is an adjustment to the standard errors of the estimated coefficients, which helps to account for the uncertainty in the estimate of the amount of (residual) heterogeneity and leads to different reference distributions. Tests of individual coefficients and confidence intervals are then based on the t-distribution with \mjseqn{k-p} degrees of freedom, while the omnibus test statistic then uses an F-distribution with \mjseqn{m} and \mjseqn{k-p} degrees of freedom (\mjseqn{p} being the total number of model coefficients including the intercept if it is present). The Knapp and Hartung (2003) adjustment is only meant to be used in the context of random- or mixed-effects models.
+   By default, tests of individual coefficients in the model (and the corresponding confidence intervals) are based on a standard normal distribution, while the omnibus test is based on a chi-square distribution (see above). The Knapp and Hartung (2003) method (\code{test="knha"}) is an adjustment to the standard errors of the estimated coefficients, which helps to account for the uncertainty in the estimate of the amount of (residual) heterogeneity and leads to different reference distributions. Tests of individual coefficients and confidence intervals are then based on a t-distribution with \mjseqn{k-p} degrees of freedom, while the omnibus test statistic then uses an F-distribution with \mjseqn{m} and \mjseqn{k-p} degrees of freedom (with \mjseqn{p} denoting the total number of model coefficients including the intercept if it is present). The Knapp and Hartung (2003) adjustment is only meant to be used in the context of random- or mixed-effects models.
 
    \bold{Test for (Residual) Heterogeneity}
 
@@ -122,19 +122,19 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \item{beta}{estimated coefficients of the model.}
    \item{se}{standard errors of the coefficients.}
    \item{zval}{test statistics of the coefficients.}
-   \item{pval}{p-values for the test statistics.}
+   \item{pval}{corresponding p-values.}
    \item{ci.lb}{lower bound of the confidence intervals for the coefficients.}
    \item{ci.ub}{upper bound of the confidence intervals for the coefficients.}
    \item{vb}{variance-covariance matrix of the estimated coefficients.}
    \item{tau2}{estimated amount of (residual) heterogeneity. Always \code{0} when \code{method="FE"}.}
    \item{se.tau2}{estimated standard error of the estimated amount of (residual) heterogeneity.}
-   \item{k}{number of outcomes included in the model fitting.}
+   \item{k}{number of studies included in the analysis.}
    \item{p}{number of coefficients in the model (including the intercept).}
-   \item{m}{number of coefficients included in the omnibus test of coefficients.}
-   \item{QE}{test statistic for the test of (residual) heterogeneity.}
-   \item{QEp}{p-value for the test of (residual) heterogeneity.}
-   \item{QM}{test statistic for the omnibus test of coefficients.}
-   \item{QMp}{p-value for the omnibus test of coefficients.}
+   \item{m}{number of coefficients included in the omnibus test of moderators.}
+   \item{QE}{test statistic of the test for (residual) heterogeneity.}
+   \item{QEp}{corresponding p-value.}
+   \item{QM}{test statistic of the omnibus test of moderators.}
+   \item{QMp}{corresponding p-value.}
    \item{I2}{value of \mjseqn{I^2}. See \code{\link{print.rma.uni}} for more details.}
    \item{H2}{value of \mjseqn{H^2}. See \code{\link{print.rma.uni}} for more details.}
    \item{R2}{value of \mjseqn{R^2}. See \code{\link{print.rma.uni}} for more details.}

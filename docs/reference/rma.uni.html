@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-23</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-24</span>
       </span>
     </div>
 
@@ -358,12 +358,12 @@
 <p>Alternatively, one can use the standard <code><a href='formula.rma.html'>formula</a></code> syntax to specify the model. In this case, the <code>mods</code> argument should be set equal to a one-sided formula of the form <code>mods = ~ model</code> (e.g., <code>mods = ~ mod1 + mod2 + mod3</code>). Interactions, polynomial terms, and factors can be easily added to the model in this manner. When specifying a model formula via the <code>mods</code> argument, the <code>intercept</code> argument is ignored. Instead, the inclusion/exclusion of the intercept is controlled by the specified formula (e.g., <code>mods = ~ mod1 + mod2 + mod3 - 1</code> would lead to the removal of the intercept).</p>
 <p>A <em>fixed-effects with moderators model</em> is then fitted by setting <code>method="FE"</code>, while a <em>mixed-effects model</em> is fitted by specifying one of the estimators for the amount of (residual) heterogeneity given earlier.</p>
 <p>When the observed outcomes and corresponding sampling variances are supplied via the <code>yi</code> and <code>vi</code> (or <code>sei</code>) arguments, one can also specify moderators via the <code>yi</code> argument (e.g., <code>rma(yi ~ mod1 + mod2 + mod3, vi)</code>). In that case, the <code>mods</code> argument is ignored and the inclusion/exclusion of the intercept again is controlled by the specified formula.</p>
-<p><b>Omnibus Test of Parameters</b></p>
-<p>For models including moderators, an omnibus test of all the model coefficients is conducted that excludes the intercept (the first coefficient) if it is included in the model. If no intercept is included in the model, then the omnibus test includes all of the coefficients in the model including the first. Alternatively, one can manually specify the indices of the coefficients to test via the <code>btt</code> argument. For example, with <code>btt=c(3,4)</code>, only the third and fourth coefficient from the model would be included in the test (if an intercept is included in the model, then it corresponds to the first coefficient in the model). Instead of specifying the coefficient numbers, one can specify a string for <code>btt</code>. In that case, <code><a href='https://rdrr.io/r/base/grep.html'>grep</a></code> will be used to search for all coefficient names that match the string.</p>
+<p><b>Omnibus Test of Moderators</b></p>
+<p>For models including moderators, an omnibus test of all model coefficients is conducted that excludes the intercept (the first coefficient) if it is included in the model. If no intercept is included in the model, then the omnibus test includes all of the coefficients in the model including the first. Alternatively, one can manually specify the indices of the coefficients to test via the <code>btt</code> argument. For example, with <code>btt=c(3,4)</code>, only the third and fourth coefficient from the model would be included in the test (if an intercept is included in the model, then it corresponds to the first coefficient in the model). Instead of specifying the coefficient numbers, one can specify a string for <code>btt</code>. In that case, <code><a href='https://rdrr.io/r/base/grep.html'>grep</a></code> will be used to search for all coefficient names that match the string. The omnibus test is called the \(Q_M\)-test in the output and follows, under the assumptions of the model, a chi-square distribution with \(m\) degrees of freedom (with \(m\) denoting the number of coefficients tested) under the null hypothesis (that the true value of all coefficients tested is equal to 0).</p>
 <p><b>Categorical Moderators</b></p>
 <p>Categorical moderator variables can be included in the model via the <code>mods</code> argument in the same way that appropriately (dummy) coded categorical independent variables can be included in linear models. One can either do the dummy coding manually or use a model formula together with the <code><a href='https://rdrr.io/r/base/factor.html'>factor</a></code> function to let <span style="R">R</span> handle the coding automatically. An example to illustrate these different approaches is provided below.</p>
 <p><b>Knapp &amp; Hartung Adjustment</b></p>
-<p>By default, the test statistics of the individual coefficients in the model (and the corresponding confidence intervals) are based on a standard normal distribution, while the omnibus test is based on a chi-square distribution with \(m\) degrees of freedom (\(m\) being the number of coefficients tested). The Knapp and Hartung (2003) method (<code>test="knha"</code>) is an adjustment to the standard errors of the estimated coefficients, which helps to account for the uncertainty in the estimate of the amount of (residual) heterogeneity and leads to different reference distributions. Tests of individual coefficients and confidence intervals are then based on the t-distribution with \(k-p\) degrees of freedom, while the omnibus test statistic then uses an F-distribution with \(m\) and \(k-p\) degrees of freedom (\(p\) being the total number of model coefficients including the intercept if it is present). The Knapp and Hartung (2003) adjustment is only meant to be used in the context of random- or mixed-effects models.</p>
+<p>By default, tests of individual coefficients in the model (and the corresponding confidence intervals) are based on a standard normal distribution, while the omnibus test is based on a chi-square distribution (see above). The Knapp and Hartung (2003) method (<code>test="knha"</code>) is an adjustment to the standard errors of the estimated coefficients, which helps to account for the uncertainty in the estimate of the amount of (residual) heterogeneity and leads to different reference distributions. Tests of individual coefficients and confidence intervals are then based on a t-distribution with \(k-p\) degrees of freedom, while the omnibus test statistic then uses an F-distribution with \(m\) and \(k-p\) degrees of freedom (with \(p\) denoting the total number of model coefficients including the intercept if it is present). The Knapp and Hartung (2003) adjustment is only meant to be used in the context of random- or mixed-effects models.</p>
 <p><b>Test for (Residual) Heterogeneity</b></p>
 <p>A test for (residual) heterogeneity is automatically carried out by the function. Without moderators in the model, this is simply Cochran's \(Q\)-test (Cochran, 1954), which tests whether the variability in the observed effect sizes or outcomes is larger than would be expected based on sampling variability alone. A significant test suggests that the true effects or outcomes are heterogeneous. When moderators are included in the model, this is the \(Q_E\)-test for residual heterogeneity, which tests whether the variability in the observed effect sizes or outcomes not accounted for by the moderators included in the model is larger than would be expected based on sampling variability alone.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -372,19 +372,19 @@
 <dt>beta</dt><dd><p>estimated coefficients of the model.</p></dd>
    <dt>se</dt><dd><p>standard errors of the coefficients.</p></dd>
    <dt>zval</dt><dd><p>test statistics of the coefficients.</p></dd>
-   <dt>pval</dt><dd><p>p-values for the test statistics.</p></dd>
+   <dt>pval</dt><dd><p>corresponding p-values.</p></dd>
    <dt>ci.lb</dt><dd><p>lower bound of the confidence intervals for the coefficients.</p></dd>
    <dt>ci.ub</dt><dd><p>upper bound of the confidence intervals for the coefficients.</p></dd>
    <dt>vb</dt><dd><p>variance-covariance matrix of the estimated coefficients.</p></dd>
    <dt>tau2</dt><dd><p>estimated amount of (residual) heterogeneity. Always <code>0</code> when <code>method="FE"</code>.</p></dd>
    <dt>se.tau2</dt><dd><p>estimated standard error of the estimated amount of (residual) heterogeneity.</p></dd>
-   <dt>k</dt><dd><p>number of outcomes included in the model fitting.</p></dd>
+   <dt>k</dt><dd><p>number of studies included in the analysis.</p></dd>
    <dt>p</dt><dd><p>number of coefficients in the model (including the intercept).</p></dd>
-   <dt>m</dt><dd><p>number of coefficients included in the omnibus test of coefficients.</p></dd>
-   <dt>QE</dt><dd><p>test statistic for the test of (residual) heterogeneity.</p></dd>
-   <dt>QEp</dt><dd><p>p-value for the test of (residual) heterogeneity.</p></dd>
-   <dt>QM</dt><dd><p>test statistic for the omnibus test of coefficients.</p></dd>
-   <dt>QMp</dt><dd><p>p-value for the omnibus test of coefficients.</p></dd>
+   <dt>m</dt><dd><p>number of coefficients included in the omnibus test of moderators.</p></dd>
+   <dt>QE</dt><dd><p>test statistic of the test for (residual) heterogeneity.</p></dd>
+   <dt>QEp</dt><dd><p>corresponding p-value.</p></dd>
+   <dt>QM</dt><dd><p>test statistic of the omnibus test of moderators.</p></dd>
+   <dt>QMp</dt><dd><p>corresponding p-value.</p></dd>
    <dt>I2</dt><dd><p>value of \(I^2\). See <code><a href='print.rma.html'>print.rma.uni</a></code> for more details.</p></dd>
    <dt>H2</dt><dd><p>value of \(H^2\). See <code><a href='print.rma.html'>print.rma.uni</a></code> for more details.</p></dd>
    <dt>R2</dt><dd><p>value of \(R^2\). See <code><a href='print.rma.html'>print.rma.uni</a></code> for more details.</p></dd>

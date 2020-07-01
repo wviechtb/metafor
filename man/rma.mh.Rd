@@ -71,16 +71,16 @@ rma.mh(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \item{beta}{aggregated log risk ratio, log odds ratio, risk difference, log rate ratio, or rate difference.}
    \item{se}{standard error of the aggregated value.}
    \item{zval}{test statistics of the aggregated value.}
-   \item{pval}{p-value for the test statistic.}
+   \item{pval}{corresponding p-value.}
    \item{ci.lb}{lower bound of the confidence interval.}
    \item{ci.ub}{upper bound of the confidence interval.}
-   \item{QE}{test statistic for the test of heterogeneity.}
-   \item{QEp}{p-value for the test of heterogeneity.}
+   \item{QE}{test statistic of the test for heterogeneity.}
+   \item{QEp}{correspinding p-value.}
    \item{MH}{Cochran-Mantel-Haenszel test statistic (\code{measure="OR"}) or Mantel-Haenszel test statistic (\code{measure="IRR"}).}
    \item{MHp}{corresponding p-value.}
-   \item{TA}{Tarone's heterogeneity test statistic (only when \code{measure="OR"}).}
+   \item{TA}{test statistic of Tarone's test for heterogeneity (only when \code{measure="OR"}).}
    \item{TAp}{corresponding p-value (only when \code{measure="OR"}).}
-   \item{k}{number of tables included in the analysis.}
+   \item{k}{number of studies included in the analysis.}
    \item{yi, vi}{the vector of outcomes and corresponding sampling variances.}
    \item{fit.stats}{a list with the log-likelihood, deviance, AIC, BIC, and AICc values under the unrestricted and restricted likelihood.}
    \item{\dots}{some additional elements/values.}

@@ -113,9 +113,9 @@ rma.mv(yi, V, W, mods, random, struct="CS", intercept=TRUE,
 
    Similarly, arguments \code{gamma2} and \code{phi} are only relevant when the \code{random} argument contains a second \code{~ inner | outer} formula. The arguments then work exactly as described above.
 
-   \bold{Omnibus Test of Parameters}
+   \bold{Omnibus Test of Moderators}
 
-   For models including moderators, an omnibus test of all the model coefficients is conducted that excludes the intercept (the first coefficient) if it is included in the model. If no intercept is included in the model, then the omnibus test includes all of the coefficients in the model including the first. Alternatively, one can manually specify the indices of the coefficients to test via the \code{btt} argument. For example, with \code{btt=c(3,4)}, only the third and fourth coefficient from the model would be included in the test (if an intercept is included in the model, then it corresponds to the first coefficient in the model). Instead of specifying the coefficient numbers, one can specify a string for \code{btt}. In that case, \code{\link{grep}} will be used to search for all coefficient names that match the string.
+   For models including moderators, an omnibus test of all model coefficients is conducted that excludes the intercept (the first coefficient) if it is included in the model. If no intercept is included in the model, then the omnibus test includes all of the coefficients in the model including the first. Alternatively, one can manually specify the indices of the coefficients to test via the \code{btt} argument. For example, with \code{btt=c(3,4)}, only the third and fourth coefficient from the model would be included in the test (if an intercept is included in the model, then it corresponds to the first coefficient in the model). Instead of specifying the coefficient numbers, one can specify a string for \code{btt}. In that case, \code{\link{grep}} will be used to search for all coefficient names that match the string. The omnibus test is called the \mjseqn{Q_M}-test in the output and follows, under the assumptions of the model, a chi-square distribution with \mjseqn{m} degrees of freedom (with \mjseqn{m} denoting the number of coefficients tested) under the null hypothesis (that the true value of all coefficients tested is equal to 0).
 
    \bold{Categorical Moderators}
 
@@ -123,7 +123,7 @@ rma.mv(yi, V, W, mods, random, struct="CS", intercept=TRUE,
 
    \bold{Tests and Confidence Intervals}
 
-   By default, the test statistics of the individual coefficients in the model (and the corresponding confidence intervals) are based on a standard normal distribution, while the omnibus test is based on a chi-square distribution with \mjseqn{m} degrees of freedom (\mjseqn{m} being the number of coefficients tested). As an alternative, one can set \code{test="t"}, which slightly mimics the Knapp and Hartung (2003) method by using a t-distribution with \mjseqn{k-p} degrees of freedom for tests of individual coefficients and confidence intervals and an F-distribution with \mjseqn{m} and \mjseqn{k-p} degrees of freedom (\mjseqn{p} being the total number of model coefficients including the intercept if it is present) for the omnibus test statistic (but note that \code{test="t"} is not the same as \code{test="knha"} in \code{\link{rma.uni}}, as no adjustment to the standard errors of the estimated coefficients is made).
+   By default, tests of individual coefficients in the model (and the corresponding confidence intervals) are based on a standard normal distribution, while the omnibus test is based on a chi-square distribution (see above). As an alternative, one can set \code{test="t"}, which slightly mimics the Knapp and Hartung (2003) method by using a t-distribution with \mjseqn{k-p} degrees of freedom for tests of individual coefficients and confidence intervals and an F-distribution with \mjseqn{m} and \mjseqn{k-p} degrees of freedom (with \mjseqn{p} denoting the total number of model coefficients including the intercept if it is present) for the omnibus test statistic (but note that \code{test="t"} is not the same as \code{test="knha"} in \code{\link{rma.uni}}, as no adjustment to the standard errors of the estimated coefficients is made).
 
    \bold{Test for (Residual) Heterogeneity}
 
@@ -134,7 +134,7 @@ rma.mv(yi, V, W, mods, random, struct="CS", intercept=TRUE,
    \item{beta}{estimated coefficients of the model.}
    \item{se}{standard errors of the coefficients.}
    \item{zval}{test statistics of the coefficients.}
-   \item{pval}{p-values for the test statistics.}
+   \item{pval}{corresponding p-values.}
    \item{ci.lb}{lower bound of the confidence intervals for the coefficients.}
    \item{ci.ub}{upper bound of the confidence intervals for the coefficients.}
    \item{vb}{variance-covariance matrix of the estimated coefficients.}
@@ -143,13 +143,13 @@ rma.mv(yi, V, W, mods, random, struct="CS", intercept=TRUE,
    \item{rho}{estimated \mjseqn{\rho} value(s).}
    \item{gamma2}{estimated \mjseqn{\gamma^2} value(s).}
    \item{phi}{estimated \mjseqn{\phi} value(s).}
-   \item{k}{number of studies included in the model.}
+   \item{k}{number of observed outcomes included in the analysis.}
    \item{p}{number of coefficients in the model (including the intercept).}
-   \item{m}{number of coefficients included in the omnibus test of coefficients.}
-   \item{QE}{test statistic for the test of (residual) heterogeneity.}
-   \item{QEp}{p-value for the test of (residual) heterogeneity.}
-   \item{QM}{test statistic for the omnibus test of coefficients.}
-   \item{QMp}{p-value for the omnibus test of coefficients.}
+   \item{m}{number of coefficients included in the omnibus test of moderators.}
+   \item{QE}{test statistic of the test for (residual) heterogeneity.}
+   \item{QEp}{corresponding p-value.}
+   \item{QM}{test statistic of the omnibus test of moderators.}
+   \item{QMp}{corresponding p-value.}
    \item{int.only}{logical that indicates whether the model is an intercept-only model.}
    \item{yi, V, X}{the vector of outcomes, the corresponding variance-covariance matrix of the sampling errors, and the model matrix.}
    \item{M}{the estimated marginal variance-covariance matrix of the observed outcomes.}

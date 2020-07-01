@@ -29,30 +29,30 @@
 }
 \value{
    An object of class \code{"anova.rma"}. When a single model is specified (without any further arguments or together with the \code{btt} argument), the object is a list containing the following components:
-   \item{QM}{test statistic for the Wald-type test of the model coefficients.}
-   \item{QMp}{p-value for the Wald-type test of the model coefficients.}
+   \item{QM}{test statistic of the Wald-type test of the model coefficients.}
+   \item{QMp}{corresponding p-value.}
    \item{btt}{indices of the coefficients tested by the Wald-type test.}
-   \item{k}{number of outcomes included in the model fitting.}
+   \item{k}{number of outcomes included in the analysis.}
    \item{p}{number of coefficients in the model (including the intercept).}
    \item{m}{number of coefficients included in the Wald-type test.}
    \item{\dots}{some additional elements/values.}
    When argument \code{L} is used, the object is a list containing the following components:
-   \item{QM}{test statistic for the omnibus Wald-type test of all linear combinations.}
-   \item{QMp}{p-value for the omnibus Wald-type test.}
+   \item{QM}{test statistic of the omnibus Wald-type test of all linear combinations.}
+   \item{QMp}{corresponding p-value.}
    \item{hyp}{description of the linear combinations tested.}
    \item{Lb}{values of the linear combinations.}
    \item{se}{standard errors of the linear combinations.}
    \item{zval}{test statistics of the linear combinations.}
-   \item{pval}{p-values for the linear combinations.}
+   \item{pval}{corresponding p-values.}
    When two models are specified, the object is a list containing the following components:
    \item{fit.stats.f}{log-likelihood, deviance, AIC, BIC, and AICc for the full model.}
    \item{fit.stats.r}{log-likelihood, deviance, AIC, BIC, and AICc for the reduced model.}
    \item{p.f}{number of parameters in the full model.}
    \item{p.r}{number of parameters in the reduced model.}
    \item{LRT}{likelihood ratio test statistic.}
-   \item{pval}{p-value for the likelihood ratio test.}
-   \item{QE.f}{test statistic for the test of (residual) heterogeneity from the full model.}
-   \item{QE.r}{test statistic for the test of (residual) heterogeneity from the reduced model.}
+   \item{pval}{corresponding p-value.}
+   \item{QE.f}{test statistic of the test for (residual) heterogeneity from the full model.}
+   \item{QE.r}{test statistic of the test for (residual) heterogeneity from the reduced model.}
    \item{tau2.f}{estimated \mjseqn{\tau^2} value from the full model. \code{NA} for \code{"rma.mv"} objects.}
    \item{tau2.r}{estimated \mjseqn{\tau^2} value from the reduced model. \code{NA} for \code{"rma.mv"} objects.}
    \item{R2}{amount (in percent) of the heterogeneity in the reduced model that is accounted for in the full model (\code{NA} for fixed-effects models or for \code{"rma.mv"} objects). This can be regarded as a pseudo \mjseqn{R^2} statistic (Raudenbush, 2009). Note that the value may not be very accurate unless \mjseqn{k} is large (Lopez-Lopez et al., 2014).}
@@ -61,7 +61,7 @@
    The results are formatted and printed with the \code{\link{print.anova.rma}} function.
 }
 \note{
-   In principle, one can consider likelihood ratio tests for the amount of (residual) heterogeneity in random- and mixed-effects models. The full model should then be fitted with either \code{method="ML"} or \code{method="REML"} and the reduced model with \code{method="FE"}. The p-value from that test is based on a chi-square distribution with 1 degree of freedom, but actually needs to be adjusted for the fact that the parameter (i.e., \mjseqn{\tau^2}) falls on the boundary of the parameter space under the null hypothesis. Moreover, the Q-test usually keeps better control of the Type I error rate and therefore should be preferred (see Viechtbauer, 2007, for more details).
+   In principle, one can consider likelihood ratio tests for the amount of (residual) heterogeneity in random- and mixed-effects models. The full model should then be fitted with either \code{method="ML"} or \code{method="REML"} and the reduced model with \code{method="FE"}. The p-value for that test is based on a chi-square distribution with 1 degree of freedom, but actually needs to be adjusted for the fact that the parameter (i.e., \mjseqn{\tau^2}) falls on the boundary of the parameter space under the null hypothesis. Moreover, the Q-test usually keeps better control of the Type I error rate and therefore should be preferred (see Viechtbauer, 2007, for more details).
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}

@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-23</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-24</span>
       </span>
     </div>
 
@@ -153,7 +153,7 @@
     </tr>
     <tr>
       <th>progbar</th>
-      <td><p>logical indicating whether a progress bar should be shown (the default is <code>TRUE</code>). Ignored when using parallel processing.</p></td>
+      <td><p>logical indicating whether a progress bar should be shown (the default is <code>TRUE</code>).</p></td>
     </tr>
     <tr>
       <th>parallel</th>
@@ -180,7 +180,7 @@
 <p>For models fitted with the <code><a href='rma.uni.html'>rma.uni</a></code> function (which may involve moderators and/or may be random/mixed-effects models), the idea underlying this type of plot can be generalized by examining the distribution of all model coefficients, plotting them against each other, and against some measure of (residual) heterogeneity (including the estimate of \(\tau^2\)).</p>
 <p>Note that for models without moderators, application of the method requires fitting a total of \(2^k - 1\) models, which could be an excessively large number when \(k\) is large. For example, for \(k=10\), there are only 1023 possible subsets, but for \(k=20\), this number already grows to 1048575. For even larger \(k\), it may become computationally infeasible to consider all possible subsets (and even storage of the results could become an issue). Instead, we can then examine (a sufficiently large number of) random subsets.</p>
 <p>By default, if the number of possible subsets is \(\le 10^6\), the function will consider all possible subsets and otherwise \(10^6\) random subsets. One can use the <code>subsets</code> argument to specify a different number of subsets to consider. If <code>subsets</code> is specified and it is actually larger than the number of possible subsets, then the function automatically only considers the possible subsets and does not use random subsets.</p>
-<p>On machines with multiple cores, one can try to speed things up by delegating the model fitting to separate worker processes, that is, by setting <code>parallel="snow"</code> or <code>parallel="multicore"</code> and <code>ncpus</code> to some value larger than 1. Parallel processing makes use of the <code><a href='https://rdrr.io/r/parallel/parallel-package.html'>parallel</a></code> package, using the <code><a href='https://rdrr.io/r/parallel/makeCluster.html'>makePSOCKcluster</a></code> and <code><a href='https://rdrr.io/r/parallel/clusterApply.html'>parLapply</a></code> functions when <code>parallel="snow"</code> or using <code><a href='https://rdrr.io/r/parallel/mclapply.html'>mclapply</a></code> when <code>parallel="multicore"</code> (the latter only works on Unix/Linux-alikes). With <code><a href='https://rdrr.io/r/parallel/detectCores.html'>parallel::detectCores()</a></code>, one can check on the number of available cores on the local machine. Note that no progress bar will be shown when using parallel processing.</p>
+<p>On machines with multiple cores, one can try to speed things up by delegating the model fitting to separate worker processes, that is, by setting <code>parallel="snow"</code> or <code>parallel="multicore"</code> and <code>ncpus</code> to some value larger than 1. Parallel processing makes use of the <code><a href='https://rdrr.io/r/parallel/parallel-package.html'>parallel</a></code> package, using the <code><a href='https://rdrr.io/r/parallel/makeCluster.html'>makePSOCKcluster</a></code> and <code><a href='https://rdrr.io/r/parallel/clusterApply.html'>parLapply</a></code> functions when <code>parallel="snow"</code> or using <code><a href='https://rdrr.io/r/parallel/mclapply.html'>mclapply</a></code> when <code>parallel="multicore"</code> (the latter only works on Unix/Linux-alikes). With <code><a href='https://rdrr.io/r/parallel/detectCores.html'>parallel::detectCores()</a></code>, one can check on the number of available cores on the local machine.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class <code>"gosh.rma"</code>. The object is a list containing the following components:</p>
@@ -203,22 +203,14 @@
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>ai</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>n1i</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>ci</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>n2i</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.egger2001</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"FE"</span>)
 
 <span class='co'>### fit FE model to all possible subsets (65535 models)</span>
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='no'>sav</span> <span class='kw'>&lt;-</span> <span class='fu'>gosh</span>(<span class='no'>res</span>, <span class='kw'>progbar</span><span class='kw'>=</span><span class='fl'>FALSE</span>)
-<span class='no'>sav</span></div><div class='output co'>#&gt; 
-#&gt; Model fits attempted: 65535
-#&gt; Model fits succeeded: 65535
-#&gt; 
-#&gt;             mean     min      Q1  median      Q3     max 
-#&gt; k         8.0001  1.0000  7.0000  8.0000  9.0000 16.0000 
-#&gt; Q        16.2141  0.0000  8.6068 14.1750 23.9552 47.0593 
-#&gt; I2       45.1552  0.0000 24.8066 52.5244 68.6902 87.5350 
-#&gt; H2        2.2396  0.0000  1.3299  2.1063  3.1939  8.0225 
-#&gt; estimate -0.3424 -2.4075 -0.5535  0.0148  0.0354  0.2231 
-#&gt; </div><div class='input'>
+<span class='no'>sav</span>
+
 <span class='co'>### create GOSH plot</span>
 <span class='co'>### red points for subsets that include and blue points</span>
 <span class='co'>### for subsets that exclude study 16 (the ISIS-4 trial)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>sav</span>, <span class='kw'>out</span><span class='kw'>=</span><span class='fl'>16</span>, <span class='kw'>breaks</span><span class='kw'>=</span><span class='fl'>100</span>)</div><div class='img'><img src='gosh-1.png' alt='' width='768' height='614' /></div></pre>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>sav</span>, <span class='kw'>out</span><span class='kw'>=</span><span class='fl'>16</span>, <span class='kw'>breaks</span><span class='kw'>=</span><span class='fl'>100</span>)}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -42,10 +42,10 @@ permutest(x, \dots)
 \value{
    An object of class \code{"permutest.rma.uni"}. The object is a list containing the following components:
    \item{pval}{p-value(s) based on the permutation test.}
-   \item{QMp}{p-value for the omnibus test of coefficients based on the permutation test.}
+   \item{QMp}{p-value for the omnibus test of moderators based on the permutation test.}
    \item{zval.perm}{values of the test statistics of the coefficients under the various permutations (only when \code{retpermdist=TRUE}).}
-   \item{b.perm}{values of the model coefficients under the various permutations (only when \code{retpermdist=TRUE}).}
-   \item{QM.perm}{values of the test statistic for the omnibus test of coefficients under the various permutations (only when \code{retpermdist=TRUE}).}
+   \item{b.perm}{the model coefficients under the various permutations (only when \code{retpermdist=TRUE}).}
+   \item{QM.perm}{the test statistic of the omnibus test of moderators under the various permutations (only when \code{retpermdist=TRUE}).}
    \item{ci.lb}{lower bound of the confidence intervals for the coefficients (permutation-based when \code{permci=TRUE}).}
    \item{ci.ub}{upper bound of the confidence intervals for the coefficients (permutation-based when \code{permci=TRUE}).}
    \item{\dots}{some additional elements/values are passed on.}
@@ -53,7 +53,7 @@ permutest(x, \dots)
    The results are formatted and printed with the \code{\link{print.permutest.rma.uni}} function. One can also use \code{\link{coef.permutest.rma.uni}} to obtain the table with the model coefficients, corresponding standard errors, test statistics, p-values, and confidence interval bounds.
 }
 \note{
-   It is important to note that the p-values obtained with permutation tests cannot reach conventional levels of statistical significance (i.e., \mjseqn{p \le .05}) when \mjseqn{k} is very small. In particular, for models without moderators, the smallest possible (two-sided) p-value is .0625 when \mjseqn{k=5} and .03125 when \mjseqn{k=6}. Therefore, the permutation test is only able to reject the null hypothesis at \mjseqn{\alpha=.05} when \mjseqn{k} is at least equal to 6. For models with moderators, the smallest possible (two-sided) p-value for a particular model coefficient is .0833 when \mjseqn{k=4} and .0167 when \mjseqn{k=5} (assuming that each row in the model matrix is unique). Therefore, the permutation test is only able to reject the null hypothesis at \mjseqn{\alpha=.05} when \mjseqn{k} is at least equal to 5. Consequently, permutation-based CIs can also only be obtained when \mjseqn{k} is sufficiently large.
+   The p-values obtained with permutation tests cannot reach conventional levels of statistical significance (i.e., \mjseqn{p \le .05}) when \mjseqn{k} is very small. In particular, for models without moderators, the smallest possible (two-sided) p-value is .0625 when \mjseqn{k=5} and .03125 when \mjseqn{k=6}. Therefore, the permutation test is only able to reject the null hypothesis at \mjseqn{\alpha=.05} when \mjseqn{k} is at least equal to 6. For models with moderators, the smallest possible (two-sided) p-value for a particular model coefficient is .0833 when \mjseqn{k=4} and .0167 when \mjseqn{k=5} (assuming that each row in the model matrix is unique). Therefore, the permutation test is only able to reject the null hypothesis at \mjseqn{\alpha=.05} when \mjseqn{k} is at least equal to 5. Consequently, permutation-based CIs can also only be obtained when \mjseqn{k} is sufficiently large.
 
    When the number of permutations required for the exact test is so large as to be essentially indistinguishable from infinity (e.g., \code{factorial(200)}), the function will terminate with an error.
 

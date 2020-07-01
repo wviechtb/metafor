@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-23</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-24</span>
       </span>
     </div>
 
@@ -177,30 +177,30 @@
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class <code>"anova.rma"</code>. When a single model is specified (without any further arguments or together with the <code>btt</code> argument), the object is a list containing the following components:</p>
-<dt>QM</dt><dd><p>test statistic for the Wald-type test of the model coefficients.</p></dd>
-   <dt>QMp</dt><dd><p>p-value for the Wald-type test of the model coefficients.</p></dd>
+<dt>QM</dt><dd><p>test statistic of the Wald-type test of the model coefficients.</p></dd>
+   <dt>QMp</dt><dd><p>corresponding p-value.</p></dd>
    <dt>btt</dt><dd><p>indices of the coefficients tested by the Wald-type test.</p></dd>
-   <dt>k</dt><dd><p>number of outcomes included in the model fitting.</p></dd>
+   <dt>k</dt><dd><p>number of outcomes included in the analysis.</p></dd>
    <dt>p</dt><dd><p>number of coefficients in the model (including the intercept).</p></dd>
    <dt>m</dt><dd><p>number of coefficients included in the Wald-type test.</p></dd>
    <dt>...</dt><dd><p>some additional elements/values.</p></dd>
    When argument L is used, the object is a list containing the following components:
-   <dt>QM</dt><dd><p>test statistic for the omnibus Wald-type test of all linear combinations.</p></dd>
-   <dt>QMp</dt><dd><p>p-value for the omnibus Wald-type test.</p></dd>
+   <dt>QM</dt><dd><p>test statistic of the omnibus Wald-type test of all linear combinations.</p></dd>
+   <dt>QMp</dt><dd><p>corresponding p-value.</p></dd>
    <dt>hyp</dt><dd><p>description of the linear combinations tested.</p></dd>
    <dt>Lb</dt><dd><p>values of the linear combinations.</p></dd>
    <dt>se</dt><dd><p>standard errors of the linear combinations.</p></dd>
    <dt>zval</dt><dd><p>test statistics of the linear combinations.</p></dd>
-   <dt>pval</dt><dd><p>p-values for the linear combinations.</p></dd>
+   <dt>pval</dt><dd><p>corresponding p-values.</p></dd>
    When two models are specified, the object is a list containing the following components:
    <dt>fit.stats.f</dt><dd><p>log-likelihood, deviance, AIC, BIC, and AICc for the full model.</p></dd>
    <dt>fit.stats.r</dt><dd><p>log-likelihood, deviance, AIC, BIC, and AICc for the reduced model.</p></dd>
    <dt>p.f</dt><dd><p>number of parameters in the full model.</p></dd>
    <dt>p.r</dt><dd><p>number of parameters in the reduced model.</p></dd>
    <dt>LRT</dt><dd><p>likelihood ratio test statistic.</p></dd>
-   <dt>pval</dt><dd><p>p-value for the likelihood ratio test.</p></dd>
-   <dt>QE.f</dt><dd><p>test statistic for the test of (residual) heterogeneity from the full model.</p></dd>
-   <dt>QE.r</dt><dd><p>test statistic for the test of (residual) heterogeneity from the reduced model.</p></dd>
+   <dt>pval</dt><dd><p>corresponding p-value.</p></dd>
+   <dt>QE.f</dt><dd><p>test statistic of the test for (residual) heterogeneity from the full model.</p></dd>
+   <dt>QE.r</dt><dd><p>test statistic of the test for (residual) heterogeneity from the reduced model.</p></dd>
    <dt>tau2.f</dt><dd><p>estimated \(\tau^2\) value from the full model. <code>NA</code> for <code>"rma.mv"</code> objects.</p></dd>
    <dt>tau2.r</dt><dd><p>estimated \(\tau^2\) value from the reduced model. <code>NA</code> for <code>"rma.mv"</code> objects.</p></dd>
    <dt>R2</dt><dd><p>amount (in percent) of the heterogeneity in the reduced model that is accounted for in the full model (<code>NA</code> for fixed-effects models or for <code>"rma.mv"</code> objects). This can be regarded as a pseudo \(R^2\) statistic (Raudenbush, 2009). Note that the value may not be very accurate unless \(k\) is large (Lopez-Lopez et al., 2014).</p></dd>
@@ -210,7 +210,7 @@
 
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>In principle, one can consider likelihood ratio tests for the amount of (residual) heterogeneity in random- and mixed-effects models. The full model should then be fitted with either <code>method="ML"</code> or <code>method="REML"</code> and the reduced model with <code>method="FE"</code>. The p-value from that test is based on a chi-square distribution with 1 degree of freedom, but actually needs to be adjusted for the fact that the parameter (i.e., \(\tau^2\)) falls on the boundary of the parameter space under the null hypothesis. Moreover, the Q-test usually keeps better control of the Type I error rate and therefore should be preferred (see Viechtbauer, 2007, for more details).</p>
+    <p>In principle, one can consider likelihood ratio tests for the amount of (residual) heterogeneity in random- and mixed-effects models. The full model should then be fitted with either <code>method="ML"</code> or <code>method="REML"</code> and the reduced model with <code>method="FE"</code>. The p-value for that test is based on a chi-square distribution with 1 degree of freedom, but actually needs to be adjusted for the fact that the parameter (i.e., \(\tau^2\)) falls on the boundary of the parameter space under the null hypothesis. Moreover, the Q-test usually keeps better control of the Type I error rate and therefore should be preferred (see Viechtbauer, 2007, for more details).</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Hardy, R. J., &amp; Thompson, S. G. (1996). A likelihood approach to meta-analysis with random effects. <em>Statistics in Medicine</em>, <b>15</b>(6), 619--629. <a href='https://doi.org/10.1002/(sici)1097-0258(19960330)15:6%3C619::aid-sim188%3E3.0.co;2-a'>https://doi.org/10.1002/(sici)1097-0258(19960330)15:6%3C619::aid-sim188%3E3.0.co;2-a</a></p>

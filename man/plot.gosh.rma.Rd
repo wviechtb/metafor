@@ -50,11 +50,12 @@
 res <- rma(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat.egger2001, method="FE")
 
 ### fit FE model to all possible subsets (65535 models)
+\dontrun{
 sav <- gosh(res, progbar=FALSE)
 
 ### create GOSH plot
 ### red points for subsets that include and blue points
 ### for subsets that exclude study 16 (the ISIS-4 trial)
-plot(sav, out=16, breaks=100)
+plot(sav, out=16, breaks=100)}
 }
 \keyword{hplot}
