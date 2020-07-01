@@ -2,7 +2,7 @@
 
 ### for profile(), confint(), and gosh()
 
-.profile.rma.uni <- function(val, obj, parallel=FALSE, profile=FALSE, confint=FALSE, subset=FALSE, objective, FE=FALSE, verbose=FALSE, outlist=NULL) {
+.profile.rma.uni <- function(val, obj, parallel=FALSE, profile=FALSE, confint=FALSE, subset=FALSE, objective, model=0L, verbose=FALSE, outlist=NULL) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -53,25 +53,30 @@
 
       ### for subset, fit model to subset as specified by 'val'
 
-      if (FE) {
+      if (model >= 1L) {
 
-         # special case for gosh() when an intercept-only FE model is used
+         # special cases for gosh() for FE and RE+DL models
 
          yi <- obj$yi[val]
          vi <- obj$vi[val]
          k <- length(yi)
          wi <- 1/vi
-         est <- sum(wi*yi)/sum(wi)
+         sumwi <- sum(wi)
+         est <- sum(wi*yi)/sumwi
+         Q <- 0
+         I2 <- 0
+         H2 <- 1
+         tau2 <- 0
          if (k > 1) {
             Q <- sum(wi * (yi - est)^2)
             I2 <- max(0, 100 * (Q - (k-1)) / Q)
             H2 <- Q / (k-1)
-         } else {
-            Q <- 0
-            I2 <- 0
-            H2 <- 1
+            if (model == 2L) {
+               tau2 <- max(0, (Q - (k-1)) / (sumwi - sum(wi^2)/sumwi))
+               wi <- 1 / (vi + tau2)
+               est <- sum(wi*yi)/sum(wi)
+            }
          }
-         tau2 <- 0
          sav <- list(beta = est, k = k, QE = Q, I2 = I2, H2 = H2, tau2 = tau2)
 
       } else {

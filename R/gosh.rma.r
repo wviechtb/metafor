@@ -117,13 +117,13 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
 
    colnames(incl) <- seq_len(x$k)
 
-   ### check if model is a standard FE model (fitted with the usual 1/vi weights)
+   ### check if model is a standard FE model or a standard RE model with the DL estimators
 
-   if (x$method=="FE" && x$weighted && is.null(x$weights) && x$int.only) {
-      FE <- TRUE
-   } else {
-      FE <- FALSE
-   }
+   model <- 0L
+   if (x$method=="FE" && x$weighted && is.null(x$weights) && x$int.only)
+      model <- 1L
+   if (x$method=="DL" && x$weighted && is.null(x$weights) && x$int.only)
+      model <- 2L
 
    #########################################################################
 
@@ -132,7 +132,7 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
    if (parallel == "no") {
 
       if (inherits(x, "rma.uni"))
-         res <- pbapply::pbapply(incl, 1, .profile.rma.uni, obj=x, parallel=parallel, subset=TRUE, FE=FE, outlist=outlist)
+         res <- pbapply::pbapply(incl, 1, .profile.rma.uni, obj=x, parallel=parallel, subset=TRUE, model=model, outlist=outlist)
 
       if (inherits(x, "rma.mh"))
          res <- pbapply::pbapply(incl, 1, .profile.rma.mh, obj=x, parallel=parallel, subset=TRUE, outlist=outlist)
@@ -145,8 +145,8 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
    if (parallel == "multicore") {
 
       if (inherits(x, "rma.uni"))
-         res <- pbapply::pbapply(incl, 1, .profile.rma.uni, obj=x, parallel=parallel, subset=TRUE, FE=FE, outlist=outlist, cl=ncpus)
-         #res <- parallel::mclapply(asplit(incl, 1), .profile.rma.uni, obj=x, mc.cores=ncpus, parallel=parallel, subset=TRUE, FE=FE, outlist=outlist)
+         res <- pbapply::pbapply(incl, 1, .profile.rma.uni, obj=x, parallel=parallel, subset=TRUE, model=model, outlist=outlist, cl=ncpus)
+         #res <- parallel::mclapply(asplit(incl, 1), .profile.rma.uni, obj=x, mc.cores=ncpus, parallel=parallel, subset=TRUE, model=model, outlist=outlist)
 
       if (inherits(x, "rma.mh"))
          res <- pbapply::pbapply(incl, 1, .profile.rma.mh, obj=x, parallel=parallel, subset=TRUE, outlist=outlist, cl=ncpus)
@@ -167,10 +167,10 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
 
       if (inherits(x, "rma.uni")) {
          if (.isTRUE(ddd$LB)) {
-            res <- parallel::parLapplyLB(cl, asplit(incl, 1), .profile.rma.uni, obj=x, parallel=parallel, subset=TRUE, FE=FE, outlist=outlist)
+            res <- parallel::parLapplyLB(cl, asplit(incl, 1), .profile.rma.uni, obj=x, parallel=parallel, subset=TRUE, model=model, outlist=outlist)
          } else {
-            res <- pbapply::pbapply(incl, 1, .profile.rma.uni, obj=x, parallel=parallel, subset=TRUE, FE=FE, outlist=outlist, cl=cl)
-            #res <- parallel::parLapply(cl, asplit(incl, 1), .profile.rma.uni, obj=x, parallel=parallel, subset=TRUE, FE=FE, outlist=outlist)
+            res <- pbapply::pbapply(incl, 1, .profile.rma.uni, obj=x, parallel=parallel, subset=TRUE, model=model, outlist=outlist, cl=cl)
+            #res <- parallel::parLapply(cl, asplit(incl, 1), .profile.rma.uni, obj=x, parallel=parallel, subset=TRUE, model=model, outlist=outlist)
          }
       }
 
