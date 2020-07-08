@@ -9,6 +9,17 @@ bldiag <- function(...) {
    ### make sure each element is a matrix (so that bldiag(matrix(1, nrow=3, ncol=3), 2) also works)
    mlist <- lapply(mlist, function(x) if (inherits(x, "matrix")) x else diag(x, nrow=length(x), ncol=length(x)))
 
+   ### find 0x0 matrices
+   is00 <- sapply(mlist, function(x) all(dim(x) == c(0L,0L)))
+
+   ### filter out 0x0 matrices (if there are any)
+   if (any(is00))
+      mlist <- mlist[!is00]
+
+   ### if none are left, return 0x0 matrix
+   if (all(is00))
+      return(matrix(nrow=0, ncol=0))
+
    csdim <- rbind(c(0,0), apply(sapply(mlist,dim), 1, cumsum)) ### consider using rowCumsums() from matrixStats package
 
    out  <- array(0, dim=csdim[length(mlist) + 1,])
