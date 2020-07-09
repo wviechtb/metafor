@@ -802,11 +802,11 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
    if (k < 1)
       stop(mstyle$stop("Processing terminated since k = 0."))
 
-   ### check if k is equal to 1
+   ### if k=1 and test != "z", set test="z" (other methods cannot be used)
 
-   if (k == 1) {
-      method <- "FE"
-      test   <- "z"
+   if (k == 1 && test != "z") {
+      warning(mstyle$warning("Setting argument test=\"z\" since k=1."), call.=FALSE)
+      test <- "z"
    }
 
    ### make sure that there is at least one column in X ([b])
@@ -830,8 +830,12 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
    ### note: need to save coef.na for functions that modify the data/model and then refit the model (regtest() and the
    ### various function that leave out an observation); so we can check if there are redundant/dropped predictors then
 
-   tmp <- lm(yi ~ X - 1)
-   coef.na <- is.na(coef(tmp))
+   tmp <- try(lm(yi ~ X - 1), silent=TRUE)
+   if (inherits(tmp, "lm")) {
+      coef.na <- is.na(coef(tmp))
+   } else {
+      coef.na <- rep(FALSE, NCOL(X))
+   }
    if (any(coef.na)) {
       warning(mstyle$warning("Redundant predictors dropped from the model."), call.=FALSE)
       X   <- X[,!coef.na,drop=FALSE]
@@ -863,16 +867,18 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
    ### check if there are too many parameters for given k
 
-   if (method == "FE") {                        ### have to estimate p parms
-      if (p > k)
-         stop(mstyle$stop("Number of parameters to be estimated is larger than the number of observations."))
-   } else {
-      if (is.numeric(tau2)) {                   ### have to estimate p parms (tau2 is fixed at value specified)
+   if (!(int.only && k == 1L)) {
+      if (method == "FE") {                        ### have to estimate p parms
          if (p > k)
             stop(mstyle$stop("Number of parameters to be estimated is larger than the number of observations."))
       } else {
-         if ((p+1) > k)                         ### have to estimate p+1 parms
-            stop(mstyle$stop("Number of parameters to be estimated is larger than the number of observations."))
+         if (is.numeric(tau2)) {                   ### have to estimate p parms (tau2 is fixed at value specified)
+            if (p > k)
+               stop(mstyle$stop("Number of parameters to be estimated is larger than the number of observations."))
+         } else {
+            if ((p+1) > k)                         ### have to estimate p+1 parms
+               stop(mstyle$stop("Number of parameters to be estimated is larger than the number of observations."))
+         }
       }
    }
 
@@ -972,6 +978,13 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
       if ((verbose > 1) && !tau2.fix)
          message(mstyle$message("Estimating tau^2 value ...\n"))
+
+      if (k == 1) {
+         method.sav <- method
+         method = "k1"
+         if (!tau2.fix)
+            tau2 <- 0
+      }
 
       ### Hunter & Schmidt (HS) estimator
 
@@ -1379,14 +1392,14 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
          ### need to run this so that wi and P are based on the final tau^2 value
 
-         wi     <- 1/(vi + tau2)
+         wi <- 1/(vi + tau2)
          if (any(tau2 + vi < 0))
             stop(mstyle$stop("Some marginal variances are negative."))
          if (any(is.infinite(wi)))
             stop(mstyle$stop("Division by zero when computing the inverse variance weights."))
-         W     <- diag(wi, nrow=k, ncol=k)
+         W <- diag(wi, nrow=k, ncol=k)
          stXWX <- .invcalc(X=X, W=W, k=k)
-         P     <- W - W %*% X %*% stXWX %*% crossprod(X,W)
+         P <- W - W %*% X %*% stXWX %*% crossprod(X,W)
 
       }
 
@@ -1429,6 +1442,9 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
          #se.tau2 <- sqrt((k/(k-p))^2 / sum(wi)^2 * (2*sum(PV*t(PV)) + 4*max(tau2,0)*sum(PV*P) + 2*max(tau2,0)^2*sum(P*P)))
          se.tau2 <- sqrt(2*k^2/(k-p) / sum(wi)^2) ### these two equations are actually identical, but this one is much simpler
       }
+
+      if (k == 1)
+         method <- method.sav
 
    }
 
@@ -1533,6 +1549,13 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
          sdZ   <- apply(Z[, 2:q, drop=FALSE], 2, sd) ### consider using colSds() from matrixStats package
          is.d  <- apply(Z, 2, .is.dummy) ### is each column a dummy variable (i.e., only 0s and 1s)?
          Z[,!is.d] <- apply(Z[, !is.d, drop=FALSE], 2, scale) ### rescale the non-dummy variables
+      }
+
+      if (k == 1 && Z.int.only) {
+         if (link == "log")
+            con$alpha.init <- -10000
+         if (link == "identity")
+            con$alpha.init <- 0.00001
       }
 
       ### set alpha.init (or check if length of alpha.init matches number of parameters)

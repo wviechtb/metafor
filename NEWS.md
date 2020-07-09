@@ -1,6 +1,8 @@
-# metafor 2.5-24 (2020-07-01)
+# metafor 2.5-25 (2020-07-09)
 
 - the `metafor` package now makes use of the `mathjaxr` package to nicely render equations shown in the HTML help pages
+
+- `rma.uni()` no longer constrains a fixed tau2 value to 0 when k=1
 
 - started using the `pbapply` package for showing progress bars, also when using parallel processing
 
