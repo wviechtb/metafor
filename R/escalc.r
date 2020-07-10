@@ -22,7 +22,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
                               "PCOR","ZPCOR","SPCOR",                              ### partial and semi-partial correlations
                               "PR","PLN","PLO","PAS","PFT",                        ### single proportions (and transformations thereof)
                               "IR","IRLN","IRS","IRFT",                            ### single-group person-time data (and transformations thereof)
-                              "MN","MNLN","CVLN","SDLN",                           ### mean, log(mean), log(CV), log(SD)
+                              "MN","MNLN","CVLN","SDLN","SMD1",                    ### mean, log(mean), log(CV), log(SD), single-group SMD
                               "MC","SMCC","SMCR","SMCRH","ROMC","CVRC","VRC",      ### raw/standardized mean change, log(ROM), CVR, and VR for dependent samples
                               "ARAW","AHW","ABT",                                  ### alpha (and transformations thereof)
                               "GEN")))
@@ -1508,7 +1508,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
       ######################################################################
 
-      if (is.element(measure, c("MN","MNLN","CVLN","SDLN"))) {
+      if (is.element(measure, c("MN","MNLN","CVLN","SDLN","SMD1"))) {
 
          mf.mi  <- mf[[match("mi",  names(mf))]] ### for SDLN, do not need to supply this
          mf.sdi <- mf[[match("sdi", names(mf))]]
@@ -1527,7 +1527,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
          ### for these measures, need mi, sdi, and ni
 
-         if (is.element(measure, c("MN","MNLN","CVLN"))) {
+         if (is.element(measure, c("MN","MNLN","CVLN","SMD1"))) {
 
             if (length(mi)==0L || length(sdi)==0L || length(ni)==0L)
                stop(mstyle$stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments."))
@@ -1590,6 +1590,14 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (measure == "SDLN") {
             yi <- log(sdi) + 1/(2*(ni-1))
             vi <- 1/(2*(ni-1))
+         }
+
+         ### single-group SMD
+
+         if (measure == "SMD1") {
+            cmi <- .cmicalc(ni-1)
+            yi <- cmi * mi / sdi
+            vi <- 1/ni + yi^2/(2*ni)
          }
 
       }

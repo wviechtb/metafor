@@ -51,12 +51,12 @@
 ### copy data into 'dat'
 dat <- dat.curtis1998
 
-### calculate log ratio of means and corresponding sampling variances
+### calculate (log transformed) ratios of means and corresponding sampling variances
 dat <- escalc(measure="ROM", m1i=m1i, sd1i=sd1i, n1i=n1i,
                              m2i=m2i, sd2i=sd2i, n2i=n2i, data=dat)
 dat
 
-### meta-analysis of log ratio of means using a random-effects model
+### meta-analysis using a random-effects model
 res <- rma(yi, vi, method="DL", data=dat)
 res
 

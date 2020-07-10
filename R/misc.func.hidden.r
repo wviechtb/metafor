@@ -377,7 +377,7 @@
             lab <- ifelse(short, lab, "Transformed Mean Difference")
          }
       }
-      if (is.element(measure, c("SMD","SMDH","PBIT","OR2D","OR2DN","OR2DL"))) {
+      if (is.element(measure, c("SMD","SMDH","PBIT","OR2D","OR2DN","OR2DL","SMD1"))) {
          if (transf.char == "FALSE" && atransf.char == "FALSE") {
             lab <- ifelse(short, "SMD", "Standardized Mean Difference")
          } else {
@@ -947,7 +947,8 @@ coefTable.rma <- function (model, ...) {
 
 ")
 
-### helper functions to make mice work together with metafor
+### helper functions to make mice work together with metafor (note: no longer
+### needed, as there are glance and tidy methods for rma objects in broom now)
 
 .mice <- parse(text="
 

@@ -16,7 +16,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
                               "PCOR","ZPCOR","SPCOR",                              ### partial and semi-partial correlations
                               "PR","PLN","PLO","PAS","PFT",                        ### single proportions (and transformations thereof)
                               "IR","IRLN","IRS","IRFT",                            ### single-group person-time data (and transformations thereof)
-                              "MN","MNLN","CVLN","SDLN",                           ### mean, log(mean), log(CV), log(SD)
+                              "MN","MNLN","CVLN","SDLN","SMD1",                    ### mean, log(mean), log(CV), log(SD), single-group SMD
                               "MC","SMCC","SMCR","SMCRH","ROMC","CVRC","VRC",      ### raw/standardized mean change, log(ROM), CVR, and VR for dependent samples
                               "ARAW","AHW","ABT")))                                ### alpha (and transformations thereof)
       stop(mstyle$stop("Unknown 'measure' specified."))
@@ -451,7 +451,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
    #########################################################################
 
-   if (is.element(measure, c("MN","MNLN"))) {
+   if (is.element(measure, c("MN","MNLN","SMD1"))) {
 
       mf.mi  <- mf[[match("mi",  names(mf))]]
       mf.sdi <- mf[[match("sdi", names(mf))]]
@@ -1212,7 +1212,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
    #########################################################################
 
-   if (is.element(measure, c("MN","MNLN"))) {
+   if (is.element(measure, c("MN","MNLN","SMD1"))) {
 
       ### check for NAs in table data and act accordingly
 
