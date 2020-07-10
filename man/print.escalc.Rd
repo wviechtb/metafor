@@ -8,7 +8,7 @@
 \usage{
 \method{print}{escalc}(x, digits=attr(x,"digits"), \dots)
 
-\method{summary}{escalc}(object, out.names=c("sei","zi","ci.lb","ci.ub"), var.names,
+\method{summary}{escalc}(object, out.names=c("sei","zi","pval","ci.lb","ci.ub"), var.names,
         H0=0, append=TRUE, replace=TRUE, level=95, clim, digits, transf, \dots)
 }
 \arguments{
@@ -33,6 +33,7 @@
    \item{vi}{corresponding (estimated) sampling variances.}
    \item{sei}{standard errors of the observed outcomes or effect size estimates.}
    \item{zi}{test statistics for testing \mjeqn{H_0: \theta_i = \mbox{H0}}{H_0: \theta_i = H0} (i.e., \code{(yi-H0)/sei}).}
+   \item{pval}{corresponding p-values.}
    \item{ci.lb}{lower confidence interval bounds (transformed if \code{transf} is specified).}
    \item{ci.ub}{upper confidence interval bounds (transformed if \code{transf} is specified).}
 

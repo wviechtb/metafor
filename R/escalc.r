@@ -2014,6 +2014,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
    ### add 'out.names' back to object in case these attributes exist (if summary() has been used on the object)
    attr(dat, "sei.names")   <- attr(data, "sei.names")
    attr(dat, "zi.names")    <- attr(data, "zi.names")
+   attr(dat, "pval.names")  <- attr(data, "pval.names")
    attr(dat, "ci.lb.names") <- attr(data, "ci.lb.names")
    attr(dat, "ci.ub.names") <- attr(data, "ci.ub.names")
 

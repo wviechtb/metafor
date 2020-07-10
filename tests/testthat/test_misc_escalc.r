@@ -315,8 +315,8 @@ test_that("summary() of 'escalc' objects works correctly with the 'out.names' ar
    dat <- dat.bcg
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat, var.names=c("y1","v1"), slab=paste0(author, ", ", year))
    dat <- escalc(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat, var.names=c("y2","v2"), slab=paste0(author, ", ", year))
-   dat <- summary(dat, var.names=c("y1","v1"), out.names=c("sei1","zi1","ci.lb1","ci.ub1"))
-   dat <- summary(dat, var.names=c("y2","v2"), out.names=c("sei2","zi2","ci.lb2","ci.ub2"))
+   dat <- summary(dat, var.names=c("y1","v1"), out.names=c("sei1","zi1","pval1","ci.lb1","ci.ub1"))
+   dat <- summary(dat, var.names=c("y2","v2"), out.names=c("sei2","zi2","pval2","ci.lb2","ci.ub2"))
    expect_equivalent(with(dat, c(zi1[1], sei1[1], ci.lb1[1], ci.ub1[1])), c(-1.5586, 0.5706, -2.0077, 0.2290), tolerance=.tol[["est"]])
    expect_equivalent(with(dat, c(zi2[1], sei2[1], ci.lb2[1], ci.ub2[1])), c(-1.5708, 0.5976, -2.1100, 0.2326), tolerance=.tol[["est"]])
 

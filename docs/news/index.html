@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-25</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-26</span>
       </span>
     </div>
 
@@ -129,12 +129,13 @@
       <small>Source: <a href='https://github.com/wviechtb/metafor/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="metafor-2-5-25-2020-07-09" class="section level1">
-<h1 class="page-header" data-toc-text="2.5-25">
-<a href="#metafor-2-5-25-2020-07-09" class="anchor"></a>metafor 2.5-25 (2020-07-09)<small> Unreleased </small>
+    <div id="metafor-2-5-26-2020-07-10" class="section level1">
+<h1 class="page-header" data-toc-text="2.5-26">
+<a href="#metafor-2-5-26-2020-07-10" class="anchor"></a>metafor 2.5-26 (2020-07-10)<small> Unreleased </small>
 </h1>
 <ul>
 <li><p>the <code>metafor</code> package now makes use of the <code>mathjaxr</code> package to nicely render equations shown in the HTML help pages</p></li>
+<li><p><code><a href="../reference/print.escalc.html">summary.escalc()</a></code> also provides the p-values (of the Wald-type tests); but when using the <code>transf</code> argument, the sampling variances, standard errors, test statistics, and p-values are no longer shown</p></li>
 <li><p><code><a href="../reference/rma.uni.html">rma.uni()</a></code> no longer constrains a fixed tau2 value to 0 when k=1</p></li>
 <li><p>started using the <code>pbapply</code> package for showing progress bars, also when using parallel processing</p></li>
 <li><p>to avoid potential confusion, all references to ‘credibility intervals’ have been removed from the documentation; these intervals are now exclusively referred to as ‘prediction intervals’; in the output, the bounds are therefore indicated now as <code>pi.lb</code> and <code>pi.ub</code> (instead of <code>cr.lb</code> and <code>cr.ub</code>); the corresponding argument names were changed in <code><a href="../reference/addpoly.default.html">addpoly.default()</a></code>; argument <code>addcred</code> was changed to <code>addpred</code> in <code><a href="../reference/addpoly.rma.html">addpoly.rma()</a></code> and <code><a href="../reference/forest.rma.html">forest.rma()</a></code>; however, code using the old arguments names should continue to work</p></li>

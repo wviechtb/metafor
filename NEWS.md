@@ -1,6 +1,8 @@
-# metafor 2.5-25 (2020-07-09)
+# metafor 2.5-26 (2020-07-10)
 
 - the `metafor` package now makes use of the `mathjaxr` package to nicely render equations shown in the HTML help pages
+
+- `summary.escalc()` also provides the p-values (of the Wald-type tests); but when using the `transf` argument, the sampling variances, standard errors, test statistics, and p-values are no longer shown
 
 - `rma.uni()` no longer constrains a fixed tau2 value to 0 when k=1
 

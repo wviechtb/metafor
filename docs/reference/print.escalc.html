@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-25</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-26</span>
       </span>
     </div>
 
@@ -139,7 +139,7 @@
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span>(<span class='no'>x</span>,<span class='st'>"digits"</span>), <span class='no'>...</span>)
 
 <span class='co'># S3 method for escalc</span>
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>object</span>, <span class='kw'>out.names</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"sei"</span>,<span class='st'>"zi"</span>,<span class='st'>"ci.lb"</span>,<span class='st'>"ci.ub"</span>), <span class='no'>var.names</span>,
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>object</span>, <span class='kw'>out.names</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"sei"</span>,<span class='st'>"zi"</span>,<span class='st'>"pval"</span>,<span class='st'>"ci.lb"</span>,<span class='st'>"ci.ub"</span>), <span class='no'>var.names</span>,
         <span class='kw'>H0</span><span class='kw'>=</span><span class='fl'>0</span>, <span class='kw'>append</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>replace</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>level</span><span class='kw'>=</span><span class='fl'>95</span>, <span class='no'>clim</span>, <span class='no'>digits</span>, <span class='no'>transf</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -203,6 +203,7 @@
    <dt>vi</dt><dd><p>corresponding (estimated) sampling variances.</p></dd>
    <dt>sei</dt><dd><p>standard errors of the observed outcomes or effect size estimates.</p></dd>
    <dt>zi</dt><dd><p>test statistics for testing \(H_0: \theta_i = \mbox{H0}\) (i.e., <code>(yi-H0)/sei</code>).</p></dd>
+   <dt>pval</dt><dd><p>corresponding p-values.</p></dd>
    <dt>ci.lb</dt><dd><p>lower confidence interval bounds (transformed if <code>transf</code> is specified).</p></dd>
    <dt>ci.ub</dt><dd><p>upper confidence interval bounds (transformed if <code>transf</code> is specified).</p></dd>
 
@@ -268,20 +269,20 @@
 #&gt; 11    11       Comstock et al 1974  186 50448  141 27197    18 systematic 
 #&gt; 12    12   Comstock &amp; Webster 1969    5  2493    3  2338    33 systematic 
 #&gt; 13    13       Comstock et al 1976   27 16886   29 17825    33 systematic 
-#&gt;         yi     vi    sei       zi   ci.lb   ci.ub 
-#&gt; 1  -0.8893 0.3256 0.5706  -1.5586 -2.0077  0.2290 
-#&gt; 2  -1.5854 0.1946 0.4411  -3.5941 -2.4500 -0.7208 
-#&gt; 3  -1.3481 0.4154 0.6445  -2.0917 -2.6113 -0.0849 
-#&gt; 4  -1.4416 0.0200 0.1415 -10.1908 -1.7188 -1.1643 
-#&gt; 5  -0.2175 0.0512 0.2263  -0.9613 -0.6611  0.2260 
-#&gt; 6  -0.7861 0.0069 0.0831  -9.4599 -0.9490 -0.6232 
-#&gt; 7  -1.6209 0.2230 0.4722  -3.4323 -2.5465 -0.6953 
-#&gt; 8   0.0120 0.0040 0.0629   0.1899 -0.1114  0.1353 
-#&gt; 9  -0.4694 0.0564 0.2376  -1.9760 -0.9350 -0.0038 
-#&gt; 10 -1.3713 0.0730 0.2702  -5.0747 -1.9010 -0.8417 
-#&gt; 11 -0.3394 0.0124 0.1114  -3.0460 -0.5577 -0.1210 
-#&gt; 12  0.4459 0.5325 0.7297   0.6111 -0.9843  1.8762 
-#&gt; 13 -0.0173 0.0714 0.2672  -0.0648 -0.5410  0.5064 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>dat</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>)</div><div class='output co'>#&gt;    trial               author year tpos  tneg cpos  cneg ablat      alloc 
+#&gt;         yi     vi    sei       zi   pval   ci.lb   ci.ub 
+#&gt; 1  -0.8893 0.3256 0.5706  -1.5586 0.1191 -2.0077  0.2290 
+#&gt; 2  -1.5854 0.1946 0.4411  -3.5941 0.0003 -2.4500 -0.7208 
+#&gt; 3  -1.3481 0.4154 0.6445  -2.0917 0.0365 -2.6113 -0.0849 
+#&gt; 4  -1.4416 0.0200 0.1415 -10.1908 &lt;.0001 -1.7188 -1.1643 
+#&gt; 5  -0.2175 0.0512 0.2263  -0.9613 0.3364 -0.6611  0.2260 
+#&gt; 6  -0.7861 0.0069 0.0831  -9.4599 &lt;.0001 -0.9490 -0.6232 
+#&gt; 7  -1.6209 0.2230 0.4722  -3.4323 0.0006 -2.5465 -0.6953 
+#&gt; 8   0.0120 0.0040 0.0629   0.1899 0.8494 -0.1114  0.1353 
+#&gt; 9  -0.4694 0.0564 0.2376  -1.9760 0.0482 -0.9350 -0.0038 
+#&gt; 10 -1.3713 0.0730 0.2702  -5.0747 &lt;.0001 -1.9010 -0.8417 
+#&gt; 11 -0.3394 0.0124 0.1114  -3.0460 0.0023 -0.5577 -0.1210 
+#&gt; 12  0.4459 0.5325 0.7297   0.6111 0.5412 -0.9843  1.8762 
+#&gt; 13 -0.0173 0.0714 0.2672  -0.0648 0.9483 -0.5410  0.5064 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>dat</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>)</div><div class='output co'>#&gt;    trial               author year tpos  tneg cpos  cneg ablat      alloc 
 #&gt; 1      1              Aronson 1948    4   119   11   128    44     random 
 #&gt; 2      2     Ferguson &amp; Simes 1949    6   300   29   274    55     random 
 #&gt; 3      3      Rosenthal et al 1960    3   228   11   209    42     random 
@@ -295,20 +296,20 @@
 #&gt; 11    11       Comstock et al 1974  186 50448  141 27197    18 systematic 
 #&gt; 12    12   Comstock &amp; Webster 1969    5  2493    3  2338    33 systematic 
 #&gt; 13    13       Comstock et al 1976   27 16886   29 17825    33 systematic 
-#&gt;        yi     vi    sei       zi  ci.lb  ci.ub 
-#&gt; 1  0.4109 0.3256 0.5706  -1.5586 0.1343 1.2574 
-#&gt; 2  0.2049 0.1946 0.4411  -3.5941 0.0863 0.4864 
-#&gt; 3  0.2597 0.4154 0.6445  -2.0917 0.0734 0.9186 
-#&gt; 4  0.2366 0.0200 0.1415 -10.1908 0.1793 0.3121 
-#&gt; 5  0.8045 0.0512 0.2263  -0.9613 0.5163 1.2536 
-#&gt; 6  0.4556 0.0069 0.0831  -9.4599 0.3871 0.5362 
-#&gt; 7  0.1977 0.2230 0.4722  -3.4323 0.0784 0.4989 
-#&gt; 8  1.0120 0.0040 0.0629   0.1899 0.8946 1.1449 
-#&gt; 9  0.6254 0.0564 0.2376  -1.9760 0.3926 0.9962 
-#&gt; 10 0.2538 0.0730 0.2702  -5.0747 0.1494 0.4310 
-#&gt; 11 0.7122 0.0124 0.1114  -3.0460 0.5725 0.8860 
-#&gt; 12 1.5619 0.5325 0.7297   0.6111 0.3737 6.5284 
-#&gt; 13 0.9828 0.0714 0.2672  -0.0648 0.5821 1.6593 </div></pre>
+#&gt;        yi  ci.lb  ci.ub 
+#&gt; 1  0.4109 0.1343 1.2574 
+#&gt; 2  0.2049 0.0863 0.4864 
+#&gt; 3  0.2597 0.0734 0.9186 
+#&gt; 4  0.2366 0.1793 0.3121 
+#&gt; 5  0.8045 0.5163 1.2536 
+#&gt; 6  0.4556 0.3871 0.5362 
+#&gt; 7  0.1977 0.0784 0.4989 
+#&gt; 8  1.0120 0.8946 1.1449 
+#&gt; 9  0.6254 0.3926 0.9962 
+#&gt; 10 0.2538 0.1494 0.4310 
+#&gt; 11 0.7122 0.5725 0.8860 
+#&gt; 12 1.5619 0.3737 6.5284 
+#&gt; 13 0.9828 0.5821 1.6593 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

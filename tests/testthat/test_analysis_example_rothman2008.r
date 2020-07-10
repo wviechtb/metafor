@@ -68,18 +68,18 @@ test_that("the stratum-specific and crude risk ratios are computed correctly.", 
 
    ### stratum-specific risk ratios
    tmp <- summary(escalc(ai=ai, bi=bi, ci=ci, di=di, data=dat, measure="RR", digits=2), transf=exp, append=FALSE)
-   tmp <- as.matrix(tmp[1:4])
+   tmp <- as.matrix(tmp)
 
-   expected <- structure(c(1.8113, 1.1926, 0.3072, 0.086, 0.5543, 0.2932, 1.0718, 0.6007), .Dim = c(2L, 4L), .Dimnames = list(NULL, c("yi", "vi", "sei", "zi")))
+   expected <- structure(c(1.8113, 1.1926, 0.6112, 0.6713, 5.3679, 2.1188), .Dim = 2:3, .Dimnames = list(NULL, c("yi", "ci.lb", "ci.ub")))
 
    ### compare with data in Table 15-1
    expect_equivalent(tmp, expected, tolerance=.tol[["misc"]])
 
    ### crude risk ratio
    tmp <- summary(escalc(ai=sum(ai), bi=sum(bi), ci=sum(ci), di=sum(di), data=dat, measure="RR", digits=2, append=FALSE), transf=exp)
-   tmp <- as.matrix(tmp[1:4])
+   tmp <- as.matrix(tmp)
 
-   expected <- structure(c(1.4356, 0.0712, 0.2668, 1.3553), .Dim = c(1L, 4L), .Dimnames = list(NULL, c("yi", "vi", "sei", "zi")))
+   expected <- structure(c(1.4356, 0.851, 2.4216), .Dim = c(1L, 3L), .Dimnames = list(NULL, c("yi", "ci.lb", "ci.ub")))
 
    ### compare with data in Table 15-1
    expect_equivalent(tmp, expected, tolerance=.tol[["misc"]])
@@ -217,18 +217,18 @@ test_that("the stratum-specific and crude rate ratios are computed correctly.", 
 
    ### stratum-specific rate ratios
    tmp <- summary(escalc(x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i, data=dat, measure="IRR", digits=1, append=FALSE), transf=exp)
-   tmp <- as.matrix(tmp[1:4])
+   tmp <- as.matrix(tmp)
 
-   expected <- structure(c(5.7366, 2.1388, 1.4682, 1.3561, 0.9047, 0.5312, 0.0929, 0.0406, 0.0411, 0.0421, 0.7289, 0.3049, 0.2014, 0.2027, 0.2051, 2.3967, 2.4936, 1.9068, 1.5026, -0.4882), .Dim = c(5L, 4L), .Dimnames = list(NULL, c("yi", "vi", "sei", "zi")))
+   expected <- structure(c(5.7366, 2.1388, 1.4682, 1.3561, 0.9047, 1.3748, 1.1767, 0.9894, 0.9115, 0.6053, 23.9371, 3.8876, 2.1789, 2.0176, 1.3524), .Dim = c(5L, 3L), .Dimnames = list(NULL, c("yi", "ci.lb", "ci.ub")))
 
    ### compare with data in Table 15-2
    expect_equivalent(tmp, expected, tolerance=.tol[["misc"]])
 
    ### crude rate ratio
    tmp <- summary(escalc(x1i=sum(x1i), x2i=sum(x2i), t1i=sum(t1i), t2i=sum(t2i), data=dat, measure="IRR", digits=1, append=FALSE), transf=exp)
-   tmp <- as.matrix(tmp[1:4])
+   tmp <- as.matrix(tmp)
 
-   expected <- structure(c(1.7198, 0.0115, 0.1072, 5.0588), .Dim = c(1L, 4L), .Dimnames = list(NULL, c("yi", "vi", "sei", "zi")))
+   expected <- structure(c(1.7198, 1.394, 2.1219), .Dim = c(1L, 3L), .Dimnames = list(NULL, c("yi", "ci.lb", "ci.ub")))
 
    ### compare with data in Table 15-2
    expect_equivalent(tmp, expected, tolerance=.tol[["misc"]])

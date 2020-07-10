@@ -25,7 +25,7 @@
 
    ### add var.names and out.names attributes back to object (but only if they exist and only keep variables still in the dataset)
 
-   all.names <- c("yi.names", "vi.names", "sei.names", "zi.names", "ci.lb.names", "ci.ub.names")
+   all.names <- c("yi.names", "vi.names", "sei.names", "zi.names", "pval.names", "ci.lb.names", "ci.ub.names")
 
    for (l in seq_along(all.names)) {
       if (any(is.element(attr(x, all.names[l]), names(dat)))) ### check if any of the variables still exist in the dataset
@@ -55,6 +55,7 @@ cbind.escalc <- function (..., deparse.level=1) {
    vi.names    <- NULL
    sei.names   <- NULL
    zi.names    <- NULL
+   pval.names  <- NULL
    ci.lb.names <- NULL
    ci.ub.names <- NULL
 
@@ -63,6 +64,7 @@ cbind.escalc <- function (..., deparse.level=1) {
       vi.names    <- c(attr(arg, "vi.names"),    vi.names)
       sei.names   <- c(attr(arg, "sei.names"),   sei.names)
       zi.names    <- c(attr(arg, "zi.names"),    zi.names)
+      pval.names  <- c(attr(arg, "pval.names"),  pval.names)
       ci.lb.names <- c(attr(arg, "ci.lb.names"), ci.lb.names)
       ci.ub.names <- c(attr(arg, "ci.ub.names"), ci.ub.names)
    }
@@ -73,6 +75,7 @@ cbind.escalc <- function (..., deparse.level=1) {
    attr(dat, "vi.names")    <- unique(vi.names)
    attr(dat, "sei.names")   <- unique(sei.names)
    attr(dat, "zi.names")    <- unique(zi.names)
+   attr(dat, "pval.names")  <- unique(pval.names)
    attr(dat, "ci.lb.names") <- unique(ci.lb.names)
    attr(dat, "ci.ub.names") <- unique(ci.ub.names)
 
