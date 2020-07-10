@@ -1,6 +1,10 @@
-# metafor 2.5-26 (2020-07-10)
+# metafor 2.5-27 (2020-07-10)
 
 - the `metafor` package now makes use of the `mathjaxr` package to nicely render equations shown in the HTML help pages
+
+- `bldiag()` now properly handles ?x0 or 0x? matrices
+
+- p-values are given to 2 digits when `digits = 1`
 
 - `summary.escalc()` also provides the p-values (of the Wald-type tests); but when using the `transf` argument, the sampling variances, standard errors, test statistics, and p-values are no longer shown
 

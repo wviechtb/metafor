@@ -37,6 +37,8 @@
    \item{ci.lb}{lower confidence interval bounds (transformed if \code{transf} is specified).}
    \item{ci.ub}{upper confidence interval bounds (transformed if \code{transf} is specified).}
 
+   When the \code{transf} argument is specified, elements \code{vi}, \code{sei}, \code{zi}, and \code{pval} are not included (since these only apply to the untransformed outcomes or effect size estimates).
+
    Note that the actual variable names above depend on the \code{out.names} (and \code{var.names}) arguments. If the data frame already contains variables with names as specified by the \code{out.names} argument, the values for these variables will be overwritten when \code{replace=TRUE} (which is the default). By setting \code{replace=FALSE}, only values that are \code{NA} will be replaced.
 
    The \code{print.escalc} function again formats and prints the data frame, rounding the added variables to the number of digits specified.

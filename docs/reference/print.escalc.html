@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-26</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-27</span>
       </span>
     </div>
 
@@ -206,6 +206,8 @@
    <dt>pval</dt><dd><p>corresponding p-values.</p></dd>
    <dt>ci.lb</dt><dd><p>lower confidence interval bounds (transformed if <code>transf</code> is specified).</p></dd>
    <dt>ci.ub</dt><dd><p>upper confidence interval bounds (transformed if <code>transf</code> is specified).</p></dd>
+
+   When the transf argument is specified, elements vi, sei, zi, and pval are not included (since these only apply to the untransformed outcomes or effect size estimates).
 
    Note that the actual variable names above depend on the out.names (and var.names) arguments. If the data frame already contains variables with names as specified by the out.names argument, the values for these variables will be overwritten when replace=TRUE (which is the default). By setting replace=FALSE, only values that are NA will be replaced.
 
