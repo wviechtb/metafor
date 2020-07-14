@@ -53,13 +53,13 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
    }
 
    if (center) {
-      yi    <- yi - x$beta
+      yi    <- yi - c(x$beta)
       beta  <- 0
-      ci.lb <- ci.lb - x$beta
-      ci.ub <- ci.ub - x$beta
-      atyis <- atyis - x$beta
+      ci.lb <- ci.lb - c(x$beta)
+      ci.ub <- ci.ub - c(x$beta)
+      atyis <- atyis - c(x$beta)
       if (!is.null(aty))
-         aty <- aty - x$beta
+         aty <- aty - c(x$beta)
    }
 
    #########################################################################
