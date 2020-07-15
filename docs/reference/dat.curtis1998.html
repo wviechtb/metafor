@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-27</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-28</span>
       </span>
     </div>
 
@@ -187,7 +187,7 @@
     <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat'</span>
 <span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.curtis1998</span>
 
-<span class='co'>### calculate log ratio of means and corresponding sampling variances</span>
+<span class='co'>### calculate (log transformed) ratios of means and corresponding sampling variances</span>
 <span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"ROM"</span>, <span class='kw'>m1i</span><span class='kw'>=</span><span class='no'>m1i</span>, <span class='kw'>sd1i</span><span class='kw'>=</span><span class='no'>sd1i</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>n1i</span>,
                              <span class='kw'>m2i</span><span class='kw'>=</span><span class='no'>m2i</span>, <span class='kw'>sd2i</span><span class='kw'>=</span><span class='no'>sd2i</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>n2i</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
 <span class='no'>dat</span></div><div class='output co'>#&gt;      id paper         genus        species fungrp co2.ambi co2.elev    units 
@@ -499,7 +499,7 @@
 #&gt; 100    7.20000  2.5981000   3  0.8532 0.0469 
 #&gt; 101    4.60000  1.7321000   3  0.4480 0.0666 
 #&gt; 102   69.70000  3.6373000   3  0.3866 0.0021 </div><div class='input'>
-<span class='co'>### meta-analysis of log ratio of means using a random-effects model</span>
+<span class='co'>### meta-analysis using a random-effects model</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"DL"</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
 <span class='no'>res</span></div><div class='output co'>#&gt; 
 #&gt; Random-Effects Model (k = 102; tau^2 estimator: DL)
