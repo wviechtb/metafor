@@ -1,4 +1,4 @@
-Changes in Version 2.5-28 (2020-07-15)
+Changes in Version 2.5-29 (2020-07-21)
 =====================================
 
    o the metafor package now makes use of the 'mathjaxr' package to nicely
@@ -59,7 +59,8 @@ Changes in Version 2.5-28 (2020-07-15)
 
    o refactored various functions (for cleaner/simpler code)
 
-   o added datasets 'dat.cannon2006', 'dat.lau1992', and 'dat.vanhowe1999'
+   o added datasets 'dat.cannon2006', 'dat.lau1992', 'dat.vanhowe1999',
+     'dat.kalaian1996', and 'dat.damico2009'
 
    o improved the documentation a bit
 

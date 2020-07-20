@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Studies on Acupoint P6 Stimulation for Preventing Nausea — dat.lee2004 • metafor</title>
+<title>Studies on Topical plus Systemic Antibiotics to Prevent Respiratory Tract Infections — dat.damico2009 • metafor</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Studies on Acupoint P6 Stimulation for Preventing Nausea — dat.lee2004" />
-<meta property="og:description" content="Results from studies examining the effectiveness of wrist acupuncture point P6 stimulation for preventing postoperative nausea." />
+<meta property="og:title" content="Studies on Topical plus Systemic Antibiotics to Prevent Respiratory Tract Infections — dat.damico2009" />
+<meta property="og:description" content="Results from 16 studies examining the effectiveness of topical plus systemic antibiotics to prevent respiratory tract infections (RTIs)." />
 
 
 
@@ -126,81 +126,108 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Studies on Acupoint P6 Stimulation for Preventing Nausea</h1>
+    <h1>Studies on Topical plus Systemic Antibiotics to Prevent Respiratory Tract Infections</h1>
     
-    <div class="hidden name"><code>dat.lee2004.Rd</code></div>
+    <div class="hidden name"><code>dat.damico2009.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Results from studies examining the effectiveness of wrist acupuncture point P6 stimulation for preventing postoperative nausea.</p>
+    <p>Results from 16 studies examining the effectiveness of topical plus systemic antibiotics to prevent respiratory tract infections (RTIs).</p>
     </div>
 
-    <pre class="usage"><span class='no'>dat.lee2004</span></pre>
+    <pre class="usage"><span class='no'>dat.damico2009</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
     <p>The data frame contains the following columns:</p><table class='table'>
-<tr><td><b>id</b></td><td><code>numeric</code></td><td>trial id number</td></tr>
 <tr><td><b>study</b></td><td><code>character</code></td><td>first author</td></tr>
-<tr><td><b>year</b></td><td><code>numeric</code></td><td>study year</td></tr>
-<tr><td><b>ai</b></td><td><code>numeric</code></td><td>number of patients experiencing nausea in the treatment group</td></tr>
-<tr><td><b>n1i</b></td><td><code>numeric</code></td><td>total number of patients in treatment group</td></tr>
-<tr><td><b>ci</b></td><td><code>numeric</code></td><td>number of patients experiencing nausea in the sham group</td></tr>
-<tr><td><b>n2i</b></td><td><code>numeric</code></td><td>total number of patients in the sham group</td></tr>
+<tr><td><b>year</b></td><td><code>numeric</code></td><td>publication year</td></tr>
+<tr><td><b>xt</b></td><td><code>numeric</code></td><td>number of RTIs in the treatment group</td></tr>
+<tr><td><b>nt</b></td><td><code>numeric</code></td><td>number of patients in the treatment group</td></tr>
+<tr><td><b>xc</b></td><td><code>numeric</code></td><td>number of RTIs in the control group</td></tr>
+<tr><td><b>nc</b></td><td><code>numeric</code></td><td>number of patients in the control group</td></tr>
+<tr><td><b>conceal</b></td><td><code>numeric</code></td><td>allocation concealment (0 = not adequate, 1 = adequate)</td></tr>
+<tr><td><b>blind</b></td><td><code>numeric</code></td><td>blinding (0 = open, 1 = double-blind)</td></tr>
 </table>
 
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Postoperative nausea and vomiting are common complications following surgery and anaesthesia. As an alternative to drug therapy, acupuncture has been studied as a potential treatment in several trials. The dataset contains the results from 16 clinical trials examining the effectiveness of wrist acupuncture point P6 stimulation for preventing postoperative nausea.</p>
+    <p>The dataset includes the results from 16 studies that examined the effectiveness of topical plus systemic antibiotics versus no prophylaxis to prevent respiratory tract infections (RTIs).</p>
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-    <p>Lee, A., &amp; Done, M. L. (2004). Stimulation of the wrist acupuncture point P6 for preventing postoperative nausea and vomiting. <em>Cochrane Database of Systematic Reviews</em>, <b>3</b>, CD003281. <a href='https://doi.org/10.1002/14651858.CD003281.pub2'>https://doi.org/10.1002/14651858.CD003281.pub2</a></p>
+    <p>D'Amico, R., Pifferi, S., Torri, V., Brazzi, L., Parmelli, E., &amp; Liberati, A. (2009). Antibiotic prophylaxis to reduce respiratory tract infections and mortality in adults receiving intensive care. <em>Cochrane Database of Systematic Reviews</em>, <b>4</b>, CD000022. <a href='https://doi.org/10.1002/14651858.CD000022.pub3'>https://doi.org/10.1002/14651858.CD000022.pub3</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat' and examine data</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.lee2004</span>
-<span class='no'>dat</span></div><div class='output co'>#&gt;    id        study year ai n1i ci n2i
-#&gt; 1   1      Agarwal 2000 18 100 20 100
-#&gt; 2   2      Agarwal 2002  5  50 18  50
-#&gt; 3   3     Alkaissi 1999  9  20  7  20
-#&gt; 4   4     Alkaissi 2002 32 135 31 139
-#&gt; 5   5        Allen 1994  9  23 10  23
-#&gt; 6   6 Andrzejowski 1996 11  18 12  18
-#&gt; 7   7       Duggal 1998 69 122 80 122
-#&gt; 8   8       Dundee 1986  3  25 12  25
-#&gt; 9   9 Ferrera-Love 1996  1  30  1  30
-#&gt; 10 10       Gieron 1993 11  30 19  30
-#&gt; 11 11       Harmon 1999  7  44 16  39
-#&gt; 12 12       Harmon 2000  4  47  6  47
-#&gt; 13 13           Ho 1996  1  30 13  30
-#&gt; 14 14         Rusy 2002 24  40 71  80
-#&gt; 15 15         Wang 2002 16  50 53  88
-#&gt; 16 16       Zarate 2001 28 110 25 111</div><div class='input'>
-<span class='co'>### meta-analysis based on log risk ratios</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>ai</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>n1i</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>ci</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>n2i</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
-<span class='no'>res</span></div><div class='output co'>#&gt; 
-#&gt; Random-Effects Model (k = 16; tau^2 estimator: REML)
+<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.damico2009</span>
+<span class='no'>dat</span></div><div class='output co'>#&gt;             study year xt  nt  xc  nc conceal blind
+#&gt; 1      Abele-Horn 1997 13  58  23  30       0     0
+#&gt; 2          Aerdts 1991  1  28  29  60       1     0
+#&gt; 3           Blair 1991 12 161  38 170       1     0
+#&gt; 4          Boland 1991 14  32  17  32       0     1
+#&gt; 5       Cockerill 1992  4  75  12  75       0     0
+#&gt; 6           Finch 1991  4  20   7  24       1     0
+#&gt; 7          Jacobs 1992  0  45   4  46       0     0
+#&gt; 8          Kerver 1988  5  49  31  47       0     0
+#&gt; 9         Palomar 1997 10  50  25  49       0     0
+#&gt; 10          Rocha 1992  7  47  25  54       0     1
+#&gt; 11 Sanchez-Garcia 1992 32 131  60 140       1     1
+#&gt; 12    Stoutenbeek 2007 62 201 100 200       1     0
+#&gt; 13         Ulrich 1989  7  55  26  57       1     0
+#&gt; 14       Verwaest 1997 22 193  40 185       1     0
+#&gt; 15         Winter 1992  3  91  17  92       1     0
+#&gt; 16        Krueger 2002 91 265 149 262       1     1</div><div class='input'>
+<span class='co'>### meta-analysis of the (log) odds ratios using the Mantel-Haenszel method</span>
+<span class='fu'><a href='rma.mh.html'>rma.mh</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>xt</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>nt</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>xc</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>nc</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
+#&gt; Fixed-Effects Model (k = 16)
 #&gt; 
-#&gt; tau^2 (estimated amount of total heterogeneity): 0.0554 (SE = 0.0487)
-#&gt; tau (square root of estimated tau^2 value):      0.2353
-#&gt; I^2 (total heterogeneity / total variability):   46.04%
-#&gt; H^2 (total variability / sampling variability):  1.85
+#&gt; I^2 (total heterogeneity / total variability):  55.61%
+#&gt; H^2 (total variability / sampling variability): 2.25
+#&gt; 
+#&gt; Test for Heterogeneity: 
+#&gt; Q(df = 15) = 33.79, p-val &lt; .01
+#&gt; 
+#&gt; Model Results (log scale):
+#&gt; 
+#&gt; estimate    se    zval  pval  ci.lb  ci.ub 
+#&gt;    -1.14  0.09  -12.74  &lt;.01  -1.31  -0.96 
+#&gt; 
+#&gt; Model Results (OR scale):
+#&gt; 
+#&gt; estimate  ci.lb  ci.ub 
+#&gt;     0.32   0.27   0.38 
+#&gt; 
+#&gt; Cochran-Mantel-Haenszel Test:    CMH = 169.58, df = 1,  p-val &lt; 0.01
+#&gt; Tarone's Test for Heterogeneity: X^2 =  37.24, df = 15, p-val &lt; 0.01
+#&gt; </div><div class='input'>
+<span class='co'>### compute log odds ratios and corresponding sampling variances</span>
+<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>xt</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>nt</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>xc</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>nc</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
+
+<span class='co'>### meta-analysis using a random-effects model</span>
+<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"DL"</span>)
+<span class='no'>res</span></div><div class='output co'>#&gt; 
+#&gt; Random-Effects Model (k = 16; tau^2 estimator: DL)
+#&gt; 
+#&gt; tau^2 (estimated amount of total heterogeneity): 0.1784 (SE = 0.1362)
+#&gt; tau (square root of estimated tau^2 value):      0.4224
+#&gt; I^2 (total heterogeneity / total variability):   55.27%
+#&gt; H^2 (total variability / sampling variability):  2.24
 #&gt; 
 #&gt; Test for Heterogeneity:
-#&gt; Q(df = 15) = 30.2238, p-val = 0.0111
+#&gt; Q(df = 15) = 33.5329, p-val = 0.0040
 #&gt; 
 #&gt; Model Results:
 #&gt; 
 #&gt; estimate      se     zval    pval    ci.lb    ci.ub 
-#&gt;  -0.3145  0.0977  -3.2200  0.0013  -0.5059  -0.1231  ** 
+#&gt;  -1.2782  0.1572  -8.1295  &lt;.0001  -1.5864  -0.9700  *** 
 #&gt; 
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'><span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
 #&gt;  pred ci.lb ci.ub pi.lb pi.ub 
-#&gt;  0.73  0.60  0.88  0.44  1.20 
+#&gt;  0.28  0.20  0.38  0.12  0.67 
 #&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
