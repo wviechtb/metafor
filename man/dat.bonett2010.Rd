@@ -46,6 +46,9 @@ res <- rma(measure="ABT", ai=ai, mi=mi, ni=ni, data=dat)
 res
 predict(res, transf=transf.iabt)
 
+### forest plot
+forest(res, slab=dat$source, header=TRUE, atransf=transf.iabt, refline=coef(res))
+
 ### examine whether female/mixed samples yield different alphas (with raw alphas)
 res <- rma(measure="ARAW", ai=ai, mi=mi, ni=ni, mods = ~ caregivers, data=dat)
 res
