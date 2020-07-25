@@ -60,7 +60,7 @@ leave1out.rma.peto <- function(x, digits, transf, targs, progbar=FALSE, ...) {
       if (!x$not.na[i])
          next
 
-      res <- try(suppressWarnings(rma.peto(ai=x$ai.f, bi=x$bi.f, ci=x$ci.f, di=x$di.f, add=x$add, to=x$to, drop00=x$drop00, subset=-i)), silent=TRUE)
+      res <- try(suppressWarnings(rma.peto(ai=x$ai.f, bi=x$bi.f, ci=x$ci.f, di=x$di.f, add=x$add, to=x$to, drop00=x$drop00, level=x$level, subset=-i)), silent=TRUE)
 
       if (inherits(res, "try-error"))
          next

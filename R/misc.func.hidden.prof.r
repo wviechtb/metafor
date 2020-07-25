@@ -180,11 +180,11 @@
       if (is.element(obj$measure, c("RR","OR","RD"))) {
          sav <- try(suppressWarnings(rma.mh(ai=obj$ai, bi=obj$bi, ci=obj$ci, di=obj$di, measure=obj$measure,
                                             add=obj$add, to=obj$to, drop00=obj$drop00, correct=obj$correct,
-                                            subset=val, outlist=outlist)), silent=TRUE)
+                                            level=obj$level, subset=val, outlist=outlist)), silent=TRUE)
       } else {
          sav <- try(suppressWarnings(rma.mh(x1i=obj$x1i, x2i=obj$x2i, t1i=obj$t1i, t2i=obj$t2i, measure=obj$measure,
                                             add=obj$add, to=obj$to, drop00=obj$drop00, correct=obj$correct,
-                                            subset=val, outlist=outlist)), silent=TRUE)
+                                            level=obj$level, subset=val, outlist=outlist)), silent=TRUE)
       }
 
    }
@@ -204,7 +204,7 @@
 
       sav <- try(suppressWarnings(rma.peto(ai=obj$ai, bi=obj$bi, ci=obj$ci, di=obj$di,
                                            add=obj$add, to=obj$to, drop00=obj$drop00,
-                                           subset=val, outlist=outlist)), silent=TRUE)
+                                           level=obj$level, subset=val, outlist=outlist)), silent=TRUE)
 
    }
 

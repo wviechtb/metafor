@@ -72,7 +72,7 @@ regtest.rma <- function(x, model="rma", predictor="sei", ret.fit=FALSE, digits, 
 
    if (model == "rma") {
 
-      fit  <- rma.uni(yi, vi, weights=weights, mods=X, intercept=FALSE, method=x$method, weighted=x$weighted, test=x$test, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, ...)
+      fit  <- rma.uni(yi, vi, weights=weights, mods=X, intercept=FALSE, method=x$method, weighted=x$weighted, test=x$test, level=x$level, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, ...)
       zval <- fit$zval[p+1]
       pval <- fit$pval[p+1]
       dfs  <- fit$dfs

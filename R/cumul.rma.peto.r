@@ -66,7 +66,7 @@ cumul.rma.peto <- function(x, order, digits, transf, targs, progbar=FALSE, ...) 
       if (!not.na[i])
          next
 
-      res <- try(suppressWarnings(rma.peto(ai=ai.f, bi=bi.f, ci=ci.f, di=di.f, add=x$add, to=x$to, drop00=x$drop00, subset=seq_len(i))), silent=TRUE)
+      res <- try(suppressWarnings(rma.peto(ai=ai.f, bi=bi.f, ci=ci.f, di=di.f, add=x$add, to=x$to, drop00=x$drop00, level=x$level, subset=seq_len(i))), silent=TRUE)
 
       if (inherits(res, "try-error"))
          next

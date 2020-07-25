@@ -77,7 +77,7 @@ cumul.rma.uni <- function(x, order, digits, transf, targs, progbar=FALSE, ...) {
       if (!not.na[i])
          next
 
-      res <- try(suppressWarnings(rma.uni(yi.f, vi.f, weights=weights.f, intercept=TRUE, method=x$method, weighted=x$weighted, test=x$test, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, subset=seq_len(i))), silent=TRUE)
+      res <- try(suppressWarnings(rma.uni(yi.f, vi.f, weights=weights.f, intercept=TRUE, method=x$method, weighted=x$weighted, test=x$test, level=x$level, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, subset=seq_len(i))), silent=TRUE)
 
       if (inherits(res, "try-error"))
          next
