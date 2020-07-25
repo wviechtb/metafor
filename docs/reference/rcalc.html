@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-31</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-32</span>
       </span>
     </div>
 
@@ -161,6 +161,10 @@
       <td><p>a character string indicating how the &#8216;common&#8217; sample size within each study should be computed. Possible options are <code>"min"</code> (for the minimum), <code>"harmonic"</code> (for the harmonic mean), or <code>"mean"</code> (for the arithmetic mean). Can also be a function. See &#8216;Details&#8217;.</p></td>
     </tr>
     <tr>
+      <th>sparse</th>
+      <td><p>logical indicating whether the variance-covariance matrix should be returned as a sparse matrix (the default is <code>FALSE</code>).</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>other arguments.</p></td>
     </tr>
@@ -179,7 +183,7 @@
 
     <p>A list containing the following components:</p>
 <dt>dat</dt><dd><p>a data frame with the study identifier, the two variable identifiers, a variable pair identifier, the correlation coefficients (possibly transformed with Fisher's r-to-z transformation), and the (common) sample sizes.</p></dd>
-   <dt>V</dt><dd><p>corresponding variance-covariance matrix.</p></dd>
+   <dt>V</dt><dd><p>corresponding variance-covariance matrix (given as a sparse matrix when <code>sparse=TRUE</code>).</p></dd>
 
    Note that a particular covariance can only be computed when all of the correlation coefficients involved in the covariance equation are included in the dataset. If one or more coefficients needed for the computation are missing, then the resulting covariance will also be missing (i.e., NA).
 

@@ -1,4 +1,4 @@
-rcalc <- function(x, ni, data, rtoz=FALSE, nfun="min", ...) {
+rcalc <- function(x, ni, data, rtoz=FALSE, nfun="min", sparse=FALSE, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -149,7 +149,7 @@ rcalc <- function(x, ni, data, rtoz=FALSE, nfun="min", ...) {
 
       names(Rlist) <- names(dat)
 
-      return(rcalc(Rlist, ni=nmi, simplify=simplify, rtoz=rtoz, rowid=rowid, vnames=vnames, noid=noid))
+      return(rcalc(Rlist, ni=nmi, simplify=simplify, rtoz=rtoz, sparse=sparse, rowid=rowid, vnames=vnames, noid=noid))
 
    }
 
@@ -177,7 +177,11 @@ rcalc <- function(x, ni, data, rtoz=FALSE, nfun="min", ...) {
 
          ki  <- sapply(res, function(x) NROW(x$dat))
          dat <- cbind(id=rep(names(x), times=ki), do.call(rbind, lapply(res, "[[", "dat")))
-         V   <- bldiag(lapply(res, "[[", "V"))
+         if (sparse) {
+            V <- bdiag(lapply(res, "[[", "V"))
+         } else {
+            V <- bldiag(lapply(res, "[[", "V"))
+         }
          rownames(V) <- colnames(V) <- unlist(lapply(res, function(x) rownames(x$V)))
 
          if (!is.null(ddd$rowid)) {

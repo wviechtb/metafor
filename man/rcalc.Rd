@@ -13,6 +13,7 @@ rcalc(x, ni, data, rtoz=FALSE, nfun="min", \dots)
    \item{data}{data frame containing the variables specified via the formula (and the sample sizes).}
    \item{rtoz}{logical indicating whether to transform the correlations via Fisher's r-to-z transformation (the default is \code{FALSE}).}
    \item{nfun}{a character string indicating how the \sQuote{common} sample size within each study should be computed. Possible options are \code{"min"} (for the minimum), \code{"harmonic"} (for the harmonic mean), or \code{"mean"} (for the arithmetic mean). Can also be a function. See \sQuote{Details}.}
+   \item{sparse}{logical indicating whether the variance-covariance matrix should be returned as a sparse matrix (the default is \code{FALSE}).}
    \item{\dots}{other arguments.}
 }
 \details{
@@ -34,7 +35,7 @@ rcalc(x, ni, data, rtoz=FALSE, nfun="min", \dots)
    A list containing the following components:
    \item{dat}{a data frame with the study identifier, the two variable identifiers, a variable pair identifier, the correlation coefficients (possibly transformed with Fisher's r-to-z transformation), and the (common) sample sizes.
    }
-   \item{V}{corresponding variance-covariance matrix.}
+   \item{V}{corresponding variance-covariance matrix (given as a sparse matrix when \code{sparse=TRUE}).}
 
    Note that a particular covariance can only be computed when all of the correlation coefficients involved in the covariance equation are included in the dataset. If one or more coefficients needed for the computation are missing, then the resulting covariance will also be missing (i.e., \code{NA}).
 }
