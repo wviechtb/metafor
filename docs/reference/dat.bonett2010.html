@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-29</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-30</span>
       </span>
     </div>
 
@@ -245,6 +245,8 @@
 #&gt;    pred  ci.lb  ci.ub  pi.lb  pi.ub 
 #&gt;  0.9052 0.8886 0.9193 0.8512 0.9396 
 #&gt; </div><div class='input'>
+<span class='co'>### forest plot</span>
+<span class='fu'><a href='forest.html'>forest</a></span>(<span class='no'>res</span>, <span class='kw'>slab</span><span class='kw'>=</span><span class='no'>dat</span>$<span class='no'>source</span>, <span class='kw'>header</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>atransf</span><span class='kw'>=</span><span class='no'>transf.iabt</span>, <span class='kw'>refline</span><span class='kw'>=</span><span class='fu'><a href='coef.rma.html'>coef</a></span>(<span class='no'>res</span>))</div><div class='img'><img src='dat.bonett2010-1.png' alt='' width='768' height='614' /></div><div class='input'>
 <span class='co'>### examine whether female/mixed samples yield different alphas (with raw alphas)</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"ARAW"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>ai</span>, <span class='kw'>mi</span><span class='kw'>=</span><span class='no'>mi</span>, <span class='kw'>ni</span><span class='kw'>=</span><span class='no'>ni</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>caregivers</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
 <span class='no'>res</span></div><div class='output co'>#&gt; 
