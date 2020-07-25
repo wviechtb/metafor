@@ -5,7 +5,7 @@
    The function can be used to calculate the variance-covariance matrix of correlation coefficients computed based on the same sample of subjects. \loadmathjax
 }
 \usage{
-rcalc(x, ni, data, rtoz=FALSE, nfun="min", \dots)
+rcalc(x, ni, data, rtoz=FALSE, nfun="min", sparse=FALSE, \dots)
 }
 \arguments{
    \item{x}{a formula of the form \code{ri ~ var1 + var2 | study}. See \sQuote{Details}.}
