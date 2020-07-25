@@ -45,9 +45,10 @@ navbar:
 reference:
   - title: "Outcome Measures"
     desc: >
-      Function to compute various effect sizes and outcome measures.
+      Functions to compute various effect sizes and outcome measures.
     contents:
       - escalc
+      - rcalc
   - title: "Model Fitting"
     desc: >
       Main model fitting functions.

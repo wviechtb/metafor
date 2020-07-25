@@ -192,6 +192,8 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
          Datasets corresponding to data of this type are provided in \code{\link{dat.mcdaniel1994}} and \code{\link{dat.molloy2014}}.
 
+         For meta-analyses involving multiple correlations extracted from the same sample, see also the \code{\link{rcalc}} function.
+
       }
 
       \subsection{Measures for Two Dichotomous Variables}{
