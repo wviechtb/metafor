@@ -123,6 +123,7 @@ reference:
       - print.gosh.rma
       - print.hc.rma.uni
       - print.list.rma
+      - print.matreg
       - print.permutest.rma.uni
       - print.ranktest.rma
       - print.regtest.rma
@@ -154,6 +155,7 @@ reference:
       - contrmat
       - metafor.news
       - reporter
+      - matreg
       - transf
   - title: "Other Methods"
     desc: >

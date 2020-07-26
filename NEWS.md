@@ -1,10 +1,8 @@
-# metafor 2.5-33 (2020-07-26)
+# metafor 2.5-34 (2020-07-27)
 
 - the `metafor` package now makes use of the `mathjaxr` package to nicely render equations shown in the HTML help pages
 
-- added `rcalc()` function
-
-- added `dfround()` function
+- added `rcalc()`, `matreg()`, and `dfround()` functions
 
 - `bldiag()` now properly handles ?x0 or 0x? matrices
 

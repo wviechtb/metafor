@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Print Method for 'hc.rma.uni' Objects — print.hc.rma.uni • metafor</title>
+<title>Print Method for 'matreg' Objects — print.matreg • metafor</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Print Method for 'hc.rma.uni' Objects — print.hc.rma.uni" />
-<meta property="og:description" content="Print method for objects of class &quot;hc.rma.uni&quot;. " />
+<meta property="og:title" content="Print Method for 'matreg' Objects — print.matreg" />
+<meta property="og:description" content="Print method for objects of class &quot;matreg&quot;." />
 
 
 
@@ -126,28 +126,37 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Print Method for 'hc.rma.uni' Objects</h1>
+    <h1>Print Method for 'matreg' Objects</h1>
     
-    <div class="hidden name"><code>print.hc.rma.uni.Rd</code></div>
+    <div class="hidden name"><code>print.matreg.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Print method for objects of class <code>"hc.rma.uni"</code>. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
+    <p>Print method for objects of class <code>"matreg"</code>.</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for hc.rma.uni</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='no'>x</span>$<span class='no'>digits</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='co'># S3 method for matreg</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='no'>x</span>$<span class='no'>digits</span>,
+      <span class='kw'>signif.stars</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"show.signif.stars"</span>), <span class='kw'>signif.legend</span><span class='kw'>=</span><span class='no'>signif.stars</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>an object of class <code>"hc.rma.uni"</code>.</p></td>
+      <td><p>an object of class <code>"matreg"</code>.</p></td>
     </tr>
     <tr>
       <th>digits</th>
-      <td><p>integer specifying the number of decimal places to which the printed results should be rounded (the default is to take the value from the object).</p></td>
+      <td><p>integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is to take the value from the object).</p></td>
+    </tr>
+    <tr>
+      <th>signif.stars</th>
+      <td><p>logical indicating whether p-values should be encoded visually with &#8216;significance stars&#8217;. Defaults to the <code>show.signif.stars</code> slot of <code><a href='https://rdrr.io/r/base/options.html'>options</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>signif.legend</th>
+      <td><p>logical indicating whether the legend for the &#8216;significance stars&#8217; should be printed. Defaults to the value for <code>signif.stars</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -157,23 +166,13 @@
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The output is a data frame with two rows, the first (labeled <code>rma</code>) corresponding to the results based on the usual estimation method, the second (labeled <code>hc</code>) corresponding to the results based on the method by Henmi and Copas (2010). The data frame includes the following variables:</p><ul>
-<li><p>the method used to estimate \(\tau^2\) (always <code>DL</code> for <code>hc</code>)</p></li>
-<li><p>the estimated amount of heterogeneity</p></li>
-<li><p>the estimated average true effect</p></li>
-<li><p>the corresponding standard errror (<code>NA</code> when <code>transf</code> argument has been used)</p></li>
-<li><p>the lower and upper confidence interval bounds</p></li>
-</ul>
-
+    <p>The output is a table with the estimated coefficients, corresponding standard errors, test statistics, p-values, and confidence interval bounds.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The function returns the data frame invisibly.</p>
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
-
-    <p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='https://doi.org/10.18637/jss.v036.i03'>https://doi.org/10.18637/jss.v036.i03</a></p>
+    <p>The function does not return an object.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='hc.html'>hc.rma.uni</a></code></p></div>
+    <div class='dont-index'><p><code><a href='matreg.html'>matreg</a></code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
