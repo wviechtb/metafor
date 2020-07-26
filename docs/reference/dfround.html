@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Print Method for 'regtest.rma' Objects — print.regtest.rma • metafor</title>
+<title>Round Variables in a Data Frame — dfround • metafor</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Print Method for 'regtest.rma' Objects — print.regtest.rma" />
-<meta property="og:description" content="Print method for objects of class &quot;regtest.rma&quot;." />
+<meta property="og:title" content="Round Variables in a Data Frame — dfround" />
+<meta property="og:description" content="Function to round the numeric variables in a data frame." />
 
 
 
@@ -126,61 +126,53 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Print Method for 'regtest.rma' Objects</h1>
+    <h1>Round Variables in a Data Frame</h1>
     
-    <div class="hidden name"><code>print.regtest.rma.Rd</code></div>
+    <div class="hidden name"><code>dfround.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Print method for objects of class <code>"regtest.rma"</code>.</p>
+    <p>Function to round the numeric variables in a data frame.</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for regtest.rma</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='no'>x</span>$<span class='no'>digits</span>, <span class='kw'>ret.fit</span><span class='kw'>=</span><span class='no'>x</span>$<span class='no'>ret.fit</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>dfround</span>(<span class='no'>x</span>, <span class='no'>digits</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>an object of class <code>"regtest.rma"</code>.</p></td>
+      <td><p>a data frame.</p></td>
     </tr>
     <tr>
       <th>digits</th>
-      <td><p>integer specifying the number of decimal places to which the printed results should be rounded (the default is to take the value from the object).</p></td>
-    </tr>
-    <tr>
-      <th>ret.fit</th>
-      <td><p>logical indicating whether the full results from the fitted model should also be returned (if unspecified, the default is to take the value from the object).</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>other arguments.</p></td>
+      <td><p>either a single integer or a numeric vector of the same length as there are columns in <code>x</code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The output includes:</p><ul>
-<li><p>the model used for the regression test</p></li>
-<li><p>the predictor used for the regression test</p></li>
-<li><p>the results from the fitted model (only when <code>ret.fit=TRUE</code>)</p></li>
-<li><p>the test statistic of the test that the predictor is unreleated to the outcomes</p></li>
-<li><p>the degrees of freedom of the test statistic (only if the test statistic follows a t-distribution)</p></li>
-<li><p>the corresponding p-value</p></li>
-<li><p>the &#8216;limit estimate&#8217; and its corresponding CI (only for predictors <code>"sei"</code> <code>"vi"</code>, <code>"ninv"</code>, or <code>"sqrtninv"</code> and when the model does not contain any additional moderators)</p></li>
-</ul>
-
+    <p>A simply convenience function to round the numeric variables in a data frame, possibly to different numbers of digits. Hence, <code>digits</code> can either be a single integer (which will then be used to round all numeric variables to the specified number of digits) or a numeric vector (of the same length as there are columns in <code>x</code>) to specify the number of digits to which each variable should be rounded.</p>
+<p>Non-numeric variables are skipped. If <code>digits</code> is a vector, some arbitrary value (or <code>NA</code>) can be specified for those variables.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The function does not return an object.</p>
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+    <p>Returns the data frame with variables rounded as specified.</p>
 
-    <p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='https://doi.org/10.18637/jss.v036.i03'>https://doi.org/10.18637/jss.v036.i03</a></p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><code><a href='regtest.html'>regtest.rma</a></code></p></div>
-
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.bcg</span>
+<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
+<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>ablat</span> + <span class='no'>year</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
+<span class='fu'><a href='coef.rma.html'>coef</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>res</span>))</div><div class='output co'>#&gt;             estimate          se       zval        pval        ci.lb
+#&gt; intrcpt -3.545505079 29.09587983 -0.1218559 0.903013130 -60.57238164
+#&gt; ablat   -0.028011275  0.01023404 -2.7370689 0.006198931  -0.04806963
+#&gt; year     0.001907557  0.01468382  0.1299088 0.896638598  -0.02687219
+#&gt;                ci.ub
+#&gt; intrcpt 53.481371479
+#&gt; ablat   -0.007952924
+#&gt; year     0.030687307</div><div class='input'><span class='fu'>dfround</span>(<span class='fu'><a href='coef.rma.html'>coef</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>res</span>)), <span class='kw'>digits</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>2</span>,<span class='fl'>2</span>))</div><div class='output co'>#&gt;         estimate     se  zval  pval  ci.lb ci.ub
+#&gt; intrcpt    -3.55 29.096 -0.12 0.903 -60.57 53.48
+#&gt; ablat      -0.03  0.010 -2.74 0.006  -0.05 -0.01
+#&gt; year        0.00  0.015  0.13 0.897  -0.03  0.03</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

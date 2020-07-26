@@ -1,10 +1,12 @@
-Changes in Version 2.5-32 (2020-07-25)
+Changes in Version 2.5-33 (2020-07-26)
 =====================================
 
    o the metafor package now makes use of the 'mathjaxr' package to nicely
      render equations shown in the HTML help pages
 
    o added rcalc() function
+
+   o added dfround() function
 
    o bldiag() now properly handles ?x0 or 0x? matrices
 

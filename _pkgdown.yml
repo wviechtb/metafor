@@ -146,6 +146,7 @@ reference:
       Some miscellaneous convenience functions.
     contents:
       - bldiag
+      - dfround
       - replmiss
       - to.long
       - to.wide
