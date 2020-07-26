@@ -67,6 +67,8 @@ matreg <- function(y, x, R, n, V, nearPD=FALSE, level=95, digits) {
       rownames(b) <- x
    }
 
+   colnames(b) <- NULL
+
    ############################################################################
 
    if (missing(V) && missing(n))
@@ -125,7 +127,7 @@ matreg <- function(y, x, R, n, V, nearPD=FALSE, level=95, digits) {
 
       R2 <- c(t(b) %*% R01)
 
-      res <- list(tab = data.frame(b=b, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub), vb=vb, R2=R2, digits=digits)
+      res <- list(tab = data.frame(estimate=b, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub), vb=vb, R2=R2, digits=digits)
 
    } else {
 
@@ -150,7 +152,7 @@ matreg <- function(y, x, R, n, V, nearPD=FALSE, level=95, digits) {
       F <- c(value = (R2 / m) / mse, df1=m, df2=df)
       Fp <- pf(F[[1]], df1=m, df2=df, lower.tail=FALSE)
 
-      res <- list(tab = data.frame(b=b, se=se, tval=tval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub), vb=vb, R2=R2, F=F, Fp=Fp, digits=digits)
+      res <- list(tab = data.frame(estimate=b, se=se, tval=tval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub), vb=vb, R2=R2, F=F, Fp=Fp, digits=digits)
 
    }
 
