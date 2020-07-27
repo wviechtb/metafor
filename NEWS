@@ -1,4 +1,4 @@
-Changes in Version 2.5-35 (2020-07-27)
+Changes in Version 2.5-36 (2020-07-27)
 =====================================
 
    o the metafor package now makes use of the 'mathjaxr' package to nicely
@@ -56,13 +56,13 @@ Changes in Version 2.5-35 (2020-07-27)
      when using 'sei', 'vi', 'ninv', or 'sqrtninv' as predictor (and the model
      does not contain any other moderators)
 
-   o show nicer network graphs for 'dat.hasselblad1998' and 'dat.senn2013' in
+   o show nicer network graphs for dat.hasselblad1998 and dat.senn2013 in the
      help files
 
    o refactored various functions (for cleaner/simpler code)
 
-   o added datasets 'dat.cannon2006', 'dat.lau1992', 'dat.vanhowe1999',
-     'dat.kalaian1996', 'dat.damico2009', and 'dat.craft2003'
+   o added 7 datasets (dat.anand1999, dat.cannon2006, dat.craft2003,
+     dat.damico2009, dat.kalaian1996, dat.lau1992, dat.vanhowe1999)
 
    o fixed 'level' not getting passed down to the various cumul() functions
 

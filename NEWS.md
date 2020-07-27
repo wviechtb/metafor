@@ -1,4 +1,4 @@
-# metafor 2.5-35 (2020-07-27)
+# metafor 2.5-36 (2020-07-27)
 
 - the `metafor` package now makes use of the `mathjaxr` package to nicely render equations shown in the HTML help pages
 
@@ -34,11 +34,11 @@
 
 - `regtest()` now shows the 'limit estimate' of the (average) true effect when using `sei`, `vi`, `ninv`, or `sqrtninv` as predictor (and the model does not contain any other moderators)
 
-- show nicer network graphs for `dat.hasselblad1998` and `dat.senn2013` in help files
+- show nicer network graphs for `dat.hasselblad1998` and `dat.senn2013` in the help files
 
 - refactored various functions (for cleaner/simpler code)
 
-- added datasets `dat.cannon2006`, `dat.lau1992`, `dat.vanhowe1999`, `dat.kalaian1996`, `dat.damico2009`, and `dat.craft2003`
+- added 7 datasets (`dat.anand1999`, `dat.cannon2006`, `dat.craft2003`, `dat.damico2009`, `dat.kalaian1996`, `dat.lau1992`, `dat.vanhowe1999`)
 
 - fixed `level` not getting passed down to the various `cumul()` functions
 
