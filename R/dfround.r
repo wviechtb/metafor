@@ -2,6 +2,9 @@ dfround <- function(x, digits) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
+   #if (inherits(x, "matrix"))
+   #   x <- data.frame(x)
+
    if (!inherits(x, "data.frame"))
       stop(mstyle$stop("Argument 'x' must be a data frame."))
 

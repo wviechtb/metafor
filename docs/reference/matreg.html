@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-34</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-35</span>
       </span>
     </div>
 
@@ -196,6 +196,7 @@
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Becker, B. J. (1992). Using results from replicated studies to estimate linear models. <em>Journal of Educational Statistics</em>, <b>17</b>(4), 341--362. <a href='https://doi.org/10.3102/10769986017004341'>https://doi.org/10.3102/10769986017004341</a></p>
+<p>Becker, B. J. (1995). Corrections to "Using results from replicated studies to estimate linear models". <em>Journal of Educational and Behavioral Statistics</em>, <b>20</b>(1), 100--102. <a href='https://doi.org/10.3102/10769986020001100'>https://doi.org/10.3102/10769986020001100</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='rcalc.html'>rcalc</a></code>, <code><a href='rma.mv.html'>rma.mv</a></code></p></div>
@@ -291,10 +292,10 @@
 <span class='co'>### fit regression model with 'perf' as outcome and 'acog', 'asom', and 'conf' as predictors</span>
 <span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'>matreg</span>(<span class='fl'>1</span>, <span class='fl'>2</span>:<span class='fl'>4</span>, <span class='kw'>R</span><span class='kw'>=</span><span class='no'>R</span>, <span class='kw'>V</span><span class='kw'>=</span><span class='fu'><a href='vcov.rma.html'>vcov</a></span>(<span class='no'>res</span>))
 <span class='no'>fit</span></div><div class='output co'>#&gt; 
-#&gt;          perf      se     zval    pval    ci.lb   ci.ub 
-#&gt; acog   0.1482  0.1566   0.9465  0.3439  -0.1587  0.4550      
-#&gt; asom  -0.0536  0.0768  -0.6979  0.4852  -0.2043  0.0970      
-#&gt; conf   0.3637  0.0910   3.9985  0.0001   0.1854  0.5419  *** 
+#&gt;       estimate      se     zval    pval    ci.lb   ci.ub 
+#&gt; acog    0.1482  0.1566   0.9465  0.3439  -0.1587  0.4550      
+#&gt; asom   -0.0536  0.0768  -0.6979  0.4852  -0.2043  0.0970      
+#&gt; conf    0.3637  0.0910   3.9985  0.0001   0.1854  0.5419  *** 
 #&gt; 
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1

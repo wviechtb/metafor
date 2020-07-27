@@ -156,6 +156,7 @@ reference:
       - metafor.news
       - reporter
       - matreg
+      - vec2mat
       - transf
   - title: "Other Methods"
     desc: >
