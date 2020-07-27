@@ -44,6 +44,8 @@ matreg(y, x, R, n, V, nearPD=FALSE, level=95, digits)
 }
 \references{
    Becker, B. J. (1992). Using results from replicated studies to estimate linear models. \emph{Journal of Educational Statistics}, \bold{17}(4), 341--362. \verb{https://doi.org/10.3102/10769986017004341}
+
+   Becker, B. J. (1995). Corrections to "Using results from replicated studies to estimate linear models". \emph{Journal of Educational and Behavioral Statistics}, \bold{20}(1), 100--102. \verb{https://doi.org/10.3102/10769986020001100}
 }
 \seealso{
    \code{\link{rcalc}}, \code{\link{rma.mv}}
