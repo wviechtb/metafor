@@ -1,5 +1,5 @@
 plot.cumul.rma <- function(x, yaxis="tau2", xlim, ylim, xlab, ylab, at, transf, atransf, targs,
-digits, cols=c("gray90","gray10"), addgrid=TRUE, pch=19, cex=1, lwd=2, ...) {
+digits, cols=c("gray80","gray10"), addgrid=TRUE, pch=19, cex=1, lwd=2, ...) {
 
    #########################################################################
 
@@ -111,7 +111,7 @@ digits, cols=c("gray90","gray10"), addgrid=TRUE, pch=19, cex=1, lwd=2, ...) {
 
    ### set up plot
 
-   plot(NA, NA, xlim=xlim, ylim=ylim, xlab=xlab, ylab=ylab, xaxt="n", yaxt="n")
+   plot(NA, NA, xlim=xlim, ylim=ylim, xlab=xlab, ylab=ylab, xaxt="n", yaxt="n", ...)
 
    ### generate x axis positions if none are specified
 
@@ -136,12 +136,12 @@ digits, cols=c("gray90","gray10"), addgrid=TRUE, pch=19, cex=1, lwd=2, ...) {
 
    ### add x-axis
 
-   axis(side=1, at=at, labels=at.lab)
+   axis(side=1, at=at, labels=at.lab, ...)
 
    ### add y-axis
 
    aty <- axTicks(side=2)
-   axis(side=2, at=aty, labels=formatC(aty, digits=digits[[2]], format="f", drop0trailing=ifelse(class(digits[[2]]) == "integer", TRUE, FALSE)))
+   axis(side=2, at=aty, labels=formatC(aty, digits=digits[[2]], format="f", drop0trailing=ifelse(class(digits[[2]]) == "integer", TRUE, FALSE)), ...)
 
    ### add grid
 

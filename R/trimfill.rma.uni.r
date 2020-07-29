@@ -169,7 +169,7 @@ trimfill.rma.uni <- function(x, side, estimator="L0", maxiter=100, verbose=FALSE
 
       ### fit model with imputed data
 
-      res <- suppressWarnings(rma.uni(yi.fill, vi.fill, weights=wi.fill, ni=ni.fill, method=x$method, weighted=x$weighted, ...))
+      res <- suppressWarnings(rma.uni(yi.fill, vi.fill, weights=wi.fill, ni=ni.fill, method=x$method, weighted=x$weighted, digits=x$digits, ...))
 
       ### fill, ids, and slab are of length 'k.f + k0' (i.e., subsetted but with NAs)
 

@@ -6,7 +6,7 @@
 }
 \usage{
 \method{plot}{cumul.rma}(x, yaxis="tau2", xlim, ylim, xlab, ylab,
-     at, transf, atransf, targs, digits, cols=c("gray90","gray10"),
+     at, transf, atransf, targs, digits, cols=c("gray80","gray10"),
      addgrid=TRUE, pch=19, cex=1, lwd=2, \dots)
 }
 \arguments{
