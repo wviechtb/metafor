@@ -656,7 +656,7 @@ label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
       }
 
       if (inherits(x, "rma.uni.trimfill")) {
-         ltet   <- c(ltxt, expression(plain(Filled~Studies)))
+         ltxt   <- c(ltxt, expression(plain(Filled~Studies)))
          pch.l  <- c(pch.l, pch.fill[1])
          col.l  <- c(col.l, col[2])
          pt.cex <- c(pt.cex, 1)
