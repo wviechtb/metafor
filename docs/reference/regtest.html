@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-36</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-37</span>
       </span>
     </div>
 
@@ -222,6 +222,7 @@
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>The classical ``Egger test'' is obtained by setting <code>model="lm"</code> and <code>predictor="sei"</code>. For the random/mixed-effects version of the Egger test, one should first fit a random-effects model to the data and then set <code>model="rma"</code> and <code>predictor="sei"</code> when using the <code>regtest.rma</code> function. See Sterne and Egger (2005) for details on these two types of models/tests.</p>
+<p>For fixed-effects models, when using the standard error as predictor, the test of the limit estimate is the same as the &#8216;precision-effect test&#8217; (PET) of Stanley and Doucouliagos (2014). The limit estimate when using the sampling variance as predictor is sometimes called the &#8216;precision-effect estimate with SE&#8217; (PEESE) (Stanley &amp; Doucouliagos, 2014). A conditional procedure where we use the limit estimate when PET is not significant (i.e., when using the standard error as predictor) and the PEESE (i.e., when using the sampling variance as predictor) when PET is significant is sometimes called the PET-PEESE procedure (Stanley &amp; Doucouliagos, 2014).</p>
 <p>All of the tests do not directly test for publication bias, but for a relationship between the observed outcomes and the chosen predictor. If such a relationship is present, then this usually implies asymmetry in the funnel plot, which in turn may be an indication of publication bias. However, it is important to keep in mind that there can be other reasons besides publication bias that could lead to asymmetry in the funnel plot.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
@@ -232,6 +233,7 @@
 <p>Moreno, S. G., Sutton, A. J., Ades, A. E., Stanley, T. D., Abrams, K. R., Peters, J. L., &amp; Cooper, N. J. (2009). Assessment of regression-based methods to adjust for publication bias through a comprehensive simulation study. <em>BMC Medical Research Methodology</em>, <b>9</b>, 2. <a href='https://doi.org/10.1186/1471-2288-9-2'>https://doi.org/10.1186/1471-2288-9-2</a></p>
 <p>Peters, J. L., Sutton, A. J., Jones, D. R., Abrams, K. R., &amp; Rushton, L. (2006). Comparison of two methods to detect publication bias in meta-analysis. <em>Journal of the American Medical Association</em>, <b>295</b>(6), 676--680. <a href='https://doi.org/10.1001/jama.295.6.676'>https://doi.org/10.1001/jama.295.6.676</a></p>
 <p>Rücker, G., Schwarzer, G., &amp; Carpenter, J. (2008). Arcsine test for publication bias in meta-analyses with binary outcomes. <em>Statistics in Medicine</em>, <b>27</b>(5), 746--763. <a href='https://doi.org/10.1002/sim.2971'>https://doi.org/10.1002/sim.2971</a></p>
+<p>Stanley, T. D., &amp; Doucouliagos, H. (2014). Meta-regression approximations to reduce publication selection bias. <em>Research Synthesis Methods</em>, <b>5</b>(1), 60--78. <a href='https://doi.org/10.1002/jrsm.1095'>https://doi.org/10.1002/jrsm.1095</a></p>
 <p>Sterne, J. A. C., &amp; Egger, M. (2005). Regression methods to detect publication and other bias in meta-analysis. In H. R. Rothstein, A. J. Sutton, &amp; M. Borenstein (Eds.) <em>Publication bias in meta-analysis: Prevention, assessment, and adjustments</em> (pp. 99--110). Chichester, England: Wiley.</p>
 <p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='https://doi.org/10.18637/jss.v036.i03'>https://doi.org/10.18637/jss.v036.i03</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
