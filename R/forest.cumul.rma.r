@@ -348,7 +348,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
    ### set y axis limits
 
    if (missing(ylim)) {
-      ylim <- c(0.5, k+top)
+      ylim <- c(0.5, max(rows, na.rm=TRUE)+top)
    } else {
       ylim <- sort(ylim)
    }

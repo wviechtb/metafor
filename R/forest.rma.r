@@ -522,9 +522,9 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
    if (missing(ylim)) {
       if (x$int.only && addfit) {
-         ylim <- c(-1.5, k+top)
+         ylim <- c(-1.5, max(rows, na.rm=TRUE)+top)
       } else {
-         ylim <- c(0.5, k+top)
+         ylim <- c(0.5, max(rows, na.rm=TRUE)+top)
       }
    } else {
       ylim <- sort(ylim)
