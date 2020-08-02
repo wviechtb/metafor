@@ -13,7 +13,7 @@
 \bold{selection}    \tab \code{character} \tab selection of subjects on the basis of eyedness or handedness \cr
 \bold{investigator} \tab \code{character} \tab investigator (psychologist, educationalist, or other) \cr
 \bold{hand_assess}  \tab \code{character} \tab method to assess handedness (questionnaire or performance based) \cr
-\bold{eye_assess}   \tab \code{character} \tab method to assess eyedness (see below for classification) \cr
+\bold{eye_assess}   \tab \code{character} \tab method to assess eyedness (see \sQuote{Details}) \cr
 \bold{mage}         \tab \code{numeric}   \tab mean age of sample \cr
 \bold{lh.le}        \tab \code{numeric}   \tab number of left-handed left-eyed individuals \cr
 \bold{lh.re}        \tab \code{numeric}   \tab number of left-handed right-eyed individuals \cr

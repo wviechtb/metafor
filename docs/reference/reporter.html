@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-38</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-39</span>
       </span>
     </div>
 
@@ -150,11 +150,11 @@
     </tr>
     <tr>
       <th>dir</th>
-      <td><p>optional character string specifying the directory for creating the report (by default, <code><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></code> will be used).</p></td>
+      <td><p>optional character string specifying the directory for creating the report (if unspecified, <code><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></code> will be used).</p></td>
     </tr>
     <tr>
       <th>filename</th>
-      <td><p>optional character string specifying the filename (without file extension) for the report (by default, the function sets a filename automatically).</p></td>
+      <td><p>optional character string specifying the filename (without file extension) for the report (if unspecified, the function sets a filename automatically).</p></td>
     </tr>
     <tr>
       <th>format</th>
@@ -162,7 +162,7 @@
     </tr>
     <tr>
       <th>open</th>
-      <td><p>logical indicating whether the report should be opened after it has been generated (default is <code>TRUE</code>). See &#8216;Note&#8217;.</p></td>
+      <td><p>logical indicating whether the report should be opened after it has been generated (the default is <code>TRUE</code>). See &#8216;Note&#8217;.</p></td>
     </tr>
     <tr>
       <th>digits</th>
@@ -178,11 +178,11 @@
     </tr>
     <tr>
       <th>footnotes</th>
-      <td><p>logical indicating whether additional explanatory footnotes should be added to the report (default is <code>FALSE</code>).</p></td>
+      <td><p>logical indicating whether additional explanatory footnotes should be added to the report (the default is <code>FALSE</code>).</p></td>
     </tr>
     <tr>
       <th>verbose</th>
-      <td><p>logical indicating whether information on the progress of the report generation should be provided (default is <code>TRUE</code>).</p></td>
+      <td><p>logical indicating whether information on the progress of the report generation should be provided (the default is <code>TRUE</code>).</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -192,7 +192,7 @@
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The function dynamically generates an analysis report based on the model object. The report includes information about the model that was fitted, the distribution of the observed outcomes, the estimate of the average outcome based on the fitted model, tests and statistics that are informative about potential (residual) heterogeneity in the outcomes, checks for outliers and/or influential studies, and tests for funnel plot asymmetry. By default, a forest plot and a funnel plot are also provided (these can be suppressed by setting <code>forest=FALSE</code> and/or <code>funnel=FALSE</code>).</p>
+    <p>The function dynamically generates an analysis report based on the model object. The report includes information about the model that was fitted, the distribution of the observed effect sizes or outcomes, the estimate of the average outcome based on the fitted model, tests and statistics that are informative about potential (residual) heterogeneity in the outcomes, checks for outliers and/or influential studies, and tests for funnel plot asymmetry. By default, a forest plot and a funnel plot are also provided (these can be suppressed by setting <code>forest=FALSE</code> and/or <code>funnel=FALSE</code>).</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>The function generates either a html, pdf, or docx file and returns (invisibly) the path to the generated document.</p>

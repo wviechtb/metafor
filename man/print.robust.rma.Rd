@@ -18,7 +18,7 @@
 \details{
    The output includes:
    \itemize{
-   \item information on the number of observed outcomes, number of clusters, and the number of outcomes per cluster.
+   \item information on the number of observed effect sizes or outcomes, number of clusters, and the number of effect sizes or outcomes per cluster.
    \item the results of the omnibus (Wald-type) test of the coefficients in the model (the indices of the coefficients tested are also indicated). Suppressed if the model includes only one coefficient (e.g., only an intercept, like in the fixed- and random-effects model).
    \item a table with the estimated coefficients, corresponding standard errors, test statistics, p-values, and confidence interval bounds.
    }

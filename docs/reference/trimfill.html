@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-38</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-39</span>
       </span>
     </div>
 
@@ -181,9 +181,9 @@
     <p>An object of class <code><a href='https://rdrr.io/r/base/c.html'>c("rma.uni.trimfill","rma.uni","rma")</a></code>. The object is a list containing the same components as objects created by <code><a href='rma.uni.html'>rma.uni</a></code>, except that the data are augmented by the trim and fill method. The following components are also added:</p>
 <dt>k0</dt><dd><p>estimated number of missing studies.</p></dd>
    <dt>side</dt><dd><p>either <code>"left"</code> or <code>"right"</code>, indicating on which side of the funnel plot the missing studies (if any) were imputed.</p></dd>
-   <dt>se.k0</dt><dd><p>estimated standard error of k0.</p></dd>
+   <dt>se.k0</dt><dd><p>standard error of k0.</p></dd>
    <dt>p.k0</dt><dd><p>p-value for the test of \(H_0\): no missing studies on the chosen side (only when <code>estimator="R0"</code>; <code>NA</code> otherwise).</p></dd>
-   <dt>yi</dt><dd><p>the observed outcomes or effect sizes plus the augmented values (if there are any).</p></dd>
+   <dt>yi</dt><dd><p>the observed effect sizes or outcomes plus the augmented values (if there are any).</p></dd>
    <dt>vi</dt><dd><p>the corresponding sampling variances</p></dd>
    <dt>fill</dt><dd><p>a logical vector indicating which of the values in <code>yi</code> are the observed (<code>FALSE</code>) and the augmented (<code>TRUE</code>) data.</p></dd>
 

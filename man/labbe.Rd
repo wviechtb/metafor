@@ -18,8 +18,8 @@ labbe(x, \dots)
    \item{ylim}{y-axis limits. If unspecified, the function tries to set the y-axis limits to some sensible values.}
    \item{xlab}{title for the x-axis. If unspecified, the function tries to set an appropriate axis title.}
    \item{ylab}{title for the y-axis. If unspecified, the function tries to set an appropriate axis title.}
-   \item{add}{See below and the documentation of the \code{\link{escalc}} function for more details.}
-   \item{to}{See below and the documentation of the \code{\link{escalc}} function for more details.}
+   \item{add}{See \sQuote{Details} and the documentation of the \code{\link{escalc}} function for more details.}
+   \item{to}{See \sQuote{Details} and the documentation of the \code{\link{escalc}} function for more details.}
    \item{transf}{optional argument specifying the name of a function that should be used to transform the outcomes (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified under \code{transf}.}
    \item{pch}{plotting symbol to use for the outcomes. By default, a filled circle is used. Can also be a vector of values. See \code{\link{points}} for other options.}

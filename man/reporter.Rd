@@ -13,19 +13,19 @@ reporter(x, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma.uni"}.}
-   \item{dir}{optional character string specifying the directory for creating the report (by default, \code{\link{tempdir}} will be used).}
-   \item{filename}{optional character string specifying the filename (without file extension) for the report (by default, the function sets a filename automatically).}
+   \item{dir}{optional character string specifying the directory for creating the report (if unspecified, \code{\link{tempdir}} will be used).}
+   \item{filename}{optional character string specifying the filename (without file extension) for the report (if unspecified, the function sets a filename automatically).}
    \item{format}{output format for the report (either \code{html_document}, \code{pdf_document}, or \code{word_document}). Can be abbreviated. See \sQuote{Note}.}
-   \item{open}{logical indicating whether the report should be opened after it has been generated (default is \code{TRUE}). See \sQuote{Note}.}
+   \item{open}{logical indicating whether the report should be opened after it has been generated (the default is \code{TRUE}). See \sQuote{Note}.}
    \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is to take the value from the object).}
    \item{forest}{either a logical which will suppress the drawing of the forest plot when set to \code{FALSE} or a character string with arguments to be added to the call to \code{\link{forest.rma}} for generating the forest plot.}
    \item{funnel}{either a logical which will suppress the drawing of the funnel plot when set to \code{FALSE} or a character string with arguments to be added to the call to \code{\link{funnel.rma}} for generating the funnel plot.}
-   \item{footnotes}{logical indicating whether additional explanatory footnotes should be added to the report (default is \code{FALSE}).}
-   \item{verbose}{logical indicating whether information on the progress of the report generation should be provided (default is \code{TRUE}).}
+   \item{footnotes}{logical indicating whether additional explanatory footnotes should be added to the report (the default is \code{FALSE}).}
+   \item{verbose}{logical indicating whether information on the progress of the report generation should be provided (the default is \code{TRUE}).}
    \item{\dots}{other arguments.}
 }
 \details{
-   The function dynamically generates an analysis report based on the model object. The report includes information about the model that was fitted, the distribution of the observed outcomes, the estimate of the average outcome based on the fitted model, tests and statistics that are informative about potential (residual) heterogeneity in the outcomes, checks for outliers and/or influential studies, and tests for funnel plot asymmetry. By default, a forest plot and a funnel plot are also provided (these can be suppressed by setting \code{forest=FALSE} and/or \code{funnel=FALSE}).
+   The function dynamically generates an analysis report based on the model object. The report includes information about the model that was fitted, the distribution of the observed effect sizes or outcomes, the estimate of the average outcome based on the fitted model, tests and statistics that are informative about potential (residual) heterogeneity in the outcomes, checks for outliers and/or influential studies, and tests for funnel plot asymmetry. By default, a forest plot and a funnel plot are also provided (these can be suppressed by setting \code{forest=FALSE} and/or \code{funnel=FALSE}).
 }
 \value{
    The function generates either a html, pdf, or docx file and returns (invisibly) the path to the generated document.

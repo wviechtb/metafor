@@ -40,6 +40,11 @@ ranktest.default <- function(x, vi, sei, subset, digits, ...) {
 
    yi <- x
 
+   ### check length of yi and vi
+
+   if (length(yi) != length(vi))
+      stop(mstyle$stop("Length of 'yi' and 'vi' (or 'sei') is not the same."))
+
    #########################################################################
 
    ### if a subset of studies is specified

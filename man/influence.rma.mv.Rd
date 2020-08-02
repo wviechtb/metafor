@@ -17,7 +17,7 @@
 \arguments{
    \item{model}{an object of class \code{"rma.mv"}.}
    \item{progbar}{logical indicating whether a progress bar should be shown (the default is \code{FALSE}). Ignored when using parallel processing.}
-   \item{cluster}{optional vector specifying a clustering variable to use for computing the Cook's distances. If not specified, Cook's distances are computed for all individual observed outcomes.}
+   \item{cluster}{optional vector specifying a clustering variable to use for computing the Cook's distances. If not specified, Cook's distances are computed for all individual observed effect sizes or outcomes.}
    \item{reestimate}{logical indicating whether variance/correlation components should be re-estimated after deletion of the \mjseqn{i}th study/cluster (the default is \code{TRUE}).}
    \item{parallel}{character string indicating whether parallel processing should be used (the default is \code{"no"}). For parallel processing, set to either \code{"snow"} or \code{"multicore"}. See \sQuote{Details}.}
    \item{ncpus}{integer specifying the number of processes to use in the parallel processing.}

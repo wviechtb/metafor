@@ -99,7 +99,7 @@ coef_test(res, vcov="CR2", cluster=dat$district)
 ### copy data from Berkey et al. (1998) into 'dat'
 dat <- dat.berkey1998
 
-### construct list of the variance-covariance matrices of the observed outcomes for the studies
+### construct list with the variance-covariance matrices of the observed outcomes for the studies
 V <- lapply(split(dat[c("v1i", "v2i")], dat$trial), as.matrix)
 
 ### construct block diagonal matrix

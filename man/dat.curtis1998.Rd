@@ -15,11 +15,11 @@
 \bold{co2.elev} \tab \code{numeric}   \tab elevated CO2 level (treatment group) \cr
 \bold{units}    \tab \code{character} \tab units for CO2 exposure levels \cr
 \bold{time}     \tab \code{numeric}   \tab maximum length of time (days) of CO2 exposure \cr
-\bold{pot}      \tab \code{character} \tab growing method (see below) \cr
-\bold{method}   \tab \code{character} \tab CO2 exposure facility (see below) \cr
+\bold{pot}      \tab \code{character} \tab growing method (see \sQuote{Details}) \cr
+\bold{method}   \tab \code{character} \tab CO2 exposure facility (see \sQuote{Details}) \cr
 \bold{stock}    \tab \code{character} \tab planting stock code \cr
-\bold{xtrt}     \tab \code{character} \tab interacting treatment code (see below) \cr
-\bold{level}    \tab \code{character} \tab interacting treatment level codes (see below) \cr
+\bold{xtrt}     \tab \code{character} \tab interacting treatment code (see \sQuote{Details}) \cr
+\bold{level}    \tab \code{character} \tab interacting treatment level codes (see \sQuote{Details}) \cr
 \bold{m1i}      \tab \code{numeric}   \tab mean plant mass under elevated CO2 level (treatment group) \cr
 \bold{sd1i}     \tab \code{numeric}   \tab standard deviation of plant mass underelevated CO2 level (treatment group) \cr
 \bold{n1i}      \tab \code{numeric}   \tab number of observations under elevated CO2 level (treatment group) \cr

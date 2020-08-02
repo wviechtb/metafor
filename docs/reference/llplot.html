@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-38</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-39</span>
       </span>
     </div>
 
@@ -247,7 +247,7 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>At the moment, the function only accepts <code>measure="GEN"</code> or <code>measure="OR"</code>.</p>
-<p>For <code>measure="GEN"</code>, one must specify arguments <code>yi</code> for the observed effect sizes or outcomes and <code>vi</code> for the corresponding sampling variances (instead of specifying <code>vi</code>, one can specify the standard errors via the <code>sei</code> argument). The function then plots the likelihood of the true outcome based on a normal sampling distribution with observed outcome as given by <code>yi</code> and variance as given by <code>vi</code> for each study.</p>
+<p>For <code>measure="GEN"</code>, one must specify arguments <code>yi</code> for the observed effect sizes or outcomes and <code>vi</code> for the corresponding sampling variances (instead of specifying <code>vi</code>, one can specify the standard errors via the <code>sei</code> argument). The function then plots the likelihood of the true effect size or outcome based on a normal sampling distribution with observed outcome as given by <code>yi</code> and variance as given by <code>vi</code> for each study.</p>
 <p>For <code>measure="OR"</code>, one must specify arguments <code>ai</code>, <code>bi</code>, <code>ci</code>, and <code>di</code>, which denote the cell frequencies of the \(2 \times 2\) tables. Alternatively, one can specify <code>ai</code>, <code>ci</code>, <code>n1i</code>, and <code>n2i</code>. See <code><a href='escalc.html'>escalc</a></code> function for more details. The function then plots the likelihood of the true log odds ratio based on the non-central hypergeometric distribution for each \(2 \times 2\) table. Since studies with no cases (or only cases) in both groups have a flat likelihood and are not informative about the odds ratio, they are dropped by default (i.e., <code>drop00=TRUE</code>) and are hence not drawn (if <code>drop00=FALSE</code>, these likelihood are indicated by dotted lines). For studies that have a single zero count, the MLE of the odds ratio is infinite and these likelihoods are indicated by dashed lines.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 

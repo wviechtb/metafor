@@ -28,7 +28,7 @@ print.gosh.rma <- function(x, digits=x$digits, ...) {
 
    res.table <- .fcf(res.table, digits[["est"]])
 
-   colnames(res.table) <- c("mean", "min", "Q1", "median", "Q3", "max")
+   colnames(res.table) <- c("mean", "min", "q1", "median", "q3", "max")
    rownames(res.table) <- colnames(x$res)
 
    if (ncol(x$res) == 6)

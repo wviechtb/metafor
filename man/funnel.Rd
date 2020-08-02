@@ -26,8 +26,8 @@ funnel(x, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma"} or a vector with the observed effect sizes or outcomes.}
-   \item{vi}{vector with the corresponding sampling variances.}
-   \item{sei}{vector with the corresponding standard errors.}
+   \item{vi}{vector with the corresponding sampling variances (needed if \code{x} is a vector with the observed effect sizes or outcomes).}
+   \item{sei}{vector with the corresponding standard errors (note: only one of the two, \code{vi} or \code{sei}, needs to be specified).}
    \item{ni}{vector with the corresponding sample sizes.}
    \item{subset}{optional (logical or numeric) vector indicating the subset of studies that should be included in the plot. Only relevant when passing a vector via \code{x}.}
    \item{yaxis}{either \code{"sei"}, \code{"vi"}, \code{"seinv"}, \code{"vinv"}, \code{"ni"}, \code{"ninv"}, \code{"sqrtni"}, \code{"sqrtninv"}, \code{"lni"}, or \code{"wi"} to indicate what values should be placed on the y-axis. See \sQuote{Details}.}
@@ -80,16 +80,16 @@ funnel(x, \dots)
 
    If the object passed to the function comes from the \code{\link{trimfill}} function, the effect sizes or outcomes that are filled in by the trim and fill method are also added to the funnel plot. The symbol to use for plotting the filled in values can be specified via the \code{pch.fill} argument.
 
-   One can also directly pass a vector of observed effect sizes or outcomes (via \code{x}) and the corresponding sampling variances (via \code{vi}), standard errors (via \code{sei}), and/or sample sizes (via \code{ni}) to the function. By default, the vertical reference line is then drawn at zero.
+   One can also directly pass a vector with the observed effect sizes or outcomes (via \code{x}) and the corresponding sampling variances (via \code{vi}), standard errors (via \code{sei}), and/or sample sizes (via \code{ni}) to the function. By default, the vertical reference line is then drawn at zero.
 
    The arguments \code{back}, \code{shade}, and \code{hlines} can be set to \code{NULL} to suppress the shading and the horizontal reference lines.
 
    With the \code{label} argument, one can control whether points in the plot will be labeled. If \code{label="all"} (or \code{label=TRUE}), all points in the plot will be labeled. If \code{label="out"}, points falling outside of the pseudo confidence region will be labeled. Finally, one can also set this argument to a numeric value (between 1 and \mjseqn{k}), indicating how many of the most extreme points should be labeled (for example, with \code{label=1} only the most extreme point would be labeled, while with \code{label=3}, the most extreme, and the second and third most extreme points would be labeled). With the \code{offset} argument, the distance between the labels and the corresponding points can be controlled.
 }
 \note{
-   Placing (a function of) the sample size on the y-axis (i.e., using \code{yaxis="ni"}, \code{yaxis="ninv"}, \code{yaxis="sqrtni"}, \code{yaxis="sqrtninv"}, or \code{yaxis="lni"}) is only possible when information about the sample sizes is actually stored within the object passed to the \code{funnel} function. That should automatically be the case when the observed outcomes were computed with the \code{escalc} function or when the observed outcomes were computed within the model fitting function. On the other hand, this will not be the case when \code{rma.uni} was used together with the \code{yi} and \code{vi} arguments and the \code{yi} and \code{vi} values were \emph{not} computed with \code{escalc}. In that case, it is still possible to pass information about the sample sizes to the \code{rma.uni} function (e.g., use \code{rma.uni(yi, vi, ni=ni, data=dat)}, where data frame \code{dat} includes a variable called \code{ni} with the sample sizes).
+   Placing (a function of) the sample size on the y-axis (i.e., using \code{yaxis="ni"}, \code{yaxis="ninv"}, \code{yaxis="sqrtni"}, \code{yaxis="sqrtninv"}, or \code{yaxis="lni"}) is only possible when information about the sample sizes is actually stored within the object passed to the \code{funnel} function. That should automatically be the case when the observed effect sizes or outcomes were computed with the \code{escalc} function or when the observed effect sizes or outcomes were computed within the model fitting function. On the other hand, this will not be the case when \code{rma.uni} was used together with the \code{yi} and \code{vi} arguments and the \code{yi} and \code{vi} values were \emph{not} computed with \code{escalc}. In that case, it is still possible to pass information about the sample sizes to the \code{rma.uni} function (e.g., use \code{rma.uni(yi, vi, ni=ni, data=dat)}, where data frame \code{dat} includes a variable called \code{ni} with the sample sizes).
 
-   When using unweighted estimation, using \code{yaxis="wi"} will place all points on a horizontal line. When directly passing a vector of observed effect sizes or outcomes to the function, \code{yaxis="wi"} is equivalent to \code{yaxis="vinv"}, except that the weights are expressed in percent.
+   When using unweighted estimation, using \code{yaxis="wi"} will place all points on a horizontal line. When directly passing a vector with the observed effect sizes or outcomes to the function, \code{yaxis="wi"} is equivalent to \code{yaxis="vinv"}, except that the weights are expressed in percent.
 
    When specifying vectors for \code{pch}, \code{col}, and/or \code{bg}, the variables specified are assumed to be of the same length as the data passed to the funnel function or the model fitting function (when using \code{funnel} on a model object). Any subsetting and removal of studies with missing values is automatically applied to the variables specified via \code{pch}, \code{col}, and \code{bg}.
 }

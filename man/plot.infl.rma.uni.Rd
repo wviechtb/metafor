@@ -11,7 +11,7 @@
 }
 \arguments{
    \item{x}{an object of class \code{"infl.rma.uni"}.}
-   \item{plotinf}{logical indicating whether the various case diagnostics should be plotted (the default is \code{TRUE}). Can also be a vector of up to 8 integers indicating which plots to draw (see \sQuote{Details} for the numbers corresponding to the various plots).}
+   \item{plotinf}{logical indicating whether the various case diagnostics should be plotted (the default is \code{TRUE}). Can also be a vector of up to 8 integers indicating which plots to draw. See \sQuote{Details} for the numbers corresponding to the various plots.}
    \item{plotdfbs}{logical indicating whether the DFBETAS values should be plotted (the default is \code{FALSE}). Can also be a vector of integers to indicate for which coefficient(s) to plot the DFBETAS values.}
    \item{dfbsnew}{logical indicating whether a new device should be opened for plotting the DFBETAS values (the default is \code{FALSE}).}
    \item{logcov}{logical indicating whether the covariance ratios should be plotted on a log scale (the default is \code{TRUE}).}

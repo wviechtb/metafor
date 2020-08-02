@@ -16,28 +16,28 @@
    \item{object}{an object of class \code{"escalc"}.}
    \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (the default is to take the value from the object).}
    \item{out.names}{character string with four elements, specifying the variable names for the standard errors, test statistics, and lower/upper confidence interval bounds.}
-   \item{var.names}{character string with two elements, specifying the variable names for the observed outcomes and the sampling variances (the default is to take the value from the object if possible).}
-   \item{H0}{numeric value specifying the value of the outcome under the null hypothesis.}
+   \item{var.names}{character string with two elements, specifying the variable names for the observed effect sizes or outcomes and the sampling variances (the default is to take the value from the object if possible).}
+   \item{H0}{numeric value specifying the value of the outcome or the effect size under the null hypothesis (the default is 0).}
    \item{append}{logical indicating whether the data frame specified via the \code{object} argument should be returned together with the additional variables that are calculated by the \code{summary} function (the default is \code{TRUE}).}
    \item{replace}{logical indicating whether existing values for \code{sei}, \code{zi}, \code{ci.lb}, and \code{ci.ub} in the data frame should be replaced or not. Only relevant when the data frame already contains these variables. If \code{replace=TRUE} (the default), all of the existing values will be overwritten. If \code{replace=FALSE}, only \code{NA} values will be replaced.}
    \item{level}{numerical value between 0 and 100 specifying the confidence interval level (the default is 95).}
    \item{clim}{limits for the confidence intervals. If unspecified, no limits are used.}
-   \item{transf}{optional argument specifying the name of a function that should be used to transform the observed outcomes and interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used. Any additional arguments needed for the function specified here can be passed via \code{\dots}.}
+   \item{transf}{optional argument specifying the name of a function that should be used to transform the observed effect sizes or outcomes and interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used. Any additional arguments needed for the function specified here can be passed via \code{\dots}.}
    \item{\dots}{other arguments.}
 }
 \value{
-   The \code{print.escalc} function formats and prints the data frame, so that the observed outcomes and sampling variances are rounded (to the number of digits specified).
+   The \code{print.escalc} function formats and prints the data frame, so that the observed effect sizes or outcomes and sampling variances are rounded (to the number of digits specified).
 
    The \code{summary.escalc} function creates an object that is a data frame containing the original data (if \code{append=TRUE}) and the following components:
-   \item{yi}{observed outcomes or effect size estimates (transformed if \code{transf} is specified).}
-   \item{vi}{corresponding (estimated) sampling variances.}
-   \item{sei}{standard errors of the observed outcomes or effect size estimates.}
+   \item{yi}{observed effect sizes or outcomes (transformed if \code{transf} is specified).}
+   \item{vi}{corresponding sampling variances.}
+   \item{sei}{correponding standard errors.}
    \item{zi}{test statistics for testing \mjeqn{H_0: \theta_i = \mbox{H0}}{H_0: \theta_i = H0} (i.e., \code{(yi-H0)/sei}).}
    \item{pval}{corresponding p-values.}
    \item{ci.lb}{lower confidence interval bounds (transformed if \code{transf} is specified).}
    \item{ci.ub}{upper confidence interval bounds (transformed if \code{transf} is specified).}
 
-   When the \code{transf} argument is specified, elements \code{vi}, \code{sei}, \code{zi}, and \code{pval} are not included (since these only apply to the untransformed outcomes or effect size estimates).
+   When the \code{transf} argument is specified, elements \code{vi}, \code{sei}, \code{zi}, and \code{pval} are not included (since these only apply to the untransformed effect sizes or outcomes).
 
    Note that the actual variable names above depend on the \code{out.names} (and \code{var.names}) arguments. If the data frame already contains variables with names as specified by the \code{out.names} argument, the values for these variables will be overwritten when \code{replace=TRUE} (which is the default). By setting \code{replace=FALSE}, only values that are \code{NA} will be replaced.
 

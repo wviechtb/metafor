@@ -10,7 +10,7 @@ to.long(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
         add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, var.names)
 }
 \arguments{
-   \item{measure}{a character string indicating the effect size or outcome measure corresponding to the summary data supplied. See below and the documentation of the \code{\link{escalc}} function for more details.}
+   \item{measure}{a character string indicating the effect size or outcome measure corresponding to the summary data supplied. See \sQuote{Details} and the documentation of the \code{\link{escalc}} function for possible options.}
    \item{ai}{vector to specify the \mjeqn{2 \times 2}{2x2} table frequencies (upper left cell).}
    \item{bi}{vector to specify the \mjeqn{2 \times 2}{2x2} table frequencies (upper right cell).}
    \item{ci}{vector to specify the \mjeqn{2 \times 2}{2x2} table frequencies (lower left cell).}

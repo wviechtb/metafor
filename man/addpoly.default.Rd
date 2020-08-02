@@ -12,7 +12,7 @@
 \arguments{
    \item{x}{vector with the values at which the polygons should be drawn.}
    \item{vi}{vector with the corresponding variances.}
-   \item{sei}{vector with the corresponding standard errors note: only one of the two, \code{vi} or \code{sei}, needs to be specified).}
+   \item{sei}{vector with the corresponding standard errors (note: only one of the two, \code{vi} or \code{sei}, needs to be specified).}
    \item{ci.lb}{vector with the corresponding lower confidence interval bounds. Not needed if \code{vi} or \code{sei} is specified. See \sQuote{Details}.}
    \item{ci.ub}{vector with the corresponding upper confidence interval bounds. Not needed if \code{vi} or \code{sei} is specified. See \sQuote{Details}.}
    \item{pi.lb}{optional vector with the corresponding lower prediction interval bounds.}

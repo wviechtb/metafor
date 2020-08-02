@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-38</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-39</span>
       </span>
     </div>
 
@@ -152,11 +152,11 @@
     </tr>
     <tr>
       <th>vi</th>
-      <td><p>vector with the corresponding sampling variances.</p></td>
+      <td><p>vector with the corresponding sampling variances (needed if <code>x</code> is a vector with the observed effect sizes or outcomes).</p></td>
     </tr>
     <tr>
       <th>sei</th>
-      <td><p>vector with the corresponding standard errors.</p></td>
+      <td><p>vector with the corresponding standard errors (note: only one of the two, <code>vi</code> or <code>sei</code>, needs to be specified).</p></td>
     </tr>
     <tr>
       <th>subset</th>
@@ -174,8 +174,8 @@
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The function carries out the rank correlation test as described by Begg and Mazumdar (1994). The test can be used to examine whether the observed outcomes and the corresponding sampling variances are correlated. A high correlation would indicate that the funnel plot is asymmetric, which may be a result of publication bias.</p>
-<p>One can either pass an object of class <code>"rma"</code> to the function or a vector of observed effect sizes or outcomes (via <code>x</code>) and the corresponding sampling variances via <code>vi</code> (or the standard errors via <code>sei</code>).</p>
+    <p>The function carries out the rank correlation test as described by Begg and Mazumdar (1994). The test can be used to examine whether the observed effect sizes or outcomes and the corresponding sampling variances are correlated. A high correlation would indicate that the funnel plot is asymmetric, which may be a result of publication bias.</p>
+<p>One can either pass an object of class <code>"rma"</code> to the function or a vector with the observed effect sizes or outcomes (via <code>x</code>) and the corresponding sampling variances via <code>vi</code> (or the standard errors via <code>sei</code>).</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class <code>"ranktest.rma"</code>. The object is a list containing the following components:</p>

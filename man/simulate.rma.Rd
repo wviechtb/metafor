@@ -3,7 +3,7 @@
 \alias{simulate.rma}
 \title{Simulate Method for 'rma' Objects}
 \description{
-   The function simulates observed outcomes based on \code{"rma"} model object.
+   The function simulates effect sizes or outcomes based on \code{"rma"} model object.
 }
 \usage{
 \method{simulate}{rma}(object, nsim = 1, seed = NULL, \dots)
@@ -18,7 +18,7 @@
    The model specified via \code{object} must be a model fitted with either the \code{\link{rma.uni}} or \code{\link{rma.mv}} function.
 }
 \value{
-   A data frame with \code{nsim} columns with the simulated outcomes.
+   A data frame with \code{nsim} columns with the simulated effect sizes or outcomes.
 
    The data frame comes with an attribute \code{"seed"}. If argument \code{seed} is \code{NULL}, the attribute is the value of \code{\link{.Random.seed}} before the simulation was started; otherwise it is the value of the \code{seed} argument with a \code{"kind"} attribute with value \code{as.list(RNGkind())}.
 }

@@ -8,24 +8,24 @@
 fsn(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, subset, digits)
 }
 \arguments{
-   \item{yi}{vector with the observed effect sizes or outcomes. See \sQuote{Details}}
-   \item{vi}{vector with the corresponding sampling variances. See \sQuote{Details}}
-   \item{sei}{vector with the corresponding standard errors. See \sQuote{Details}}
+   \item{yi}{vector with the observed effect sizes or outcomes.}
+   \item{vi}{vector with the corresponding sampling variances.}
+   \item{sei}{vector with the corresponding standard errors (note: only one of the two, \code{vi} or \code{sei}, needs to be specified).}
    \item{data}{optional data frame containing the variables given to the arguments above.}
-   \item{type}{character string indicating the method to use for the calculation of the fail-safe N. Possible options are \code{"Rosenthal"}, \code{"Orwin"}, or \code{"Rosenberg"}. See below for more details.}
-   \item{alpha}{target alpha level to use for the Rosenthal and Rosenberg methods (.05 by default).}
+   \item{type}{character string indicating the method to use for the calculation of the fail-safe N. Possible options are \code{"Rosenthal"}, \code{"Orwin"}, or \code{"Rosenberg"}. See \sQuote{Details}.}
+   \item{alpha}{target alpha level to use for the Rosenthal and Rosenberg methods (the default is .05).}
    \item{target}{target average effect size to use for the Orwin method. If undefined, then the target average effect size will be equal to the observed average effect size divided by 2.}
-   \item{subset}{optional (logical or numeric) vector indicating the subset of studies that should be used for the calculation.}
+   \item{subset}{optional (logical or numeric) vector indicating the subset of studies that should be used for the calculations.}
    \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is 4).}
 }
 \details{
-   The function can be used in conjunction with any of the usual effect sizes / outcome measures used in meta-analyses (e.g., log risk ratios, log odds ratios, risk differences, mean differences, standardized mean differences, raw correlation coefficients, correlation coefficients transformed with Fisher's r-to-z transformation, and so on). Simply specify the observed outcomes via the \code{yi} argument and the corresponding sampling variances via the \code{vi} argument (instead of specifying \code{vi}, one can specify the standard errors via the \code{sei} argument). The \code{\link{escalc}} function can be used to compute a wide variety of effect sizes / outcome measures (and the corresponding sampling variances) based on summary statistics.
+   The function can be used in conjunction with any of the usual effect sizes / outcome measures used in meta-analyses (e.g., log risk ratios, log odds ratios, risk differences, mean differences, standardized mean differences, raw correlation coefficients, correlation coefficients transformed with Fisher's r-to-z transformation, and so on). Simply specify the observed effect sizes or outcomes via the \code{yi} argument and the corresponding sampling variances via the \code{vi} argument (instead of specifying \code{vi}, one can specify the standard errors via the \code{sei} argument). The \code{\link{escalc}} function can be used to compute a wide variety of effect sizes / outcome measures (and the corresponding sampling variances) based on summary statistics.
 
-   The Rosenthal method (sometimes called a \sQuote{file drawer analysis}) calculates the number of studies averaging null results that would have to be added to the given set of observed outcomes to reduce the combined significance level (p-value) to a target alpha level (e.g., .05). The calculation is based on Stouffer's method to combine p-values and is described in Rosenthal (1979).
+   The Rosenthal method (sometimes called a \sQuote{file drawer analysis}) calculates the number of studies averaging null results that would have to be added to the given set of observed effect sizes or outcomes to reduce the combined significance level (p-value) to a target alpha level (e.g., .05). The calculation is based on Stouffer's method to combine p-values and is described in Rosenthal (1979).
 
-   The Orwin method calculates the number of studies averaging null results that would have to be added to the given set of observed outcomes to reduce the (unweighted) average effect size to a target (unweighted) average effect size. The method is described in Orwin (1983).
+   The Orwin method calculates the number of studies averaging null results that would have to be added to the given set of observed effect sizes or outcomes to reduce the (unweighted) average effect size to a target (unweighted) average effect size. The method is described in Orwin (1983).
 
-   The Rosenberg method calculates the number of studies averaging null results that would have to be added to the given set of observed outcomes to reduce significance level (p-value) of the (weighted) average effect size (based on a fixed-effects model) to a target alpha level (e.g., .05). The method is described in Rosenberg (2005).
+   The Rosenberg method calculates the number of studies averaging null results that would have to be added to the given set of observed effect sizes or outcomes to reduce significance level (p-value) of the (weighted) average effect size (based on a fixed-effects model) to a target alpha level (e.g., .05). The method is described in Rosenberg (2005).
 }
 \value{
    An object of class \code{"fsn"}. The object is a list containing the following components:

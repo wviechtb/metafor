@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-38</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-39</span>
       </span>
     </div>
 
@@ -176,7 +176,7 @@
 #&gt; 8      4  Ramfjord et al. 1987 89      AL -0.3100 0.0015 0.0009 0.0015 
 #&gt; 9      5    Becker et al. 1988 16      PD  0.5600 0.0148 0.0148 0.0072 
 #&gt; 10     5    Becker et al. 1988 16      AL -0.3900 0.0304 0.0072 0.0304 </div><div class='input'>
-<span class='co'>### construct list of the variance-covariance matrices of the observed outcomes for the studies</span>
+<span class='co'>### construct list with the variance-covariance matrices of the observed outcomes for the studies</span>
 <span class='no'>V</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/split.html'>split</a></span>(<span class='no'>dat</span>[<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"v1i"</span>, <span class='st'>"v2i"</span>)], <span class='no'>dat</span>$<span class='no'>trial</span>), <span class='no'>as.matrix</span>)
 
 <span class='co'>### construct block diagonal matrix</span>

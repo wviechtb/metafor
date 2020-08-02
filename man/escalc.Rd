@@ -44,11 +44,11 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \item{include}{optional (logical or numeric) vector indicating the subset of studies for which the measure should be calculated. See the \sQuote{Value} section for more details.}
    \item{add}{a non-negative number indicating the amount to add to zero cells, counts, or frequencies. See \sQuote{Details}.}
    \item{to}{a character string indicating when the values under \code{add} should be added (either \code{"all"}, \code{"only0"}, \code{"if0all"}, or \code{"none"}). See \sQuote{Details}.}
-   \item{drop00}{logical indicating whether studies with no cases/events (or only cases) in both groups should be dropped when calculating the observed outcomes of the individual studies. See \sQuote{Details}.}
+   \item{drop00}{logical indicating whether studies with no cases/events (or only cases) in both groups should be dropped when calculating the observed effect sizes. See \sQuote{Details}.}
    \item{vtype}{a character string indicating the type of sampling variances to calculate (either \code{"LS"}, \code{"UB"}, \code{"HO"}, \code{"ST"}, or \code{vtype="CS"}). See \sQuote{Details}.}
-   \item{var.names}{a character string with two elements, specifying the name of the variable for the observed outcomes and the name of the variable for the corresponding sampling variances (the default is \code{"yi"} and \code{"vi"}).}
+   \item{var.names}{a character string with two elements, specifying the name of the variable for the observed effect sizes or outcomes and the name of the variable for the corresponding sampling variances (the default is \code{"yi"} and \code{"vi"}).}
    \item{add.measure}{logical indicating whether a variable should be added to the data frame (with default name \code{"measure"}) that indicates the type of outcome measure computed. When using this option, \code{var.names} can have a third element to change this variable name.}
-   \item{append}{logical indicating whether the data frame specified via the \code{data} argument (if one has been specified) should be returned together with the observed outcomes and corresponding sampling variances (the default is \code{TRUE}).}
+   \item{append}{logical indicating whether the data frame specified via the \code{data} argument (if one has been specified) should be returned together with the observed effect sizes or outcomes and corresponding sampling variances (the default is \code{TRUE}).}
    \item{replace}{logical indicating whether existing values for \code{yi} and \code{vi} in the data frame should be replaced or not. Only relevant when \code{append=TRUE} and the data frame already contains the \code{yi} and \code{vi} variables. If \code{replace=TRUE} (the default), all of the existing values will be overwritten. If \code{replace=FALSE}, only \code{NA} values will be replaced. See the \sQuote{Value} section for more details.}
    \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is 4). Note that the values are stored without rounding in the returned object.}
    \item{\dots}{other arguments.}
@@ -371,8 +371,8 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 }
 \value{
    An object of class \code{c("escalc","data.frame")}. The object is a data frame containing the following components:
-   \item{yi}{observed outcomes or effect size estimates.}
-   \item{vi}{corresponding (estimated) sampling variances.}
+   \item{yi}{observed effect sizes or outcomes.}
+   \item{vi}{corresponding sampling variances.}
 
    If \code{append=TRUE} and a data frame was specified via the \code{data} argument, then \code{yi} and \code{vi} are append to this data frame. Note that the \code{var.names} argument actually specifies the names of these two variables.
 

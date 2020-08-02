@@ -51,7 +51,7 @@
 
    If a particular study fits the model, its standardized residual follows (asymptotically) a standard normal distribution. A large standardized residual for a study therefore may suggest that the study does not fit the assumed model (i.e., it may be an outlier).
 
-   For \code{"rma.uni"} objects, \code{rstandard.rma.uni} also can compute conditional residuals (when \code{type="conditional"}), which are the deviations of the observed outcomes from the best linear unbiased predictions (BLUPs) of the study-specific true outcomes (see \code{\link{blup.rma.uni}}).
+   For \code{"rma.uni"} objects, \code{rstandard.rma.uni} also can compute conditional residuals (when \code{type="conditional"}), which are the deviations of the observed effect sizes or outcomes from the best linear unbiased predictions (BLUPs) of the study-specific true effect sizes or outcomes (see \code{\link{blup.rma.uni}}).
 
    For \code{"rma.mv"} objects, one can specify a clustering variable (via the \code{cluster} argument). If specified, \code{rstandard} and \code{rstudent} also compute cluster-level multivariate (internally or externally) standardized residuals. If all outcomes within a cluster fit the model, then the multivariate standardized residual for the cluster follows (asymptotically) a chi-square distribution with \mjseqn{k_i} degrees of freedom (where \mjseqn{k_i} denotes the number of outcomes within the cluster).
 
@@ -65,7 +65,7 @@
 
    When a clustering variable is specified for \code{"rma.mv"} objects, the returned object is a list with the first element (named \code{obs}) as described above and a second element (named \code{cluster} of class \code{"list.rma"} with:
    \item{X2}{cluster-level multivariate standardized residuals.}
-   \item{k}{number of observed outcomes within the clusters.}
+   \item{k}{number of observed effect sizes or outcomes within the clusters.}
 
    The \code{"list.rma"} object is formatted and printed with \code{\link{print.list.rma}}.
 }

@@ -167,13 +167,12 @@ cex, cex.lab, cex.axis, annosym, ...) {
             stop(mstyle$stop("Must specify either 'vi', 'sei', or ('ci.lb', 'ci.ub') pairs."))
          } else {
             vi <- sei^2
-            ci.lb <- yi - qnorm(level/2, lower.tail=FALSE) * sei
-            ci.ub <- yi + qnorm(level/2, lower.tail=FALSE) * sei
          }
-      } else {
-         ci.lb <- yi - qnorm(level/2, lower.tail=FALSE) * sqrt(vi)
-         ci.ub <- yi + qnorm(level/2, lower.tail=FALSE) * sqrt(vi)
       }
+      if (length(yi) != length(vi)) # need to do this here to avoid warning when calculating 'ci.lb' and 'ci.ub'
+         stop(mstyle$stop("Length of 'vi' (or 'sei') does not match length of 'yi'."))
+      ci.lb <- yi - qnorm(level/2, lower.tail=FALSE) * sqrt(vi)
+      ci.ub <- yi + qnorm(level/2, lower.tail=FALSE) * sqrt(vi)
    }
 
    ### check length of yi and vi

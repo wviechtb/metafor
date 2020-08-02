@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-38</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-39</span>
       </span>
     </div>
 
@@ -271,7 +271,7 @@
     </tr>
     <tr>
       <th>drop00</th>
-      <td><p>logical indicating whether studies with no cases/events (or only cases) in both groups should be dropped when calculating the observed outcomes of the individual studies. See &#8216;Details&#8217;.</p></td>
+      <td><p>logical indicating whether studies with no cases/events (or only cases) in both groups should be dropped when calculating the observed effect sizes. See &#8216;Details&#8217;.</p></td>
     </tr>
     <tr>
       <th>vtype</th>
@@ -279,7 +279,7 @@
     </tr>
     <tr>
       <th>var.names</th>
-      <td><p>a character string with two elements, specifying the name of the variable for the observed outcomes and the name of the variable for the corresponding sampling variances (the default is <code>"yi"</code> and <code>"vi"</code>).</p></td>
+      <td><p>a character string with two elements, specifying the name of the variable for the observed effect sizes or outcomes and the name of the variable for the corresponding sampling variances (the default is <code>"yi"</code> and <code>"vi"</code>).</p></td>
     </tr>
     <tr>
       <th>add.measure</th>
@@ -287,7 +287,7 @@
     </tr>
     <tr>
       <th>append</th>
-      <td><p>logical indicating whether the data frame specified via the <code>data</code> argument (if one has been specified) should be returned together with the observed outcomes and corresponding sampling variances (the default is <code>TRUE</code>).</p></td>
+      <td><p>logical indicating whether the data frame specified via the <code>data</code> argument (if one has been specified) should be returned together with the observed effect sizes or outcomes and corresponding sampling variances (the default is <code>TRUE</code>).</p></td>
     </tr>
     <tr>
       <th>replace</th>
@@ -570,8 +570,8 @@
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class <code><a href='https://rdrr.io/r/base/c.html'>c("escalc","data.frame")</a></code>. The object is a data frame containing the following components:</p>
-<dt>yi</dt><dd><p>observed outcomes or effect size estimates.</p></dd>
-   <dt>vi</dt><dd><p>corresponding (estimated) sampling variances.</p></dd>
+<dt>yi</dt><dd><p>observed effect sizes or outcomes.</p></dd>
+   <dt>vi</dt><dd><p>corresponding sampling variances.</p></dd>
 
    If append=TRUE and a data frame was specified via the data argument, then yi and vi are append to this data frame. Note that the var.names argument actually specifies the names of these two variables.
 

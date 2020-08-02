@@ -9,15 +9,15 @@
 \bold{study}      \tab \code{numeric}    \tab study number \cr
 \bold{trt}        \tab \code{character}  \tab treatment (BMT or CMO) \cr
 \bold{arms}       \tab \code{numeric}    \tab number of arms in the study (1 = uncontrolled studies; 2 = controlled studies) \cr
-\bold{yi}         \tab \code{numeric}    \tab 2-year disease-free survival \cr
-\bold{sei}        \tab \code{numeric}    \tab corresponding standard error \cr
-\bold{vi}         \tab \code{numeric}    \tab corresponding sampling variance
+\bold{yi}         \tab \code{numeric}    \tab 2-year disease-free survival rates \cr
+\bold{sei}        \tab \code{numeric}    \tab corresponding standard errors \cr
+\bold{vi}         \tab \code{numeric}    \tab corresponding sampling variances
 }
 }
 \details{
-   The dataset includes the results from controlled and uncontrolled studies on the 2-year disease-free survival in patients with acute nonlymphocytic leukemia receiving either allogeneic bone-marrow transplantation (BMT) or conventional chemotherapy (CMO). In the controlled (two-arm) studies (studies 1-4), a cohort of patients in complete remission and potentially eligible for BMT was assembled, and those who consented and for whom a donor could be found received BMT, with the remaining patients used as controls (receiving CMO). In the uncontrolled (one-arm) studies (studies 5-16), only a single group was studied, receiving either BMT or CMO.
+   The dataset includes the results from controlled and uncontrolled studies on the 2-year disease-free survival rate in patients with acute nonlymphocytic leukemia receiving either allogeneic bone-marrow transplantation (BMT) or conventional chemotherapy (CMO). In the controlled (two-arm) studies (studies 1-4), a cohort of patients in complete remission and potentially eligible for BMT was assembled, and those who consented and for whom a donor could be found received BMT, with the remaining patients used as controls (receiving CMO). In the uncontrolled (one-arm) studies (studies 5-16), only a single group was studied, receiving either BMT or CMO.
 
-   The data in this dataset were obtained from Table 1 in Begg & Pilote (1991, p. 902).
+   The data in this dataset were obtained from Table 1 in Begg and Pilote (1991, p. 902).
 }
 \source{
    Begg, C. B., & Pilote, L. (1991). A model for incorporating historical controls into a meta-analysis. \emph{Biometrics}, \bold{47}(3), 899--906. \verb{https://doi.org/10.2307/2532647}

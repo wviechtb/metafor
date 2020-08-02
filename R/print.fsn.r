@@ -30,7 +30,7 @@ print.fsn <- function(x, digits=x$digits, ...) {
    }
 
    if (x$type == "Rosenberg") {
-      cat(mstyle$text("Average Effect Size:        "))
+      cat(mstyle$text("Average Effect Size:         "))
       cat(mstyle$result(.fcf(x$meanes, digits[["est"]])))
       cat("\n")
       cat(mstyle$text("Observed Significance Level: "))

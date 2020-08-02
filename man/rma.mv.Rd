@@ -42,7 +42,7 @@ rma.mv(yi, V, W, mods, random, struct="CS", intercept=TRUE,
 
    \bold{Specifying the Data}
 
-   The function can be used in conjunction with any of the usual effect size or outcome measures used in meta-analyses (e.g., log risk ratios, log odds ratios, risk differences, mean differences, standardized mean differences, raw correlation coefficients, correlation coefficients transformed with Fisher's r-to-z transformation, and so on). Simply specify the observed outcomes via the \code{yi} argument and the corresponding sampling variances via the \code{V} argument. In case the sampling errors are correlated, then one can specify the entire variance-covariance matrix of the sampling errors via the \code{V} argument.
+   The function can be used in conjunction with any of the usual effect size or outcome measures used in meta-analyses (e.g., log risk ratios, log odds ratios, risk differences, mean differences, standardized mean differences, raw correlation coefficients, correlation coefficients transformed with Fisher's r-to-z transformation, and so on). Simply specify the observed effect sizes or outcomes via the \code{yi} argument and the corresponding sampling variances via the \code{V} argument. In case the sampling errors are correlated, then one can specify the entire variance-covariance matrix of the sampling errors via the \code{V} argument.
 
    The \code{\link{escalc}} function can be used to compute a wide variety of effect size or outcome measures (and the corresponding sampling variances) based on summary statistics. Equations for computing the covariance between sampling errors for a variety of different effect size or outcome measures can be found, for example, in Gleser and Olkin (2009). For raw and Fisher's r-to-z transformed correlations, one can find suitable equations, for example, in Steiger (1980).
 
@@ -101,7 +101,7 @@ rma.mv(yi, V, W, mods, random, struct="CS", intercept=TRUE,
 
    The \code{Rscale} argument controls how matrices specified via the \code{R} argument are scaled. With \code{Rscale="none"} (or \code{Rscale=0} or \code{Rscale=FALSE}), no scaling is used. With \code{Rscale="cor"} (or \code{Rscale=1} or \code{Rscale=TRUE}), the \code{\link{cov2cor}} function is used to ensure that the matrices are correlation matrices (assuming they were covariance matrices to begin with). With \code{Rscale="cor0"} (or \code{Rscale=2}), first \code{\link{cov2cor}} is used and then the elements of each correlation matrix are scaled with \mjseqn{(R - \min(R)) / (1 - \min(R))} (this ensures that a correlation of zero in a phylogenetic correlation matrix corresponds to the split at the root node of the tree comprising the species that are actually analyzed). Finally, \code{Rscale="cov0"} (or \code{Rscale=3}) only rescales with \mjseqn{(R - \min(R))} (which ensures that a phylogenetic covariance matrix is rooted at the lowest split).
 
-   Together with the variance-covariance matrix of the sampling errors (i.e., \mjseqn{V}), the random effects structure of the model implies a particular marginal variance-covariance matrix of the observed outcomes. Once estimates of the variance components (i.e., \mjseqn{\sigma^2}, \mjseqn{\tau^2}, \mjseqn{\rho}, \mjseqn{\gamma^2}, and/or \mjseqn{\phi}, values) have been obtained, the estimated marginal variance-covariance matrix can be constructed (denoted by \mjseqn{M}). The model coefficients (i.e., \mjseqn{\beta}) are then estimated with \mjeqn{b = (X'WX')^{-1} X'Wy}{b = (X'WX)^(-1) X'Wy}, where \mjeqn{W = M^{-1}}{W = M^(-1)} is the weight matrix. With the \code{W} argument, one can again specify user-defined weights (or a weight matrix).
+   Together with the variance-covariance matrix of the sampling errors (i.e., \mjseqn{V}), the random effects structure of the model implies a particular marginal variance-covariance matrix of the observed effect sizes or outcomes. Once estimates of the variance components (i.e., \mjseqn{\sigma^2}, \mjseqn{\tau^2}, \mjseqn{\rho}, \mjseqn{\gamma^2}, and/or \mjseqn{\phi}, values) have been obtained, the estimated marginal variance-covariance matrix can be constructed (denoted by \mjseqn{M}). The model coefficients (i.e., \mjseqn{\beta}) are then estimated with \mjeqn{b = (X'WX')^{-1} X'Wy}{b = (X'WX)^(-1) X'Wy}, where \mjeqn{W = M^{-1}}{W = M^(-1)} is the weight matrix. With the \code{W} argument, one can again specify user-defined weights (or a weight matrix).
 
    \bold{Fixing Variance Components and/or Correlations}
 
@@ -143,7 +143,7 @@ rma.mv(yi, V, W, mods, random, struct="CS", intercept=TRUE,
    \item{rho}{estimated \mjseqn{\rho} value(s).}
    \item{gamma2}{estimated \mjseqn{\gamma^2} value(s).}
    \item{phi}{estimated \mjseqn{\phi} value(s).}
-   \item{k}{number of observed outcomes included in the analysis.}
+   \item{k}{number of observed effect sizes or outcomes included in the analysis.}
    \item{p}{number of coefficients in the model (including the intercept).}
    \item{m}{number of coefficients included in the omnibus test of moderators.}
    \item{QE}{test statistic of the test for (residual) heterogeneity.}
@@ -152,7 +152,7 @@ rma.mv(yi, V, W, mods, random, struct="CS", intercept=TRUE,
    \item{QMp}{corresponding p-value.}
    \item{int.only}{logical that indicates whether the model is an intercept-only model.}
    \item{yi, V, X}{the vector of outcomes, the corresponding variance-covariance matrix of the sampling errors, and the model matrix.}
-   \item{M}{the estimated marginal variance-covariance matrix of the observed outcomes.}
+   \item{M}{the estimated marginal variance-covariance matrix of the observed effect sizes or outcomes.}
    \item{fit.stats}{a list with the log-likelihood, deviance, AIC, BIC, and AICc values.}
    \item{\dots}{some additional elements/values.}
 }
@@ -182,7 +182,7 @@ rma.mv(yi, V, W, mods, random, struct="CS", intercept=TRUE,
 
    Whether particular variance components and/or correlations are actually identifiable needs to be carefully examined when fitting complex models. The function does some limited checking internally to fix variances and/or correlations at zero when it is clear that insufficient information is available to estimate a particular parameter (e.g., if a particular factor has only a single level, the corresponding variance component cannot be estimated). However, it is strongly advised in general to do post model fitting checks to make sure that the likelihood surface around the ML/REML estimates is not flat for some combination of the parameter estimates (which would imply that the estimates are essentially arbitrary). For example, one can plot the (restricted) log-likelihood as a function of each variance component and correlation in the model to make sure that each profile plot shows a clear peak at the corresponding ML/REML estimates. The \code{\link{profile.rma.mv}} function can be used for this purpose.
 
-   Finally, note that the model fitting is not done in a very efficient manner at the moment, which is partly a result of allowing for crossed random effects and correlations among the effect sizes or outcomes across the entire dataset (e.g., when using the \code{R} argument). As a result, the function works directly with the entire \mjeqn{k \times k}{kxk} (marginal) variance-covariance matrix of the effect sizes or outcomes (instead of working with smaller blocks in a block diagonal structure). As a result, model fitting can be slow for large \mjseqn{k}. However, when the variance-covariance structure is actually sparse, a lot of speed can be gained by setting \code{sparse=TRUE}, in which case sparse matrix objects are used (via the \code{Matrix} package). Also, when model fitting appears to be slow, setting \code{verbose=TRUE} is useful to obtain information on how the model fitting is progressing.
+   Finally, note that the model fitting is not done in a very efficient manner at the moment, which is partly a result of allowing for crossed random effects and correlations across the entire dataset (e.g., when using the \code{R} argument). As a result, the function works directly with the entire \mjeqn{k \times k}{kxk} (marginal) variance-covariance matrix of the observed effect sizes or outcomes (instead of working with smaller blocks in a block diagonal structure). As a result, model fitting can be slow for large \mjseqn{k}. However, when the variance-covariance structure is actually sparse, a lot of speed can be gained by setting \code{sparse=TRUE}, in which case sparse matrix objects are used (via the \code{Matrix} package). Also, when model fitting appears to be slow, setting \code{verbose=TRUE} is useful to obtain information on how the model fitting is progressing.
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}

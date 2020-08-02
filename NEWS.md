@@ -1,6 +1,8 @@
-# metafor 2.5-38 (2020-07-30)
+# metafor 2.5-39 (2020-08-02)
 
 - the `metafor` package now makes use of the `mathjaxr` package to nicely render equations shown in the HTML help pages
+
+- added `tes()` function for the test of excess significance
 
 - added `rcalc()`, `matreg()`, `dfround()`, and `vec2mat()` functions
 
@@ -38,7 +40,7 @@
 
 - refactored various functions (for cleaner/simpler code)
 
-- added 7 datasets (`dat.anand1999`, `dat.cannon2006`, `dat.craft2003`, `dat.damico2009`, `dat.kalaian1996`, `dat.lau1992`, `dat.vanhowe1999`)
+- added 8 new datasets (`dat.anand1999`, `dat.cannon2006`, `dat.craft2003`, `dat.damico2009`, `dat.dorn2007`, `dat.kalaian1996`, `dat.lau1992`, `dat.vanhowe1999`)
 
 - fixed `level` not getting passed down to the various `cumul()` functions
 

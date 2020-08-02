@@ -13,23 +13,23 @@ print.regtest.rma <- function(x, digits=x$digits, ret.fit=x$ret.fit, ...) {
    cat(mstyle$section("Regression Test for Funnel Plot Asymmetry"))
    cat("\n\n")
    if (x$model == "lm") {
-      cat(mstyle$text("model:     weighted regression with multiplicative dispersion"))
+      cat(mstyle$text("Model:     weighted regression with multiplicative dispersion"))
    } else {
-      cat(mstyle$text(paste("model:    ", ifelse(x$method=="FE", "fixed-effects", "mixed-effects"), "meta-regression model")))
+      cat(mstyle$text(paste("Model:    ", ifelse(x$method=="FE", "fixed-effects", "mixed-effects"), "meta-regression model")))
    }
    cat("\n")
    if (x$predictor == "sei")
-      cat(mstyle$text("predictor: standard error"))
+      cat(mstyle$text("Predictor: standard error"))
    if (x$predictor == "vi")
-      cat(mstyle$text("predictor: sampling variance"))
+      cat(mstyle$text("Predictor: sampling variance"))
    if (x$predictor == "ni")
-      cat(mstyle$text("predictor: sample size"))
+      cat(mstyle$text("Predictor: sample size"))
    if (x$predictor == "ninv")
-      cat(mstyle$text("predictor: inverse of the sample size"))
+      cat(mstyle$text("Predictor: inverse of the sample size"))
    if (x$predictor == "sqrtni")
-      cat(mstyle$text("predictor: square root sample size"))
+      cat(mstyle$text("Predictor: square root sample size"))
    if (x$predictor == "sqrtninv")
-      cat(mstyle$text("predictor: inverse of the square root sample size"))
+      cat(mstyle$text("Predictor: inverse of the square root sample size"))
 
    cat("\n")
 
@@ -43,7 +43,7 @@ print.regtest.rma <- function(x, digits=x$digits, ret.fit=x$ret.fit, ...) {
       cat("\n")
    }
 
-   cat(mstyle$text("test for funnel plot asymmetry: "))
+   cat(mstyle$text("Test for Funnel Plot Asymmetry: "))
    if (is.na(x$dfs)) {
       cat(mstyle$result(paste0("z = ", .fcf(x$zval, digits[["test"]]), ", p ", .pval(x$pval, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
    } else {
@@ -53,11 +53,11 @@ print.regtest.rma <- function(x, digits=x$digits, ret.fit=x$ret.fit, ...) {
 
    if (!is.null(x$est)) {
       if (x$predictor == "sei")
-         cat(mstyle$text("limit estimate (as sei -> 0):   "))
+         cat(mstyle$text("Limit Estimate (as sei -> 0):   "))
       if (x$predictor == "vi")
-         cat(mstyle$text("limit estimate (as vi -> 0):    "))
+         cat(mstyle$text("Limit Estimate (as vi -> 0):    "))
       if (x$predictor %in% c("ninv", "sqrtninv"))
-         cat(mstyle$text("limit estimate (as ni -> inf):  "))
+         cat(mstyle$text("Limit Estimate (as ni -> inf):  "))
       cat(mstyle$result(paste0("b = ", .fcf(x$est, digits[["est"]]), " (CI: ", .fcf(x$ci.lb, digits[["est"]]), ", ", .fcf(x$ci.ub, digits[["est"]]), ")")))
       cat("\n")
    }

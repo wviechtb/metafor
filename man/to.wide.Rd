@@ -16,10 +16,10 @@ to.wide(data, study, grp, ref, grpvars, postfix=c(".1",".2"),
    \item{ref}{optional character string to specify the reference group (must be one of the groups in the group variable). If not given, the most frequently occurring group is used as the reference group.}
    \item{grpvars}{either the names (given as a character vector) or the positions (given as a numeric vector) of the group-level variables.}
    \item{postfix}{a character string of length 2 giving the affix that is placed after the names of the group-level variables for the first and second group.}
-   \item{addid}{logical indicating whether a row id variable should be added to the data frame (\code{TRUE} by default).}
-   \item{addcomp}{logical indicating whether a comparison id variable should be added to the data frame (\code{TRUE} by default).}
-   \item{adddesign}{logical indicating whether a design id variable should be added to the data frame (\code{TRUE} by default).}
-   \item{minlen}{integer indicating the minimum length of the shortened group names for the comparison and design id variables (\code{2} by default).}
+   \item{addid}{logical indicating whether a row id variable should be added to the data frame (the default is \code{TRUE}).}
+   \item{addcomp}{logical indicating whether a comparison id variable should be added to the data frame (the default is \code{TRUE}).}
+   \item{adddesign}{logical indicating whether a design id variable should be added to the data frame (the default is \code{TRUE}).}
+   \item{minlen}{integer indicating the minimum length of the shortened group names for the comparison and design id variables (the default is 2).}
    \item{var.names}{a character string with three elements, specifying the name of the id, comparison, and design variables (the default is \code{c("id","comp","design")}, respectively).}
 }
 \details{

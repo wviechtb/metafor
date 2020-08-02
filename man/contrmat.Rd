@@ -12,9 +12,9 @@ contrmat(data, grp1, grp2, last, shorten=FALSE, minlen=2, append=TRUE)
    \item{grp1}{either the name (given as a character string) or the position (given as a single number) of the first group variable in the data frame.}
    \item{grp2}{either the name (given as a character string) or the position (given as a single number) of the second group variable in the data frame.}
    \item{last}{optional character string to specify which group will be placed in the last column of the matrix (must be one of the groups in the group variables). If not given, the most frequently occurring second group is placed last.}
-   \item{shorten}{logical indicating whether the variable names corresponding to the group names should be shortened (default is \code{FALSE}).}
-   \item{minlen}{integer indicating the minimum length of the shortened variable names (\code{2} by default).}
-   \item{append}{logical indicating whether the contrast matrix should be appended to the data frame specified via the \code{data} argument (default is \code{TRUE}). If \code{append=FALSE}, only the contrast matrix is returned.}
+   \item{shorten}{logical indicating whether the variable names corresponding to the group names should be shortened (the default is \code{FALSE}).}
+   \item{minlen}{integer indicating the minimum length of the shortened variable names (the default is 2).}
+   \item{append}{logical indicating whether the contrast matrix should be appended to the data frame specified via the \code{data} argument (the default is \code{TRUE}). If \code{append=FALSE}, only the contrast matrix is returned.}
 }
 \details{
    The function can be used to construct a matrix that indicates which two groups have been contrasted against each other in each row of a data frame (with \code{1} for the first group, \code{-1} for the second group, and \code{0} otherwise).

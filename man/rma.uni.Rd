@@ -70,7 +70,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
    \bold{Specifying the Data}
 
-   The function can be used in conjunction with any of the usual effect size or outcome measures used in meta-analyses (e.g., log risk ratios, log odds ratios, risk differences, mean differences, standardized mean differences, raw correlation coefficients, correlation coefficients transformed with Fisher's r-to-z transformation, and so on). Simply specify the observed outcomes via the \code{yi} argument and the corresponding sampling variances via the \code{vi} argument. Instead of specifying \code{vi}, one can specify the standard errors (the square root of the sampling variances) via the \code{sei} argument. The \code{\link{escalc}} function can be used to compute a wide variety of effect size or outcome measures (and the corresponding sampling variances) based on summary statistics.
+   The function can be used in conjunction with any of the usual effect size or outcome measures used in meta-analyses (e.g., log risk ratios, log odds ratios, risk differences, mean differences, standardized mean differences, raw correlation coefficients, correlation coefficients transformed with Fisher's r-to-z transformation, and so on). Simply specify the observed effect sizes or outcomes via the \code{yi} argument and the corresponding sampling variances via the \code{vi} argument. Instead of specifying \code{vi}, one can specify the standard errors (the square root of the sampling variances) via the \code{sei} argument. The \code{\link{escalc}} function can be used to compute a wide variety of effect size or outcome measures (and the corresponding sampling variances) based on summary statistics.
 
    Alternatively, the function can automatically calculate the values of a chosen effect size or outcome measure (and the corresponding sampling variances) when supplied with the necessary data. The \code{\link{escalc}} function describes which effect size or outcome measures are currently implemented and what data/arguments should then be specified/used. The \code{measure} argument should then be set to the desired effect size or outcome measure.
 
@@ -78,7 +78,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
    The function can be used to fit fixed- and random/mixed-effects models, as well as meta-regression models including moderators (the difference between the various models is described in detail in the introductory \pkg{\link{metafor-package}} help file).
 
-   Assuming the observed outcomes and corresponding sampling variances are supplied via \code{yi} and \code{vi}, a \emph{fixed-effects model} can be fitted with \code{rma(yi, vi, method="FE")}. Weighted estimation (with inverse-variance weights) is used by default. User-defined weights can be supplied via the \code{weights} argument. Unweighted estimation can be used by setting \code{weighted=FALSE} (same as setting the weights equal to a constant).
+   Assuming the observed effect sizes or outcomes and corresponding sampling variances are supplied via \code{yi} and \code{vi}, a \emph{fixed-effects model} can be fitted with \code{rma(yi, vi, method="FE")}. Weighted estimation (with inverse-variance weights) is used by default. User-defined weights can be supplied via the \code{weights} argument. Unweighted estimation can be used by setting \code{weighted=FALSE} (same as setting the weights equal to a constant).
 
    A \emph{random-effects model} can be fitted with the same code but setting \code{method} to one of the various estimators for the amount of heterogeneity:
    \itemize{
@@ -99,7 +99,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
    A \emph{fixed-effects with moderators model} is then fitted by setting \code{method="FE"}, while a \emph{mixed-effects model} is fitted by specifying one of the estimators for the amount of (residual) heterogeneity given earlier.
 
-   When the observed outcomes and corresponding sampling variances are supplied via the \code{yi} and \code{vi} (or \code{sei}) arguments, one can also specify moderators via the \code{yi} argument (e.g., \code{rma(yi ~ mod1 + mod2 + mod3, vi)}). In that case, the \code{mods} argument is ignored and the inclusion/exclusion of the intercept again is controlled by the specified formula.
+   When the observed effect sizes or outcomes and corresponding sampling variances are supplied via the \code{yi} and \code{vi} (or \code{sei}) arguments, one can also specify moderators via the \code{yi} argument (e.g., \code{rma(yi ~ mod1 + mod2 + mod3, vi)}). In that case, the \code{mods} argument is ignored and the inclusion/exclusion of the intercept again is controlled by the specified formula.
 
    \bold{Omnibus Test of Moderators}
 
@@ -127,7 +127,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \item{ci.ub}{upper bound of the confidence intervals for the coefficients.}
    \item{vb}{variance-covariance matrix of the estimated coefficients.}
    \item{tau2}{estimated amount of (residual) heterogeneity. Always \code{0} when \code{method="FE"}.}
-   \item{se.tau2}{estimated standard error of the estimated amount of (residual) heterogeneity.}
+   \item{se.tau2}{standard error of the estimated amount of (residual) heterogeneity.}
    \item{k}{number of studies included in the analysis.}
    \item{p}{number of coefficients in the model (including the intercept).}
    \item{m}{number of coefficients included in the omnibus test of moderators.}

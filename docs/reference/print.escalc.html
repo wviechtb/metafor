@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-38</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-39</span>
       </span>
     </div>
 
@@ -163,11 +163,11 @@
     </tr>
     <tr>
       <th>var.names</th>
-      <td><p>character string with two elements, specifying the variable names for the observed outcomes and the sampling variances (the default is to take the value from the object if possible).</p></td>
+      <td><p>character string with two elements, specifying the variable names for the observed effect sizes or outcomes and the sampling variances (the default is to take the value from the object if possible).</p></td>
     </tr>
     <tr>
       <th>H0</th>
-      <td><p>numeric value specifying the value of the outcome under the null hypothesis.</p></td>
+      <td><p>numeric value specifying the value of the outcome or the effect size under the null hypothesis (the default is 0).</p></td>
     </tr>
     <tr>
       <th>append</th>
@@ -187,7 +187,7 @@
     </tr>
     <tr>
       <th>transf</th>
-      <td><p>optional argument specifying the name of a function that should be used to transform the observed outcomes and interval bounds (e.g., <code>transf=exp</code>; see also <a href='transf.html'>transf</a>). If unspecified, no transformation is used. Any additional arguments needed for the function specified here can be passed via <code>...</code>.</p></td>
+      <td><p>optional argument specifying the name of a function that should be used to transform the observed effect sizes or outcomes and interval bounds (e.g., <code>transf=exp</code>; see also <a href='transf.html'>transf</a>). If unspecified, no transformation is used. Any additional arguments needed for the function specified here can be passed via <code>...</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -197,17 +197,17 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The <code>print.escalc</code> function formats and prints the data frame, so that the observed outcomes and sampling variances are rounded (to the number of digits specified).</p>
+    <p>The <code>print.escalc</code> function formats and prints the data frame, so that the observed effect sizes or outcomes and sampling variances are rounded (to the number of digits specified).</p>
 <p>The <code>summary.escalc</code> function creates an object that is a data frame containing the original data (if <code>append=TRUE</code>) and the following components:</p>
-<dt>yi</dt><dd><p>observed outcomes or effect size estimates (transformed if <code>transf</code> is specified).</p></dd>
-   <dt>vi</dt><dd><p>corresponding (estimated) sampling variances.</p></dd>
-   <dt>sei</dt><dd><p>standard errors of the observed outcomes or effect size estimates.</p></dd>
+<dt>yi</dt><dd><p>observed effect sizes or outcomes (transformed if <code>transf</code> is specified).</p></dd>
+   <dt>vi</dt><dd><p>corresponding sampling variances.</p></dd>
+   <dt>sei</dt><dd><p>correponding standard errors.</p></dd>
    <dt>zi</dt><dd><p>test statistics for testing \(H_0: \theta_i = \mbox{H0}\) (i.e., <code>(yi-H0)/sei</code>).</p></dd>
    <dt>pval</dt><dd><p>corresponding p-values.</p></dd>
    <dt>ci.lb</dt><dd><p>lower confidence interval bounds (transformed if <code>transf</code> is specified).</p></dd>
    <dt>ci.ub</dt><dd><p>upper confidence interval bounds (transformed if <code>transf</code> is specified).</p></dd>
 
-   When the transf argument is specified, elements vi, sei, zi, and pval are not included (since these only apply to the untransformed outcomes or effect size estimates).
+   When the transf argument is specified, elements vi, sei, zi, and pval are not included (since these only apply to the untransformed effect sizes or outcomes).
 
    Note that the actual variable names above depend on the out.names (and var.names) arguments. If the data frame already contains variables with names as specified by the out.names argument, the values for these variables will be overwritten when replace=TRUE (which is the default). By setting replace=FALSE, only values that are NA will be replaced.
 

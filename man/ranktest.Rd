@@ -15,16 +15,16 @@ ranktest(x, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma"} or a vector with the observed effect sizes or outcomes.}
-   \item{vi}{vector with the corresponding sampling variances.}
-   \item{sei}{vector with the corresponding standard errors.}
+   \item{vi}{vector with the corresponding sampling variances (needed if \code{x} is a vector with the observed effect sizes or outcomes).}
+   \item{sei}{vector with the corresponding standard errors (note: only one of the two, \code{vi} or \code{sei}, needs to be specified).}
    \item{subset}{optional (logical or numeric) vector indicating the subset of studies that should be included in the test. Only relevant when passing a vector via \code{x}.}
    \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (the default is 4).}
    \item{\dots}{other arguments.}
 }
 \details{
-   The function carries out the rank correlation test as described by Begg and Mazumdar (1994). The test can be used to examine whether the observed outcomes and the corresponding sampling variances are correlated. A high correlation would indicate that the funnel plot is asymmetric, which may be a result of publication bias.
+   The function carries out the rank correlation test as described by Begg and Mazumdar (1994). The test can be used to examine whether the observed effect sizes or outcomes and the corresponding sampling variances are correlated. A high correlation would indicate that the funnel plot is asymmetric, which may be a result of publication bias.
 
-   One can either pass an object of class \code{"rma"} to the function or a vector of observed effect sizes or outcomes (via \code{x}) and the corresponding sampling variances via \code{vi} (or the standard errors via \code{sei}).
+   One can either pass an object of class \code{"rma"} to the function or a vector with the observed effect sizes or outcomes (via \code{x}) and the corresponding sampling variances via \code{vi} (or the standard errors via \code{sei}).
 }
 \value{
    An object of class \code{"ranktest.rma"}. The object is a list containing the following components:

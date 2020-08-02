@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Simulate Method for 'rma' Objects — simulate.rma" />
-<meta property="og:description" content="The function simulates observed outcomes based on &quot;rma&quot; model object." />
+<meta property="og:description" content="The function simulates effect sizes or outcomes based on &quot;rma&quot; model object." />
 
 
 
@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-38</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-39</span>
       </span>
     </div>
 
@@ -132,7 +132,7 @@
     </div>
 
     <div class="ref-description">
-    <p>The function simulates observed outcomes based on <code>"rma"</code> model object.</p>
+    <p>The function simulates effect sizes or outcomes based on <code>"rma"</code> model object.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for rma</span>
@@ -164,7 +164,7 @@
     <p>The model specified via <code>object</code> must be a model fitted with either the <code><a href='rma.uni.html'>rma.uni</a></code> or <code><a href='rma.mv.html'>rma.mv</a></code> function.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame with <code>nsim</code> columns with the simulated outcomes.</p>
+    <p>A data frame with <code>nsim</code> columns with the simulated effect sizes or outcomes.</p>
 <p>The data frame comes with an attribute <code>"seed"</code>. If argument <code>seed</code> is <code>NULL</code>, the attribute is the value of <code><a href='https://rdrr.io/r/base/Random.html'>.Random.seed</a></code> before the simulation was started; otherwise it is the value of the <code>seed</code> argument with a <code>"kind"</code> attribute with value <code><a href='https://rdrr.io/r/base/list.html'>as.list(RNGkind())</a></code>.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 

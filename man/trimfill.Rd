@@ -26,9 +26,9 @@ trimfill(x, \dots)
    An object of class \code{c("rma.uni.trimfill","rma.uni","rma")}. The object is a list containing the same components as objects created by \code{\link{rma.uni}}, except that the data are augmented by the trim and fill method. The following components are also added:
    \item{k0}{estimated number of missing studies.}
    \item{side}{either \code{"left"} or \code{"right"}, indicating on which side of the funnel plot the missing studies (if any) were imputed.}
-   \item{se.k0}{estimated standard error of k0.}
+   \item{se.k0}{standard error of k0.}
    \item{p.k0}{p-value for the test of \mjseqn{H_0}: no missing studies on the chosen side (only when \code{estimator="R0"}; \code{NA} otherwise).}
-   \item{yi}{the observed outcomes or effect sizes plus the augmented values (if there are any).}
+   \item{yi}{the observed effect sizes or outcomes plus the augmented values (if there are any).}
    \item{vi}{the corresponding sampling variances}
    \item{fill}{a logical vector indicating which of the values in \code{yi} are the observed (\code{FALSE}) and the augmented (\code{TRUE}) data.}
 
