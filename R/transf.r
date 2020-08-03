@@ -170,3 +170,56 @@ transf.ilogit.int <- function(xi, targs=NULL, ...) {
    return(c(zi))
 
 }
+
+transf.dtou1 <- function(xi, ...) {
+   u2i <- pnorm(abs(xi)/2)
+   return((2*u2i - 1) / u2i)
+}
+
+transf.dtou2 <- function(xi, ...)
+   pnorm(xi/2)
+
+transf.dtou3 <- function(xi, ...)
+   pnorm(xi)
+
+transf.dtocles <- function(xi, ...)
+   pnorm(xi/sqrt(2))
+
+transf.dtorpb <- function(xi, n1i, n2i, ...) {
+   if (missing(n1i) || missing(n2i)) {
+      hi <- 4
+   } else {
+      if (length(n1i) != length(n2i))
+         stop("Length of 'n1i' does not match length of 'n2i'.")
+      if (length(n1i) != length(xi))
+         stop("Length of 'n1i' and 'n2i' does not match length of 'xi'.")
+      mi <- n1i + n2i - 2
+      hi <- mi / n1i + mi / n2i
+   }
+   return(xi / sqrt(xi^2 + hi))
+}
+
+transf.dtobesd <- function(xi, ...) {
+   rpbi <- xi / sqrt(xi^2 + 4)
+   return(0.50 + rpbi/2)
+}
+
+transf.logortord <- function(xi, pc, ...) {
+   if (length(pc) == 1L)
+      pc <- rep(pc, length(xi))
+   if (length(xi) != length(pc))
+      stop("Length of 'xi' does not match length of 'pc'.")
+   if (any(pc < 0) || any(pc > 1))
+      stop("The control group risk 'pc' must be between 0 and 1.")
+   return(exp(xi)*pc / (1 - pc + pc * exp(xi)) - pc)
+}
+
+transf.logortorr <- function(xi, pc, ...) {
+   if (length(pc) == 1L)
+      pc <- rep(pc, length(xi))
+   if (length(xi) != length(pc))
+      stop("Length of 'xi' does not match length of 'pc'.")
+   if (any(pc < 0) || any(pc > 1))
+      stop("The control group risk 'pc' must be between 0 and 1.")
+   return(exp(xi) / (pc * (exp(xi) - 1) + 1))
+}

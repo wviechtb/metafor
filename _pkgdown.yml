@@ -80,11 +80,12 @@ reference:
     desc: >
       Functions related to publication bias.
     contents:
-      - starts_with("ranktest")
-      - starts_with("regtest")
-      - starts_with("trimfill")
-      - starts_with("hc")
-      - starts_with("fsn")
+      - ranktest
+      - regtest
+      - trimfill
+      - hc
+      - fsn
+      - tes
   - title: "Inference Methods"
     desc: >
       Functions for standard and advanced methods for drawing inferences based on meta-analytic data and for assessing the model fit.
@@ -115,7 +116,7 @@ reference:
     desc: >
       Print methods.
     contents:
-      - print.rma.uni
+      - print.rma
       - print.escalc
       - print.anova.rma
       - print.confint.rma

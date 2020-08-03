@@ -19,6 +19,14 @@
 \alias{transf.ztor.int}
 \alias{transf.exp.int}
 \alias{transf.ilogit.int}
+\alias{transf.dtou1}
+\alias{transf.dtou2}
+\alias{transf.dtou3}
+\alias{transf.dtocles}
+\alias{transf.dtorpb}
+\alias{transf.dtobesd}
+\alias{transf.logortord}
+\alias{transf.logortorr}
 \title{Transformation Function}
 \description{
    A set of transformation functions useful for meta-analyses. \loadmathjax
@@ -43,11 +51,21 @@ transf.iabt(xi, \dots)
 transf.ztor.int(xi, targs, \dots)
 transf.exp.int(xi, targs, \dots)
 transf.ilogit.int(xi, targs, \dots)
+transf.dtou1(xi, \dots)
+transf.dtou2(xi, \dots)
+transf.dtou3(xi, \dots)
+transf.dtorpb(xi, n1i, n2i, \dots)
+transf.dtobesd(xi, \dots)
+transf.logortord(xi, pc, \dots)
+transf.logortorr(xi, pc, \dots)
 }
 \arguments{
    \item{xi}{vector of values to be transformed.}
    \item{ni}{vector of sample sizes.}
+   \item{n1i}{vector of sample sizes for the first group.}
+   \item{n2i}{vector of sample sizes for the second group.}
    \item{ti}{vector of person-times at risk.}
+   \item{pc}{control group risk (either a single value or a vector).}
    \item{targs}{list with additional arguments for the transformation function. See \sQuote{Details}.}
    \item{\dots}{other arguments.}
 }
@@ -66,18 +84,28 @@ transf.ilogit.int(xi, targs, \dots)
    \item \code{transf.isqrt}: inverse of the square root transformation (i.e., function to square a number).
    \item \code{transf.irft}: Freeman-Tukey transformation for incidence rates. See Freeman & Tukey (1950). The \code{xi} argument is used to specify the incidence rates and the \code{ti} argument the corresponding person-times at risk.
    \item \code{transf.iirft}: inverse of the Freeman-Tukey transformation for incidence rates.
-   \item \code{transf.ahw}: Transformation of coefficient alpha as suggested by Hakstian & Whalen (1976).
-   \item \code{transf.iahw}: Inverse of the transformation of coefficient alpha as suggested by Hakstian & Whalen (1976).
-   \item \code{transf.abt}: Transformation of coefficient alpha as suggested by Bonett (2002).
-   \item \code{transf.iabt}: Inverse of the transformation of coefficient alpha as suggested by Bonett (2002).
+   \item \code{transf.ahw}: transformation of coefficient alpha as suggested by Hakstian & Whalen (1976).
+   \item \code{transf.iahw}: inverse of the transformation of coefficient alpha as suggested by Hakstian & Whalen (1976).
+   \item \code{transf.abt}: transformation of coefficient alpha as suggested by Bonett (2002).
+   \item \code{transf.iabt}: inverse of the transformation of coefficient alpha as suggested by Bonett (2002).
    \item \code{transf.ztor.int}: integral transformation method for the z-to-r transformation.
    \item \code{transf.exp.int}: integral transformation method for the exponential transformation.
    \item \code{transf.ilogit.int}: integral transformation method for the inverse of the logit transformation.
+   \item \code{transf.dtou1}: transformation of standardized mean differences to Cohen's U1 values (Cohen, 1988).
+   \item \code{transf.dtou2}: transformation of standardized mean differences to Cohen's U2 values (Cohen, 1988).
+   \item \code{transf.dtou3}: transformation of standardized mean differences to Cohen's U3 values (Cohen, 1988).
+   \item \code{transf.dtocles}: transformation of standardized mean differences to common language effect size values (McGraw & Wong, 1992).
+   \item \code{transf.dtorpb}: transformation of standardized mean differences to point-biserial correlations. If \code{n1i} and \code{n2i} are not specified, the function assumes \code{n1i=n2i} and uses an approximate formula. If \code{n1i} and \code{n2i} are specified, the exact transformation formula is used.
+   \item \code{transf.dtobesd}: transformation of standardized mean differences to binomial effect-size display values (Rosenthal & Rubin, 1982). Note that the function only provides the proportion in the first group scoring above the median (the proportion in the second group scoring above the median is simply 1 minus the proportion in the first group scoring above the median).
+   \item \code{transf.logortord}: transformation of log odds ratios to risk differences, assuming a particular value for the control group risk (which needs to be specified via the \code{pc} argument).
+   \item \code{transf.logortorr}: transformation of log odds ratios to risk ratios, assuming a particular value for the control group risk (which needs to be specified via the \code{pc} argument).
    }
-   The integral transformation method for a transformation function \mjseqn{h(z)} integrates \mjseqn{h(z) f(z)} over \mjseqn{z} using the limits \code{targs$lower} and \code{targs$upper}, where \mjseqn{f(z)} is the density of a normal distribution with mean equal to \code{xi} and variance equal to \code{targs$tau2}. An example is provided below.
 }
 \value{
    A vector with the transformed values.
+}
+\note{
+   The integral transformation method for a transformation function \mjseqn{h(z)} integrates \mjseqn{h(z) f(z)} over \mjseqn{z} using the limits \code{targs$lower} and \code{targs$upper}, where \mjseqn{f(z)} is the density of a normal distribution with mean equal to \code{xi} and variance equal to \code{targs$tau2}. An example is provided below.
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
@@ -85,13 +113,19 @@ transf.ilogit.int(xi, targs, \dots)
 \references{
    Bonett, D. G. (2002). Sample size requirements for testing and estimating coefficient alpha. \emph{Journal of Educational and Behavioral Statistics}, \bold{27}(4), 335--340. \verb{https://doi.org/10.3102/10769986027004335}
 
+   Cohen, J. (1988). \emph{Statistical power analysis for the behavioral sciences} (2nd ed.). Hillsdale, NJ: Lawrence Erlbaum Associates.
+
    Fisher, R. A. (1921). On the \dQuote{probable error} of a coefficient of correlation deduced from a small sample. \emph{Metron}, \bold{1}, 1--32. \verb{http://hdl.handle.net/2440/15169}
 
    Freeman, M. F., & Tukey, J. W. (1950). Transformations related to the angular and the square root. \emph{Annals of Mathematical Statistics}, \bold{21}(4), 607--611. \verb{https://doi.org/10.1214/aoms/1177729756}
 
    Hakstian, A. R., & Whalen, T. E. (1976). A k-sample significance test for independent alpha coefficients. \emph{Psychometrika}, \bold{41}(2), 219--231. \verb{https://doi.org/10.1007/BF02291840}
 
+   McGraw, K. O., & Wong, S. P. (1992). A common language effect size statistic. \emph{Psychological Bulletin}, \bold{111}(2), 361--365. \verb{https://doi.org/10.1037/0033-2909.111.2.361}
+
    Miller, J. J. (1978). The inverse of the Freeman-Tukey double arcsine transformation. \emph{American Statistician}, \bold{32}(4), 138. \verb{https://doi.org/10.1080/00031305.1978.10479283}
+
+   Rosenthal, R., & Rubin, D. B. (1982). A simple, general purpose display of magnitude of experimental effect. \emph{Journal of Educational Psychology}, \bold{74}(2), 166--169. \verb{https://doi.org/10.1037/0022-0663.74.2.166}
 
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}
 }
