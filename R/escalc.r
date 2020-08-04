@@ -31,7 +31,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
    if (!is.element(to, c("all","only0","if0all","none")))
       stop(mstyle$stop("Unknown 'to' argument specified."))
 
-   if (any(!is.element(vtype, c("UB","LS","HO","ST","CS","AV")), na.rm=TRUE)) ### vtype can be an entire vector, so use any() and na.rm=TRUE
+   if (any(!is.element(vtype, c("UB","LS","LS2","HO","ST","CS","AV")), na.rm=TRUE)) ### vtype can be an entire vector, so use any() and na.rm=TRUE
       stop(mstyle$stop("Unknown 'vtype' argument specified."))
 
    if (add.measure) {
@@ -793,8 +793,8 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
             mnwyi <- sum(ni*yi, na.rm=TRUE) / sum(ni, na.rm=TRUE) ### sample size weighted average of yi's
 
-            if (!all(is.element(vtype, c("UB","LS","AV"))))
-               stop(mstyle$stop("For this outcome measure, 'vtype' must be either 'UB', 'LS', or 'AV'."))
+            if (!all(is.element(vtype, c("UB","LS","LS2","AV"))))
+               stop(mstyle$stop("For this outcome measure, 'vtype' must be either 'UB', 'LS', 'LS2', or 'AV'."))
 
             for (i in seq_len(k)) {
 
@@ -809,6 +809,10 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
                ### estimator assuming homogeneity (using sample size weighted average of the yi's)
                if (vtype[i] == "AV")
                   vi[i] <- 1/n1i[i] + 1/n2i[i] + mnwyi^2/(2*ni[i])
+
+               ### large sample approximation to the sampling variance (using equation from Borenstein, 2009)
+               if (vtype[i] == "LS2")
+                  vi[i] <- cmi[i]^2 * (1/n1i[i] + 1/n2i[i] + di[i]^2/(2*ni[i]))
 
             }
 
@@ -1699,19 +1703,64 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          ### note: does not assume homoscedasticity, since we use sddi here
 
          if (measure == "SMCC") {
+
             cmi <- .cmicalc(mi)
             sddi <- sqrt(sd1i^2 + sd2i^2 - 2*ri*sd1i*sd2i)
-            yi <- cmi * (m1i - m2i) / sddi
-            vi <- 1/ni + yi^2 / (2*ni)
+            di <- (m1i - m2i) / sddi
+            yi <- cmi * di
+
+            if (length(vtype) == 1L)
+               vtype <- rep(vtype, k)
+
+            vi <- rep(NA_real_, k)
+
+            if (!all(is.element(vtype, c("LS","LS2"))))
+               stop(mstyle$stop("For this outcome measure, 'vtype' must be either ''LS' or 'LS2'."))
+
+            for (i in seq_len(k)) {
+
+               ### large sample approximation to the sampling variance
+               if (vtype[i] == "LS")
+                  vi[i] <- 1/ni[i] + yi[i]^2 / (2*ni[i])
+
+               ### large sample approximation to the sampling variance
+               if (vtype[i] == "LS2")
+                  vi[i] <- cmi[i]^2 * (1/ni[i] + di[i]^2 / (2*ni[i]))
+
+            }
+
          }
 
          ### standardized mean change with raw score standardization (using sd1i)
          ### note: yi does not assume homoscedasticity, but vi does
 
          if (measure == "SMCR") {
+
             cmi <- .cmicalc(mi)
-            yi <- cmi * (m1i - m2i) / sd1i
-            vi <- 2*(1-ri)/ni + yi^2 / (2*ni)
+            di <- (m1i - m2i) / sd1i
+            yi <- cmi * di
+
+            if (length(vtype) == 1L)
+               vtype <- rep(vtype, k)
+
+            vi <- rep(NA_real_, k)
+
+            if (!all(is.element(vtype, c("LS","LS2"))))
+               stop(mstyle$stop("For this outcome measure, 'vtype' must be either ''LS' or 'LS2'."))
+
+            for (i in seq_len(k)) {
+
+               ### large sample approximation to the sampling variance
+               if (vtype[i] == "LS")
+                  vi[i] <- 2*(1-ri[i])/ni[i] + yi[i]^2 / (2*ni[i])
+
+               ### large sample approximation to the sampling variance (using corrected (!) equation from Borenstein, 2009)
+               if (vtype[i] == "LS2")
+                  vi[i] <- cmi[i]^2 * (2*(1-ri[i])/ni[i] + di[i]^2 / (2*ni[i]))
+                  #vi[i] <- cmi[i]^2 * 2*(1-ri[i]) * (1/ni[i] + di[i]^2 / (2*ni[i])) # as in  Borenstein (2009) but this is incorrect
+
+            }
+
          }
 
          ### standardized mean change with raw score standardization (using sd1i)
