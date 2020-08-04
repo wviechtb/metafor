@@ -44,8 +44,14 @@ efac=1, col, border, fonts, cex, ...) {
    if (!is.null(ddd$addcred))
       addpred <- ddd$addcred
 
+   if (is.null(ddd$pi.type)) {
+      pi.type <- "default"
+   } else {
+      pi.type <- ddd$pi.type
+   }
+
    if (addpred) {
-      temp <- predict(x, level=level)
+      temp <- predict(x, level=level, pi.type=pi.type)
       pi.lb <- temp$pi.lb
       pi.ub <- temp$pi.ub
    } else {

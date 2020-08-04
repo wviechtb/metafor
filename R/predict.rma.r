@@ -47,6 +47,14 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
    level <- ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
 
+   ddd <- list(...)
+
+   if (is.null(ddd$pi.type)) {
+      pi.type <- "default"
+   } else {
+      pi.type <- ddd$pi.type
+   }
+
    #########################################################################
 
    if (is.element(x$test, c("knha","adhoc","t"))) {
@@ -304,8 +312,27 @@ level, digits, transf, targs, vcov=FALSE, ...) {
    ci.lb <- pred - crit * se
    ci.ub <- pred + crit * se
 
+   #########################################################################
+
    if (vcov)
       vcovpred <- X.new %*% x$vb %*% t(X.new)
+
+   if (pi.type == "simple")
+      crit <- qnorm(level/2, lower.tail=FALSE)
+
+   if (pi.type == "riley") {
+      dfs <- x$k - x$p - 1
+      if (dfs <= 0) {
+         crit <- Inf
+      } else {
+         crit <- qt(level/2, df=x$k-x$p-1, lower.tail=FALSE)
+      }
+      if (inherits(object, "rma.mv"))
+         stop(mstyle$stop("This type of prediction interval not currently available for objects of class \"rma.mv\"."))
+   }
+
+   if (pi.type == "simple")
+      vpred <- 0
 
    #########################################################################
 

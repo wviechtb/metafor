@@ -51,9 +51,9 @@ atransf, targs, efac=1, col, border, fonts, cex, ...) {
    if (!is.null(ddd$cr.ub))
       pi.ub <- ddd$cr.ub
 
-   lsegments <- function(..., cr.lb, cr.ub, addcred) segments(...)
-   ltext     <- function(..., cr.lb, cr.ub, addcred) text(...)
-   lpolygon  <- function(..., cr.lb, cr.ub, addcred) polygon(...)
+   lsegments <- function(..., cr.lb, cr.ub, addcred, pi.type) segments(...)
+   ltext     <- function(..., cr.lb, cr.ub, addcred, pi.type) text(...)
+   lpolygon  <- function(..., cr.lb, cr.ub, addcred, pi.type) polygon(...)
 
    ### set/get fonts (1st for labels, 2nd for annotations)
    ### when passing a named vector, the names are for 'family' and the values are for 'font'

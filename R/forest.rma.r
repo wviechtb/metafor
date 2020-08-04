@@ -153,14 +153,20 @@ cex, cex.lab, cex.axis, annosym, ...) {
    if (!is.null(ddd$addcred))
       addpred <- ddd$addcred
 
-   lplot     <- function(..., textpos, addcred) plot(...)
-   labline   <- function(..., textpos, addcred) abline(...)
-   lsegments <- function(..., textpos, addcred) segments(...)
-   laxis     <- function(..., textpos, addcred) axis(...)
-   lmtext    <- function(..., textpos, addcred) mtext(...)
-   lpolygon  <- function(..., textpos, addcred) polygon(...)
-   ltext     <- function(..., textpos, addcred) text(...)
-   lpoints   <- function(..., textpos, addcred) points(...)
+   if (is.null(ddd$pi.type)) {
+      pi.type <- "default"
+   } else {
+      pi.type <- ddd$pi.type
+   }
+
+   lplot     <- function(..., textpos, addcred, pi.type) plot(...)
+   labline   <- function(..., textpos, addcred, pi.type) abline(...)
+   lsegments <- function(..., textpos, addcred, pi.type) segments(...)
+   laxis     <- function(..., textpos, addcred, pi.type) axis(...)
+   lmtext    <- function(..., textpos, addcred, pi.type) mtext(...)
+   lpolygon  <- function(..., textpos, addcred, pi.type) polygon(...)
+   ltext     <- function(..., textpos, addcred, pi.type) text(...)
+   lpoints   <- function(..., textpos, addcred, pi.type) points(...)
 
    ### TODO: remove this when there is a weights() function for 'rma.glmm' objects
    if (inherits(x, "rma.glmm") && showweights)
@@ -224,7 +230,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
          pred.ci.lb <- rep(NA_real_, k)
          pred.ci.ub <- rep(NA_real_, k)
       } else {
-         temp <- predict(x, level=level)
+         temp <- predict(x, level=level, pi.type=pi.type)
          pred <- temp$pred
          if (addpred) {
             pred.ci.lb <- temp$pi.lb
@@ -655,7 +661,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
             ### this can be done via the addpred argument (i.e., instead of using a logical, one specifies the level(s))
             if (length(addpred) == 1L)
                addpred <- c(addpred, addpred)
-            temp <- predict(x, level=level, tau2.levels=addpred[1], gamma2.levels=addpred[2])
+            temp <- predict(x, level=level, tau2.levels=addpred[1], gamma2.levels=addpred[2], pi.type=pi.type)
             addpred <- TRUE ### set addpred to TRUE, so if (x$method != "FE" && addpred) further below works
          } else {
             if (addpred) {
@@ -663,13 +669,13 @@ cex, cex.lab, cex.axis, annosym, ...) {
                stop(mstyle$stop("Need to specify the level of the inner factor(s) via the 'addpred' argument."))
             } else {
                ### here addpred=FALSE, so just use the first tau^2 and gamma^2 arbitrarily (so predict() works)
-               temp <- predict(x, level=level, tau2.levels=1, gamma2.levels=1)
+               temp <- predict(x, level=level, tau2.levels=1, gamma2.levels=1, pi.type=pi.type)
             }
          }
 
       } else {
 
-         temp <- predict(x, level=level)
+         temp <- predict(x, level=level, pi.type=pi.type)
 
       }
 
