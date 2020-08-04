@@ -24,21 +24,19 @@
    \item{\dots}{other arguments.}
 }
 \details{
-   For a fixed-effects model, \code{predict(object)} returns the estimated (average) outcome in the set of studies included in the meta-analysis. This is the same as the estimated intercept in the fixed-effects model.
+   For a fixed-effects model, \code{predict(object)} returns the estimated (average) outcome in the set of studies included in the meta-analysis. This is the same as the estimated intercept in the fixed-effects model (i.e., \mjseqn{\hat{\theta}}).
 
-   For a random-effects model, \code{predict(object)} returns the estimated (average) outcome in the hypothetical population of studies from which the set of studies included in the meta-analysis are assumed to be a random selection. This is the same as the estimated intercept in the random-effects model.
+   For a random-effects model, \code{predict(object)} returns the estimated (average) outcome in the hypothetical population of studies from which the set of studies included in the meta-analysis are assumed to be a random selection. This is the same as the estimated intercept in the random-effects model (i.e., \mjseqn{\hat{\mu}}).
 
-   For models including one or more moderators, \code{predict(object)} returns the estimated (average) outcomes for values of the moderator(s) equal to those of the \mjseqn{k} studies included in the meta-analysis (i.e., the fitted values for the \mjseqn{k} studies).
+   For models including one or more moderators, \code{predict(object)} returns the estimated (average) outcomes for values of the moderator(s) equal to those of the \mjseqn{k} studies included in the meta-analysis (i.e., the fitted values for the \mjseqn{k} studies ).
 
    For models including \mjseqn{p'} moderator variables, new moderator values for \mjeqn{k_{new}}{k_new} new studies can be specified by setting \code{newmods} equal to an \mjeqn{k_{new} \times p'}{k_new x p'} matrix with the corresponding new moderator values. If the original model includes an intercept, then it should not be explicitly specified under \code{newmods}, as it will be added by default (unless one sets \code{intercept=FALSE}). Also, any factors in the original model get turned into the appropriate contrast variables within the \code{rma} function, so that \code{newmods} should actually include the values for the contrast variables. Examples are shown below.
 
    For random/mixed-effects models, an approximate prediction interval is also calculated (Riley et al., 2011). The interval estimates where \code{level} \% of the true effect sizes or outcomes fall in the hypothetical population of studies. Note that this interval is calculated under the assumption that the value of \mjseqn{\tau^2} is known (and not estimated). A method for calculating a prediction interval that accounts for the uncertainty in the estimate of \mjseqn{\tau^2} may be implemented in the future.
 
-   For random-effects models of class \code{"rma.mv"} (see \code{\link{rma.mv}}) with multiple \mjseqn{\tau^2} values (i.e., when the \code{random} argument includes an \sQuote{\code{~ inner | outer}} term and \code{struct="HCS"}, \code{struct="HAR"}, or \code{struct="UN"}), the function will provide prediction intervals for each level of the inner factor (since the prediction intervals differ depending on the \mjseqn{\tau^2} value). Alternatively, one can use the \code{tau2.levels} argument to specify for which level(s) the prediction interval should be provided.
+   For random-effects models that were fitted with the \code{\link{rma.mv}} function, the model may actually include multiple \mjseqn{\tau^2} values (i.e., when the \code{random} argument includes an \sQuote{\code{~ inner | outer}} term and \code{struct="HCS"}, \code{struct="DIAG"}, \code{struct="HAR"}, or \code{struct="UN"}). In that case, the function will provide prediction intervals for each level of the inner factor (since the prediction intervals differ depending on the \mjseqn{\tau^2} value). Alternatively, one can use the \code{tau2.levels} argument to specify for which level(s) the prediction interval should be provided. If the model includes a second \sQuote{\code{~ inner | outer}} term with multiple \mjseqn{\gamma^2} values, prediction intervals for each combination of levels of the inner factors will be provided. Alternatively, one can use the \code{tau2.levels} and \code{gamma2.levels} arguments to specify for which level combination(s) the prediction interval should be provided.
 
-   If the model includes a second \sQuote{\code{~ inner | outer}} term with multiple \mjseqn{\gamma^2} values, prediction intervals for each combination of levels of the inner factors will be provided. Alternatively, one can use the \code{tau2.levels} and \code{gamma2.levels} arguments to specify for which level combination(s) the prediction interval should be provided.
-
-   When using the \code{newmods} argument for mixed-effects models of class \code{"rma.mv"} with multiple \mjseqn{\tau^2} (and multiple \mjseqn{\gamma^2}) values, one must use the \code{tau2.levels} (and \code{gamma2.levels}) argument to specify the levels of the inner factor(s) (i.e., a vector of length \mjeqn{k_{new}}{k_new}) to obtain the appropriate prediction interval(s).
+   When using the \code{newmods} argument for mixed-effects models that were fitted with the \code{\link{rma.mv}} function, if the model includes multiple \mjseqn{\tau^2} (and multiple \mjseqn{\gamma^2}) values, then one must use the \code{tau2.levels} (and \code{gamma2.levels}) argument to specify the levels of the inner factor(s) (i.e., a vector of length \mjeqn{k_{new}}{k_new}) to obtain the appropriate prediction interval(s).
 }
 \value{
    An object of class \code{"list.rma"}. The object is a list containing the following components:
@@ -46,8 +44,8 @@
    \item{se}{corresponding standard error(s).}
    \item{ci.lb}{lower bound of the confidence interval(s).}
    \item{ci.ub}{upper bound of the confidence interval(s).}
-   \item{pi.lb}{lower bound of the prediction interval(s) (only random/mixed-effects models).}
-   \item{pi.ub}{upper bound of the prediction interval(s) (only random/mixed-effects models).}
+   \item{pi.lb}{lower bound of the prediction interval(s) (only for random/mixed-effects models).}
+   \item{pi.ub}{upper bound of the prediction interval(s) (only for random/mixed-effects models).}
    \item{tau2.level}{the level(s) of the inner factor (only for models of class \code{"rma.mv"} with multiple \mjseqn{\tau^2} values).}
    \item{gamma2.level}{the level(s) of the inner factor (only for models of class \code{"rma.mv"} with multiple \mjseqn{\gamma^2} values).}
    \item{X}{the moderator value(s) used to calculate the predicted values (only when \code{addx=TRUE}).}
@@ -58,11 +56,13 @@
    The \code{"list.rma"} object is formatted and printed with \code{\link{print.list.rma}}.
 }
 \note{
+   Confidence and prediction intervals are calculated based on the critical values from a standard normal distribution (i.e., \mjeqn{\pm 1.96}{±1.96} for \code{level=95}). When the model was fitted with the Knapp and Hartung (2003) method (i.e., \code{test="knha"} in the \code{\link{rma.uni}} function) or with \code{test="t"} in the \code{\link{rma.glmm}} and \code{\link{rma.mv}} functions, then a t-distribution with \mjseqn{k-p} degrees of freedom is used.
+
+   For random-effects models of the type that can be fitted with the \code{\link{rma.uni}} function, note that this differs slightly from Riley et al. (2001), who suggest to use a t-distribution with \mjseqn{k-2} degrees of freedom for constructing the prediction interval. Neither a normal, nor a t-distribution with \mjseqn{k-1} or \mjseqn{k-2} degrees of freedom is correct; all of these are approximations. The computations are done in the way described above, so that the prediction interval is identical to the confidence interval when \mjeqn{\hat{\tau}^2 = 0}{hat(\tau)^2 = 0}, which could be argued is the logical thing that should happen. If the prediction interval should be computed exactly as described by Riley et al. (2001), then one can use argument \code{pi.type="riley"}.
+
    The predicted values are based only on the fixed effects of the model. Best linear unbiased predictions (BLUPs) that combine the fitted values based on the fixed effects and the estimated contributions of the random effects can be obtained with \code{\link{blup.rma.uni}} (currently only for objects of class \code{"rma.uni"}).
 
-   When using the \code{transf} option, the transformation is applied to the predicted values and the corresponding interval bounds. The standard errors are then set equal to \code{NA} and are omitted from the printed output. Also, \code{vcov=TRUE} is ignored when using the \code{transf} option.
-
-   Confidence and prediction intervals are calculated based on the critical values from a standard normal distribution (i.e., \mjeqn{\pm 1.96}{±1.96} for \code{level=95}). When the model was fitted with the Knapp and Hartung (2003) method (i.e., \code{test="knha"} in the \code{\link{rma.uni}} function) or with \code{test="t"} in the \code{\link{rma.glmm}} and \code{\link{rma.mv}} functions, then a t-distribution with \mjseqn{k-p} degrees of freedom is used.
+   When using the \code{transf} option, the transformation is applied to the predicted values and the corresponding interval bounds. The standard errors are omitted from the printed output. Also, \code{vcov=TRUE} is ignored when using the \code{transf} option.
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
