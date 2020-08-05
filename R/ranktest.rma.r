@@ -16,6 +16,16 @@ ranktest.rma <- function(x, digits, ...) {
       digits <- .get.digits(digits=digits, xdigits=x$digits, dmiss=FALSE)
    }
 
+   ddd <- list(...)
+
+   .chkdots(ddd, c("exact"))
+
+   if (is.null(ddd$exact)) {
+      exact <- TRUE
+   } else {
+      exact <- ddd$exact
+   }
+
    #########################################################################
 
    yi <- x$yi
@@ -27,7 +37,7 @@ ranktest.rma <- function(x, digits, ...) {
 
    vi.star <- vi - vb
    yi.star <- (yi - beta) / sqrt(vi.star)
-   res <- cor.test(yi.star, vi, method="kendall", exact=TRUE)
+   res <- cor.test(yi.star, vi, method="kendall", exact=exact)
 
    pval <- res$p.value
    tau  <- res$estimate

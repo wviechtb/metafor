@@ -20,6 +20,16 @@ ranktest.default <- function(x, vi, sei, subset, digits, ...) {
       digits <- .set.digits(digits, dmiss=FALSE)
    }
 
+   ddd <- list(...)
+
+   .chkdots(ddd, c("exact"))
+
+   if (is.null(ddd$exact)) {
+      exact <- TRUE
+   } else {
+      exact <- ddd$exact
+   }
+
    #########################################################################
 
    ### check if sampling variances and/or standard errors are available
@@ -83,7 +93,7 @@ ranktest.default <- function(x, vi, sei, subset, digits, ...) {
 
    vi.star <- vi - vb
    yi.star <- (yi - beta) / sqrt(vi.star)
-   res <- cor.test(yi.star, vi, method="kendall", exact=TRUE)
+   res <- cor.test(yi.star, vi, method="kendall", exact=exact)
 
    pval <- res$p.value
    tau  <- res$estimate

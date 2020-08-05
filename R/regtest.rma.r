@@ -81,9 +81,9 @@ regtest.rma <- function(x, model="rma", predictor="sei", ret.fit=FALSE, digits, 
 
       yi   <- c(yi) ### to remove attributes
       fit  <- lm(yi ~ X - 1, weights=1/vi)
-      fit  <- summary(fit)
-      zval <- coef(fit)[p+1,3]
-      pval <- coef(fit)[p+1,4]
+      tmp  <- summary(fit)
+      zval <- coef(tmp)[p+1,3]
+      pval <- coef(tmp)[p+1,4]
       dfs  <- x$k - x$p - 1
 
    }
@@ -91,9 +91,9 @@ regtest.rma <- function(x, model="rma", predictor="sei", ret.fit=FALSE, digits, 
    if (predictor %in% c("sei", "vi", "ninv", "sqrtninv") && p == 1L && .is.intercept(X[,1])) {
 
       if (model=="lm") {
-         est <- coef(fit)[1,1]
-         ci.lb <- est - qt(x$level/2, df=dfs, lower.tail=FALSE) * coef(fit)[1,2]
-         ci.ub <- est + qt(x$level/2, df=dfs, lower.tail=FALSE) * coef(fit)[1,2]
+         est <- coef(tmp)[1,1]
+         ci.lb <- est - qt(x$level/2, df=dfs, lower.tail=FALSE) * coef(tmp)[1,2]
+         ci.ub <- est + qt(x$level/2, df=dfs, lower.tail=FALSE) * coef(tmp)[1,2]
       } else {
          est <- coef(fit)[1]
          ci.lb <- fit$ci.lb[1]

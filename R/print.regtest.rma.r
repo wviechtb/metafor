@@ -36,7 +36,11 @@ print.regtest.rma <- function(x, digits=x$digits, ret.fit=x$ret.fit, ...) {
    if (ret.fit) {
       if (exists(".rmspace"))
          cat("\n")
-      print(x$fit)
+      if (x$model == "lm") {
+         print(summary(x$fit))
+      } else {
+         print(x$fit)
+      }
       if (exists(".rmspace"))
          cat("\n")
    } else {

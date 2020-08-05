@@ -151,9 +151,9 @@ regtest.default <- function(x, vi, sei, ni, subset, model="rma", predictor="sei"
 
       yi   <- c(yi) ### to remove attributes
       fit  <- lm(yi ~ X - 1, weights=1/vi)
-      fit  <- summary(fit)
-      zval <- coef(fit)[2,3]
-      pval <- coef(fit)[2,4]
+      tmp  <- summary(fit)
+      zval <- coef(tmp)[2,3]
+      pval <- coef(tmp)[2,4]
       dfs  <- length(yi) - 2
 
    }
@@ -161,9 +161,9 @@ regtest.default <- function(x, vi, sei, ni, subset, model="rma", predictor="sei"
    if (predictor %in% c("sei", "vi", "ninv", "sqrtninv")) {
 
       if (model=="lm") {
-         est <- coef(fit)[1,1]
-         ci.lb <- est - qt(level/2, df=dfs, lower.tail=FALSE) * coef(fit)[1,2]
-         ci.ub <- est + qt(level/2, df=dfs, lower.tail=FALSE) * coef(fit)[1,2]
+         est <- coef(tmp)[1,1]
+         ci.lb <- est - qt(level/2, df=dfs, lower.tail=FALSE) * coef(tmp)[1,2]
+         ci.ub <- est + qt(level/2, df=dfs, lower.tail=FALSE) * coef(tmp)[1,2]
       } else {
          est <- coef(fit)[1]
          ci.lb <- fit$ci.lb[1]
