@@ -50,12 +50,16 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, subset, 
    #weights <- eval(mf.weights, data, enclos=sys.frame(sys.parent()))
    subset  <- eval(mf.subset,  data, enclos=sys.frame(sys.parent()))
 
-   if (is.null(vi)) {
-      if (is.null(sei)) {
-         stop(mstyle$stop("Need to specify 'vi' or 'sei' argument."))
-      } else {
-         vi <- sei^2
+   if (type != "Orwin") {
+      if (is.null(vi)) {
+         if (is.null(sei)) {
+            stop(mstyle$stop("Need to specify 'vi' or 'sei' argument."))
+         } else {
+            vi <- sei^2
+         }
       }
+   } else {
+      vi <- rep(0, length(yi))
    }
 
    ### check length of yi and vi

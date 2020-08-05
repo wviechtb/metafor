@@ -23,7 +23,7 @@ fsn(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, subset, digits)
 
    The Rosenthal method (sometimes called a \sQuote{file drawer analysis}) calculates the number of studies averaging null results that would have to be added to the given set of observed effect sizes or outcomes to reduce the combined significance level (p-value) to a target alpha level (e.g., .05). The calculation is based on Stouffer's method to combine p-values and is described in Rosenthal (1979).
 
-   The Orwin method calculates the number of studies averaging null results that would have to be added to the given set of observed effect sizes or outcomes to reduce the (unweighted) average effect size to a target (unweighted) average effect size. The method is described in Orwin (1983).
+   The Orwin method calculates the number of studies averaging null results that would have to be added to the given set of observed effect sizes or outcomes to reduce the (unweighted) average effect size to a target (unweighted) average effect size. The method is described in Orwin (1983). Note that this method does not require (or makes use) of \code{vi} or \code{sei}, so these arguments are not relevant for this method.
 
    The Rosenberg method calculates the number of studies averaging null results that would have to be added to the given set of observed effect sizes or outcomes to reduce significance level (p-value) of the (weighted) average effect size (based on a fixed-effects model) to a target alpha level (e.g., .05). The method is described in Rosenberg (2005).
 }
@@ -61,7 +61,7 @@ fsn(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, subset, digits)
 dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
 fsn(yi, vi, data=dat)
-fsn(yi, vi, data=dat, type="Orwin")
+fsn(yi, data=dat, type="Orwin")
 fsn(yi, vi, data=dat, type="Rosenberg")
 }
 \keyword{htest}

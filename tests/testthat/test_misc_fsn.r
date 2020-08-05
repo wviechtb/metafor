@@ -14,7 +14,7 @@ test_that("confint() gives correct results for the 'expectancy data' in Becker (
 
    out <- capture.output(print(sav)) ### so that print.fsn() is run (at least once)
 
-   sav <- fsn(yi, vi, data=dat.raudenbush1985, type="Orwin", target=.05)
+   sav <- fsn(yi, data=dat.raudenbush1985, type="Orwin", target=.05)
    expect_equivalent(sav$fsnum, 44)
    ### note: Becker finds N = 4, but uses the FE model estimate with 1/vi weights for
    ### the average effect size, but Orwin's methods is based on units weighting
@@ -36,7 +36,7 @@ test_that("confint() gives correct results for the 'passive smoking data' in Bec
    expect_equivalent(sav$fsnum, 393)
    ### note: Becker finds N =~ 398 (due to rounding)
 
-   sav <- fsn(yi, vi, data=dat.hackshaw1998, type="Orwin", target=.049)
+   sav <- fsn(yi, data=dat.hackshaw1998, type="Orwin", target=.049)
    expect_equivalent(sav$fsnum, 186)
    ### note: Becker finds N = 103, but uses the FE model estimate with 1/vi weights for
    ### the average effect size, but Orwin's methods is based on units weighting
@@ -55,7 +55,7 @@ test_that("confint() gives correct results for the 'interview data' in Becker (2
    expect_equivalent(sav$fsnum, 50364)
    ### note: Becker uses p-values based on t-tests, which yields N =~ 51226
 
-   sav <- fsn(yi, vi, data=dat, type="Orwin", target=.15)
+   sav <- fsn(yi, data=dat, type="Orwin", target=.15)
    expect_equivalent(sav$fsnum, 129)
    ### note: Becker finds N = 64, but uses the FE model estimate with 1/vi weights for
    ### the average effect size, but Orwin's methods is based on units weighting
