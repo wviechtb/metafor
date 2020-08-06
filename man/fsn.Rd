@@ -5,7 +5,7 @@
    Function to compute the fail-safe N (also called a file drawer analysis).
 }
 \usage{
-fsn(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, weighted=FALSE, subset, digits)
+fsn(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, weighted=FALSE, subset, digits, \dots)
 }
 \arguments{
    \item{yi}{vector with the observed effect sizes or outcomes.}
@@ -18,6 +18,7 @@ fsn(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, weighted=FALSE, subs
    \item{weighted}{logical indicating whether Orwin's method should be based on unweighted (the default) or weighted averages.}
    \item{subset}{optional (logical or numeric) vector indicating the subset of studies that should be used for the calculations.}
    \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is 4).}
+   \item{\dots}{other arguments.}
 }
 \details{
    The function can be used in conjunction with any of the usual effect sizes / outcome measures used in meta-analyses (e.g., log risk ratios, log odds ratios, risk differences, mean differences, standardized mean differences, raw correlation coefficients, correlation coefficients transformed with Fisher's r-to-z transformation, and so on). Simply specify the observed effect sizes or outcomes via the \code{yi} argument and the corresponding sampling variances via the \code{vi} argument (instead of specifying \code{vi}, one can specify the standard errors via the \code{sei} argument). The \code{\link{escalc}} function can be used to compute a wide variety of effect sizes / outcome measures (and the corresponding sampling variances) based on summary statistics.

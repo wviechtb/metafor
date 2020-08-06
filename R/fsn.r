@@ -1,4 +1,4 @@
-fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, weighted=FALSE, subset, digits) {
+fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, weighted=FALSE, subset, digits, ...) {
 
    #########################################################################
 
@@ -20,6 +20,16 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, weighted
       digits <- .set.digits(dmiss=TRUE)
    } else {
       digits <- .set.digits(digits, dmiss=FALSE)
+   }
+
+   ddd <- list(...)
+
+   .chkdots(ddd, c("test"))
+
+   if (is.null(ddd$test)) {
+      test <- "Stouffer"
+   } else {
+      test <- match.arg(ddd$test, c("Stouffer", "Fisher"))
    }
 
    #########################################################################
@@ -94,13 +104,36 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, weighted
 
    #########################################################################
 
-   if (type == "Rosenthal") {
+   if (type == "Rosenthal" && test == "Stouffer") {
 
       k      <- length(yi)
       zi     <- yi / sqrt(vi)
       z.avg  <- abs(sum(zi) / sqrt(k))
       pval   <- pnorm(z.avg, lower.tail=FALSE)
       fsnum  <- max(0, k * (z.avg / qnorm(alpha, lower.tail=FALSE))^2 - k)
+      meanes <- NA
+      target <- NA
+
+   }
+
+   if (type == "Rosenthal" && test == "Fisher") {
+
+      .fsn.fisher <- function(fsnum, pi, alpha) {
+         k <- length(pi)
+         X2 <- -2*sum(log(c(pi, rep(0.5, fsnum))))
+         return(pchisq(X2, df=2*(k+fsnum), lower.tail=FALSE) - alpha)
+      }
+
+      zi <- c(yi / sqrt(vi))
+      pi <- pnorm(zi, lower.tail=FALSE)
+      pval <- .fsn.fisher(0, pi=pi, alpha=0)
+      if (pval >= alpha) {
+         fsnum <- 0
+      } else {
+         fsnum <- try(uniroot(.fsn.fisher, lower=0, upper=1000, extendInt="upX", pi=pi, alpha=alpha)$root, silent=FALSE)
+         if (inherits(fsnum, "try-error"))
+            stop(mstyle$stop("Could not find failsafe N using Fisher's method."))
+      }
       meanes <- NA
       target <- NA
 
