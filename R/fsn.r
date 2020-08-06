@@ -1,4 +1,4 @@
-fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, subset, digits) {
+fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, weighted=FALSE, subset, digits) {
 
    #########################################################################
 
@@ -50,7 +50,7 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, subset, 
    #weights <- eval(mf.weights, data, enclos=sys.frame(sys.parent()))
    subset  <- eval(mf.subset,  data, enclos=sys.frame(sys.parent()))
 
-   if (type != "Orwin") {
+   if (type %in% c("Rosenthal", "Rosenberg") || (type == "Orwin" && weighted)) {
       if (is.null(vi)) {
          if (is.null(sei)) {
             stop(mstyle$stop("Need to specify 'vi' or 'sei' argument."))
@@ -109,7 +109,13 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, subset, 
    if (type == "Orwin") {
 
       k      <- length(yi)
-      meanes <- mean(yi)
+
+      if (weighted) {
+         wi <- 1/vi
+         meanes <- sum(wi*yi)/sum(wi)
+      } else {
+         meanes <- mean(yi)
+      }
 
       if (is.null(target))
          target <- meanes / 2
@@ -117,7 +123,7 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, subset, 
       if (identical(target, 0) || sign(target) != sign(meanes)) {
          fsnum <- Inf
       } else {
-         fsnum <- ceiling(max(0, k * (meanes - target)/target))
+         fsnum <- ceiling(max(0, k * (meanes - target) / target))
       }
       pval <- NA
 

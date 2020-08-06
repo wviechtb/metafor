@@ -1,6 +1,8 @@
-# metafor 2.5-41 (2020-08-04)
+# metafor 2.5-42 (2020-08-06)
 
 - the `metafor` package now makes use of the `mathjaxr` package to nicely render equations shown in the HTML help pages
+
+- added `weighted` argument to `fsn()` (for Orwin's method)
 
 - added some more transformation functions
 
