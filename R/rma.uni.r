@@ -31,7 +31,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
                               "GEN")))
       stop(mstyle$stop("Unknown 'measure' specified."))
 
-   if (!is.element(method, c("FE","HS","HE","DL","DLIT","GENQ","GENQM","SJ","SJIT","PM","PMM","ML","REML","EB")))
+   if (!is.element(method, c("FE","HS","HSk","HE","DL","DLIT","GENQ","GENQM","SJ","SJIT","PM","PMM","ML","REML","EB")))
       stop(mstyle$stop("Unknown 'method' specified."))
 
    ### in case user specifies more than one add/to value (as one can do with rma.mh() and rma.peto())
@@ -988,7 +988,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
       ### Hunter & Schmidt (HS) estimator (or k-corrected HS estimator (HSk))
 
-      if (is.element(method, c("HS", "HSk")) {
+      if (is.element(method, c("HS", "HSk"))) {
 
          if (!allvipos)
             stop(mstyle$stop(method, " estimator cannot be used when there are non-positive sampling variances in the data."))
@@ -999,12 +999,13 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
          P     <- W - W %*% X %*% stXWX %*% crossprod(X,W)
          RSS   <- crossprod(Y,P) %*% Y
          if (method == "HS") {
-            tau2  <- ifelse(tau2.fix, tau2.val, (RSS-k)/sum(wi))
+            tau2 <- ifelse(tau2.fix, tau2.val, (RSS-k)/sum(wi))
          } else {
             ### HSk = (RSS - (k-p)) / sum(wi) * k/(k-p)
-            trP <- sum(wi) * (k-p) / k
-            tau2  <- ifelse(tau2.fix, tau2.val, k/(k-p) * (RSS - (k-p)) / trP)
+            trP  <- sum(wi) * (k-p) / k
+            tau2 <- ifelse(tau2.fix, tau2.val, k/(k-p) * (RSS - (k-p)) / trP)
          }
+
       }
 
       ### Hedges (HE) estimator (or initial value for ML, REML, EB)
@@ -1430,7 +1431,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
       if (method == "HS")
          se.tau2 <- sqrt(1/sum(wi)^2 * (2*(k-p) + 4*max(tau2,0)*.tr(P) + 2*max(tau2,0)^2*sum(P*P))) ### note: wi = 1/vi
       if (method == "HSk")
-         se.tau2 <- sqrt(1/trP^2 * (2*(k-p) + 4*max(tau2,0)*.tr(P) + 2*max(tau2,0)^2*sum(P*P))) ### note: wi = 1/vi   
+         se.tau2 <- sqrt(1/trP^2 * (2*(k-p) + 4*max(tau2,0)*.tr(P) + 2*max(tau2,0)^2*sum(P*P)))
       if (method == "HE")
          se.tau2 <- sqrt(1/(k-p)^2 * (2*sum(PV*t(PV)) + 4*max(tau2,0)*trPV + 2*max(tau2,0)^2*(k-p)))
       if (method == "DL" || method == "DLIT")

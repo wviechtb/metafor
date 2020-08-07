@@ -191,7 +191,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 \references{
    Berkey, C. S., Hoaglin, D. C., Mosteller, F., & Colditz, G. A. (1995). A random-effects regression model for meta-analysis. \emph{Statistics in Medicine}, \bold{14}(4), 395--411. \verb{https://doi.org/10.1002/sim.4780140406}
 
-   Brannick, M. T., Potter, S. M., Benitez, B., & Morris, S. B. (2019). Bias and precision of alternate estimators in meta-analysis: Benefits of blending Schmidt–Hunter and Hedges approaches. \emph{Organizational Research Methods, 22}(2), 490--514. \verb{https://doi.org/10.1177/1094428117741966}
+   Brannick, M. T., Potter, S. M., Benitez, B., & Morris, S. B. (2019). Bias and precision of alternate estimators in meta-analysis: Benefits of blending Schmidt–Hunter and Hedges approaches. \emph{Organizational Research Methods}, \bold{22}(2), 490--514. \verb{https://doi.org/10.1177/1094428117741966}
 
    Cochran, W. G. (1954). The combination of estimates from different experiments. \emph{Biometrics}, \bold{10}(1), 101--129. \verb{https://doi.org/10.2307/3001666}
 
