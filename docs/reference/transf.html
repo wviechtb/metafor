@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-42</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-43</span>
       </span>
     </div>
 
@@ -203,7 +203,7 @@
 
     <p>The following transformation functions are currently implemented:</p><ul>
 <li><p><code>transf.rtoz</code>: Fisher's r-to-z transformation for correlations.</p></li>
-<li><p><code>transf.ztor</code>: inverse of the Fisher's r-to-z transformation.</p></li>
+<li><p><code>transf.ztor</code>: inverse of Fisher's r-to-z transformation.</p></li>
 <li><p><code>transf.logit</code>: logit (log odds) transformation for proportions.</p></li>
 <li><p><code>transf.ilogit</code>: inverse of the logit transformation.</p></li>
 <li><p><code>transf.arcsin</code>: arcsine square root transformation for proportions.</p></li>
@@ -226,7 +226,7 @@
 <li><p><code>transf.dtou3</code>: transformation of standardized mean differences to Cohen's U3 values (Cohen, 1988).</p></li>
 <li><p><code>transf.dtocles</code>: transformation of standardized mean differences to common language effect size values (McGraw &amp; Wong, 1992).</p></li>
 <li><p><code>transf.dtorpb</code>: transformation of standardized mean differences to point-biserial correlations. If <code>n1i</code> and <code>n2i</code> are not specified, the function assumes <code>n1i=n2i</code> and uses an approximate formula. If <code>n1i</code> and <code>n2i</code> are specified, the exact transformation formula is used.</p></li>
-<li><p><code>transf.dtobesd</code>: transformation of standardized mean differences to binomial effect-size display values (Rosenthal &amp; Rubin, 1982). Note that the function only provides the proportion in the first group scoring above the median (the proportion in the second group scoring above the median is simply 1 minus the proportion in the first group scoring above the median).</p></li>
+<li><p><code>transf.dtobesd</code>: transformation of standardized mean differences to binomial effect-size display values (Rosenthal &amp; Rubin, 1982). Note that the function only provides the proportion in the first group scoring above the median (the proportion in the second group scoring above the median is simply one minus the proportion in the first group scoring above the median).</p></li>
 <li><p><code>transf.logortord</code>: transformation of log odds ratios to risk differences, assuming a particular value for the control group risk (which needs to be specified via the <code>pc</code> argument).</p></li>
 <li><p><code>transf.logortorr</code>: transformation of log odds ratios to risk ratios, assuming a particular value for the control group risk (which needs to be specified via the <code>pc</code> argument).</p></li>
 </ul>

@@ -73,7 +73,7 @@ transf.logortorr(xi, pc, \dots)
    The following transformation functions are currently implemented:
    \itemize{
    \item \code{transf.rtoz}: Fisher's r-to-z transformation for correlations.
-   \item \code{transf.ztor}: inverse of the Fisher's r-to-z transformation.
+   \item \code{transf.ztor}: inverse of Fisher's r-to-z transformation.
    \item \code{transf.logit}: logit (log odds) transformation for proportions.
    \item \code{transf.ilogit}: inverse of the logit transformation.
    \item \code{transf.arcsin}: arcsine square root transformation for proportions.
@@ -96,7 +96,7 @@ transf.logortorr(xi, pc, \dots)
    \item \code{transf.dtou3}: transformation of standardized mean differences to Cohen's U3 values (Cohen, 1988).
    \item \code{transf.dtocles}: transformation of standardized mean differences to common language effect size values (McGraw & Wong, 1992).
    \item \code{transf.dtorpb}: transformation of standardized mean differences to point-biserial correlations. If \code{n1i} and \code{n2i} are not specified, the function assumes \code{n1i=n2i} and uses an approximate formula. If \code{n1i} and \code{n2i} are specified, the exact transformation formula is used.
-   \item \code{transf.dtobesd}: transformation of standardized mean differences to binomial effect-size display values (Rosenthal & Rubin, 1982). Note that the function only provides the proportion in the first group scoring above the median (the proportion in the second group scoring above the median is simply 1 minus the proportion in the first group scoring above the median).
+   \item \code{transf.dtobesd}: transformation of standardized mean differences to binomial effect-size display values (Rosenthal & Rubin, 1982). Note that the function only provides the proportion in the first group scoring above the median (the proportion in the second group scoring above the median is simply one minus the proportion in the first group scoring above the median).
    \item \code{transf.logortord}: transformation of log odds ratios to risk differences, assuming a particular value for the control group risk (which needs to be specified via the \code{pc} argument).
    \item \code{transf.logortorr}: transformation of log odds ratios to risk ratios, assuming a particular value for the control group risk (which needs to be specified via the \code{pc} argument).
    }

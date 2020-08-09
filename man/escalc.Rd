@@ -356,7 +356,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
          \item \code{"PCOR"} for the \emph{partial correlation coefficient}.
          \item \code{"ZPCOR"} for \emph{Fisher's r-to-z transformed partial correlation coefficient}.
          \item \code{"SPCOR"} for the \emph{semi-partial correlation coefficient}.
-         } Note that the sign of the (semi-)partial correlation coefficients is determined based on the signs of the values specified via the \code{ti} argument. Also, Fisher's variance stabilizing transformation can only be applied to partial correlation coefficient, not semi-partial coefficients.
+         } Note that the sign of the (semi-)partial correlation coefficients is determined based on the signs of the values specified via the \code{ti} argument. Also, the Fisher transformation can only be applied to partial correlation coefficient, not semi-partial coefficients.
 
       }
 

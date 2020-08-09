@@ -1,4 +1,4 @@
-matreg <- function(y, x, R, n, V, nearPD=FALSE, level=95, digits) {
+matreg <- function(y, x, R, n, V, ztor=FALSE, nearPD=FALSE, level=95, digits) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -30,14 +30,31 @@ matreg <- function(y, x, R, n, V, nearPD=FALSE, level=95, digits) {
    if (y %in% x)
       stop(mstyle$stop("Index 'y' should not be an element of 'x'."))
 
+   m <- length(x)
+
+   if (missing(V))
+      V <- NULL
+
+   ############################################################################
+
    if (nrow(R) != ncol(R))
       stop(mstyle$stop("Argument 'R' must be a square matrix."))
 
    R[upper.tri(R)] <- t(R)[upper.tri(R)]
 
-   diag(R) <- 1
+   if (ztor) {
 
-   m <- length(x)
+      if (!is.null(V)) {
+         zij <- R[lower.tri(R)]
+         Dmat <- diag(2 / (cosh(2*zij) + 1), nrow=length(zij), ncol=length(zij), names=FALSE)
+         V <- Dmat %*% V %*% Dmat
+      }
+
+      R <- tanh(R)
+
+   }
+
+   diag(R) <- 1
 
    ############################################################################
 
@@ -71,13 +88,40 @@ matreg <- function(y, x, R, n, V, nearPD=FALSE, level=95, digits) {
 
    ############################################################################
 
-   if (missing(V) && missing(n))
+   if (is.null(V) && missing(n))
       stop(mstyle$stop("Either 'V' or 'n' must be specified."))
 
-   if (!missing(V) && !missing(n))
+   if (!is.null(V) && !missing(n))
       stop(mstyle$stop("Either 'V' or 'n' must be specified, not both."))
 
-   if (!missing(V)) {
+   if (is.null(V)) {
+
+      if (length(n) != 1L)
+         stop(mstyle$stop("Argument 'n' should be a single number."))
+
+      if (n <= m)
+         stop(mstyle$stop("Cannot fit model when 'n' is equal to or less than the number of predictors."))
+
+      df <- n - m
+      sse <- 1 - c(t(b) %*% R01)
+      mse <- sse / df
+      vb <- mse * invR11
+      se <- sqrt(diag(vb))
+      tval <- c(b / se)
+      pval <- 2*pt(abs(tval), df=df, lower.tail=FALSE)
+      crit <- qt(level/2, df=df, lower.tail=FALSE)
+      ci.lb <- c(b - crit * se)
+      ci.ub <- c(b + crit * se)
+
+      R2 <- 1 - sse
+      F <- c(value = (R2 / m) / mse, df1=m, df2=df)
+      Fp <- pf(F[[1]], df1=m, df2=df, lower.tail=FALSE)
+
+      rownames(vb) <- colnames(vb) <- rownames(b)
+
+      res <- list(tab = data.frame(estimate=b, se=se, tval=tval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub), vb=vb, R2=R2, F=F, Fp=Fp, digits=digits)
+
+   } else {
 
       if (nrow(V) != ncol(V))
          stop(mstyle$stop("Argument 'V' must be a square matrix."))
@@ -130,33 +174,6 @@ matreg <- function(y, x, R, n, V, nearPD=FALSE, level=95, digits) {
       rownames(vb) <- colnames(vb) <- rownames(b)
 
       res <- list(tab = data.frame(estimate=b, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub), vb=vb, R2=R2, digits=digits)
-
-   } else {
-
-      if (length(n) != 1L)
-         stop(mstyle$stop("Argument 'n' should be a single number."))
-
-      if (n <= m)
-         stop(mstyle$stop("Cannot fit model when 'n' is equal to or less than the number of predictors."))
-
-      df <- n - m
-      sse <- 1 - c(t(b) %*% R01)
-      mse <- sse / df
-      vb <- mse * invR11
-      se <- sqrt(diag(vb))
-      tval <- c(b / se)
-      pval <- 2*pt(abs(tval), df=df, lower.tail=FALSE)
-      crit <- qt(level/2, df=df, lower.tail=FALSE)
-      ci.lb <- c(b - crit * se)
-      ci.ub <- c(b + crit * se)
-
-      R2 <- 1 - sse
-      F <- c(value = (R2 / m) / mse, df1=m, df2=df)
-      Fp <- pf(F[[1]], df1=m, df2=df, lower.tail=FALSE)
-
-      rownames(vb) <- colnames(vb) <- rownames(b)
-
-      res <- list(tab = data.frame(estimate=b, se=se, tval=tval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub), vb=vb, R2=R2, F=F, Fp=Fp, digits=digits)
 
    }
 
