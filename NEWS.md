@@ -1,4 +1,4 @@
-# metafor 2.5-43 (2020-08-09)
+# metafor 2.5-44 (2020-08-11)
 
 - the `metafor` package now makes use of the `mathjaxr` package to nicely render equations shown in the HTML help pages
 
@@ -44,7 +44,7 @@
 
 - refactored various functions (for cleaner/simpler code)
 
-- added 8 new datasets (`dat.anand1999`, `dat.cannon2006`, `dat.craft2003`, `dat.damico2009`, `dat.dorn2007`, `dat.kalaian1996`, `dat.lau1992`, `dat.vanhowe1999`)
+- added 9 new datasets (`dat.anand1999`, `dat.cannon2006`, `dat.craft2003`, `dat.damico2009`, `dat.dorn2007`, `dat.kalaian1996`, `dat.kearon1998`, `dat.lau1992`, `dat.vanhowe1999`)
 
 - fixed `level` not getting passed down to the various `cumul()` functions
 

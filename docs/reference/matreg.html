@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-43</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-44</span>
       </span>
     </div>
 
@@ -305,6 +305,7 @@
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'>### repeat the above but with r-to-z transformed correlations</span>
 <span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.craft2003</span>
 <span class='no'>tmp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rcalc.html'>rcalc</a></span>(<span class='no'>ri</span> ~ <span class='no'>var1</span> + <span class='no'>var2</span> <span class='kw'>|</span> <span class='no'>study</span>, <span class='kw'>ni</span><span class='kw'>=</span><span class='no'>ni</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>rtoz</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
@@ -312,19 +313,12 @@
 <span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>tmp</span>$<span class='no'>dat</span>
 <span class='no'>dat</span>$<span class='no'>var1.var2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>dat</span>$<span class='no'>var1.var2</span>,
    <span class='kw'>levels</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"acog.perf"</span>, <span class='st'>"asom.perf"</span>, <span class='st'>"conf.perf"</span>, <span class='st'>"acog.asom"</span>, <span class='st'>"acog.conf"</span>, <span class='st'>"asom.conf"</span>))
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span>(<span class='no'>yi</span>, <span class='no'>V</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>var1.var2</span> - <span class='fl'>1</span>, <span class='kw'>random</span> <span class='kw'>=</span> ~ <span class='no'>var1.var2</span> <span class='kw'>|</span> <span class='no'>study</span>, <span class='kw'>struct</span><span class='kw'>=</span><span class='st'>"UN"</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Rows with NAs omitted from model fitting.</span></div><div class='input'><span class='no'>R</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>NA</span>, <span class='kw'>nrow</span><span class='kw'>=</span><span class='fl'>4</span>, <span class='kw'>ncol</span><span class='kw'>=</span><span class='fl'>4</span>)
+<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span>(<span class='no'>yi</span>, <span class='no'>V</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>var1.var2</span> - <span class='fl'>1</span>, <span class='kw'>random</span> <span class='kw'>=</span> ~ <span class='no'>var1.var2</span> <span class='kw'>|</span> <span class='no'>study</span>, <span class='kw'>struct</span><span class='kw'>=</span><span class='st'>"UN"</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
+<span class='no'>R</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>NA</span>, <span class='kw'>nrow</span><span class='kw'>=</span><span class='fl'>4</span>, <span class='kw'>ncol</span><span class='kw'>=</span><span class='fl'>4</span>)
 <span class='no'>R</span>[<span class='fu'><a href='https://rdrr.io/r/base/lower.tri.html'>lower.tri</a></span>(<span class='no'>R</span>)] <span class='kw'>&lt;-</span> <span class='fu'><a href='coef.rma.html'>coef</a></span>(<span class='no'>res</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span>(<span class='no'>R</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>R</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"perf"</span>, <span class='st'>"acog"</span>, <span class='st'>"asom"</span>, <span class='st'>"conf"</span>)
 <span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'>matreg</span>(<span class='fl'>1</span>, <span class='fl'>2</span>:<span class='fl'>4</span>, <span class='kw'>R</span><span class='kw'>=</span><span class='no'>R</span>, <span class='kw'>V</span><span class='kw'>=</span><span class='fu'><a href='vcov.rma.html'>vcov</a></span>(<span class='no'>res</span>), <span class='kw'>ztor</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
-<span class='no'>fit</span></div><div class='output co'>#&gt; 
-#&gt;       estimate      se     zval    pval    ci.lb   ci.ub 
-#&gt; acog    0.1362  0.1697   0.8023  0.4224  -0.1965  0.4688      
-#&gt; asom   -0.0678  0.0761  -0.8900  0.3735  -0.2170  0.0814      
-#&gt; conf    0.3666  0.0934   3.9248  0.0001   0.1835  0.5496  *** 
-#&gt; 
-#&gt; ---
-#&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-#&gt; </div></pre>
+<span class='no'>fit</span>}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

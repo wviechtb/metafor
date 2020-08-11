@@ -5,7 +5,8 @@
    Function to compute the fail-safe N (also called a file drawer analysis).
 }
 \usage{
-fsn(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, weighted=FALSE, subset, digits, \dots)
+fsn(yi, vi, sei, data, type="Rosenthal", alpha=.05,
+    target, weighted=FALSE, subset, digits, \dots)
 }
 \arguments{
    \item{yi}{vector with the observed effect sizes or outcomes.}

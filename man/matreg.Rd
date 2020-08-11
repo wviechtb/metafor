@@ -83,6 +83,7 @@ round(vcov(res), digits=4)
 fit <- matreg(1, 2:4, R=R, V=vcov(res))
 fit
 
+\dontrun{
 ### repeat the above but with r-to-z transformed correlations
 dat <- dat.craft2003
 tmp <- rcalc(ri ~ var1 + var2 | study, ni=ni, data=dat, rtoz=TRUE)
@@ -95,6 +96,6 @@ R <- matrix(NA, nrow=4, ncol=4)
 R[lower.tri(R)] <- coef(res)
 rownames(R) <- colnames(R) <- c("perf", "acog", "asom", "conf")
 fit <- matreg(1, 2:4, R=R, V=vcov(res), ztor=TRUE)
-fit
+fit}
 }
 \keyword{models}
