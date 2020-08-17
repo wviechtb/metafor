@@ -1452,6 +1452,9 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
 
       total <- sigma(lm(Y ~ X - 1))^2
 
+      if (is.na(total)) # if X is a saturated model, then sigma() yields NaN
+         stop(mstyle$stop("Cannot compute initial values."))
+
       QE  <- NA
       QEp <- NA
 
