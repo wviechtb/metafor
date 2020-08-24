@@ -111,7 +111,8 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
 
       con <- list(tol=.Machine$double.eps^0.25, maxiter=1000, tau2.min=tau2.min, tau2.max=tau2.max, verbose=FALSE)
 
-      con[pmatch(names(control), names(con))] <- control
+      con.pos <- pmatch(names(control), names(con))
+      con[c(na.omit(con.pos))] <- control[!is.na(con.pos)]
 
       if (verbose)
          con$verbose <- verbose

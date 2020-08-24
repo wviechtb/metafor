@@ -1,4 +1,4 @@
-simulate.rma <- function (object, nsim = 1, seed = NULL, ...) {
+simulate.rma <- function(object, nsim = 1, seed = NULL, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 

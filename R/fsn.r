@@ -141,7 +141,7 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, weighted
 
    if (type == "Orwin") {
 
-      k      <- length(yi)
+      k <- length(yi)
 
       if (weighted) {
          wi <- 1/vi

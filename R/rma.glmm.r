@@ -601,7 +601,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                package="lme4",             # package for fitting logistic mixed-effects models ("lme4" or "GLMMadaptive")
                optimizer = "optim",        # optimizer to use for CM.EL+OR ("optim", "nlminb", "uobyqa", "newuoa", "bobyqa", "clogit", "clogistic")
                optmethod = "BFGS",         # argument 'method' for optim() ("Nelder-Mead" and "BFGS" are sensible options)
-               scale = TRUE,               # should non-dummy variables in the X matrix be rescaled before model fitting?
+               scaleX = TRUE,              # whether non-dummy variables in the X matrix be rescaled before model fitting
                evtol = 1e-07,              # lower bound for eigenvalues to determine if model matrix is positive definite
                dnchgcalc = "dFNCHypergeo", # method for calculating dnchg ("dFNCHypergeo" from BiasedUrn package or "dnoncenhypergeom")
                dnchgprec = 1e-10)          # precision for dFNCHypergeo()
@@ -734,7 +734,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    #########################################################################
 
-   ### check that required packages are available
+   ### check that the required packages are installed
 
    if (is.element(measure, c("OR","IRR"))) {
       if ((model == "UM.FS" && method == "ML") || (model == "UM.RS") || (model == "CM.AL" && method == "ML") || (model == "CM.EL" && method == "ML")) {
@@ -797,7 +797,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    ### rescale X matrix (only for models with moderators and models including an intercept term)
 
-   if (!int.only && int.incl && con$scale) {
+   if (!int.only && int.incl && con$scaleX) {
       Xsave <- X
       meanX <- colMeans(X[, 2:p, drop=FALSE])
       sdX   <- apply(X[, 2:p, drop=FALSE], 2, sd) ### consider using colSds() from matrixStats package
@@ -1900,7 +1900,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    ### heterogeneity tests (Wald-type and likelihood ratio tests of the extra coefficients in the saturated model)
 
    if (verbose > 1)
-      message(mstyle$message("Heterogeneity testing ..."))
+      message(mstyle$message("Conducting heterogeneity tests ..."))
 
    if (QEconv) {
 
@@ -1968,6 +1968,11 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    I2    <- 100 * tau2 / (vt + tau2)
    H2    <- tau2 / vt + 1
 
+   ### testing of the fixed effects in the model
+
+   if (verbose > 1)
+      message(mstyle$message("Conducting tests of the fixed effects ..."))
+
    chol.h <- try(chol(vb[btt,btt]), silent=!verbose) ### see if Hessian can be inverted with chol()
 
    if (inherits(chol.h, "try-error")) {
@@ -1979,11 +1984,11 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    ### scale back beta and vb
 
-   if (!int.only && int.incl && con$scale) {
+   if (!int.only && int.incl && con$scaleX) {
       mX <- rbind(c(1, -1*ifelse(is.d[-1], 0, meanX/sdX)), cbind(0, diag(ifelse(is.d[-1], 1, 1/sdX), nrow=length(is.d)-1, ncol=length(is.d)-1)))
       beta <- mX %*% beta
       vb <- mX %*% vb %*% t(mX)
-      X  <- Xsave
+      X <- Xsave
    }
 
    rownames(beta) <- rownames(vb) <- colnames(vb) <- colnames(X)

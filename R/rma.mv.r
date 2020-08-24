@@ -856,7 +856,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
          ### check if R list has no names at all or some names are missing
          ### (if only some elements of R have names, then names(R) is "" for the unnamed elements, so use nchar()==0 to check for that)
 
-         if (is.null(names(R)) || any(nchar(names(R)) == 0))
+         if (is.null(names(R)) || any(nchar(names(R)) == 0L))
             stop(mstyle$stop("Argument 'R' must be a *named* list."))
 
          ### remove elements in R that are NULL (not sure why this is needed; why would anybody ever do this?)
@@ -1661,14 +1661,15 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
    ncpus      <- con$ncpus
    optcontrol <- control[is.na(con.pos)] ### get arguments that are control arguments for optimizer
 
+   if (length(optcontrol) == 0L)
+      optcontrol <- list()
+
    ### if control argument 'ncpus' is larger than 1, automatically switch to optimParallel optimizer
+
    if (ncpus > 1L) {
       con$optimizer <- "optimParallel"
       optimizer <- "optimParallel"
    }
-
-   if (length(optcontrol) == 0L)
-      optcontrol <- list()
 
    reml <- ifelse(method=="REML", TRUE, FALSE)
 
@@ -1682,6 +1683,8 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
       optcontrol$ftol_rel <- 1e-8
 
    #return(list(con=con, optimizer=optimizer, optmethod=optmethod, parallel=parallel, cl=cl, ncpus=ncpus, evtol=evtol, posdefify=posdefify, optcontrol=optcontrol))
+
+   ### check that the required packages are installed
 
    if (is.element(optimizer, c("uobyqa","newuoa","bobyqa"))) {
       if (!requireNamespace("minqa", quietly=TRUE))
@@ -1707,6 +1710,9 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
       if (!requireNamespace("optimParallel", quietly=TRUE))
          stop(mstyle$stop("Please install the 'optimParallel' package to use this optimizer."))
    }
+
+   if (con$hessian && !requireNamespace("numDeriv", quietly=TRUE))
+      stop(mstyle$stop("Please install the 'numDeriv' package for Hessian computation."))
 
    ### check if length of sigma2.init, tau2.init, rho.init, gamma2.init, and phi.init matches number of variance components
    ### note: if a particular component is not included, reset (transformed) initial values (in case the user still specifies multiple initial values)
@@ -1842,7 +1848,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
    if (optimizer=="nlm") {
       par.arg <- "p" ### because of this, must use argument name pX for p (number of columns in X matrix)
       ctrl.arg <- paste(names(optcontrol), unlist(optcontrol), sep="=", collapse=", ")
-      if (nchar(ctrl.arg) != 0)
+      if (nchar(ctrl.arg) != 0L)
          ctrl.arg <- paste0(", ", ctrl.arg)
    }
    if (is.element(optimizer, c("hjk","nmk"))) {
@@ -2040,6 +2046,9 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
 
    #print(M[1:8,1:8])
 
+   if (verbose > 1)
+      message(mstyle$message("Conducting tests of the fixed effects ..."))
+
    ### QM calculation
 
    QM <- try(as.vector(t(beta)[btt] %*% chol2inv(chol(vb[btt,btt])) %*% beta[btt]), silent=TRUE)
@@ -2080,7 +2089,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
    ### heterogeneity test (Wald-type test of the extra coefficients in the saturated model)
 
    if (verbose > 1)
-      message(mstyle$message("\nHeterogeneity testing ..."))
+      message(mstyle$message("\nConducting heterogeneity test ..."))
 
    QE.df <- k-p
 
@@ -2118,9 +2127,6 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
 
       if (verbose > 1)
          message(mstyle$message("Computing Hessian ..."))
-
-      if (!requireNamespace("numDeriv", quietly=TRUE))
-         stop(mstyle$stop("Please install the 'numDeriv' package for Hessian computation."))
 
       hessian <- try(numDeriv::hessian(func=.ll.rma.mv, x = if (con$vctransf) opt.res$par else c(sigma2, tau2, rho, gamma2, phi),
          method.args=con$hessianCtrl, reml=reml, Y=Y, M=V, A=NULL, X.fit=X, k=k, pX=p,

@@ -287,7 +287,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
                          \tab trt 2 outcome 1 \tab trt 2 outcome 2 \cr
          trt 1 outcome 1 \tab \code{ai}       \tab \code{bi} \cr
          trt 1 outcome 2 \tab \code{ci}       \tab \code{di}
-         } where \code{ai}, \code{bi}, \code{ci}, and \code{di} denote the cell frequencies. Note that \sQuote{trt1} and \sQuote{trt2} may be applied to a single group of subjects or to matched pairs of subjects. The data from such a study can be rearranged into a marginal table of the form:
+         } where \code{ai}, \code{bi}, \code{ci}, and \code{di} denote the cell frequencies. Note that \sQuote{trt1} and \sQuote{trt2} may be applied to a single group of subjects or to matched pairs of subjects. Also, \sQuote{trt1} and \sQuote{trt2} might refer to two different time points (e.g., before and after a treatment). In any case, the data from such a study can be rearranged into a marginal table of the form:
          \tabular{lcc}{
                \tab outcome 1    \tab outcome 2 \cr
          trt 1 \tab \code{ai+bi} \tab \code{ci+di} \cr

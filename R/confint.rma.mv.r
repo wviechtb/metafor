@@ -328,7 +328,8 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
          }
       }
 
-      con[pmatch(names(control), names(con))] <- control
+      con.pos <- pmatch(names(control), names(con))
+      con[c(na.omit(con.pos))] <- control[!is.na(con.pos)]
 
       if (verbose)
          con$verbose <- verbose

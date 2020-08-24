@@ -98,7 +98,8 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
    con <- list(comptol=.Machine$double.eps^0.5, tol=.Machine$double.eps^0.25,
                maxiter=100, alternative="two.sided", p2defn="abs", stat="test",
                cialt="one.sided", seed=seed, distfac=1)
-   con[pmatch(names(control), names(con))] <- control
+   con.pos <- pmatch(names(control), names(con))
+   con[c(na.omit(con.pos))] <- control[!is.na(con.pos)]
 
    if (exists("comptol", inherits=FALSE))
       con$comptol <- comptol

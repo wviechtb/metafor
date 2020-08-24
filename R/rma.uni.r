@@ -921,7 +921,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
    verbose <- con$verbose
 
-   ### contrain negative tau2.min values to -min(vi) (to ensure that the marginal variance is always >= 0)
+   ### constrain negative tau2.min values to -min(vi) (to ensure that the marginal variance is always >= 0)
 
    if (con$tau2.min < 0 && (-con$tau2.min > min(vi))) {
       con$tau2.min <- -min(vi)
@@ -1482,6 +1482,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
          optcontrol <- list()
 
       ### if control argument 'ncpus' is larger than 1, automatically switch to optimParallel optimizer
+
       if (ncpus > 1L) {
          con$optimizer <- "optimParallel"
          optimizer <- "optimParallel"
@@ -1497,6 +1498,8 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
       if (optimizer=="nloptr" && !is.element("ftol_rel", names(optcontrol)))
          optcontrol$ftol_rel <- 1e-8
+
+   ### check that the required packages are installed
 
       if (is.element(optimizer, c("uobyqa","newuoa","bobyqa"))) {
          if (!requireNamespace("minqa", quietly=TRUE))
@@ -1636,7 +1639,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
       if (optimizer=="nlm") {
          par.arg <- "p" ### because of this, must use argument name pX for p (number of columns in X matrix)
          ctrl.arg <- paste(names(optcontrol), unlist(optcontrol), sep="=", collapse=", ")
-         if (nchar(ctrl.arg) != 0)
+         if (nchar(ctrl.arg) != 0L)
             ctrl.arg <- paste0(", ", ctrl.arg)
       }
       if (is.element(optimizer, c("hjk","nmk"))) {
@@ -1913,6 +1916,9 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
    }
 
+   if (verbose > 1)
+      message(mstyle$message("Conducting tests of the fixed effects ..."))
+
    ### the Knapp & Hartung method as described in the literature is for random/mixed-effects models
 
    if (method == "FE" && is.element(test, c("knha","adhoc")))
@@ -1967,7 +1973,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
    ### heterogeneity test (Wald-type test of the extra coefficients in the saturated model)
 
    if (verbose > 1)
-      message(mstyle$message("Heterogeneity testing ..."))
+      message(mstyle$message("Conducting heterogeneity test ..."))
 
    if (allvipos) {
 
