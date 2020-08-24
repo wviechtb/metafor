@@ -1,4 +1,4 @@
-simulate.rma <- function(object, nsim = 1, seed = NULL, ...) {
+simulate.rma <- function(object, nsim = 1, seed = NULL, yilim, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -46,6 +46,16 @@ simulate.rma <- function(object, nsim = 1, seed = NULL, ...) {
 
    if (inherits(object, "rma.mv"))
       val <- t(.mvrnorm(nsim, mu=ftd, Sigma=object$M))
+
+   ### apply yi limits if specified
+
+   if (!missing(yilim)) {
+      yilim <- sort(yilim)
+      if (length(yilim) != 2L)
+         stop(mstyle$stop("Argument 'yilim' must be of length 2."))
+      val[val < yilim[1]] <- yilim[1]
+      val[val > yilim[2]] <- yilim[2]
+   }
 
    #########################################################################
 

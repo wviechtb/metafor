@@ -2,6 +2,8 @@
 
 - the `metafor` package now makes use of the `mathjaxr` package to nicely render equations shown in the HTML help pages
 
+- `simulate.rma()` gains `yilim` argument
+
 - added `weighted` argument to `fsn()` (for Orwin's method)
 
 - added some more transformation functions
