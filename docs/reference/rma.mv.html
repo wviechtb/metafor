@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-46</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-47</span>
       </span>
     </div>
 
@@ -275,12 +275,12 @@
 <p>See <code><a href='dat.fine1993.html'>dat.fine1993</a></code> and <code><a href='dat.ishak2007.html'>dat.ishak2007</a></code> for examples involving such structures.</p>
 <p>For outcomes that have a known spatial configuration, various spatial correlation structures are also available. For these structures, the formula is of the form <code>random = ~ var1 + var2 + ... | outer</code>, where <code>var1</code>, <code>var2</code>, and so on are variables to indicate the spatial coordinates (e.g., longitude and latitude) based on which distances (by default Euclidean) will be computed. Let \(d\) denote the distance between two points that share the same level of the <code>outer</code> variable (if all true effects are allowed to be spatially correlated, simply set <code>outer</code> to a variable that is a constant). Then the correlation between the true effects corresponding to these two points is a function of \(d\) and the parameter \(\rho\). The following table shows the types of spatial correlation structures that can be specified and the equations for the correlation. The covariance between the true effects is then the correlation times \(\tau^2\).</p>
 <p></p><table class='table'>
-<tr><td>structure</td><td><a>&emsp;</a></td><td><code>struct</code></td><td><a>&emsp;</a></td><td>correlation</td></tr>
-<tr><td>exponential</td><td><a>&emsp;</a></td><td><code>"SPEXP"</code></td><td><a>&emsp;</a></td><td>\(\exp(-d/\rho)\)</td></tr>
-<tr><td>Gaussian</td><td><a>&emsp;</a></td><td><code>"SPGAU"</code></td><td><a>&emsp;</a></td><td>\(\exp(-d^2/\rho^2)\)</td></tr>
-<tr><td>linear</td><td><a>&emsp;</a></td><td><code>"SPLIN"</code></td><td><a>&emsp;</a></td><td>\((1 - d/\rho) I(d < \rho)\)</td></tr>
-<tr><td>rational quadratic</td><td><a>&emsp;</a></td><td><code>"SPRAT"</code></td><td><a>&emsp;</a></td><td>\(1 - (d/\rho)^2 / (1 + (d/\rho)^2)\)</td></tr>
-<tr><td>spherical</td><td><a>&emsp;</a></td><td><code>"SPSPH"</code></td><td><a>&emsp;</a></td><td>\((1 - 1.5(d/\rho) + 0.5(d/\rho)^3) I(d < \rho)\)</td></tr>
+<tr><td>structure</td><td>&emsp;</td><td><code>struct</code></td><td>&emsp;</td><td>correlation</td></tr>
+<tr><td>exponential</td><td>&emsp;</td><td><code>"SPEXP"</code></td><td>&emsp;</td><td>\(\exp(-d/\rho)\)</td></tr>
+<tr><td>Gaussian</td><td>&emsp;</td><td><code>"SPGAU"</code></td><td>&emsp;</td><td>\(\exp(-d^2/\rho^2)\)</td></tr>
+<tr><td>linear</td><td>&emsp;</td><td><code>"SPLIN"</code></td><td>&emsp;</td><td>\((1 - d/\rho) I(d < \rho)\)</td></tr>
+<tr><td>rational quadratic</td><td>&emsp;</td><td><code>"SPRAT"</code></td><td>&emsp;</td><td>\(1 - (d/\rho)^2 / (1 + (d/\rho)^2)\)</td></tr>
+<tr><td>spherical</td><td>&emsp;</td><td><code>"SPSPH"</code></td><td>&emsp;</td><td>\((1 - 1.5(d/\rho) + 0.5(d/\rho)^3) I(d < \rho)\)</td></tr>
 </table>
 <p>Note that \(I(d < \rho)\) is equal to \(1\) if \(d < \rho\) and \(0\) otherwise. The parameterization of the various structures is based on Pinheiro and Bates (2000). Instead of Euclidean distances, one can also use other distance measures by setting (the undocumented) argument <code>dist</code> to either <code>"maximum"</code> for the maximum distance between two points (supremum norm), to <code>"manhattan"</code> for the absolute distance between the coordinate vectors (L1 norm), or to <code>"gcd"</code> for the great-circle distance (WGS84 ellipsoid method). In the latter case, only two variables, namely the longitude and latitude (in decimal degrees, with minus signs for West and South), must be specified.</p>
 <p>The <code>random</code> argument can also contain a second formula of the form <code>~ inner | outer</code> (but no more!). A second formula of this form works exactly described as above, but its variance components are denoted by \(\gamma^2\) and its correlation components by \(\phi\). The <code>struct</code> argument should then be of length 2 to specify the variance-covariance structure for the first and second component, respectively.</p>

@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Cumulative Meta-Analysis for 'rma' Objects — cumul" />
-<meta property="og:description" content="The functions repeatedly fit the specified model, adding one observation/study at a time to the model. " />
+<meta property="og:description" content="The functions repeatedly fit the specified model, adding one study at a time to the model. " />
 
 
 
@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-46</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-47</span>
       </span>
     </div>
 
@@ -132,7 +132,7 @@
     </div>
 
     <div class="ref-description">
-    <p>The functions repeatedly fit the specified model, adding one observation/study at a time to the model. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
+    <p>The functions repeatedly fit the specified model, adding one study at a time to the model. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
     </div>
 
     <pre class="usage"><span class='fu'>cumul</span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -192,10 +192,10 @@
    <dt>QE</dt><dd><p>test statistics for the tests of heterogeneity.</p></dd>
    <dt>QEp</dt><dd><p>corresponding p-values.</p></dd>
    <dt>tau2</dt><dd><p>estimated amounts of (residual) heterogeneity (only for random-effects models).</p></dd>
-   <dt>I2</dt><dd><p>values of \(I^2\) (only for random-effects models).</p></dd>
-   <dt>H2</dt><dd><p>values of \(H^2\) (only for random-effects models).</p></dd>
+   <dt>I2</dt><dd><p>values of \(I^2\).</p></dd>
+   <dt>H2</dt><dd><p>values of \(H^2\).</p></dd>
 
-   The object is formatted and printed with <a href='print.list.rma.html'>print.list.rma</a>. A forest plot showing the results from the cumulative meta-analysis can be obtained with <a href='forest.cumul.rma.html'>forest.cumul.rma</a>. For random-effects models, <a href='plot.cumul.rma.html'>plot.cumul.rma</a> can also be used to visualize the results.
+   The object is formatted and printed with <a href='print.list.rma.html'>print.list.rma</a>. A forest plot showing the results from the cumulative meta-analysis can be obtained with <a href='forest.cumul.rma.html'>forest.cumul.rma</a>. Alternatively, <a href='plot.cumul.rma.html'>plot.cumul.rma</a> can also be used to visualize the results.
 
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
@@ -238,70 +238,98 @@
 
 <span class='co'>### cumulative meta-analysis</span>
 <span class='fu'>cumul</span>(<span class='no'>res</span>, <span class='kw'>order</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/order.html'>order</a></span>(<span class='no'>dat.bcg</span>$<span class='no'>year</span>))</div><div class='output co'>#&gt; 
-#&gt;    estimate     se     zval   pval   ci.lb   ci.ub       QE    QEp 
-#&gt; 1   -0.8893 0.5706  -1.5586 0.1191 -2.0077  0.2290   0.0000 1.0000 
-#&gt; 2   -1.3517 0.3455  -3.9124 0.0001 -2.0289 -0.6746   0.9373 0.3330 
-#&gt; 6   -0.8273 0.0808 -10.2371 0.0000 -0.9857 -0.6689   3.2109 0.2008 
-#&gt; 3   -0.8379 0.0802 -10.4490 0.0000 -0.9951 -0.6807   3.8945 0.2731 
-#&gt; 10  -0.8940 0.0769 -11.6254 0.0000 -1.0447 -0.7433   7.7589 0.1008 
-#&gt; 9   -0.8507 0.0730 -11.6480 0.0000 -0.9938 -0.7075  10.2660 0.0680 
-#&gt; 12  -0.8358 0.0725 -11.5275 0.0000 -0.9779 -0.6937  13.2768 0.0388 
-#&gt; 5   -0.7744 0.0688 -11.2623 0.0000 -0.9092 -0.6397  19.6127 0.0065 
-#&gt; 7   -0.7896 0.0680 -11.6188 0.0000 -0.9228 -0.6564  22.8443 0.0036 
-#&gt; 11  -0.6660 0.0577 -11.5373 0.0000 -0.7792 -0.5529  34.1377 0.0001 
-#&gt; 13  -0.6351 0.0563 -11.2811 0.0000 -0.7454 -0.5247  39.6232 0.0000 
-#&gt; 4   -0.7758 0.0520 -14.9267 0.0000 -0.8777 -0.6739  68.3763 0.0000 
-#&gt; 8   -0.4537 0.0393 -11.5338 0.0000 -0.5308 -0.3766 152.5676 0.0000 
+#&gt;    estimate     se     zval   pval   ci.lb   ci.ub       QE    QEp      I2 
+#&gt; 1   -0.8893 0.5706  -1.5586 0.1191 -2.0077  0.2290   0.0000 1.0000  0.0000 
+#&gt; 2   -1.3517 0.3455  -3.9124 0.0001 -2.0289 -0.6746   0.9373 0.3330  0.0000 
+#&gt; 6   -0.8273 0.0808 -10.2371 0.0000 -0.9857 -0.6689   3.2109 0.2008 37.7127 
+#&gt; 3   -0.8379 0.0802 -10.4490 0.0000 -0.9951 -0.6807   3.8945 0.2731 22.9687 
+#&gt; 10  -0.8940 0.0769 -11.6254 0.0000 -1.0447 -0.7433   7.7589 0.1008 48.4460 
+#&gt; 9   -0.8507 0.0730 -11.6480 0.0000 -0.9938 -0.7075  10.2660 0.0680 51.2956 
+#&gt; 12  -0.8358 0.0725 -11.5275 0.0000 -0.9779 -0.6937  13.2768 0.0388 54.8084 
+#&gt; 5   -0.7744 0.0688 -11.2623 0.0000 -0.9092 -0.6397  19.6127 0.0065 64.3088 
+#&gt; 7   -0.7896 0.0680 -11.6188 0.0000 -0.9228 -0.6564  22.8443 0.0036 64.9803 
+#&gt; 11  -0.6660 0.0577 -11.5373 0.0000 -0.7792 -0.5529  34.1377 0.0001 73.6362 
+#&gt; 13  -0.6351 0.0563 -11.2811 0.0000 -0.7454 -0.5247  39.6232 0.0000 74.7622 
+#&gt; 4   -0.7758 0.0520 -14.9267 0.0000 -0.8777 -0.6739  68.3763 0.0000 83.9126 
+#&gt; 8   -0.4537 0.0393 -11.5338 0.0000 -0.5308 -0.3766 152.5676 0.0000 92.1346 
+#&gt;         H2 
+#&gt; 1   1.0000 
+#&gt; 2   0.9373 
+#&gt; 6   1.6055 
+#&gt; 3   1.2982 
+#&gt; 10  1.9397 
+#&gt; 9   2.0532 
+#&gt; 12  2.2128 
+#&gt; 5   2.8018 
+#&gt; 7   2.8555 
+#&gt; 11  3.7931 
+#&gt; 13  3.9623 
+#&gt; 4   6.2160 
+#&gt; 8  12.7140 
 #&gt; </div><div class='input'><span class='fu'>cumul</span>(<span class='no'>res</span>, <span class='kw'>order</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/order.html'>order</a></span>(<span class='no'>dat.bcg</span>$<span class='no'>year</span>), <span class='kw'>transf</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; 
-#&gt;    estimate     zval   pval  ci.lb  ci.ub       QE    QEp 
-#&gt; 1    0.4109  -1.5586 0.1191 0.1343 1.2574   0.0000 1.0000 
-#&gt; 2    0.2588  -3.9124 0.0001 0.1315 0.5094   0.9373 0.3330 
-#&gt; 6    0.4372 -10.2371 0.0000 0.3732 0.5123   3.2109 0.2008 
-#&gt; 3    0.4326 -10.4490 0.0000 0.3697 0.5062   3.8945 0.2731 
-#&gt; 10   0.4090 -11.6254 0.0000 0.3518 0.4756   7.7589 0.1008 
-#&gt; 9    0.4271 -11.6480 0.0000 0.3702 0.4929  10.2660 0.0680 
-#&gt; 12   0.4335 -11.5275 0.0000 0.3761 0.4997  13.2768 0.0388 
-#&gt; 5    0.4610 -11.2623 0.0000 0.4028 0.5275  19.6127 0.0065 
-#&gt; 7    0.4540 -11.6188 0.0000 0.3974 0.5187  22.8443 0.0036 
-#&gt; 11   0.5138 -11.5373 0.0000 0.4588 0.5753  34.1377 0.0001 
-#&gt; 13   0.5299 -11.2811 0.0000 0.4745 0.5917  39.6232 0.0000 
-#&gt; 4    0.4603 -14.9267 0.0000 0.4158 0.5097  68.3763 0.0000 
-#&gt; 8    0.6353 -11.5338 0.0000 0.5881 0.6862 152.5676 0.0000 
+#&gt;    estimate     zval   pval  ci.lb  ci.ub       QE    QEp      I2      H2 
+#&gt; 1    0.4109  -1.5586 0.1191 0.1343 1.2574   0.0000 1.0000  0.0000  1.0000 
+#&gt; 2    0.2588  -3.9124 0.0001 0.1315 0.5094   0.9373 0.3330  0.0000  0.9373 
+#&gt; 6    0.4372 -10.2371 0.0000 0.3732 0.5123   3.2109 0.2008 37.7127  1.6055 
+#&gt; 3    0.4326 -10.4490 0.0000 0.3697 0.5062   3.8945 0.2731 22.9687  1.2982 
+#&gt; 10   0.4090 -11.6254 0.0000 0.3518 0.4756   7.7589 0.1008 48.4460  1.9397 
+#&gt; 9    0.4271 -11.6480 0.0000 0.3702 0.4929  10.2660 0.0680 51.2956  2.0532 
+#&gt; 12   0.4335 -11.5275 0.0000 0.3761 0.4997  13.2768 0.0388 54.8084  2.2128 
+#&gt; 5    0.4610 -11.2623 0.0000 0.4028 0.5275  19.6127 0.0065 64.3088  2.8018 
+#&gt; 7    0.4540 -11.6188 0.0000 0.3974 0.5187  22.8443 0.0036 64.9803  2.8555 
+#&gt; 11   0.5138 -11.5373 0.0000 0.4588 0.5753  34.1377 0.0001 73.6362  3.7931 
+#&gt; 13   0.5299 -11.2811 0.0000 0.4745 0.5917  39.6232 0.0000 74.7622  3.9623 
+#&gt; 4    0.4603 -14.9267 0.0000 0.4158 0.5097  68.3763 0.0000 83.9126  6.2160 
+#&gt; 8    0.6353 -11.5338 0.0000 0.5881 0.6862 152.5676 0.0000 92.1346 12.7140 
 #&gt; </div><div class='input'>
 <span class='co'>### meta-analysis of the (log) odds ratios using Peto's method</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.mh.html'>rma.mh</a></span>(<span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>)
 
 <span class='co'>### cumulative meta-analysis</span>
 <span class='fu'>cumul</span>(<span class='no'>res</span>, <span class='kw'>order</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/order.html'>order</a></span>(<span class='no'>dat.bcg</span>$<span class='no'>year</span>))</div><div class='output co'>#&gt; 
-#&gt;    estimate     se     zval   pval   ci.lb   ci.ub       QE    QEp 
-#&gt; 1   -0.9387 0.5976  -1.5708 0.1162 -2.1100  0.2326   0.0000 1.0000 
-#&gt; 2   -1.4215 0.3595  -3.9539 0.0001 -2.1261 -0.7169   0.9404 0.3322 
-#&gt; 6   -0.9968 0.0957 -10.4137 0.0000 -1.1844 -0.8092   2.3134 0.3145 
-#&gt; 3   -1.0061 0.0947 -10.6259 0.0000 -1.1917 -0.8205   2.6721 0.4450 
-#&gt; 10  -1.0542 0.0893 -11.8020 0.0000 -1.2293 -0.8792   4.6200 0.3286 
-#&gt; 9   -0.9846 0.0835 -11.7978 0.0000 -1.1482 -0.8211   9.5987 0.0874 
-#&gt; 12  -0.9652 0.0827 -11.6734 0.0000 -1.1273 -0.8032  13.3029 0.0385 
-#&gt; 5   -0.8805 0.0775 -11.3644 0.0000 -1.0323 -0.7286  22.4178 0.0022 
-#&gt; 7   -0.8957 0.0766 -11.6965 0.0000 -1.0457 -0.7456  24.9324 0.0016 
-#&gt; 11  -0.7286 0.0624 -11.6815 0.0000 -0.8508 -0.6063  41.0143 0.0000 
-#&gt; 13  -0.6914 0.0607 -11.3982 0.0000 -0.8103 -0.5725  47.3437 0.0000 
-#&gt; 4   -0.8333 0.0552 -15.0934 0.0000 -0.9415 -0.7251  73.1329 0.0000 
-#&gt; 8   -0.4734 0.0410 -11.5444 0.0000 -0.5538 -0.3930 163.9426 0.0000 
+#&gt;    estimate     se     zval   pval   ci.lb   ci.ub       QE    QEp      I2 
+#&gt; 1   -0.9387 0.5976  -1.5708 0.1162 -2.1100  0.2326   0.0000 1.0000  0.0000 
+#&gt; 2   -1.4215 0.3595  -3.9539 0.0001 -2.1261 -0.7169   0.9404 0.3322  0.0000 
+#&gt; 6   -0.9968 0.0957 -10.4137 0.0000 -1.1844 -0.8092   2.3134 0.3145 13.5455 
+#&gt; 3   -1.0061 0.0947 -10.6259 0.0000 -1.1917 -0.8205   2.6721 0.4450  0.0000 
+#&gt; 10  -1.0542 0.0893 -11.8020 0.0000 -1.2293 -0.8792   4.6200 0.3286 13.4195 
+#&gt; 9   -0.9846 0.0835 -11.7978 0.0000 -1.1482 -0.8211   9.5987 0.0874 47.9095 
+#&gt; 12  -0.9652 0.0827 -11.6734 0.0000 -1.1273 -0.8032  13.3029 0.0385 54.8972 
+#&gt; 5   -0.8805 0.0775 -11.3644 0.0000 -1.0323 -0.7286  22.4178 0.0022 68.7748 
+#&gt; 7   -0.8957 0.0766 -11.6965 0.0000 -1.0457 -0.7456  24.9324 0.0016 67.9132 
+#&gt; 11  -0.7286 0.0624 -11.6815 0.0000 -0.8508 -0.6063  41.0143 0.0000 78.0565 
+#&gt; 13  -0.6914 0.0607 -11.3982 0.0000 -0.8103 -0.5725  47.3437 0.0000 78.8779 
+#&gt; 4   -0.8333 0.0552 -15.0934 0.0000 -0.9415 -0.7251  73.1329 0.0000 84.9589 
+#&gt; 8   -0.4734 0.0410 -11.5444 0.0000 -0.5538 -0.3930 163.9426 0.0000 92.6804 
+#&gt;         H2 
+#&gt; 1   1.0000 
+#&gt; 2   0.9404 
+#&gt; 6   1.1567 
+#&gt; 3   0.8907 
+#&gt; 10  1.1550 
+#&gt; 9   1.9197 
+#&gt; 12  2.2172 
+#&gt; 5   3.2025 
+#&gt; 7   3.1165 
+#&gt; 11  4.5571 
+#&gt; 13  4.7344 
+#&gt; 4   6.6484 
+#&gt; 8  13.6619 
 #&gt; </div><div class='input'><span class='fu'>cumul</span>(<span class='no'>res</span>, <span class='kw'>order</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/order.html'>order</a></span>(<span class='no'>dat.bcg</span>$<span class='no'>year</span>), <span class='kw'>transf</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; 
-#&gt;    estimate     zval   pval  ci.lb  ci.ub       QE    QEp 
-#&gt; 1    0.3911  -1.5708 0.1162 0.1212 1.2619   0.0000 1.0000 
-#&gt; 2    0.2414  -3.9539 0.0001 0.1193 0.4883   0.9404 0.3322 
-#&gt; 6    0.3691 -10.4137 0.0000 0.3059 0.4452   2.3134 0.3145 
-#&gt; 3    0.3656 -10.6259 0.0000 0.3037 0.4402   2.6721 0.4450 
-#&gt; 10   0.3485 -11.8020 0.0000 0.2925 0.4151   4.6200 0.3286 
-#&gt; 9    0.3736 -11.7978 0.0000 0.3172 0.4400   9.5987 0.0874 
-#&gt; 12   0.3809 -11.6734 0.0000 0.3239 0.4479  13.3029 0.0385 
-#&gt; 5    0.4146 -11.3644 0.0000 0.3562 0.4826  22.4178 0.0022 
-#&gt; 7    0.4083 -11.6965 0.0000 0.3514 0.4745  24.9324 0.0016 
-#&gt; 11   0.4826 -11.6815 0.0000 0.4271 0.5454  41.0143 0.0000 
-#&gt; 13   0.5009 -11.3982 0.0000 0.4447 0.5641  47.3437 0.0000 
-#&gt; 4    0.4346 -15.0934 0.0000 0.3901 0.4843  73.1329 0.0000 
-#&gt; 8    0.6229 -11.5444 0.0000 0.5748 0.6750 163.9426 0.0000 
+#&gt;    estimate     zval   pval  ci.lb  ci.ub       QE    QEp      I2      H2 
+#&gt; 1    0.3911  -1.5708 0.1162 0.1212 1.2619   0.0000 1.0000  0.0000  1.0000 
+#&gt; 2    0.2414  -3.9539 0.0001 0.1193 0.4883   0.9404 0.3322  0.0000  0.9404 
+#&gt; 6    0.3691 -10.4137 0.0000 0.3059 0.4452   2.3134 0.3145 13.5455  1.1567 
+#&gt; 3    0.3656 -10.6259 0.0000 0.3037 0.4402   2.6721 0.4450  0.0000  0.8907 
+#&gt; 10   0.3485 -11.8020 0.0000 0.2925 0.4151   4.6200 0.3286 13.4195  1.1550 
+#&gt; 9    0.3736 -11.7978 0.0000 0.3172 0.4400   9.5987 0.0874 47.9095  1.9197 
+#&gt; 12   0.3809 -11.6734 0.0000 0.3239 0.4479  13.3029 0.0385 54.8972  2.2172 
+#&gt; 5    0.4146 -11.3644 0.0000 0.3562 0.4826  22.4178 0.0022 68.7748  3.2025 
+#&gt; 7    0.4083 -11.6965 0.0000 0.3514 0.4745  24.9324 0.0016 67.9132  3.1165 
+#&gt; 11   0.4826 -11.6815 0.0000 0.4271 0.5454  41.0143 0.0000 78.0565  4.5571 
+#&gt; 13   0.5009 -11.3982 0.0000 0.4447 0.5641  47.3437 0.0000 78.8779  4.7344 
+#&gt; 4    0.4346 -15.0934 0.0000 0.3901 0.4843  73.1329 0.0000 84.9589  6.6484 
+#&gt; 8    0.6229 -11.5444 0.0000 0.5748 0.6750 163.9426 0.0000 92.6804 13.6619 
 #&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

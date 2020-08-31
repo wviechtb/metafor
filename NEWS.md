@@ -1,6 +1,8 @@
-# metafor 2.5-46 (2020-08-31)
+# metafor 2.5-47 (2020-08-31)
 
 - the `metafor` package now makes use of the `mathjaxr` package to nicely render equations shown in the HTML help pages
+
+- the various `cumul()` functions provide `I^2` and `H^2` also for fixed-effects models; accordingly, `plot.cumul.rma()` now also works with such models
 
 - `simulate.rma()` gains `yilim` argument
 

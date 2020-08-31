@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-46</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-47</span>
       </span>
     </div>
 
@@ -216,7 +216,7 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The function is meant to be used for cumulative random-effects models results as obtained with the <code><a href='cumul.html'>cumul.rma.uni</a></code> function.</p>
-<p>By default, the plot shows the model estimate on the x-axis and the corresponding estimate of \(\tau^2\) on the y-axis in the cumulative order of the results in the <code>"cumul.rma"</code> object. Alternatively, one can also place the value of \(I^2\) (<code>yaxis="I2"</code>) or \(H^2\) (<code>yaxis="H2"</code>) on the y-axis.</p>
+<p>By default, the plot shows the model estimate on the x-axis and the corresponding estimate of \(\tau^2\) on the y-axis in the cumulative order of the results in the <code>"cumul.rma"</code> object. Alternatively, one can also place the value of \(I^2\) (<code>yaxis="I2"</code>) or \(H^2\) (<code>yaxis="H2"</code>) on the y-axis (for fixed-effects models \(\tau^2 = 0\) by definition, so the function automatically places \(I^2\) on the y-axis).</p>
 <p>The color gradient of the points/lines indicates the order of the cumulative results (by default, light gray at the beginning, dark gray at the end). A different set of colors can be chosen via the <code>cols</code> argument. See &#8216;Examples&#8217;.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 

@@ -31,7 +31,7 @@
 \details{
    The function is meant to be used for cumulative random-effects models results as obtained with the \code{\link{cumul.rma.uni}} function.
 
-   By default, the plot shows the model estimate on the x-axis and the corresponding estimate of \mjseqn{\tau^2} on the y-axis in the cumulative order of the results in the \code{"cumul.rma"} object. Alternatively, one can also place the value of \mjseqn{I^2} (\code{yaxis="I2"}) or \mjseqn{H^2} (\code{yaxis="H2"}) on the y-axis.
+   By default, the plot shows the model estimate on the x-axis and the corresponding estimate of \mjseqn{\tau^2} on the y-axis in the cumulative order of the results in the \code{"cumul.rma"} object. Alternatively, one can also place the value of \mjseqn{I^2} (\code{yaxis="I2"}) or \mjseqn{H^2} (\code{yaxis="H2"}) on the y-axis (for fixed-effects models \mjseqn{\tau^2 = 0} by definition, so the function automatically places \mjseqn{I^2} on the y-axis).
 
    The color gradient of the points/lines indicates the order of the cumulative results (by default, light gray at the beginning, dark gray at the end). A different set of colors can be chosen via the \code{cols} argument. See \sQuote{Examples}.
 }

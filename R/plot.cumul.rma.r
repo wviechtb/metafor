@@ -8,10 +8,10 @@ digits, cols=c("gray80","gray10"), addgrid=TRUE, pch=19, cex=1, lwd=2, ...) {
    if (!inherits(x, "cumul.rma"))
       stop(mstyle$stop("Argument 'x' must be an object of class \"cumul.rma\"."))
 
-   if (is.null(x$tau2))
-      stop(mstyle$stop("Either a fixed-effects model or not sufficient data to estimate tau^2."))
-
    yaxis <- match.arg(yaxis, c("tau2","I2","H2"))
+
+   if (yaxis == "tau2" && is.null(x$tau2))
+      yaxis <- "I2"
 
    if (missing(transf))
       transf <- FALSE

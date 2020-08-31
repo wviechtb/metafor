@@ -5,7 +5,7 @@
 \alias{cumul.rma.peto}
 \title{Cumulative Meta-Analysis for 'rma' Objects}
 \description{
-   The functions repeatedly fit the specified model, adding one observation/study at a time to the model. \loadmathjax
+   The functions repeatedly fit the specified model, adding one study at a time to the model. \loadmathjax
 }
 \usage{
 cumul(x, \dots)
@@ -37,10 +37,10 @@ cumul(x, \dots)
    \item{QE}{test statistics for the tests of heterogeneity.}
    \item{QEp}{corresponding p-values.}
    \item{tau2}{estimated amounts of (residual) heterogeneity (only for random-effects models).}
-   \item{I2}{values of \mjseqn{I^2} (only for random-effects models).}
-   \item{H2}{values of \mjseqn{H^2} (only for random-effects models).}
+   \item{I2}{values of \mjseqn{I^2}.}
+   \item{H2}{values of \mjseqn{H^2}.}
 
-   The object is formatted and printed with \code{\link{print.list.rma}}. A forest plot showing the results from the cumulative meta-analysis can be obtained with \code{\link{forest.cumul.rma}}. For random-effects models, \code{\link{plot.cumul.rma}} can also be used to visualize the results.
+   The object is formatted and printed with \code{\link{print.list.rma}}. A forest plot showing the results from the cumulative meta-analysis can be obtained with \code{\link{forest.cumul.rma}}. Alternatively, \code{\link{plot.cumul.rma}} can also be used to visualize the results.
 }
 \note{
    When using the \code{transf} option, the transformation is applied to the estimated coefficients and the corresponding interval bounds. The standard errors are then set equal to \code{NA} and are omitted from the printed output.

@@ -99,11 +99,6 @@ cumul.rma.uni <- function(x, order, digits, transf, targs, progbar=FALSE, ...) {
    if (progbar)
       pbapply::closepb(pbar)
 
-   ### for first 'not.na' element, I2 and H2 would be NA (since k=1), but set to 0 and 1, respectively
-
-   I2[which(not.na)[1]] <- 0
-   H2[which(not.na)[1]] <- 1
-
    #########################################################################
 
    ### if requested, apply transformation function
@@ -147,10 +142,10 @@ cumul.rma.uni <- function(x, order, digits, transf, targs, progbar=FALSE, ...) {
    if (is.element(x$test, c("knha","adhoc","t")))
       names(out)[3] <- "tval"
 
-   ### remove tau2, I2, and H2 columns for FE models
+   ### remove tau2 for FE models
 
    if (x$method == "FE")
-      out <- out[-c(9,10,11)]
+      out <- out[-9]
 
    out$digits    <- digits
    out$transf    <- transf

@@ -56,6 +56,8 @@ cumul.rma.mh <- function(x, order, digits, transf, targs, progbar=FALSE, ...) {
    ci.ub <- rep(NA_real_, x$k.f)
    QE    <- rep(NA_real_, x$k.f)
    QEp   <- rep(NA_real_, x$k.f)
+   I2    <- rep(NA_real_, x$k.f)
+   H2    <- rep(NA_real_, x$k.f)
 
    ### note: skipping NA cases
 
@@ -87,6 +89,8 @@ cumul.rma.mh <- function(x, order, digits, transf, targs, progbar=FALSE, ...) {
       ci.ub[i] <- res$ci.ub
       QE[i]    <- res$QE
       QEp[i]   <- res$QEp
+      I2[i]    <- res$I2
+      H2[i]    <- res$H2
 
    }
 
@@ -124,12 +128,12 @@ cumul.rma.mh <- function(x, order, digits, transf, targs, progbar=FALSE, ...) {
    #########################################################################
 
    if (na.act == "na.omit") {
-      out <- list(estimate=beta[not.na], se=se[not.na], zval=zval[not.na], pval=pval[not.na], ci.lb=ci.lb[not.na], ci.ub=ci.ub[not.na], QE=QE[not.na], QEp=QEp[not.na])
+      out <- list(estimate=beta[not.na], se=se[not.na], zval=zval[not.na], pval=pval[not.na], ci.lb=ci.lb[not.na], ci.ub=ci.ub[not.na], QE=QE[not.na], QEp=QEp[not.na], I2=I2[not.na], H2=H2[not.na])
       out$slab <- slab[not.na]
    }
 
    if (na.act == "na.exclude" || na.act == "na.pass") {
-      out <- list(estimate=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, QE=QE, QEp=QEp)
+      out <- list(estimate=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, QE=QE, QEp=QEp, I2=I2, H2=H2)
       out$slab <- slab
    }
 
