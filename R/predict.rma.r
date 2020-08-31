@@ -205,7 +205,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
       }
 
       if (ncol(X.new) != x$p)
-         stop(mstyle$stop("Dimensions of 'newmods' do not match dimensions of the model."))
+         stop(mstyle$stop(paste0("Dimensions of 'newmods' (", ncol(X.new), ") do not match dimensions of the model (", x$p, ").")))
 
    }
 
@@ -242,7 +242,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
             ### check length of tau2.levels argument
             if (length(tau2.levels) != k.new)
-               stop(mstyle$stop("Length of 'tau2.levels' does not match number of predicted values."))
+               stop(mstyle$stop(paste0("Length of 'tau2.levels' argument (", length(tau2.levels), ") does not match number of predicted values (", k.new, ").")))
 
          }
 
@@ -283,7 +283,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
             ### check length of gamma2.levels argument
             if (length(gamma2.levels) != k.new)
-               stop(mstyle$stop("Length of 'gamma2.levels' does not match number of predicted values."))
+               stop(mstyle$stop(paste0("Length of 'gamma2.levels' argument (", length(gamma2.levels), ") does not match number of predicted values (", k.new, ").")))
 
          }
 

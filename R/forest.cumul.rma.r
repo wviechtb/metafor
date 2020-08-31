@@ -162,12 +162,12 @@ cex, cex.lab, cex.axis, annosym, ...) {
    if (length(pch) == 1L)
       pch <- rep(pch, k)
    if (length(pch) != length(yi))
-      stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'pch' argument."))
+      stop(mstyle$stop(paste0("Number of outcomes (", length(yi), ") does not correspond to the length of the 'pch' argument (", length(pch), ").")))
 
    if (length(psize) == 1L)
       psize <- rep(psize, k)
    if (length(psize) != length(yi))
-      stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'psize' argument."))
+      stop(mstyle$stop(paste0("Number of outcomes (", length(yi), ") does not correspond to the length of the 'psize' argument (", length(psize), ").")))
 
    ### if user has set the col argument
 
@@ -175,7 +175,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
       if (length(col) == 1L)
          col <- rep(col, k)
       if (length(col) != length(yi))
-         stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'col' argument."))
+         stop(mstyle$stop(paste0("Number of outcomes (", length(yi), ") does not correspond to the length of the 'col' argument (", length(col), ").")))
    } else {
       col <- rep("black", k)
    }
@@ -190,7 +190,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
    }
 
    if (length(rows) != length(yi))
-      stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'rows' argument."))
+      stop(mstyle$stop(paste0("Number of outcomes (", length(yi), ") does not correspond to the length of the 'rows' argument (", length(rows), ").")))
 
    ### reverse order
 

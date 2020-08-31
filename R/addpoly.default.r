@@ -150,7 +150,7 @@ atransf, targs, efac=1, col, border, fonts, cex, ...) {
    }
 
    if (length(rows) != length(yi))
-      stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'rows' argument."))
+      stop(mstyle$stop(paste0("Number of outcomes (", length(yi), ") does not correspond to the length of the 'rows' argument (", length(rows), ").")))
 
    ### check for NAs in yi/vi and act accordingly
 

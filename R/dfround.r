@@ -17,7 +17,7 @@ dfround <- function(x, digits) {
       digits <- rep(digits, p)
 
    if (p != length(digits))
-      stop(mstyle$stop("Number of columns in 'x' does not match length of 'digits'."))
+      stop(mstyle$stop(paste0("Number of columns in 'x' (", p, ") does not match length of 'digits' (", length(digits), ").")))
 
    if (!is.numeric(digits))
       stop(mstyle$stop("Argument 'digits' must be a numeric vector."))

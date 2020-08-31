@@ -194,7 +194,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
    }
 
    if (length(yi) != length(slab))
-      stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'slab' argument."))
+      stop(mstyle$stop(paste0("Number of outcomes (", length(yi), ") does not correspond to the length of the 'slab' argument (", length(slab), ").")))
 
    if (is.null(dim(ilab)))                      ### note: ilab must have same length as yi (including NAs)
       ilab <- cbind(ilab)                       ### even when subsetting eventually
@@ -203,7 +203,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
       pch <- rep(pch, k)                        ### or be equal to a single value (which is then repeated)
 
    if (length(pch) != length(yi))
-      stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'pch' argument."))
+      stop(mstyle$stop(paste0("Number of outcomes (", length(yi), ") does not correspond to the length of the 'pch' argument (", length(pch), ").")))
 
    ### if user has set the point sizes
 
@@ -211,7 +211,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
       if (length(psize) == 1L)                  ### or be equal to a single value (which is then repeated)
          psize <- rep(psize, k)
       if (length(psize) != length(yi))
-         stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'psize' argument."))
+         stop(mstyle$stop(paste0("Number of outcomes (", length(yi), ") does not correspond to the length of the 'psize' argument (", length(psize), ").")))
    }
 
    ### if user has set the col argument
@@ -220,7 +220,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
       if (length(col) == 1L)                    ### or be equal to a single value (which is then repeated)
          col <- rep(col, k)
       if (length(col) != length(yi))
-         stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'col' argument."))
+         stop(mstyle$stop(paste0("Number of outcomes (", length(yi), ") does not correspond to the length of the 'col' argument (", length(col), ").")))
    } else {
       col <- rep("black", k)
    }
@@ -251,7 +251,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
    }
 
    if (length(rows) != length(yi))
-      stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'rows' argument."))
+      stop(mstyle$stop(paste0("Number of outcomes (", length(yi), ") does not correspond to the length of the 'rows' argument (", length(rows), ").")))
 
    ### reverse order
 

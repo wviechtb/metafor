@@ -105,7 +105,7 @@ label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
       pch.vec <- TRUE
    }
    if (length(pch) != x$k.all)
-      stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'pch' argument."))
+      stop(mstyle$stop(paste0("Number of outcomes (", x$k.all, ") does not correspond to the length of the 'pch' argument (", length(pch), ").")))
 
    if (!is.null(x$subset))
       pch <- pch[x$subset]
@@ -121,7 +121,7 @@ label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
          col.vec <- TRUE
       }
       if (length(col) != x$k.all)
-         stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'col' argument."))
+         stop(mstyle$stop(paste0("Number of outcomes (", x$k.all, ") does not correspond to the length of the 'col' argument (", length(col), ").")))
 
       if (!is.null(x$subset))
          col <- col[x$subset]
@@ -135,7 +135,7 @@ label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
          bg.vec <- TRUE
       }
       if (length(bg) != x$k.all)
-         stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'bg' argument."))
+         stop(mstyle$stop(paste0("Number of outcomes (", x$k.all, ") does not correspond to the length of the 'bg' argument (", length(bg), ").")))
 
       if (!is.null(x$subset))
          bg <- bg[x$subset]

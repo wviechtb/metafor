@@ -204,7 +204,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
    }
 
    if (length(yi) != length(slab))
-      stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'slab' argument."))
+      stop(mstyle$stop(paste0("Number of outcomes (", length(yi), ") does not correspond to the length of the 'slab' argument (", length(slab), ").")))
 
    if (is.null(dim(ilab)))                      ### note: ilab must have same length as yi.f in rma object
       ilab <- cbind(ilab)                       ### even when fewer studies used for model fitting
@@ -213,13 +213,13 @@ cex, cex.lab, cex.axis, annosym, ...) {
       pch <- rep(pch, k)                        ### or be equal to a single value (which is then repeated)
 
    if (length(pch) != length(yi))
-      stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'pch' argument."))
+      stop(mstyle$stop(paste0("Number of outcomes (", length(yi), ") does not correspond to the length of the 'pch' argument (", length(pch), ").")))
 
    if (length(colout) == 1L)                    ### note: colout must have same length as yi.f in rma object
       colout <- rep(colout, k)                  ### or be equal to a single value (which is then repeated)
 
    if (length(colout) != length(yi))
-      stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'colout' argument."))
+      stop(mstyle$stop(paste0("Number of outcomes (", length(yi), ") does not correspond to the length of the 'colout' argument (", length(colout), ").")))
 
    ### extract fitted values
 
@@ -256,7 +256,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
       if (length(psize) == 1L)                  ### or be equal to a single value (which is then repeated)
          psize <- rep(psize, k)
       if (length(psize) != length(yi))
-         stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'psize' argument."))
+         stop(mstyle$stop(paste0("Number of outcomes (", length(yi), ") does not correspond to the length of the 'psize' argument (", length(psize), ").")))
    }
 
    ### sort the data if requested
@@ -317,7 +317,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
    }
 
    if (length(rows) != length(yi))
-      stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'rows' argument."))
+      stop(mstyle$stop(paste0("Number of outcomes (", length(yi), ") does not correspond to the length of the 'rows' argument (", length(rows), ").")))
 
    ### reverse order
 

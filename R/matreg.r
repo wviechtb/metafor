@@ -129,7 +129,7 @@ matreg <- function(y, x, R, n, V, ztor=FALSE, nearPD=FALSE, level=95, digits) {
       s <- p*(p-1)/2
 
       if (nrow(V) != s)
-         stop(mstyle$stop("Dimensions of 'V' do not match the number of elements in 'R'."))
+         stop(mstyle$stop(paste0("Dimensions of 'V' (", nrow(V), ",", ncol(V), ") do not match the number of elements in 'R' (", s, ").")))
 
       U <- matrix(NA, nrow=p, ncol=p)
       U[lower.tri(U)] <- seq_len(s)

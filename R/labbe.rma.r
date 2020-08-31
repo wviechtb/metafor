@@ -64,7 +64,7 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, lty, ..
       pch <- rep(pch, k)                        ### or be equal to a single value (which is then repeated)
 
    if (length(pch) != k)
-      stop(mstyle$stop("Number of tables (", k, ") does not correspond to the length of the 'pch' argument."))
+      stop(mstyle$stop(paste0("Number of tables (", k, ") does not correspond to the length of the 'pch' argument (", length(pch), ").")))
 
    ### if user has set the point sizes
 
@@ -72,14 +72,14 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, lty, ..
       if (length(psize) == 1L)                  ### or be equal to a single value (which is then repeated)
          psize <- rep(psize, k)
       if (length(psize) != k)
-         stop(mstyle$stop("Number of tables (", k, ") does not correspond to the length of the 'psize' argument."))
+         stop(mstyle$stop(paste0("Number of tables (", k, ") does not correspond to the length of the 'psize' argument (", length(psize), ").")))
    }
 
    if (length(bg) == 1L)                        ### note: bg must have same length as number of tables (including NAs)
       bg <- rep(bg, k)                          ### or be equal to a single value (which is then repeated)
 
    if (length(bg) != k)
-      stop(mstyle$stop("Number of tables (", k, ") does not correspond to the length of the 'bg' argument."))
+      stop(mstyle$stop(paste0("Number of tables (", k, ") does not correspond to the length of the 'bg' argument (", length(bg), ").")))
 
    #########################################################################
 

@@ -192,7 +192,7 @@ lty, lwd, col, level=99.99, refline=0, ...) {
          lty <- rep(lty, k)
       } else {
          if (length(lty) != k)
-            stop(mstyle$stop("Length of 'lty' argument does not match length of data."))
+            stop(mstyle$stop(paste0("Length of 'lty' argument (", length(lty), ") does not match length of data (", k, ").")))
       }
    }
 
@@ -201,7 +201,7 @@ lty, lwd, col, level=99.99, refline=0, ...) {
          lwd <- rep(lwd, k)
       } else {
          if (length(lwd) != k)
-            stop(mstyle$stop("Length of 'lwd' argument does not match length of data."))
+         stop(mstyle$stop(paste0("Length of 'lwd' argument (", length(lwd), ") does not match length of data (", k, ").")))
       }
    }
 
@@ -210,7 +210,7 @@ lty, lwd, col, level=99.99, refline=0, ...) {
          col <- rep(col, k)
       } else {
          if (length(col) != k)
-            stop(mstyle$stop("Length of 'col' argument does not match length of data."))
+            stop(mstyle$stop(paste0("Length of 'col' argument (", length(col), ") does not match length of data (", k, ").")))
       }
    }
 

@@ -648,8 +648,8 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
    ### check if mods matrix has the right number of rows
 
-   if (!is.null(mods) && (nrow(mods) != k))
-      stop(mstyle$stop("Number of rows of the model matrix does not match length of the outcome vector."))
+   if (!is.null(mods) && nrow(mods) != k)
+      stop(mstyle$stop(paste0("Number of rows in the model matrix (", nrow(mods), ") does not match length of the outcome vector (", k, ").")))
 
    ### in case scale is a formula, get model matrix for it
 
@@ -663,7 +663,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
       options(na.action = na.act)
       model <- "rma.ls"
       if (nrow(Z) != k)
-         stop(mstyle$stop("Number of rows of the model matrix specified via 'scale' argument does not match length of the outcome vector."))
+         stop(mstyle$stop(paste0("Number of rows in the model matrix specified via the 'scale' argument (", nrow(Z), ") does not match length of the outcome vector (", k, ").")))
    } else {
       Z <- NULL
       model <- "rma.uni"

@@ -150,7 +150,7 @@ label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
       pch.vec <- TRUE
    }
    if (length(pch) != k)
-      stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'pch' argument."))
+      stop(mstyle$stop(paste0("Number of outcomes (", k, ") does not correspond to the length of the 'pch' argument (", length(pch), ").")))
 
    if (missing(col))
       col <- "black"
@@ -161,7 +161,7 @@ label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
       col.vec <- TRUE
    }
    if (length(col) != k)
-      stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'col' argument."))
+      stop(mstyle$stop(paste0("Number of outcomes (", k, ") does not correspond to the length of the 'col' argument (", length(col), ").")))
 
    if (missing(bg))
       bg <- "white"
@@ -172,7 +172,7 @@ label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
       bg.vec <- TRUE
    }
    if (length(bg) != k)
-      stop(mstyle$stop("Number of outcomes does not correspond to the length of the 'bg' argument."))
+      stop(mstyle$stop(paste0("Number of outcomes (", k, ") does not correspond to the length of the 'bg' argument (", length(bg), ").")))
 
    if (length(label) != 1L)
       stop(mstyle$stop("Argument 'label' should be of length 1."))

@@ -15,7 +15,7 @@ vec2mat <- function(x, diag=FALSE, corr=!diag, dimnames) {
 
    if (!missing(dimnames)) {
       if (length(dimnames) != dims)
-         stop(mstyle$stop("Length of 'dimnames' does not correspond to the dimensions of the matrix."))
+         stop(mstyle$stop(paste0("Length of 'dimnames' (", length(dimnames), ") does not correspond to the dimensions of the matrix (", dims, ").")))
       rownames(R) <- colnames(R) <- dimnames
    }
 

@@ -319,7 +319,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
    ### check length of yi and V
 
    if (nrow(V) != k)
-      stop(mstyle$stop("Length of 'yi' and length/dimensions of 'V' is not the same."))
+      stop(mstyle$stop(paste0("Length of 'yi' (", k, ") and length/dimensions of 'V' (", nrow(V), ") is not the same.")))
 
    ### force V to be sparse when sparse=TRUE (and V is not yet sparse)
 
@@ -370,7 +370,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
       ### check length of yi and A
 
       if (nrow(A) != k)
-         stop(mstyle$stop("Length of 'yi' and length/dimensions of 'W' is not the same."))
+         stop(mstyle$stop(paste0("Length of 'yi' (", k, ") and length/dimensions of 'W' (", nrow(A), ") is not the same.")))
 
       ### force A to be sparse when sparse=TRUE (and A is not yet sparse)
 
@@ -435,8 +435,8 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
 
    ### check if mods matrix has the right number of rows
 
-   if (!is.null(mods) && (nrow(mods) != k))
-      stop(mstyle$stop("Number of rows of the model matrix does not match length of the outcome vector."))
+   if (!is.null(mods) && nrow(mods) != k)
+      stop(mstyle$stop(paste0("Number of rows in the model matrix (", nrow(mods), ") does not match length of the outcome vector (", k, ").")))
 
    #########################################################################
    #########################################################################

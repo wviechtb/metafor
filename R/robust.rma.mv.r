@@ -33,7 +33,7 @@ robust.rma.mv <- function(x, cluster, adjust=TRUE, digits, ...) {
       stop(mstyle$stop("No missing values allowed in 'cluster' variable."))
 
    if (length(cluster) != x$k)
-      stop(mstyle$stop("Length of variable specified via 'cluster' does not match length of data."))
+      stop(mstyle$stop(paste0("Length of variable specified via 'cluster' (", length(cluster), ") does not match length of data (", x$k, ").")))
 
    ### number of clusters
 
