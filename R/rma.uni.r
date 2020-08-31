@@ -968,7 +968,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
    if (model == "rma.uni") {
 
-      if (is.numeric(tau2)) { ### if user has fixed the tau2 value
+      if (is.numeric(tau2) && method != "FE") { ### if user has fixed the tau2 value
          tau2.fix <- TRUE
          tau2.val <- tau2
       } else {
@@ -976,7 +976,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
          tau2.val <- NA
       }
 
-      if ((verbose > 1) && !tau2.fix)
+      if (verbose > 1 && !tau2.fix && method != "FE")
          message(mstyle$message("Estimating tau^2 value ...\n"))
 
       if (k == 1) {

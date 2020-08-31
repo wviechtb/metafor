@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-45</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-46</span>
       </span>
     </div>
 
@@ -187,7 +187,7 @@
     </tr>
     <tr>
       <th>psize</th>
-      <td><p>optional vector with point sizes for the outcomes. If unspecified, the point sizes are an inverse function of the precision of the estimates.</p></td>
+      <td><p>optional vector with point sizes for the outcomes. If unspecified, the point sizes are an inverse function of the precision of the outcomes.</p></td>
     </tr>
     <tr>
       <th>bg</th>
@@ -218,7 +218,11 @@
     <p>A data frame with components:</p>
 <dt>x</dt><dd><p>the x coordinates of the points that were plotted.</p></dd>
    <dt>y</dt><dd><p>the y coordinates of the points that were plotted.</p></dd>
-   <dt>psize</dt><dd><p>the point sizes.</p></dd>
+   <dt>cex</dt><dd><p>the point sizes.</p></dd>
+   <dt>pch</dt><dd><p>the plotting symbols.</p></dd>
+   <dt>bg</dt><dd><p>the background colors.</p></dd>
+   <dt>ids</dt><dd><p>the study id numbers.</p></dd>
+   <dt>slab</dt><dd><p>the study labels.</p></dd>
    Note that the data frame is returned invisibly.
 
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>

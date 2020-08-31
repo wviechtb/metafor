@@ -192,30 +192,25 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
 }
 \examples{
 ### random-effects model using rma.uni() (standard RE model analysis)
-rma(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg,
-    data=dat.bcg, method="ML", verbose=TRUE)
+rma(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, method="ML")
 
 ### random-effects models using rma.glmm() (require 'lme4' package)
 
 ### unconditional model with fixed study effects
 \dontrun{
-rma.glmm(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg,
-         data=dat.bcg, model="UM.FS", verbose=TRUE)}
+rma.glmm(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, model="UM.FS")}
 
 ### unconditional model with random study effects
 \dontrun{
-rma.glmm(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg,
-         data=dat.bcg, model="UM.RS", verbose=TRUE)}
+rma.glmm(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, model="UM.RS")}
 
 ### conditional model with approximate likelihood
 \dontrun{
-rma.glmm(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg,
-         data=dat.bcg, model="CM.AL", verbose=TRUE)}
+rma.glmm(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, model="CM.AL")}
 
-### conditional model with exact likelihood (be patient!)
-### note: fitting this model is very slow, so be patient
+### conditional model with exact likelihood
+### note: fitting this model may take a bit of time, so be patient
 \dontrun{
-rma.glmm(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg,
-         data=dat.bcg, model="CM.EL", verbose=TRUE)}
+rma.glmm(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, model="CM.EL")}
 }
 \keyword{models}

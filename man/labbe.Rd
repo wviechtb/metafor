@@ -23,7 +23,7 @@ labbe(x, \dots)
    \item{transf}{optional argument specifying the name of a function that should be used to transform the outcomes (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified under \code{transf}.}
    \item{pch}{plotting symbol to use for the outcomes. By default, a filled circle is used. Can also be a vector of values. See \code{\link{points}} for other options.}
-   \item{psize}{optional vector with point sizes for the outcomes. If unspecified, the point sizes are an inverse function of the precision of the estimates.}
+   \item{psize}{optional vector with point sizes for the outcomes. If unspecified, the point sizes are an inverse function of the precision of the outcomes.}
    \item{bg}{color to use for filling the plotting symbol (the default is \code{"gray"}). Can also be a vector of values. Set to \code{NA} to make the plotting symbols transparent.}
    \item{grid}{logical indicating whether a grid should be added to the plot.}
    \item{lty}{optional character vector specifying the line type for the diagonal reference line of no effect and the line that indicates the estimated effect based on the fitted model (if unspecified, the function sets this to \code{c("solid", "dashed")} by default; use \code{"blank"} to suppress a line).}
@@ -42,7 +42,11 @@ labbe(x, \dots)
    A data frame with components:
    \item{x}{the x coordinates of the points that were plotted.}
    \item{y}{the y coordinates of the points that were plotted.}
-   \item{psize}{the point sizes.}
+   \item{cex}{the point sizes.}
+   \item{pch}{the plotting symbols.}
+   \item{bg}{the background colors.}
+   \item{ids}{the study id numbers.}
+   \item{slab}{the study labels.}
    Note that the data frame is returned invisibly.
 }
 \author{

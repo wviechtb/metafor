@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-45</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-46</span>
       </span>
     </div>
 
@@ -169,7 +169,7 @@
     </tr>
     <tr>
       <th>symbol</th>
-      <td><p>either an integer to specify the <code>pch</code> value (i.e., plotting symbol), or <code>"slab"</code> to plot the study labels (if specified), or <code>"ids"</code> to plot the study id numbers (if unspecified, this is the default).</p></td>
+      <td><p>either an integer to specify the <code>pch</code> value (i.e., plotting symbol), or <code>"slab"</code> to plot the study labels, or <code>"ids"</code> to plot the study id numbers (if unspecified, this is the default).</p></td>
     </tr>
     <tr>
       <th>grid</th>
@@ -190,14 +190,14 @@
     <p>The model specified via <code>x</code> must be a model fitted with either the <code><a href='rma.uni.html'>rma.uni</a></code>, <code><a href='rma.mh.html'>rma.mh</a></code>, or <code><a href='rma.peto.html'>rma.peto</a></code> function.</p>
 <p>Baujat et al. (2002) proposed a diagnostic plot to detect sources of heterogeneity in meta-analytic data. The plot shows the contribution of each study to the overall Q-test statistic for heterogeneity on the x-axis versus the influence of each study (defined as the standardized squared difference between the overall estimate based on a fixed-effects model with and without the study included in the model fitting) on the y-axis. The same type of plot can be produced by first fitting a fixed-effects model with either the <code><a href='rma.uni.html'>rma.uni</a></code> (using <code>method="FE"</code>), <code><a href='rma.mh.html'>rma.mh</a></code>, or <code><a href='rma.peto.html'>rma.peto</a></code> functions and then passing the fitted model object to the <code>baujat</code> function.</p>
 <p>For models fitted with the <code><a href='rma.uni.html'>rma.uni</a></code> function (which may involve moderators and/or which may be random/mixed-effects models), the idea underlying this type of plot can be generalized as follows: The x-axis then corresponds to the squared Pearson residual of a study, while the y-axis corresponds to the standardized squared difference between the predicted/fitted value for the study with and without the study included in the model fitting. Therefore, for a fixed-effect with moderators model, the x-axis corresponds to the contribution of the study to the QE-test statistic for residual heterogeneity.</p>
-<p>By default, the points plotted are the study id numbers, but one can also plot the study labels by setting <code>symbol="slab"</code> or one can specify a plotting symbol via the <code>symbol</code> argument that gets passed to <code>pch</code> (see <code><a href='https://rdrr.io/r/graphics/points.html'>points</a></code>).</p>
+<p>By default, the points plotted are the study id numbers, but one can also plot the study labels by setting <code>symbol="slab"</code> (if study labels are available within the model object) or one can specify a plotting symbol via the <code>symbol</code> argument that gets passed to <code>pch</code> (see <code><a href='https://rdrr.io/r/graphics/points.html'>points</a></code> for possible options).</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data frame with components:</p>
 <dt>x</dt><dd><p>the x coordinates of the points that were plotted.</p></dd>
    <dt>y</dt><dd><p>the y coordinates of the points that were plotted.</p></dd>
-   <dt>ids</dt><dd><p>study id numbers.</p></dd>
-   <dt>slab</dt><dd><p>study labels.</p></dd>
+   <dt>ids</dt><dd><p>the study id numbers.</p></dd>
+   <dt>slab</dt><dd><p>the study labels.</p></dd>
    Note that the data frame is returned invisibly.
 
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>

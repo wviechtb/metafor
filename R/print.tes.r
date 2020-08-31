@@ -72,7 +72,10 @@ print.tes <- function(x, digits=x$digits, ...) {
             cat(mstyle$result(.fcf(x$theta.lim[2], digits=digits[["est"]])))
          }
       }
-      cat(mstyle$result(paste0(" (where p = ", ifelse(x$tes.alternative == "two.sided", x$tes.alpha/2, x$tes.alpha), ")")))
+
+      if (any(!is.na(x$theta.lim)))
+         cat(mstyle$result(paste0(" (where p = ", ifelse(x$tes.alternative == "two.sided", x$tes.alpha/2, x$tes.alpha), ")")))
+
       cat("\n")
 
    }

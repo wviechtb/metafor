@@ -210,6 +210,8 @@ label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
       vi   <- x$vi
       ni   <- x$ni             ### ni can be NULL (and there may be 'additional' NAs)
       sei  <- sqrt(vi)
+      if (!is.null(x$not.na.yivi))
+         x$not.na <- x$not.na.yivi
       slab <- x$slab[x$not.na] ### slab is subsetted but NAs are not removed, so still need to do this here
       pch  <- pch[x$not.na]    ### same for pch
 
@@ -576,16 +578,16 @@ label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
 
    ### labeling of points
 
-   ### labeling of points
-
    k <- length(yi)
 
    if (is.numeric(label) || is.character(label) || .isTRUE(label)) {
 
       if (is.numeric(label)) {
          label <- round(label)
-         if (label < 1 | label > k)
-            stop(mstyle$stop("Out of range value for 'label' argument."))
+         if (label < 0)
+            label <- 0
+         if (label > k)
+            label <- k
          label <- order(abs(yi - refline), decreasing=TRUE)[seq_len(label)]
       } else if ((is.character(label) && label == "all") || .isTRUE(label)) {
          label <- seq_len(k)

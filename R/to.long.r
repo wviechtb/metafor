@@ -5,6 +5,12 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
    ### check argument specifications
 
+   if (missing(measure))
+      stop(mstyle$stop("Must specify an effect size or outcome measure via the 'measure' argument."))
+
+   if (!is.character(measure))
+      stop(mstyle$stop("The 'measure' argument must be a character string."))
+
    if (!is.element(measure, c("RR","OR","PETO","RD","AS","PHI","YUQ","YUY","RTET", ### 2x2 table measures
                               "PBIT","OR2D","OR2DN","OR2DL",                       ### - transformations to SMD
                               "MPRD","MPRR","MPOR","MPORC","MPPETO",               ### - measures for matched pairs data

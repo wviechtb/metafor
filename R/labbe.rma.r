@@ -64,7 +64,7 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, lty, ..
       pch <- rep(pch, k)                        ### or be equal to a single value (which is then repeated)
 
    if (length(pch) != k)
-      stop(mstyle$stop("Number of tables does not correspond to the length of the 'pch' argument."))
+      stop(mstyle$stop("Number of tables (", k, ") does not correspond to the length of the 'pch' argument."))
 
    ### if user has set the point sizes
 
@@ -72,14 +72,14 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, lty, ..
       if (length(psize) == 1L)                  ### or be equal to a single value (which is then repeated)
          psize <- rep(psize, k)
       if (length(psize) != k)
-         stop(mstyle$stop("Number of tables does not correspond to the length of the 'psize' argument."))
+         stop(mstyle$stop("Number of tables (", k, ") does not correspond to the length of the 'psize' argument."))
    }
 
    if (length(bg) == 1L)                        ### note: bg must have same length as number of tables (including NAs)
       bg <- rep(bg, k)                          ### or be equal to a single value (which is then repeated)
 
    if (length(bg) != k)
-      stop(mstyle$stop("Number of tables does not correspond to the length of the 'bg' argument."))
+      stop(mstyle$stop("Number of tables (", k, ") does not correspond to the length of the 'bg' argument."))
 
    #########################################################################
 
@@ -156,13 +156,14 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, lty, ..
    ### check for NAs in yi/vi pairs and filter out
 
    has.na <- apply(is.na(dat.t), 1, any) | apply(is.na(dat.c), 1, any)
+   not.na <- !has.na
 
    if (any(has.na)) {
 
-      not.na <- !has.na
-
       dat.t <- dat.t[not.na,]
       dat.c <- dat.c[not.na,]
+      pch   <- pch[not.na]
+      bg    <- bg[not.na]
 
    }
 
@@ -182,6 +183,8 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, lty, ..
       } else {
          psize <- 0.5 + 3 * (wi - min(wi))/rng
       }
+   } else {
+      psize <- psize[not.na]
    }
 
    ### determine x/y values for line that indicates the estimated effect
@@ -274,7 +277,7 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, lty, ..
    #########################################################################
 
    ### prepare data frame to return
-   sav <- data.frame(x=dat.c$yi, y=dat.t$yi, cex=psize, pch=pch, bg=bg, stringsAsFactors=FALSE)
+   sav <- data.frame(x=dat.c$yi, y=dat.t$yi, cex=psize, pch=pch, bg=bg, ids=x$ids[not.na], slab=x$slab[not.na], stringsAsFactors=FALSE)
 
    invisible(sav)
 

@@ -97,7 +97,7 @@ funnel(x, \dots)
    A data frame with components:
    \item{x}{the x coordinates of the points that were plotted.}
    \item{y}{the y coordinates of the points that were plotted.}
-   \item{slab}{study labels of the points that were plotted.}
+   \item{slab}{the study labels.}
    Note that the data frame is returned invisibly.
 }
 \author{

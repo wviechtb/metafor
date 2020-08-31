@@ -67,7 +67,7 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
 
    cat("\n")
 
-   if (x$model == "rma.uni") {
+   if (x$model == "rma.uni" || x$model == "rma.uni.selmodel") {
 
       if (x$method != "FE") {
          if (x$int.only) {
@@ -117,7 +117,8 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
          cat("\n")
       }
 
-      cat("\n")
+      if (x$method != "FE" || !is.na(x$I2) || !is.na(x$H2) || (x$method != "FE" && !x$int.only && !is.null(x$R2)))
+         cat("\n")
 
    }
 
@@ -130,6 +131,19 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
          cat(mstyle$section("Test for Residual Heterogeneity:"))
          cat("\n")
          cat(mstyle$result(paste0("QE(df = ", x$k-x$p, ") = ", .fcf(x$QE, digits[["test"]]), ", p-val ", .pval(x$QEp, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
+      }
+      cat("\n\n")
+   }
+
+   if (x$model == "rma.uni.selmodel" && !is.na(x$LRT.tau2)) {
+      if (x$int.only) {
+         cat(mstyle$section("Test for Heterogeneity:"))
+         cat("\n")
+         cat(mstyle$result(paste0("LRT(df = 1) = ", .fcf(x$LRT.tau2, digits[["test"]]), ", p-val ", .pval(x$LRTp.tau2, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
+      } else {
+         cat(mstyle$section("Test for Residual Heterogeneity:"))
+         cat("\n")
+         cat(mstyle$result(paste0("LRT(df = 1) = ", .fcf(x$LRT.tau2, digits[["test"]]), ", p-val ", .pval(x$LRTp.tau2, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
       }
       cat("\n\n")
    }
@@ -163,7 +177,7 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
    if (x$int.only)
       res.table <- res.table[1,]
 
-   if (x$model == "rma.uni") {
+   if (x$model == "rma.uni" || x$model == "rma.uni.selmodel") {
       cat(mstyle$section("Model Results:"))
    } else {
       cat(mstyle$section("Model Results (Location):"))
@@ -188,8 +202,6 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
          colnames(res.table)[7] <- ""
       }
 
-      ddd <- list(...)
-
       if (.isTRUE(ddd$num))
          rownames(res.table) <- paste0(1:nrow(res.table), ") ", rownames(res.table))
 
@@ -201,6 +213,42 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
       cat("\n\n")
 
       if (length(x$alpha) == 1L) {
+         tmp <- capture.output(.print.vector(res.table))
+      } else {
+         tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE, print.gap=2))
+      }
+      .print.table(tmp, mstyle)
+
+   }
+
+   if (x$model == "rma.uni.selmodel") {
+
+      if (!is.na(x$LRT)) {
+         cat("\n")
+         cat(mstyle$section("Test for Selection Model Parameters:"))
+         cat("\n")
+         cat(mstyle$result(paste0("LRT(df = ", x$LRTdf, ") = ", .fcf(x$LRT, digits[["test"]]), ", p-val ", .pval(x$LRTp, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
+         cat("\n")
+      }
+
+      res.table <- cbind(estimate=.fcf(c(x$delta), digits[["est"]]), se=.fcf(x$se.delta, digits[["se"]]), zval=.fcf(x$zval.delta, digits[["test"]]), pval=.pval(x$pval.delta, digits[["pval"]]), ci.lb=.fcf(x$ci.lb.delta, digits[["ci"]]), ci.ub=.fcf(x$ci.ub.delta, digits[["ci"]]))
+      rownames(res.table) <- paste0("delta.", seq_along(x$delta))
+      #if (is.element(x$test, c("t")))
+      #   colnames(res.table)[3] <- "tval"
+      signif <- symnum(x$pval.delta, corr=FALSE, na=FALSE, cutpoints=c(0, 0.001, 0.01, 0.05, 0.1, 1), symbols = c("***", "**", "*", ".", " "))
+      if (signif.stars) {
+         res.table <- cbind(res.table, signif)
+         colnames(res.table)[7] <- ""
+      }
+
+      if (length(x$delta) == 1L)
+         res.table <- res.table[1,]
+
+      cat("\n")
+      cat(mstyle$section("Selection Model Results:"))
+      cat("\n\n")
+
+      if (length(x$delta) == 1L) {
          tmp <- capture.output(.print.vector(res.table))
       } else {
          tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE, print.gap=2))

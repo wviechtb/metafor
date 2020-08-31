@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-45</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-46</span>
       </span>
     </div>
 
@@ -387,15 +387,7 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### random-effects model using rma.uni() (standard RE model analysis)</span>
-<span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>,
-    <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"ML"</span>, <span class='kw'>verbose</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; 
-#&gt; Iteration 0 	tau^2 = 0.3495 
-#&gt; Iteration 1 	tau^2 = 0.3034 
-#&gt; Iteration 2 	tau^2 = 0.3025 
-#&gt; Iteration 3 	tau^2 = 0.3025 
-#&gt; Iteration 4 	tau^2 = 0.3025 
-#&gt; Fisher scoring algorithm converged after 4 iterations.
-#&gt; </div><div class='output co'>#&gt; 
+<span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"ML"</span>)</div><div class='output co'>#&gt; 
 #&gt; Random-Effects Model (k = 13; tau^2 estimator: ML)
 #&gt; 
 #&gt; tau^2 (estimated amount of total heterogeneity): 0.3025 (SE = 0.1549)
@@ -418,24 +410,20 @@
 
 <span class='co'>### unconditional model with fixed study effects</span>
 <span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'>rma.glmm</span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>,
-         <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>, <span class='kw'>model</span><span class='kw'>=</span><span class='st'>"UM.FS"</span>, <span class='kw'>verbose</span><span class='kw'>=</span><span class='fl'>TRUE</span>)}
+<span class='fu'>rma.glmm</span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>, <span class='kw'>model</span><span class='kw'>=</span><span class='st'>"UM.FS"</span>)}
 
 <span class='co'>### unconditional model with random study effects</span>
 <span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'>rma.glmm</span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>,
-         <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>, <span class='kw'>model</span><span class='kw'>=</span><span class='st'>"UM.RS"</span>, <span class='kw'>verbose</span><span class='kw'>=</span><span class='fl'>TRUE</span>)}
+<span class='fu'>rma.glmm</span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>, <span class='kw'>model</span><span class='kw'>=</span><span class='st'>"UM.RS"</span>)}
 
 <span class='co'>### conditional model with approximate likelihood</span>
 <span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'>rma.glmm</span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>,
-         <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>, <span class='kw'>model</span><span class='kw'>=</span><span class='st'>"CM.AL"</span>, <span class='kw'>verbose</span><span class='kw'>=</span><span class='fl'>TRUE</span>)}
+<span class='fu'>rma.glmm</span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>, <span class='kw'>model</span><span class='kw'>=</span><span class='st'>"CM.AL"</span>)}
 
-<span class='co'>### conditional model with exact likelihood (be patient!)</span>
-<span class='co'>### note: fitting this model is very slow, so be patient</span>
+<span class='co'>### conditional model with exact likelihood</span>
+<span class='co'>### note: fitting this model may take a bit of time, so be patient</span>
 <span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'>rma.glmm</span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>,
-         <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>, <span class='kw'>model</span><span class='kw'>=</span><span class='st'>"CM.EL"</span>, <span class='kw'>verbose</span><span class='kw'>=</span><span class='fl'>TRUE</span>)}</div></pre>
+<span class='fu'>rma.glmm</span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>, <span class='kw'>model</span><span class='kw'>=</span><span class='st'>"CM.EL"</span>)}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

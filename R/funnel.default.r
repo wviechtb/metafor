@@ -568,8 +568,10 @@ label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
 
       if (is.numeric(label)) {
          label <- round(label)
-         if (label < 1 | label > k)
-            stop(mstyle$stop("Out of range value for 'label' argument."))
+         if (label < 0)
+            label <- 0
+         if (label > k)
+            label <- k
          label <- order(abs(yi - refline), decreasing=TRUE)[seq_len(label)]
       } else if ((is.character(label) && label == "all") || .isTRUE(label)) {
          label <- seq_len(k)

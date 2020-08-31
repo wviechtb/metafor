@@ -18,7 +18,7 @@ baujat(x, \dots)
    \item{xlab}{title for the x-axis. If unspecified, the function tries to set an appropriate axis title.}
    \item{ylab}{title for the y-axis. If unspecified, the function tries to set an appropriate axis title.}
    \item{cex}{optional character expansion factor. If unspecified, the function tries to set this to a sensible value.}
-   \item{symbol}{either an integer to specify the \code{pch} value (i.e., plotting symbol), or \code{"slab"} to plot the study labels (if specified), or \code{"ids"} to plot the study id numbers (if unspecified, this is the default).}
+   \item{symbol}{either an integer to specify the \code{pch} value (i.e., plotting symbol), or \code{"slab"} to plot the study labels, or \code{"ids"} to plot the study id numbers (if unspecified, this is the default).}
    \item{grid}{logical indicating whether a grid should be added to the plot (can also be a color name).}
    \item{progbar}{logical indicating whether a progress bar should be shown (the default is \code{FALSE}).}
    \item{\dots}{other arguments.}
@@ -30,14 +30,14 @@ baujat(x, \dots)
 
    For models fitted with the \code{\link{rma.uni}} function (which may involve moderators and/or which may be random/mixed-effects models), the idea underlying this type of plot can be generalized as follows: The x-axis then corresponds to the squared Pearson residual of a study, while the y-axis corresponds to the standardized squared difference between the predicted/fitted value for the study with and without the study included in the model fitting. Therefore, for a fixed-effect with moderators model, the x-axis corresponds to the contribution of the study to the QE-test statistic for residual heterogeneity.
 
-   By default, the points plotted are the study id numbers, but one can also plot the study labels by setting \code{symbol="slab"} or one can specify a plotting symbol via the \code{symbol} argument that gets passed to \code{pch} (see \code{\link{points}}).
+   By default, the points plotted are the study id numbers, but one can also plot the study labels by setting \code{symbol="slab"} (if study labels are available within the model object) or one can specify a plotting symbol via the \code{symbol} argument that gets passed to \code{pch} (see \code{\link{points}} for possible options).
 }
 \value{
    A data frame with components:
    \item{x}{the x coordinates of the points that were plotted.}
    \item{y}{the y coordinates of the points that were plotted.}
-   \item{ids}{study id numbers.}
-   \item{slab}{study labels.}
+   \item{ids}{the study id numbers.}
+   \item{slab}{the study labels.}
    Note that the data frame is returned invisibly.
 }
 \author{

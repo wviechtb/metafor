@@ -32,10 +32,16 @@ regtest.rma <- function(x, model="rma", predictor="sei", ret.fit=FALSE, digits, 
 
    yi <- x$yi
    vi <- x$vi
-   weights <- x$weights
    ni <- x$ni ### may be NULL
-   X  <- x$X
    p  <- x$p
+
+   if (inherits(x, "rma.mh") || inherits(x, "rma.peto")) {
+      weights <- NULL
+      X <- cbind(rep(1,length(yi)))
+   } else {
+      weights <- x$weights
+      X <- x$X
+   }
 
    if (predictor == "sei")
       X <- cbind(X, sei=sqrt(vi))

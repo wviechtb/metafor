@@ -304,6 +304,10 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
 
    points(xi, zi, pch=pch, cex=cex, ...)
 
-   invisible(data.frame(x=xi, y=zi, slab=x$slab[x$not.na], stringsAsFactors=FALSE))
+   if (is.null(x$not.na.yivi)) {
+      invisible(data.frame(x=xi, y=zi, ids=x$ids[x$not.na], slab=x$slab[x$not.na], stringsAsFactors=FALSE))
+   } else {
+      invisible(data.frame(x=xi, y=zi, ids=x$ids[x$not.na.yivi], slab=x$slab[x$not.na.yivi], stringsAsFactors=FALSE))
+   }
 
 }
