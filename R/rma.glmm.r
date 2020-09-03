@@ -601,7 +601,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                package="lme4",             # package for fitting logistic mixed-effects models ("lme4" or "GLMMadaptive")
                optimizer = "optim",        # optimizer to use for CM.EL+OR ("optim", "nlminb", "uobyqa", "newuoa", "bobyqa", "clogit", "clogistic")
                optmethod = "BFGS",         # argument 'method' for optim() ("Nelder-Mead" and "BFGS" are sensible options)
-               scaleX = TRUE,              # whether non-dummy variables in the X matrix be rescaled before model fitting
+               scaleX = TRUE,              # whether non-dummy variables in the X matrix should be rescaled before model fitting
                evtol = 1e-07,              # lower bound for eigenvalues to determine if model matrix is positive definite
                dnchgcalc = "dFNCHypergeo", # method for calculating dnchg ("dFNCHypergeo" from BiasedUrn package or "dnoncenhypergeom")
                dnchgprec = 1e-10)          # precision for dFNCHypergeo()
@@ -718,7 +718,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    if (!is.element(con$package, c("lme4", "GLMMadaptive")))
       stop(mstyle$stop("Unknown package specified."))
 
-   if (!is.element(con$optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","clogit","clogistic")))
+   if (!is.element(con$optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa")))#,"clogit","clogistic")))
       stop(mstyle$stop("Unknown optimizer specified."))
 
    if (con$dnchgcalc != "dnoncenhypergeom" && con$dnchgcalc != "dFNCHypergeo")
@@ -763,16 +763,16 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                stop(mstyle$stop("Please install the 'BiasedUrn' package to fit this model."))
          }
       }
-      if (con$optimizer == "clogit") {
-         if (!requireNamespace("survival", quietly=TRUE))
-            stop(mstyle$stop("Please install the 'survival' package to fit this model."))
-         coxph <- survival::coxph
-         Surv  <- survival::Surv
-      }
-      if (con$optimizer == "clogistic") {
-         if (!requireNamespace("Epi", quietly=TRUE))
-            stop(mstyle$stop("Please install the 'Epi' package to fit this model."))
-      }
+      #if (con$optimizer == "clogit") {
+      #   if (!requireNamespace("survival", quietly=TRUE))
+      #      stop(mstyle$stop("Please install the 'survival' package to fit this model."))
+      #   coxph <- survival::coxph
+      #   Surv  <- survival::Surv
+      #}
+      #if (con$optimizer == "clogistic") {
+      #   if (!requireNamespace("Epi", quietly=TRUE))
+      #      stop(mstyle$stop("Please install the 'Epi' package to fit this model."))
+      #}
    }
 
    ### check whether model matrix is of full rank
@@ -1542,13 +1542,13 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                if (con$optimizer == "clogit") {
                   args.clogit <- clogitCtrl
                   args.clogit$formula <- event ~ X.fit.l + strata(study.l)
-                  res.FE <- try(do.call(survival::clogit, args.clogit), silent=!verbose)
+                  #res.FE <- try(do.call(survival::clogit, args.clogit), silent=!verbose)
                }
                if (con$optimizer == "clogistic") {
                   args.clogistic <- clogisticCtrl
                   args.clogistic$formula <- event ~ X.fit.l
                   args.clogistic$strata <- study.l
-                  res.FE <- try(do.call(Epi::clogistic, args.clogistic), silent=!verbose)
+                  #res.FE <- try(do.call(Epi::clogistic, args.clogistic), silent=!verbose)
                }
 
             } else {
@@ -1576,9 +1576,9 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                args.clogit <- clogitCtrl
                args.clogit$formula <- event ~ X.QE.l + strata(study.l)
                if (verbose) {
-                  res.QE <- try(do.call(survival::clogit, args.clogit), silent=!verbose)
+                  #res.QE <- try(do.call(survival::clogit, args.clogit), silent=!verbose)
                } else {
-                  res.QE <- try(suppressWarnings(do.call(survival::clogit, args.clogit)), silent=!verbose)
+                  #res.QE <- try(suppressWarnings(do.call(survival::clogit, args.clogit)), silent=!verbose)
                }
             }
 
@@ -1586,7 +1586,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                args.clogistic <- clogisticCtrl
                args.clogistic$formula <- event ~ X.QE.l
                args.clogistic$strata <- study.l
-               res.QE <- try(do.call(Epi::clogistic, args.clogistic), silent=!verbose)
+               #res.QE <- try(do.call(Epi::clogistic, args.clogistic), silent=!verbose)
             }
 
             if (inherits(res.QE, "try-error"))
