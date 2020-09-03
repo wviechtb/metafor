@@ -178,7 +178,7 @@ regtest.default <- function(x, vi, sei, ni, subset, model="rma", predictor="sei"
 
    res <- list(model=model, predictor=predictor, zval=zval, pval=pval, dfs=dfs, method=fit$method, digits=digits, ret.fit=ret.fit, fit=fit, est=est, ci.lb=ci.lb, ci.ub=ci.ub)
 
-   class(res) <- "regtest.rma"
+   class(res) <- "regtest"
    return(res)
 
 }

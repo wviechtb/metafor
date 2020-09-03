@@ -1,9 +1,9 @@
-print.regtest.rma <- function(x, digits=x$digits, ret.fit=x$ret.fit, ...) {
+print.regtest <- function(x, digits=x$digits, ret.fit=x$ret.fit, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(x, "regtest.rma"))
-      stop(mstyle$stop("Argument 'x' must be an object of class \"regtest.rma\"."))
+   if (!inherits(x, "regtest"))
+      stop(mstyle$stop("Argument 'x' must be an object of class \"regtest\"."))
 
    digits <- .get.digits(digits=digits, xdigits=x$digits, dmiss=FALSE)
 

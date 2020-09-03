@@ -114,7 +114,7 @@ regtest.rma <- function(x, model="rma", predictor="sei", ret.fit=FALSE, digits, 
 
    res <- list(model=model, predictor=predictor, zval=zval, pval=pval, dfs=dfs, method=x$method, digits=digits, ret.fit=ret.fit, fit=fit, est=est, ci.lb=ci.lb, ci.ub=ci.ub)
 
-   class(res) <- "regtest.rma"
+   class(res) <- "regtest"
    return(res)
 
 }

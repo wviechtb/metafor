@@ -1,14 +1,14 @@
-\name{print.regtest.rma}
-\alias{print.regtest.rma}
-\title{Print Method for 'regtest.rma' Objects}
+\name{print.regtest}
+\alias{print.regtest}
+\title{Print Method for 'regtest' Objects}
 \description{
-   Print method for objects of class \code{"regtest.rma"}.
+   Print method for objects of class \code{"regtest"}.
 }
 \usage{
-\method{print}{regtest.rma}(x, digits=x$digits, ret.fit=x$ret.fit, \dots)
+\method{print}{regtest}(x, digits=x$digits, ret.fit=x$ret.fit, \dots)
 }
 \arguments{
-   \item{x}{an object of class \code{"regtest.rma"}.}
+   \item{x}{an object of class \code{"regtest"}.}
    \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (the default is to take the value from the object).}
    \item{ret.fit}{logical indicating whether the full results from the fitted model should also be returned (if unspecified, the default is to take the value from the object).}
    \item{\dots}{other arguments.}
@@ -35,6 +35,6 @@
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}
 }
 \seealso{
-   \code{\link{regtest.rma}}
+   \code{\link{regtest}}
 }
 \keyword{print}

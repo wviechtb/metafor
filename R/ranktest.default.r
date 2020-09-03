@@ -100,7 +100,7 @@ ranktest.default <- function(x, vi, sei, subset, digits, ...) {
 
    res <- list(tau=tau, pval=pval, digits=digits)
 
-   class(res) <- "ranktest.rma"
+   class(res) <- "ranktest"
    return(res)
 
 }

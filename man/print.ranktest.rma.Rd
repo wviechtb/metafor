@@ -1,14 +1,14 @@
-\name{print.ranktest.rma}
-\alias{print.ranktest.rma}
-\title{Print Method for 'ranktest.rma' Objects}
+\name{print.ranktest}
+\alias{print.ranktest}
+\title{Print Method for 'ranktest' Objects}
 \description{
-   Print method for objects of class \code{"ranktest.rma"}.
+   Print method for objects of class \code{"ranktest"}.
 }
 \usage{
-\method{print}{ranktest.rma}(x, digits=x$digits, \dots)
+\method{print}{ranktest}(x, digits=x$digits, \dots)
 }
 \arguments{
-   \item{x}{an object of class \code{"ranktest.rma"}.}
+   \item{x}{an object of class \code{"ranktest"}.}
    \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (the default is to take the value from the object).}
    \item{\dots}{other arguments.}
 }
@@ -29,6 +29,6 @@
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}
 }
 \seealso{
-   \code{\link{ranktest.rma}}
+   \code{\link{ranktest}}
 }
 \keyword{print}

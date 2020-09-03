@@ -28,7 +28,7 @@ regtest(x, \dots)
 \details{
    Various tests for funnel plot asymmetry have been suggested in the literature, including the rank correlation test by Begg and Mazumdar (1994) and the regression test by Egger et al. (1997). Extensions, modifications, and further developments of the regression test are described (among others) by Macaskill, Walter, and Irwig (2001), Sterne and Egger (2005), Harbord, Egger, and Sterne (2006), Peters et al. (2006), \enc{Rücker}{Ruecker} et al. (2008), and Moreno et al. (2009). The various versions of the regression test differ in terms of the model (either a weighted regression model with a multiplicative dispersion term or a fixed/random/mixed-effects meta-regression model is used), in terms of the predictor variable that the observed effect sizes or outcomes are hypothesized to be related to when publication bias is present (suggested predictors include the standard error, the sampling variance, and the sample size -- or transformations thereof), and in terms of the outcome measure used (e.g., for \mjeqn{2 \times 2}{2x2} table data, one has the choice between various outcome measures). The idea behind the various tests is the same though: If there is a relationship between the observed effect sizes or outcomes and the chosen predictor, then this usually implies asymmetry in the funnel plot, which in turn may be an indication of publication bias.
 
-   The \code{regtest.rma} function can be used to carry out various versions of the regression test. The model is chosen via the \code{model} argument, with \code{model="lm"} for weighted regression with a multiplicative dispersion term or \code{model="rma"} for the meta-analytic models. In the latter case, arguments such as \code{method}, \code{weighted}, and \code{test} used during the initial model fitting are also used for the regression test. Therefore, if one wants to conduct the regression test with a random/mixed-effects model, one should first fit a random-effects model with the \code{rma} function and then use the \code{regtest.rma} function on the fitted model object.
+   The \code{regtest} function can be used to carry out various versions of the regression test. The model is chosen via the \code{model} argument, with \code{model="lm"} for weighted regression with a multiplicative dispersion term or \code{model="rma"} for the meta-analytic models. In the latter case, arguments such as \code{method}, \code{weighted}, and \code{test} used during the initial model fitting are also used for the regression test. Therefore, if one wants to conduct the regression test with a random/mixed-effects model, one should first fit a random-effects model with the \code{rma} function and then use the \code{regtest} function on the fitted model object.
 
    The predictor is chosen via the \code{predictor} argument:
    \itemize{
@@ -40,7 +40,7 @@ regtest(x, \dots)
    \item \code{predictor="sqrtninv"} for the inverse of the square root transformed sample size.
    } For predictors based on the sample size, the object \code{x} obviously must contain the information about the sample sizes. This will automatically be the case when \code{measure} was \emph{not} equal to \code{"GEN"} or the \code{ni} values were explicitly specified during the initial model fitting.
 
-   If the model passed to the \code{regtest.rma} function already included one or more moderators, then \code{regtest.rma} will add the chosen predictor to the moderator(s) already included in the model. This way, one can test for funnel plot asymmetry after accounting first for the influence of the moderator(s) already included.
+   If the model passed to the \code{regtest} function already included one or more moderators, then \code{regtest} will add the chosen predictor to the moderator(s) already included in the model. This way, one can test for funnel plot asymmetry after accounting first for the influence of the moderator(s) already included.
 
    One can also pass a vector with the observed effect sizes or outcomes (via \code{x}) and the corresponding sampling variances via \code{vi} (or the standard errors via \code{sei}) directly to the function (in this case, the \code{regtest.default} function is used). When the predictor is the sample size or a transformation thereof, then \code{ni} needs to be specified here as well.
 
@@ -49,7 +49,7 @@ regtest(x, \dots)
    The model used for conducting the regression test can also be used to obtain a \sQuote{limit estimate} of the (average) true effect. In particular, when the standard error, sampling variance, or inverse (square root) sample size is used as the predictor, the model intercept in essence reflects the estimate under infinite precision. This is sometimes (cautiously) interpreted as an estimate of the (average) true effect that is adjusted for publication bias.
 }
 \value{
-   An object of class \code{"regtest.rma"}. The object is a list containing the following components:
+   An object of class \code{"regtest"}. The object is a list containing the following components:
    \item{model}{the model used for the regression test.}
    \item{predictor}{the predictor used for the regression test.}
    \item{zval}{the value of the test statistic.}
@@ -60,10 +60,10 @@ regtest(x, \dots)
    \item{ci.lb}{lower bound of the confidence interval for the limit estimate.}
    \item{ci.ub}{upper bound of the confidence intervals for the limit estimate.}
 
-   The results are formatted and printed with the \code{\link{print.regtest.rma}} function.
+   The results are formatted and printed with the \code{\link{print.regtest}} function.
 }
 \note{
-   The classical \sQuote{Egger test} is obtained by setting \code{model="lm"} and \code{predictor="sei"}. For the random/mixed-effects version of the Egger test, one should first fit a random-effects model to the data and then set \code{model="rma"} and \code{predictor="sei"} when using the \code{regtest.rma} function. See Sterne and Egger (2005) for details on these two types of models/tests.
+   The classical \sQuote{Egger test} is obtained by setting \code{model="lm"} and \code{predictor="sei"}. For the random/mixed-effects version of the Egger test, one should first fit a random-effects model to the data and then set \code{model="rma"} and \code{predictor="sei"} when using the \code{regtest} function. See Sterne and Egger (2005) for details on these two types of models/tests.
 
    When conducting a classical \sQuote{Egger test}, the test of the limit estimate is the same as the \sQuote{precision-effect test} (PET) of Stanley and Doucouliagos (2014). The limit estimate when using the sampling variance as predictor is sometimes called the \sQuote{precision-effect estimate with SE} (PEESE) (Stanley & Doucouliagos, 2014). A conditional procedure where we use the limit estimate when PET is not significant (i.e., when using the standard error as predictor) and the PEESE (i.e., when using the sampling variance as predictor) when PET is significant is sometimes called the PET-PEESE procedure (Stanley & Doucouliagos, 2014).
 

@@ -27,11 +27,11 @@ ranktest(x, \dots)
    One can either pass an object of class \code{"rma"} to the function or a vector with the observed effect sizes or outcomes (via \code{x}) and the corresponding sampling variances via \code{vi} (or the standard errors via \code{sei}).
 }
 \value{
-   An object of class \code{"ranktest.rma"}. The object is a list containing the following components:
+   An object of class \code{"ranktest"}. The object is a list containing the following components:
    \item{tau}{the estimated value of Kendall's tau rank correlation coefficient}
    \item{pval}{the corresponding p-value for the test that the true tau is equal to zero}
 
-   The results are formatted and printed with the \code{\link{print.ranktest.rma}} function.
+   The results are formatted and printed with the \code{\link{print.ranktest}} function.
 }
 \note{
    The method does not depend on the model fitted. Therefore, regardless of the model passed to the function, the results of the rank test will always be the same. See \code{\link{regtest}} for tests of funnel plot asymmetry that are based on regression models and model dependent.
