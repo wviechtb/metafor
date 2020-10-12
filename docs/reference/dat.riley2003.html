@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-47</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-48</span>
       </span>
     </div>
 
@@ -135,7 +135,7 @@
     <p>Results from 81 studies examining overall and disease-free survival in neuroblastoma patients with amplified versus normal MYC-N protein levels.</p>
     </div>
 
-    <pre class="usage"><span class='no'>dat.riley2003</span></pre>
+    <pre class="usage"><span class='va'>dat.riley2003</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
@@ -163,8 +163,9 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat' and examine data</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.riley2003</span>
-<span class='no'>dat</span></div><div class='output co'>#&gt;    study    yi  sei outcome 
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.riley2003</span>
+<span class='va'>dat</span>
+</div><div class='output co'>#&gt;    study    yi  sei outcome 
 #&gt; 1      1 -0.11 0.67     DFS 
 #&gt; 2      1 -0.14 0.81      OS 
 #&gt; 3      2  0.30 0.26     DFS 
@@ -264,8 +265,9 @@
 #&gt; 97    80  3.54 0.91      OS 
 #&gt; 98    81  5.04 1.10      OS </div><div class='input'>
 <span class='co'>### random-effects model analysis for outcome DFS</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='kw'>sei</span><span class='kw'>=</span><span class='no'>sei</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>subset</span><span class='kw'>=</span>(<span class='no'>outcome</span> <span class='kw'>==</span> <span class='st'>"DFS"</span>), <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"DL"</span>)
-<span class='no'>res</span></div><div class='output co'>#&gt; 
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, sei<span class='op'>=</span><span class='va'>sei</span>, data<span class='op'>=</span><span class='va'>dat</span>, subset<span class='op'>=</span><span class='op'>(</span><span class='va'>outcome</span> <span class='op'>==</span> <span class='st'>"DFS"</span><span class='op'>)</span>, method<span class='op'>=</span><span class='st'>"DL"</span><span class='op'>)</span>
+<span class='va'>res</span>
+</div><div class='output co'>#&gt; 
 #&gt; Random-Effects Model (k = 42; tau^2 estimator: DL)
 #&gt; 
 #&gt; tau^2 (estimated amount of total heterogeneity): 0.4212 (SE = 0.1561)
@@ -283,13 +285,15 @@
 #&gt; 
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-#&gt; </div><div class='input'><span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
+#&gt; </div><div class='input'><span class='fu'><a href='predict.rma.html'>predict</a></span><span class='op'>(</span><span class='va'>res</span>, transf<span class='op'>=</span><span class='va'>exp</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;  pred ci.lb ci.ub pi.lb pi.ub 
 #&gt;  4.41  3.42  5.70  1.21 16.15 
 #&gt; </div><div class='input'>
 <span class='co'>### random-effects model analysis for outcome OS</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='kw'>sei</span><span class='kw'>=</span><span class='no'>sei</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>subset</span><span class='kw'>=</span>(<span class='no'>outcome</span> <span class='kw'>==</span> <span class='st'>"OS"</span>), <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"DL"</span>)
-<span class='no'>res</span></div><div class='output co'>#&gt; 
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, sei<span class='op'>=</span><span class='va'>sei</span>, data<span class='op'>=</span><span class='va'>dat</span>, subset<span class='op'>=</span><span class='op'>(</span><span class='va'>outcome</span> <span class='op'>==</span> <span class='st'>"OS"</span><span class='op'>)</span>, method<span class='op'>=</span><span class='st'>"DL"</span><span class='op'>)</span>
+<span class='va'>res</span>
+</div><div class='output co'>#&gt; 
 #&gt; Random-Effects Model (k = 56; tau^2 estimator: DL)
 #&gt; 
 #&gt; tau^2 (estimated amount of total heterogeneity): 0.4223 (SE = 0.1889)
@@ -307,7 +311,8 @@
 #&gt; 
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-#&gt; </div><div class='input'><span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
+#&gt; </div><div class='input'><span class='fu'><a href='predict.rma.html'>predict</a></span><span class='op'>(</span><span class='va'>res</span>, transf<span class='op'>=</span><span class='va'>exp</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;  pred ci.lb ci.ub pi.lb pi.ub 
 #&gt;  5.13  4.04  6.52  1.40 18.76 
 #&gt; </div></pre>
@@ -326,7 +331,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

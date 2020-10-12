@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-47</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-48</span>
       </span>
     </div>
 
@@ -135,10 +135,10 @@
     <p>Function to create GOSH plots for objects of class <code>"rma"</code>. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
     </div>
 
-    <pre class="usage"><span class='fu'>gosh</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>gosh</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for rma</span>
-<span class='fu'>gosh</span>(<span class='no'>x</span>, <span class='no'>subsets</span>, <span class='kw'>progbar</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>parallel</span><span class='kw'>=</span><span class='st'>"no"</span>, <span class='kw'>ncpus</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>cl</span><span class='kw'>=</span><span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>gosh</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>subsets</span>, progbar<span class='op'>=</span><span class='cn'>TRUE</span>, parallel<span class='op'>=</span><span class='st'>"no"</span>, ncpus<span class='op'>=</span><span class='fl'>1</span>, cl<span class='op'>=</span><span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -190,6 +190,9 @@
 
    The results can be printed with the <a href='print.gosh.rma.html'>print.gosh.rma</a> function and plotted with the <a href='plot.gosh.rma.html'>plot.gosh.rma</a> function.
 
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Wolfgang Viechtbauer <a href='mailto:wvb@metafor-project.org'>wvb@metafor-project.org</a> <a href='http://www.metafor-project.org'>http://www.metafor-project.org</a></p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Olkin, I., Dahabreh, I. J., &amp; Trikalinos, T. A. (2012). GOSH - a graphical display of study heterogeneity. <em>Research Synthesis Methods</em>, <b>3</b>(3), 214--223. <a href='https://doi.org/10.1002/jrsm.1053'>https://doi.org/10.1002/jrsm.1053</a></p>
@@ -200,17 +203,28 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### meta-analysis of all trials including ISIS-4 using a FE model</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>ai</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>n1i</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>ci</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>n2i</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.egger2001</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"FE"</span>)
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"OR"</span>, ai<span class='op'>=</span><span class='va'>ai</span>, n1i<span class='op'>=</span><span class='va'>n1i</span>, ci<span class='op'>=</span><span class='va'>ci</span>, n2i<span class='op'>=</span><span class='va'>n2i</span>, data<span class='op'>=</span><span class='va'>dat.egger2001</span>, method<span class='op'>=</span><span class='st'>"FE"</span><span class='op'>)</span>
 
 <span class='co'>### fit FE model to all possible subsets (65535 models)</span>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='no'>sav</span> <span class='kw'>&lt;-</span> <span class='fu'>gosh</span>(<span class='no'>res</span>, <span class='kw'>progbar</span><span class='kw'>=</span><span class='fl'>FALSE</span>)
-<span class='no'>sav</span>
-
+<span class='co'># \dontrun{</span>
+<span class='va'>sav</span> <span class='op'>&lt;-</span> <span class='fu'>gosh</span><span class='op'>(</span><span class='va'>res</span>, progbar<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='va'>sav</span>
+</div><div class='output co'>#&gt; 
+#&gt; Model fits attempted: 65535
+#&gt; Model fits succeeded: 65535
+#&gt; 
+#&gt;             mean     min      q1  median      q3     max 
+#&gt; k         8.0001  1.0000  7.0000  8.0000  9.0000 16.0000 
+#&gt; Q        16.2141  0.0000  8.6068 14.1750 23.9552 47.0593 
+#&gt; I2       45.1552  0.0000 24.8066 52.5244 68.6902 87.5350 
+#&gt; H2        2.2396  0.0000  1.3299  2.1063  3.1939  8.0225 
+#&gt; estimate -0.3424 -2.4075 -0.5535  0.0148  0.0354  0.2231 
+#&gt; </div><div class='input'>
 <span class='co'>### create GOSH plot</span>
 <span class='co'>### red points for subsets that include and blue points</span>
 <span class='co'>### for subsets that exclude study 16 (the ISIS-4 trial)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>sav</span>, <span class='kw'>out</span><span class='kw'>=</span><span class='fl'>16</span>, <span class='kw'>breaks</span><span class='kw'>=</span><span class='fl'>100</span>)}</div></pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>sav</span>, out<span class='op'>=</span><span class='fl'>16</span>, breaks<span class='op'>=</span><span class='fl'>100</span><span class='op'>)</span><span class='co'># }</span>
+</div><div class='img'><img src='gosh-1.png' alt='' width='768' height='614' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -226,7 +240,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

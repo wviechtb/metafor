@@ -372,7 +372,7 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
             results <- paste0(results, "```{r, forestplot, echo=FALSE, fig.align=\"center\", fig.cap=\"Figure ", num.forest, ": Forest plot showing the observed outcomes and the estimate of the ", model.name, " model\"")
          if (format == "word_document")
             results <- paste0(results, "```{r, forestplot, echo=FALSE, fig.cap=\"Figure ", num.forest, ": Forest plot showing the observed outcomes and the estimate of the ", model.name, " model\"")
-         results <- paste0(results, ", dev.args=list(pointsize=9)}\npar(family=\"mono\")\ntmp <- metafor::forest(x, addpred=TRUE, header=TRUE", args.forest, ")\n```")
+         results <- paste0(results, ", dev.args=list(pointsize=9)}\npar(family=\"mono\")\npar(mar=c(5,4,1,2))\ntmp <- metafor::forest(x, addpred=TRUE, header=TRUE", args.forest, ")\n```")
          #text(tmp$xlim[1], x$k+2, \"Study\", pos=4, font=2, cex=tmp$cex)\ntext(tmp$xlim[2], x$k+2, \"Outcome [", level, "% CI]\", pos=2, font=2, cex=tmp$cex)\n
       }
 
@@ -471,11 +471,11 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
       ### funnel plot
       if (plot.funnel) {
          if (is.element(format, c("pdf_document", "bookdown::pdf_document2")))
-            results <- paste0(results, "\n\n```{r, funnelplot, echo=FALSE, fig.align=\"center\", fig.cap=\"Funnel plot\", dev.args=list(pointsize=9)}\nmetafor::funnel(x", args.funnel, ")\n```")
+            results <- paste0(results, "\n\n```{r, funnelplot, echo=FALSE, fig.align=\"center\", fig.cap=\"Funnel plot\", dev.args=list(pointsize=9)}\npar(mar=c(5,4,2,2))\nmetafor::funnel(x", args.funnel, ")\n```")
          if (format == "html_document")
-            results <- paste0(results, "\n\n```{r, funnelplot, echo=FALSE, fig.align=\"center\", fig.cap=\"Figure ", num.funnel, ": Funnel plot\", dev.args=list(pointsize=9)}\nmetafor::funnel(x", args.funnel, ")\n```")
+            results <- paste0(results, "\n\n```{r, funnelplot, echo=FALSE, fig.align=\"center\", fig.cap=\"Figure ", num.funnel, ": Funnel plot\", dev.args=list(pointsize=9)}\npar(mar=c(5,4,2,2))\nmetafor::funnel(x", args.funnel, ")\n```")
          if (format == "word_document")
-            results <- paste0(results, "\n\n```{r, funnelplot, echo=FALSE, fig.cap=\"Figure ", num.funnel, ": Funnel plot\", dev.args=list(pointsize=9)}\nmetafor::funnel(x", args.funnel, ")\n```")
+            results <- paste0(results, "\n\n```{r, funnelplot, echo=FALSE, fig.cap=\"Figure ", num.funnel, ": Funnel plot\", dev.args=list(pointsize=9)}\npar(mar=c(5,4,2,2))\nmetafor::funnel(x", args.funnel, ")\n```")
       }
 
    }

@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-47</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-48</span>
       </span>
     </div>
 
@@ -136,9 +136,9 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for infl.rma.uni</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='kw'>plotinf</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>plotdfbs</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>dfbsnew</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>logcov</span><span class='kw'>=</span><span class='fl'>TRUE</span>,
-     <span class='no'>layout</span>, <span class='kw'>slab.style</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>las</span><span class='kw'>=</span><span class='fl'>0</span>, <span class='kw'>pch</span><span class='kw'>=</span><span class='fl'>21</span>, <span class='kw'>bg</span><span class='kw'>=</span><span class='st'>"black"</span>,
-     <span class='kw'>bg.infl</span><span class='kw'>=</span><span class='st'>"red"</span>, <span class='kw'>col.na</span><span class='kw'>=</span><span class='st'>"lightgray"</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span>, plotinf<span class='op'>=</span><span class='cn'>TRUE</span>, plotdfbs<span class='op'>=</span><span class='cn'>FALSE</span>, dfbsnew<span class='op'>=</span><span class='cn'>FALSE</span>, logcov<span class='op'>=</span><span class='cn'>TRUE</span>,
+     <span class='va'>layout</span>, slab.style<span class='op'>=</span><span class='fl'>1</span>, las<span class='op'>=</span><span class='fl'>0</span>, pch<span class='op'>=</span><span class='fl'>21</span>, bg<span class='op'>=</span><span class='st'>"black"</span>,
+     bg.infl<span class='op'>=</span><span class='st'>"red"</span>, col.na<span class='op'>=</span><span class='st'>"lightgray"</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -208,6 +208,9 @@
 </ul><p>Studies which are considered influential with respect to any of these measures are indicated by the color specified for the <code>bg.infl</code> argument (the default is <code>"red"</code>).</p>
 <p>The cut-offs described above are indicated in the plot with horizontal reference lines. In addition, on the plot of the externally standardized residuals, horizontal reference lines are drawn at -1.96, 0, and 1.96. On the plot of the hat values, a horizontal reference line is drawn at \(p/k\). Since the sum of the hat values is equal to \(p\), the value \(p/k\) indicates equal hat values for all \(k\) studies. Finally, on the plot of weights, a horizontal reference line is drawn at \(100/k\), corresponding to the value for equal weights (in %) for all \(k\) studies. Note that all weights will automatically be equal to each other when using unweighted model fitting. Also, the hat values will be equal to the weights values (except for their scaling) in models without moderators.</p>
 <p>The chosen cut-offs are (somewhat) arbitrary. Substantively informed judgment should always be used when examining the influence of each study on the results.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Wolfgang Viechtbauer <a href='mailto:wvb@metafor-project.org'>wvb@metafor-project.org</a> <a href='http://www.metafor-project.org'>http://www.metafor-project.org</a></p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='https://doi.org/10.18637/jss.v036.i03'>https://doi.org/10.18637/jss.v036.i03</a></p>
@@ -219,11 +222,15 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### meta-analysis of the log risk ratios using a mixed-effects model</span>
 <span class='co'>### with two moderators (absolute latitude and publication year)</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>,
-           <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>ablat</span> + <span class='no'>year</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>)
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"RR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>,
+           mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>ablat</span> <span class='op'>+</span> <span class='va'>year</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>)</span>
 
-<span class='no'>inf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='influence.rma.uni.html'>influence</a></span>(<span class='no'>res</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>inf</span>)</div><div class='img'><img src='plot.infl.rma.uni-1.png' alt='' width='768' height='614' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>inf</span>, <span class='kw'>plotinf</span><span class='kw'>=</span><span class='fl'>1</span>:<span class='fl'>4</span>)</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>inf</span>, <span class='kw'>plotinf</span><span class='kw'>=</span><span class='fl'>1</span>:<span class='fl'>4</span>, <span class='kw'>layout</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>4</span>,<span class='fl'>1</span>))</div><div class='img'><img src='plot.infl.rma.uni-2.png' alt='' width='768' height='614' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>inf</span>, <span class='kw'>plotinf</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>plotdfbs</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='plot.infl.rma.uni-3.png' alt='' width='768' height='614' /></div></pre>
+<span class='va'>inf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='influence.rma.uni.html'>influence</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>inf</span><span class='op'>)</span>
+</div><div class='img'><img src='plot.infl.rma.uni-1.png' alt='' width='768' height='614' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>inf</span>, plotinf<span class='op'>=</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span>
+</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>inf</span>, plotinf<span class='op'>=</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>, layout<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>4</span>,<span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='plot.infl.rma.uni-2.png' alt='' width='768' height='614' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>inf</span>, plotinf<span class='op'>=</span><span class='cn'>FALSE</span>, plotdfbs<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='img'><img src='plot.infl.rma.uni-3.png' alt='' width='768' height='614' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -239,7 +246,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

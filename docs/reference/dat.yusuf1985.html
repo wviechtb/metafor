@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-47</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-48</span>
       </span>
     </div>
 
@@ -135,7 +135,7 @@
     <p>Results from studies examining the effectiveness of beta blockers for reducing mortality and reinfarction. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
     </div>
 
-    <pre class="usage"><span class='no'>dat.yusuf1985</span></pre>
+    <pre class="usage"><span class='va'>dat.yusuf1985</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
@@ -161,16 +161,19 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat'</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.yusuf1985</span>
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.yusuf1985</span>
 
 <span class='co'>### to select a table for the analysis</span>
-<span class='no'>tab</span> <span class='kw'>&lt;-</span> <span class='st'>"6"</span> <span class='co'>### either: 6, 9, 10, 11, 12a, 12b</span>
+<span class='va'>tab</span> <span class='op'>&lt;-</span> <span class='st'>"6"</span> <span class='co'>### either: 6, 9, 10, 11, 12a, 12b</span>
 
 <span class='co'>### to double-check total counts as reported in article</span>
-<span class='fu'><a href='https://rdrr.io/r/base/apply.html'>apply</a></span>(<span class='no'>dat</span>[<span class='no'>dat</span>$<span class='no'>table</span><span class='kw'>==</span><span class='no'>tab</span>,<span class='fl'>4</span>:<span class='fl'>7</span>], <span class='fl'>2</span>, <span class='no'>sum</span>, <span class='kw'>na.rm</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;   ai  n1i   ci  n2i 
+<span class='fu'><a href='https://rdrr.io/r/base/apply.html'>apply</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>[</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>table</span><span class='op'>==</span><span class='va'>tab</span>,<span class='fl'>4</span><span class='op'>:</span><span class='fl'>7</span><span class='op'>]</span>, <span class='fl'>2</span>, <span class='va'>sum</span>, na.rm<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   ai  n1i   ci  n2i 
 #&gt;  165 1900  165 1711 </div><div class='input'>
 <span class='co'>### meta-analysis using Peto's one-step method</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.peto.html'>rma.peto</a></span>(<span class='kw'>ai</span><span class='kw'>=</span><span class='no'>ai</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>n1i</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>ci</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>n2i</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>subset</span><span class='kw'>=</span>(<span class='no'>table</span><span class='kw'>==</span><span class='no'>tab</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: Tables with NAs omitted from model fitting.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Some yi/vi values are NA.</span></div><div class='input'><span class='no'>res</span></div><div class='output co'>#&gt; 
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.peto.html'>rma.peto</a></span><span class='op'>(</span>ai<span class='op'>=</span><span class='va'>ai</span>, n1i<span class='op'>=</span><span class='va'>n1i</span>, ci<span class='op'>=</span><span class='va'>ci</span>, n2i<span class='op'>=</span><span class='va'>n2i</span>, data<span class='op'>=</span><span class='va'>dat</span>, subset<span class='op'>=</span><span class='op'>(</span><span class='va'>table</span><span class='op'>==</span><span class='va'>tab</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Tables with NAs omitted from model fitting.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Some yi/vi values are NA.</span></div><div class='input'><span class='va'>res</span>
+</div><div class='output co'>#&gt; 
 #&gt; Fixed-Effects Model (k = 21)
 #&gt; 
 #&gt; I^2 (total heterogeneity / total variability):  0.00%
@@ -188,7 +191,8 @@
 #&gt; 
 #&gt; estimate   ci.lb   ci.ub 
 #&gt;   0.9332  0.7385  1.1792 
-#&gt; </div><div class='input'><span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
+#&gt; </div><div class='input'><span class='fu'><a href='predict.rma.html'>predict</a></span><span class='op'>(</span><span class='va'>res</span>, transf<span class='op'>=</span><span class='va'>exp</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;  pred ci.lb ci.ub 
 #&gt;  0.93  0.74  1.18 
 #&gt; </div></pre>
@@ -207,7 +211,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

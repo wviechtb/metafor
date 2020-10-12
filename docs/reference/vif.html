@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-47</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-48</span>
       </span>
     </div>
 
@@ -135,13 +135,13 @@
     <p>Compute variance inflation factors (VIFs) for objects of class <code>"rma"</code>. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
     </div>
 
-    <pre class="usage"><span class='fu'>vif</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>vif</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for rma</span>
-<span class='fu'>vif</span>(<span class='no'>x</span>, <span class='no'>btt</span>, <span class='kw'>intercept</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>table</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>digits</span>, <span class='no'>...</span>)
+<span class='fu'>vif</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>btt</span>, intercept<span class='op'>=</span><span class='cn'>FALSE</span>, table<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>digits</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for vif.rma</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='no'>x</span>$<span class='no'>digits</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span>, digits<span class='op'>=</span><span class='va'>x</span><span class='op'>$</span><span class='va'>digits</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -193,6 +193,9 @@
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>The values of the (G)VIFs are invariant to the scaling of the predictor variables if the model includes an intercept that is removed when inverting the correlation matrix of the model coefficients to compute the (G)VIFs. This is the default behavior. See &#8216;Examples&#8217;.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Wolfgang Viechtbauer <a href='mailto:wvb@metafor-project.org'>wvb@metafor-project.org</a> <a href='http://www.metafor-project.org'>http://www.metafor-project.org</a></p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Belsley, D. A., Kuh, E., &amp; Welsch, R. E. (1980). <em>Regression diagnostics</em>. New York: Wiley.</p>
@@ -206,26 +209,31 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### copy data from Bangert-Drowns et al. (2004) into 'dat'</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.bangertdrowns2004</span>
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.bangertdrowns2004</span>
 
 <span class='co'>### fit mixed-effects meta-regression model</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>length</span> + <span class='no'>wic</span> + <span class='no'>feedback</span> + <span class='no'>info</span> + <span class='no'>pers</span> + <span class='no'>imag</span> + <span class='no'>meta</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Studies with NAs omitted from model fitting.</span></div><div class='input'>
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>length</span> <span class='op'>+</span> <span class='va'>wic</span> <span class='op'>+</span> <span class='va'>feedback</span> <span class='op'>+</span> <span class='va'>info</span> <span class='op'>+</span> <span class='va'>pers</span> <span class='op'>+</span> <span class='va'>imag</span> <span class='op'>+</span> <span class='va'>meta</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Studies with NAs omitted from model fitting.</span></div><div class='input'>
 <span class='co'>### get variance inflation factors</span>
-<span class='fu'>vif</span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; 
+<span class='fu'>vif</span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;   length      wic feedback     info     pers     imag     meta 
 #&gt;   1.5371   1.3860   1.6490   1.8340   5.6780   1.1554   4.5333 
 #&gt; </div><div class='input'>
 <span class='co'>### show that VIFs are not influenced by scaling of the predictors</span>
-<span class='no'>u</span> <span class='kw'>&lt;-</span> <span class='no'>scale</span> <span class='co'># to standardize the predictors</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='fu'>u</span>(<span class='no'>length</span>) + <span class='fu'>u</span>(<span class='no'>wic</span>) + <span class='fu'>u</span>(<span class='no'>feedback</span>) + <span class='fu'>u</span>(<span class='no'>info</span>) +
-                            <span class='fu'>u</span>(<span class='no'>pers</span>) + <span class='fu'>u</span>(<span class='no'>imag</span>) + <span class='fu'>u</span>(<span class='no'>meta</span>), <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Studies with NAs omitted from model fitting.</span></div><div class='input'><span class='fu'>vif</span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; 
+<span class='va'>u</span> <span class='op'>&lt;-</span> <span class='va'>scale</span> <span class='co'># to standardize the predictors</span>
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='fu'>u</span><span class='op'>(</span><span class='va'>length</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'>u</span><span class='op'>(</span><span class='va'>wic</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'>u</span><span class='op'>(</span><span class='va'>feedback</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'>u</span><span class='op'>(</span><span class='va'>info</span><span class='op'>)</span> <span class='op'>+</span>
+                            <span class='fu'>u</span><span class='op'>(</span><span class='va'>pers</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'>u</span><span class='op'>(</span><span class='va'>imag</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'>u</span><span class='op'>(</span><span class='va'>meta</span><span class='op'>)</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Studies with NAs omitted from model fitting.</span></div><div class='input'><span class='fu'>vif</span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;   u(length)      u(wic) u(feedback)     u(info)     u(pers)     u(imag) 
 #&gt;      1.5371      1.3860      1.6490      1.8340      5.6780      1.1554 
 #&gt;     u(meta) 
 #&gt;      4.5333 
 #&gt; </div><div class='input'>
 <span class='co'>### get full table</span>
-<span class='fu'>vif</span>(<span class='no'>res</span>, <span class='kw'>table</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; 
+<span class='fu'>vif</span><span class='op'>(</span><span class='va'>res</span>, table<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;              estimate      se     zval    pval    ci.lb   ci.ub     vif     sif 
 #&gt; intrcpt        0.1825  0.0406   4.4898  &lt;.0001   0.1028  0.2621      NA      NA 
 #&gt; u(length)      0.0458  0.0496   0.9240  0.3555  -0.0514  0.1431  1.5371  1.2398 
@@ -237,13 +245,14 @@
 #&gt; u(meta)        0.0981  0.0850   1.1537  0.2486  -0.0685  0.2647  4.5333  2.1291 
 #&gt; </div><div class='input'>
 <span class='co'>### calculate log risk ratios and corresponding sampling variances</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>)
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"RR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>)</span>
 
 <span class='co'>### fit meta-regression model where one predictor (alloc) is a three-level factor</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>ablat</span> + <span class='no'>alloc</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>ablat</span> <span class='op'>+</span> <span class='va'>alloc</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 
 <span class='co'>### get variance inflation factors for all individual coefficients</span>
-<span class='fu'>vif</span>(<span class='no'>res</span>, <span class='kw'>table</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; 
+<span class='fu'>vif</span><span class='op'>(</span><span class='va'>res</span>, table<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;                  estimate      se     zval    pval    ci.lb    ci.ub     vif 
 #&gt; intrcpt            0.2932  0.4050   0.7239  0.4691  -0.5006   1.0870      NA 
 #&gt; ablat             -0.0273  0.0092  -2.9650  0.0030  -0.0453  -0.0092  1.0151 
@@ -256,12 +265,14 @@
 #&gt; allocsystematic  1.3081 
 #&gt; </div><div class='input'>
 <span class='co'>### generalized variance inflation factor for the 'alloc' factor</span>
-<span class='fu'>vif</span>(<span class='no'>res</span>, <span class='kw'>btt</span><span class='kw'>=</span><span class='fl'>3</span>:<span class='fl'>4</span>)</div><div class='output co'>#&gt; 
+<span class='fu'>vif</span><span class='op'>(</span><span class='va'>res</span>, btt<span class='op'>=</span><span class='fl'>3</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; Collinearity Diagnostics (coefficients 3:4):
 #&gt; GVIF = 1.0151, GSIF = 1.0038
 #&gt; </div><div class='input'>
 <span class='co'>### can also specify a string to grep for</span>
-<span class='fu'>vif</span>(<span class='no'>res</span>, <span class='kw'>btt</span><span class='kw'>=</span><span class='st'>"alloc"</span>)</div><div class='output co'>#&gt; 
+<span class='fu'>vif</span><span class='op'>(</span><span class='va'>res</span>, btt<span class='op'>=</span><span class='st'>"alloc"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; Collinearity Diagnostics (coefficients 3:4):
 #&gt; GVIF = 1.0151, GSIF = 1.0038
 #&gt; </div></pre>
@@ -280,7 +291,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

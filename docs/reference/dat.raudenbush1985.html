@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-47</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-48</span>
       </span>
     </div>
 
@@ -135,7 +135,7 @@
     <p>Results from 19 studies examining how teachers' expectations about their pupils can influence actual IQ levels.</p>
     </div>
 
-    <pre class="usage"><span class='no'>dat.raudenbush1985</span></pre>
+    <pre class="usage"><span class='va'>dat.raudenbush1985</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
@@ -167,8 +167,9 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat' and examine data</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.raudenbush1985</span>
-<span class='no'>dat</span></div><div class='output co'>#&gt;    study               author year weeks setting tester n1i n2i      yi     vi 
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.raudenbush1985</span>
+<span class='va'>dat</span>
+</div><div class='output co'>#&gt;    study               author year weeks setting tester n1i n2i      yi     vi 
 #&gt; 1      1     Rosenthal et al. 1974     2   group  aware  77 339  0.0300 0.0156 
 #&gt; 2      2          Conn et al. 1968    21   group  aware  60 198  0.1200 0.0216 
 #&gt; 3      3          Jose &amp; Cody 1971    19   group  aware  72  72 -0.1400 0.0279 
@@ -189,8 +190,9 @@
 #&gt; 18    18   Fleming &amp; Anttonen 1971     2   group  blind 233 224  0.0700 0.0088 
 #&gt; 19    19             Ginsburg 1970     7   group  aware  65  67 -0.0700 0.0303 </div><div class='input'>
 <span class='co'>### random-effects model</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
-<span class='no'>res</span></div><div class='output co'>#&gt; 
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
+<span class='va'>res</span>
+</div><div class='output co'>#&gt; 
 #&gt; Random-Effects Model (k = 19; tau^2 estimator: REML)
 #&gt; 
 #&gt; tau^2 (estimated amount of total heterogeneity): 0.0188 (SE = 0.0155)
@@ -210,11 +212,12 @@
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### create weeks variable where values larger than 3 are set to 3</span>
-<span class='no'>dat</span>$<span class='no'>weeks.c</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='no'>dat</span>$<span class='no'>week</span> <span class='kw'>&gt;</span> <span class='fl'>3</span>, <span class='fl'>3</span>, <span class='no'>dat</span>$<span class='no'>week</span>)
+<span class='va'>dat</span><span class='op'>$</span><span class='va'>weeks.c</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>week</span> <span class='op'>&gt;</span> <span class='fl'>3</span>, <span class='fl'>3</span>, <span class='va'>dat</span><span class='op'>$</span><span class='va'>week</span><span class='op'>)</span>
 
 <span class='co'>### mixed-effects model with weeks.c variable as moderator</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>mods</span><span class='kw'>=</span>~<span class='no'>weeks.c</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>3</span>)
-<span class='no'>res</span></div><div class='output co'>#&gt; 
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, mods<span class='op'>=</span><span class='op'>~</span><span class='va'>weeks.c</span>, data<span class='op'>=</span><span class='va'>dat</span>, digits<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span>
+<span class='va'>res</span>
+</div><div class='output co'>#&gt; 
 #&gt; Mixed-Effects Model (k = 19; tau^2 estimator: REML)
 #&gt; 
 #&gt; tau^2 (estimated amount of residual heterogeneity):     0.000 (SE = 0.007)
@@ -253,7 +256,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

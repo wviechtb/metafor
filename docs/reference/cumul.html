@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-47</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-48</span>
       </span>
     </div>
 
@@ -135,14 +135,14 @@
     <p>The functions repeatedly fit the specified model, adding one study at a time to the model. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
     </div>
 
-    <pre class="usage"><span class='fu'>cumul</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>cumul</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for rma.uni</span>
-<span class='fu'>cumul</span>(<span class='no'>x</span>, <span class='no'>order</span>, <span class='no'>digits</span>, <span class='no'>transf</span>, <span class='no'>targs</span>, <span class='kw'>progbar</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'>cumul</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>order</span>, <span class='va'>digits</span>, <span class='va'>transf</span>, <span class='va'>targs</span>, progbar<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 <span class='co'># S3 method for rma.mh</span>
-<span class='fu'>cumul</span>(<span class='no'>x</span>, <span class='no'>order</span>, <span class='no'>digits</span>, <span class='no'>transf</span>, <span class='no'>targs</span>, <span class='kw'>progbar</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'>cumul</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>order</span>, <span class='va'>digits</span>, <span class='va'>transf</span>, <span class='va'>targs</span>, progbar<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 <span class='co'># S3 method for rma.peto</span>
-<span class='fu'>cumul</span>(<span class='no'>x</span>, <span class='no'>order</span>, <span class='no'>digits</span>, <span class='no'>transf</span>, <span class='no'>targs</span>, <span class='kw'>progbar</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>cumul</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>order</span>, <span class='va'>digits</span>, <span class='va'>transf</span>, <span class='va'>targs</span>, progbar<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -200,6 +200,9 @@
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>When using the <code>transf</code> option, the transformation is applied to the estimated coefficients and the corresponding interval bounds. The standard errors are then set equal to <code>NA</code> and are omitted from the printed output.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Wolfgang Viechtbauer <a href='mailto:wvb@metafor-project.org'>wvb@metafor-project.org</a> <a href='http://www.metafor-project.org'>http://www.metafor-project.org</a></p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Chalmers, T. C., &amp; Lau, J. (1993). Meta-analytic stimulus for changes in clinical trials. <em>Statistical Methods in Medical Research</em>, <b>2</b>(2), 161--172. <a href='https://doi.org/10.1177/096228029300200204'>https://doi.org/10.1177/096228029300200204</a></p>
@@ -211,13 +214,14 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### calculate log risk ratios and corresponding sampling variances</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>)
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"RR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>)</span>
 
 <span class='co'>### random-effects model</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 
 <span class='co'>### cumulative meta-analysis (in the order of publication year)</span>
-<span class='fu'>cumul</span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>order</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/order.html'>order</a></span>(<span class='no'>dat</span>$<span class='no'>year</span>))</div><div class='output co'>#&gt; 
+<span class='fu'>cumul</span><span class='op'>(</span><span class='va'>res</span>, transf<span class='op'>=</span><span class='va'>exp</span>, order<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/order.html'>order</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>year</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;    estimate    zval  pvals  ci.lb  ci.ub       QE    QEp   tau2      I2      H2 
 #&gt; 1    0.4109 -1.5586 0.1191 0.1343 1.2574   0.0000 1.0000 0.0000  0.0000  1.0000 
 #&gt; 2    0.2658 -3.7967 0.0001 0.1341 0.5268   0.9315 0.3345 0.0000  0.0000  1.0000 
@@ -234,10 +238,11 @@
 #&gt; 8    0.4894 -3.9744 0.0001 0.3441 0.6962 152.2330 0.0000 0.3132 92.2214 12.8558 
 #&gt; </div><div class='input'>
 <span class='co'>### meta-analysis of the (log) risk ratios using the Mantel-Haenszel method</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.mh.html'>rma.mh</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>)
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.mh.html'>rma.mh</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"RR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>)</span>
 
 <span class='co'>### cumulative meta-analysis</span>
-<span class='fu'>cumul</span>(<span class='no'>res</span>, <span class='kw'>order</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/order.html'>order</a></span>(<span class='no'>dat.bcg</span>$<span class='no'>year</span>))</div><div class='output co'>#&gt; 
+<span class='fu'>cumul</span><span class='op'>(</span><span class='va'>res</span>, order<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/order.html'>order</a></span><span class='op'>(</span><span class='va'>dat.bcg</span><span class='op'>$</span><span class='va'>year</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;    estimate     se     zval   pval   ci.lb   ci.ub       QE    QEp      I2 
 #&gt; 1   -0.8893 0.5706  -1.5586 0.1191 -2.0077  0.2290   0.0000 1.0000  0.0000 
 #&gt; 2   -1.3517 0.3455  -3.9124 0.0001 -2.0289 -0.6746   0.9373 0.3330  0.0000 
@@ -266,7 +271,8 @@
 #&gt; 13  3.9623 
 #&gt; 4   6.2160 
 #&gt; 8  12.7140 
-#&gt; </div><div class='input'><span class='fu'>cumul</span>(<span class='no'>res</span>, <span class='kw'>order</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/order.html'>order</a></span>(<span class='no'>dat.bcg</span>$<span class='no'>year</span>), <span class='kw'>transf</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; 
+#&gt; </div><div class='input'><span class='fu'>cumul</span><span class='op'>(</span><span class='va'>res</span>, order<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/order.html'>order</a></span><span class='op'>(</span><span class='va'>dat.bcg</span><span class='op'>$</span><span class='va'>year</span><span class='op'>)</span>, transf<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;    estimate     zval   pval  ci.lb  ci.ub       QE    QEp      I2      H2 
 #&gt; 1    0.4109  -1.5586 0.1191 0.1343 1.2574   0.0000 1.0000  0.0000  1.0000 
 #&gt; 2    0.2588  -3.9124 0.0001 0.1315 0.5094   0.9373 0.3330  0.0000  0.9373 
@@ -283,10 +289,11 @@
 #&gt; 8    0.6353 -11.5338 0.0000 0.5881 0.6862 152.5676 0.0000 92.1346 12.7140 
 #&gt; </div><div class='input'>
 <span class='co'>### meta-analysis of the (log) odds ratios using Peto's method</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.mh.html'>rma.mh</a></span>(<span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>)
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.mh.html'>rma.mh</a></span><span class='op'>(</span>ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>)</span>
 
 <span class='co'>### cumulative meta-analysis</span>
-<span class='fu'>cumul</span>(<span class='no'>res</span>, <span class='kw'>order</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/order.html'>order</a></span>(<span class='no'>dat.bcg</span>$<span class='no'>year</span>))</div><div class='output co'>#&gt; 
+<span class='fu'>cumul</span><span class='op'>(</span><span class='va'>res</span>, order<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/order.html'>order</a></span><span class='op'>(</span><span class='va'>dat.bcg</span><span class='op'>$</span><span class='va'>year</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;    estimate     se     zval   pval   ci.lb   ci.ub       QE    QEp      I2 
 #&gt; 1   -0.9387 0.5976  -1.5708 0.1162 -2.1100  0.2326   0.0000 1.0000  0.0000 
 #&gt; 2   -1.4215 0.3595  -3.9539 0.0001 -2.1261 -0.7169   0.9404 0.3322  0.0000 
@@ -315,7 +322,8 @@
 #&gt; 13  4.7344 
 #&gt; 4   6.6484 
 #&gt; 8  13.6619 
-#&gt; </div><div class='input'><span class='fu'>cumul</span>(<span class='no'>res</span>, <span class='kw'>order</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/order.html'>order</a></span>(<span class='no'>dat.bcg</span>$<span class='no'>year</span>), <span class='kw'>transf</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; 
+#&gt; </div><div class='input'><span class='fu'>cumul</span><span class='op'>(</span><span class='va'>res</span>, order<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/order.html'>order</a></span><span class='op'>(</span><span class='va'>dat.bcg</span><span class='op'>$</span><span class='va'>year</span><span class='op'>)</span>, transf<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;    estimate     zval   pval  ci.lb  ci.ub       QE    QEp      I2      H2 
 #&gt; 1    0.3911  -1.5708 0.1162 0.1212 1.2619   0.0000 1.0000  0.0000  1.0000 
 #&gt; 2    0.2414  -3.9539 0.0001 0.1193 0.4883   0.9404 0.3322  0.0000  0.9404 
@@ -346,7 +354,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

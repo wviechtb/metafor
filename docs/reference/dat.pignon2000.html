@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-47</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-48</span>
       </span>
     </div>
 
@@ -135,7 +135,7 @@
     <p>Results from studies examining mortality risk in patients with nonmetastatic head and neck squamous-cell carcinoma receiving either locoregional treatment plus chemotherapy versus locoregional treatment alone.</p>
     </div>
 
-    <pre class="usage"><span class='no'>dat.pignon2000</span></pre>
+    <pre class="usage"><span class='va'>dat.pignon2000</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
@@ -159,12 +159,13 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat'</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.pignon2000</span>
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.pignon2000</span>
 
 <span class='co'>### compute estimated log hazard ratios and sampling variances</span>
-<span class='no'>dat</span>$<span class='no'>yi</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>dat</span>, <span class='no'>OmE</span>/<span class='no'>V</span>)
-<span class='no'>dat</span>$<span class='no'>vi</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>dat</span>, <span class='fl'>1</span>/<span class='no'>V</span>)
-<span class='no'>dat</span></div><div class='output co'>#&gt;       id          trial   OmE     V grp           yi          vi
+<span class='va'>dat</span><span class='op'>$</span><span class='va'>yi</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>dat</span>, <span class='va'>OmE</span><span class='op'>/</span><span class='va'>V</span><span class='op'>)</span>
+<span class='va'>dat</span><span class='op'>$</span><span class='va'>vi</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>dat</span>, <span class='fl'>1</span><span class='op'>/</span><span class='va'>V</span><span class='op'>)</span>
+<span class='va'>dat</span>
+</div><div class='output co'>#&gt;       id          trial   OmE     V grp           yi          vi
 #&gt; 1   44.0       Pitie-74  -1.8  14.5   1 -0.124137931 0.068965517
 #&gt; 2   45.0      GETTECadj  11.8  57.1   1  0.206654991 0.017513135
 #&gt; 3   46.0       Int 0034  -7.4  80.6   1 -0.091811414 0.012406948
@@ -231,8 +232,9 @@
 #&gt; 64  91.0     Bavaria 89 -16.8  29.8   3 -0.563758389 0.033557047
 #&gt; 65  98.0       LOHNG 91  -5.3  12.3   3 -0.430894309 0.081300813</div><div class='input'>
 <span class='co'>### meta-analysis based on all 65 trials</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"FE"</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)
-<span class='no'>res</span></div><div class='output co'>#&gt; 
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span>, method<span class='op'>=</span><span class='st'>"FE"</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+<span class='va'>res</span>
+</div><div class='output co'>#&gt; 
 #&gt; Fixed-Effects Model (k = 65)
 #&gt; 
 #&gt; I^2 (total heterogeneity / total variability):   48.25%
@@ -248,13 +250,15 @@
 #&gt; 
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-#&gt; </div><div class='input'><span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>)</div><div class='output co'>#&gt; 
+#&gt; </div><div class='input'><span class='fu'><a href='predict.rma.html'>predict</a></span><span class='op'>(</span><span class='va'>res</span>, transf<span class='op'>=</span><span class='va'>exp</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;  pred ci.lb ci.ub 
 #&gt;  0.90  0.85  0.94 
 #&gt; </div><div class='input'>
 <span class='co'>### only adjuvant trials</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"FE"</span>, <span class='kw'>subset</span><span class='kw'>=</span><span class='no'>grp</span><span class='kw'>==</span><span class='fl'>1</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)
-<span class='no'>res</span></div><div class='output co'>#&gt; 
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span>, method<span class='op'>=</span><span class='st'>"FE"</span>, subset<span class='op'>=</span><span class='va'>grp</span><span class='op'>==</span><span class='fl'>1</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+<span class='va'>res</span>
+</div><div class='output co'>#&gt; 
 #&gt; Fixed-Effects Model (k = 8)
 #&gt; 
 #&gt; I^2 (total heterogeneity / total variability):   10.56%
@@ -270,13 +274,15 @@
 #&gt; 
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-#&gt; </div><div class='input'><span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>)</div><div class='output co'>#&gt; 
+#&gt; </div><div class='input'><span class='fu'><a href='predict.rma.html'>predict</a></span><span class='op'>(</span><span class='va'>res</span>, transf<span class='op'>=</span><span class='va'>exp</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;  pred ci.lb ci.ub 
 #&gt;  0.98  0.85  1.12 
 #&gt; </div><div class='input'>
 <span class='co'>### only neoadjuvant trials</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"FE"</span>, <span class='kw'>subset</span><span class='kw'>=</span><span class='no'>grp</span><span class='kw'>==</span><span class='fl'>2</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)
-<span class='no'>res</span></div><div class='output co'>#&gt; 
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span>, method<span class='op'>=</span><span class='st'>"FE"</span>, subset<span class='op'>=</span><span class='va'>grp</span><span class='op'>==</span><span class='fl'>2</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+<span class='va'>res</span>
+</div><div class='output co'>#&gt; 
 #&gt; Fixed-Effects Model (k = 31)
 #&gt; 
 #&gt; I^2 (total heterogeneity / total variability):   4.96%
@@ -292,13 +298,15 @@
 #&gt; 
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-#&gt; </div><div class='input'><span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>)</div><div class='output co'>#&gt; 
+#&gt; </div><div class='input'><span class='fu'><a href='predict.rma.html'>predict</a></span><span class='op'>(</span><span class='va'>res</span>, transf<span class='op'>=</span><span class='va'>exp</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;  pred ci.lb ci.ub 
 #&gt;  0.95  0.88  1.01 
 #&gt; </div><div class='input'>
 <span class='co'>### only concomitant trials</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"FE"</span>, <span class='kw'>subset</span><span class='kw'>=</span><span class='no'>grp</span><span class='kw'>==</span><span class='fl'>3</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)
-<span class='no'>res</span></div><div class='output co'>#&gt; 
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span>, method<span class='op'>=</span><span class='st'>"FE"</span>, subset<span class='op'>=</span><span class='va'>grp</span><span class='op'>==</span><span class='fl'>3</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+<span class='va'>res</span>
+</div><div class='output co'>#&gt; 
 #&gt; Fixed-Effects Model (k = 26)
 #&gt; 
 #&gt; I^2 (total heterogeneity / total variability):   66.13%
@@ -314,7 +322,8 @@
 #&gt; 
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-#&gt; </div><div class='input'><span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>)</div><div class='output co'>#&gt; 
+#&gt; </div><div class='input'><span class='fu'><a href='predict.rma.html'>predict</a></span><span class='op'>(</span><span class='va'>res</span>, transf<span class='op'>=</span><span class='va'>exp</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;  pred ci.lb ci.ub 
 #&gt;  0.81  0.76  0.88 
 #&gt; </div></pre>
@@ -333,7 +342,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

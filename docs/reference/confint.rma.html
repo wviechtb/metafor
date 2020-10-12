@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-47</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-48</span>
       </span>
     </div>
 
@@ -136,21 +136,21 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for rma.uni</span>
-<span class='fu'>confint</span>(<span class='no'>object</span>, <span class='no'>parm</span>, <span class='no'>level</span>, <span class='kw'>fixed</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>random</span><span class='kw'>=</span><span class='fl'>TRUE</span>,
-        <span class='no'>digits</span>, <span class='no'>transf</span>, <span class='no'>targs</span>, <span class='kw'>verbose</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>control</span>, <span class='no'>...</span>)
+<span class='fu'>confint</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>parm</span>, <span class='va'>level</span>, fixed<span class='op'>=</span><span class='cn'>FALSE</span>, random<span class='op'>=</span><span class='cn'>TRUE</span>,
+        <span class='va'>digits</span>, <span class='va'>transf</span>, <span class='va'>targs</span>, verbose<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>control</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for rma.mh</span>
-<span class='fu'>confint</span>(<span class='no'>object</span>, <span class='no'>parm</span>, <span class='no'>level</span>, <span class='no'>digits</span>, <span class='no'>transf</span>, <span class='no'>targs</span>, <span class='no'>...</span>)
+<span class='fu'>confint</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>parm</span>, <span class='va'>level</span>, <span class='va'>digits</span>, <span class='va'>transf</span>, <span class='va'>targs</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for rma.peto</span>
-<span class='fu'>confint</span>(<span class='no'>object</span>, <span class='no'>parm</span>, <span class='no'>level</span>, <span class='no'>digits</span>, <span class='no'>transf</span>, <span class='no'>targs</span>, <span class='no'>...</span>)
+<span class='fu'>confint</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>parm</span>, <span class='va'>level</span>, <span class='va'>digits</span>, <span class='va'>transf</span>, <span class='va'>targs</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for rma.glmm</span>
-<span class='fu'>confint</span>(<span class='no'>object</span>, <span class='no'>parm</span>, <span class='no'>level</span>, <span class='no'>digits</span>, <span class='no'>transf</span>, <span class='no'>targs</span>, <span class='no'>...</span>)
+<span class='fu'>confint</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>parm</span>, <span class='va'>level</span>, <span class='va'>digits</span>, <span class='va'>transf</span>, <span class='va'>targs</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for rma.mv</span>
-<span class='fu'>confint</span>(<span class='no'>object</span>, <span class='no'>parm</span>, <span class='no'>level</span>, <span class='kw'>fixed</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>sigma2</span>, <span class='no'>tau2</span>, <span class='no'>rho</span>, <span class='no'>gamma2</span>, <span class='no'>phi</span>,
-        <span class='no'>digits</span>, <span class='no'>transf</span>, <span class='no'>targs</span>, <span class='kw'>verbose</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>control</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>confint</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>parm</span>, <span class='va'>level</span>, fixed<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>sigma2</span>, <span class='va'>tau2</span>, <span class='va'>rho</span>, <span class='va'>gamma2</span>, <span class='va'>phi</span>,
+        <span class='va'>digits</span>, <span class='va'>transf</span>, <span class='va'>targs</span>, verbose<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>control</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -225,7 +225,7 @@
 
     <p>The confidence intervals for the model coefficients are simply the usual Wald-type intervals which are also shown when printing the fitted object.</p>
 <p>For objects of class <code>"rma.uni"</code> obtained with the <code><a href='rma.uni.html'>rma.uni</a></code> function, the confidence interval for the amount of (residual) heterogeneity (i.e., \(\tau^2\)) is obtained iteratively either via the Q-profile method or via the generalized Q-statistic method (Hartung and Knapp, 2005; Viechtbauer, 2007; Jackson, 2013; Jackson et al., 2014). The latter is automatically used when the model was fitted with <code>method="GENQ"</code>, the former is used in all other cases. Either method provides an exact confidence interval for \(\tau^2\) in random- and mixed-effects models. The square root of the interval bounds is also returned for easier interpretation. Confidence intervals for \(I^2\) and \(H^2\) are also provided (Higgins &amp; Thompson, 2002). Since \(I^2\) and \(H^2\) are just monotonic transformations of \(\tau^2\) (for details, see <code><a href='print.rma.html'>print.rma.uni</a></code>), the confidence intervals for \(I^2\) and \(H^2\) are also exact.</p>
-<p>For objects of class <code>"rma.mv"</code> obtained with the <code><a href='rma.mv.html'>rma.mv</a></code> function, profile likelihood confidence intervals are obtained by default for all (non-fixed) variance and correlation components of the model. Alternatively, one can use the <code>sigma2</code>, <code>tau2</code>, <code>rho</code>, <code>gamma2</code>, or <code>phi</code> arguments to specify for which variance/correlation parameter a confidence interval should be obtained. Only one of these arguments can be used at a time. A single integer is used to specify the number of the parameter. The function then provides a profile likelihood confidence interval for the specified parameter. It is a good idea to examine the corresponding profile likelihood plot (via the <code><a href='profile.rma.html'>profile.rma.mv</a></code> function) to make sure that the bounds obtained are sensible.</p>
+<p>For objects of class <code>"rma.mv"</code> obtained with the <code><a href='rma.mv.html'>rma.mv</a></code> function, profile likelihood confidence intervals are obtained by default for all (non-fixed) variance and correlation components of the model. Alternatively, one can use the <code>sigma2</code>, <code>tau2</code>, <code>rho</code>, <code>gamma2</code>, or <code>phi</code> arguments to specify for which variance/correlation parameter a confidence interval should be obtained. Only one of these arguments can be used at a time. A single integer is used to specify the number of the parameter. The function then provides a profile likelihood confidence interval for the specified parameter. It is a good idea to examine the corresponding profile likelihood plot (via the <code><a href='profile.rma.uni.html'>profile.rma.mv</a></code> function) to make sure that the bounds obtained are sensible.</p>
 <p>The methods used to find a confidence interval for a variance/correlation component are iterative and require the use of the <code><a href='https://rdrr.io/r/stats/uniroot.html'>uniroot</a></code> function. By default, the desired accuracy (<code>tol</code>) is set equal to <code>.Machine$double.eps^0.25</code> and the maximum number of iterations (<code>maxiter</code>) to <code>1000</code>. These values can be adjusted with <code>control=list(tol=value, maxiter=value)</code>, but the defaults should be adequate for most purposes. If <code>verbose=TRUE</code>, output is generated on the progress of the iterative algorithm. This is especially useful when model fitting is slow, in which case finding the confidence interval bounds can also take considerable amounts of time.</p>
 <p>When using the <code><a href='https://rdrr.io/r/stats/uniroot.html'>uniroot</a></code> function, one must also set appropriate end points of the interval to be searched for the confidence interval bounds. The function tries to set some sensible defaults for the end points, but it may happen that the function is only able to determine that a bound is below/above a certain limit (this is indicated in the output accordingly with <code>&lt;</code> or <code>&gt;</code> signs). It can also happen that the model cannot be fitted or does not converge especially at the extremes of the interval to be searched. This will result in missing (<code>NA</code>) bounds and corresponding warnings. It may then be necessary to adjust the end points manually (see &#8216;Note&#8217;).</p>
 <p>Finally, it is also possible that the lower and upper confidence interval bounds for a variance component both fall below zero. Since both bounds then fall outside of the parameter space, the confidence interval then consists of the null/empty set. Alternatively, one could interpret this as a CI with bounds \([0,0]\) or as indicating &#8216;highly/overly homogeneous&#8217; data.</p>
@@ -246,6 +246,9 @@
 <p>When computing a confidence interval for \(\tau^2\) for objects of class <code>"rma.uni"</code>, the end points of the interval to be searched for the confidence interval bounds are \([0,100]\). The upper bound should be large enough for most cases, but can be adjusted with <code>control=list(tau2.max=value)</code>. One can also adjust the lower end point with <code>control=list(tau2.min=value)</code> (the default is to take that value from the object, which is 0 by default). You should only play around with this value if you know what you are doing.</p>
 <p>For objects of class <code>"rma.mv"</code>, the function provides confidence intervals for the variance/correlation parameters in the model. For variance components, the lower end point of the interval to be searched is set to 0 and the upper end point to the larger of 10 and 100 times the value of the component. For correlations, the function tries to set the lower end point to a sensible default depending on the type of variance structure chosen, while the upper end point is set to 1. One can adjust the lower and/or upper end points with <code>control=list(vc.min=value, vc.max=value)</code>. Also, the function tries to adjust the lower/upper end points when the model does not converge at these extremes (the end points are then moved closer to the estimated value of the component). The total number of tries for setting/adjusting the end points is determined via <code>control=list(eptries=&lt;value&gt;)</code>, with the default being 10 tries.</p>
 <p>The Q-profile and generalized Q-statistic methods are both exact under the assumptions of the random- and mixed-effects models (i.e., normally distributed observed and true effect sizes or outcomes and known sampling variances). In practice, these assumptions are usually only approximately true, turning confidence intervals for \(\tau^2\) also into approximations. Profile likelihood confidence intervals are not exact by construction and rely on the asymptotic behavior of the likelihood ratio statistic, so they may be inaccurate in small samples.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Wolfgang Viechtbauer <a href='mailto:wvb@metafor-project.org'>wvb@metafor-project.org</a> <a href='http://www.metafor-project.org'>http://www.metafor-project.org</a></p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Hartung, J., &amp; Knapp, G. (2005). On confidence intervals for the among-group variance in the one-way random effects model with unequal error variances. <em>Journal of Statistical Planning and Inference</em>, <b>127</b>(1-2), 157--177. <a href='https://doi.org/10.1016/j.jspi.2003.09.032'>https://doi.org/10.1016/j.jspi.2003.09.032</a></p>
@@ -262,10 +265,11 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### meta-analysis of the log risk ratios using a random-effects model</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>)
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"RR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>)</span>
 
 <span class='co'>### confidence interval for the total amount of heterogeneity</span>
-<span class='fu'>confint</span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; 
+<span class='fu'>confint</span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;        estimate   ci.lb   ci.ub 
 #&gt; tau^2    0.3132  0.1197  1.1115 
 #&gt; tau      0.5597  0.3460  1.0543 
@@ -273,11 +277,12 @@
 #&gt; H^2     12.8558  5.5303 43.0680 
 #&gt; </div><div class='input'>
 <span class='co'>### mixed-effects model with absolute latitude in the model</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>,
-           <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>ablat</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>)
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"RR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>,
+           mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>ablat</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>)</span>
 
 <span class='co'>### confidence interval for the residual amount of heterogeneity</span>
-<span class='fu'>confint</span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; 
+<span class='fu'>confint</span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;        estimate   ci.lb   ci.ub 
 #&gt; tau^2    0.0764  0.0167  0.7849 
 #&gt; tau      0.2763  0.1292  0.8859 
@@ -285,38 +290,54 @@
 #&gt; H^2      3.1639  1.4729 23.2428 
 #&gt; </div><div class='input'>
 <span class='co'>### multilevel random-effects model</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>random</span> <span class='kw'>=</span> ~ <span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>district</span>/<span class='no'>school</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.konstantopoulos2011</span>)
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, random <span class='op'>=</span> <span class='op'>~</span> <span class='fl'>1</span> <span class='op'>|</span> <span class='va'>district</span><span class='op'>/</span><span class='va'>school</span>, data<span class='op'>=</span><span class='va'>dat.konstantopoulos2011</span><span class='op'>)</span>
 
 <span class='co'>### profile plots and confidence intervals for the variance components</span>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span>(<span class='kw'>mfrow</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>,<span class='fl'>1</span>))
-<span class='fu'><a href='https://rdrr.io/r/stats/profile.html'>profile</a></span>(<span class='no'>res</span>, <span class='kw'>sigma2</span><span class='kw'>=</span><span class='fl'>1</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span>(<span class='kw'>h</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/stats/logLik.html'>logLik</a></span>(<span class='no'>res</span>) - <span class='fu'><a href='https://rdrr.io/r/stats/Chisquare.html'>qchisq</a></span>(<span class='fl'>.95</span>, <span class='kw'>df</span><span class='kw'>=</span><span class='fl'>1</span>)/<span class='fl'>2</span>, <span class='kw'>lty</span><span class='kw'>=</span><span class='st'>"dotted"</span>)
-<span class='no'>sav</span> <span class='kw'>&lt;-</span> <span class='fu'>confint</span>(<span class='no'>res</span>, <span class='kw'>sigma2</span><span class='kw'>=</span><span class='fl'>1</span>)
-<span class='no'>sav</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span>(<span class='kw'>v</span><span class='kw'>=</span><span class='no'>sav</span>$<span class='no'>random</span>[<span class='fl'>1</span>,<span class='fl'>2</span>:<span class='fl'>3</span>], <span class='kw'>lty</span><span class='kw'>=</span><span class='st'>"dotted"</span>)
-<span class='fu'><a href='https://rdrr.io/r/stats/profile.html'>profile</a></span>(<span class='no'>res</span>, <span class='kw'>sigma2</span><span class='kw'>=</span><span class='fl'>2</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span>(<span class='kw'>h</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/stats/logLik.html'>logLik</a></span>(<span class='no'>res</span>) - <span class='fu'><a href='https://rdrr.io/r/stats/Chisquare.html'>qchisq</a></span>(<span class='fl'>.95</span>, <span class='kw'>df</span><span class='kw'>=</span><span class='fl'>1</span>)/<span class='fl'>2</span>, <span class='kw'>lty</span><span class='kw'>=</span><span class='st'>"dotted"</span>)
-<span class='no'>sav</span> <span class='kw'>&lt;-</span> <span class='fu'>confint</span>(<span class='no'>res</span>, <span class='kw'>sigma2</span><span class='kw'>=</span><span class='fl'>2</span>)
-<span class='no'>sav</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span>(<span class='kw'>v</span><span class='kw'>=</span><span class='no'>sav</span>$<span class='no'>random</span>[<span class='fl'>1</span>,<span class='fl'>2</span>:<span class='fl'>3</span>], <span class='kw'>lty</span><span class='kw'>=</span><span class='st'>"dotted"</span>)}
-
+<span class='co'># \dontrun{</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mfrow<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>,<span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/profile.html'>profile</a></span><span class='op'>(</span><span class='va'>res</span>, sigma2<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span>h<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/stats/logLik.html'>logLik</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span> <span class='op'>-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Chisquare.html'>qchisq</a></span><span class='op'>(</span><span class='fl'>.95</span>, df<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span><span class='op'>/</span><span class='fl'>2</span>, lty<span class='op'>=</span><span class='st'>"dotted"</span><span class='op'>)</span>
+<span class='va'>sav</span> <span class='op'>&lt;-</span> <span class='fu'>confint</span><span class='op'>(</span><span class='va'>res</span>, sigma2<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
+<span class='va'>sav</span>
+</div><div class='output co'>#&gt; 
+#&gt;           estimate  ci.lb  ci.ub 
+#&gt; sigma^2.1   0.0651 0.0222 0.2072 
+#&gt; sigma.1     0.2551 0.1491 0.4552 
+#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span>v<span class='op'>=</span><span class='va'>sav</span><span class='op'>$</span><span class='va'>random</span><span class='op'>[</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span>, lty<span class='op'>=</span><span class='st'>"dotted"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/profile.html'>profile</a></span><span class='op'>(</span><span class='va'>res</span>, sigma2<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span>h<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/stats/logLik.html'>logLik</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span> <span class='op'>-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Chisquare.html'>qchisq</a></span><span class='op'>(</span><span class='fl'>.95</span>, df<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span><span class='op'>/</span><span class='fl'>2</span>, lty<span class='op'>=</span><span class='st'>"dotted"</span><span class='op'>)</span>
+</div><div class='input'><span class='va'>sav</span> <span class='op'>&lt;-</span> <span class='fu'>confint</span><span class='op'>(</span><span class='va'>res</span>, sigma2<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+<span class='va'>sav</span>
+</div><div class='output co'>#&gt; 
+#&gt;           estimate  ci.lb  ci.ub 
+#&gt; sigma^2.2   0.0327 0.0163 0.0628 
+#&gt; sigma.2     0.1809 0.1276 0.2507 
+#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span>v<span class='op'>=</span><span class='va'>sav</span><span class='op'>$</span><span class='va'>random</span><span class='op'>[</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span>, lty<span class='op'>=</span><span class='st'>"dotted"</span><span class='op'>)</span><span class='co'># }</span>
+</div><div class='img'><img src='confint.rma-1.png' alt='' width='768' height='614' /></div><div class='input'>
 <span class='co'>### multivariate parameterization of the model</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>random</span> <span class='kw'>=</span> ~ <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>school</span>) <span class='kw'>|</span> <span class='no'>district</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.konstantopoulos2011</span>)
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, random <span class='op'>=</span> <span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>school</span><span class='op'>)</span> <span class='op'>|</span> <span class='va'>district</span>, data<span class='op'>=</span><span class='va'>dat.konstantopoulos2011</span><span class='op'>)</span>
 
 <span class='co'>### profile plots and confidence intervals for the variance component and correlation</span>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span>(<span class='kw'>mfrow</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>,<span class='fl'>1</span>))
-<span class='fu'><a href='https://rdrr.io/r/stats/profile.html'>profile</a></span>(<span class='no'>res</span>, <span class='kw'>tau2</span><span class='kw'>=</span><span class='fl'>1</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span>(<span class='kw'>h</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/stats/logLik.html'>logLik</a></span>(<span class='no'>res</span>) - <span class='fu'><a href='https://rdrr.io/r/stats/Chisquare.html'>qchisq</a></span>(<span class='fl'>.95</span>, <span class='kw'>df</span><span class='kw'>=</span><span class='fl'>1</span>)/<span class='fl'>2</span>, <span class='kw'>lty</span><span class='kw'>=</span><span class='st'>"dotted"</span>)
-<span class='no'>sav</span> <span class='kw'>&lt;-</span> <span class='fu'>confint</span>(<span class='no'>res</span>, <span class='kw'>tau2</span><span class='kw'>=</span><span class='fl'>1</span>)
-<span class='no'>sav</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span>(<span class='kw'>v</span><span class='kw'>=</span><span class='no'>sav</span>$<span class='no'>random</span>[<span class='fl'>1</span>,<span class='fl'>2</span>:<span class='fl'>3</span>], <span class='kw'>lty</span><span class='kw'>=</span><span class='st'>"dotted"</span>)
-<span class='fu'><a href='https://rdrr.io/r/stats/profile.html'>profile</a></span>(<span class='no'>res</span>, <span class='kw'>rho</span><span class='kw'>=</span><span class='fl'>1</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span>(<span class='kw'>h</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/stats/logLik.html'>logLik</a></span>(<span class='no'>res</span>) - <span class='fu'><a href='https://rdrr.io/r/stats/Chisquare.html'>qchisq</a></span>(<span class='fl'>.95</span>, <span class='kw'>df</span><span class='kw'>=</span><span class='fl'>1</span>)/<span class='fl'>2</span>, <span class='kw'>lty</span><span class='kw'>=</span><span class='st'>"dotted"</span>)
-<span class='no'>sav</span> <span class='kw'>&lt;-</span> <span class='fu'>confint</span>(<span class='no'>res</span>, <span class='kw'>rho</span><span class='kw'>=</span><span class='fl'>1</span>)
-<span class='no'>sav</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span>(<span class='kw'>v</span><span class='kw'>=</span><span class='no'>sav</span>$<span class='no'>random</span>[<span class='fl'>1</span>,<span class='fl'>2</span>:<span class='fl'>3</span>], <span class='kw'>lty</span><span class='kw'>=</span><span class='st'>"dotted"</span>)}</div></pre>
+<span class='co'># \dontrun{</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mfrow<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>,<span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/profile.html'>profile</a></span><span class='op'>(</span><span class='va'>res</span>, tau2<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span>h<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/stats/logLik.html'>logLik</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span> <span class='op'>-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Chisquare.html'>qchisq</a></span><span class='op'>(</span><span class='fl'>.95</span>, df<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span><span class='op'>/</span><span class='fl'>2</span>, lty<span class='op'>=</span><span class='st'>"dotted"</span><span class='op'>)</span>
+<span class='va'>sav</span> <span class='op'>&lt;-</span> <span class='fu'>confint</span><span class='op'>(</span><span class='va'>res</span>, tau2<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
+<span class='va'>sav</span>
+</div><div class='output co'>#&gt; 
+#&gt;       estimate  ci.lb  ci.ub 
+#&gt; tau^2   0.0978 0.0528 0.2398 
+#&gt; tau     0.3127 0.2298 0.4897 
+#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span>v<span class='op'>=</span><span class='va'>sav</span><span class='op'>$</span><span class='va'>random</span><span class='op'>[</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span>, lty<span class='op'>=</span><span class='st'>"dotted"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/profile.html'>profile</a></span><span class='op'>(</span><span class='va'>res</span>, rho<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
+</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span>h<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/stats/logLik.html'>logLik</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span> <span class='op'>-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Chisquare.html'>qchisq</a></span><span class='op'>(</span><span class='fl'>.95</span>, df<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span><span class='op'>/</span><span class='fl'>2</span>, lty<span class='op'>=</span><span class='st'>"dotted"</span><span class='op'>)</span>
+</div><div class='input'><span class='va'>sav</span> <span class='op'>&lt;-</span> <span class='fu'>confint</span><span class='op'>(</span><span class='va'>res</span>, rho<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
+<span class='va'>sav</span>
+</div><div class='output co'>#&gt; 
+#&gt;     estimate  ci.lb  ci.ub 
+#&gt; rho   0.6653 0.3282 0.8855 
+#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span>v<span class='op'>=</span><span class='va'>sav</span><span class='op'>$</span><span class='va'>random</span><span class='op'>[</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span>, lty<span class='op'>=</span><span class='st'>"dotted"</span><span class='op'>)</span><span class='co'># }</span>
+</div><div class='img'><img src='confint.rma-2.png' alt='' width='768' height='614' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -332,7 +353,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-47</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-48</span>
       </span>
     </div>
 
@@ -136,11 +136,11 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for escalc</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span>(<span class='no'>x</span>,<span class='st'>"digits"</span>), <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span>, digits<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span><span class='op'>(</span><span class='va'>x</span>,<span class='st'>"digits"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for escalc</span>
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>object</span>, <span class='kw'>out.names</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"sei"</span>,<span class='st'>"zi"</span>,<span class='st'>"pval"</span>,<span class='st'>"ci.lb"</span>,<span class='st'>"ci.ub"</span>), <span class='no'>var.names</span>,
-        <span class='kw'>H0</span><span class='kw'>=</span><span class='fl'>0</span>, <span class='kw'>append</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>replace</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>level</span><span class='kw'>=</span><span class='fl'>95</span>, <span class='no'>clim</span>, <span class='no'>digits</span>, <span class='no'>transf</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>object</span>, out.names<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"sei"</span>,<span class='st'>"zi"</span>,<span class='st'>"pval"</span>,<span class='st'>"ci.lb"</span>,<span class='st'>"ci.ub"</span><span class='op'>)</span>, <span class='va'>var.names</span>,
+        H0<span class='op'>=</span><span class='fl'>0</span>, append<span class='op'>=</span><span class='cn'>TRUE</span>, replace<span class='op'>=</span><span class='cn'>TRUE</span>, level<span class='op'>=</span><span class='fl'>95</span>, <span class='va'>clim</span>, <span class='va'>digits</span>, <span class='va'>transf</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -202,7 +202,7 @@
 <dt>yi</dt><dd><p>observed effect sizes or outcomes (transformed if <code>transf</code> is specified).</p></dd>
    <dt>vi</dt><dd><p>corresponding sampling variances.</p></dd>
    <dt>sei</dt><dd><p>correponding standard errors.</p></dd>
-   <dt>zi</dt><dd><p>test statistics for testing \(H_0: \theta_i = \mbox{H0}\) (i.e., <code>(yi-H0)/sei</code>).</p></dd>
+   <dt>zi</dt><dd><p>test statistics for testing \(\mbox{H}_0{:}\; \theta_i = \mbox{H0}\) (i.e., <code>(yi-H0)/sei</code>).</p></dd>
    <dt>pval</dt><dd><p>corresponding p-values.</p></dd>
    <dt>ci.lb</dt><dd><p>lower confidence interval bounds (transformed if <code>transf</code> is specified).</p></dd>
    <dt>ci.ub</dt><dd><p>upper confidence interval bounds (transformed if <code>transf</code> is specified).</p></dd>
@@ -218,6 +218,9 @@
     <p>If some transformation function has been specified for the <code>transf</code> argument, then <code>yi</code>, <code>ci.lb</code>, and <code>ci.ub</code> will be transformed accordingly. However, <code>vi</code> and <code>sei</code> then still reflect the sampling variances and standard errors of the untransformed values.</p>
 <p>The <code>summary.escalc</code> function computes <code>level</code> % Wald-type confidence intervals, which may or may not be the most accurate method for computing confidence intervals for the chosen outcome or effect size measure.</p>
 <p>If the outcome measure used is bounded (e.g., correlations are bounded between <code>-1</code> and <code>1</code>, proportions are bounded between <code>0</code> and <code>1</code>), one can use the <code>clim</code> argument to enforce those limits (confidence intervals cannot exceed those bounds then).</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Wolfgang Viechtbauer <a href='mailto:wvb@metafor-project.org'>wvb@metafor-project.org</a> <a href='http://www.metafor-project.org'>http://www.metafor-project.org</a></p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='https://doi.org/10.18637/jss.v036.i03'>https://doi.org/10.18637/jss.v036.i03</a></p>
@@ -227,8 +230,9 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### calculate log risk ratios and corresponding sampling variances</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>)
-<span class='no'>dat</span></div><div class='output co'>#&gt;    trial               author year tpos  tneg cpos  cneg ablat      alloc 
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"RR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>)</span>
+<span class='va'>dat</span>
+</div><div class='output co'>#&gt;    trial               author year tpos  tneg cpos  cneg ablat      alloc 
 #&gt; 1      1              Aronson 1948    4   119   11   128    44     random 
 #&gt; 2      2     Ferguson &amp; Simes 1949    6   300   29   274    55     random 
 #&gt; 3      3      Rosenthal et al 1960    3   228   11   209    42     random 
@@ -257,7 +261,8 @@
 #&gt; 12  0.4459 0.5325 
 #&gt; 13 -0.0173 0.0714 </div><div class='input'>
 <span class='co'>### apply summary function</span>
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>dat</span>)</div><div class='output co'>#&gt;    trial               author year tpos  tneg cpos  cneg ablat      alloc 
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;    trial               author year tpos  tneg cpos  cneg ablat      alloc 
 #&gt; 1      1              Aronson 1948    4   119   11   128    44     random 
 #&gt; 2      2     Ferguson &amp; Simes 1949    6   300   29   274    55     random 
 #&gt; 3      3      Rosenthal et al 1960    3   228   11   209    42     random 
@@ -284,7 +289,8 @@
 #&gt; 10 -1.3713 0.0730 0.2702  -5.0747 &lt;.0001 -1.9010 -0.8417 
 #&gt; 11 -0.3394 0.0124 0.1114  -3.0460 0.0023 -0.5577 -0.1210 
 #&gt; 12  0.4459 0.5325 0.7297   0.6111 0.5412 -0.9843  1.8762 
-#&gt; 13 -0.0173 0.0714 0.2672  -0.0648 0.9483 -0.5410  0.5064 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>dat</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>)</div><div class='output co'>#&gt;    trial               author year tpos  tneg cpos  cneg ablat      alloc 
+#&gt; 13 -0.0173 0.0714 0.2672  -0.0648 0.9483 -0.5410  0.5064 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>dat</span>, transf<span class='op'>=</span><span class='va'>exp</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;    trial               author year tpos  tneg cpos  cneg ablat      alloc 
 #&gt; 1      1              Aronson 1948    4   119   11   128    44     random 
 #&gt; 2      2     Ferguson &amp; Simes 1949    6   300   29   274    55     random 
 #&gt; 3      3      Rosenthal et al 1960    3   228   11   209    42     random 
@@ -327,7 +333,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

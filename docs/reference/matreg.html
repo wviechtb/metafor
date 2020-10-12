@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-47</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-48</span>
       </span>
     </div>
 
@@ -135,7 +135,7 @@
     <p>Function to fit a regression model based on a correlation matrix. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
     </div>
 
-    <pre class="usage"><span class='fu'>matreg</span>(<span class='no'>y</span>, <span class='no'>x</span>, <span class='no'>R</span>, <span class='no'>n</span>, <span class='no'>V</span>, <span class='kw'>ztor</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>nearPD</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>level</span><span class='kw'>=</span><span class='fl'>95</span>, <span class='no'>digits</span>)</pre>
+    <pre class="usage"><span class='fu'>matreg</span><span class='op'>(</span><span class='va'>y</span>, <span class='va'>x</span>, <span class='va'>R</span>, <span class='va'>n</span>, <span class='va'>V</span>, ztor<span class='op'>=</span><span class='cn'>FALSE</span>, nearPD<span class='op'>=</span><span class='cn'>FALSE</span>, level<span class='op'>=</span><span class='fl'>95</span>, <span class='va'>digits</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -198,6 +198,9 @@
 
     <p>Only the lower triangular part of <code>R</code> is used in the computations.</p>
 <p>If \(R_{x,x}\) is not invertible, an error will be issued. In this case, one can set argument <code>nearPD=TRUE</code>, in which case the <code><a href='https://rdrr.io/pkg/Matrix/man/nearPD.html'>nearPD</a></code> function from the <code>Matrix</code> package will be used to find the nearest positive semi-definite matrix, which should be invertible. The results should be treated with caution when this is done.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Wolfgang Viechtbauer <a href='mailto:wvb@metafor-project.org'>wvb@metafor-project.org</a> <a href='http://www.metafor-project.org'>http://www.metafor-project.org</a></p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Becker, B. J. (1992). Using results from replicated studies to estimate linear models. <em>Journal of Educational Statistics</em>, <b>17</b>(4), 341--362. <a href='https://doi.org/10.3102/10769986017004341'>https://doi.org/10.3102/10769986017004341</a></p>
@@ -208,19 +211,21 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat'</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.craft2003</span>
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.craft2003</span>
 
 <span class='co'>### construct dataset and var-cov matrix of the correlations</span>
-<span class='no'>tmp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rcalc.html'>rcalc</a></span>(<span class='no'>ri</span> ~ <span class='no'>var1</span> + <span class='no'>var2</span> <span class='kw'>|</span> <span class='no'>study</span>, <span class='kw'>ni</span><span class='kw'>=</span><span class='no'>ni</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
-<span class='no'>V</span> <span class='kw'>&lt;-</span> <span class='no'>tmp</span>$<span class='no'>V</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>tmp</span>$<span class='no'>dat</span>
+<span class='va'>tmp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rcalc.html'>rcalc</a></span><span class='op'>(</span><span class='va'>ri</span> <span class='op'>~</span> <span class='va'>var1</span> <span class='op'>+</span> <span class='va'>var2</span> <span class='op'>|</span> <span class='va'>study</span>, ni<span class='op'>=</span><span class='va'>ni</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
+<span class='va'>V</span> <span class='op'>&lt;-</span> <span class='va'>tmp</span><span class='op'>$</span><span class='va'>V</span>
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>tmp</span><span class='op'>$</span><span class='va'>dat</span>
 
 <span class='co'>### turn var1.var2 into a factor with the desired order of levels</span>
-<span class='no'>dat</span>$<span class='no'>var1.var2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>dat</span>$<span class='no'>var1.var2</span>,
-   <span class='kw'>levels</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"acog.perf"</span>, <span class='st'>"asom.perf"</span>, <span class='st'>"conf.perf"</span>, <span class='st'>"acog.asom"</span>, <span class='st'>"acog.conf"</span>, <span class='st'>"asom.conf"</span>))
+<span class='va'>dat</span><span class='op'>$</span><span class='va'>var1.var2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>var1.var2</span>,
+   levels<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"acog.perf"</span>, <span class='st'>"asom.perf"</span>, <span class='st'>"conf.perf"</span>, <span class='st'>"acog.asom"</span>, <span class='st'>"acog.conf"</span>, <span class='st'>"asom.conf"</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'>### multivariate random-effects model</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span>(<span class='no'>yi</span>, <span class='no'>V</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>var1.var2</span> - <span class='fl'>1</span>, <span class='kw'>random</span> <span class='kw'>=</span> ~ <span class='no'>var1.var2</span> <span class='kw'>|</span> <span class='no'>study</span>, <span class='kw'>struct</span><span class='kw'>=</span><span class='st'>"UN"</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Rows with NAs omitted from model fitting.</span></div><div class='input'><span class='no'>res</span></div><div class='output co'>#&gt; 
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>V</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>var1.var2</span> <span class='op'>-</span> <span class='fl'>1</span>, random <span class='op'>=</span> <span class='op'>~</span> <span class='va'>var1.var2</span> <span class='op'>|</span> <span class='va'>study</span>, struct<span class='op'>=</span><span class='st'>"UN"</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Rows with NAs omitted from model fitting.</span></div><div class='input'><span class='va'>res</span>
+</div><div class='output co'>#&gt; 
 #&gt; Multivariate Meta-Analysis Model (k = 51; method: REML)
 #&gt; 
 #&gt; Variance Components:
@@ -271,16 +276,18 @@
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### restructure estimated mean correlations into a 4x4 matrix</span>
-<span class='no'>R</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>NA</span>, <span class='kw'>nrow</span><span class='kw'>=</span><span class='fl'>4</span>, <span class='kw'>ncol</span><span class='kw'>=</span><span class='fl'>4</span>)
-<span class='no'>R</span>[<span class='fu'><a href='https://rdrr.io/r/base/lower.tri.html'>lower.tri</a></span>(<span class='no'>R</span>)] <span class='kw'>&lt;-</span> <span class='fu'><a href='coef.rma.html'>coef</a></span>(<span class='no'>res</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span>(<span class='no'>R</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>R</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"perf"</span>, <span class='st'>"acog"</span>, <span class='st'>"asom"</span>, <span class='st'>"conf"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='no'>R</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>3</span>)</div><div class='output co'>#&gt;        perf   acog   asom conf
+<span class='va'>R</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='cn'>NA</span>, nrow<span class='op'>=</span><span class='fl'>4</span>, ncol<span class='op'>=</span><span class='fl'>4</span><span class='op'>)</span>
+<span class='va'>R</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/lower.tri.html'>lower.tri</a></span><span class='op'>(</span><span class='va'>R</span><span class='op'>)</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'><a href='coef.rma.html'>coef</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span><span class='op'>(</span><span class='va'>R</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>R</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"perf"</span>, <span class='st'>"acog"</span>, <span class='st'>"asom"</span>, <span class='st'>"conf"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='va'>R</span>, digits<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;        perf   acog   asom conf
 #&gt; perf     NA     NA     NA   NA
 #&gt; acog -0.060     NA     NA   NA
 #&gt; asom -0.142  0.567     NA   NA
 #&gt; conf  0.317 -0.489 -0.475   NA</div><div class='input'>
 <span class='co'>### check that order in vcov(res) corresponds to order in R</span>
-<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='fu'><a href='vcov.rma.html'>vcov</a></span>(<span class='no'>res</span>), <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>4</span>)</div><div class='output co'>#&gt;                    var1.var2acog.perf var1.var2asom.perf var1.var2conf.perf
+<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='fu'><a href='vcov.rma.html'>vcov</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>, digits<span class='op'>=</span><span class='fl'>4</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;                    var1.var2acog.perf var1.var2asom.perf var1.var2conf.perf
 #&gt; var1.var2acog.perf             0.0198             0.0115            -0.0069
 #&gt; var1.var2asom.perf             0.0115             0.0084            -0.0043
 #&gt; var1.var2conf.perf            -0.0069            -0.0043             0.0072
@@ -295,8 +302,9 @@
 #&gt; var1.var2acog.conf            -0.0009             0.0026             0.0011
 #&gt; var1.var2asom.conf            -0.0004             0.0011             0.0026</div><div class='input'>
 <span class='co'>### fit regression model with 'perf' as outcome and 'acog', 'asom', and 'conf' as predictors</span>
-<span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'>matreg</span>(<span class='fl'>1</span>, <span class='fl'>2</span>:<span class='fl'>4</span>, <span class='kw'>R</span><span class='kw'>=</span><span class='no'>R</span>, <span class='kw'>V</span><span class='kw'>=</span><span class='fu'><a href='vcov.rma.html'>vcov</a></span>(<span class='no'>res</span>))
-<span class='no'>fit</span></div><div class='output co'>#&gt; 
+<span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>matreg</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>:</span><span class='fl'>4</span>, R<span class='op'>=</span><span class='va'>R</span>, V<span class='op'>=</span><span class='fu'><a href='vcov.rma.html'>vcov</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>fit</span>
+</div><div class='output co'>#&gt; 
 #&gt;       estimate      se     zval    pval    ci.lb   ci.ub 
 #&gt; acog    0.1482  0.1566   0.9465  0.3439  -0.1587  0.4550      
 #&gt; asom   -0.0536  0.0768  -0.6979  0.4852  -0.2043  0.0970      
@@ -305,20 +313,29 @@
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'># \dontrun{</span>
 <span class='co'>### repeat the above but with r-to-z transformed correlations</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.craft2003</span>
-<span class='no'>tmp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rcalc.html'>rcalc</a></span>(<span class='no'>ri</span> ~ <span class='no'>var1</span> + <span class='no'>var2</span> <span class='kw'>|</span> <span class='no'>study</span>, <span class='kw'>ni</span><span class='kw'>=</span><span class='no'>ni</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>rtoz</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
-<span class='no'>V</span> <span class='kw'>&lt;-</span> <span class='no'>tmp</span>$<span class='no'>V</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>tmp</span>$<span class='no'>dat</span>
-<span class='no'>dat</span>$<span class='no'>var1.var2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>dat</span>$<span class='no'>var1.var2</span>,
-   <span class='kw'>levels</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"acog.perf"</span>, <span class='st'>"asom.perf"</span>, <span class='st'>"conf.perf"</span>, <span class='st'>"acog.asom"</span>, <span class='st'>"acog.conf"</span>, <span class='st'>"asom.conf"</span>))
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span>(<span class='no'>yi</span>, <span class='no'>V</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>var1.var2</span> - <span class='fl'>1</span>, <span class='kw'>random</span> <span class='kw'>=</span> ~ <span class='no'>var1.var2</span> <span class='kw'>|</span> <span class='no'>study</span>, <span class='kw'>struct</span><span class='kw'>=</span><span class='st'>"UN"</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
-<span class='no'>R</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>NA</span>, <span class='kw'>nrow</span><span class='kw'>=</span><span class='fl'>4</span>, <span class='kw'>ncol</span><span class='kw'>=</span><span class='fl'>4</span>)
-<span class='no'>R</span>[<span class='fu'><a href='https://rdrr.io/r/base/lower.tri.html'>lower.tri</a></span>(<span class='no'>R</span>)] <span class='kw'>&lt;-</span> <span class='fu'><a href='coef.rma.html'>coef</a></span>(<span class='no'>res</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span>(<span class='no'>R</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>R</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"perf"</span>, <span class='st'>"acog"</span>, <span class='st'>"asom"</span>, <span class='st'>"conf"</span>)
-<span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'>matreg</span>(<span class='fl'>1</span>, <span class='fl'>2</span>:<span class='fl'>4</span>, <span class='kw'>R</span><span class='kw'>=</span><span class='no'>R</span>, <span class='kw'>V</span><span class='kw'>=</span><span class='fu'><a href='vcov.rma.html'>vcov</a></span>(<span class='no'>res</span>), <span class='kw'>ztor</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
-<span class='no'>fit</span>}</div></pre>
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.craft2003</span>
+<span class='va'>tmp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rcalc.html'>rcalc</a></span><span class='op'>(</span><span class='va'>ri</span> <span class='op'>~</span> <span class='va'>var1</span> <span class='op'>+</span> <span class='va'>var2</span> <span class='op'>|</span> <span class='va'>study</span>, ni<span class='op'>=</span><span class='va'>ni</span>, data<span class='op'>=</span><span class='va'>dat</span>, rtoz<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='va'>V</span> <span class='op'>&lt;-</span> <span class='va'>tmp</span><span class='op'>$</span><span class='va'>V</span>
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>tmp</span><span class='op'>$</span><span class='va'>dat</span>
+<span class='va'>dat</span><span class='op'>$</span><span class='va'>var1.var2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>var1.var2</span>,
+   levels<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"acog.perf"</span>, <span class='st'>"asom.perf"</span>, <span class='st'>"conf.perf"</span>, <span class='st'>"acog.asom"</span>, <span class='st'>"acog.conf"</span>, <span class='st'>"asom.conf"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>V</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>var1.var2</span> <span class='op'>-</span> <span class='fl'>1</span>, random <span class='op'>=</span> <span class='op'>~</span> <span class='va'>var1.var2</span> <span class='op'>|</span> <span class='va'>study</span>, struct<span class='op'>=</span><span class='st'>"UN"</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Rows with NAs omitted from model fitting.</span></div><div class='input'><span class='va'>R</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='cn'>NA</span>, nrow<span class='op'>=</span><span class='fl'>4</span>, ncol<span class='op'>=</span><span class='fl'>4</span><span class='op'>)</span>
+<span class='va'>R</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/lower.tri.html'>lower.tri</a></span><span class='op'>(</span><span class='va'>R</span><span class='op'>)</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'><a href='coef.rma.html'>coef</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span><span class='op'>(</span><span class='va'>R</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>R</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"perf"</span>, <span class='st'>"acog"</span>, <span class='st'>"asom"</span>, <span class='st'>"conf"</span><span class='op'>)</span>
+<span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>matreg</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>:</span><span class='fl'>4</span>, R<span class='op'>=</span><span class='va'>R</span>, V<span class='op'>=</span><span class='fu'><a href='vcov.rma.html'>vcov</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>, ztor<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='va'>fit</span><span class='co'># }</span>
+</div><div class='output co'>#&gt; 
+#&gt;       estimate      se     zval    pval    ci.lb   ci.ub 
+#&gt; acog    0.1362  0.1697   0.8023  0.4224  -0.1965  0.4688      
+#&gt; asom   -0.0678  0.0761  -0.8900  0.3735  -0.2170  0.0814      
+#&gt; conf    0.3666  0.0934   3.9248  0.0001   0.1835  0.5496  *** 
+#&gt; 
+#&gt; ---
+#&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -334,7 +351,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

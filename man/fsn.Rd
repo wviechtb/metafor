@@ -13,7 +13,7 @@ fsn(yi, vi, sei, data, type="Rosenthal", alpha=.05,
    \item{vi}{vector with the corresponding sampling variances.}
    \item{sei}{vector with the corresponding standard errors (note: only one of the two, \code{vi} or \code{sei}, needs to be specified).}
    \item{data}{optional data frame containing the variables given to the arguments above.}
-   \item{type}{character string indicating the method to use for the calculation of the fail-safe N. Possible options are \code{"Rosenthal"}, \code{"Orwin"}, or \code{"Rosenberg"}. See \sQuote{Details}.}
+   \item{type}{character string indicating the method to use for the calculation of the fail-safe N. Possible options are \code{"Rosenthal"} (the default), \code{"Orwin"}, or \code{"Rosenberg"}. See \sQuote{Details}.}
    \item{alpha}{target alpha level to use for the Rosenthal and Rosenberg methods (the default is .05).}
    \item{target}{target average effect size to use for the Orwin method. If undefined, then the target average effect size will be equal to the observed average effect size divided by 2.}
    \item{weighted}{logical indicating whether Orwin's method should be based on unweighted (the default) or weighted averages.}
@@ -26,9 +26,11 @@ fsn(yi, vi, sei, data, type="Rosenthal", alpha=.05,
 
    The Rosenthal method (sometimes called a \sQuote{file drawer analysis}) calculates the number of studies averaging null results that would have to be added to the given set of observed effect sizes or outcomes to reduce the combined significance level (p-value) to a target alpha level (e.g., .05). The calculation is based on Stouffer's method to combine p-values and is described in Rosenthal (1979).
 
-   The Orwin method calculates the number of studies averaging null results that would have to be added to the given set of observed effect sizes or outcomes to reduce the (unweighted or weighted) average effect size to a target effect size. The method is described in Orwin (1983). If \code{weighted=FALSE} (the default), the method does not require (or makes use) of \code{vi} or \code{sei}, so these arguments are not relevant for this method.
+   The Orwin method calculates the number of studies averaging null results that would have to be added to the given set of observed effect sizes or outcomes to reduce the (unweighted or weighted) average effect size to a target effect size (as specified via the \code{target} argument). The method is described in Orwin (1983). If \code{weighted=FALSE} (the default), the method does not require (or makes use) of \code{vi} (or \code{sei}), so these arguments are then not relevant for this method. If the \code{target} argument is not specified, then the target average effect size will be equal to the observed average effect size divided by 2 (which is quite arbitrary). One should really set \code{target} to a value that reflects an effect size one would consider practically irrelevant.
 
-   The Rosenberg method calculates the number of studies averaging null results that would have to be added to the given set of observed effect sizes or outcomes to reduce significance level (p-value) of the (weighted) average effect size (based on a fixed-effects model) to a target alpha level (e.g., .05). The method is described in Rosenberg (2005).
+   The Rosenberg method calculates the number of studies averaging null results that would have to be added to the given set of observed effect sizes or outcomes to reduce the significance level (i.e., p-value) of the (weighted) average effect size (based on a fixed-effects model) to a target alpha level (e.g., .05). The method is described in Rosenberg (2005).
+
+   If the combined/observed significance level is above the target alpha level (for \code{type = "Rosenthal"} or \code{type = "Rosenberg)"}) or if the observed average effect size is below the target average effect size (for \code{type = "Orwin"}), then the fail-sage N value will be 0.
 }
 \value{
    An object of class \code{"fsn"}. The object is a list containing the following components:

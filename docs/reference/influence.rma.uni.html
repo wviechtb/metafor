@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-47</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-48</span>
       </span>
     </div>
 
@@ -136,17 +136,17 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for rma.uni</span>
-<span class='fu'>influence</span>(<span class='no'>model</span>, <span class='no'>digits</span>, <span class='kw'>progbar</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'>influence</span><span class='op'>(</span><span class='va'>model</span>, <span class='va'>digits</span>, progbar<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for infl.rma.uni</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='no'>x</span>$<span class='no'>digits</span>, <span class='kw'>infonly</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span>, digits<span class='op'>=</span><span class='va'>x</span><span class='op'>$</span><span class='va'>digits</span>, infonly<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for rma.uni</span>
-<span class='fu'>cooks.distance</span>(<span class='no'>model</span>, <span class='kw'>progbar</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'>cooks.distance</span><span class='op'>(</span><span class='va'>model</span>, progbar<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 <span class='co'># S3 method for rma.uni</span>
-<span class='fu'>dfbetas</span>(<span class='no'>model</span>, <span class='kw'>progbar</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'>dfbetas</span><span class='op'>(</span><span class='va'>model</span>, progbar<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 <span class='co'># S3 method for rma.uni</span>
-<span class='fu'>hatvalues</span>(<span class='no'>model</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"diagonal"</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>hatvalues</span><span class='op'>(</span><span class='va'>model</span>, type<span class='op'>=</span><span class='st'>"diagonal"</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -196,7 +196,7 @@
 <p>The DFFITS value essentially indicates how many standard deviations the predicted (average) effect for the \(i\)th study changes after excluding the \(i\)th study from the model fitting.</p>
 <p>Cook's distance can be interpreted as the Mahalanobis distance between the entire set of predicted values once with the \(i\)th study included and once with the \(i\)th study excluded from the model fitting.</p>
 <p>The covariance ratio is defined as the determinant of the variance-covariance matrix of the parameter estimates based on the dataset with the \(i\)th study removed divided by the determinant of the variance-covariance matrix of the parameter estimates based on the complete dataset. A value below 1 therefore indicates that removal of the \(i\)th study yields more precise estimates of the model coefficients.</p>
-<p>The leave-one-out amount of (residual) heterogeneity is the estimated value of \(\tau^2\) based on the dataset with the \(i\)th study removed. Note that this is always equal to <code>0</code> for fixed-effects models.</p>
+<p>The leave-one-out amount of (residual) heterogeneity is the estimated value of \(\tau^2\) based on the dataset with the \(i\)th study removed. This is always equal to <code>0</code> for fixed-effects models.</p>
 <p>Similarly, the leave-one-out test statistic of the test for (residual) heterogeneity is the value of the test statistic of the test for (residual) heterogeneity calculated based on the dataset with the \(i\)th study removed.</p>
 <p>Finally, the DFBETAS value(s) essentially indicate(s) how many standard deviations the estimated coefficient(s) change(s) after excluding the \(i\)th study from the model fitting.</p>
 <p>A study may be considered to be &#8216;influential&#8217; if at least one of the following is true:</p><ul>
@@ -219,6 +219,9 @@
     <p>Right now, leave-one-out diagnostics are calculated by refitting the model \(k\) times. Depending on how large \(k\) is, it may take a few moments to finish the calculations. There are shortcuts for calculating at least some of these values without refitting the model each time, but these are currently not implemented (and may not exist for all of the leave-one-out diagnostics calculated by the function).</p>
 <p>It may not be possible to fit the model after deletion of the \(i\)th study from the dataset. This will result in <code>NA</code> values for that study.</p>
 <p>Certain relationships between the leave-one-out diagnostics and the (internally or externally) standardized residuals (Belsley, Kuh, &amp; Welsch, 1980; Cook &amp; Weisberg, 1982) no longer hold for the meta-analytic models. Maybe there are other relationships. These remain to be determined.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Wolfgang Viechtbauer <a href='mailto:wvb@metafor-project.org'>wvb@metafor-project.org</a> <a href='http://www.metafor-project.org'>http://www.metafor-project.org</a></p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Belsley, D. A., Kuh, E., &amp; Welsch, R. E. (1980). <em>Regression diagnostics</em>. New York: Wiley.</p>
@@ -228,16 +231,17 @@
 <p>Viechtbauer, W., &amp; Cheung, M. W.-L. (2010). Outlier and influence diagnostics for meta-analysis. <em>Research Synthesis Methods</em>, <b>1</b>(2), 112--125. <a href='https://doi.org/10.1002/jrsm.11'>https://doi.org/10.1002/jrsm.11</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='plot.infl.rma.uni.html'>plot.infl.rma.uni</a></code>, <code><a href='residuals.rma.html'>rstudent.rma.uni</a></code>, <code><a href='weights.rma.html'>weights.rma.uni</a></code></p></div>
+    <div class='dont-index'><p><code><a href='plot.infl.rma.uni.html'>plot.infl.rma.uni</a></code>, <code><a href='residuals.rma.html'>rstudent.rma.uni</a></code>, <code><a href='weights.rma.uni.html'>weights.rma.uni</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### meta-analysis of the log risk ratios using a mixed-effects model</span>
 <span class='co'>### with two moderators (absolute latitude and publication year)</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>,
-           <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>ablat</span> + <span class='no'>year</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>)
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"RR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>,
+           mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>ablat</span> <span class='op'>+</span> <span class='va'>year</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>)</span>
 
-<span class='no'>inf</span> <span class='kw'>&lt;-</span> <span class='fu'>influence</span>(<span class='no'>res</span>)
-<span class='no'>inf</span></div><div class='output co'>#&gt; $inf
+<span class='va'>inf</span> <span class='op'>&lt;-</span> <span class='fu'>influence</span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
+<span class='va'>inf</span>
+</div><div class='output co'>#&gt; $inf
 #&gt; 
 #&gt;    rstudent  dffits cook.d  cov.r tau2.del  QE.del    hat  weight inf 
 #&gt; 1    0.2978  0.1785 0.0348 1.8003   0.1317 28.3142 0.1725  3.3664     
@@ -271,13 +275,16 @@
 #&gt; 12 -0.0413  0.0465  0.0419 
 #&gt; 13 -0.8276  0.6269  0.8279 
 #&gt; </div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>inf</span>)</div><div class='img'><img src='influence.rma.uni-1.png' alt='' width='768' height='614' /></div><div class='input'>
-<span class='fu'>cooks.distance</span>(<span class='no'>res</span>)</div><div class='output co'>#&gt;           1           2           3           4           5           6 
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>inf</span><span class='op'>)</span>
+</div><div class='img'><img src='influence.rma.uni-1.png' alt='' width='768' height='614' /></div><div class='input'>
+<span class='fu'>cooks.distance</span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;           1           2           3           4           5           6 
 #&gt; 0.034763870 0.061956371 0.012503192 7.317914072 0.003236974 0.720524896 
 #&gt;           7           8           9          10          11          12 
 #&gt; 0.417263935 0.189852980 0.023722929 0.146959603 0.005232795 0.046915399 
 #&gt;          13 
-#&gt; 0.499370065 </div><div class='input'><span class='fu'>dfbetas</span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; 
+#&gt; 0.499370065 </div><div class='input'><span class='fu'>dfbetas</span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;    intrcpt   ablat    year 
 #&gt; 1   0.1492 -0.0622 -0.1491 
 #&gt; 2  -0.0949 -0.1001  0.0963 
@@ -292,7 +299,8 @@
 #&gt; 11  0.0631 -0.0343 -0.0631 
 #&gt; 12 -0.0413  0.0465  0.0419 
 #&gt; 13 -0.8276  0.6269  0.8279 
-#&gt; </div><div class='input'><span class='fu'>hatvalues</span>(<span class='no'>res</span>)</div><div class='output co'>#&gt;          1          2          3          4          5          6          7 
+#&gt; </div><div class='input'><span class='fu'>hatvalues</span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;          1          2          3          4          5          6          7 
 #&gt; 0.17250070 0.23668273 0.04870101 0.80821407 0.24826116 0.40606407 0.07657599 
 #&gt;          8          9         10         11         12         13 
 #&gt; 0.36274386 0.10304034 0.13102564 0.22140605 0.02353859 0.16124580 </div></pre>
@@ -311,7 +319,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

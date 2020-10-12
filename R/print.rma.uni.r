@@ -241,6 +241,11 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
          colnames(res.table)[7] <- ""
       }
 
+      for (j in 1:nrow(res.table)) {
+         res.table[j, is.na(res.table[j,])]  <- ifelse(x$delta.fix[j], "---", "NA")
+         res.table[j, res.table[j,] == "NA"] <- ifelse(x$delta.fix[j], "---", "NA")
+      }
+
       if (length(x$delta) == 1L)
          res.table <- res.table[1,]
 

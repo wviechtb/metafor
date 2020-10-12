@@ -75,6 +75,7 @@ reference:
       - plot.cumul.rma
       - plot.infl.rma.uni
       - plot.profile.rma
+      - plot.rma.uni.selmodel
       - starts_with("qqnorm")
   - title: "Publication Bias"
     desc: >
@@ -83,6 +84,7 @@ reference:
       - ranktest
       - regtest
       - trimfill
+      - selmodel
       - hc
       - fsn
       - tes
@@ -126,8 +128,8 @@ reference:
       - print.list.rma
       - print.matreg
       - print.permutest.rma.uni
-      - print.ranktest.rma
-      - print.regtest.rma
+      - print.ranktest
+      - print.regtest
       - print.robust.rma
   - title: "Datasets"
     desc: >

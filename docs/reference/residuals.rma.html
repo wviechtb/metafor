@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-47</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-48</span>
       </span>
     </div>
 
@@ -136,26 +136,26 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for rma</span>
-<span class='fu'>residuals</span>(<span class='no'>object</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"response"</span>, <span class='no'>...</span>)
+<span class='fu'>residuals</span><span class='op'>(</span><span class='va'>object</span>, type<span class='op'>=</span><span class='st'>"response"</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for rma.uni</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>rstandard</a></span>(<span class='no'>model</span>, <span class='no'>digits</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"marginal"</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>rstandard</a></span><span class='op'>(</span><span class='va'>model</span>, <span class='va'>digits</span>, type<span class='op'>=</span><span class='st'>"marginal"</span>, <span class='va'>...</span><span class='op'>)</span>
 <span class='co'># S3 method for rma.mh</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>rstandard</a></span>(<span class='no'>model</span>, <span class='no'>digits</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>rstandard</a></span><span class='op'>(</span><span class='va'>model</span>, <span class='va'>digits</span>, <span class='va'>...</span><span class='op'>)</span>
 <span class='co'># S3 method for rma.peto</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>rstandard</a></span>(<span class='no'>model</span>, <span class='no'>digits</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>rstandard</a></span><span class='op'>(</span><span class='va'>model</span>, <span class='va'>digits</span>, <span class='va'>...</span><span class='op'>)</span>
 <span class='co'># S3 method for rma.mv</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>rstandard</a></span>(<span class='no'>model</span>, <span class='no'>digits</span>, <span class='no'>cluster</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>rstandard</a></span><span class='op'>(</span><span class='va'>model</span>, <span class='va'>digits</span>, <span class='va'>cluster</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for rma.uni</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>rstudent</a></span>(<span class='no'>model</span>, <span class='no'>digits</span>, <span class='kw'>progbar</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>rstudent</a></span><span class='op'>(</span><span class='va'>model</span>, <span class='va'>digits</span>, progbar<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 <span class='co'># S3 method for rma.mh</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>rstudent</a></span>(<span class='no'>model</span>, <span class='no'>digits</span>, <span class='kw'>progbar</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>rstudent</a></span><span class='op'>(</span><span class='va'>model</span>, <span class='va'>digits</span>, progbar<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 <span class='co'># S3 method for rma.peto</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>rstudent</a></span>(<span class='no'>model</span>, <span class='no'>digits</span>, <span class='kw'>progbar</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>rstudent</a></span><span class='op'>(</span><span class='va'>model</span>, <span class='va'>digits</span>, progbar<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 <span class='co'># S3 method for rma.mv</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>rstudent</a></span>(<span class='no'>model</span>, <span class='no'>digits</span>, <span class='kw'>progbar</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>cluster</span>,
-         <span class='kw'>reestimate</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>parallel</span><span class='kw'>=</span><span class='st'>"no"</span>, <span class='kw'>ncpus</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>cl</span><span class='kw'>=</span><span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>rstudent</a></span><span class='op'>(</span><span class='va'>model</span>, <span class='va'>digits</span>, progbar<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>cluster</span>,
+         reestimate<span class='op'>=</span><span class='cn'>TRUE</span>, parallel<span class='op'>=</span><span class='st'>"no"</span>, ncpus<span class='op'>=</span><span class='fl'>1</span>, cl<span class='op'>=</span><span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -166,7 +166,7 @@
     </tr>
     <tr>
       <th>type</th>
-      <td><p>the type of residuals which should be returned. For <code>residuals</code>, the alternatives are: <code>"response"</code> (default), <code>"rstandard"</code>, <code>"rstudent"</code>, and <code>"pearson"</code>. For <code>rstandard.rma.uni</code>, the alternatives ares: <code>"marginal"</code> (default) and <code>"conditional"</code>. See &#8216;Details&#8217;.</p></td>
+      <td><p>the type of residuals which should be returned. For <code>residuals</code>, the alternatives are: <code>"response"</code> (default), <code>"rstandard"</code>, <code>"rstudent"</code>, and <code>"pearson"</code>. For <code>rstandard.rma.uni</code>, the alternatives are: <code>"marginal"</code> (default) and <code>"conditional"</code>. See &#8216;Details&#8217;.</p></td>
     </tr>
     <tr>
       <th>model</th>
@@ -237,6 +237,9 @@
 <p>It may not be possible to fit the model after deletion of the \(i\)th study/cluster from the dataset. This will result in <code>NA</code> values for that study/cluster when calling <code>rstudent</code>.</p>
 <p>Also, for <code>"rma.mv"</code> objects with a clustering variable specified, it may not be possible to compute the cluster-level multivariate standardized residual for a particular cluster (if the var-cov matrix of the residuals within a cluster is not of full rank). This will result in <code>NA</code> for that cluster.</p>
 <p>For objects of class <code>"rma.mh"</code> and <code>"rma.peto"</code>, <code>rstandard</code> actually computes Pearson (or semi-standardized) residuals.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Wolfgang Viechtbauer <a href='mailto:wvb@metafor-project.org'>wvb@metafor-project.org</a> <a href='http://www.metafor-project.org'>http://www.metafor-project.org</a></p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Hedges, L. V., &amp; Olkin, I. (1985). <em>Statistical methods for meta-analysis</em>. San Diego, CA: Academic Press.</p>
@@ -248,8 +251,9 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### meta-analysis of the log risk ratios using a random-effects model</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>)
-<span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>rstudent</a></span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; 
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"RR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>rstudent</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;      resid     se       z 
 #&gt; 1  -0.1822 0.8354 -0.2181 
 #&gt; 2  -0.9314 0.7210 -1.2918 
@@ -266,9 +270,10 @@
 #&gt; 13  0.7602 0.6400  1.1879 
 #&gt; </div><div class='input'>
 <span class='co'>### mixed-effects model with absolute latitude as a moderator</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>ablat</span>,
-           <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>)
-<span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>rstudent</a></span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; 
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"RR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>ablat</span>,
+           data<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>rstudent</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;      resid     se       z 
 #&gt; 1   0.1488 0.6587  0.2259 
 #&gt; 2  -0.2801 0.5811 -0.4819 
@@ -299,7 +304,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

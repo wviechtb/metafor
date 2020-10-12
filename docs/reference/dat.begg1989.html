@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-47</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-48</span>
       </span>
     </div>
 
@@ -135,7 +135,7 @@
     <p>Results from controlled and uncontrolled studies on the effectiveness of allogeneic bone-marrow transplantation (BMT) and conventional chemotherapy (CMO) in the treatment of acute nonlymphocytic leukemia.</p>
     </div>
 
-    <pre class="usage"><span class='no'>dat.begg1989</span></pre>
+    <pre class="usage"><span class='va'>dat.begg1989</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
@@ -163,8 +163,9 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat' and examine data</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.begg1989</span>
-<span class='no'>dat</span></div><div class='output co'>#&gt;    study trt arms     yi   sei     vi 
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.begg1989</span>
+<span class='va'>dat</span>
+</div><div class='output co'>#&gt;    study trt arms     yi   sei     vi 
 #&gt; 1      1 BMT    2 0.4600 0.118 0.0139 
 #&gt; 2      1 CMO    2 0.2500 0.074 0.0055 
 #&gt; 3      2 BMT    2 0.5000 0.100 0.0100 
@@ -186,20 +187,22 @@
 #&gt; 19    15 CMO    1 0.2400 0.084 0.0071 
 #&gt; 20    16 CMO    1 0.5300 0.084 0.0071 </div><div class='input'>
 <span class='co'>### turn trt and arms into factors and set reference levels</span>
-<span class='no'>dat</span>$<span class='no'>trt</span>  <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/relevel.html'>relevel</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>dat</span>$<span class='no'>trt</span>), <span class='kw'>ref</span><span class='kw'>=</span><span class='st'>"CMO"</span>)
-<span class='no'>dat</span>$<span class='no'>arms</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/relevel.html'>relevel</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>dat</span>$<span class='no'>arms</span>), <span class='kw'>ref</span><span class='kw'>=</span><span class='st'>"2"</span>)
+<span class='va'>dat</span><span class='op'>$</span><span class='va'>trt</span>  <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/relevel.html'>relevel</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>trt</span><span class='op'>)</span>, ref<span class='op'>=</span><span class='st'>"CMO"</span><span class='op'>)</span>
+<span class='va'>dat</span><span class='op'>$</span><span class='va'>arms</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/relevel.html'>relevel</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>arms</span><span class='op'>)</span>, ref<span class='op'>=</span><span class='st'>"2"</span><span class='op'>)</span>
 
 <span class='co'>### create data frame with the treatment differences for the controlled studies</span>
-<span class='no'>dat2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>yi</span> <span class='kw'>=</span> <span class='no'>dat</span>$<span class='no'>yi</span>[<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>3</span>,<span class='fl'>5</span>,<span class='fl'>7</span>)] - <span class='no'>dat</span>$<span class='no'>yi</span>[<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>,<span class='fl'>4</span>,<span class='fl'>6</span>,<span class='fl'>8</span>)],
-                   <span class='kw'>vi</span> <span class='kw'>=</span> <span class='no'>dat</span>$<span class='no'>vi</span>[<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>3</span>,<span class='fl'>5</span>,<span class='fl'>7</span>)] + <span class='no'>dat</span>$<span class='no'>vi</span>[<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>,<span class='fl'>4</span>,<span class='fl'>6</span>,<span class='fl'>8</span>)])
-<span class='no'>dat2</span></div><div class='output co'>#&gt;     yi       vi
+<span class='va'>dat2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>yi <span class='op'>=</span> <span class='va'>dat</span><span class='op'>$</span><span class='va'>yi</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>3</span>,<span class='fl'>5</span>,<span class='fl'>7</span><span class='op'>)</span><span class='op'>]</span> <span class='op'>-</span> <span class='va'>dat</span><span class='op'>$</span><span class='va'>yi</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>,<span class='fl'>4</span>,<span class='fl'>6</span>,<span class='fl'>8</span><span class='op'>)</span><span class='op'>]</span>,
+                   vi <span class='op'>=</span> <span class='va'>dat</span><span class='op'>$</span><span class='va'>vi</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>3</span>,<span class='fl'>5</span>,<span class='fl'>7</span><span class='op'>)</span><span class='op'>]</span> <span class='op'>+</span> <span class='va'>dat</span><span class='op'>$</span><span class='va'>vi</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>,<span class='fl'>4</span>,<span class='fl'>6</span>,<span class='fl'>8</span><span class='op'>)</span><span class='op'>]</span><span class='op'>)</span>
+<span class='va'>dat2</span>
+</div><div class='output co'>#&gt;     yi       vi
 #&gt; 1 0.21 0.019400
 #&gt; 2 0.27 0.014489
 #&gt; 3 0.05 0.024037
 #&gt; 4 0.22 0.080789</div><div class='input'>
 <span class='co'>### DerSimonian and Laird method using the treatment differences</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat2</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"DL"</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)
-<span class='no'>res</span></div><div class='output co'>#&gt; 
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat2</span>, method<span class='op'>=</span><span class='st'>"DL"</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+<span class='va'>res</span>
+</div><div class='output co'>#&gt; 
 #&gt; Random-Effects Model (k = 4; tau^2 estimator: DL)
 #&gt; 
 #&gt; tau^2 (estimated amount of total heterogeneity): 0 (SE = 0.02)
@@ -219,9 +222,10 @@
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### Begg &amp; Pilote (1991) model incorporating the uncontrolled studies</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>trt</span>, <span class='kw'>random</span> <span class='kw'>=</span> ~ <span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>study</span>,
-              <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"ML"</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)
-<span class='no'>res</span></div><div class='output co'>#&gt; 
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>trt</span>, random <span class='op'>=</span> <span class='op'>~</span> <span class='fl'>1</span> <span class='op'>|</span> <span class='va'>study</span>,
+              data<span class='op'>=</span><span class='va'>dat</span>, method<span class='op'>=</span><span class='st'>"ML"</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+<span class='va'>res</span>
+</div><div class='output co'>#&gt; 
 #&gt; Multivariate Meta-Analysis Model (k = 20; method: ML)
 #&gt; 
 #&gt; Variance Components:
@@ -245,9 +249,10 @@
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### model involving bias terms for the uncontrolled studies</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>trt</span> + <span class='no'>trt</span>:<span class='no'>arms</span>, <span class='kw'>random</span> <span class='kw'>=</span> ~ <span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>study</span>,
-              <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"ML"</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)
-<span class='no'>res</span></div><div class='output co'>#&gt; 
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>trt</span> <span class='op'>+</span> <span class='va'>trt</span><span class='op'>:</span><span class='va'>arms</span>, random <span class='op'>=</span> <span class='op'>~</span> <span class='fl'>1</span> <span class='op'>|</span> <span class='va'>study</span>,
+              data<span class='op'>=</span><span class='va'>dat</span>, method<span class='op'>=</span><span class='st'>"ML"</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+<span class='va'>res</span>
+</div><div class='output co'>#&gt; 
 #&gt; Multivariate Meta-Analysis Model (k = 20; method: ML)
 #&gt; 
 #&gt; Variance Components:
@@ -273,9 +278,10 @@
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### model with random treatment effect</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>trt</span>, <span class='kw'>random</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(~ <span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>study</span>, ~ <span class='no'>trt</span> <span class='kw'>|</span> <span class='no'>study</span>),
-              <span class='kw'>struct</span><span class='kw'>=</span><span class='st'>"UN"</span>, <span class='kw'>tau2</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>NA</span>), <span class='kw'>rho</span><span class='kw'>=</span><span class='fl'>0</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"ML"</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)
-<span class='no'>res</span></div><div class='output co'>#&gt; 
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>trt</span>, random <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>~</span> <span class='fl'>1</span> <span class='op'>|</span> <span class='va'>study</span>, <span class='op'>~</span> <span class='va'>trt</span> <span class='op'>|</span> <span class='va'>study</span><span class='op'>)</span>,
+              struct<span class='op'>=</span><span class='st'>"UN"</span>, tau2<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='cn'>NA</span><span class='op'>)</span>, rho<span class='op'>=</span><span class='fl'>0</span>, data<span class='op'>=</span><span class='va'>dat</span>, method<span class='op'>=</span><span class='st'>"ML"</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+<span class='va'>res</span>
+</div><div class='output co'>#&gt; 
 #&gt; Multivariate Meta-Analysis Model (k = 20; method: ML)
 #&gt; 
 #&gt; Variance Components:
@@ -310,9 +316,10 @@
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### model with random treatment effect, but with equal variances in both arms</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>trt</span>, <span class='kw'>random</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(~ <span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>study</span>, ~ <span class='no'>trt</span> <span class='kw'>|</span> <span class='no'>study</span>),
-              <span class='kw'>struct</span><span class='kw'>=</span><span class='st'>"CS"</span>, <span class='kw'>rho</span><span class='kw'>=</span><span class='fl'>0</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"ML"</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)
-<span class='no'>res</span></div><div class='output co'>#&gt; 
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>trt</span>, random <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>~</span> <span class='fl'>1</span> <span class='op'>|</span> <span class='va'>study</span>, <span class='op'>~</span> <span class='va'>trt</span> <span class='op'>|</span> <span class='va'>study</span><span class='op'>)</span>,
+              struct<span class='op'>=</span><span class='st'>"CS"</span>, rho<span class='op'>=</span><span class='fl'>0</span>, data<span class='op'>=</span><span class='va'>dat</span>, method<span class='op'>=</span><span class='st'>"ML"</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+<span class='va'>res</span>
+</div><div class='output co'>#&gt; 
 #&gt; Multivariate Meta-Analysis Model (k = 20; method: ML)
 #&gt; 
 #&gt; Variance Components:
@@ -357,7 +364,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-47</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-48</span>
       </span>
     </div>
 
@@ -135,11 +135,11 @@
     <p>The function carries out permutation tests for objects of class <code>"rma.uni"</code>. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
     </div>
 
-    <pre class="usage"><span class='fu'>permutest</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>permutest</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for rma.uni</span>
-<span class='fu'>permutest</span>(<span class='no'>x</span>, <span class='kw'>exact</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>iter</span><span class='kw'>=</span><span class='fl'>1000</span>, <span class='kw'>permci</span><span class='kw'>=</span><span class='fl'>FALSE</span>,
-          <span class='kw'>progbar</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>retpermdist</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>digits</span>, <span class='no'>control</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>permutest</span><span class='op'>(</span><span class='va'>x</span>, exact<span class='op'>=</span><span class='cn'>FALSE</span>, iter<span class='op'>=</span><span class='fl'>1000</span>, permci<span class='op'>=</span><span class='cn'>FALSE</span>,
+          progbar<span class='op'>=</span><span class='cn'>TRUE</span>, retpermdist<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>digits</span>, <span class='va'>control</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -212,6 +212,9 @@
 <p>When the number of permutations required for the exact test is so large as to be essentially indistinguishable from infinity (e.g., <code><a href='https://rdrr.io/r/base/Special.html'>factorial(200)</a></code>), the function will terminate with an error.</p>
 <p>Determining whether a test statistic under the permuted data is as extreme or more extreme than under the actually observed data requires making <code>&gt;=</code> or <code>&lt;=</code> comparisons. To avoid problems due to the finite precision with which computers generally represent numbers, the function uses a numerical tolerance (control argument <code>comptol</code>, which is set equal to <code>.Machine$double.eps^0.5</code> by default) when making such comparisons (e.g., instead of <code>sqrt(3)^2 - 3 &gt;= 0</code>, which may evaluate to <code>FALSE</code>, we can use <code>sqrt(3)^2 - 3 &gt;= 0 - .Machine$double.eps^0.5</code>, which should evaluate to <code>TRUE</code>).</p>
 <p>When obtaining permutation-based CIs, the function makes use of <code><a href='https://rdrr.io/r/stats/uniroot.html'>uniroot</a></code>. By default, the desired accuracy is set equal to <code>.Machine$double.eps^0.25</code> and the maximum number of iterations to <code>100</code>. The desired accuracy and the maximum number of iterations can be adjusted with the <code>control</code> argument (i.e., <code>control=list(tol=value, maxiter=value)</code>).</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Wolfgang Viechtbauer <a href='mailto:wvb@metafor-project.org'>wvb@metafor-project.org</a> <a href='http://www.metafor-project.org'>http://www.metafor-project.org</a></p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Follmann, D. A., &amp; Proschan, M. A. (1999). Valid inference in random effects meta-analysis. <em>Biometrics</em>, <b>55</b>(3), 732--737. <a href='https://doi.org/10.1111/j.0006-341x.1999.00732.x'>https://doi.org/10.1111/j.0006-341x.1999.00732.x</a></p>
@@ -225,11 +228,12 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### calculate log risk ratios and corresponding sampling variances</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>)
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"RR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>)</span>
 
 <span class='co'>### random-effects model</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
-<span class='no'>res</span></div><div class='output co'>#&gt; 
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
+<span class='va'>res</span>
+</div><div class='output co'>#&gt; 
 #&gt; Random-Effects Model (k = 13; tau^2 estimator: REML)
 #&gt; 
 #&gt; tau^2 (estimated amount of total heterogeneity): 0.3132 (SE = 0.1664)
@@ -249,13 +253,30 @@
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### permutation test (approximate and exact)</span>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'>permutest</span>(<span class='no'>res</span>)
-<span class='fu'>permutest</span>(<span class='no'>res</span>, <span class='kw'>exact</span><span class='kw'>=</span><span class='fl'>TRUE</span>)}
-
+<span class='co'># \dontrun{</span>
+<span class='fu'>permutest</span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Running 1000 iterations for approximate permutation test.</div><div class='output co'>#&gt; 
+#&gt; Model Results:
+#&gt; 
+#&gt; estimate      se     zval   pval*    ci.lb    ci.ub 
+#&gt;  -0.7145  0.1798  -3.9744  0.0030  -1.0669  -0.3622  ** 
+#&gt; 
+#&gt; ---
+#&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+#&gt; </div><div class='input'><span class='fu'>permutest</span><span class='op'>(</span><span class='va'>res</span>, exact<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span><span class='co'># }</span>
+</div><div class='output co'>#&gt; Running 8192 iterations for exact permutation test.</div><div class='output co'>#&gt; 
+#&gt; Model Results:
+#&gt; 
+#&gt; estimate      se     zval   pval*    ci.lb    ci.ub 
+#&gt;  -0.7145  0.1798  -3.9744  0.0015  -1.0669  -0.3622  ** 
+#&gt; 
+#&gt; ---
+#&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+#&gt; </div><div class='input'>
 <span class='co'>### mixed-effects model with two moderators (absolute latitude and publication year)</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>ablat</span> + <span class='no'>year</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
-<span class='no'>res</span></div><div class='output co'>#&gt; 
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>ablat</span> <span class='op'>+</span> <span class='va'>year</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
+<span class='va'>res</span>
+</div><div class='output co'>#&gt; 
 #&gt; Mixed-Effects Model (k = 13; tau^2 estimator: REML)
 #&gt; 
 #&gt; tau^2 (estimated amount of residual heterogeneity):     0.1108 (SE = 0.0845)
@@ -281,24 +302,38 @@
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### permutation test (approximate only; exact not feasible)</span>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'># \dontrun{</span>
 
-<span class='no'>permres</span> <span class='kw'>&lt;-</span> <span class='fu'>permutest</span>(<span class='no'>res</span>, <span class='kw'>iter</span><span class='kw'>=</span><span class='fl'>10000</span>, <span class='kw'>retpermdist</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
-<span class='no'>permres</span>
-
+<span class='va'>permres</span> <span class='op'>&lt;-</span> <span class='fu'>permutest</span><span class='op'>(</span><span class='va'>res</span>, iter<span class='op'>=</span><span class='fl'>10000</span>, retpermdist<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Running 10000 iterations for approximate permutation test.</div><div class='input'><span class='va'>permres</span>
+</div><div class='output co'>#&gt; 
+#&gt; Test of Moderators (coefficients 2:3):
+#&gt; QM(df = 2) = 12.2043, p-val* = 0.0214
+#&gt; 
+#&gt; Model Results:
+#&gt; 
+#&gt;          estimate       se     zval   pval*     ci.lb    ci.ub 
+#&gt; intrcpt   -3.5455  29.0959  -0.1219  0.9099  -60.5724  53.4814    
+#&gt; ablat     -0.0280   0.0102  -2.7371  0.0187   -0.0481  -0.0080  * 
+#&gt; year       0.0019   0.0147   0.1299  0.9031   -0.0269   0.0307    
+#&gt; 
+#&gt; ---
+#&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+#&gt; </div><div class='input'>
 <span class='co'>### histogram of permutation distribution for absolute latitude</span>
 <span class='co'>### dashed horizontal line: the observed value of the test statistic</span>
 <span class='co'>### red curve: standard normal density</span>
 <span class='co'>### blue curve: kernel density estimate of the permutation distribution</span>
 <span class='co'>### note that the tail area under the permutation distribution is larger</span>
 <span class='co'>### than under a standard normal density (hence, the larger p-value)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span>(<span class='no'>permres</span>$<span class='no'>zval.perm</span>[,<span class='fl'>2</span>], <span class='kw'>breaks</span><span class='kw'>=</span><span class='fl'>120</span>, <span class='kw'>freq</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>xlim</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>5</span>,<span class='fl'>5</span>), <span class='kw'>ylim</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>.4</span>),
-     <span class='kw'>main</span><span class='kw'>=</span><span class='st'>"Permutation Distribution"</span>, <span class='kw'>xlab</span><span class='kw'>=</span><span class='st'>"Value of Test Statistic"</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>"gray90"</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span>(<span class='kw'>v</span><span class='kw'>=</span><span class='no'>res</span>$<span class='no'>zval</span>[<span class='fl'>2</span>], <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>2</span>, <span class='kw'>lty</span><span class='kw'>=</span><span class='st'>"dashed"</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span>(<span class='kw'>v</span><span class='kw'>=</span><span class='fl'>0</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>2</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/curve.html'>curve</a></span>(<span class='no'>dnorm</span>, <span class='kw'>from</span><span class='kw'>=</span>-<span class='fl'>5</span>, <span class='kw'>to</span><span class='kw'>=</span><span class='fl'>5</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>2</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/grDevices/rgb.html'>rgb</a></span>(<span class='fl'>1</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='kw'>alpha</span><span class='kw'>=</span><span class='fl'>.7</span>))
-<span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/density.html'>density</a></span>(<span class='no'>permres</span>$<span class='no'>zval.perm</span>[,<span class='fl'>2</span>]), <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>2</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/grDevices/rgb.html'>rgb</a></span>(<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='kw'>alpha</span><span class='kw'>=</span><span class='fl'>.7</span>))
-}</div></pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>permres</span><span class='op'>$</span><span class='va'>zval.perm</span><span class='op'>[</span>,<span class='fl'>2</span><span class='op'>]</span>, breaks<span class='op'>=</span><span class='fl'>120</span>, freq<span class='op'>=</span><span class='cn'>FALSE</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>5</span>,<span class='fl'>5</span><span class='op'>)</span>, ylim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>.4</span><span class='op'>)</span>,
+     main<span class='op'>=</span><span class='st'>"Permutation Distribution"</span>, xlab<span class='op'>=</span><span class='st'>"Value of Test Statistic"</span>, col<span class='op'>=</span><span class='st'>"gray90"</span><span class='op'>)</span>
+</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span>v<span class='op'>=</span><span class='va'>res</span><span class='op'>$</span><span class='va'>zval</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>]</span>, lwd<span class='op'>=</span><span class='fl'>2</span>, lty<span class='op'>=</span><span class='st'>"dashed"</span><span class='op'>)</span>
+</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span>v<span class='op'>=</span><span class='fl'>0</span>, lwd<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/curve.html'>curve</a></span><span class='op'>(</span><span class='va'>dnorm</span>, from<span class='op'>=</span><span class='op'>-</span><span class='fl'>5</span>, to<span class='op'>=</span><span class='fl'>5</span>, add<span class='op'>=</span><span class='cn'>TRUE</span>, lwd<span class='op'>=</span><span class='fl'>2</span>, col<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/grDevices/rgb.html'>rgb</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,alpha<span class='op'>=</span><span class='fl'>.7</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/density.html'>density</a></span><span class='op'>(</span><span class='va'>permres</span><span class='op'>$</span><span class='va'>zval.perm</span><span class='op'>[</span>,<span class='fl'>2</span><span class='op'>]</span><span class='op'>)</span>, lwd<span class='op'>=</span><span class='fl'>2</span>, col<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/grDevices/rgb.html'>rgb</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>1</span>,alpha<span class='op'>=</span><span class='fl'>.7</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='permutest-1.png' alt='' width='768' height='614' /></div><div class='input'><span class='co'># }</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -314,7 +349,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

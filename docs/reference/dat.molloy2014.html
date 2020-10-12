@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-47</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-48</span>
       </span>
     </div>
 
@@ -135,7 +135,7 @@
     <p>Results from 16 studies on the correlation between conscientiousness and medication adherence.</p>
     </div>
 
-    <pre class="usage"><span class='no'>dat.molloy2014</span></pre>
+    <pre class="usage"><span class='va'>dat.molloy2014</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
@@ -167,11 +167,12 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat'</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.molloy2014</span>
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.molloy2014</span>
 
 <span class='co'>### calculate r-to-z transformed correlations and corresponding sampling variances</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"ZCOR"</span>, <span class='kw'>ri</span><span class='kw'>=</span><span class='no'>ri</span>, <span class='kw'>ni</span><span class='kw'>=</span><span class='no'>ni</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>slab</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='no'>authors</span>, <span class='no'>year</span>, <span class='kw'>sep</span><span class='kw'>=</span><span class='st'>", "</span>))
-<span class='no'>dat</span></div><div class='output co'>#&gt;                authors year  ni     ri controls          design   a_measure 
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"ZCOR"</span>, ri<span class='op'>=</span><span class='va'>ri</span>, ni<span class='op'>=</span><span class='va'>ni</span>, data<span class='op'>=</span><span class='va'>dat</span>, slab<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='va'>authors</span>, <span class='va'>year</span>, sep<span class='op'>=</span><span class='st'>", "</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>dat</span>
+</div><div class='output co'>#&gt;                authors year  ni     ri controls          design   a_measure 
 #&gt; 1      Axelsson et al. 2009 109  0.187     none cross-sectional self-report 
 #&gt; 2      Axelsson et al. 2011 749  0.162     none cross-sectional self-report 
 #&gt; 3         Bruce et al. 2010  55  0.340     none     prospective       other 
@@ -206,8 +207,9 @@
 #&gt; 15       NEO   46.20       3  0.2448 0.0065 
 #&gt; 16       NEO   56.00       1  0.0400 0.0161 </div><div class='input'>
 <span class='co'>### meta-analysis of the transformed correlations using a random-effects model</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
-<span class='no'>res</span></div><div class='output co'>#&gt; 
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
+<span class='va'>res</span>
+</div><div class='output co'>#&gt; 
 #&gt; Random-Effects Model (k = 16; tau^2 estimator: REML)
 #&gt; 
 #&gt; tau^2 (estimated amount of total heterogeneity): 0.0081 (SE = 0.0055)
@@ -227,16 +229,19 @@
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### average correlation with 95% CI</span>
-<span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>3</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>transf.ztor</span>)</div><div class='output co'>#&gt; 
+<span class='fu'><a href='predict.rma.html'>predict</a></span><span class='op'>(</span><span class='va'>res</span>, digits<span class='op'>=</span><span class='fl'>3</span>, transf<span class='op'>=</span><span class='va'>transf.ztor</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;   pred ci.lb ci.ub  pi.lb pi.ub 
 #&gt;  0.149 0.088 0.209 -0.037 0.325 
 #&gt; </div><div class='input'>
 <span class='co'>### forest plot</span>
-<span class='fu'><a href='forest.html'>forest</a></span>(<span class='no'>res</span>, <span class='kw'>addpred</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>xlim</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>1.6</span>,<span class='fl'>1.6</span>), <span class='kw'>atransf</span><span class='kw'>=</span><span class='no'>transf.ztor</span>,
-       <span class='kw'>at</span><span class='kw'>=</span><span class='fu'><a href='transf.html'>transf.rtoz</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>.4</span>,-<span class='fl'>.2</span>,<span class='fl'>0</span>,<span class='fl'>.2</span>,<span class='fl'>.4</span>,<span class='fl'>.6</span>)), <span class='kw'>digits</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>,<span class='fl'>1</span>), <span class='kw'>cex</span><span class='kw'>=</span><span class='fl'>.8</span>,
-       <span class='kw'>header</span><span class='kw'>=</span><span class='st'>"Author(s), Year"</span>)</div><div class='img'><img src='dat.molloy2014-1.png' alt='' width='768' height='614' /></div><div class='input'>
+<span class='fu'><a href='forest.html'>forest</a></span><span class='op'>(</span><span class='va'>res</span>, addpred<span class='op'>=</span><span class='cn'>TRUE</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>1.6</span>,<span class='fl'>1.6</span><span class='op'>)</span>, atransf<span class='op'>=</span><span class='va'>transf.ztor</span>,
+       at<span class='op'>=</span><span class='fu'><a href='transf.html'>transf.rtoz</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>.4</span>,<span class='op'>-</span><span class='fl'>.2</span>,<span class='fl'>0</span>,<span class='fl'>.2</span>,<span class='fl'>.4</span>,<span class='fl'>.6</span><span class='op'>)</span><span class='op'>)</span>, digits<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>,<span class='fl'>1</span><span class='op'>)</span>, cex<span class='op'>=</span><span class='fl'>.8</span>,
+       header<span class='op'>=</span><span class='st'>"Author(s), Year"</span><span class='op'>)</span>
+</div><div class='img'><img src='dat.molloy2014-1.png' alt='' width='768' height='614' /></div><div class='input'>
 <span class='co'>### funnel plot</span>
-<span class='fu'><a href='funnel.html'>funnel</a></span>(<span class='no'>res</span>)</div><div class='img'><img src='dat.molloy2014-2.png' alt='' width='768' height='614' /></div></pre>
+<span class='fu'><a href='funnel.html'>funnel</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
+</div><div class='img'><img src='dat.molloy2014-2.png' alt='' width='768' height='614' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -252,7 +257,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

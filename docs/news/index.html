@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-47</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-48</span>
       </span>
     </div>
 
@@ -129,18 +129,19 @@
       <small>Source: <a href='https://github.com/wviechtb/metafor/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="metafor-2-5-47-2020-08-31" class="section level1">
-<h1 class="page-header" data-toc-text="2.5-47">
-<a href="#metafor-2-5-47-2020-08-31" class="anchor"></a>metafor 2.5-47 (2020-08-31)<small> Unreleased </small>
+    <div id="metafor-2-5-48-2020-10-12" class="section level1">
+<h1 class="page-header" data-toc-text="2.5-48">
+<a href="#metafor-2-5-48-2020-10-12" class="anchor"></a>metafor 2.5-48 (2020-10-12)<small> Unreleased </small>
 </h1>
 <ul>
 <li><p>the <code>metafor</code> package now makes use of the <code>mathjaxr</code> package to nicely render equations shown in the HTML help pages</p></li>
+<li><p>added <code><a href="../reference/selmodel.html">selmodel()</a></code> for fitting a wide variety of selection models (and added the corresponding <code>plot.selmodel.rma.uni()</code> function for drawing the estimated selection function)</p></li>
+<li><p>added <code><a href="../reference/tes.html">tes()</a></code> function for the test of excess significance</p></li>
+<li><p>added <code><a href="../reference/rcalc.html">rcalc()</a></code>, <code><a href="../reference/matreg.html">matreg()</a></code>, <code><a href="../reference/dfround.html">dfround()</a></code>, and <code><a href="../reference/vec2mat.html">vec2mat()</a></code> functions</p></li>
 <li><p>the various <code><a href="../reference/cumul.html">cumul()</a></code> functions provide <code>I^2</code> and <code>H^2</code> also for fixed-effects models; accordingly, <code><a href="../reference/plot.cumul.rma.html">plot.cumul.rma()</a></code> now also works with such models</p></li>
 <li><p><code><a href="../reference/simulate.rma.html">simulate.rma()</a></code> gains <code>yilim</code> argument</p></li>
 <li><p>added <code>weighted</code> argument to <code><a href="../reference/fsn.html">fsn()</a></code> (for Orwin’s method)</p></li>
 <li><p>added some more transformation functions</p></li>
-<li><p>added <code><a href="../reference/tes.html">tes()</a></code> function for the test of excess significance</p></li>
-<li><p>added <code><a href="../reference/rcalc.html">rcalc()</a></code>, <code><a href="../reference/matreg.html">matreg()</a></code>, <code><a href="../reference/dfround.html">dfround()</a></code>, and <code><a href="../reference/vec2mat.html">vec2mat()</a></code> functions</p></li>
 <li><p><code><a href="../reference/bldiag.html">bldiag()</a></code> now properly handles ?x0 or 0x? matrices</p></li>
 <li><p>p-values are still given to 2 digits when <code>digits = 1</code></p></li>
 <li><p><code><a href="../reference/print.escalc.html">summary.escalc()</a></code> also provides the p-values (of the Wald-type tests); but when using the <code>transf</code> argument, the sampling variances, standard errors, test statistics, and p-values are no longer shown</p></li>
@@ -148,17 +149,17 @@
 <li><p>started using the <code>pbapply</code> package for showing progress bars, also when using parallel processing</p></li>
 <li><p>to avoid potential confusion, all references to ‘credibility intervals’ have been removed from the documentation; these intervals are now exclusively referred to as ‘prediction intervals’; in the output, the bounds are therefore indicated now as <code>pi.lb</code> and <code>pi.ub</code> (instead of <code>cr.lb</code> and <code>cr.ub</code>); the corresponding argument names were changed in <code><a href="../reference/addpoly.default.html">addpoly.default()</a></code>; argument <code>addcred</code> was changed to <code>addpred</code> in <code><a href="../reference/addpoly.rma.html">addpoly.rma()</a></code> and <code><a href="../reference/forest.rma.html">forest.rma()</a></code>; however, code using the old arguments names should continue to work</p></li>
 <li><p><code><a href="../reference/vif.html">vif()</a></code> gains <code>btt</code> argument and can now also compute generalized variance inflation factors; a proper <code><a href="../reference/vif.html">print.vif.rma()</a></code> function was added</p></li>
-<li><p>in the various <code><a href="../reference/forest.html">forest()</a></code> functions, when <code>header=TRUE</code>, suppress the right header when <code>annotate=FALSE</code></p></li>
+<li><p>in the various <code><a href="../reference/forest.html">forest()</a></code> functions, the right header is now suppressed when <code>annotate=FALSE</code> and <code>header=TRUE</code></p></li>
 <li><p>the <code>forest</code> and <code>funnel</code> arguments of <code><a href="../reference/reporter.html">reporter.rma.uni()</a></code> can now also be logicals to suppress the drawing of these plots</p></li>
-<li><p>one can now use <code><a href="../reference/weights.rma.html">weights(...,  type="rowsum")</a></code> for intercept-only <code>rma.mv</code> models (to obtain ‘row-sum weights’)</p></li>
+<li><p>one can now use <code><a href="../reference/weights.rma.uni.html">weights(...,  type="rowsum")</a></code> for intercept-only <code>rma.mv</code> models (to obtain ‘row-sum weights’)</p></li>
 <li><p><code><a href="../reference/forest.rma.html">forest.rma()</a></code> gains <code>colout</code> argument (to adjust the color of the observed effect sizes or outcomes)</p></li>
-<li><p>slight speedup in functions that repeatedly fit <code><a href="../reference/rma.uni.html">rma.uni()</a></code> models by skipping the computation of <code>R2</code></p></li>
+<li><p>slight speedup in functions that repeatedly fit <code><a href="../reference/rma.uni.html">rma.uni()</a></code> models by skipping the computation of the pseudo R^2 statistic</p></li>
 <li><p><code><a href="../reference/funnel.html">funnel.default()</a></code> and <code><a href="../reference/funnel.html">funnel.rma()</a></code> gain <code>label</code> and <code>offset</code> arguments</p></li>
-<li><p><code><a href="../reference/funnel.html">funnel.default()</a></code> and <code><a href="../reference/funnel.html">funnel.rma()</a></code> gain <code>lty</code> argument; reference line is now drawn by default as a dotted line (like the line for the pseudo confidence region)</p></li>
+<li><p><code><a href="../reference/funnel.html">funnel.default()</a></code> and <code><a href="../reference/funnel.html">funnel.rma()</a></code> gain <code>lty</code> argument; the reference line is now drawn by default as a dotted line (like the line for the pseudo confidence region)</p></li>
 <li><p><code><a href="../reference/regtest.html">regtest()</a></code> now shows the ‘limit estimate’ of the (average) true effect when using <code>sei</code>, <code>vi</code>, <code>ninv</code>, or <code>sqrtninv</code> as predictor (and the model does not contain any other moderators)</p></li>
 <li><p>show nicer network graphs for <code>dat.hasselblad1998</code> and <code>dat.senn2013</code> in the help files</p></li>
 <li><p>refactored various functions (for cleaner/simpler code)</p></li>
-<li><p>added 9 new datasets (<code>dat.anand1999</code>, <code>dat.cannon2006</code>, <code>dat.craft2003</code>, <code>dat.damico2009</code>, <code>dat.dorn2007</code>, <code>dat.kalaian1996</code>, <code>dat.kearon1998</code>, <code>dat.lau1992</code>, <code>dat.vanhowe1999</code>)</p></li>
+<li><p>added 12 new datasets (<code>dat.anand1999</code>, <code>dat.baskerville2012</code>, <code>dat.cannon2006</code>, <code>dat.cohen1981</code>, <code>dat.craft2003</code>, <code>dat.damico2009</code>, <code>dat.dorn2007</code>, <code>dat.hahn2001</code>, <code>dat.kalaian1996</code>, <code>dat.kearon1998</code>, <code>dat.lau1992</code>, <code>dat.vanhowe1999</code>)</p></li>
 <li><p>fixed <code>level</code> not getting passed down to the various <code><a href="../reference/cumul.html">cumul()</a></code> functions</p></li>
 <li><p>improved the documentation a bit</p></li>
 </ul>
@@ -239,8 +240,8 @@
 <li><p><code><a href="../reference/labbe.html">labbe()</a></code> gains <code>lty</code> argument</p></li>
 <li><p><code><a href="../reference/labbe.html">labbe()</a></code> now (invisibly) returns a data frame with the coordinates of the points that were drawn (which may be useful for manual labeling of points in the plot)</p></li>
 <li><p>added a print method for <code>profile.rma</code> objects</p></li>
-<li><p><code><a href="../reference/profile.rma.html">profile.rma.mv()</a></code> now check whether any of the profiled log-likelihood values is larger than the log-likelihood of the fitted model (using numerical tolerance given by <code>lltol</code>) and issues a warning if so</p></li>
-<li><p><code><a href="../reference/profile.rma.html">profile.rma.uni()</a></code>, <code><a href="../reference/profile.rma.html">profile.rma.mv()</a></code>, and <code><a href="../reference/profile.rma.html">plot.profile.rma()</a></code> gain <code>cline</code> argument; <code><a href="../reference/profile.rma.html">plot.profile.rma()</a></code> gains <code>xlim</code>, <code>ylab</code>, and <code>main</code> arguments</p></li>
+<li><p><code><a href="../reference/profile.rma.uni.html">profile.rma.mv()</a></code> now check whether any of the profiled log-likelihood values is larger than the log-likelihood of the fitted model (using numerical tolerance given by <code>lltol</code>) and issues a warning if so</p></li>
+<li><p><code><a href="../reference/profile.rma.uni.html">profile.rma.uni()</a></code>, <code><a href="../reference/profile.rma.uni.html">profile.rma.mv()</a></code>, and <code><a href="../reference/profile.rma.uni.html">plot.profile.rma()</a></code> gain <code>cline</code> argument; <code><a href="../reference/profile.rma.uni.html">plot.profile.rma()</a></code> gains <code>xlim</code>, <code>ylab</code>, and <code>main</code> arguments</p></li>
 <li><p>fixed an issue with <code><a href="../reference/robust.html">robust.rma.mv()</a></code> when the model was fitted with <code>sparse=TRUE</code> (thanks to Roger Martineau for noting the problem)</p></li>
 <li><p>various method functions (<code><a href="../reference/fitted.rma.html">fitted()</a></code>, <code><a href="https://rdrr.io/r/stats/residuals.html">resid()</a></code>, <code><a href="../reference/predict.rma.html">predict()</a></code>, etc.) behave in a more consistent manner when model omitted studies with missings</p></li>
 <li><p><code><a href="../reference/predict.rma.html">predict.rma()</a></code> gains <code>vcov</code> argument; when set to <code>TRUE</code>, the variance- covariance matrix of the predicted values is also returned</p></li>
@@ -267,7 +268,7 @@
 <li><p>added <code><a href="../reference/regtest.html">regtest.default()</a></code>, so user can now pass the outcomes and corresponding sampling variances directly to the function</p></li>
 <li><p><code><a href="../reference/funnel.html">funnel.default()</a></code> gains <code>subset</code> argument</p></li>
 <li><p><code><a href="../reference/funnel.html">funnel.default()</a></code> and <code><a href="../reference/funnel.html">funnel.rma()</a></code> gain <code>col</code> and <code>bg</code> arguments</p></li>
-<li><p><code><a href="../reference/profile.rma.html">plot.profile.rma()</a></code> gains <code>ylab</code> argument</p></li>
+<li><p><code><a href="../reference/profile.rma.uni.html">plot.profile.rma()</a></code> gains <code>ylab</code> argument</p></li>
 <li><p>more consistent handling of <code>robust.rma</code> objects</p></li>
 <li><p>added location-scale model</p></li>
 <li><p>added a print method for <code>rma.gosh</code> objects</p></li>
@@ -316,12 +317,12 @@
 <li><p>more flexible <code>efac</code> argument in the various <code><a href="../reference/forest.html">forest()</a></code> functions</p></li>
 <li><p>trailing zeros in the axis labels are now dropped in forest and funnel plots by default; but trailing zeros can be retained by specifying a numeric (and not an integer) value for the <code>digits</code> argument</p></li>
 <li><p>added <code><a href="../reference/funnel.html">funnel.default()</a></code>, which directly takes as input a vector with the observed effect sizes or outcomes and the corresponding sampling variances, standard errors, and/or sample sizes</p></li>
-<li><p>added <code><a href="../reference/profile.rma.html">plot.profile.rma()</a></code>, a plot method for objects returned by the <code><a href="../reference/profile.rma.html">profile.rma.uni()</a></code> and <code><a href="../reference/profile.rma.html">profile.rma.mv()</a></code> functions</p></li>
+<li><p>added <code><a href="../reference/profile.rma.uni.html">plot.profile.rma()</a></code>, a plot method for objects returned by the <code><a href="../reference/profile.rma.uni.html">profile.rma.uni()</a></code> and <code><a href="../reference/profile.rma.uni.html">profile.rma.mv()</a></code> functions</p></li>
 <li><p>simplified <code>baujat.rma.uni()</code>, <code>baujat.rma.mh()</code>, and <code>baujat.rma.peto()</code> to <code><a href="../reference/baujat.html">baujat.rma()</a></code>, which now handles objects of class <code>rma.uni</code>, <code>rma.mh</code>, and <code>rma.peto</code></p></li>
 <li><p><code><a href="../reference/baujat.html">baujat.rma()</a></code> gains argument <code>symbol</code> for more control over the plotting symbol</p></li>
 <li><p><code><a href="../reference/labbe.html">labbe()</a></code> gains a <code>grid</code> argument</p></li>
-<li><p>more logical placement of labels in <code><a href="../reference/qqnorm.rma.html">qqnorm.rma.uni()</a></code>, <code><a href="../reference/qqnorm.rma.html">qqnorm.rma.mh()</a></code>, and <code><a href="../reference/qqnorm.rma.html">qqnorm.rma.peto()</a></code> functions (and more control thereof)</p></li>
-<li><p><code><a href="../reference/qqnorm.rma.html">qqnorm.rma.uni()</a></code> gains <code>lty</code> argument</p></li>
+<li><p>more logical placement of labels in <code><a href="../reference/qqnorm.rma.uni.html">qqnorm.rma.uni()</a></code>, <code><a href="../reference/qqnorm.rma.uni.html">qqnorm.rma.mh()</a></code>, and <code><a href="../reference/qqnorm.rma.uni.html">qqnorm.rma.peto()</a></code> functions (and more control thereof)</p></li>
+<li><p><code><a href="../reference/qqnorm.rma.uni.html">qqnorm.rma.uni()</a></code> gains <code>lty</code> argument</p></li>
 <li><p>added <code><a href="../reference/gosh.html">gosh.rma()</a></code> and <code><a href="../reference/plot.gosh.rma.html">plot.gosh.rma()</a></code> for creating GOSH (i.e., graphical display of study heterogeneity) plots based on Olkin et al. (2012)</p></li>
 <li><p>in the (rare) case where all observed outcomes are exactly equal to each other, <code>test="knha"</code> (i.e., <code>knha=TRUE</code>) in <code><a href="../reference/rma.uni.html">rma()</a></code> now leads to more appropriate results</p></li>
 <li><p>updated datasets so those containing precomputed effect size estimates or observed outcomes are already declared to be <code>escalc</code> objects</p></li>
@@ -372,7 +373,7 @@
 <li><p><code><a href="../reference/rma.glmm.html">rma.glmm()</a></code> will now only issue a warning (and not an error) when the Hessian for the saturated model cannot be inverted (which is needed to compute the Wald-type test for heterogeneity, so the test statistic is then simply set to <code>NA</code>)</p></li>
 <li><p><code><a href="../reference/rma.mv.html">rma.mv()</a></code> now allows for two terms of the form <code>~ inner | outer</code>; the variance components corresponding to such a structure are called <code>gamma2</code> and correlations are called <code>phi</code>; other functions that work with objects of class <code>rma.mv</code> have been updated accordingly</p></li>
 <li><p><code><a href="../reference/rma.mv.html">rma.mv()</a></code> now provides (even) more optimizer choices: <code><a href="https://rdrr.io/r/stats/nlm.html">nlm()</a></code> from the <code>stats</code> package, <code>hjk()</code> and <code>nmk()</code> from the <code>dfoptim</code> package, and <code>ucminf()</code> from the <code>ucminf</code> package; choose the desired optimizer via the control argument (e.g., <code>control=list(optimizer="nlm")</code>)</p></li>
-<li><p><code><a href="../reference/profile.rma.html">profile.rma.uni()</a></code> and <code><a href="../reference/profile.rma.html">profile.rma.mv()</a></code> now can do parallel processing (which is especially relevant for <code>rma.mv</code> objects, where profiling is crucial and model fitting can be slow)</p></li>
+<li><p><code><a href="../reference/profile.rma.uni.html">profile.rma.uni()</a></code> and <code><a href="../reference/profile.rma.uni.html">profile.rma.mv()</a></code> now can do parallel processing (which is especially relevant for <code>rma.mv</code> objects, where profiling is crucial and model fitting can be slow)</p></li>
 <li><p>the various <code><a href="../reference/confint.rma.html">confint()</a></code> functions now have a <code>transf</code> argument (to apply some kind of transformation to the model coefficients and confidence interval bounds); coefficients and bounds for objects of class <code>rma.mh</code> and <code>rma.peto</code> are no longer automatically transformed</p></li>
 <li><p>the various <code><a href="../reference/forest.html">forest()</a></code> functions no longer enforce that the actual x-axis limits (<code>alim</code>) encompass the observed outcomes to be plotted; also, outcomes below or above the actual x-axis limits are no longer shown</p></li>
 <li><p>the various <code><a href="../reference/forest.html">forest()</a></code> functions now provide control over the horizontal lines (at the top/bottom) that are automatically added to the plot via the <code>lty</code> argument (this also allows for removing them); also, the vertical reference line is now placed <em>behind</em> the points/CIs</p></li>
@@ -404,16 +405,16 @@
 <li><p><code><a href="../reference/rma.mv.html">rma.mv()</a></code> now makes use of the Cholesky decomposition when there is a <code>random = ~ inner | outer</code> formula and <code>struct="UN"</code>; this is numerically more stable than the old approach that avoided non-positive definite solutions by forcing the log-likelihood to be -Inf in those cases; the old behavior can be restored with <code>control = list(cholesky=FALSE)</code></p></li>
 <li><p><code><a href="../reference/rma.mv.html">rma.mv()</a></code> now requires the <code>inner</code> variable in an <code>~ inner | outer</code> formula to be a factor or character variable (except when <code>struct</code> is <code>"AR"</code> or <code>"HAR"</code>); use <code>~ factor(inner) | outer</code> in case it isn’t</p></li>
 <li><p><code>anova.rma.uni()</code> function changed to <code><a href="../reference/anova.rma.html">anova.rma()</a></code> that works now for both <code>rma.uni</code> and <code>rma.mv</code> objects</p></li>
-<li><p>the <code><a href="../reference/profile.rma.html">profile.rma.mv()</a></code> function now omits the number of the variance or correlation component from the plot title and x-axis label when the model only includes one of the respective parameters</p></li>
+<li><p>the <code><a href="../reference/profile.rma.uni.html">profile.rma.mv()</a></code> function now omits the number of the variance or correlation component from the plot title and x-axis label when the model only includes one of the respective parameters</p></li>
 <li><p><code><a href="https://rdrr.io/r/stats/profile.html">profile()</a></code> functions now pass on the <code>...</code> argument also to the <code><a href="https://rdrr.io/r/graphics/title.html">title()</a></code> function used to create the figure titles (esp. relevant when using the <code>cex.main</code> argument)</p></li>
 <li><p>the <code>drop00</code> argument of the <code><a href="../reference/rma.mh.html">rma.mh()</a></code> and <code><a href="../reference/rma.peto.html">rma.peto()</a></code> functions now also accepts a vector with two logicals, the first applies when calculating the observed outcomes, the second when applying the Mantel-Haenszel or Peto’s method</p></li>
-<li><p><code><a href="../reference/weights.rma.html">weights.rma.uni()</a></code> now shows the correct weights when <code>weighted=FALSE</code></p></li>
-<li><p>argument <code>showweight</code> renamed to <code>showweights</code> in the <code><a href="../reference/forest.default.html">forest.default()</a></code> and <code><a href="../reference/forest.rma.html">forest.rma()</a></code> functions (more consistent with the naming of the various <code><a href="../reference/weights.rma.html">weights()</a></code> functions)</p></li>
+<li><p><code><a href="../reference/weights.rma.uni.html">weights.rma.uni()</a></code> now shows the correct weights when <code>weighted=FALSE</code></p></li>
+<li><p>argument <code>showweight</code> renamed to <code>showweights</code> in the <code><a href="../reference/forest.default.html">forest.default()</a></code> and <code><a href="../reference/forest.rma.html">forest.rma()</a></code> functions (more consistent with the naming of the various <code><a href="../reference/weights.rma.uni.html">weights()</a></code> functions)</p></li>
 <li><p>added <code><a href="../reference/model.matrix.rma.html">model.matrix.rma()</a></code> function (to extract the model matrix from objects of class <code>rma</code>)</p></li>
 <li><p><code><a href="../reference/funnel.html">funnel()</a></code> and <code><a href="../reference/radial.html">radial()</a></code> now (invisibly) return data frames with the coordinates of the points that were drawn (may be useful for manual labeling of points in the plots)</p></li>
 <li><p><code><a href="../reference/permutest.html">permutest.rma.uni()</a></code> function now uses a numerical tolerance when making comparisons (&gt;= or &lt;=) between an observed test statistic and the test statistic under the permuted data; when using random permutations, the function now ensures that the very first permutation correspond to the original data</p></li>
 <li><p>corrected some missing/redundant row/column labels in some output</p></li>
-<li><p>most <code>require()</code> calls replaced with <code>requireNamespace()</code> to avoid altering the search path (hopefully this won’t break stuff …)</p></li>
+<li><p>most <code><a href="https://rdrr.io/r/base/library.html">require()</a></code> calls replaced with <code><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace()</a></code> to avoid altering the search path (hopefully this won’t break stuff …)</p></li>
 <li><p>some non-visible changes including more use of some (non-exported) helper functions for common tasks</p></li>
 <li><p>dataset <code>dat.collins91985a</code> updated (including all reported outcomes and some more information about the various trials)</p></li>
 <li><p>oh, and guess what? I updated the documentation …</p></li>
@@ -434,7 +435,7 @@
 <li><p>more optimizers are now available for the <code><a href="../reference/rma.mv.html">rma.mv()</a></code> function via the <code>nloptr</code> package by setting <code>control = list(optimizer="nloptr")</code>; when using this optimizer, the default is to use the BOBYQA implementation from that package with a relative convergence criterion of 1e-8 on the function value (see documentation on how to change these defaults)</p></li>
 <li><p><code><a href="../reference/predict.rma.html">predict.rma()</a></code> function now works for <code>rma.mv</code> objects with multiple tau^2 values even if the user specifies the <code>newmods</code> argument but not the <code>tau2.levels</code> argument (but a warning is issued and the prediction intervals are not computed)</p></li>
 <li><p>argument <code>var.names</code> now works properly in <code><a href="../reference/escalc.html">escalc()</a></code> when the user has not made use of the <code>data</code> argument (thanks to Jarrett Byrnes for bringing this to my attention)</p></li>
-<li><p>added <code><a href="https://rdrr.io/r/base/plot.html">plot()</a></code> function for cumulative random-effects models results as obtained with the <code><a href="../reference/cumul.html">cumul.rma.uni()</a></code> function; the plot shows the model estimate on the x-axis and the corresponding tau^2 estimate on the y-axis in the cumulative order of the results</p></li>
+<li><p>added <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> function for cumulative random-effects models results as obtained with the <code><a href="../reference/cumul.html">cumul.rma.uni()</a></code> function; the plot shows the model estimate on the x-axis and the corresponding tau^2 estimate on the y-axis in the cumulative order of the results</p></li>
 <li><p>fixed the omitted offset term in the underlying model fitted by the <code><a href="../reference/rma.glmm.html">rma.glmm()</a></code> function when <code>method="ML"</code>, <code>measure="IRR"</code>, and <code>model="UM.FS"</code>, that is, when fitting a mixed-effects Poisson regression model with fixed study effects to two-group event count data (thanks to Peter Konings for pointing out this error)</p></li>
 <li><p>added two new datasets (<code>dat.bourassa1996</code>, <code>dat.riley2003</code>)</p></li>
 <li><p>added function <code><a href="../reference/replmiss.html">replmiss()</a></code> (just a useful helper function)</p></li>
@@ -459,8 +460,8 @@
 <li><p><code><a href="../reference/rma.mv.html">rma.mv()</a></code> now has a new argument <code>Rscale</code> which can be used to control how matrices specified via the <code>R</code> argument are scaled (see docs for more details)</p></li>
 <li><p><code><a href="../reference/rma.mv.html">rma.mv()</a></code> now only checks for missing values in the rows of the lower triangular part of the <code>V</code> matrix (including the diagonal); this way, if <code>Vi = matrix(c(.5,NA,NA,NA), nrow=2, ncol=2)</code> is the var-cov matrix of the sampling errors for a particular study with two outcomes, then only the second row/column needs to be removed before the model fitting (and not the entire study)</p></li>
 <li><p>added five new datasets (<code>dat.begg1989</code>, <code>dat.ishak2007</code>, <code>dat.fine1993</code>, <code>dat.konstantopoulos2011</code>, and <code>dat.hasselblad1998</code>) to provide further illustrations of the use of the <code><a href="../reference/rma.mv.html">rma.mv()</a></code> function (for meta-analyses combining controlled and uncontrolled studies, for meta-analyses of longitudinal studies, for multilevel meta-analyses, and for network meta-analyses / mixed treatment comparison meta-analyses)</p></li>
-<li><p>added <code><a href="../reference/residuals.rma.html">rstandard.rma.mv()</a></code> function to compute standardized residuals for models fitted with the <code><a href="../reference/rma.mv.html">rma.mv()</a></code> function (<code><a href="../reference/residuals.rma.html">rstudent.rma.mv()</a></code> to be added at a later point); also added <code><a href="../reference/influence.rma.mv.html">hatvalues.rma.mv()</a></code> for computing the hat values and <code><a href="../reference/weights.rma.html">weights.rma.uni()</a></code> for computing the weights (i.e., the diagonal elements of the weight matrix)</p></li>
-<li><p>the various <code><a href="../reference/weights.rma.html">weights()</a></code> functions now have a new argument <code>type</code> to indicate whether only the diagonal elements of the weight matrix (default) or the entire weight matrix should be returned</p></li>
+<li><p>added <code><a href="../reference/residuals.rma.html">rstandard.rma.mv()</a></code> function to compute standardized residuals for models fitted with the <code><a href="../reference/rma.mv.html">rma.mv()</a></code> function (<code><a href="../reference/residuals.rma.html">rstudent.rma.mv()</a></code> to be added at a later point); also added <code><a href="../reference/influence.rma.mv.html">hatvalues.rma.mv()</a></code> for computing the hat values and <code><a href="../reference/weights.rma.uni.html">weights.rma.uni()</a></code> for computing the weights (i.e., the diagonal elements of the weight matrix)</p></li>
+<li><p>the various <code><a href="../reference/weights.rma.uni.html">weights()</a></code> functions now have a new argument <code>type</code> to indicate whether only the diagonal elements of the weight matrix (default) or the entire weight matrix should be returned</p></li>
 <li><p>the various <code><a href="../reference/influence.rma.uni.html">hatvalues()</a></code> functions now have a new argument <code>type</code> to indicate whether only the diagonal elements of the hat matrix (default) or the entire hat matrix should be returned</p></li>
 <li><p><code><a href="../reference/predict.rma.html">predict.rma()</a></code> function now works properly for <code>rma.mv</code> objects (also has a new argument <code>tau2.levels</code> to specify, where applicable, the levels of the inner factor when computing prediction intervals)</p></li>
 <li><p><code><a href="../reference/forest.rma.html">forest.rma()</a></code> function now provides a bit more control over the color of the summary polygon and is now compatible with <code>rma.mv</code> objects; also, has a new argument <code>lty</code>, which provides more control over the line type for the individual CIs and the prediction interval</p></li>
@@ -471,8 +472,8 @@
 <li><p><code>cumul.mh()</code> and <code>cumul.peto()</code> now get the order of the studies right when there are missing values in the data</p></li>
 <li><p>the <code>transf</code> argument of <code><a href="../reference/leave1out.html">leave1out.rma.mh()</a></code>, <code><a href="../reference/leave1out.html">leave1out.rma.peto()</a></code>, <code><a href="../reference/cumul.html">cumul.rma.mh()</a></code>, and <code><a href="../reference/cumul.html">cumul.rma.peto()</a></code> should now be used to specify the actual function for the transformation (the former behavior of setting this argument to <code>TRUE</code> to exponentiate log RRs, log ORs, or log IRRs still works for back-compatibility); this is more consistent with how the <code><a href="../reference/cumul.html">cumul.rma.uni()</a></code> and <code><a href="../reference/leave1out.html">leave1out.rma.uni()</a></code> functions work and is also more flexible</p></li>
 <li><p>added <code><a href="../reference/bldiag.html">bldiag()</a></code> function to construct a block diagonal matrix from (a list of) matrices (may be needed to construct the <code>V</code> matrix when using the <code><a href="../reference/rma.mv.html">rma.mv()</a></code> function); <code>bdiag()</code> function from the <code>Matrix</code> package does the same thing, but creates sparse matrix objects</p></li>
-<li><p><code><a href="../reference/profile.rma.html">profile.rma.mv()</a></code> now has a <code>startmethod</code> argument; by setting this to <code>"prev"</code>, successive model fits are started at the parameter estimates from the previous model fit; this may speed things up a bit; also, the method for automatically choosing the <code>xlim</code> values has been changed</p></li>
-<li><p>slight improvement to <code><a href="../reference/profile.rma.html">profile.rma.mv()</a></code> function, which would throw an error if the last model fit did not converge</p></li>
+<li><p><code><a href="../reference/profile.rma.uni.html">profile.rma.mv()</a></code> now has a <code>startmethod</code> argument; by setting this to <code>"prev"</code>, successive model fits are started at the parameter estimates from the previous model fit; this may speed things up a bit; also, the method for automatically choosing the <code>xlim</code> values has been changed</p></li>
+<li><p>slight improvement to <code><a href="../reference/profile.rma.uni.html">profile.rma.mv()</a></code> function, which would throw an error if the last model fit did not converge</p></li>
 <li><p>added a new dataset (<code>dat.linde2005</code>) for replication of the analyses in Viechtbauer (2007)</p></li>
 <li><p>added a new dataset (<code>dat.molloy2014</code>) for illustrating the meta-analysis of (r-to-z transformed) correlation coefficients</p></li>
 <li><p>added a new dataset (<code>dat.gibson2002</code>) to illustrate the combined analysis of standardized mean differences and probit transformed risk differences</p></li>
@@ -616,7 +617,7 @@
 <li><p>completely rewrote the <code><a href="../reference/funnel.html">funnel.rma()</a></code> function which now supports many more options for the values to put on the y-axis; <code><a href="../reference/trimfill.html">trimfill.rma.uni()</a></code> function was adapted accordingly</p></li>
 <li><p>removed the <code>ni</code> argument from the <code><a href="../reference/regtest.html">regtest.rma()</a></code> function; instead, sample sizes can now be explicitly specified via the <code>ni</code> argument when using the <code><a href="../reference/rma.uni.html">rma.uni()</a></code> function (i.e., when <code>measure="GEN"</code>); the <code><a href="../reference/escalc.html">escalc()</a></code> function also now adds information on the <code>ni</code> values to the resulting data frame (as an attribute of the <code>yi</code> variable), so, if possible, this information is passed on to <code><a href="../reference/regtest.html">regtest.rma()</a></code></p></li>
 <li><p>added switch so that <code><a href="../reference/regtest.html">regtest()</a></code> can also provide the full results from the fitted model (thanks to Michael Dewey for the suggestion)</p></li>
-<li><p><code><a href="../reference/weights.rma.html">weights.rma.mh()</a></code> now shows the weights in % as intended (thanks to Gavin Stewart for pointing out this error)</p></li>
+<li><p><code><a href="../reference/weights.rma.uni.html">weights.rma.mh()</a></code> now shows the weights in % as intended (thanks to Gavin Stewart for pointing out this error)</p></li>
 <li><p>more flexible handling of the <code>digits</code> argument in the various forest functions</p></li>
 <li><p>forest functions now use <code><a href="https://rdrr.io/r/base/pretty.html">pretty()</a></code> by default to set the x-axis tick locations (<code>alim</code> and <code>at</code> arguments can still be used for complete control)</p></li>
 <li><p>studies that are considered to be ‘influential’ are now marked with an asterisk when printing the results returned by the <code><a href="../reference/influence.rma.uni.html">influence.rma.uni()</a></code> function (see the documentation of this function for details on how such studies are identified)</p></li>
@@ -627,7 +628,7 @@
 <li><p>added proper <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> method for objects generated by the <code><a href="../reference/confint.rma.html">confint.rma.uni()</a></code>, <code><a href="../reference/confint.rma.html">confint.rma.mh()</a></code>, and <code><a href="../reference/confint.rma.html">confint.rma.peto()</a></code> functions</p></li>
 <li><p>when <code>transf</code> or <code>atransf</code> argument was a monotonically <em>decreasing</em> function, then confidence and prediction interval bounds were in reversed order; various functions now check for this and order the bounds correctly</p></li>
 <li><p><code><a href="../reference/trimfill.html">trimfill.rma.uni()</a></code> now only prints information about the number of imputed studies when actually printing the model object</p></li>
-<li><p><code><a href="../reference/qqnorm.rma.html">qqnorm.rma.uni()</a></code>, <code><a href="../reference/qqnorm.rma.html">qqnorm.rma.mh()</a></code>, and <code><a href="../reference/qqnorm.rma.html">qqnorm.rma.peto()</a></code> functions now have a new argument called <code>label</code>, which allows for labeling of points; the functions also now return (invisibly) the x and y coordinates of the points drawn</p></li>
+<li><p><code><a href="../reference/qqnorm.rma.uni.html">qqnorm.rma.uni()</a></code>, <code><a href="../reference/qqnorm.rma.uni.html">qqnorm.rma.mh()</a></code>, and <code><a href="../reference/qqnorm.rma.uni.html">qqnorm.rma.peto()</a></code> functions now have a new argument called <code>label</code>, which allows for labeling of points; the functions also now return (invisibly) the x and y coordinates of the points drawn</p></li>
 <li><p><code><a href="../reference/rma.mh.html">rma.mh()</a></code> with <code>measure="RD"</code> now computes the standard error of the estimated risk difference based on Sato, Greenland, &amp; Robins (1989), which provides a consistent estimate under both large-stratum and sparse-data limiting models</p></li>
 <li><p>the restricted maximum likelihood (REML) is now calculated using the full likelihood equation (without leaving out additive constants)</p></li>
 <li><p>the model deviance is now calculated as -2 times the difference between the model log-likelihood and the log-likelihood under the saturated model (this is a more appropriate definition of the deviance than just taking -2 times the model log-likelihood)</p></li>
@@ -718,8 +719,8 @@
 <li><p>some additional examples have been added to the help files for the forest and addpoly functions to demonstrate how to create more complex displays with these functions</p></li>
 <li><p>added <code>showweight</code> argument to the <code><a href="../reference/forest.default.html">forest.default()</a></code> and <code><a href="../reference/forest.rma.html">forest.rma()</a></code> functions</p></li>
 <li><p><code><a href="../reference/cumul.html">cumul()</a></code> functions not showing all of the output columns when using fixed-effects models has been corrected</p></li>
-<li><p><code><a href="../reference/weights.rma.html">weights.rma.uni()</a></code> function now handles <code>NA</code>s appropriately</p></li>
-<li><p><code><a href="../reference/weights.rma.html">weights.rma.mh()</a></code> and <code><a href="../reference/weights.rma.html">weights.rma.peto()</a></code> functions added</p></li>
+<li><p><code><a href="../reference/weights.rma.uni.html">weights.rma.uni()</a></code> function now handles <code>NA</code>s appropriately</p></li>
+<li><p><code><a href="../reference/weights.rma.uni.html">weights.rma.mh()</a></code> and <code><a href="../reference/weights.rma.uni.html">weights.rma.peto()</a></code> functions added</p></li>
 <li><p><code><a href="../reference/fitstats.html">logLik.rma()</a></code> function now behaves more like other <code><a href="https://rdrr.io/r/stats/logLik.html">logLik()</a></code> functions (such as <code><a href="https://rdrr.io/r/stats/logLik.html">logLik.lm()</a></code> and <code>logLik.lme()</code>)</p></li>
 </ul>
 </div>
@@ -754,7 +755,7 @@
 <li><p><code><a href="../reference/funnel.html">funnel()</a></code> function now has more arguments (e.g., <code>atransf</code>, <code>at</code>) providing more control over the display of the x-axis</p></li>
 <li><p><code><a href="../reference/predict.rma.html">predict()</a></code> function now has its own <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> method and has a new argument called <code>addx</code>, which adds the values of the moderator variables to the returned object (when <code>addx=TRUE</code>)</p></li>
 <li><p>functions now properly handle the <code>na.action</code> <code>"na.pass"</code> (treated essentially like <code>"na.exclude"</code>)</p></li>
-<li><p>added method for <code><a href="../reference/weights.rma.html">weights()</a></code> to extract the weights used when fitting models with <code><a href="../reference/rma.uni.html">rma.uni()</a></code></p></li>
+<li><p>added method for <code><a href="../reference/weights.rma.uni.html">weights()</a></code> to extract the weights used when fitting models with <code><a href="../reference/rma.uni.html">rma.uni()</a></code></p></li>
 <li><p>some small improvements to the documentation</p></li>
 </ul>
 </div>
@@ -789,7 +790,7 @@
 <li><p>forest plots now order the studies so that the first study is at the top of the plot and the last study at the bottom (the order can still be set with the <code>order</code> or <code>subset</code> argument)</p></li>
 <li><p>added <code><a href="../reference/cumul.html">cumul()</a></code> function for cumulative meta-analyses (with a corresponding <code><a href="../reference/forest.html">forest()</a></code> method to plot the cumulative results)</p></li>
 <li><p>added <code><a href="../reference/leave1out.html">leave1out()</a></code> function for leave-one-out diagnostics</p></li>
-<li><p>added option to <code><a href="../reference/qqnorm.rma.html">qqnorm.rma.uni()</a></code> so that the user can choose whether to apply the Bonferroni correction to the bounds of the pseudo confidence envelope</p></li>
+<li><p>added option to <code><a href="../reference/qqnorm.rma.uni.html">qqnorm.rma.uni()</a></code> so that the user can choose whether to apply the Bonferroni correction to the bounds of the pseudo confidence envelope</p></li>
 <li><p>some internal changes to the class and methods names</p></li>
 <li><p>some small corrections to the documentation</p></li>
 </ul>
@@ -861,7 +862,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-47</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-48</span>
       </span>
     </div>
 
@@ -135,9 +135,9 @@
     <p>The function converts summary data in vector format to the corresponding long format. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
     </div>
 
-    <pre class="usage"><span class='fu'>to.long</span>(<span class='no'>measure</span>, <span class='no'>ai</span>, <span class='no'>bi</span>, <span class='no'>ci</span>, <span class='no'>di</span>, <span class='no'>n1i</span>, <span class='no'>n2i</span>, <span class='no'>x1i</span>, <span class='no'>x2i</span>, <span class='no'>t1i</span>, <span class='no'>t2i</span>,
-        <span class='no'>m1i</span>, <span class='no'>m2i</span>, <span class='no'>sd1i</span>, <span class='no'>sd2i</span>, <span class='no'>xi</span>, <span class='no'>mi</span>, <span class='no'>ri</span>, <span class='no'>ti</span>, <span class='no'>sdi</span>, <span class='no'>ni</span>, <span class='no'>data</span>, <span class='no'>slab</span>, <span class='no'>subset</span>,
-        <span class='kw'>add</span><span class='kw'>=</span><span class='fl'>1</span>/<span class='fl'>2</span>, <span class='kw'>to</span><span class='kw'>=</span><span class='st'>"none"</span>, <span class='kw'>drop00</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>vlong</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>append</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='no'>var.names</span>)</pre>
+    <pre class="usage"><span class='fu'>to.long</span><span class='op'>(</span><span class='va'>measure</span>, <span class='va'>ai</span>, <span class='va'>bi</span>, <span class='va'>ci</span>, <span class='va'>di</span>, <span class='va'>n1i</span>, <span class='va'>n2i</span>, <span class='va'>x1i</span>, <span class='va'>x2i</span>, <span class='va'>t1i</span>, <span class='va'>t2i</span>,
+        <span class='va'>m1i</span>, <span class='va'>m2i</span>, <span class='va'>sd1i</span>, <span class='va'>sd2i</span>, <span class='va'>xi</span>, <span class='va'>mi</span>, <span class='va'>ri</span>, <span class='va'>ti</span>, <span class='va'>sdi</span>, <span class='va'>ni</span>, <span class='va'>data</span>, <span class='va'>slab</span>, <span class='va'>subset</span>,
+        add<span class='op'>=</span><span class='fl'>1</span><span class='op'>/</span><span class='fl'>2</span>, to<span class='op'>=</span><span class='st'>"none"</span>, drop00<span class='op'>=</span><span class='cn'>FALSE</span>, vlong<span class='op'>=</span><span class='cn'>FALSE</span>, append<span class='op'>=</span><span class='cn'>TRUE</span>, <span class='va'>var.names</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -280,6 +280,9 @@
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data frame with either \(k\), \(2 \times k\), or \(4 \times k\) rows and an appropriate number of columns (depending on the data type) with the data in long format. If <code>append=TRUE</code> and a data frame was specified via the <code>data</code> argument, then the data in long format are appended to the original data frame (with rows repeated an appropriate number of times).</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Wolfgang Viechtbauer <a href='mailto:wvb@metafor-project.org'>wvb@metafor-project.org</a> <a href='http://www.metafor-project.org'>http://www.metafor-project.org</a></p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='https://doi.org/10.18637/jss.v036.i03'>https://doi.org/10.18637/jss.v036.i03</a></p>
@@ -289,8 +292,9 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### convert data to long format</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'>to.long</span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>)
-<span class='no'>dat</span></div><div class='output co'>#&gt;    trial               author year tpos  tneg cpos  cneg ablat      alloc study
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'>to.long</span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"OR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>)</span>
+<span class='va'>dat</span>
+</div><div class='output co'>#&gt;    trial               author year tpos  tneg cpos  cneg ablat      alloc study
 #&gt; 1      1              Aronson 1948    4   119   11   128    44     random     1
 #&gt; 2      1              Aronson 1948    4   119   11   128    44     random     1
 #&gt; 3      2     Ferguson &amp; Simes 1949    6   300   29   274    55     random     2
@@ -345,8 +349,9 @@
 #&gt; 25     1   27 16886
 #&gt; 26     2   29 17825</div><div class='input'>
 <span class='co'>### extra long format</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'>to.long</span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>, <span class='kw'>vlong</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
-<span class='no'>dat</span></div><div class='output co'>#&gt;    trial               author year tpos  tneg cpos  cneg ablat      alloc study
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'>to.long</span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"OR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span>, vlong<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='va'>dat</span>
+</div><div class='output co'>#&gt;    trial               author year tpos  tneg cpos  cneg ablat      alloc study
 #&gt; 1      1              Aronson 1948    4   119   11   128    44     random     1
 #&gt; 2      1              Aronson 1948    4   119   11   128    44     random     1
 #&gt; 3      1              Aronson 1948    4   119   11   128    44     random     1
@@ -453,9 +458,10 @@
 #&gt; 51     2       1    29
 #&gt; 52     2       2 17825</div><div class='input'>
 <span class='co'>### convert data to long format</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'>to.long</span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"IRR"</span>, <span class='kw'>x1i</span><span class='kw'>=</span><span class='no'>x1i</span>, <span class='kw'>x2i</span><span class='kw'>=</span><span class='no'>x2i</span>, <span class='kw'>t1i</span><span class='kw'>=</span><span class='no'>t1i</span>, <span class='kw'>t2i</span><span class='kw'>=</span><span class='no'>t2i</span>,
-               <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.hart1999</span>, <span class='kw'>var.names</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"id"</span>, <span class='st'>"group"</span>, <span class='st'>"events"</span>, <span class='st'>"ptime"</span>))
-<span class='no'>dat</span></div><div class='output co'>#&gt;    trial  study year x1i n1i t1i x2i n2i t2i compgrp  prevtype   trinr id group
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'>to.long</span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"IRR"</span>, x1i<span class='op'>=</span><span class='va'>x1i</span>, x2i<span class='op'>=</span><span class='va'>x2i</span>, t1i<span class='op'>=</span><span class='va'>t1i</span>, t2i<span class='op'>=</span><span class='va'>t2i</span>,
+               data<span class='op'>=</span><span class='va'>dat.hart1999</span>, var.names<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"id"</span>, <span class='st'>"group"</span>, <span class='st'>"events"</span>, <span class='st'>"ptime"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>dat</span>
+</div><div class='output co'>#&gt;    trial  study year x1i n1i t1i x2i n2i t2i compgrp  prevtype   trinr id group
 #&gt; 1      1 AFASAK 1989   9 335 413  19 336 398 placebo   primary 2.8-4.2  1     1
 #&gt; 2      1 AFASAK 1989   9 335 413  19 336 398 placebo   primary 2.8-4.2  1     2
 #&gt; 3      2   SPAF 1991   8 210 263  19 211 245 placebo   primary 2.0-4.5  2     1
@@ -482,10 +488,11 @@
 #&gt; 11     20   507
 #&gt; 12     50   405</div><div class='input'>
 <span class='co'>### convert data to long format</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'>to.long</span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"MD"</span>, <span class='kw'>m1i</span><span class='kw'>=</span><span class='no'>m1i</span>, <span class='kw'>sd1i</span><span class='kw'>=</span><span class='no'>sd1i</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>n1i</span>,
-               <span class='kw'>m2i</span><span class='kw'>=</span><span class='no'>m2i</span>, <span class='kw'>sd2i</span><span class='kw'>=</span><span class='no'>sd2i</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>n2i</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.normand1999</span>,
-               <span class='kw'>var.names</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"id"</span>, <span class='st'>"group"</span>, <span class='st'>"mean"</span>, <span class='st'>"sd"</span>, <span class='st'>"n"</span>))
-<span class='no'>dat</span></div><div class='output co'>#&gt;    study             source n1i m1i sd1i n2i m2i sd2i id group mean sd   n
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'>to.long</span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"MD"</span>, m1i<span class='op'>=</span><span class='va'>m1i</span>, sd1i<span class='op'>=</span><span class='va'>sd1i</span>, n1i<span class='op'>=</span><span class='va'>n1i</span>,
+               m2i<span class='op'>=</span><span class='va'>m2i</span>, sd2i<span class='op'>=</span><span class='va'>sd2i</span>, n2i<span class='op'>=</span><span class='va'>n2i</span>, data<span class='op'>=</span><span class='va'>dat.normand1999</span>,
+               var.names<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"id"</span>, <span class='st'>"group"</span>, <span class='st'>"mean"</span>, <span class='st'>"sd"</span>, <span class='st'>"n"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>dat</span>
+</div><div class='output co'>#&gt;    study             source n1i m1i sd1i n2i m2i sd2i id group mean sd   n
 #&gt; 1      1          Edinburgh 155  55   47 156  75   64  1     1   55 47 155
 #&gt; 2      1          Edinburgh 155  55   47 156  75   64  1     2   75 64 156
 #&gt; 3      2     Orpington-Mild  31  27    7  32  29    4  2     1   27  7  31
@@ -519,7 +526,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-47</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-48</span>
       </span>
     </div>
 
@@ -135,7 +135,7 @@
     <p>Results from 14 studies on the effectiveness of hyperdynamic therapy for treating cerebral vasospasm.</p>
     </div>
 
-    <pre class="usage"><span class='no'>dat.pritz1997</span></pre>
+    <pre class="usage"><span class='va'>dat.pritz1997</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
@@ -160,8 +160,9 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat' and examine data</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.pritz1997</span>
-<span class='no'>dat</span></div><div class='output co'>#&gt;    study              authors xi ni
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.pritz1997</span>
+<span class='va'>dat</span>
+</div><div class='output co'>#&gt;    study              authors xi ni
 #&gt; 1      1     Giannotta et al. 16 17
 #&gt; 2      2  Haraguchi and Ebina 10 12
 #&gt; 3      3    Swift and Solomon  4  8
@@ -177,15 +178,17 @@
 #&gt; 13    13       Shimoda et al. 58 68
 #&gt; 14    14       Solomon et al.  6 10</div><div class='input'>
 <span class='co'>### computation of "weighted average" in Zhou et al. (1999), Table IV</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"PR"</span>, <span class='kw'>xi</span><span class='kw'>=</span><span class='no'>xi</span>, <span class='kw'>ni</span><span class='kw'>=</span><span class='no'>ni</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='fl'>0</span>)
-<span class='no'>theta.hat</span>    <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>dat</span>$<span class='no'>ni</span> * <span class='no'>dat</span>$<span class='no'>yi</span>) / <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>dat</span>$<span class='no'>ni</span>)
-<span class='no'>se.theta.hat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>dat</span>$<span class='no'>ni</span>^<span class='fl'>2</span> * <span class='no'>dat</span>$<span class='no'>vi</span>) / <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>dat</span>$<span class='no'>ni</span>)^<span class='fl'>2</span>)
-<span class='no'>ci.lb</span>        <span class='kw'>&lt;-</span> <span class='no'>theta.hat</span> - <span class='fl'>1.96</span> * <span class='no'>se.theta.hat</span>
-<span class='no'>ci.ub</span>        <span class='kw'>&lt;-</span> <span class='no'>theta.hat</span> + <span class='fl'>1.96</span> * <span class='no'>se.theta.hat</span>
-<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>estimate</span> <span class='kw'>=</span> <span class='no'>theta.hat</span>, <span class='kw'>se</span> <span class='kw'>=</span> <span class='no'>se.theta.hat</span>, <span class='kw'>ci.lb</span> <span class='kw'>=</span> <span class='no'>ci.lb</span>, <span class='kw'>ci.ub</span> <span class='kw'>=</span> <span class='no'>ci.ub</span>), <span class='fl'>4</span>)</div><div class='output co'>#&gt; estimate       se    ci.lb    ci.ub 
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"PR"</span>, xi<span class='op'>=</span><span class='va'>xi</span>, ni<span class='op'>=</span><span class='va'>ni</span>, data<span class='op'>=</span><span class='va'>dat</span>, add<span class='op'>=</span><span class='fl'>0</span><span class='op'>)</span>
+<span class='va'>theta.hat</span>    <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>ni</span> <span class='op'>*</span> <span class='va'>dat</span><span class='op'>$</span><span class='va'>yi</span><span class='op'>)</span> <span class='op'>/</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>ni</span><span class='op'>)</span>
+<span class='va'>se.theta.hat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>ni</span><span class='op'>^</span><span class='fl'>2</span> <span class='op'>*</span> <span class='va'>dat</span><span class='op'>$</span><span class='va'>vi</span><span class='op'>)</span> <span class='op'>/</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>ni</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span><span class='op'>)</span>
+<span class='va'>ci.lb</span>        <span class='op'>&lt;-</span> <span class='va'>theta.hat</span> <span class='op'>-</span> <span class='fl'>1.96</span> <span class='op'>*</span> <span class='va'>se.theta.hat</span>
+<span class='va'>ci.ub</span>        <span class='op'>&lt;-</span> <span class='va'>theta.hat</span> <span class='op'>+</span> <span class='fl'>1.96</span> <span class='op'>*</span> <span class='va'>se.theta.hat</span>
+<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>estimate <span class='op'>=</span> <span class='va'>theta.hat</span>, se <span class='op'>=</span> <span class='va'>se.theta.hat</span>, ci.lb <span class='op'>=</span> <span class='va'>ci.lb</span>, ci.ub <span class='op'>=</span> <span class='va'>ci.ub</span><span class='op'>)</span>, <span class='fl'>4</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; estimate       se    ci.lb    ci.ub 
 #&gt;   0.7546   0.0224   0.7106   0.7986 </div><div class='input'>
 <span class='co'>### this is identical to a FE model with sample size weights</span>
-<span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>weights</span><span class='kw'>=</span><span class='no'>ni</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"FE"</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: There are outcomes with non-positive sampling variances.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Cannot compute Q-test, I^2, or H^2 when there are non-positive sampling variances in the data.</span></div><div class='output co'>#&gt; 
+<span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, weights<span class='op'>=</span><span class='va'>ni</span>, method<span class='op'>=</span><span class='st'>"FE"</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: There are outcomes with non-positive sampling variances.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Cannot compute Q-test, I^2, or H^2 when there are non-positive sampling variances in the data.</span></div><div class='output co'>#&gt; 
 #&gt; Fixed-Effects Model (k = 14)
 #&gt; 
 #&gt; Model Results:
@@ -197,22 +200,25 @@
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### random-effects model with raw proportions</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"PR"</span>, <span class='kw'>xi</span><span class='kw'>=</span><span class='no'>xi</span>, <span class='kw'>ni</span><span class='kw'>=</span><span class='no'>ni</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
-<span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; 
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"PR"</span>, xi<span class='op'>=</span><span class='va'>xi</span>, ni<span class='op'>=</span><span class='va'>ni</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
+<span class='fu'><a href='predict.rma.html'>predict</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;    pred     se  ci.lb  ci.ub  pi.lb  pi.ub 
 #&gt;  0.7968 0.0423 0.7138 0.8797 0.5306 1.0629 
 #&gt; </div><div class='input'>
 <span class='co'>### random-effects model with logit transformed proportions</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"PLO"</span>, <span class='kw'>xi</span><span class='kw'>=</span><span class='no'>xi</span>, <span class='kw'>ni</span><span class='kw'>=</span><span class='no'>ni</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
-<span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>transf.ilogit</span>)</div><div class='output co'>#&gt; 
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"PLO"</span>, xi<span class='op'>=</span><span class='va'>xi</span>, ni<span class='op'>=</span><span class='va'>ni</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
+<span class='fu'><a href='predict.rma.html'>predict</a></span><span class='op'>(</span><span class='va'>res</span>, transf<span class='op'>=</span><span class='va'>transf.ilogit</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;    pred  ci.lb  ci.ub  pi.lb  pi.ub 
 #&gt;  0.7575 0.6605 0.8337 0.4661 0.9179 
 #&gt; </div><div class='input'>
 <span class='co'>### mixed-effects logistic regression model</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.glmm.html'>rma.glmm</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"PLO"</span>, <span class='kw'>xi</span><span class='kw'>=</span><span class='no'>xi</span>, <span class='kw'>ni</span><span class='kw'>=</span><span class='no'>ni</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
-<span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>transf.ilogit</span>)</div><div class='output co'>#&gt; 
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.glmm.html'>rma.glmm</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"PLO"</span>, xi<span class='op'>=</span><span class='va'>xi</span>, ni<span class='op'>=</span><span class='va'>ni</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
+<span class='fu'><a href='predict.rma.html'>predict</a></span><span class='op'>(</span><span class='va'>res</span>, transf<span class='op'>=</span><span class='va'>transf.ilogit</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;    pred  ci.lb  ci.ub  pi.lb  pi.ub 
 #&gt;  0.7984 0.6924 0.8746 0.4426 0.9518 
 #&gt; </div></pre>
@@ -231,7 +237,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

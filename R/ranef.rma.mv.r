@@ -99,6 +99,7 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
          pred[abs(pred) < 100 * .Machine$double.eps] <- 0
          #vpred <- D - (DZtW %*% x$Z.S[[j]] %*% D - DZtW %*% x$X %*% stXWX %*% t(x$X) %*% W %*% x$Z.S[[j]] %*% D)
          vpred <- D - (DZtW %*% (I - Hmat) %*% x$Z.S[[j]] %*% D)
+         #vpred <- D - (DZtW %*% x$Z.S[[j]] %*% D) # same as lme4::ranef()
 
          se <- sqrt(diag(vpred))
          pi.lb <- c(pred - crit * se)

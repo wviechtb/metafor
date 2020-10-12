@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-47</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-48</span>
       </span>
     </div>
 
@@ -135,10 +135,10 @@
     <p>Function to create Baujat plots for objects of class <code>"rma"</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>baujat</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>baujat</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for rma</span>
-<span class='fu'>baujat</span>(<span class='no'>x</span>, <span class='no'>xlim</span>, <span class='no'>ylim</span>, <span class='no'>xlab</span>, <span class='no'>ylab</span>, <span class='no'>cex</span>, <span class='no'>symbol</span>, <span class='kw'>grid</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>progbar</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>baujat</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>xlim</span>, <span class='va'>ylim</span>, <span class='va'>xlab</span>, <span class='va'>ylab</span>, <span class='va'>cex</span>, <span class='va'>symbol</span>, grid<span class='op'>=</span><span class='cn'>TRUE</span>, progbar<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -200,6 +200,9 @@
    <dt>slab</dt><dd><p>the study labels.</p></dd>
    Note that the data frame is returned invisibly.
 
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Wolfgang Viechtbauer <a href='mailto:wvb@metafor-project.org'>wvb@metafor-project.org</a> <a href='http://www.metafor-project.org'>http://www.metafor-project.org</a></p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Baujat, B., Mahe, C., Pignon, J.-P., &amp; Hill, C. (2002). A graphical method for exploring heterogeneity in meta-analyses: Application to a meta-analysis of 65 trials. <em>Statistics in Medicine</em>, <b>21</b>(18), 2641--2652. <a href='https://doi.org/10.1002/sim.1221'>https://doi.org/10.1002/sim.1221</a></p>
@@ -210,19 +213,22 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### copy data from Pignon et al. (2000) into 'dat'</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.pignon2000</span>
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.pignon2000</span>
 
 <span class='co'>### compute estimated log hazard ratios and sampling variances</span>
-<span class='no'>dat</span>$<span class='no'>yi</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>dat</span>, <span class='no'>OmE</span>/<span class='no'>V</span>)
-<span class='no'>dat</span>$<span class='no'>vi</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>dat</span>, <span class='fl'>1</span>/<span class='no'>V</span>)
+<span class='va'>dat</span><span class='op'>$</span><span class='va'>yi</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>dat</span>, <span class='va'>OmE</span><span class='op'>/</span><span class='va'>V</span><span class='op'>)</span>
+<span class='va'>dat</span><span class='op'>$</span><span class='va'>vi</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>dat</span>, <span class='fl'>1</span><span class='op'>/</span><span class='va'>V</span><span class='op'>)</span>
 
 <span class='co'>### meta-analysis based on all 65 trials</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"FE"</span>, <span class='kw'>slab</span><span class='kw'>=</span><span class='no'>trial</span>)
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span>, method<span class='op'>=</span><span class='st'>"FE"</span>, slab<span class='op'>=</span><span class='va'>trial</span><span class='op'>)</span>
 
 <span class='co'>### create Baujat plot</span>
-<span class='fu'>baujat</span>(<span class='no'>res</span>)</div><div class='img'><img src='baujat-1.png' alt='' width='768' height='614' /></div><div class='input'>
+<span class='fu'>baujat</span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
+</div><div class='img'><img src='baujat-1.png' alt='' width='768' height='614' /></div><div class='input'>
 <span class='co'>### some variations of the plotting symbol</span>
-<span class='fu'>baujat</span>(<span class='no'>res</span>, <span class='kw'>symbol</span><span class='kw'>=</span><span class='fl'>19</span>)</div><div class='img'><img src='baujat-2.png' alt='' width='768' height='614' /></div><div class='input'><span class='fu'>baujat</span>(<span class='no'>res</span>, <span class='kw'>symbol</span><span class='kw'>=</span><span class='st'>"slab"</span>)</div><div class='img'><img src='baujat-3.png' alt='' width='768' height='614' /></div></pre>
+<span class='fu'>baujat</span><span class='op'>(</span><span class='va'>res</span>, symbol<span class='op'>=</span><span class='fl'>19</span><span class='op'>)</span>
+</div><div class='img'><img src='baujat-2.png' alt='' width='768' height='614' /></div><div class='input'><span class='fu'>baujat</span><span class='op'>(</span><span class='va'>res</span>, symbol<span class='op'>=</span><span class='st'>"slab"</span><span class='op'>)</span>
+</div><div class='img'><img src='baujat-3.png' alt='' width='768' height='614' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -238,7 +244,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

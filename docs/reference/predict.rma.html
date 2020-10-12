@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-47</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-48</span>
       </span>
     </div>
 
@@ -136,8 +136,8 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for rma</span>
-<span class='fu'>predict</span>(<span class='no'>object</span>, <span class='no'>newmods</span>, <span class='no'>intercept</span>, <span class='no'>tau2.levels</span>, <span class='no'>gamma2.levels</span>,
-        <span class='kw'>addx</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>level</span>, <span class='no'>digits</span>, <span class='no'>transf</span>, <span class='no'>targs</span>, <span class='kw'>vcov</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>predict</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>newmods</span>, <span class='va'>intercept</span>, <span class='va'>tau2.levels</span>, <span class='va'>gamma2.levels</span>,
+        addx<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>level</span>, <span class='va'>digits</span>, <span class='va'>transf</span>, <span class='va'>targs</span>, vcov<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -225,6 +225,9 @@
 <p>For random-effects models of the type that can be fitted with the <code><a href='rma.uni.html'>rma.uni</a></code> function, note that this differs slightly from Riley et al. (2001), who suggest to use a t-distribution with \(k-2\) degrees of freedom for constructing the prediction interval. Neither a normal, nor a t-distribution with \(k-1\) or \(k-2\) degrees of freedom is correct; all of these are approximations. The computations are done in the way described above, so that the prediction interval is identical to the confidence interval when \(\hat{\tau}^2 = 0\), which could be argued is the logical thing that should happen. If the prediction interval should be computed exactly as described by Riley et al. (2001), then one can use argument <code>pi.type="riley"</code>.</p>
 <p>The predicted values are based only on the fixed effects of the model. Best linear unbiased predictions (BLUPs) that combine the fitted values based on the fixed effects and the estimated contributions of the random effects can be obtained with <code><a href='blup.html'>blup.rma.uni</a></code> (currently only for objects of class <code>"rma.uni"</code>).</p>
 <p>When using the <code>transf</code> option, the transformation is applied to the predicted values and the corresponding interval bounds. The standard errors are omitted from the printed output. Also, <code>vcov=TRUE</code> is ignored when using the <code>transf</code> option.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Wolfgang Viechtbauer <a href='mailto:wvb@metafor-project.org'>wvb@metafor-project.org</a> <a href='http://www.metafor-project.org'>http://www.metafor-project.org</a></p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Hedges, L. V., &amp; Olkin, I. (1985). <em>Statistical methods for meta-analysis</em>. San Diego, CA: Academic Press.</p>
@@ -236,19 +239,21 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### meta-analysis of the log risk ratios using a random-effects model</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>)
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"RR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>)</span>
 
 <span class='co'>### average risk ratio with 95% CI</span>
-<span class='fu'>predict</span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>)</div><div class='output co'>#&gt; 
+<span class='fu'>predict</span><span class='op'>(</span><span class='va'>res</span>, transf<span class='op'>=</span><span class='va'>exp</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;    pred  ci.lb  ci.ub  pi.lb  pi.ub 
 #&gt;  0.4894 0.3441 0.6962 0.1546 1.5490 
 #&gt; </div><div class='input'>
 <span class='co'>### mixed-effects model with absolute latitude as a moderator</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>ablat</span>,
-           <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>)
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"RR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>ablat</span>,
+           data<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>)</span>
 
 <span class='co'>### predicted average risk ratios for given absolute latitude values</span>
-<span class='fu'>predict</span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>addx</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; 
+<span class='fu'>predict</span><span class='op'>(</span><span class='va'>res</span>, transf<span class='op'>=</span><span class='va'>exp</span>, addx<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;      pred  ci.lb  ci.ub  pi.lb  pi.ub X.intrcpt X.ablat 
 #&gt; 1  0.3574 0.2714 0.4705 0.1947 0.6560         1      44 
 #&gt; 2  0.2595 0.1749 0.3848 0.1328 0.5070         1      55 
@@ -265,7 +270,8 @@
 #&gt; 13 0.4922 0.3989 0.6073 0.2753 0.8799         1      33 
 #&gt; </div><div class='input'>
 <span class='co'>### predicted average risk ratios for 10-60 degrees absolute latitude</span>
-<span class='fu'>predict</span>(<span class='no'>res</span>, <span class='kw'>newmods</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>10</span>, <span class='fl'>20</span>, <span class='fl'>30</span>, <span class='fl'>40</span>, <span class='fl'>50</span>, <span class='fl'>60</span>), <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>)</div><div class='output co'>#&gt; 
+<span class='fu'>predict</span><span class='op'>(</span><span class='va'>res</span>, newmods<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='fl'>20</span>, <span class='fl'>30</span>, <span class='fl'>40</span>, <span class='fl'>50</span>, <span class='fl'>60</span><span class='op'>)</span>, transf<span class='op'>=</span><span class='va'>exp</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;     pred  ci.lb  ci.ub  pi.lb  pi.ub 
 #&gt; 1 0.9612 0.6668 1.3857 0.5000 1.8478 
 #&gt; 2 0.7185 0.5526 0.9343 0.3936 1.3117 
@@ -275,11 +281,12 @@
 #&gt; 6 0.2243 0.1423 0.3538 0.1105 0.4552 
 #&gt; </div><div class='input'>
 <span class='co'>### mixed-effects model with two moderators (absolute latitude and publication year)</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>,
-           <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>ablat</span> + <span class='no'>year</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>)
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"RR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>,
+           mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>ablat</span> <span class='op'>+</span> <span class='va'>year</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>)</span>
 
 <span class='co'>### predicted average risk ratios for 10 and 60 degrees latitude in 1950 and 1980</span>
-<span class='fu'>predict</span>(<span class='no'>res</span>, <span class='kw'>newmods</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>10</span>,<span class='fl'>60</span>,<span class='fl'>10</span>,<span class='fl'>60</span>),<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1950</span>,<span class='fl'>1950</span>,<span class='fl'>1980</span>,<span class='fl'>1980</span>)), <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>addx</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; 
+<span class='fu'>predict</span><span class='op'>(</span><span class='va'>res</span>, newmods<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>10</span>,<span class='fl'>60</span>,<span class='fl'>10</span>,<span class='fl'>60</span><span class='op'>)</span>,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1950</span>,<span class='fl'>1950</span>,<span class='fl'>1980</span>,<span class='fl'>1980</span><span class='op'>)</span><span class='op'>)</span>, transf<span class='op'>=</span><span class='va'>exp</span>, addx<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;     pred  ci.lb  ci.ub  pi.lb  pi.ub X.intrcpt X.ablat X.year 
 #&gt; 1 0.8995 0.3689 2.1933 0.2981 2.7146         1      10   1950 
 #&gt; 2 0.2217 0.1278 0.3847 0.0944 0.5208         1      60   1950 
@@ -287,11 +294,12 @@
 #&gt; 4 0.2348 0.1005 0.5481 0.0805 0.6843         1      60   1980 
 #&gt; </div><div class='input'>
 <span class='co'>### mixed-effects model with two moderators (one of which is a factor)</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>,
-           <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>ablat</span> + <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>alloc</span>), <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>)
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"RR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>,
+           mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>ablat</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>alloc</span><span class='op'>)</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>)</span>
 
 <span class='co'>### examine how the factor was actually coded for the studies in the dataset</span>
-<span class='fu'>predict</span>(<span class='no'>res</span>, <span class='kw'>addx</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; 
+<span class='fu'>predict</span><span class='op'>(</span><span class='va'>res</span>, addx<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;       pred     se   ci.lb   ci.ub   pi.lb   pi.ub X.intrcpt X.ablat 
 #&gt; 1  -1.1744 0.2137 -1.5932 -0.7557 -2.0293 -0.3196         1      44 
 #&gt; 2  -1.4745 0.2742 -2.0119 -0.9370 -2.3933 -0.5556         1      55 
@@ -323,30 +331,36 @@
 #&gt; </div><div class='input'>
 <span class='co'>### predictd average risk ratios at 30 degrees for the three factor levels</span>
 <span class='co'>### note: the contrast (dummy) variables need to specified explicitly here</span>
-<span class='fu'>predict</span>(<span class='no'>res</span>, <span class='kw'>newmods</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>30</span>, <span class='fl'>0</span>, <span class='fl'>0</span>), <span class='kw'>addx</span><span class='kw'>=</span><span class='fl'>TRUE</span>)   <span class='co'># for alternate  allocation</span></div><div class='output co'>#&gt; 
+<span class='fu'>predict</span><span class='op'>(</span><span class='va'>res</span>, newmods<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>30</span>, <span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span>, addx<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>   <span class='co'># for alternate  allocation</span>
+</div><div class='output co'>#&gt; 
 #&gt;     pred     se   ci.lb  ci.ub   pi.lb  pi.ub X.intrcpt X.ablat 
 #&gt;  -0.5251 0.2923 -1.0980 0.0478 -1.4651 0.4149         1      30 
 #&gt;  X.factor.alloc.random X.factor.alloc.systematic 
 #&gt;                      0                         0 
-#&gt; </div><div class='input'><span class='fu'>predict</span>(<span class='no'>res</span>, <span class='kw'>newmods</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>30</span>, <span class='fl'>1</span>, <span class='fl'>0</span>), <span class='kw'>addx</span><span class='kw'>=</span><span class='fl'>TRUE</span>)   <span class='co'># for random     allocation</span></div><div class='output co'>#&gt; 
+#&gt; </div><div class='input'><span class='fu'>predict</span><span class='op'>(</span><span class='va'>res</span>, newmods<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>30</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span>, addx<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>   <span class='co'># for random     allocation</span>
+</div><div class='output co'>#&gt; 
 #&gt;     pred     se   ci.lb   ci.ub   pi.lb  pi.ub X.intrcpt X.ablat 
 #&gt;  -0.7926 0.1941 -1.1729 -0.4122 -1.6293 0.0442         1      30 
 #&gt;  X.factor.alloc.random X.factor.alloc.systematic 
 #&gt;                      1                         0 
-#&gt; </div><div class='input'><span class='fu'>predict</span>(<span class='no'>res</span>, <span class='kw'>newmods</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>30</span>, <span class='fl'>0</span>, <span class='fl'>1</span>), <span class='kw'>addx</span><span class='kw'>=</span><span class='fl'>TRUE</span>)   <span class='co'># for systematic allocation</span></div><div class='output co'>#&gt; 
+#&gt; </div><div class='input'><span class='fu'>predict</span><span class='op'>(</span><span class='va'>res</span>, newmods<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>30</span>, <span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span>, addx<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>   <span class='co'># for systematic allocation</span>
+</div><div class='output co'>#&gt; 
 #&gt;     pred     se   ci.lb  ci.ub   pi.lb  pi.ub X.intrcpt X.ablat 
 #&gt;  -0.4666 0.2420 -0.9410 0.0078 -1.3501 0.4168         1      30 
 #&gt;  X.factor.alloc.random X.factor.alloc.systematic 
 #&gt;                      0                         1 
 #&gt; </div><div class='input'>
 <span class='co'>### can also use named vector with arbitrary order and abbreviated variable names</span>
-<span class='fu'>predict</span>(<span class='no'>res</span>, <span class='kw'>newmods</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>sys</span><span class='kw'>=</span><span class='fl'>0</span>, <span class='kw'>ran</span><span class='kw'>=</span><span class='fl'>0</span>, <span class='kw'>abl</span><span class='kw'>=</span><span class='fl'>30</span>))</div><div class='output co'>#&gt; 
+<span class='fu'>predict</span><span class='op'>(</span><span class='va'>res</span>, newmods<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>sys<span class='op'>=</span><span class='fl'>0</span>, ran<span class='op'>=</span><span class='fl'>0</span>, abl<span class='op'>=</span><span class='fl'>30</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;     pred     se   ci.lb  ci.ub   pi.lb  pi.ub 
 #&gt;  -0.5251 0.2923 -1.0980 0.0478 -1.4651 0.4149 
-#&gt; </div><div class='input'><span class='fu'>predict</span>(<span class='no'>res</span>, <span class='kw'>newmods</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>sys</span><span class='kw'>=</span><span class='fl'>0</span>, <span class='kw'>ran</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>abl</span><span class='kw'>=</span><span class='fl'>30</span>))</div><div class='output co'>#&gt; 
+#&gt; </div><div class='input'><span class='fu'>predict</span><span class='op'>(</span><span class='va'>res</span>, newmods<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>sys<span class='op'>=</span><span class='fl'>0</span>, ran<span class='op'>=</span><span class='fl'>1</span>, abl<span class='op'>=</span><span class='fl'>30</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;     pred     se   ci.lb   ci.ub   pi.lb  pi.ub 
 #&gt;  -0.7926 0.1941 -1.1729 -0.4122 -1.6293 0.0442 
-#&gt; </div><div class='input'><span class='fu'>predict</span>(<span class='no'>res</span>, <span class='kw'>newmods</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>sys</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>ran</span><span class='kw'>=</span><span class='fl'>0</span>, <span class='kw'>abl</span><span class='kw'>=</span><span class='fl'>30</span>))</div><div class='output co'>#&gt; 
+#&gt; </div><div class='input'><span class='fu'>predict</span><span class='op'>(</span><span class='va'>res</span>, newmods<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>sys<span class='op'>=</span><span class='fl'>1</span>, ran<span class='op'>=</span><span class='fl'>0</span>, abl<span class='op'>=</span><span class='fl'>30</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;     pred     se   ci.lb  ci.ub   pi.lb  pi.ub 
 #&gt;  -0.4666 0.2420 -0.9410 0.0078 -1.3501 0.4168 
 #&gt; </div></pre>
@@ -365,7 +379,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

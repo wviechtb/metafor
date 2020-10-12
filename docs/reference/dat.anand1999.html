@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-47</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-48</span>
       </span>
     </div>
 
@@ -135,7 +135,7 @@
     <p>Results from 34 trials examining the effectiveness of oral anticoagulants in patients with coronary artery disease.</p>
     </div>
 
-    <pre class="usage"><span class='no'>dat.anand1999</span></pre>
+    <pre class="usage"><span class='va'>dat.anand1999</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
@@ -166,8 +166,9 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat' and examine data</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.anand1999</span>
-<span class='no'>dat</span></div><div class='output co'>#&gt;                            study year intensity asp.t asp.c  ai  n1i  ci  n2i
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.anand1999</span>
+<span class='va'>dat</span>
+</div><div class='output co'>#&gt;                            study year intensity asp.t asp.c  ai  n1i  ci  n2i
 #&gt; 1                MacMillan et al 1960      high     0     0   8   27   0   23
 #&gt; 2                  Borchegrevink 1960      high     0     0   1  103   8  100
 #&gt; 3                  Clausen et al 1961      high     0     0  15   93  13   99
@@ -203,8 +204,9 @@
 #&gt; 33                     Post-CABG 1997       low     1     1  28  674  39  677
 #&gt; 34                          CARS 1997       low     1     1 118 3382 102 3393</div><div class='input'>
 <span class='co'>### High-Intensity OA vs Control</span>
-<span class='fu'><a href='rma.mh.html'>rma.mh</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>ai</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>n1i</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>ci</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>n2i</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>,
-       <span class='kw'>subset</span><span class='kw'>=</span>(<span class='no'>intensity</span><span class='kw'>==</span><span class='st'>"high"</span> <span class='kw'>&amp;</span> <span class='no'>asp.t</span><span class='kw'>==</span><span class='fl'>0</span> <span class='kw'>&amp;</span> <span class='no'>asp.c</span><span class='kw'>==</span><span class='fl'>0</span>), <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
+<span class='fu'><a href='rma.mh.html'>rma.mh</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"OR"</span>, ai<span class='op'>=</span><span class='va'>ai</span>, n1i<span class='op'>=</span><span class='va'>n1i</span>, ci<span class='op'>=</span><span class='va'>ci</span>, n2i<span class='op'>=</span><span class='va'>n2i</span>, data<span class='op'>=</span><span class='va'>dat</span>,
+       subset<span class='op'>=</span><span class='op'>(</span><span class='va'>intensity</span><span class='op'>==</span><span class='st'>"high"</span> <span class='op'>&amp;</span> <span class='va'>asp.t</span><span class='op'>==</span><span class='fl'>0</span> <span class='op'>&amp;</span> <span class='va'>asp.c</span><span class='op'>==</span><span class='fl'>0</span><span class='op'>)</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; Fixed-Effects Model (k = 17)
 #&gt; 
 #&gt; I^2 (total heterogeneity / total variability):  41.89%
@@ -227,8 +229,9 @@
 #&gt; Tarone's Test for Heterogeneity: X^2 = 34.88, df = 16, p-val &lt; 0.01
 #&gt; </div><div class='input'>
 <span class='co'>### High- or Moderate-Intensity OA vs Aspirin</span>
-<span class='fu'><a href='rma.mh.html'>rma.mh</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>ai</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>n1i</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>ci</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>n2i</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>,
-       <span class='kw'>subset</span><span class='kw'>=</span>(<span class='no'>intensity</span> <span class='kw'>%in%</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"high"</span>,<span class='st'>"moderate"</span>) <span class='kw'>&amp;</span> <span class='no'>asp.t</span><span class='kw'>==</span><span class='fl'>0</span> <span class='kw'>&amp;</span> <span class='no'>asp.c</span><span class='kw'>==</span><span class='fl'>1</span>), <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
+<span class='fu'><a href='rma.mh.html'>rma.mh</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"OR"</span>, ai<span class='op'>=</span><span class='va'>ai</span>, n1i<span class='op'>=</span><span class='va'>n1i</span>, ci<span class='op'>=</span><span class='va'>ci</span>, n2i<span class='op'>=</span><span class='va'>n2i</span>, data<span class='op'>=</span><span class='va'>dat</span>,
+       subset<span class='op'>=</span><span class='op'>(</span><span class='va'>intensity</span> <span class='op'>%in%</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"high"</span>,<span class='st'>"moderate"</span><span class='op'>)</span> <span class='op'>&amp;</span> <span class='va'>asp.t</span><span class='op'>==</span><span class='fl'>0</span> <span class='op'>&amp;</span> <span class='va'>asp.c</span><span class='op'>==</span><span class='fl'>1</span><span class='op'>)</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; Fixed-Effects Model (k = 7)
 #&gt; 
 #&gt; I^2 (total heterogeneity / total variability):  16.57%
@@ -251,8 +254,9 @@
 #&gt; Tarone's Test for Heterogeneity: X^2 = 8.05, df = 6, p-val = 0.23
 #&gt; </div><div class='input'>
 <span class='co'>### Moderate-Intensity OA vs Control</span>
-<span class='fu'><a href='rma.mh.html'>rma.mh</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>ai</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>n1i</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>ci</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>n2i</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>,
-       <span class='kw'>subset</span><span class='kw'>=</span>(<span class='no'>intensity</span><span class='kw'>==</span><span class='st'>"moderate"</span> <span class='kw'>&amp;</span> <span class='no'>asp.t</span><span class='kw'>==</span><span class='fl'>0</span> <span class='kw'>&amp;</span> <span class='no'>asp.c</span><span class='kw'>==</span><span class='fl'>0</span>), <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
+<span class='fu'><a href='rma.mh.html'>rma.mh</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"OR"</span>, ai<span class='op'>=</span><span class='va'>ai</span>, n1i<span class='op'>=</span><span class='va'>n1i</span>, ci<span class='op'>=</span><span class='va'>ci</span>, n2i<span class='op'>=</span><span class='va'>n2i</span>, data<span class='op'>=</span><span class='va'>dat</span>,
+       subset<span class='op'>=</span><span class='op'>(</span><span class='va'>intensity</span><span class='op'>==</span><span class='st'>"moderate"</span> <span class='op'>&amp;</span> <span class='va'>asp.t</span><span class='op'>==</span><span class='fl'>0</span> <span class='op'>&amp;</span> <span class='va'>asp.c</span><span class='op'>==</span><span class='fl'>0</span><span class='op'>)</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; Fixed-Effects Model (k = 4)
 #&gt; 
 #&gt; I^2 (total heterogeneity / total variability):  5.55%
@@ -275,8 +279,9 @@
 #&gt; Tarone's Test for Heterogeneity: X^2 = 3.35, df = 3, p-val = 0.34
 #&gt; </div><div class='input'>
 <span class='co'>### High- or Moderate-Intensity OA and Aspirin vs Aspirin</span>
-<span class='fu'><a href='rma.mh.html'>rma.mh</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>ai</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>n1i</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>ci</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>n2i</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>,
-       <span class='kw'>subset</span><span class='kw'>=</span>(<span class='no'>intensity</span> <span class='kw'>%in%</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"high"</span>,<span class='st'>"moderate"</span>) <span class='kw'>&amp;</span> <span class='no'>asp.t</span><span class='kw'>==</span><span class='fl'>1</span> <span class='kw'>&amp;</span> <span class='no'>asp.c</span><span class='kw'>==</span><span class='fl'>1</span>), <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Some yi/vi values are NA.</span></div><div class='output co'>#&gt; 
+<span class='fu'><a href='rma.mh.html'>rma.mh</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"OR"</span>, ai<span class='op'>=</span><span class='va'>ai</span>, n1i<span class='op'>=</span><span class='va'>n1i</span>, ci<span class='op'>=</span><span class='va'>ci</span>, n2i<span class='op'>=</span><span class='va'>n2i</span>, data<span class='op'>=</span><span class='va'>dat</span>,
+       subset<span class='op'>=</span><span class='op'>(</span><span class='va'>intensity</span> <span class='op'>%in%</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"high"</span>,<span class='st'>"moderate"</span><span class='op'>)</span> <span class='op'>&amp;</span> <span class='va'>asp.t</span><span class='op'>==</span><span class='fl'>1</span> <span class='op'>&amp;</span> <span class='va'>asp.c</span><span class='op'>==</span><span class='fl'>1</span><span class='op'>)</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Some yi/vi values are NA.</span></div><div class='output co'>#&gt; 
 #&gt; Fixed-Effects Model (k = 3)
 #&gt; 
 #&gt; I^2 (total heterogeneity / total variability):  0.00%
@@ -299,8 +304,9 @@
 #&gt; Tarone's Test for Heterogeneity: X^2 = 0.56, df = 1, p-val = 0.45
 #&gt; </div><div class='input'>
 <span class='co'>### Low-Intensity OA and Aspirin vs Aspirin</span>
-<span class='fu'><a href='rma.mh.html'>rma.mh</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>ai</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>n1i</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>ci</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>n2i</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>,
-       <span class='kw'>subset</span><span class='kw'>=</span>(<span class='no'>intensity</span><span class='kw'>==</span><span class='st'>"low"</span> <span class='kw'>&amp;</span> <span class='no'>asp.t</span><span class='kw'>==</span><span class='fl'>1</span> <span class='kw'>&amp;</span> <span class='no'>asp.c</span><span class='kw'>==</span><span class='fl'>1</span>), <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
+<span class='fu'><a href='rma.mh.html'>rma.mh</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"OR"</span>, ai<span class='op'>=</span><span class='va'>ai</span>, n1i<span class='op'>=</span><span class='va'>n1i</span>, ci<span class='op'>=</span><span class='va'>ci</span>, n2i<span class='op'>=</span><span class='va'>n2i</span>, data<span class='op'>=</span><span class='va'>dat</span>,
+       subset<span class='op'>=</span><span class='op'>(</span><span class='va'>intensity</span><span class='op'>==</span><span class='st'>"low"</span> <span class='op'>&amp;</span> <span class='va'>asp.t</span><span class='op'>==</span><span class='fl'>1</span> <span class='op'>&amp;</span> <span class='va'>asp.c</span><span class='op'>==</span><span class='fl'>1</span><span class='op'>)</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; Fixed-Effects Model (k = 3)
 #&gt; 
 #&gt; I^2 (total heterogeneity / total variability):  37.85%
@@ -337,7 +343,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

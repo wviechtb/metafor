@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-47</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-48</span>
       </span>
     </div>
 
@@ -135,12 +135,12 @@
     <p>The function can be used to calculate various effect sizes or outcome measures (and the corresponding sampling variances) that are commonly used in meta-analyses. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
     </div>
 
-    <pre class="usage"><span class='fu'>escalc</span>(<span class='no'>measure</span>, <span class='no'>ai</span>, <span class='no'>bi</span>, <span class='no'>ci</span>, <span class='no'>di</span>, <span class='no'>n1i</span>, <span class='no'>n2i</span>, <span class='no'>x1i</span>, <span class='no'>x2i</span>, <span class='no'>t1i</span>, <span class='no'>t2i</span>,
-       <span class='no'>m1i</span>, <span class='no'>m2i</span>, <span class='no'>sd1i</span>, <span class='no'>sd2i</span>, <span class='no'>xi</span>, <span class='no'>mi</span>, <span class='no'>ri</span>, <span class='no'>ti</span>, <span class='no'>sdi</span>, <span class='no'>r2i</span>, <span class='no'>ni</span>, <span class='no'>yi</span>, <span class='no'>vi</span>, <span class='no'>sei</span>,
-       <span class='no'>data</span>, <span class='no'>slab</span>, <span class='no'>subset</span>, <span class='no'>include</span>,
-       <span class='kw'>add</span><span class='kw'>=</span><span class='fl'>1</span>/<span class='fl'>2</span>, <span class='kw'>to</span><span class='kw'>=</span><span class='st'>"only0"</span>, <span class='kw'>drop00</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>vtype</span><span class='kw'>=</span><span class='st'>"LS"</span>,
-       <span class='kw'>var.names</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"yi"</span>,<span class='st'>"vi"</span>), <span class='kw'>add.measure</span><span class='kw'>=</span><span class='fl'>FALSE</span>,
-       <span class='kw'>append</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>replace</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='no'>digits</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>escalc</span><span class='op'>(</span><span class='va'>measure</span>, <span class='va'>ai</span>, <span class='va'>bi</span>, <span class='va'>ci</span>, <span class='va'>di</span>, <span class='va'>n1i</span>, <span class='va'>n2i</span>, <span class='va'>x1i</span>, <span class='va'>x2i</span>, <span class='va'>t1i</span>, <span class='va'>t2i</span>,
+       <span class='va'>m1i</span>, <span class='va'>m2i</span>, <span class='va'>sd1i</span>, <span class='va'>sd2i</span>, <span class='va'>xi</span>, <span class='va'>mi</span>, <span class='va'>ri</span>, <span class='va'>ti</span>, <span class='va'>sdi</span>, <span class='va'>r2i</span>, <span class='va'>ni</span>, <span class='va'>yi</span>, <span class='va'>vi</span>, <span class='va'>sei</span>,
+       <span class='va'>data</span>, <span class='va'>slab</span>, <span class='va'>subset</span>, <span class='va'>include</span>,
+       add<span class='op'>=</span><span class='fl'>1</span><span class='op'>/</span><span class='fl'>2</span>, to<span class='op'>=</span><span class='st'>"only0"</span>, drop00<span class='op'>=</span><span class='cn'>FALSE</span>, vtype<span class='op'>=</span><span class='st'>"LS"</span>,
+       var.names<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"yi"</span>,<span class='st'>"vi"</span><span class='op'>)</span>, add.measure<span class='op'>=</span><span class='cn'>FALSE</span>,
+       append<span class='op'>=</span><span class='cn'>TRUE</span>, replace<span class='op'>=</span><span class='cn'>TRUE</span>, <span class='va'>digits</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -318,11 +318,11 @@
 <li><p>a quantitative variable (e.g., amount of depression as assessed by a rating scale).</p></li>
 </ul>
 
-<p></p><h3>Outcome Measures for Two-Group Comparisons</h3>
+<p></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Outcome Measures for Two-Group Comparisons</h3>
 
 
 <p>In many meta-analyses, the goal is to synthesize the results from studies that compare or contrast two groups. The groups may be experimentally defined (e.g., a treatment and a control group created via random assignment) or may occur naturally (e.g., men and women, employees working under high- versus low-stress conditions, people exposed to some environmental risk factor versus those not exposed).</p>
-<p></p><h3>Measures for Dichotomous Variables</h3>
+<p></p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Measures for Dichotomous Variables</h4>
 
 
 <p>In various fields (such as the health and medical sciences), the response or outcome variable measured is often dichotomous (binary), so that the data from a study comparing two different groups can be expressed in terms of a \(2 \times 2\) table, such as:</p><table class='table'>
@@ -350,7 +350,7 @@
 <p>A dataset corresponding to data of this type is provided in <code><a href='dat.gibson2002.html'>dat.gibson2002</a></code>.</p>
 <p></p>
 
-<p></p><h3>Measures for Event Counts</h3>
+<p></p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Measures for Event Counts</h4>
 
 
 <p>In medical and epidemiological studies comparing two different groups (e.g., treated versus untreated patients, exposed versus unexposed individuals), results are sometimes reported in terms of event counts (i.e., the number of events, such as strokes or myocardial infarctions) over a certain period of time. Data of this type are also referred to as &#8216;person-time data&#8217;. In particular, assume that the studies report data in the form:</p><table class='table'>
@@ -369,7 +369,7 @@
 <p>Datasets corresponding to data of this type are provided in <code><a href='dat.hart1999.html'>dat.hart1999</a></code> and <code><a href='dat.nielweise2008.html'>dat.nielweise2008</a></code>.</p>
 <p></p>
 
-<p></p><h3>Measures for Quantitative Variables</h3>
+<p></p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Measures for Quantitative Variables</h4>
 
 
 <p>When the response or dependent variable assessed in the individual studies is measured on some quantitative scale, it is customary to report certain summary statistics, such as the mean and standard deviation of the observations. The data layout for a study comparing two groups with respect to such a variable is then of the form:</p><table class='table'>
@@ -399,11 +399,11 @@
 
 <p></p>
 
-<p></p><h3>Outcome Measures for Variable Association</h3>
+<p></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Outcome Measures for Variable Association</h3>
 
 
 <p>Meta-analyses are often used to synthesize studies that examine the direction and strength of the association between two variables measured concurrently and/or without manipulation by experimenters. In this section, a variety of outcome measures will be discussed that may be suitable for a meta-analyses with this purpose. We can distinguish between measures that are applicable when both variables are measured on quantitative scales, when both variables measured are dichotomous, and when the two variables are of mixed types.</p>
-<p></p><h3>Measures for Two Quantitative Variables</h3>
+<p></p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Measures for Two Quantitative Variables</h4>
 
 
 <p>The (Pearson or product moment) correlation coefficient quantifies the direction and strength of the (linear) relationship between two quantitative variables and is therefore frequently used as the outcome measure for meta-analyses (e.g., Borenstein, 2009). Two alternative measures are a bias-corrected version of the correlation coefficient and Fisher's r-to-z transformed correlation coefficient.</p>
@@ -416,7 +416,7 @@
 <p>For meta-analyses involving multiple correlations extracted from the same sample, see also the <code><a href='rcalc.html'>rcalc</a></code> function.</p>
 <p></p>
 
-<p></p><h3>Measures for Two Dichotomous Variables</h3>
+<p></p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Measures for Two Dichotomous Variables</h4>
 
 
 <p>When the goal of a meta-analysis is to examine the relationship between two dichotomous variables, the data for each study can again be presented in the form of a \(2 \times 2\) table, except that there may not be a clear distinction between the group (i.e., the row) and the outcome (i.e., the column) variable. Moreover, the table may be a result of cross-sectional (i.e., multinomial) sampling, where none of the table margins (except the total sample size) are fixed by the study design.</p>
@@ -431,7 +431,7 @@
 <p>A dataset corresponding to data of this type is provided in <code><a href='dat.bourassa1996.html'>dat.bourassa1996</a></code>.</p>
 <p></p>
 
-<p></p><h3>Measures for Mixed Variable Types</h3>
+<p></p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Measures for Mixed Variable Types</h4>
 
 
 <p>Finally, we can consider outcome measures that can be used to describe the relationship between two variables, where one variable is dichotomous and the other variable measures some quantitative characteristic. In that case, it is likely that study authors again report summary statistics, such as the mean and standard deviation of the measurements within the two groups (defined by the dichotomous variable). In that case, one can compute the point-biserial correlation (Tate, 1954) as a measure of association between the two variables. If the dichotomous variable is actually a dichotomized version of the responses on an underlying quantitative scale (and assuming that the two variables follow a bivariate normal distribution), it is also possible to estimate the correlation between the two variables using the biserial correlation coefficient (Pearson, 1909; Soper, 1914; Jacobs &amp; Viechtbauer, 2017).</p>
@@ -443,11 +443,11 @@
 
 <p></p>
 
-<p></p><h3>Outcome Measures for Individual Groups</h3>
+<p></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Outcome Measures for Individual Groups</h3>
 
 
 <p>In this section, outcome measures will be described which may be useful when the goal of a meta-analysis is to synthesize studies that characterize some property of individual groups. We will again distinguish between measures that are applicable when the characteristic of interest is a dichotomous variable, when the characteristic represents an event count, or when the characteristic assessed is a quantitative variable.</p>
-<p></p><h3>Measures for Dichotomous Variables</h3>
+<p></p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Measures for Dichotomous Variables</h4>
 
 
 <p>A meta-analysis may be conducted to aggregate studies that provide data for individual groups with respect to a dichotomous dependent variable. Here, one needs to specify <code>xi</code> and <code>ni</code>, denoting the number of individuals experiencing the event of interest and the total number of individuals, respectively. Instead of specifying <code>ni</code>, one can use <code>mi</code> to specify the number of individuals that do not experience the event of interest. The options for the <code>measure</code> argument are then:</p><ul>
@@ -460,7 +460,7 @@
 <p>Datasets corresponding to data of this type are provided in <code><a href='dat.pritz1997.html'>dat.pritz1997</a></code> and <code><a href='dat.debruin2009.html'>dat.debruin2009</a></code>.</p>
 <p></p>
 
-<p></p><h3>Measures for Event Counts</h3>
+<p></p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Measures for Event Counts</h4>
 
 
 <p>Various measures can be used to characterize individual groups when the dependent variable assessed is an event count. Here, one needs to specify <code>xi</code> and <code>ti</code>, denoting the number of events that occurred and the total person-times at risk, respectively. The options for the <code>measure</code> argument are then:</p><ul>
@@ -471,7 +471,7 @@
 </ul><p>Studies with zero events can be problematic, especially for the log transformed incidence rate. Adding a small constant to the number of events is a common solution to this problem. When <code>to="only0"</code> (the default), the value of <code>add</code> (the default is <code>1/2</code>; but see &#8216;Note&#8217;) is added to <code>xi</code> only in the studies that have zero events. When <code>to="all"</code>, the value of <code>add</code> is added to <code>xi</code> in all studies. When <code>to="if0all"</code>, the value of <code>add</code> is added to <code>xi</code> in all studies, but only when there is at least one study with zero events. Setting <code>to="none"</code> or <code>add=0</code> has the same effect: No adjustment to the observed number of events is made. Depending on the outcome measure and the data, this may lead to division by zero inside of the function (when this occurs, the resulting value is recoded to <code>NA</code>).</p>
 <p></p>
 
-<p></p><h3>Measures for Quantitative Variables</h3>
+<p></p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Measures for Quantitative Variables</h4>
 
 
 <p>The goal of a meta-analysis may also be to characterize individual groups, where the response, characteristic, or dependent variable assessed in the individual studies is measured on some quantitative scale. In the simplest case, the raw mean for the quantitative variable is reported for each group, which then becomes the observed outcome for the meta-analysis. Here, one needs to specify <code>mi</code>, <code>sdi</code>, and <code>ni</code> for the observed means, the observed standard deviations, and the sample sizes, respectively. For ratio scale measurements, the log transformed mean or the log transformed coefficient of variation (with bias correction) may also be of interest (Nakagawa et al., 2015). If focus is solely on the variability of the measurements, then the log transformed standard deviation (with bias correction) is a useful measure (Nakagawa et al., 2015; Raudenbush &amp; Bryk, 1987). Here, one only needs to specify <code>sdi</code> and <code>ni</code>.</p>
@@ -485,11 +485,11 @@
 
 <p></p>
 
-<p></p><h3>Outcome Measures for Change or Matched Pairs</h3>
+<p></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Outcome Measures for Change or Matched Pairs</h3>
 
 
 <p>A more complicated situation arises when the purpose of the meta-analysis is to assess the amount of change within individual groups (e.g., before and after a treatment or under two different treatments) or when dealing with matched pairs designs.</p>
-<p></p><h3>Measures for Dichotomous Variables</h3>
+<p></p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Measures for Dichotomous Variables</h4>
 
 
 <p>For dichotomous variables, the data for a study of this type gives rise to a paired \(2 \times 2\) table, which is of the form:</p><table class='table'>
@@ -514,7 +514,7 @@
 </ul><p>See Curtin et al. (2002) and Zou (2007) for discussions of these measures.</p>
 <p></p>
 
-<p></p><h3>Measures for Quantitative Variables</h3>
+<p></p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Measures for Quantitative Variables</h4>
 
 
 <p>When the response or dependent variable assessed in the individual studies is measured on some quantitative scale, the raw mean change, standardized versions thereof, or the (log transformed) ratio of means (log response ratio) can be used as outcome measures (Becker, 1988; Gibbons et al., 1993; Lajeunesse, 2011; Morris, 2000). Here, one needs to specify <code>m1i</code> and <code>m2i</code>, the observed means at the two measurement occasions, <code>sd1i</code> and <code>sd2i</code> for the corresponding observed standard deviations, <code>ri</code> for the correlation between the measurements at the two measurement occasions, and <code>ni</code> for the sample size. The options for the <code>measure</code> argument are then:</p><ul>
@@ -533,11 +533,11 @@
 
 <p></p>
 
-<p></p><h3>Other Outcome Measures for Meta-Analyses</h3>
+<p></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Other Outcome Measures for Meta-Analyses</h3>
 
 
 <p>Other outcome measures are sometimes used for meta-analyses that do not directly fall into the categories above. These are described in this section.</p>
-<p></p><h3>Cronbach's alpha and Transformations Thereof</h3>
+<p></p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Cronbach's alpha and Transformations Thereof</h4>
 
 
 <p>Meta-analytic methods can also be used to aggregate Cronbach's alpha values. This is usually referred to as a &#8216;reliability generalization meta-analysis&#8217; (Vacha-Haase, 1998). Here, one needs to specify <code>ai</code>, <code>mi</code>, and <code>ni</code> for the observed alpha values, the number of items/replications/parts of the measurement instrument, and the sample sizes, respectively. One can either directly analyze the raw Cronbach's alpha values or transformations thereof (Bonett, 2002, 2010; Hakstian &amp; Whalen, 1976). The options for the <code>measure</code> argument are then:</p><ul>
@@ -548,7 +548,7 @@
 <p>A dataset corresponding to data of this type is provided in <code><a href='dat.bonett2010.html'>dat.bonett2010</a></code>.</p>
 <p></p>
 
-<p></p><h3>Partial and Semi-Partial Correlations</h3>
+<p></p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Partial and Semi-Partial Correlations</h4>
 
 
 <p>Aloe and Becker (2012), Aloe and Thompson (2013), and Aloe (2014) describe the use of partial and semi-partial correlation coefficients as a method for meta-analyzing the results from regression models (when the focus is on a common regression coefficient of interest across studies). To compute these measures, one needs to specify <code>ti</code> for the test statistics (i.e., t-tests) of the regression coefficient of interest, <code>ni</code> for the sample sizes of the studies, <code>mi</code> for the number of predictors in the regression models, and <code>r2i</code> for the \(R^2\) value of the regression models (the latter is only needed when <code>measure="SPCOR"</code>). The options for the <code>measure</code> argument are then:</p><ul>
@@ -560,7 +560,7 @@
 
 <p></p>
 
-<p></p><h3>Converting a Data Frame to an 'escalc' Object</h3>
+<p></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Converting a Data Frame to an 'escalc' Object</h3>
 
 
 <p>The function can also be used to convert a regular data frame to an 'escalc' object. One simply sets the <code>measure</code> argument to one of the options described above (or to <code>measure="GEN"</code> for a generic outcome measure not further specified) and passes the observed effects or outcomes via the <code>yi</code> argument and the corresponding sampling variances via the <code>vi</code> argument (or the standard errors via the <code>sei</code> argument).</p>
@@ -585,6 +585,9 @@
 
     <p>The variable names specified under <code>var.names</code> should be syntactically valid variable names. If necessary, they are adjusted so that they are.</p>
 <p>Although the default value for <code>add</code> is <code>1/2</code>, for certain measures the use of such a bias correction makes little sense and for these measures, the function internally sets <code>add = 0</code>. This applies to the following measures: <code>"AS"</code>, <code>"PHI"</code>, <code>"RTET"</code>, <code>"IRSD"</code>, <code>"PAS"</code>, <code>"PFT"</code>, <code>"IRS"</code>, and <code>"IRFT"</code>. One can still force the use of the bias correction by explicitly setting the <code>add</code> argument to some non-zero value.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Wolfgang Viechtbauer <a href='mailto:wvb@metafor-project.org'>wvb@metafor-project.org</a> <a href='http://www.metafor-project.org'>http://www.metafor-project.org</a></p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Aloe, A. M. (2014). An empirical investigation of partial effect sizes in meta-analysis of correlational data. <em>Journal of General Psychology</em>, <b>141</b>(1), 47--64. <a href='https://doi.org/10.1080/00221309.2013.853021'>https://doi.org/10.1080/00221309.2013.853021</a></p>
@@ -644,8 +647,9 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### calculate log risk ratios and corresponding sampling variances</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'>escalc</span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>)
-<span class='no'>dat</span></div><div class='output co'>#&gt;    trial               author year tpos  tneg cpos  cneg ablat      alloc 
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'>escalc</span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"RR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>)</span>
+<span class='va'>dat</span>
+</div><div class='output co'>#&gt;    trial               author year tpos  tneg cpos  cneg ablat      alloc 
 #&gt; 1      1              Aronson 1948    4   119   11   128    44     random 
 #&gt; 2      2     Ferguson &amp; Simes 1949    6   300   29   274    55     random 
 #&gt; 3      3      Rosenthal et al 1960    3   228   11   209    42     random 
@@ -676,9 +680,10 @@
 <span class='co'>### suppose that for a particular study, yi and vi are known (i.e., have</span>
 <span class='co'>### already been calculated) but the 2x2 table counts are not known; with</span>
 <span class='co'>### replace=FALSE, the yi and vi values for that study are not replaced</span>
-<span class='no'>dat</span>[<span class='fl'>1</span>:<span class='fl'>12</span>,<span class='fl'>10</span>:<span class='fl'>11</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
-<span class='no'>dat</span>[<span class='fl'>13</span>,<span class='fl'>4</span>:<span class='fl'>7</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
-<span class='no'>dat</span></div><div class='output co'>#&gt;    trial               author year tpos  tneg cpos  cneg ablat      alloc 
+<span class='va'>dat</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>12</span>,<span class='fl'>10</span><span class='op'>:</span><span class='fl'>11</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='cn'>NA</span>
+<span class='va'>dat</span><span class='op'>[</span><span class='fl'>13</span>,<span class='fl'>4</span><span class='op'>:</span><span class='fl'>7</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='cn'>NA</span>
+<span class='va'>dat</span>
+</div><div class='output co'>#&gt;    trial               author year tpos  tneg cpos  cneg ablat      alloc 
 #&gt; 1      1              Aronson 1948    4   119   11   128    44     random 
 #&gt; 2      2     Ferguson &amp; Simes 1949    6   300   29   274    55     random 
 #&gt; 3      3      Rosenthal et al 1960    3   228   11   209    42     random 
@@ -705,8 +710,9 @@
 #&gt; 10      NA     NA 
 #&gt; 11      NA     NA 
 #&gt; 12      NA     NA 
-#&gt; 13 -0.0173 0.0714 </div><div class='input'><span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'>escalc</span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>replace</span><span class='kw'>=</span><span class='fl'>FALSE</span>)
-<span class='no'>dat</span></div><div class='output co'>#&gt;    trial               author year tpos  tneg cpos  cneg ablat      alloc 
+#&gt; 13 -0.0173 0.0714 </div><div class='input'><span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'>escalc</span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"RR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, data<span class='op'>=</span><span class='va'>dat</span>, replace<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='va'>dat</span>
+</div><div class='output co'>#&gt;    trial               author year tpos  tneg cpos  cneg ablat      alloc 
 #&gt; 1      1              Aronson 1948    4   119   11   128    44     random 
 #&gt; 2      2     Ferguson &amp; Simes 1949    6   300   29   274    55     random 
 #&gt; 3      3      Rosenthal et al 1960    3   228   11   209    42     random 
@@ -735,7 +741,8 @@
 #&gt; 12  0.4459 0.5325 
 #&gt; 13 -0.0173 0.0714 </div><div class='input'>
 <span class='co'>### illustrate difference between 'subset' and 'include' arguments</span>
-<span class='fu'>escalc</span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>, <span class='kw'>subset</span><span class='kw'>=</span><span class='fl'>1</span>:<span class='fl'>6</span>)</div><div class='output co'>#&gt;   trial               author year tpos  tneg cpos  cneg ablat     alloc      yi 
+<span class='fu'>escalc</span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"RR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span>, subset<span class='op'>=</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>6</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   trial               author year tpos  tneg cpos  cneg ablat     alloc      yi 
 #&gt; 1     1              Aronson 1948    4   119   11   128    44    random -0.8893 
 #&gt; 2     2     Ferguson &amp; Simes 1949    6   300   29   274    55    random -1.5854 
 #&gt; 3     3      Rosenthal et al 1960    3   228   11   209    42    random -1.3481 
@@ -748,7 +755,8 @@
 #&gt; 3 0.4154 
 #&gt; 4 0.0200 
 #&gt; 5 0.0512 
-#&gt; 6 0.0069 </div><div class='input'><span class='fu'>escalc</span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>, <span class='kw'>include</span><span class='kw'>=</span><span class='fl'>1</span>:<span class='fl'>6</span>)</div><div class='output co'>#&gt;    trial               author year tpos  tneg cpos  cneg ablat      alloc 
+#&gt; 6 0.0069 </div><div class='input'><span class='fu'>escalc</span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"RR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span>, include<span class='op'>=</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>6</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;    trial               author year tpos  tneg cpos  cneg ablat      alloc 
 #&gt; 1      1              Aronson 1948    4   119   11   128    44     random 
 #&gt; 2      2     Ferguson &amp; Simes 1949    6   300   29   274    55     random 
 #&gt; 3      3      Rosenthal et al 1960    3   228   11   209    42     random 
@@ -778,13 +786,14 @@
 #&gt; 13      NA     NA </div><div class='input'>
 <span class='co'>### convert a regular data frame to an 'escalc' object</span>
 <span class='co'>### dataset from Lipsey &amp; Wilson (2001), Table 7.1, page 130</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>100</span>, <span class='fl'>308</span>, <span class='fl'>1596</span>, <span class='fl'>2479</span>, <span class='fl'>9021</span>, <span class='fl'>9028</span>, <span class='fl'>161</span>, <span class='fl'>172</span>, <span class='fl'>537</span>, <span class='fl'>7049</span>),
-                  <span class='kw'>yi</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>0.33</span>, <span class='fl'>0.32</span>, <span class='fl'>0.39</span>, <span class='fl'>0.31</span>, <span class='fl'>0.17</span>, <span class='fl'>0.64</span>, -<span class='fl'>0.33</span>, <span class='fl'>0.15</span>, -<span class='fl'>0.02</span>, <span class='fl'>0.00</span>),
-                  <span class='kw'>vi</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.084</span>, <span class='fl'>0.035</span>, <span class='fl'>0.017</span>, <span class='fl'>0.034</span>, <span class='fl'>0.072</span>, <span class='fl'>0.117</span>, <span class='fl'>0.102</span>, <span class='fl'>0.093</span>, <span class='fl'>0.012</span>, <span class='fl'>0.067</span>),
-                  <span class='kw'>random</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>),
-                  <span class='kw'>intensity</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>7</span>, <span class='fl'>3</span>, <span class='fl'>7</span>, <span class='fl'>5</span>, <span class='fl'>7</span>, <span class='fl'>7</span>, <span class='fl'>4</span>, <span class='fl'>4</span>, <span class='fl'>5</span>, <span class='fl'>6</span>))
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'>escalc</span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"SMD"</span>, <span class='kw'>yi</span><span class='kw'>=</span><span class='no'>yi</span>, <span class='kw'>vi</span><span class='kw'>=</span><span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>slab</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='st'>"Study ID:"</span>, <span class='no'>id</span>), <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>3</span>)
-<span class='no'>dat</span></div><div class='output co'>#&gt;      id     yi    vi random intensity 
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>id <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>308</span>, <span class='fl'>1596</span>, <span class='fl'>2479</span>, <span class='fl'>9021</span>, <span class='fl'>9028</span>, <span class='fl'>161</span>, <span class='fl'>172</span>, <span class='fl'>537</span>, <span class='fl'>7049</span><span class='op'>)</span>,
+                  yi <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>0.33</span>, <span class='fl'>0.32</span>, <span class='fl'>0.39</span>, <span class='fl'>0.31</span>, <span class='fl'>0.17</span>, <span class='fl'>0.64</span>, <span class='op'>-</span><span class='fl'>0.33</span>, <span class='fl'>0.15</span>, <span class='op'>-</span><span class='fl'>0.02</span>, <span class='fl'>0.00</span><span class='op'>)</span>,
+                  vi <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.084</span>, <span class='fl'>0.035</span>, <span class='fl'>0.017</span>, <span class='fl'>0.034</span>, <span class='fl'>0.072</span>, <span class='fl'>0.117</span>, <span class='fl'>0.102</span>, <span class='fl'>0.093</span>, <span class='fl'>0.012</span>, <span class='fl'>0.067</span><span class='op'>)</span>,
+                  random <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>,
+                  intensity <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>7</span>, <span class='fl'>3</span>, <span class='fl'>7</span>, <span class='fl'>5</span>, <span class='fl'>7</span>, <span class='fl'>7</span>, <span class='fl'>4</span>, <span class='fl'>4</span>, <span class='fl'>5</span>, <span class='fl'>6</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'>escalc</span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"SMD"</span>, yi<span class='op'>=</span><span class='va'>yi</span>, vi<span class='op'>=</span><span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span>, slab<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='st'>"Study ID:"</span>, <span class='va'>id</span><span class='op'>)</span>, digits<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span>
+<span class='va'>dat</span>
+</div><div class='output co'>#&gt;      id     yi    vi random intensity 
 #&gt; 1   100 -0.330 0.084      0         7 
 #&gt; 2   308  0.320 0.035      0         3 
 #&gt; 3  1596  0.390 0.017      0         7 
@@ -810,7 +819,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

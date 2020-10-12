@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-47</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-48</span>
       </span>
     </div>
 
@@ -135,12 +135,12 @@
     <p>The function provides (cluster) robust tests and confidence intervals of the model coefficients for objects of class <code>"rma"</code>. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
     </div>
 
-    <pre class="usage"><span class='fu'>robust</span>(<span class='no'>x</span>, <span class='no'>cluster</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>robust</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>cluster</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for rma.uni</span>
-<span class='fu'>robust</span>(<span class='no'>x</span>, <span class='no'>cluster</span>, <span class='kw'>adjust</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='no'>digits</span>, <span class='no'>...</span>)
+<span class='fu'>robust</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>cluster</span>, adjust<span class='op'>=</span><span class='cn'>TRUE</span>, <span class='va'>digits</span>, <span class='va'>...</span><span class='op'>)</span>
 <span class='co'># S3 method for rma.mv</span>
-<span class='fu'>robust</span>(<span class='no'>x</span>, <span class='no'>cluster</span>, <span class='kw'>adjust</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='no'>digits</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>robust</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>cluster</span>, adjust<span class='op'>=</span><span class='cn'>TRUE</span>, <span class='va'>digits</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -193,6 +193,9 @@
 
     <p>The variable specified via <code>cluster</code> is assumed to be of the same length as the data originally passed to the <code>rma.uni</code> or <code>rma.mv</code> function. Any subsetting and removal of studies with missing values as done when fitting the original model is also automatically applied to the variable specified via <code>cluster</code>.</p>
 <p>The idea of the robust (sandwich-type) estimator for models with unspecified heteroscedasticity can be traced back to Eicker (1967), Huber (1967), and White (1980). Hence, the method in general is often referred to as the Eicker-Huber-White method. Some small-sample improvements to the method are described by MacKinnon and White (1985). The extension to the cluster robust estimator can be found in Froot (1989) and Williams (2000). Cameron and Miller (2015) provide an extensive overview of cluster robust methods. Sidik and Jonkman (2005, 2006) introduced robust methods in the meta-analytic context for standard random/mixed-effects models. The use of the cluster robust estimator for multivariate/multilevel meta-analytic models is described in Hedges, Tipton, and Johnson (2010).</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Wolfgang Viechtbauer <a href='mailto:wvb@metafor-project.org'>wvb@metafor-project.org</a> <a href='http://www.metafor-project.org'>http://www.metafor-project.org</a></p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Cameron, A. C., &amp; Miller, D. L. (2015). A practitioner's guide to cluster-robust inference. <em>Journal of Human Resources</em>, <b>50</b>(2), 317--372. <a href='https://doi.org/10.3368/jhr.50.2.317'>https://doi.org/10.3368/jhr.50.2.317</a></p>
@@ -213,11 +216,12 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### copy data from Konstantopoulos (2011) into 'dat'</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.konstantopoulos2011</span>
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.konstantopoulos2011</span>
 
 <span class='co'>### multilevel random-effects model</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>random</span> <span class='kw'>=</span> ~ <span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>district</span>/<span class='no'>school</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
-<span class='no'>res</span></div><div class='output co'>#&gt; 
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, random <span class='op'>=</span> <span class='op'>~</span> <span class='fl'>1</span> <span class='op'>|</span> <span class='va'>district</span><span class='op'>/</span><span class='va'>school</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
+<span class='va'>res</span>
+</div><div class='output co'>#&gt; 
 #&gt; Multivariate Meta-Analysis Model (k = 56; method: REML)
 #&gt; 
 #&gt; Variance Components:
@@ -238,7 +242,8 @@
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### results based on the sandwich method</span>
-<span class='fu'>robust</span>(<span class='no'>res</span>, <span class='kw'>cluster</span><span class='kw'>=</span><span class='no'>dat</span>$<span class='no'>district</span>)</div><div class='output co'>#&gt; 
+<span class='fu'>robust</span><span class='op'>(</span><span class='va'>res</span>, cluster<span class='op'>=</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>district</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; Number of outcomes:   56
 #&gt; Number of clusters:   11
 #&gt; Outcomes per cluster: 3-11 (mean: 5.09, median: 4)
@@ -252,23 +257,27 @@
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### illustrate use of the clubSandwich package together with metafor</span>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='no'>clubSandwich</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/clubSandwich/man/coef_test.html'>coef_test</a></span>(<span class='no'>res</span>, <span class='kw'>vcov</span><span class='kw'>=</span><span class='st'>"CR2"</span>, <span class='kw'>cluster</span><span class='kw'>=</span><span class='no'>dat</span>$<span class='no'>district</span>)
-}
+<span class='co'># \dontrun{</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/jepusto/clubSandwich'>clubSandwich</a></span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Loading required package: clubSandwich</span></div><div class='output co'>#&gt; <span class='message'>Registered S3 method overwritten by 'clubSandwich':</span>
+#&gt; <span class='message'>  method    from    </span>
+#&gt; <span class='message'>  bread.mlm sandwich</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/clubSandwich/man/coef_test.html'>coef_test</a></span><span class='op'>(</span><span class='va'>res</span>, vcov<span class='op'>=</span><span class='st'>"CR2"</span>, cluster<span class='op'>=</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>district</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;     Coef. Estimate     SE t-stat d.f. p-val (Satt) Sig.
+#&gt; 1 intrcpt    0.185 0.0845   2.19 9.86        0.054    .</div><div class='input'><span class='co'># }</span>
 
 <span class='co'>### copy data from Berkey et al. (1998) into 'dat'</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.berkey1998</span>
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.berkey1998</span>
 
 <span class='co'>### construct list with the variance-covariance matrices of the observed outcomes for the studies</span>
-<span class='no'>V</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/split.html'>split</a></span>(<span class='no'>dat</span>[<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"v1i"</span>, <span class='st'>"v2i"</span>)], <span class='no'>dat</span>$<span class='no'>trial</span>), <span class='no'>as.matrix</span>)
+<span class='va'>V</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/split.html'>split</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"v1i"</span>, <span class='st'>"v2i"</span><span class='op'>)</span><span class='op'>]</span>, <span class='va'>dat</span><span class='op'>$</span><span class='va'>trial</span><span class='op'>)</span>, <span class='va'>as.matrix</span><span class='op'>)</span>
 
 <span class='co'>### construct block diagonal matrix</span>
-<span class='no'>V</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bldiag.html'>bldiag</a></span>(<span class='no'>V</span>)
+<span class='va'>V</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bldiag.html'>bldiag</a></span><span class='op'>(</span><span class='va'>V</span><span class='op'>)</span>
 
 <span class='co'>### fit multivariate model</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span>(<span class='no'>yi</span>, <span class='no'>V</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>outcome</span> - <span class='fl'>1</span>, <span class='kw'>random</span> <span class='kw'>=</span> ~ <span class='no'>outcome</span> <span class='kw'>|</span> <span class='no'>trial</span>, <span class='kw'>struct</span><span class='kw'>=</span><span class='st'>"UN"</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
-<span class='no'>res</span></div><div class='output co'>#&gt; 
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>V</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>outcome</span> <span class='op'>-</span> <span class='fl'>1</span>, random <span class='op'>=</span> <span class='op'>~</span> <span class='va'>outcome</span> <span class='op'>|</span> <span class='va'>trial</span>, struct<span class='op'>=</span><span class='st'>"UN"</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
+<span class='va'>res</span>
+</div><div class='output co'>#&gt; 
 #&gt; Multivariate Meta-Analysis Model (k = 10; method: REML)
 #&gt; 
 #&gt; Variance Components:
@@ -300,7 +309,8 @@
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### results based on sandwich method</span>
-<span class='fu'>robust</span>(<span class='no'>res</span>, <span class='kw'>cluster</span><span class='kw'>=</span><span class='no'>dat</span>$<span class='no'>trial</span>)</div><div class='output co'>#&gt; 
+<span class='fu'>robust</span><span class='op'>(</span><span class='va'>res</span>, cluster<span class='op'>=</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>trial</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; Number of outcomes:   10
 #&gt; Number of clusters:   5
 #&gt; Outcomes per cluster: 2
@@ -318,10 +328,13 @@
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### illustrate use of the clubSandwich package together with metafor</span>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='no'>clubSandwich</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/clubSandwich/man/coef_test.html'>coef_test</a></span>(<span class='no'>res</span>, <span class='kw'>vcov</span><span class='kw'>=</span><span class='st'>"CR2"</span>, <span class='kw'>cluster</span><span class='kw'>=</span><span class='no'>dat</span>$<span class='no'>trial</span>)
-}</div></pre>
+<span class='co'># \dontrun{</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/jepusto/clubSandwich'>clubSandwich</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/pkg/clubSandwich/man/coef_test.html'>coef_test</a></span><span class='op'>(</span><span class='va'>res</span>, vcov<span class='op'>=</span><span class='st'>"CR2"</span>, cluster<span class='op'>=</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>trial</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;       Coef. Estimate     SE t-stat d.f. p-val (Satt) Sig.
+#&gt; 1 outcomeAL   -0.339 0.0892  -3.80 3.81       0.0208    *
+#&gt; 2 outcomePD    0.353 0.0582   6.08 3.79       0.0044   **</div><div class='input'><span class='co'># }</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -337,7 +350,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

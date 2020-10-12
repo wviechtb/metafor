@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-47</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-48</span>
       </span>
     </div>
 
@@ -135,10 +135,10 @@
     <p>Carry out a trim and fill analysis for objects of class <code>"rma.uni"</code>. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
     </div>
 
-    <pre class="usage"><span class='fu'>trimfill</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>trimfill</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for rma.uni</span>
-<span class='fu'>trimfill</span>(<span class='no'>x</span>, <span class='no'>side</span>, <span class='kw'>estimator</span><span class='kw'>=</span><span class='st'>"L0"</span>, <span class='kw'>maxiter</span><span class='kw'>=</span><span class='fl'>100</span>, <span class='kw'>verbose</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>ilim</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>trimfill</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>side</span>, estimator<span class='op'>=</span><span class='st'>"L0"</span>, maxiter<span class='op'>=</span><span class='fl'>100</span>, verbose<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>ilim</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -182,7 +182,7 @@
 <dt>k0</dt><dd><p>estimated number of missing studies.</p></dd>
    <dt>side</dt><dd><p>either <code>"left"</code> or <code>"right"</code>, indicating on which side of the funnel plot the missing studies (if any) were imputed.</p></dd>
    <dt>se.k0</dt><dd><p>standard error of k0.</p></dd>
-   <dt>p.k0</dt><dd><p>p-value for the test of \(H_0\): no missing studies on the chosen side (only when <code>estimator="R0"</code>; <code>NA</code> otherwise).</p></dd>
+   <dt>p.k0</dt><dd><p>p-value for the test of \(\mbox{H}_0\): no missing studies on the chosen side (only when <code>estimator="R0"</code>; <code>NA</code> otherwise).</p></dd>
    <dt>yi</dt><dd><p>the observed effect sizes or outcomes plus the augmented values (if there are any).</p></dd>
    <dt>vi</dt><dd><p>the corresponding sampling variances</p></dd>
    <dt>fill</dt><dd><p>a logical vector indicating which of the values in <code>yi</code> are the observed (<code>FALSE</code>) and the augmented (<code>TRUE</code>) data.</p></dd>
@@ -194,6 +194,9 @@
     <p>Three different estimators for the number of missing studies were proposed by Duval and Tweedie (2000a, 2000b). Based on these articles and Duval (2005), <code>"R0"</code> and <code>"L0"</code> are recommended. An advantage of estimator <code>"R0"</code> is that it provides a test of the null hypothesis that the number of missing studies (on the chosen side) is zero.</p>
 <p>If the outcome measure used for the analysis is bounded (e.g., correlations are bounded between <code>-1</code> and <code>1</code>, proportions are bounded between <code>0</code> and <code>1</code>), one can use the <code>ilim</code> argument to enforce those limits when imputing values (imputed values cannot exceed those bounds then).</p>
 <p>The model used during the trim and fill procedure is the same as used by the original model object. Hence, if a fixed-effects model is passed to the function, then a fixed-effects model is also used during the trim and fill procedure and the results provided are also based on a fixed-effects model. This would be a &#8216;fixed-fixed&#8217; approach. Similarly, if a random-effects model is passed to the function, then the same model is used as part of the trim and fill procedure and for the final analysis. This would be a &#8216;random-random&#8217; approach. However, one can also easily fit a different model for the final analysis than was used for the trim and fill procedure. See &#8216;Examples&#8217; for an illustration of a &#8216;fixed-random&#8217; approach.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Wolfgang Viechtbauer <a href='mailto:wvb@metafor-project.org'>wvb@metafor-project.org</a> <a href='http://www.metafor-project.org'>http://www.metafor-project.org</a></p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Duval, S. J., &amp; Tweedie, R. L. (2000a). Trim and fill: A simple funnel-plot-based method of testing and adjusting for publication bias in meta-analysis. <em>Biometrics</em>, <b>56</b>(2), 455--463. <a href='https://doi.org/10.1111/j.0006-341x.2000.00455.x'>https://doi.org/10.1111/j.0006-341x.2000.00455.x</a></p>
@@ -206,12 +209,13 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### calculate log risk ratios and corresponding sampling variances</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>)
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"RR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>)</span>
 
 <span class='co'>### meta-analysis of the log risk ratios using a fixed-effects model</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"FE"</span>)
-<span class='no'>res.tf</span> <span class='kw'>&lt;-</span> <span class='fu'>trimfill</span>(<span class='no'>res</span>)
-<span class='no'>res.tf</span></div><div class='output co'>#&gt; 
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span>, method<span class='op'>=</span><span class='st'>"FE"</span><span class='op'>)</span>
+<span class='va'>res.tf</span> <span class='op'>&lt;-</span> <span class='fu'>trimfill</span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
+<span class='va'>res.tf</span>
+</div><div class='output co'>#&gt; 
 #&gt; Estimated number of missing studies on the right side: 4 (SE = 2.3853)
 #&gt; 
 #&gt; Fixed-Effects Model (k = 17)
@@ -229,10 +233,12 @@
 #&gt; 
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-#&gt; </div><div class='input'><span class='fu'><a href='funnel.html'>funnel</a></span>(<span class='no'>res.tf</span>, <span class='kw'>legend</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>cex</span><span class='kw'>=</span><span class='fl'>1.2</span>)</div><div class='img'><img src='trimfill-1.png' alt='' width='768' height='614' /></div><div class='input'>
+#&gt; </div><div class='input'><span class='fu'><a href='funnel.html'>funnel</a></span><span class='op'>(</span><span class='va'>res.tf</span>, legend<span class='op'>=</span><span class='cn'>TRUE</span>, cex<span class='op'>=</span><span class='fl'>1.2</span><span class='op'>)</span>
+</div><div class='img'><img src='trimfill-1.png' alt='' width='768' height='614' /></div><div class='input'>
 <span class='co'>### estimator "R0" also provides test</span>
-<span class='no'>res.tf</span> <span class='kw'>&lt;-</span> <span class='fu'>trimfill</span>(<span class='no'>res</span>, <span class='kw'>estimator</span><span class='kw'>=</span><span class='st'>"R0"</span>)
-<span class='no'>res.tf</span></div><div class='output co'>#&gt; 
+<span class='va'>res.tf</span> <span class='op'>&lt;-</span> <span class='fu'>trimfill</span><span class='op'>(</span><span class='va'>res</span>, estimator<span class='op'>=</span><span class='st'>"R0"</span><span class='op'>)</span>
+<span class='va'>res.tf</span>
+</div><div class='output co'>#&gt; 
 #&gt; Estimated number of missing studies on the right side: 4 (SE = 3.1623)
 #&gt; Test of H0: no missing studies on the right side:      p-val = 0.0312
 #&gt; 
@@ -253,9 +259,10 @@
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### meta-analysis of the log risk ratios using a random-effects model</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
-<span class='no'>res.tf</span> <span class='kw'>&lt;-</span> <span class='fu'>trimfill</span>(<span class='no'>res</span>)
-<span class='no'>res.tf</span></div><div class='output co'>#&gt; 
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
+<span class='va'>res.tf</span> <span class='op'>&lt;-</span> <span class='fu'>trimfill</span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
+<span class='va'>res.tf</span>
+</div><div class='output co'>#&gt; 
 #&gt; Estimated number of missing studies on the right side: 1 (SE = 2.4528)
 #&gt; 
 #&gt; Random-Effects Model (k = 14; tau^2 estimator: REML)
@@ -275,14 +282,16 @@
 #&gt; 
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-#&gt; </div><div class='input'><span class='fu'><a href='funnel.html'>funnel</a></span>(<span class='no'>res.tf</span>, <span class='kw'>legend</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>cex</span><span class='kw'>=</span><span class='fl'>1.2</span>)</div><div class='img'><img src='trimfill-2.png' alt='' width='768' height='614' /></div><div class='input'>
+#&gt; </div><div class='input'><span class='fu'><a href='funnel.html'>funnel</a></span><span class='op'>(</span><span class='va'>res.tf</span>, legend<span class='op'>=</span><span class='cn'>TRUE</span>, cex<span class='op'>=</span><span class='fl'>1.2</span><span class='op'>)</span>
+</div><div class='img'><img src='trimfill-2.png' alt='' width='768' height='614' /></div><div class='input'>
 <span class='co'>### the examples above are fixed-fixed and random-random approaches</span>
 
 <span class='co'>### illustration of a fixed-random approach</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"FE"</span>)
-<span class='no'>res.tf</span> <span class='kw'>&lt;-</span> <span class='fu'>trimfill</span>(<span class='no'>res</span>)
-<span class='no'>filled</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>yi</span> <span class='kw'>=</span> <span class='no'>res.tf</span>$<span class='no'>yi</span>, <span class='kw'>vi</span> <span class='kw'>=</span> <span class='no'>res.tf</span>$<span class='no'>vi</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='no'>res.tf</span>$<span class='no'>fill</span>)
-<span class='no'>filled</span></div><div class='output co'>#&gt;             yi          vi  fill
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span>, method<span class='op'>=</span><span class='st'>"FE"</span><span class='op'>)</span>
+<span class='va'>res.tf</span> <span class='op'>&lt;-</span> <span class='fu'>trimfill</span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
+<span class='va'>filled</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>yi <span class='op'>=</span> <span class='va'>res.tf</span><span class='op'>$</span><span class='va'>yi</span>, vi <span class='op'>=</span> <span class='va'>res.tf</span><span class='op'>$</span><span class='va'>vi</span>, fill <span class='op'>=</span> <span class='va'>res.tf</span><span class='op'>$</span><span class='va'>fill</span><span class='op'>)</span>
+<span class='va'>filled</span>
+</div><div class='output co'>#&gt;             yi          vi  fill
 #&gt; 1  -0.88931133 0.325584765 FALSE
 #&gt; 2  -1.58538866 0.194581121 FALSE
 #&gt; 3  -1.34807315 0.415367965 FALSE
@@ -299,7 +308,8 @@
 #&gt; 14  0.78929282 0.073024794  TRUE
 #&gt; 15  0.85949921 0.020010032  TRUE
 #&gt; 16  1.00333667 0.194581121  TRUE
-#&gt; 17  1.03884624 0.223017248  TRUE</div><div class='input'><span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>filled</span>)</div><div class='output co'>#&gt; 
+#&gt; 17  1.03884624 0.223017248  TRUE</div><div class='input'><span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>filled</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; Random-Effects Model (k = 17; tau^2 estimator: REML)
 #&gt; 
 #&gt; tau^2 (estimated amount of total heterogeneity): 0.7164 (SE = 0.2944)
@@ -333,7 +343,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

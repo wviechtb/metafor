@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-47</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-48</span>
       </span>
     </div>
 
@@ -135,7 +135,7 @@
     <p>Function to convert a vector into a square matrix by filling up the lower triangular part of the matrix.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>vec2mat</span>(<span class='no'>x</span>, <span class='kw'>diag</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>corr</span><span class='kw'>=</span>!<span class='no'>diag</span>, <span class='no'>dimnames</span>)</pre>
+    <pre class="usage"><span class='fu'>vec2mat</span><span class='op'>(</span><span class='va'>x</span>, diag<span class='op'>=</span><span class='cn'>FALSE</span>, corr<span class='op'>=</span><span class='op'>!</span><span class='va'>diag</span>, <span class='va'>dimnames</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -164,21 +164,28 @@
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A matrix.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Wolfgang Viechtbauer <a href='mailto:wvb@metafor-project.org'>wvb@metafor-project.org</a> <a href='http://www.metafor-project.org'>http://www.metafor-project.org</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>vec2mat</span>(<span class='fl'>1</span>:<span class='fl'>6</span>, <span class='kw'>corr</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><div class='output co'>#&gt;      [,1] [,2] [,3] [,4]
+    <pre class="examples"><div class='input'><span class='fu'>vec2mat</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>6</span>, corr<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;      [,1] [,2] [,3] [,4]
 #&gt; [1,]   NA    1    2    3
 #&gt; [2,]    1   NA    4    5
 #&gt; [3,]    2    4   NA    6
-#&gt; [4,]    3    5    6   NA</div><div class='input'><span class='fu'>vec2mat</span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>0.2</span>, <span class='fl'>0.7</span>, <span class='kw'>by</span><span class='kw'>=</span><span class='fl'>0.1</span>), <span class='kw'>corr</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;      [,1] [,2] [,3] [,4]
+#&gt; [4,]    3    5    6   NA</div><div class='input'><span class='fu'>vec2mat</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>0.2</span>, <span class='fl'>0.7</span>, by<span class='op'>=</span><span class='fl'>0.1</span><span class='op'>)</span>, corr<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;      [,1] [,2] [,3] [,4]
 #&gt; [1,]  1.0  0.2  0.3  0.4
 #&gt; [2,]  0.2  1.0  0.5  0.6
 #&gt; [3,]  0.3  0.5  1.0  0.7
-#&gt; [4,]  0.4  0.6  0.7  1.0</div><div class='input'><span class='fu'>vec2mat</span>(<span class='fl'>1</span>:<span class='fl'>10</span>, <span class='kw'>diag</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;      [,1] [,2] [,3] [,4]
+#&gt; [4,]  0.4  0.6  0.7  1.0</div><div class='input'><span class='fu'>vec2mat</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, diag<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;      [,1] [,2] [,3] [,4]
 #&gt; [1,]    1    2    3    4
 #&gt; [2,]    2    5    6    7
 #&gt; [3,]    3    6    8    9
-#&gt; [4,]    4    7    9   10</div><div class='input'><span class='fu'>vec2mat</span>(<span class='fl'>1</span>:<span class='fl'>6</span>, <span class='kw'>corr</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>dimnames</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"A"</span>,<span class='st'>"B"</span>,<span class='st'>"C"</span>,<span class='st'>"D"</span>))</div><div class='output co'>#&gt;    A  B  C  D
+#&gt; [4,]    4    7    9   10</div><div class='input'><span class='fu'>vec2mat</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>6</span>, corr<span class='op'>=</span><span class='cn'>FALSE</span>, dimnames<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>,<span class='st'>"B"</span>,<span class='st'>"C"</span>,<span class='st'>"D"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;    A  B  C  D
 #&gt; A NA  1  2  3
 #&gt; B  1 NA  4  5
 #&gt; C  2  4 NA  6
@@ -198,7 +205,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-47</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-48</span>
       </span>
     </div>
 
@@ -135,7 +135,7 @@
     <p>The function constructs a matrix that indicates which two groups have been contrasted against each other in each row of a dataset.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>contrmat</span>(<span class='no'>data</span>, <span class='no'>grp1</span>, <span class='no'>grp2</span>, <span class='no'>last</span>, <span class='kw'>shorten</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>minlen</span><span class='kw'>=</span><span class='fl'>2</span>, <span class='kw'>append</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>contrmat</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>grp1</span>, <span class='va'>grp2</span>, <span class='va'>last</span>, shorten<span class='op'>=</span><span class='cn'>FALSE</span>, minlen<span class='op'>=</span><span class='fl'>2</span>, append<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -179,6 +179,9 @@
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A matrix with as many variables as there are groups.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Wolfgang Viechtbauer <a href='mailto:wvb@metafor-project.org'>wvb@metafor-project.org</a> <a href='http://www.metafor-project.org'>http://www.metafor-project.org</a></p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='https://doi.org/10.18637/jss.v036.i03'>https://doi.org/10.18637/jss.v036.i03</a></p>
@@ -188,10 +191,11 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### restructure to wide format</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.senn2013</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat</span>[<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>4</span>,<span class='fl'>3</span>,<span class='fl'>2</span>,<span class='fl'>5</span>,<span class='fl'>6</span>)]
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='to.wide.html'>to.wide</a></span>(<span class='no'>dat</span>, <span class='kw'>study</span><span class='kw'>=</span><span class='st'>"study"</span>, <span class='kw'>grp</span><span class='kw'>=</span><span class='st'>"treatment"</span>, <span class='kw'>ref</span><span class='kw'>=</span><span class='st'>"placebo"</span>, <span class='kw'>grpvars</span><span class='kw'>=</span><span class='fl'>4</span>:<span class='fl'>6</span>)
-<span class='no'>dat</span></div><div class='output co'>#&gt;                    study comment   treatment.1 ni.1  mi.1 sdi.1   treatment.2
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.senn2013</span>
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>4</span>,<span class='fl'>3</span>,<span class='fl'>2</span>,<span class='fl'>5</span>,<span class='fl'>6</span><span class='op'>)</span><span class='op'>]</span>
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='to.wide.html'>to.wide</a></span><span class='op'>(</span><span class='va'>dat</span>, study<span class='op'>=</span><span class='st'>"study"</span>, grp<span class='op'>=</span><span class='st'>"treatment"</span>, ref<span class='op'>=</span><span class='st'>"placebo"</span>, grpvars<span class='op'>=</span><span class='fl'>4</span><span class='op'>:</span><span class='fl'>6</span><span class='op'>)</span>
+<span class='va'>dat</span>
+</div><div class='output co'>#&gt;                    study comment   treatment.1 ni.1  mi.1 sdi.1   treatment.2
 #&gt; 1            Alex (1998)  change     metformin  291  0.13 1.428  sulfonylurea
 #&gt; 2           Baksi (2004)  change rosiglitazone  218 -1.20 1.112       placebo
 #&gt; 3           Costa (1997)  change      acarbose   36 -1.10 0.360       placebo
@@ -248,8 +252,9 @@
 #&gt; 26  102 -1.09 1.650 26 me-ro    me-ro
 #&gt; 27  105 -0.40 1.300 27 ro-pl    ro-pl</div><div class='input'>
 <span class='co'>### add contrast matrix</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'>contrmat</span>(<span class='no'>dat</span>, <span class='kw'>grp1</span><span class='kw'>=</span><span class='st'>"treatment.1"</span>, <span class='kw'>grp2</span><span class='kw'>=</span><span class='st'>"treatment.2"</span>)
-<span class='no'>dat</span></div><div class='output co'>#&gt;                    study comment   treatment.1 ni.1  mi.1 sdi.1   treatment.2
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'>contrmat</span><span class='op'>(</span><span class='va'>dat</span>, grp1<span class='op'>=</span><span class='st'>"treatment.1"</span>, grp2<span class='op'>=</span><span class='st'>"treatment.2"</span><span class='op'>)</span>
+<span class='va'>dat</span>
+</div><div class='output co'>#&gt;                    study comment   treatment.1 ni.1  mi.1 sdi.1   treatment.2
 #&gt; 1            Alex (1998)  change     metformin  291  0.13 1.428  sulfonylurea
 #&gt; 2           Baksi (2004)  change rosiglitazone  218 -1.20 1.112       placebo
 #&gt; 3           Costa (1997)  change      acarbose   36 -1.10 0.360       placebo
@@ -334,8 +339,9 @@
 #&gt; 26            0            -1           0            0            0       0
 #&gt; 27            0             1           0            0            0      -1</div><div class='input'>
 <span class='co'>### data in long format</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.hasselblad1998</span>
-<span class='no'>dat</span></div><div class='output co'>#&gt;    id study            authors year            trt  xi   ni
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.hasselblad1998</span>
+<span class='va'>dat</span>
+</div><div class='output co'>#&gt;    id study            authors year            trt  xi   ni
 #&gt; 1   1     1        Reid et al. 1974     no_contact  75  731
 #&gt; 2   2     1        Reid et al. 1974 ind_counseling 363  714
 #&gt; 3   3     2    Cottraux et al. 1983     no_contact   9  140
@@ -387,8 +393,9 @@
 #&gt; 49 49    24    Kendrick et al. 1995     no_contact  69 1177
 #&gt; 50 50    24    Kendrick et al. 1995 ind_counseling  54  888</div><div class='input'>
 <span class='co'>### restructure to wide format</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='to.wide.html'>to.wide</a></span>(<span class='no'>dat</span>, <span class='kw'>study</span><span class='kw'>=</span><span class='st'>"study"</span>, <span class='kw'>grp</span><span class='kw'>=</span><span class='st'>"trt"</span>, <span class='kw'>ref</span><span class='kw'>=</span><span class='st'>"no_contact"</span>, <span class='kw'>grpvars</span><span class='kw'>=</span><span class='fl'>6</span>:<span class='fl'>7</span>)
-<span class='no'>dat</span></div><div class='output co'>#&gt;    id study            authors year          trt.1 xi.1 ni.1          trt.2
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='to.wide.html'>to.wide</a></span><span class='op'>(</span><span class='va'>dat</span>, study<span class='op'>=</span><span class='st'>"study"</span>, grp<span class='op'>=</span><span class='st'>"trt"</span>, ref<span class='op'>=</span><span class='st'>"no_contact"</span>, grpvars<span class='op'>=</span><span class='fl'>6</span><span class='op'>:</span><span class='fl'>7</span><span class='op'>)</span>
+<span class='va'>dat</span>
+</div><div class='output co'>#&gt;    id study            authors year          trt.1 xi.1 ni.1          trt.2
 #&gt; 1   1     1        Reid et al. 1974 ind_counseling  363  714     no_contact
 #&gt; 2   2     2    Cottraux et al. 1983 grp_counseling   10  138     no_contact
 #&gt; 3   3     2    Cottraux et al. 1983 ind_counseling   23  140     no_contact
@@ -443,8 +450,9 @@
 #&gt; 25   78  584 in-no    in-no
 #&gt; 26   69 1177 in-no    in-no</div><div class='input'>
 <span class='co'>### add contrast matrix</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'>contrmat</span>(<span class='no'>dat</span>, <span class='kw'>grp1</span><span class='kw'>=</span><span class='st'>"trt.1"</span>, <span class='kw'>grp2</span><span class='kw'>=</span><span class='st'>"trt.2"</span>, <span class='kw'>shorten</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
-<span class='no'>dat</span></div><div class='output co'>#&gt;    id study            authors year          trt.1 xi.1 ni.1          trt.2
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'>contrmat</span><span class='op'>(</span><span class='va'>dat</span>, grp1<span class='op'>=</span><span class='st'>"trt.1"</span>, grp2<span class='op'>=</span><span class='st'>"trt.2"</span>, shorten<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='va'>dat</span>
+</div><div class='output co'>#&gt;    id study            authors year          trt.1 xi.1 ni.1          trt.2
 #&gt; 1   1     1        Reid et al. 1974 ind_counseling  363  714     no_contact
 #&gt; 2   2     2    Cottraux et al. 1983 grp_counseling   10  138     no_contact
 #&gt; 3   3     2    Cottraux et al. 1983 ind_counseling   23  140     no_contact
@@ -513,7 +521,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

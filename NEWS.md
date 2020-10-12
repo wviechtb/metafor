@@ -1,6 +1,12 @@
-# metafor 2.5-47 (2020-08-31)
+# metafor 2.5-48 (2020-10-12)
 
 - the `metafor` package now makes use of the `mathjaxr` package to nicely render equations shown in the HTML help pages
+
+- added `selmodel()` for fitting a wide variety of selection models (and added the corresponding `plot.selmodel.rma.uni()` function for drawing the estimated selection function)
+
+- added `tes()` function for the test of excess significance
+
+- added `rcalc()`, `matreg()`, `dfround()`, and `vec2mat()` functions
 
 - the various `cumul()` functions provide `I^2` and `H^2` also for fixed-effects models; accordingly, `plot.cumul.rma()` now also works with such models
 
@@ -9,10 +15,6 @@
 - added `weighted` argument to `fsn()` (for Orwin's method)
 
 - added some more transformation functions
-
-- added `tes()` function for the test of excess significance
-
-- added `rcalc()`, `matreg()`, `dfround()`, and `vec2mat()` functions
 
 - `bldiag()` now properly handles ?x0 or 0x? matrices
 
@@ -28,7 +30,7 @@
 
 - `vif()` gains `btt` argument and can now also compute generalized variance inflation factors; a proper `print.vif.rma()` function was added
 
-- in the various `forest()` functions, when `header=TRUE`, suppress the right header when `annotate=FALSE`
+- in the various `forest()` functions, the right header is now suppressed when `annotate=FALSE` and `header=TRUE`
 
 - the `forest` and `funnel` arguments of `reporter.rma.uni()` can now also be logicals to suppress the drawing of these plots
 
@@ -36,11 +38,11 @@
 
 - `forest.rma()` gains `colout` argument (to adjust the color of the observed effect sizes or outcomes)
 
-- slight speedup in functions that repeatedly fit `rma.uni()` models by skipping the computation of `R2`
+- slight speedup in functions that repeatedly fit `rma.uni()` models by skipping the computation of the pseudo R^2 statistic
 
 - `funnel.default()` and `funnel.rma()` gain `label` and `offset` arguments
 
-- `funnel.default()` and `funnel.rma()` gain `lty` argument; reference line is now drawn by default as a dotted line (like the line for the pseudo confidence region)
+- `funnel.default()` and `funnel.rma()` gain `lty` argument; the reference line is now drawn by default as a dotted line (like the line for the pseudo confidence region)
 
 - `regtest()` now shows the 'limit estimate' of the (average) true effect when using `sei`, `vi`, `ninv`, or `sqrtninv` as predictor (and the model does not contain any other moderators)
 
@@ -48,7 +50,7 @@
 
 - refactored various functions (for cleaner/simpler code)
 
-- added 9 new datasets (`dat.anand1999`, `dat.cannon2006`, `dat.craft2003`, `dat.damico2009`, `dat.dorn2007`, `dat.kalaian1996`, `dat.kearon1998`, `dat.lau1992`, `dat.vanhowe1999`)
+- added 12 new datasets (`dat.anand1999`, `dat.baskerville2012`, `dat.cannon2006`, `dat.cohen1981`, `dat.craft2003`, `dat.damico2009`, `dat.dorn2007`, `dat.hahn2001`, `dat.kalaian1996`, `dat.kearon1998`, `dat.lau1992`, `dat.vanhowe1999`)
 
 - fixed `level` not getting passed down to the various `cumul()` functions
 

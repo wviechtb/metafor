@@ -185,7 +185,7 @@
    if (all(is.na(x))) { # since formatC(NA, format="f", digits=2) fails
       x
    } else {
-      formatC(x, format="f", digits=digits)
+      trimws(formatC(x, format="f", digits=digits))
    }
 
 }

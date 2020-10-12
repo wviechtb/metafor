@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-47</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-48</span>
       </span>
     </div>
 
@@ -135,7 +135,7 @@
     <p>Results from 6 studies evaluating mortality from prophylactic use of lidocaine in acute myocardial infarction.</p>
     </div>
 
-    <pre class="usage"><span class='no'>dat.hine1989</span></pre>
+    <pre class="usage"><span class='va'>dat.hine1989</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
@@ -163,11 +163,12 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat'</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.hine1989</span>
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.hine1989</span>
 
 <span class='co'>### calculate risk differences and corresponding sampling variances</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RD"</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>n1i</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>n2i</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>ai</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>ci</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
-<span class='no'>dat</span></div><div class='output co'>#&gt;   study         source n1i n2i ai ci     yi     vi 
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"RD"</span>, n1i<span class='op'>=</span><span class='va'>n1i</span>, n2i<span class='op'>=</span><span class='va'>n2i</span>, ai<span class='op'>=</span><span class='va'>ai</span>, ci<span class='op'>=</span><span class='va'>ci</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
+<span class='va'>dat</span>
+</div><div class='output co'>#&gt;   study         source n1i n2i ai ci     yi     vi 
 #&gt; 1     1  Chopra et al.  39  43  2  1 0.0280 0.0018 
 #&gt; 2     2       Mogensen  44  44  4  4 0.0000 0.0038 
 #&gt; 3     3    Pitt et al. 107 110  6  4 0.0197 0.0008 
@@ -175,8 +176,9 @@
 #&gt; 5     5 Bennett et al. 110 106  7  3 0.0353 0.0008 
 #&gt; 6     6 O'Brien et al. 154 146 11  4 0.0440 0.0006 </div><div class='input'>
 <span class='co'>### meta-analysis of risk differences using a random-effects model</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
-<span class='no'>res</span></div><div class='output co'>#&gt; 
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
+<span class='va'>res</span>
+</div><div class='output co'>#&gt; 
 #&gt; Random-Effects Model (k = 6; tau^2 estimator: REML)
 #&gt; 
 #&gt; tau^2 (estimated amount of total heterogeneity): 0 (SE = 0.0006)
@@ -210,7 +212,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

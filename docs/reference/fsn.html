@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-47</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-48</span>
       </span>
     </div>
 
@@ -135,8 +135,8 @@
     <p>Function to compute the fail-safe N (also called a file drawer analysis).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>fsn</span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='no'>sei</span>, <span class='no'>data</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"Rosenthal"</span>, <span class='kw'>alpha</span><span class='kw'>=</span><span class='fl'>.05</span>,
-    <span class='no'>target</span>, <span class='kw'>weighted</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>subset</span>, <span class='no'>digits</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>fsn</span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, <span class='va'>sei</span>, <span class='va'>data</span>, type<span class='op'>=</span><span class='st'>"Rosenthal"</span>, alpha<span class='op'>=</span><span class='fl'>.05</span>,
+    <span class='va'>target</span>, weighted<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>subset</span>, <span class='va'>digits</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -159,7 +159,7 @@
     </tr>
     <tr>
       <th>type</th>
-      <td><p>character string indicating the method to use for the calculation of the fail-safe N. Possible options are <code>"Rosenthal"</code>, <code>"Orwin"</code>, or <code>"Rosenberg"</code>. See &#8216;Details&#8217;.</p></td>
+      <td><p>character string indicating the method to use for the calculation of the fail-safe N. Possible options are <code>"Rosenthal"</code> (the default), <code>"Orwin"</code>, or <code>"Rosenberg"</code>. See &#8216;Details&#8217;.</p></td>
     </tr>
     <tr>
       <th>alpha</th>
@@ -191,8 +191,9 @@
 
     <p>The function can be used in conjunction with any of the usual effect sizes / outcome measures used in meta-analyses (e.g., log risk ratios, log odds ratios, risk differences, mean differences, standardized mean differences, raw correlation coefficients, correlation coefficients transformed with Fisher's r-to-z transformation, and so on). Simply specify the observed effect sizes or outcomes via the <code>yi</code> argument and the corresponding sampling variances via the <code>vi</code> argument (instead of specifying <code>vi</code>, one can specify the standard errors via the <code>sei</code> argument). The <code><a href='escalc.html'>escalc</a></code> function can be used to compute a wide variety of effect sizes / outcome measures (and the corresponding sampling variances) based on summary statistics.</p>
 <p>The Rosenthal method (sometimes called a &#8216;file drawer analysis&#8217;) calculates the number of studies averaging null results that would have to be added to the given set of observed effect sizes or outcomes to reduce the combined significance level (p-value) to a target alpha level (e.g., .05). The calculation is based on Stouffer's method to combine p-values and is described in Rosenthal (1979).</p>
-<p>The Orwin method calculates the number of studies averaging null results that would have to be added to the given set of observed effect sizes or outcomes to reduce the (unweighted or weighted) average effect size to a target effect size. The method is described in Orwin (1983). If <code>weighted=FALSE</code> (the default), the method does not require (or makes use) of <code>vi</code> or <code>sei</code>, so these arguments are not relevant for this method.</p>
-<p>The Rosenberg method calculates the number of studies averaging null results that would have to be added to the given set of observed effect sizes or outcomes to reduce significance level (p-value) of the (weighted) average effect size (based on a fixed-effects model) to a target alpha level (e.g., .05). The method is described in Rosenberg (2005).</p>
+<p>The Orwin method calculates the number of studies averaging null results that would have to be added to the given set of observed effect sizes or outcomes to reduce the (unweighted or weighted) average effect size to a target effect size (as specified via the <code>target</code> argument). The method is described in Orwin (1983). If <code>weighted=FALSE</code> (the default), the method does not require (or makes use) of <code>vi</code> (or <code>sei</code>), so these arguments are then not relevant for this method. If the <code>target</code> argument is not specified, then the target average effect size will be equal to the observed average effect size divided by 2 (which is quite arbitrary). One should really set <code>target</code> to a value that reflects an effect size one would consider practically irrelevant.</p>
+<p>The Rosenberg method calculates the number of studies averaging null results that would have to be added to the given set of observed effect sizes or outcomes to reduce the significance level (i.e., p-value) of the (weighted) average effect size (based on a fixed-effects model) to a target alpha level (e.g., .05). The method is described in Rosenberg (2005).</p>
+<p>If the combined/observed significance level is above the target alpha level (for <code>type = "Rosenthal"</code> or <code>type = "Rosenberg)"</code>) or if the observed average effect size is below the target average effect size (for <code>type = "Orwin"</code>), then the fail-sage N value will be 0.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class <code>"fsn"</code>. The object is a list containing the following components:</p>
@@ -208,6 +209,9 @@
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>For the Rosenberg method, the p-value is calculated based on a standard normal distribution (instead of a t-distribution, as suggested by Rosenberg, 2005).</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Wolfgang Viechtbauer <a href='mailto:wvb@metafor-project.org'>wvb@metafor-project.org</a> <a href='http://www.metafor-project.org'>http://www.metafor-project.org</a></p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Rosenthal, R. (1979). The "file drawer problem" and tolerance for null results. <em>Psychological Bulletin</em>, <b>86</b>(3), 638--641. <a href='https://doi.org/10.1037/0033-2909.86.3.638'>https://doi.org/10.1037/0033-2909.86.3.638</a></p>
@@ -220,30 +224,34 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### calculate log risk ratios and corresponding sampling variances</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>)
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"RR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>)</span>
 
-<span class='fu'>fsn</span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)</div><div class='output co'>#&gt; 
+<span class='fu'>fsn</span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; Fail-safe N Calculation Using the Rosenthal Approach
 #&gt; 
 #&gt; Observed Significance Level: &lt;.0001
 #&gt; Target Significance Level:   0.05
 #&gt; 
 #&gt; Fail-safe N: 598
-#&gt; </div><div class='input'><span class='fu'>fsn</span>(<span class='no'>yi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"Orwin"</span>)</div><div class='output co'>#&gt; 
+#&gt; </div><div class='input'><span class='fu'>fsn</span><span class='op'>(</span><span class='va'>yi</span>, data<span class='op'>=</span><span class='va'>dat</span>, type<span class='op'>=</span><span class='st'>"Orwin"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; Fail-safe N Calculation Using the Orwin Approach
 #&gt; 
 #&gt; Average Effect Size: -0.7407
 #&gt; Target Effect Size:  -0.3703
 #&gt; 
 #&gt; Fail-safe N: 13
-#&gt; </div><div class='input'><span class='fu'>fsn</span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"Orwin"</span>, <span class='kw'>weighted</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; 
+#&gt; </div><div class='input'><span class='fu'>fsn</span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span>, type<span class='op'>=</span><span class='st'>"Orwin"</span>, weighted<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; Fail-safe N Calculation Using the Orwin Approach
 #&gt; 
 #&gt; Average Effect Size: -0.4303
 #&gt; Target Effect Size:  -0.2151
 #&gt; 
 #&gt; Fail-safe N: 13
-#&gt; </div><div class='input'><span class='fu'>fsn</span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"Rosenberg"</span>)</div><div class='output co'>#&gt; 
+#&gt; </div><div class='input'><span class='fu'>fsn</span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span>, type<span class='op'>=</span><span class='st'>"Rosenberg"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; Fail-safe N Calculation Using the Rosenberg Approach
 #&gt; 
 #&gt; Average Effect Size:         -0.4303
@@ -267,7 +275,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -132,7 +132,7 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, weighted
       } else {
          fsnum <- try(uniroot(.fsn.fisher, lower=0, upper=1000, extendInt="upX", pi=pi, alpha=alpha)$root, silent=FALSE)
          if (inherits(fsnum, "try-error"))
-            stop(mstyle$stop("Could not find failsafe N using Fisher's method."))
+            stop(mstyle$stop("Could not find fail-safe N using Fisher's method."))
       }
       meanes <- NA
       target <- NA

@@ -1,8 +1,16 @@
-Changes in Version 2.5-47 (2020-08-31)
+Changes in Version 2.5-48 (2020-10-12)
 =====================================
 
    o the metafor package now makes use of the 'mathjaxr' package to nicely
      render equations shown in the HTML help pages
+
+   o added selmodel() for fitting a wide variety of selection models (and
+     added the corresponding plot.selmodel.rma.uni() function for drawing the
+     estimated selection function)
+
+   o added tes() function for the test of excess significance
+
+   o added rcalc(), matreg(), dfround(), and vec2mat() functions
 
    o the various cumul() functions provide I^2 and H^2 also for fixed-effects
      models; accordingly, plot.cumul.rma() now also works with such models
@@ -12,10 +20,6 @@ Changes in Version 2.5-47 (2020-08-31)
    o added 'weighted' argument to fsn() (for Orwin's method)
 
    o added some more transformation functions
-
-   o added tes() function for the test of excess significance
-
-   o added rcalc(), matreg(), dfround(), and vec2mat() functions
 
    o bldiag() now properly handles ?x0 or 0x? matrices
 
@@ -42,8 +46,8 @@ Changes in Version 2.5-47 (2020-08-31)
    o vif() gains 'btt' argument and can now also compute generalized variance
      inflation factors; a proper print.vif.rma() function was added
 
-   o in the various forest() functions, when 'header=TRUE', suppress the right
-     header when 'annotate=FALSE'
+   o in the various forest() functions, the right header is now suppressed
+     when 'annotate=FALSE' and 'header=TRUE'
 
    o the 'forest' and 'funnel' arguments of reporter.rma.uni() can now also be
      logicals to suppress the drawing of these plots
@@ -55,12 +59,12 @@ Changes in Version 2.5-47 (2020-08-31)
      effect sizes or outcomes)
 
    o slight speedup in functions that repeatedly fit rma.uni() models by
-     skipping the computation of 'R2'
+     skipping the computation of the pseudo R^2 statistic
 
    o funnel.default() and funnel.rma() gain 'label' and 'offset' arguments
 
-   o funnel.default() and funnel.rma() gain 'lty' argument; reference line is
-     now drawn by default as a dotted line (like the line for the pseudo
+   o funnel.default() and funnel.rma() gain 'lty' argument; the reference line
+     is now drawn by default as a dotted line (like the line for the pseudo
      confidence region)
 
    o regtest() now shows the 'limit estimate' of the (average) true effect
@@ -72,9 +76,10 @@ Changes in Version 2.5-47 (2020-08-31)
 
    o refactored various functions (for cleaner/simpler code)
 
-   o added 9 new datasets (dat.anand1999, dat.cannon2006, dat.craft2003,
-     dat.damico2009, dat.dorn2007, dat.kalaian1996, dat.kearon1998,
-     dat.lau1992, dat.vanhowe1999)
+   o added 12 new datasets (dat.anand1999, dat.baskerville2012,
+     dat.cannon2006, dat.cohen1981, dat.craft2003, dat.damico2009,
+     dat.dorn2007, dat.hahn2001, dat.kalaian1996, dat.kearon1998, dat.lau1992,
+     dat.vanhowe1999)
 
    o fixed 'level' not getting passed down to the various cumul() functions
 

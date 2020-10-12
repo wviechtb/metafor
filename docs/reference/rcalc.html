@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-47</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-48</span>
       </span>
     </div>
 
@@ -135,7 +135,7 @@
     <p>The function can be used to calculate the variance-covariance matrix of correlation coefficients computed based on the same sample of subjects. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
     </div>
 
-    <pre class="usage"><span class='fu'>rcalc</span>(<span class='no'>x</span>, <span class='no'>ni</span>, <span class='no'>data</span>, <span class='kw'>rtoz</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>nfun</span><span class='kw'>=</span><span class='st'>"min"</span>, <span class='kw'>sparse</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>rcalc</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>ni</span>, <span class='va'>data</span>, rtoz<span class='op'>=</span><span class='cn'>FALSE</span>, nfun<span class='op'>=</span><span class='st'>"min"</span>, sparse<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -191,6 +191,9 @@
 
     <p>For raw correlation coefficients, the variance-covariance matrix is computed with \(n-1\) in the denominator (instead of \(n\) as suggested in Steiger, 1980, and Olkin &amp; Finn, 1990).</p>
 <p>For raw and r-to-z transformed coefficients, the variance-covariance matrix will only be computed when the (common) sample size for a study is at least 5.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Wolfgang Viechtbauer <a href='mailto:wvb@metafor-project.org'>wvb@metafor-project.org</a> <a href='http://www.metafor-project.org'>http://www.metafor-project.org</a></p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Olkin, I., &amp; Finn, J. D. (1990). Testing correlated correlations. <em>Psychological Bulletin</em>, <b>108</b>(2), 330--333. <a href='https://doi.org/10.1037/0033-2909.108.2.330'>https://doi.org/10.1037/0033-2909.108.2.330</a></p>
@@ -201,21 +204,23 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat'</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.craft2003</span>
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.craft2003</span>
 
 <span class='co'>### construct dataset and var-cov matrix of the correlations</span>
-<span class='no'>tmp</span> <span class='kw'>&lt;-</span> <span class='fu'>rcalc</span>(<span class='no'>ri</span> ~ <span class='no'>var1</span> + <span class='no'>var2</span> <span class='kw'>|</span> <span class='no'>study</span>, <span class='kw'>ni</span><span class='kw'>=</span><span class='no'>ni</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
-<span class='no'>V</span> <span class='kw'>&lt;-</span> <span class='no'>tmp</span>$<span class='no'>V</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>tmp</span>$<span class='no'>dat</span>
+<span class='va'>tmp</span> <span class='op'>&lt;-</span> <span class='fu'>rcalc</span><span class='op'>(</span><span class='va'>ri</span> <span class='op'>~</span> <span class='va'>var1</span> <span class='op'>+</span> <span class='va'>var2</span> <span class='op'>|</span> <span class='va'>study</span>, ni<span class='op'>=</span><span class='va'>ni</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
+<span class='va'>V</span> <span class='op'>&lt;-</span> <span class='va'>tmp</span><span class='op'>$</span><span class='va'>V</span>
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>tmp</span><span class='op'>$</span><span class='va'>dat</span>
 
 <span class='co'>### examine data for study 1</span>
-<span class='no'>dat</span>[<span class='no'>dat</span>$<span class='no'>study</span> <span class='kw'>==</span> <span class='fl'>1</span>,]</div><div class='output co'>#&gt;   study var1 var2 var1.var2    yi  ni
+<span class='va'>dat</span><span class='op'>[</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>study</span> <span class='op'>==</span> <span class='fl'>1</span>,<span class='op'>]</span>
+</div><div class='output co'>#&gt;   study var1 var2 var1.var2    yi  ni
 #&gt; 1     1 acog perf acog.perf -0.55 142
 #&gt; 2     1 asom perf asom.perf -0.48 142
 #&gt; 3     1 conf perf conf.perf  0.66 142
 #&gt; 4     1 acog asom acog.asom  0.47 142
 #&gt; 5     1 acog conf acog.conf -0.38 142
-#&gt; 6     1 asom conf asom.conf -0.46 142</div><div class='input'><span class='no'>V</span>[<span class='no'>dat</span>$<span class='no'>study</span> <span class='kw'>==</span> <span class='fl'>1</span>, <span class='no'>dat</span>$<span class='no'>study</span> <span class='kw'>==</span> <span class='fl'>1</span>]</div><div class='output co'>#&gt;               acog.perf     asom.perf     conf.perf     acog.asom    acog.conf
+#&gt; 6     1 asom conf asom.conf -0.46 142</div><div class='input'><span class='va'>V</span><span class='op'>[</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>study</span> <span class='op'>==</span> <span class='fl'>1</span>, <span class='va'>dat</span><span class='op'>$</span><span class='va'>study</span> <span class='op'>==</span> <span class='fl'>1</span><span class='op'>]</span>
+</div><div class='output co'>#&gt;               acog.perf     asom.perf     conf.perf     acog.asom    acog.conf
 #&gt; acog.perf  0.0034503989  0.0013265149 -0.0005545798 -0.0013967848  0.002501895
 #&gt; asom.perf  0.0013265149  0.0042005969 -0.0009521407 -0.0019433591  0.001264856
 #&gt; conf.perf -0.0005545798 -0.0009521407  0.0022592011  0.0005791091 -0.001533798
@@ -230,13 +235,15 @@
 #&gt; acog.conf  0.0018844047
 #&gt; asom.conf  0.0044083302</div><div class='input'>
 <span class='co'>### examine data for study 6</span>
-<span class='no'>dat</span>[<span class='no'>dat</span>$<span class='no'>study</span> <span class='kw'>==</span> <span class='fl'>6</span>,]</div><div class='output co'>#&gt;    study var1 var2 var1.var2   yi ni
+<span class='va'>dat</span><span class='op'>[</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>study</span> <span class='op'>==</span> <span class='fl'>6</span>,<span class='op'>]</span>
+</div><div class='output co'>#&gt;    study var1 var2 var1.var2   yi ni
 #&gt; 13     6 acog perf acog.perf 0.44 16
 #&gt; 14     6 asom perf asom.perf 0.46 16
 #&gt; 15     6 conf perf conf.perf   NA 16
 #&gt; 16     6 acog asom acog.asom 0.67 16
 #&gt; 17     6 acog conf acog.conf   NA 16
-#&gt; 18     6 asom conf asom.conf   NA 16</div><div class='input'><span class='no'>V</span>[<span class='no'>dat</span>$<span class='no'>study</span> <span class='kw'>==</span> <span class='fl'>6</span>, <span class='no'>dat</span>$<span class='no'>study</span> <span class='kw'>==</span> <span class='fl'>6</span>]</div><div class='output co'>#&gt;             acog.perf   asom.perf conf.perf   acog.asom acog.conf asom.conf
+#&gt; 18     6 asom conf asom.conf   NA 16</div><div class='input'><span class='va'>V</span><span class='op'>[</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>study</span> <span class='op'>==</span> <span class='fl'>6</span>, <span class='va'>dat</span><span class='op'>$</span><span class='va'>study</span> <span class='op'>==</span> <span class='fl'>6</span><span class='op'>]</span>
+</div><div class='output co'>#&gt;             acog.perf   asom.perf conf.perf   acog.asom acog.conf asom.conf
 #&gt; acog.perf 0.043352064 0.025583395        NA 0.009529623        NA        NA
 #&gt; asom.perf 0.025583395 0.041438304        NA 0.008459787        NA        NA
 #&gt; conf.perf          NA          NA        NA          NA        NA        NA
@@ -244,13 +251,15 @@
 #&gt; acog.conf          NA          NA        NA          NA        NA        NA
 #&gt; asom.conf          NA          NA        NA          NA        NA        NA</div><div class='input'>
 <span class='co'>### examine data for study 17</span>
-<span class='no'>dat</span>[<span class='no'>dat</span>$<span class='no'>study</span> <span class='kw'>==</span> <span class='fl'>17</span>,]</div><div class='output co'>#&gt;    study var1 var2 var1.var2    yi ni
+<span class='va'>dat</span><span class='op'>[</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>study</span> <span class='op'>==</span> <span class='fl'>17</span>,<span class='op'>]</span>
+</div><div class='output co'>#&gt;    study var1 var2 var1.var2    yi ni
 #&gt; 25    17 acog perf acog.perf  0.10 45
 #&gt; 26    17 asom perf asom.perf  0.31 45
 #&gt; 27    17 conf perf conf.perf -0.17 45
 #&gt; 28    17 acog asom acog.asom    NA 45
 #&gt; 29    17 acog conf acog.conf    NA 45
-#&gt; 30    17 asom conf asom.conf    NA 45</div><div class='input'><span class='no'>V</span>[<span class='no'>dat</span>$<span class='no'>study</span> <span class='kw'>==</span> <span class='fl'>17</span>, <span class='no'>dat</span>$<span class='no'>study</span> <span class='kw'>==</span> <span class='fl'>17</span>]</div><div class='output co'>#&gt;           acog.perf  asom.perf  conf.perf acog.asom acog.conf asom.conf
+#&gt; 30    17 asom conf asom.conf    NA 45</div><div class='input'><span class='va'>V</span><span class='op'>[</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>study</span> <span class='op'>==</span> <span class='fl'>17</span>, <span class='va'>dat</span><span class='op'>$</span><span class='va'>study</span> <span class='op'>==</span> <span class='fl'>17</span><span class='op'>]</span>
+</div><div class='output co'>#&gt;           acog.perf  asom.perf  conf.perf acog.asom acog.conf asom.conf
 #&gt; acog.perf  0.022275         NA         NA        NA        NA        NA
 #&gt; asom.perf        NA 0.01856898         NA        NA        NA        NA
 #&gt; conf.perf        NA         NA 0.02143262        NA        NA        NA
@@ -272,7 +281,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

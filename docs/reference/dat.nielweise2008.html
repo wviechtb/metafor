@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-47</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-48</span>
       </span>
     </div>
 
@@ -135,7 +135,7 @@
     <p>Results from 18 studies comparing the risk of catheter-related bloodstream infection when using anti-infective-treated versus standard catheters for total parenteral nutrition or chemotherapy.</p>
     </div>
 
-    <pre class="usage"><span class='no'>dat.nielweise2008</span></pre>
+    <pre class="usage"><span class='va'>dat.nielweise2008</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
@@ -164,8 +164,9 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat' and examine data</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.nielweise2008</span>
-<span class='no'>dat</span></div><div class='output co'>#&gt;   study          authors year x1i   t1i x2i   t2i
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.nielweise2008</span>
+<span class='va'>dat</span>
+</div><div class='output co'>#&gt;   study          authors year x1i   t1i x2i   t2i
 #&gt; 1     1      Bong et al. 2003   7  1344  11  1988
 #&gt; 2     2    Ciresi et al. 1996   8  1600   8  1461
 #&gt; 3     3     Hanna et al. 2004   3 12012  14 10962
@@ -176,8 +177,9 @@
 #&gt; 8     8 Ostendorf et al. 2005   3  1107   7  1015
 #&gt; 9     9 Pemberton et al. 1996   2   320   3   440</div><div class='input'>
 <span class='co'>### standard (inverse-variance) random-effects model</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"IRR"</span>, <span class='kw'>x1i</span><span class='kw'>=</span><span class='no'>x1i</span>, <span class='kw'>t1i</span><span class='kw'>=</span><span class='no'>t1i</span>, <span class='kw'>x2i</span><span class='kw'>=</span><span class='no'>x2i</span>, <span class='kw'>t2i</span><span class='kw'>=</span><span class='no'>t2i</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>res</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>3</span>)</div><div class='output co'>#&gt; 
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"IRR"</span>, x1i<span class='op'>=</span><span class='va'>x1i</span>, t1i<span class='op'>=</span><span class='va'>t1i</span>, x2i<span class='op'>=</span><span class='va'>x2i</span>, t2i<span class='op'>=</span><span class='va'>t2i</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>res</span>, digits<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; Random-Effects Model (k = 9; tau^2 estimator: REML)
 #&gt; 
 #&gt; tau^2 (estimated amount of total heterogeneity): 0.094 (SE = 0.212)
@@ -195,15 +197,40 @@
 #&gt; 
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-#&gt; </div><div class='input'><span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
+#&gt; </div><div class='input'><span class='fu'><a href='predict.rma.html'>predict</a></span><span class='op'>(</span><span class='va'>res</span>, transf<span class='op'>=</span><span class='va'>exp</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;  pred ci.lb ci.ub pi.lb pi.ub 
 #&gt;  0.67  0.43  1.05  0.32  1.42 
 #&gt; </div><div class='input'>
 <span class='co'>### random-effects conditional Poisson model</span>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.glmm.html'>rma.glmm</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"IRR"</span>, <span class='kw'>x1i</span><span class='kw'>=</span><span class='no'>x1i</span>, <span class='kw'>t1i</span><span class='kw'>=</span><span class='no'>t1i</span>, <span class='kw'>x2i</span><span class='kw'>=</span><span class='no'>x2i</span>, <span class='kw'>t2i</span><span class='kw'>=</span><span class='no'>t2i</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>model</span><span class='kw'>=</span><span class='st'>"CM.EL"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>res</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>3</span>)
-<span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>transf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)}</div></pre>
+<span class='co'># \dontrun{</span>
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.glmm.html'>rma.glmm</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"IRR"</span>, x1i<span class='op'>=</span><span class='va'>x1i</span>, t1i<span class='op'>=</span><span class='va'>t1i</span>, x2i<span class='op'>=</span><span class='va'>x2i</span>, t2i<span class='op'>=</span><span class='va'>t2i</span>, data<span class='op'>=</span><span class='va'>dat</span>, model<span class='op'>=</span><span class='st'>"CM.EL"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>res</span>, digits<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
+#&gt; Random-Effects Model (k = 9; tau^2 estimator: ML)
+#&gt; Model Type: Conditional Model with Exact Likelihood
+#&gt; 
+#&gt; tau^2 (estimated amount of total heterogeneity): 0.123
+#&gt; tau (square root of estimated tau^2 value):      0.350
+#&gt; I^2 (total heterogeneity / total variability):   25.683%
+#&gt; H^2 (total variability / sampling variability):  1.346
+#&gt; 
+#&gt; Tests for Heterogeneity:
+#&gt; Wld(df = 8) =  9.698, p-val = 0.287
+#&gt; LRT(df = 8) = 11.602, p-val = 0.170
+#&gt; 
+#&gt; Model Results:
+#&gt; 
+#&gt; estimate     se    zval   pval   ci.lb   ci.ub 
+#&gt;   -0.476  0.238  -2.004  0.045  -0.942  -0.010  * 
+#&gt; 
+#&gt; ---
+#&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+#&gt; </div><div class='input'><span class='fu'><a href='predict.rma.html'>predict</a></span><span class='op'>(</span><span class='va'>res</span>, transf<span class='op'>=</span><span class='va'>exp</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span><span class='co'># }</span>
+</div><div class='output co'>#&gt; 
+#&gt;  pred ci.lb ci.ub pi.lb pi.ub 
+#&gt;  0.62  0.39  0.99  0.27  1.42 
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -219,7 +246,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

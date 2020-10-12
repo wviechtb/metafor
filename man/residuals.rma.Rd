@@ -29,7 +29,7 @@
 }
 \arguments{
    \item{object}{an object of class \code{"rma"} (for \code{residuals}).}
-   \item{type}{the type of residuals which should be returned. For \code{residuals}, the alternatives are: \code{"response"} (default), \code{"rstandard"}, \code{"rstudent"}, and \code{"pearson"}. For \code{rstandard.rma.uni}, the alternatives ares: \code{"marginal"} (default) and \code{"conditional"}. See \sQuote{Details}.}
+   \item{type}{the type of residuals which should be returned. For \code{residuals}, the alternatives are: \code{"response"} (default), \code{"rstandard"}, \code{"rstudent"}, and \code{"pearson"}. For \code{rstandard.rma.uni}, the alternatives are: \code{"marginal"} (default) and \code{"conditional"}. See \sQuote{Details}.}
    \item{model}{an object of class \code{"rma"} (for \code{residuals}) or an object of class \code{"rma.uni"}, \code{"rma.mh"}, \code{"rma.peto"}, or \code{"rma.mv"} (for \code{rstandard} and \code{rstudent}).}
    \item{cluster}{optional vector specifying a clustering variable to use for computing cluster-level multivariate standardized residuals (only for \code{"rma.mv"} objects).}
    \item{reestimate}{logical indicating whether variance/correlation components should be re-estimated after deletion of the \mjseqn{i}th study/cluster when computing externally standardized residuals (the default is \code{TRUE}).}

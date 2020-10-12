@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-47</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-48</span>
       </span>
     </div>
 
@@ -136,9 +136,9 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for default</span>
-<span class='fu'><a href='addpoly.html'>addpoly</a></span>(<span class='no'>x</span>, <span class='no'>vi</span>, <span class='no'>sei</span>, <span class='no'>ci.lb</span>, <span class='no'>ci.ub</span>, <span class='no'>pi.lb</span>, <span class='no'>pi.ub</span>,
-        <span class='kw'>rows</span><span class='kw'>=</span>-<span class='fl'>1</span>, <span class='kw'>level</span><span class='kw'>=</span><span class='fl'>95</span>, <span class='kw'>annotate</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>, <span class='no'>width</span>, <span class='no'>mlab</span>,
-        <span class='no'>transf</span>, <span class='no'>atransf</span>, <span class='no'>targs</span>, <span class='kw'>efac</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='no'>col</span>, <span class='no'>border</span>, <span class='no'>fonts</span>, <span class='no'>cex</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='addpoly.html'>addpoly</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>vi</span>, <span class='va'>sei</span>, <span class='va'>ci.lb</span>, <span class='va'>ci.ub</span>, <span class='va'>pi.lb</span>, <span class='va'>pi.ub</span>,
+        rows<span class='op'>=</span><span class='op'>-</span><span class='fl'>1</span>, level<span class='op'>=</span><span class='fl'>95</span>, annotate<span class='op'>=</span><span class='cn'>TRUE</span>, digits<span class='op'>=</span><span class='fl'>2</span>, <span class='va'>width</span>, <span class='va'>mlab</span>,
+        <span class='va'>transf</span>, <span class='va'>atransf</span>, <span class='va'>targs</span>, efac<span class='op'>=</span><span class='fl'>1</span>, <span class='va'>col</span>, <span class='va'>border</span>, <span class='va'>fonts</span>, <span class='va'>cex</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -238,6 +238,9 @@
     <p>The function can be used to add one or more polygons to an existing forest plot created with the <code><a href='forest.html'>forest</a></code> function. For example, summary estimates based on a model involving moderators can be added to the plot this way (see &#8216;Examples&#8217;).</p>
 <p>To use the function, one should specify the values at which the polygons should be drawn (via the <code>x</code> argument) together with the corresponding variances (via the <code>vi</code> argument) or with the corresponding standard errors (via the <code>sei</code> argument). Alternatively, one can specify the values at which the polygons should be drawn together with the corresponding confidence interval bounds (via the <code>ci.lb</code> and <code>ci.ub</code> arguments). Optionally, one can also specify the bounds of the corresponding prediction interval bounds via the <code>pi.lb</code> and <code>pi.ub</code> arguments.</p>
 <p>The arguments <code>transf</code>, <code>atransf</code>, <code>efac</code>, and <code>cex</code> should always be set equal to the same values used to create the forest plot.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Wolfgang Viechtbauer <a href='mailto:wvb@metafor-project.org'>wvb@metafor-project.org</a> <a href='http://www.metafor-project.org'>http://www.metafor-project.org</a></p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='https://doi.org/10.18637/jss.v036.i03'>https://doi.org/10.18637/jss.v036.i03</a></p>
@@ -248,19 +251,24 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### meta-analysis of the log risk ratios using a mixed-</span>
 <span class='co'>### effects model with absolute latitude as a moderator</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"RR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>ablat</span>,
-           <span class='kw'>slab</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='no'>author</span>, <span class='no'>year</span>, <span class='kw'>sep</span><span class='kw'>=</span><span class='st'>", "</span>), <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>)
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"RR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>ablat</span>,
+           slab<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='va'>author</span>, <span class='va'>year</span>, sep<span class='op'>=</span><span class='st'>", "</span><span class='op'>)</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>)</span>
 
 <span class='co'>### forest plot of the observed risk ratios</span>
-<span class='fu'><a href='forest.html'>forest</a></span>(<span class='no'>res</span>, <span class='kw'>addfit</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>atransf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>xlim</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>8</span>,<span class='fl'>5</span>), <span class='kw'>ylim</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>4.5</span>,<span class='fl'>16</span>), <span class='kw'>cex</span><span class='kw'>=</span><span class='fl'>.8</span>,
-       <span class='kw'>order</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/order.html'>order</a></span>(<span class='no'>dat.bcg</span>$<span class='no'>ablat</span>), <span class='kw'>ilab</span><span class='kw'>=</span><span class='no'>dat.bcg</span>$<span class='no'>ablat</span>, <span class='kw'>ilab.xpos</span><span class='kw'>=</span>-<span class='fl'>4</span>,
-       <span class='kw'>header</span><span class='kw'>=</span><span class='st'>"Author(s) and Year"</span>)</div><div class='input'>
+<span class='fu'><a href='forest.html'>forest</a></span><span class='op'>(</span><span class='va'>res</span>, addfit<span class='op'>=</span><span class='cn'>FALSE</span>, atransf<span class='op'>=</span><span class='va'>exp</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>8</span>,<span class='fl'>5</span><span class='op'>)</span>, ylim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>4.5</span>,<span class='fl'>16</span><span class='op'>)</span>, cex<span class='op'>=</span><span class='fl'>.8</span>,
+       order<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/order.html'>order</a></span><span class='op'>(</span><span class='va'>dat.bcg</span><span class='op'>$</span><span class='va'>ablat</span><span class='op'>)</span>, ilab<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>$</span><span class='va'>ablat</span>, ilab.xpos<span class='op'>=</span><span class='op'>-</span><span class='fl'>4</span>,
+       header<span class='op'>=</span><span class='st'>"Author(s) and Year"</span><span class='op'>)</span>
+</div><div class='input'>
 <span class='co'>### predicted average log risk ratios for 10, 30, and 50 degrees absolute latitude</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='predict.rma.html'>predict</a></span>(<span class='no'>res</span>, <span class='kw'>newmods</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>10</span>, <span class='fl'>30</span>, <span class='fl'>50</span>))
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='predict.rma.html'>predict</a></span><span class='op'>(</span><span class='va'>res</span>, newmods<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='fl'>30</span>, <span class='fl'>50</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'>### add predicted average risk ratios to forest plot</span>
-<span class='fu'><a href='addpoly.html'>addpoly</a></span>(<span class='no'>x</span>$<span class='no'>pred</span>, <span class='kw'>sei</span><span class='kw'>=</span><span class='no'>x</span>$<span class='no'>se</span>, <span class='kw'>atransf</span><span class='kw'>=</span><span class='no'>exp</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>"white"</span>, <span class='kw'>rows</span><span class='kw'>=</span>-<span class='fl'>2</span>,
-        <span class='kw'>mlab</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"- at 10 Degrees"</span>, <span class='st'>"- at 30 Degrees"</span>, <span class='st'>"- at 50 Degrees"</span>), <span class='kw'>cex</span><span class='kw'>=</span><span class='fl'>.8</span>)</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span>(<span class='kw'>h</span><span class='kw'>=</span><span class='fl'>0</span>)</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/text.html'>text</a></span>(-<span class='fl'>8</span>, -<span class='fl'>1</span>, <span class='st'>"Model-Based Estimates of RR:"</span>, <span class='kw'>pos</span><span class='kw'>=</span><span class='fl'>4</span>, <span class='kw'>cex</span><span class='kw'>=</span><span class='fl'>.8</span>)</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/text.html'>text</a></span>(-<span class='fl'>4</span>, <span class='fl'>15</span>, <span class='st'>"Latitude"</span>, <span class='kw'>cex</span><span class='kw'>=</span><span class='fl'>.8</span>, <span class='kw'>font</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='img'><img src='addpoly.default-1.png' alt='' width='768' height='614' /></div></pre>
+<span class='fu'><a href='addpoly.html'>addpoly</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>$</span><span class='va'>pred</span>, sei<span class='op'>=</span><span class='va'>x</span><span class='op'>$</span><span class='va'>se</span>, atransf<span class='op'>=</span><span class='va'>exp</span>, col<span class='op'>=</span><span class='st'>"white"</span>, rows<span class='op'>=</span><span class='op'>-</span><span class='fl'>2</span>,
+        mlab<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"- at 10 Degrees"</span>, <span class='st'>"- at 30 Degrees"</span>, <span class='st'>"- at 50 Degrees"</span><span class='op'>)</span>, cex<span class='op'>=</span><span class='fl'>.8</span><span class='op'>)</span>
+</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span>h<span class='op'>=</span><span class='fl'>0</span><span class='op'>)</span>
+</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/text.html'>text</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>8</span>, <span class='op'>-</span><span class='fl'>1</span>, <span class='st'>"Model-Based Estimates of RR:"</span>, pos<span class='op'>=</span><span class='fl'>4</span>, cex<span class='op'>=</span><span class='fl'>.8</span><span class='op'>)</span>
+</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/text.html'>text</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>4</span>, <span class='fl'>15</span>, <span class='st'>"Latitude"</span>, cex<span class='op'>=</span><span class='fl'>.8</span>, font<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+</div><div class='img'><img src='addpoly.default-1.png' alt='' width='768' height='614' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -276,7 +284,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

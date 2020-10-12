@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-47</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-48</span>
       </span>
     </div>
 
@@ -136,21 +136,21 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for rma.uni</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/profile.html'>profile</a></span>(<span class='no'>fitted</span>, <span class='no'>xlim</span>, <span class='no'>ylim</span>, <span class='kw'>steps</span><span class='kw'>=</span><span class='fl'>20</span>,
-        <span class='kw'>lltol</span><span class='kw'>=</span><span class='fl'>1e-04</span>, <span class='kw'>progbar</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>parallel</span><span class='kw'>=</span><span class='st'>"no"</span>, <span class='kw'>ncpus</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>cl</span><span class='kw'>=</span><span class='kw'>NULL</span>,
-        <span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>pch</span><span class='kw'>=</span><span class='fl'>19</span>, <span class='kw'>cline</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/r/stats/profile.html'>profile</a></span><span class='op'>(</span><span class='va'>fitted</span>, <span class='va'>xlim</span>, <span class='va'>ylim</span>, steps<span class='op'>=</span><span class='fl'>20</span>,
+        lltol<span class='op'>=</span><span class='fl'>1e-04</span>, progbar<span class='op'>=</span><span class='cn'>TRUE</span>, parallel<span class='op'>=</span><span class='st'>"no"</span>, ncpus<span class='op'>=</span><span class='fl'>1</span>, cl<span class='op'>=</span><span class='cn'>NULL</span>,
+        plot<span class='op'>=</span><span class='cn'>TRUE</span>, pch<span class='op'>=</span><span class='fl'>19</span>, cline<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for rma.mv</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/profile.html'>profile</a></span>(<span class='no'>fitted</span>, <span class='no'>sigma2</span>, <span class='no'>tau2</span>, <span class='no'>rho</span>, <span class='no'>gamma2</span>, <span class='no'>phi</span>,
-        <span class='no'>xlim</span>, <span class='no'>ylim</span>, <span class='kw'>steps</span><span class='kw'>=</span><span class='fl'>20</span>, <span class='kw'>lltol</span><span class='kw'>=</span><span class='fl'>1e-04</span>, <span class='kw'>progbar</span><span class='kw'>=</span><span class='fl'>TRUE</span>,
-        <span class='kw'>parallel</span><span class='kw'>=</span><span class='st'>"no"</span>, <span class='kw'>ncpus</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>cl</span><span class='kw'>=</span><span class='kw'>NULL</span>,
-        <span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>pch</span><span class='kw'>=</span><span class='fl'>19</span>, <span class='kw'>cline</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/r/stats/profile.html'>profile</a></span><span class='op'>(</span><span class='va'>fitted</span>, <span class='va'>sigma2</span>, <span class='va'>tau2</span>, <span class='va'>rho</span>, <span class='va'>gamma2</span>, <span class='va'>phi</span>,
+        <span class='va'>xlim</span>, <span class='va'>ylim</span>, steps<span class='op'>=</span><span class='fl'>20</span>, lltol<span class='op'>=</span><span class='fl'>1e-04</span>, progbar<span class='op'>=</span><span class='cn'>TRUE</span>,
+        parallel<span class='op'>=</span><span class='st'>"no"</span>, ncpus<span class='op'>=</span><span class='fl'>1</span>, cl<span class='op'>=</span><span class='cn'>NULL</span>,
+        plot<span class='op'>=</span><span class='cn'>TRUE</span>, pch<span class='op'>=</span><span class='fl'>19</span>, cline<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for profile.rma</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 <span class='co'># S3 method for profile.rma</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='no'>xlim</span>, <span class='no'>ylim</span>, <span class='kw'>pch</span><span class='kw'>=</span><span class='fl'>19</span>,
-     <span class='no'>xlab</span>, <span class='no'>ylab</span>, <span class='no'>main</span>, <span class='kw'>cline</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>xlim</span>, <span class='va'>ylim</span>, pch<span class='op'>=</span><span class='fl'>19</span>,
+     <span class='va'>xlab</span>, <span class='va'>ylab</span>, <span class='va'>main</span>, cline<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -266,6 +266,9 @@
    <dt>...</dt><dd><p>some additional elements/values.</p></dd>
    Note that the list is returned invisibly.
 
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Wolfgang Viechtbauer <a href='mailto:wvb@metafor-project.org'>wvb@metafor-project.org</a> <a href='http://www.metafor-project.org'>http://www.metafor-project.org</a></p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='https://doi.org/10.18637/jss.v036.i03'>https://doi.org/10.18637/jss.v036.i03</a></p>
@@ -275,28 +278,30 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### calculate log odds ratios and corresponding sampling variances</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>)
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"OR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>)</span>
 
 <span class='co'>### random-effects model using rma.uni()</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 
 <span class='co'>### profile over tau^2</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/profile.html'>profile</a></span>(<span class='no'>res</span>, <span class='kw'>progbar</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><div class='img'><img src='profile.rma-1.png' alt='' width='768' height='614' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/stats/profile.html'>profile</a></span><span class='op'>(</span><span class='va'>res</span>, progbar<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='img'><img src='profile.rma-1.png' alt='' width='768' height='614' /></div><div class='input'>
 <span class='co'>### change data into long format</span>
-<span class='no'>dat.long</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='to.long.html'>to.long</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"OR"</span>, <span class='kw'>ai</span><span class='kw'>=</span><span class='no'>tpos</span>, <span class='kw'>bi</span><span class='kw'>=</span><span class='no'>tneg</span>, <span class='kw'>ci</span><span class='kw'>=</span><span class='no'>cpos</span>, <span class='kw'>di</span><span class='kw'>=</span><span class='no'>cneg</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.bcg</span>)
+<span class='va'>dat.long</span> <span class='op'>&lt;-</span> <span class='fu'><a href='to.long.html'>to.long</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"OR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>)</span>
 
 <span class='co'>### set levels of group variable ("exp" = experimental/vaccinated; "con" = control/non-vaccinated)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span>(<span class='no'>dat.long</span>$<span class='no'>group</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"exp"</span>, <span class='st'>"con"</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span><span class='op'>(</span><span class='va'>dat.long</span><span class='op'>$</span><span class='va'>group</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"exp"</span>, <span class='st'>"con"</span><span class='op'>)</span>
 
 <span class='co'>### set "con" to reference level</span>
-<span class='no'>dat.long</span>$<span class='no'>group</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/relevel.html'>relevel</a></span>(<span class='no'>dat.long</span>$<span class='no'>group</span>, <span class='kw'>ref</span><span class='kw'>=</span><span class='st'>"con"</span>)
+<span class='va'>dat.long</span><span class='op'>$</span><span class='va'>group</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/relevel.html'>relevel</a></span><span class='op'>(</span><span class='va'>dat.long</span><span class='op'>$</span><span class='va'>group</span>, ref<span class='op'>=</span><span class='st'>"con"</span><span class='op'>)</span>
 
 <span class='co'>### calculate log odds and corresponding sampling variances</span>
-<span class='no'>dat.long</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"PLO"</span>, <span class='kw'>xi</span><span class='kw'>=</span><span class='no'>out1</span>, <span class='kw'>mi</span><span class='kw'>=</span><span class='no'>out2</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.long</span>)
+<span class='va'>dat.long</span> <span class='op'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"PLO"</span>, xi<span class='op'>=</span><span class='va'>out1</span>, mi<span class='op'>=</span><span class='va'>out2</span>, data<span class='op'>=</span><span class='va'>dat.long</span><span class='op'>)</span>
 
 <span class='co'>### bivariate random-effects model using rma.mv()</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>group</span>, <span class='kw'>random</span> <span class='kw'>=</span> ~ <span class='no'>group</span> <span class='kw'>|</span> <span class='no'>study</span>, <span class='kw'>struct</span><span class='kw'>=</span><span class='st'>"UN"</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat.long</span>)
-<span class='no'>res</span></div><div class='output co'>#&gt; 
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>group</span>, random <span class='op'>=</span> <span class='op'>~</span> <span class='va'>group</span> <span class='op'>|</span> <span class='va'>study</span>, struct<span class='op'>=</span><span class='st'>"UN"</span>, data<span class='op'>=</span><span class='va'>dat.long</span><span class='op'>)</span>
+<span class='va'>res</span>
+</div><div class='output co'>#&gt; 
 #&gt; Multivariate Meta-Analysis Model (k = 26; method: REML)
 #&gt; 
 #&gt; Variance Components:
@@ -329,11 +334,12 @@
 #&gt; </div><div class='input'>
 <span class='co'>### profile over tau^2_1, tau^2_2, and rho</span>
 <span class='co'>### note: for rho, adjust region over which profiling is done ('zoom in' on area around estimate)</span>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span>(<span class='kw'>mfrow</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3</span>,<span class='fl'>1</span>))
-<span class='fu'><a href='https://rdrr.io/r/stats/profile.html'>profile</a></span>(<span class='no'>res</span>, <span class='kw'>tau2</span><span class='kw'>=</span><span class='fl'>1</span>)
-<span class='fu'><a href='https://rdrr.io/r/stats/profile.html'>profile</a></span>(<span class='no'>res</span>, <span class='kw'>tau2</span><span class='kw'>=</span><span class='fl'>2</span>)
-<span class='fu'><a href='https://rdrr.io/r/stats/profile.html'>profile</a></span>(<span class='no'>res</span>, <span class='kw'>rho</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>xlim</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.90</span>, <span class='fl'>.98</span>))}</div></pre>
+<span class='co'># \dontrun{</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mfrow<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>,<span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/profile.html'>profile</a></span><span class='op'>(</span><span class='va'>res</span>, tau2<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/profile.html'>profile</a></span><span class='op'>(</span><span class='va'>res</span>, tau2<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/profile.html'>profile</a></span><span class='op'>(</span><span class='va'>res</span>, rho<span class='op'>=</span><span class='fl'>1</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.90</span>, <span class='fl'>.98</span><span class='op'>)</span><span class='op'>)</span><span class='co'># }</span>
+</div><div class='img'><img src='profile.rma-2.png' alt='' width='768' height='614' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -349,7 +355,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

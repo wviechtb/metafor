@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-47</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-48</span>
       </span>
     </div>
 
@@ -135,7 +135,7 @@
     <p>Results from 9 studies on the length of the hospital stay of stroke patients under specialized care and under conventional/routine (non-specialist) care.</p>
     </div>
 
-    <pre class="usage"><span class='no'>dat.normand1999</span></pre>
+    <pre class="usage"><span class='va'>dat.normand1999</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
@@ -161,11 +161,12 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat'</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>dat.normand1999</span>
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.normand1999</span>
 
 <span class='co'>### calculate mean differences and corresponding sampling variances</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"MD"</span>, <span class='kw'>m1i</span><span class='kw'>=</span><span class='no'>m1i</span>, <span class='kw'>sd1i</span><span class='kw'>=</span><span class='no'>sd1i</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>n1i</span>, <span class='kw'>m2i</span><span class='kw'>=</span><span class='no'>m2i</span>, <span class='kw'>sd2i</span><span class='kw'>=</span><span class='no'>sd2i</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>n2i</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
-<span class='no'>dat</span></div><div class='output co'>#&gt;   study             source n1i m1i sd1i n2i m2i sd2i       yi       vi 
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"MD"</span>, m1i<span class='op'>=</span><span class='va'>m1i</span>, sd1i<span class='op'>=</span><span class='va'>sd1i</span>, n1i<span class='op'>=</span><span class='va'>n1i</span>, m2i<span class='op'>=</span><span class='va'>m2i</span>, sd2i<span class='op'>=</span><span class='va'>sd2i</span>, n2i<span class='op'>=</span><span class='va'>n2i</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
+<span class='va'>dat</span>
+</div><div class='output co'>#&gt;   study             source n1i m1i sd1i n2i m2i sd2i       yi       vi 
 #&gt; 1     1          Edinburgh 155  55   47 156  75   64 -20.0000  40.5080 
 #&gt; 2     2     Orpington-Mild  31  27    7  32  29    4  -2.0000   2.0806 
 #&gt; 3     3 Orpington-Moderate  75  64   17  71 119   29 -55.0000  15.6984 
@@ -176,8 +177,9 @@
 #&gt; 8     8               Umea 110  21   16 183  31   27 -10.0000   6.3109 
 #&gt; 9     9            Uppsala  60  30   27  52  23   20   7.0000  19.8423 </div><div class='input'>
 <span class='co'>### meta-analysis of mean differences using a random-effects model</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>)
-<span class='no'>res</span></div><div class='output co'>#&gt; 
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
+<span class='va'>res</span>
+</div><div class='output co'>#&gt; 
 #&gt; Random-Effects Model (k = 9; tau^2 estimator: REML)
 #&gt; 
 #&gt; tau^2 (estimated amount of total heterogeneity): 684.6462 (SE = 359.7541)
@@ -197,9 +199,10 @@
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### meta-analysis of standardized mean differences using a random-effects model</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span>(<span class='kw'>measure</span><span class='kw'>=</span><span class='st'>"SMD"</span>, <span class='kw'>m1i</span><span class='kw'>=</span><span class='no'>m1i</span>, <span class='kw'>sd1i</span><span class='kw'>=</span><span class='no'>sd1i</span>, <span class='kw'>n1i</span><span class='kw'>=</span><span class='no'>n1i</span>, <span class='kw'>m2i</span><span class='kw'>=</span><span class='no'>m2i</span>, <span class='kw'>sd2i</span><span class='kw'>=</span><span class='no'>sd2i</span>, <span class='kw'>n2i</span><span class='kw'>=</span><span class='no'>n2i</span>,
-           <span class='kw'>data</span><span class='kw'>=</span><span class='no'>dat</span>, <span class='kw'>slab</span><span class='kw'>=</span><span class='no'>source</span>)
-<span class='no'>res</span></div><div class='output co'>#&gt; 
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"SMD"</span>, m1i<span class='op'>=</span><span class='va'>m1i</span>, sd1i<span class='op'>=</span><span class='va'>sd1i</span>, n1i<span class='op'>=</span><span class='va'>n1i</span>, m2i<span class='op'>=</span><span class='va'>m2i</span>, sd2i<span class='op'>=</span><span class='va'>sd2i</span>, n2i<span class='op'>=</span><span class='va'>n2i</span>,
+           data<span class='op'>=</span><span class='va'>dat</span>, slab<span class='op'>=</span><span class='va'>source</span><span class='op'>)</span>
+<span class='va'>res</span>
+</div><div class='output co'>#&gt; 
 #&gt; Random-Effects Model (k = 9; tau^2 estimator: REML)
 #&gt; 
 #&gt; tau^2 (estimated amount of total heterogeneity): 0.7908 (SE = 0.4281)
@@ -219,7 +222,8 @@
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### draw forest plot</span>
-<span class='fu'><a href='forest.html'>forest</a></span>(<span class='no'>res</span>, <span class='kw'>xlim</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>7</span>,<span class='fl'>5</span>), <span class='kw'>alim</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>3</span>,<span class='fl'>1</span>), <span class='kw'>cex</span><span class='kw'>=</span><span class='fl'>.8</span>, <span class='kw'>header</span><span class='kw'>=</span><span class='st'>"Study/Source"</span>)</div><div class='img'><img src='dat.normand1999-1.png' alt='' width='768' height='614' /></div></pre>
+<span class='fu'><a href='forest.html'>forest</a></span><span class='op'>(</span><span class='va'>res</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>7</span>,<span class='fl'>5</span><span class='op'>)</span>, alim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>3</span>,<span class='fl'>1</span><span class='op'>)</span>, cex<span class='op'>=</span><span class='fl'>.8</span>, header<span class='op'>=</span><span class='st'>"Study/Source"</span><span class='op'>)</span>
+</div><div class='img'><img src='dat.normand1999-1.png' alt='' width='768' height='614' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -235,7 +239,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
