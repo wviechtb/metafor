@@ -8,6 +8,9 @@ hc.rma.uni <- function(object, digits, transf, targs, control, ...) {
    if (inherits(object, "rma.ls"))
       stop(mstyle$stop("Method not available for objects of class \"rma.ls\"."))
 
+   if (inherits(object, "rma.uni.selmodel"))
+      stop(mstyle$stop("Method not available for objects of class \"rma.uni.selmodel\"."))
+
    x <- object
 
    if (!x$int.only)

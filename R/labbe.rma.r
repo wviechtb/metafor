@@ -9,6 +9,9 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, lty, ..
    if (inherits(x, "rma.ls"))
       stop(mstyle$stop("Method not available for objects of class \"rma.ls\"."))
 
+   if (inherits(x, "rma.uni.selmodel"))
+      stop(mstyle$stop("Method not available for objects of class \"rma.uni.selmodel\"."))
+
    if (!x$int.only)
       stop(mstyle$stop("L'Abbe plot only applicable for models without moderators."))
 

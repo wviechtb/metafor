@@ -5,6 +5,9 @@ hatvalues.rma.uni <- function(model, type="diagonal", ...) {
    if (!inherits(model, "rma.uni"))
       stop(mstyle$stop("Argument 'model' must be an object of class \"rma.uni\"."))
 
+   if (inherits(model, "rma.uni.selmodel"))
+      stop(mstyle$stop("Method not available for objects of class \"rma.uni.selmodel\"."))
+
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))

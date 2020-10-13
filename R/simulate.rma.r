@@ -14,6 +14,9 @@ simulate.rma <- function(object, nsim = 1, seed = NULL, yilim, ...) {
    if (inherits(object, "rma.peto"))
       stop(mstyle$stop("Method not available for objects of class \"rma.peto\"."))
 
+   if (inherits(object, "rma.uni.selmodel"))
+      stop(mstyle$stop("Method not available for objects of class \"rma.uni.selmodel\"."))
+
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))

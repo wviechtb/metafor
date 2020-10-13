@@ -52,7 +52,7 @@
    tau2  <- par[pX+1]
    delta <- par[(pX+2):(pX+1+deltas)]
 
-   beta[!is.na(beta.val)] <- beta.val
+   beta <- ifelse(is.na(beta.val), beta, beta.val)
 
    if (tau2.transf)
       tau2 <- exp(tau2)
@@ -109,7 +109,7 @@
    tau2  <- par[pX+1]
    delta <- par[(pX+2):(pX+1+deltas)]
 
-   beta[!is.na(beta.val)] <- beta.val
+   beta <- ifelse(is.na(beta.val), beta, beta.val)
 
    if (tau2.transf)
       tau2 <- exp(tau2)

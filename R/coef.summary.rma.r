@@ -19,6 +19,16 @@ coef.summary.rma <- function(object, ...) {
          colnames(res.table$alpha)[3] <- "tval"
    }
 
+   if (inherits(x, "rma.uni.selmodel")) {
+      res.table <- list(beta=res.table)
+      res.table$delta <- data.frame(estimate=x$delta, se=x$se.delta, zval=x$zval.delta, pval=x$pval.delta, ci.lb=x$ci.lb.delta, ci.ub=x$ci.ub.delta)
+      if (length(x$delta) == 1L) {
+         rownames(res.table$delta) <- "delta"
+      } else {
+         rownames(res.table$delta) <- paste0("delta.", 1:length(x$delta))
+      }
+   }
+
    return(res.table)
 
 }

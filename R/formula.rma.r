@@ -7,7 +7,7 @@ formula.rma <- function(x, type="mods", ...) {
 
    type <- match.arg(type, c("mods", "yi", "scale"))
 
-   if (type=="scale" && x$model!="rma.ls")
+   if (type == "scale" && x$model != "rma.ls")
       stop(mstyle$stop("Can only use type='scale' for location-scale models."))
 
    if (type == "mods")

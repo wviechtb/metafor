@@ -22,6 +22,9 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
    if (inherits(object, "rma.ls"))
       stop(mstyle$stop("Method not available for objects of class \"rma.ls\"."))
 
+   if (inherits(object, "rma.uni.selmodel"))
+      stop(mstyle$stop("Method not available for objects of class \"rma.uni.selmodel\"."))
+
    x <- object
 
    k <- x$k

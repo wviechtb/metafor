@@ -8,7 +8,7 @@ update.rma <- function (object, formula., ..., evaluate=TRUE) {
       stop(mstyle$stop("Argument 'object' must be an object of class \"rma\"."))
 
    if (inherits(object, "robust.rma"))
-      stop(mstyle$stop("Function not applicable to objects of class \"robust.rma\"."))
+      stop(mstyle$stop("Method not available for objects of class \"robust.rma\"."))
 
    if (is.null(call <- getCall(object)))
       stop(mstyle$stop("Need an object with call component."))

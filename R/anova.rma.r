@@ -6,7 +6,7 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
       stop(mstyle$stop("Argument 'object' must be an object of class \"rma\"."))
 
    if (inherits(object, c("rma.mh", "rma.peto")))
-      stop(mstyle$stop("Function not applicable for objects of class \"rma.mh\" or \"rma.peto\"."))
+      stop(mstyle$stop("Method not applicable for objects of class \"rma.mh\" or \"rma.peto\"."))
 
    if (inherits(object, "rma.glmm"))
       stop(mstyle$stop("Method not available for objects of class \"rma.glmm\"."))

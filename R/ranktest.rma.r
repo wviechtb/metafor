@@ -10,6 +10,9 @@ ranktest.rma <- function(x, digits, ...) {
    if (inherits(x, "robust.rma"))
       stop(mstyle$stop("Method not available for objects of class \"robust.rma\"."))
 
+   if (inherits(x, "rma.uni.selmodel"))
+      stop(mstyle$stop("Method not available for objects of class \"rma.uni.selmodel\"."))
+
    if (missing(digits)) {
       digits <- .get.digits(xdigits=x$digits, dmiss=TRUE)
    } else {

@@ -8,6 +8,9 @@ rstandard.rma.uni <- function(model, digits, type="marginal", ...) {
    if (inherits(model, "robust.rma"))
       stop(mstyle$stop("Method not available for objects of class \"robust.rma\"."))
 
+   if (inherits(model, "rma.uni.selmodel"))
+      stop(mstyle$stop("Method not available for objects of class \"rma.uni.selmodel\"."))
+
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
@@ -17,7 +20,7 @@ rstandard.rma.uni <- function(model, digits, type="marginal", ...) {
 
    x <- model
 
-   if (!is.null(x$weight) & type == "conditional")
+   if (type == "conditional" && (!is.null(x$weights) || !x$weighted))
       stop(mstyle$stop("Extraction of conditional residuals not available for models with non-standard weights."))
 
    #if (type == "conditional" & inherits(x, "robust.rma"))

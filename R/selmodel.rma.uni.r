@@ -23,7 +23,10 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    time.start <- proc.time()
 
    if (!x$allvipos)
-      stop(mstyle$stop("Cannot use method when one or more sampling variances are non-positive."))
+      stop(mstyle$stop("Cannot fit selection model when one or more sampling variances are non-positive."))
+
+   if (!x$weighted || !is.null(x$weights))
+      stop(mstyle$stop("Cannot fit selection model for unweighted models or models with custom weights."))
 
    if (missing(type))
       stop(mstyle$stop("Must choose a specific selection model via the 'type' argument."))
@@ -76,8 +79,10 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
    if (is.null(ddd$beta)) {
       beta <- rep(NA, x$p)
+      betaspec <- FALSE
    } else {
       beta <- ddd$beta
+      betaspec <- TRUE
    }
 
    yi <- x$yi
@@ -175,7 +180,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
                h.tau2.fix = FALSE,    # fix tau2 in Hessian computation
                h.delta.fix = FALSE,   # fix delta in Hessian computation
                hessianCtrl=list(r=6), # arguments passed on to 'method.args' of hessian()
-               scaleX = TRUE)         # whether non-dummy variables in the X matrix should be rescaled before model fitting
+               scaleX = !betaspec)    # whether non-dummy variables in the X matrix should be rescaled before model fitting
 
    ### replace defaults with any user-defined values
 
@@ -809,15 +814,15 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
    ### computing (inverse) Hessian
 
-   hessian <- NA
-   H.sel   <- NA
-   iH.sel  <- NA
-   vb <- matrix(NA, nrow=p, ncol=p)
-   se.tau2 <- NA
+   hessian  <- NA
+   H.sel    <- NA
+   iH.sel   <- NA
+   vb       <- matrix(NA, nrow=p, ncol=p)
+   se.tau2  <- NA
    se.delta <- rep(NA, deltas)
 
    if (con$h.beta.fix) {
-      beta.hes <- beta
+      beta.hes <- c(beta)
    } else {
       beta.hes <- beta.val
    }
@@ -870,7 +875,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
             iH <- matrix(0, nrow=length(sel), ncol=length(sel))
             iH[sel, sel] <- iH.sel
             if (any(is.na(beta.hes)))
-               vb <- iH[c(is.na(beta.hes),FALSE,rep(FALSE,deltas)), c(is.na(beta.hes),FALSE,rep(FALSE,deltas)), drop=FALSE]
+               vb[is.na(beta.hes), is.na(beta.hes)] <- iH[c(is.na(beta.hes),FALSE,rep(FALSE,deltas)), c(is.na(beta.hes),FALSE,rep(FALSE,deltas)), drop=FALSE]
             if (is.na(tau2.hes))
                se.tau2 <- sqrt(iH[c(rep(FALSE,p),TRUE,rep(FALSE,deltas)), c(rep(FALSE,p),TRUE,rep(FALSE,deltas))])
             if (any(is.na(delta.hes)))
@@ -1072,6 +1077,8 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    res$pval.min <- pval.min
    res$precspec <- precspec
    res$precis <- precis
+
+   res$call <- match.call()
 
    time.end <- proc.time()
    res$time <- unname(time.end - time.start)[3]

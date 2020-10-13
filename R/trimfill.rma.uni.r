@@ -13,6 +13,9 @@ trimfill.rma.uni <- function(x, side, estimator="L0", maxiter=100, verbose=FALSE
    if (inherits(x, "rma.ls"))
       stop(mstyle$stop("Method not available for objects of class \"rma.ls\"."))
 
+   if (inherits(x, "rma.uni.selmodel"))
+      stop(mstyle$stop("Method not available for objects of class \"rma.uni.selmodel\"."))
+
    if (!x$int.only)
       stop(mstyle$stop("Trim-and-fill method only applicable for models without moderators."))
 

@@ -14,6 +14,9 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
    if (x$model == "rma.ls")
       stop(mstyle$stop("Cannot use reporter function for location-scale models."))
 
+   if (x$model == "rma.uni.selmodel")
+      stop(mstyle$stop("Cannot use reporter function for selection models."))
+
    if (!x$weighted)
       stop(mstyle$stop("Cannot use reporter function when 'weighted=FALSE'."))
 

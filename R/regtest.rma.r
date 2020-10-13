@@ -19,6 +19,9 @@ regtest.rma <- function(x, model="rma", predictor="sei", ret.fit=FALSE, digits, 
    if (inherits(x, "rma.ls"))
       stop(mstyle$stop("Method not available for objects of class \"rma.ls\"."))
 
+   if (inherits(x, "rma.uni.selmodel"))
+      stop(mstyle$stop("Method not available for objects of class \"rma.uni.selmodel\"."))
+
    model <- match.arg(model, c("lm", "rma"))
    predictor <- match.arg(predictor, c("sei", "vi", "ni", "ninv", "sqrtni", "sqrtninv"))
 

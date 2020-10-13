@@ -9,6 +9,9 @@ profile.rma.uni <- function(fitted,
    if (inherits(fitted, "rma.ls"))
       stop(mstyle$stop("Method not available for objects of class \"rma.ls\"."))
 
+   if (inherits(fitted, "rma.uni.selmodel"))
+      stop(mstyle$stop("Method not available for objects of class \"rma.uni.selmodel\"."))
+
    if (steps < 2)
       stop(mstyle$stop("Argument 'steps' must be >= 2."))
 

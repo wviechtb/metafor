@@ -172,6 +172,10 @@ cex, cex.lab, cex.axis, annosym, ...) {
    if (inherits(x, "rma.glmm") && showweights)
       stop(mstyle$stop("Option 'showweights=TRUE' not possible for 'rma.glmm' objects."))
 
+   ### TODO: remove this when there is a weights() function for 'rma.uni.selmodel' objects
+   if (inherits(x, "rma.uni.selmodel") && showweights)
+      stop(mstyle$stop("Option 'showweights=TRUE' not possible for 'rma.uni.selmodel' objects."))
+
    if (!is.null(ddd$subset))
       stop(mstyle$stop("Function does not have a 'subset' argument (could use 'order' argument instead)."))
 
@@ -241,7 +245,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
          }
       }
 
-      if (inherits(x, "rma.glmm")) {            ### TODO: change this when there is a weights() function for 'rma.glmm' objects
+      if (inherits(x, "rma.glmm") || inherits(x, "rma.uni.selmodel")) { ### TODO: change this when there is a weights() function for 'rma.glmm' and 'rma.uni.selmodel' objects
          #weights <- NULL
          weights <- rep(1, k)
       } else {

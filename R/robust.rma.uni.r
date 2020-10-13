@@ -5,6 +5,9 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, digits, ...) {
    if (!inherits(x, "rma.uni"))
       stop(mstyle$stop("Argument 'x' must be an object of class \"rma.uni\"."))
 
+   if (inherits(x, "rma.uni.selmodel"))
+      stop(mstyle$stop("Method not available for objects of class \"rma.uni.selmodel\"."))
+
    if (missing(cluster))
       stop(mstyle$stop("Need to specify 'cluster' variable."))
 

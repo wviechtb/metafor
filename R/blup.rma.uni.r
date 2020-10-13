@@ -5,6 +5,9 @@ blup.rma.uni <- function(x, level, digits, transf, targs, ...) {
    if (!inherits(x, "rma.uni"))
       stop(mstyle$stop("Argument 'x' must be an object of class \"rma.uni\"."))
 
+   if (inherits(x, "rma.uni.selmodel"))
+      stop(mstyle$stop("Method not available for objects of class \"rma.uni.selmodel\"."))
+
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
