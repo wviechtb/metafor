@@ -1,11 +1,11 @@
-Changes in Version 2.5-50 (2020-10-13)
+Changes in Version 2.5-50 (2020-10-14)
 =====================================
 
    o the metafor package now makes use of the 'mathjaxr' package to nicely
      render equations shown in the HTML help pages
 
    o added selmodel() for fitting a wide variety of selection models (and
-     added the corresponding plot.selmodel.rma.uni() function for drawing the
+     added the corresponding plot.rma.uni.selmodel() function for drawing the
      estimated selection function)
 
    o added tes() function for the test of excess significance
