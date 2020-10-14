@@ -40,7 +40,7 @@ tab <- table(pairs[,1], pairs[,2])
 tab # adjacency matrix
 g <- graph_from_adjacency_matrix(tab, mode = "plus", weighted=TRUE, diag=FALSE)
 plot(g, edge.curved=FALSE, edge.width=E(g)$weight, layout=layout_as_star(g, center="placebo"),
-     vertex.size=35, vertex.color="lightgray", vertex.label.color="black", vertex.label.font=2)}
+     vertex.size=45, vertex.color="lightgray", vertex.label.color="black", vertex.label.font=2)}
 
 ### table of studies versus treatments examined
 print(addmargins(table(dat$study, dat$treatment)), zero.print="")

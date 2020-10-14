@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-50</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-51</span>
       </span>
     </div>
 
@@ -198,15 +198,15 @@
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.hackshaw1998</span>
 
 <span class='co'>### random-effects model using the log odds ratios</span>
-<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span>, method<span class='op'>=</span><span class='st'>"ML"</span><span class='op'>)</span>
 <span class='va'>res</span>
 </div><div class='output co'>#&gt; 
-#&gt; Random-Effects Model (k = 37; tau^2 estimator: REML)
+#&gt; Random-Effects Model (k = 37; tau^2 estimator: ML)
 #&gt; 
-#&gt; tau^2 (estimated amount of total heterogeneity): 0.0224 (SE = 0.0178)
-#&gt; tau (square root of estimated tau^2 value):      0.1497
-#&gt; I^2 (total heterogeneity / total variability):   29.57%
-#&gt; H^2 (total variability / sampling variability):  1.42
+#&gt; tau^2 (estimated amount of total heterogeneity): 0.0204 (SE = 0.0165)
+#&gt; tau (square root of estimated tau^2 value):      0.1427
+#&gt; I^2 (total heterogeneity / total variability):   27.62%
+#&gt; H^2 (total variability / sampling variability):  1.38
 #&gt; 
 #&gt; Test for Heterogeneity:
 #&gt; Q(df = 36) = 47.4979, p-val = 0.0952
@@ -214,23 +214,23 @@
 #&gt; Model Results:
 #&gt; 
 #&gt; estimate      se    zval    pval   ci.lb   ci.ub 
-#&gt;   0.2189  0.0494  4.4313  &lt;.0001  0.1221  0.3157  *** 
+#&gt;   0.2171  0.0486  4.4712  &lt;.0001  0.1219  0.3123  *** 
 #&gt; 
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### fit step selection model</span>
 <span class='va'>sel</span> <span class='op'>&lt;-</span> <span class='fu'><a href='selmodel.html'>selmodel</a></span><span class='op'>(</span><span class='va'>res</span>, type<span class='op'>=</span><span class='st'>"stepfun"</span>, steps<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.05</span>, <span class='fl'>0.10</span>, <span class='fl'>0.50</span>, <span class='fl'>1.00</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in rma(yi = yi, vi = vi, data = dat, method = "ML"): object 'dat' not found</span></div><div class='input'>
+
 <span class='co'>### plot selection function</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>sel</span>, scale<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in plot(sel, scale = TRUE): object 'sel' not found</span></div><div class='input'>
+</div><div class='input'>
 <span class='co'>### fit negative exponential selection model</span>
 <span class='va'>sel</span> <span class='op'>&lt;-</span> <span class='fu'><a href='selmodel.html'>selmodel</a></span><span class='op'>(</span><span class='va'>res</span>, type<span class='op'>=</span><span class='st'>"negexp"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in rma(yi = yi, vi = vi, data = dat, method = "ML"): object 'dat' not found</span></div><div class='input'>
+
 <span class='co'>### add selection function to the existing plot</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>sel</span>, add<span class='op'>=</span><span class='cn'>TRUE</span>, col<span class='op'>=</span><span class='st'>"blue"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in plot(sel, add = TRUE, col = "blue"): object 'sel' not found</span></div></pre>
+</div><div class='img'><img src='plot.rma.uni.selmodel-1.png' alt='' width='768' height='614' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

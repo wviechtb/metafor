@@ -1,8 +1,8 @@
-# metafor 2.5-50 (2020-10-14)
+# metafor 2.5-51 (2020-10-14)
 
 - the `metafor` package now makes use of the `mathjaxr` package to nicely render equations shown in the HTML help pages
 
-- added `selmodel()` for fitting a wide variety of selection models (and added the corresponding `plot.selmodel.rma.uni()` function for drawing the estimated selection function)
+- added `selmodel()` for fitting a wide variety of selection models (and added the corresponding `plot.rma.uni.selmodel()` function for drawing the estimated selection function)
 
 - added `tes()` function for the test of excess significance
 

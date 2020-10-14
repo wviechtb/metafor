@@ -49,7 +49,7 @@ g <- graph_from_adjacency_matrix(tab, mode = "plus", weighted=TRUE, diag=FALSE)
 vertex_attr(g, "name") <- c("No Contact", "Self-Help",
                             "Individual\nCounseling", "Group\nCounseling")
 plot(g, edge.curved=FALSE, edge.width=E(g)$weight, layout=layout_on_grid,
-     vertex.size=35, vertex.color="lightgray", vertex.label.color="black", vertex.label.font=2)}
+     vertex.size=45, vertex.color="lightgray", vertex.label.color="black", vertex.label.font=2)}
 
 ### calculate log odds for each study arm
 dat <- escalc(measure="PLO", xi=xi, ni=ni, add=1/2, to="all", data=dat)

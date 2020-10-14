@@ -324,7 +324,7 @@ dat <- dat.hackshaw1998
 dat
 
 # fit random-effects model
-res <- rma(yi, vi, data=dat)
+res <- rma(yi, vi, data=dat, method="ML")
 res
 
 # funnel plot
@@ -379,4 +379,4 @@ sav}
 
 ############################################################################
 }
-\keyword{htest}
+\keyword{models}

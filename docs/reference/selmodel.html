@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-50</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-51</span>
       </span>
     </div>
 
@@ -188,7 +188,7 @@
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Selection models are a general class of models that attempt to model the process by which the studies included in a meta-analysis may have been influenced by publication bias. If a particular selection model is an adequate approximation for the underlying selection process, then the model provides estimates of the parameters of interest (e.g., the average true effect or outcome and the amount of heterogeneity in the true effects or outcomes) that are &#8216;corrected&#8217; for this selection process (i.e., they are estimates of the parameters in the population of studies before any selection has taken place). The present function fits a variety of such selection models. To do so, one should pass an object fitted with the <code><a href='rma.uni.html'>rma.uni</a></code> function to the first argument. The model that will then be fitted is of the same form as the original model combined with the specific selection model chosen (see below for possible options). For example, if the original model was a random-effects model, then a random-effects selection model will be fitted. Similarly, if the original model included moderators, then they will also be included in the selection model. Model fitting is done via maximum likelihood (ML) estimation over the fixed- and random-effects parameters (e.g., \(\mu\) and \(\tau^2\) in a random-effects model) and the selection model parameters.</p>
+    <p>Selection models are a general class of models that attempt to model the process by which the studies included in a meta-analysis may have been influenced by some form of publication bias. If a particular selection model is an adequate approximation for the underlying selection process, then the model provides estimates of the parameters of interest (e.g., the average true effect or outcome and the amount of heterogeneity in the true effects or outcomes) that are &#8216;corrected&#8217; for this selection process (i.e., they are estimates of the parameters in the population of studies before any selection has taken place). The present function fits a variety of such selection models. To do so, one should pass an object fitted with the <code><a href='rma.uni.html'>rma.uni</a></code> function to the first argument. The model that will then be fitted is of the same form as the original model combined with the specific selection model chosen (see below for possible options). For example, if the original model was a random-effects model, then a random-effects selection model will be fitted. Similarly, if the original model included moderators, then they will also be included in the selection model. Model fitting is done via maximum likelihood (ML) estimation over the fixed- and random-effects parameters (e.g., \(\mu\) and \(\tau^2\) in a random-effects model) and the selection model parameters.</p>
 <p>Argument <code>type</code> determines the specific type of selection model that should be fitted. All selection models that can be fitted are based on the idea that selection may haven taken place based on the p-values of the studies. In particular, let \(y_i\) and \(v_i\) denote the observed effect size or outcome and the corresponding sampling variance of the \(i\)th study. Then \(z_i = y_i / \sqrt{v_i}\) is the (Wald-type) test statistic for testing the null hypothesis \(\mbox{H}_0{:}\; \theta_i = 0\) and \(p_i = 1 - \Phi(z_i)\) (if <code>alternative="greater"</code>), \(p_i = \Phi(z_i)\) (if <code>alternative="less"</code>), or \(p_i = 2(1 - \Phi(|z_i|)\) (if <code>alternative="two.sided"</code>) the corresponding (one- or two-sided) p-value, where \(\Phi()\) denotes the cumulative distribution function of a standard normal distribution. Finally, let \(w(p_i)\) denote some function that specifies the relative likelihood of selection given the p-value of a study.</p>
 <p>If \(w(p_i) > w(p_{i'})\) when \(p_i < p_{i'}\) (i.e., \(w(p_i)\) is larger for smaller p-values), then <code>alternative="greater"</code> implies selection in favor of increasingly significant positive effects, <code>alternative="less"</code> implies selection in favor of increasingly significant negative effects, and <code>alternative="two.sided"</code> implies selection in favor of increasingly significant effects regardless of their direction.</p>
 <p></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Beta Selection Model</h3>
@@ -293,7 +293,7 @@
    <dt>LRTp.tau2</dt><dd><p>p-value for the likelihood ratio test.</p></dd>
    <dt>...</dt><dd><p>some additional elements/values.</p></dd>
 
-   The results of the fitted model are formatted and printed with the <a href='print.rma.html'>print.rma.uni</a> function.
+   The results of the fitted model are formatted and printed with the <a href='print.rma.html'>print.rma.uni</a> function. The estimated selection function can be plotted with <a href='plot.rma.uni.selmodel.html'>plot.rma.uni.selmodel</a>.
 
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
@@ -752,15 +752,15 @@
 #&gt; 36  0.1484 0.0364 
 #&gt; 37  0.1044 0.0664 </div><div class='input'>
 <span class='co'># fit random-effects model</span>
-<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span>, method<span class='op'>=</span><span class='st'>"ML"</span><span class='op'>)</span>
 <span class='va'>res</span>
 </div><div class='output co'>#&gt; 
-#&gt; Random-Effects Model (k = 37; tau^2 estimator: REML)
+#&gt; Random-Effects Model (k = 37; tau^2 estimator: ML)
 #&gt; 
-#&gt; tau^2 (estimated amount of total heterogeneity): 0.0224 (SE = 0.0178)
-#&gt; tau (square root of estimated tau^2 value):      0.1497
-#&gt; I^2 (total heterogeneity / total variability):   29.57%
-#&gt; H^2 (total variability / sampling variability):  1.42
+#&gt; tau^2 (estimated amount of total heterogeneity): 0.0204 (SE = 0.0165)
+#&gt; tau (square root of estimated tau^2 value):      0.1427
+#&gt; I^2 (total heterogeneity / total variability):   27.62%
+#&gt; H^2 (total variability / sampling variability):  1.38
 #&gt; 
 #&gt; Test for Heterogeneity:
 #&gt; Q(df = 36) = 47.4979, p-val = 0.0952
@@ -768,7 +768,7 @@
 #&gt; Model Results:
 #&gt; 
 #&gt; estimate      se    zval    pval   ci.lb   ci.ub 
-#&gt;   0.2189  0.0494  4.4313  &lt;.0001  0.1221  0.3157  *** 
+#&gt;   0.2171  0.0486  4.4712  &lt;.0001  0.1219  0.3123  *** 
 #&gt; 
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
@@ -779,33 +779,31 @@
 <span class='co'># step function selection model</span>
 <span class='co'># \dontrun{</span>
 <span class='va'>sel</span> <span class='op'>&lt;-</span> <span class='fu'>selmodel</span><span class='op'>(</span><span class='va'>res</span>, type<span class='op'>=</span><span class='st'>"stepfun"</span>, steps<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.05</span>, <span class='fl'>0.10</span>, <span class='fl'>0.50</span>, <span class='fl'>1.00</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in rma(yi = yi, vi = vi, data = dat, method = "ML"): object 'dat' not found</span></div><div class='input'><span class='va'>sel</span>
+<span class='va'>sel</span>
 </div><div class='output co'>#&gt; 
-#&gt; Mixed-Effects Model (k = 23; tau^2 estimator: ML)
+#&gt; Random-Effects Model (k = 37; tau^2 estimator: ML)
 #&gt; 
-#&gt; tau^2 (estimated amount of residual heterogeneity):     0.000 (SE = 0.000)
-#&gt; tau (square root of estimated tau^2 value):             0.001
+#&gt; tau^2 (estimated amount of total heterogeneity): 0.0307 (SE = 0.0271)
+#&gt; tau (square root of estimated tau^2 value):      0.1753
 #&gt; 
-#&gt; Test for Residual Heterogeneity:
-#&gt; LRT(df = 1) = 0.000, p-val = 1.000
-#&gt; 
-#&gt; Test of Moderators (coefficient 2):
-#&gt; QM(df = 1) = 1.201, p-val = 0.273
+#&gt; Test for Heterogeneity:
+#&gt; LRT(df = 1) = 3.9537, p-val = 0.0468
 #&gt; 
 #&gt; Model Results:
 #&gt; 
-#&gt;          estimate     se    zval   pval   ci.lb  ci.ub 
-#&gt; intrcpt     0.134  0.171   0.787  0.432  -0.200  0.469    
-#&gt; blind      -0.136  0.124  -1.096  0.273  -0.380  0.108    
+#&gt; estimate      se    zval    pval    ci.lb   ci.ub 
+#&gt;   0.1217  0.1299  0.9373  0.3486  -0.1328  0.3763    
 #&gt; 
 #&gt; Test for Selection Model Parameters:
-#&gt; LRT(df = 2) = 9.044, p-val = 0.011
+#&gt; LRT(df = 3) = 7.0661, p-val = 0.0698
 #&gt; 
 #&gt; Selection Model Results:
 #&gt; 
-#&gt;          estimate     se    zval   pval   ci.lb  ci.ub 
-#&gt; delta.1     0.420  0.239  -2.425  0.015  -0.049  0.889  * 
-#&gt; delta.2     5.096  2.411   1.699  0.089   0.371  9.821  . 
+#&gt;          estimate      se     zval    pval    ci.lb   ci.ub 
+#&gt; delta.1    1.0000     ---      ---     ---      ---     ---    
+#&gt; delta.2    2.4221  1.6609   0.8562  0.3919  -0.8331  5.6773    
+#&gt; delta.3    0.9775  0.8204  -0.0274  0.9782  -0.6304  2.5855    
+#&gt; delta.4    0.3967  0.4692  -1.2857  0.1986  -0.5230  1.3164    
 #&gt; 
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1

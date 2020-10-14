@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-50</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-51</span>
       </span>
     </div>
 
@@ -251,7 +251,7 @@
 #&gt;   sulfonylurea              0           0            0            0
 #&gt;   vildagliptin              0           0            0            0</div><div class='input'><span class='va'>g</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/igraph/man/graph_from_adjacency_matrix.html'>graph_from_adjacency_matrix</a></span><span class='op'>(</span><span class='va'>tab</span>, mode <span class='op'>=</span> <span class='st'>"plus"</span>, weighted<span class='op'>=</span><span class='cn'>TRUE</span>, diag<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>g</span>, edge.curved<span class='op'>=</span><span class='cn'>FALSE</span>, edge.width<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/E.html'>E</a></span><span class='op'>(</span><span class='va'>g</span><span class='op'>)</span><span class='op'>$</span><span class='va'>weight</span>, layout<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/layout_as_star.html'>layout_as_star</a></span><span class='op'>(</span><span class='va'>g</span>, center<span class='op'>=</span><span class='st'>"placebo"</span><span class='op'>)</span>,
-     vertex.size<span class='op'>=</span><span class='fl'>35</span>, vertex.color<span class='op'>=</span><span class='st'>"lightgray"</span>, vertex.label.color<span class='op'>=</span><span class='st'>"black"</span>, vertex.label.font<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span><span class='co'># }</span>
+     vertex.size<span class='op'>=</span><span class='fl'>45</span>, vertex.color<span class='op'>=</span><span class='st'>"lightgray"</span>, vertex.label.color<span class='op'>=</span><span class='st'>"black"</span>, vertex.label.font<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span><span class='co'># }</span>
 </div><div class='img'><img src='dat.senn2013-1.png' alt='' width='768' height='614' /></div><div class='input'>
 <span class='co'>### table of studies versus treatments examined</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/addmargins.html'>addmargins</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>study</span>, <span class='va'>dat</span><span class='op'>$</span><span class='va'>treatment</span><span class='op'>)</span><span class='op'>)</span>, zero.print<span class='op'>=</span><span class='st'>""</span><span class='op'>)</span>
