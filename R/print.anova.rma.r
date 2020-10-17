@@ -38,7 +38,7 @@ print.anova.rma <- function(x, digits=x$digits, ...) {
       cat(mstyle$section("Results:"))
       cat("\n")
 
-      res.table <- cbind(estimate=.fcf(c(x$Lb), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), zval=.fcf(x$zval, digits[["test"]]), pval=.pval(x$pval, digits=digits[["pval"]]))
+      res.table <- data.frame(estimate=.fcf(c(x$Lb), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), zval=.fcf(x$zval, digits[["test"]]), pval=.pval(x$pval, digits=digits[["pval"]]))
       if (is.element(x$test, c("knha","adhoc","t")))
          colnames(res.table)[3] <- "tval"
       rownames(res.table) <- paste0(seq_len(x$m), ":")

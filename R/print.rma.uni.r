@@ -159,7 +159,7 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
       cat("\n\n")
    }
 
-   res.table <- cbind(estimate=.fcf(c(x$beta), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), zval=.fcf(x$zval, digits[["test"]]), pval=.pval(x$pval, digits[["pval"]]), ci.lb=.fcf(x$ci.lb, digits[["ci"]]), ci.ub=.fcf(x$ci.ub, digits[["ci"]]))
+   res.table <- data.frame(estimate=.fcf(c(x$beta), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), zval=.fcf(x$zval, digits[["test"]]), pval=.pval(x$pval, digits[["pval"]]), ci.lb=.fcf(x$ci.lb, digits[["ci"]]), ci.ub=.fcf(x$ci.ub, digits[["ci"]]))
    rownames(res.table) <- rownames(x$beta)
    if (is.element(x$test, c("knha","adhoc","t")))
       colnames(res.table)[3] <- "tval"
@@ -192,7 +192,7 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
 
    if (x$model == "rma.ls") {
 
-      res.table <- cbind(estimate=.fcf(c(x$alpha), digits[["est"]]), se=.fcf(x$se.alpha, digits[["se"]]), zval=.fcf(x$zval.alpha, digits[["test"]]), pval=.pval(x$pval.alpha, digits[["pval"]]), ci.lb=.fcf(x$ci.lb.alpha, digits[["ci"]]), ci.ub=.fcf(x$ci.ub.alpha, digits[["ci"]]))
+      res.table <- data.frame(estimate=.fcf(c(x$alpha), digits[["est"]]), se=.fcf(x$se.alpha, digits[["se"]]), zval=.fcf(x$zval.alpha, digits[["test"]]), pval=.pval(x$pval.alpha, digits[["pval"]]), ci.lb=.fcf(x$ci.lb.alpha, digits[["ci"]]), ci.ub=.fcf(x$ci.ub.alpha, digits[["ci"]]))
       rownames(res.table) <- rownames(x$alpha)
       if (is.element(x$test, c("t")))
          colnames(res.table)[3] <- "tval"
@@ -231,14 +231,19 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
          cat("\n")
       }
 
-      res.table <- cbind(estimate=.fcf(c(x$delta), digits[["est"]]), se=.fcf(x$se.delta, digits[["se"]]), zval=.fcf(x$zval.delta, digits[["test"]]), pval=.pval(x$pval.delta, digits[["pval"]]), ci.lb=.fcf(x$ci.lb.delta, digits[["ci"]]), ci.ub=.fcf(x$ci.ub.delta, digits[["ci"]]))
-      rownames(res.table) <- paste0("delta.", seq_along(x$delta))
+      res.table <- data.frame(estimate=.fcf(c(x$delta), digits[["est"]]), se=.fcf(x$se.delta, digits[["se"]]), zval=.fcf(x$zval.delta, digits[["test"]]), pval=.pval(x$pval.delta, digits[["pval"]]), ci.lb=.fcf(x$ci.lb.delta, digits[["ci"]]), ci.ub=.fcf(x$ci.ub.delta, digits[["ci"]]))
+      if (x$type == "stepfun") {
+         rownames(res.table) <- rownames(x$ptable)
+         res.table <- cbind(k=x$ptable$k, res.table)
+      } else {
+         rownames(res.table) <- paste0("delta.", seq_along(x$delta))
+      }
       #if (is.element(x$test, c("t")))
       #   colnames(res.table)[3] <- "tval"
       signif <- symnum(x$pval.delta, corr=FALSE, na=FALSE, cutpoints=c(0, 0.001, 0.01, 0.05, 0.1, 1), symbols = c("***", "**", "*", ".", " "))
       if (signif.stars) {
          res.table <- cbind(res.table, signif)
-         colnames(res.table)[7] <- ""
+         colnames(res.table)[ncol(res.table)] <- ""
       }
 
       for (j in 1:nrow(res.table)) {

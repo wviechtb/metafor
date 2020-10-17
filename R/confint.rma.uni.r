@@ -82,6 +82,9 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
    if (!is.null(ddd$type)) # can override with 'type' argument
       type <- ddd$type
 
+   if (!is.element(type, c("QP", "GENQ", "PL")))
+      stop(mstyle$stop("Unknown 'type' specified."))
+
    #########################################################################
    #########################################################################
    #########################################################################

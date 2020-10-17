@@ -46,7 +46,8 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    if (!is.element(x$method, c("FE","ML"))) {
       #stop(mstyle$stop("Argument 'x' must either be a fixed-effects model or a model fitted with ML estimation."))
       #x <- try(update(x, method="ML"), silent=TRUE)
-      x <- suppressWarnings(update(x, method="ML"))
+      #x <- suppressWarnings(update(x, method="ML"))
+      x <- try(suppressWarnings(rma.uni(x$yi, x$vi, weights=x$weights, mods=x$X, intercept=FALSE, method="ML", weighted=x$weighted, test=x$test, level=x$level, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, skipr2=TRUE)), silent=TRUE)
    }
 
    ### get ... argument and check for extra/superfluous arguments
@@ -176,9 +177,10 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
                parallel = list(),     # parallel argument for optimParallel() (note: 'cl' argument in parallel is not passed; this is directly specified via 'cl')
                cl = NULL,             # arguments for optimParallel()
                ncpus = 1L,            # arguments for optimParallel()
-               h.beta.fix = FALSE,    # fix beta in Hessian computation
-               h.tau2.fix = FALSE,    # fix tau2 in Hessian computation
-               h.delta.fix = FALSE,   # fix delta in Hessian computation
+               beta.fix = FALSE,      # fix beta in Hessian computation
+               tau2.fix = FALSE,      # fix tau2 in Hessian computation
+               delta.fix = FALSE,     # fix delta in Hessian computation
+               htransf = FALSE,       # FALSE/TRUE: Hessian is computed for the untransformed/transformed delta and tau^2 estimates
                hessianCtrl=list(r=6), # arguments passed on to 'method.args' of hessian()
                scaleX = !betaspec)    # whether non-dummy variables in the X matrix should be rescaled before model fitting
 
@@ -477,7 +479,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
       delta.lb <- rep(0, deltas)
       delta.ub <- rep(Inf, deltas)
       delta.lb.excl <- rep(FALSE, deltas)
-      delta.ub.excl <- rep(TRUE, deltas)
+      delta.ub.excl <- rep(FALSE, deltas)
       delta.init <- rep(1, deltas)
       delta.min <- rep(0, deltas)
       delta.max <- rep(100, deltas)
@@ -595,7 +597,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
    delta.init <- ifelse(!is.na(delta), delta, delta.init)
 
-   if (.isTRUE(ddd$defmap)) {
+   if (.isTRUE(ddd$defmap) || any(is.infinite(delta.max))) {
       ddd$mapfun <- delta.transf.fun
       ddd$mapinvfun <- delta.transf.fun.inv
    }
@@ -784,6 +786,11 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    if (optimizer=="nlm")
       opt.res$par <- opt.res$estimate
 
+   ### estimates/values of tau2 and delta on the transformed scale
+
+   tau2.transf  <- opt.res$par[p+1]
+   delta.transf <- opt.res$par[(p+2):(p+1+deltas)]
+
    ### save for Hessian computation
 
    beta.val  <- beta
@@ -818,34 +825,32 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
    ### computing (inverse) Hessian
 
-   hessian  <- NA
-   H.sel    <- NA
-   iH.sel   <- NA
+   H        <- NA
    vb       <- matrix(NA, nrow=p, ncol=p)
    se.tau2  <- NA
-   se.delta <- rep(NA, deltas)
+   vb.delta <- matrix(NA, nrow=deltas, ncol=deltas)
 
-   if (con$h.beta.fix) {
+   if (con$beta.fix) {
       beta.hes <- c(beta)
    } else {
       beta.hes <- beta.val
    }
 
-   if (con$h.tau2.fix) {
+   if (con$tau2.fix) {
       tau2.hes <- tau2
    } else {
       tau2.hes <- tau2.val
    }
 
-   if (con$h.delta.fix) {
+   if (con$delta.fix) {
       delta.hes <- delta
    } else {
       delta.hes <- delta.val
    }
 
-   sel <- c(is.na(beta.hes), is.na(tau2.hes), is.na(delta.hes))
+   hest <- c(is.na(beta.hes), is.na(tau2.hes), is.na(delta.hes))
 
-   if (any(sel) && !isTRUE(ddd$skiphes)) {
+   if (any(hest) && !isTRUE(ddd$skiphes)) {
 
       if (verbose > 1)
          message(mstyle$message("\nComputing Hessian ..."))
@@ -853,38 +858,64 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
       if (verbose > 3)
          cat("\n")
 
-      hescall <- paste("numDeriv::hessian(", .selmodel.ll, ", x=c(beta, tau2, delta), method.args=con$hessianCtrl,
-         yi=yi, vi=vi, X.fit=X, preci=preci, k=k, pX=p, pvals=pvals,
-         deltas=deltas, delta.val=delta.hes, delta.transf=FALSE, mapfun=mapfun, delta.min=delta.min, delta.max=delta.max,
-         tau2.val=tau2.hes, tau2.transf=FALSE, tau2.max=tau2.max, beta.val=beta.hes,
-         wi.fun=wi.fun, steps=steps, pgrp=pgrp,
-         alternative=alternative, pval.min=pval.min, intCtrl=intCtrl, verbose=ifelse(verbose > 3, verbose, 0), digits=digits)\n", sep="")
+      if (con$htransf) {
+
+         hescall <- paste("numDeriv::hessian(", .selmodel.ll, ", x=opt.res$par, method.args=con$hessianCtrl,
+            yi=yi, vi=vi, X.fit=X, preci=preci, k=k, pX=p, pvals=pvals,
+            deltas=deltas, delta.val=delta.hes, delta.transf=TRUE, mapfun=mapfun, delta.min=delta.min, delta.max=delta.max,
+            tau2.val=tau2.hes, tau2.transf=TRUE, tau2.max=tau2.max, beta.val=beta.hes,
+            wi.fun=wi.fun, steps=steps, pgrp=pgrp,
+            alternative=alternative, pval.min=pval.min, intCtrl=intCtrl, verbose=ifelse(verbose > 3, verbose, 0), digits=digits)\n", sep="")
+
+      } else {
+
+         hescall <- paste("numDeriv::hessian(", .selmodel.ll, ", x=c(beta, tau2, delta), method.args=con$hessianCtrl,
+            yi=yi, vi=vi, X.fit=X, preci=preci, k=k, pX=p, pvals=pvals,
+            deltas=deltas, delta.val=delta.hes, delta.transf=FALSE, mapfun=mapfun, delta.min=delta.min, delta.max=delta.max,
+            tau2.val=tau2.hes, tau2.transf=FALSE, tau2.max=tau2.max, beta.val=beta.hes,
+            wi.fun=wi.fun, steps=steps, pgrp=pgrp,
+            alternative=alternative, pval.min=pval.min, intCtrl=intCtrl, verbose=ifelse(verbose > 3, verbose, 0), digits=digits)\n", sep="")
+
+      }
 
       #return(hescall)
 
-      hessian <- try(eval(parse(text=hescall)), silent=TRUE)
+      H <- try(eval(parse(text=hescall)), silent=TRUE)
+
+      #return(H)
 
       if (verbose > 3)
          cat("\n")
 
-      if (inherits(hessian, "try-error")) {
+      if (inherits(H, "try-error")) {
+
          warning(mstyle$warning("Error when trying to compute Hessian."), call.=FALSE)
+
       } else {
-         H.sel <- hessian[sel, sel, drop=FALSE]
-         iH.sel <- try(suppressWarnings(chol2inv(chol(H.sel))), silent=TRUE)
-         if (inherits(iH.sel, "try-error")) {
-            warning(mstyle$warning("Error when trying to invert Hessian."), call.=FALSE)
-            iH.sel <- NA
+
+         if (deltas == 1L) {
+            rownames(H) <- colnames(H) <- c(colnames(X), "tau2", "delta")
          } else {
-            iH <- matrix(0, nrow=length(sel), ncol=length(sel))
-            iH[sel, sel] <- iH.sel
+            rownames(H) <- colnames(H) <- c(colnames(X), "tau2", paste0("delta.", 1:deltas))
+         }
+
+         H.hest  <- H[hest, hest, drop=FALSE]
+         iH.hest <- try(suppressWarnings(chol2inv(chol(H.hest))), silent=TRUE)
+
+         if (inherits(iH.hest, "try-error")) {
+            warning(mstyle$warning("Error when trying to invert Hessian."), call.=FALSE)
+            iH.hest <- NA
+         } else {
+            iH <- matrix(0, nrow=length(hest), ncol=length(hest))
+            iH[hest, hest] <- iH.hest
             if (any(is.na(beta.hes)))
                vb[is.na(beta.hes), is.na(beta.hes)] <- iH[c(is.na(beta.hes),FALSE,rep(FALSE,deltas)), c(is.na(beta.hes),FALSE,rep(FALSE,deltas)), drop=FALSE]
             if (is.na(tau2.hes))
                se.tau2 <- sqrt(iH[c(rep(FALSE,p),TRUE,rep(FALSE,deltas)), c(rep(FALSE,p),TRUE,rep(FALSE,deltas))])
             if (any(is.na(delta.hes)))
-               se.delta[is.na(delta.hes)] <- sqrt(diag(iH[c(rep(FALSE,p),FALSE,is.na(delta.hes)), c(rep(FALSE,p),FALSE,is.na(delta.hes)), drop=FALSE]))
+               vb.delta[is.na(delta.hes), is.na(delta.hes)] <- iH[c(rep(FALSE,p),FALSE,is.na(delta.hes)), c(rep(FALSE,p),FALSE,is.na(delta.hes)), drop=FALSE]
          }
+
       }
 
    }
@@ -928,10 +959,43 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
    ### inference for delta parameters
 
-   zval.delta  <- (delta - H0.delta) / se.delta
-   pval.delta  <- 2*pnorm(abs(zval.delta), lower.tail=FALSE)
-   ci.lb.delta <- c(delta - crit * se.delta)
-   ci.ub.delta <- c(delta + crit * se.delta)
+   se.delta <- sqrt(diag(vb.delta))
+
+   if (con$htransf) {
+
+      zval.delta <- rep(NA_real_, deltas)
+      pval.delta <- rep(NA_real_, deltas)
+      ci.lb.delta <- c(delta.transf - crit * se.delta)
+      ci.ub.delta <- c(delta.transf + crit * se.delta)
+      ci.lb.delta <- mapply(.mapfun, ci.lb.delta, delta.min, delta.max, mapfun)
+      ci.ub.delta <- mapply(.mapfun, ci.ub.delta, delta.min, delta.max, mapfun)
+      vb.delta <- matrix(NA, nrow=deltas, ncol=deltas)
+      se.delta <- rep(NA_real_, deltas)
+
+   } else {
+
+      zval.delta  <- (delta - H0.delta) / se.delta
+      pval.delta  <- 2*pnorm(abs(zval.delta), lower.tail=FALSE)
+      ci.lb.delta <- c(delta - crit * se.delta)
+      ci.ub.delta <- c(delta + crit * se.delta)
+
+   }
+
+   ci.lb.delta <- ifelse(ci.lb.delta < delta.lb, delta.lb, ci.lb.delta)
+   ci.ub.delta <- ifelse(ci.ub.delta > delta.ub, delta.ub, ci.ub.delta)
+
+   ### inference for tau^2 parameter
+
+   if (con$htransf) {
+      ci.lb.tau2 <- exp(tau2.transf - crit * se.tau2)
+      ci.ub.tau2 <- exp(tau2.transf + crit * se.tau2)
+      se.tau2 <- NA
+   } else {
+      ci.lb.tau2 <- tau2 - crit * se.tau2
+      ci.ub.tau2 <- tau2 + crit * se.tau2
+   }
+
+   ci.lb.tau2[ci.lb.tau2 < 0] <- 0
 
    ############################################################################
 
@@ -1023,15 +1087,18 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
    res <- x
 
-   res$beta <- res$b <- beta
+   res$beta    <- res$b <- beta
    res$se      <- se
    res$zval    <- zval
    res$pval    <- pval
    res$ci.lb   <- ci.lb
    res$ci.ub   <- ci.ub
    res$vb      <- vb
+
    res$tau2    <- res$tau2.f <- tau2
    res$se.tau2 <- se.tau2
+   res$ci.lb.tau2 <- ci.lb.tau2
+   res$ci.ub.tau2 <- ci.ub.tau2
 
    res$dfs  <- NA
    res$test <- "z"
@@ -1045,6 +1112,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    res$QMp <- QMp
 
    res$delta       <- delta
+   res$vb.delta    <- vb.delta
    res$se.delta    <- se.delta
    res$zval.delta  <- zval.delta
    res$pval.delta  <- pval.delta
@@ -1052,13 +1120,13 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    res$ci.ub.delta <- ci.ub.delta
    res$delta.fix   <- !is.na(delta.val)
 
-   res$hessian  <- H.sel
-   res$iH       <- iH.sel
-   res$ll       <- ll
-   res$ll0      <- ll0
-   res$LRT      <- LRT
-   res$LRTdf    <- LRTdf
-   res$LRTp     <- LRTp
+   res$hessian <- H
+   res$hest    <- hest
+   res$ll      <- ll
+   res$ll0     <- ll0
+   res$LRT     <- LRT
+   res$LRTdf   <- LRTdf
+   res$LRTp    <- LRTp
 
    res$LRT.tau2  <- LRT.tau2
    res$LRTp.tau2 <- LRTp.tau2

@@ -32,7 +32,7 @@ print.robust.rma <- function(x, digits=x$digits, signif.stars=getOption("show.si
       cat("\n\n")
    }
 
-   res.table <- cbind(estimate=.fcf(c(x$beta), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), zval=.fcf(x$zval, digits[["test"]]), pval=.pval(x$pval, digits[["pval"]]), ci.lb=.fcf(x$ci.lb, digits[["ci"]]), ci.ub=.fcf(x$ci.ub, digits[["ci"]]))
+   res.table <- data.frame(estimate=.fcf(c(x$beta), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), zval=.fcf(x$zval, digits[["test"]]), pval=.pval(x$pval, digits[["pval"]]), ci.lb=.fcf(x$ci.lb, digits[["ci"]]), ci.ub=.fcf(x$ci.ub, digits[["ci"]]))
    rownames(res.table) <- rownames(x$beta)
    if (is.element(x$test, c("knha","adhoc","t")))
       colnames(res.table)[3] <- "tval"
