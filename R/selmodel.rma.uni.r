@@ -650,6 +650,10 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
          }
       }
 
+   } else {
+
+      ptable <- NA
+
    }
 
    ############################################################################
@@ -1070,9 +1074,10 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    res$digits   <- digits
    res$verbose  <- verbose
 
-   res$type  <- type
-   res$steps <- steps
-   res$pgrp  <- pgrp
+   res$type   <- type
+   res$steps  <- steps
+   res$pgrp   <- pgrp
+   res$ptable <- ptable
    res$alternative <- alternative
    res$pval.min <- pval.min
    res$precspec <- precspec
