@@ -1,4 +1,4 @@
-# metafor 2.5-51 (2020-10-14)
+# metafor 2.5-52 (2020-10-17)
 
 - the `metafor` package now makes use of the `mathjaxr` package to nicely render equations shown in the HTML help pages
 
