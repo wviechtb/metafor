@@ -37,7 +37,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
    if (!is.element(method, c("FE","ML","REML")))
       stop(mstyle$stop("Unknown 'method' specified."))
 
-   if (any(!is.element(struct, c("CS","HCS","UN","AR","HAR","CAR","ID","DIAG","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","GEN")))) # "UNR", "PHYBM","PHYPL","PHYPD",
+   if (any(!is.element(struct, c("CS","HCS","UN","AR","HAR","CAR","ID","DIAG","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","GEN")))) # "UNR", "PHYBM","PHYPL","PHYPD"))))
       stop(mstyle$stop("Unknown 'struct' specified."))
 
    if (length(struct) == 1L)

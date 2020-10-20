@@ -63,7 +63,7 @@ plot.rma.uni.selmodel <- function(x, xlim, n=1001, prec="max", scale=FALSE, rug=
       ys <- ifelse(xs <= steps[1], 1, (1-xs)^(prec*delta) / (1-steps[1])^(prec*delta))
 
    if (x$type == "negexppow")
-      ys <- exp(-delta[1] * prec * xs^(1/delta[2]))
+      ys <- ifelse(xs <= steps[1], 1, exp(-delta[1] * prec * xs^(1/delta[2])) / exp(-delta[1] * prec * steps[1]^(1/delta[2])))
 
    if (x$type == "halfnorm2")
       ys <- ifelse(xs <= steps[1], 1, (delta[1] + exp(-delta[2] * prec * xs^2) / exp(-delta[2] * prec * steps[1]^2)) / (1 + delta[1]))

@@ -1,7 +1,6 @@
 selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps, verbose=FALSE, digits, control, ...) {
 
    # TODO: add a H0 argument? since p-value may not be based on H0: theta_i = 0
-   # TODO: argument to leave estimates transformed (also for Hessian)
    # TODO: argument for which deltas to include in LRT (a delta may also not be constrained under H0, so it should not be included in the LRT then)
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
@@ -399,8 +398,12 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
    if (type == "negexppow") {
 
-      if (stepsspec)
-         warning(mstyle$warning("Argument 'steps' ignored (not applicable to this type of selection model)."), call.=FALSE)
+      if (stepsspec) {
+         if (length(steps) != 2L) # steps should be c(alpha,1)
+            stop(mstyle$stop("Can only specify a single value for the 'steps' argument for this type of selection model."))
+      } else {
+         steps <- 0
+      }
 
       deltas <- 2L
       delta.transf.fun <- c("exp", "exp")
@@ -415,10 +418,8 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
       H0.delta <- c(0, 0)
       delta.LRT <- c(TRUE, TRUE)
       pval.min <- 0
-      if (type == "negexppow") {
-         wi.fun <- function(x, delta, yi, vi, preci, alternative, steps)
-            exp(-delta[1] * preci * x^(1/delta[2]))
-      }
+      wi.fun <- function(x, delta, yi, vi, preci, alternative, steps)
+         ifelse(x <= steps[1], 1, exp(-delta[1] * preci * x^(1/delta[2])) / exp(-delta[1] * preci * steps[1]^(1/delta[2])))
       .selmodel.ll <- ".selmodel.ll.cont"
 
    }
