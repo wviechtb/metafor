@@ -13,13 +13,13 @@ selmodel(x, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma.uni"}.}
-   \item{type}{character string indicating the type of selection model. Possible options are \code{"beta"}, \code{"halfnorm"}, \code{"negexp"}, \code{"logistic"}, \code{"power"}, \code{"negexppow"}, or \code{"stepfun"}. Can be abbreviated. See \sQuote{Details}.}
-   \item{alternative}{character string indicating the sidedness of the hypothesis when testing the observed effect sizes or outcomes. Possible options are \code{"greater"} (the default), \code{"less"}, or \code{"two.sided"}. Can be abbreviated.}
-   \item{prec}{optional character string indicating the measure of precision (only relevant for selection models that can incorporate this into the selection function). Possible options are \code{"sei"}, \code{"vi"}, \code{"ninv"}, or \code{"sqrtninv"}. See \sQuote{Details}.}
-   \item{delta}{optional numerical vector (of the same length as the number of selection model parameters) to fix the corresponding \mjseqn{\delta} value(s). A specific \mjseqn{\delta} value can be fixed by setting the corresponding element of this argument to the desired value. A specific \mjseqn{\delta} value will be estimated if the corresponding element is set equal to \code{NA}. See \sQuote{Details}.}
-   \item{steps}{numerical vector of one or more values between 0 and 1 that can or must be specified for certain selection functions. See \sQuote{Details}.}
-   \item{verbose}{logical indicating whether output should be generated on the progress of the model fitting (the default is \code{FALSE}). Can also be an integer. Values > 1 generate more verbose output. See \sQuote{Note}.}
-   \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is to take the value from the object).}
+   \item{type}{character string to specify the type of selection model. Possible options are \code{"beta"}, \code{"halfnorm"}, \code{"negexp"}, \code{"logistic"}, \code{"power"}, \code{"negexppow"}, or \code{"stepfun"}. Can be abbreviated. See \sQuote{Details}.}
+   \item{alternative}{character string to specify the sidedness of the hypothesis when testing the observed effect sizes or outcomes. Possible options are \code{"greater"} (the default), \code{"less"}, or \code{"two.sided"}. Can be abbreviated.}
+   \item{prec}{optional character string to specify the measure of precision (only relevant for selection models that can incorporate this into the selection function). Possible options are \code{"sei"}, \code{"vi"}, \code{"ninv"}, or \code{"sqrtninv"}. See \sQuote{Details}.}
+   \item{delta}{optional numeric vector (of the same length as the number of selection model parameters) to fix the corresponding \mjseqn{\delta} value(s). A specific \mjseqn{\delta} value can be fixed by setting the corresponding element of this argument to the desired value. A specific \mjseqn{\delta} value will be estimated if the corresponding element is set equal to \code{NA}. See \sQuote{Details}.}
+   \item{steps}{numeric vector of one or more values between 0 and 1 that can or must be specified for certain selection functions. See \sQuote{Details}.}
+   \item{verbose}{logical to specify whether output should be generated on the progress of the model fitting (the default is \code{FALSE}). Can also be an integer. Values > 1 generate more verbose output. See \sQuote{Note}.}
+   \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded (if unspecified, the default is to take the value from the object).}
    \item{control}{optional list of control values for the estimation algorithm. If unspecified, default values are defined inside the function. See \sQuote{Note}.}
    \item{\dots}{other arguments.}
 }
@@ -114,6 +114,8 @@ selmodel(x, \dots)
 
    When applying a single cutoff in the context of a random-effects model, this model is sometimes called the \sQuote{three-parameter selection model} (3PSM), corresponding to the parameters \mjseqn{\mu}, \mjseqn{\tau^2}, and \mjseqn{\delta_2} (e.g., Carter et al., 2019; McShane et al., 2016; Pustejovsky & Rodgers, 2019). The same idea but in the context of a fixed-effects model was also described by Iyengar and Greenhouse (1988).
 
+   Note that when \code{alternative="greater"} or \code{alternative="less"} (i.e., when we assume that the relative likelihood of selection is not only related to the p-values of the studies, but also the directionality of the effects), then it would usually make sense to divide conventional levels of significance (e.g., .05) by 2 before passing these values to the \code{steps} argument. For example, if we think that studies were selected for positive effects that are significant at two-tailed \mjseqn{\alpha = .05}, then we should use \code{alternative="greater"} in combination with \code{steps=c(.025, 1)}.
+
    One of the challenges when fitting this model with many cutoffs is the large number of parameters that need to be estimated (which is especially problematic when the number of studies is small). An alternative approach suggested by Vevea and Woods (2005) is to fix the \mjseqn{\delta_j} values to some a priori chosen values instead of estimating them. One can then conduct a sensitivity analysis by examining the results (e.g., the estimates of \mjseqn{\mu} and \mjseqn{\tau^2} in a random-effects model) for a variety of different sets of \mjseqn{\delta_j} values (reflecting more or less severe forms of selection). This can be done by specifying the \mjseqn{\delta_j} values via the \code{delta} argument. Table 1 in Vevea and Woods (2005) provides some illustrative examples of moderate and severe selection functions for one- and two-tailed selection. The code below creates a data frame that contains these functions.
 
    \preformatted{tab <- data.frame(
@@ -158,7 +160,7 @@ selmodel(x, \dots)
    \item{LRTp.tau2}{p-value for the likelihood ratio test.}
    \item{\dots}{some additional elements/values.}
 
-   The results of the fitted model are formatted and printed with the \code{\link{print.rma.uni}} function. The estimated selection function can be plotted with \code{\link{plot.rma.uni.selmodel}}.
+   The results of the fitted model are formatted and printed with the \code{\link{print.rma.uni}} function. The estimated selection function can be drawn with \code{\link{plot.rma.uni.selmodel}}.
 }
 \note{
    Model fitting is done via numerical optimization over the model parameters. By default, \code{\link{optim}} is used for the optimization. One can also chose a different optimizer via the \code{control} argument (e.g., \code{control=list(optimizer="nlminb")}). When using \code{\link{optim}}, one can set the particular method via the \code{optmethod} argument (e.g., \code{control=list(optimizer="optim", optmethod="BFGS")}, which is the default). Besides \code{\link{optim}} and \code{\link{nlminb}}, one can also choose one of the optimizers from the \code{minqa} package (i.e., \code{\link[minqa]{uobyqa}}, \code{\link[minqa]{newuoa}}, or \code{\link[minqa]{bobyqa}}), one of the (derivative-free) algorithms from the \code{\link[nloptr]{nloptr}} package, the Newton-type algorithm implemented in \code{\link{nlm}}, the Hooke-Jeeves and Nelder-Mead algorithms as implemented in \code{\link[dfoptim]{hjk}} and \code{\link[dfoptim]{nmk}} from the \code{dfoptim} package, the quasi-Newton type optimizer \code{\link[ucminf]{ucminf}} from the package of the same name, or the parallelized version of the L-BFGS-B algorithm implemented in \code{\link[optimParallel]{optimParallel}} from the package of the same name.
@@ -171,7 +173,7 @@ selmodel(x, \dots)
 
    By default, the \mjseqn{\delta} parameter(s) are constrained to a certain range, which improves the stability of the optimization algorithm. For all models, the maximum is set to \code{100} and the minimum to \code{0} (except for \code{type="beta"}, where the minimum for both parameters is \code{1e-05}). These defaults can be changed via the \code{control} argument by specifying a vector of the appropriate length for \code{delta.min} and/or \code{delta.max}.
 
-   A difficulty with fitting the beta selection model (i.e., \code{type="beta"}) is the behavior of \mjseqn{w(p_i)} when \mjseqn{p_i = 0} or \mjseqn{p_i = 1}. When \mjseqn{\delta_1 < 1} or \mjseqn{\delta_2 < 1}, then this leads to selection weights equal to infinity, which causes problems when evaluating the integrals that are part of the likelihood function. Following Citkowicz and Vevea (2017), this problem can be avoided by censoring p-values too close to 0 or 1. The specific censoring point can be set via the \code{pval.min} element of the \code{control} argument. The default for this selection model is \code{control=list(pval.min=1e-5)} (for all other selection models, the default is \code{pval.min=0}).
+   A difficulty with fitting the beta selection model (i.e., \code{type="beta"}) is the behavior of \mjseqn{w(p_i)} when \mjseqn{p_i = 0} or \mjseqn{p_i = 1}. When \mjseqn{\delta_1 < 1} or \mjseqn{\delta_2 < 1}, then this leads to selection weights equal to infinity, which causes problems when computing the likelihood function. Following Citkowicz and Vevea (2017), this problem can be avoided by censoring p-values too close to 0 or 1. The specific censoring point can be set via the \code{pval.min} element of the \code{control} argument. The default for this selection model is \code{control=list(pval.min=1e-5)} (for all other selection models, the default is \code{pval.min=0}).
 
    The variance-covariance matrix corresponding to the estimates of the fixed effects, the \mjseqn{\tau^2} value (only relevant in random/mixed-effects models), and the \mjseqn{\delta} parameter(s) is obtained by inverting the Hessian, which is numerically approximated using the \code{\link[numDeriv]{hessian}} function. This may fail, leading to \code{NA} values for the standard errors and hence test statistics, p-values, and confidence interval bounds. One can set control argument \code{hessianCtrl} to a list of named arguments to be passed on to the \code{method.args} argument of the \code{\link[numDeriv]{hessian}} function (the default is \code{control=list(hessianCtrl=list(r=6))}).
 
@@ -278,7 +280,7 @@ sel3 <- selmodel(res, type="logistic", alternative="less")
 sel4 <- selmodel(res, type="power",    alternative="less")
 
 # plot selection functions
-plot(sel1, ylim=c(0,1))
+plot(sel1)
 plot(sel2, add=TRUE, col="blue")
 plot(sel3, add=TRUE, col="red")
 plot(sel4, add=TRUE, col="green")

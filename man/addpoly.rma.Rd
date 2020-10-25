@@ -11,20 +11,20 @@
 }
 \arguments{
    \item{x}{an object of class \code{"rma"}.}
-   \item{row}{value specifying the row (or more generally, the horizontal position) for plotting the polygon (the default is \code{-2}).}
-   \item{level}{numerical value between 0 and 100 specifying the confidence interval level (the default is to take the value from the object).}
-   \item{annotate}{logical specifying whether annotations for the summary estimate should be added to the plot (the default is \code{TRUE}).}
-   \item{addpred}{logical specifying whether the bounds of the prediction interval should be added to the plot (the default is \code{FALSE}).}
-   \item{digits}{integer specifying the number of decimal places to which the annotations should be rounded (the default is 2).}
+   \item{row}{numeric value to specify the row (or more generally, the horizontal position) for plotting the polygon (the default is \code{-2}).}
+   \item{level}{numeric value between 0 and 100 to specify the confidence interval level (the default is to take the value from the object).}
+   \item{annotate}{logical to specify whether annotations for the summary estimate should be added to the plot (the default is \code{TRUE}).}
+   \item{addpred}{logical to specify whether the bounds of the prediction interval should be added to the plot (the default is \code{FALSE}).}
+   \item{digits}{integer to specify the number of decimal places to which the annotations should be rounded (the default is 2).}
    \item{width}{optional integer to manually adjust the width of the columns for the annotations.}
    \item{mlab}{optional character string giving a label for the summary estimate polygon. If unspecified, the function sets a default label.}
-   \item{transf}{optional argument specifying the name of a function that should be used to transform the summary estimate and confidence interval bound (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
-   \item{atransf}{optional argument specifying the name of a function that should be used to transform the annotations (e.g., \code{atransf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
+   \item{transf}{optional argument to specify the name of a function that should be used to transform the summary estimate and confidence interval bound (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
+   \item{atransf}{optional argument to specify the name of a function that should be used to transform the annotations (e.g., \code{atransf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified via \code{transf} or \code{atransf}.}
    \item{efac}{vertical expansion factor for the polygon. The default value of 1 should usually work okay.}
-   \item{col}{optional character string specifying the name of a color to use for the polygon. If unspecified, the function sets a default color.}
-   \item{border}{optional character string specifying the name of a color to use for the border of the polygon. If unspecified, the function sets a default color.}
-   \item{fonts}{optional character string specifying the font to use for the label and annotations. If unspecified, the default font is used.}
+   \item{col}{optional character string to specify the name of a color to use for the polygon. If unspecified, the function sets a default color.}
+   \item{border}{optional character string to specify the name of a color to use for the border of the polygon. If unspecified, the function sets a default color.}
+   \item{fonts}{optional character string to specify the font to use for the label and annotations. If unspecified, the default font is used.}
    \item{cex}{optional symbol expansion factor. If unspecified, the function tries to set this to a sensible value.}
    \item{\dots}{other arguments.}
 }

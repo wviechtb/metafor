@@ -16,9 +16,9 @@ vif(x, \dots)
 \arguments{
    \item{x}{an object of class \code{"rma"} (for \code{vif}) or \code{"vif.rma"} (for \code{print}).}
    \item{btt}{optional vector of indices to specify a set of coefficients for which a generalized variance inflation factor (GVIF) should be computed. Can also be a string to grep for. See \sQuote{Details}.}
-   \item{intercept}{logical indicating whether to include the intercept (if the model includes one) in the computation of the VIFs (the default is \code{FALSE}). See \sQuote{Note}.}
-   \item{table}{logical indicating whether the VIFs should be added to the model coefficient table (the default is \code{FALSE}).}
-   \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is to take the value from the object).}
+   \item{intercept}{logical to specify whether to include the intercept (if the model includes one) in the computation of the VIFs (the default is \code{FALSE}). See \sQuote{Note}.}
+   \item{table}{logical to specify whether the VIFs should be added to the model coefficient table (the default is \code{FALSE}).}
+   \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded (if unspecified, the default is to take the value from the object).}
    \item{\dots}{other arguments.}
 }
 \details{

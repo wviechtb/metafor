@@ -14,15 +14,15 @@
 \arguments{
    \item{x}{an object of class \code{"escalc"}.}
    \item{object}{an object of class \code{"escalc"}.}
-   \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (the default is to take the value from the object).}
-   \item{out.names}{character string with four elements, specifying the variable names for the standard errors, test statistics, and lower/upper confidence interval bounds.}
-   \item{var.names}{character string with two elements, specifying the variable names for the observed effect sizes or outcomes and the sampling variances (the default is to take the value from the object if possible).}
-   \item{H0}{numeric value specifying the value of the outcome or the effect size under the null hypothesis (the default is 0).}
-   \item{append}{logical indicating whether the data frame specified via the \code{object} argument should be returned together with the additional variables that are calculated by the \code{summary} function (the default is \code{TRUE}).}
-   \item{replace}{logical indicating whether existing values for \code{sei}, \code{zi}, \code{ci.lb}, and \code{ci.ub} in the data frame should be replaced or not. Only relevant when the data frame already contains these variables. If \code{replace=TRUE} (the default), all of the existing values will be overwritten. If \code{replace=FALSE}, only \code{NA} values will be replaced.}
-   \item{level}{numerical value between 0 and 100 specifying the confidence interval level (the default is 95).}
+   \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded (the default is to take the value from the object).}
+   \item{out.names}{character string with four elements to specify the variable names for the standard errors, test statistics, and lower/upper confidence interval bounds.}
+   \item{var.names}{character string with two elements to specify the variable names for the observed effect sizes or outcomes and the sampling variances (the default is to take the value from the object if possible).}
+   \item{H0}{numeric value to specify the value of the outcome or the effect size under the null hypothesis (the default is 0).}
+   \item{append}{logical to specify whether the data frame specified via the \code{object} argument should be returned together with the additional variables that are calculated by the \code{summary} function (the default is \code{TRUE}).}
+   \item{replace}{logical to specify whether existing values for \code{sei}, \code{zi}, \code{ci.lb}, and \code{ci.ub} in the data frame should be replaced or not. Only relevant when the data frame already contains these variables. If \code{replace=TRUE} (the default), all of the existing values will be overwritten. If \code{replace=FALSE}, only \code{NA} values will be replaced.}
+   \item{level}{numeric value between 0 and 100 to specify the confidence interval level (the default is 95).}
    \item{clim}{limits for the confidence intervals. If unspecified, no limits are used.}
-   \item{transf}{optional argument specifying the name of a function that should be used to transform the observed effect sizes or outcomes and interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used. Any additional arguments needed for the function specified here can be passed via \code{\dots}.}
+   \item{transf}{optional argument to specify the name of a function that should be used to transform the observed effect sizes or outcomes and interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used. Any additional arguments needed for the function specified here can be passed via \code{\dots}.}
    \item{\dots}{other arguments.}
 }
 \value{

@@ -11,9 +11,9 @@ rcalc(x, ni, data, rtoz=FALSE, nfun="min", sparse=FALSE, \dots)
    \item{x}{a formula of the form \code{ri ~ var1 + var2 | study}. See \sQuote{Details}.}
    \item{ni}{vector to specify the sample sizes based on which the correlations were computed.}
    \item{data}{data frame containing the variables specified via the formula (and the sample sizes).}
-   \item{rtoz}{logical indicating whether to transform the correlations via Fisher's r-to-z transformation (the default is \code{FALSE}).}
-   \item{nfun}{a character string indicating how the \sQuote{common} sample size within each study should be computed. Possible options are \code{"min"} (for the minimum), \code{"harmonic"} (for the harmonic mean), or \code{"mean"} (for the arithmetic mean). Can also be a function. See \sQuote{Details}.}
-   \item{sparse}{logical indicating whether the variance-covariance matrix should be returned as a sparse matrix (the default is \code{FALSE}).}
+   \item{rtoz}{logical to specify whether to transform the correlations via Fisher's r-to-z transformation (the default is \code{FALSE}).}
+   \item{nfun}{a character string to specify how the \sQuote{common} sample size within each study should be computed. Possible options are \code{"min"} (for the minimum), \code{"harmonic"} (for the harmonic mean), or \code{"mean"} (for the arithmetic mean). Can also be a function. See \sQuote{Details}.}
+   \item{sparse}{logical to specify whether the variance-covariance matrix should be returned as a sparse matrix (the default is \code{FALSE}).}
    \item{\dots}{other arguments.}
 }
 \details{

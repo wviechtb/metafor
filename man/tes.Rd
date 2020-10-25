@@ -24,29 +24,29 @@ tes(x, \dots)
    \item{x}{an object of class \code{"rma"} or a vector with the observed effect sizes or outcomes.}
    \item{vi}{vector with the corresponding sampling variances.}
    \item{sei}{vector with the corresponding standard errors (note: only one of the two, \code{vi} or \code{sei}, needs to be specified).}
-   \item{subset}{optional (logical or numeric) vector indicating the subset of studies that should be included.}
+   \item{subset}{optional (logical or numeric) vector to specify the subset of studies that should be included.}
 
    \emph{These arguments pertain to the tests of the observed effect sizes or outcomes:}
 
-   \item{H0}{numeric value specifying the value of the effect size or outcome under the null hypothesis (the default is 0).}
-   \item{alternative}{character string indicating the sidedness of the hypothesis when testing the observed effect sizes or outcomes. Possible options are \code{"two.sided"} (the default), \code{"greater"}, or \code{"less"}. Can be abbreviated.}
+   \item{H0}{numeric value to specify the value of the effect size or outcome under the null hypothesis (the default is 0).}
+   \item{alternative}{character string to specify the sidedness of the hypothesis when testing the observed effect sizes or outcomes. Possible options are \code{"two.sided"} (the default), \code{"greater"}, or \code{"less"}. Can be abbreviated.}
    \item{alpha}{alpha level for testing the observed effect sizes or outcomes (the default is .05).}
 
    \emph{These arguments pertain to the power of the tests:}
 
-   \item{theta}{numeric value specifying the value of the true effect size or outcome under the alternative hypothesis. If unspecified, it will be estimated based on the data or the value is taken from the \code{"rma"} object.}
-   \item{tau2}{numeric value specifying the amount of heterogeneity in the true effects or outcomes. If unspecified, the true effect sizes or outcomes are assumed to be homogeneous or the value is taken from the \code{"rma"} object.}
+   \item{theta}{numeric value to specify the value of the true effect size or outcome under the alternative hypothesis. If unspecified, it will be estimated based on the data or the value is taken from the \code{"rma"} object.}
+   \item{tau2}{numeric value to specify the amount of heterogeneity in the true effects or outcomes. If unspecified, the true effect sizes or outcomes are assumed to be homogeneous or the value is taken from the \code{"rma"} object.}
 
    \emph{These arguments pertain to the test of excess significance:}
 
-   \item{test}{character string indicating the type of test to use for conducting the test of excess significance. Possible options are \code{"chi2"}, \code{"binom"}, or \code{"exact"}. Can be abbreviated. If unspecified, the function chooses the type of test based on the data.}
-   \item{tes.alternative}{character string indicating the sidedness of the hypothesis for the test of excess significance. Possible options are \code{"greater"} (the default), \code{"two.sided"}, or \code{"less"}. Can be abbreviated.}
-   \item{progbar}{logical indicating whether a progress bar should be shown (the default is \code{TRUE}). Only relevant when conducting an exact test.}
+   \item{test}{character string to specify the type of test to use for conducting the test of excess significance. Possible options are \code{"chi2"}, \code{"binom"}, or \code{"exact"}. Can be abbreviated. If unspecified, the function chooses the type of test based on the data.}
+   \item{tes.alternative}{character string to specify the sidedness of the hypothesis for the test of excess significance. Possible options are \code{"greater"} (the default), \code{"two.sided"}, or \code{"less"}. Can be abbreviated.}
+   \item{progbar}{logical to specify whether a progress bar should be shown (the default is \code{TRUE}). Only relevant when conducting an exact test.}
    \item{tes.alpha}{alpha level for the test of excess significance (the default is .10). Only relevant for finding the \sQuote{limit estimate}.}
 
    \emph{Miscellaneous arguments:}
 
-   \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is 4).}
+   \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded (if unspecified, the default is 4).}
    \item{\dots}{other arguments.}
 }
 \details{
@@ -60,7 +60,7 @@ tes(x, \dots)
 
    The test of excess significance then tests if \mjseqn{O} is significantly greater (if \code{tes.alternative="greater"}) than \mjseqn{E}. This can be done using Pearson's chi-squared test (if \code{test="chi2"}), a binomial test (if \code{test="binomial"}), or an exact test (if \code{test="exact"}). The latter is described in Francis (2013). If argument \code{test} is unspecified, the default is to do an exact test if the number of elements in the sum that needs to be computed is less than or equal to \code{10^6} and to do a chi-square test otherwise.
 
-   One can also iteratively find the value of \mjseqn{\theta} such that the p-value of the test of excess significance is equal to \code{tes.alpha} (which is .10 by default). The resulting value is called the \sQuote{limit estimate} and is denoted \mjeqn{\theta_{lim}}{\theta_lim} by Ioannidis and Trikalinos (2007). Note that the limit estimate is not computable if the p-value is larger than \code{tes.alpha} even if \mjeqn{\theta = \mbox{H}_0}{\theta = H_0}.
+   One can also iteratively find the value of \mjseqn{\theta} such that the p-value of the test of excess significance is equal to \code{tes.alpha} (which is \code{.10} by default). The resulting value is called the \sQuote{limit estimate} and is denoted \mjeqn{\theta_{lim}}{\theta_lim} by Ioannidis and Trikalinos (2007). Note that the limit estimate is not computable if the p-value is larger than \code{tes.alpha} even if \mjeqn{\theta = \mbox{H}_0}{\theta = H_0}.
 }
 \value{
    An object of class \code{"tes"}. The object is a list containing the following components:

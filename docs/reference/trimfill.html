@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-52</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-54</span>
       </span>
     </div>
 
@@ -149,19 +149,19 @@
     </tr>
     <tr>
       <th>side</th>
-      <td><p>either <code>"left"</code> or <code>"right"</code>, indicating on which side of the funnel plot the missing studies should be imputed. If left undefined, the side is chosen within the function depending on the results of Egger's regression test (see <code><a href='regtest.html'>regtest</a></code> for details on this test).</p></td>
+      <td><p>optional character string (either <code>"left"</code> or <code>"right"</code>) to specify on which side of the funnel plot the missing studies should be imputed. If left unspecified, the side is chosen within the function depending on the results of Egger's regression test (see <code><a href='regtest.html'>regtest</a></code> for details on this test).</p></td>
     </tr>
     <tr>
       <th>estimator</th>
-      <td><p>either <code>"L0"</code>, <code>"R0"</code>, or <code>"Q0"</code>, indicating the estimator to use for estimating the number of missing studies (the default is <code>"L0"</code>).</p></td>
+      <td><p>character string (either <code>"L0"</code>, <code>"R0"</code>, or <code>"Q0"</code>) to specify the estimator to use for estimating the number of missing studies (the default is <code>"L0"</code>).</p></td>
     </tr>
     <tr>
       <th>maxiter</th>
-      <td><p>integer indicating the maximum number of iterations to use for the trim and fill method (the default is <code>100</code>).</p></td>
+      <td><p>integer to specify the maximum number of iterations to use for the trim and fill method (the default is <code>100</code>).</p></td>
     </tr>
     <tr>
       <th>verbose</th>
-      <td><p>logical indicating whether output should be generated on the progress of the iterative algorithm used as part of the trim and fill method (the default is <code>FALSE</code>).</p></td>
+      <td><p>logical to specify whether output should be generated on the progress of the iterative algorithm used as part of the trim and fill method (the default is <code>FALSE</code>).</p></td>
     </tr>
     <tr>
       <th>ilim</th>

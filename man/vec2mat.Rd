@@ -9,8 +9,8 @@ vec2mat(x, diag=FALSE, corr=!diag, dimnames)
 }
 \arguments{
    \item{x}{a vector of the correct length.}
-   \item{diag}{logical indicating whether the vector also contains the diagonal values of the lower triangular part of the matrix (the default is \code{FALSE}).}
-   \item{corr}{logical indicating whether the diagonal of the matrix should be replaced with 1's (the default is to do this when \code{diag=FALSE}).}
+   \item{diag}{logical to specify whether the vector also contains the diagonal values of the lower triangular part of the matrix (the default is \code{FALSE}).}
+   \item{corr}{logical to specify whether the diagonal of the matrix should be replaced with 1's (the default is to do this when \code{diag=FALSE}).}
    \item{dimnames}{optional vector of the correct length with the dimension names of the matrix.}
 }
 \details{

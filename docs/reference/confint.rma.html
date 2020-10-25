@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-52</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-54</span>
       </span>
     </div>
 
@@ -165,43 +165,43 @@
     </tr>
     <tr>
       <th>fixed</th>
-      <td><p>logical indicating whether confidence intervals for the model coefficients should be returned (the default is <code>FALSE</code>).</p></td>
+      <td><p>logical to specify whether confidence intervals for the model coefficients should be returned (the default is <code>FALSE</code>).</p></td>
     </tr>
     <tr>
       <th>random</th>
-      <td><p>logical indicating whether a confidence interval for the amount of (residual) heterogeneity should be returned (the default is <code>TRUE</code>) (only relevant for <code>"rma.uni"</code> objects).</p></td>
+      <td><p>logical to specify whether a confidence interval for the amount of (residual) heterogeneity should be returned (the default is <code>TRUE</code>) (only relevant for <code>"rma.uni"</code> objects).</p></td>
     </tr>
     <tr>
       <th>sigma2</th>
-      <td><p>integer specifying for which \(\sigma^2\) value a confidence interval should be obtained (only relevant for <code>"rma.mv"</code> objects).</p></td>
+      <td><p>integer to specify for which \(\sigma^2\) value a confidence interval should be obtained (only relevant for <code>"rma.mv"</code> objects).</p></td>
     </tr>
     <tr>
       <th>tau2</th>
-      <td><p>integer specifying for which \(\tau^2\) value a confidence interval should be obtained (only relevant for <code>"rma.mv"</code> objects).</p></td>
+      <td><p>integer to specify for which \(\tau^2\) value a confidence interval should be obtained (only relevant for <code>"rma.mv"</code> objects).</p></td>
     </tr>
     <tr>
       <th>rho</th>
-      <td><p>integer specifying for which \(\rho\) value the confidence interval should be obtained (only relevant for <code>"rma.mv"</code> objects).</p></td>
+      <td><p>integer to specify for which \(\rho\) value the confidence interval should be obtained (only relevant for <code>"rma.mv"</code> objects).</p></td>
     </tr>
     <tr>
       <th>gamma2</th>
-      <td><p>integer specifying for which \(\gamma^2\) value a confidence interval should be obtained (only relevant for <code>"rma.mv"</code> objects).</p></td>
+      <td><p>integer to specify for which \(\gamma^2\) value a confidence interval should be obtained (only relevant for <code>"rma.mv"</code> objects).</p></td>
     </tr>
     <tr>
       <th>phi</th>
-      <td><p>integer specifying for which \(\phi\) value a confidence interval should be obtained (only relevant for <code>"rma.mv"</code> objects).</p></td>
+      <td><p>integer to specify for which \(\phi\) value a confidence interval should be obtained (only relevant for <code>"rma.mv"</code> objects).</p></td>
     </tr>
     <tr>
       <th>level</th>
-      <td><p>numerical value between 0 and 100 specifying the confidence interval level (if unspecified, the default is to take the value from the object).</p></td>
+      <td><p>numeric value between 0 and 100 to specify the confidence interval level (if unspecified, the default is to take the value from the object).</p></td>
     </tr>
     <tr>
       <th>digits</th>
-      <td><p>integer specifying the number of decimal places to which the results should be rounded (if unspecified, the default is to take the value from the object).</p></td>
+      <td><p>integer to specify the number of decimal places to which the results should be rounded (if unspecified, the default is to take the value from the object).</p></td>
     </tr>
     <tr>
       <th>transf</th>
-      <td><p>optional argument specifying the name of a function that should be used to transform the model coefficients and interval bounds (e.g., <code>transf=exp</code>; see also <a href='transf.html'>transf</a>). If unspecified, no transformation is used.</p></td>
+      <td><p>optional argument to specify the name of a function that should be used to transform the model coefficients and interval bounds (e.g., <code>transf=exp</code>; see also <a href='transf.html'>transf</a>). If unspecified, no transformation is used.</p></td>
     </tr>
     <tr>
       <th>targs</th>
@@ -209,7 +209,7 @@
     </tr>
     <tr>
       <th>verbose</th>
-      <td><p>logical indicating whether output should be generated on the progress of the iterative algorithms used to obtain the confidence intervals (the default is <code>FALSE</code>). See &#8216;Note&#8217;.</p></td>
+      <td><p>logical to specify whether output should be generated on the progress of the iterative algorithms used to obtain the confidence intervals (the default is <code>FALSE</code>). See &#8216;Note&#8217;.</p></td>
     </tr>
     <tr>
       <th>control</th>
@@ -295,7 +295,7 @@
 <span class='co'>### profile plots and confidence intervals for the variance components</span>
 <span class='co'># \dontrun{</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mfrow<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>,<span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/profile.html'>profile</a></span><span class='op'>(</span><span class='va'>res</span>, sigma2<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
+<span class='fu'><a href='profile.rma.uni.html'>profile</a></span><span class='op'>(</span><span class='va'>res</span>, sigma2<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span>h<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/stats/logLik.html'>logLik</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span> <span class='op'>-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Chisquare.html'>qchisq</a></span><span class='op'>(</span><span class='fl'>.95</span>, df<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span><span class='op'>/</span><span class='fl'>2</span>, lty<span class='op'>=</span><span class='st'>"dotted"</span><span class='op'>)</span>
 <span class='va'>sav</span> <span class='op'>&lt;-</span> <span class='fu'>confint</span><span class='op'>(</span><span class='va'>res</span>, sigma2<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
 <span class='va'>sav</span>
@@ -304,7 +304,7 @@
 #&gt; sigma^2.1   0.0651 0.0222 0.2072 
 #&gt; sigma.1     0.2551 0.1491 0.4552 
 #&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span>v<span class='op'>=</span><span class='va'>sav</span><span class='op'>$</span><span class='va'>random</span><span class='op'>[</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span>, lty<span class='op'>=</span><span class='st'>"dotted"</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/profile.html'>profile</a></span><span class='op'>(</span><span class='va'>res</span>, sigma2<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+<span class='fu'><a href='profile.rma.uni.html'>profile</a></span><span class='op'>(</span><span class='va'>res</span>, sigma2<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span>h<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/stats/logLik.html'>logLik</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span> <span class='op'>-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Chisquare.html'>qchisq</a></span><span class='op'>(</span><span class='fl'>.95</span>, df<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span><span class='op'>/</span><span class='fl'>2</span>, lty<span class='op'>=</span><span class='st'>"dotted"</span><span class='op'>)</span>
 </div><div class='input'><span class='va'>sav</span> <span class='op'>&lt;-</span> <span class='fu'>confint</span><span class='op'>(</span><span class='va'>res</span>, sigma2<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
 <span class='va'>sav</span>
@@ -320,7 +320,7 @@
 <span class='co'>### profile plots and confidence intervals for the variance component and correlation</span>
 <span class='co'># \dontrun{</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mfrow<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>,<span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/profile.html'>profile</a></span><span class='op'>(</span><span class='va'>res</span>, tau2<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
+<span class='fu'><a href='profile.rma.uni.html'>profile</a></span><span class='op'>(</span><span class='va'>res</span>, tau2<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span>h<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/stats/logLik.html'>logLik</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span> <span class='op'>-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Chisquare.html'>qchisq</a></span><span class='op'>(</span><span class='fl'>.95</span>, df<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span><span class='op'>/</span><span class='fl'>2</span>, lty<span class='op'>=</span><span class='st'>"dotted"</span><span class='op'>)</span>
 <span class='va'>sav</span> <span class='op'>&lt;-</span> <span class='fu'>confint</span><span class='op'>(</span><span class='va'>res</span>, tau2<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
 <span class='va'>sav</span>
@@ -329,7 +329,7 @@
 #&gt; tau^2   0.0978 0.0528 0.2398 
 #&gt; tau     0.3127 0.2298 0.4897 
 #&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span>v<span class='op'>=</span><span class='va'>sav</span><span class='op'>$</span><span class='va'>random</span><span class='op'>[</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span>, lty<span class='op'>=</span><span class='st'>"dotted"</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/profile.html'>profile</a></span><span class='op'>(</span><span class='va'>res</span>, rho<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
+<span class='fu'><a href='profile.rma.uni.html'>profile</a></span><span class='op'>(</span><span class='va'>res</span>, rho<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span>h<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/stats/logLik.html'>logLik</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span> <span class='op'>-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Chisquare.html'>qchisq</a></span><span class='op'>(</span><span class='fl'>.95</span>, df<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span><span class='op'>/</span><span class='fl'>2</span>, lty<span class='op'>=</span><span class='st'>"dotted"</span><span class='op'>)</span>
 </div><div class='input'><span class='va'>sav</span> <span class='op'>&lt;-</span> <span class='fu'>confint</span><span class='op'>(</span><span class='va'>res</span>, rho<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
 <span class='va'>sav</span>

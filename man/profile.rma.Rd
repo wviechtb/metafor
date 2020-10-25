@@ -1,4 +1,5 @@
 \name{profile.rma.uni}
+\alias{profile}
 \alias{profile.rma.uni}
 \alias{profile.rma.mv}
 \alias{print.profile.rma}
@@ -24,22 +25,22 @@
 \arguments{
    \item{fitted}{an object of class \code{"rma.uni"} or \code{"rma.mv"}.}
    \item{x}{an object of class \code{"profile.rma"} (for \code{plot} and \code{print}).}
-   \item{sigma2}{integer specifying for which \mjseqn{\sigma^2} value the likelihood should be profiled (only relevant for \code{"rma.mv"} objects).}
-   \item{tau2}{integer specifying for which \mjseqn{\tau^2} value the likelihood should be profiled (only relevant for \code{"rma.mv"} objects).}
-   \item{rho}{integer specifying for which \mjseqn{\rho} value the likelihood should be profiled (only relevant for \code{"rma.mv"} objects).}
-   \item{gamma2}{integer specifying for which \mjseqn{\gamma^2} value the likelihood should be profiled (only relevant for \code{"rma.mv"} objects).}
-   \item{phi}{integer specifying for which \mjseqn{\phi} value the likelihood should be profiled (only relevant for \code{"rma.mv"} objects).}
-   \item{xlim}{optional vector specifying the lower and upper limit of the parameter over which the profiling should be done. If unspecified, the function tries to set these limits automatically.}
-   \item{ylim}{optional vector specifying the y-axis limits when plotting the profiled likelihood. If unspecified, the function tries to set these limits automatically.}
+   \item{sigma2}{integer to specify for which \mjseqn{\sigma^2} value the likelihood should be profiled (only relevant for \code{"rma.mv"} objects).}
+   \item{tau2}{integer to specify for which \mjseqn{\tau^2} value the likelihood should be profiled (only relevant for \code{"rma.mv"} objects).}
+   \item{rho}{integer to specify for which \mjseqn{\rho} value the likelihood should be profiled (only relevant for \code{"rma.mv"} objects).}
+   \item{gamma2}{integer to specify for which \mjseqn{\gamma^2} value the likelihood should be profiled (only relevant for \code{"rma.mv"} objects).}
+   \item{phi}{integer to specify for which \mjseqn{\phi} value the likelihood should be profiled (only relevant for \code{"rma.mv"} objects).}
+   \item{xlim}{optional vector to specify the lower and upper limit of the parameter over which the profiling should be done. If unspecified, the function tries to set these limits automatically.}
+   \item{ylim}{optional vector to specify the y-axis limits when plotting the profiled likelihood. If unspecified, the function tries to set these limits automatically.}
    \item{steps}{number of points between \code{xlim[1]} and \code{xlim[2]} (inclusive) for which the likelihood should be evaluated (the default is 20).}
    \item{lltol}{numerical tolerance used when comparing values of the profiled log-likelihood with the log-likelihood of the fitted model (the default is 1e-06).}
-   \item{progbar}{logical indicating whether a progress bar should be shown (the default is \code{TRUE}).}
-   \item{parallel}{character string indicating whether parallel processing should be used (the default is \code{"no"}). For parallel processing, set to either \code{"snow"} or \code{"multicore"}. See \sQuote{Details}.}
-   \item{ncpus}{integer specifying the number of processes to use in the parallel processing.}
+   \item{progbar}{logical to specify whether a progress bar should be shown (the default is \code{TRUE}).}
+   \item{parallel}{character string to specify whether parallel processing should be used (the default is \code{"no"}). For parallel processing, set to either \code{"snow"} or \code{"multicore"}. See \sQuote{Details}.}
+   \item{ncpus}{integer to specify the number of processes to use in the parallel processing.}
    \item{cl}{optional snow cluster to use if \code{parallel="snow"}. If not supplied, a cluster on the local machine is created for the duration of the call.}
-   \item{plot}{logical indicating whether the profile plot should be drawn after profiling is finished (the default is \code{TRUE}).}
+   \item{plot}{logical to specify whether the profile plot should be drawn after profiling is finished (the default is \code{TRUE}).}
    \item{pch}{plotting symbol to use. By default, a filled circle is used. See \code{\link{points}} for other options.}
-   \item{cline}{logical indicating whether a horizontal reference line should be added to the plot that indicates the log-likelihood value corresponding to the 95\% profile confidence interval (the default is \code{FALSE}).}
+   \item{cline}{logical to specify whether a horizontal reference line should be added to the plot that indicates the log-likelihood value corresponding to the 95\% profile confidence interval (the default is \code{FALSE}).}
    \item{xlab}{title for the x-axis. If unspecified, the function tries to set an appropriate axis title.}
    \item{ylab}{title for the y-axis. If unspecified, the function tries to set an appropriate axis title.}
    \item{main}{title for the plot. If unspecified, the function tries to set an appropriate title.}

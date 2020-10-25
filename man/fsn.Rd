@@ -13,12 +13,12 @@ fsn(yi, vi, sei, data, type="Rosenthal", alpha=.05,
    \item{vi}{vector with the corresponding sampling variances.}
    \item{sei}{vector with the corresponding standard errors (note: only one of the two, \code{vi} or \code{sei}, needs to be specified).}
    \item{data}{optional data frame containing the variables given to the arguments above.}
-   \item{type}{character string indicating the method to use for the calculation of the fail-safe N. Possible options are \code{"Rosenthal"} (the default), \code{"Orwin"}, or \code{"Rosenberg"}. See \sQuote{Details}.}
+   \item{type}{character string to specify the method to use for the calculation of the fail-safe N. Possible options are \code{"Rosenthal"} (the default), \code{"Orwin"}, or \code{"Rosenberg"}. See \sQuote{Details}.}
    \item{alpha}{target alpha level to use for the Rosenthal and Rosenberg methods (the default is .05).}
    \item{target}{target average effect size to use for the Orwin method. If undefined, then the target average effect size will be equal to the observed average effect size divided by 2.}
-   \item{weighted}{logical indicating whether Orwin's method should be based on unweighted (the default) or weighted averages.}
-   \item{subset}{optional (logical or numeric) vector indicating the subset of studies that should be used for the calculations.}
-   \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is 4).}
+   \item{weighted}{logical to specify whether Orwin's method should be based on unweighted (the default) or weighted averages.}
+   \item{subset}{optional (logical or numeric) vector to specify the subset of studies that should be used for the calculations.}
+   \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded (if unspecified, the default is 4).}
    \item{\dots}{other arguments.}
 }
 \details{

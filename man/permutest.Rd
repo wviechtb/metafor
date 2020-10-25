@@ -13,12 +13,12 @@ permutest(x, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma.uni"}.}
-   \item{exact}{logical indicating whether an exact permutation test should be carried out or not (the default is \code{FALSE}). See \sQuote{Details}.}
-   \item{iter}{integer specifying the number of iterations for the permutation test when not doing an exact test (the default is \code{1000} iterations).}
-   \item{permci}{logical indicating whether permutation-based CIs should also be calculated (the default is \code{FALSE}). Can also be a vector of indices specifying for which coefficients a permutation-based CI should be obtained.}
-   \item{progbar}{logical indicating whether a progress bar should be shown (the default is \code{TRUE}).}
-   \item{retpermdist}{logical indicating whether the permutation distributions of the test statistics should be returned (the default is \code{FALSE}).}
-   \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is to take the value from the object).}
+   \item{exact}{logical to specify whether an exact permutation test should be carried out or not (the default is \code{FALSE}). See \sQuote{Details}.}
+   \item{iter}{integer to specify the number of iterations for the permutation test when not doing an exact test (the default is \code{1000} iterations).}
+   \item{permci}{logical to specify whether permutation-based CIs should also be calculated (the default is \code{FALSE}). Can also be a vector of indices to specify for which coefficients a permutation-based CI should be obtained.}
+   \item{progbar}{logical to specify whether a progress bar should be shown (the default is \code{TRUE}).}
+   \item{retpermdist}{logical to specify whether the permutation distributions of the test statistics should be returned (the default is \code{FALSE}).}
+   \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded (if unspecified, the default is to take the value from the object).}
    \item{control}{list of control values for numerical comparisons (\code{comptol}) and for \code{uniroot} (i.e., \code{tol} and \code{maxiter}). The latter is only relevant when \code{permci=TRUE}. See \sQuote{Note}.}
    \item{\dots}{other arguments.}
 }
@@ -37,7 +37,7 @@ permutest(x, \dots)
 
    When using random permutations, the function ensures that the very first permutation will always correspond to the original data. This avoids p-values equal to 0.
 
-   When \code{permci=TRUE}, the function also tries to obtain permutation-based CIs of the model coefficient(s). This is done by shifting the observed effect sizes or outcomes and finding the most extreme values for which the permutation-based test would just lead to non-rejection. This is computationally expensive and may take a long time to complete. For models with moderators, one can also set \code{permci} to a vector of indices specifying for which coefficient(s) a permutation-based CI should be obtained. When the algorithm fails to determine a particular CI bound, it will be shown as \code{NA} in the output.
+   When \code{permci=TRUE}, the function also tries to obtain permutation-based CIs of the model coefficient(s). This is done by shifting the observed effect sizes or outcomes and finding the most extreme values for which the permutation-based test would just lead to non-rejection. This is computationally expensive and may take a long time to complete. For models with moderators, one can also set \code{permci} to a vector of indices to specify for which coefficient(s) a permutation-based CI should be obtained. When the algorithm fails to determine a particular CI bound, it will be shown as \code{NA} in the output.
 }
 \value{
    An object of class \code{"permutest.rma.uni"}. The object is a list containing the following components:

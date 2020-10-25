@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-52</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-54</span>
       </span>
     </div>
 
@@ -206,11 +206,11 @@
     </tr>
     <tr>
       <th>measure</th>
-      <td><p>character string indicating the outcome measure to use for the meta-analysis. Possible options are the odds ratio (<code>"OR"</code>), the incidence rate ratio (<code>"IRR"</code>), the logit transformed proportion (<code>"PLO"</code>), or the log transformed incidence rate (<code>"IRLN"</code>).</p></td>
+      <td><p>character string to specify the outcome measure to use for the meta-analysis. Possible options are the odds ratio (<code>"OR"</code>), the incidence rate ratio (<code>"IRR"</code>), the logit transformed proportion (<code>"PLO"</code>), or the log transformed incidence rate (<code>"IRLN"</code>).</p></td>
     </tr>
     <tr>
       <th>intercept</th>
-      <td><p>logical indicating whether an intercept should be added to the model (the default is <code>TRUE</code>).</p></td>
+      <td><p>logical to specify whether an intercept should be added to the model (the default is <code>TRUE</code>).</p></td>
     </tr>
     <tr>
       <th>data</th>
@@ -222,55 +222,55 @@
     </tr>
     <tr>
       <th>subset</th>
-      <td><p>optional (logical or numeric) vector indicating the subset of studies that should be used for the analysis.</p></td>
+      <td><p>optional (logical or numeric) vector to specify the subset of studies that should be used for the analysis.</p></td>
     </tr>
     <tr>
       <th>add</th>
-      <td><p>non-negative number indicating the amount to add to zero cells, counts, or frequencies when calculating the observed effect sizes or outcomes of the individual studies. See below and the documentation of the <code><a href='escalc.html'>escalc</a></code> function for more details.</p></td>
+      <td><p>non-negative number to specify the amount to add to zero cells, counts, or frequencies when calculating the observed effect sizes or outcomes of the individual studies. See below and the documentation of the <code><a href='escalc.html'>escalc</a></code> function for more details.</p></td>
     </tr>
     <tr>
       <th>to</th>
-      <td><p>character string indicating when the values under <code>add</code> should be added (either <code>"only0"</code>, <code>"all"</code>, <code>"if0all"</code>, or <code>"none"</code>). See below and the documentation of the <code><a href='escalc.html'>escalc</a></code> function for more details.</p></td>
+      <td><p>character string to specify when the values under <code>add</code> should be added (either <code>"only0"</code>, <code>"all"</code>, <code>"if0all"</code>, or <code>"none"</code>). See below and the documentation of the <code><a href='escalc.html'>escalc</a></code> function for more details.</p></td>
     </tr>
     <tr>
       <th>drop00</th>
-      <td><p>logical indicating whether studies with no cases/events (or only cases) in both groups should be dropped. See the documentation of the <code><a href='escalc.html'>escalc</a></code> function for more details.</p></td>
+      <td><p>logical to specify whether studies with no cases/events (or only cases) in both groups should be dropped. See the documentation of the <code><a href='escalc.html'>escalc</a></code> function for more details.</p></td>
     </tr>
     <tr>
       <th>vtype</th>
-      <td><p>character string indicating the type of sampling variances to calculate when calculating the observed effect sizes or outcomes. See the documentation of the <code><a href='escalc.html'>escalc</a></code> function for more details.</p></td>
+      <td><p>character string to specify the type of sampling variances to calculate when calculating the observed effect sizes or outcomes. See the documentation of the <code><a href='escalc.html'>escalc</a></code> function for more details.</p></td>
     </tr>
     <tr>
       <th>model</th>
-      <td><p>character string specifying the general model type to use for the analysis (either <code>"UM.FS"</code> (the default), <code>"UM.RS"</code>, <code>"CM.EL"</code>, or <code>"CM.AL"</code>). See &#8216;Details&#8217;.</p></td>
+      <td><p>character string to specify the general model type to use for the analysis (either <code>"UM.FS"</code> (the default), <code>"UM.RS"</code>, <code>"CM.EL"</code>, or <code>"CM.AL"</code>). See &#8216;Details&#8217;.</p></td>
     </tr>
     <tr>
       <th>method</th>
-      <td><p>character string specifying whether a fixed- or a random/mixed-effects model should be fitted. A fixed-effects model (with or without moderators) is fitted when using <code>method="FE"</code>. Random/mixed-effects models are fitted by setting <code>method="ML"</code> (the default). See &#8216;Details&#8217;.</p></td>
+      <td><p>character string to specify whether a fixed- or a random/mixed-effects model should be fitted. A fixed-effects model (with or without moderators) is fitted when using <code>method="FE"</code>. Random/mixed-effects models are fitted by setting <code>method="ML"</code> (the default). See &#8216;Details&#8217;.</p></td>
     </tr>
     <tr>
       <th>test</th>
-      <td><p>character string specifying how test statistics and confidence intervals for the fixed effects should be computed. By default (<code>test="z"</code>), Wald-type tests and CIs are obtained, which are based on a standard normal distribution. When <code>test="t"</code>, a t-distribution is used instead. See &#8216;Details&#8217;.</p></td>
+      <td><p>character string to specify how test statistics and confidence intervals for the fixed effects should be computed. By default (<code>test="z"</code>), Wald-type tests and CIs are obtained, which are based on a standard normal distribution. When <code>test="t"</code>, a t-distribution is used instead. See &#8216;Details&#8217;.</p></td>
     </tr>
     <tr>
       <th>level</th>
-      <td><p>numerical value between 0 and 100 specifying the confidence interval level (the default is 95).</p></td>
+      <td><p>numeric value between 0 and 100 to specify the confidence interval level (the default is 95).</p></td>
     </tr>
     <tr>
       <th>digits</th>
-      <td><p>integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is 4).</p></td>
+      <td><p>integer to specify the number of decimal places to which the printed results should be rounded (if unspecified, the default is 4).</p></td>
     </tr>
     <tr>
       <th>btt</th>
-      <td><p>optional vector of indices specifying which coefficients to include in the omnibus test of moderators. Can also be a string to grep for. See &#8216;Details&#8217;.</p></td>
+      <td><p>optional vector of indices to specify which coefficients to include in the omnibus test of moderators. Can also be a string to grep for. See &#8216;Details&#8217;.</p></td>
     </tr>
     <tr>
       <th>nAGQ</th>
-      <td><p>positive integer specifying the number of points per axis for evaluating the adaptive Gauss-Hermite approximation to the log-likelihood. The default is 7. Setting this to 1 corresponds to the Laplacian approximation. See &#8216;Note&#8217;.</p></td>
+      <td><p>positive integer to specify the number of points per axis for evaluating the adaptive Gauss-Hermite approximation to the log-likelihood. The default is 7. Setting this to 1 corresponds to the Laplacian approximation. See &#8216;Note&#8217;.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
-      <td><p>logical indicating whether output should be generated on the progress of the model fitting (the default is <code>FALSE</code>). Can also be an integer. Values &gt; 1 generate more verbose output. See &#8216;Note&#8217;.</p></td>
+      <td><p>logical to specify whether output should be generated on the progress of the model fitting (the default is <code>FALSE</code>). Can also be an integer. Values &gt; 1 generate more verbose output. See &#8216;Note&#8217;.</p></td>
     </tr>
     <tr>
       <th>control</th>

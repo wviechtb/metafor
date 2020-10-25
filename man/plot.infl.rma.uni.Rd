@@ -11,11 +11,11 @@
 }
 \arguments{
    \item{x}{an object of class \code{"infl.rma.uni"}.}
-   \item{plotinf}{logical indicating whether the various case diagnostics should be plotted (the default is \code{TRUE}). Can also be a vector of up to 8 integers indicating which plots to draw. See \sQuote{Details} for the numbers corresponding to the various plots.}
-   \item{plotdfbs}{logical indicating whether the DFBETAS values should be plotted (the default is \code{FALSE}). Can also be a vector of integers to indicate for which coefficient(s) to plot the DFBETAS values.}
-   \item{dfbsnew}{logical indicating whether a new device should be opened for plotting the DFBETAS values (the default is \code{FALSE}).}
-   \item{logcov}{logical indicating whether the covariance ratios should be plotted on a log scale (the default is \code{TRUE}).}
-   \item{layout}{optional vector of two numbers, indicating the number of rows and columns for the layout of the figure.}
+   \item{plotinf}{logical to specify whether the various case diagnostics should be plotted (the default is \code{TRUE}). Can also be a vector of up to 8 integers to specify which plots to draw. See \sQuote{Details} for the numbers corresponding to the various plots.}
+   \item{plotdfbs}{logical to specify whether the DFBETAS values should be plotted (the default is \code{FALSE}). Can also be a vector of integers to specify for which coefficient(s) to plot the DFBETAS values.}
+   \item{dfbsnew}{logical to specify whether a new device should be opened for plotting the DFBETAS values (the default is \code{FALSE}).}
+   \item{logcov}{logical to specify whether the covariance ratios should be plotted on a log scale (the default is \code{TRUE}).}
+   \item{layout}{optional vector of two numbers to specify the number of rows and columns for the layout of the figure.}
    \item{slab.style}{integer to indicate the style of the x-axis labels: 1 = study number, 2 = study label, 3 = abbreviated study label. Note that study labels, even when abbreviated, may be too long to fit in the margin.)}
    \item{las}{integer between 0 and 3 to specify the alignment of the axis labels (see \code{\link{par}}). The most useful alternative to 0 is 3, so that the x-axis labels are drawn vertical to the axis.}
    \item{pch}{plotting symbol to use. By default, a filled circle is used. See \code{\link{points}} for other options.}

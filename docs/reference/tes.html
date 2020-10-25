@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-52</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-54</span>
       </span>
     </div>
 
@@ -165,15 +165,15 @@
     </tr>
     <tr>
       <th>subset</th>
-      <td><p>optional (logical or numeric) vector indicating the subset of studies that should be included.</p></td>
+      <td><p>optional (logical or numeric) vector to specify the subset of studies that should be included.</p></td>
     </tr>
     <tr>
       <th>H0</th>
-      <td><p>numeric value specifying the value of the effect size or outcome under the null hypothesis (the default is 0).</p></td>
+      <td><p>numeric value to specify the value of the effect size or outcome under the null hypothesis (the default is 0).</p></td>
     </tr>
     <tr>
       <th>alternative</th>
-      <td><p>character string indicating the sidedness of the hypothesis when testing the observed effect sizes or outcomes. Possible options are <code>"two.sided"</code> (the default), <code>"greater"</code>, or <code>"less"</code>. Can be abbreviated.</p></td>
+      <td><p>character string to specify the sidedness of the hypothesis when testing the observed effect sizes or outcomes. Possible options are <code>"two.sided"</code> (the default), <code>"greater"</code>, or <code>"less"</code>. Can be abbreviated.</p></td>
     </tr>
     <tr>
       <th>alpha</th>
@@ -181,23 +181,23 @@
     </tr>
     <tr>
       <th>theta</th>
-      <td><p>numeric value specifying the value of the true effect size or outcome under the alternative hypothesis. If unspecified, it will be estimated based on the data or the value is taken from the <code>"rma"</code> object.</p></td>
+      <td><p>numeric value to specify the value of the true effect size or outcome under the alternative hypothesis. If unspecified, it will be estimated based on the data or the value is taken from the <code>"rma"</code> object.</p></td>
     </tr>
     <tr>
       <th>tau2</th>
-      <td><p>numeric value specifying the amount of heterogeneity in the true effects or outcomes. If unspecified, the true effect sizes or outcomes are assumed to be homogeneous or the value is taken from the <code>"rma"</code> object.</p></td>
+      <td><p>numeric value to specify the amount of heterogeneity in the true effects or outcomes. If unspecified, the true effect sizes or outcomes are assumed to be homogeneous or the value is taken from the <code>"rma"</code> object.</p></td>
     </tr>
     <tr>
       <th>test</th>
-      <td><p>character string indicating the type of test to use for conducting the test of excess significance. Possible options are <code>"chi2"</code>, <code>"binom"</code>, or <code>"exact"</code>. Can be abbreviated. If unspecified, the function chooses the type of test based on the data.</p></td>
+      <td><p>character string to specify the type of test to use for conducting the test of excess significance. Possible options are <code>"chi2"</code>, <code>"binom"</code>, or <code>"exact"</code>. Can be abbreviated. If unspecified, the function chooses the type of test based on the data.</p></td>
     </tr>
     <tr>
       <th>tes.alternative</th>
-      <td><p>character string indicating the sidedness of the hypothesis for the test of excess significance. Possible options are <code>"greater"</code> (the default), <code>"two.sided"</code>, or <code>"less"</code>. Can be abbreviated.</p></td>
+      <td><p>character string to specify the sidedness of the hypothesis for the test of excess significance. Possible options are <code>"greater"</code> (the default), <code>"two.sided"</code>, or <code>"less"</code>. Can be abbreviated.</p></td>
     </tr>
     <tr>
       <th>progbar</th>
-      <td><p>logical indicating whether a progress bar should be shown (the default is <code>TRUE</code>). Only relevant when conducting an exact test.</p></td>
+      <td><p>logical to specify whether a progress bar should be shown (the default is <code>TRUE</code>). Only relevant when conducting an exact test.</p></td>
     </tr>
     <tr>
       <th>tes.alpha</th>
@@ -205,7 +205,7 @@
     </tr>
     <tr>
       <th>digits</th>
-      <td><p>integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is 4).</p></td>
+      <td><p>integer to specify the number of decimal places to which the printed results should be rounded (if unspecified, the default is 4).</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -220,7 +220,7 @@
 <p>The observed effect sizes or outcomes are tested for significance based on a standard Wald-type test, that is, by comparing \[z_i = \frac{y_i - \mbox{H}_0}{\sqrt{v_i}}\] against the appropriate critical value(s) of a standard normal distribution (e.g., \(\pm 1.96\) for <code>alternative="two.sided"</code> and <code>alpha=.05</code>, which are the defaults). Let \(O\) denote the observed number of significant tests.</p>
 <p>Given a particular value for the true effect or outcome denoted by \(\theta\) (which, if it is unspecified, is determined by computing the inverse-variance weighted average of the observed effect sizes or outcomes or the value is taken from the model object), let \(1-\beta_i\) denote the power of the \(i\)th test (where \(\beta_i\) denotes the Type II error probability). If \(\tau^2 > 0\), let \(1-\beta_i\) denote the expected power (computed based on integrating the power over a normal distribution with mean \(\theta\) and variance \(\tau^2\)). Let \(E = \sum_{i=1}^k (1-\beta_i)\) denote the expected number of significant tests.</p>
 <p>The test of excess significance then tests if \(O\) is significantly greater (if <code>tes.alternative="greater"</code>) than \(E\). This can be done using Pearson's chi-squared test (if <code>test="chi2"</code>), a binomial test (if <code>test="binomial"</code>), or an exact test (if <code>test="exact"</code>). The latter is described in Francis (2013). If argument <code>test</code> is unspecified, the default is to do an exact test if the number of elements in the sum that needs to be computed is less than or equal to <code>10^6</code> and to do a chi-square test otherwise.</p>
-<p>One can also iteratively find the value of \(\theta\) such that the p-value of the test of excess significance is equal to <code>tes.alpha</code> (which is .10 by default). The resulting value is called the &#8216;limit estimate&#8217; and is denoted \(\theta_{lim}\) by Ioannidis and Trikalinos (2007). Note that the limit estimate is not computable if the p-value is larger than <code>tes.alpha</code> even if \(\theta = \mbox{H}_0\).</p>
+<p>One can also iteratively find the value of \(\theta\) such that the p-value of the test of excess significance is equal to <code>tes.alpha</code> (which is <code>.10</code> by default). The resulting value is called the &#8216;limit estimate&#8217; and is denoted \(\theta_{lim}\) by Ioannidis and Trikalinos (2007). Note that the limit estimate is not computable if the p-value is larger than <code>tes.alpha</code> even if \(\theta = \mbox{H}_0\).</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class <code>"tes"</code>. The object is a list containing the following components:</p>

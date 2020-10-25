@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-52</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-54</span>
       </span>
     </div>
 
@@ -149,7 +149,7 @@
     </tr>
     <tr>
       <th>het</th>
-      <td><p>character string indicating the heterogeneity measure to plot. Either <code>"I2"</code>, <code>"H2"</code>, <code>"QE"</code>, or <code>"tau2"</code> (the last only for random/mixed-effects models).</p></td>
+      <td><p>character string to specify the heterogeneity measure to plot. Either <code>"I2"</code>, <code>"H2"</code>, <code>"QE"</code>, or <code>"tau2"</code> (the last only for random/mixed-effects models).</p></td>
     </tr>
     <tr>
       <th>pch</th>
@@ -161,11 +161,11 @@
     </tr>
     <tr>
       <th>out</th>
-      <td><p>optional integer indicating the number of a study that may be a potential outlier. If specified, subsets containing the specified study are drawn in a different color than those not containing the study.</p></td>
+      <td><p>optional integer to specify the number of a study that may be a potential outlier. If specified, subsets containing the specified study are drawn in a different color than those not containing the study.</p></td>
     </tr>
     <tr>
       <th>col</th>
-      <td><p>optional character string specifying the name of a color to use for the points (if not provided, points are drawn in black). When <code>out</code> is used, two colors should be specified (if not provided, red is used for subsets containing the specified study and blue otherwise).</p></td>
+      <td><p>optional character string to specify the name of a color to use for the points (if not provided, points are drawn in black). When <code>out</code> is used, two colors should be specified (if not provided, red is used for subsets containing the specified study and blue otherwise).</p></td>
     </tr>
     <tr>
       <th>alpha</th>
@@ -173,7 +173,7 @@
     </tr>
     <tr>
       <th>border</th>
-      <td><p>optional character string specifying the name of a color to use for the borders of the histogram (if not provided, borders are drawn in white). Set to <code>FALSE</code> to omit the borders.</p></td>
+      <td><p>optional character string to specify the name of a color to use for the borders of the histogram (if not provided, borders are drawn in white). Set to <code>FALSE</code> to omit the borders.</p></td>
     </tr>
     <tr>
       <th>xlim</th>
@@ -185,15 +185,15 @@
     </tr>
     <tr>
       <th>xhist</th>
-      <td><p>logical specifying whether a histogram should be drawn for the x-axis (the default is <code>TRUE</code>).</p></td>
+      <td><p>logical to specify whether a histogram should be drawn for the x-axis (the default is <code>TRUE</code>).</p></td>
     </tr>
     <tr>
       <th>yhist</th>
-      <td><p>logical specifying whether a histogram should be drawn for the y-axis (the default is <code>TRUE</code>).</p></td>
+      <td><p>logical to specify whether a histogram should be drawn for the y-axis (the default is <code>TRUE</code>).</p></td>
     </tr>
     <tr>
       <th>hh</th>
-      <td><p>optional numerical value (or vector of two values) to adjust the height of the histogram(s). Must be between 0 and 1, but should not be too close to 0 or 1, as otherwise the plot cannot be drawn.</p></td>
+      <td><p>optional numeric value (or vector of two values) to adjust the height of the histogram(s). Must be between 0 and 1, but should not be too close to 0 or 1, as otherwise the plot cannot be drawn.</p></td>
     </tr>
     <tr>
       <th>breaks</th>
@@ -209,7 +209,7 @@
     </tr>
     <tr>
       <th>labels</th>
-      <td><p>optional argument to specify the x-axis and y-axis labels (or passed on to <code><a href='https://rdrr.io/r/graphics/pairs.html'>pairs</a></code> for specifying the names of the variables in the scatterplot matrix).</p></td>
+      <td><p>optional argument to specify the x-axis and y-axis labels (or passed on to <code><a href='https://rdrr.io/r/graphics/pairs.html'>pairs</a></code> to specify the names of the variables in the scatterplot matrix).</p></td>
     </tr>
     <tr>
       <th>...</th>

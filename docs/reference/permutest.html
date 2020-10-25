@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-52</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-54</span>
       </span>
     </div>
 
@@ -150,27 +150,27 @@
     </tr>
     <tr>
       <th>exact</th>
-      <td><p>logical indicating whether an exact permutation test should be carried out or not (the default is <code>FALSE</code>). See &#8216;Details&#8217;.</p></td>
+      <td><p>logical to specify whether an exact permutation test should be carried out or not (the default is <code>FALSE</code>). See &#8216;Details&#8217;.</p></td>
     </tr>
     <tr>
       <th>iter</th>
-      <td><p>integer specifying the number of iterations for the permutation test when not doing an exact test (the default is <code>1000</code> iterations).</p></td>
+      <td><p>integer to specify the number of iterations for the permutation test when not doing an exact test (the default is <code>1000</code> iterations).</p></td>
     </tr>
     <tr>
       <th>permci</th>
-      <td><p>logical indicating whether permutation-based CIs should also be calculated (the default is <code>FALSE</code>). Can also be a vector of indices specifying for which coefficients a permutation-based CI should be obtained.</p></td>
+      <td><p>logical to specify whether permutation-based CIs should also be calculated (the default is <code>FALSE</code>). Can also be a vector of indices to specify for which coefficients a permutation-based CI should be obtained.</p></td>
     </tr>
     <tr>
       <th>progbar</th>
-      <td><p>logical indicating whether a progress bar should be shown (the default is <code>TRUE</code>).</p></td>
+      <td><p>logical to specify whether a progress bar should be shown (the default is <code>TRUE</code>).</p></td>
     </tr>
     <tr>
       <th>retpermdist</th>
-      <td><p>logical indicating whether the permutation distributions of the test statistics should be returned (the default is <code>FALSE</code>).</p></td>
+      <td><p>logical to specify whether the permutation distributions of the test statistics should be returned (the default is <code>FALSE</code>).</p></td>
     </tr>
     <tr>
       <th>digits</th>
-      <td><p>integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is to take the value from the object).</p></td>
+      <td><p>integer to specify the number of decimal places to which the printed results should be rounded (if unspecified, the default is to take the value from the object).</p></td>
     </tr>
     <tr>
       <th>control</th>
@@ -191,7 +191,7 @@
 <p>Therefore, going through all possible permutations may become infeasible. Instead of using an exact permutation test, one can set <code>exact=FALSE</code> (which is also the default). In that case, the function approximates the exact permutation-based p-value(s) by going through a smaller number (as specified by the <code>iter</code> argument) of <em>random</em> permutations. Therefore, running the function twice on the same data can yield (slightly) different p-values. Setting <code>iter</code> sufficiently large ensures that the results become stable. Note that if <code>exact=FALSE</code> and <code>iter</code> is actually larger than the number of iterations required for an exact permutation test, then an exact test will be carried out.</p>
 <p>For models with moderators, the exact permutation test actually only requires fitting the model to each <em>unique</em> permutation of the model matrix. The number of unique permutations will be smaller than \(k!\) when the model matrix contains recurring rows. This may be the case when only including categorical moderators (i.e., factors) in the model or when any quantitative moderators included in the model can only take on a small number of unique values. When <code>exact=TRUE</code>, the function therefore uses an algorithm to restrict the test to only the unique permutations of the model matrix, which may make the use of the exact test feasible even when \(k\) is large.</p>
 <p>When using random permutations, the function ensures that the very first permutation will always correspond to the original data. This avoids p-values equal to 0.</p>
-<p>When <code>permci=TRUE</code>, the function also tries to obtain permutation-based CIs of the model coefficient(s). This is done by shifting the observed effect sizes or outcomes and finding the most extreme values for which the permutation-based test would just lead to non-rejection. This is computationally expensive and may take a long time to complete. For models with moderators, one can also set <code>permci</code> to a vector of indices specifying for which coefficient(s) a permutation-based CI should be obtained. When the algorithm fails to determine a particular CI bound, it will be shown as <code>NA</code> in the output.</p>
+<p>When <code>permci=TRUE</code>, the function also tries to obtain permutation-based CIs of the model coefficient(s). This is done by shifting the observed effect sizes or outcomes and finding the most extreme values for which the permutation-based test would just lead to non-rejection. This is computationally expensive and may take a long time to complete. For models with moderators, one can also set <code>permci</code> to a vector of indices to specify for which coefficient(s) a permutation-based CI should be obtained. When the algorithm fails to determine a particular CI bound, it will be shown as <code>NA</code> in the output.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class <code>"permutest.rma.uni"</code>. The object is a list containing the following components:</p>

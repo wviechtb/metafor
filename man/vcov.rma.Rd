@@ -10,7 +10,7 @@
 }
 \arguments{
    \item{object}{an object of class \code{"rma"}.}
-   \item{type}{character string indicating the type of variance-covariance matrix to return; \code{type="fixed"} returns the variance-covariance matrix of the fixed effects (the default), \code{type="obs"} returns the marginal variance-covariance matrix of the observed effect sizes or outcomes, \code{type="fitted"} returns the variance-covariance matrix of the fitted values, \code{type="resid"} returns the variance-covariance matrix of the residuals.}
+   \item{type}{character string to specify the type of variance-covariance matrix to return: \code{type="fixed"} returns the variance-covariance matrix of the fixed effects (the default), \code{type="obs"} returns the marginal variance-covariance matrix of the observed effect sizes or outcomes, \code{type="fitted"} returns the variance-covariance matrix of the fitted values, \code{type="resid"} returns the variance-covariance matrix of the residuals.}
    \item{\dots}{other arguments.}
 }
 \details{

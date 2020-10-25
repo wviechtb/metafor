@@ -1,5 +1,7 @@
 \name{residuals.rma}
 \alias{residuals}
+\alias{rstandard}
+\alias{rstudent}
 \alias{residuals.rma}
 \alias{rstandard.rma.uni}
 \alias{rstandard.rma.mh}
@@ -31,13 +33,13 @@
    \item{object}{an object of class \code{"rma"} (for \code{residuals}).}
    \item{type}{the type of residuals which should be returned. For \code{residuals}, the alternatives are: \code{"response"} (default), \code{"rstandard"}, \code{"rstudent"}, and \code{"pearson"}. For \code{rstandard.rma.uni}, the alternatives are: \code{"marginal"} (default) and \code{"conditional"}. See \sQuote{Details}.}
    \item{model}{an object of class \code{"rma"} (for \code{residuals}) or an object of class \code{"rma.uni"}, \code{"rma.mh"}, \code{"rma.peto"}, or \code{"rma.mv"} (for \code{rstandard} and \code{rstudent}).}
-   \item{cluster}{optional vector specifying a clustering variable to use for computing cluster-level multivariate standardized residuals (only for \code{"rma.mv"} objects).}
-   \item{reestimate}{logical indicating whether variance/correlation components should be re-estimated after deletion of the \mjseqn{i}th study/cluster when computing externally standardized residuals (the default is \code{TRUE}).}
-   \item{parallel}{character string indicating whether parallel processing should be used (the default is \code{"no"}). For parallel processing, set to either \code{"snow"} or \code{"multicore"}. See \sQuote{Details}.}
-   \item{ncpus}{integer specifying the number of processes to use in the parallel processing.}
+   \item{cluster}{optional vector to specify a clustering variable to use for computing cluster-level multivariate standardized residuals (only for \code{"rma.mv"} objects).}
+   \item{reestimate}{logical to specify whether variance/correlation components should be re-estimated after deletion of the \mjseqn{i}th study/cluster when computing externally standardized residuals (the default is \code{TRUE}).}
+   \item{parallel}{character string to specify whether parallel processing should be used (the default is \code{"no"}). For parallel processing, set to either \code{"snow"} or \code{"multicore"}. See \sQuote{Details}.}
+   \item{ncpus}{integer to specify the number of processes to use in the parallel processing.}
    \item{cl}{optional snow cluster to use if \code{parallel="snow"}. If not supplied, a cluster on the local machine is created for the duration of the call.}
-   \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is to take the value from the object).}
-   \item{progbar}{logical indicating whether a progress bar should be shown (only for \code{rstudent}) (the default is \code{FALSE}).}
+   \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded (if unspecified, the default is to take the value from the object).}
+   \item{progbar}{logical to specify whether a progress bar should be shown (only for \code{rstudent}) (the default is \code{FALSE}).}
    \item{\dots}{other arguments.}
 }
 \details{

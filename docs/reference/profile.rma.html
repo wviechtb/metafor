@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-52</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-54</span>
       </span>
     </div>
 
@@ -136,12 +136,12 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for rma.uni</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/profile.html'>profile</a></span><span class='op'>(</span><span class='va'>fitted</span>, <span class='va'>xlim</span>, <span class='va'>ylim</span>, steps<span class='op'>=</span><span class='fl'>20</span>,
+<span class='fu'>profile</span><span class='op'>(</span><span class='va'>fitted</span>, <span class='va'>xlim</span>, <span class='va'>ylim</span>, steps<span class='op'>=</span><span class='fl'>20</span>,
         lltol<span class='op'>=</span><span class='fl'>1e-04</span>, progbar<span class='op'>=</span><span class='cn'>TRUE</span>, parallel<span class='op'>=</span><span class='st'>"no"</span>, ncpus<span class='op'>=</span><span class='fl'>1</span>, cl<span class='op'>=</span><span class='cn'>NULL</span>,
         plot<span class='op'>=</span><span class='cn'>TRUE</span>, pch<span class='op'>=</span><span class='fl'>19</span>, cline<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for rma.mv</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/profile.html'>profile</a></span><span class='op'>(</span><span class='va'>fitted</span>, <span class='va'>sigma2</span>, <span class='va'>tau2</span>, <span class='va'>rho</span>, <span class='va'>gamma2</span>, <span class='va'>phi</span>,
+<span class='fu'>profile</span><span class='op'>(</span><span class='va'>fitted</span>, <span class='va'>sigma2</span>, <span class='va'>tau2</span>, <span class='va'>rho</span>, <span class='va'>gamma2</span>, <span class='va'>phi</span>,
         <span class='va'>xlim</span>, <span class='va'>ylim</span>, steps<span class='op'>=</span><span class='fl'>20</span>, lltol<span class='op'>=</span><span class='fl'>1e-04</span>, progbar<span class='op'>=</span><span class='cn'>TRUE</span>,
         parallel<span class='op'>=</span><span class='st'>"no"</span>, ncpus<span class='op'>=</span><span class='fl'>1</span>, cl<span class='op'>=</span><span class='cn'>NULL</span>,
         plot<span class='op'>=</span><span class='cn'>TRUE</span>, pch<span class='op'>=</span><span class='fl'>19</span>, cline<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
@@ -165,31 +165,31 @@
     </tr>
     <tr>
       <th>sigma2</th>
-      <td><p>integer specifying for which \(\sigma^2\) value the likelihood should be profiled (only relevant for <code>"rma.mv"</code> objects).</p></td>
+      <td><p>integer to specify for which \(\sigma^2\) value the likelihood should be profiled (only relevant for <code>"rma.mv"</code> objects).</p></td>
     </tr>
     <tr>
       <th>tau2</th>
-      <td><p>integer specifying for which \(\tau^2\) value the likelihood should be profiled (only relevant for <code>"rma.mv"</code> objects).</p></td>
+      <td><p>integer to specify for which \(\tau^2\) value the likelihood should be profiled (only relevant for <code>"rma.mv"</code> objects).</p></td>
     </tr>
     <tr>
       <th>rho</th>
-      <td><p>integer specifying for which \(\rho\) value the likelihood should be profiled (only relevant for <code>"rma.mv"</code> objects).</p></td>
+      <td><p>integer to specify for which \(\rho\) value the likelihood should be profiled (only relevant for <code>"rma.mv"</code> objects).</p></td>
     </tr>
     <tr>
       <th>gamma2</th>
-      <td><p>integer specifying for which \(\gamma^2\) value the likelihood should be profiled (only relevant for <code>"rma.mv"</code> objects).</p></td>
+      <td><p>integer to specify for which \(\gamma^2\) value the likelihood should be profiled (only relevant for <code>"rma.mv"</code> objects).</p></td>
     </tr>
     <tr>
       <th>phi</th>
-      <td><p>integer specifying for which \(\phi\) value the likelihood should be profiled (only relevant for <code>"rma.mv"</code> objects).</p></td>
+      <td><p>integer to specify for which \(\phi\) value the likelihood should be profiled (only relevant for <code>"rma.mv"</code> objects).</p></td>
     </tr>
     <tr>
       <th>xlim</th>
-      <td><p>optional vector specifying the lower and upper limit of the parameter over which the profiling should be done. If unspecified, the function tries to set these limits automatically.</p></td>
+      <td><p>optional vector to specify the lower and upper limit of the parameter over which the profiling should be done. If unspecified, the function tries to set these limits automatically.</p></td>
     </tr>
     <tr>
       <th>ylim</th>
-      <td><p>optional vector specifying the y-axis limits when plotting the profiled likelihood. If unspecified, the function tries to set these limits automatically.</p></td>
+      <td><p>optional vector to specify the y-axis limits when plotting the profiled likelihood. If unspecified, the function tries to set these limits automatically.</p></td>
     </tr>
     <tr>
       <th>steps</th>
@@ -201,15 +201,15 @@
     </tr>
     <tr>
       <th>progbar</th>
-      <td><p>logical indicating whether a progress bar should be shown (the default is <code>TRUE</code>).</p></td>
+      <td><p>logical to specify whether a progress bar should be shown (the default is <code>TRUE</code>).</p></td>
     </tr>
     <tr>
       <th>parallel</th>
-      <td><p>character string indicating whether parallel processing should be used (the default is <code>"no"</code>). For parallel processing, set to either <code>"snow"</code> or <code>"multicore"</code>. See &#8216;Details&#8217;.</p></td>
+      <td><p>character string to specify whether parallel processing should be used (the default is <code>"no"</code>). For parallel processing, set to either <code>"snow"</code> or <code>"multicore"</code>. See &#8216;Details&#8217;.</p></td>
     </tr>
     <tr>
       <th>ncpus</th>
-      <td><p>integer specifying the number of processes to use in the parallel processing.</p></td>
+      <td><p>integer to specify the number of processes to use in the parallel processing.</p></td>
     </tr>
     <tr>
       <th>cl</th>
@@ -217,7 +217,7 @@
     </tr>
     <tr>
       <th>plot</th>
-      <td><p>logical indicating whether the profile plot should be drawn after profiling is finished (the default is <code>TRUE</code>).</p></td>
+      <td><p>logical to specify whether the profile plot should be drawn after profiling is finished (the default is <code>TRUE</code>).</p></td>
     </tr>
     <tr>
       <th>pch</th>
@@ -225,7 +225,7 @@
     </tr>
     <tr>
       <th>cline</th>
-      <td><p>logical indicating whether a horizontal reference line should be added to the plot that indicates the log-likelihood value corresponding to the 95% profile confidence interval (the default is <code>FALSE</code>).</p></td>
+      <td><p>logical to specify whether a horizontal reference line should be added to the plot that indicates the log-likelihood value corresponding to the 95% profile confidence interval (the default is <code>FALSE</code>).</p></td>
     </tr>
     <tr>
       <th>xlab</th>
@@ -286,7 +286,7 @@
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 
 <span class='co'>### profile over tau^2</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/profile.html'>profile</a></span><span class='op'>(</span><span class='va'>res</span>, progbar<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'>profile</span><span class='op'>(</span><span class='va'>res</span>, progbar<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
 </div><div class='img'><img src='profile.rma-1.png' alt='' width='768' height='614' /></div><div class='input'>
 <span class='co'>### change data into long format</span>
 <span class='va'>dat.long</span> <span class='op'>&lt;-</span> <span class='fu'><a href='to.long.html'>to.long</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"OR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>)</span>
@@ -338,9 +338,9 @@
 <span class='co'>### note: for rho, adjust region over which profiling is done ('zoom in' on area around estimate)</span>
 <span class='co'># \dontrun{</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mfrow<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>,<span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/profile.html'>profile</a></span><span class='op'>(</span><span class='va'>res</span>, tau2<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/profile.html'>profile</a></span><span class='op'>(</span><span class='va'>res</span>, tau2<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/profile.html'>profile</a></span><span class='op'>(</span><span class='va'>res</span>, rho<span class='op'>=</span><span class='fl'>1</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.90</span>, <span class='fl'>.98</span><span class='op'>)</span><span class='op'>)</span><span class='co'># }</span>
+<span class='fu'>profile</span><span class='op'>(</span><span class='va'>res</span>, tau2<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
+<span class='fu'>profile</span><span class='op'>(</span><span class='va'>res</span>, tau2<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+<span class='fu'>profile</span><span class='op'>(</span><span class='va'>res</span>, rho<span class='op'>=</span><span class='fl'>1</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.90</span>, <span class='fl'>.98</span><span class='op'>)</span><span class='op'>)</span><span class='co'># }</span>
 </div><div class='img'><img src='profile.rma-2.png' alt='' width='768' height='614' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -13,9 +13,9 @@ gosh(x, \dots)
 \arguments{
    \item{x}{an object of class \code{"rma"}.}
    \item{subsets}{optional integer to specify the number of subsets.}
-   \item{progbar}{logical indicating whether a progress bar should be shown (the default is \code{TRUE}).}
-   \item{parallel}{character string indicating whether parallel processing should be used (the default is \code{"no"}). For parallel processing, set to either \code{"snow"} or \code{"multicore"}. See \sQuote{Details}.}
-   \item{ncpus}{integer specifying the number of processes to use in the parallel processing.}
+   \item{progbar}{logical to specify whether a progress bar should be shown (the default is \code{TRUE}).}
+   \item{parallel}{character string to specify whether parallel processing should be used (the default is \code{"no"}). For parallel processing, set to either \code{"snow"} or \code{"multicore"}. See \sQuote{Details}.}
+   \item{ncpus}{integer to specify the number of processes to use in the parallel processing.}
    \item{cl}{optional snow cluster to use if \code{parallel="snow"}. If not supplied, a cluster on the local machine is created for the duration of the call.}
    \item{\dots}{other arguments.}
 }

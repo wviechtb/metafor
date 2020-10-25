@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-52</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-54</span>
       </span>
     </div>
 
@@ -177,31 +177,31 @@
     </tr>
     <tr>
       <th>subset</th>
-      <td><p>optional (logical or numeric) vector indicating the subset of studies that should be used for the analysis.</p></td>
+      <td><p>optional (logical or numeric) vector to specify the subset of studies that should be used for the analysis.</p></td>
     </tr>
     <tr>
       <th>add</th>
-      <td><p>non-negative number indicating the amount to add to zero cells, counts, or frequencies when calculating the observed effect sizes or outcomes of the individual studies. Can also be a vector of two numbers, where the first number is used in the calculation of the observed effect sizes outcomes and the second number is used when applying Peto's method. See below and the documentation of the <code><a href='escalc.html'>escalc</a></code> function for more details.</p></td>
+      <td><p>non-negative number to specify the amount to add to zero cells, counts, or frequencies when calculating the observed effect sizes or outcomes of the individual studies. Can also be a vector of two numbers, where the first number is used in the calculation of the observed effect sizes outcomes and the second number is used when applying Peto's method. See below and the documentation of the <code><a href='escalc.html'>escalc</a></code> function for more details.</p></td>
     </tr>
     <tr>
       <th>to</th>
-      <td><p>character string indicating when the values under <code>add</code> should be added (either <code>"only0"</code>, <code>"all"</code>, <code>"if0all"</code>, or <code>"none"</code>). Can also be a character vector, where the first string again applies when calculating the observed effect sizes or outcomes and the second string when applying Peto's method. See below and the documentation of the <code><a href='escalc.html'>escalc</a></code> function for more details.</p></td>
+      <td><p>character string to specify when the values under <code>add</code> should be added (either <code>"only0"</code>, <code>"all"</code>, <code>"if0all"</code>, or <code>"none"</code>). Can also be a character vector, where the first string again applies when calculating the observed effect sizes or outcomes and the second string when applying Peto's method. See below and the documentation of the <code><a href='escalc.html'>escalc</a></code> function for more details.</p></td>
     </tr>
     <tr>
       <th>drop00</th>
-      <td><p>logical indicating whether studies with no cases (or only cases) in both groups should be dropped when calculating the observed effect sizes or outcomes (the outcomes for such studies are set to <code>NA</code>). Can also be a vector of two logicals, where the first applies to the calculation of the observed effect sizes or outcomes and the second when applying Peto's method. See below and the documentation of the <code><a href='escalc.html'>escalc</a></code> function for more details.</p></td>
+      <td><p>logical to specify whether studies with no cases (or only cases) in both groups should be dropped when calculating the observed effect sizes or outcomes (the outcomes for such studies are set to <code>NA</code>). Can also be a vector of two logicals, where the first applies to the calculation of the observed effect sizes or outcomes and the second when applying Peto's method. See below and the documentation of the <code><a href='escalc.html'>escalc</a></code> function for more details.</p></td>
     </tr>
     <tr>
       <th>level</th>
-      <td><p>numerical value between 0 and 100 specifying the confidence interval level (the default is 95).</p></td>
+      <td><p>numeric value between 0 and 100 to specify the confidence interval level (the default is 95).</p></td>
     </tr>
     <tr>
       <th>digits</th>
-      <td><p>integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is 4).</p></td>
+      <td><p>integer to specify the number of decimal places to which the printed results should be rounded (if unspecified, the default is 4).</p></td>
     </tr>
     <tr>
       <th>verbose</th>
-      <td><p>logical indicating whether output should be generated on the progress of the model fitting (the default is <code>FALSE</code>).</p></td>
+      <td><p>logical to specify whether output should be generated on the progress of the model fitting (the default is <code>FALSE</code>).</p></td>
     </tr>
     <tr>
       <th>...</th>

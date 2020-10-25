@@ -20,13 +20,13 @@ labbe(x, \dots)
    \item{ylab}{title for the y-axis. If unspecified, the function tries to set an appropriate axis title.}
    \item{add}{See \sQuote{Details} and the documentation of the \code{\link{escalc}} function for more details.}
    \item{to}{See \sQuote{Details} and the documentation of the \code{\link{escalc}} function for more details.}
-   \item{transf}{optional argument specifying the name of a function that should be used to transform the outcomes (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
+   \item{transf}{optional argument to specify the name of a function that should be used to transform the outcomes (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified under \code{transf}.}
    \item{pch}{plotting symbol to use for the outcomes. By default, a filled circle is used. Can also be a vector of values. See \code{\link{points}} for other options.}
    \item{psize}{optional vector with point sizes for the outcomes. If unspecified, the point sizes are an inverse function of the precision of the outcomes.}
    \item{bg}{color to use for filling the plotting symbol (the default is \code{"gray"}). Can also be a vector of values. Set to \code{NA} to make the plotting symbols transparent.}
-   \item{grid}{logical indicating whether a grid should be added to the plot.}
-   \item{lty}{optional character vector specifying the line type for the diagonal reference line of no effect and the line that indicates the estimated effect based on the fitted model (if unspecified, the function sets this to \code{c("solid", "dashed")} by default; use \code{"blank"} to suppress a line).}
+   \item{grid}{logical to specify whether a grid should be added to the plot.}
+   \item{lty}{optional character vector to specify the line type for the diagonal reference line of no effect and the line that indicates the estimated effect based on the fitted model (if unspecified, the function sets this to \code{c("solid", "dashed")} by default; use \code{"blank"} to suppress a line).}
    \item{\dots}{other arguments.}
 }
 \details{

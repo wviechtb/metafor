@@ -25,18 +25,18 @@
 \arguments{
    \item{object}{an object of class \code{"rma.uni"}, \code{"rma.mh"}, \code{"rma.peto"}, or \code{"rma.mv"}. The method is not yet implemented for objects of class \code{"rma.glmm"}.}
    \item{parm}{this argument is here for compatibility with the generic function \code{\link{confint}}, but is (currently) ignored.}
-   \item{fixed}{logical indicating whether confidence intervals for the model coefficients should be returned (the default is \code{FALSE}).}
-   \item{random}{logical indicating whether a confidence interval for the amount of (residual) heterogeneity should be returned (the default is \code{TRUE}) (only relevant for \code{"rma.uni"} objects).}
-   \item{sigma2}{integer specifying for which \mjseqn{\sigma^2} value a confidence interval should be obtained (only relevant for \code{"rma.mv"} objects).}
-   \item{tau2}{integer specifying for which \mjseqn{\tau^2} value a confidence interval should be obtained (only relevant for \code{"rma.mv"} objects).}
-   \item{rho}{integer specifying for which \mjseqn{\rho} value the confidence interval should be obtained (only relevant for \code{"rma.mv"} objects).}
-   \item{gamma2}{integer specifying for which \mjseqn{\gamma^2} value a confidence interval should be obtained (only relevant for \code{"rma.mv"} objects).}
-   \item{phi}{integer specifying for which \mjseqn{\phi} value a confidence interval should be obtained (only relevant for \code{"rma.mv"} objects).}
-   \item{level}{numerical value between 0 and 100 specifying the confidence interval level (if unspecified, the default is to take the value from the object).}
-   \item{digits}{integer specifying the number of decimal places to which the results should be rounded (if unspecified, the default is to take the value from the object).}
-   \item{transf}{optional argument specifying the name of a function that should be used to transform the model coefficients and interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
+   \item{fixed}{logical to specify whether confidence intervals for the model coefficients should be returned (the default is \code{FALSE}).}
+   \item{random}{logical to specify whether a confidence interval for the amount of (residual) heterogeneity should be returned (the default is \code{TRUE}) (only relevant for \code{"rma.uni"} objects).}
+   \item{sigma2}{integer to specify for which \mjseqn{\sigma^2} value a confidence interval should be obtained (only relevant for \code{"rma.mv"} objects).}
+   \item{tau2}{integer to specify for which \mjseqn{\tau^2} value a confidence interval should be obtained (only relevant for \code{"rma.mv"} objects).}
+   \item{rho}{integer to specify for which \mjseqn{\rho} value the confidence interval should be obtained (only relevant for \code{"rma.mv"} objects).}
+   \item{gamma2}{integer to specify for which \mjseqn{\gamma^2} value a confidence interval should be obtained (only relevant for \code{"rma.mv"} objects).}
+   \item{phi}{integer to specify for which \mjseqn{\phi} value a confidence interval should be obtained (only relevant for \code{"rma.mv"} objects).}
+   \item{level}{numeric value between 0 and 100 to specify the confidence interval level (if unspecified, the default is to take the value from the object).}
+   \item{digits}{integer to specify the number of decimal places to which the results should be rounded (if unspecified, the default is to take the value from the object).}
+   \item{transf}{optional argument to specify the name of a function that should be used to transform the model coefficients and interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified under \code{transf}.}
-   \item{verbose}{logical indicating whether output should be generated on the progress of the iterative algorithms used to obtain the confidence intervals (the default is \code{FALSE}). See \sQuote{Note}.}
+   \item{verbose}{logical to specify whether output should be generated on the progress of the iterative algorithms used to obtain the confidence intervals (the default is \code{FALSE}). See \sQuote{Note}.}
    \item{control}{list of control values for the iterative algorithms. If unspecified, default values are defined inside the function. See \sQuote{Note}.}
    \item{\dots}{other arguments.}
 }

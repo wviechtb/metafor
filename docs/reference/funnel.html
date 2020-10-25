@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-52</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-54</span>
       </span>
     </div>
 
@@ -175,7 +175,7 @@
     </tr>
     <tr>
       <th>subset</th>
-      <td><p>optional (logical or numeric) vector indicating the subset of studies that should be included in the plot. Only relevant when passing a vector via <code>x</code>.</p></td>
+      <td><p>optional (logical or numeric) vector to specify the subset of studies that should be included in the plot. Only relevant when passing a vector via <code>x</code>.</p></td>
     </tr>
     <tr>
       <th>yaxis</th>
@@ -207,7 +207,7 @@
     </tr>
     <tr>
       <th>atransf</th>
-      <td><p>optional argument specifying the name of a function that should be used to transform the x-axis labels (e.g., <code>atransf=exp</code>; see also <a href='transf.html'>transf</a>). If unspecified, no transformation is used.</p></td>
+      <td><p>optional argument to specify the name of a function that should be used to transform the x-axis labels (e.g., <code>atransf=exp</code>; see also <a href='transf.html'>transf</a>). If unspecified, no transformation is used.</p></td>
     </tr>
     <tr>
       <th>targs</th>
@@ -215,11 +215,11 @@
     </tr>
     <tr>
       <th>digits</th>
-      <td><p>integer specifying the number of decimal places to which the tick mark labels of the x- and y-axis should be rounded. Can also be a vector of two integers, the first specifying the number of decimal places for the x-axis, the second for the y-axis labels (e.g., <code><a href='https://rdrr.io/r/base/c.html'>c(2,3)</a></code>). If unspecified, the function tries to set the argument to some sensible values.</p></td>
+      <td><p>integer to specify the number of decimal places to which the tick mark labels of the x- and y-axis should be rounded. Can also be a vector of two integers, the first to specify the number of decimal places for the x-axis, the second for the y-axis labels (e.g., <code><a href='https://rdrr.io/r/base/c.html'>c(2,3)</a></code>). If unspecified, the function tries to set the argument to some sensible values.</p></td>
     </tr>
     <tr>
       <th>level</th>
-      <td><p>numerical value between 0 and 100 specifying the level of the pseudo confidence interval region (for <code>"rma"</code> objects, the default is to take the value from the object). May also be a vector of values to obtain multiple regions. See &#8216;Examples&#8217;.</p></td>
+      <td><p>numeric value between 0 and 100 to specify the level of the pseudo confidence interval region (for <code>"rma"</code> objects, the default is to take the value from the object). May also be a vector of values to obtain multiple regions. See &#8216;Examples&#8217;.</p></td>
     </tr>
     <tr>
       <th>addtau2</th>
@@ -227,7 +227,7 @@
     </tr>
     <tr>
       <th>type</th>
-      <td><p>either <code>"rstandard"</code> (default) or <code>"rstudent"</code> indicating whether the usual or deleted residuals should be used in creating the funnel plot when the model involves moderators. See &#8216;Details&#8217;.</p></td>
+      <td><p>either <code>"rstandard"</code> (default) or <code>"rstudent"</code> to specify whether the usual or deleted residuals should be used in creating the funnel plot when the model involves moderators. See &#8216;Details&#8217;.</p></td>
     </tr>
     <tr>
       <th>back</th>
@@ -243,7 +243,7 @@
     </tr>
     <tr>
       <th>refline</th>
-      <td><p>value at which to draw the vertical reference line and where the pseudo confidence interval should be centered. If unspecified, the reference line is drawn at the fixed- or random-effects model estimate when the model does not include moderators and at zero when moderators are included (and therefore residuals are plotted) or when directly plotting observed effect sizes or outcomes.</p></td>
+      <td><p>numeric value to specify the location of the vertical &#8216;reference&#8217; line and where the pseudo confidence interval should be centered. If unspecified, the reference line is drawn at the fixed- or random-effects model estimate when the model does not include moderators and at zero when moderators are included (and therefore residuals are plotted) or when directly plotting observed effect sizes or outcomes.</p></td>
     </tr>
     <tr>
       <th>lty</th>
@@ -259,11 +259,11 @@
     </tr>
     <tr>
       <th>col</th>
-      <td><p>optional character string specifying the name of a color to use for the points ("black" is used by default if not specified). Can also be a vector of color names.</p></td>
+      <td><p>optional character string to specify the name of a color to use for the points (<code>"black"</code> is used by default if not specified). Can also be a vector of color names.</p></td>
     </tr>
     <tr>
       <th>bg</th>
-      <td><p>optional character string specifying the name of a background color for open plot symbols ("white" is used by default if not specified). Can also be a vector of color names.</p></td>
+      <td><p>optional character string to specify the name of a background color for open plot symbols (<code>"white"</code> is used by default if not specified). Can also be a vector of color names.</p></td>
     </tr>
     <tr>
       <th>label</th>
@@ -279,7 +279,7 @@
     </tr>
     <tr>
       <th>ci.res</th>
-      <td><p>integer specifying the number of y-axis values at which to calculate the bounds of the pseudo confidence interval. The default is <code>1000</code>, which usually provides a sufficient resolution for the plotting.</p></td>
+      <td><p>integer to specify the number of y-axis values at which to calculate the bounds of the pseudo confidence interval. The default is <code>1000</code>, which usually provides a sufficient resolution for the plotting.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -306,7 +306,7 @@
 <p>If the object passed to the function comes from the <code><a href='trimfill.html'>trimfill</a></code> function, the effect sizes or outcomes that are filled in by the trim and fill method are also added to the funnel plot. The symbol to use for plotting the filled in values can be specified via the <code>pch.fill</code> argument.</p>
 <p>One can also directly pass a vector with the observed effect sizes or outcomes (via <code>x</code>) and the corresponding sampling variances (via <code>vi</code>), standard errors (via <code>sei</code>), and/or sample sizes (via <code>ni</code>) to the function. By default, the vertical reference line is then drawn at zero.</p>
 <p>The arguments <code>back</code>, <code>shade</code>, and <code>hlines</code> can be set to <code>NULL</code> to suppress the shading and the horizontal reference lines.</p>
-<p>With the <code>label</code> argument, one can control whether points in the plot will be labeled. If <code>label="all"</code> (or <code>label=TRUE</code>), all points in the plot will be labeled. If <code>label="out"</code>, points falling outside of the pseudo confidence region will be labeled. Finally, one can also set this argument to a numeric value (between 1 and \(k\)), indicating how many of the most extreme points should be labeled (for example, with <code>label=1</code> only the most extreme point would be labeled, while with <code>label=3</code>, the most extreme, and the second and third most extreme points would be labeled). With the <code>offset</code> argument, the distance between the labels and the corresponding points can be controlled.</p>
+<p>With the <code>label</code> argument, one can control whether points in the plot will be labeled. If <code>label="all"</code> (or <code>label=TRUE</code>), all points in the plot will be labeled. If <code>label="out"</code>, points falling outside of the pseudo confidence region will be labeled. Finally, one can also set this argument to a numeric value (between 1 and \(k\)) to specify how many of the most extreme points should be labeled (e.g., with <code>label=1</code> only the most extreme point would be labeled, while with <code>label=3</code>, the most extreme, and the second and third most extreme points would be labeled). With the <code>offset</code> argument, the distance between the labels and the corresponding points can be controlled.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>Placing (a function of) the sample size on the y-axis (i.e., using <code>yaxis="ni"</code>, <code>yaxis="ninv"</code>, <code>yaxis="sqrtni"</code>, <code>yaxis="sqrtninv"</code>, or <code>yaxis="lni"</code>) is only possible when information about the sample sizes is actually stored within the object passed to the <code>funnel</code> function. That should automatically be the case when the observed effect sizes or outcomes were computed with the <code><a href='escalc.html'>escalc</a></code> function or when the observed effect sizes or outcomes were computed within the model fitting function. On the other hand, this will not be the case when <code><a href='rma.uni.html'>rma.uni</a></code> was used together with the <code>yi</code> and <code>vi</code> arguments and the <code>yi</code> and <code>vi</code> values were <em>not</em> computed with <code><a href='escalc.html'>escalc</a></code>. In that case, it is still possible to pass information about the sample sizes to the <code><a href='rma.uni.html'>rma.uni</a></code> function (e.g., use <code><a href='rma.uni.html'>rma.uni(yi, vi, ni=ni, data=dat)</a></code>, where data frame <code>dat</code> includes a variable called <code>ni</code> with the sample sizes).</p>

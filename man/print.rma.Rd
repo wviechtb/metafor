@@ -33,10 +33,10 @@
 \arguments{
    \item{x}{an object of class \code{"rma.uni"}, \code{"rma.mh"}, \code{"rma.peto"}, \code{"rma.glmm"}, \code{"rma.mv"}, or \code{"summary.rma"} (for \code{print}).}
    \item{object}{an object of class \code{"rma"} (for \code{summary}).}
-   \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is to take the value from the object).}
-   \item{showfit}{logical indicating whether the fit statistics and information criteria should be printed (the default is \code{FALSE} for \code{print} and \code{TRUE} for \code{summary}).}
-   \item{signif.stars}{logical indicating whether p-values should be encoded visually with \sQuote{significance stars}. Defaults to the \code{show.signif.stars} slot of \code{\link{options}}.}
-   \item{signif.legend}{logical indicating whether the legend for the \sQuote{significance stars} should be printed. Defaults to the value for \code{signif.stars}.}
+   \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded (if unspecified, the default is to take the value from the object).}
+   \item{showfit}{logical to specify whether the fit statistics and information criteria should be printed (the default is \code{FALSE} for \code{print} and \code{TRUE} for \code{summary}).}
+   \item{signif.stars}{logical to specify whether p-values should be encoded visually with \sQuote{significance stars}. Defaults to the \code{show.signif.stars} slot of \code{\link{options}}.}
+   \item{signif.legend}{logical to specify whether the legend for the \sQuote{significance stars} should be printed. Defaults to the value for \code{signif.stars}.}
    \item{\dots}{other arguments.}
 }
 \details{

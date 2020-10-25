@@ -24,13 +24,13 @@ galbraith(x, \dots)
    \item{atz}{position for the z-axis tick marks and labels. If unspecified, these values are set by the function.}
    \item{aty}{position for the y-axis tick marks and labels. If unspecified, these values are set by the function.}
    \item{steps}{the number of tick marks for the y-axis (the default is 7). Ignored when argument \code{aty} is used.}
-   \item{level}{numerical value between 0 and 100 specifying the level of the z-axis error region (the default is to take the value from the object).}
-   \item{digits}{integer specifying the number of decimal places to which the tick mark labels of the y-axis should be rounded (the default is 2).}
+   \item{level}{numeric value between 0 and 100 to specify the level of the z-axis error region (the default is to take the value from the object).}
+   \item{digits}{integer to specify the number of decimal places to which the tick mark labels of the y-axis should be rounded (the default is 2).}
    \item{back}{color of the z-axis error region. Set to \code{NA} to suppress shading of the region.}
-   \item{transf}{optional argument specifying the name of a function that should be used to transform the y-axis labels (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
+   \item{transf}{optional argument to specify the name of a function that should be used to transform the y-axis labels (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified via \code{transf}.}
    \item{pch}{plotting symbol. By default, a solid circle is used. See \code{\link{points}} for other options.}
-   \item{arc.res}{integer specifying the number of line segments to use when drawing the y-axis and confidence interval arcs (the default is 100).}
+   \item{arc.res}{integer to specify the number of line segments to use when drawing the y-axis and confidence interval arcs (the default is 100).}
    \item{cex}{optional character and symbol expansion factor. If unspecified, the function tries to set this to a sensible value.}
    \item{\dots}{other arguments.}
 }

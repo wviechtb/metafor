@@ -17,19 +17,19 @@
    \item{ci.ub}{vector with the corresponding upper confidence interval bounds. Not needed if \code{vi} or \code{sei} is specified. See \sQuote{Details}.}
    \item{pi.lb}{optional vector with the corresponding lower prediction interval bounds.}
    \item{pi.ub}{optional vector with the corresponding upper prediction interval bounds.}
-   \item{rows}{vector specifying the rows (or more generally, the horizontal positions) for plotting the polygons (defaults is \code{-1}). Can also be a single value specifying the row (horizontal position) of the first polygon (the remaining polygons are then plotted below this starting row).}
-   \item{level}{numerical value between 0 and 100 specifying the confidence interval level (the default is 95).}
-   \item{annotate}{logical specifying whether annotations should be added to the plot for the polygons that are drawn (the default is \code{TRUE}).}
-   \item{digits}{integer specifying the number of decimal places to which the annotations should be rounded (the default is 2).}
+   \item{rows}{vector to specify the rows (or more generally, the horizontal positions) for plotting the polygons (defaults is \code{-1}). Can also be a single value to specify the row (horizontal position) of the first polygon (the remaining polygons are then plotted below this starting row).}
+   \item{level}{numeric value between 0 and 100 to specify the confidence interval level (the default is 95).}
+   \item{annotate}{logical to specify whether annotations should be added to the plot for the polygons that are drawn (the default is \code{TRUE}).}
+   \item{digits}{integer to specify the number of decimal places to which the annotations should be rounded (the default is 2).}
    \item{width}{optional integer to manually adjust the width of the columns for the annotations.}
    \item{mlab}{optional character vector with the same length as \code{x} giving labels for the polygons that are drawn.}
-   \item{transf}{optional argument specifying the name of a function that should be used to transform the \code{x} values and confidence interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
-   \item{atransf}{optional argument specifying the name of a function that should be used to transform the annotations (e.g., \code{atransf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
+   \item{transf}{optional argument to specify the name of a function that should be used to transform the \code{x} values and confidence interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
+   \item{atransf}{optional argument to specify the name of a function that should be used to transform the annotations (e.g., \code{atransf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified via \code{transf} or \code{atransf}.}
    \item{efac}{vertical expansion factor for the polygons. The default value of 1 should usually work okay.}
-   \item{col}{optional character string specifying the name of a color to use for the polygons. If unspecified, the function sets a default color.}
-   \item{border}{optional character string specifying the name of a color to use for the border of the polygons. If unspecified, the function sets a default color.}
-   \item{fonts}{optional character string specifying the font to use for the labels and annotations. If unspecified, the default font is used.}
+   \item{col}{optional character string to specify the name of a color to use for the polygons. If unspecified, the function sets a default color.}
+   \item{border}{optional character string to specify the name of a color to use for the border of the polygons. If unspecified, the function sets a default color.}
+   \item{fonts}{optional character string to specify the font to use for the labels and annotations. If unspecified, the default font is used.}
    \item{cex}{optional symbol expansion factor. If unspecified, the function tries to set this to a sensible value.}
    \item{\dots}{other arguments.}
 }

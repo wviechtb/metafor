@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-52</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-54</span>
       </span>
     </div>
 
@@ -153,23 +153,23 @@
     </tr>
     <tr>
       <th>progbar</th>
-      <td><p>logical indicating whether a progress bar should be shown (the default is <code>FALSE</code>). Ignored when using parallel processing.</p></td>
+      <td><p>logical to specify whether a progress bar should be shown (the default is <code>FALSE</code>). Ignored when using parallel processing.</p></td>
     </tr>
     <tr>
       <th>cluster</th>
-      <td><p>optional vector specifying a clustering variable to use for computing the Cook's distances. If not specified, Cook's distances are computed for all individual observed effect sizes or outcomes.</p></td>
+      <td><p>optional vector to specify a clustering variable to use for computing the Cook's distances. If not specified, Cook's distances are computed for all individual observed effect sizes or outcomes.</p></td>
     </tr>
     <tr>
       <th>reestimate</th>
-      <td><p>logical indicating whether variance/correlation components should be re-estimated after deletion of the \(i\)th study/cluster (the default is <code>TRUE</code>).</p></td>
+      <td><p>logical to specify whether variance/correlation components should be re-estimated after deletion of the \(i\)th study/cluster (the default is <code>TRUE</code>).</p></td>
     </tr>
     <tr>
       <th>parallel</th>
-      <td><p>character string indicating whether parallel processing should be used (the default is <code>"no"</code>). For parallel processing, set to either <code>"snow"</code> or <code>"multicore"</code>. See &#8216;Details&#8217;.</p></td>
+      <td><p>character string to specify whether parallel processing should be used (the default is <code>"no"</code>). For parallel processing, set to either <code>"snow"</code> or <code>"multicore"</code>. See &#8216;Details&#8217;.</p></td>
     </tr>
     <tr>
       <th>ncpus</th>
-      <td><p>integer specifying the number of processes to use in the parallel processing.</p></td>
+      <td><p>integer to specify the number of processes to use in the parallel processing.</p></td>
     </tr>
     <tr>
       <th>cl</th>
@@ -177,7 +177,7 @@
     </tr>
     <tr>
       <th>type</th>
-      <td><p>character string indicating whether to return only the diagonal of the hat matrix (<code>"diagonal"</code>) or the entire hat matrix (<code>"matrix"</code>).</p></td>
+      <td><p>character string to specify whether only the diagonal of the hat matrix (<code>"diagonal"</code>) or the entire hat matrix (<code>"matrix"</code>) should be returned.</p></td>
     </tr>
     <tr>
       <th>...</th>

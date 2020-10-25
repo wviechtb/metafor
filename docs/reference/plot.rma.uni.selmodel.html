@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-52</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-54</span>
       </span>
     </div>
 
@@ -136,43 +136,60 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for rma.uni.selmodel</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>xlim</span>, n<span class='op'>=</span><span class='fl'>1001</span>, prec<span class='op'>=</span><span class='st'>"max"</span>,
-      scale<span class='op'>=</span><span class='cn'>FALSE</span>, rug<span class='op'>=</span><span class='cn'>TRUE</span>, add<span class='op'>=</span><span class='cn'>FALSE</span>, lwd<span class='op'>=</span><span class='fl'>2</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>xlim</span>, <span class='va'>ylim</span>, n<span class='op'>=</span><span class='fl'>1000</span>, prec<span class='op'>=</span><span class='st'>"max"</span>, scale<span class='op'>=</span><span class='cn'>FALSE</span>,
+      ci<span class='op'>=</span><span class='cn'>FALSE</span>, reps<span class='op'>=</span><span class='fl'>1000</span>, rug<span class='op'>=</span><span class='cn'>TRUE</span>, add<span class='op'>=</span><span class='cn'>FALSE</span>,
+      lty<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"solid"</span>,<span class='st'>"dotted"</span><span class='op'>)</span>, lwd<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>,<span class='fl'>1</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>an object of class <code>"rma.uni"</code>.</p></td>
+      <td><p>an object of class <code>"rma.uni.selmodel"</code>.</p></td>
     </tr>
     <tr>
       <th>xlim</th>
-      <td><p>x-axis limits. Essentially the range of p-values for which the selection function should be plotted. If unspecified, the function sets limits automatically.</p></td>
+      <td><p>x-axis limits. Essentially the range of p-values for which the selection function should be drawn. If unspecified, the function sets the limits automatically.</p></td>
+    </tr>
+    <tr>
+      <th>ylim</th>
+      <td><p>y-axis limits. If unspecified, the function sets the limits automatically.</p></td>
     </tr>
     <tr>
       <th>n</th>
-      <td><p>numerical value indicating for how many p-values within the x-axis limits the function value should be computed.</p></td>
+      <td><p>numeric value to specify for how many p-values within the x-axis limits the function value should be computed (the default is 1000).</p></td>
     </tr>
     <tr>
       <th>prec</th>
-      <td><p>either a character string (with options <code>"max"</code>, <code>"min"</code>, <code>"mean"</code>, or <code>"median"</code>) or a numeric value.</p></td>
+      <td><p>either a character string (with options <code>"max"</code>, <code>"min"</code>, <code>"mean"</code>, or <code>"median"</code>) or a numeric value. See &#8216;Details&#8217;.</p></td>
     </tr>
     <tr>
       <th>scale</th>
-      <td><p>logical specifying whether the function values should be rescaled to a 0 to 1 range (the default is <code>FALSE</code>).</p></td>
+      <td><p>logical to specify whether the function values should be rescaled to a 0 to 1 range (the default is <code>FALSE</code>).</p></td>
+    </tr>
+    <tr>
+      <th>ci</th>
+      <td><p>logical to specify whether a confidence interval should be drawn around the selection function (the default is <code>FALSE</code>). Can also be a string (with options <code>"boot"</code> or <code>"wald"</code>). See &#8216;Details&#8217;.</p></td>
+    </tr>
+    <tr>
+      <th>reps</th>
+      <td><p>numeric value to specify the number of bootstrap samples to draw for generating the confidence interval bounds (the default is 1000).</p></td>
     </tr>
     <tr>
       <th>rug</th>
-      <td><p>logical specifying whether the observed p-values should be added as tick marks on the x-axis (the default is <code>TRUE</code>).</p></td>
+      <td><p>logical to specify whether the observed p-values should be added as tick marks on the x-axis (the default is <code>TRUE</code>).</p></td>
     </tr>
     <tr>
       <th>add</th>
-      <td><p>logical specifying whether the function should be added to an existing plot (the default is <code>FALSE</code>).</p></td>
+      <td><p>logical to specify whether the function should be added to an existing plot (the default is <code>FALSE</code>).</p></td>
+    </tr>
+    <tr>
+      <th>lty</th>
+      <td><p>the line types for the selection function and the confidence interval bounds.</p></td>
     </tr>
     <tr>
       <th>lwd</th>
-      <td><p>numerical value for the line width.</p></td>
+      <td><p>the line widths for the selection function and the confidence interval bounds.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -182,7 +199,10 @@
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Blah.</p>
+    <p>The function can be used to draw the estimated selection function based on objects of class <code>"plot.rma.uni.selmodel"</code>.</p>
+<p>When the selection function incorporates a measure of precision (which, strictly speaking, is really a measure of imprecision), one can specify for which level of precision the selection function should be drawn. When <code>prec="max"</code>, then the function is drawn for the <em>least</em> precise study (maximum imprecision), when <code>prec="min"</code>, then the function is drawn for the <em>most</em> precise study (minimum imprecision), while <code>prec="mean"</code> and <code>prec="median"</code> will show the function for the mean and median level of imprecision, respectively. Alternatively, one can specify a numeric value for argument <code>prec</code> to specify the precision value (where <code>prec="max"</code> corresponds to <code>prec=1</code> and higher levels of precision to <code>prec</code> values below 1).</p>
+<p>When <code>ci=TRUE</code> (or equivalently, <code>ci="boot"</code>), a confidence interval is drawn around the selection function. The bounds of this interval are generated using parametric bootstrapping, with argument <code>reps</code> controlling the number of bootstrap samples to draw for generating the confidence interval bounds. When both <code>n</code> and <code>reps</code> are large, constructing the confidence interval can take a few moments to complete.</p>
+<p>For models where the selection function involves a single \(\delta\) parameter, one can also set <code>ci="wald"</code>, in which case the confidence interval will be constructed based on the Wald-type CI of the \(\delta\) parameter (doing so is much quicker than using parametric bootstrapping). This option is also available for step function models (even if they involve multiple \(\delta\) parameters).</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Wolfgang Viechtbauer <a href='mailto:wvb@metafor-project.org'>wvb@metafor-project.org</a> <a href='http://www.metafor-project.org'>http://www.metafor-project.org</a></p>
@@ -220,17 +240,20 @@
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### fit step selection model</span>
-<span class='va'>sel</span> <span class='op'>&lt;-</span> <span class='fu'><a href='selmodel.html'>selmodel</a></span><span class='op'>(</span><span class='va'>res</span>, type<span class='op'>=</span><span class='st'>"stepfun"</span>, steps<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.05</span>, <span class='fl'>0.10</span>, <span class='fl'>0.50</span>, <span class='fl'>1.00</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>sel1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='selmodel.html'>selmodel</a></span><span class='op'>(</span><span class='va'>res</span>, type<span class='op'>=</span><span class='st'>"stepfun"</span>, steps<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.05</span>, <span class='fl'>0.10</span>, <span class='fl'>0.50</span>, <span class='fl'>1.00</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'>### plot selection function</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>sel</span>, scale<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>sel1</span>, scale<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='input'>
 <span class='co'>### fit negative exponential selection model</span>
-<span class='va'>sel</span> <span class='op'>&lt;-</span> <span class='fu'><a href='selmodel.html'>selmodel</a></span><span class='op'>(</span><span class='va'>res</span>, type<span class='op'>=</span><span class='st'>"negexp"</span><span class='op'>)</span>
+<span class='va'>sel2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='selmodel.html'>selmodel</a></span><span class='op'>(</span><span class='va'>res</span>, type<span class='op'>=</span><span class='st'>"negexp"</span><span class='op'>)</span>
 
 <span class='co'>### add selection function to the existing plot</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>sel</span>, add<span class='op'>=</span><span class='cn'>TRUE</span>, col<span class='op'>=</span><span class='st'>"blue"</span><span class='op'>)</span>
-</div><div class='img'><img src='plot.rma.uni.selmodel-1.png' alt='' width='768' height='614' /></div></pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>sel2</span>, add<span class='op'>=</span><span class='cn'>TRUE</span>, col<span class='op'>=</span><span class='st'>"blue"</span><span class='op'>)</span>
+</div><div class='img'><img src='plot.rma.uni.selmodel-1.png' alt='' width='768' height='614' /></div><div class='input'>
+<span class='co'>### plot selection function with CI</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>sel1</span>, ci<span class='op'>=</span><span class='st'>"wald"</span><span class='op'>)</span>
+</div><div class='img'><img src='plot.rma.uni.selmodel-2.png' alt='' width='768' height='614' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

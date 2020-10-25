@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-52</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-54</span>
       </span>
     </div>
 
@@ -157,7 +157,7 @@
     </tr>
     <tr>
       <th>type</th>
-      <td><p>either <code>"rstandard"</code> (default) or <code>"rstudent"</code> indicating whether standardized residuals or studentized deleted residuals should be used in creating the plot. See &#8216;Details&#8217;.</p></td>
+      <td><p>character string (either <code>"rstandard"</code> (default) or <code>"rstudent"</code>) to specify whether standardized residuals or studentized deleted residuals should be used in creating the plot. See &#8216;Details&#8217;.</p></td>
     </tr>
     <tr>
       <th>pch</th>
@@ -165,27 +165,27 @@
     </tr>
     <tr>
       <th>envelope</th>
-      <td><p>logical indicating whether a pseudo confidence envelope should be simulated and added to the plot (the default is <code>TRUE</code>)). Only for objects of class <code>"rma.uni"</code>. See &#8216;Details&#8217;.</p></td>
+      <td><p>logical to specify whether a pseudo confidence envelope should be simulated and added to the plot (the default is <code>TRUE</code>)). Only for objects of class <code>"rma.uni"</code>. See &#8216;Details&#8217;.</p></td>
     </tr>
     <tr>
       <th>level</th>
-      <td><p>numerical value between 0 and 100 specifying the level of the pseudo confidence envelope (the default is to take the value from the object).</p></td>
+      <td><p>numeric value between 0 and 100 to specify the level of the pseudo confidence envelope (the default is to take the value from the object).</p></td>
     </tr>
     <tr>
       <th>bonferroni</th>
-      <td><p>logical indicating whether the bounds of the envelope should be Bonferroni corrected.</p></td>
+      <td><p>logical to specify whether the bounds of the envelope should be Bonferroni corrected.</p></td>
     </tr>
     <tr>
       <th>reps</th>
-      <td><p>numerical value indicating the number of iterations to use for simulating the pseudo confidence envelope (the default is 1000).</p></td>
+      <td><p>numeric value to specify the number of iterations to use for simulating the pseudo confidence envelope (the default is 1000).</p></td>
     </tr>
     <tr>
       <th>smooth</th>
-      <td><p>logical indicating whether the results from the simulation should be smoothed (the default is <code>TRUE</code>).</p></td>
+      <td><p>logical to specify whether the results from the simulation should be smoothed (the default is <code>TRUE</code>).</p></td>
     </tr>
     <tr>
       <th>bass</th>
-      <td><p>numerical value that controls the degree of smoothing (the default is 0).</p></td>
+      <td><p>numeric value that controls the degree of smoothing (the default is 0).</p></td>
     </tr>
     <tr>
       <th>label</th>
@@ -201,7 +201,7 @@
     </tr>
     <tr>
       <th>lty</th>
-      <td><p>optional character string specifying the line type for the diagonal line and the pseudo confidence envelope (if unspecified, the function sets this to <code><a href='https://rdrr.io/r/base/c.html'>c("solid", "dotted")</a></code> by default).</p></td>
+      <td><p>optional character string to specify the line type for the diagonal line and the pseudo confidence envelope (if unspecified, the function sets this to <code><a href='https://rdrr.io/r/base/c.html'>c("solid", "dotted")</a></code> by default).</p></td>
     </tr>
     <tr>
       <th>...</th>

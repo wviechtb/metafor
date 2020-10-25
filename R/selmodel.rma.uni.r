@@ -138,7 +138,6 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
       stepsspec <- FALSE
       steps <- NA
-      pgrp <- NA
 
    } else {
 
@@ -154,8 +153,6 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
       if (steps[length(steps)] != 1)
          steps <- c(steps, 1)
-
-      pgrp <- sapply(pvals, function(p) which(p <= steps)[1])
 
    }
 
@@ -632,8 +629,12 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
    ############################################################################
 
+   pvals[pvals < pval.min]     <- pval.min
+   pvals[pvals > (1-pval.min)] <- 1-pval.min
+
    if (stepsspec) {
 
+      pgrp     <- sapply(pvals, function(p) which(p <= steps)[1])
       psteps.l <- as.character(c(0,steps[-length(steps)]))
       psteps.r <- as.character(steps)
       len.l    <- nchar(psteps.l)
@@ -655,6 +656,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
    } else {
 
+      pgrp   <- NA
       ptable <- NA
 
    }
@@ -819,7 +821,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    tau2  <- fitcall$tau2
    delta <- fitcall$delta
 
-   if (any(delta <= delta.min + .Machine$double.eps^0.25) || any(delta >= delta.max - .Machine$double.eps^0.25))
+   if (any(delta <= delta.min + .Machine$double.eps^0.25) || any(delta >= delta.max - 100*.Machine$double.eps^0.25))
       warning(mstyle$warning("One or more 'delta' estimates are (almost) equal to their lower or upper bound.\nTreat results with caution (or consider adjusting 'delta.min' and/or 'delta.max')."), call.=FALSE)
 
    ############################################################################
@@ -827,9 +829,9 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    ### computing (inverse) Hessian
 
    H        <- NA
-   vb       <- matrix(NA, nrow=p, ncol=p)
+   vb       <- matrix(NA_real_, nrow=p, ncol=p)
    se.tau2  <- NA
-   vb.delta <- matrix(NA, nrow=deltas, ncol=deltas)
+   vb.delta <- matrix(NA_real_, nrow=deltas, ncol=deltas)
 
    if (con$beta.fix) {
       beta.hes <- c(beta)
@@ -905,7 +907,6 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
          if (inherits(iH.hest, "try-error")) {
             warning(mstyle$warning("Error when trying to invert Hessian."), call.=FALSE)
-            iH.hest <- NA
          } else {
             iH <- matrix(0, nrow=length(hest), ncol=length(hest))
             iH[hest, hest] <- iH.hest
@@ -970,7 +971,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
       ci.ub.delta <- c(delta.transf + crit * se.delta)
       ci.lb.delta <- mapply(.mapfun, ci.lb.delta, delta.min, delta.max, mapfun)
       ci.ub.delta <- mapply(.mapfun, ci.ub.delta, delta.min, delta.max, mapfun)
-      vb.delta <- matrix(NA, nrow=deltas, ncol=deltas)
+      vb.delta <- matrix(NA_real_, nrow=deltas, ncol=deltas)
       se.delta <- rep(NA_real_, deltas)
 
    } else {
@@ -1151,6 +1152,14 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    res$pval.min <- pval.min
    res$precspec <- precspec
    res$precis <- precis
+
+   res$wi.fun <- wi.fun
+   res$delta.lb <- delta.lb
+   res$delta.ub <- delta.ub
+   res$delta.lb.excl <- delta.lb.excl
+   res$delta.ub.excl <- delta.ub.excl
+   res$delta.min <- delta.min
+   res$delta.max <- delta.max
 
    res$call <- match.call()
 

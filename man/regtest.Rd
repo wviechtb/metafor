@@ -18,11 +18,11 @@ regtest(x, \dots)
    \item{vi}{vector with the corresponding sampling variances (needed if \code{x} is a vector with the observed effect sizes or outcomes).}
    \item{sei}{vector with the corresponding standard errors (note: only one of the two, \code{vi} or \code{sei}, needs to be specified).}
    \item{ni}{vector with the corresponding sample sizes.}
-   \item{subset}{optional (logical or numeric) vector indicating the subset of studies that should be included in the test. Only relevant when passing a vector via \code{x}.}
+   \item{subset}{optional (logical or numeric) vector to specify the subset of studies that should be included in the test. Only relevant when passing a vector via \code{x}.}
    \item{model}{either \code{"rma"} or \code{"lm"} to indicate the type of model to use for the regression test. See \sQuote{Details}.}
    \item{predictor}{either \code{"sei"} \code{"vi"}, \code{"ni"}, \code{"ninv"}, \code{"sqrtni"}, or \code{"sqrtninv"} to indicate the predictor to use for the regression test. See \sQuote{Details}.}
-   \item{ret.fit}{logical indicating whether the full results from the fitted model should also be returned.}
-   \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (the default is to take the value from the object or is 4 for the default method).}
+   \item{ret.fit}{logical to specify whether the full results from the fitted model should also be returned.}
+   \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded (the default is to take the value from the object or is 4 for the default method).}
    \item{\dots}{other arguments.}
 }
 \details{

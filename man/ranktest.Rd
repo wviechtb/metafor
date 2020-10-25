@@ -17,8 +17,8 @@ ranktest(x, \dots)
    \item{x}{an object of class \code{"rma"} or a vector with the observed effect sizes or outcomes.}
    \item{vi}{vector with the corresponding sampling variances (needed if \code{x} is a vector with the observed effect sizes or outcomes).}
    \item{sei}{vector with the corresponding standard errors (note: only one of the two, \code{vi} or \code{sei}, needs to be specified).}
-   \item{subset}{optional (logical or numeric) vector indicating the subset of studies that should be included in the test. Only relevant when passing a vector via \code{x}.}
-   \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (the default is 4).}
+   \item{subset}{optional (logical or numeric) vector to specify the subset of studies that should be included in the test. Only relevant when passing a vector via \code{x}.}
+   \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded (the default is 4).}
    \item{\dots}{other arguments.}
 }
 \details{

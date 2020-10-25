@@ -12,7 +12,7 @@
    \item{object}{an object of class \code{"rma"}.}
    \item{formula.}{changes to the formula. See \sQuote{Details}.}
    \item{\dots}{additional arguments to the call, or arguments with changed values.}
-   \item{evaluate}{logical indicating whether to evaluate the new call or just return the call.}
+   \item{evaluate}{logical to specify whether to evaluate the new call or just return the call.}
 }
 \details{
    For objects of class \code{"rma.uni"}, \code{"rma.glmm"}, and \code{"rma.mv"}, the \code{formula.} argument can be used to update the set of moderators included in the model (see \sQuote{Examples}).

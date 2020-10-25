@@ -13,10 +13,10 @@ matreg(y, x, R, n, V, ztor=FALSE, nearPD=FALSE, level=95, digits)
    \item{R}{correlation matrix (or only the lower triangular part including the diagonal).}
    \item{n}{sample size based on which the elements in the correlation matrix were computed.}
    \item{V}{variance-covariance matrix of the lower triangular elements of the correlation matrix. Either \code{V} or \code{n} should be specified, not both. See \sQuote{Details}.}
-   \item{ztor}{logical indicating whether \code{R} is a matrix of r-to-z transformed correlations (the default is \code{FALSE}). See \sQuote{Details}.}
-   \item{nearPD}{logical indicating whether the \code{\link[Matrix]{nearPD}} function from the \code{Matrix} package should be used when the \mjeqn{R_{x,x}}{R[x,x]} matrix cannot be inverted. See \sQuote{Note}.}
-   \item{level}{numerical value between 0 and 100 specifying the confidence interval level (the default is 95).}
-   \item{digits}{integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is 4).}
+   \item{ztor}{logical to specify whether \code{R} is a matrix of r-to-z transformed correlations (the default is \code{FALSE}). See \sQuote{Details}.}
+   \item{nearPD}{logical to specify whether the \code{\link[Matrix]{nearPD}} function from the \code{Matrix} package should be used when the \mjeqn{R_{x,x}}{R[x,x]} matrix cannot be inverted. See \sQuote{Note}.}
+   \item{level}{numeric value between 0 and 100 to specify the confidence interval level (the default is 95).}
+   \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded (if unspecified, the default is 4).}
 }
 \details{
    The function can be used to fit a regression model based on a correlation matrix.

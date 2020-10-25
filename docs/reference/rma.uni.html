@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-52</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-54</span>
       </span>
     </div>
 
@@ -257,11 +257,11 @@
     </tr>
     <tr>
       <th>measure</th>
-      <td><p>character string indicating the type of data supplied to the function. When <code>measure="GEN"</code> (default), the observed effect sizes or outcomes and corresponding sampling variances (or standard errors) should be supplied to the function via the <code>yi</code>, <code>vi</code>, and <code>sei</code> arguments (only one of the two, <code>vi</code> or <code>sei</code>, needs to be specified). Alternatively, one can set <code>measure</code> to one of the effect size or outcome measures described under the documentation for the <code><a href='escalc.html'>escalc</a></code> function and specify the required data via the appropriate arguments.</p></td>
+      <td><p>character string to specify the type of data supplied to the function. When <code>measure="GEN"</code> (default), the observed effect sizes or outcomes and corresponding sampling variances (or standard errors) should be supplied to the function via the <code>yi</code>, <code>vi</code>, and <code>sei</code> arguments (only one of the two, <code>vi</code> or <code>sei</code>, needs to be specified). Alternatively, one can set <code>measure</code> to one of the effect size or outcome measures described under the documentation for the <code><a href='escalc.html'>escalc</a></code> function in which case one must specify the required data via the appropriate arguments.</p></td>
     </tr>
     <tr>
       <th>intercept</th>
-      <td><p>logical indicating whether an intercept should be added to the model (the default is <code>TRUE</code>). Ignored when <code>mods</code> is a formula.</p></td>
+      <td><p>logical to specify whether an intercept should be added to the model (the default is <code>TRUE</code>). Ignored when <code>mods</code> is a formula.</p></td>
     </tr>
     <tr>
       <th>data</th>
@@ -273,7 +273,7 @@
     </tr>
     <tr>
       <th>subset</th>
-      <td><p>optional (logical or numeric) vector indicating the subset of studies that should be used for the analysis.</p></td>
+      <td><p>optional (logical or numeric) vector to specify the subset of studies that should be used for the analysis.</p></td>
     </tr>
     <tr>
       <th>add</th>
@@ -293,35 +293,35 @@
     </tr>
     <tr>
       <th>method</th>
-      <td><p>character string specifying whether a fixed- or a random/mixed-effects model should be fitted. A fixed-effects model (with or without moderators) is fitted when using <code>method="FE"</code>. Random/mixed-effects models are fitted by setting <code>method</code> equal to one of the following: <code>"DL"</code>, <code>"HE"</code>, <code>"SJ"</code>, <code>"ML"</code>, <code>"REML"</code>, <code>"EB"</code>, <code>"HS"</code>, <code>"HSk"</code>, or <code>"GENQ"</code>. Default is <code>"REML"</code>. See &#8216;Details&#8217;.</p></td>
+      <td><p>character string to specify whether a fixed- or a random/mixed-effects model should be fitted. A fixed-effects model (with or without moderators) is fitted when using <code>method="FE"</code>. Random/mixed-effects models are fitted by setting <code>method</code> equal to one of the following: <code>"DL"</code>, <code>"HE"</code>, <code>"SJ"</code>, <code>"ML"</code>, <code>"REML"</code>, <code>"EB"</code>, <code>"HS"</code>, <code>"HSk"</code>, or <code>"GENQ"</code>. Default is <code>"REML"</code>. See &#8216;Details&#8217;.</p></td>
     </tr>
     <tr>
       <th>weighted</th>
-      <td><p>logical indicating whether weighted (default) or unweighted estimation should be used to fit the model.</p></td>
+      <td><p>logical to specify whether weighted (default) or unweighted estimation should be used to fit the model.</p></td>
     </tr>
     <tr>
       <th>test</th>
-      <td><p>character string specifying how test statistics and confidence intervals for the fixed effects should be computed. By default (<code>test="z"</code>), Wald-type tests and CIs are obtained, which are based on a standard normal distribution. When <code>test="knha"</code>, the method by Knapp and Hartung (2003) is used for adjusting test statistics and confidence intervals. See &#8216;Details&#8217;.</p></td>
+      <td><p>character string to specify how test statistics and confidence intervals for the fixed effects should be computed. By default (<code>test="z"</code>), Wald-type tests and CIs are obtained, which are based on a standard normal distribution. When <code>test="knha"</code>, the method by Knapp and Hartung (2003) is used for adjusting test statistics and confidence intervals. See &#8216;Details&#8217;.</p></td>
     </tr>
     <tr>
       <th>level</th>
-      <td><p>numerical value between 0 and 100 specifying the confidence interval level (the default is 95).</p></td>
+      <td><p>numeric value between 0 and 100 to specify the confidence interval level (the default is 95).</p></td>
     </tr>
     <tr>
       <th>digits</th>
-      <td><p>integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is 4).</p></td>
+      <td><p>integer to specify the number of decimal places to which the printed results should be rounded (if unspecified, the default is 4).</p></td>
     </tr>
     <tr>
       <th>btt</th>
-      <td><p>optional vector of indices specifying which coefficients to include in the omnibus test of moderators. Can also be a string to grep for. See &#8216;Details&#8217;.</p></td>
+      <td><p>optional vector of indices to specify which coefficients to include in the omnibus test of moderators. Can also be a string to grep for. See &#8216;Details&#8217;.</p></td>
     </tr>
     <tr>
       <th>tau2</th>
-      <td><p>optional numerical value to specify the amount of (residual) heterogeneity in a random- or mixed-effects model (instead of estimating it). Useful for sensitivity analyses (e.g., for plotting results as a function of \(\tau^2\)). When unspecified, the value of \(\tau^2\) is estimated from the data.</p></td>
+      <td><p>optional numeric value to specify the amount of (residual) heterogeneity in a random- or mixed-effects model (instead of estimating it). Useful for sensitivity analyses (e.g., for plotting results as a function of \(\tau^2\)). When unspecified, the value of \(\tau^2\) is estimated from the data.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
-      <td><p>logical indicating whether output should be generated on the progress of the model fitting (the default is <code>FALSE</code>). Can also be an integer. Values &gt; 1 generate more verbose output. See &#8216;Note&#8217;.</p></td>
+      <td><p>logical to specify whether output should be generated on the progress of the model fitting (the default is <code>FALSE</code>). Can also be an integer. Values &gt; 1 generate more verbose output. See &#8216;Note&#8217;.</p></td>
     </tr>
     <tr>
       <th>control</th>

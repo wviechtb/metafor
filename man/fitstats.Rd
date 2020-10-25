@@ -25,9 +25,9 @@ fitstats(object, \dots)
 \arguments{
    \item{object}{an object of class \code{"rma"}.}
    \item{\dots}{optionally more fitted model objects.}
-   \item{REML}{logical indicating whether the regular or restricted likelihood function should be used to obtain the fit statistics and information criteria. Defaults to the method of estimation used, that is \code{TRUE} if \code{object} was fitted with \code{method="REML"} and \code{FALSE} otherwise.}
-   \item{k}{numeric value specifying the penalty per parameter to use. The default (\code{k=2}) is the classical AIC. See \code{\link{AIC}} for more details.}
-   \item{correct}{logical indicating whether the regular (default) or corrected (i.e., AICc) should be extracted.}
+   \item{REML}{logical to specify whether the regular or restricted likelihood function should be used to obtain the fit statistics and information criteria. Defaults to the method of estimation used, that is \code{TRUE} if \code{object} was fitted with \code{method="REML"} and \code{FALSE} otherwise.}
+   \item{k}{numeric value to specify the penalty per parameter to use. The default (\code{k=2}) is the classical AIC. See \code{\link{AIC}} for more details.}
+   \item{correct}{logical to specify whether the regular (default) or corrected (i.e., AICc) should be extracted.}
 }
 \value{
    For \code{fitstats}, a data frame with the (restricted) log-likelihood, deviance, AIC, BIC, and AICc values for each model passed to the function.

@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-52</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-54</span>
       </span>
     </div>
 
@@ -144,7 +144,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>measure</th>
-      <td><p>a character string indicating for which effect size or outcome measure the likelihoods should be calculated. See &#8216;Details&#8217; for possible options and how the data should be specified.</p></td>
+      <td><p>a character string to specify for which effect size or outcome measure the likelihoods should be calculated. See &#8216;Details&#8217; for possible options and how the data should then be specified.</p></td>
     </tr>
     <tr>
       <th>yi</th>
@@ -188,15 +188,15 @@
     </tr>
     <tr>
       <th>subset</th>
-      <td><p>optional (logical or numeric) vector indicating the subset of studies that should be included in the plot.</p></td>
+      <td><p>optional (logical or numeric) vector to specify the subset of studies that should be included in the plot.</p></td>
     </tr>
     <tr>
       <th>drop00</th>
-      <td><p>logical indicating whether studies with no cases (or only cases) in both groups should be dropped. See &#8216;Details&#8217;.</p></td>
+      <td><p>logical to specify whether studies with no cases (or only cases) in both groups should be dropped. See &#8216;Details&#8217;.</p></td>
     </tr>
     <tr>
       <th>xvals</th>
-      <td><p>integer specifying for how many distinct values the likelihood should be evaluated.</p></td>
+      <td><p>integer to specify for how many distinct values the likelihood should be evaluated.</p></td>
     </tr>
     <tr>
       <th>xlim</th>
@@ -216,7 +216,7 @@
     </tr>
     <tr>
       <th>scale</th>
-      <td><p>logical indicating whether the likelihood values should be scaled, so that the total area under each curve is (approximately) equal to 1.</p></td>
+      <td><p>logical to specify whether the likelihood values should be scaled, so that the total area under each curve is (approximately) equal to 1.</p></td>
     </tr>
     <tr>
       <th>lty</th>
@@ -232,11 +232,11 @@
     </tr>
     <tr>
       <th>level</th>
-      <td><p>numerical value between 0 and 100 specifying the plotting limits for each likelihood line in terms of the confidence interval (the default is 99.99).</p></td>
+      <td><p>numeric value between 0 and 100 to specify the plotting limits for each likelihood line in terms of the confidence interval (the default is 99.99).</p></td>
     </tr>
     <tr>
       <th>refline</th>
-      <td><p>value at which a vertical &#8216;reference&#8217; line should be drawn (the default is 0). The line can be suppressed by setting this argument to <code>NA</code>.</p></td>
+      <td><p>numeric value to specify the location of the vertical &#8216;reference&#8217; line (the default is 0). The line can be suppressed by setting this argument to <code>NA</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>

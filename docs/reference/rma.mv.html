@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-52</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-54</span>
       </span>
     </div>
 
@@ -169,7 +169,7 @@
     </tr>
     <tr>
       <th>intercept</th>
-      <td><p>logical indicating whether an intercept should be added to the model (the default is <code>TRUE</code>). Ignored when <code>mods</code> is a formula.</p></td>
+      <td><p>logical to specify whether an intercept should be added to the model (the default is <code>TRUE</code>). Ignored when <code>mods</code> is a formula.</p></td>
     </tr>
     <tr>
       <th>data</th>
@@ -181,27 +181,27 @@
     </tr>
     <tr>
       <th>subset</th>
-      <td><p>optional (logical or numeric) vector indicating the subset of studies (or more precisely, rows of the dataset) that should be used for the analysis.</p></td>
+      <td><p>optional (logical or numeric) vector to specify the subset of studies (or more precisely, rows of the dataset) that should be used for the analysis.</p></td>
     </tr>
     <tr>
       <th>method</th>
-      <td><p>character string specifying whether the model should be fitted via maximum-likelihood (<code>"ML"</code>) or via restricted maximum-likelihood (<code>"REML"</code>) estimation. Default is <code>"REML"</code>.</p></td>
+      <td><p>character string to specify whether the model should be fitted via maximum-likelihood (<code>"ML"</code>) or via restricted maximum-likelihood (<code>"REML"</code>) estimation. Default is <code>"REML"</code>.</p></td>
     </tr>
     <tr>
       <th>test</th>
-      <td><p>character string specifying how test statistics and confidence intervals for the fixed effects should be computed. By default (<code>test="z"</code>), Wald-type tests and CIs are obtained, which are based on a standard normal distribution. When <code>test="t"</code>, a t-distribution is used instead. See &#8216;Details&#8217;.</p></td>
+      <td><p>character string to specify how test statistics and confidence intervals for the fixed effects should be computed. By default (<code>test="z"</code>), Wald-type tests and CIs are obtained, which are based on a standard normal distribution. When <code>test="t"</code>, a t-distribution is used instead. See &#8216;Details&#8217;.</p></td>
     </tr>
     <tr>
       <th>level</th>
-      <td><p>numerical value between 0 and 100 specifying the confidence interval level (the default is 95).</p></td>
+      <td><p>numeric value between 0 and 100 to specify the confidence interval level (the default is 95).</p></td>
     </tr>
     <tr>
       <th>digits</th>
-      <td><p>integer specifying the number of decimal places to which the printed results should be rounded (if unspecified, the default is 4).</p></td>
+      <td><p>integer to specify the number of decimal places to which the printed results should be rounded (if unspecified, the default is 4).</p></td>
     </tr>
     <tr>
       <th>btt</th>
-      <td><p>optional vector of indices specifying which coefficients to include in the omnibus test of moderators. Can also be a string to grep for. See &#8216;Details&#8217;.</p></td>
+      <td><p>optional vector of indices to specify which coefficients to include in the omnibus test of moderators. Can also be a string to grep for. See &#8216;Details&#8217;.</p></td>
     </tr>
     <tr>
       <th>R</th>
@@ -209,19 +209,19 @@
     </tr>
     <tr>
       <th>Rscale</th>
-      <td><p>character string, integer, or logical indicating how matrices specified via the <code>R</code> argument should be scaled. See &#8216;Details&#8217;.</p></td>
+      <td><p>character string, integer, or logical to specify how matrices specified via the <code>R</code> argument should be scaled. See &#8216;Details&#8217;.</p></td>
     </tr>
     <tr>
       <th>sigma2</th>
-      <td><p>optional numerical vector (of the same length as the number of random intercept components specified via the <code>random</code> argument) to fix the corresponding \(\sigma^2\) value(s). A specific \(\sigma^2\) value can be fixed by setting the corresponding element of this argument to the desired value. A specific \(\sigma^2\) value will be estimated if the corresponding element is set equal to <code>NA</code>. See &#8216;Details&#8217;.</p></td>
+      <td><p>optional numeric vector (of the same length as the number of random intercept components specified via the <code>random</code> argument) to fix the corresponding \(\sigma^2\) value(s). A specific \(\sigma^2\) value can be fixed by setting the corresponding element of this argument to the desired value. A specific \(\sigma^2\) value will be estimated if the corresponding element is set equal to <code>NA</code>. See &#8216;Details&#8217;.</p></td>
     </tr>
     <tr>
       <th>tau2</th>
-      <td><p>optional numerical value (for <code>struct="CS"</code>, <code>"AR"</code>, <code>"CAR"</code>, or a spatial correlation structure) or vector (for <code>struct="HCS"</code>, <code>"UN"</code>, or <code>"HAR"</code>) to fix the amount of (residual) heterogeneity for the levels of the inner factor corresponding to an <code>~ inner | outer</code> formula specified in the <code>random</code> argument. A numeric value fixes a particular \(\tau^2\) value, while <code>NA</code> means that the value should be estimated. See &#8216;Details&#8217;.</p></td>
+      <td><p>optional numeric value (for <code>struct="CS"</code>, <code>"AR"</code>, <code>"CAR"</code>, or a spatial correlation structure) or vector (for <code>struct="HCS"</code>, <code>"UN"</code>, or <code>"HAR"</code>) to fix the amount of (residual) heterogeneity for the levels of the inner factor corresponding to an <code>~ inner | outer</code> formula specified in the <code>random</code> argument. A numeric value fixes a particular \(\tau^2\) value, while <code>NA</code> means that the value should be estimated. See &#8216;Details&#8217;.</p></td>
     </tr>
     <tr>
       <th>rho</th>
-      <td><p>optional numerical value (for <code>struct="CS"</code>, <code>"HCS"</code>, <code>"AR"</code>, <code>"HAR"</code>, <code>"CAR"</code>, or a spatial correlation structure) or vector (for <code>struct="UN"</code>) to fix the correlation between the levels of the inner factor corresponding to an <code>~ inner | outer</code> formula specified in the <code>random</code> argument. A numeric value fixes a particular \(\rho\) value, while <code>NA</code> means that the value should be estimated. See &#8216;Details&#8217;.</p></td>
+      <td><p>optional numeric value (for <code>struct="CS"</code>, <code>"HCS"</code>, <code>"AR"</code>, <code>"HAR"</code>, <code>"CAR"</code>, or a spatial correlation structure) or vector (for <code>struct="UN"</code>) to fix the correlation between the levels of the inner factor corresponding to an <code>~ inner | outer</code> formula specified in the <code>random</code> argument. A numeric value fixes a particular \(\rho\) value, while <code>NA</code> means that the value should be estimated. See &#8216;Details&#8217;.</p></td>
     </tr>
     <tr>
       <th>gamma2</th>
@@ -233,11 +233,11 @@
     </tr>
     <tr>
       <th>sparse</th>
-      <td><p>logical indicating whether the function should use sparse matrix objects to the extent possible (can speed up model fitting substantially for certain models). See &#8216;Note&#8217;.</p></td>
+      <td><p>logical to specify whether the function should use sparse matrix objects to the extent possible (can speed up model fitting substantially for certain models). See &#8216;Note&#8217;.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
-      <td><p>logical indicating whether output should be generated on the progress of the model fitting (the default is <code>FALSE</code>). Can also be an integer. Values &gt; 1 generate more verbose output. See &#8216;Note&#8217;.</p></td>
+      <td><p>logical to specify whether output should be generated on the progress of the model fitting (the default is <code>FALSE</code>). Can also be an integer. Values &gt; 1 generate more verbose output. See &#8216;Note&#8217;.</p></td>
     </tr>
     <tr>
       <th>control</th>

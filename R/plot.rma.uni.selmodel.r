@@ -1,4 +1,6 @@
-plot.rma.uni.selmodel <- function(x, xlim, n=1001, prec="max", scale=FALSE, rug=TRUE, add=FALSE, lwd=2, ...) {
+plot.rma.uni.selmodel <- function(x, xlim, ylim, n=1000, prec="max", scale=FALSE,
+   ci=FALSE, reps=1000, rug=TRUE, add=FALSE,
+   lty=c("solid","dotted"), lwd=c(2,1), ...) {
 
    #########################################################################
 
@@ -6,6 +8,23 @@ plot.rma.uni.selmodel <- function(x, xlim, n=1001, prec="max", scale=FALSE, rug=
 
    if (!inherits(x, "rma.uni.selmodel"))
       stop(mstyle$stop("Argument 'x' must be an object of class \"rma.uni.selmodel\"."))
+
+   ddd <- list(...)
+
+   lplot  <- function(..., seed) plot(...)
+   llines <- function(..., seed) lines(...)
+   lrug   <- function(..., seed) rug(...)
+
+   if (is.logical(ci))
+      citype <- "boot"
+
+   if (is.character(ci)) {
+      citype <- ci
+      ci <- TRUE
+   }
+
+   if (!is.element(citype, c("boot", "wald")))
+      stop(mstyle$stop("Unknown confidence interval type specified."))
 
    if (missing(xlim))
       xlim <- c(x$pval.min, 1-x$pval.min)
@@ -32,82 +51,154 @@ plot.rma.uni.selmodel <- function(x, xlim, n=1001, prec="max", scale=FALSE, rug=
          prec <- x$precis[["mean"]]
       if (prec == "median")
          prec <- x$precis[["median"]]
+   } else {
+      if (is.numeric(prec) && !x$precspec)
+         prec <- 1
    }
 
    delta <- x$delta
    steps <- x$steps
-   xs <- seq(xlim[1], xlim[2], length=n)
+
+   ps <- seq(xlim[1], xlim[2], length=n)
 
    if (x$type == "stepfun") {
-      xs <- unique(sort(c(xs, steps)))
-      xs <- xs[xs >= xlim[1]]
-      xs <- xs[xs <= xlim[2]]
+      ps <- unique(sort(c(ps, steps))) # make sure that the 'steps' values are part of 'ps'
+      ps <- ps[ps >= xlim[1]]          # but only keep ps >= xlim[1]
+      ps <- ps[ps <= xlim[2]]          #               ps <= xlim[2]
       plot.type <- "S"
    } else {
       plot.type <- "l"
    }
 
-   if (x$type == "beta")
-      ys <- dbeta(xs, delta[1], delta[2])
+   wi.fun <- x$wi.fun
 
-   if (x$type == "halfnorm")
-      ys <- ifelse(xs <= steps[1], 1, exp(-delta * prec * xs^2) / exp(-delta * prec * steps[1]^2))
+   ys <- wi.fun(ps, delta=delta, yi=x$yi, vi=x$vi, preci=prec, alternative=x$alternative, steps=x$steps)
 
-   if (x$type == "negexp")
-      ys <- ifelse(xs <= steps[1], 1, exp(-delta * prec * xs) / exp(-delta * prec * steps[1]))
+   if (ci && citype == "boot" && all(is.na(x$vb.delta)))
+      ci <- FALSE
 
-   if (x$type == "logistic")
-      ys <- ifelse(xs <= steps[1], 1, (2 * exp(-delta * prec * xs) / (1 + exp(-delta * prec * xs))) / (2 * exp(-delta * prec * steps[1]) / (1 + exp(-delta * prec * steps[1]))))
+   if (ci && citype == "wald" && all(is.na(x$ci.lb.delta)) && all(is.na(x$ci.ub.delta)))
+      ci <- FALSE
 
-   if (x$type == "power")
-      ys <- ifelse(xs <= steps[1], 1, (1-xs)^(prec*delta) / (1-steps[1])^(prec*delta))
+   if (ci && citype == "wald" && x$type != "stepfun" && sum(!x$delta.fix) >= 2L)
+      stop(mstyle$stop("Cannot compute Wald-type confidence intervals for this selection model."))
 
-   if (x$type == "negexppow")
-      ys <- ifelse(xs <= steps[1], 1, exp(-delta[1] * prec * xs^(1/delta[2])) / exp(-delta[1] * prec * steps[1]^(1/delta[2])))
+   if (ci) {
 
-   if (x$type == "halfnorm2")
-      ys <- ifelse(xs <= steps[1], 1, (delta[1] + exp(-delta[2] * prec * xs^2) / exp(-delta[2] * prec * steps[1]^2)) / (1 + delta[1]))
+      if (citype == "boot") {
 
-   if (x$type == "negexp2")
-      ys <- ifelse(xs <= steps[1], 1, (delta[1] + exp(-delta[2] * prec * xs) / exp(-delta[2] * prec * steps[1])) / (1 + delta[1]))
+         if (!is.null(ddd$seed))
+            set.seed(ddd$seed)
 
-   if (x$type == "logistic2")
-      ys <- ifelse(xs <= steps[1], 1, (delta[1] + (2 * exp(-delta[2] * prec * xs) / (1 + exp(-delta[2] * prec * xs))) / (2 * exp(-delta[2] * prec * steps[1]) / (1 + exp(-delta[2] * prec * steps[1])))) / (1 + delta[1]))
+         vb.delta <- x$vb.delta
+         vb.delta.na <- is.na(diag(vb.delta))
+         vb.delta[vb.delta.na,] <- 0
+         vb.delta[,vb.delta.na] <- 0
 
-   if (x$type == "power2")
-      ys <- ifelse(xs <= steps[1], 1, (delta[1] + (1-xs)^(prec*delta[2]) / (1-steps[1])^(prec*delta[2])) / (1 + delta[1]))
+         dsim <- .mvrnorm(reps, mu=delta, Sigma=vb.delta)
 
-   if (x$type == "stepfun")
-      ys <- delta[sapply(xs, function(p) which(p <= x$steps)[1])] / prec
+         for (j in 1:ncol(dsim)) {
+            dsim[,j] <- ifelse(dsim[,j] < x$delta.min[j], x$delta.min[j], dsim[,j])
+            dsim[,j] <- ifelse(dsim[,j] > x$delta.max[j], x$delta.max[j], dsim[,j])
+         }
 
+         ys.ci <- lapply(ps, function(p) {
+            ysim <- apply(dsim, 1, function(d) wi.fun(p, delta=d, yi=x$yi, vi=x$vi, preci=prec, alternative=x$alternative, steps=x$steps))
+            quantile(ysim, probs=c(x$level/2, 1 - x$level/2))
+         })
+         ys.ci <- do.call(rbind, ys.ci)
+         ys.lb <- ys.ci[,1]
+         ys.ub <- ys.ci[,2]
+
+      }
+
+      if (citype == "wald") {
+
+         ci.lb.delta <- x$ci.lb.delta
+         ci.ub.delta <- x$ci.ub.delta
+
+         if (x$type == "stepfun") {
+            ci.lb.delta[x$delta.fix] <- delta[x$delta.fix]
+            ci.ub.delta[x$delta.fix] <- delta[x$delta.fix]
+         }
+
+         ys.lb <- wi.fun(ps, delta=ci.lb.delta, yi=x$yi, vi=x$vi, preci=prec, alternative=x$alternative, steps=x$steps)
+         ys.ub <- wi.fun(ps, delta=ci.ub.delta, yi=x$yi, vi=x$vi, preci=prec, alternative=x$alternative, steps=x$steps)
+
+      }
+
+   } else {
+
+      ys.lb <- NA
+      ys.ub <- NA
+
+   }
 
    if (scale) {
 
-      is.inf.pos <- ys ==  Inf
-      is.inf.neg <- ys == -Inf
+      #is.inf.pos <- ys ==  Inf
+      #is.inf.neg <- ys == -Inf
 
       ys[is.infinite(ys)] <- NA
 
-      rng <- max(ys, na.rm=TRUE) - min(ys, na.rm=TRUE)
+      rng.ys <- max(ys, na.rm=TRUE) - min(ys, na.rm=TRUE)
+      min.ys <- min(ys, na.rm=TRUE)
 
-      if (rng > .Machine$double.eps^0.5)
-         ys <- (ys - min(ys, na.rm=TRUE)) / rng
+      if (rng.ys > .Machine$double.eps^0.5) {
+         ys <- (ys - min.ys) / rng.ys
+         ys.lb <- (ys.lb - min.ys) / rng.ys
+         ys.ub <- (ys.ub - min.ys) / rng.ys
+      }
 
-      ys[is.inf.pos] <- 1
-      ys[is.inf.neg] <- 0
+      #ys[is.inf.pos] <- 1
+      #ys[is.inf.neg] <- 0
+
+   }
+
+   ys[ys < 0] <- 0
+   ys.lb[ys.lb < 0] <- 0
+   ys.ub[ys.ub < 0] <- 0
+
+   if (missing(ylim)) {
+
+      if (is.element(x$type, c("halfnorm", "negexp", "logistic", "power", "negexppow", "halfnorm2", "negexp2", "logistic2", "power2"))) {
+
+         ylim <- c(0,1)
+
+      } else {
+
+         if (ci) {
+            ylim <- c(min(c(ys.lb[is.finite(ys.lb)], ys[is.finite(ys)]), na.rm=TRUE), max(c(ys.ub[is.finite(ys.ub)], ys[is.finite(ys)]), na.rm=TRUE))
+         } else {
+            ylim <- range(ys[is.finite(ys)], na.rm=TRUE)
+         }
+
+      }
+
+   } else {
+
+      if (length(ylim) != 2L)
+         stop(mstyle$stop("Argument 'ylim' should be a vector of length 2."))
+
+      ylim <- sort(ylim)
 
    }
 
    if (add) {
-      lines(xs, ys, type=plot.type, lwd=lwd, ...)
+      llines(ps, ys, type=plot.type, lty=lty[1], lwd=lwd[1], ...)
    } else {
-      plot(xs, ys, type=plot.type, lwd=lwd, xlab="p-value", ylab="Relative Likelihood of Selection", ...)
+      lplot(ps, ys, ylim=ylim, type=plot.type, lwd=lwd, xlab="p-value", ylab="Relative Likelihood of Selection", ...)
+   }
+
+   if (ci) {
+      llines(ps, ys.lb, type=plot.type, lty=lty[2], lwd=lwd[2], ...)
+      llines(ps, ys.ub, type=plot.type, lty=lty[2], lwd=lwd[2], ...)
    }
 
    if (rug && !add)
-      rug(x$pvals, quiet=TRUE)
+      lrug(x$pvals, quiet=TRUE)
 
-   sav <- data.frame(xs=xs, ys=ys)
+   sav <- data.frame(xs=ps, ys=ys, ys.lb=ys.lb, ys.ub=ys.ub)
 
    invisible(sav)
 
