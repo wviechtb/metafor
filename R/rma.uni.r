@@ -903,7 +903,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
                REMLf = TRUE,              # should |X'X| term be included in the REML log likelihood?
                evtol = 1e-07,             # lower bound for eigenvalues to determine if model matrix is positive definite (also for checking if vimaxmin >= 1/con$evtol)
                alpha.init = NULL,         # initial values for scale parameters
-               optimizer = "nlminb",      # optimizer to use ("optim", "nlminb", "uobyqa", "newuoa", "bobyqa", "nloptr", "nlm", "hjk", "nmk", "ucminf", "optimParallel") for location-scale model
+               optimizer = "nlminb",      # optimizer to use ("optim", "nlminb", "uobyqa", "newuoa", "bobyqa", "nloptr", "nlm", "hjk", "nmk", "mads", "ucminf", "optimParallel") for location-scale model
                optmethod = "BFGS",        # argument 'method' for optim() ("Nelder-Mead" and "BFGS" are sensible options)
                parallel = list(),         # parallel argument for optimParallel() (note: 'cl' argument in parallel is not passed; this is directly specified via 'cl')
                cl = NULL,                 # arguments for optimParallel()
@@ -1471,7 +1471,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
       ### get optimizer arguments from control argument
 
-      optimizer  <- match.arg(con$optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","ucminf","optimParallel"))
+      optimizer  <- match.arg(con$optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","optimParallel"))
       optmethod  <- match.arg(con$optmethod, c("Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent"))
       parallel   <- con$parallel
       cl         <- con$cl
@@ -1499,7 +1499,15 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
       if (optimizer=="nloptr" && !is.element("ftol_rel", names(optcontrol)))
          optcontrol$ftol_rel <- 1e-8
 
-   ### check that the required packages are installed
+      ### for mads, set trace=FALSE and tol=1e-6 by default
+
+      if (optimizer=="mads" && !is.element("trace", names(optcontrol)))
+         optcontrol$trace <- FALSE
+
+      if (optimizer=="mads" && !is.element("tol", names(optcontrol)))
+         optcontrol$tol <- 1e-6
+
+      ### check that the required packages are installed
 
       if (is.element(optimizer, c("uobyqa","newuoa","bobyqa"))) {
          if (!requireNamespace("minqa", quietly=TRUE))
@@ -1511,7 +1519,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
             stop(mstyle$stop("Please install the 'nloptr' package to use this optimizer."))
       }
 
-      if (is.element(optimizer, c("hjk","nmk"))) {
+      if (is.element(optimizer, c("hjk","nmk","mads"))) {
          if (!requireNamespace("dfoptim", quietly=TRUE))
             stop(mstyle$stop("Please install the 'dfoptim' package to use this optimizer."))
       }
@@ -1642,7 +1650,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
          if (nchar(ctrl.arg) != 0L)
             ctrl.arg <- paste0(", ", ctrl.arg)
       }
-      if (is.element(optimizer, c("hjk","nmk"))) {
+      if (is.element(optimizer, c("hjk","nmk","mads"))) {
          par.arg <- "par"
          optimizer <- paste0("dfoptim::", optimizer) ### need to use this so that the optimizers can be found
          ctrl.arg <- ", control=optcontrol"
@@ -1727,6 +1735,9 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
       ### convergence checks
 
       if (is.element(optimizer, c("optim","nlminb","dfoptim::hjk","dfoptim::nmk","optimParallel::optimParallel")) && opt.res$convergence != 0)
+         stop(mstyle$stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (convergence = ", opt.res$convergence, ").")))
+
+      if (is.element(optimizer, c("dfoptim::mads")) && opt.res$convergence > optcontrol$tol)
          stop(mstyle$stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (convergence = ", opt.res$convergence, ").")))
 
       if (is.element(optimizer, c("minqa::uobyqa","minqa::newuoa","minqa::bobyqa")) && opt.res$ierr != 0)

@@ -1,8 +1,8 @@
 \name{dat.assink2016}
 \docType{data}
 \alias{dat.assink2016}
-\title{Studies on the Association between Recidivism and Mental Health Disorders}
-\description{Results from 17 studies on the association between recidivism and mental health disorders in delinquent juveniles.}
+\title{Studies on the Association between Recidivism and Mental Health}
+\description{Results from 17 studies on the association between recidivism and mental health in delinquent juveniles.}
 \usage{dat.assink2016}
 \format{The data frame contains the following columns:
 \tabular{lll}{

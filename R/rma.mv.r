@@ -1651,7 +1651,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
          con$phi.init  <- atanh(phi.init)
    }
 
-   optimizer  <- match.arg(con$optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","ucminf","optimParallel"))
+   optimizer  <- match.arg(con$optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","optimParallel"))
    optmethod  <- match.arg(con$optmethod, c("Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent"))
    evtol      <- con$evtol
    posdefify  <- con$posdefify
@@ -1682,6 +1682,14 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
    if (optimizer=="nloptr" && !is.element("ftol_rel", names(optcontrol)))
       optcontrol$ftol_rel <- 1e-8
 
+   ### for mads, set trace=FALSE and tol=1e-6 by default
+
+   if (optimizer=="mads" && !is.element("trace", names(optcontrol)))
+      optcontrol$trace <- FALSE
+
+   if (optimizer=="mads" && !is.element("tol", names(optcontrol)))
+      optcontrol$tol <- 1e-6
+
    #return(list(con=con, optimizer=optimizer, optmethod=optmethod, parallel=parallel, cl=cl, ncpus=ncpus, evtol=evtol, posdefify=posdefify, optcontrol=optcontrol))
 
    ### check that the required packages are installed
@@ -1696,7 +1704,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
          stop(mstyle$stop("Please install the 'nloptr' package to use this optimizer."))
    }
 
-   if (is.element(optimizer, c("hjk","nmk"))) {
+   if (is.element(optimizer, c("hjk","nmk","mads"))) {
       if (!requireNamespace("dfoptim", quietly=TRUE))
          stop(mstyle$stop("Please install the 'dfoptim' package to use this optimizer."))
    }
@@ -1851,7 +1859,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
       if (nchar(ctrl.arg) != 0L)
          ctrl.arg <- paste0(", ", ctrl.arg)
    }
-   if (is.element(optimizer, c("hjk","nmk"))) {
+   if (is.element(optimizer, c("hjk","nmk","mads"))) {
       par.arg <- "par"
       optimizer <- paste0("dfoptim::", optimizer) ### need to use this so that the optimizers can be found
       ctrl.arg <- ", control=optcontrol"
@@ -1932,6 +1940,9 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
          ### convergence checks
 
          if (is.element(optimizer, c("optim","nlminb","dfoptim::hjk","dfoptim::nmk","optimParallel::optimParallel")) && opt.res$convergence != 0)
+            stop(mstyle$stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (convergence = ", opt.res$convergence, ").")))
+
+         if (is.element(optimizer, c("dfoptim::mads")) && opt.res$convergence > optcontrol$tol)
             stop(mstyle$stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (convergence = ", opt.res$convergence, ").")))
 
          if (is.element(optimizer, c("minqa::uobyqa","minqa::newuoa","minqa::bobyqa")) && opt.res$ierr != 0)

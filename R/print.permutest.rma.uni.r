@@ -22,6 +22,7 @@ print.permutest.rma.uni <- function(x, digits=x$digits, signif.stars=getOption("
    }
 
    res.table <- data.frame(estimate=.fcf(c(x$beta), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), zval=.fcf(x$zval, digits[["test"]]), "pval*"=.pval(x$pval, digits[["pval"]]), ci.lb=.fcf(x$ci.lb, digits[["ci"]]), ci.ub=.fcf(x$ci.ub, digits[["ci"]]))
+   colnames(res.table)[4] <- "pval*"
    if (x$permci)
       colnames(res.table)[5:6] <- c("ci.lb*", "ci.ub*")
    rownames(res.table) <- rownames(x$beta)

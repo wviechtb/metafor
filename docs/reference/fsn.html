@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-54</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-55</span>
       </span>
     </div>
 
@@ -193,7 +193,7 @@
 <p>The Rosenthal method (sometimes called a &#8216;file drawer analysis&#8217;) calculates the number of studies averaging null results that would have to be added to the given set of observed effect sizes or outcomes to reduce the combined significance level (p-value) to a target alpha level (e.g., .05). The calculation is based on Stouffer's method to combine p-values and is described in Rosenthal (1979).</p>
 <p>The Orwin method calculates the number of studies averaging null results that would have to be added to the given set of observed effect sizes or outcomes to reduce the (unweighted or weighted) average effect size to a target effect size (as specified via the <code>target</code> argument). The method is described in Orwin (1983). If <code>weighted=FALSE</code> (the default), the method does not require (or makes use) of <code>vi</code> (or <code>sei</code>), so these arguments are then not relevant for this method. If the <code>target</code> argument is not specified, then the target average effect size will be equal to the observed average effect size divided by 2 (which is quite arbitrary). One should really set <code>target</code> to a value that reflects an effect size one would consider practically irrelevant.</p>
 <p>The Rosenberg method calculates the number of studies averaging null results that would have to be added to the given set of observed effect sizes or outcomes to reduce the significance level (i.e., p-value) of the (weighted) average effect size (based on a fixed-effects model) to a target alpha level (e.g., .05). The method is described in Rosenberg (2005).</p>
-<p>If the combined/observed significance level is above the target alpha level (for <code>type = "Rosenthal"</code> or <code>type = "Rosenberg)"</code>) or if the observed average effect size is below the target average effect size (for <code>type = "Orwin"</code>), then the fail-sage N value will be 0.</p>
+<p>If the combined/observed significance level is above the target alpha level (for <code>type = "Rosenthal"</code> or <code>type = "Rosenberg"</code>) or if the observed average effect size is below the target average effect size (for <code>type = "Orwin"</code>), then the fail-sage N value will be 0.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class <code>"fsn"</code>. The object is a list containing the following components:</p>
