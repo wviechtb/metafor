@@ -153,9 +153,11 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, weighted
       if (is.null(target))
          target <- meanes / 2
 
-      if (identical(target, 0) || sign(target) != sign(meanes)) {
+      if (identical(target, 0)) {
          fsnum <- Inf
       } else {
+         if (sign(target) != sign(meanes))
+            target <- -1 * target
          fsnum <- max(0, k * (meanes - target) / target)
       }
       pval <- NA
@@ -175,7 +177,7 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, weighted
 
    }
 
-   if (abs(fsnum - round(fsnum)) >= .Machine$double.eps^0.5) {
+   if (!is.infinite(fsnum) && abs(fsnum - round(fsnum)) >= .Machine$double.eps^0.5) {
       fsnum <- ceiling(fsnum)
    } else {
       fsnum <- round(fsnum)
