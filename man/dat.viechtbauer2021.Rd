@@ -126,8 +126,8 @@ plot(res.GOSH.ME, het="tau2", out=6, breaks=50, adjust=0.6, las=1)
 
 ### plot of treatment dosage against the standardized residuals
 
-plot(dat$dose, rstandard(res.ME)$z, pch=19, xlab="Dosage (mg per day)", ylab="Standardized Residual",
-     xlim=c(0,250), ylim=c(-2.5,2.5), las=1)
+plot(dat$dose, rstandard(res.ME)$z, pch=19, xlab="Dosage (mg per day)",
+     ylab="Standardized Residual", xlim=c(0,250), ylim=c(-2.5,2.5), las=1)
 abline(h=c(-1.96,1.96), lty="dotted", lwd=2)
 abline(h=0)
 title("Standardized Residual Plot")
@@ -192,8 +192,9 @@ title("Heatmap for the Mixed-Effects Model")
 
 ### plot of leverages versus standardized residuals for the ME model
 
-plot(hatvalues(res.ME), rstudent(res.ME)$z, pch=19, cex=0.2+3*sqrt(cooks.distance(res.ME)), las=1,
-     xlab="Leverage (Hat Value)", ylab="Standardized Deleted Residual", xlim=c(0,0.35), ylim=c(-3.5,2.5))
+plot(hatvalues(res.ME), rstudent(res.ME)$z, pch=19, cex=0.2+3*sqrt(cooks.distance(res.ME)),
+     las=1, xlab="Leverage (Hat Value)", ylab="Standardized Deleted Residual",
+     xlim=c(0,0.35), ylim=c(-3.5,2.5))
 abline(h=c(-1.96,1.96), lty="dotted", lwd=2)
 abline(h=0, lwd=2)
 ids <- c(3,6,9)
@@ -212,8 +213,8 @@ title("Cook's Distances")
 
 x <- influence(res.ME)
 
-plot(1:20, x$inf$tau2.del,  ylim=c(0,0.15), type="o", pch=19, las=1, xaxt="n",
-     xlab="Study", ylab=expression(paste("Estimate of ", tau^2, " without the ", italic(i), "th study")))
+plot(1:20, x$inf$tau2.del,  ylim=c(0,0.15), type="o", pch=19, las=1, xaxt="n", xlab="Study",
+     ylab=expression(paste("Estimate of ", tau^2, " without the ", italic(i), "th study")))
 abline(h=res.ME$tau2, lty="dashed")
 axis(1, 1:20)
 title("Residual Heterogeneity Estimates")

@@ -161,6 +161,7 @@ reference:
       - matreg
       - vec2mat
       - transf
+      - aggregate.escalc
   - title: "Other Methods"
     desc: >
       Other method functions.

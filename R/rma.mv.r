@@ -654,7 +654,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
    ### from the default, but the model doesn't contain '~ inner | outer' terms
 
    if (!withG && struct[1] != "CS")
-      warning(mstyle$warning(paste0("Model does not contain an '~ inner | outer' term, so 'struct' argument is disregaded.")), call.=FALSE)
+      warning(mstyle$warning("Model does not contain an '~ inner | outer' term, so 'struct' argument is disregaded."), call.=FALSE)
 
    #return(list(mf.r=mf.r, mf.s=mf.s, mf.g=mf.g, mf.h=mf.h))
 
@@ -1499,7 +1499,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
    ### set default control parameters
 
    con <- list(verbose = FALSE,
-               optimizer = "nlminb",      # optimizer to use ("optim", "nlminb", "uobyqa", "newuoa", "bobyqa", "nloptr", "nlm", "hjk", "nmk", "ucminf", "optimParallel")
+               optimizer = "nlminb",      # optimizer to use ("optim", "nlminb", "uobyqa", "newuoa", "bobyqa", "nloptr", "nlm", "hjk", "nmk", "mads", "ucminf", "optimParallel")
                optmethod = "BFGS",        # argument 'method' for optim() ("Nelder-Mead" and "BFGS" are sensible options)
                parallel = list(),         # parallel argument for optimParallel() (note: 'cl' argument in parallel is not passed; this is directly specified via 'cl')
                cl = NULL,                 # arguments for optimParallel()

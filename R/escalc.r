@@ -5,8 +5,11 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (missing(measure))
+   if (missing(measure) && missing(yi))
       stop(mstyle$stop("Must specify an effect size or outcome measure via the 'measure' argument."))
+
+   if (!missing(yi) && missing(measure))
+      measure <- "GEN"
 
    if (!is.character(measure))
       stop(mstyle$stop("The 'measure' argument must be a character string."))
@@ -2028,7 +2031,8 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
       if (add.measure)
          dat[[var.names[3]]][!is.na(yi) & include & measure.replace] <- measure
 
-      attributes(dat[[var.names[1]]])$ni[include & yi.replace] <- ni.u[include & yi.replace]
+      if (!is.null(ni.u))
+         attributes(dat[[var.names[1]]])$ni[include & yi.replace] <- ni.u[include & yi.replace]
 
    } else {
 
