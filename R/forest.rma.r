@@ -670,7 +670,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
          } else {
             if (addpred) {
                ### here addpred=TRUE, but user has not specified the level, so throw an error
-               stop(mstyle$stop("Need to specify the level of the inner factor(s) via the 'addpred' argument."))
+               stop(mstyle$stop("Must specify the level of the inner factor(s) via the 'addpred' argument."))
             } else {
                ### here addpred=FALSE, so just use the first tau^2 and gamma^2 arbitrarily (so predict() works)
                temp <- predict(x, level=level, tau2.levels=1, gamma2.levels=1, pi.type=pi.type)

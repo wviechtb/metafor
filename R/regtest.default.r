@@ -50,7 +50,7 @@ regtest.default <- function(x, vi, sei, ni, subset, model="rma", predictor="sei"
    }
 
    if (is.null(vi))
-      stop(mstyle$stop("Need to specify 'vi' or 'sei' argument."))
+      stop(mstyle$stop("Must specify 'vi' or 'sei' argument."))
 
    yi <- x
 
@@ -116,7 +116,7 @@ regtest.default <- function(x, vi, sei, ni, subset, model="rma", predictor="sei"
    if (is.element(predictor, c("ni", "ninv", "sqrtni", "sqrtninv"))) {
 
       if (is.null(ni)) {
-         stop(mstyle$stop("Sample size information need to be specified via 'ni' argument."))
+         stop(mstyle$stop("Sample size information must be specified via 'ni' argument."))
 
       } else {
 

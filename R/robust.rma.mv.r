@@ -6,7 +6,7 @@ robust.rma.mv <- function(x, cluster, adjust=TRUE, digits, ...) {
       stop(mstyle$stop("Argument 'x' must be an object of class \"rma.mv\"."))
 
    if (missing(cluster))
-      stop(mstyle$stop("Need to specify 'cluster' variable."))
+      stop(mstyle$stop("Must specify 'cluster' variable."))
 
    if (missing(digits)) {
       digits <- .get.digits(xdigits=x$digits, dmiss=TRUE)

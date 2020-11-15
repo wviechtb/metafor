@@ -221,7 +221,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
          if (is.null(tau2.levels)) {
 
-            #warning(mstyle$warning("Need to specify 'tau2.levels' argument to obtain prediction interval."), call.=FALSE)
+            #warning(mstyle$warning("Must specify 'tau2.levels' argument to obtain prediction interval."), call.=FALSE)
 
          } else {
 
@@ -262,7 +262,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
          if (is.null(gamma2.levels)) {
 
-            #warning(mstyle$warning("Need to specify 'gamma2.levels' argument to obtain prediction interval."), call.=FALSE)
+            #warning(mstyle$warning("Must specify 'gamma2.levels' argument to obtain prediction interval."), call.=FALSE)
 
          } else {
 

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Aggregate Multiple Effect Sizes or Outcomes Within Studies/Clusters — aggregate.escalc • metafor</title>
+<title>Aggregate Multiple Effect Sizes or Outcomes Within Studies — aggregate.escalc • metafor</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Aggregate Multiple Effect Sizes or Outcomes Within Studies/Clusters — aggregate.escalc" />
-<meta property="og:description" content="The function can be used to aggregate multiple effect sizes or outcomes belonging to the same study (or to the same level of some other clustering variable) into a single combined effect size or outcome." />
+<meta property="og:title" content="Aggregate Multiple Effect Sizes or Outcomes Within Studies — aggregate.escalc" />
+<meta property="og:description" content="The function can be used to aggregate multiple effect sizes or outcomes belonging to the same study (or to the same level of some other clustering variable) into a single combined effect size or outcome. " />
 
 
 
@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-57</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-58</span>
       </span>
     </div>
 
@@ -126,18 +126,18 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Aggregate Multiple Effect Sizes or Outcomes Within Studies/Clusters</h1>
+    <h1>Aggregate Multiple Effect Sizes or Outcomes Within Studies</h1>
     
     <div class="hidden name"><code>aggregate.escalc.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The function can be used to aggregate multiple effect sizes or outcomes belonging to the same study (or to the same level of some other clustering variable) into a single combined effect size or outcome.</p>
+    <p>The function can be used to aggregate multiple effect sizes or outcomes belonging to the same study (or to the same level of some other clustering variable) into a single combined effect size or outcome. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for escalc</span>
-<span class='fu'>aggregate</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>cluster</span>, <span class='va'>V</span>, struct<span class='op'>=</span><span class='st'>"CS"</span>, <span class='va'>rho</span>, <span class='va'>fun</span>, na.rm<span class='op'>=</span><span class='cn'>TRUE</span>,
-          <span class='va'>subset</span>, <span class='va'>select</span>, <span class='va'>digits</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='fu'>aggregate</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>cluster</span>, <span class='va'>time</span>, <span class='va'>V</span>, struct<span class='op'>=</span><span class='st'>"CS"</span>, <span class='va'>rho</span>, <span class='va'>phi</span>,
+          <span class='va'>fun</span>, na.rm<span class='op'>=</span><span class='cn'>TRUE</span>, <span class='va'>subset</span>, <span class='va'>select</span>, <span class='va'>digits</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -148,7 +148,11 @@
     </tr>
     <tr>
       <th>cluster</th>
-      <td><p>a vector to specify the clustering variable.</p></td>
+      <td><p>vector to specify the clustering variable (e.g., study).</p></td>
+    </tr>
+    <tr>
+      <th>time</th>
+      <td><p>optional vector to specify the time points (only relevant when <code>struct="CAR"</code> or <code>struct="CS+CAR"</code>).</p></td>
     </tr>
     <tr>
       <th>V</th>
@@ -156,11 +160,15 @@
     </tr>
     <tr>
       <th>struct</th>
-      <td><p>character string to specify the variance-covariance structure of the sampling errors within the same cluster (either <code>"CS"</code> or <code>"ID"</code>).</p></td>
+      <td><p>character string to specify the variance-covariance structure of the sampling errors within the same cluster (either <code>"ID"</code>, <code>"CS"</code>, <code>"CAR"</code>, or <code>"CS+CAR"</code>). See &#8216;Details&#8217;.</p></td>
     </tr>
     <tr>
       <th>rho</th>
-      <td><p>value of the correlation of the sampling errors within clusters when <code>struct="CS"</code>. Can also be a vector with the value of the correlation for each cluster.</p></td>
+      <td><p>value of the correlation of the sampling errors within clusters (when <code>struct="CS"</code> or <code>struct="CS+CAR"</code>). Can also be a vector with the value of the correlation for each cluster.</p></td>
+    </tr>
+    <tr>
+      <th>phi</th>
+      <td><p>value of the autocorrelation of the sampling errors within clusters (when <code>struct="CAR"</code> or <code>struct="CS+CAR"</code>). Can also be a vector with the value of the autocorrelation for each cluster.</p></td>
     </tr>
     <tr>
       <th>fun</th>
@@ -191,12 +199,14 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>In many meta-analyses, multiple effect size estimates or outcomes can be extracted from the same study. Ideally, such structures should be analyzed using an appropriate multilevel/multivariate model as can be fitted with the <code><a href='rma.mv.html'>rma.mv</a></code> function. However, there may occasionally be reasons for aggregating multiple effect sizes or outcomes belonging to the same study (or to the same level of some other clustering variable) into a single combined effect size or outcome. The present function can be used for this purpose.</p>
-<p>The input must be an object of class <code>"escalc"</code>. The error &#8216;<code>Error in match.fun(FUN) : argument "FUN" is missing, with no default</code>&#8217; indicates that a regular data frame was passed to the function, but this does not work. One can turn a regular data frame (containing the effect sizes or outcomes and the corresponding sampling variances) into an <code>"escalc"</code> object with the <code><a href='escalc.html'>escalc</a></code> function. See the &#8216;Examples&#8217; below for an illustration of this.</p>
+<p>The input must be an object of class <code>"escalc"</code>. The error &#8216;<code>Error in match.fun(FUN): argument "FUN" is missing, with no default</code>&#8217; indicates that a regular data frame was passed to the function, but this does not work. One can turn a regular data frame (containing the effect sizes or outcomes and the corresponding sampling variances) into an <code>"escalc"</code> object with the <code><a href='escalc.html'>escalc</a></code> function. See the &#8216;Examples&#8217; below for an illustration of this.</p>
 <p>The <code>cluster</code> variable is used to specify which estimates/outcomes belong to the same study/cluster.</p>
-<p>In the simplest case, the estimates/outcomes within clusters (or, to be precise, their sampling errors) are assumed to be independent. This is usually a safe assumption as long as each study participant (or whatever the unit of analysis is) only contributes data to a single estimate/outcome. For example, if a study provides effect size estimates for male and female subjects separately, then the sampling errors can be assumed to be independent. In this case, one can set <code>struct="ID"</code> and multiple estimates/outcomes within the same cluster are combined using standard inverse-variance weighting under the assumption of independence.</p>
-<p>In other cases, the estimates/outcomes within clusters cannot be assumed to be independent. For example, if multiple effect size estimates are computed for the same group of subjects (e.g., for different dependent variables or multiple time points), then the estimates are likely to be correlated. If the actual correlation between the estimates is unknown, one can often still make an educated guess, set argument <code>rho</code> to this value, which is then assumed to be the same for all pairs of estimates within clusters (when <code>struct="CS"</code>). Multiple estimates/outcomes within the same cluster are then combined using inverse-variance weighting taking their correlation into consideration. One can also specify a different value of <code>rho</code> for each cluster by passing a vector (of the same length as the number of clusters) to this argument.</p>
-<p>Finally, if one actually knows the correlation (and hence the covariance) between each pair of estimates, one can also specify the entire variance-covariance matrix of the estimates (or more precisely, their sampling errors) via the <code>V</code> argument. In this case, arguments <code>rho</code> and <code>struct</code> are ignored.</p>
-<p>Other variables (besides the estimates) will also be aggregated to the cluster level. By default, numeric/integer type variables are averaged, logicals are also averaged (yielding the proportion of <code>TRUE</code> values), and for all other types of variables (e.g., character variables or factors) the most frequent category/level is returned. One can also specify a list of three functions via the <code>fun</code> argument for aggregating these three variable types.</p>
+<p>In the simplest case, the estimates/outcomes within clusters (or, to be precise, their sampling errors) are assumed to be independent. This is usually a safe assumption as long as each study participant (or whatever the unit of analysis is) only contributes data to a single estimate/outcome. For example, if a study provides effect size estimates for male and female subjects separately, then the sampling errors can usually be assumed to be independent. In this case, one can set <code>struct="ID"</code> and multiple estimates/outcomes within the same cluster are combined using standard inverse-variance weighting under the assumption of independence.</p>
+<p>In other cases, the estimates/outcomes within clusters cannot be assumed to be independent. For example, if multiple effect size estimates are computed for the same group of subjects (e.g., for different dependent variables), then the estimates are likely to be correlated. If the actual correlation between the estimates is unknown, one can often still make an educated guess and set argument <code>rho</code> to this value, which is then assumed to be the same for all pairs of estimates within clusters when <code>struct="CS"</code> (for a compound symmetric structure). Multiple estimates/outcomes within the same cluster are then combined using inverse-variance weighting taking their correlation into consideration (i.e., using generalized least squares). One can also specify a different value of <code>rho</code> for each cluster by passing a vector (of the same length as the number of clusters) to this argument.</p>
+<p>If multiple effect size estimates are computed for the same group of subjects at different time points, then it may be more sensible to assume that the correlation between estimates decreases as a function of the distance between the time points. If so, one can specify <code>struct="CAR"</code> (for a continuous-time autoregressive structure), set <code>phi</code> to the autocorrelation (for two estimates one time-unit apart), and use argument <code>time</code> to specify the actual time points corresponding to the estimates. The correlation between two estimates, \(y_{ij}\) and \(y_{ij'}\), in the \(i\)th cluster, with time points \(t_{ij}\) and \(t_{ij'}\), is then given by \(\phi^{|t_{ij} - t_{ij'}|}\). One can also specify a different value of <code>phi</code> for each cluster by passing a vector (of the same length as the number of clusters) to this argument.</p>
+<p>One can also combine the compound symmetric and autoregressive structures by specifying <code>struct="CS+CAR"</code>. In this case, one must specify both <code>rho</code> and <code>phi</code>. The correlation between two estimates, \(y_{ij}\) and \(y_{ij'}\), in the \(i\)th cluster, with time points \(t_{ij}\) and \(t_{ij'}\), is then given by \(\rho + (1 - \rho) \phi^{|t_{ij} - t_{ij'}|}\).</p>
+<p>Finally, if one actually knows the correlation (and hence the covariance) between each pair of estimates, one can also specify the entire variance-covariance matrix of the estimates (or more precisely, their sampling errors) via the <code>V</code> argument. In this case, arguments <code>struct</code>, <code>rho</code>, and  <code>phi</code> are ignored.</p>
+<p>Other variables (besides the estimates) will also be aggregated to the cluster level. By default, numeric/integer type variables are averaged, logicals are also averaged (yielding the proportion of <code>TRUE</code> values), and for all other types of variables (e.g., character variables or factors) the most frequent category/level is returned. One can also specify a list of three functions via the <code>fun</code> argument for aggregating variables belong to these three types.</p>
 <p>Argument <code>na.rm</code> controls how missing values should be handled. By default, any missing estimates are first removed before aggregating the non-missing values within each cluster. The same applies when aggregating the other variables. One can also specify a vector with two logicals for the <code>na.rm</code> argument to control how missing values should be handled when aggregating the estimates and when aggregating all other variables.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -277,18 +287,18 @@
 <span class='co'>### errors for multiples studies/schools within the same district</span>
 <span class='va'>agg</span> <span class='op'>&lt;-</span> <span class='fu'>aggregate</span><span class='op'>(</span><span class='va'>dat</span>, cluster<span class='op'>=</span><span class='va'>district</span>, struct<span class='op'>=</span><span class='st'>"ID"</span><span class='op'>)</span>
 <span class='va'>agg</span>
-</div><div class='output co'>#&gt;     district school study   year     yi    vi 
-#&gt; 11        11    2.5   2.5 1976.0 -0.126 0.032 
-#&gt; 12        12    2.5   6.5 1989.0  0.067 0.004 
-#&gt; 18        18    2.0  10.0 1994.0  0.350 0.007 
-#&gt; 27        27    2.5  13.5 1976.0  0.500 0.001 
-#&gt; 56        56    2.5  17.5 1997.0  0.051 0.002 
-#&gt; 58        58    6.0  25.0 1976.0 -0.042 0.001 
-#&gt; 71        71    2.0  32.0 1997.0  0.886 0.004 
-#&gt; 86        86    4.5  37.5 1997.0 -0.029 0.000 
-#&gt; 91        91    3.5  44.5 2000.0  0.250 0.002 
-#&gt; 108      108    3.0  50.0 2000.0  0.015 0.006 
-#&gt; 644      644    2.5  54.5 1994.5  0.162 0.019 </div><div class='input'>
+</div><div class='output co'>#&gt;    district school study   year     yi    vi 
+#&gt; 1        11    2.5   2.5 1976.0 -0.126 0.032 
+#&gt; 2        12    2.5   6.5 1989.0  0.067 0.004 
+#&gt; 3        18    2.0  10.0 1994.0  0.350 0.007 
+#&gt; 4        27    2.5  13.5 1976.0  0.500 0.001 
+#&gt; 5        56    2.5  17.5 1997.0  0.051 0.002 
+#&gt; 6        58    6.0  25.0 1976.0 -0.042 0.001 
+#&gt; 7        71    2.0  32.0 1997.0  0.886 0.004 
+#&gt; 8        86    4.5  37.5 1997.0 -0.029 0.000 
+#&gt; 9        91    3.5  44.5 2000.0  0.250 0.002 
+#&gt; 10      108    3.0  50.0 2000.0  0.015 0.006 
+#&gt; 11      644    2.5  54.5 1994.5  0.162 0.019 </div><div class='input'>
 <span class='co'>### copy data into 'dat' and examine data</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.assink2016</span>
 <span class='va'>dat</span>
@@ -421,7 +431,150 @@
 #&gt; 14    14  3.5 72.5  0.0356 0.0014         1  -1.5 general 
 #&gt; 15    15  2.0 77.0  0.0908 0.1269         1 -13.5 general 
 #&gt; 16    16  8.5 86.5  0.0181 0.0169         1   2.5  covert 
-#&gt; 17    17  3.5 97.5 -0.0552 0.0072         1   5.5 general </div></pre>
+#&gt; 17    17  3.5 97.5 -0.0552 0.0072         1   5.5 general </div><div class='input'>
+<span class='co'>### reshape 'dat.ishak2007' into long format</span>
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.ishak2007</span>
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/reshape.html'>reshape</a></span><span class='op'>(</span><span class='va'>dat.ishak2007</span>, direction<span class='op'>=</span><span class='st'>"long"</span>, idvar<span class='op'>=</span><span class='st'>"study"</span>, v.names<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"yi"</span>,<span class='st'>"vi"</span><span class='op'>)</span>,
+                    varying<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>,<span class='fl'>4</span>,<span class='fl'>6</span>,<span class='fl'>8</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>,<span class='fl'>5</span>,<span class='fl'>7</span>,<span class='fl'>9</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/order.html'>order</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>study</span>, <span class='va'>dat</span><span class='op'>$</span><span class='va'>time</span><span class='op'>)</span>,<span class='op'>]</span>
+<span class='va'>is.miss</span>  <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>yi</span><span class='op'>)</span>
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat</span><span class='op'>[</span><span class='op'>!</span><span class='va'>is.miss</span>,<span class='op'>]</span>
+<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='cn'>NULL</span>
+<span class='va'>dat</span>
+</div><div class='output co'>#&gt;                           study mdur mbase time    yi    vi 
+#&gt; 1                Alegret (2001) 16.1  53.6    1 -33.4  14.3 
+#&gt; 2             Barichella (2003) 13.5  45.3    1 -20.0   7.3 
+#&gt; 3             Barichella (2003) 13.5  45.3    3 -30.0   5.7 
+#&gt; 4                 Berney (2002) 13.6  45.6    1 -21.1   7.3 
+#&gt; 5               Burchiel (1999) 13.6  48.0    1 -20.0   8.0 
+#&gt; 6               Burchiel (1999) 13.6  48.0    2 -20.0   8.0 
+#&gt; 7               Burchiel (1999) 13.6  48.0    3 -18.0   5.0 
+#&gt; 8                   Chen (2003) 12.1  65.7    2 -32.9 125.0 
+#&gt; 9  DBS for PD Study Grp. (2001) 14.4  54.0    1 -25.6   4.2 
+#&gt; 10 DBS for PD Study Grp. (2001) 14.4  54.0    2 -28.3   4.6 
+#&gt; 11              Dujardin (2001) 13.1  65.0    1 -30.3  88.2 
+#&gt; 12              Dujardin (2001) 13.1  65.0    3 -24.5 170.7 
+#&gt; 13              Esselink (2004) 12.0  51.5    2 -25.0  17.0 
+#&gt; 14            Funkiewiez (2003) 14.0  56.0    3 -36.0   5.0 
+#&gt; 15                Herzog (2003) 15.0  44.9    2 -22.5   6.8 
+#&gt; 16                Herzog (2003) 15.0  44.9    3 -25.2  11.0 
+#&gt; 17                Herzog (2003) 15.0  44.9    4 -25.7  15.4 
+#&gt; 18                Iansek (2002) 13.0  27.6    2  -8.6  41.0 
+#&gt; 19                  Just (2002) 14.0  44.0    1 -26.0  22.4 
+#&gt; 20                  Just (2002) 14.0  44.0    2 -30.0  20.6 
+#&gt; 21        Kleiner-Fisman (1999) 13.4  50.1    3 -25.5   8.2 
+#&gt; 22        Kleiner-Fisman (1999) 13.4  50.1    4 -19.5  13.0 
+#&gt; 23                 Krack (2003) 14.6  55.7    3 -36.7   5.8 
+#&gt; 24                 Krack (2003) 14.6  55.7    4 -32.9   6.1 
+#&gt; 25                Krause (2001) 13.7  59.0    1 -27.5   3.8 
+#&gt; 26                Krause (2001) 13.7  59.0    2 -23.5   3.8 
+#&gt; 27                Krause (2001) 13.7  59.0    3 -29.0   3.8 
+#&gt; 28                Krause (2004) 14.4  60.0    3 -25.0  13.0 
+#&gt; 29                Krause (2004) 14.4  60.0    4 -23.0  15.4 
+#&gt; 30                 Kumar (1998) 14.3  55.7    2 -36.3  27.3 
+#&gt; 31              Lagrange (2002) 14.0  53.7    3 -29.4  10.7 
+#&gt; 32              Limousin (1998) 14.0  57.0    1 -31.0   2.6 
+#&gt; 33              Limousin (1998) 14.0  57.0    2 -34.0   2.0 
+#&gt; 34              Limousin (1998) 14.0  57.0    3 -32.5   2.0 
+#&gt; 35            Linazasoro (2003) 13.7  47.7    3 -20.6  25.3 
+#&gt; 36               Lopiano (2001) 15.4  59.8    1 -33.9  20.1 
+#&gt; 37                 Macia (2004) 15.0  55.2    3 -35.4  21.2 
+#&gt; 38       Martinez-Martin (2002) 16.4  55.7    2 -34.9  18.0 
+#&gt; 39             Molinuevo (2000) 15.8  49.6    2 -32.7  16.3 
+#&gt; 40                  Moro (1999) 15.4  67.6    1 -23.0  38.1 
+#&gt; 41                  Moro (1999) 15.4  67.6    2 -24.1  32.9 
+#&gt; 42                  Moro (1999) 15.4  67.6    3 -27.8  31.0 
+#&gt; 43                  Moro (1999) 15.4  67.6    4 -28.3  34.6 
+#&gt; 44            Ostergaard (2002) 15.0  51.3    1 -31.2  12.7 
+#&gt; 45            Ostergaard (2002) 15.0  51.3    3 -33.0   9.5 
+#&gt; 46                 Pahwa (2003) 12.1  41.3    1 -16.2   5.9 
+#&gt; 47                 Pahwa (2003) 12.1  41.3    3 -16.3   7.0 
+#&gt; 48                 Pahwa (2003) 12.1  41.3    4 -11.5  12.7 
+#&gt; 49                 Patel (2003) 10.0  47.8    3 -29.2   5.8 
+#&gt; 50               Perozzo (2001) 15.4  59.7    2 -31.7  12.4 
+#&gt; 51      Pinter (1999) - Long FU 11.3  60.0    1 -32.2  26.5 
+#&gt; 52      Pinter (1999) - Long FU 11.3  60.0    3 -32.9  29.0 
+#&gt; 53     Pinter (1999) - Short FU 11.5  59.7    1 -31.7  19.1 
+#&gt; 54        Rodriguez-Oroz (2000) 16.5  51.5    1 -29.3  22.9 
+#&gt; 55        Rodriguez-Oroz (2000) 16.5  51.5    2 -32.0  20.0 
+#&gt; 56        Rodriguez-Oroz (2000) 16.5  51.5    3 -36.7  17.8 
+#&gt; 57                Romito (2003) 13.8  63.9    1 -30.1   9.4 
+#&gt; 58                Romito (2003) 13.8  63.9    2 -30.5   8.7 
+#&gt; 59                Romito (2003) 13.8  63.9    3 -29.7  10.4 
+#&gt; 60                Romito (2003) 13.8  63.9    4 -31.9  13.3 
+#&gt; 61             Rousseaux (2004) 12.0  52.3    1 -17.6  28.4 
+#&gt; 62         Russman (2004) (21m) 15.9  47.1    4 -22.9  20.0 
+#&gt; 63             Schneider (2003) 17.0  51.3    3 -36.0  27.7 
+#&gt; 64          Seif (2004) (17.5m) 15.0  44.2    4 -22.5  20.3 
+#&gt; 65                Simuni (2002) 16.7  43.5    1 -19.4   1.6 
+#&gt; 66                Simuni (2002) 16.7  43.5    2 -18.0   1.7 
+#&gt; 67                Simuni (2002) 16.7  43.5    3 -20.5   1.5 
+#&gt; 68       Straits-Troster (2000)  8.0  47.4    1  -9.3  85.2 
+#&gt; 69               Thobois (2002) 13.5  44.9    2 -24.7  15.5 
+#&gt; 70               Thobois (2002) 13.5  44.9    3 -27.9  17.1 
+#&gt; 71               Troster (2003)  9.5  41.6    1 -16.7   9.8 
+#&gt; 72          Valldeoriola (2002) 15.6  49.0    2 -31.2 196.0 
+#&gt; 73          Valldeoriola (2002) 15.6  49.0    4 -27.4 201.6 
+#&gt; 74                Vesper (2002) 14.0  53.0    1 -27.0   5.5 
+#&gt; 75                Vesper (2002) 14.0  53.0    2 -30.0   3.5 
+#&gt; 76           Vingerhoets (2002) 16.0  48.8    1 -19.7  18.5 
+#&gt; 77           Vingerhoets (2002) 16.0  48.8    2 -22.1  18.1 
+#&gt; 78           Vingerhoets (2002) 16.0  48.8    3 -24.3  18.2 
+#&gt; 79           Vingerhoets (2002) 16.0  48.8    4 -21.9  16.7 
+#&gt; 80               Volkman (2001) 13.1  56.4    2 -37.8  20.9 
+#&gt; 81               Volkman (2001) 13.1  56.4    3 -34.0  26.4 
+#&gt; 82           Weselburger (2002) 14.0  50.3    1 -22.1  40.8 </div><div class='input'>
+<span class='co'>### aggregate the estimates to the study level, assuming a CAR structure for</span>
+<span class='co'>### the sampling errors within studies with an autocorrelation of 0.9</span>
+<span class='va'>agg</span> <span class='op'>&lt;-</span> <span class='fu'>aggregate</span><span class='op'>(</span><span class='va'>dat</span>, cluster<span class='op'>=</span><span class='va'>study</span>, struct<span class='op'>=</span><span class='st'>"CAR"</span>, time<span class='op'>=</span><span class='va'>time</span>, phi<span class='op'>=</span><span class='fl'>0.9</span><span class='op'>)</span>
+<span class='va'>agg</span>
+</div><div class='output co'>#&gt;                           study mdur mbase     time    yi    vi 
+#&gt; 1                Alegret (2001) 16.1  53.6 1.000000 -33.4  14.3 
+#&gt; 2             Barichella (2003) 13.5  45.3 2.000000 -28.1   5.6 
+#&gt; 3                 Berney (2002) 13.6  45.6 1.000000 -21.1   7.3 
+#&gt; 4               Burchiel (1999) 13.6  48.0 2.000000 -17.2   4.6 
+#&gt; 5                   Chen (2003) 12.1  65.7 2.000000 -32.9 125.0 
+#&gt; 6  DBS for PD Study Grp. (2001) 14.4  54.0 1.500000 -26.3   4.1 
+#&gt; 7               Dujardin (2001) 13.1  65.0 2.000000 -31.4  86.1 
+#&gt; 8               Esselink (2004) 12.0  51.5 2.000000 -25.0  17.0 
+#&gt; 9             Funkiewiez (2003) 14.0  56.0 3.000000 -36.0   5.0 
+#&gt; 10                Herzog (2003) 15.0  44.9 3.000000 -21.3   6.3 
+#&gt; 11                Iansek (2002) 13.0  27.6 2.000000  -8.6  41.0 
+#&gt; 12                  Just (2002) 14.0  44.0 1.500000 -28.8  20.2 
+#&gt; 13        Kleiner-Fisman (1999) 13.4  50.1 3.500000 -28.0   7.7 
+#&gt; 14                 Krack (2003) 14.6  55.7 3.500000 -35.3   5.6 
+#&gt; 15                Krause (2001) 13.7  59.0 2.000000 -28.0   3.4 
+#&gt; 16                Krause (2004) 14.4  60.0 3.500000 -24.8  13.0 
+#&gt; 17                 Kumar (1998) 14.3  55.7 2.000000 -36.3  27.3 
+#&gt; 18              Lagrange (2002) 14.0  53.7 3.000000 -29.4  10.7 
+#&gt; 19              Limousin (1998) 14.0  57.0 2.000000 -33.6   1.9 
+#&gt; 20            Linazasoro (2003) 13.7  47.7 3.000000 -20.6  25.3 
+#&gt; 21               Lopiano (2001) 15.4  59.8 1.000000 -33.9  20.1 
+#&gt; 22                 Macia (2004) 15.0  55.2 3.000000 -35.4  21.2 
+#&gt; 23       Martinez-Martin (2002) 16.4  55.7 2.000000 -34.9  18.0 
+#&gt; 24             Molinuevo (2000) 15.8  49.6 2.000000 -32.7  16.3 
+#&gt; 25                  Moro (1999) 15.4  67.6 2.500000 -26.5  29.8 
+#&gt; 26            Ostergaard (2002) 15.0  51.3 2.000000 -32.8   9.4 
+#&gt; 27                 Pahwa (2003) 12.1  41.3 2.666667 -18.4   5.2 
+#&gt; 28                 Patel (2003) 10.0  47.8 3.000000 -29.2   5.8 
+#&gt; 29               Perozzo (2001) 15.4  59.7 2.000000 -31.7  12.4 
+#&gt; 30      Pinter (1999) - Long FU 11.3  60.0 2.000000 -32.5  25.0 
+#&gt; 31     Pinter (1999) - Short FU 11.5  59.7 1.000000 -31.7  19.1 
+#&gt; 32        Rodriguez-Oroz (2000) 16.5  51.5 2.000000 -35.3  17.5 
+#&gt; 33                Romito (2003) 13.8  63.9 2.500000 -30.2   8.5 
+#&gt; 34             Rousseaux (2004) 12.0  52.3 1.000000 -17.6  28.4 
+#&gt; 35         Russman (2004) (21m) 15.9  47.1 4.000000 -22.9  20.0 
+#&gt; 36             Schneider (2003) 17.0  51.3 3.000000 -36.0  27.7 
+#&gt; 37          Seif (2004) (17.5m) 15.0  44.2 4.000000 -22.5  20.3 
+#&gt; 38                Simuni (2002) 16.7  43.5 2.000000 -20.7   1.4 
+#&gt; 39       Straits-Troster (2000)  8.0  47.4 1.000000  -9.3  85.2 
+#&gt; 40               Thobois (2002) 13.5  44.9 2.500000 -25.5  15.3 
+#&gt; 41               Troster (2003)  9.5  41.6 1.000000 -16.7   9.8 
+#&gt; 42          Valldeoriola (2002) 15.6  49.0 3.000000 -29.4 179.8 
+#&gt; 43                Vesper (2002) 14.0  53.0 1.500000 -31.2   3.3 
+#&gt; 44           Vingerhoets (2002) 16.0  48.8 2.500000 -20.7  15.1 
+#&gt; 45               Volkman (2001) 13.1  56.4 2.500000 -38.0  20.9 
+#&gt; 46           Weselburger (2002) 14.0  50.3 1.000000 -22.1  40.8 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

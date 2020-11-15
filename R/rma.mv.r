@@ -254,7 +254,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
    ### some checks on V (and turn V into a diagonal matrix if it is a column/row vector)
 
    if (is.null(V))
-      stop(mstyle$stop("Need to specify 'V' argument."))
+      stop(mstyle$stop("Must specify 'V' argument."))
 
    if (is.list(V) && !is.data.frame(V)) {
 

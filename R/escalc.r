@@ -1890,7 +1890,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
       if (is.null(vi)) {
          if (is.null(sei)) {
-            stop(mstyle$stop("Need to specify 'vi' or 'sei' argument."))
+            stop(mstyle$stop("Must specify 'vi' or 'sei' argument."))
          } else {
             vi <- sei^2
          }

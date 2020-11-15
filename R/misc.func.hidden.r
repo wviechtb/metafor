@@ -897,7 +897,7 @@
 .glmulti <- parse(text="
 
 if (!(\"glmulti\" %in% .packages()))
-   stop(\"Need to load the 'glmulti' package first to use this code.\")
+   stop(\"Must load the 'glmulti' package first to use this code.\")
 
 setOldClass(\"rma.uni\")
 

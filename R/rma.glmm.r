@@ -15,7 +15,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    ### (arguments "to" and "vtype" are checked inside escalc function)
 
    if (missing(measure))
-      stop(mstyle$stop("Need to specify 'measure' argument."))
+      stop(mstyle$stop("Must specify 'measure' argument."))
 
    if (!is.element(measure, c("OR","IRR","PLO","IRLN")))
       stop(mstyle$stop("Unknown 'measure' specified."))

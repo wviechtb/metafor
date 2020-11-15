@@ -9,7 +9,7 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, digits, ...) {
       stop(mstyle$stop("Method not available for objects of class \"rma.uni.selmodel\"."))
 
    if (missing(cluster))
-      stop(mstyle$stop("Need to specify 'cluster' variable."))
+      stop(mstyle$stop("Must specify 'cluster' variable."))
 
    if (missing(digits)) {
       digits <- .get.digits(xdigits=x$digits, dmiss=TRUE)

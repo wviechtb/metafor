@@ -1,11 +1,11 @@
-aggregate.escalc <- function(x, cluster, V, struct="CS", rho, fun, na.rm=TRUE, subset, select, digits, ...) {
+aggregate.escalc <- function(x, cluster, time, V, struct="CS", rho, phi, fun, na.rm=TRUE, subset, select, digits, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
    if (!inherits(x, "escalc"))
       stop(mstyle$stop("Argument 'x' must be an object of class \"escalc\"."))
 
-   if (any(!is.element(struct, c("CS","ID"))))
+   if (any(!is.element(struct, c("ID","CS","CAR","CS+CAR"))))
       stop(mstyle$stop("Unknown 'struct' specified."))
 
    if (length(na.rm) == 1L)
@@ -21,10 +21,12 @@ aggregate.escalc <- function(x, cluster, V, struct="CS", rho, fun, na.rm=TRUE, s
 
    mf.V       <- mf[[match("V",       names(mf))]]
    mf.cluster <- mf[[match("cluster", names(mf))]]
+   mf.time    <- mf[[match("time",    names(mf))]]
    mf.subset  <- mf[[match("subset",  names(mf))]]
 
    V       <- eval(mf.V,       x, enclos=sys.frame(sys.parent())) # NULL if user does not specify this
    cluster <- eval(mf.cluster, x, enclos=sys.frame(sys.parent())) # NULL if user does not specify this
+   time    <- eval(mf.time,    x, enclos=sys.frame(sys.parent())) # NULL if user does not specify this
    subset  <- eval(mf.subset,  x, enclos=sys.frame(sys.parent())) # NULL if user does not specify this
 
    #########################################################################
@@ -32,7 +34,7 @@ aggregate.escalc <- function(x, cluster, V, struct="CS", rho, fun, na.rm=TRUE, s
    ### checks on cluster variable
 
    if (is.null(cluster))
-      stop(mstyle$stop("Need to specify 'cluster' variable."))
+      stop(mstyle$stop("Must specify 'cluster' variable."))
 
    if (anyNA(cluster))
       stop(mstyle$stop("No missing values allowed in 'cluster' variable."))
@@ -69,12 +71,12 @@ aggregate.escalc <- function(x, cluster, V, struct="CS", rho, fun, na.rm=TRUE, s
       ### construct V matrix based on the specified structure
 
       if (struct=="ID")
-         V <- diag(as.vector(vi), nrow=k, ncol=k)
+         R <- diag(1, nrow=k, ncol=k)
 
-      if (struct=="CS") {
+      if (is.element(struct, c("CS","CS+CAR"))) {
 
          if (missing(rho))
-            stop(mstyle$stop("Need to specify 'rho' for this var-cov structure."))
+            stop(mstyle$stop("Must specify 'rho' for this var-cov structure."))
 
          if (length(rho) == 1L)
             rho <- rep(rho, n)
@@ -83,17 +85,64 @@ aggregate.escalc <- function(x, cluster, V, struct="CS", rho, fun, na.rm=TRUE, s
             stop(mstyle$stop(paste0("Length of 'rho' (", length(rho), ") does not match the number of clusters (", n, ").")))
 
          if (any(rho > 1) || any(rho < -1))
-            stop(mstyle$stop("Value(s) of 'rho' must be between -1 and +1."))
+            stop(mstyle$stop("Value(s) of 'rho' must be in [-1,1]."))
+
+      }
+
+      if (is.element(struct, c("CAR","CS+CAR"))) {
+
+         if (missing(phi))
+            stop(mstyle$stop("Must specify 'phi' for this var-cov structure."))
+
+         if (length(phi) == 1L)
+            phi <- rep(phi, n)
+
+         if (length(phi) != n)
+            stop(mstyle$stop(paste0("Length of 'phi' (", length(phi), ") does not match the number of clusters (", n, ").")))
+
+         if (any(phi > 1) || any(phi < 0))
+            stop(mstyle$stop("Value(s) of 'phi' must be in [0,1]."))
+
+         ### checks on time variable
+
+         if (is.null(time))
+            stop(mstyle$stop("Must specify 'time' variable for this var-cov structure."))
+
+         if (length(time) != k)
+            stop(mstyle$stop(paste0("Length of variable specified via 'time' (", length(time), ") does not match length of data (", k, ").")))
+
+      }
+
+      if (struct=="CS") {
 
          R <- matrix(0, nrow=k, ncol=k)
          for (i in 1:n) {
             R[cluster == ucluster[i], cluster == ucluster[i]] <- rho[i]
          }
-         diag(R) <- 1
-         S <- diag(sqrt(as.vector(vi)), nrow=k, ncol=k)
-         V <- S %*% R %*% S
 
       }
+
+      if (struct == "CAR") {
+
+         R <- matrix(0, nrow=k, ncol=k)
+         for (i in 1:n) {
+            R[cluster == ucluster[i], cluster == ucluster[i]] <- outer(time[cluster == ucluster[i]], time[cluster == ucluster[i]], function(x,y) phi[i]^(abs(x-y)))
+         }
+
+      }
+
+      if (struct == "CS+CAR") {
+
+         R <- matrix(0, nrow=k, ncol=k)
+         for (i in 1:n) {
+            R[cluster == ucluster[i], cluster == ucluster[i]] <- rho[i] + (1 - rho[i]) * outer(time[cluster == ucluster[i]], time[cluster == ucluster[i]], function(x,y) phi[i]^(abs(x-y)))
+         }
+
+      }
+
+      diag(R) <- 1
+      S <- diag(sqrt(as.vector(vi)), nrow=k, ncol=k)
+      V <- S %*% R %*% S
 
    } else {
 
@@ -329,6 +378,8 @@ aggregate.escalc <- function(x, cluster, V, struct="CS", rho, fun, na.rm=TRUE, s
       sel <- eval(substitute(select), nl, parent.frame())
       xagg <- xagg[,sel,drop=FALSE]
    }
+
+   rownames(xagg) <- NULL
 
    return(xagg)
 

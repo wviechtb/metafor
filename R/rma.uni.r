@@ -259,7 +259,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
       if (is.null(vi)) {
          if (is.null(sei)) {
-            stop(mstyle$stop("Need to specify 'vi' or 'sei' argument."))
+            stop(mstyle$stop("Must specify 'vi' or 'sei' argument."))
          } else {
             vi <- sei^2
          }

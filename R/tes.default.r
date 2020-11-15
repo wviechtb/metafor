@@ -92,7 +92,7 @@ tes.default <- function(x, vi, sei, subset,
    }
 
    if (is.null(vi))
-      stop(mstyle$stop("Need to specify 'vi' or 'sei' argument."))
+      stop(mstyle$stop("Must specify 'vi' or 'sei' argument."))
 
    yi <- x
 
