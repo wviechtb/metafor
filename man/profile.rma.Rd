@@ -60,7 +60,7 @@
    \itemize{
    \item For objects of class \code{"rma.uni"} obtained with the \code{\link{rma.uni}} function, the function profiles over parameter \mjseqn{\tau^2} (not for fixed-effects models).
    \item For objects of class \code{"rma.mv"} obtained with the \code{\link{rma.mv}} function, profiling is done by default over all (non-fixed) variance and correlation components of the model. Alternatively, one can use the \code{sigma2}, \code{tau2}, \code{rho}, \code{gamma2}, or \code{phi} arguments to specify over which parameter the profiling should be done. Only one of these arguments can be used at a time. A single integer is used to specify the number of the parameter.
-   \item  For objects of class \code{"rma.uni.selmodel"} obtained with the \code{\link{selmodel.rma.uni}} function, profiling is done by default over \mjseqn{\tau^2} (for models where this is an estimated parameter) and all (non-fixed) selection model parameters. Alternatively, one can choose to profile only \mjseqn{\tau^2} by setting \code{tau2=TRUE} or one can select one of the selection model parameters to profile by specifying its number via the \code{delta} argument.
+   \item For objects of class \code{"rma.uni.selmodel"} obtained with the \code{\link{selmodel.rma.uni}} function, profiling is done by default over \mjseqn{\tau^2} (for models where this is an estimated parameter) and all (non-fixed) selection model parameters. Alternatively, one can choose to profile only \mjseqn{\tau^2} by setting \code{tau2=TRUE} or one can select one of the selection model parameters to profile by specifying its number via the \code{delta} argument.
    }
 
    A profile plot should show a single peak at the corresponding ML/REML estimate (assuming that the model was fitted with ML/REML estimation). The value of the parameter estimate is indicated by a dotted vertical line and its log-likelihood value by a dotted horizontal line. Hence, the intersection of these two lines should correspond to the peak.
@@ -99,7 +99,7 @@
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}
 }
 \seealso{
-   \code{\link{rma.uni}}, \code{\link{rma.mv}}
+   \code{\link{rma.uni}}, \code{\link{rma.mv}}, \code{\link{selmodel.rma.uni}}
 }
 \examples{
 ### calculate log odds ratios and corresponding sampling variances

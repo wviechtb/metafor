@@ -6,7 +6,7 @@ confint.rma.peto <- function(object, parm, level, digits, transf, targs, ...) {
       stop(mstyle$stop("Argument 'object' must be an object of class \"rma.peto\"."))
 
    if (!missing(parm))
-      warning(mstyle$warning("Argument 'parm' currently ignored."), call.=FALSE)
+      warning(mstyle$warning("Argument 'parm' (currently) ignored."), call.=FALSE)
 
    x <- object
 

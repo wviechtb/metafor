@@ -162,7 +162,7 @@ profile.rma.uni.selmodel <- function(fitted, tau2, delta,
 
    ### if everything is good so far, get value of the variance component and set 'comp'
 
-   delta.pos  <- NA
+   delta.pos <- NA
 
    if (!missing(tau2)) {
       vc <- x$tau2

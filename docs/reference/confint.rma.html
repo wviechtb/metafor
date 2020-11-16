@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Confidence Intervals for 'rma' Objects — confint.rma" />
-<meta property="og:description" content="The function calculates confidence intervals for the model coefficients and/or for variance/correlation parameters in the model (the latter only for rma.uni and rma.mv objects). " />
+<meta property="og:description" content="The function calculates confidence intervals for the model coefficients and/or other parameters in the model. " />
 
 
 
@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-59</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-60</span>
       </span>
     </div>
 
@@ -132,7 +132,7 @@
     </div>
 
     <div class="ref-description">
-    <p>The function calculates confidence intervals for the model coefficients and/or for variance/correlation parameters in the model (the latter only for <code><a href='rma.uni.html'>rma.uni</a></code> and <code><a href='rma.mv.html'>rma.mv</a></code> objects). <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
+    <p>The function calculates confidence intervals for the model coefficients and/or other parameters in the model. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for rma.uni</span>
@@ -150,6 +150,10 @@
 
 <span class='co'># S3 method for rma.mv</span>
 <span class='fu'>confint</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>parm</span>, <span class='va'>level</span>, fixed<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>sigma2</span>, <span class='va'>tau2</span>, <span class='va'>rho</span>, <span class='va'>gamma2</span>, <span class='va'>phi</span>,
+        <span class='va'>digits</span>, <span class='va'>transf</span>, <span class='va'>targs</span>, verbose<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>control</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for rma.uni.selmodel</span>
+<span class='fu'>confint</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>parm</span>, <span class='va'>level</span>, fixed<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>tau2</span>, <span class='va'>delta</span>,
         <span class='va'>digits</span>, <span class='va'>transf</span>, <span class='va'>targs</span>, verbose<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>control</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -157,7 +161,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p>an object of class <code>"rma.uni"</code>, <code>"rma.mh"</code>, <code>"rma.peto"</code>, or <code>"rma.mv"</code>. The method is not yet implemented for objects of class <code>"rma.glmm"</code>.</p></td>
+      <td><p>an object of class <code>"rma.uni"</code>, <code>"rma.mh"</code>, <code>"rma.peto"</code>, <code>"rma.mv"</code>, or <code>"rma.uni.selmodel"</code>. The method is not yet implemented for objects of class <code>"rma.glmm"</code>.</p></td>
     </tr>
     <tr>
       <th>parm</th>
@@ -165,31 +169,35 @@
     </tr>
     <tr>
       <th>fixed</th>
-      <td><p>logical to specify whether confidence intervals for the model coefficients should be returned (the default is <code>FALSE</code>).</p></td>
+      <td><p>logical to specify whether confidence intervals for the model coefficients should be returned.</p></td>
     </tr>
     <tr>
       <th>random</th>
-      <td><p>logical to specify whether a confidence interval for the amount of (residual) heterogeneity should be returned (the default is <code>TRUE</code>) (only relevant for <code>"rma.uni"</code> objects).</p></td>
+      <td><p>logical to specify whether a confidence interval for the amount of (residual) heterogeneity should be returned.</p></td>
     </tr>
     <tr>
       <th>sigma2</th>
-      <td><p>integer to specify for which \(\sigma^2\) value a confidence interval should be obtained (only relevant for <code>"rma.mv"</code> objects).</p></td>
+      <td><p>integer to specify for which \(\sigma^2\) value a confidence interval should be obtained.</p></td>
     </tr>
     <tr>
       <th>tau2</th>
-      <td><p>integer to specify for which \(\tau^2\) value a confidence interval should be obtained (only relevant for <code>"rma.mv"</code> objects).</p></td>
+      <td><p>integer to specify for which \(\tau^2\) value a confidence interval should be obtained.</p></td>
     </tr>
     <tr>
       <th>rho</th>
-      <td><p>integer to specify for which \(\rho\) value the confidence interval should be obtained (only relevant for <code>"rma.mv"</code> objects).</p></td>
+      <td><p>integer to specify for which \(\rho\) value the confidence interval should be obtained.</p></td>
     </tr>
     <tr>
       <th>gamma2</th>
-      <td><p>integer to specify for which \(\gamma^2\) value a confidence interval should be obtained (only relevant for <code>"rma.mv"</code> objects).</p></td>
+      <td><p>integer to specify for which \(\gamma^2\) value a confidence interval should be obtained.</p></td>
     </tr>
     <tr>
       <th>phi</th>
-      <td><p>integer to specify for which \(\phi\) value a confidence interval should be obtained (only relevant for <code>"rma.mv"</code> objects).</p></td>
+      <td><p>integer to specify for which \(\phi\) value a confidence interval should be obtained.</p></td>
+    </tr>
+    <tr>
+      <th>delta</th>
+      <td><p>integer to specify for which \(\delta\) value a confidence interval should be obtained.</p></td>
     </tr>
     <tr>
       <th>level</th>
@@ -223,28 +231,34 @@
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The confidence intervals for the model coefficients are simply the usual Wald-type intervals which are also shown when printing the fitted object.</p>
-<p>For objects of class <code>"rma.uni"</code> obtained with the <code><a href='rma.uni.html'>rma.uni</a></code> function, the confidence interval for the amount of (residual) heterogeneity (i.e., \(\tau^2\)) is obtained iteratively either via the Q-profile method or via the generalized Q-statistic method (Hartung and Knapp, 2005; Viechtbauer, 2007; Jackson, 2013; Jackson et al., 2014). The latter is automatically used when the model was fitted with <code>method="GENQ"</code>, the former is used in all other cases. Either method provides an exact confidence interval for \(\tau^2\) in random- and mixed-effects models. The square root of the interval bounds is also returned for easier interpretation. Confidence intervals for \(I^2\) and \(H^2\) are also provided (Higgins &amp; Thompson, 2002). Since \(I^2\) and \(H^2\) are just monotonic transformations of \(\tau^2\) (for details, see <code><a href='print.rma.html'>print.rma.uni</a></code>), the confidence intervals for \(I^2\) and \(H^2\) are also exact.</p>
-<p>For objects of class <code>"rma.mv"</code> obtained with the <code><a href='rma.mv.html'>rma.mv</a></code> function, profile likelihood confidence intervals are obtained by default for all (non-fixed) variance and correlation components of the model. Alternatively, one can use the <code>sigma2</code>, <code>tau2</code>, <code>rho</code>, <code>gamma2</code>, or <code>phi</code> arguments to specify for which variance/correlation parameter a confidence interval should be obtained. Only one of these arguments can be used at a time. A single integer is used to specify the number of the parameter. The function then provides a profile likelihood confidence interval for the specified parameter. It is a good idea to examine the corresponding profile likelihood plot (via the <code><a href='profile.rma.uni.html'>profile.rma.mv</a></code> function) to make sure that the bounds obtained are sensible.</p>
-<p>The methods used to find a confidence interval for a variance/correlation component are iterative and require the use of the <code><a href='https://rdrr.io/r/stats/uniroot.html'>uniroot</a></code> function. By default, the desired accuracy (<code>tol</code>) is set equal to <code>.Machine$double.eps^0.25</code> and the maximum number of iterations (<code>maxiter</code>) to <code>1000</code>. These values can be adjusted with <code>control=list(tol=value, maxiter=value)</code>, but the defaults should be adequate for most purposes. If <code>verbose=TRUE</code>, output is generated on the progress of the iterative algorithm. This is especially useful when model fitting is slow, in which case finding the confidence interval bounds can also take considerable amounts of time.</p>
+    <p>Confidence intervals for the model coefficients can be obtained by setting <code>fixed=TRUE</code> and are simply the usual Wald-type intervals (which are also shown when printing the fitted object).</p>
+<p>Other parameter(s) for which confidence intervals can be obtained depend on the model object:</p>
+<p></p><ul>
+<li><p>For objects of class <code>"rma.uni"</code> obtained with the <code><a href='rma.uni.html'>rma.uni</a></code> function, a confidence interval for the amount of (residual) heterogeneity (i.e., \(\tau^2\)) can be obtained by setting <code>random=TRUE</code> (which is the default). The interval is obtained iteratively either via the Q-profile method or via the generalized Q-statistic method (Hartung and Knapp, 2005; Viechtbauer, 2007; Jackson, 2013; Jackson et al., 2014). The latter is automatically used when the model was fitted with <code>method="GENQ"</code>, the former is used in all other cases. Either method provides an exact confidence interval for \(\tau^2\) in random- and mixed-effects models. The square root of the interval bounds is also returned for easier interpretation. Confidence intervals for \(I^2\) and \(H^2\) are also provided (Higgins &amp; Thompson, 2002). Since \(I^2\) and \(H^2\) are just monotonic transformations of \(\tau^2\) (for details, see <code><a href='print.rma.html'>print.rma.uni</a></code>), the confidence intervals for \(I^2\) and \(H^2\) are also exact.</p></li>
+<li><p>For objects of class <code>"rma.mv"</code> obtained with the <code><a href='rma.mv.html'>rma.mv</a></code> function, confidence intervals are obtained by default for all (non-fixed) variance and correlation components of the model. Alternatively, one can use the <code>sigma2</code>, <code>tau2</code>, <code>rho</code>, <code>gamma2</code>, or <code>phi</code> arguments to specify for which variance/correlation parameter a confidence interval should be obtained. Only one of these arguments can be used at a time. A single integer is used to specify the number of the parameter. The function provides profile likelihood confidence intervals for these parameters. It is a good idea to examine the corresponding profile likelihood plots (via the <code><a href='profile.rma.uni.html'>profile.rma.mv</a></code> function) to make sure that the bounds obtained are sensible.</p></li>
+<li><p>For objects of class <code>"rma.uni.selmodel"</code> obtained with the <code><a href='selmodel.html'>selmodel.rma.uni</a></code> function, confidence intervals are obtained by default for \(\tau^2\) (for models where this is an estimated parameter) and all (non-fixed) selection model parameters. Alternatively, one can choose to obtain a confidence interval only for \(\tau^2\) by setting <code>tau2=TRUE</code> or for one of the selection model parameters by specifying its number via the <code>delta</code> argument. The function provides profile likelihood confidence intervals for these parameters. It is a good idea to examine the corresponding profile likelihood plots (via the <code><a href='profile.rma.uni.html'>profile.rma.uni.selmodel</a></code> function) to make sure that the bounds obtained are sensible.</p></li>
+</ul>
+
+<p>The methods used to find confidence intervals for these parameters are iterative and require the use of the <code><a href='https://rdrr.io/r/stats/uniroot.html'>uniroot</a></code> function. By default, the desired accuracy (<code>tol</code>) is set equal to <code>.Machine$double.eps^0.25</code> and the maximum number of iterations (<code>maxiter</code>) to <code>1000</code>. These values can be adjusted with <code>control=list(tol=value, maxiter=value)</code>, but the defaults should be adequate for most purposes. If <code>verbose=TRUE</code>, output is generated on the progress of the iterative algorithm. This is especially useful when model fitting is slow, in which case finding the confidence interval bounds can also take considerable amounts of time.</p>
 <p>When using the <code><a href='https://rdrr.io/r/stats/uniroot.html'>uniroot</a></code> function, one must also set appropriate end points of the interval to be searched for the confidence interval bounds. The function tries to set some sensible defaults for the end points, but it may happen that the function is only able to determine that a bound is below/above a certain limit (this is indicated in the output accordingly with <code>&lt;</code> or <code>&gt;</code> signs). It can also happen that the model cannot be fitted or does not converge especially at the extremes of the interval to be searched. This will result in missing (<code>NA</code>) bounds and corresponding warnings. It may then be necessary to adjust the end points manually (see &#8216;Note&#8217;).</p>
 <p>Finally, it is also possible that the lower and upper confidence interval bounds for a variance component both fall below zero. Since both bounds then fall outside of the parameter space, the confidence interval then consists of the null/empty set. Alternatively, one could interpret this as a CI with bounds \([0,0]\) or as indicating &#8216;highly/overly homogeneous&#8217; data.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class <code>"confint.rma"</code>. The object is a list with either one or two elements (named <code>fixed</code> and <code>random</code>) with the following elements:</p>
-<dt>estimate</dt><dd><p>estimate of the model coefficient or variance component.</p></dd>
+<dt>estimate</dt><dd><p>estimate of the model coefficient, variance/correlation component, or selection model parameter.</p></dd>
    <dt>ci.lb</dt><dd><p>lower bound of the confidence interval.</p></dd>
    <dt>ci.ub</dt><dd><p>upper bound of the confidence interval.</p></dd>
 
-   When obtaining CIs for all variance and correlation components of "rma.mv" models, the object is a list of class "list.confint.rma", where each element is a "confint.rma" object as described above.
+   When obtaining CIs for multiple components, the object is a list of class "list.confint.rma", where each element is a "confint.rma" object as described above.
 
    The results are formatted and printed with the <a href='print.confint.rma.html'>print.confint.rma</a> and <a href='print.confint.rma.html'>print.list.confint.rma</a> functions.
 
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>When computing a confidence interval for \(\tau^2\) for objects of class <code>"rma.uni"</code>, the estimate of \(\tau^2\) will usually fall within the confidence interval provided by the Q-profile method. However, this is not guaranteed. Depending on the method used to estimate \(\tau^2\) and the width of the confidence interval, it can happen that the confidence interval does not actually contain the estimate (trying to explain this to reviewers can be tricky). Using the empirical Bayes or Paule-Mandel estimator of \(\tau^2\) when fitting the model (i.e., using <code>method="EB"</code> or <code>method="PM"</code>) guarantees that the estimate of \(\tau^2\) falls within the confidence interval. When <code>method="GENQ"</code> was used to fit the model, the corresponding CI obtained via the generalized Q-statistic method is also guaranteed to contain the estimate \(\tau^2\).</p>
-<p>When computing a confidence interval for \(\tau^2\) for objects of class <code>"rma.uni"</code>, the end points of the interval to be searched for the confidence interval bounds are \([0,100]\). The upper bound should be large enough for most cases, but can be adjusted with <code>control=list(tau2.max=value)</code>. One can also adjust the lower end point with <code>control=list(tau2.min=value)</code> (the default is to take that value from the object, which is 0 by default). You should only play around with this value if you know what you are doing.</p>
-<p>For objects of class <code>"rma.mv"</code>, the function provides confidence intervals for the variance/correlation parameters in the model. For variance components, the lower end point of the interval to be searched is set to 0 and the upper end point to the larger of 10 and 100 times the value of the component. For correlations, the function tries to set the lower end point to a sensible default depending on the type of variance structure chosen, while the upper end point is set to 1. One can adjust the lower and/or upper end points with <code>control=list(vc.min=value, vc.max=value)</code>. Also, the function tries to adjust the lower/upper end points when the model does not converge at these extremes (the end points are then moved closer to the estimated value of the component). The total number of tries for setting/adjusting the end points is determined via <code>control=list(eptries=&lt;value&gt;)</code>, with the default being 10 tries.</p>
+    <p>When computing a confidence interval for \(\tau^2\) for objects of class <code>"rma.uni"</code>, the estimate of \(\tau^2\) will usually fall within the confidence interval provided by the Q-profile method. However, this is not guaranteed. Depending on the method used to estimate \(\tau^2\) and the width of the confidence interval, it can happen that the confidence interval does not actually contain the estimate (trying to explain this to reviewers can be tricky). Using the empirical Bayes or Paule-Mandel estimator of \(\tau^2\) when fitting the model (i.e., using <code>method="EB"</code> or <code>method="PM"</code>) usually ensures that the estimate of \(\tau^2\) falls within the confidence interval. When <code>method="GENQ"</code> was used to fit the model, the corresponding CI obtained via the generalized Q-statistic method also usually contains the estimate \(\tau^2\).</p>
+<p>When computing a confidence interval for \(\tau^2\) for objects of class <code>"rma.uni"</code>, the end points of the interval to be searched for the confidence interval bounds are \([0,100]\) (or, for the upper bound, ten times the estimate of \(\tau^2\), whichever is greater). The upper bound should be large enough for most cases, but can be adjusted with <code>control=list(tau2.max=value)</code>. One can also adjust the lower end point with <code>control=list(tau2.min=value)</code> (the default is to take that value from the object, which is 0 by default). You should only play around with this value if you know what you are doing.</p>
+<p>For objects of class <code>"rma.mv"</code>, the function provides confidence intervals for the variance/correlation parameters in the model. For variance components, the lower end point of the interval to be searched is set to 0 and the upper end point to the larger of 10 and 100 times the value of the component. For correlations, the function tries to set the lower end point to a sensible default depending on the type of variance structure chosen, while the upper end point is set to 1. One can adjust the lower and/or upper end points with <code>control=list(vc.min=value, vc.max=value)</code>. Also, the function tries to adjust the lower/upper end points when the model does not converge at these extremes (the end points are then moved closer to the estimated value of the component). The total number of tries for setting/adjusting the end points is determined via <code>control=list(eptries=value)</code>, with the default being 10 tries.</p>
+<p>For objects of class <code>"rma.uni.selmodel"</code>, the function also sets some sensible defaults for the end points of the interval to be searched for the confidence interval bounds of the \(\tau^2\) and the \(\delta\) parameter(s). One can again adjust the end points and the number of retries (as described above) with <code>control=list(vc.min=value, vc.max=value, eptries=value)</code>.</p>
 <p>The Q-profile and generalized Q-statistic methods are both exact under the assumptions of the random- and mixed-effects models (i.e., normally distributed observed and true effect sizes or outcomes and known sampling variances). In practice, these assumptions are usually only approximately true, turning confidence intervals for \(\tau^2\) also into approximations. Profile likelihood confidence intervals are not exact by construction and rely on the asymptotic behavior of the likelihood ratio statistic, so they may be inaccurate in small samples.</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
@@ -261,7 +275,7 @@
 <p>Yusuf, S., Peto, R., Lewis, J., Collins, R., &amp; Sleight, P. (1985). Beta blockade during and after myocardial infarction: An overview of the randomized trials. <em>Progress in Cardiovascular Disease</em>, <b>27</b>(5), 335--371. <a href='https://doi.org/10.1016/s0033-0620(85)80003-7'>https://doi.org/10.1016/s0033-0620(85)80003-7</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='rma.uni.html'>rma.uni</a></code>, <code><a href='rma.mh.html'>rma.mh</a></code>, <code><a href='rma.peto.html'>rma.peto</a></code>, <code><a href='rma.glmm.html'>rma.glmm</a></code>, <code><a href='rma.mv.html'>rma.mv</a></code></p></div>
+    <div class='dont-index'><p><code><a href='rma.uni.html'>rma.uni</a></code>, <code><a href='rma.mh.html'>rma.mh</a></code>, <code><a href='rma.peto.html'>rma.peto</a></code>, <code><a href='rma.glmm.html'>rma.glmm</a></code>, <code><a href='rma.mv.html'>rma.mv</a></code>, <code><a href='selmodel.html'>selmodel.rma.uni</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### meta-analysis of the log risk ratios using a random-effects model</span>
@@ -295,7 +309,7 @@
 <span class='co'>### profile plots and confidence intervals for the variance components</span>
 <span class='co'># \dontrun{</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mfrow<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>,<span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='profile.rma.uni.html'>profile</a></span><span class='op'>(</span><span class='va'>res</span>, sigma2<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
+<span class='fu'><a href='profile.rma.uni.html'>profile</a></span><span class='op'>(</span><span class='va'>res</span>, sigma2<span class='op'>=</span><span class='fl'>1</span>, steps<span class='op'>=</span><span class='fl'>40</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span>h<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/stats/logLik.html'>logLik</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span> <span class='op'>-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Chisquare.html'>qchisq</a></span><span class='op'>(</span><span class='fl'>.95</span>, df<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span><span class='op'>/</span><span class='fl'>2</span>, lty<span class='op'>=</span><span class='st'>"dotted"</span><span class='op'>)</span>
 <span class='va'>sav</span> <span class='op'>&lt;-</span> <span class='fu'>confint</span><span class='op'>(</span><span class='va'>res</span>, sigma2<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
 <span class='va'>sav</span>
@@ -304,7 +318,7 @@
 #&gt; sigma^2.1   0.0651 0.0222 0.2072 
 #&gt; sigma.1     0.2551 0.1491 0.4552 
 #&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span>v<span class='op'>=</span><span class='va'>sav</span><span class='op'>$</span><span class='va'>random</span><span class='op'>[</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span>, lty<span class='op'>=</span><span class='st'>"dotted"</span><span class='op'>)</span>
-<span class='fu'><a href='profile.rma.uni.html'>profile</a></span><span class='op'>(</span><span class='va'>res</span>, sigma2<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+<span class='fu'><a href='profile.rma.uni.html'>profile</a></span><span class='op'>(</span><span class='va'>res</span>, sigma2<span class='op'>=</span><span class='fl'>2</span>, steps<span class='op'>=</span><span class='fl'>40</span><span class='op'>)</span>
 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span>h<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/stats/logLik.html'>logLik</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span> <span class='op'>-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Chisquare.html'>qchisq</a></span><span class='op'>(</span><span class='fl'>.95</span>, df<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span><span class='op'>/</span><span class='fl'>2</span>, lty<span class='op'>=</span><span class='st'>"dotted"</span><span class='op'>)</span>
 </div><div class='input'><span class='va'>sav</span> <span class='op'>&lt;-</span> <span class='fu'>confint</span><span class='op'>(</span><span class='va'>res</span>, sigma2<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
 <span class='va'>sav</span>
@@ -320,7 +334,7 @@
 <span class='co'>### profile plots and confidence intervals for the variance component and correlation</span>
 <span class='co'># \dontrun{</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mfrow<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>,<span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='profile.rma.uni.html'>profile</a></span><span class='op'>(</span><span class='va'>res</span>, tau2<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
+<span class='fu'><a href='profile.rma.uni.html'>profile</a></span><span class='op'>(</span><span class='va'>res</span>, tau2<span class='op'>=</span><span class='fl'>1</span>, steps<span class='op'>=</span><span class='fl'>40</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span>h<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/stats/logLik.html'>logLik</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span> <span class='op'>-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Chisquare.html'>qchisq</a></span><span class='op'>(</span><span class='fl'>.95</span>, df<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span><span class='op'>/</span><span class='fl'>2</span>, lty<span class='op'>=</span><span class='st'>"dotted"</span><span class='op'>)</span>
 <span class='va'>sav</span> <span class='op'>&lt;-</span> <span class='fu'>confint</span><span class='op'>(</span><span class='va'>res</span>, tau2<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
 <span class='va'>sav</span>
@@ -329,7 +343,7 @@
 #&gt; tau^2   0.0978 0.0528 0.2398 
 #&gt; tau     0.3127 0.2298 0.4897 
 #&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span>v<span class='op'>=</span><span class='va'>sav</span><span class='op'>$</span><span class='va'>random</span><span class='op'>[</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span>, lty<span class='op'>=</span><span class='st'>"dotted"</span><span class='op'>)</span>
-<span class='fu'><a href='profile.rma.uni.html'>profile</a></span><span class='op'>(</span><span class='va'>res</span>, rho<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
+<span class='fu'><a href='profile.rma.uni.html'>profile</a></span><span class='op'>(</span><span class='va'>res</span>, rho<span class='op'>=</span><span class='fl'>1</span>, steps<span class='op'>=</span><span class='fl'>40</span><span class='op'>)</span>
 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span>h<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/stats/logLik.html'>logLik</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span> <span class='op'>-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Chisquare.html'>qchisq</a></span><span class='op'>(</span><span class='fl'>.95</span>, df<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span><span class='op'>/</span><span class='fl'>2</span>, lty<span class='op'>=</span><span class='st'>"dotted"</span><span class='op'>)</span>
 </div><div class='input'><span class='va'>sav</span> <span class='op'>&lt;-</span> <span class='fu'>confint</span><span class='op'>(</span><span class='va'>res</span>, rho<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
 <span class='va'>sav</span>

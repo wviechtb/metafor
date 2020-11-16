@@ -6,7 +6,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
       stop(mstyle$stop("Argument 'object' must be an object of class \"rma.mv\"."))
 
    if (!missing(parm))
-      warning(mstyle$warning("Argument 'parm' currently ignored."), call.=FALSE)
+      warning(mstyle$warning("Argument 'parm' (currently) ignored."), call.=FALSE)
 
    x <- object
 
