@@ -5,6 +5,9 @@ confint.rma.mh <- function(object, parm, level, digits, transf, targs, ...) {
    if (!inherits(object, "rma.mh"))
       stop(mstyle$stop("Argument 'object' must be an object of class \"rma.mh\"."))
 
+   if (!missing(parm))
+      warning(mstyle$warning("Argument 'parm' currently ignored."), call.=FALSE)
+
    x <- object
 
    if (missing(level))
@@ -23,6 +26,8 @@ confint.rma.mh <- function(object, parm, level, digits, transf, targs, ...) {
       targs <- NULL
 
    ddd <- list(...)
+
+   .chkdots(ddd, c("time"))
 
    if (.isTRUE(ddd$time))
       time.start <- proc.time()

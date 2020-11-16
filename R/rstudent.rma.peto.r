@@ -20,6 +20,8 @@ rstudent.rma.peto <- function(model, digits, progbar=FALSE, ...) {
 
    ddd <- list(...)
 
+   .chkdots(ddd, c("time"))
+
    if (.isTRUE(ddd$time))
       time.start <- proc.time()
 

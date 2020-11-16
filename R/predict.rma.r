@@ -49,6 +49,8 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
    ddd <- list(...)
 
+   .chkdots(ddd, c("pi.type"))
+
    if (is.null(ddd$pi.type)) {
       pi.type <- "default"
    } else {

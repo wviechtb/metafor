@@ -38,6 +38,8 @@ rstudent.rma.mv <- function(model, digits, progbar=FALSE, cluster, reestimate=TR
 
    ddd <- list(...)
 
+   .chkdots(ddd, c("time", "LB"))
+
    if (.isTRUE(ddd$time))
       time.start <- proc.time()
 

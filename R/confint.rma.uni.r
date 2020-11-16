@@ -25,6 +25,9 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
    if (inherits(object, "rma.uni.selmodel"))
       stop(mstyle$stop("Method not available for objects of class \"rma.uni.selmodel\"."))
 
+   if (!missing(parm))
+      warning(mstyle$warning("Argument 'parm' currently ignored."), call.=FALSE)
+
    x <- object
 
    k <- x$k
@@ -59,6 +62,8 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
    level <- ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
 
    ddd <- list(...)
+
+   .chkdots(ddd, c("time"))
 
    if (.isTRUE(ddd$time))
       time.start <- proc.time()

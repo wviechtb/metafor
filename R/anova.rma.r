@@ -17,6 +17,10 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
       digits <- .get.digits(digits=digits, xdigits=object$digits, dmiss=FALSE)
    }
 
+   ddd <- list(...)
+
+   .chkdots(ddd, c("test"))
+
    if (missing(object2)) {
 
       ### if only 'object' has been specified, can use function to test (sets) of coefficients via
@@ -155,8 +159,6 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
       if (!identical(class(object), class(object2)))
          stop(mstyle$stop("Class of 'object1' must be the same as class of 'object2'."))
 
-      ddd <- list(...)
-
       if (!is.null(ddd$test)) {
          test <- match.arg(ddd$test, c("LRT", "Wald"))
       } else {
@@ -210,7 +212,7 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
       if (m.f$method == "FE" && m.r$method != "FE")
          stop(mstyle$stop("Full model uses a fixed- and reduced model uses random/mixed-effects model."))
 
-      ### could do even more checks for cases where the models are clearly not nested ...
+      ### could do even more checks for cases where the models are clearly not nested
 
       ######################################################################
 

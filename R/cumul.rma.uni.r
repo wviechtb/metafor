@@ -39,6 +39,8 @@ cumul.rma.uni <- function(x, order, digits, transf, targs, progbar=FALSE, ...) {
 
    ddd <- list(...)
 
+   .chkdots(ddd, c("time"))
+
    if (.isTRUE(ddd$time))
       time.start <- proc.time()
 

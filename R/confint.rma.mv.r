@@ -5,6 +5,9 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
    if (!inherits(object, "rma.mv"))
       stop(mstyle$stop("Argument 'object' must be an object of class \"rma.mv\"."))
 
+   if (!missing(parm))
+      warning(mstyle$warning("Argument 'parm' currently ignored."), call.=FALSE)
+
    x <- object
 
    k <- x$k
@@ -31,6 +34,8 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
    level <- ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
 
    ddd <- list(...)
+
+   .chkdots(ddd, c("time"))
 
    if (.isTRUE(ddd$time))
       time.start <- proc.time()

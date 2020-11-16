@@ -32,6 +32,8 @@ dfbetas.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE, paral
 
    ddd <- list(...)
 
+   .chkdots(ddd, c("time", "LB"))
+
    if (.isTRUE(ddd$time))
       time.start <- proc.time()
 

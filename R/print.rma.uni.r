@@ -171,6 +171,8 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
 
    ddd <- list(...)
 
+   .chkdots(ddd, c("num"))
+
    if (.isTRUE(ddd$num))
       rownames(res.table) <- paste0(1:nrow(res.table), ") ", rownames(res.table))
 

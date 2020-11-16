@@ -10,6 +10,10 @@ print.vif.rma <- function(x, digits=x$digits, ...) {
    if (!exists(".rmspace"))
       cat("\n")
 
+   ddd <- list(...)
+
+   .chkdots(ddd, c("num"))
+
    if (is.null(x$gvif)) {
 
       if (x$table) {
@@ -18,8 +22,6 @@ print.vif.rma <- function(x, digits=x$digits, ...) {
          rownames(res.table) <- rownames(x$vif)
          if (is.element(x$test, c("knha","adhoc","t")))
             colnames(res.table)[3] <- "tval"
-
-         ddd <- list(...)
 
          if (.isTRUE(ddd$num))
             rownames(res.table) <- paste0(1:nrow(res.table), ") ", rownames(res.table))

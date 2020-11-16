@@ -139,6 +139,8 @@ print.rma.glmm <- function(x, digits, showfit=FALSE, signif.stars=getOption("sho
 
    ddd <- list(...)
 
+   .chkdots(ddd, c("num"))
+
    if (.isTRUE(ddd$num))
       rownames(res.table) <- paste0(1:nrow(res.table), ") ", rownames(res.table))
 

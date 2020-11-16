@@ -32,6 +32,8 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
 
    ddd <- list(...)
 
+   .chkdots(ddd, c("btt", "time", "LB"))
+
    btt <- .set.btt(ddd$btt, x$p, int.incl=FALSE, Xnames=colnames(x$X))
    m <- length(btt)
 

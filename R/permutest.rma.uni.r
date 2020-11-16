@@ -22,7 +22,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("tol", "seed", "time"))
+   .chkdots(ddd, c("tol", "time", "seed"))
 
    if (!is.null(ddd$tol)) # in case user specifies comptol in the old manner
       comptol <- ddd$tol
