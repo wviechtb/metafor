@@ -1001,6 +1001,8 @@
 
    if (reestimate) {
 
+      ### set initial values to estimates from full model
+
       control             <- obj$control
       control$sigma2.init <- obj$sigma2
       control$tau2.init   <- obj$tau2
@@ -1008,9 +1010,13 @@
       control$gamma2.init <- obj$gamma2
       control$phi.init    <- obj$phi
 
+      ### fit model without data from ith cluster
+
       res <- try(suppressWarnings(rma.mv(obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=ifelse(obj$vc.fix$sigma2, obj$sigma2, NA), tau2=ifelse(obj$vc.fix$tau2, obj$tau2, NA), rho=ifelse(obj$vc.fix$rho, obj$rho, NA), gamma2=ifelse(obj$vc.fix$gamma2, obj$gamma2, NA), phi=ifelse(obj$vc.fix$phi, obj$phi, NA), sparse=obj$sparse, dist=obj$dist, control=control, subset=!incl)), silent=TRUE)
 
    } else {
+
+      ### set values of variance/correlation components to those from the 'full' model
 
       res <- try(suppressWarnings(rma.mv(obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=obj$sigma2, tau2=obj$tau2, rho=obj$rho, gamma2=obj$gamma2, phi=obj$phi, sparse=obj$sparse, dist=obj$dist, control=obj$control, subset=!incl)), silent=TRUE)
 
@@ -1019,10 +1025,16 @@
    if (inherits(res, "try-error"))
       return(list(cook.d = NA))
 
+   ### removing a cluster could lead to a model coefficient becoming inestimable
+
    if (any(res$coef.na))
       return(list(cook.d = NA))
 
+   ### compute dfbeta value(s) (including coefficients as specified via btt)
+
    dfb <- obj$beta[btt] - res$beta[btt]
+
+   ### compute Cook's distance
 
    return(list(cook.d = crossprod(dfb,svb) %*% dfb))
 
@@ -1039,6 +1051,8 @@
 
    if (reestimate) {
 
+      ### set initial values to estimates from full model
+
       control             <- obj$control
       control$sigma2.init <- obj$sigma2
       control$tau2.init   <- obj$tau2
@@ -1046,9 +1060,13 @@
       control$gamma2.init <- obj$gamma2
       control$phi.init    <- obj$phi
 
+      ### fit model without data from ith cluster
+
       res <- try(suppressWarnings(rma.mv(obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=ifelse(obj$vc.fix$sigma2, obj$sigma2, NA), tau2=ifelse(obj$vc.fix$tau2, obj$tau2, NA), rho=ifelse(obj$vc.fix$rho, obj$rho, NA), gamma2=ifelse(obj$vc.fix$gamma2, obj$gamma2, NA), phi=ifelse(obj$vc.fix$phi, obj$phi, NA), sparse=obj$sparse, dist=obj$dist, control=control, subset=!incl)), silent=TRUE)
 
    } else {
+
+      ### set values of variance/correlation components to those from the 'full' model
 
       res <- try(suppressWarnings(rma.mv(obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=obj$sigma2, tau2=obj$tau2, rho=obj$rho, gamma2=obj$gamma2, phi=obj$phi, sparse=obj$sparse, dist=obj$dist, control=obj$control, subset=!incl)), silent=TRUE)
 
@@ -1057,10 +1075,15 @@
    if (inherits(res, "try-error"))
       return(list(delresid = rep(NA, k.id), sedelresid = rep(NA, k.id), X2 = NA, k.id = NA, pos = which(incl)))
 
+   ### removing a cluster could lead to a model coefficient becoming inestimable
+
    if (any(res$coef.na))
       return(list(delresid = rep(NA, k.id), sedelresid = rep(NA, k.id), X2 = NA, k.id = NA, pos = which(incl)))
 
+   ### fit model based on all data but with var/cor components fixed to those from res
+
    tmp <- try(suppressWarnings(rma.mv(obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=res$sigma2, tau2=res$tau2, rho=res$rho, gamma2=res$gamma2, phi=res$phi, sparse=obj$sparse, dist=obj$dist, control=obj$control)), silent=TRUE)
+   #tmp <- try(rma.mv(obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=res$sigma2, tau2=res$tau2, rho=res$rho, gamma2=res$gamma2, phi=res$phi, sparse=obj$sparse, dist=obj$dist, control=obs$control), silent=FALSE)
 
    Xi <- obj$X[incl,,drop=FALSE]
    delpred  <- Xi %*% res$beta
@@ -1069,6 +1092,7 @@
    sedelresid <- c(sqrt(diag(tmp$M[incl,incl,drop=FALSE] + vdelpred)))
 
    sve <- try(chol2inv(chol(tmp$M[incl,incl,drop=FALSE] + vdelpred)), silent=TRUE)
+   #sve <- try(solve(tmp$M[incl,incl,drop=FALSE] + vdelpred), silent=TRUE)
 
    if (inherits(sve, "try-error"))
       return(list(delresid = delresid, sedelresid = sedelresid, X2 = NA, k.id = k.id, pos = which(incl)))
@@ -1088,6 +1112,8 @@
 
    if (reestimate) {
 
+      ### set initial values to estimates from full model
+
       control             <- obj$control
       control$sigma2.init <- obj$sigma2
       control$tau2.init   <- obj$tau2
@@ -1095,9 +1121,13 @@
       control$gamma2.init <- obj$gamma2
       control$phi.init    <- obj$phi
 
+      ### fit model without data from ith cluster
+
       res <- try(suppressWarnings(rma.mv(obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=ifelse(obj$vc.fix$sigma2, obj$sigma2, NA), tau2=ifelse(obj$vc.fix$tau2, obj$tau2, NA), rho=ifelse(obj$vc.fix$rho, obj$rho, NA), gamma2=ifelse(obj$vc.fix$gamma2, obj$gamma2, NA), phi=ifelse(obj$vc.fix$phi, obj$phi, NA), sparse=obj$sparse, dist=obj$dist, control=control, subset=!incl)), silent=TRUE)
 
    } else {
+
+      ### set values of variance/correlation components to those from the 'full' model
 
       res <- try(suppressWarnings(rma.mv(obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=obj$sigma2, tau2=obj$tau2, rho=obj$rho, gamma2=obj$gamma2, phi=obj$phi, sparse=obj$sparse, dist=obj$dist, control=obj$control, subset=!incl)), silent=TRUE)
 
@@ -1106,12 +1136,20 @@
    if (inherits(res, "try-error"))
       return(list(dfbs = NA))
 
+   ### removing a cluster could lead to a model coefficient becoming inestimable
+
    if (any(res$coef.na))
       return(list(dfbs = NA))
 
+   ### fit model based on all data but with var/cor components fixed to those from res
+
    tmp <- try(suppressWarnings(rma.mv(obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=res$sigma2, tau2=res$tau2, rho=res$rho, gamma2=res$gamma2, phi=res$phi, sparse=obj$sparse, dist=obj$dist, control=obj$control)), silent=TRUE)
 
+   ### compute dfbeta value(s)
+
    dfb <- obj$beta - res$beta
+
+   ### compute dfbetas
 
    dfbs <- c(dfb / sqrt(diag(tmp$vb)))
 

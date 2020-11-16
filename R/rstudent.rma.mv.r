@@ -25,6 +25,26 @@ rstudent.rma.mv <- function(model, digits, progbar=FALSE, cluster, reestimate=TR
       ncpus <- length(cl)
    }
 
+   if (parallel == "snow" && ncpus < 2)
+      parallel <- "no"
+
+   if (parallel == "snow" || parallel == "multicore") {
+
+      if (!requireNamespace("parallel", quietly=TRUE))
+         stop(mstyle$stop("Please install the 'parallel' package for parallel processing."))
+
+      ncpus <- as.integer(ncpus)
+
+      if (ncpus < 1L)
+         stop(mstyle$stop("Argument 'ncpus' must be >= 1."))
+
+   }
+
+   if (!progbar) {
+      pbo <- pbapply::pboptions(type="none")
+      on.exit(pbapply::pboptions(pbo))
+   }
+
    if (missing(digits)) {
       digits <- .get.digits(xdigits=x$digits, dmiss=TRUE)
    } else {
@@ -61,6 +81,9 @@ rstudent.rma.mv <- function(model, digits, progbar=FALSE, cluster, reestimate=TR
    if (anyNA(cluster.f))
       stop(mstyle$stop("No missing values allowed in 'cluster' variable."))
 
+   if (length(cluster.f) == 0L)
+      stop(mstyle$stop(paste0("Cannot find 'cluster' variable (or it has zero length).")))
+
    if (length(cluster) != x$k)
       stop(mstyle$stop(paste0("Length of variable specified via 'cluster' (", length(cluster), ") does not match length of data (", x$k, ").")))
 
@@ -71,119 +94,38 @@ rstudent.rma.mv <- function(model, digits, progbar=FALSE, cluster, reestimate=TR
 
    #########################################################################
 
-   if (parallel == "no") {
+   if (parallel == "no")
+      res <- pbapply::pblapply(seq_len(n), .rstudent.rma.mv, obj=x, parallel=parallel, cluster=cluster, ids=ids, reestimate=reestimate)
 
-      delresid   <- rep(NA_real_, x$k)
-      sedelresid <- rep(NA_real_, x$k)
-      X2   <- rep(NA_integer_, n)
-      k.id <- rep(NA_integer_, n)
+   if (parallel == "multicore")
+      res <- pbapply::pblapply(seq_len(n), .rstudent.rma.mv, obj=x, parallel=parallel, cluster=cluster, ids=ids, reestimate=reestimate, cl=ncpus)
+      #res <- parallel::mclapply(seq_len(n), .rstudent.rma.mv, obj=x, parallel=parallel, cluster=cluster, ids=ids, reestimate=reestimate, mc.cores=ncpus)
 
-      if (progbar)
-         pbar <- pbapply::startpb(min=0, max=n)
-
-      for (i in seq_len(n)) {
-
-         if (progbar)
-            pbapply::setpb(pbar, i)
-
-         incl <- cluster %in% ids[i]
-
-         k.id[i] <- sum(incl)
-
-         if (reestimate) {
-
-            ### set initial values to estimates from full model
-
-            control             <- x$control
-            control$sigma2.init <- x$sigma2
-            control$tau2.init   <- x$tau2
-            control$rho.init    <- x$rho
-            control$gamma2.init <- x$gamma2
-            control$phi.init    <- x$phi
-
-            ### fit model without data from ith cluster
-
-            res <- try(suppressWarnings(rma.mv(x$yi, V=x$V, W=x$W, mods=x$X, random=x$random, struct=x$struct, intercept=FALSE, data=x$mf.r, method=x$method, test=x$test, level=x$level, R=x$R, Rscale=x$Rscale, sigma2=ifelse(x$vc.fix$sigma2, x$sigma2, NA), tau2=ifelse(x$vc.fix$tau2, x$tau2, NA), rho=ifelse(x$vc.fix$rho, x$rho, NA), gamma2=ifelse(x$vc.fix$gamma2, x$gamma2, NA), phi=ifelse(x$vc.fix$phi, x$phi, NA), sparse=x$sparse, dist=x$dist, control=control, subset=!incl)), silent=TRUE)
-
-         } else {
-
-            ### set values of variance/correlation components to those from the 'full' model
-
-            res <- try(suppressWarnings(rma.mv(x$yi, V=x$V, W=x$W, mods=x$X, random=x$random, struct=x$struct, intercept=FALSE, data=x$mf.r, method=x$method, test=x$test, level=x$level, R=x$R, Rscale=x$Rscale, sigma2=x$sigma2, tau2=x$tau2, rho=x$rho, gamma2=x$gamma2, phi=x$phi, sparse=x$sparse, dist=x$dist, control=x$control, subset=!incl)), silent=TRUE)
-
-         }
-
-         if (inherits(res, "try-error"))
-            next
-
-         ### removing a cluster could lead to a model coefficient becoming inestimable
-
-         if (any(res$coef.na))
-            next
-
-         ### fit model based on all data but with var/cor components fixed to those from res
-
-         tmp <- try(suppressWarnings(rma.mv(x$yi, V=x$V, W=x$W, mods=x$X, random=x$random, struct=x$struct, intercept=FALSE, data=x$mf.r, method=x$method, test=x$test, level=x$level, R=x$R, Rscale=x$Rscale, sigma2=res$sigma2, tau2=res$tau2, rho=res$rho, gamma2=res$gamma2, phi=res$phi, sparse=x$sparse, dist=x$dist, control=x$control)), silent=TRUE)
-         #tmp <- try(rma.mv(x$yi, V=x$V, W=x$W, mods=x$X, random=x$random, struct=x$struct, intercept=FALSE, data=x$mf.r, method=x$method, test=x$test, level=x$level, R=x$R, Rscale=x$Rscale, sigma2=res$sigma2, tau2=res$tau2, rho=res$rho, gamma2=res$gamma2, phi=res$phi, sparse=x$sparse, dist=x$dist, control=x$control), silent=FALSE)
-
-         Xi <- x$X[incl,,drop=FALSE]
-         delpred  <- Xi %*% res$beta
-         vdelpred <- Xi %*% res$vb %*% t(Xi)
-         delresid[incl] <- x$yi[incl] - delpred
-         sedelresid[incl] <- sqrt(diag(tmp$M[incl,incl,drop=FALSE] + vdelpred))
-
-         sve <- try(chol2inv(chol(tmp$M[incl,incl,drop=FALSE] + vdelpred)), silent=TRUE)
-         #sve <- try(solve(tmp$M[incl,incl,drop=FALSE] + vdelpred), silent=TRUE)
-
-         if (inherits(sve, "try-error"))
-            next
-
-         X2[i] <- rbind(delresid[incl]) %*% sve %*% cbind(delresid[incl])
-
+   if (parallel == "snow") {
+      if (is.null(cl)) {
+         cl <- parallel::makePSOCKcluster(ncpus)
+         on.exit(parallel::stopCluster(cl), add=TRUE)
       }
-
-      if (progbar)
-         pbapply::closepb(pbar)
-
+      if (.isTRUE(ddd$LB)) {
+         res <- parallel::parLapplyLB(cl, seq_len(n), .rstudent.rma.mv, obj=x, parallel=parallel, cluster=cluster, ids=ids, reestimate=reestimate)
+         #res <- parallel::clusterApplyLB(cl, seq_len(n), .rstudent.rma.mv, obj=x, parallel=parallel, cluster=cluster, ids=ids, reestimate=reestimate)
+      } else {
+         res <- pbapply::pblapply(seq_len(n), .rstudent.rma.mv, obj=x, parallel=parallel, cluster=cluster, ids=ids, reestimate=reestimate, cl=cl)
+         #res <- parallel::parLapply(cl, seq_len(n), .rstudent.rma.mv, obj=x, parallel=parallel, cluster=cluster, ids=ids, reestimate=reestimate)
+         #res <- parallel::clusterApply(cl, seq_len(n), .rstudent.rma.mv, obj=x, parallel=parallel, cluster=cluster, ids=ids, reestimate=reestimate)
+      }
    }
 
-   if (parallel == "snow" || parallel == "multicore") {
+   delresid   <- rep(NA_real_, x$k)
+   sedelresid <- rep(NA_real_, x$k)
 
-      if (!requireNamespace("parallel", quietly=TRUE))
-         stop(mstyle$stop("Please install the 'parallel' package for parallel processing."))
+   pos <- unlist(sapply(res, function(x) x$pos))
 
-      ncpus <- as.integer(ncpus)
+   delresid[pos]   <- unlist(sapply(res, function(x) x$delresid))
+   sedelresid[pos] <- unlist(sapply(res, function(x) x$sedelresid))
 
-      if (ncpus < 1L)
-         stop(mstyle$stop("Argument 'ncpus' must be >= 1."))
-
-      if (parallel == "multicore")
-         res <- parallel::mclapply(seq_len(n), .rstudent.rma.mv, obj=x, mc.cores=ncpus, parallel=parallel, cluster=cluster, ids=ids, reestimate=reestimate)
-
-      if (parallel == "snow") {
-         if (is.null(cl)) {
-            cl <- parallel::makePSOCKcluster(ncpus)
-            on.exit(parallel::stopCluster(cl))
-         }
-         if (.isTRUE(ddd$LB)) {
-            res <- parallel::parLapplyLB(cl, seq_len(n), .rstudent.rma.mv, obj=x, parallel=parallel, cluster=cluster, ids=ids, reestimate=reestimate)
-         } else {
-            res <- parallel::parLapply(cl, seq_len(n), .rstudent.rma.mv, obj=x, parallel=parallel, cluster=cluster, ids=ids, reestimate=reestimate)
-         }
-      }
-
-      delresid   <- rep(NA_real_, x$k)
-      sedelresid <- rep(NA_real_, x$k)
-
-      pos <- unlist(sapply(res, function(x) x$pos))
-
-      delresid[pos]   <- unlist(sapply(res, function(x) x$delresid))
-      sedelresid[pos] <- unlist(sapply(res, function(x) x$sedelresid))
-
-      X2   <- sapply(res, function(x) x$X2)
-      k.id <- sapply(res, function(x) x$k.id)
-
-   }
+   X2   <- sapply(res, function(x) x$X2)
+   k.id <- sapply(res, function(x) x$k.id)
 
    #########################################################################
 

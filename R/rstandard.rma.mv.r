@@ -44,6 +44,9 @@ rstandard.rma.mv <- function(model, digits, cluster, ...) {
    if (anyNA(cluster.f))
       stop(mstyle$stop("No missing values allowed in 'cluster' variable."))
 
+   if (length(cluster.f) == 0L)
+      stop(mstyle$stop(paste0("Cannot find 'cluster' variable (or it has zero length).")))
+
    if (length(cluster) != x$k)
       stop(mstyle$stop(paste0("Length of variable specified via 'cluster' (", length(cluster), ") does not match length of data (", x$k, ").")))
 

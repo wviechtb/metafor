@@ -25,6 +25,26 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
       ncpus <- length(cl)
    }
 
+   if (parallel == "snow" && ncpus < 2)
+      parallel <- "no"
+
+   if (parallel == "snow" || parallel == "multicore") {
+
+      if (!requireNamespace("parallel", quietly=TRUE))
+         stop(mstyle$stop("Please install the 'parallel' package for parallel processing."))
+
+      ncpus <- as.integer(ncpus)
+
+      if (ncpus < 1L)
+         stop(mstyle$stop("Argument 'ncpus' must be >= 1."))
+
+   }
+
+   if (!progbar) {
+      pbo <- pbapply::pboptions(type="none")
+      on.exit(pbapply::pboptions(pbo))
+   }
+
    misscluster <- ifelse(missing(cluster), TRUE, FALSE)
 
    if (misscluster)
@@ -58,6 +78,9 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
    if (anyNA(cluster.f))
       stop(mstyle$stop("No missing values allowed in 'cluster' variable."))
 
+   if (length(cluster.f) == 0L)
+      stop(mstyle$stop(paste0("Cannot find 'cluster' variable (or it has zero length).")))
+
    if (length(cluster) != x$k)
       stop(mstyle$stop(paste0("Length of variable specified via 'cluster' (", length(cluster), ") does not match length of data (", x$k, ").")))
 
@@ -72,94 +95,29 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
 
    svb <- chol2inv(chol(x$vb[btt,btt,drop=FALSE]))
 
-   if (parallel == "no") {
+   if (parallel == "no")
+      res <- pbapply::pblapply(seq_len(n), .cooks.distance.rma.mv, obj=x, parallel=parallel, svb=svb, cluster=cluster, ids=ids, reestimate=reestimate, btt=btt)
 
-      cook.d <- rep(NA_real_, n)
+   if (parallel == "multicore")
+      res <- pbapply::pblapply(seq_len(n), .cooks.distance.rma.mv, obj=x, parallel=parallel, svb=svb, cluster=cluster, ids=ids, reestimate=reestimate, btt=btt, cl=ncpus)
+      #res <- parallel::mclapply(seq_len(n), .cooks.distance.rma.mv, obj=x, parallel=parallel, svb=svb, cluster=cluster, ids=ids, reestimate=reestimate, btt=btt, mc.cores=ncpus)
 
-      if (progbar)
-         pbar <- pbapply::startpb(min=0, max=n)
-
-      for (i in seq_len(n)) {
-
-         if (progbar)
-            pbapply::setpb(pbar, i)
-
-         incl <- cluster %in% ids[i]
-
-         if (reestimate) {
-
-            ### set initial values to estimates from full model
-
-            control             <- x$control
-            control$sigma2.init <- x$sigma2
-            control$tau2.init   <- x$tau2
-            control$rho.init    <- x$rho
-            control$gamma2.init <- x$gamma2
-            control$phi.init    <- x$phi
-
-            ### fit model without data from ith cluster
-
-            res <- try(suppressWarnings(rma.mv(x$yi, V=x$V, W=x$W, mods=x$X, random=x$random, struct=x$struct, intercept=FALSE, data=x$mf.r, method=x$method, test=x$test, level=x$level, R=x$R, Rscale=x$Rscale, sigma2=ifelse(x$vc.fix$sigma2, x$sigma2, NA), tau2=ifelse(x$vc.fix$tau2, x$tau2, NA), rho=ifelse(x$vc.fix$rho, x$rho, NA), gamma2=ifelse(x$vc.fix$gamma2, x$gamma2, NA), phi=ifelse(x$vc.fix$phi, x$phi, NA), sparse=x$sparse, dist=x$dist, control=control, subset=!incl)), silent=TRUE)
-
-         } else {
-
-            ### set values of variance/correlation components to those from the 'full' model
-
-            res <- try(suppressWarnings(rma.mv(x$yi, V=x$V, W=x$W, mods=x$X, random=x$random, struct=x$struct, intercept=FALSE, data=x$mf.r, method=x$method, test=x$test, level=x$level, R=x$R, Rscale=x$Rscale, sigma2=x$sigma2, tau2=x$tau2, rho=x$rho, gamma2=x$gamma2, phi=x$phi, sparse=x$sparse, dist=x$dist, control=x$control, subset=!incl)), silent=TRUE)
-
-         }
-
-         if (inherits(res, "try-error"))
-            next
-
-         ### removing a cluster could lead to a model coefficient becoming inestimable
-
-         if (any(res$coef.na))
-            next
-
-         ### compute dfbeta value(s) (including coefficients as specified via btt)
-
-         dfb <- x$beta[btt] - res$beta[btt]
-
-         ### compute Cook's distance
-
-         cook.d[i]  <- crossprod(dfb,svb) %*% dfb
-
+   if (parallel == "snow") {
+      if (is.null(cl)) {
+         cl <- parallel::makePSOCKcluster(ncpus)
+         on.exit(parallel::stopCluster(cl), add=TRUE)
       }
-
-      if (progbar)
-         pbapply::closepb(pbar)
-
+      if (.isTRUE(ddd$LB)) {
+         res <- parallel::parLapplyLB(cl, seq_len(n), .cooks.distance.rma.mv, obj=x, parallel=parallel, svb=svb, cluster=cluster, ids=ids, reestimate=reestimate, btt=btt)
+         #res <- parallel::clusterApplyLB(cl, seq_len(n), .cooks.distance.rma.mv, obj=x, parallel=parallel, svb=svb, cluster=cluster, ids=ids, reestimate=reestimate, btt=btt)
+      } else {
+         res <- pbapply::pblapply(seq_len(n), .cooks.distance.rma.mv, obj=x, parallel=parallel, svb=svb, cluster=cluster, ids=ids, reestimate=reestimate, btt=btt, cl=cl)
+         #res <- parallel::parLapply(cl, seq_len(n), .cooks.distance.rma.mv, obj=x, parallel=parallel, svb=svb, cluster=cluster, ids=ids, reestimate=reestimate, btt=btt)
+         #res <- parallel::clusterApply(cl, seq_len(n), .cooks.distance.rma.mv, obj=x, parallel=parallel, svb=svb, cluster=cluster, ids=ids, reestimate=reestimate, btt=btt)
+      }
    }
 
-   if (parallel == "snow" || parallel == "multicore") {
-
-      if (!requireNamespace("parallel", quietly=TRUE))
-         stop(mstyle$stop("Please install the 'parallel' package for parallel processing."))
-
-      ncpus <- as.integer(ncpus)
-
-      if (ncpus < 1L)
-         stop(mstyle$stop("Argument 'ncpus' must be >= 1."))
-
-      if (parallel == "multicore")
-         res <- parallel::mclapply(seq_len(n), .cooks.distance.rma.mv, obj=x, mc.cores=ncpus, parallel=parallel, svb=svb, cluster=cluster, ids=ids, reestimate=reestimate, btt=btt)
-
-      if (parallel == "snow") {
-         if (is.null(cl)) {
-            cl <- parallel::makePSOCKcluster(ncpus)
-            on.exit(parallel::stopCluster(cl))
-         }
-         if (.isTRUE(ddd$LB)) {
-            res <- parallel::parLapplyLB(cl, seq_len(n), .cooks.distance.rma.mv, obj=x, parallel=parallel, svb=svb, cluster=cluster, ids=ids, reestimate=reestimate, btt=btt)
-         } else {
-            res <- parallel::parLapply(cl, seq_len(n), .cooks.distance.rma.mv, obj=x, parallel=parallel, svb=svb, cluster=cluster, ids=ids, reestimate=reestimate, btt=btt)
-         }
-      }
-
-      cook.d <- sapply(res, function(x) x$cook.d)
-
-   }
+   cook.d <- sapply(res, function(x) x$cook.d)
 
    #########################################################################
 
