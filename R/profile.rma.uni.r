@@ -1,5 +1,5 @@
 profile.rma.uni <- function(fitted,
-   xlim, ylim, steps=20, lltol=1e-04, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, plot=TRUE, pch=19, cline=FALSE, ...) {
+   xlim, ylim, steps=20, lltol=1e-03, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, plot=TRUE, pch=19, cline=FALSE, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -11,6 +11,9 @@ profile.rma.uni <- function(fitted,
 
    if (inherits(fitted, "rma.uni.selmodel"))
       stop(mstyle$stop("Method not available for objects of class \"rma.uni.selmodel\"."))
+
+   if (fitted$method == "FE")
+      stop(mstyle$stop("Cannot profile tau2 parameter for fixed-effects models."))
 
    if (steps < 2)
       stop(mstyle$stop("Argument 'steps' must be >= 2."))
@@ -56,7 +59,7 @@ profile.rma.uni <- function(fitted,
 
    if (missing(xlim)) {
 
-      ### if the user has not specified xlim, get CI for tau^2 (suppress warnings)
+      ### if the user has not specified xlim, try to get CI for tau^2
 
       vc.ci <- try(suppressWarnings(confint(x)), silent=TRUE)
 
@@ -79,8 +82,8 @@ profile.rma.uni <- function(fitted,
 
          ### if the CI method fails, try a Wald-type CI for tau^2
 
-         vc.lb <- max( 0, x$tau2 - 1.96 * x$se.tau2)
-         vc.ub <- max(.1, x$tau2 + 1.96 * x$se.tau2)
+         vc.lb <- max( 0, x$tau2 - qnorm(.995) * x$se.tau2)
+         vc.ub <- max(.1, x$tau2 + qnorm(.995) * x$se.tau2)
 
       }
 

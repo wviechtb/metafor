@@ -1,5 +1,5 @@
 profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
-   xlim, ylim, steps=20, lltol=1e-04, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, plot=TRUE, pch=19, cline=FALSE, ...) {
+   xlim, ylim, steps=20, lltol=1e-03, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, plot=TRUE, pch=19, cline=FALSE, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -51,7 +51,7 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
 
    #########################################################################
 
-   ### check if user has specified one of the sigma2, tau2, rho, gamma2, or phi arguments
+   ### check if user has not specified one of the sigma2, tau2, rho, gamma2, or phi arguments
 
    if (missing(sigma2) && missing(tau2) && missing(rho) && missing(gamma2) && missing(phi)) {
 
@@ -390,26 +390,6 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
 
    if (length(vcs) <= 1L)
       stop(mstyle$stop("Cannot set 'xlim' automatically. Please set this argument manually."))
-
-   ### extract control argument
-   x.control <- x$control
-
-   ### if not an empty list(), get position of sigma2.init, tau2.init, rho.init, gamma2.init, or phi.init arguments
-   ### if these arguments were not specified, then the respective con.pos values are NA
-
-   if (length(x.control) > 0L) {
-      con.pos.sigma2.init <- pmatch("sigma2.init", names(x.control))
-      con.pos.tau2.init   <- pmatch("tau2.init",   names(x.control))
-      con.pos.rho.init    <- pmatch("rho.init",    names(x.control))
-      con.pos.gamma2.init <- pmatch("gamma2.init", names(x.control))
-      con.pos.phi.init    <- pmatch("phi.init",    names(x.control))
-   } else {
-      con.pos.sigma2.init <- NA
-      con.pos.tau2.init   <- NA
-      con.pos.rho.init    <- NA
-      con.pos.gamma2.init <- NA
-      con.pos.phi.init    <- NA
-   }
 
    if (parallel == "no")
       res <- pbapply::pblapply(vcs, .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE)

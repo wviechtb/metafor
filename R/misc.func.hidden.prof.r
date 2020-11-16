@@ -1,5 +1,3 @@
-############################################################################
-
 ### for profile(), confint(), and gosh()
 
 .profile.rma.uni <- function(val, obj, parallel=FALSE, profile=FALSE, confint=FALSE, subset=FALSE, objective, model=0L, verbose=FALSE, outlist=NULL) {
@@ -212,4 +210,65 @@
 
 }
 
-############################################################################
+.profile.rma.uni.selmodel <- function(val, obj, comp, delta.pos, parallel=FALSE, profile=FALSE, confint=FALSE, subset=FALSE, objective, verbose=FALSE) {
+
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
+   if (parallel == "snow")
+      library(metafor)
+
+   if (profile || confint) {
+
+      ### for profile and confint, fit model with component fixed to 'val'
+
+      ### set any fixed components to their values
+      tau2.arg  <- ifelse(obj$method == "FE" || obj$tau2.fix, obj$tau2, NA)
+      delta.arg <- ifelse(obj$delta.fix, obj$delta, NA)
+
+      if (comp == "tau2")
+         tau2.arg <- val
+
+      if (comp == "delta")
+         delta.arg[delta.pos] <- val
+
+      ### reset steps to NA if !stepsspec (some types set steps=0 if steps was not specified)
+      if (!obj$stepsspec)
+         obj$steps <- NA
+
+      res <- try(suppressWarnings(selmodel(obj, obj$type, alternative=obj$alternative, prec=obj$prec, scaleprec=obj$scaleprec, tau2=tau2.arg, delta=delta.arg, steps=obj$steps, verbose=FALSE, control=obj$control, skiphes=FALSE, skiphet=TRUE, defmap=obj$defmap, mapfun=obj$mapfun, mapinvfun=obj$mapinvfun)), silent=TRUE)
+
+   }
+
+   if (profile) {
+
+      if (inherits(res, "try-error")) {
+         sav <- list(ll = NA, beta = matrix(NA, nrow=nrow(obj$beta), ncol=1), ci.lb = rep(NA, length(obj$ci.lb)), ci.ub = rep(NA, length(obj$ci.ub)))
+      } else {
+         sav <- list(ll = logLik(res), beta = res$beta, ci.lb = res$ci.lb, ci.ub = res$ci.ub)
+      }
+
+   }
+
+   if (confint) {
+
+      if (inherits(res, "try-error")) {
+
+         if (verbose)
+            cat(mstyle$verbose(paste("val =", formatC(val, digits=obj$digits[["var"]], width=obj$digits[["var"]]+4, format="f"), "  LRT - objective = NA", "\n")))
+
+         stop()
+
+      } else {
+
+         sav <- -2*(logLik(res) - logLik(obj)) - objective
+
+         if (verbose)
+            cat(mstyle$verbose(paste("val =", formatC(val, digits=obj$digits[["var"]], width=obj$digits[["var"]]+4, format="f"), "  LRT - objective =", formatC(sav, digits=obj$digits[["fit"]], width=obj$digits[["fit"]]+4, format="f"), "\n")))
+
+      }
+
+   }
+
+   return(sav)
+
+}

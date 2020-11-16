@@ -11,6 +11,9 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    if (inherits(x, "rma.ls"))
       stop(mstyle$stop("Method not available for objects of class \"rma.ls\"."))
 
+   if (inherits(x, "robust.rma"))
+      stop(mstyle$stop("Method not available for objects of class \"robust.rma\"."))
+
    alternative <- match.arg(alternative, c("two.sided", "greater", "less"))
 
    if (missing(digits)) {
@@ -72,6 +75,8 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    } else {
 
       tau2 <- ddd$tau2
+      if (!is.na(tau2))
+         x$tau2.fix <- TRUE
 
    }
 
@@ -93,7 +98,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
    ### set precision measure
 
-   if (!missing(prec)) {
+   if (!missing(prec) && !is.null(prec)) {
 
       precspec <- TRUE
 
@@ -120,8 +125,8 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
    } else {
 
+      prec <- NULL
       precspec <- FALSE
-
       preci <- rep(1, k)
 
    }
@@ -265,9 +270,12 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
       beta.init <- c(imX %*% cbind(beta.init))
    }
 
-   ### adjust max value for tau^2 if necessary
+   ### check that tau2.max is larger than the tau^2 value
 
-   tau2.max <- max(x$tau2 + 1, con$tau2.max)
+   if (x$tau2 >= con$tau2.max)
+      stop(mstyle$stop("Value of 'tau2.max' must be > tau^2 value."))
+
+   tau2.max <- con$tau2.max
 
    ### initial value for tau^2
 
@@ -655,11 +663,10 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
       if (any(ptable[["k"]] == 0L)) {
          if (verbose >= 1)
             print(ptable)
-         if (any(ptable[["k"]] & is.na(delta))) {
+         if (type == "stepfun" && (any(ptable[["k"]] & is.na(delta))))
             stop(mstyle$stop("One or more intervals do not contain any observed p-values."))
-         #} else {
-         #   warning(mstyle$stop("One or more intervals do not contain any observed p-values."))
-         }
+         if (type != "stepfun" && any(ptable[["k"]]))
+            stop(mstyle$stop("One or more intervals do not contain any observed p-values."))
       }
 
    } else {
@@ -1108,8 +1115,10 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    res$ci.ub   <- ci.ub
    res$vb      <- vb
 
-   res$tau2    <- res$tau2.f <- tau2
-   res$se.tau2 <- se.tau2
+   res$betaspec <- betaspec
+
+   res$tau2       <- res$tau2.f <- tau2
+   res$se.tau2    <- se.tau2
    res$ci.lb.tau2 <- ci.lb.tau2
    res$ci.ub.tau2 <- ci.ub.tau2
 
@@ -1131,6 +1140,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    res$pval.delta  <- pval.delta
    res$ci.lb.delta <- ci.lb.delta
    res$ci.ub.delta <- ci.ub.delta
+   res$deltas      <- deltas
    res$delta.fix   <- !is.na(delta.val)
 
    res$hessian <- H
@@ -1144,35 +1154,41 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    res$LRT.tau2  <- LRT.tau2
    res$LRTp.tau2 <- LRTp.tau2
 
-   res$M <- diag(vi + tau2, nrow=k, ncol=k)
-   if (x$method != "FE")
-      res$method  <- "ML"
+   res$M         <- diag(vi + tau2, nrow=k, ncol=k)
    res$model     <- "rma.uni.selmodel"
    res$parms     <- parms
    res$fit.stats <- fit.stats
    res$pvals     <- pvals
 
-   res$digits   <- digits
-   res$verbose  <- verbose
+   res$digits  <- digits
+   res$verbose <- verbose
 
-   res$type   <- type
-   res$steps  <- steps
-   res$pgrp   <- pgrp
-   res$ptable <- ptable
+   res$type        <- type
+   res$steps       <- steps
+   res$stepsspec   <- stepsspec
+   res$pgrp        <- pgrp
+   res$ptable      <- ptable
    res$alternative <- alternative
-   res$pval.min <- pval.min
-   res$precspec <- precspec
-   res$precis <- precis
+   res$pval.min    <- pval.min
+   res$prec        <- prec
+   res$precspec    <- precspec
+   res$precis      <- precis
+   res$scaleprec   <- ddd$scaleprec
 
-   res$wi.fun <- wi.fun
-   res$delta.lb <- delta.lb
-   res$delta.ub <- delta.ub
+   res$wi.fun        <- wi.fun
+   res$delta.lb      <- delta.lb
+   res$delta.ub      <- delta.ub
    res$delta.lb.excl <- delta.lb.excl
    res$delta.ub.excl <- delta.ub.excl
-   res$delta.min <- delta.min
-   res$delta.max <- delta.max
+   res$delta.min     <- delta.min
+   res$delta.max     <- delta.max
+   res$tau2.max      <- tau2.max
 
-   res$call <- match.call()
+   res$call      <- match.call()
+   res$control   <- control
+   res$defmap    <- ddd$defmap
+   res$mapfun    <- ddd$mapfun
+   res$mapinvfun <- ddd$mapinvfun
 
    time.end <- proc.time()
    res$time <- unname(time.end - time.start)[3]

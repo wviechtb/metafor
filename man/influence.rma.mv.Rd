@@ -21,7 +21,7 @@
    \item{reestimate}{logical to specify whether variance/correlation components should be re-estimated after deletion of the \mjseqn{i}th study/cluster (the default is \code{TRUE}).}
    \item{parallel}{character string to specify whether parallel processing should be used (the default is \code{"no"}). For parallel processing, set to either \code{"snow"} or \code{"multicore"}. See \sQuote{Details}.}
    \item{ncpus}{integer to specify the number of processes to use in the parallel processing.}
-   \item{cl}{optional snow cluster to use if \code{parallel="snow"}. If not supplied, a cluster on the local machine is created for the duration of the call.}
+   \item{cl}{optional cluster to use if \code{parallel="snow"}. If not supplied, a cluster on the local machine is created for the duration of the call.}
    \item{type}{character string to specify whether only the diagonal of the hat matrix (\code{"diagonal"}) or the entire hat matrix (\code{"matrix"}) should be returned.}
    \item{\dots}{other arguments.}
 }
