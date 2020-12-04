@@ -79,7 +79,7 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
          #}
 
          if (ncol(L) != p)
-            stop(mstyle$stop("Length or number of columns of 'L' does not match number of model coefficients."))
+            stop(mstyle$stop(paste0("Length or number of columns of 'L' (", ncol(L), ") does not match number of model coefficients (", p, ").")))
 
          m <- nrow(L)
 

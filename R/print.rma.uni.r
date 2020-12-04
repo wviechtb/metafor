@@ -204,6 +204,11 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
          colnames(res.table)[7] <- ""
       }
 
+      for (j in 1:nrow(res.table)) {
+         res.table[j, is.na(res.table[j,])]  <- ifelse(x$alpha.fix[j], "---", "NA")
+         res.table[j, res.table[j,] == "NA"] <- ifelse(x$alpha.fix[j], "---", "NA")
+      }
+
       if (.isTRUE(ddd$num))
          rownames(res.table) <- paste0(1:nrow(res.table), ") ", rownames(res.table))
 

@@ -262,6 +262,11 @@ label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
 
    }
 
+   if (inherits(x, "rma.ls") && addtau2) {
+      warning(mstyle$warning("Argument 'addtau2' ignored for 'rma.ls' models."), call.=FALSE)
+      addtau2 <- FALSE
+   }
+
    tau2 <- ifelse(addtau2, x$tau2, 0)
 
    ### get weights (omit any NAs)

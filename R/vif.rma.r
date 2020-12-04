@@ -27,7 +27,7 @@ vif.rma <- function(x, btt, intercept=FALSE, table=FALSE, digits, ...) {
    vb <- vcov(x)
 
    if (inherits(x, "rma.ls"))
-      vb <- vb$vb
+      vb <- vb$beta
 
    if (missing(btt)) {
 

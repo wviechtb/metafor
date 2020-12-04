@@ -60,7 +60,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("knha", "scale", "link", "outlist", "onlyo1", "addyi", "addvi", "time", "skipr2"))
+   .chkdots(ddd, c("knha", "scale", "link", "alpha", "outlist", "onlyo1", "addyi", "addvi", "time", "skipr2"))
 
    ### handle 'knha' argument from ... (note: overrides test argument)
 
@@ -77,7 +77,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
       scale <- ddd$scale
 
       if (!inherits(scale, "formula"))
-         stop(mstyle$stop("Must specify formula for 'scale' argument."))
+         stop(mstyle$stop("Must specify a formula for the 'scale' argument."))
 
    }
 
@@ -85,6 +85,12 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
       link <- match.arg(ddd$link, c("log", "identity"))
    } else {
       link <- "log"
+   }
+
+   if (!is.null(ddd$alpha)) {
+      alpha <- ddd$alpha
+   } else {
+      alpha <- NA
    }
 
    ### set defaults or get onlyo1, addyi, and addvi arguments
@@ -799,12 +805,12 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
    ### at least one study left?
 
-   if (k < 1)
+   if (k < 1L)
       stop(mstyle$stop("Processing terminated since k = 0."))
 
    ### if k=1 and test != "z", set test="z" (other methods cannot be used)
 
-   if (k == 1 && test != "z") {
+   if (k == 1L && test != "z") {
       warning(mstyle$warning("Setting argument test=\"z\" since k=1."), call.=FALSE)
       test <- "z"
    }
@@ -903,7 +909,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
                REMLf = TRUE,              # should |X'X| term be included in the REML log likelihood?
                evtol = 1e-07,             # lower bound for eigenvalues to determine if model matrix is positive definite (also for checking if vimaxmin >= 1/con$evtol)
                alpha.init = NULL,         # initial values for scale parameters
-               optimizer = "nlminb",      # optimizer to use ("optim", "nlminb", "uobyqa", "newuoa", "bobyqa", "nloptr", "nlm", "hjk", "nmk", "mads", "ucminf", "optimParallel") for location-scale model
+               optimizer = "nlminb",      # optimizer to use ("optim", "nlminb", "uobyqa", "newuoa", "bobyqa", "nloptr", "nlm", "hjk", "nmk", "mads", "ucminf", "optimParallel", "constrOptim") for location-scale models
                optmethod = "BFGS",        # argument 'method' for optim() ("Nelder-Mead" and "BFGS" are sensible options)
                parallel = list(),         # parallel argument for optimParallel() (note: 'cl' argument in parallel is not passed; this is directly specified via 'cl')
                cl = NULL,                 # arguments for optimParallel()
@@ -979,9 +985,9 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
       if (verbose > 1 && !tau2.fix && method != "FE")
          message(mstyle$message("Estimating tau^2 value ...\n"))
 
-      if (k == 1) {
+      if (k == 1L) {
          method.sav <- method
-         method = "k1"
+         method = "k1" # set method to k1 so all of the stuff below is skipped
          if (!tau2.fix)
             tau2 <- 0
       }
@@ -1455,7 +1461,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
          se.tau2 <- sqrt(2*k^2/(k-p) / sum(wi)^2) ### these two equations are actually identical, but this one is much simpler
       }
 
-      if (k == 1)
+      if (k == 1L)
          method <- method.sav
 
    }
@@ -1466,12 +1472,34 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
    if (model == "rma.ls") {
 
-      if (method != "ML" && method != "REML")
+      if (!is.element(method, c("ML", "REML")))
          stop(mstyle$stop("Location-scale model can only be fitted with ML or REML estimation."))
+
+      tau2.fix <- FALSE
+
+      if (is.numeric(tau2))
+         warning(mstyle$warning("Argument 'tau2' ignored for location-scale models."), call.=FALSE)
+
+      ### checks on alpha argument
+
+      q <- NCOL(Z)
+
+      if (missing(alpha) || is.null(alpha) || (length(alpha) == 1L && is.na(alpha))) {
+         alpha <- rep(NA, q)
+         alphaspec <- FALSE
+      } else {
+         if (length(alpha) == 1L)
+            alpha <- rep(alpha, q)
+         if (length(alpha) != q)
+            stop(mstyle$stop(paste0("Length of 'alpha' argument (", length(alpha), ") does not match actual number of parameters (", q, ").")))
+         alphaspec <- TRUE
+         con$scaleZ <- FALSE
+
+      }
 
       ### get optimizer arguments from control argument
 
-      optimizer  <- match.arg(con$optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","optimParallel"))
+      optimizer  <- match.arg(con$optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","optimParallel","constrOptim"))
       optmethod  <- match.arg(con$optmethod, c("Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent"))
       parallel   <- con$parallel
       cl         <- con$cl
@@ -1483,10 +1511,16 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
       ### if control argument 'ncpus' is larger than 1, automatically switch to optimParallel optimizer
 
-      if (ncpus > 1L) {
-         con$optimizer <- "optimParallel"
+      if (ncpus > 1L)
          optimizer <- "optimParallel"
-      }
+
+      ### when using an identify link, force optimizer to constrOptim
+
+      if (link == "identity")
+         optimizer <- "constrOptim"
+
+      if (link == "log" && optimizer == "constrOptim")
+         stop(mstyle$stop("Cannot use 'constrOptim' optimizer when using a log link."))
 
       reml <- ifelse(method=="REML", TRUE, FALSE)
 
@@ -1536,6 +1570,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
       if (!requireNamespace("numDeriv", quietly=TRUE))
          stop(mstyle$stop("Please install the 'numDeriv' package to fit location-scale models."))
+      # TODO: make this optional? (user can skip hessian computation?)
 
       ### drop redundant predictors
 
@@ -1547,12 +1582,12 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
          Z.f <- Z.f[,!coef.na.Z,drop=FALSE]
       }
 
+      q <- NCOL(Z)
+
       ### check whether model matrix is of full rank
 
       if (any(eigen(crossprod(Z), symmetric=TRUE, only.values=TRUE)$values <= con$evtol))
          stop(mstyle$stop("Model matrix for scale part of the model not of full rank. Cannot fit model."))
-
-      q <- NCOL(Z)
 
       ### check whether this is an intercept-only model
 
@@ -1571,62 +1606,84 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
          meanZ <- colMeans(Z[, 2:q, drop=FALSE])
          sdZ   <- apply(Z[, 2:q, drop=FALSE], 2, sd) ### consider using colSds() from matrixStats package
          is.d  <- apply(Z, 2, .is.dummy) ### is each column a dummy variable (i.e., only 0s and 1s)?
+         mZ    <- rbind(c(1, -1*ifelse(is.d[-1], 0, meanZ/sdZ)), cbind(0, diag(ifelse(is.d[-1], 1, 1/sdZ), nrow=length(is.d)-1, ncol=length(is.d)-1)))
+         imZ   <- try(suppressWarnings(solve(mZ)), silent=TRUE)
          Z[,!is.d] <- apply(Z[, !is.d, drop=FALSE], 2, scale) ### rescale the non-dummy variables
+      } else {
+         mZ <- NULL
       }
 
-      if (k == 1 && Z.int.only) {
+      if (k == 1L && Z.int.only) {
          if (link == "log")
             con$alpha.init <- -10000
          if (link == "identity")
             con$alpha.init <- 0.00001
       }
 
-      ### set alpha.init (or check if length of alpha.init matches number of parameters)
-      ### FIXME: need a better way of setting default initial values
+      ### set/transform/check alpha.init
+
+      if (verbose > 1)
+         message(mstyle$message("Extracting/computing initial values ..."))
 
       if (is.null(con$alpha.init)) {
 
+         fit <- suppressWarnings(rma(yi, vi, mods=X, intercept=FALSE, method="HE"))
+         tmp <- rstandard(fit)
+
          if (link == "log") {
 
-            tmp <- rma(yi, vi, mods=X, intercept=FALSE, method="HE")
-            tmp <- rstandard(tmp)
-            tmp <- rma(log(tmp$resid^2), tmp$se^2, mods=Z, intercept=FALSE, method="FE")
-            #tmp <- ranef(tmp)
-            #tmp <- rma(log(tmp$pred^2), tmp$se^2, mods=Z, intercept=FALSE, method="FE")
-            #print(coef(tmp))
-
-            con$alpha.init <- coef(tmp)
-            #con$alpha.init <- ifelse(is.int, log(tmp$tau2+.01), -5)
-            #con$alpha.init <- rep(log(0.0001), q)
+            tmp <- rma(log(tmp$resid^2), 4/tmp$resid^2*tmp$se^2, mods=Z, intercept=FALSE, method="FE")
+            #tmp <- rma(log(tmp$resid^2), tmp$se^2, mods=Z, intercept=FALSE, method="FE")
+            #tmp <- rma(log(tmp$resid^2), 1, mods=Z, intercept=FALSE, method="FE")
+            alpha.init <- coef(tmp)
 
          }
 
          if (link == "identity") {
 
-            tmp <- rma(yi, vi, mods=X, intercept=FALSE, method="HE")
-            con$alpha.init <- ifelse(is.int, tmp$tau2+.01, .01)
-            #con$alpha.init <- rep(0.0001, q)
+            #tmp <- rma(tmp$resid^2, 4*tmp$resid^2*tmp$se^2, mods=Z, intercept=FALSE, method="FE")
+            tmp <- rma(tmp$resid^2, tmp$se^2, mods=Z, intercept=FALSE, method="FE")
+            #tmp <- rma(tmp$resid^2, 1, mods=Z, intercept=FALSE, method="FE")
+            alpha.init <- coef(tmp)
+            if (any(Z %*% alpha.init < 0))
+               alpha.init <- ifelse(is.int, fit$tau2+.01, 0)
+            if (any(Z %*% alpha.init < 0))
+               stop(mstyle$stop("Unable to find suitable starting values for the scale parameters."))
 
          }
 
       } else {
 
-         if (length(con$alpha.init) != q)
-            stop(mstyle$stop(paste0("Length of 'alpha.init' argument (", length(con$alpha.init), ") does not match actual number of parameters (", q, ").")))
+         alpha.init <- con$alpha.init
+
+         if (!Z.int.only && any(is.int) && con$scaleZ) {
+            if (inherits(imZ, "try-error"))
+               stop(mstyle$stop("Unable to rescale starting values for the scale parameters."))
+            alpha.init <- c(imZ %*% cbind(alpha.init))
+         }
+
+         if (link == "identity" && any(Z %*% alpha.init < 0))
+            stop(mstyle$stop("Starting values for the scale parameters lead to one or more negative tau^2 values."))
 
       }
+
+      if (length(alpha.init) != q)
+         stop(mstyle$stop(paste0("Length of 'alpha.init' argument (", length(alpha.init), ") does not match actual number of parameters (", q, ").")))
+
+      if (anyNA(alpha.init))
+         stop(mstyle$stop("No missing values allowed in 'alpha.init'."))
 
       if (verbose > 1)
          message(mstyle$message("Estimating scale parameters ...\n"))
 
-      ### obtain initial values for beta (would only need this when optimizing over beta and alpha jointly)
+      ### obtain initial values for beta (only need this when optimizing over beta and alpha jointly)
 
       #wi <- 1/vi
       #W  <- diag(wi, nrow=k, ncol=k)
       #stXWX <- .invcalc(X=X, W=W, k=k)
-      #beta  <- stXWX %*% crossprod(X,W) %*% Y
+      #beta.init <- stXWX %*% crossprod(X,W) %*% Y
 
-      if (optimizer=="optim") {
+      if (is.element(optimizer, c("optim","constrOptim"))) {
          par.arg <- "par"
          ctrl.arg <- ", control=optcontrol"
       }
@@ -1704,22 +1761,25 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
       if (link == "log") {
 
-         optcall <- paste(optimizer, "(", par.arg, "=c(con$alpha.init), .ll.rma.ls, ", ifelse(optimizer=="optim", "method=optmethod, ", ""),
-                                                       "yi=yi, vi=vi, X=X, Z=Z, reml=reml, k=k, pX=p, verbose=verbose, digits=digits,
+         optcall <- paste(optimizer, "(", par.arg, "=alpha.init, .ll.rma.ls, ", ifelse(optimizer=="optim", "method=optmethod, ", ""),
+                                                       "yi=yi, vi=vi, X=X, Z=Z, reml=reml, k=k, pX=p, alpha.val=alpha, verbose=verbose, digits=digits,
                                                        #hessian=TRUE,
-                                                       REMLf=con$REMLf, link=link", ctrl.arg, ")\n", sep="")
+                                                       REMLf=con$REMLf, link=link, mZ=mZ", ctrl.arg, ")\n", sep="")
          #return(optcall)
-         opt.res <- try(eval(parse(text=optcall)), silent=!verbose)
+         if (verbose) {
+            opt.res <- try(eval(parse(text=optcall)), silent=!verbose)
+         } else {
+            opt.res <- try(suppressWarnings(eval(parse(text=optcall))), silent=!verbose)
+         }
 
       }
 
       if (link == "identity") {
 
-         optimizer <- "optim"
+         opt.res <- try(constrOptim(theta=alpha.init, f=.ll.rma.ls, grad=NULL, ui=Z, ci=rep(0,k),
+                                    yi=yi, vi=vi, X=X, Z=Z, reml=reml, k=k, pX=p, alpha.val=alpha, verbose=verbose, digits=digits,
+                                    REMLf=con$REMLf, link=link, mZ=mZ), silent=!verbose)
 
-         opt.res <- try(constrOptim(theta=con$alpha.init, f=.ll.rma.ls, grad=NULL, ui=Z, ci=rep(0,k),
-                                    yi=yi, vi=vi, X=X, Z=Z, reml=reml, k=k, pX=p, verbose=verbose, digits=digits,
-                                    REMLf=con$REMLf, link=link), silent=!verbose)
       }
 
       #return(opt.res)
@@ -1730,11 +1790,11 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
       }
 
       if (inherits(opt.res, "try-error"))
-         stop(mstyle$stop("Error during optimization for scale model."))
+         stop(mstyle$stop("Error during the optimization. Use verbose=TRUE and see help(rma) for more details on the optimization routines."))
 
       ### convergence checks
 
-      if (is.element(optimizer, c("optim","nlminb","dfoptim::hjk","dfoptim::nmk","optimParallel::optimParallel")) && opt.res$convergence != 0)
+      if (is.element(optimizer, c("optim","constrOptim","nlminb","dfoptim::hjk","dfoptim::nmk","optimParallel::optimParallel")) && opt.res$convergence != 0)
          stop(mstyle$stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (convergence = ", opt.res$convergence, ").")))
 
       if (is.element(optimizer, c("dfoptim::mads")) && opt.res$convergence > optcontrol$tol)
@@ -1762,24 +1822,55 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
       if (optimizer=="nlm")
          opt.res$par <- opt.res$estimate
 
+      ### replace fixed alpha values in opt.res$par
+
+      opt.res$par <- ifelse(is.na(alpha), opt.res$par, alpha)
+
       ### try to compute vcov matrix for scale parameter estimates
 
-      h <- try(numDeriv::hessian(func=.ll.rma.ls, x=opt.res$par, method.args=con$hessianCtrl, yi=yi, vi=vi, X=X,
-                                 Z=Z, reml=reml, k=k, pX=p, verbose=FALSE, digits=digits, REMLf=con$REMLf, link=link), silent=TRUE)
+      H <- NA
+      vb.alpha <- matrix(NA_real_, nrow=q, ncol=q)
+      hest <- is.na(alpha)
 
-      vb.alpha <- try(chol2inv(chol(h)), silent=TRUE)
+      if (any(hest)) {
 
-      if (inherits(vb.alpha, "try-error"))
-         vb.alpha <- matrix(NA, nrow=q, ncol=q)
+         if (verbose > 1)
+            message(mstyle$message("\nComputing Hessian ..."))
+
+         H <- try(numDeriv::hessian(func=.ll.rma.ls, x=opt.res$par, method.args=con$hessianCtrl, yi=yi, vi=vi, X=X,
+                                    Z=Z, reml=reml, k=k, pX=p, alpha.val=alpha, verbose=FALSE, digits=digits, REMLf=con$REMLf, link=link, mZ=mZ), silent=TRUE)
+
+         if (inherits(H, "try-error")) {
+
+            warning(mstyle$warning("Error when trying to compute Hessian."), call.=FALSE)
+
+         } else {
+
+            H.hest <- H[hest, hest, drop=FALSE]
+            iH.hest <- try(suppressWarnings(chol2inv(chol(H.hest))), silent=TRUE)
+
+            if (inherits(iH.hest, "try-error") || any(is.na(iH.hest)) || any(is.infinite(iH.hest))) {
+
+               warning(mstyle$warning("Error when trying to invert Hessian."), call.=FALSE)
+
+            } else {
+
+               vb.alpha[hest, hest] <- iH.hest
+
+            }
+
+         }
+
+      }
 
       ### get scale parameter estimates
 
+      alpha.val <- alpha
       alpha <- cbind(opt.res$par)
 
       ### scale back alpha and vb.alpha
 
       if (!Z.int.only && any(is.int) && con$scaleZ) {
-         mZ <- rbind(c(1, -1*ifelse(is.d[-1], 0, meanZ/sdZ)), cbind(0, diag(ifelse(is.d[-1], 1, 1/sdZ), nrow=length(is.d)-1, ncol=length(is.d)-1)))
          alpha <- mZ %*% alpha
          vb.alpha <- mZ %*% vb.alpha %*% t(mZ)
          Z <- Zsave
@@ -1808,8 +1899,6 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
          tau2 <- exp(as.vector(Z %*% alpha))
       if (link == "identity")
          tau2 <- as.vector(Z %*% alpha)
-
-      tau2.fix <- FALSE
 
    }
 
@@ -2085,7 +2174,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
       message(mstyle$message("Computing fit statistics and log likelihood ..."))
 
    ### note: tau2 is not counted as a parameter when it was fixed by the user
-   parms <- p + ifelse(model == "rma.uni", ifelse(method == "FE" || tau2.fix, 0, 1), q)
+   parms <- p + ifelse(model == "rma.uni", ifelse(method == "FE" || tau2.fix, 0, 1), sum(is.na(alpha.val)))
 
    ll.ML    <- -1/2 * (k) * log(2*base::pi) - 1/2 * sum(log(vi + tau2)) - 1/2 * RSS.f
    ll.REML  <- -1/2 * (k-p) * log(2*base::pi) + ifelse(con$REMLf, 1/2 * determinant(crossprod(X), logarithm=TRUE)$modulus, 0) +
@@ -2147,11 +2236,13 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
          res$pval.alpha  <- pval.alpha
          res$ci.lb.alpha <- ci.lb.alpha
          res$ci.ub.alpha <- ci.ub.alpha
+         res$alpha.fix   <- !is.na(alpha.val)
          res$Z   <- Z
          res$Z.f <- Z.f
          res$tau2.f <- rep(NA, k.f)
          res$tau2.f[not.na] <- tau2
          res$formula.scale <- formula.scale
+         res$H <- H
 
       }
 

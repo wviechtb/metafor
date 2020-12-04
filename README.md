@@ -5,7 +5,7 @@ metafor: A Meta-Analysis Package for R
 [![Build Status](https://travis-ci.org/wviechtb/metafor.svg?branch=master)](https://travis-ci.org/wviechtb/metafor)
 [![Code Coverage](https://codecov.io/gh/wviechtb/metafor/branch/master/graph/badge.svg)](https://codecov.io/gh/wviechtb/metafor)
 [![CRAN Version](https://www.r-pkg.org/badges/version/metafor)](https://cran.r-project.org/package=metafor)
-[![devel Version](https://img.shields.io/badge/devel-2.5--60-brightgreen.svg)](http://www.metafor-project.org/doku.php/installation#development_version)
+[![devel Version](https://img.shields.io/badge/devel-2.5--61-brightgreen.svg)](http://www.metafor-project.org/doku.php/installation#development_version)
 [![Monthly Downloads](https://cranlogs.r-pkg.org/badges/metafor)](https://cranlogs.r-pkg.org/badges/metafor)
 [![Total Downloads](https://cranlogs.r-pkg.org/badges/grand-total/metafor)](https://cranlogs.r-pkg.org/badges/grand-total/metafor)
 
@@ -40,12 +40,12 @@ In addition to reading the paper, carefully read the [package intro](https://wvi
 
 ## Installation
 
-The current official (i.e., [CRAN](https://cran.r-project.org/package=metafor)) release can be installed directly within R with:
+The current official (i.e., [CRAN](https://cran.r-project.org/package=metafor)) release can be installed within R with:
 ```r
 install.packages("metafor")
 ```
 
-The development version of the metafor package can be installed with:
+The development version of the package can be installed with:
 ```r
 install.packages("remotes")
 remotes::install_github("wviechtb/metafor")

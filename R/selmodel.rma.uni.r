@@ -766,7 +766,12 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
       message(mstyle$message("\nModel fitting ...\n"))
 
    #return(optcall)
-   opt.res <- try(eval(parse(text=optcall)), silent=!verbose)
+   if (verbose) {
+      opt.res <- try(eval(parse(text=optcall)), silent=!verbose)
+   } else {
+      opt.res <- try(suppressWarnings(eval(parse(text=optcall))), silent=!verbose)
+   }
+
    #return(opt.res)
 
    if (optimizer == "optimParallel::optimParallel" && verbose) {
@@ -775,7 +780,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    }
 
    if (inherits(opt.res, "try-error"))
-      stop(mstyle$stop("Error during optimization."))
+      stop(mstyle$stop("Error during the optimization. Use verbose=TRUE and see help(selmodel) for more details on the optimization routines."))
 
    ### convergence checks
 
@@ -832,7 +837,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    #return(fitcall)
 
    if (inherits(fitcall, "try-error"))
-      stop(mstyle$stop("Error during optimization."))
+      stop(mstyle$stop("Error during the optimization. Use verbose=TRUE and see help(selmodel) for more details on the optimization routines."))
 
    ll    <- fitcall$ll
    beta  <- cbind(fitcall$beta)
@@ -923,7 +928,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
          H.hest  <- H[hest, hest, drop=FALSE]
          iH.hest <- try(suppressWarnings(chol2inv(chol(H.hest))), silent=TRUE)
 
-         if (inherits(iH.hest, "try-error")) {
+         if (inherits(iH.hest, "try-error") || any(is.na(iH.hest)) || any(is.infinite(iH.hest))) {
             warning(mstyle$warning("Error when trying to invert Hessian."), call.=FALSE)
          } else {
             iH <- matrix(0, nrow=length(hest), ncol=length(hest))

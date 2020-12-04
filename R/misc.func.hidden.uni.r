@@ -152,7 +152,7 @@
 
 ### -1 times the log likelihood (regular or restricted) for location-scale model
 
-.ll.rma.ls <- function(par, yi, vi, X, Z, reml, k, pX, verbose, digits, REMLf, link) {
+.ll.rma.ls <- function(par, yi, vi, X, Z, reml, k, pX, alpha.val, verbose, digits, REMLf, link, mZ) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -160,13 +160,15 @@
    #alpha <- par[-seq_len(pX)]
 
    alpha <- par
+   alpha <- ifelse(is.na(alpha.val), alpha, alpha.val)
 
    ### compute predicted tau2 values
 
-   if (link == "log")
+   if (link == "log") {
       tau2 <- exp(c(Z %*% alpha))
-   if (link == "identity")
+   } else {
       tau2 <- c(Z %*% alpha)
+   }
 
    if (any(tau2 < 0)) {
 
@@ -179,7 +181,7 @@
 
       ### when using this, the optimization only pertains to the parameter(s) in 'alpha', as 'beta' is then fully
       ### determined by the current value(s) of 'alpha'; this is actually also how the standard RE/ME model is fitted;
-      ### but is this really the best way of doing this? one could also optimize over beta and alpha jointly
+      ### but is this really the best way of doing this? one could also optimize over beta and alpha jointly!
       W <- diag(wi, nrow=k, ncol=k)
       stXWX <- try(.invcalc(X=X, W=W, k=k), silent=TRUE)
 
@@ -205,6 +207,9 @@
       }
 
    }
+
+   if (!is.null(mZ))
+      alpha <- mZ %*% alpha
 
    if (verbose) {
       cat(mstyle$verbose(paste0("ll = ",          ifelse(is.na(llval), NA, formatC(llval, digits=digits[["fit"]], format="f", flag=" ")), "  ")))

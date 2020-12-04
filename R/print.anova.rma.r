@@ -65,10 +65,16 @@ print.anova.rma <- function(x, digits=x$digits, ...) {
 
    if (x$type == "LRT") {
 
-      res.table <- rbind(
-         c(x$p.f, .fcf(x$fit.stats.f[c("AIC","BIC","AICc","ll")], digits[["fit"]]), NA, NA, .fcf(x$QE.f, digits[["test"]]), .fcf(x$tau2.f, digits[["var"]]), NA),
-         c(x$p.r, .fcf(x$fit.stats.r[c("AIC","BIC","AICc","ll")], digits[["fit"]]), .fcf(x$LRT, digits[["test"]]), .pval(x$pval, digits=digits[["pval"]]), .fcf(x$QE.r, digits[["test"]]), .fcf(x$tau2.r, digits[["var"]]), NA)
-      )
+      res.table <- data.frame(c(x$p.f, x$p.r),
+                              c(.fcf(x$fit.stats.f["AIC"],  digits[["fit"]]), .fcf(x$fit.stats.r["AIC"],  digits[["fit"]])),
+                              c(.fcf(x$fit.stats.f["BIC"],  digits[["fit"]]), .fcf(x$fit.stats.r["BIC"],  digits[["fit"]])),
+                              c(.fcf(x$fit.stats.f["AICc"], digits[["fit"]]), .fcf(x$fit.stats.r["AICc"], digits[["fit"]])),
+                              c(.fcf(x$fit.stats.f["ll"],   digits[["fit"]]), .fcf(x$fit.stats.r["ll"],   digits[["fit"]])),
+                              c(NA, .fcf(x$LRT, digits[["test"]])),
+                              c(NA, .pval(x$pval, digits=digits[["pval"]])),
+                              c(.fcf(x$QE.f, digits[["test"]]),  .fcf(x$QE.r, digits[["test"]])),
+                              c(.fcf(x$tau2.f, digits[["var"]]), .fcf(x$tau2.r, digits[["var"]])),
+                              c(NA, NA))
 
       colnames(res.table) <- c("df", "AIC", "BIC", "AICc", "logLik", "LRT", "pval", "QE", "tau^2", "R^2")
       rownames(res.table) <- c("Full", "Reduced")

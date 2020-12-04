@@ -1528,6 +1528,19 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
 
    verbose <- con$verbose
 
+   ### check for missings in initial values
+
+   if (anyNA(con$sigma2.init))
+      stop(mstyle$stop(paste0("No missing values allowed in 'sigma2.init'.")))
+   if (anyNA(con$tau2.init))
+      stop(mstyle$stop(paste0("No missing values allowed in 'tau2.init'.")))
+   if (anyNA(con$rho.init))
+      stop(mstyle$stop(paste0("No missing values allowed in 'rho.init'.")))
+   if (anyNA(con$gamma2.init))
+      stop(mstyle$stop(paste0("No missing values allowed in 'gamma2.init'.")))
+   if (anyNA(con$phi.init))
+      stop(mstyle$stop(paste0("No missing values allowed in 'phi.init'.")))
+
    ### expand initial values to correct length
 
    if (length(con$sigma2.init) == 1L)
@@ -1666,10 +1679,8 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
 
    ### if control argument 'ncpus' is larger than 1, automatically switch to optimParallel optimizer
 
-   if (ncpus > 1L) {
-      con$optimizer <- "optimParallel"
+   if (ncpus > 1L)
       optimizer <- "optimParallel"
-   }
 
    reml <- ifelse(method=="REML", TRUE, FALSE)
 
@@ -1926,7 +1937,11 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
             verbose=verbose, digits=digits, REMLf=con$REMLf, dofit=FALSE", ctrl.arg, ")\n", sep="")
 
          #return(optcall)
-         opt.res <- try(eval(parse(text=optcall)), silent=!verbose)
+         if (verbose) {
+            opt.res <- try(eval(parse(text=optcall)), silent=!verbose)
+         } else {
+            opt.res <- try(suppressWarnings(eval(parse(text=optcall))), silent=!verbose)
+         }
          #return(opt.res)
 
          if (optimizer == "optimParallel::optimParallel" && verbose) {
@@ -1935,7 +1950,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
          }
 
          if (inherits(opt.res, "try-error"))
-            stop(mstyle$stop("Error during optimization."))
+            stop(mstyle$stop("Error during the optimization. Use verbose=TRUE and see help(rma.mv) for more details on the optimization routines."))
 
          ### convergence checks
 

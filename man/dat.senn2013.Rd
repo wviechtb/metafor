@@ -29,7 +29,7 @@
 dat <- dat.senn2013
 dat
 
-### create network graph ('plyr' and 'igraph' packages must be installed)
+### create network graph ('igraph' package must be installed)
 \dontrun{
 require(igraph)
 pairs <- data.frame(do.call(rbind,
