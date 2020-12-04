@@ -1,4 +1,4 @@
-aggregate.escalc <- function(x, cluster, time, V, struct="CS", rho, phi, fun, na.rm=TRUE, subset, select, digits, ...) {
+aggregate.escalc <- function(x, cluster, time, V, struct="CS", rho, phi, weighted=TRUE, fun, na.rm=TRUE, subset, select, digits, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -271,14 +271,26 @@ aggregate.escalc <- function(x, cluster, time, V, struct="CS", rho, phi, fun, na
 
    for (i in 1:n) {
 
-      Wi <- try(chol2inv(chol(V[cluster == ucluster[i], cluster == ucluster[i]])), silent=FALSE)
+      Vi <- V[cluster == ucluster[i], cluster == ucluster[i]]
 
-      if (inherits(Wi, "try-error"))
-         stop(mstyle$stop(paste0("Cannot take inverse of 'V' in cluster ", ucluster[i], ".")))
+      if (weighted) {
 
-      sumWi <- sum(Wi)
-      yi.agg[i] <- sum(Wi %*% cbind(yi[cluster == ucluster[i]])) / sumWi
-      vi.agg[i] <- 1 / sumWi
+         Wi <- try(chol2inv(chol(Vi)), silent=FALSE)
+
+         if (inherits(Wi, "try-error"))
+            stop(mstyle$stop(paste0("Cannot take inverse of 'V' in cluster ", ucluster[i], ".")))
+
+         sumWi <- sum(Wi)
+         yi.agg[i] <- sum(Wi %*% cbind(yi[cluster == ucluster[i]])) / sumWi
+         vi.agg[i] <- 1 / sumWi
+
+      } else {
+
+         ki <- sum(cluster == ucluster[i])
+         yi.agg[i] <- sum(yi[cluster == ucluster[i]]) / ki
+         vi.agg[i] <- sum(Vi) / ki^2
+
+      }
 
    }
 
