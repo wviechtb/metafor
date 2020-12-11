@@ -143,17 +143,19 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
                  \tab mean       \tab standard deviation \tab group size \cr
          group 1 \tab \code{m1i} \tab \code{sd1i}        \tab \code{n1i} \cr
          group 2 \tab \code{m2i} \tab \code{sd2i}        \tab \code{n2i}
-         } where \code{m1i} and \code{m2i} are the observed means of the two groups, \code{sd1i} and \code{sd2i} are the observed standard deviations, and \code{n1i} and \code{n2i} denote the number of individuals in each group. Again, the two groups may be experimentally created (e.g., a treatment and control group based on random assignment) or naturally occurring (e.g., men and women). In either case, the raw mean difference, the standardized mean difference, and the (log transformed) ratio of means (also called log response ratio) are useful outcome measures when meta-analyzing studies of this type (e.g., Borenstein, 2009).
+         } where \code{m1i} and \code{m2i} are the observed means of the two groups, \code{sd1i} and \code{sd2i} are the observed standard deviations, and \code{n1i} and \code{n2i} denote the number of individuals in each group. Again, the two groups may be experimentally created (e.g., a treatment and control group based on random assignment) or naturally occurring (e.g., men and women). In either case, the raw mean difference, the standardized mean difference, and the (log transformed) ratio of means (also called log response ratio) are useful outcome measures when meta-analyzing studies of this type.
 
          The options for the \code{measure} argument are then:
          \itemize{
-         \item \code{"MD"} for the \emph{raw mean difference}.
+         \item \code{"MD"} for the \emph{raw mean difference} (e.g., Borenstein, 2009).
          \item \code{"SMD"} for the \emph{standardized mean difference} (Hedges, 1981).
          \item \code{"SMDH"} for the \emph{standardized mean difference} with heteroscedastic population variances in the two groups (Bonett, 2008, 2009).
          \item \code{"ROM"} for the \emph{log transformed ratio of means} (Hedges et al., 1999; Lajeunesse, 2011).
-         } Note that the log is taken of the ratio of means, which makes this outcome measures symmetric around 0 and yields a corresponding sampling distribution that is closer to normality. However, note that if \code{m1i} and \code{m2i} have opposite signs, this outcome measure cannot be computed.
+         }
 
-         The positive bias in the standardized mean difference is automatically corrected for within the function, yielding Hedges' g for \code{measure="SMD"} (Hedges, 1981). Similarly, the same bias correction is applied for \code{measure="SMDH"} (Bonett, 2009). For \code{measure="SMD"}, one can choose between \code{vtype="LS"} (the default) and \code{vtype="UB"}. The former uses the usual large-sample approximation to compute the sampling variances. The latter provides unbiased estimates of the sampling variances (see Hedges, 1983). There is also \code{vtype="LS2"}, which computes the sampling variances as described in Borenstein (2009). Finally, for \code{measure="MD"} and \code{measure="ROM"}, one can choose between \code{vtype="LS"} (the default) and \code{vtype="HO"}. The former computes the sampling variances without assuming homoscedasticity (i.e., that the true variances of the measurements are the same in group 1 and group 2 within each study), while the latter assumes homoscedasticity.
+         For \code{measure="ROM"}, the log is taken of the ratio of means, which makes this outcome measure symmetric around 0 and yields a corresponding sampling distribution that is closer to normality. Hence, this measure cannot be computed when \code{m1i} and \code{m2i} have opposite signs (i.e., it is meant to be used for ratio scale measurements, where both means should be positive anyway). For \code{measure="SMD"}, the positive bias in the standardized mean difference is automatically corrected for within the function, yielding Hedges' g (Hedges, 1981). Similarly, the same bias correction is applied for \code{measure="SMDH"} (Bonett, 2009).
+
+         For \code{measure="MD"}, one can choose between \code{vtype="LS"} (the default) and \code{vtype="HO"}. The former computes the sampling variances without assuming homoscedasticity (i.e., that the true variances of the measurements are the same in group 1 and group 2 within each study), while the latter assumes homoscedasticity (equations 12.5 and 12.3 in Borenstein, 2009, respectively). For \code{measure="SMD"}, one can choose between \code{vtype="LS"} (the default) for the usual large-sample approximation to compute the sampling variances (equation 8 in Hedges, 1982), \code{vtype="UB"} to compute unbiased estimates of the sampling variances (equation 9 in Hedges, 1983), \code{vtype="LS2"} to compute the sampling variances as described in Borenstein (2009) (i.e., equation 12.17), and \code{vtype="AV"} to compute the sampling variances with the usual large-sample approximation but plugging the sample-size weighted average of the Hedges' g values into the equation. For \code{measure="ROM"}, one can choose between \code{vtype="LS"} (the default) for the usual large-sample approximation to compute the sampling variances (equation 1 in Hedges et al., 1999), \code{vtype="HO"} to compute the sampling variances assuming homoscedasticity (the unnumbered equation after equation 1 in Hedges et al., 1999), \code{vtype="AV"} to compute the sampling variances assuming homoscedasticity of the coefficient of variation within each group across studies, and \code{vtype="AVHO"} to compute the sampling variances assuming homoscedasticity of the coefficient of variation for both groups across studies.
 
          A dataset corresponding to data of this type is provided in \code{\link{dat.normand1999}} (for mean differences and standardized mean differences). A dataset showing the use of the ratio of means measure is provided in \code{\link{dat.curtis1998}}.
 
@@ -181,14 +183,16 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
       \subsection{Measures for Two Quantitative Variables}{
 
-         The (Pearson or product moment) correlation coefficient quantifies the direction and strength of the (linear) relationship between two quantitative variables and is therefore frequently used as the outcome measure for meta-analyses (e.g., Borenstein, 2009). Two alternative measures are a bias-corrected version of the correlation coefficient and Fisher's r-to-z transformed correlation coefficient.
+         The (Pearson or product-moment) correlation coefficient quantifies the direction and strength of the (linear) relationship between two quantitative variables and is therefore frequently used as the outcome measure for meta-analyses. Two alternative measures are a bias-corrected version of the correlation coefficient and Fisher's r-to-z transformed correlation coefficient.
 
          For these measures, one needs to specify \code{ri}, the vector with the raw correlation coefficients, and \code{ni}, the corresponding sample sizes. The options for the \code{measure} argument are then:
          \itemize{
          \item \code{"COR"} for the \emph{raw correlation coefficient}.
          \item \code{"UCOR"} for the \emph{raw correlation coefficient} corrected for its slight negative bias (based on equation 2.3 in Olkin & Pratt, 1958).
          \item \code{"ZCOR"} for \emph{Fisher's r-to-z transformed correlation coefficient} (Fisher, 1921).
-         } For \code{measure="UCOR"}, one can choose between \code{vtype="LS"} (the default) and \code{vtype="UB"}. The former uses the usual large-sample approximation to compute the sampling variances. The latter provides unbiased estimates of the sampling variances (see Hedges, 1989, but using the exact equation instead of the approximation).
+         }
+
+         For \code{measure="COR"} and \code{measure="UCOR"}, one can choose between \code{vtype="LS"} (the default) for the usual large-sample approximation to compute the sampling variances (i.e., plugging the (biased-corrected) correlation coefficients into equation 12.27 in Borenstein, 2009), \code{vtype="UB"} to compute unbiased estimates of the sampling variances (see Hedges, 1989, but using the exact equation instead of the approximation), and \code{vtype="AV"} to compute the sampling variances with the usual large-sample approximation but plugging the sample-size weighted average of the (bias-corrected) correlation coefficients into the equation.
 
          Datasets corresponding to data of this type are provided in \code{\link{dat.mcdaniel1994}} and \code{\link{dat.molloy2014}}.
 
@@ -441,9 +445,11 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
    Hedges, L. V. (1981). Distribution theory for Glass's estimator of effect size and related estimators. \emph{Journal of Educational Statistics}, \bold{6}(2), 107--128. \verb{https://doi.org/10.3102/10769986006002107}
 
-   Hedges, L. V. (1989). An unbiased correction for sampling error in validity generalization studies. \emph{Journal of Applied Psychology}, \bold{74}(3), 469--477. \verb{https://doi.org/10.1037/0021-9010.74.3.469}
+   Hedges, L. V. (1982). Estimation of effect size from a series of independent experiments. \emph{Psychological Bulletin}, \bold{92}(2), 490--499. \verb{https://doi.org/10.1037/0033-2909.92.2.490}
 
    Hedges, L. V. (1983). A random effects model for effect sizes. \emph{Psychological Bulletin}, \bold{93}(2), 388--395. \verb{https://doi.org/10.1037/0033-2909.93.2.388}
+
+   Hedges, L. V. (1989). An unbiased correction for sampling error in validity generalization studies. \emph{Journal of Applied Psychology}, \bold{74}(3), 469--477. \verb{https://doi.org/10.1037/0021-9010.74.3.469}
 
    Hedges, L. V., Gurevitch, J., & Curtis, P. S. (1999). The meta-analysis of response ratios in experimental ecology. \emph{Ecology}, \bold{80}(4), 1150--1156. \verb{https://doi.org/10.1890/0012-9658(1999)080[1150:TMAORR]2.0.CO;2}
 

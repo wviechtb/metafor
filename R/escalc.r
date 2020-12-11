@@ -34,7 +34,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
    if (!is.element(to, c("all","only0","if0all","none")))
       stop(mstyle$stop("Unknown 'to' argument specified."))
 
-   if (any(!is.element(vtype, c("UB","LS","LS2","HO","ST","CS","AV")), na.rm=TRUE)) ### vtype can be an entire vector, so use any() and na.rm=TRUE
+   if (any(!is.element(vtype, c("UB","LS","LS2","HO","ST","CS","AV","AVHO")), na.rm=TRUE)) ### vtype can be an entire vector, so use any() and na.rm=TRUE
       stop(mstyle$stop("Unknown 'vtype' argument specified."))
 
    if (add.measure) {
@@ -845,8 +845,12 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
             vi <- rep(NA_real_, k)
 
-            if (!all(is.element(vtype, c("LS","HO"))))
-               stop(mstyle$stop("For this outcome measure, 'vtype' must be either 'LS' or 'HO'."))
+            mn1wcvi <- sum(n1i*sd1i/m1i, na.rm=TRUE) / sum(n1i, na.rm=TRUE) ### sample size weighted average of the coefficient of variation in group 1
+            mn2wcvi <- sum(n2i*sd2i/m2i, na.rm=TRUE) / sum(n2i, na.rm=TRUE) ### sample size weighted average of the coefficient of variation in group 2
+            mnwcvi  <- (sum(n1i*sd1i/m1i, na.rm=TRUE) + sum(n2i*sd2i/m2i, na.rm=TRUE)) / sum(ni, na.rm=TRUE) ### sample size weighted average of the two CV values
+
+            if (!all(is.element(vtype, c("LS","HO","AV","AVHO"))))
+               stop(mstyle$stop("For this outcome measure, 'vtype' must be either 'LS', 'HO', 'AV', or 'AVHO'."))
 
             for (i in seq_len(k)) {
 
@@ -857,6 +861,14 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
                ### estimator assuming homoscedasticity
                if (vtype[i] == "HO")
                   vi[i] <- sdpi[i]^2/(n1i[i]*m1i[i]^2) + sdpi[i]^2/(n2i[i]*m2i[i]^2)
+
+               ### estimator using the weighted averages of the CV values
+               if (vtype[i] == "AV")
+                  vi[i] <- mn1wcvi^2/n1i[i] + mn2wcvi^2/n2i[i]
+
+               ### estimator using the weighted average of two weighted averages of the CV values
+               if (vtype[i] == "AVHO")
+                  vi[i] <- mnwcvi^2 * (1/n1i[i] + 1/n2i[i])
 
             }
 
