@@ -6,9 +6,6 @@ profile.rma.uni <- function(fitted,
    if (!inherits(fitted, "rma.uni"))
       stop(mstyle$stop("Argument 'fitted' must be an object of class \"rma.uni\"."))
 
-   if (inherits(fitted, "rma.ls"))
-      stop(mstyle$stop("Method not available for objects of class \"rma.ls\"."))
-
    if (inherits(fitted, "rma.uni.selmodel"))
       stop(mstyle$stop("Method not available for objects of class \"rma.uni.selmodel\"."))
 

@@ -12,6 +12,7 @@ label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
       stop(mstyle$stop("Argument 'x' must be an object of class \"rma\"."))
 
    na.act <- getOption("na.action")
+   on.exit(options(na.action=na.act))
 
    yaxis <- match.arg(yaxis, c("sei", "vi", "seinv", "vinv", "ni", "ninv", "sqrtni", "sqrtninv", "lni", "wi"))
    type  <- match.arg(type,  c("rstandard", "rstudent"))

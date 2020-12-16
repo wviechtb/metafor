@@ -44,6 +44,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
       struct <- c(struct, struct)
 
    na.act <- getOption("na.action")
+   on.exit(options(na.action=na.act))
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))
@@ -157,7 +158,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
 
    if (verbose > 2) {
       opwarn <- options(warn=1)
-      on.exit(options(warn=opwarn$warn))
+      on.exit(options(warn=opwarn$warn), add=TRUE)
    }
 
    #########################################################################
@@ -224,6 +225,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
       options(na.action = "na.pass")                   ### set na.action to na.pass, so that NAs are not filtered out (we'll do that later)
       mods <- model.matrix(yi, data=data)              ### extract model matrix (now mods is no longer a formula, so [a] further below is skipped)
       attr(mods, "assign") <- NULL                     ### strip assign attribute (not needed at the moment)
+      attr(mods, "contrasts") <- NULL                  ### strip contrasts attribute (not needed at the moment)
       yi <- model.response(model.frame(yi, data=data)) ### extract yi values from model frame
       options(na.action = na.act)                      ### set na.action back to na.act
       names(yi) <- NULL                                ### strip names (1:k) from yi (so res$yi is the same whether yi is a formula or not)
@@ -414,6 +416,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
       options(na.action = "na.pass")        ### set na.action to na.pass, so that NAs are not filtered out (we'll do that later)
       mods <- model.matrix(mods, data=data) ### extract model matrix
       attr(mods, "assign") <- NULL          ### strip assign attribute (not needed at the moment)
+      attr(mods, "contrasts") <- NULL       ### strip contrasts attribute (not needed at the moment)
       options(na.action = na.act)           ### set na.action back to na.act
       intercept <- FALSE                    ### set to FALSE since formula now controls whether the intercept is included or not
    }                                        ### note: code further below ([b]) actually checks whether intercept is included or not
@@ -1731,7 +1734,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
    }
 
    if (con$hessian && !requireNamespace("numDeriv", quietly=TRUE))
-      stop(mstyle$stop("Please install the 'numDeriv' package for Hessian computation."))
+      stop(mstyle$stop("Please install the 'numDeriv' package to compute the Hessian."))
 
    ### check if length of sigma2.init, tau2.init, rho.init, gamma2.init, and phi.init matches number of variance components
    ### note: if a particular component is not included, reset (transformed) initial values (in case the user still specifies multiple initial values)

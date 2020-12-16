@@ -21,6 +21,7 @@ baujat.rma <- function(x, xlim, ylim, xlab, ylab, cex, symbol, grid=TRUE, progba
       stop(mstyle$stop("Method not available for objects of class \"rma.uni.selmodel\"."))
 
    na.act <- getOption("na.action")
+   on.exit(options(na.action=na.act))
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))

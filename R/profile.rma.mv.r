@@ -80,10 +80,10 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
             mc.vc <- mc
             mc.vc$sigma2 <- pos
             mc.vc$time <- FALSE
-            mc.vc$fitted <- quote(x)
+            #mc.vc$fitted <- quote(x)
             if (progbar)
                cat(mstyle$verbose(paste("Profiling sigma2 =", pos, "\n")))
-            sav[[j]] <- eval(mc.vc)
+            sav[[j]] <- eval(mc.vc, envir=parent.frame())
          }
       }
 
@@ -94,10 +94,10 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
                mc.vc <- mc
                mc.vc$tau2 <- pos
                mc.vc$time <- FALSE
-               mc.vc$fitted <- quote(x)
+               #mc.vc$fitted <- quote(x)
                if (progbar)
                   cat(mstyle$verbose(paste("Profiling tau2 =", pos, "\n")))
-               sav[[j]] <- eval(mc.vc)
+               sav[[j]] <- eval(mc.vc, envir=parent.frame())
             }
          }
          if (any(!x$vc.fix$rho)) {
@@ -106,10 +106,10 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
                mc.vc <- mc
                mc.vc$rho <- pos
                mc.vc$time <- FALSE
-               mc.vc$fitted <- quote(x)
+               #mc.vc$fitted <- quote(x)
                if (progbar)
                   cat(mstyle$verbose(paste("Profiling rho =", pos, "\n")))
-               sav[[j]] <- eval(mc.vc)
+               sav[[j]] <- eval(mc.vc, envir=parent.frame())
             }
          }
       }
@@ -121,10 +121,10 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
                mc.vc <- mc
                mc.vc$gamma2 <- pos
                mc.vc$time <- FALSE
-               mc.vc$fitted <- quote(x)
+               #mc.vc$fitted <- quote(x)
                if (progbar)
                   cat(mstyle$verbose(paste("Profiling gamma2 =", pos, "\n")))
-               sav[[j]] <- eval(mc.vc)
+               sav[[j]] <- eval(mc.vc, envir=parent.frame())
             }
          }
          if (any(!x$vc.fix$phi)) {
@@ -133,10 +133,10 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
                mc.vc <- mc
                mc.vc$phi <- pos
                mc.vc$time <- FALSE
-               mc.vc$fitted <- quote(x)
+               #mc.vc$fitted <- quote(x)
                if (progbar)
                   cat(mstyle$verbose(paste("Profiling phi =", pos, "\n")))
-               sav[[j]] <- eval(mc.vc)
+               sav[[j]] <- eval(mc.vc, envir=parent.frame())
             }
          }
       }

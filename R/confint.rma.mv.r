@@ -68,10 +68,10 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
             cl.vc <- cl
             cl.vc$sigma2 <- pos
             cl.vc$time <- FALSE
-            cl.vc$object <- quote(x)
+            #cl.vc$object <- quote(x)
             if (verbose)
                cat(mstyle$verbose(paste("\nObtaining CI for sigma2 =", pos, "\n")))
-            res.all[[j]] <- eval(cl.vc)
+            res.all[[j]] <- eval(cl.vc, envir=parent.frame())
          }
       }
 
@@ -82,10 +82,10 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
                cl.vc <- cl
                cl.vc$tau2 <- pos
                cl.vc$time <- FALSE
-               cl.vc$object <- quote(x)
+               #cl.vc$object <- quote(x)
                if (verbose)
                   cat(mstyle$verbose(paste("\nObtaining CI for tau2 =", pos, "\n")))
-               res.all[[j]] <- eval(cl.vc)
+               res.all[[j]] <- eval(cl.vc, envir=parent.frame())
             }
          }
          if (any(!x$vc.fix$rho)) {
@@ -94,10 +94,10 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
                cl.vc <- cl
                cl.vc$rho <- pos
                cl.vc$time <- FALSE
-               cl.vc$object <- quote(x)
+               #cl.vc$object <- quote(x)
                if (verbose)
                   cat(mstyle$verbose(paste("\nObtaining CI for rho =", pos, "\n")))
-               res.all[[j]] <- eval(cl.vc)
+               res.all[[j]] <- eval(cl.vc, envir=parent.frame())
             }
          }
       }
@@ -109,10 +109,10 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
                cl.vc <- cl
                cl.vc$gamma2 <- pos
                cl.vc$time <- FALSE
-               cl.vc$object <- quote(x)
+               #cl.vc$object <- quote(x)
                if (verbose)
                   cat(mstyle$verbose(paste("\nObtaining CI for gamma2 =", pos, "\n")))
-               res.all[[j]] <- eval(cl.vc)
+               res.all[[j]] <- eval(cl.vc, envir=parent.frame())
             }
          }
          if (any(!x$vc.fix$phi)) {
@@ -121,10 +121,10 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
                cl.vc <- cl
                cl.vc$phi <- pos
                cl.vc$time <- FALSE
-               cl.vc$object <- quote(x)
+               #cl.vc$object <- quote(x)
                if (verbose)
                   cat(mstyle$verbose(paste("\nObtaining CI for phi =", pos, "\n")))
-               res.all[[j]] <- eval(cl.vc)
+               res.all[[j]] <- eval(cl.vc, envir=parent.frame())
             }
          }
       }

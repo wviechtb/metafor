@@ -30,6 +30,7 @@ rcalc <- function(x, ni, data, rtoz=FALSE, nfun="min", sparse=FALSE, ...) {
    }
 
    na.act <- getOption("na.action")
+   on.exit(options(na.action=na.act))
 
    ############################################################################
 

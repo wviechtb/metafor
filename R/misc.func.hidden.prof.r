@@ -1,6 +1,8 @@
 ### for profile(), confint(), and gosh()
 
-.profile.rma.uni <- function(val, obj, parallel=FALSE, profile=FALSE, confint=FALSE, subset=FALSE, objective, model=0L, verbose=FALSE, outlist=NULL) {
+.profile.rma.uni <- function(val, obj,
+   parallel=FALSE, profile=FALSE, confint=FALSE, subset=FALSE,
+   objective, model=0L, verbose=FALSE, outlist=NULL) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -11,9 +13,10 @@
 
       ### for profile and confint, fit model with tau2 fixed to 'val'
 
-      res <- try(suppressWarnings(rma.uni(obj$yi, obj$vi, weights=obj$weights, mods=obj$X, intercept=FALSE,
-                                          method=obj$method, weighted=obj$weighted, test=obj$test, level=obj$level,
-                                          control=obj$control, tau2=val, skipr2=TRUE, outlist="minimal")), silent=TRUE)
+      res <- try(suppressWarnings(
+         rma.uni(obj$yi, obj$vi, weights=obj$weights, mods=obj$X, intercept=FALSE,
+                 method=obj$method, weighted=obj$weighted, test=obj$test, level=obj$level,
+                 control=obj$control, tau2=val, skipr2=TRUE, outlist="minimal")), silent=TRUE)
 
    }
 
@@ -79,10 +82,11 @@
 
       } else {
 
-         sav <- try(suppressWarnings(rma.uni(obj$yi, obj$vi, weights=obj$weights, mods=obj$X, intercept=FALSE,
-                                             method=obj$method, weighted=obj$weighted, test=obj$test, level=obj$level,
-                                             control=obj$control, tau2=ifelse(obj$tau2.fix, obj$tau2, NA),
-                                             subset=val, skipr2=TRUE, outlist=outlist)), silent=TRUE)
+         sav <- try(suppressWarnings(
+            rma.uni(obj$yi, obj$vi, weights=obj$weights, mods=obj$X, intercept=FALSE,
+                    method=obj$method, weighted=obj$weighted, test=obj$test, level=obj$level,
+                    control=obj$control, tau2=ifelse(obj$tau2.fix, obj$tau2, NA),
+                    subset=val, skipr2=TRUE, outlist=outlist)), silent=TRUE)
 
       }
 
@@ -92,7 +96,9 @@
 
 }
 
-.profile.rma.mv <- function(val, obj, comp, sigma2.pos, tau2.pos, rho.pos, gamma2.pos, phi.pos, parallel=FALSE, profile=FALSE, confint=FALSE, subset=FALSE, objective, verbose=FALSE) {
+.profile.rma.mv <- function(val, obj, comp, sigma2.pos, tau2.pos, rho.pos, gamma2.pos, phi.pos,
+   parallel=FALSE, profile=FALSE, confint=FALSE, subset=FALSE,
+   objective, verbose=FALSE) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -125,10 +131,13 @@
       if (comp == "phi")
          phi.arg[phi.pos] <- val
 
-      res <- try(suppressWarnings(rma.mv(obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE,
-                                         data=obj$mf.r, method=obj$method, test=obj$test, level=obj$level, R=obj$R, Rscale=obj$Rscale,
-                                         sigma2=sigma2.arg, tau2=tau2.arg, rho=rho.arg, gamma2=gamma2.arg, phi=phi.arg, sparse=obj$sparse,
-                                         dist=obj$dist, control=obj$control, outlist="minimal")), silent=TRUE)
+      obj$control$hessian  <- FALSE
+
+      res <- try(suppressWarnings(
+         rma.mv(obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE,
+                data=obj$mf.r, method=obj$method, test=obj$test, level=obj$level, R=obj$R, Rscale=obj$Rscale,
+                sigma2=sigma2.arg, tau2=tau2.arg, rho=rho.arg, gamma2=gamma2.arg, phi=phi.arg, sparse=obj$sparse,
+                dist=obj$dist, control=obj$control, outlist="minimal")), silent=TRUE)
 
    }
 
@@ -176,13 +185,15 @@
       ### for subset, fit model to subset as specified by 'val'
 
       if (is.element(obj$measure, c("RR","OR","RD"))) {
-         sav <- try(suppressWarnings(rma.mh(ai=obj$ai, bi=obj$bi, ci=obj$ci, di=obj$di, measure=obj$measure,
-                                            add=obj$add, to=obj$to, drop00=obj$drop00, correct=obj$correct,
-                                            level=obj$level, subset=val, outlist=outlist)), silent=TRUE)
+         sav <- try(suppressWarnings(
+            rma.mh(ai=obj$ai, bi=obj$bi, ci=obj$ci, di=obj$di, measure=obj$measure,
+                   add=obj$add, to=obj$to, drop00=obj$drop00, correct=obj$correct,
+                   level=obj$level, subset=val, outlist=outlist)), silent=TRUE)
       } else {
-         sav <- try(suppressWarnings(rma.mh(x1i=obj$x1i, x2i=obj$x2i, t1i=obj$t1i, t2i=obj$t2i, measure=obj$measure,
-                                            add=obj$add, to=obj$to, drop00=obj$drop00, correct=obj$correct,
-                                            level=obj$level, subset=val, outlist=outlist)), silent=TRUE)
+         sav <- try(suppressWarnings(
+            rma.mh(x1i=obj$x1i, x2i=obj$x2i, t1i=obj$t1i, t2i=obj$t2i, measure=obj$measure,
+                   add=obj$add, to=obj$to, drop00=obj$drop00, correct=obj$correct,
+                   level=obj$level, subset=val, outlist=outlist)), silent=TRUE)
       }
 
    }
@@ -200,9 +211,10 @@
 
       ### for subset, fit model to subset as specified by 'val'
 
-      sav <- try(suppressWarnings(rma.peto(ai=obj$ai, bi=obj$bi, ci=obj$ci, di=obj$di,
-                                           add=obj$add, to=obj$to, drop00=obj$drop00,
-                                           level=obj$level, subset=val, outlist=outlist)), silent=TRUE)
+      sav <- try(suppressWarnings(
+         rma.peto(ai=obj$ai, bi=obj$bi, ci=obj$ci, di=obj$di,
+                  add=obj$add, to=obj$to, drop00=obj$drop00,
+                  level=obj$level, subset=val, outlist=outlist)), silent=TRUE)
 
    }
 
@@ -210,7 +222,9 @@
 
 }
 
-.profile.rma.uni.selmodel <- function(val, obj, comp, delta.pos, parallel=FALSE, profile=FALSE, confint=FALSE, subset=FALSE, objective, verbose=FALSE) {
+.profile.rma.uni.selmodel <- function(val, obj, comp, delta.pos,
+   parallel=FALSE, profile=FALSE, confint=FALSE, subset=FALSE,
+   objective, verbose=FALSE) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -235,7 +249,70 @@
       if (!obj$stepsspec)
          obj$steps <- NA
 
-      res <- try(suppressWarnings(selmodel(obj, obj$type, alternative=obj$alternative, prec=obj$prec, scaleprec=obj$scaleprec, tau2=tau2.arg, delta=delta.arg, steps=obj$steps, verbose=FALSE, control=obj$control, skiphes=FALSE, skiphet=TRUE, defmap=obj$defmap, mapfun=obj$mapfun, mapinvfun=obj$mapinvfun)), silent=TRUE)
+      res <- try(suppressWarnings(
+         selmodel(obj, obj$type, alternative=obj$alternative, prec=obj$prec, scaleprec=obj$scaleprec,
+                  tau2=tau2.arg, delta=delta.arg, steps=obj$steps, verbose=FALSE, control=obj$control,
+                  skiphes=confint, skiphet=TRUE, defmap=obj$defmap, mapfun=obj$mapfun, mapinvfun=obj$mapinvfun)), silent=TRUE)
+
+   }
+
+   if (profile) {
+
+      if (inherits(res, "try-error")) {
+         sav <- list(ll = NA, beta = matrix(NA, nrow=nrow(obj$beta), ncol=1), ci.lb = rep(NA, length(obj$ci.lb)), ci.ub = rep(NA, length(obj$ci.ub)))
+      } else {
+         sav <- list(ll = logLik(res), beta = res$beta, ci.lb = res$ci.lb, ci.ub = res$ci.ub)
+      }
+
+   }
+
+   if (confint) {
+
+      if (inherits(res, "try-error")) {
+
+         if (verbose)
+            cat(mstyle$verbose(paste("val =", formatC(val, digits=obj$digits[["var"]], width=obj$digits[["var"]]+4, format="f"), "  LRT - objective = NA", "\n")))
+
+         stop()
+
+      } else {
+
+         sav <- -2*(logLik(res) - logLik(obj)) - objective
+
+         if (verbose)
+            cat(mstyle$verbose(paste("val =", formatC(val, digits=obj$digits[["var"]], width=obj$digits[["var"]]+4, format="f"), "  LRT - objective =", formatC(sav, digits=obj$digits[["fit"]], width=obj$digits[["fit"]]+4, format="f"), "\n")))
+
+      }
+
+   }
+
+   return(sav)
+
+}
+
+.profile.rma.ls <- function(val, obj, comp, alpha.pos,
+   parallel=FALSE, profile=FALSE, confint=FALSE, subset=FALSE,
+   objective, verbose=FALSE) {
+
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
+   if (parallel == "snow")
+      library(metafor)
+
+   if (profile || confint) {
+
+      ### for profile and confint, fit model with component fixed to 'val'
+
+      ### set any fixed components to their values
+      alpha.arg <- ifelse(obj$alpha.fix, obj$alpha, NA)
+
+      if (comp == "alpha")
+         alpha.arg[alpha.pos] <- val
+
+      res <- try(suppressWarnings(
+         rma.uni(obj$yi, obj$vi, weights=obj$weights, mods=obj$X, intercept=FALSE, scale=obj$Z, link=obj$link,
+                 method=obj$method, weighted=obj$weighted, test=obj$test, level=obj$level,
+                 control=obj$control, skiphes=TRUE, alpha=alpha.arg, outlist="minimal")), silent=TRUE)
 
    }
 

@@ -46,6 +46,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       model <- "CM.EL"
 
    na.act <- getOption("na.action")
+   on.exit(options(na.action=na.act))
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))
@@ -93,7 +94,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    if (verbose > 2) {
       opwarn <- options(warn=1)
-      on.exit(options(warn=opwarn$warn))
+      on.exit(options(warn=opwarn$warn), add=TRUE)
    }
 
    #########################################################################
@@ -792,7 +793,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    ### upgrade warnings to errors (for some testing)
    #o.warn <- getOption("warn")
-   #on.exit(options(warn = o.warn))
+   #on.exit(options(warn = o.warn), add=TRUE)
    #options(warn = 2)
 
    ### rescale X matrix (only for models with moderators and models including an intercept term)
@@ -1985,7 +1986,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    ### scale back beta and vb
 
    if (!int.only && int.incl && con$scaleX) {
-      mX <- rbind(c(1, -1*ifelse(is.d[-1], 0, meanX/sdX)), cbind(0, diag(ifelse(is.d[-1], 1, 1/sdX), nrow=length(is.d)-1, ncol=length(is.d)-1)))
+      mX <- rbind(c(intrcpt=1, -1*ifelse(is.d[-1], 0, meanX/sdX)), cbind(0, diag(ifelse(is.d[-1], 1, 1/sdX), nrow=length(is.d)-1, ncol=length(is.d)-1)))
       beta <- mX %*% beta
       vb <- mX %*% vb %*% t(mX)
       X <- Xsave

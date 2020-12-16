@@ -17,6 +17,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
       stop(mstyle$stop("Method not available for objects of class \"rma.ls\"."))
 
    na.act <- getOption("na.action")
+   on.exit(options(na.action=na.act))
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))
@@ -593,7 +594,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
    par.mar.adj <- par.mar - c(0,3,1,1)
    par.mar.adj[par.mar.adj < 0] <- 0
    par(mar = par.mar.adj)
-   on.exit(par(mar = par.mar))
+   on.exit(par(mar = par.mar), add=TRUE)
 
    ### start plot
 

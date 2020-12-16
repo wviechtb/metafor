@@ -79,10 +79,10 @@ profile.rma.uni.selmodel <- function(fitted, tau2, delta,
          mc.vc <- mc
          mc.vc$tau2 <- 1
          mc.vc$time <- FALSE
-         mc.vc$fitted <- quote(x)
+         #mc.vc$fitted <- quote(x)
          if (progbar)
             cat(mstyle$verbose(paste("Profiling tau2\n")))
-         sav[[j]] <- eval(mc.vc)
+         sav[[j]] <- eval(mc.vc, envir=parent.frame())
       }
 
       if (any(!x$delta.fix)) {
@@ -91,10 +91,10 @@ profile.rma.uni.selmodel <- function(fitted, tau2, delta,
             mc.vc <- mc
             mc.vc$delta <- pos
             mc.vc$time <- FALSE
-            mc.vc$fitted <- quote(x)
+            #mc.vc$fitted <- quote(x)
             if (progbar)
                cat(mstyle$verbose(paste("Profiling delta =", pos, "\n")))
-            sav[[j]] <- eval(mc.vc)
+            sav[[j]] <- eval(mc.vc, envir=parent.frame())
          }
       }
 

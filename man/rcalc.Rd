@@ -25,7 +25,7 @@ rcalc(x, ni, data, rtoz=FALSE, nfun="min", sparse=FALSE, \dots)
 
    Equations for these covariances can be found, for example, in Steiger (1980) and Olkin and Finn (1990).
 
-   To use the \code{rcalc} function, one needs construct a data frame that contains a study identifier (say \code{study}), two variable identifiers (say \code{var1} and \code{var2}), the corresponding correlation coefficient (say \code{ri}), and the sample size based on which the correlation coefficient was computed (say \code{ni}). Then the first argument should be a formula of the form \code{ri ~ var1 + var2 | study}, argument \code{ni} is set equal to the variable name containing the sample sizes, and the data frame containing these variables is specified via the \code{data} argument. When using the function for a single study, one can leave out the study identifier from the formula.
+   To use the \code{rcalc} function, one needs to construct a data frame that contains a study identifier (say \code{study}), two variable identifiers (say \code{var1} and \code{var2}), the corresponding correlation coefficient (say \code{ri}), and the sample size based on which the correlation coefficient was computed (say \code{ni}). Then the first argument should be a formula of the form \code{ri ~ var1 + var2 | study}, argument \code{ni} is set equal to the variable name containing the sample sizes, and the data frame containing these variables is specified via the \code{data} argument. When using the function for a single study, one can leave out the study identifier from the formula.
 
    When argument \code{rtoz} is set to \code{TRUE}, then the correlations are transformed with Fisher's r-to-z transformation and the variance-covariance matrix is computed for the transformed values.
 

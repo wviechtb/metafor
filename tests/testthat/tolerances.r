@@ -14,7 +14,7 @@
           het   = .01, # heterogeneity statistics (and CIs thereof)
           inf   = .01, # influence statistics, hat values
           den   = .01, # density
-          misc  = .01) # miscellanoue, mix of values
+          misc  = .01) # miscellaneous, mix of values
 
 # to quickly set all tolerances to a common value
 #.tol[1:length(.tol)] <- .001

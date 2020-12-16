@@ -6,6 +6,7 @@ vcov.rma <- function(object, type="fixed", ...) {
       stop(mstyle$stop("Argument 'object' must be an object of class \"rma\"."))
 
    na.act <- getOption("na.action")
+   on.exit(options(na.action=na.act))
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))

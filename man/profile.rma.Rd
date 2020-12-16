@@ -3,11 +3,12 @@
 \alias{profile.rma.uni}
 \alias{profile.rma.mv}
 \alias{profile.rma.uni.selmodel}
+\alias{profile.rma.ls}
 \alias{print.profile.rma}
 \alias{plot.profile.rma}
 \title{Profile Plots for 'rma' Objects}
 \description{
-   Function to profile the (restricted) log-likelihood for objects of class \code{"rma.uni"}, \code{"rma.mv"}, and \code{"rma.uni.selmodel"}. \loadmathjax
+   Function to profile the (restricted) log-likelihood for objects of class \code{"rma.uni"}, \code{"rma.mv"}, \code{"rma.uni.selmodel"}, and \code{"rma.ls"}. \loadmathjax
 }
 \usage{
 \method{profile}{rma.uni}(fitted, xlim, ylim, steps=20,
@@ -24,12 +25,16 @@
         parallel="no", ncpus=1, cl=NULL,
         plot=TRUE, pch=19, cline=FALSE, \dots)
 
+\method{profile}{rma.ls}(fitted, alpha, xlim, ylim, steps=20,
+        lltol=1e-03, progbar=TRUE, parallel="no", ncpus=1, cl=NULL,
+        plot=TRUE, pch=19, cline=FALSE, \dots)
+
 \method{print}{profile.rma}(x, \dots)
 \method{plot}{profile.rma}(x, xlim, ylim, pch=19,
      xlab, ylab, main, cline=FALSE, \dots)
 }
 \arguments{
-   \item{fitted}{an object of class \code{"rma.uni"}, \code{"rma.mv"}, or \code{"rma.uni.selmodel"}.}
+   \item{fitted}{an object of class \code{"rma.uni"}, \code{"rma.mv"}, \code{"rma.uni.selmodel"}, or \code{"rma.ls"}.}
    \item{x}{an object of class \code{"profile.rma"} (for \code{plot} and \code{print}).}
    \item{sigma2}{optional integer to specify for which \mjseqn{\sigma^2} value the likelihood should be profiled.}
    \item{tau2}{optional integer to specify for which \mjseqn{\tau^2} value the likelihood should be profiled.}
@@ -37,6 +42,7 @@
    \item{gamma2}{optional integer to specify for which \mjseqn{\gamma^2} value the likelihood should be profiled.}
    \item{phi}{optional integer to specify for which \mjseqn{\phi} value the likelihood should be profiled.}
    \item{delta}{optional integer to specify for which \mjseqn{\delta} value the likelihood should be profiled.}
+   \item{alpha}{optional integer to specify for which \mjseqn{\alpha} value the likelihood should be profiled.}
    \item{xlim}{optional vector to specify the lower and upper limit of the parameter over which the profiling should be done. If unspecified, the function tries to set these limits automatically.}
    \item{ylim}{optional vector to specify the y-axis limits when plotting the profiled likelihood. If unspecified, the function tries to set these limits automatically.}
    \item{steps}{number of points between \code{xlim[1]} and \code{xlim[2]} (inclusive) for which the likelihood should be evaluated (the default is 20).}
@@ -61,6 +67,7 @@
    \item For objects of class \code{"rma.uni"} obtained with the \code{\link{rma.uni}} function, the function profiles over parameter \mjseqn{\tau^2} (not for fixed-effects models).
    \item For objects of class \code{"rma.mv"} obtained with the \code{\link{rma.mv}} function, profiling is done by default over all (non-fixed) variance and correlation components of the model. Alternatively, one can use the \code{sigma2}, \code{tau2}, \code{rho}, \code{gamma2}, or \code{phi} arguments to specify over which parameter the profiling should be done. Only one of these arguments can be used at a time. A single integer is used to specify the number of the parameter.
    \item For objects of class \code{"rma.uni.selmodel"} obtained with the \code{\link{selmodel.rma.uni}} function, profiling is done by default over \mjseqn{\tau^2} (for models where this is an estimated parameter) and all (non-fixed) selection model parameters. Alternatively, one can choose to profile only \mjseqn{\tau^2} by setting \code{tau2=TRUE} or one can select one of the selection model parameters to profile by specifying its number via the \code{delta} argument.
+   \item For objects of class \code{"rma.ls"} obtained with the \code{\link{rma.uni}} function, profiling is done by default over all (non-fixed) \mjseqn{\alpha} parameters that are part of the scale model.
    }
 
    A profile plot should show a single peak at the corresponding ML/REML estimate (assuming that the model was fitted with ML/REML estimation). The value of the parameter estimate is indicated by a dotted vertical line and its log-likelihood value by a dotted horizontal line. Hence, the intersection of these two lines should correspond to the peak.
@@ -73,7 +80,7 @@
 
    The function checks whether any profiled log-likelihood value is actually larger than the log-likelihood of the fitted model (using a numerical tolerance of \code{lltol}). If so, a warning is issued as this might indicate that the optimizer did not identify the actual ML/REML estimate.
 
-   Profiling requires repeatedly refitting the model, which can be slow when \mjseqn{k} is large and/or the model is complex (the latter especially applies to \code{"rma.mv"} objects and also to certain \code{"rma.uni.selmodel"} objects). On machines with multiple cores, one can usually speed things up by delegating the model fitting to separate worker processes, that is, by setting \code{parallel="snow"} or \code{parallel="multicore"} and \code{ncpus} to some value larger than 1. Parallel processing makes use of the \code{\link[parallel]{parallel}} package, using the \code{\link[parallel]{makePSOCKcluster}} and \code{\link[parallel]{parLapply}} functions when \code{parallel="snow"} or using \code{\link[parallel]{mclapply}} when \code{parallel="multicore"} (the latter only works on Unix/Linux-alikes). With \code{parallel::detectCores()}, one can check on the number of available cores on the local machine.
+   Profiling requires repeatedly refitting the model, which can be slow when \mjseqn{k} is large and/or the model is complex (the latter especially applies to \code{"rma.mv"} objects and also to certain \code{"rma.uni.selmodel"} or \code{"rma.ls"} objects). On machines with multiple cores, one can usually speed things up by delegating the model fitting to separate worker processes, that is, by setting \code{parallel="snow"} or \code{parallel="multicore"} and \code{ncpus} to some value larger than 1. Parallel processing makes use of the \code{\link[parallel]{parallel}} package, using the \code{\link[parallel]{makePSOCKcluster}} and \code{\link[parallel]{parLapply}} functions when \code{parallel="snow"} or using \code{\link[parallel]{mclapply}} when \code{parallel="multicore"} (the latter only works on Unix/Linux-alikes). With \code{parallel::detectCores()}, one can check on the number of available cores on the local machine.
 }
 \value{
    An object of class \code{"profile.rma"}. The object is a list (or list of lists) containing the following components:
@@ -83,6 +90,7 @@
    \item{gamma2}{values of \mjseqn{\gamma^2} over which the likelihood was profiled (only when profiling was actually done over \mjseqn{\gamma^2}).}
    \item{phi}{values of \mjseqn{\phi} over which the likelihood was profiled (only when profiling was actually done over \mjseqn{\phi}).}
    \item{delta}{values of \mjseqn{\delta} over which the likelihood was profiled (only when profiling was actually done over \mjseqn{\delta}).}
+   \item{alpha}{values of \mjseqn{\alpha} over which the likelihood was profiled (only when profiling was actually done over \mjseqn{\alpha}).}
    \item{ll}{(restricted) log-likelihood at the corresponding parameter value.}
    \item{beta}{a matrix with the estimated model coefficients at the corresponding parameter value.}
    \item{ci.lb}{a matrix with the lower confidence interval bounds for the model coefficients at the corresponding parameter value.}

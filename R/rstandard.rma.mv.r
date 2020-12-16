@@ -9,6 +9,7 @@ rstandard.rma.mv <- function(model, digits, cluster, ...) {
       stop(mstyle$stop("Method not available for objects of class \"robust.rma\"."))
 
    na.act <- getOption("na.action")
+   on.exit(options(na.action=na.act))
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))

@@ -60,7 +60,7 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("time"))
+   .chkdots(ddd, c("time", "type"))
 
    if (.isTRUE(ddd$time))
       time.start <- proc.time()

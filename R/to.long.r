@@ -687,8 +687,8 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
          }
 
          dat[[1]] <- factor(dat[[1]])
-         dat[[2]] <- factor(dat[[2]])
-         dat[[3]] <- factor(dat[[3]])
+         dat[[2]] <- factor(dat[[2]], levels=c(2,1))
+         dat[[3]] <- factor(dat[[3]], levels=c(2,1))
 
          if (has.data && append)
             dat <- cbind(data[rep(seq_len(k), each=4),], dat)
@@ -712,7 +712,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
          }
 
          dat[[1]] <- factor(dat[[1]])
-         dat[[2]] <- factor(dat[[2]])
+         dat[[2]] <- factor(dat[[2]], levels=c(2,1))
 
          if (has.data && append)
             dat <- cbind(data[rep(seq_len(k), each=2),], dat)
@@ -777,8 +777,8 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
          }
 
          dat[[1]] <- factor(dat[[1]])
-         dat[[2]] <- factor(dat[[2]])
-         dat[[3]] <- factor(dat[[3]])
+         dat[[2]] <- factor(dat[[2]], levels=c(2,1))
+         dat[[3]] <- factor(dat[[3]], levels=c(2,1))
 
          if (has.data && append)
             dat <- data.frame(data[rep(seq_len(k), each=4),], dat)
@@ -802,7 +802,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
          }
 
          dat[[1]] <- factor(dat[[1]])
-         dat[[2]] <- factor(dat[[2]])
+         dat[[2]] <- factor(dat[[2]], levels=c(2,1))
 
          if (has.data && append)
             dat <- cbind(data[rep(seq_len(k), each=2),], dat)
@@ -867,8 +867,8 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
          }
 
          dat[[1]] <- factor(dat[[1]])
-         dat[[2]] <- factor(dat[[2]])
-         dat[[3]] <- factor(dat[[3]])
+         dat[[2]] <- factor(dat[[2]], levels=c(2,1))
+         dat[[3]] <- factor(dat[[3]], levels=c(2,1))
 
          if (has.data && append)
             dat <- cbind(data[rep(seq_len(k), each=4),], dat)
@@ -892,7 +892,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
          }
 
          dat[[1]] <- factor(dat[[1]])
-         dat[[2]] <- factor(dat[[2]])
+         dat[[2]] <- factor(dat[[2]], levels=c(2,1))
 
          if (has.data && append)
             dat <- cbind(data[rep(seq_len(k), each=2),], dat)
@@ -953,7 +953,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
       }
 
       dat[[1]] <- factor(dat[[1]])
-      dat[[2]] <- factor(dat[[2]])
+      dat[[2]] <- factor(dat[[2]], levels=c(2,1))
 
       if (has.data && append)
          dat <- cbind(data[rep(seq_len(k), each=2),], dat)
@@ -1015,7 +1015,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
       }
 
       dat[[1]] <- factor(dat[[1]])
-      dat[[2]] <- factor(dat[[2]])
+      dat[[2]] <- factor(dat[[2]], levels=c(2,1))
 
       if (has.data && append)
          dat <- cbind(data[rep(seq_len(k), each=2),], dat)
@@ -1130,7 +1130,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
          }
 
          dat[[1]] <- factor(dat[[1]])
-         dat[[2]] <- factor(dat[[2]])
+         dat[[2]] <- factor(dat[[2]], levels=c(2,1))
 
          if (has.data && append)
             dat <- cbind(data[rep(seq_len(k), each=2),], dat)

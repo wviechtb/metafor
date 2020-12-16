@@ -60,7 +60,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("knha", "scale", "link", "alpha", "outlist", "onlyo1", "addyi", "addvi", "time", "skipr2"))
+   .chkdots(ddd, c("knha", "scale", "link", "alpha", "outlist", "onlyo1", "addyi", "addvi", "time", "skipr2", "skiphes"))
 
    ### handle 'knha' argument from ... (note: overrides test argument)
 
@@ -76,8 +76,17 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
       scale <- ddd$scale
 
-      if (!inherits(scale, "formula"))
-         stop(mstyle$stop("Must specify a formula for the 'scale' argument."))
+      #if (!inherits(scale, "formula"))
+      #   stop(mstyle$stop("Must specify a formula for the 'scale' argument."))
+
+      if (is.element(test, c("knha", "adhoc")))
+         stop(mstyle$stop("Cannot use Knapp & Hartung method with location-scale models."))
+
+      model <- "rma.ls"
+
+   } else {
+
+      model <- "rma.uni"
 
    }
 
@@ -185,6 +194,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
          options(na.action = "na.pass")                   ### set na.action to na.pass, so that NAs are not filtered out (we'll do that later)
          mods <- model.matrix(yi, data=data)              ### extract model matrix (now mods is no longer a formula, so [a] further below is skipped)
          attr(mods, "assign") <- NULL                     ### strip assign attribute (not needed at the moment)
+         attr(mods, "contrasts") <- NULL                  ### strip contrasts attribute (not needed at the moment)
          yi <- model.response(model.frame(yi, data=data)) ### extract yi values from model frame
          options(na.action = na.act)                      ### set na.action back to na.act
          names(yi) <- NULL                                ### strip names (1:k) from yi (so res$yi is the same whether yi is a formula or not)
@@ -633,6 +643,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
       options(na.action = "na.pass")        ### set na.action to na.pass, so that NAs are not filtered out (we'll do that later)
       mods <- model.matrix(mods, data=data) ### extract model matrix
       attr(mods, "assign") <- NULL          ### strip assign attribute (not needed at the moment)
+      attr(mods, "contrasts") <- NULL       ### strip contrasts attribute (not needed at the moment)
       options(na.action = na.act)           ### set na.action back to na.act
       intercept <- FALSE                    ### set to FALSE since formula now controls whether the intercept is included or not
    }                                        ### note: code further below ([b]) actually checks whether intercept is included or not
@@ -657,22 +668,30 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
    if (!is.null(mods) && nrow(mods) != k)
       stop(mstyle$stop(paste0("Number of rows in the model matrix (", nrow(mods), ") does not match length of the outcome vector (", k, ").")))
 
-   ### in case scale is a formula, get model matrix for it
+   ### for rma.ls models, get model matrix for scale part
 
-   if (inherits(scale, "formula")) {
-      formula.scale <- scale
-      options(na.action = "na.pass")
-      Z <- model.matrix(scale, data=data)
-      colnames(Z)[grep("(Intercept)", colnames(Z))] <- "intrcpt"
-      attr(Z, "assign") <- NULL
-      attr(Z, "contrasts") <- NULL
-      options(na.action = na.act)
-      model <- "rma.ls"
+   if (model == "rma.ls") {
+      if (inherits(scale, "formula")) {
+         formula.scale <- scale
+         options(na.action = "na.pass")
+         Z <- model.matrix(scale, data=data)
+         colnames(Z)[grep("(Intercept)", colnames(Z))] <- "intrcpt"
+         attr(Z, "assign") <- NULL
+         attr(Z, "contrasts") <- NULL
+         options(na.action = na.act)
+      } else {
+         Z <- scale
+         if (.is.vector(Z))
+            Z <- cbind(Z)
+         if (is.data.frame(Z))
+            Z <- as.matrix(Z)
+         if (is.character(Z))
+            stop(mstyle$stop("Model matrix contains character variables."))
+      }
       if (nrow(Z) != k)
          stop(mstyle$stop(paste0("Number of rows in the model matrix specified via the 'scale' argument (", nrow(Z), ") does not match length of the outcome vector (", k, ").")))
    } else {
       Z <- NULL
-      model <- "rma.uni"
    }
 
    ### generate study labels if none are specified (or none have been found in yi)
@@ -1480,23 +1499,6 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
       if (is.numeric(tau2))
          warning(mstyle$warning("Argument 'tau2' ignored for location-scale models."), call.=FALSE)
 
-      ### checks on alpha argument
-
-      q <- NCOL(Z)
-
-      if (missing(alpha) || is.null(alpha) || (length(alpha) == 1L && is.na(alpha))) {
-         alpha <- rep(NA, q)
-         alphaspec <- FALSE
-      } else {
-         if (length(alpha) == 1L)
-            alpha <- rep(alpha, q)
-         if (length(alpha) != q)
-            stop(mstyle$stop(paste0("Length of 'alpha' argument (", length(alpha), ") does not match actual number of parameters (", q, ").")))
-         alphaspec <- TRUE
-         con$scaleZ <- FALSE
-
-      }
-
       ### get optimizer arguments from control argument
 
       optimizer  <- match.arg(con$optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","optimParallel","constrOptim"))
@@ -1568,21 +1570,37 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
             stop(mstyle$stop("Please install the 'optimParallel' package to use this optimizer."))
       }
 
-      if (!requireNamespace("numDeriv", quietly=TRUE))
-         stop(mstyle$stop("Please install the 'numDeriv' package to fit location-scale models."))
-      # TODO: make this optional? (user can skip hessian computation?)
+      if (!isTRUE(ddd$skiphes) && !requireNamespace("numDeriv", quietly=TRUE))
+         stop(mstyle$stop("Please install the 'numDeriv' package to compute the Hessian."))
 
       ### drop redundant predictors
 
-      tmp <- lm(yi ~ Z - 1)
-      coef.na.Z <- is.na(coef(tmp))
+      tmp <- try(lm(yi ~ Z - 1), silent=TRUE)
+      if (inherits(tmp, "lm")) {
+         coef.na.Z <- is.na(coef(tmp))
+      } else {
+         coef.na.Z <- rep(FALSE, NCOL(Z))
+      }
       if (any(coef.na.Z)) {
          warning(mstyle$warning("Redundant predictors dropped from the scale model."), call.=FALSE)
          Z   <- Z[,!coef.na.Z,drop=FALSE]
          Z.f <- Z.f[,!coef.na.Z,drop=FALSE]
       }
 
-      q <- NCOL(Z)
+      ### check whether intercept is included and if yes, move it to the first column (NAs already removed, so na.rm=TRUE for any() not necessary)
+
+      is.int <- apply(Z, 2, .is.intercept)
+      if (any(is.int)) {
+         Z.int.incl <- TRUE
+         int.indx   <- which(is.int, arr.ind=TRUE)
+         Z          <- cbind(intrcpt=1,   Z[,-int.indx, drop=FALSE]) ### this removes any duplicate intercepts
+         Z.f        <- cbind(intrcpt=1, Z.f[,-int.indx, drop=FALSE]) ### this removes any duplicate intercepts
+         Z.intercept <- TRUE ### set intercept appropriately so that the predict() function works
+      } else {
+         Z.int.incl <- FALSE
+      }
+
+      q <- NCOL(Z) ### number of columns in Z (including the intercept if it is included)
 
       ### check whether model matrix is of full rank
 
@@ -1592,23 +1610,38 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
       ### check whether this is an intercept-only model
 
       is.int <- apply(Z, 2, .is.intercept)
-
       if ((q == 1L) && is.int) {
          Z.int.only <- TRUE
       } else {
          Z.int.only <- FALSE
       }
 
-      ### rescale Z matrix (only for models with moderators and models including an intercept term)
+      ### checks on alpha argument
 
-      if (!Z.int.only && any(is.int) && con$scaleZ) {
+      if (missing(alpha) || is.null(alpha) || all(is.na(alpha))) {
+         alpha <- rep(NA, q)
+      } else {
+         if (length(alpha) == 1L)
+            alpha <- rep(alpha, q)
+         if (length(alpha) != q)
+            stop(mstyle$stop(paste0("Length of 'alpha' argument (", length(alpha), ") does not match actual number of parameters (", q, ").")))
+      }
+
+      ### rescale Z matrix (only for models with moderators and models including an intercept term and when alpha[1] is not fixed)
+
+      if (!Z.int.only && Z.int.incl && con$scaleZ && is.na(alpha[1])) {
          Zsave <- Z
          meanZ <- colMeans(Z[, 2:q, drop=FALSE])
          sdZ   <- apply(Z[, 2:q, drop=FALSE], 2, sd) ### consider using colSds() from matrixStats package
          is.d  <- apply(Z, 2, .is.dummy) ### is each column a dummy variable (i.e., only 0s and 1s)?
-         mZ    <- rbind(c(1, -1*ifelse(is.d[-1], 0, meanZ/sdZ)), cbind(0, diag(ifelse(is.d[-1], 1, 1/sdZ), nrow=length(is.d)-1, ncol=length(is.d)-1)))
+         mZ    <- rbind(c(intrcpt=1, -1*ifelse(is.d[-1], 0, meanZ/sdZ)), cbind(0, diag(ifelse(is.d[-1], 1, 1/sdZ), nrow=length(is.d)-1, ncol=length(is.d)-1)))
          imZ   <- try(suppressWarnings(solve(mZ)), silent=TRUE)
          Z[,!is.d] <- apply(Z[, !is.d, drop=FALSE], 2, scale) ### rescale the non-dummy variables
+         if (any(!is.na(alpha))) {
+            if (inherits(imZ, "try-error"))
+               stop(mstyle$stop("Unable to rescale starting values for the scale parameters."))
+            alpha <- diag(imZ) * alpha
+         }
       } else {
          mZ <- NULL
       }
@@ -1656,7 +1689,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
          alpha.init <- con$alpha.init
 
-         if (!Z.int.only && any(is.int) && con$scaleZ) {
+         if (!Z.int.only && Z.int.incl && con$scaleZ && is.na(alpha[1])) {
             if (inherits(imZ, "try-error"))
                stop(mstyle$stop("Unable to rescale starting values for the scale parameters."))
             alpha.init <- c(imZ %*% cbind(alpha.init))
@@ -1832,7 +1865,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
       vb.alpha <- matrix(NA_real_, nrow=q, ncol=q)
       hest <- is.na(alpha)
 
-      if (any(hest)) {
+      if (any(hest) && !isTRUE(ddd$skiphes)) {
 
          if (verbose > 1)
             message(mstyle$message("\nComputing Hessian ..."))
@@ -1870,9 +1903,13 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
       ### scale back alpha and vb.alpha
 
-      if (!Z.int.only && any(is.int) && con$scaleZ) {
+      if (!Z.int.only && Z.int.incl && con$scaleZ && is.na(alpha.val[1])) {
          alpha <- mZ %*% alpha
+         vb.alpha[!hest,] <- 0
+         vb.alpha[,!hest] <- 0
          vb.alpha <- mZ %*% vb.alpha %*% t(mZ)
+         vb.alpha[!hest,] <- NA
+         vb.alpha[,!hest] <- NA
          Z <- Zsave
       }
 
@@ -2133,7 +2170,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
    #########################################################################
 
-   ### compute pseudo R^2 statistic for mixed-effects models with an intercept
+   ### compute pseudo R^2 statistic for mixed-effects models with an intercept (only for rma.uni models)
 
    if (!int.only && int.incl && method != "FE" && model == "rma.uni" && !isTRUE(ddd$skipr2)) {
 
@@ -2173,7 +2210,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
    if (verbose > 1)
       message(mstyle$message("Computing fit statistics and log likelihood ..."))
 
-   ### note: tau2 is not counted as a parameter when it was fixed by the user
+   ### note: tau2 is not counted as a parameter when it was fixed by the user (same for fixed alpha values)
    parms <- p + ifelse(model == "rma.uni", ifelse(method == "FE" || tau2.fix, 0, 1), sum(is.na(alpha.val)))
 
    ll.ML    <- -1/2 * (k) * log(2*base::pi) - 1/2 * sum(log(vi + tau2)) - 1/2 * RSS.f
@@ -2227,28 +2264,10 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
                   formula.yi=formula.yi, formula.mods=formula.mods,
                   version=packageVersion("metafor"), call=mf)
 
-      if (model == "rma.ls") {
-
-         res$alpha       <- alpha
-         res$vb.alpha    <- vb.alpha
-         res$se.alpha    <- se.alpha
-         res$zval.alpha  <- zval.alpha
-         res$pval.alpha  <- pval.alpha
-         res$ci.lb.alpha <- ci.lb.alpha
-         res$ci.ub.alpha <- ci.ub.alpha
-         res$alpha.fix   <- !is.na(alpha.val)
-         res$Z   <- Z
-         res$Z.f <- Z.f
-         res$tau2.f <- rep(NA, k.f)
-         res$tau2.f[not.na] <- tau2
-         res$formula.scale <- formula.scale
-         res$H <- H
-
-      }
-
    }
 
    if (!is.null(ddd$outlist)) {
+
       if (ddd$outlist == "minimal") {
          res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
                      tau2=tau2, se.tau2=se.tau2, tau2.fix=tau2.fix,
@@ -2263,6 +2282,28 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
       } else {
          res <- eval(parse(text=paste0("list(", ddd$outlist, ")")))
       }
+
+   }
+
+   if (model == "rma.ls") {
+
+      res$alpha          <- alpha
+      res$vb.alpha       <- vb.alpha
+      res$se.alpha       <- se.alpha
+      res$zval.alpha     <- zval.alpha
+      res$pval.alpha     <- pval.alpha
+      res$ci.lb.alpha    <- ci.lb.alpha
+      res$ci.ub.alpha    <- ci.ub.alpha
+      res$alpha.fix      <- !is.na(alpha.val)
+      res$alphas         <- q
+      res$link           <- link
+      res$Z              <- Z
+      res$Z.f            <- Z.f
+      res$tau2.f         <- rep(NA, k.f)
+      res$tau2.f[not.na] <- tau2
+      res$formula.scale  <- formula.scale
+      res$H <- H
+
    }
 
    time.end <- proc.time()

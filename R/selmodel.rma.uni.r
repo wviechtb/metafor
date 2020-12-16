@@ -249,7 +249,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
       meanX <- colMeans(X[, 2:p, drop=FALSE])
       sdX   <- apply(X[, 2:p, drop=FALSE], 2, sd) ### consider using colSds() from matrixStats package
       is.d  <- apply(X, 2, .is.dummy) ### is each column a dummy variable (i.e., only 0s and 1s)?
-      mX    <- rbind(c(1, -1*ifelse(is.d[-1], 0, meanX/sdX)), cbind(0, diag(ifelse(is.d[-1], 1, 1/sdX), nrow=length(is.d)-1, ncol=length(is.d)-1)))
+      mX    <- rbind(c(intrcpt=1, -1*ifelse(is.d[-1], 0, meanX/sdX)), cbind(0, diag(ifelse(is.d[-1], 1, 1/sdX), nrow=length(is.d)-1, ncol=length(is.d)-1)))
       X[,!is.d] <- apply(X[, !is.d, drop=FALSE], 2, scale) ### rescale the non-dummy variables
    }
 
@@ -336,7 +336,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    }
 
    if (!isTRUE(ddd$skiphes) && !requireNamespace("numDeriv", quietly=TRUE))
-      stop(mstyle$stop("Please install the 'numDeriv' package for Hessian computation."))
+      stop(mstyle$stop("Please install the 'numDeriv' package to compute the Hessian."))
 
    ############################################################################
 

@@ -35,7 +35,7 @@ test_that("the to.long() function works.", {
    expected <- structure(list(age = c("Age <55", "Age <55", "Age 55+", "Age 55+"),
       ai = c(8, 8, 22, 22), bi = c(98, 98, 76, 76), ci = c(5, 5, 16, 16), di = c(115, 115, 69, 69),
       study = structure(c(2L, 2L, 1L, 1L), .Label = c("Age 55+", "Age <55"), class = "factor"),
-      group = structure(c(1L, 2L, 1L, 2L), .Label = c("1", "2"), class = "factor"),
+      group = structure(c(2L, 1L, 2L, 1L), .Label = c("2", "1"), class = "factor"),
       out1 = c(8, 5, 22, 16), out2 = c(98, 115, 76, 69)), class = "data.frame", row.names = c(NA, 4L))
 
    expect_equivalent(tmp, expected)
@@ -182,7 +182,7 @@ test_that("the to.long() function works.", {
       x2i = c(2, 2, 12, 12, 28, 28, 28, 28, 31, 31),
       t2i = c(1.879, 1.879, 1.0673, 1.0673, 0.571, 0.571, 0.2585, 0.2585, 0.1462, 0.1462),
       study = structure(c(1L, 1L, 2L, 2L, 3L, 3L, 4L, 4L, 5L, 5L), .Label = c("35-44", "45-54", "55-64", "65-74", "75-84"), class = "factor"),
-      group = structure(c(1L, 2L, 1L, 2L, 1L, 2L, 1L, 2L, 1L, 2L), .Label = c("1", "2"), class = "factor"),
+      group = structure(c(2L, 1L, 2L, 1L, 2L, 1L, 2L, 1L, 2L, 1L), .Label = c("2", "1"), class = "factor"),
       events = c(32, 2, 104, 12, 206, 28, 186, 28, 102, 31),
       ptime = c(5.2407, 1.879, 4.3248, 1.0673, 2.8612, 0.571, 1.2663, 0.2585, 0.5317, 0.1462)),
       class = "data.frame", row.names = c(NA, 10L))

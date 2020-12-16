@@ -11,6 +11,7 @@ label=FALSE, offset=0.3, pos=13, lty, ...) {
       stop(mstyle$stop("Method not available for objects of class \"rma.uni.selmodel\"."))
 
    na.act <- getOption("na.action")
+   on.exit(options(na.action=na.act))
 
    x <- y
 

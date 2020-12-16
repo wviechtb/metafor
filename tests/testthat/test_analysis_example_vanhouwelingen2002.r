@@ -38,10 +38,15 @@ test_that("results for the random-effects model are correct.", {
    expect_equivalent(tmp$ci.ub, .6749, tolerance=.tol[["ci"]])
    expect_equivalent(res$tau2,  .3025, tolerance=.tol[["var"]])
 
-   ### CI for tau^2
+   ### CI for tau^2 (profile likelihood method)
+   tmp <- confint(res, type="PL")
+   expect_equivalent(tmp$random[1,2], 0.1151, tolerance=.tol[["var"]])
+   expect_equivalent(tmp$random[1,3], 0.8937, tolerance=.tol[["var"]])
+
+   ### CI for tau^2 (Q-profile method)
    tmp <- confint(res)
-   expect_equivalent(tmp$random[1,2], 0.1302, tolerance=.tol[["var"]]) ### 0.135 based on a Satterthwaite approximation (page 597)
-   expect_equivalent(tmp$random[1,3], 1.1812, tolerance=.tol[["var"]]) ### 1.181 based on a Satterthwaite approximation (page 597)
+   expect_equivalent(tmp$random[1,2], 0.1302, tolerance=.tol[["var"]]) ### 0.1350 based on a Satterthwaite approximation (page 597)
+   expect_equivalent(tmp$random[1,3], 1.1812, tolerance=.tol[["var"]]) ### 1.1810 based on a Satterthwaite approximation (page 597)
 
    ### CI for mu with Knapp & Hartung method
    res <- rma(yi, vi, data=dat, method="ML", test="knha")
@@ -62,9 +67,8 @@ test_that("profile plot for tau^2 can be drawn.", {
    res <- rma(yi, vi, data=dat, method="ML")
 
    opar <- par(no.readonly=TRUE)
-   profile(res, xlim=c(.01,2), steps=200, log="x", cex=0, lwd=2, progbar=FALSE)
-   abline(h=logLik(res) - 1.92, lwd=2)
-   abline(v=c(.12, .89), lty="dashed")
+   profile(res, xlim=c(.01,2), steps=200, log="x", cex=0, lwd=2, cline=TRUE, progbar=FALSE)
+   abline(v=c(0.1151, 0.8937), lty="dotted")
    par(opar)
 
 })
@@ -82,8 +86,8 @@ test_that("forest plot of observed log(OR)s and corresponding BLUPs can be drawn
    par(family="mono", mar=c(5,4,1,2))
    forest(res, refline=res$beta, addpred=TRUE, xlim=c(-7,8), alim=c(-3,3), slab=1:13, psize=.8,
           ilab=paste0("(n = ", formatC(apply(dat[,c(4:7)], 1, sum), width=7, big.mark=","), ")"),
-          ilab.xpos=-3.5, ilab.pos=2, rows=13:1+.15, header="Trial (total n)")
-   arrows(sav$pi.lb, 13:1 - .15, sav$pi.ub, 13:1 -.15, length=.03, angle=90, code=3, lty="dotted")
+          ilab.xpos=-3.5, ilab.pos=2, rows=13:1+.15, header="Trial (total n)", lty="dashed")
+   arrows(sav$pi.lb, 13:1 - .15, sav$pi.ub, 13:1 -.15, length=.05, angle=90, code=3)
    points(sav$pred, 13:1 - .15, pch=15, cex=.8)
    par(opar)
 
@@ -128,18 +132,18 @@ test_that("L'Abbe plot can be drawn.", {
 dat.long <- to.long(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.colditz1994)
 dat.long <- escalc(measure="PLO", xi=out1, mi=out2, data=dat.long)
 dat.long$tpos <- dat.long$tneg <- dat.long$cpos <- dat.long$cneg <- NULL
-levels(dat.long$group) <- c("EXP", "CON")
+levels(dat.long$group) <- c("CON", "EXP")
 
 test_that("results for the bivariate model are correct.", {
 
    res <- rma.mv(yi, vi, mods = ~ group - 1, random = ~ group | trial, struct="UN", data=dat.long, method="ML")
 
    ### compare with results on pages 604-605 (in text)
-   expect_equivalent(coef(res), c(-4.8337, -4.0960), tolerance=.tol[["coef"]])
-   expect_equivalent(res$tau2, c(1.4314, 2.4073), tolerance=.tol[["var"]])
+   expect_equivalent(coef(res), c(-4.0960, -4.8337), tolerance=.tol[["coef"]])
+   expect_equivalent(res$tau2, c(2.4073, 1.4314), tolerance=.tol[["var"]])
    expect_equivalent(res$rho, .9467, tolerance=.tol[["cor"]])
 
-   res <- rma.mv(yi, vi, mods = ~ relevel(group, ref="CON"), random = ~ group | trial, struct="UN", data=dat.long, method="ML")
+   res <- rma.mv(yi, vi, mods = ~ group, random = ~ group | trial, struct="UN", data=dat.long, method="ML")
 
    ### compare with results on pages 604-605 (in text)
    expect_equivalent(coef(res), c(-4.0960, -0.7378), tolerance=.tol[["coef"]])
@@ -172,17 +176,17 @@ test_that("results for the meta-regression analyses are correct.", {
    res <- rma.mv(yi, vi, mods = ~ group + group:I(ablat-33) - 1, random = ~ group | trial, struct="UN", data=dat.long, method="ML")
 
    ### compare with results on pages 612-613 (in text)
-   expect_equivalent(coef(res), c(-4.8257, -4.1174, 0.0391, 0.0725), tolerance=.tol[["coef"]])
-   expect_equivalent(res$se, c(0.3129, 0.3061, 0.0224, 0.0219), tolerance=.tol[["se"]])
-   expect_equivalent(res$tau2, c(1.2262, 1.1819), tolerance=.tol[["var"]])
+   expect_equivalent(coef(res), c(-4.1174, -4.8257, 0.0725, 0.0391), tolerance=.tol[["coef"]])
+   expect_equivalent(res$se, c(0.3061, 0.3129, 0.0219, 0.0224), tolerance=.tol[["se"]])
+   expect_equivalent(res$tau2, c(1.1819, 1.2262), tolerance=.tol[["var"]])
    expect_equivalent(res$rho, 1.0000, tolerance=.tol[["cor"]])
 
-   res <- rma.mv(yi, vi, mods = ~ relevel(group, ref="CON")*I(ablat-33), random = ~ group | trial, struct="UN", data=dat.long, method="ML")
+   res <- rma.mv(yi, vi, mods = ~ group*I(ablat-33), random = ~ group | trial, struct="UN", data=dat.long, method="ML")
 
    ### compare with results on pages 612-613 (in text)
    expect_equivalent(coef(res), c(-4.1174, -0.7083, 0.0725, -0.0333), tolerance=.tol[["coef"]])
    expect_equivalent(res$se, c(0.3061, 0.0481, 0.0219, 0.0028), tolerance=.tol[["se"]])
-   expect_equivalent(res$tau2, c(1.2262, 1.1819), tolerance=.tol[["var"]])
+   expect_equivalent(res$tau2, c(1.1819, 1.2262), tolerance=.tol[["var"]])
    expect_equivalent(res$rho, 1.0000, tolerance=.tol[["cor"]])
 
 })

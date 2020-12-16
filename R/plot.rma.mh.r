@@ -8,13 +8,14 @@ plot.rma.mh <- function(x, qqplot=FALSE, ...) {
       stop(mstyle$stop("Argument 'x' must be an object of class \"rma.mh\"."))
 
    na.act <- getOption("na.action")
+   on.exit(options(na.action=na.act))
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
    par.mfrow <- par("mfrow")
    par(mfrow=c(2,2))
-   on.exit(par(mfrow = par.mfrow))
+   on.exit(par(mfrow = par.mfrow), add=TRUE)
 
    #########################################################################
 
