@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Profile Plots for 'rma' Objects — profile.rma.uni" />
-<meta property="og:description" content="Function to profile the (restricted) log-likelihood for objects of class &quot;rma.uni&quot;, &quot;rma.mv&quot;, and &quot;rma.uni.selmodel&quot;. " />
+<meta property="og:description" content="Function to profile the (restricted) log-likelihood for objects of class &quot;rma.uni&quot;, &quot;rma.mv&quot;, &quot;rma.uni.selmodel&quot;, and &quot;rma.ls&quot;. " />
 
 
 
@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-61</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-65</span>
       </span>
     </div>
 
@@ -132,7 +132,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Function to profile the (restricted) log-likelihood for objects of class <code>"rma.uni"</code>, <code>"rma.mv"</code>, and <code>"rma.uni.selmodel"</code>. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
+    <p>Function to profile the (restricted) log-likelihood for objects of class <code>"rma.uni"</code>, <code>"rma.mv"</code>, <code>"rma.uni.selmodel"</code>, and <code>"rma.ls"</code>. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for rma.uni</span>
@@ -152,6 +152,11 @@
         parallel<span class='op'>=</span><span class='st'>"no"</span>, ncpus<span class='op'>=</span><span class='fl'>1</span>, cl<span class='op'>=</span><span class='cn'>NULL</span>,
         plot<span class='op'>=</span><span class='cn'>TRUE</span>, pch<span class='op'>=</span><span class='fl'>19</span>, cline<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
+<span class='co'># S3 method for rma.ls</span>
+<span class='fu'>profile</span><span class='op'>(</span><span class='va'>fitted</span>, <span class='va'>alpha</span>, <span class='va'>xlim</span>, <span class='va'>ylim</span>, steps<span class='op'>=</span><span class='fl'>20</span>,
+        lltol<span class='op'>=</span><span class='fl'>1e-03</span>, progbar<span class='op'>=</span><span class='cn'>TRUE</span>, parallel<span class='op'>=</span><span class='st'>"no"</span>, ncpus<span class='op'>=</span><span class='fl'>1</span>, cl<span class='op'>=</span><span class='cn'>NULL</span>,
+        plot<span class='op'>=</span><span class='cn'>TRUE</span>, pch<span class='op'>=</span><span class='fl'>19</span>, cline<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
+
 <span class='co'># S3 method for profile.rma</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 <span class='co'># S3 method for profile.rma</span>
@@ -163,7 +168,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>fitted</th>
-      <td><p>an object of class <code>"rma.uni"</code>, <code>"rma.mv"</code>, or <code>"rma.uni.selmodel"</code>.</p></td>
+      <td><p>an object of class <code>"rma.uni"</code>, <code>"rma.mv"</code>, <code>"rma.uni.selmodel"</code>, or <code>"rma.ls"</code>.</p></td>
     </tr>
     <tr>
       <th>x</th>
@@ -192,6 +197,10 @@
     <tr>
       <th>delta</th>
       <td><p>optional integer to specify for which \(\delta\) value the likelihood should be profiled.</p></td>
+    </tr>
+    <tr>
+      <th>alpha</th>
+      <td><p>optional integer to specify for which \(\alpha\) value the likelihood should be profiled.</p></td>
     </tr>
     <tr>
       <th>xlim</th>
@@ -262,6 +271,7 @@
 <li><p>For objects of class <code>"rma.uni"</code> obtained with the <code><a href='rma.uni.html'>rma.uni</a></code> function, the function profiles over parameter \(\tau^2\) (not for fixed-effects models).</p></li>
 <li><p>For objects of class <code>"rma.mv"</code> obtained with the <code><a href='rma.mv.html'>rma.mv</a></code> function, profiling is done by default over all (non-fixed) variance and correlation components of the model. Alternatively, one can use the <code>sigma2</code>, <code>tau2</code>, <code>rho</code>, <code>gamma2</code>, or <code>phi</code> arguments to specify over which parameter the profiling should be done. Only one of these arguments can be used at a time. A single integer is used to specify the number of the parameter.</p></li>
 <li><p>For objects of class <code>"rma.uni.selmodel"</code> obtained with the <code><a href='selmodel.html'>selmodel.rma.uni</a></code> function, profiling is done by default over \(\tau^2\) (for models where this is an estimated parameter) and all (non-fixed) selection model parameters. Alternatively, one can choose to profile only \(\tau^2\) by setting <code>tau2=TRUE</code> or one can select one of the selection model parameters to profile by specifying its number via the <code>delta</code> argument.</p></li>
+<li><p>For objects of class <code>"rma.ls"</code> obtained with the <code><a href='rma.uni.html'>rma.uni</a></code> function, profiling is done by default over all (non-fixed) \(\alpha\) parameters that are part of the scale model.</p></li>
 </ul>
 
 <p>A profile plot should show a single peak at the corresponding ML/REML estimate (assuming that the model was fitted with ML/REML estimation). The value of the parameter estimate is indicated by a dotted vertical line and its log-likelihood value by a dotted horizontal line. Hence, the intersection of these two lines should correspond to the peak.</p>
@@ -269,7 +279,7 @@
 <p>If the profiled log-likelihood has multiple peaks, this indicates that the likelihood surface is not unimodal. In such cases, the ML/REML estimate may correspond to a local optimum (when the intersection of the two dotted lines is not at the highest peak).</p>
 <p>If the profile is flat (over the entire parameter space or large portions of it), then this suggests that at least some of the parameters of the model are not identifiable (and the parameter estimates obtained are to some extent arbitrary). See Raue et al. (2009) for some further discussion of parameter identifiability (structurally and practically) and the use of profile likelihoods to check for this.</p>
 <p>The function checks whether any profiled log-likelihood value is actually larger than the log-likelihood of the fitted model (using a numerical tolerance of <code>lltol</code>). If so, a warning is issued as this might indicate that the optimizer did not identify the actual ML/REML estimate.</p>
-<p>Profiling requires repeatedly refitting the model, which can be slow when \(k\) is large and/or the model is complex (the latter especially applies to <code>"rma.mv"</code> objects and also to certain <code>"rma.uni.selmodel"</code> objects). On machines with multiple cores, one can usually speed things up by delegating the model fitting to separate worker processes, that is, by setting <code>parallel="snow"</code> or <code>parallel="multicore"</code> and <code>ncpus</code> to some value larger than 1. Parallel processing makes use of the <code><a href='https://rdrr.io/r/parallel/parallel-package.html'>parallel</a></code> package, using the <code><a href='https://rdrr.io/r/parallel/makeCluster.html'>makePSOCKcluster</a></code> and <code><a href='https://rdrr.io/r/parallel/clusterApply.html'>parLapply</a></code> functions when <code>parallel="snow"</code> or using <code><a href='https://rdrr.io/r/parallel/mclapply.html'>mclapply</a></code> when <code>parallel="multicore"</code> (the latter only works on Unix/Linux-alikes). With <code><a href='https://rdrr.io/r/parallel/detectCores.html'>parallel::detectCores()</a></code>, one can check on the number of available cores on the local machine.</p>
+<p>Profiling requires repeatedly refitting the model, which can be slow when \(k\) is large and/or the model is complex (the latter especially applies to <code>"rma.mv"</code> objects and also to certain <code>"rma.uni.selmodel"</code> or <code>"rma.ls"</code> objects). On machines with multiple cores, one can usually speed things up by delegating the model fitting to separate worker processes, that is, by setting <code>parallel="snow"</code> or <code>parallel="multicore"</code> and <code>ncpus</code> to some value larger than 1. Parallel processing makes use of the <code><a href='https://rdrr.io/r/parallel/parallel-package.html'>parallel</a></code> package, using the <code><a href='https://rdrr.io/r/parallel/makeCluster.html'>makePSOCKcluster</a></code> and <code><a href='https://rdrr.io/r/parallel/clusterApply.html'>parLapply</a></code> functions when <code>parallel="snow"</code> or using <code><a href='https://rdrr.io/r/parallel/mclapply.html'>mclapply</a></code> when <code>parallel="multicore"</code> (the latter only works on Unix/Linux-alikes). With <code><a href='https://rdrr.io/r/parallel/detectCores.html'>parallel::detectCores()</a></code>, one can check on the number of available cores on the local machine.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class <code>"profile.rma"</code>. The object is a list (or list of lists) containing the following components:</p>
@@ -279,6 +289,7 @@
    <dt>gamma2</dt><dd><p>values of \(\gamma^2\) over which the likelihood was profiled (only when profiling was actually done over \(\gamma^2\)).</p></dd>
    <dt>phi</dt><dd><p>values of \(\phi\) over which the likelihood was profiled (only when profiling was actually done over \(\phi\)).</p></dd>
    <dt>delta</dt><dd><p>values of \(\delta\) over which the likelihood was profiled (only when profiling was actually done over \(\delta\)).</p></dd>
+   <dt>alpha</dt><dd><p>values of \(\alpha\) over which the likelihood was profiled (only when profiling was actually done over \(\alpha\)).</p></dd>
    <dt>ll</dt><dd><p>(restricted) log-likelihood at the corresponding parameter value.</p></dd>
    <dt>beta</dt><dd><p>a matrix with the estimated model coefficients at the corresponding parameter value.</p></dd>
    <dt>ci.lb</dt><dd><p>a matrix with the lower confidence interval bounds for the model coefficients at the corresponding parameter value.</p></dd>
@@ -295,7 +306,7 @@
 <p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='https://doi.org/10.18637/jss.v036.i03'>https://doi.org/10.18637/jss.v036.i03</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='rma.uni.html'>rma.uni</a></code>, <code><a href='rma.mv.html'>rma.mv</a></code>, <code><a href='selmodel.html'>selmodel.rma.uni</a></code></p></div>
+    <div class='dont-index'><p><code><a href='rma.uni.html'>rma.uni</a></code>, <code><a href='rma.mv.html'>rma.mv</a></code>, <code><a href='selmodel.html'>selmodel.rma.uni</a></code>, <code><a href='confint.rma.html'>confint.rma.uni</a></code>, <code><a href='confint.rma.html'>confint.rma.mv</a></code>, <code><a href='confint.rma.html'>confint.rma.uni.selmodel</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### calculate log odds ratios and corresponding sampling variances</span>
@@ -331,8 +342,8 @@
 #&gt; inner factor: group (nlvls = 2)
 #&gt; 
 #&gt;             estim    sqrt  k.lvl  fixed  level 
-#&gt; tau^2.1    2.6173  1.6178     13     no    con 
-#&gt; tau^2.2    1.5486  1.2444     13     no    exp 
+#&gt; tau^2.1    1.5486  1.2444     13     no    con 
+#&gt; tau^2.2    2.6173  1.6178     13     no    exp 
 #&gt; 
 #&gt;      rho.con  rho.exp    con  exp 
 #&gt; con        1   0.9450      -   no 
@@ -346,9 +357,9 @@
 #&gt; 
 #&gt; Model Results:
 #&gt; 
-#&gt;           estimate      se     zval    pval    ci.lb    ci.ub 
-#&gt; intrcpt    -4.0960  0.4529  -9.0432  &lt;.0001  -4.9837  -3.2082  *** 
-#&gt; groupexp   -0.7414  0.1880  -3.9430  &lt;.0001  -1.1099  -0.3729  *** 
+#&gt;           estimate      se      zval    pval    ci.lb    ci.ub 
+#&gt; intrcpt    -4.8374  0.3528  -13.7113  &lt;.0001  -5.5289  -4.1459  *** 
+#&gt; groupexp    0.7414  0.1880    3.9430  &lt;.0001   0.3729   1.1099  *** 
 #&gt; 
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1

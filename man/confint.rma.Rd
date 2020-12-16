@@ -6,6 +6,7 @@
 \alias{confint.rma.glmm}
 \alias{confint.rma.mv}
 \alias{confint.rma.uni.selmodel}
+\alias{confint.rma.ls}
 \title{Confidence Intervals for 'rma' Objects}
 \description{
    The function calculates confidence intervals for the model coefficients and/or other parameters in the model. \loadmathjax
@@ -25,18 +26,22 @@
 
 \method{confint}{rma.uni.selmodel}(object, parm, level, fixed=FALSE, tau2, delta,
         digits, transf, targs, verbose=FALSE, control, \dots)
+
+\method{confint}{rma.ls}(object, parm, level, fixed=FALSE, alpha,
+        digits, transf, targs, verbose=FALSE, control, \dots)
 }
 \arguments{
-   \item{object}{an object of class \code{"rma.uni"}, \code{"rma.mh"}, \code{"rma.peto"}, \code{"rma.mv"}, or \code{"rma.uni.selmodel"}. The method is not yet implemented for objects of class \code{"rma.glmm"}.}
+   \item{object}{an object of class \code{"rma.uni"}, \code{"rma.mh"}, \code{"rma.peto"}, \code{"rma.mv"}, \code{"rma.uni.selmodel"}, or \code{"rma.ls"}. The method is not yet implemented for objects of class \code{"rma.glmm"}.}
    \item{parm}{this argument is here for compatibility with the generic function \code{\link{confint}}, but is (currently) ignored.}
    \item{fixed}{logical to specify whether confidence intervals for the model coefficients should be returned.}
    \item{random}{logical to specify whether a confidence interval for the amount of (residual) heterogeneity should be returned.}
-   \item{sigma2}{integer to specify for which \mjseqn{\sigma^2} value a confidence interval should be obtained.}
-   \item{tau2}{integer to specify for which \mjseqn{\tau^2} value a confidence interval should be obtained.}
-   \item{rho}{integer to specify for which \mjseqn{\rho} value the confidence interval should be obtained.}
-   \item{gamma2}{integer to specify for which \mjseqn{\gamma^2} value a confidence interval should be obtained.}
-   \item{phi}{integer to specify for which \mjseqn{\phi} value a confidence interval should be obtained.}
-   \item{delta}{integer to specify for which \mjseqn{\delta} value a confidence interval should be obtained.}
+   \item{sigma2}{integer to specify for which \mjseqn{\sigma^2} parameter a confidence interval should be obtained.}
+   \item{tau2}{integer to specify for which \mjseqn{\tau^2} parameter a confidence interval should be obtained.}
+   \item{rho}{integer to specify for which \mjseqn{\rho} parameter the confidence interval should be obtained.}
+   \item{gamma2}{integer to specify for which \mjseqn{\gamma^2} parameter a confidence interval should be obtained.}
+   \item{phi}{integer to specify for which \mjseqn{\phi} parameter a confidence interval should be obtained.}
+   \item{delta}{integer to specify for which \mjseqn{\delta} parameter a confidence interval should be obtained.}
+   \item{alpha}{integer to specify for which \mjseqn{\alpha} parameter a confidence interval should be obtained.}
    \item{level}{numeric value between 0 and 100 to specify the confidence interval level (if unspecified, the default is to take the value from the object).}
    \item{digits}{integer to specify the number of decimal places to which the results should be rounded (if unspecified, the default is to take the value from the object).}
    \item{transf}{optional argument to specify the name of a function that should be used to transform the model coefficients and interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
@@ -54,6 +59,7 @@
    \item For objects of class \code{"rma.uni"} obtained with the \code{\link{rma.uni}} function, a confidence interval for the amount of (residual) heterogeneity (i.e., \mjseqn{\tau^2}) can be obtained by setting \code{random=TRUE} (which is the default). The interval is obtained iteratively either via the Q-profile method or via the generalized Q-statistic method (Hartung and Knapp, 2005; Viechtbauer, 2007; Jackson, 2013; Jackson et al., 2014). The latter is automatically used when the model was fitted with \code{method="GENQ"}, the former is used in all other cases. Either method provides an exact confidence interval for \mjseqn{\tau^2} in random- and mixed-effects models. The square root of the interval bounds is also returned for easier interpretation. Confidence intervals for \mjseqn{I^2} and \mjseqn{H^2} are also provided (Higgins & Thompson, 2002). Since \mjseqn{I^2} and \mjseqn{H^2} are just monotonic transformations of \mjseqn{\tau^2} (for details, see \code{\link{print.rma.uni}}), the confidence intervals for \mjseqn{I^2} and \mjseqn{H^2} are also exact.
    \item For objects of class \code{"rma.mv"} obtained with the \code{\link{rma.mv}} function, confidence intervals are obtained by default for all (non-fixed) variance and correlation components of the model. Alternatively, one can use the \code{sigma2}, \code{tau2}, \code{rho}, \code{gamma2}, or \code{phi} arguments to specify for which variance/correlation parameter a confidence interval should be obtained. Only one of these arguments can be used at a time. A single integer is used to specify the number of the parameter. The function provides profile likelihood confidence intervals for these parameters. It is a good idea to examine the corresponding profile likelihood plots (via the \code{\link{profile.rma.mv}} function) to make sure that the bounds obtained are sensible.
    \item For objects of class \code{"rma.uni.selmodel"} obtained with the \code{\link{selmodel.rma.uni}} function, confidence intervals are obtained by default for \mjseqn{\tau^2} (for models where this is an estimated parameter) and all (non-fixed) selection model parameters. Alternatively, one can choose to obtain a confidence interval only for \mjseqn{\tau^2} by setting \code{tau2=TRUE} or for one of the selection model parameters by specifying its number via the \code{delta} argument. The function provides profile likelihood confidence intervals for these parameters. It is a good idea to examine the corresponding profile likelihood plots (via the \code{\link{profile.rma.uni.selmodel}} function) to make sure that the bounds obtained are sensible.
+   \item For objects of class \code{"rma.ls"} obtained with the \code{\link{rma.uni}} function, confidence intervals are obtained by default for all (non-fixed) scale parameters. Alternatively, one can choose to obtain a confidence interval for one of the scale parameters by specifying its number via the \code{alpha} argument. The function provides profile likelihood confidence intervals for these parameters. It is a good idea to examine the corresponding profile likelihood plots (via the \code{\link{profile.rma.ls}} function) to make sure that the bounds obtained are sensible.
    }
 
    The methods used to find confidence intervals for these parameters are iterative and require the use of the \code{\link{uniroot}} function. By default, the desired accuracy (\code{tol}) is set equal to \code{.Machine$double.eps^0.25} and the maximum number of iterations (\code{maxiter}) to \code{1000}. These values can be adjusted with \code{control=list(tol=value, maxiter=value)}, but the defaults should be adequate for most purposes. If \code{verbose=TRUE}, output is generated on the progress of the iterative algorithm. This is especially useful when model fitting is slow, in which case finding the confidence interval bounds can also take considerable amounts of time.
@@ -79,7 +85,7 @@
 
    For objects of class \code{"rma.mv"}, the function provides confidence intervals for the variance/correlation parameters in the model. For variance components, the lower end point of the interval to be searched is set to 0 and the upper end point to the larger of 10 and 100 times the value of the component. For correlations, the function tries to set the lower end point to a sensible default depending on the type of variance structure chosen, while the upper end point is set to 1. One can adjust the lower and/or upper end points with \code{control=list(vc.min=value, vc.max=value)}. Also, the function tries to adjust the lower/upper end points when the model does not converge at these extremes (the end points are then moved closer to the estimated value of the component). The total number of tries for setting/adjusting the end points in this manner is determined via \code{control=list(eptries=value)}, with the default being 10 tries.
 
-   For objects of class \code{"rma.uni.selmodel"}, the function also sets some sensible defaults for the end points of the interval to be searched for the confidence interval bounds of the \mjseqn{\tau^2} and the \mjseqn{\delta} parameter(s). One can again adjust the end points and the number of retries (as described above) with \code{control=list(vc.min=value, vc.max=value, eptries=value)}.
+   For objects of class \code{"rma.uni.selmodel"} or \code{"rma.ls"}, the function also sets some sensible defaults for the end points of the interval to be searched for the confidence interval bounds (of the \mjseqn{\tau^2}, \mjseqn{\delta}, and \mjseqn{\alpha} parameter(s)). One can again adjust the end points and the number of retries (as described above) with \code{control=list(vc.min=value, vc.max=value, eptries=value)}.
 
    The Q-profile and generalized Q-statistic methods are both exact under the assumptions of the random- and mixed-effects models (i.e., normally distributed observed and true effect sizes or outcomes and known sampling variances). In practice, these assumptions are usually only approximately true, turning confidence intervals for \mjseqn{\tau^2} also into approximations. Profile likelihood confidence intervals are not exact by construction and rely on the asymptotic behavior of the likelihood ratio statistic, so they may be inaccurate in small samples.
 }

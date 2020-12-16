@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-61</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-65</span>
       </span>
     </div>
 
@@ -154,6 +154,10 @@
 
 <span class='co'># S3 method for rma.uni.selmodel</span>
 <span class='fu'>confint</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>parm</span>, <span class='va'>level</span>, fixed<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>tau2</span>, <span class='va'>delta</span>,
+        <span class='va'>digits</span>, <span class='va'>transf</span>, <span class='va'>targs</span>, verbose<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>control</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for rma.ls</span>
+<span class='fu'>confint</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>parm</span>, <span class='va'>level</span>, fixed<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>alpha</span>,
         <span class='va'>digits</span>, <span class='va'>transf</span>, <span class='va'>targs</span>, verbose<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>control</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -161,7 +165,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p>an object of class <code>"rma.uni"</code>, <code>"rma.mh"</code>, <code>"rma.peto"</code>, <code>"rma.mv"</code>, or <code>"rma.uni.selmodel"</code>. The method is not yet implemented for objects of class <code>"rma.glmm"</code>.</p></td>
+      <td><p>an object of class <code>"rma.uni"</code>, <code>"rma.mh"</code>, <code>"rma.peto"</code>, <code>"rma.mv"</code>, <code>"rma.uni.selmodel"</code>, or <code>"rma.ls"</code>. The method is not yet implemented for objects of class <code>"rma.glmm"</code>.</p></td>
     </tr>
     <tr>
       <th>parm</th>
@@ -177,27 +181,31 @@
     </tr>
     <tr>
       <th>sigma2</th>
-      <td><p>integer to specify for which \(\sigma^2\) value a confidence interval should be obtained.</p></td>
+      <td><p>integer to specify for which \(\sigma^2\) parameter a confidence interval should be obtained.</p></td>
     </tr>
     <tr>
       <th>tau2</th>
-      <td><p>integer to specify for which \(\tau^2\) value a confidence interval should be obtained.</p></td>
+      <td><p>integer to specify for which \(\tau^2\) parameter a confidence interval should be obtained.</p></td>
     </tr>
     <tr>
       <th>rho</th>
-      <td><p>integer to specify for which \(\rho\) value the confidence interval should be obtained.</p></td>
+      <td><p>integer to specify for which \(\rho\) parameter the confidence interval should be obtained.</p></td>
     </tr>
     <tr>
       <th>gamma2</th>
-      <td><p>integer to specify for which \(\gamma^2\) value a confidence interval should be obtained.</p></td>
+      <td><p>integer to specify for which \(\gamma^2\) parameter a confidence interval should be obtained.</p></td>
     </tr>
     <tr>
       <th>phi</th>
-      <td><p>integer to specify for which \(\phi\) value a confidence interval should be obtained.</p></td>
+      <td><p>integer to specify for which \(\phi\) parameter a confidence interval should be obtained.</p></td>
     </tr>
     <tr>
       <th>delta</th>
-      <td><p>integer to specify for which \(\delta\) value a confidence interval should be obtained.</p></td>
+      <td><p>integer to specify for which \(\delta\) parameter a confidence interval should be obtained.</p></td>
+    </tr>
+    <tr>
+      <th>alpha</th>
+      <td><p>integer to specify for which \(\alpha\) parameter a confidence interval should be obtained.</p></td>
     </tr>
     <tr>
       <th>level</th>
@@ -217,7 +225,7 @@
     </tr>
     <tr>
       <th>verbose</th>
-      <td><p>logical to specify whether output should be generated on the progress of the iterative algorithms used to obtain the confidence intervals (the default is <code>FALSE</code>). See &#8216;Note&#8217;.</p></td>
+      <td><p>logical to specify whether output should be generated on the progress of the iterative algorithms used to obtain the confidence intervals (the default is <code>FALSE</code>). See &#8216;Details&#8217;.</p></td>
     </tr>
     <tr>
       <th>control</th>
@@ -237,6 +245,7 @@
 <li><p>For objects of class <code>"rma.uni"</code> obtained with the <code><a href='rma.uni.html'>rma.uni</a></code> function, a confidence interval for the amount of (residual) heterogeneity (i.e., \(\tau^2\)) can be obtained by setting <code>random=TRUE</code> (which is the default). The interval is obtained iteratively either via the Q-profile method or via the generalized Q-statistic method (Hartung and Knapp, 2005; Viechtbauer, 2007; Jackson, 2013; Jackson et al., 2014). The latter is automatically used when the model was fitted with <code>method="GENQ"</code>, the former is used in all other cases. Either method provides an exact confidence interval for \(\tau^2\) in random- and mixed-effects models. The square root of the interval bounds is also returned for easier interpretation. Confidence intervals for \(I^2\) and \(H^2\) are also provided (Higgins &amp; Thompson, 2002). Since \(I^2\) and \(H^2\) are just monotonic transformations of \(\tau^2\) (for details, see <code><a href='print.rma.html'>print.rma.uni</a></code>), the confidence intervals for \(I^2\) and \(H^2\) are also exact.</p></li>
 <li><p>For objects of class <code>"rma.mv"</code> obtained with the <code><a href='rma.mv.html'>rma.mv</a></code> function, confidence intervals are obtained by default for all (non-fixed) variance and correlation components of the model. Alternatively, one can use the <code>sigma2</code>, <code>tau2</code>, <code>rho</code>, <code>gamma2</code>, or <code>phi</code> arguments to specify for which variance/correlation parameter a confidence interval should be obtained. Only one of these arguments can be used at a time. A single integer is used to specify the number of the parameter. The function provides profile likelihood confidence intervals for these parameters. It is a good idea to examine the corresponding profile likelihood plots (via the <code><a href='profile.rma.uni.html'>profile.rma.mv</a></code> function) to make sure that the bounds obtained are sensible.</p></li>
 <li><p>For objects of class <code>"rma.uni.selmodel"</code> obtained with the <code><a href='selmodel.html'>selmodel.rma.uni</a></code> function, confidence intervals are obtained by default for \(\tau^2\) (for models where this is an estimated parameter) and all (non-fixed) selection model parameters. Alternatively, one can choose to obtain a confidence interval only for \(\tau^2\) by setting <code>tau2=TRUE</code> or for one of the selection model parameters by specifying its number via the <code>delta</code> argument. The function provides profile likelihood confidence intervals for these parameters. It is a good idea to examine the corresponding profile likelihood plots (via the <code><a href='profile.rma.uni.html'>profile.rma.uni.selmodel</a></code> function) to make sure that the bounds obtained are sensible.</p></li>
+<li><p>For objects of class <code>"rma.ls"</code> obtained with the <code><a href='rma.uni.html'>rma.uni</a></code> function, confidence intervals are obtained by default for all (non-fixed) scale parameters. Alternatively, one can choose to obtain a confidence interval for one of the scale parameters by specifying its number via the <code>alpha</code> argument. The function provides profile likelihood confidence intervals for these parameters. It is a good idea to examine the corresponding profile likelihood plots (via the <code><a href='profile.rma.uni.html'>profile.rma.ls</a></code> function) to make sure that the bounds obtained are sensible.</p></li>
 </ul>
 
 <p>The methods used to find confidence intervals for these parameters are iterative and require the use of the <code><a href='https://rdrr.io/r/stats/uniroot.html'>uniroot</a></code> function. By default, the desired accuracy (<code>tol</code>) is set equal to <code>.Machine$double.eps^0.25</code> and the maximum number of iterations (<code>maxiter</code>) to <code>1000</code>. These values can be adjusted with <code>control=list(tol=value, maxiter=value)</code>, but the defaults should be adequate for most purposes. If <code>verbose=TRUE</code>, output is generated on the progress of the iterative algorithm. This is especially useful when model fitting is slow, in which case finding the confidence interval bounds can also take considerable amounts of time.</p>
@@ -256,9 +265,9 @@
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>When computing a confidence interval for \(\tau^2\) for objects of class <code>"rma.uni"</code>, the estimate of \(\tau^2\) will usually fall within the confidence interval provided by the Q-profile method. However, this is not guaranteed. Depending on the method used to estimate \(\tau^2\) and the width of the confidence interval, it can happen that the confidence interval does not actually contain the estimate (trying to explain this to reviewers can be tricky). Using the empirical Bayes or Paule-Mandel estimator of \(\tau^2\) when fitting the model (i.e., using <code>method="EB"</code> or <code>method="PM"</code>) usually ensures that the estimate of \(\tau^2\) falls within the confidence interval. When <code>method="GENQ"</code> was used to fit the model, the corresponding CI obtained via the generalized Q-statistic method also usually contains the estimate \(\tau^2\).</p>
-<p>When computing a confidence interval for \(\tau^2\) for objects of class <code>"rma.uni"</code>, the end points of the interval to be searched for the confidence interval bounds are \([0,100]\) (or, for the upper bound, ten times the estimate of \(\tau^2\), whichever is greater). The upper bound should be large enough for most cases, but can be adjusted with <code>control=list(tau2.max=value)</code>. One can also adjust the lower end point with <code>control=list(tau2.min=value)</code> (the default is to take that value from the object, which is 0 by default). You should only play around with this value if you know what you are doing.</p>
-<p>For objects of class <code>"rma.mv"</code>, the function provides confidence intervals for the variance/correlation parameters in the model. For variance components, the lower end point of the interval to be searched is set to 0 and the upper end point to the larger of 10 and 100 times the value of the component. For correlations, the function tries to set the lower end point to a sensible default depending on the type of variance structure chosen, while the upper end point is set to 1. One can adjust the lower and/or upper end points with <code>control=list(vc.min=value, vc.max=value)</code>. Also, the function tries to adjust the lower/upper end points when the model does not converge at these extremes (the end points are then moved closer to the estimated value of the component). The total number of tries for setting/adjusting the end points is determined via <code>control=list(eptries=value)</code>, with the default being 10 tries.</p>
-<p>For objects of class <code>"rma.uni.selmodel"</code>, the function also sets some sensible defaults for the end points of the interval to be searched for the confidence interval bounds of the \(\tau^2\) and the \(\delta\) parameter(s). One can again adjust the end points and the number of retries (as described above) with <code>control=list(vc.min=value, vc.max=value, eptries=value)</code>.</p>
+<p>When computing a confidence interval for \(\tau^2\) for objects of class <code>"rma.uni"</code>, the end points of the interval to be searched for the confidence interval bounds are \([0,100]\) (or, for the upper bound, ten times the estimate of \(\tau^2\), whichever is greater). The upper bound should be large enough for most cases, but can be adjusted with <code>control=list(tau2.max=value)</code>. One can also adjust the lower end point with <code>control=list(tau2.min=value)</code>. You should only play around with this value if you know what you are doing.</p>
+<p>For objects of class <code>"rma.mv"</code>, the function provides confidence intervals for the variance/correlation parameters in the model. For variance components, the lower end point of the interval to be searched is set to 0 and the upper end point to the larger of 10 and 100 times the value of the component. For correlations, the function tries to set the lower end point to a sensible default depending on the type of variance structure chosen, while the upper end point is set to 1. One can adjust the lower and/or upper end points with <code>control=list(vc.min=value, vc.max=value)</code>. Also, the function tries to adjust the lower/upper end points when the model does not converge at these extremes (the end points are then moved closer to the estimated value of the component). The total number of tries for setting/adjusting the end points in this manner is determined via <code>control=list(eptries=value)</code>, with the default being 10 tries.</p>
+<p>For objects of class <code>"rma.uni.selmodel"</code> or <code>"rma.ls"</code>, the function also sets some sensible defaults for the end points of the interval to be searched for the confidence interval bounds (of the \(\tau^2\), \(\delta\), and \(\alpha\) parameter(s)). One can again adjust the end points and the number of retries (as described above) with <code>control=list(vc.min=value, vc.max=value, eptries=value)</code>.</p>
 <p>The Q-profile and generalized Q-statistic methods are both exact under the assumptions of the random- and mixed-effects models (i.e., normally distributed observed and true effect sizes or outcomes and known sampling variances). In practice, these assumptions are usually only approximately true, turning confidence intervals for \(\tau^2\) also into approximations. Profile likelihood confidence intervals are not exact by construction and rely on the asymptotic behavior of the likelihood ratio statistic, so they may be inaccurate in small samples.</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
@@ -275,7 +284,7 @@
 <p>Yusuf, S., Peto, R., Lewis, J., Collins, R., &amp; Sleight, P. (1985). Beta blockade during and after myocardial infarction: An overview of the randomized trials. <em>Progress in Cardiovascular Disease</em>, <b>27</b>(5), 335--371. <a href='https://doi.org/10.1016/s0033-0620(85)80003-7'>https://doi.org/10.1016/s0033-0620(85)80003-7</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='rma.uni.html'>rma.uni</a></code>, <code><a href='rma.mh.html'>rma.mh</a></code>, <code><a href='rma.peto.html'>rma.peto</a></code>, <code><a href='rma.glmm.html'>rma.glmm</a></code>, <code><a href='rma.mv.html'>rma.mv</a></code>, <code><a href='selmodel.html'>selmodel.rma.uni</a></code></p></div>
+    <div class='dont-index'><p><code><a href='rma.uni.html'>rma.uni</a></code>, <code><a href='rma.mh.html'>rma.mh</a></code>, <code><a href='rma.peto.html'>rma.peto</a></code>, <code><a href='rma.glmm.html'>rma.glmm</a></code>, <code><a href='rma.mv.html'>rma.mv</a></code>, <code><a href='selmodel.html'>selmodel.rma.uni</a></code>, <code><a href='profile.rma.uni.html'>profile.rma.uni</a></code>, <code><a href='profile.rma.uni.html'>profile.rma.mv</a></code>, <code><a href='profile.rma.uni.html'>profile.rma.uni.selmodel</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### meta-analysis of the log risk ratios using a random-effects model</span>
