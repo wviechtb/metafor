@@ -194,6 +194,18 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
 
    if (x$model == "rma.ls") {
 
+      if (x$alphas > 1 && !is.na(x$QM.alpha)) {
+         cat("\n")
+         cat(mstyle$section(paste0("Test of Scale Coefficients (coefficient", ifelse(x$m.alpha == 1, " ", "s "), .format.btt(x$att),"):")))
+         cat("\n")
+         if (is.element(x$test, c("knha","adhoc","t"))) {
+            cat(mstyle$result(paste0("F(df1 = ", x$m.alpha, ", df2 = ", x$dfs.alpha, ") = ", .fcf(x$QM.alpha, digits[["test"]]), ", p-val ", .pval(x$QMp.alpha, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
+         } else {
+            cat(mstyle$result(paste0("QM(df = ", x$m.alpha, ") = ", .fcf(x$QM.alpha, digits[["test"]]), ", p-val ", .pval(x$QMp.alpha, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
+         }
+         cat("\n")
+      }
+
       res.table <- data.frame(estimate=.fcf(c(x$alpha), digits[["est"]]), se=.fcf(x$se.alpha, digits[["se"]]), zval=.fcf(x$zval.alpha, digits[["test"]]), pval=.pval(x$pval.alpha, digits[["pval"]]), ci.lb=.fcf(x$ci.lb.alpha, digits[["ci"]]), ci.ub=.fcf(x$ci.ub.alpha, digits[["ci"]]))
       rownames(res.table) <- rownames(x$alpha)
       if (is.element(x$test, c("t")))

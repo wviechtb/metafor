@@ -60,7 +60,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("knha", "scale", "link", "alpha", "outlist", "onlyo1", "addyi", "addvi", "time", "skipr2", "skiphes"))
+   .chkdots(ddd, c("knha", "scale", "link", "alpha", "outlist", "onlyo1", "addyi", "addvi", "time", "skipr2", "skiphes", "att"))
 
    ### handle 'knha' argument from ... (note: overrides test argument)
 
@@ -100,6 +100,12 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
       alpha <- ddd$alpha
    } else {
       alpha <- NA
+   }
+
+   if (!is.null(ddd$att)) {
+      att <- ddd$att
+   } else {
+      att <- NULL
    }
 
    ### set defaults or get onlyo1, addyi, and addvi arguments
@@ -1913,6 +1919,18 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
          Z <- Zsave
       }
 
+      ### set/check 'att' argument
+
+      att <- .set.btt(att, q, Z.int.incl, colnames(Z))
+      m.alpha <- length(att) ### number of alphas to test (m = z if all betas are tested)
+
+      ### QM calculation
+
+      QM.alpha <- try(as.vector(t(alpha)[att] %*% chol2inv(chol(vb.alpha[att,att])) %*% alpha[att]), silent=TRUE)
+
+      if (inherits(QM.alpha, "try-error"))
+         QM.alpha <- NA
+
       se.alpha <- sqrt(diag(vb.alpha))
 
       rownames(alpha) <- rownames(vb.alpha) <- colnames(vb.alpha) <- colnames(Z)
@@ -1921,10 +1939,14 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
       zval.alpha  <- c(alpha/se.alpha)
 
       if (is.element(test, c("t"))) {
-         dfs <- k-q
-         pval.alpha <- 2*pt(abs(zval.alpha), df=dfs, lower.tail=FALSE)
-         crit <- qt(level/2, df=dfs, lower.tail=FALSE)
+         dfs.alpha <- k-q
+         QM.alpha <- QM.alpha / m.alpha
+         QMp.alpha  <- pf(QM.alpha, df1=m.alpha, df2=dfs.alpha, lower.tail=FALSE)
+         pval.alpha <- 2*pt(abs(zval.alpha), df=dfs.alpha, lower.tail=FALSE)
+         crit <- qt(level/2, df=dfs.alpha, lower.tail=FALSE)
       } else {
+         dfs.alpha <- NA
+         QMp.alpha  <- pchisq(QM.alpha, df=m.alpha, lower.tail=FALSE)
          pval.alpha  <- 2*pnorm(abs(zval.alpha), lower.tail=FALSE)
          crit <- qnorm(level/2, lower.tail=FALSE)
       }
@@ -2301,6 +2323,11 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
       res$Z.f            <- Z.f
       res$tau2.f         <- rep(NA, k.f)
       res$tau2.f[not.na] <- tau2
+      res$att            <- att
+      res$m.alpha        <- m.alpha
+      res$dfs.alpha      <- dfs.alpha
+      res$QM.alpha       <- QM.alpha
+      res$QMp.alpha      <- QMp.alpha
       res$formula.scale  <- formula.scale
       res$H <- H
 
