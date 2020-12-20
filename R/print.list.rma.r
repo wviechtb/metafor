@@ -49,7 +49,7 @@ print.list.rma <- function(x, digits=x$digits, ...) {
    ### leave element tau2.level, gamma2.level, and/or element X untouched
 
    if (exists("method", where=x, inherits=FALSE)) {
-      min.pos <- slab.pos - is.element("tau2.level", names(x)) - is.element("gamma2.level", names(x)) - is.element("X", names(x)) - transf.true
+      min.pos <- slab.pos - is.element("tau2.level", names(x)) - is.element("gamma2.level", names(x)) - is.element("X", names(x)) - is.element("Z", names(x)) - transf.true
    } else {
       min.pos <- slab.pos - transf.true
    }

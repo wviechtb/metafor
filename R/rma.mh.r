@@ -98,6 +98,9 @@ correct=TRUE, level=95, digits, verbose=FALSE, ...) {
    slab   <- eval(mf.slab,   data, enclos=sys.frame(sys.parent()))
    subset <- eval(mf.subset, data, enclos=sys.frame(sys.parent()))
 
+   if (!is.null(subset))
+      subset <- .setnafalse(subset)
+
    #########################################################################
 
    ### for RR, OR, and RD: extract/calculate ai,bi,ci,di,n1i,n2i values

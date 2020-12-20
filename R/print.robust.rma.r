@@ -25,7 +25,7 @@ print.robust.rma <- function(x, digits=x$digits, signif.stars=getOption("show.si
    }
    cat("\n\n")
 
-   if (x$p > 1 && !is.na(x$QM)) {
+   if (x$p > 1L && !is.na(x$QM)) {
       cat(mstyle$section(paste0("Test of Moderators (coefficient", ifelse(x$m == 1, " ", "s "), .format.btt(x$btt),"):")))
       cat("\n")
       cat(mstyle$result(paste0("F(df1 = ", x$m, ", df2 = ", x$dfs, ") = ", .fcf(x$QM, digits[["test"]]), ", p-val ", .pval(x$QMp, digits=digits[["pval"]], showeq=TRUE, sep=" "))))

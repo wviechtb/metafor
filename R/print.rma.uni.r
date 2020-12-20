@@ -148,7 +148,7 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
       cat("\n\n")
    }
 
-   if (x$p > 1 && !is.na(x$QM)) {
+   if (x$p > 1L && !is.na(x$QM)) {
       cat(mstyle$section(paste0("Test of Moderators (coefficient", ifelse(x$m == 1, " ", "s "), .format.btt(x$btt),"):")))
       cat("\n")
       if (is.element(x$test, c("knha","adhoc","t"))) {
@@ -194,7 +194,7 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
 
    if (x$model == "rma.ls") {
 
-      if (x$alphas > 1 && !is.na(x$QM.alpha)) {
+      if (x$q > 1L && !is.na(x$QM.alpha)) {
          cat("\n")
          cat(mstyle$section(paste0("Test of Scale Coefficients (coefficient", ifelse(x$m.alpha == 1, " ", "s "), .format.btt(x$att),"):")))
          cat("\n")

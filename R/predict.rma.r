@@ -57,14 +57,6 @@ level, digits, transf, targs, vcov=FALSE, ...) {
       pi.type <- ddd$pi.type
    }
 
-   #########################################################################
-
-   if (is.element(x$test, c("knha","adhoc","t"))) {
-      crit <- qt(level/2, df=x$dfs, lower.tail=FALSE)
-   } else {
-      crit <- qnorm(level/2, lower.tail=FALSE)
-   }
-
    if (x$int.only && !is.null(newmods))
       stop(mstyle$stop("Cannot specify new moderator values for models without moderators."))
 
@@ -177,11 +169,13 @@ level, digits, transf, targs, vcov=FALSE, ...) {
                         stop(mstyle$stop(paste0("Could not find variable '", colname, "' in the model.")), call. = FALSE)
                      d <- which(d == min(d)) # don't use which.min() since that only finds the first minimum
                      if (length(d) > 1L) # if there is no unique match, then there is more than one minimum
-                        stop(mstyle$stop(paste0("Could not match up '", colname, "' uniquely to a variable in the model.")), call. = FALSE)
+                        stop(mstyle$stop(paste0("Could not match up variable '", colname, "' uniquely to a variable in the model.")), call. = FALSE)
                      return(d)
                      })
-            if (anyDuplicated(pos)) # if the same name is used more than once, then there will be duplicated pos values
-               stop(mstyle$stop("Multiple matches for the same variable name."))
+            if (anyDuplicated(pos)) { # if the same name is used more than once, then there will be duplicated pos values
+               dups <- paste(unique(colnames(X.new)[duplicated(pos)]), collapse=", ")
+               stop(mstyle$stop(paste0("Found multiple matches for the same variable name (", dups, ").")))
+            }
             colnames(X.new) <- colnames.mod[pos]
             pos <- sapply(colnames.mod, function(colname) {
                      d <- c(adist(colname, colnames(X.new), costs=c(ins=1, sub=Inf, del=Inf))) # compute edit distances with Inf costs for substitutions/deletions
@@ -200,9 +194,9 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
       if (x$int.incl) {
          if (intercept) {
-            X.new <- cbind(intrcpt=rep(1,k.new), X.new)
+            X.new <- cbind(intrcpt=1, X.new)
          } else {
-            X.new <- cbind(intrcpt=rep(0,k.new), X.new)
+            X.new <- cbind(intrcpt=0, X.new)
          }
       }
 
@@ -308,6 +302,12 @@ level, digits, transf, targs, vcov=FALSE, ...) {
       Xi.new   <- X.new[i,,drop=FALSE]
       pred[i]  <- Xi.new %*% x$beta
       vpred[i] <- Xi.new %*% tcrossprod(x$vb, Xi.new)
+   }
+
+   if (is.element(x$test, c("knha","adhoc","t"))) {
+      crit <- qt(level/2, df=x$dfs, lower.tail=FALSE)
+   } else {
+      crit <- qnorm(level/2, lower.tail=FALSE)
    }
 
    se <- sqrt(vpred)
@@ -464,7 +464,9 @@ level, digits, transf, targs, vcov=FALSE, ...) {
          pi.lb <- sapply(pi.lb, transf, targs)
          pi.ub <- sapply(pi.ub, transf, targs)
       }
-      transf <- TRUE
+      do.transf <- TRUE
+   } else {
+      do.transf <- FALSE
    }
 
    ### make sure order of intervals is always increasing
@@ -555,11 +557,10 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
    ### add X matrix to list
 
-   if (addx)
+   if (addx) {
       out$X <- matrix(X.new[not.na,], ncol=x$p)
-
-   if (addx)
       colnames(out$X) <- colnames(x$X)
+   }
 
    ### add slab values to list
 
@@ -576,11 +577,11 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
    out$digits <- digits
    out$method <- x$method
-   out$transf <- transf
+   out$transf <- do.transf
 
    class(out) <- "list.rma"
 
-   if (vcov & !transf) {
+   if (vcov & !do.transf) {
       out <- list(pred=out)
       out$vcov <- vcovpred
    }

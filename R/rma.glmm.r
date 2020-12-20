@@ -128,6 +128,9 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    subset <- eval(mf.subset, data, enclos=sys.frame(sys.parent()))
    mods   <- eval(mf.mods,   data, enclos=sys.frame(sys.parent()))
 
+   if (!is.null(subset))
+      subset <- .setnafalse(subset)
+
    ai <- bi <- ci <- di <- x1i <- x2i <- t1i <- t2i <- xi <- mi <- ti <- ni <- NA
 
    ### calculate yi and vi values

@@ -78,6 +78,9 @@ lty, lwd, col, level=99.99, refline=0, ...) {
    lwd    <- eval(mf.lwd,    data, enclos=sys.frame(sys.parent()))
    col    <- eval(mf.col,    data, enclos=sys.frame(sys.parent()))
 
+   if (!is.null(subset))
+      subset <- .setnafalse(subset)
+
    if (measure == "GEN") {
 
       mf.yi  <- mf[[match("yi",  names(mf))]]

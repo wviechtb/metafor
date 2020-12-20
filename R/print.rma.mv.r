@@ -327,7 +327,7 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
       cat("\n\n")
    }
 
-   if (x$p > 1 && !is.na(x$QM)) {
+   if (x$p > 1L && !is.na(x$QM)) {
       cat(mstyle$section(paste0("Test of Moderators (coefficient", ifelse(x$m == 1, " ", "s "), .format.btt(x$btt),"):")))
       cat("\n")
       if (is.element(x$test, c("t"))) {

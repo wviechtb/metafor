@@ -3,7 +3,7 @@ tes.default <- function(x, vi, sei, subset,
    test, tes.alternative="greater", progbar=TRUE, tes.alpha=.10,
    digits, ...) {
 
-   # allow multiple alphas? plot for pval as a function of alpha?
+   # allow multiple alpha values? plot for pval as a function of alpha?
 
    #########################################################################
 
@@ -19,6 +19,9 @@ tes.default <- function(x, vi, sei, subset,
 
    if (missing(subset))
       subset <- NULL
+
+   if (!is.null(subset))
+      subset <- .setnafalse(subset)
 
    if (alpha <= 0 || alpha >= 1)
       stop(mstyle$stop("Value of 'alpha' needs to be > 0 and < 1."))

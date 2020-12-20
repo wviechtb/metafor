@@ -29,6 +29,9 @@ aggregate.escalc <- function(x, cluster, time, V, struct="CS", rho, phi, weighte
    time    <- eval(mf.time,    x, enclos=sys.frame(sys.parent())) # NULL if user does not specify this
    subset  <- eval(mf.subset,  x, enclos=sys.frame(sys.parent())) # NULL if user does not specify this
 
+   if (!is.null(subset))
+      subset <- .setnafalse(subset)
+
    #########################################################################
 
    ### checks on cluster variable

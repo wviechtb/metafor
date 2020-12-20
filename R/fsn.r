@@ -60,6 +60,9 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, weighted
    #weights <- eval(mf.weights, data, enclos=sys.frame(sys.parent()))
    subset  <- eval(mf.subset,  data, enclos=sys.frame(sys.parent()))
 
+   if (!is.null(subset))
+      subset <- .setnafalse(subset)
+
    if (type %in% c("Rosenthal", "Rosenberg") || (type == "Orwin" && weighted)) {
       if (is.null(vi)) {
          if (is.null(sei)) {

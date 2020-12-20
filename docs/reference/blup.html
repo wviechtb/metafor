@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-65</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-66</span>
       </span>
     </div>
 
@@ -187,7 +187,7 @@
 <p>For conditional residuals (the deviations of the observed effect sizes or outcomes from the BLUPs), see <code>rstandard.rma.uni</code> with <code>type="conditional"</code>.</p>
 <p>Fixed-effects models (with or without moderators) do not contain random study effects. The BLUPs for these models will therefore be equal to the fitted values, that is, those obtained with <code><a href='fitted.rma.html'>fitted.rma</a></code> and <code><a href='predict.rma.html'>predict.rma</a></code>.</p>
 <p>When using the <code>transf</code> argument, the transformation is applied to the predicted values and the corresponding interval bounds. The standard errors are then set equal to <code>NA</code> and are omitted from the printed output.</p>
-<p>A normal distribution is used to calculate the prediction intervals. When the model was fitted with the Knapp and Hartung (2003) method (i.e., <code>test="knha"</code> in the <code><a href='rma.uni.html'>rma.uni</a></code> function), then a t-distribution with \(k-p\) degrees of freedom is used.</p>
+<p>By default, a standard normal distribution is used to calculate the prediction intervals. When the model was fitted with <code>test="t"</code> or <code>test="knha"</code>, then a t-distribution with \(k-p\) degrees of freedom is used.</p>
 <p>To be precise, it should be noted that the function actually calculates empirical BLUPs (eBLUPs), since the predicted values are a function of the estimated value of \(\tau^2\).</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 

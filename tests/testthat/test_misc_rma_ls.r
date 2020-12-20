@@ -151,3 +151,42 @@ test_that("location-scale model works correctly for multiple predictors", {
    out <- capture.output(print(res1))
 
 })
+
+test_that("predict() works correctly for location-scale models", {
+
+   expect_warning(res <- rma(yi, vi, data=dat, mods = ~ meta, scale = ~ meta))
+   res0 <- rma(yi, vi, data=dat, subset=meta==0)
+   res1 <- rma(yi, vi, data=dat, subset=meta==1)
+
+   pred <- predict(res, addx=TRUE, addz=TRUE)
+   pred0 <- predict(res0)
+   pred1 <- predict(res1)
+
+   expect_equivalent(pred$pred[1:2],  c(pred1$pred,  pred0$pred), tolerance=.tol[["pred"]])
+   expect_equivalent(pred$se[1:2] ,   c(pred1$se,    pred0$se),   tolerance=.tol[["pred"]])
+   expect_equivalent(pred$ci.lb[1:2], c(pred1$ci.lb, pred0$ci.lb), tolerance=.tol[["pred"]])
+   expect_equivalent(pred$ci.ub[1:2], c(pred1$ci.ub, pred0$ci.ub), tolerance=.tol[["pred"]])
+   expect_equivalent(pred$pi.lb[1:2], c(pred1$pi.lb, pred0$pi.lb), tolerance=.tol[["pred"]])
+   expect_equivalent(pred$pi.ub[1:2], c(pred1$pi.ub, pred0$pi.ub), tolerance=.tol[["pred"]])
+
+   pred <- predict(res, newmods=0:1)
+   expect_equivalent(pred$pred, c(pred0$pred, pred1$pred), tolerance=.tol[["pred"]])
+
+   pred <- predict(res, newmods=0:1, newscale=0:1)
+
+   expect_equivalent(pred$pred,  c(pred0$pred,  pred1$pred), tolerance=.tol[["pred"]])
+   expect_equivalent(pred$se ,   c(pred0$se,    pred1$se),   tolerance=.tol[["pred"]])
+   expect_equivalent(pred$ci.lb, c(pred0$ci.lb, pred1$ci.lb), tolerance=.tol[["pred"]])
+   expect_equivalent(pred$ci.ub, c(pred0$ci.ub, pred1$ci.ub), tolerance=.tol[["pred"]])
+   expect_equivalent(pred$pi.lb, c(pred0$pi.lb, pred1$pi.lb), tolerance=.tol[["pred"]])
+   expect_equivalent(pred$pi.ub, c(pred0$pi.ub, pred1$pi.ub), tolerance=.tol[["pred"]])
+
+   pred <- predict(res, newscale=0:1, transf=exp)
+   expect_equivalent(pred$pred, c(res0$tau2, res1$tau2), tolerance=.tol[["var"]])
+
+   expect_warning(res <- rma(yi, vi, data=dat, mods = ~ meta, scale = ~ meta, link="identity"))
+
+   pred <- predict(res, newscale=0:1)
+   expect_equivalent(pred$pred, c(res0$tau2, res1$tau2), tolerance=.tol[["var"]])
+
+})

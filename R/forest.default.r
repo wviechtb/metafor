@@ -54,6 +54,9 @@ cex, cex.lab, cex.axis, annosym, ...) {
    if (missing(subset))
       subset <- NULL
 
+   if (!is.null(subset))
+      subset <- .setnafalse(subset)
+
    if (missing(psize))
       psize <- NULL
 

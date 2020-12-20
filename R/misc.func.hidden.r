@@ -8,7 +8,7 @@
 
    if (missing(btt) || is.null(btt)) {
 
-      if (p > 1) {                        ### if the model matrix has more than one column
+      if (p > 1L) {                       ### if the model matrix has more than one column
          if (int.incl) {
             btt <- seq.int(from=2, to=p)     ### and the model has an intercept term, test all coefficients except the intercept
          } else {
@@ -1030,6 +1030,24 @@ tidy.rma <- function (x, ...) {
                        tes.alpha=tes.alpha, correct=correct, rel.tol=rel.tol, subdivisions=subdivisions, tau2.lb=tau2.lb, find.lim=FALSE)$pval
    #cat("theta = ", theta, " pval = ", pval, "\n")
    return(pval - tes.alpha)
+}
+
+############################################################################
+
+.setnafalse <- function(x, arg="subset") {
+
+   #mstyle <- .get.mstyle("crayon" %in% .packages())
+
+   if (anyNA(x)) {
+      if (is.logical(x))
+         x[is.na(x)] <- FALSE
+      if (is.numeric(x))
+         x <- x[!is.na(x)]
+      #warning(mstyle$warning(paste0("Missing values in '", arg, "' argument treated as non-selected.")), call.=FALSE)
+   }
+
+   return(x)
+
 }
 
 ############################################################################

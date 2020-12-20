@@ -120,6 +120,12 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
    subset     <- eval(mf.subset,  data, enclos=sys.frame(sys.parent()))
    include    <- eval(mf.include, data, enclos=sys.frame(sys.parent()))
 
+   if (!is.null(subset))
+      subset <- .setnafalse(subset)
+
+   if (!is.null(include))
+      include <- .setnafalse(include, arg="include")
+
    ### get yi (in case it has been specified)
 
    mf.yi <- mf[[match("yi", names(mf))]]

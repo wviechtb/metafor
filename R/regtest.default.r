@@ -12,6 +12,9 @@ regtest.default <- function(x, vi, sei, ni, subset, model="rma", predictor="sei"
    if (missing(subset))
       subset <- NULL
 
+   if (!is.null(subset))
+      subset <- .setnafalse(subset)
+
    ### set defaults for digits
 
    if (missing(digits)) {

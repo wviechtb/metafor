@@ -16,6 +16,9 @@ label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
    if (missing(subset))
       subset <- NULL
 
+   if (!is.null(subset))
+      subset <- .setnafalse(subset)
+
    yaxis <- match.arg(yaxis, c("sei", "vi", "seinv", "vinv", "ni", "ninv", "sqrtni", "sqrtninv", "lni", "wi"))
 
    if (missing(atransf))

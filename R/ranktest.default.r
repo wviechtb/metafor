@@ -12,6 +12,9 @@ ranktest.default <- function(x, vi, sei, subset, digits, ...) {
    if (missing(subset))
       subset <- NULL
 
+   if (!is.null(subset))
+      subset <- .setnafalse(subset)
+
    ### set defaults for digits
 
    if (missing(digits)) {

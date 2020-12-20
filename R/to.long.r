@@ -63,6 +63,9 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
    slab   <- eval(mf.slab,   data, enclos=sys.frame(sys.parent()))
    subset <- eval(mf.subset, data, enclos=sys.frame(sys.parent()))
 
+   if (!is.null(subset))
+      subset <- .setnafalse(subset)
+
    #########################################################################
    #########################################################################
    #########################################################################

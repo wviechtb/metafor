@@ -189,6 +189,9 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
    ai <- bi <- ci <- di <- x1i <- x2i <- t1i <- t2i <- NA
 
+   if (!is.null(subset))
+      subset <- .setnafalse(subset)
+
    if (!is.null(yi)) {
 
       ### if yi is not NULL, then yi now either contains the yi values, a formula, or an escalc object
@@ -956,7 +959,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
    if (con$tau2.min < 0 && (-con$tau2.min > min(vi))) {
       con$tau2.min <- -min(vi)
-      warning(mstyle$warning(paste0("Value of 'tau2.min' constrained to -min(vi) = ", .fcf(-min(vi), digits[["est"]]), ".")))
+      warning(mstyle$warning(paste0("Value of 'tau2.min' constrained to -min(vi) = ", .fcf(-min(vi), digits[["est"]]), ".")), call.=FALSE)
    }
 
    ### convergence indicator and change variable (for iterative estimators)
@@ -2184,7 +2187,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
    } else {
 
       if (!vi0)
-         warning(mstyle$warning(paste0("Cannot compute ", ifelse(int.only, "Q", "QE"), "-test, I^2, or H^2 when there are non-positive sampling variances in the data.")))
+         warning(mstyle$warning(paste0("Cannot compute ", ifelse(int.only, "Q", "QE"), "-test, I^2, or H^2 when there are non-positive sampling variances in the data.")), call.=FALSE)
 
       vt <- NA
 
@@ -2317,6 +2320,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
       res$ci.lb.alpha    <- ci.lb.alpha
       res$ci.ub.alpha    <- ci.ub.alpha
       res$alpha.fix      <- !is.na(alpha.val)
+      res$q              <- q
       res$alphas         <- q
       res$link           <- link
       res$Z              <- Z
@@ -2329,7 +2333,9 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
       res$QM.alpha       <- QM.alpha
       res$QMp.alpha      <- QMp.alpha
       res$formula.scale  <- formula.scale
-      res$H <- H
+      res$Z.int.incl     <- Z.int.incl
+      res$Z.int.only     <- Z.int.only
+      res$H              <- H
 
    }
 
