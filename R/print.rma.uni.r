@@ -30,25 +30,39 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
    if (!exists(".rmspace"))
       cat("\n")
 
-   if (x$method == "FE") {
-      if (x$int.only) {
-         cat(mstyle$section("Fixed-Effects Model"))
-      } else {
-         cat(mstyle$section("Fixed-Effects with Moderators Model"))
-      }
-      cat(mstyle$section(paste0(" (k = ", x$k, ")")))
-   } else {
-      if (x$int.only) {
-         cat(mstyle$section("Random-Effects Model"))
-      } else {
-         cat(mstyle$section("Mixed-Effects Model"))
-      }
+   if (x$model == "rma.ls") {
+
+      cat(mstyle$section("Location-Scale Model"))
       cat(mstyle$section(paste0(" (k = ", x$k, "; ")))
       if (x$tau2.fix) {
          cat(mstyle$section("user-specified tau^2 value)"))
       } else {
          cat(mstyle$section(paste0("tau^2 estimator: ", x$method, ")")))
       }
+
+   } else {
+
+      if (x$method == "FE") {
+         if (x$int.only) {
+            cat(mstyle$section("Fixed-Effects Model"))
+         } else {
+            cat(mstyle$section("Fixed-Effects with Moderators Model"))
+         }
+         cat(mstyle$section(paste0(" (k = ", x$k, ")")))
+      } else {
+         if (x$int.only) {
+            cat(mstyle$section("Random-Effects Model"))
+         } else {
+            cat(mstyle$section("Mixed-Effects Model"))
+         }
+         cat(mstyle$section(paste0(" (k = ", x$k, "; ")))
+         if (x$tau2.fix) {
+            cat(mstyle$section("user-specified tau^2 value)"))
+         } else {
+            cat(mstyle$section(paste0("tau^2 estimator: ", x$method, ")")))
+         }
+      }
+
    }
 
    cat("\n")

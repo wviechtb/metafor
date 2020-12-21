@@ -54,7 +54,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
    if (x$int.only && !is.null(newmods))
       stop(mstyle$stop("Cannot specify new moderator values for models without moderators."))
 
-   if (x$Z.int.only && !is.null(newscale))
+   if (!(x$Z.int.only && identical(newscale, 1)) && x$Z.int.only && !is.null(newscale))
       stop(mstyle$stop("Cannot specify new scale values for models without scale variables."))
 
    #########################################################################
@@ -172,12 +172,14 @@ level, digits, transf, targs, vcov=FALSE, ...) {
          stop(mstyle$stop(paste0("Argument 'newscale' should only contain numeric variables.")))
 
       ### if the user has specified newscale and an intercept was included in the original model, add the intercept to Z.new
+      ### one special case: when the scale model is an intercept-only model, one can set newscale=1 to obtain the predicted
+      ### intercept (which can be converted to tau^2 with transf=exp when using a log link)
 
-      if (x$Z.int.incl)
+      if (!(x$Z.int.only && dim(Z.new) == c(1L,1L) && Z.new == 1) && x$Z.int.incl)
          Z.new <- cbind(intrcpt=1, Z.new)
 
       if (ncol(Z.new) != x$q)
-         stop(mstyle$stop(paste0("Dimensions of 'newscale' (", ncol(Z.new), ") do not match dimensions of the model (", x$q, ").")))
+         stop(mstyle$stop(paste0("Dimensions of 'newscale' (", ncol(Z.new), ") do not match dimensions of the scale model (", x$q, ").")))
 
    }
 
