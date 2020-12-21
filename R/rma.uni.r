@@ -2334,6 +2334,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
       res$QMp.alpha      <- QMp.alpha
       res$formula.scale  <- formula.scale
       res$Z.int.incl     <- Z.int.incl
+      res$Z.intercept    <- Z.int.incl
       res$Z.int.only     <- Z.int.only
       res$H              <- H
 
