@@ -270,6 +270,12 @@ atransf, targs, efac=1, col, border, fonts, cex, ...) {
 
    }
 
+   if (length(col) == 1L)
+      col <- rep(col, k)
+
+   if (length(border) == 1L)
+      border <- rep(border, k)
+
    ### add polygon(s)
 
    for (i in seq_len(k)) {
@@ -278,7 +284,7 @@ atransf, targs, efac=1, col, border, fonts, cex, ...) {
       lsegments(pi.lb[i], rows[i]-(height/150)*cex*efac, pi.lb[i], rows[i]+(height/150)*cex*efac, col="gray50", ...)
       lsegments(pi.ub[i], rows[i]-(height/150)*cex*efac, pi.ub[i], rows[i]+(height/150)*cex*efac, col="gray50", ...)
 
-      lpolygon(x=c(ci.lb[i], yi[i], ci.ub[i], yi[i]), y=c(rows[i], rows[i]+(height/100)*cex*efac, rows[i], rows[i]-(height/100)*cex*efac), col=col, border=border, ...)
+      lpolygon(x=c(ci.lb[i], yi[i], ci.ub[i], yi[i]), y=c(rows[i], rows[i]+(height/100)*cex*efac, rows[i], rows[i]-(height/100)*cex*efac), col=col[i], border=border[i], ...)
 
       if (!is.null(mlab))
          ltext(xlim[1], rows[i], mlab[i], pos=4, cex=cex, ...)
