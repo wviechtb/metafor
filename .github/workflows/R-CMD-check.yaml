@@ -1,11 +1,9 @@
 on:
   push:
     branches:
-      - main
       - master
   pull_request:
     branches:
-      - main
       - master
 
 name: R-CMD-check
@@ -20,6 +18,12 @@ jobs:
       - uses: r-lib/actions/setup-r@v1
       - name: Install gls
         run: sudo apt install libgsl-dev
+      - name: Cache R packages
+        uses: actions/cache@v2
+        with:
+          path: ~/.local/share/renv
+          key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
+          restore-keys: ${{ runner.os }}-renv-
       - name: Install dependencies
         run: |
           install.packages(c("remotes", "rcmdcheck"))
