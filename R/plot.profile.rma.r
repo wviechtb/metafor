@@ -4,8 +4,7 @@ plot.profile.rma <- function(x, xlim, ylim, pch=19, xlab, ylab, main, cline=FALS
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(x, "profile.rma"))
-      stop(mstyle$stop("Argument 'x' must be an object of class \"profile.rma\"."))
+   .chkclass(class(x), must="profile.rma")
 
    if (dev.cur() == 1) {
       par(mfrow=c(x$comps, 1))

@@ -2,8 +2,7 @@ leave1out.rma.mh <- function(x, digits, transf, targs, progbar=FALSE, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(x, "rma.mh"))
-      stop(mstyle$stop("Argument 'x' must be an object of class \"rma.mh\"."))
+   .chkclass(class(x), must="rma.mh")
 
    na.act <- getOption("na.action")
 

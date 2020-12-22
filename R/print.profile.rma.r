@@ -4,8 +4,7 @@ print.profile.rma <- function(x, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(x, "profile.rma"))
-      stop(mstyle$stop("Argument 'x' must be an object of class \"profile.rma\"."))
+   .chkclass(class(x), must="profile.rma")
 
    #########################################################################
 

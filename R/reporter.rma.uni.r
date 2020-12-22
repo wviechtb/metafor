@@ -2,20 +2,13 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(x, "rma.uni"))
-      stop(mstyle$stop("Argument 'x' must be an object of class \"rma.uni\"."))
+   .chkclass(class(x), must="rma.uni", notav=c("robust.rma", "rma.ls", "rma.uni.selmodel"))
 
    if (!suppressMessages(suppressWarnings(requireNamespace("rmarkdown", quietly=TRUE))))
       stop(mstyle$stop("Please install the 'rmarkdown' package to use the reporter function."))
 
    if (!is.element(x$test, c("z", "knha")))
       stop(mstyle$stop("Cannot only use reporter function when test='z' or test='knha'."))
-
-   if (x$model == "rma.ls")
-      stop(mstyle$stop("Cannot use reporter function for location-scale models."))
-
-   if (x$model == "rma.uni.selmodel")
-      stop(mstyle$stop("Cannot use reporter function for selection models."))
 
    if (!x$weighted)
       stop(mstyle$stop("Cannot use reporter function when 'weighted=FALSE'."))
@@ -31,9 +24,6 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
 
    if (x$k == 1)
       stop(mstyle$stop("Cannot use reporter function when k = 1."))
-
-   if (inherits(x, "robust.rma"))
-      stop(mstyle$stop("Cannot use reporter function for objects of class \"robust.rma\"."))
 
    if (missing(digits)) {
       digits <- .get.digits(xdigits=x$digits, dmiss=TRUE)

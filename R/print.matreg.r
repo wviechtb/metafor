@@ -2,8 +2,7 @@ print.matreg <- function(x, digits=x$digits, signif.stars=getOption("show.signif
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(x, "matreg"))
-      stop(mstyle$stop("Argument 'x' must be an object of class \"matreg\"."))
+   .chkclass(class(x), must="matreg")
 
    if (!exists(".rmspace"))
       cat("\n")

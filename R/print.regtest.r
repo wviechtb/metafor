@@ -2,8 +2,7 @@ print.regtest <- function(x, digits=x$digits, ret.fit=x$ret.fit, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(x, "regtest"))
-      stop(mstyle$stop("Argument 'x' must be an object of class \"regtest\"."))
+   .chkclass(class(x), must="regtest")
 
    digits <- .get.digits(digits=digits, xdigits=x$digits, dmiss=FALSE)
 

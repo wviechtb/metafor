@@ -4,23 +4,7 @@ regtest.rma <- function(x, model="rma", predictor="sei", ret.fit=FALSE, digits, 
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(x, "rma"))
-      stop(mstyle$stop("Argument 'x' must be an object of class \"rma\"."))
-
-   if (inherits(x, "robust.rma"))
-      stop(mstyle$stop("Method not available for objects of class \"robust.rma\"."))
-
-   if (inherits(x, "rma.glmm"))
-      stop(mstyle$stop("Method not available for objects of class \"rma.glmm\"."))
-
-   if (inherits(x, "rma.mv"))
-      stop(mstyle$stop("Method not available for objects of class \"rma.mv\"."))
-
-   if (inherits(x, "rma.ls"))
-      stop(mstyle$stop("Method not available for objects of class \"rma.ls\"."))
-
-   if (inherits(x, "rma.uni.selmodel"))
-      stop(mstyle$stop("Method not available for objects of class \"rma.uni.selmodel\"."))
+   .chkclass(class(x), must="rma", notav=c("robust.rma", "rma.glmm", "rma.mv", "rma.ls", "rma.uni.selmodel"))
 
    model <- match.arg(model, c("lm", "rma"))
    predictor <- match.arg(predictor, c("sei", "vi", "ni", "ninv", "sqrtni", "sqrtninv"))

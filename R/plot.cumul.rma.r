@@ -5,8 +5,7 @@ digits, cols=c("gray80","gray10"), addgrid=TRUE, pch=19, cex=1, lwd=2, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(x, "cumul.rma"))
-      stop(mstyle$stop("Argument 'x' must be an object of class \"cumul.rma\"."))
+   .chkclass(class(x), must="cumul.rma")
 
    yaxis <- match.arg(yaxis, c("tau2","I2","H2"))
 

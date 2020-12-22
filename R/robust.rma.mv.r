@@ -2,8 +2,7 @@ robust.rma.mv <- function(x, cluster, adjust=TRUE, digits, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(x, "rma.mv"))
-      stop(mstyle$stop("Argument 'x' must be an object of class \"rma.mv\"."))
+   .chkclass(class(x), must="rma.mv")
 
    if (missing(cluster))
       stop(mstyle$stop("Must specify 'cluster' variable."))

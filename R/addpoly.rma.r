@@ -6,8 +6,7 @@ efac=1, col, border, fonts, cex, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(x, "rma"))
-      stop(mstyle$stop("Argument 'x' must be an object of class \"rma\"."))
+   .chkclass(class(x), must="rma")
 
    if (!x$int.only)
       stop(mstyle$stop("Fitted model should not contain moderators."))

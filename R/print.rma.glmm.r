@@ -2,8 +2,7 @@ print.rma.glmm <- function(x, digits, showfit=FALSE, signif.stars=getOption("sho
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(x, "rma.glmm"))
-      stop(mstyle$stop("Argument 'x' must be an object of class \"rma.glmm\"."))
+   .chkclass(class(x), must="rma.glmm")
 
    if (missing(digits)) {
       digits <- .get.digits(xdigits=x$digits, dmiss=TRUE)

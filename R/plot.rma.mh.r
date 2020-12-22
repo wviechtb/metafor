@@ -4,8 +4,7 @@ plot.rma.mh <- function(x, qqplot=FALSE, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(x, "rma.mh"))
-      stop(mstyle$stop("Argument 'x' must be an object of class \"rma.mh\"."))
+   .chkclass(class(x), must="rma.mh")
 
    na.act <- getOption("na.action")
    on.exit(options(na.action=na.act))

@@ -5,8 +5,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(object, "rma.ls"))
-      stop(mstyle$stop("Argument 'object' must be an object of class \"rma.ls\"."))
+   .chkclass(class(object), must="rma.ls")
 
    na.act <- getOption("na.action")
 

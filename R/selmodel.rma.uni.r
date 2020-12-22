@@ -5,14 +5,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(x, "rma.uni"))
-      stop(mstyle$stop("Argument 'x' must be an object of class \"rma.uni\"."))
-
-   if (inherits(x, "rma.ls"))
-      stop(mstyle$stop("Method not available for objects of class \"rma.ls\"."))
-
-   if (inherits(x, "robust.rma"))
-      stop(mstyle$stop("Method not available for objects of class \"robust.rma\"."))
+   .chkclass(class(x), must="rma.uni", notav=c("rma.ls", "robust.rma"))
 
    alternative <- match.arg(alternative, c("two.sided", "greater", "less"))
 

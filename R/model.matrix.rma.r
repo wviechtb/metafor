@@ -2,8 +2,7 @@ model.matrix.rma <- function(object, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(object, "rma"))
-      stop(mstyle$stop("Argument 'object' must be an object of class \"rma\"."))
+   .chkclass(class(object), must="rma")
 
    na.act <- getOption("na.action")
 

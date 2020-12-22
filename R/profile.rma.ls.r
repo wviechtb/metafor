@@ -3,8 +3,7 @@ profile.rma.ls <- function(fitted, alpha,
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(fitted, "rma.ls"))
-      stop(mstyle$stop("Argument 'fitted' must be an object of class \"rma.ls\"."))
+   .chkclass(class(fitted), must="rma.ls")
 
    if (steps < 2)
       stop(mstyle$stop("Argument 'steps' must be >= 2."))

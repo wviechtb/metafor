@@ -2,8 +2,7 @@ print.permutest.rma.uni <- function(x, digits=x$digits, signif.stars=getOption("
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(x, "permutest.rma.uni"))
-      stop(mstyle$stop("Argument 'x' must be an object of class \"permutest.rma.uni\"."))
+   .chkclass(class(x), must="permutest.rma.uni")
 
    digits <- .get.digits(digits=digits, xdigits=x$digits, dmiss=FALSE)
 

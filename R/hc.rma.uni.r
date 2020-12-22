@@ -2,14 +2,7 @@ hc.rma.uni <- function(object, digits, transf, targs, control, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(object, "rma.uni"))
-      stop(mstyle$stop("Argument 'object' must be an object of class \"rma.uni\"."))
-
-   if (inherits(object, "rma.ls"))
-      stop(mstyle$stop("Method not available for objects of class \"rma.ls\"."))
-
-   if (inherits(object, "rma.uni.selmodel"))
-      stop(mstyle$stop("Method not available for objects of class \"rma.uni.selmodel\"."))
+   .chkclass(class(object), must="rma.uni", notav=c("rma.ls", "rma.uni.selmodel"))
 
    x <- object
 

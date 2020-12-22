@@ -8,8 +8,7 @@ label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(x, "rma"))
-      stop(mstyle$stop("Argument 'x' must be an object of class \"rma\"."))
+   .chkclass(class(x), must="rma")
 
    na.act <- getOption("na.action")
    on.exit(options(na.action=na.act))

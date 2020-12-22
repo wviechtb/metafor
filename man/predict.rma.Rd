@@ -101,7 +101,7 @@ res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, mods = ~ ablat,
 predict(res, transf=exp, addx=TRUE)
 
 ### predicted average risk ratios for 10-60 degrees absolute latitude
-predict(res, newmods=c(10, 20, 30, 40, 50, 60), transf=exp)
+predict(res, newmods=c(10, 20, 30, 40, 50, 60), transf=exp, addx=TRUE)
 
 ### mixed-effects model with two moderators (absolute latitude and publication year)
 res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg,

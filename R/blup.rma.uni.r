@@ -2,11 +2,7 @@ blup.rma.uni <- function(x, level, digits, transf, targs, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(x, "rma.uni"))
-      stop(mstyle$stop("Argument 'x' must be an object of class \"rma.uni\"."))
-
-   if (inherits(x, "rma.uni.selmodel"))
-      stop(mstyle$stop("Method not available for objects of class \"rma.uni.selmodel\"."))
+   .chkclass(class(x), must="rma.uni", notav="rma.uni.selmodel")
 
    na.act <- getOption("na.action")
 

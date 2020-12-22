@@ -2,8 +2,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(object, "rma.mv"))
-      stop(mstyle$stop("Argument 'object' must be an object of class \"rma.mv\"."))
+   .chkclass(class(object), must="rma.mv")
 
    if (!missing(parm))
       warning(mstyle$warning("Argument 'parm' (currently) ignored."), call.=FALSE)

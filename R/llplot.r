@@ -11,8 +11,7 @@ lty, lwd, col, level=99.99, refline=0, ...) {
    if (missing(measure))
       stop(mstyle$stop("Must specify an effect size or outcome measure via the 'measure' argument."))
 
-   if (inherits(measure, "rma"))
-      stop(mstyle$stop("Function not applicable to 'rma' objects."))
+   .chkclass(class(measure), notap="rma", type="Function")
 
    if (!is.element(measure, c("GEN", "OR")))
       stop(mstyle$stop("Currently only measure=\"GEN\" or measure=\"OR\" can be specified."))

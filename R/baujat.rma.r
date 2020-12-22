@@ -2,23 +2,7 @@ baujat.rma <- function(x, xlim, ylim, xlab, ylab, cex, symbol, grid=TRUE, progba
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(x, "rma"))
-      stop(mstyle$stop("Argument 'x' must be an object of class \"rma\"."))
-
-   if (inherits(x, "rma.glmm"))
-      stop(mstyle$stop("Method not available for objects of class \"rma.glmm\"."))
-
-   if (inherits(x, "rma.mv"))
-      stop(mstyle$stop("Method not available for objects of class \"rma.mv\"."))
-
-   if (inherits(x, "robust.rma"))
-      stop(mstyle$stop("Method not available for objects of class \"robust.rma\"."))
-
-   if (inherits(x, "rma.ls"))
-      stop(mstyle$stop("Method not available for objects of class \"rma.ls\"."))
-
-   if (inherits(x, "rma.uni.selmodel"))
-      stop(mstyle$stop("Method not available for objects of class \"rma.uni.selmodel\"."))
+   .chkclass(class(x), must="rma", notav=c("rma.glmm", "rma.mv", "robust.rma", "rma.ls", "rma.uni.selmodel"))
 
    na.act <- getOption("na.action")
    on.exit(options(na.action=na.act))

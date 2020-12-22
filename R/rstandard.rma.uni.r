@@ -2,14 +2,7 @@ rstandard.rma.uni <- function(model, digits, type="marginal", ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(model, "rma.uni"))
-      stop(mstyle$stop("Argument 'model' must be an object of class \"rma.uni\"."))
-
-   if (inherits(model, "robust.rma"))
-      stop(mstyle$stop("Method not available for objects of class \"robust.rma\"."))
-
-   if (inherits(model, "rma.uni.selmodel"))
-      stop(mstyle$stop("Method not available for objects of class \"rma.uni.selmodel\"."))
+   .chkclass(class(model), must="rma.uni", notav=c("robust.rma", "rma.uni.selmodel"))
 
    na.act <- getOption("na.action")
    on.exit(options(na.action=na.act))

@@ -3,14 +3,7 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, lty, ..
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(x, "rma"))
-      stop(mstyle$stop("Argument 'x' must be an object of class \"rma\"."))
-
-   if (inherits(x, "rma.ls"))
-      stop(mstyle$stop("Method not available for objects of class \"rma.ls\"."))
-
-   if (inherits(x, "rma.uni.selmodel"))
-      stop(mstyle$stop("Method not available for objects of class \"rma.uni.selmodel\"."))
+   .chkclass(class(x), must="rma", notav=c("rma.ls", "rma.uni.selmodel"))
 
    if (!x$int.only)
       stop(mstyle$stop("L'Abbe plot only applicable for models without moderators."))

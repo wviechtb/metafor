@@ -6,8 +6,7 @@ plot.rma.uni.selmodel <- function(x, xlim, ylim, n=1000, prec="max", scale=FALSE
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(x, "rma.uni.selmodel"))
-      stop(mstyle$stop("Argument 'x' must be an object of class \"rma.uni.selmodel\"."))
+   .chkclass(class(x), must="rma.uni.selmodel")
 
    ddd <- list(...)
 

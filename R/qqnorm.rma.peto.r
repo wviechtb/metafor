@@ -2,8 +2,7 @@ qqnorm.rma.peto <- function(y, type="rstandard", pch=19, label=FALSE, offset=0.3
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(y, "rma.peto"))
-      stop(mstyle$stop("Argument 'y' must be an object of class \"rma.peto\"."))
+   .chkclass(class(y), must="rma.peto")
 
    x <- y
 

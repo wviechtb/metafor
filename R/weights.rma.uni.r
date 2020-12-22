@@ -2,11 +2,7 @@ weights.rma.uni <- function(object, type="diagonal", ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(object, "rma.uni"))
-      stop(mstyle$stop("Argument 'object' must be an object of class \"rma.uni\"."))
-
-   if (inherits(object, "rma.uni.selmodel"))
-      stop(mstyle$stop("Method not available for objects of class \"rma.uni.selmodel\"."))
+   .chkclass(class(object), must="rma.uni", notav="rma.uni.selmodel")
 
    na.act <- getOption("na.action")
 

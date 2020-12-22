@@ -3,8 +3,7 @@ profile.rma.uni.selmodel <- function(fitted, tau2, delta,
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(fitted, "rma.uni.selmodel"))
-      stop(mstyle$stop("Argument 'fitted' must be an object of class \"rma.uni.selmodel\"."))
+   .chkclass(class(fitted), must="rma.uni.selmodel")
 
    if (steps < 2)
       stop(mstyle$stop("Argument 'steps' must be >= 2."))

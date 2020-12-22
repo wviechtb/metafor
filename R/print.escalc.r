@@ -2,8 +2,7 @@ print.escalc <- function(x, digits=attr(x,"digits"), ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(x, "escalc"))
-      stop(mstyle$stop("Argument 'x' must be an object of class \"escalc\"."))
+   .chkclass(class(x), must="escalc")
 
    attr(x, "class") <- NULL
 

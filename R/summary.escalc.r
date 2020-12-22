@@ -3,8 +3,7 @@ H0=0, append=TRUE, replace=TRUE, level=95, clim, digits, transf, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(object, "escalc"))
-      stop(mstyle$stop("Argument 'object' must be an object of class \"escalc\"."))
+   .chkclass(class(object), must="escalc")
 
    x <- object
 

@@ -2,8 +2,7 @@ weights.rma.mh <- function(object, type="diagonal", ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(object, "rma.mh"))
-      stop(mstyle$stop("Argument 'object' must be an object of class \"rma.mh\"."))
+   .chkclass(class(object), must="rma.mh")
 
    na.act <- getOption("na.action")
 

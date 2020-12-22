@@ -2,11 +2,7 @@ rstandard.rma.mv <- function(model, digits, cluster, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(model, "rma.mv"))
-      stop(mstyle$stop("Argument 'model' must be an object of class \"rma.mv\"."))
-
-   if (inherits(model, "robust.rma"))
-      stop(mstyle$stop("Method not available for objects of class \"robust.rma\"."))
+   .chkclass(class(model), must="rma.mv", notav="robust.rma")
 
    na.act <- getOption("na.action")
    on.exit(options(na.action=na.act))

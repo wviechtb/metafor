@@ -2,8 +2,7 @@ confint.rma.uni.selmodel <- function(object, parm, level, fixed=FALSE, tau2, del
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(object, "rma.uni.selmodel"))
-      stop(mstyle$stop("Argument 'object' must be an object of class \"rma.uni.selmodel\"."))
+   .chkclass(class(object), must="rma.uni.selmodel")
 
    if (!missing(parm))
       warning(mstyle$warning("Argument 'parm' (currently) ignored."), call.=FALSE)

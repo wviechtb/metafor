@@ -2,20 +2,7 @@ simulate.rma <- function(object, nsim = 1, seed = NULL, yilim, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(object, "rma"))
-      stop(mstyle$stop("Argument 'object' must be an object of class \"rma\"."))
-
-   if (inherits(object, "rma.glmm"))
-      stop(mstyle$stop("Method not available for objects of class \"rma.glmm\"."))
-
-   if (inherits(object, "rma.mh"))
-      stop(mstyle$stop("Method not available for objects of class \"rma.mh\"."))
-
-   if (inherits(object, "rma.peto"))
-      stop(mstyle$stop("Method not available for objects of class \"rma.peto\"."))
-
-   if (inherits(object, "rma.uni.selmodel"))
-      stop(mstyle$stop("Method not available for objects of class \"rma.uni.selmodel\"."))
+   .chkclass(class(object), must="rma", notav=c("rma.glmm", "rma.mh", "rma.peto", "rma.uni.selmodel"))
 
    na.act <- getOption("na.action")
 

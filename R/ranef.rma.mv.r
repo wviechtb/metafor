@@ -2,10 +2,9 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   x <- object
+   .chkclass(class(object), must="rma.mv")
 
-   if (!inherits(x, "rma.mv"))
-      stop(mstyle$stop("Argument 'x' must be an object of class \"rma.mv\"."))
+   x <- object
 
    na.act <- getOption("na.action")
 

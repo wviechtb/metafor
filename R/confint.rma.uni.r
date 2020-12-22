@@ -13,14 +13,7 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(object, "rma.uni"))
-      stop(mstyle$stop("Argument 'object' must be an object of class \"rma.uni\"."))
-
-   if (inherits(object, "robust.rma"))
-      stop(mstyle$stop("Method not available for objects of class \"robust.rma\"."))
-
-   if (inherits(object, "rma.ls"))
-      stop(mstyle$stop("Method not available for objects of class \"rma.ls\"."))
+   .chkclass(class(object), must="rma.uni", notav=c("robust.rma", "rma.ls"))
 
    if (!missing(parm))
       warning(mstyle$warning("Argument 'parm' (currently) ignored."), call.=FALSE)

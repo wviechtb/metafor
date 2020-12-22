@@ -4,17 +4,7 @@ trimfill.rma.uni <- function(x, side, estimator="L0", maxiter=100, verbose=FALSE
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(x, "rma.uni"))
-      stop(mstyle$stop("Argument 'x' must be an object of class \"rma.uni\"."))
-
-   if (inherits(x, "robust.rma"))
-      stop(mstyle$stop("Method not available for objects of class \"robust.rma\"."))
-
-   if (inherits(x, "rma.ls"))
-      stop(mstyle$stop("Method not available for objects of class \"rma.ls\"."))
-
-   if (inherits(x, "rma.uni.selmodel"))
-      stop(mstyle$stop("Method not available for objects of class \"rma.uni.selmodel\"."))
+   .chkclass(class(x), must="rma.uni", notav=c("robust.rma", "rma.ls", "rma.uni.selmodel"))
 
    if (!x$int.only)
       stop(mstyle$stop("Trim-and-fill method only applicable for models without moderators."))

@@ -2,8 +2,7 @@ print.hc.rma.uni <- function(x, digits=x$digits, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(x, "hc.rma.uni"))
-      stop(mstyle$stop("Argument 'x' must be an object of class \"hc.rma.uni\"."))
+   .chkclass(class(x), must="hc.rma.uni")
 
    digits <- .get.digits(digits=digits, xdigits=x$digits, dmiss=FALSE)
 

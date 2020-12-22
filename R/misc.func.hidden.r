@@ -270,6 +270,28 @@
 
 ############################################################################
 
+.chkclass <- function(class, must, notap, notav, type="Method") {
+
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
+   obj <- as.character(match.call()[2])
+   obj <- substr(obj, 7, nchar(obj)-1)
+
+   if (!missing(must) && !is.element(must, class))
+      stop(mstyle$stop(paste0("Argument '", obj, "' must be an object of class \"", must, "\".")), call.=FALSE)
+
+   if (!missing(notap) && any(is.element(notap, class)))
+      stop(mstyle$stop(paste0(type, " not applicable to objects of class \"", class[1], "\".")), call.=FALSE)
+      #stop(mstyle$stop(paste0("Method not applicable to objects of class \"", paste0(class, collapse=", "), "\".")), call.=FALSE)
+
+   if (!missing(notav) && any(is.element(notav, class)))
+      stop(mstyle$stop(paste0(type, " not available for objects of class \"", class[1], "\".")), call.=FALSE)
+      #stop(mstyle$stop(paste0("Method not available for objects of class \"", paste0(class, collapse=", "), "\".")), call.=FALSE)
+
+}
+
+############################################################################
+
 ### set axis label (for forest, funnel, and labbe functions)
 
 .setlab <- function(measure, transf.char, atransf.char, gentype, short=FALSE) {

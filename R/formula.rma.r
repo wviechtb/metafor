@@ -2,8 +2,7 @@ formula.rma <- function(x, type="mods", ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(x, "rma"))
-      stop(mstyle$stop("Argument 'x' must be an object of class \"rma\"."))
+   .chkclass(class(x), must="rma")
 
    type <- match.arg(type, c("mods", "yi", "scale"))
 

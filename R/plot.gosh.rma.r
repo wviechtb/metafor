@@ -3,8 +3,7 @@ xlim, ylim, xhist=TRUE, yhist=TRUE, hh=.3, breaks, adjust, lwd, labels, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(x, "gosh.rma"))
-      stop(mstyle$stop("Argument 'x' must be an object of class \"gosh.rma\"."))
+   .chkclass(class(x), must="gosh.rma")
 
    het <- match.arg(het, c("QE", "I2", "H2", "tau2"))
 

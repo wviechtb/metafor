@@ -15,8 +15,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
-   if (!inherits(x, "cumul.rma"))
-      stop(mstyle$stop("Argument 'x' must be an object of class \"cumul.rma\"."))
+   .chkclass(class(x), must="cumul.rma")
 
    if (missing(transf))
       transf <- FALSE

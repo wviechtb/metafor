@@ -2,8 +2,7 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(x, "rma.uni"))
-      stop(mstyle$stop("Argument 'x' must be an object of class \"rma.uni\"."))
+   .chkclass(class(x), must="rma.uni")
 
    if (missing(digits)) {
       digits <- .get.digits(xdigits=x$digits, dmiss=TRUE)

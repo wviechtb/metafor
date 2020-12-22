@@ -2,8 +2,7 @@ aggregate.escalc <- function(x, cluster, time, V, struct="CS", rho, phi, weighte
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(x, "escalc"))
-      stop(mstyle$stop("Argument 'x' must be an object of class \"escalc\"."))
+   .chkclass(class(x), must="escalc")
 
    if (any(!is.element(struct, c("ID","CS","CAR","CS+CAR"))))
       stop(mstyle$stop("Unknown 'struct' specified."))

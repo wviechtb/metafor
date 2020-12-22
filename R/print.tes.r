@@ -2,8 +2,7 @@ print.tes <- function(x, digits=x$digits, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(x, "tes"))
-      stop(mstyle$stop("Argument 'x' must be an object of class \"tes\"."))
+   .chkclass(class(x), must="tes")
 
    digits <- .get.digits(digits=digits, xdigits=x$digits, dmiss=FALSE)
 

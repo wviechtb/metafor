@@ -2,8 +2,7 @@ qqnorm.rma.mh <- function(y, type="rstandard", pch=19, label=FALSE, offset=0.3, 
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(y, "rma.mh"))
-      stop(mstyle$stop("Argument 'y' must be an object of class \"rma.mh\"."))
+   .chkclass(class(y), must="rma.mh")
 
    x <- y
 

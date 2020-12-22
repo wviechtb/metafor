@@ -3,11 +3,7 @@ profile.rma.uni <- function(fitted,
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(fitted, "rma.uni"))
-      stop(mstyle$stop("Argument 'fitted' must be an object of class \"rma.uni\"."))
-
-   if (inherits(fitted, "rma.uni.selmodel"))
-      stop(mstyle$stop("Method not available for objects of class \"rma.uni.selmodel\"."))
+   .chkclass(class(fitted), must="rma.uni", notav="rma.uni.selmodel")
 
    if (fitted$method == "FE")
       stop(mstyle$stop("Cannot profile tau2 parameter for fixed-effects models."))

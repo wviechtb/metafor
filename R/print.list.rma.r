@@ -2,8 +2,7 @@ print.list.rma <- function(x, digits=x$digits, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(x, "list.rma"))
-      stop(mstyle$stop("Argument 'x' must be an object of class \"list.rma\"."))
+   .chkclass(class(x), must="list.rma")
 
    digits <- .get.digits(digits=digits, xdigits=x$digits, dmiss=FALSE)
 

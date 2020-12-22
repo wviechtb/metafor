@@ -2,8 +2,7 @@ coef.permutest.rma.uni <- function(object, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(object, "permutest.rma.uni"))
-      stop(mstyle$stop("Argument 'object' must be an object of class \"permutest.rma.uni\"."))
+   .chkclass(class(object), must="permutest.rma.uni")
 
    x <- object
 

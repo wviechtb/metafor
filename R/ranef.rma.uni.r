@@ -2,13 +2,9 @@ ranef.rma.uni <- function(object, level, digits, transf, targs, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
+   .chkclass(class(object), must="rma.uni", notav="rma.uni.selmodel")
+
    x <- object
-
-   if (!inherits(x, "rma.uni"))
-      stop(mstyle$stop("Argument 'x' must be an object of class \"rma.uni\"."))
-
-   if (inherits(x, "rma.uni.selmodel"))
-      stop(mstyle$stop("Method not available for objects of class \"rma.uni.selmodel\"."))
 
    na.act <- getOption("na.action")
 

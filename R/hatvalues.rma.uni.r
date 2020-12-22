@@ -2,11 +2,7 @@ hatvalues.rma.uni <- function(model, type="diagonal", ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(model, "rma.uni"))
-      stop(mstyle$stop("Argument 'model' must be an object of class \"rma.uni\"."))
-
-   if (inherits(model, "rma.uni.selmodel"))
-      stop(mstyle$stop("Method not available for objects of class \"rma.uni.selmodel\"."))
+   .chkclass(class(model), must="rma.uni", notav="rma.uni.selmodel")
 
    na.act <- getOption("na.action")
 

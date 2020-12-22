@@ -2,8 +2,7 @@ rstandard.rma.peto <- function(model, digits, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(model, "rma.peto"))
-      stop(mstyle$stop("Argument 'model' must be an object of class \"rma.peto\"."))
+   .chkclass(class(model), must="rma.peto")
 
    na.act <- getOption("na.action")
 

@@ -4,14 +4,7 @@ vif.rma <- function(x, btt, intercept=FALSE, table=FALSE, digits, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(x, "rma"))
-      stop(mstyle$stop("Argument 'x' must be an object of class \"rma\"."))
-
-   if (inherits(x, "robust.rma"))
-      stop(mstyle$stop("Method not available for objects of class \"robust.rma\"."))
-
-   if (inherits(x, "rma.uni.selmodel"))
-      stop(mstyle$stop("Method not available for objects of class \"rma.uni.selmodel\"."))
+   .chkclass(class(x), must="rma", notav=c("robust.rma", "rma.uni.selmodel"))
 
    vif.loc   <- TRUE
    vif.scale <- TRUE

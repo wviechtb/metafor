@@ -2,8 +2,7 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(model, "rma.mv"))
-      stop(mstyle$stop("Argument 'model' must be an object of class \"rma.mv\"."))
+   .chkclass(class(model), must="rma.mv")
 
    #if (inherits(model, "robust.rma")) ### can compute Cook's distance also for 'robust.rma' objects
    #   stop(mstyle$stop("Method not available for objects of class \"robust.rma\"."))

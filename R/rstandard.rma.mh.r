@@ -2,8 +2,7 @@ rstandard.rma.mh <- function(model, digits, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(model, "rma.mh"))
-      stop(mstyle$stop("Argument 'model' must be an object of class \"rma.mh\"."))
+   .chkclass(class(model), must="rma.mh")
 
    na.act <- getOption("na.action")
 

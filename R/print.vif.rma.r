@@ -2,8 +2,7 @@ print.vif.rma <- function(x, digits=x$digits, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(x, "vif.rma"))
-      stop(mstyle$stop("Argument 'x' must be an object of class \"vif.rma\"."))
+   .chkclass(class(x), must="vif.rma")
 
    digits <- .get.digits(digits=digits, xdigits=x$digits, dmiss=FALSE)
 

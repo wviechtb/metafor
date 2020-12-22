@@ -4,11 +4,7 @@ update.rma <- function (object, formula., ..., evaluate=TRUE) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(object, "rma"))
-      stop(mstyle$stop("Argument 'object' must be an object of class \"rma\"."))
-
-   if (inherits(object, "robust.rma"))
-      stop(mstyle$stop("Method not available for objects of class \"robust.rma\"."))
+   .chkclass(class(object), must="rma", notav="robust.rma")
 
    if (is.null(call <- getCall(object)))
       stop(mstyle$stop("Need an object with call component."))

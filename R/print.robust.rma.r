@@ -2,8 +2,7 @@ print.robust.rma <- function(x, digits=x$digits, signif.stars=getOption("show.si
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(x, "robust.rma"))
-      stop(mstyle$stop("Argument 'x' must be an object of class \"robust.rma\"."))
+   .chkclass(class(x), must="robust.rma")
 
    digits <- .get.digits(digits=digits, xdigits=x$digits, dmiss=FALSE)
 

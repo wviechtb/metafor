@@ -10,11 +10,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!inherits(x, "rma"))
-      stop(mstyle$stop("Argument 'x' must be an object of class \"rma\"."))
-
-   if (inherits(x, "rma.ls"))
-      stop(mstyle$stop("Method not available for objects of class \"rma.ls\"."))
+   .chkclass(class(x), must="rma", notav="rma.ls")
 
    na.act <- getOption("na.action")
    on.exit(options(na.action=na.act))

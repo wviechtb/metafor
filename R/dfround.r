@@ -5,8 +5,7 @@ dfround <- function(x, digits) {
    #if (inherits(x, "matrix"))
    #   x <- data.frame(x)
 
-   if (!inherits(x, "data.frame"))
-      stop(mstyle$stop("Argument 'x' must be a data frame."))
+   .chkclass(class(x), must="data.frame")
 
    p <- ncol(x)
 
