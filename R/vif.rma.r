@@ -141,7 +141,7 @@ vif.rma <- function(x, btt, intercept=FALSE, table=FALSE, digits, ...) {
 
       } else {
 
-         att <- .set.btt(ddd$att, x$q, Z.int.incl, colnames(Z))
+         att <- .set.btt(ddd$att, x$q, x$Z.int.incl, colnames(x$Z))
 
          if (x$Z.intercept && !intercept) {
             vcov <- vcov[-1,-1,drop=FALSE]

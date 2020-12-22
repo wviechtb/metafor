@@ -1,7 +1,6 @@
 ^\.git$
 ^\.github$
 ^\.gitignore$
-^\.travis\.yml$
 ^_pkgdown\.yml$
 ^docs$
 ^vignettes/pkgdown$
