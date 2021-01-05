@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-66</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-70</span>
       </span>
     </div>
 
@@ -80,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -103,13 +103,13 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://twitter.com/wviechtb">
-    <span class="fa fa-twitter"></span>
+    <span class="fas fa-twitter"></span>
      
   </a>
 </li>
 <li>
   <a href="https://github.com/wviechtb/metafor">
-    <span class="fa fa-github"></span>
+    <span class="fas fa-github"></span>
      
   </a>
 </li>
@@ -492,6 +492,7 @@
 <li><p><code>"IRFT"</code> for the <em>Freeman-Tukey transformed incidence rate</em> (Freeman &amp; Tukey, 1950).</p></li>
 </ul>
 
+<p>Measures <code>"IR"</code> and <code>"IRLN"</code> can also be used when meta-analyzing standardized incidence ratios (SIRs), where the observed number of events is divided by the expected number of events. In this case, arguments <code>xi</code> and <code>ti</code> are used to specify the observed and expected number of events in the studies. Since SIRs are not symmetric around 1, it is usually more appropriate to meta-analyze the log transformed SIRs (i.e., using measure <code>"IRLN"</code>), which are symmetric around 0.</p>
 <p>Studies with zero events can be problematic, especially for the log transformed incidence rate. Adding a small constant to the number of events is a common solution to this problem. When <code>to="only0"</code> (the default), the value of <code>add</code> (the default is <code>1/2</code>; but see &#8216;Note&#8217;) is added to <code>xi</code> only in the studies that have zero events. When <code>to="all"</code>, the value of <code>add</code> is added to <code>xi</code> in all studies. When <code>to="if0all"</code>, the value of <code>add</code> is added to <code>xi</code> in all studies, but only when there is at least one study with zero events. Setting <code>to="none"</code> or <code>add=0</code> has the same effect: No adjustment to the observed number of events is made. Depending on the outcome measure and the data, this may lead to division by zero inside of the function (when this occurs, the resulting value is recoded to <code>NA</code>).</p>
 <p></p>
 
