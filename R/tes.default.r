@@ -180,7 +180,7 @@ tes.default <- function(x, vi, sei, subset,
    wi  <- 1 / vi
 
    if (est.theta) {
-      theta.1 <- sum(wi*yi)/sum(wi)
+      theta.1 <- .wmean(yi, wi)
       theta <- rep(theta.1, k)
    }
 

@@ -31,7 +31,7 @@ weights.rma.uni <- function(object, type="diagonal", ...) {
 
       wi <- as.vector(diag(W))
       weight <- rep(NA_real_, x$k.f)
-      weight[x$not.na] <- wi/sum(wi) * 100
+      weight[x$not.na] <- wi / sum(wi) * 100
       names(weight) <- x$slab
 
       if (na.act == "na.omit")

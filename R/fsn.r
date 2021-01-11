@@ -148,7 +148,7 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, weighted
 
       if (weighted) {
          wi <- 1/vi
-         meanes <- sum(wi*yi)/sum(wi)
+         meanes <- .wmean(yi, wi)
       } else {
          meanes <- mean(yi)
       }
@@ -171,7 +171,7 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, weighted
 
       k      <- length(yi)
       wi     <- 1/vi
-      meanes <- sum(wi*yi)/sum(wi)
+      meanes <- .wmean(yi, wi)
       zval   <- meanes / sqrt(1/sum(wi))
       w.p    <- (sum(wi*yi) / qnorm(alpha/2, lower.tail=FALSE))^2 - sum(wi)
       pval   <- 2*pnorm(abs(zval), lower.tail=FALSE)

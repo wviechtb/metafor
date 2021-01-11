@@ -336,7 +336,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
    if (showweights) {                           ### inverse variance weights after ordering/subsetting and
       weights <- 1/vi                           ### omitting NAs (so these weights always add up to 100%)
-      weights <- 100 * weights/sum(weights, na.rm=TRUE)
+      weights <- 100 * weights / sum(weights, na.rm=TRUE)
    }
 
    ### set default point sizes (if not specified by user)

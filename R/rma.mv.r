@@ -284,7 +284,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
 
    ### check if user constrained V to 0 (can skip a lot of the steps below then)
 
-   if (.is.vector(V) && length(V) == 1L && V == 0) {
+   if ((.is.vector(V) && length(V) == 1L && V == 0) || (.is.vector(V) && length(V) == k && !anyNA(V) && all(V == 0))) {
       V0 <- TRUE
    } else {
       V0 <- FALSE

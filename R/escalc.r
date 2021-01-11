@@ -322,11 +322,11 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             vi <- rep(NA_real_, k)
 
             if (addvi) {
-               mnwp1i <- sum(ai, na.rm=TRUE) / sum(n1i, na.rm=TRUE) ### sample size weighted average of proportions (same as sum(n1i*p1i)/sum(n1i))
-               mnwp2i <- sum(ci, na.rm=TRUE) / sum(n2i, na.rm=TRUE) ### sample size weighted average of proportions (same as sum(n2i*p2i)/sum(n2i))
+               mnwp1i <- .wmean(p1i, n1i, na.rm=TRUE) ### sample size weighted average of proportions
+               mnwp2i <- .wmean(p2i, n2i, na.rm=TRUE) ### sample size weighted average of proportions
             } else {
-               mnwp1i.u <- sum(ai.u, na.rm=TRUE) / sum(n1i.u, na.rm=TRUE) ### sample size weighted average of proportions (same as sum(n1i.u*p1i.u)/sum(n1i.u))
-               mnwp2i.u <- sum(ci.u, na.rm=TRUE) / sum(n2i.u, na.rm=TRUE) ### sample size weighted average of proportions (same as sum(n2i.u*p2i.u)/sum(n2i.u))
+               mnwp1i.u <- .wmean(p1i.u, n1i.u, na.rm=TRUE) ### sample size weighted average of proportions
+               mnwp2i.u <- .wmean(p2i.u, n2i.u, na.rm=TRUE) ### sample size weighted average of proportions
             }
 
             if (!all(is.element(vtype, c("UB","LS","AV"))))
@@ -800,7 +800,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
             vi <- rep(NA_real_, k)
 
-            mnwyi <- sum(ni*yi, na.rm=TRUE) / sum(ni, na.rm=TRUE) ### sample size weighted average of yi's
+            mnwyi <- .wmean(yi, ni, na.rm=TRUE) ### sample size weighted average of yi's
 
             if (!all(is.element(vtype, c("UB","LS","LS2","AV"))))
                stop(mstyle$stop("For this outcome measure, 'vtype' must be either 'UB', 'LS', 'LS2', or 'AV'."))
@@ -851,9 +851,10 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
             vi <- rep(NA_real_, k)
 
-            mn1wcvi <- sum(n1i*sd1i/m1i, na.rm=TRUE) / sum(n1i, na.rm=TRUE) ### sample size weighted average of the coefficient of variation in group 1
-            mn2wcvi <- sum(n2i*sd2i/m2i, na.rm=TRUE) / sum(n2i, na.rm=TRUE) ### sample size weighted average of the coefficient of variation in group 2
-            mnwcvi  <- (sum(n1i*sd1i/m1i, na.rm=TRUE) + sum(n2i*sd2i/m2i, na.rm=TRUE)) / sum(ni, na.rm=TRUE) ### sample size weighted average of the two CV values
+            mn1wcvi <- .wmean(sd1i/m1i, n1i, na.rm=TRUE) ### sample size weighted average of the coefficient of variation in group 1
+            mn2wcvi <- .wmean(sd2i/m2i, n2i, na.rm=TRUE) ### sample size weighted average of the coefficient of variation in group 2
+            not.na  <- !(is.na(n1i) | is.na(n2i) | is.na(sd1i/m1i) | is.na(sd2i/m2i))
+            mnwcvi  <- (sum(n1i[not.na]*(sd1i/m1i)[not.na]) + sum(n2i[not.na]*(sd2i/m2i)[not.na])) / sum((n1i+n2i)[not.na]) ### sample size weighted average of the two CV values
 
             if (!all(is.element(vtype, c("LS","HO","AV","AVHO"))))
                stop(mstyle$stop("For this outcome measure, 'vtype' must be either 'LS', 'HO', 'AV', or 'AVHO'."))
@@ -1028,7 +1029,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
             vi <- rep(NA_real_, k)
 
-            mnwyi <- sum(ni*yi, na.rm=TRUE) / sum(ni, na.rm=TRUE) ### sample size weighted average of yi's
+            mnwyi <- .wmean(yi, ni, na.rm=TRUE) ### sample size weighted average of yi's
 
             if (!all(is.element(vtype, c("UB","LS","AV"))))
                stop(mstyle$stop("For this outcome measure, 'vtype' must be either 'UB', 'LS', or 'AV'."))
@@ -1246,9 +1247,9 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             vi <- rep(NA_real_, k)
 
             if (addvi) {
-               mnwpri <- sum(xi, na.rm=TRUE) / sum(ni, na.rm=TRUE) ### sample size weighted average of proportions (same as sum(ni*pri)/sum(ni))
+               mnwpri <- .wmean(pri, ni, na.rm=TRUE) ### sample size weighted average of proportions
             } else {
-               mnwpri.u <- sum(xi.u, na.rm=TRUE) / sum(ni.u, na.rm=TRUE) ### sample size weighted average of proportions (same as sum(ni.u*pri.u)/sum(ni.u))
+               mnwpri.u <- .wmean(pri.u, ni.u, na.rm=TRUE) ### sample size weighted average of proportions
             }
 
             if (!all(is.element(vtype, c("UB","LS","AV"))))
@@ -1303,10 +1304,10 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             vi <- rep(NA_real_, k)
 
             if (addvi) {
-               mnwpri <- sum(xi, na.rm=TRUE) / sum(ni, na.rm=TRUE) ### sample size weighted average of proportions (same as sum(ni*pri)/sum(ni))
-               #mnwpri <- exp(sum(ni*yi)/sum(ni))                  ### alternative strategy (exp of the sample size weighted average of the log proportions)
+               mnwpri <- .wmean(pri, ni, na.rm=TRUE) ### sample size weighted average of proportions
+               #mnwpri <- exp(.wmean(yi, ni, na.rm=TRUE)) ### alternative strategy (exp of the sample size weighted average of the log proportions)
             } else {
-               mnwpri.u <- sum(xi.u, na.rm=TRUE) / sum(ni.u, na.rm=TRUE) ### sample size weighted average of proportions (same as sum(ni.u*pri.u)/sum(ni.u))
+               mnwpri.u <- .wmean(pri.u, ni.u, na.rm=TRUE) ### sample size weighted average of proportions
             }
 
             if (!all(is.element(vtype, c("LS","AV"))))
@@ -1352,10 +1353,10 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             vi <- rep(NA_real_, k)
 
             if (addvi) {
-               mnwpri <- sum(xi, na.rm=TRUE) / sum(ni, na.rm=TRUE) ### sample size weighted average of proportions (same as sum(ni*pri)/sum(ni))
-               #mnwpri <- transf.ilogit(sum(ni*yi)/sum(ni))        ### alternative strategy (inverse logit of the sample size weighted average of the logit transformed proportions)
+               mnwpri <- .wmean(pri, ni, na.rm=TRUE) ### sample size weighted average of proportions
+               #mnwpri <- transf.ilogit(.wmean(yi, ni, na.rm=TRUE)) ### alternative strategy (inverse logit of the sample size weighted average of the logit transformed proportions)
             } else {
-               mnwpri.u <- sum(xi.u, na.rm=TRUE) / sum(ni.u, na.rm=TRUE) ### sample size weighted average of proportions (same as sum(ni.u*pri.u)/sum(ni.u))
+               mnwpri.u <- .wmean(pri.u, ni.u, na.rm=TRUE) ### sample size weighted average of proportions
             }
 
             if (!all(is.element(vtype, c("LS","AV"))))

@@ -1073,3 +1073,17 @@ tidy.rma <- function (x, ...) {
 }
 
 ############################################################################
+
+# function to compute a weighted mean (this one works a bit different than
+# stats:::weighted.mean.default)
+
+.wmean <- function (x, w, na.rm=FALSE) {
+   if (na.rm) {
+      i <- !(is.na(x) | is.na(w))
+      x <- x[i]
+      w <- w[i]
+   }
+   sum(x*w) / sum(w)
+}
+
+############################################################################

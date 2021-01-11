@@ -298,7 +298,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
       ### check if user constrained vi to 0
 
-      if (length(vi) == 1L && vi == 0) {
+      if ((length(vi) == 1L && vi == 0) || (length(vi) == k && !anyNA(vi) && all(vi == 0))) {
          vi0 <- TRUE
       } else {
          vi0 <- FALSE
