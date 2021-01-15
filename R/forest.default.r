@@ -87,7 +87,9 @@ cex, cex.lab, cex.axis, annosym, ...) {
    ### annotation symbols vector
 
    if (missing(annosym))
-      annosym <- c(" [", ", ", "]")
+      annosym <- c(" [", ", ", "]", "-")
+   if (length(annosym) == 3L)
+      annosym <- c(annosym, "-")
    if (length(annosym) != 3L)
       stop(mstyle$stop("Argument 'annosym' must be a vector of length 3."))
 
@@ -626,6 +628,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
          annotext <- cbind(weights, annotext)
 
       annotext <- .fcf(annotext, digits[[1]])
+      annotext <- sub("-", annosym[4], annotext, fixed=TRUE)
 
       if (missing(width)) {
          width <- apply(annotext, 2, function(x) max(nchar(x)))
