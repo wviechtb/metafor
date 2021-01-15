@@ -76,7 +76,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
       annosym <- c(" [", ", ", "]", "-")
    if (length(annosym) == 3L)
       annosym <- c(annosym, "-")
-   if (length(annosym) != 3L)
+   if (length(annosym) != 4L)
       stop(mstyle$stop("Argument 'annosym' must be a vector of length 3."))
 
    level <- ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
