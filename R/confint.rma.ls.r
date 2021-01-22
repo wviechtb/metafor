@@ -40,7 +40,7 @@ confint.rma.ls <- function(object, parm, level, fixed=FALSE, alpha, digits, tran
       time.start <- proc.time()
 
    if (!is.null(ddd$xlim)) {
-      if (length(xlim) != 2)
+      if (length(ddd$xlim) != 2L)
          stop(mstyle$stop("Argument 'xlim' should be a vector of length 2."))
       control$vc.min <- ddd$xlim[1]
       control$vc.max <- ddd$xlim[2]

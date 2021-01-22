@@ -58,7 +58,7 @@ plot.rma.uni.selmodel <- function(x, xlim, ylim, n=1000, prec="max", scale=FALSE
    delta <- x$delta
    steps <- x$steps
 
-   ps <- seq(xlim[1], xlim[2], length=n)
+   ps <- seq(xlim[1], xlim[2], length.out=n)
 
    if (x$type == "stepfun") {
       ps <- unique(sort(c(ps, steps))) # make sure that the 'steps' values are part of 'ps'

@@ -50,10 +50,10 @@ level, digits, transf, targs, vcov=FALSE, ...) {
       pi.type <- ddd$pi.type
    }
 
-   if (x$int.only && !is.null(newmods))
+   if (!is.null(newmods) && x$int.only && !(x$int.only && identical(newmods, 1)))
       stop(mstyle$stop("Cannot specify new moderator values for models without moderators."))
 
-   if (!(x$Z.int.only && identical(newscale, 1)) && x$Z.int.only && !is.null(newscale))
+   if (!is.null(newscale) && x$Z.int.only && !(x$Z.int.only && identical(newscale, 1)))
       stop(mstyle$stop("Cannot specify new scale values for models without scale variables."))
 
    #########################################################################
@@ -109,8 +109,9 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
       ### if the user has specified newmods and an intercept was included in the original model, add the intercept to X.new
       ### but user can also decide to remove the intercept from the predictions with intercept=FALSE
+      ### one special case: when the location model is an intercept-only model, one can set newmods=1 to obtain the predicted intercept
 
-      if (x$int.incl) {
+      if (x$int.incl && !(x$int.only && dim(X.new) == c(1L,1L) && X.new[1,1] == 1)) {
          if (intercept) {
             X.new <- cbind(intrcpt=1, X.new)
          } else {
@@ -171,11 +172,21 @@ level, digits, transf, targs, vcov=FALSE, ...) {
          stop(mstyle$stop(paste0("Argument 'newscale' should only contain numeric variables.")))
 
       ### if the user has specified newscale and an intercept was included in the original model, add the intercept to Z.new
-      ### one special case: when the scale model is an intercept-only model, one can set newscale=1 to obtain the predicted
-      ### intercept (which can be converted to tau^2 with transf=exp when using a log link)
+      ### but user can also decide to remove the intercept from the predictions with intercept=FALSE (only when predicting log(tau^2))
+      ### one special case: when the scale model is an intercept-only model, one can set newscale=1 to obtain the predicted intercept
+      ### (which can be converted to tau^2 with transf=exp when using a log link)
 
-      if (!(x$Z.int.only && dim(Z.new) == c(1L,1L) && Z.new == 1) && x$Z.int.incl)
-         Z.new <- cbind(intrcpt=1, Z.new)
+      if (x$Z.int.incl && !(x$Z.int.only && dim(Z.new) == c(1L,1L) && Z.new[1,1] == 1)) {
+         if (is.null(newmods)) {
+            if (intercept) {
+               Z.new <- cbind(intrcpt=1, Z.new)
+            } else {
+               Z.new <- cbind(intrcpt=0, Z.new)
+            }
+         } else {
+            Z.new <- cbind(intrcpt=1, Z.new)
+         }
+      }
 
       if (ncol(Z.new) != x$q)
          stop(mstyle$stop(paste0("Dimensions of 'newscale' (", ncol(Z.new), ") do not match dimensions of the scale model (", x$q, ").")))
@@ -186,7 +197,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
    # 1) newmods not specified, newscale not specified: get the fitted values of the studies and ci/pi bounds thereof
    # 2) newmods     specified, newscale not specified: get the predicted mu values for these newmods values and ci bounds thereof
    #                                                      (note: cannot compute pi bounds, since the tau^2 values cannot be predicted)
-   # 3) newmods not specified, newscale     specified: get the predicted alpha values and ci bounds thereof
+   # 3) newmods not specified, newscale     specified: get the predicted log(tau^2) values and ci bounds thereof
    #                                                      (transf=exp to obtain predicted tau^2 values when using the default log link)
    # 4) newmods     specified, newscale     specified: get the predicted mu values for these newmods values and ci/pi bounds thereof
 

@@ -59,7 +59,7 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
       time.start <- proc.time()
 
    if (!is.null(ddd$xlim)) {
-      if (length(xlim) != 2)
+      if (length(ddd$xlim) != 2L)
          stop(mstyle$stop("Argument 'xlim' should be a vector of length 2."))
       control$tau2.min <- ddd$xlim[1]
       control$tau2.max <- ddd$xlim[2]
