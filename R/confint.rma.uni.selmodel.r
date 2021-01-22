@@ -37,10 +37,17 @@ confint.rma.uni.selmodel <- function(object, parm, level, fixed=FALSE, tau2, del
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("time"))
+   .chkdots(ddd, c("time", "xlim"))
 
    if (.isTRUE(ddd$time))
       time.start <- proc.time()
+
+   if (!is.null(ddd$xlim)) {
+      if (length(xlim) != 2)
+         stop(mstyle$stop("Argument 'xlim' should be a vector of length 2."))
+      control$vc.min <- ddd$xlim[1]
+      control$vc.max <- ddd$xlim[2]
+   }
 
    ### check if user has specified one of the tau2 or delta arguments
 

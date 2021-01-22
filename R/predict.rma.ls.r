@@ -236,7 +236,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
          }
 
          if (length(tau2.f) == 1L) {
-            Z.new  <- Z.new[rep(1,k.new),]
+            Z.new  <- Z.new[rep(1,k.new),,drop=FALSE]
             tau2.f <- rep(tau2.f, k.new)
          }
 

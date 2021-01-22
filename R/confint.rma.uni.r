@@ -53,10 +53,17 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("time", "type"))
+   .chkdots(ddd, c("time", "type", "xlim"))
 
    if (.isTRUE(ddd$time))
       time.start <- proc.time()
+
+   if (!is.null(ddd$xlim)) {
+      if (length(xlim) != 2)
+         stop(mstyle$stop("Argument 'xlim' should be a vector of length 2."))
+      control$tau2.min <- ddd$xlim[1]
+      control$tau2.max <- ddd$xlim[2]
+   }
 
    if (x$method == "GENQ" || x$method == "GENQM") {
       type <- "GENQ"
