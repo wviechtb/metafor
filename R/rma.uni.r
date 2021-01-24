@@ -1926,7 +1926,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
       ### set/check 'att' argument
 
       att <- .set.btt(att, q, Z.int.incl, colnames(Z))
-      m.alpha <- length(att) ### number of alphas to test (m = z if all betas are tested)
+      m.alpha <- length(att) ### number of alphas to test (m = q if all alphas are tested)
 
       ### QM calculation
 

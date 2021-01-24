@@ -12,97 +12,68 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("test"))
+   .chkdots(ddd, c("test", "att", "K"))
+
+   if (!is.null(ddd$att)) {
+      if (!inherits(object, "rma.ls"))
+         stop(mstyle$stop("Can only specify 'att' for location-scale models."))
+      att <- ddd$att
+   } else {
+      att <- NULL
+   }
+
+   if (!is.null(ddd$K)) {
+      if (!inherits(object, "rma.ls"))
+         stop(mstyle$stop("Can only specify 'K' for location-scale models."))
+      K <- ddd$K
+   } else {
+      K <- NULL
+   }
 
    if (missing(object2)) {
 
       ### if only 'object' has been specified, can use function to test (sets) of coefficients via
-      ### the 'btt' argument or one or more linear contrasts of the coefficients via the 'L' argument
+      ### the 'btt' (or 'att') argument or one or more linear contrasts of the coefficients via the
+      ### 'L' (or 'K') argument
 
-      x    <- object
-      k    <- x$k
-      p    <- x$p
-      beta <- x$beta
-      vb   <- x$vb
+      x <- object
 
-      if (missing(L)) {
+      if (missing(L) && is.null(K)) {
 
-         ### if 'L' has not been specified, then do Wald-test via 'btt' argument
+         ### if 'L' (and 'K') has not been specified, then do a Wald-test via the 'btt' argument (can also use 'att' for location-scale models)
 
-         ### set/check 'btt' argument
+         if (inherits(object, "rma.ls") && !is.null(att)) {
 
-         btt <- .set.btt(btt, p, x$int.incl, colnames(x$X))
-         m <- length(btt) ### number of betas to test (m = p if all betas are tested)
+            if (!missing(btt))
+               stop(mstyle$stop("Can only specify either 'btt' or 'att', but not both."))
 
-         QM <- as.vector(t(beta)[btt] %*% chol2inv(chol(vb[btt,btt])) %*% beta[btt])
+            ### set/check 'att' argument
 
-         if (is.element(x$test, c("knha","adhoc","t"))) {
-            QM  <- QM/m
-            QMp <- pf(QM, df1=m, df2=x$dfs, lower.tail=FALSE)
+            att <- .set.btt(att, x$q, x$Z.int.incl, colnames(x$Z))
+            m <- length(att)
+
+            QM <- try(as.vector(t(x$alpha)[att] %*% chol2inv(chol(x$vb.alpha[att,att])) %*% x$alpha[att]), silent=TRUE)
+
+            if (inherits(QM, "try-error"))
+               QM <- NA
+
+            if (is.element(x$test, c("t"))) {
+               QM <- QM / m
+               QMp <- pf(QM, df1=m, df2=x$dfs.alpha, lower.tail=FALSE)
+            } else {
+               QMp <- pchisq(QM, df=m, lower.tail=FALSE)
+            }
+
+            res <- list(QM=QM, QMp=QMp, att=att, k=x$k, q=x$q, m=m, test=x$test, dfs=x$dfs.alpha, digits=digits, type="Wald.att")
+
          } else {
-            QMp <- pchisq(QM, df=m, lower.tail=FALSE)
-         }
 
-         res <- list(QM=QM, QMp=QMp, btt=btt, k=k, p=p, m=m, test=x$test, dfs=x$dfs, digits=digits, type="Wald.b")
+            ### set/check 'btt' argument
 
-      } else {
+            btt <- .set.btt(btt, x$p, x$int.incl, colnames(x$X))
+            m <- length(btt)
 
-         ### if 'L' has been specified, then do Wald-type test(s) via 'L' argument
-
-         if (.is.vector(L))
-            L <- rbind(L)
-
-         if (is.data.frame(L))
-            L <- as.matrix(L)
-
-         if (is.character(L))
-            stop(mstyle$stop("Argument 'L' must be a numeric vector/matrix."))
-
-         ### if model has an intercept term and L has p-1 columns, assume user left out the intercept and add it automatically
-
-         if (x$int.incl && ncol(L) == (p-1))
-            L <- cbind(1, L)
-
-         ### if L has p+1 columns, assume that last column is the right-hand side
-         ### leave this out for now; maybe add later or a 'rhs' argument (as linearHypothesis() from car package)
-
-         #if (ncol(L) == (p+1)) {
-         #   rhs <- L[,p+1]
-         #   L <- L[,seq_len(p)]
-         #}
-
-         if (ncol(L) != p)
-            stop(mstyle$stop(paste0("Length or number of columns of 'L' (", ncol(L), ") does not match number of model coefficients (", p, ").")))
-
-         m <- nrow(L)
-
-         ### test of individual hypotheses
-
-         Lb  <- L %*% beta
-         vLb <- L %*% vb %*% t(L)
-
-         se <- sqrt(diag(vLb))
-         zval <- c(Lb/se)
-
-         if (is.element(x$test, c("knha","adhoc","t"))) {
-            pval <- 2*pt(abs(zval), df=x$dfs, lower.tail=FALSE)
-         } else {
-            pval <- 2*pnorm(abs(zval), lower.tail=FALSE)
-         }
-
-         ### omnibus test of all hypotheses (only possible if 'L' is of full rank)
-
-         QM  <- NA ### need this in case QM cannot be calculated below
-         QMp <- NA ### need this in case QMp cannot be calculated below
-
-         if (rankMatrix(L) == m) {
-
-            ### use try(), since this could fail: this could happen when the var-cov matrix of the
-            ### fixed effects has been estimated using robust() -- 'vb' is then only guaranteed to
-            ### be positive semidefinite, so for certain linear combinations, vLb could be singular
-            ### (see Cameron & Miller, 2015, p. 326)
-
-            QM <- try(as.vector(t(Lb) %*% chol2inv(chol(vLb)) %*% Lb), silent=TRUE)
+            QM <- try(as.vector(t(x$beta)[btt] %*% chol2inv(chol(x$vb[btt,btt])) %*% x$beta[btt]), silent=TRUE)
 
             if (inherits(QM, "try-error"))
                QM <- NA
@@ -114,24 +85,187 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
                QMp <- pchisq(QM, df=m, lower.tail=FALSE)
             }
 
+            res <- list(QM=QM, QMp=QMp, btt=btt, k=x$k, p=x$p, m=m, test=x$test, dfs=x$dfs, digits=digits, type="Wald.btt")
+
          }
 
-         ### create a data frame with each row specifying the linear combination tested
+      } else {
 
-         hyp <- rep("", m)
-         for (j in seq_len(m)) {
-            Lj <- round(L[j,], digits=digits[["est"]]) ### coefficients for the jth contrast
-            sel <- Lj != 0 ### TRUE if coefficient is != 0
-            hyp[j] <- paste(paste(Lj[sel], rownames(beta)[sel], sep="*"), collapse=" + ") ### coefficient*variable + coefficient*variable ...
-            hyp[j] <- gsub("1*", "", hyp[j], fixed=TRUE) ### turn '+1' into '+' and '-1' into '-'
-            hyp[j] <- gsub("+ -", "- ", hyp[j], fixed=TRUE) ### turn '+ -' into '-'
+         if (inherits(object, "rma.ls") && !is.null(K)) {
+
+            ### if 'K' has been specified, then do Wald-type test(s) via 'K' argument
+
+            if (!missing(L))
+               stop(mstyle$stop("Can only specify either 'L' or 'K', but not both."))
+
+            if (.is.vector(K))
+               K <- rbind(K)
+
+            if (is.data.frame(K))
+               K <- as.matrix(K)
+
+            if (is.character(K))
+               stop(mstyle$stop("Argument 'K' must be a numeric vector/matrix."))
+
+            ### if model has an intercept term and K has q-1 columns, assume user left out the intercept and add it automatically
+
+            if (x$Z.int.incl && ncol(K) == (x$q-1))
+               K <- cbind(1, K)
+
+            ### if K has q+1 columns, assume that last column is the right-hand side
+            ### leave this out for now; maybe add later or a 'rhs' argument (as linearHypothesis() from car package)
+
+            #if (ncol(K) == (x$q+1)) {
+            #   rhs <- K[,x$q+1]
+            #   K <- K[,seq_len(x$q)]
+            #}
+
+            if (ncol(K) != x$q)
+               stop(mstyle$stop(paste0("Length or number of columns of 'K' (", ncol(K), ") does not match number of scale coefficients (", x$q, ").")))
+
+            m <- nrow(K)
+
+            ### test of individual hypotheses
+
+            Ka  <- K %*% x$alpha
+            vKa <- K %*% x$vb.alpha %*% t(K)
+
+            se <- sqrt(diag(vKa))
+            zval <- c(Ka/se)
+
+            if (is.element(x$test, c("t"))) {
+               pval <- 2*pt(abs(zval), df=x$dfs.alpha, lower.tail=FALSE)
+            } else {
+               pval <- 2*pnorm(abs(zval), lower.tail=FALSE)
+            }
+
+            ### omnibus test of all hypotheses (only possible if 'K' is of full rank)
+
+            QM  <- NA ### need this in case QM cannot be calculated below
+            QMp <- NA ### need this in case QMp cannot be calculated below
+
+            if (rankMatrix(K) == m) {
+
+               QM <- try(as.vector(t(Ka) %*% chol2inv(chol(vKa)) %*% Ka), silent=TRUE)
+
+               if (inherits(QM, "try-error"))
+                  QM <- NA
+
+               if (is.element(x$test, c("t"))) {
+                  QM  <- QM/m
+                  QMp <- pf(QM, df1=m, df2=x$dfs.alpha, lower.tail=FALSE)
+               } else {
+                  QMp <- pchisq(QM, df=m, lower.tail=FALSE)
+               }
+
+            }
+
+            ### create a data frame with each row specifying the linear combination tested
+
+            hyp <- rep("", m)
+            for (j in seq_len(m)) {
+               Lj <- round(K[j,], digits=digits[["est"]]) ### coefficients for the jth contrast
+               sel <- Lj != 0 ### TRUE if coefficient is != 0
+               hyp[j] <- paste(paste(Lj[sel], rownames(x$alpha)[sel], sep="*"), collapse=" + ") ### coefficient*variable + coefficient*variable ...
+               hyp[j] <- gsub("1*", "", hyp[j], fixed=TRUE) ### turn '+1' into '+' and '-1' into '-'
+               hyp[j] <- gsub("+ -", "- ", hyp[j], fixed=TRUE) ### turn '+ -' into '-'
+            }
+            hyp <- paste0(hyp, " = 0") ### add '= 0' at the right
+            hyp <- data.frame(hyp, stringsAsFactors=FALSE)
+            colnames(hyp) <- ""
+            rownames(hyp) <- paste0(seq_len(m), ":") ### add '1:', '2:', ... as row names
+
+            res <- list(QM=QM, QMp=QMp, hyp=hyp, Ka=Ka, se=se, zval=zval, pval=pval, k=x$k, q=x$q, m=m, test=x$test, dfs=x$dfs, digits=digits, type="Wald.Ka")
+
+         } else {
+
+            ### if 'L' has been specified, then do Wald-type test(s) via 'L' argument
+
+            if (.is.vector(L))
+               L <- rbind(L)
+
+            if (is.data.frame(L))
+               L <- as.matrix(L)
+
+            if (is.character(L))
+               stop(mstyle$stop("Argument 'L' must be a numeric vector/matrix."))
+
+            ### if model has an intercept term and L has p-1 columns, assume user left out the intercept and add it automatically
+
+            if (x$int.incl && ncol(L) == (x$p-1))
+               L <- cbind(1, L)
+
+            ### if L has p+1 columns, assume that last column is the right-hand side
+            ### leave this out for now; maybe add later or a 'rhs' argument (as linearHypothesis() from car package)
+
+            #if (ncol(L) == (x$p+1)) {
+            #   rhs <- L[,x$p+1]
+            #   L <- L[,seq_len(x$p)]
+            #}
+
+            if (ncol(L) != x$p)
+               stop(mstyle$stop(paste0("Length or number of columns of 'L' (", ncol(L), ") does not match number of model coefficients (", x$p, ").")))
+
+            m <- nrow(L)
+
+            ### test of individual hypotheses
+
+            Lb  <- L %*% x$beta
+            vLb <- L %*% x$vb %*% t(L)
+
+            se <- sqrt(diag(vLb))
+            zval <- c(Lb/se)
+
+            if (is.element(x$test, c("knha","adhoc","t"))) {
+               pval <- 2*pt(abs(zval), df=x$dfs, lower.tail=FALSE)
+            } else {
+               pval <- 2*pnorm(abs(zval), lower.tail=FALSE)
+            }
+
+            ### omnibus test of all hypotheses (only possible if 'L' is of full rank)
+
+            QM  <- NA ### need this in case QM cannot be calculated below
+            QMp <- NA ### need this in case QMp cannot be calculated below
+
+            if (rankMatrix(L) == m) {
+
+               ### use try(), since this could fail: this could happen when the var-cov matrix of the
+               ### fixed effects has been estimated using robust() -- 'vb' is then only guaranteed to
+               ### be positive semidefinite, so for certain linear combinations, vLb could be singular
+               ### (see Cameron & Miller, 2015, p. 326)
+
+               QM <- try(as.vector(t(Lb) %*% chol2inv(chol(vLb)) %*% Lb), silent=TRUE)
+
+               if (inherits(QM, "try-error"))
+                  QM <- NA
+
+               if (is.element(x$test, c("knha","adhoc","t"))) {
+                  QM  <- QM/m
+                  QMp <- pf(QM, df1=m, df2=x$dfs, lower.tail=FALSE)
+               } else {
+                  QMp <- pchisq(QM, df=m, lower.tail=FALSE)
+               }
+
+            }
+
+            ### create a data frame with each row specifying the linear combination tested
+
+            hyp <- rep("", m)
+            for (j in seq_len(m)) {
+               Lj <- round(L[j,], digits=digits[["est"]]) ### coefficients for the jth contrast
+               sel <- Lj != 0 ### TRUE if coefficient is != 0
+               hyp[j] <- paste(paste(Lj[sel], rownames(x$beta)[sel], sep="*"), collapse=" + ") ### coefficient*variable + coefficient*variable ...
+               hyp[j] <- gsub("1*", "", hyp[j], fixed=TRUE) ### turn '+1' into '+' and '-1' into '-'
+               hyp[j] <- gsub("+ -", "- ", hyp[j], fixed=TRUE) ### turn '+ -' into '-'
+            }
+            hyp <- paste0(hyp, " = 0") ### add '= 0' at the right
+            hyp <- data.frame(hyp, stringsAsFactors=FALSE)
+            colnames(hyp) <- ""
+            rownames(hyp) <- paste0(seq_len(m), ":") ### add '1:', '2:', ... as row names
+
+            res <- list(QM=QM, QMp=QMp, hyp=hyp, Lb=Lb, se=se, zval=zval, pval=pval, k=x$k, p=x$p, m=m, test=x$test, dfs=x$dfs, digits=digits, type="Wald.Lb")
+
          }
-         hyp <- paste0(hyp, " = 0") ### add '= 0' at the right
-         hyp <- data.frame(hyp, stringsAsFactors=FALSE)
-         colnames(hyp) <- ""
-         rownames(hyp) <- paste0(seq_len(m), ":") ### add '1:', '2:', ... as row names
-
-         res <- list(QM=QM, QMp=QMp, hyp=hyp, Lb=Lb, se=se, zval=zval, pval=pval, k=k, p=p, m=m, test=x$test, dfs=x$dfs, digits=digits, type="Wald.L")
 
       }
 

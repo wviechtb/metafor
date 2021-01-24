@@ -1,4 +1,4 @@
-Changes in Version 2.5-73 (2021-01-24)
+Changes in Version 2.5-74 (2021-01-24)
 =====================================
 
    o the metafor package now makes use of the 'mathjaxr' package to nicely
@@ -354,8 +354,6 @@ Changes in Version 2.0-0 (2017-06-22)
    o plot.profile.rma() gains 'ylab' argument
 
    o more consistent handling of 'robust.rma' objects
-
-   o added location-scale model
 
    o added a print method for 'rma.gosh' objects
 

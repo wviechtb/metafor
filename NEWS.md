@@ -1,4 +1,4 @@
-# metafor 2.5-73 (2021-01-24)
+# metafor 2.5-74 (2021-01-24)
 
 - the `metafor` package now makes use of the `mathjaxr` package to nicely render equations shown in the HTML help pages
 
@@ -237,8 +237,6 @@
 - `plot.profile.rma()` gains `ylab` argument
 
 - more consistent handling of `robust.rma` objects
-
-- added location-scale model
 
 - added a print method for `rma.gosh` objects
 
