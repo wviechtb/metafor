@@ -168,12 +168,12 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
       p.f <- m.f$parms
       p.r <- m.r$parms
 
-      ### if they have the same number of parameters, they cannot be nested
+      ### check if they have the same number of parameters
 
       if (p.f == p.r)
          stop(mstyle$stop("Models have the same number of parameters. LRT not meaningful."))
 
-      ### if p.f < p.r, then 'object' must be the reduced model and 'object2' the full model
+      ### if p.f < p.r, then let 'object' be the reduced model and 'object2' the full model
 
       if (p.f < p.r) {
          m.f <- object2

@@ -1807,21 +1807,22 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
                                                        "yi=yi, vi=vi, X=X, Z=Z, reml=reml, k=k, pX=p, alpha.val=alpha, verbose=verbose, digits=digits,
                                                        #hessian=TRUE,
                                                        REMLf=con$REMLf, link=link, mZ=mZ", ctrl.arg, ")\n", sep="")
-         #return(optcall)
-         if (verbose) {
-            opt.res <- try(eval(parse(text=optcall)), silent=!verbose)
-         } else {
-            opt.res <- try(suppressWarnings(eval(parse(text=optcall))), silent=!verbose)
-         }
-
       }
 
       if (link == "identity") {
 
-         opt.res <- try(constrOptim(theta=alpha.init, f=.ll.rma.ls, grad=NULL, ui=Z, ci=rep(0,k),
-                                    yi=yi, vi=vi, X=X, Z=Z, reml=reml, k=k, pX=p, alpha.val=alpha, verbose=verbose, digits=digits,
-                                    REMLf=con$REMLf, link=link, mZ=mZ), silent=!verbose)
+         optcall <- paste0("constrOptim(theta=alpha.init, f=.ll.rma.ls, grad=NULL, ui=Z, ci=rep(0,k),
+                                yi=yi, vi=vi, X=X, Z=Z, reml=reml, k=k, pX=p, alpha.val=alpha, verbose=verbose, digits=digits,
+                                REMLf=con$REMLf, link=link, mZ=mZ", ctrl.arg, ")\n")
 
+      }
+
+      #return(optcall)
+
+      if (verbose) {
+         opt.res <- try(eval(parse(text=optcall)), silent=!verbose)
+      } else {
+         opt.res <- try(suppressWarnings(eval(parse(text=optcall))), silent=!verbose)
       }
 
       #return(opt.res)
