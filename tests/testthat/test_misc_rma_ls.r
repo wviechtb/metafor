@@ -69,7 +69,7 @@ test_that("profile() and confint() work correctly for location-scale models", {
    expect_equivalent(prof1$ll[c(1,20)], prof3$ll[c(1,20)], tolerance=.tol[["fit"]])
    expect_equivalent(conf1$random[1,], exp(conf3$random), tolerance=.tol[["var"]])
 
-   expect_warning(res4 <- rma(yi, vi, data=dat, scale = ~ 1, link="identity"))
+   res4 <- rma(yi, vi, data=dat, scale = ~ 1, link="identity")
    prof4 <- profile(res4, progbar=FALSE, cline=TRUE, xlim=c(.01,.15))
    conf4 <- confint(res4, control=list(vc.max=.2))
    abline(v=conf4$random[1,2:3], lty="dotted")
