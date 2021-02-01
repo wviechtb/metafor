@@ -45,6 +45,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -72,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-70</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-75</span>
       </span>
     </div>
 
@@ -189,7 +191,7 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Selection models are a general class of models that attempt to model the process by which the studies included in a meta-analysis may have been influenced by some form of publication bias. If a particular selection model is an adequate approximation for the underlying selection process, then the model provides estimates of the parameters of interest (e.g., the average true effect or outcome and the amount of heterogeneity in the true effects or outcomes) that are &#8216;corrected&#8217; for this selection process (i.e., they are estimates of the parameters in the population of studies before any selection has taken place). The present function fits a variety of such selection models. To do so, one should pass an object fitted with the <code><a href='rma.uni.html'>rma.uni</a></code> function to the first argument. The model that will then be fitted is of the same form as the original model combined with the specific selection model chosen (see below for possible options). For example, if the original model was a random-effects model, then a random-effects selection model will be fitted. Similarly, if the original model included moderators, then they will also be included in the selection model. Model fitting is done via maximum likelihood (ML) estimation over the fixed- and random-effects parameters (e.g., \(\mu\) and \(\tau^2\) in a random-effects model) and the selection model parameters.</p>
-<p>Argument <code>type</code> determines the specific type of selection model that should be fitted. All selection models that can be fitted are based on the idea that selection may haven taken place based on the p-values of the studies. In particular, let \(y_i\) and \(v_i\) denote the observed effect size or outcome and the corresponding sampling variance of the \(i\)th study. Then \(z_i = y_i / \sqrt{v_i}\) is the (Wald-type) test statistic for testing the null hypothesis \(\mbox{H}_0{:}\; \theta_i = 0\) and \(p_i = 1 - \Phi(z_i)\) (if <code>alternative="greater"</code>), \(p_i = \Phi(z_i)\) (if <code>alternative="less"</code>), or \(p_i = 2(1 - \Phi(|z_i|)\) (if <code>alternative="two.sided"</code>) the corresponding (one- or two-sided) p-value, where \(\Phi()\) denotes the cumulative distribution function of a standard normal distribution. Finally, let \(w(p_i)\) denote some function that specifies the relative likelihood of selection given the p-value of a study.</p>
+<p>Argument <code>type</code> determines the specific type of selection model that should be fitted. All selection models that can be fitted are based on the idea that selection may haven taken place based on the p-values of the studies. In particular, let \(y_i\) and \(v_i\) denote the observed effect size or outcome and the corresponding sampling variance of the \(i\)th study. Then \(z_i = y_i / \sqrt{v_i}\) is the (Wald-type) test statistic for testing the null hypothesis \(\mbox{H}_0{:}\; \theta_i = 0\) and \(p_i = 1 - \Phi(z_i)\) (if <code>alternative="greater"</code>), \(p_i = \Phi(z_i)\) (if <code>alternative="less"</code>), or \(p_i = 2(1 - \Phi(|z_i|))\) (if <code>alternative="two.sided"</code>) the corresponding (one- or two-sided) p-value, where \(\Phi()\) denotes the cumulative distribution function of a standard normal distribution. Finally, let \(w(p_i)\) denote some function that specifies the relative likelihood of selection given the p-value of a study.</p>
 <p>If \(w(p_i) > w(p_{i'})\) when \(p_i < p_{i'}\) (i.e., \(w(p_i)\) is larger for smaller p-values), then <code>alternative="greater"</code> implies selection in favor of increasingly significant positive effects, <code>alternative="less"</code> implies selection in favor of increasingly significant negative effects, and <code>alternative="two.sided"</code> implies selection in favor of increasingly significant effects regardless of their direction.</p>
 <p></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Beta Selection Model</h3>
 
@@ -280,6 +282,7 @@
    <dt>vb</dt><dd><p>variance-covariance matrix of the estimated coefficients.</p></dd>
    <dt>tau2</dt><dd><p>estimated amount of (residual) heterogeneity. Always <code>0</code> when <code>method="FE"</code>.</p></dd>
    <dt>se.tau2</dt><dd><p>standard error of the estimated amount of (residual) heterogeneity.</p></dd>
+
    In addition, the object contains the following additional elements:
    <dt>delta</dt><dd><p>estimated selection model parameter(s).</p></dd>
    <dt>se.delta</dt><dd><p>corresponding standard error(s).</p></dd>
@@ -290,14 +293,14 @@
    <dt>LRT</dt><dd><p>test statistic of the likelihood ratio test for the selection model parameter(s).</p></dd>
    <dt>LRTdf</dt><dd><p>degrees of freedom for the likelihood ratio test.</p></dd>
    <dt>LRTp</dt><dd><p>p-value for the likelihood ratio test.</p></dd>
-   <dt>LRT.tau2</dt><dd><p>test statistic of the likelihood ratio test for testing \(H_0: \tau^2 = 0\) (<code>NA</code> when fitting a fixed-effects model).</p></dd>
+   <dt>LRT.tau2</dt><dd><p>test statistic of the likelihood ratio test for testing \(\mbox{H}_0{:}\; \tau^2 = 0\) (<code>NA</code> when fitting a fixed-effects model).</p></dd>
    <dt>LRTp.tau2</dt><dd><p>p-value for the likelihood ratio test.</p></dd>
    <dt>...</dt><dd><p>some additional elements/values.</p></dd>
 
-   The results of the fitted model are formatted and printed with the <a href='print.rma.html'>print.rma.uni</a> function. The estimated selection function can be drawn with <a href='plot.rma.uni.selmodel.html'>plot.rma.uni.selmodel</a>.
+    <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
-   The <a href='profile.rma.uni.html'>profile.rma.uni.selmodel</a> function can be used to obtain a plot of the log-likelihood as a function of \ifelse{html}{\out{\(#1\)}}{\eqn{#1}}\tau^2html\(\tau^2\)\(\tau^2\) and/or the selection model parameter(s) of the model. Confidence intervals for \ifelse{html}{\out{\(#1\)}}{\eqn{#1}}\tau^2html\(\tau^2\)\(\tau^2\) and/or the selection model parameter(s) can be obtained with the <a href='confint.rma.html'>confint.rma.uni.selmodel</a> function.
-
+    <p>The results of the fitted model are formatted and printed with the <code><a href='print.rma.html'>print.rma.uni</a></code> function. The estimated selection function can be drawn with <code><a href='plot.rma.uni.selmodel.html'>plot.rma.uni.selmodel</a></code>.</p>
+<p>The <code><a href='profile.rma.uni.html'>profile.rma.uni.selmodel</a></code> function can be used to obtain a plot of the log-likelihood as a function of \(\tau^2\) and/or the selection model parameter(s) of the model. Corresponding confidence intervals can be obtained with the <code><a href='confint.rma.html'>confint.rma.uni.selmodel</a></code> function.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>Model fitting is done via numerical optimization over the model parameters. By default, <code><a href='https://rdrr.io/r/stats/optim.html'>optim</a></code> is used for the optimization. One can also chose a different optimizer via the <code>control</code> argument (e.g., <code>control=list(optimizer="nlminb")</code>). When using <code><a href='https://rdrr.io/r/stats/optim.html'>optim</a></code>, one can set the particular method via the <code>optmethod</code> argument (e.g., <code>control=list(optimizer="optim", optmethod="BFGS")</code>, which is the default). Besides <code><a href='https://rdrr.io/r/stats/optim.html'>optim</a></code> and <code><a href='https://rdrr.io/r/stats/nlminb.html'>nlminb</a></code>, one can also choose one of the optimizers from the <code>minqa</code> package (i.e., <code><a href='https://rdrr.io/pkg/minqa/man/uobyqa.html'>uobyqa</a></code>, <code><a href='https://rdrr.io/pkg/minqa/man/newuoa.html'>newuoa</a></code>, or <code><a href='https://rdrr.io/pkg/minqa/man/bobyqa.html'>bobyqa</a></code>), one of the (derivative-free) algorithms from the <code><a href='https://rdrr.io/pkg/nloptr/man/nloptr.html'>nloptr</a></code> package, the Newton-type algorithm implemented in <code><a href='https://rdrr.io/r/stats/nlm.html'>nlm</a></code>, the various algorithms implemented in the <code>dfoptim</code> package (<code><a href='https://rdrr.io/pkg/dfoptim/man/hookejeeves.html'>hjk</a></code> for the Hooke-Jeeves, <code><a href='https://rdrr.io/pkg/dfoptim/man/nmkb.html'>nmk</a></code> for the Nelder-Mead, and <code><a href='https://rdrr.io/pkg/dfoptim/man/mads.html'>mads</a></code> for the Mesh Adaptive Direct Searches (MADS) algorithm), the quasi-Newton type optimizer <code><a href='https://rdrr.io/pkg/ucminf/man/ucminf.html'>ucminf</a></code> from the package of the same name, or the parallelized version of the L-BFGS-B algorithm implemented in <code><a href='https://rdrr.io/pkg/optimParallel/man/optimParallel.html'>optimParallel</a></code> from the package of the same name.</p>
@@ -957,7 +960,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

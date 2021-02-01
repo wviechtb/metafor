@@ -62,7 +62,7 @@
 
    If \code{vcov=TRUE}, then the returned object is a list with the first element equal to the one as described above and the second element equal to the variance-covariance matrix of the predicted values.
 
-   The \code{"list.rma"} object is formatted and printed with \code{\link{print.list.rma}}.
+   The object is formatted and printed with \code{\link{print.list.rma}}.
 }
 \note{
    Confidence and prediction intervals are calculated based on the critical values from a standard normal distribution (i.e., \mjeqn{\pm 1.96}{±1.96} for \code{level=95}). When the model was fitted with \code{test="t"} or \code{test="knha"}, then a t-distribution with \mjseqn{k-p} degrees of freedom is used.

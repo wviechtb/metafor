@@ -45,6 +45,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -72,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-70</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-75</span>
       </span>
     </div>
 
@@ -136,7 +138,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for rma</span>
-<span class='fu'>anova</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>object2</span>, <span class='va'>btt</span>, <span class='va'>L</span>, <span class='va'>digits</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='fu'>anova</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>object2</span>, <span class='va'>btt</span>, <span class='va'>X</span>, <span class='va'>att</span>, <span class='va'>Z</span>, <span class='va'>digits</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -154,8 +156,16 @@
       <td><p>optional vector of indices to specify which coefficients should be included in the Wald-type test. Can also be a string to grep for. See &#8216;Details&#8217;.</p></td>
     </tr>
     <tr>
-      <th>L</th>
+      <th>X</th>
       <td><p>optional numeric vector or matrix to specify one or more linear combinations of the coefficients in the model that should be tested. See &#8216;Details&#8217;.</p></td>
+    </tr>
+    <tr>
+      <th>att</th>
+      <td><p>optional vector of indices to specify which scale coefficients should be included in the Wald-type test. Can also be a string to grep for. See &#8216;Details&#8217;. Only relevant for location-scale models (see <code><a href='rma.uni.html'>rma</a></code>).</p></td>
+    </tr>
+    <tr>
+      <th>Z</th>
+      <td><p>optional numeric vector or matrix to specify one or more linear combinations of the scale coefficients in the model that should be tested. See &#8216;Details&#8217;. Only relevant for location-scale models (see <code><a href='rma.uni.html'>rma</a></code>).</p></td>
     </tr>
     <tr>
       <th>digits</th>
@@ -172,8 +182,9 @@
     <p>When a single model is specified, the function provides Wald-type tests of one or more model coefficients or linear combinations thereof.</p>
 <p>In particular, for a fixed- or random-effects model (i.e., a model without moderators), this is just the test of the single coefficient of the model. For models including moderators, an omnibus test of all the model coefficients is conducted that excludes the intercept (the first coefficient) if it is included in the model. If no intercept is included in the model, then the omnibus test includes all of the coefficients in the model including the first.</p>
 <p>Alternatively, one can manually specify the indices of the coefficients to test via the <code>btt</code> argument. For example, with <code>btt=c(3,4)</code>, only the third and fourth coefficient from the model would be included in the test (if an intercept is included in the model, then it corresponds to the first coefficient in the model). Instead of specifying the coefficient numbers, one can specify a string for <code>btt</code>. In that case, <code><a href='https://rdrr.io/r/base/grep.html'>grep</a></code> will be used to search for all coefficient names that match the string. Using the <code>btt</code> argument, one can for example select all coefficients corresponding to a particular factor to test if the factor as a whole is significant. See &#8216;Examples&#8217;.</p>
-<p>Instead, one can use the <code>L</code> argument to specify a linear combination of the coefficients in the model that should be tested (i.e., whether the linear combination is significantly different from zero). If a matrix of linear combinations is specified, each row defines a particular linear combination to be tested. If the matrix is of full rank, an omnibus Wald-type test of all linear combinations is also provided. Linear combinations can also be obtained with the <code><a href='predict.rma.html'>predict.rma</a></code> function, which will provide corresponding confidence intervals.</p>
-<p>When specifying two models for comparison, the function provides a likelihood ratio test comparing the two models. The two models must be based on the same set of data, must be of the same class, and should be nested for the likelihood ratio test to make sense. Note that likelihood ratio tests are not meaningful when using REML estimation and the two models have different fixed effects.</p>
+<p>Instead, one can use the <code>X</code> argument to specify a linear combination of the coefficients in the model that should be tested (i.e., whether the linear combination is significantly different from zero). If a matrix of linear combinations is specified, each row defines a particular linear combination to be tested. If the matrix is of full rank, an omnibus Wald-type test of all linear combinations is also provided. Linear combinations can also be obtained with the <code><a href='predict.rma.html'>predict.rma</a></code> function, which will provide corresponding confidence intervals.</p>
+<p>When specifying two models for comparison, the function provides a likelihood ratio test (LRT) comparing the two models. The two models must be based on the same set of data, must be of the same class, and should be nested for the LRT to make sense. Note that LRTs are not meaningful when using REML estimation and the two models have different fixed effects.</p>
+<p>For location-scale models fitted with the <code><a href='rma.uni.html'>rma</a></code> function, one can use <code>att</code> to specify the indices of the scale coefficients to test. Similarly, one can use the <code>Z</code> argument to specify one or multiple linear combinations of the scale coefficients in the model that should be tested.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class <code>"anova.rma"</code>. When a single model is specified (without any further arguments or together with the <code>btt</code> argument), the object is a list containing the following components:</p>
@@ -184,11 +195,11 @@
    <dt>p</dt><dd><p>number of coefficients in the model (including the intercept).</p></dd>
    <dt>m</dt><dd><p>number of coefficients included in the Wald-type test.</p></dd>
    <dt>...</dt><dd><p>some additional elements/values.</p></dd>
-   When argument L is used, the object is a list containing the following components:
+   When argument X is used, the object is a list containing the following components:
    <dt>QM</dt><dd><p>test statistic of the omnibus Wald-type test of all linear combinations.</p></dd>
    <dt>QMp</dt><dd><p>corresponding p-value.</p></dd>
    <dt>hyp</dt><dd><p>description of the linear combinations tested.</p></dd>
-   <dt>Lb</dt><dd><p>values of the linear combinations.</p></dd>
+   <dt>Xb</dt><dd><p>values of the linear combinations.</p></dd>
    <dt>se</dt><dd><p>standard errors of the linear combinations.</p></dd>
    <dt>zval</dt><dd><p>test statistics of the linear combinations.</p></dd>
    <dt>pval</dt><dd><p>corresponding p-values.</p></dd>
@@ -210,7 +221,8 @@
 
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>In principle, one can consider likelihood ratio tests for the amount of (residual) heterogeneity in random- and mixed-effects models. The full model should then be fitted with either <code>method="ML"</code> or <code>method="REML"</code> and the reduced model with <code>method="FE"</code>. The p-value for that test is based on a chi-square distribution with 1 degree of freedom, but actually needs to be adjusted for the fact that the parameter (i.e., \(\tau^2\)) falls on the boundary of the parameter space under the null hypothesis. Moreover, the Q-test usually keeps better control of the Type I error rate and therefore should be preferred (see Viechtbauer, 2007, for more details).</p>
+    <p>The function can also be used to conduct a likelihood ratio test (LRT) for the amount of (residual) heterogeneity in random- and mixed-effects models. The full model should then be fitted with either <code>method="ML"</code> or <code>method="REML"</code> and the reduced model with <code>method="FE"</code>. The p-value for the test is based on a chi-square distribution with 1 degree of freedom, but actually needs to be adjusted for the fact that the parameter (i.e., \(\tau^2\)) falls on the boundary of the parameter space under the null hypothesis (see Viechtbauer, 2007, for more details).</p>
+<p>LRTs for variance components in more complex models (as fitted with the <code><a href='rma.mv.html'>rma.mv</a></code> function) can also be conducted in this manner (see &#8216;Examples&#8217;).</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Wolfgang Viechtbauer <a href='mailto:wvb@metafor-project.org'>wvb@metafor-project.org</a> <a href='http://www.metafor-project.org'>http://www.metafor-project.org</a></p>
@@ -224,7 +236,7 @@
 <p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='https://doi.org/10.18637/jss.v036.i03'>https://doi.org/10.18637/jss.v036.i03</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='rma.uni.html'>rma.uni</a></code>, <code><a href='print.anova.rma.html'>print.anova.rma</a></code></p></div>
+    <div class='dont-index'><p><code><a href='rma.uni.html'>rma.uni</a></code>, <code><a href='rma.mv.html'>rma.mv</a></code>, <code><a href='print.anova.rma.html'>print.anova.rma</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### calculate log risk ratios and corresponding sampling variances</span>
@@ -243,7 +255,7 @@
 #&gt; QM(df = 2) = 33.9192, p-val &lt; .0001
 #&gt; </div><div class='input'>
 <span class='co'>### alternative way of specifying the same test</span>
-<span class='fu'>anova</span><span class='op'>(</span><span class='va'>res2</span>, L<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>0</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>anova</span><span class='op'>(</span><span class='va'>res2</span>, X<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>0</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 
 #&gt; Hypotheses:             
 #&gt; 1: ablat = 0 
@@ -268,7 +280,7 @@
 #&gt; Reduced 90.3948% 
 #&gt; </div><div class='input'>
 <span class='co'>### test of a linear combination</span>
-<span class='fu'>anova</span><span class='op'>(</span><span class='va'>res2</span>, L<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>35</span>,<span class='fl'>1970</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>anova</span><span class='op'>(</span><span class='va'>res2</span>, X<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>35</span>,<span class='fl'>1970</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 
 #&gt; Hypothesis:                                      
 #&gt; 1: intrcpt + 35*ablat + 1970*year = 0 
@@ -327,6 +339,36 @@
 </div><div class='output co'>#&gt; 
 #&gt; Test of Moderators (coefficients 4:5):
 #&gt; QM(df = 2) = 1.4674, p-val = 0.4801
+#&gt; </div><div class='input'>
+<span class='co'>############################################################################</span>
+
+<span class='co'>### an example of doing LRTs of variance components in more complex models</span>
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.konstantopoulos2011</span>
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, random <span class='op'>=</span> <span class='op'>~</span> <span class='fl'>1</span> <span class='op'>|</span> <span class='va'>district</span><span class='op'>/</span><span class='va'>school</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
+
+<span class='co'>### test the district-level variance component</span>
+<span class='va'>res0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, random <span class='op'>=</span> <span class='op'>~</span> <span class='fl'>1</span> <span class='op'>|</span> <span class='va'>district</span><span class='op'>/</span><span class='va'>school</span>, data<span class='op'>=</span><span class='va'>dat</span>, sigma2<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='cn'>NA</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>anova</span><span class='op'>(</span><span class='va'>res</span>, <span class='va'>res0</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
+#&gt;         df     AIC     BIC    AICc   logLik     LRT   pval       QE 
+#&gt; Full     3 21.9174 27.9394 22.3880  -7.9587                578.8640 
+#&gt; Reduced  2 37.6910 41.7057 37.9218 -16.8455 17.7736 &lt;.0001 578.8640 
+#&gt; </div><div class='input'>
+<span class='co'>### test the school-level variance component</span>
+<span class='va'>res0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, random <span class='op'>=</span> <span class='op'>~</span> <span class='fl'>1</span> <span class='op'>|</span> <span class='va'>district</span><span class='op'>/</span><span class='va'>school</span>, data<span class='op'>=</span><span class='va'>dat</span>, sigma2<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span>,<span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>anova</span><span class='op'>(</span><span class='va'>res</span>, <span class='va'>res0</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
+#&gt;         df     AIC     BIC    AICc   logLik     LRT   pval       QE 
+#&gt; Full     3 21.9174 27.9394 22.3880  -7.9587                578.8640 
+#&gt; Reduced  2 68.4330 72.4476 68.6637 -32.2165 48.5155 &lt;.0001 578.8640 
+#&gt; </div><div class='input'>
+<span class='co'>### test both variance components simultaneously</span>
+<span class='va'>res0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
+<span class='fu'>anova</span><span class='op'>(</span><span class='va'>res</span>, <span class='va'>res0</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
+#&gt;         df      AIC      BIC     AICc    logLik      LRT   pval       QE 
+#&gt; Full     3  21.9174  27.9394  22.3880   -7.9587                 578.8640 
+#&gt; Reduced  1 439.7236 441.7310 439.7991 -218.8618 421.8062 &lt;.0001 578.8640 
 #&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -343,7 +385,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

@@ -45,6 +45,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -72,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-70</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-75</span>
       </span>
     </div>
 
@@ -182,7 +184,7 @@
 
     <p>The function can be used to fit a regression model based on a correlation matrix.</p>
 <p>Let \(R\) be a \(p \times p\) correlation matrix. Let \(y\) denote the row/column of the outcome variable and \(x\) the row(s)/column(s) of the predictor variable(s). Let \(R_{x,x}\) and \(R_{x,y}\) denote the corresponding submatrices of \(R\). Then \[b = R_{x,x}^{-1} R_{x,y}\] yields the (standardized) regression slopes when regressing the outcome variable on the predictor variable(s).</p>
-<p>The \(R\) matrix may be computed based on a single sample of \(n\) subjects. In this case, one should specify the sample size via argument <code>n</code>. The variance-covariance matrix of the estimated model coefficients is then given by \(\mbox{Var}[b] = \mbox{MSE} \times R_{x,x}^{-1}\), where \(\mbox{MSE} = (1 - b'R_{x,y}) / (n - m)\), where \(m\) denotes the number of predictor variables. The standard errors of the estimated model coefficients are then given by the square root of the diagonal elements of \(\mbox{Var}[b]\). Test statistics (in this case, t-statistics) and the corresponding p-values can then be computed as in regular regression.</p>
+<p>The \(R\) matrix may be computed based on a single sample of \(n\) subjects. In this case, one should specify the sample size via argument <code>n</code>. The variance-covariance matrix of the estimated model coefficients is then given by \(\mbox{Var}[b] = \mbox{MSE} \times R_{x,x}^{-1}\), where \(\mbox{MSE} = (1 - b'R_{x,y}) / (n - m)\), where \(m\) denotes the number of predictor variables. The standard errors of the estimated model coefficients are then given by the square root of the diagonal elements of \(\mbox{Var}[b]\). Test statistics (in this case, t-statistics) and the corresponding p-values can then be computed as in a regular regression analysis.</p>
 <p>Alternatively, \(R\) may be the result of a meta-analysis of correlation coefficients. In this case, the elements in \(R\) are really pooled correlation coefficients and there should be a variance-covariance matrix of these pooled coefficients. In this case, one should specify this variance-covariance matrix via argument <code>V</code>. The order of elements in <code>V</code> should correspond to the order of elements in the lower triangular part of \(R\) column-wise. For example, if \(R\) is a \(4 \times 4\) matrix, then the elements are \(r_{2,1}\), \(r_{3,1}\), \(r_{4,1}\), \(r_{3,2}\), \(r_{4,2}\), and \(r_{4,3}\) and hence <code>V</code> should be a \(6 \times 6\) variance-covariance matrix of these elements. The variance-covariance matrix of the estimated model coefficients (i.e., \(\mbox{Var}[b]\)) is then computed as described in Becker (1992) using the multivariate delta method. The standard errors of the estimated model coefficients are then given by the square root of the diagonal elements of \(\mbox{Var}[b]\). Test statistics (in this case, z-statistics) and the corresponding p-values can then be computed in the usual manner.</p>
 <p>In case \(R\) is the result of a meta-analysis of Fisher r-to-z transformed correlation coefficients (and hence <code>V</code> is then the corresponding variance-covariance matrix of these pooled transformed coefficients), one should set argument <code>ztor=TRUE</code>, so that the appropriate back-transformation is then applied to <code>R</code> (and <code>V</code>) within the function.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -351,7 +353,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

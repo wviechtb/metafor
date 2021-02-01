@@ -26,7 +26,7 @@ selmodel(x, \dots)
 \details{
    Selection models are a general class of models that attempt to model the process by which the studies included in a meta-analysis may have been influenced by some form of publication bias. If a particular selection model is an adequate approximation for the underlying selection process, then the model provides estimates of the parameters of interest (e.g., the average true effect or outcome and the amount of heterogeneity in the true effects or outcomes) that are \sQuote{corrected} for this selection process (i.e., they are estimates of the parameters in the population of studies before any selection has taken place). The present function fits a variety of such selection models. To do so, one should pass an object fitted with the \code{\link{rma.uni}} function to the first argument. The model that will then be fitted is of the same form as the original model combined with the specific selection model chosen (see below for possible options). For example, if the original model was a random-effects model, then a random-effects selection model will be fitted. Similarly, if the original model included moderators, then they will also be included in the selection model. Model fitting is done via maximum likelihood (ML) estimation over the fixed- and random-effects parameters (e.g., \mjseqn{\mu} and \mjseqn{\tau^2} in a random-effects model) and the selection model parameters.
 
-   Argument \code{type} determines the specific type of selection model that should be fitted. All selection models that can be fitted are based on the idea that selection may haven taken place based on the p-values of the studies. In particular, let \mjseqn{y_i} and \mjseqn{v_i} denote the observed effect size or outcome and the corresponding sampling variance of the \mjseqn{i}th study. Then \mjseqn{z_i = y_i / \sqrt{v_i}} is the (Wald-type) test statistic for testing the null hypothesis \mjeqn{\mbox{H}_0{:}\; \theta_i = 0}{H_0: \theta_i = 0} and \mjseqn{p_i = 1 - \Phi(z_i)} (if \code{alternative="greater"}), \mjseqn{p_i = \Phi(z_i)} (if \code{alternative="less"}), or \mjseqn{p_i = 2(1 - \Phi(|z_i|)} (if \code{alternative="two.sided"}) the corresponding (one- or two-sided) p-value, where \mjseqn{\Phi()} denotes the cumulative distribution function of a standard normal distribution. Finally, let \mjseqn{w(p_i)} denote some function that specifies the relative likelihood of selection given the p-value of a study.
+   Argument \code{type} determines the specific type of selection model that should be fitted. All selection models that can be fitted are based on the idea that selection may haven taken place based on the p-values of the studies. In particular, let \mjseqn{y_i} and \mjseqn{v_i} denote the observed effect size or outcome and the corresponding sampling variance of the \mjseqn{i}th study. Then \mjseqn{z_i = y_i / \sqrt{v_i}} is the (Wald-type) test statistic for testing the null hypothesis \mjeqn{\mbox{H}_0{:}\; \theta_i = 0}{H_0: \theta_i = 0} and \mjseqn{p_i = 1 - \Phi(z_i)} (if \code{alternative="greater"}), \mjseqn{p_i = \Phi(z_i)} (if \code{alternative="less"}), or \mjseqn{p_i = 2(1 - \Phi(|z_i|))} (if \code{alternative="two.sided"}) the corresponding (one- or two-sided) p-value, where \mjseqn{\Phi()} denotes the cumulative distribution function of a standard normal distribution. Finally, let \mjseqn{w(p_i)} denote some function that specifies the relative likelihood of selection given the p-value of a study.
 
    If \mjseqn{w(p_i) > w(p_{i'})} when \mjseqn{p_i < p_{i'}} (i.e., \mjseqn{w(p_i)} is larger for smaller p-values), then \code{alternative="greater"} implies selection in favor of increasingly significant positive effects, \code{alternative="less"} implies selection in favor of increasingly significant negative effects, and \code{alternative="two.sided"} implies selection in favor of increasingly significant effects regardless of their direction.
 
@@ -146,6 +146,7 @@ selmodel(x, \dots)
    \item{vb}{variance-covariance matrix of the estimated coefficients.}
    \item{tau2}{estimated amount of (residual) heterogeneity. Always \code{0} when \code{method="FE"}.}
    \item{se.tau2}{standard error of the estimated amount of (residual) heterogeneity.}
+
    In addition, the object contains the following additional elements:
    \item{delta}{estimated selection model parameter(s).}
    \item{se.delta}{corresponding standard error(s).}
@@ -156,13 +157,14 @@ selmodel(x, \dots)
    \item{LRT}{test statistic of the likelihood ratio test for the selection model parameter(s).}
    \item{LRTdf}{degrees of freedom for the likelihood ratio test.}
    \item{LRTp}{p-value for the likelihood ratio test.}
-   \item{LRT.tau2}{test statistic of the likelihood ratio test for testing \mjseqn{H_0: \tau^2 = 0} (\code{NA} when fitting a fixed-effects model).}
+   \item{LRT.tau2}{test statistic of the likelihood ratio test for testing \mjeqn{\mbox{H}_0{:}\; \tau^2 = 0}{H_0: \tau^2 = 0} (\code{NA} when fitting a fixed-effects model).}
    \item{LRTp.tau2}{p-value for the likelihood ratio test.}
    \item{\dots}{some additional elements/values.}
-
+}
+\section{Methods}{
    The results of the fitted model are formatted and printed with the \code{\link{print.rma.uni}} function. The estimated selection function can be drawn with \code{\link{plot.rma.uni.selmodel}}.
 
-   The \code{\link{profile.rma.uni.selmodel}} function can be used to obtain a plot of the log-likelihood as a function of \mjseqn{\tau^2} and/or the selection model parameter(s) of the model. Confidence intervals for \mjseqn{\tau^2} and/or the selection model parameter(s) can be obtained with the \code{\link{confint.rma.uni.selmodel}} function.
+   The \code{\link{profile.rma.uni.selmodel}} function can be used to obtain a plot of the log-likelihood as a function of \mjseqn{\tau^2} and/or the selection model parameter(s) of the model. Corresponding confidence intervals can be obtained with the \code{\link{confint.rma.uni.selmodel}} function.
 }
 \note{
    Model fitting is done via numerical optimization over the model parameters. By default, \code{\link{optim}} is used for the optimization. One can also chose a different optimizer via the \code{control} argument (e.g., \code{control=list(optimizer="nlminb")}). When using \code{\link{optim}}, one can set the particular method via the \code{optmethod} argument (e.g., \code{control=list(optimizer="optim", optmethod="BFGS")}, which is the default). Besides \code{\link{optim}} and \code{\link{nlminb}}, one can also choose one of the optimizers from the \code{minqa} package (i.e., \code{\link[minqa]{uobyqa}}, \code{\link[minqa]{newuoa}}, or \code{\link[minqa]{bobyqa}}), one of the (derivative-free) algorithms from the \code{\link[nloptr]{nloptr}} package, the Newton-type algorithm implemented in \code{\link{nlm}}, the various algorithms implemented in the \code{dfoptim} package (\code{\link[dfoptim]{hjk}} for the Hooke-Jeeves, \code{\link[dfoptim]{nmk}} for the Nelder-Mead, and \code{\link[dfoptim]{mads}} for the Mesh Adaptive Direct Searches (MADS) algorithm), the quasi-Newton type optimizer \code{\link[ucminf]{ucminf}} from the package of the same name, or the parallelized version of the L-BFGS-B algorithm implemented in \code{\link[optimParallel]{optimParallel}} from the package of the same name.
@@ -208,7 +210,6 @@ selmodel(x, \dots)
    Vevea, J. L., & Hedges, L. V. (1995). A general linear model for estimating effect size in the presence of publication bias. \emph{Psychometrika}, \bold{60}(3), 419--435. \verb{https://doi.org/10.1007/BF02294384}
 
    Vevea, J. L., & Woods, C. M. (2005). Publication bias in research synthesis: Sensitivity analysis using a priori weight functions. \emph{Psychological Methods}, \bold{10}(4), 428--443. \verb{https://doi.org/10.1037/1082-989X.10.4.428}
-
 }
 \seealso{
    \code{\link{rma.uni}}

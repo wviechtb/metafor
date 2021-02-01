@@ -35,7 +35,7 @@ print.anova.rma <- function(x, digits=x$digits, ...) {
 
    }
 
-   if (x$type == "Wald.Lb") {
+   if (x$type == "Wald.Xb") {
 
       if (x$m == 1) {
          cat(mstyle$section("Hypothesis:"))
@@ -50,7 +50,7 @@ print.anova.rma <- function(x, digits=x$digits, ...) {
       cat(mstyle$section("Results:"))
       cat("\n")
 
-      res.table <- data.frame(estimate=.fcf(c(x$Lb), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), zval=.fcf(x$zval, digits[["test"]]), pval=.pval(x$pval, digits=digits[["pval"]]))
+      res.table <- data.frame(estimate=.fcf(c(x$Xb), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), zval=.fcf(x$zval, digits[["test"]]), pval=.pval(x$pval, digits=digits[["pval"]]))
       if (is.element(x$test, c("knha","adhoc","t")))
          colnames(res.table)[3] <- "tval"
       rownames(res.table) <- paste0(seq_len(x$m), ":")
@@ -75,7 +75,7 @@ print.anova.rma <- function(x, digits=x$digits, ...) {
 
    }
 
-   if (x$type == "Wald.Ka") {
+   if (x$type == "Wald.Za") {
 
       if (x$m == 1) {
          cat(mstyle$section("Hypothesis:"))
@@ -90,7 +90,7 @@ print.anova.rma <- function(x, digits=x$digits, ...) {
       cat(mstyle$section("Results:"))
       cat("\n")
 
-      res.table <- data.frame(estimate=.fcf(c(x$Ka), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), zval=.fcf(x$zval, digits[["test"]]), pval=.pval(x$pval, digits=digits[["pval"]]))
+      res.table <- data.frame(estimate=.fcf(c(x$Za), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), zval=.fcf(x$zval, digits[["test"]]), pval=.pval(x$pval, digits=digits[["pval"]]))
       if (is.element(x$test, c("t")))
          colnames(res.table)[3] <- "tval"
       rownames(res.table) <- paste0(seq_len(x$m), ":")

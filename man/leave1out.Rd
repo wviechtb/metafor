@@ -39,7 +39,7 @@ leave1out(x, \dots)
    \item{I2}{values of \mjseqn{I^2} (only for random-effects models).}
    \item{H2}{values of \mjseqn{H^2} (only for random-effects models).}
 
-   The \code{"list.rma"} object is formatted and printed with \code{\link{print.list.rma}}.
+   The object is formatted and printed with \code{\link{print.list.rma}}.
 }
 \note{
    When using the \code{transf} option, the transformation is applied to the estimated coefficients and the corresponding interval bounds. The standard errors are then set equal to \code{NA} and are omitted from the printed output.

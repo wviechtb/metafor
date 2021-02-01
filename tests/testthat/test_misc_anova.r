@@ -49,18 +49,18 @@ test_that("anova() works correctly when using the 'btt' argument.", {
 
 })
 
-test_that("anova() works correctly when using the 'L' argument.", {
+test_that("anova() works correctly when using the 'X' argument.", {
 
    data(dat.bcg, package="metafor")
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
    res <- rma(yi, vi, mods = ~ ablat + alloc, data=dat)
-   sav <- anova(res, L=rbind(c(1, 10, 0, 0), c(1, 30, 0, 0), c(1, 50, 0, 0)))
+   sav <- anova(res, X=rbind(c(1, 10, 0, 0), c(1, 30, 0, 0), c(1, 50, 0, 0)))
    out <- capture.output(print(sav))
 
    expect_equivalent(sav$zval, c(0.0588, -1.7964, -3.1210), tolerance=.tol[["test"]])
 
    res <- rma(yi, vi, mods = ~ ablat + alloc, data=dat, test="knha")
-   sav <- anova(res, L=rbind(c(1, 10, 0, 0), c(1, 10, 1, 0), c(1, 10, 0, 1)))
+   sav <- anova(res, X=rbind(c(1, 10, 0, 0), c(1, 10, 1, 0), c(1, 10, 0, 1)))
    out <- capture.output(print(sav))
 
    expect_equivalent(sav$zval, c(0.0568, -0.8252, 0.2517), tolerance=.tol[["test"]])

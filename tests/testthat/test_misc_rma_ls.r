@@ -210,18 +210,18 @@ test_that("anova() works correctly for location-scale models", {
 
    expect_error(anova(res1, btt=2:4, att=2:4))
 
-   sav <- anova(res1, L=c(0,1,-1,0,0,0))
+   sav <- anova(res1, X=c(0,1,-1,0,0,0))
    expect_equivalent(sav$QM,  4.463309, tolerance=.tol[["test"]])
    expect_equivalent(sav$QMp, 0.03463035, tolerance=.tol[["pval"]])
    tmp <- predict(res1, newmods=c(1,-1,0,0,0), intercept=FALSE)
-   expect_equivalent(sav$Lb[1,1], tmp$pred, tolerance=.tol[["test"]])
+   expect_equivalent(sav$Xb[1,1], tmp$pred, tolerance=.tol[["test"]])
 
-   sav <- anova(res1, K=c(0,1,-1,0,0,0))
+   sav <- anova(res1, Z=c(0,1,-1,0,0,0))
    expect_equivalent(sav$QM,  0.3679934, tolerance=.tol[["test"]])
    expect_equivalent(sav$QMp, 0.5441001, tolerance=.tol[["pval"]])
    tmp <- predict(res1, newscale=c(1,-1,0,0,0), intercept=FALSE)
-   expect_equivalent(sav$Ka[1,1], tmp$pred, tolerance=.tol[["test"]])
+   expect_equivalent(sav$Za[1,1], tmp$pred, tolerance=.tol[["test"]])
 
-   expect_error(anova(res1, L=c(0,1,-1,0,0,0), K=c(0,1,-1,0,0,0)))
+   expect_error(anova(res1, X=c(0,1,-1,0,0,0), Z=c(0,1,-1,0,0,0)))
 
 })

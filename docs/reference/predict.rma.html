@@ -45,6 +45,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -72,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-70</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-75</span>
       </span>
     </div>
 
@@ -209,11 +211,11 @@
     <p>For a fixed-effects model, <code>predict(object)</code> returns the estimated (average) outcome in the set of studies included in the meta-analysis. This is the same as the estimated intercept in the fixed-effects model (i.e., \(\hat{\theta}\)).</p>
 <p>For a random-effects model, <code>predict(object)</code> returns the estimated (average) outcome in the hypothetical population of studies from which the set of studies included in the meta-analysis are assumed to be a random selection. This is the same as the estimated intercept in the random-effects model (i.e., \(\hat{\mu}\)).</p>
 <p>For models including one or more moderators, <code>predict(object)</code> returns the estimated (average) outcomes for values of the moderator(s) equal to those of the \(k\) studies included in the meta-analysis (i.e., the &#8216;fitted values&#8217; for the \(k\) studies).</p>
-<p>For models including \(p'\) moderator variables, new moderator values for \(k_{new}\) new studies can be specified by setting <code>newmods</code> equal to a \(k_{new} \times p'\) matrix with the corresponding new moderator values. If the model object included an intercept, then it should not be explicitly specified under <code>newmods</code>, as it will be added by default (unless one sets <code>intercept=FALSE</code>). Also, any factors in the original model get turned into the appropriate contrast variables within the <code>rma</code> function, so that <code>newmods</code> should actually include the values for the contrast variables. Examples are shown below.</p>
+<p>For models including \(p'\) moderator variables, new moderator values (for \(k_{new}\) hypothetical new studies) can be specified by setting <code>newmods</code> equal to a \(k_{new} \times p'\) matrix with the corresponding new moderator values. If the model object included an intercept, then it should not be explicitly specified under <code>newmods</code>, as it will be added by default (unless one sets <code>intercept=FALSE</code>). Also, any factors in the original model get turned into the appropriate contrast variables within the <code>rma</code> function, so that <code>newmods</code> should actually include the values for the contrast variables. Examples are shown below.</p>
 <p>For random/mixed-effects models, an approximate prediction interval is also calculated (Riley et al., 2011). The interval estimates where <code>level</code> % of the true effect sizes or outcomes fall in the hypothetical population of studies (and hence where the true effect/outcome of a new study from the population of studies should fall in <code>level</code> % of the cases).</p>
 <p>For random-effects models that were fitted with the <code><a href='rma.mv.html'>rma.mv</a></code> function, the model may actually include multiple \(\tau^2\) values (i.e., when the <code>random</code> argument includes an &#8216;<code>~ inner | outer</code>&#8217; term and <code>struct="HCS"</code>, <code>struct="DIAG"</code>, <code>struct="HAR"</code>, or <code>struct="UN"</code>). In that case, the function will provide prediction intervals for each level of the inner factor (since the prediction intervals differ depending on the \(\tau^2\) value). Alternatively, one can use the <code>tau2.levels</code> argument to specify for which level(s) the prediction interval should be provided. If the model includes a second &#8216;<code>~ inner | outer</code>&#8217; term with multiple \(\gamma^2\) values, prediction intervals for each combination of levels of the inner factors will be provided. Alternatively, one can use the <code>tau2.levels</code> and <code>gamma2.levels</code> arguments to specify for which level combination(s) the prediction interval should be provided.</p>
 <p>When using the <code>newmods</code> argument for mixed-effects models that were fitted with the <code><a href='rma.mv.html'>rma.mv</a></code> function, if the model includes multiple \(\tau^2\) (and multiple \(\gamma^2\)) values, then one must use the <code>tau2.levels</code> (and <code>gamma2.levels</code>) argument to specify the levels of the inner factor(s) (i.e., a vector of length \(k_{new}\)) to obtain the appropriate prediction interval(s).</p>
-<p>For location-scale models fitted with the <code><a href='rma.uni.html'>rma</a></code> function, one can use <code>newmods</code> to specify the values of the \(p'\) moderator variables included in the model and <code>newscale</code> to specify the values of the \(q'\) scale variables included in the model. Whenever <code>newmods</code> is specified, the function computes predicted effects/outcomes corresponding to the specified moderators values. To obtain the corresponding prediction intervals, one must also specify the corresponding <code>newscale</code> values. If only <code>newscale</code> is specified (and not <code>newmods</code>), the function computes the predicted log-transformed \(\tau^2\) values (when using a log link) corresponding to the specified scale values. By setting <code>transf=exp</code>, one can then obtain the predicted \(\tau^2\) values.</p>
+<p>For location-scale models fitted with the <code><a href='rma.uni.html'>rma</a></code> function, one can use <code>newmods</code> to specify the values of the \(p'\) moderator variables included in the model and <code>newscale</code> to specify the values of the \(q'\) scale variables included in the model. Whenever <code>newmods</code> is specified, the function computes predicted effects/outcomes for the specified moderators values. To obtain the corresponding prediction intervals, one must also specify the corresponding <code>newscale</code> values. If only <code>newscale</code> is specified (and not <code>newmods</code>), the function computes the predicted log-transformed \(\tau^2\) values (when using a log link) for to the specified scale values. By setting <code>transf=exp</code>, one can then obtain the predicted \(\tau^2\) values.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class <code>"list.rma"</code>. The object is a list containing the following components:</p>
@@ -231,7 +233,7 @@
 
    If vcov=TRUE, then the returned object is a list with the first element equal to the one as described above and the second element equal to the variance-covariance matrix of the predicted values.
 
-   The "list.rma" object is formatted and printed with <a href='print.list.rma.html'>print.list.rma</a>.
+   The object is formatted and printed with <a href='print.list.rma.html'>print.list.rma</a>.
 
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
@@ -393,7 +395,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

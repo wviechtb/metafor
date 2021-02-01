@@ -27,7 +27,7 @@
    \item{pi.ub}{upper bound of the prediction intervals.}
    \item{\dots}{some additional elements/values.}
 
-   The \code{"list.rma"} object is formatted and printed with \code{\link{print.list.rma}}.
+   The object is formatted and printed with \code{\link{print.list.rma}}.
 
    For objects of class \code{"rma.mv"}, a list of data frames with the same components as described above.
 }

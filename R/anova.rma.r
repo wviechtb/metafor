@@ -1,4 +1,4 @@
-anova.rma <- function(object, object2, btt, L, digits, ...) {
+anova.rma <- function(object, object2, btt, X, att, Z, digits, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -12,37 +12,30 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("test", "att", "K"))
+   .chkdots(ddd, c("test", "L"))
 
-   if (!is.null(ddd$att)) {
-      if (!inherits(object, "rma.ls"))
-         stop(mstyle$stop("Can only specify 'att' for location-scale models."))
-      att <- ddd$att
-   } else {
-      att <- NULL
-   }
+   if (!is.null(ddd$L))
+      X <- ddd$L
 
-   if (!is.null(ddd$K)) {
-      if (!inherits(object, "rma.ls"))
-         stop(mstyle$stop("Can only specify 'K' for location-scale models."))
-      K <- ddd$K
-   } else {
-      K <- NULL
-   }
+   if (!missing(att) && !inherits(object, "rma.ls"))
+      stop(mstyle$stop("Can only specify 'att' for location-scale models."))
+
+   if (!missing(Z) && !inherits(object, "rma.ls"))
+      stop(mstyle$stop("Can only specify 'Z' for location-scale models."))
 
    if (missing(object2)) {
 
       ### if only 'object' has been specified, can use function to test (sets) of coefficients via
       ### the 'btt' (or 'att') argument or one or more linear contrasts of the coefficients via the
-      ### 'L' (or 'K') argument
+      ### 'X' (or 'Z') argument
 
       x <- object
 
-      if (missing(L) && is.null(K)) {
+      if (missing(X) && missing(Z)) {
 
-         ### if 'L' (and 'K') has not been specified, then do a Wald-test via the 'btt' argument (can also use 'att' for location-scale models)
+         ### if 'X' (and 'Z') has not been specified, then do a Wald-test via the 'btt' argument (can also use 'att' for location-scale models)
 
-         if (inherits(object, "rma.ls") && !is.null(att)) {
+         if (inherits(object, "rma.ls") && !missing(att)) {
 
             if (!missing(btt))
                stop(mstyle$stop("Can only specify either 'btt' or 'att', but not both."))
@@ -91,47 +84,47 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
 
       } else {
 
-         if (inherits(object, "rma.ls") && !is.null(K)) {
+         if (inherits(object, "rma.ls") && !missing(Z)) {
 
-            ### if 'K' has been specified, then do Wald-type test(s) via 'K' argument
+            ### if 'Z' has been specified, then do Wald-type test(s) via 'Z' argument
 
-            if (!missing(L))
-               stop(mstyle$stop("Can only specify either 'L' or 'K', but not both."))
+            if (!missing(X))
+               stop(mstyle$stop("Can only specify either 'X' or 'Z', but not both."))
 
-            if (.is.vector(K))
-               K <- rbind(K)
+            if (.is.vector(Z))
+               Z <- rbind(Z)
 
-            if (is.data.frame(K))
-               K <- as.matrix(K)
+            if (is.data.frame(Z))
+               Z <- as.matrix(Z)
 
-            if (is.character(K))
-               stop(mstyle$stop("Argument 'K' must be a numeric vector/matrix."))
+            if (is.character(Z))
+               stop(mstyle$stop("Argument 'Z' must be a numeric vector/matrix."))
 
-            ### if model has an intercept term and K has q-1 columns, assume user left out the intercept and add it automatically
+            ### if model has an intercept term and Z has q-1 columns, assume user left out the intercept and add it automatically
 
-            if (x$Z.int.incl && ncol(K) == (x$q-1))
-               K <- cbind(1, K)
+            if (x$Z.int.incl && ncol(Z) == (x$q-1))
+               Z <- cbind(1, Z)
 
-            ### if K has q+1 columns, assume that last column is the right-hand side
+            ### if Z has q+1 columns, assume that last column is the right-hand side
             ### leave this out for now; maybe add later or a 'rhs' argument (as linearHypothesis() from car package)
 
-            #if (ncol(K) == (x$q+1)) {
-            #   rhs <- K[,x$q+1]
-            #   K <- K[,seq_len(x$q)]
+            #if (ncol(Z) == (x$q+1)) {
+            #   rhs <- Z[,x$q+1]
+            #   Z <- Z[,seq_len(x$q)]
             #}
 
-            if (ncol(K) != x$q)
-               stop(mstyle$stop(paste0("Length or number of columns of 'K' (", ncol(K), ") does not match number of scale coefficients (", x$q, ").")))
+            if (ncol(Z) != x$q)
+               stop(mstyle$stop(paste0("Length or number of columns of 'Z' (", ncol(Z), ") does not match number of scale coefficients (", x$q, ").")))
 
-            m <- nrow(K)
+            m <- nrow(Z)
 
             ### test of individual hypotheses
 
-            Ka  <- K %*% x$alpha
-            vKa <- K %*% x$vb.alpha %*% t(K)
+            Za  <- Z %*% x$alpha
+            vZa <- Z %*% x$vb.alpha %*% t(Z)
 
-            se <- sqrt(diag(vKa))
-            zval <- c(Ka/se)
+            se <- sqrt(diag(vZa))
+            zval <- c(Za/se)
 
             if (is.element(x$test, c("t"))) {
                pval <- 2*pt(abs(zval), df=x$dfs.alpha, lower.tail=FALSE)
@@ -139,14 +132,14 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
                pval <- 2*pnorm(abs(zval), lower.tail=FALSE)
             }
 
-            ### omnibus test of all hypotheses (only possible if 'K' is of full rank)
+            ### omnibus test of all hypotheses (only possible if 'Z' is of full rank)
 
             QM  <- NA ### need this in case QM cannot be calculated below
             QMp <- NA ### need this in case QMp cannot be calculated below
 
-            if (rankMatrix(K) == m) {
+            if (rankMatrix(Z) == m) {
 
-               QM <- try(as.vector(t(Ka) %*% chol2inv(chol(vKa)) %*% Ka), silent=TRUE)
+               QM <- try(as.vector(t(Za) %*% chol2inv(chol(vZa)) %*% Za), silent=TRUE)
 
                if (inherits(QM, "try-error"))
                   QM <- NA
@@ -164,9 +157,9 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
 
             hyp <- rep("", m)
             for (j in seq_len(m)) {
-               Lj <- round(K[j,], digits=digits[["est"]]) ### coefficients for the jth contrast
-               sel <- Lj != 0 ### TRUE if coefficient is != 0
-               hyp[j] <- paste(paste(Lj[sel], rownames(x$alpha)[sel], sep="*"), collapse=" + ") ### coefficient*variable + coefficient*variable ...
+               Zj <- round(Z[j,], digits=digits[["est"]]) ### coefficients for the jth contrast
+               sel <- Zj != 0 ### TRUE if coefficient is != 0
+               hyp[j] <- paste(paste(Zj[sel], rownames(x$alpha)[sel], sep="*"), collapse=" + ") ### coefficient*variable + coefficient*variable ...
                hyp[j] <- gsub("1*", "", hyp[j], fixed=TRUE) ### turn '+1' into '+' and '-1' into '-'
                hyp[j] <- gsub("+ -", "- ", hyp[j], fixed=TRUE) ### turn '+ -' into '-'
             }
@@ -175,46 +168,46 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
             colnames(hyp) <- ""
             rownames(hyp) <- paste0(seq_len(m), ":") ### add '1:', '2:', ... as row names
 
-            res <- list(QM=QM, QMp=QMp, hyp=hyp, Ka=Ka, se=se, zval=zval, pval=pval, k=x$k, q=x$q, m=m, test=x$test, dfs=x$dfs, digits=digits, type="Wald.Ka")
+            res <- list(QM=QM, QMp=QMp, hyp=hyp, Za=Za, se=se, zval=zval, pval=pval, k=x$k, q=x$q, m=m, test=x$test, dfs=x$dfs, digits=digits, type="Wald.Za")
 
          } else {
 
-            ### if 'L' has been specified, then do Wald-type test(s) via 'L' argument
+            ### if 'X' has been specified, then do Wald-type test(s) via 'X' argument
 
-            if (.is.vector(L))
-               L <- rbind(L)
+            if (.is.vector(X))
+               X <- rbind(X)
 
-            if (is.data.frame(L))
-               L <- as.matrix(L)
+            if (is.data.frame(X))
+               X <- as.matrix(X)
 
-            if (is.character(L))
-               stop(mstyle$stop("Argument 'L' must be a numeric vector/matrix."))
+            if (is.character(X))
+               stop(mstyle$stop("Argument 'X' must be a numeric vector/matrix."))
 
-            ### if model has an intercept term and L has p-1 columns, assume user left out the intercept and add it automatically
+            ### if model has an intercept term and X has p-1 columns, assume user left out the intercept and add it automatically
 
-            if (x$int.incl && ncol(L) == (x$p-1))
-               L <- cbind(1, L)
+            if (x$int.incl && ncol(X) == (x$p-1))
+               X <- cbind(1, X)
 
-            ### if L has p+1 columns, assume that last column is the right-hand side
+            ### if X has p+1 columns, assume that last column is the right-hand side
             ### leave this out for now; maybe add later or a 'rhs' argument (as linearHypothesis() from car package)
 
-            #if (ncol(L) == (x$p+1)) {
-            #   rhs <- L[,x$p+1]
-            #   L <- L[,seq_len(x$p)]
+            #if (ncol(X) == (x$p+1)) {
+            #   rhs <- X[,x$p+1]
+            #   X <- X[,seq_len(x$p)]
             #}
 
-            if (ncol(L) != x$p)
-               stop(mstyle$stop(paste0("Length or number of columns of 'L' (", ncol(L), ") does not match number of model coefficients (", x$p, ").")))
+            if (ncol(X) != x$p)
+               stop(mstyle$stop(paste0("Length or number of columns of 'X' (", ncol(X), ") does not match number of model coefficients (", x$p, ").")))
 
-            m <- nrow(L)
+            m <- nrow(X)
 
             ### test of individual hypotheses
 
-            Lb  <- L %*% x$beta
-            vLb <- L %*% x$vb %*% t(L)
+            Xb  <- X %*% x$beta
+            vXb <- X %*% x$vb %*% t(X)
 
-            se <- sqrt(diag(vLb))
-            zval <- c(Lb/se)
+            se <- sqrt(diag(vXb))
+            zval <- c(Xb/se)
 
             if (is.element(x$test, c("knha","adhoc","t"))) {
                pval <- 2*pt(abs(zval), df=x$dfs, lower.tail=FALSE)
@@ -222,19 +215,19 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
                pval <- 2*pnorm(abs(zval), lower.tail=FALSE)
             }
 
-            ### omnibus test of all hypotheses (only possible if 'L' is of full rank)
+            ### omnibus test of all hypotheses (only possible if 'X' is of full rank)
 
             QM  <- NA ### need this in case QM cannot be calculated below
             QMp <- NA ### need this in case QMp cannot be calculated below
 
-            if (rankMatrix(L) == m) {
+            if (rankMatrix(X) == m) {
 
                ### use try(), since this could fail: this could happen when the var-cov matrix of the
                ### fixed effects has been estimated using robust() -- 'vb' is then only guaranteed to
-               ### be positive semidefinite, so for certain linear combinations, vLb could be singular
+               ### be positive semidefinite, so for certain linear combinations, vXb could be singular
                ### (see Cameron & Miller, 2015, p. 326)
 
-               QM <- try(as.vector(t(Lb) %*% chol2inv(chol(vLb)) %*% Lb), silent=TRUE)
+               QM <- try(as.vector(t(Xb) %*% chol2inv(chol(vXb)) %*% Xb), silent=TRUE)
 
                if (inherits(QM, "try-error"))
                   QM <- NA
@@ -252,9 +245,9 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
 
             hyp <- rep("", m)
             for (j in seq_len(m)) {
-               Lj <- round(L[j,], digits=digits[["est"]]) ### coefficients for the jth contrast
-               sel <- Lj != 0 ### TRUE if coefficient is != 0
-               hyp[j] <- paste(paste(Lj[sel], rownames(x$beta)[sel], sep="*"), collapse=" + ") ### coefficient*variable + coefficient*variable ...
+               Xj <- round(X[j,], digits=digits[["est"]]) ### coefficients for the jth contrast
+               sel <- Xj != 0 ### TRUE if coefficient is != 0
+               hyp[j] <- paste(paste(Xj[sel], rownames(x$beta)[sel], sep="*"), collapse=" + ") ### coefficient*variable + coefficient*variable ...
                hyp[j] <- gsub("1*", "", hyp[j], fixed=TRUE) ### turn '+1' into '+' and '-1' into '-'
                hyp[j] <- gsub("+ -", "- ", hyp[j], fixed=TRUE) ### turn '+ -' into '-'
             }
@@ -263,7 +256,7 @@ anova.rma <- function(object, object2, btt, L, digits, ...) {
             colnames(hyp) <- ""
             rownames(hyp) <- paste0(seq_len(m), ":") ### add '1:', '2:', ... as row names
 
-            res <- list(QM=QM, QMp=QMp, hyp=hyp, Lb=Lb, se=se, zval=zval, pval=pval, k=x$k, p=x$p, m=m, test=x$test, dfs=x$dfs, digits=digits, type="Wald.Lb")
+            res <- list(QM=QM, QMp=QMp, hyp=hyp, Xb=Xb, se=se, zval=zval, pval=pval, k=x$k, p=x$p, m=m, test=x$test, dfs=x$dfs, digits=digits, type="Wald.Xb")
 
          }
 

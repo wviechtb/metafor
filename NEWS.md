@@ -1,6 +1,8 @@
-# metafor 2.5-74 (2021-01-24)
+# metafor 2.5-75 (2021-02-01)
 
 - the `metafor` package now makes use of the `mathjaxr` package to nicely render equations shown in the HTML help pages
+
+- `anova.rma()` argument `L` renamed to `X` (the former still works, but is no longer documented)
 
 - added `selmodel()` for fitting a wide variety of selection models (and added the corresponding `plot.rma.uni.selmodel()` function for drawing the estimated selection function)
 

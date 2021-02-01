@@ -43,7 +43,7 @@ res <- rma.mv(yi, V, mods = ~ outcome - 1, random = ~ outcome | trial, struct="U
 print(res, digits=3)
 
 ### test/estimate difference between the two outcomes
-anova(res, L=c(1,-1))
+anova(res, X=c(1,-1))
 
 ### fit model including publication year as moderator for both outcomes (with ML estimation)
 res <- rma.mv(yi, V, mods = ~ outcome + outcome:I(year - 1983) - 1,
