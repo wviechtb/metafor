@@ -166,9 +166,9 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
    For \code{model="CM.EL"} and \code{measure="OR"}, optimization involves repeated calculation of the density of the non-central hypergeometric distribution. When \code{method="ML"}, this also requires integration over the same density. This is currently implemented in a rather brute-force manner and may not be numerically stable, especially when models with moderators are fitted. Stability can be improved by scaling the moderators in a similar manner (i.e., don't use a moderator that is coded 0 and 1, while another uses values in the 1000s). For models with an intercept and moderators, the function actually rescales (non-dummy) variables to z-scores during the model fitting (results are given after back-scaling, so this should be transparent to the user). For models without an intercept, this is not done, so sensitivity analyses are highly recommended here (to ensure that the results do not depend on the scaling of the moderators).
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
 
-   Code for computing the density of the non-central hypergeometric distribution from package \pkg{MCMCpack}, which in turn is based on Liao and Rosen (2001).
+   Code for computing the density of the non-central hypergeometric distribution comes from the \href{https://cran.r-project.org/package=MCMCpack}{MCMCpack} package, which in turn is based on Liao and Rosen (2001).
 }
 \references{
    Agresti, A. (2002). \emph{Categorical data analysis} (2nd. ed). Hoboken, NJ: Wiley.

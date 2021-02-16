@@ -43,7 +43,7 @@
    It may not be possible to fit the model after deletion of the \mjseqn{i}th study/cluster from the dataset. This will result in \code{NA} values for that study/cluster.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
 }
 \references{
    Belsley, D. A., Kuh, E., & Welsch, R. E. (1980). \emph{Regression diagnostics}. New York: Wiley.

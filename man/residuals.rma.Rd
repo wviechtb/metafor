@@ -85,7 +85,7 @@
    For objects of class \code{"rma.mh"} and \code{"rma.peto"}, \code{rstandard} actually computes Pearson (or semi-standardized) residuals.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
 }
 \references{
    Hedges, L. V., & Olkin, I. (1985). \emph{Statistical methods for meta-analysis}. San Diego, CA: Academic Press.

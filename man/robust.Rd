@@ -26,7 +26,7 @@ robust(x, cluster, \dots)
 
    When \code{adjust=TRUE} (the default), the (cluster) robust estimate of the variance-covariance matrix is multiplied by the factor \mjseqn{n/(n-p)}, which serves as a small-sample adjustment that tends to improve the performance of the method when the number of clusters is small.
 
-   For even better small-sample adjustments (Pustejovsky & Tipton, 2018), see the \pkg{clubSandwich} package, which nicely works together with the \pkg{metafor} package (see \sQuote{Examples}).
+   For even better small-sample adjustments (Pustejovsky & Tipton, 2018), see the \href{https://cran.r-project.org/package=clubSandwich}{clubSandwich} package, which nicely works together with the \pkg{metafor} package (see \sQuote{Examples}).
 }
 \value{
    An object of class \code{"robust.rma"}. The object is a list containing the following components:
@@ -49,7 +49,7 @@ robust(x, cluster, \dots)
    The idea of the robust (sandwich-type) estimator for models with unspecified heteroscedasticity can be traced back to Eicker (1967), Huber (1967), and White (1980). Hence, the method in general is often referred to as the Eicker-Huber-White method. Some small-sample improvements to the method are described by MacKinnon and White (1985). The extension to the cluster robust estimator can be found in Froot (1989) and Williams (2000). Cameron and Miller (2015) provide an extensive overview of cluster robust methods. Sidik and Jonkman (2005, 2006) introduced robust methods in the meta-analytic context for standard random/mixed-effects models. The use of the cluster robust estimator for multivariate/multilevel meta-analytic models is described in Hedges, Tipton, and Johnson (2010).
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
 }
 \references{
    Cameron, A. C., & Miller, D. L. (2015). A practitioner's guide to cluster-robust inference. \emph{Journal of Human Resources}, \bold{50}(2), 317--372. \verb{https://doi.org/10.3368/jhr.50.2.317}

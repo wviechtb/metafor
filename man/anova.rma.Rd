@@ -70,7 +70,7 @@
    LRTs for variance components in more complex models (as fitted with the \code{\link{rma.mv}} function) can also be conducted in this manner (see \sQuote{Examples}).
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
 }
 \references{
    Hardy, R. J., & Thompson, S. G. (1996). A likelihood approach to meta-analysis with random effects. \emph{Statistics in Medicine}, \bold{15}(6), 619--629. \verb{https://doi.org/10.1002/(sici)1097-0258(19960330)15:6\%3C619::aid-sim188\%3E3.0.co;2-a}

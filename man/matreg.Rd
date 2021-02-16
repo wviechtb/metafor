@@ -14,7 +14,7 @@ matreg(y, x, R, n, V, ztor=FALSE, nearPD=FALSE, level=95, digits)
    \item{n}{sample size based on which the elements in the correlation matrix were computed.}
    \item{V}{variance-covariance matrix of the lower triangular elements of the correlation matrix. Either \code{V} or \code{n} should be specified, not both. See \sQuote{Details}.}
    \item{ztor}{logical to specify whether \code{R} is a matrix of r-to-z transformed correlations (the default is \code{FALSE}). See \sQuote{Details}.}
-   \item{nearPD}{logical to specify whether the \code{\link[Matrix]{nearPD}} function from the \code{Matrix} package should be used when the \mjeqn{R_{x,x}}{R[x,x]} matrix cannot be inverted. See \sQuote{Note}.}
+   \item{nearPD}{logical to specify whether the \code{\link[Matrix]{nearPD}} function from the \href{https://cran.r-project.org/package=Matrix}{Matrix} package should be used when the \mjeqn{R_{x,x}}{R[x,x]} matrix cannot be inverted. See \sQuote{Note}.}
    \item{level}{numeric value between 0 and 100 to specify the confidence interval level (the default is 95).}
    \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded (if unspecified, the default is 4).}
 }
@@ -40,10 +40,10 @@ matreg(y, x, R, n, V, ztor=FALSE, nearPD=FALSE, level=95, digits)
 \note{
    Only the lower triangular part of \code{R} is used in the computations.
 
-   If \mjeqn{R_{x,x}}{R[x,x]} is not invertible, an error will be issued. In this case, one can set argument \code{nearPD=TRUE}, in which case the \code{\link[Matrix]{nearPD}} function from the \code{Matrix} package will be used to find the nearest positive semi-definite matrix, which should be invertible. The results should be treated with caution when this is done.
+   If \mjeqn{R_{x,x}}{R[x,x]} is not invertible, an error will be issued. In this case, one can set argument \code{nearPD=TRUE}, in which case the \code{\link[Matrix]{nearPD}} function from the \href{https://cran.r-project.org/package=Matrix}{Matrix} package will be used to find the nearest positive semi-definite matrix, which should be invertible. The results should be treated with caution when this is done.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
 }
 \references{
    Becker, B. J. (1992). Using results from replicated studies to estimate linear models. \emph{Journal of Educational Statistics}, \bold{17}(4), 341--362. \verb{https://doi.org/10.3102/10769986017004341}

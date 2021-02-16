@@ -42,7 +42,7 @@ trimfill(x, \dots)
    The model used during the trim and fill procedure is the same as used by the original model object. Hence, if a fixed-effects model is passed to the function, then a fixed-effects model is also used during the trim and fill procedure and the results provided are also based on a fixed-effects model. This would be a \sQuote{fixed-fixed} approach. Similarly, if a random-effects model is passed to the function, then the same model is used as part of the trim and fill procedure and for the final analysis. This would be a \sQuote{random-random} approach. However, one can also easily fit a different model for the final analysis than was used for the trim and fill procedure. See \sQuote{Examples} for an illustration of a \sQuote{fixed-random} approach.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
 }
 \references{
    Duval, S. J., & Tweedie, R. L. (2000a). Trim and fill: A simple funnel-plot-based method of testing and adjusting for publication bias in meta-analysis. \emph{Biometrics}, \bold{56}(2), 455--463. \verb{https://doi.org/10.1111/j.0006-341x.2000.00455.x}

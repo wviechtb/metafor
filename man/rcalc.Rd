@@ -44,7 +44,7 @@ rcalc(x, ni, data, rtoz=FALSE, nfun="min", sparse=FALSE, \dots)
    For raw and r-to-z transformed coefficients, the variance-covariance matrix will only be computed when the (common) sample size for a study is at least 5.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
 }
 \references{
    Olkin, I., & Finn, J. D. (1990). Testing correlated correlations. \emph{Psychological Bulletin}, \bold{108}(2), 330--333. \verb{https://doi.org/10.1037/0033-2909.108.2.330}

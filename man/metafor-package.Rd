@@ -61,14 +61,14 @@
 
    A (pdf) diagram showing the various functions in the metafor package (and how they are related to each other) can be opened with the command \code{vignette("diagram")}.
 
-   Finally, additional information about the package, several detailed analysis examples, examples of plots and figures provided by the package (with the corresponding code), some additional tips and notes, and a FAQ can be found on the package website at \url{http://www.metafor-project.org}.
+   Finally, additional information about the package, several detailed analysis examples, examples of plots and figures provided by the package (with the corresponding code), some additional tips and notes, and a FAQ can be found on the package website at \url{https://www.metafor-project.org}.
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \cr
-   package website: \url{http://www.metafor-project.org} \cr
-   author homepage: \url{http://www.wvbauer.com} \cr
+   package website: \url{https://www.metafor-project.org} \cr
+   author homepage: \url{https://www.wvbauer.com} \cr
 
-   Suggestions on how to obtain help with using the package can found on the package website at: \url{http://www.metafor-project.org/doku.php/help}
+   Suggestions on how to obtain help with using the package can found on the package website at: \url{https://www.metafor-project.org/doku.php/help}
 }
 \references{
    Cooper, H., Hedges, L. V., & Valentine, J. C. (Eds.) (2009). \emph{The handbook of research synthesis and meta-analysis} (2nd ed.). New York: Russell Sage Foundation.

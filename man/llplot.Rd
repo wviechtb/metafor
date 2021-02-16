@@ -44,7 +44,7 @@ llplot(measure, yi, vi, sei, ai, bi, ci, di, n1i, n2i, data, subset, drop00=TRUE
    For \code{measure="OR"}, one must specify arguments \code{ai}, \code{bi}, \code{ci}, and \code{di}, which denote the cell frequencies of the \mjeqn{2 \times 2}{2x2} tables. Alternatively, one can specify \code{ai}, \code{ci}, \code{n1i}, and \code{n2i}. See \code{\link{escalc}} function for more details. The function then plots the likelihood of the true log odds ratio based on the non-central hypergeometric distribution for each \mjeqn{2 \times 2}{2x2} table. Since studies with no cases (or only cases) in both groups have a flat likelihood and are not informative about the odds ratio, they are dropped by default (i.e., \code{drop00=TRUE}) and are hence not drawn (if \code{drop00=FALSE}, these likelihood are indicated by dotted lines). For studies that have a single zero count, the MLE of the odds ratio is infinite and these likelihoods are indicated by dashed lines.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
 }
 \references{
    van Houwelingen, H. C., Zwinderman, K. H., & Stijnen, T. (1993). A bivariate approach to meta-analysis. \emph{Statistics in Medicine}, \bold{12}(24), 2273--2284. \verb{https://doi.org/10.1002/sim.4780122405}

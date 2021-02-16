@@ -88,7 +88,7 @@ tes(x, \dots)
    Note that the test is not a test for publication bias but a test whether the set of studies includes an unusual number of significant findings given the power of the studies. The general usefulness of the test and its usefulness under particular circumstances (e.g., when there is substantial heterogeneity in the true effects or outcomes) has been the subject of considerable debate. See Francis (2013) and the commentaries on this article in the same issue of the journal.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
 }
 \references{
    Francis, G. (2013). Replication, statistical consistency, and publication bias. \emph{Journal of Mathematical Psychology}, \bold{57}(5), 153--169. \verb{https://doi.org/10.1016/j.jmp.2013.02.003}

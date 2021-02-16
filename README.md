@@ -5,7 +5,7 @@ metafor: A Meta-Analysis Package for R
 [![R build status](https://github.com/wviechtb/metafor/workflows/R-CMD-check/badge.svg)](https://github.com/wviechtb/metafor/actions)
 [![Code Coverage](https://codecov.io/gh/wviechtb/metafor/branch/master/graph/badge.svg)](https://codecov.io/gh/wviechtb/metafor)
 [![CRAN Version](https://www.r-pkg.org/badges/version/metafor)](https://cran.r-project.org/package=metafor)
-[![devel Version](https://img.shields.io/badge/devel-2.5--75-brightgreen.svg)](http://www.metafor-project.org/doku.php/installation#development_version)
+[![devel Version](https://img.shields.io/badge/devel-2.5--76-brightgreen.svg)](https://www.metafor-project.org/doku.php/installation#development_version)
 [![Monthly Downloads](https://cranlogs.r-pkg.org/badges/metafor)](https://cranlogs.r-pkg.org/badges/metafor)
 [![Total Downloads](https://cranlogs.r-pkg.org/badges/grand-total/metafor)](https://cranlogs.r-pkg.org/badges/grand-total/metafor)
 
@@ -15,20 +15,20 @@ The `metafor` package is a comprehensive collection of functions for conducting 
 
 ## Package Website
 
-The `metafor` package website can be found at [http://www.metafor-project.org](http://www.metafor-project.org). On the website, you can find:
+The `metafor` package website can be found at [https://www.metafor-project.org](https://www.metafor-project.org). On the website, you can find:
 
-* some [news](http://www.metafor-project.org/doku.php/news:news) concerning the package and/or its development,
-* a more detailed description of the [package features](http://www.metafor-project.org/doku.php/features),
-* a log of the [package updates](http://www.metafor-project.org/doku.php/updates) that have been made over the years,
-* a [to-do list](http://www.metafor-project.org/doku.php/todo) and a description of planned features to be implemented in the future,
-* information on how to [download and install](http://www.metafor-project.org/doku.php/installation) the package,
-* information on how to obtain [documentation and help](http://www.metafor-project.org/doku.php/help) with using the package,
-* some [analysis examples](http://www.metafor-project.org/doku.php/analyses) that illustrate various models, methods, and techniques,
-* a little showcase of [plots and figures](http://www.metafor-project.org/doku.php/plots) that can be created with the package,
-* some [tips and notes](http://www.metafor-project.org/doku.php/tips) that may be useful when working with the package,
-* a list of people that have in some shape or form [contributed](http://www.metafor-project.org/doku.php/contributors) to the development of the package,
-* a [frequently asked questions](http://www.metafor-project.org/doku.php/faq) section, and
-* some [links](http://www.metafor-project.org/doku.php/links) to other websites related to software for meta-analysis.
+* some [news](https://www.metafor-project.org/doku.php/news:news) concerning the package and/or its development,
+* a more detailed description of the [package features](https://www.metafor-project.org/doku.php/features),
+* a log of the [package updates](https://www.metafor-project.org/doku.php/updates) that have been made over the years,
+* a [to-do list](https://www.metafor-project.org/doku.php/todo) and a description of planned features to be implemented in the future,
+* information on how to [download and install](https://www.metafor-project.org/doku.php/installation) the package,
+* information on how to obtain [documentation and help](https://www.metafor-project.org/doku.php/help) with using the package,
+* some [analysis examples](https://www.metafor-project.org/doku.php/analyses) that illustrate various models, methods, and techniques,
+* a little showcase of [plots and figures](https://www.metafor-project.org/doku.php/plots) that can be created with the package,
+* some [tips and notes](https://www.metafor-project.org/doku.php/tips) that may be useful when working with the package,
+* a list of people that have in some shape or form [contributed](https://www.metafor-project.org/doku.php/contributors) to the development of the package,
+* a [frequently asked questions](https://www.metafor-project.org/doku.php/faq) section, and
+* some [links](https://www.metafor-project.org/doku.php/links) to other websites related to software for meta-analysis.
 
 ## Documentation
 
@@ -54,4 +54,4 @@ This builds the package from source based on the current version on [GitHub](htt
 
 ## Meta
 
-The metafor package was written by [Wolfgang Viechtbauer](http://www.wvbauer.com/). It is licensed under the [GNU General Public License](https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt). For citation info, type `citation(package='metafor')` in R. To report any issues or bugs or to suggest enhancements to the package, please go [here](https://github.com/wviechtb/metafor/issues).
+The metafor package was written by [Wolfgang Viechtbauer](https://www.wvbauer.com/). It is licensed under the [GNU General Public License](https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt). For citation info, type `citation(package='metafor')` in R. To report any issues or bugs or to suggest enhancements to the package, please go [here](https://github.com/wviechtb/metafor/issues).

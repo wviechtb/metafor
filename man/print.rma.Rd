@@ -68,7 +68,7 @@
    The pseudo \mjseqn{R^2} statistic (Raudenbush, 2009) is computed with \mjdeqn{R^2 = \frac{\hat{\tau}_{RE}^2 - \hat{\tau}_{ME}^2}{\hat{\tau}_{RE}^2},}{R^2 = (hat(\tau)^2_RE - hat(\tau)^2_ME) / hat(\tau)^2_RE,} where \mjeqn{\hat{\tau}_{RE}^2}{hat(\tau)^2_RE} denotes the estimated value of \mjseqn{\tau^2} based on the random-effects model (i.e., the total amount of heterogeneity) and \mjeqn{\hat{\tau}_{ME}^2}{hat(\tau)^2_ME} denotes the estimated value of \mjseqn{\tau^2} based on the mixed-effects model (i.e., the residual amount of heterogeneity). It can happen that \mjeqn{\hat{\tau}_{RE}^2 < \hat{\tau}_{ME}^2}{hat(\tau)^2_RE < hat(\tau)^2_ME}, in which case \mjseqn{R^2} is set to zero (and also if \mjeqn{\hat{\tau}_{RE}^2 = 0}{hat(\tau)^2_RE = 0}). Again, the value of \mjseqn{R^2} will change depending on the estimator of \mjseqn{\tau^2} used. This statistic is only computed when the mixed-effects model includes an intercept (so that the random-effects model is clearly nested within the mixed-effects model). You can also use the \code{\link{anova.rma}} function to compute \mjseqn{R^2} for any two models that are known to be nested. Note that the pseudo \mjseqn{R^2} statistic may not be very accurate unless \mjseqn{k} is large (Lopez-Lopez et al., 2014).
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
 }
 \references{
    Higgins, J. P. T., & Thompson, S. G. (2002). Quantifying heterogeneity in a meta-analysis. \emph{Statistics in Medicine}, \bold{21}(11), 1539--1558. \verb{https://doi.org/10.1002/sim.1186}

@@ -20,7 +20,7 @@ vec2mat(x, diag=FALSE, corr=!diag, dimnames)
    A matrix.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{http://www.metafor-project.org}
+   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
 }
 \examples{
 vec2mat(1:6, corr=FALSE)
