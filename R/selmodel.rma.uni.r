@@ -381,7 +381,11 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
       delta.max <- 100
       H0.delta <- 0
       delta.LRT <- TRUE
-      pval.min <- 0
+      if (type == "power") {
+         pval.min <- 1e-5
+      } else {
+         pval.min <- 0
+      }
       if (type == "halfnorm") {
          wi.fun <- function(x, delta, yi, vi, preci, alternative, steps)
             ifelse(x <= steps[1], 1, exp(-delta * preci * x^2) / exp(-delta * preci * steps[1]^2))

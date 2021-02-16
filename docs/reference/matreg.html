@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-75</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-77</span>
       </span>
     </div>
 
@@ -168,7 +168,7 @@
     </tr>
     <tr>
       <th>nearPD</th>
-      <td><p>logical to specify whether the <code><a href='https://rdrr.io/pkg/Matrix/man/nearPD.html'>nearPD</a></code> function from the <code>Matrix</code> package should be used when the \(R_{x,x}\) matrix cannot be inverted. See &#8216;Note&#8217;.</p></td>
+      <td><p>logical to specify whether the <code><a href='https://rdrr.io/pkg/Matrix/man/nearPD.html'>nearPD</a></code> function from the <a href='https://cran.r-project.org/package=Matrix'>Matrix</a> package should be used when the \(R_{x,x}\) matrix cannot be inverted. See &#8216;Note&#8217;.</p></td>
     </tr>
     <tr>
       <th>level</th>
@@ -199,10 +199,10 @@
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>Only the lower triangular part of <code>R</code> is used in the computations.</p>
-<p>If \(R_{x,x}\) is not invertible, an error will be issued. In this case, one can set argument <code>nearPD=TRUE</code>, in which case the <code><a href='https://rdrr.io/pkg/Matrix/man/nearPD.html'>nearPD</a></code> function from the <code>Matrix</code> package will be used to find the nearest positive semi-definite matrix, which should be invertible. The results should be treated with caution when this is done.</p>
+<p>If \(R_{x,x}\) is not invertible, an error will be issued. In this case, one can set argument <code>nearPD=TRUE</code>, in which case the <code><a href='https://rdrr.io/pkg/Matrix/man/nearPD.html'>nearPD</a></code> function from the <a href='https://cran.r-project.org/package=Matrix'>Matrix</a> package will be used to find the nearest positive semi-definite matrix, which should be invertible. The results should be treated with caution when this is done.</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
-    <p>Wolfgang Viechtbauer <a href='mailto:wvb@metafor-project.org'>wvb@metafor-project.org</a> <a href='http://www.metafor-project.org'>http://www.metafor-project.org</a></p>
+    <p>Wolfgang Viechtbauer <a href='mailto:wvb@metafor-project.org'>wvb@metafor-project.org</a> <a href='https://www.metafor-project.org'>https://www.metafor-project.org</a></p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Becker, B. J. (1992). Using results from replicated studies to estimate linear models. <em>Journal of Educational Statistics</em>, <b>17</b>(4), 341--362. <a href='https://doi.org/10.3102/10769986017004341'>https://doi.org/10.3102/10769986017004341</a></p>

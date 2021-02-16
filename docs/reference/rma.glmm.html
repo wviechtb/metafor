@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-75</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-77</span>
       </span>
     </div>
 
@@ -375,8 +375,8 @@
 <p>For <code>model="CM.EL"</code> and <code>measure="OR"</code>, optimization involves repeated calculation of the density of the non-central hypergeometric distribution. When <code>method="ML"</code>, this also requires integration over the same density. This is currently implemented in a rather brute-force manner and may not be numerically stable, especially when models with moderators are fitted. Stability can be improved by scaling the moderators in a similar manner (i.e., don't use a moderator that is coded 0 and 1, while another uses values in the 1000s). For models with an intercept and moderators, the function actually rescales (non-dummy) variables to z-scores during the model fitting (results are given after back-scaling, so this should be transparent to the user). For models without an intercept, this is not done, so sensitivity analyses are highly recommended here (to ensure that the results do not depend on the scaling of the moderators).</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
-    <p>Wolfgang Viechtbauer <a href='mailto:wvb@metafor-project.org'>wvb@metafor-project.org</a> <a href='http://www.metafor-project.org'>http://www.metafor-project.org</a></p>
-<p>Code for computing the density of the non-central hypergeometric distribution from package <span class="pkg">MCMCpack</span>, which in turn is based on Liao and Rosen (2001).</p>
+    <p>Wolfgang Viechtbauer <a href='mailto:wvb@metafor-project.org'>wvb@metafor-project.org</a> <a href='https://www.metafor-project.org'>https://www.metafor-project.org</a></p>
+<p>Code for computing the density of the non-central hypergeometric distribution comes from the <a href='https://cran.r-project.org/package=MCMCpack'>MCMCpack</a> package, which in turn is based on Liao and Rosen (2001).</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Agresti, A. (2002). <em>Categorical data analysis</em> (2nd. ed). Hoboken, NJ: Wiley.</p>

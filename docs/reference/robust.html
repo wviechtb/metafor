@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-75</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-77</span>
       </span>
     </div>
 
@@ -174,7 +174,7 @@
     <p>The function constructs a (cluster) robust estimate of the variance-covariance matrix of the model coefficients based on a sandwich-type estimator and then computes tests and confidence intervals of the model coefficients.</p>
 <p>Tests of individual coefficients and confidence intervals are based on a t-distribution with \(n-p\) degrees of freedom is used, while the omnibus test statistic uses an F-distribution with \(m\) and \(n-p\) degrees of freedom, where \(n\) is the number of clusters, \(p\) denotes the total number of model coefficients (including the intercept if it is present), and \(m\) denotes the number of coefficients tested (in the omnibus test).</p>
 <p>When <code>adjust=TRUE</code> (the default), the (cluster) robust estimate of the variance-covariance matrix is multiplied by the factor \(n/(n-p)\), which serves as a small-sample adjustment that tends to improve the performance of the method when the number of clusters is small.</p>
-<p>For even better small-sample adjustments (Pustejovsky &amp; Tipton, 2018), see the <span class="pkg">clubSandwich</span> package, which nicely works together with the <span class="pkg">metafor</span> package (see &#8216;Examples&#8217;).</p>
+<p>For even better small-sample adjustments (Pustejovsky &amp; Tipton, 2018), see the <a href='https://cran.r-project.org/package=clubSandwich'>clubSandwich</a> package, which nicely works together with the <span class="pkg">metafor</span> package (see &#8216;Examples&#8217;).</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class <code>"robust.rma"</code>. The object is a list containing the following components:</p>
@@ -197,7 +197,7 @@
 <p>The idea of the robust (sandwich-type) estimator for models with unspecified heteroscedasticity can be traced back to Eicker (1967), Huber (1967), and White (1980). Hence, the method in general is often referred to as the Eicker-Huber-White method. Some small-sample improvements to the method are described by MacKinnon and White (1985). The extension to the cluster robust estimator can be found in Froot (1989) and Williams (2000). Cameron and Miller (2015) provide an extensive overview of cluster robust methods. Sidik and Jonkman (2005, 2006) introduced robust methods in the meta-analytic context for standard random/mixed-effects models. The use of the cluster robust estimator for multivariate/multilevel meta-analytic models is described in Hedges, Tipton, and Johnson (2010).</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
-    <p>Wolfgang Viechtbauer <a href='mailto:wvb@metafor-project.org'>wvb@metafor-project.org</a> <a href='http://www.metafor-project.org'>http://www.metafor-project.org</a></p>
+    <p>Wolfgang Viechtbauer <a href='mailto:wvb@metafor-project.org'>wvb@metafor-project.org</a> <a href='https://www.metafor-project.org'>https://www.metafor-project.org</a></p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Cameron, A. C., &amp; Miller, D. L. (2015). A practitioner's guide to cluster-robust inference. <em>Journal of Human Resources</em>, <b>50</b>(2), 317--372. <a href='https://doi.org/10.3368/jhr.50.2.317'>https://doi.org/10.3368/jhr.50.2.317</a></p>
