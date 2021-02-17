@@ -301,7 +301,8 @@ predict(sel2, transf=exp, digits=2)
 predict(sel3, transf=exp, digits=2)
 predict(sel4, transf=exp, digits=2)
 
-# fit selection models including standard error as precision measure
+# fit selection models including standard error as precision measure (note: using
+# scaleprec=FALSE here since Preston et al. (2004) did not use the rescaling)
 sel1 <- selmodel(res, type="halfnorm", prec="sei", alternative="less", scaleprec=FALSE)
 sel2 <- selmodel(res, type="negexp",   prec="sei", alternative="less", scaleprec=FALSE)
 sel3 <- selmodel(res, type="logistic", prec="sei", alternative="less", scaleprec=FALSE)

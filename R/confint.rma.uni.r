@@ -1,15 +1,13 @@
-### Note: There is code below to obtain a profile likelihood CI for tau^2, but then
-### I may have to introduce a 'type' argument to specify which type of CI to obtain.
-### Actually, what would be most consistent is this:
-### if method='ML/REML':    profile likelihood (PL) CI (based on the ML/REML likelihood)
-### if method='EB/PM/PMM':  Q-profile (QP) CI
-### if method='GENQ/GENQM': generalized Q-statistic (GENQ) CI (which also covers method='DL/HE' as special cases)
-### if method='SJ':         method by Sidik & Jonkman (2005) (but this performs poorly, except if tau^2 is very large)
-### if method='HS':         not sure since this is an ad-hoc estimator with no obvious underlying statistical principle
-### Also could in principle compute Wald-type CIs (but those perform poorly except when k is very large).
-### But it may be a bit late to change how the function works (right now, type="GENQ" if method="GENQ/GENQM" and type="QP" otherwise).
+# What would be most consistent is this:
+# if method='ML/REML':    profile likelihood (PL) CI (based on the ML/REML likelihood)
+# if method='EB/PM/PMM':  Q-profile (QP) CI
+# if method='GENQ/GENQM': generalized Q-statistic (GENQ) CI (which also covers method='DL/HE' as special cases)
+# if method='SJ':         method by Sidik & Jonkman (2005) (but this performs poorly, except if tau^2 is very large)
+# if method='HS':         not sure since this is an ad-hoc estimator with no obvious underlying statistical principle
+# Also could in principle compute Wald-type CIs (but those perform poorly except when k is very large).
+# Too late to change how the function works (right now, type="GENQ" if method="GENQ/GENQM" and type="QP" otherwise).
 
-confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digits, transf, targs, verbose=FALSE, control, ...) {
+confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, type, digits, transf, targs, verbose=FALSE, control, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -53,7 +51,7 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("time", "type", "xlim"))
+   .chkdots(ddd, c("time", "xlim"))
 
    if (.isTRUE(ddd$time))
       time.start <- proc.time()
@@ -65,27 +63,17 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
       control$tau2.max <- ddd$xlim[2]
    }
 
-   if (x$method == "GENQ" || x$method == "GENQM") {
-      type <- "GENQ"
+   if (missing(type)) {
+      if (x$method == "GENQ" || x$method == "GENQM") {
+         type <- "GENQ"
+      } else {
+         type <- "QP"
+      }
    } else {
-      type <- "QP"
+      #type <- match.arg(type, c("QP", "GENQ", "PL"))
+      if (!is.element(type, c("QP", "GENQ", "PL")))
+         stop(mstyle$stop("Unknown 'type' specified."))
    }
-
-   #if (missing(type)) {
-   #   if (x$method == "GENQ" || x$method == "GENQM") {
-   #      type <- "GENQ"
-   #   } else {
-   #      type <- "QP"
-   #   }
-   #} else {
-   #   type <- match.arg(type, c("QP", "GENQ", "PL"))
-   #}
-
-   if (!is.null(ddd$type)) # can override with 'type' argument
-      type <- ddd$type
-
-   if (!is.element(type, c("QP", "GENQ", "PL")))
-      stop(mstyle$stop("Unknown 'type' specified."))
 
    #########################################################################
    #########################################################################
@@ -103,7 +91,7 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, digit
          stop(mstyle$stop("Model does not contain an estimated random-effects component."))
 
       if (type == "GENQ" && !(is.element(x$method, c("GENQ","GENQM"))))
-         stop(mstyle$stop("Model must be fitted with 'method=\"GENQ\" or 'method=\"GENQM\" to use this option."))
+         stop(mstyle$stop("Model must be fitted with method=\"GENQ\" or method=\"GENQM\" to use this option."))
 
       ######################################################################
 
