@@ -1,4 +1,4 @@
-\name{qqnorm.rma.uni}
+\name{qqnorm.rma}
 \alias{qqnorm}
 \alias{qqnorm.rma.uni}
 \alias{qqnorm.rma.mh}

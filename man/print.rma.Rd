@@ -9,7 +9,7 @@
 \alias{print.summary.rma}
 \title{Print and Summary Methods for 'rma' Objects}
 \description{
-   Print and summary methods for objects of class \code{"rma.uni"}, \code{"rma.mh"}, \code{"rma.peto"}, \code{"rma.glmm"}, and \code{"rma.glmm"}. \loadmathjax
+   Print and summary methods for objects of class \code{"rma.uni"}, \code{"rma.mh"}, \code{"rma.peto"}, \code{"rma.glmm"}, \code{"rma.glmm"}, and \code{"rma.mv"}. \loadmathjax
 }
 \usage{
 \method{print}{rma.uni}(x, digits, showfit=FALSE, signif.stars=getOption("show.signif.stars"),

@@ -1,4 +1,4 @@
-\name{weights.rma.uni}
+\name{weights.rma}
 \alias{weights}
 \alias{weights.rma}
 \alias{weights.rma.uni}

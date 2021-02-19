@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-78</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-79</span>
       </span>
     </div>
 
@@ -307,15 +307,15 @@
 <span class='co'># \dontrun{</span>
 <span class='co'>### profile the variance components</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mfrow<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>,<span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='profile.rma.uni.html'>profile</a></span><span class='op'>(</span><span class='va'>res</span>, tau2<span class='op'>=</span><span class='fl'>1</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span> <span class='fl'>0</span>,<span class='fl'>.2</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: At least one profiled log-likelihood value is larger than the log-likelihood of the fitted model.</span></div><div class='input'><span class='fu'><a href='profile.rma.uni.html'>profile</a></span><span class='op'>(</span><span class='va'>res</span>, tau2<span class='op'>=</span><span class='fl'>2</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span> <span class='fl'>0</span>,<span class='fl'>.2</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='profile.rma.uni.html'>profile</a></span><span class='op'>(</span><span class='va'>res</span>, tau2<span class='op'>=</span><span class='fl'>3</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span> <span class='fl'>0</span>,<span class='fl'>.2</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='profile.rma.uni.html'>profile</a></span><span class='op'>(</span><span class='va'>res</span>, tau2<span class='op'>=</span><span class='fl'>4</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.1</span>,<span class='fl'>.3</span><span class='op'>)</span><span class='op'>)</span><span class='co'># }</span>
+<span class='fu'><a href='profile.rma.html'>profile</a></span><span class='op'>(</span><span class='va'>res</span>, tau2<span class='op'>=</span><span class='fl'>1</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span> <span class='fl'>0</span>,<span class='fl'>.2</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: At least one profiled log-likelihood value is larger than the log-likelihood of the fitted model.</span></div><div class='input'><span class='fu'><a href='profile.rma.html'>profile</a></span><span class='op'>(</span><span class='va'>res</span>, tau2<span class='op'>=</span><span class='fl'>2</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span> <span class='fl'>0</span>,<span class='fl'>.2</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='profile.rma.html'>profile</a></span><span class='op'>(</span><span class='va'>res</span>, tau2<span class='op'>=</span><span class='fl'>3</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span> <span class='fl'>0</span>,<span class='fl'>.2</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='profile.rma.html'>profile</a></span><span class='op'>(</span><span class='va'>res</span>, tau2<span class='op'>=</span><span class='fl'>4</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.1</span>,<span class='fl'>.3</span><span class='op'>)</span><span class='op'>)</span><span class='co'># }</span>
 </div><div class='img'><img src='dat.fine1993-1.png' alt='' width='768' height='614' /></div><div class='input'>
 <span class='co'># \dontrun{</span>
 <span class='co'>### profile the autocorrelation coefficient</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mfrow<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='profile.rma.uni.html'>profile</a></span><span class='op'>(</span><span class='va'>res</span>, rho<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span><span class='co'># }</span>
+<span class='fu'><a href='profile.rma.html'>profile</a></span><span class='op'>(</span><span class='va'>res</span>, rho<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span><span class='co'># }</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: At least one profiled log-likelihood value is larger than the log-likelihood of the fitted model.</span></div><div class='img'><img src='dat.fine1993-2.png' alt='' width='768' height='614' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

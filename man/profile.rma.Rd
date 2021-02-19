@@ -1,4 +1,4 @@
-\name{profile.rma.uni}
+\name{profile.rma}
 \alias{profile}
 \alias{profile.rma.uni}
 \alias{profile.rma.mv}

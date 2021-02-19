@@ -71,7 +71,7 @@ rma.peto(ai, bi, ci, di, n1i, n2i,
 
    The \code{\link{residuals.rma}}, \code{\link{rstandard.rma.peto}}, and \code{\link{rstudent.rma.peto}} functions extract raw and standardized residuals. Leave-one-out diagnostics can be obtained with \code{\link{leave1out.rma.peto}}.
 
-   Forest, funnel, radial, \enc{L'Abbé}{L'Abbe}, and Baujat plots can be obtained with \code{\link{forest.rma}}, \code{\link{funnel.rma}}, \code{\link{radial.rma}}, \code{\link{labbe.rma}}, and \code{\link{baujat}}. The \code{\link{qqnorm.rma.peto}} function provides normal QQ plots of the standardized residuals. One can also just call \code{\link{plot.rma.peto}} on the fitted model object to obtain various plots at once.
+   Forest, funnel, radial, \enc{L'Abbé}{L'Abbe}, and Baujat plots can be obtained with \code{\link{forest.rma}}, \code{\link{funnel.rma}}, \code{\link{radial.rma}}, \code{\link{labbe.rma}}, and \code{\link{baujat.rma}}. The \code{\link{qqnorm.rma.peto}} function provides normal QQ plots of the standardized residuals. One can also just call \code{\link{plot.rma.peto}} on the fitted model object to obtain various plots at once.
 
    A cumulative meta-analysis (i.e., adding one observation at a time) can be obtained with \code{\link{cumul.rma.peto}}.
 
