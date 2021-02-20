@@ -1,5 +1,5 @@
 plot.gosh.rma <- function(x, het="I2", pch=16, cex=0.5, out, col, alpha, border,
-xlim, ylim, xhist=TRUE, yhist=TRUE, hh=.3, breaks, adjust, lwd, labels, ...) {
+xlim, ylim, xhist=TRUE, yhist=TRUE, hh=0.3, breaks, adjust, lwd, labels, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 

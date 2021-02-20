@@ -92,7 +92,7 @@ label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
    ### note: digits can also be a list (e.g., digits=list(2L,3))
 
    if (length(lty) == 1L)
-      lty <- rep(lty, 2)
+      lty <- rep(lty, 2) ### 1st value = funnel lines, 2nd value = reference line
 
    ### note: 'pch', 'col', and 'bg' are assumed to be of the same length as the original data passed to rma()
    ###       so we have to apply the same subsetting (if necessary) and removing of NAs as done during the
@@ -206,10 +206,10 @@ label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
          addtau2 <- FALSE
       }
 
-      yi   <- x$yi             ### yi/vi/ni is already subsetted and NAs are removed
-      vi   <- x$vi
-      ni   <- x$ni             ### ni can be NULL (and there may be 'additional' NAs)
-      sei  <- sqrt(vi)
+      yi  <- x$yi              ### yi/vi/ni is already subsetted and NAs are removed
+      vi  <- x$vi
+      ni  <- x$ni              ### ni can be NULL (and there may be 'additional' NAs)
+      sei <- sqrt(vi)
       if (!is.null(x$not.na.yivi))
          x$not.na <- x$not.na.yivi
       slab <- x$slab[x$not.na] ### slab is subsetted but NAs are not removed, so still need to do this here
@@ -498,6 +498,16 @@ label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
 
    if (is.element(yaxis, c("ni", "ninv", "sqrtni", "sqrtninv", "lni", "wi")))
       labline(v=refline, lty=lty[2], ...)
+
+   if (!is.null(refline2)) {
+
+      if (is.element(yaxis, c("sei", "vi", "seinv", "vinv")))
+         lsegments(refline2, ylim[1], refline2, ylim[2], lty=lty2, ...)
+
+      if (is.element(yaxis, c("ni", "ninv", "sqrtni", "sqrtninv", "lni", "wi")))
+         labline(v=refline2, lty=lty2, ...)
+
+   }
 
    #########################################################################
 

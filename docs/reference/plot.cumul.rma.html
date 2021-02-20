@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-79</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-80</span>
       </span>
     </div>
 
@@ -140,7 +140,7 @@
     <pre class="usage"><span class='co'># S3 method for cumul.rma</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span>, yaxis<span class='op'>=</span><span class='st'>"tau2"</span>, <span class='va'>xlim</span>, <span class='va'>ylim</span>, <span class='va'>xlab</span>, <span class='va'>ylab</span>,
      <span class='va'>at</span>, <span class='va'>transf</span>, <span class='va'>atransf</span>, <span class='va'>targs</span>, <span class='va'>digits</span>, cols<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"gray80"</span>,<span class='st'>"gray10"</span><span class='op'>)</span>,
-     addgrid<span class='op'>=</span><span class='cn'>TRUE</span>, pch<span class='op'>=</span><span class='fl'>19</span>, cex<span class='op'>=</span><span class='fl'>1</span>, lwd<span class='op'>=</span><span class='fl'>2</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+     grid<span class='op'>=</span><span class='cn'>TRUE</span>, pch<span class='op'>=</span><span class='fl'>19</span>, cex<span class='op'>=</span><span class='fl'>1</span>, lwd<span class='op'>=</span><span class='fl'>2</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -194,8 +194,8 @@
       <td><p>vector with two or more colors to use for visualizing the order of the cumulative results.</p></td>
     </tr>
     <tr>
-      <th>addgrid</th>
-      <td><p>logical to specify whether a grid should be added to the plot (the default is <code>TRUE</code>).</p></td>
+      <th>grid</th>
+      <td><p>logical to specify whether a grid should be added to the plot (can also be a color name).</p></td>
     </tr>
     <tr>
       <th>pch</th>

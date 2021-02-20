@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-79</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-80</span>
       </span>
     </div>
 
@@ -142,7 +142,7 @@
 <span class='co'># S3 method for rma</span>
 <span class='fu'>labbe</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>xlim</span>, <span class='va'>ylim</span>, <span class='va'>xlab</span>, <span class='va'>ylab</span>,
       add<span class='op'>=</span><span class='va'>x</span><span class='op'>$</span><span class='va'>add</span>, to<span class='op'>=</span><span class='va'>x</span><span class='op'>$</span><span class='va'>to</span>, <span class='va'>transf</span>, <span class='va'>targs</span>,
-      pch<span class='op'>=</span><span class='fl'>21</span>, <span class='va'>psize</span>, bg<span class='op'>=</span><span class='st'>"gray"</span>, grid<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>lty</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+      pch<span class='op'>=</span><span class='fl'>21</span>, <span class='va'>psize</span>, <span class='va'>col</span>, <span class='va'>bg</span>, grid<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>lty</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -192,12 +192,16 @@
       <td><p>optional vector with point sizes for the outcomes. If unspecified, the point sizes are an inverse function of the precision of the outcomes.</p></td>
     </tr>
     <tr>
+      <th>col</th>
+      <td><p>optional character string to specify the name of a color to use for the points (<code>"black"</code> is used by default if not specified). Can also be a vector of color names.</p></td>
+    </tr>
+    <tr>
       <th>bg</th>
-      <td><p>color to use for filling the plotting symbol (the default is <code>"gray"</code>). Can also be a vector of values. Set to <code>NA</code> to make the plotting symbols transparent.</p></td>
+      <td><p>optional character string to specify the name of a background color for open plot symbols (<code>"gray"</code> is used by default if not specified). Can also be a vector of color names. Set to <code>NA</code> to make the plotting symbols transparent.</p></td>
     </tr>
     <tr>
       <th>grid</th>
-      <td><p>logical to specify whether a grid should be added to the plot.</p></td>
+      <td><p>logical to specify whether a grid should be added to the plot (can also be a color name).</p></td>
     </tr>
     <tr>
       <th>lty</th>
@@ -222,6 +226,7 @@
    <dt>y</dt><dd><p>the y coordinates of the points that were plotted.</p></dd>
    <dt>cex</dt><dd><p>the point sizes.</p></dd>
    <dt>pch</dt><dd><p>the plotting symbols.</p></dd>
+   <dt>col</dt><dd><p>the point colors.</p></dd>
    <dt>bg</dt><dd><p>the background colors.</p></dd>
    <dt>ids</dt><dd><p>the study id numbers.</p></dd>
    <dt>slab</dt><dd><p>the study labels.</p></dd>

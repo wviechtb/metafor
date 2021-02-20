@@ -1,5 +1,5 @@
 plot.cumul.rma <- function(x, yaxis="tau2", xlim, ylim, xlab, ylab, at, transf, atransf, targs,
-digits, cols=c("gray80","gray10"), addgrid=TRUE, pch=19, cex=1, lwd=2, ...) {
+digits, cols=c("gray80","gray10"), grid=TRUE, pch=19, cex=1, lwd=2, ...) {
 
    #########################################################################
 
@@ -56,6 +56,23 @@ digits, cols=c("gray80","gray10"), addgrid=TRUE, pch=19, cex=1, lwd=2, ...) {
 
    ### note: digits can also be a list (e.g., digits=list(2L,3))
 
+   ddd <- list(...)
+
+   if (!is.null(ddd$addgrid))
+      grid <- ddd$addgrid
+
+   ### grid argument can either be a logical or a color
+
+   if (is.logical(grid))
+      gridcol <- "lightgray"
+   if (is.character(grid)) {
+      gridcol <- grid
+      grid <- TRUE
+   }
+
+   lplot <- function(..., addgrid) plot(...)
+   laxis <- function(..., addgrid) axis(...)
+
    #########################################################################
 
    ### set up data frame with the values to be plotted
@@ -110,7 +127,7 @@ digits, cols=c("gray80","gray10"), addgrid=TRUE, pch=19, cex=1, lwd=2, ...) {
 
    ### set up plot
 
-   plot(NA, NA, xlim=xlim, ylim=ylim, xlab=xlab, ylab=ylab, xaxt="n", yaxt="n", ...)
+   lplot(NA, NA, xlim=xlim, ylim=ylim, xlab=xlab, ylab=ylab, xaxt="n", yaxt="n", ...)
 
    ### generate x axis positions if none are specified
 
@@ -135,18 +152,18 @@ digits, cols=c("gray80","gray10"), addgrid=TRUE, pch=19, cex=1, lwd=2, ...) {
 
    ### add x-axis
 
-   axis(side=1, at=at, labels=at.lab, ...)
+   laxis(side=1, at=at, labels=at.lab, ...)
 
    ### add y-axis
 
    aty <- axTicks(side=2)
-   axis(side=2, at=aty, labels=formatC(aty, digits=digits[[2]], format="f", drop0trailing=ifelse(class(digits[[2]]) == "integer", TRUE, FALSE)), ...)
+   laxis(side=2, at=aty, labels=formatC(aty, digits=digits[[2]], format="f", drop0trailing=ifelse(class(digits[[2]]) == "integer", TRUE, FALSE)), ...)
 
    ### add grid
 
-   if (addgrid) {
-      abline(v=at, lty="dotted", col="lightgray")
-      abline(h=aty, lty="dotted", col="lightgray")
+   if (.isTRUE(grid)) {
+      abline(v=at,  lty="dotted", col=gridcol)
+      abline(h=aty, lty="dotted", col=gridcol)
    }
 
    ### vector with color gradient for points

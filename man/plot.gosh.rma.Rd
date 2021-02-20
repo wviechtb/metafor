@@ -6,7 +6,7 @@
 }
 \usage{
 \method{plot}{gosh.rma}(x, het="I2", pch=16, cex=0.5, out, col, alpha, border,
-     xlim, ylim, xhist=TRUE, yhist=TRUE, hh=.3, breaks,
+     xlim, ylim, xhist=TRUE, yhist=TRUE, hh=0.3, breaks,
      adjust, lwd, labels, \dots)
 }
 \arguments{

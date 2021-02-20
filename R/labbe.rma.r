@@ -1,5 +1,5 @@
 labbe.rma <- function(x, xlim, ylim, xlab, ylab,
-add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, lty, ...) {
+add=x$add, to=x$to, transf, targs, pch=21, psize, col, bg, grid=FALSE, lty, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -53,6 +53,15 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, lty, ..
    addyi <- ifelse(is.null(ddd$addyi), TRUE, ddd$addyi)
    addvi <- ifelse(is.null(ddd$addvi), TRUE, ddd$addvi)
 
+   ### grid argument can either be a logical or a color
+
+   if (is.logical(grid))
+      gridcol <- "lightgray"
+   if (is.character(grid)) {
+      gridcol <- grid
+      grid <- TRUE
+   }
+
    #########################################################################
 
    k <- x$k.f
@@ -71,6 +80,18 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, lty, ..
       if (length(psize) != k)
          stop(mstyle$stop(paste0("Number of tables (", k, ") does not correspond to the length of the 'psize' argument (", length(psize), ").")))
    }
+
+   if (missing(col))
+      col <- "black"
+
+   if (length(col) == 1L)                       ### note: col must have same length as number of tables (including NAs)
+      col <- rep(col, k)                        ### or be equal to a single value (which is then repeated)
+
+   if (length(col) != k)
+      stop(mstyle$stop(paste0("Number of tables (", k, ") does not correspond to the length of the 'col' argument (", length(col), ").")))
+
+   if (missing(bg))
+      bg <- "gray"
 
    if (length(bg) == 1L)                        ### note: bg must have same length as number of tables (including NAs)
       bg <- rep(bg, k)                          ### or be equal to a single value (which is then repeated)
@@ -160,6 +181,7 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, lty, ..
       dat.t <- dat.t[not.na,]
       dat.c <- dat.c[not.na,]
       pch   <- pch[not.na]
+      col   <- col[not.na]
       bg    <- bg[not.na]
 
    }
@@ -242,6 +264,7 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, lty, ..
    dat.c$yi.o  <- dat.c$yi[order.vec]
    psize.o     <- psize[order.vec]
    pch.o       <- pch[order.vec]
+   col.o       <- col[order.vec]
    bg.o        <- bg[order.vec]
 
    ### add x axis label
@@ -262,19 +285,19 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, bg="gray", grid=FALSE, lty, ..
 
    ### add grid (and redraw box)
 
-   if (grid) {
-      grid()
+   if (.isTRUE(grid)) {
+      grid(col=gridcol)
       box(...)
    }
 
    abline(a=0, b=1, lty=lty[1], ...)
    lines(c.vals, t.vals, lty=lty[2], ...)
-   points(dat.c$yi.o, dat.t$yi.o, cex=psize.o, pch=pch.o, bg=bg.o, ...)
+   points(dat.c$yi.o, dat.t$yi.o, cex=psize.o, pch=pch.o, col=col.o, bg=bg.o, ...)
 
    #########################################################################
 
    ### prepare data frame to return
-   sav <- data.frame(x=dat.c$yi, y=dat.t$yi, cex=psize, pch=pch, bg=bg, ids=x$ids[not.na], slab=x$slab[not.na], stringsAsFactors=FALSE)
+   sav <- data.frame(x=dat.c$yi, y=dat.t$yi, cex=psize, pch=pch, col=col, bg=bg, ids=x$ids[not.na], slab=x$slab[not.na], stringsAsFactors=FALSE)
 
    invisible(sav)
 

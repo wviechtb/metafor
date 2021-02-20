@@ -7,7 +7,7 @@
 \usage{
 \method{plot}{cumul.rma}(x, yaxis="tau2", xlim, ylim, xlab, ylab,
      at, transf, atransf, targs, digits, cols=c("gray80","gray10"),
-     addgrid=TRUE, pch=19, cex=1, lwd=2, \dots)
+     grid=TRUE, pch=19, cex=1, lwd=2, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"cumul.rma"}.}
@@ -22,7 +22,7 @@
    \item{targs}{optional arguments needed by the function specified via \code{transf} or \code{atransf}.}
    \item{digits}{integer to specify the number of decimal places to which the tick mark labels of the x- and y-axis should be rounded. Can also be a vector of two integers, the first to specify the number of decimal places for the x-axis, the second for the y-axis labels (e.g., \code{c(2,3)}). If unspecified, the function tries to set the argument to some sensible values.}
    \item{cols}{vector with two or more colors to use for visualizing the order of the cumulative results.}
-   \item{addgrid}{logical to specify whether a grid should be added to the plot (the default is \code{TRUE}).}
+   \item{grid}{logical to specify whether a grid should be added to the plot (can also be a color name).}
    \item{pch}{plotting symbol to use. By default, a solid circle is used. See \code{\link{points}} for other options.}
    \item{cex}{symbol expansion factor.}
    \item{lwd}{line width.}
