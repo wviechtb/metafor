@@ -27,7 +27,7 @@
 \alias{transf.dtobesd}
 \alias{transf.logortord}
 \alias{transf.logortorr}
-\title{Transformation Function}
+\title{Transformation Functions}
 \description{
    A set of transformation functions useful for meta-analyses. \loadmathjax
 }

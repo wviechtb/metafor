@@ -3,7 +3,7 @@
 \alias{baujat.rma}
 \title{Baujat Plots for 'rma' Objects}
 \description{
-   Function to create Baujat plots for objects of class \code{"rma"}.
+   Function to create Baujat plots for objects of class \code{"rma"}. \loadmathjax
 }
 \usage{
 baujat(x, \dots)
@@ -24,11 +24,11 @@ baujat(x, \dots)
    \item{\dots}{other arguments.}
 }
 \details{
-   The model specified via \code{x} must be a model fitted with either the \code{\link{rma.uni}}, \code{\link{rma.mh}}, or \code{\link{rma.peto}} function.
+   The model specified via \code{x} must be a model fitted with either the \code{\link{rma.uni}}, \code{\link{rma.mh}}, or \code{\link{rma.peto}} functions.
 
-   Baujat et al. (2002) proposed a diagnostic plot to detect sources of heterogeneity in meta-analytic data. The plot shows the contribution of each study to the overall Q-test statistic for heterogeneity on the x-axis versus the influence of each study (defined as the standardized squared difference between the overall estimate based on a fixed-effects model with and without the study included in the model fitting) on the y-axis. The same type of plot can be produced by first fitting a fixed-effects model with either the \code{\link{rma.uni}} (using \code{method="FE"}), \code{\link{rma.mh}}, or \code{\link{rma.peto}} functions and then passing the fitted model object to the \code{baujat} function.
+   Baujat et al. (2002) proposed a diagnostic plot to detect sources of heterogeneity in meta-analytic data. The plot shows the contribution of each study to the overall \mjseqn{Q}-test statistic for heterogeneity on the x-axis versus the influence of each study (defined as the standardized squared difference between the overall estimate based on a fixed-effects model with and without the study included in the model fitting) on the y-axis. The same type of plot can be produced by first fitting a fixed-effects model with either the \code{\link{rma.uni}} (using \code{method="FE"}), \code{\link{rma.mh}}, or \code{\link{rma.peto}} functions and then passing the fitted model object to the \code{baujat} function.
 
-   For models fitted with the \code{\link{rma.uni}} function (which may involve moderators and/or which may be random/mixed-effects models), the idea underlying this type of plot can be generalized as follows: The x-axis then corresponds to the squared Pearson residual of a study, while the y-axis corresponds to the standardized squared difference between the predicted/fitted value for the study with and without the study included in the model fitting. Therefore, for a fixed-effect with moderators model, the x-axis corresponds to the contribution of the study to the QE-test statistic for residual heterogeneity.
+   For models fitted with the \code{\link{rma.uni}} function (which may involve moderators and/or which may be random/mixed-effects models), the idea underlying this type of plot can be generalized as follows (Viechtbauer, 2021): The x-axis then corresponds to the squared Pearson residual of a study, while the y-axis corresponds to the standardized squared difference between the predicted/fitted value for the study with and without the study included in the model fitting. Therefore, for a fixed-effects with moderators model, the x-axis corresponds to the contribution of the study to the \mjseqn{Q_E}-test statistic for residual heterogeneity.
 
    By default, the points plotted are the study id numbers, but one can also plot the study labels by setting \code{symbol="slab"} (if study labels are available within the model object) or one can specify a plotting symbol via the \code{symbol} argument that gets passed to \code{pch} (see \code{\link{points}} for possible options).
 }
@@ -47,6 +47,8 @@ baujat(x, \dots)
    Baujat, B., Mahe, C., Pignon, J.-P., & Hill, C. (2002). A graphical method for exploring heterogeneity in meta-analyses: Application to a meta-analysis of 65 trials. \emph{Statistics in Medicine}, \bold{21}(18), 2641--2652. \verb{https://doi.org/10.1002/sim.1221}
 
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}
+
+   Viechtbauer, W. (2021). Model checking in meta-analysis. In C. H. Schmid, T. Stijnen, & I. R. White (Eds.), \emph{Handbook of meta-analysis} (pp. 219--254). Boca Raton, FL: CRC Press. \verb{https://doi.org/10.1201/9781315119403}
 }
 \seealso{
    \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, \code{\link{influence.rma.uni}}, \code{\link{radial}}
@@ -68,5 +70,10 @@ baujat(res)
 ### some variations of the plotting symbol
 baujat(res, symbol=19)
 baujat(res, symbol="slab")
+
+### label only a selection of the more 'extreme' points
+sav <- baujat(res, symbol=19, xlim=c(0,20))
+sav <- sav[sav$x >= 10 | sav$y >= 0.10,]
+text(sav$x, sav$y, sav$slab, pos=1)
 }
 \keyword{hplot}

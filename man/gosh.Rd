@@ -24,9 +24,9 @@ gosh(x, \dots)
 
    Olkin et al. (2012) proposed the GOSH (graphical display of study heterogeneity) plot, which is based on examining the results of a fixed-effects model in all possible subsets of size \mjseqn{1, \ldots, k} of the \mjseqn{k} studies included in a meta-analysis. In a homogeneous set of studies, the model estimates obtained this way should form a roughly symmetric, contiguous, and unimodal distribution. On the other hand, when the distribution is multimodal, then this suggests the presence of heterogeneity, possibly due to outliers and/or distinct subgroupings of studies. Plotting the estimates against some measure of heterogeneity (e.g., \mjseqn{I^2}, \mjseqn{H^2}, or the \mjseqn{Q}-statistic) can also help to reveal subclusters, which are indicative of heterogeneity. The same type of plot can be produced by first fitting a fixed-effects model with either the \code{\link{rma.uni}} (using \code{method="FE"}), \code{\link{rma.mh}}, or \code{\link{rma.peto}} functions and then passing the fitted model object to the \code{gosh} function and then plotting the results.
 
-   For models fitted with the \code{\link{rma.uni}} function (which may involve moderators and/or may be random/mixed-effects models), the idea underlying this type of plot can be generalized by examining the distribution of all model coefficients, plotting them against each other, and against some measure of (residual) heterogeneity (including the estimate of \mjseqn{\tau^2}).
+   For models fitted with the \code{\link{rma.uni}} function (which may involve moderators and/or may be random/mixed-effects models), the idea underlying this type of plot can be generalized (Viechtbauer, 2021) by examining the distribution of all model coefficients, plotting them against each other, and against some measure of (residual) heterogeneity (including the estimate of \mjseqn{\tau^2}).
 
-   Note that for models without moderators, application of the method requires fitting a total of \mjseqn{2^k - 1} models, which could be an excessively large number when \mjseqn{k} is large. For example, for \mjseqn{k=10}, there are only 1023 possible subsets, but for \mjseqn{k=20}, this number already grows to 1048575. For even larger \mjseqn{k}, it may become computationally infeasible to consider all possible subsets (and even storage of the results could become an issue). Instead, we can then examine (a sufficiently large number of) random subsets.
+   Note that for models without moderators, application of the method requires fitting a total of \mjseqn{2^k - 1} models, which could be an excessively large number when \mjseqn{k} is large. For example, for \mjseqn{k=10}, there are only 1023 possible subsets, but for \mjseqn{k=20}, this number already grows to 1048575. For even larger \mjseqn{k}, it may become computationally infeasible to consider all possible subsets. Instead, we can then examine (a sufficiently large number of) random subsets.
 
    By default, if the number of possible subsets is \mjseqn{\le 10^6}, the function will consider all possible subsets and otherwise \mjseqn{10^6} random subsets. One can use the \code{subsets} argument to specify a different number of subsets to consider. If \code{subsets} is specified and it is actually larger than the number of possible subsets, then the function automatically only considers the possible subsets and does not use random subsets.
 
@@ -47,6 +47,9 @@ gosh(x, \dots)
    Olkin, I., Dahabreh, I. J., & Trikalinos, T. A. (2012). GOSH - a graphical display of study heterogeneity. \emph{Research Synthesis Methods}, \bold{3}(3), 214--223. \verb{https://doi.org/10.1002/jrsm.1053}
 
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}
+
+   Viechtbauer, W. (2021). Model checking in meta-analysis. In C. H. Schmid, T. Stijnen, & I. R. White (Eds.), \emph{Handbook of meta-analysis} (pp. 219--254). Boca Raton, FL: CRC Press. \verb{https://doi.org/10.1201/9781315119403}
+
 }
 \seealso{
    \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, \code{\link{influence.rma.uni}},

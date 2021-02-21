@@ -1,11 +1,11 @@
-# Note: If 'x' and 'vi' (or 'sei') are specified, the CI bounds for the
-# polygon are calculated based on a standard normal distribution. But the
-# Knapp and Hartung method may have been used to obtain 'vi' (or 'sei'),
-# in which case we would want to use a t-distribution. But adding a
-# corresponding argument would be a bit awkward, since the user would then
-# also have to specify the degrees of freedom. Instead, the user can just
-# pass the CI bounds (that were calculated with 'test="knha"') directly to
-# the function via the 'ci.lb' and 'ci.ub' argument.
+# Note: If x and vi (or sei) are specified, the CI bounds for the polygon are
+# calculated based on a normal distribution. But the Knapp and Hartung method
+# may have been used to obtain vi (or sei), in which case we would want to use
+# a t-distribution. Adding a corresponding argument would be a bit awkward,
+# since the user would then have to specify the degrees of freedom. Instead,
+# the user can just pass the CI (and PI) bounds (that were calculated with
+# test="knha") directly to the function via the ci.lb and ci.ub (and pi.lb and
+# pi.ub) argument.
 
 addpoly.default <- function(x, vi, sei, ci.lb, ci.ub, pi.lb, pi.ub,
 rows=-1, level=95, annotate=TRUE, digits=2, width, mlab, transf,

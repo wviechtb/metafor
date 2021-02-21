@@ -7,6 +7,11 @@ digits, cols=c("gray80","gray10"), grid=TRUE, pch=19, cex=1, lwd=2, ...) {
 
    .chkclass(class(x), must="cumul.rma")
 
+   na.act <- getOption("na.action")
+
+   if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
+      stop(mstyle$stop("Unknown 'na.action' specified under options()."))
+
    yaxis <- match.arg(yaxis, c("tau2","I2","H2"))
 
    if (yaxis == "tau2" && is.null(x$tau2))
@@ -29,12 +34,20 @@ digits, cols=c("gray80","gray10"), grid=TRUE, pch=19, cex=1, lwd=2, ...) {
 
    if (missing(ylab)) {
       if (yaxis == "tau2")
-         ylab <- "Amount of Heterogeneity (tau^2)"
+         #ylab <- "Amount of Heterogeneity (tau^2)"
+         ylab <- expression(paste("Amount of Heterogeneity ", (tau^2)))
       if (yaxis == "I2")
-         ylab <- "Percentage of Variability due to Heterogeneity (I^2)"
+         #ylab <- "Percentage of Variability due to Heterogeneity (I^2)"
+         ylab <- expression(paste("Percentage of Variability due to Heterogeneity ", (I^2)))
       if (yaxis == "H2")
-         ylab <- "Ratio of Total Variability to Sampling Variability (H^2)"
+         #ylab <- "Ratio of Total Variability to Sampling Variability (H^2)"
+         ylab <- expression(paste("Ratio of Total Variability to Sampling Variability ", (H^2)))
    }
+
+   par.mar <- par("mar")
+   par.mar.adj <- par.mar + c(0,0.5,0,0) # need a bit more space on the right for the y-axis label
+   par(mar = par.mar.adj)
+   on.exit(par(mar = par.mar))
 
    if (missing(at))
       at <- NULL
@@ -86,9 +99,13 @@ digits, cols=c("gray80","gray10"), grid=TRUE, pch=19, cex=1, lwd=2, ...) {
    if (yaxis == "H2")
       dat$yval <- x$H2
 
-   ### remove any rows with NAs
+   ### apply chosen na.action
 
-   dat <- na.omit(dat)
+   if (na.act == "na.fail" && anyNA(dat))
+      stop(mstyle$stop("Missing values in results."))
+
+   if (na.act == "na.omit")
+      dat <- na.omit(dat)
 
    ### number of remaining rows/points
 
@@ -107,13 +124,13 @@ digits, cols=c("gray80","gray10"), grid=TRUE, pch=19, cex=1, lwd=2, ...) {
    ### set xlim and ylim values
 
    if (missing(xlim)) {
-      xlim <- range(dat$estim)
+      xlim <- range(dat$estim, na.rm=TRUE)
    } else {
       xlim <- sort(xlim) ### just in case the user supplies the limits in the wrong order
    }
 
    if (missing(ylim)) {
-      ylim <- range(dat$yval)
+      ylim <- range(dat$yval, na.rm=TRUE)
    } else {
       ylim <- sort(ylim) ### just in case the user supplies the limits in the wrong order
    }
@@ -182,6 +199,8 @@ digits, cols=c("gray80","gray10"), grid=TRUE, pch=19, cex=1, lwd=2, ...) {
    ### looks better this way, especially when k is low
 
    for (i in seq_len(k-1)) {
+      if (is.na(dat$estim[i]) || is.na(dat$estim[i+1]) || is.na(dat$yval[i]) || is.na(dat$yval[i+1]))
+         next
       estims <- approx(c(dat$estim[i], dat$estim[i+1]), n=50)$y
       yvals  <- approx(c(dat$yval[i], dat$yval[i+1]), n=50)$y
       cols.lines <- colorRampPalette(c(cols.points[i], cols.points[i+1]))(50)

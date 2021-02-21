@@ -141,6 +141,8 @@ baujat.rma <- function(x, xlim, ylim, xlab, ylab, cex, symbol, grid=TRUE, progba
 
    #########################################################################
 
-   invisible(data.frame(x=xhati[x$not.na], y=yhati[x$not.na], ids=x$ids[x$not.na], slab=x$slab[x$not.na], stringsAsFactors=FALSE))
+   sav <- data.frame(x=xhati[x$not.na], y=yhati[x$not.na], ids=x$ids[x$not.na], slab=x$slab[x$not.na], stringsAsFactors=FALSE)
+
+   invisible(sav)
 
 }

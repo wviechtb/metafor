@@ -12,7 +12,7 @@ dfround(x, digits)
    \item{digits}{either a single integer or a numeric vector of the same length as there are columns in \code{x}.}
 }
 \details{
-   A simply convenience function to round the numeric variables in a data frame, possibly to different numbers of digits. Hence, \code{digits} can either be a single integer (which will then be used to round all numeric variables to the specified number of digits) or a numeric vector (of the same length as there are columns in \code{x}) to specify the number of digits to which each variable should be rounded.
+   A simple convenience function to round the numeric variables in a data frame, possibly to different numbers of digits. Hence, \code{digits} can either be a single integer (which will then be used to round all numeric variables to the specified number of digits) or a numeric vector (of the same length as there are columns in \code{x}) to specify the number of digits to which each variable should be rounded.
 
    Non-numeric variables are skipped. If \code{digits} is a vector, some arbitrary value (or \code{NA}) can be specified for those variables.
 }

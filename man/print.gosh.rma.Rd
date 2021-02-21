@@ -13,7 +13,7 @@
    \item{\dots}{other arguments.}
 }
 \details{
-   The output shows how many model fits were attempted, how many succeeded, and summary statistics (i.e., the mean and the five-number summary) for the various measures of (residual) heterogeneity and the model coefficient(s) computed across all of the subsets.
+   The output shows how many model fits were attempted, how many succeeded, and summary statistics (i.e., the mean, minimum, first quartile, median, third quartile, and maximum) for the various measures of (residual) heterogeneity and the model coefficient(s) computed across all of the subsets.
 }
 \value{
    The function does not return an object.
