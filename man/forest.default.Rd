@@ -11,8 +11,8 @@
        level=95, refline=0, digits=2L, width,
        xlab, slab, ilab, ilab.xpos, ilab.pos,
        subset, transf, atransf, targs, rows,
-       efac=1, pch=15, psize, col, lty, fonts,
-       cex, cex.lab, cex.axis, annosym, \dots)
+       efac=1, pch=15, psize, plim=c(0.5,1.5), col,
+       lty, fonts, cex, cex.lab, cex.axis, annosym, \dots)
 }
 \arguments{
    \item{x}{vector of length \mjseqn{k} with the observed effect sizes or outcomes.}
@@ -43,10 +43,11 @@
    \item{transf}{optional argument to specify the name of a function that should be used to transform the observed effect sizes or outcomes and corresponding confidence interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{atransf}{optional argument to specify the name of a function that should be used to transform the x-axis labels and annotations (e.g., \code{atransf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified via \code{transf} or \code{atransf}.}
-   \item{rows}{optional vector to specify the rows (or more generally, the horizontal positions) for plotting the outcomes. If unspecified, the function sets this value automatically. Can also be a single value to specify the row (horizontal position) of the first outcome (the remaining outcomes are then plotted below this starting row).}
+   \item{rows}{optional vector to specify the rows (or more generally, the horizontal positions) for plotting the outcomes. Can also be a single value to specify the row (horizontal position) of the first outcome (the remaining outcomes are then plotted below this starting row). If unspecified, the function sets this value automatically.}
    \item{efac}{vertical expansion factor for confidence interval limits and arrows. The default value of 1 should usually work okay. Can also be a vector of two numbers, the first for CI limits, the second for arrows.}
    \item{pch}{plotting symbol to use for the observed effect sizes or outcomes. By default, a filled square is used. See \code{\link{points}} for other options. Can also be a vector of values.}
-   \item{psize}{optional numeric value to specify the point sizes for the observed effect sizes or outcomes. If unspecified, the point sizes are an inverse function of the precision of the estimates. Can also be a vector of values.}
+   \item{psize}{optional numeric value to specify the point sizes for the observed effect sizes or outcomes. If unspecified, the point sizes are a function of the precision of the estimates. Can also be a vector of values.}
+   \item{plim}{numeric vector of length 2 to scale the point sizes (ignored when \code{psize} is specified). See \sQuote{Details}.}
    \item{col}{optional character string to specify the name of a color to use for plotting the observed effect sizes or outcomes (\code{"black"} is used by default if not specified). Can also be a vector of color names.}
    \item{lty}{optional character string to specify the line type for the confidence intervals (if unspecified, the function sets this to \code{"solid"} by default).}
    \item{fonts}{optional character string to specify the font to use for the study labels, annotations, and the extra information (if specified via \code{ilab}). If unspecified, the default font is used.}
@@ -61,12 +62,14 @@
 
    With the \code{transf} argument, the observed effect sizes or outcomes and corresponding confidence interval bounds can be transformed with some suitable function. For example, when plotting log odds ratios, then one could use \code{transf=exp} to obtain a forest plot showing the odds ratios. Alternatively, one can use the \code{atransf} argument to transform the x-axis labels and annotations (e.g., \code{atransf=exp}). See also \link{transf} for some transformation functions useful for meta-analyses. The examples below illustrate the use of these arguments.
 
-   By default, the studies are ordered from top to bottom (i.e., the first study in the dataset will be placed in row \mjseqn{k}, the second study in row \mjseqn{k-1}, and so on, until the last study, which is placed in the first row). The studies can be reordered with the \code{subset} argument (by specifying a vector with indices with the desired order).
+   By default, the studies are ordered from top to bottom (i.e., the first study in the dataset will be placed in row \mjseqn{k}, the second study in row \mjseqn{k-1}, and so on, until the last study, which is placed in the first row). The studies can be reordered with the \code{subset} argument (by specifying a vector with the desired order).
+
+   By default (i.e., when \code{psize} is not specified), the size of the points is a function of the precision (i.e., inverse standard error) of the outcomes. This way, more precise estimates are visually more prominent in the plot. By making the point sizes a function of the inverse standard error of the estimates, their area is proportional to the inverse sampling variances, which corresponds to the weights they would receive in a fixed-effects model. However, the point sizes are rescaled so that the smallest point size is \code{plim[1]} and the largest point size is \code{plim[2]}. As a result, their relative sizes (i.e., areas) no longer exactly correspond to their relative weights in such a model. If exactly relative point sizes are desired, one can set \code{plim[2]} to \code{NA}, in which case the points are rescaled so that the smallest point size corresponds to \code{plim[1]} and all other points are scaled accordingly. As a result, the largest point may be very large. Alternatively, one can set \code{plim[1]} to \code{NA}, in which case the points are rescaled so that the largest point size corresponds to \code{plim[2]} and all other points are scaled accordingly. As a result, the smallest point may be very small and essentially indistinguishable from the confidence interval line. To avoid the latter, one can also set \code{plim[3]}, which enforces a minimal point size.
 
    Summary estimates can be added to the plot with the \code{\link{addpoly}} function. See the documentation for that function for examples.
 }
 \note{
-   The function tries to set some sensible values for the optional arguments, but it may be necessary to tweak these in certain circumstances.
+   The function tries to set some sensible values for the optional arguments, but it may be necessary to adjust these in certain circumstances.
 
    The function actually returns some information about the chosen defaults invisibly. Printing this information is useful as a starting point to make adjustments to the plot.
 
@@ -74,7 +77,7 @@
 
    If the horizontal plot and/or x-axis limits are set by the user, then the horizontal plot limits (\code{xlim}) must be at least as wide as the x-axis limits (\code{alim}). This restriction is enforced inside the function.
 
-   If the outcome measure used for creating the plot is bounded (e.g., correlations are bounded between \code{-1} and \code{1}, proportions are bounded between \code{0} and \code{1}), one can use the \code{clim} argument to enforce those limits (confidence intervals cannot exceed those bounds then).
+   If the outcome measure used for creating the plot is bounded (e.g., correlations are bounded between -1 and +1, proportions are bounded between 0 and 1), one can use the \code{clim} argument to enforce those limits (confidence intervals cannot exceed those bounds then).
 
    The \code{lty} argument can also be a vector of two elements, the first for specifying the line type of the individual CIs (\code{"solid"} by default), the second for the line type of the horizontal line that is automatically added to the plot (\code{"solid"} by default; set to \code{"blank"} to remove it).
 }
@@ -96,11 +99,11 @@ dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 ### default forest plot of the observed log risk ratios
 forest(dat$yi, dat$vi)
 
-### forest plot of the observed risk ratios
+### forest plot of the observed risk ratios (transform outcomes)
 forest(dat$yi, dat$vi, slab=paste(dat$author, dat$year, sep=", "), transf=exp,
        alim=c(0,2), steps=5, xlim=c(-2.5,4), refline=1, cex=.9)
 
-### forest plot of the observed risk ratios
+### forest plot of the observed risk ratios (transformed x-axis)
 forest(dat$yi, dat$vi, slab=paste(dat$author, dat$year, sep=", "), atransf=exp,
        at=log(c(.05,.25,1,4,20)), xlim=c(-10,8), cex=.9)
 

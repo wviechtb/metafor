@@ -24,7 +24,7 @@
    The data frame comes with an attribute \code{"seed"}. If argument \code{seed} is \code{NULL}, the attribute is the value of \code{\link{.Random.seed}} before the simulation was started; otherwise it is the value of the \code{seed} argument with a \code{"kind"} attribute with value \code{as.list(RNGkind())}.
 }
 \note{
-   If the outcome measure used for the analysis is bounded (e.g., correlations are bounded between \code{-1} and \code{1}, proportions are bounded between \code{0} and \code{1}), one can use the \code{yilim} argument to enforce those limits when simulating values (simulated values cannot exceed those bounds then).
+   If the outcome measure used for the analysis is bounded (e.g., correlations are bounded between -1 and +1, proportions are bounded between 0 and 1), one can use the \code{yilim} argument to enforce those limits when simulating values (simulated values cannot exceed those bounds then).
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}

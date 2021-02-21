@@ -37,7 +37,7 @@ trimfill(x, \dots)
 \note{
    Three different estimators for the number of missing studies were proposed by Duval and Tweedie (2000a, 2000b). Based on these articles and Duval (2005), \code{"R0"} and \code{"L0"} are recommended. An advantage of estimator \code{"R0"} is that it provides a test of the null hypothesis that the number of missing studies (on the chosen side) is zero.
 
-   If the outcome measure used for the analysis is bounded (e.g., correlations are bounded between \code{-1} and \code{1}, proportions are bounded between \code{0} and \code{1}), one can use the \code{ilim} argument to enforce those limits when imputing values (imputed values cannot exceed those bounds then).
+   If the outcome measure used for the analysis is bounded (e.g., correlations are bounded between -1 and +1, proportions are bounded between 0 and 1), one can use the \code{ilim} argument to enforce those limits when imputing values (imputed values cannot exceed those bounds then).
 
    The model used during the trim and fill procedure is the same as used by the original model object. Hence, if a fixed-effects model is passed to the function, then a fixed-effects model is also used during the trim and fill procedure and the results provided are also based on a fixed-effects model. This would be a \sQuote{fixed-fixed} approach. Similarly, if a random-effects model is passed to the function, then the same model is used as part of the trim and fill procedure and for the final analysis. This would be a \sQuote{random-random} approach. However, one can also easily fit a different model for the final analysis than was used for the trim and fill procedure. See \sQuote{Examples} for an illustration of a \sQuote{fixed-random} approach.
 }

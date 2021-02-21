@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Baujat Plots for 'rma' Objects — baujat" />
-<meta property="og:description" content="Function to create Baujat plots for objects of class &quot;rma&quot;." />
+<meta property="og:description" content="Function to create Baujat plots for objects of class &quot;rma&quot;. " />
 
 
 
@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-80</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-82</span>
       </span>
     </div>
 
@@ -134,7 +134,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Function to create Baujat plots for objects of class <code>"rma"</code>.</p>
+    <p>Function to create Baujat plots for objects of class <code>"rma"</code>. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
     </div>
 
     <pre class="usage"><span class='fu'>baujat</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
@@ -189,9 +189,9 @@
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The model specified via <code>x</code> must be a model fitted with either the <code><a href='rma.uni.html'>rma.uni</a></code>, <code><a href='rma.mh.html'>rma.mh</a></code>, or <code><a href='rma.peto.html'>rma.peto</a></code> function.</p>
-<p>Baujat et al. (2002) proposed a diagnostic plot to detect sources of heterogeneity in meta-analytic data. The plot shows the contribution of each study to the overall Q-test statistic for heterogeneity on the x-axis versus the influence of each study (defined as the standardized squared difference between the overall estimate based on a fixed-effects model with and without the study included in the model fitting) on the y-axis. The same type of plot can be produced by first fitting a fixed-effects model with either the <code><a href='rma.uni.html'>rma.uni</a></code> (using <code>method="FE"</code>), <code><a href='rma.mh.html'>rma.mh</a></code>, or <code><a href='rma.peto.html'>rma.peto</a></code> functions and then passing the fitted model object to the <code>baujat</code> function.</p>
-<p>For models fitted with the <code><a href='rma.uni.html'>rma.uni</a></code> function (which may involve moderators and/or which may be random/mixed-effects models), the idea underlying this type of plot can be generalized as follows: The x-axis then corresponds to the squared Pearson residual of a study, while the y-axis corresponds to the standardized squared difference between the predicted/fitted value for the study with and without the study included in the model fitting. Therefore, for a fixed-effect with moderators model, the x-axis corresponds to the contribution of the study to the QE-test statistic for residual heterogeneity.</p>
+    <p>The model specified via <code>x</code> must be a model fitted with either the <code><a href='rma.uni.html'>rma.uni</a></code>, <code><a href='rma.mh.html'>rma.mh</a></code>, or <code><a href='rma.peto.html'>rma.peto</a></code> functions.</p>
+<p>Baujat et al. (2002) proposed a diagnostic plot to detect sources of heterogeneity in meta-analytic data. The plot shows the contribution of each study to the overall \(Q\)-test statistic for heterogeneity on the x-axis versus the influence of each study (defined as the standardized squared difference between the overall estimate based on a fixed-effects model with and without the study included in the model fitting) on the y-axis. The same type of plot can be produced by first fitting a fixed-effects model with either the <code><a href='rma.uni.html'>rma.uni</a></code> (using <code>method="FE"</code>), <code><a href='rma.mh.html'>rma.mh</a></code>, or <code><a href='rma.peto.html'>rma.peto</a></code> functions and then passing the fitted model object to the <code>baujat</code> function.</p>
+<p>For models fitted with the <code><a href='rma.uni.html'>rma.uni</a></code> function (which may involve moderators and/or which may be random/mixed-effects models), the idea underlying this type of plot can be generalized as follows (Viechtbauer, 2021): The x-axis then corresponds to the squared Pearson residual of a study, while the y-axis corresponds to the standardized squared difference between the predicted/fitted value for the study with and without the study included in the model fitting. Therefore, for a fixed-effects with moderators model, the x-axis corresponds to the contribution of the study to the \(Q_E\)-test statistic for residual heterogeneity.</p>
 <p>By default, the points plotted are the study id numbers, but one can also plot the study labels by setting <code>symbol="slab"</code> (if study labels are available within the model object) or one can specify a plotting symbol via the <code>symbol</code> argument that gets passed to <code>pch</code> (see <code><a href='https://rdrr.io/r/graphics/points.html'>points</a></code> for possible options).</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -209,6 +209,7 @@
 
     <p>Baujat, B., Mahe, C., Pignon, J.-P., &amp; Hill, C. (2002). A graphical method for exploring heterogeneity in meta-analyses: Application to a meta-analysis of 65 trials. <em>Statistics in Medicine</em>, <b>21</b>(18), 2641--2652. <a href='https://doi.org/10.1002/sim.1221'>https://doi.org/10.1002/sim.1221</a></p>
 <p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href='https://doi.org/10.18637/jss.v036.i03'>https://doi.org/10.18637/jss.v036.i03</a></p>
+<p>Viechtbauer, W. (2021). Model checking in meta-analysis. In C. H. Schmid, T. Stijnen, &amp; I. R. White (Eds.), <em>Handbook of meta-analysis</em> (pp. 219--254). Boca Raton, FL: CRC Press. <a href='https://doi.org/10.1201/9781315119403'>https://doi.org/10.1201/9781315119403</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='rma.uni.html'>rma.uni</a></code>, <code><a href='rma.mh.html'>rma.mh</a></code>, <code><a href='rma.peto.html'>rma.peto</a></code>, <code><a href='influence.rma.uni.html'>influence.rma.uni</a></code>, <code><a href='radial.html'>radial</a></code></p></div>
@@ -230,7 +231,12 @@
 <span class='co'>### some variations of the plotting symbol</span>
 <span class='fu'>baujat</span><span class='op'>(</span><span class='va'>res</span>, symbol<span class='op'>=</span><span class='fl'>19</span><span class='op'>)</span>
 </div><div class='img'><img src='baujat-2.png' alt='' width='768' height='614' /></div><div class='input'><span class='fu'>baujat</span><span class='op'>(</span><span class='va'>res</span>, symbol<span class='op'>=</span><span class='st'>"slab"</span><span class='op'>)</span>
-</div><div class='img'><img src='baujat-3.png' alt='' width='768' height='614' /></div></pre>
+</div><div class='img'><img src='baujat-3.png' alt='' width='768' height='614' /></div><div class='input'>
+<span class='co'>### label only a selection of the more 'extreme' points</span>
+<span class='va'>sav</span> <span class='op'>&lt;-</span> <span class='fu'>baujat</span><span class='op'>(</span><span class='va'>res</span>, symbol<span class='op'>=</span><span class='fl'>19</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>20</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='input'><span class='va'>sav</span> <span class='op'>&lt;-</span> <span class='va'>sav</span><span class='op'>[</span><span class='va'>sav</span><span class='op'>$</span><span class='va'>x</span> <span class='op'>&gt;=</span> <span class='fl'>10</span> <span class='op'>|</span> <span class='va'>sav</span><span class='op'>$</span><span class='va'>y</span> <span class='op'>&gt;=</span> <span class='fl'>0.10</span>,<span class='op'>]</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/text.html'>text</a></span><span class='op'>(</span><span class='va'>sav</span><span class='op'>$</span><span class='va'>x</span>, <span class='va'>sav</span><span class='op'>$</span><span class='va'>y</span>, <span class='va'>sav</span><span class='op'>$</span><span class='va'>slab</span>, pos<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
+</div><div class='img'><img src='baujat-4.png' alt='' width='768' height='614' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -3,7 +3,7 @@ annotate=TRUE, addfit=TRUE, addpred=FALSE, showweights=FALSE, header=FALSE,
 xlim, alim, clim, ylim, top=3, at, steps=5, level=x$level, refline=0, digits=2L, width,
 xlab, slab, mlab, ilab, ilab.xpos, ilab.pos, order,
 transf, atransf, targs, rows,
-efac=1, pch=15, psize, colout, col, border, lty, fonts,
+efac=1, pch=15, psize, plim=c(0.5,1.5), colout, col, border, lty, fonts,
 cex, cex.lab, cex.axis, annosym, ...) {
 
    #########################################################################
@@ -68,7 +68,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
    if (x$int.only) {
 
       if (missing(col)) {
-         col <- c("black", "gray50") ### 1st color for summary polygon, 2nd color for prediction interval
+         col <- c("black", "gray50") ### 1st color for summary polygon, 2nd color for prediction interval line
       } else {
          if (length(col) == 1L)      ### if user only specified one value, assume it is for the summary polygon
             col <- c(col, "gray50")
@@ -102,7 +102,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
       efac <- rep(efac, 3)
 
    if (length(efac) == 2L)
-      efac <- c(efac[1], efac[1], efac[2])
+      efac <- c(efac[1], efac[1], efac[2]) # if 2 values specified: 1st = CI end lines and arrows, 2nd = summary polygon or fitted polygons
 
    ### annotation symbols vector
 
@@ -197,7 +197,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
    if (missing(slab)) {
       if (x$slab.null) {
-         slab <- paste("Study", x$slab)         ### x$slab is always of length yi.f (i.e., NAs also have an slab)
+         slab <- paste("Study", x$ids)          ### x$ids is always of length yi.f (i.e., NAs also have an id)
       } else {
          slab <- x$slab                         ### note: slab must have same length as yi.f in rma object
       }                                         ### even when fewer studies used for model fitting (due to NAs)
@@ -426,30 +426,30 @@ cex, cex.lab, cex.axis, annosym, ...) {
    ### set default point sizes (if not specified by user)
 
    if (is.null(psize)) {
-      # if (is.null(weights)) {
-      #    if (any(vi <= 0, na.rm=TRUE)) {           ### in case any vi value is zero
-      #       psize <- rep(1, k)
-      #    } else {                                  ### default psize is proportional to inverse standard error
-      #       wi    <- 1/sqrt(vi)                    ### note: vi's that are NA are ignored (but vi's whose yi is
-      #       psize <- wi/sum(wi, na.rm=TRUE)        ### NA are NOT ignored; an unlikely case in practice)
-      #       psize <- (psize - min(psize, na.rm=TRUE)) / (max(psize, na.rm=TRUE) - min(psize, na.rm=TRUE))
-      #       psize <- (psize * 1.0) + 0.5           ### note: only vi's that are still in the subset are used for determining the default point sizes
-      #       if (all(is.na(psize)))                 ### if k=1, then psize is NA, so catch this (and maybe some other problems)
-      #          psize <- rep(1, k)
-      #    }
-      # } else {
-      wi    <- weights
-      psize <- wi/sum(wi, na.rm=TRUE)
-      rng   <- max(psize, na.rm=TRUE) - min(psize, na.rm=TRUE)
-      if (rng <= .Machine$double.eps^0.5) {
-         psize <- rep(1, k)
-      } else {
-         psize <- (psize - min(psize, na.rm=TRUE)) / rng
-         psize <- (psize * 1.0) + 0.5
+      if (length(plim) < 2L)
+         stop(mstyle$stop("Argument 'plim' must be of length 2 or 3."))
+      wi <- sqrt(weights)
+      if (!is.na(plim[1]) && !is.na(plim[2])) {
+         rng <- max(wi, na.rm=TRUE) - min(wi, na.rm=TRUE)
+         if (rng <= .Machine$double.eps^0.5) {
+            psize <- rep(1, k)
+         } else {
+            psize <- (wi - min(wi, na.rm=TRUE)) / rng
+            psize <- (psize * (plim[2] - plim[1])) + plim[1]
+         }
+      }
+      if (is.na(plim[1]) && !is.na(plim[2])) {
+         psize <- wi / max(wi, na.rm=TRUE) * plim[2]
+         if (length(plim) == 3L)
+            psize[psize <= plim[3]] <- plim[3]
+      }
+      if (!is.na(plim[1]) && is.na(plim[2])) {
+         psize <- wi / min(wi, na.rm=TRUE) * plim[1]
+         if (length(plim) == 3L)
+            psize[psize >= plim[3]] <- plim[3]
       }
       if (all(is.na(psize)))
          psize <- rep(1, k)
-      # }
    }
 
    #########################################################################
@@ -932,7 +932,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
    ### return some information about plot invisibly
 
-   res <- list('xlim'=par("usr")[1:2], 'alim'=alim, 'at'=at, 'ylim'=ylim, 'rows'=rows, 'cex'=cex, 'cex.lab'=cex.lab, 'cex.axis'=cex.axis)
+   res <- list(xlim=par("usr")[1:2], alim=alim, at=at, ylim=ylim, rows=rows, cex=cex, cex.lab=cex.lab, cex.axis=cex.axis)
 
    invisible(res)
 

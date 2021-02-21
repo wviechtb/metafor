@@ -150,8 +150,8 @@ cex, cex.lab, cex.axis, annosym, ...) {
    k <- length(yi)
 
    if (x$slab.null) {
-      slab    <- paste("+ Study", x$slab)
-      slab[1] <- paste("Study", x$slab[1])
+      slab    <- paste("+ Study", x$ids)
+      slab[1] <- paste("Study", x$ids[1])
    } else {
       slab    <- paste("+", x$slab)
       slab[1] <- paste(x$slab[1])
@@ -582,7 +582,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
    ### return some information about plot invisibly
 
-   res <- list('xlim'=par("usr")[1:2], 'alim'=alim, 'at'=at, 'ylim'=ylim, 'rows'=rows, 'cex'=cex, 'cex.lab'=cex.lab, 'cex.axis'=cex.axis)
+   res <- list(xlim=par("usr")[1:2], alim=alim, at=at, ylim=ylim, rows=rows, cex=cex, cex.lab=cex.lab, cex.axis=cex.axis)
 
    invisible(res)
 

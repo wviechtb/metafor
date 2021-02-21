@@ -73,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-80</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-82</span>
       </span>
     </div>
 
@@ -131,9 +131,9 @@
       <small>Source: <a href='https://github.com/wviechtb/metafor/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="metafor-25-80-2021-02-20" class="section level1">
-<h1 class="page-header" data-toc-text="2.5-80">
-<a href="#metafor-25-80-2021-02-20" class="anchor"></a>metafor 2.5-80 (2021-02-20)<small> Unreleased </small>
+    <div id="metafor-25-82-2021-02-21" class="section level1">
+<h1 class="page-header" data-toc-text="2.5-82">
+<a href="#metafor-25-82-2021-02-21" class="anchor"></a>metafor 2.5-82 (2021-02-21)<small> Unreleased </small>
 </h1>
 <ul>
 <li><p>the <code>metafor</code> package now makes use of the <code>mathjaxr</code> package to nicely render equations shown in the HTML help pages</p></li>
@@ -157,6 +157,7 @@
 <li><p>in the various <code><a href="../reference/forest.html">forest()</a></code> functions, the right header is now suppressed when <code>annotate=FALSE</code> and <code>header=TRUE</code></p></li>
 <li><p>the <code>forest</code> and <code>funnel</code> arguments of <code><a href="../reference/reporter.html">reporter.rma.uni()</a></code> can now also be logicals to suppress the drawing of these plots</p></li>
 <li><p>one can now use <code><a href="../reference/weights.rma.html">weights(...,  type="rowsum")</a></code> for intercept-only <code>rma.mv</code> models (to obtain ‘row-sum weights’)</p></li>
+<li><p><code><a href="../reference/forest.default.html">forest.default()</a></code>, <code><a href="../reference/forest.rma.html">forest.rma()</a></code>, and <code><a href="../reference/labbe.html">labbe()</a></code> gain <code>plim</code> argument and now provide more flexibility in terms of the scaling of the points</p></li>
 <li><p><code><a href="../reference/forest.rma.html">forest.rma()</a></code> gains <code>colout</code> argument (to adjust the color of the observed effect sizes or outcomes)</p></li>
 <li><p>slight speedup in functions that repeatedly fit <code><a href="../reference/rma.uni.html">rma.uni()</a></code> models by skipping the computation of the pseudo R^2 statistic</p></li>
 <li><p><code><a href="../reference/funnel.html">funnel.default()</a></code> and <code><a href="../reference/funnel.html">funnel.rma()</a></code> gain <code>label</code> and <code>offset</code> arguments</p></li>

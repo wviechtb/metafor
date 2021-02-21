@@ -11,8 +11,8 @@
        level=x$level, refline=0, digits=2L, width,
        xlab, slab, mlab, ilab, ilab.xpos, ilab.pos,
        order, transf, atransf, targs, rows,
-       efac=1, pch=15, psize, colout, col, border, lty,
-       fonts, cex, cex.lab, cex.axis, annosym, \dots)
+       efac=1, pch=15, psize, plim=c(0.5,1.5), colout,
+       col, border, lty, fonts, cex, cex.lab, cex.axis, annosym, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma"}.}
@@ -42,10 +42,11 @@
    \item{transf}{optional argument to specify the name of a function that should be used to transform the observed effect sizes, summary estimates, fitted values, and confidence interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{atransf}{optional argument to specify the name of a function that should be used to transform the x-axis labels and annotations (e.g., \code{atransf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified via \code{transf} or \code{atransf}.}
-   \item{rows}{optional vector to specify the rows (or more generally, the horizontal positions) for plotting the outcomes. If unspecified, the function sets this value automatically. Can also be a single value to specify the row (horizontal position) of the first outcome (the remaining outcomes are then plotted below this starting row).}
+   \item{rows}{optional vector to specify the rows (or more generally, the horizontal positions) for plotting the outcomes. Can also be a single value to specify the row (horizontal position) of the first outcome (the remaining outcomes are then plotted below this starting row). If unspecified, the function sets this value automatically.}
    \item{efac}{vertical expansion factor for confidence interval limits, arrows, and the symbol used to denote summary estimates. The default value of 1 should usually work okay. Can also be a vector of two numbers, the first for CI limits and arrows, the second for summary estimates. Can also be a vector of three numbers, the first for CI limits, the second for arrows, the third for summary estimates.}
    \item{pch}{plotting symbol to use for the observed effect sizes or outcomes. By default, a filled square is used. See \code{\link{points}} for other options. Can also be a vector of values.}
-   \item{psize}{optional numeric value to specify the point sizes for the observed effect sizes or outcomes. If unspecified, the point sizes are an inverse function of the model weights. Can also be a vector of values.}
+   \item{psize}{optional numeric value to specify the point sizes for the observed effect sizes or outcomes. If unspecified, the point sizes are a function of the model weights. Can also be a vector of values.}
+   \item{plim}{numeric vector of length 2 to scale the point sizes (ignored when \code{psize} is specified). See \sQuote{Details}.}
    \item{colout}{optional character string to specify the name of a color to use for plotting the observed effect sizes or outcomes (\code{"black"} is used by default if not specified). Can also be a vector of color names.}
    \item{col}{optional character string to specify the name of a color to use for the summary polygon or fitted values. If unspecified, the function sets a default color.}
    \item{border}{optional character string to specify the name of a color to use for the border of the summary polygon or fitted values. If unspecified, the function sets a default color.}
@@ -82,9 +83,11 @@
    Additional summary estimates can be added to the plot with the \code{\link{addpoly}} function. See the documentation for that function for examples.
 
    When \code{showweights=TRUE}, the annotations will include information about the weights given to the observed effects or outcomes during the model fitting. For simple models (such as those fitted with the \code{\link{rma.uni}} function), these weights correspond to the \sQuote{inverse-variance weights} (but are given in percent). For models fitted with the \code{\link{rma.mv}} function, the weights are based on the diagonal of the weight matrix. Note that the weighting structure is typically more complex in such models (i.e., the weight matrix is usually not just a diagonal matrix) and the weights shown therefore do not reflect this complexity. See \code{\link{weights.rma}} for more details.
+
+   By default (i.e., when \code{psize} is not specified), the size of the points is a function of the square root of the model weights. This way, their area is proportional to the the weights. However, the point sizes are rescaled so that the smallest point size is \code{plim[1]} and the largest point size is \code{plim[2]}. As a result, their relative sizes (i.e., areas) no longer exactly correspond to their relative weights. If exactly relative point sizes are desired, one can set \code{plim[2]} to \code{NA}, in which case the points are rescaled so that the smallest point size corresponds to \code{plim[1]} and all other points are scaled accordingly. As a result, the largest point may be very large. Alternatively, one can set \code{plim[1]} to \code{NA}, in which case the points are rescaled so that the largest point size corresponds to \code{plim[2]} and all other points are scaled accordingly. As a result, the smallest point may be very small and essentially indistinguishable from the confidence interval line. To avoid the latter, one can also set \code{plim[3]}, which enforces a minimal point size.
 }
 \note{
-   The function tries to set some sensible values for the optional arguments, but it may be necessary to tweak these in certain circumstances.
+   The function tries to set some sensible values for the optional arguments, but it may be necessary to adjust these in certain circumstances.
 
    The function actually returns some information about the chosen defaults invisibly. Printing this information is useful as a starting point to make adjustments to the plot (see \sQuote{Examples}).
 
@@ -92,7 +95,7 @@
 
    If the horizontal plot and/or x-axis limits are set by the user, then the horizontal plot limits (\code{xlim}) must be at least as wide as the x-axis limits (\code{alim}). This restriction is enforced inside the function.
 
-   If the outcome measure used for creating the plot is bounded (e.g., correlations are bounded between \code{-1} and \code{1}, proportions are bounded between \code{0} and \code{1}), one can use the \code{clim} argument to enforce those limits (confidence/prediction intervals cannot exceed those bounds then).
+   If the outcome measure used for creating the plot is bounded (e.g., correlations are bounded between -1 and +1, proportions are bounded between 0 and 1), one can use the \code{clim} argument to enforce those limits (confidence/prediction intervals cannot exceed those bounds then).
 
    The models without moderators, the \code{col} argument can also be a vector of two elements, the first for specifying the color of the summary polygon, the second for specifying the color of the line for the prediction interval.
 

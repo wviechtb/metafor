@@ -10,7 +10,8 @@ labbe(x, \dots)
 
 \method{labbe}{rma}(x, xlim, ylim, xlab, ylab,
       add=x$add, to=x$to, transf, targs,
-      pch=21, psize, col, bg, grid=FALSE, lty, \dots)
+      pch=21, psize, plim=c(0.5,3.5),
+      col, bg, grid=FALSE, lty, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma"}. See \sQuote{Details}.}
@@ -23,7 +24,8 @@ labbe(x, \dots)
    \item{transf}{optional argument to specify the name of a function that should be used to transform the outcomes (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified under \code{transf}.}
    \item{pch}{plotting symbol to use for the outcomes. By default, a filled circle is used. Can also be a vector of values. See \code{\link{points}} for other options.}
-   \item{psize}{optional vector with point sizes for the outcomes. If unspecified, the point sizes are an inverse function of the precision of the outcomes.}
+   \item{psize}{optional numeric vector to specify the point sizes for the outcomes. If unspecified, the point sizes are a function of the precision of the outcomes. Can also be a vector of values.}
+   \item{plim}{numeric vector of length 2 to scale the point sizes (ignored when \code{psize} is specified). See \sQuote{Details}.}
    \item{col}{optional character string to specify the name of a color to use for the points (\code{"black"} is used by default if not specified). Can also be a vector of color names.}
    \item{bg}{optional character string to specify the name of a background color for open plot symbols (\code{"gray"} is used by default if not specified). Can also be a vector of color names. Set to \code{NA} to make the plotting symbols transparent.}
    \item{grid}{logical to specify whether a grid should be added to the plot (can also be a color name).}
@@ -31,13 +33,15 @@ labbe(x, \dots)
    \item{\dots}{other arguments.}
 }
 \details{
-   The model specified via \code{x} must be a model without moderators (i.e., either a fixed- or a random-effects model) fitted with either the \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, or \code{\link{rma.glmm}} function. Moreover, the model must be fitted with \code{measure} set equal to \code{"RD"} (for risk differences), \code{"RR"} (for risk ratios), \code{"OR"} (for odds ratios), \code{"AS"} (for arcsine square root transformed risk differences), \code{"IRR"} (for incidence rate ratios), \code{"IRD"} (for incidence rate differences), or \code{"IRSD"} (for square root transformed incidence rate differences).
+   The model specified via \code{x} must be a model without moderators (i.e., either a fixed- or a random-effects model) fitted with either the \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, or \code{\link{rma.glmm}} functions. Moreover, the model must be fitted with \code{measure} set equal to \code{"RD"} (for risk differences), \code{"RR"} (for risk ratios), \code{"OR"} (for odds ratios), \code{"AS"} (for arcsine square root transformed risk differences), \code{"IRR"} (for incidence rate ratios), \code{"IRD"} (for incidence rate differences), or \code{"IRSD"} (for square root transformed incidence rate differences).
 
    The function calculates the arm-level outcomes for the two experimental groups (e.g., treatment and control groups) and plots them against each other. In particular, the function plots the raw proportions of the two groups against each other when analyzing risk differences, the log of the proportions when analyzing (log) risk ratios, the log odds when analyzing (log) odds ratios, the arcsine square root transformed proportions when analyzing arcsine square root transformed risk differences, the raw incidence rates when analyzing incidence rate differences, the log of the incidence rates when analyzing (log) incidence rate ratios, and the square root transformed incidence rates when analyzing square root transformed incidence rate differences. The \code{transf} argument can be used to transform these values (e.g., \code{transf=exp} to transform the log of the proportions back to raw proportions; see also \link{transf}).
 
-   As described under the documentation for the \code{\link{escalc}} function, zero cells can lead to problems when calculating particular outcomes. Adding a small constant to the cells of the \mjeqn{2 \times 2}{2x2} tables is a common solution to this problem. By default, the functions adopts the same method for handling zero cells as was done when fitting the model.
+   As described under the documentation for the \code{\link{escalc}} function, zero cells can lead to problems when calculating particular outcomes. Adding a small constant to the cells of the \mjeqn{2 \times 2}{2x2} tables is a common solution to this problem. By default, the functions adopts the same method for handling zero cells as was used when fitting the model.
 
-   By default (i.e., if \code{psize} is not specified), the size of the points is an inverse function of the precision (inverse standard errors) of the outcomes. The solid line corresponds to identical outcomes in the two groups (i.e., the absence of a difference between the two groups). The dashed line indicates the estimated effect based on the fitted model.
+   By default (i.e., when \code{psize} is not specified), the size of the points is a function of the precision (i.e., inverse standard error) of the outcomes. This way, more precise estimates are visually more prominent in the plot. By making the point sizes a function of the inverse standard error of the estimates, their area is proportional to the inverse sampling variances, which corresponds to the weights they would receive in a fixed-effects model. However, the point sizes are rescaled so that the smallest point size is \code{plim[1]} and the largest point size is \code{plim[2]}. As a result, their relative sizes (i.e., areas) no longer exactly correspond to their relative weights in such a model. If exactly relative point sizes are desired, one can set \code{plim[2]} to \code{NA}, in which case the points are rescaled so that the smallest point size corresponds to \code{plim[1]} and all other points are scaled accordingly. As a result, the largest point may be very large. Alternatively, one can set \code{plim[1]} to \code{NA}, in which case the points are rescaled so that the largest point size corresponds to \code{plim[2]} and all other points are scaled accordingly.
+
+   The solid line corresponds to identical outcomes in the two groups (i.e., the absence of a difference between the two groups). The dashed line indicates the estimated effect based on the fitted model.
 }
 \value{
    A data frame with components:

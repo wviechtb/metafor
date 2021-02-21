@@ -1,4 +1,4 @@
-# metafor 2.5-81 (2021-02-20)
+# metafor 2.5-82 (2021-02-21)
 
 - the `metafor` package now makes use of the `mathjaxr` package to nicely render equations shown in the HTML help pages
 
@@ -41,6 +41,8 @@
 - the `forest` and `funnel` arguments of `reporter.rma.uni()` can now also be logicals to suppress the drawing of these plots
 
 - one can now use `weights(...,  type="rowsum")` for intercept-only `rma.mv` models (to obtain 'row-sum weights')
+
+- `forest.default()`, `forest.rma()`, and `labbe()` gain `plim` argument and now provide more flexibility in terms of the scaling of the points
 
 - `forest.rma()` gains `colout` argument (to adjust the color of the observed effect sizes or outcomes)
 

@@ -1,5 +1,5 @@
 labbe.rma <- function(x, xlim, ylim, xlab, ylab,
-add=x$add, to=x$to, transf, targs, pch=21, psize, col, bg, grid=FALSE, lty, ...) {
+add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid=FALSE, lty, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -196,11 +196,24 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, col, bg, grid=FALSE, lty, ...)
    if (is.null(psize)) {
       vi <- dat.t$vi + dat.c$vi
       wi <- 1/sqrt(vi)
-      rng <- max(wi) - min(wi)
-      if (rng <= .Machine$double.eps^0.5) {
-         psize <- rep(1, length(wi))
-      } else {
-         psize <- 0.5 + 3 * (wi - min(wi))/rng
+      if (!is.na(plim[1]) && !is.na(plim[2])) {
+         rng <- max(wi, na.rm=TRUE) - min(wi, na.rm=TRUE)
+         if (rng <= .Machine$double.eps^0.5) {
+            psize <- rep(1, length(wi))
+         } else {
+            psize <- (wi - min(wi, na.rm=TRUE)) / rng
+            psize <- (psize * (plim[2] - plim[1])) + plim[1]
+         }
+      }
+      if (is.na(plim[1]) && !is.na(plim[2])) {
+         psize <- wi / max(wi, na.rm=TRUE) * plim[2]
+         if (length(plim) == 3L)
+            psize[psize <= plim[3]] <- plim[3]
+      }
+      if (!is.na(plim[1]) && is.na(plim[2])) {
+         psize <- wi / min(wi, na.rm=TRUE) * plim[1]
+         if (length(plim) == 3L)
+            psize[psize >= plim[3]] <- plim[3]
       }
    } else {
       psize <- psize[not.na]

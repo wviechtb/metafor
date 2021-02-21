@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-80</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-82</span>
       </span>
     </div>
 
@@ -143,8 +143,8 @@
        level<span class='op'>=</span><span class='va'>x</span><span class='op'>$</span><span class='va'>level</span>, refline<span class='op'>=</span><span class='fl'>0</span>, digits<span class='op'>=</span><span class='fl'>2L</span>, <span class='va'>width</span>,
        <span class='va'>xlab</span>, <span class='va'>ilab</span>, <span class='va'>ilab.xpos</span>, <span class='va'>ilab.pos</span>,
        <span class='va'>transf</span>, <span class='va'>atransf</span>, <span class='va'>targs</span>, <span class='va'>rows</span>,
-       efac<span class='op'>=</span><span class='fl'>1</span>, pch<span class='op'>=</span><span class='fl'>15</span>, psize<span class='op'>=</span><span class='fl'>1</span>, <span class='va'>col</span>, <span class='va'>lty</span>, <span class='va'>fonts</span>,
-       <span class='va'>cex</span>, <span class='va'>cex.lab</span>, <span class='va'>cex.axis</span>, <span class='va'>annosym</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+       efac<span class='op'>=</span><span class='fl'>1</span>, pch<span class='op'>=</span><span class='fl'>15</span>, psize<span class='op'>=</span><span class='fl'>1</span>, <span class='va'>col</span>,
+       <span class='va'>lty</span>, <span class='va'>fonts</span>, <span class='va'>cex</span>, <span class='va'>cex.lab</span>, <span class='va'>cex.axis</span>, <span class='va'>annosym</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -235,7 +235,7 @@
     </tr>
     <tr>
       <th>rows</th>
-      <td><p>optional vector to specify the rows (or more generally, the horizontal positions) for plotting the outcomes. If unspecified, the function sets this value automatically. Can also be a single value to specify the row (horizontal position) of the first outcome (the remaining outcomes are then plotted below this starting row).</p></td>
+      <td><p>optional vector to specify the rows (or more generally, the horizontal positions) for plotting the outcomes. Can also be a single value to specify the row (horizontal position) of the first outcome (the remaining outcomes are then plotted below this starting row). If unspecified, the function sets this value automatically.</p></td>
     </tr>
     <tr>
       <th>efac</th>
@@ -288,11 +288,11 @@
     <p>The plot shows the estimated (average) outcome with corresponding confidence interval as one study at a time is added to the analysis.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>The function tries to set some sensible values for the optional arguments, but it may be necessary to tweak these in certain circumstances.</p>
+    <p>The function tries to set some sensible values for the optional arguments, but it may be necessary to adjust these in certain circumstances.</p>
 <p>The function actually returns some information about the chosen defaults invisibly. Printing this information is useful as a starting point to make adjustments to the plot.</p>
 <p>If the number of studies is quite large, the labels, annotations, and symbols may become quite small and impossible to read. Stretching the plot window vertically may then provide a more readable figure (one should call the function again after adjusting the window size, so that the label/symbol sizes can be properly adjusted). Also, the <code>cex</code>, <code>cex.lab</code>, and <code>cex.axis</code> arguments are then useful to adjust the symbol and text sizes.</p>
 <p>If the horizontal plot and/or x-axis limits are set by the user, then the horizontal plot limits (<code>xlim</code>) must be at least as wide as the x-axis limits (<code>alim</code>). This restriction is enforced inside the function.</p>
-<p>If the outcome measure used for creating the plot is bounded (e.g., correlations are bounded between <code>-1</code> and <code>1</code>, proportions are bounded between <code>0</code> and <code>1</code>), one can use the <code>clim</code> argument to enforce those limits (confidence intervals cannot exceed those bounds then).</p>
+<p>If the outcome measure used for creating the plot is bounded (e.g., correlations are bounded between -1 and +1, proportions are bounded between 0 and 1), one can use the <code>clim</code> argument to enforce those limits (confidence intervals cannot exceed those bounds then).</p>
 <p>The <code>lty</code> argument can also be a vector of two elements, the first for specifying the line type of the individual CIs (<code>"solid"</code> by default), the second for the line type of the horizontal line that is automatically added to the plot (<code>"solid"</code> by default; set to <code>"blank"</code> to remove it).</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 

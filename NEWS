@@ -1,4 +1,4 @@
-Changes in Version 2.5-81 (2021-02-20)
+Changes in Version 2.5-82 (2021-02-21)
 =====================================
 
    o the metafor package now makes use of the 'mathjaxr' package to nicely
@@ -63,6 +63,9 @@ Changes in Version 2.5-81 (2021-02-20)
 
    o one can now use weights(..., type="rowsum") for intercept-only 'rma.mv'
      models (to obtain 'row-sum weights')
+
+   o forest.default(), forest.rma(), and labbe() gain 'plim' argument and now
+     provide more flexibility in terms of the scaling of the points
 
    o forest.rma() gains 'colout' argument (to adjust the color of the observed
      effect sizes or outcomes)
