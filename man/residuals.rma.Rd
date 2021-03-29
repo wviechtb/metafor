@@ -34,7 +34,7 @@
    \item{type}{the type of residuals which should be returned. For \code{residuals}, the alternatives are: \code{"response"} (default), \code{"rstandard"}, \code{"rstudent"}, and \code{"pearson"}. For \code{rstandard.rma.uni}, the alternatives are: \code{"marginal"} (default) and \code{"conditional"}. See \sQuote{Details}.}
    \item{model}{an object of class \code{"rma"} (for \code{residuals}) or an object of class \code{"rma.uni"}, \code{"rma.mh"}, \code{"rma.peto"}, or \code{"rma.mv"} (for \code{rstandard} and \code{rstudent}).}
    \item{cluster}{optional vector to specify a clustering variable to use for computing cluster-level multivariate standardized residuals (only for \code{"rma.mv"} objects).}
-   \item{reestimate}{logical to specify whether variance/correlation components should be re-estimated after deletion of the \mjseqn{i}th study/cluster when computing externally standardized residuals (the default is \code{TRUE}).}
+   \item{reestimate}{logical to specify whether variance/correlation components should be re-estimated after deletion of the \mjseqn{i}th case when computing externally standardized residuals for \code{"rma.mv"} objects (the default is \code{TRUE}).}
    \item{parallel}{character string to specify whether parallel processing should be used (the default is \code{"no"}). For parallel processing, set to either \code{"snow"} or \code{"multicore"}. See \sQuote{Details}.}
    \item{ncpus}{integer to specify the number of processes to use in the parallel processing.}
    \item{cl}{optional cluster to use if \code{parallel="snow"}. If not supplied, a cluster on the local machine is created for the duration of the call.}
@@ -47,15 +47,15 @@
 
    Dividing the observed residuals by the model-implied standard errors of the observed effect sizes or outcomes yields Pearson (or semi-standardized) residuals. These can be obtained with \code{residuals(object, type="pearson")}.
 
-   Dividing the observed residuals by their corresponding standard errors yields (internally) standardized residuals. These can be obtained with \code{rstandard} or \code{residuals(object, type="rstandard")}.
+   Dividing the observed residuals by their corresponding standard errors yields (internally) standardized residuals. These can be obtained with \code{rstandard(model)} or \code{residuals(object, type="rstandard")}.
 
-   The \code{rstudent} function (or \code{residuals(object, type="rstudent")}) calculates externally standardized residuals (also called standardized deleted residuals or (externally) studentized residuals). The externally standardized residual for the \mjseqn{i}th case is obtained by deleting the \mjseqn{i}th case from the dataset, fitting the model based on the remaining cases, calculating the predicted value for the \mjseqn{i}th case based on the fitted model, taking the difference between the observed and the predicted value for the \mjseqn{i}th case (which yields the deleted residual), and then standardizing the deleted residual based on its standard error.
+   With \code{rstudent(model)} (or \code{residuals(object, type="rstudent")}), one can obtain the externally standardized residuals (also called standardized deleted residuals or (externally) studentized residuals). The externally standardized residual for the \mjseqn{i}th case is obtained by deleting the \mjseqn{i}th case from the dataset, fitting the model based on the remaining cases, calculating the predicted value for the \mjseqn{i}th case based on the fitted model, taking the difference between the observed and the predicted value for the \mjseqn{i}th case (which yields the deleted residual), and then standardizing the deleted residual based on its standard error.
 
-   If a particular study fits the model, its standardized residual follows (asymptotically) a standard normal distribution. A large standardized residual for a study therefore may suggest that the study does not fit the assumed model (i.e., it may be an outlier).
+   If a particular case fits the model, its standardized residual follows (asymptotically) a standard normal distribution. A large standardized residual for a case therefore may suggest that the case does not fit the assumed model (i.e., it may be an outlier).
 
-   For \code{"rma.uni"} objects, \code{rstandard.rma.uni} also can compute conditional residuals (when \code{type="conditional"}), which are the deviations of the observed effect sizes or outcomes from the best linear unbiased predictions (BLUPs) of the study-specific true effect sizes or outcomes (see \code{\link{blup.rma.uni}}).
+   For \code{"rma.uni"} objects, \code{rstandard(model, type="conditional")} computes conditional residuals, which are the deviations of the observed effect sizes or outcomes from the best linear unbiased predictions (BLUPs) of the study-specific true effect sizes or outcomes (see \code{\link{blup.rma.uni}}).
 
-   For \code{"rma.mv"} objects, one can specify a clustering variable (via the \code{cluster} argument). If specified, \code{rstandard} and \code{rstudent} also compute cluster-level multivariate (internally or externally) standardized residuals. If all outcomes within a cluster fit the model, then the multivariate standardized residual for the cluster follows (asymptotically) a chi-square distribution with \mjseqn{k_i} degrees of freedom (where \mjseqn{k_i} denotes the number of outcomes within the cluster).
+   For \code{"rma.mv"} objects, one can specify a clustering variable (via the \code{cluster} argument). If specified, \code{rstandard(model)} and \code{rstudent(model)} also compute cluster-level multivariate (internally or externally) standardized residuals. If all outcomes within a cluster fit the model, then the multivariate standardized residual for the cluster follows (asymptotically) a chi-square distribution with \mjseqn{k_i} degrees of freedom (where \mjseqn{k_i} denotes the number of outcomes within the cluster).
 
    See also \code{\link{influence.rma.uni}} and \code{\link{influence.rma.mv}} for other leave-one-out diagnostics that are useful for detecting influential cases in models fitted with the \code{\link{rma.uni}} and \code{\link{rma.mv}} functions.
 }
@@ -72,13 +72,13 @@
    The object is formatted and printed with \code{\link{print.list.rma}}.
 }
 \note{
-   Right now, the externally standardized residuals (obtained with \code{rstudent}) are calculated by refitting the model \mjseqn{k} times (where \mjseqn{k} is the number of studies/clusters). Depending on how large \mjseqn{k} is, it may take a few moments to finish the calculations. For complex models fitted with \code{\link{rma.mv}}, this can become computationally expensive.
+   Right now, the externally standardized residuals (obtained with \code{rstudent}) are calculated by refitting the model \mjseqn{k} times (where \mjseqn{k} is the number of cases). Depending on how large \mjseqn{k} is, it may take a few moments to finish the calculations. For complex models fitted with \code{\link{rma.mv}}, this can become computationally expensive.
 
    On machines with multiple cores, one can usually speed things up by delegating the model fitting to separate worker processes, that is, by setting \code{parallel="snow"} or \code{parallel="multicore"} and \code{ncpus} to some value larger than 1 (only for objects of class \code{"rma.mv"}). Parallel processing makes use of the \code{\link[parallel]{parallel}} package, using the \code{\link[parallel]{makePSOCKcluster}} and \code{\link[parallel]{parLapply}} functions when \code{parallel="snow"} or using \code{\link[parallel]{mclapply}} when \code{parallel="multicore"} (the latter only works on Unix/Linux-alikes). With \code{parallel::detectCores()}, one can check on the number of available cores on the local machine.
 
-   Alternatively (or in addition to using parallel processing), one can also set \code{reestimate=FALSE}, in which case any variance/correlation components in the model are not re-estimated after deleting the \mjseqn{i}th study/cluster from the dataset. Doing so only yields an approximation to the externally standardized residuals (and the cluster-level multivariate standardized residuals) that ignores the influence of the \mjseqn{i}th study/cluster on the variance/correlation components, but is considerably faster (and often yields similar results).
+   Alternatively (or in addition to using parallel processing), one can also set \code{reestimate=FALSE}, in which case any variance/correlation components in the model are not re-estimated after deleting the \mjseqn{i}th case from the dataset. Doing so only yields an approximation to the externally standardized residuals (and the cluster-level multivariate standardized residuals) that ignores the influence of the \mjseqn{i}th case on the variance/correlation components, but is considerably faster (and often yields similar results).
 
-   It may not be possible to fit the model after deletion of the \mjseqn{i}th study/cluster from the dataset. This will result in \code{NA} values for that study/cluster when calling \code{rstudent}.
+   It may not be possible to fit the model after deletion of the \mjseqn{i}th case from the dataset. This will result in \code{NA} values for that case when calling \code{rstudent}.
 
    Also, for \code{"rma.mv"} objects with a clustering variable specified, it may not be possible to compute the cluster-level multivariate standardized residual for a particular cluster (if the var-cov matrix of the residuals within a cluster is not of full rank). This will result in \code{NA} for that cluster.
 
@@ -98,13 +98,19 @@
    \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, \code{\link{rma.glmm}}, \code{\link{rma.mv}}, \code{\link{influence.rma.uni}}, \code{\link{influence.rma.mv}}
 }
 \examples{
-### meta-analysis of the log risk ratios using a random-effects model
-res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
+### calculate log risk ratios and corresponding sampling variances
+dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
+
+### fit random-effects model
+res <- rma(yi, vi, data=dat)
+
+### compute the studentized residuals
 rstudent(res)
 
-### mixed-effects model with absolute latitude as a moderator
-res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, mods = ~ ablat,
-           data=dat.bcg)
+### fit mixed-effects model with absolute latitude as moderator
+res <- rma(yi, vi, mods = ~ ablat, data=dat)
+
+### compute the studentized residuals
 rstudent(res)
 }
 \keyword{models}

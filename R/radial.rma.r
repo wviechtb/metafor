@@ -68,7 +68,7 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
    if (any(is.infinite(c(xi,zi))))
       stop(mstyle$stop("Setting 'xlim' and 'zlim' automatically not possible (must set axis limits manually)."))
 
-   ### set x axis limits if none are specified
+   ### set x-axis limits if none are specified
 
    if (missing(xlim)) {
       xlims <- c(0, (1.30*max(xi)))                   ### add 30% to upper bound
@@ -76,17 +76,17 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
       xlims <- sort(xlim)
    }
 
-   ### x axis position of the confidence interval
+   ### x-axis position of the confidence interval
 
    ci.xpos <- xlims[2] + 0.12*(xlims[2]-xlims[1])     ### add 12% of range to upper bound
 
-   ### x axis position of the y axis on the right
+   ### x-axis position of the y-axis on the right
 
    ya.xpos <- xlims[2] + 0.14*(xlims[2]-xlims[1])     ### add 14% of range to upper bound
 
    xaxismax <- xlims[2]
 
-   ### set z axis limits if none are specified (these are the actual y axis limits of the plot)
+   ### set z-axis limits if none are specified (these are the actual y-axis limits of the plot)
 
    if (missing(zlim)) {
       zlims <- c(min(-5, 1.10*min(zi), 1.10*ci.lb*ci.xpos, 1.10*min(atyis)*ya.xpos, 1.10*min(yi)*ya.xpos, -1.10*zcrit+xaxismax*beta), max(5, 1.10*max(zi), 1.10*ci.ub*ci.xpos, 1.10*max(atyis)*ya.xpos, 1.10*max(yi)*ya.xpos, 1.10*zcrit+xaxismax*beta))
@@ -102,7 +102,7 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
    par(mar = par.mar.adj)
    on.exit(par(mar = par.mar))
 
-   ### label for the x axis
+   ### label for the x-axis
 
    if (missing(xlab)) {
       if (x$method == "FE") {
@@ -128,11 +128,11 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
    segments(0, -zcrit, xaxismax, -zcrit+xaxismax*beta, lty="dotted", ...)
    segments(0,  zcrit, xaxismax,  zcrit+xaxismax*beta, lty="dotted", ...)
 
-   ### add x axis
+   ### add x-axis
 
    axis(side=1, ...)
 
-   ### add z axis
+   ### add z-axis
 
    if (is.null(atz)) {
       axis(side=2, at=seq(-4, 4, length.out=9), labels=NA, las=1, tcl=par("tcl")/2, ...)
@@ -141,7 +141,7 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
       axis(side=2, at=atz, labels=atz, las=1, ...)
    }
 
-   ### add label for the z axis
+   ### add label for the z-axis
 
    if (missing(zlab)) {
       if (center) {
@@ -165,7 +165,7 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
 
    #########################################################################
 
-   ### add y axis arc and CI arc on the right
+   ### add y-axis arc and CI arc on the right
 
    par.xpd <- par("xpd")
    par(xpd=TRUE)
@@ -176,7 +176,7 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
    if (length(arc.res) == 1L)
       arc.res <- c(arc.res, arc.res/4)
 
-   ### add y axis arc
+   ### add y-axis arc
 
    if (is.null(aty)) {
       atyis <- seq(min(yi), max(yi), length.out=arc.res[1])
@@ -195,7 +195,7 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
    valid <- zis > zlims[1] & zis < zlims[2]
    lines(xis[valid], zis[valid], ...)
 
-   ### add y axis tick marks
+   ### add y-axis tick marks
 
    if (is.null(aty)) {
       atyis <- seq(min(yi), max(yi), length.out=steps)
@@ -221,7 +221,7 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
    if (any(valid))
       segments(xis.l[valid], zis.l[valid], xis.u[valid], (xis.u*atyis)[valid], ...)
 
-   ### add y axis labels
+   ### add y-axis labels
 
    if (is.null(aty)) {
       atyis     <- seq(min(yi),   max(yi),   length.out=steps)

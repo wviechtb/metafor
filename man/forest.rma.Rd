@@ -24,10 +24,10 @@
    \item{xlim}{horizontal limits of the plot region. If unspecified, the function tries to set the horizontal plot limits to some sensible values.}
    \item{alim}{the actual x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.}
    \item{clim}{limits for the confidence/prediction intervals. If unspecified, no limits are used.}
-   \item{ylim}{the y limits of the plot. If unspecified, the function tries to set the y-axis limits to some sensible values.}
+   \item{ylim}{the y-axis limits of the plot. If unspecified, the function tries to set the y-axis limits to some sensible values.}
    \item{top}{the amount of space to leave empty at the top of the plot (e.g., for adding headers) (the default is 3 rows).}
    \item{at}{position of the x-axis tick marks and corresponding labels. If unspecified, the function tries to set the tick mark positions/labels to some sensible values.}
-   \item{steps}{the number of tick marks for the x-axis (the default is 5). Ignored when the user specifies the positions via the \code{at} argument.}
+   \item{steps}{the number of tick marks for the x-axis (the default is 5). Ignored when the positions are specified via the \code{at} argument.}
    \item{level}{numeric value between 0 and 100 to specify the confidence interval level (the default is to take the value from the object).}
    \item{refline}{numeric value to specify the location of the vertical \sQuote{reference} line (the default is 0). The line can be suppressed by setting this argument to \code{NA}.}
    \item{digits}{integer to specify the number of decimal places to which the tick mark labels of the x-axis and the annotations should be rounded (the default is \code{2L}). Can also be a vector of two integers, the first to specify the number of decimal places for the annotations, the second for the x-axis labels. When specifying an integer (e.g., \code{2L}), trailing zeros after the decimal mark are dropped for the x-axis labels. When specifying a numeric value (e.g., \code{2}), trailing zeros are retained.}
@@ -38,9 +38,9 @@
    \item{ilab}{optional vector, matrix, or data frame providing additional information about the studies that should be added to the plot.}
    \item{ilab.xpos}{numeric vector to specify the x-axis position(s) of the variable(s) given via \code{ilab} (must be specified if \code{ilab} is specified).}
    \item{ilab.pos}{integer(s) (either 1, 2, 3, or 4) to specify the alignment of the vector(s) given via \code{ilab} (2 means right, 4 mean left aligned). If unspecified, the default is to center the labels.}
-   \item{order}{optional character string to specify how the studies should be ordered. See \sQuote{Details}.}
-   \item{transf}{optional argument to specify the name of a function that should be used to transform the observed effect sizes, summary estimates, fitted values, and confidence interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
-   \item{atransf}{optional argument to specify the name of a function that should be used to transform the x-axis labels and annotations (e.g., \code{atransf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
+   \item{order}{optional character string to specify how the studies should be ordered. Can also be a variable based on which the studies will be ordered. See \sQuote{Details}.}
+   \item{transf}{optional argument to specify a function that should be used to transform the observed effect sizes, summary estimates, fitted values, and confidence interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
+   \item{atransf}{optional argument to specify a function that should be used to transform the x-axis labels and annotations (e.g., \code{atransf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified via \code{transf} or \code{atransf}.}
    \item{rows}{optional vector to specify the rows (or more generally, the horizontal positions) for plotting the outcomes. Can also be a single value to specify the row (horizontal position) of the first outcome (the remaining outcomes are then plotted below this starting row). If unspecified, the function sets this value automatically.}
    \item{efac}{vertical expansion factor for confidence interval limits, arrows, and the symbol used to denote summary estimates. The default value of 1 should usually work okay. Can also be a vector of two numbers, the first for CI limits and arrows, the second for summary estimates. Can also be a vector of three numbers, the first for CI limits, the second for arrows, the third for summary estimates.}
@@ -59,7 +59,7 @@
    \item{\dots}{other arguments.}
 }
 \details{
-   The plot shows the individual observed effect sizes or outcomes with corresponding confidence intervals.
+   The plot shows the observed effect sizes or outcomes with corresponding confidence intervals.
 
    For fixed- and random-effects models (i.e., for models without moderators), a four-sided polygon, sometimes called a summary \sQuote{diamond}, is added to the bottom of the forest plot, showing the summary estimate based on the model (with the center of the polygon corresponding to the estimate and the left/right edges indicating the confidence interval limits). The \code{col} and \code{border} arguments can be used to adjust the (border) color of the polygon. Drawing of the polgyon can be suppressed by setting \code{addfit=FALSE}.
 
@@ -67,7 +67,7 @@
 
    For models involving moderators, the fitted value for each study is added as a polygon to the plot. By default, the width of the polygons corresponds to the confidence interval limits for the fitted values. By setting \code{addpred=TRUE}, the width reflects the prediction interval limits. Again, the \code{col} and \code{border} arguments can be used to adjust the (border) color of the polygons. These polygons can be suppressed by setting \code{addfit=FALSE}.
 
-   With the \code{transf} argument, the observed effect sizes or outcomes, summary estimate, fitted values, confidence interval bounds, and prediction interval bounds can be transformed with some suitable function. For example, when plotting log odds ratios, one could use \code{transf=exp} to obtain a forest plot showing the odds ratios. Alternatively, one can use the \code{atransf} argument to transform the x-axis labels and annotations (e.g., \code{atransf=exp}). See also \link{transf} for some transformation functions useful for meta-analyses. The examples below illustrate the use of these arguments.
+   With the \code{transf} argument, the observed effect sizes or outcomes, summary estimate, fitted values, confidence interval bounds, and prediction interval bounds can be transformed with some suitable function. For example, when plotting log odds ratios, one could use \code{transf=exp} to obtain a forest plot showing the odds ratios. Alternatively, one can use the \code{atransf} argument to transform the x-axis labels and annotations (e.g., \code{atransf=exp}). See also \link{transf} for some other useful transformation functions in the context of a meta-analysis. The examples below illustrate the use of these arguments.
 
    By default, the studies are ordered from top to bottom (i.e., the first study in the dataset will be placed in row \mjseqn{k}, the second study in row \mjseqn{k-1}, and so on, until the last study, which is placed in the first row). The studies can be reordered with the \code{order} argument:
    \itemize{
@@ -78,7 +78,7 @@
    \item \code{order="rstandard"}: the studies are ordered by the size of their standardized residuals,
    \item \code{order="abs.resid"}: the studies are ordered by the size of their absolute residuals,
    \item \code{order="abs.rstandard"}: the studies are ordered by the size of their absolute standardized residuals.
-   } Alternatively, it is also possible to set \code{order} equal to a vector with indices to specify the desired order (see \sQuote{Examples}).
+   } Alternatively, it is also possible to set \code{order} equal to a variable based on which the studies will be ordered (see \sQuote{Examples}).
 
    Additional summary estimates can be added to the plot with the \code{\link{addpoly}} function. See the documentation for that function for examples.
 
@@ -93,7 +93,7 @@
 
    If the number of studies is quite large, the labels, annotations, and symbols may become quite small and impossible to read. Stretching the plot window vertically may then provide a more readable figure (one should call the function again after adjusting the window size, so that the label/symbol sizes can be properly adjusted). Also, the \code{cex}, \code{cex.lab}, and \code{cex.axis} arguments are then useful to adjust the symbol and text sizes.
 
-   If the horizontal plot and/or x-axis limits are set by the user, then the horizontal plot limits (\code{xlim}) must be at least as wide as the x-axis limits (\code{alim}). This restriction is enforced inside the function.
+   If the horizontal plot and/or x-axis limits are set manually, then the horizontal plot limits (\code{xlim}) must be at least as wide as the x-axis limits (\code{alim}). This restriction is enforced inside the function.
 
    If the outcome measure used for creating the plot is bounded (e.g., correlations are bounded between -1 and +1, proportions are bounded between 0 and 1), one can use the \code{clim} argument to enforce those limits (confidence/prediction intervals cannot exceed those bounds then).
 
@@ -138,7 +138,7 @@ forest(res, cex=.8)
 forest(res, cex=.8, addpred=TRUE)
 forest(res, cex=.8, alim=c(-3,3))
 forest(res, cex=.8, order="prec", alim=c(-3,3))
-forest(res, cex=.8, order=order(dat.bcg$ablat), addpred=TRUE)
+forest(res, cex=.8, order=dat.bcg$ablat, addpred=TRUE)
 
 ### adjust xlim values to see how that changes the plot
 forest(res)
@@ -192,7 +192,7 @@ forest(res, ylim=c(-1.5, 20), rows=c(17:15, 12:6, 3:1)) ### set positions
 forest(res, xlim=c(-16, 6), at=log(c(.05, .25, 1, 4)), atransf=exp,
        ilab=cbind(dat.bcg$tpos, dat.bcg$tneg, dat.bcg$cpos, dat.bcg$cneg),
        ilab.xpos=c(-9.5,-8,-6,-4.5), cex=.75, ylim=c(-1, 21),
-       order=order(dat.bcg$alloc), rows=c(1:2,5:11,14:17),
+       order=dat.bcg$alloc, rows=c(1:2,5:11,14:17),
        header="Author(s) and Year")
 op <- par(cex=.75, font=4)
 text(-16, c(18,12,3), c("Systematic Allocation", "Random Allocation",

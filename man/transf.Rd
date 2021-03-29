@@ -25,6 +25,7 @@
 \alias{transf.dtocles}
 \alias{transf.dtorpb}
 \alias{transf.dtobesd}
+\alias{transf.dtomd}
 \alias{transf.logortord}
 \alias{transf.logortorr}
 \title{Transformation Functions}
@@ -56,6 +57,7 @@ transf.dtou2(xi, \dots)
 transf.dtou3(xi, \dots)
 transf.dtorpb(xi, n1i, n2i, \dots)
 transf.dtobesd(xi, \dots)
+transf.dtomd(xi, targs, \dots)
 transf.logortord(xi, pc, \dots)
 transf.logortorr(xi, pc, \dots)
 }
@@ -97,6 +99,7 @@ transf.logortorr(xi, pc, \dots)
    \item \code{transf.dtocles}: transformation of standardized mean differences to common language effect size values (McGraw & Wong, 1992).
    \item \code{transf.dtorpb}: transformation of standardized mean differences to point-biserial correlations. If \code{n1i} and \code{n2i} are not specified, the function assumes \code{n1i=n2i} and uses an approximate formula. If \code{n1i} and \code{n2i} are specified, the exact transformation formula is used.
    \item \code{transf.dtobesd}: transformation of standardized mean differences to binomial effect-size display values (Rosenthal & Rubin, 1982). Note that the function only provides the proportion in the first group scoring above the median (the proportion in the second group scoring above the median is simply one minus the proportion in the first group scoring above the median).
+   \item \code{transf.dtoumd}: transformation of standardized mean differences to mean differences given a known standard deviation, which must be specified via the \code{targs} argument.
    \item \code{transf.logortord}: transformation of log odds ratios to risk differences, assuming a particular value for the control group risk (which needs to be specified via the \code{pc} argument).
    \item \code{transf.logortorr}: transformation of log odds ratios to risk ratios, assuming a particular value for the control group risk (which needs to be specified via the \code{pc} argument).
    }
@@ -130,8 +133,11 @@ transf.logortorr(xi, pc, \dots)
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}
 }
 \examples{
-### meta-analysis of the log risk ratios using a random-effects model
-res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
+### calculate log risk ratios and corresponding sampling variances
+dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
+
+### random-effects model
+res <- rma(yi, vi, data=dat)
 
 ### average risk ratio with 95\% CI (but technically, this provides an
 ### estimate of the median risk ratio, not the mean risk ratio!)

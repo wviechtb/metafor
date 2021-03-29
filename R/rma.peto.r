@@ -91,9 +91,6 @@ level=95, digits, verbose=FALSE, ...) {
    slab   <- eval(mf.slab,   data, enclos=sys.frame(sys.parent()))
    subset <- eval(mf.subset, data, enclos=sys.frame(sys.parent()))
 
-   if (!is.null(subset))
-      subset <- .setnafalse(subset)
-
    ### extract/calculate ai,bi,ci,di,n1i,n2i values
 
    mf.ai  <- mf[[match("ai",  names(mf))]]
@@ -148,6 +145,8 @@ level=95, digits, verbose=FALSE, ...) {
 
       if (verbose)
          message(mstyle$message("Subsetting ..."))
+
+      subset <- .setnafalse(subset, k=k)
 
       ai   <- ai[subset]
       bi   <- bi[subset]

@@ -172,13 +172,17 @@ level, digits, transf, targs, vcov=FALSE, ...) {
                dups <- paste(unique(colnames(X.new)[duplicated(pos)]), collapse=", ")
                stop(mstyle$stop(paste0("Found multiple matches for the same variable name (", dups, ").")))
             }
-            colnames(X.new) <- colnames.mod[pos]
-            pos <- sapply(colnames.mod, function(colname) {
-                     d <- c(adist(colname, colnames(X.new), costs=c(ins=1, sub=Inf, del=Inf))) # compute edit distances with Inf costs for substitutions/deletions
-                     d <- which(d == min(d)) # don't use which.min() since that only finds the first minimum
-                     return(d)
-                     })
-            X.new <- X.new[,pos,drop=FALSE]
+            if (length(pos) != length(colnames.mod)) {
+               no.match <- colnames.mod[seq_along(colnames.mod)[-pos]]
+               if (length(no.match) > 3L)
+                  stop(mstyle$stop(paste0("Argument 'newmods' does not specify values for these variables: ", paste0(no.match[1:3], collapse=", "), ", ...")))
+               if (length(no.match) > 1L)
+                  stop(mstyle$stop(paste0("Argument 'newmods' does not specify values for these variables: ", paste0(no.match, collapse=", "))))
+               if (length(no.match) == 1L)
+                  stop(mstyle$stop(paste0("Argument 'newmods' does not specify values for this variable: ", no.match)))
+            }
+            X.new <- X.new[,order(pos),drop=FALSE]
+            colnames(X.new) <- colnames.mod
          }
       }
 

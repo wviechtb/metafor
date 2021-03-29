@@ -21,7 +21,7 @@
 \arguments{
    \item{y}{an object of class \code{"rma.uni"}, \code{"rma.mh"}, or \code{"rma.peto"}. The method is not yet implemented for objects of class \code{"rma.glmm"} or \code{"rma.mv"}.}
    \item{type}{character string (either \code{"rstandard"} (default) or \code{"rstudent"}) to specify whether standardized residuals or studentized deleted residuals should be used in creating the plot. See \sQuote{Details}.}
-   \item{pch}{plotting symbol to use for the observed effect sizes or outcomes. By default, a solid circle is used. See \code{\link{points}} for other options.}
+   \item{pch}{plotting symbol to use for the observed effect sizes or outcomes. By default, a filled circle is used. See \code{\link{points}} for other options.}
    \item{envelope}{logical to specify whether a pseudo confidence envelope should be simulated and added to the plot (the default is \code{TRUE})). Only for objects of class \code{"rma.uni"}. See \sQuote{Details}.}
    \item{level}{numeric value between 0 and 100 to specify the level of the pseudo confidence envelope (the default is to take the value from the object).}
    \item{bonferroni}{logical to specify whether the bounds of the envelope should be Bonferroni corrected.}
@@ -63,13 +63,19 @@
    \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, \code{\link{rma.glmm}}, \code{\link{rma.mv}}
 }
 \examples{
-### meta-analysis of the log risk ratios using a random-effects model
-res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
+### calculate log risk ratios and corresponding sampling variances
+dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
+
+### fit random-effects model
+res <- rma(yi, vi, data=dat)
+
+### draw QQ plot
 qqnorm(res)
 
-### mixed-effects model with absolute latitude as a moderator
-res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, mods = ~ ablat,
-           data=dat.bcg)
+### fit mixed-effects model with absolute latitude as moderator
+res <- rma(yi, vi, mods = ~ ablat, data=dat)
+
+### draw QQ plot
 qqnorm(res)
 }
 \keyword{hplot}

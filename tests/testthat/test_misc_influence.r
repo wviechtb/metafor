@@ -42,7 +42,7 @@ test_that("leave1out() works for rma.mh().", {
    inf <- leave1out(res)
    inf <- inf[1]
 
-   sav <- structure(list(estimate = -0.4514, se = 0.0394, zval = -11.4462, pval = 0, ci.lb = -0.5287, ci.ub = -0.3741, Q = 151.9153, Qp = 0, slab = 1L, digits = c(est = 4, se = 4, test = 4, pval = 4,
+   sav <- structure(list(estimate = -0.4514, se = 0.0394, zval = -11.4462, pval = 0, ci.lb = -0.5287, ci.ub = -0.3741, Q = 151.9153, Qp = 0, I2 = 92.7591, H2 = 13.8105, slab = 1L, digits = c(est = 4, se = 4, test = 4, pval = 4,
     ci = 4, var = 4, sevar = 4, fit = 4, het = 4), transf = FALSE), class = "list.rma")
 
    expect_equivalent(sav, inf, tolerance=.tol[["misc"]])
@@ -56,7 +56,7 @@ test_that("leave1out() works for rma.peto().", {
    inf <- leave1out(res)
    inf <- inf[1]
 
-   sav <- structure(list(estimate = -0.4722, se = 0.0408, zval = -11.5791, pval = 0, ci.lb = -0.5521, ci.ub = -0.3923, Q = 167.2005, Qp = 0, slab = 1L, digits = c(est = 4, se = 4, test = 4, pval = 4,
+   sav <- structure(list(estimate = -0.4722, se = 0.0408, zval = -11.5791, pval = 0, ci.lb = -0.5521, ci.ub = -0.3923, Q = 167.2005, Qp = 0, I2 = 93.4211, H2 = 15.2000, slab = 1L, digits = c(est = 4, se = 4, test = 4, pval = 4,
     ci = 4, var = 4, sevar = 4, fit = 4, het = 4), transf = FALSE), class = "list.rma")
 
    expect_equivalent(sav, inf, tolerance=.tol[["misc"]])

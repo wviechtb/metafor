@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Outlier and Influential Case Diagnostics for 'rma.mv' Objects — influence.rma.mv" />
-<meta property="og:description" content="The functions can be used to compute various outlier and influential case diagnostics (some of which indicate the influence of deleting one case/study at a time on the model fit or the fitted/residual values) for objects of class &quot;rma.mv&quot;. " />
+<meta property="og:description" content="The functions can be used to compute various outlier and influential case diagnostics (some of which indicate the influence of deleting one case at a time on the model fit or the fitted/residual values) for objects of class &quot;rma.mv&quot;. " />
 
 
 
@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-82</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-83</span>
       </span>
     </div>
 
@@ -134,15 +134,17 @@
     </div>
 
     <div class="ref-description">
-    <p>The functions can be used to compute various outlier and influential case diagnostics (some of which indicate the influence of deleting one case/study at a time on the model fit or the fitted/residual values) for objects of class <code>"rma.mv"</code>. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
+    <p>The functions can be used to compute various outlier and influential case diagnostics (some of which indicate the influence of deleting one case at a time on the model fit or the fitted/residual values) for objects of class <code>"rma.mv"</code>. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for rma.mv</span>
 <span class='fu'><a href='influence.rma.uni.html'>cooks.distance</a></span><span class='op'>(</span><span class='va'>model</span>, progbar<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>cluster</span>,
                reestimate<span class='op'>=</span><span class='cn'>TRUE</span>, parallel<span class='op'>=</span><span class='st'>"no"</span>, ncpus<span class='op'>=</span><span class='fl'>1</span>, cl<span class='op'>=</span><span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span>
+
 <span class='co'># S3 method for rma.mv</span>
 <span class='fu'><a href='influence.rma.uni.html'>dfbetas</a></span><span class='op'>(</span><span class='va'>model</span>, progbar<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>cluster</span>,
         reestimate<span class='op'>=</span><span class='cn'>TRUE</span>, parallel<span class='op'>=</span><span class='st'>"no"</span>, ncpus<span class='op'>=</span><span class='fl'>1</span>, cl<span class='op'>=</span><span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span>
+
 <span class='co'># S3 method for rma.mv</span>
 <span class='fu'><a href='influence.rma.uni.html'>hatvalues</a></span><span class='op'>(</span><span class='va'>model</span>, type<span class='op'>=</span><span class='st'>"diagonal"</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
@@ -155,15 +157,15 @@
     </tr>
     <tr>
       <th>progbar</th>
-      <td><p>logical to specify whether a progress bar should be shown (the default is <code>FALSE</code>). Ignored when using parallel processing.</p></td>
+      <td><p>logical to specify whether a progress bar should be shown (the default is <code>FALSE</code>).</p></td>
     </tr>
     <tr>
       <th>cluster</th>
-      <td><p>optional vector to specify a clustering variable to use for computing the Cook's distances. If not specified, Cook's distances are computed for all individual observed effect sizes or outcomes.</p></td>
+      <td><p>optional vector to specify a clustering variable to use for computing the Cook's distances or DFBETAS values. If not specified, these measures are computed for the individual observed effect sizes or outcomes.</p></td>
     </tr>
     <tr>
       <th>reestimate</th>
-      <td><p>logical to specify whether variance/correlation components should be re-estimated after deletion of the \(i\)th study/cluster (the default is <code>TRUE</code>).</p></td>
+      <td><p>logical to specify whether variance/correlation components should be re-estimated after deletion of the \(i\)th case (the default is <code>TRUE</code>).</p></td>
     </tr>
     <tr>
       <th>parallel</th>
@@ -189,17 +191,18 @@
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Cook's distance for the \(i\)th study/cluster can be interpreted as the Mahalanobis distance between the entire set of predicted values once with the \(i\)th study/cluster included and once with the \(i\)th study/cluster excluded from the model fitting.</p>
-<p>The DFBETAS value(s) essentially indicate(s) how many standard deviations the estimated coefficient(s) change(s) after excluding the \(i\)th study/cluster from the model fitting.</p>
+    <p>The term &#8216;case&#8217; below refers to a particular row from the dataset used in the model fitting (when argument <code>cluster</code> is not specified) or each level of the variable specified via <code>cluster</code>.</p>
+<p>Cook's distance for the \(i\)th case can be interpreted as the Mahalanobis distance between the entire set of predicted values once with the \(i\)th case included and once with the \(i\)th case excluded from the model fitting.</p>
+<p>The DFBETAS value(s) essentially indicate(s) how many standard deviations the estimated coefficient(s) change(s) after excluding the \(i\)th case from the model fitting.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>The <code>cooks.distance</code> function returns a vector. The <code>dfbetas</code> function returns a data frame. The <code>hatvalues</code> function returns either a vector with the diagonal elements of the hat matrix or the entire hat matrix.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>Right now, leave-one-out diagnostics are calculated by refitting the model \(k\) times (where \(k\) is the number of studies/clusters). Depending on how large \(k\) is, it may take a few moments to finish the calculations. For complex models fitted with <code><a href='rma.mv.html'>rma.mv</a></code>, this can become computationally expensive.</p>
+    <p>Right now, leave-one-out diagnostics are calculated by refitting the model \(k\) times (where \(k\) is the number of cases). Depending on how large \(k\) is, it may take a few moments to finish the calculations. For complex models fitted with <code><a href='rma.mv.html'>rma.mv</a></code>, this can become computationally expensive.</p>
 <p>On machines with multiple cores, one can usually speed things up by delegating the model fitting to separate worker processes, that is, by setting <code>parallel="snow"</code> or <code>parallel="multicore"</code> and <code>ncpus</code> to some value larger than 1. Parallel processing makes use of the <code><a href='https://rdrr.io/r/parallel/parallel-package.html'>parallel</a></code> package, using the <code><a href='https://rdrr.io/r/parallel/makeCluster.html'>makePSOCKcluster</a></code> and <code><a href='https://rdrr.io/r/parallel/clusterApply.html'>parLapply</a></code> functions when <code>parallel="snow"</code> or using <code><a href='https://rdrr.io/r/parallel/mclapply.html'>mclapply</a></code> when <code>parallel="multicore"</code> (the latter only works on Unix/Linux-alikes). With <code><a href='https://rdrr.io/r/parallel/detectCores.html'>parallel::detectCores()</a></code>, one can check on the number of available cores on the local machine.</p>
-<p>Alternatively (or in addition to using parallel processing), one can also set <code>reestimate=FALSE</code>, in which case any variance/correlation components in the model are not re-estimated after deleting the \(i\)th study/cluster from the dataset. Doing so only yields an approximation to the Cook's distances and DFBETAS values that ignores the influence of the \(i\)th study/cluster on the variance/correlation components, but is considerably faster (and often yields similar results).</p>
-<p>It may not be possible to fit the model after deletion of the \(i\)th study/cluster from the dataset. This will result in <code>NA</code> values for that study/cluster.</p>
+<p>Alternatively (or in addition to using parallel processing), one can also set <code>reestimate=FALSE</code>, in which case any variance/correlation components in the model are not re-estimated after deleting the \(i\)th case from the dataset. Doing so only yields an approximation to the Cook's distances and DFBETAS values that ignores the influence of the \(i\)th case on the variance/correlation components, but is considerably faster (and often yields similar results).</p>
+<p>It may not be possible to fit the model after deletion of the \(i\)th case from the dataset. This will result in <code>NA</code> values for that case.</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Wolfgang Viechtbauer <a href='mailto:wvb@metafor-project.org'>wvb@metafor-project.org</a> <a href='https://www.metafor-project.org'>https://www.metafor-project.org</a></p>

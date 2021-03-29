@@ -17,27 +17,29 @@ leave1out(x, \dots)
 \arguments{
    \item{x}{an object of class \code{"rma.mh"}, \code{"rma.peto"}, or \code{"rma.uni"}.}
    \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded (if unspecified, the default is to take the value from the object).}
-   \item{transf}{an optional argument to specify the name of a function that should be used to transform the model coefficients and interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
+   \item{transf}{an optional argument to specify a function that should be used to transform the model coefficients and interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified under \code{transf}.}
    \item{progbar}{logical to specify whether a progress bar should be shown (the default is \code{FALSE}).}
    \item{\dots}{other arguments.}
 }
 \details{
-   The model specified via \code{x} must be a model without moderators (i.e., either a fixed- or a random-effects model and not a fixed-effects with moderators or mixed-effects model).
+   For \code{"rma.uni"} objects, the model specified via \code{x} must be a model without moderators (i.e., either a fixed- or a random-effects model).
 }
 \value{
    An object of class \code{"list.rma"}. The object is a list containing the following components:
-   \item{estimate}{estimated coefficients of the model.}
-   \item{se}{standard errors of the coefficients.}
-   \item{zval}{test statistics of the coefficients.}
+   \item{estimate}{estimated (average) outcomes.}
+   \item{se}{corresponding standard errors.}
+   \item{zval}{corresponding test statistics.}
    \item{pval}{corresponding p-values.}
-   \item{ci.lb}{lower bounds of the confidence intervals for the coefficients.}
-   \item{ci.ub}{upper bounds of the confidence intervals for the coefficients.}
-   \item{Q}{test statistics for the tests of heterogeneity.}
+   \item{ci.lb}{lower bounds of the confidence intervals.}
+   \item{ci.ub}{upper bounds of the confidence intervals.}
+   \item{Q}{test statistics for the test of heterogeneity.}
    \item{Qp}{corresponding p-values.}
-   \item{tau2}{estimated amounts of (residual) heterogeneity (only for random-effects models).}
-   \item{I2}{values of \mjseqn{I^2} (only for random-effects models).}
-   \item{H2}{values of \mjseqn{H^2} (only for random-effects models).}
+   \item{tau2}{estimated amount of heterogeneity (only for random-effects models).}
+   \item{I2}{values of \mjseqn{I^2}.}
+   \item{H2}{values of \mjseqn{H^2}.}
+
+   When the model was fitted with \code{test="t"} or \code{test="knha"}, then \code{zval} is called \code{tval} in the object that is returned by the function.
 
    The object is formatted and printed with \code{\link{print.list.rma}}.
 }

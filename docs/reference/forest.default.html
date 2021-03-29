@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-82</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-83</span>
       </span>
     </div>
 
@@ -143,7 +143,7 @@
        <span class='va'>xlim</span>, <span class='va'>alim</span>, <span class='va'>clim</span>, <span class='va'>ylim</span>, top<span class='op'>=</span><span class='fl'>3</span>, <span class='va'>at</span>, steps<span class='op'>=</span><span class='fl'>5</span>,
        level<span class='op'>=</span><span class='fl'>95</span>, refline<span class='op'>=</span><span class='fl'>0</span>, digits<span class='op'>=</span><span class='fl'>2L</span>, <span class='va'>width</span>,
        <span class='va'>xlab</span>, <span class='va'>slab</span>, <span class='va'>ilab</span>, <span class='va'>ilab.xpos</span>, <span class='va'>ilab.pos</span>,
-       <span class='va'>subset</span>, <span class='va'>transf</span>, <span class='va'>atransf</span>, <span class='va'>targs</span>, <span class='va'>rows</span>,
+       <span class='va'>order</span>, <span class='va'>subset</span>, <span class='va'>transf</span>, <span class='va'>atransf</span>, <span class='va'>targs</span>, <span class='va'>rows</span>,
        efac<span class='op'>=</span><span class='fl'>1</span>, pch<span class='op'>=</span><span class='fl'>15</span>, <span class='va'>psize</span>, plim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.5</span>,<span class='fl'>1.5</span><span class='op'>)</span>, <span class='va'>col</span>,
        <span class='va'>lty</span>, <span class='va'>fonts</span>, <span class='va'>cex</span>, <span class='va'>cex.lab</span>, <span class='va'>cex.axis</span>, <span class='va'>annosym</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
@@ -196,7 +196,7 @@
     </tr>
     <tr>
       <th>ylim</th>
-      <td><p>the y limits of the plot. If unspecified, the function tries to set the y-axis limits to some sensible values.</p></td>
+      <td><p>the y-axis limits of the plot. If unspecified, the function tries to set the y-axis limits to some sensible values.</p></td>
     </tr>
     <tr>
       <th>top</th>
@@ -208,7 +208,7 @@
     </tr>
     <tr>
       <th>steps</th>
-      <td><p>the number of tick marks for the x-axis (the default is 5). Ignored when the user specifies the positions via the <code>at</code> argument.</p></td>
+      <td><p>the number of tick marks for the x-axis (the default is 5). Ignored when the positions are specified via the <code>at</code> argument.</p></td>
     </tr>
     <tr>
       <th>level</th>
@@ -247,16 +247,20 @@
       <td><p>integer(s) (either 1, 2, 3, or 4) to specify the alignment of the vector(s) given via <code>ilab</code> (2 means right, 4 mean left aligned). If unspecified, the default is to center the labels.</p></td>
     </tr>
     <tr>
+      <th>order</th>
+      <td><p>optional character string to specify how the studies should be ordered. Can also be a variable based on which the studies will be ordered. See &#8216;Details&#8217;.</p></td>
+    </tr>
+    <tr>
       <th>subset</th>
-      <td><p>optional (logical or numeric) vector to specify the subset of studies that should be included in the plot. This argument can also be used for reordering the studies.</p></td>
+      <td><p>optional (logical or numeric) vector to specify the subset of studies that should be included in the plot.</p></td>
     </tr>
     <tr>
       <th>transf</th>
-      <td><p>optional argument to specify the name of a function that should be used to transform the observed effect sizes or outcomes and corresponding confidence interval bounds (e.g., <code>transf=exp</code>; see also <a href='transf.html'>transf</a>). If unspecified, no transformation is used.</p></td>
+      <td><p>optional argument to specify a function that should be used to transform the observed effect sizes or outcomes and corresponding confidence interval bounds (e.g., <code>transf=exp</code>; see also <a href='transf.html'>transf</a>). If unspecified, no transformation is used.</p></td>
     </tr>
     <tr>
       <th>atransf</th>
-      <td><p>optional argument to specify the name of a function that should be used to transform the x-axis labels and annotations (e.g., <code>atransf=exp</code>; see also <a href='transf.html'>transf</a>). If unspecified, no transformation is used.</p></td>
+      <td><p>optional argument to specify a function that should be used to transform the x-axis labels and annotations (e.g., <code>atransf=exp</code>; see also <a href='transf.html'>transf</a>). If unspecified, no transformation is used.</p></td>
     </tr>
     <tr>
       <th>targs</th>
@@ -318,9 +322,12 @@
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The plot shows the individual observed effect sizes or outcomes with corresponding confidence intervals. To use the function, one should specify the observed effect sizes or outcomes (via the <code>x</code> argument) together with the corresponding sampling variances (via the <code>vi</code> argument) or with the corresponding standard errors (via the <code>sei</code> argument). Alternatively, one can specify the observed effect sizes or outcomes together with the corresponding confidence interval bounds (via the <code>ci.lb</code> and <code>ci.ub</code> arguments).</p>
-<p>With the <code>transf</code> argument, the observed effect sizes or outcomes and corresponding confidence interval bounds can be transformed with some suitable function. For example, when plotting log odds ratios, then one could use <code>transf=exp</code> to obtain a forest plot showing the odds ratios. Alternatively, one can use the <code>atransf</code> argument to transform the x-axis labels and annotations (e.g., <code>atransf=exp</code>). See also <a href='transf.html'>transf</a> for some transformation functions useful for meta-analyses. The examples below illustrate the use of these arguments.</p>
-<p>By default, the studies are ordered from top to bottom (i.e., the first study in the dataset will be placed in row \(k\), the second study in row \(k-1\), and so on, until the last study, which is placed in the first row). The studies can be reordered with the <code>subset</code> argument (by specifying a vector with the desired order).</p>
+    <p>The plot shows the observed effect sizes or outcomes with corresponding confidence intervals. To use the function, one should specify the observed effect sizes or outcomes (via the <code>x</code> argument) together with the corresponding sampling variances (via the <code>vi</code> argument) or with the corresponding standard errors (via the <code>sei</code> argument). Alternatively, one can specify the observed effect sizes or outcomes together with the corresponding confidence interval bounds (via the <code>ci.lb</code> and <code>ci.ub</code> arguments).</p>
+<p>With the <code>transf</code> argument, the observed effect sizes or outcomes and corresponding confidence interval bounds can be transformed with some suitable function. For example, when plotting log odds ratios, then one could use <code>transf=exp</code> to obtain a forest plot showing the odds ratios. Alternatively, one can use the <code>atransf</code> argument to transform the x-axis labels and annotations (e.g., <code>atransf=exp</code>). See also <a href='transf.html'>transf</a> for some other useful transformation functions in the context of a meta-analysis. The examples below illustrate the use of these arguments.</p>
+<p>By default, the studies are ordered from top to bottom (i.e., the first study in the dataset will be placed in row \(k\), the second study in row \(k-1\), and so on, until the last study, which is placed in the first row). The studies can be reordered with the <code>order</code> argument:</p><ul>
+<li><p><code>order="obs"</code>: the studies are ordered by the observed effect sizes,</p></li>
+<li><p><code>order="prec"</code>: the studies are ordered by their sampling variances.</p></li>
+</ul><p>Alternatively, it is also possible to set <code>order</code> equal to a variable based on which the studies will be ordered (see &#8216;Examples&#8217;).</p>
 <p>By default (i.e., when <code>psize</code> is not specified), the size of the points is a function of the precision (i.e., inverse standard error) of the outcomes. This way, more precise estimates are visually more prominent in the plot. By making the point sizes a function of the inverse standard error of the estimates, their area is proportional to the inverse sampling variances, which corresponds to the weights they would receive in a fixed-effects model. However, the point sizes are rescaled so that the smallest point size is <code>plim[1]</code> and the largest point size is <code>plim[2]</code>. As a result, their relative sizes (i.e., areas) no longer exactly correspond to their relative weights in such a model. If exactly relative point sizes are desired, one can set <code>plim[2]</code> to <code>NA</code>, in which case the points are rescaled so that the smallest point size corresponds to <code>plim[1]</code> and all other points are scaled accordingly. As a result, the largest point may be very large. Alternatively, one can set <code>plim[1]</code> to <code>NA</code>, in which case the points are rescaled so that the largest point size corresponds to <code>plim[2]</code> and all other points are scaled accordingly. As a result, the smallest point may be very small and essentially indistinguishable from the confidence interval line. To avoid the latter, one can also set <code>plim[3]</code>, which enforces a minimal point size.</p>
 <p>Summary estimates can be added to the plot with the <code><a href='addpoly.html'>addpoly</a></code> function. See the documentation for that function for examples.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
@@ -328,7 +335,7 @@
     <p>The function tries to set some sensible values for the optional arguments, but it may be necessary to adjust these in certain circumstances.</p>
 <p>The function actually returns some information about the chosen defaults invisibly. Printing this information is useful as a starting point to make adjustments to the plot.</p>
 <p>If the number of studies is quite large, the labels, annotations, and symbols may become quite small and impossible to read. Stretching the plot window vertically may then provide a more readable figure (one should call the function again after adjusting the window size, so that the label/symbol sizes can be properly adjusted). Also, the <code>cex</code>, <code>cex.lab</code>, and <code>cex.axis</code> arguments are then useful to adjust the symbol and text sizes.</p>
-<p>If the horizontal plot and/or x-axis limits are set by the user, then the horizontal plot limits (<code>xlim</code>) must be at least as wide as the x-axis limits (<code>alim</code>). This restriction is enforced inside the function.</p>
+<p>If the horizontal plot and/or x-axis limits are set manually, then the horizontal plot limits (<code>xlim</code>) must be at least as wide as the x-axis limits (<code>alim</code>). This restriction is enforced inside the function.</p>
 <p>If the outcome measure used for creating the plot is bounded (e.g., correlations are bounded between -1 and +1, proportions are bounded between 0 and 1), one can use the <code>clim</code> argument to enforce those limits (confidence intervals cannot exceed those bounds then).</p>
 <p>The <code>lty</code> argument can also be a vector of two elements, the first for specifying the line type of the individual CIs (<code>"solid"</code> by default), the second for the line type of the horizontal line that is automatically added to the plot (<code>"solid"</code> by default; set to <code>"blank"</code> to remove it).</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
@@ -359,8 +366,12 @@
 </div><div class='img'><img src='forest.default-3.png' alt='' width='768' height='614' /></div><div class='input'>
 <span class='co'>### forest plot of the observed risk ratios with studies ordered by the RRs</span>
 <span class='fu'><a href='forest.html'>forest</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>yi</span>, <span class='va'>dat</span><span class='op'>$</span><span class='va'>vi</span>, slab<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>author</span>, <span class='va'>dat</span><span class='op'>$</span><span class='va'>year</span>, sep<span class='op'>=</span><span class='st'>", "</span><span class='op'>)</span>, atransf<span class='op'>=</span><span class='va'>exp</span>,
-       at<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.05</span>,<span class='fl'>.25</span>,<span class='fl'>1</span>,<span class='fl'>4</span>,<span class='fl'>20</span><span class='op'>)</span><span class='op'>)</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>10</span>,<span class='fl'>8</span><span class='op'>)</span>, cex<span class='op'>=</span><span class='fl'>.9</span>, subset<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/order.html'>order</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>yi</span><span class='op'>)</span><span class='op'>)</span>
+       at<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.05</span>,<span class='fl'>.25</span>,<span class='fl'>1</span>,<span class='fl'>4</span>,<span class='fl'>20</span><span class='op'>)</span><span class='op'>)</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>10</span>,<span class='fl'>8</span><span class='op'>)</span>, cex<span class='op'>=</span><span class='fl'>.9</span>, order<span class='op'>=</span><span class='st'>"obs"</span><span class='op'>)</span>
 </div><div class='img'><img src='forest.default-4.png' alt='' width='768' height='614' /></div><div class='input'>
+<span class='co'>### forest plot of the observed risk ratios with studies ordered by absolute latitude</span>
+<span class='fu'><a href='forest.html'>forest</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>yi</span>, <span class='va'>dat</span><span class='op'>$</span><span class='va'>vi</span>, slab<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>author</span>, <span class='va'>dat</span><span class='op'>$</span><span class='va'>year</span>, sep<span class='op'>=</span><span class='st'>", "</span><span class='op'>)</span>, atransf<span class='op'>=</span><span class='va'>exp</span>,
+       at<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.05</span>,<span class='fl'>.25</span>,<span class='fl'>1</span>,<span class='fl'>4</span>,<span class='fl'>20</span><span class='op'>)</span><span class='op'>)</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>10</span>,<span class='fl'>8</span><span class='op'>)</span>, cex<span class='op'>=</span><span class='fl'>.9</span>, order<span class='op'>=</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>ablat</span><span class='op'>)</span>
+</div><div class='img'><img src='forest.default-5.png' alt='' width='768' height='614' /></div><div class='input'>
 <span class='co'>### see also examples for the forest.rma function</span>
 </div></pre>
   </div>

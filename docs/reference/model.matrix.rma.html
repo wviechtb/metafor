@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-82</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-83</span>
       </span>
     </div>
 
@@ -167,25 +167,28 @@
     <div class='dont-index'><p><code><a href='fitted.rma.html'>fitted.rma</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>### meta-analysis of the log risk ratios using a mixed-effects meta-regression model</span>
-<span class='co'>### with multiple moderators (absolute latitude, publication year, and allocation method)</span>
-<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"RR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>,
-           mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>ablat</span> <span class='op'>+</span> <span class='va'>year</span> <span class='op'>+</span> <span class='va'>alloc</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='co'>### calculate log risk ratios and corresponding sampling variances</span>
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"RR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>)</span>
+
+<span class='co'>### fit mixed-effects model with absolute latitude and publication year as moderators</span>
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>ablat</span> <span class='op'>+</span> <span class='va'>year</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
+
+<span class='co'>### extract the model matrix</span>
 <span class='fu'>model.matrix</span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;    intrcpt ablat year allocrandom allocsystematic
-#&gt; 1        1    44 1948           1               0
-#&gt; 2        1    55 1949           1               0
-#&gt; 3        1    42 1960           1               0
-#&gt; 4        1    52 1977           1               0
-#&gt; 5        1    13 1973           0               0
-#&gt; 6        1    44 1953           0               0
-#&gt; 7        1    19 1973           1               0
-#&gt; 8        1    13 1980           1               0
-#&gt; 9        1    27 1968           1               0
-#&gt; 10       1    42 1961           0               1
-#&gt; 11       1    18 1974           0               1
-#&gt; 12       1    33 1969           0               1
-#&gt; 13       1    33 1976           0               1</div></pre>
+</div><div class='output co'>#&gt;    intrcpt ablat year
+#&gt; 1        1    44 1948
+#&gt; 2        1    55 1949
+#&gt; 3        1    42 1960
+#&gt; 4        1    52 1977
+#&gt; 5        1    13 1973
+#&gt; 6        1    44 1953
+#&gt; 7        1    19 1973
+#&gt; 8        1    13 1980
+#&gt; 9        1    27 1968
+#&gt; 10       1    42 1961
+#&gt; 11       1    18 1974
+#&gt; 12       1    33 1969
+#&gt; 13       1    33 1976</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

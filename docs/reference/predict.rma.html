@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-82</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-83</span>
       </span>
     </div>
 
@@ -190,7 +190,7 @@
     </tr>
     <tr>
       <th>transf</th>
-      <td><p>optional argument to specify the name of a function that should be used to transform the predicted values and interval bounds (e.g., <code>transf=exp</code>; see also <a href='transf.html'>transf</a>). If unspecified, no transformation is used.</p></td>
+      <td><p>optional argument to specify a function that should be used to transform the predicted values and interval bounds (e.g., <code>transf=exp</code>; see also <a href='transf.html'>transf</a>). If unspecified, no transformation is used.</p></td>
     </tr>
     <tr>
       <th>targs</th>
@@ -254,8 +254,11 @@
     <div class='dont-index'><p><code><a href='fitted.rma.html'>fitted.rma</a></code>, <code><a href='blup.html'>blup.rma.uni</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>### meta-analysis of the log risk ratios using a random-effects model</span>
-<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"RR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='co'>### calculate log risk ratios and corresponding sampling variances</span>
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"RR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>)</span>
+
+<span class='co'>### fit random-effects model</span>
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 
 <span class='co'>### average risk ratio with 95% CI</span>
 <span class='fu'>predict</span><span class='op'>(</span><span class='va'>res</span>, transf<span class='op'>=</span><span class='va'>exp</span><span class='op'>)</span>
@@ -263,9 +266,8 @@
 #&gt;    pred  ci.lb  ci.ub  pi.lb  pi.ub 
 #&gt;  0.4894 0.3441 0.6962 0.1546 1.5490 
 #&gt; </div><div class='input'>
-<span class='co'>### mixed-effects model with absolute latitude as a moderator</span>
-<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"RR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>ablat</span>,
-           data<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>)</span>
+<span class='co'>### fit mixed-effects model with absolute latitude as a moderator</span>
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>ablat</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 
 <span class='co'>### predicted average risk ratios for given absolute latitude values</span>
 <span class='fu'>predict</span><span class='op'>(</span><span class='va'>res</span>, transf<span class='op'>=</span><span class='va'>exp</span>, addx<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
@@ -296,9 +298,8 @@
 #&gt; 5 0.3001 0.2144 0.4201 0.1586 0.5678         1      50 
 #&gt; 6 0.2243 0.1423 0.3538 0.1105 0.4552         1      60 
 #&gt; </div><div class='input'>
-<span class='co'>### mixed-effects model with two moderators (absolute latitude and publication year)</span>
-<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"RR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>,
-           mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>ablat</span> <span class='op'>+</span> <span class='va'>year</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>)</span>
+<span class='co'>### fit mixed-effects model with absolute latitude and publication year as moderators</span>
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>ablat</span> <span class='op'>+</span> <span class='va'>year</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 
 <span class='co'>### predicted average risk ratios for 10 and 60 degrees latitude in 1950 and 1980</span>
 <span class='fu'>predict</span><span class='op'>(</span><span class='va'>res</span>, newmods<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>10</span>,<span class='fl'>60</span>,<span class='fl'>10</span>,<span class='fl'>60</span><span class='op'>)</span>,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1950</span>,<span class='fl'>1950</span>,<span class='fl'>1980</span>,<span class='fl'>1980</span><span class='op'>)</span><span class='op'>)</span>, transf<span class='op'>=</span><span class='va'>exp</span>, addx<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
@@ -309,9 +310,8 @@
 #&gt; 3 0.9525 0.6199 1.4637 0.4361 2.0802         1      10   1980 
 #&gt; 4 0.2348 0.1005 0.5481 0.0805 0.6843         1      60   1980 
 #&gt; </div><div class='input'>
-<span class='co'>### mixed-effects model with two moderators (one of which is a factor)</span>
-<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"RR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>,
-           mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>ablat</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>alloc</span><span class='op'>)</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>)</span>
+<span class='co'>### fit mixed-effects model with two moderators (one of which is a factor)</span>
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>ablat</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>alloc</span><span class='op'>)</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 
 <span class='co'>### examine how the factor was actually coded for the studies in the dataset</span>
 <span class='fu'>predict</span><span class='op'>(</span><span class='va'>res</span>, addx<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>

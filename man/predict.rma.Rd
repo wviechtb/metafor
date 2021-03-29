@@ -24,7 +24,7 @@
    \item{addz}{logical to specify whether the values of the scale variables should be added to the returned object.}
    \item{level}{numeric value between 0 and 100 to specify the confidence and prediction interval level (if unspecified, the default is to take the value from the object).}
    \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded (if unspecified, the default is to take the value from the object).}
-   \item{transf}{optional argument to specify the name of a function that should be used to transform the predicted values and interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
+   \item{transf}{optional argument to specify a function that should be used to transform the predicted values and interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified under \code{transf}.}
    \item{vcov}{logical to specify whether the variance-covariance matrix of the predicted values should also be returned (the default is \code{FALSE}).}
    \item{\dots}{other arguments.}
@@ -87,15 +87,17 @@
    \code{\link{fitted.rma}}, \code{\link{blup.rma.uni}}
 }
 \examples{
-### meta-analysis of the log risk ratios using a random-effects model
-res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
+### calculate log risk ratios and corresponding sampling variances
+dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
+
+### fit random-effects model
+res <- rma(yi, vi, data=dat)
 
 ### average risk ratio with 95\% CI
 predict(res, transf=exp)
 
-### mixed-effects model with absolute latitude as a moderator
-res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, mods = ~ ablat,
-           data=dat.bcg)
+### fit mixed-effects model with absolute latitude as a moderator
+res <- rma(yi, vi, mods = ~ ablat, data=dat)
 
 ### predicted average risk ratios for given absolute latitude values
 predict(res, transf=exp, addx=TRUE)
@@ -103,16 +105,14 @@ predict(res, transf=exp, addx=TRUE)
 ### predicted average risk ratios for 10-60 degrees absolute latitude
 predict(res, newmods=c(10, 20, 30, 40, 50, 60), transf=exp, addx=TRUE)
 
-### mixed-effects model with two moderators (absolute latitude and publication year)
-res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg,
-           mods = ~ ablat + year, data=dat.bcg)
+### fit mixed-effects model with absolute latitude and publication year as moderators
+res <- rma(yi, vi, mods = ~ ablat + year, data=dat)
 
 ### predicted average risk ratios for 10 and 60 degrees latitude in 1950 and 1980
 predict(res, newmods=cbind(c(10,60,10,60),c(1950,1950,1980,1980)), transf=exp, addx=TRUE)
 
-### mixed-effects model with two moderators (one of which is a factor)
-res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg,
-           mods = ~ ablat + factor(alloc), data=dat.bcg)
+### fit mixed-effects model with two moderators (one of which is a factor)
+res <- rma(yi, vi, mods = ~ ablat + factor(alloc), data=dat)
 
 ### examine how the factor was actually coded for the studies in the dataset
 predict(res, addx=TRUE)

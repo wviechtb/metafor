@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-82</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-83</span>
       </span>
     </div>
 
@@ -155,7 +155,7 @@
     </tr>
     <tr>
       <th>order</th>
-      <td><p>optional vector with indices giving the desired order for the cumulative meta-analysis.</p></td>
+      <td><p>optional argument to specify a variable based on which the studies will be ordered for the cumulative meta-analysis.</p></td>
     </tr>
     <tr>
       <th>digits</th>
@@ -163,7 +163,7 @@
     </tr>
     <tr>
       <th>transf</th>
-      <td><p>optional argument to specify the name of a function that should be used to transform the model coefficients and interval bounds (e.g., <code>transf=exp</code>; see also <a href='transf.html'>transf</a>). If unspecified, no transformation is used.</p></td>
+      <td><p>optional argument to specify a function that should be used to transform the model coefficients and interval bounds (e.g., <code>transf=exp</code>; see also <a href='transf.html'>transf</a>). If unspecified, no transformation is used.</p></td>
     </tr>
     <tr>
       <th>targs</th>
@@ -181,21 +181,26 @@
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>For <code>"rma.uni"</code> objects, the model specified by <code>x</code> must be a model without moderators (i.e., either a fixed- or a random-effects model).</p>
+    <p>For <code>"rma.uni"</code> objects, the model specified via <code>x</code> must be a model without moderators (i.e., either a fixed- or a random-effects model).</p>
+<p>If argument <code>order</code> is not specified, the studies are added according to their order in the original dataset.</p>
+<p>When a variable is specified for <code>order</code>, the variable is assumed to be of the same length as the original dataset that was used in the model fitting. Any subsetting and removal of studies with missing values that was applied during the model fitting is also automatically applied to the variable specified via the <code>order</code> argument. See &#8216;Examples&#8217;.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class <code><a href='https://rdrr.io/r/base/c.html'>c("list.rma","cumul.rma")</a></code>. The object is a list containing the following components:</p>
-<dt>estimate</dt><dd><p>estimated coefficients of the model.</p></dd>
-   <dt>se</dt><dd><p>standard errors of the coefficients.</p></dd>
-   <dt>zval</dt><dd><p>test statistics of the coefficients.</p></dd>
+<dt>estimate</dt><dd><p>estimated (average) outcomes.</p></dd>
+   <dt>se</dt><dd><p>corresponding standard errors.</p></dd>
+   <dt>zval</dt><dd><p>corresponding test statistics.</p></dd>
    <dt>pval</dt><dd><p>corresponding p-values.</p></dd>
-   <dt>ci.lb</dt><dd><p>lower bounds of the confidence intervals for the coefficients.</p></dd>
-   <dt>ci.ub</dt><dd><p>upper bounds of the confidence intervals for the coefficients.</p></dd>
-   <dt>QE</dt><dd><p>test statistics for the tests of heterogeneity.</p></dd>
-   <dt>QEp</dt><dd><p>corresponding p-values.</p></dd>
-   <dt>tau2</dt><dd><p>estimated amounts of (residual) heterogeneity (only for random-effects models).</p></dd>
+   <dt>ci.lb</dt><dd><p>lower bounds of the confidence intervals.</p></dd>
+   <dt>ci.ub</dt><dd><p>upper bounds of the confidence intervals.</p></dd>
+   <dt>Q</dt><dd><p>test statistics for the test of heterogeneity.</p></dd>
+   <dt>Qp</dt><dd><p>corresponding p-values.</p></dd>
+   <dt>tau2</dt><dd><p>estimated amount of heterogeneity (only for random-effects models).</p></dd>
    <dt>I2</dt><dd><p>values of \(I^2\).</p></dd>
    <dt>H2</dt><dd><p>values of \(H^2\).</p></dd>
+   <dt>...</dt><dd><p>other arguments.</p></dd>
+
+   When the model was fitted with test="t" or test="knha", then zval is called tval in the object that is returned by the function.
 
    The object is formatted and printed with <a href='print.list.rma.html'>print.list.rma</a>. A forest plot showing the results from the cumulative meta-analysis can be obtained with <a href='forest.cumul.rma.html'>forest.cumul.rma</a>. Alternatively, <a href='plot.cumul.rma.html'>plot.cumul.rma</a> can also be used to visualize the results.
 
@@ -222,9 +227,9 @@
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 
 <span class='co'>### cumulative meta-analysis (in the order of publication year)</span>
-<span class='fu'>cumul</span><span class='op'>(</span><span class='va'>res</span>, transf<span class='op'>=</span><span class='va'>exp</span>, order<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/order.html'>order</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>year</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>cumul</span><span class='op'>(</span><span class='va'>res</span>, transf<span class='op'>=</span><span class='va'>exp</span>, order<span class='op'>=</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>year</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 
-#&gt;    estimate    zval  pvals  ci.lb  ci.ub       QE    QEp   tau2      I2      H2 
+#&gt;    estimate    zval  pvals  ci.lb  ci.ub        Q     Qp   tau2      I2      H2 
 #&gt; 1    0.4109 -1.5586 0.1191 0.1343 1.2574   0.0000 1.0000 0.0000  0.0000  1.0000 
 #&gt; 2    0.2658 -3.7967 0.0001 0.1341 0.5268   0.9315 0.3345 0.0000  0.0000  1.0000 
 #&gt; 6    0.3783 -3.9602 0.0001 0.2338 0.6120   3.1879 0.2031 0.0872 40.7090  1.6866 
@@ -243,9 +248,9 @@
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.mh.html'>rma.mh</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"RR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>)</span>
 
 <span class='co'>### cumulative meta-analysis</span>
-<span class='fu'>cumul</span><span class='op'>(</span><span class='va'>res</span>, order<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/order.html'>order</a></span><span class='op'>(</span><span class='va'>dat.bcg</span><span class='op'>$</span><span class='va'>year</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>cumul</span><span class='op'>(</span><span class='va'>res</span>, order<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>$</span><span class='va'>year</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 
-#&gt;    estimate     se     zval   pval   ci.lb   ci.ub       QE    QEp      I2 
+#&gt;    estimate     se     zval   pval   ci.lb   ci.ub        Q     Qp      I2 
 #&gt; 1   -0.8893 0.5706  -1.5586 0.1191 -2.0077  0.2290   0.0000 1.0000  0.0000 
 #&gt; 2   -1.3517 0.3455  -3.9124 0.0001 -2.0289 -0.6746   0.9373 0.3330  0.0000 
 #&gt; 6   -0.8273 0.0808 -10.2371 0.0000 -0.9857 -0.6689   3.2109 0.2008 37.7127 
@@ -273,9 +278,9 @@
 #&gt; 13  3.9623 
 #&gt; 4   6.2160 
 #&gt; 8  12.7140 
-#&gt; </div><div class='input'><span class='fu'>cumul</span><span class='op'>(</span><span class='va'>res</span>, order<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/order.html'>order</a></span><span class='op'>(</span><span class='va'>dat.bcg</span><span class='op'>$</span><span class='va'>year</span><span class='op'>)</span>, transf<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+#&gt; </div><div class='input'><span class='fu'>cumul</span><span class='op'>(</span><span class='va'>res</span>, order<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>$</span><span class='va'>year</span>, transf<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 
-#&gt;    estimate     zval   pval  ci.lb  ci.ub       QE    QEp      I2      H2 
+#&gt;    estimate     zval   pval  ci.lb  ci.ub        Q     Qp      I2      H2 
 #&gt; 1    0.4109  -1.5586 0.1191 0.1343 1.2574   0.0000 1.0000  0.0000  1.0000 
 #&gt; 2    0.2588  -3.9124 0.0001 0.1315 0.5094   0.9373 0.3330  0.0000  0.9373 
 #&gt; 6    0.4372 -10.2371 0.0000 0.3732 0.5123   3.2109 0.2008 37.7127  1.6055 
@@ -294,9 +299,9 @@
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.mh.html'>rma.mh</a></span><span class='op'>(</span>ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>)</span>
 
 <span class='co'>### cumulative meta-analysis</span>
-<span class='fu'>cumul</span><span class='op'>(</span><span class='va'>res</span>, order<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/order.html'>order</a></span><span class='op'>(</span><span class='va'>dat.bcg</span><span class='op'>$</span><span class='va'>year</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>cumul</span><span class='op'>(</span><span class='va'>res</span>, order<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>$</span><span class='va'>year</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 
-#&gt;    estimate     se     zval   pval   ci.lb   ci.ub       QE    QEp      I2 
+#&gt;    estimate     se     zval   pval   ci.lb   ci.ub        Q     Qp      I2 
 #&gt; 1   -0.9387 0.5976  -1.5708 0.1162 -2.1100  0.2326   0.0000 1.0000  0.0000 
 #&gt; 2   -1.4215 0.3595  -3.9539 0.0001 -2.1261 -0.7169   0.9404 0.3322  0.0000 
 #&gt; 6   -0.9968 0.0957 -10.4137 0.0000 -1.1844 -0.8092   2.3134 0.3145 13.5455 
@@ -324,9 +329,9 @@
 #&gt; 13  4.7344 
 #&gt; 4   6.6484 
 #&gt; 8  13.6619 
-#&gt; </div><div class='input'><span class='fu'>cumul</span><span class='op'>(</span><span class='va'>res</span>, order<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/order.html'>order</a></span><span class='op'>(</span><span class='va'>dat.bcg</span><span class='op'>$</span><span class='va'>year</span><span class='op'>)</span>, transf<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+#&gt; </div><div class='input'><span class='fu'>cumul</span><span class='op'>(</span><span class='va'>res</span>, order<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>$</span><span class='va'>year</span>, transf<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 
-#&gt;    estimate     zval   pval  ci.lb  ci.ub       QE    QEp      I2      H2 
+#&gt;    estimate     zval   pval  ci.lb  ci.ub        Q     Qp      I2      H2 
 #&gt; 1    0.3911  -1.5708 0.1162 0.1212 1.2619   0.0000 1.0000  0.0000  1.0000 
 #&gt; 2    0.2414  -3.9539 0.0001 0.1193 0.4883   0.9404 0.3322  0.0000  0.9404 
 #&gt; 6    0.3691 -10.4137 0.0000 0.3059 0.4452   2.3134 0.3145 13.5455  1.1567 
@@ -340,6 +345,27 @@
 #&gt; 13   0.5009 -11.3982 0.0000 0.4447 0.5641  47.3437 0.0000 78.8779  4.7344 
 #&gt; 4    0.4346 -15.0934 0.0000 0.3901 0.4843  73.1329 0.0000 84.9589  6.6484 
 #&gt; 8    0.6229 -11.5444 0.0000 0.5748 0.6750 163.9426 0.0000 92.6804 13.6619 
+#&gt; </div><div class='input'>
+<span class='co'>### make first log risk ratio missing and fit model without study 2; then the</span>
+<span class='co'>### variable specified via 'order' should still be of the same length as the</span>
+<span class='co'>### original dataset; subsetting and removal of studies with missing values is</span>
+<span class='co'>### automatically done by the cumul() function</span>
+<span class='va'>dat</span><span class='op'>$</span><span class='va'>yi</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='cn'>NA</span>
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span>, subset<span class='op'>=</span><span class='op'>-</span><span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Studies with NAs omitted from model fitting.</span></div><div class='input'><span class='fu'>cumul</span><span class='op'>(</span><span class='va'>res</span>, transf<span class='op'>=</span><span class='va'>exp</span>, order<span class='op'>=</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>year</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
+#&gt;    estimate    zval  pvals  ci.lb  ci.ub        Q     Qp   tau2      I2      H2 
+#&gt; 6    0.4556 -9.4599 0.0000 0.3871 0.5362   0.0000 1.0000 0.0000  0.0000  1.0000 
+#&gt; 3    0.4514 -9.6497 0.0000 0.3841 0.5306   0.7478 0.3872 0.0000  0.0000  1.0000 
+#&gt; 10   0.3504 -4.3207 0.0000 0.2178 0.5639   4.9051 0.0861 0.1008 59.6906  2.4808 
+#&gt; 9    0.4100 -4.2685 0.0000 0.2722 0.6174   7.1487 0.0673 0.1034 66.8114  3.0131 
+#&gt; 12   0.4480 -3.6703 0.0002 0.2918 0.6878  10.0666 0.0393 0.1304 66.7246  3.0052 
+#&gt; 5    0.5075 -3.1669 0.0015 0.3335 0.7722  15.9241 0.0071 0.1704 75.5631  4.0922 
+#&gt; 7    0.4584 -3.5536 0.0004 0.2981 0.7048  19.3442 0.0036 0.2132 77.6086  4.4660 
+#&gt; 11   0.4970 -3.6803 0.0002 0.3425 0.7212  29.4342 0.0001 0.1880 83.2856  5.9829 
+#&gt; 13   0.5390 -3.3443 0.0008 0.3752 0.7743  34.5952 0.0000 0.2077 84.0877  6.2845 
+#&gt; 4    0.4835 -3.7288 0.0002 0.3300 0.7084  64.2052 0.0000 0.2831 89.1076  9.1808 
+#&gt; 8    0.5262 -3.3578 0.0008 0.3618 0.7655 144.6390 0.0000 0.3139 93.3044 14.9352 
 #&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

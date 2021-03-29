@@ -3,19 +3,19 @@ annotate=TRUE, header=FALSE,
 xlim, alim, clim, ylim, top=3, at, steps=5, level=x$level, refline=0, digits=2L, width,
 xlab,             ilab, ilab.xpos, ilab.pos,
 transf, atransf, targs, rows,
-efac=1, pch=15, psize=1, col,       lty, fonts,
-cex, cex.lab, cex.axis, annosym, ...) {
+efac=1, pch=15, psize=1,                        col,
+lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
 
    #########################################################################
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
+   .chkclass(class(x), must="cumul.rma")
+
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))
-
-   .chkclass(class(x), must="cumul.rma")
 
    if (missing(transf))
       transf <- FALSE
@@ -58,8 +58,20 @@ cex, cex.lab, cex.axis, annosym, ...) {
    if (missing(cex.axis))
       cex.axis <- NULL
 
+   level <- ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
+
+   ### digits[1] for annotations, digits[2] for x-axis labels
+   ### note: digits can also be a list (e.g., digits=list(2L,3)); trailing 0's are dropped for intergers
+
+   if (length(digits) == 1L)
+      digits <- c(digits,digits)
+
+   ############################################################################
+
+   ### set default line types if user has not specified 'lty' argument
+
    if (missing(lty)) {
-      lty <- c("solid", "solid") ### 1st value = CIs, 2nd value = horizontal line(s)
+      lty <- c("solid", "solid") # 1st value = CIs, 2nd value = horizontal line(s)
    } else {
       if (length(lty) == 1L)
          lty <- c(lty, "solid")
@@ -73,21 +85,15 @@ cex, cex.lab, cex.axis, annosym, ...) {
    ### annotation symbols vector
 
    if (missing(annosym))
-      annosym <- c(" [", ", ", "]", "-")
+      annosym <- c(" [", ", ", "]", "-") # 4th element for minus sign symbol
    if (length(annosym) == 3L)
       annosym <- c(annosym, "-")
    if (length(annosym) != 4L)
       stop(mstyle$stop("Argument 'annosym' must be a vector of length 3."))
 
-   level <- ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
+   ### get measure from object
 
-   ### set measure based on the measure attribute of yi
-
-   if (is.null(attr(yi, "measure"))) {
-      measure <- "GEN"
-   } else {
-      measure <- attr(yi, "measure")
-   }
+   measure <- x$measure
 
    ### column header
 
@@ -132,11 +138,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
    #########################################################################
 
-   ### digits[1] for annotations, digits[2] for x-axis labels
-   ### note: digits can also be a list (e.g., digits=list(2L,3))
-
-   if (length(digits) == 1L)
-      digits <- c(digits,digits)
+   ### extract data / results and other arguments
 
    vi <- x$se^2
    ci.lb <- x$ci.lb
@@ -144,39 +146,50 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
    ### check length of yi and vi
 
-   if (length(yi) != length(vi))
+   k <- length(yi) # either of length k when na.action="na.omit" or k.f otherwise
+
+   if (length(vi) != k)
       stop(mstyle$stop("Length of 'yi' and 'vi' (or 'sei') is not the same."))
 
-   k <- length(yi)
+   ### note: ilab, pch, psize, col must be of the same length as yi (which may
+   ###       or may not contain NAs; this is different than the other forest()
+   ###       functions but it would be tricky to make this fully consistent now
 
    if (x$slab.null) {
-      slab    <- paste("+ Study", x$ids)
+      slab    <- paste("+ Study", x$ids)  # cumul() removes the studies with NAs when na.action="na.omit"
       slab[1] <- paste("Study", x$ids[1])
    } else {
-      slab    <- paste("+", x$slab)
+      slab    <- paste("+", x$slab)       # cumul() removes the studies with NAs when na.action="na.omit"
       slab[1] <- paste(x$slab[1])
    }
 
-   if (is.null(dim(ilab)))
-      ilab <- cbind(ilab)
+   if (!is.null(ilab)) {
+
+      if (is.null(dim(ilab)))
+         ilab <- cbind(ilab)
+
+      if (nrow(ilab) != k)
+         stop(mstyle$stop(paste0("Length of the 'ilab' argument (", nrow(ilab), ") does not correspond to the number of outcomes (", k, ").")))
+
+   }
 
    if (length(pch) == 1L)
       pch <- rep(pch, k)
-   if (length(pch) != length(yi))
-      stop(mstyle$stop(paste0("Number of outcomes (", length(yi), ") does not correspond to the length of the 'pch' argument (", length(pch), ").")))
+   if (length(pch) != k)
+      stop(mstyle$stop(paste0("Length of the 'pch' argument (", length(pch), ") does not correspond to the number of outcomes (", k, ").")))
 
    if (length(psize) == 1L)
       psize <- rep(psize, k)
-   if (length(psize) != length(yi))
-      stop(mstyle$stop(paste0("Number of outcomes (", length(yi), ") does not correspond to the length of the 'psize' argument (", length(psize), ").")))
+   if (length(psize) != k)
+      stop(mstyle$stop(paste0("Length of the 'psize' argument (", length(psize), ") does not correspond to the number of outcomes (", k, ").")))
 
    ### if user has set the col argument
 
    if (!is.null(col)) {
       if (length(col) == 1L)
          col <- rep(col, k)
-      if (length(col) != length(yi))
-         stop(mstyle$stop(paste0("Number of outcomes (", length(yi), ") does not correspond to the length of the 'col' argument (", length(col), ").")))
+      if (length(col) != k)
+         stop(mstyle$stop(paste0("Length of the 'col' argument (", length(col), ") does not correspond to the number of outcomes (", k, ").")))
    } else {
       col <- rep("black", k)
    }
@@ -190,8 +203,8 @@ cex, cex.lab, cex.axis, annosym, ...) {
          rows <- rows:(rows-k+1)
    }
 
-   if (length(rows) != length(yi))
-      stop(mstyle$stop(paste0("Number of outcomes (", length(yi), ") does not correspond to the length of the 'rows' argument (", length(rows), ").")))
+   if (length(rows) != k)
+      stop(mstyle$stop(paste0("Length of the 'rows' argument (", length(rows), ") does not correspond to the number of outcomes (", k, ").")))
 
    ### reverse order
 
@@ -200,9 +213,9 @@ cex, cex.lab, cex.axis, annosym, ...) {
    ci.lb   <- ci.lb[k:1]
    ci.ub   <- ci.ub[k:1]
    slab    <- slab[k:1]
-   ilab    <- ilab[k:1,,drop=FALSE]               ### if ilab is still NULL, then this remains NULL
+   ilab    <- ilab[k:1,,drop=FALSE]               # if NULL, remains NULL
    pch     <- pch[k:1]
-   psize   <- psize[k:1]                          ### if psize is still NULL, then this remains NULL
+   psize   <- psize[k:1]                          # if NULL, remains NULL
    col     <- col[k:1]
    rows    <- rows[k:1]
 
@@ -220,13 +233,13 @@ cex, cex.lab, cex.axis, annosym, ...) {
          ci.lb   <- ci.lb[not.na]
          ci.ub   <- ci.ub[not.na]
          slab    <- slab[not.na]
-         ilab    <- ilab[not.na,,drop=FALSE]    ### if ilab is still NULL, then this remains NULL
+         ilab    <- ilab[not.na,,drop=FALSE]    # if NULL, remains NULL
          pch     <- pch[not.na]
-         psize   <- psize[not.na]               ### if psize is still NULL, then this remains NULL
+         psize   <- psize[not.na]               # if NULL, remains NULL
          col     <- col[not.na]
 
-         rows.new <- rows                       ### rearrange rows due to NAs being omitted from plot
-         rows.na  <- rows[!not.na]              ### shift higher rows down according to number of NAs omitted
+         rows.new <- rows                       # rearrange rows due to NAs being omitted from plot
+         rows.na  <- rows[!not.na]              # shift higher rows down according to number of NAs omitted
          for (j in seq_len(length(rows.na))) {
             rows.new[rows >= rows.na[j]] <- rows.new[rows >= rows.na[j]] - 1
          }
@@ -237,14 +250,9 @@ cex, cex.lab, cex.axis, annosym, ...) {
       if (na.act == "na.fail")
          stop(mstyle$stop("Missing values in results."))
 
-   }                                            ### note: yi/vi may be NA if na.act == "na.exclude" or "na.pass"
+   }                                            # note: yi/vi may be NA if na.act == "na.exclude" or "na.pass"
 
-   k <- length(yi)                              ### in case length of k has changed
-
-   ### calculate individual CI bounds (skipped: CI bounds are already extracted above)
-
-   #ci.lb <- yi - qnorm(level/2, lower.tail=FALSE) * sqrt(vi)
-   #ci.ub <- yi + qnorm(level/2, lower.tail=FALSE) * sqrt(vi)
+   k <- length(yi)                              # in case length of k has changed
 
    ### if requested, apply transformation to yi's and CI bounds
 
@@ -299,7 +307,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
       #xlim[2] <- xlim[2]*max(1, digits[[2]]/2)
    }
 
-   ### set x axis limits (at argument overrides alim argument)
+   ### set x-axis limits (at argument overrides alim argument)
 
    alim.spec <- TRUE
 
@@ -312,7 +320,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
       }
    }
 
-   ### make sure the plot and x axis limits are sorted
+   ### make sure the plot and x-axis limits are sorted
 
    alim <- sort(alim)
    xlim <- sort(xlim)
@@ -322,12 +330,12 @@ cex, cex.lab, cex.axis, annosym, ...) {
    if (xlim[1] > min(yi, na.rm=TRUE)) { xlim[1] <- min(yi, na.rm=TRUE) }
    if (xlim[2] < max(yi, na.rm=TRUE)) { xlim[2] <- max(yi, na.rm=TRUE) }
 
-   ### x axis limits must always encompass the yi values (no longer required)
+   ### x-axis limits must always encompass the yi values (no longer required)
 
    #if (alim[1] > min(yi, na.rm=TRUE)) { alim[1] <- min(yi, na.rm=TRUE) }
    #if (alim[2] < max(yi, na.rm=TRUE)) { alim[2] <- max(yi, na.rm=TRUE) }
 
-   ### plot limits must always encompass the x axis limits
+   ### plot limits must always encompass the x-axis limits
 
    if (alim[1] < xlim[1]) { xlim[1] <- alim[1] }
    if (alim[2] > xlim[2]) { xlim[2] <- alim[2] }
@@ -346,7 +354,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
    if (is.na(ddd$textpos[2]))
       ddd$textpos[2] <- xlim[2]
 
-   ### set y axis limits
+   ### set y-axis limits
 
    if (missing(ylim)) {
       ylim <- c(0.5, max(rows, na.rm=TRUE)+top)
@@ -354,7 +362,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
       ylim <- sort(ylim)
    }
 
-   ### generate x axis positions if none are specified
+   ### generate x-axis positions if none are specified
 
    if (is.null(at)) {
       if (alim.spec) {
@@ -363,23 +371,23 @@ cex, cex.lab, cex.axis, annosym, ...) {
          at <- pretty(x=c(min(ci.lb, na.rm=TRUE), max(ci.ub, na.rm=TRUE)), n=steps-1)
       }
    } else {
-      at[at < alim[1]] <- alim[1] ### remove at values that are below or above the axis limits
+      at[at < alim[1]] <- alim[1] # remove at values that are below or above the axis limits
       at[at > alim[2]] <- alim[2]
       at <- unique(at)
    }
 
-   ### x axis labels (apply transformation to axis labels if requested)
+   ### x-axis labels (apply transformation to axis labels if requested)
 
    at.lab <- at
 
    if (is.function(atransf)) {
       if (is.null(targs)) {
-         at.lab <- formatC(sapply(at.lab, atransf), digits=digits[[2]], format="f", drop0trailing=ifelse(class(digits[[2]]) == "integer", TRUE, FALSE))
+         at.lab <- formatC(sapply(at.lab, atransf), digits=digits[[2]], format="f", drop0trailing=is.integer(digits[[2]]))
       } else {
-         at.lab <- formatC(sapply(at.lab, atransf, targs), digits=digits[[2]], format="f", drop0trailing=ifelse(class(digits[[2]]) == "integer", TRUE, FALSE))
+         at.lab <- formatC(sapply(at.lab, atransf, targs), digits=digits[[2]], format="f", drop0trailing=is.integer(digits[[2]]))
       }
    } else {
-      at.lab <- formatC(at.lab, digits=digits[[2]], format="f", drop0trailing=ifelse(class(digits[[2]]) == "integer", TRUE, FALSE))
+      at.lab <- formatC(at.lab, digits=digits[[2]], format="f", drop0trailing=is.integer(digits[[2]]))
    }
 
    #########################################################################
@@ -445,11 +453,11 @@ cex, cex.lab, cex.axis, annosym, ...) {
    if (is.null(cex.axis))
       cex.axis <- par("cex") * cex.adj
 
-   ### add x axis
+   ### add x-axis
 
    laxis(side=1, at=at, labels=at.lab, cex.axis=cex.axis, ...)
 
-   ### add x axis label
+   ### add x-axis label
 
    if (missing(xlab))
       xlab <- .setlab(measure, transf.char, atransf.char, gentype=2)

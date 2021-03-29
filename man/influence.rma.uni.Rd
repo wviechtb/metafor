@@ -10,7 +10,7 @@
 \alias{hatvalues.rma.uni}
 \title{Outlier and Influential Case Diagnostics for 'rma.uni' Objects}
 \description{
-   The functions can be used to compute various outlier and influential case diagnostics (some of which indicate the influence of deleting one case/study at a time on the model fit or the fitted/residual values) for objects of class \code{"rma.uni"}. For the corresponding help file for \code{"rma.mv"} objects, see \code{\link{influence.rma.mv}}. \loadmathjax
+   The functions can be used to compute various outlier and influential case diagnostics (some of which indicate the influence of deleting one case at a time on the model fit or the fitted/residual values) for objects of class \code{"rma.uni"}. For the corresponding help file for \code{"rma.mv"} objects, see \code{\link{influence.rma.mv}}. \loadmathjax
 }
 \usage{
 \method{influence}{rma.uni}(model, digits, progbar=FALSE, \dots)
@@ -31,7 +31,9 @@
    \item{\dots}{other arguments.}
 }
 \details{
-   The \code{influence} function calculates the following leave-one-out diagnostics for each study:
+   The term \sQuote{case} below refers to a particular row from the dataset used in the model fitting (which is typically synonymous with study).
+
+   The \code{influence} function calculates the following leave-one-out diagnostics for each case:
    \itemize{
    \item externally standardized residual,
    \item DFFITS value,
@@ -44,29 +46,29 @@
 
    For details on externally standardized residuals, see \code{\link{rstudent.rma.uni}}.
 
-   The DFFITS value essentially indicates how many standard deviations the predicted (average) effect for the \mjseqn{i}th study changes after excluding the \mjseqn{i}th study from the model fitting.
+   The DFFITS value essentially indicates how many standard deviations the predicted (average) effect for the \mjseqn{i}th case changes after excluding the \mjseqn{i}th case from the model fitting.
 
-   Cook's distance can be interpreted as the Mahalanobis distance between the entire set of predicted values once with the \mjseqn{i}th study included and once with the \mjseqn{i}th study excluded from the model fitting.
+   Cook's distance can be interpreted as the Mahalanobis distance between the entire set of predicted values once with the \mjseqn{i}th case included and once with the \mjseqn{i}th case excluded from the model fitting.
 
-   The covariance ratio is defined as the determinant of the variance-covariance matrix of the parameter estimates based on the dataset with the \mjseqn{i}th study removed divided by the determinant of the variance-covariance matrix of the parameter estimates based on the complete dataset. A value below 1 therefore indicates that removal of the \mjseqn{i}th study yields more precise estimates of the model coefficients.
+   The covariance ratio is defined as the determinant of the variance-covariance matrix of the parameter estimates based on the dataset with the \mjseqn{i}th case removed divided by the determinant of the variance-covariance matrix of the parameter estimates based on the complete dataset. A value below 1 therefore indicates that removal of the \mjseqn{i}th case yields more precise estimates of the model coefficients.
 
-   The leave-one-out amount of (residual) heterogeneity is the estimated value of \mjseqn{\tau^2} based on the dataset with the \mjseqn{i}th study removed. This is always equal to 0 for fixed-effects models.
+   The leave-one-out amount of (residual) heterogeneity is the estimated value of \mjseqn{\tau^2} based on the dataset with the \mjseqn{i}th case removed. This is always equal to 0 for fixed-effects models.
 
-   Similarly, the leave-one-out test statistic of the test for (residual) heterogeneity is the value of the test statistic of the test for (residual) heterogeneity calculated based on the dataset with the \mjseqn{i}th study removed.
+   Similarly, the leave-one-out test statistic of the test for (residual) heterogeneity is the value of the test statistic of the test for (residual) heterogeneity calculated based on the dataset with the \mjseqn{i}th case removed.
 
-   Finally, the DFBETAS value(s) essentially indicate(s) how many standard deviations the estimated coefficient(s) change(s) after excluding the \mjseqn{i}th study from the model fitting.
+   Finally, the DFBETAS value(s) essentially indicate(s) how many standard deviations the estimated coefficient(s) change(s) after excluding the \mjseqn{i}th case from the model fitting.
 
-   A study may be considered to be \sQuote{influential} if at least one of the following is true:
+   A case may be considered to be \sQuote{influential} if at least one of the following is true:
    \itemize{
-   \item The absolute DFFITS value is larger than \mjeqn{3 \times \sqrt{p/(k-p)}}{3*\sqrt(p/(k-p))}, where \mjseqn{p} is the number of model coefficients and \mjseqn{k} the number of studies.
+   \item The absolute DFFITS value is larger than \mjeqn{3 \times \sqrt{p/(k-p)}}{3*\sqrt(p/(k-p))}, where \mjseqn{p} is the number of model coefficients and \mjseqn{k} the number of cases.
    \item The lower tail area of a chi-square distribution with \mjseqn{p} degrees of freedom cut off by the Cook's distance is larger than 50\%.
    \item The hat value is larger than \mjeqn{3 \times (p/k)}{3*(p/k)}.
    \item Any DFBETAS value is larger than \mjseqn{1}.
-   } Studies which are considered influential with respect to any of these measures are marked with an asterisk. Note that the chosen cut-offs are (somewhat) arbitrary. Substantively informed judgment should always be used when examining the influence of each study on the results.
+   } Cases which are considered influential with respect to any of these measures are marked with an asterisk. Note that the chosen cut-offs are (somewhat) arbitrary. Substantively informed judgment should always be used when examining the influence of each case on the results.
 }
 \value{
    An object of class \code{"infl.rma.uni"}, which is a list containing the following components:
-   \item{inf}{an element of class \code{"list.rma"} with the externally standardized residuals, DFFITS values, Cook's distances, covariance ratios, leave-one-out \mjseqn{\tau^2} estimates, leave-one-out (residual) heterogeneity test statistics, hat values, weights, and an indicator whether a study is influential or not.}
+   \item{inf}{an element of class \code{"list.rma"} with the externally standardized residuals, DFFITS values, Cook's distances, covariance ratios, leave-one-out \mjseqn{\tau^2} estimates, leave-one-out (residual) heterogeneity test statistics, hat values, weights, and an indicator whether a case is influential or not.}
    \item{dfbs}{an element of class \code{"list.rma"} with the the DFBETAS values.}
    \item{\dots}{some additional elements/values.}
 
@@ -75,7 +77,7 @@
 \note{
    Right now, leave-one-out diagnostics are calculated by refitting the model \mjseqn{k} times. Depending on how large \mjseqn{k} is, it may take a few moments to finish the calculations. There are shortcuts for calculating at least some of these values without refitting the model each time, but these are currently not implemented (and may not exist for all of the leave-one-out diagnostics calculated by the function).
 
-   It may not be possible to fit the model after deletion of the \mjseqn{i}th study from the dataset. This will result in \code{NA} values for that study.
+   It may not be possible to fit the model after deletion of the \mjseqn{i}th case from the dataset. This will result in \code{NA} values for that case.
 
    Certain relationships between the leave-one-out diagnostics and the (internally or externally) standardized residuals (Belsley, Kuh, & Welsch, 1980; Cook & Weisberg, 1982) no longer hold for the meta-analytic models. Maybe there are other relationships. These remain to be determined.
 }
@@ -97,16 +99,20 @@
    \code{\link{plot.infl.rma.uni}}, \code{\link{rstudent.rma.uni}}, \code{\link{weights.rma.uni}}
 }
 \examples{
-### meta-analysis of the log risk ratios using a mixed-effects model
-### with two moderators (absolute latitude and publication year)
-res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg,
-           mods = ~ ablat + year, data=dat.bcg)
+### calculate log risk ratios and corresponding sampling variances
+dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
+### fit mixed-effects model with absolute latitude and publication year as moderators
+res <- rma(yi, vi, mods = ~ ablat + year, data=dat)
+
+### compute the diagnostics
 inf <- influence(res)
 inf
 
+### plot the values
 plot(inf)
 
+### compute Cook's distances, DFBETAS values, and hat values
 cooks.distance(res)
 dfbetas(res)
 hatvalues(res)

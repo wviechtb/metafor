@@ -27,7 +27,7 @@ test_that("plot can be drawn.", {
    ### create plot
    forest(yi, vi,
           xlim=c(-2.5,3.5),        ### adjust horizontal plot region limits
-          subset=order(yi),        ### order by size of yi
+          order=yi,                ### order by size of yi
           slab=NA, annotate=FALSE, ### remove study labels and annotations
           efac=0,                  ### remove vertical bars at end of CIs
           pch=19,                  ### changing point symbol to filled circle

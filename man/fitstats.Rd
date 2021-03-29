@@ -51,22 +51,27 @@ fitstats(object, \dots)
    \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, \code{\link{rma.glmm}}, \code{\link{rma.mv}}, \code{\link{anova.rma}}
 }
 \examples{
-### meta-analysis of the log risk ratios using a random-effects model
-res1 <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg,
-            data=dat.bcg, method="ML")
+### calculate log risk ratios and corresponding sampling variances
+dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
-### mixed-effects model with two moderators (latitude and publication year)
-res2 <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, mods = ~ ablat + year,
-            data=dat.bcg, method="ML")
+### fit random-effects model
+res1 <- rma(yi, vi, data=dat, method="ML")
 
+### fit mixed-effects model with absolute latitude and publication year as moderators
+res2 <- rma(yi, vi, mods = ~ ablat + year, data=dat, method="ML")
+
+### compare fit statistics
 fitstats(res1, res2)
 
+### log-likelihoods
 logLik(res1)
 logLik(res2)
 
+### deviances
 deviance(res1)
 deviance(res2)
 
+### AIC, AICc, and BIC values
 AIC(res1, res2)
 AIC(res1, res2, correct=TRUE)
 BIC(res1, res2)

@@ -189,9 +189,6 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
    ai <- bi <- ci <- di <- x1i <- x2i <- t1i <- t2i <- NA
 
-   if (!is.null(subset))
-      subset <- .setnafalse(subset)
-
    if (!is.null(yi)) {
 
       ### if yi is not NULL, then yi now either contains the yi values, a formula, or an escalc object
@@ -351,6 +348,8 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
       if (!is.null(subset)) {
 
+         subset <- .setnafalse(subset, k=k)
+
          yi <- yi[subset]
          vi <- vi[subset]
          ni <- ni[subset]
@@ -385,6 +384,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
          k.all <- k
 
          if (!is.null(subset)) {
+            subset <- .setnafalse(subset, k=k)
             ai <- ai[subset]
             bi <- bi[subset]
             ci <- ci[subset]
@@ -410,6 +410,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
          k.all <- k
 
          if (!is.null(subset)) {
+            subset <- .setnafalse(subset, k=k)
             x1i <- x1i[subset]
             x2i <- x2i[subset]
             t1i <- t1i[subset]
@@ -439,6 +440,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
          k.all <- k
 
          if (!is.null(subset)) {
+            subset <- .setnafalse(subset, k=k)
             m1i  <- m1i[subset]
             m2i  <- m2i[subset]
             sd1i <- sd1i[subset]
@@ -462,6 +464,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
          k.all <- k
 
          if (!is.null(subset)) {
+            subset <- .setnafalse(subset, k=k)
             ri <- ri[subset]
             ni <- ni[subset]
          }
@@ -485,6 +488,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
          k.all <- k
 
          if (!is.null(subset)) {
+            subset <- .setnafalse(subset, k=k)
             ti  <- ti[subset]
             r2i <- r2i[subset]
             mi  <- mi[subset]
@@ -509,6 +513,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
          k.all <- k
 
          if (!is.null(subset)) {
+            subset <- .setnafalse(subset, k=k)
             xi <- xi[subset]
             mi <- mi[subset]
          }
@@ -528,6 +533,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
          k.all <- k
 
          if (!is.null(subset)) {
+            subset <- .setnafalse(subset, k=k)
             xi <- xi[subset]
             ti <- ti[subset]
          }
@@ -549,6 +555,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
          k.all <- k
 
          if (!is.null(subset)) {
+            subset <- .setnafalse(subset, k=k)
             mi  <- mi[subset]
             sdi <- sdi[subset]
             ni  <- ni[subset]
@@ -577,6 +584,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
          k.all <- k
 
          if (!is.null(subset)) {
+            subset <- .setnafalse(subset, k=k)
             m1i  <- m1i[subset]
             m2i  <- m2i[subset]
             sd1i <- sd1i[subset]
@@ -602,6 +610,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
          k.all <- k
 
          if (!is.null(subset)) {
+            subset <- .setnafalse(subset, k=k)
             ai <- ai[subset]
             mi <- mi[subset]
             ni <- ni[subset]
@@ -1669,23 +1678,24 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
       if (is.null(con$alpha.init)) {
 
-         fit <- suppressWarnings(rma(yi, vi, mods=X, intercept=FALSE, method="HE"))
+         fit <- suppressWarnings(rma.uni(yi, vi, mods=X, intercept=FALSE, method="HE", skipr2=TRUE))
          tmp <- rstandard(fit)
 
          if (link == "log") {
 
-            tmp <- rma(log(tmp$resid^2), 4/tmp$resid^2*tmp$se^2, mods=Z, intercept=FALSE, method="FE")
-            #tmp <- rma(log(tmp$resid^2), tmp$se^2, mods=Z, intercept=FALSE, method="FE")
-            #tmp <- rma(log(tmp$resid^2), 1, mods=Z, intercept=FALSE, method="FE")
+            tmp <- suppressWarnings(rma.uni(log(tmp$resid^2), 4/tmp$resid^2*tmp$se^2, mods=Z, intercept=FALSE, method="FE"))
+            #tmp <- rma.uni(log(tmp$resid^2), 4/tmp$resid^2*tmp$se^2, mods=Z, intercept=FALSE, method="FE")
+            #tmp <- rma.uni(log(tmp$resid^2), tmp$se^2, mods=Z, intercept=FALSE, method="FE")
+            #tmp <- rma.uni(log(tmp$resid^2), 1, mods=Z, intercept=FALSE, method="FE")
             alpha.init <- coef(tmp)
 
          }
 
          if (link == "identity") {
 
-            #tmp <- rma(tmp$resid^2, 4*tmp$resid^2*tmp$se^2, mods=Z, intercept=FALSE, method="FE")
-            tmp <- rma(tmp$resid^2, tmp$se^2, mods=Z, intercept=FALSE, method="FE")
-            #tmp <- rma(tmp$resid^2, 1, mods=Z, intercept=FALSE, method="FE")
+            #tmp <- rma.uni(tmp$resid^2, 4*tmp$resid^2*tmp$se^2, mods=Z, intercept=FALSE, method="FE")
+            tmp <- suppressWarnings(rma.uni(tmp$resid^2, tmp$se^2, mods=Z, intercept=FALSE, method="FE"))
+            #tmp <- rma.uni(tmp$resid^2, 1, mods=Z, intercept=FALSE, method="FE")
             alpha.init <- coef(tmp)
             if (any(Z %*% alpha.init < 0))
                alpha.init <- ifelse(is.int, fit$tau2+.01, 0)

@@ -25,10 +25,13 @@
    \code{\link{fitted.rma}}
 }
 \examples{
-### meta-analysis of the log risk ratios using a mixed-effects meta-regression model
-### with multiple moderators (absolute latitude, publication year, and allocation method)
-res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg,
-           mods = ~ ablat + year + alloc, data=dat.bcg)
+### calculate log risk ratios and corresponding sampling variances
+dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
+
+### fit mixed-effects model with absolute latitude and publication year as moderators
+res <- rma(yi, vi, mods = ~ ablat + year, data=dat)
+
+### extract the model matrix
 model.matrix(res)
 }
 \keyword{models}

@@ -3,8 +3,8 @@ annotate=TRUE, addfit=TRUE, addpred=FALSE, showweights=FALSE, header=FALSE,
 xlim, alim, clim, ylim, top=3, at, steps=5, level=x$level, refline=0, digits=2L, width,
 xlab, slab, mlab, ilab, ilab.xpos, ilab.pos, order,
 transf, atransf, targs, rows,
-efac=1, pch=15, psize, plim=c(0.5,1.5), colout, col, border, lty, fonts,
-cex, cex.lab, cex.axis, annosym, ...) {
+efac=1, pch=15, psize, plim=c(0.5,1.5), colout, col, border,
+lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
 
    #########################################################################
 
@@ -63,32 +63,44 @@ cex, cex.lab, cex.axis, annosym, ...) {
    if (missing(cex.axis))
       cex.axis <- NULL
 
+   level <- ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
+
+   ### digits[1] for annotations, digits[2] for x-axis labels
+   ### note: digits can also be a list (e.g., digits=list(2L,3)); trailing 0's are dropped for intergers
+
+   if (length(digits) == 1L)
+      digits <- c(digits,digits)
+
+   ############################################################################
+
    ### set default colors if user has not specified 'col' and 'border' arguments
 
    if (x$int.only) {
 
       if (missing(col)) {
-         col <- c("black", "gray50") ### 1st color for summary polygon, 2nd color for prediction interval line
+         col <- c("black", "gray50") # 1st color for summary polygon, 2nd color for prediction interval line
       } else {
-         if (length(col) == 1L)      ### if user only specified one value, assume it is for the summary polygon
+         if (length(col) == 1L)      # if user only specified one value, assume it is for the summary polygon
             col <- c(col, "gray50")
       }
 
       if (missing(border))
-         border <- "black"           ### border color of summary polygon
+         border <- "black"           # border color of summary polygon
 
    } else {
 
       if (missing(col))
-         col <- "gray"               ### color of fitted values
+         col <- "gray"               # color of fitted values
 
       if (missing(border))
-         border <- "gray"            ### border color of fitted values
+         border <- "gray"            # border color of fitted values
 
    }
 
+   ### set default line types if user has not specified 'lty' argument
+
    if (missing(lty)) {
-      lty <- c("solid", "dotted", "solid") ### 1st value = CIs, 2nd value = prediction interval, 3rd = horizontal line(s)
+      lty <- c("solid", "dotted", "solid") # 1st value = CIs, 2nd value = prediction interval, 3rd = horizontal line(s)
    } else {
       if (length(lty) == 1L)
          lty <- c(lty, "dotted", "solid")
@@ -102,18 +114,18 @@ cex, cex.lab, cex.axis, annosym, ...) {
       efac <- rep(efac, 3)
 
    if (length(efac) == 2L)
-      efac <- c(efac[1], efac[1], efac[2]) # if 2 values specified: 1st = CI end lines and arrows, 2nd = summary polygon or fitted polygons
+      efac <- c(efac, efac[2]) # if 2 values specified: 1st = CI end lines and arrows, 2nd = summary polygon or fitted polygons
 
    ### annotation symbols vector
 
    if (missing(annosym))
-      annosym <- c(" [", ", ", "]", "-")
+      annosym <- c(" [", ", ", "]", "-") # 4th element for minus sign symbol
    if (length(annosym) == 3L)
       annosym <- c(annosym, "-")
    if (length(annosym) != 4L)
       stop(mstyle$stop("Argument 'annosym' must be a vector of length 3."))
 
-   level <- ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
+   ### get measure from object
 
    measure <- x$measure
 
@@ -158,14 +170,20 @@ cex, cex.lab, cex.axis, annosym, ...) {
       pi.type <- ddd$pi.type
    }
 
-   lplot     <- function(..., textpos, addcred, pi.type) plot(...)
-   labline   <- function(..., textpos, addcred, pi.type) abline(...)
-   lsegments <- function(..., textpos, addcred, pi.type) segments(...)
-   laxis     <- function(..., textpos, addcred, pi.type) axis(...)
-   lmtext    <- function(..., textpos, addcred, pi.type) mtext(...)
-   lpolygon  <- function(..., textpos, addcred, pi.type) polygon(...)
-   ltext     <- function(..., textpos, addcred, pi.type) text(...)
-   lpoints   <- function(..., textpos, addcred, pi.type) points(...)
+   if (is.null(ddd$decreasing)) {
+      decreasing <- FALSE
+   } else {
+      decreasing <- ddd$decreasing
+   }
+
+   lplot     <- function(..., textpos, addcred, pi.type, decreasing) plot(...)
+   labline   <- function(..., textpos, addcred, pi.type, decreasing) abline(...)
+   lsegments <- function(..., textpos, addcred, pi.type, decreasing) segments(...)
+   laxis     <- function(..., textpos, addcred, pi.type, decreasing) axis(...)
+   lmtext    <- function(..., textpos, addcred, pi.type, decreasing) mtext(...)
+   lpolygon  <- function(..., textpos, addcred, pi.type, decreasing) polygon(...)
+   ltext     <- function(..., textpos, addcred, pi.type, decreasing) text(...)
+   lpoints   <- function(..., textpos, addcred, pi.type, decreasing) points(...)
 
    ### TODO: remove this when there is a weights() function for 'rma.glmm' objects
    if (inherits(x, "rma.glmm") && showweights)
@@ -176,15 +194,9 @@ cex, cex.lab, cex.axis, annosym, ...) {
       stop(mstyle$stop("Option 'showweights=TRUE' not possible for 'rma.uni.selmodel' objects."))
 
    if (!is.null(ddd$subset))
-      stop(mstyle$stop("Function does not have a 'subset' argument (could use 'order' argument instead)."))
+      stop(mstyle$stop("Function does not have a 'subset' argument."))
 
    #########################################################################
-
-   ### digits[1] for annotations, digits[2] for x-axis labels
-   ### note: digits can also be a list (e.g., digits=list(2L,3))
-
-   if (length(digits) == 1L)
-      digits <- c(digits,digits)
 
    ### extract data and study labels
    ### note: yi.f/vi.f and pred may contain NAs
@@ -193,40 +205,80 @@ cex, cex.lab, cex.axis, annosym, ...) {
    vi <- x$vi.f
    X  <- x$X.f
 
-   k <- length(yi)                              ### length of yi.f
+   k <- length(yi)                              # length of yi.f
+
+   ### note: slab (if specified), ilab (if specified), pch (if vector), psize (if
+   ###       vector), colout (if vector), order (if vector) must have the same
+   ###       length as the original dataset
 
    if (missing(slab)) {
+
       if (x$slab.null) {
-         slab <- paste("Study", x$ids)          ### x$ids is always of length yi.f (i.e., NAs also have an id)
+         slab <- paste("Study", x$ids)          # x$ids is always of length yi.f (i.e., NAs also have an id)
       } else {
-         slab <- x$slab                         ### note: slab must have same length as yi.f in rma object
-      }                                         ### even when fewer studies used for model fitting (due to NAs)
+         slab <- x$slab                         # x$slab is always of length yi.f (i.e., NAs also have a study label)
+      }
+
    } else {
-      if (length(slab) == 1L && is.na(slab))
-         slab <- rep("", k)
+
+      if (is.null(slab) || (length(slab) == 1L && is.na(slab))) # slab=NULL or slab=NA can be used to suppress study labels
+         slab <- rep("", x$k.all)
+
+      if (length(slab) != x$k.all)
+         stop(mstyle$stop(paste0("Length of the 'slab' argument (", length(slab), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
+
+      if (!is.null(x$subset))
+         slab <- slab[x$subset]
+
    }
 
-   if (length(yi) != length(slab))
-      stop(mstyle$stop(paste0("Number of outcomes (", length(yi), ") does not correspond to the length of the 'slab' argument (", length(slab), ").")))
+   if (!is.null(ilab)) {
 
-   if (is.null(dim(ilab)))                      ### note: ilab must have same length as yi.f in rma object
-      ilab <- cbind(ilab)                       ### even when fewer studies used for model fitting
+      if (is.null(dim(ilab)))
+         ilab <- cbind(ilab)
 
-   if (length(pch) == 1L)                       ### note: pch must have same length as yi.f in rma object
-      pch <- rep(pch, k)                        ### or be equal to a single value (which is then repeated)
+      if (nrow(ilab) != x$k.all)
+         stop(mstyle$stop(paste0("Length of the 'ilab' argument (", nrow(ilab), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
 
-   if (length(pch) != length(yi))
-      stop(mstyle$stop(paste0("Number of outcomes (", length(yi), ") does not correspond to the length of the 'pch' argument (", length(pch), ").")))
+      if (!is.null(x$subset))
+         ilab <- ilab[x$subset,,drop=FALSE]
 
-   if (length(colout) == 1L)                    ### note: colout must have same length as yi.f in rma object
-      colout <- rep(colout, k)                  ### or be equal to a single value (which is then repeated)
+   }
 
-   if (length(colout) != length(yi))
-      stop(mstyle$stop(paste0("Number of outcomes (", length(yi), ") does not correspond to the length of the 'colout' argument (", length(colout), ").")))
+   if (length(pch) == 1L)
+      pch <- rep(pch, x$k.all)
+
+   if (length(pch) != x$k.all)
+      stop(mstyle$stop(paste0("Length of the 'pch' argument (", length(pch), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
+
+   if (!is.null(x$subset))
+      pch <- pch[x$subset]
+
+   if (!is.null(psize)) {
+
+      if (length(psize) == 1L)
+         psize <- rep(psize, x$k.all)
+
+      if (length(psize) != x$k.all)
+         stop(mstyle$stop(paste0("Length of the 'psize' argument (", length(psize), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
+
+      if (!is.null(x$subset))
+         psize <- psize[x$subset]
+
+   }
+
+   if (length(colout) == 1L)
+      colout <- rep(colout, x$k.all)
+
+   if (length(colout) != x$k.all)
+      stop(mstyle$stop(paste0("Length of the 'colout' argument (", length(colout), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
+
+   if (!is.null(x$subset))
+      colout <- colout[x$subset]
 
    ### extract fitted values
 
-   options(na.action = "na.pass")               ### using na.pass to get the entire vector (length of yi.f)
+   options(na.action = "na.pass") # using na.pass to get the entire vector (length of yi.f)
 
       if (x$int.only) {
          pred <- fitted(x)
@@ -244,83 +296,83 @@ cex, cex.lab, cex.axis, annosym, ...) {
          }
       }
 
-      if (inherits(x, "rma.glmm") || inherits(x, "rma.uni.selmodel")) { ### TODO: change this when there is a weights() function for 'rma.glmm' and 'rma.uni.selmodel' objects
+      if (inherits(x, "rma.glmm") || inherits(x, "rma.uni.selmodel")) { # TODO: change this when there is a weights() function for 'rma.glmm' and 'rma.uni.selmodel' objects
          #weights <- NULL
          weights <- rep(1, k)
       } else {
-         weights <- weights(x)                  ### these are the weights used for the actual model fitting
+         weights <- weights(x) # weights used for the model fitting
       }
-
-   options(na.action = na.act)
-
-   ### if user has set the point sizes
-
-   if (!is.null(psize)) {                       ### note: psize must have same length as yi.f (including NAs)
-      if (length(psize) == 1L)                  ### or be equal to a single value (which is then repeated)
-         psize <- rep(psize, k)
-      if (length(psize) != length(yi))
-         stop(mstyle$stop(paste0("Number of outcomes (", length(yi), ") does not correspond to the length of the 'psize' argument (", length(psize), ").")))
-   }
 
    ### sort the data if requested
 
    if (!is.null(order)) {
 
-      if (is.character(order)) {
+      if (length(order) == 1L) {
 
-         order <- match.arg(order, c("obs", "fit", "prec", "resid", "rstandard", "abs.resid", "abs.rstandard"))
+         order <- match.arg(order, c("obs", "yi", "fit", "prec", "vi", "resid", "rstandard", "abs.resid", "abs.rstandard"))
 
-         if (length(order) != 1L)
-            stop(mstyle$stop("Incorrect length of 'order' argument."))
-
-         if (order == "obs")
+         if (order == "obs" || order == "yi")
             sort.vec <- order(yi)
          if (order == "fit")
             sort.vec <- order(pred)
-         if (order == "prec")
+         if (order == "prec" || order == "vi")
             sort.vec <- order(vi, yi)
          if (order == "resid")
             sort.vec <- order(yi-pred, yi)
          if (order == "rstandard")
-            sort.vec <- order(rstandard(x)$z, yi)
+            sort.vec <- order(rstandard(x)$z, yi)      # need options(na.action = "na.pass") here as well
          if (order == "abs.resid")
             sort.vec <- order(abs(yi-pred), yi)
          if (order == "abs.rstandard")
-            sort.vec <- order(abs(rstandard(x)$z), yi)
+            sort.vec <- order(abs(rstandard(x)$z), yi) # need options(na.action = "na.pass") here as well
 
       } else {
-         sort.vec <- order                      ### in principle, can also subset with the order argument
+
+         if (length(order) != x$k.all)
+            stop(mstyle$stop(paste0("Length of the 'order' argument (", length(order), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
+
+         if (grepl("^order\\(", deparse(substitute(order)))) {
+            sort.vec <- order
+         } else {
+            sort.vec <- order(order, decreasing=decreasing)
+         }
+
+         if (!is.null(x$subset))
+            sort.vec <- sort.vec[x$subset] - sum(!x$subset)
+
       }
 
       yi         <- yi[sort.vec]
       vi         <- vi[sort.vec]
       X          <- X[sort.vec,,drop=FALSE]
       slab       <- slab[sort.vec]
-      ilab       <- ilab[sort.vec,,drop=FALSE]  ### if ilab is still NULL, then this remains NULL
+      ilab       <- ilab[sort.vec,,drop=FALSE]  # if NULL, remains NULL
       pred       <- pred[sort.vec]
       pred.ci.lb <- pred.ci.lb[sort.vec]
       pred.ci.ub <- pred.ci.ub[sort.vec]
       weights    <- weights[sort.vec]
       pch        <- pch[sort.vec]
+      psize      <- psize[sort.vec]             # if NULL, remains NULL
       colout     <- colout[sort.vec]
-      psize      <- psize[sort.vec]             ### if psize is still NULL, then this remains NULL
 
    }
 
-   k <- length(yi)                              ### in case length of k has changed
+   options(na.action = na.act)
+
+   k <- length(yi)                              # in case length of k has changed
 
    ### set rows value
 
    if (missing(rows)) {
       rows <- k:1
    } else {
-      if (length(rows) == 1L) {                 ### note: rows must be a single value or the same
-         rows <- rows:(rows-k+1)                ### length of yi.f (including NAs) *after ordering/subsetting*
+      if (length(rows) == 1L) {                 # note: rows must be a single value or the same
+         rows <- rows:(rows-k+1)                # length of yi.f (including NAs) *after ordering*
       }
    }
 
-   if (length(rows) != length(yi))
-      stop(mstyle$stop(paste0("Number of outcomes (", length(yi), ") does not correspond to the length of the 'rows' argument (", length(rows), ").")))
+   if (length(rows) != k)
+      stop(mstyle$stop(paste0("Length of the 'rows' argument (", length(rows), ") does not correspond to the number of outcomes (", k, ").")))
 
    ### reverse order
 
@@ -328,17 +380,17 @@ cex, cex.lab, cex.axis, annosym, ...) {
    vi         <- vi[k:1]
    X          <- X[k:1,,drop=FALSE]
    slab       <- slab[k:1]
-   ilab       <- ilab[k:1,,drop=FALSE]          ### if ilab is still NULL, then this remains NULL
+   ilab       <- ilab[k:1,,drop=FALSE]          # if NULL, remains NULL
    pred       <- pred[k:1]
    pred.ci.lb <- pred.ci.lb[k:1]
    pred.ci.ub <- pred.ci.ub[k:1]
    weights    <- weights[k:1]
    pch        <- pch[k:1]
+   psize      <- psize[k:1]                     # if NULL, remains NULL
    colout     <- colout[k:1]
-   psize      <- psize[k:1]                     ### if psize is still NULL, then this remains NULL
    rows       <- rows[k:1]
 
-   ### check for NAs in yi/vi and act accordingly
+   ### check for NAs in yi/vi/X and act accordingly
 
    yiviX.na <- is.na(yi) | is.na(vi) | apply(is.na(X), 1, any)
 
@@ -351,17 +403,17 @@ cex, cex.lab, cex.axis, annosym, ...) {
          vi         <- vi[not.na]
          X          <- X[not.na,,drop=FALSE]
          slab       <- slab[not.na]
-         ilab       <- ilab[not.na,,drop=FALSE] ### if ilab is still NULL, then this remains NULL
+         ilab       <- ilab[not.na,,drop=FALSE] # if NULL, remains NULL
          pred       <- pred[not.na]
          pred.ci.lb <- pred.ci.lb[not.na]
          pred.ci.ub <- pred.ci.ub[not.na]
          weights    <- weights[not.na]
          pch        <- pch[not.na]
+         psize      <- psize[not.na]            # if NULL, remains NULL
          colout     <- colout[not.na]
-         psize      <- psize[not.na]            ### if psize is still NULL, then this remains NULL
 
-         rows.new <- rows                       ### rearrange rows due to NAs being omitted from plot
-         rows.na  <- rows[!not.na]              ### shift higher rows down according to number of NAs omitted
+         rows.new <- rows                       # rearrange rows due to NAs being omitted from plot
+         rows.na  <- rows[!not.na]              # shift higher rows down according to number of NAs omitted
          for (j in seq_len(length(rows.na))) {
             rows.new[rows >= rows.na[j]] <- rows.new[rows >= rows.na[j]] - 1
          }
@@ -372,9 +424,9 @@ cex, cex.lab, cex.axis, annosym, ...) {
       if (na.act == "na.fail")
          stop(mstyle$stop("Missing values in results."))
 
-   }                                            ### note: yi/vi may be NA if na.act == "na.exclude" or "na.pass"
+   }                                            # note: yi/vi may be NA if na.act == "na.exclude" or "na.pass"
 
-   k <- length(yi)                              ### in case length of k has changed
+   k <- length(yi)                              # in case length of k has changed
 
    ### calculate individual CI bounds
 
@@ -480,7 +532,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
       #xlim[2] <- xlim[2]*max(1, digits[[2]]/2)
    }
 
-   ### set x axis limits (at argument overrides alim argument)
+   ### set x-axis limits (at argument overrides alim argument)
 
    alim.spec <- TRUE
 
@@ -493,7 +545,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
       }
    }
 
-   ### make sure the plot and x axis limits are sorted
+   ### make sure the plot and x-axis limits are sorted
 
    alim <- sort(alim)
    xlim <- sort(xlim)
@@ -503,12 +555,12 @@ cex, cex.lab, cex.axis, annosym, ...) {
    if (xlim[1] > min(yi, na.rm=TRUE)) { xlim[1] <- min(yi, na.rm=TRUE) }
    if (xlim[2] < max(yi, na.rm=TRUE)) { xlim[2] <- max(yi, na.rm=TRUE) }
 
-   ### x axis limits must always encompass the yi values (no longer required)
+   ### x-axis limits must always encompass the yi values (no longer required)
 
    #if (alim[1] > min(yi, na.rm=TRUE)) { alim[1] <- min(yi, na.rm=TRUE) }
    #if (alim[2] < max(yi, na.rm=TRUE)) { alim[2] <- max(yi, na.rm=TRUE) }
 
-   ### plot limits must always encompass the x axis limits
+   ### plot limits must always encompass the x-axis limits
 
    if (alim[1] < xlim[1]) { xlim[1] <- alim[1] }
    if (alim[2] > xlim[2]) { xlim[2] <- alim[2] }
@@ -527,7 +579,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
    if (is.na(ddd$textpos[2]))
       ddd$textpos[2] <- xlim[2]
 
-   ### set y axis limits
+   ### set y-axis limits
 
    if (missing(ylim)) {
       if (x$int.only && addfit) {
@@ -539,7 +591,7 @@ cex, cex.lab, cex.axis, annosym, ...) {
       ylim <- sort(ylim)
    }
 
-   ### generate x axis positions if none are specified
+   ### generate x-axis positions if none are specified
 
    if (is.null(at)) {
       if (alim.spec) {
@@ -548,23 +600,23 @@ cex, cex.lab, cex.axis, annosym, ...) {
          at <- pretty(x=c(min(ci.lb, na.rm=TRUE), max(ci.ub, na.rm=TRUE)), n=steps-1)
       }
    } else {
-      at[at < alim[1]] <- alim[1] ### remove at values that are below or above the axis limits
+      at[at < alim[1]] <- alim[1] # remove at values that are below or above the axis limits
       at[at > alim[2]] <- alim[2]
       at <- unique(at)
    }
 
-   ### x axis labels (apply transformation to axis labels if requested)
+   ### x-axis labels (apply transformation to axis labels if requested)
 
    at.lab <- at
 
    if (is.function(atransf)) {
       if (is.null(targs)) {
-         at.lab <- formatC(sapply(at.lab, atransf), digits=digits[[2]], format="f", drop0trailing=ifelse(class(digits[[2]]) == "integer", TRUE, FALSE))
+         at.lab <- formatC(sapply(at.lab, atransf), digits=digits[[2]], format="f", drop0trailing=is.integer(digits[[2]]))
       } else {
-         at.lab <- formatC(sapply(at.lab, atransf, targs), digits=digits[[2]], format="f", drop0trailing=ifelse(class(digits[[2]]) == "integer", TRUE, FALSE))
+         at.lab <- formatC(sapply(at.lab, atransf, targs), digits=digits[[2]], format="f", drop0trailing=is.integer(digits[[2]]))
       }
    } else {
-      at.lab <- formatC(at.lab, digits=digits[[2]], format="f", drop0trailing=ifelse(class(digits[[2]]) == "integer", TRUE, FALSE))
+      at.lab <- formatC(at.lab, digits=digits[[2]], format="f", drop0trailing=is.integer(digits[[2]]))
    }
 
    #########################################################################
@@ -758,11 +810,11 @@ cex, cex.lab, cex.axis, annosym, ...) {
 
    #########################################################################
 
-   ### add x axis
+   ### add x-axis
 
    laxis(side=1, at=at, labels=at.lab, cex.axis=cex.axis, ...)
 
-   ### add x axis label
+   ### add x-axis label
 
    if (missing(xlab))
       xlab <- .setlab(measure, transf.char, atransf.char, gentype=1)

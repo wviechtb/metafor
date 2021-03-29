@@ -1,7 +1,7 @@
 \name{dat.ishak2007}
 \docType{data}
 \alias{dat.ishak2007}
-\title{Studies on Deep-Brain Stimulation}
+\title{Studies on Deep-Brain Stimulation in Patients with Parkinson's disease}
 \description{Results from 46 studies examining the effects of deep-brain stimulation on motor skills of patients with Parkinson's disease.}
 \usage{dat.ishak2007}
 \format{The data frame contains the following columns:

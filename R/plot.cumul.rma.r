@@ -1,4 +1,4 @@
-plot.cumul.rma <- function(x, yaxis="tau2", xlim, ylim, xlab, ylab, at, transf, atransf, targs,
+plot.cumul.rma <- function(x, yaxis, xlim, ylim, xlab, ylab, at, transf, atransf, targs,
 digits, cols=c("gray80","gray10"), grid=TRUE, pch=19, cex=1, lwd=2, ...) {
 
    #########################################################################
@@ -12,10 +12,17 @@ digits, cols=c("gray80","gray10"), grid=TRUE, pch=19, cex=1, lwd=2, ...) {
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
-   yaxis <- match.arg(yaxis, c("tau2","I2","H2"))
-
-   if (yaxis == "tau2" && is.null(x$tau2))
-      yaxis <- "I2"
+   if (missing(yaxis)) {
+      if (is.null(x$tau2)) {
+         yaxis <- "I2"
+      } else {
+         yaxis <- "tau2"
+      }
+   } else {
+      yaxis <- match.arg(yaxis, c("tau2","I2","H2"))
+      if (is.null(x$tau2))
+         stop(mstyle$stop("Cannot use yaxis=\"tau2\" for fixed-effects models."))
+   }
 
    if (missing(transf))
       transf <- FALSE
@@ -67,7 +74,7 @@ digits, cols=c("gray80","gray10"), grid=TRUE, pch=19, cex=1, lwd=2, ...) {
          digits <- c(digits,digits) ### digits[2] for y-axis labels
    }
 
-   ### note: digits can also be a list (e.g., digits=list(2L,3))
+   ### note: digits can also be a list (e.g., digits=list(2L,3)); trailing 0's are dropped for intergers
 
    ddd <- list(...)
 
@@ -146,7 +153,7 @@ digits, cols=c("gray80","gray10"), grid=TRUE, pch=19, cex=1, lwd=2, ...) {
 
    lplot(NA, NA, xlim=xlim, ylim=ylim, xlab=xlab, ylab=ylab, xaxt="n", yaxt="n", ...)
 
-   ### generate x axis positions if none are specified
+   ### generate x-axis positions if none are specified
 
    if (is.null(at)) {
       at <- axTicks(side=1)
@@ -159,12 +166,12 @@ digits, cols=c("gray80","gray10"), grid=TRUE, pch=19, cex=1, lwd=2, ...) {
 
    if (is.function(atransf)) {
       if (is.null(targs)) {
-         at.lab <- formatC(sapply(at.lab, atransf), digits=digits[[1]], format="f", drop0trailing=ifelse(class(digits[[1]]) == "integer", TRUE, FALSE))
+         at.lab <- formatC(sapply(at.lab, atransf), digits=digits[[1]], format="f", drop0trailing=is.integer(digits[[1]]))
       } else {
-         at.lab <- formatC(sapply(at.lab, atransf, targs), digits=digits[[1]], format="f", drop0trailing=ifelse(class(digits[[1]]) == "integer", TRUE, FALSE))
+         at.lab <- formatC(sapply(at.lab, atransf, targs), digits=digits[[1]], format="f", drop0trailing=is.integer(digits[[1]]))
       }
    } else {
-      at.lab <- formatC(at.lab, digits=digits[[1]], format="f", drop0trailing=ifelse(class(digits[[1]]) == "integer", TRUE, FALSE))
+      at.lab <- formatC(at.lab, digits=digits[[1]], format="f", drop0trailing=is.integer(digits[[1]]))
    }
 
    ### add x-axis
@@ -174,7 +181,7 @@ digits, cols=c("gray80","gray10"), grid=TRUE, pch=19, cex=1, lwd=2, ...) {
    ### add y-axis
 
    aty <- axTicks(side=2)
-   laxis(side=2, at=aty, labels=formatC(aty, digits=digits[[2]], format="f", drop0trailing=ifelse(class(digits[[2]]) == "integer", TRUE, FALSE)), ...)
+   laxis(side=2, at=aty, labels=formatC(aty, digits=digits[[2]], format="f", drop0trailing=is.integer(digits[[2]])), ...)
 
    ### add grid
 

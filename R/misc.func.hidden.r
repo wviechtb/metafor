@@ -1056,17 +1056,38 @@ tidy.rma <- function (x, ...) {
 
 ############################################################################
 
-.setnafalse <- function(x, arg="subset") {
+.setnafalse <- function(x, arg="subset", k) {
 
-   #mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (anyNA(x)) {
-      if (is.logical(x))
+   if (is.logical(x)) {
+      if (anyNA(x))
          x[is.na(x)] <- FALSE
-      if (is.numeric(x))
-         x <- x[!is.na(x)]
-      #warning(mstyle$warning(paste0("Missing values in '", arg, "' argument treated as non-selected.")), call.=FALSE)
    }
+
+   if (is.numeric(x)) {
+      if (anyNA(x))
+         x <- x[!is.na(x)]
+      x <- as.integer(round(x))
+      x <- x[x != 0L]
+      if (any(x > 0L) && any(x < 0L))
+         stop(mstyle$stop(paste0("Cannot mix positive and negative values for subsetting.")), call.=FALSE)
+      if (all(x > 0L))
+         x <- is.element(seq_len(k), x)
+      if (all(x < 0L))
+         x <- !is.element(seq_len(k), abs(x))
+   }
+
+   if (!any(x))
+      stop(mstyle$stop(paste0("Stopped because k = 0 after subsetting.")), call.=FALSE)
+
+   #if (anyNA(x)) {
+   #   if (is.logical(x))
+   #      x[is.na(x)] <- FALSE
+   #   if (is.numeric(x))
+   #      x <- x[!is.na(x)]
+   #   #warning(mstyle$warning(paste0("Missing values in '", arg, "' argument treated as non-selected.")), call.=FALSE)
+   #}
 
    return(x)
 

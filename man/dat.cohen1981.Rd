@@ -1,8 +1,8 @@
 \name{dat.cohen1981}
 \docType{data}
 \alias{dat.cohen1981}
-\title{Studies on the Relationship between Course Ratings and Student Achievement}
-\description{Results from 20 studies on the correlation between overall course ratings and student achievement.}
+\title{Studies on the Relationship between Course Instructor Ratings and Student Achievement}
+\description{Results from 20 studies on the correlation between course instructor ratings and student achievement.}
 \usage{dat.cohen1981}
 \format{The data frame contains the following columns:
 \tabular{lll}{
@@ -14,7 +14,7 @@
 }
 }
 \details{
-   The studies included in this dataset examined to what extent students' ratings of a course correlated with their achievement in the course. Instead of correlating individual ratings and achievement scores, the studies were carried out in multisection courses, in which the sections had different instructors but all sections used a common achievement measure (e.g., a final exam). The correlation coefficients reflects the correlation between the mean overall course rating of each section and the mean achievement score.
+   The studies included in this dataset examined to what extent students' ratings of a course instructor correlated with their achievement in the course. Instead of correlating individual ratings and achievement scores, the studies were carried out in multisection courses, in which the sections had different instructors but all sections used a common achievement measure (e.g., a final exam). The correlation coefficients reflect the correlation between the mean instructor rating and the mean achievement score of each section. Hence, the unit of analysis are the sections, not the individuals.
 
    Note that this dataset (extracted from Table A.3 in Cooper & Hedges, 1994) only contains studies with at least 10 sections.
 }

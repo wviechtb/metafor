@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Outlier and Influential Case Diagnostics for 'rma.uni' Objects — influence.rma.uni" />
-<meta property="og:description" content="The functions can be used to compute various outlier and influential case diagnostics (some of which indicate the influence of deleting one case/study at a time on the model fit or the fitted/residual values) for objects of class &quot;rma.uni&quot;. For the corresponding help file for &quot;rma.mv&quot; objects, see influence.rma.mv. " />
+<meta property="og:description" content="The functions can be used to compute various outlier and influential case diagnostics (some of which indicate the influence of deleting one case at a time on the model fit or the fitted/residual values) for objects of class &quot;rma.uni&quot;. For the corresponding help file for &quot;rma.mv&quot; objects, see influence.rma.mv. " />
 
 
 
@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-82</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-83</span>
       </span>
     </div>
 
@@ -134,7 +134,7 @@
     </div>
 
     <div class="ref-description">
-    <p>The functions can be used to compute various outlier and influential case diagnostics (some of which indicate the influence of deleting one case/study at a time on the model fit or the fitted/residual values) for objects of class <code>"rma.uni"</code>. For the corresponding help file for <code>"rma.mv"</code> objects, see <code><a href='influence.rma.mv.html'>influence.rma.mv</a></code>. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
+    <p>The functions can be used to compute various outlier and influential case diagnostics (some of which indicate the influence of deleting one case at a time on the model fit or the fitted/residual values) for objects of class <code>"rma.uni"</code>. For the corresponding help file for <code>"rma.mv"</code> objects, see <code><a href='influence.rma.mv.html'>influence.rma.mv</a></code>. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for rma.uni</span>
@@ -185,7 +185,8 @@
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The <code>influence</code> function calculates the following leave-one-out diagnostics for each study:</p><ul>
+    <p>The term &#8216;case&#8217; below refers to a particular row from the dataset used in the model fitting (which is typically synonymous with study).</p>
+<p>The <code>influence</code> function calculates the following leave-one-out diagnostics for each case:</p><ul>
 <li><p>externally standardized residual,</p></li>
 <li><p>DFFITS value,</p></li>
 <li><p>Cook's distance,</p></li>
@@ -195,22 +196,22 @@
 <li><p>DFBETAS value(s).</p></li>
 </ul><p>The diagonal elements of the hat matrix and the weights (in %) given to the observed effects or outcomes during the model fitting are also provided (except for their scaling, the hat values and weights are the same for models without moderators, but will differ when moderators are included).</p>
 <p>For details on externally standardized residuals, see <code><a href='residuals.rma.html'>rstudent.rma.uni</a></code>.</p>
-<p>The DFFITS value essentially indicates how many standard deviations the predicted (average) effect for the \(i\)th study changes after excluding the \(i\)th study from the model fitting.</p>
-<p>Cook's distance can be interpreted as the Mahalanobis distance between the entire set of predicted values once with the \(i\)th study included and once with the \(i\)th study excluded from the model fitting.</p>
-<p>The covariance ratio is defined as the determinant of the variance-covariance matrix of the parameter estimates based on the dataset with the \(i\)th study removed divided by the determinant of the variance-covariance matrix of the parameter estimates based on the complete dataset. A value below 1 therefore indicates that removal of the \(i\)th study yields more precise estimates of the model coefficients.</p>
-<p>The leave-one-out amount of (residual) heterogeneity is the estimated value of \(\tau^2\) based on the dataset with the \(i\)th study removed. This is always equal to 0 for fixed-effects models.</p>
-<p>Similarly, the leave-one-out test statistic of the test for (residual) heterogeneity is the value of the test statistic of the test for (residual) heterogeneity calculated based on the dataset with the \(i\)th study removed.</p>
-<p>Finally, the DFBETAS value(s) essentially indicate(s) how many standard deviations the estimated coefficient(s) change(s) after excluding the \(i\)th study from the model fitting.</p>
-<p>A study may be considered to be &#8216;influential&#8217; if at least one of the following is true:</p><ul>
-<li><p>The absolute DFFITS value is larger than \(3 \times \sqrt{p/(k-p)}\), where \(p\) is the number of model coefficients and \(k\) the number of studies.</p></li>
+<p>The DFFITS value essentially indicates how many standard deviations the predicted (average) effect for the \(i\)th case changes after excluding the \(i\)th case from the model fitting.</p>
+<p>Cook's distance can be interpreted as the Mahalanobis distance between the entire set of predicted values once with the \(i\)th case included and once with the \(i\)th case excluded from the model fitting.</p>
+<p>The covariance ratio is defined as the determinant of the variance-covariance matrix of the parameter estimates based on the dataset with the \(i\)th case removed divided by the determinant of the variance-covariance matrix of the parameter estimates based on the complete dataset. A value below 1 therefore indicates that removal of the \(i\)th case yields more precise estimates of the model coefficients.</p>
+<p>The leave-one-out amount of (residual) heterogeneity is the estimated value of \(\tau^2\) based on the dataset with the \(i\)th case removed. This is always equal to 0 for fixed-effects models.</p>
+<p>Similarly, the leave-one-out test statistic of the test for (residual) heterogeneity is the value of the test statistic of the test for (residual) heterogeneity calculated based on the dataset with the \(i\)th case removed.</p>
+<p>Finally, the DFBETAS value(s) essentially indicate(s) how many standard deviations the estimated coefficient(s) change(s) after excluding the \(i\)th case from the model fitting.</p>
+<p>A case may be considered to be &#8216;influential&#8217; if at least one of the following is true:</p><ul>
+<li><p>The absolute DFFITS value is larger than \(3 \times \sqrt{p/(k-p)}\), where \(p\) is the number of model coefficients and \(k\) the number of cases.</p></li>
 <li><p>The lower tail area of a chi-square distribution with \(p\) degrees of freedom cut off by the Cook's distance is larger than 50%.</p></li>
 <li><p>The hat value is larger than \(3 \times (p/k)\).</p></li>
 <li><p>Any DFBETAS value is larger than \(1\).</p></li>
-</ul><p>Studies which are considered influential with respect to any of these measures are marked with an asterisk. Note that the chosen cut-offs are (somewhat) arbitrary. Substantively informed judgment should always be used when examining the influence of each study on the results.</p>
+</ul><p>Cases which are considered influential with respect to any of these measures are marked with an asterisk. Note that the chosen cut-offs are (somewhat) arbitrary. Substantively informed judgment should always be used when examining the influence of each case on the results.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class <code>"infl.rma.uni"</code>, which is a list containing the following components:</p>
-<dt>inf</dt><dd><p>an element of class <code>"list.rma"</code> with the externally standardized residuals, DFFITS values, Cook's distances, covariance ratios, leave-one-out \(\tau^2\) estimates, leave-one-out (residual) heterogeneity test statistics, hat values, weights, and an indicator whether a study is influential or not.</p></dd>
+<dt>inf</dt><dd><p>an element of class <code>"list.rma"</code> with the externally standardized residuals, DFFITS values, Cook's distances, covariance ratios, leave-one-out \(\tau^2\) estimates, leave-one-out (residual) heterogeneity test statistics, hat values, weights, and an indicator whether a case is influential or not.</p></dd>
    <dt>dfbs</dt><dd><p>an element of class <code>"list.rma"</code> with the the DFBETAS values.</p></dd>
    <dt>...</dt><dd><p>some additional elements/values.</p></dd>
 
@@ -219,7 +220,7 @@
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>Right now, leave-one-out diagnostics are calculated by refitting the model \(k\) times. Depending on how large \(k\) is, it may take a few moments to finish the calculations. There are shortcuts for calculating at least some of these values without refitting the model each time, but these are currently not implemented (and may not exist for all of the leave-one-out diagnostics calculated by the function).</p>
-<p>It may not be possible to fit the model after deletion of the \(i\)th study from the dataset. This will result in <code>NA</code> values for that study.</p>
+<p>It may not be possible to fit the model after deletion of the \(i\)th case from the dataset. This will result in <code>NA</code> values for that case.</p>
 <p>Certain relationships between the leave-one-out diagnostics and the (internally or externally) standardized residuals (Belsley, Kuh, &amp; Welsch, 1980; Cook &amp; Weisberg, 1982) no longer hold for the meta-analytic models. Maybe there are other relationships. These remain to be determined.</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
@@ -236,11 +237,13 @@
     <div class='dont-index'><p><code><a href='plot.infl.rma.uni.html'>plot.infl.rma.uni</a></code>, <code><a href='residuals.rma.html'>rstudent.rma.uni</a></code>, <code><a href='weights.rma.html'>weights.rma.uni</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>### meta-analysis of the log risk ratios using a mixed-effects model</span>
-<span class='co'>### with two moderators (absolute latitude and publication year)</span>
-<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"RR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>,
-           mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>ablat</span> <span class='op'>+</span> <span class='va'>year</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='co'>### calculate log risk ratios and corresponding sampling variances</span>
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"RR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>)</span>
 
+<span class='co'>### fit mixed-effects model with absolute latitude and publication year as moderators</span>
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>ablat</span> <span class='op'>+</span> <span class='va'>year</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
+
+<span class='co'>### compute the diagnostics</span>
 <span class='va'>inf</span> <span class='op'>&lt;-</span> <span class='fu'>influence</span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
 <span class='va'>inf</span>
 </div><div class='output co'>#&gt; $inf
@@ -277,8 +280,10 @@
 #&gt; 12 -0.0413  0.0465  0.0419 
 #&gt; 13 -0.8276  0.6269  0.8279 
 #&gt; </div><div class='input'>
+<span class='co'>### plot the values</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>inf</span><span class='op'>)</span>
 </div><div class='img'><img src='influence.rma.uni-1.png' alt='' width='768' height='614' /></div><div class='input'>
+<span class='co'>### compute Cook's distances, DFBETAS values, and hat values</span>
 <span class='fu'>cooks.distance</span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;           1           2           3           4           5           6 
 #&gt; 0.034763870 0.061956371 0.012503192 7.317914072 0.003236974 0.720524896 

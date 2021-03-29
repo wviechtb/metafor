@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-82</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-83</span>
       </span>
     </div>
 
@@ -153,16 +153,10 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \dontrun{</span>
 <span class='fu'>metafor.news</span><span class='op'>(</span><span class='op'>)</span><span class='co'># }</span>
-</div><div class='output co'>#&gt;                  Changes in version 2.5-82 (2021-02-21)                 
+</div><div class='output co'>#&gt;                  Changes in version 2.5-83 (2021-03-29)                 
 #&gt; 
 #&gt;   - the metafor package now makes use of the mathjaxr package to nicely
 #&gt;     render equations shown in the HTML help pages
-#&gt; 
-#&gt;   - anova.rma() argument L renamed to X (the former still works, but is
-#&gt;     no longer documented)
-#&gt; 
-#&gt;   - plot.cumul.rma() argument addgrid rename to grid (the former still
-#&gt;     works, but is no longer documented)
 #&gt; 
 #&gt;   - added selmodel() for fitting a wide variety of selection models (and
 #&gt;     added the corresponding plot.rma.uni.selmodel() function for drawing
@@ -170,14 +164,64 @@
 #&gt; 
 #&gt;   - added tes() function for the test of excess significance
 #&gt; 
+#&gt;   - added rcalc() for calculating the variance-covariance matrix of
+#&gt;     correlation coefficients and matreg() for fitting regression models
+#&gt;     based on a correlation matrix
+#&gt; 
+#&gt;   - added convenience functions dfround() and vec2mat()
+#&gt; 
 #&gt;   - added rcalc(), matreg(), dfround(), and vec2mat() functions
 #&gt; 
 #&gt;   - added aggregate.escalc() function to aggregate multiple effect sizes
 #&gt;     or outcomes within studies/clusters
 #&gt; 
-#&gt;   - the various cumul() functions provide I^2 and H^2 also for
-#&gt;     fixed-effects models; accordingly, plot.cumul.rma() now also works
-#&gt;     with such models
+#&gt;   - regtest() now shows the 'limit estimate' of the (average) true
+#&gt;     effect when using sei, vi, ninv, or sqrtninv as predictors (and the
+#&gt;     model does not contain any other moderators)
+#&gt; 
+#&gt;   - vif() gains btt argument and can now also compute generalized
+#&gt;     variance inflation factors; a proper print.vif.rma() function was
+#&gt;     also added
+#&gt; 
+#&gt;   - anova.rma() argument L renamed to X (the former still works, but is
+#&gt;     no longer documented)
+#&gt; 
+#&gt;   - argument order in cumul() should now just be a variable, not the
+#&gt;     order of the variable, to be used for ordering the studies and must
+#&gt;     be of the same length as the original dataset that was used in the
+#&gt;     model fitting
+#&gt; 
+#&gt;   - similarly, vector arguments in various plotting functions such as
+#&gt;     forest.rma() must now be of the same length as the original dataset
+#&gt;     that was used in the model fitting (any subsetting and removal of
+#&gt;     NAs is automatically applied)
+#&gt; 
+#&gt;   - the various leave1out() and cumul() functions now provide I^2 and
+#&gt;     H^2 also for fixed-effects models; accordingly, plot.cumul.rma() now
+#&gt;     also works with such models
+#&gt; 
+#&gt;   - fixed level not getting passed down to the various cumul() functions
+#&gt; 
+#&gt;   - plot.cumul.rma() argument addgrid renamed to grid (the former still
+#&gt;     works, but is no longer documented)
+#&gt; 
+#&gt;   - forest.default(), forest.rma(), and labbe() gain plim argument and
+#&gt;     now provide more flexibility in terms of the scaling of the points
+#&gt; 
+#&gt;   - forest.rma() gains colout argument (to adjust the color of the
+#&gt;     observed effect sizes or outcomes)
+#&gt; 
+#&gt;   - in the various forest() functions, the right header is now
+#&gt;     suppressed when annotate=FALSE and header=TRUE
+#&gt; 
+#&gt;   - funnel.default() and funnel.rma() gain label and offset arguments
+#&gt; 
+#&gt;   - funnel.default() and funnel.rma() gain lty argument; the reference
+#&gt;     line is now drawn by default as a dotted line (like the line for the
+#&gt;     pseudo confidence region)
+#&gt; 
+#&gt;   - the forest and funnel arguments of reporter.rma.uni() can now also
+#&gt;     be logicals to suppress the drawing of these plots
 #&gt; 
 #&gt;   - simulate.rma() gains yilim argument
 #&gt; 
@@ -187,13 +231,16 @@
 #&gt; 
 #&gt;   - bldiag() now properly handles ?x0 or 0x? matrices
 #&gt; 
-#&gt;   - p-values are still given to 2 digits when digits = 1
+#&gt;   - p-values are still given to 2 digits even when digits=1
 #&gt; 
 #&gt;   - summary.escalc() also provides the p-values (of the Wald-type
 #&gt;     tests); but when using the transf argument, the sampling variances,
 #&gt;     standard errors, test statistics, and p-values are no longer shown
 #&gt; 
-#&gt;   - rma.uni() no longer constrains a fixed tau2 value to 0 when k=1
+#&gt;   - rma.uni() no longer constrains a fixed tau^2 value to 0 when k=1
+#&gt; 
+#&gt;   - slight speedup in functions that repeatedly fit rma.uni() models by
+#&gt;     skipping the computation of the pseudo R^2 statistic
 #&gt; 
 #&gt;   - started using the pbapply package for showing progress bars, also
 #&gt;     when using parallel processing
@@ -207,49 +254,18 @@
 #&gt;     addpred in addpoly.rma() and forest.rma(); however, code using the
 #&gt;     old arguments names should continue to work
 #&gt; 
-#&gt;   - vif() gains btt argument and can now also compute generalized
-#&gt;     variance inflation factors; a proper print.vif.rma() function was
-#&gt;     added
-#&gt; 
-#&gt;   - in the various forest() functions, the right header is now
-#&gt;     suppressed when annotate=FALSE and header=TRUE
-#&gt; 
-#&gt;   - the forest and funnel arguments of reporter.rma.uni() can now also
-#&gt;     be logicals to suppress the drawing of these plots
-#&gt; 
 #&gt;   - one can now use weights(..., type="rowsum") for intercept-only
 #&gt;     rma.mv models (to obtain 'row-sum weights')
 #&gt; 
-#&gt;   - forest.default(), forest.rma(), and labbe() gain plim argument and
-#&gt;     now provide more flexibility in terms of the scaling of the points
-#&gt; 
-#&gt;   - forest.rma() gains colout argument (to adjust the color of the
-#&gt;     observed effect sizes or outcomes)
-#&gt; 
-#&gt;   - slight speedup in functions that repeatedly fit rma.uni() models by
-#&gt;     skipping the computation of the pseudo R^2 statistic
-#&gt; 
-#&gt;   - funnel.default() and funnel.rma() gain label and offset arguments
-#&gt; 
-#&gt;   - funnel.default() and funnel.rma() gain lty argument; the reference
-#&gt;     line is now drawn by default as a dotted line (like the line for the
-#&gt;     pseudo confidence region)
-#&gt; 
-#&gt;   - regtest() now shows the 'limit estimate' of the (average) true
-#&gt;     effect when using sei, vi, ninv, or sqrtninv as predictor (and the
-#&gt;     model does not contain any other moderators)
-#&gt; 
 #&gt;   - show nicer network graphs for dat.hasselblad1998 and dat.senn2013 in
 #&gt;     the help files
-#&gt; 
-#&gt;   - refactored various functions (for cleaner/simpler code)
 #&gt; 
 #&gt;   - added 14 new datasets (dat.anand1999, dat.assink2016,
 #&gt;     dat.baskerville2012, dat.cannon2006, dat.cohen1981, dat.craft2003,
 #&gt;     dat.damico2009, dat.dorn2007, dat.hahn2001, dat.kalaian1996,
 #&gt;     dat.kearon1998, dat.lau1992, dat.vanhowe1999, dat.viechtbauer2021)
 #&gt; 
-#&gt;   - fixed level not getting passed down to the various cumul() functions
+#&gt;   - refactored various functions (for cleaner/simpler code)
 #&gt; 
 #&gt;   - improved the documentation a bit
 #&gt; 

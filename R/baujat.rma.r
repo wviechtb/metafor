@@ -130,13 +130,25 @@ baujat.rma <- function(x, xlim, ylim, xlab, ylab, cex, symbol, grid=TRUE, progba
    if (missing(symbol))
       symbol <- "ids"
 
-   if (is.numeric(symbol))
+   if (is.numeric(symbol)) {
+
+      if (length(symbol) == 1L)
+         symbol <- rep(symbol, x$k.all)
+
+      if (length(symbol) != x$k.all)
+         stop(mstyle$stop(paste0("Length of the 'symbol' argument (", length(symbol), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
+
+      if (!is.null(x$subset))
+         symbol <- symbol[x$subset]
+
       points(xhati, yhati, cex=cex, pch=symbol, ...)
 
-   if (is.character(symbol) && symbol == "ids")
+   }
+
+   if (is.character(symbol) && symbol=="ids")
       text(xhati, yhati, x$ids, cex=cex, ...)
 
-   if (is.character(symbol) && symbol == "slab")
+   if (is.character(symbol) && symbol=="slab")
       text(xhati, yhati, x$slab, cex=cex, ...)
 
    #########################################################################

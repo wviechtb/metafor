@@ -128,9 +128,6 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    subset <- eval(mf.subset, data, enclos=sys.frame(sys.parent()))
    mods   <- eval(mf.mods,   data, enclos=sys.frame(sys.parent()))
 
-   if (!is.null(subset))
-      subset <- .setnafalse(subset)
-
    ai <- bi <- ci <- di <- x1i <- x2i <- t1i <- t2i <- xi <- mi <- ti <- ni <- NA
 
    ### calculate yi and vi values
@@ -156,6 +153,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       k.all <- k
 
       if (!is.null(subset)) {
+         subset <- .setnafalse(subset, k=k)
          ai <- ai[subset]
          bi <- bi[subset]
          ci <- ci[subset]
@@ -181,6 +179,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       k.all <- k
 
       if (!is.null(subset)) {
+         subset <- .setnafalse(subset, k=k)
          x1i <- x1i[subset]
          x2i <- x2i[subset]
          t1i <- t1i[subset]
@@ -205,6 +204,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       k.all <- k
 
       if (!is.null(subset)) {
+         subset <- .setnafalse(subset, k=k)
          xi <- xi[subset]
          mi <- mi[subset]
       }
@@ -224,6 +224,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       k.all <- k
 
       if (!is.null(subset)) {
+         subset <- .setnafalse(subset, k=k)
          xi <- xi[subset]
          ti <- ti[subset]
       }

@@ -5,7 +5,7 @@
 # since the user would then have to specify the degrees of freedom. Instead,
 # the user can just pass the CI (and PI) bounds (that were calculated with
 # test="knha") directly to the function via the ci.lb and ci.ub (and pi.lb and
-# pi.ub) argument.
+# pi.ub) arguments.
 
 addpoly.default <- function(x, vi, sei, ci.lb, ci.ub, pi.lb, pi.ub,
 rows=-1, level=95, annotate=TRUE, digits=2, width, mlab, transf,
@@ -86,8 +86,8 @@ atransf, targs, efac=1, col, border, fonts, cex, ...) {
       if (missing(vi) && missing(sei)) {
 
          ### vi/sei not specified, so calculate vi based on CI bounds
-         ### note: technically assumes that the CI is a symmetric Wald-type
-         ###       CI computed based on a standard normal distribution
+         ### note: assumes that the CI is a symmetric Wald-type CI
+         ###       computed based on a standard normal distribution
 
          vi <- ((ci.ub - ci.lb) / (2*qnorm(level/2, lower.tail=FALSE)))^2
 
@@ -150,7 +150,7 @@ atransf, targs, efac=1, col, border, fonts, cex, ...) {
    }
 
    if (length(rows) != length(yi))
-      stop(mstyle$stop(paste0("Number of outcomes (", length(yi), ") does not correspond to the length of the 'rows' argument (", length(rows), ").")))
+      stop(mstyle$stop(paste0("Length of the 'rows' argument (", length(rows), ") does not correspond to the number of polygons to be plotted (", length(yi), ").")))
 
    ### check for NAs in yi/vi and act accordingly
 

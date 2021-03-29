@@ -89,14 +89,14 @@ label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
          digits <- c(digits,digits) ### digits[2] for y-axis labels
    }
 
-   ### note: digits can also be a list (e.g., digits=list(2L,3))
+   ### note: digits can also be a list (e.g., digits=list(2L,3)); trailing 0's are dropped for intergers
 
    if (length(lty) == 1L)
       lty <- rep(lty, 2) ### 1st value = funnel lines, 2nd value = reference line
 
-   ### note: 'pch', 'col', and 'bg' are assumed to be of the same length as the original data passed to rma()
-   ###       so we have to apply the same subsetting (if necessary) and removing of NAs as done during the
-   ###       model fitting (note: NAs are removed further below)
+   ### note: pch, col, and bg must be of the same length as the original data passed to rma()
+   ###       so we have to apply the same subsetting (if necessary) and removing of NAs as was
+   ###       done during the model fitting (note: NAs are removed further below)
 
    if (length(pch) == 1L) {
       pch.vec <- FALSE
@@ -105,7 +105,7 @@ label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
       pch.vec <- TRUE
    }
    if (length(pch) != x$k.all)
-      stop(mstyle$stop(paste0("Number of outcomes (", x$k.all, ") does not correspond to the length of the 'pch' argument (", length(pch), ").")))
+      stop(mstyle$stop(paste0("Length of the 'pch' argument (", length(pch), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
 
    if (!is.null(x$subset))
       pch <- pch[x$subset]
@@ -121,7 +121,7 @@ label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
          col.vec <- TRUE
       }
       if (length(col) != x$k.all)
-         stop(mstyle$stop(paste0("Number of outcomes (", x$k.all, ") does not correspond to the length of the 'col' argument (", length(col), ").")))
+         stop(mstyle$stop(paste0("Length of the 'col' argument (", length(col), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
 
       if (!is.null(x$subset))
          col <- col[x$subset]
@@ -135,7 +135,7 @@ label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
          bg.vec <- TRUE
       }
       if (length(bg) != x$k.all)
-         stop(mstyle$stop(paste0("Number of outcomes (", x$k.all, ") does not correspond to the length of the 'bg' argument (", length(bg), ").")))
+         stop(mstyle$stop(paste0("Length of the 'bg' argument (", length(bg), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
 
       if (!is.null(x$subset))
          bg <- bg[x$subset]
@@ -172,6 +172,8 @@ label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
    lpoints   <- function(..., refline2, level2, lty2) points(...)
    lrect     <- function(..., refline2, level2, lty2) rect(...)
    ltext     <- function(..., refline2, level2, lty2) text(...)
+
+   ### refline2, level2, and lty2 for adding a second reference line / funnel
 
    if (!is.null(ddd$refline2)) {
       refline2 <- ddd$refline2
@@ -326,17 +328,17 @@ label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
 
       if (is.element(yaxis, c("sei", "vi", "ni", "ninv", "sqrtni", "sqrtninv", "lni"))) {
          if (ylim[1] < 0 || ylim[2] < 0)
-            stop(mstyle$stop("Both limits for the y axis must be >= 0."))
+            stop(mstyle$stop("Both y-axis limits must be >= 0."))
       }
 
       if (is.element(yaxis, c("seinv", "vinv"))) {
          if (ylim[1] <= 0 || ylim[2] <= 0)
-            stop(mstyle$stop("Both limits for the y axis must be > 0."))
+            stop(mstyle$stop("Both y-axis limits must be > 0."))
       }
 
       if (is.element(yaxis, c("wi"))) {
          if (ylim[1] < 0 || ylim[2] < 0)
-            stop(mstyle$stop("Both limits for the y axis must be >= 0."))
+            stop(mstyle$stop("Both y-axis limits must be >= 0."))
       }
 
    }
@@ -374,7 +376,7 @@ label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
 
       if (missing(xlim)) {
          xlim    <- c(min(x.lb.bot,min(yi)), max(x.ub.bot,max(yi))) ### make sure x-axis not only includes widest CI, but also all yi values
-         rxlim   <- xlim[2] - xlim[1]        ### calculate range of the x axis limits
+         rxlim   <- xlim[2] - xlim[1]        ### calculate range of the x-axis limits
          xlim[1] <- xlim[1] - (rxlim * 0.10) ### subtract 10% of range from lower x-axis bound
          xlim[2] <- xlim[2] + (rxlim * 0.10) ### add      10% of range to   upper x-axis bound
       } else {
@@ -387,7 +389,7 @@ label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
 
       if (missing(xlim)) {
          xlim    <- c(min(yi), max(yi))
-         rxlim   <- xlim[2] - xlim[1]        ### calculate range of the x axis limits
+         rxlim   <- xlim[2] - xlim[1]        ### calculate range of the x-axis limits
          xlim[1] <- xlim[1] - (rxlim * 0.10) ### subtract 10% of range from lower x-axis bound
          xlim[2] <- xlim[2] + (rxlim * 0.10) ### add      10% of range to   upper x-axis bound
       } else {
@@ -416,7 +418,7 @@ label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
 
    ### add y-axis
 
-   laxis(side=2, at=seq(from=ylim[1], to=ylim[2], length.out=steps), labels=formatC(seq(from=ylim[1], to=ylim[2], length.out=steps), digits=digits[[2]], format="f", drop0trailing=ifelse(class(digits[[2]]) == "integer", TRUE, FALSE)), ...)
+   laxis(side=2, at=seq(from=ylim[1], to=ylim[2], length.out=steps), labels=formatC(seq(from=ylim[1], to=ylim[2], length.out=steps), digits=digits[[2]], format="f", drop0trailing=is.integer(digits[[2]])), ...)
 
    ### add horizontal lines
 
@@ -562,7 +564,7 @@ label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
 
    box(bty="l")
 
-   ### generate x axis positions if none are specified
+   ### generate x-axis positions if none are specified
 
    if (is.null(at)) {
       at <- axTicks(side=1)
@@ -577,12 +579,12 @@ label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
 
    if (is.function(atransf)) {
       if (is.null(targs)) {
-         at.lab <- formatC(sapply(at.lab, atransf), digits=digits[[1]], format="f", drop0trailing=ifelse(class(digits[[1]]) == "integer", TRUE, FALSE))
+         at.lab <- formatC(sapply(at.lab, atransf), digits=digits[[1]], format="f", drop0trailing=is.integer(digits[[1]]))
       } else {
-         at.lab <- formatC(sapply(at.lab, atransf, targs), digits=digits[[1]], format="f", drop0trailing=ifelse(class(digits[[1]]) == "integer", TRUE, FALSE))
+         at.lab <- formatC(sapply(at.lab, atransf, targs), digits=digits[[1]], format="f", drop0trailing=is.integer(digits[[1]]))
       }
    } else {
-      at.lab <- formatC(at.lab, digits=digits[[1]], format="f", drop0trailing=ifelse(class(digits[[1]]) == "integer", TRUE, FALSE))
+      at.lab <- formatC(at.lab, digits=digits[[1]], format="f", drop0trailing=is.integer(digits[[1]]))
    }
 
    ### add x-axis

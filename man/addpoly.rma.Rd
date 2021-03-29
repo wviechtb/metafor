@@ -18,8 +18,8 @@
    \item{digits}{integer to specify the number of decimal places to which the annotations should be rounded (the default is 2).}
    \item{width}{optional integer to manually adjust the width of the columns for the annotations.}
    \item{mlab}{optional character string giving a label for the summary estimate polygon. If unspecified, the function sets a default label.}
-   \item{transf}{optional argument to specify the name of a function that should be used to transform the summary estimate and confidence interval bound (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
-   \item{atransf}{optional argument to specify the name of a function that should be used to transform the annotations (e.g., \code{atransf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
+   \item{transf}{optional argument to specify a function that should be used to transform the summary estimate and confidence interval bound (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
+   \item{atransf}{optional argument to specify a function that should be used to transform the annotations (e.g., \code{atransf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified via \code{transf} or \code{atransf}.}
    \item{efac}{vertical expansion factor for the polygon. The default value of 1 should usually work okay.}
    \item{col}{optional character string to specify the name of a color to use for the polygon. If unspecified, the function sets a default color.}
@@ -62,7 +62,7 @@ res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg,
 forest(res, xlim=c(-16, 6), at=log(c(.05, .25, 1, 4)), atransf=exp,
        ilab=cbind(dat.bcg$tpos, dat.bcg$tneg, dat.bcg$cpos, dat.bcg$cneg),
        ilab.xpos=c(-9.5,-8,-6,-4.5), cex=.75, ylim=c(-1, 27),
-       order=order(dat.bcg$alloc), rows=c(3:4,9:15,20:23),
+       order=dat.bcg$alloc, rows=c(3:4,9:15,20:23),
        mlab="RE Model for All Studies", header="Author(s) and Year")
 op <- par(cex=.75, font=4)
 text(-16, c(24,16,5), c("Systematic Allocation", "Random Allocation",

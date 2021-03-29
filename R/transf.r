@@ -35,11 +35,18 @@ transf.ipft <- function(xi, ni, ...) {             ### inverse of Freeman-Tukey 
 }
 
 transf.ipft.hm <- function(xi, targs, ...) {       ### inverse of Freeman-Tukey transformation for a collection of proportions
-   ni <- 1/(mean(1/targs$ni, na.rm=TRUE))          ### calculate harmonic mean of the ni's
-   zi <- suppressWarnings(1/2 * (1 - sign(cos(2*xi)) * sqrt(1 - (sin(2*xi)+(sin(2*xi)-1/sin(2*xi))/ni)^2)))
+   if (is.null(targs) || (is.list(targs) && is.null(targs$ni)))
+      stop("Need to specify the sample sizes via the 'targs' argument.", call.=FALSE)
+   if (is.list(targs)) {
+      ni <- targs$ni
+   } else {
+      ni <- ni
+   }
+   nhm <- 1/(mean(1/ni, na.rm=TRUE))               ### calculate harmonic mean of the ni's
+   zi <- suppressWarnings(1/2 * (1 - sign(cos(2*xi)) * sqrt(1 - (sin(2*xi)+(sin(2*xi)-1/sin(2*xi))/nhm)^2)))
    zi <- ifelse(is.nan(zi), NA, zi)                ### it may not be possible to calculate zi
-   zi[xi > transf.pft(1,ni)] <- 1                  ### if xi is above upper limit, return 1
-   zi[xi < transf.pft(0,ni)] <- 0                  ### if xi is below lower limit, return 0
+   zi[xi > transf.pft(1,nhm)] <- 1                 ### if xi is above upper limit, return 1
+   zi[xi < transf.pft(0,nhm)] <- 0                 ### if xi is below lower limit, return 0
    return(c(zi))
 }
 
@@ -190,9 +197,9 @@ transf.dtorpb <- function(xi, n1i, n2i, ...) {
       hi <- 4
    } else {
       if (length(n1i) != length(n2i))
-         stop("Length of 'n1i' does not match length of 'n2i'.")
+         stop("Length of 'n1i' does not match length of 'n2i'.", call.=FALSE)
       if (length(n1i) != length(xi))
-         stop("Length of 'n1i' and 'n2i' does not match length of 'xi'.")
+         stop("Length of 'n1i' and 'n2i' does not match length of 'xi'.", call.=FALSE)
       mi <- n1i + n2i - 2
       hi <- mi / n1i + mi / n2i
    }
@@ -204,13 +211,26 @@ transf.dtobesd <- function(xi, ...) {
    return(0.50 + rpbi/2)
 }
 
+transf.dtomd <- function(xi, targs=NULL, ...) {
+   if (is.null(targs) || (is.list(targs) && is.null(targs$sd)))
+      stop("Need to specify a standard deviation value via the 'targs' argument.", call.=FALSE)
+   if (is.list(targs)) {
+      sd <- targs$sd
+   } else {
+      sd <- targs
+   }
+   if (length(sd) != 1L)
+      stop("Specify a single standard deviation value via the 'targs' argument.", call.=FALSE)
+   return(xi * sd)
+}
+
 transf.logortord <- function(xi, pc, ...) {
    if (length(pc) == 1L)
       pc <- rep(pc, length(xi))
    if (length(xi) != length(pc))
-      stop("Length of 'xi' does not match length of 'pc'.")
+      stop("Length of 'xi' does not match length of 'pc'.", call.=FALSE)
    if (any(pc < 0) || any(pc > 1))
-      stop("The control group risk 'pc' must be between 0 and 1.")
+      stop("The control group risk 'pc' must be between 0 and 1.", call.=FALSE)
    return(exp(xi)*pc / (1 - pc + pc * exp(xi)) - pc)
 }
 
@@ -218,8 +238,8 @@ transf.logortorr <- function(xi, pc, ...) {
    if (length(pc) == 1L)
       pc <- rep(pc, length(xi))
    if (length(xi) != length(pc))
-      stop("Length of 'xi' does not match length of 'pc'.")
+      stop("Length of 'xi' does not match length of 'pc'.", call.=FALSE)
    if (any(pc < 0) || any(pc > 1))
-      stop("The control group risk 'pc' must be between 0 and 1.")
+      stop("The control group risk 'pc' must be between 0 and 1.", call.=FALSE)
    return(exp(xi) / (pc * (exp(xi) - 1) + 1))
 }

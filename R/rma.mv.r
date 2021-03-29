@@ -218,9 +218,6 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
    if (!is.null(mf.mods) && !any(grepl("$", mf.mods, fixed=TRUE)))
       mods <- eval(mf.mods, data, enclos=sys.frame(sys.parent()))       ### NULL if user does not specify this
 
-   if (!is.null(subset))
-      subset <- .setnafalse(subset)
-
    ### if yi is a formula, extract yi and X (this overrides anything specified via the mods argument further below)
 
    if (inherits(yi, "formula")) {
@@ -720,6 +717,8 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
 
       if (verbose > 1)
          message(mstyle$message("Subsetting ..."))
+
+      subset <- .setnafalse(subset, k=k)
 
       yi   <- yi[subset]
       V    <- V[subset,subset,drop=FALSE]

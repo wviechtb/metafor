@@ -61,7 +61,7 @@ selmodel(x, \dots)
    \if{html}{\figure{selmodel-preston-step.png}{options: width=600}}
    \if{latex}{\figure{selmodel-preston-step.pdf}{options: width=4in}}
 
-   Preston et al. (2004) also suggested selection functions where the relatively likelihood of selection not only depends on the p-value, but also the precision (e.g., standard error) of the estimate (if two studies have similar p-values, it may be plausible to assume that the larger / more precise study has a higher probability of selection). These selection functions plus the corresponding power function are given by:
+   Preston et al. (2004) also suggested selection functions where the relatively likelihood of selection not only depends on the p-value, but also the precision (e.g., standard error) of the estimate (if two studies have similar p-values, it may be plausible to assume that the larger / more precise study has a higher probability of selection). These selection functions plus the corresponding power functions are given by:
 
    \tabular{lllll}{
    \bold{name}          \tab \ics \tab \bold{\code{type}} \tab \ics \tab \bold{selection function} \cr

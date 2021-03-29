@@ -16,7 +16,7 @@
    \item{dfbsnew}{logical to specify whether a new device should be opened for plotting the DFBETAS values (the default is \code{FALSE}).}
    \item{logcov}{logical to specify whether the covariance ratios should be plotted on a log scale (the default is \code{TRUE}).}
    \item{layout}{optional vector of two numbers to specify the number of rows and columns for the layout of the figure.}
-   \item{slab.style}{integer to indicate the style of the x-axis labels: 1 = study number, 2 = study label, 3 = abbreviated study label. Note that study labels, even when abbreviated, may be too long to fit in the margin.)}
+   \item{slab.style}{integer to indicate the style of the x-axis labels: 1 = study number, 2 = study label, 3 = abbreviated study label. Note that study labels, even when abbreviated, may be too long to fit in the margins.)}
    \item{las}{integer between 0 and 3 to specify the alignment of the axis labels (see \code{\link{par}}). The most useful alternative to 0 is 3, so that the x-axis labels are drawn vertical to the axis.}
    \item{pch}{plotting symbol to use. By default, a filled circle is used. See \code{\link{points}} for other options.}
    \item{bg}{color to use for filling the plotting symbol (the default is \code{"black"}).}
@@ -27,17 +27,17 @@
 \details{
    When \code{plotinf=TRUE}, the function plots the (1) externally standardized residuals, (2) DFFITS values, (3) Cook's distances, (4) covariance ratios, (5) leave-one-out \mjseqn{\tau^2} estimates, (6) leave-one-out (residual) heterogeneity test statistics, (7) hat values, and (8) weights. If \code{plotdfbs=TRUE}, the DFBETAS values are also plotted either after confirming the page change (if \code{dfbsnew=FALSE}) or on a separate device (if \code{dfbsnew=TRUE}).
 
-   A study may be considered to be \sQuote{influential} if at least one of the following is true:
+   A case (which is typically synonymous with study) may be considered to be \sQuote{influential} if at least one of the following is true:
    \itemize{
-   \item The absolute DFFITS value is larger than \mjeqn{3 \times \sqrt{p/(k-p)}}{3*\sqrt(p/(k-p))}, where \mjseqn{p} is the number of model coefficients and \mjseqn{k} the number of studies.
+   \item The absolute DFFITS value is larger than \mjeqn{3 \times \sqrt{p/(k-p)}}{3*\sqrt(p/(k-p))}, where \mjseqn{p} is the number of model coefficients and \mjseqn{k} the number of cases.
    \item The lower tail area of a chi-square distribution with \mjseqn{p} degrees of freedom cut off by the Cook's distance is larger than 50\%.
    \item The hat value is larger than \mjeqn{3 \times (p/k)}{3*(p/k)}.
    \item Any DFBETAS value is larger than \mjseqn{1}.
-   } Studies which are considered influential with respect to any of these measures are indicated by the color specified for the \code{bg.infl} argument (the default is \code{"red"}).
+   } Cases which are considered influential with respect to any of these measures are indicated by the color specified for the \code{bg.infl} argument (the default is \code{"red"}).
 
-   The cut-offs described above are indicated in the plot with horizontal reference lines. In addition, on the plot of the externally standardized residuals, horizontal reference lines are drawn at -1.96, 0, and 1.96. On the plot of the hat values, a horizontal reference line is drawn at \mjseqn{p/k}. Since the sum of the hat values is equal to \mjseqn{p}, the value \mjseqn{p/k} indicates equal hat values for all \mjseqn{k} studies. Finally, on the plot of weights, a horizontal reference line is drawn at \mjseqn{100/k}, corresponding to the value for equal weights (in \%) for all \mjseqn{k} studies. Note that all weights will automatically be equal to each other when using unweighted model fitting. Also, the hat values will be equal to the weights values (except for their scaling) in models without moderators.
+   The cut-offs described above are indicated in the plot with horizontal reference lines. In addition, on the plot of the externally standardized residuals, horizontal reference lines are drawn at -1.96, 0, and 1.96. On the plot of the hat values, a horizontal reference line is drawn at \mjseqn{p/k}. Since the sum of the hat values is equal to \mjseqn{p}, the value \mjseqn{p/k} indicates equal hat values for all \mjseqn{k} cases. Finally, on the plot of weights, a horizontal reference line is drawn at \mjseqn{100/k}, corresponding to the value for equal weights (in \%) for all \mjseqn{k} cases. Note that all weights will automatically be equal to each other when using unweighted model fitting. Also, the hat values will be equal to the weights values (except for their scaling) in models without moderators.
 
-   The chosen cut-offs are (somewhat) arbitrary. Substantively informed judgment should always be used when examining the influence of each study on the results.
+   The chosen cut-offs are (somewhat) arbitrary. Substantively informed judgment should always be used when examining the influence of each case on the results.
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
@@ -51,15 +51,23 @@
    \code{\link{influence.rma.uni}}
 }
 \examples{
-### meta-analysis of the log risk ratios using a mixed-effects model
-### with two moderators (absolute latitude and publication year)
-res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg,
-           mods = ~ ablat + year, data=dat.bcg)
+### calculate log risk ratios and corresponding sampling variances
+dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
+### fit mixed-effects model with absolute latitude and publication year as moderators
+res <- rma(yi, vi, mods = ~ ablat + year, data=dat)
+
+### compute the diagnostics
 inf <- influence(res)
+
+### plot the values
 plot(inf)
+
+### select which plots to show
 plot(inf, plotinf=1:4)
 plot(inf, plotinf=1:4, layout=c(4,1))
+
+### plot the DFBETAS values
 plot(inf, plotinf=FALSE, plotdfbs=TRUE)
 }
 \keyword{hplot}

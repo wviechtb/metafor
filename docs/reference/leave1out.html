@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-82</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-83</span>
       </span>
     </div>
 
@@ -159,7 +159,7 @@
     </tr>
     <tr>
       <th>transf</th>
-      <td><p>an optional argument to specify the name of a function that should be used to transform the model coefficients and interval bounds (e.g., <code>transf=exp</code>; see also <a href='transf.html'>transf</a>). If unspecified, no transformation is used.</p></td>
+      <td><p>an optional argument to specify a function that should be used to transform the model coefficients and interval bounds (e.g., <code>transf=exp</code>; see also <a href='transf.html'>transf</a>). If unspecified, no transformation is used.</p></td>
     </tr>
     <tr>
       <th>targs</th>
@@ -177,21 +177,23 @@
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The model specified via <code>x</code> must be a model without moderators (i.e., either a fixed- or a random-effects model and not a fixed-effects with moderators or mixed-effects model).</p>
+    <p>For <code>"rma.uni"</code> objects, the model specified via <code>x</code> must be a model without moderators (i.e., either a fixed- or a random-effects model).</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class <code>"list.rma"</code>. The object is a list containing the following components:</p>
-<dt>estimate</dt><dd><p>estimated coefficients of the model.</p></dd>
-   <dt>se</dt><dd><p>standard errors of the coefficients.</p></dd>
-   <dt>zval</dt><dd><p>test statistics of the coefficients.</p></dd>
+<dt>estimate</dt><dd><p>estimated (average) outcomes.</p></dd>
+   <dt>se</dt><dd><p>corresponding standard errors.</p></dd>
+   <dt>zval</dt><dd><p>corresponding test statistics.</p></dd>
    <dt>pval</dt><dd><p>corresponding p-values.</p></dd>
-   <dt>ci.lb</dt><dd><p>lower bounds of the confidence intervals for the coefficients.</p></dd>
-   <dt>ci.ub</dt><dd><p>upper bounds of the confidence intervals for the coefficients.</p></dd>
-   <dt>Q</dt><dd><p>test statistics for the tests of heterogeneity.</p></dd>
+   <dt>ci.lb</dt><dd><p>lower bounds of the confidence intervals.</p></dd>
+   <dt>ci.ub</dt><dd><p>upper bounds of the confidence intervals.</p></dd>
+   <dt>Q</dt><dd><p>test statistics for the test of heterogeneity.</p></dd>
    <dt>Qp</dt><dd><p>corresponding p-values.</p></dd>
-   <dt>tau2</dt><dd><p>estimated amounts of (residual) heterogeneity (only for random-effects models).</p></dd>
-   <dt>I2</dt><dd><p>values of \(I^2\) (only for random-effects models).</p></dd>
-   <dt>H2</dt><dd><p>values of \(H^2\) (only for random-effects models).</p></dd>
+   <dt>tau2</dt><dd><p>estimated amount of heterogeneity (only for random-effects models).</p></dd>
+   <dt>I2</dt><dd><p>values of \(I^2\).</p></dd>
+   <dt>H2</dt><dd><p>values of \(H^2\).</p></dd>
+
+   When the model was fitted with test="t" or test="knha", then zval is called tval in the object that is returned by the function.
 
    The object is formatted and printed with <a href='print.list.rma.html'>print.list.rma</a>.
 
@@ -270,36 +272,50 @@
 <span class='co'>### leave-one-out analysis</span>
 <span class='fu'>leave1out</span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 
-#&gt;    estimate     se     zval   pval   ci.lb   ci.ub        Q     Qp 
-#&gt; 1   -0.4514 0.0394 -11.4462 0.0000 -0.5287 -0.3741 151.9153 0.0000 
-#&gt; 2   -0.4410 0.0395 -11.1512 0.0000 -0.5185 -0.3635 145.5727 0.0000 
-#&gt; 3   -0.4495 0.0394 -11.4001 0.0000 -0.5267 -0.3722 150.5130 0.0000 
-#&gt; 4   -0.3392 0.0414  -8.1874 0.0000 -0.4205 -0.2580  96.5629 0.0000 
-#&gt; 5   -0.4614 0.0400 -11.5474 0.0000 -0.5397 -0.3831 151.6611 0.0000 
-#&gt; 6   -0.3666 0.0448  -8.1809 0.0000 -0.4544 -0.2788 129.2200 0.0000 
-#&gt; 7   -0.4466 0.0395 -11.3046 0.0000 -0.5241 -0.3692 146.2134 0.0000 
-#&gt; 8   -0.7758 0.0520 -14.9267 0.0000 -0.8777 -0.6739  68.3763 0.0000 
-#&gt; 9   -0.4532 0.0399 -11.3633 0.0000 -0.5314 -0.3751 152.5497 0.0000 
-#&gt; 10  -0.4278 0.0399 -10.7338 0.0000 -0.5059 -0.3497 140.0446 0.0000 
-#&gt; 11  -0.4698 0.0421 -11.1706 0.0000 -0.5522 -0.3874 151.8140 0.0000 
-#&gt; 12  -0.4566 0.0394 -11.5865 0.0000 -0.5338 -0.3794 151.1253 0.0000 
-#&gt; 13  -0.4637 0.0398 -11.6542 0.0000 -0.5417 -0.3858 150.1246 0.0000 
+#&gt;    estimate     se     zval   pval   ci.lb   ci.ub        Q     Qp      I2 
+#&gt; 1   -0.4514 0.0394 -11.4462 0.0000 -0.5287 -0.3741 151.9153 0.0000 92.7591 
+#&gt; 2   -0.4410 0.0395 -11.1512 0.0000 -0.5185 -0.3635 145.5727 0.0000 92.4436 
+#&gt; 3   -0.4495 0.0394 -11.4001 0.0000 -0.5267 -0.3722 150.5130 0.0000 92.6917 
+#&gt; 4   -0.3392 0.0414  -8.1874 0.0000 -0.4205 -0.2580  96.5629 0.0000 88.6085 
+#&gt; 5   -0.4614 0.0400 -11.5474 0.0000 -0.5397 -0.3831 151.6611 0.0000 92.7470 
+#&gt; 6   -0.3666 0.0448  -8.1809 0.0000 -0.4544 -0.2788 129.2200 0.0000 91.4874 
+#&gt; 7   -0.4466 0.0395 -11.3046 0.0000 -0.5241 -0.3692 146.2134 0.0000 92.4767 
+#&gt; 8   -0.7758 0.0520 -14.9267 0.0000 -0.8777 -0.6739  68.3763 0.0000 83.9126 
+#&gt; 9   -0.4532 0.0399 -11.3633 0.0000 -0.5314 -0.3751 152.5497 0.0000 92.7892 
+#&gt; 10  -0.4278 0.0399 -10.7338 0.0000 -0.5059 -0.3497 140.0446 0.0000 92.1454 
+#&gt; 11  -0.4698 0.0421 -11.1706 0.0000 -0.5522 -0.3874 151.8140 0.0000 92.7543 
+#&gt; 12  -0.4566 0.0394 -11.5865 0.0000 -0.5338 -0.3794 151.1253 0.0000 92.7213 
+#&gt; 13  -0.4637 0.0398 -11.6542 0.0000 -0.5417 -0.3858 150.1246 0.0000 92.6728 
+#&gt;         H2 
+#&gt; 1  13.8105 
+#&gt; 2  13.2339 
+#&gt; 3  13.6830 
+#&gt; 4   8.7784 
+#&gt; 5  13.7874 
+#&gt; 6  11.7473 
+#&gt; 7  13.2921 
+#&gt; 8   6.2160 
+#&gt; 9  13.8682 
+#&gt; 10 12.7313 
+#&gt; 11 13.8013 
+#&gt; 12 13.7387 
+#&gt; 13 13.6477 
 #&gt; </div><div class='input'><span class='fu'>leave1out</span><span class='op'>(</span><span class='va'>res</span>, transf<span class='op'>=</span><span class='va'>exp</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 
-#&gt;    estimate     zval   pval  ci.lb  ci.ub        Q     Qp 
-#&gt; 1    0.6367 -11.4462 0.0000 0.5894 0.6879 151.9153 0.0000 
-#&gt; 2    0.6434 -11.1512 0.0000 0.5954 0.6952 145.5727 0.0000 
-#&gt; 3    0.6380 -11.4001 0.0000 0.5905 0.6892 150.5130 0.0000 
-#&gt; 4    0.7123  -8.1874 0.0000 0.6568 0.7726  96.5629 0.0000 
-#&gt; 5    0.6304 -11.5474 0.0000 0.5829 0.6818 151.6611 0.0000 
-#&gt; 6    0.6931  -8.1809 0.0000 0.6348 0.7567 129.2200 0.0000 
-#&gt; 7    0.6398 -11.3046 0.0000 0.5921 0.6913 146.2134 0.0000 
-#&gt; 8    0.4603 -14.9267 0.0000 0.4158 0.5097  68.3763 0.0000 
-#&gt; 9    0.6356 -11.3633 0.0000 0.5878 0.6872 152.5497 0.0000 
-#&gt; 10   0.6520 -10.7338 0.0000 0.6030 0.7049 140.0446 0.0000 
-#&gt; 11   0.6251 -11.1706 0.0000 0.5757 0.6788 151.8140 0.0000 
-#&gt; 12   0.6334 -11.5865 0.0000 0.5864 0.6843 151.1253 0.0000 
-#&gt; 13   0.6289 -11.6542 0.0000 0.5817 0.6799 150.1246 0.0000 
+#&gt;    estimate     zval   pval  ci.lb  ci.ub        Q     Qp      I2      H2 
+#&gt; 1    0.6367 -11.4462 0.0000 0.5894 0.6879 151.9153 0.0000 92.7591 13.8105 
+#&gt; 2    0.6434 -11.1512 0.0000 0.5954 0.6952 145.5727 0.0000 92.4436 13.2339 
+#&gt; 3    0.6380 -11.4001 0.0000 0.5905 0.6892 150.5130 0.0000 92.6917 13.6830 
+#&gt; 4    0.7123  -8.1874 0.0000 0.6568 0.7726  96.5629 0.0000 88.6085  8.7784 
+#&gt; 5    0.6304 -11.5474 0.0000 0.5829 0.6818 151.6611 0.0000 92.7470 13.7874 
+#&gt; 6    0.6931  -8.1809 0.0000 0.6348 0.7567 129.2200 0.0000 91.4874 11.7473 
+#&gt; 7    0.6398 -11.3046 0.0000 0.5921 0.6913 146.2134 0.0000 92.4767 13.2921 
+#&gt; 8    0.4603 -14.9267 0.0000 0.4158 0.5097  68.3763 0.0000 83.9126  6.2160 
+#&gt; 9    0.6356 -11.3633 0.0000 0.5878 0.6872 152.5497 0.0000 92.7892 13.8682 
+#&gt; 10   0.6520 -10.7338 0.0000 0.6030 0.7049 140.0446 0.0000 92.1454 12.7313 
+#&gt; 11   0.6251 -11.1706 0.0000 0.5757 0.6788 151.8140 0.0000 92.7543 13.8013 
+#&gt; 12   0.6334 -11.5865 0.0000 0.5864 0.6843 151.1253 0.0000 92.7213 13.7387 
+#&gt; 13   0.6289 -11.6542 0.0000 0.5817 0.6799 150.1246 0.0000 92.6728 13.6477 
 #&gt; </div><div class='input'>
 <span class='co'>### meta-analysis of the (log) odds ratios using Peto's method</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.peto.html'>rma.peto</a></span><span class='op'>(</span>ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>)</span>
@@ -307,36 +323,50 @@
 <span class='co'>### leave-one-out analysis</span>
 <span class='fu'>leave1out</span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 
-#&gt;    estimate     se     zval   pval   ci.lb   ci.ub        Q     Qp 
-#&gt; 1   -0.4722 0.0408 -11.5791 0.0000 -0.5521 -0.3923 167.2005 0.0000 
-#&gt; 2   -0.4616 0.0409 -11.2751 0.0000 -0.5418 -0.3814 160.5154 0.0000 
-#&gt; 3   -0.4702 0.0408 -11.5317 0.0000 -0.5501 -0.3903 165.7913 0.0000 
-#&gt; 4   -0.3591 0.0435  -8.2533 0.0000 -0.4443 -0.2738 112.1274 0.0000 
-#&gt; 5   -0.4832 0.0413 -11.6873 0.0000 -0.5642 -0.4021 166.3727 0.0000 
-#&gt; 6   -0.3710 0.0451  -8.2328 0.0000 -0.4593 -0.2827 139.3918 0.0000 
-#&gt; 7   -0.4660 0.0408 -11.4343 0.0000 -0.5459 -0.3861 158.6048 0.0000 
-#&gt; 8   -0.8161 0.0531 -15.3842 0.0000 -0.9201 -0.7122  67.1837 0.0000 
-#&gt; 9   -0.4747 0.0413 -11.4973 0.0000 -0.5557 -0.3938 167.7284 0.0000 
-#&gt; 10  -0.4486 0.0413 -10.8488 0.0000 -0.5296 -0.3675 155.8992 0.0000 
-#&gt; 11  -0.4911 0.0434 -11.3135 0.0000 -0.5762 -0.4060 166.5326 0.0000 
-#&gt; 12  -0.4775 0.0407 -11.7236 0.0000 -0.5573 -0.3976 166.0703 0.0000 
-#&gt; 13  -0.4853 0.0411 -11.7960 0.0000 -0.5659 -0.4046 164.7427 0.0000 
+#&gt;    estimate     se     zval   pval   ci.lb   ci.ub        Q     Qp      I2 
+#&gt; 1   -0.4722 0.0408 -11.5791 0.0000 -0.5521 -0.3923 167.2005 0.0000 93.4211 
+#&gt; 2   -0.4616 0.0409 -11.2751 0.0000 -0.5418 -0.3814 160.5154 0.0000 93.1471 
+#&gt; 3   -0.4702 0.0408 -11.5317 0.0000 -0.5501 -0.3903 165.7913 0.0000 93.3652 
+#&gt; 4   -0.3591 0.0435  -8.2533 0.0000 -0.4443 -0.2738 112.1274 0.0000 90.1897 
+#&gt; 5   -0.4832 0.0413 -11.6873 0.0000 -0.5642 -0.4021 166.3727 0.0000 93.3883 
+#&gt; 6   -0.3710 0.0451  -8.2328 0.0000 -0.4593 -0.2827 139.3918 0.0000 92.1086 
+#&gt; 7   -0.4660 0.0408 -11.4343 0.0000 -0.5459 -0.3861 158.6048 0.0000 93.0645 
+#&gt; 8   -0.8161 0.0531 -15.3842 0.0000 -0.9201 -0.7122  67.1837 0.0000 83.6270 
+#&gt; 9   -0.4747 0.0413 -11.4973 0.0000 -0.5557 -0.3938 167.7284 0.0000 93.4418 
+#&gt; 10  -0.4486 0.0413 -10.8488 0.0000 -0.5296 -0.3675 155.8992 0.0000 92.9442 
+#&gt; 11  -0.4911 0.0434 -11.3135 0.0000 -0.5762 -0.4060 166.5326 0.0000 93.3947 
+#&gt; 12  -0.4775 0.0407 -11.7236 0.0000 -0.5573 -0.3976 166.0703 0.0000 93.3763 
+#&gt; 13  -0.4853 0.0411 -11.7960 0.0000 -0.5659 -0.4046 164.7427 0.0000 93.3229 
+#&gt;         H2 
+#&gt; 1  15.2000 
+#&gt; 2  14.5923 
+#&gt; 3  15.0719 
+#&gt; 4  10.1934 
+#&gt; 5  15.1248 
+#&gt; 6  12.6720 
+#&gt; 7  14.4186 
+#&gt; 8   6.1076 
+#&gt; 9  15.2480 
+#&gt; 10 14.1727 
+#&gt; 11 15.1393 
+#&gt; 12 15.0973 
+#&gt; 13 14.9766 
 #&gt; </div><div class='input'><span class='fu'>leave1out</span><span class='op'>(</span><span class='va'>res</span>, transf<span class='op'>=</span><span class='va'>exp</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 
-#&gt;    estimate     zval   pval  ci.lb  ci.ub        Q     Qp 
-#&gt; 1    0.6236 -11.5791 0.0000 0.5757 0.6755 167.2005 0.0000 
-#&gt; 2    0.6303 -11.2751 0.0000 0.5817 0.6829 160.5154 0.0000 
-#&gt; 3    0.6249 -11.5317 0.0000 0.5769 0.6769 165.7913 0.0000 
-#&gt; 4    0.6983  -8.2533 0.0000 0.6413 0.7605 112.1274 0.0000 
-#&gt; 5    0.6168 -11.6873 0.0000 0.5688 0.6689 166.3727 0.0000 
-#&gt; 6    0.6900  -8.2328 0.0000 0.6317 0.7538 139.3918 0.0000 
-#&gt; 7    0.6275 -11.4343 0.0000 0.5793 0.6797 158.6048 0.0000 
-#&gt; 8    0.4421 -15.3842 0.0000 0.3985 0.4906  67.1837 0.0000 
-#&gt; 9    0.6220 -11.4973 0.0000 0.5737 0.6745 167.7284 0.0000 
-#&gt; 10   0.6385 -10.8488 0.0000 0.5888 0.6924 155.8992 0.0000 
-#&gt; 11   0.6120 -11.3135 0.0000 0.5621 0.6663 166.5326 0.0000 
-#&gt; 12   0.6204 -11.7236 0.0000 0.5728 0.6719 166.0703 0.0000 
-#&gt; 13   0.6155 -11.7960 0.0000 0.5679 0.6672 164.7427 0.0000 
+#&gt;    estimate     zval   pval  ci.lb  ci.ub        Q     Qp      I2      H2 
+#&gt; 1    0.6236 -11.5791 0.0000 0.5757 0.6755 167.2005 0.0000 93.4211 15.2000 
+#&gt; 2    0.6303 -11.2751 0.0000 0.5817 0.6829 160.5154 0.0000 93.1471 14.5923 
+#&gt; 3    0.6249 -11.5317 0.0000 0.5769 0.6769 165.7913 0.0000 93.3652 15.0719 
+#&gt; 4    0.6983  -8.2533 0.0000 0.6413 0.7605 112.1274 0.0000 90.1897 10.1934 
+#&gt; 5    0.6168 -11.6873 0.0000 0.5688 0.6689 166.3727 0.0000 93.3883 15.1248 
+#&gt; 6    0.6900  -8.2328 0.0000 0.6317 0.7538 139.3918 0.0000 92.1086 12.6720 
+#&gt; 7    0.6275 -11.4343 0.0000 0.5793 0.6797 158.6048 0.0000 93.0645 14.4186 
+#&gt; 8    0.4421 -15.3842 0.0000 0.3985 0.4906  67.1837 0.0000 83.6270  6.1076 
+#&gt; 9    0.6220 -11.4973 0.0000 0.5737 0.6745 167.7284 0.0000 93.4418 15.2480 
+#&gt; 10   0.6385 -10.8488 0.0000 0.5888 0.6924 155.8992 0.0000 92.9442 14.1727 
+#&gt; 11   0.6120 -11.3135 0.0000 0.5621 0.6663 166.5326 0.0000 93.3947 15.1393 
+#&gt; 12   0.6204 -11.7236 0.0000 0.5728 0.6719 166.0703 0.0000 93.3763 15.0973 
+#&gt; 13   0.6155 -11.7960 0.0000 0.5679 0.6672 164.7427 0.0000 93.3229 14.9766 
 #&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

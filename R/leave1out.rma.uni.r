@@ -124,8 +124,13 @@ leave1out.rma.uni <- function(x, digits, transf, targs, progbar=FALSE, ...) {
    if (na.act == "na.fail" && any(!x$not.na))
       stop(mstyle$stop("Missing values in results."))
 
+   if (is.element(x$test, c("knha","adhoc","t")))
+      names(out)[3] <- "tval"
+
+   ### remove tau2 for FE models
+
    if (x$method == "FE")
-      out <- out[-c(9,10,11)]
+      out <- out[-9]
 
    out$digits <- digits
    out$transf <- transf

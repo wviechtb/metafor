@@ -9,7 +9,6 @@
 baujat(x, \dots)
 
 \method{baujat}{rma}(x, xlim, ylim, xlab, ylab, cex, symbol, grid=TRUE, progbar=FALSE, \dots)
-
 }
 \arguments{
    \item{x}{an object of class \code{"rma"}.}

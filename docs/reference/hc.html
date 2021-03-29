@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-82</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-83</span>
       </span>
     </div>
 
@@ -155,7 +155,7 @@
     </tr>
     <tr>
       <th>transf</th>
-      <td><p>optional argument to specify the name of a function that should be used to transform the estimated true effect and the corresponding interval bounds (e.g., <code>transf=exp</code>; see also <a href='transf.html'>transf</a>). If unspecified, no transformation is used.</p></td>
+      <td><p>optional argument to specify a function that should be used to transform the estimated true effect and the corresponding interval bounds (e.g., <code>transf=exp</code>; see also <a href='transf.html'>transf</a>). If unspecified, no transformation is used.</p></td>
     </tr>
     <tr>
       <th>targs</th>
@@ -202,8 +202,28 @@
     <div class='dont-index'><p><code><a href='rma.uni.html'>rma.uni</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>### meta-analysis based on log odds ratios</span>
-<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"OR"</span>, ai<span class='op'>=</span><span class='va'>ai</span>, n1i<span class='op'>=</span><span class='va'>n1i</span>, ci<span class='op'>=</span><span class='va'>ci</span>, n2i<span class='op'>=</span><span class='va'>n2i</span>, data<span class='op'>=</span><span class='va'>dat.lee2004</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='co'>### calculate log odds ratios and corresponding sampling variances</span>
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"OR"</span>, ai<span class='op'>=</span><span class='va'>ai</span>, n1i<span class='op'>=</span><span class='va'>n1i</span>, ci<span class='op'>=</span><span class='va'>ci</span>, n2i<span class='op'>=</span><span class='va'>n2i</span>, data<span class='op'>=</span><span class='va'>dat.lee2004</span><span class='op'>)</span>
+<span class='va'>dat</span>
+</div><div class='output co'>#&gt;    id        study year ai n1i ci n2i      yi     vi 
+#&gt; 1   1      Agarwal 2000 18 100 20 100 -0.1301 0.1303 
+#&gt; 2   2      Agarwal 2002  5  50 18  50 -1.6219 0.3090 
+#&gt; 3   3     Alkaissi 1999  9  20  7  20  0.4184 0.4218 
+#&gt; 4   4     Alkaissi 2002 32 135 31 139  0.0792 0.0825 
+#&gt; 5   5        Allen 1994  9  23 10  23 -0.1795 0.3595 
+#&gt; 6   6 Andrzejowski 1996 11  18 12  18 -0.2412 0.4838 
+#&gt; 7   7       Duggal 1998 69 122 80 122 -0.3805 0.0697 
+#&gt; 8   8       Dundee 1986  3  25 12  25 -1.9124 0.5390 
+#&gt; 9   9 Ferrera-Love 1996  1  30  1  30  0.0000 2.0690 
+#&gt; 10 10       Gieron 1993 11  30 19  30 -1.0931 0.2871 
+#&gt; 11 11       Harmon 1999  7  44 16  39 -1.3021 0.2759 
+#&gt; 12 12       Harmon 2000  4  47  6  47 -0.4531 0.4643 
+#&gt; 13 13           Ho 1996  1  30 13  30 -3.0990 1.1702 
+#&gt; 14 14         Rusy 2002 24  40 71  80 -1.6600 0.2294 
+#&gt; 15 15         Wang 2002 16  50 53  88 -1.1687 0.1394 
+#&gt; 16 16       Zarate 2001 28 110 25 111  0.1610 0.0995 </div><div class='input'>
+<span class='co'>### meta-analysis based on log odds ratios</span>
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 <span class='va'>res</span>
 </div><div class='output co'>#&gt; 
 #&gt; Random-Effects Model (k = 16; tau^2 estimator: REML)
@@ -225,7 +245,7 @@
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### funnel plot as in Henmi and Copas (2010)</span>
-<span class='fu'><a href='funnel.html'>funnel</a></span><span class='op'>(</span><span class='va'>res</span>, yaxis<span class='op'>=</span><span class='st'>"seinv"</span>, refline<span class='op'>=</span><span class='fl'>0</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>3</span>,<span class='fl'>3</span><span class='op'>)</span>, ylim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.5</span>,<span class='fl'>3.5</span><span class='op'>)</span>, steps<span class='op'>=</span><span class='fl'>7</span>, digits<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
+<span class='fu'><a href='funnel.html'>funnel</a></span><span class='op'>(</span><span class='va'>res</span>, yaxis<span class='op'>=</span><span class='st'>"seinv"</span>, refline<span class='op'>=</span><span class='fl'>0</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>3</span>,<span class='fl'>3</span><span class='op'>)</span>, ylim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.5</span>,<span class='fl'>3.5</span><span class='op'>)</span>, steps<span class='op'>=</span><span class='fl'>7</span>, digits<span class='op'>=</span><span class='fl'>1</span>, back<span class='op'>=</span><span class='st'>"white"</span><span class='op'>)</span>
 </div><div class='img'><img src='hc-1.png' alt='' width='768' height='614' /></div><div class='input'>
 <span class='co'>### use method by Henmi and Copas (2010) as a sensitivity analysis</span>
 <span class='fu'>hc</span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>

@@ -33,10 +33,11 @@
    \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, \code{\link{rma.glmm}}, \code{\link{rma.mv}}
 }
 \examples{
-### meta-analysis of the log risk ratios using a mixed-effects model
-### with two moderators (absolute latitude and publication year)
-res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg,
-           mods = ~ ablat + year, data=dat.bcg)
+### calculate log risk ratios and corresponding sampling variances
+dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
+
+### fit mixed-effects model with absolute latitude and publication year as moderators
+res <- rma(yi, vi, mods = ~ ablat + year, data=dat)
 
 ### var-cov matrix of the fixed effects (i.e., the model coefficients)
 vcov(res)

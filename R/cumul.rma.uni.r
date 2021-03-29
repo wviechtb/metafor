@@ -12,9 +12,6 @@ cumul.rma.uni <- function(x, order, digits, transf, targs, progbar=FALSE, ...) {
    if (!x$int.only)
       stop(mstyle$stop("Method only applicable for models without moderators."))
 
-   if (missing(order))
-      order <- NULL
-
    if (missing(digits)) {
       digits <- .get.digits(xdigits=x$digits, dmiss=TRUE)
    } else {
@@ -29,15 +26,36 @@ cumul.rma.uni <- function(x, order, digits, transf, targs, progbar=FALSE, ...) {
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("time"))
+   .chkdots(ddd, c("time", "decreasing"))
 
    if (.isTRUE(ddd$time))
       time.start <- proc.time()
 
+   if (is.null(ddd$decreasing)) {
+      decreasing <- FALSE
+   } else {
+      decreasing <- ddd$decreasing
+   }
+
    #########################################################################
 
-   if (is.null(order))
-      order <- seq_len(x$k.f)
+   if (grepl("^order\\(", deparse(substitute(order))))
+      warning(mstyle$warning("Use of order() in 'order' argument is probably erroneous."), call.=FALSE)
+
+   if (missing(order))
+      order <- seq_len(x$k.all)
+
+   if (length(order) != x$k.all)
+      stop(mstyle$stop(paste0("Length of the 'order' argument (", length(order), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
+
+   ### note: order variable is assumed to be of the same length as the size of the
+   ###       original dataset passed to the model fitting function and so we apply
+   ###       the same subsetting (if necessary) as was done during model fitting
+
+   if (!is.null(x$subset))
+      order <- order[x$subset]
+
+   order <- order(order, decreasing=decreasing)
 
    yi.f      <- x$yi.f[order]
    vi.f      <- x$vi.f[order]
@@ -45,6 +63,7 @@ cumul.rma.uni <- function(x, order, digits, transf, targs, progbar=FALSE, ...) {
    weights.f <- x$weights.f[order]
    not.na    <- x$not.na[order]
    slab      <- x$slab[order]
+   ids       <- x$ids[order]
 
    beta  <- rep(NA_real_, x$k.f)
    se    <- rep(NA_real_, x$k.f)
@@ -122,13 +141,15 @@ cumul.rma.uni <- function(x, order, digits, transf, targs, progbar=FALSE, ...) {
    #########################################################################
 
    if (na.act == "na.omit") {
-      out <- list(estimate=beta[not.na], se=se[not.na], zval=zval[not.na], pvals=pval[not.na], ci.lb=ci.lb[not.na], ci.ub=ci.ub[not.na], QE=QE[not.na], QEp=QEp[not.na], tau2=tau2[not.na], I2=I2[not.na], H2=H2[not.na])
+      out <- list(estimate=beta[not.na], se=se[not.na], zval=zval[not.na], pvals=pval[not.na], ci.lb=ci.lb[not.na], ci.ub=ci.ub[not.na], Q=QE[not.na], Qp=QEp[not.na], tau2=tau2[not.na], I2=I2[not.na], H2=H2[not.na])
       out$slab <- slab[not.na]
+      out$ids  <- ids[not.na]
    }
 
    if (na.act == "na.exclude" || na.act == "na.pass") {
-      out <- list(estimate=beta, se=se, zval=zval, pvals=pval, ci.lb=ci.lb, ci.ub=ci.ub, QE=QE, QEp=QEp, tau2=tau2, I2=I2, H2=H2)
+      out <- list(estimate=beta, se=se, zval=zval, pvals=pval, ci.lb=ci.lb, ci.ub=ci.ub, Q=QE, Qp=QEp, tau2=tau2, I2=I2, H2=H2)
       out$slab <- slab
+      out$ids  <- ids
    }
 
    if (na.act == "na.fail" && any(!x$not.na))

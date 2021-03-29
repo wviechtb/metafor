@@ -77,9 +77,6 @@ lty, lwd, col, level=99.99, refline=0, ...) {
    lwd    <- eval(mf.lwd,    data, enclos=sys.frame(sys.parent()))
    col    <- eval(mf.col,    data, enclos=sys.frame(sys.parent()))
 
-   if (!is.null(subset))
-      subset <- .setnafalse(subset)
-
    if (measure == "GEN") {
 
       mf.yi  <- mf[[match("yi",  names(mf))]]
@@ -108,6 +105,7 @@ lty, lwd, col, level=99.99, refline=0, ...) {
       ### subsetting
 
       if (!is.null(subset)) {
+         subset <- .setnafalse(subset, k=k)
          yi <- yi[subset]
          vi <- vi[subset]
       }
@@ -167,6 +165,7 @@ lty, lwd, col, level=99.99, refline=0, ...) {
       ### subsetting
 
       if (!is.null(subset)) {
+         subset <- .setnafalse(subset, k=k)
          ai <- ai[subset]
          bi <- bi[subset]
          ci <- ci[subset]
@@ -295,7 +294,7 @@ lty, lwd, col, level=99.99, refline=0, ...) {
    if (is.null(col))
       col <- paste0("gray", round(seq(from=0, to=60, length.out=k))[rank(vi)])
 
-   ### set x axis limits
+   ### set x-axis limits
 
    ci.lb <- yi - qnorm(level/2, lower.tail=FALSE) * sqrt(vi)
    ci.ub <- yi + qnorm(level/2, lower.tail=FALSE) * sqrt(vi)
@@ -347,7 +346,7 @@ lty, lwd, col, level=99.99, refline=0, ...) {
 
    lls[out] <- NA
 
-   ### set y axis limits
+   ### set y-axis limits
 
    if (missing(ylim)) {
       ylim <- c(0, max(lls, na.rm=TRUE))

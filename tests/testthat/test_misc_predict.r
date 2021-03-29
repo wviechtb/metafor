@@ -26,9 +26,12 @@ test_that("predict() correctly matches named vectors in 'newmods'", {
    expect_equivalent(pred1, pred7)
 
    expect_error(predict(res, newmods = c(30, 0))) # not the right length
+   expect_error(predict(res, newmods = c(30, 0, 0, 0))) # not the right length
+   expect_error(predict(res, newmods = c(abl = 30, random = 0))) # not the right length
    expect_error(predict(res, newmods = c(abl = 30, alloc = 0, sys = 1))) # alloc matches up equally to allocrandom and allocsystem
    expect_error(predict(res, newmods = c(abl = 30, ran = 0, year = 1970))) # year not in the model
    expect_error(predict(res, newmods = c(abl = 30, ran = 0, sys = 1, ran = 1))) # ran used twice
+   expect_error(predict(res, newmods = c(abl = 30, ran = 0, sys = 1, rand = 1))) # same issue
 
    res <- rma(yi ~ ablat * year, vi, data=dat)
    pred1 <- predict(res, newmods = c(30, 1970, 30*1970))

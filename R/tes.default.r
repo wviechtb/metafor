@@ -20,9 +20,6 @@ tes.default <- function(x, vi, sei, subset,
    if (missing(subset))
       subset <- NULL
 
-   if (!is.null(subset))
-      subset <- .setnafalse(subset)
-
    if (alpha <= 0 || alpha >= 1)
       stop(mstyle$stop("Value of 'alpha' needs to be > 0 and < 1."))
 
@@ -141,6 +138,7 @@ tes.default <- function(x, vi, sei, subset,
    ### if a subset of studies is specified
 
    if (!is.null(subset)) {
+      subset <- .setnafalse(subset, k=length(yi))
       yi <- yi[subset]
       vi <- vi[subset]
       theta <- theta[subset]

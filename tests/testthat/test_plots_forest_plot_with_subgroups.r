@@ -27,7 +27,7 @@ test_that("plot can be drawn.", {
    forest(res, xlim=c(-16, 6), at=log(c(.05, .25, 1, 4)), atransf=exp,
           ilab=cbind(dat.bcg$tpos, dat.bcg$tneg, dat.bcg$cpos, dat.bcg$cneg),
           ilab.xpos=c(-9.5,-8,-6,-4.5), cex=.75, ylim=c(-1, 27),
-          order=order(dat.bcg$alloc), rows=c(3:4,9:15,20:23),
+          order=dat.bcg$alloc, rows=c(3:4,9:15,20:23),
           xlab="Risk Ratio", mlab="", psize=1, header="Author(s) and Year")
 
    ### add text with Q-value, dfs, p-value, and I^2 statistic

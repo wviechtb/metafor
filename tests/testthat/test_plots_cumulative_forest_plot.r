@@ -25,7 +25,7 @@ test_that("plot can be drawn for 'rma.uni' object.", {
    res <- rma(yi, vi, data=dat, slab=paste(author, year, sep=", "))
 
    ### cumulative meta-analysis (in the order of publication year)
-   tmp <- cumul(res, order=order(dat$year))
+   tmp <- cumul(res, order=dat$year)
 
    ### cumulative forest plot
    forest(tmp, xlim=c(-4,2), at=log(c(.125, .25, .5, 1, 2)),
@@ -53,7 +53,7 @@ test_that("plot can be drawn for 'rma.mh' object.", {
    res <- rma.mh(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, slab=paste(author, year, sep=", "))
 
    ### cumulative meta-analysis (in the order of publication year)
-   tmp <- cumul(res, order=order(dat.bcg$year))
+   tmp <- cumul(res, order=dat.bcg$year)
 
    ### cumulative forest plot
    forest(tmp, xlim=c(-4,2), at=log(c(.125, .25, .5, 1, 2)),
@@ -81,7 +81,7 @@ test_that("plot can be drawn for 'rma.peto' object.", {
    res <- rma.peto(ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, slab=paste(author, year, sep=", "))
 
    ### cumulative meta-analysis (in the order of publication year)
-   tmp <- cumul(res, order=order(dat.bcg$year))
+   tmp <- cumul(res, order=dat.bcg$year)
 
    ### cumulative forest plot
    forest(tmp, xlim=c(-4,2), at=log(c(.125, .25, .5, 1, 2)),

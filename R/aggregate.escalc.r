@@ -28,9 +28,6 @@ aggregate.escalc <- function(x, cluster, time, V, struct="CS", rho, phi, weighte
    time    <- eval(mf.time,    x, enclos=sys.frame(sys.parent())) # NULL if user does not specify this
    subset  <- eval(mf.subset,  x, enclos=sys.frame(sys.parent())) # NULL if user does not specify this
 
-   if (!is.null(subset))
-      subset <- .setnafalse(subset)
-
    #########################################################################
 
    ### checks on cluster variable
@@ -206,8 +203,7 @@ aggregate.escalc <- function(x, cluster, time, V, struct="CS", rho, phi, weighte
 
    if (!is.null(subset)) {
 
-      #if (length(subset) != k)
-      #   stop(mstyle$stop(paste0("Length of 'subset' (", length(subset), ") does not match length of data frame (", k, ").")))
+      subset <- .setnafalse(subset, k=k)
 
       x  <- x[subset,,drop=FALSE]
       yi <- yi[subset]

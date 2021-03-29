@@ -1,20 +1,46 @@
-# metafor 2.5-82 (2021-02-21)
+# metafor 2.5-83 (2021-03-29)
 
 - the `metafor` package now makes use of the `mathjaxr` package to nicely render equations shown in the HTML help pages
-
-- `anova.rma()` argument `L` renamed to `X` (the former still works, but is no longer documented)
-
-- `plot.cumul.rma()` argument `addgrid` rename to `grid` (the former still works, but is no longer documented)
 
 - added `selmodel()` for fitting a wide variety of selection models (and added the corresponding `plot.rma.uni.selmodel()` function for drawing the estimated selection function)
 
 - added `tes()` function for the test of excess significance
 
+- added `rcalc()` for calculating the variance-covariance matrix of correlation coefficients and `matreg()` for fitting regression models based on a correlation matrix
+
+- added convenience functions `dfround()` and `vec2mat()`
+
 - added `rcalc()`, `matreg()`, `dfround()`, and `vec2mat()` functions
 
 - added `aggregate.escalc()` function to aggregate multiple effect sizes or outcomes within studies/clusters
 
-- the various `cumul()` functions provide `I^2` and `H^2` also for fixed-effects models; accordingly, `plot.cumul.rma()` now also works with such models
+- `regtest()` now shows the 'limit estimate' of the (average) true effect when using `sei`, `vi`, `ninv`, or `sqrtninv` as predictors (and the model does not contain any other moderators)
+
+- `vif()` gains `btt` argument and can now also compute generalized variance inflation factors; a proper `print.vif.rma()` function was also added
+
+- `anova.rma()` argument `L` renamed to `X` (the former still works, but is no longer documented)
+
+- argument `order` in `cumul()` should now just be a variable, not the order of the variable, to be used for ordering the studies and must be of the same length as the original dataset that was used in the model fitting
+
+- similarly, vector arguments in various plotting functions such as `forest.rma()` must now be of the same length as the original dataset that was used in the model fitting (any subsetting and removal of `NA`s is automatically applied)
+
+- the various `leave1out()` and `cumul()` functions now provide `I^2` and `H^2` also for fixed-effects models; accordingly, `plot.cumul.rma()` now also works with such models
+
+- fixed `level` not getting passed down to the various `cumul()` functions
+
+- `plot.cumul.rma()` argument `addgrid` renamed to `grid` (the former still works, but is no longer documented)
+
+- `forest.default()`, `forest.rma()`, and `labbe()` gain `plim` argument and now provide more flexibility in terms of the scaling of the points
+
+- `forest.rma()` gains `colout` argument (to adjust the color of the observed effect sizes or outcomes)
+
+- in the various `forest()` functions, the right header is now suppressed when `annotate=FALSE` and `header=TRUE`
+
+- `funnel.default()` and `funnel.rma()` gain `label` and `offset` arguments
+
+- `funnel.default()` and `funnel.rma()` gain `lty` argument; the reference line is now drawn by default as a dotted line (like the line for the pseudo confidence region)
+
+- the `forest` and `funnel` arguments of `reporter.rma.uni()` can now also be logicals to suppress the drawing of these plots
 
 - `simulate.rma()` gains `yilim` argument
 
@@ -24,43 +50,25 @@
 
 - `bldiag()` now properly handles ?x0 or 0x? matrices
 
-- p-values are still given to 2 digits when `digits = 1`
+- p-values are still given to 2 digits even when `digits=1`
 
 - `summary.escalc()` also provides the p-values (of the Wald-type tests); but when using the `transf` argument, the sampling variances, standard errors, test statistics, and p-values are no longer shown
 
-- `rma.uni()` no longer constrains a fixed tau2 value to 0 when k=1
+- `rma.uni()` no longer constrains a fixed tau^2 value to 0 when k=1
+
+- slight speedup in functions that repeatedly fit `rma.uni()` models by skipping the computation of the pseudo R^2 statistic
 
 - started using the `pbapply` package for showing progress bars, also when using parallel processing
 
 - to avoid potential confusion, all references to 'credibility intervals' have been removed from the documentation; these intervals are now exclusively referred to as 'prediction intervals'; in the output, the bounds are therefore indicated now as `pi.lb` and `pi.ub` (instead of `cr.lb` and `cr.ub`); the corresponding argument names were changed in `addpoly.default()`; argument `addcred` was changed to `addpred` in `addpoly.rma()` and `forest.rma()`; however, code using the old arguments names should continue to work
 
-- `vif()` gains `btt` argument and can now also compute generalized variance inflation factors; a proper `print.vif.rma()` function was added
-
-- in the various `forest()` functions, the right header is now suppressed when `annotate=FALSE` and `header=TRUE`
-
-- the `forest` and `funnel` arguments of `reporter.rma.uni()` can now also be logicals to suppress the drawing of these plots
-
 - one can now use `weights(...,  type="rowsum")` for intercept-only `rma.mv` models (to obtain 'row-sum weights')
-
-- `forest.default()`, `forest.rma()`, and `labbe()` gain `plim` argument and now provide more flexibility in terms of the scaling of the points
-
-- `forest.rma()` gains `colout` argument (to adjust the color of the observed effect sizes or outcomes)
-
-- slight speedup in functions that repeatedly fit `rma.uni()` models by skipping the computation of the pseudo R^2 statistic
-
-- `funnel.default()` and `funnel.rma()` gain `label` and `offset` arguments
-
-- `funnel.default()` and `funnel.rma()` gain `lty` argument; the reference line is now drawn by default as a dotted line (like the line for the pseudo confidence region)
-
-- `regtest()` now shows the 'limit estimate' of the (average) true effect when using `sei`, `vi`, `ninv`, or `sqrtninv` as predictor (and the model does not contain any other moderators)
 
 - show nicer network graphs for `dat.hasselblad1998` and `dat.senn2013` in the help files
 
-- refactored various functions (for cleaner/simpler code)
-
 - added 14 new datasets (`dat.anand1999`, `dat.assink2016`, `dat.baskerville2012`, `dat.cannon2006`, `dat.cohen1981`, `dat.craft2003`, `dat.damico2009`, `dat.dorn2007`, `dat.hahn2001`, `dat.kalaian1996`, `dat.kearon1998`, `dat.lau1992`, `dat.vanhowe1999`, `dat.viechtbauer2021`)
 
-- fixed `level` not getting passed down to the various `cumul()` functions
+- refactored various functions (for cleaner/simpler code)
 
 - improved the documentation a bit
 

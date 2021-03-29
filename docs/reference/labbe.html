@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-82</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-83</span>
       </span>
     </div>
 
@@ -178,7 +178,7 @@
     </tr>
     <tr>
       <th>transf</th>
-      <td><p>optional argument to specify the name of a function that should be used to transform the outcomes (e.g., <code>transf=exp</code>; see also <a href='transf.html'>transf</a>). If unspecified, no transformation is used.</p></td>
+      <td><p>optional argument to specify a function that should be used to transform the outcomes (e.g., <code>transf=exp</code>; see also <a href='transf.html'>transf</a>). If unspecified, no transformation is used.</p></td>
     </tr>
     <tr>
       <th>targs</th>
@@ -210,7 +210,7 @@
     </tr>
     <tr>
       <th>lty</th>
-      <td><p>optional character vector to specify the line type for the diagonal reference line of no effect and the line that indicates the estimated effect based on the fitted model (if unspecified, the function sets this to <code><a href='https://rdrr.io/r/base/c.html'>c("solid", "dashed")</a></code> by default; use <code>"blank"</code> to suppress a line).</p></td>
+      <td><p>optional character vector to specify the line type for the diagonal reference line of no effect and the line that indicates the estimated effect based on the fitted model (if unspecified, the function sets this to <code><a href='https://rdrr.io/r/base/c.html'>c("solid","dashed")</a></code> by default; use <code>"blank"</code> to suppress a line).</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -220,8 +220,8 @@
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The model specified via <code>x</code> must be a model without moderators (i.e., either a fixed- or a random-effects model) fitted with either the <code><a href='rma.uni.html'>rma.uni</a></code>, <code><a href='rma.mh.html'>rma.mh</a></code>, <code><a href='rma.peto.html'>rma.peto</a></code>, or <code><a href='rma.glmm.html'>rma.glmm</a></code> functions. Moreover, the model must be fitted with <code>measure</code> set equal to <code>"RD"</code> (for risk differences), <code>"RR"</code> (for risk ratios), <code>"OR"</code> (for odds ratios), <code>"AS"</code> (for arcsine square root transformed risk differences), <code>"IRR"</code> (for incidence rate ratios), <code>"IRD"</code> (for incidence rate differences), or <code>"IRSD"</code> (for square root transformed incidence rate differences).</p>
-<p>The function calculates the arm-level outcomes for the two experimental groups (e.g., treatment and control groups) and plots them against each other. In particular, the function plots the raw proportions of the two groups against each other when analyzing risk differences, the log of the proportions when analyzing (log) risk ratios, the log odds when analyzing (log) odds ratios, the arcsine square root transformed proportions when analyzing arcsine square root transformed risk differences, the raw incidence rates when analyzing incidence rate differences, the log of the incidence rates when analyzing (log) incidence rate ratios, and the square root transformed incidence rates when analyzing square root transformed incidence rate differences. The <code>transf</code> argument can be used to transform these values (e.g., <code>transf=exp</code> to transform the log of the proportions back to raw proportions; see also <a href='transf.html'>transf</a>).</p>
+    <p>The model specified via <code>x</code> must be a model without moderators (i.e., either a fixed- or a random-effects model) fitted with either the <code><a href='rma.uni.html'>rma.uni</a></code>, <code><a href='rma.mh.html'>rma.mh</a></code>, <code><a href='rma.peto.html'>rma.peto</a></code>, or <code><a href='rma.glmm.html'>rma.glmm</a></code> functions. Moreover, the model must have been fitted with <code>measure</code> set equal to <code>"RD"</code> (for risk differences), <code>"RR"</code> (for risk ratios), <code>"OR"</code> (for odds ratios), <code>"AS"</code> (for arcsine square root transformed risk differences), <code>"IRR"</code> (for incidence rate ratios), <code>"IRD"</code> (for incidence rate differences), or <code>"IRSD"</code> (for square root transformed incidence rate differences).</p>
+<p>The function calculates the arm-level outcomes for the two groups (e.g., treatment and control) and plots them against each other. In particular, the function plots the raw proportions of the two groups against each other when analyzing risk differences, the log of the proportions when analyzing (log) risk ratios, the log odds when analyzing (log) odds ratios, the arcsine square root transformed proportions when analyzing arcsine square root transformed risk differences, the raw incidence rates when analyzing incidence rate differences, the log of the incidence rates when analyzing (log) incidence rate ratios, and the square root transformed incidence rates when analyzing square root transformed incidence rate differences. The <code>transf</code> argument can be used to transform these values (e.g., <code>transf=exp</code> to transform the log of the proportions back to raw proportions; see also <a href='transf.html'>transf</a>).</p>
 <p>As described under the documentation for the <code><a href='escalc.html'>escalc</a></code> function, zero cells can lead to problems when calculating particular outcomes. Adding a small constant to the cells of the \(2 \times 2\) tables is a common solution to this problem. By default, the functions adopts the same method for handling zero cells as was used when fitting the model.</p>
 <p>By default (i.e., when <code>psize</code> is not specified), the size of the points is a function of the precision (i.e., inverse standard error) of the outcomes. This way, more precise estimates are visually more prominent in the plot. By making the point sizes a function of the inverse standard error of the estimates, their area is proportional to the inverse sampling variances, which corresponds to the weights they would receive in a fixed-effects model. However, the point sizes are rescaled so that the smallest point size is <code>plim[1]</code> and the largest point size is <code>plim[2]</code>. As a result, their relative sizes (i.e., areas) no longer exactly correspond to their relative weights in such a model. If exactly relative point sizes are desired, one can set <code>plim[2]</code> to <code>NA</code>, in which case the points are rescaled so that the smallest point size corresponds to <code>plim[1]</code> and all other points are scaled accordingly. As a result, the largest point may be very large. Alternatively, one can set <code>plim[1]</code> to <code>NA</code>, in which case the points are rescaled so that the largest point size corresponds to <code>plim[2]</code> and all other points are scaled accordingly.</p>
 <p>The solid line corresponds to identical outcomes in the two groups (i.e., the absence of a difference between the two groups). The dashed line indicates the estimated effect based on the fitted model.</p>
@@ -256,8 +256,8 @@
 <span class='co'>### default plot</span>
 <span class='fu'>labbe</span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
 </div><div class='img'><img src='labbe-1.png' alt='' width='768' height='614' /></div><div class='input'>
-<span class='co'>### funnel plot with risk values on the x- and y-axis</span>
-<span class='fu'>labbe</span><span class='op'>(</span><span class='va'>res</span>, transf<span class='op'>=</span><span class='va'>exp</span><span class='op'>)</span>
+<span class='co'>### funnel plot with risk values on the x- and y-axis and add grid</span>
+<span class='fu'>labbe</span><span class='op'>(</span><span class='va'>res</span>, transf<span class='op'>=</span><span class='va'>exp</span>, grid<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='img'><img src='labbe-2.png' alt='' width='768' height='614' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

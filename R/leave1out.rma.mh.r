@@ -45,8 +45,8 @@ leave1out.rma.mh <- function(x, digits, transf, targs, progbar=FALSE, ...) {
    QE    <- rep(NA_real_, x$k.f)
    QEp   <- rep(NA_real_, x$k.f)
    #tau2 <- rep(NA_real_, x$k.f)
-   #I2   <- rep(NA_real_, x$k.f)
-   #H2   <- rep(NA_real_, x$k.f)
+   I2   <- rep(NA_real_, x$k.f)
+   H2   <- rep(NA_real_, x$k.f)
 
    ### note: skipping NA cases
 
@@ -79,8 +79,8 @@ leave1out.rma.mh <- function(x, digits, transf, targs, progbar=FALSE, ...) {
       QE[i]    <- res$QE
       QEp[i]   <- res$QEp
       #tau2[i] <- res$tau2
-      #I2[i]   <- res$I2
-      #H2[i]   <- res$H2
+      I2[i]   <- res$I2
+      H2[i]   <- res$H2
 
    }
 
@@ -118,12 +118,12 @@ leave1out.rma.mh <- function(x, digits, transf, targs, progbar=FALSE, ...) {
    #########################################################################
 
    if (na.act == "na.omit") {
-      out <- list(estimate=beta[x$not.na], se=se[x$not.na], zval=zval[x$not.na], pval=pval[x$not.na], ci.lb=ci.lb[x$not.na], ci.ub=ci.ub[x$not.na], Q=QE[x$not.na], Qp=QEp[x$not.na])
+      out <- list(estimate=beta[x$not.na], se=se[x$not.na], zval=zval[x$not.na], pval=pval[x$not.na], ci.lb=ci.lb[x$not.na], ci.ub=ci.ub[x$not.na], Q=QE[x$not.na], Qp=QEp[x$not.na], I2=I2[x$not.na], H2=H2[x$not.na])
       out$slab <- x$slab[x$not.na]
    }
 
    if (na.act == "na.exclude" || na.act == "na.pass") {
-      out <- list(estimate=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, Q=QE, Qp=QEp)
+      out <- list(estimate=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, Q=QE, Qp=QEp, I2=I2, H2=H2)
       out$slab <- x$slab
    }
 

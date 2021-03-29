@@ -12,9 +12,6 @@ regtest.default <- function(x, vi, sei, ni, subset, model="rma", predictor="sei"
    if (missing(subset))
       subset <- NULL
 
-   if (!is.null(subset))
-      subset <- .setnafalse(subset)
-
    ### set defaults for digits
 
    if (missing(digits)) {
@@ -81,6 +78,7 @@ regtest.default <- function(x, vi, sei, ni, subset, model="rma", predictor="sei"
    ### if a subset of studies is specified
 
    if (!is.null(subset)) {
+      subset <- .setnafalse(subset, k=length(yi))
       yi <- yi[subset]
       vi <- vi[subset]
       ni <- ni[subset]

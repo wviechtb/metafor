@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-82</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-83</span>
       </span>
     </div>
 
@@ -171,7 +171,7 @@
     </tr>
     <tr>
       <th>slab.style</th>
-      <td><p>integer to indicate the style of the x-axis labels: 1 = study number, 2 = study label, 3 = abbreviated study label. Note that study labels, even when abbreviated, may be too long to fit in the margin.)</p></td>
+      <td><p>integer to indicate the style of the x-axis labels: 1 = study number, 2 = study label, 3 = abbreviated study label. Note that study labels, even when abbreviated, may be too long to fit in the margins.)</p></td>
     </tr>
     <tr>
       <th>las</th>
@@ -202,14 +202,14 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>When <code>plotinf=TRUE</code>, the function plots the (1) externally standardized residuals, (2) DFFITS values, (3) Cook's distances, (4) covariance ratios, (5) leave-one-out \(\tau^2\) estimates, (6) leave-one-out (residual) heterogeneity test statistics, (7) hat values, and (8) weights. If <code>plotdfbs=TRUE</code>, the DFBETAS values are also plotted either after confirming the page change (if <code>dfbsnew=FALSE</code>) or on a separate device (if <code>dfbsnew=TRUE</code>).</p>
-<p>A study may be considered to be &#8216;influential&#8217; if at least one of the following is true:</p><ul>
-<li><p>The absolute DFFITS value is larger than \(3 \times \sqrt{p/(k-p)}\), where \(p\) is the number of model coefficients and \(k\) the number of studies.</p></li>
+<p>A case (which is typically synonymous with study) may be considered to be &#8216;influential&#8217; if at least one of the following is true:</p><ul>
+<li><p>The absolute DFFITS value is larger than \(3 \times \sqrt{p/(k-p)}\), where \(p\) is the number of model coefficients and \(k\) the number of cases.</p></li>
 <li><p>The lower tail area of a chi-square distribution with \(p\) degrees of freedom cut off by the Cook's distance is larger than 50%.</p></li>
 <li><p>The hat value is larger than \(3 \times (p/k)\).</p></li>
 <li><p>Any DFBETAS value is larger than \(1\).</p></li>
-</ul><p>Studies which are considered influential with respect to any of these measures are indicated by the color specified for the <code>bg.infl</code> argument (the default is <code>"red"</code>).</p>
-<p>The cut-offs described above are indicated in the plot with horizontal reference lines. In addition, on the plot of the externally standardized residuals, horizontal reference lines are drawn at -1.96, 0, and 1.96. On the plot of the hat values, a horizontal reference line is drawn at \(p/k\). Since the sum of the hat values is equal to \(p\), the value \(p/k\) indicates equal hat values for all \(k\) studies. Finally, on the plot of weights, a horizontal reference line is drawn at \(100/k\), corresponding to the value for equal weights (in %) for all \(k\) studies. Note that all weights will automatically be equal to each other when using unweighted model fitting. Also, the hat values will be equal to the weights values (except for their scaling) in models without moderators.</p>
-<p>The chosen cut-offs are (somewhat) arbitrary. Substantively informed judgment should always be used when examining the influence of each study on the results.</p>
+</ul><p>Cases which are considered influential with respect to any of these measures are indicated by the color specified for the <code>bg.infl</code> argument (the default is <code>"red"</code>).</p>
+<p>The cut-offs described above are indicated in the plot with horizontal reference lines. In addition, on the plot of the externally standardized residuals, horizontal reference lines are drawn at -1.96, 0, and 1.96. On the plot of the hat values, a horizontal reference line is drawn at \(p/k\). Since the sum of the hat values is equal to \(p\), the value \(p/k\) indicates equal hat values for all \(k\) cases. Finally, on the plot of weights, a horizontal reference line is drawn at \(100/k\), corresponding to the value for equal weights (in %) for all \(k\) cases. Note that all weights will automatically be equal to each other when using unweighted model fitting. Also, the hat values will be equal to the weights values (except for their scaling) in models without moderators.</p>
+<p>The chosen cut-offs are (somewhat) arbitrary. Substantively informed judgment should always be used when examining the influence of each case on the results.</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Wolfgang Viechtbauer <a href='mailto:wvb@metafor-project.org'>wvb@metafor-project.org</a> <a href='https://www.metafor-project.org'>https://www.metafor-project.org</a></p>
@@ -222,16 +222,24 @@
     <div class='dont-index'><p><code><a href='influence.rma.uni.html'>influence.rma.uni</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>### meta-analysis of the log risk ratios using a mixed-effects model</span>
-<span class='co'>### with two moderators (absolute latitude and publication year)</span>
-<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"RR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>,
-           mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>ablat</span> <span class='op'>+</span> <span class='va'>year</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='co'>### calculate log risk ratios and corresponding sampling variances</span>
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"RR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>)</span>
 
+<span class='co'>### fit mixed-effects model with absolute latitude and publication year as moderators</span>
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>ablat</span> <span class='op'>+</span> <span class='va'>year</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
+
+<span class='co'>### compute the diagnostics</span>
 <span class='va'>inf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='influence.rma.uni.html'>influence</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
+
+<span class='co'>### plot the values</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>inf</span><span class='op'>)</span>
-</div><div class='img'><img src='plot.infl.rma.uni-1.png' alt='' width='768' height='614' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>inf</span>, plotinf<span class='op'>=</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span>
+</div><div class='img'><img src='plot.infl.rma.uni-1.png' alt='' width='768' height='614' /></div><div class='input'>
+<span class='co'>### select which plots to show</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>inf</span>, plotinf<span class='op'>=</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span>
 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>inf</span>, plotinf<span class='op'>=</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>, layout<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>4</span>,<span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='img'><img src='plot.infl.rma.uni-2.png' alt='' width='768' height='614' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>inf</span>, plotinf<span class='op'>=</span><span class='cn'>FALSE</span>, plotdfbs<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='img'><img src='plot.infl.rma.uni-2.png' alt='' width='768' height='614' /></div><div class='input'>
+<span class='co'>### plot the DFBETAS values</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>inf</span>, plotinf<span class='op'>=</span><span class='cn'>FALSE</span>, plotdfbs<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='img'><img src='plot.infl.rma.uni-3.png' alt='' width='768' height='614' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

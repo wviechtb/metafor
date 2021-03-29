@@ -23,8 +23,8 @@
    \item{digits}{integer to specify the number of decimal places to which the annotations should be rounded (the default is 2).}
    \item{width}{optional integer to manually adjust the width of the columns for the annotations.}
    \item{mlab}{optional character vector with the same length as \code{x} giving labels for the polygons that are drawn.}
-   \item{transf}{optional argument to specify the name of a function that should be used to transform the \code{x} values and confidence interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
-   \item{atransf}{optional argument to specify the name of a function that should be used to transform the annotations (e.g., \code{atransf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
+   \item{transf}{optional argument to specify a function that should be used to transform the \code{x} values and confidence interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
+   \item{atransf}{optional argument to specify a function that should be used to transform the annotations (e.g., \code{atransf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified via \code{transf} or \code{atransf}.}
    \item{efac}{vertical expansion factor for the polygons. The default value of 1 should usually work okay.}
    \item{col}{optional character string to specify the name of a color to use for the polygons. If unspecified, the function sets a default color.}
@@ -50,24 +50,25 @@
    \code{\link{forest.rma}}, \code{\link{forest.default}}
 }
 \examples{
-### meta-analysis of the log risk ratios using a mixed-
-### effects model with absolute latitude as a moderator
-res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, mods = ~ ablat,
-           slab=paste(author, year, sep=", "), data=dat.bcg)
+### calculate log risk ratios and corresponding sampling variances
+dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
+
+### fit mixed-effects model with absolute latitude as a moderator
+res <- rma(yi, vi, mods = ~ ablat, slab=paste(author, year, sep=", "), data=dat)
 
 ### forest plot of the observed risk ratios
 forest(res, addfit=FALSE, atransf=exp, xlim=c(-8,5), ylim=c(-4.5,16), cex=.8,
-       order=order(dat.bcg$ablat), ilab=dat.bcg$ablat, ilab.xpos=-4,
+       order=dat$ablat, ilab=dat$ablat, ilab.xpos=-4,
        header="Author(s) and Year")
 
 ### predicted average log risk ratios for 10, 30, and 50 degrees absolute latitude
 x <- predict(res, newmods=c(10, 30, 50))
 
 ### add predicted average risk ratios to forest plot
-addpoly(x$pred, sei=x$se, atransf=exp, col="white", rows=-2,
+addpoly(x$pred, sei=x$se, atransf=exp, rows=-2,
         mlab=c("- at 10 Degrees", "- at 30 Degrees", "- at 50 Degrees"), cex=.8)
 abline(h=0)
-text(-8, -1, "Model-Based Estimates of RR:", pos=4, cex=.8)
+text(-8, -1, "Model-Based Estimates:", pos=4, cex=.8)
 text(-4, 15, "Latitude", cex=.8, font=2)
 }
 \keyword{aplot}
