@@ -114,7 +114,7 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
       efac <- rep(efac, 3)
 
    if (length(efac) == 2L)
-      efac <- c(efac, efac[2]) # if 2 values specified: 1st = CI end lines and arrows, 2nd = summary polygon or fitted polygons
+      efac <- c(efac[1], efac[1], efac[2]) # if 2 values specified: 1st = CI end lines and arrows, 2nd = summary polygon or fitted polygons
 
    ### annotation symbols vector
 
