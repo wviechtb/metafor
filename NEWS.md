@@ -1,4 +1,4 @@
-# metafor 2.5-83 (2021-03-29)
+# metafor 2.5-84 (2021-03-30)
 
 - the `metafor` package now makes use of the `mathjaxr` package to nicely render equations shown in the HTML help pages
 
@@ -66,7 +66,7 @@
 
 - show nicer network graphs for `dat.hasselblad1998` and `dat.senn2013` in the help files
 
-- added 14 new datasets (`dat.anand1999`, `dat.assink2016`, `dat.baskerville2012`, `dat.cannon2006`, `dat.cohen1981`, `dat.craft2003`, `dat.damico2009`, `dat.dorn2007`, `dat.hahn2001`, `dat.kalaian1996`, `dat.kearon1998`, `dat.lau1992`, `dat.vanhowe1999`, `dat.viechtbauer2021`)
+- added 15 datasets (`dat.anand1999`, `dat.assink2016`, `dat.baskerville2012`, `dat.cannon2006`, `dat.cohen1981`, `dat.craft2003`, `dat.crede2010`, `dat.damico2009`, `dat.dorn2007`, `dat.hahn2001`, `dat.kalaian1996`, `dat.kearon1998`, `dat.lau1992`, `dat.vanhowe1999`, `dat.viechtbauer2021`)
 
 - refactored various functions (for cleaner/simpler code)
 
