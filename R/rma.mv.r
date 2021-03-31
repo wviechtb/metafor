@@ -1929,7 +1929,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
 
       ### if at least one parameter needs to be estimated
 
-      if (any(is.na(c(sigma2, tau2, rho, gamma2, phi)))) {
+      if (anyNA(c(sigma2, tau2, rho, gamma2, phi))) {
 
          optcall <- paste(optimizer, "(", par.arg, "=c(con$sigma2.init, con$tau2.init, con$rho.init, con$gamma2.init, con$phi.init),
             .ll.rma.mv, reml=reml, ", ifelse(optimizer=="optim", "method=optmethod, ", ""), "Y=Y, M=V, A=NULL, X.fit=X, k=k, pX=p,

@@ -413,7 +413,7 @@ anova.rma <- function(object, object2, btt, X, att, Z, digits, ...) {
 
          btt <- charmatch(btt, colnames(m.f$X))
 
-         if (any(is.na(btt)))
+         if (anyNA(btt))
             stop(mstyle$stop("Cannot identify coefficients to test."))
 
          res <- anova(m.f, btt=btt)

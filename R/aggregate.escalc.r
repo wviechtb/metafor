@@ -252,7 +252,7 @@ aggregate.escalc <- function(x, cluster, time, V, struct="CS", rho, phi, weighte
 
       Vi <- V[cluster == ucluster[i], cluster == ucluster[i]]
 
-      if (!any(is.na(Vi)) && any(eigen(Vi, symmetric=TRUE, only.values=TRUE)$values <= .Machine$double.eps)) {
+      if (!anyNA(Vi) && any(eigen(Vi, symmetric=TRUE, only.values=TRUE)$values <= .Machine$double.eps)) {
          all.pd <- FALSE
          warning(mstyle$warning(paste0("'V' appears to be not positive definite in cluster ", ucluster[i], ".")), call.=FALSE)
       }

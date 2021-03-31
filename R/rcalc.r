@@ -69,7 +69,7 @@ rcalc <- function(x, ni, data, rtoz=FALSE, nfun="min", sparse=FALSE, ...) {
          stop(mstyle$stop("Formula should contain 4 variables, but contains ", ncol(dat), " variables."))
 
       ### check that there are no missings in the variable identifiers
-      if (any(is.na(c(dat[[2]],dat[[3]]))))
+      if (anyNA(c(dat[[2]],dat[[3]])))
          stop(mstyle$stop("No missing values allowed in variable identifiers."))
 
       id <- dat[[4]]
@@ -79,7 +79,7 @@ rcalc <- function(x, ni, data, rtoz=FALSE, nfun="min", sparse=FALSE, ...) {
          stop(mstyle$stop("Argument 'ni' must be of the same length as the data frame specified via 'data'."))
 
       ### check that there are ni missings in the study identifier
-      if (any(is.na(id)))
+      if (anyNA(id))
          stop(mstyle$stop("No missing values allowed in study identifier."))
 
       ### need these to correctly sort 'dat' and 'V' back into the original order at the end

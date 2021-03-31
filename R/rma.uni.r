@@ -1902,7 +1902,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
             H.hest <- H[hest, hest, drop=FALSE]
             iH.hest <- try(suppressWarnings(chol2inv(chol(H.hest))), silent=TRUE)
 
-            if (inherits(iH.hest, "try-error") || any(is.na(iH.hest)) || any(is.infinite(iH.hest))) {
+            if (inherits(iH.hest, "try-error") || anyNA(iH.hest) || any(is.infinite(iH.hest))) {
 
                warning(mstyle$warning("Error when trying to invert Hessian."), call.=FALSE)
 

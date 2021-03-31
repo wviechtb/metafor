@@ -154,7 +154,7 @@ addid=TRUE, addcomp=TRUE, adddesign=TRUE, minlen=2, var.names=c("id","comp","des
 
       grpvars.pos <- unique(charmatch(grpvars, varnames))
 
-      if (any(is.na(grpvars.pos)))
+      if (anyNA(grpvars.pos))
          stop(mstyle$stop("Argument 'grpvars' must be the names of variables in the data frame."))
 
       if (any(grpvars.pos == 0L))

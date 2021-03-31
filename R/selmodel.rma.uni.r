@@ -141,7 +141,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
       stepsspec <- TRUE
 
-      if (any(is.na(steps)))
+      if (anyNA(steps))
          stop(mstyle$stop("No missing values allowed in 'steps' argument."))
 
       if (any(steps < 0 | steps > 1))
@@ -540,7 +540,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
       delta.min <- rep(delta.min, deltas)
    if (length(delta.min) != deltas)
       stop(mstyle$stop(paste0("Argument 'delta.min' should be of length ", deltas, " for this type of selection model.")))
-   if (any(is.na(delta.min)))
+   if (anyNA(delta.min))
       stop(mstyle$stop("No missing values allowed in 'delta.min'."))
    for (j in seq_len(deltas)) {
       if (delta.lb.excl[j] && delta.min[j] <= delta.lb[j])
@@ -564,7 +564,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
       delta.max <- rep(delta.max, deltas)
    if (length(delta.max) != deltas)
       stop(mstyle$stop(paste0("Argument 'delta.max' should be of length ", deltas, " for this type of selection model.")))
-   if (any(is.na(delta.max)))
+   if (anyNA(delta.max))
       stop(mstyle$stop("No missing values allowed in 'delta.max'."))
    for (j in seq_len(deltas)) {
       if (delta.lb.excl[j] && delta.max[j] <= delta.lb[j])
@@ -591,7 +591,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
       delta.init <- rep(delta.init, deltas)
    if (length(delta.init) != deltas)
       stop(mstyle$stop(paste0("Argument 'delta.init' should be of length ", deltas, " for this type of selection model.")))
-   if (any(is.na(delta.init)))
+   if (anyNA(delta.init))
       stop(mstyle$stop("No missing values allowed in 'delta.init'."))
    for (j in seq_len(deltas)) {
       if (delta.lb.excl[j] && delta.init[j] <= delta.lb[j])
@@ -925,16 +925,16 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
          H.hest  <- H[hest, hest, drop=FALSE]
          iH.hest <- try(suppressWarnings(chol2inv(chol(H.hest))), silent=TRUE)
 
-         if (inherits(iH.hest, "try-error") || any(is.na(iH.hest)) || any(is.infinite(iH.hest))) {
+         if (inherits(iH.hest, "try-error") || anyNA(iH.hest) || any(is.infinite(iH.hest))) {
             warning(mstyle$warning("Error when trying to invert Hessian."), call.=FALSE)
          } else {
             iH <- matrix(0, nrow=length(hest), ncol=length(hest))
             iH[hest, hest] <- iH.hest
-            if (any(is.na(beta.hes)))
+            if (anyNA(beta.hes))
                vb[is.na(beta.hes), is.na(beta.hes)] <- iH[c(is.na(beta.hes),FALSE,rep(FALSE,deltas)), c(is.na(beta.hes),FALSE,rep(FALSE,deltas)), drop=FALSE]
             if (is.na(tau2.hes))
                se.tau2 <- sqrt(iH[c(rep(FALSE,p),TRUE,rep(FALSE,deltas)), c(rep(FALSE,p),TRUE,rep(FALSE,deltas))])
-            if (any(is.na(delta.hes)))
+            if (anyNA(delta.hes))
                vb.delta[is.na(delta.hes), is.na(delta.hes)] <- iH[c(rep(FALSE,p),FALSE,is.na(delta.hes)), c(rep(FALSE,p),FALSE,is.na(delta.hes)), drop=FALSE]
          }
 
