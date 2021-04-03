@@ -26,13 +26,13 @@
    \item{breaks}{optional argument passed on to \code{\link{hist}} for choosing the (number of) breakpoints of the histogram(s).}
    \item{adjust}{optional argument passed on to \code{\link{density}} for adjusting the bandwidth of the kernel density estimate(s) (values larger than 1 result in more smoothing).}
    \item{lwd}{optional numeric value to specify the line width of the estimated densities. Set to \code{0} to omit the line(s).}
-   \item{labels}{optional argument to specify the x-axis and y-axis labels (or passed on to \code{\link{pairs}} to specify the names of the variables in the scatterplot matrix).}
+   \item{labels}{optional argument to specify the x-axis and y-axis labels (or passed on to \code{\link{pairs}} to specify the names of the variables in the scatter plot matrix).}
    \item{\dots}{other arguments.}
 }
 \details{
-   For models without moderators, the function draws a scatterplot of the model estimates on the x-axis against the chosen measure of heterogeneity on the y-axis. Histograms of the respective distributions (with kernel density estimates superimposed) are shown in the margins (when \code{xhist=TRUE} and \code{yhist=TRUE}).
+   For models without moderators, the function draws a scatter plot of the model estimates on the x-axis against the chosen measure of heterogeneity on the y-axis. Histograms of the respective distributions (with kernel density estimates superimposed) are shown in the margins (when \code{xhist=TRUE} and \code{yhist=TRUE}).
 
-   For models with moderators, the function draws a scatterplot matrix (with the \code{\link{pairs}} function) of the chosen measure of heterogeneity and each of the model coefficients. Histograms of the variables plotted are shown along the diagonal, with kernel density estimates of the distributions superimposed. Arguments \code{xlim}, \code{ylim}, \code{xhist}, and \code{yhist} are then ignored (argument \code{hh} can then be used to compress/stretch the height of the distributions shown along the diagonal).
+   For models with moderators, the function draws a scatter plot matrix (with the \code{\link{pairs}} function) of the chosen measure of heterogeneity and each of the model coefficients. Histograms of the variables plotted are shown along the diagonal, with kernel density estimates of the distributions superimposed. Arguments \code{xlim}, \code{ylim}, \code{xhist}, and \code{yhist} are then ignored (argument \code{hh} can then be used to compress/stretch the height of the distributions shown along the diagonal).
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}

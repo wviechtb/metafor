@@ -1,6 +1,6 @@
 forest.cumul.rma <- function(x,
 annotate=TRUE, header=FALSE,
-xlim, alim, clim, ylim, top=3, at, steps=5, level=x$level, refline=0, digits=2L, width,
+xlim, alim, olim, ylim, top=3, at, steps=5, level=x$level, refline=0, digits=2L, width,
 xlab,             ilab, ilab.xpos, ilab.pos,
 transf, atransf, targs, rows,
 efac=1, pch=15, psize=1,                        col,
@@ -127,14 +127,17 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
 
    ddd <- list(...)
 
-   lplot     <- function(..., textpos) plot(...)
-   labline   <- function(..., textpos) abline(...)
-   lsegments <- function(..., textpos) segments(...)
-   laxis     <- function(..., textpos) axis(...)
-   lmtext    <- function(..., textpos) mtext(...)
-   lpolygon  <- function(..., textpos) polygon(...)
-   ltext     <- function(..., textpos) text(...)
-   lpoints   <- function(..., textpos) points(...)
+   if (!is.null(ddd$clim))
+      olim <- ddd$clim
+
+   lplot     <- function(..., textpos, clim) plot(...)
+   labline   <- function(..., textpos, clim) abline(...)
+   lsegments <- function(..., textpos, clim) segments(...)
+   laxis     <- function(..., textpos, clim) axis(...)
+   lmtext    <- function(..., textpos, clim) mtext(...)
+   lpolygon  <- function(..., textpos, clim) polygon(...)
+   ltext     <- function(..., textpos, clim) text(...)
+   lpoints   <- function(..., textpos, clim) points(...)
 
    #########################################################################
 
@@ -274,14 +277,16 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
    ci.lb <- tmp[,1]
    ci.ub <- tmp[,2]
 
-   ### apply ci limits if specified
+   ### apply observation/outcome limits if specified
 
-   if (!missing(clim)) {
-      clim <- sort(clim)
-      if (length(clim) != 2L)
-         stop(mstyle$stop("Argument 'clim' must be of length 2."))
-      ci.lb[ci.lb < clim[1]] <- clim[1]
-      ci.ub[ci.ub > clim[2]] <- clim[2]
+   if (!missing(olim)) {
+      if (length(olim) != 2L)
+         stop(mstyle$stop("Argument 'olim' must be of length 2."))
+      olim <- sort(olim)
+      yi[yi < olim[1]] <- olim[1]
+      yi[yi > olim[2]] <- olim[2]
+      ci.lb[ci.lb < olim[1]] <- olim[1]
+      ci.ub[ci.ub > olim[2]] <- olim[2]
    }
 
    #########################################################################

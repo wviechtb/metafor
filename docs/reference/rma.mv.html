@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-84</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-86</span>
       </span>
     </div>
 
@@ -199,7 +199,7 @@
     </tr>
     <tr>
       <th>digits</th>
-      <td><p>integer to specify the number of decimal places to which the printed results should be rounded (if unspecified, the default is 4).</p></td>
+      <td><p>integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4.</p></td>
     </tr>
     <tr>
       <th>btt</th>
@@ -337,7 +337,7 @@
 <p>Predicted/fitted values can be obtained with <code><a href='predict.rma.html'>predict.rma</a></code> and <code><a href='fitted.rma.html'>fitted.rma</a></code>. For best linear unbiased predictions, see <code><a href='ranef.html'>ranef.rma.mv</a></code>.</p>
 <p>The <code><a href='residuals.rma.html'>residuals.rma</a></code>, <code><a href='residuals.rma.html'>rstandard.rma.mv</a></code>, and <code><a href='residuals.rma.html'>rstudent.rma.mv</a></code> functions extract raw and standardized residuals. See <code><a href='influence.rma.mv.html'>influence.rma.mv</a></code> for additional case diagnostics (e.g., to determine influential studies). For models with moderators, variance inflation factors can be obtained with <code><a href='vif.html'>vif.rma</a></code>.</p>
 <p>Confidence intervals for any variance/correlation parameters in the model can be obtained with <code><a href='confint.rma.html'>confint.rma.mv</a></code>.</p>
-<p>For random/mixed-effects models, the <code><a href='profile.rma.html'>profile.rma.mv</a></code> function can be used to obtain a plot of the (restricted) log-likelihood as a function of a specific variance component or correlation parameter of the model.</p>
+<p>For random/mixed-effects models, the <code><a href='profile.rma.html'>profile.rma.mv</a></code> function can be used to obtain a plot of the (restricted) log-likelihood as a function of a specific variance component or correlation parameter of the model. For models with moderators, <code><a href='regplot.html'>regplot.rma</a></code> draws scatter plots / bubble plots, showing the (marginal) relationship between the observed outcomes and a selected moderator from the model.</p>
 <p>Other extractor functions include <code><a href='coef.rma.html'>coef.rma</a></code>, <code><a href='vcov.rma.html'>vcov.rma</a></code>, <code><a href='fitstats.html'>logLik.rma</a></code>, <code><a href='fitstats.html'>deviance.rma</a></code>, <code><a href='fitstats.html'>AIC.rma</a></code>, <code><a href='fitstats.html'>BIC.rma</a></code>, <code><a href='influence.rma.mv.html'>hatvalues.rma.mv</a></code>, and <code><a href='weights.rma.html'>weights.rma.mv</a></code>.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 

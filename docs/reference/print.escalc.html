@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-84</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-86</span>
       </span>
     </div>
 
@@ -142,7 +142,7 @@
 
 <span class='co'># S3 method for escalc</span>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>object</span>, out.names<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"sei"</span>,<span class='st'>"zi"</span>,<span class='st'>"pval"</span>,<span class='st'>"ci.lb"</span>,<span class='st'>"ci.ub"</span><span class='op'>)</span>, <span class='va'>var.names</span>,
-        H0<span class='op'>=</span><span class='fl'>0</span>, append<span class='op'>=</span><span class='cn'>TRUE</span>, replace<span class='op'>=</span><span class='cn'>TRUE</span>, level<span class='op'>=</span><span class='fl'>95</span>, <span class='va'>clim</span>, <span class='va'>digits</span>, <span class='va'>transf</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+        H0<span class='op'>=</span><span class='fl'>0</span>, append<span class='op'>=</span><span class='cn'>TRUE</span>, replace<span class='op'>=</span><span class='cn'>TRUE</span>, level<span class='op'>=</span><span class='fl'>95</span>, <span class='va'>olim</span>, <span class='va'>digits</span>, <span class='va'>transf</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -184,8 +184,8 @@
       <td><p>numeric value between 0 and 100 to specify the confidence interval level (the default is 95).</p></td>
     </tr>
     <tr>
-      <th>clim</th>
-      <td><p>limits for the confidence intervals. If unspecified, no limits are used.</p></td>
+      <th>olim</th>
+      <td><p>optional argument to specify observation/outcome limits. If unspecified, no limits are used.</p></td>
     </tr>
     <tr>
       <th>transf</th>
@@ -219,7 +219,7 @@
 
     <p>If some transformation function has been specified for the <code>transf</code> argument, then <code>yi</code>, <code>ci.lb</code>, and <code>ci.ub</code> will be transformed accordingly. However, <code>vi</code> and <code>sei</code> then still reflect the sampling variances and standard errors of the untransformed values.</p>
 <p>The <code>summary.escalc</code> function computes <code>level</code> % Wald-type confidence intervals, which may or may not be the most accurate method for computing confidence intervals for the chosen outcome or effect size measure.</p>
-<p>If the outcome measure used is bounded (e.g., correlations are bounded between -1 and +1, proportions are bounded between 0 and 1), one can use the <code>clim</code> argument to enforce those limits (confidence intervals cannot exceed those bounds then).</p>
+<p>If the outcome measure used is bounded (e.g., correlations are bounded between -1 and +1, proportions are bounded between 0 and 1), one can use the <code>olim</code> argument to enforce those observation/outcome limits (the observed outcomes and confidence intervals cannot exceed those bounds then).</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Wolfgang Viechtbauer <a href='mailto:wvb@metafor-project.org'>wvb@metafor-project.org</a> <a href='https://www.metafor-project.org'>https://www.metafor-project.org</a></p>

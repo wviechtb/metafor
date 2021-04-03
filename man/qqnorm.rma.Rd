@@ -31,7 +31,7 @@
    \item{label}{argument to control the labeling of the points (the default is \code{FALSE}). See \sQuote{Details}.}
    \item{offset}{argument to control the distance between the points and the corresponding labels.}
    \item{pos}{argument to control the position of the labels.}
-   \item{lty}{optional character string to specify the line type for the diagonal line and the pseudo confidence envelope (if unspecified, the function sets this to \code{c("solid", "dotted")} by default).}
+   \item{lty}{optional character string to specify the line type for the diagonal line and the pseudo confidence envelope. If unspecified, the function sets this to \code{c("solid", "dotted")} by default.}
    \item{\dots}{other arguments.}
 }
 \details{
@@ -41,12 +41,12 @@
 
    For objects of class \code{"rma.uni"}, it is also possible to add a pseudo confidence envelope to the plot. The envelope is created based on the quantiles of sets of pseudo residuals simulated from the given model (for details, see Cook & Weisberg, 1982). The number of sets simulated can be controlled with the \code{reps} argument. When \code{smooth=TRUE}, the simulated bounds are smoothed with Friedman's SuperSmoother (see \code{\link{supsmu}}). The \code{bass} argument can be set to a number between 0 and 10, with higher numbers indicating increasing smoothness. If \code{bonferroni=TRUE}, the envelope bounds are Bonferroni corrected, so that the envelope can be regarded as a confidence region for all \mjseqn{k} residuals simultaneously. The default however is \code{bonferroni=FALSE}, which makes the plot more sensitive to deviations from normality.
 
-   With the \code{label} argument, one can control whether points in the plot will be labeled (e.g., to identify outliers). If \code{label="all"} (or \code{label=TRUE}), all points in the plot will be labeled. If \code{label="out"}, points falling outside of the confidence envelope will be labeled (only available for objects of class \code{"rma.uni"}). Finally, one can also set this argument to a numeric value (between 1 and \mjseqn{k}), indicating how many of the most extreme points should be labeled (for example, with \code{label=1} only the most extreme point would be labeled, while with \code{label=3}, the most extreme, and the second and third most extreme points would be labeled). With the \code{offset} argument, the distance between the labels and the corresponding points can be controlled. The \code{pos} argument is the position specifier for the labels (\code{1}, \code{2}, \code{3}, and \code{4}, respectively indicate positions below, to the left of, above, and to the right of the points; \code{13} places the labels below the points for points that fall below the reference line and above otherwise; \code{24} places the labels to the left of the points for points that fall above the reference line and to the right otherwise).
+   With the \code{label} argument, one can control whether points in the plot will be labeled (e.g., to identify outliers). If \code{label="all"} (or \code{label=TRUE}), all points in the plot will be labeled. If \code{label="out"}, points falling outside of the confidence envelope will be labeled (only available for objects of class \code{"rma.uni"}). Finally, one can also set this argument to a numeric value (between 1 and \mjseqn{k}), indicating how many of the most extreme points should be labeled (for example, with \code{label=1} only the most extreme point would be labeled, while with \code{label=3}, the most extreme, and the second and third most extreme points would be labeled). With the \code{offset} argument, one can adjust the distance between the labels and the corresponding points. The \code{pos} argument is the position specifier for the labels (\code{1}, \code{2}, \code{3}, and \code{4}, respectively indicate positions below, to the left of, above, and to the right of the points; \code{13} places the labels below the points for points that fall below the reference line and above otherwise; \code{24} places the labels to the left of the points for points that fall above the reference line and to the right otherwise).
 }
 \value{
    A list with components:
-   \item{x}{the x coordinates of the points that were plotted.}
-   \item{y}{the y coordinates of the points that were plotted.}
+   \item{x}{the x-axis coordinates of the points that were plotted.}
+   \item{y}{the y-axis coordinates of the points that were plotted.}
    Note that the list is returned invisibly.
 }
 \author{

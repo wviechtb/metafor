@@ -65,6 +65,7 @@ reference:
       - funnel
       - starts_with("forest")
       - starts_with("addpoly")
+      - regplot
       - baujat
       - labbe
       - radial

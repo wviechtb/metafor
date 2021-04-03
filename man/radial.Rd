@@ -43,8 +43,8 @@ galbraith(x, \dots)
 }
 \value{
    A data frame with components:
-   \item{x}{the x coordinates of the points that were plotted.}
-   \item{y}{the y coordinates of the points that were plotted.}
+   \item{x}{the x-axis coordinates of the points that were plotted.}
+   \item{y}{the y-axis coordinates of the points that were plotted.}
    \item{ids}{the study id numbers.}
    \item{slab}{the study labels.}
    Note that the data frame is returned invisibly.

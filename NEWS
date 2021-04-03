@@ -1,4 +1,4 @@
-Changes in Version 2.5-85 (2021-03-31)
+Changes in Version 2.5-86 (2021-04-03)
 =====================================
 
    o the metafor package now makes use of the 'mathjaxr' package to nicely
@@ -9,6 +9,9 @@ Changes in Version 2.5-85 (2021-03-31)
      estimated selection function)
 
    o added tes() function for the test of excess significance
+
+   o added regplot() function for drawing scatter plots / bubble plots based
+     on meta-regression models
 
    o added rcalc() for calculating the variance-covariance matrix of
      correlation coefficients and matreg() for fitting regression models based
@@ -65,8 +68,6 @@ Changes in Version 2.5-85 (2021-03-31)
    o the 'forest' and 'funnel' arguments of reporter.rma.uni() can now also be
      logicals to suppress the drawing of these plots
 
-   o simulate.rma() gains 'yilim' argument
-
    o added 'weighted' argument to fsn() (for Orwin's method)
 
    o added some more transformation functions
@@ -98,6 +99,10 @@ Changes in Version 2.5-85 (2021-03-31)
 
    o one can now use weights(..., type="rowsum") for intercept-only 'rma.mv'
      models (to obtain 'row-sum weights')
+
+   o simulate.rma() gains 'olim' argument; renamed the 'clim' argument in
+     summary.escalc() and the various forest() functions to 'olim' for
+     consistency (the old 'clim' argument should continue to work)
 
    o show nicer network graphs for dat.hasselblad1998 and dat.senn2013 in the
      help files

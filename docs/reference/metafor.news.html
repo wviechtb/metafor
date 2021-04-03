@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-84</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-86</span>
       </span>
     </div>
 
@@ -153,7 +153,7 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \dontrun{</span>
 <span class='fu'>metafor.news</span><span class='op'>(</span><span class='op'>)</span><span class='co'># }</span>
-</div><div class='output co'>#&gt;                  Changes in version 2.5-84 (2021-03-30)                 
+</div><div class='output co'>#&gt;                  Changes in version 2.5-86 (2021-04-03)                 
 #&gt; 
 #&gt;   - the metafor package now makes use of the mathjaxr package to nicely
 #&gt;     render equations shown in the HTML help pages
@@ -163,6 +163,9 @@
 #&gt;     the estimated selection function)
 #&gt; 
 #&gt;   - added tes() function for the test of excess significance
+#&gt; 
+#&gt;   - added regplot() function for drawing scatter plots / bubble plots
+#&gt;     based on meta-regression models
 #&gt; 
 #&gt;   - added rcalc() for calculating the variance-covariance matrix of
 #&gt;     correlation coefficients and matreg() for fitting regression models
@@ -223,8 +226,6 @@
 #&gt;   - the forest and funnel arguments of reporter.rma.uni() can now also
 #&gt;     be logicals to suppress the drawing of these plots
 #&gt; 
-#&gt;   - simulate.rma() gains yilim argument
-#&gt; 
 #&gt;   - added weighted argument to fsn() (for Orwin's method)
 #&gt; 
 #&gt;   - added some more transformation functions
@@ -256,6 +257,10 @@
 #&gt; 
 #&gt;   - one can now use weights(..., type="rowsum") for intercept-only
 #&gt;     rma.mv models (to obtain 'row-sum weights')
+#&gt; 
+#&gt;   - simulate.rma() gains olim argument; renamed the clim argument in
+#&gt;     summary.escalc() and the various forest() functions to olim for
+#&gt;     consistency (the old clim argument should continue to work)
 #&gt; 
 #&gt;   - show nicer network graphs for dat.hasselblad1998 and dat.senn2013 in
 #&gt;     the help files

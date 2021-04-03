@@ -1056,7 +1056,7 @@ tidy.rma <- function (x, ...) {
 
 ############################################################################
 
-.setnafalse <- function(x, arg="subset", k) {
+.setnafalse <- function(x, arg="subset", k, stoponk0=TRUE) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -1078,7 +1078,7 @@ tidy.rma <- function (x, ...) {
          x <- !is.element(seq_len(k), abs(x))
    }
 
-   if (!any(x))
+   if (stoponk0 && !any(x))
       stop(mstyle$stop(paste0("Stopped because k = 0 after subsetting.")), call.=FALSE)
 
    #if (anyNA(x)) {

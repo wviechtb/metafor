@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-84</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-86</span>
       </span>
     </div>
 
@@ -140,7 +140,7 @@
     <pre class="usage"><span class='fu'>baujat</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for rma</span>
-<span class='fu'>baujat</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>xlim</span>, <span class='va'>ylim</span>, <span class='va'>xlab</span>, <span class='va'>ylab</span>, <span class='va'>cex</span>, <span class='va'>symbol</span>, grid<span class='op'>=</span><span class='cn'>TRUE</span>, progbar<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='fu'>baujat</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>xlim</span>, <span class='va'>ylim</span>, <span class='va'>xlab</span>, <span class='va'>ylab</span>, <span class='va'>cex</span>, symbol<span class='op'>=</span><span class='st'>"ids"</span>, grid<span class='op'>=</span><span class='cn'>TRUE</span>, progbar<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -171,7 +171,7 @@
     </tr>
     <tr>
       <th>symbol</th>
-      <td><p>either an integer to specify the <code>pch</code> value (i.e., plotting symbol), or <code>"slab"</code> to plot the study labels, or <code>"ids"</code> to plot the study id numbers (if unspecified, this is the default).</p></td>
+      <td><p>either an integer to specify the <code>pch</code> value (i.e., plotting symbol), or <code>"slab"</code> to plot the study labels, or <code>"ids"</code> (the default) to plot the study id numbers.</p></td>
     </tr>
     <tr>
       <th>grid</th>
@@ -196,8 +196,8 @@
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data frame with components:</p>
-<dt>x</dt><dd><p>the x coordinates of the points that were plotted.</p></dd>
-   <dt>y</dt><dd><p>the y coordinates of the points that were plotted.</p></dd>
+<dt>x</dt><dd><p>the x-axis coordinates of the points that were plotted.</p></dd>
+   <dt>y</dt><dd><p>the y-axis coordinates of the points that were plotted.</p></dd>
    <dt>ids</dt><dd><p>the study id numbers.</p></dd>
    <dt>slab</dt><dd><p>the study labels.</p></dd>
    Note that the data frame is returned invisibly.

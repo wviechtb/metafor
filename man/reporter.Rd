@@ -13,11 +13,11 @@ reporter(x, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma.uni"}.}
-   \item{dir}{optional character string to specify the directory for creating the report (if unspecified, \code{\link{tempdir}} will be used).}
-   \item{filename}{optional character string to specify the filename (without file extension) for the report (if unspecified, the function sets a filename automatically).}
+   \item{dir}{optional character string to specify the directory for creating the report. If unspecified, \code{\link{tempdir}} will be used.}
+   \item{filename}{optional character string to specify the filename (without file extension) for the report. If unspecified, the function sets a filename automatically.}
    \item{format}{output format for the report (either \code{html_document}, \code{pdf_document}, or \code{word_document}). Can be abbreviated. See \sQuote{Note}.}
    \item{open}{logical to specify whether the report should be opened after it has been generated (the default is \code{TRUE}). See \sQuote{Note}.}
-   \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded (if unspecified, the default is to take the value from the object).}
+   \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.}
    \item{forest}{either a logical which will suppress the drawing of the forest plot when set to \code{FALSE} or a character string with arguments to be added to the call to \code{\link{forest.rma}} for generating the forest plot.}
    \item{funnel}{either a logical which will suppress the drawing of the funnel plot when set to \code{FALSE} or a character string with arguments to be added to the call to \code{\link{funnel.rma}} for generating the funnel plot.}
    \item{footnotes}{logical to specify whether additional explanatory footnotes should be added to the report (the default is \code{FALSE}).}

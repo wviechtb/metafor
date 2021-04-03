@@ -1,5 +1,5 @@
 summary.escalc <- function(object, out.names=c("sei","zi","pval","ci.lb","ci.ub"), var.names,
-H0=0, append=TRUE, replace=TRUE, level=95, clim, digits, transf, ...) {
+H0=0, append=TRUE, replace=TRUE, level=95, olim, digits, transf, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -97,14 +97,16 @@ H0=0, append=TRUE, replace=TRUE, level=95, clim, digits, transf, ...) {
    ci.lb <- tmp[,1]
    ci.ub <- tmp[,2]
 
-   ### apply ci limits if specified
+   ### apply observation/outcome limits if specified
 
-   if (!missing(clim)) {
-      clim <- sort(clim)
-      if (length(clim) != 2L)
-         stop(mstyle$stop("Argument 'clim' must be of length 2."))
-      ci.lb[ci.lb < clim[1]] <- clim[1]
-      ci.ub[ci.ub > clim[2]] <- clim[2]
+   if (!missing(olim)) {
+      if (length(olim) != 2L)
+         stop(mstyle$stop("Argument 'olim' must be of length 2."))
+      olim <- sort(olim)
+      yi[yi < olim[1]] <- olim[1] # note: zi and pval are based on unconstrained yi
+      yi[yi > olim[2]] <- olim[2]
+      ci.lb[ci.lb < olim[1]] <- olim[1]
+      ci.ub[ci.ub > olim[2]] <- olim[2]
    }
 
    x[[yi.name]] <- yi

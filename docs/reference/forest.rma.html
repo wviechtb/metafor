@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-84</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-86</span>
       </span>
     </div>
 
@@ -140,7 +140,7 @@
     <pre class="usage"><span class='co'># S3 method for rma</span>
 <span class='fu'><a href='forest.html'>forest</a></span><span class='op'>(</span><span class='va'>x</span>, annotate<span class='op'>=</span><span class='cn'>TRUE</span>, addfit<span class='op'>=</span><span class='cn'>TRUE</span>, addpred<span class='op'>=</span><span class='cn'>FALSE</span>,
        showweights<span class='op'>=</span><span class='cn'>FALSE</span>, header<span class='op'>=</span><span class='cn'>FALSE</span>,
-       <span class='va'>xlim</span>, <span class='va'>alim</span>, <span class='va'>clim</span>, <span class='va'>ylim</span>, top<span class='op'>=</span><span class='fl'>3</span>, <span class='va'>at</span>, steps<span class='op'>=</span><span class='fl'>5</span>,
+       <span class='va'>xlim</span>, <span class='va'>alim</span>, <span class='va'>olim</span>, <span class='va'>ylim</span>, top<span class='op'>=</span><span class='fl'>3</span>, <span class='va'>at</span>, steps<span class='op'>=</span><span class='fl'>5</span>,
        level<span class='op'>=</span><span class='va'>x</span><span class='op'>$</span><span class='va'>level</span>, refline<span class='op'>=</span><span class='fl'>0</span>, digits<span class='op'>=</span><span class='fl'>2L</span>, <span class='va'>width</span>,
        <span class='va'>xlab</span>, <span class='va'>slab</span>, <span class='va'>mlab</span>, <span class='va'>ilab</span>, <span class='va'>ilab.xpos</span>, <span class='va'>ilab.pos</span>,
        <span class='va'>order</span>, <span class='va'>transf</span>, <span class='va'>atransf</span>, <span class='va'>targs</span>, <span class='va'>rows</span>,
@@ -183,8 +183,8 @@
       <td><p>the actual x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.</p></td>
     </tr>
     <tr>
-      <th>clim</th>
-      <td><p>limits for the confidence/prediction intervals. If unspecified, no limits are used.</p></td>
+      <th>olim</th>
+      <td><p>optional argument to specify observation/outcome limits. If unspecified, no limits are used.</p></td>
     </tr>
     <tr>
       <th>ylim</th>
@@ -248,7 +248,7 @@
     </tr>
     <tr>
       <th>transf</th>
-      <td><p>optional argument to specify a function that should be used to transform the observed effect sizes, summary estimates, fitted values, and confidence interval bounds (e.g., <code>transf=exp</code>; see also <a href='transf.html'>transf</a>). If unspecified, no transformation is used.</p></td>
+      <td><p>optional argument to specify a function that should be used to transform the observed effect sizes or outcomes, summary estimates, fitted values, and confidence interval bounds (e.g., <code>transf=exp</code>; see also <a href='transf.html'>transf</a>). If unspecified, no transformation is used.</p></td>
     </tr>
     <tr>
       <th>atransf</th>
@@ -292,7 +292,7 @@
     </tr>
     <tr>
       <th>lty</th>
-      <td><p>optional character string to specify the line type for the confidence intervals (if unspecified, the function sets this to <code>"solid"</code> by default).</p></td>
+      <td><p>optional character string to specify the line type for the confidence intervals. If unspecified, the function sets this to <code>"solid"</code> by default.</p></td>
     </tr>
     <tr>
       <th>fonts</th>
@@ -345,7 +345,7 @@
 <p>The function actually returns some information about the chosen defaults invisibly. Printing this information is useful as a starting point to make adjustments to the plot (see &#8216;Examples&#8217;).</p>
 <p>If the number of studies is quite large, the labels, annotations, and symbols may become quite small and impossible to read. Stretching the plot window vertically may then provide a more readable figure (one should call the function again after adjusting the window size, so that the label/symbol sizes can be properly adjusted). Also, the <code>cex</code>, <code>cex.lab</code>, and <code>cex.axis</code> arguments are then useful to adjust the symbol and text sizes.</p>
 <p>If the horizontal plot and/or x-axis limits are set manually, then the horizontal plot limits (<code>xlim</code>) must be at least as wide as the x-axis limits (<code>alim</code>). This restriction is enforced inside the function.</p>
-<p>If the outcome measure used for creating the plot is bounded (e.g., correlations are bounded between -1 and +1, proportions are bounded between 0 and 1), one can use the <code>clim</code> argument to enforce those limits (confidence/prediction intervals cannot exceed those bounds then).</p>
+<p>If the outcome measure used for creating the plot is bounded (e.g., correlations are bounded between -1 and +1, proportions are bounded between 0 and 1), one can use the <code>olim</code> argument to enforce those limits (the observed outcomes and confidence/prediction intervals cannot exceed those bounds then).</p>
 <p>The models without moderators, the <code>col</code> argument can also be a vector of two elements, the first for specifying the color of the summary polygon, the second for specifying the color of the line for the prediction interval.</p>
 <p>The <code>lty</code> argument can also be a vector of up to three elements, the first for specifying the line type of the individual CIs (<code>"solid"</code> by default), the second for the line type of the prediction interval (<code>"dotted"</code> by default), the third for the line type of the horizontal lines that are automatically added to the plot (<code>"solid"</code> by default; set to <code>"blank"</code> to remove them).</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
@@ -474,12 +474,12 @@
 <span class='co'>### see also the addpoly.rma function for an example where summaries</span>
 <span class='co'>### for the three subgroups are added to such a forest plot</span>
 
-<span class='co'>### illustrate use of clim argument with a meta-analysis of raw correlation</span>
-<span class='co'>### coefficients (data from Pritz, 1997); without clim=c(0,1), some of the</span>
+<span class='co'>### illustrate use of olim argument with a meta-analysis of raw correlation</span>
+<span class='co'>### coefficients (data from Pritz, 1997); without olim=c(0,1), some of the</span>
 <span class='co'>### CIs would have upper bounds larger than 1</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"PR"</span>, xi<span class='op'>=</span><span class='va'>xi</span>, ni<span class='op'>=</span><span class='va'>ni</span>, data<span class='op'>=</span><span class='va'>dat.pritz1997</span><span class='op'>)</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span>, slab<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='va'>study</span>, <span class='st'>") "</span>, <span class='va'>authors</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='forest.html'>forest</a></span><span class='op'>(</span><span class='va'>res</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span>, alim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>1</span><span class='op'>)</span>, psize<span class='op'>=</span><span class='fl'>1</span>, refline<span class='op'>=</span><span class='fu'><a href='coef.rma.html'>coef</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>, clim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>1</span><span class='op'>)</span>, header<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='fu'><a href='forest.html'>forest</a></span><span class='op'>(</span><span class='va'>res</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span>, alim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>1</span><span class='op'>)</span>, psize<span class='op'>=</span><span class='fl'>1</span>, refline<span class='op'>=</span><span class='fu'><a href='coef.rma.html'>coef</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>, olim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>1</span><span class='op'>)</span>, header<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='img'><img src='forest.rma-21.png' alt='' width='768' height='614' /></div><div class='input'>
 <span class='co'>### an example of a forest plot where the data have a multilevel structure and</span>
 <span class='co'>### we want to reflect this by grouping together estimates from the same cluster</span>

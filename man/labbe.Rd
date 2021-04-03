@@ -29,7 +29,7 @@ labbe(x, \dots)
    \item{col}{optional character string to specify the name of a color to use for the points (\code{"black"} is used by default if not specified). Can also be a vector of color names.}
    \item{bg}{optional character string to specify the name of a background color for open plot symbols (\code{"gray"} is used by default if not specified). Can also be a vector of color names. Set to \code{NA} to make the plotting symbols transparent.}
    \item{grid}{logical to specify whether a grid should be added to the plot (can also be a color name).}
-   \item{lty}{optional character vector to specify the line type for the diagonal reference line of no effect and the line that indicates the estimated effect based on the fitted model (if unspecified, the function sets this to \code{c("solid","dashed")} by default; use \code{"blank"} to suppress a line).}
+   \item{lty}{optional character vector to specify the line type for the diagonal reference line of no effect and the line that indicates the estimated effect based on the fitted model. If unspecified, the function sets this to \code{c("solid","dashed")} by default (use \code{"blank"} to suppress a line).}
    \item{\dots}{other arguments.}
 }
 \details{
@@ -45,8 +45,8 @@ labbe(x, \dots)
 }
 \value{
    A data frame with components:
-   \item{x}{the x coordinates of the points that were plotted.}
-   \item{y}{the y coordinates of the points that were plotted.}
+   \item{x}{the x-axis coordinates of the points that were plotted.}
+   \item{y}{the y-axis coordinates of the points that were plotted.}
    \item{cex}{the point sizes.}
    \item{pch}{the plotting symbols.}
    \item{col}{the point colors.}

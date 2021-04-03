@@ -1,6 +1,6 @@
 forest.default <- function(x, vi, sei, ci.lb, ci.ub,
 annotate=TRUE,                             showweights=FALSE, header=FALSE,
-xlim, alim, clim, ylim, top=3, at, steps=5, level=95,      refline=0, digits=2L, width,
+xlim, alim, olim, ylim, top=3, at, steps=5, level=95,      refline=0, digits=2L, width,
 xlab, slab,       ilab, ilab.xpos, ilab.pos, order, subset,
 transf, atransf, targs, rows,
 efac=1, pch=15, psize, plim=c(0.5,1.5),         col,
@@ -151,14 +151,17 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
       decreasing <- ddd$decreasing
    }
 
-   lplot     <- function(..., textpos, decreasing) plot(...)
-   labline   <- function(..., textpos, decreasing) abline(...)
-   lsegments <- function(..., textpos, decreasing) segments(...)
-   laxis     <- function(..., textpos, decreasing) axis(...)
-   lmtext    <- function(..., textpos, decreasing) mtext(...)
-   lpolygon  <- function(..., textpos, decreasing) polygon(...)
-   ltext     <- function(..., textpos, decreasing) text(...)
-   lpoints   <- function(..., textpos, decreasing) points(...)
+   if (!is.null(ddd$clim))
+      olim <- ddd$clim
+
+   lplot     <- function(..., textpos, decreasing, clim) plot(...)
+   labline   <- function(..., textpos, decreasing, clim) abline(...)
+   lsegments <- function(..., textpos, decreasing, clim) segments(...)
+   laxis     <- function(..., textpos, decreasing, clim) axis(...)
+   lmtext    <- function(..., textpos, decreasing, clim) mtext(...)
+   lpolygon  <- function(..., textpos, decreasing, clim) polygon(...)
+   ltext     <- function(..., textpos, decreasing, clim) text(...)
+   lpoints   <- function(..., textpos, decreasing, clim) points(...)
 
    #########################################################################
 
@@ -392,14 +395,16 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
    ci.lb <- tmp[,1]
    ci.ub <- tmp[,2]
 
-   ### apply ci limits if specified
+   ### apply observation/outcome limits if specified
 
-   if (!missing(clim)) {
-      clim <- sort(clim)
-      if (length(clim) != 2L)
-         stop(mstyle$stop("Argument 'clim' must be of length 2."))
-      ci.lb[ci.lb < clim[1]] <- clim[1]
-      ci.ub[ci.ub > clim[2]] <- clim[2]
+   if (!missing(olim)) {
+      if (length(olim) != 2L)
+         stop(mstyle$stop("Argument 'olim' must be of length 2."))
+      olim <- sort(olim)
+      yi[yi < olim[1]] <- olim[1]
+      yi[yi > olim[2]] <- olim[2]
+      ci.lb[ci.lb < olim[1]] <- olim[1]
+      ci.ub[ci.ub > olim[2]] <- olim[2]
    }
 
    if (showweights) {                           # inverse variance weights after ordering/subsetting and

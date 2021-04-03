@@ -1,10 +1,12 @@
-# metafor 2.5-85 (2021-03-31)
+# metafor 2.5-86 (2021-04-03)
 
 - the `metafor` package now makes use of the `mathjaxr` package to nicely render equations shown in the HTML help pages
 
 - added `selmodel()` for fitting a wide variety of selection models (and added the corresponding `plot.rma.uni.selmodel()` function for drawing the estimated selection function)
 
 - added `tes()` function for the test of excess significance
+
+- added `regplot()` function for drawing scatter plots / bubble plots based on meta-regression models
 
 - added `rcalc()` for calculating the variance-covariance matrix of correlation coefficients and `matreg()` for fitting regression models based on a correlation matrix
 
@@ -42,8 +44,6 @@
 
 - the `forest` and `funnel` arguments of `reporter.rma.uni()` can now also be logicals to suppress the drawing of these plots
 
-- `simulate.rma()` gains `yilim` argument
-
 - added `weighted` argument to `fsn()` (for Orwin's method)
 
 - added some more transformation functions
@@ -63,6 +63,8 @@
 - to avoid potential confusion, all references to 'credibility intervals' have been removed from the documentation; these intervals are now exclusively referred to as 'prediction intervals'; in the output, the bounds are therefore indicated now as `pi.lb` and `pi.ub` (instead of `cr.lb` and `cr.ub`); the corresponding argument names were changed in `addpoly.default()`; argument `addcred` was changed to `addpred` in `addpoly.rma()` and `forest.rma()`; however, code using the old arguments names should continue to work
 
 - one can now use `weights(...,  type="rowsum")` for intercept-only `rma.mv` models (to obtain 'row-sum weights')
+
+- `simulate.rma()` gains `olim` argument; renamed the `clim` argument in `summary.escalc()` and the various `forest()` functions to `olim` for consistency (the old `clim` argument should continue to work)
 
 - show nicer network graphs for `dat.hasselblad1998` and `dat.senn2013` in the help files
 

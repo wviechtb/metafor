@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-84</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-86</span>
       </span>
     </div>
 
@@ -139,7 +139,7 @@
 
     <pre class="usage"><span class='co'># S3 method for cumul.rma</span>
 <span class='fu'><a href='forest.html'>forest</a></span><span class='op'>(</span><span class='va'>x</span>, annotate<span class='op'>=</span><span class='cn'>TRUE</span>, header<span class='op'>=</span><span class='cn'>FALSE</span>,
-       <span class='va'>xlim</span>, <span class='va'>alim</span>, <span class='va'>clim</span>, <span class='va'>ylim</span>, top<span class='op'>=</span><span class='fl'>3</span>, <span class='va'>at</span>, steps<span class='op'>=</span><span class='fl'>5</span>,
+       <span class='va'>xlim</span>, <span class='va'>alim</span>, <span class='va'>olim</span>, <span class='va'>ylim</span>, top<span class='op'>=</span><span class='fl'>3</span>, <span class='va'>at</span>, steps<span class='op'>=</span><span class='fl'>5</span>,
        level<span class='op'>=</span><span class='va'>x</span><span class='op'>$</span><span class='va'>level</span>, refline<span class='op'>=</span><span class='fl'>0</span>, digits<span class='op'>=</span><span class='fl'>2L</span>, <span class='va'>width</span>,
        <span class='va'>xlab</span>, <span class='va'>ilab</span>, <span class='va'>ilab.xpos</span>, <span class='va'>ilab.pos</span>,
        <span class='va'>transf</span>, <span class='va'>atransf</span>, <span class='va'>targs</span>, <span class='va'>rows</span>,
@@ -170,8 +170,8 @@
       <td><p>the actual x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.</p></td>
     </tr>
     <tr>
-      <th>clim</th>
-      <td><p>limits for the confidence intervals. If unspecified, no limits are used.</p></td>
+      <th>olim</th>
+      <td><p>optional argument to specify observation/outcome limits. If unspecified, no limits are used.</p></td>
     </tr>
     <tr>
       <th>ylim</th>
@@ -255,7 +255,7 @@
     </tr>
     <tr>
       <th>lty</th>
-      <td><p>optional character string to specify the line type for the confidence intervals (if unspecified, the function sets this to <code>"solid"</code> by default).</p></td>
+      <td><p>optional character string to specify the line type for the confidence intervals. If unspecified, the function sets this to <code>"solid"</code> by default.</p></td>
     </tr>
     <tr>
       <th>fonts</th>
@@ -292,7 +292,7 @@
 <p>The function actually returns some information about the chosen defaults invisibly. Printing this information is useful as a starting point to make adjustments to the plot.</p>
 <p>If the number of studies is quite large, the labels, annotations, and symbols may become quite small and impossible to read. Stretching the plot window vertically may then provide a more readable figure (one should call the function again after adjusting the window size, so that the label/symbol sizes can be properly adjusted). Also, the <code>cex</code>, <code>cex.lab</code>, and <code>cex.axis</code> arguments are then useful to adjust the symbol and text sizes.</p>
 <p>If the horizontal plot and/or x-axis limits are set manually, then the horizontal plot limits (<code>xlim</code>) must be at least as wide as the x-axis limits (<code>alim</code>). This restriction is enforced inside the function.</p>
-<p>If the outcome measure used for creating the plot is bounded (e.g., correlations are bounded between -1 and +1, proportions are bounded between 0 and 1), one can use the <code>clim</code> argument to enforce those limits (confidence intervals cannot exceed those bounds then).</p>
+<p>If the outcome measure used for creating the plot is bounded (e.g., correlations are bounded between -1 and +1, proportions are bounded between 0 and 1), one can use the <code>olim</code> argument to enforce those limits (the observed outcomes and confidence intervals cannot exceed those bounds then).</p>
 <p>The <code>lty</code> argument can also be a vector of two elements, the first for specifying the line type of the individual CIs (<code>"solid"</code> by default), the second for the line type of the horizontal line that is automatically added to the plot (<code>"solid"</code> by default; set to <code>"blank"</code> to remove it).</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 

@@ -8,15 +8,15 @@
 
    slab.pos <- which(names(out) == "slab")
 
-   if (!missing(i)) ### for X element
-      out[seq_len(slab.pos-1)] <- lapply(out[seq_len(slab.pos-1)], function(r) if (class(r) == "matrix") r[i,] else r[i])
+   if (!missing(i)) ### for X and Z element
+      out[seq_len(slab.pos-1)] <- lapply(out[seq_len(slab.pos-1)], function(r) if (inherits(r, "matrix")) r[i,,drop=FALSE] else r[i])
 
    ### catch cases where user selects values outside 1:k
 
    if (length(out[[1]]) == 0L)
       return(NULL)
 
-   #out <- out[j] ### this causes all kinds of problems, so left out for now
+   #out <- out[j] ### this causes all kinds of problems, so left out for now (TODO: check if this is really a problem)
 
    out$slab <- x$slab[i]
 

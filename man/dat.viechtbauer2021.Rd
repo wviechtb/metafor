@@ -50,7 +50,7 @@ res.MR
 res.ME <- rma(yi, vi, mods = ~ dose, data=dat, method="DL")
 res.ME
 
-### forest and scatterplot
+### forest and bubble plot
 
 par(mar=c(5,4,1,2))
 
@@ -142,7 +142,7 @@ rma(yi, vi, mods = ~ dose + I(dose^2), data=dat, method="DL")
 resLOF <- rma(yi, vi, mods = ~ dose + factor(dose), data=dat, method="DL", btt=3:9)
 resLOF
 
-### scatterplot
+### scatter plot to illustrate the lack-of-fit model
 
 plot(NA, NA, xlim=c(0,250), ylim=c(-1.0,1.5),
      xlab="Dosage (mg per day)", ylab="Log Odds Ratio", bty="l", las=1)

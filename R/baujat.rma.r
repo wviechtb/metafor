@@ -1,4 +1,4 @@
-baujat.rma <- function(x, xlim, ylim, xlab, ylab, cex, symbol, grid=TRUE, progbar=FALSE, ...) {
+baujat.rma <- function(x, xlim, ylim, xlab, ylab, cex, symbol="ids", grid=TRUE, progbar=FALSE, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -124,11 +124,6 @@ baujat.rma <- function(x, xlim, ylim, xlab, ylab, cex, symbol, grid=TRUE, progba
       grid(col=gridcol)
       box(...)
    }
-
-   ### add points/symbols
-
-   if (missing(symbol))
-      symbol <- "ids"
 
    if (is.numeric(symbol)) {
 

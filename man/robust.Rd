@@ -16,7 +16,7 @@ robust(x, cluster, \dots)
    \item{x}{an object of class \code{"rma.uni"} or \code{"rma.mv"}.}
    \item{cluster}{a vector to specify a clustering variable to use for constructing the sandwich estimator of the variance-covariance matrix.}
    \item{adjust}{logical to specify whether a small-sample correction should be applied to the variance-covariance matrix.}
-   \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded (if unspecified, the default is to take the value from the object).}
+   \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.}
    \item{\dots}{other arguments.}
 }
 \details{

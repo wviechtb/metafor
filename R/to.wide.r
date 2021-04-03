@@ -72,7 +72,7 @@ addid=TRUE, addcomp=TRUE, adddesign=TRUE, minlen=2, var.names=c("id","comp","des
    if (length(grp) != 1L)
       stop(mstyle$stop("Argument 'grp' must of length 1."))
 
-   if (!(is.character(grp) | is.numeric(grp)))
+   if (!(is.character(grp) || is.numeric(grp)))
       stop(mstyle$stop("Argument 'grp' must either be a character string or a scalar."))
 
    if (is.character(grp)) {
@@ -147,7 +147,7 @@ addid=TRUE, addcomp=TRUE, adddesign=TRUE, minlen=2, var.names=c("id","comp","des
 
    ### checks on 'grpvars' argument
 
-   if (!(is.character(grpvars) | is.numeric(grpvars)))
+   if (!(is.character(grpvars) || is.numeric(grpvars)))
       stop(mstyle$stop("Argument 'grpvars' must either be a string or numeric vector."))
 
    if (is.character(grpvars)) {

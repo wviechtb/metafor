@@ -1,6 +1,6 @@
 forest.rma <- function(x,
 annotate=TRUE, addfit=TRUE, addpred=FALSE, showweights=FALSE, header=FALSE,
-xlim, alim, clim, ylim, top=3, at, steps=5, level=x$level, refline=0, digits=2L, width,
+xlim, alim, olim, ylim, top=3, at, steps=5, level=x$level, refline=0, digits=2L, width,
 xlab, slab, mlab, ilab, ilab.xpos, ilab.pos, order,
 transf, atransf, targs, rows,
 efac=1, pch=15, psize, plim=c(0.5,1.5), colout, col, border,
@@ -176,14 +176,17 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
       decreasing <- ddd$decreasing
    }
 
-   lplot     <- function(..., textpos, addcred, pi.type, decreasing) plot(...)
-   labline   <- function(..., textpos, addcred, pi.type, decreasing) abline(...)
-   lsegments <- function(..., textpos, addcred, pi.type, decreasing) segments(...)
-   laxis     <- function(..., textpos, addcred, pi.type, decreasing) axis(...)
-   lmtext    <- function(..., textpos, addcred, pi.type, decreasing) mtext(...)
-   lpolygon  <- function(..., textpos, addcred, pi.type, decreasing) polygon(...)
-   ltext     <- function(..., textpos, addcred, pi.type, decreasing) text(...)
-   lpoints   <- function(..., textpos, addcred, pi.type, decreasing) points(...)
+   if (!is.null(ddd$clim))
+      olim <- ddd$clim
+
+   lplot     <- function(..., textpos, addcred, pi.type, decreasing, clim) plot(...)
+   labline   <- function(..., textpos, addcred, pi.type, decreasing, clim) abline(...)
+   lsegments <- function(..., textpos, addcred, pi.type, decreasing, clim) segments(...)
+   laxis     <- function(..., textpos, addcred, pi.type, decreasing, clim) axis(...)
+   lmtext    <- function(..., textpos, addcred, pi.type, decreasing, clim) mtext(...)
+   lpolygon  <- function(..., textpos, addcred, pi.type, decreasing, clim) polygon(...)
+   ltext     <- function(..., textpos, addcred, pi.type, decreasing, clim) text(...)
+   lpoints   <- function(..., textpos, addcred, pi.type, decreasing, clim) points(...)
 
    ### TODO: remove this when there is a weights() function for 'rma.glmm' objects
    if (inherits(x, "rma.glmm") && showweights)
@@ -296,12 +299,10 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
          }
       }
 
-      if (inherits(x, "rma.glmm") || inherits(x, "rma.uni.selmodel")) { # TODO: change this when there is a weights() function for 'rma.glmm' and 'rma.uni.selmodel' objects
-         #weights <- NULL
+      weights <- try(weights(x), silent=TRUE) # does not work for rma.glmm and rma.uni.selmodel objects
+
+      if (inherits(weights, "try-error"))
          weights <- rep(1, k)
-      } else {
-         weights <- weights(x) # weights used for the model fitting
-      }
 
    ### sort the data if requested
 
@@ -463,16 +464,18 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
    pred.ci.lb <- tmp[,1]
    pred.ci.ub <- tmp[,2]
 
-   ### apply ci limits if specified
+   ### apply observation/outcome limits if specified
 
-   if (!missing(clim)) {
-      clim <- sort(clim)
-      if (length(clim) != 2L)
-         stop(mstyle$stop("Argument 'clim' must be of length 2."))
-      ci.lb[ci.lb < clim[1]] <- clim[1]
-      ci.ub[ci.ub > clim[2]] <- clim[2]
-      pred.ci.lb[pred.ci.lb < clim[1]] <- clim[1]
-      pred.ci.ub[pred.ci.ub > clim[2]] <- clim[2]
+   if (!missing(olim)) {
+      if (length(olim) != 2L)
+         stop(mstyle$stop("Argument 'olim' must be of length 2."))
+      olim <- sort(olim)
+      yi[yi < olim[1]] <- olim[1]
+      yi[yi > olim[2]] <- olim[2]
+      ci.lb[ci.lb < olim[1]] <- olim[1]
+      ci.ub[ci.ub > olim[2]] <- olim[2]
+      pred.ci.lb[pred.ci.lb < olim[1]] <- olim[1]
+      pred.ci.ub[pred.ci.ub > olim[2]] <- olim[2]
    }
 
    ### set default point sizes (if not specified by user)
@@ -766,13 +769,15 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
       beta.pi.lb <- tmp[,1]
       beta.pi.ub <- tmp[,2]
 
-      ### apply ci limits if specified
+      ### apply observation/outcome limits if specified
 
-      if (!missing(clim)) {
-         beta.ci.lb[beta.ci.lb < clim[1]] <- clim[1]
-         beta.ci.ub[beta.ci.ub > clim[2]] <- clim[2]
-         beta.pi.lb[beta.pi.lb < clim[1]] <- clim[1]
-         beta.pi.ub[beta.pi.ub > clim[2]] <- clim[2]
+      if (!missing(olim)) {
+         pred[pred < olim[1]] <- olim[1]
+         pred[pred > olim[2]] <- olim[2]
+         beta.ci.lb[beta.ci.lb < olim[1]] <- olim[1]
+         beta.ci.ub[beta.ci.ub > olim[2]] <- olim[2]
+         beta.pi.lb[beta.pi.lb < olim[1]] <- olim[1]
+         beta.pi.ub[beta.pi.ub > olim[2]] <- olim[2]
       }
 
       ### add prediction interval

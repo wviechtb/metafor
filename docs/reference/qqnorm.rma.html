@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-84</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-86</span>
       </span>
     </div>
 
@@ -203,7 +203,7 @@
     </tr>
     <tr>
       <th>lty</th>
-      <td><p>optional character string to specify the line type for the diagonal line and the pseudo confidence envelope (if unspecified, the function sets this to <code><a href='https://rdrr.io/r/base/c.html'>c("solid", "dotted")</a></code> by default).</p></td>
+      <td><p>optional character string to specify the line type for the diagonal line and the pseudo confidence envelope. If unspecified, the function sets this to <code><a href='https://rdrr.io/r/base/c.html'>c("solid", "dotted")</a></code> by default.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -216,12 +216,12 @@
     <p>The plot shows the theoretical quantiles of a normal distribution on the horizontal axis against the observed quantiles for either the standardized residuals (<code>type="rstandard"</code>, the default) or the externally standardized residuals (<code>type="rstudent"</code>) on the vertical axis (see <code><a href='residuals.rma.html'>residuals.rma</a></code> for details on the definition of these residual types).</p>
 <p>For reference, a line is added to the plot with slope of 1, going through the (0,0) point.</p>
 <p>For objects of class <code>"rma.uni"</code>, it is also possible to add a pseudo confidence envelope to the plot. The envelope is created based on the quantiles of sets of pseudo residuals simulated from the given model (for details, see Cook &amp; Weisberg, 1982). The number of sets simulated can be controlled with the <code>reps</code> argument. When <code>smooth=TRUE</code>, the simulated bounds are smoothed with Friedman's SuperSmoother (see <code><a href='https://rdrr.io/r/stats/supsmu.html'>supsmu</a></code>). The <code>bass</code> argument can be set to a number between 0 and 10, with higher numbers indicating increasing smoothness. If <code>bonferroni=TRUE</code>, the envelope bounds are Bonferroni corrected, so that the envelope can be regarded as a confidence region for all \(k\) residuals simultaneously. The default however is <code>bonferroni=FALSE</code>, which makes the plot more sensitive to deviations from normality.</p>
-<p>With the <code>label</code> argument, one can control whether points in the plot will be labeled (e.g., to identify outliers). If <code>label="all"</code> (or <code>label=TRUE</code>), all points in the plot will be labeled. If <code>label="out"</code>, points falling outside of the confidence envelope will be labeled (only available for objects of class <code>"rma.uni"</code>). Finally, one can also set this argument to a numeric value (between 1 and \(k\)), indicating how many of the most extreme points should be labeled (for example, with <code>label=1</code> only the most extreme point would be labeled, while with <code>label=3</code>, the most extreme, and the second and third most extreme points would be labeled). With the <code>offset</code> argument, the distance between the labels and the corresponding points can be controlled. The <code>pos</code> argument is the position specifier for the labels (<code>1</code>, <code>2</code>, <code>3</code>, and <code>4</code>, respectively indicate positions below, to the left of, above, and to the right of the points; <code>13</code> places the labels below the points for points that fall below the reference line and above otherwise; <code>24</code> places the labels to the left of the points for points that fall above the reference line and to the right otherwise).</p>
+<p>With the <code>label</code> argument, one can control whether points in the plot will be labeled (e.g., to identify outliers). If <code>label="all"</code> (or <code>label=TRUE</code>), all points in the plot will be labeled. If <code>label="out"</code>, points falling outside of the confidence envelope will be labeled (only available for objects of class <code>"rma.uni"</code>). Finally, one can also set this argument to a numeric value (between 1 and \(k\)), indicating how many of the most extreme points should be labeled (for example, with <code>label=1</code> only the most extreme point would be labeled, while with <code>label=3</code>, the most extreme, and the second and third most extreme points would be labeled). With the <code>offset</code> argument, one can adjust the distance between the labels and the corresponding points. The <code>pos</code> argument is the position specifier for the labels (<code>1</code>, <code>2</code>, <code>3</code>, and <code>4</code>, respectively indicate positions below, to the left of, above, and to the right of the points; <code>13</code> places the labels below the points for points that fall below the reference line and above otherwise; <code>24</code> places the labels to the left of the points for points that fall above the reference line and to the right otherwise).</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A list with components:</p>
-<dt>x</dt><dd><p>the x coordinates of the points that were plotted.</p></dd>
-   <dt>y</dt><dd><p>the y coordinates of the points that were plotted.</p></dd>
+<dt>x</dt><dd><p>the x-axis coordinates of the points that were plotted.</p></dd>
+   <dt>y</dt><dd><p>the y-axis coordinates of the points that were plotted.</p></dd>
    Note that the list is returned invisibly.
 
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>

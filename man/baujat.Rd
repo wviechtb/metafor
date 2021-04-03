@@ -8,7 +8,7 @@
 \usage{
 baujat(x, \dots)
 
-\method{baujat}{rma}(x, xlim, ylim, xlab, ylab, cex, symbol, grid=TRUE, progbar=FALSE, \dots)
+\method{baujat}{rma}(x, xlim, ylim, xlab, ylab, cex, symbol="ids", grid=TRUE, progbar=FALSE, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma"}.}
@@ -17,7 +17,7 @@ baujat(x, \dots)
    \item{xlab}{title for the x-axis. If unspecified, the function tries to set an appropriate axis title.}
    \item{ylab}{title for the y-axis. If unspecified, the function tries to set an appropriate axis title.}
    \item{cex}{optional character expansion factor. If unspecified, the function tries to set this to a sensible value.}
-   \item{symbol}{either an integer to specify the \code{pch} value (i.e., plotting symbol), or \code{"slab"} to plot the study labels, or \code{"ids"} to plot the study id numbers (if unspecified, this is the default).}
+   \item{symbol}{either an integer to specify the \code{pch} value (i.e., plotting symbol), or \code{"slab"} to plot the study labels, or \code{"ids"} (the default) to plot the study id numbers.}
    \item{grid}{logical to specify whether a grid should be added to the plot (can also be a color name).}
    \item{progbar}{logical to specify whether a progress bar should be shown (the default is \code{FALSE}).}
    \item{\dots}{other arguments.}
@@ -33,8 +33,8 @@ baujat(x, \dots)
 }
 \value{
    A data frame with components:
-   \item{x}{the x coordinates of the points that were plotted.}
-   \item{y}{the y coordinates of the points that were plotted.}
+   \item{x}{the x-axis coordinates of the points that were plotted.}
+   \item{y}{the y-axis coordinates of the points that were plotted.}
    \item{ids}{the study id numbers.}
    \item{slab}{the study labels.}
    Note that the data frame is returned invisibly.

@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-84</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-86</span>
       </span>
     </div>
 
@@ -138,7 +138,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for rma</span>
-<span class='fu'>simulate</span><span class='op'>(</span><span class='va'>object</span>, nsim <span class='op'>=</span> <span class='fl'>1</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>yilim</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='fu'>simulate</span><span class='op'>(</span><span class='va'>object</span>, nsim <span class='op'>=</span> <span class='fl'>1</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>olim</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -156,8 +156,8 @@
       <td><p>an object to specify if and how the random number generator should be initialized (&#8216;seeded&#8217;). Either <code>NULL</code> or an integer that will be used in a call to <code>set.seed</code> before simulating the response vectors. If set, the value is saved as the <code>"seed"</code> attribute of the returned value. The default, <code>NULL</code> will not change the random generator state, and return <code><a href='https://rdrr.io/r/base/Random.html'>.Random.seed</a></code> as the <code>"seed"</code> attribute; see &#8216;Value&#8217;.</p></td>
     </tr>
     <tr>
-      <th>yilim</th>
-      <td><p>limits for the simulated values. If unspecified, no limits are used.</p></td>
+      <th>olim</th>
+      <td><p>optional argument to specify observation/outcome limits for the simulated values. If unspecified, no limits are used.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -174,7 +174,7 @@
 <p>The data frame comes with an attribute <code>"seed"</code>. If argument <code>seed</code> is <code>NULL</code>, the attribute is the value of <code><a href='https://rdrr.io/r/base/Random.html'>.Random.seed</a></code> before the simulation was started; otherwise it is the value of the <code>seed</code> argument with a <code>"kind"</code> attribute with value <code><a href='https://rdrr.io/r/base/list.html'>as.list(RNGkind())</a></code>.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>If the outcome measure used for the analysis is bounded (e.g., correlations are bounded between -1 and +1, proportions are bounded between 0 and 1), one can use the <code>yilim</code> argument to enforce those limits when simulating values (simulated values cannot exceed those bounds then).</p>
+    <p>If the outcome measure used for the analysis is bounded (e.g., correlations are bounded between -1 and +1, proportions are bounded between 0 and 1), one can use the <code>olim</code> argument to enforce those observation/outcome limits when simulating values (simulated values cannot exceed those bounds then).</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Wolfgang Viechtbauer <a href='mailto:wvb@metafor-project.org'>wvb@metafor-project.org</a> <a href='https://www.metafor-project.org'>https://www.metafor-project.org</a></p>

@@ -19,7 +19,7 @@ selmodel(x, \dots)
    \item{delta}{optional numeric vector (of the same length as the number of selection model parameters) to fix the corresponding \mjseqn{\delta} value(s). A specific \mjseqn{\delta} value can be fixed by setting the corresponding element of this argument to the desired value. A specific \mjseqn{\delta} value will be estimated if the corresponding element is set equal to \code{NA}. See \sQuote{Details}.}
    \item{steps}{numeric vector of one or more values between 0 and 1 that can or must be specified for certain selection functions. See \sQuote{Details}.}
    \item{verbose}{logical to specify whether output should be generated on the progress of the model fitting (the default is \code{FALSE}). Can also be an integer. Values > 1 generate more verbose output. See \sQuote{Note}.}
-   \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded (if unspecified, the default is to take the value from the object).}
+   \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.}
    \item{control}{optional list of control values for the estimation algorithm. If unspecified, default values are defined inside the function. See \sQuote{Note}.}
    \item{\dots}{other arguments.}
 }

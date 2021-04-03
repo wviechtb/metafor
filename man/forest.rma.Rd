@@ -7,7 +7,7 @@
 \usage{
 \method{forest}{rma}(x, annotate=TRUE, addfit=TRUE, addpred=FALSE,
        showweights=FALSE, header=FALSE,
-       xlim, alim, clim, ylim, top=3, at, steps=5,
+       xlim, alim, olim, ylim, top=3, at, steps=5,
        level=x$level, refline=0, digits=2L, width,
        xlab, slab, mlab, ilab, ilab.xpos, ilab.pos,
        order, transf, atransf, targs, rows,
@@ -23,7 +23,7 @@
    \item{header}{logical to specify whether column headings should be added to the plot (the default is \code{FALSE}). Can also be a character vector to specify the left and right headings.}
    \item{xlim}{horizontal limits of the plot region. If unspecified, the function tries to set the horizontal plot limits to some sensible values.}
    \item{alim}{the actual x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.}
-   \item{clim}{limits for the confidence/prediction intervals. If unspecified, no limits are used.}
+   \item{olim}{optional argument to specify observation/outcome limits. If unspecified, no limits are used.}
    \item{ylim}{the y-axis limits of the plot. If unspecified, the function tries to set the y-axis limits to some sensible values.}
    \item{top}{the amount of space to leave empty at the top of the plot (e.g., for adding headers) (the default is 3 rows).}
    \item{at}{position of the x-axis tick marks and corresponding labels. If unspecified, the function tries to set the tick mark positions/labels to some sensible values.}
@@ -39,7 +39,7 @@
    \item{ilab.xpos}{numeric vector to specify the x-axis position(s) of the variable(s) given via \code{ilab} (must be specified if \code{ilab} is specified).}
    \item{ilab.pos}{integer(s) (either 1, 2, 3, or 4) to specify the alignment of the vector(s) given via \code{ilab} (2 means right, 4 mean left aligned). If unspecified, the default is to center the labels.}
    \item{order}{optional character string to specify how the studies should be ordered. Can also be a variable based on which the studies will be ordered. See \sQuote{Details}.}
-   \item{transf}{optional argument to specify a function that should be used to transform the observed effect sizes, summary estimates, fitted values, and confidence interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
+   \item{transf}{optional argument to specify a function that should be used to transform the observed effect sizes or outcomes, summary estimates, fitted values, and confidence interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{atransf}{optional argument to specify a function that should be used to transform the x-axis labels and annotations (e.g., \code{atransf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified via \code{transf} or \code{atransf}.}
    \item{rows}{optional vector to specify the rows (or more generally, the horizontal positions) for plotting the outcomes. Can also be a single value to specify the row (horizontal position) of the first outcome (the remaining outcomes are then plotted below this starting row). If unspecified, the function sets this value automatically.}
@@ -50,7 +50,7 @@
    \item{colout}{optional character string to specify the name of a color to use for plotting the observed effect sizes or outcomes (\code{"black"} is used by default if not specified). Can also be a vector of color names.}
    \item{col}{optional character string to specify the name of a color to use for the summary polygon or fitted values. If unspecified, the function sets a default color.}
    \item{border}{optional character string to specify the name of a color to use for the border of the summary polygon or fitted values. If unspecified, the function sets a default color.}
-   \item{lty}{optional character string to specify the line type for the confidence intervals (if unspecified, the function sets this to \code{"solid"} by default).}
+   \item{lty}{optional character string to specify the line type for the confidence intervals. If unspecified, the function sets this to \code{"solid"} by default.}
    \item{fonts}{optional character string to specify the font to use for the study labels, annotations, and the extra information (if specified via \code{ilab}). If unspecified, the default font is used.}
    \item{cex}{optional character and symbol expansion factor. If unspecified, the function tries to set this to a sensible value.}
    \item{cex.lab}{optional expansion factor for the x-axis title. If unspecified, the function tries to set this to a sensible value.}
@@ -95,7 +95,7 @@
 
    If the horizontal plot and/or x-axis limits are set manually, then the horizontal plot limits (\code{xlim}) must be at least as wide as the x-axis limits (\code{alim}). This restriction is enforced inside the function.
 
-   If the outcome measure used for creating the plot is bounded (e.g., correlations are bounded between -1 and +1, proportions are bounded between 0 and 1), one can use the \code{clim} argument to enforce those limits (confidence/prediction intervals cannot exceed those bounds then).
+   If the outcome measure used for creating the plot is bounded (e.g., correlations are bounded between -1 and +1, proportions are bounded between 0 and 1), one can use the \code{olim} argument to enforce those limits (the observed outcomes and confidence/prediction intervals cannot exceed those bounds then).
 
    The models without moderators, the \code{col} argument can also be a vector of two elements, the first for specifying the color of the summary polygon, the second for specifying the color of the line for the prediction interval.
 
@@ -205,12 +205,12 @@ par(op)
 ### see also the addpoly.rma function for an example where summaries
 ### for the three subgroups are added to such a forest plot
 
-### illustrate use of clim argument with a meta-analysis of raw correlation
-### coefficients (data from Pritz, 1997); without clim=c(0,1), some of the
+### illustrate use of olim argument with a meta-analysis of raw correlation
+### coefficients (data from Pritz, 1997); without olim=c(0,1), some of the
 ### CIs would have upper bounds larger than 1
 dat <- escalc(measure="PR", xi=xi, ni=ni, data=dat.pritz1997)
 res <- rma(yi, vi, data=dat, slab=paste0(study, ") ", authors))
-forest(res, xlim=c(-1,2), alim=c(0,1), psize=1, refline=coef(res), clim=c(0,1), header=TRUE)
+forest(res, xlim=c(-1,2), alim=c(0,1), psize=1, refline=coef(res), olim=c(0,1), header=TRUE)
 
 ### an example of a forest plot where the data have a multilevel structure and
 ### we want to reflect this by grouping together estimates from the same cluster

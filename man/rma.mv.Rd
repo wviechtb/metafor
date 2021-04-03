@@ -24,7 +24,7 @@ rma.mv(yi, V, W, mods, random, struct="CS", intercept=TRUE,
    \item{method}{character string to specify whether the model should be fitted via maximum-likelihood (\code{"ML"}) or via restricted maximum-likelihood (\code{"REML"}) estimation. Default is \code{"REML"}.}
    \item{test}{character string to specify how test statistics and confidence intervals for the fixed effects should be computed. By default (\code{test="z"}), Wald-type tests and CIs are obtained, which are based on a standard normal distribution. When \code{test="t"}, a t-distribution is used instead. See \sQuote{Details}.}
    \item{level}{numeric value between 0 and 100 to specify the confidence interval level (the default is 95).}
-   \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded (if unspecified, the default is 4).}
+   \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4.}
    \item{btt}{optional vector of indices to specify which coefficients to include in the omnibus test of moderators. Can also be a string to grep for. See \sQuote{Details}.}
    \item{R}{an optional named list of known correlation matrices corresponding to (some of) the components specified via the \code{random} argument. See \sQuote{Details}.}
    \item{Rscale}{character string, integer, or logical to specify how matrices specified via the \code{R} argument should be scaled. See \sQuote{Details}.}
@@ -165,7 +165,7 @@ rma.mv(yi, V, W, mods, random, struct="CS", intercept=TRUE,
 
    Confidence intervals for any variance/correlation parameters in the model can be obtained with \code{\link{confint.rma.mv}}.
 
-   For random/mixed-effects models, the \code{\link{profile.rma.mv}} function can be used to obtain a plot of the (restricted) log-likelihood as a function of a specific variance component or correlation parameter of the model.
+   For random/mixed-effects models, the \code{\link{profile.rma.mv}} function can be used to obtain a plot of the (restricted) log-likelihood as a function of a specific variance component or correlation parameter of the model. For models with moderators, \code{\link{regplot.rma}} draws scatter plots / bubble plots, showing the (marginal) relationship between the observed outcomes and a selected moderator from the model.
 
    Other extractor functions include \code{\link{coef.rma}}, \code{\link{vcov.rma}}, \code{\link{logLik.rma}}, \code{\link{deviance.rma}}, \code{\link{AIC.rma}}, \code{\link{BIC.rma}}, \code{\link{hatvalues.rma.mv}}, and \code{\link{weights.rma.mv}}.
 }

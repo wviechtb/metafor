@@ -46,7 +46,7 @@ tes(x, \dots)
 
    \emph{Miscellaneous arguments:}
 
-   \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded (if unspecified, the default is 4).}
+   \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4.}
    \item{\dots}{other arguments.}
 }
 \details{
