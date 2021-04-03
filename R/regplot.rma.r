@@ -3,14 +3,7 @@ xlim, ylim, predlim, olim, xlab, ylab, at, digits=2L,
 transf, atransf, targs, level=x$level,
 pch=21, psize, plim=c(0.5,3), col="black", bg="darkgray",
 grid=FALSE, refline, label=FALSE, offset=c(1,1), labsize=1,
-lcol, lwd, lty, xvals, ...) {
-
-# what about an added variable plot version? i.e., for yi ~ x1 + x2 + x3, say we want a plot for x3;
-# then refit model with yi ~ x1 + x2, get residuals, fit x3 ~ x1 + x2, get residuals, and then plot
-# the residuals against each other (note: fix var-cov structure for all models to the one from the
-# full model!)
-
-# allow adding a legend?
+lcol, lwd, lty, legend=FALSE, xvals, ...) {
 
    #########################################################################
 
@@ -638,6 +631,124 @@ lcol, lwd, lty, xvals, ...) {
    } else {
 
       label <- rep(FALSE, k)
+
+   }
+
+   ### add legend (if requested)
+
+   if (is.logical(legend) && isTRUE(legend))
+      lpos <- "topright"
+
+   if (is.character(legend)) {
+      lpos <- legend
+      legend <- TRUE
+   }
+
+   if (legend) {
+
+      pch.l  <- NULL
+      col.l  <- NULL
+      bg.l   <- NULL
+      lty.l  <- NULL
+      lwd.l  <- NULL
+      tcol.l <- NULL
+      ltxt   <- NULL
+
+      if (length(unique(pch)) == 1L && length(unique(col)) == 1L && length(unique(bg)) == 1L) {
+         pch.l  <- NA
+         col.l  <- NA
+         bg.l   <- NA
+         lty.l  <- "blank"
+         lwd.l  <- NA
+         tcol.l <- "white"
+         ltxt   <- "Studies"
+      }
+
+      if (addpred) {
+         pch.l  <- c(pch.l, NA)
+         col.l  <- c(col.l, NA)
+         bg.l   <- c(bg.l,  NA)
+         lty.l  <- c(lty.l, NA)
+         lwd.l  <- c(lwd.l, NA)
+         tcol.l <- c(tcol.l, "white")
+         ltxt   <- c(ltxt, "Regression Line")
+      }
+
+      if (ci) {
+         pch.l  <- c(pch.l, 22)
+         col.l  <- c(col.l, lcol[2])
+         bg.l   <- c(bg.l,  shadecol[1])
+         lty.l  <- c(lty.l, NA)
+         lwd.l  <- c(lwd.l, 1)
+         tcol.l <- c(tcol.l, "white")
+         ltxt   <- c(ltxt, paste0(round(100*(1-level), digits[[1]]), "% Confidence Interval"))
+      }
+
+      if (pi) {
+         pch.l  <- c(pch.l, 22)
+         col.l  <- c(col.l, lcol[3])
+         bg.l   <- c(bg.l,  shadecol[2])
+         lty.l  <- c(lty.l, NA)
+         lwd.l  <- c(lwd.l, 1)
+         tcol.l <- c(tcol.l, "white")
+         ltxt   <- c(ltxt, paste0(round(100*(1-level), digits[[1]]), "% Prediction Interval"))
+      }
+
+      if (length(ltxt) >= 1L)
+         legend(lpos, inset=.01, bg="white", pch=pch.l, col=col.l, pt.bg=bg.l, lty=lty.l, lwd=lwd.l, text.col=tcol.l, pt.cex=1.5, seg.len=3, legend=ltxt)
+
+      pch.l  <- NULL
+      col.l  <- NULL
+      bg.l   <- NULL
+      lty.l  <- NULL
+      lwd.l  <- NULL
+      tcol.l <- NULL
+      ltxt   <- NULL
+
+      if (length(unique(pch)) == 1L && length(unique(col)) == 1L && length(unique(bg)) == 1L) {
+         pch.l  <- pch[1]
+         col.l  <- col[1]
+         bg.l   <- bg[1]
+         lty.l  <- "blank"
+         lwd.l  <- 1
+         tcol.l <- "black"
+         ltxt   <- "Studies"
+      }
+
+      if (addpred) {
+         pch.l  <- c(pch.l, NA)
+         col.l  <- c(col.l, lcol[1])
+         bg.l   <- c(bg.l,  NA)
+         lty.l  <- c(lty.l, lty[1])
+         lwd.l  <- c(lwd.l, lwd[1])
+         tcol.l <- c(tcol.l, "black")
+         ltxt   <- c(ltxt, "Regression Line")
+      }
+
+      if (ci) {
+         pch.l  <- c(pch.l, NA)
+         col.l  <- c(col.l, lcol[2])
+         bg.l   <- c(bg.l,  NA)
+         lty.l  <- c(lty.l, lty[2])
+         lwd.l  <- c(lwd.l, lwd[2])
+         tcol.l <- c(tcol.l, "black")
+         ltxt   <- c(ltxt, paste0(round(100*(1-level), digits[[1]]), "% Confidence Interval"))
+      }
+
+      if (pi) {
+         pch.l  <- c(pch.l, NA)
+         col.l  <- c(col.l, lcol[3])
+         bg.l   <- c(bg.l,  NA)
+         lty.l  <- c(lty.l, lty[3])
+         lwd.l  <- c(lwd.l, lwd[3])
+         tcol.l <- c(tcol.l, "black")
+         ltxt   <- c(ltxt, paste0(round(100*(1-level), digits[[1]]), "% Prediction Interval"))
+      }
+
+      if (length(ltxt) >= 1L)
+         legend(lpos, inset=.01, bg=NA, pch=pch.l, col=col.l, pt.bg=bg.l, lty=lty.l, lwd=lwd.l, text.col=tcol.l, pt.cex=1.5, seg.len=3, legend=ltxt)
+
+      ### set lcol, lty, and lwd (1 = reg line, 2 = ci bounds, 3 = pi bounds, 4 = refline)
 
    }
 

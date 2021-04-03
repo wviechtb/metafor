@@ -13,7 +13,7 @@ regplot(x, \dots)
         transf, atransf, targs, level=x$level,
         pch=21, psize, plim=c(0.5,3), col="black", bg="darkgray",
         grid=FALSE, refline, label=FALSE, offset=c(1,1), labsize=1,
-        lcol, lwd, lty, xvals, \dots)
+        lcol, lwd, lty, legend=FALSE, xvals, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma.uni"}, \code{"rma.mv"}, or \code{"rma.glmm"} including one or multiple moderators.}
@@ -47,6 +47,7 @@ regplot(x, \dots)
    \item{lcol}{optional vector of (up to) four elements to specify the color of the regression line, of the confidence interval bounds, of the prediction interval bounds, and of the horizontal reference line.}
    \item{lty}{optional vector of (up to) four elements to specify the line type of the regression line, of the confidence interval bounds, of the prediction interval bounds, and of the horizontal reference line.}
    \item{lwd}{optional vector of (up to) four elements to specify the line width of the regression line, of the confidence interval bounds, of the prediction interval bounds, and of the horizontal reference line.}
+   \item{legend}{logical to indicate whether a legend should be added to the plot (the default is \code{FALSE}). Can also be a keyword to indicate the position of the legend (see \code{\link{legend}}).}
    \item{xvals}{optional numeric vector to specify the values of the moderator for which predicted values should be computed. Needs to be specified when passing an object from \code{\link{predict.rma}} to the \code{pred} argument. See \sQuote{Details}.}
    \item{\dots}{other arguments.}
 }
@@ -114,14 +115,14 @@ regplot(res, mod="ablat", xlab="Absolute Latitude", xlim=c(0,60), transf=exp)
 ### also extend the prediction limits for the regression line
 regplot(res, mod="ablat", xlab="Absolute Latitude", xlim=c(0,60), predlim=c(0,60), transf=exp)
 
-### add the prediction interval to the plot and add a reference line at 1
+### add the prediction interval to the plot, add a reference line at 1, and add a legend
 regplot(res, mod="ablat", pi=TRUE, xlab="Absolute Latitude",
-         xlim=c(0,60), predlim=c(0,60), transf=exp, refline=1)
+        xlim=c(0,60), predlim=c(0,60), transf=exp, refline=1, legend=TRUE)
 
 ### label points outside of the prediction interval
 regplot(res, mod="ablat", pi=TRUE, xlab="Absolute Latitude",
-         xlim=c(0,60), predlim=c(0,60), transf=exp, refline=1,
-         label="piout", labsize=0.8)
+        xlim=c(0,60), predlim=c(0,60), transf=exp, refline=1, legend=TRUE,
+        label="piout", labsize=0.8)
 
 ### fit mixed-effects model with absolute latitude and publication year as moderators
 res <- rma(yi, vi, mods = ~ ablat + year, data=dat)
@@ -144,6 +145,6 @@ regplot(res, mod="ablat", pred=tmp, xlab="Absolute Latitude", xlim=c(0,60), xval
 
 ### back-transform to risk ratios and add reference line
 regplot(res, mod="ablat", pred=tmp, xlab="Absolute Latitude", xlim=c(0,60), xvals=xs,
-         transf=exp, refline=1)
+        transf=exp, refline=1)
 }
 \keyword{hplot}

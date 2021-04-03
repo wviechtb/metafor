@@ -145,7 +145,7 @@
         <span class='va'>transf</span>, <span class='va'>atransf</span>, <span class='va'>targs</span>, level<span class='op'>=</span><span class='va'>x</span><span class='op'>$</span><span class='va'>level</span>,
         pch<span class='op'>=</span><span class='fl'>21</span>, <span class='va'>psize</span>, plim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.5</span>,<span class='fl'>3</span><span class='op'>)</span>, col<span class='op'>=</span><span class='st'>"black"</span>, bg<span class='op'>=</span><span class='st'>"darkgray"</span>,
         grid<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>refline</span>, label<span class='op'>=</span><span class='cn'>FALSE</span>, offset<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>1</span><span class='op'>)</span>, labsize<span class='op'>=</span><span class='fl'>1</span>,
-        <span class='va'>lcol</span>, <span class='va'>lwd</span>, <span class='va'>lty</span>, <span class='va'>xvals</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+        <span class='va'>lcol</span>, <span class='va'>lwd</span>, <span class='va'>lty</span>, legend<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>xvals</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -275,6 +275,10 @@
       <td><p>optional vector of (up to) four elements to specify the line width of the regression line, of the confidence interval bounds, of the prediction interval bounds, and of the horizontal reference line.</p></td>
     </tr>
     <tr>
+      <th>legend</th>
+      <td><p>logical to indicate whether a legend should be added to the plot (the default is <code>FALSE</code>). Can also be a keyword to indicate the position of the legend (see <code><a href='https://rdrr.io/r/graphics/legend.html'>legend</a></code>).</p></td>
+    </tr>
+    <tr>
       <th>xvals</th>
       <td><p>optional numeric vector to specify the values of the moderator for which predicted values should be computed. Needs to be specified when passing an object from <code><a href='predict.rma.html'>predict.rma</a></code> to the <code>pred</code> argument. See &#8216;Details&#8217;.</p></td>
     </tr>
@@ -358,22 +362,22 @@
 #&gt; </div><div class='input'>
 <span class='co'>### draw plot</span>
 <span class='fu'>regplot</span><span class='op'>(</span><span class='va'>res</span>, mod<span class='op'>=</span><span class='st'>"ablat"</span>, xlab<span class='op'>=</span><span class='st'>"Absolute Latitude"</span><span class='op'>)</span>
-</div><div class='img'><img src='regplot-1.png' alt='' width='768' height='768' /></div><div class='input'>
+</div><div class='img'><img src='regplot-1.png' alt='' width='864' height='768' /></div><div class='input'>
 <span class='co'>### adjust x-axis limits and back-transform to risk ratios</span>
 <span class='fu'>regplot</span><span class='op'>(</span><span class='va'>res</span>, mod<span class='op'>=</span><span class='st'>"ablat"</span>, xlab<span class='op'>=</span><span class='st'>"Absolute Latitude"</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>60</span><span class='op'>)</span>, transf<span class='op'>=</span><span class='va'>exp</span><span class='op'>)</span>
-</div><div class='img'><img src='regplot-2.png' alt='' width='768' height='768' /></div><div class='input'>
+</div><div class='img'><img src='regplot-2.png' alt='' width='864' height='768' /></div><div class='input'>
 <span class='co'>### also extend the prediction limits for the regression line</span>
 <span class='fu'>regplot</span><span class='op'>(</span><span class='va'>res</span>, mod<span class='op'>=</span><span class='st'>"ablat"</span>, xlab<span class='op'>=</span><span class='st'>"Absolute Latitude"</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>60</span><span class='op'>)</span>, predlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>60</span><span class='op'>)</span>, transf<span class='op'>=</span><span class='va'>exp</span><span class='op'>)</span>
-</div><div class='img'><img src='regplot-3.png' alt='' width='768' height='768' /></div><div class='input'>
-<span class='co'>### add the prediction interval to the plot and add a reference line at 1</span>
+</div><div class='img'><img src='regplot-3.png' alt='' width='864' height='768' /></div><div class='input'>
+<span class='co'>### add the prediction interval to the plot, add a reference line at 1, and add a legend</span>
 <span class='fu'>regplot</span><span class='op'>(</span><span class='va'>res</span>, mod<span class='op'>=</span><span class='st'>"ablat"</span>, pi<span class='op'>=</span><span class='cn'>TRUE</span>, xlab<span class='op'>=</span><span class='st'>"Absolute Latitude"</span>,
-         xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>60</span><span class='op'>)</span>, predlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>60</span><span class='op'>)</span>, transf<span class='op'>=</span><span class='va'>exp</span>, refline<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
-</div><div class='input'>
+        xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>60</span><span class='op'>)</span>, predlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>60</span><span class='op'>)</span>, transf<span class='op'>=</span><span class='va'>exp</span>, refline<span class='op'>=</span><span class='fl'>1</span>, legend<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='img'><img src='regplot-4.png' alt='' width='864' height='768' /></div><div class='input'>
 <span class='co'>### label points outside of the prediction interval</span>
 <span class='fu'>regplot</span><span class='op'>(</span><span class='va'>res</span>, mod<span class='op'>=</span><span class='st'>"ablat"</span>, pi<span class='op'>=</span><span class='cn'>TRUE</span>, xlab<span class='op'>=</span><span class='st'>"Absolute Latitude"</span>,
-         xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>60</span><span class='op'>)</span>, predlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>60</span><span class='op'>)</span>, transf<span class='op'>=</span><span class='va'>exp</span>, refline<span class='op'>=</span><span class='fl'>1</span>,
-         label<span class='op'>=</span><span class='st'>"piout"</span>, labsize<span class='op'>=</span><span class='fl'>0.8</span><span class='op'>)</span>
-</div><div class='img'><img src='regplot-4.png' alt='' width='768' height='768' /></div><div class='input'>
+        xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>60</span><span class='op'>)</span>, predlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>60</span><span class='op'>)</span>, transf<span class='op'>=</span><span class='va'>exp</span>, refline<span class='op'>=</span><span class='fl'>1</span>, legend<span class='op'>=</span><span class='cn'>TRUE</span>,
+        label<span class='op'>=</span><span class='st'>"piout"</span>, labsize<span class='op'>=</span><span class='fl'>0.8</span><span class='op'>)</span>
+</div><div class='img'><img src='regplot-5.png' alt='' width='864' height='768' /></div><div class='input'>
 <span class='co'>### fit mixed-effects model with absolute latitude and publication year as moderators</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>ablat</span> <span class='op'>+</span> <span class='va'>year</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 <span class='va'>res</span>
@@ -404,8 +408,8 @@
 #&gt; </div><div class='input'>
 <span class='co'>### plot the marginal relationships</span>
 <span class='fu'>regplot</span><span class='op'>(</span><span class='va'>res</span>, mod<span class='op'>=</span><span class='st'>"ablat"</span>, xlab<span class='op'>=</span><span class='st'>"Absolute Latitude"</span><span class='op'>)</span>
-</div><div class='img'><img src='regplot-5.png' alt='' width='768' height='768' /></div><div class='input'><span class='fu'>regplot</span><span class='op'>(</span><span class='va'>res</span>, mod<span class='op'>=</span><span class='st'>"year"</span>,  xlab<span class='op'>=</span><span class='st'>"Publication Year"</span><span class='op'>)</span>
-</div><div class='img'><img src='regplot-6.png' alt='' width='768' height='768' /></div><div class='input'>
+</div><div class='img'><img src='regplot-6.png' alt='' width='864' height='768' /></div><div class='input'><span class='fu'>regplot</span><span class='op'>(</span><span class='va'>res</span>, mod<span class='op'>=</span><span class='st'>"year"</span>,  xlab<span class='op'>=</span><span class='st'>"Publication Year"</span><span class='op'>)</span>
+</div><div class='img'><img src='regplot-7.png' alt='' width='864' height='768' /></div><div class='input'>
 <span class='co'>### fit a quadratic polynomial meta-regression model</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>ablat</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/AsIs.html'>I</a></span><span class='op'>(</span><span class='va'>ablat</span><span class='op'>^</span><span class='fl'>2</span><span class='op'>)</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 <span class='va'>res</span>
@@ -440,11 +444,11 @@
 
 <span class='co'>### can now pass these results to the 'pred' argument (and have to specify xvals accordingly)</span>
 <span class='fu'>regplot</span><span class='op'>(</span><span class='va'>res</span>, mod<span class='op'>=</span><span class='st'>"ablat"</span>, pred<span class='op'>=</span><span class='va'>tmp</span>, xlab<span class='op'>=</span><span class='st'>"Absolute Latitude"</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>60</span><span class='op'>)</span>, xvals<span class='op'>=</span><span class='va'>xs</span><span class='op'>)</span>
-</div><div class='img'><img src='regplot-7.png' alt='' width='768' height='768' /></div><div class='input'>
+</div><div class='img'><img src='regplot-8.png' alt='' width='864' height='768' /></div><div class='input'>
 <span class='co'>### back-transform to risk ratios and add reference line</span>
 <span class='fu'>regplot</span><span class='op'>(</span><span class='va'>res</span>, mod<span class='op'>=</span><span class='st'>"ablat"</span>, pred<span class='op'>=</span><span class='va'>tmp</span>, xlab<span class='op'>=</span><span class='st'>"Absolute Latitude"</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>60</span><span class='op'>)</span>, xvals<span class='op'>=</span><span class='va'>xs</span>,
-         transf<span class='op'>=</span><span class='va'>exp</span>, refline<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
-</div><div class='img'><img src='regplot-8.png' alt='' width='768' height='768' /></div></pre>
+        transf<span class='op'>=</span><span class='va'>exp</span>, refline<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
+</div><div class='img'><img src='regplot-9.png' alt='' width='864' height='768' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -242,7 +242,7 @@
 
 <span class='co'>### add summary estimate from the random-effects model to the forest plot</span>
 <span class='fu'><a href='addpoly.html'>addpoly</a></span><span class='op'>(</span><span class='va'>res</span>, atransf<span class='op'>=</span><span class='va'>exp</span><span class='op'>)</span>
-</div><div class='img'><img src='addpoly.rma-1.png' alt='' width='768' height='768' /></div><div class='input'>
+</div><div class='img'><img src='addpoly.rma-1.png' alt='' width='864' height='768' /></div><div class='input'>
 <span class='co'>### forest plot with subgrouping of studies and summaries per subgroup</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"RR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span>,
            slab<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='va'>author</span>, <span class='va'>year</span>, sep<span class='op'>=</span><span class='st'>", "</span><span class='op'>)</span><span class='op'>)</span>
@@ -267,7 +267,7 @@
 </div><div class='input'><span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"RR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span>,
            subset<span class='op'>=</span><span class='op'>(</span><span class='va'>alloc</span><span class='op'>==</span><span class='st'>"alternate"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='addpoly.html'>addpoly</a></span><span class='op'>(</span><span class='va'>res</span>, row<span class='op'>=</span><span class='fl'>1.5</span>, cex<span class='op'>=</span><span class='fl'>.75</span>, atransf<span class='op'>=</span><span class='va'>exp</span>, mlab<span class='op'>=</span><span class='st'>"RE Model for Subgroup"</span><span class='op'>)</span>
-</div><div class='img'><img src='addpoly.rma-2.png' alt='' width='768' height='768' /></div></pre>
+</div><div class='img'><img src='addpoly.rma-2.png' alt='' width='864' height='768' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

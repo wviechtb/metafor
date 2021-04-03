@@ -106,19 +106,19 @@ forest(dat$yi, dat$vi)
 
 ### forest plot of the observed risk ratios (transform outcomes)
 forest(dat$yi, dat$vi, slab=paste(dat$author, dat$year, sep=", "), transf=exp,
-       alim=c(0,2), steps=5, xlim=c(-2.5,4), refline=1, cex=.9)
+       alim=c(0,2), steps=5, xlim=c(-2.5,4), refline=1, cex=.9, header=TRUE)
 
 ### forest plot of the observed risk ratios (transformed x-axis)
 forest(dat$yi, dat$vi, slab=paste(dat$author, dat$year, sep=", "), atransf=exp,
-       at=log(c(.05,.25,1,4,20)), xlim=c(-10,8), cex=.9)
+       at=log(c(.05,.25,1,4,20)), xlim=c(-10,8), cex=.9, header=TRUE)
 
 ### forest plot of the observed risk ratios with studies ordered by the RRs
 forest(dat$yi, dat$vi, slab=paste(dat$author, dat$year, sep=", "), atransf=exp,
-       at=log(c(.05,.25,1,4,20)), xlim=c(-10,8), cex=.9, order="obs")
+       at=log(c(.05,.25,1,4,20)), xlim=c(-10,8), cex=.9, header=TRUE, order="obs")
 
 ### forest plot of the observed risk ratios with studies ordered by absolute latitude
 forest(dat$yi, dat$vi, slab=paste(dat$author, dat$year, sep=", "), atransf=exp,
-       at=log(c(.05,.25,1,4,20)), xlim=c(-10,8), cex=.9, order=dat$ablat)
+       at=log(c(.05,.25,1,4,20)), xlim=c(-10,8), cex=.9, header=TRUE, order=dat$ablat)
 
 ### see also examples for the forest.rma function
 }

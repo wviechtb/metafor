@@ -16,8 +16,8 @@ figures:
   dpi: 96
   dev.args: []
   fig.ext: png
-  fig.width: 8
-  fig.height: ~
+  fig.width: 9
+  fig.height: 8
   fig.retina: 2
   fig.asp: 1
 
