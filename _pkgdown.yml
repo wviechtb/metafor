@@ -19,7 +19,7 @@ figures:
   fig.width: 8
   fig.height: ~
   fig.retina: 2
-  fig.asp: 0.8
+  fig.asp: 1
 
 navbar:
   title: "metafor"

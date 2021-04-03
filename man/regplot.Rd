@@ -121,7 +121,7 @@ regplot(res, mod="ablat", pi=TRUE, xlab="Absolute Latitude",
 ### label points outside of the prediction interval
 regplot(res, mod="ablat", pi=TRUE, xlab="Absolute Latitude",
          xlim=c(0,60), predlim=c(0,60), transf=exp, refline=1,
-         label="piout", labsize=0.9)
+         label="piout", labsize=0.8)
 
 ### fit mixed-effects model with absolute latitude and publication year as moderators
 res <- rma(yi, vi, mods = ~ ablat + year, data=dat)
