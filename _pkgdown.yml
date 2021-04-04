@@ -21,6 +21,17 @@ figures:
   fig.retina: 2
   fig.asp: 1
 
+# figures:
+#   dev: ragg::agg_png
+#   dpi: 96
+#   dev.args: []
+#   fig.ext: png
+#   fig.width: 9
+#   fig.height: 8
+#   fig.retina: 2
+#   fig.asp: 1
+#   bg: NA
+
 navbar:
   title: "metafor"
   left:
