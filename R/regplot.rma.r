@@ -125,6 +125,14 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
 
    ### checks on mod argument
 
+   if (missing(mod)) {
+      if (x$p == 2L && x$int.incl) {
+         mod <- 2
+      } else {
+         stop(mstyle$stop("Need to specify 'mod' argument."))
+      }
+   }
+
    if (length(mod) != 1L)
       stop(mstyle$stop("Can only specify a single variable via argument 'mod'."))
 

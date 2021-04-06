@@ -324,7 +324,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
          if (dfs <= 0) {
             crit <- Inf
          } else {
-            crit <- qt(level/2, df=x$k-x$p-1, lower.tail=FALSE)
+            crit <- qt(level/2, df=dfs, lower.tail=FALSE)
          }
       }
 

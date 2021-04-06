@@ -67,7 +67,7 @@ predict(res, newmods=cbind(seq(from=10, to=60, by=10), 1970), transf=exp)
 ### note: the interpretation of the results is difficult because absolute
 ### latitude and publication year are strongly correlated (the more recent
 ### studies were conducted closer to the equator)
-plot(dat$ablat, dat$year)
-cor(dat$ablat, dat$year)
+plot(dat$year, dat$ablat, pch=19, xlab="Publication Year", ylab="Absolute Lattitude")
+cor(dat$yar, dat$ablat)
 }
 \keyword{datasets}

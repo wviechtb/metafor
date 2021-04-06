@@ -62,19 +62,12 @@ text(-4, 22, "Trial",         pos=4, font=2)
 text( 6, 22, "LnOR [95\% CI]", pos=2, font=2)
 abline(h=0)
 
-plot(NA, NA, xlim=c(0, 250), ylim=c(-1,1.5),
-     xlab="Dosage (mg per day)", ylab="Log Odds Ratio", bty="l", las=1)
-abline(res.ME)
-pred <- predict(res.ME, newmods=c(-100:300), addx=TRUE)
-lines(pred$X[,"dose"], pred$ci.lb, lty="dashed")
-lines(pred$X[,"dose"], pred$ci.ub, lty="dashed")
+tmp <- regplot(res.ME, xlim=c(0,250), ylim=c(-1,1.5), predlim=c(0,250), shade=FALSE, digits=1,
+               xlab="Dosage (mg per day)", psize="seinv", plim=c(NA,5), bty="l", las=1,
+               lty=c("solid", "dashed"), label=TRUE, labsize=0.8, offset=c(1,0.7))
 res.sub <- rma(yi, vi, mods = ~ dose, data=dat, method="DL", subset=-6)
 abline(res.sub, lty="dotted")
-area <- 1/dat$vi
-symbols(dat$dose, dat$yi, circles=sqrt(area/pi), inches=0.2, fg="black", bg="gray60", add=TRUE)
-below <- c(2,4,5,6,7,11,12,13,16,17,20)
-text(dat$dose[-below], (dat$yi+(area/pi)^.25 / 15)[-below], (1:20)[-below], cex=0.8)
-text(dat$dose[ below], (dat$yi-(area/pi)^.25 / 15)[ below], (1:20)[ below], cex=0.8)
+points(tmp$xi, tmp$yi, pch=21, cex=tmp$psize, col="black", bg="darkgray")
 
 par(mar=c(5,4,4,2))
 
@@ -144,9 +137,8 @@ resLOF
 
 ### scatter plot to illustrate the lack-of-fit model
 
-plot(NA, NA, xlim=c(0,250), ylim=c(-1.0,1.5),
-     xlab="Dosage (mg per day)", ylab="Log Odds Ratio", bty="l", las=1)
-abline(res.ME)
+regplot(res.ME, xlim=c(0,250), ylim=c(-1.0,1.5), xlab="Dosage (mg per day)", ci=FALSE,
+        predlim=c(0,250), psize=1, pch=19, col="gray60", digits=1, lwd=1, bty="l", las=1)
 dosages <- sort(unique(dat$dose))
 lines(dosages, fitted(resLOF)[match(dosages, dat$dose)], type="o", pch=19, cex=2, lwd=2)
 points(dat$dose, dat$yi, pch=19, col="gray60")
