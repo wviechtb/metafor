@@ -1,6 +1,10 @@
 template:
   params:
     bootswatch: cosmo
+  opengraph:
+    twitter:
+      creator: "@wviechtb"
+      card: summary_large_image
 
 home:
   links:
