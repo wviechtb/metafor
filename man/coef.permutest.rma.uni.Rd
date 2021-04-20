@@ -38,7 +38,7 @@ dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 ### fit mixed-effects model with absolute latitude and publication year as moderators
 res <- rma(yi, vi, mods = ~ ablat + year, data=dat)
 
-### permutation test
+### carry out permutation test
 \dontrun{
 sav <- permutest(res)
 coef(sav)}

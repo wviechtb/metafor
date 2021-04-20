@@ -8,7 +8,7 @@
 \alias{weights.rma.mv}
 \title{Compute Weights for 'rma' Objects}
 \description{
-   The function computes the weights given to the observed effects or outcomes during the model fitting for objects of class \code{"rma.uni"}, \code{"rma.mh"}, \code{"rma.peto"}, and \code{"rma.mv"}.
+   The function computes the weights given to the observed effect sizes or outcomes during the model fitting for objects of class \code{"rma.uni"}, \code{"rma.mh"}, \code{"rma.peto"}, and \code{"rma.mv"}.
 }
 \usage{
 \method{weights}{rma.uni}(object, type="diagonal", \dots)
@@ -29,7 +29,7 @@
 
    For \code{"rma.mv"}, the structure of the weight matrix depends on the model fitted (i.e., the random effects included and the variance-covariance matrix of the sampling errors) but is often more complex and not just diagonal.
 
-   For \code{"rma.mv"} intercept-only models, one can also take the sum over the rows in the weight matrix, which are actually the weights assigned to the observed effects / outcomes when estimating the model intercept. These weights can be obtained with \code{type="rowsum"} (as with \code{type="diagonal"}, they are also given in \%).
+   For \code{"rma.mv"} intercept-only models, one can also take the sum over the rows in the weight matrix, which are actually the weights assigned to the observed effect sizes or outcomes when estimating the model intercept. These weights can be obtained with \code{type="rowsum"} (as with \code{type="diagonal"}, they are also given in \%).
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}

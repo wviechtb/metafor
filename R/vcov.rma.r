@@ -19,7 +19,7 @@ vcov.rma <- function(object, type="fixed", ...) {
       out <- object$vb
 
       if (inherits(object, "rma.ls"))
-         out <- list(beta = object$vb, alpha = object$vb.alpha)
+         out <- list(beta = object$vb, alpha = object$va)
 
       return(out)
 

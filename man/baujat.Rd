@@ -56,7 +56,7 @@ baujat(x, \dots)
 ### copy data from Pignon et al. (2000) into 'dat'
 dat <- dat.pignon2000
 
-### compute estimated log hazard ratios and sampling variances
+### calculate estimated log hazard ratios and sampling variances
 dat$yi <- with(dat, OmE/V)
 dat$vi <- with(dat, 1/V)
 

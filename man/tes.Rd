@@ -35,7 +35,7 @@ tes(x, \dots)
    \emph{These arguments pertain to the power of the tests:}
 
    \item{theta}{numeric value to specify the value of the true effect size or outcome under the alternative hypothesis. If unspecified, it will be estimated based on the data or the value is taken from the \code{"rma"} object.}
-   \item{tau2}{numeric value to specify the amount of heterogeneity in the true effects or outcomes. If unspecified, the true effect sizes or outcomes are assumed to be homogeneous or the value is taken from the \code{"rma"} object.}
+   \item{tau2}{numeric value to specify the amount of heterogeneity in the true effect sizes or outcomes. If unspecified, the true effect sizes or outcomes are assumed to be homogeneous or the value is taken from the \code{"rma"} object.}
 
    \emph{These arguments pertain to the test of excess significance:}
 
@@ -85,7 +85,7 @@ tes(x, \dots)
 
    The function computes the significance and power of the studies based on Wald-type tests regardless of the effect size or outcome measure used as input. This works as an adequate approximation as long as the within-study sample sizes are not too small.
 
-   Note that the test is not a test for publication bias but a test whether the set of studies includes an unusual number of significant findings given the power of the studies. The general usefulness of the test and its usefulness under particular circumstances (e.g., when there is substantial heterogeneity in the true effects or outcomes) has been the subject of considerable debate. See Francis (2013) and the commentaries on this article in the same issue of the journal.
+   Note that the test is not a test for publication bias but a test whether the set of studies includes an unusual number of significant findings given the power of the studies. The general usefulness of the test and its usefulness under particular circumstances (e.g., when there is substantial heterogeneity in the true effect sizes or outcomes) has been the subject of considerable debate. See Francis (2013) and the commentaries on this article in the same issue of the journal.
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}

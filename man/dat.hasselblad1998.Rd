@@ -18,7 +18,7 @@
 \details{
    The dataset includes the results from 24 studies on the effectiveness of various counseling types for smoking cessation (i.e., self-help, individual counseling, group counseling, and no contact). The dataset indicates the total number of individuals within each study arm and the number that were abstinent from 6 to 12 months. The majority of the studies compared two interventions types against each other, while 2 studies compared three types against each other simultaneously.
 
-   The data can be used for a \sQuote{network meta-analysis} (also called \sQuote{mixed treatment comparison meta-analysis}). The code below shows how such an analysis can be conducted using an arm-based and a contrast-based model (see Salanti et al., 2008, for more details).
+   The data can be used for a \sQuote{network meta-analysis} (also called a \sQuote{mixed treatment comparison}). The code below shows how such an analysis can be conducted using an arm-based and a contrast-based model (see Salanti et al., 2008, for more details).
 }
 \source{
    Hasselblad, V. (1998). Meta-analysis of multitreatment studies. \emph{Medical Decision Making}, \bold{18}(1), 37--43. \verb{https://doi.org/10.1177/0272989X9801800110}

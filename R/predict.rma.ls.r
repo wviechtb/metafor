@@ -42,7 +42,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("pi.type"))
+   .chkdots(ddd, c("pi.type", "newvi"))
 
    if (is.null(ddd$pi.type)) {
       pi.type <- "default"
@@ -124,7 +124,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
       }
 
       if (ncol(X.new) != x$p)
-         stop(mstyle$stop(paste0("Dimensions of 'newmods' (", ncol(X.new), ") do not match dimensions of the model (", x$p, ").")))
+         stop(mstyle$stop(paste0("Dimensions of 'newmods' (", ncol(X.new), ") do not match the dimensions of the model (", x$p, ").")))
 
    }
 
@@ -197,7 +197,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
       }
 
       if (ncol(Z.new) != x$q)
-         stop(mstyle$stop(paste0("Dimensions of 'newscale' (", ncol(Z.new), ") do not match dimensions of the scale model (", x$q, ").")))
+         stop(mstyle$stop(paste0("Dimensions of 'newscale' (", ncol(Z.new), ") do not match the dimensions of the scale model (", x$q, ").")))
 
    }
 
@@ -277,28 +277,32 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
    if (pred.mui) {
 
+      ddf <- ifelse(is.na(x$ddf), x$k - x$p, x$ddf)
+
       for (i in seq_len(k.new)) {
          Xi.new   <- X.new[i,,drop=FALSE]
          pred[i]  <- Xi.new %*% x$beta
          vpred[i] <- Xi.new %*% tcrossprod(x$vb, Xi.new)
       }
 
-      if (is.element(x$test, c("t"))) {
-         crit <- qt(level/2, df=x$dfs, lower.tail=FALSE)
+      if (x$test == "t") {
+         crit <- if (ddf > 0) qt(level/2, df=ddf, lower.tail=FALSE) else NA
       } else {
          crit <- qnorm(level/2, lower.tail=FALSE)
       }
 
    } else {
 
+      ddf <- ifelse(is.na(x$ddf.alpha), x$k - x$q, x$ddf.alpha)
+
       for (i in seq_len(k.new)) {
          Zi.new   <- Z.new[i,,drop=FALSE]
          pred[i]  <- Zi.new %*% x$alpha
-         vpred[i] <- Zi.new %*% tcrossprod(x$vb.alpha, Zi.new)
+         vpred[i] <- Zi.new %*% tcrossprod(x$va, Zi.new)
       }
 
-      if (is.element(x$test, c("t"))) {
-         crit <- qt(level/2, df=x$dfs.alpha, lower.tail=FALSE)
+      if (x$test == "t") {
+         crit <- if (ddf > 0) qt(level/2, df=ddf, lower.tail=FALSE) else NA
       } else {
          crit <- qnorm(level/2, lower.tail=FALSE)
       }
@@ -316,30 +320,41 @@ level, digits, transf, targs, vcov=FALSE, ...) {
       if (vcov)
          vcovpred <- X.new %*% x$vb %*% t(X.new)
 
-      if (pi.type == "simple")
+      if (pi.type == "simple") {
          crit <- qnorm(level/2, lower.tail=FALSE)
-
-      if (pi.type == "riley") {
-         dfs <- x$k - x$p - 1
-         if (dfs <= 0) {
-            crit <- Inf
-         } else {
-            crit <- qt(level/2, df=dfs, lower.tail=FALSE)
-         }
+         vpred <- 0
       }
 
-      if (pi.type == "simple")
-         vpred <- 0
+      pi.ddf <- ddf
+
+      if (is.element(pi.type, c("riley","t"))) {
+         if (pi.type == "riley")
+            pi.ddf <- x$k - x$p - x$q
+         if (pi.type == "t")
+            pi.ddf <- x$k - x$p
+         pi.ddf[pi.ddf < 1] <- 1
+         crit <- qt(level/2, df=pi.ddf, lower.tail=FALSE)
+      }
+
+      if (is.null(ddd$newvi)) {
+         newvi <- 0
+      } else {
+         newvi <- ddd$newvi
+         if (length(newvi) == 1L)
+            newvi <- rep(newvi, k.new)
+         if (length(newvi) != k.new)
+            stop(mstyle$stop(paste0("Length of 'newvi' argument (", length(newvi), ") does not match the number of predicted values (", k.new, ").")))
+      }
 
       ### prediction intervals
 
-      pi.lb <- pred - crit * sqrt(vpred + tau2.f)
-      pi.ub <- pred + crit * sqrt(vpred + tau2.f)
+      pi.lb <- pred - crit * sqrt(vpred + tau2.f + newvi)
+      pi.ub <- pred + crit * sqrt(vpred + tau2.f + newvi)
 
    } else {
 
       if (vcov)
-         vcovpred <- Z.new %*% x$vb.alpha %*% t(Z.new)
+         vcovpred <- Z.new %*% x$va %*% t(Z.new)
 
       pi.lb <- NA
       pi.ub <- NA
@@ -486,6 +501,12 @@ level, digits, transf, targs, vcov=FALSE, ...) {
    out$digits <- digits
    out$method <- x$method
    out$transf <- do.transf
+
+   if (x$test != "z")
+      out$ddf <- ddf
+
+   if (pred.mui && (x$test != "z" || is.element(pi.type, c("riley","t"))) && pi.type != "simple")
+      out$pi.ddf <- pi.ddf
 
    class(out) <- "list.rma"
 

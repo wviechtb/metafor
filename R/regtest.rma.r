@@ -68,7 +68,7 @@ regtest.rma <- function(x, model="rma", predictor="sei", ret.fit=FALSE, digits, 
       fit  <- rma.uni(yi, vi, weights=weights, mods=X, intercept=FALSE, method=x$method, weighted=x$weighted, test=x$test, level=x$level, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, ...)
       zval <- fit$zval[p+1]
       pval <- fit$pval[p+1]
-      dfs  <- fit$dfs
+      ddf  <- fit$ddf
 
    } else {
 
@@ -77,16 +77,18 @@ regtest.rma <- function(x, model="rma", predictor="sei", ret.fit=FALSE, digits, 
       tmp  <- summary(fit)
       zval <- coef(tmp)[p+1,3]
       pval <- coef(tmp)[p+1,4]
-      dfs  <- x$k - x$p - 1
+      ddf  <- x$k - x$p - 1
 
    }
+
+   ### get the 'limit estimate'
 
    if (predictor %in% c("sei", "vi", "ninv", "sqrtninv") && p == 1L && .is.intercept(X[,1])) {
 
       if (model=="lm") {
          est <- coef(tmp)[1,1]
-         ci.lb <- est - qt(x$level/2, df=dfs, lower.tail=FALSE) * coef(tmp)[1,2]
-         ci.ub <- est + qt(x$level/2, df=dfs, lower.tail=FALSE) * coef(tmp)[1,2]
+         ci.lb <- est - qt(x$level/2, df=ddf, lower.tail=FALSE) * coef(tmp)[1,2]
+         ci.ub <- est + qt(x$level/2, df=ddf, lower.tail=FALSE) * coef(tmp)[1,2]
       } else {
          est <- coef(fit)[1]
          ci.lb <- fit$ci.lb[1]
@@ -99,7 +101,7 @@ regtest.rma <- function(x, model="rma", predictor="sei", ret.fit=FALSE, digits, 
 
    }
 
-   res <- list(model=model, predictor=predictor, zval=zval, pval=pval, dfs=dfs, method=x$method, digits=digits, ret.fit=ret.fit, fit=fit, est=est, ci.lb=ci.lb, ci.ub=ci.ub)
+   res <- list(model=model, predictor=predictor, zval=zval, pval=pval, dfs=ddf, ddf=ddf, method=x$method, digits=digits, ret.fit=ret.fit, fit=fit, est=est, ci.lb=ci.lb, ci.ub=ci.ub)
 
    class(res) <- "regtest"
    return(res)

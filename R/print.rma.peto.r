@@ -42,7 +42,7 @@ print.rma.peto <- function(x, digits, showfit=FALSE, ...) {
    if (!is.na(x$QE)) {
       cat("\n")
       cat(mstyle$section("Test for Heterogeneity:"), "\n")
-      cat(mstyle$result(paste0("Q(df = ", x$k.pos-1, ") = ", .fcf(x$QE, digits[["test"]]), ", p-val ", .pval(x$QEp, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
+      cat(mstyle$result(paste0("Q(df = ", x$k.pos-1, ") = ", .fcf(x$QE, digits[["test"]]), ", p-val ", .pval(x$QEp, digits[["pval"]], showeq=TRUE, sep=" "))))
    }
 
    if (any(!is.na(c(x$I2, x$H2, x$QE))))

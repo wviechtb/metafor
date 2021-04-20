@@ -83,9 +83,10 @@
 ### calculate log risk ratios and corresponding sampling variances
 dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
-### random-effects model
+### fit random-effects model
 res <- rma(yi, vi, data=dat, slab=paste(author, year, sep=", "))
 
+### draw cumulative forest plots
 x <- cumul(res, order=dat$year)
 forest(x, cex=.8, header=TRUE)
 forest(x, alim=c(-2,1), cex=.8, header=TRUE)
@@ -93,6 +94,8 @@ forest(x, alim=c(-2,1), cex=.8, header=TRUE)
 ### meta-analysis of the (log) risk ratios using the Mantel-Haenszel method
 res <- rma.mh(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg,
               slab=paste(author, year, sep=", "))
+
+### draw cumulative forest plot
 x <- cumul(res, order=dat$year)
 forest(x, alim=c(-2,1), cex=.8, header=TRUE)
 }

@@ -26,7 +26,7 @@
    \item{\dots}{other arguments.}
 }
 \details{
-   In many meta-analyses, multiple effect size estimates or outcomes can be extracted from the same study. Ideally, such structures should be analyzed using an appropriate multilevel/multivariate model as can be fitted with the \code{\link{rma.mv}} function. However, there may occasionally be reasons for aggregating multiple effect sizes or outcomes belonging to the same study (or to the same level of some other clustering variable) into a single combined effect size or outcome. The present function can be used for this purpose.
+   In many meta-analyses, multiple effect sizes or outcomes can be extracted from the same study. Ideally, such structures should be analyzed using an appropriate multilevel/multivariate model as can be fitted with the \code{\link{rma.mv}} function. However, there may occasionally be reasons for aggregating multiple effect sizes or outcomes belonging to the same study (or to the same level of some other clustering variable) into a single combined effect size or outcome. The present function can be used for this purpose.
 
    The input must be an object of class \code{"escalc"}. The error \sQuote{\code{Error in match.fun(FUN): argument "FUN" is missing, with no default}} indicates that a regular data frame was passed to the function, but this does not work. One can turn a regular data frame (containing the effect sizes or outcomes and the corresponding sampling variances) into an \code{"escalc"} object with the \code{\link{escalc}} function. See the \sQuote{Examples} below for an illustration of this.
 

@@ -146,7 +146,7 @@ regtest.default <- function(x, vi, sei, ni, subset, model="rma", predictor="sei"
       fit  <- rma.uni(yi, vi, mods=X, intercept=FALSE, ...)
       zval <- fit$zval[2]
       pval <- fit$pval[2]
-      dfs  <- fit$dfs
+      ddf  <- fit$ddf
 
    } else {
 
@@ -155,16 +155,18 @@ regtest.default <- function(x, vi, sei, ni, subset, model="rma", predictor="sei"
       tmp  <- summary(fit)
       zval <- coef(tmp)[2,3]
       pval <- coef(tmp)[2,4]
-      dfs  <- length(yi) - 2
+      ddf  <- length(yi) - 2
 
    }
+
+   ### get the 'limit estimate'
 
    if (predictor %in% c("sei", "vi", "ninv", "sqrtninv")) {
 
       if (model=="lm") {
          est <- coef(tmp)[1,1]
-         ci.lb <- est - qt(level/2, df=dfs, lower.tail=FALSE) * coef(tmp)[1,2]
-         ci.ub <- est + qt(level/2, df=dfs, lower.tail=FALSE) * coef(tmp)[1,2]
+         ci.lb <- est - qt(level/2, df=ddf, lower.tail=FALSE) * coef(tmp)[1,2]
+         ci.ub <- est + qt(level/2, df=ddf, lower.tail=FALSE) * coef(tmp)[1,2]
       } else {
          est <- coef(fit)[1]
          ci.lb <- fit$ci.lb[1]
@@ -177,7 +179,7 @@ regtest.default <- function(x, vi, sei, ni, subset, model="rma", predictor="sei"
 
    }
 
-   res <- list(model=model, predictor=predictor, zval=zval, pval=pval, dfs=dfs, method=fit$method, digits=digits, ret.fit=ret.fit, fit=fit, est=est, ci.lb=ci.lb, ci.ub=ci.ub)
+   res <- list(model=model, predictor=predictor, zval=zval, pval=pval, dfs=ddf, ddf=ddf, method=fit$method, digits=digits, ret.fit=ret.fit, fit=fit, est=est, ci.lb=ci.lb, ci.ub=ci.ub)
 
    class(res) <- "regtest"
    return(res)

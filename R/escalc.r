@@ -1119,8 +1119,31 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          ### partial correlation coefficient
 
          if (measure == "PCOR") {
+
             yi <- ti / sqrt(ti^2 + (ni - mi - 1))
-            vi <- (1 - yi^2)^2 / (ni - mi - 1)
+
+            if (length(vtype) == 1L)
+               vtype <- rep(vtype, k)
+
+            vi <- rep(NA_real_, k)
+
+            mnwyi <- .wmean(yi, ni, na.rm=TRUE) ### sample size weighted average of yi's
+
+            if (!all(is.element(vtype, c("LS","AV"))))
+               stop(mstyle$stop("For this outcome measure, 'vtype' must be either 'LS' or 'AV'."))
+
+            for (i in seq_len(k)) {
+
+               ### large sample approximation to the sampling variance
+               if (vtype[i] == "LS")
+                  vi[i] <- (1 - yi[i]^2)^2 / (ni[i] - mi[i] - 1)
+
+               ### estimator assuming homogeneity (using sample size weighted average of the yi's)
+               if (vtype[i] == "AV")
+                  vi[i] <- (1 - mnwyi^2)^2 / (ni[i] - mi[i] - 1)
+
+            }
+
          }
 
          ### r-to-z transformed partial correlation
@@ -1134,8 +1157,31 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          ### semi-partial correlation coefficient
 
          if (measure == "SPCOR") {
+
             yi <- ti * sqrt(1 - r2i) / sqrt(ni - mi - 1)
-            vi <- (r2i^2 - 2*r2i + (r2i - yi^2) + 1 - (r2i - yi^2)^2) / ni
+
+            if (length(vtype) == 1L)
+               vtype <- rep(vtype, k)
+
+            vi <- rep(NA_real_, k)
+
+            mnwyi <- .wmean(yi, ni, na.rm=TRUE) ### sample size weighted average of yi's
+
+            if (!all(is.element(vtype, c("LS","AV"))))
+               stop(mstyle$stop("For this outcome measure, 'vtype' must be either 'LS' or 'AV'."))
+
+            for (i in seq_len(k)) {
+
+               ### large sample approximation to the sampling variance
+               if (vtype[i] == "LS")
+                  vi[i] <- (r2i[i]^2 - 2*r2i[i] + (r2i[i] - yi[i]^2) + 1 - (r2i[i] - yi[i]^2)^2) / ni[i]
+
+               ### estimator assuming homogeneity (using sample size weighted average of the yi's)
+               if (vtype[i] == "AV")
+                  vi[i] <- (r2i[i]^2 - 2*r2i[i] + (r2i[i] - mnwyi^2) + 1 - (r2i[i] - mnwyi^2)^2) / ni[i]
+
+            }
+
          }
 
       }

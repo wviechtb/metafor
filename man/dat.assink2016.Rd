@@ -19,7 +19,7 @@
 \details{
    The studies included in this dataset compared the difference in recidivism between delinquent juveniles with a mental health disorder and a comparison group of juveniles without a mental health disorder. Since studies differed in the way recidivism was defined and assessed, results are given in terms of standardized mean differences, with positive values indicating a higher prevalence of recidivism in the group of juveniles with a mental health disorder.
 
-   Multiple effect size estimates could be extracted from most studies, necessitating the use of appropriate models/methods for the analysis. Assink and Wibbelink (2016) illustrated the use of multilevel meta-analytic models for these purposes.
+   Multiple effect size estimates could be extracted from most studies, necessitating the use of appropriate models/methods for the analysis. Assink and Wibbelink (2016) illustrate the use of multilevel meta-analytic models for this purpose.
 }
 \source{
    Assink, M., & Wibbelink, C. J. M. (2016). Fitting three-level meta-analytic models in R: A step-by-step tutorial. \emph{The Quantitative Methods for Psychology}, \bold{12}(3), 154--174. \verb{https://doi.org/10.20982/tqmp.12.3.p154}

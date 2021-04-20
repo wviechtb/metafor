@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-86</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-87</span>
       </span>
     </div>
 
@@ -206,7 +206,7 @@
 #&gt; Cochran-Mantel-Haenszel Test:    CMH = 169.58, df = 1,  p-val &lt; 0.01
 #&gt; Tarone's Test for Heterogeneity: X^2 =  37.24, df = 15, p-val &lt; 0.01
 #&gt; </div><div class='input'>
-<span class='co'>### compute log odds ratios and corresponding sampling variances</span>
+<span class='co'>### calculate log odds ratios and corresponding sampling variances</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"OR"</span>, ai<span class='op'>=</span><span class='va'>xt</span>, n1i<span class='op'>=</span><span class='va'>nt</span>, ci<span class='op'>=</span><span class='va'>xc</span>, n2i<span class='op'>=</span><span class='va'>nc</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 
 <span class='co'>### meta-analysis using a random-effects model</span>

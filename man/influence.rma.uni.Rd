@@ -42,11 +42,11 @@
    \item the leave-one-out amount of (residual) heterogeneity,
    \item the leave-one-out test statistic of the test for (residual) heterogeneity,
    \item DFBETAS value(s).
-   } The diagonal elements of the hat matrix and the weights (in \%) given to the observed effects or outcomes during the model fitting are also provided (except for their scaling, the hat values and weights are the same for models without moderators, but will differ when moderators are included).
+   } The diagonal elements of the hat matrix and the weights (in \%) given to the observed effect sizes or outcomes during the model fitting are also provided (except for their scaling, the hat values and weights are the same for models without moderators, but will differ when moderators are included).
 
    For details on externally standardized residuals, see \code{\link{rstudent.rma.uni}}.
 
-   The DFFITS value essentially indicates how many standard deviations the predicted (average) effect for the \mjseqn{i}th case changes after excluding the \mjseqn{i}th case from the model fitting.
+   The DFFITS value essentially indicates how many standard deviations the predicted (average) effect or outcome for the \mjseqn{i}th case changes after excluding the \mjseqn{i}th case from the model fitting.
 
    Cook's distance can be interpreted as the Mahalanobis distance between the entire set of predicted values once with the \mjseqn{i}th case included and once with the \mjseqn{i}th case excluded from the model fitting.
 

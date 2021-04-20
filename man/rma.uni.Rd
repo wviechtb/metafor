@@ -112,11 +112,11 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
    \bold{Tests and Confidence Intervals}
 
-   By default, tests of individual coefficients in the model (and the corresponding confidence intervals) are based on a standard normal distribution, while the omnibus test is based on a chi-square distribution (see above). As an alternative, one can set \code{test="t"}, in which case tests of individual coefficients and confidence intervals are based on a t-distribution with \mjseqn{k-p} degrees of freedom, while the omnibus test statistic then uses an F-distribution with \mjseqn{m} and \mjseqn{k-p} degrees of freedom (with \mjseqn{p} denoting the total number of model coefficients including the intercept if it is present). Finally, when \code{test="knha"}, the Knapp and Hartung (2003) method is used, which applies an adjustment to the standard errors of the estimated coefficients (to account for the uncertainty in the estimate of the amount of (residual) heterogeneity) and uses t- and F-distributions as described above.
+   By default, tests of individual coefficients in the model (and the corresponding confidence intervals) are based on a standard normal distribution, while the omnibus test is based on a chi-square distribution (see above). As an alternative, one can set \code{test="t"}, in which case tests of individual coefficients and confidence intervals are based on a t-distribution with \mjseqn{k-p} degrees of freedom, while the omnibus test statistic then uses an F-distribution with \mjseqn{m} and \mjseqn{k-p} degrees of freedom (with \mjseqn{k} denoting the total number of estimates included in the analysis and \mjseqn{p} the total number of model coefficients including the intercept if it is present). Finally, when \code{test="knha"}, the Knapp and Hartung (2003) method is used, which applies an adjustment to the standard errors of the estimated coefficients (to account for the uncertainty in the estimate of the amount of (residual) heterogeneity) and uses t- and F-distributions as described above.
 
    \bold{Test for (Residual) Heterogeneity}
 
-   A test for (residual) heterogeneity is automatically carried out by the function. Without moderators in the model, this is simply Cochran's \mjseqn{Q}-test (Cochran, 1954), which tests whether the variability in the observed effect sizes or outcomes is larger than would be expected based on sampling variability alone. A significant test suggests that the true effects or outcomes are heterogeneous. When moderators are included in the model, this is the \mjseqn{Q_E}-test for residual heterogeneity, which tests whether the variability in the observed effect sizes or outcomes not accounted for by the moderators included in the model is larger than would be expected based on sampling variability alone.
+   A test for (residual) heterogeneity is automatically carried out by the function. Without moderators in the model, this is simply Cochran's \mjseqn{Q}-test (Cochran, 1954), which tests whether the variability in the observed effect sizes or outcomes is larger than would be expected based on sampling variability alone. A significant test suggests that the true effect sizes or outcomes are heterogeneous. When moderators are included in the model, this is the \mjseqn{Q_E}-test for residual heterogeneity, which tests whether the variability in the observed effect sizes or outcomes not accounted for by the moderators included in the model is larger than would be expected based on sampling variability alone.
 }
 \value{
    An object of class \code{c("rma.uni","rma")}. The object is a list containing the following components:
@@ -238,11 +238,11 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 ### calculate log risk ratios and corresponding sampling variances
 dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
-### random-effects model, using log risk ratios and variances as input
+### fit random-effects model, using log risk ratios and variances as input
 ### note: method="REML" is the default, so one could leave this out
 rma(yi, vi, data=dat, method="REML")
 
-### random-effects model, using log risk ratios and standard errors as input
+### fit random-effects model, using log risk ratios and standard errors as input
 ### note: the second argument of rma() is for the *variances*, so we use the
 ### named argument 'sei' to supply the standard errors to the function
 dat$sei <- sqrt(dat$vi)
@@ -251,7 +251,7 @@ rma(yi, sei=sei, data=dat)
 ### supplying the 2x2 table cell frequencies directly to the rma() function
 rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat)
 
-### mixed-effects model with two moderators (absolute latitude and publication year)
+### fit mixed-effects model with two moderators (absolute latitude and publication year)
 rma(yi, vi, mods=cbind(ablat, year), data=dat)
 
 ### using a model formula to specify the same model

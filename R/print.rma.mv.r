@@ -317,11 +317,11 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
       if (x$int.only) {
          cat(mstyle$section("Test for Heterogeneity:"))
          cat("\n")
-         cat(mstyle$result(paste0("Q(df = ", x$k-x$p, ") = ", .fcf(x$QE, digits[["test"]]), ", p-val ", .pval(x$QEp, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
+         cat(mstyle$result(paste0("Q(df = ", x$k-x$p, ") = ", .fcf(x$QE, digits[["test"]]), ", p-val ", .pval(x$QEp, digits[["pval"]], showeq=TRUE, sep=" "))))
       } else {
          cat(mstyle$section("Test for Residual Heterogeneity:"))
          cat("\n")
-         cat(mstyle$result(paste0("QE(df = ", x$k-x$p, ") = ", .fcf(x$QE, digits[["test"]]), ", p-val ", .pval(x$QEp, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
+         cat(mstyle$result(paste0("QE(df = ", x$k-x$p, ") = ", .fcf(x$QE, digits[["test"]]), ", p-val ", .pval(x$QEp, digits[["pval"]], showeq=TRUE, sep=" "))))
       }
       cat("\n\n")
    }
@@ -329,23 +329,24 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
    if (x$p > 1L && !is.na(x$QM)) {
       cat(mstyle$section(paste0("Test of Moderators (coefficient", ifelse(x$m == 1, " ", "s "), .format.btt(x$btt),"):")))
       cat("\n")
-      if (is.element(x$test, c("t"))) {
-         cat(mstyle$result(paste0("F(df1 = ", x$m, ", df2 = ", x$dfs, ") = ", .fcf(x$QM, digits[["test"]]), ", p-val ", .pval(x$QMp, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
+      if (x$test == "t") {
+         cat(mstyle$result(paste0("F(df1 = ", x$QMdf[1], ", df2 = ", x$QMdf[2], ") = ", .fcf(x$QM, digits[["test"]]), ", p-val ", .pval(x$QMp, digits[["pval"]], showeq=TRUE, sep=" "))))
       } else {
-         cat(mstyle$result(paste0("QM(df = ", x$m, ") = ", .fcf(x$QM, digits[["test"]]), ", p-val ", .pval(x$QMp, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
+         cat(mstyle$result(paste0("QM(df = ", x$QMdf[1], ") = ", .fcf(x$QM, digits[["test"]]), ", p-val ", .pval(x$QMp, digits[["pval"]], showeq=TRUE, sep=" "))))
       }
       cat("\n\n")
    }
 
-   res.table <- data.frame(estimate=.fcf(c(x$beta), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), zval=.fcf(x$zval, digits[["test"]]), pval=.pval(x$pval, digits[["pval"]]), ci.lb=.fcf(x$ci.lb, digits[["ci"]]), ci.ub=.fcf(x$ci.ub, digits[["ci"]]))
-
+   if (x$test == "t") {
+      res.table <- data.frame(estimate=.fcf(c(x$beta), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), tval=.fcf(x$zval, digits[["test"]]), df=round(x$ddf, 2), pval=.pval(x$pval, digits[["pval"]]), ci.lb=.fcf(x$ci.lb, digits[["ci"]]), ci.ub=.fcf(x$ci.ub, digits[["ci"]]))
+   } else {
+      res.table <- data.frame(estimate=.fcf(c(x$beta), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), zval=.fcf(x$zval, digits[["test"]]), pval=.pval(x$pval, digits[["pval"]]), ci.lb=.fcf(x$ci.lb, digits[["ci"]]), ci.ub=.fcf(x$ci.ub, digits[["ci"]]))
+   }
    rownames(res.table) <- rownames(x$beta)
-   if (is.element(x$test, c("t")))
-      colnames(res.table)[3] <- "tval"
    signif <- symnum(x$pval, corr=FALSE, na=FALSE, cutpoints=c(0, 0.001, 0.01, 0.05, 0.1, 1), symbols = c("***", "**", "*", ".", " "))
    if (signif.stars) {
       res.table <- cbind(res.table, signif)
-      colnames(res.table)[7] <- ""
+      colnames(res.table)[ncol(res.table)] <- ""
    }
 
    ddd <- list(...)

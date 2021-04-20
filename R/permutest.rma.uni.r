@@ -464,8 +464,8 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
 
    #########################################################################
 
-   out <- list(pval=pval, QMp=QMp, beta=x$beta, se=x$se, zval=x$zval, ci.lb=ci.lb, ci.ub=ci.ub,
-               QM=x$QM, k=x$k, p=x$p, btt=x$btt, m=x$m, test=x$test, dfs=x$dfs,
+   out <- list(pval=pval, QMdf=x$QMdf, QMp=QMp, beta=x$beta, se=x$se, zval=x$zval, ci.lb=ci.lb, ci.ub=ci.ub,
+               QM=x$QM, k=x$k, p=x$p, btt=x$btt, m=x$m, test=x$test, dfs=x$dfs, ddf=x$ddf,
                int.only=x$int.only, digits=digits, exact.iter=exact.iter, permci=permci)
 
    if (retpermdist) {

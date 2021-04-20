@@ -11,12 +11,16 @@ print.anova.rma <- function(x, digits=x$digits, ...) {
 
    if (x$type == "Wald.btt") {
 
-      cat(mstyle$section(paste0("Test of Moderators (coefficient", ifelse(x$m == 1, " ", "s "), .format.btt(x$btt),"):")))
+      if (is.element("rma.ls", x$class)) {
+         cat(mstyle$section(paste0("Test of Location Coefficients (coefficient", ifelse(x$m == 1, " ", "s "), .format.btt(x$btt),"):")))
+      } else {
+         cat(mstyle$section(paste0("Test of Moderators (coefficient", ifelse(x$m == 1, " ", "s "), .format.btt(x$btt),"):")))
+      }
       cat("\n")
       if (is.element(x$test, c("knha","adhoc","t"))) {
-         cat(mstyle$result(paste0("F(df1 = ", x$m, ", df2 = ", x$dfs, ") = ", .fcf(x$QM, digits[["test"]]), ", p-val ", .pval(x$QMp, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
+         cat(mstyle$result(paste0("F(df1 = ", x$QMdf[1], ", df2 = ", x$QMdf[2], ") = ", .fcf(x$QM, digits[["test"]]), ", p-val ", .pval(x$QMp, digits[["pval"]], showeq=TRUE, sep=" "))))
       } else {
-         cat(mstyle$result(paste0("QM(df = ", x$m, ") = ", .fcf(x$QM, digits[["test"]]), ", p-val ", .pval(x$QMp, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
+         cat(mstyle$result(paste0("QM(df = ", x$QMdf[1], ") = ", .fcf(x$QM, digits[["test"]]), ", p-val ", .pval(x$QMp, digits[["pval"]], showeq=TRUE, sep=" "))))
       }
       cat("\n")
 
@@ -26,10 +30,10 @@ print.anova.rma <- function(x, digits=x$digits, ...) {
 
       cat(mstyle$section(paste0("Test of Scale Coefficients (coefficient", ifelse(x$m == 1, " ", "s "), .format.btt(x$att),"):")))
       cat("\n")
-      if (is.element(x$test, c("t"))) {
-         cat(mstyle$result(paste0("F(df1 = ", x$m, ", df2 = ", x$dfs, ") = ", .fcf(x$QM, digits[["test"]]), ", p-val ", .pval(x$QMp, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
+      if (x$test == "t") {
+         cat(mstyle$result(paste0("F(df1 = ", x$QSdf[1], ", df2 = ", x$QSdf[2], ") = ", .fcf(x$QS, digits[["test"]]), ", p-val ", .pval(x$QSp, digits[["pval"]], showeq=TRUE, sep=" "))))
       } else {
-         cat(mstyle$result(paste0("QM(df = ", x$m, ") = ", .fcf(x$QM, digits[["test"]]), ", p-val ", .pval(x$QMp, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
+         cat(mstyle$result(paste0("QS(df = ", x$QSdf[1], ") = ", .fcf(x$QS, digits[["test"]]), ", p-val ", .pval(x$QSp, digits[["pval"]], showeq=TRUE, sep=" "))))
       }
       cat("\n")
 
@@ -50,9 +54,11 @@ print.anova.rma <- function(x, digits=x$digits, ...) {
       cat(mstyle$section("Results:"))
       cat("\n")
 
-      res.table <- data.frame(estimate=.fcf(c(x$Xb), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), zval=.fcf(x$zval, digits[["test"]]), pval=.pval(x$pval, digits=digits[["pval"]]))
-      if (is.element(x$test, c("knha","adhoc","t")))
-         colnames(res.table)[3] <- "tval"
+      if (is.element(x$test, c("knha","adhoc","t"))) {
+         res.table <- data.frame(estimate=.fcf(c(x$Xb), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), tval=.fcf(x$zval, digits[["test"]]), df=round(x$ddf, 2), pval=.pval(x$pval, digits[["pval"]]))
+      } else {
+         res.table <- data.frame(estimate=.fcf(c(x$Xb), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), zval=.fcf(x$zval, digits[["test"]]), pval=.pval(x$pval, digits[["pval"]]))
+      }
       rownames(res.table) <- paste0(seq_len(x$m), ":")
       tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE))
       .print.table(tmp, mstyle)
@@ -66,9 +72,9 @@ print.anova.rma <- function(x, digits=x$digits, ...) {
          }
          cat("\n")
          if (is.element(x$test, c("knha","adhoc","t"))) {
-            cat(mstyle$result(paste0("F(df1 = ", x$m, ", df2 = ", x$dfs, ") = ", .fcf(x$QM, digits[["test"]]), ", p-val ", .pval(x$QMp, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
+            cat(mstyle$result(paste0("F(df1 = ", x$QMdf[1], ", df2 = ", x$QMdf[2], ") = ", .fcf(x$QM, digits[["test"]]), ", p-val ", .pval(x$QMp, digits[["pval"]], showeq=TRUE, sep=" "))))
          } else {
-            cat(mstyle$result(paste0("QM(df = ", x$m, ") = ", .fcf(x$QM, digits[["test"]]), ", p-val ", .pval(x$QMp, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
+            cat(mstyle$result(paste0("QM(df = ", x$QMdf[1], ") = ", .fcf(x$QM, digits[["test"]]), ", p-val ", .pval(x$QMp, digits[["pval"]], showeq=TRUE, sep=" "))))
          }
          cat("\n")
       }
@@ -90,14 +96,16 @@ print.anova.rma <- function(x, digits=x$digits, ...) {
       cat(mstyle$section("Results:"))
       cat("\n")
 
-      res.table <- data.frame(estimate=.fcf(c(x$Za), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), zval=.fcf(x$zval, digits[["test"]]), pval=.pval(x$pval, digits=digits[["pval"]]))
-      if (is.element(x$test, c("t")))
-         colnames(res.table)[3] <- "tval"
+      if (x$test == "t") {
+         res.table <- data.frame(estimate=.fcf(c(x$Za), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), tval=.fcf(x$zval, digits[["test"]]), df=round(x$ddf, 2), pval=.pval(x$pval, digits[["pval"]]))
+      } else {
+         res.table <- data.frame(estimate=.fcf(c(x$Za), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), zval=.fcf(x$zval, digits[["test"]]), pval=.pval(x$pval, digits[["pval"]]))
+      }
       rownames(res.table) <- paste0(seq_len(x$m), ":")
       tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE))
       .print.table(tmp, mstyle)
 
-      if (!is.na(x$QM)) {
+      if (!is.na(x$QS)) {
          cat("\n")
          if (x$m == 1) {
             cat(mstyle$section("Test of Hypothesis:"))
@@ -105,10 +113,10 @@ print.anova.rma <- function(x, digits=x$digits, ...) {
             cat(mstyle$section("Omnibus Test of Hypotheses:"))
          }
          cat("\n")
-         if (is.element(x$test, c("t"))) {
-            cat(mstyle$result(paste0("F(df1 = ", x$m, ", df2 = ", x$dfs.alpha, ") = ", .fcf(x$QM, digits[["test"]]), ", p-val ", .pval(x$QMp, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
+         if (x$test == "t") {
+            cat(mstyle$result(paste0("F(df1 = ", x$QSdf[1], ", df2 = ", x$QSdf[2], ") = ", .fcf(x$QS, digits[["test"]]), ", p-val ", .pval(x$QSp, digits[["pval"]], showeq=TRUE, sep=" "))))
          } else {
-            cat(mstyle$result(paste0("QM(df = ", x$m, ") = ", .fcf(x$QM, digits[["test"]]), ", p-val ", .pval(x$QMp, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
+            cat(mstyle$result(paste0("QS(df = ", x$QSdf[1], ") = ", .fcf(x$QS, digits[["test"]]), ", p-val ", .pval(x$QSp, digits[["pval"]], showeq=TRUE, sep=" "))))
          }
          cat("\n")
       }
@@ -117,13 +125,13 @@ print.anova.rma <- function(x, digits=x$digits, ...) {
 
    if (x$type == "LRT") {
 
-      res.table <- data.frame(c(x$p.f, x$p.r),
+      res.table <- data.frame(c(x$parms.f, x$parms.r),
                               c(.fcf(x$fit.stats.f["AIC"],  digits[["fit"]]), .fcf(x$fit.stats.r["AIC"],  digits[["fit"]])),
                               c(.fcf(x$fit.stats.f["BIC"],  digits[["fit"]]), .fcf(x$fit.stats.r["BIC"],  digits[["fit"]])),
                               c(.fcf(x$fit.stats.f["AICc"], digits[["fit"]]), .fcf(x$fit.stats.r["AICc"], digits[["fit"]])),
                               c(.fcf(x$fit.stats.f["ll"],   digits[["fit"]]), .fcf(x$fit.stats.r["ll"],   digits[["fit"]])),
                               c(NA, .fcf(x$LRT, digits[["test"]])),
-                              c(NA, .pval(x$pval, digits=digits[["pval"]])),
+                              c(NA, .pval(x$pval, digits[["pval"]])),
                               c(.fcf(x$QE.f, digits[["test"]]),  .fcf(x$QE.r, digits[["test"]])),
                               c(.fcf(x$tau2.f, digits[["var"]]), .fcf(x$tau2.r, digits[["var"]])),
                               c(NA, NA))

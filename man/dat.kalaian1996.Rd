@@ -65,7 +65,7 @@ res <- rma.mv(yi, V, mods = ~ outcome - 1,
               data=dat, digits=3)
 res
 
-### test whether effect differs for the math and verbal subtest
+### test whether the effect differs for the math and verbal subtest
 anova(res, X=c(1,-1))
 
 ### log-transform and mean center the hours of coaching variable

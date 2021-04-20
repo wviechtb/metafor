@@ -24,7 +24,7 @@
 ### - PHYBM/PHYPL/PHYPD (phylogenetic structures: Brownian motion, Pagel's lambda, Pagel's delta)
 
 rma.mv <- function(yi, V, W, mods, random, struct="CS", intercept=TRUE, data, slab, subset, ### add ni as argument in the future
-method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, rho, gamma2, phi, sparse=FALSE, verbose=FALSE, control, ...) {
+method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, rho, gamma2, phi, sparse=FALSE, verbose=FALSE, control, ...) {
 
    #########################################################################
 
@@ -96,9 +96,11 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
    if (.isTRUE(ddd$tdist))
       test <- "t"
 
-   # if (!is.element(test, c("z", "t", "knha", "adhoc")))
    if (!is.element(test, c("z", "t")))
       stop(mstyle$stop("Invalid option selected for 'test' argument."))
+
+   if (is.character(dfs))
+      dfs <- match.arg(dfs, c("residual", "contain"))
 
    ### handle Rscale argument (either character, logical, or integer)
 
@@ -1817,16 +1819,16 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
          cat("\n\n")
       } else {
          cat("\n\n")
-         vcs <- rbind(c("sigma2" = if (withS) round(sigma2.init, digits=digits[["var"]]) else NA,
-                        "tau2"   = if (withG) round(tau2.init, digits=digits[["var"]]) else NA,
-                        "rho"    = if (withG) round(rho.init, digits=digits[["var"]]) else NA,
-                        "gamma2" = if (withH) round(gamma2.init, digits=digits[["var"]]) else NA,
-                        "phi"    = if (withH) round(phi.init, digits=digits[["var"]]) else NA),
+         vcs <- rbind(c("sigma2" = if (withS) round(sigma2.init, digits[["var"]]) else NA,
+                        "tau2"   = if (withG) round(tau2.init, digits[["var"]]) else NA,
+                        "rho"    = if (withG) round(rho.init, digits[["var"]]) else NA,
+                        "gamma2" = if (withH) round(gamma2.init, digits[["var"]]) else NA,
+                        "phi"    = if (withH) round(phi.init, digits[["var"]]) else NA),
                         round(c(   if (withS) sigma2 else NA,
                                    if (withG) tau2 else NA,
                                    if (withG) rho else NA,
                                    if (withH) gamma2 else NA,
-                                   if (withH) phi else NA), digits=digits[["var"]]))
+                                   if (withH) phi else NA), digits[["var"]]))
          vcs <- data.frame(vcs, stringsAsFactors=FALSE)
          rownames(vcs) <- c("initial", "specified")
          vcs <- rbind(included=ifelse(c(rep(withS, sigma2s), rep(withG, tau2s), rep(withG, rhos), rep(withH, gamma2s), rep(withH, phis)), "Yes", "No"), fixed=unlist(vc.fix), vcs)
@@ -2080,6 +2082,14 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
    if (verbose > 1)
       message(mstyle$message("Conducting tests of the fixed effects ..."))
 
+   ### ddf calculation
+
+   if (test == "t") {
+      ddf <- .ddf.calc(dfs, X=X, k=k, p=p, mf.s=mf.s, mf.g=mf.g, mf.h=mf.h)
+   } else {
+      ddf <- rep(NA, p)
+   }
+
    ### QM calculation
 
    QM <- try(as.vector(t(beta)[btt] %*% chol2inv(chol(vb[btt,btt])) %*% beta[btt]), silent=TRUE)
@@ -2093,21 +2103,15 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
    names(se) <- NULL
    zval <- c(beta/se)
 
-   if (is.element(test, c("t"))) {
-      dfs <- k-p
-      QM  <- QM / m
-      if (dfs > 0) {
-         QMp  <- pf(QM, df1=m, df2=dfs, lower.tail=FALSE)
-         pval <- 2*pt(abs(zval), df=dfs, lower.tail=FALSE)
-         crit <- qt(level/2, df=dfs, lower.tail=FALSE)
-      } else {
-         QMp  <- NaN
-         pval <- NaN
-         crit <- NaN
-      }
+   if (test == "t") {
+      QM   <- QM / m
+      QMdf <- c(m, min(ddf[btt]))
+      QMp  <- if (QMdf[2] > 0) pf(QM, df1=QMdf[1], df2=QMdf[2], lower.tail=FALSE) else NA
+      pval <- sapply(seq_along(ddf), function(j) if (ddf[j] > 0) 2*pt(abs(zval[j]), df=ddf[j], lower.tail=FALSE) else NA)
+      crit <- sapply(seq_along(ddf), function(j) if (ddf[j] > 0) qt(level/2, df=ddf[j], lower.tail=FALSE) else NA)
    } else {
-      dfs  <- NA
-      QMp  <- pchisq(QM, df=m, lower.tail=FALSE)
+      QMdf <- c(m, NA)
+      QMp  <- pchisq(QM, df=QMdf[1], lower.tail=FALSE)
       pval <- 2*pnorm(abs(zval), lower.tail=FALSE)
       crit <- qnorm(level/2, lower.tail=FALSE)
    }
@@ -2280,13 +2284,13 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
 
       res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
                   sigma2=sigma2, tau2=tau2, rho=rho, gamma2=gamma2, phi=phi,
-                  QE=QE, QEp=QEp, QM=QM, QMp=QMp,
+                  QE=QE, QEp=QEp, QM=QM, QMdf=QMdf, QMp=QMp,
                   k=k, k.f=k.f, k.eff=k.eff, k.all=k.all, p=p, p.eff=p.eff, parms=parms,
                   int.only=int.only, int.incl=int.incl, intercept=intercept, allvipos=allvipos, coef.na=coef.na,
                   yi=yi, vi=vi, V=V, W=A, X=X, yi.f=yi.f, vi.f=vi.f, V.f=V.f, X.f=X.f, W.f=W.f, ni=ni, ni.f=ni.f, M=M, G=G, H=H, hessian=hessian,
                   ids=ids, not.na=not.na, subset=subset, slab=slab, slab.null=slab.null,
                   measure=measure, method=method, weighted=weighted,
-                  test=test, dfs=dfs, btt=btt, m=m,
+                  test=test, dfs=dfs, ddf=ddf, btt=btt, m=m,
                   digits=digits, level=level, sparse=sparse, dist=ddd$dist, control=control, verbose=verbose,
                   fit.stats=fit.stats,
                   vc.fix=vc.fix,
@@ -2300,7 +2304,7 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
                   g.levels.f=g.levels.f, g.levels.k=g.levels.k, g.levels.comb.k=g.levels.comb.k,
                   h.levels.f=h.levels.f, h.levels.k=h.levels.k, h.levels.comb.k=h.levels.comb.k,
                   struct=struct, Rfix=Rfix, R=R, Rscale=Rscale,
-                  mf.r=mf.r, mf.g=mf.g, mf.g.f=mf.g.f, mf.h=mf.h, mf.h.f=mf.h.f, Z.S=Z.S, Z.G1=Z.G1, Z.G2=Z.G2, Z.H1=Z.H1, Z.H2=Z.H2,
+                  mf.r=mf.r, mf.s=mf.s, mf.g=mf.g, mf.g.f=mf.g.f, mf.h=mf.h, mf.h.f=mf.h.f, Z.S=Z.S, Z.G1=Z.G1, Z.G2=Z.G2, Z.H1=Z.H1, Z.H2=Z.H2,
                   formula.yi=formula.yi, formula.mods=formula.mods, random=random,
                   version=packageVersion("metafor"), call=mf)
 
@@ -2310,11 +2314,11 @@ method="REML", test="z", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, r
       if (ddd$outlist == "minimal") {
          res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
                      sigma2=sigma2, tau2=tau2, rho=rho, gamma2=gamma2, phi=phi,
-                     QE=QE, QEp=QEp, QM=QM, QMp=QMp,
+                     QE=QE, QEp=QEp, QM=QM, QMdf=QMdf, QMp=QMp,
                      k=k, k.eff=k.eff, k.all=k.all, p=p, p.eff=p.eff, parms=parms,
                      int.only=int.only,
                      measure=measure, method=method,
-                     test=test, dfs=dfs, btt=btt, m=m,
+                     test=test, dfs=dfs, ddf=ddf, btt=btt, m=m,
                      digits=digits,
                      fit.stats=fit.stats,
                      vc.fix=vc.fix,

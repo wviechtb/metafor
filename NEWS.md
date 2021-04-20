@@ -1,8 +1,10 @@
-# metafor 2.5-86 (2021-04-03)
+# metafor 2.5-87 (2021-04-20)
 
 - the `metafor` package now makes use of the `mathjaxr` package to nicely render equations shown in the HTML help pages
 
 - added `selmodel()` for fitting a wide variety of selection models (and added the corresponding `plot.rma.uni.selmodel()` function for drawing the estimated selection function)
+
+- `rma.mv()` gains `dfs` argument and now provides an often better way for calculating the (denominator) degrees of freedom for approximate t- and F-tests when `dfs="contain"`
 
 - added `tes()` function for the test of excess significance
 

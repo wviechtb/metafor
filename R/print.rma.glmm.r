@@ -109,31 +109,33 @@ print.rma.glmm <- function(x, digits, showfit=FALSE, signif.stars=getOption("sho
          cat(mstyle$section("Tests for Residual Heterogeneity:"))
       }
       cat("\n")
-      cat(mstyle$result(paste0("Wld(df = ", x$QE.df, ") = ", QE.Wld, ", p-val ", .pval(x$QEp.Wld, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
+      cat(mstyle$result(paste0("Wld(df = ", x$QE.df, ") = ", QE.Wld, ", p-val ", .pval(x$QEp.Wld, digits[["pval"]], showeq=TRUE, sep=" "))))
       cat("\n")
-      cat(mstyle$result(paste0("LRT(df = ", x$QE.df, ") = ", QE.LRT, ", p-val ", .pval(x$QEp.LRT, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
+      cat(mstyle$result(paste0("LRT(df = ", x$QE.df, ") = ", QE.LRT, ", p-val ", .pval(x$QEp.LRT, digits[["pval"]], showeq=TRUE, sep=" "))))
       cat("\n\n")
    }
 
    if (x$p > 1L && !is.na(x$QM)) {
       cat(mstyle$section(paste0("Test of Moderators (coefficient", ifelse(x$m == 1, " ", "s "), .format.btt(x$btt),"):")))
       cat("\n")
-      if (is.element(x$test, c("t"))) {
-         cat(mstyle$result(paste0("F(df1 = ", x$m, ", df2 = ", x$dfs, ") = ", .fcf(x$QM, digits[["test"]]), ", p-val ", .pval(x$QMp, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
+      if (x$test == "t") {
+         cat(mstyle$result(paste0("F(df1 = ", x$QMdf[1], ", df2 = ", x$QMdf[2], ") = ", .fcf(x$QM, digits[["test"]]), ", p-val ", .pval(x$QMp, digits[["pval"]], showeq=TRUE, sep=" "))))
       } else {
-         cat(mstyle$result(paste0("QM(df = ", x$m, ") = ", .fcf(x$QM, digits[["test"]]), ", p-val ", .pval(x$QMp, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
+         cat(mstyle$result(paste0("QM(df = ", x$QMdf[1], ") = ", .fcf(x$QM, digits[["test"]]), ", p-val ", .pval(x$QMp, digits[["pval"]], showeq=TRUE, sep=" "))))
       }
       cat("\n\n")
    }
 
-   res.table <- data.frame(estimate=.fcf(c(x$beta), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), zval=.fcf(x$zval, digits[["test"]]), pval=.pval(x$pval, digits[["pval"]]), ci.lb=.fcf(x$ci.lb, digits[["ci"]]), ci.ub=.fcf(x$ci.ub, digits[["ci"]]))
+   if (x$test == "t") {
+      res.table <- data.frame(estimate=.fcf(c(x$beta), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), tval=.fcf(x$zval, digits[["test"]]), df=round(x$ddf, 2), pval=.pval(x$pval, digits[["pval"]]), ci.lb=.fcf(x$ci.lb, digits[["ci"]]), ci.ub=.fcf(x$ci.ub, digits[["ci"]]))
+   } else {
+      res.table <- data.frame(estimate=.fcf(c(x$beta), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), zval=.fcf(x$zval, digits[["test"]]), pval=.pval(x$pval, digits[["pval"]]), ci.lb=.fcf(x$ci.lb, digits[["ci"]]), ci.ub=.fcf(x$ci.ub, digits[["ci"]]))
+   }
    rownames(res.table) <- rownames(x$beta)
-   if (is.element(x$test, c("t")))
-      colnames(res.table)[3] <- "tval"
    signif <- symnum(x$pval, corr=FALSE, na=FALSE, cutpoints=c(0, 0.001, 0.01, 0.05, 0.1, 1), symbols = c("***", "**", "*", ".", " "))
    if (signif.stars) {
       res.table <- cbind(res.table, signif)
-      colnames(res.table)[7] <- ""
+      colnames(res.table)[ncol(res.table)] <- ""
    }
 
    ddd <- list(...)

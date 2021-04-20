@@ -53,12 +53,12 @@ res <- rma.mv(yi, vi, mods = ~ trt + trt:arms, random = ~ 1 | study,
               data=dat, method="ML", digits=2)
 res
 
-### model with random treatment effect
+### model with a random treatment effect
 res <- rma.mv(yi, vi, mods = ~ trt, random = list(~ 1 | study, ~ trt | study),
               struct="UN", tau2=c(0,NA), rho=0, data=dat, method="ML", digits=2)
 res
 
-### model with random treatment effect, but with equal variances in both arms
+### model with a random treatment effect, but with equal variances in both arms
 res <- rma.mv(yi, vi, mods = ~ trt, random = list(~ 1 | study, ~ trt | study),
               struct="CS", rho=0, data=dat, method="ML", digits=2)
 res

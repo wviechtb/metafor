@@ -1124,7 +1124,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    res$ci.lb.tau2 <- ci.lb.tau2
    res$ci.ub.tau2 <- ci.ub.tau2
 
-   res$dfs  <- NA
+   res$dfs <- res$ddf <- NA
    res$test <- "z"
    res$s2w  <- 1
 

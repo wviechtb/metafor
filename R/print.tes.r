@@ -44,7 +44,7 @@ print.tes <- function(x, digits=x$digits, ...) {
    cat("\n")
 
    cat(mstyle$text("Test of Excess Significance: "))
-   cat(mstyle$result(paste0("p ", .pval(x$pval, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
+   cat(mstyle$result(paste0("p ", .pval(x$pval, digits[["pval"]], showeq=TRUE, sep=" "))))
    if (x$test == "chi2") {
       cat(mstyle$result(paste0(" (X^2 = ", .fcf(x$X2, digits[["test"]]), ", df = 1)")))
    }

@@ -41,15 +41,15 @@
    \item{ilab.pos}{integer(s) (either 1, 2, 3, or 4) to specify the alignment of the vector(s) given via \code{ilab} (2 means right, 4 mean left aligned). If unspecified, the default is to center the labels.}
    \item{order}{optional character string to specify how the studies should be ordered. Can also be a variable based on which the studies will be ordered. See \sQuote{Details}.}
    \item{subset}{optional (logical or numeric) vector to specify the subset of studies that should be included in the plot.}
-   \item{transf}{optional argument to specify a function that should be used to transform the observed effect sizes or outcomes and corresponding confidence interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
+   \item{transf}{optional argument to specify a function that should be used to transform the observed outcomes and corresponding confidence interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{atransf}{optional argument to specify a function that should be used to transform the x-axis labels and annotations (e.g., \code{atransf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified via \code{transf} or \code{atransf}.}
    \item{rows}{optional vector to specify the rows (or more generally, the horizontal positions) for plotting the outcomes. Can also be a single value to specify the row (horizontal position) of the first outcome (the remaining outcomes are then plotted below this starting row). If unspecified, the function sets this value automatically.}
    \item{efac}{vertical expansion factor for confidence interval limits and arrows. The default value of 1 should usually work okay. Can also be a vector of two numbers, the first for CI limits, the second for arrows.}
-   \item{pch}{plotting symbol to use for the observed effect sizes or outcomes. By default, a filled square is used. See \code{\link{points}} for other options. Can also be a vector of values.}
-   \item{psize}{optional numeric value to specify the point sizes for the observed effect sizes or outcomes. If unspecified, the point sizes are a function of the precision of the estimates. Can also be a vector of values.}
+   \item{pch}{plotting symbol to use for the observed outcomes. By default, a filled square is used. See \code{\link{points}} for other options. Can also be a vector of values.}
+   \item{psize}{optional numeric value to specify the point sizes for the observed outcomes. If unspecified, the point sizes are a function of the precision of the estimates. Can also be a vector of values.}
    \item{plim}{numeric vector of length 2 to scale the point sizes (ignored when \code{psize} is specified). See \sQuote{Details}.}
-   \item{col}{optional character string to specify the name of a color to use for plotting the observed effect sizes or outcomes (\code{"black"} is used by default if not specified). Can also be a vector of color names.}
+   \item{col}{optional character string to specify the name of a color to use for plotting the observed outcomes (\code{"black"} is used by default if not specified). Can also be a vector of color names.}
    \item{lty}{optional character string to specify the line type for the confidence intervals. If unspecified, the function sets this to \code{"solid"} by default.}
    \item{fonts}{optional character string to specify the font to use for the study labels, annotations, and the extra information (if specified via \code{ilab}). If unspecified, the default font is used.}
    \item{cex}{optional character and symbol expansion factor. If unspecified, the function tries to set this to a sensible value.}
@@ -59,13 +59,13 @@
    \item{\dots}{other arguments.}
 }
 \details{
-   The plot shows the observed effect sizes or outcomes with corresponding confidence intervals. To use the function, one should specify the observed effect sizes or outcomes (via the \code{x} argument) together with the corresponding sampling variances (via the \code{vi} argument) or with the corresponding standard errors (via the \code{sei} argument). Alternatively, one can specify the observed effect sizes or outcomes together with the corresponding confidence interval bounds (via the \code{ci.lb} and \code{ci.ub} arguments).
+   The plot shows the observed effect sizes or outcomes with corresponding confidence intervals. To use the function, one should specify the observed outcomes (via the \code{x} argument) together with the corresponding sampling variances (via the \code{vi} argument) or with the corresponding standard errors (via the \code{sei} argument). Alternatively, one can specify the observed outcomes together with the corresponding confidence interval bounds (via the \code{ci.lb} and \code{ci.ub} arguments).
 
-   With the \code{transf} argument, the observed effect sizes or outcomes and corresponding confidence interval bounds can be transformed with some suitable function. For example, when plotting log odds ratios, then one could use \code{transf=exp} to obtain a forest plot showing the odds ratios. Alternatively, one can use the \code{atransf} argument to transform the x-axis labels and annotations (e.g., \code{atransf=exp}). See also \link{transf} for some other useful transformation functions in the context of a meta-analysis. The examples below illustrate the use of these arguments.
+   With the \code{transf} argument, the observed outcomes and corresponding confidence interval bounds can be transformed with some suitable function. For example, when plotting log odds ratios, then one could use \code{transf=exp} to obtain a forest plot showing the odds ratios. Alternatively, one can use the \code{atransf} argument to transform the x-axis labels and annotations (e.g., \code{atransf=exp}). See also \link{transf} for some other useful transformation functions in the context of a meta-analysis. The examples below illustrate the use of these arguments.
 
    By default, the studies are ordered from top to bottom (i.e., the first study in the dataset will be placed in row \mjseqn{k}, the second study in row \mjseqn{k-1}, and so on, until the last study, which is placed in the first row). The studies can be reordered with the \code{order} argument:
    \itemize{
-   \item \code{order="obs"}: the studies are ordered by the observed effect sizes,
+   \item \code{order="obs"}: the studies are ordered by the observed outcomes,
    \item \code{order="prec"}: the studies are ordered by their sampling variances.
    } Alternatively, it is also possible to set \code{order} equal to a variable based on which the studies will be ordered (see \sQuote{Examples}).
 

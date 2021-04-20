@@ -53,10 +53,13 @@ ranktest(x, \dots)
 ### calculate log risk ratios and corresponding sampling variances
 dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
-### random-effects model
+### fit random-effects model
 res <- rma(yi, vi, data=dat)
 
+### carry out the rank correlation test
 ranktest(res)
+
+### can also pass the observed outcomes and corresponding sampling variances to the function
 ranktest(dat$yi, dat$vi)
 }
 \keyword{htest}

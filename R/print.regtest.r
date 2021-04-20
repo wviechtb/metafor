@@ -47,10 +47,10 @@ print.regtest <- function(x, digits=x$digits, ret.fit=x$ret.fit, ...) {
    }
 
    cat(mstyle$text("Test for Funnel Plot Asymmetry: "))
-   if (is.na(x$dfs)) {
-      cat(mstyle$result(paste0("z = ", .fcf(x$zval, digits[["test"]]), ", p ", .pval(x$pval, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
+   if (is.na(x$ddf)) {
+      cat(mstyle$result(paste0("z = ", .fcf(x$zval, digits[["test"]]), ", p ", .pval(x$pval, digits[["pval"]], showeq=TRUE, sep=" "))))
    } else {
-      cat(mstyle$result(paste0("t = ", .fcf(x$zval, digits[["test"]]), ", df = ", x$dfs, ", p ", .pval(x$pval, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
+      cat(mstyle$result(paste0("t = ", .fcf(x$zval, digits[["test"]]), ", df = ", x$ddf, ", p ", .pval(x$pval, digits[["pval"]], showeq=TRUE, sep=" "))))
    }
    cat("\n")
 

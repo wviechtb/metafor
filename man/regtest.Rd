@@ -46,7 +46,7 @@ regtest(x, \dots)
 
    The outcome measure used for the regression test is simply determined by what measure was used in fitting the original model (or what values are passed to \code{regtest.default}).
 
-   The model used for conducting the regression test can also be used to obtain a \sQuote{limit estimate} of the (average) true effect. In particular, when the standard error, sampling variance, or inverse (square root) sample size is used as the predictor, the model intercept in essence reflects the estimate under infinite precision. This is sometimes (cautiously) interpreted as an estimate of the (average) true effect that is adjusted for publication bias.
+   The model used for conducting the regression test can also be used to obtain a \sQuote{limit estimate} of the (average) true effect or outcome. In particular, when the standard error, sampling variance, or inverse (square root) sample size is used as the predictor, the model intercept in essence reflects the estimate under infinite precision. This is sometimes (cautiously) interpreted as an estimate of the (average) true effect or outcome that is adjusted for publication bias.
 }
 \value{
    An object of class \code{"regtest"}. The object is a list containing the following components:

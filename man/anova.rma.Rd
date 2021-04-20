@@ -27,13 +27,14 @@
 
    Instead, one can use the \code{X} argument to specify a linear combination of the coefficients in the model that should be tested (i.e., whether the linear combination is significantly different from zero). If a matrix of linear combinations is specified, each row defines a particular linear combination to be tested. If the matrix is of full rank, an omnibus Wald-type test of all linear combinations is also provided. Linear combinations can also be obtained with the \code{\link{predict.rma}} function, which will provide corresponding confidence intervals.
 
-   When specifying two models for comparison, the function provides a likelihood ratio test (LRT) comparing the two models. The two models must be based on the same set of data, must be of the same class, and should be nested for the LRT to make sense. Note that LRTs are not meaningful when using REML estimation and the two models have different fixed effects.
+   When specifying two models for comparison, the function provides a likelihood ratio test (LRT) comparing the two models. The two models must be based on the same set of data, must be of the same class, and should be nested for the LRT to make sense. Note that LRTs are not meaningful when using REML estimation and the two models differ in their fixed effects.
 
    For location-scale models fitted with the \code{\link{rma}} function, one can use \code{att} to specify the indices of the scale coefficients to test. Similarly, one can use the \code{Z} argument to specify one or multiple linear combinations of the scale coefficients in the model that should be tested.
 }
 \value{
    An object of class \code{"anova.rma"}. When a single model is specified (without any further arguments or together with the \code{btt} argument), the object is a list containing the following components:
    \item{QM}{test statistic of the Wald-type test of the model coefficients.}
+   \item{QMdf}{corresponding degrees of freedom.}
    \item{QMp}{corresponding p-value.}
    \item{btt}{indices of the coefficients tested by the Wald-type test.}
    \item{k}{number of outcomes included in the analysis.}
@@ -42,6 +43,7 @@
    \item{\dots}{some additional elements/values.}
    When argument \code{X} is used, the object is a list containing the following components:
    \item{QM}{test statistic of the omnibus Wald-type test of all linear combinations.}
+   \item{QMdf}{corresponding degrees of freedom.}
    \item{QMp}{corresponding p-value.}
    \item{hyp}{description of the linear combinations tested.}
    \item{Xb}{values of the linear combinations.}
@@ -51,8 +53,8 @@
    When two models are specified, the object is a list containing the following components:
    \item{fit.stats.f}{log-likelihood, deviance, AIC, BIC, and AICc for the full model.}
    \item{fit.stats.r}{log-likelihood, deviance, AIC, BIC, and AICc for the reduced model.}
-   \item{p.f}{number of parameters in the full model.}
-   \item{p.r}{number of parameters in the reduced model.}
+   \item{parms.f}{number of parameters in the full model.}
+   \item{parms.r}{number of parameters in the reduced model.}
    \item{LRT}{likelihood ratio test statistic.}
    \item{pval}{corresponding p-value.}
    \item{QE.f}{test statistic of the test for (residual) heterogeneity from the full model.}
@@ -92,10 +94,10 @@
 ### calculate log risk ratios and corresponding sampling variances
 dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
-### random-effects model
+### fit random-effects model
 res1 <- rma(yi, vi, data=dat, method="ML")
 
-### mixed-effects model with two moderators (absolute latitude and publication year)
+### fit mixed-effects model with two moderators (absolute latitude and publication year)
 res2 <- rma(yi, vi, mods = ~ ablat + year, data=dat, method="ML")
 
 ### Wald-type test of the two moderators

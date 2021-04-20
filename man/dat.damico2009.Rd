@@ -32,7 +32,7 @@ dat
 ### meta-analysis of the (log) odds ratios using the Mantel-Haenszel method
 rma.mh(measure="OR", ai=xt, n1i=nt, ci=xc, n2i=nc, data=dat, digits=2)
 
-### compute log odds ratios and corresponding sampling variances
+### calculate log odds ratios and corresponding sampling variances
 dat <- escalc(measure="OR", ai=xt, n1i=nt, ci=xc, n2i=nc, data=dat)
 
 ### meta-analysis using a random-effects model

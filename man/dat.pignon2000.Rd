@@ -25,7 +25,7 @@
 ### copy data into 'dat'
 dat <- dat.pignon2000
 
-### compute estimated log hazard ratios and sampling variances
+### calculate log hazard ratios and sampling variances
 dat$yi <- with(dat, OmE/V)
 dat$vi <- with(dat, 1/V)
 dat

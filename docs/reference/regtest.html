@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-86</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-87</span>
       </span>
     </div>
 
@@ -205,7 +205,7 @@
 <p>If the model passed to the <code>regtest</code> function already included one or more moderators, then <code>regtest</code> will add the chosen predictor to the moderator(s) already included in the model. This way, one can test for funnel plot asymmetry after accounting first for the influence of the moderator(s) already included.</p>
 <p>One can also pass a vector with the observed effect sizes or outcomes (via <code>x</code>) and the corresponding sampling variances via <code>vi</code> (or the standard errors via <code>sei</code>) directly to the function (in this case, the <code>regtest.default</code> function is used). When the predictor is the sample size or a transformation thereof, then <code>ni</code> needs to be specified here as well.</p>
 <p>The outcome measure used for the regression test is simply determined by what measure was used in fitting the original model (or what values are passed to <code>regtest.default</code>).</p>
-<p>The model used for conducting the regression test can also be used to obtain a &#8216;limit estimate&#8217; of the (average) true effect. In particular, when the standard error, sampling variance, or inverse (square root) sample size is used as the predictor, the model intercept in essence reflects the estimate under infinite precision. This is sometimes (cautiously) interpreted as an estimate of the (average) true effect that is adjusted for publication bias.</p>
+<p>The model used for conducting the regression test can also be used to obtain a &#8216;limit estimate&#8217; of the (average) true effect or outcome. In particular, when the standard error, sampling variance, or inverse (square root) sample size is used as the predictor, the model intercept in essence reflects the estimate under infinite precision. This is sometimes (cautiously) interpreted as an estimate of the (average) true effect or outcome that is adjusted for publication bias.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class <code>"regtest"</code>. The object is a list containing the following components:</p>

@@ -113,7 +113,7 @@
 ### calculate log odds ratios and corresponding sampling variances
 dat <- escalc(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
-### random-effects model using rma.uni()
+### fit random-effects model using rma.uni()
 res <- rma(yi, vi, data=dat)
 
 ### profile over tau^2
@@ -131,7 +131,7 @@ dat.long$group <- relevel(dat.long$group, ref="con")
 ### calculate log odds and corresponding sampling variances
 dat.long <- escalc(measure="PLO", xi=out1, mi=out2, data=dat.long)
 
-### bivariate random-effects model using rma.mv()
+### fit bivariate random-effects model using rma.mv()
 res <- rma.mv(yi, vi, mods = ~ group, random = ~ group | study, struct="UN", data=dat.long)
 res
 

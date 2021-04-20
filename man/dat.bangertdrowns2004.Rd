@@ -25,7 +25,7 @@
 }
 }
 \details{
-   In each of the studies included in this meta-analysis, an experimental group (i.e., a group of students that received instruction with increased emphasis on writing tasks) was compared against a control group (i.e., a group of students that received conventional instruction) with respect to some content-related measure of academic achievement (e.g., final grade, an exam/quiz/test score). The effect size measure for this meta-analysis was the standardized mean difference (with positive values indicating a higher mean level of academic achievement in the intervention group).
+   In each of the studies included in this meta-analysis, an experimental group (i.e., a group of students that received instruction with increased emphasis on writing tasks) was compared against a control group (i.e., a group of students that received conventional instruction) with respect to some content-related measure of academic achievement (e.g., final grade, an exam/quiz/test score). The outcome measure for this meta-analysis was the standardized mean difference (with positive values indicating a higher mean level of academic achievement in the intervention group).
 
    The standardized mean differences given here are bias-corrected and therefore differ slighty from the values reported in the article. Also, since only the total sample size is given in the article, the sampling variances were computed under the assumption that \mjeqn{n_{i1} = n_{i2} = n_i / 2}{n_i1 = n_i2 = n_i / 2}.
 }

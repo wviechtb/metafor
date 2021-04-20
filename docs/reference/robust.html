@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-86</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-87</span>
       </span>
     </div>
 
@@ -193,7 +193,7 @@
 
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>The variable specified via <code>cluster</code> is assumed to be of the same length as the data originally passed to the <code>rma.uni</code> or <code>rma.mv</code> function. Any subsetting and removal of studies with missing values as done when fitting the original model is also automatically applied to the variable specified via <code>cluster</code>.</p>
+    <p>The variable specified via <code>cluster</code> is assumed to be of the same length as the data originally passed to the <code>rma.uni</code> or <code>rma.mv</code> functions. Any subsetting and removal of studies with missing values that was applied during the model fitting is also automatically applied to the variable specified via the <code>cluster</code> argument.</p>
 <p>The idea of the robust (sandwich-type) estimator for models with unspecified heteroscedasticity can be traced back to Eicker (1967), Huber (1967), and White (1980). Hence, the method in general is often referred to as the Eicker-Huber-White method. Some small-sample improvements to the method are described by MacKinnon and White (1985). The extension to the cluster robust estimator can be found in Froot (1989) and Williams (2000). Cameron and Miller (2015) provide an extensive overview of cluster robust methods. Sidik and Jonkman (2005, 2006) introduced robust methods in the meta-analytic context for standard random/mixed-effects models. The use of the cluster robust estimator for multivariate/multilevel meta-analytic models is described in Hedges, Tipton, and Johnson (2010).</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
@@ -220,7 +220,7 @@
     <pre class="examples"><div class='input'><span class='co'>### copy data from Konstantopoulos (2011) into 'dat'</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.konstantopoulos2011</span>
 
-<span class='co'>### multilevel random-effects model</span>
+<span class='co'>### fit multilevel random-effects model</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, random <span class='op'>=</span> <span class='op'>~</span> <span class='fl'>1</span> <span class='op'>|</span> <span class='va'>district</span><span class='op'>/</span><span class='va'>school</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 <span class='va'>res</span>
 </div><div class='output co'>#&gt; 
@@ -243,7 +243,7 @@
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
-<span class='co'>### results based on the sandwich method</span>
+<span class='co'>### obtain results based on the sandwich method</span>
 <span class='fu'>robust</span><span class='op'>(</span><span class='va'>res</span>, cluster<span class='op'>=</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>district</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 
 #&gt; Number of outcomes:   56
@@ -252,8 +252,8 @@
 #&gt; 
 #&gt; Model Results:
 #&gt; 
-#&gt; estimate      se    tval    pval    ci.lb   ci.ub 
-#&gt;   0.1847  0.0845  2.1859  0.0537  -0.0036  0.3730  . 
+#&gt; estimate      se    tval  df    pval    ci.lb   ci.ub 
+#&gt;   0.1847  0.0845  2.1859  10  0.0537  -0.0036  0.3730  . 
 #&gt; 
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
@@ -310,7 +310,7 @@
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
-<span class='co'>### results based on sandwich method</span>
+<span class='co'>### obtain results based on sandwich method</span>
 <span class='fu'>robust</span><span class='op'>(</span><span class='va'>res</span>, cluster<span class='op'>=</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>trial</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 
 #&gt; Number of outcomes:   10
@@ -322,9 +322,9 @@
 #&gt; 
 #&gt; Model Results:
 #&gt; 
-#&gt;            estimate      se     tval    pval    ci.lb    ci.ub 
-#&gt; outcomeAL   -0.3392  0.1010  -3.3597  0.0437  -0.6605  -0.0179  * 
-#&gt; outcomePD    0.3534  0.0675   5.2338  0.0136   0.1385   0.5683  * 
+#&gt;            estimate      se     tval  df    pval    ci.lb    ci.ub 
+#&gt; outcomeAL   -0.3392  0.1010  -3.3597   3  0.0437  -0.6605  -0.0179  * 
+#&gt; outcomePD    0.3534  0.0675   5.2338   3  0.0136   0.1385   0.5683  * 
 #&gt; 
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1

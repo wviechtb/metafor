@@ -43,7 +43,7 @@ dat <- dat.bcg
 dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat)
 dat
 
-### random-effects model
+### fit random-effects model
 res <- rma(yi, vi, data=dat)
 res
 

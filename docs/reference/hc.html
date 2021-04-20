@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Meta-Analysis based on the Method by Henmi and Copas (2010) — hc" />
-<meta property="og:description" content="The function can be used to obtain an estimate of the average true effect and corresponding confidence interval under a random-effects model using the method described by Henmi and Copas (2010)." />
+<meta property="og:description" content="The function can be used to obtain an estimate of the average true outcome and corresponding confidence interval under a random-effects model using the method described by Henmi and Copas (2010)." />
 
 
 
@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-86</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-87</span>
       </span>
     </div>
 
@@ -134,7 +134,7 @@
     </div>
 
     <div class="ref-description">
-    <p>The function can be used to obtain an estimate of the average true effect and corresponding confidence interval under a random-effects model using the method described by Henmi and Copas (2010).</p>
+    <p>The function can be used to obtain an estimate of the average true outcome and corresponding confidence interval under a random-effects model using the method described by Henmi and Copas (2010).</p>
     </div>
 
     <pre class="usage"><span class='fu'>hc</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>...</span><span class='op'>)</span>
@@ -155,7 +155,7 @@
     </tr>
     <tr>
       <th>transf</th>
-      <td><p>optional argument to specify a function that should be used to transform the estimated true effect and the corresponding interval bounds (e.g., <code>transf=exp</code>; see also <a href='transf.html'>transf</a>). If unspecified, no transformation is used.</p></td>
+      <td><p>optional argument to specify a function that should be used to transform the estimate and the corresponding interval bounds (e.g., <code>transf=exp</code>; see also <a href='transf.html'>transf</a>). If unspecified, no transformation is used.</p></td>
     </tr>
     <tr>
       <th>targs</th>
@@ -174,15 +174,15 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The model specified via <code>object</code> must be a model without moderators (i.e., either a fixed- or a random-effects model and not a fixed-effects with moderators or mixed-effects model).</p>
-<p>When using the usual method for fitting a random-effects model (i.e., weighted estimation with inverse-variance weights), the weights assigned to smaller and larger studies become more uniform as the amount of heterogeneity increases. As a consequence, the estimated average effect could become increasingly biased under certain forms of publication bias (where smaller studies on one side of the funnel plot are missing). The method by Henmi and Copas (2010) tries to counteract this problem by providing an estimate of the average true effect that is based on inverse-variance weights as used under a fixed-effects model (which do not take the amount of heterogeneity into consideration). The amount of heterogeneity is still estimated (with the DerSimonian-Laird estimator) and incorporated into the standard error of the estimated average effect and the corresponding confidence interval.</p>
+<p>When using the usual method for fitting a random-effects model (i.e., weighted estimation with inverse-variance weights), the weights assigned to smaller and larger studies become more uniform as the amount of heterogeneity increases. As a consequence, the estimated average outcome could become increasingly biased under certain forms of publication bias (where smaller studies on one side of the funnel plot are missing). The method by Henmi and Copas (2010) tries to counteract this problem by providing an estimate of the average true outcome that is based on inverse-variance weights as used under a fixed-effects model (which do not take the amount of heterogeneity into consideration). The amount of heterogeneity is still estimated (with the DerSimonian-Laird estimator) and incorporated into the standard error of the estimated average outcome and the corresponding confidence interval.</p>
 <p>Currently, there is only a method for handling objects of class <code>"rma.uni"</code> with the <code>hc</code> function. It therefore provides a method for conducting a sensitivity analysis after the model has been fitted with the <code><a href='rma.uni.html'>rma.uni</a></code> function.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class <code>"hc.rma.uni"</code>. The object is a list containing the following components:</p>
-<dt>beta</dt><dd><p>estimated average true effect.</p></dd>
+<dt>beta</dt><dd><p>estimated average true outcome.</p></dd>
    <dt>se</dt><dd><p>corresponding standard error.</p></dd>
-   <dt>ci.lb</dt><dd><p>lower bound of the confidence intervals for the average true effect.</p></dd>
-   <dt>ci.ub</dt><dd><p>upper bound of the confidence intervals for the average true effect.</p></dd>
+   <dt>ci.lb</dt><dd><p>lower bound of the confidence intervals for the average true outcome.</p></dd>
+   <dt>ci.ub</dt><dd><p>upper bound of the confidence intervals for the average true outcome.</p></dd>
    <dt>...</dt><dd><p>some additional elements/values.</p></dd>
 
    The results are formatted and printed with the <a href='print.hc.rma.uni.html'>print.hc.rma.uni</a> function.

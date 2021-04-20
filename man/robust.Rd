@@ -44,7 +44,7 @@ robust(x, cluster, \dots)
    The results are formatted and printed with the \code{\link{print.robust.rma}} function.
 }
 \note{
-   The variable specified via \code{cluster} is assumed to be of the same length as the data originally passed to the \code{rma.uni} or \code{rma.mv} function. Any subsetting and removal of studies with missing values as done when fitting the original model is also automatically applied to the variable specified via \code{cluster}.
+   The variable specified via \code{cluster} is assumed to be of the same length as the data originally passed to the \code{rma.uni} or \code{rma.mv} functions. Any subsetting and removal of studies with missing values that was applied during the model fitting is also automatically applied to the variable specified via the \code{cluster} argument.
 
    The idea of the robust (sandwich-type) estimator for models with unspecified heteroscedasticity can be traced back to Eicker (1967), Huber (1967), and White (1980). Hence, the method in general is often referred to as the Eicker-Huber-White method. Some small-sample improvements to the method are described by MacKinnon and White (1985). The extension to the cluster robust estimator can be found in Froot (1989) and Williams (2000). Cameron and Miller (2015) provide an extensive overview of cluster robust methods. Sidik and Jonkman (2005, 2006) introduced robust methods in the meta-analytic context for standard random/mixed-effects models. The use of the cluster robust estimator for multivariate/multilevel meta-analytic models is described in Hedges, Tipton, and Johnson (2010).
 }
@@ -83,11 +83,11 @@ robust(x, cluster, \dots)
 ### copy data from Konstantopoulos (2011) into 'dat'
 dat <- dat.konstantopoulos2011
 
-### multilevel random-effects model
+### fit multilevel random-effects model
 res <- rma.mv(yi, vi, random = ~ 1 | district/school, data=dat)
 res
 
-### results based on the sandwich method
+### obtain results based on the sandwich method
 robust(res, cluster=dat$district)
 
 ### illustrate use of the clubSandwich package together with metafor
@@ -109,7 +109,7 @@ V <- bldiag(V)
 res <- rma.mv(yi, V, mods = ~ outcome - 1, random = ~ outcome | trial, struct="UN", data=dat)
 res
 
-### results based on sandwich method
+### obtain results based on sandwich method
 robust(res, cluster=dat$trial)
 
 ### illustrate use of the clubSandwich package together with metafor

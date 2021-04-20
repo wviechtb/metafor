@@ -35,7 +35,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \item{sdi}{vector to specify the standard deviations.}
    \item{r2i}{vector to specify the \mjseqn{R^2} values.}
    \item{ni}{vector to specify the sample/group sizes.}
-   \item{yi}{vector to specify the observed effects or outcomes.}
+   \item{yi}{vector to specify the observed effect sizes or outcomes.}
    \item{vi}{vector to specify the corresponding sampling variances.}
    \item{sei}{vector to specify the corresponding standard errors.}
    \item{data}{optional data frame containing the variables given to the arguments above.}
@@ -44,8 +44,8 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \item{include}{optional (logical or numeric) vector to specify the subset of studies for which the measure should be calculated. See the \sQuote{Value} section for more details.}
    \item{add}{a non-negative number to specify the amount to add to zero cells, counts, or frequencies. See \sQuote{Details}.}
    \item{to}{a character string to specify when the values under \code{add} should be added (either \code{"all"}, \code{"only0"}, \code{"if0all"}, or \code{"none"}). See \sQuote{Details}.}
-   \item{drop00}{logical to specify whether studies with no cases/events (or only cases) in both groups should be dropped when calculating the observed effect sizes. See \sQuote{Details}.}
-   \item{vtype}{a character string to specify the type of sampling variances to calculate (either \code{"LS"}, \code{"UB"}, \code{"HO"}, \code{"ST"}, or \code{vtype="CS"}). See \sQuote{Details}.}
+   \item{drop00}{logical to specify whether studies with no cases/events (or only cases) in both groups should be dropped when calculating the observed effect sizes or outcomes. See \sQuote{Details}.}
+   \item{vtype}{a character string to specify the type of sampling variances to calculate. See \sQuote{Details}.}
    \item{var.names}{character string with two elements to specify the name of the variable for the observed effect sizes or outcomes and the name of the variable for the corresponding sampling variances (the defaults are \code{"yi"} and \code{"vi"}).}
    \item{add.measure}{logical to specify whether a variable should be added to the data frame (with default name \code{"measure"}) that indicates the type of outcome measure computed. When using this option, \code{var.names} can have a third element to change this variable name.}
    \item{append}{logical to specify whether the data frame provided via the \code{data} argument should be returned together with the observed effect sizes or outcomes and corresponding sampling variances (the default is \code{TRUE}).}
@@ -404,7 +404,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
    \subsection{Converting a Data Frame to an 'escalc' Object}{
 
-      The function can also be used to convert a regular data frame to an \sQuote{escalc} object. One simply sets the \code{measure} argument to one of the options described above (or to \code{measure="GEN"} for a generic outcome measure not further specified) and passes the observed effects or outcomes via the \code{yi} argument and the corresponding sampling variances via the \code{vi} argument (or the standard errors via the \code{sei} argument).
+      The function can also be used to convert a regular data frame to an \sQuote{escalc} object. One simply sets the \code{measure} argument to one of the options described above (or to \code{measure="GEN"} for a generic outcome measure not further specified) and passes the observed effect sizes or outcomes via the \code{yi} argument and the corresponding sampling variances via the \code{vi} argument (or the standard errors via the \code{sei} argument).
 
    }
 

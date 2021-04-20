@@ -1996,6 +1996,14 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       X <- Xsave
    }
 
+   ### ddf calculation
+
+   if (test == "t") {
+      ddf <- k-p
+   } else {
+      ddf <- NA
+   }
+
    rownames(beta) <- rownames(vb) <- colnames(vb) <- colnames(X)
 
    ve <- diag(vb)
@@ -2003,21 +2011,15 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    names(se) <- NULL
    zval <- c(beta/se)
 
-   if (is.element(test, c("t"))) {
-      dfs <- k-p
-      QM  <- QM / m
-      if (dfs > 0) {
-         QMp  <- pf(QM, df1=m, df2=dfs, lower.tail=FALSE)
-         pval <- 2*pt(abs(zval), df=dfs, lower.tail=FALSE)
-         crit <- qt(level/2, df=dfs, lower.tail=FALSE)
-      } else {
-         QMp  <- NaN
-         pval <- NaN
-         crit <- NaN
-      }
+   if (test == "t") {
+      QM   <- QM / m
+      QMdf <- c(m, k-p)
+      QMp  <- if (QMdf[2] > 0) pf(QM, df1=QMdf[1], df2=QMdf[2], lower.tail=FALSE) else NA
+      pval <- if (ddf > 0) 2*pt(abs(zval), df=ddf, lower.tail=FALSE) else rep(NA,p)
+      crit <- if (ddf > 0) qt(level/2, df=ddf, lower.tail=FALSE) else rep(NA,p)
    } else {
-      dfs  <- NA
-      QMp  <- pchisq(QM, df=m, lower.tail=FALSE)
+      QMdf <- c(m, NA)
+      QMp  <- pchisq(QM, df=QMdf[1], lower.tail=FALSE)
       pval <- 2*pnorm(abs(zval), lower.tail=FALSE)
       crit <- qnorm(level/2, lower.tail=FALSE)
    }
@@ -2063,7 +2065,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
                   tau2=tau2, se.tau2=se.tau2, sigma2=sigma2,
                   I2=I2, H2=H2, vt=vt,
-                  QE.Wld=QE.Wld, QEp.Wld=QEp.Wld, QE.LRT=QE.LRT, QEp.LRT=QEp.LRT, QE.df=QE.df, QM=QM, QMp=QMp,
+                  QE.Wld=QE.Wld, QEp.Wld=QEp.Wld, QE.LRT=QE.LRT, QEp.LRT=QEp.LRT, QE.df=QE.df, QM=QM, QMdf=QMdf, QMp=QMp,
                   k=k, k.f=k.f, k.yi=k.yi, k.eff=k.eff, k.all=k.all, p=p, p.eff=p.eff, parms=parms,
                   int.only=int.only, int.incl=int.incl, intercept=intercept,
                   yi=yi, vi=vi, X=X, yi.f=yi.f, vi.f=vi.f, X.f=X.f,
@@ -2072,7 +2074,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                   xi=xi, mi=mi, ti=ti, xi.f=xi.f, mi.f=mi.f, ti.f=ti.f, ni=ni, ni.f=ni.f,
                   ids=ids, not.na=not.na, subset=subset, not.na.yivi=not.na.yivi, slab=slab, slab.null=slab.null,
                   measure=measure, method=method, model=model, weighted=weighted,
-                  test=test, dfs=dfs, btt=btt, m=m,
+                  test=test, dfs=ddf, ddf=ddf, btt=btt, m=m,
                   digits=digits, level=level, control=control, verbose=verbose,
                   add=add, to=to, drop00=drop00,
                   fit.stats=fit.stats,
@@ -2085,11 +2087,11 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
          res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
                      tau2=tau2, se.tau2=se.tau2, sigma2=sigma2,
                      I2=I2, H2=H2,
-                     QE.Wld=QE.Wld, QEp.Wld=QEp.Wld, QE.LRT=QE.LRT, QEp.LRT=QEp.LRT, QE.df=QE.df, QEp=QEp, QM=QM, QMp=QMp,
+                     QE.Wld=QE.Wld, QEp.Wld=QEp.Wld, QE.LRT=QE.LRT, QEp.LRT=QEp.LRT, QE.df=QE.df, QEp=QEp, QM=QM, QMdf=QMdf, QMp=QMp,
                      k=k, k.eff=k.eff, p=p, p.eff=p.eff, parms=parms,
                      int.only=int.only,
                      measure=measure, method=method, model=model,
-                     test=test, dfs=dfs, btt=btt, m=m,
+                     test=test, dfs=ddf, ddf=ddf, btt=btt, m=m,
                      digits=digits,
                      fit.stats=fit.stats)
       } else {

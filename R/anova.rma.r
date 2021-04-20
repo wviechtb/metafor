@@ -45,19 +45,21 @@ anova.rma <- function(object, object2, btt, X, att, Z, digits, ...) {
             att <- .set.btt(att, x$q, x$Z.int.incl, colnames(x$Z))
             m <- length(att)
 
-            QM <- try(as.vector(t(x$alpha)[att] %*% chol2inv(chol(x$vb.alpha[att,att])) %*% x$alpha[att]), silent=TRUE)
+            QS <- try(as.vector(t(x$alpha)[att] %*% chol2inv(chol(x$va[att,att])) %*% x$alpha[att]), silent=TRUE)
 
-            if (inherits(QM, "try-error"))
-               QM <- NA
+            if (inherits(QS, "try-error"))
+               QS <- NA
 
-            if (is.element(x$test, c("t"))) {
-               QM <- QM / m
-               QMp <- pf(QM, df1=m, df2=x$dfs.alpha, lower.tail=FALSE)
+            if (x$test == "t") {
+               QS   <- QS / m
+               QSdf <- c(m, x$QSdf[2])
+               QSp  <- pf(QS, df1=QSdf[1], df2=QSdf[2], lower.tail=FALSE)
             } else {
-               QMp <- pchisq(QM, df=m, lower.tail=FALSE)
+               QSdf <- c(m, NA)
+               QSp  <- pchisq(QS, df=QSdf[1], lower.tail=FALSE)
             }
 
-            res <- list(QM=QM, QMp=QMp, att=att, k=x$k, q=x$q, m=m, test=x$test, dfs=x$dfs.alpha, digits=digits, type="Wald.att")
+            res <- list(QS=QS, QSdf=QSdf, QSp=QSp, att=att, k=x$k, q=x$q, m=m, test=x$test, digits=digits, type="Wald.att")
 
          } else {
 
@@ -72,13 +74,15 @@ anova.rma <- function(object, object2, btt, X, att, Z, digits, ...) {
                QM <- NA
 
             if (is.element(x$test, c("knha","adhoc","t"))) {
-               QM  <- QM/m
-               QMp <- pf(QM, df1=m, df2=x$dfs, lower.tail=FALSE)
+               QM   <- QM / m
+               QMdf <- c(m, x$QMdf[2])
+               QMp  <- pf(QM, df1=QMdf[1], df2=QMdf[2], lower.tail=FALSE)
             } else {
-               QMp <- pchisq(QM, df=m, lower.tail=FALSE)
+               QMdf <- c(m, NA)
+               QMp  <- pchisq(QM, df=QMdf[1], lower.tail=FALSE)
             }
 
-            res <- list(QM=QM, QMp=QMp, btt=btt, k=x$k, p=x$p, m=m, test=x$test, dfs=x$dfs, digits=digits, type="Wald.btt")
+            res <- list(QM=QM, QMdf=QMdf, QMp=QMp, btt=btt, k=x$k, p=x$p, m=m, test=x$test, digits=digits, type="Wald.btt", class=class(x))
 
          }
 
@@ -114,41 +118,43 @@ anova.rma <- function(object, object2, btt, X, att, Z, digits, ...) {
             #}
 
             if (ncol(Z) != x$q)
-               stop(mstyle$stop(paste0("Length or number of columns of 'Z' (", ncol(Z), ") does not match number of scale coefficients (", x$q, ").")))
+               stop(mstyle$stop(paste0("Length or number of columns of 'Z' (", ncol(Z), ") does not match the number of scale coefficients (", x$q, ").")))
 
             m <- nrow(Z)
 
             ### test of individual hypotheses
 
             Za  <- Z %*% x$alpha
-            vZa <- Z %*% x$vb.alpha %*% t(Z)
+            vZa <- Z %*% x$va %*% t(Z)
 
             se <- sqrt(diag(vZa))
             zval <- c(Za/se)
 
-            if (is.element(x$test, c("t"))) {
-               pval <- 2*pt(abs(zval), df=x$dfs.alpha, lower.tail=FALSE)
+            if (x$test == "t") {
+               pval <- if (x$ddf.alpha > 0) 2*pt(abs(zval), df=x$ddf.alpha, lower.tail=FALSE) else rep(NA,m)
             } else {
                pval <- 2*pnorm(abs(zval), lower.tail=FALSE)
             }
 
             ### omnibus test of all hypotheses (only possible if 'Z' is of full rank)
 
-            QM  <- NA ### need this in case QM cannot be calculated below
-            QMp <- NA ### need this in case QMp cannot be calculated below
+            QS  <- NA ### need this in case QS cannot be calculated below
+            QSp <- NA ### need this in case QSp cannot be calculated below
 
             if (rankMatrix(Z) == m) {
 
-               QM <- try(as.vector(t(Za) %*% chol2inv(chol(vZa)) %*% Za), silent=TRUE)
+               QS <- try(as.vector(t(Za) %*% chol2inv(chol(vZa)) %*% Za), silent=TRUE)
 
-               if (inherits(QM, "try-error"))
-                  QM <- NA
+               if (inherits(QS, "try-error"))
+                  QS <- NA
 
-               if (is.element(x$test, c("t"))) {
-                  QM  <- QM/m
-                  QMp <- pf(QM, df1=m, df2=x$dfs.alpha, lower.tail=FALSE)
+               if (x$test == "t") {
+                  QS   <- QS / m
+                  QSdf <- c(m, x$QSdf[2])
+                  QSp  <- if (QSdf[2] > 0) pf(QS, df1=QSdf[1], df2=QSdf[2], lower.tail=FALSE) else NA
                } else {
-                  QMp <- pchisq(QM, df=m, lower.tail=FALSE)
+                  QSdf <- c(m, NA)
+                  QSp  <- pchisq(QS, df=QSdf[1], lower.tail=FALSE)
                }
 
             }
@@ -157,7 +163,7 @@ anova.rma <- function(object, object2, btt, X, att, Z, digits, ...) {
 
             hyp <- rep("", m)
             for (j in seq_len(m)) {
-               Zj <- round(Z[j,], digits=digits[["est"]]) ### coefficients for the jth contrast
+               Zj <- round(Z[j,], digits[["est"]]) ### coefficients for the jth contrast
                sel <- Zj != 0 ### TRUE if coefficient is != 0
                hyp[j] <- paste(paste(Zj[sel], rownames(x$alpha)[sel], sep="*"), collapse=" + ") ### coefficient*variable + coefficient*variable ...
                hyp[j] <- gsub("1*", "", hyp[j], fixed=TRUE) ### turn '+1' into '+' and '-1' into '-'
@@ -168,7 +174,7 @@ anova.rma <- function(object, object2, btt, X, att, Z, digits, ...) {
             colnames(hyp) <- ""
             rownames(hyp) <- paste0(seq_len(m), ":") ### add '1:', '2:', ... as row names
 
-            res <- list(QM=QM, QMp=QMp, hyp=hyp, Za=Za, se=se, zval=zval, pval=pval, k=x$k, q=x$q, m=m, test=x$test, dfs=x$dfs, digits=digits, type="Wald.Za")
+            res <- list(QS=QS, QSdf=QSdf, QSp=QSp, hyp=hyp, Za=Za, se=se, zval=zval, pval=pval, k=x$k, q=x$q, m=m, test=x$test, ddf=x$ddf.alpha, digits=digits, type="Wald.Za")
 
          } else {
 
@@ -197,9 +203,25 @@ anova.rma <- function(object, object2, btt, X, att, Z, digits, ...) {
             #}
 
             if (ncol(X) != x$p)
-               stop(mstyle$stop(paste0("Length or number of columns of 'X' (", ncol(X), ") does not match number of model coefficients (", x$p, ").")))
+               stop(mstyle$stop(paste0("Length or number of columns of 'X' (", ncol(X), ") does not match the number of ", ifelse(inherits(object, "rma.ls"), "location", "model"), " coefficients (", x$p, ").")))
 
             m <- nrow(X)
+
+            ### ddf calculation
+
+            if (is.element(x$test, c("knha","adhoc","t"))) {
+               if (length(x$ddf) == 1L) {
+                  ddf <- rep(x$ddf, m)
+               } else {
+                  ddf <- rep(NA, m)
+                  for (j in seq_len(m)) {
+                     bn0 <- X[j,] != 0
+                     ddf[j] <- min(x$ddf[bn0])
+                  }
+               }
+            } else {
+               ddf <- rep(NA, m)
+            }
 
             ### test of individual hypotheses
 
@@ -210,15 +232,16 @@ anova.rma <- function(object, object2, btt, X, att, Z, digits, ...) {
             zval <- c(Xb/se)
 
             if (is.element(x$test, c("knha","adhoc","t"))) {
-               pval <- 2*pt(abs(zval), df=x$dfs, lower.tail=FALSE)
+               pval <- sapply(seq_along(ddf), function(j) if (ddf[j] > 0) 2*pt(abs(zval[j]), df=ddf[j], lower.tail=FALSE) else NA)
             } else {
                pval <- 2*pnorm(abs(zval), lower.tail=FALSE)
             }
 
             ### omnibus test of all hypotheses (only possible if 'X' is of full rank)
 
-            QM  <- NA ### need this in case QM cannot be calculated below
-            QMp <- NA ### need this in case QMp cannot be calculated below
+            QM   <- NA ### need this in case QMp cannot be calculated below
+            QMdf <- NA ### need this in case X is not of full rank
+            QMp  <- NA ### need this in case QMp cannot be calculated below
 
             if (rankMatrix(X) == m) {
 
@@ -233,10 +256,12 @@ anova.rma <- function(object, object2, btt, X, att, Z, digits, ...) {
                   QM <- NA
 
                if (is.element(x$test, c("knha","adhoc","t"))) {
-                  QM  <- QM/m
-                  QMp <- pf(QM, df1=m, df2=x$dfs, lower.tail=FALSE)
+                  QM   <- QM / m
+                  QMdf <- c(m, min(ddf))
+                  QMp  <- if (QMdf[2] > 0) pf(QM, df1=QMdf[1], df2=QMdf[2], lower.tail=FALSE) else NA
                } else {
-                  QMp <- pchisq(QM, df=m, lower.tail=FALSE)
+                  QMdf <- c(m, NA)
+                  QMp  <- pchisq(QM, df=QMdf[1], lower.tail=FALSE)
                }
 
             }
@@ -245,7 +270,7 @@ anova.rma <- function(object, object2, btt, X, att, Z, digits, ...) {
 
             hyp <- rep("", m)
             for (j in seq_len(m)) {
-               Xj <- round(X[j,], digits=digits[["est"]]) ### coefficients for the jth contrast
+               Xj <- round(X[j,], digits[["est"]]) ### coefficients for the jth contrast
                sel <- Xj != 0 ### TRUE if coefficient is != 0
                hyp[j] <- paste(paste(Xj[sel], rownames(x$beta)[sel], sep="*"), collapse=" + ") ### coefficient*variable + coefficient*variable ...
                hyp[j] <- gsub("1*", "", hyp[j], fixed=TRUE) ### turn '+1' into '+' and '-1' into '-'
@@ -256,7 +281,7 @@ anova.rma <- function(object, object2, btt, X, att, Z, digits, ...) {
             colnames(hyp) <- ""
             rownames(hyp) <- paste0(seq_len(m), ":") ### add '1:', '2:', ... as row names
 
-            res <- list(QM=QM, QMp=QMp, hyp=hyp, Xb=Xb, se=se, zval=zval, pval=pval, k=x$k, p=x$p, m=m, test=x$test, dfs=x$dfs, digits=digits, type="Wald.Xb")
+            res <- list(QM=QM, QMdf=QMdf, QMp=QMp, hyp=hyp, Xb=Xb, se=se, zval=zval, pval=pval, k=x$k, p=x$p, m=m, test=x$test, ddf=ddf, digits=digits, type="Wald.Xb")
 
          }
 
@@ -287,50 +312,50 @@ anova.rma <- function(object, object2, btt, X, att, Z, digits, ...) {
 
       ### assume 'object' is the full model and 'object2' the reduced model
 
-      m.f <- object
-      m.r <- object2
+      model.f <- object
+      model.r <- object2
 
       ### number of parameters in the models
 
-      p.f <- m.f$parms
-      p.r <- m.r$parms
+      parms.f <- model.f$parms
+      parms.r <- model.r$parms
 
       ### check if they have the same number of parameters
 
-      if (p.f == p.r)
+      if (parms.f == parms.r)
          stop(mstyle$stop("Models have the same number of parameters. LRT not meaningful."))
 
-      ### if p.f < p.r, then let 'object' be the reduced model and 'object2' the full model
+      ### if parms.f < parms.r, then let 'object' be the reduced model and 'object2' the full model
 
-      if (p.f < p.r) {
-         m.f <- object2
-         m.r <- object
-         p.f <- m.f$parms
-         p.r <- m.r$parms
+      if (parms.f < parms.r) {
+         model.f <- object2
+         model.r <- object
+         parms.f <- model.f$parms
+         parms.r <- model.r$parms
       }
 
       ### check if models are based on the same data (TODO: also check for same weights?)
 
       if (inherits(object, "rma.uni")) {
-         if (!(identical(as.vector(m.f$yi), as.vector(m.r$yi)) && identical(as.vector(m.f$vi), as.vector(m.r$vi)))) ### as.vector() to strip attributes/names
+         if (!(identical(as.vector(model.f$yi), as.vector(model.r$yi)) && identical(as.vector(model.f$vi), as.vector(model.r$vi)))) ### as.vector() to strip attributes/names
             stop(mstyle$stop("Observed outcomes and/or sampling variances not equal in the full and reduced model."))
       }
 
       if (inherits(object, "rma.mv")) {
-         if (!(identical(as.vector(m.f$yi), as.vector(m.r$yi)) && identical(as.matrix(m.f$V), as.matrix(m.r$V)))) ### as.vector() to strip attributes/names, as.matrix() to make both V matrices non-sparse
+         if (!(identical(as.vector(model.f$yi), as.vector(model.r$yi)) && identical(as.matrix(model.f$V), as.matrix(model.r$V)))) ### as.vector() to strip attributes/names, as.matrix() to make both V matrices non-sparse
             stop(mstyle$stop("Observed outcomes and/or sampling variances/covariances not equal in the full and reduced model."))
       }
 
       ### for Wald-type test, both models should be fitted using the same method
 
-      if (test == "Wald" && (m.f$method != m.r$method))
-         stop(mstyle$stop("Full and reduced model do not use the same 'method'."))
+      if (test == "Wald" && (model.f$method != model.r$method))
+         stop(mstyle$stop("Full and reduced model must use the same 'method' for the model fitting."))
 
       ### for LRT, reduced model may use method="FE" and full model method="(RE)ML"
       ### which is fine, but the other way around doesn't really make sense
 
-      if (m.f$method == "FE" && m.r$method != "FE")
-         stop(mstyle$stop("Full model uses a fixed- and reduced model uses random/mixed-effects model."))
+      if (model.f$method == "FE" && model.r$method != "FE")
+         stop(mstyle$stop("Full model uses a fixed- and reduced model uses a random/mixed-effects model."))
 
       ### could do even more checks for cases where the models are clearly not nested
 
@@ -340,12 +365,12 @@ anova.rma <- function(object, object2, btt, X, att, Z, digits, ...) {
       ### proportional reduction in tau^2) comparing full vs. reduced model
 
       if (inherits(object, "rma.uni") && !inherits(object, "rma.ls") && !inherits(object2, "rma.ls")) {
-         if (m.f$method == "FE") {
+         if (model.f$method == "FE") {
             R2 <- NA
-         } else if (identical(m.r$tau2,0)) {
+         } else if (identical(model.r$tau2,0)) {
             R2 <- 0
          } else {
-            R2 <- 100 * max(0, (m.r$tau2 - m.f$tau2)/m.r$tau2)
+            R2 <- 100 * max(0, (model.r$tau2 - model.f$tau2)/model.r$tau2)
          }
       } else {
          R2 <- NA
@@ -354,8 +379,8 @@ anova.rma <- function(object, object2, btt, X, att, Z, digits, ...) {
       ### for 'rma.uni' objects, extract tau^2 estimates
 
       if (inherits(object, "rma.uni") && !inherits(object, "rma.ls") && !inherits(object2, "rma.ls")) {
-         tau2.f <- m.f$tau2
-         tau2.r <- m.r$tau2
+         tau2.f <- model.f$tau2
+         tau2.r <- model.r$tau2
       } else {
          tau2.f <- NA
          tau2.r <- NA
@@ -363,15 +388,15 @@ anova.rma <- function(object, object2, btt, X, att, Z, digits, ...) {
 
       if (test == "LRT") {
 
-         p.diff <- p.f - p.r
+         parms.diff <- parms.f - parms.r
 
-         if (m.f$method == "REML") {
+         if (model.f$method == "REML") {
 
-            LRT <- m.r$fit.stats["dev","REML"] - m.f$fit.stats["dev","REML"]
-            fit.stats.f <- t(m.f$fit.stats)["REML",] # to keep (row)names of fit.stats
-            fit.stats.r <- t(m.r$fit.stats)["REML",] # to keep (row)names of fit.stats
+            LRT <- model.r$fit.stats["dev","REML"] - model.f$fit.stats["dev","REML"]
+            fit.stats.f <- t(model.f$fit.stats)["REML",] # to keep (row)names of fit.stats
+            fit.stats.r <- t(model.r$fit.stats)["REML",] # to keep (row)names of fit.stats
 
-            if (!identical(m.f$X, m.r$X))
+            if (!identical(model.f$X, model.r$X))
                warning(mstyle$warning("Models with different fixed effects. REML comparisons are not meaningful."), call.=FALSE)
 
             ### in this case, one could consider just taking the ML deviances, but this
@@ -381,9 +406,9 @@ anova.rma <- function(object, object2, btt, X, att, Z, digits, ...) {
 
          } else {
 
-            LRT <- m.r$fit.stats["dev","ML"] - m.f$fit.stats["dev","ML"]
-            fit.stats.f <- t(m.f$fit.stats)["ML",]
-            fit.stats.r <- t(m.r$fit.stats)["ML",]
+            LRT <- model.r$fit.stats["dev","ML"] - model.f$fit.stats["dev","ML"]
+            fit.stats.f <- t(model.f$fit.stats)["ML",]
+            fit.stats.r <- t(model.r$fit.stats)["ML",]
 
             ### in principle, a 'rma.uni' model may have been fitted with something besides ML
             ### estimation (for tau^2), so technically the deviance is then not really that as
@@ -395,32 +420,34 @@ anova.rma <- function(object, object2, btt, X, att, Z, digits, ...) {
 
          LRT[LRT < 0] <- 0
 
-         pval <- pchisq(LRT, df=p.diff, lower.tail=FALSE)
+         pval <- pchisq(LRT, df=parms.diff, lower.tail=FALSE)
 
-         res <- list(fit.stats.f=fit.stats.f, fit.stats.r=fit.stats.r, p.f=p.f, p.r=p.r,
-                     LRT=LRT, pval=pval, QE.f=m.f$QE, QE.r=m.r$QE,
+         res <- list(fit.stats.f=fit.stats.f, fit.stats.r=fit.stats.r, parms.f=parms.f, parms.r=parms.r,
+                     LRT=LRT, pval=pval, QE.f=model.f$QE, QE.r=model.r$QE,
                      tau2.f=tau2.f, tau2.r=tau2.r, R2=R2,
-                     method=m.f$method, class.f=class(m.f), digits=digits, type="LRT")
+                     method=model.f$method, class.f=class(model.f), digits=digits, type="LRT")
 
       }
 
       if (test == "Wald") {
 
-         btt <- setdiff(colnames(m.f$X), colnames(m.r$X))
+         btt <- setdiff(colnames(model.f$X), colnames(model.r$X))
 
-         if (length(setdiff(colnames(m.r$X), colnames(m.f$X))) != 0L)
+         if (length(btt) == 0L)
+            stop(mstyle$stop("Full and reduced models appear to contain the same moderators."))
+
+         if (length(setdiff(colnames(model.r$X), colnames(model.f$X))) != 0L)
             stop(mstyle$stop("There are coefficients in the reduced model that are not in the full model."))
 
-         btt <- charmatch(btt, colnames(m.f$X))
+         btt <- charmatch(btt, colnames(model.f$X))
 
          if (anyNA(btt))
             stop(mstyle$stop("Cannot identify coefficients to test."))
 
-         res <- anova(m.f, btt=btt)
+         res <- anova(model.f, btt=btt)
          return(res)
 
       }
-
 
    }
 

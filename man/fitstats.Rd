@@ -54,10 +54,10 @@ fitstats(object, \dots)
 ### calculate log risk ratios and corresponding sampling variances
 dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
-### fit random-effects model
+### random-effects model
 res1 <- rma(yi, vi, data=dat, method="ML")
 
-### fit mixed-effects model with absolute latitude and publication year as moderators
+### mixed-effects model with absolute latitude and publication year as moderators
 res2 <- rma(yi, vi, mods = ~ ablat + year, data=dat, method="ML")
 
 ### compare fit statistics

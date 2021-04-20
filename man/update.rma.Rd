@@ -33,11 +33,11 @@
 ### calculate log risk ratios and corresponding sampling variances
 dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
-### random-effects model (method="REML" is default)
+### fit random-effects model (method="REML" is default)
 res <- rma(yi, vi, data=dat, digits=3)
 res
 
-### mixed-effects model with two moderators (absolute latitude and publication year)
+### fit mixed-effects model with two moderators (absolute latitude and publication year)
 res <- update(res, ~ ablat + year)
 res
 
@@ -53,7 +53,7 @@ res <- rma.glmm(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, 
 res <- update(res, mods = ~ ablat)
 res
 
-### conditional model with approximate likelihood
+### fit conditional model with approximate likelihood
 update(res, model="CM.AL")
 }
 \keyword{models}

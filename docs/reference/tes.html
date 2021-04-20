@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-86</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-87</span>
       </span>
     </div>
 
@@ -187,7 +187,7 @@
     </tr>
     <tr>
       <th>tau2</th>
-      <td><p>numeric value to specify the amount of heterogeneity in the true effects or outcomes. If unspecified, the true effect sizes or outcomes are assumed to be homogeneous or the value is taken from the <code>"rma"</code> object.</p></td>
+      <td><p>numeric value to specify the amount of heterogeneity in the true effect sizes or outcomes. If unspecified, the true effect sizes or outcomes are assumed to be homogeneous or the value is taken from the <code>"rma"</code> object.</p></td>
     </tr>
     <tr>
       <th>test</th>
@@ -245,7 +245,7 @@
     <p>When <code>tes.alternative="greater"</code> (the default), then the function tests if \(O\) is significantly greater than \(E\) and hence this is indeed a test of excess significance. When <code>tes.alternative="two.sided"</code>, then the function tests if \(O\) differs significantly from \(E\) in either direction and hence it would be more apt to describe this as a test of (in)consistency (between \(O\) and \(E\)). Finally, one can also set <code>tes.alternative="less"</code>, in which case the function tests if \(O\) is significantly lower than \(E\), which could be considered a test of excess non-significance.</p>
 <p>When <code>tes.alternative="two.sided"</code>, one can actually compute two limit estimates. The function attempts to compute both.</p>
 <p>The function computes the significance and power of the studies based on Wald-type tests regardless of the effect size or outcome measure used as input. This works as an adequate approximation as long as the within-study sample sizes are not too small.</p>
-<p>Note that the test is not a test for publication bias but a test whether the set of studies includes an unusual number of significant findings given the power of the studies. The general usefulness of the test and its usefulness under particular circumstances (e.g., when there is substantial heterogeneity in the true effects or outcomes) has been the subject of considerable debate. See Francis (2013) and the commentaries on this article in the same issue of the journal.</p>
+<p>Note that the test is not a test for publication bias but a test whether the set of studies includes an unusual number of significant findings given the power of the studies. The general usefulness of the test and its usefulness under particular circumstances (e.g., when there is substantial heterogeneity in the true effect sizes or outcomes) has been the subject of considerable debate. See Francis (2013) and the commentaries on this article in the same issue of the journal.</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Wolfgang Viechtbauer <a href='mailto:wvb@metafor-project.org'>wvb@metafor-project.org</a> <a href='https://www.metafor-project.org'>https://www.metafor-project.org</a></p>

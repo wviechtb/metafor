@@ -396,7 +396,7 @@ level=95, digits, verbose=FALSE, ...) {
    method    <- "FE"
    weighted  <- TRUE
    test      <- "z"
-   dfs       <- NA
+   ddf       <- NA
 
    if (is.null(ddd$outlist)) {
 
@@ -409,7 +409,7 @@ level=95, digits, verbose=FALSE, ...) {
                   yi=yi, vi=vi, yi.f=yi.f, vi.f=vi.f, X.f=X.f, ai=ai, bi=bi, ci=ci, di=di, ai.f=ai.f, bi.f=bi.f, ci.f=ci.f, di.f=di.f, ni=ni, ni.f=ni.f,
                   ids=ids, not.na=not.na, subset=subset, not.na.yivi=not.na.yivi, slab=slab, slab.null=slab.null,
                   measure=measure, method=method, weighted=weighted,
-                  test=test, dfs=dfs, btt=btt, m=m,
+                  test=test, ddf=ddf, dfs=ddf, btt=btt, m=m,
                   digits=digits, level=level,
                   add=add, to=to, drop00=drop00,
                   fit.stats=fit.stats,
@@ -426,7 +426,7 @@ level=95, digits, verbose=FALSE, ...) {
                      k=k, k.pos=k.pos, k.eff=k.eff, p=p, p.eff=p.eff, parms=parms,
                      int.only=int.only,
                      measure=measure, method=method,
-                     test=test, dfs=dfs, btt=btt, m=m,
+                     test=test, ddf=ddf, dfs=ddf, btt=btt, m=m,
                      digits=digits,
                      fit.stats=fit.stats)
       } else {

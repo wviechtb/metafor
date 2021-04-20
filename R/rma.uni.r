@@ -1509,8 +1509,8 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
    if (model == "rma.ls") {
 
-      if (!is.element(method, c("ML", "REML")))
-         stop(mstyle$stop("Location-scale model can only be fitted with ML or REML estimation."))
+      if (!is.element(method, c("ML","REML")))
+         stop(mstyle$stop("Location-scale models can only be fitted with ML or REML estimation."))
 
       tau2.fix <- FALSE
 
@@ -1882,7 +1882,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
       ### try to compute vcov matrix for scale parameter estimates
 
       H <- NA
-      vb.alpha <- matrix(NA_real_, nrow=q, ncol=q)
+      va <- matrix(NA_real_, nrow=q, ncol=q)
       hest <- is.na(alpha)
 
       if (any(hest) && !isTRUE(ddd$skiphes)) {
@@ -1908,7 +1908,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
             } else {
 
-               vb.alpha[hest, hest] <- iH.hest
+               va[hest, hest] <- iH.hest
 
             }
 
@@ -1921,15 +1921,15 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
       alpha.val <- alpha
       alpha <- cbind(opt.res$par)
 
-      ### scale back alpha and vb.alpha
+      ### scale back alpha and va
 
       if (!Z.int.only && Z.int.incl && con$scaleZ && is.na(alpha.val[1])) {
          alpha <- mZ %*% alpha
-         vb.alpha[!hest,] <- 0
-         vb.alpha[,!hest] <- 0
-         vb.alpha <- mZ %*% vb.alpha %*% t(mZ)
-         vb.alpha[!hest,] <- NA
-         vb.alpha[,!hest] <- NA
+         va[!hest,] <- 0
+         va[,!hest] <- 0
+         va <- mZ %*% va %*% t(mZ)
+         va[!hest,] <- NA
+         va[,!hest] <- NA
          Z <- Zsave
       }
 
@@ -1938,35 +1938,43 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
       att <- .set.btt(att, q, Z.int.incl, colnames(Z))
       m.alpha <- length(att) ### number of alphas to test (m = q if all alphas are tested)
 
+      ### ddf calculation
+
+      if (test == "t") {
+         ddf.alpha <- k-q
+      } else {
+         ddf.alpha <- NA
+      }
+
       ### QM calculation
 
-      QM.alpha <- try(as.vector(t(alpha)[att] %*% chol2inv(chol(vb.alpha[att,att])) %*% alpha[att]), silent=TRUE)
+      QS <- try(as.vector(t(alpha)[att] %*% chol2inv(chol(va[att,att])) %*% alpha[att]), silent=TRUE)
 
-      if (inherits(QM.alpha, "try-error"))
-         QM.alpha <- NA
+      if (inherits(QS, "try-error"))
+         QS <- NA
 
-      se.alpha <- sqrt(diag(vb.alpha))
+      se.alpha <- sqrt(diag(va))
 
-      rownames(alpha) <- rownames(vb.alpha) <- colnames(vb.alpha) <- colnames(Z)
+      rownames(alpha) <- rownames(va) <- colnames(va) <- colnames(Z)
 
       names(se.alpha) <- NULL
       zval.alpha  <- c(alpha/se.alpha)
 
-      if (is.element(test, c("t"))) {
-         dfs.alpha <- k-q
-         QM.alpha <- QM.alpha / m.alpha
-         QMp.alpha  <- pf(QM.alpha, df1=m.alpha, df2=dfs.alpha, lower.tail=FALSE)
-         pval.alpha <- 2*pt(abs(zval.alpha), df=dfs.alpha, lower.tail=FALSE)
-         crit <- qt(level/2, df=dfs.alpha, lower.tail=FALSE)
+      if (test == "t") {
+         QS         <- QS / m.alpha
+         QSdf       <- c(m.alpha, k-q)
+         QSp        <- if (QSdf[2] > 0) pf(QS, df1=QSdf[1], df2=QSdf[2], lower.tail=FALSE) else NA
+         pval.alpha <- if (ddf.alpha > 0) 2*pt(abs(zval.alpha), df=ddf.alpha, lower.tail=FALSE) else rep(NA,q)
+         crit.alpha <- if (ddf.alpha > 0) qt(level/2, df=ddf.alpha, lower.tail=FALSE) else NA
       } else {
-         dfs.alpha <- NA
-         QMp.alpha  <- pchisq(QM.alpha, df=m.alpha, lower.tail=FALSE)
-         pval.alpha  <- 2*pnorm(abs(zval.alpha), lower.tail=FALSE)
-         crit <- qnorm(level/2, lower.tail=FALSE)
+         QSdf       <- c(m.alpha, NA)
+         QSp        <- pchisq(QS, df=QSdf[1], lower.tail=FALSE)
+         pval.alpha <- 2*pnorm(abs(zval.alpha), lower.tail=FALSE)
+         crit.alpha <- qnorm(level/2, lower.tail=FALSE)
       }
 
-      ci.lb.alpha <- c(alpha - crit * se.alpha)
-      ci.ub.alpha <- c(alpha + crit * se.alpha)
+      ci.lb.alpha <- c(alpha - crit.alpha * se.alpha)
+      ci.ub.alpha <- c(alpha + crit.alpha * se.alpha)
 
       if (link == "log")
          tau2 <- exp(as.vector(Z %*% alpha))
@@ -1975,7 +1983,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
    }
 
-   ### fixed-effects model (note: set tau2 to zero even when tau2 is specified)
+   ### fixed-effects model (note: sets tau2 to zero even when tau2 value is specified)
 
    if (method == "FE")
       tau2 <- 0
@@ -2106,6 +2114,14 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
    vb <- s2w * vb
 
+   ### ddf calculation
+
+   if (is.element(test, c("knha","adhoc","t"))) {
+      ddf <- k-p
+   } else {
+      ddf <- NA
+   }
+
    ### QM calculation
 
    QM <- try(as.vector(t(beta)[btt] %*% chol2inv(chol(vb[btt,btt])) %*% beta[btt]), silent=TRUE)
@@ -2113,27 +2129,21 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
    if (inherits(QM, "try-error"))
       QM <- NA
 
-   rownames(beta) <- rownames(vb) <- colnames(vb) <- colnames(X) ### may not be needed, but what's the harm?
+   rownames(beta) <- rownames(vb) <- colnames(vb) <- colnames(X)
 
    se <- sqrt(diag(vb))
    names(se) <- NULL
    zval <- c(beta/se)
 
    if (is.element(test, c("knha","adhoc","t"))) {
-      dfs <- k-p
-      QM  <- QM / m
-      if (dfs > 0) {
-         QMp  <- pf(QM, df1=m, df2=dfs, lower.tail=FALSE)
-         pval <- 2*pt(abs(zval), df=dfs, lower.tail=FALSE)
-         crit <- qt(level/2, df=dfs, lower.tail=FALSE)
-      } else {
-         QMp  <- NaN
-         pval <- NaN
-         crit <- NaN
-      }
+      QM   <- QM / m
+      QMdf <- c(m, k-p)
+      QMp  <- if (QMdf[2] > 0) pf(QM, df1=QMdf[1], df2=QMdf[2], lower.tail=FALSE) else NA
+      pval <- if (ddf > 0) 2*pt(abs(zval), df=ddf, lower.tail=FALSE) else rep(NA,p)
+      crit <- if (ddf > 0) qt(level/2, df=ddf, lower.tail=FALSE) else NA
    } else {
-      dfs  <- NA
-      QMp  <- pchisq(QM, df=m, lower.tail=FALSE)
+      QMdf <- c(m, NA)
+      QMp  <- pchisq(QM, df=QMdf[1], lower.tail=FALSE)
       pval <- 2*pnorm(abs(zval), lower.tail=FALSE)
       crit <- qnorm(level/2, lower.tail=FALSE)
    }
@@ -2151,12 +2161,12 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
    if (allvipos) {
 
       ### heterogeneity test (always uses inverse variance method)
-      ### note: this is unaffected by the 'weighted' argument, since under H0, the same parameters are estimated
-      ### and weighted estimation provides the most efficient estimates; therefore, also any arbitrary weights
-      ### specified by the user are not relevant here (different from what the metan command in Stata does!)
-      ### see also: Chen, Z., Ng, H. K. T., & Nadarajah, S. (2014). A note on Cochran test for homogeneity in
-      ### one-way ANOVA and meta-analysis. Statistical Papers, 55(2), 301-310. This shows that the weights used
-      ### are not relevant.
+      # note: this is unaffected by the 'weighted' argument, since under H0, the same parameters are
+      # estimated and weighted estimation provides the most efficient estimates; therefore, also any
+      # arbitrary weights specified by the user are not relevant here (different from what the metan
+      # command in Stata does!) see also: Chen, Z., Ng, H. K. T., & Nadarajah, S. (2014). A note on
+      # Cochran test for homogeneity in one-way ANOVA and meta-analysis. Statistical Papers, 55(2),
+      # 301-310. This shows that the weights used are not relevant.
 
       if (k > p) {
 
@@ -2285,7 +2295,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
       res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
                   tau2=tau2, se.tau2=se.tau2, tau2.fix=tau2.fix, tau2.f=tau2,
                   I2=I2, H2=H2, R2=R2, vt=vt,
-                  QE=QE, QEp=QEp, QM=QM, QMp=QMp,
+                  QE=QE, QEp=QEp, QM=QM, QMdf=QMdf, QMp=QMp,
                   k=k, k.f=k.f, k.eff=k.eff, k.all=k.all, p=p, p.eff=p.eff, parms=parms,
                   int.only=int.only, int.incl=int.incl, intercept=intercept, allvipos=allvipos, coef.na=coef.na,
                   yi=yi, vi=vi, X=X, weights=weights, yi.f=yi.f, vi.f=vi.f, X.f=X.f, weights.f=weights.f, M=M,
@@ -2293,7 +2303,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
                   x1i.f=x1i.f, x2i.f=x2i.f, t1i.f=t1i.f, t2i.f=t2i.f, ni=ni, ni.f=ni.f,
                   ids=ids, not.na=not.na, subset=subset, slab=slab, slab.null=slab.null,
                   measure=measure, method=method, model=model, weighted=weighted,
-                  test=test, dfs=dfs, s2w=s2w, btt=btt, m=m,
+                  test=test, dfs=ddf, ddf=ddf, s2w=s2w, btt=btt, m=m,
                   digits=digits, level=level, control=control, verbose=verbose,
                   add=add, to=to, drop00=drop00,
                   fit.stats=fit.stats,
@@ -2308,11 +2318,11 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
          res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
                      tau2=tau2, se.tau2=se.tau2, tau2.fix=tau2.fix,
                      I2=I2, H2=H2, R2=R2,
-                     QE=QE, QEp=QEp, QM=QM, QMp=QMp,
+                     QE=QE, QEp=QEp, QM=QM, QMdf=QMdf, QMp=QMp,
                      k=k, k.eff=k.eff, p=p, p.eff=p.eff, parms=parms,
                      int.only=int.only,
                      measure=measure, method=method, model=model,
-                     test=test, dfs=dfs, btt=btt, m=m,
+                     test=test, dfs=ddf, ddf=ddf, btt=btt, m=m,
                      digits=digits,
                      fit.stats=fit.stats)
       } else {
@@ -2324,7 +2334,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
    if (model == "rma.ls") {
 
       res$alpha          <- alpha
-      res$vb.alpha       <- vb.alpha
+      res$va             <- va
       res$se.alpha       <- se.alpha
       res$zval.alpha     <- zval.alpha
       res$pval.alpha     <- pval.alpha
@@ -2340,9 +2350,10 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
       res$tau2.f[not.na] <- tau2
       res$att            <- att
       res$m.alpha        <- m.alpha
-      res$dfs.alpha      <- dfs.alpha
-      res$QM.alpha       <- QM.alpha
-      res$QMp.alpha      <- QMp.alpha
+      res$ddf.alpha      <- ddf.alpha
+      res$QS             <- QS
+      res$QSdf           <- QSdf
+      res$QSp            <- QSp
       res$formula.scale  <- formula.scale
       res$Z.int.incl     <- Z.int.incl
       res$Z.intercept    <- Z.int.incl

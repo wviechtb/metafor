@@ -1,4 +1,4 @@
-Changes in Version 2.5-86 (2021-04-03)
+Changes in Version 2.5-87 (2021-04-20)
 =====================================
 
    o the metafor package now makes use of the 'mathjaxr' package to nicely
@@ -7,6 +7,10 @@ Changes in Version 2.5-86 (2021-04-03)
    o added selmodel() for fitting a wide variety of selection models (and
      added the corresponding plot.rma.uni.selmodel() function for drawing the
      estimated selection function)
+
+   o rma.mv() gains 'dfs' argument and now provides an often better way for
+     calculating the (denominator) degrees of freedom for approximate t- and
+     F-tests when dfs="contain"
 
    o added tes() function for the test of excess significance
 

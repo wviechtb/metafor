@@ -14,7 +14,7 @@ coef.summary.rma <- function(object, ...) {
    if (inherits(x, "rma.ls")) {
       res.table <- list(beta=res.table)
       res.table$alpha <- data.frame(estimate=x$alpha, se=x$se.alpha, zval=x$zval.alpha, pval=x$pval.alpha, ci.lb=x$ci.lb.alpha, ci.ub=x$ci.ub.alpha)
-      if (is.element(x$test, c("t")))
+      if (x$test == "t")
          colnames(res.table$alpha)[3] <- "tval"
    }
 

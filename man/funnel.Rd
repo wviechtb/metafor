@@ -46,10 +46,10 @@ funnel(x, \dots)
    \item{back}{color to use for the background of the plotting region (default is \code{"lightgray"}).}
    \item{shade}{color to use for shading the pseudo confidence interval region (default is \code{"white"}). When \code{level} is a vector of values, different shading colors can be specified for each region.}
    \item{hlines}{color of the horizontal reference lines (default is \code{"white"}).}
-   \item{refline}{numeric value to specify the location of the vertical \sQuote{reference} line and where the pseudo confidence interval should be centered. If unspecified, the reference line is drawn at the fixed- or random-effects model estimate when the model does not include moderators and at zero when moderators are included (and therefore residuals are plotted) or when directly plotting observed effect sizes or outcomes.}
+   \item{refline}{numeric value to specify the location of the vertical \sQuote{reference} line and where the pseudo confidence interval should be centered. If unspecified, the reference line is drawn at the fixed- or random-effects model estimate when the model does not include moderators and at zero when moderators are included (and therefore residuals are plotted) or when directly plotting observed outcomes.}
    \item{lty}{line type for the pseudo confidence interval region and the reference line. The default is to draw dotted lines (see \code{\link{par}} for other options). Can also be a vector to specify the two line types separately.}
-   \item{pch}{plotting symbol to use for the observed effect sizes or outcomes. By default, a filled circle is used. Can also be a vector of values. See \code{\link{points}} for other options.}
-   \item{pch.fill}{plotting symbol to use for the effect sizes or outcomes filled in by the trim and fill method. By default, a circle is used. Only relevant when plotting an object created by the \code{\link{trimfill}} function.}
+   \item{pch}{plotting symbol to use for the observed outcomes. By default, a filled circle is used. Can also be a vector of values. See \code{\link{points}} for other options.}
+   \item{pch.fill}{plotting symbol to use for the outcomes filled in by the trim and fill method. By default, a circle is used. Only relevant when plotting an object created by the \code{\link{trimfill}} function.}
    \item{col}{optional character string to specify the name of a color to use for the points (\code{"black"} is used by default if not specified). Can also be a vector of color names.}
    \item{bg}{optional character string to specify the name of a background color for open plot symbols (\code{"white"} is used by default if not specified). Can also be a vector of color names.}
    \item{label}{argument to control the labeling of the points (the default is \code{FALSE}). See \sQuote{Details}.}
@@ -78,7 +78,7 @@ funnel(x, \dots)
    \item \code{yaxis="wi"} for the weights.
    } However, only when \code{yaxis="sei"} (the default) will the pseudo confidence region have the expected (upside-down) funnel shape with straight lines. Also, when placing (a function of) the sample sizes on the y-axis or the weights, then the pseudo confidence region cannot be drawn. See Sterne and Egger (2001) for more details on the choice of the y-axis.
 
-   If the object passed to the function comes from the \code{\link{trimfill}} function, the effect sizes or outcomes that are filled in by the trim and fill method are also added to the funnel plot. The symbol to use for plotting the filled in values can be specified via the \code{pch.fill} argument.
+   If the object passed to the function comes from the \code{\link{trimfill}} function, the outcomes that are filled in by the trim and fill method are also added to the funnel plot. The symbol to use for plotting the filled in values can be specified via the \code{pch.fill} argument.
 
    One can also directly pass a vector with the observed effect sizes or outcomes (via \code{x}) and the corresponding sampling variances (via \code{vi}), standard errors (via \code{sei}), and/or sample sizes (via \code{ni}) to the function. By default, the vertical reference line is then drawn at zero.
 

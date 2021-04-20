@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-86</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-87</span>
       </span>
     </div>
 
@@ -183,12 +183,13 @@
 <p>In particular, for a fixed- or random-effects model (i.e., a model without moderators), this is just the test of the single coefficient of the model. For models including moderators, an omnibus test of all the model coefficients is conducted that excludes the intercept (the first coefficient) if it is included in the model. If no intercept is included in the model, then the omnibus test includes all of the coefficients in the model including the first.</p>
 <p>Alternatively, one can manually specify the indices of the coefficients to test via the <code>btt</code> argument. For example, with <code>btt=c(3,4)</code>, only the third and fourth coefficient from the model would be included in the test (if an intercept is included in the model, then it corresponds to the first coefficient in the model). Instead of specifying the coefficient numbers, one can specify a string for <code>btt</code>. In that case, <code><a href='https://rdrr.io/r/base/grep.html'>grep</a></code> will be used to search for all coefficient names that match the string. Using the <code>btt</code> argument, one can for example select all coefficients corresponding to a particular factor to test if the factor as a whole is significant. See &#8216;Examples&#8217;.</p>
 <p>Instead, one can use the <code>X</code> argument to specify a linear combination of the coefficients in the model that should be tested (i.e., whether the linear combination is significantly different from zero). If a matrix of linear combinations is specified, each row defines a particular linear combination to be tested. If the matrix is of full rank, an omnibus Wald-type test of all linear combinations is also provided. Linear combinations can also be obtained with the <code><a href='predict.rma.html'>predict.rma</a></code> function, which will provide corresponding confidence intervals.</p>
-<p>When specifying two models for comparison, the function provides a likelihood ratio test (LRT) comparing the two models. The two models must be based on the same set of data, must be of the same class, and should be nested for the LRT to make sense. Note that LRTs are not meaningful when using REML estimation and the two models have different fixed effects.</p>
+<p>When specifying two models for comparison, the function provides a likelihood ratio test (LRT) comparing the two models. The two models must be based on the same set of data, must be of the same class, and should be nested for the LRT to make sense. Note that LRTs are not meaningful when using REML estimation and the two models differ in their fixed effects.</p>
 <p>For location-scale models fitted with the <code><a href='rma.uni.html'>rma</a></code> function, one can use <code>att</code> to specify the indices of the scale coefficients to test. Similarly, one can use the <code>Z</code> argument to specify one or multiple linear combinations of the scale coefficients in the model that should be tested.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class <code>"anova.rma"</code>. When a single model is specified (without any further arguments or together with the <code>btt</code> argument), the object is a list containing the following components:</p>
 <dt>QM</dt><dd><p>test statistic of the Wald-type test of the model coefficients.</p></dd>
+   <dt>QMdf</dt><dd><p>corresponding degrees of freedom.</p></dd>
    <dt>QMp</dt><dd><p>corresponding p-value.</p></dd>
    <dt>btt</dt><dd><p>indices of the coefficients tested by the Wald-type test.</p></dd>
    <dt>k</dt><dd><p>number of outcomes included in the analysis.</p></dd>
@@ -197,6 +198,7 @@
    <dt>...</dt><dd><p>some additional elements/values.</p></dd>
    When argument X is used, the object is a list containing the following components:
    <dt>QM</dt><dd><p>test statistic of the omnibus Wald-type test of all linear combinations.</p></dd>
+   <dt>QMdf</dt><dd><p>corresponding degrees of freedom.</p></dd>
    <dt>QMp</dt><dd><p>corresponding p-value.</p></dd>
    <dt>hyp</dt><dd><p>description of the linear combinations tested.</p></dd>
    <dt>Xb</dt><dd><p>values of the linear combinations.</p></dd>
@@ -206,8 +208,8 @@
    When two models are specified, the object is a list containing the following components:
    <dt>fit.stats.f</dt><dd><p>log-likelihood, deviance, AIC, BIC, and AICc for the full model.</p></dd>
    <dt>fit.stats.r</dt><dd><p>log-likelihood, deviance, AIC, BIC, and AICc for the reduced model.</p></dd>
-   <dt>p.f</dt><dd><p>number of parameters in the full model.</p></dd>
-   <dt>p.r</dt><dd><p>number of parameters in the reduced model.</p></dd>
+   <dt>parms.f</dt><dd><p>number of parameters in the full model.</p></dd>
+   <dt>parms.r</dt><dd><p>number of parameters in the reduced model.</p></dd>
    <dt>LRT</dt><dd><p>likelihood ratio test statistic.</p></dd>
    <dt>pval</dt><dd><p>corresponding p-value.</p></dd>
    <dt>QE.f</dt><dd><p>test statistic of the test for (residual) heterogeneity from the full model.</p></dd>
@@ -242,10 +244,10 @@
     <pre class="examples"><div class='input'><span class='co'>### calculate log risk ratios and corresponding sampling variances</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"RR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>)</span>
 
-<span class='co'>### random-effects model</span>
+<span class='co'>### fit random-effects model</span>
 <span class='va'>res1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span>, method<span class='op'>=</span><span class='st'>"ML"</span><span class='op'>)</span>
 
-<span class='co'>### mixed-effects model with two moderators (absolute latitude and publication year)</span>
+<span class='co'>### fit mixed-effects model with two moderators (absolute latitude and publication year)</span>
 <span class='va'>res2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>ablat</span> <span class='op'>+</span> <span class='va'>year</span>, data<span class='op'>=</span><span class='va'>dat</span>, method<span class='op'>=</span><span class='st'>"ML"</span><span class='op'>)</span>
 
 <span class='co'>### Wald-type test of the two moderators</span>

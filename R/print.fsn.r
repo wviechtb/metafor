@@ -14,7 +14,7 @@ print.fsn <- function(x, digits=x$digits, ...) {
 
    if (x$type == "Rosenthal") {
       cat(mstyle$text("Observed Significance Level: "))
-      cat(mstyle$result(.pval(x$pval, digits=digits[["pval"]])))
+      cat(mstyle$result(.pval(x$pval, digits[["pval"]])))
       cat("\n")
       cat(mstyle$text("Target Significance Level:   "))
       cat(mstyle$result(x$alpha))
@@ -33,7 +33,7 @@ print.fsn <- function(x, digits=x$digits, ...) {
       cat(mstyle$result(.fcf(x$meanes, digits[["est"]])))
       cat("\n")
       cat(mstyle$text("Observed Significance Level: "))
-      cat(mstyle$result(.pval(x$pval, digits=digits[["pval"]])))
+      cat(mstyle$result(.pval(x$pval, digits[["pval"]])))
       cat("\n")
       cat(mstyle$text("Target Significance Level:   "))
       cat(mstyle$result(x$alpha))

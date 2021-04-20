@@ -27,7 +27,7 @@ blup.rma.uni <- function(x, level, digits, transf, targs, ...) {
    level <- ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
 
    if (is.element(x$test, c("knha","adhoc","t"))) {
-      crit <- qt(level/2, df=x$dfs, lower.tail=FALSE)
+      crit <- qt(level/2, df=x$ddf, lower.tail=FALSE)
    } else {
       crit <- qnorm(level/2, lower.tail=FALSE)
    }

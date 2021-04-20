@@ -17,8 +17,8 @@
    \itemize{
    \item the method used to estimate \mjseqn{\tau^2} (always \code{DL} for \code{hc})
    \item the estimated amount of heterogeneity
-   \item the estimated average true effect
-   \item the corresponding standard errror (\code{NA} when \code{transf} argument has been used)
+   \item the estimated average true outcome
+   \item the corresponding standard error (\code{NA} when \code{transf} argument has been used)
    \item the lower and upper confidence interval bounds
    }
 }

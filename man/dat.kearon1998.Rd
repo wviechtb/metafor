@@ -33,7 +33,7 @@ dat.kearon1998
 ### copy data into 'dat'
 dat <- dat.kearon1998
 
-### compute diagnostic log odds ratios and corresponding sampling variances
+### calculate diagnostic log odds ratios and corresponding sampling variances
 dat <- escalc(measure="OR", ai=tp, n1i=np, ci=nn-tn, n2i=nn, data=dat, add=1/2, to="all")
 dat
 
@@ -85,12 +85,12 @@ dat <- dat[9:12]
 levels(dat$group) <- c("sensitivity", "specificity")
 dat
 
-### compute logit-transformed sensitivity
+### calculate logit-transformed sensitivities
 dat <- escalc(measure="PLO", xi=out1, mi=out2, data=dat, add=1/2, to="all",
               include=group=="sensitivity")
 dat
 
-### compute logit-transformed specificity
+### calculate logit-transformed specificities
 dat <- escalc(measure="PLO", xi=out1, mi=out2, data=dat, add=1/2, to="all",
               include=group=="specificity")
 dat

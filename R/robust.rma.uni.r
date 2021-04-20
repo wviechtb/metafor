@@ -21,21 +21,19 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, digits, ...) {
    ### note: cluster variable is assumed to be of the same length as the original data passed to the model fitting function
    ###       so we have to apply the same subsetting (if necessary) and removing of missings as done during model fitting
 
+   if (length(cluster) != x$k.all)
+      stop(mstyle$stop(paste0("Length of variable specified via 'cluster' (", length(cluster), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
+
    if (!is.null(x$subset))
       cluster <- cluster[x$subset]
 
    cluster <- cluster[x$not.na]
-
-   ### checks on cluster variable
 
    if (anyNA(cluster))
       stop(mstyle$stop("No missing values allowed in 'cluster' variable."))
 
    if (length(cluster) == 0L)
       stop(mstyle$stop(paste0("Cannot find 'cluster' variable (or it has zero length).")))
-
-   if (length(cluster) != x$k)
-      stop(mstyle$stop(paste0("Length of variable specified via 'cluster' (", length(cluster), ") does not match length of data (", x$k, ").")))
 
    ### number of clusters
 
@@ -137,8 +135,9 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, digits, ...) {
    if (inherits(QM, "try-error"))
       QM <- NA
 
-   QM <- QM / x$m ### note: m is the number of coefficients in btt, not the number of unique clusters
-   QMp <- pf(QM, df1=x$m, df2=dfs, lower.tail=FALSE)
+   QM   <- QM / x$m ### note: m is the number of coefficients in btt, not the number of unique clusters
+   QMdf <- c(x$m, dfs)
+   QMp  <- pf(QM, df1=x$m, df2=dfs, lower.tail=FALSE)
 
    #########################################################################
 
@@ -150,6 +149,7 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, digits, ...) {
 
    ### replace elements with robust results
 
+   res$ddf   <- dfs
    res$dfs   <- dfs
    res$vb    <- vb
    res$se    <- se
@@ -158,6 +158,7 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, digits, ...) {
    res$ci.lb <- ci.lb
    res$ci.ub <- ci.ub
    res$QM    <- QM
+   res$QMdf  <- QMdf
    res$QMp   <- QMp
    res$n     <- n
    res$tcl   <- tcl

@@ -60,7 +60,7 @@ dat <- dat.bcg
 dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat,
               slab=paste(author, ", ", year, sep=""))
 
-### random-effects model
+### fit random-effects model
 res <- rma(yi, vi, data=dat)
 
 \dontrun{

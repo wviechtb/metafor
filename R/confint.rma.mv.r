@@ -543,8 +543,8 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
 
    if (fixed) {
 
-      if (is.element(x$test, c("t"))) {
-         crit <- qt(level/2, df=x$dfs, lower.tail=FALSE)
+      if (x$test == "t") {
+         crit <- sapply(seq_along(x$ddf), function(j) if (x$ddf[j] > 0) qt(level/2, df=x$ddf[j], lower.tail=FALSE) else NA)
       } else {
          crit <- qnorm(level/2, lower.tail=FALSE)
       }

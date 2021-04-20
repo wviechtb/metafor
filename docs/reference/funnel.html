@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-86</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-87</span>
       </span>
     </div>
 
@@ -245,7 +245,7 @@
     </tr>
     <tr>
       <th>refline</th>
-      <td><p>numeric value to specify the location of the vertical &#8216;reference&#8217; line and where the pseudo confidence interval should be centered. If unspecified, the reference line is drawn at the fixed- or random-effects model estimate when the model does not include moderators and at zero when moderators are included (and therefore residuals are plotted) or when directly plotting observed effect sizes or outcomes.</p></td>
+      <td><p>numeric value to specify the location of the vertical &#8216;reference&#8217; line and where the pseudo confidence interval should be centered. If unspecified, the reference line is drawn at the fixed- or random-effects model estimate when the model does not include moderators and at zero when moderators are included (and therefore residuals are plotted) or when directly plotting observed outcomes.</p></td>
     </tr>
     <tr>
       <th>lty</th>
@@ -253,11 +253,11 @@
     </tr>
     <tr>
       <th>pch</th>
-      <td><p>plotting symbol to use for the observed effect sizes or outcomes. By default, a filled circle is used. Can also be a vector of values. See <code><a href='https://rdrr.io/r/graphics/points.html'>points</a></code> for other options.</p></td>
+      <td><p>plotting symbol to use for the observed outcomes. By default, a filled circle is used. Can also be a vector of values. See <code><a href='https://rdrr.io/r/graphics/points.html'>points</a></code> for other options.</p></td>
     </tr>
     <tr>
       <th>pch.fill</th>
-      <td><p>plotting symbol to use for the effect sizes or outcomes filled in by the trim and fill method. By default, a circle is used. Only relevant when plotting an object created by the <code><a href='trimfill.html'>trimfill</a></code> function.</p></td>
+      <td><p>plotting symbol to use for the outcomes filled in by the trim and fill method. By default, a circle is used. Only relevant when plotting an object created by the <code><a href='trimfill.html'>trimfill</a></code> function.</p></td>
     </tr>
     <tr>
       <th>col</th>
@@ -305,7 +305,7 @@
 <li><p><code>yaxis="lni"</code> for the log of the sample sizes,</p></li>
 <li><p><code>yaxis="wi"</code> for the weights.</p></li>
 </ul><p>However, only when <code>yaxis="sei"</code> (the default) will the pseudo confidence region have the expected (upside-down) funnel shape with straight lines. Also, when placing (a function of) the sample sizes on the y-axis or the weights, then the pseudo confidence region cannot be drawn. See Sterne and Egger (2001) for more details on the choice of the y-axis.</p>
-<p>If the object passed to the function comes from the <code><a href='trimfill.html'>trimfill</a></code> function, the effect sizes or outcomes that are filled in by the trim and fill method are also added to the funnel plot. The symbol to use for plotting the filled in values can be specified via the <code>pch.fill</code> argument.</p>
+<p>If the object passed to the function comes from the <code><a href='trimfill.html'>trimfill</a></code> function, the outcomes that are filled in by the trim and fill method are also added to the funnel plot. The symbol to use for plotting the filled in values can be specified via the <code>pch.fill</code> argument.</p>
 <p>One can also directly pass a vector with the observed effect sizes or outcomes (via <code>x</code>) and the corresponding sampling variances (via <code>vi</code>), standard errors (via <code>sei</code>), and/or sample sizes (via <code>ni</code>) to the function. By default, the vertical reference line is then drawn at zero.</p>
 <p>The arguments <code>back</code>, <code>shade</code>, and <code>hlines</code> can be set to <code>NULL</code> to suppress the shading and the horizontal reference line.</p>
 <p>With the <code>label</code> argument, one can control whether points in the plot will be labeled. If <code>label="all"</code> (or <code>label=TRUE</code>), all points in the plot will be labeled. If <code>label="out"</code>, points falling outside of the pseudo confidence region will be labeled. Finally, one can also set this argument to a numeric value (between 1 and \(k\)) to specify how many of the most extreme points should be labeled (e.g., with <code>label=1</code> only the most extreme point would be labeled, while with <code>label=3</code>, the most extreme, and the second and third most extreme points would be labeled). With the <code>offset</code> argument, one can adjust the distance between the labels and the corresponding points.</p>

@@ -17,7 +17,7 @@
    \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded (the default is to take the value from the object).}
    \item{out.names}{character string with four elements to specify the variable names for the standard errors, test statistics, and lower/upper confidence interval bounds.}
    \item{var.names}{character string with two elements to specify the variable names for the observed effect sizes or outcomes and the sampling variances (the default is to take the value from the object if possible).}
-   \item{H0}{numeric value to specify the value of the outcome or the effect size under the null hypothesis (the default is 0).}
+   \item{H0}{numeric value to specify the value of the effect size or outcome under the null hypothesis (the default is 0).}
    \item{append}{logical to specify whether the data frame specified via the \code{object} argument should be returned together with the additional variables that are calculated by the \code{summary} function (the default is \code{TRUE}).}
    \item{replace}{logical to specify whether existing values for \code{sei}, \code{zi}, \code{ci.lb}, and \code{ci.ub} in the data frame should be replaced or not. Only relevant when the data frame already contains these variables. If \code{replace=TRUE} (the default), all of the existing values will be overwritten. If \code{replace=FALSE}, only \code{NA} values will be replaced.}
    \item{level}{numeric value between 0 and 100 to specify the confidence interval level (the default is 95).}
@@ -46,7 +46,7 @@
 \note{
    If some transformation function has been specified for the \code{transf} argument, then \code{yi}, \code{ci.lb}, and \code{ci.ub} will be transformed accordingly. However, \code{vi} and \code{sei} then still reflect the sampling variances and standard errors of the untransformed values.
 
-   The \code{summary.escalc} function computes \code{level} \% Wald-type confidence intervals, which may or may not be the most accurate method for computing confidence intervals for the chosen outcome or effect size measure.
+   The \code{summary.escalc} function computes \code{level} \% Wald-type confidence intervals, which may or may not be the most accurate method for computing confidence intervals for the chosen effect size or outcome measure.
 
    If the outcome measure used is bounded (e.g., correlations are bounded between -1 and +1, proportions are bounded between 0 and 1), one can use the \code{olim} argument to enforce those observation/outcome limits (the observed outcomes and confidence intervals cannot exceed those bounds then).
 }

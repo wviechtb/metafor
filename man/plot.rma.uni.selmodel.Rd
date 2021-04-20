@@ -46,7 +46,7 @@
 ### copy data into 'dat' and examine data
 dat <- dat.hackshaw1998
 
-### random-effects model using the log odds ratios
+### fit random-effects model using the log odds ratios
 res <- rma(yi, vi, data=dat, method="ML")
 res
 

@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-86</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-87</span>
       </span>
     </div>
 
@@ -318,7 +318,7 @@
 <p><b>Categorical Moderators</b></p>
 <p>Categorical moderator variables can be included in the model via the <code>mods</code> argument in the same way that appropriately (dummy) coded categorical independent variables can be included in linear models. One can either do the dummy coding manually or use a model formula together with the <code><a href='https://rdrr.io/r/base/factor.html'>factor</a></code> function to let <span style="R">R</span> handle the coding automatically.</p>
 <p><b>Tests and Confidence Intervals</b></p>
-<p>By default, tests of individual coefficients in the model (and the corresponding confidence intervals) are based on a standard normal distribution, while the omnibus test is based on a chi-square distribution (see above). As an alternative, one can set <code>test="t"</code>, in which case tests of individual coefficients and confidence intervals are based on a t-distribution with \(k-p\) degrees of freedom, while the omnibus test statistic then uses an F-distribution with \(m\) and \(k-p\) degrees of freedom (with \(p\) denoting the total number of model coefficients including the intercept if it is present). Note that <code>test="t"</code> is not the same as <code>test="knha"</code> in <code><a href='rma.uni.html'>rma.uni</a></code>, as no adjustment to the standard errors of the estimated coefficients is made.</p>
+<p>By default, tests of individual coefficients in the model (and the corresponding confidence intervals) are based on a standard normal distribution, while the omnibus test is based on a chi-square distribution (see above). As an alternative, one can set <code>test="t"</code>, in which case tests of individual coefficients and confidence intervals are based on a t-distribution with \(k-p\) degrees of freedom, while the omnibus test statistic then uses an F-distribution with \(m\) and \(k-p\) degrees of freedom (with \(k\) denoting the total number of estimates included in the analysis and \(p\) the total number of model coefficients including the intercept if it is present). Note that <code>test="t"</code> is not the same as <code>test="knha"</code> in <code><a href='rma.uni.html'>rma.uni</a></code>, as no adjustment to the standard errors of the estimated coefficients is made.</p>
 <p><b>Tests for (Residual) Heterogeneity</b></p>
 <p>Two different tests for (residual) heterogeneity are automatically carried out by the function. The first is a Wald-type test, which tests the coefficients corresponding to the dummy variables added in the saturated model for significance. The second is a likelihood ratio test, which tests the same set of coefficients, but does so by computing \(-2\) times the difference in the log-likelihood of the fixed-effects and the saturated model. These two tests are not identical for the types of models fitted by the <code>rma.glmm</code> function and may even lead to conflicting conclusions.</p>
 <p><b>Observed Effect Sizes or Outcomes of the Individual Studies</b></p>

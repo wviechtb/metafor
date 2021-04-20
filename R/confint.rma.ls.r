@@ -313,8 +313,8 @@ confint.rma.ls <- function(object, parm, level, fixed=FALSE, alpha, digits, tran
 
    if (fixed) {
 
-      if (is.element(x$test, c("t"))) {
-         crit <- qt(level/2, df=x$dfs, lower.tail=FALSE)
+      if (x$test == "t") {
+         crit <- qt(level/2, df=x$ddf, lower.tail=FALSE)
       } else {
          crit <- qnorm(level/2, lower.tail=FALSE)
       }
