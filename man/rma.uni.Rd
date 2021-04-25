@@ -7,17 +7,17 @@
 }
 \usage{
 rma.uni(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
-        m1i, m2i, sd1i, sd2i, xi, mi, ri, ti, sdi, r2i, ni, mods,
+        m1i, m2i, sd1i, sd2i, xi, mi, ri, ti, sdi, r2i, ni, mods, scale,
         measure="GEN", intercept=TRUE, data, slab, subset,
         add=1/2, to="only0", drop00=FALSE, vtype="LS",
         method="REML", weighted=TRUE, test="z",
-        level=95, digits, btt, tau2, verbose=FALSE, control, \dots)
+        level=95, digits, btt, att, tau2, verbose=FALSE, control, \dots)
 rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
-        m1i, m2i, sd1i, sd2i, xi, mi, ri, ti, sdi, r2i, ni, mods,
+        m1i, m2i, sd1i, sd2i, xi, mi, ri, ti, sdi, r2i, ni, mods, scale,
         measure="GEN", intercept=TRUE, data, slab, subset,
         add=1/2, to="only0", drop00=FALSE, vtype="LS",
         method="REML", weighted=TRUE, test="z",
-        level=95, digits, btt, tau2, verbose=FALSE, control, \dots)
+        level=95, digits, btt, att, tau2, verbose=FALSE, control, \dots)
 }
 \arguments{
    \item{yi}{vector of length \mjseqn{k} with the observed effect sizes or outcomes. See \sQuote{Details}.}
@@ -46,6 +46,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \item{r2i}{see below and the documentation of the \code{\link{escalc}} function for more details.}
    \item{ni}{see below and the documentation of the \code{\link{escalc}} function for more details.}
    \item{mods}{optional argument to include one or more moderators in the model. A single moderator can be given as a vector of length \mjseqn{k} specifying the values of the moderator. Multiple moderators are specified by giving a matrix with \mjseqn{k} rows and as many columns as there are moderator variables. Alternatively, a model \code{\link{formula}} can be used to specify the model. See \sQuote{Details}.}
+   \item{scale}{optional argument to include one or more predictors for the scale part in a location-scale model. See \sQuote{Details}.}
    \item{measure}{character string to specify the type of data supplied to the function. When \code{measure="GEN"} (default), the observed effect sizes or outcomes and corresponding sampling variances (or standard errors) should be supplied to the function via the \code{yi}, \code{vi}, and \code{sei} arguments (only one of the two, \code{vi} or \code{sei}, needs to be specified). Alternatively, one can set \code{measure} to one of the effect size or outcome measures described under the documentation for the \code{\link{escalc}} function in which case one must specify the required data via the appropriate arguments.}
    \item{intercept}{logical to specify whether an intercept should be added to the model (the default is \code{TRUE}). Ignored when \code{mods} is a formula.}
    \item{data}{optional data frame containing the data supplied to the function.}
@@ -61,6 +62,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \item{level}{numeric value between 0 and 100 to specify the confidence interval level (the default is 95).}
    \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4.}
    \item{btt}{optional vector of indices to specify which coefficients to include in the omnibus test of moderators. Can also be a string to grep for. See \sQuote{Details}.}
+   \item{att}{optional vector of indices to specify which scale coefficients to include in the omnibus test. Only relevant for location-scale models. See \sQuote{Details}.}
    \item{tau2}{optional numeric value to specify the amount of (residual) heterogeneity in a random- or mixed-effects model (instead of estimating it). Useful for sensitivity analyses (e.g., for plotting results as a function of \mjseqn{\tau^2}). When unspecified, the value of \mjseqn{\tau^2} is estimated from the data.}
    \item{verbose}{logical to specify whether output should be generated on the progress of the model fitting (the default is \code{FALSE}). Can also be an integer. Values > 1 generate more verbose output. See \sQuote{Note}.}
    \item{control}{optional list of control values for the iterative estimation algorithms. If unspecified, default values are defined inside the function. See \sQuote{Note}.}
@@ -117,6 +119,10 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \bold{Test for (Residual) Heterogeneity}
 
    A test for (residual) heterogeneity is automatically carried out by the function. Without moderators in the model, this is simply Cochran's \mjseqn{Q}-test (Cochran, 1954), which tests whether the variability in the observed effect sizes or outcomes is larger than would be expected based on sampling variability alone. A significant test suggests that the true effect sizes or outcomes are heterogeneous. When moderators are included in the model, this is the \mjseqn{Q_E}-test for residual heterogeneity, which tests whether the variability in the observed effect sizes or outcomes not accounted for by the moderators included in the model is larger than would be expected based on sampling variability alone.
+
+   \bold{Location-Scale Models}
+
+   The function can also be used to fit so-called \sQuote{location-scale models}. In such models, one can specify not only predictors for the size of the average true outcome (i.e., for their \sQuote{location}), but also predictors for the amount of heterogeneity in the outcomes (i.e., their \sQuote{scale}). The model is then given by \mjdeqn{y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \ldots + \beta_{p'} x_{ip'} + u_i + \epsilon_i,}{y_i = \beta_0 + \beta_1 x_i1 + \beta_2 x_i2 + \ldots + \beta_p' x_ip' + u_i + \epsilon_i,} \mjdeqn{u_i \sim N(0, \tau_i^2), \; \epsilon_i \sim N(0, v_i),}{u_i ~ N(0, tau_i^2), \epsilon_i \sim N(0, v_i),} \mjdeqn{\ln(\tau_i^2) = \alpha_0 + \alpha_1 z_{i1} + \alpha_2 z_{i2} + \ldots + \alpha_{q'} z_{iq'},}{log(tau^2) = \alpha_0 + \alpha z_i1 + \alpha z_i2 + \ldots + \alpha_q' z_iq',} where \mjeqn{x_{i1}, \ldots, x_{ip'}}{x_i1, \ldots, x_ip'} are the values of the \mjseqn{p'} predictor variables that may be related to the size of the average true outcome (letting \mjseqn{p = p' + 1} denote the total number of location coefficients in the model including the model intercept \mjseqn{\beta_0}) and \mjeqn{z_{i1}, \ldots, z_{iq'}}{z_i1, \ldots, z_iq'} are the values of the \mjseqn{q'} scale variables that may be related to the amount of heterogeneity in the outcomes (letting \mjseqn{q = q' + 1} denote the total number of scale coefficients in the model including the model intercept \mjseqn{\alpha_0}). Location variables can be specified via the \code{mods} argument as described above (e.g., \code{mods = ~ mod1 + mod2 + mod3}). Scale variables can be specified via the \code{scale} argument (e.g., \code{scale = ~ var1 + var2 + var3}). A log link is used for specifying the relationship between the scale variables and the amount of heterogeneity so that \mjseqn{\tau_i^2} is guaranteed to be non-negative. Estimates of the location and scale coefficients can be obtained with either maximum likelihood (\code{method="ML"}) or restricted maximum likelihood (\code{method="REML"}) estimation. An omnibus test of the scale coefficients is conducted as described above (where the \code{att} argument can be used to specify which coefficients to include in the test).
 }
 \value{
    An object of class \code{c("rma.uni","rma")}. The object is a list containing the following components:
@@ -142,6 +148,20 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \item{int.only}{logical that indicates whether the model is an intercept-only model.}
    \item{yi, vi, X}{the vector of outcomes, the corresponding sampling variances, and the model matrix.}
    \item{fit.stats}{a list with the log-likelihood, deviance, AIC, BIC, and AICc values under the unrestricted and restricted likelihood.}
+   \item{\dots}{some additional elements/values.}
+
+   For location-scale models, the object is of class \code{c("rma.ls","rma.uni","rma")} and includes the following components in addition to the ones listed above:
+   \item{alpha}{estimated scale coefficients of the model.}
+   \item{se.alpha}{standard errors of the coefficients.}
+   \item{zval.alpha}{test statistics of the coefficients.}
+   \item{pval.alpha}{corresponding p-values.}
+   \item{ci.lb.alpha}{lower bound of the confidence intervals for the coefficients.}
+   \item{ci.ub.alpha}{upper bound of the confidence intervals for the coefficients.}
+   \item{va}{variance-covariance matrix of the estimated coefficients.}
+   \item{tau2}{as above, but now a vector of values.}
+   \item{q}{number of scale coefficients in the model (including the intercept).}
+   \item{QS}{test statistic of the omnibus test of the scale coefficients.}
+   \item{QSp}{corresponding p-value.}
    \item{\dots}{some additional elements/values.}
 }
 \section{Methods}{
@@ -238,20 +258,20 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 ### calculate log risk ratios and corresponding sampling variances
 dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
-### fit random-effects model, using log risk ratios and variances as input
+### fit a random-effects model using the log risk ratios and variances as input
 ### note: method="REML" is the default, so one could leave this out
 rma(yi, vi, data=dat, method="REML")
 
-### fit random-effects model, using log risk ratios and standard errors as input
+### fit a random-effects model using the log risk ratios and standard errors as input
 ### note: the second argument of rma() is for the *variances*, so we use the
 ### named argument 'sei' to supply the standard errors to the function
 dat$sei <- sqrt(dat$vi)
 rma(yi, sei=sei, data=dat)
 
-### supplying the 2x2 table cell frequencies directly to the rma() function
+### fit a random-effects model supplying the 2x2 table cell frequencies to the function
 rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat)
 
-### fit mixed-effects model with two moderators (absolute latitude and publication year)
+### fit a mixed-effects model with two moderators (absolute latitude and publication year)
 rma(yi, vi, mods=cbind(ablat, year), data=dat)
 
 ### using a model formula to specify the same model
@@ -276,6 +296,9 @@ rma(yi, vi, mods = ~ alloc.random + alloc.systematic + year + ablat, data=dat, b
 ### using a model formula to specify the same model
 rma(yi, vi, mods = ~ factor(alloc) + year + ablat, data=dat, btt=2:3)
 
+### factor() is not needed as character variables are automatically converted to factors
+rma(yi, vi, mods = ~ alloc + year + ablat, data=dat, btt=2:3)
+
 ### test all pairwise differences with Holm's method (using the 'multcomp' package if installed)
 res <- rma(yi, vi, mods = ~ factor(alloc) - 1, data=dat)
 res
@@ -296,6 +319,8 @@ res.r
 res.s
 res <- rma(yi, vi, mods = ~ factor(alloc) - 1, data=dat)
 res
+
+############################################################################
 
 ### demonstrating that Q_E + Q_M = Q_Total for fixed-effects models
 ### note: this does not work for random/mixed-effects models, since Q_E and
@@ -321,5 +346,30 @@ res.s$QE ### Q-value within subgroup "systematic"
 
 res$QE
 res.a$QE + res.r$QE + res.s$QE
+
+############################################################################
+
+### an example of a location-scale model
+dat <- dat.bangertdrowns2004
+
+### fit a standard random-effects model
+res <- rma(yi, vi, data=dat)
+res
+
+### fit the same model as a location-scale model
+res <- rma(yi, vi, scale = ~ 1, data=dat)
+res
+
+### check that we obtain the same estimate for tau^2
+predict(res, newscale=1, transf=exp)
+
+### add the total sample size (per 100) as a location and scale predictor
+dat$ni100 <- dat$ni/100
+res <- rma(yi, vi, mods = ~ ni100, scale = ~ ni100, data=dat)
+res
+
+### variables in the location and scale parts can differ
+res <- rma(yi, vi, mods = ~ ni100 + meta, scale = ~ ni100 + imag, data=dat)
+res
 }
 \keyword{models}

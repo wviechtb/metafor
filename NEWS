@@ -1,8 +1,10 @@
-Changes in Version 2.5-88 (2021-04-25)
+Changes in Version 2.5-89 (2021-04-25)
 =====================================
 
    o the metafor package now makes use of the 'mathjaxr' package to nicely
      render equations shown in the HTML help pages
+
+   o rma() can now also fit location-scale models
 
    o added selmodel() for fitting a wide variety of selection models (and
      added the corresponding plot.rma.uni.selmodel() function for drawing the
@@ -27,8 +29,8 @@ Changes in Version 2.5-88 (2021-04-25)
      outcomes within studies/clusters
 
    o regtest() now shows the 'limit estimate' of the (average) true effect
-     when using 'sei', 'vi', 'ninv', or 'sqrtninv' as predictors (and the model
-     does not contain any other moderators)
+     when using 'sei', 'vi', 'ninv', or 'sqrtninv' as predictors (and the
+     model does not contain any other moderators)
 
    o vif() gains 'btt' argument and can now also compute generalized variance
      inflation factors; a proper print.vif.rma() function was also added

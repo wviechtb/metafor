@@ -1,6 +1,8 @@
-# metafor 2.5-88 (2021-04-25)
+# metafor 2.5-89 (2021-04-25)
 
 - the `metafor` package now makes use of the `mathjaxr` package to nicely render equations shown in the HTML help pages
+
+- `rma()` can now also fit location-scale models
 
 - added `selmodel()` for fitting a wide variety of selection models (and added the corresponding `plot.rma.uni.selmodel()` function for drawing the estimated selection function)
 

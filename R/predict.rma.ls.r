@@ -115,7 +115,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
       ### but user can also decide to remove the intercept from the predictions with intercept=FALSE
       ### one special case: when the location model is an intercept-only model, one can set newmods=1 to obtain the predicted intercept
 
-      if (x$int.incl && !(x$int.only && dim(X.new) == c(1L,1L) && X.new[1,1] == 1)) {
+      if (x$int.incl && !(x$int.only && ncol(X.new) == 1L && nrow(X.new) == 1L && X.new[1,1] == 1)) {
          if (intercept) {
             X.new <- cbind(intrcpt=1, X.new)
          } else {
@@ -184,7 +184,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
       ### one special case: when the scale model is an intercept-only model, one can set newscale=1 to obtain the predicted intercept
       ### (which can be converted to tau^2 with transf=exp when using a log link)
 
-      if (x$Z.int.incl && !(x$Z.int.only && dim(Z.new) == c(1L,1L) && Z.new[1,1] == 1)) {
+      if (x$Z.int.incl && !(x$Z.int.only && ncol(Z.new) == 1L && nrow(Z.new) == 1L && Z.new[1,1] == 1)) {
          if (is.null(newmods)) {
             if (intercept) {
                Z.new <- cbind(intrcpt=1, Z.new)

@@ -1,9 +1,9 @@
-rma <- rma.uni <- function(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, m1i, m2i, sd1i, sd2i, xi, mi, ri, ti, sdi, r2i, ni, mods, #scale,
+rma <- rma.uni <- function(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, m1i, m2i, sd1i, sd2i, xi, mi, ri, ti, sdi, r2i, ni, mods, scale,
 measure="GEN", intercept=TRUE,
 data, slab, subset,
 add=1/2, to="only0", drop00=FALSE, vtype="LS",
 method="REML", weighted=TRUE, test="z", #knha=FALSE,
-level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
+level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
    #########################################################################
 
@@ -60,7 +60,7 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("knha", "scale", "link", "alpha", "outlist", "onlyo1", "addyi", "addvi", "time", "skipr2", "skiphes", "att"))
+   .chkdots(ddd, c("knha", "link", "alpha", "outlist", "onlyo1", "addyi", "addvi", "time", "skipr2", "skiphes"))
 
    ### handle 'knha' argument from ... (note: overrides test argument)
 
@@ -72,9 +72,11 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
    if (!is.element(test, c("z", "t", "knha", "adhoc")))
       stop(mstyle$stop("Invalid option selected for 'test' argument."))
 
-   if (!is.null(ddd$scale)) {
+   if (missing(scale)) {
 
-      scale <- ddd$scale
+      model <- "rma.uni"
+
+   } else {
 
       #if (!inherits(scale, "formula"))
       #   stop(mstyle$stop("Must specify a formula for the 'scale' argument."))
@@ -83,10 +85,6 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
          stop(mstyle$stop("Cannot use Knapp & Hartung method with location-scale models."))
 
       model <- "rma.ls"
-
-   } else {
-
-      model <- "rma.uni"
 
    }
 
@@ -100,12 +98,6 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
       alpha <- ddd$alpha
    } else {
       alpha <- NA
-   }
-
-   if (!is.null(ddd$att)) {
-      att <- ddd$att
-   } else {
-      att <- NULL
    }
 
    ### set defaults or get onlyo1, addyi, and addvi arguments
@@ -2191,8 +2183,8 @@ level=95, digits, btt, tau2, verbose=FALSE, control, ...) {
             I2 <- max(0, 100 * (QE - (k-p)) / QE)
             H2 <- QE / (k-p)
          } else {
-            I2 <- 100 * mean(tau2) / (vt + mean(tau2)) ### must use mean(tau2) in case tau2 is vector from location-scale model
-            H2 <- mean(tau2) / vt + 1                  ### must use mean(tau2) in case tau2 is vector from location-scale model
+            I2 <- 100 * tau2 / (vt + tau2) # vector for location-scale models
+            H2 <- tau2 / vt + 1            # vector for location-scale models
          }
 
       } else {
