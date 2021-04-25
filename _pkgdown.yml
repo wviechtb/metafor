@@ -2,6 +2,9 @@ template:
   params:
     bootswatch: cosmo
   opengraph:
+    #image:
+    #  src: man/figures/card.png
+    #  alt: "Alternative text describing the image"
     twitter:
       creator: "@wviechtb"
       card: summary_large_image

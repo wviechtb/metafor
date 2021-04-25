@@ -255,7 +255,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
 
          }
 
-      } else {
+      } else if (is.logical(label)) {
 
          if (!is.logical(label))
             stop(mstyle$stop("Argument 'label' must be a logical vector (or a single character string)."))
@@ -268,6 +268,11 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
 
          if (!is.null(x$subset))
             label <- label[x$subset]
+
+      } else if (is.numeric(label)) {
+
+         label <- round(label)
+         label <- seq(x$k.all) %in% label
 
       }
 
