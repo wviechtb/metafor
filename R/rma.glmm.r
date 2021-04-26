@@ -60,7 +60,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("tdist", "outlist", "onlyo1", "addyi", "addvi", "time", "retdat", "family"))
+   .chkdots(ddd, c("tdist", "outlist", "onlyo1", "addyi", "addvi", "time", "retdat", "family", "retfit"))
 
    ### handle 'tdist' argument from ... (note: overrides test argument)
 
@@ -2097,6 +2097,13 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       } else {
          res <- eval(parse(text=paste0("list(", ddd$outlist, ")")))
       }
+   }
+
+   if (.isTRUE(ddd$retfit)) {
+      res$res.FE <- res.FE
+      res$res.QE <- res.QE
+      if (method == "ML")
+         res$res.ML <- res.ML
    }
 
    time.end <- proc.time()

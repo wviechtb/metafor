@@ -1,7 +1,7 @@
 \name{selmodel}
 \alias{selmodel}
 \alias{selmodel.rma.uni}
-\title{Selection Model}
+\title{Selection Models}
 \description{
    Function to fit selection models. \loadmathjax
 }
