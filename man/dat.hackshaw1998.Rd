@@ -1,8 +1,8 @@
 \name{dat.hackshaw1998}
 \docType{data}
 \alias{dat.hackshaw1998}
-\title{Studies on Lung Cancer Risk from ETS Exposure}
-\description{Results from 37 studies on the risk of lung cancer from environmental tobacco smoke (ETS) exposure.}
+\title{Studies on the Risk of Lung Cancer in Women Exposed to Environmental Tobacco Smoke}
+\description{Results from 37 studies on the risk of lung cancer in women exposed to environmental tobacco smoke (ETS) from their smoking spouse.}
 \usage{dat.hackshaw1998}
 \format{The data frame contains the following columns:
 \tabular{lll}{
@@ -20,7 +20,7 @@
 }
 }
 \details{
-   The dataset includes the results from 37 studies (4 cohort, 33 case-control) on the risk of lung cancer from environmental tobacco smoke (ETS) exposure from the spouse in women who are lifelong nonsmokers. Values of the log odds ratio greater than 0 indicate an increased risk of cancer in exposed women compared to women not exposed to ETS from their spouse.
+   The dataset includes the results from 37 studies (4 cohort, 33 case-control) examining if women (who are lifelong nonsmokers) have an elevated risk for lung cancer due to exposure to environmental tobacco smoke (ETS) from their smoking spouse. Values of the log odds ratio greater than 0 indicate an increased risk of cancer in exposed women compared to women not exposed to ETS from their spouse.
 
    Note that the log odds ratios and corresponding sampling variances were back-calculated from the reported odds ratios and confidence interval (CI) bounds (see \sQuote{Examples}). Since the reported values were rounded to some extent, this introduces some minor inaccuracies into the back-calculations. The overall estimate reported in Hackshaw et al. (1997) and Hackshaw (1998) can be fully reproduced though.
 }

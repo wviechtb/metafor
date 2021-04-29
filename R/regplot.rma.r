@@ -761,8 +761,6 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
       if (length(ltxt) >= 1L)
          legend(lpos, inset=.01, bg=NA, pch=pch.l, col=col.l, pt.bg=bg.l, lty=lty.l, lwd=lwd.l, text.col=tcol.l, pt.cex=1.5, seg.len=3, legend=ltxt)
 
-      ### set lcol, lty, and lwd (1 = reg line, 2 = ci bounds, 3 = pi bounds, 4 = refline)
-
    }
 
    ############################################################################

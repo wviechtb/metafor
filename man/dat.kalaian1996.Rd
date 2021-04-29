@@ -33,6 +33,9 @@
 ### copy data into 'dat'
 dat <- dat.kalaian1996
 
+### order dataset by study (important since we split() by study below)
+dat <- dat[order(dat$study),]
+
 ### check ranges
 range(dat$yi[dat$outcome == "verbal"]) # -0.35 to 0.74 according to page 230
 range(dat$yi[dat$outcome == "math"])   # -0.53 to 0.60 according to page 231
@@ -74,6 +77,12 @@ dat$loghrs <- log(dat$hrs) - mean(log(dat$hrs), na.rm=TRUE)
 ### fit multivariate model with log(hrs) as moderator
 res <- rma.mv(yi, V, mods = ~ outcome + outcome:loghrs - 1,
               random = ~ outcome | study, struct="UN",
+              data=dat, digits=3)
+res
+
+### fit model with tau2 = 0 for outcome verbal (which also constrains rho = 0)
+res <- rma.mv(yi, V, mods = ~ outcome + outcome:loghrs - 1,
+              random = ~ outcome | study, struct="UN", tau2=c(NA,0),
               data=dat, digits=3)
 res
 }

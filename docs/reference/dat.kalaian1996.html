@@ -175,6 +175,9 @@
     <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat'</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.kalaian1996</span>
 
+<span class='co'>### order dataset by study (important since we split() by study below)</span>
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/order.html'>order</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>study</span><span class='op'>)</span>,<span class='op'>]</span>
+
 <span class='co'>### check ranges</span>
 <span class='fu'><a href='https://rdrr.io/r/base/range.html'>range</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>yi</span><span class='op'>[</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>outcome</span> <span class='op'>==</span> <span class='st'>"verbal"</span><span class='op'>]</span><span class='op'>)</span> <span class='co'># -0.35 to 0.74 according to page 230</span>
 </div><div class='output co'>#&gt; [1] -0.38  0.74</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/range.html'>range</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>yi</span><span class='op'>[</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>outcome</span> <span class='op'>==</span> <span class='st'>"math"</span><span class='op'>]</span><span class='op'>)</span>   <span class='co'># -0.53 to 0.60 according to page 231</span>
@@ -215,24 +218,24 @@
 #&gt; inner factor: outcome (nlvls = 2)
 #&gt; 
 #&gt;            estim   sqrt  k.lvl  fixed   level 
-#&gt; tau^2.1    0.057  0.239     29     no    math 
-#&gt; tau^2.2    0.043  0.207     38     no  verbal 
+#&gt; tau^2.1    0.012  0.111     29     no    math 
+#&gt; tau^2.2    0.003  0.051     38     no  verbal 
 #&gt; 
 #&gt;         rho.math  rho.vrbl    math  vrbl 
-#&gt; math           1     0.249       -    no 
-#&gt; verbal     0.249         1      20     - 
+#&gt; math           1    -1.000       -    no 
+#&gt; verbal    -1.000         1      20     - 
 #&gt; 
 #&gt; Test for Residual Heterogeneity:
-#&gt; QE(df = 65) = 397.585, p-val &lt; .001
+#&gt; QE(df = 65) = 72.261, p-val = 0.251
 #&gt; 
 #&gt; Test of Moderators (coefficients 1:2):
-#&gt; QM(df = 2) = 5.994, p-val = 0.050
+#&gt; QM(df = 2) = 18.090, p-val &lt; .001
 #&gt; 
 #&gt; Model Results:
 #&gt; 
-#&gt;                estimate     se   zval   pval   ci.lb  ci.ub 
-#&gt; outcomemath       0.105  0.061  1.723  0.085  -0.014  0.225  . 
-#&gt; outcomeverbal     0.111  0.053  2.083  0.037   0.007  0.215  * 
+#&gt;                estimate     se   zval   pval  ci.lb  ci.ub 
+#&gt; outcomemath       0.138  0.043  3.171  0.002  0.053  0.223   ** 
+#&gt; outcomeverbal     0.117  0.034  3.459  &lt;.001  0.051  0.183  *** 
 #&gt; 
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
@@ -244,11 +247,11 @@
 #&gt; 1: outcomemath - outcomeverbal = 0 
 #&gt; 
 #&gt; Results:
-#&gt;    estimate    se   zval  pval 
-#&gt; 1:   -0.006 0.071 -0.078 0.938 
+#&gt;    estimate    se  zval  pval 
+#&gt; 1:    0.021 0.049 0.427 0.669 
 #&gt; 
 #&gt; Test of Hypothesis:
-#&gt; QM(df = 1) = 0.006, p-val = 0.938
+#&gt; QM(df = 1) = 0.183, p-val = 0.669
 #&gt; </div><div class='input'>
 <span class='co'>### log-transform and mean center the hours of coaching variable</span>
 <span class='va'>dat</span><span class='op'>$</span><span class='va'>loghrs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>hrs</span><span class='op'>)</span> <span class='op'>-</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>hrs</span><span class='op'>)</span>, na.rm<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
@@ -267,26 +270,64 @@
 #&gt; inner factor: outcome (nlvls = 2)
 #&gt; 
 #&gt;            estim   sqrt  k.lvl  fixed   level 
-#&gt; tau^2.1    0.050  0.223     28     no    math 
-#&gt; tau^2.2    0.039  0.197     37     no  verbal 
+#&gt; tau^2.1    0.015  0.123     28     no    math 
+#&gt; tau^2.2    0.001  0.037     37     no  verbal 
 #&gt; 
 #&gt;         rho.math  rho.vrbl    math  vrbl 
-#&gt; math           1    -0.896       -    no 
-#&gt; verbal    -0.896         1      19     - 
+#&gt; math           1    -1.000       -    no 
+#&gt; verbal    -1.000         1      19     - 
 #&gt; 
 #&gt; Test for Residual Heterogeneity:
-#&gt; QE(df = 61) = 294.205, p-val &lt; .001
+#&gt; QE(df = 61) = 68.018, p-val = 0.251
 #&gt; 
 #&gt; Test of Moderators (coefficients 1:4):
-#&gt; QM(df = 4) = 18.961, p-val &lt; .001
+#&gt; QM(df = 4) = 23.634, p-val &lt; .001
 #&gt; 
 #&gt; Model Results:
 #&gt; 
 #&gt;                       estimate     se   zval   pval   ci.lb  ci.ub 
-#&gt; outcomemath              0.080  0.059  1.347  0.178  -0.036  0.196    
-#&gt; outcomeverbal            0.090  0.053  1.705  0.088  -0.014  0.194  . 
-#&gt; outcomemath:loghrs       0.182  0.092  1.978  0.048   0.002  0.362  * 
-#&gt; outcomeverbal:loghrs     0.168  0.069  2.440  0.015   0.033  0.303  * 
+#&gt; outcomemath              0.101  0.049  2.085  0.037   0.006  0.197   * 
+#&gt; outcomeverbal            0.110  0.035  3.164  0.002   0.042  0.178  ** 
+#&gt; outcomemath:loghrs       0.170  0.073  2.339  0.019   0.028  0.312   * 
+#&gt; outcomeverbal:loghrs     0.049  0.046  1.069  0.285  -0.041  0.139     
+#&gt; 
+#&gt; ---
+#&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+#&gt; </div><div class='input'>
+<span class='co'>### fit model with tau2 = 0 for outcome verbal (which also constrains rho = 0)</span>
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>V</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>outcome</span> <span class='op'>+</span> <span class='va'>outcome</span><span class='op'>:</span><span class='va'>loghrs</span> <span class='op'>-</span> <span class='fl'>1</span>,
+              random <span class='op'>=</span> <span class='op'>~</span> <span class='va'>outcome</span> <span class='op'>|</span> <span class='va'>study</span>, struct<span class='op'>=</span><span class='st'>"UN"</span>, tau2<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span>,<span class='fl'>0</span><span class='op'>)</span>,
+              data<span class='op'>=</span><span class='va'>dat</span>, digits<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Rows with NAs omitted from model fitting.</span></div><div class='input'><span class='va'>res</span>
+</div><div class='output co'>#&gt; 
+#&gt; Multivariate Meta-Analysis Model (k = 65; method: REML)
+#&gt; 
+#&gt; Variance Components:
+#&gt; 
+#&gt; outer factor: study   (nlvls = 46)
+#&gt; inner factor: outcome (nlvls = 2)
+#&gt; 
+#&gt;            estim   sqrt  k.lvl  fixed   level 
+#&gt; tau^2.1    0.021  0.145     28     no    math 
+#&gt; tau^2.2    0.000  0.000     37    yes  verbal 
+#&gt; 
+#&gt;         rho.math  rho.vrbl    math  vrbl 
+#&gt; math           1     0.000       -   yes 
+#&gt; verbal     0.000         1      19     - 
+#&gt; 
+#&gt; Test for Residual Heterogeneity:
+#&gt; QE(df = 61) = 68.018, p-val = 0.251
+#&gt; 
+#&gt; Test of Moderators (coefficients 1:4):
+#&gt; QM(df = 4) = 23.340, p-val &lt; .001
+#&gt; 
+#&gt; Model Results:
+#&gt; 
+#&gt;                       estimate     se   zval   pval   ci.lb  ci.ub 
+#&gt; outcomemath              0.107  0.051  2.100  0.036   0.007  0.206    * 
+#&gt; outcomeverbal            0.114  0.034  3.395  &lt;.001   0.048  0.180  *** 
+#&gt; outcomemath:loghrs       0.188  0.076  2.466  0.014   0.039  0.337    * 
+#&gt; outcomeverbal:loghrs     0.060  0.044  1.358  0.175  -0.027  0.147      
 #&gt; 
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
