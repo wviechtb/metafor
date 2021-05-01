@@ -21,7 +21,7 @@ print.permutest.rma.uni <- function(x, digits=x$digits, signif.stars=getOption("
    }
 
    if (is.element(x$test, c("knha","adhoc","t"))) {
-      res.table <- data.frame(estimate=.fcf(c(x$beta), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), tval=.fcf(x$zval, digits[["test"]]), df=round(x$ddf, 2), "pval*"=.pval(x$pval, digits[["pval"]]), ci.lb=.fcf(x$ci.lb, digits[["ci"]]), ci.ub=.fcf(x$ci.ub, digits[["ci"]]), stringsAsFactors=FALSE)
+      res.table <- data.frame(estimate=.fcf(c(x$beta), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), tval=.fcf(x$zval, digits[["test"]]), df=round(x$ddf,2), "pval*"=.pval(x$pval, digits[["pval"]]), ci.lb=.fcf(x$ci.lb, digits[["ci"]]), ci.ub=.fcf(x$ci.ub, digits[["ci"]]), stringsAsFactors=FALSE)
       colnames(res.table)[5] <- "pval*" # rename 'pval.' to 'pval*'
       if (x$permci)
          colnames(res.table)[6:7] <- c("ci.lb*", "ci.ub*")
