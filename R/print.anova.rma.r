@@ -55,9 +55,9 @@ print.anova.rma <- function(x, digits=x$digits, ...) {
       cat("\n")
 
       if (is.element(x$test, c("knha","adhoc","t"))) {
-         res.table <- data.frame(estimate=.fcf(c(x$Xb), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), tval=.fcf(x$zval, digits[["test"]]), df=round(x$ddf, 2), pval=.pval(x$pval, digits[["pval"]]))
+         res.table <- data.frame(estimate=.fcf(c(x$Xb), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), tval=.fcf(x$zval, digits[["test"]]), df=round(x$ddf, 2), pval=.pval(x$pval, digits[["pval"]]), stringsAsFactors=FALSE)
       } else {
-         res.table <- data.frame(estimate=.fcf(c(x$Xb), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), zval=.fcf(x$zval, digits[["test"]]), pval=.pval(x$pval, digits[["pval"]]))
+         res.table <- data.frame(estimate=.fcf(c(x$Xb), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), zval=.fcf(x$zval, digits[["test"]]), pval=.pval(x$pval, digits[["pval"]]), stringsAsFactors=FALSE)
       }
       rownames(res.table) <- paste0(seq_len(x$m), ":")
       tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE))
@@ -97,9 +97,9 @@ print.anova.rma <- function(x, digits=x$digits, ...) {
       cat("\n")
 
       if (x$test == "t") {
-         res.table <- data.frame(estimate=.fcf(c(x$Za), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), tval=.fcf(x$zval, digits[["test"]]), df=round(x$ddf, 2), pval=.pval(x$pval, digits[["pval"]]))
+         res.table <- data.frame(estimate=.fcf(c(x$Za), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), tval=.fcf(x$zval, digits[["test"]]), df=round(x$ddf, 2), pval=.pval(x$pval, digits[["pval"]]), stringsAsFactors=FALSE)
       } else {
-         res.table <- data.frame(estimate=.fcf(c(x$Za), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), zval=.fcf(x$zval, digits[["test"]]), pval=.pval(x$pval, digits[["pval"]]))
+         res.table <- data.frame(estimate=.fcf(c(x$Za), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), zval=.fcf(x$zval, digits[["test"]]), pval=.pval(x$pval, digits[["pval"]]), stringsAsFactors=FALSE)
       }
       rownames(res.table) <- paste0(seq_len(x$m), ":")
       tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE))
@@ -134,7 +134,7 @@ print.anova.rma <- function(x, digits=x$digits, ...) {
                               c(NA, .pval(x$pval, digits[["pval"]])),
                               c(.fcf(x$QE.f, digits[["test"]]),  .fcf(x$QE.r, digits[["test"]])),
                               c(.fcf(x$tau2.f, digits[["var"]]), .fcf(x$tau2.r, digits[["var"]])),
-                              c(NA, NA))
+                              c(NA, NA), stringsAsFactors=FALSE)
 
       colnames(res.table) <- c("df", "AIC", "BIC", "AICc", "logLik", "LRT", "pval", "QE", "tau^2", "R^2")
       rownames(res.table) <- c("Full", "Reduced")
