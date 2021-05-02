@@ -6,16 +6,42 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- Inform modern browsers that this page supports both dark and light color schemes,
+  and the page author prefers light. -->
+<meta name="color-scheme" content="dark light">
+<script>
+  // If `prefers-color-scheme` is not supported, fall back to light mode.
+  // i.e. In this case, inject the `light` CSS before the others, with
+  // no media filter so that it will be downloaded with highest priority.
+  if (window.matchMedia("(prefers-color-scheme: dark)").media === "not all") {
+    document.documentElement.style.display = "none";
+    document.head.insertAdjacentHTML(
+      "beforeend",
+      "<link id=\"css\" rel=\"stylesheet\" href=\"https://bootswatch.com/3/flatly/bootstrap.css\" onload=\"document.documentElement.style.display = ''\">"
+    );
+  }
+</script>
+
 <title>Studies to Illustrate Model Checking Methods — dat.viechtbauer2021 • metafor</title>
 
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- Flatly Theme - Light  -->
+<link id="css-light" rel="stylesheet" href="https://bootswatch.com/3/flatly/bootstrap.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)">
+
+<!-- Darkly Theme - Dark -->
+<link id="css-dark" rel="stylesheet" href="https://bootswatch.com/3/darkly/bootstrap.css" media="(prefers-color-scheme: dark)">
+
+<!-- preferably CSS -->
+<link rel="stylesheet" href="../preferably.css">
+<link id="css-code-light" rel="stylesheet" href="../code-color-scheme-light.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)">
+<link id="css-code-dark" rel="stylesheet" href="../code-color-scheme-dark.css" media="(prefers-color-scheme: dark)">
+
 
 <!-- bootstrap-toc -->
 <link rel="stylesheet" href="../bootstrap-toc.css">
@@ -48,11 +74,12 @@
 
 
 
-
-
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
+
+
+
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -61,9 +88,15 @@
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -106,6 +139,7 @@
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+        
         <li>
   <a href="https://twitter.com/wviechtb">
     <span class="fas fa-twitter"></span>
@@ -118,6 +152,10 @@
      
   </a>
 </li>
+        
+        
+
+
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -171,7 +209,7 @@
 
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"OR"</span>, ai<span class='op'>=</span><span class='va'>xTi</span>, n1i<span class='op'>=</span><span class='va'>nTi</span>, ci<span class='op'>=</span><span class='va'>xCi</span>, n2i<span class='op'>=</span><span class='va'>nCi</span>, add<span class='op'>=</span><span class='fl'>1</span><span class='op'>/</span><span class='fl'>2</span>, to<span class='op'>=</span><span class='st'>"all"</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 <span class='va'>dat</span>
-</div><div class='output co'>#&gt;    trial nTi nCi xTi xCi dose      yi     vi 
+</div><div class='co'>#&gt;    trial nTi nCi xTi xCi dose      yi     vi 
 #&gt; 1      1  66  59  42  24  100  0.9217 0.1333 
 #&gt; 2      2  59  65  42  34  200  0.7963 0.1414 
 #&gt; 3      3 253 257  96  32  250  1.4472 0.0519 
@@ -200,7 +238,7 @@
 
 <span class='va'>res.CE</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span>, method<span class='op'>=</span><span class='st'>"FE"</span><span class='op'>)</span>
 <span class='va'>res.CE</span>
-</div><div class='output co'>#&gt; 
+</div><div class='co'>#&gt; 
 #&gt; Fixed-Effects Model (k = 20)
 #&gt; 
 #&gt; I^2 (total heterogeneity / total variability):   81.70%
@@ -219,7 +257,7 @@
 #&gt; </div><div class='input'>
 <span class='va'>res.RE</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span>, method<span class='op'>=</span><span class='st'>"DL"</span><span class='op'>)</span>
 <span class='va'>res.RE</span>
-</div><div class='output co'>#&gt; 
+</div><div class='co'>#&gt; 
 #&gt; Random-Effects Model (k = 20; tau^2 estimator: DL)
 #&gt; 
 #&gt; tau^2 (estimated amount of total heterogeneity): 0.3174 (SE = 0.1472)
@@ -240,7 +278,7 @@
 #&gt; </div><div class='input'>
 <span class='va'>res.MR</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>dose</span>, data<span class='op'>=</span><span class='va'>dat</span>, method<span class='op'>=</span><span class='st'>"FE"</span><span class='op'>)</span>
 <span class='va'>res.MR</span>
-</div><div class='output co'>#&gt; 
+</div><div class='co'>#&gt; 
 #&gt; Fixed-Effects with Moderators Model (k = 20)
 #&gt; 
 #&gt; I^2 (residual heterogeneity / unaccounted variability): 55.49%
@@ -263,7 +301,7 @@
 #&gt; </div><div class='input'>
 <span class='va'>res.ME</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>dose</span>, data<span class='op'>=</span><span class='va'>dat</span>, method<span class='op'>=</span><span class='st'>"DL"</span><span class='op'>)</span>
 <span class='va'>res.ME</span>
-</div><div class='output co'>#&gt; 
+</div><div class='co'>#&gt; 
 #&gt; Mixed-Effects Model (k = 20; tau^2 estimator: DL)
 #&gt; 
 #&gt; tau^2 (estimated amount of residual heterogeneity):     0.0895 (SE = 0.0582)
@@ -311,10 +349,10 @@
 <span class='co'>### number of standardized deleted residuals larger than +-1.96 in each model</span>
 
 <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span><span class='op'>(</span><span class='fu'><a href='residuals.rma.html'>rstudent</a></span><span class='op'>(</span><span class='va'>res.CE</span><span class='op'>)</span><span class='op'>$</span><span class='va'>z</span><span class='op'>)</span> <span class='op'>&gt;=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>qnorm</a></span><span class='op'>(</span><span class='fl'>.975</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 4</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span><span class='op'>(</span><span class='fu'><a href='residuals.rma.html'>rstudent</a></span><span class='op'>(</span><span class='va'>res.MR</span><span class='op'>)</span><span class='op'>$</span><span class='va'>z</span><span class='op'>)</span> <span class='op'>&gt;=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>qnorm</a></span><span class='op'>(</span><span class='fl'>.975</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 3</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span><span class='op'>(</span><span class='fu'><a href='residuals.rma.html'>rstudent</a></span><span class='op'>(</span><span class='va'>res.RE</span><span class='op'>)</span><span class='op'>$</span><span class='va'>z</span><span class='op'>)</span> <span class='op'>&gt;=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>qnorm</a></span><span class='op'>(</span><span class='fl'>.975</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 1</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span><span class='op'>(</span><span class='fu'><a href='residuals.rma.html'>rstudent</a></span><span class='op'>(</span><span class='va'>res.ME</span><span class='op'>)</span><span class='op'>$</span><span class='va'>z</span><span class='op'>)</span> <span class='op'>&gt;=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>qnorm</a></span><span class='op'>(</span><span class='fl'>.975</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 2</div><div class='input'>
+</div><div class='co'>#&gt; [1] 4</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span><span class='op'>(</span><span class='fu'><a href='residuals.rma.html'>rstudent</a></span><span class='op'>(</span><span class='va'>res.MR</span><span class='op'>)</span><span class='op'>$</span><span class='va'>z</span><span class='op'>)</span> <span class='op'>&gt;=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>qnorm</a></span><span class='op'>(</span><span class='fl'>.975</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='co'>#&gt; [1] 3</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span><span class='op'>(</span><span class='fu'><a href='residuals.rma.html'>rstudent</a></span><span class='op'>(</span><span class='va'>res.RE</span><span class='op'>)</span><span class='op'>$</span><span class='va'>z</span><span class='op'>)</span> <span class='op'>&gt;=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>qnorm</a></span><span class='op'>(</span><span class='fl'>.975</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='co'>#&gt; [1] 1</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span><span class='op'>(</span><span class='fu'><a href='residuals.rma.html'>rstudent</a></span><span class='op'>(</span><span class='va'>res.ME</span><span class='op'>)</span><span class='op'>$</span><span class='va'>z</span><span class='op'>)</span> <span class='op'>&gt;=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>qnorm</a></span><span class='op'>(</span><span class='fl'>.975</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='co'>#&gt; [1] 2</div><div class='input'>
 <span class='co'>### plot of the standardized deleted residuals for the RE and ME models</span>
 
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='cn'>NA</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>20</span><span class='op'>)</span>, ylim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>4</span>,<span class='fl'>4</span><span class='op'>)</span>, xlab<span class='op'>=</span><span class='st'>"Study"</span>, ylab<span class='op'>=</span><span class='st'>"Standardized (Deleted) Residual"</span>,
@@ -366,7 +404,7 @@
 <span class='co'>### quadratic polynomial model</span>
 
 <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>dose</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/AsIs.html'>I</a></span><span class='op'>(</span><span class='va'>dose</span><span class='op'>^</span><span class='fl'>2</span><span class='op'>)</span>, data<span class='op'>=</span><span class='va'>dat</span>, method<span class='op'>=</span><span class='st'>"DL"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
+</div><div class='co'>#&gt; 
 #&gt; Mixed-Effects Model (k = 20; tau^2 estimator: DL)
 #&gt; 
 #&gt; tau^2 (estimated amount of residual heterogeneity):     0.0807 (SE = 0.0568)
@@ -394,8 +432,8 @@
 <span class='co'>### lack-of-fit model</span>
 
 <span class='va'>resLOF</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>dose</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>dose</span><span class='op'>)</span>, data<span class='op'>=</span><span class='va'>dat</span>, method<span class='op'>=</span><span class='st'>"DL"</span>, btt<span class='op'>=</span><span class='fl'>3</span><span class='op'>:</span><span class='fl'>9</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: Redundant predictors dropped from the model.</span></div><div class='input'><span class='va'>resLOF</span>
-</div><div class='output co'>#&gt; 
+</div><div class='co'>#&gt; <span class='warning'>Warning: </span>Redundant predictors dropped from the model.</div><div class='input'><span class='va'>resLOF</span>
+</div><div class='co'>#&gt; 
 #&gt; Mixed-Effects Model (k = 20; tau^2 estimator: DL)
 #&gt; 
 #&gt; tau^2 (estimated amount of residual heterogeneity):     0.1285 (SE = 0.0981)
@@ -513,7 +551,7 @@
 <span class='co'>### fit mixed-effects model without studies 3 and/or 6</span>
 
 <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>dose</span>, data<span class='op'>=</span><span class='va'>dat</span>, method<span class='op'>=</span><span class='st'>"DL"</span>, subset<span class='op'>=</span><span class='op'>-</span><span class='fl'>3</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
+</div><div class='co'>#&gt; 
 #&gt; Mixed-Effects Model (k = 19; tau^2 estimator: DL)
 #&gt; 
 #&gt; tau^2 (estimated amount of residual heterogeneity):     0.0994 (SE = 0.0645)
@@ -537,7 +575,7 @@
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'><span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>dose</span>, data<span class='op'>=</span><span class='va'>dat</span>, method<span class='op'>=</span><span class='st'>"DL"</span>, subset<span class='op'>=</span><span class='op'>-</span><span class='fl'>6</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
+</div><div class='co'>#&gt; 
 #&gt; Mixed-Effects Model (k = 19; tau^2 estimator: DL)
 #&gt; 
 #&gt; tau^2 (estimated amount of residual heterogeneity):     0.0321 (SE = 0.0375)
@@ -561,7 +599,7 @@
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'><span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>dose</span>, data<span class='op'>=</span><span class='va'>dat</span>, method<span class='op'>=</span><span class='st'>"DL"</span>, subset<span class='op'>=</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>,<span class='fl'>6</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
+</div><div class='co'>#&gt; 
 #&gt; Mixed-Effects Model (k = 18; tau^2 estimator: DL)
 #&gt; 
 #&gt; tau^2 (estimated amount of residual heterogeneity):     0.0375 (SE = 0.0412)
@@ -600,7 +638,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9001, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
 </div>
 
       </footer>
@@ -608,6 +646,8 @@
 
   
 
+
+  
 
   </body>
 </html>

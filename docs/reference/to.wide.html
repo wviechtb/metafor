@@ -6,16 +6,42 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- Inform modern browsers that this page supports both dark and light color schemes,
+  and the page author prefers light. -->
+<meta name="color-scheme" content="dark light">
+<script>
+  // If `prefers-color-scheme` is not supported, fall back to light mode.
+  // i.e. In this case, inject the `light` CSS before the others, with
+  // no media filter so that it will be downloaded with highest priority.
+  if (window.matchMedia("(prefers-color-scheme: dark)").media === "not all") {
+    document.documentElement.style.display = "none";
+    document.head.insertAdjacentHTML(
+      "beforeend",
+      "<link id=\"css\" rel=\"stylesheet\" href=\"https://bootswatch.com/3/flatly/bootstrap.css\" onload=\"document.documentElement.style.display = ''\">"
+    );
+  }
+</script>
+
 <title>Convert Data from a Long to a Wide Format — to.wide • metafor</title>
 
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- Flatly Theme - Light  -->
+<link id="css-light" rel="stylesheet" href="https://bootswatch.com/3/flatly/bootstrap.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)">
+
+<!-- Darkly Theme - Dark -->
+<link id="css-dark" rel="stylesheet" href="https://bootswatch.com/3/darkly/bootstrap.css" media="(prefers-color-scheme: dark)">
+
+<!-- preferably CSS -->
+<link rel="stylesheet" href="../preferably.css">
+<link id="css-code-light" rel="stylesheet" href="../code-color-scheme-light.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)">
+<link id="css-code-dark" rel="stylesheet" href="../code-color-scheme-dark.css" media="(prefers-color-scheme: dark)">
+
 
 <!-- bootstrap-toc -->
 <link rel="stylesheet" href="../bootstrap-toc.css">
@@ -48,11 +74,12 @@
 
 
 
-
-
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
+
+
+
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -61,9 +88,15 @@
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -106,6 +139,7 @@
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+        
         <li>
   <a href="https://twitter.com/wviechtb">
     <span class="fas fa-twitter"></span>
@@ -118,6 +152,10 @@
      
   </a>
 </li>
+        
+        
+
+
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -219,7 +257,7 @@
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.senn2013</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>4</span>,<span class='fl'>3</span>,<span class='fl'>2</span>,<span class='fl'>5</span>,<span class='fl'>6</span><span class='op'>)</span><span class='op'>]</span>
 <span class='va'>dat</span>
-</div><div class='output co'>#&gt;                    study comment     treatment  ni    mi   sdi
+</div><div class='co'>#&gt;                    study comment     treatment  ni    mi   sdi
 #&gt; 1       De Fronzo (1995)  change     metformin 213 -1.70 1.459
 #&gt; 2       De Fronzo (1995)  change       placebo 209  0.20 1.446
 #&gt; 3           Lewin (2007)  change     metformin 431 -0.74 1.106
@@ -276,7 +314,7 @@
 <span class='co'>### restructure to wide format</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'>to.wide</span><span class='op'>(</span><span class='va'>dat</span>, study<span class='op'>=</span><span class='st'>"study"</span>, grp<span class='op'>=</span><span class='st'>"treatment"</span>, ref<span class='op'>=</span><span class='st'>"placebo"</span>, grpvars<span class='op'>=</span><span class='fl'>4</span><span class='op'>:</span><span class='fl'>6</span><span class='op'>)</span>
 <span class='va'>dat</span>
-</div><div class='output co'>#&gt;                    study comment   treatment.1 ni.1  mi.1 sdi.1   treatment.2
+</div><div class='co'>#&gt;                    study comment   treatment.1 ni.1  mi.1 sdi.1   treatment.2
 #&gt; 1            Alex (1998)  change     metformin  291  0.13 1.428  sulfonylurea
 #&gt; 2           Baksi (2004)  change rosiglitazone  218 -1.20 1.112       placebo
 #&gt; 3           Costa (1997)  change      acarbose   36 -1.10 0.360       placebo
@@ -335,7 +373,7 @@
 <span class='co'>### data in long format</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.hasselblad1998</span>
 <span class='va'>dat</span>
-</div><div class='output co'>#&gt;    id study            authors year            trt  xi   ni
+</div><div class='co'>#&gt;    id study            authors year            trt  xi   ni
 #&gt; 1   1     1        Reid et al. 1974     no_contact  75  731
 #&gt; 2   2     1        Reid et al. 1974 ind_counseling 363  714
 #&gt; 3   3     2    Cottraux et al. 1983     no_contact   9  140
@@ -389,7 +427,7 @@
 <span class='co'>### restructure to wide format</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'>to.wide</span><span class='op'>(</span><span class='va'>dat</span>, study<span class='op'>=</span><span class='st'>"study"</span>, grp<span class='op'>=</span><span class='st'>"trt"</span>, ref<span class='op'>=</span><span class='st'>"no_contact"</span>, grpvars<span class='op'>=</span><span class='fl'>6</span><span class='op'>:</span><span class='fl'>7</span><span class='op'>)</span>
 <span class='va'>dat</span>
-</div><div class='output co'>#&gt;    id study            authors year          trt.1 xi.1 ni.1          trt.2
+</div><div class='co'>#&gt;    id study            authors year          trt.1 xi.1 ni.1          trt.2
 #&gt; 1   1     1        Reid et al. 1974 ind_counseling  363  714     no_contact
 #&gt; 2   2     2    Cottraux et al. 1983 grp_counseling   10  138     no_contact
 #&gt; 3   3     2    Cottraux et al. 1983 ind_counseling   23  140     no_contact
@@ -458,7 +496,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9001, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
 </div>
 
       </footer>
@@ -466,6 +504,8 @@
 
   
 
+
+  
 
   </body>
 </html>

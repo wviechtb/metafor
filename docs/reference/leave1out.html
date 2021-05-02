@@ -6,16 +6,42 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- Inform modern browsers that this page supports both dark and light color schemes,
+  and the page author prefers light. -->
+<meta name="color-scheme" content="dark light">
+<script>
+  // If `prefers-color-scheme` is not supported, fall back to light mode.
+  // i.e. In this case, inject the `light` CSS before the others, with
+  // no media filter so that it will be downloaded with highest priority.
+  if (window.matchMedia("(prefers-color-scheme: dark)").media === "not all") {
+    document.documentElement.style.display = "none";
+    document.head.insertAdjacentHTML(
+      "beforeend",
+      "<link id=\"css\" rel=\"stylesheet\" href=\"https://bootswatch.com/3/flatly/bootstrap.css\" onload=\"document.documentElement.style.display = ''\">"
+    );
+  }
+</script>
+
 <title>Leave-One-Out Diagnostics for 'rma' Objects — leave1out • metafor</title>
 
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- Flatly Theme - Light  -->
+<link id="css-light" rel="stylesheet" href="https://bootswatch.com/3/flatly/bootstrap.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)">
+
+<!-- Darkly Theme - Dark -->
+<link id="css-dark" rel="stylesheet" href="https://bootswatch.com/3/darkly/bootstrap.css" media="(prefers-color-scheme: dark)">
+
+<!-- preferably CSS -->
+<link rel="stylesheet" href="../preferably.css">
+<link id="css-code-light" rel="stylesheet" href="../code-color-scheme-light.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)">
+<link id="css-code-dark" rel="stylesheet" href="../code-color-scheme-dark.css" media="(prefers-color-scheme: dark)">
+
 
 <!-- bootstrap-toc -->
 <link rel="stylesheet" href="../bootstrap-toc.css">
@@ -48,11 +74,12 @@
 
 
 
-
-
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
+
+
+
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -61,9 +88,15 @@
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -106,6 +139,7 @@
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+        
         <li>
   <a href="https://twitter.com/wviechtb">
     <span class="fas fa-twitter"></span>
@@ -118,6 +152,10 @@
      
   </a>
 </li>
+        
+        
+
+
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -223,7 +261,7 @@
 
 <span class='co'>### leave-one-out analysis</span>
 <span class='fu'>leave1out</span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
+</div><div class='co'>#&gt; 
 #&gt;    estimate     se    zval   pval   ci.lb   ci.ub        Q     Qp   tau2 
 #&gt; 1   -0.7071 0.1900 -3.7223 0.0002 -1.0794 -0.3348 151.5826 0.0000 0.3362 
 #&gt; 2   -0.6540 0.1807 -3.6195 0.0003 -1.0082 -0.2999 145.3176 0.0000 0.2926 
@@ -253,7 +291,7 @@
 #&gt; 12 92.6782 13.6579 
 #&gt; 13 92.3444 13.0623 
 #&gt; </div><div class='input'><span class='fu'>leave1out</span><span class='op'>(</span><span class='va'>res</span>, transf<span class='op'>=</span><span class='va'>exp</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
+</div><div class='co'>#&gt; 
 #&gt;    estimate    zval   pval  ci.lb  ci.ub        Q     Qp   tau2      I2      H2 
 #&gt; 1    0.4931 -3.7223 0.0002 0.3398 0.7155 151.5826 0.0000 0.3362 93.2259 14.7622 
 #&gt; 2    0.5199 -3.6195 0.0003 0.3649 0.7409 145.3176 0.0000 0.2926 92.2540 12.9098 
@@ -274,7 +312,7 @@
 
 <span class='co'>### leave-one-out analysis</span>
 <span class='fu'>leave1out</span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
+</div><div class='co'>#&gt; 
 #&gt;    estimate     se     zval   pval   ci.lb   ci.ub        Q     Qp      I2 
 #&gt; 1   -0.4514 0.0394 -11.4462 0.0000 -0.5287 -0.3741 151.9153 0.0000 92.7591 
 #&gt; 2   -0.4410 0.0395 -11.1512 0.0000 -0.5185 -0.3635 145.5727 0.0000 92.4436 
@@ -304,7 +342,7 @@
 #&gt; 12 13.7387 
 #&gt; 13 13.6477 
 #&gt; </div><div class='input'><span class='fu'>leave1out</span><span class='op'>(</span><span class='va'>res</span>, transf<span class='op'>=</span><span class='va'>exp</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
+</div><div class='co'>#&gt; 
 #&gt;    estimate     zval   pval  ci.lb  ci.ub        Q     Qp      I2      H2 
 #&gt; 1    0.6367 -11.4462 0.0000 0.5894 0.6879 151.9153 0.0000 92.7591 13.8105 
 #&gt; 2    0.6434 -11.1512 0.0000 0.5954 0.6952 145.5727 0.0000 92.4436 13.2339 
@@ -325,7 +363,7 @@
 
 <span class='co'>### leave-one-out analysis</span>
 <span class='fu'>leave1out</span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
+</div><div class='co'>#&gt; 
 #&gt;    estimate     se     zval   pval   ci.lb   ci.ub        Q     Qp      I2 
 #&gt; 1   -0.4722 0.0408 -11.5791 0.0000 -0.5521 -0.3923 167.2005 0.0000 93.4211 
 #&gt; 2   -0.4616 0.0409 -11.2751 0.0000 -0.5418 -0.3814 160.5154 0.0000 93.1471 
@@ -355,7 +393,7 @@
 #&gt; 12 15.0973 
 #&gt; 13 14.9766 
 #&gt; </div><div class='input'><span class='fu'>leave1out</span><span class='op'>(</span><span class='va'>res</span>, transf<span class='op'>=</span><span class='va'>exp</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
+</div><div class='co'>#&gt; 
 #&gt;    estimate     zval   pval  ci.lb  ci.ub        Q     Qp      I2      H2 
 #&gt; 1    0.6236 -11.5791 0.0000 0.5757 0.6755 167.2005 0.0000 93.4211 15.2000 
 #&gt; 2    0.6303 -11.2751 0.0000 0.5817 0.6829 160.5154 0.0000 93.1471 14.5923 
@@ -386,7 +424,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9001, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
 </div>
 
       </footer>
@@ -394,6 +432,8 @@
 
   
 
+
+  
 
   </body>
 </html>

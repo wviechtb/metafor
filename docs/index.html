@@ -5,9 +5,26 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Meta-Analysis Package for R • metafor</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
+<!-- Inform modern browsers that this page supports both dark and light color schemes,
+  and the page author prefers light. --><meta name="color-scheme" content="dark light">
+<script>
+  // If `prefers-color-scheme` is not supported, fall back to light mode.
+  // i.e. In this case, inject the `light` CSS before the others, with
+  // no media filter so that it will be downloaded with highest priority.
+  if (window.matchMedia("(prefers-color-scheme: dark)").media === "not all") {
+    document.documentElement.style.display = "none";
+    document.head.insertAdjacentHTML(
+      "beforeend",
+      "<link id=\"css\" rel=\"stylesheet\" href=\"https://bootswatch.com/3/flatly/bootstrap.css\" onload=\"document.documentElement.style.display = ''\">"
+    );
+  }
+</script><title>Meta-Analysis Package for R • metafor</title>
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- Flatly Theme - Light  --><link id="css-light" rel="stylesheet" href="https://bootswatch.com/3/flatly/bootstrap.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)">
+<!-- Darkly Theme - Dark --><link id="css-dark" rel="stylesheet" href="https://bootswatch.com/3/darkly/bootstrap.css" media="(prefers-color-scheme: dark)">
+<!-- preferably CSS --><link rel="stylesheet" href="preferably.css">
+<link id="css-code-light" rel="stylesheet" href="code-color-scheme-light.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)">
+<link id="css-code-dark" rel="stylesheet" href="code-color-scheme-dark.css" media="(prefers-color-scheme: dark)">
+<!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
@@ -22,6 +39,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -75,6 +94,10 @@
      
   </a>
 </li>
+        
+        
+
+
       </ul>
 </div>
 <!--/.nav-collapse -->
@@ -89,62 +112,62 @@
   <div class="contents col-md-9">
 <div id="metafor-a-meta-analysis-package-for-r" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#metafor-a-meta-analysis-package-for-r" class="anchor"></a>metafor: A Meta-Analysis Package for R</h1></div>
+<a href="#metafor-a-meta-analysis-package-for-r" class="anchor" aria-hidden="true"></a>metafor: A Meta-Analysis Package for R</h1></div>
 
 <div id="description" class="section level2">
 <h2 class="hasAnchor">
-<a href="#description" class="anchor"></a>Description</h2>
+<a href="#description" class="anchor" aria-hidden="true"></a>Description</h2>
 <p>The <code>metafor</code> package is a comprehensive collection of functions for conducting meta-analyses in R. The package includes functions to calculate various effect sizes or outcome measures, fit fixed-, random-, and mixed-effects models to such data, carry out moderator and meta-regression analyses, and create various types of meta-analytical plots (e.g., forest, funnel, radial, L’Abbé, Baujat, GOSH plots). For meta-analyses of binomial and person-time data, the package also provides functions that implement specialized methods, including the Mantel-Haenszel method, Peto’s method, and a variety of suitable generalized linear (mixed-effects) models (i.e., mixed-effects logistic and Poisson regression models). Finally, the package provides functionality for fitting meta-analytic multivariate/multilevel models that account for non-independent sampling errors and/or true effects (e.g., due to the inclusion of multiple treatment studies, multiple endpoints, or other forms of clustering). Network meta-analyses and meta-analyses accounting for known correlation structures (e.g., due to phylogenetic relatedness) can also be conducted.</p>
 </div>
 <div id="package-website" class="section level2">
 <h2 class="hasAnchor">
-<a href="#package-website" class="anchor"></a>Package Website</h2>
-<p>The <code>metafor</code> package website can be found at <a href="https://www.metafor-project.org">https://www.metafor-project.org</a>. On the website, you can find:</p>
+<a href="#package-website" class="anchor" aria-hidden="true"></a>Package Website</h2>
+<p>The <code>metafor</code> package website can be found at <a href="https://www.metafor-project.org" class="external-link">https://www.metafor-project.org</a>. On the website, you can find:</p>
 <ul>
-<li>some <a href="https://www.metafor-project.org/doku.php/news:news">news</a> concerning the package and/or its development,</li>
-<li>a more detailed description of the <a href="https://www.metafor-project.org/doku.php/features">package features</a>,</li>
-<li>a log of the <a href="https://www.metafor-project.org/doku.php/updates">package updates</a> that have been made over the years,</li>
-<li>a <a href="https://www.metafor-project.org/doku.php/todo">to-do list</a> and a description of planned features to be implemented in the future,</li>
-<li>information on how to <a href="https://www.metafor-project.org/doku.php/installation">download and install</a> the package,</li>
-<li>information on how to obtain <a href="https://www.metafor-project.org/doku.php/help">documentation and help</a> with using the package,</li>
-<li>some <a href="https://www.metafor-project.org/doku.php/analyses">analysis examples</a> that illustrate various models, methods, and techniques,</li>
-<li>a little showcase of <a href="https://www.metafor-project.org/doku.php/plots">plots and figures</a> that can be created with the package,</li>
-<li>some <a href="https://www.metafor-project.org/doku.php/tips">tips and notes</a> that may be useful when working with the package,</li>
-<li>a list of people that have in some shape or form <a href="https://www.metafor-project.org/doku.php/contributors">contributed</a> to the development of the package,</li>
-<li>a <a href="https://www.metafor-project.org/doku.php/faq">frequently asked questions</a> section, and</li>
-<li>some <a href="https://www.metafor-project.org/doku.php/links">links</a> to other websites related to software for meta-analysis.</li>
+<li>some <a href="https://www.metafor-project.org/doku.php/news:news" class="external-link">news</a> concerning the package and/or its development,</li>
+<li>a more detailed description of the <a href="https://www.metafor-project.org/doku.php/features" class="external-link">package features</a>,</li>
+<li>a log of the <a href="https://www.metafor-project.org/doku.php/updates" class="external-link">package updates</a> that have been made over the years,</li>
+<li>a <a href="https://www.metafor-project.org/doku.php/todo" class="external-link">to-do list</a> and a description of planned features to be implemented in the future,</li>
+<li>information on how to <a href="https://www.metafor-project.org/doku.php/installation" class="external-link">download and install</a> the package,</li>
+<li>information on how to obtain <a href="https://www.metafor-project.org/doku.php/help" class="external-link">documentation and help</a> with using the package,</li>
+<li>some <a href="https://www.metafor-project.org/doku.php/analyses" class="external-link">analysis examples</a> that illustrate various models, methods, and techniques,</li>
+<li>a little showcase of <a href="https://www.metafor-project.org/doku.php/plots" class="external-link">plots and figures</a> that can be created with the package,</li>
+<li>some <a href="https://www.metafor-project.org/doku.php/tips" class="external-link">tips and notes</a> that may be useful when working with the package,</li>
+<li>a list of people that have in some shape or form <a href="https://www.metafor-project.org/doku.php/contributors" class="external-link">contributed</a> to the development of the package,</li>
+<li>a <a href="https://www.metafor-project.org/doku.php/faq" class="external-link">frequently asked questions</a> section, and</li>
+<li>some <a href="https://www.metafor-project.org/doku.php/links" class="external-link">links</a> to other websites related to software for meta-analysis.</li>
 </ul>
 </div>
 <div id="documentation" class="section level2">
 <h2 class="hasAnchor">
-<a href="#documentation" class="anchor"></a>Documentation</h2>
+<a href="#documentation" class="anchor" aria-hidden="true"></a>Documentation</h2>
 <p>A good starting place for those interested in using the <code>metafor</code> package is the following paper:</p>
-<p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software, 36</em>(3), 1-48. <a href="https://www.jstatsoft.org/v36/i03/">https://www.jstatsoft.org/v36/i03/</a>.</p>
-<p>In addition to reading the paper, carefully read the <a href="https://wviechtb.github.io/metafor/reference/metafor-package.html">package intro</a> and then the help pages for the <a href="https://wviechtb.github.io/metafor/reference/escalc.html"><code>escalc</code></a> and the <a href="https://wviechtb.github.io/metafor/reference/rma.uni.html"><code>rma.uni</code></a> functions (or the <a href="https://wviechtb.github.io/metafor/reference/rma.mh.html"><code>rma.mh</code></a>, <a href="https://wviechtb.github.io/metafor/reference/rma.peto.html"><code>rma.peto</code></a>, <a href="https://wviechtb.github.io/metafor/reference/rma.glmm.html"><code>rma.glmm</code></a>, <a href="https://wviechtb.github.io/metafor/reference/rma.mv.html"><code>rma.mv</code></a> functions if you intend to use these methods). The help pages for these functions provide links to many additional functions, which can be used after fitting a model. You can also read the entire documentation online at <a href="https://wviechtb.github.io/metafor/">https://wviechtb.github.io/metafor/</a> (where it is nicely formatted, equations are shown correctly, and the output from all examples is provided).</p>
+<p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software, 36</em>(3), 1-48. <a href="https://www.jstatsoft.org/v36/i03/" class="external-link">https://www.jstatsoft.org/v36/i03/</a>.</p>
+<p>In addition to reading the paper, carefully read the <a href="https://wviechtb.github.io/metafor/reference/metafor-package.html" class="external-link">package intro</a> and then the help pages for the <a href="https://wviechtb.github.io/metafor/reference/escalc.html" class="external-link"><code>escalc</code></a> and the <a href="https://wviechtb.github.io/metafor/reference/rma.uni.html" class="external-link"><code>rma.uni</code></a> functions (or the <a href="https://wviechtb.github.io/metafor/reference/rma.mh.html" class="external-link"><code>rma.mh</code></a>, <a href="https://wviechtb.github.io/metafor/reference/rma.peto.html" class="external-link"><code>rma.peto</code></a>, <a href="https://wviechtb.github.io/metafor/reference/rma.glmm.html" class="external-link"><code>rma.glmm</code></a>, <a href="https://wviechtb.github.io/metafor/reference/rma.mv.html" class="external-link"><code>rma.mv</code></a> functions if you intend to use these methods). The help pages for these functions provide links to many additional functions, which can be used after fitting a model. You can also read the entire documentation online at <a href="https://wviechtb.github.io/metafor/" class="external-link">https://wviechtb.github.io/metafor/</a> (where it is nicely formatted, equations are shown correctly, and the output from all examples is provided).</p>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
-<p>The current official (i.e., <a href="https://cran.r-project.org/package=metafor">CRAN</a>) release can be installed within R with:</p>
+<a href="#installation" class="anchor" aria-hidden="true"></a>Installation</h2>
+<p>The current official (i.e., <a href="https://cran.r-project.org/package=metafor" class="external-link">CRAN</a>) release can be installed within R with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"metafor"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"metafor"</span><span class="op">)</span></code></pre></div>
 <p>The development version of the package can be installed with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"wviechtb/metafor"</span><span class="op">)</span></code></pre></div>
-<p>This builds the package from source based on the current version on <a href="https://github.com/wviechtb/metafor">GitHub</a>.</p>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"wviechtb/metafor"</span><span class="op">)</span></code></pre></div>
+<p>This builds the package from source based on the current version on <a href="https://github.com/wviechtb/metafor" class="external-link">GitHub</a>.</p>
 </div>
 <div id="meta" class="section level2">
 <h2 class="hasAnchor">
-<a href="#meta" class="anchor"></a>Meta</h2>
-<p>The metafor package was written by <a href="https://www.wvbauer.com/">Wolfgang Viechtbauer</a>. It is licensed under the <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt">GNU General Public License</a>. For citation info, type <code><a href="https://rdrr.io/r/utils/citation.html">citation(package='metafor')</a></code> in R. To report any issues or bugs or to suggest enhancements to the package, please go <a href="https://github.com/wviechtb/metafor/issues">here</a>.</p>
+<a href="#meta" class="anchor" aria-hidden="true"></a>Meta</h2>
+<p>The metafor package was written by <a href="https://www.wvbauer.com/" class="external-link">Wolfgang Viechtbauer</a>. It is licensed under the <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt" class="external-link">GNU General Public License</a>. For citation info, type <code>citation(package='metafor')</code> in R. To report any issues or bugs or to suggest enhancements to the package, please go <a href="https://github.com/wviechtb/metafor/issues" class="external-link">here</a>.</p>
 </div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
 <li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=metafor">https://​cloud.r-project.org/​package=metafor</a>
 </li>
@@ -158,38 +181,43 @@
 </li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li>GPL (&gt;=2)</li>
 </ul>
 </div>
+
+
 <div class="citation">
-<h2>Citation</h2>
+<h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
 <li><a href="authors.html">Citing metafor</a></li>
 </ul>
 </div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Wolfgang Viechtbauer <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-3463-4063" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html"><img src="https://img.shields.io/badge/license-GPL-blue" alt="License: GPL (&gt;=2)"></a></li>
-<li><a href="https://github.com/wviechtb/metafor/actions"><img src="https://github.com/wviechtb/metafor/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
-<li><a href="https://codecov.io/gh/wviechtb/metafor"><img src="https://codecov.io/gh/wviechtb/metafor/branch/master/graph/badge.svg" alt="Code Coverage"></a></li>
-<li><a href="https://cran.r-project.org/package=metafor"><img src="https://www.r-pkg.org/badges/version/metafor" alt="CRAN Version"></a></li>
-<li><a href="https://www.metafor-project.org/doku.php/installation#development_version"><img src="https://img.shields.io/badge/devel-2.5--91-brightgreen.svg" alt="devel Version"></a></li>
-<li><a href="https://cranlogs.r-pkg.org/badges/metafor"><img src="https://cranlogs.r-pkg.org/badges/metafor" alt="Monthly Downloads"></a></li>
-<li><a href="https://cranlogs.r-pkg.org/badges/grand-total/metafor"><img src="https://cranlogs.r-pkg.org/badges/grand-total/metafor" alt="Total Downloads"></a></li>
+<li><a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html" class="external-link"><img src="https://img.shields.io/badge/license-GPL-blue" alt="License: GPL (&gt;=2)"></a></li>
+<li><a href="https://github.com/wviechtb/metafor/actions" class="external-link"><img src="https://github.com/wviechtb/metafor/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
+<li><a href="https://codecov.io/gh/wviechtb/metafor" class="external-link"><img src="https://codecov.io/gh/wviechtb/metafor/branch/master/graph/badge.svg" alt="Code Coverage"></a></li>
+<li><a href="https://cran.r-project.org/package=metafor" class="external-link"><img src="https://www.r-pkg.org/badges/version/metafor" alt="CRAN Version"></a></li>
+<li><a href="https://www.metafor-project.org/doku.php/installation#development_version" class="external-link"><img src="https://img.shields.io/badge/devel-2.5--91-brightgreen.svg" alt="devel Version"></a></li>
+<li><a href="https://cranlogs.r-pkg.org/badges/metafor" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/metafor" alt="Monthly Downloads"></a></li>
+<li><a href="https://cranlogs.r-pkg.org/badges/grand-total/metafor" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/metafor" alt="Total Downloads"></a></li>
 </ul>
 </div>
-</div>
+
+  </div>
 </div>
 
 
@@ -198,7 +226,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9001, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
 </div>
 
       </footer>
@@ -206,6 +234,8 @@
 
   
 
+
+  
 
   </body>
 </html>

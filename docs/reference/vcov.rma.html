@@ -6,16 +6,42 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- Inform modern browsers that this page supports both dark and light color schemes,
+  and the page author prefers light. -->
+<meta name="color-scheme" content="dark light">
+<script>
+  // If `prefers-color-scheme` is not supported, fall back to light mode.
+  // i.e. In this case, inject the `light` CSS before the others, with
+  // no media filter so that it will be downloaded with highest priority.
+  if (window.matchMedia("(prefers-color-scheme: dark)").media === "not all") {
+    document.documentElement.style.display = "none";
+    document.head.insertAdjacentHTML(
+      "beforeend",
+      "<link id=\"css\" rel=\"stylesheet\" href=\"https://bootswatch.com/3/flatly/bootstrap.css\" onload=\"document.documentElement.style.display = ''\">"
+    );
+  }
+</script>
+
 <title>Extract Various Types of Variance-Covariance Matrices from 'rma' Objects — vcov.rma • metafor</title>
 
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- Flatly Theme - Light  -->
+<link id="css-light" rel="stylesheet" href="https://bootswatch.com/3/flatly/bootstrap.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)">
+
+<!-- Darkly Theme - Dark -->
+<link id="css-dark" rel="stylesheet" href="https://bootswatch.com/3/darkly/bootstrap.css" media="(prefers-color-scheme: dark)">
+
+<!-- preferably CSS -->
+<link rel="stylesheet" href="../preferably.css">
+<link id="css-code-light" rel="stylesheet" href="../code-color-scheme-light.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)">
+<link id="css-code-dark" rel="stylesheet" href="../code-color-scheme-dark.css" media="(prefers-color-scheme: dark)">
+
 
 <!-- bootstrap-toc -->
 <link rel="stylesheet" href="../bootstrap-toc.css">
@@ -48,11 +74,12 @@
 
 
 
-
-
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
+
+
+
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -61,9 +88,15 @@
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -106,6 +139,7 @@
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+        
         <li>
   <a href="https://twitter.com/wviechtb">
     <span class="fas fa-twitter"></span>
@@ -118,6 +152,10 @@
      
   </a>
 </li>
+        
+        
+
+
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -187,13 +225,13 @@
 
 <span class='co'>### var-cov matrix of the fixed effects (i.e., the model coefficients)</span>
 <span class='fu'>vcov</span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;             intrcpt         ablat          year
+</div><div class='co'>#&gt;             intrcpt         ablat          year
 #&gt; intrcpt 846.5702228 -0.1783751581 -0.4272176864
 #&gt; ablat    -0.1783752  0.0001047356  0.0000889397
 #&gt; year     -0.4272177  0.0000889397  0.0002156144</div><div class='input'>
 <span class='co'>### marginal var-cov matrix of the observed log risk ratios</span>
 <span class='fu'>vcov</span><span class='op'>(</span><span class='va'>res</span>, type<span class='op'>=</span><span class='st'>"obs"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;            1         2         3         4         5        6         7
+</div><div class='co'>#&gt;            1         2         3         4         5        6         7
 #&gt; 1  0.4363721 0.0000000 0.0000000 0.0000000 0.0000000 0.000000 0.0000000
 #&gt; 2  0.0000000 0.3053685 0.0000000 0.0000000 0.0000000 0.000000 0.0000000
 #&gt; 3  0.0000000 0.0000000 0.5261553 0.0000000 0.0000000 0.000000 0.0000000
@@ -223,7 +261,7 @@
 #&gt; 13 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.182192</div><div class='input'>
 <span class='co'>### var-cov matrix of the fitted values</span>
 <span class='fu'>vcov</span><span class='op'>(</span><span class='va'>res</span>, type<span class='op'>=</span><span class='st'>"fitted"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;               1            2            3             4            5
+</div><div class='co'>#&gt;               1            2            3             4            5
 #&gt; 1   0.075274494  0.066352321  0.036850236 -2.415804e-02  0.008969395
 #&gt; 2   0.066352321  0.072275443  0.039773414  1.147263e-02 -0.008575967
 #&gt; 3   0.036850236  0.039773414  0.025624295  1.415547e-02  0.004190524
@@ -267,7 +305,7 @@
 #&gt; 13  0.013445239 0.01697740  0.029377697</div><div class='input'>
 <span class='co'>### var-cov matrix of the residuals</span>
 <span class='fu'>vcov</span><span class='op'>(</span><span class='va'>res</span>, type<span class='op'>=</span><span class='st'>"resid"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;               1            2            3             4            5
+</div><div class='co'>#&gt;               1            2            3             4            5
 #&gt; 1   0.361097623 -0.066352321 -0.036850236  2.415804e-02 -0.008969395
 #&gt; 2  -0.066352321  0.233093030 -0.039773414 -1.147263e-02  0.008575967
 #&gt; 3  -0.036850236 -0.039773414  0.500531022 -1.415547e-02 -0.004190524
@@ -324,7 +362,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9001, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
 </div>
 
       </footer>
@@ -332,6 +370,8 @@
 
   
 
+
+  
 
   </body>
 </html>
