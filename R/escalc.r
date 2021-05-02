@@ -987,19 +987,17 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (any(abs(ri) > 1, na.rm=TRUE))
             stop(mstyle$stop("One or more correlations are > 1 or < -1."))
 
-         if (any(ni < 0, na.rm=TRUE))
-            stop(mstyle$stop("One or more sample sizes are negative."))
+         if (any(ni < 1, na.rm=TRUE))
+            stop(mstyle$stop("One or more sample sizes are < 1."))
 
          if (measure != "UCOR" && vtype == "UB")
             stop(mstyle$stop("Use of vtype='UB' only permitted when measure='UCOR'."))
 
-         if (any(ni <= 4, na.rm=TRUE)) {
-            if (measure == "UCOR") {
-               warning(mstyle$warning("Cannot compute the bias-corrected correlation coefficient when ni <= 4."), call.=FALSE)
-            } else {
-               warning(mstyle$warning("Cannot estimate the sampling variance when ni <= 4."), call.=FALSE)
-            }
-         }
+         if (measure == "UCOR" && any(ni <= 4, na.rm=TRUE))
+            warning(mstyle$warning("Cannot compute the bias-corrected correlation coefficient when ni <= 4."), call.=FALSE)
+
+         if (measure == "ZCOR" && any(ni <= 3, na.rm=TRUE))
+            warning(mstyle$warning("Cannot estimate the sampling variance when ni <= 3."), call.=FALSE)
 
          ni.u <- ni ### unadjusted total sample sizes
 
@@ -1059,9 +1057,9 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             vi <- 1/(ni-3)
          }
 
-         ### set sampling variances for ni <= 4 to NA
+         ### set sampling variances for ni <= 3 to NA
 
-         vi[ni <= 4] <- NA
+         vi[ni <= 3] <- NA
 
       }
 
