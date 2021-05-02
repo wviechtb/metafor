@@ -1,7 +1,7 @@
 template:
   package: preferably
-  #params:
-  #  toggle: manual
+  params:
+    toggle: manual
   #params:
   #  bootswatch: cosmo
   opengraph:

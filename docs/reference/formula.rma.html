@@ -42,6 +42,7 @@
 <link id="css-code-light" rel="stylesheet" href="../code-color-scheme-light.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)">
 <link id="css-code-dark" rel="stylesheet" href="../code-color-scheme-dark.css" media="(prefers-color-scheme: dark)">
 
+  <script src="../darkswitch.js"></script>
 
 <!-- bootstrap-toc -->
 <link rel="stylesheet" href="../bootstrap-toc.css">
@@ -141,6 +142,12 @@
       <ul class="nav navbar-nav navbar-right">
         
         <li>
+          <a href="#" id="css-toggle-btn">
+            <span class="fas fa-adjust fa-lg"></span>
+          </a>
+        </li>
+        
+        <li>
   <a href="https://twitter.com/wviechtb">
     <span class="fas fa-twitter"></span>
      
@@ -223,12 +230,12 @@
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>ablat</span> <span class='op'>+</span> <span class='va'>alloc</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 <span class='fu'>formula</span><span class='op'>(</span><span class='va'>res</span>, type<span class='op'>=</span><span class='st'>"mods"</span><span class='op'>)</span>
 </div><div class='co'>#&gt; ~ablat + alloc
-#&gt; &lt;environment: 0x55d1baab7958&gt;</div><div class='input'>
+#&gt; &lt;environment: 0x56459efd5360&gt;</div><div class='input'>
 <span class='co'>### specify moderators via 'yi' argument</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span> <span class='op'>~</span> <span class='va'>ablat</span> <span class='op'>+</span> <span class='va'>alloc</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 <span class='fu'>formula</span><span class='op'>(</span><span class='va'>res</span>, type<span class='op'>=</span><span class='st'>"yi"</span><span class='op'>)</span>
 </div><div class='co'>#&gt; yi ~ ablat + alloc
-#&gt; &lt;environment: 0x55d1bddbdf40&gt;</div></pre>
+#&gt; &lt;environment: 0x56459e6ae510&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
