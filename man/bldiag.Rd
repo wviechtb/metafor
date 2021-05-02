@@ -5,13 +5,14 @@
    Function to construct a block diagonal matrix from (a list of) matrices.
 }
 \usage{
-bldiag(\dots)
+bldiag(\dots, order)
 }
 \arguments{
    \item{\dots}{individual matrices or a list of matrices.}
+   \item{order}{optional argument to specify a variable based on which a square block diagonal matrix should be ordered.}
 }
 \author{
-   Posted to R-help by Berton Gunter (2 Sep 2005).
+   Posted to R-help by Berton Gunter (2 Sep 2005) with some further adjustments by Wolfgang Viechtbauer
 }
 \seealso{
    \code{\link{rma.mv}}
@@ -19,6 +20,7 @@ bldiag(\dots)
 \examples{
 ### copy data into 'dat'
 dat <- dat.berkey1998
+dat
 
 ### construct list with the variance-covariance matrices of the observed outcomes for the studies
 V <- lapply(split(dat[c("v1i", "v2i")], dat$trial), as.matrix)
@@ -26,6 +28,14 @@ V
 
 ### construct block diagonal matrix
 V <- bldiag(V)
+V
+
+### if we split based on 'author', the list elements in V are in a different order than tha data
+V <- lapply(split(dat[c("v1i", "v2i")], dat$author), as.matrix)
+V
+
+### can use 'order' argument to reorder the block-diagonal matrix into the correct order
+V <- bldiag(V, order=dat$author)
 V
 }
 \keyword{manip}

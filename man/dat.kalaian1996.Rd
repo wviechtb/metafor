@@ -33,9 +33,6 @@
 ### copy data into 'dat'
 dat <- dat.kalaian1996
 
-### order dataset by study (important since we split() by study below)
-dat <- dat[order(dat$study),]
-
 ### check ranges
 range(dat$yi[dat$outcome == "verbal"]) # -0.35 to 0.74 according to page 230
 range(dat$yi[dat$outcome == "math"])   # -0.53 to 0.60 according to page 231
@@ -61,6 +58,7 @@ vcalc <- function(v, rho) {
    S \%*\% R \%*\% S
 }
 V <- lapply(split(dat$v, dat$study), vcalc, rho=0.66)
+V <- bldiag(V, order=dat$study)
 
 ### fit multivariate random-effects model
 res <- rma.mv(yi, V, mods = ~ outcome - 1,
