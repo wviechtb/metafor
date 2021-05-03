@@ -111,7 +111,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-91</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-92</span>
       </span>
     </div>
 
@@ -214,7 +214,68 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat'</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.craft2003</span>
-
+<span class='va'>dat</span>
+</div><div class='co'>#&gt;    study  ni sport    ri var1 var2
+#&gt; 1      1 142     I -0.55 acog perf
+#&gt; 2      1 142     I -0.48 asom perf
+#&gt; 3      1 142     I  0.66 conf perf
+#&gt; 4      1 142     I  0.47 acog asom
+#&gt; 5      1 142     I -0.38 acog conf
+#&gt; 6      1 142     I -0.46 asom conf
+#&gt; 7      3  37     I  0.53 acog perf
+#&gt; 8      3  37     I -0.12 asom perf
+#&gt; 9      3  37     I  0.03 conf perf
+#&gt; 10     3  37     I  0.52 acog asom
+#&gt; 11     3  37     I -0.48 acog conf
+#&gt; 12     3  37     I -0.40 asom conf
+#&gt; 13     6  16     T  0.44 acog perf
+#&gt; 14     6  16     T  0.46 asom perf
+#&gt; 15     6  16     T    NA conf perf
+#&gt; 16     6  16     T  0.67 acog asom
+#&gt; 17     6  16     T    NA acog conf
+#&gt; 18     6  16     T    NA asom conf
+#&gt; 19    10  14     I -0.39 acog perf
+#&gt; 20    10  14     I -0.17 asom perf
+#&gt; 21    10  14     I  0.19 conf perf
+#&gt; 22    10  14     I  0.21 acog asom
+#&gt; 23    10  14     I -0.54 acog conf
+#&gt; 24    10  14     I -0.43 asom conf
+#&gt; 25    17  45     I  0.10 acog perf
+#&gt; 26    17  45     I  0.31 asom perf
+#&gt; 27    17  45     I -0.17 conf perf
+#&gt; 28    17  45     I    NA acog asom
+#&gt; 29    17  45     I    NA acog conf
+#&gt; 30    17  45     I    NA asom conf
+#&gt; 31    22 100     I  0.23 acog perf
+#&gt; 32    22 100     I  0.08 asom perf
+#&gt; 33    22 100     I  0.51 conf perf
+#&gt; 34    22 100     I  0.45 acog asom
+#&gt; 35    22 100     I -0.29 acog conf
+#&gt; 36    22 100     I -0.44 asom conf
+#&gt; 37    26  51     T -0.52 acog perf
+#&gt; 38    26  51     T -0.43 asom perf
+#&gt; 39    26  51     T  0.16 conf perf
+#&gt; 40    26  51     T  0.57 acog asom
+#&gt; 41    26  51     T -0.18 acog conf
+#&gt; 42    26  51     T -0.26 asom conf
+#&gt; 43    28 128     T  0.14 acog perf
+#&gt; 44    28 128     T  0.02 asom perf
+#&gt; 45    28 128     T  0.13 conf perf
+#&gt; 46    28 128     T  0.56 acog asom
+#&gt; 47    28 128     T -0.53 acog conf
+#&gt; 48    28 128     T -0.27 asom conf
+#&gt; 49    36  70     T -0.01 acog perf
+#&gt; 50    36  70     T -0.16 asom perf
+#&gt; 51    36  70     T  0.42 conf perf
+#&gt; 52    36  70     T  0.62 acog asom
+#&gt; 53    36  70     T -0.46 acog conf
+#&gt; 54    36  70     T -0.54 asom conf
+#&gt; 55    38  30     I -0.27 acog perf
+#&gt; 56    38  30     I -0.13 asom perf
+#&gt; 57    38  30     I  0.15 conf perf
+#&gt; 58    38  30     I  0.63 acog asom
+#&gt; 59    38  30     I -0.68 acog conf
+#&gt; 60    38  30     I -0.71 asom conf</div><div class='input'>
 <span class='co'>### construct dataset and var-cov matrix of the correlations</span>
 <span class='va'>tmp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rcalc.html'>rcalc</a></span><span class='op'>(</span><span class='va'>ri</span> <span class='op'>~</span> <span class='va'>var1</span> <span class='op'>+</span> <span class='va'>var2</span> <span class='op'>|</span> <span class='va'>study</span>, ni<span class='op'>=</span><span class='va'>ni</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 <span class='va'>V</span> <span class='op'>&lt;-</span> <span class='va'>tmp</span><span class='op'>$</span><span class='va'>V</span>

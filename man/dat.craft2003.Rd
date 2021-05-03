@@ -29,6 +29,7 @@
 \examples{
 ### copy data into 'dat'
 dat <- dat.craft2003
+dat
 
 ### construct dataset and var-cov matrix of the correlations
 tmp <- rcalc(ri ~ var1 + var2 | study, ni=ni, data=dat)

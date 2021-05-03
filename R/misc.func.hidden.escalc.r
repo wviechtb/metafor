@@ -43,18 +43,18 @@
          cut.col <- qnorm((ai+ci)/ni)
       }
 
-      #       │ ci : di    #   ci = lo X and hi Y    di = hi X and hi Y
-      # var Y │∙∙∙∙:∙∙∙∙   #
-      #       │ ai : bi    #   ai = lo X and lo Y    bi = hi X and lo Y
+      #       │ ci | di    #   ci = lo X and hi Y    di = hi X and hi Y
+      # var Y │----+----   #
+      #       │ ai | bi    #   ai = lo X and lo Y    bi = hi X and lo Y
       #       ┼─────────
       #          var X
       #
       #      lo   hi
-      #    ┌────┬────┐
-      # lo │ ai │ bi │
-      #    ├────┼────┤ var Y
-      # hi │ ci │ di │
-      #    └────┴────┘
+      #    +----+----+
+      # lo | ai | bi |
+      #    +----+----+ var Y
+      # hi | ci | di |
+      #    +----+----+
       #       var X
 
       R <- matrix(c(1,rho,rho,1), nrow=2, ncol=2)
