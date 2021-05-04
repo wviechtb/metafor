@@ -244,7 +244,7 @@ confint.rma.uni.selmodel <- function(object, parm, level, fixed=FALSE, tau2, del
 
             res <- try(.profile.rma.uni.selmodel(con$vc.min, obj=x, comp=comp, delta.pos=delta.pos, confint=TRUE, objective=objective, verbose=verbose), silent=TRUE)
 
-            if (!inherits(res, "try-error")) {
+            if (!inherits(res, "try-error") && !is.na(res)) {
 
                if (res < 0) {
 
@@ -293,7 +293,7 @@ confint.rma.uni.selmodel <- function(object, parm, level, fixed=FALSE, tau2, del
 
             res <- try(.profile.rma.uni.selmodel(con$vc.max, obj=x, comp=comp, delta.pos=delta.pos, confint=TRUE, objective=objective, verbose=verbose), silent=TRUE)
 
-            if (!inherits(res, "try-error")) {
+            if (!inherits(res, "try-error") && !is.na(res)) {
 
                if (res < 0) {
 

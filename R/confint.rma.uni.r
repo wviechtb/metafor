@@ -392,7 +392,7 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, type,
 
          res <- try(.profile.rma.uni(con$tau2.min, obj=x, confint=TRUE, objective=objective, verbose=verbose), silent=TRUE)
 
-         if (!inherits(res, "try-error")) {
+         if (!inherits(res, "try-error") && !is.na(res)) {
 
             if (res < 0) {
 
@@ -428,7 +428,7 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, type,
 
          res <- try(.profile.rma.uni(con$tau2.max, obj=x, confint=TRUE, objective=objective, verbose=verbose), silent=TRUE)
 
-         if (!inherits(res, "try-error")) {
+         if (!inherits(res, "try-error") && !is.na(res)) {
 
             if (res < 0) {
 

@@ -537,7 +537,7 @@
       if (struct == "PHYPD")
          rho.init <- 1
       if (!is.element(struct, c("PHYBM","PHYPL","PHYPD")))
-         rho.init <- suppressMessages(quantile(Dmat[upper.tri(Dmat)], 0.25)) # suppressMessages() to avoid '<sparse>[ <logic> ] : .M.sub.i.logical() maybe inefficient' messages when sparse=TRUE
+         rho.init <- unname(suppressMessages(quantile(Dmat[upper.tri(Dmat)], 0.25))) # suppressMessages() to avoid '<sparse>[ <logic> ] : .M.sub.i.logical() maybe inefficient' messages when sparse=TRUE
    } else {
       rho.init <- NULL
    }

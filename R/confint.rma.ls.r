@@ -204,7 +204,7 @@ confint.rma.ls <- function(object, parm, level, fixed=FALSE, alpha, digits, tran
 
             res <- try(.profile.rma.ls(con$vc.min, obj=x, comp=comp, alpha.pos=alpha.pos, confint=TRUE, objective=objective, verbose=verbose), silent=TRUE)
 
-            if (!inherits(res, "try-error")) {
+            if (!inherits(res, "try-error") && !is.na(res)) {
 
                if (res < 0) {
 
@@ -248,7 +248,7 @@ confint.rma.ls <- function(object, parm, level, fixed=FALSE, alpha, digits, tran
 
             res <- try(.profile.rma.ls(con$vc.max, obj=x, comp=comp, alpha.pos=alpha.pos, confint=TRUE, objective=objective, verbose=verbose), silent=TRUE)
 
-            if (!inherits(res, "try-error")) {
+            if (!inherits(res, "try-error") && !is.na(res)) {
 
                if (res < 0) {
 

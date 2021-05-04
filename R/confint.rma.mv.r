@@ -385,7 +385,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
 
             res <- try(.profile.rma.mv(con$vc.min, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, confint=TRUE, objective=objective, verbose=verbose), silent=TRUE)
 
-            if (!inherits(res, "try-error")) {
+            if (!inherits(res, "try-error") && !is.na(res)) {
 
                if (res < 0) {
 
@@ -437,7 +437,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
 
             res <- try(.profile.rma.mv(con$vc.max, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, confint=TRUE, objective=objective, verbose=verbose), silent=TRUE)
 
-            if (!inherits(res, "try-error")) {
+            if (!inherits(res, "try-error") && !is.na(res)) {
 
                if (res < 0) {
 
