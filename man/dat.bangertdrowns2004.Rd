@@ -37,7 +37,7 @@
 dat <- dat.bangertdrowns2004
 dat
 
-### random-effects model
+### fit random-effects model
 res <- rma(yi, vi, data=dat)
 res
 }

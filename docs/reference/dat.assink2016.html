@@ -111,7 +111,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-94</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-95</span>
       </span>
     </div>
 
@@ -197,15 +197,18 @@
 <tr><td><b>yi</b></td><td><code>numeric</code></td><td>standardized mean difference</td></tr>
 <tr><td><b>vi</b></td><td><code>numeric</code></td><td>corresponding sampling variance</td></tr>
 <tr><td><b>pubstatus</b></td><td><code>numeric</code></td><td>published study (0 = no; 1 = yes)</td></tr>
-<tr><td><b>year</b></td><td><code>numeric</code></td><td>publication year of the study (centered)</td></tr>
-<tr><td><b>deltype</b></td><td><code>character</code></td><td>type of delinquent behavior in which juveniles have recidivated (either general, overt, or covert)</td></tr>
+<tr><td><b>year</b></td><td><code>numeric</code></td><td>publication year of the study (approximately mean centered)</td></tr>
+<tr><td><b>deltype</b></td><td><code>character</code></td><td>type of delinquent behavior in which juveniles could have recidivated (either general, overt, or covert)</td></tr>
 </table>
 
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The studies included in this dataset compared the difference in recidivism between delinquent juveniles with a mental health disorder and a comparison group of juveniles without a mental health disorder. Since studies differed in the way recidivism was defined and assessed, results are given in terms of standardized mean differences, with positive values indicating a higher prevalence of recidivism in the group of juveniles with a mental health disorder.</p>
-<p>Multiple effect size estimates could be extracted from most studies, necessitating the use of appropriate models/methods for the analysis. Assink and Wibbelink (2016) illustrate the use of multilevel meta-analytic models for this purpose.</p>
+    <p>The studies included in this dataset (which is a subset of the data used in Assink et al., 2015) compared the difference in recidivism between delinquent juveniles with a mental health disorder and a comparison group of juveniles without a mental health disorder. Since studies differed in the way recidivism was defined and assessed, results are given in terms of standardized mean differences, with positive values indicating a higher prevalence of recidivism in the group of juveniles with a mental health disorder.</p>
+<p>Multiple effect size estimates could be extracted from most studies (e.g., for different delinquent behaviors in which juveniles could have recidivated), necessitating the use of appropriate models/methods for the analysis. Assink and Wibbelink (2016) illustrate the use of multilevel meta-analytic models for this purpose.</p>
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>The <code>year</code> variable is not constant within study 3, as this study refers to two different publications using the same data.</p>
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
     <p>Assink, M., &amp; Wibbelink, C. J. M. (2016). Fitting three-level meta-analytic models in R: A step-by-step tutorial. <em>The Quantitative Methods for Psychology</em>, <b>12</b>(3), 154--174. <a href='https://doi.org/10.20982/tqmp.12.3.p154'>https://doi.org/10.20982/tqmp.12.3.p154</a></p>

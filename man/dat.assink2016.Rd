@@ -12,14 +12,17 @@
 \bold{yi}        \tab \code{numeric}   \tab standardized mean difference \cr
 \bold{vi}        \tab \code{numeric}   \tab corresponding sampling variance \cr
 \bold{pubstatus} \tab \code{numeric}   \tab published study (0 = no; 1 = yes) \cr
-\bold{year}      \tab \code{numeric}   \tab publication year of the study (centered) \cr
-\bold{deltype}   \tab \code{character} \tab type of delinquent behavior in which juveniles have recidivated (either general, overt, or covert)
+\bold{year}      \tab \code{numeric}   \tab publication year of the study (approximately mean centered) \cr
+\bold{deltype}   \tab \code{character} \tab type of delinquent behavior in which juveniles could have recidivated (either general, overt, or covert)
 }
 }
 \details{
-   The studies included in this dataset compared the difference in recidivism between delinquent juveniles with a mental health disorder and a comparison group of juveniles without a mental health disorder. Since studies differed in the way recidivism was defined and assessed, results are given in terms of standardized mean differences, with positive values indicating a higher prevalence of recidivism in the group of juveniles with a mental health disorder.
+   The studies included in this dataset (which is a subset of the data used in Assink et al., 2015) compared the difference in recidivism between delinquent juveniles with a mental health disorder and a comparison group of juveniles without a mental health disorder. Since studies differed in the way recidivism was defined and assessed, results are given in terms of standardized mean differences, with positive values indicating a higher prevalence of recidivism in the group of juveniles with a mental health disorder.
 
-   Multiple effect size estimates could be extracted from most studies, necessitating the use of appropriate models/methods for the analysis. Assink and Wibbelink (2016) illustrate the use of multilevel meta-analytic models for this purpose.
+   Multiple effect size estimates could be extracted from most studies (e.g., for different delinquent behaviors in which juveniles could have recidivated), necessitating the use of appropriate models/methods for the analysis. Assink and Wibbelink (2016) illustrate the use of multilevel meta-analytic models for this purpose.
+}
+\note{
+   The \code{year} variable is not constant within study 3, as this study refers to two different publications using the same data.
 }
 \source{
    Assink, M., & Wibbelink, C. J. M. (2016). Fitting three-level meta-analytic models in R: A step-by-step tutorial. \emph{The Quantitative Methods for Psychology}, \bold{12}(3), 154--174. \verb{https://doi.org/10.20982/tqmp.12.3.p154}

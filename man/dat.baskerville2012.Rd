@@ -27,7 +27,7 @@
 }
 }
 \details{
-   "Outreach or practice facilitation is a multifaceted approach that involves skilled individuals who enable others, through a range of intervention components and approaches, to address the challenges in implementing evidence-based care guidelines within the primary care setting." (Baskerville et al., 2012). The studies included in this dataset examined the effectiveness of such practice facilitation interventions for improving some relevant evidence-based practice behavior. The effect was quantified in terms of a standardized mean difference, comparing the change (from pre- to post-intervention) in the intervention versus the comparison group (or the difference from baseline in prospective cohort studies).
+   Baskerville et al. (2012) describe outreach or practice facilitation as a "multifaceted approach that involves skilled individuals who enable others, through a range of intervention components and approaches, to address the challenges in implementing evidence-based care guidelines within the primary care setting". The studies included in this dataset examined the effectiveness of practice facilitation interventions for improving some relevant evidence-based practice behavior. The effect was quantified in terms of a standardized mean difference, comparing the change (from pre- to post-intervention) in the intervention versus the comparison group (or the difference from baseline in prospective cohort studies).
 }
 \source{
    Baskerville, N. B., Liddy, C., & Hogg, W. (2012). Systematic review and meta-analysis of practice facilitation within primary care settings. \emph{Annals of Family Medicine}, \bold{10}(1), 63--74. \verb{https://doi.org/10.1370/afm.1312}

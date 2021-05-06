@@ -111,7 +111,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-94</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-95</span>
       </span>
     </div>
 
@@ -202,19 +202,34 @@
 <tr><td><b>duration</b></td><td><code>numeric</code></td><td>study duration (in weeks)</td></tr>
 <tr><td><b>prep</b></td><td><code>character</code></td><td>Hypericum extract preparation</td></tr>
 <tr><td><b>dosage</b></td><td><code>numeric</code></td><td>dosage (in mg)</td></tr>
-<tr><td><b>response</b></td><td><code>numeric</code></td><td>definition of response (1 = HRSD score reduction of at least 50% or HRSDscore after therapy &lt;10; 2 = HRSDreduction of at least 50%; 3 = based on HRSD scale but exact definition not reported; 4 = global patient assessment of efficacy; 5 = at least 'much improved' on the Clinical Global Impression sub-scale global improvement)</td></tr>
+<tr><td><b>response</b></td><td><code>numeric</code></td><td>definition of response (see &#8216;Details&#8217;)</td></tr>
 <tr><td><b>ai</b></td><td><code>numeric</code></td><td>number of responses in treatment group</td></tr>
 <tr><td><b>n1i</b></td><td><code>numeric</code></td><td>number of patients in treatment group</td></tr>
 <tr><td><b>ci</b></td><td><code>numeric</code></td><td>number of responses in placebo group</td></tr>
 <tr><td><b>n2i</b></td><td><code>numeric</code></td><td>number of patients in placebo group</td></tr>
-<tr><td><b>group</b></td><td><code>numeric</code></td><td>stratification variable used by the authors (1 = smaller trials restricted to major depression; 2 = larger trials restricted to major depression; 3 = smaller trials not restricted to major depression; 4 = larger trials not restricted to major depression)</td></tr>
+<tr><td><b>group</b></td><td><code>numeric</code></td><td>stratification variable used by the authors (see &#8216;Details&#8217;)</td></tr>
 </table>
 
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The dataset includes the results from 26 double-blind placebo-controlled trials on the effectiveness of Hypericum perforatum extracts (St. John's wort) for treating depression (note that 2 studies did not provide sufficient response information).</p>
-<p>Data were extracted from Table 1 and Figure 3. For study duration, the assessment week (instead of the total study duration) was coded for Philipp et al. (1999) and Montgomery et al. (2000). For dosage, the midpoint was coded when a range of values was given.</p>
+<p>Data were extracted from Table 1 and Figure 3 from Linde et al. (2005). For study duration, the assessment week (instead of the total study duration) was coded for Philipp et al. (1999) and Montgomery et al. (2000). For dosage, the midpoint was coded when a range of values was given.</p>
+<p>The definition of what constitutes a <code>response</code> differed across studies and is coded as follows:</p><ol>
+<li><p>HRSD score reduction of at least 50% or HRSD score after therapy &lt;10,</p></li>
+<li><p>HRSD reduction of at least 50%,</p></li>
+<li><p>based on HRSD scale but exact definition not reported,</p></li>
+<li><p>global patient assessment of efficacy,</p></li>
+<li><p>at least &#8216;much improved&#8217; on the Clinical Global Impression sub-scale for global improvement.</p></li>
+</ol>
+
+<p>The <code>group</code> variable corresponds to the variable used by Linde et al. (2005) to stratify their analyses and is coded as follows:</p><ol>
+<li><p>smaller trials restricted to major depression,</p></li>
+<li><p>larger trials restricted to major depression,</p></li>
+<li><p>smaller trials not restricted to major depression,</p></li>
+<li><p>larger trials not restricted to major depression.</p></li>
+</ol>
+
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
     <p>Linde, K., Berner, M., Egger, M., &amp; Mulrow, C. (2005). St John's wort for depression: Meta-analysis of randomised controlled trials. <em>British Journal of Psychiatry</em>, <b>186</b>(2), 99--107. <a href='https://doi.org/10.1192/bjp.186.2.99'>https://doi.org/10.1192/bjp.186.2.99</a></p>

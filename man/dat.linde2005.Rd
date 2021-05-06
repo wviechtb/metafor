@@ -17,18 +17,35 @@
 \bold{duration} \tab \code{numeric}   \tab study duration (in weeks) \cr
 \bold{prep}     \tab \code{character} \tab Hypericum extract preparation \cr
 \bold{dosage}   \tab \code{numeric}   \tab dosage (in mg) \cr
-\bold{response} \tab \code{numeric}   \tab definition of response (1 = HRSD score reduction of at least 50\% or HRSDscore after therapy <10; 2 = HRSDreduction of at least 50\%; 3 = based on HRSD scale but exact definition not reported; 4 = global patient assessment of efficacy; 5 = at least 'much improved' on the Clinical Global Impression sub-scale global improvement) \cr
+\bold{response} \tab \code{numeric}   \tab definition of response (see \sQuote{Details}) \cr
 \bold{ai}       \tab \code{numeric}   \tab number of responses in treatment group \cr
 \bold{n1i}      \tab \code{numeric}   \tab number of patients in treatment group \cr
 \bold{ci}       \tab \code{numeric}   \tab number of responses in placebo group \cr
 \bold{n2i}      \tab \code{numeric}   \tab number of patients in placebo group \cr
-\bold{group}    \tab \code{numeric}   \tab stratification variable used by the authors (1 = smaller trials restricted to major depression; 2 = larger trials restricted to major depression; 3 = smaller trials not restricted to major depression; 4 = larger trials not restricted to major depression)
+\bold{group}    \tab \code{numeric}   \tab stratification variable used by the authors (see \sQuote{Details})
 }
 }
 \details{
    The dataset includes the results from 26 double-blind placebo-controlled trials on the effectiveness of Hypericum perforatum extracts (St. John's wort) for treating depression (note that 2 studies did not provide sufficient response information).
 
-   Data were extracted from Table 1 and Figure 3. For study duration, the assessment week (instead of the total study duration) was coded for Philipp et al. (1999) and Montgomery et al. (2000). For dosage, the midpoint was coded when a range of values was given.
+   Data were extracted from Table 1 and Figure 3 from Linde et al. (2005). For study duration, the assessment week (instead of the total study duration) was coded for Philipp et al. (1999) and Montgomery et al. (2000). For dosage, the midpoint was coded when a range of values was given.
+
+   The definition of what constitutes a \code{response} differed across studies and is coded as follows:
+   \enumerate{
+   \item HRSD score reduction of at least 50\% or HRSD score after therapy <10,
+   \item HRSD reduction of at least 50\%,
+   \item based on HRSD scale but exact definition not reported,
+   \item global patient assessment of efficacy,
+   \item at least \sQuote{much improved} on the Clinical Global Impression sub-scale for global improvement.
+   }
+
+   The \code{group} variable corresponds to the variable used by Linde et al. (2005) to stratify their analyses and is coded as follows:
+   \enumerate{
+   \item smaller trials restricted to major depression,
+   \item larger trials restricted to major depression,
+   \item smaller trials not restricted to major depression,
+   \item larger trials not restricted to major depression.
+   }
 }
 \source{
    Linde, K., Berner, M., Egger, M., & Mulrow, C. (2005). St John's wort for depression: Meta-analysis of randomised controlled trials. \emph{British Journal of Psychiatry}, \bold{186}(2), 99--107. \verb{https://doi.org/10.1192/bjp.186.2.99}

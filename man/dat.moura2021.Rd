@@ -8,10 +8,10 @@ dat.moura2021
 }
 \format{The object is a list containing a data frame called \code{dat} that contains the following columns and a phylogenetic tree called \code{tree}:
 \tabular{lll}{
-\bold{study.id}               \tab \code{character} \tab study ID \cr
-\bold{effect.size.id}         \tab \code{numeric}   \tab effect size ID \cr
+\bold{study.id}               \tab \code{character} \tab study id \cr
+\bold{effect.size.id}         \tab \code{numeric}   \tab effect size id \cr
 \bold{species}                \tab \code{character} \tab species \cr
-\bold{species.id}             \tab \code{character} \tab species ID (as in the Open Tree of Life reference taxonomy) \cr
+\bold{species.id}             \tab \code{character} \tab species id (as in the Open Tree of Life reference taxonomy) \cr
 \bold{subphylum}              \tab \code{character} \tab the subphyla of the species \cr
 \bold{phylum}                 \tab \code{character} \tab the phyla of the species \cr
 \bold{assortment.trait}       \tab \code{character} \tab the measure of body size \cr
