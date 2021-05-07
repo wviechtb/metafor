@@ -1,4 +1,4 @@
-contrmat <- function(data, grp1, grp2, last, shorten=FALSE, minlen=2, append=TRUE) {
+contrmat <- function(data, grp1, grp2, last, shorten=FALSE, minlen=2, check=TRUE, append=TRUE) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -150,7 +150,11 @@ contrmat <- function(data, grp1, grp2, last, shorten=FALSE, minlen=2, append=TRU
 
    ### add variable names
 
-   colnames(X) <- lvls
+   if (check) {
+      colnames(X) <- make.names(lvls, unique=TRUE)
+   } else {
+      colnames(X) <- lvls
+   }
 
    ### append to original data if requested
 

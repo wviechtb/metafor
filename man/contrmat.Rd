@@ -5,7 +5,7 @@
    The function constructs a matrix that indicates which two groups have been contrasted against each other in each row of a dataset.
 }
 \usage{
-contrmat(data, grp1, grp2, last, shorten=FALSE, minlen=2, append=TRUE)
+contrmat(data, grp1, grp2, last, shorten=FALSE, minlen=2, check=TRUE, append=TRUE)
 }
 \arguments{
    \item{data}{a data frame in wide format.}
@@ -14,6 +14,7 @@ contrmat(data, grp1, grp2, last, shorten=FALSE, minlen=2, append=TRUE)
    \item{last}{optional character string to specify which group will be placed in the last column of the matrix (must be one of the groups in the group variables). If not given, the most frequently occurring second group is placed last.}
    \item{shorten}{logical to specify whether the variable names corresponding to the group names should be shortened (the default is \code{FALSE}).}
    \item{minlen}{integer to specify the minimum length of the shortened variable names (the default is 2).}
+   \item{check}{logical to specify whether the variables names should be checked to ensure that they are syntactically valid variable names and if not, they are adjusted (by \code{\link{make.names}}) so that they are (the default is \code{TRUE}).}
    \item{append}{logical to specify whether the contrast matrix should be appended to the data frame specified via the \code{data} argument (the default is \code{TRUE}). If \code{append=FALSE}, only the contrast matrix is returned.}
 }
 \details{

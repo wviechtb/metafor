@@ -2,7 +2,7 @@
 \docType{data}
 \alias{dat.maire2019}
 \title{Studies on Temporal Trends in Fish Community Structures in French Rivers}
-\description{Results from studies .}
+\description{Results from studies examining changes in the abundance of fish species in French rivers.}
 \usage{
 dat.maire2019
 }

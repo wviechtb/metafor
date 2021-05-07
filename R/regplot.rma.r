@@ -502,7 +502,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
    if (missing(xlab))
       xlab <- colnames(X)[mod.pos]
 
-   if (xlab == "")
+   if (!is.expression(xlab) && xlab == "")
       xlab <- "Moderator"
 
    if (missing(xlim)) {

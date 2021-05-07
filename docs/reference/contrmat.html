@@ -111,7 +111,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-95</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-97</span>
       </span>
     </div>
 
@@ -185,7 +185,7 @@
     <p>The function constructs a matrix that indicates which two groups have been contrasted against each other in each row of a dataset.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>contrmat</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>grp1</span>, <span class='va'>grp2</span>, <span class='va'>last</span>, shorten<span class='op'>=</span><span class='cn'>FALSE</span>, minlen<span class='op'>=</span><span class='fl'>2</span>, append<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>contrmat</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>grp1</span>, <span class='va'>grp2</span>, <span class='va'>last</span>, shorten<span class='op'>=</span><span class='cn'>FALSE</span>, minlen<span class='op'>=</span><span class='fl'>2</span>, check<span class='op'>=</span><span class='cn'>TRUE</span>, append<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -213,6 +213,10 @@
     <tr>
       <th>minlen</th>
       <td><p>integer to specify the minimum length of the shortened variable names (the default is 2).</p></td>
+    </tr>
+    <tr>
+      <th>check</th>
+      <td><p>logical to specify whether the variables names should be checked to ensure that they are syntactically valid variable names and if not, they are adjusted (by <code><a href='https://rdrr.io/r/base/make.names.html'>make.names</a></code>) so that they are (the default is <code>TRUE</code>).</p></td>
     </tr>
     <tr>
       <th>append</th>
@@ -529,33 +533,33 @@
 #&gt; 24 24    22 Stewart and Rosser 1982 ind_counseling   36  504     no_contact
 #&gt; 25 25    23     Russell et al. 1979 ind_counseling   73  675     no_contact
 #&gt; 26 26    24    Kendrick et al. 1995 ind_counseling   54  888     no_contact
-#&gt;    xi.2 ni.2  comp   design gr in se no
-#&gt; 1    75  731 in-no    in-no  0  1  0 -1
-#&gt; 2     9  140 gr-no gr-in-no  1  0  0 -1
-#&gt; 3     9  140 in-no gr-in-no  0  1  0 -1
-#&gt; 4     2  106 in-no    in-no  0  1  0 -1
-#&gt; 5    58  549 in-no    in-no  0  1  0 -1
-#&gt; 6     0   33 in-no    in-no  0  1  0 -1
-#&gt; 7    20   49 in-se    in-se  0  1 -1  0
-#&gt; 8     3  100 in-no    in-no  0  1  0 -1
-#&gt; 9     1   31 in-no    in-no  0  1  0 -1
-#&gt; 10   11   78 gr-se gr-in-se  1  0 -1  0
-#&gt; 11   11   78 in-se gr-in-se  0  1 -1  0
-#&gt; 12    6   39 in-no    in-no  0  1  0 -1
-#&gt; 13   79  702 se-no    se-no  0  0  1 -1
-#&gt; 14   18  671 se-no    se-no  0  0  1 -1
-#&gt; 15   64  642 in-no    in-no  0  1  0 -1
-#&gt; 16   12   76 gr-in    gr-in  1 -1  0  0
-#&gt; 17    9   55 gr-in    gr-in  1 -1  0  0
-#&gt; 18    7   66 gr-se    gr-se  1  0 -1  0
-#&gt; 19    5   62 in-no    in-no  0  1  0 -1
-#&gt; 20   20  234 in-no    in-no  0  1  0 -1
-#&gt; 21    0   20 gr-no    gr-no  1  0  0 -1
-#&gt; 22    8  116 se-no    se-no  0  0  1 -1
-#&gt; 23   95 1107 in-no    in-no  0  1  0 -1
-#&gt; 24   15  187 in-no    in-no  0  1  0 -1
-#&gt; 25   78  584 in-no    in-no  0  1  0 -1
-#&gt; 26   69 1177 in-no    in-no  0  1  0 -1</div></pre>
+#&gt;    xi.2 ni.2  comp   design gr in. se no
+#&gt; 1    75  731 in-no    in-no  0   1  0 -1
+#&gt; 2     9  140 gr-no gr-in-no  1   0  0 -1
+#&gt; 3     9  140 in-no gr-in-no  0   1  0 -1
+#&gt; 4     2  106 in-no    in-no  0   1  0 -1
+#&gt; 5    58  549 in-no    in-no  0   1  0 -1
+#&gt; 6     0   33 in-no    in-no  0   1  0 -1
+#&gt; 7    20   49 in-se    in-se  0   1 -1  0
+#&gt; 8     3  100 in-no    in-no  0   1  0 -1
+#&gt; 9     1   31 in-no    in-no  0   1  0 -1
+#&gt; 10   11   78 gr-se gr-in-se  1   0 -1  0
+#&gt; 11   11   78 in-se gr-in-se  0   1 -1  0
+#&gt; 12    6   39 in-no    in-no  0   1  0 -1
+#&gt; 13   79  702 se-no    se-no  0   0  1 -1
+#&gt; 14   18  671 se-no    se-no  0   0  1 -1
+#&gt; 15   64  642 in-no    in-no  0   1  0 -1
+#&gt; 16   12   76 gr-in    gr-in  1  -1  0  0
+#&gt; 17    9   55 gr-in    gr-in  1  -1  0  0
+#&gt; 18    7   66 gr-se    gr-se  1   0 -1  0
+#&gt; 19    5   62 in-no    in-no  0   1  0 -1
+#&gt; 20   20  234 in-no    in-no  0   1  0 -1
+#&gt; 21    0   20 gr-no    gr-no  1   0  0 -1
+#&gt; 22    8  116 se-no    se-no  0   0  1 -1
+#&gt; 23   95 1107 in-no    in-no  0   1  0 -1
+#&gt; 24   15  187 in-no    in-no  0   1  0 -1
+#&gt; 25   78  584 in-no    in-no  0   1  0 -1
+#&gt; 26   69 1177 in-no    in-no  0   1  0 -1</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
