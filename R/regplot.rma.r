@@ -525,6 +525,13 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
          stop(mstyle$stop("Argument 'ylim' must be of length 2."))
    }
 
+   ### if user has specified 'at' argument, make sure ylim actually contains the min and max 'at' values
+
+   if (!is.null(at)) {
+      ylim[1] <- min(c(ylim[1], at), na.rm=TRUE)
+      ylim[2] <- max(c(ylim[2], at), na.rm=TRUE)
+   }
+
    ############################################################################
 
    ### set up plot
