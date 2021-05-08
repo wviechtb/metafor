@@ -22,7 +22,7 @@
   }
 </script>
 
-<title>Fit Regression Model based on a Correlation Matrix — matreg • metafor</title>
+<title>Fit Regression Models based on Correlation and Covariance Matrices — matreg • metafor</title>
 
 
 <!-- jquery -->
@@ -66,8 +66,8 @@
 
 
 
-<meta property="og:title" content="Fit Regression Model based on a Correlation Matrix — matreg" />
-<meta property="og:description" content="Function to fit a regression model based on a correlation matrix. " />
+<meta property="og:title" content="Fit Regression Models based on Correlation and Covariance Matrices — matreg" />
+<meta property="og:description" content="Function to fit regression models based on correlation and covariance matrices. " />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@wviechtb" />
 <meta name="twitter:site" content="@wviechtb" />
@@ -111,7 +111,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-97</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-98</span>
       </span>
     </div>
 
@@ -176,16 +176,16 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Fit Regression Model based on a Correlation Matrix</h1>
+    <h1>Fit Regression Models based on Correlation and Covariance Matrices</h1>
     
     <div class="hidden name"><code>matreg.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Function to fit a regression model based on a correlation matrix. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
+    <p>Function to fit regression models based on correlation and covariance matrices. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
     </div>
 
-    <pre class="usage"><span class='fu'>matreg</span><span class='op'>(</span><span class='va'>y</span>, <span class='va'>x</span>, <span class='va'>R</span>, <span class='va'>n</span>, <span class='va'>V</span>, ztor<span class='op'>=</span><span class='cn'>FALSE</span>, nearPD<span class='op'>=</span><span class='cn'>FALSE</span>, level<span class='op'>=</span><span class='fl'>95</span>, <span class='va'>digits</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>matreg</span><span class='op'>(</span><span class='va'>y</span>, <span class='va'>x</span>, <span class='va'>R</span>, <span class='va'>n</span>, <span class='va'>V</span>, cov<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>means</span>, ztor<span class='op'>=</span><span class='cn'>FALSE</span>, nearPD<span class='op'>=</span><span class='cn'>FALSE</span>, level<span class='op'>=</span><span class='fl'>95</span>, <span class='va'>digits</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -200,19 +200,27 @@
     </tr>
     <tr>
       <th>R</th>
-      <td><p>correlation matrix (or only the lower triangular part including the diagonal).</p></td>
+      <td><p>correlation or covariance matrix (or only the lower triangular part including the diagonal).</p></td>
     </tr>
     <tr>
       <th>n</th>
-      <td><p>sample size based on which the elements in the correlation matrix were computed.</p></td>
+      <td><p>sample size based on which the elements in the correlation/covariance matrix were computed.</p></td>
     </tr>
     <tr>
       <th>V</th>
       <td><p>variance-covariance matrix of the lower triangular elements of the correlation matrix. Either <code>V</code> or <code>n</code> should be specified, not both. See &#8216;Details&#8217;.</p></td>
     </tr>
     <tr>
+      <th>cov</th>
+      <td><p>logical to specify whether <code>R</code> is a covariance matrix (the default is <code>FALSE</code>).</p></td>
+    </tr>
+    <tr>
+      <th>means</th>
+      <td><p>optional vector to specify the means of the variables (only relevant when <code>cov=TRUE</code>).</p></td>
+    </tr>
+    <tr>
       <th>ztor</th>
-      <td><p>logical to specify whether <code>R</code> is a matrix of r-to-z transformed correlations (the default is <code>FALSE</code>). See &#8216;Details&#8217;.</p></td>
+      <td><p>logical to specify whether <code>R</code> is a matrix of r-to-z transformed correlations and it should be back-transformed to raw correlations (the default is <code>FALSE</code>). See &#8216;Details&#8217;.</p></td>
     </tr>
     <tr>
       <th>nearPD</th>
@@ -230,15 +238,14 @@
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The function can be used to fit a regression model based on a correlation matrix.</p>
-<p>Let \(R\) be a \(p \times p\) correlation matrix. Let \(y\) denote the row/column of the outcome variable and \(x\) the row(s)/column(s) of the predictor variable(s). Let \(R_{x,x}\) and \(R_{x,y}\) denote the corresponding submatrices of \(R\). Then \[b = R_{x,x}^{-1} R_{x,y}\] yields the (standardized) regression slopes when regressing the outcome variable on the predictor variable(s).</p>
-<p>The \(R\) matrix may be computed based on a single sample of \(n\) subjects. In this case, one should specify the sample size via argument <code>n</code>. The variance-covariance matrix of the estimated model coefficients is then given by \(\mbox{Var}[b] = \mbox{MSE} \times R_{x,x}^{-1}\), where \(\mbox{MSE} = (1 - b'R_{x,y}) / (n - m)\), where \(m\) denotes the number of predictor variables. The standard errors of the estimated model coefficients are then given by the square root of the diagonal elements of \(\mbox{Var}[b]\). Test statistics (in this case, t-statistics) and the corresponding p-values can then be computed as in a regular regression analysis.</p>
-<p>Alternatively, \(R\) may be the result of a meta-analysis of correlation coefficients. In this case, the elements in \(R\) are really pooled correlation coefficients and there should be a variance-covariance matrix of these pooled coefficients. In this case, one should specify this variance-covariance matrix via argument <code>V</code>. The order of elements in <code>V</code> should correspond to the order of elements in the lower triangular part of \(R\) column-wise. For example, if \(R\) is a \(4 \times 4\) matrix, then the elements are \(r_{2,1}\), \(r_{3,1}\), \(r_{4,1}\), \(r_{3,2}\), \(r_{4,2}\), and \(r_{4,3}\) and hence <code>V</code> should be a \(6 \times 6\) variance-covariance matrix of these elements. The variance-covariance matrix of the estimated model coefficients (i.e., \(\mbox{Var}[b]\)) is then computed as described in Becker (1992) using the multivariate delta method. The standard errors of the estimated model coefficients are then given by the square root of the diagonal elements of \(\mbox{Var}[b]\). Test statistics (in this case, z-statistics) and the corresponding p-values can then be computed in the usual manner.</p>
+    <p>Let \(R\) be a \(p \times p\) correlation or covariance matrix. Let \(y\) denote the row/column of the outcome variable and \(x\) the row(s)/column(s) of the predictor variable(s) in this matrix. Let \(R_{x,x}\) and \(R_{x,y}\) denote the corresponding submatrices of \(R\). Then \[b = R_{x,x}^{-1} R_{x,y}\] yields the standardized or raw regression coefficients (depending on whether \(R\) is a correlation or covariance matrix) when regressing the outcome variable on the predictor variable(s).</p>
+<p>The \(R\) matrix may be computed based on a single sample of \(n\) subjects. In this case, one should specify the sample size via argument <code>n</code>. The variance-covariance matrix of the standardized regression coefficients is then given by \(\mbox{Var}[b] = \mbox{MSE} \times R_{x,x}^{-1}\), where \(\mbox{MSE} = (1 - b'R_{x,y}) / (n - m)\), where \(m\) denotes the number of predictor variables. The standard errors of the regression coefficients are then given by the square root of the diagonal elements of \(\mbox{Var}[b]\). Test statistics (in this case, t-statistics) and the corresponding p-values can then be computed as in a regular regression analysis. When \(R\) is a covariance matrix, one should set <code>cov=TRUE</code> and specify the means of the \(p\) variables via argument <code>means</code> to obtain raw regression coefficients including the intercept and corresponding standard errors.</p>
+<p>Alternatively, \(R\) may be the result of a meta-analysis of correlation coefficients. In this case, the elements in \(R\) are pooled correlation coefficients and the variance-covariance matrix of these pooled coefficients should be specified via argument <code>V</code>. The order of elements in <code>V</code> should correspond to the order of elements in the lower triangular part of \(R\) column-wise. For example, if \(R\) is a \(4 \times 4\) matrix, then the elements are \(r_{2,1}\), \(r_{3,1}\), \(r_{4,1}\), \(r_{3,2}\), \(r_{4,2}\), and \(r_{4,3}\) and hence <code>V</code> should be a \(6 \times 6\) variance-covariance matrix of these elements. The variance-covariance matrix of the standardized regression coefficients (i.e., \(\mbox{Var}[b]\)) is then computed as a function of <code>V</code> as described in Becker (1992) using the multivariate delta method. The standard errors of the standardized regression coefficients are then given by the square root of the diagonal elements of \(\mbox{Var}[b]\). Test statistics (in this case, z-statistics) and the corresponding p-values can then be computed in the usual manner.</p>
 <p>In case \(R\) is the result of a meta-analysis of Fisher r-to-z transformed correlation coefficients (and hence <code>V</code> is then the corresponding variance-covariance matrix of these pooled transformed coefficients), one should set argument <code>ztor=TRUE</code>, so that the appropriate back-transformation is then applied to <code>R</code> (and <code>V</code>) within the function.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class <code>"matreg"</code>. The object is a list containing the following components:</p>
-<dt>tab</dt><dd><p>a data frame with the estimated model coefficients, standard errors, test statistics, p-values, and lower/upper confidence interval bounds.</p></dd>
+<dt>tab</dt><dd><p>a data frame with the estimated model coefficients, standard errors, test statistics, degrees of freedom (only for t-tests), p-values, and lower/upper confidence interval bounds.</p></dd>
    <dt>vb</dt><dd><p>the variance-covariance matrix of the estimated model coefficients.</p></dd>
    <dt>...</dt><dd><p>some additional elements/values.</p></dd>
 
@@ -246,7 +253,7 @@
 
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>Only the lower triangular part of <code>R</code> is used in the computations.</p>
+    <p>Only the lower triangular part of <code>R</code> (and <code>V</code> if it is specified) is used in the computations.</p>
 <p>If \(R_{x,x}\) is not invertible, an error will be issued. In this case, one can set argument <code>nearPD=TRUE</code>, in which case the <code><a href='https://rdrr.io/pkg/Matrix/man/nearPD.html'>nearPD</a></code> function from the <a href='https://cran.r-project.org/package=Matrix'>Matrix</a> package will be used to find the nearest positive semi-definite matrix, which should be invertible. The results should be treated with caution when this is done.</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
@@ -358,7 +365,7 @@
 #&gt;       estimate      se     zval    pval    ci.lb   ci.ub 
 #&gt; acog    0.1482  0.1566   0.9465  0.3439  -0.1587  0.4550      
 #&gt; asom   -0.0536  0.0768  -0.6979  0.4852  -0.2043  0.0970      
-#&gt; conf    0.3637  0.0910   3.9985  0.0001   0.1854  0.5419  *** 
+#&gt; conf    0.3637  0.0910   3.9985  &lt;.0001   0.1854  0.5419  *** 
 #&gt; 
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
@@ -381,7 +388,7 @@
 #&gt;       estimate      se     zval    pval    ci.lb   ci.ub 
 #&gt; acog    0.1362  0.1697   0.8023  0.4224  -0.1965  0.4688      
 #&gt; asom   -0.0678  0.0761  -0.8900  0.3735  -0.2170  0.0814      
-#&gt; conf    0.3666  0.0934   3.9248  0.0001   0.1835  0.5496  *** 
+#&gt; conf    0.3666  0.0934   3.9248  &lt;.0001   0.1835  0.5496  *** 
 #&gt; 
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1

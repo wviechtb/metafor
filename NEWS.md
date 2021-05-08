@@ -1,4 +1,4 @@
-# metafor 2.5-97 (2021-05-07)
+# metafor 2.5-98 (2021-05-09)
 
 - the `metafor` package now makes use of the `mathjaxr` package to nicely render equations shown in the HTML help pages
 
@@ -12,7 +12,7 @@
 
 - added `regplot()` function for drawing scatter plots / bubble plots based on meta-regression models
 
-- added `rcalc()` for calculating the variance-covariance matrix of correlation coefficients and `matreg()` for fitting regression models based on a correlation matrix
+- added `rcalc()` for calculating the variance-covariance matrix of correlation coefficients and `matreg()` for fitting regression models based on correlation/covariance matrices
 
 - added convenience functions `dfround()` and `vec2mat()`
 

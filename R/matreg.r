@@ -1,4 +1,4 @@
-matreg <- function(y, x, R, n, V, ztor=FALSE, nearPD=FALSE, level=95, digits) {
+matreg <- function(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearPD=FALSE, level=95, digits) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -7,10 +7,15 @@ matreg <- function(y, x, R, n, V, ztor=FALSE, nearPD=FALSE, level=95, digits) {
 
    level <- ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
 
+   if (missing(R))
+      stop(mstyle$stop("Must specify 'R' argument."))
+
+   if (nrow(R) != ncol(R))
+      stop(mstyle$stop("Argument 'R' must be a square matrix."))
+
    p <- nrow(R)
 
-   #y <- round(y)
-   #x <- round(x)
+   y <- round(y)
 
    if (length(y) != 1L)
       stop(mstyle$stop("Argument 'y' should be a single index."))
@@ -21,6 +26,8 @@ matreg <- function(y, x, R, n, V, ztor=FALSE, nearPD=FALSE, level=95, digits) {
    if (missing(x))
       x <- seq_len(p)[-y]
 
+   x <- round(x)
+
    if (anyDuplicated(x))
       stop(mstyle$stop("Argument 'x' should not contain duplicated elements."))
 
@@ -30,15 +37,24 @@ matreg <- function(y, x, R, n, V, ztor=FALSE, nearPD=FALSE, level=95, digits) {
    if (y %in% x)
       stop(mstyle$stop("Index 'y' should not be an element of 'x'."))
 
-   m <- length(x)
-
    if (missing(V))
       V <- NULL
 
-   ############################################################################
+   if (cov && !is.null(V))
+      stop(mstyle$stop("Cannot use a covariance matrix as input when specifying 'V'."))
 
-   if (nrow(R) != ncol(R))
-      stop(mstyle$stop("Argument 'R' must be a square matrix."))
+   if (cov && ztor)
+      stop(mstyle$stop("Cannot use a covariance matrix as input when 'ztor=TRUE'."))
+
+   if (is.null(V) && missing(n))
+      stop(mstyle$stop("Either 'V' or 'n' must be specified."))
+
+   if (!is.null(V) && !missing(n))
+      stop(mstyle$stop("Either 'V' or 'n' must be specified, not both."))
+
+   m <- length(x)
+
+   ############################################################################
 
    R[upper.tri(R)] <- t(R)[upper.tri(R)]
 
@@ -51,35 +67,50 @@ matreg <- function(y, x, R, n, V, ztor=FALSE, nearPD=FALSE, level=95, digits) {
       }
 
       R <- tanh(R)
+      diag(R) <- 1
 
    }
 
-   diag(R) <- 1
+   if (cov) {
+
+      S <- R
+      R <- cov2cor(R)
+      sdy <- sqrt(diag(S)[y])
+      sdx <- sqrt(diag(S)[x])
+
+   } else {
+
+      if (any(abs(R) > 1, na.rm=TRUE))
+         stop(mstyle$stop("Argument 'R' must be a correlation matrix, but contains values outside [-1,1]."))
+
+      diag(R) <- 1
+
+   }
 
    ############################################################################
 
-   R01 <- R[x, y, drop=FALSE]
-   R11 <- R[x, x, drop=FALSE]
+   Rxy <- R[x, y, drop=FALSE]
+   Rxx <- R[x, x, drop=FALSE]
 
-   #invR11 <- solve(R11)
-   invR11 <- try(chol2inv(chol(R11)), silent=TRUE)
+   #invRxx <- solve(Rxx)
+   invRxx <- try(chol2inv(chol(Rxx)), silent=TRUE)
 
-   if (inherits(invR11, "try-error")) {
+   if (inherits(invRxx, "try-error")) {
       if (nearPD) {
          message(mstyle$message("Cannot invert R[x,x] matrix. Using nearPD(). Treat results with caution."))
-         R11 <- as.matrix(nearPD(R11, corr=TRUE)$mat)
+         Rxx <- as.matrix(nearPD(Rxx, corr=TRUE)$mat)
       } else {
          stop(mstyle$stop("Cannot invert R[x,x] matrix."))
       }
-      invR11 <- try(chol2inv(chol(R11)), silent=TRUE)
-      if (inherits(invR11, "try-error"))
+      invRxx <- try(chol2inv(chol(Rxx)), silent=TRUE)
+      if (inherits(invRxx, "try-error"))
          stop(mstyle$stop("Still cannot invert R[x,x] matrix."))
    }
 
-   b <- invR11 %*% R01
+   b <- invRxx %*% Rxy
 
-   if (!is.null(rownames(R11))) {
-      rownames(b) <- rownames(R11)
+   if (!is.null(rownames(Rxx))) {
+      rownames(b) <- rownames(Rxx)
    } else {
       rownames(b) <- x
    }
@@ -88,38 +119,78 @@ matreg <- function(y, x, R, n, V, ztor=FALSE, nearPD=FALSE, level=95, digits) {
 
    ############################################################################
 
-   if (is.null(V) && missing(n))
-      stop(mstyle$stop("Either 'V' or 'n' must be specified."))
-
-   if (!is.null(V) && !missing(n))
-      stop(mstyle$stop("Either 'V' or 'n' must be specified, not both."))
-
    if (is.null(V)) {
 
       if (length(n) != 1L)
          stop(mstyle$stop("Argument 'n' should be a single number."))
 
-      if (n <= m)
-         stop(mstyle$stop("Cannot fit model when 'n' is equal to or less than the number of predictors."))
+      df <- n - m - ifelse(cov, 1, 0)
 
-      df <- n - m
-      sse <- 1 - c(t(b) %*% R01)
+      if (df <= 0)
+         stop(mstyle$stop("Cannot fit model when 'n' is equal to or less than the number of regression coefficients."))
+
+      sse <- 1 - c(t(b) %*% Rxy)
       mse <- sse / df
-      vb <- mse * invR11
-      se <- sqrt(diag(vb))
-      tval <- c(b / se)
-      pval <- 2*pt(abs(tval), df=df, lower.tail=FALSE)
-      crit <- qt(level/2, df=df, lower.tail=FALSE)
-      ci.lb <- c(b - crit * se)
-      ci.ub <- c(b + crit * se)
+      vb  <- mse * invRxx
 
-      R2 <- 1 - sse
-      F <- c(value = (R2 / m) / mse, df1=m, df2=df)
+      R2    <- 1 - sse
+      R2adj <- 1 - (1 - R2) * ((n-1) / df)
+
+      F  <- c(value = (R2 / m) / mse, df1=m, df2=df)
       Fp <- pf(F[[1]], df1=m, df2=df, lower.tail=FALSE)
+
+      if (cov) {
+
+         mult <- sdy / sdx
+         b    <- b * mult
+         mse  <- sdy^2 * (n-1) * (1 - R2) / df
+
+         if (missing(means)) {
+
+            means <- rep(0,p)
+            has.means <- FALSE
+
+         } else {
+
+            if (length(means) != p)
+               stop(mstyle$stop(paste0("Length of 'means' (", length(means), ") does not match the dimensions of 'R' (", p, "x", p, ").")))
+
+            has.means <- TRUE
+
+         }
+
+         b <- rbind(means[y] - means[x] %*% b, b)
+         rownames(b)[1] <- "intrcpt"
+
+         XtX    <- (n-1) * bldiag(0,S[x,x]) + n * tcrossprod(c(1,means[x]))
+         invXtX <- try(suppressWarnings(chol2inv(chol(XtX))), silent=TRUE)
+
+         if (inherits(invXtX, "try-error")) {
+            vb <- matrix(NA, nrow=(m+1), ncol=(m+1))
+            warning(mstyle$warning("Cannot obtain var-cov matrix of the regression coefficients."), call.=FALSE)
+         } else {
+            mse <- sdy^2 * (n-1) * (1 - R2) / df
+            vb  <- mse * invXtX
+         }
+
+         if (!has.means) {
+            b[1,]  <- NA
+            vb[1,] <- NA
+            vb[,1] <- NA
+         }
+
+      }
 
       rownames(vb) <- colnames(vb) <- rownames(b)
 
-      res <- list(tab = data.frame(estimate=b, se=se, tval=tval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub), vb=vb, R2=R2, F=F, Fp=Fp, digits=digits)
+      se    <- sqrt(diag(vb))
+      tval  <- c(b / se)
+      pval  <- 2*pt(abs(tval), df=df, lower.tail=FALSE)
+      crit  <- qt(level/2, df=df, lower.tail=FALSE)
+      ci.lb <- c(b - crit * se)
+      ci.ub <- c(b + crit * se)
+
+      res <- list(tab = data.frame(beta=b, se=se, tval=tval, df=df, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub), vb=vb, R2=R2, R2adj=R2adj, F=F, Fp=Fp, digits=digits, test="t")
 
    } else {
 
@@ -129,36 +200,38 @@ matreg <- function(y, x, R, n, V, ztor=FALSE, nearPD=FALSE, level=95, digits) {
       s <- p*(p-1)/2
 
       if (nrow(V) != s)
-         stop(mstyle$stop(paste0("Dimensions of 'V' (", nrow(V), ",", ncol(V), ") do not match the number of elements in 'R' (", s, ").")))
+         stop(mstyle$stop(paste0("Dimensions of 'V' (", nrow(V), "x", ncol(V), ") do not match the number of elements in 'R' (", s, ").")))
+
+      V[upper.tri(V)] <- t(V)[upper.tri(V)]
 
       U <- matrix(NA, nrow=p, ncol=p)
       U[lower.tri(U)] <- seq_len(s)
       U[upper.tri(U)] <- t(U)[upper.tri(U)]
-      U11 <- U[x, x, drop=FALSE]
-      U01 <- U[x, y, drop=FALSE]
-      u11 <- unique(c(na.omit(c(U11))))
-      u01 <- c(U01)
+      Uxx <- U[x, x, drop=FALSE]
+      Uxy <- U[x, y, drop=FALSE]
+      uxx <- unique(c(na.omit(c(Uxx))))
+      uxy <- c(Uxy)
 
       A <- matrix(0, nrow=m, ncol=s)
 
       for (a in 1:ncol(A)) {
-         if (a %in% u11) {
-            pos <- c(which(a == U11, arr.ind=TRUE))
+         if (a %in% uxx) {
+            pos <- c(which(a == Uxx, arr.ind=TRUE))
             J <- matrix(0, nrow=m, ncol=m)
             J[pos[1],pos[2]] <- J[pos[2],pos[1]] <- 1
-            A[,a] <- - invR11 %*% J %*% invR11 %*% R01
+            A[,a] <- - invRxx %*% J %*% invRxx %*% Rxy
          }
-         if (a %in% u01) {
-            pos <- c(which(a == U01, arr.ind=TRUE))
-            A[,a] <- invR11[,pos[1]]
+         if (a %in% uxy) {
+            pos <- c(which(a == Uxy, arr.ind=TRUE))
+            A[,a] <- invRxx[,pos[1]]
          }
       }
 
-      vb <- A %*% V %*% t(A)
-      se <- sqrt(diag(vb))
-      zval <- c(b / se)
-      pval <- 2*pnorm(abs(zval), lower.tail=FALSE)
-      crit <- qnorm(level/2, lower.tail=FALSE)
+      vb    <- A %*% V %*% t(A)
+      se    <- sqrt(diag(vb))
+      zval  <- c(b / se)
+      pval  <- 2*pnorm(abs(zval), lower.tail=FALSE)
+      crit  <- qnorm(level/2, lower.tail=FALSE)
       ci.lb <- c(b - crit * se)
       ci.ub <- c(b + crit * se)
 
@@ -169,11 +242,11 @@ matreg <- function(y, x, R, n, V, ztor=FALSE, nearPD=FALSE, level=95, digits) {
 
       QMp <- pchisq(QM, df=m, lower.tail=FALSE)
 
-      R2 <- c(t(b) %*% R01)
+      R2 <- c(t(b) %*% Rxy)
 
       rownames(vb) <- colnames(vb) <- rownames(b)
 
-      res <- list(tab = data.frame(estimate=b, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub), vb=vb, R2=R2, digits=digits)
+      res <- list(tab = data.frame(beta=b, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub), vb=vb, R2=R2, digits=digits, test="z")
 
    }
 

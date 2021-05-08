@@ -1,4 +1,4 @@
-Changes in Version 2.5-97 (2021-05-07)
+Changes in Version 2.5-98 (2021-05-09)
 =====================================
 
    o the metafor package now makes use of the 'mathjaxr' package to nicely
@@ -21,7 +21,7 @@ Changes in Version 2.5-97 (2021-05-07)
 
    o added rcalc() for calculating the variance-covariance matrix of
      correlation coefficients and matreg() for fitting regression models based
-     on a correlation matrix
+     on correlation/covariance matries
 
    o added convenience functions dfround() and vec2mat()
 
