@@ -430,14 +430,17 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
 
    labline(h=ylim[2]-(top-1), lty=lty[2], ...)
 
+   ### get coordinates of the plotting region
+
+   par.usr <- par("usr")
+
    ### add reference line
 
    if (is.numeric(refline))
-      lsegments(refline, ylim[1]-5, refline, ylim[2]-(top-1), lty="dotted", ...)
+      lsegments(refline, par.usr[3], refline, ylim[2]-(top-1), lty="dotted", ...)
 
    ### set cex, cex.lab, and cex.axis sizes as a function of the height of the figure
 
-   par.usr <- par("usr")
    height  <- par.usr[4] - par.usr[3]
 
    if (is.null(cex)) {
@@ -588,7 +591,7 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
 
    ### add header
 
-   ltext(ddd$textpos[1], ylim[2]-(top-1)+1, header.left, pos=4, font=2, cex=cex, ...)
+   ltext(ddd$textpos[1], ylim[2]-(top-1)+1, header.left,  pos=4, font=2, cex=cex, ...)
    ltext(ddd$textpos[2], ylim[2]-(top-1)+1, header.right, pos=2, font=2, cex=cex, ...)
 
    #########################################################################

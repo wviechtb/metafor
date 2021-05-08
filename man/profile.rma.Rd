@@ -146,6 +146,7 @@ profile(res, rho=1, xlim=c(.90, .98))}
 ### an example where the peak is at 0
 dat <- escalc(measure="RD", n1i=n1i, n2i=n2i, ai=ai, ci=ci, data=dat.hine1989)
 res <- rma(yi, vi, data=dat)
+par(mfrow=c(1,1))
 profile(res, progbar=FALSE)
 }
 \keyword{hplot}
