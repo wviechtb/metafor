@@ -351,10 +351,10 @@ anova.rma <- function(object, object2, btt, X, att, Z, digits, ...) {
       if (test == "Wald" && (model.f$method != model.r$method))
          stop(mstyle$stop("Full and reduced model must use the same 'method' for the model fitting."))
 
-      ### for LRT, reduced model may use method="FE" and full model method="(RE)ML"
+      ### for LRT, reduced model may use method="EE/FE" and full model method="(RE)ML"
       ### which is fine, but the other way around doesn't really make sense
 
-      if (model.f$method == "FE" && model.r$method != "FE")
+      if (is.element(model.f$method, c("FE","EE")) && !is.element(model.r$method, c("FE","EE")))
          stop(mstyle$stop("Full model uses a fixed- and reduced model uses a random/mixed-effects model."))
 
       ### could do even more checks for cases where the models are clearly not nested
@@ -365,7 +365,7 @@ anova.rma <- function(object, object2, btt, X, att, Z, digits, ...) {
       ### proportional reduction in tau^2) comparing full vs. reduced model
 
       if (inherits(object, "rma.uni") && !inherits(object, "rma.ls") && !inherits(object2, "rma.ls")) {
-         if (model.f$method == "FE") {
+         if (is.element(model.f$method, c("FE","EE"))) {
             R2 <- NA
          } else if (identical(model.r$tau2,0)) {
             R2 <- 0

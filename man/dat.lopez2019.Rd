@@ -94,8 +94,9 @@ dat <- contrmat(dat, grp1="treatment1", grp2="treatment2")
 ### network meta-analysis using a contrast-based random-effects model
 ### by setting rho=1/2, tau^2 reflects the amount of heterogeneity for all treatment comparisons
 ### the treatment left out (TAU) becomes the reference level for the treatment comparisons
-res <- rma.mv(yi, V, mods = ~ No.treatment + Wait.list + Placebo + F2F.CBT + Hybrid.CBT + Multimedia.CBT - 1,
-              random = ~ comp | study, rho=1/2, data=dat)
+res <- rma.mv(yi, V, data=dat,
+         mods = ~ No.treatment + Wait.list + Placebo + F2F.CBT + Hybrid.CBT + Multimedia.CBT - 1,
+         random = ~ comp | study, rho=1/2)
 res
 
 ### forest plot of the contrast estimates (treatments versus TAU)
@@ -104,8 +105,9 @@ forest(coef(res), diag(vcov(res)), slab=sub(".", " ", names(coef(res)), fixed=TR
        xlab="Difference in Standardized Mean Change (compared to TAU)")
 
 ### fit random inconsistency effects model
-res <- rma.mv(yi, V, mods = ~ No.treatment + Wait.list + Placebo + F2F.CBT + Hybrid.CBT + Multimedia.CBT - 1,
-              random = list(~ comp | study, ~ comp | design), rho=1/2, phi=1/2, data=dat)
+res <- rma.mv(yi, V, data=dat,
+         mods = ~ No.treatment + Wait.list + Placebo + F2F.CBT + Hybrid.CBT + Multimedia.CBT - 1,
+         random = list(~ comp | study, ~ comp | design), rho=1/2, phi=1/2)
 res
 }
 \keyword{datasets}

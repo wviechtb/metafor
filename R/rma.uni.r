@@ -31,7 +31,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
                               "GEN")))
       stop(mstyle$stop("Unknown 'measure' specified."))
 
-   if (!is.element(method, c("FE","HS","HSk","HE","DL","DLIT","GENQ","GENQM","SJ","SJIT","PM","PMM","ML","REML","EB")))
+   if (!is.element(method, c("FE","EE","HS","HSk","HE","DL","DLIT","GENQ","GENQM","SJ","SJIT","PM","PMM","ML","REML","EB")))
       stop(mstyle$stop("Unknown 'method' specified."))
 
    ### in case user specifies more than one add/to value (as one can do with rma.mh() and rma.peto())
@@ -903,7 +903,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
    ### check if there are too many parameters for given k
 
    if (!(int.only && k == 1L)) {
-      if (method == "FE") {                        ### have to estimate p parms
+      if (is.element(method, c("FE","EE"))) {      ### have to estimate p parms
          if (p > k)
             stop(mstyle$stop("Number of parameters to be estimated is larger than the number of observations."))
       } else {
@@ -1003,7 +1003,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
    if (model == "rma.uni") {
 
-      if (is.numeric(tau2) && method != "FE") { ### if user has fixed the tau2 value
+      if (is.numeric(tau2) && !is.element(method, c("FE","EE"))) { ### if user has fixed the tau2 value
          tau2.fix <- TRUE
          tau2.val <- tau2
       } else {
@@ -1011,7 +1011,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
          tau2.val <- NA
       }
 
-      if (verbose > 1 && !tau2.fix && method != "FE")
+      if (verbose > 1 && !tau2.fix && !is.element(method, c("FE","EE")))
          message(mstyle$message("Estimating tau^2 value ...\n"))
 
       if (k == 1L) {
@@ -1977,7 +1977,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
    ### fixed-effects model (note: sets tau2 to zero even when tau2 value is specified)
 
-   if (method == "FE")
+   if (is.element(method, c("FE","EE")))
       tau2 <- 0
 
    #########################################################################
@@ -2094,7 +2094,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
    ### the Knapp & Hartung method as described in the literature is for random/mixed-effects models
 
-   if (method == "FE" && is.element(test, c("knha","adhoc")))
+   if (is.element(method, c("FE","EE")) && is.element(test, c("knha","adhoc")))
       warning(mstyle$warning("Knapp & Hartung method is not meant to be used in the context of FE models."), call.=FALSE)
 
    ### Knapp & Hartung method with ad-hoc correction so that the scale factor is always >= 1
@@ -2179,7 +2179,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
          ### calculation of I^2 and H^2
 
-         if (method == "FE") {
+         if (is.element(method, c("FE","EE"))) {
             I2 <- max(0, 100 * (QE - (k-p)) / QE)
             H2 <- QE / (k-p)
          } else {
@@ -2210,7 +2210,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
    ### compute pseudo R^2 statistic for mixed-effects models with an intercept (only for rma.uni models)
 
-   if (!int.only && int.incl && method != "FE" && model == "rma.uni" && !isTRUE(ddd$skipr2)) {
+   if (!int.only && int.incl && !is.element(method, c("FE","EE")) && model == "rma.uni" && !isTRUE(ddd$skipr2)) {
 
       if (verbose > 1) {
          message(mstyle$message("Fitting RE model for R^2 computation ..."))
@@ -2249,7 +2249,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
       message(mstyle$message("Computing fit statistics and log likelihood ..."))
 
    ### note: tau2 is not counted as a parameter when it was fixed by the user (same for fixed alpha values)
-   parms <- p + ifelse(model == "rma.uni", ifelse(method == "FE" || tau2.fix, 0, 1), sum(is.na(alpha.val)))
+   parms <- p + ifelse(model == "rma.uni", ifelse(is.element(method, c("FE","EE")) || tau2.fix, 0, 1), sum(is.na(alpha.val)))
 
    ll.ML    <- -1/2 * (k) * log(2*base::pi) - 1/2 * sum(log(vi + tau2)) - 1/2 * RSS.f
    ll.REML  <- -1/2 * (k-p) * log(2*base::pi) + ifelse(con$REMLf, 1/2 * determinant(crossprod(X), logarithm=TRUE)$modulus, 0) +

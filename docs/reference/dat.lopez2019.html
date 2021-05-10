@@ -111,7 +111,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-98</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-99</span>
       </span>
     </div>
 
@@ -305,8 +305,9 @@
 <span class='co'>### network meta-analysis using a contrast-based random-effects model</span>
 <span class='co'>### by setting rho=1/2, tau^2 reflects the amount of heterogeneity for all treatment comparisons</span>
 <span class='co'>### the treatment left out (TAU) becomes the reference level for the treatment comparisons</span>
-<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>V</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>No.treatment</span> <span class='op'>+</span> <span class='va'>Wait.list</span> <span class='op'>+</span> <span class='va'>Placebo</span> <span class='op'>+</span> <span class='va'>F2F.CBT</span> <span class='op'>+</span> <span class='va'>Hybrid.CBT</span> <span class='op'>+</span> <span class='va'>Multimedia.CBT</span> <span class='op'>-</span> <span class='fl'>1</span>,
-              random <span class='op'>=</span> <span class='op'>~</span> <span class='va'>comp</span> <span class='op'>|</span> <span class='va'>study</span>, rho<span class='op'>=</span><span class='fl'>1</span><span class='op'>/</span><span class='fl'>2</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>V</span>, data<span class='op'>=</span><span class='va'>dat</span>,
+         mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>No.treatment</span> <span class='op'>+</span> <span class='va'>Wait.list</span> <span class='op'>+</span> <span class='va'>Placebo</span> <span class='op'>+</span> <span class='va'>F2F.CBT</span> <span class='op'>+</span> <span class='va'>Hybrid.CBT</span> <span class='op'>+</span> <span class='va'>Multimedia.CBT</span> <span class='op'>-</span> <span class='fl'>1</span>,
+         random <span class='op'>=</span> <span class='op'>~</span> <span class='va'>comp</span> <span class='op'>|</span> <span class='va'>study</span>, rho<span class='op'>=</span><span class='fl'>1</span><span class='op'>/</span><span class='fl'>2</span><span class='op'>)</span>
 <span class='va'>res</span>
 </div><div class='co'>#&gt; 
 #&gt; Multivariate Meta-Analysis Model (k = 96; method: REML)
@@ -345,8 +346,9 @@
        xlab<span class='op'>=</span><span class='st'>"Difference in Standardized Mean Change (compared to TAU)"</span><span class='op'>)</span>
 </div><div class='img'><img src='dat.lopez2019-2.png' alt='' width='864' height='768' /></div><div class='input'>
 <span class='co'>### fit random inconsistency effects model</span>
-<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>V</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>No.treatment</span> <span class='op'>+</span> <span class='va'>Wait.list</span> <span class='op'>+</span> <span class='va'>Placebo</span> <span class='op'>+</span> <span class='va'>F2F.CBT</span> <span class='op'>+</span> <span class='va'>Hybrid.CBT</span> <span class='op'>+</span> <span class='va'>Multimedia.CBT</span> <span class='op'>-</span> <span class='fl'>1</span>,
-              random <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>~</span> <span class='va'>comp</span> <span class='op'>|</span> <span class='va'>study</span>, <span class='op'>~</span> <span class='va'>comp</span> <span class='op'>|</span> <span class='va'>design</span><span class='op'>)</span>, rho<span class='op'>=</span><span class='fl'>1</span><span class='op'>/</span><span class='fl'>2</span>, phi<span class='op'>=</span><span class='fl'>1</span><span class='op'>/</span><span class='fl'>2</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>V</span>, data<span class='op'>=</span><span class='va'>dat</span>,
+         mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>No.treatment</span> <span class='op'>+</span> <span class='va'>Wait.list</span> <span class='op'>+</span> <span class='va'>Placebo</span> <span class='op'>+</span> <span class='va'>F2F.CBT</span> <span class='op'>+</span> <span class='va'>Hybrid.CBT</span> <span class='op'>+</span> <span class='va'>Multimedia.CBT</span> <span class='op'>-</span> <span class='fl'>1</span>,
+         random <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>~</span> <span class='va'>comp</span> <span class='op'>|</span> <span class='va'>study</span>, <span class='op'>~</span> <span class='va'>comp</span> <span class='op'>|</span> <span class='va'>design</span><span class='op'>)</span>, rho<span class='op'>=</span><span class='fl'>1</span><span class='op'>/</span><span class='fl'>2</span>, phi<span class='op'>=</span><span class='fl'>1</span><span class='op'>/</span><span class='fl'>2</span><span class='op'>)</span>
 <span class='va'>res</span>
 </div><div class='co'>#&gt; 
 #&gt; Multivariate Meta-Analysis Model (k = 96; method: REML)

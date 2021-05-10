@@ -111,7 +111,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-98</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-99</span>
       </span>
     </div>
 
@@ -448,7 +448,7 @@
 #&gt;    pred  ci.lb  ci.ub  pi.lb  pi.ub 
 #&gt;  1.7012 1.2604 2.2961 1.2604 2.2961 
 #&gt; </div><div class='input'>
-<span class='co'>### construct an approximate V matrix assuming a correlation of 0.7 for sampling errors within studies</span>
+<span class='co'>### construct approximate V matrix assuming a correlation of 0.7 for sampling errors within studies</span>
 <span class='va'>V</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/split.html'>split</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>vi</span>, <span class='va'>dat</span><span class='op'>$</span><span class='va'>study</span><span class='op'>)</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>v</span><span class='op'>)</span> <span class='op'>{</span>
    <span class='va'>S</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/diag.html'>diag</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span><span class='op'>(</span><span class='va'>v</span><span class='op'>)</span>, nrow<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>v</span><span class='op'>)</span>, ncol<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>v</span><span class='op'>)</span><span class='op'>)</span>
    <span class='va'>R</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fl'>0.7</span>, nrow<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>v</span><span class='op'>)</span>, ncol<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>v</span><span class='op'>)</span><span class='op'>)</span>

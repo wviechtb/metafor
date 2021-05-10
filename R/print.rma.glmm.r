@@ -13,9 +13,9 @@ print.rma.glmm <- function(x, digits, showfit=FALSE, signif.stars=getOption("sho
    if (!exists(".rmspace"))
       cat("\n")
 
-   if (x$method == "FE") {
+   if (is.element(x$method, c("FE","EE"))) {
       if (x$int.only) {
-         cat(mstyle$section("Fixed-Effects Model"))
+         cat(mstyle$section(ifelse(x$method == "FE", "Fixed-Effects Model", "Equal-Effects Model")))
       } else {
          cat(mstyle$section("Fixed-Effects with Moderators Model"))
       }
@@ -54,7 +54,7 @@ print.rma.glmm <- function(x, digits, showfit=FALSE, signif.stars=getOption("sho
       cat("\n\n")
    }
 
-   if (x$method != "FE") {
+   if (!is.element(x$method, c("FE","EE"))) {
       if (x$int.only) {
          cat(mstyle$text("tau^2 (estimated amount of total heterogeneity): "))
          cat(mstyle$result(paste0(.fcf(x$tau2, ifelse(abs(x$tau2) <= .Machine$double.eps*10,0,digits[["var"]])), ifelse(is.na(x$se.tau2), "", paste0(" (SE = " , .fcf(x$se.tau2, digits[["sevar"]]), ")")))))

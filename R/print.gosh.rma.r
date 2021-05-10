@@ -38,9 +38,9 @@ print.gosh.rma <- function(x, digits=x$digits, ...) {
    if (ncol(x$res) > 6)
       res.table <- rbind(res.table[seq_len(5),], "", res.table[6:nrow(res.table),,drop=FALSE])
 
-   ### remove row for tau^2 in FE models
+   ### remove row for tau^2 in FE/EE models
 
-   if (x$method == "FE")
+   if (is.element(x$method, c("FE","EE")))
       res.table <- res.table[-5,]
 
    tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE))

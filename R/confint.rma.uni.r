@@ -84,7 +84,7 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, type,
       if (k == 1)
          stop(mstyle$stop("Stopped because k = 1."))
 
-      if (x$method == "FE")
+      if (is.element(x$method, c("FE","EE")))
          stop(mstyle$stop("Model does not contain a random-effects component."))
 
       if (x$tau2.fix)

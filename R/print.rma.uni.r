@@ -41,9 +41,9 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
 
    } else {
 
-      if (x$method == "FE") {
+      if (is.element(x$method, c("FE","EE"))) {
          if (x$int.only) {
-            cat(mstyle$section("Fixed-Effects Model"))
+            cat(mstyle$section(ifelse(x$method == "FE", "Fixed-Effects Model", "Equal-Effects Model")))
          } else {
             cat(mstyle$section("Fixed-Effects with Moderators Model"))
          }
@@ -82,7 +82,7 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
 
    if (x$model == "rma.uni" || x$model == "rma.uni.selmodel") {
 
-      if (x$method != "FE") {
+      if (!is.element(x$method, c("FE","EE"))) {
          if (x$int.only) {
             cat(mstyle$text("tau^2 (estimated amount of total heterogeneity): "))
             cat(mstyle$result(paste0(.fcf(x$tau2, ifelse(abs(x$tau2) <= .Machine$double.eps*10,0,digits[["var"]])), ifelse(is.na(x$se.tau2), "", paste0(" (SE = " , .fcf(x$se.tau2, digits[["sevar"]]), ")")))))
@@ -124,13 +124,13 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
          }
       }
 
-      if (x$method != "FE" && !x$int.only && !is.null(x$R2)) {
+      if (!is.element(x$method, c("FE","EE")) && !x$int.only && !is.null(x$R2)) {
          cat(mstyle$text("R^2 (amount of heterogeneity accounted for):            "))
          cat(mstyle$result(paste0(ifelse(is.na(x$R2), NA, .fcf(x$R2, 2)), "%")))
          cat("\n")
       }
 
-      if (x$method != "FE" || !is.na(x$I2) || !is.na(x$H2) || (x$method != "FE" && !x$int.only && !is.null(x$R2)))
+      if (!is.element(x$method, c("FE","EE")) || !is.na(x$I2) || !is.na(x$H2) || (!is.element(x$method, c("FE","EE")) && !x$int.only && !is.null(x$R2)))
          cat("\n")
 
    }

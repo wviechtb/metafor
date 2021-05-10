@@ -62,7 +62,7 @@ res <- rma(yi, vi, data=dat, subset=outcome=="rngoal1")
 res
 predict(res, transf=exp)
 
-### construct an approximate V matrix assuming a correlation of 0.7 for sampling errors within studies
+### construct approximate V matrix assuming a correlation of 0.7 for sampling errors within studies
 V <- lapply(split(dat$vi, dat$study), function(v) {
    S <- diag(sqrt(v), nrow=length(v), ncol=length(v))
    R <- matrix(0.7, nrow=length(v), ncol=length(v))

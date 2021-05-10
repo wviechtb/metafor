@@ -107,7 +107,7 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
    ### check if model is a standard FE model or a standard RE model with the DL estimators
 
    model <- 0L
-   if (x$method=="FE" && x$weighted && is.null(x$weights) && x$int.only)
+   if (is.element(x$method, c("FE","EE")) && x$weighted && is.null(x$weights) && x$int.only)
       model <- 1L
    if (x$method=="DL" && x$weighted && is.null(x$weights) && x$int.only)
       model <- 2L

@@ -58,7 +58,7 @@ profile.rma.uni.selmodel <- function(fitted, tau2, delta,
 
       ### total number of non-fixed components
 
-      comps <- ifelse(x$method != "FE" && !x$tau2.fix, 1, 0) + sum(!x$delta.fix)
+      comps <- ifelse(!is.element(x$method, c("FE","EE")) && !x$tau2.fix, 1, 0) + sum(!x$delta.fix)
 
       if (comps == 0)
          stop(mstyle$stop("No components in the model for which a profile likelihood can be constructed."))
@@ -73,7 +73,7 @@ profile.rma.uni.selmodel <- function(fitted, tau2, delta,
       sav <- list()
       j <- 0
 
-      if (x$method != "FE" && !x$tau2.fix) {
+      if (!is.element(x$method, c("FE","EE")) && !x$tau2.fix) {
          j <- j + 1
          mc.vc <- mc
          mc.vc$tau2 <- 1
@@ -121,7 +121,7 @@ profile.rma.uni.selmodel <- function(fitted, tau2, delta,
 
    ### check if model actually contains (at least one) such a component and that it was actually estimated
 
-   if (!missing(tau2) && (x$method == "FE" || x$tau2.fix))
+   if (!missing(tau2) && (is.element(x$method, c("FE","EE")) || x$tau2.fix))
       stop(mstyle$stop("Model does not contain an (estimated) 'tau2' component."))
 
    if (!missing(delta) && all(x$delta.fix))

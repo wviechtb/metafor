@@ -34,7 +34,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (!is.element(method, c("FE","ML","REML")))
+   if (!is.element(method, c("FE","EE","ML","REML")))
       stop(mstyle$stop("Unknown 'method' specified."))
 
    if (any(!is.element(struct, c("CS","HCS","UN","AR","HAR","CAR","ID","DIAG","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","GEN")))) # "UNR", "PHYBM","PHYPL","PHYPD"))))
@@ -449,7 +449,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
 
    ### process random argument
 
-   if (method != "FE" && !is.null(random)) {
+   if (!is.element(method, c("FE","EE")) && !is.null(random)) {
 
       if (verbose > 1)
          message(mstyle$message("Processing 'random' argument ..."))
@@ -642,7 +642,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
 
    } else {
 
-      ### set defaults for some elements when method="FE"
+      ### set defaults for some elements when method="FE/EE"
 
       formulas <- list(NULL, NULL)
       mf.r  <- NULL
@@ -1927,7 +1927,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
 
    }
 
-   if (method != "FE" && !is.null(random)) {
+   if (!is.element(method, c("FE","EE")) && !is.null(random)) {
 
       ### if at least one parameter needs to be estimated
 

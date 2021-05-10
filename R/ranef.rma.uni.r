@@ -51,7 +51,7 @@ ranef.rma.uni <- function(object, level, digits, transf, targs, ...) {
 
    for (i in seq_len(x$k.f)[x$not.na]) { ### note: skipping NA cases
       Xi <- matrix(x$X.f[i,], nrow=1)
-      if (x$method == "FE") {
+      if (is.element(x$method, c("FE","EE"))) {
          pred[i]  <- 0
          vpred[i] <- 0
       } else {

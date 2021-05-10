@@ -158,9 +158,9 @@ cumul.rma.uni <- function(x, order, digits, transf, targs, progbar=FALSE, ...) {
    if (is.element(x$test, c("knha","adhoc","t")))
       names(out)[3] <- "tval"
 
-   ### remove tau2 for FE models
+   ### remove tau2 for FE/EE models
 
-   if (x$method == "FE")
+   if (is.element(x$method, c("FE","EE")))
       out <- out[-9]
 
    out$digits    <- digits

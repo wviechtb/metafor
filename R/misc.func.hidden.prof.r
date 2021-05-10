@@ -236,7 +236,7 @@
       ### for profile and confint, fit model with component fixed to 'val'
 
       ### set any fixed components to their values
-      tau2.arg  <- ifelse(obj$method == "FE" || obj$tau2.fix, obj$tau2, NA)
+      tau2.arg  <- ifelse(is.element(obj$method, c("FE","EE")) || obj$tau2.fix, obj$tau2, NA)
       delta.arg <- ifelse(obj$delta.fix, obj$delta, NA)
 
       if (comp == "tau2")

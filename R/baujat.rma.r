@@ -96,7 +96,7 @@ baujat.rma <- function(x, xlim, ylim, xlab, ylab, cex, symbol="ids", grid=TRUE, 
       cex <- 0.8
 
    if (missing(xlab)) {
-      if (x$method == "FE") {
+      if (is.element(x$method, c("FE","EE"))) {
          xlab <- ifelse(x$int.only, "Contribution to Overall Heterogeneity", "Contribution to Residual Heterogeneity")
       } else {
          xlab <- "Squared Pearson Residual"

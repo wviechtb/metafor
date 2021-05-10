@@ -1,18 +1,21 @@
 .onAttach <- function(libname, pkgname) {
 
-   ver <- "2.5-98"
+   ver <- "2.5-99"
 
    loadmsg <- paste0("Loading 'metafor' package (version ", ver, "). For an overview \nand introduction to the package please type: help(metafor)")
 
    inst.ver <- as.numeric(strsplit(gsub("-", ".", ver, fixed=TRUE), ".", fixed=TRUE)[[1]])
 
-   if (inst.ver[2] %% 2 == 0) {
+   #if (inst.ver[2] %% 2 == 0 && interactive()) { # only run version check if a non-devel version is installed and it's an interactive session
+   if (FALSE && interactive()) {                  # disable check completely for now
 
-      # only run version check if a non-devel version is installed
+      # pull version number from CRAN page
 
-      cran.ver <- suppressWarnings(try(readLines("https://raw.githubusercontent.com/wviechtb/metafor/master/CRAN_version", n=1), silent=TRUE))
+      tmp <- suppressWarnings(try(readLines("https://cran.r-project.org/web/packages/metafor/index.html"), silent=TRUE))
 
-      if (!inherits(cran.ver, "try-error")) {
+      if (!inherits(tmp, "try-error")) {
+         cran.ver <- tmp[grep("Version:", tmp, fixed=TRUE) + 1]
+         cran.ver <- substr(cran.ver, 5, nchar(cran.ver)-5)
          save.ver <- cran.ver
          cran.ver <- as.numeric(strsplit(gsub("-", ".", cran.ver), ".", fixed=TRUE)[[1]])
          inst.ver <- 100000 * inst.ver[1] + 1000 * inst.ver[2] + inst.ver[3]
@@ -20,6 +23,19 @@
          if (inst.ver < cran.ver)
             loadmsg <- paste0(loadmsg, "\n\nAn updated version of the package (version ", save.ver, ") is available!\nTo update to this version type: install.packages(\"metafor\")")
       }
+
+      # or pull version number from github
+
+      # cran.ver <- suppressWarnings(try(readLines("https://raw.githubusercontent.com/wviechtb/metafor/master/CRAN_version", n=1), silent=TRUE))
+
+      # if (!inherits(cran.ver, "try-error")) {
+      #    save.ver <- cran.ver
+      #    cran.ver <- as.numeric(strsplit(gsub("-", ".", cran.ver), ".", fixed=TRUE)[[1]])
+      #    inst.ver <- 100000 * inst.ver[1] + 1000 * inst.ver[2] + inst.ver[3]
+      #    cran.ver <- 100000 * cran.ver[1] + 1000 * cran.ver[2] + cran.ver[3]
+      #    if (inst.ver < cran.ver)
+      #       loadmsg <- paste0(loadmsg, "\n\nAn updated version of the package (version ", save.ver, ") is available!\nTo update to this version type: install.packages(\"metafor\")")
+      # }
 
    }
 

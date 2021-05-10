@@ -7,7 +7,7 @@ xlim, ylim, xhist=TRUE, yhist=TRUE, hh=0.3, breaks, adjust, lwd, labels, ...) {
 
    het <- match.arg(het, c("QE", "I2", "H2", "tau2"))
 
-   if (het == "tau2" && x$method == "FE")
+   if (het == "tau2" && is.element(x$method, c("FE","EE")))
       stop(mstyle$stop("Cannot plot 'tau2' for fixed-effects models."))
 
    if (missing(alpha))

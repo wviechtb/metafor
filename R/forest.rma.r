@@ -723,7 +723,7 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
             if (length(addpred) == 1L)
                addpred <- c(addpred, addpred)
             temp <- predict(x, level=level, tau2.levels=addpred[1], gamma2.levels=addpred[2], pi.type=pi.type)
-            addpred <- TRUE ### set addpred to TRUE, so if (x$method != "FE" && addpred) further below works
+            addpred <- TRUE ### set addpred to TRUE, so if (!is.element(x$method, c("FE","EE")) && addpred) further below works
          } else {
             if (addpred) {
                ### here addpred=TRUE, but user has not specified the level, so throw an error
@@ -785,7 +785,7 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
 
       ### add prediction interval
 
-      if (x$method != "FE" && addpred) {
+      if (!is.element(x$method, c("FE","EE")) && addpred) {
 
          lsegments(max(beta.pi.lb, alim[1]), -1, min(beta.pi.ub, alim[2]), -1, lty=lty[2], col=col[2], ...)
 
@@ -810,7 +810,7 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
       ### add label for model estimate
 
       if (missing(mlab))
-         mlab <- ifelse((x$method=="FE"), "FE Model", "RE Model")
+         mlab <- sapply(x$method, switch, "FE"="FE Model", "EE"="EE Model", "RE Model", USE.NAMES=FALSE)
 
       ltext(ddd$textpos[1], -1, mlab, pos=4, cex=cex, ...)
 

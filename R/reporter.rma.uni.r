@@ -20,7 +20,7 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
       stop(mstyle$stop("Cannot use reporter function for models with a fixed tau^2 value."))
 
    if (!x$int.only)
-      stop(mstyle$stop("Cannot currently use reporter function for models with moderators. This will be implemented shortly."))
+      stop(mstyle$stop("Cannot currently use reporter function for models with moderators. This will be implemented eventually."))
 
    if (x$k == 1)
       stop(mstyle$stop("Cannot use reporter function when k = 1."))
@@ -162,8 +162,25 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
 
    ### model type
 
-   model <- ifelse(x$method == "FE", ifelse(x$int.only, "FE", "MR"), ifelse(x$int.only, "RE", "ME"))
-   model.name <- c(FE = "fixed-effects", MR = "(fixed-effects) meta-regression", RE = "random-effects", ME = "(mixed-effects) meta-regression")[model]
+   if (x$int.only) {
+      if (x$method == "EE") {
+         model <- "EE"
+      } else if (x$method == "FE") {
+         model <- "FE"
+      } else {
+         model <- "RE"
+      }
+   } else {
+      if (x$method == "EE") {
+         model <- "MR"
+      } else if (x$method == "FE") {
+         model <- "MR"
+      } else {
+         model <- "ME"
+      }
+   }
+
+   model.name <- c(EE = "equal-effects", FE = "fixed-effects", MR = "(fixed-effects) meta-regression", RE = "random-effects", ME = "(mixed-effects) meta-regression")[model]
 
    ### get tau^2 estimator name and set reference
 
@@ -229,7 +246,7 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
 
    ### Q-test reference
 
-   if (is.element(model, c("FE", "RE"))) {
+   if (is.element(model, c("FE","EE","RE"))) {
       qtest.ref <- "[@cochran1954]"
    } else {
       qtest.ref <- "[@hedges1983]"
@@ -291,12 +308,12 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
    if (x$measure != "GEN")
       methods <- paste0(methods, "The analysis was carried out using the ", measure, " as the outcome measure. ")
 
-   methods <- paste0(methods, "A ", model.name, " model was fitted to the data. ")
+   methods <- paste0(methods, "A", ifelse(model.name == "equal-effects", "n ", " "), model.name, " model was fitted to the data. ")
 
    if (is.element(model, c("RE", "ME")))
       methods <- paste0(methods, "The amount of ", ifelse(x$int.only, "", "residual "), "heterogeneity (i.e., $\\tau^2$), was estimated using the ", tau2.method, " estimator ", tau2.ref, ". ")
 
-   if (model == "FE")
+   if (is.element(model, c("FE","EE")))
       methods <- paste0(methods, "The $Q$-test for heterogeneity ", qtest.ref, " and the $I^2$ statistic [@higgins2002] are reported. ")
 
    if (model == "MR")
@@ -324,10 +341,10 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
 
    methods <- if (footnotes) paste0(methods, "[^cook] ") else paste0(methods, " ")
 
-   if (is.element(model, c("FE", "RE")))
+   if (is.element(model, c("FE","EE","RE")))
       methods <- paste0(methods, "The rank correlation test [@begg1994] and the regression test [@sterne2005], using the standard error of the observed outcomes as predictor, are used to check for funnel plot asymmetry. ")
 
-   if (is.element(model, c("MR", "ME")))
+   if (is.element(model, c("MR","ME")))
       methods <- paste0(methods, "The regression test [@sterne2005], using the standard error of the observed outcomes as predictor (in addition to the moderators already included in the model), is used to check for funnel plot asymmetry. ")
 
    methods <- paste0(methods, "The analysis was carried out using R (version ", getRversion(), ") [@rcore2020] and the **metafor** package (version ", x$version, ") [@viechtbauer2010a]. ")
@@ -347,10 +364,10 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
    ### percent positive/negative
    results <- paste0(results, "with the majority of estimates being ", ifelse(mean(x$yi > 0) > .50, "positive", "negative"), " (", ifelse(mean(x$yi > 0) > .50, round(100*mean(x$yi > 0)), round(100*mean(x$yi < 0))), "%). ")
 
-   if (is.element(model, c("FE", "RE"))) {
+   if (is.element(model, c("FE","EE","RE"))) {
 
       ### estimated average outcome with CI
-      results <- paste0(results, "The estimated average ", measure, " based on the ", model.name, " model was ", ifelse(model == "FE", "$\\hat{\\theta} = ", "$\\hat{\\mu} = "), .fcf(c(x$beta), digits[["est"]]), "$ ")
+      results <- paste0(results, "The estimated average ", measure, " based on the ", model.name, " model was ", ifelse(is.element(model, c("FE","EE")), "$\\hat{\\theta} = ", "$\\hat{\\mu} = "), .fcf(c(x$beta), digits[["est"]]), "$ ")
       results <- paste0(results, "(", level, "% CI: $", .fcf(x$ci.lb, digits[["ci"]]), "$ to $", .fcf(x$ci.ub, digits[["ci"]]), "$). ")
 
       ### note: for some outcome measures (e.g., proportions), the test H0: mu/theta = 0 is not really relevant; maybe check for this

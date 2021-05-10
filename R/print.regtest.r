@@ -14,7 +14,7 @@ print.regtest <- function(x, digits=x$digits, ret.fit=x$ret.fit, ...) {
    if (x$model == "lm") {
       cat(mstyle$text("Model:     weighted regression with multiplicative dispersion"))
    } else {
-      cat(mstyle$text(paste("Model:    ", ifelse(x$method=="FE", "fixed-effects", "mixed-effects"), "meta-regression model")))
+      cat(mstyle$text(paste("Model:    ", ifelse(is.element(x$method, c("FE","EE")), "fixed-effects", "mixed-effects"), "meta-regression model")))
    }
    cat("\n")
    if (x$predictor == "sei")
