@@ -20,7 +20,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    if (!is.element(measure, c("OR","IRR","PLO","IRLN")))
       stop(mstyle$stop("Unknown 'measure' specified."))
 
-   if (!is.element(method, c("FE","EE","ML")))
+   if (!is.element(method, c("FE","EE","CE","ML")))
       stop(mstyle$stop("Unknown 'method' specified."))
 
    ### in case user specifies more than one add/to value (as one can do with rma.mh() and rma.peto())
@@ -588,9 +588,9 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    ### check if there are too many parameters for given k
 
-   if (is.element(method, c("FE","EE")) && p > k)
+   if (is.element(method, c("FE","EE","CE")) && p > k)
       stop(mstyle$stop("Number of parameters to be estimated is larger than the number of observations."))
-   if (!is.element(method, c("FE","EE")) && (p+1) > k)
+   if (!is.element(method, c("FE","EE","CE")) && (p+1) > k)
       stop(mstyle$stop("Number of parameters to be estimated is larger than the number of observations."))
 
    ### set/check 'btt' argument
@@ -971,7 +971,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             #return(list(res.FE, res.QE, res.ML, ll.FE=ll.FE, ll.QE=ll.QE, ll.ML=ll.ML))
             #res.FE <- res[[1]]; res.QE <- res[[2]]; res.ML <- res[[3]]
 
-            if (is.element(method, c("FE","EE"))) {
+            if (is.element(method, c("FE","EE","CE"))) {
                beta   <- cbind(coef(res.FE)[seq_len(p)])
                vb     <- vcov(res.FE)[seq_len(p),seq_len(p),drop=FALSE]
                tau2   <- 0
@@ -1153,7 +1153,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             #return(list(res.FE, res.QE, res.ML, ll.FE=ll.FE, ll.QE=ll.QE, ll.ML=ll.ML))
             #res.FE <- res[[1]]; res.QE <- res[[2]]; res.ML <- res[[3]]
 
-            if (is.element(method, c("FE","EE"))) {
+            if (is.element(method, c("FE","EE","CE"))) {
 
                if (con$package == "lme4") {
                   beta   <- cbind(lme4::fixef(res.FE)[seq_len(p)])
@@ -1325,7 +1325,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
          #return(list(res.FE, res.QE, res.ML, ll.FE=ll.FE, ll.QE=ll.QE, ll.ML=ll.ML))
          #res.FE <- res[[1]]; res.QE <- res[[2]]; res.ML <- res[[3]]
 
-         if (is.element(method, c("FE","EE"))) {
+         if (is.element(method, c("FE","EE","CE"))) {
             beta   <- cbind(coef(res.FE)[seq_len(p)])
             vb     <- vcov(res.FE)[seq_len(p),seq_len(p),drop=FALSE]
             tau2   <- 0
@@ -1668,7 +1668,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
          #return(list(res.FE, res.QE, res.ML, ll.FE=ll.FE, ll.QE=ll.QE, ll.ML=ll.ML))
          #res.FE <- res[[1]]; res.QE <- res[[2]]; res.ML <- res[[3]]
 
-         if (is.element(method, c("FE","EE"))) {
+         if (is.element(method, c("FE","EE","CE"))) {
             if (con$optimizer == "optim" || con$optimizer == "nlminb" || con$optimizer == "minqa") {
                beta <- cbind(res.FE$par[seq_len(p)])
                chol.h <- try(chol(h.FE[seq_len(p),seq_len(p)]), silent=!verbose) ### see if Hessian can be inverted with chol()
@@ -1863,7 +1863,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       #return(list(res.FE, res.QE, res.ML, ll.FE=ll.FE, ll.QE=ll.QE, ll.ML=ll.ML))
       #res.FE <- res[[1]]; res.QE <- res[[2]]; res.ML <- res[[3]]
 
-      if (is.element(method, c("FE","EE"))) {
+      if (is.element(method, c("FE","EE","CE"))) {
          beta   <- cbind(coef(res.FE)[seq_len(p)])
          vb     <- vcov(res.FE)[seq_len(p),seq_len(p),drop=FALSE]
          tau2   <- 0
@@ -2036,7 +2036,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    if (verbose > 1)
       message(mstyle$message("Computing fit statistics and log likelihood ..."))
 
-   ll.ML     <- ifelse(is.element(method, c("FE","EE")), ll.FE, ll.ML)
+   ll.ML     <- ifelse(is.element(method, c("FE","EE","CE")), ll.FE, ll.ML)
    ll.REML   <- NA
    dev.ML    <- -2 * (ll.ML - ll.QE)
    AIC.ML    <- -2 * ll.ML + 2*parms

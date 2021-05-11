@@ -143,9 +143,9 @@ print.anova.rma <- function(x, digits=x$digits, ...) {
       res.table["Full","R^2"] <- ""
       res.table["Reduced","R^2"] <- paste0(.fcf(x$R2, digits[["het"]]), "%")
 
-      ### remove tau^2 and R^2 columns if full model is a FE/EE model or if dealing with rma.mv or rma.ls models
+      ### remove tau^2 and R^2 columns if full model is a FE/EE/CE model or if dealing with rma.mv or rma.ls models
 
-      if (is.element(x$method, c("FE","EE")) || is.element("rma.mv", x$class.f) || is.element("rma.ls", x$class.f))
+      if (is.element(x$method, c("FE","EE","CE")) || is.element("rma.mv", x$class.f) || is.element("rma.ls", x$class.f))
          res.table <- res.table[,seq_len(8)]
 
       tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE))

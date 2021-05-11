@@ -38,7 +38,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
    ### refit RE/ME models with ML estimation
 
-   if (!is.element(x$method, c("FE","EE","ML"))) {
+   if (!is.element(x$method, c("FE","EE","CE","ML"))) {
       #stop(mstyle$stop("Argument 'x' must either be a fixed-effects model or a model fitted with ML estimation."))
       #x <- try(update(x, method="ML"), silent=TRUE)
       #x <- suppressWarnings(update(x, method="ML"))
@@ -55,7 +55,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
    if (is.null(ddd$tau2)) {
 
-      if (is.element(x$method, c("FE","EE"))) {
+      if (is.element(x$method, c("FE","EE","CE"))) {
          tau2 <- 0
       } else {
          if (x$tau2.fix) {
@@ -637,7 +637,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    if (!is.null(con$pval.min))
       pval.min <- con$pval.min
 
-   if (k < p + ifelse(is.element(x$method, c("FE","EE")) || x$tau2.fix, 0, 1) + sum(is.na(delta)))
+   if (k < p + ifelse(is.element(x$method, c("FE","EE","CE")) || x$tau2.fix, 0, 1) + sum(is.na(delta)))
       stop(mstyle$stop("Number of studies (k=", k, ") is too small to fit the selection model."))
 
    ############################################################################
@@ -1026,7 +1026,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    LRT.tau2  <- NA
    LRTp.tau2 <- NA
 
-   if (!x$tau2.fix && !is.element(x$method, c("FE","EE")) && !isTRUE(ddd$skiphet)) {
+   if (!x$tau2.fix && !is.element(x$method, c("FE","EE","CE")) && !isTRUE(ddd$skiphet)) {
 
       if (verbose > 1)
          message(mstyle$message("Conducting heterogeneity test ..."))
@@ -1088,7 +1088,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
       message(mstyle$message("Computing fit statistics and log likelihood ..."))
 
    ### note: tau2 and delta are not counted as parameters when they were fixed by the user
-   parms <- p + ifelse(is.element(x$method, c("FE","EE")) || x$tau2.fix, 0, 1) + sum(is.na(delta.val))
+   parms <- p + ifelse(is.element(x$method, c("FE","EE","CE")) || x$tau2.fix, 0, 1) + sum(is.na(delta.val))
 
    ll.ML   <- ll
    dev.ML  <- -2 * ll.ML

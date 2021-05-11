@@ -63,7 +63,7 @@ efac=1, col, border, fonts, cex, ...) {
    ### label for model estimate (if not specified)
 
    if (is.null(mlab))
-      mlab <- sapply(x$method, switch, "FE"="FE Model", "EE"="EE Model", "RE Model", USE.NAMES=FALSE)
+      mlab <- sapply(x$method, switch, "FE"="FE Model", "EE"="EE Model", "CE"="CE Model", "RE Model", USE.NAMES=FALSE)
 
    ### passing ci.lb and ci.ub, so that the bounds are correct when the model was fitted with test="knha"
 

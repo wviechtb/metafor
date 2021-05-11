@@ -97,8 +97,10 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
          pred <- as.vector(DZtW %*% cbind(ei))
          pred[abs(pred) < 100 * .Machine$double.eps] <- 0
          #vpred <- D - (DZtW %*% x$Z.S[[j]] %*% D - DZtW %*% x$X %*% stXWX %*% t(x$X) %*% W %*% x$Z.S[[j]] %*% D)
-         vpred <- D - (DZtW %*% (I - Hmat) %*% x$Z.S[[j]] %*% D)
+         vpred <- D - (DZtW %*% (I - Hmat) %*% x$Z.S[[j]] %*% D) # this one is the same as ranef.rma.uni() for standard RE/ME models
+         #vpred <- DZtW %*% (I - Hmat) %*% x$Z.S[[j]] %*% D # = var(u^)
          #vpred <- D - (DZtW %*% x$Z.S[[j]] %*% D) # same as lme4::ranef()
+         #vpred <- DZtW %*% x$Z.S[[j]] %*% D
 
          if (x$test == "t") {
             ddf <- .ddf.calc(x$dfs, k=x$k, p=x$p, mf.s=x$mf.s[[j]], beta=FALSE)
@@ -158,7 +160,7 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
 
       if (x$struct[1] == "GEN") {
          if (verbose)
-            message(mstyle$message("Computation of BLUPs not available for struct=\"GEN\"."))
+            message(mstyle$message("Computation of BLUPs not currently available for struct=\"GEN\"."))
       } else {
 
       if (verbose)
@@ -221,7 +223,7 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
 
       if (x$struct[2] == "GEN") {
          if (verbose)
-            message(mstyle$message("Computation of BLUPs not available for struct=\"GEN\"."))
+            message(mstyle$message("Computation of BLUPs not currently available for struct=\"GEN\"."))
       } else {
 
       if (verbose)

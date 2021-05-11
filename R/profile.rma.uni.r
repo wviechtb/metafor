@@ -5,7 +5,7 @@ profile.rma.uni <- function(fitted,
 
    .chkclass(class(fitted), must="rma.uni", notav="rma.uni.selmodel")
 
-   if (is.element(fitted$method, c("FE","EE")))
+   if (is.element(fitted$method, c("FE","EE","CE")))
       stop(mstyle$stop("Cannot profile tau2 parameter for fixed-effects models."))
 
    if (steps < 2)

@@ -105,7 +105,7 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
    ### label for the x-axis
 
    if (missing(xlab)) {
-      if (is.element(x$method, c("FE","EE"))) {
+      if (is.element(x$method, c("FE","EE","CE"))) {
          xlab <- expression(x[i]==1/sqrt(v[i]), ...)
       } else {
          xlab <- expression(x[i]==1/sqrt(v[i]+tau^2), ...)
@@ -145,13 +145,13 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
 
    if (missing(zlab)) {
       if (center) {
-         if (is.element(x$method, c("FE","EE"))) {
+         if (is.element(x$method, c("FE","EE","CE"))) {
             mtext(expression(z[i]==frac(y[i]-hat(theta),sqrt(v[i]))), side=2, line=par.mar.adj[2]-1, at=0, adj=0, las=1, cex=cex, ...)
          } else {
             mtext(expression(z[i]==frac(y[i]-hat(mu),sqrt(v[i]+tau^2))), side=2, line=par.mar.adj[2]-1, adj=0, at=0, las=1, cex=cex, ...)
          }
       } else {
-         if (is.element(x$method, c("FE","EE"))) {
+         if (is.element(x$method, c("FE","EE","CE"))) {
             mtext(expression(z[i]==frac(y[i],sqrt(v[i]))), side=2, line=par.mar.adj[2]-2, at=0, adj=0, las=1, cex=cex, ...)
          } else {
             mtext(expression(z[i]==frac(y[i],sqrt(v[i]+tau^2))), side=2, line=par.mar.adj[2]-1, at=0, adj=0, las=1, cex=cex, ...)

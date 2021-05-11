@@ -127,9 +127,9 @@ leave1out.rma.uni <- function(x, digits, transf, targs, progbar=FALSE, ...) {
    if (is.element(x$test, c("knha","adhoc","t")))
       names(out)[3] <- "tval"
 
-   ### remove tau2 for FE/EE models
+   ### remove tau2 for FE/EE/CE models
 
-   if (is.element(x$method, c("FE","EE")))
+   if (is.element(x$method, c("FE","EE","CE")))
       out <- out[-9]
 
    out$digits <- digits

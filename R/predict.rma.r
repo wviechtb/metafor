@@ -589,9 +589,9 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
    out$slab <- slab[not.na]
 
-   ### for FE/EE models, remove the columns corresponding to the prediction interval bounds
+   ### for FE/EE/CE models, remove the columns corresponding to the prediction interval bounds
 
-   if (is.element(x$method, c("FE","EE"))) {
+   if (is.element(x$method, c("FE","EE","CE"))) {
       out$cr.lb <- NULL
       out$cr.ub <- NULL
       out$pi.lb <- NULL

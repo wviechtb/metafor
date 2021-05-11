@@ -61,7 +61,7 @@ confint.rma.uni.selmodel <- function(object, parm, level, fixed=FALSE, tau2, del
 
       ### total number of non-fixed components
 
-      comps <- ifelse(!is.element(x$method, c("FE","EE")) && !x$tau2.fix, 1, 0) + sum(!x$delta.fix)
+      comps <- ifelse(!is.element(x$method, c("FE","EE","CE")) && !x$tau2.fix, 1, 0) + sum(!x$delta.fix)
 
       if (comps == 0)
          stop(mstyle$stop("No components for which a CI can be obtained."))
@@ -69,7 +69,7 @@ confint.rma.uni.selmodel <- function(object, parm, level, fixed=FALSE, tau2, del
       res.all <- list()
       j <- 0
 
-      if (!is.element(x$method, c("FE","EE")) && !x$tau2.fix) {
+      if (!is.element(x$method, c("FE","EE","CE")) && !x$tau2.fix) {
          j <- j + 1
          cl.vc <- cl
          cl.vc$tau2 <- 1
@@ -125,7 +125,7 @@ confint.rma.uni.selmodel <- function(object, parm, level, fixed=FALSE, tau2, del
 
       ### check if model actually contains (at least one) such a component and that it was actually estimated
 
-      if (!missing(tau2) && (is.element(x$method, c("FE","EE")) || x$tau2.fix))
+      if (!missing(tau2) && (is.element(x$method, c("FE","EE","CE")) || x$tau2.fix))
          stop(mstyle$stop("Model does not contain an (estimated) 'tau2' component."))
 
       if (!missing(delta) && all(x$delta.fix))

@@ -104,10 +104,10 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
 
    colnames(incl) <- seq_len(x$k)
 
-   ### check if model is a standard FE model or a standard RE model with the DL estimators
+   ### check if model is a standard FE/EE/CE model or a standard RE model with the DL estimators
 
    model <- 0L
-   if (is.element(x$method, c("FE","EE")) && x$weighted && is.null(x$weights) && x$int.only)
+   if (is.element(x$method, c("FE","EE","CE")) && x$weighted && is.null(x$weights) && x$int.only)
       model <- 1L
    if (x$method=="DL" && x$weighted && is.null(x$weights) && x$int.only)
       model <- 2L
