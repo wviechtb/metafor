@@ -286,8 +286,13 @@ atransf, targs, efac=1, col, border, fonts, cex, ...) {
 
       lpolygon(x=c(ci.lb[i], yi[i], ci.ub[i], yi[i]), y=c(rows[i], rows[i]+(height/100)*cex*efac, rows[i], rows[i]-(height/100)*cex*efac), col=col[i], border=border[i], ...)
 
-      if (!is.null(mlab))
-         ltext(xlim[1], rows[i], mlab[i], pos=4, cex=cex, ...)
+      if (!is.null(mlab)) {
+         if (is.list(mlab)) {
+            ltext(xlim[1], rows[i], mlab[[i]], pos=4, cex=cex, ...)
+         } else {
+            ltext(xlim[1], rows[i], mlab[i], pos=4, cex=cex, ...)
+         }
+      }
 
    }
 

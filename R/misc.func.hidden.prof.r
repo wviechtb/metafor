@@ -41,7 +41,7 @@
 
       } else {
 
-         sav <- -2*(logLik(res) - logLik(obj)) - objective
+         sav <- c(-2*(logLik(res) - logLik(obj)) - objective)
 
          if (verbose)
             cat(mstyle$verbose(paste("tau2 =", formatC(val, digits=obj$digits[["var"]], width=obj$digits[["var"]]+4, format="f"), "  LRT - objective =", formatC(sav, digits=obj$digits[["test"]], width=obj$digits[["test"]]+4, format="f"), "\n")))
@@ -162,7 +162,7 @@
 
       } else {
 
-         sav <- -2*(logLik(res) - logLik(obj)) - objective
+         sav <- c(-2*(logLik(res) - logLik(obj)) - objective)
 
          if (verbose)
             cat(mstyle$verbose(paste("val =", formatC(val, digits=obj$digits[["var"]], width=obj$digits[["var"]]+4, format="f"), "  LRT - objective =", formatC(sav, digits=obj$digits[["fit"]], width=obj$digits[["fit"]]+4, format="f"), "\n")))
@@ -277,7 +277,7 @@
 
       } else {
 
-         sav <- -2*(logLik(res) - logLik(obj)) - objective
+         sav <- c(-2*(logLik(res) - logLik(obj)) - objective)
 
          if (verbose)
             cat(mstyle$verbose(paste("val =", formatC(val, digits=obj$digits[["var"]], width=obj$digits[["var"]]+4, format="f"), "  LRT - objective =", formatC(sav, digits=obj$digits[["fit"]], width=obj$digits[["fit"]]+4, format="f"), "\n")))
@@ -337,7 +337,7 @@
 
       } else {
 
-         sav <- -2*(logLik(res) - logLik(obj)) - objective
+         sav <- c(-2*(logLik(res) - logLik(obj)) - objective)
 
          if (verbose)
             cat(mstyle$verbose(paste("val =", formatC(val, digits=obj$digits[["var"]], width=obj$digits[["var"]]+4, format="f"), "  LRT - objective =", formatC(sav, digits=obj$digits[["fit"]], width=obj$digits[["fit"]]+4, format="f"), "\n")))

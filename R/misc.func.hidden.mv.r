@@ -63,7 +63,7 @@
    ### turn each variable in mf.g into a factor (not for SP/PHY structures or GEN)
    ### if a variable was a factor to begin with, this drops any unused levels, but order of existing levels is preserved
 
-   if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD","GEN"))) {
+   if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD","GEN","GDIAG"))) {
       mf.g <- data.frame(mf.g[-nvars], outer=factor(mf.g[[nvars]]))
    } else {
       mf.g <- data.frame(inner=factor(mf.g[[1]]), outer=factor(mf.g[[2]]))
@@ -77,7 +77,7 @@
    ### get number of levels of each variable in mf.g (vector with two values, for the inner and outer factor)
 
    #g.nlevels <- c(nlevels(mf.g[[1]]), nlevels(mf.g[[2]])) ### works only for factors
-   if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD","GEN"))) {
+   if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD","GEN","GDIAG"))) {
       g.nlevels <- c(length(unique(apply(mf.g[-nvars], 1, paste, collapse=" + "))), length(unique(mf.g[[nvars]])))
    } else {
       g.nlevels <- c(length(unique(mf.g[[1]])), length(unique(mf.g[[2]])))
@@ -86,7 +86,7 @@
    ### get levels of each variable in mf.g
 
    #g.levels <- list(levels(mf.g[[1]]), levels(mf.g[[2]])) ### works only for factors
-   if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD","GEN"))) {
+   if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD","GEN","GDIAG"))) {
       g.levels <- list(sort(unique(apply(mf.g[-nvars], 1, paste, collapse=" + "))), sort(unique((mf.g[[nvars]]))))
    } else {
       #g.levels <- list(sort(unique(as.character(mf.g[[1]]))), sort(unique(as.character(mf.g[[2]]))))
@@ -117,6 +117,11 @@
       p     <- nvars - 1
       tau2s <- p
       rhos  <- ifelse(p > 1, p*(p-1)/2, 1)
+   }
+   if (struct == "GDIAG") {
+      p     <- nvars - 1
+      tau2s <- p
+      rhos  <- 1
    }
 
    ### set default value(s) for tau2 if it is unspecified
@@ -183,7 +188,7 @@
 
    }
 
-   if (is.element(struct, c("GEN"))) {
+   if (is.element(struct, c("GEN","GDIAG"))) {
 
       if (sparse) {
          Z.G1 <- Matrix(as.matrix(mf.g[-nvars]), sparse=TRUE)
@@ -235,7 +240,7 @@
    ### redo: turn each variable in mf.g into a factor (not for SP structures or GEN)
    ### (reevaluates the levels present, but order of existing levels is preserved)
 
-   if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD","GEN"))) {
+   if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD","GEN","GDIAG"))) {
       mf.g <- data.frame(mf.g[-nvars], outer=factor(mf.g[[nvars]]))
    } else {
       mf.g <- data.frame(inner=factor(mf.g[[1]]), outer=factor(mf.g[[2]]))
@@ -244,7 +249,7 @@
    ### redo: get number of levels of each variable in mf.g (vector with two values, for the inner and outer factor)
 
    #g.nlevels <- c(nlevels(mf.g[[1]]), nlevels(mf.g[[2]])) ### works only for factors
-   if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD","GEN"))) {
+   if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD","GEN","GDIAG"))) {
       g.nlevels <- c(length(unique(apply(mf.g[-nvars], 1, paste, collapse=" + "))), length(unique(mf.g[[nvars]])))
    } else {
       g.nlevels <- c(length(unique(mf.g[[1]])), length(unique(mf.g[[2]])))
@@ -253,7 +258,7 @@
    ### redo: get levels of each variable in mf.g
 
    #g.levels <- list(levels(mf.g[[1]]), levels(mf.g[[2]])) ### works only for factors
-   if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD","GEN"))) {
+   if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD","GEN","GDIAG"))) {
       g.levels <- list(sort(unique(apply(mf.g[-nvars], 1, paste, collapse=" + "))), sort(unique((mf.g[[nvars]]))))
    } else {
       #g.levels <- list(sort(unique(as.character(mf.g[[1]]))), sort(unique(as.character(mf.g[[2]]))))
@@ -264,14 +269,14 @@
 
    g.levels.r <- !is.element(g.levels.f[[1]], g.levels[[1]])
 
-   ### warn if any levels were removed (not for "AR","CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","GEN")
+   ### warn if any levels were removed (not for "AR","CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","GEN","GDIAG")
 
-   if (any(g.levels.r) && !is.element(struct, c("AR","CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","GEN")))
+   if (any(g.levels.r) && !is.element(struct, c("AR","CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","GEN","GDIAG")))
       warning(mstyle$warning(paste0("One or more levels of inner factor (i.e., ", paste(g.levels.f[[1]][g.levels.r], collapse=", "), ") removed due to NAs.")), call.=FALSE)
 
-   ### for "ID" and "DIAG", fix rho to 0
+   ### for "ID", "DIAG", and "GDIAG", fix rho to 0
 
-   if (is.element(struct, c("ID","DIAG")))
+   if (is.element(struct, c("ID","DIAG","GDIAG")))
       rho <- 0
 
    ### if there is only a single arm for "CS","HCS","AR","HAR","CAR" (either to begin with or after removing NAs), then fix rho to 0
@@ -281,14 +286,14 @@
       warning(mstyle$warning(paste0("Inner factor has only a single level, so fixed value of ", ifelse(isG, 'rho', 'phi'), " to 0.")), call.=FALSE)
    }
 
-   ### if there is only a single arm for SP/PHY structures or GEN (either to begin with or after removing NAs), cannot fit model
+   ### if there is only a single arm for SP/PHY structures or GEN/GDIAG (either to begin with or after removing NAs), cannot fit model
 
-   if (g.nlevels[1] == 1 && is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD","GEN")))
+   if (g.nlevels[1] == 1 && is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD","GEN","GDIAG")))
       stop(mstyle$stop("Cannot fit model since inner term only has a single level."), call.=FALSE)
 
    ### k per level of the inner factor
 
-   if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD","GEN"))) {
+   if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD","GEN","GDIAG"))) {
       g.levels.k <- table(factor(apply(mf.g[-nvars], 1, paste, collapse=" + "), levels=g.levels.f[[1]]))
    } else {
       g.levels.k <- table(factor(mf.g[[1]], levels=g.levels.f[[1]]))
@@ -319,7 +324,7 @@
 
    g.levels.comb.k <- NULL
 
-   if (!is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD","GEN"))) {
+   if (!is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD","GEN","GDIAG"))) {
 
       ### create matrix where each row (= study) indicates how often each arm occurred
       ### then turn this into a list (with each element equal to a row (= study))
@@ -374,6 +379,10 @@
 
    if (struct == "UNR") {
       G <- .con.vcov.UNR(tau2, rho)
+   }
+
+   if (is.element(struct, c("GDIAG"))) {
+      G <- diag(tau2, nrow=length(tau2), ncol=length(tau2))
    }
 
    if (is.element(struct, c("ID","DIAG"))) {
@@ -720,6 +729,10 @@
       }
    }
 
+   if (struct == "GDIAG") {
+      E <- diag(v, nrow=length(v), ncol=length(v))
+   }
+
    if (is.element(struct, c("ID","DIAG")))
       E <- diag(v, nrow=ncol.Z1, ncol=ncol.Z1)
 
@@ -788,7 +801,7 @@
 
    ### set variance and corresponding correlation value(s) to 0 for any levels that were removed
 
-   if (!is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD","GEN")) && any(levels.r)) {
+   if (!is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD","GEN","GDIAG")) && any(levels.r)) {
       E[levels.r,] <- 0
       E[,levels.r] <- 0
    }

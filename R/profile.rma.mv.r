@@ -435,7 +435,11 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
    if (missing(ylim)) {
 
       if (any(!is.na(lls))) {
-         ylim <- range(lls, na.rm=TRUE)
+         if (xlim[1] <= vc && xlim[2] >= vc) {
+            ylim <- range(c(logLik(x),lls), na.rm=TRUE)
+         } else {
+            ylim <- range(lls, na.rm=TRUE)
+         }
       } else {
          ylim <- rep(logLik(x), 2)
       }

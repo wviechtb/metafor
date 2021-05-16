@@ -37,7 +37,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
    if (!is.element(method, c("FE","EE","CE","ML","REML")))
       stop(mstyle$stop("Unknown 'method' specified."))
 
-   if (any(!is.element(struct, c("CS","HCS","UN","AR","HAR","CAR","ID","DIAG","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","GEN")))) # "UNR", "PHYBM","PHYPL","PHYPD"))))
+   if (any(!is.element(struct, c("CS","HCS","UN","AR","HAR","CAR","ID","DIAG","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","GEN","GDIAG")))) # "UNR", "PHYBM","PHYPL","PHYPD"))))
       stop(mstyle$stop("Unknown 'struct' specified."))
 
    if (length(struct) == 1L)
@@ -530,7 +530,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
             ### for an '~ inner | outer' term with struct="GEN", expand the inner formula to the
             ### model matrix and re-combine this with the outer variable
 
-            if (struct[io] == "GEN") {
+            if (is.element(struct[io], c("GEN","GDIAG"))) {
 
                f.inner <- as.formula(strsplit(paste(random[[j]], collapse=""), " | ", fixed=TRUE)[[1]][1])
                f.outer <- as.formula(paste("~", strsplit(paste(random[[j]], collapse=""), " | ", fixed=TRUE)[[1]][2]))
@@ -2051,7 +2051,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
          colnames(G) <- rownames(G) <- seq_len(nrow(G))
       if (is.element(struct[1], c("CS","HCS","UN","UNR","AR","HAR","CAR","ID","DIAG")))
          colnames(G) <- rownames(G) <- g.levels.f[[1]]
-      if (is.element(struct[1], c("GEN")))
+      if (is.element(struct[1], c("GEN","GDIAG")))
          colnames(G) <- rownames(G) <- g.names[-length(g.names)]
       tau2 <- fitcall$tau2
       rho  <- fitcall$rho
@@ -2063,7 +2063,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
          colnames(H) <- rownames(H) <- seq_len(nrow(H))
       if (is.element(struct[2], c("CS","HCS","UN","UNR","AR","HAR","CAR","ID","DIAG")))
          colnames(H) <- rownames(H) <- h.levels.f[[1]]
-      if (is.element(struct[2], c("GEN")))
+      if (is.element(struct[2], c("GEN","GDIAG")))
          colnames(H) <- rownames(H) <- h.names[-length(h.names)]
       gamma2 <- fitcall$gamma2
       phi    <- fitcall$phi

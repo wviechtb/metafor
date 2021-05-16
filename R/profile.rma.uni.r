@@ -158,7 +158,11 @@ profile.rma.uni <- function(fitted,
    if (missing(ylim)) {
 
       if (any(!is.na(lls))) {
-         ylim <- range(lls, na.rm=TRUE)
+         if (xlim[1] <= x$tau2 && xlim[2] >= x$tau2) {
+            ylim <- range(c(logLik(x),lls), na.rm=TRUE)
+         } else {
+            ylim <- range(lls, na.rm=TRUE)
+         }
       } else {
          ylim <- rep(logLik(x), 2)
       }

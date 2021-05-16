@@ -27,7 +27,9 @@ to.wide(data, study, grp, ref, grpvars, postfix=c(".1",".2"),
 
    The \code{study} and \code{group} arguments are used to specify the study and group variables in the dataset (either as character strings or as numbers indicating the column positions of these variables in the dataset). Optional argument \code{ref} is used to specify the reference group (this must be one of the groups in the \code{group} variable). Argument \code{grpvars} is used to specify (either as a character vector or by giving the column positions) of those variables in the dataset that correspond to group-level outcomes (the remaining variables are treated as study-level outcomes).
 
-   The dataset is restructured so that a two-group study will yield a single row in the restructured dataset, contrasting the first group against the second group (either the specified reference group if the study actually includes that group or the other group that was included in the study). For studies with more than two groups (often called \sQuote{multiarm} studies in the medical literature), the reference group is repeated as many times as needed (so a three-group study would yield two rows in the restructured dataset, contrasting two groups against a common reference group).
+   The dataset is restructured so that a two-group study will yield a single row in the restructured dataset, contrasting the first group against the second/reference group. For studies with more than two groups (often called \sQuote{multiarm} or \sQuote{multitreatment} studies in the medical literature), the reference group is repeated as many times as needed (so a three-group study would yield two rows in the restructured dataset, contrasting two groups against a common reference group).
+
+   If a study does not include the reference group, then another group from the study will be used as the reference group. This group is chosen based on the factor levels of the \code{grp} variable (i.e., the last level that occurs in the study becomes the reference group).
 
    To distinguish the names of the group-level outcome variables for the two first and second group in the restructured dataset, the strings given for the \code{postfix} argument are placed after the respective variable names.
 
@@ -45,7 +47,7 @@ to.wide(data, study, grp, ref, grpvars, postfix=c(".1",".2"),
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}
 }
 \seealso{
-   \code{\link{contrmat}}, \code{\link{dat.senn2013}}, \code{\link{dat.hasselblad1998}}
+   \code{\link{contrmat}}, \code{\link{dat.hasselblad1998}}, \code{\link{dat.lopez2019}}, \code{\link{dat.obrien2003}}, \code{\link{dat.pagliaro1992}}, \code{\link{dat.senn2013}}
 }
 \examples{
 ### data in long format

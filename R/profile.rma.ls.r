@@ -143,8 +143,8 @@ profile.rma.ls <- function(fitted, alpha,
 
       if (comp == "alpha") {
          if (is.na(x$se.alpha[alpha])) {
-            vc.lb <- vc/4
-            vc.ub <- vc*4
+            vc.lb <- vc - 4 * abs(vc)
+            vc.ub <- vc + 4 * abs(vc)
          } else {
             vc.lb <- vc - qnorm(.995) * x$se.alpha[alpha]
             vc.ub <- vc + qnorm(.995) * x$se.alpha[alpha]
@@ -217,7 +217,11 @@ profile.rma.ls <- function(fitted, alpha,
    if (missing(ylim)) {
 
       if (any(!is.na(lls))) {
-         ylim <- range(lls, na.rm=TRUE)
+         if (xlim[1] <= vc && xlim[2] >= vc) {
+            ylim <- range(c(logLik(x),lls), na.rm=TRUE)
+         } else {
+            ylim <- range(lls, na.rm=TRUE)
+         }
       } else {
          ylim <- rep(logLik(x), 2)
       }

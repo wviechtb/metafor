@@ -34,7 +34,7 @@ confint.rma.ls <- function(object, parm, level, fixed=FALSE, alpha, digits, tran
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("time", "xlim"))
+   .chkdots(ddd, c("time", "xlim", "extint"))
 
    if (.isTRUE(ddd$time))
       time.start <- proc.time()
@@ -150,11 +150,11 @@ confint.rma.ls <- function(object, parm, level, fixed=FALSE, alpha, digits, tran
 
       if (comp == "alpha") {
          if (is.na(x$se.alpha[alpha])) {
-            con$vc.min <- vc/4
-            con$vc.max <- vc*4
+            con$vc.min <- vc - 10 * abs(vc)
+            con$vc.max <- vc + 10 * abs(vc)
          } else {
-            con$vc.min <- vc - qnorm(.995) * x$se.alpha[alpha]
-            con$vc.max <- vc + qnorm(.995) * x$se.alpha[alpha]
+            con$vc.min <- vc - 10 * qnorm(level/2, lower.tail=FALSE) * x$se.alpha[alpha]
+            con$vc.max <- vc + 10 * qnorm(level/2, lower.tail=FALSE) * x$se.alpha[alpha]
          }
       }
 
@@ -206,7 +206,7 @@ confint.rma.ls <- function(object, parm, level, fixed=FALSE, alpha, digits, tran
 
             if (!inherits(res, "try-error") && !is.na(res)) {
 
-               if (res < 0) {
+               if (!.isTRUE(ddd$extint) && res < 0) {
 
                   vc.lb <- con$vc.min
                   lb.conv <- TRUE
@@ -214,7 +214,11 @@ confint.rma.ls <- function(object, parm, level, fixed=FALSE, alpha, digits, tran
 
                } else {
 
-                  res <- try(uniroot(.profile.rma.ls, interval=c(con$vc.min, vc), tol=con$tol, maxiter=con$maxiter, obj=x, comp=comp, alpha.pos=alpha.pos, confint=TRUE, objective=objective, verbose=verbose, check.conv=TRUE)$root, silent=TRUE)
+                  if (.isTRUE(ddd$extint)) {
+                     res <- try(uniroot(.profile.rma.ls, interval=c(con$vc.min, vc), tol=con$tol, maxiter=con$maxiter, extendInt="downX", obj=x, comp=comp, alpha.pos=alpha.pos, confint=TRUE, objective=objective, verbose=verbose, check.conv=TRUE)$root, silent=TRUE)
+                  } else {
+                     res <- try(uniroot(.profile.rma.ls, interval=c(con$vc.min, vc), tol=con$tol, maxiter=con$maxiter, obj=x, comp=comp, alpha.pos=alpha.pos, confint=TRUE, objective=objective, verbose=verbose, check.conv=TRUE)$root, silent=TRUE)
+                  }
 
                   ### check if uniroot method converged
                   if (!inherits(res, "try-error")) {
@@ -250,7 +254,7 @@ confint.rma.ls <- function(object, parm, level, fixed=FALSE, alpha, digits, tran
 
             if (!inherits(res, "try-error") && !is.na(res)) {
 
-               if (res < 0) {
+               if (!.isTRUE(ddd$extint) && res < 0) {
 
                   vc.ub <- con$vc.max
                   ub.conv <- TRUE
@@ -258,7 +262,11 @@ confint.rma.ls <- function(object, parm, level, fixed=FALSE, alpha, digits, tran
 
                } else {
 
-                  res <- try(uniroot(.profile.rma.ls, interval=c(vc, con$vc.max), tol=con$tol, maxiter=con$maxiter, obj=x, comp=comp, alpha.pos=alpha.pos, confint=TRUE, objective=objective, verbose=verbose, check.conv=TRUE)$root, silent=TRUE)
+                  if (.isTRUE(ddd$extint)) {
+                     res <- try(uniroot(.profile.rma.ls, interval=c(vc, con$vc.max), tol=con$tol, maxiter=con$maxiter, extendInt="upX", obj=x, comp=comp, alpha.pos=alpha.pos, confint=TRUE, objective=objective, verbose=verbose, check.conv=TRUE)$root, silent=TRUE)
+                  } else {
+                     res <- try(uniroot(.profile.rma.ls, interval=c(vc, con$vc.max), tol=con$tol, maxiter=con$maxiter, obj=x, comp=comp, alpha.pos=alpha.pos, confint=TRUE, objective=objective, verbose=verbose, check.conv=TRUE)$root, silent=TRUE)
+                  }
 
                   ### check if uniroot method converged
                   if (!inherits(res, "try-error")) {

@@ -37,7 +37,7 @@ confint.rma.uni.selmodel <- function(object, parm, level, fixed=FALSE, tau2, del
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("time", "xlim"))
+   .chkdots(ddd, c("time", "xlim", "extint"))
 
    if (.isTRUE(ddd$time))
       time.start <- proc.time()
@@ -246,7 +246,7 @@ confint.rma.uni.selmodel <- function(object, parm, level, fixed=FALSE, tau2, del
 
             if (!inherits(res, "try-error") && !is.na(res)) {
 
-               if (res < 0) {
+               if (!.isTRUE(ddd$extint) && res < 0) {
 
                   vc.lb <- con$vc.min
                   lb.conv <- TRUE
@@ -259,7 +259,11 @@ confint.rma.uni.selmodel <- function(object, parm, level, fixed=FALSE, tau2, del
 
                } else {
 
-                  res <- try(uniroot(.profile.rma.uni.selmodel, interval=c(con$vc.min, vc), tol=con$tol, maxiter=con$maxiter, obj=x, comp=comp, delta.pos=delta.pos, confint=TRUE, objective=objective, verbose=verbose, check.conv=TRUE)$root, silent=TRUE)
+                  if (.isTRUE(ddd$extint)) {
+                     res <- try(uniroot(.profile.rma.uni.selmodel, interval=c(con$vc.min, vc), tol=con$tol, maxiter=con$maxiter, extendInt="downX", obj=x, comp=comp, delta.pos=delta.pos, confint=TRUE, objective=objective, verbose=verbose, check.conv=TRUE)$root, silent=TRUE)
+                  } else {
+                     res <- try(uniroot(.profile.rma.uni.selmodel, interval=c(con$vc.min, vc), tol=con$tol, maxiter=con$maxiter, obj=x, comp=comp, delta.pos=delta.pos, confint=TRUE, objective=objective, verbose=verbose, check.conv=TRUE)$root, silent=TRUE)
+                  }
 
                   ### check if uniroot method converged
                   if (!inherits(res, "try-error")) {
@@ -295,7 +299,7 @@ confint.rma.uni.selmodel <- function(object, parm, level, fixed=FALSE, tau2, del
 
             if (!inherits(res, "try-error") && !is.na(res)) {
 
-               if (res < 0) {
+               if (!.isTRUE(ddd$extint) && res < 0) {
 
                   vc.ub <- con$vc.max
                   ub.conv <- TRUE
@@ -308,7 +312,11 @@ confint.rma.uni.selmodel <- function(object, parm, level, fixed=FALSE, tau2, del
 
                } else {
 
-                  res <- try(uniroot(.profile.rma.uni.selmodel, interval=c(vc, con$vc.max), tol=con$tol, maxiter=con$maxiter, obj=x, comp=comp, delta.pos=delta.pos, confint=TRUE, objective=objective, verbose=verbose, check.conv=TRUE)$root, silent=TRUE)
+                  if (.isTRUE(ddd$extint)) {
+                     res <- try(uniroot(.profile.rma.uni.selmodel, interval=c(vc, con$vc.max), tol=con$tol, maxiter=con$maxiter, extendInt="upX", obj=x, comp=comp, delta.pos=delta.pos, confint=TRUE, objective=objective, verbose=verbose, check.conv=TRUE)$root, silent=TRUE)
+                  } else {
+                     res <- try(uniroot(.profile.rma.uni.selmodel, interval=c(vc, con$vc.max), tol=con$tol, maxiter=con$maxiter, obj=x, comp=comp, delta.pos=delta.pos, confint=TRUE, objective=objective, verbose=verbose, check.conv=TRUE)$root, silent=TRUE)
+                  }
 
                   ### check if uniroot method converged
                   if (!inherits(res, "try-error")) {

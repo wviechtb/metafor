@@ -51,7 +51,7 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, type,
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("time", "xlim"))
+   .chkdots(ddd, c("time", "xlim", "extint"))
 
    if (.isTRUE(ddd$time))
       time.start <- proc.time()
@@ -404,7 +404,11 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, type,
 
             } else {
 
-               res <- try(uniroot(.profile.rma.uni, interval=c(con$tau2.min, x$tau2), tol=con$tol, maxiter=con$maxiter, obj=x, confint=TRUE, objective=objective, verbose=verbose, check.conv=TRUE)$root, silent=TRUE)
+               if (.isTRUE(ddd$extint)) {
+                  res <- try(uniroot(.profile.rma.uni, interval=c(con$tau2.min, x$tau2), tol=con$tol, maxiter=con$maxiter, extendInt="downX", obj=x, confint=TRUE, objective=objective, verbose=verbose, check.conv=TRUE)$root, silent=TRUE)
+               } else {
+                  res <- try(uniroot(.profile.rma.uni, interval=c(con$tau2.min, x$tau2), tol=con$tol, maxiter=con$maxiter, obj=x, confint=TRUE, objective=objective, verbose=verbose, check.conv=TRUE)$root, silent=TRUE)
+               }
 
                ### check if uniroot method converged
 
@@ -430,7 +434,7 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, type,
 
          if (!inherits(res, "try-error") && !is.na(res)) {
 
-            if (res < 0) {
+            if (!.isTRUE(ddd$extint) && res < 0) {
 
                tau2.ub <- con$tau2.max
                ub.conv <- TRUE
@@ -438,7 +442,11 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, type,
 
             } else {
 
-               res <- try(uniroot(.profile.rma.uni, interval=c(x$tau2, con$tau2.max), tol=con$tol, maxiter=con$maxiter, obj=x, confint=TRUE, objective=objective, verbose=verbose, check.conv=TRUE)$root, silent=TRUE)
+               if (.isTRUE(ddd$extint)) {
+                  res <- try(uniroot(.profile.rma.uni, interval=c(x$tau2, con$tau2.max), tol=con$tol, maxiter=con$maxiter, extendInt="upX", obj=x, confint=TRUE, objective=objective, verbose=verbose, check.conv=TRUE)$root, silent=TRUE)
+               } else {
+                  res <- try(uniroot(.profile.rma.uni, interval=c(x$tau2, con$tau2.max), tol=con$tol, maxiter=con$maxiter, obj=x, confint=TRUE, objective=objective, verbose=verbose, check.conv=TRUE)$root, silent=TRUE)
+               }
 
                ### check if uniroot method converged
 

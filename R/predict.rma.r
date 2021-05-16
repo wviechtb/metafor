@@ -64,7 +64,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
       ### if no new moderator values are specified
 
-      if (!inherits(object, "rma.mv") || (inherits(object, "rma.mv") && any(object$struct=="GEN"))) {
+      if (!inherits(object, "rma.mv") || (inherits(object, "rma.mv") && any(is.element(object$struct, c("GEN","GDIAG"))))) {
 
          ### for rma.uni, rma.mh, rma.peto, and rma.glmm objects
 
@@ -569,7 +569,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
       out$gamma2.level <- gamma2.levels
 
    ### remove cr part for models with a GEN structure
-   if (inherits(object, "rma.mv") && any(object$struct=="GEN")) {
+   if (inherits(object, "rma.mv") && any(is.element(object$struct, c("GEN","GDIAG")))) {
       out$cr.lb <- NULL
       out$cr.ub <- NULL
       out$pi.lb <- NULL

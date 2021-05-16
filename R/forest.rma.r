@@ -812,7 +812,11 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
       if (missing(mlab))
          mlab <- sapply(x$method, switch, "FE"="FE Model", "EE"="EE Model", "CE"="CE Model", "RE Model", USE.NAMES=FALSE)
 
-      ltext(ddd$textpos[1], -1, mlab, pos=4, cex=cex, ...)
+      if (is.list(mlab)) {
+         ltext(ddd$textpos[1], -1, mlab[[1]], pos=4, cex=cex, ...)
+      } else {
+         ltext(ddd$textpos[1], -1, mlab, pos=4, cex=cex, ...)
+      }
 
    }
 

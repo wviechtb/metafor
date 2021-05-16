@@ -72,7 +72,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
    if (inherits(pred, "list.rma")) {
       addpred <- TRUE
       if (missing(xvals))
-         stop(mstyle$stop("Need to specify 'xvals' argument."))
+         stop(mstyle$stop("Need to specify the 'xvals' argument."))
       if (length(xvals) != length(pred$pred))
          stop(mstyle$stop(paste0("Length of the 'xvals' argument (", length(xvals), ") does not correspond to the number of predicted values (", length(pred$pred), ").")))
    } else {
@@ -129,7 +129,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
       if (x$p == 2L && x$int.incl) {
          mod <- 2
       } else {
-         stop(mstyle$stop("Need to specify 'mod' argument."))
+         stop(mstyle$stop("Need to specify the 'mod' argument."))
       }
    }
 
