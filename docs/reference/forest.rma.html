@@ -89,15 +89,9 @@
 
 
 
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -111,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-101</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-102</span>
       </span>
     </div>
 
@@ -420,13 +414,13 @@
 <span class='co'>### lines in rows 0 and k+1; two extra lines of space at the top for headings,</span>
 <span class='co'>### and other annotations; headings (if requested) in line k+2</span>
 <span class='va'>op</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>xpd<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/text.html'>text</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='op'>-</span><span class='fl'>8.5</span>, y<span class='op'>=</span><span class='op'>-</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>16</span>, <span class='op'>-</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>16</span>, pos<span class='op'>=</span><span class='fl'>4</span>, cex<span class='op'>=</span><span class='fl'>.5</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/text.html'>text</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='op'>-</span><span class='fl'>8.4</span>, y<span class='op'>=</span><span class='op'>-</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>16</span>, <span class='op'>-</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>16</span>, pos<span class='op'>=</span><span class='fl'>4</span>, cex<span class='op'>=</span><span class='fl'>.6</span><span class='op'>)</span>
 </div><div class='img'><img src='forest.rma-1.png' alt='' width='864' height='768' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span><span class='va'>op</span><span class='op'>)</span>
 
 <span class='co'>### can also inspect defaults chosen</span>
 <span class='va'>defaults</span> <span class='op'>&lt;-</span> <span class='fu'><a href='forest.html'>forest</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
 </div><div class='img'><img src='forest.rma-2.png' alt='' width='864' height='768' /></div><div class='input'><span class='va'>defaults</span>
-</div><div class='co'>#&gt; $xlim
+</div><div class='output co'>#&gt; $xlim
 #&gt; [1] -8.00  7.26
 #&gt; 
 #&gt; $alim
@@ -460,7 +454,7 @@
 <span class='co'>### adjust xlim values to see how that changes the plot</span>
 <span class='fu'><a href='forest.html'>forest</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
 </div><div class='img'><img src='forest.rma-8.png' alt='' width='864' height='768' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span><span class='st'>"usr"</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>]</span> <span class='co'>### this shows what xlim values were chosen by default</span>
-</div><div class='co'>#&gt; [1] -8.00  7.26</div><div class='input'><span class='fu'><a href='forest.html'>forest</a></span><span class='op'>(</span><span class='va'>res</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>16</span>,<span class='fl'>14</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] -8.00  7.26</div><div class='input'><span class='fu'><a href='forest.html'>forest</a></span><span class='op'>(</span><span class='va'>res</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>16</span>,<span class='fl'>14</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='img'><img src='forest.rma-9.png' alt='' width='864' height='768' /></div><div class='input'><span class='fu'><a href='forest.html'>forest</a></span><span class='op'>(</span><span class='va'>res</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>18</span>,<span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='img'><img src='forest.rma-10.png' alt='' width='864' height='768' /></div><div class='input'><span class='fu'><a href='forest.html'>forest</a></span><span class='op'>(</span><span class='va'>res</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>10</span>,<span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='img'><img src='forest.rma-11.png' alt='' width='864' height='768' /></div><div class='input'>
@@ -506,17 +500,17 @@
 </div><div class='img'><img src='forest.rma-19.png' alt='' width='864' height='768' /></div><div class='input'>
 <span class='co'>### forest plot with subgrouping of studies</span>
 <span class='co'>### note: may need to widen plotting device to avoid overlapping text</span>
-<span class='fu'><a href='forest.html'>forest</a></span><span class='op'>(</span><span class='va'>res</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>16</span>, <span class='fl'>6</span><span class='op'>)</span>, at<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.05</span>, <span class='fl'>.25</span>, <span class='fl'>1</span>, <span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>, atransf<span class='op'>=</span><span class='va'>exp</span>,
+<span class='fu'><a href='forest.html'>forest</a></span><span class='op'>(</span><span class='va'>res</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>16</span>, <span class='fl'>4.6</span><span class='op'>)</span>, at<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.05</span>, <span class='fl'>.25</span>, <span class='fl'>1</span>, <span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>, atransf<span class='op'>=</span><span class='va'>exp</span>,
        ilab<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='va'>dat.bcg</span><span class='op'>$</span><span class='va'>tpos</span>, <span class='va'>dat.bcg</span><span class='op'>$</span><span class='va'>tneg</span>, <span class='va'>dat.bcg</span><span class='op'>$</span><span class='va'>cpos</span>, <span class='va'>dat.bcg</span><span class='op'>$</span><span class='va'>cneg</span><span class='op'>)</span>,
        ilab.xpos<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>9.5</span>,<span class='op'>-</span><span class='fl'>8</span>,<span class='op'>-</span><span class='fl'>6</span>,<span class='op'>-</span><span class='fl'>4.5</span><span class='op'>)</span>, cex<span class='op'>=</span><span class='fl'>.75</span>, ylim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>1</span>, <span class='fl'>21</span><span class='op'>)</span>,
        order<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>$</span><span class='va'>alloc</span>, rows<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>,<span class='fl'>5</span><span class='op'>:</span><span class='fl'>11</span>,<span class='fl'>14</span><span class='op'>:</span><span class='fl'>17</span><span class='op'>)</span>,
        header<span class='op'>=</span><span class='st'>"Author(s) and Year"</span><span class='op'>)</span>
-</div><div class='input'><span class='va'>op</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>cex<span class='op'>=</span><span class='fl'>.75</span>, font<span class='op'>=</span><span class='fl'>4</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/text.html'>text</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>16</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>18</span>,<span class='fl'>12</span>,<span class='fl'>3</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Systematic Allocation"</span>, <span class='st'>"Random Allocation"</span>,
-                        <span class='st'>"Alternate Allocation"</span><span class='op'>)</span>, pos<span class='op'>=</span><span class='fl'>4</span><span class='op'>)</span>
-</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>cex<span class='op'>=</span><span class='fl'>.75</span>, font<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+</div><div class='input'><span class='va'>op</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>cex<span class='op'>=</span><span class='fl'>0.75</span>, font<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/text.html'>text</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>9.5</span>,<span class='op'>-</span><span class='fl'>8</span>,<span class='op'>-</span><span class='fl'>6</span>,<span class='op'>-</span><span class='fl'>4.5</span><span class='op'>)</span>, <span class='fl'>20</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"TB+"</span>, <span class='st'>"TB-"</span>, <span class='st'>"TB+"</span>, <span class='st'>"TB-"</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/text.html'>text</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>8.75</span>,<span class='op'>-</span><span class='fl'>5.25</span><span class='op'>)</span>,     <span class='fl'>21</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Vaccinated"</span>, <span class='st'>"Control"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='input'><span class='va'>op</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>font<span class='op'>=</span><span class='fl'>4</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/text.html'>text</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>16</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>18</span>,<span class='fl'>12</span>,<span class='fl'>3</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Systematic Allocation"</span>, <span class='st'>"Random Allocation"</span>,
+                        <span class='st'>"Alternate Allocation"</span><span class='op'>)</span>, pos<span class='op'>=</span><span class='fl'>4</span><span class='op'>)</span>
 </div><div class='img'><img src='forest.rma-20.png' alt='' width='864' height='768' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span><span class='va'>op</span><span class='op'>)</span>
 
 <span class='co'>### see also the addpoly.rma function for an example where summaries</span>
@@ -527,7 +521,7 @@
 <span class='co'>### CIs would have upper bounds larger than 1</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"PR"</span>, xi<span class='op'>=</span><span class='va'>xi</span>, ni<span class='op'>=</span><span class='va'>ni</span>, data<span class='op'>=</span><span class='va'>dat.pritz1997</span><span class='op'>)</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span>, slab<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='va'>study</span>, <span class='st'>") "</span>, <span class='va'>authors</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='forest.html'>forest</a></span><span class='op'>(</span><span class='va'>res</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span>, alim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>1</span><span class='op'>)</span>, psize<span class='op'>=</span><span class='fl'>1</span>, refline<span class='op'>=</span><span class='fu'><a href='coef.rma.html'>coef</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>, olim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>1</span><span class='op'>)</span>, header<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='fu'><a href='forest.html'>forest</a></span><span class='op'>(</span><span class='va'>res</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>0.8</span>,<span class='fl'>1.6</span><span class='op'>)</span>, alim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>1</span><span class='op'>)</span>, psize<span class='op'>=</span><span class='fl'>1</span>, refline<span class='op'>=</span><span class='fu'><a href='coef.rma.html'>coef</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>, olim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>1</span><span class='op'>)</span>, header<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='img'><img src='forest.rma-21.png' alt='' width='864' height='768' /></div><div class='input'>
 <span class='co'>### an example of a forest plot where the data have a multilevel structure and</span>
 <span class='co'>### we want to reflect this by grouping together estimates from the same cluster</span>
@@ -556,7 +550,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9001, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
+  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
 </div>
 
       </footer>
@@ -564,8 +558,6 @@
 
   
 
-
-  
 
   </body>
 </html>

@@ -89,15 +89,9 @@
 
 
 
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -111,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-101</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-102</span>
       </span>
     </div>
 
@@ -220,7 +214,7 @@
     <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat' and examine data</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.maire2019</span><span class='op'>$</span><span class='va'>dat</span>
 <span class='va'>dat</span>
-</div><div class='co'>#&gt;      site station site_station  s1      vars1   s2      vars2   s3      vars3
+</div><div class='output co'>#&gt;      site station site_station  s1      vars1   s2      vars2   s3      vars3
 #&gt; 1   site1    sta1   site1_sta1 168  3502.7424    9  2301.0000 -109  2301.0000
 #&gt; 2   site1    sta2   site1_sta2 123  2301.0000   -9  2301.0000  -71  1603.4889
 #&gt; 3   site2    sta1   site2_sta1 302  5846.0000 -213 13738.9074   -1  5846.0000
@@ -295,7 +289,7 @@
 <span class='co'>### copy distance matrix into 'dmat' and examine first 5 rows/columns</span>
 <span class='va'>dmat</span> <span class='op'>&lt;-</span> <span class='va'>dat.maire2019</span><span class='op'>$</span><span class='va'>dmat</span>
 <span class='va'>dmat</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>,<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span>
-</div><div class='co'>#&gt;            site1_sta1 site1_sta2 site2_sta1 site2_sta2 site2_sta3
+</div><div class='output co'>#&gt;            site1_sta1 site1_sta2 site2_sta1 site2_sta2 site2_sta3
 #&gt; site1_sta1          0          6      10000      10000      10000
 #&gt; site1_sta2          6          0      10000      10000      10000
 #&gt; site2_sta1      10000      10000          0          1          1
@@ -304,7 +298,7 @@
 <span class='co'>### fit a standard random-effects model ignoring spatial correlation</span>
 <span class='va'>res1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span><span class='op'>(</span><span class='va'>s1</span>, <span class='va'>vars1</span>, random <span class='op'>=</span> <span class='op'>~</span> <span class='fl'>1</span> <span class='op'>|</span> <span class='va'>site_station</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 <span class='va'>res1</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Multivariate Meta-Analysis Model (k = 35; method: REML)
 #&gt; 
 #&gt; Variance Components:
@@ -327,7 +321,7 @@
 <span class='va'>res2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span><span class='op'>(</span><span class='va'>s1</span>, <span class='va'>vars1</span>, random <span class='op'>=</span> <span class='op'>~</span> <span class='va'>site_station</span> <span class='op'>|</span> <span class='va'>const</span>, struct<span class='op'>=</span><span class='st'>"SPGAU"</span>,
                data<span class='op'>=</span><span class='va'>dat</span>, dist<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>dmat</span><span class='op'>)</span>, control<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>rho.init<span class='op'>=</span><span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>res2</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Multivariate Meta-Analysis Model (k = 35; method: REML)
 #&gt; 
 #&gt; Variance Components:
@@ -354,7 +348,7 @@
 <span class='va'>res3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span><span class='op'>(</span><span class='va'>s1</span>, <span class='va'>vars1</span>, random <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>~</span> <span class='fl'>1</span> <span class='op'>|</span> <span class='va'>site</span><span class='op'>/</span><span class='va'>station</span>, <span class='op'>~</span> <span class='va'>site_station</span> <span class='op'>|</span> <span class='va'>const</span><span class='op'>)</span>, struct<span class='op'>=</span><span class='st'>"SPGAU"</span>,
                data<span class='op'>=</span><span class='va'>dat</span>, dist<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>dmat</span><span class='op'>)</span>, control<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>rho.init<span class='op'>=</span><span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>res3</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Multivariate Meta-Analysis Model (k = 35; method: REML)
 #&gt; 
 #&gt; Variance Components:
@@ -383,22 +377,22 @@
 #&gt; </div><div class='input'>
 <span class='co'>### likelihood ratio tests comparing the models</span>
 <span class='fu'><a href='anova.rma.html'>anova</a></span><span class='op'>(</span><span class='va'>res1</span>, <span class='va'>res2</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt;         df      AIC      BIC     AICc    logLik     LRT   pval       QE 
 #&gt; Full     3 402.3380 406.9171 403.1380 -198.1690                191.4837 
 #&gt; Reduced  2 423.8050 426.8577 424.1921 -209.9025 23.4670 &lt;.0001 191.4837 
 #&gt; </div><div class='input'><span class='fu'><a href='anova.rma.html'>anova</a></span><span class='op'>(</span><span class='va'>res2</span>, <span class='va'>res3</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt;         df      AIC      BIC     AICc    logLik    LRT   pval       QE 
 #&gt; Full     5 403.7355 411.3673 405.8783 -196.8677               191.4837 
 #&gt; Reduced  3 402.3380 406.9171 403.1380 -198.1690 2.6025 0.2722 191.4837 
 #&gt; </div><div class='input'>
 <span class='co'>### profile likelihood plots for model res2</span>
 <span class='fu'><a href='profile.rma.html'>profile</a></span><span class='op'>(</span><span class='va'>res2</span>, cline<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='co'>#&gt; Profiling tau2 = 1 </div><div class='img'><img src='dat.maire2019-1.png' alt='' width='864' height='768' /></div><div class='co'>#&gt; Profiling rho = 1 </div><div class='img'><img src='dat.maire2019-2.png' alt='' width='864' height='768' /></div><div class='input'>
+</div><div class='output co'>#&gt; Profiling tau2 = 1 </div><div class='img'><img src='dat.maire2019-1.png' alt='' width='864' height='768' /></div><div class='output co'>#&gt; Profiling rho = 1 </div><div class='img'><img src='dat.maire2019-2.png' alt='' width='864' height='768' /></div><div class='input'>
 <span class='co'>### effective range (river-km for which the spatial correlation is &gt;= .05)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span><span class='op'>(</span><span class='fl'>3</span><span class='op'>)</span> <span class='op'>*</span> <span class='va'>res2</span><span class='op'>$</span><span class='va'>rho</span>
-</div><div class='co'>#&gt; [1] 26.07908</div></pre>
+</div><div class='output co'>#&gt; [1] 26.07908</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -414,7 +408,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9001, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
+  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
 </div>
 
       </footer>
@@ -422,8 +416,6 @@
 
   
 
-
-  
 
   </body>
 </html>

@@ -39,6 +39,17 @@ print.fsn <- function(x, digits=x$digits, ...) {
       cat(mstyle$result(x$alpha))
    }
 
+   if (x$type == "REM") {
+      cat(mstyle$text("Average Effect Size: "))
+      cat(mstyle$result(.fcf(x$meanes, digits[["est"]])))
+      cat("\n")
+      cat(mstyle$text("Target Effect Size:  "))
+      cat(mstyle$result(.fcf(x$target, digits[["est"]])))
+      #cat("\n")
+      #cat(mstyle$text("Rejection Rate:      "))
+      #cat(mstyle$result(.pval(x$rejrate, digits[["pval"]])))
+   }
+
    cat("\n\n")
    cat(mstyle$text("Fail-safe N: "))
    cat(mstyle$result(x$fsnum))

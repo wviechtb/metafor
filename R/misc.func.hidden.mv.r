@@ -893,7 +893,7 @@
    if (inherits(W, "try-error")) {
 
       ### if M is not positive-definite, set the (restricted) log likelihood to -Inf
-      ### this idea is based on: http://stats.stackexchange.com/q/11368/1934 (this is crude, but should
+      ### this idea is based on: https://stats.stackexchange.com/q/11368/1934 (this is crude, but should
       ### move the parameter estimates away from values that create the non-positive-definite M matrix)
 
       if (dofit) {

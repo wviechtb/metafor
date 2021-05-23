@@ -1,6 +1,6 @@
 ### library(metafor); library(testthat); Sys.setenv(NOT_CRAN="true")
 
-### see also: http://www.metafor-project.org/doku.php/analyses:raudenbush2009
+### see also: https://www.metafor-project.org/doku.php/analyses:raudenbush2009
 
 context("Checking analysis example: raudenbush2009")
 

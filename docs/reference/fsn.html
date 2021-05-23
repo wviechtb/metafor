@@ -89,15 +89,9 @@
 
 
 
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -111,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-101</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-102</span>
       </span>
     </div>
 
@@ -240,16 +234,16 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The function can be used in conjunction with any of the usual effect sizes / outcome measures used in meta-analyses (e.g., log risk ratios, log odds ratios, risk differences, mean differences, standardized mean differences, raw correlation coefficients, correlation coefficients transformed with Fisher's r-to-z transformation, and so on). Simply specify the observed outcomes via the <code>yi</code> argument and the corresponding sampling variances via the <code>vi</code> argument (instead of specifying <code>vi</code>, one can specify the standard errors via the <code>sei</code> argument). The <code><a href='escalc.html'>escalc</a></code> function can be used to compute a wide variety of effect sizes / outcome measures (and the corresponding sampling variances) based on summary statistics.</p>
-<p>The Rosenthal method (sometimes called a &#8216;file drawer analysis&#8217;) calculates the number of studies averaging null results that would have to be added to the given set of observed outcomes to reduce the combined significance level (p-value) to a target alpha level (e.g., .05). The calculation is based on Stouffer's method to combine p-values and is described in Rosenthal (1979).</p>
+<p>The Rosenthal method (sometimes called a &#8216;file drawer analysis&#8217;) calculates the number of studies averaging null results that would have to be added to the given set of observed outcomes to reduce the combined significance level (p-value) to a particular alpha level (e.g., .05). The calculation is based on Stouffer's method to combine p-values and is described in Rosenthal (1979).</p>
 <p>The Orwin method calculates the number of studies averaging null results that would have to be added to the given set of observed outcomes to reduce the (unweighted or weighted) average outcome to a target value (as specified via the <code>target</code> argument). The method is described in Orwin (1983). If <code>weighted=FALSE</code> (the default), the method does not require (or makes use) of <code>vi</code> (or <code>sei</code>), so these arguments are then not relevant for this method. If the <code>target</code> argument is not specified, then the target average outcome will be equal to the observed average outcome divided by 2 (which is quite arbitrary). One should really set <code>target</code> to a value that reflects an outcome one would consider practically irrelevant. Note that if <code>target</code> has the opposite sign as the actually observed average outcome, then its sign is automatically flipped.</p>
-<p>The Rosenberg method calculates the number of studies averaging null results that would have to be added to the given set of observed outcomes to reduce the significance level (i.e., p-value) of the (weighted) average outcome (based on a fixed-effects model) to a target alpha level (e.g., .05). The method is described in Rosenberg (2005).</p>
-<p>If the combined/observed significance level is above the target alpha level (for <code>type = "Rosenthal"</code> or <code>type = "Rosenberg"</code>) or if the observed average outcome is below the target average outcome (for <code>type = "Orwin"</code>), then the fail-sage N value will be 0.</p>
+<p>The Rosenberg method calculates the number of studies averaging null results that would have to be added to the given set of observed outcomes to reduce the significance level (i.e., p-value) of the weighted average outcome (based on a fixed-effects model) to a particular alpha level (e.g., .05). The method is described in Rosenberg (2005).</p>
+<p>If the combined/observed significance level is above the specified alpha level (for <code>type = "Rosenthal"</code> or <code>type = "Rosenberg"</code>) or if the observed average outcome is below the target average outcome (for <code>type = "Orwin"</code>), then the fail-sage N value will be 0.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class <code>"fsn"</code>. The object is a list containing the following components:</p>
 <dt>type</dt><dd><p>the method used.</p></dd>
    <dt>fsnum</dt><dd><p>the calculated fail-safe N.</p></dd>
-   <dt>alpha</dt><dd><p>the target alpha level.</p></dd>
+   <dt>alpha</dt><dd><p>the specified alpha level.</p></dd>
    <dt>pval</dt><dd><p>the p-value of the observed results. <code>NA</code> for the Orwin method.</p></dd>
    <dt>meanes</dt><dd><p>the average outcome of the observed results. <code>NA</code> for the Rosenthal method.</p></dd>
    <dt>target</dt><dd><p>the target value. <code>NA</code> for the Rosenthal and Rosenberg methods.</p></dd>
@@ -276,32 +270,52 @@
     <pre class="examples"><div class='input'><span class='co'>### calculate log risk ratios and corresponding sampling variances</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"RR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>)</span>
 
+<span class='co'>### fit fixed-effects model</span>
+<span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span>, method<span class='op'>=</span><span class='st'>"FE"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
+#&gt; Fixed-Effects Model (k = 13)
+#&gt; 
+#&gt; I^2 (total heterogeneity / total variability):   92.12%
+#&gt; H^2 (total variability / sampling variability):  12.69
+#&gt; 
+#&gt; Test for Heterogeneity:
+#&gt; Q(df = 12) = 152.2330, p-val &lt; .0001
+#&gt; 
+#&gt; Model Results:
+#&gt; 
+#&gt; estimate      se      zval    pval    ci.lb    ci.ub 
+#&gt;  -0.4303  0.0405  -10.6247  &lt;.0001  -0.5097  -0.3509  *** 
+#&gt; 
+#&gt; ---
+#&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+#&gt; </div><div class='input'>
+<span class='co'>### fail-safe N computations</span>
 <span class='fu'>fsn</span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Fail-safe N Calculation Using the Rosenthal Approach
 #&gt; 
 #&gt; Observed Significance Level: &lt;.0001
 #&gt; Target Significance Level:   0.05
 #&gt; 
 #&gt; Fail-safe N: 598
-#&gt; </div><div class='input'><span class='fu'>fsn</span><span class='op'>(</span><span class='va'>yi</span>, data<span class='op'>=</span><span class='va'>dat</span>, type<span class='op'>=</span><span class='st'>"Orwin"</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+#&gt; </div><div class='input'><span class='fu'>fsn</span><span class='op'>(</span><span class='va'>yi</span>, data<span class='op'>=</span><span class='va'>dat</span>, type<span class='op'>=</span><span class='st'>"Orwin"</span>, target<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='fl'>0.95</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># target corresponds to a 5% risk reduction</span>
+</div><div class='output co'>#&gt; 
 #&gt; Fail-safe N Calculation Using the Orwin Approach
 #&gt; 
 #&gt; Average Effect Size: -0.7407
-#&gt; Target Effect Size:  -0.3703
+#&gt; Target Effect Size:  -0.0513
 #&gt; 
-#&gt; Fail-safe N: 13
-#&gt; </div><div class='input'><span class='fu'>fsn</span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span>, type<span class='op'>=</span><span class='st'>"Orwin"</span>, weighted<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+#&gt; Fail-safe N: 175
+#&gt; </div><div class='input'><span class='fu'>fsn</span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span>, type<span class='op'>=</span><span class='st'>"Orwin"</span>, weighted<span class='op'>=</span><span class='cn'>TRUE</span>, target<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='fl'>0.95</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; Fail-safe N Calculation Using the Orwin Approach
 #&gt; 
 #&gt; Average Effect Size: -0.4303
-#&gt; Target Effect Size:  -0.2151
+#&gt; Target Effect Size:  -0.0513
 #&gt; 
-#&gt; Fail-safe N: 13
+#&gt; Fail-safe N: 97
 #&gt; </div><div class='input'><span class='fu'>fsn</span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span>, type<span class='op'>=</span><span class='st'>"Rosenberg"</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Fail-safe N Calculation Using the Rosenberg Approach
 #&gt; 
 #&gt; Average Effect Size:         -0.4303
@@ -325,7 +339,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9001, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
+  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
 </div>
 
       </footer>
@@ -333,8 +347,6 @@
 
   
 
-
-  
 
   </body>
 </html>

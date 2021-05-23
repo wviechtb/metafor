@@ -89,15 +89,9 @@
 
 
 
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -111,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-101</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-102</span>
       </span>
     </div>
 
@@ -218,7 +212,7 @@
     <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat'</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.hasselblad1998</span>
 <span class='va'>dat</span>
-</div><div class='co'>#&gt;    id study            authors year            trt  xi   ni
+</div><div class='output co'>#&gt;    id study            authors year            trt  xi   ni
 #&gt; 1   1     1        Reid et al. 1974     no_contact  75  731
 #&gt; 2   2     1        Reid et al. 1974 ind_counseling 363  714
 #&gt; 3   3     2    Cottraux et al. 1983     no_contact   9  140
@@ -272,19 +266,19 @@
 <span class='co'>### create network graph ('igraph' package must be installed)</span>
 <span class='co'># \dontrun{</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://igraph.org'>igraph</a></span><span class='op'>)</span>
-</div><div class='co'>#&gt; Loading required package: igraph</div><div class='co'>#&gt; 
-#&gt; Attaching package: ‘igraph’</div><div class='co'>#&gt; The following objects are masked from ‘package:stats’:
-#&gt; 
-#&gt;     decompose, spectrum</div><div class='co'>#&gt; The following object is masked from ‘package:base’:
-#&gt; 
-#&gt;     union</div><div class='input'><span class='va'>pairs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/do.call.html'>do.call</a></span><span class='op'>(</span><span class='va'>rbind</span>,
+</div><div class='output co'>#&gt; <span class='message'>Loading required package: igraph</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘igraph’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:stats’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    decompose, spectrum</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:base’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    union</span></div><div class='input'><span class='va'>pairs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/do.call.html'>do.call</a></span><span class='op'>(</span><span class='va'>rbind</span>,
    <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/split.html'>split</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>trt</span>, <span class='va'>dat</span><span class='op'>$</span><span class='va'>study</span><span class='op'>)</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/t.html'>t</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/utils/combn.html'>combn</a></span><span class='op'>(</span><span class='va'>x</span>,<span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>, stringsAsFactors<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
 <span class='va'>lvls</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"no_contact"</span>, <span class='st'>"self_help"</span>, <span class='st'>"ind_counseling"</span>, <span class='st'>"grp_counseling"</span><span class='op'>)</span>
 <span class='va'>pairs</span><span class='op'>$</span><span class='va'>X1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>pairs</span><span class='op'>$</span><span class='va'>X1</span>, levels<span class='op'>=</span><span class='va'>lvls</span><span class='op'>)</span>
 <span class='va'>pairs</span><span class='op'>$</span><span class='va'>X2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>pairs</span><span class='op'>$</span><span class='va'>X2</span>, levels<span class='op'>=</span><span class='va'>lvls</span><span class='op'>)</span>
 <span class='va'>tab</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>pairs</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>]</span>, <span class='va'>pairs</span><span class='op'>[</span>,<span class='fl'>2</span><span class='op'>]</span><span class='op'>)</span>
 <span class='va'>tab</span> <span class='co'># adjacency matrix</span>
-</div><div class='co'>#&gt;                 
+</div><div class='output co'>#&gt;                 
 #&gt;                  no_contact self_help ind_counseling grp_counseling
 #&gt;   no_contact              0         3             15              2
 #&gt;   self_help               0         0              2              2
@@ -298,7 +292,7 @@
 <span class='co'>### calculate log odds for each study arm</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"PLO"</span>, xi<span class='op'>=</span><span class='va'>xi</span>, ni<span class='op'>=</span><span class='va'>ni</span>, add<span class='op'>=</span><span class='fl'>1</span><span class='op'>/</span><span class='fl'>2</span>, to<span class='op'>=</span><span class='st'>"all"</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 <span class='va'>dat</span>
-</div><div class='co'>#&gt;    id study            authors year            trt  xi   ni      yi     vi 
+</div><div class='output co'>#&gt;    id study            authors year            trt  xi   ni      yi     vi 
 #&gt; 1   1     1        Reid et al. 1974     no_contact  75  731 -2.1628 0.0148 
 #&gt; 2   2     1        Reid et al. 1974 ind_counseling 363  714  0.0336 0.0056 
 #&gt; 3   3     2    Cottraux et al. 1983     no_contact   9  140 -2.6277 0.1129 
@@ -360,7 +354,7 @@
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>study</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'>trt</span> <span class='op'>-</span> <span class='fl'>1</span>,
               random <span class='op'>=</span> <span class='op'>~</span> <span class='va'>trt</span> <span class='op'>|</span> <span class='va'>study</span>, rho<span class='op'>=</span><span class='fl'>1</span><span class='op'>/</span><span class='fl'>2</span>, data<span class='op'>=</span><span class='va'>dat</span>, btt<span class='op'>=</span><span class='st'>"trt"</span><span class='op'>)</span>
 <span class='va'>res</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Multivariate Meta-Analysis Model (k = 50; method: REML)
 #&gt; 
 #&gt; Variance Components:
@@ -415,7 +409,7 @@
 <span class='co'>### all pairwise odds ratios of interventions versus no contact</span>
 <span class='fu'><a href='predict.rma.html'>predict</a></span><span class='op'>(</span><span class='va'>res</span>, newmods<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fl'>0</span>, nrow<span class='op'>=</span><span class='fl'>3</span>, ncol<span class='op'>=</span><span class='fl'>24</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/diag.html'>diag</a></span><span class='op'>(</span><span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>,
         intercept<span class='op'>=</span><span class='cn'>FALSE</span>, transf<span class='op'>=</span><span class='va'>exp</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt;   pred ci.lb ci.ub pi.lb pi.ub 
 #&gt; 1 1.48  0.78  2.77  0.35  6.20 
 #&gt; 2 1.99  1.37  2.89  0.52  7.60 
@@ -424,7 +418,7 @@
 <span class='co'>### all pairwise odds ratios comparing interventions (ic vs sh, gc vs sh, and gc vs ic)</span>
 <span class='fu'><a href='predict.rma.html'>predict</a></span><span class='op'>(</span><span class='va'>res</span>, newmods<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fl'>0</span>, nrow<span class='op'>=</span><span class='fl'>3</span>, ncol<span class='op'>=</span><span class='fl'>24</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>0</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>1</span>,<span class='fl'>0</span>,<span class='fl'>1</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='op'>-</span><span class='fl'>1</span>,<span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>,
         intercept<span class='op'>=</span><span class='cn'>FALSE</span>, transf<span class='op'>=</span><span class='va'>exp</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt;   pred ci.lb ci.ub pi.lb pi.ub 
 #&gt; 1 1.35  0.70  2.58  0.32  5.71 
 #&gt; 2 1.58  0.72  3.43  0.35  7.10 
@@ -447,7 +441,7 @@
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"OR"</span>, ai<span class='op'>=</span><span class='va'>xi.1</span>, n1i<span class='op'>=</span><span class='va'>ni.1</span>,
                             ci<span class='op'>=</span><span class='va'>xi.2</span>, n2i<span class='op'>=</span><span class='va'>ni.2</span>, add<span class='op'>=</span><span class='fl'>1</span><span class='op'>/</span><span class='fl'>2</span>, to<span class='op'>=</span><span class='st'>"all"</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 <span class='va'>dat</span>
-</div><div class='co'>#&gt;    id study            authors year          trt.1 xi.1 ni.1          trt.2 
+</div><div class='output co'>#&gt;    id study            authors year          trt.1 xi.1 ni.1          trt.2 
 #&gt; 1   1     1        Reid et al. 1974 ind_counseling  363  714     no_contact 
 #&gt; 2   2     2    Cottraux et al. 1983 grp_counseling   10  138     no_contact 
 #&gt; 3   3     2    Cottraux et al. 1983 ind_counseling   23  140     no_contact 
@@ -513,7 +507,7 @@
 <span class='co'>### add contrast matrix to dataset</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='contrmat.html'>contrmat</a></span><span class='op'>(</span><span class='va'>dat</span>, grp1<span class='op'>=</span><span class='st'>"trt.1"</span>, grp2<span class='op'>=</span><span class='st'>"trt.2"</span><span class='op'>)</span>
 <span class='va'>dat</span>
-</div><div class='co'>#&gt;    id study            authors year          trt.1 xi.1 ni.1          trt.2 
+</div><div class='output co'>#&gt;    id study            authors year          trt.1 xi.1 ni.1          trt.2 
 #&gt; 1   1     1        Reid et al. 1974 ind_counseling  363  714     no_contact 
 #&gt; 2   2     2    Cottraux et al. 1983 grp_counseling   10  138     no_contact 
 #&gt; 3   3     2    Cottraux et al. 1983 ind_counseling   23  140     no_contact 
@@ -599,7 +593,7 @@
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>V</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>self_help</span> <span class='op'>+</span> <span class='va'>ind_counseling</span> <span class='op'>+</span> <span class='va'>grp_counseling</span> <span class='op'>-</span> <span class='fl'>1</span>,
               random <span class='op'>=</span> <span class='op'>~</span> <span class='va'>comp</span> <span class='op'>|</span> <span class='va'>study</span>, rho<span class='op'>=</span><span class='fl'>1</span><span class='op'>/</span><span class='fl'>2</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 <span class='va'>res</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Multivariate Meta-Analysis Model (k = 26; method: REML)
 #&gt; 
 #&gt; Variance Components:
@@ -629,7 +623,7 @@
 #&gt; </div><div class='input'>
 <span class='co'>### predicted odds ratios of interventions versus no contact</span>
 <span class='fu'><a href='predict.rma.html'>predict</a></span><span class='op'>(</span><span class='va'>res</span>, newmods<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/diag.html'>diag</a></span><span class='op'>(</span><span class='fl'>3</span><span class='op'>)</span>, transf<span class='op'>=</span><span class='va'>exp</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt;   pred ci.lb ci.ub pi.lb pi.ub 
 #&gt; 1 1.48  0.78  2.77  0.35  6.20 
 #&gt; 2 1.99  1.37  2.89  0.52  7.60 
@@ -639,7 +633,7 @@
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>V</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>self_help</span> <span class='op'>+</span> <span class='va'>ind_counseling</span> <span class='op'>+</span> <span class='va'>grp_counseling</span> <span class='op'>-</span> <span class='fl'>1</span>,
               random <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>~</span> <span class='va'>comp</span> <span class='op'>|</span> <span class='va'>study</span>, <span class='op'>~</span> <span class='va'>comp</span> <span class='op'>|</span> <span class='va'>design</span><span class='op'>)</span>, rho<span class='op'>=</span><span class='fl'>1</span><span class='op'>/</span><span class='fl'>2</span>, phi<span class='op'>=</span><span class='fl'>1</span><span class='op'>/</span><span class='fl'>2</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 <span class='va'>res</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Multivariate Meta-Analysis Model (k = 26; method: REML)
 #&gt; 
 #&gt; Variance Components:
@@ -689,7 +683,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9001, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
+  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
 </div>
 
       </footer>
@@ -697,8 +691,6 @@
 
   
 
-
-  
 
   </body>
 </html>

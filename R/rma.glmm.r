@@ -1511,7 +1511,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                } else {
                   Ivb2.QE  <- h.D-h.C%*%chol2inv(chol.h.A)%*%h.B       ### inverse of the inverse of the lower right part
                   QE.Wld   <- c(t(b2.QE) %*% Ivb2.QE %*% b2.QE)        ### Wald statistic (note: this approach only requires taking the inverse of h.A)
-               }                                                       ### see: http://en.wikipedia.org/wiki/Invertible_matrix#Blockwise_inversion
+               }                                                       ### see: https://en.wikipedia.org/wiki/Invertible_matrix#Blockwise_inversion
 
                #vb2.QE <- chol2inv(chol(hessian))[-seq_len(p),-seq_len(p),drop=FALSE] ### take inverse, then take part relevant for QE test
                #QE.Wld <- c(t(b2.QE) %*% chol2inv(chol(vb2.QE)) %*% b2.QE)

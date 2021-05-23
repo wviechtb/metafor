@@ -89,15 +89,9 @@
 
 
 
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -111,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-101</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-102</span>
       </span>
     </div>
 
@@ -210,7 +204,7 @@
     <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat' and examine data</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.hahn2001</span>
 <span class='va'>dat</span>
-</div><div class='co'>#&gt;               study ai n1i ci n2i
+</div><div class='output co'>#&gt;               study ai n1i ci n2i
 #&gt; 1  Banhladesh 1995a  4  19  5  19
 #&gt; 2  Banhladesh 1996a  0  18  0  18
 #&gt; 3       CHOICE 2001 34 341 50 334
@@ -225,8 +219,8 @@
 #&gt; 12         WHO 1995 33 221 43 218</div><div class='input'>
 <span class='co'>### meta-analysis of (log) odds rations using the Mantel-Haenszel method</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.mh.html'>rma.mh</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"OR"</span>, ai<span class='op'>=</span><span class='va'>ai</span>, n1i<span class='op'>=</span><span class='va'>n1i</span>, ci<span class='op'>=</span><span class='va'>ci</span>, n2i<span class='op'>=</span><span class='va'>n2i</span>, data<span class='op'>=</span><span class='va'>dat</span>, digits<span class='op'>=</span><span class='fl'>2</span>, slab<span class='op'>=</span><span class='va'>study</span><span class='op'>)</span>
-</div><div class='co'>#&gt; <span class='warning'>Warning: </span>Some yi/vi values are NA.</div><div class='input'><span class='va'>res</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Some yi/vi values are NA.</span></div><div class='input'><span class='va'>res</span>
+</div><div class='output co'>#&gt; 
 #&gt; Fixed-Effects Model (k = 12)
 #&gt; 
 #&gt; I^2 (total heterogeneity / total variability):  0.00%
@@ -268,7 +262,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9001, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
+  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
 </div>
 
       </footer>
@@ -276,8 +270,6 @@
 
   
 
-
-  
 
   </body>
 </html>

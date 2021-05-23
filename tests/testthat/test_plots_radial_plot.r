@@ -1,6 +1,6 @@
 ### library(metafor); library(testthat); Sys.setenv(NOT_CRAN="true")
 
-### see also: http://www.metafor-project.org/doku.php/plots:radial_plot
+### see also: https://www.metafor-project.org/doku.php/plots:radial_plot
 
 context("Checking plots example: radial (Galbraith) plot")
 

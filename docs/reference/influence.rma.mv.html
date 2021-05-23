@@ -89,15 +89,9 @@
 
 
 
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -111,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-101</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-102</span>
       </span>
     </div>
 
@@ -271,7 +265,7 @@
 <span class='co'>### multilevel random-effects model</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, random <span class='op'>=</span> <span class='op'>~</span> <span class='fl'>1</span> <span class='op'>|</span> <span class='va'>district</span><span class='op'>/</span><span class='va'>school</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>res</span>, digits<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Multivariate Meta-Analysis Model (k = 56; method: REML)
 #&gt; 
 #&gt; Variance Components:
@@ -294,7 +288,7 @@
 <span class='co'>### Cook's distances for each observed outcome</span>
 <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='influence.rma.uni.html'>cooks.distance</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
 <span class='va'>x</span>
-</div><div class='co'>#&gt;            1            2            3            4            5            6 
+</div><div class='output co'>#&gt;            1            2            3            4            5            6 
 #&gt; 1.965212e-03 2.989768e-03 2.638140e-03 3.873368e-03 1.954562e-04 2.049672e-02 
 #&gt;            7            8            9           10           11           12 
 #&gt; 1.172821e-03 3.913806e-03 3.646294e-03 3.850068e-04 4.111673e-04 5.636933e-03 
@@ -318,7 +312,7 @@
 <span class='co'>### Cook's distances for each district</span>
 <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='influence.rma.uni.html'>cooks.distance</a></span><span class='op'>(</span><span class='va'>res</span>, cluster<span class='op'>=</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>district</span><span class='op'>)</span>
 <span class='va'>x</span>
-</div><div class='co'>#&gt;           11           12           18           27           56           58 
+</div><div class='output co'>#&gt;           11           12           18           27           56           58 
 #&gt; 0.0693784140 0.0161880606 0.0419849759 0.1192089452 0.0213566370 0.1014506985 
 #&gt;           71           86           91          108          644 
 #&gt; 0.5585174853 0.0656500671 0.0037438517 0.0548839759 0.0003441647 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span>, type<span class='op'>=</span><span class='st'>"o"</span>, pch<span class='op'>=</span><span class='fl'>19</span>, xlab<span class='op'>=</span><span class='st'>"District"</span>, ylab<span class='op'>=</span><span class='st'>"Cook's Distance"</span>, xaxt<span class='op'>=</span><span class='st'>"n"</span><span class='op'>)</span>
@@ -326,7 +320,7 @@
 </div><div class='img'><img src='influence.rma.mv-2.png' alt='' width='864' height='768' /></div><div class='input'>
 <span class='co'>### hat values</span>
 <span class='fu'><a href='influence.rma.uni.html'>hatvalues</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
-</div><div class='co'>#&gt;           1           2           3           4           5           6 
+</div><div class='output co'>#&gt;           1           2           3           4           5           6 
 #&gt; 0.018246414 0.018246414 0.015562154 0.015562154 0.024305990 0.024305990 
 #&gt;           7           8           9          10          11          12 
 #&gt; 0.023796820 0.020021978 0.028628711 0.021068630 0.035668057 0.018288352 
@@ -361,7 +355,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9001, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
+  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
 </div>
 
       </footer>
@@ -369,8 +363,6 @@
 
   
 
-
-  
 
   </body>
 </html>

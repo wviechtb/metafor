@@ -1,6 +1,6 @@
 ### library(metafor); library(testthat); Sys.setenv(NOT_CRAN="true")
 
-### see also: http://www.metafor-project.org/doku.php/plots:forest_plot_with_subgroups
+### see also: https://www.metafor-project.org/doku.php/plots:forest_plot_with_subgroups
 
 context("Checking plots example: forest plot with subgroups")
 

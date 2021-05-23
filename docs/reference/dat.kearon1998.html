@@ -89,15 +89,9 @@
 
 
 
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -111,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-101</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-102</span>
       </span>
     </div>
 
@@ -220,7 +214,7 @@
 <span class='co'>### calculate diagnostic log odds ratios and corresponding sampling variances</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"OR"</span>, ai<span class='op'>=</span><span class='va'>tp</span>, n1i<span class='op'>=</span><span class='va'>np</span>, ci<span class='op'>=</span><span class='va'>nn</span><span class='op'>-</span><span class='va'>tn</span>, n2i<span class='op'>=</span><span class='va'>nn</span>, data<span class='op'>=</span><span class='va'>dat</span>, add<span class='op'>=</span><span class='fl'>1</span><span class='op'>/</span><span class='fl'>2</span>, to<span class='op'>=</span><span class='st'>"all"</span><span class='op'>)</span>
 <span class='va'>dat</span>
-</div><div class='co'>#&gt;    id                study year     patients  tp  np  tn  nn     yi     vi 
+</div><div class='output co'>#&gt;    id                study year     patients  tp  np  tn  nn     yi     vi 
 #&gt; 1   1         Elias et al. 1987  symptomatic 325 333 483 505 6.7128 0.1672 
 #&gt; 2   2      Appleman et al. 1987  symptomatic  NA  NA  47  49     NA     NA 
 #&gt; 3   3         Vogel et al. 1987  symptomatic  20  25  29  29 5.3932 2.2645 
@@ -257,8 +251,8 @@
 #&gt; 34 34       Lensing et al. 1997 asymptomatic  NA  NA  NA  NA     NA     NA </div><div class='input'>
 <span class='co'>### fit random-effects model for the symptomatic patients</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span>, subset<span class='op'>=</span><span class='va'>patients</span><span class='op'>==</span><span class='st'>"symptomatic"</span><span class='op'>)</span>
-</div><div class='co'>#&gt; <span class='warning'>Warning: </span>Studies with NAs omitted from model fitting.</div><div class='input'><span class='va'>res</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Studies with NAs omitted from model fitting.</span></div><div class='input'><span class='va'>res</span>
+</div><div class='output co'>#&gt; 
 #&gt; Random-Effects Model (k = 16; tau^2 estimator: REML)
 #&gt; 
 #&gt; tau^2 (estimated amount of total heterogeneity): 1.2663 (SE = 0.7846)
@@ -279,8 +273,8 @@
 #&gt; </div><div class='input'>
 <span class='co'>### fit random-effects model for the asymptomatic patients</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span>, subset<span class='op'>=</span><span class='va'>patients</span><span class='op'>==</span><span class='st'>"asymptomatic"</span><span class='op'>)</span>
-</div><div class='co'>#&gt; <span class='warning'>Warning: </span>Studies with NAs omitted from model fitting.</div><div class='input'><span class='va'>res</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Studies with NAs omitted from model fitting.</span></div><div class='input'><span class='va'>res</span>
+</div><div class='output co'>#&gt; 
 #&gt; Random-Effects Model (k = 14; tau^2 estimator: REML)
 #&gt; 
 #&gt; tau^2 (estimated amount of total heterogeneity): 0.4534 (SE = 0.3776)
@@ -301,14 +295,14 @@
 #&gt; </div><div class='input'>
 <span class='co'>### estimated average diagnostic odds ratio (with 95% CI)</span>
 <span class='fu'><a href='predict.rma.html'>predict</a></span><span class='op'>(</span><span class='va'>res</span>, transf<span class='op'>=</span><span class='va'>exp</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt;   pred ci.lb ci.ub pi.lb pi.ub 
 #&gt;  20.16 11.92 34.11  4.87 83.47 
 #&gt; </div><div class='input'>
 <span class='co'>### regression test for funnel plot asymmetry using SE as predictor</span>
 <span class='va'>reg</span> <span class='op'>&lt;-</span> <span class='fu'><a href='regtest.html'>regtest</a></span><span class='op'>(</span><span class='va'>res</span>, model<span class='op'>=</span><span class='st'>"lm"</span><span class='op'>)</span>
 <span class='va'>reg</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Regression Test for Funnel Plot Asymmetry
 #&gt; 
 #&gt; Model:     weighted regression with multiplicative dispersion
@@ -325,7 +319,7 @@
 <span class='co'>### regression test for funnel plot asymmetry using total sample size as predictor</span>
 <span class='va'>reg</span> <span class='op'>&lt;-</span> <span class='fu'><a href='regtest.html'>regtest</a></span><span class='op'>(</span><span class='va'>res</span>, model<span class='op'>=</span><span class='st'>"lm"</span>, predictor<span class='op'>=</span><span class='st'>"ni"</span><span class='op'>)</span>
 <span class='va'>reg</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Regression Test for Funnel Plot Asymmetry
 #&gt; 
 #&gt; Model:     weighted regression with multiplicative dispersion
@@ -341,9 +335,9 @@
 <span class='co'>### regression test for funnel plot asymmetry using 1/sqrt(ESS) as predictor (Deeks et al., 2005)</span>
 <span class='va'>dat</span><span class='op'>$</span><span class='va'>invessi</span> <span class='op'>&lt;-</span> <span class='fl'>1</span><span class='op'>/</span><span class='op'>(</span><span class='fl'>4</span><span class='op'>*</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>np</span><span class='op'>)</span> <span class='op'>+</span> <span class='fl'>1</span><span class='op'>/</span><span class='op'>(</span><span class='fl'>4</span><span class='op'>*</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>nn</span><span class='op'>)</span>
 <span class='va'>tmp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>invessi</span>, data<span class='op'>=</span><span class='va'>dat</span>, subset<span class='op'>=</span><span class='va'>patients</span><span class='op'>==</span><span class='st'>"asymptomatic"</span><span class='op'>)</span>
-</div><div class='co'>#&gt; <span class='warning'>Warning: </span>Studies with NAs omitted from model fitting.</div><div class='input'><span class='va'>reg</span> <span class='op'>&lt;-</span> <span class='fu'><a href='regtest.html'>regtest</a></span><span class='op'>(</span><span class='va'>tmp</span>, model<span class='op'>=</span><span class='st'>"lm"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Studies with NAs omitted from model fitting.</span></div><div class='input'><span class='va'>reg</span> <span class='op'>&lt;-</span> <span class='fu'><a href='regtest.html'>regtest</a></span><span class='op'>(</span><span class='va'>tmp</span>, model<span class='op'>=</span><span class='st'>"lm"</span><span class='op'>)</span>
 <span class='va'>reg</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Regression Test for Funnel Plot Asymmetry
 #&gt; 
 #&gt; Model:     weighted regression with multiplicative dispersion
@@ -361,10 +355,10 @@
 <span class='co'>### convert data to long format</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='to.long.html'>to.long</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"OR"</span>, ai<span class='op'>=</span><span class='va'>tp</span>, n1i<span class='op'>=</span><span class='va'>np</span>, ci<span class='op'>=</span><span class='va'>tn</span>, n2i<span class='op'>=</span><span class='va'>nn</span>,
                data<span class='op'>=</span><span class='va'>dat.kearon1998</span>, subset<span class='op'>=</span><span class='va'>patients</span><span class='op'>==</span><span class='st'>"asymptomatic"</span><span class='op'>)</span>
-</div><div class='co'>#&gt; <span class='warning'>Warning: </span>Tables with NAs omitted.</div><div class='input'><span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat</span><span class='op'>[</span><span class='fl'>9</span><span class='op'>:</span><span class='fl'>12</span><span class='op'>]</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Tables with NAs omitted.</span></div><div class='input'><span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat</span><span class='op'>[</span><span class='fl'>9</span><span class='op'>:</span><span class='fl'>12</span><span class='op'>]</span>
 <span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>group</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"sensitivity"</span>, <span class='st'>"specificity"</span><span class='op'>)</span>
 <span class='va'>dat</span>
-</div><div class='co'>#&gt;    study       group out1 out2
+</div><div class='output co'>#&gt;    study       group out1 out2
 #&gt; 1     19 specificity   10   15
 #&gt; 2     19 sensitivity   47    6
 #&gt; 3     20 specificity   15    9
@@ -397,7 +391,7 @@
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"PLO"</span>, xi<span class='op'>=</span><span class='va'>out1</span>, mi<span class='op'>=</span><span class='va'>out2</span>, data<span class='op'>=</span><span class='va'>dat</span>, add<span class='op'>=</span><span class='fl'>1</span><span class='op'>/</span><span class='fl'>2</span>, to<span class='op'>=</span><span class='st'>"all"</span>,
               include<span class='op'>=</span><span class='va'>group</span><span class='op'>==</span><span class='st'>"sensitivity"</span><span class='op'>)</span>
 <span class='va'>dat</span>
-</div><div class='co'>#&gt;    study       group out1 out2     yi     vi 
+</div><div class='output co'>#&gt;    study       group out1 out2     yi     vi 
 #&gt; 1     19 specificity   10   15     NA     NA 
 #&gt; 2     19 sensitivity   47    6 1.9889 0.1749 
 #&gt; 3     20 specificity   15    9     NA     NA 
@@ -430,7 +424,7 @@
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"PLO"</span>, xi<span class='op'>=</span><span class='va'>out1</span>, mi<span class='op'>=</span><span class='va'>out2</span>, data<span class='op'>=</span><span class='va'>dat</span>, add<span class='op'>=</span><span class='fl'>1</span><span class='op'>/</span><span class='fl'>2</span>, to<span class='op'>=</span><span class='st'>"all"</span>,
               include<span class='op'>=</span><span class='va'>group</span><span class='op'>==</span><span class='st'>"specificity"</span><span class='op'>)</span>
 <span class='va'>dat</span>
-</div><div class='co'>#&gt;    study       group out1 out2      yi     vi 
+</div><div class='output co'>#&gt;    study       group out1 out2      yi     vi 
 #&gt; 1     19 specificity   10   15 -0.3895 0.1598 
 #&gt; 2     19 sensitivity   47    6  1.9889 0.1749 
 #&gt; 3     20 specificity   15    9  0.4895 0.1698 
@@ -462,7 +456,7 @@
 <span class='co'>### bivariate random-effects model for logit sensitivity and specificity</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>group</span> <span class='op'>-</span> <span class='fl'>1</span>, random <span class='op'>=</span> <span class='op'>~</span> <span class='va'>group</span> <span class='op'>|</span> <span class='va'>study</span>, struct<span class='op'>=</span><span class='st'>"UN"</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 <span class='va'>res</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Multivariate Meta-Analysis Model (k = 28; method: REML)
 #&gt; 
 #&gt; Variance Components:
@@ -495,14 +489,14 @@
 #&gt; </div><div class='input'>
 <span class='co'>### estimated average sensitivity and specificity based on the model</span>
 <span class='fu'><a href='predict.rma.html'>predict</a></span><span class='op'>(</span><span class='va'>res</span>, newmods <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>0</span><span class='op'>)</span>,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>, transf<span class='op'>=</span><span class='va'>transf.ilogit</span>, tau2.levels<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt;   pred ci.lb ci.ub pi.lb pi.ub  tau2.level 
 #&gt; 1 0.95  0.92  0.97  0.81  0.99 sensitivity 
 #&gt; 2 0.49  0.39  0.59  0.20  0.78 specificity 
 #&gt; </div><div class='input'>
 <span class='co'>### estimated average diagnostic odds ratio based on the model</span>
 <span class='fu'><a href='predict.rma.html'>predict</a></span><span class='op'>(</span><span class='va'>res</span>, newmods <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>1</span><span class='op'>)</span>, transf<span class='op'>=</span><span class='va'>exp</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt;   pred ci.lb ci.ub pi.lb pi.ub tau2.level 
 #&gt;  19.29 11.22 33.14    NA    NA         NA 
 #&gt; </div></pre>
@@ -521,7 +515,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9001, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
+  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
 </div>
 
       </footer>
@@ -529,8 +523,6 @@
 
   
 
-
-  
 
   </body>
 </html>

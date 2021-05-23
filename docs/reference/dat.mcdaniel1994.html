@@ -89,15 +89,9 @@
 
 
 
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -111,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-101</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-102</span>
       </span>
     </div>
 
@@ -219,7 +213,7 @@
 <span class='co'>### calculate r-to-z transformed correlations and corresponding sampling variances</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"ZCOR"</span>, ri<span class='op'>=</span><span class='va'>ri</span>, ni<span class='op'>=</span><span class='va'>ni</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 <span class='va'>dat</span>
-</div><div class='co'>#&gt;     study   ni    ri type struct      yi     vi 
+</div><div class='output co'>#&gt;     study   ni    ri type struct      yi     vi 
 #&gt; 1       1  123  0.00    j      s  0.0000 0.0083 
 #&gt; 2       2   95  0.06    p      u  0.0601 0.0109 
 #&gt; 3       3   69  0.36    j      s  0.3769 0.0152 
@@ -383,7 +377,7 @@
 <span class='co'>### meta-analysis of the transformed correlations using a random-effects model</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 <span class='va'>res</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Random-Effects Model (k = 160; tau^2 estimator: REML)
 #&gt; 
 #&gt; tau^2 (estimated amount of total heterogeneity): 0.0293 (SE = 0.0049)
@@ -404,14 +398,14 @@
 #&gt; </div><div class='input'>
 <span class='co'>### average correlation with 95% CI</span>
 <span class='fu'><a href='predict.rma.html'>predict</a></span><span class='op'>(</span><span class='va'>res</span>, transf<span class='op'>=</span><span class='va'>transf.ztor</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt;    pred  ci.lb  ci.ub   pi.lb  pi.ub 
 #&gt;  0.2330 0.2014 0.2642 -0.0995 0.5187 
 #&gt; </div><div class='input'>
 <span class='co'>### mixed-effects model with interview type as factor</span>
 <span class='co'>### note: job-related interviews is the reference level</span>
 <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>type</span><span class='op'>)</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
-</div><div class='co'>#&gt; <span class='warning'>Warning: </span>Studies with NAs omitted from model fitting.</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Studies with NAs omitted from model fitting.</span></div><div class='output co'>#&gt; 
 #&gt; Mixed-Effects Model (k = 157; tau^2 estimator: REML)
 #&gt; 
 #&gt; tau^2 (estimated amount of residual heterogeneity):     0.0282 (SE = 0.0049)
@@ -439,7 +433,7 @@
 <span class='co'>### mixed-effects model with interview structure as factor</span>
 <span class='co'>### note: structured interviews is the reference level</span>
 <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>struct</span><span class='op'>)</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
-</div><div class='co'>#&gt; <span class='warning'>Warning: </span>Studies with NAs omitted from model fitting.</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Studies with NAs omitted from model fitting.</span></div><div class='output co'>#&gt; 
 #&gt; Mixed-Effects Model (k = 145; tau^2 estimator: REML)
 #&gt; 
 #&gt; tau^2 (estimated amount of residual heterogeneity):     0.0298 (SE = 0.0053)
@@ -469,7 +463,7 @@
 <span class='co'>### the psychological interviews it was unknown whether the interview</span>
 <span class='co'>### was structured or unstructured</span>
 <span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>type</span>, <span class='va'>dat</span><span class='op'>$</span><span class='va'>struct</span>, useNA<span class='op'>=</span><span class='st'>"always"</span><span class='op'>)</span>
-</div><div class='co'>#&gt;       
+</div><div class='output co'>#&gt;       
 #&gt;         s  u &lt;NA&gt;
 #&gt;   j    89 34    4
 #&gt;   p     1  5    8
@@ -478,7 +472,7 @@
 <span class='co'>### meta-analysis of raw correlations using a random-effects model</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"COR"</span>, ri<span class='op'>=</span><span class='va'>ri</span>, ni<span class='op'>=</span><span class='va'>ni</span>, data<span class='op'>=</span><span class='va'>dat.mcdaniel1994</span><span class='op'>)</span>
 <span class='va'>res</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Random-Effects Model (k = 160; tau^2 estimator: REML)
 #&gt; 
 #&gt; tau^2 (estimated amount of total heterogeneity): 0.0331 (SE = 0.0051)
@@ -512,7 +506,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9001, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
+  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
 </div>
 
       </footer>
@@ -520,8 +514,6 @@
 
   
 
-
-  
 
   </body>
 </html>

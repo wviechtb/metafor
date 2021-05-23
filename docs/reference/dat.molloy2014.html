@@ -89,15 +89,9 @@
 
 
 
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -111,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-101</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-102</span>
       </span>
     </div>
 
@@ -222,7 +216,7 @@
 <span class='co'>### calculate r-to-z transformed correlations and corresponding sampling variances</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"ZCOR"</span>, ri<span class='op'>=</span><span class='va'>ri</span>, ni<span class='op'>=</span><span class='va'>ni</span>, data<span class='op'>=</span><span class='va'>dat</span>, slab<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='va'>authors</span>, <span class='va'>year</span>, sep<span class='op'>=</span><span class='st'>", "</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>dat</span>
-</div><div class='co'>#&gt;                authors year  ni     ri controls          design   a_measure 
+</div><div class='output co'>#&gt;                authors year  ni     ri controls          design   a_measure 
 #&gt; 1      Axelsson et al. 2009 109  0.187     none cross-sectional self-report 
 #&gt; 2      Axelsson et al. 2011 749  0.162     none cross-sectional self-report 
 #&gt; 3         Bruce et al. 2010  55  0.340     none     prospective       other 
@@ -259,7 +253,7 @@
 <span class='co'>### meta-analysis of the transformed correlations using a random-effects model</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 <span class='va'>res</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Random-Effects Model (k = 16; tau^2 estimator: REML)
 #&gt; 
 #&gt; tau^2 (estimated amount of total heterogeneity): 0.0081 (SE = 0.0055)
@@ -280,7 +274,7 @@
 #&gt; </div><div class='input'>
 <span class='co'>### average correlation with 95% CI</span>
 <span class='fu'><a href='predict.rma.html'>predict</a></span><span class='op'>(</span><span class='va'>res</span>, digits<span class='op'>=</span><span class='fl'>3</span>, transf<span class='op'>=</span><span class='va'>transf.ztor</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt;   pred ci.lb ci.ub  pi.lb pi.ub 
 #&gt;  0.149 0.088 0.209 -0.037 0.325 
 #&gt; </div><div class='input'>
@@ -307,7 +301,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9001, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
+  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
 </div>
 
       </footer>
@@ -315,8 +309,6 @@
 
   
 
-
-  
 
   </body>
 </html>

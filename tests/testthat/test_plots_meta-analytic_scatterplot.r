@@ -1,6 +1,6 @@
 ### library(metafor); library(testthat); Sys.setenv(NOT_CRAN="true")
 
-### see also: http://www.metafor-project.org/doku.php/plots:meta_analytic_scatterplot
+### see also: https://www.metafor-project.org/doku.php/plots:meta_analytic_scatterplot
 
 context("Checking plots example: meta-analytic scatterplot")
 

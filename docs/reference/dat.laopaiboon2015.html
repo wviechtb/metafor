@@ -89,15 +89,9 @@
 
 
 
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -111,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-101</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-102</span>
       </span>
     </div>
 
@@ -216,7 +210,7 @@
     <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat' and examine data</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.laopaiboon2015</span>
 <span class='va'>dat</span>
-</div><div class='co'>#&gt;       author year ai n1i ci n2i      age diag.ab diag.cb diag.pn        ctrl
+</div><div class='output co'>#&gt;       author year ai n1i ci n2i      age diag.ab diag.cb diag.pn        ctrl
 #&gt; 1     Balmes 1991  4  48  7  56   adults       1       0       0   amoxyclav
 #&gt; 2      Beghi 1995 22  69  2  73   adults       0       1       0   amoxyclav
 #&gt; 3   Biebuyck 1996 53 497 53 257   adults       1       1       0   amoxyclav
@@ -234,7 +228,7 @@
 #&gt; 15     Zheng 2002 12  38  2  42   adults       0       1       0   amoxyclav</div><div class='input'>
 <span class='co'>### analysis using the Mantel-Haenszel method</span>
 <span class='fu'><a href='rma.mh.html'>rma.mh</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"RR"</span>, ai<span class='op'>=</span><span class='va'>ai</span>, n1i<span class='op'>=</span><span class='va'>n1i</span>, ci<span class='op'>=</span><span class='va'>ci</span>, n2i<span class='op'>=</span><span class='va'>n2i</span>, data<span class='op'>=</span><span class='va'>dat</span>, digits<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Fixed-Effects Model (k = 15)
 #&gt; 
 #&gt; I^2 (total heterogeneity / total variability):  65.30%
@@ -259,7 +253,7 @@
 <span class='co'>### random-effects model</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 <span class='va'>res</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Random-Effects Model (k = 15; tau^2 estimator: REML)
 #&gt; 
 #&gt; tau^2 (estimated amount of total heterogeneity): 0.5874 (SE = 0.3897)
@@ -280,7 +274,7 @@
 #&gt; </div><div class='input'>
 <span class='co'>### average risk ratio with 95% CI</span>
 <span class='fu'><a href='predict.rma.html'>predict</a></span><span class='op'>(</span><span class='va'>res</span>, transf<span class='op'>=</span><span class='va'>exp</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt;    pred  ci.lb  ci.ub  pi.lb  pi.ub 
 #&gt;  1.0889 0.6448 1.8389 0.2218 5.3447 
 #&gt; </div></pre>
@@ -299,7 +293,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9001, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
+  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
 </div>
 
       </footer>
@@ -307,8 +301,6 @@
 
   
 
-
-  
 
   </body>
 </html>

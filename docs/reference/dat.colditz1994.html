@@ -89,15 +89,9 @@
 
 
 
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -111,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-101</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-102</span>
       </span>
     </div>
 
@@ -229,7 +223,7 @@
 <span class='co'>### calculate log risk ratios and corresponding sampling variances</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"RR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 <span class='va'>dat</span>
-</div><div class='co'>#&gt;    trial               author year tpos  tneg cpos  cneg ablat      alloc 
+</div><div class='output co'>#&gt;    trial               author year tpos  tneg cpos  cneg ablat      alloc 
 #&gt; 1      1              Aronson 1948    4   119   11   128    44     random 
 #&gt; 2      2     Ferguson &amp; Simes 1949    6   300   29   274    55     random 
 #&gt; 3      3      Rosenthal et al 1960    3   228   11   209    42     random 
@@ -260,7 +254,7 @@
 <span class='co'>### random-effects model</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 <span class='va'>res</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Random-Effects Model (k = 13; tau^2 estimator: REML)
 #&gt; 
 #&gt; tau^2 (estimated amount of total heterogeneity): 0.3132 (SE = 0.1664)
@@ -281,14 +275,14 @@
 #&gt; </div><div class='input'>
 <span class='co'>### average risk ratio with 95% CI</span>
 <span class='fu'><a href='predict.rma.html'>predict</a></span><span class='op'>(</span><span class='va'>res</span>, transf<span class='op'>=</span><span class='va'>exp</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt;    pred  ci.lb  ci.ub  pi.lb  pi.ub 
 #&gt;  0.4894 0.3441 0.6962 0.1546 1.5490 
 #&gt; </div><div class='input'>
 <span class='co'>### mixed-effects model with absolute latitude and publication year as moderators</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>ablat</span> <span class='op'>+</span> <span class='va'>year</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 <span class='va'>res</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Mixed-Effects Model (k = 13; tau^2 estimator: REML)
 #&gt; 
 #&gt; tau^2 (estimated amount of residual heterogeneity):     0.1108 (SE = 0.0845)
@@ -316,7 +310,7 @@
 <span class='co'>### predicted average risk ratios for 10-60 degrees absolute latitude</span>
 <span class='co'>### holding the publication year constant at 1970</span>
 <span class='fu'><a href='predict.rma.html'>predict</a></span><span class='op'>(</span><span class='va'>res</span>, newmods<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span>from<span class='op'>=</span><span class='fl'>10</span>, to<span class='op'>=</span><span class='fl'>60</span>, by<span class='op'>=</span><span class='fl'>10</span><span class='op'>)</span>, <span class='fl'>1970</span><span class='op'>)</span>, transf<span class='op'>=</span><span class='va'>exp</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt;     pred  ci.lb  ci.ub  pi.lb  pi.ub 
 #&gt; 1 0.9345 0.5833 1.4973 0.4179 2.0899 
 #&gt; 2 0.7062 0.5149 0.9686 0.3421 1.4579 
@@ -330,7 +324,7 @@
 <span class='co'>### studies were conducted closer to the equator)</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>year</span>, <span class='va'>dat</span><span class='op'>$</span><span class='va'>ablat</span>, pch<span class='op'>=</span><span class='fl'>19</span>, xlab<span class='op'>=</span><span class='st'>"Publication Year"</span>, ylab<span class='op'>=</span><span class='st'>"Absolute Lattitude"</span><span class='op'>)</span>
 </div><div class='img'><img src='dat.colditz1994-1.png' alt='' width='864' height='768' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>year</span>, <span class='va'>dat</span><span class='op'>$</span><span class='va'>ablat</span><span class='op'>)</span>
-</div><div class='co'>#&gt; [1] -0.6630572</div></pre>
+</div><div class='output co'>#&gt; [1] -0.6630572</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -346,7 +340,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9001, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
+  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
 </div>
 
       </footer>
@@ -354,8 +348,6 @@
 
   
 
-
-  
 
   </body>
 </html>

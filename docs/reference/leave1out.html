@@ -89,15 +89,9 @@
 
 
 
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -111,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-101</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-102</span>
       </span>
     </div>
 
@@ -268,7 +262,7 @@
 
 <span class='co'>### leave-one-out analysis</span>
 <span class='fu'>leave1out</span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt;    estimate     se    zval   pval   ci.lb   ci.ub        Q     Qp   tau2 
 #&gt; 1   -0.7071 0.1900 -3.7223 0.0002 -1.0794 -0.3348 151.5826 0.0000 0.3362 
 #&gt; 2   -0.6540 0.1807 -3.6195 0.0003 -1.0082 -0.2999 145.3176 0.0000 0.2926 
@@ -298,7 +292,7 @@
 #&gt; 12 92.6782 13.6579 
 #&gt; 13 92.3444 13.0623 
 #&gt; </div><div class='input'><span class='fu'>leave1out</span><span class='op'>(</span><span class='va'>res</span>, transf<span class='op'>=</span><span class='va'>exp</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt;    estimate    zval   pval  ci.lb  ci.ub        Q     Qp   tau2      I2      H2 
 #&gt; 1    0.4931 -3.7223 0.0002 0.3398 0.7155 151.5826 0.0000 0.3362 93.2259 14.7622 
 #&gt; 2    0.5199 -3.6195 0.0003 0.3649 0.7409 145.3176 0.0000 0.2926 92.2540 12.9098 
@@ -319,7 +313,7 @@
 
 <span class='co'>### leave-one-out analysis</span>
 <span class='fu'>leave1out</span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt;    estimate     se     zval   pval   ci.lb   ci.ub        Q     Qp      I2 
 #&gt; 1   -0.4514 0.0394 -11.4462 0.0000 -0.5287 -0.3741 151.9153 0.0000 92.7591 
 #&gt; 2   -0.4410 0.0395 -11.1512 0.0000 -0.5185 -0.3635 145.5727 0.0000 92.4436 
@@ -349,7 +343,7 @@
 #&gt; 12 13.7387 
 #&gt; 13 13.6477 
 #&gt; </div><div class='input'><span class='fu'>leave1out</span><span class='op'>(</span><span class='va'>res</span>, transf<span class='op'>=</span><span class='va'>exp</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt;    estimate     zval   pval  ci.lb  ci.ub        Q     Qp      I2      H2 
 #&gt; 1    0.6367 -11.4462 0.0000 0.5894 0.6879 151.9153 0.0000 92.7591 13.8105 
 #&gt; 2    0.6434 -11.1512 0.0000 0.5954 0.6952 145.5727 0.0000 92.4436 13.2339 
@@ -370,7 +364,7 @@
 
 <span class='co'>### leave-one-out analysis</span>
 <span class='fu'>leave1out</span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt;    estimate     se     zval   pval   ci.lb   ci.ub        Q     Qp      I2 
 #&gt; 1   -0.4722 0.0408 -11.5791 0.0000 -0.5521 -0.3923 167.2005 0.0000 93.4211 
 #&gt; 2   -0.4616 0.0409 -11.2751 0.0000 -0.5418 -0.3814 160.5154 0.0000 93.1471 
@@ -400,7 +394,7 @@
 #&gt; 12 15.0973 
 #&gt; 13 14.9766 
 #&gt; </div><div class='input'><span class='fu'>leave1out</span><span class='op'>(</span><span class='va'>res</span>, transf<span class='op'>=</span><span class='va'>exp</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt;    estimate     zval   pval  ci.lb  ci.ub        Q     Qp      I2      H2 
 #&gt; 1    0.6236 -11.5791 0.0000 0.5757 0.6755 167.2005 0.0000 93.4211 15.2000 
 #&gt; 2    0.6303 -11.2751 0.0000 0.5817 0.6829 160.5154 0.0000 93.1471 14.5923 
@@ -431,7 +425,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9001, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
+  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
 </div>
 
       </footer>
@@ -439,8 +433,6 @@
 
   
 
-
-  
 
   </body>
 </html>

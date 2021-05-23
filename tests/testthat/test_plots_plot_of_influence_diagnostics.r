@@ -1,6 +1,6 @@
 ### library(metafor); library(testthat); Sys.setenv(NOT_CRAN="true")
 
-### see also: http://www.metafor-project.org/doku.php/plots:plot_of_influence_diagnostics
+### see also: https://www.metafor-project.org/doku.php/plots:plot_of_influence_diagnostics
 
 context("Checking plots example: plot of influence diagnostics")
 

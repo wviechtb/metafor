@@ -89,15 +89,9 @@
 
 
 
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -111,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-101</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-102</span>
       </span>
     </div>
 
@@ -259,7 +253,7 @@
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>The p-values obtained with permutation tests cannot reach conventional levels of statistical significance (i.e., \(p \le .05\)) when \(k\) is very small. In particular, for models without moderators, the smallest possible (two-sided) p-value is .0625 when \(k=5\) and .03125 when \(k=6\). Therefore, the permutation test is only able to reject the null hypothesis at \(\alpha=.05\) when \(k\) is at least equal to 6. For models with moderators, the smallest possible (two-sided) p-value for a particular model coefficient is .0833 when \(k=4\) and .0167 when \(k=5\) (assuming that each row in the model matrix is unique). Therefore, the permutation test is only able to reject the null hypothesis at \(\alpha=.05\) when \(k\) is at least equal to 5. Consequently, permutation-based CIs can also only be obtained when \(k\) is sufficiently large.</p>
-<p>When the number of permutations required for the exact test is so large as to be essentially indistinguishable from infinity (e.g., <code>factorial(200)</code>), the function will terminate with an error.</p>
+<p>When the number of permutations required for the exact test is so large as to be essentially indistinguishable from infinity (e.g., <code><a href='https://rdrr.io/r/base/Special.html'>factorial(200)</a></code>), the function will terminate with an error.</p>
 <p>Determining whether a test statistic under the permuted data is as extreme or more extreme than under the actually observed data requires making <code>&gt;=</code> or <code>&lt;=</code> comparisons. To avoid problems due to the finite precision with which computers generally represent numbers, the function uses a numerical tolerance (control argument <code>comptol</code>, which is set equal to <code>.Machine$double.eps^0.5</code> by default) when making such comparisons (e.g., instead of <code>sqrt(3)^2 - 3 &gt;= 0</code>, which may evaluate to <code>FALSE</code>, we can use <code>sqrt(3)^2 - 3 &gt;= 0 - .Machine$double.eps^0.5</code>, which should evaluate to <code>TRUE</code>).</p>
 <p>When obtaining permutation-based CIs, the function makes use of <code><a href='https://rdrr.io/r/stats/uniroot.html'>uniroot</a></code>. By default, the desired accuracy is set equal to <code>.Machine$double.eps^0.25</code> and the maximum number of iterations to <code>100</code>. The desired accuracy and the maximum number of iterations can be adjusted with the <code>control</code> argument (i.e., <code>control=list(tol=value, maxiter=value)</code>).</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
@@ -283,7 +277,7 @@
 <span class='co'>### random-effects model</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 <span class='va'>res</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Random-Effects Model (k = 13; tau^2 estimator: REML)
 #&gt; 
 #&gt; tau^2 (estimated amount of total heterogeneity): 0.3132 (SE = 0.1664)
@@ -305,7 +299,7 @@
 <span class='co'>### permutation test (approximate and exact)</span>
 <span class='co'># \dontrun{</span>
 <span class='fu'>permutest</span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
-</div><div class='co'>#&gt; Running 1000 iterations for approximate permutation test.</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; Running 1000 iterations for approximate permutation test.</div><div class='output co'>#&gt; 
 #&gt; Model Results:
 #&gt; 
 #&gt; estimate      se     zval   pval*    ci.lb    ci.ub 
@@ -314,7 +308,7 @@
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'><span class='fu'>permutest</span><span class='op'>(</span><span class='va'>res</span>, exact<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span><span class='co'># }</span>
-</div><div class='co'>#&gt; Running 8192 iterations for exact permutation test.</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; Running 8192 iterations for exact permutation test.</div><div class='output co'>#&gt; 
 #&gt; Model Results:
 #&gt; 
 #&gt; estimate      se     zval   pval*    ci.lb    ci.ub 
@@ -326,7 +320,7 @@
 <span class='co'>### mixed-effects model with two moderators (absolute latitude and publication year)</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>ablat</span> <span class='op'>+</span> <span class='va'>year</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 <span class='va'>res</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Mixed-Effects Model (k = 13; tau^2 estimator: REML)
 #&gt; 
 #&gt; tau^2 (estimated amount of residual heterogeneity):     0.1108 (SE = 0.0845)
@@ -355,8 +349,8 @@
 <span class='co'># \dontrun{</span>
 
 <span class='va'>permres</span> <span class='op'>&lt;-</span> <span class='fu'>permutest</span><span class='op'>(</span><span class='va'>res</span>, iter<span class='op'>=</span><span class='fl'>10000</span>, retpermdist<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='co'>#&gt; Running 10000 iterations for approximate permutation test.</div><div class='input'><span class='va'>permres</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; Running 10000 iterations for approximate permutation test.</div><div class='input'><span class='va'>permres</span>
+</div><div class='output co'>#&gt; 
 #&gt; Test of Moderators (coefficients 2:3):
 #&gt; QM(df = 2) = 12.2043, p-val* = 0.0214
 #&gt; 
@@ -399,7 +393,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9001, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
+  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
 </div>
 
       </footer>
@@ -407,8 +401,6 @@
 
   
 
-
-  
 
   </body>
 </html>

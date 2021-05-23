@@ -89,15 +89,9 @@
 
 
 
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -111,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-101</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-102</span>
       </span>
     </div>
 
@@ -362,7 +356,7 @@
 <p>A test for (residual) heterogeneity is automatically carried out by the function. Without moderators in the model, this test is the generalized/weighted least squares extension of Cochran's \(Q\)-test, which tests whether the variability in the observed effect sizes or outcomes is larger than one would expect based on sampling variability (and the given covariances among the sampling errors) alone. A significant test suggests that the true effects/outcomes are heterogeneous. When moderators are included in the model, this is the \(Q_E\)-test for residual heterogeneity, which tests whether the variability in the observed effect sizes or outcomes that is not accounted for by the moderators included in the model is larger than one would expect based on sampling variability (and the given covariances among the sampling errors) alone.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An object of class <code>c("rma.mv","rma")</code>. The object is a list containing the following components:</p>
+    <p>An object of class <code><a href='https://rdrr.io/r/base/c.html'>c("rma.mv","rma")</a></code>. The object is a list containing the following components:</p>
 <dt>beta</dt><dd><p>estimated coefficients of the model.</p></dd>
    <dt>se</dt><dd><p>standard errors of the coefficients.</p></dd>
    <dt>zval</dt><dd><p>test statistics of the coefficients.</p></dd>
@@ -402,7 +396,7 @@
 <p>Model fitting is done via numerical optimization over the model parameters. By default, <code><a href='https://rdrr.io/r/stats/nlminb.html'>nlminb</a></code> is used for the optimization. One can also chose a different optimizer via the <code>control</code> argument (e.g., <code>control=list(optimizer="optim")</code>). When using <code><a href='https://rdrr.io/r/stats/optim.html'>optim</a></code>, one can set the particular method via the <code>optmethod</code> argument (e.g., <code>control=list(optimizer="optim", optmethod="BFGS")</code>). Besides <code><a href='https://rdrr.io/r/stats/nlminb.html'>nlminb</a></code> and <code><a href='https://rdrr.io/r/stats/optim.html'>optim</a></code>, one can also choose one of the optimizers from the <code>minqa</code> package (i.e., <code><a href='https://rdrr.io/pkg/minqa/man/uobyqa.html'>uobyqa</a></code>, <code><a href='https://rdrr.io/pkg/minqa/man/newuoa.html'>newuoa</a></code>, or <code><a href='https://rdrr.io/pkg/minqa/man/bobyqa.html'>bobyqa</a></code>), one of the (derivative-free) algorithms from the <code><a href='https://rdrr.io/pkg/nloptr/man/nloptr.html'>nloptr</a></code> package, the Newton-type algorithm implemented in <code><a href='https://rdrr.io/r/stats/nlm.html'>nlm</a></code>, the various algorithms implemented in the <code>dfoptim</code> package (<code><a href='https://rdrr.io/pkg/dfoptim/man/hookejeeves.html'>hjk</a></code> for the Hooke-Jeeves, <code><a href='https://rdrr.io/pkg/dfoptim/man/nmkb.html'>nmk</a></code> for the Nelder-Mead, and <code><a href='https://rdrr.io/pkg/dfoptim/man/mads.html'>mads</a></code> for the Mesh Adaptive Direct Searches (MADS) algorithm), the quasi-Newton type optimizer <code><a href='https://rdrr.io/pkg/ucminf/man/ucminf.html'>ucminf</a></code> from the package of the same name, or the parallelized version of the L-BFGS-B algorithm implemented in <code><a href='https://rdrr.io/pkg/optimParallel/man/optimParallel.html'>optimParallel</a></code> from the package of the same name.</p>
 <p>The optimizer name must be given as a character string (i.e., in quotes). Additional control parameters can be specified via the <code>control</code> argument (e.g., <code>control=list(iter.max=500, rel.tol=1e-8)</code>). For <code><a href='https://rdrr.io/pkg/nloptr/man/nloptr.html'>nloptr</a></code>, the default is to use the BOBYQA implementation from that package with a relative convergence criterion of <code>1e-8</code> on the function value (i.e., log-likelihood), but this can be changed via the <code>algorithm</code> and <code>ftop_rel</code> arguments (e.g., <code>control=list(optimizer="nloptr", algorithm="NLOPT_LN_SBPLX", ftol_rel=1e-6)</code>). For <code><a href='https://rdrr.io/pkg/optimParallel/man/optimParallel.html'>optimParallel</a></code>, the control argument <code>ncpus</code> can be used to specify the number of cores to use for the parallelization (e.g., <code>control=list(optimizer="optimParallel", ncpus=2)</code>). With <code><a href='https://rdrr.io/r/parallel/detectCores.html'>parallel::detectCores()</a></code>, one can check on the number of available cores on the local machine.</p>
 <p>At the moment, the starting values are not chosen in a terribly clever way and could be far off. As a result, the optimizer may be slow to converge or may even get stuck at a local maximum. One can set the starting values manually for the various variance components and correlations in the model via the <code>control</code> argument by specifying the vectors <code>sigma2.init</code>, <code>tau2.init</code>, <code>rho.init</code>, <code>gamma2.init</code>, and/or <code>phi.init</code> as needed. Especially for complex models, it is a good idea to try out different starting values to make sure that the same estimates are obtained.</p>
-<p>Information on the progress of the optimization algorithm can be obtained by setting <code>verbose=TRUE</code> (this won't work when using parallelization). Since fitting complex models with many random effects can be computationally expensive, this option is useful to determine how the model fitting is progressing. One can also set <code>verbose</code> to an integer (<code>verbose=2</code> yields even more information and <code>verbose=3</code> also sets <code>option(warn=1)</code> temporarily).</p>
+<p>Information on the progress of the optimization algorithm can be obtained by setting <code>verbose=TRUE</code> (this won't work when using parallelization). Since fitting complex models with many random effects can be computationally expensive, this option is useful to determine how the model fitting is progressing. One can also set <code>verbose</code> to an integer (<code>verbose=2</code> yields even more information and <code>verbose=3</code> also sets <code><a href='https://rdrr.io/r/base/options.html'>option(warn=1)</a></code> temporarily).</p>
 <p>Whether particular variance components and/or correlations are actually identifiable needs to be carefully examined when fitting complex models. The function does some limited checking internally to fix variances and/or correlations at zero when it is clear that insufficient information is available to estimate a particular parameter (e.g., if a particular factor has only a single level, the corresponding variance component cannot be estimated). However, it is strongly advised in general to do post model fitting checks to make sure that the likelihood surface around the ML/REML estimates is not flat for some combination of the parameter estimates (which would imply that the estimates are essentially arbitrary). For example, one can plot the (restricted) log-likelihood as a function of each variance component and correlation in the model to make sure that each profile plot shows a clear peak at the corresponding ML/REML estimates. The <code><a href='profile.rma.html'>profile.rma.mv</a></code> function can be used for this purpose.</p>
 <p>Finally, note that the model fitting is not done in a very efficient manner at the moment, which is partly a result of allowing for crossed random effects and correlations across the entire dataset (e.g., when using the <code>R</code> argument). As a result, the function works directly with the entire \(k \times k\) (marginal) variance-covariance matrix of the observed effect sizes or outcomes (instead of working with smaller blocks in a block diagonal structure). As a result, model fitting can be slow for large \(k\). However, when the variance-covariance structure is actually sparse, a lot of speed can be gained by setting <code>sparse=TRUE</code>, in which case sparse matrix objects are used (via the <a href='https://cran.r-project.org/package=Matrix'>Matrix</a> package). Also, when model fitting appears to be slow, setting <code>verbose=TRUE</code> is useful to obtain information on how the model fitting is progressing.</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
@@ -433,7 +427,7 @@
 
 <span class='co'>### fit random-effects model using rma.uni()</span>
 <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Random-Effects Model (k = 13; tau^2 estimator: REML)
 #&gt; 
 #&gt; tau^2 (estimated amount of total heterogeneity): 0.3378 (SE = 0.1784)
@@ -455,7 +449,7 @@
 <span class='co'>### fit random-effects model using rma.mv()</span>
 <span class='co'>### note: sigma^2 in this model is the same as tau^2 from the previous model</span>
 <span class='fu'>rma.mv</span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, random <span class='op'>=</span> <span class='op'>~</span> <span class='fl'>1</span> <span class='op'>|</span> <span class='va'>trial</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Multivariate Meta-Analysis Model (k = 13; method: REML)
 #&gt; 
 #&gt; Variance Components:
@@ -489,7 +483,7 @@
 <span class='co'>### fit bivariate random-effects model using rma.mv()</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'>rma.mv</span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>group</span>, random <span class='op'>=</span> <span class='op'>~</span> <span class='va'>group</span> <span class='op'>|</span> <span class='va'>study</span>, struct<span class='op'>=</span><span class='st'>"UN"</span>, data<span class='op'>=</span><span class='va'>dat.long</span><span class='op'>)</span>
 <span class='va'>res</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Multivariate Meta-Analysis Model (k = 26; method: REML)
 #&gt; 
 #&gt; Variance Components:
@@ -535,7 +529,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9001, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
+  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
 </div>
 
       </footer>
@@ -543,8 +537,6 @@
 
   
 
-
-  
 
   </body>
 </html>

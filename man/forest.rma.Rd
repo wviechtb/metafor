@@ -126,7 +126,7 @@ forest(res, header=TRUE)
 ### lines in rows 0 and k+1; two extra lines of space at the top for headings,
 ### and other annotations; headings (if requested) in line k+2
 op <- par(xpd=TRUE)
-text(x=-8.5, y=-1:16, -1:16, pos=4, cex=.5)
+text(x=-8.4, y=-1:16, -1:16, pos=4, cex=.6)
 par(op)
 
 ### can also inspect defaults chosen
@@ -189,17 +189,17 @@ forest(res, ylim=c(-1.5, 20), rows=c(17:15, 12:6, 3:1)) ### set positions
 
 ### forest plot with subgrouping of studies
 ### note: may need to widen plotting device to avoid overlapping text
-forest(res, xlim=c(-16, 6), at=log(c(.05, .25, 1, 4)), atransf=exp,
+forest(res, xlim=c(-16, 4.6), at=log(c(.05, .25, 1, 4)), atransf=exp,
        ilab=cbind(dat.bcg$tpos, dat.bcg$tneg, dat.bcg$cpos, dat.bcg$cneg),
        ilab.xpos=c(-9.5,-8,-6,-4.5), cex=.75, ylim=c(-1, 21),
        order=dat.bcg$alloc, rows=c(1:2,5:11,14:17),
        header="Author(s) and Year")
-op <- par(cex=.75, font=4)
-text(-16, c(18,12,3), c("Systematic Allocation", "Random Allocation",
-                        "Alternate Allocation"), pos=4)
-par(cex=.75, font=2)
+op <- par(cex=0.75, font=2)
 text(c(-9.5,-8,-6,-4.5), 20, c("TB+", "TB-", "TB+", "TB-"))
 text(c(-8.75,-5.25),     21, c("Vaccinated", "Control"))
+op <- par(font=4)
+text(-16, c(18,12,3), c("Systematic Allocation", "Random Allocation",
+                        "Alternate Allocation"), pos=4)
 par(op)
 
 ### see also the addpoly.rma function for an example where summaries
@@ -210,7 +210,7 @@ par(op)
 ### CIs would have upper bounds larger than 1
 dat <- escalc(measure="PR", xi=xi, ni=ni, data=dat.pritz1997)
 res <- rma(yi, vi, data=dat, slab=paste0(study, ") ", authors))
-forest(res, xlim=c(-1,2), alim=c(0,1), psize=1, refline=coef(res), olim=c(0,1), header=TRUE)
+forest(res, xlim=c(-0.8,1.6), alim=c(0,1), psize=1, refline=coef(res), olim=c(0,1), header=TRUE)
 
 ### an example of a forest plot where the data have a multilevel structure and
 ### we want to reflect this by grouping together estimates from the same cluster

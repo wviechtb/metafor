@@ -1,6 +1,6 @@
 ### library(metafor); library(testthat); Sys.setenv(NOT_CRAN="true")
 
-### see also: http://www.metafor-project.org/doku.php/plots:contour_enhanced_funnel_plot
+### see also: https://www.metafor-project.org/doku.php/plots:contour_enhanced_funnel_plot
 
 context("Checking plots example: contour-enhanced funnel plot")
 

@@ -89,15 +89,9 @@
 
 
 
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -111,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-101</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-102</span>
       </span>
     </div>
 
@@ -241,7 +235,7 @@
     <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat' and examine data</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.landenberger2005</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>)</span>
-</div><div class='co'>#&gt;              study pubtype country design  program   setting designprob
+</div><div class='output co'>#&gt;              study pubtype country design  program   setting designprob
 #&gt; 1    Guerra (1990) journal     USA    rct research    prison         no
 #&gt; 2    Leeman (1993) journal     USA    rct     demo    prison         no
 #&gt; 3  Kownacki (1995) chapter     USA    rct research community         no
@@ -282,7 +276,7 @@
 <span class='co'>### fit random-effects model</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 <span class='va'>res</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Random-Effects Model (k = 58; tau^2 estimator: REML)
 #&gt; 
 #&gt; tau^2 (estimated amount of total heterogeneity): 0.1046 (SE = 0.0352)
@@ -303,14 +297,14 @@
 #&gt; </div><div class='input'>
 <span class='co'>### estimated average OR and corresponding 95% CI/PI</span>
 <span class='fu'><a href='predict.rma.html'>predict</a></span><span class='op'>(</span><span class='va'>res</span>, transf<span class='op'>=</span><span class='va'>exp</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt;  pred ci.lb ci.ub pi.lb pi.ub 
 #&gt;  1.53  1.36  1.72  0.80  2.91 
 #&gt; </div><div class='input'>
 <span class='co'>### examine if number of treatment sessions per week is a potential moderator</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>sessions</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 <span class='va'>res</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Mixed-Effects Model (k = 58; tau^2 estimator: REML)
 #&gt; 
 #&gt; tau^2 (estimated amount of residual heterogeneity):     0.0761 (SE = 0.0285)
@@ -336,7 +330,7 @@
 #&gt; </div><div class='input'>
 <span class='co'>### predicted ORs for 1, 2, 5, or 10 sessions per week</span>
 <span class='fu'><a href='predict.rma.html'>predict</a></span><span class='op'>(</span><span class='va'>res</span>, newmods<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>5</span>,<span class='fl'>10</span><span class='op'>)</span>, transf<span class='op'>=</span><span class='va'>exp</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt;   pred ci.lb ci.ub pi.lb pi.ub 
 #&gt; 1 1.31  1.12  1.53  0.75  2.30 
 #&gt; 2 1.41  1.25  1.59  0.81  2.45 
@@ -358,7 +352,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9001, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
+  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
 </div>
 
       </footer>
@@ -366,8 +360,6 @@
 
   
 
-
-  
 
   </body>
 </html>

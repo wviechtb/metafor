@@ -1,6 +1,6 @@
 ### library(metafor); library(testthat); Sys.setenv(NOT_CRAN="true")
 
-### see also: http://www.metafor-project.org/doku.php/plots:cumulative_forest_plot
+### see also: https://www.metafor-project.org/doku.php/plots:cumulative_forest_plot
 
 context("Checking plots example: cumulative forest plot")
 

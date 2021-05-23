@@ -17,9 +17,9 @@ home:
   # - text: GitHub Repo
     # href: https://github.com/wviechtb/metafor
   - text: Package Website
-    href: http://www.metafor-project.org
+    href: https://www.metafor-project.org
   - text: Author Website
-    href: http://www.wvbauer.com
+    href: https://www.wvbauer.com
 
 figures:
   dev: grDevices::png

@@ -1,6 +1,6 @@
 ### library(metafor); library(testthat); Sys.setenv(NOT_CRAN="true")
 
-### see also: http://www.metafor-project.org/doku.php/plots:normal_qq_plots
+### see also: https://www.metafor-project.org/doku.php/plots:normal_qq_plots
 
 context("Checking plots example: normal QQ plots")
 

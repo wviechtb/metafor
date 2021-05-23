@@ -89,15 +89,9 @@
 
 
 
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -111,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-101</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-102</span>
       </span>
     </div>
 
@@ -216,7 +210,7 @@
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"RR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>ablat</span> <span class='op'>+</span> <span class='va'>year</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 <span class='fu'><a href='coef.rma.html'>coef</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='co'>#&gt;             estimate          se       zval        pval        ci.lb
+</div><div class='output co'>#&gt;             estimate          se       zval        pval        ci.lb
 #&gt; intrcpt -3.545505079 29.09587983 -0.1218559 0.903013130 -60.57238164
 #&gt; ablat   -0.028011275  0.01023404 -2.7370689 0.006198931  -0.04806963
 #&gt; year     0.001907557  0.01468382  0.1299088 0.896638598  -0.02687219
@@ -224,7 +218,7 @@
 #&gt; intrcpt 53.481371479
 #&gt; ablat   -0.007952924
 #&gt; year     0.030687307</div><div class='input'><span class='fu'>dfround</span><span class='op'>(</span><span class='fu'><a href='coef.rma.html'>coef</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span><span class='op'>)</span>, digits<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>2</span>,<span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='co'>#&gt;         estimate     se  zval  pval  ci.lb ci.ub
+</div><div class='output co'>#&gt;         estimate     se  zval  pval  ci.lb ci.ub
 #&gt; intrcpt    -3.55 29.096 -0.12 0.903 -60.57 53.48
 #&gt; ablat      -0.03  0.010 -2.74 0.006  -0.05 -0.01
 #&gt; year        0.00  0.015  0.13 0.897  -0.03  0.03</div></pre>
@@ -243,7 +237,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9001, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
+  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
 </div>
 
       </footer>
@@ -251,8 +245,6 @@
 
   
 
-
-  
 
   </body>
 </html>

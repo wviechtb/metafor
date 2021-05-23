@@ -89,15 +89,9 @@
 
 
 
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -111,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-101</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-102</span>
       </span>
     </div>
 
@@ -221,7 +215,7 @@
     <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat' and examine data</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.fine1993</span>
 <span class='va'>dat</span>
-</div><div class='co'>#&gt;    study nei nci e1i c1i e2i c2i e3i c3i e4i c4i
+</div><div class='output co'>#&gt;    study nei nci e1i c1i e2i c2i e3i c3i e4i c4i
 #&gt; 1      1  19  22  16  20  11  12   4   8   4   3
 #&gt; 2      2  34  35  22  22  18  12  15   8  15   6
 #&gt; 3      3  72  68  44  40  21  15  10   3   3   0
@@ -278,7 +272,7 @@
 <span class='va'>repl.Vi</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>Vi</span><span class='op'>)</span> <span class='op'>{</span>
    <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/eigen.html'>eigen</a></span><span class='op'>(</span><span class='va'>Vi</span><span class='op'>)</span>
    <span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/any.html'>any</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>$</span><span class='va'>values</span> <span class='op'>&lt;=</span> <span class='fl'>.08</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-      <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>$</span><span class='va'>vectors</span> <span class='op'><a href='https://rdrr.io/r/base/matmult.html'>%*%</a></span> <span class='fu'><a href='https://rdrr.io/r/base/diag.html'>diag</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>$</span><span class='va'>values</span> <span class='op'>+</span> <span class='fl'>.08</span><span class='op'>)</span> <span class='op'><a href='https://rdrr.io/r/base/matmult.html'>%*%</a></span> <span class='fu'><a href='https://rdrr.io/r/base/t.html'>t</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>$</span><span class='va'>vectors</span><span class='op'>)</span>, <span class='fl'>12</span><span class='op'>)</span>
+      <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>$</span><span class='va'>vectors</span> <span class='op'>%*%</span> <span class='fu'><a href='https://rdrr.io/r/base/diag.html'>diag</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>$</span><span class='va'>values</span> <span class='op'>+</span> <span class='fl'>.08</span><span class='op'>)</span> <span class='op'>%*%</span> <span class='fu'><a href='https://rdrr.io/r/base/t.html'>t</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>$</span><span class='va'>vectors</span><span class='op'>)</span>, <span class='fl'>12</span><span class='op'>)</span>
    <span class='op'>}</span> <span class='kw'>else</span> <span class='op'>{</span>
       <span class='va'>Vi</span>
    <span class='op'>}</span>
@@ -294,7 +288,7 @@
 <span class='co'>### multivariate fixed-effects model</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>Vc</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>time</span><span class='op'>)</span> <span class='op'>-</span> <span class='fl'>1</span>, method<span class='op'>=</span><span class='st'>"FE"</span>, data<span class='op'>=</span><span class='va'>dat.long</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>res</span>, digits<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Multivariate Meta-Analysis Model (k = 66; method: FE)
 #&gt; 
 #&gt; Variance Components: none
@@ -320,7 +314,7 @@
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>Vc</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>time</span><span class='op'>)</span> <span class='op'>-</span> <span class='fl'>1</span>, random <span class='op'>=</span> <span class='op'>~</span> <span class='va'>time</span> <span class='op'>|</span> <span class='va'>study</span>,
               struct<span class='op'>=</span><span class='st'>"HAR"</span>, data<span class='op'>=</span><span class='va'>dat.long</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>res</span>, digits<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Multivariate Meta-Analysis Model (k = 66; method: REML)
 #&gt; 
 #&gt; Variance Components:
@@ -356,7 +350,7 @@
 <span class='co'>### profile the variance components</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mfrow<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>,<span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='profile.rma.html'>profile</a></span><span class='op'>(</span><span class='va'>res</span>, tau2<span class='op'>=</span><span class='fl'>1</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span> <span class='fl'>0</span>,<span class='fl'>.2</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='co'>#&gt; <span class='warning'>Warning: </span>At least one profiled log-likelihood value is larger than the log-likelihood of the fitted model.</div><div class='input'><span class='fu'><a href='profile.rma.html'>profile</a></span><span class='op'>(</span><span class='va'>res</span>, tau2<span class='op'>=</span><span class='fl'>2</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span> <span class='fl'>0</span>,<span class='fl'>.2</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: At least one profiled log-likelihood value is larger than the log-likelihood of the fitted model.</span></div><div class='input'><span class='fu'><a href='profile.rma.html'>profile</a></span><span class='op'>(</span><span class='va'>res</span>, tau2<span class='op'>=</span><span class='fl'>2</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span> <span class='fl'>0</span>,<span class='fl'>.2</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='profile.rma.html'>profile</a></span><span class='op'>(</span><span class='va'>res</span>, tau2<span class='op'>=</span><span class='fl'>3</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span> <span class='fl'>0</span>,<span class='fl'>.2</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='profile.rma.html'>profile</a></span><span class='op'>(</span><span class='va'>res</span>, tau2<span class='op'>=</span><span class='fl'>4</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.1</span>,<span class='fl'>.3</span><span class='op'>)</span><span class='op'>)</span><span class='co'># }</span>
 </div><div class='img'><img src='dat.fine1993-1.png' alt='' width='864' height='768' /></div><div class='input'>
@@ -364,7 +358,7 @@
 <span class='co'>### profile the autocorrelation coefficient</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mfrow<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='profile.rma.html'>profile</a></span><span class='op'>(</span><span class='va'>res</span>, rho<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span><span class='co'># }</span>
-</div><div class='co'>#&gt; <span class='warning'>Warning: </span>At least one profiled log-likelihood value is larger than the log-likelihood of the fitted model.</div><div class='img'><img src='dat.fine1993-2.png' alt='' width='864' height='768' /></div></pre>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: At least one profiled log-likelihood value is larger than the log-likelihood of the fitted model.</span></div><div class='img'><img src='dat.fine1993-2.png' alt='' width='864' height='768' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -380,7 +374,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9001, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
+  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
 </div>
 
       </footer>
@@ -388,8 +382,6 @@
 
   
 
-
-  
 
   </body>
 </html>

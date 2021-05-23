@@ -5,7 +5,7 @@ context("Checking tip: rma() results match up with those from lm() and lme()")
 source("tolerances.r") # read in tolerances
 
 ### this is essentially checking the equivalence of the results as explained here:
-### http://www.metafor-project.org/doku.php/tips:rma_vs_lm_and_lme
+### https://www.metafor-project.org/doku.php/tips:rma_vs_lm_and_lme
 
 test_that("results for rma() and lm() match for method='FE'.", {
 

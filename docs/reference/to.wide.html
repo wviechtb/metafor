@@ -89,15 +89,9 @@
 
 
 
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -111,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-101</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-102</span>
       </span>
     </div>
 
@@ -265,7 +259,7 @@
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.senn2013</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>4</span>,<span class='fl'>3</span>,<span class='fl'>2</span>,<span class='fl'>5</span>,<span class='fl'>6</span><span class='op'>)</span><span class='op'>]</span>
 <span class='va'>dat</span>
-</div><div class='co'>#&gt;                    study comment     treatment  ni    mi   sdi
+</div><div class='output co'>#&gt;                    study comment     treatment  ni    mi   sdi
 #&gt; 1       De Fronzo (1995)  change     metformin 213 -1.70 1.459
 #&gt; 2       De Fronzo (1995)  change       placebo 209  0.20 1.446
 #&gt; 3           Lewin (2007)  change     metformin 431 -0.74 1.106
@@ -322,7 +316,7 @@
 <span class='co'>### restructure to wide format</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'>to.wide</span><span class='op'>(</span><span class='va'>dat</span>, study<span class='op'>=</span><span class='st'>"study"</span>, grp<span class='op'>=</span><span class='st'>"treatment"</span>, ref<span class='op'>=</span><span class='st'>"placebo"</span>, grpvars<span class='op'>=</span><span class='fl'>4</span><span class='op'>:</span><span class='fl'>6</span><span class='op'>)</span>
 <span class='va'>dat</span>
-</div><div class='co'>#&gt;                    study comment   treatment.1 ni.1  mi.1 sdi.1   treatment.2
+</div><div class='output co'>#&gt;                    study comment   treatment.1 ni.1  mi.1 sdi.1   treatment.2
 #&gt; 1            Alex (1998)  change     metformin  291  0.13 1.428  sulfonylurea
 #&gt; 2           Baksi (2004)  change rosiglitazone  218 -1.20 1.112       placebo
 #&gt; 3           Costa (1997)  change      acarbose   36 -1.10 0.360       placebo
@@ -381,7 +375,7 @@
 <span class='co'>### data in long format</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.hasselblad1998</span>
 <span class='va'>dat</span>
-</div><div class='co'>#&gt;    id study            authors year            trt  xi   ni
+</div><div class='output co'>#&gt;    id study            authors year            trt  xi   ni
 #&gt; 1   1     1        Reid et al. 1974     no_contact  75  731
 #&gt; 2   2     1        Reid et al. 1974 ind_counseling 363  714
 #&gt; 3   3     2    Cottraux et al. 1983     no_contact   9  140
@@ -435,7 +429,7 @@
 <span class='co'>### restructure to wide format</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'>to.wide</span><span class='op'>(</span><span class='va'>dat</span>, study<span class='op'>=</span><span class='st'>"study"</span>, grp<span class='op'>=</span><span class='st'>"trt"</span>, ref<span class='op'>=</span><span class='st'>"no_contact"</span>, grpvars<span class='op'>=</span><span class='fl'>6</span><span class='op'>:</span><span class='fl'>7</span><span class='op'>)</span>
 <span class='va'>dat</span>
-</div><div class='co'>#&gt;    id study            authors year          trt.1 xi.1 ni.1          trt.2
+</div><div class='output co'>#&gt;    id study            authors year          trt.1 xi.1 ni.1          trt.2
 #&gt; 1   1     1        Reid et al. 1974 ind_counseling  363  714     no_contact
 #&gt; 2   2     2    Cottraux et al. 1983 grp_counseling   10  138     no_contact
 #&gt; 3   3     2    Cottraux et al. 1983 ind_counseling   23  140     no_contact
@@ -504,7 +498,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9001, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
+  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
 </div>
 
       </footer>
@@ -512,8 +506,6 @@
 
   
 
-
-  
 
   </body>
 </html>

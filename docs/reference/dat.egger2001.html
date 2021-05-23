@@ -89,15 +89,9 @@
 
 
 
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -111,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-101</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-102</span>
       </span>
     </div>
 
@@ -224,7 +218,7 @@
     <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat' and examine data</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.egger2001</span>
 <span class='va'>dat</span>
-</div><div class='co'>#&gt;    id        study year   ai   n1i   ci   n2i
+</div><div class='output co'>#&gt;    id        study year   ai   n1i   ci   n2i
 #&gt; 1   1       Morton 1984    1    40    2    36
 #&gt; 2   2    Rasmussen 1986    9   135   23   135
 #&gt; 3   3        Smith 1986    2   200    7   200
@@ -244,7 +238,7 @@
 <span class='co'>### meta-analysis of trials 1-7 using Peto's method (as in Teo et al., 1991)</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.peto.html'>rma.peto</a></span><span class='op'>(</span>ai<span class='op'>=</span><span class='va'>ai</span>, n1i<span class='op'>=</span><span class='va'>n1i</span>, ci<span class='op'>=</span><span class='va'>ci</span>, n2i<span class='op'>=</span><span class='va'>n2i</span>, data<span class='op'>=</span><span class='va'>dat</span>, subset<span class='op'>=</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>7</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>res</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Fixed-Effects Model (k = 7)
 #&gt; 
 #&gt; I^2 (total heterogeneity / total variability):  21.13%
@@ -266,7 +260,7 @@
 <span class='co'>### meta-analysis of trials 1-7 and LIMIT-2 (as in Yusuf et al., 1993)</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.peto.html'>rma.peto</a></span><span class='op'>(</span>ai<span class='op'>=</span><span class='va'>ai</span>, n1i<span class='op'>=</span><span class='va'>n1i</span>, ci<span class='op'>=</span><span class='va'>ci</span>, n2i<span class='op'>=</span><span class='va'>n2i</span>, data<span class='op'>=</span><span class='va'>dat</span>, subset<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>7</span>,<span class='fl'>14</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>res</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Fixed-Effects Model (k = 8)
 #&gt; 
 #&gt; I^2 (total heterogeneity / total variability):  35.71%
@@ -288,7 +282,7 @@
 <span class='co'>### meta-analysis of all trials except ISIS-4</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.peto.html'>rma.peto</a></span><span class='op'>(</span>ai<span class='op'>=</span><span class='va'>ai</span>, n1i<span class='op'>=</span><span class='va'>n1i</span>, ci<span class='op'>=</span><span class='va'>ci</span>, n2i<span class='op'>=</span><span class='va'>n2i</span>, data<span class='op'>=</span><span class='va'>dat</span>, subset<span class='op'>=</span><span class='op'>-</span><span class='fl'>16</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>res</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Fixed-Effects Model (k = 15)
 #&gt; 
 #&gt; I^2 (total heterogeneity / total variability):  36.34%
@@ -307,14 +301,14 @@
 #&gt; estimate  ci.lb  ci.ub 
 #&gt;     0.55   0.44   0.68 
 #&gt; </div><div class='input'><span class='fu'><a href='predict.rma.html'>predict</a></span><span class='op'>(</span><span class='va'>res</span>, transf<span class='op'>=</span><span class='va'>exp</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt;  pred ci.lb ci.ub 
 #&gt;  0.55  0.44  0.68 
 #&gt; </div><div class='input'>
 <span class='co'>### meta-analysis of all trials including ISIS-4</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.peto.html'>rma.peto</a></span><span class='op'>(</span>ai<span class='op'>=</span><span class='va'>ai</span>, n1i<span class='op'>=</span><span class='va'>n1i</span>, ci<span class='op'>=</span><span class='va'>ci</span>, n2i<span class='op'>=</span><span class='va'>n2i</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>res</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Fixed-Effects Model (k = 16)
 #&gt; 
 #&gt; I^2 (total heterogeneity / total variability):  73.12%
@@ -333,7 +327,7 @@
 #&gt; estimate  ci.lb  ci.ub 
 #&gt;     1.01   0.95   1.07 
 #&gt; </div><div class='input'><span class='fu'><a href='predict.rma.html'>predict</a></span><span class='op'>(</span><span class='va'>res</span>, transf<span class='op'>=</span><span class='va'>exp</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt;  pred ci.lb ci.ub 
 #&gt;  1.01  0.95  1.07 
 #&gt; </div><div class='input'>
@@ -355,7 +349,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9001, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
+  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
 </div>
 
       </footer>
@@ -363,8 +357,6 @@
 
   
 
-
-  
 
   </body>
 </html>

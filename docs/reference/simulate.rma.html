@@ -89,15 +89,9 @@
 
 
 
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -111,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-101</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-102</span>
       </span>
     </div>
 
@@ -219,7 +213,7 @@
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data frame with <code>nsim</code> columns with the simulated effect sizes or outcomes.</p>
-<p>The data frame comes with an attribute <code>"seed"</code>. If argument <code>seed</code> is <code>NULL</code>, the attribute is the value of <code><a href='https://rdrr.io/r/base/Random.html'>.Random.seed</a></code> before the simulation was started; otherwise it is the value of the <code>seed</code> argument with a <code>"kind"</code> attribute with value <code>as.list(RNGkind())</code>.</p>
+<p>The data frame comes with an attribute <code>"seed"</code>. If argument <code>seed</code> is <code>NULL</code>, the attribute is the value of <code><a href='https://rdrr.io/r/base/Random.html'>.Random.seed</a></code> before the simulation was started; otherwise it is the value of the <code>seed</code> argument with a <code>"kind"</code> attribute with value <code><a href='https://rdrr.io/r/base/list.html'>as.list(RNGkind())</a></code>.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>If the outcome measure used for the analysis is bounded (e.g., correlations are bounded between -1 and +1, proportions are bounded between 0 and 1), one can use the <code>olim</code> argument to enforce those observation/outcome limits when simulating values (simulated values cannot exceed those bounds then).</p>
@@ -240,7 +234,7 @@
 <span class='co'>### calculate log risk ratios and corresponding sampling variances</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"RR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 <span class='va'>dat</span>
-</div><div class='co'>#&gt;    trial               author year tpos  tneg cpos  cneg ablat      alloc 
+</div><div class='output co'>#&gt;    trial               author year tpos  tneg cpos  cneg ablat      alloc 
 #&gt; 1      1              Aronson 1948    4   119   11   128    44     random 
 #&gt; 2      2     Ferguson &amp; Simes 1949    6   300   29   274    55     random 
 #&gt; 3      3      Rosenthal et al 1960    3   228   11   209    42     random 
@@ -271,7 +265,7 @@
 <span class='co'>### fit random-effects model</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 <span class='va'>res</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Random-Effects Model (k = 13; tau^2 estimator: REML)
 #&gt; 
 #&gt; tau^2 (estimated amount of total heterogeneity): 0.3132 (SE = 0.1664)
@@ -293,7 +287,7 @@
 <span class='co'>### simulate 10 sets of new outcomes based on the fitted model</span>
 <span class='va'>newdat</span> <span class='op'>&lt;-</span> <span class='fu'>simulate</span><span class='op'>(</span><span class='va'>res</span>, nsim<span class='op'>=</span><span class='fl'>10</span>, seed<span class='op'>=</span><span class='fl'>1234</span><span class='op'>)</span>
 <span class='va'>newdat</span>
-</div><div class='co'>#&gt;         sim_1       sim_2       sim_3      sim_4      sim_5       sim_6
+</div><div class='output co'>#&gt;         sim_1       sim_2       sim_3      sim_4      sim_5       sim_6
 #&gt; 1  -1.6793004 -0.66301253 -0.25514894 -1.0869090 -1.6008315  0.70583300
 #&gt; 2  -0.5168313 -0.03077959 -1.44400787  0.3184048 -1.4378126 -1.52592474
 #&gt; 3   0.2111329 -0.80867065 -0.72745421 -1.6267122 -0.8530777  0.45302757
@@ -336,7 +330,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9001, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
+  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
 </div>
 
       </footer>
@@ -344,8 +338,6 @@
 
   
 
-
-  
 
   </body>
 </html>

@@ -89,15 +89,9 @@
 
 
 
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -111,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-101</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-102</span>
       </span>
     </div>
 
@@ -374,7 +368,7 @@
 <p>However, for plotting and various other functions, it is necessary to calculate the observed effect sizes or outcomes for the \(k\) studies. Here, zero cells/events can be problematic, so adding a constant value to the cell/event counts ensures that all \(k\) values can be calculated. The <code>add</code> and <code>to</code> arguments are used to specify what value should be added to the cell/event counts and under what circumstances when calculating the observed effect sizes or outcomes. The documentation of the <code><a href='escalc.html'>escalc</a></code> function explains how the <code>add</code> and <code>to</code> arguments work. Note that <code>drop00</code> is set to <code>TRUE</code> by default, since studies where <code>ai=ci=0</code> or <code>bi=di=0</code> or studies where <code>x1i=x2i=0</code> are uninformative about the size of the effect.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An object of class <code>c("rma.glmm","rma")</code>. The object is a list containing the following components:</p>
+    <p>An object of class <code><a href='https://rdrr.io/r/base/c.html'>c("rma.glmm","rma")</a></code>. The object is a list containing the following components:</p>
 <dt>beta</dt><dd><p>estimated coefficients of the model.</p></dd>
    <dt>se</dt><dd><p>standard errors of the coefficients.</p></dd>
    <dt>zval</dt><dd><p>test statistics of the coefficients.</p></dd>
@@ -419,7 +413,7 @@
 <li><p><code>intCtrl</code> is a list of named arguments (i.e., <code>rel.tol</code> and <code>subdivisions</code>) to be passed on to the <code><a href='https://rdrr.io/r/stats/integrate.html'>integrate</a></code> function.</p></li>
 <li><p><code>hessianCtrl</code> is a list of named arguments to be passed on to the <code>method.args</code> argument of the <code><a href='https://rdrr.io/pkg/numDeriv/man/hessian.html'>hessian</a></code> function. For some borderline cases, it may be necessary to bump up the <code>r</code> argument to a higher number to get sufficient accuracy when approximating the Hessian numerically (the default is <code>control=list(hessianCtrl=list(r=16))</code>).</p></li>
 </ul><p>Also, for <code><a href='https://rdrr.io/pkg/lme4/man/glmer.html'>glmer</a></code>, the <code>nAGQ</code> argument is used to specify the number of quadrature points. The default value is 7, which should provide sufficient accuracy in the evaluation of the log-likelihood in most cases, but at the expense of speed. Setting this to 1 corresponds to the Laplacian approximation (which is faster, but less accurate).</p>
-<p>Information on the progress of the various algorithms can be obtained by setting <code>verbose=TRUE</code>. Since fitting the various models can be computationally expensive, this option is useful to determine how the model fitting is progressing. One can also set <code>verbose</code> to an integer (<code>verbose=2</code> yields even more information and <code>verbose=3</code> also sets <code>option(warn=1)</code> temporarily).</p>
+<p>Information on the progress of the various algorithms can be obtained by setting <code>verbose=TRUE</code>. Since fitting the various models can be computationally expensive, this option is useful to determine how the model fitting is progressing. One can also set <code>verbose</code> to an integer (<code>verbose=2</code> yields even more information and <code>verbose=3</code> also sets <code><a href='https://rdrr.io/r/base/options.html'>option(warn=1)</a></code> temporarily).</p>
 <p>For <code>model="CM.EL"</code> and <code>measure="OR"</code>, optimization involves repeated calculation of the density of the non-central hypergeometric distribution. When <code>method="ML"</code>, this also requires integration over the same density. This is currently implemented in a rather brute-force manner and may not be numerically stable, especially when models with moderators are fitted. Stability can be improved by scaling the moderators in a similar manner (i.e., don't use a moderator that is coded 0 and 1, while another uses values in the 1000s). For models with an intercept and moderators, the function actually rescales (non-dummy) variables to z-scores during the model fitting (results are given after back-scaling, so this should be transparent to the user). For models without an intercept, this is not done, so sensitivity analyses are highly recommended here (to ensure that the results do not depend on the scaling of the moderators).</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
@@ -442,7 +436,7 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### random-effects model using rma.uni() (standard RE model analysis)</span>
 <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"OR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span>, method<span class='op'>=</span><span class='st'>"ML"</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Random-Effects Model (k = 13; tau^2 estimator: ML)
 #&gt; 
 #&gt; tau^2 (estimated amount of total heterogeneity): 0.3025 (SE = 0.1549)
@@ -466,7 +460,7 @@
 <span class='co'>### unconditional model with fixed study effects</span>
 <span class='co'># \dontrun{</span>
 <span class='fu'>rma.glmm</span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"OR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span>, model<span class='op'>=</span><span class='st'>"UM.FS"</span><span class='op'>)</span><span class='co'># }</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Random-Effects Model (k = 13; tau^2 estimator: ML)
 #&gt; Model Type: Unconditional Model with Fixed Study Effects
 #&gt; 
@@ -490,7 +484,7 @@
 <span class='co'>### unconditional model with random study effects</span>
 <span class='co'># \dontrun{</span>
 <span class='fu'>rma.glmm</span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"OR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span>, model<span class='op'>=</span><span class='st'>"UM.RS"</span><span class='op'>)</span><span class='co'># }</span>
-</div><div class='co'>#&gt; <span class='warning'>Warning: </span>Currently not possible to fit RE/ME model='UM.RS' with nAGQ &gt; 1. nAGQ automatically set to 1.</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Currently not possible to fit RE/ME model='UM.RS' with nAGQ &gt; 1. nAGQ automatically set to 1.</span></div><div class='output co'>#&gt; 
 #&gt; Random-Effects Model (k = 13; tau^2 estimator: ML)
 #&gt; Model Type: Unconditional Model with Random Study Effects
 #&gt; 
@@ -517,7 +511,7 @@
 <span class='co'>### conditional model with approximate likelihood</span>
 <span class='co'># \dontrun{</span>
 <span class='fu'>rma.glmm</span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"OR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span>, model<span class='op'>=</span><span class='st'>"CM.AL"</span><span class='op'>)</span><span class='co'># }</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Random-Effects Model (k = 13; tau^2 estimator: ML)
 #&gt; Model Type: Conditional Model with Approximate Likelihood
 #&gt; 
@@ -542,7 +536,7 @@
 <span class='co'>### note: fitting this model may take a bit of time, so be patient</span>
 <span class='co'># \dontrun{</span>
 <span class='fu'>rma.glmm</span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"OR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span>, model<span class='op'>=</span><span class='st'>"CM.EL"</span><span class='op'>)</span><span class='co'># }</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Random-Effects Model (k = 13; tau^2 estimator: ML)
 #&gt; Model Type: Conditional Model with Exact Likelihood
 #&gt; 
@@ -578,7 +572,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9001, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
+  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
 </div>
 
       </footer>
@@ -586,8 +580,6 @@
 
   
 
-
-  
 
   </body>
 </html>

@@ -89,15 +89,9 @@
 
 
 
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -111,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-101</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-102</span>
       </span>
     </div>
 
@@ -232,7 +226,7 @@
 <dt>tau</dt><dd><p>the estimated value of Kendall's tau rank correlation coefficient</p></dd>
    <dt>pval</dt><dd><p>the corresponding p-value for the test that the true tau is equal to zero</p></dd>
 
-   The results are formatted and printed with the <a href='print.ranktest.rma.html'>print.ranktest</a> function.
+   The results are formatted and printed with the <a href='print.ranktest.html'>print.ranktest</a> function.
 
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
@@ -258,14 +252,14 @@
 
 <span class='co'>### carry out the rank correlation test</span>
 <span class='fu'>ranktest</span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Rank Correlation Test for Funnel Plot Asymmetry
 #&gt; 
 #&gt; Kendall's tau = 0.0256, p = 0.9524
 #&gt; </div><div class='input'>
 <span class='co'>### can also pass the observed outcomes and corresponding sampling variances to the function</span>
 <span class='fu'>ranktest</span><span class='op'>(</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>yi</span>, <span class='va'>dat</span><span class='op'>$</span><span class='va'>vi</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Rank Correlation Test for Funnel Plot Asymmetry
 #&gt; 
 #&gt; Kendall's tau = 0.0256, p = 0.9524
@@ -285,7 +279,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9001, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
+  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
 </div>
 
       </footer>
@@ -293,8 +287,6 @@
 
   
 
-
-  
 
   </body>
 </html>

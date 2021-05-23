@@ -89,15 +89,9 @@
 
 
 
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -111,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-101</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-102</span>
       </span>
     </div>
 
@@ -218,7 +212,7 @@
     <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat' and examine data</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.hackshaw1998</span>
 <span class='va'>dat</span>
-</div><div class='co'>#&gt;    study       author year   country       design cases   or or.lb or.ub 
+</div><div class='output co'>#&gt;    study       author year   country       design cases   or or.lb or.ub 
 #&gt; 1      1    Garfinkel 1981       USA       cohort   153 1.18  0.90  1.54 
 #&gt; 2      2     Hirayama 1984     Japan       cohort   200 1.45  1.02  2.08 
 #&gt; 3      3       Butler 1988       USA       cohort     8 2.02  0.48  8.56 
@@ -297,7 +291,7 @@
 <span class='co'>### random-effects model using the log odds ratios</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span>, method<span class='op'>=</span><span class='st'>"DL"</span><span class='op'>)</span>
 <span class='va'>res</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Random-Effects Model (k = 37; tau^2 estimator: DL)
 #&gt; 
 #&gt; tau^2 (estimated amount of total heterogeneity): 0.0170 (SE = 0.0171)
@@ -318,7 +312,7 @@
 #&gt; </div><div class='input'>
 <span class='co'>### estimated average odds ratio with CI (and prediction interval)</span>
 <span class='fu'><a href='predict.rma.html'>predict</a></span><span class='op'>(</span><span class='va'>res</span>, transf<span class='op'>=</span><span class='va'>exp</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt;  pred ci.lb ci.ub pi.lb pi.ub 
 #&gt;  1.24  1.13  1.36  0.94  1.63 
 #&gt; </div><div class='input'>
@@ -342,7 +336,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9001, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
+  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
 </div>
 
       </footer>
@@ -350,8 +344,6 @@
 
   
 
-
-  
 
   </body>
 </html>

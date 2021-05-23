@@ -89,15 +89,9 @@
 
 
 
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -111,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-101</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-102</span>
       </span>
     </div>
 
@@ -222,7 +216,7 @@
     <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat' and examine data</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.collins1985a</span>
 <span class='va'>dat</span>
-</div><div class='co'>#&gt;    id       trial year ref trt ctrl nti b.xti o.xti d.xti nci b.xci o.xci d.xci
+</div><div class='output co'>#&gt;    id       trial year ref trt ctrl nti b.xti o.xti d.xti nci b.xci o.xci d.xci
 #&gt; 1   1       Hoare 1979   3   C    P  50     8     5     1  50    16    12     1
 #&gt; 2   2    La Brooy 1979   4   C    P  56    11     6     1  53    12     7     0
 #&gt; 3   3     Macklon 1979   5   C    P  18     5    NA    NA  12     1    NA    NA
@@ -252,8 +246,8 @@
 #&gt; 27 27        Foco 1984  28   R    P  15     2     0     0  14     3     0     0</div><div class='input'>
 <span class='co'>### meta-analysis of log ORs using Peto's method (outcome: persistent or recurrent bleedings)</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.peto.html'>rma.peto</a></span><span class='op'>(</span>ai<span class='op'>=</span><span class='va'>b.xti</span>, n1i<span class='op'>=</span><span class='va'>nti</span>, ci<span class='op'>=</span><span class='va'>b.xci</span>, n2i<span class='op'>=</span><span class='va'>nci</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
-</div><div class='co'>#&gt; <span class='warning'>Warning: </span>Tables with NAs omitted from model fitting.</div><div class='co'>#&gt; <span class='warning'>Warning: </span>Some yi/vi values are NA.</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>res</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Tables with NAs omitted from model fitting.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Some yi/vi values are NA.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>res</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; Fixed-Effects Model (k = 25)
 #&gt; 
 #&gt; I^2 (total heterogeneity / total variability):  39.33%
@@ -276,8 +270,8 @@
 <span class='co'>### meta-analysis of log ORs using a conditional logistic regression model (FE model)</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.glmm.html'>rma.glmm</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"OR"</span>, ai<span class='op'>=</span><span class='va'>b.xti</span>, n1i<span class='op'>=</span><span class='va'>nti</span>, ci<span class='op'>=</span><span class='va'>b.xci</span>, n2i<span class='op'>=</span><span class='va'>nci</span>, data<span class='op'>=</span><span class='va'>dat</span>,
                 model<span class='op'>=</span><span class='st'>"CM.EL"</span>, method<span class='op'>=</span><span class='st'>"FE"</span><span class='op'>)</span>
-</div><div class='co'>#&gt; <span class='warning'>Warning: </span>Studies with NAs omitted from model fitting.</div><div class='co'>#&gt; <span class='warning'>Warning: </span>Some yi/vi values are NA.</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Studies with NAs omitted from model fitting.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Some yi/vi values are NA.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; Fixed-Effects Model (k = 24)
 #&gt; Model Type: Conditional Model with Exact Likelihood
 #&gt; 
@@ -296,19 +290,19 @@
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'><span class='fu'><a href='predict.rma.html'>predict</a></span><span class='op'>(</span><span class='va'>res</span>, transf<span class='op'>=</span><span class='va'>exp</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt;  pred ci.lb ci.ub 
 #&gt;  0.89  0.73  1.08 
 #&gt; </div><div class='input'>
 <span class='co'>### plot the likelihoods of the odds ratios</span>
 <span class='fu'><a href='llplot.html'>llplot</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"OR"</span>, ai<span class='op'>=</span><span class='va'>b.xti</span>, n1i<span class='op'>=</span><span class='va'>nti</span>, ci<span class='op'>=</span><span class='va'>b.xci</span>, n2i<span class='op'>=</span><span class='va'>nci</span>, data<span class='op'>=</span><span class='va'>dat</span>,
        lwd<span class='op'>=</span><span class='fl'>1</span>, refline<span class='op'>=</span><span class='cn'>NA</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>4</span>,<span class='fl'>4</span><span class='op'>)</span>, drop00<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='co'>#&gt; <span class='warning'>Warning: </span>Studies with NAs omitted from plotting.</div><div class='img'><img src='dat.collins1985a-1.png' alt='' width='864' height='768' /></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Studies with NAs omitted from plotting.</span></div><div class='img'><img src='dat.collins1985a-1.png' alt='' width='864' height='768' /></div><div class='input'>
 <span class='co'>### meta-analysis of log odds ratios using a conditional logistic regression model (RE model)</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.glmm.html'>rma.glmm</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"OR"</span>, ai<span class='op'>=</span><span class='va'>b.xti</span>, n1i<span class='op'>=</span><span class='va'>nti</span>, ci<span class='op'>=</span><span class='va'>b.xci</span>, n2i<span class='op'>=</span><span class='va'>nci</span>, data<span class='op'>=</span><span class='va'>dat</span>,
                 model<span class='op'>=</span><span class='st'>"CM.EL"</span>, method<span class='op'>=</span><span class='st'>"ML"</span><span class='op'>)</span>
-</div><div class='co'>#&gt; <span class='warning'>Warning: </span>Studies with NAs omitted from model fitting.</div><div class='co'>#&gt; <span class='warning'>Warning: </span>Some yi/vi values are NA.</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Studies with NAs omitted from model fitting.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Some yi/vi values are NA.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; Random-Effects Model (k = 24; tau^2 estimator: ML)
 #&gt; Model Type: Conditional Model with Exact Likelihood
 #&gt; 
@@ -332,15 +326,15 @@
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'><span class='fu'><a href='predict.rma.html'>predict</a></span><span class='op'>(</span><span class='va'>res</span>, transf<span class='op'>=</span><span class='va'>exp</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt;  pred ci.lb ci.ub pi.lb pi.ub 
 #&gt;  0.84  0.64  1.10  0.41  1.74 
 #&gt; </div><div class='input'><span class='co'># }</span>
 
 <span class='co'>### meta-analysis of log ORs using Peto's method (outcome: need for surgery)</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.peto.html'>rma.peto</a></span><span class='op'>(</span>ai<span class='op'>=</span><span class='va'>o.xti</span>, n1i<span class='op'>=</span><span class='va'>nti</span>, ci<span class='op'>=</span><span class='va'>o.xci</span>, n2i<span class='op'>=</span><span class='va'>nci</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
-</div><div class='co'>#&gt; <span class='warning'>Warning: </span>Tables with NAs omitted from model fitting.</div><div class='co'>#&gt; <span class='warning'>Warning: </span>Some yi/vi values are NA.</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>res</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Tables with NAs omitted from model fitting.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Some yi/vi values are NA.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>res</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; Fixed-Effects Model (k = 22)
 #&gt; 
 #&gt; I^2 (total heterogeneity / total variability):  25.38%
@@ -361,8 +355,8 @@
 #&gt; </div><div class='input'>
 <span class='co'>### meta-analysis of log ORs using Peto's method (outcome: death)</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.peto.html'>rma.peto</a></span><span class='op'>(</span>ai<span class='op'>=</span><span class='va'>d.xti</span>, n1i<span class='op'>=</span><span class='va'>nti</span>, ci<span class='op'>=</span><span class='va'>d.xci</span>, n2i<span class='op'>=</span><span class='va'>nci</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
-</div><div class='co'>#&gt; <span class='warning'>Warning: </span>Tables with NAs omitted from model fitting.</div><div class='co'>#&gt; <span class='warning'>Warning: </span>Some yi/vi values are NA.</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>res</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Tables with NAs omitted from model fitting.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Some yi/vi values are NA.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>res</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; Fixed-Effects Model (k = 24)
 #&gt; 
 #&gt; I^2 (total heterogeneity / total variability):  23.17%
@@ -396,7 +390,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9001, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
+  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
 </div>
 
       </footer>
@@ -404,8 +398,6 @@
 
   
 
-
-  
 
   </body>
 </html>

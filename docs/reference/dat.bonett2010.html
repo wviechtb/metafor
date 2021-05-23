@@ -89,15 +89,9 @@
 
 
 
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -111,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-101</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-102</span>
       </span>
     </div>
 
@@ -215,7 +209,7 @@
     <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat' and examine data</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.bonett2010</span>
 <span class='va'>dat</span>
-</div><div class='co'>#&gt;   study                           source  ni   ai mi caregivers
+</div><div class='output co'>#&gt;   study                           source  ni   ai mi caregivers
 #&gt; 1     1 Atienza &amp; Parris Stephens (2000) 103 0.93 20      women
 #&gt; 2     2             Hooker et al. (2002)  64 0.91 20      mixed
 #&gt; 3     3            Martire et al. (1997) 118 0.94 20      women
@@ -228,7 +222,7 @@
 <span class='co'>### meta-analysis using the raw alpha values</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"ARAW"</span>, ai<span class='op'>=</span><span class='va'>ai</span>, mi<span class='op'>=</span><span class='va'>mi</span>, ni<span class='op'>=</span><span class='va'>ni</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 <span class='va'>res</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Random-Effects Model (k = 9; tau^2 estimator: REML)
 #&gt; 
 #&gt; tau^2 (estimated amount of total heterogeneity): 0.0004 (SE = 0.0003)
@@ -251,7 +245,7 @@
 <span class='co'>### transformation suggested by Hakstian &amp; Whalen, 1976)</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"AHW"</span>, ai<span class='op'>=</span><span class='va'>ai</span>, mi<span class='op'>=</span><span class='va'>mi</span>, ni<span class='op'>=</span><span class='va'>ni</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 <span class='va'>res</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Random-Effects Model (k = 9; tau^2 estimator: REML)
 #&gt; 
 #&gt; tau^2 (estimated amount of total heterogeneity): 0.0011 (SE = 0.0007)
@@ -270,7 +264,7 @@
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'><span class='fu'><a href='predict.rma.html'>predict</a></span><span class='op'>(</span><span class='va'>res</span>, transf<span class='op'>=</span><span class='va'>transf.iahw</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt;    pred  ci.lb  ci.ub  pi.lb  pi.ub 
 #&gt;  0.9052 0.8891 0.9197 0.8555 0.9420 
 #&gt; </div><div class='input'>
@@ -278,7 +272,7 @@
 <span class='co'>### transformation suggested by Bonett, 2002)</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"ABT"</span>, ai<span class='op'>=</span><span class='va'>ai</span>, mi<span class='op'>=</span><span class='va'>mi</span>, ni<span class='op'>=</span><span class='va'>ni</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 <span class='va'>res</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Random-Effects Model (k = 9; tau^2 estimator: REML)
 #&gt; 
 #&gt; tau^2 (estimated amount of total heterogeneity): 0.0461 (SE = 0.0302)
@@ -297,7 +291,7 @@
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'><span class='fu'><a href='predict.rma.html'>predict</a></span><span class='op'>(</span><span class='va'>res</span>, transf<span class='op'>=</span><span class='va'>transf.iabt</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt;    pred  ci.lb  ci.ub  pi.lb  pi.ub 
 #&gt;  0.9052 0.8886 0.9193 0.8512 0.9396 
 #&gt; </div><div class='input'>
@@ -307,7 +301,7 @@
 <span class='co'>### examine whether female/mixed samples yield different alphas (with raw alphas)</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"ARAW"</span>, ai<span class='op'>=</span><span class='va'>ai</span>, mi<span class='op'>=</span><span class='va'>mi</span>, ni<span class='op'>=</span><span class='va'>ni</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>caregivers</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 <span class='va'>res</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Mixed-Effects Model (k = 9; tau^2 estimator: REML)
 #&gt; 
 #&gt; tau^2 (estimated amount of residual heterogeneity):     0.0003 (SE = 0.0002)
@@ -331,7 +325,7 @@
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'><span class='fu'><a href='predict.rma.html'>predict</a></span><span class='op'>(</span><span class='va'>res</span>, newmods<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>1</span><span class='op'>)</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt;   pred   se ci.lb ci.ub pi.lb pi.ub 
 #&gt; 1 0.89 0.01  0.88  0.91  0.86  0.93 
 #&gt; 2 0.92 0.01  0.90  0.94  0.89  0.96 
@@ -351,7 +345,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9001, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
+  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
 </div>
 
       </footer>
@@ -359,8 +353,6 @@
 
   
 
-
-  
 
   </body>
 </html>

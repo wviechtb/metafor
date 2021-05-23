@@ -1,6 +1,6 @@
 ### library(metafor); library(testthat); Sys.setenv(NOT_CRAN="true")
 
-### see also: http://www.metafor-project.org/doku.php/analyses:berkey1995
+### see also: https://www.metafor-project.org/doku.php/analyses:berkey1995
 
 source("tolerances.r") # read in tolerances
 

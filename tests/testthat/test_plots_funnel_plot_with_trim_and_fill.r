@@ -1,6 +1,6 @@
 ### library(metafor); library(testthat); Sys.setenv(NOT_CRAN="true")
 
-### see also: http://www.metafor-project.org/doku.php/plots:funnel_plot_with_trim_and_fill
+### see also: https://www.metafor-project.org/doku.php/plots:funnel_plot_with_trim_and_fill
 
 context("Checking plots example: funnel plot with trim and fill")
 

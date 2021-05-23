@@ -89,15 +89,9 @@
 
 
 
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -111,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-101</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-102</span>
       </span>
     </div>
 
@@ -281,8 +275,8 @@
 
 <span class='co'>### multivariate random-effects model</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>V</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>var1.var2</span> <span class='op'>-</span> <span class='fl'>1</span>, random <span class='op'>=</span> <span class='op'>~</span> <span class='va'>var1.var2</span> <span class='op'>|</span> <span class='va'>study</span>, struct<span class='op'>=</span><span class='st'>"UN"</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
-</div><div class='co'>#&gt; <span class='warning'>Warning: </span>Rows with NAs omitted from model fitting.</div><div class='input'><span class='va'>res</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Rows with NAs omitted from model fitting.</span></div><div class='input'><span class='va'>res</span>
+</div><div class='output co'>#&gt; 
 #&gt; Multivariate Meta-Analysis Model (k = 51; method: REML)
 #&gt; 
 #&gt; Variance Components:
@@ -337,14 +331,14 @@
 <span class='va'>R</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/lower.tri.html'>lower.tri</a></span><span class='op'>(</span><span class='va'>R</span><span class='op'>)</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'><a href='coef.rma.html'>coef</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span><span class='op'>(</span><span class='va'>R</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>R</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"perf"</span>, <span class='st'>"acog"</span>, <span class='st'>"asom"</span>, <span class='st'>"conf"</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='va'>R</span>, digits<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span>
-</div><div class='co'>#&gt;        perf   acog   asom conf
+</div><div class='output co'>#&gt;        perf   acog   asom conf
 #&gt; perf     NA     NA     NA   NA
 #&gt; acog -0.060     NA     NA   NA
 #&gt; asom -0.142  0.567     NA   NA
 #&gt; conf  0.317 -0.489 -0.475   NA</div><div class='input'>
 <span class='co'>### check that order in vcov(res) corresponds to order in R</span>
 <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='fu'><a href='vcov.rma.html'>vcov</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>, digits<span class='op'>=</span><span class='fl'>4</span><span class='op'>)</span>
-</div><div class='co'>#&gt;                    var1.var2acog.perf var1.var2asom.perf var1.var2conf.perf
+</div><div class='output co'>#&gt;                    var1.var2acog.perf var1.var2asom.perf var1.var2conf.perf
 #&gt; var1.var2acog.perf             0.0198             0.0115            -0.0069
 #&gt; var1.var2asom.perf             0.0115             0.0084            -0.0043
 #&gt; var1.var2conf.perf            -0.0069            -0.0043             0.0072
@@ -361,7 +355,7 @@
 <span class='co'>### fit regression model with 'perf' as outcome and 'acog', 'asom', and 'conf' as predictors</span>
 <span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>matreg</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>:</span><span class='fl'>4</span>, R<span class='op'>=</span><span class='va'>R</span>, V<span class='op'>=</span><span class='fu'><a href='vcov.rma.html'>vcov</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>fit</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt;       estimate      se     zval    pval    ci.lb   ci.ub 
 #&gt; acog    0.1482  0.1566   0.9465  0.3439  -0.1587  0.4550      
 #&gt; asom   -0.0536  0.0768  -0.6979  0.4852  -0.2043  0.0970      
@@ -379,12 +373,12 @@
 <span class='va'>dat</span><span class='op'>$</span><span class='va'>var1.var2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>var1.var2</span>,
    levels<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"acog.perf"</span>, <span class='st'>"asom.perf"</span>, <span class='st'>"conf.perf"</span>, <span class='st'>"acog.asom"</span>, <span class='st'>"acog.conf"</span>, <span class='st'>"asom.conf"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>V</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>var1.var2</span> <span class='op'>-</span> <span class='fl'>1</span>, random <span class='op'>=</span> <span class='op'>~</span> <span class='va'>var1.var2</span> <span class='op'>|</span> <span class='va'>study</span>, struct<span class='op'>=</span><span class='st'>"UN"</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
-</div><div class='co'>#&gt; <span class='warning'>Warning: </span>Rows with NAs omitted from model fitting.</div><div class='input'><span class='va'>R</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='cn'>NA</span>, nrow<span class='op'>=</span><span class='fl'>4</span>, ncol<span class='op'>=</span><span class='fl'>4</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Rows with NAs omitted from model fitting.</span></div><div class='input'><span class='va'>R</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='cn'>NA</span>, nrow<span class='op'>=</span><span class='fl'>4</span>, ncol<span class='op'>=</span><span class='fl'>4</span><span class='op'>)</span>
 <span class='va'>R</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/lower.tri.html'>lower.tri</a></span><span class='op'>(</span><span class='va'>R</span><span class='op'>)</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'><a href='coef.rma.html'>coef</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span><span class='op'>(</span><span class='va'>R</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>R</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"perf"</span>, <span class='st'>"acog"</span>, <span class='st'>"asom"</span>, <span class='st'>"conf"</span><span class='op'>)</span>
 <span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>matreg</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>:</span><span class='fl'>4</span>, R<span class='op'>=</span><span class='va'>R</span>, V<span class='op'>=</span><span class='fu'><a href='vcov.rma.html'>vcov</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>, ztor<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
 <span class='va'>fit</span><span class='co'># }</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt;       estimate      se     zval    pval    ci.lb   ci.ub 
 #&gt; acog    0.1362  0.1697   0.8023  0.4224  -0.1965  0.4688      
 #&gt; asom   -0.0678  0.0761  -0.8900  0.3735  -0.2170  0.0814      
@@ -408,7 +402,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9001, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
+  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
 </div>
 
       </footer>
@@ -416,8 +410,6 @@
 
   
 
-
-  
 
   </body>
 </html>

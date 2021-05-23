@@ -274,7 +274,7 @@ res <- rma(yi, vi, data=dat, method="FE")
 predict(res, transf=exp, digits=2)
 
 # funnel plot
-funnel(res, atransf=exp, at=log(c(0.01, 0.1, 1, 10, 100)), ylim=c(0,2))
+funnel(res, atransf=exp, at=log(c(0.01,0.1,1,10,100)), ylim=c(0,2))
 
 # fit half-normal, negative-exponential, logistic, and power selection models
 sel1 <- selmodel(res, type="halfnorm", alternative="less")
@@ -334,11 +334,11 @@ res <- rma(yi, vi, data=dat, method="ML")
 res
 
 # funnel plot
-funnel(res, atransf=exp, at=log(c(0.25, 0.5, 1, 2, 4, 8)), ylim=c(0,0.8))
+funnel(res, atransf=exp, at=log(c(0.25,0.5,1,2,4,8)), ylim=c(0,0.8))
 
 # step function selection model
 \dontrun{
-sel <- selmodel(res, type="stepfun", steps=c(0.05, 0.10, 0.50, 1.00))
+sel <- selmodel(res, type="stepfun", alternative="greater", steps=c(.025,.10,.50,1))
 sel
 
 # plot selection function

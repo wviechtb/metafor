@@ -89,15 +89,9 @@
 
 
 
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -111,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-101</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-102</span>
       </span>
     </div>
 
@@ -220,7 +214,7 @@
     <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat' and examine data</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.knapp2017</span>
 <span class='va'>dat</span>
-</div><div class='co'>#&gt;                 authors year study    yi    vi difficulty n_sz n_hc comp yi_iq
+</div><div class='output co'>#&gt;                 authors year study    yi    vi difficulty n_sz n_hc comp yi_iq
 #&gt; 1        Badcock et al. 2005     1  0.62 0.075       3.83   24   33    1  0.72
 #&gt; 2           Braw et al. 2008     2  0.46 0.047       3.83   44   44    1    NA
 #&gt; 3           Braw et al. 2008     2  0.73 0.052       3.83   38   44    2    NA
@@ -357,7 +351,7 @@
 <span class='co'>### fit a standard random-effects model ignoring correlated sampling errors</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 <span class='va'>res</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Random-Effects Model (k = 66; tau^2 estimator: REML)
 #&gt; 
 #&gt; tau^2 (estimated amount of total heterogeneity): 0.0551 (SE = 0.0212)
@@ -379,7 +373,7 @@
 <span class='co'>### fit a multilevel model with random effects for studies and comparisons within studies</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, random <span class='op'>=</span> <span class='op'>~</span> <span class='fl'>1</span> <span class='op'>|</span> <span class='va'>study</span><span class='op'>/</span><span class='va'>comp</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 <span class='va'>res</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Multivariate Meta-Analysis Model (k = 66; method: REML)
 #&gt; 
 #&gt; Variance Components:
@@ -405,14 +399,14 @@
    <span class='va'>S</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/diag.html'>diag</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span><span class='op'>(</span><span class='va'>v</span><span class='op'>)</span>, nrow<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>v</span><span class='op'>)</span>, ncol<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>v</span><span class='op'>)</span><span class='op'>)</span>
    <span class='va'>R</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fl'>0.4</span>, nrow<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>v</span><span class='op'>)</span>, ncol<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>v</span><span class='op'>)</span><span class='op'>)</span>
    <span class='fu'><a href='https://rdrr.io/r/base/diag.html'>diag</a></span><span class='op'>(</span><span class='va'>R</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fl'>1</span>
-   <span class='va'>S</span> <span class='op'><a href='https://rdrr.io/r/base/matmult.html'>%*%</a></span> <span class='va'>R</span> <span class='op'><a href='https://rdrr.io/r/base/matmult.html'>%*%</a></span> <span class='va'>S</span>
+   <span class='va'>S</span> <span class='op'>%*%</span> <span class='va'>R</span> <span class='op'>%*%</span> <span class='va'>S</span>
 <span class='op'>}</span><span class='op'>)</span>
 <span class='va'>V</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bldiag.html'>bldiag</a></span><span class='op'>(</span><span class='va'>V</span>, order<span class='op'>=</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>study</span><span class='op'>)</span>
 
 <span class='co'>### fit the same multilevel model, but now use this V matrix in the model</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>V</span>, random <span class='op'>=</span> <span class='op'>~</span> <span class='fl'>1</span> <span class='op'>|</span> <span class='va'>study</span><span class='op'>/</span><span class='va'>comp</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 <span class='va'>res</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Multivariate Meta-Analysis Model (k = 66; method: REML)
 #&gt; 
 #&gt; Variance Components:
@@ -434,7 +428,7 @@
 #&gt; </div><div class='input'>
 <span class='co'>### use cluster-robust inference methods based on this model</span>
 <span class='fu'><a href='robust.html'>robust</a></span><span class='op'>(</span><span class='va'>res</span>, cluster<span class='op'>=</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>study</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Number of outcomes:   66
 #&gt; Number of clusters:   31
 #&gt; Outcomes per cluster: 1-8 (mean: 2.13, median: 1)
@@ -449,8 +443,8 @@
 #&gt; </div><div class='input'>
 <span class='co'>### examine if task difficulty is a potential moderator of the effect</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>V</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>difficulty</span>, random <span class='op'>=</span> <span class='op'>~</span> <span class='fl'>1</span> <span class='op'>|</span> <span class='va'>study</span><span class='op'>/</span><span class='va'>comp</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
-</div><div class='co'>#&gt; <span class='warning'>Warning: </span>Rows with NAs omitted from model fitting.</div><div class='input'><span class='va'>res</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Rows with NAs omitted from model fitting.</span></div><div class='input'><span class='va'>res</span>
+</div><div class='output co'>#&gt; 
 #&gt; Multivariate Meta-Analysis Model (k = 57; method: REML)
 #&gt; 
 #&gt; Variance Components:
@@ -475,7 +469,7 @@
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'><span class='va'>sav</span> <span class='op'>&lt;-</span> <span class='fu'><a href='robust.html'>robust</a></span><span class='op'>(</span><span class='va'>res</span>, cluster<span class='op'>=</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>study</span><span class='op'>)</span>
 <span class='va'>sav</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Number of outcomes:   57
 #&gt; Number of clusters:   25
 #&gt; Outcomes per cluster: 1-8 (mean: 2.28, median: 1)
@@ -510,7 +504,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9001, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
+  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
 </div>
 
       </footer>
@@ -518,8 +512,6 @@
 
   
 
-
-  
 
   </body>
 </html>

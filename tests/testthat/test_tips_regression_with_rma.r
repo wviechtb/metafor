@@ -5,7 +5,7 @@ context("Checking tip: rma() results match up with those from lm()")
 source("tolerances.r") # read in tolerances
 
 ### this is essentially checking the equivalence of the results as explained here:
-### http://www.metafor-project.org/doku.php/tips:regression_with_rma
+### https://www.metafor-project.org/doku.php/tips:regression_with_rma
 
 test_that("results for rma() and lm() match for method='FE'.", {
 

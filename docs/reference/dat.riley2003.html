@@ -89,15 +89,9 @@
 
 
 
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -111,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-101</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-102</span>
       </span>
     </div>
 
@@ -215,7 +209,7 @@
     <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat' and examine data</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.riley2003</span>
 <span class='va'>dat</span>
-</div><div class='co'>#&gt;    study    yi  sei outcome 
+</div><div class='output co'>#&gt;    study    yi  sei outcome 
 #&gt; 1      1 -0.11 0.67     DFS 
 #&gt; 2      1 -0.14 0.81      OS 
 #&gt; 3      2  0.30 0.26     DFS 
@@ -317,7 +311,7 @@
 <span class='co'>### random-effects model analysis for outcome DFS</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, sei<span class='op'>=</span><span class='va'>sei</span>, data<span class='op'>=</span><span class='va'>dat</span>, subset<span class='op'>=</span><span class='op'>(</span><span class='va'>outcome</span> <span class='op'>==</span> <span class='st'>"DFS"</span><span class='op'>)</span>, method<span class='op'>=</span><span class='st'>"DL"</span><span class='op'>)</span>
 <span class='va'>res</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Random-Effects Model (k = 42; tau^2 estimator: DL)
 #&gt; 
 #&gt; tau^2 (estimated amount of total heterogeneity): 0.4212 (SE = 0.1561)
@@ -336,14 +330,14 @@
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'><span class='fu'><a href='predict.rma.html'>predict</a></span><span class='op'>(</span><span class='va'>res</span>, transf<span class='op'>=</span><span class='va'>exp</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt;  pred ci.lb ci.ub pi.lb pi.ub 
 #&gt;  4.41  3.42  5.70  1.21 16.15 
 #&gt; </div><div class='input'>
 <span class='co'>### random-effects model analysis for outcome OS</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, sei<span class='op'>=</span><span class='va'>sei</span>, data<span class='op'>=</span><span class='va'>dat</span>, subset<span class='op'>=</span><span class='op'>(</span><span class='va'>outcome</span> <span class='op'>==</span> <span class='st'>"OS"</span><span class='op'>)</span>, method<span class='op'>=</span><span class='st'>"DL"</span><span class='op'>)</span>
 <span class='va'>res</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt; Random-Effects Model (k = 56; tau^2 estimator: DL)
 #&gt; 
 #&gt; tau^2 (estimated amount of total heterogeneity): 0.4223 (SE = 0.1889)
@@ -362,7 +356,7 @@
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'><span class='fu'><a href='predict.rma.html'>predict</a></span><span class='op'>(</span><span class='va'>res</span>, transf<span class='op'>=</span><span class='va'>exp</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt;  pred ci.lb ci.ub pi.lb pi.ub 
 #&gt;  5.13  4.04  6.52  1.40 18.76 
 #&gt; </div></pre>
@@ -381,7 +375,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9001, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
+  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
 </div>
 
       </footer>
@@ -389,8 +383,6 @@
 
   
 
-
-  
 
   </body>
 </html>

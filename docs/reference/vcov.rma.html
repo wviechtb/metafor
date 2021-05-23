@@ -89,15 +89,9 @@
 
 
 
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -111,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-101</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-102</span>
       </span>
     </div>
 
@@ -232,13 +226,13 @@
 
 <span class='co'>### var-cov matrix of the fixed effects (i.e., the model coefficients)</span>
 <span class='fu'>vcov</span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
-</div><div class='co'>#&gt;             intrcpt         ablat          year
+</div><div class='output co'>#&gt;             intrcpt         ablat          year
 #&gt; intrcpt 846.5702228 -0.1783751581 -0.4272176864
 #&gt; ablat    -0.1783752  0.0001047356  0.0000889397
 #&gt; year     -0.4272177  0.0000889397  0.0002156144</div><div class='input'>
 <span class='co'>### marginal var-cov matrix of the observed log risk ratios</span>
 <span class='fu'>vcov</span><span class='op'>(</span><span class='va'>res</span>, type<span class='op'>=</span><span class='st'>"obs"</span><span class='op'>)</span>
-</div><div class='co'>#&gt;            1         2         3         4         5        6         7
+</div><div class='output co'>#&gt;            1         2         3         4         5        6         7
 #&gt; 1  0.4363721 0.0000000 0.0000000 0.0000000 0.0000000 0.000000 0.0000000
 #&gt; 2  0.0000000 0.3053685 0.0000000 0.0000000 0.0000000 0.000000 0.0000000
 #&gt; 3  0.0000000 0.0000000 0.5261553 0.0000000 0.0000000 0.000000 0.0000000
@@ -268,7 +262,7 @@
 #&gt; 13 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.182192</div><div class='input'>
 <span class='co'>### var-cov matrix of the fitted values</span>
 <span class='fu'>vcov</span><span class='op'>(</span><span class='va'>res</span>, type<span class='op'>=</span><span class='st'>"fitted"</span><span class='op'>)</span>
-</div><div class='co'>#&gt;               1            2            3             4            5
+</div><div class='output co'>#&gt;               1            2            3             4            5
 #&gt; 1   0.075274494  0.066352321  0.036850236 -2.415804e-02  0.008969395
 #&gt; 2   0.066352321  0.072275443  0.039773414  1.147263e-02 -0.008575967
 #&gt; 3   0.036850236  0.039773414  0.025624295  1.415547e-02  0.004190524
@@ -312,7 +306,7 @@
 #&gt; 13  0.013445239 0.01697740  0.029377697</div><div class='input'>
 <span class='co'>### var-cov matrix of the residuals</span>
 <span class='fu'>vcov</span><span class='op'>(</span><span class='va'>res</span>, type<span class='op'>=</span><span class='st'>"resid"</span><span class='op'>)</span>
-</div><div class='co'>#&gt;               1            2            3             4            5
+</div><div class='output co'>#&gt;               1            2            3             4            5
 #&gt; 1   0.361097623 -0.066352321 -0.036850236  2.415804e-02 -0.008969395
 #&gt; 2  -0.066352321  0.233093030 -0.039773414 -1.147263e-02  0.008575967
 #&gt; 3  -0.036850236 -0.039773414  0.500531022 -1.415547e-02 -0.004190524
@@ -369,7 +363,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9001, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
+  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
 </div>
 
       </footer>
@@ -377,8 +371,6 @@
 
   
 
-
-  
 
   </body>
 </html>

@@ -89,15 +89,9 @@
 
 
 
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -111,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-101</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-102</span>
       </span>
     </div>
 
@@ -212,7 +206,7 @@
     <pre class="examples"><div class='input'><span class='co'>### copy data into 'dat' and examine data</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.pritz1997</span>
 <span class='va'>dat</span>
-</div><div class='co'>#&gt;    study              authors xi ni
+</div><div class='output co'>#&gt;    study              authors xi ni
 #&gt; 1      1     Giannotta et al. 16 17
 #&gt; 2      2  Haraguchi and Ebina 10 12
 #&gt; 3      3    Swift and Solomon  4  8
@@ -234,11 +228,11 @@
 <span class='va'>ci.lb</span>        <span class='op'>&lt;-</span> <span class='va'>theta.hat</span> <span class='op'>-</span> <span class='fl'>1.96</span> <span class='op'>*</span> <span class='va'>se.theta.hat</span>
 <span class='va'>ci.ub</span>        <span class='op'>&lt;-</span> <span class='va'>theta.hat</span> <span class='op'>+</span> <span class='fl'>1.96</span> <span class='op'>*</span> <span class='va'>se.theta.hat</span>
 <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>estimate <span class='op'>=</span> <span class='va'>theta.hat</span>, se <span class='op'>=</span> <span class='va'>se.theta.hat</span>, ci.lb <span class='op'>=</span> <span class='va'>ci.lb</span>, ci.ub <span class='op'>=</span> <span class='va'>ci.ub</span><span class='op'>)</span>, <span class='fl'>4</span><span class='op'>)</span>
-</div><div class='co'>#&gt; estimate       se    ci.lb    ci.ub 
+</div><div class='output co'>#&gt; estimate       se    ci.lb    ci.ub 
 #&gt;   0.7546   0.0224   0.7106   0.7986 </div><div class='input'>
 <span class='co'>### this is identical to a FE model with sample size weights</span>
 <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, weights<span class='op'>=</span><span class='va'>ni</span>, method<span class='op'>=</span><span class='st'>"FE"</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
-</div><div class='co'>#&gt; <span class='warning'>Warning: </span>There are outcomes with non-positive sampling variances.</div><div class='co'>#&gt; <span class='warning'>Warning: </span>Cannot compute Q-test, I^2, or H^2 when there are non-positive sampling variances in the data.</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; <span class='warning'>Warning: There are outcomes with non-positive sampling variances.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Cannot compute Q-test, I^2, or H^2 when there are non-positive sampling variances in the data.</span></div><div class='output co'>#&gt; 
 #&gt; Fixed-Effects Model (k = 14)
 #&gt; 
 #&gt; Model Results:
@@ -253,7 +247,7 @@
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"PR"</span>, xi<span class='op'>=</span><span class='va'>xi</span>, ni<span class='op'>=</span><span class='va'>ni</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 <span class='fu'><a href='predict.rma.html'>predict</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt;    pred     se  ci.lb  ci.ub  pi.lb  pi.ub 
 #&gt;  0.7968 0.0423 0.7138 0.8797 0.5306 1.0629 
 #&gt; </div><div class='input'>
@@ -261,14 +255,14 @@
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"PLO"</span>, xi<span class='op'>=</span><span class='va'>xi</span>, ni<span class='op'>=</span><span class='va'>ni</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 <span class='fu'><a href='predict.rma.html'>predict</a></span><span class='op'>(</span><span class='va'>res</span>, transf<span class='op'>=</span><span class='va'>transf.ilogit</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt;    pred  ci.lb  ci.ub  pi.lb  pi.ub 
 #&gt;  0.7575 0.6605 0.8337 0.4661 0.9179 
 #&gt; </div><div class='input'>
 <span class='co'>### mixed-effects logistic regression model</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.glmm.html'>rma.glmm</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"PLO"</span>, xi<span class='op'>=</span><span class='va'>xi</span>, ni<span class='op'>=</span><span class='va'>ni</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 <span class='fu'><a href='predict.rma.html'>predict</a></span><span class='op'>(</span><span class='va'>res</span>, transf<span class='op'>=</span><span class='va'>transf.ilogit</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt;    pred  ci.lb  ci.ub  pi.lb  pi.ub 
 #&gt;  0.7984 0.6924 0.8746 0.4426 0.9518 
 #&gt; </div></pre>
@@ -287,7 +281,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9001, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
+  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
 </div>
 
       </footer>
@@ -295,8 +289,6 @@
 
   
 
-
-  
 
   </body>
 </html>
