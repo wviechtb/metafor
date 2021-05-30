@@ -98,6 +98,7 @@ reference:
       - plot.infl.rma.uni
       - plot.profile.rma
       - plot.rma.uni.selmodel
+      - points.regplot
       - starts_with("qqnorm")
   - title: "Publication Bias"
     desc: >

@@ -105,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-102</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-103</span>
       </span>
     </div>
 
@@ -187,14 +187,17 @@
         <span class='va'>transf</span>, <span class='va'>atransf</span>, <span class='va'>targs</span>, level<span class='op'>=</span><span class='va'>x</span><span class='op'>$</span><span class='va'>level</span>,
         pch<span class='op'>=</span><span class='fl'>21</span>, <span class='va'>psize</span>, plim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.5</span>,<span class='fl'>3</span><span class='op'>)</span>, col<span class='op'>=</span><span class='st'>"black"</span>, bg<span class='op'>=</span><span class='st'>"darkgray"</span>,
         grid<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>refline</span>, label<span class='op'>=</span><span class='cn'>FALSE</span>, offset<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>1</span><span class='op'>)</span>, labsize<span class='op'>=</span><span class='fl'>1</span>,
-        <span class='va'>lcol</span>, <span class='va'>lwd</span>, <span class='va'>lty</span>, legend<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>xvals</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+        <span class='va'>lcol</span>, <span class='va'>lwd</span>, <span class='va'>lty</span>, legend<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>xvals</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for regplot</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/points.html'>points</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>an object of class <code>"rma.uni"</code>, <code>"rma.mv"</code>, or <code>"rma.glmm"</code> including one or multiple moderators.</p></td>
+      <td><p>an object of class <code>"rma.uni"</code>, <code>"rma.mv"</code>, or <code>"rma.glmm"</code> including one or multiple moderators (or an object of class <code>"regplot"</code> for <code>points</code>).</p></td>
     </tr>
     <tr>
       <th>mod</th>
@@ -345,7 +348,7 @@
 <p>If the outcome measure used for creating the plot is bounded (e.g., correlations are bounded between -1 and +1, proportions are bounded between 0 and 1), one can use the <code>olim</code> argument to enforce those limits (the observed outcomes and confidence/prediction intervals cannot exceed those bounds then).</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame with components:</p>
+    <p>An object of class <code>"regplot"</code> with components:</p>
 <dt>slab</dt><dd><p>the study labels</p></dd>
    <dt>ids</dt><dd><p>the study ids</p></dd>
    <dt>xi</dt><dd><p>the x-axis coordinates of the points that were plotted.</p></dd>
@@ -355,7 +358,8 @@
    <dt>col</dt><dd><p>the colors of the points that were plotted.</p></dd>
    <dt>bg</dt><dd><p>the background colors of the points that were plotted.</p></dd>
    <dt>label</dt><dd><p>logical vector indicating whether a point was labeled or not.</p></dd>
-   Note that the data frame is returned invisibly.
+
+   Note that the object is returned invisibly. Using points.regplot, one can redraw the points in case one wants to superimpose the points on top of any elements that were added manually to the plot (see Examples).
 
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
@@ -374,6 +378,8 @@
 
 <span class='co'>### calculate log risk ratios and corresponding sampling variances</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"RR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
+
+<span class='co'>############################################################################</span>
 
 <span class='co'>### fit mixed-effects model with absolute latitude as a moderator</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>ablat</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
@@ -420,6 +426,8 @@
         xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>60</span><span class='op'>)</span>, predlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>60</span><span class='op'>)</span>, transf<span class='op'>=</span><span class='va'>exp</span>, refline<span class='op'>=</span><span class='fl'>1</span>, legend<span class='op'>=</span><span class='cn'>TRUE</span>,
         label<span class='op'>=</span><span class='st'>"piout"</span>, labsize<span class='op'>=</span><span class='fl'>0.8</span><span class='op'>)</span>
 </div><div class='img'><img src='regplot-5.png' alt='' width='864' height='768' /></div><div class='input'>
+<span class='co'>############################################################################</span>
+
 <span class='co'>### fit mixed-effects model with absolute latitude and publication year as moderators</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>ablat</span> <span class='op'>+</span> <span class='va'>year</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 <span class='va'>res</span>
@@ -452,6 +460,8 @@
 <span class='fu'>regplot</span><span class='op'>(</span><span class='va'>res</span>, mod<span class='op'>=</span><span class='st'>"ablat"</span>, xlab<span class='op'>=</span><span class='st'>"Absolute Latitude"</span><span class='op'>)</span>
 </div><div class='img'><img src='regplot-6.png' alt='' width='864' height='768' /></div><div class='input'><span class='fu'>regplot</span><span class='op'>(</span><span class='va'>res</span>, mod<span class='op'>=</span><span class='st'>"year"</span>,  xlab<span class='op'>=</span><span class='st'>"Publication Year"</span><span class='op'>)</span>
 </div><div class='img'><img src='regplot-7.png' alt='' width='864' height='768' /></div><div class='input'>
+<span class='co'>############################################################################</span>
+
 <span class='co'>### fit a quadratic polynomial meta-regression model</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>ablat</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/AsIs.html'>I</a></span><span class='op'>(</span><span class='va'>ablat</span><span class='op'>^</span><span class='fl'>2</span><span class='op'>)</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 <span class='va'>res</span>
@@ -490,7 +500,56 @@
 <span class='co'>### back-transform to risk ratios and add reference line</span>
 <span class='fu'>regplot</span><span class='op'>(</span><span class='va'>res</span>, mod<span class='op'>=</span><span class='st'>"ablat"</span>, pred<span class='op'>=</span><span class='va'>tmp</span>, xlab<span class='op'>=</span><span class='st'>"Absolute Latitude"</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>60</span><span class='op'>)</span>, xvals<span class='op'>=</span><span class='va'>xs</span>,
         transf<span class='op'>=</span><span class='va'>exp</span>, refline<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
-</div><div class='img'><img src='regplot-9.png' alt='' width='864' height='768' /></div></pre>
+</div><div class='img'><img src='regplot-9.png' alt='' width='864' height='768' /></div><div class='input'>
+<span class='co'>############################################################################</span>
+
+<span class='co'>### fit a model with an interaction between a quantitative and a categorical predictor</span>
+<span class='co'>### (note: just for illustration purposes; this model is too complex for this dataset)</span>
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.uni.html'>rma</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>vi</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>ablat</span> <span class='op'>*</span> <span class='va'>alloc</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
+<span class='va'>res</span>
+</div><div class='output co'>#&gt; 
+#&gt; Mixed-Effects Model (k = 13; tau^2 estimator: REML)
+#&gt; 
+#&gt; tau^2 (estimated amount of residual heterogeneity):     0.2465 (SE = 0.2085)
+#&gt; tau (square root of estimated tau^2 value):             0.4965
+#&gt; I^2 (residual heterogeneity / unaccounted variability): 70.49%
+#&gt; H^2 (unaccounted variability / sampling variability):   3.39
+#&gt; R^2 (amount of heterogeneity accounted for):            21.30%
+#&gt; 
+#&gt; Test for Residual Heterogeneity:
+#&gt; QE(df = 7) = 20.7809, p-val = 0.0041
+#&gt; 
+#&gt; Test of Moderators (coefficients 2:6):
+#&gt; QM(df = 5) = 7.4799, p-val = 0.1873
+#&gt; 
+#&gt; Model Results:
+#&gt; 
+#&gt;                        estimate      se     zval    pval    ci.lb   ci.ub 
+#&gt; intrcpt                  0.0209  0.8027   0.0260  0.9792  -1.5525  1.5942    
+#&gt; ablat                   -0.0183  0.0239  -0.7658  0.4438  -0.0653  0.0286    
+#&gt; allocrandom              0.0068  0.9689   0.0070  0.9944  -1.8922  1.9058    
+#&gt; allocsystematic          0.4711  1.2713   0.3705  0.7110  -2.0206  2.9627    
+#&gt; ablat:allocrandom       -0.0098  0.0279  -0.3518  0.7250  -0.0645  0.0449    
+#&gt; ablat:allocsystematic   -0.0125  0.0391  -0.3193  0.7495  -0.0892  0.0642    
+#&gt; 
+#&gt; ---
+#&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+#&gt; </div><div class='input'>
+<span class='co'>### draw bubble plot but do not add regression line or CI</span>
+<span class='va'>tmp</span> <span class='op'>&lt;-</span> <span class='fu'>regplot</span><span class='op'>(</span><span class='va'>res</span>, mod<span class='op'>=</span><span class='st'>"ablat"</span>, xlab<span class='op'>=</span><span class='st'>"Absolute Latitude"</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>60</span><span class='op'>)</span>, pred<span class='op'>=</span><span class='cn'>FALSE</span>, ci<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='input'>
+<span class='co'>### add regression lines for the three alloc levels</span>
+<span class='va'>xs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>60</span>, length<span class='op'>=</span><span class='fl'>100</span><span class='op'>)</span>
+<span class='va'>preds</span> <span class='op'>&lt;-</span> <span class='fu'><a href='predict.rma.html'>predict</a></span><span class='op'>(</span><span class='va'>res</span>, newmods<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='va'>xs</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span><span class='op'>(</span><span class='va'>xs</span>, <span class='va'>preds</span><span class='op'>$</span><span class='va'>pred</span>, lwd<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span>
+</div><div class='input'><span class='va'>preds</span> <span class='op'>&lt;-</span> <span class='fu'><a href='predict.rma.html'>predict</a></span><span class='op'>(</span><span class='va'>res</span>, newmods<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='va'>xs</span>, <span class='fl'>1</span>, <span class='fl'>0</span>, <span class='va'>xs</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span><span class='op'>(</span><span class='va'>xs</span>, <span class='va'>preds</span><span class='op'>$</span><span class='va'>pred</span>, lwd<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span>
+</div><div class='input'><span class='va'>preds</span> <span class='op'>&lt;-</span> <span class='fu'><a href='predict.rma.html'>predict</a></span><span class='op'>(</span><span class='va'>res</span>, newmods<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='va'>xs</span>, <span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>0</span>, <span class='va'>xs</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span><span class='op'>(</span><span class='va'>xs</span>, <span class='va'>preds</span><span class='op'>$</span><span class='va'>pred</span>, lwd<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span>
+</div><div class='input'>
+<span class='co'>### add points back to the plot (so they are on top of the lines)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/points.html'>points</a></span><span class='op'>(</span><span class='va'>tmp</span><span class='op'>)</span>
+</div><div class='img'><img src='regplot-10.png' alt='' width='864' height='768' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

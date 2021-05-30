@@ -1,6 +1,7 @@
 \name{regplot}
 \alias{regplot}
 \alias{regplot.rma}
+\alias{points.regplot}
 \title{Scatter Plots / Bubble Plots}
 \description{
    Function to create scatter plots / bubble plots based on meta-regression models. \loadmathjax
@@ -14,9 +15,11 @@ regplot(x, \dots)
         pch=21, psize, plim=c(0.5,3), col="black", bg="darkgray",
         grid=FALSE, refline, label=FALSE, offset=c(1,1), labsize=1,
         lcol, lwd, lty, legend=FALSE, xvals, \dots)
+
+\method{points}{regplot}(x, \dots)
 }
 \arguments{
-   \item{x}{an object of class \code{"rma.uni"}, \code{"rma.mv"}, or \code{"rma.glmm"} including one or multiple moderators.}
+   \item{x}{an object of class \code{"rma.uni"}, \code{"rma.mv"}, or \code{"rma.glmm"} including one or multiple moderators (or an object of class \code{"regplot"} for \code{points}).}
    \item{mod}{either a scalar to specify the position of the moderator variable in the model or a character string to specify the name of the moderator variable.}
    \item{pred}{logical to indicate whether the (marginal) regression line based on the moderator should be added to the plot (the default is \code{TRUE}). Can also be an object from \code{\link{predict.rma}}. See \sQuote{Details}.}
    \item{ci}{logical to indicate whether the corresponding confidence interval bounds should be added to the plot (the default is \code{TRUE}).}
@@ -72,7 +75,7 @@ regplot(x, \dots)
    If the outcome measure used for creating the plot is bounded (e.g., correlations are bounded between -1 and +1, proportions are bounded between 0 and 1), one can use the \code{olim} argument to enforce those limits (the observed outcomes and confidence/prediction intervals cannot exceed those bounds then).
 }
 \value{
-   A data frame with components:
+   An object of class \code{"regplot"} with components:
    \item{slab}{the study labels}
    \item{ids}{the study ids}
    \item{xi}{the x-axis coordinates of the points that were plotted.}
@@ -82,7 +85,8 @@ regplot(x, \dots)
    \item{col}{the colors of the points that were plotted.}
    \item{bg}{the background colors of the points that were plotted.}
    \item{label}{logical vector indicating whether a point was labeled or not.}
-   Note that the data frame is returned invisibly.
+
+   Note that the object is returned invisibly. Using \code{points.regplot}, one can redraw the points in case one wants to superimpose the points on top of any elements that were added manually to the plot (see \sQuote{Examples}).
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
@@ -101,6 +105,8 @@ dat <- dat.bcg
 
 ### calculate log risk ratios and corresponding sampling variances
 dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat)
+
+############################################################################
 
 ### fit mixed-effects model with absolute latitude as a moderator
 res <- rma(yi, vi, mods = ~ ablat, data=dat)
@@ -124,6 +130,8 @@ regplot(res, mod="ablat", pi=TRUE, xlab="Absolute Latitude",
         xlim=c(0,60), predlim=c(0,60), transf=exp, refline=1, legend=TRUE,
         label="piout", labsize=0.8)
 
+############################################################################
+
 ### fit mixed-effects model with absolute latitude and publication year as moderators
 res <- rma(yi, vi, mods = ~ ablat + year, data=dat)
 res
@@ -131,6 +139,8 @@ res
 ### plot the marginal relationships
 regplot(res, mod="ablat", xlab="Absolute Latitude")
 regplot(res, mod="year",  xlab="Publication Year")
+
+############################################################################
 
 ### fit a quadratic polynomial meta-regression model
 res <- rma(yi, vi, mods = ~ ablat + I(ablat^2), data=dat)
@@ -146,5 +156,27 @@ regplot(res, mod="ablat", pred=tmp, xlab="Absolute Latitude", xlim=c(0,60), xval
 ### back-transform to risk ratios and add reference line
 regplot(res, mod="ablat", pred=tmp, xlab="Absolute Latitude", xlim=c(0,60), xvals=xs,
         transf=exp, refline=1)
+
+############################################################################
+
+### fit a model with an interaction between a quantitative and a categorical predictor
+### (note: just for illustration purposes; this model is too complex for this dataset)
+res <- rma(yi, vi, mods = ~ ablat * alloc, data=dat)
+res
+
+### draw bubble plot but do not add regression line or CI
+tmp <- regplot(res, mod="ablat", xlab="Absolute Latitude", xlim=c(0,60), pred=FALSE, ci=FALSE)
+
+### add regression lines for the three alloc levels
+xs <- seq(0, 60, length=100)
+preds <- predict(res, newmods=cbind(xs, 0, 0, 0, 0))
+lines(xs, preds$pred, lwd=3)
+preds <- predict(res, newmods=cbind(xs, 1, 0, xs, 0))
+lines(xs, preds$pred, lwd=3)
+preds <- predict(res, newmods=cbind(xs, 0, 1, 0, xs))
+lines(xs, preds$pred, lwd=3)
+
+### add points back to the plot (so they are on top of the lines)
+points(tmp)
 }
 \keyword{hplot}

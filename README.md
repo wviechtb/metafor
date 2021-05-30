@@ -5,7 +5,7 @@ metafor: A Meta-Analysis Package for R
 [![R build status](https://github.com/wviechtb/metafor/workflows/R-CMD-check/badge.svg)](https://github.com/wviechtb/metafor/actions)
 [![Code Coverage](https://codecov.io/gh/wviechtb/metafor/branch/master/graph/badge.svg)](https://codecov.io/gh/wviechtb/metafor)
 [![CRAN Version](https://www.r-pkg.org/badges/version/metafor)](https://cran.r-project.org/package=metafor)
-[![devel Version](https://img.shields.io/badge/devel-2.5--102-brightgreen.svg)](https://www.metafor-project.org/doku.php/installation#development_version)
+[![devel Version](https://img.shields.io/badge/devel-2.5--103-brightgreen.svg)](https://www.metafor-project.org/doku.php/installation#development_version)
 [![Monthly Downloads](https://cranlogs.r-pkg.org/badges/metafor)](https://cranlogs.r-pkg.org/badges/metafor)
 [![Total Downloads](https://cranlogs.r-pkg.org/badges/grand-total/metafor)](https://cranlogs.r-pkg.org/badges/grand-total/metafor)
 
@@ -34,7 +34,7 @@ The `metafor` package website can be found at [https://www.metafor-project.org](
 
 A good starting place for those interested in using the `metafor` package is the following paper:
 
-Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. *Journal of Statistical Software, 36*(3), 1-48. [https://doi.org/10.18637/jss.v036.i03](https://doi.org/10.18637/jss.v036.i03).
+Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. *Journal of Statistical Software, 36*(3), 1-48. [https://doi.org/10.18637/jss.v036.i03](https://doi.org/10.18637/jss.v036.i03)
 
 In addition to reading the paper, carefully read the [package intro](https://wviechtb.github.io/metafor/reference/metafor-package.html) and then the help pages for the [`escalc`](https://wviechtb.github.io/metafor/reference/escalc.html) and the [`rma.uni`](https://wviechtb.github.io/metafor/reference/rma.uni.html) functions (or the [`rma.mh`](https://wviechtb.github.io/metafor/reference/rma.mh.html), [`rma.peto`](https://wviechtb.github.io/metafor/reference/rma.peto.html), [`rma.glmm`](https://wviechtb.github.io/metafor/reference/rma.glmm.html), [`rma.mv`](https://wviechtb.github.io/metafor/reference/rma.mv.html) functions if you intend to use these methods). The help pages for these functions provide links to many additional functions, which can be used after fitting a model. You can also read the entire documentation online at [https://wviechtb.github.io/metafor/](https://wviechtb.github.io/metafor/) (where it is nicely formatted, equations are shown correctly, and the output from all examples is provided).
 

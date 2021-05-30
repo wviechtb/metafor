@@ -331,7 +331,7 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
 
    ### add points
 
-   points(dat.c$yi.o, dat.t$yi.o, cex=psize.o, pch=pch.o, col=col.o, bg=bg.o, ...)
+   points(x=dat.c$yi.o, y=dat.t$yi.o, cex=psize.o, pch=pch.o, col=col.o, bg=bg.o, ...)
 
    #########################################################################
 

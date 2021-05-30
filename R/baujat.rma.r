@@ -136,7 +136,7 @@ baujat.rma <- function(x, xlim, ylim, xlab, ylab, cex, symbol="ids", grid=TRUE, 
       if (!is.null(x$subset))
          symbol <- symbol[x$subset]
 
-      points(xhati, yhati, cex=cex, pch=symbol, ...)
+      points(x=xhati, y=yhati, cex=cex, pch=symbol, ...)
 
    }
 

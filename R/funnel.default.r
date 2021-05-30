@@ -526,7 +526,7 @@ label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
    if (yaxis == "wi")
       yaxis.vals <- weights
 
-   lpoints(xaxis.vals, yaxis.vals, pch=pch, col=col, bg=bg, ...)
+   lpoints(x=xaxis.vals, y=yaxis.vals, pch=pch, col=col, bg=bg, ...)
 
    #########################################################################
 

@@ -976,11 +976,11 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
          next
 
       if (yi[i] >= alim[1] && yi[i] <= alim[2])
-         lpoints(yi[i], rows[i], pch=pch[i], col=colout[i], cex=cex*psize[i], ...)
+         lpoints(x=yi[i], y=rows[i], pch=pch[i], col=colout[i], cex=cex*psize[i], ...)
 
    }
 
-   #lpoints(yi, rows, pch=pch, cex=cex*psize, ...)
+   #lpoints(x=yi, y=rows, pch=pch, cex=cex*psize, ...)
 
    ### add horizontal line at 0 for the standard FE/RE model display
 

@@ -160,7 +160,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
 
    ### extract the observed outcomes, corresponding sampling variances, model matrix, slab, and ids
 
-   yi   <- x$yi.f
+   yi   <- c(x$yi.f)
    vi   <- x$vi.f
    X    <- x$X.f
    slab <- x$slab
@@ -613,7 +613,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
 
    ### add points
 
-   points(xi.o, yi.o, pch=pch.o, col=col.o, bg=bg.o, cex=psize.o, ...)
+   points(x=xi.o, y=yi.o, pch=pch.o, col=col.o, bg=bg.o, cex=psize.o, ...)
 
    ### labeling of points
 
@@ -772,7 +772,8 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
 
    ############################################################################
 
-   sav <- data.frame(slab, ids, xi, yi, pch, psize, col, bg, label)
+   sav <- data.frame(slab, ids, xi, yi, pch, psize, col, bg, label, order=order.vec)
+   class(sav) <- "regplot"
    invisible(sav)
 
 }

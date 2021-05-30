@@ -549,12 +549,12 @@ label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
 
    if (!inherits(x, "rma.uni.trimfill")) {
 
-      lpoints(xaxis.vals, yaxis.vals, pch=pch, col=col, bg=bg, ...)
+      lpoints(x=xaxis.vals, y=yaxis.vals, pch=pch, col=col, bg=bg, ...)
 
    } else {
 
-      lpoints(xaxis.vals[!fill], yaxis.vals[!fill], pch=pch,      col=col[1], bg=bg[1], ...)
-      lpoints(xaxis.vals[fill],  yaxis.vals[fill],  pch=pch.fill, col=col[2], bg=bg[2], ...)
+      lpoints(x=xaxis.vals[!fill], y=yaxis.vals[!fill], pch=pch,      col=col[1], bg=bg[1], ...)
+      lpoints(x=xaxis.vals[fill],  y=yaxis.vals[fill],  pch=pch.fill, col=col[2], bg=bg[2], ...)
 
    }
 

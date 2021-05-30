@@ -105,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-102</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5-103</span>
       </span>
     </div>
 
@@ -195,7 +195,1830 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \dontrun{</span>
 <span class='fu'>metafor.news</span><span class='op'>(</span><span class='op'>)</span><span class='co'># }</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in loadNamespace(x): there is no package called ‘commonmark’</span></div></pre>
+</div><div class='output co'>#&gt;                 Changes in version 2.5-103 (2021-05-30)                 
+#&gt; 
+#&gt;   - the metafor package now makes use of the mathjaxr package to nicely
+#&gt;     render equations shown in the HTML help pages
+#&gt; 
+#&gt;   - rma() can now also fit location-scale models
+#&gt; 
+#&gt;   - added selmodel() for fitting a wide variety of selection models (and
+#&gt;     added the corresponding plot.rma.uni.selmodel() function for drawing
+#&gt;     the estimated selection function)
+#&gt; 
+#&gt;   - rma.mv() gains dfs argument and now provides an often better way for
+#&gt;     calculating the (denominator) degrees of freedom for approximate t-
+#&gt;     and F-tests when dfs="contain"
+#&gt; 
+#&gt;   - added tes() function for the test of excess significance
+#&gt; 
+#&gt;   - added regplot() function for drawing scatter plots / bubble plots
+#&gt;     based on meta-regression models
+#&gt; 
+#&gt;   - added rcalc() for calculating the variance-covariance matrix of
+#&gt;     correlation coefficients and matreg() for fitting regression models
+#&gt;     based on correlation/covariance matrices
+#&gt; 
+#&gt;   - added convenience functions dfround() and vec2mat()
+#&gt; 
+#&gt;   - added rcalc(), matreg(), dfround(), and vec2mat() functions
+#&gt; 
+#&gt;   - added aggregate.escalc() function to aggregate multiple effect sizes
+#&gt;     or outcomes within studies/clusters
+#&gt; 
+#&gt;   - regtest() now shows the 'limit estimate' of the (average) true
+#&gt;     effect when using sei, vi, ninv, or sqrtninv as predictors (and the
+#&gt;     model does not contain any other moderators)
+#&gt; 
+#&gt;   - vif() gains btt argument and can now also compute generalized
+#&gt;     variance inflation factors; a proper print.vif.rma() function was
+#&gt;     also added
+#&gt; 
+#&gt;   - anova.rma() argument L renamed to X (the former still works, but is
+#&gt;     no longer documented)
+#&gt; 
+#&gt;   - argument order in cumul() should now just be a variable, not the
+#&gt;     order of the variable, to be used for ordering the studies and must
+#&gt;     be of the same length as the original dataset that was used in the
+#&gt;     model fitting
+#&gt; 
+#&gt;   - similarly, vector arguments in various plotting functions such as
+#&gt;     forest.rma() must now be of the same length as the original dataset
+#&gt;     that was used in the model fitting (any subsetting and removal of
+#&gt;     NAs is automatically applied)
+#&gt; 
+#&gt;   - the various leave1out() and cumul() functions now provide I^2 and
+#&gt;     H^2 also for fixed-effects models; accordingly, plot.cumul.rma() now
+#&gt;     also works with such models
+#&gt; 
+#&gt;   - fixed level not getting passed down to the various cumul() functions
+#&gt; 
+#&gt;   - plot.cumul.rma() argument addgrid renamed to grid (the former still
+#&gt;     works, but is no longer documented)
+#&gt; 
+#&gt;   - forest.default(), forest.rma(), and labbe() gain plim argument and
+#&gt;     now provide more flexibility in terms of the scaling of the points
+#&gt; 
+#&gt;   - forest.rma() gains colout argument (to adjust the color of the
+#&gt;     observed effect sizes or outcomes)
+#&gt; 
+#&gt;   - in the various forest() functions, the right header is now
+#&gt;     suppressed when annotate=FALSE and header=TRUE
+#&gt; 
+#&gt;   - funnel.default() and funnel.rma() gain label and offset arguments
+#&gt; 
+#&gt;   - funnel.default() and funnel.rma() gain lty argument; the reference
+#&gt;     line is now drawn by default as a dotted line (like the line for the
+#&gt;     pseudo confidence region)
+#&gt; 
+#&gt;   - the forest and funnel arguments of reporter.rma.uni() can now also
+#&gt;     be logicals to suppress the drawing of these plots
+#&gt; 
+#&gt;   - added weighted argument to fsn() (for Orwin's method)
+#&gt; 
+#&gt;   - added some more transformation functions
+#&gt; 
+#&gt;   - bldiag() now properly handles ?x0 or 0x? matrices
+#&gt; 
+#&gt;   - p-values are still given to 2 digits even when digits=1
+#&gt; 
+#&gt;   - summary.escalc() also provides the p-values (of the Wald-type
+#&gt;     tests); but when using the transf argument, the sampling variances,
+#&gt;     standard errors, test statistics, and p-values are no longer shown
+#&gt; 
+#&gt;   - rma.uni() no longer constrains a fixed tau^2 value to 0 when k=1
+#&gt; 
+#&gt;   - slight speedup in functions that repeatedly fit rma.uni() models by
+#&gt;     skipping the computation of the pseudo R^2 statistic
+#&gt; 
+#&gt;   - started using the pbapply package for showing progress bars, also
+#&gt;     when using parallel processing
+#&gt; 
+#&gt;   - to avoid potential confusion, all references to 'credibility
+#&gt;     intervals' have been removed from the documentation; these intervals
+#&gt;     are now exclusively referred to as 'prediction intervals'; in the
+#&gt;     output, the bounds are therefore indicated now as pi.lb and pi.ub
+#&gt;     (instead of cr.lb and cr.ub); the corresponding argument names were
+#&gt;     changed in addpoly.default(); argument addcred was changed to
+#&gt;     addpred in addpoly.rma() and forest.rma(); however, code using the
+#&gt;     old arguments names should continue to work
+#&gt; 
+#&gt;   - one can now use weights(..., type="rowsum") for intercept-only
+#&gt;     rma.mv models (to obtain 'row-sum weights')
+#&gt; 
+#&gt;   - simulate.rma() gains olim argument; renamed the clim argument in
+#&gt;     summary.escalc() and the various forest() functions to olim for
+#&gt;     consistency (the old clim argument should continue to work)
+#&gt; 
+#&gt;   - show nicer network graphs for dat.hasselblad1998 and dat.senn2013 in
+#&gt;     the help files
+#&gt; 
+#&gt;   - added 24 datasets (dat.anand1999, dat.assink2016,
+#&gt;     dat.baskerville2012, dat.bornmann2007, dat.cannon2006,
+#&gt;     dat.cohen1981, dat.craft2003, dat.crede2010, dat.dagostino1998,
+#&gt;     dat.damico2009, dat.dorn2007, dat.hahn2001, dat.kalaian1996,
+#&gt;     dat.kearon1998, dat.knapp2017, dat.landenberger2005, dat.lau1992,
+#&gt;     dat.lim2014, dat.lopez2019, dat.maire2019, , dat.moura2021
+#&gt;     dat.obrien2003, dat.vanhowe1999, dat.viechtbauer2021)
+#&gt; 
+#&gt;   - refactored various functions (for cleaner/simpler code)
+#&gt; 
+#&gt;   - improved the documentation a bit
+#&gt; 
+#&gt;                  Changes in version 2.4-0 (2020-03-19)                  
+#&gt; 
+#&gt;   - version jump to 2.4-0 for CRAN release (from now on, even minor
+#&gt;     numbers for CRAN releases, odd numbers for development versions)
+#&gt; 
+#&gt;   - the various forest() functions gain header argument
+#&gt; 
+#&gt;   - escalc() gains include argument
+#&gt; 
+#&gt;   - setting verbose=3 in model fitting functions sets options(warn=1)
+#&gt; 
+#&gt;   - forest.rma() and forest.default() now throw informative errors when
+#&gt;     misusing order and subset arguments
+#&gt; 
+#&gt;   - fixed failing tests due to the stringsAsFactors=FALSE change in the
+#&gt;     upcoming version of R
+#&gt; 
+#&gt;   - print.infl.rma.uni() gains infonly argument, to only show the
+#&gt;     influential studies
+#&gt; 
+#&gt;   - removed MASS from Suggests (no longer needed)
+#&gt; 
+#&gt;   - argument btt can now also take a string to grep for
+#&gt; 
+#&gt;   - added optimParallel as possible optimizer in rma.mv()
+#&gt; 
+#&gt;   - added (for now undocumented) option to fit models in rma.glmm() via
+#&gt;     the GLMMadaptive package (instead of lme4); to try this, use:
+#&gt;     control=list(package="GLMMadaptive")
+#&gt; 
+#&gt;   - started to use numbering scheme for devel version (the number after
+#&gt;     the dash indicates the devel version)
+#&gt; 
+#&gt;   - added contrmat() function (for creating a matrix that indicates
+#&gt;     which groups have been compared against each other in each row of a
+#&gt;     dataset)
+#&gt; 
+#&gt;   - added to.wide() function (for restructuring long format datasets
+#&gt;     into the wide format needed for contrast-based analyses)
+#&gt; 
+#&gt;   - I^2 and H^2 are also shown in output for fixed-effects models
+#&gt; 
+#&gt;   - argument grid in baujat() can now also be a color name
+#&gt; 
+#&gt;   - added (for now undocumented) time argument to more functions that
+#&gt;     are computationally expensive
+#&gt; 
+#&gt;   - added (for now undocumented) textpos argument to the various forest
+#&gt;     functions
+#&gt; 
+#&gt;   - added a new dataset (dat.graves2010)
+#&gt; 
+#&gt;   - added more tests
+#&gt; 
+#&gt;                  Changes in version 2.1-0 (2019-05-13)                  
+#&gt; 
+#&gt;   - added formula() method for objects of class rma
+#&gt; 
+#&gt;   - llplot() now also allows for measure="GEN"; also, the documentation
+#&gt;     and y-axis label have been corrected to indicate that the function
+#&gt;     plots likelihoods (not log likelihoods)
+#&gt; 
+#&gt;   - confint.rma.mv() now returns an object of class list.confint.rma
+#&gt;     when obtaining CIs for all variance and correlation components of
+#&gt;     the model; added corresponding print.list.confint.rma() function
+#&gt; 
+#&gt;   - moved tol argument in permutest() to control and renamed to comptol
+#&gt; 
+#&gt;   - added PMM and GENQM estimators in rma.uni()
+#&gt; 
+#&gt;   - added vif() function to get variance inflation factors
+#&gt; 
+#&gt;   - added .glmulti object for making the interaction with glmulti easier
+#&gt; 
+#&gt;   - added reporter() and reporter.rma.uni() for dynamically generating
+#&gt;     analysis reports for objects of class rma.uni
+#&gt; 
+#&gt;   - output is now styled/colored when crayon package is loaded (this
+#&gt;     only works on a 'proper' terminal with color support; also works in
+#&gt;     RStudio)
+#&gt; 
+#&gt;   - overhauled plot.gosh.rma(); when out is specified, it now shows two
+#&gt;     distributions, one for the values when the outlier is included and
+#&gt;     one for the values when for outlier is excluded; dropped the hcol
+#&gt;     argument and added border argument
+#&gt; 
+#&gt;   - refactored influence.rma.uni() to be more consistent internally with
+#&gt;     other functions; print.infl.rma.uni() and plot.infl.rma.uni()
+#&gt;     adjusted accordingly; functions cooks.distance.rma.uni(),
+#&gt;     dfbetas.rma.uni(), and rstudent.rma.uni() now call
+#&gt;     influence.rma.uni() for the computations
+#&gt; 
+#&gt;   - rstudent.rma.uni() now computes the SE of the deleted residuals in
+#&gt;     such a way that it will yield identical results to a mean shift
+#&gt;     outlier model even when that model is fitted with test="knha"
+#&gt; 
+#&gt;   - rstandard.rma.uni() gains type argument, and can now also compute
+#&gt;     conditional residuals (it still computes marginal residuals by
+#&gt;     default)
+#&gt; 
+#&gt;   - cooks.distance.rma.mv() gains cluster argument, so that the Cook's
+#&gt;     distances can be computed for groups of estimates
+#&gt; 
+#&gt;   - cooks.distance.rma.mv() gains parallel, ncpus, and cl arguments and
+#&gt;     can now make use of parallel processing
+#&gt; 
+#&gt;   - cooks.distance.rma.mv() should be faster by using the estimates from
+#&gt;     the full model as starting values when fitting the models with the
+#&gt;     ith study/cluster deleted from the dataset
+#&gt; 
+#&gt;   - cooks.distance.rma.mv() gains reestimate argument; when set to
+#&gt;     FALSE, variance/correlation components are not reestimated
+#&gt; 
+#&gt;   - rstandard.rma.mv() gains cluster argument for computing
+#&gt;     cluster-level multivariate standardized residuals
+#&gt; 
+#&gt;   - added rstudent.rma.mv() and dfbetas.rma.mv()
+#&gt; 
+#&gt;   - smarter matching of elements in newmods (when using a named vector)
+#&gt;     in predict() that also works for models with interactions (thanks to
+#&gt;     Nicole Erler for pointing out the problem)
+#&gt; 
+#&gt;   - rma.uni() and rma.mv() no longer issue (obvious) warnings when user
+#&gt;     constrains vi or V to 0 (i.e., vi=0 or V=0, respectively)
+#&gt; 
+#&gt;   - rma.mv() does more intelligent filtering based on NAs in V matrix
+#&gt; 
+#&gt;   - rma.mv() now ensures strict symmetry of any (var-cov or correlation)
+#&gt;     matrices specified via the R argument
+#&gt; 
+#&gt;   - fixed rma.mv() so checks on R argument run as intended; also fixed
+#&gt;     an issue when multiple formulas with slashes are specified via
+#&gt;     random (thanks to Andrew Loignon for pointing out the problem)
+#&gt; 
+#&gt;   - suppressed showing calls on some warnings/errors in rma.mv()
+#&gt; 
+#&gt;   - rma.mv() now allows for a continuous-time autoregressive random
+#&gt;     effects structure (struct="CAR") and various spatial correlation
+#&gt;     structures (struct="SPEXP", "SPGAU", "SPLIN", "SPRAT", and "SPSPH")
+#&gt; 
+#&gt;   - rma.mv() now allows for struct="GEN" which models correlated random
+#&gt;     effects for any number of predictors, including continuous ones
+#&gt;     (i.e., this allows for 'random slopes')
+#&gt; 
+#&gt;   - in the various forest() functions, when options(na.action="na.pass")
+#&gt;     or options(na.action="na.exclude") and an annotation contains NA,
+#&gt;     this is now shown as a blank (instead of NA [NA, NA])
+#&gt; 
+#&gt;   - the various forest() and addpoly() functions gain a fonts argument
+#&gt; 
+#&gt;   - the various forest() functions gain a top argument
+#&gt; 
+#&gt;   - the various forest() functions now show correct point sizes when the
+#&gt;     weights of the studies are exactly the same
+#&gt; 
+#&gt;   - forest.cumul.rma() gains a col argument
+#&gt; 
+#&gt;   - funnel.default() and funnel.rma() can now take vectors as input for
+#&gt;     the col and bg arguments (and also for pch); both functions also
+#&gt;     gain a legend argument
+#&gt; 
+#&gt;   - addpoly() functions can now also show prediction interval bounds
+#&gt; 
+#&gt;   - removed 'formula interface' from escalc(); until this actually adds
+#&gt;     some kind of extra functionality, this just makes escalc() more
+#&gt;     confusing to use
+#&gt; 
+#&gt;   - escalc() can now compute the coefficient of variation ratio and the
+#&gt;     variability ratio for pre-post or matched designs ("CVRC", "VRC")
+#&gt; 
+#&gt;   - escalc() does a bit more housekeeping
+#&gt; 
+#&gt;   - added (currently undocumented) arguments onlyo1, addyi, and addvi to
+#&gt;     escalc() that allow for more flexibility when computing certain bias
+#&gt;     corrections and when computing sampling variances for measures that
+#&gt;     make use of the add and to arguments
+#&gt; 
+#&gt;   - escalc() now sets add=0 for measures where the use of such a bias
+#&gt;     correction makes little sense; this applies to the following
+#&gt;     measures: "AS", "PHI", "RTET", "IRSD", "PAS", "PFT", "IRS", and
+#&gt;     "IRFT"; one can still force the use of the bias correction by
+#&gt;     explicitly setting the add argument to some non-zero value
+#&gt; 
+#&gt;   - added clim argument to summary.escalc()
+#&gt; 
+#&gt;   - added ilim argument to trimfill()
+#&gt; 
+#&gt;   - labbe() gains lty argument
+#&gt; 
+#&gt;   - labbe() now (invisibly) returns a data frame with the coordinates of
+#&gt;     the points that were drawn (which may be useful for manual labeling
+#&gt;     of points in the plot)
+#&gt; 
+#&gt;   - added a print method for profile.rma objects
+#&gt; 
+#&gt;   - profile.rma.mv() now check whether any of the profiled
+#&gt;     log-likelihood values is larger than the log-likelihood of the
+#&gt;     fitted model (using numerical tolerance given by lltol) and issues a
+#&gt;     warning if so
+#&gt; 
+#&gt;   - profile.rma.uni(), profile.rma.mv(), and plot.profile.rma() gain
+#&gt;     cline argument; plot.profile.rma() gains xlim, ylab, and main
+#&gt;     arguments
+#&gt; 
+#&gt;   - fixed an issue with robust.rma.mv() when the model was fitted with
+#&gt;     sparse=TRUE (thanks to Roger Martineau for noting the problem)
+#&gt; 
+#&gt;   - various method functions (fitted(), resid(), predict(), etc.) behave
+#&gt;     in a more consistent manner when model omitted studies with missings
+#&gt; 
+#&gt;   - predict.rma() gains vcov argument; when set to TRUE, the variance-
+#&gt;     covariance matrix of the predicted values is also returned
+#&gt; 
+#&gt;   - vcov.rma() can now also return the variance-covariance matrix of the
+#&gt;     fitted values (type="fitted") and the residuals (type="resid")
+#&gt; 
+#&gt;   - added $&lt;- and as.matrix() methods for list.rma objects
+#&gt; 
+#&gt;   - fixed error in simulate.rma() that would generate too many samples
+#&gt;     for rma.mv models
+#&gt; 
+#&gt;   - added undocumented argument time to all model fitting functions; if
+#&gt;     set to TRUE, the model fitting time is printed
+#&gt; 
+#&gt;   - added more tests (also for parallel operations); also, all tests
+#&gt;     updated to use proper tolerances instead of rounding
+#&gt; 
+#&gt;   - reorganized the documentation a bit
+#&gt; 
+#&gt;                  Changes in version 2.0-0 (2017-06-22)                  
+#&gt; 
+#&gt;   - added simulate() method for rma objects; added MASS to Suggests
+#&gt;     (since simulating for rma.mv objects requires mvrnorm() from MASS)
+#&gt; 
+#&gt;   - cooks.distance.rma.mv() now works properly even when there are
+#&gt;     missing values in the data
+#&gt; 
+#&gt;   - residuals() gains type argument and can compute Pearson residuals
+#&gt; 
+#&gt;   - the newmods argument in predict() can now be a named vector or a
+#&gt;     matrix/data frame with column names that get properly matched up
+#&gt;     with the variables in the model
+#&gt; 
+#&gt;   - added ranef.rma.mv() for extracting the BLUPs of the random effects
+#&gt;     for rma.mv models
+#&gt; 
+#&gt;   - all functions that repeatedly refit models now have the option to
+#&gt;     show a progress bar
+#&gt; 
+#&gt;   - added ranktest.default(), so user can now pass the outcomes and
+#&gt;     corresponding sampling variances directly to the function
+#&gt; 
+#&gt;   - added regtest.default(), so user can now pass the outcomes and
+#&gt;     corresponding sampling variances directly to the function
+#&gt; 
+#&gt;   - funnel.default() gains subset argument
+#&gt; 
+#&gt;   - funnel.default() and funnel.rma() gain col and bg arguments
+#&gt; 
+#&gt;   - plot.profile.rma() gains ylab argument
+#&gt; 
+#&gt;   - more consistent handling of robust.rma objects
+#&gt; 
+#&gt;   - added a print method for rma.gosh objects
+#&gt; 
+#&gt;   - the (log) relative risk is now called the (log) risk ratio in all
+#&gt;     help files, plots, code, and comments
+#&gt; 
+#&gt;   - escalc() can now compute outcome measures based on paired binary
+#&gt;     data ("MPRR", "MPOR", "MPRD", "MPORC", and "MPPETO")
+#&gt; 
+#&gt;   - escalc() can now compute (semi-)partial correlation coefficients
+#&gt;     ("PCOR", "ZPCOR", "SPCOR")
+#&gt; 
+#&gt;   - escalc() can now compute measures of variability for single groups
+#&gt;     ("CVLN", "SDLN") and for the difference in variability between two
+#&gt;     groups ("CVR", "VR"); also the log transformed mean ("MNLN") has
+#&gt;     been added for consistency
+#&gt; 
+#&gt;   - escalc() can now compute the sampling variance for measure="PHI" for
+#&gt;     studies using stratified sampling (vtpye="ST")
+#&gt; 
+#&gt;   - the [ method for escalc objects now properly handles the ni and slab
+#&gt;     attributes and does a better job of cleaning out superfluous
+#&gt;     variable name information
+#&gt; 
+#&gt;   - added rbind() method for escalc objects
+#&gt; 
+#&gt;   - added as.data.frame() method for list.rma objects
+#&gt; 
+#&gt;   - added a new dataset (dat.pagliaro1992) for another illustration of a
+#&gt;     network meta-analysis
+#&gt; 
+#&gt;   - added a new dataset (dat.laopaiboon2015) on the effectiveness of
+#&gt;     azithromycin for treating lower respiratory tract infections
+#&gt; 
+#&gt;   - rma.uni() and rma.mv() now check if the ratio of the largest to
+#&gt;     smallest sampling variance is very large; results may not be stable
+#&gt;     then (and very large ratios typically indicate wrongly coded data)
+#&gt; 
+#&gt;   - model fitting functions now check if extra/superfluous arguments are
+#&gt;     specified via ... and issues are warning if so
+#&gt; 
+#&gt;   - instead of defining own generic ranef(), import ranef() from nlme
+#&gt; 
+#&gt;   - improved output formatting
+#&gt; 
+#&gt;   - added more tests (but disabled a few tests on CRAN to avoid some
+#&gt;     issues when R is compiled with --disable-long-double)
+#&gt; 
+#&gt;   - some general code cleanup
+#&gt; 
+#&gt;   - renamed diagram_metafor.pdf vignette to just diagram.pdf
+#&gt; 
+#&gt;   - minor updates in the documentation
+#&gt; 
+#&gt;                  Changes in version 1.9-9 (2016-09-25)                  
+#&gt; 
+#&gt;   - started to use git as version control system, GitHub to host the
+#&gt;     repository (https://github.com/wviechtb/metafor) for the development
+#&gt;     version of the package, Travis CI as continuous integration service
+#&gt;     (https://travis-ci.org/wviechtb/metafor), and Codecov for automated
+#&gt;     code coverage reporting (https://codecov.io/github/wviechtb/metafor)
+#&gt; 
+#&gt;   - argument knha in rma.uni() and argument tdist in rma.glmm() and
+#&gt;     rma.mv() are now superseded by argument test in all three functions;
+#&gt;     for backwards compatibility, the knha and tdist arguments still
+#&gt;     work, but are no longer documented
+#&gt; 
+#&gt;   - rma(yi, vi, weights=1, test="knha") now yields the same results as
+#&gt;     rma(yi, vi, weighted=FALSE, test="knha") (but use of the Knapp and
+#&gt;     Hartung method in the context of an unweighted analysis remains an
+#&gt;     experimental feature)
+#&gt; 
+#&gt;   - one can now pass an escalc object directly to rma.uni(), which then
+#&gt;     tries to automatically determine the yi and vi variables in the data
+#&gt;     frame (thanks to Christian Roever for the suggestion)
+#&gt; 
+#&gt;   - escalc() can now also be used to convert a regular data frame to an
+#&gt;     escalc object
+#&gt; 
+#&gt;   - for measure="UCOR", the exact bias-correction is now used (instead
+#&gt;     of the approximation); when vtype="UB", the exact equation is now
+#&gt;     used to compute the unbiased estimate of the variance of the
+#&gt;     bias-corrected correlation coefficient; hence gsl is now a suggested
+#&gt;     package (needed to compute the hypergeometric function) and is
+#&gt;     loaded when required
+#&gt; 
+#&gt;   - cooks.distance() now also works with rma.mv objects; and since model
+#&gt;     fitting can take some time, an option to show a progress bar has
+#&gt;     been added
+#&gt; 
+#&gt;   - fixed an issue with robust.rma.mv() throwing errors when the model
+#&gt;     was fitted with sparse=TRUE
+#&gt; 
+#&gt;   - fixed an error with robust.rma.mv() when the model was fitted with
+#&gt;     user-defined weights (or a user-defined weight matrix)
+#&gt; 
+#&gt;   - added ranef() for extracting the BLUPs of the random effects (only
+#&gt;     for rma.uni objects at the moment)
+#&gt; 
+#&gt;   - reverted back to the pre-1.1-0 way of computing p-values for
+#&gt;     individual coefficients in permutest.rma.uni(), that is, the p-value
+#&gt;     is computed with mean(abs(z_perm) &gt;= abs(z_obs) - tol) (where tol is
+#&gt;     a numerical tolerance)
+#&gt; 
+#&gt;   - permutest.rma.uni() gains permci argument, which can be used to
+#&gt;     obtain permutation-based CIs of the model coefficients (note that
+#&gt;     this is computationally very demanding and may take a long time to
+#&gt;     complete)
+#&gt; 
+#&gt;   - rma.glmm() continues to work even when the saturated model cannot be
+#&gt;     fitted (although the tests for heterogeneity are not available then)
+#&gt; 
+#&gt;   - rma.glmm() now allows control over the arguments used for
+#&gt;     method.args (via control=list(hessianCtrl=list(...))) passed to
+#&gt;     hessian() (from the numDeriv package) when using model="CM.EL" and
+#&gt;     measure="OR"
+#&gt; 
+#&gt;   - in rma.glmm(), default method.args value for r passed to hessian()
+#&gt;     has been increased to 16 (while this slows things down a bit, this
+#&gt;     appears to improve the accuracy of the numerical approximation to
+#&gt;     the Hessian, especially when tau^2 is close to 0)
+#&gt; 
+#&gt;   - the various forest() and addpoly() functions now have a new argument
+#&gt;     called width, which provides manual control over the width of the
+#&gt;     annotation columns; this is useful when creating complex forest
+#&gt;     plots with a monospaced font and we want to ensure that all
+#&gt;     annotations are properly lined up at the decimal point
+#&gt; 
+#&gt;   - the annotations created by the various forest() and addpoly()
+#&gt;     functions are now a bit more compact by default
+#&gt; 
+#&gt;   - more flexible efac argument in the various forest() functions
+#&gt; 
+#&gt;   - trailing zeros in the axis labels are now dropped in forest and
+#&gt;     funnel plots by default; but trailing zeros can be retained by
+#&gt;     specifying a numeric (and not an integer) value for the digits
+#&gt;     argument
+#&gt; 
+#&gt;   - added funnel.default(), which directly takes as input a vector with
+#&gt;     the observed effect sizes or outcomes and the corresponding sampling
+#&gt;     variances, standard errors, and/or sample sizes
+#&gt; 
+#&gt;   - added plot.profile.rma(), a plot method for objects returned by the
+#&gt;     profile.rma.uni() and profile.rma.mv() functions
+#&gt; 
+#&gt;   - simplified baujat.rma.uni(), baujat.rma.mh(), and baujat.rma.peto()
+#&gt;     to baujat.rma(), which now handles objects of class rma.uni, rma.mh,
+#&gt;     and rma.peto
+#&gt; 
+#&gt;   - baujat.rma() gains argument symbol for more control over the
+#&gt;     plotting symbol
+#&gt; 
+#&gt;   - labbe() gains a grid argument
+#&gt; 
+#&gt;   - more logical placement of labels in qqnorm.rma.uni(),
+#&gt;     qqnorm.rma.mh(), and qqnorm.rma.peto() functions (and more control
+#&gt;     thereof)
+#&gt; 
+#&gt;   - qqnorm.rma.uni() gains lty argument
+#&gt; 
+#&gt;   - added gosh.rma() and plot.gosh.rma() for creating GOSH (i.e.,
+#&gt;     graphical display of study heterogeneity) plots based on Olkin et
+#&gt;     al. (2012)
+#&gt; 
+#&gt;   - in the (rare) case where all observed outcomes are exactly equal to
+#&gt;     each other, test="knha" (i.e., knha=TRUE) in rma() now leads to more
+#&gt;     appropriate results
+#&gt; 
+#&gt;   - updated datasets so those containing precomputed effect size
+#&gt;     estimates or observed outcomes are already declared to be escalc
+#&gt;     objects
+#&gt; 
+#&gt;   - added new datasets (dat.egger2001 and dat.li2007) on the
+#&gt;     effectiveness of intravenous magnesium in acute myocardial
+#&gt;     infarction
+#&gt; 
+#&gt;   - methods package is now under Depends (in addition to Matrix), so
+#&gt;     that rma.mv(..., sparse=TRUE) always works, even under Rscript
+#&gt; 
+#&gt;   - some general code cleanup
+#&gt; 
+#&gt;   - added more tests (and used a more consistent naming scheme for
+#&gt;     tests)
+#&gt; 
+#&gt;                  Changes in version 1.9-8 (2015-09-28)                  
+#&gt; 
+#&gt;   - due to more stringent package testing, it is increasingly difficult
+#&gt;     to ensure that the package passes all checks on older versions of R;
+#&gt;     from now on, the package will therefore require, and be checked
+#&gt;     under, only the current (and the development) version of R
+#&gt; 
+#&gt;   - added graphics, grDevices, and methods to Imports (due to recent
+#&gt;     change in how CRAN checks packages)
+#&gt; 
+#&gt;   - the struct argument for rma.mv() now also allows for "ID" and
+#&gt;     "DIAG", which are identical to the "CS" and "HCS" structures, but
+#&gt;     with the correlation parameter fixed to 0
+#&gt; 
+#&gt;   - added robust() for (cluster) robust tests and confidence intervals
+#&gt;     for rma.uni and rma.mv models (this uses a robust sandwich-type
+#&gt;     estimator of the variance-covariance matrix of the fixed effects
+#&gt;     along the lines of the Eicker-Huber-White method)
+#&gt; 
+#&gt;   - confint() now works for models fitted with the rma.mv() function;
+#&gt;     for variance and correlation parameters, the function provides
+#&gt;     profile likelihood confidence intervals; the output generated by the
+#&gt;     confint() function has been adjusted in general to make the
+#&gt;     formatting more consistent across the different model types
+#&gt; 
+#&gt;   - for objects of class rma.mv, profile() now provides profile plots
+#&gt;     for all (non-fixed) variance and correlation components of the model
+#&gt;     when no component is specified by the user (via the sigma2, tau2,
+#&gt;     rho, gamma2, or phi arguments)
+#&gt; 
+#&gt;   - for measure="MD" and measure="ROM", one can now choose between
+#&gt;     vtype="LS" (the default) and vtype="HO"; the former computes the
+#&gt;     sampling variances without assuming homoscedasticity, while the
+#&gt;     latter assumes homoscedasticity
+#&gt; 
+#&gt;   - multiple model objects can now be passed to the fitstats(), AIC(),
+#&gt;     and BIC() functions
+#&gt; 
+#&gt;   - check for duplicates in the slab argument is now done after any
+#&gt;     subsetting is done (as suggested by Michael Dewey)
+#&gt; 
+#&gt;   - rma.glmm() now again works when using add=0, in which case some of
+#&gt;     the observed outcomes (e.g., log odds or log odds ratios) may be NA
+#&gt; 
+#&gt;   - when using rma.glmm() with model="CM.EL", the saturated model (used
+#&gt;     to compute the Wald-type and likelihood ratio tests for the presence
+#&gt;     of (residual) heterogeneity) often fails to converge; the function
+#&gt;     now continues to run (instead of stopping with an error) and simply
+#&gt;     omits the test results from the output
+#&gt; 
+#&gt;   - when using rma.glmm() with model="CM.EL" and inversion of the
+#&gt;     Hessian fails via the Choleski factorization, the function now makes
+#&gt;     another attempt via the QR decomposition (even when this works, a
+#&gt;     warning is issued)
+#&gt; 
+#&gt;   - for rma.glmm(), BIC and AICc values were switched around; corrected
+#&gt; 
+#&gt;   - more use of suppressWarnings() is made when functions repeatedly
+#&gt;     need to fit the same model, such as cumul(), influence(), and
+#&gt;     profile(); that way, one does not get inundated with the same
+#&gt;     warning(s)
+#&gt; 
+#&gt;   - some (overdue) updates to the documentation
+#&gt; 
+#&gt;                  Changes in version 1.9-7 (2015-05-22)                  
+#&gt; 
+#&gt;   - default optimizer for rma.mv() changed to nlminb() (instead of
+#&gt;     optim() with "Nelder-Mead"); extensive testing indicated that
+#&gt;     nlminb() (and also optim() with "BFGS") is typically quicker and
+#&gt;     more robust; note that this is in principle a non-backwards
+#&gt;     compatible change, but really a necessary one; and you can always
+#&gt;     revert to the old behavior with control=list(optimizer="optim",
+#&gt;     optmethod="Nelder-Mead")
+#&gt; 
+#&gt;   - all tests have been updated in accordance with the recommended
+#&gt;     syntax of the testthat package; for example, expect_equivalent(x,y)
+#&gt;     is used instead of test_that(x, is_equivalent_to(y))
+#&gt; 
+#&gt;   - changed a few is_identical_to() comparisons to expect_equivalent()
+#&gt;     ones (that failed on Sparc Solaris)
+#&gt; 
+#&gt;                  Changes in version 1.9-6 (2015-05-07)                  
+#&gt; 
+#&gt;   - funnel() now works again for rma.glmm objects (note to self: quit
+#&gt;     breaking things that work!)
+#&gt; 
+#&gt;   - rma.glmm() will now only issue a warning (and not an error) when the
+#&gt;     Hessian for the saturated model cannot be inverted (which is needed
+#&gt;     to compute the Wald-type test for heterogeneity, so the test
+#&gt;     statistic is then simply set to NA)
+#&gt; 
+#&gt;   - rma.mv() now allows for two terms of the form ~ inner | outer; the
+#&gt;     variance components corresponding to such a structure are called
+#&gt;     gamma2 and correlations are called phi; other functions that work
+#&gt;     with objects of class rma.mv have been updated accordingly
+#&gt; 
+#&gt;   - rma.mv() now provides (even) more optimizer choices: nlm() from the
+#&gt;     stats package, hjk() and nmk() from the dfoptim package, and
+#&gt;     ucminf() from the ucminf package; choose the desired optimizer via
+#&gt;     the control argument (e.g., control=list(optimizer="nlm"))
+#&gt; 
+#&gt;   - profile.rma.uni() and profile.rma.mv() now can do parallel
+#&gt;     processing (which is especially relevant for rma.mv objects, where
+#&gt;     profiling is crucial and model fitting can be slow)
+#&gt; 
+#&gt;   - the various confint() functions now have a transf argument (to apply
+#&gt;     some kind of transformation to the model coefficients and confidence
+#&gt;     interval bounds); coefficients and bounds for objects of class
+#&gt;     rma.mh and rma.peto are no longer automatically transformed
+#&gt; 
+#&gt;   - the various forest() functions no longer enforce that the actual
+#&gt;     x-axis limits (alim) encompass the observed outcomes to be plotted;
+#&gt;     also, outcomes below or above the actual x-axis limits are no longer
+#&gt;     shown
+#&gt; 
+#&gt;   - the various forest() functions now provide control over the
+#&gt;     horizontal lines (at the top/bottom) that are automatically added to
+#&gt;     the plot via the lty argument (this also allows for removing them);
+#&gt;     also, the vertical reference line is now placed behind the
+#&gt;     points/CIs
+#&gt; 
+#&gt;   - forest.default() now has argument col which can be used to specify
+#&gt;     the color(s) to be used for drawing the study labels, points, CIs,
+#&gt;     and annotations
+#&gt; 
+#&gt;   - the efac argument for forest.rma() now also allows two values, the
+#&gt;     first for the arrows and CI limits, the second for summary estimates
+#&gt; 
+#&gt;   - corrected some axis labels in various plots when measure="PLO"
+#&gt; 
+#&gt;   - axes in labbe() plots now have "(Group 1)" and "(Group 2)" added by
+#&gt;     default
+#&gt; 
+#&gt;   - anova.rma() gains argument L for specifying linear combinations of
+#&gt;     the coefficients in the model that should be tested to be zero
+#&gt; 
+#&gt;   - in case removal of a row of data would lead to one or more
+#&gt;     inestimable model coefficients, baujat(), cooks.distance(),
+#&gt;     dfbetas(), influence(), and rstudent() could fail for rma.uni
+#&gt;     objects; such cases are now handled properly
+#&gt; 
+#&gt;   - for models with moderators, the predict() function now shows the
+#&gt;     study labels when they have been specified by the user (and newmods
+#&gt;     is not used)
+#&gt; 
+#&gt;   - if there is only one fixed effect (model coefficient) in the model,
+#&gt;     the print.infl.rma.uni() function now shows the DFBETAS values with
+#&gt;     the other case diagnostics in a single table (for easier
+#&gt;     inspection); if there is more than one fixed effect, a separate
+#&gt;     table is still used for the DFBETAS values (with one column for each
+#&gt;     coefficient)
+#&gt; 
+#&gt;   - added measure="SMCRH" to the escalc() function for the standardized
+#&gt;     mean change using raw score standardization with heteroscedastic
+#&gt;     population variances at the two measurement occasions
+#&gt; 
+#&gt;   - added measure="ROMC" to the escalc() function for the (log
+#&gt;     transformed) ratio of means (response ratio) when the means reflect
+#&gt;     two measurement occasions (e.g., for a single group of people) and
+#&gt;     hence are correlated
+#&gt; 
+#&gt;   - added own function for computing/estimating the tetrachoric
+#&gt;     correlation coefficient (for measure="RTET"); package therefore no
+#&gt;     longer suggests polycor but now suggest mvtnorm (which is loaded as
+#&gt;     needed)
+#&gt; 
+#&gt;   - element fill returned by trimfill.rma.uni() is now a logical vector
+#&gt;     (instead of a 0/1 dummy variable)
+#&gt; 
+#&gt;   - print.list.rma() now also returns the printed results invisibly as a
+#&gt;     data frame
+#&gt; 
+#&gt;   - added a new dataset (dat.senn2013) as another illustration of a
+#&gt;     network meta-analysis
+#&gt; 
+#&gt;   - metafor now depends on at least version 3.1.0 of R
+#&gt; 
+#&gt;                  Changes in version 1.9-5 (2014-11-24)                  
+#&gt; 
+#&gt;   - moved the stats and Matrix packages from Depends to Imports; as a
+#&gt;     result, had to add utils to Imports; moved the Formula package from
+#&gt;     Depends to Suggests
+#&gt; 
+#&gt;   - added update.rma() function (for updating/refitting a model); model
+#&gt;     objects also now store and keep the call
+#&gt; 
+#&gt;   - the vcov() function now also extracts the marginal
+#&gt;     variance-covariance matrix of the observed effect sizes or outcomes
+#&gt;     from a fitted model (of class rma.uni or rma.mv)
+#&gt; 
+#&gt;   - rma.mv() now makes use of the Cholesky decomposition when there is a
+#&gt;     random = ~ inner | outer formula and struct="UN"; this is
+#&gt;     numerically more stable than the old approach that avoided
+#&gt;     non-positive definite solutions by forcing the log-likelihood to be
+#&gt;     -Inf in those cases; the old behavior can be restored with control =
+#&gt;     list(cholesky=FALSE)
+#&gt; 
+#&gt;   - rma.mv() now requires the inner variable in an ~ inner | outer
+#&gt;     formula to be a factor or character variable (except when struct is
+#&gt;     "AR" or "HAR"); use ~ factor(inner) | outer in case it isn't
+#&gt; 
+#&gt;   - anova.rma.uni() function changed to anova.rma() that works now for
+#&gt;     both rma.uni and rma.mv objects
+#&gt; 
+#&gt;   - the profile.rma.mv() function now omits the number of the variance
+#&gt;     or correlation component from the plot title and x-axis label when
+#&gt;     the model only includes one of the respective parameters
+#&gt; 
+#&gt;   - profile() functions now pass on the ... argument also to the title()
+#&gt;     function used to create the figure titles (esp. relevant when using
+#&gt;     the cex.main argument)
+#&gt; 
+#&gt;   - the drop00 argument of the rma.mh() and rma.peto() functions now
+#&gt;     also accepts a vector with two logicals, the first applies when
+#&gt;     calculating the observed outcomes, the second when applying the
+#&gt;     Mantel-Haenszel or Peto's method
+#&gt; 
+#&gt;   - weights.rma.uni() now shows the correct weights when weighted=FALSE
+#&gt; 
+#&gt;   - argument showweight renamed to showweights in the forest.default()
+#&gt;     and forest.rma() functions (more consistent with the naming of the
+#&gt;     various weights() functions)
+#&gt; 
+#&gt;   - added model.matrix.rma() function (to extract the model matrix from
+#&gt;     objects of class rma)
+#&gt; 
+#&gt;   - funnel() and radial() now (invisibly) return data frames with the
+#&gt;     coordinates of the points that were drawn (may be useful for manual
+#&gt;     labeling of points in the plots)
+#&gt; 
+#&gt;   - permutest.rma.uni() function now uses a numerical tolerance when
+#&gt;     making comparisons (&gt;= or &lt;=) between an observed test statistic and
+#&gt;     the test statistic under the permuted data; when using random
+#&gt;     permutations, the function now ensures that the very first
+#&gt;     permutation correspond to the original data
+#&gt; 
+#&gt;   - corrected some missing/redundant row/column labels in some output
+#&gt; 
+#&gt;   - most require() calls replaced with requireNamespace() to avoid
+#&gt;     altering the search path (hopefully this won't break stuff ...)
+#&gt; 
+#&gt;   - some non-visible changes including more use of some (non-exported)
+#&gt;     helper functions for common tasks
+#&gt; 
+#&gt;   - dataset dat.collins91985a updated (including all reported outcomes
+#&gt;     and some more information about the various trials)
+#&gt; 
+#&gt;   - oh, and guess what? I updated the documentation ...
+#&gt; 
+#&gt;                  Changes in version 1.9-4 (2014-07-30)                  
+#&gt; 
+#&gt;   - added method="GENQ" to rma.uni() for the generalized Q-statistic
+#&gt;     estimator of tau^2, which allows for used-defined weights (note: the
+#&gt;     DL and HE estimators are just special cases of this method)
+#&gt; 
+#&gt;   - when the model was fitted with method="GENQ", then confint() will
+#&gt;     now use the generalized Q-statistic method to construct the
+#&gt;     corresponding confidence interval for tau^2 (thanks to Dan Jackson
+#&gt;     for the code); the iterative method used to obtain the CI makes use
+#&gt;     of Farebrother's algorithm as implemented in the CompQuadForm
+#&gt;     package
+#&gt; 
+#&gt;   - slight improvements in how the rma.uni() function handles
+#&gt;     non-positive sampling variances
+#&gt; 
+#&gt;   - rma.uni(), rma.mv(), and rma.glmm() now try to detect and remove any
+#&gt;     redundant predictors before the model fitting; therefore, if there
+#&gt;     are exact linear relationships among the predictor variables (i.e.,
+#&gt;     perfect multicollinearity), terms are removed to obtain a set of
+#&gt;     predictors that is no longer perfectly multicollinear (a warning is
+#&gt;     issued when this happens); note that the order of how the variables
+#&gt;     are specified in the model formula can influence which terms are
+#&gt;     removed
+#&gt; 
+#&gt;   - the last update introduced an error in how hat values were computed
+#&gt;     when the model was fitted with the rma() function using the Knapp &amp;
+#&gt;     Hartung method (i.e., when knha=TRUE); this has been fixed
+#&gt; 
+#&gt;   - regtest() no longer works (for now) with rma.mv objects (it wasn't
+#&gt;     meant to in the first place); if you want to run something along the
+#&gt;     same lines, just consider adding some measure of the precision of
+#&gt;     the observed outcomes (e.g., their standard errors) as a predictor
+#&gt;     to the model
+#&gt; 
+#&gt;   - added "sqrtni" and "sqrtninv" as possible options for the predictor
+#&gt;     argument of regtest()
+#&gt; 
+#&gt;   - more optimizers are now available for the rma.mv() function via the
+#&gt;     nloptr package by setting control = list(optimizer="nloptr"); when
+#&gt;     using this optimizer, the default is to use the BOBYQA
+#&gt;     implementation from that package with a relative convergence
+#&gt;     criterion of 1e-8 on the function value (see documentation on how to
+#&gt;     change these defaults)
+#&gt; 
+#&gt;   - predict.rma() function now works for rma.mv objects with multiple
+#&gt;     tau^2 values even if the user specifies the newmods argument but not
+#&gt;     the tau2.levels argument (but a warning is issued and the prediction
+#&gt;     intervals are not computed)
+#&gt; 
+#&gt;   - argument var.names now works properly in escalc() when the user has
+#&gt;     not made use of the data argument (thanks to Jarrett Byrnes for
+#&gt;     bringing this to my attention)
+#&gt; 
+#&gt;   - added plot() function for cumulative random-effects models results
+#&gt;     as obtained with the cumul.rma.uni() function; the plot shows the
+#&gt;     model estimate on the x-axis and the corresponding tau^2 estimate on
+#&gt;     the y-axis in the cumulative order of the results
+#&gt; 
+#&gt;   - fixed the omitted offset term in the underlying model fitted by the
+#&gt;     rma.glmm() function when method="ML", measure="IRR", and
+#&gt;     model="UM.FS", that is, when fitting a mixed-effects Poisson
+#&gt;     regression model with fixed study effects to two-group event count
+#&gt;     data (thanks to Peter Konings for pointing out this error)
+#&gt; 
+#&gt;   - added two new datasets (dat.bourassa1996, dat.riley2003)
+#&gt; 
+#&gt;   - added function replmiss() (just a useful helper function)
+#&gt; 
+#&gt;   - package now uses LazyData: TRUE
+#&gt; 
+#&gt;   - some improvements to the documentation (do I still need to mention
+#&gt;     this every time?)
+#&gt; 
+#&gt;                  Changes in version 1.9-3 (2014-05-05)                  
+#&gt; 
+#&gt;   - some minor tweaks to rma.uni() that should be user transparent
+#&gt; 
+#&gt;   - rma.uni() now has a weights argument, allowing the user to specify
+#&gt;     arbitrary user-defined weights; all functions affected by this have
+#&gt;     been updated accordingly
+#&gt; 
+#&gt;   - better handling of mismatched length of yi and ni vectors in
+#&gt;     rma.uni() and rma.mv() functions
+#&gt; 
+#&gt;   - subsetting is now handled as early as possible within functions with
+#&gt;     subsetting capabilities; this avoids some (rare) cases where studies
+#&gt;     ultimately excluded by the subsetting could still affect the results
+#&gt; 
+#&gt;   - some general tweaks to rma.mv() that should make it a bit faster
+#&gt; 
+#&gt;   - argument V of rma.mv() now also accepts a list of var-cov matrices
+#&gt;     for the observed effects or outcomes; from the list elements, the
+#&gt;     full (block diagonal) var-cov matrix V is then automatically
+#&gt;     constructed
+#&gt; 
+#&gt;   - rma.mv() now has a new argument W allowing the user to specify
+#&gt;     arbitrary user-defined weights or an arbitrary weight matrix
+#&gt; 
+#&gt;   - rma.mv() now has a new argument sparse; by setting this to TRUE, the
+#&gt;     function uses sparse matrix objects to the extent possible; this can
+#&gt;     speed up model fitting substantially for certain models (hence, the
+#&gt;     metafor package now depends on the Matrix package)
+#&gt; 
+#&gt;   - rma.mv() now allows for struct="AR" and struct="HAR", to fit models
+#&gt;     with (heteroscedastic) autoregressive (AR1) structures among the
+#&gt;     true effects (useful for meta-analyses of studies reporting outcomes
+#&gt;     at multiple time points)
+#&gt; 
+#&gt;   - rma.mv() now has a new argument Rscale which can be used to control
+#&gt;     how matrices specified via the R argument are scaled (see docs for
+#&gt;     more details)
+#&gt; 
+#&gt;   - rma.mv() now only checks for missing values in the rows of the lower
+#&gt;     triangular part of the V matrix (including the diagonal); this way,
+#&gt;     if Vi = matrix(c(.5,NA,NA,NA), nrow=2, ncol=2) is the var-cov matrix
+#&gt;     of the sampling errors for a particular study with two outcomes,
+#&gt;     then only the second row/column needs to be removed before the model
+#&gt;     fitting (and not the entire study)
+#&gt; 
+#&gt;   - added five new datasets (dat.begg1989, dat.ishak2007, dat.fine1993,
+#&gt;     dat.konstantopoulos2011, and dat.hasselblad1998) to provide further
+#&gt;     illustrations of the use of the rma.mv() function (for meta-analyses
+#&gt;     combining controlled and uncontrolled studies, for meta-analyses of
+#&gt;     longitudinal studies, for multilevel meta-analyses, and for network
+#&gt;     meta-analyses / mixed treatment comparison meta-analyses)
+#&gt; 
+#&gt;   - added rstandard.rma.mv() function to compute standardized residuals
+#&gt;     for models fitted with the rma.mv() function (rstudent.rma.mv() to
+#&gt;     be added at a later point); also added hatvalues.rma.mv() for
+#&gt;     computing the hat values and weights.rma.uni() for computing the
+#&gt;     weights (i.e., the diagonal elements of the weight matrix)
+#&gt; 
+#&gt;   - the various weights() functions now have a new argument type to
+#&gt;     indicate whether only the diagonal elements of the weight matrix
+#&gt;     (default) or the entire weight matrix should be returned
+#&gt; 
+#&gt;   - the various hatvalues() functions now have a new argument type to
+#&gt;     indicate whether only the diagonal elements of the hat matrix
+#&gt;     (default) or the entire hat matrix should be returned
+#&gt; 
+#&gt;   - predict.rma() function now works properly for rma.mv objects (also
+#&gt;     has a new argument tau2.levels to specify, where applicable, the
+#&gt;     levels of the inner factor when computing prediction intervals)
+#&gt; 
+#&gt;   - forest.rma() function now provides a bit more control over the color
+#&gt;     of the summary polygon and is now compatible with rma.mv objects;
+#&gt;     also, has a new argument lty, which provides more control over the
+#&gt;     line type for the individual CIs and the prediction interval
+#&gt; 
+#&gt;   - addpoly.default() and addpoly.rma() now have a border argument (for
+#&gt;     consistency with the forest.rma() function); addpoly.rma() now
+#&gt;     yields the correct CI bounds when the model was fitted with
+#&gt;     knha=TRUE
+#&gt; 
+#&gt;   - forest.cumul.rma() now provides the correct CI bounds when the
+#&gt;     models were fitted with the Knapp &amp; Hartung method (i.e., when
+#&gt;     knha=TRUE in the original rma() function call)
+#&gt; 
+#&gt;   - the various forest() functions now return information about the
+#&gt;     chosen values for arguments xlim, alim, at, ylim, rows, cex,
+#&gt;     cex.lab, and cex.axis invisibly (useful for tweaking the default
+#&gt;     values); thanks to Michael Dewey for the suggestion
+#&gt; 
+#&gt;   - the various forest() functions now have a new argument, clim, to set
+#&gt;     limits for the confidence/prediction interval bounds
+#&gt; 
+#&gt;   - cumul.mh() and cumul.peto() now get the order of the studies right
+#&gt;     when there are missing values in the data
+#&gt; 
+#&gt;   - the transf argument of leave1out.rma.mh(), leave1out.rma.peto(),
+#&gt;     cumul.rma.mh(), and cumul.rma.peto() should now be used to specify
+#&gt;     the actual function for the transformation (the former behavior of
+#&gt;     setting this argument to TRUE to exponentiate log RRs, log ORs, or
+#&gt;     log IRRs still works for back-compatibility); this is more
+#&gt;     consistent with how the cumul.rma.uni() and leave1out.rma.uni()
+#&gt;     functions work and is also more flexible
+#&gt; 
+#&gt;   - added bldiag() function to construct a block diagonal matrix from (a
+#&gt;     list of) matrices (may be needed to construct the V matrix when
+#&gt;     using the rma.mv() function); bdiag() function from the Matrix
+#&gt;     package does the same thing, but creates sparse matrix objects
+#&gt; 
+#&gt;   - profile.rma.mv() now has a startmethod argument; by setting this to
+#&gt;     "prev", successive model fits are started at the parameter estimates
+#&gt;     from the previous model fit; this may speed things up a bit; also,
+#&gt;     the method for automatically choosing the xlim values has been
+#&gt;     changed
+#&gt; 
+#&gt;   - slight improvement to profile.rma.mv() function, which would throw
+#&gt;     an error if the last model fit did not converge
+#&gt; 
+#&gt;   - added a new dataset (dat.linde2005) for replication of the analyses
+#&gt;     in Viechtbauer (2007)
+#&gt; 
+#&gt;   - added a new dataset (dat.molloy2014) for illustrating the
+#&gt;     meta-analysis of (r-to-z transformed) correlation coefficients
+#&gt; 
+#&gt;   - added a new dataset (dat.gibson2002) to illustrate the combined
+#&gt;     analysis of standardized mean differences and probit transformed
+#&gt;     risk differences
+#&gt; 
+#&gt;   - computations in weights.mh() slightly changed to prevent integer
+#&gt;     overflows for large counts
+#&gt; 
+#&gt;   - unnecessary warnings in transf.ipft.hm() are now suppressed (cases
+#&gt;     that raised those warnings were already handled correctly)
+#&gt; 
+#&gt;   - in predict(), blup(), cumul(), and leave1out(), when using the
+#&gt;     transf argument, the standard errors (which are NA) are no longer
+#&gt;     shown in the output
+#&gt; 
+#&gt;   - argument slab in various functions will now also accept non-unique
+#&gt;     study labels; make.unique() is used as needed to make them unique
+#&gt; 
+#&gt;   - vignettes("metafor") and vignettes("metafor_diagram") work again
+#&gt;     (yes, I know they are not true vignettes in the strict sense, but I
+#&gt;     think they should show up on the CRAN website for the package and
+#&gt;     using a minimal valid Sweave document that is recognized by the R
+#&gt;     build system makes that happen)
+#&gt; 
+#&gt;   - escalc() and its summary() method now keep better track when the
+#&gt;     data frame contains multiple columns with outcome or effect size
+#&gt;     values (and corresponding sampling variances) for print formatting;
+#&gt;     also simplified the class structure a bit (and hence,
+#&gt;     print.summary.escalc() removed)
+#&gt; 
+#&gt;   - summary.escalc() has a new argument H0 to specify the value of the
+#&gt;     outcome under the null hypothesis for computing the test statistics
+#&gt; 
+#&gt;   - added measures "OR2DN" and "D2ORN" to escalc() for transforming log
+#&gt;     odds ratios to standardized mean differences and vice-versa, based
+#&gt;     on the method of Cox &amp; Snell (1989), which assumes normally
+#&gt;     distributed response variables within the two groups before the
+#&gt;     dichotomization
+#&gt; 
+#&gt;   - permutest.rma.uni() function now catches an error when the number of
+#&gt;     permutations requested is too large (for R to even create the
+#&gt;     objects to store the results in) and produces a proper error message
+#&gt; 
+#&gt;   - funnel.rma() function now allows the yaxis argument to be set to
+#&gt;     "wi" so that the actual weights (in %) are placed on the y-axis
+#&gt;     (useful when arbitrary user-defined have been specified)
+#&gt; 
+#&gt;   - for rma.glmm(), the control argument optCtrl is now used for passing
+#&gt;     control arguments to all of the optimizers (hence, control arguments
+#&gt;     nlminbCtrl and minqaCtrl are now defunct)
+#&gt; 
+#&gt;   - rma.glmm() should not throw an error anymore when including only a
+#&gt;     single moderator/predictor in the model
+#&gt; 
+#&gt;   - predict.rma() now returns an object of class list.rma (therefore,
+#&gt;     function print.predict.rma() has been removed)
+#&gt; 
+#&gt;   - for rma.list objects, added [, head(), and tail() methods
+#&gt; 
+#&gt;   - automated testing using the testthat package (still many more tests
+#&gt;     to add, but finally made a start on this)
+#&gt; 
+#&gt;   - encoding changed to UTF-8 (to use 'foreign characters' in the docs
+#&gt;     and to make the HTML help files look a bit nicer)
+#&gt; 
+#&gt;   - guess what? some improvements to the documentation! (also combined
+#&gt;     some of the help files to reduce the size of the manual a bit; and
+#&gt;     yes, it's still way too big)
+#&gt; 
+#&gt;                  Changes in version 1.9-2 (2013-10-07)                  
+#&gt; 
+#&gt;   - added function rma.mv() to fit multivariate/multilevel meta-analytic
+#&gt;     models via appropriate linear (mixed-effects) models; this function
+#&gt;     allows for modeling of non-independent sampling errors and/or true
+#&gt;     effects and can be used for network meta-analyses, meta-analyses
+#&gt;     accounting for phylogenetic relatedness, and other complicated
+#&gt;     meta-analytic data structures
+#&gt; 
+#&gt;   - added the AICc to the information criteria computed by the various
+#&gt;     model fitting functions
+#&gt; 
+#&gt;   - if the value of tau^2 is fixed by the user via the corresponding
+#&gt;     argument in rma.uni(), then tau^2 is no longer counted as an
+#&gt;     additional parameter for the computation of the information criteria
+#&gt;     (i.e., AIC, BIC, and AICc)
+#&gt; 
+#&gt;   - rma.uni(), rma.glmm(), and rma.mv() now use a more stringent check
+#&gt;     whether the model matrix is of full rank
+#&gt; 
+#&gt;   - added profile() method functions for objects of class rma.uni and
+#&gt;     rma.mv (can be used to obtain a plot of the profiled log-likelihood
+#&gt;     as a function of a specific variance component or correlation
+#&gt;     parameter of the model)
+#&gt; 
+#&gt;   - predict.rma() function now has an intercept argument that allows the
+#&gt;     user to decide whether the intercept term should be included when
+#&gt;     calculating the predicted values (rare that this should be changed
+#&gt;     from the default)
+#&gt; 
+#&gt;   - for rma.uni(), rma.glmm(), and rma.mv(), the control argument can
+#&gt;     now also accept an integer value; values &gt; 1 generate more verbose
+#&gt;     output about the progress inside of the function
+#&gt; 
+#&gt;   - rma.glmm() has been updated to work with lme4 1.0.x for fitting
+#&gt;     various models; as a result, model="UM.RS" can only use nAGQ=1 at
+#&gt;     the moment (hopefully this will change in the future)
+#&gt; 
+#&gt;   - the control argument of rma.glmm() can now be used to pass all
+#&gt;     desired control arguments to the various functions and optimizers
+#&gt;     used for the model fitting (admittedly the use of lists within this
+#&gt;     argument is a bit unwieldy, but much more flexible)
+#&gt; 
+#&gt;   - rma.mh() and rma.peto() also now have a verbose argument (not really
+#&gt;     needed, but added for sake of consistency across functions)
+#&gt; 
+#&gt;   - fixed (silly) error that would prevent rma.glmm() from running for
+#&gt;     measures "IRR", "PLO", and "IRLN" when there are missing values in
+#&gt;     the data (lesson: add some missing values to datasets for the unit
+#&gt;     tests!)
+#&gt; 
+#&gt;   - a bit of code reorganization (should be user transparent)
+#&gt; 
+#&gt;   - vignettes ("metafor" and "metafor_diagram") are now just 'other
+#&gt;     files' in the doc directory (as these were not true vignettes to
+#&gt;     begin with)
+#&gt; 
+#&gt;   - some improvements to the documentation (as always)
+#&gt; 
+#&gt;                  Changes in version 1.9-1 (2013-07-20)                  
+#&gt; 
+#&gt;   - rma.mh() now also implements the Mantel-Haenszel method for
+#&gt;     incidence rate differences (measure="IRD")
+#&gt; 
+#&gt;   - when analyzing incidence rate ratios (measure="IRR") with the
+#&gt;     rma.mh() function, the Mantel-Haenszel test for person-time data is
+#&gt;     now also provided
+#&gt; 
+#&gt;   - rma.mh() has a new argument correct (default is TRUE) to indicate
+#&gt;     whether the continuity correction should be applied when computing
+#&gt;     the (Cochran-)Mantel-Haenszel test statistic
+#&gt; 
+#&gt;   - renamed elements CMH and CMHp (for the Cochran-Mantel-Haenszel test
+#&gt;     statistic and corresponding p-value) to MH and MHp
+#&gt; 
+#&gt;   - added function baujat() to create Baujat plots
+#&gt; 
+#&gt;   - added a new dataset (dat.pignon2000) to illustrate the use of the
+#&gt;     baujat() function
+#&gt; 
+#&gt;   - added function to.table() to convert data from vector format into
+#&gt;     the corresponding table format
+#&gt; 
+#&gt;   - added function to.long() to convert data from vector format into the
+#&gt;     corresponding long format
+#&gt; 
+#&gt;   - rma.glmm() now even runs when k=1 (yielding trivial results)
+#&gt; 
+#&gt;   - for models with an intercept and moderators, rma.glmm() now
+#&gt;     internally rescales (non-dummy) variables to z-scores during the
+#&gt;     model fitting (this improves the stability of the model fitting,
+#&gt;     especially when model="CM.EL"); results are given after
+#&gt;     back-scaling, so this should be transparent to the user
+#&gt; 
+#&gt;   - in rma.glmm(), default number of quadrature points (nAGQ) is now 7
+#&gt;     (setting this to 100 was a bit overkill)
+#&gt; 
+#&gt;   - a few more error checks here and there for misspecified arguments
+#&gt; 
+#&gt;   - some improvements to the documentation
+#&gt; 
+#&gt;                  Changes in version 1.9-0 (2013-06-21)                  
+#&gt; 
+#&gt;   - vignette renamed to metafor so vignette("metafor") works now
+#&gt; 
+#&gt;   - added a diagram to the documentation, showing the various functions
+#&gt;     in the metafor package (and how they relate to each other); can be
+#&gt;     loaded with vignette("metafor_diagram")
+#&gt; 
+#&gt;   - anova.rma.uni() function can now also be used to test (sub)sets of
+#&gt;     model coefficients with a Wald-type test when a single model is
+#&gt;     passed to the function
+#&gt; 
+#&gt;   - the pseudo R^2 statistic is now automatically calculated by the
+#&gt;     rma.uni() function and supplied in the output (only for
+#&gt;     mixed-effects models and when the model includes an intercept, so
+#&gt;     that the random- effects model is clearly nested within the
+#&gt;     mixed-effects model)
+#&gt; 
+#&gt;   - component VAF is now called R2 in anova.rma.uni() function
+#&gt; 
+#&gt;   - added function hc() that carries out a random-effects model analysis
+#&gt;     using the method by Henmi and Copas (2010); thanks to Michael Dewey
+#&gt;     for the suggestion and providing the code
+#&gt; 
+#&gt;   - added new dataset (dat.lee2004), which was used in the article by
+#&gt;     Henmi and Copas (2010) to illustrate their method
+#&gt; 
+#&gt;   - fixed missing x-axis labels in the forest() functions
+#&gt; 
+#&gt;   - rma.glmm() now computes Hessian matrices via the numDeriv package
+#&gt;     when model="CM.EL" and measure="OR" (i.e., for the conditional
+#&gt;     logistic model with exact likelihood); so numDeriv is now a
+#&gt;     suggested package and is loaded within rma.glmm() when required
+#&gt; 
+#&gt;   - trimfill.rma.uni() now also implements the "Q0" estimator (although
+#&gt;     the "L0" and "R0" estimators are generally to be preferred)
+#&gt; 
+#&gt;   - trimfill.rma.uni() now also calculates the SE of the estimated
+#&gt;     number of missing studies and, for estimator "R0", provides a formal
+#&gt;     test of the null hypothesis that the number of missing studies on a
+#&gt;     given side is zero
+#&gt; 
+#&gt;   - added new dataset (dat.bangertdrowns2004)
+#&gt; 
+#&gt;   - the level argument in various functions now either accepts a value
+#&gt;     representing a percentage or a proportion (values greater than 1 are
+#&gt;     assumed to be a percentage)
+#&gt; 
+#&gt;   - summary.escalc() now computes confidence intervals correctly when
+#&gt;     using the transf argument
+#&gt; 
+#&gt;   - computation of Cochran-Mantel-Haenszel statistic in rma.mh() changed
+#&gt;     slightly to avoid integer overflow with very big counts
+#&gt; 
+#&gt;   - some internal improvements with respect to object attributes that
+#&gt;     were getting discarded when subsetting
+#&gt; 
+#&gt;   - some general code cleanup
+#&gt; 
+#&gt;   - some improvements to the documentation
+#&gt; 
+#&gt;                  Changes in version 1.8-0 (2013-04-11)                  
+#&gt; 
+#&gt;   - added additional clarifications about the change score outcome
+#&gt;     measures ("MC", "SMCC", and "SMCR") to the help file for the
+#&gt;     escalc() function and changed the code so that "SMCR" no longer
+#&gt;     expects argument sd2i to be specified (which is not needed anyways)
+#&gt;     (thanks to Markus Kösters for bringing this to my attention)
+#&gt; 
+#&gt;   - sampling variance for the biserial correlation coefficient ("RBIS")
+#&gt;     is now calculated in a slightly more accurate way
+#&gt; 
+#&gt;   - llplot() now properly scales the log-likelihoods
+#&gt; 
+#&gt;   - argument which in the plot.infl.rma.uni() function has been replaced
+#&gt;     with argument plotinf which can now also be set to FALSE to suppress
+#&gt;     plotting of the various case diagnostics altogether
+#&gt; 
+#&gt;   - labeling of the axes in labbe() plots is now correct for odds ratios
+#&gt;     (and transformations thereof)
+#&gt; 
+#&gt;   - added two new datasets (dat.nielweise2007 and dat.nielweise2008) to
+#&gt;     illustrate some methods/models from the rma.glmm() function
+#&gt; 
+#&gt;   - added a new dataset (dat.yusuf1985) to illustrate the use of
+#&gt;     rma.peto()
+#&gt; 
+#&gt;   - test for heterogeneity is now conducted by the rma.peto() function
+#&gt;     exactly as described by Yusuf et al. (1985)
+#&gt; 
+#&gt;   - in rma.glmm(), default number of quadrature points (nAGQ) is now 100
+#&gt;     (which is quite a bit slower, but should provide more than
+#&gt;     sufficient accuracy in most cases)
+#&gt; 
+#&gt;   - the standard errors of the HS and DL estimators of tau^2 are now
+#&gt;     correctly computed when tau^2 is prespecified by the user in the
+#&gt;     rma() function; in addition, the standard error of the SJ estimator
+#&gt;     is also now provided when tau^2 is prespecified
+#&gt; 
+#&gt;   - rma.uni() and rma.glmm() now use a better method to check whether
+#&gt;     the model matrix is of full rank
+#&gt; 
+#&gt;   - I^2 and H^2 statistics are now also calculated for mixed-effects
+#&gt;     models by the rma.uni() and rma.glmm() function; confint.rma.uni()
+#&gt;     provides the corresponding confidence intervals for rma.uni models
+#&gt; 
+#&gt;   - various print() methods now have a new argument called signif.stars,
+#&gt;     which defaults to getOption("show.signif.stars") (which by default
+#&gt;     is TRUE) to determine whether the infamous 'significance stars'
+#&gt;     should be printed
+#&gt; 
+#&gt;   - slight changes in wording in the output produced by the
+#&gt;     print.rma.uni() and print.rma.glmm() functions
+#&gt; 
+#&gt;   - some improvements to the documentation
+#&gt; 
+#&gt;                  Changes in version 1.7-0 (2013-02-06)                  
+#&gt; 
+#&gt;   - added rma.glmm() function for fitting of appropriate generalized
+#&gt;     linear (mixed-effects) models when analyzing odds ratios, incidence
+#&gt;     rate ratios, proportions, or rates; the function makes use of the
+#&gt;     lme4 and BiasedUrn packages; these are now suggested packages and
+#&gt;     loaded within rma.glmm() only when required (this makes for faster
+#&gt;     loading of the metafor package)
+#&gt; 
+#&gt;   - added several method functions for objects of class rma.glmm (not
+#&gt;     all methods yet implemented; to be completed in the future)
+#&gt; 
+#&gt;   - rma.uni() now allows the user to specify a formula for the yi
+#&gt;     argument, so instead of rma(yi, vi, mods=~mod1+mod2), one can
+#&gt;     specify the same model with rma(yi~mod1+mod2, vi)
+#&gt; 
+#&gt;   - rma.uni() now has a weights argument to specify the inverse of the
+#&gt;     sampling variances (instead of using the vi or sei arguments); for
+#&gt;     now, this is all this argument should be used for (in the future,
+#&gt;     this argument may potentially be used to allow the user to define
+#&gt;     alternative weights)
+#&gt; 
+#&gt;   - rma.uni() now checks whether the model matrix is not of full rank
+#&gt;     and issues an error accordingly (instead of the rather cryptic error
+#&gt;     that was issued before)
+#&gt; 
+#&gt;   - rma.uni() now has a verbose argument
+#&gt; 
+#&gt;   - coef.rma() now returns only the model coefficients (this change was
+#&gt;     necessary to make the package compatible with the multcomp package;
+#&gt;     see help(rma) for an example); use coef(summary()) to obtain the
+#&gt;     full table of results
+#&gt; 
+#&gt;   - the escalc() function now does some more extensive error checking
+#&gt;     for misspecified data and some unusual cases
+#&gt; 
+#&gt;   - append argument is now TRUE by default in the escalc() function
+#&gt; 
+#&gt;   - objects generated by the escalc() function now have their own class
+#&gt; 
+#&gt;   - added print() and summary() methods for objects of class escalc
+#&gt; 
+#&gt;   - added [ and cbind() methods for objects of class escalc
+#&gt; 
+#&gt;   - added a few additional arguments to the escalc() function (i.e.,
+#&gt;     slab, subset, var.names, replace, digits)
+#&gt; 
+#&gt;   - added drop00 argument to the escalc(), rma.uni(), rma.mh(), and
+#&gt;     rma.peto() functions
+#&gt; 
+#&gt;   - added "MN", "MC", "SMCC", and "SMCR" measures to the escalc() and
+#&gt;     rma.uni() functions for the raw mean, the raw mean change, and the
+#&gt;     standardized mean change (with change score or raw score
+#&gt;     standardization) as possible outcome measures
+#&gt; 
+#&gt;   - the "IRFT" measure in the escalc() and rma.uni() functions is now
+#&gt;     computed with 1/2*(sqrt(xi/ti) + sqrt(xi/ti+1/ti)) which is more
+#&gt;     consistent with the definition of the Freeman-Tukey transformation
+#&gt;     for proportions
+#&gt; 
+#&gt;   - added "RTET" measure to the escalc() and rma.uni() functions to
+#&gt;     compute the tetrachoric correlation coefficient based on 2x2 table
+#&gt;     data (the polycor package is therefore now a suggested package,
+#&gt;     which is loaded within escalc() only when required)
+#&gt; 
+#&gt;   - added "RPB" and "RBIS" measures to the escalc() and rma.uni()
+#&gt;     functions to compute the point-biserial and biserial correlation
+#&gt;     coefficient based on means and standard deviations
+#&gt; 
+#&gt;   - added "PBIT" and "OR2D" measures to the escalc() and rma.uni()
+#&gt;     functions to compute the standardized mean difference based on 2x2
+#&gt;     table data
+#&gt; 
+#&gt;   - added the "D2OR" measure to the escalc() and rma.uni() functions to
+#&gt;     compute the log odds ratio based on the standardized mean difference
+#&gt; 
+#&gt;   - added "SMDH" measure to the escalc() and rma.uni() functions to
+#&gt;     compute the standardized mean difference without assuming equal
+#&gt;     population variances
+#&gt; 
+#&gt;   - added "ARAW", "AHW", and "ABT" measures to the escalc() and
+#&gt;     rma.uni() functions for the raw value of Cronbach's alpha, the
+#&gt;     transformation suggested by Hakstian &amp; Whalen (1976), and the
+#&gt;     transformation suggested by Bonett (2002) for the meta-analysis of
+#&gt;     reliability coefficients (see help(escalc) for details)
+#&gt; 
+#&gt;   - corrected a small mistake in the equation used to compute the
+#&gt;     sampling variance of the phi coefficient (measure="PHI") in the
+#&gt;     escalc() function
+#&gt; 
+#&gt;   - the permutest.rma.uni() function now uses an algorithm to find only
+#&gt;     the unique permutations of the model matrix (which may be much
+#&gt;     smaller than the total number of permutations), making the exact
+#&gt;     permutation test feasible in a larger set of circumstances (thanks
+#&gt;     to John Hodgson for making me aware of this issue and to Hans-Jörg
+#&gt;     Viechtbauer for coming up with a recursive algorithm for finding the
+#&gt;     unique permutations)
+#&gt; 
+#&gt;   - prediction interval in forest.rma() is now indicated with a dotted
+#&gt;     (instead of a dashed) line; ends of the interval are now marked with
+#&gt;     vertical bars
+#&gt; 
+#&gt;   - completely rewrote the funnel.rma() function which now supports many
+#&gt;     more options for the values to put on the y-axis; trimfill.rma.uni()
+#&gt;     function was adapted accordingly
+#&gt; 
+#&gt;   - removed the ni argument from the regtest.rma() function; instead,
+#&gt;     sample sizes can now be explicitly specified via the ni argument
+#&gt;     when using the rma.uni() function (i.e., when measure="GEN"); the
+#&gt;     escalc() function also now adds information on the ni values to the
+#&gt;     resulting data frame (as an attribute of the yi variable), so, if
+#&gt;     possible, this information is passed on to regtest.rma()
+#&gt; 
+#&gt;   - added switch so that regtest() can also provide the full results
+#&gt;     from the fitted model (thanks to Michael Dewey for the suggestion)
+#&gt; 
+#&gt;   - weights.rma.mh() now shows the weights in % as intended (thanks to
+#&gt;     Gavin Stewart for pointing out this error)
+#&gt; 
+#&gt;   - more flexible handling of the digits argument in the various forest
+#&gt;     functions
+#&gt; 
+#&gt;   - forest functions now use pretty() by default to set the x-axis tick
+#&gt;     locations (alim and at arguments can still be used for complete
+#&gt;     control)
+#&gt; 
+#&gt;   - studies that are considered to be 'influential' are now marked with
+#&gt;     an asterisk when printing the results returned by the
+#&gt;     influence.rma.uni() function (see the documentation of this function
+#&gt;     for details on how such studies are identified)
+#&gt; 
+#&gt;   - added additional extractor functions for some of the influence
+#&gt;     measures (i.e., cooks.distance(), dfbetas()); unfortunately, the
+#&gt;     covratio() and dffits() functions in the stats package are not
+#&gt;     generic; so, to avoid masking, there are currently no extractor
+#&gt;     functions for these measures
+#&gt; 
+#&gt;   - better handling of missing values in some unusual situations
+#&gt; 
+#&gt;   - corrected small bug in fsn() that would not allow the user to
+#&gt;     specify the standard errors instead of the sampling variances
+#&gt;     (thanks to Bernd Weiss for pointing this out)
+#&gt; 
+#&gt;   - plot.infl.rma.uni() function now allows the user to specify which
+#&gt;     plots to draw (and the layout) and adds the option to show study
+#&gt;     labels on the x-axis
+#&gt; 
+#&gt;   - added proper print() method for objects generated by the
+#&gt;     confint.rma.uni(), confint.rma.mh(), and confint.rma.peto()
+#&gt;     functions
+#&gt; 
+#&gt;   - when transf or atransf argument was a monotonically decreasing
+#&gt;     function, then confidence and prediction interval bounds were in
+#&gt;     reversed order; various functions now check for this and order the
+#&gt;     bounds correctly
+#&gt; 
+#&gt;   - trimfill.rma.uni() now only prints information about the number of
+#&gt;     imputed studies when actually printing the model object
+#&gt; 
+#&gt;   - qqnorm.rma.uni(), qqnorm.rma.mh(), and qqnorm.rma.peto() functions
+#&gt;     now have a new argument called label, which allows for labeling of
+#&gt;     points; the functions also now return (invisibly) the x and y
+#&gt;     coordinates of the points drawn
+#&gt; 
+#&gt;   - rma.mh() with measure="RD" now computes the standard error of the
+#&gt;     estimated risk difference based on Sato, Greenland, &amp; Robins (1989),
+#&gt;     which provides a consistent estimate under both large-stratum and
+#&gt;     sparse-data limiting models
+#&gt; 
+#&gt;   - the restricted maximum likelihood (REML) is now calculated using the
+#&gt;     full likelihood equation (without leaving out additive constants)
+#&gt; 
+#&gt;   - the model deviance is now calculated as -2 times the difference
+#&gt;     between the model log-likelihood and the log-likelihood under the
+#&gt;     saturated model (this is a more appropriate definition of the
+#&gt;     deviance than just taking -2 times the model log-likelihood)
+#&gt; 
+#&gt;   - naming scheme of illustrative datasets bundled with the package has
+#&gt;     been changed; now datasets are called &lt;dat.authoryear&gt;; therefore,
+#&gt;     the datasets are now called (old name -&gt; new name):
+#&gt;     
+#&gt;       - dat.bcg -&gt; dat.colditz1994
+#&gt;       - dat.warfarin -&gt; dat.hart1999
+#&gt;       - dat.los -&gt; dat.normand1999
+#&gt;       - dat.co2 -&gt; dat.curtis1998
+#&gt;       - dat.empint -&gt; dat.mcdaniel1994
+#&gt; 
+#&gt;   - but dat.bcg has been kept as an alias for dat.colditz1994, as it has
+#&gt;     been referenced under that name in some publications
+#&gt; 
+#&gt;   - added new dataset (dat.pritz1997) to illustrate the meta-analysis of
+#&gt;     proportions (raw values and transformations thereof)
+#&gt; 
+#&gt;   - added new dataset (dat.bonett2010) to illustrate the meta-analysis
+#&gt;     of Cronbach's alpha values (raw values and transformations thereof)
+#&gt; 
+#&gt;   - added new datasets (dat.hackshaw1998, dat.raudenbush1985)
+#&gt; 
+#&gt;   - (approximate) standard error of the tau^2 estimate is now computed
+#&gt;     and shown for most of the (residual) heterogeneity estimators
+#&gt; 
+#&gt;   - added nobs() and df.residual() methods for objects of class rma
+#&gt; 
+#&gt;   - metafor.news() is now simply a wrapper for news(package="metafor")
+#&gt; 
+#&gt;   - the package code is now byte-compiled, which yields some modest
+#&gt;     increases in execution speed
+#&gt; 
+#&gt;   - some general code cleanup
+#&gt; 
+#&gt;   - the metafor package no longer depends on the nlme package
+#&gt; 
+#&gt;   - some improvements to the documentation
+#&gt; 
+#&gt;                  Changes in version 1.6-0 (2011-04-13)                  
+#&gt; 
+#&gt;   - trimfill.rma.uni() now returns a proper object even when the number
+#&gt;     of missing studies is estimated to be zero
+#&gt; 
+#&gt;   - added the (log transformed) ratio of means as a possible outcome
+#&gt;     measure to the escalc() and rma.uni() functions (measure="ROM")
+#&gt; 
+#&gt;   - added new dataset (dat.co2) to illustrate the use of the ratio of
+#&gt;     means outcome measure
+#&gt; 
+#&gt;   - some additional error checking in the various forest functions
+#&gt;     (especially when using the ilab argument)
+#&gt; 
+#&gt;   - in labbe.rma(), the solid and dashed lines are now drawn behind (and
+#&gt;     not on top of) the points
+#&gt; 
+#&gt;   - slight change to transf.ipft.hm() so that missing values in targs$ni
+#&gt;     are ignored
+#&gt; 
+#&gt;   - some improvements to the documentation
+#&gt; 
+#&gt;                  Changes in version 1.5-0 (2010-12-16)                  
+#&gt; 
+#&gt;   - the metafor package now has its own project website at:
+#&gt;     http://www.metafor-project.org/
+#&gt; 
+#&gt;   - added labbe() function to create L'Abbe plots
+#&gt; 
+#&gt;   - the forest.default() and addpoly.default() functions now allow the
+#&gt;     user to directly specify the lower and upper confidence interval
+#&gt;     bounds (this can be useful when the CI bounds have been calculated
+#&gt;     with other methods/functions)
+#&gt; 
+#&gt;   - added the incidence rate for a single group and for two groups (and
+#&gt;     transformations thereof) as possible outcome measures to the
+#&gt;     escalc() and rma.uni() functions (measure="IRR", "IRD", "IRSD",
+#&gt;     "IR", "IRLN", "IRS", and "IRFT")
+#&gt; 
+#&gt;   - added the incidence rate ratio as a possible outcome measure to the
+#&gt;     rma.mh() function
+#&gt; 
+#&gt;   - added transformation functions related to incidence rates
+#&gt; 
+#&gt;   - added the Freeman-Tukey double arcsine transformation and its
+#&gt;     inverse to the transformation functions
+#&gt; 
+#&gt;   - added some additional error checking for out-of-range p-values in
+#&gt;     the permutest.rma.uni() function
+#&gt; 
+#&gt;   - added some additional checking for out-of-range values in several
+#&gt;     transformation functions
+#&gt; 
+#&gt;   - added confint() methods for rma.mh and rma.peto objects (only for
+#&gt;     completeness sake; print already provides CIs)
+#&gt; 
+#&gt;   - added new datasets (dat.warfarin, dat.los, dat.empint)
+#&gt; 
+#&gt;   - some improvements to the documentation
+#&gt; 
+#&gt;                  Changes in version 1.4-0 (2010-07-30)                  
+#&gt; 
+#&gt;   - a paper about the package has now been published in the Journal of
+#&gt;     Statistical Software (https://www.jstatsoft.org/v36/i03/)
+#&gt; 
+#&gt;   - added citation info; see: citation("metafor")
+#&gt; 
+#&gt;   - the metafor package now depends on the nlme package
+#&gt; 
+#&gt;   - added extractor functions for the AIC, BIC, and deviance
+#&gt; 
+#&gt;   - some updates to the documentation
+#&gt; 
+#&gt;                  Changes in version 1.3-0 (2010-06-25)                  
+#&gt; 
+#&gt;   - the metafor package now depends on the Formula package
+#&gt; 
+#&gt;   - made escalc() generic and implemented a default and a formula
+#&gt;     interface
+#&gt; 
+#&gt;   - added the (inverse) arcsine transformation to the set of
+#&gt;     transformation functions
+#&gt; 
+#&gt;                  Changes in version 1.2-0 (2010-05-18)                  
+#&gt; 
+#&gt;   - cases where k is very small (e.g., k equal to 1 or 2) are now
+#&gt;     handled more gracefully
+#&gt; 
+#&gt;   - added sanity check for cases where all observed outcomes are equal
+#&gt;     to each other (this led to division by zero when using the Knapp &amp;
+#&gt;     Hartung method)
+#&gt; 
+#&gt;   - the "smarter way to set the number of iterations for permutation
+#&gt;     tests" (see notes for previous version below) now actually works
+#&gt;     like it is supposed to
+#&gt; 
+#&gt;   - the permutest.rma.uni() function now provides more sensible results
+#&gt;     when k is very small; the documentation for the function has also
+#&gt;     been updated with some notes about the use of permutation tests
+#&gt;     under those circumstances
+#&gt; 
+#&gt;   - made some general improvements to the various forest plot functions
+#&gt;     making them more flexible in particular when creating more complex
+#&gt;     displays; most importantly, added a rows argument and removed the
+#&gt;     addrows argument
+#&gt; 
+#&gt;   - some additional examples have been added to the help files for the
+#&gt;     forest and addpoly functions to demonstrate how to create more
+#&gt;     complex displays with these functions
+#&gt; 
+#&gt;   - added showweight argument to the forest.default() and forest.rma()
+#&gt;     functions
+#&gt; 
+#&gt;   - cumul() functions not showing all of the output columns when using
+#&gt;     fixed-effects models has been corrected
+#&gt; 
+#&gt;   - weights.rma.uni() function now handles NAs appropriately
+#&gt; 
+#&gt;   - weights.rma.mh() and weights.rma.peto() functions added
+#&gt; 
+#&gt;   - logLik.rma() function now behaves more like other logLik() functions
+#&gt;     (such as logLik.lm() and logLik.lme())
+#&gt; 
+#&gt;                  Changes in version 1.1-0 (2010-04-28)                  
+#&gt; 
+#&gt;   - cint() generic removed and replaced with confint() method for
+#&gt;     objects of class rma.uni
+#&gt; 
+#&gt;   - slightly improved the code to set the x-axis title in the forest()
+#&gt;     and funnel() functions
+#&gt; 
+#&gt;   - added coef() method for permutest.rma.uni objects
+#&gt; 
+#&gt;   - added append argument to escalc() function
+#&gt; 
+#&gt;   - implemented a smarter way to set the number of iterations for
+#&gt;     permutation tests (i.e., the permutest.rma.uni() function will now
+#&gt;     switch to an exact test if the number of iterations required for an
+#&gt;     exact test is actually smaller than the requested number of
+#&gt;     iterations for an approximate test)
+#&gt; 
+#&gt;   - changed the way how p-values for individual coefficients are
+#&gt;     calculated in permutest.rma.uni() to 'two times the one-tailed area
+#&gt;     under the permutation distribution' (more consistent with the way we
+#&gt;     typically define two-tailed p-values)
+#&gt; 
+#&gt;   - added retpermdist argument to permutest.rma.uni() to return the
+#&gt;     permutation distributions of the test statistics
+#&gt; 
+#&gt;   - slight improvements to the various transformation functions to cope
+#&gt;     better with some extreme cases
+#&gt; 
+#&gt;   - p-values are now calculated in such a way that very small p-values
+#&gt;     stored in fitted model objects are no longer truncated to 0 (the
+#&gt;     printed results are still truncated depending on the number of
+#&gt;     digits specified)
+#&gt; 
+#&gt;   - changed the default number of iterations for the ML, REML, and EB
+#&gt;     estimators from 50 to 100
+#&gt; 
+#&gt;                  Changes in version 1.0-1 (2010-02-02)                  
+#&gt; 
+#&gt;   - version jump in conjunction with the upcoming publication of a paper
+#&gt;     in the Journal of Statistical Software describing the metafor
+#&gt;     package
+#&gt; 
+#&gt;   - instead of specifying a model matrix, the user can now specify a
+#&gt;     model formula for the mods argument in the rma() function (e.g.,
+#&gt;     like in the lm() function)
+#&gt; 
+#&gt;   - permutest() function now allows exact permutation tests (but this is
+#&gt;     only feasible when k is not too large)
+#&gt; 
+#&gt;   - forest() function now uses the level argument properly to adjust the
+#&gt;     CI level of the summary estimate for models without moderators
+#&gt;     (i.e., for fixed- and random-effets models)
+#&gt; 
+#&gt;   - forest() function can now also show the prediction interval as a
+#&gt;     dashed line for a random-effects model
+#&gt; 
+#&gt;   - information about the measure used is now passed on to the forest()
+#&gt;     and funnel() functions, which try to set an appropriate x-axis title
+#&gt;     accordingly
+#&gt; 
+#&gt;   - funnel() function now has more arguments (e.g., atransf, at)
+#&gt;     providing more control over the display of the x-axis
+#&gt; 
+#&gt;   - predict() function now has its own print() method and has a new
+#&gt;     argument called addx, which adds the values of the moderator
+#&gt;     variables to the returned object (when addx=TRUE)
+#&gt; 
+#&gt;   - functions now properly handle the na.action "na.pass" (treated
+#&gt;     essentially like "na.exclude")
+#&gt; 
+#&gt;   - added method for weights() to extract the weights used when fitting
+#&gt;     models with rma.uni()
+#&gt; 
+#&gt;   - some small improvements to the documentation
+#&gt; 
+#&gt;                  Changes in version 0.5-7 (2009-12-06)                  
+#&gt; 
+#&gt;   - added permutest() function for permutation tests
+#&gt; 
+#&gt;   - added metafor.news() function to display the NEWS file of the
+#&gt;     metafor package within R (based on same idea in the animate package
+#&gt;     by Yihui Xie)
+#&gt; 
+#&gt;   - added some checks for values below machine precision
+#&gt; 
+#&gt;   - a bit of code reorganization (nothing that affects how the functions
+#&gt;     work)
+#&gt; 
+#&gt;                  Changes in version 0.5-6 (2009-10-19)                  
+#&gt; 
+#&gt;   - small changes to the computation of the DFFITS and DFBETAS values in
+#&gt;     the influence() function, so that these statistics are more in line
+#&gt;     with their definitions in regular linear regression models
+#&gt; 
+#&gt;   - added option to the plot function for objects returned by
+#&gt;     influence() to allow plotting the covariance ratios on a log scale
+#&gt;     (now the default)
+#&gt; 
+#&gt;   - slight adjustments to various print() functions (to catch some
+#&gt;     errors when certain values were NA)
+#&gt; 
+#&gt;   - added a control option to rma() to adjust the step length of the
+#&gt;     Fisher scoring algorithm by a constant factor (this may be useful
+#&gt;     when the algorithm does not converge)
+#&gt; 
+#&gt;                  Changes in version 0.5-5 (2009-10-08)                  
+#&gt; 
+#&gt;   - added the phi coefficient (measure="PHI"), Yule's Q ("YUQ"), and
+#&gt;     Yule's Y ("YUY") as additional measures to the escalc() function
+#&gt;     for 2x2 table data
+#&gt; 
+#&gt;   - forest plots now order the studies so that the first study is at the
+#&gt;     top of the plot and the last study at the bottom (the order can
+#&gt;     still be set with the order or subset argument)
+#&gt; 
+#&gt;   - added cumul() function for cumulative meta-analyses (with a
+#&gt;     corresponding forest() method to plot the cumulative results)
+#&gt; 
+#&gt;   - added leave1out() function for leave-one-out diagnostics
+#&gt; 
+#&gt;   - added option to qqnorm.rma.uni() so that the user can choose whether
+#&gt;     to apply the Bonferroni correction to the bounds of the pseudo
+#&gt;     confidence envelope
+#&gt; 
+#&gt;   - some internal changes to the class and methods names
+#&gt; 
+#&gt;   - some small corrections to the documentation
+#&gt; 
+#&gt;                  Changes in version 0.5-4 (2009-09-18)                  
+#&gt; 
+#&gt;   - corrected the trimfill() function
+#&gt; 
+#&gt;   - improvements to various print functions
+#&gt; 
+#&gt;   - added a regtest() function for various regression tests of funnel
+#&gt;     plot asymmetry (e.g., Egger's regression test)
+#&gt; 
+#&gt;   - made ranktest() generic and added a method for objects of class rma
+#&gt;     so that the test can be carried out after fitting
+#&gt; 
+#&gt;   - added anova() function for full vs reduced model comparisons via fit
+#&gt;     statistics and likelihood ratio tests
+#&gt; 
+#&gt;   - added the Orwin and Rosenberg approaches to fsn()
+#&gt; 
+#&gt;   - added H^2 measure to the output for random-effects models
+#&gt; 
+#&gt;   - in escalc(), measure="COR" is now used for the (usual) raw
+#&gt;     correlation coefficient and measure="UCOR" for the bias corrected
+#&gt;     correlation coefficients
+#&gt; 
+#&gt;   - some small corrections to the documentation
+#&gt; 
+#&gt;                  Changes in version 0.5-3 (2009-07-31)                  
+#&gt; 
+#&gt;   - small changes to some of the examples
+#&gt; 
+#&gt;   - added the log transformed proportion (measure="PLN") as another
+#&gt;     measure to the escalc() function; changed "PL" to "PLO" for the
+#&gt;     logit (i.e., log odds) transformation for proportions
+#&gt; 
+#&gt;                  Changes in version 0.5-2 (2009-07-06)                  
+#&gt; 
+#&gt;   - added an option in plot.infl.rma.uni() to open a new device for
+#&gt;     plotting the DFBETAS values
+#&gt; 
+#&gt;   - thanks to Jim Lemon, added a much better method for adjusting the
+#&gt;     size of the labels, annotations, and symbols in the forest()
+#&gt;     function when the number of studies is large
+#&gt; 
+#&gt;                  Changes in version 0.5-1 (2009-06-14)                  
+#&gt; 
+#&gt;   - made some small changes to the documentation (some typos corrected,
+#&gt;     some confusing points clarified)
+#&gt; 
+#&gt;                  Changes in version 0.5-0 (2009-06-05)                  
+#&gt; 
+#&gt;   - first version released on CRAN</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

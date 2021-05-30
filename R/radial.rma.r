@@ -295,7 +295,7 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
 
    ### add points to the plot
 
-   points(xi, zi, pch=pch, cex=cex, ...)
+   points(x=xi, y=zi, pch=pch, cex=cex, ...)
 
    if (is.null(x$not.na.yivi)) {
       invisible(data.frame(x=xi, y=zi, ids=x$ids[x$not.na], slab=x$slab[x$not.na], stringsAsFactors=FALSE))

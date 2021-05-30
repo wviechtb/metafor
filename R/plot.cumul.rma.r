@@ -221,7 +221,7 @@ digits, cols=c("gray80","gray10"), grid=TRUE, pch=19, cex=1, lwd=2, ...) {
 
    ### add points
 
-   points(dat$estim, dat$yval, pch=pch, col=cols.points, cex=cex)
+   points(x=dat$estim, y=dat$yval, pch=pch, col=cols.points, cex=cex)
 
    ### redraw box around plot
 
