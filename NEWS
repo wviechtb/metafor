@@ -121,6 +121,10 @@ Changes in Version 2.5-104 (2021-06-02)
      dat.maire2019, dat.moura2021, dat.obrien2003, dat.vanhowe1999,
      dat.viechtbauer2021)
 
+   o the package now runs a version check on startup in interactive sessions;
+     setting the environment variable METAFOR_VERSION_CHECK to FALSE disables
+     this
+
    o refactored various functions (for cleaner/simpler code)
 
    o improved the documentation a bit
