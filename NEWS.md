@@ -1,4 +1,4 @@
-# metafor 2.5-104 (2021-06-02)
+# metafor 3.0-1 (2021-06-02)
 
 - the `metafor` package now makes use of the `mathjaxr` package to nicely render equations shown in the HTML help pages
 
@@ -15,8 +15,6 @@
 - added `rcalc()` for calculating the variance-covariance matrix of correlation coefficients and `matreg()` for fitting regression models based on correlation/covariance matrices
 
 - added convenience functions `dfround()` and `vec2mat()`
-
-- added `rcalc()`, `matreg()`, `dfround()`, and `vec2mat()` functions
 
 - added `aggregate.escalc()` function to aggregate multiple effect sizes or outcomes within studies/clusters
 

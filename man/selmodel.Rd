@@ -277,6 +277,7 @@ predict(res, transf=exp, digits=2)
 funnel(res, atransf=exp, at=log(c(0.01,0.1,1,10,100)), ylim=c(0,2))
 
 # fit half-normal, negative-exponential, logistic, and power selection models
+\dontrun{
 sel1 <- selmodel(res, type="halfnorm", alternative="less")
 sel2 <- selmodel(res, type="negexp",   alternative="less")
 sel3 <- selmodel(res, type="logistic", alternative="less")
@@ -299,10 +300,11 @@ predict(res,  transf=exp, digits=2)
 predict(sel1, transf=exp, digits=2)
 predict(sel2, transf=exp, digits=2)
 predict(sel3, transf=exp, digits=2)
-predict(sel4, transf=exp, digits=2)
+predict(sel4, transf=exp, digits=2)}
 
 # fit selection models including standard error as precision measure (note: using
 # scaleprec=FALSE here since Preston et al. (2004) did not use the rescaling)
+\dontrun{
 sel1 <- selmodel(res, type="halfnorm", prec="sei", alternative="less", scaleprec=FALSE)
 sel2 <- selmodel(res, type="negexp",   prec="sei", alternative="less", scaleprec=FALSE)
 sel3 <- selmodel(res, type="logistic", prec="sei", alternative="less", scaleprec=FALSE)
@@ -319,7 +321,7 @@ predict(res,  transf=exp, digits=2)
 predict(sel1, transf=exp, digits=2)
 predict(sel2, transf=exp, digits=2)
 predict(sel3, transf=exp, digits=2)
-predict(sel4, transf=exp, digits=2)
+predict(sel4, transf=exp, digits=2)}
 
 ############################################################################
 

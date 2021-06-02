@@ -478,6 +478,21 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
       if (any(has.dollar))
          stop(mstyle$stop("Cannot use '$' notation in formulas in the 'random' argument (use the 'data' argument instead)."))
 
+      ### check which formulas have a ||
+
+      has.dblvbar <- sapply(random, function(f) grepl("||", paste0(f, collapse=""), fixed=TRUE))
+
+      ### replace || with |
+
+      random <- lapply(random, function(f) {
+         if (grepl("||", paste0(f, collapse=""), fixed=TRUE)) {
+            f <- paste0(f, collapse="")
+            f <- gsub("||", "|", f, fixed=TRUE)
+            f <- as.formula(f)
+         }
+         return(f)
+      })
+
       ### check which formulas in random are '~ inner | outer' formulas
 
       formulas <- list(NULL, NULL)
@@ -540,6 +555,9 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
                is.int <- apply(X.inner, 2, .is.intercept)
                colnames(X.inner)[is.int] <- "intrcpt"
                mf.r[[j]] <- cbind(X.inner, model.frame(f.outer, data=data, na.action=na.pass))
+
+               if (has.dblvbar[j]) # change "GEN" to "GDIAG" if the formula had a ||
+                  struct[io] <- "GDIAG"
 
             } else {
 
