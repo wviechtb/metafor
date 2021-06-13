@@ -125,6 +125,9 @@ correct=TRUE, level=95, digits, verbose=FALSE, ...) {
       k <- length(ai) ### number of outcomes before subsetting
       k.all <- k
 
+      if (length(ai)==0L || length(bi)==0L || length(ci)==0L || length(di)==0L)
+         stop(mstyle$stop("Need to specify arguments ai, bi, ci, di (or ai, ci, n1i, n2i)."))
+
       ids <- seq_len(k)
 
       ### generate study labels if none are specified
@@ -334,6 +337,9 @@ correct=TRUE, level=95, digits, verbose=FALSE, ...) {
 
       k <- length(x1i) ### number of outcomes before subsetting
       k.all <- k
+
+      if (length(x1i)==0L || length(x2i)==0L || length(t1i)==0L || length(t2i)==0L)
+         stop(mstyle$stop("Need to specify arguments x1i, x2i, t1i, t2i"))
 
       ids <- seq_len(k)
 

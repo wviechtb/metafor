@@ -1,4 +1,8 @@
-# metafor 3.0-1 (2021-06-02)
+# metafor 3.1-1 (2021-06-13)
+
+- added measure `"MPORM"` to `escalc()` for computing marginal log odds ratios based on marginal 2x2 tables directly (which requires specification of the correlation coefficients in the paired tables for the calculation of the sampling variances)
+
+# metafor 3.0-2 (2021-06-09)
 
 - the `metafor` package now makes use of the `mathjaxr` package to nicely render equations shown in the HTML help pages
 
@@ -218,7 +222,7 @@
 
 - various method functions (`fitted()`, `resid()`, `predict()`, etc.) behave in a more consistent manner when model omitted studies with missings
 
-- `predict.rma()` gains `vcov` argument; when set to `TRUE`, the variance- covariance matrix of the predicted values is also returned
+- `predict.rma()` gains `vcov` argument; when set to `TRUE`, the variance-covariance matrix of the predicted values is also returned
 
 - `vcov.rma()` can now also return the variance-covariance matrix of the fitted values (`type="fitted"`) and the residuals (`type="resid"`)
 

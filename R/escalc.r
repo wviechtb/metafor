@@ -16,7 +16,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
    if (!is.element(measure, c("RR","OR","PETO","RD","AS","PHI","YUQ","YUY","RTET", ### 2x2 table measures
                               "PBIT","OR2D","OR2DN","OR2DL",                       ### - transformations to SMD
-                              "MPRD","MPRR","MPOR","MPORC","MPPETO",               ### - measures for matched pairs / pre-post data
+                              "MPRD","MPRR","MPOR","MPORC","MPPETO","MPORM",       ### - measures for matched pairs / pre-post data
                               "IRR","IRD","IRSD",                                  ### two-group person-time data measures
                               "MD","SMD","SMDH","ROM",                             ### two-group mean/SD measures
                               "CVR","VR",                                          ### coefficient of variation ratio, variability ratio
@@ -138,7 +138,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
    if (is.null(yi)) {
 
-      if (is.element(measure, c("RR","OR","RD","AS","PETO","PHI","YUQ","YUY","RTET","PBIT","OR2D","OR2DN","OR2DL","MPRD","MPRR","MPOR","MPORC","MPPETO"))) {
+      if (is.element(measure, c("RR","OR","RD","AS","PETO","PHI","YUQ","YUY","RTET","PBIT","OR2D","OR2DN","OR2DL","MPRD","MPRR","MPOR","MPORC","MPPETO","MPORM"))) {
 
          mf.ai  <- mf[[match("ai",  names(mf))]]
          if (any("~" %in% as.character(mf.ai)))
@@ -148,12 +148,14 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          mf.di  <- mf[[match("di",  names(mf))]]
          mf.n1i <- mf[[match("n1i", names(mf))]]
          mf.n2i <- mf[[match("n2i", names(mf))]]
+         mf.ri  <- mf[[match("ri",  names(mf))]]
          ai     <- eval(mf.ai,  data, enclos=sys.frame(sys.parent()))
          bi     <- eval(mf.bi,  data, enclos=sys.frame(sys.parent()))
          ci     <- eval(mf.ci,  data, enclos=sys.frame(sys.parent()))
          di     <- eval(mf.di,  data, enclos=sys.frame(sys.parent()))
          n1i    <- eval(mf.n1i, data, enclos=sys.frame(sys.parent()))
          n2i    <- eval(mf.n2i, data, enclos=sys.frame(sys.parent()))
+         ri     <- eval(mf.ri,  data, enclos=sys.frame(sys.parent()))
          if (is.null(bi)) bi <- n1i - ai
          if (is.null(di)) di <- n2i - ci
 
@@ -164,6 +166,27 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
          if (!all(k.all == c(length(ai),length(bi),length(ci),length(di))))
             stop(mstyle$stop("Supplied data vectors are not all of the same length."))
+
+         if (is.element(measure, c("MPORM"))) {
+
+            if (length(ri)==0L)
+               stop(mstyle$stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments."))
+
+            if (k.all != length(ri))
+               stop(mstyle$stop("Supplied data vectors are not all of the same length."))
+
+         }
+
+         n1i.inc <- n1i != ai + bi
+         n2i.inc <- n2i != ci + di
+
+         if (any(n1i.inc, na.rm=TRUE))
+            stop(mstyle$stop("One or more 'n1i' values are not equal to 'ai + bi'."))
+         if (any(n2i.inc, na.rm=TRUE))
+            stop(mstyle$stop("One or more 'n2i' values are not equal to 'ci + di'."))
+
+         bi <- replmiss(bi, n1i-ai)
+         di <- replmiss(di, n2i-ci)
 
          if (!is.null(subset)) {
             subset <- .setnafalse(subset, k=k.all)
@@ -185,7 +208,17 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (any(c(n1i < 0, n2i < 0), na.rm=TRUE))
             stop(mstyle$stop("One or more group sizes are < 0."))
 
+         if (is.element(measure, c("MPORM"))) {
+
+            if (any(abs(ri) > 1, na.rm=TRUE))
+               stop(mstyle$stop("One or more correlations are > 1 or < -1."))
+
+         }
+
          ni.u <- ai + bi + ci + di ### unadjusted total sample sizes
+
+         if (is.element(measure, c("MPORM")))
+            ni.u <- round(ni.u / 2)
 
          k <- length(ai)
 
@@ -267,7 +300,10 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
          n1i <- ai + bi
          n2i <- ci + di
-         ni <- n1i + n2i ### ni.u computed earlier is always the 'unadjusted' total sample size
+         ni  <- n1i + n2i ### ni.u computed earlier is always the 'unadjusted' total sample size
+
+         if (is.element(measure, c("MPORM")))
+            ni <- round(ni / 2)
 
          ### compute proportions for the two groups (unadjusted and adjusted)
 
@@ -293,7 +329,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
          ### log odds ratio
 
-         if (is.element(measure, c("OR","OR2D","OR2DN","OR2DL"))) {
+         if (is.element(measure, c("OR","OR2D","OR2DN","OR2DL","MPORM"))) {
             if (addyi) {
                yi <- log(p1i/(1-p1i)) - log(p2i/(1-p2i))
             } else {
@@ -489,6 +525,8 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             vi <- vi / 1.65^2
          }
 
+         ### matched pairs / pre-post 2x2 table measures
+
          if (is.element(measure, c("MPRD","MPRR","MPOR"))) {
             pi12 <- bi/ni
             pi21 <- ci/ni
@@ -509,6 +547,18 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (measure == "MPOR") {
             yi <- log(pi1./(1-pi1.)) - log(pi.1/(1-pi.1))
             vi <- (pi12*(1-pi12) + pi21*(1-pi21) + 2*pi12*pi21) / (ni * pi1.*(1-pi1.) * pi.1*(1-pi.1))
+         }
+
+         if (measure == "MPORM") {
+            if (addvi) {
+               si <- (ri * sqrt(ai * bi * ci * di) + (ai * bi)) / ni
+               deltai <- ni^2 * (ni * si - ai * bi) / (ai * bi * ci * di)
+               vi <- vi - 2*deltai / ni
+            } else {
+               si.u <- (ri * sqrt(ai.u * bi.u * ci.u * di.u) + (ai.u * bi.u)) / ni.u
+               deltai.u <- ni.u^2 * (ni.u * si.u - ai.u * bi) / (ai.u * bi.u * ci.u * di.u)
+               vi <- vi - 2*deltai.u / ni.u
+            }
          }
 
          if (measure == "MPORC") {
@@ -820,7 +870,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
                if (vtype[i] == "AV")
                   vi[i] <- 1/n1i[i] + 1/n2i[i] + mnwyi^2/(2*ni[i])
 
-               ### large sample approximation to the sampling variance (using equation from Borenstein, 2009)
+               ### large sample approximation to the sampling variance (using equation 4.24 from Borenstein, 2009)
                if (vtype[i] == "LS2")
                   vi[i] <- cmi[i]^2 * (1/n1i[i] + 1/n2i[i] + di[i]^2/(2*ni[i]))
 

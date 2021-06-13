@@ -154,14 +154,20 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
    if (!is.null(ddd$clim))
       olim <- ddd$clim
 
-   lplot     <- function(..., textpos, decreasing, clim) plot(...)
-   labline   <- function(..., textpos, decreasing, clim) abline(...)
-   lsegments <- function(..., textpos, decreasing, clim) segments(...)
-   laxis     <- function(..., textpos, decreasing, clim) axis(...)
-   lmtext    <- function(..., textpos, decreasing, clim) mtext(...)
-   lpolygon  <- function(..., textpos, decreasing, clim) polygon(...)
-   ltext     <- function(..., textpos, decreasing, clim) text(...)
-   lpoints   <- function(..., textpos, decreasing, clim) points(...)
+   if (is.null(ddd$rowadj)) {
+      rowadj <- 0
+   } else {
+      rowadj <- ddd$rowadj
+   }
+
+   lplot     <- function(..., textpos, decreasing, clim, rowadj) plot(...)
+   labline   <- function(..., textpos, decreasing, clim, rowadj) abline(...)
+   lsegments <- function(..., textpos, decreasing, clim, rowadj) segments(...)
+   laxis     <- function(..., textpos, decreasing, clim, rowadj) axis(...)
+   lmtext    <- function(..., textpos, decreasing, clim, rowadj) mtext(...)
+   lpolygon  <- function(..., textpos, decreasing, clim, rowadj) polygon(...)
+   ltext     <- function(..., textpos, decreasing, clim, rowadj) text(...)
+   lpoints   <- function(..., textpos, decreasing, clim, rowadj) points(...)
 
    #########################################################################
 
@@ -671,7 +677,7 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
 
    ### add study labels on the left
 
-   ltext(ddd$textpos[1], rows, slab, pos=4, cex=cex, col=col, ...)
+   ltext(ddd$textpos[1], rows+rowadj, slab, pos=4, cex=cex, col=col, ...)
 
    ### add info labels
 
@@ -684,7 +690,7 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
          ilab.pos <- rep(ilab.pos, ncol(ilab))
       par(family=names(fonts)[3], font=fonts[3])
       for (l in seq_len(ncol(ilab))) {
-         ltext(ilab.xpos[l], rows, ilab[,l], pos=ilab.pos[l], cex=cex, ...)
+         ltext(ilab.xpos[l], rows+rowadj, ilab[,l], pos=ilab.pos[l], cex=cex, ...)
       }
       par(family=names(fonts)[1], font=fonts[1])
    }
@@ -737,7 +743,7 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
       annotext <- apply(annotext, 1, paste, collapse="")
       annotext[grepl("NA", annotext, fixed=TRUE)] <- ""
       par(family=names(fonts)[2], font=fonts[2])
-      ltext(ddd$textpos[2], rows, labels=annotext, pos=2, cex=cex, col=col, ...)
+      ltext(ddd$textpos[2], rows+rowadj, labels=annotext, pos=2, cex=cex, col=col, ...)
       par(family=names(fonts)[1], font=fonts[1])
 
    }

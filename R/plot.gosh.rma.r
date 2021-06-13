@@ -10,6 +10,34 @@ xlim, ylim, xhist=TRUE, yhist=TRUE, hh=0.3, breaks, adjust, lwd, labels, ...) {
    if (het == "tau2" && is.element(x$method, c("FE","EE","CE")))
       stop(mstyle$stop("Cannot plot 'tau2' for fixed-effects models."))
 
+   ddd <- list(...)
+
+   if (!is.null(ddd$trim)) {
+
+      trim <- ddd$trim
+
+      if (!is.list(trim)) {
+         if (length(trim) == 1L)
+            trim <- rep(trim, ncol(x$res)-4)
+         trim <- as.list(trim)
+      }
+
+      X <- cbind(x$res[,het], x$res[,6:ncol(x$res)])
+      del <- rep(FALSE, nrow(X))
+      for (i in 1:ncol(X)) {
+         del[X[,i] < quantile(X[,i], trim[[i]][1], na.rm=TRUE) | X[,i] > quantile(X[,i], 1-trim[[i]][length(trim[[i]])], na.rm=TRUE)] <- TRUE
+      }
+
+      del[is.na(del)] <- TRUE
+      x$res <- x$res[!del,]
+      x$incl <- x$incl[!del,]
+
+   }
+
+   lplot  <- function(..., trim) plot(...)
+   lpairs <- function(..., trim) pairs(...)
+   panel.hist <- function(..., trim) panel.hist(...)
+
    if (missing(alpha))
       alpha <- nrow(x$res)^(-0.2)
 
@@ -186,7 +214,7 @@ xlim, ylim, xhist=TRUE, yhist=TRUE, hh=0.3, breaks, adjust, lwd, labels, ...) {
          plot.new()
 
       par(mar = par.mar.adj)
-      plot(x$res[,6], x$res[,het], xlim=xlim, ylim=ylim, pch=pch, cex=cex, col=col.pnts, bty="l", xlab=labels[1], ylab=labels[2], ...)
+      lplot(x$res[,6], x$res[,het], xlim=xlim, ylim=ylim, pch=pch, cex=cex, col=col.pnts, bty="l", xlab=labels[1], ylab=labels[2], ...)
 
       if (missout) {
 
@@ -278,7 +306,7 @@ xlim, ylim, xhist=TRUE, yhist=TRUE, hh=0.3, breaks, adjust, lwd, labels, ...) {
       ### draw scatterplot matrix
 
       X <- cbind(x$res[,het], x$res[,6:ncol(x$res)])
-      pairs(X, pch=pch, cex=cex, diag.panel=panel.hist, col=col.pnts, labels=labels, ...)
+      lpairs(X, pch=pch, cex=cex, diag.panel=panel.hist, col=col.pnts, labels=labels, ...)
 
    }
 

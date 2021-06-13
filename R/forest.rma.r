@@ -179,14 +179,20 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
    if (!is.null(ddd$clim))
       olim <- ddd$clim
 
-   lplot     <- function(..., textpos, addcred, pi.type, decreasing, clim) plot(...)
-   labline   <- function(..., textpos, addcred, pi.type, decreasing, clim) abline(...)
-   lsegments <- function(..., textpos, addcred, pi.type, decreasing, clim) segments(...)
-   laxis     <- function(..., textpos, addcred, pi.type, decreasing, clim) axis(...)
-   lmtext    <- function(..., textpos, addcred, pi.type, decreasing, clim) mtext(...)
-   lpolygon  <- function(..., textpos, addcred, pi.type, decreasing, clim) polygon(...)
-   ltext     <- function(..., textpos, addcred, pi.type, decreasing, clim) text(...)
-   lpoints   <- function(..., textpos, addcred, pi.type, decreasing, clim) points(...)
+   if (is.null(ddd$rowadj)) {
+      rowadj <- 0
+   } else {
+      rowadj <- ddd$rowadj
+   }
+
+   lplot     <- function(..., textpos, addcred, pi.type, decreasing, clim, rowadj) plot(...)
+   labline   <- function(..., textpos, addcred, pi.type, decreasing, clim, rowadj) abline(...)
+   lsegments <- function(..., textpos, addcred, pi.type, decreasing, clim, rowadj) segments(...)
+   laxis     <- function(..., textpos, addcred, pi.type, decreasing, clim, rowadj) axis(...)
+   lmtext    <- function(..., textpos, addcred, pi.type, decreasing, clim, rowadj) mtext(...)
+   lpolygon  <- function(..., textpos, addcred, pi.type, decreasing, clim, rowadj) polygon(...)
+   ltext     <- function(..., textpos, addcred, pi.type, decreasing, clim, rowadj) text(...)
+   lpoints   <- function(..., textpos, addcred, pi.type, decreasing, clim, rowadj) points(...)
 
    ### TODO: remove this when there is a weights() function for 'rma.glmm' objects
    if (inherits(x, "rma.glmm") && showweights)
@@ -813,9 +819,9 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
          mlab <- sapply(x$method, switch, "FE"="FE Model", "EE"="EE Model", "CE"="CE Model", "RE Model", USE.NAMES=FALSE)
 
       if (is.list(mlab)) {
-         ltext(ddd$textpos[1], -1, mlab[[1]], pos=4, cex=cex, ...)
+         ltext(ddd$textpos[1], -1+rowadj, mlab[[1]], pos=4, cex=cex, ...)
       } else {
-         ltext(ddd$textpos[1], -1, mlab, pos=4, cex=cex, ...)
+         ltext(ddd$textpos[1], -1+rowadj, mlab, pos=4, cex=cex, ...)
       }
 
    }
@@ -871,7 +877,7 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
 
    ### add study labels on the left
 
-   ltext(ddd$textpos[1], rows, slab, pos=4, cex=cex, ...)
+   ltext(ddd$textpos[1], rows+rowadj, slab, pos=4, cex=cex, ...)
 
    ### add info labels
 
@@ -884,7 +890,7 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
          ilab.pos <- rep(ilab.pos, ncol(ilab))
       par(family=names(fonts)[3], font=fonts[3])
       for (l in seq_len(ncol(ilab))) {
-         ltext(ilab.xpos[l], rows, ilab[,l], pos=ilab.pos[l], cex=cex, ...)
+         ltext(ilab.xpos[l], rows+rowadj, ilab[,l], pos=ilab.pos[l], cex=cex, ...)
       }
       par(family=names(fonts)[1], font=fonts[1])
    }
@@ -959,9 +965,9 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
 
       par(family=names(fonts)[2], font=fonts[2])
       if (addfit && x$int.only) {
-         ltext(ddd$textpos[2], c(rows,-1), labels=annotext, pos=2, cex=cex, ...)
+         ltext(ddd$textpos[2], c(rows,-1)+rowadj, labels=annotext, pos=2, cex=cex, ...)
       } else {
-         ltext(ddd$textpos[2], rows, labels=annotext, pos=2, cex=cex, ...)
+         ltext(ddd$textpos[2], rows+rowadj, labels=annotext, pos=2, cex=cex, ...)
       }
       par(family=names(fonts)[1], font=fonts[1])
 

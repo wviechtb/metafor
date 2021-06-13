@@ -175,7 +175,11 @@ tes.default <- function(x, vi, sei, subset,
 
    sei <- sqrt(vi)
    zi  <- (yi - H0) / sei
-   wi  <- 1 / vi
+   if (missing(tau2) || is.null(tau2) || tau2 <= tau2.lb) {
+      wi <- 1 / vi
+   } else {
+      wi <- 1 / (vi + tau2)
+   }
 
    if (est.theta) {
       theta.1 <- .wmean(yi, wi)

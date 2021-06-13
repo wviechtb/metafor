@@ -92,6 +92,17 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
       if (!all(k == c(length(ai),length(bi),length(ci),length(di))))
          stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
+      n1i.inc <- n1i != ai + bi
+      n2i.inc <- n2i != ci + di
+
+      if (any(n1i.inc, na.rm=TRUE))
+         stop(mstyle$stop("One or more 'n1i' values are not equal to 'ai + bi'."))
+      if (any(n2i.inc, na.rm=TRUE))
+         stop(mstyle$stop("One or more 'n2i' values are not equal to 'ci + di'."))
+
+      bi <- replmiss(bi, n1i-ai)
+      di <- replmiss(di, n2i-ci)
+
       if (!is.null(subset)) {
          subset <- .setnafalse(subset, k=k)
          ai <- ai[subset]
