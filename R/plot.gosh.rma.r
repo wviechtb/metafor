@@ -36,7 +36,6 @@ xlim, ylim, xhist=TRUE, yhist=TRUE, hh=0.3, breaks, adjust, lwd, labels, ...) {
 
    lplot  <- function(..., trim) plot(...)
    lpairs <- function(..., trim) pairs(...)
-   panel.hist <- function(..., trim) panel.hist(...)
 
    if (missing(alpha))
       alpha <- nrow(x$res)^(-0.2)

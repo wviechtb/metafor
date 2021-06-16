@@ -94,10 +94,10 @@ lty, lwd, col, level=99.99, refline=0, ...) {
          }
       }
 
-      if (length(yi)==0L || length(vi)==0L)
-         stop(mstyle$stop("Cannot extract outcomes. Check that all of the required \n  information is specified via the appropriate arguments."))
+      if (!.all.specified(yi, vi))
+         stop(mstyle$stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments."))
 
-      if (length(yi) != length(vi))
+      if (!.equal.length(yi, vi))
          stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
       k <- length(yi) ### number of outcomes before subsetting
@@ -126,20 +126,35 @@ lty, lwd, col, level=99.99, refline=0, ...) {
       di  <- eval(mf.di,  data, enclos=sys.frame(sys.parent()))
       n1i <- eval(mf.n1i, data, enclos=sys.frame(sys.parent()))
       n2i <- eval(mf.n2i, data, enclos=sys.frame(sys.parent()))
-      if (is.null(bi)) bi <- n1i - ai
-      if (is.null(di)) di <- n2i - ci
 
-      if (length(ai)==0L || length(bi)==0L || length(ci)==0L || length(di)==0L)
+      if (!.equal.length(ai, bi, ci, di, n1i, n2i))
+         stop(mstyle$stop("Supplied data vectors are not all of the same length."))
+
+      n1i.inc <- n1i != ai + bi
+      n2i.inc <- n2i != ci + di
+
+      if (any(n1i.inc, na.rm=TRUE))
+         stop(mstyle$stop("One or more 'n1i' values are not equal to 'ai + bi'."))
+      if (any(n2i.inc, na.rm=TRUE))
+         stop(mstyle$stop("One or more 'n2i' values are not equal to 'ci + di'."))
+
+      bi <- replmiss(bi, n1i-ai)
+      di <- replmiss(di, n2i-ci)
+
+      if (!.all.specified(ai, bi, ci, di))
          stop(mstyle$stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments."))
 
-      if (!all(length(ai) == c(length(ai),length(bi),length(ci),length(di))))
-         stop(mstyle$stop("Supplied data vectors are not all of the same length."))
+      n1i <- ai + bi
+      n2i <- ci + di
 
       if (any(c(ai > n1i, ci > n2i), na.rm=TRUE))
          stop(mstyle$stop("One or more event counts are larger than the corresponding group sizes."))
 
       if (any(c(ai, bi, ci, di) < 0, na.rm=TRUE))
          stop(mstyle$stop("One or more counts are negative."))
+
+      if (any(c(n1i < 0, n2i < 0), na.rm=TRUE))
+         stop(mstyle$stop("One or more group sizes are < 0."))
 
       k <- length(ai) ### number of outcomes before subsetting
 

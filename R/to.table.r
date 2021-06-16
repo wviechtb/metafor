@@ -13,7 +13,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
 
    if (!is.element(measure, c("RR","OR","PETO","RD","AS","PHI","YUQ","YUY","RTET", ### 2x2 table measures
                               "PBIT","OR2D","OR2DN","OR2DL",                       ### - transformations to SMD
-                              "MPRD","MPRR","MPOR","MPORC","MPPETO",               ### - measures for matched pairs data
+                              "MPRD","MPRR","MPOR","MPORC","MPPETO","MPORM",       ### - measures for matched pairs data
                               "IRR","IRD","IRSD",                                  ### two-group person-time data measures
                               "MD","SMD","SMDH","ROM",                             ### two-group mean/SD measures
                               "CVR","VR",                                          ### coefficient of variation ratio, variability ratio
@@ -63,7 +63,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
    #########################################################################
    #########################################################################
 
-   if (is.element(measure, c("RR","OR","RD","AS","PETO","PHI","YUQ","YUY","RTET","PBIT","OR2D","OR2DN","OR2DL","MPRD","MPRR","MPOR","MPORC","MPPETO"))) {
+   if (is.element(measure, c("RR","OR","RD","AS","PETO","PHI","YUQ","YUY","RTET","PBIT","OR2D","OR2DN","OR2DL","MPRD","MPRR","MPOR","MPORC","MPPETO","MPORM"))) {
 
       mf.ai  <- mf[[match("ai",  names(mf))]]
       mf.bi  <- mf[[match("bi",  names(mf))]]
@@ -77,15 +77,8 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
       di  <- eval(mf.di,  data, enclos=sys.frame(sys.parent()))
       n1i <- eval(mf.n1i, data, enclos=sys.frame(sys.parent()))
       n2i <- eval(mf.n2i, data, enclos=sys.frame(sys.parent()))
-      if (is.null(bi)) bi <- n1i - ai
-      if (is.null(di)) di <- n2i - ci
 
-      k <- length(ai) ### number of outcomes before subsetting
-
-      if (length(ai)==0L || length(bi)==0L || length(ci)==0L || length(di)==0L)
-         stop(mstyle$stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments."))
-
-      if (!all(k == c(length(ai),length(bi),length(ci),length(di))))
+      if (!.equal.length(ai, bi, ci, di, n1i, n2i))
          stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
       n1i.inc <- n1i != ai + bi
@@ -98,6 +91,11 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
 
       bi <- replmiss(bi, n1i-ai)
       di <- replmiss(di, n2i-ci)
+
+      if (!.all.specified(ai, bi, ci, di))
+         stop(mstyle$stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments."))
+
+      k <- length(ai) ### number of outcomes before subsetting
 
       if (!is.null(subset)) {
          subset <- .setnafalse(subset, k=k)
@@ -190,13 +188,13 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
       t1i <- eval(mf.t1i, data, enclos=sys.frame(sys.parent()))
       t2i <- eval(mf.t2i, data, enclos=sys.frame(sys.parent()))
 
-      k <- length(x1i) ### number of outcomes before subsetting
-
-      if (length(x1i)==0L || length(x2i)==0L || length(t1i)==0L || length(t2i)==0L)
+      if (!.all.specified(x1i, x2i, t1i, t2i))
          stop(mstyle$stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments."))
 
-      if (!all(k == c(length(x1i),length(x2i),length(t1i),length(t2i))))
+      if (!.equal.length(x1i, x2i, t1i, t2i))
          stop(mstyle$stop("Supplied data vectors are not all of the same length."))
+
+      k <- length(x1i) ### number of outcomes before subsetting
 
       if (!is.null(subset)) {
          subset <- .setnafalse(subset, k=k)
@@ -279,13 +277,13 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
       n1i  <- eval(mf.n1i,  data, enclos=sys.frame(sys.parent()))
       n2i  <- eval(mf.n2i,  data, enclos=sys.frame(sys.parent()))
 
-      k <- length(n1i) ### number of outcomes before subsetting
-
-      if (length(m1i)==0L || length(m2i)==0L || length(sd1i)==0L || length(sd2i)==0L || length(n1i)==0L || length(n2i)==0L)
+      if (!.all.specified(m1i, m2i, sd1i, sd2i, n1i, n2i))
          stop(mstyle$stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments."))
 
-      if (!all(k == c(length(m1i),length(m2i),length(sd1i),length(sd2i),length(n1i),length(n2i))))
+      if (!.equal.length(m1i, m2i, sd1i, sd2i, n1i, n2i))
          stop(mstyle$stop("Supplied data vectors are not all of the same length."))
+
+      k <- length(n1i) ### number of outcomes before subsetting
 
       if (!is.null(subset)) {
          subset <- .setnafalse(subset, k=k)
@@ -316,13 +314,13 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
       ri <- eval(mf.ri, data, enclos=sys.frame(sys.parent()))
       ni <- eval(mf.ni, data, enclos=sys.frame(sys.parent()))
 
-      k <- length(ri) ### number of outcomes before subsetting
-
-      if (length(ri)==0L || length(ni)==0L)
+      if (!.all.specified(ri, ni))
          stop(mstyle$stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments."))
 
-      if (length(ri) != length(ni))
-         stop(mstyle$stop("Supplied data vectors are not of the same length."))
+      if (!.equal.length(ri, ni))
+         stop(mstyle$stop("Supplied data vectors are not all of the same length."))
+
+      k <- length(ri) ### number of outcomes before subsetting
 
       if (!is.null(subset)) {
          subset <- .setnafalse(subset, k=k)
@@ -350,15 +348,21 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
       xi <- eval(mf.xi, data, enclos=sys.frame(sys.parent()))
       mi <- eval(mf.mi, data, enclos=sys.frame(sys.parent()))
       ni <- eval(mf.ni, data, enclos=sys.frame(sys.parent()))
-      if (is.null(mi)) mi <- ni - xi
 
-      k <- length(xi) ### number of outcomes before subsetting
+      if (!.equal.length(xi, mi, ni))
+         stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
-      if (length(xi)==0L || length(mi)==0L)
+      ni.inc <- ni != xi + mi
+
+      if (any(ni.inc, na.rm=TRUE))
+         stop(mstyle$stop("One or more 'ni' values are not equal to 'xi + mi'."))
+
+      mi <- replmiss(mi, ni-xi)
+
+      if (!.all.specified(xi, mi))
          stop(mstyle$stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments."))
 
-      if (length(xi) != length(mi))
-         stop(mstyle$stop("Supplied data vectors are not all of the same length."))
+      k <- length(xi) ### number of outcomes before subsetting
 
       if (!is.null(subset)) {
          subset <- .setnafalse(subset, k=k)
@@ -427,13 +431,13 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
       xi <- eval(mf.xi, data, enclos=sys.frame(sys.parent()))
       ti <- eval(mf.ti, data, enclos=sys.frame(sys.parent()))
 
-      k <- length(xi) ### number of outcomes before subsetting
-
-      if (length(xi)==0L || length(ti)==0L)
+      if (!.all.specified(xi, ti))
          stop(mstyle$stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments."))
 
-      if (length(xi) != length(ti))
+      if (!.equal.length(xi, ti))
          stop(mstyle$stop("Supplied data vectors are not all of the same length."))
+
+      k <- length(xi) ### number of outcomes before subsetting
 
       if (!is.null(subset)) {
          subset <- .setnafalse(subset, k=k)
@@ -496,13 +500,13 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
       sdi <- eval(mf.sdi, data, enclos=sys.frame(sys.parent()))
       ni  <- eval(mf.ni,  data, enclos=sys.frame(sys.parent()))
 
-      k <- length(ni) ### number of outcomes before subsetting
-
-      if (length(mi)==0L || length(sdi)==0L || length(ni)==0L)
+      if (!.all.specified(mi, sdi, ni))
          stop(mstyle$stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments."))
 
-      if (!all(k == c(length(mi),length(sdi),length(ni))))
+      if (!.equal.length(mi, sdi, ni))
          stop(mstyle$stop("Supplied data vectors are not all of the same length."))
+
+      k <- length(ni) ### number of outcomes before subsetting
 
       if (!is.null(subset)) {
          subset <- .setnafalse(subset, k=k)
@@ -545,18 +549,18 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
 
       if (is.element(measure, c("MC","SMCC","SMCRH","ROMC","CVRC"))) {
 
-         if (length(m1i)==0L || length(m2i)==0L || length(sd1i)==0L || length(sd2i)==0L || length(ni)==0L || length(ri)==0L)
+         if (!.all.specified(m1i, m2i, sd1i, sd2i, ni, ri))
             stop(mstyle$stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments."))
 
-         if (!all(k == c(length(m1i),length(m2i),length(sd1i),length(sd2i),length(ni),length(ri))))
+         if (!.equal.length(m1i, m2i, sd1i, sd2i, ni, ri))
             stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
       } else {
 
-         if (length(m1i)==0L || length(m2i)==0L || length(sd1i)==0L || length(ni)==0L || length(ri)==0L)
+         if (!.all.specified(m1i, m2i, sd1i, ni, ri))
             stop(mstyle$stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments."))
 
-         if (!all(k == c(length(m1i),length(m2i),length(sd1i),length(ni),length(ri))))
+         if (!.equal.length(m1i, m2i, sd1i, ni, ri))
             stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
       }
@@ -600,13 +604,13 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
       mi <- eval(mf.mi, data, enclos=sys.frame(sys.parent()))
       ni <- eval(mf.ni, data, enclos=sys.frame(sys.parent()))
 
-      k <- length(ai) ### number of outcomes before subsetting
-
-      if (length(ai)==0L || length(mi)==0L || length(ni)==0L)
+      if (!.all.specified(ai, mi, ni))
          stop(mstyle$stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments."))
 
-      if (!all(k == c(length(ai),length(mi),length(ni))))
+      if (!.equal.length(ai, mi, ni))
          stop(mstyle$stop("Supplied data vectors are not all of the same length."))
+
+      k <- length(ai) ### number of outcomes before subsetting
 
       if (!is.null(subset)) {
          subset <- .setnafalse(subset, k=k)
@@ -665,7 +669,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
    #########################################################################
    #########################################################################
 
-   if (is.element(measure, c("RR","OR","RD","AS","PETO","PHI","YUQ","YUY","RTET","PBIT","OR2D","OR2DN","OR2DL"))) {
+   if (is.element(measure, c("RR","OR","RD","AS","PETO","PHI","YUQ","YUY","RTET","PBIT","OR2D","OR2DN","OR2DL","MPORM"))) {
 
       ### check for NAs in table data and act accordingly
 

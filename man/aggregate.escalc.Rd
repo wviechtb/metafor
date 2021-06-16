@@ -7,7 +7,7 @@
 }
 \usage{
 \method{aggregate}{escalc}(x, cluster, time, V, struct="CS", rho, phi,
-          weighted=TRUE, fun, na.rm=TRUE, subset, select, digits, \dots)
+          weighted=TRUE, checkpd=TRUE, fun, na.rm=TRUE, subset, select, digits, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"escalc"}.}
@@ -18,6 +18,7 @@
    \item{rho}{value of the correlation of the sampling errors within clusters (when \code{struct="CS"} or \code{struct="CS+CAR"}). Can also be a vector with the value of the correlation for each cluster.}
    \item{phi}{value of the autocorrelation of the sampling errors within clusters (when \code{struct="CAR"} or \code{struct="CS+CAR"}). Can also be a vector with the value of the autocorrelation for each cluster.}
    \item{weighted}{logical to specify whether estimates within clusters should be aggregated using inverse-variance weighting (the default is \code{TRUE}). If set to \code{FALSE}, unweighted averages are computed.}
+   \item{checkpd}{logical to specify whether to check that the variance-covariance matrices of the sampling errors within clusters are positive definite (the default is \code{TRUE}).}
    \item{fun}{optional list with three functions for aggregating other variables besides the effect sizes or outcomes within clusters (for numeric/integer variables, for logicals, and for all other types, respectively).}
    \item{na.rm}{logical to specify whether \code{NA} values should be removed before aggregating values within clusters. Can also be a vector with two logicals (the first pertains to the effect sizes or outcomes, the second to all other variables).}
    \item{subset}{optional (logical or numeric) vector to specify the subset of rows to include when aggregating the effect sizes or outcomes.}

@@ -1,6 +1,8 @@
-# metafor 3.1-1 (2021-06-13)
+# metafor 3.1-2 (2021-06-16)
 
 - added measure `"MPORM"` to `escalc()` for computing marginal log odds ratios based on marginal 2x2 tables directly (which requires specification of the correlation coefficients in the paired tables for the calculation of the sampling variances)
+
+- `aggregate.escalc()` gains `checkpd` argument
 
 # metafor 3.0-2 (2021-06-09)
 

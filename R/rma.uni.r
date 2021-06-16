@@ -16,7 +16,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
    if (!is.element(measure, c("RR","OR","PETO","RD","AS","PHI","YUQ","YUY","RTET", ### 2x2 table measures
                               "PBIT","OR2D","OR2DN","OR2DL",                       ### - transformations to SMD
-                              "MPRD","MPRR","MPOR","MPORC","MPPETO",               ### - measures for matched pairs data
+                              "MPRD","MPRR","MPOR","MPORC","MPPETO","MPORM",       ### - measures for matched pairs data
                               "IRR","IRD","IRSD",                                  ### two-group person-time data measures
                               "MD","SMD","SMDH","ROM",                             ### two-group mean/SD measures
                               "CVR","VR",                                          ### coefficient of variation ratio, variability ratio
@@ -355,7 +355,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
       ### if yi is NULL, try to compute yi/vi based on specified measure and supplied data
 
-      if (is.element(measure, c("RR","OR","PETO","RD","AS","PHI","YUQ","YUY","RTET","PBIT","OR2D","OR2DN","OR2DL","MPRD","MPRR","MPOR","MPORC","MPPETO"))) {
+      if (is.element(measure, c("RR","OR","PETO","RD","AS","PHI","YUQ","YUY","RTET","PBIT","OR2D","OR2DN","OR2DL","MPRD","MPRR","MPOR","MPORC","MPPETO","MPORM"))) {
 
          mf.ai  <- mf[[match("ai",  names(mf))]]
          mf.bi  <- mf[[match("bi",  names(mf))]]
@@ -363,12 +363,14 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
          mf.di  <- mf[[match("di",  names(mf))]]
          mf.n1i <- mf[[match("n1i", names(mf))]]
          mf.n2i <- mf[[match("n2i", names(mf))]]
+         mf.ri  <- mf[[match("ri",  names(mf))]]
          ai  <- eval(mf.ai,  data, enclos=sys.frame(sys.parent()))
          bi  <- eval(mf.bi,  data, enclos=sys.frame(sys.parent()))
          ci  <- eval(mf.ci,  data, enclos=sys.frame(sys.parent()))
          di  <- eval(mf.di,  data, enclos=sys.frame(sys.parent()))
          n1i <- eval(mf.n1i, data, enclos=sys.frame(sys.parent()))
          n2i <- eval(mf.n2i, data, enclos=sys.frame(sys.parent()))
+         ri  <- eval(mf.ri,  data, enclos=sys.frame(sys.parent()))
          if (is.null(bi)) bi <- n1i - ai
          if (is.null(di)) di <- n2i - ci
 
@@ -383,7 +385,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
             di <- di[subset]
          }
 
-         dat <- escalc(measure=measure, ai=ai, bi=bi, ci=ci, di=di, add=add, to=to, drop00=drop00, vtype=vtype, onlyo1=onlyo1, addyi=addyi, addvi=addvi)
+         dat <- escalc(measure=measure, ai=ai, bi=bi, ci=ci, di=di, ri=ri, add=add, to=to, drop00=drop00, vtype=vtype, onlyo1=onlyo1, addyi=addyi, addvi=addvi)
 
       }
 

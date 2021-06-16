@@ -292,6 +292,30 @@
 
 ############################################################################
 
+### check that the length of all non-NULL elements given via ... are equal to each other
+
+.equal.length <- function(...) {
+
+   ddd <- list(...)
+   ddd <- ddd[!sapply(ddd, is.null)]
+   ks  <- sapply(ddd, length)
+   return(length(unique(ks)) == 1L)
+
+}
+
+### check that all elements are not of length 0 (NULL)
+
+.all.specified <- function(...) {
+
+   ddd  <- list(...)
+   not0  <- sapply(ddd, length) != 0L
+   all(not0)
+   #all(!sapply(ddd, is.null))
+
+}
+
+############################################################################
+
 ### set axis label (for forest, funnel, and labbe functions)
 
 .setlab <- function(measure, transf.char, atransf.char, gentype, short=FALSE) {
@@ -319,7 +343,7 @@
                lab <- ifelse(short, "Risk Ratio", "Risk Ratio")
          }
       }
-      if (is.element(measure, c("OR","PETO","D2OR","D2ORN","D2ORL","MPOR","MPORC","MPPETO"))) {
+      if (is.element(measure, c("OR","PETO","D2OR","D2ORN","D2ORL","MPOR","MPORC","MPPETO","MPORM"))) {
          if (transf.char == "FALSE" && atransf.char == "FALSE") {
             lab <- ifelse(short, "Log[OR]", "Log Odds Ratio")
          } else {

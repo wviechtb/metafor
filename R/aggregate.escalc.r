@@ -1,4 +1,4 @@
-aggregate.escalc <- function(x, cluster, time, V, struct="CS", rho, phi, weighted=TRUE, fun, na.rm=TRUE, subset, select, digits, ...) {
+aggregate.escalc <- function(x, cluster, time, V, struct="CS", rho, phi, weighted=TRUE, checkpd=TRUE, fun, na.rm=TRUE, subset, select, digits, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -246,21 +246,25 @@ aggregate.escalc <- function(x, cluster, time, V, struct="CS", rho, phi, weighte
 
    ### check that 'V' is positive definite (in each cluster)
 
-   all.pd <- TRUE
+   if (checkpd) {
 
-   for (i in 1:n) {
+      all.pd <- TRUE
 
-      Vi <- V[cluster == ucluster[i], cluster == ucluster[i]]
+      for (i in 1:n) {
 
-      if (!anyNA(Vi) && any(eigen(Vi, symmetric=TRUE, only.values=TRUE)$values <= .Machine$double.eps)) {
-         all.pd <- FALSE
-         warning(mstyle$warning(paste0("'V' appears to be not positive definite in cluster ", ucluster[i], ".")), call.=FALSE)
+         Vi <- V[cluster == ucluster[i], cluster == ucluster[i]]
+
+         if (!anyNA(Vi) && any(eigen(Vi, symmetric=TRUE, only.values=TRUE)$values <= .Machine$double.eps)) {
+            all.pd <- FALSE
+            warning(mstyle$warning(paste0("'V' appears to be not positive definite in cluster ", ucluster[i], ".")), call.=FALSE)
+         }
+
       }
 
-   }
+      if (!all.pd)
+         stop(mstyle$stop("Cannot aggregate estimates with a non-positive-definite 'V' matrix."))
 
-   if (!all.pd)
-      stop(mstyle$stop("Cannot aggregate estimates with a non-positive-definite 'V' matrix."))
+   }
 
    ### compute aggregated estimates and corresponding sampling variances
 
@@ -273,7 +277,7 @@ aggregate.escalc <- function(x, cluster, time, V, struct="CS", rho, phi, weighte
 
       if (weighted) {
 
-         Wi <- try(chol2inv(chol(Vi)), silent=FALSE)
+         Wi <- try(chol2inv(chol(Vi)), silent=TRUE)
 
          if (inherits(Wi, "try-error"))
             stop(mstyle$stop(paste0("Cannot take inverse of 'V' in cluster ", ucluster[i], ".")))

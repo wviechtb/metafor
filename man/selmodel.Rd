@@ -68,7 +68,7 @@ selmodel(x, \dots)
    half-normal          \tab \ics \tab \code{"halfnorm"}  \tab \ics \tab \mjseqn{w(p_i) = \exp(-\delta \times \mathrm{prec}_i \times p_i^2)} \cr
    negative-exponential \tab \ics \tab \code{"negexp"}    \tab \ics \tab \mjseqn{w(p_i) = \exp(-\delta \times \mathrm{prec}_i \times p_i)} \cr
    logistic             \tab \ics \tab \code{"logistic"}  \tab \ics \tab \mjseqn{w(p_i) = 2 \times \exp(-\delta \times \mathrm{prec}_i \times p_i) / (1 + \exp(-\delta \times \mathrm{prec}_i \times p_i))} \cr
-   power                \tab \ics \tab \code{"power"}     \tab \ics \tab \mjseqn{w(p_i) = (1-p_i)^{-\delta \times \mathrm{prec}_i}}
+   power                \tab \ics \tab \code{"power"}     \tab \ics \tab \mjseqn{w(p_i) = (1-p_i)^{\delta \times \mathrm{prec}_i}}
    }
 
    where \mjseqn{\mathrm{prec}_i = \sqrt{v_i}} (i.e., the standard error of the \mjseqn{i}th study) according to Preston et al. (2004). Here, this idea is generalized to allow the user to specify the specific measure of precision to use (via the \code{prec} argument). Possible options are:

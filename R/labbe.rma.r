@@ -9,7 +9,7 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
       stop(mstyle$stop("L'Abbe plots can only be drawn for models without moderators."))
 
    if (!is.element(x$measure, c("RR","OR","RD","AS","IRR","IRD","IRSD")))
-      stop(mstyle$stop("Argument 'measure' must have been one of the following: 'RR','OR','RD','AS','IRR','IRD','IRSD'."))
+      stop(mstyle$stop("Argument 'measure' must be set to one of the following: 'RR','OR','RD','AS','IRR','IRD','IRSD'."))
 
    na.act <- getOption("na.action")
    on.exit(options(na.action=na.act))
