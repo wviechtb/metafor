@@ -104,7 +104,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0-1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1-3</span>
       </span>
     </div>
 
@@ -112,7 +112,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
+    <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -142,13 +142,13 @@
         
         <li>
   <a href="https://twitter.com/wviechtb">
-    <span class="fas fa-twitter"></span>
+    <span class="fa fa-twitter"></span>
      
   </a>
 </li>
 <li>
   <a href="https://github.com/wviechtb/metafor">
-    <span class="fas fa-github"></span>
+    <span class="fa fa-github"></span>
      
   </a>
 </li>
@@ -173,9 +173,18 @@
       <small>Source: <a href='https://github.com/wviechtb/metafor/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="metafor-30-1-2021-06-02" class="section level1">
-<h1 class="page-header" data-toc-text="3.0-1">
-<a href="#metafor-30-1-2021-06-02" class="anchor"></a>metafor 3.0-1 (2021-06-02)<small> Unreleased </small>
+    <div id="metafor-31-3-2021-06-22" class="section level1">
+<h1 class="page-header" data-toc-text="3.1-3">
+<a href="#metafor-31-3-2021-06-22" class="anchor"></a>metafor 3.1-3 (2021-06-22)<small> Unreleased </small>
+</h1>
+<ul>
+<li><p>added measure <code>"MPORM"</code> to <code><a href="../reference/escalc.html">escalc()</a></code> for computing marginal log odds ratios based on marginal 2x2 tables directly (which requires specification of the correlation coefficients in the paired tables for the calculation of the sampling variances)</p></li>
+<li><p><code><a href="../reference/aggregate.escalc.html">aggregate.escalc()</a></code> gains <code>checkpd</code> argument</p></li>
+</ul>
+</div>
+    <div id="metafor-30-2-2021-06-09" class="section level1">
+<h1 class="page-header" data-toc-text="3.0-2">
+<a href="#metafor-30-2-2021-06-09" class="anchor"></a>metafor 3.0-2 (2021-06-09)<small> 2021-06-09 </small>
 </h1>
 <ul>
 <li><p>the <code>metafor</code> package now makes use of the <code>mathjaxr</code> package to nicely render equations shown in the HTML help pages</p></li>
@@ -299,7 +308,7 @@
 <li><p><code><a href="../reference/profile.rma.html">profile.rma.uni()</a></code>, <code><a href="../reference/profile.rma.html">profile.rma.mv()</a></code>, and <code><a href="../reference/profile.rma.html">plot.profile.rma()</a></code> gain <code>cline</code> argument; <code><a href="../reference/profile.rma.html">plot.profile.rma()</a></code> gains <code>xlim</code>, <code>ylab</code>, and <code>main</code> arguments</p></li>
 <li><p>fixed an issue with <code><a href="../reference/robust.html">robust.rma.mv()</a></code> when the model was fitted with <code>sparse=TRUE</code> (thanks to Roger Martineau for noting the problem)</p></li>
 <li><p>various method functions (<code><a href="../reference/fitted.rma.html">fitted()</a></code>, <code><a href="https://rdrr.io/r/stats/residuals.html">resid()</a></code>, <code><a href="../reference/predict.rma.html">predict()</a></code>, etc.) behave in a more consistent manner when model omitted studies with missings</p></li>
-<li><p><code><a href="../reference/predict.rma.html">predict.rma()</a></code> gains <code>vcov</code> argument; when set to <code>TRUE</code>, the variance- covariance matrix of the predicted values is also returned</p></li>
+<li><p><code><a href="../reference/predict.rma.html">predict.rma()</a></code> gains <code>vcov</code> argument; when set to <code>TRUE</code>, the variance-covariance matrix of the predicted values is also returned</p></li>
 <li><p><code><a href="../reference/vcov.rma.html">vcov.rma()</a></code> can now also return the variance-covariance matrix of the fitted values (<code>type="fitted"</code>) and the residuals (<code>type="resid"</code>)</p></li>
 <li><p>added <code>$&lt;-</code> and <code><a href="https://rdrr.io/r/base/matrix.html">as.matrix()</a></code> methods for <code>list.rma</code> objects</p></li>
 <li><p>fixed error in <code><a href="../reference/simulate.rma.html">simulate.rma()</a></code> that would generate too many samples for <code>rma.mv</code> models</p></li>

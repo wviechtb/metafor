@@ -156,6 +156,17 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
    formula.yi <- NULL
    formula.mods <- NULL
 
+   ### in case user specifies v (instead of V), verbose is set to v, which is non-sensical
+   ### - if v is set to the name of a variable in 'data', it won't be found; can check for
+   ###   this with try() and inherits(verbose, "try-error")
+   ### - if v is set to vi or var (or anything else that might be interpreted as a function),
+   ###   then can catch this by checking if verbose is a function
+
+   verbose <- try(verbose, silent=TRUE)
+
+   if (inherits(verbose, "try-error") || is.function(verbose) || length(verbose) != 1L || !(is.logical(verbose) || is.numeric(verbose)))
+      stop(mstyle$stop("Argument 'verbose' must be a scalar (logical or numeric/integer)."))
+
    ### set options(warn=1) if verbose > 2
 
    if (verbose > 2) {
