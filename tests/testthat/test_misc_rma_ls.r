@@ -92,7 +92,8 @@ test_that("location-scale model works correctly for a continuous predictor", {
    expect_equivalent(res1$alpha, c(-3.10513013522415, 0.041361925354706), tolerance=.tol[["coef"]])
 
    res2 <- rma(yi, vi, data=dat, scale = ~ grade, link="identity")
-   expect_equivalent(res1$tau2, res2$tau2, tolerance=.tol[["var"]])
+   expect_equivalent(res2$alpha, c(0.042926535, 0.002729234), tolerance=.tol[["coef"]])
+   #expect_equivalent(res1$tau2, res2$tau2, tolerance=.tol[["var"]]) # not true
 
    res3 <- rma.mv(yi, vi, data=dat, random = ~ sqrt(grade) | id, rho=0, struct="GEN", control=list(hessian=TRUE, vctransf=FALSE))
    expect_equivalent(c(res2$alpha), diag(res3$G), tolerance=.tol[["coef"]])

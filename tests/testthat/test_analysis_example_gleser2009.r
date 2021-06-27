@@ -71,7 +71,7 @@ test_that("results are correct for the multiple-treatment studies example with l
    tmp <- vcov(res)
    expected <- structure(c(0.01412, 0.00712, 0.00425, 0.00712, 0.01178, 0.00455, 0.00425, 0.00455, 0.02703), .Dim = c(3L, 3L),
                          .Dimnames = list(c("factor(trt)1", "factor(trt)2", "factor(trt)3"), c("factor(trt)1", "factor(trt)2", "factor(trt)3")))
-   expect_equivalent(tmp, expected, tolerance=.tol[["var"]]/10)
+   expect_equivalent(tmp, expected, tolerance=.tol[["var"]])
 
    ### compare with results on page 363
    expect_equivalent(res$QE, 2.0563, tolerance=.tol[["test"]]) ### 2.057 in chapter
@@ -102,7 +102,7 @@ test_that("results are correct for the multiple-treatment studies example with l
    tmp <- vcov(res)
    expected <- structure(c(0.01287, 0.00623, 0.00371, 0.00623, 0.01037, 0.00399, 0.00371, 0.00399, 0.02416), .Dim = c(3L, 3L),
                          .Dimnames = list(c("factor(trt)1", "factor(trt)2", "factor(trt)3"), c("factor(trt)1", "factor(trt)2", "factor(trt)3")))
-   expect_equivalent(tmp, expected, tolerance=.tol[["var"]]/10)
+   expect_equivalent(tmp, expected, tolerance=.tol[["var"]])
 
    ### (results for this not given in chapter)
    expect_equivalent(res$QE, 1.8954, tolerance=.tol[["test"]])
@@ -133,7 +133,7 @@ test_that("results are correct for the multiple-treatment studies example with d
    tmp <- vcov(res)*2^2
    expected <- structure(c(0.00058, 4e-04, 0.00024, 4e-04, 0.00061, 0.00025, 0.00024, 0.00025, 0.00137), .Dim = c(3L, 3L),
                          .Dimnames = list(c("factor(trt)1", "factor(trt)2", "factor(trt)3"), c("factor(trt)1", "factor(trt)2", "factor(trt)3")))
-   expect_equivalent(tmp, expected, tolerance=.tol[["var"]]/10)
+   expect_equivalent(tmp, expected, tolerance=.tol[["var"]])
 
    ### compare with results on page 365
    expect_equivalent(res$QE, 4.2634, tolerance=.tol[["test"]]) ### 4.264 in chapter
@@ -176,7 +176,7 @@ test_that("results are correct for the multiple-treatment studies example with s
    ### compare with results on page 367
    tmp <- vcov(res)
    expected <- structure(c(0.02257, 0.01244, 0.01244, 0.03554), .Dim = c(2L, 2L), .Dimnames = list(c("factor(trt)1", "factor(trt)2"), c("factor(trt)1", "factor(trt)2")))
-   expect_equivalent(tmp, expected, tolerance=.tol[["var"]]/10)
+   expect_equivalent(tmp, expected, tolerance=.tol[["var"]])
 
    ### compare with results on page 367
    expect_equivalent(res$QE, 3.9447, tolerance=.tol[["test"]])
@@ -214,7 +214,7 @@ test_that("results are correct for the multiple-endpoint studies example with st
    ### (results for this not given in chapter)
    tmp <- vcov(res)
    expected <- structure(c(0.01008, 0.00537, 0.00537, 0.00989), .Dim = c(2L, 2L), .Dimnames = list(c("outcomemath", "outcomereading"), c("outcomemath", "outcomereading")))
-   expect_equivalent(tmp, expected, tolerance=.tol[["var"]]/10)
+   expect_equivalent(tmp, expected, tolerance=.tol[["var"]])
 
    ### compare with results on page 371
    expect_equivalent(res$QE, 19.6264, tolerance=.tol[["test"]]) ### 19.62 in chapter

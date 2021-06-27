@@ -292,14 +292,19 @@
 
 ############################################################################
 
-### check that the length of all non-NULL elements given via ... are equal to each other
+### check that the lengths of all non-zero length elements given via ... are equal to each other
 
 .equal.length <- function(...) {
 
    ddd <- list(...)
-   ddd <- ddd[!sapply(ddd, is.null)]
-   ks  <- sapply(ddd, length)
-   return(length(unique(ks)) == 1L)
+   #ddd <- ddd[!sapply(ddd, is.null)] # length(NULL) is 0 anyway
+   ddd <- ddd[sapply(ddd, function(x) length(x) > 0)]
+   if (length(ddd) == 0L) { # if nothing left, return TRUE
+      return(TRUE)
+   } else {
+      ks <- sapply(ddd, length)
+      return(length(unique(ks)) == 1L)
+   }
 
 }
 

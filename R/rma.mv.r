@@ -1535,7 +1535,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
    ### set default control parameters
 
    con <- list(verbose = FALSE,
-               optimizer = "nlminb",      # optimizer to use ("optim", "nlminb", "uobyqa", "newuoa", "bobyqa", "nloptr", "nlm", "hjk", "nmk", "mads", "ucminf", "optimParallel")
+               optimizer = "nlminb",      # optimizer to use ("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","optimParallel")
                optmethod = "BFGS",        # argument 'method' for optim() ("Nelder-Mead" and "BFGS" are sensible options)
                parallel = list(),         # parallel argument for optimParallel() (note: 'cl' argument in parallel is not passed; this is directly specified via 'cl')
                cl = NULL,                 # arguments for optimParallel()
@@ -1973,11 +1973,13 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
             verbose=verbose, digits=digits, REMLf=con$REMLf, dofit=FALSE", ctrl.arg, ")\n", sep="")
 
          #return(optcall)
+
          if (verbose) {
             opt.res <- try(eval(parse(text=optcall)), silent=!verbose)
          } else {
             opt.res <- try(suppressWarnings(eval(parse(text=optcall))), silent=!verbose)
          }
+
          #return(opt.res)
 
          if (optimizer == "optimParallel::optimParallel" && verbose) {

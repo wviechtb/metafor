@@ -8,7 +8,7 @@
 rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
          mods, measure, intercept=TRUE, data, slab, subset,
          add=1/2, to="only0", drop00=TRUE, vtype="LS",
-         model="UM.FS", method="ML", test="z",
+         model="UM.FS", method="ML", coding=1/2, cor=FALSE, test="z",
          level=95, digits, btt, nAGQ=7, verbose=FALSE, control, \dots)
 }
 \arguments{
@@ -38,6 +38,8 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
    \item{vtype}{character string to specify the type of sampling variances to calculate when calculating the observed effect sizes or outcomes. See the documentation of the \code{\link{escalc}} function for more details.}
    \item{model}{character string to specify the general model type to use for the analysis (either \code{"UM.FS"} (the default), \code{"UM.RS"}, \code{"CM.EL"}, or \code{"CM.AL"}). See \sQuote{Details}.}
    \item{method}{character string to specify whether a fixed- or a random/mixed-effects model should be fitted. A fixed-effects model (with or without moderators) is fitted when using \code{method="FE"}. Random/mixed-effects models are fitted by setting \code{method="ML"} (the default). See \sQuote{Details}.}
+   \item{coding}{numeric scalar to indicate how the group variable should be coded in the random effects structure for random/mixed-effects models (the default is \code{1/2}). See \sQuote{Note}.}
+   \item{cor}{logical to indicate whether the random study effects should be allowed to be correlated with the random group effects for random/mixed-effects models when \code{model="UM.RS"} (the default is \code{FALSE}). See \sQuote{Note}.}
    \item{test}{character string to specify how test statistics and confidence intervals for the fixed effects should be computed. By default (\code{test="z"}), Wald-type tests and CIs are obtained, which are based on a standard normal distribution. When \code{test="t"}, a t-distribution is used instead. See \sQuote{Details}.}
    \item{level}{numeric value between 0 and 100 to specify the confidence interval level (the default is 95).}
    \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4.}
@@ -143,18 +145,24 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
    The results of the fitted model are formatted and printed with the \code{\link{print.rma.glmm}} function. If fit statistics should also be given, use \code{\link{summary.rma}} (or use the \code{\link{fitstats.rma}} function to extract them).
 }
 \note{
+   When \code{measure="OR"} or \code{measure="IRR"}, \code{model="UM.FS"} or \code{model="UM.RS"}, and \code{method="ML"}, one has to choose a coding scheme for the group variable in the random effects structure. When \code{code=1/2} (the default), the two groups are coded with \code{+1/2} and \code{-1/2} (i.e., contrast coding), which is invariant under group label switching.
+
+   When \code{code=1}, the first group is coded with \code{1} and the second group with \code{0}. Finally, when \code{code=0}, the first group is coded with \code{0} and the second group with \code{1}. Note that these coding schemes are not invariant under group label switching.
+
+   Also, when \code{model="UM.RS"} and \code{method="ML"}, one has to decide whether the random study effects are allowed to be correlated with the random group effects. By default (i.e., when \code{cor=FALSE}), no such correlation is allowed (which is typically an appropriate assumption when \code{code=1/2}). When using a different coding scheme for the group variable (i.e., \code{code=1} or \code{code=0}), allowing the random study and group effects to be correlated (i.e., using \code{cor=TRUE}) is usually recommended.
+
    Fitting the various types of models requires several different iterative algorithms:
    \itemize{
    \item For \code{model="UM.FS"} and \code{model="CM.AL"}, iteratively reweighted least squares (IWLS) as implemented in the \code{\link{glm}} function is used for fitting the fixed-effects and the saturated models. For \code{method="ML"}, adaptive Gauss-Hermite quadrature as implemented in the \code{\link[lme4]{glmer}} function is used. The same applies when \code{model="CM.EL"} is used in combination with \code{measure="IRR"} or when \code{measure="PLO"} or \code{measure="IRLN"} (regardless of the model type).
    \item For \code{model="UM.RS"}, adaptive Gauss-Hermite quadrature as implemented in the \code{\link[lme4]{glmer}} function is used to fit all of the models.
    \item For \code{model="CM.EL"} and \code{measure="OR"}, the quasi-Newton method (\code{"BFGS"}) as implemented in the \code{\link{optim}} function is used by default for fitting the fixed-effects and the saturated models. For \code{method="ML"}, the same algorithm is used, together with adaptive quadrature as implemented in the \code{\link{integrate}} function (for the integration over the density of the non-central hypergeometric distribution). Standard errors of the parameter estimates are obtained by inverting the Hessian, which is numerically approximated using the \code{\link[numDeriv]{hessian}} function.
-   } When \code{model="CM.EL"} and \code{measure="OR"}, actually \code{model="CM.AL"} is used first to obtain starting values for \code{\link{optim}}, so either 4 (if \code{method="FE"}) or 6 (if \code{method="ML"}) models need to be fitted in total.
 
-   Various control parameters can be adjusted via the \code{control} argument:
+   One can also chose a different optimizer via the \code{control} argument (e.g., \code{control=list(optimizer="nlminb")}). When using \code{\link{optim}}, one can set the particular method via the \code{optmethod} argument (e.g., \code{control=list(optimizer="optim", optmethod="BFGS")} is the default). Besides \code{\link{nlminb}} and \code{\link{optim}}, one can also choose one of the optimizers from the \code{minqa} package (i.e., \code{\link[minqa]{uobyqa}}, \code{\link[minqa]{newuoa}}, or \code{\link[minqa]{bobyqa}}), one of the (derivative-free) algorithms from the \code{\link[nloptr]{nloptr}} package, the Newton-type algorithm implemented in \code{\link{nlm}}, the various algorithms implemented in the \code{dfoptim} package (\code{\link[dfoptim]{hjk}} for the Hooke-Jeeves, \code{\link[dfoptim]{nmk}} for the Nelder-Mead, and \code{\link[dfoptim]{mads}} for the Mesh Adaptive Direct Searches (MADS) algorithm), the quasi-Newton type optimizer \code{\link[ucminf]{ucminf}} from the package of the same name, or the parallelized version of the L-BFGS-B algorithm implemented in \code{\link[optimParallel]{optimParallel}} from the package of the same name.
+
+   The optimizer name must be given as a character string (i.e., in quotes). Additional control parameters can be specified via the \code{optCtrl} elements of the \code{control} argument (e.g., \code{control=list(optCtrl=list(maxit=1000))}). For \code{\link[nloptr]{nloptr}}, the default is to use the BOBYQA implementation from that package with a relative convergence criterion of \code{1e-8} on the function value (i.e., log-likelihood), but this can be changed via the \code{algorithm} and \code{ftop_rel} arguments (e.g., \code{control=list(optimizer="nloptr", optCtrl=list(algorithm="NLOPT_LN_SBPLX", ftol_rel=1e-6))}). For \code{\link[optimParallel]{optimParallel}}, the control argument \code{ncpus} can be used to specify the number of cores to use for the parallelization (e.g., \code{control=list(optimizer="optimParallel", ncpus=2)}). With \code{parallel::detectCores()}, one can check on the number of available cores on the local machine.} When \code{model="CM.EL"} and \code{measure="OR"}, actually \code{model="CM.AL"} is used first to obtain starting values for \code{\link{optim}}, so either 4 (if \code{method="FE"}) or 6 (if \code{method="ML"}) models need to be fitted in total.
+
+   Various additional control parameters can be adjusted via the \code{control} argument:
    \itemize{
-      \item \code{optimizer} is set by default to \code{\link[stats:optim]{"optim"}}, but can be set to \code{\link[stats:nlminb]{"nlminb"}} or one of the optimizers from the \pkg{minqa} package (i.e., \code{\link[minqa:bobyqa]{"bobyqa"}}, \code{\link[minqa:newuoa]{"newuoa"}}, or \code{\link[minqa:uobyqa]{"uobyqa"}}),
-      \item \code{optmethod} is used to set the \code{method} argument for \code{\link{optim}} (the default is \code{"BFGS"}),
-      \item \code{optCtrl} is a list of named arguments to be passed on to the \code{control} argument of the chosen optimizer,
       \item \code{glmCtrl} is a list of named arguments to be passed on to the \code{control} argument of the \code{\link{glm}} function,
       \item \code{glmerCtrl} is a list of named arguments to be passed on to the \code{control} argument of the \code{\link[lme4]{glmer}} function, and
       \item \code{intCtrl} is a list of named arguments (i.e., \code{rel.tol} and \code{subdivisions}) to be passed on to the \code{\link{integrate}} function.
@@ -177,7 +185,11 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
 
    van Houwelingen, H. C., Zwinderman, K. H., & Stijnen, T. (1993). A bivariate approach to meta-analysis. \emph{Statistics in Medicine}, \bold{12}(24), 2273--2284. \verb{https://doi.org/10.1002/sim.4780122405}
 
+   Jackson, D., Law, M., Stijnen, T., Viechtbauer, W., & White, I. R. (2018). A comparison of seven random-effects models for meta-analyses that estimate the summary odds ratio. \emph{Statistics in Medicine}, \bold{37}(7), 1059-1085. \verb{https://doi.org/10.1002/sim.7588}
+
    Liao, J. G., & Rosen, O. (2001). Fast and stable algorithms for computing and sampling from the noncentral hypergeometric distribution. \emph{American Statistician}, \bold{55}(4), 366--369. \verb{https://doi.org/10.1198/000313001753272547}
+
+   Simmonds, M. C., & Higgins, J. P. T. (2016). A general framework for the use of logistic regression models in meta-analysis. \emph{Statistical Methods in Medical Research}, \bold{25}(6), 2858--2877. \verb{https://doi.org/10.1177/0962280214534409}
 
    Stijnen, T., Hamza, T. H., & Ozdemir, P. (2010). Random effects meta-analysis of event outcome in the framework of the generalized linear mixed model with applications in sparse data. \emph{Statistics in Medicine}, \bold{29}(29), 3046--3067. \verb{https://doi.org/10.1002/sim.4040}
 

@@ -2,7 +2,7 @@ rma.glmm <- function(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, n
 measure, intercept=TRUE,
 data, slab, subset,
 add=1/2, to="only0", drop00=TRUE, vtype="LS",
-model="UM.FS", method="ML", test="z", #tdist=FALSE, #weighted=TRUE,
+model="UM.FS", method="ML", coding=1/2, cor=FALSE, test="z", #tdist=FALSE, #weighted=TRUE,
 level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    #########################################################################
@@ -22,6 +22,9 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    if (!is.element(method, c("FE","EE","CE","ML")))
       stop(mstyle$stop("Unknown 'method' specified."))
+
+   if (!is.element(coding, c(1/2, 1, 0)))
+      stop(mstyle$stop("Unknown 'coding' option specified."))
 
    ### in case user specifies more than one add/to value (as one can do with rma.mh() and rma.peto())
    ### (never apply any kind of continuity correction to the data used in the actual model fitting for models implemented in this function)
@@ -60,7 +63,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("tdist", "outlist", "onlyo1", "addyi", "addvi", "time", "retdat", "family", "retfit"))
+   .chkdots(ddd, c("tdist", "outlist", "onlyo1", "addyi", "addvi", "time", "retdat", "family", "retfit", "skiphet"))
 
    ### handle 'tdist' argument from ... (note: overrides test argument)
 
@@ -149,7 +152,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       if (is.null(bi)) bi <- n1i - ai
       if (is.null(di)) di <- n2i - ci
 
-      k <- length(ai) ### number of outcomes before subsetting
+      k <- length(ai) # number of outcomes before subsetting
       k.all <- k
 
       if (!is.null(subset)) {
@@ -175,7 +178,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       t1i <- eval(mf.t1i, data, enclos=sys.frame(sys.parent()))
       t2i <- eval(mf.t2i, data, enclos=sys.frame(sys.parent()))
 
-      k <- length(x1i) ### number of outcomes before subsetting
+      k <- length(x1i) # number of outcomes before subsetting
       k.all <- k
 
       if (!is.null(subset)) {
@@ -200,7 +203,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       ni <- eval(mf.ni, data, enclos=sys.frame(sys.parent()))
       if (is.null(mi)) mi <- ni - xi
 
-      k <- length(xi) ### number of outcomes before subsetting
+      k <- length(xi) # number of outcomes before subsetting
       k.all <- k
 
       if (!is.null(subset)) {
@@ -220,7 +223,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       xi <- eval(mf.xi, data, enclos=sys.frame(sys.parent()))
       ti <- eval(mf.ti, data, enclos=sys.frame(sys.parent()))
 
-      k <- length(xi) ### number of outcomes before subsetting
+      k <- length(xi) # number of outcomes before subsetting
       k.all <- k
 
       if (!is.null(subset)) {
@@ -233,9 +236,9 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    }
 
-   yi <- dat$yi         ### one or more yi/vi pairs may be NA/NA (note: yi/vi pairs that are NA/NA may still have 'valid' table data)
-   vi <- dat$vi         ### one or more yi/vi pairs may be NA/NA (note: yi/vi pairs that are NA/NA may still have 'valid' table data)
-   ni <- attr(yi, "ni") ### unadjusted total sample sizes (ni.u in escalc)
+   yi <- dat$yi         # one or more yi/vi pairs may be NA/NA (note: yi/vi pairs that are NA/NA may still have 'valid' table data)
+   vi <- dat$vi         # one or more yi/vi pairs may be NA/NA (note: yi/vi pairs that are NA/NA may still have 'valid' table data)
+   ni <- attr(yi, "ni") # unadjusted total sample sizes (ni.u in escalc)
 
    ### study ids (1:k sequence before subsetting)
 
@@ -250,11 +253,11 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    if (inherits(mods, "formula")) {
       formula.mods <- mods
-      options(na.action = "na.pass")        ### set na.action to na.pass, so that NAs are not filtered out (we'll do that later)
-      mods <- model.matrix(mods, data=data) ### extract model matrix
-      attr(mods, "assign") <- NULL          ### strip assign attribute (not needed at the moment)
-      options(na.action = na.act)           ### set na.action back to na.act
-      intercept <- FALSE                    ### set to FALSE since formula now controls whether the intercept is included or not
+      options(na.action = "na.pass")        # set na.action to na.pass, so that NAs are not filtered out (we'll do that later)
+      mods <- model.matrix(mods, data=data) # extract model matrix
+      attr(mods, "assign") <- NULL          # strip assign attribute (not needed at the moment)
+      options(na.action = na.act)           # set na.action back to na.act
+      intercept <- FALSE                    # set to FALSE since formula now controls whether the intercept is included or not
    }
 
    ### turn a vector for mods into a column vector
@@ -324,7 +327,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    attr(yi, "slab") <- slab
 
-   k <- length(yi) ### number of tables/outcomes after subsetting (can all still include NAs)
+   k <- length(yi) # number of tables/outcomes after subsetting (can all still include NAs)
 
    ### if drop00=TRUE, set counts to NA for studies that have no events (or all events) in both arms (corresponding yi/vi will also be NA/NA then)
 
@@ -366,7 +369,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    ni.f   <- ni
    mods.f <- mods
 
-   k.f <- k ### total number of tables/outcomes and rows in the model matrix (including all NAs)
+   k.f <- k # total number of tables/outcomes and rows in the model matrix (including all NAs)
 
    ### check for NAs in tables (and corresponding mods) and act accordingly
 
@@ -504,8 +507,8 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
          mods.yi <- mods.f[not.na.yivi,,drop=FALSE]
          warning(mstyle$warning("Some yi/vi values are NA."), call.=FALSE)
 
-         attr(yi, "measure") <- measure ### add measure attribute back
-         attr(yi, "ni")      <- ni      ### add ni attribute back
+         attr(yi, "measure") <- measure # add measure attribute back
+         attr(yi, "ni")      <- ni      # add ni attribute back
 
       }
 
@@ -514,7 +517,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    }
 
-   k.yi <- length(yi) ### number of yi/vi pairs that are not NA
+   k.yi <- length(yi) # number of yi/vi pairs that are not NA
 
    ### make sure that there is at least one column in X
 
@@ -559,9 +562,9 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    if (any(is.int)) {
       int.incl <- TRUE
       int.indx <- which(is.int, arr.ind=TRUE)
-      X        <- cbind(intrcpt=1,   X[,-int.indx, drop=FALSE]) ### note: this removes any duplicate intercepts
-      X.f      <- cbind(intrcpt=1, X.f[,-int.indx, drop=FALSE]) ### note: this removes any duplicate intercepts
-      intercept <- TRUE ### set intercept appropriately so that the predict() function works
+      X        <- cbind(intrcpt=1,   X[,-int.indx, drop=FALSE]) # note: this removes any duplicate intercepts
+      X.f      <- cbind(intrcpt=1, X.f[,-int.indx, drop=FALSE]) # note: this removes any duplicate intercepts
+      intercept <- TRUE # set intercept appropriately so that the predict() function works
    } else {
       int.incl <- FALSE
    }
@@ -571,10 +574,10 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    is.int <- apply(X.yi, 2, .is.intercept)
    if (any(is.int)) {
       int.indx <- which(is.int, arr.ind=TRUE)
-      X.yi     <- cbind(intrcpt=1, X.yi[,-int.indx, drop=FALSE]) ### note: this removes any duplicate intercepts
+      X.yi     <- cbind(intrcpt=1, X.yi[,-int.indx, drop=FALSE]) # note: this removes any duplicate intercepts
    }
 
-   p <- NCOL(X) ### number of columns in X (including the intercept if it is included)
+   p <- NCOL(X) # number of columns in X (including the intercept if it is included)
 
    ### note: number of columns in X.yi may be lower than p; but computation of I^2 below is based on p
 
@@ -596,16 +599,19 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    ### set/check 'btt' argument
 
    btt <- .set.btt(btt, p, int.incl, colnames(X))
-   m <- length(btt) ### number of betas to test (m = p if all betas are tested)
+   m <- length(btt) # number of betas to test (m = p if all betas are tested)
 
    #########################################################################
 
    ### set default control parameters
 
    con <- list(verbose = FALSE,            # also passed on to glm/glmer/optim/nlminb/minqa (uobyqa/newuoa/bobyqa)
-               package="lme4",             # package for fitting logistic mixed-effects models ("lme4" or "GLMMadaptive")
-               optimizer = "optim",        # optimizer to use for CM.EL+OR ("optim", "nlminb", "uobyqa", "newuoa", "bobyqa", "clogit", "clogistic")
+               package="lme4",             # package for fitting logistic mixed-effects models ("lme4", "GLMMadaptive", "glmmTMB")
+               optimizer = "optim",        # optimizer to use for CM.EL+OR ("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","optimParallel","clogit","clogistic")
                optmethod = "BFGS",         # argument 'method' for optim() ("Nelder-Mead" and "BFGS" are sensible options)
+               parallel = list(),          # parallel argument for optimParallel() (note: 'cl' argument in parallel is not passed; this is directly specified via 'cl')
+               cl = NULL,                  # arguments for optimParallel()
+               ncpus = 1L,                 # arguments for optimParallel()
                scaleX = TRUE,              # whether non-dummy variables in the X matrix should be rescaled before model fitting
                evtol = 1e-07,              # lower bound for eigenvalues to determine if model matrix is positive definite
                dnchgcalc = "dFNCHypergeo", # method for calculating dnchg ("dFNCHypergeo" from BiasedUrn package or "dnoncenhypergeom")
@@ -621,6 +627,29 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    verbose <- con$verbose
 
+   optimizer  <- match.arg(con$optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","optimParallel","clogit","clogistic"))
+   optmethod  <- match.arg(con$optmethod, c("Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent"))
+   package    <- match.arg(con$package, c("lme4","GLMMadaptive","glmmTMB"))
+   parallel   <- con$parallel
+   cl         <- con$cl
+   ncpus      <- con$ncpus
+
+   if (con$dnchgcalc != "dnoncenhypergeom" && con$dnchgcalc != "dFNCHypergeo")
+      stop(mstyle$stop("Unknown dnchgcalc method specified."))
+
+   if (is.element(optimizer, c("clogit","clogistic")) && method == "ML")
+      stop(mstyle$stop("Cannot use 'clogit' or 'clogistic' with method='ML'."))
+
+   if (package == "lme4" && is.element(measure, c("OR","IRR")) && model == "UM.RS" && method == "ML" && nAGQ > 1) {
+      warning(mstyle$warning("Currently not possible to fit RE/ME model='UM.RS' with nAGQ > 1. nAGQ automatically set to 1."), call.=FALSE)
+      nAGQ <- 1
+   }
+
+   ### if control argument 'ncpus' is larger than 1, automatically switch to optimParallel optimizer
+
+   if (ncpus > 1L)
+      optimizer <- "optimParallel"
+
    pos.optCtrl <- pmatch(names(control), "optCtrl", nomatch=0)
    if (sum(pos.optCtrl) > 0) {
       optCtrl <- control[[which(pos.optCtrl == 1)]]
@@ -628,21 +657,38 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       optCtrl <- list()
    }
 
-   if (con$optimizer == "optim") {
-      con.pos <- pmatch(names(optCtrl), "REPORT", nomatch=0) ### set REPORT to 1 if it is not already set by the user
+   ### set NLOPT_LN_BOBYQA as the default algorithm for nloptr optimizer
+   ### and by default use a relative convergence criterion of 1e-8 on the function value
+
+   if (optimizer=="nloptr" && !is.element("algorithm", names(optCtrl)))
+      optCtrl$algorithm <- "NLOPT_LN_BOBYQA"
+
+   if (optimizer=="nloptr" && !is.element("ftol_rel", names(optCtrl)))
+      optCtrl$ftol_rel <- 1e-8
+
+   ### for mads, set trace=FALSE and tol=1e-6 by default
+
+   if (optimizer=="mads" && !is.element("trace", names(optCtrl)))
+      optCtrl$trace <- FALSE
+
+   if (optimizer=="mads" && !is.element("tol", names(optCtrl)))
+      optCtrl$tol <- 1e-6
+
+   if (optimizer == "optim") {
+      con.pos <- pmatch(names(optCtrl), "REPORT", nomatch=0) # set REPORT to 1 if it is not already set by the user
       if (sum(con.pos) > 0) {
          names(optCtrl)[which(con.pos == 1)] <- "REPORT"
       } else {
          optCtrl$REPORT <- 1
       }
-      optCtrl$trace <- con$verbose ### trace for optim is a non-negative integer
+      optCtrl$trace <- con$verbose # trace for optim is a non-negative integer
    }
 
-   if (con$optimizer == "nlminb")
-      optCtrl$trace <- ifelse(con$verbose > 0, 1, 0) ### set trace to 1, so information is printed every iteration
+   if (optimizer == "nlminb")
+      optCtrl$trace <- ifelse(con$verbose > 0, 1, 0) # set trace to 1, so information is printed every iteration
 
-   if (is.element(con$optimizer, c("uobyqa", "newuoa", "bobyqa")))
-      optCtrl$iprint <- ifelse(con$verbose > 0, 3, 0) ### set iprint to 3 for maximum information
+   if (is.element(optimizer, c("uobyqa", "newuoa", "bobyqa")))
+      optCtrl$iprint <- ifelse(con$verbose > 0, 3, 0) # set iprint to 3 for maximum information
 
    pos.clogitCtrl <- pmatch(names(control), "clogitCtrl", nomatch=0)
    if (sum(pos.clogitCtrl) > 0) {
@@ -664,20 +710,13 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    } else {
       glmCtrl <- list()
    }
-   glmCtrl$trace <- ifelse(con$verbose > 0, TRUE, FALSE) ### trace for glmCtrl is logical
+   glmCtrl$trace <- ifelse(con$verbose > 0, TRUE, FALSE) # trace for glmCtrl is logical
 
    pos.glmerCtrl <- pmatch(names(control), "glmerCtrl", nomatch=0)
    if (sum(pos.glmerCtrl) > 0) {
       glmerCtrl <- control[[which(pos.glmerCtrl == 1)]]
    } else {
       glmerCtrl <- list()
-   }
-
-   pos.mmCtrl <- pmatch(names(control), "mmCtrl", nomatch=0)
-   if (sum(pos.mmCtrl) > 0) {
-      mmCtrl <- control[[which(pos.mmCtrl == 1)]]
-   } else {
-      mmCtrl <- list()
    }
 
    pos.intCtrl <- pmatch(names(control), "intCtrl", nomatch=0)
@@ -718,24 +757,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       hessianCtrl <- list(r=16)
    }
 
-   #return(list(verbose=verbose, optimizer=con$optimizer, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, optCtrl=optCtrl, glmCtrl=glmCtrl, glmerCtrl=glmerCtrl, mmCtrl=mmCtrl, intCtrl=intCtrl, hessianCtrl=hessianCtrl))
-
-   if (!is.element(con$package, c("lme4", "GLMMadaptive")))
-      stop(mstyle$stop("Unknown package specified."))
-
-   if (!is.element(con$optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","clogit","clogistic")))
-      stop(mstyle$stop("Unknown optimizer specified."))
-
-   if (con$dnchgcalc != "dnoncenhypergeom" && con$dnchgcalc != "dFNCHypergeo")
-      stop(mstyle$stop("Unknown dnchgcalc method specified."))
-
-   if (is.element(con$optimizer, c("clogit", "clogistic")) && method == "ML")
-      stop(mstyle$stop("Cannot use 'clogit' or 'clogistic' with method='ML'."))
-
-   if (con$package == "lme4" && is.element(measure, c("OR","IRR")) && model == "UM.RS" && method == "ML" && nAGQ > 1) {
-      warning(mstyle$warning("Currently not possible to fit RE/ME model='UM.RS' with nAGQ > 1. nAGQ automatically set to 1."), call.=FALSE)
-      nAGQ <- 1
-   }
+   #return(list(verbose=verbose, optimizer=optimizer, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, optCtrl=optCtrl, glmCtrl=glmCtrl, glmerCtrl=glmerCtrl, intCtrl=intCtrl, hessianCtrl=hessianCtrl))
 
    #########################################################################
 
@@ -743,24 +765,46 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    if (is.element(measure, c("OR","IRR"))) {
       if ((model == "UM.FS" && method == "ML") || (model == "UM.RS") || (model == "CM.AL" && method == "ML") || (model == "CM.EL" && method == "ML")) {
-         if (!requireNamespace(con$package, quietly=TRUE))
-            stop(mstyle$stop(paste0("Please install the '", con$package, "' package to fit this model.")))
+         if (!requireNamespace(package, quietly=TRUE))
+            stop(mstyle$stop(paste0("Please install the '", package, "' package to fit this model.")))
       }
    }
 
    if (is.element(measure, c("PLO","IRLN")) && method == "ML") {
-      if (!requireNamespace(con$package, quietly=TRUE))
-         stop(mstyle$stop(paste0("Please install the '", con$package, "' package to fit this model.")))
+      if (!requireNamespace(package, quietly=TRUE))
+         stop(mstyle$stop(paste0("Please install the '", package, "' package to fit this model.")))
    }
 
    if (measure == "OR" && model == "CM.EL") {
-      if (is.element(con$optimizer, c("uobyqa", "newuoa", "bobyqa"))) {
+
+      if (is.element(optimizer, c("uobyqa","newuoa","bobyqa"))) {
          if (!requireNamespace("minqa", quietly=TRUE))
             stop(mstyle$stop("Please install the 'minqa' package to fit this model."))
-         minqa <- get(con$optimizer, envir=loadNamespace("minqa"))
-         con$optimizer <- "minqa"
+         #minqa <- get(optimizer, envir=loadNamespace("minqa"))
+         #optimizer <- "minqa"
       }
-      if (con$optimizer == "optim" || con$optimizer == "nlminb" || con$optimizer == "minqa") {
+
+      if (optimizer == "nloptr") {
+         if (!requireNamespace("nloptr", quietly=TRUE))
+            stop(mstyle$stop("Please install the 'nloptr' package to use this optimizer."))
+      }
+
+      if (is.element(optimizer, c("hjk","nmk","mads"))) {
+         if (!requireNamespace("dfoptim", quietly=TRUE))
+            stop(mstyle$stop("Please install the 'dfoptim' package to use this optimizer."))
+      }
+
+      if (optimizer == "ucminf") {
+         if (!requireNamespace("ucminf", quietly=TRUE))
+            stop(mstyle$stop("Please install the 'ucminf' package to use this optimizer."))
+      }
+
+      if (optimizer == "optimParallel") {
+         if (!requireNamespace("optimParallel", quietly=TRUE))
+            stop(mstyle$stop("Please install the 'optimParallel' package to use this optimizer."))
+      }
+
+      if (is.element(optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","optimParallel"))) {
          if (!requireNamespace("numDeriv", quietly=TRUE))
             stop(mstyle$stop("Please install the 'numDeriv' package to fit this model."))
          if (con$dnchgcalc == "dFNCHypergeo") {
@@ -768,16 +812,21 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                stop(mstyle$stop("Please install the 'BiasedUrn' package to fit this model."))
          }
       }
-      if (con$optimizer == "clogit") {
+
+      if (optimizer == "clogit") {
          if (!requireNamespace("survival", quietly=TRUE))
             stop(mstyle$stop("Please install the 'survival' package to fit this model."))
-         coxph <- survival::coxph
-         Surv  <- survival::Surv
+         coxph   <- survival::coxph
+         Surv    <- survival::Surv
+         clogit  <- survival::clogit
+         strata  <- survival::strata
       }
-      if (con$optimizer == "clogistic") {
+
+      if (optimizer == "clogistic") {
          if (!requireNamespace("Epi", quietly=TRUE))
             stop(mstyle$stop("Please install the 'Epi' package to fit this model."))
       }
+
    }
 
    ### check whether model matrix is of full rank
@@ -790,6 +839,8 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    #########################################################################
 
    se.tau2 <- I2 <- H2 <- QE <- QEp <- NA
+
+   rho <- NA
 
    level <- ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
 
@@ -805,9 +856,9 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    if (!int.only && int.incl && con$scaleX) {
       Xsave <- X
       meanX <- colMeans(X[, 2:p, drop=FALSE])
-      sdX   <- apply(X[, 2:p, drop=FALSE], 2, sd) ### consider using colSds() from matrixStats package
-      is.d  <- apply(X, 2, .is.dummy) ### is each column a dummy variable (i.e., only 0s and 1s)?
-      X[,!is.d] <- apply(X[, !is.d, drop=FALSE], 2, scale) ### rescale the non-dummy variables
+      sdX   <- apply(X[, 2:p, drop=FALSE], 2, sd)          # consider using colSds() from matrixStats package
+      is.d  <- apply(X, 2, .is.dummy)                      # is each column a dummy variable (i.e., only 0s and 1s)?
+      X[,!is.d] <- apply(X[, !is.d, drop=FALSE], 2, scale) # rescale the non-dummy variables
    }
 
    #########################################################################
@@ -822,11 +873,11 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
       if (is.element(model, c("UM.FS","UM.RS"))) {
 
-         ### prepare grp-level data for the unconditional models
+         ### prepare data for the unconditional models
 
-         if (measure == "OR") {                                      ###                           xi   mi   study   group1  group2  group12  offset  intrcpt  mod1
-            dat.grp <- cbind(xi=c(rbind(ai,ci)), mi=c(rbind(bi,di))) ### grp-level outcome data    ai   bi   i       1       0       +1/2     NULL    1        x1i
-                                                                     ###                           ci   di   i       0       1       -1/2     NULL    0        0
+         if (measure == "OR") {                                      #                           xi   mi   study   group1  group2  group12  offset  intrcpt  mod1
+            dat.grp <- cbind(xi=c(rbind(ai,ci)), mi=c(rbind(bi,di))) # grp-level outcome data    ai   bi   i       1       0       +1/2     NULL    1        x1i
+                                                                     #                           ci   di   i       0       1       -1/2     NULL    0        0
             if (is.null(ddd$family)) {
                dat.fam <- binomial
             } else {
@@ -835,9 +886,9 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             dat.off <- NULL
          }
 
-         if (measure == "IRR") {                                     ###                           xi   ti   study   group1  group2  group12  offset  intrcpt  mod1
-            dat.grp <- cbind(xi=c(rbind(x1i,x2i)))                   ### grp-level outcome data    x1i  t1i  i       1       0       +1/2     t1i     1        x1i
-                                                                     ### log(ti) for offset        x2i  t2i  i       0       1       -1/2     t2i     0        0
+         if (measure == "IRR") {                                     #                           xi   ti   study   group1  group2  group12  offset  intrcpt  mod1
+            dat.grp <- c(rbind(x1i,x2i))                             # grp-level outcome data    x1i  t1i  i       1       0       +1/2     t1i     1        x1i
+                                                                     # log(ti) for offset        x2i  t2i  i       0       1       -1/2     t2i     0        0
             if (is.null(ddd$family)) {
                dat.fam <- poisson
             } else {
@@ -846,19 +897,26 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             dat.off <- log(c(rbind(t1i,t2i)))
          }
 
-         group1  <- rep(c(1,0), times=k)                             ### group dummy for 1st group (ai,bi for group 1)
-         group2  <- rep(c(0,1), times=k)                             ### group dummy for 2nd group (ci,di for group 2) (not really needed)
-         group12 <- rep(c(1/2,-1/2), times=k)                        ### group dummy with +- 1/2 coding
-         study   <- factor(rep(seq_len(k), each=2))                  ### study factor
-         const   <- cbind(rep(1,2*k))                                ### intercept for random study effects model
+         group1  <- rep(c(1,0), times=k)                             # group dummy for 1st group (ai,bi for group 1)
+         group2  <- rep(c(0,1), times=k)                             # group dummy for 2nd group (ci,di for group 2) (not really needed)
+         group12 <- rep(c(1/2,-1/2), times=k)                        # group dummy with +- 1/2 coding
+         study   <- factor(rep(seq_len(k), each=2))                  # study factor
+         const   <- cbind(rep(1,2*k))                                # intercept for random study effects model
 
-         X.fit   <- X[rep(seq(k), each=2),,drop=FALSE]               ### duplicate each row in X (drop=FALSE, so column names are preserved)
-         X.fit   <- cbind(group1*X.fit[,,drop=FALSE])                ### then multiply by group1 dummy (intercept, if included, becomes the group1 dummy)
+         X.fit   <- X[rep(seq(k), each=2),,drop=FALSE]               # duplicate each row in X (drop=FALSE, so column names are preserved)
+         X.fit   <- cbind(group1*X.fit[,,drop=FALSE])                # then multiply by group1 dummy (intercept, if included, becomes the group1 dummy)
+
+         if (coding == 1/2)
+            group <- group12
+         if (coding == 1)
+            group <- group1
+         if (coding == 0)
+            group <- group2
 
          row.names(X.fit) <- seq_len(2*k)
 
          if (.isTRUE(ddd$retdat))
-            return(list(dat.grp=dat.grp, X.fit=X.fit, study=study, dat.off = if (!is.null(dat.off)) dat.off else NULL, const=const, group1=group1, group2=group2, group12=group12, dat.fam=dat.fam))
+            return(list(dat.grp=dat.grp, X.fit=X.fit, study=study, dat.off = if (!is.null(dat.off)) dat.off else NULL, const=const, group1=group1, group2=group2, group12=group12, group=group, dat.fam=dat.fam))
 
          ###################################################################
 
@@ -884,90 +942,103 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
             ### log-likelihood
 
-            #ll.FE <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, predict(res.FE, type="response"), log=TRUE))) ### model has a NULL offset
-            #ll.FE <- with(data.frame(dat.grp), sum(dpois(xi, predict(res.FE, type="response"), log=TRUE)))         ### offset already incorporated into predict()
-            ll.FE <- c(logLik(res.FE)) ### same as above
+            #ll.FE <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, predict(res.FE, type="response"), log=TRUE))) # model has a NULL offset
+            #ll.FE <- with(data.frame(dat.grp), sum(dpois(xi, predict(res.FE, type="response"), log=TRUE)))         # offset already incorporated into predict()
+            ll.FE <- c(logLik(res.FE)) # same as above
 
             ### fit saturated FE model (= QE model)
 
-            if (verbose)
-               message(mstyle$message("Fitting saturated model ..."))
+            QEconv <- FALSE
+            ll.QE <- NA
 
-            if (k > 1) {
-               X.QE <- model.matrix(~ -1 + X.fit + study + study:group1)
-               res.QE <- try(glm(dat.grp ~ -1 + X.QE, offset=dat.off, family=dat.fam, control=glmCtrl), silent=!verbose)
-            } else {
-               res.QE <- res.FE
-            }
+            if (!isTRUE(ddd$skiphet)) {
 
-            if (inherits(res.QE, "try-error")) {
+               if (verbose)
+                  message(mstyle$message("Fitting saturated model ..."))
 
-               warning(mstyle$warning("Cannot fit saturated model."), call.=FALSE)
-               QEconv <- FALSE
-               ll.QE <- NA
+               if (k > 1) {
+                  X.QE   <- model.matrix(~ -1 + X.fit + study + study:group1)
+                  res.QE <- try(glm(dat.grp ~ -1 + X.QE, offset=dat.off, family=dat.fam, control=glmCtrl), silent=!verbose)
+               } else {
+                  res.QE <- res.FE
+               }
 
-            } else {
+               if (inherits(res.QE, "try-error")) {
 
-               QEconv <- TRUE
+                  warning(mstyle$warning("Cannot fit saturated model."), call.=FALSE)
 
-               ### log-likelihood
+               } else {
 
-               #ll.QE <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, xi/(xi+mi), log=TRUE))) ### model has a NULL offset
-               #ll.QE <- with(data.frame(dat.grp), sum(dpois(xi, xi, log=TRUE)))                 ### offset not relevant for saturated model
-               ll.QE  <- c(logLik(res.QE)) ### same as above
+                  QEconv <- TRUE
 
-               ### extract coefficients and variance-covariance matrix for Wald-type test for heterogeneity
+                  ### log-likelihood
 
-               b2.QE  <- cbind(na.omit(coef(res.QE)[-seq_len(k+p)])) ### coef() still includes aliased coefficients as NAs, so have to filter them out
-               vb2.QE <- vcov(res.QE, complete=FALSE)[-seq_len(k+p),-seq_len(k+p),drop=FALSE] ### aliased coefficients are removed by vcov() when complete=FALSE
+                  #ll.QE <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, xi/(xi+mi), log=TRUE))) # model has a NULL offset
+                  #ll.QE <- with(data.frame(dat.grp), sum(dpois(xi, xi, log=TRUE)))                 # offset not relevant for saturated model
+                  ll.QE  <- c(logLik(res.QE)) # same as above
+
+                  ### extract coefficients and variance-covariance matrix for Wald-type test for heterogeneity
+                  #b2.QE <- cbind(na.omit(coef(res.QE)[-seq_len(k+p)]))                          # coef() still includes aliased coefficients as NAs, so filter them out
+                  b2.QE  <- cbind(coef(res.QE, complete=FALSE)[-seq_len(k+p)])                   # aliased coefficients are removed by coef() when complete=FALSE
+                  vb2.QE <- vcov(res.QE, complete=FALSE)[-seq_len(k+p),-seq_len(k+p),drop=FALSE] # aliased coefficients are removed by vcov() when complete=FALSE
+
+               }
 
             }
 
             if (method == "ML") {
 
                ### fit ML model
-               ### notes: 1) not recommended alternative: using group1 instead of group12 for the random effect (since that forces the variance in group 2 to be lower)
 
                if (verbose)
                   message(mstyle$message("Fitting ML model ..."))
 
-               if (con$package == "lme4") {
+               if (package == "lme4") {
                   if (verbose) {
-                     res.ML <- try(lme4::glmer(dat.grp ~ -1 + X.fit + study + (group12 - 1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
+                     res.ML <- try(lme4::glmer(dat.grp ~ -1 + X.fit + study + (group - 1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
                   } else {
-                     res.ML <- suppressMessages(try(lme4::glmer(dat.grp ~ -1 + X.fit + study + (group12 - 1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose))
+                     res.ML <- suppressMessages(try(lme4::glmer(dat.grp ~ -1 + X.fit + study + (group - 1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose))
                   }
                }
 
-               if (con$package == "GLMMadaptive") {
+               if (package == "GLMMadaptive") {
                   if (measure == "OR") {
-                     dat.mm <- data.frame(xi=dat.grp[,"xi"], mi=dat.grp[,"mi"], study=study, group12=group12)
-                     res.ML <- try(GLMMadaptive::mixed_model(cbind(xi,mi) ~ -1 + X.fit + study, random = ~ group12 - 1 | study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=mmCtrl), silent=!verbose)
+                     dat.mm <- data.frame(xi=dat.grp[,"xi"], mi=dat.grp[,"mi"], study=study, group=group)
+                     res.ML <- try(GLMMadaptive::mixed_model(cbind(xi,mi) ~ -1 + X.fit + study, random = ~ group - 1 | study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=glmerCtrl), silent=!verbose)
                   } else {
-                     dat.mm <- data.frame(xi=dat.grp, study=study, group12=group12)
-                     res.ML <- try(GLMMadaptive::mixed_model(xi ~ -1 + X.fit + study + offset(dat.off), random = ~ group12 - 1 | study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=mmCtrl), silent=!verbose)
+                     dat.mm <- data.frame(xi=dat.grp, study=study, group=group)
+                     res.ML <- try(GLMMadaptive::mixed_model(xi ~ -1 + X.fit + study + offset(dat.off), random = ~ group - 1 | study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=glmerCtrl), silent=!verbose)
                   }
                }
 
-               #return(res.ML)
+               if (package == "glmmTMB") {
+                  if (verbose) {
+                     res.ML <- try(glmmTMB::glmmTMB(dat.grp ~ -1 + X.fit + study + (group - 1 | study), offset=dat.off, family=dat.fam, verbose=verbose, control=do.call(glmmTMB::glmmTMBControl, glmerCtrl)), silent=!verbose)
+                  } else {
+                     res.ML <- suppressMessages(try(glmmTMB::glmmTMB(dat.grp ~ -1 + X.fit + study + (group - 1 | study), offset=dat.off, family=dat.fam, verbose=verbose, control=do.call(glmmTMB::glmmTMBControl, glmerCtrl)), silent=!verbose))
+                  }
+               }
 
                if (inherits(res.ML, "try-error"))
                   stop(mstyle$stop("Cannot fit ML model."))
 
                ### log-likelihood
 
-               #ll.ML <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, fitted(res.ML), log=TRUE))) ### not correct (since it does not incorporate the random effects; same as ll.FE if tau^2=0)
-               #ll.ML <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, plogis(qlogis(fitted(res.ML)) + group12*unlist(ranef(res.ML))), log=TRUE))) ### not correct (since one really has to integrate; same as ll.FE if tau^2=0)
-               #ll.ML <- c(logLik(res.ML)) ### this is not the same as ll.FE when tau^2 = 0 (not sure why)
-               if (con$package == "lme4") {
-                  ll.ML <- ll.QE - 1/2 * deviance(res.ML) ### this makes ll.ML comparable to ll.FE (same as ll.FE when tau^2=0)
+               #ll.ML <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, fitted(res.ML), log=TRUE))) # not correct (since it does not incorporate the random effects; same as ll.FE if tau^2=0)
+               #ll.ML <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, plogis(qlogis(fitted(res.ML)) + group12*unlist(ranef(res.ML))), log=TRUE))) # not correct (since one really has to integrate; same as ll.FE if tau^2=0)
+               #ll.ML <- c(logLik(res.ML)) # this is not the same as ll.FE when tau^2 = 0 (not sure why)
+               if (package == "lme4") {
+                  if (is.na(ll.QE)) {
+                     ll.ML <- c(logLik(res.ML))
+                  } else {
+                     ll.ML <- ll.QE - 1/2 * deviance(res.ML) # this makes ll.ML comparable to ll.FE (same as ll.FE when tau^2=0)
+
+                  }
                } else {
-                  ### FIXME: When using GLMMadaptive, ll is not comparable for FE model when tau^2 = 0
-                  ll.ML <- c(logLik(res.ML))
+                  ll.ML <- c(logLik(res.ML)) # not 100% sure how comparable this is to ll.FE when tau^2 = 0 (seems correct for glmmTMB)
                }
             }
 
-            #return(list(res.FE, res.QE, ll.FE=ll.FE, ll.QE=ll.QE))
             #return(list(res.FE, res.QE, res.ML, ll.FE=ll.FE, ll.QE=ll.QE, ll.ML=ll.ML))
             #res.FE <- res[[1]]; res.QE <- res[[2]]; res.ML <- res[[3]]
 
@@ -983,16 +1054,22 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
             if (method == "ML") {
 
-               if (con$package == "lme4") {
+               if (package  == "lme4") {
                   beta   <- cbind(lme4::fixef(res.ML)[seq_len(p)])
                   vb     <- as.matrix(vcov(res.ML))[seq_len(p),seq_len(p),drop=FALSE]
                   tau2   <- lme4::VarCorr(res.ML)[[1]][1]
                }
 
-               if (con$package == "GLMMadaptive") {
+               if (package == "GLMMadaptive") {
                   beta   <- cbind(GLMMadaptive::fixef(res.ML)[seq_len(p)])
                   vb     <- as.matrix(vcov(res.ML))[seq_len(p),seq_len(p),drop=FALSE]
                   tau2   <- res.ML$D[1,1]
+               }
+
+               if (package  == "glmmTMB") {
+                  beta   <- cbind(glmmTMB::fixef(res.ML)$cond[seq_len(p)])
+                  vb     <- as.matrix(vcov(res.ML)$cond)[seq_len(p),seq_len(p),drop=FALSE]
+                  tau2   <- glmmTMB::VarCorr(res.ML)[[1]][[1]][[1]]
                }
 
                sigma2 <- NA
@@ -1019,7 +1096,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             if (verbose)
                message(mstyle$message("Fitting FE model ..."))
 
-            if (con$package == "lme4") {
+            if (package == "lme4") {
                if (verbose) {
                   res.FE <- try(lme4::glmer(dat.grp ~ -1 + X.fit + const + (1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
                } else {
@@ -1027,13 +1104,21 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                }
             }
 
-            if (con$package == "GLMMadaptive") {
+            if (package == "GLMMadaptive") {
                if (measure == "OR") {
                   dat.mm <- data.frame(xi=dat.grp[,"xi"], mi=dat.grp[,"mi"], study=study, const=const)
-                  res.FE <- try(GLMMadaptive::mixed_model(cbind(xi,mi) ~ -1 + X.fit + const, random = ~ 1 | study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=mmCtrl), silent=!verbose)
+                  res.FE <- try(GLMMadaptive::mixed_model(cbind(xi,mi) ~ -1 + X.fit + const, random = ~ 1 | study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=glmerCtrl), silent=!verbose)
                } else {
                   dat.mm <- data.frame(xi=dat.grp, study=study, const=const)
-                  res.FE <- try(GLMMadaptive::mixed_model(xi ~ -1 + X.fit + const + offset(dat.off), random = ~ 1 | study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=mmCtrl), silent=!verbose)
+                  res.FE <- try(GLMMadaptive::mixed_model(xi ~ -1 + X.fit + const + offset(dat.off), random = ~ 1 | study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=glmerCtrl), silent=!verbose)
+               }
+            }
+
+            if (package == "glmmTMB") {
+               if (verbose) {
+                  res.FE <- try(glmmTMB::glmmTMB(dat.grp ~ -1 + X.fit + const + (1 | study), offset=dat.off, family=dat.fam, verbose=verbose, control=do.call(glmmTMB::glmmTMBControl, glmerCtrl)), silent=!verbose)
+               } else {
+                  res.FE <- suppressMessages(try(glmmTMB::glmmTMB(dat.grp ~ -1 + X.fit + const + (1 | study), offset=dat.off, family=dat.fam, verbose=verbose, control=do.call(glmmTMB::glmmTMBControl, glmerCtrl)), silent=!verbose))
                }
             }
 
@@ -1045,66 +1130,84 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             ll.FE <- c(logLik(res.FE))
 
             ### fit saturated FE model (= QE model)
-            ### notes: 1) must figure out which terms are aliased in saturated model and remove those terms before fitting
-            ###        2) sigma^2 for the study random effect must be close to the one from the FE model - so set start value to sigma from that model
+            ### notes: 1) must remove aliased terms before fitting (for GLMMadaptive to work)
+            ###        2) use the sigma^2 value from the FE model as the starting value for the study-level random effect
 
-            if (verbose)
-               message(mstyle$message("Fitting saturated model ..."))
+            QEconv <- FALSE
+            ll.QE <- NA
 
-            if (k > 1) {
+            if (!isTRUE(ddd$skiphet)) {
 
-               X.QE <- model.matrix(~ -1 + X.fit + const + study:group1)
-               res.QE <- try(glm(dat.grp ~ -1 + X.QE, offset=dat.off, family=dat.fam, control=glmCtrl), silent=!verbose)
-               X.QE <- X.QE[,!is.na(coef(res.QE)),drop=FALSE]
+               if (verbose)
+                  message(mstyle$message("Fitting saturated model ..."))
 
-               if (con$package == "lme4") {
-                  if (verbose) {
-                     res.QE <- try(lme4::glmer(dat.grp ~ -1 + X.QE + (1 | study), offset=dat.off, family=dat.fam, start=c(sqrt(lme4::VarCorr(res.FE)[[1]][1])), nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
-                  } else {
-                     res.QE <- suppressMessages(try(lme4::glmer(dat.grp ~ -1 + X.QE + (1 | study), offset=dat.off, family=dat.fam, start=c(sqrt(lme4::VarCorr(res.FE)[[1]][1])), nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose))
+               if (k > 1) {
+
+                  X.QE   <- model.matrix(~ -1 + X.fit + const + study:group1)
+                  res.QE <- try(glm(dat.grp ~ -1 + X.QE, offset=dat.off, family=dat.fam, control=glmCtrl), silent=TRUE)
+                  X.QE   <- X.QE[,!is.na(coef(res.QE)),drop=FALSE]
+
+                  if (package == "lme4") {
+                     if (verbose) {
+                        res.QE <- try(lme4::glmer(dat.grp ~ -1 + X.QE + (1 | study), offset=dat.off, family=dat.fam, start=c(sqrt(lme4::VarCorr(res.FE)[[1]][1])), nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
+                     } else {
+                        res.QE <- suppressMessages(try(lme4::glmer(dat.grp ~ -1 + X.QE + (1 | study), offset=dat.off, family=dat.fam, start=c(sqrt(lme4::VarCorr(res.FE)[[1]][1])), nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose))
+                     }
                   }
-               }
 
-               if (con$package == "GLMMadaptive") {
-                  mmCtrl$max_coef_value <- 50
-                  if (measure == "OR") {
-                     dat.mm <- data.frame(xi=dat.grp[,"xi"], mi=dat.grp[,"mi"], study=study)
-                     res.QE <- try(GLMMadaptive::mixed_model(cbind(xi,mi) ~ -1 + X.QE, random = ~ 1 | study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=mmCtrl, initial_values=list(D=matrix(res.FE$D[1,1]))), silent=!verbose)
-                  } else {
-                     dat.mm <- data.frame(xi=dat.grp, study=study)
-                     res.QE <- try(GLMMadaptive::mixed_model(xi ~ -1 + X.QE + offset(dat.off), random = ~ 1 | study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=mmCtrl), silent=!verbose)
+                  if (package == "GLMMadaptive") {
+                     glmerCtrl$max_coef_value <- 50
+                     if (measure == "OR") {
+                        dat.mm <- data.frame(xi=dat.grp[,"xi"], mi=dat.grp[,"mi"], study=study)
+                        res.QE <- try(GLMMadaptive::mixed_model(cbind(xi,mi) ~ -1 + X.QE, random = ~ 1 | study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=glmerCtrl, initial_values=list(D=matrix(res.FE$D[1,1]))), silent=!verbose)
+                     } else {
+                        dat.mm <- data.frame(xi=dat.grp, study=study)
+                        res.QE <- try(GLMMadaptive::mixed_model(xi ~ -1 + X.QE + offset(dat.off), random = ~ 1 | study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=glmerCtrl), silent=!verbose)
+                     }
                   }
+
+                  if (package == "glmmTMB") {
+                     if (verbose) {
+                        res.QE <- try(glmmTMB::glmmTMB(dat.grp ~ -1 + X.QE + (1 | study), offset=dat.off, family=dat.fam, start=list(theta=sqrt(glmmTMB::VarCorr(res.FE)[[1]][[1]][[1]])), verbose=verbose, control=do.call(glmmTMB::glmmTMBControl, glmerCtrl)), silent=!verbose)
+                     } else {
+                        res.QE <- suppressMessages(try(glmmTMB::glmmTMB(dat.grp ~ -1 + X.QE + (1 | study), offset=dat.off, family=dat.fam, start=list(theta=sqrt(glmmTMB::VarCorr(res.FE)[[1]][[1]][[1]])), verbose=verbose, control=do.call(glmmTMB::glmmTMBControl, glmerCtrl)), silent=!verbose))
+                     }
+                  }
+
+               } else {
+                  res.QE <- res.FE
                }
 
-            } else {
-               res.QE <- res.FE
-            }
+               if (inherits(res.QE, "try-error")) {
 
-            if (inherits(res.QE, "try-error")) {
+                  warning(mstyle$warning("Cannot fit saturated model."), call.=FALSE)
 
-               warning(mstyle$warning("Cannot fit saturated model."), call.=FALSE)
-               QEconv <- FALSE
-               ll.QE <- NA
+               } else {
 
-            } else {
+                  QEconv <- TRUE
 
-               QEconv <- TRUE
+                  ### log-likelihood
 
-               ### log-likelihood
+                  ll.QE <- c(logLik(res.QE))
 
-               ll.QE <- c(logLik(res.QE))
+                  ### extract coefficients and variance-covariance matrix for Wald-type test for heterogeneity (aliased coefficients are already removed)
 
-               ### extract coefficients and variance-covariance matrix for Wald-type test for heterogeneity
+                  if (package == "lme4") {
+                     b2.QE  <- cbind(lme4::fixef(res.QE)[-seq_len(p+1)])
+                     vb2.QE <- as.matrix(vcov(res.QE))[-seq_len(p+1),-seq_len(p+1),drop=FALSE]
+                  }
 
-               if (con$package == "lme4") {
-                  b2.QE  <- cbind(lme4::fixef(res.QE)[-seq_len(p+1)])                       ### aliased coefficients are already removed
-                  vb2.QE <- as.matrix(vcov(res.QE))[-seq_len(p+1),-seq_len(p+1),drop=FALSE] ### aliased coefficients are already removed
-               }
+                  if (package == "GLMMadaptive") {
+                     b2.QE  <- cbind(GLMMadaptive::fixef(res.QE)[-seq_len(p+1)])
+                     vb2.QE <- as.matrix(vcov(res.QE))[-seq_len(p+1),-seq_len(p+1),drop=FALSE]
+                     vb2.QE <- vb2.QE[-nrow(vb2.QE), -ncol(vb2.QE)]
+                  }
 
-               if (con$package == "GLMMadaptive") {
-                  b2.QE  <- cbind(GLMMadaptive::fixef(res.QE)[-seq_len(p+1)])               ### aliased coefficients are already removed
-                  vb2.QE <- as.matrix(vcov(res.QE))[-seq_len(p+1),-seq_len(p+1),drop=FALSE] ### aliased coefficients are already removed
-                  vb2.QE <- vb2.QE[-nrow(vb2.QE), -ncol(vb2.QE)]
+                  if (package == "glmmTMB") {
+                     b2.QE  <- cbind(glmmTMB::fixef(res.QE)$cond[-seq_len(p+1)])
+                     vb2.QE <- as.matrix(vcov(res.QE)$cond)[-seq_len(p+1),-seq_len(p+1),drop=FALSE]
+                  }
+
                }
 
             }
@@ -1119,25 +1222,53 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                if (verbose)
                   message(mstyle$message("Fitting ML model ..."))
 
-               if (con$package == "lme4") {
+               if (package == "lme4") {
                   if (verbose) {
-                     res.ML <- try(lme4::glmer(dat.grp ~ -1 + X.fit + const + (1 | study) + (group12 - 1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
-                     #res.ML <- try(lme4::glmer(dat.grp ~ -1 + X.fit + const + (group1 | study),                   offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
-                     #return(res.ML)
+                     if (cor) {
+                        res.ML <- try(lme4::glmer(dat.grp ~ -1 + X.fit + const + (group | study),  offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
+                     } else {
+                        res.ML <- try(lme4::glmer(dat.grp ~ -1 + X.fit + const + (group || study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
+                     }
                   } else {
-                     res.ML <- suppressMessages(try(lme4::glmer(dat.grp ~ -1 + X.fit + const + (1 | study) + (group12 - 1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose))
-                     # this is identical to:
-                     #res.ML <- suppressMessages(try(lme4::glmer(dat.grp ~ -1 + X.fit + const + (1 + group12 || study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose))
+                     if (cor) {
+                        res.ML <- suppressMessages(try(lme4::glmer(dat.grp ~ -1 + X.fit + const + (group | study),  offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose))
+                     } else {
+                        res.ML <- suppressMessages(try(lme4::glmer(dat.grp ~ -1 + X.fit + const + (group || study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose))
+                     }
                   }
                }
 
-               if (con$package == "GLMMadaptive") {
+               if (package == "GLMMadaptive") {
                   if (measure == "OR") {
-                     dat.mm <- data.frame(xi=dat.grp[,"xi"], mi=dat.grp[,"mi"], study=study, const=const, group12=group12)
-                     res.ML <- try(GLMMadaptive::mixed_model(cbind(xi,mi) ~ -1 + X.fit + const, random = ~ 1 + group12 || study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=mmCtrl), silent=!verbose)
+                     dat.mm <- data.frame(xi=dat.grp[,"xi"], mi=dat.grp[,"mi"], study=study, const=const, group=group)
+                     if (cor) {
+                        res.ML <- try(GLMMadaptive::mixed_model(cbind(xi,mi) ~ -1 + X.fit + const, random = ~ group | study,  data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=glmerCtrl), silent=!verbose)
+                     } else {
+                        res.ML <- try(GLMMadaptive::mixed_model(cbind(xi,mi) ~ -1 + X.fit + const, random = ~ group || study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=glmerCtrl), silent=!verbose)
+                     }
                   } else {
-                     dat.mm <- data.frame(xi=dat.grp, study=study, const=const, group12=group12)
-                     res.ML <- try(GLMMadaptive::mixed_model(xi ~ -1 + X.fit + const + offset(dat.off), random = ~ 1 + group12 || study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=mmCtrl), silent=!verbose)
+                     dat.mm <- data.frame(xi=dat.grp, study=study, const=const, group=group)
+                     if (cor) {
+                        res.ML <- try(GLMMadaptive::mixed_model(xi ~ -1 + X.fit + const + offset(dat.off), random = ~ group | study,  data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=glmerCtrl), silent=!verbose)
+                     } else {
+                        res.ML <- try(GLMMadaptive::mixed_model(xi ~ -1 + X.fit + const + offset(dat.off), random = ~ group || study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=glmerCtrl), silent=!verbose)
+                     }
+                  }
+               }
+
+               if (package == "glmmTMB") {
+                  if (verbose) {
+                     if (cor) {
+                        res.ML <- try(glmmTMB::glmmTMB(dat.grp ~ -1 + X.fit + const + (group | study),                   offset=dat.off, family=dat.fam, verbose=verbose, control=do.call(glmmTMB::glmmTMBControl, glmerCtrl)), silent=!verbose)
+                     } else {
+                        res.ML <- try(glmmTMB::glmmTMB(dat.grp ~ -1 + X.fit + const + (1 | study) + (group - 1 | study), offset=dat.off, family=dat.fam, verbose=verbose, control=do.call(glmmTMB::glmmTMBControl, glmerCtrl)), silent=!verbose)
+                     }
+                  } else {
+                     if (cor) {
+                        res.ML <- suppressMessages(try(glmmTMB::glmmTMB(dat.grp ~ -1 + X.fit + const + (group | study),                   offset=dat.off, family=dat.fam, verbose=verbose, control=do.call(glmmTMB::glmmTMBControl, glmerCtrl)), silent=!verbose))
+                     } else {
+                        res.ML <- suppressMessages(try(glmmTMB::glmmTMB(dat.grp ~ -1 + X.fit + const + (1 | study) + (group - 1 | study), offset=dat.off, family=dat.fam, verbose=verbose, control=do.call(glmmTMB::glmmTMBControl, glmerCtrl)), silent=!verbose))
+                     }
                   }
                }
 
@@ -1155,18 +1286,24 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
             if (is.element(method, c("FE","EE","CE"))) {
 
-               if (con$package == "lme4") {
+               tau2 <- 0
+
+               if (package == "lme4") {
                   beta   <- cbind(lme4::fixef(res.FE)[seq_len(p)])
                   vb     <- as.matrix(vcov(res.FE))[seq_len(p),seq_len(p),drop=FALSE]
-                  tau2   <- 0
                   sigma2 <- lme4::VarCorr(res.FE)[[1]][1]
                }
 
-               if (con$package == "GLMMadaptive") {
+               if (package == "GLMMadaptive") {
                   beta   <- cbind(GLMMadaptive::fixef(res.FE)[seq_len(p)])
                   vb     <- as.matrix(vcov(res.FE))[seq_len(p),seq_len(p),drop=FALSE]
-                  tau2   <- 0
                   sigma2 <- res.FE$D[1,1]
+               }
+
+               if (package == "glmmTMB") {
+                  beta   <- cbind(glmmTMB::fixef(res.FE)$cond[seq_len(p)])
+                  vb     <- as.matrix(vcov(res.FE)$cond)[seq_len(p),seq_len(p),drop=FALSE]
+                  sigma2 <- glmmTMB::VarCorr(res.FE)[[1]][[1]][[1]]
                }
 
                parms  <- p + 1 + 1
@@ -1176,18 +1313,39 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
             if (method == "ML") {
 
-               if (con$package == "lme4") {
+               if (package == "lme4") {
                   beta   <- cbind(lme4::fixef(res.ML)[seq_len(p)])
                   vb     <- as.matrix(vcov(res.ML))[seq_len(p),seq_len(p),drop=FALSE]
-                  tau2   <- lme4::VarCorr(res.ML)[[2]][1]
-                  sigma2 <- lme4::VarCorr(res.ML)[[1]][1]
+                  if (cor) {
+                     tau2   <- lme4::VarCorr(res.ML)[[1]][2,2]
+                     sigma2 <- lme4::VarCorr(res.ML)[[1]][1,1]
+                     rho    <- lme4::VarCorr(res.ML)[[1]][1,2] / sqrt(tau2 * sigma2)
+                  } else {
+                     tau2   <- lme4::VarCorr(res.ML)[[2]][1]
+                     sigma2 <- lme4::VarCorr(res.ML)[[1]][1]
+                  }
                }
 
-               if (con$package == "GLMMadaptive") {
+               if (package == "GLMMadaptive") {
                   beta   <- cbind(GLMMadaptive::fixef(res.ML)[seq_len(p)])
                   vb     <- as.matrix(vcov(res.ML))[seq_len(p),seq_len(p),drop=FALSE]
                   tau2   <- res.ML$D[2,2]
                   sigma2 <- res.ML$D[1,1]
+                  if (cor)
+                     rho <- res.ML$D[1,2] / sqrt(tau2 * sigma2)
+               }
+
+               if (package == "glmmTMB") {
+                  beta   <- cbind(glmmTMB::fixef(res.ML)$cond[seq_len(p)])
+                  vb     <- as.matrix(vcov(res.ML)$cond)[seq_len(p),seq_len(p),drop=FALSE]
+                  if (cor) {
+                     tau2   <- glmmTMB::VarCorr(res.ML)[[1]][[1]][2,2]
+                     sigma2 <- glmmTMB::VarCorr(res.ML)[[1]][[1]][1,1]
+                     rho    <- glmmTMB::VarCorr(res.ML)[[1]][[1]][1,2] / sqrt(tau2 * sigma2)
+                  } else {
+                     tau2   <- glmmTMB::VarCorr(res.ML)[[1]][[2]][[1]]
+                     sigma2 <- glmmTMB::VarCorr(res.ML)[[1]][[1]][[1]]
+                  }
                }
 
                parms  <- p + 1 + 2
@@ -1211,16 +1369,16 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
          ### prepare data for the conditional models
 
          if (measure == "OR") {
-            dat.grp <- cbind(xi=ai, mi=ci)   ### conditional outcome data (number of cases in group 1 conditional on total number of cases)
-            dat.off <- log((ai+bi)/(ci+di))  ### log(n1i/n2i) for offset
+            dat.grp <- cbind(xi=ai, mi=ci)   # conditional outcome data (number of cases in group 1 conditional on total number of cases)
+            dat.off <- log((ai+bi)/(ci+di))  # log(n1i/n2i) for offset
          }
 
          if (measure == "IRR") {
-            dat.grp <- cbind(xi=x1i, mi=x2i) ### conditional outcome data (number of events in group 1 conditional on total number of events)
-            dat.off <- log(t1i/t2i)          ### log(t1i/t1i) for offset
+            dat.grp <- cbind(xi=x1i, mi=x2i) # conditional outcome data (number of events in group 1 conditional on total number of events)
+            dat.off <- log(t1i/t2i)          # log(t1i/t1i) for offset
          }
 
-         study <- factor(seq_len(k))         ### study factor
+         study <- factor(seq_len(k))         # study factor
          X.fit <- X
 
          if (.isTRUE(ddd$retdat))
@@ -1244,47 +1402,53 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
          ### log-likelihood
 
-         #ll.FE <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, predict(res.FE, type="response"), log=TRUE))) ### offset already incorporated into predict()
-         #ll.FE <- with(data.frame(dat.grp), sum(dpois(xi, predict(res.FE, type="response"), log=TRUE)))         ### offset already incorporated into predict()
-         ll.FE <- c(logLik(res.FE)) ### same as above
+         #ll.FE <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, predict(res.FE, type="response"), log=TRUE))) # offset already incorporated into predict()
+         #ll.FE <- with(data.frame(dat.grp), sum(dpois(xi, predict(res.FE, type="response"), log=TRUE)))         # offset already incorporated into predict()
+         ll.FE  <- c(logLik(res.FE)) # same as above
 
          ### fit saturated FE model (= QE model)
 
-         if (verbose)
-            message(mstyle$message("Fitting saturated model ..."))
+         QEconv <- FALSE
+         ll.QE <- NA
 
-         if (k > 1) {
-            X.QE <- model.matrix(~ -1 + X.fit + study)
-            res.QE <- try(glm(dat.grp ~ -1 + X.QE, offset=dat.off, family=binomial, control=glmCtrl), silent=!verbose)
-         } else {
-            res.QE <- res.FE
+         if (!isTRUE(ddd$skiphet)) {
+
+            if (verbose)
+               message(mstyle$message("Fitting saturated model ..."))
+
+            if (k > 1) {
+               X.QE   <- model.matrix(~ -1 + X.fit + study)
+               res.QE <- try(glm(dat.grp ~ -1 + X.QE, offset=dat.off, family=binomial, control=glmCtrl), silent=!verbose)
+            } else {
+               res.QE <- res.FE
+            }
+
+            if (inherits(res.QE, "try-error")) {
+
+               warning(mstyle$warning("Cannot fit saturated model."), call.=FALSE)
+
+            } else {
+
+               QEconv <- TRUE
+
+               ### log-likelihood
+
+               #ll.QE <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, xi/(xi+mi), log=TRUE))) # offset not relevant for saturated model
+               #ll.QE <- with(data.frame(dat.grp), sum(dpois(xi, xi, log=TRUE)))                 # offset not relevant for saturated model
+               ll.QE  <- c(logLik(res.QE)) # same as above
+
+               ### extract coefficients and variance-covariance matrix for Wald-type test for heterogeneity
+
+               #b2.QE <- cbind(na.omit(coef(res.QE)[-seq_len(p)]))                        # coef() still includes aliased coefficients as NAs, so filter them out
+               b2.QE  <- cbind(coef(res.QE, complete=FALSE)[-seq_len(p)])                 # aliased coefficients are removed by coef() when complete=FALSE
+               vb2.QE <- vcov(res.QE, complete=FALSE)[-seq_len(p),-seq_len(p),drop=FALSE] # aliased coefficients are removed by vcov() when complete=FALSE
+
+            }
+
+            #return(list(res.FE, res.QE, ll.FE, ll.QE))
+            #res.FE <- res[[1]]; res.QE <- res[[2]]
+
          }
-
-         if (inherits(res.QE, "try-error")) {
-
-            warning(mstyle$warning("Cannot fit saturated model."), call.=FALSE)
-            QEconv <- FALSE
-            ll.QE <- NA
-
-         } else {
-
-            QEconv <- TRUE
-
-            ### log-likelihood
-
-            #ll.QE  <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, xi/(xi+mi), log=TRUE))) ### offset not relevant for saturated model
-            #ll.QE  <- with(data.frame(dat.grp), sum(dpois(xi, xi, log=TRUE)))                 ### offset not relevant for saturated model
-            ll.QE  <- c(logLik(res.QE)) ### same as above
-
-            ### extract coefficients and variance-covariance matrix for Wald-type test for heterogeneity
-
-            b2.QE  <- cbind(na.omit(coef(res.QE)[-seq_len(p)])) ### coef() still includes aliased coefficients as NAs, so have to filter them out
-            vb2.QE <- vcov(res.QE, complete=FALSE)[-seq_len(p),-seq_len(p),drop=FALSE] ### aliased coefficients are removed by vcov() when complete=FALSE
-
-         }
-
-         #return(list(res.FE, res.QE, ll.FE, ll.QE))
-         #res.FE <- res[[1]]; res.QE <- res[[2]]
 
          if (method == "ML") {
 
@@ -1294,7 +1458,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             if (verbose)
                message(mstyle$message("Fitting ML model ..."))
 
-            if (con$package == "lme4") {
+            if (package == "lme4") {
                if (verbose) {
                   res.ML <- try(lme4::glmer(dat.grp ~ -1 + X.fit + (1 | study), offset=dat.off, family=binomial, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
                } else {
@@ -1302,9 +1466,17 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                }
             }
 
-            if (con$package == "GLMMadaptive") {
+            if (package == "GLMMadaptive") {
                dat.mm <- data.frame(xi=dat.grp[,"xi"], mi=dat.grp[,"mi"], study=study)
-               res.ML <- try(GLMMadaptive::mixed_model(cbind(xi,mi) ~ -1 + X.fit + offset(dat.off), random = ~ 1 | study, data=dat.mm, family=binomial, nAGQ=nAGQ, verbose=verbose, control=mmCtrl), silent=!verbose)
+               res.ML <- try(GLMMadaptive::mixed_model(cbind(xi,mi) ~ -1 + X.fit + offset(dat.off), random = ~ 1 | study, data=dat.mm, family=binomial, nAGQ=nAGQ, verbose=verbose, control=glmerCtrl), silent=!verbose)
+            }
+
+            if (package == "glmmTMB") {
+               if (verbose) {
+                  res.ML <- try(glmmTMB::glmmTMB(dat.grp ~ -1 + X.fit + (1 | study), offset=dat.off, family=binomial, verbose=verbose, control=do.call(glmmTMB::glmmTMBControl, glmerCtrl)), silent=!verbose)
+               } else {
+                  res.ML <- suppressMessages(try(glmmTMB::glmmTMB(dat.grp ~ -1 + X.fit + (1 | study), offset=dat.off, family=binomial, verbose=verbose, control=do.call(glmmTMB::glmmTMBControl, glmerCtrl)), silent=!verbose))
+               }
             }
 
             if (inherits(res.ML, "try-error"))
@@ -1312,16 +1484,18 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
             ### log-likelihood
 
-            if (con$package == "lme4") {
-               ll.ML <- ll.QE - 1/2 * deviance(res.ML) ### this makes ll.ML comparable to ll.FE (same as ll.FE when tau^2=0)
+            if (package == "lme4") {
+               if (is.na(ll.QE)) {
+                  ll.ML <- c(logLik(res.ML))
+               } else {
+                  ll.ML <- ll.QE - 1/2 * deviance(res.ML) # this makes ll.ML comparable to ll.FE (same as ll.FE when tau^2=0)
+               }
             } else {
-               ### FIXME: When using GLMMadaptive, ll is not comparable for FE model when tau^2 = 0
-               ll.ML <- c(logLik(res.ML))
+               ll.ML <- c(logLik(res.ML)) # not 100% sure how comparable this is to ll.FE when tau^2 = 0 (seems correct for glmmTMB)
             }
 
          }
 
-         #return(list(res.FE, res.QE, res.ML, ll.FE=ll.FE, ll.QE=ll.QE, ll.ML=ll.ML))
          #return(list(res.FE, res.QE, res.ML, ll.FE=ll.FE, ll.QE=ll.QE, ll.ML=ll.ML))
          #res.FE <- res[[1]]; res.QE <- res[[2]]; res.ML <- res[[3]]
 
@@ -1337,16 +1511,22 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
          if (method == "ML") {
 
-            if (con$package == "lme4") {
+            if (package == "lme4") {
                beta   <- cbind(lme4::fixef(res.ML)[seq_len(p)])
                vb     <- as.matrix(vcov(res.ML))[seq_len(p),seq_len(p),drop=FALSE]
                tau2   <- lme4::VarCorr(res.ML)[[1]][1]
             }
 
-            if (con$package == "GLMMadaptive") {
+            if (package == "GLMMadaptive") {
                beta   <- cbind(GLMMadaptive::fixef(res.ML)[seq_len(p)])
                vb     <- as.matrix(vcov(res.ML))[seq_len(p),seq_len(p),drop=FALSE]
                tau2   <- res.ML$D[1,1]
+            }
+
+            if (package == "glmmTMB") {
+               beta   <- cbind(glmmTMB::fixef(res.ML)$cond[seq_len(p)])
+               vb     <- as.matrix(vcov(res.ML)$cond)[seq_len(p),seq_len(p),drop=FALSE]
+               tau2   <- glmmTMB::VarCorr(res.ML)[[1]][[1]][[1]]
             }
 
             sigma2 <- NA
@@ -1371,35 +1551,141 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
          if (verbose)
             message(mstyle$message("Fitting FE model ..."))
 
-         if (con$optimizer == "optim" || con$optimizer == "nlminb" || con$optimizer == "minqa") {
+         if (is.element(optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","optimParallel"))) {
+
+            if (optimizer=="optim") {
+               par.arg <- "par"
+               ctrl.arg <- ", control=optCtrl"
+            }
+            if (optimizer=="nlminb") {
+               par.arg <- "start"
+               ctrl.arg <- ", control=optCtrl"
+            }
+            if (is.element(optimizer, c("uobyqa","newuoa","bobyqa"))) {
+               par.arg <- "par"
+               optimizer <- paste0("minqa::", optimizer) ### need to use this since loading nloptr masks bobyqa() and newuoa() functions
+               ctrl.arg <- ", control=optCtrl"
+            }
+            if (optimizer=="nloptr") {
+               par.arg <- "x0"
+               optimizer <- paste0("nloptr::nloptr") ### need to use this due to requireNamespace()
+               ctrl.arg <- ", opts=optCtrl"
+            }
+            if (optimizer=="nlm") {
+               par.arg <- "p"
+               ctrl.arg <- paste(names(optCtrl), unlist(optCtrl), sep="=", collapse=", ")
+               if (nchar(ctrl.arg) != 0L)
+                  ctrl.arg <- paste0(", ", ctrl.arg)
+            }
+            if (is.element(optimizer, c("hjk","nmk","mads"))) {
+               par.arg <- "par"
+               optimizer <- paste0("dfoptim::", optimizer) ### need to use this so that the optimizers can be found
+               ctrl.arg <- ", control=optCtrl"
+            }
+            if (optimizer=="ucminf") {
+               par.arg <- "par"
+               optimizer <- paste0("ucminf::ucminf") ### need to use this due to requireNamespace()
+               ctrl.arg <- ", control=optCtrl"
+            }
+            if (optimizer=="optimParallel") {
+
+               par.arg <- "par"
+               optimizer <- paste0("optimParallel::optimParallel") ### need to use this due to requireNamespace()
+               ctrl.arg <- ", control=optCtrl, parallel=parallel"
+
+               parallel$cl <- NULL
+
+               if (is.null(cl)) {
+
+                  ncpus <- as.integer(ncpus)
+
+                  if (ncpus < 1L)
+                     stop(mstyle$stop("Control argument 'ncpus' must be >= 1."))
+
+                  cl <- parallel::makePSOCKcluster(ncpus)
+                  on.exit(parallel::stopCluster(cl), add=TRUE)
+
+               } else {
+
+                  if (!inherits(cl, "SOCKcluster"))
+                     stop(mstyle$stop("Specified cluster is not of class 'SOCKcluster'."))
+
+               }
+
+               parallel$cl <- cl
+
+               if (is.null(parallel$forward))
+                  parallel$forward <- FALSE
+
+               if (is.null(parallel$loginfo)) {
+                  if (verbose) {
+                     parallel$loginfo <- TRUE
+                  } else {
+                     parallel$loginfo <- FALSE
+                  }
+               }
+
+            }
 
             ### fit FE model
             ### notes: 1) this routine uses direct optimization over the non-central hypergeometric distribution
-            ###        2) start values from CM.AL model and 0 for tau^2 (held at 0 during the optimization since random=FALSE)
-            ###        3) no integration for FE model, so intCtrl is not relevant
+            ###        2) start values from CM.AL model (res.FE) and tau^2=0 (random=FALSE)
+            ###        3) no integration needed for FE model, so intCtrl is not actually relevant
             ###        4) results can be sensitive to the scaling of moderators
 
-            if (con$optimizer == "optim") {
-               res.FE <- try(optim(par=c(coef(res.FE)[seq_len(p)], 0), .dnchg, method=con$optmethod, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=FALSE,
-                                   verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, control=optCtrl), silent=!verbose)
-            }
-            if (con$optimizer == "nlminb") {
-               res.FE <- try(nlminb(start=c(coef(res.FE)[seq_len(p)], 0), .dnchg, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=FALSE,
-                                    verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, control=optCtrl), silent=!verbose)
-            }
-            if (con$optimizer == "minqa") {
-               res.FE <- try(minqa(par=c(coef(res.FE)[seq_len(p)], 0), .dnchg, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=FALSE,
-                                   verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, control=optCtrl), silent=!verbose)
+            optcall <- paste(optimizer, "(", par.arg, "=c(coef(res.FE)[seq_len(p)], 0),
+               .dnchg, ", ifelse(optimizer=="optim", "method=optmethod, ", ""),
+               "ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=FALSE,
+               verbose=verbose, digits=digits,
+               dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, intCtrl=intCtrl", ctrl.arg, ")\n", sep="")
+
+            #return(optcall)
+
+            if (verbose) {
+               res.FE <- try(eval(parse(text=optcall)), silent=!verbose)
+            } else {
+               res.FE <- try(suppressWarnings(eval(parse(text=optcall))), silent=!verbose)
             }
 
-            if (con$optimizer == "optim" || con$optimizer == "nlminb") {
-               if (inherits(res.FE, "try-error") || res.FE$convergence != 0)
-                  stop(mstyle$stop("Cannot fit FE model."))
+            #return(res.FE)
+
+            if (optimizer == "optimParallel::optimParallel" && verbose) {
+               tmp <- capture.output(print(res.FE$loginfo))
+               .print.output(tmp, mstyle$verbose)
             }
-            if (con$optimizer == "minqa") {
-               if (inherits(res.FE, "try-error") || res.FE$ierr != 0)
-                  stop(mstyle$stop("Cannot fit FE model."))
+
+            if (inherits(res.FE, "try-error"))
+               stop(mstyle$stop("Cannot fit FE model. Use verbose=TRUE and see help(rma.glmm) for more details on the optimization routines."))
+
+            ### convergence checks
+
+            if (is.element(optimizer, c("optim","nlminb","dfoptim::hjk","dfoptim::nmk","optimParallel::optimParallel")) && res.FE$convergence != 0)
+               stop(mstyle$stop(paste0("Cannot fit FE model. Optimizer (", optimizer, ") did not achieve convergence (convergence = ", res.FE$convergence, ").")))
+
+            if (is.element(optimizer, c("dfoptim::mads")) && res.FE$convergence > optCtrl$tol)
+               stop(mstyle$stop(paste0("Cannot fit FE model. Optimizer (", optimizer, ") did not achieve convergence (convergence = ", res.FE$convergence, ").")))
+
+            if (is.element(optimizer, c("minqa::uobyqa","minqa::newuoa","minqa::bobyqa")) && res.FE$ierr != 0)
+               stop(mstyle$stop(paste0("Cannot fit FE model. Optimizer (", optimizer, ") did not achieve convergence (ierr = ", res.FE$ierr, ").")))
+
+            if (optimizer=="nloptr::nloptr" && !(res.FE$status >= 1 && res.FE$status <= 4))
+               stop(mstyle$stop(paste0("Cannot fit FE model. Optimizer (", optimizer, ") did not achieve convergence (status = ", res.FE$status, ").")))
+
+            if (optimizer=="ucminf::ucminf" && !(res.FE$convergence == 1 || res.FE$convergence == 2))
+               stop(mstyle$stop(paste0("Cannot fit FE model. Optimizer (", optimizer, ") did not achieve convergence (convergence = ", res.FE$convergence, ").")))
+
+            if (verbose > 2) {
+               cat("\n")
+               tmp <- capture.output(print(res.FE))
+               .print.output(tmp, mstyle$verbose)
             }
+
+            ### copy estimated values to 'par'
+
+            if (optimizer=="nloptr::nloptr")
+               res.FE$par <- res.FE$solution
+            if (optimizer=="nlm")
+               res.FE$par <- res.FE$estimate
 
             if (verbose > 1)
                message(mstyle$message("Computing Hessian ..."))
@@ -1409,56 +1695,104 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
             ### log-likelihood
 
-            if (con$optimizer == "optim")
+            if (is.element(optimizer, c("optim","dfoptim::hjk","dfoptim::nmk","dfoptim::mads","ucminf::ucminf","optimParallel::optimParallel")))
                ll.FE <- -1 * res.FE$value
-            if (con$optimizer == "nlminb")
+            if (is.element(optimizer, c("nlminb","nloptr::nloptr")))
                ll.FE <- -1 * res.FE$objective
-            if (con$optimizer == "minqa")
+            if (is.element(optimizer, c("minqa::uobyqa","minqa::newuoa","minqa::bobyqa")))
                ll.FE <- -1 * res.FE$fval
+            if (optimizer == "nlm")
+               ll.FE <- -1 * res.FE$minimum
 
             ### fit saturated FE model (= QE model)
             ### notes: 1) must figure out which terms are aliased in saturated model and remove those terms before fitting
-            ###        2) start values from CM.AL model and 0 for tau^2 (held at 0 during the optimization since random=FALSE)
-            ###        3) therefore only try to fit saturated model if this was possible with CM.AL
-            ###        4) no integration for FE model, so intCtrl is not relevant
+            ###        2) start values from CM.AL model (res.QE) and tau^2=0 (random=FALSE)
+            ###        3) so only try to fit saturated model if this was possible with CM.AL
+            ###        4) no integration needed for FE model, so intCtrl is not relevant
 
-            if (QEconv) {
+            if (QEconv) { # QEconv is FALSE when skiphet=TRUE so this then also gets skipped automatically
 
                if (verbose)
                   message(mstyle$message("Fitting saturated model ..."))
 
                if (k > 1) {
 
-                  is.aliased <- is.na(coef(res.QE))
-                  X.QE <- X.QE[,!is.aliased,drop=FALSE] ### res.QE is from CM.AL model
+                  b.QE <- coef(res.QE, complete=TRUE) # res.QE is from CM.AL model
+                  is.aliased <- is.na(b.QE)
+                  b.QE <- b.QE[!is.aliased]
+                  X.QE <- X.QE[,!is.aliased,drop=FALSE]
 
-                  if (con$optimizer == "optim") {
-                     res.QE <- try(optim(par=c(coef(res.QE)[!is.aliased], 0), .dnchg, method=con$optmethod, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.QE, random=FALSE,
-                                         verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, control=optCtrl), silent=!verbose)
-                  }
-                  if (con$optimizer == "nlminb") {
-                     res.QE <- try(nlminb(start=c(coef(res.QE)[!is.aliased], 0), .dnchg, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.QE, random=FALSE,
-                                          verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, control=optCtrl), silent=!verbose)
-                  }
-                  if (con$optimizer == "minqa") {
-                     res.QE <- try(minqa(par=c(coef(res.QE)[!is.aliased], 0), .dnchg, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.QE, random=FALSE,
-                                         verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, control=optCtrl), silent=!verbose)
+                  optcall <- paste(optimizer, "(", par.arg, "=c(b.QE, 0),
+                     .dnchg, ", ifelse(optimizer=="optim", "method=optmethod, ", ""),
+                     "ai=ai, bi=bi, ci=ci, di=di, X.fit=X.QE, random=FALSE,
+                     verbose=verbose, digits=digits,
+                     dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, intCtrl=intCtrl", ctrl.arg, ")\n", sep="")
+
+                  #return(optcall)
+
+                  if (verbose) {
+                     res.QE <- try(eval(parse(text=optcall)), silent=!verbose)
+                  } else {
+                     res.QE <- try(suppressWarnings(eval(parse(text=optcall))), silent=!verbose)
                   }
 
-                  if (con$optimizer == "optim" || con$optimizer == "nlminb") {
-                     if (inherits(res.QE, "try-error") || res.QE$convergence != 0) {
-                        warning(mstyle$warning("Cannot fit saturated model."), call.=FALSE)
-                        QEconv <- FALSE
-                        ll.QE <- NA
-                     }
+                  #return(res.QE)
+
+                  if (optimizer == "optimParallel::optimParallel" && verbose) {
+                     tmp <- capture.output(print(res.QE$loginfo))
+                     .print.output(tmp, mstyle$verbose)
                   }
-                  if (con$optimizer == "minqa") {
-                     if (inherits(res.QE, "try-error") || res.QE$ierr != 0) {
-                        warning(mstyle$warning("Cannot fit saturated model."), call.=FALSE)
-                        QEconv <- FALSE
-                        ll.QE <- NA
-                     }
+
+                  if (inherits(res.QE, "try-error")) {
+                     warning(mstyle$warning("Cannot fit saturated model. Use verbose=TRUE and see help(rma.glmm) for more details on the optimization routines."), call.=FALSE)
+                     QEconv <- FALSE
+                     ll.QE <- NA
                   }
+
+                  ### convergence checks
+
+                  if (QEconv && is.element(optimizer, c("optim","nlminb","dfoptim::hjk","dfoptim::nmk","optimParallel::optimParallel")) && res.QE$convergence != 0) {
+                     warning(mstyle$warning(paste0("Cannot fit saturated model. Optimizer (", optimizer, ") did not achieve convergence (convergence = ", res.QE$convergence, ").")), call.=FALSE)
+                     QEconv <- FALSE
+                     ll.QE <- NA
+                  }
+
+                  if (QEconv && is.element(optimizer, c("dfoptim::mads")) && res.QE$convergence > optCtrl$tol) {
+                     warning(mstyle$warning(paste0("Cannot fit saturated model. Optimizer (", optimizer, ") did not achieve convergence (convergence = ", res.QE$convergence, ").")), call.=FALSE)
+                     QEconv <- FALSE
+                     ll.QE <- NA
+                  }
+
+                  if (QEconv && is.element(optimizer, c("minqa::uobyqa","minqa::newuoa","minqa::bobyqa")) && res.QE$ierr != 0) {
+                     warning(mstyle$warning(paste0("Cannot fit saturated model. Optimizer (", optimizer, ") did not achieve convergence (ierr = ", res.QE$ierr, ").")), call.=FALSE)
+                     QEconv <- FALSE
+                     ll.QE <- NA
+                  }
+
+                  if (QEconv && optimizer=="nloptr::nloptr" && !(res.QE$status >= 1 && res.QE$status <= 4)) {
+                     warning(mstyle$warning(paste0("Cannot fit saturated model. Optimizer (", optimizer, ") did not achieve convergence (status = ", res.QE$status, ").")), call.=FALSE)
+                     QEconv <- FALSE
+                     ll.QE <- NA
+                  }
+
+                  if (QEconv && optimizer=="ucminf::ucminf" && !(res.QE$convergence == 1 || res.QE$convergence == 2)) {
+                     warning(mstyle$warning(paste0("Cannot fit saturated model. Optimizer (", optimizer, ") did not achieve convergence (convergence = ", res.QE$convergence, ").")), call.=FALSE)
+                     QEconv <- FALSE
+                     ll.QE <- NA
+                  }
+
+                  if (verbose > 2) {
+                     cat("\n")
+                     tmp <- capture.output(print(res.QE))
+                     .print.output(tmp, mstyle$verbose)
+                  }
+
+                  ### copy estimated values to 'par'
+
+                  if (QEconv && optimizer=="nloptr::nloptr")
+                     res.QE$par <- res.QE$solution
+                  if (QEconv && optimizer=="nlm")
+                     res.QE$par <- res.QE$estimate
 
                   if (QEconv) {
                      if (verbose > 1)
@@ -1479,48 +1813,50 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
                ### log-likelihood
 
-               if (con$optimizer == "optim")
+               if (is.element(optimizer, c("optim","dfoptim::hjk","dfoptim::nmk","dfoptim::mads","ucminf::ucminf","optimParallel::optimParallel")))
                   ll.QE <- -1 * res.QE$value
-               if (con$optimizer == "nlminb")
+               if (is.element(optimizer, c("nlminb","nloptr::nloptr")))
                   ll.QE <- -1 * res.QE$objective
-               if (con$optimizer == "minqa")
+               if (is.element(optimizer, c("minqa::uobyqa","minqa::newuoa","minqa::bobyqa")))
                   ll.QE <- -1 * res.QE$fval
+               if (optimizer == "nlm")
+                  ll.QE <- -1 * res.QE$minimum
 
                ### extract coefficients and variance-covariance matrix for Wald-type test for heterogeneity
 
                #return(res.QE)
-               b2.QE    <- res.QE$par                                  ### recall: aliased coefficients are already removed
-               hessian  <- h.QE                                        ### take hessian from hessian() (again, aliased coefs are already removed)
-               #hessian <- res.QE$hessian                              ### take hessian from optim() (again, aliased coefs are already removed)
-               p.QE     <- length(b2.QE)                               ### how many parameters are left in saturated model?
-               b2.QE    <- b2.QE[-p.QE]                                ### remove last element (for tau^2, constrained to 0)
-               hessian  <- hessian[-p.QE,-p.QE,drop=FALSE]             ### remove last row/column (for tau^2, constrained to 0)
-               p.QE     <- length(b2.QE)                               ### how many parameters are now left?
-               is.0     <- colSums(hessian == 0L) == p.QE              ### any columns in hessian entirely composed of 0s?
-               b2.QE    <- b2.QE[!is.0]                                ### keep coefficients where this is not the case
-               hessian  <- hessian[!is.0,!is.0,drop=FALSE]             ### keep parts of hessian where this is not the case
-               b2.QE    <- cbind(b2.QE[-seq_len(p)])                   ### remove first p coefficients
-               h.A      <- hessian[seq_len(p),seq_len(p),drop=FALSE]   ### upper left part of hessian
-               h.B      <- hessian[seq_len(p),-seq_len(p),drop=FALSE]  ### upper right part of hessian
-               h.C      <- hessian[-seq_len(p),seq_len(p),drop=FALSE]  ### lower left part of hessian
-               h.D      <- hessian[-seq_len(p),-seq_len(p),drop=FALSE] ### lower right part of hessian (of which we need the inverse)
-               chol.h.A <- try(chol(h.A), silent=!verbose)             ### see if h.A can be inverted with chol()
+               b2.QE    <- res.QE$par                                  # recall: aliased coefficients are already removed
+               hessian  <- h.QE                                        # take hessian from hessian() (again, aliased coefs are already removed)
+               #hessian <- res.QE$hessian                              # take hessian from optim() (again, aliased coefs are already removed)
+               p.QE     <- length(b2.QE)                               # how many parameters are left in saturated model?
+               b2.QE    <- b2.QE[-p.QE]                                # remove last element (for tau^2, constrained to 0)
+               hessian  <- hessian[-p.QE,-p.QE,drop=FALSE]             # remove last row/column (for tau^2, constrained to 0)
+               p.QE     <- length(b2.QE)                               # how many parameters are now left?
+               is.0     <- colSums(hessian == 0L) == p.QE              # any columns in hessian entirely composed of 0s?
+               b2.QE    <- b2.QE[!is.0]                                # keep coefficients where this is not the case
+               hessian  <- hessian[!is.0,!is.0,drop=FALSE]             # keep parts of hessian where this is not the case
+               b2.QE    <- cbind(b2.QE[-seq_len(p)])                   # remove first p coefficients
+               h.A      <- hessian[seq_len(p),seq_len(p),drop=FALSE]   # upper left part of hessian
+               h.B      <- hessian[seq_len(p),-seq_len(p),drop=FALSE]  # upper right part of hessian
+               h.C      <- hessian[-seq_len(p),seq_len(p),drop=FALSE]  # lower left part of hessian
+               h.D      <- hessian[-seq_len(p),-seq_len(p),drop=FALSE] # lower right part of hessian (of which we need the inverse)
+               chol.h.A <- try(chol(h.A), silent=!verbose)             # see if h.A can be inverted with chol()
                if (inherits(chol.h.A, "try-error")) {
                   warning(mstyle$warning("Cannot invert Hessian for saturated model."), call.=FALSE)
                   QE.Wld <- NA
                } else {
-                  Ivb2.QE  <- h.D-h.C%*%chol2inv(chol.h.A)%*%h.B       ### inverse of the inverse of the lower right part
-                  QE.Wld   <- c(t(b2.QE) %*% Ivb2.QE %*% b2.QE)        ### Wald statistic (note: this approach only requires taking the inverse of h.A)
-               }                                                       ### see: https://en.wikipedia.org/wiki/Invertible_matrix#Blockwise_inversion
+                  Ivb2.QE  <- h.D-h.C%*%chol2inv(chol.h.A)%*%h.B       # inverse of the inverse of the lower right part
+                  QE.Wld   <- c(t(b2.QE) %*% Ivb2.QE %*% b2.QE)        # Wald statistic (note: this approach only requires taking the inverse of h.A)
+               }                                                       # see: https://en.wikipedia.org/wiki/Invertible_matrix#Blockwise_inversion
 
-               #vb2.QE <- chol2inv(chol(hessian))[-seq_len(p),-seq_len(p),drop=FALSE] ### take inverse, then take part relevant for QE test
+               #vb2.QE <- chol2inv(chol(hessian))[-seq_len(p),-seq_len(p),drop=FALSE] # take inverse, then take part relevant for QE test
                #QE.Wld <- c(t(b2.QE) %*% chol2inv(chol(vb2.QE)) %*% b2.QE)
 
             }
 
          }
 
-         if (con$optimizer == "clogit" || con$optimizer == "clogistic") {
+         if (is.element(optimizer, c("clogit","clogistic"))) {
 
             ### fit FE model
             ### notes: 1) this routine uses either clogit() from the survival package or clogistic() from the Epi package
@@ -1529,27 +1865,28 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             ###        4) for larger datasets, run time is often excessive (and may essentially freeze R)
             ###        5) suppressMessages for clogit() to suppress the 'beta may be infinite' warning
 
-            ### prepare IPD dataset                                                                                                      ###                   study  event  group1  intrcpt  moderator
-                                                                                                                                         ###                   i      1      1       1        x1i       (repeated ai times)
-            event   <- unlist(lapply(seq_len(k), function(i) c(rep.int(1,ai[i]), rep.int(0,bi[i]), rep.int(1,ci[i]), rep.int(0,di[i])))) ### event dummy       i      0      1       1        x1i       (repeated bi times)
-            group1  <- unlist(lapply(seq_len(k), function(i) c(rep.int(1,ai[i]), rep.int(1,bi[i]), rep.int(0,ci[i]), rep.int(0,di[i])))) ### group1 dummy      i      1      0       0        0         (repeated ci times)
-            study.l <- factor(rep(seq_len(k), times=ni))        ### study factor                                                                               i      0      0       0        0         (repeated di times)
-            X.fit.l <- X[rep(seq_len(k), times=ni),,drop=FALSE] ### repeat each row in X ni times each
-            X.fit.l <- cbind(group1*X.fit.l)                    ### multiply by group1 dummy (including intercept, which becomes the group1 dummy)
+            ### prepare IPD dataset                                                                                                      #                   study  event  group1  intrcpt  moderator
+                                                                                                                                         #                   i      1      1       1        x1i       (repeated ai times)
+            event   <- unlist(lapply(seq_len(k), function(i) c(rep.int(1,ai[i]), rep.int(0,bi[i]), rep.int(1,ci[i]), rep.int(0,di[i])))) # event dummy       i      0      1       1        x1i       (repeated bi times)
+            group1  <- unlist(lapply(seq_len(k), function(i) c(rep.int(1,ai[i]), rep.int(1,bi[i]), rep.int(0,ci[i]), rep.int(0,di[i])))) # group1 dummy      i      1      0       0        0         (repeated ci times)
+            study.l <- factor(rep(seq_len(k), times=ni))        # study factor                                                                               i      0      0       0        0         (repeated di times)
+            X.fit.l <- X[rep(seq_len(k), times=ni),,drop=FALSE] # repeat each row in X ni times each
+            X.fit.l <- cbind(group1*X.fit.l)                    # multiply by group1 dummy (including intercept, which becomes the group1 dummy)
             const   <- rep(1,length(event))
 
-            #return(data.frame(event, group1, study.l, X.fit.l, const))
+            if (.isTRUE(ddd$retdat))
+               return(data.frame(event, group1, study.l, X.fit.l, const))
 
             ### fit FE model
 
             if (k > 1) {
 
-               if (con$optimizer == "clogit") {
+               if (optimizer == "clogit") {
                   args.clogit <- clogitCtrl
                   args.clogit$formula <- event ~ X.fit.l + strata(study.l)
-                  res.FE <- try(do.call(survival::clogit, args.clogit), silent=!verbose)
+                  res.FE <- try(do.call(clogit, args.clogit), silent=!verbose)
                }
-               if (con$optimizer == "clogistic") {
+               if (optimizer == "clogistic") {
                   args.clogistic <- clogisticCtrl
                   args.clogistic$formula <- event ~ X.fit.l
                   args.clogistic$strata <- study.l
@@ -1557,57 +1894,61 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                }
 
             } else {
-               stop(mstyle$stop(paste0("Cannot use '", con$optimizer, "' optimizer when k=1.")))
+               stop(mstyle$stop(paste0("Cannot use '", optimizer, "' optimizer when k=1.")))
             }
 
             if (inherits(res.FE, "try-error"))
                stop(mstyle$stop("Cannot fit FE model."))
-
-            #return(res.FE)
 
             ### fit saturated FE model (= QE model)
             ### notes: 1) must figure out which terms are aliased in saturated model and remove those terms before fitting
             ###        2) fixed effects part does not include 'study' factor, since this is incorporated into the strata
             ###        3) however, for calculating the log likelihood, we need to go back to the conditional data, so we need to reconstruct X.QE (the study.l:group1 coefficients are the study coefficients)
 
-            if (verbose)
-               message(mstyle$message("Fitting saturated model ..."))
+            if (QEconv) { # QEconv is FALSE when skiphet=TRUE so this then also gets skipped automatically
 
-            X.QE.l <- model.matrix(~ -1 + X.fit.l + study.l:group1)
-            X.QE.l <- X.QE.l[,!is.na(coef(res.QE)),drop=FALSE]
-            X.QE   <- X.QE[,!is.na(coef(res.QE)),drop=FALSE]
+               if (verbose)
+                  message(mstyle$message("Fitting saturated model ..."))
 
-            if (con$optimizer == "clogit") {
-               args.clogit <- clogitCtrl
-               args.clogit$formula <- event ~ X.QE.l + strata(study.l)
-               if (verbose) {
-                  res.QE <- try(do.call(survival::clogit, args.clogit), silent=!verbose)
-               } else {
-                  res.QE <- try(suppressWarnings(do.call(survival::clogit, args.clogit)), silent=!verbose)
+               b.QE <- coef(res.QE, complete=TRUE) # res.QE is from CM.AL model
+               is.aliased <- is.na(b.QE)
+
+               X.QE.l <- model.matrix(~ -1 + X.fit.l + study.l:group1)
+               X.QE.l <- X.QE.l[,!is.aliased,drop=FALSE]
+               X.QE   <- X.QE[,!is.aliased,drop=FALSE]
+
+               if (optimizer == "clogit") {
+                  args.clogit <- clogitCtrl
+                  args.clogit$formula <- event ~ X.QE.l + strata(study.l)
+                  #args.clogit$method <- "efron" # c("exact", "approximate", "efron", "breslow")
+                  if (verbose) {
+                     res.QE <- try(do.call(clogit, args.clogit), silent=!verbose)
+                  } else {
+                     res.QE <- try(suppressWarnings(do.call(clogit, args.clogit)), silent=!verbose)
+                  }
                }
+
+               if (optimizer == "clogistic") {
+                  args.clogistic <- clogisticCtrl
+                  args.clogistic$formula <- event ~ X.QE.l
+                  args.clogistic$strata <- study.l
+                  res.QE <- try(do.call(Epi::clogistic, args.clogistic), silent=!verbose)
+               }
+
+               if (inherits(res.QE, "try-error"))
+                  stop(mstyle$stop("Cannot fit saturated model."))
+
+               ### log-likelihood
+
+               ll.FE <- -1 * .dnchg(c(cbind(coef(res.FE)),0), ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=FALSE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec)
+               ll.QE <- -1 * .dnchg(c(cbind(coef(res.QE)),0), ai=ai, bi=bi, ci=ci, di=di, X.fit=X.QE,  random=FALSE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec)
+
+               ### extract coefficients and variance-covariance matrix for Wald-type test for heterogeneity
+
+               b2.QE  <- cbind(coef(res.QE)[-seq_len(p)])                 # aliased coefficients are already removed
+               vb2.QE <- vcov(res.QE)[-seq_len(p),-seq_len(p),drop=FALSE] # aliased coefficients are already removed
+
             }
-
-            if (con$optimizer == "clogistic") {
-               args.clogistic <- clogisticCtrl
-               args.clogistic$formula <- event ~ X.QE.l
-               args.clogistic$strata <- study.l
-               res.QE <- try(do.call(Epi::clogistic, args.clogistic), silent=!verbose)
-            }
-
-            if (inherits(res.QE, "try-error"))
-               stop(mstyle$stop("Cannot fit saturated model."))
-
-            #return(res.QE)
-
-            ### log-likelihood
-
-            ll.FE <- -1 * .dnchg(c(cbind(coef(res.FE)),0), ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=FALSE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec)
-            ll.QE <- -1 * .dnchg(c(cbind(coef(res.QE)),0), ai=ai, bi=bi, ci=ci, di=di, X.fit=X.QE,  random=FALSE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec)
-
-            ### extract coefficients and variance-covariance matrix for Wald-type test for heterogeneity
-
-            b2.QE  <- cbind(coef(res.QE)[-seq_len(p)])                 ### aliased coefficients are already removed
-            vb2.QE <- vcov(res.QE)[-seq_len(p),-seq_len(p),drop=FALSE] ### aliased coefficients are already removed
 
          }
 
@@ -1618,35 +1959,67 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
             ### fit ML model
             ### notes: 1) cannot use clogit() or clogistic() for this (do not allow for the addition of random effects)
-            ###        2) mclogit() from mclogit package may be an alternative (but it only provides PQL method)
-            ###        3) start values from CM.AL model (add .001 to tau^2 estimate, in case estimate of tau^2 is 0)
+            ###        2) mclogit() from mclogit package may be an alternative (but it only provides a PQL method)
+            ###        3) start values from CM.AL model (add .01 to tau^2 estimate, in case estimate of tau^2 is 0)
             ###        4) optimization involves integration, so intCtrl is relevant
             ###        5) results can be sensitive to the scaling of moderators
 
             if (verbose)
                message(mstyle$message("Fitting ML model ..."))
 
-            if (con$optimizer == "optim") {
-               res.ML <- try(optim(par=c(beta, log(tau2+.001)), .dnchg, method=con$optmethod, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=TRUE,
-                                   verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, intCtrl=intCtrl, control=optCtrl), silent=!verbose)
-            }
-            if (con$optimizer == "nlminb") {
-               res.ML <- try(nlminb(start=c(beta, log(tau2+.001)), .dnchg, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=TRUE,
-                                    verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, intCtrl=intCtrl, control=optCtrl), silent=!verbose)
-            }
-            if (con$optimizer == "minqa") {
-               res.ML <- try(minqa(par=c(beta, log(tau2+.001)), .dnchg, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=TRUE,
-                                   verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, intCtrl=intCtrl, control=optCtrl), silent=!verbose)
+            optcall <- paste(optimizer, "(", par.arg, "=c(beta, log(tau2+.01)),
+               .dnchg, ", ifelse(optimizer=="optim", "method=optmethod, ", ""),
+               "ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=TRUE,
+               verbose=verbose, digits=digits,
+               dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, intCtrl=intCtrl", ctrl.arg, ")\n", sep="")
+
+            #return(optcall)
+
+            if (verbose) {
+               res.ML <- try(eval(parse(text=optcall)), silent=!verbose)
+            } else {
+               res.ML <- try(suppressWarnings(eval(parse(text=optcall))), silent=!verbose)
             }
 
-            if (con$optimizer == "optim" || con$optimizer == "nlminb") {
-               if (inherits(res.ML, "try-error") || res.ML$convergence != 0)
-                  stop(mstyle$stop("Cannot fit ML model."))
+            #return(res.ML)
+
+            if (optimizer == "optimParallel::optimParallel" && verbose) {
+               tmp <- capture.output(print(res.ML$loginfo))
+               .print.output(tmp, mstyle$verbose)
             }
-            if (con$optimizer == "minqa") {
-               if (inherits(res.ML, "try-error") || res.ML$ierr != 0)
-                  stop(mstyle$stop("Cannot fit ML model."))
+
+            if (inherits(res.ML, "try-error"))
+               stop(mstyle$stop("Cannot fit ML model. Use verbose=TRUE and see help(rma.glmm) for more details on the optimization routines."))
+
+            ### convergence checks
+
+            if (is.element(optimizer, c("optim","nlminb","dfoptim::hjk","dfoptim::nmk","optimParallel::optimParallel")) && res.ML$convergence != 0)
+               stop(mstyle$stop(paste0("Cannot fit ML model. Optimizer (", optimizer, ") did not achieve convergence (convergence = ", res.ML$convergence, ").")))
+
+            if (is.element(optimizer, c("dfoptim::mads")) && res.ML$convergence > optCtrl$tol)
+               stop(mstyle$stop(paste0("Cannot fit ML model. Optimizer (", optimizer, ") did not achieve convergence (convergence = ", res.ML$convergence, ").")))
+
+            if (is.element(optimizer, c("minqa::uobyqa","minqa::newuoa","minqa::bobyqa")) && res.ML$ierr != 0)
+               stop(mstyle$stop(paste0("Cannot fit ML model. Optimizer (", optimizer, ") did not achieve convergence (ierr = ", res.ML$ierr, ").")))
+
+            if (optimizer=="nloptr::nloptr" && !(res.ML$status >= 1 && res.ML$status <= 4))
+               stop(mstyle$stop(paste0("Cannot fit ML model. Optimizer (", optimizer, ") did not achieve convergence (status = ", res.ML$status, ").")))
+
+            if (optimizer=="ucminf::ucminf" && !(res.ML$convergence == 1 || res.ML$convergence == 2))
+               stop(mstyle$stop(paste0("Cannot fit ML model. Optimizer (", optimizer, ") did not achieve convergence (convergence = ", res.ML$convergence, ").")))
+
+            if (verbose > 2) {
+               cat("\n")
+               tmp <- capture.output(print(res.ML))
+               .print.output(tmp, mstyle$verbose)
             }
+
+            ### copy estimated values to 'par'
+
+            if (optimizer=="nloptr::nloptr")
+               res.ML$par <- res.ML$solution
+            if (optimizer=="nlm")
+               res.ML$par <- res.ML$estimate
 
             if (verbose > 1)
                message(mstyle$message("Computing Hessian ..."))
@@ -1656,12 +2029,14 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
             ### log-likelihood
 
-            if (con$optimizer == "optim")
+            if (is.element(optimizer, c("optim","dfoptim::hjk","dfoptim::nmk","dfoptim::mads","ucminf::ucminf","optimParallel::optimParallel")))
                ll.ML <- -1 * res.ML$value
-            if (con$optimizer == "nlminb")
+            if (is.element(optimizer, c("nlminb","nloptr::nloptr")))
                ll.ML <- -1 * res.ML$objective
-            if (con$optimizer == "minqa")
+            if (is.element(optimizer, c("minqa::uobyqa","minqa::newuoa","minqa::bobyqa")))
                ll.ML <- -1 * res.ML$fval
+            if (optimizer == "nlm")
+               ll.ML <- -1 * res.ML$minimum
 
          }
 
@@ -1669,19 +2044,19 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
          #res.FE <- res[[1]]; res.QE <- res[[2]]; res.ML <- res[[3]]
 
          if (is.element(method, c("FE","EE","CE"))) {
-            if (con$optimizer == "optim" || con$optimizer == "nlminb" || con$optimizer == "minqa") {
+            if (!is.element(optimizer, c("clogit","clogistic"))) {
                beta <- cbind(res.FE$par[seq_len(p)])
-               chol.h <- try(chol(h.FE[seq_len(p),seq_len(p)]), silent=!verbose) ### see if Hessian can be inverted with chol()
+               chol.h <- try(chol(h.FE[seq_len(p),seq_len(p)]), silent=!verbose)    # see if Hessian can be inverted with chol()
                if (inherits(chol.h, "try-error")) {
                   warning(mstyle$warning("Choleski factorization of Hessian failed. Trying inversion via QR decomposition."), call.=FALSE)
-                  vb <- try(qr.solve(h.FE[seq_len(p),seq_len(p)]), silent=!verbose) ### see if Hessian can be inverted with qr.solve()
+                  vb <- try(qr.solve(h.FE[seq_len(p),seq_len(p)]), silent=!verbose) # see if Hessian can be inverted with qr.solve()
                   if (inherits(vb, "try-error"))
                      stop(mstyle$stop("Cannot invert Hessian for ML model."))
                } else {
                   vb <- chol2inv(chol.h)
                }
             }
-            if (con$optimizer == "clogit" || con$optimizer == "clogistic") {
+            if (is.element(optimizer, c("clogit","clogistic"))) {
                beta <- cbind(coef(res.FE)[seq_len(p)])
                vb <- vcov(res.FE)[seq_len(p),seq_len(p),drop=FALSE]
             }
@@ -1694,10 +2069,10 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
          if (method == "ML") {
             beta <- cbind(res.ML$par[seq_len(p)])
-            chol.h <- try(chol(h.ML), silent=!verbose) ### see if Hessian can be inverted with chol()
+            chol.h <- try(chol(h.ML), silent=!verbose)      # see if Hessian can be inverted with chol()
             if (inherits(chol.h, "try-error")) {
                warning(mstyle$warning("Choleski factorization of Hessian failed. Trying inversion via QR decomposition."), call.=FALSE)
-               vb.f <- try(qr.solve(h.ML), silent=!verbose) ### see if Hessian can be inverted with qr.solve()
+               vb.f <- try(qr.solve(h.ML), silent=!verbose) # see if Hessian can be inverted with qr.solve()
                if (inherits(vb.f, "try-error"))
                   stop(mstyle$stop("Cannot invert Hessian for ML model."))
             } else {
@@ -1710,7 +2085,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             p.eff  <- p
             k.eff  <- k
             if (vb.f[p+1,p+1] >= 0) {
-               se.tau2 <- sqrt(vb.f[p+1,p+1]) * tau2 ### delta rule: vb[p+1,p+1] is the variance of log(tau2), so vb[p+1,p+1] * tau2^2 is the variance of exp(log(tau2))
+               se.tau2 <- sqrt(vb.f[p+1,p+1]) * tau2 # delta rule: vb[p+1,p+1] is the variance of log(tau2), so vb[p+1,p+1] * tau2^2 is the variance of exp(log(tau2))
             } else {
                se.tau2 <- NA
             }
@@ -1752,7 +2127,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
          dat.off <- log(ti)
       }
 
-      study <- factor(seq_len(k)) ### study factor
+      study <- factor(seq_len(k)) # study factor
       X.fit <- X
 
       if (.isTRUE(ddd$retdat))
@@ -1770,47 +2145,53 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
       ### log-likelihood
 
-      #ll.FE <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, predict(res.FE, type="response"), log=TRUE))) ### model has a NULL offset
-      #ll.FE <- with(data.frame(dat.grp), sum(dpois(xi, predict(res.FE, type="response"), log=TRUE)))         ### offset already incorporated into predict()
-      ll.FE <- c(logLik(res.FE)) ### same as above
+      #ll.FE <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, predict(res.FE, type="response"), log=TRUE))) # model has a NULL offset
+      #ll.FE <- with(data.frame(dat.grp), sum(dpois(xi, predict(res.FE, type="response"), log=TRUE)))         # offset already incorporated into predict()
+      ll.FE <- c(logLik(res.FE)) # same as above
 
       ### fit saturated FE model (= QE model)
       ### notes: 1) suppressWarnings() to suppress warning "glm.fit: fitted probabilities numerically 0 or 1 occurred"
 
-      if (verbose)
-         message(mstyle$message("Fitting saturated model ..."))
+      QEconv <- FALSE
+      ll.QE <- NA
 
-      if (k > 1) {
-         X.QE <- model.matrix(~ -1 + X.fit + study)
-         if (verbose) {
-            res.QE <- try(glm(dat.grp ~ -1 + X.QE, offset=dat.off, family=dat.fam, control=glmCtrl), silent=!verbose)
+      if (!isTRUE(ddd$skiphet)) {
+
+         if (verbose)
+            message(mstyle$message("Fitting saturated model ..."))
+
+         if (k > 1) {
+            X.QE <- model.matrix(~ -1 + X.fit + study)
+            if (verbose) {
+               res.QE <- try(glm(dat.grp ~ -1 + X.QE, offset=dat.off, family=dat.fam, control=glmCtrl), silent=!verbose)
+            } else {
+               res.QE <- try(suppressWarnings(glm(dat.grp ~ -1 + X.QE, offset=dat.off, family=dat.fam, control=glmCtrl)), silent=!verbose)
+            }
          } else {
-            res.QE <- try(suppressWarnings(glm(dat.grp ~ -1 + X.QE, offset=dat.off, family=dat.fam, control=glmCtrl)), silent=!verbose)
+            res.QE <- res.FE
          }
-      } else {
-         res.QE <- res.FE
-      }
 
-      if (inherits(res.QE, "try-error")) {
+         if (inherits(res.QE, "try-error")) {
 
-         warning(mstyle$warning("Cannot fit saturated model."), call.=FALSE)
-         QEconv <- FALSE
-         ll.QE <- NA
+            warning(mstyle$warning("Cannot fit saturated model."), call.=FALSE)
 
-      } else {
+         } else {
 
-         QEconv <- TRUE
+            QEconv <- TRUE
 
-         ### log-likelihood
+            ### log-likelihood
 
-         #ll.QE <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, xi/(xi+mi), log=TRUE))) ### model has a NULL offset
-         #ll.QE <- with(data.frame(dat.grp), sum(dpois(xi, xi, log=TRUE)))                 ### offset not relevant for saturated model
-         ll.QE <- c(logLik(res.QE)) ### same as above
+            #ll.QE <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, xi/(xi+mi), log=TRUE))) # model has a NULL offset
+            #ll.QE <- with(data.frame(dat.grp), sum(dpois(xi, xi, log=TRUE)))                 # offset not relevant for saturated model
+            ll.QE <- c(logLik(res.QE)) # same as above
 
-         ### extract coefficients and variance-covariance matrix for Wald-type test for heterogeneity
+            ### extract coefficients and variance-covariance matrix for Wald-type test for heterogeneity
 
-         b2.QE  <- cbind(na.omit(coef(res.QE)[-seq_len(p)])) ### coef() still includes aliased coefficients as NAs, so have to filter them out
-         vb2.QE <- vcov(res.QE, complete=FALSE)[-seq_len(p),-seq_len(p),drop=FALSE] ### aliased coefficients are removed by vcov() when complete=FALSE
+            #b2.QE <- cbind(na.omit(coef(res.QE)[-seq_len(p)]))                        # coef() still includes aliased coefficients as NAs, so filter them out
+            b2.QE  <- cbind(coef(res.QE, complete=FALSE)[-seq_len(p)])                 # aliased coefficients are removed by coef() when complete=FALSE
+            vb2.QE <- vcov(res.QE, complete=FALSE)[-seq_len(p),-seq_len(p),drop=FALSE] # aliased coefficients are removed by vcov() when complete=FALSE
+
+         }
 
       }
 
@@ -1822,7 +2203,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
          if (verbose)
             message(mstyle$message("Fitting ML model ..."))
 
-         if (con$package == "lme4") {
+         if (package == "lme4") {
             if (verbose) {
                res.ML <- try(lme4::glmer(dat.grp ~ -1 + X.fit + (1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
             } else {
@@ -1830,13 +2211,21 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             }
          }
 
-         if (con$package == "GLMMadaptive") {
+         if (package == "GLMMadaptive") {
             if (measure == "PLO") {
                dat.mm <- data.frame(xi=dat.grp[,"xi"], mi=dat.grp[,"mi"], study=study)
-               res.ML <- try(GLMMadaptive::mixed_model(cbind(xi,mi) ~ -1 + X.fit, random = ~ 1 | study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=mmCtrl), silent=!verbose)
+               res.ML <- try(GLMMadaptive::mixed_model(cbind(xi,mi) ~ -1 + X.fit, random = ~ 1 | study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=glmerCtrl), silent=!verbose)
             } else {
                dat.mm <- data.frame(xi=dat.grp, study=study)
-               res.ML <- try(GLMMadaptive::mixed_model(xi ~ -1 + X.fit + offset(dat.off), random = ~ 1 | study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=mmCtrl), silent=!verbose)
+               res.ML <- try(GLMMadaptive::mixed_model(xi ~ -1 + X.fit + offset(dat.off), random = ~ 1 | study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=glmerCtrl), silent=!verbose)
+            }
+         }
+
+         if (package == "glmmTMB") {
+            if (verbose) {
+               res.ML <- try(glmmTMB::glmmTMB(dat.grp ~ -1 + X.fit + (1 | study), offset=dat.off, family=dat.fam, verbose=verbose, control=do.call(glmmTMB::glmmTMBControl, glmerCtrl)), silent=!verbose)
+            } else {
+               res.ML <- suppressMessages(try(glmmTMB::glmmTMB(dat.grp ~ -1 + X.fit + (1 | study), offset=dat.off, family=dat.fam, verbose=verbose, control=do.call(glmmTMB::glmmTMBControl, glmerCtrl)), silent=!verbose))
             }
          }
 
@@ -1847,12 +2236,12 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
          ### log-likelihood
 
-         #ll.ML <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, fitted(res.ML), log=TRUE))) ### not correct (since it does not incorporate the random effects; same as ll.FE if tau^2=0)
-         #ll.ML <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, plogis(qlogis(fitted(res.ML)) + group12*unlist(ranef(res.ML))), log=TRUE))) ### not correct (since one really has to integrate; same as ll.FE if tau^2=0)
-         #ll.ML <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, plogis(predict(res.ML))))) ### not correct (since one really has to integrate; same as ll.FE if tau^2=0)
-         #ll.ML <- c(logLik(res.ML)) ### this is not the same as ll.FE when tau^2 = 0 (not sure why)
-         if (con$package == "lme4") {
-            ll.ML <- ll.QE - 1/2 * deviance(res.ML) ### this makes ll.ML comparable to ll.FE (same as ll.FE when tau^2=0)
+         #ll.ML <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, fitted(res.ML), log=TRUE))) # not correct (since it does not incorporate the random effects; same as ll.FE if tau^2=0)
+         #ll.ML <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, plogis(qlogis(fitted(res.ML)) + group12*unlist(ranef(res.ML))), log=TRUE))) # not correct (since one really has to integrate; same as ll.FE if tau^2=0)
+         #ll.ML <- with(data.frame(dat.grp), sum(dbinom(xi, xi+mi, plogis(predict(res.ML))))) # not correct (since one really has to integrate; same as ll.FE if tau^2=0)
+         #ll.ML <- c(logLik(res.ML)) # this is not the same as ll.FE when tau^2 = 0 (not sure why)
+         if (package == "lme4") {
+            ll.ML <- ll.QE - 1/2 * deviance(res.ML) # this makes ll.ML comparable to ll.FE (same as ll.FE when tau^2=0)
          } else {
             ### FIXME: When using GLMMadaptive, ll is not comparable for FE model when tau^2 = 0
             ll.ML <- c(logLik(res.ML))
@@ -1875,16 +2264,22 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
       if (method == "ML") {
 
-         if (con$package == "lme4") {
+         if (package == "lme4") {
             beta   <- cbind(lme4::fixef(res.ML)[seq_len(p)])
             vb     <- as.matrix(vcov(res.ML))[seq_len(p),seq_len(p),drop=FALSE]
             tau2   <- lme4::VarCorr(res.ML)[[1]][1]
          }
 
-         if (con$package == "GLMMadaptive") {
+         if (package == "GLMMadaptive") {
             beta   <- cbind(GLMMadaptive::fixef(res.ML)[seq_len(p)])
             vb     <- as.matrix(vcov(res.ML))[seq_len(p),seq_len(p),drop=FALSE]
             tau2   <- res.ML$D[1,1]
+         }
+
+         if (package == "glmmTMB") {
+            beta   <- cbind(glmmTMB::fixef(res.ML)$cond[seq_len(p)])
+            vb     <- as.matrix(vcov(res.ML)$cond)[seq_len(p),seq_len(p),drop=FALSE]
+            tau2   <- glmmTMB::VarCorr(res.ML)[[1]][[1]][[1]]
          }
 
          sigma2 <- NA
@@ -1911,11 +2306,11 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
       ### for OR, CM.EL, & optim/nlminb/minqa, QE.Wld is already calculated, so skip this part then
 
-      if (measure!="OR" || model!="CM.EL" || !is.element(con$optimizer, c("optim", "nlminb", "minqa"))) {
+      if (measure!="OR" || model!="CM.EL" || !is.element(optimizer, c("optim", "nlminb", "minqa"))) {
 
          if (nrow(vb2.QE) > 0) {
 
-            chol.h <- try(chol(vb2.QE), silent=!verbose) ### see if Hessian can be inverted with chol()
+            chol.h <- try(chol(vb2.QE), silent=!verbose) # see if Hessian can be inverted with chol()
 
             if (inherits(chol.h, "try-error")) {
                warning(mstyle$warning("Cannot invert Hessian for saturated model."), call.=FALSE)
@@ -1930,7 +2325,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
          } else {
 
-            QE.Wld <- 0 ### if vb2.QE has 0x0 dims, then fitted model is the saturated model and QE.Wld must be 0
+            QE.Wld <- 0 # if vb2.QE has 0x0 dims, then fitted model is the saturated model and QE.Wld must be 0
 
          }
 
@@ -1941,8 +2336,8 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       QE.Wld[QE.Wld <= 0] <- 0
       QE.LRT[QE.LRT <= 0] <- 0
 
-      #QE.df <- length(b2.QE) ### removed coefficients are not counted if dfs are determined like this
-      QE.df <- k-p            ### this yields always the same dfs regardless of how many coefficients are removed
+      #QE.df <- length(b2.QE) # removed coefficients are not counted if dfs are determined like this
+      QE.df <- k-p            # this yields always the same dfs regardless of how many coefficients are removed
       if (QE.df > 0L) {
          QEp.Wld <- pchisq(QE.Wld, df=QE.df, lower.tail=FALSE)
          QEp.LRT <- pchisq(QE.LRT, df=QE.df, lower.tail=FALSE)
@@ -1953,11 +2348,11 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    } else {
 
-      QE.Wld <- NA
-      QE.LRT <- NA
+      QE.Wld  <- NA
+      QE.LRT  <- NA
       QEp.Wld <- NA
       QEp.LRT <- NA
-      QE.df <- NA
+      QE.df   <- NA
 
    }
 
@@ -1967,8 +2362,8 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    W     <- diag(wi, nrow=k.yi, ncol=k.yi)
    stXWX <- .invcalc(X=X.yi, W=W, k=k.yi)
    P     <- W - W %*% X.yi %*% stXWX %*% crossprod(X.yi,W)
-   #vt   <- (k-1) / (sum(wi) - sum(wi^2)/sum(wi)) ### this only applies to the RE model
-   #vt   <- 1/mean(wi) ### harmonic mean of vi's (see Takkouche et al., 1999)
+   #vt   <- (k-1) / (sum(wi) - sum(wi^2)/sum(wi)) # this only applies to the RE model
+   #vt   <- 1/mean(wi) # harmonic mean of vi's (see Takkouche et al., 1999)
    vt    <- (k.yi-p) / .tr(P)
    I2    <- 100 * tau2 / (vt + tau2)
    H2    <- tau2 / vt + 1
@@ -1978,7 +2373,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    if (verbose > 1)
       message(mstyle$message("Conducting tests of the fixed effects ..."))
 
-   chol.h <- try(chol(vb[btt,btt]), silent=!verbose) ### see if Hessian can be inverted with chol()
+   chol.h <- try(chol(vb[btt,btt]), silent=!verbose) # see if Hessian can be inverted with chol()
 
    if (inherits(chol.h, "try-error")) {
       warning(mstyle$warning("Cannot invert Hessian for QM test."), call.=FALSE)
@@ -2063,7 +2458,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    if (is.null(ddd$outlist)) {
 
       res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
-                  tau2=tau2, se.tau2=se.tau2, sigma2=sigma2,
+                  tau2=tau2, se.tau2=se.tau2, sigma2=sigma2, rho=rho,
                   I2=I2, H2=H2, vt=vt,
                   QE.Wld=QE.Wld, QEp.Wld=QEp.Wld, QE.LRT=QE.LRT, QEp.LRT=QEp.LRT, QE.df=QE.df, QM=QM, QMdf=QMdf, QMp=QMp,
                   k=k, k.f=k.f, k.yi=k.yi, k.eff=k.eff, k.all=k.all, p=p, p.eff=p.eff, parms=parms,
@@ -2101,7 +2496,8 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    if (.isTRUE(ddd$retfit)) {
       res$res.FE <- res.FE
-      res$res.QE <- res.QE
+      if (!isTRUE(ddd$skiphet))
+         res$res.QE <- res.QE
       if (method == "ML")
          res$res.ML <- res.ML
    }

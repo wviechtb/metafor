@@ -940,7 +940,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
                REMLf = TRUE,              # should |X'X| term be included in the REML log likelihood?
                evtol = 1e-07,             # lower bound for eigenvalues to determine if model matrix is positive definite (also for checking if vimaxmin >= 1/con$evtol)
                alpha.init = NULL,         # initial values for scale parameters
-               optimizer = "nlminb",      # optimizer to use ("optim", "nlminb", "uobyqa", "newuoa", "bobyqa", "nloptr", "nlm", "hjk", "nmk", "mads", "ucminf", "optimParallel", "constrOptim") for location-scale models
+               optimizer = "nlminb",      # optimizer to use ("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","optimParallel","constrOptim") for location-scale models
                optmethod = "BFGS",        # argument 'method' for optim() ("Nelder-Mead" and "BFGS" are sensible options)
                parallel = list(),         # parallel argument for optimParallel() (note: 'cl' argument in parallel is not passed; this is directly specified via 'cl')
                cl = NULL,                 # arguments for optimParallel()
@@ -2014,7 +2014,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
          stXWX <- .invcalc(X=X, W=W, k=k)
          beta  <- stXWX %*% crossprod(X,W) %*% Y
          vb    <- stXWX
-         RSS.f <- sum(wi*(yi - X %*% beta)^2)
+         RSS.f <- sum(wi*c(yi - X %*% beta)^2)
          #P     <- W - W %*% X %*% stXWX %*% crossprod(X,W)
          #RSS.f <- crossprod(Y,P) %*% Y
          RSS.knha <- RSS.f
@@ -2029,7 +2029,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
          stXAX <- .invcalc(X=X, W=A, k=k)
          beta  <- stXAX %*% crossprod(X,A) %*% Y
          vb    <- stXAX %*% t(X) %*% A %*% M %*% A %*% X %*% stXAX
-         RSS.f <- sum(wi*(yi - X %*% beta)^2)
+         RSS.f <- sum(wi*c(yi - X %*% beta)^2)
          #P     <- W - W %*% X %*% stXAX %*% t(X) %*% A - A %*% X %*% stXAX %*% t(X) %*% W + A %*% X %*% stXAX %*% t(X) %*% W %*% X %*% stXAX %*% t(X) %*% A
          #RSS.f <- crossprod(Y,P) %*% Y
 

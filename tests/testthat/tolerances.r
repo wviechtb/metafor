@@ -17,7 +17,7 @@
           misc  = .01) # miscellaneous, mix of values
 
 # to quickly set all tolerances to a common value
-#.tol[1:length(.tol)] <- .001
+.tol[1:length(.tol)] <- .001
 
 # note to self: search for "]]/10 or "]]*10 to find adjusted tolerances in tests
 # some hardcoded tolerances; search for: tolerance=.0

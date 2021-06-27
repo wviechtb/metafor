@@ -166,7 +166,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
                delta.max = NULL,      # max possible value(s) for selection model parameter(s)
                tau2.max = Inf,        # max possible value for tau^2
                pval.min = NULL,       # minimum p-value to intergrate over (for selection models where this matters)
-               optimizer = "optim",   # optimizer to use ("optim", "nlminb", "uobyqa", "newuoa", "bobyqa", "nloptr", "nlm", "hjk", "nmk", "mads", "ucminf", "optimParallel")
+               optimizer = "optim",   # optimizer to use ("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","optimParallel")
                optmethod = "BFGS",    # argument 'method' for optim() ("Nelder-Mead" and "BFGS" are sensible options)
                parallel = list(),     # parallel argument for optimParallel() (note: 'cl' argument in parallel is not passed; this is directly specified via 'cl')
                cl = NULL,             # arguments for optimParallel()
@@ -763,6 +763,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
       message(mstyle$message("\nModel fitting ...\n"))
 
    #return(optcall)
+
    if (verbose) {
       opt.res <- try(eval(parse(text=optcall)), silent=!verbose)
    } else {

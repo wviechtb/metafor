@@ -194,7 +194,7 @@
          beta <- stXWX %*% crossprod(X,W) %*% as.matrix(yi)
 
          ### compute residual sum of squares
-         RSS <- sum(wi*(yi - X %*% beta)^2)
+         RSS <- sum(wi*c(yi - X %*% beta)^2)
 
          ### log-likelihood (could leave out additive constants)
          if (!reml) {
