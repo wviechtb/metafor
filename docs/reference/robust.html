@@ -307,7 +307,9 @@
 #&gt; <span class='message'>  method    from    </span>
 #&gt; <span class='message'>  bread.mlm sandwich</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/clubSandwich/man/coef_test.html'>coef_test</a></span><span class='op'>(</span><span class='va'>res</span>, vcov<span class='op'>=</span><span class='st'>"CR2"</span>, cluster<span class='op'>=</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>district</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;     Coef. Estimate     SE t-stat d.f. p-val (Satt) Sig.
-#&gt; 1 intrcpt    0.185 0.0845   2.19 9.86        0.054    .</div><div class='input'><span class='co'># }</span>
+#&gt; 1 intrcpt    0.185 0.0845   2.19 9.86        0.054    .</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/clubSandwich/man/conf_int.html'>conf_int</a></span><span class='op'>(</span><span class='va'>res</span>, vcov<span class='op'>=</span><span class='st'>"CR2"</span>, cluster<span class='op'>=</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>district</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;      Coef Estimate     SE d.f. Lower 95% CI Upper 95% CI
+#&gt; 1 intrcpt    0.185 0.0845 9.86     -0.00383        0.373</div><div class='input'><span class='co'># }</span>
 
 <span class='co'>### copy data from Berkey et al. (1998) into 'dat'</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.berkey1998</span>
@@ -377,7 +379,10 @@
 <span class='fu'><a href='https://rdrr.io/pkg/clubSandwich/man/coef_test.html'>coef_test</a></span><span class='op'>(</span><span class='va'>res</span>, vcov<span class='op'>=</span><span class='st'>"CR2"</span>, cluster<span class='op'>=</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>trial</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;       Coef. Estimate     SE t-stat d.f. p-val (Satt) Sig.
 #&gt; 1 outcomeAL   -0.339 0.0892  -3.80 3.81       0.0208    *
-#&gt; 2 outcomePD    0.353 0.0582   6.08 3.79       0.0044   **</div><div class='input'><span class='co'># }</span>
+#&gt; 2 outcomePD    0.353 0.0582   6.08 3.79       0.0044   **</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/clubSandwich/man/conf_int.html'>conf_int</a></span><span class='op'>(</span><span class='va'>res</span>, vcov<span class='op'>=</span><span class='st'>"CR2"</span>, cluster<span class='op'>=</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>trial</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;        Coef Estimate     SE d.f. Lower 95% CI Upper 95% CI
+#&gt; 1 outcomeAL   -0.339 0.0892 3.81       -0.592      -0.0866
+#&gt; 2 outcomePD    0.353 0.0582 3.79        0.188       0.5185</div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

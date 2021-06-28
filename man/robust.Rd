@@ -94,6 +94,7 @@ robust(res, cluster=dat$district)
 \dontrun{
 require(clubSandwich)
 coef_test(res, vcov="CR2", cluster=dat$district)
+conf_int(res, vcov="CR2", cluster=dat$district)
 }
 
 ### copy data from Berkey et al. (1998) into 'dat'
@@ -116,6 +117,7 @@ robust(res, cluster=dat$trial)
 \dontrun{
 require(clubSandwich)
 coef_test(res, vcov="CR2", cluster=dat$trial)
+conf_int(res, vcov="CR2", cluster=dat$trial)
 }
 }
 \keyword{htest}

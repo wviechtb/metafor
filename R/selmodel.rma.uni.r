@@ -49,7 +49,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("time", "tau2", "beta", "skiphes", "skiphet", "scaleprec", "defmap", "mapfun", "mapinvfun"))
+   .chkdots(ddd, c("time", "tau2", "beta", "skiphes", "skiphet", "skipintcheck", "scaleprec", "defmap", "mapfun", "mapinvfun"))
 
    ### handle 'tau2' argument from ...
 
@@ -660,9 +660,9 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
       if (any(ptable[["k"]] == 0L)) {
          if (verbose >= 1)
             print(ptable)
-         if (type == "stepfun" && (any(ptable[["k"]] == 0L & is.na(delta))))
+         if (!isTRUE(ddd$skipintcheck) && type == "stepfun" && (any(ptable[["k"]] == 0L & is.na(delta))))
             stop(mstyle$stop(paste0("One or more intervals do not contain any observed p-values", if (!verbose) " (use 'verbose=TRUE' to see which)", ".")))
-         if (type != "stepfun")
+         if (!isTRUE(ddd$skipintcheck) && type != "stepfun")
             stop(mstyle$stop(paste0("One of the intervals does not contain any observed p-values", if (!verbose) " (use 'verbose=TRUE' to see which)", ".")))
       }
 
