@@ -124,13 +124,13 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
          }
       }
 
-      if (!is.element(x$method, c("FE","EE","CE")) && !x$int.only && !is.null(x$R2)) {
+      if (!x$int.only && !is.null(x$R2)) {
          cat(mstyle$text("R^2 (amount of heterogeneity accounted for):            "))
          cat(mstyle$result(paste0(ifelse(is.na(x$R2), NA, .fcf(x$R2, 2)), "%")))
          cat("\n")
       }
 
-      if (!is.element(x$method, c("FE","EE","CE")) || !is.na(x$I2) || !is.na(x$H2) || (!is.element(x$method, c("FE","EE","CE")) && !x$int.only && !is.null(x$R2)))
+      if (!is.na(x$I2) || !is.na(x$H2) || !is.null(x$R2))
          cat("\n")
 
    }

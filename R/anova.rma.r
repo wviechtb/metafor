@@ -366,7 +366,27 @@ anova.rma <- function(object, object2, btt, X, att, Z, digits, ...) {
 
       if (inherits(object, "rma.uni") && !inherits(object, "rma.ls") && !inherits(object2, "rma.ls")) {
          if (is.element(model.f$method, c("FE","EE","CE"))) {
-            R2 <- NA
+            if (model.f$weighted) {
+               if (is.null(model.f$weights)) {
+                  lm.f <- lm(model.f$yi ~ model.f$X, weights=1/model.f$vi)
+               } else {
+                  lm.f <- lm(model.f$yi ~ model.f$X, weights=model.f$weights)
+               }
+            } else {
+               lm.f <- lm(model.f$yi ~ model.f$X)
+            }
+            if (model.r$weighted) {
+               if (is.null(model.r$weights)) {
+                  lm.r <- lm(model.r$yi ~ model.r$X, weights=1/model.r$vi)
+               } else {
+                  lm.r <- lm(model.r$yi ~ model.r$X, weights=model.r$weights)
+               }
+            } else {
+               lm.r <- lm(model.r$yi ~ model.r$X)
+            }
+            s2.f <- sigma(lm.f)^2
+            s2.r <- sigma(lm.r)^2
+            R2 <- 100 * max(0, (s2.r - s2.f) / s2.r)
          } else if (identical(model.r$tau2,0)) {
             R2 <- 0
          } else {

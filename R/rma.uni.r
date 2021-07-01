@@ -2212,28 +2212,50 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
    ### compute pseudo R^2 statistic for mixed-effects models with an intercept (only for rma.uni models)
 
-   if (!int.only && int.incl && !is.element(method, c("FE","EE","CE")) && model == "rma.uni" && !isTRUE(ddd$skipr2)) {
+   if (!int.only && int.incl && model == "rma.uni" && !isTRUE(ddd$skipr2)) {
 
-      if (verbose > 1) {
-         message(mstyle$message("Fitting RE model for R^2 computation ..."))
-         res.RE <- try(rma.uni(yi, vi, weights=weights, method=method, weighted=weighted, test=test, verbose=ifelse(verbose, TRUE, FALSE), control=con, digits=digits), silent=FALSE)
-      } else {
-         res.RE <- try(suppressWarnings(rma.uni(yi, vi, weights=weights, method=method, weighted=weighted, test=test, verbose=ifelse(verbose, TRUE, FALSE), control=con, digits=digits)), silent=TRUE)
-      }
+      if (verbose > 1)
+         message(mstyle$message("Computing R^2 ..."))
 
-      if (!inherits(res.RE, "try-error")) {
+      if (is.element(method, c("FE","EE","CE"))) {
 
-         tau2.RE <- res.RE$tau2
-
-         if (identical(tau2.RE,0)) {
+         if (identical(var(yi),0)) {
             R2 <- 0
          } else {
-            R2 <- max(0, 100 * (tau2.RE - tau2) / tau2.RE)
+            if (weighted) {
+               if (is.null(weights)) {
+                  R2 <- max(0, 100 * summary(lm(yi ~ X, weights=wi))$adj.r.squared)
+               } else {
+                  R2 <- max(0, 100 * summary(lm(yi ~ X, weights=weights))$adj.r.squared)
+               }
+            } else {
+               R2 <- max(0, 100 * summary(lm(yi ~ X))$adj.r.squared)
+            }
          }
 
       } else {
 
-         R2 <- NA
+         if (verbose > 1) {
+            res0 <- try(rma.uni(yi, vi, weights=weights, method=method, weighted=weighted, test=test, verbose=ifelse(verbose, TRUE, FALSE), control=con, digits=digits), silent=FALSE)
+         } else {
+            res0 <- try(suppressWarnings(rma.uni(yi, vi, weights=weights, method=method, weighted=weighted, test=test, verbose=ifelse(verbose, TRUE, FALSE), control=con, digits=digits)), silent=TRUE)
+         }
+
+         if (!inherits(res0, "try-error")) {
+
+            tau2.RE <- res0$tau2
+
+            if (identical(tau2.RE,0)) {
+               R2 <- 0
+            } else {
+               R2 <- max(0, 100 * (tau2.RE - tau2) / tau2.RE)
+            }
+
+         } else {
+
+            R2 <- NA
+
+         }
 
       }
 
