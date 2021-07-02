@@ -698,7 +698,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
          if (is.data.frame(Z))
             Z <- as.matrix(Z)
          if (is.character(Z))
-            stop(mstyle$stop("Model matrix contains character variables."))
+            stop(mstyle$stop("Scale model matrix contains character variables."))
       }
       if (nrow(Z) != k)
          stop(mstyle$stop(paste0("Number of rows in the model matrix specified via the 'scale' argument (", nrow(Z), ") does not match length of the outcome vector (", k, ").")))
@@ -893,6 +893,11 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
    }
 
    p <- NCOL(X) ### number of columns in X (including the intercept if it is included)
+
+   ### make sure variable names in X and Z are unique
+
+   colnames(X) <- colnames(X.f) <- .make.unique(colnames(X))
+   colnames(Z) <- colnames(Z.f) <- .make.unique(colnames(Z))
 
    ### check whether this is an intercept-only model
 

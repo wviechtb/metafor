@@ -1,4 +1,4 @@
-Changes in Version 3.1-6 (2021-07-01)
+Changes in Version 3.1-7 (2021-07-02)
 =====================================
 
    o added measure "MPORM" to escalc() for computing marginal log odds ratios

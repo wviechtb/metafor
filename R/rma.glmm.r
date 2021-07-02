@@ -581,6 +581,10 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    ### note: number of columns in X.yi may be lower than p; but computation of I^2 below is based on p
 
+   ### make sure variable names in X are unique
+
+   colnames(X) <- colnames(X.f) <- .make.unique(colnames(X))
+
    ### check whether this is an intercept-only model
 
    if ((p == 1L) && .is.intercept(X)) {
@@ -913,7 +917,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
          if (coding == 0)
             group <- group2
 
-         row.names(X.fit) <- seq_len(2*k)
+         rownames(X.fit) <- seq_len(2*k)
 
          if (.isTRUE(ddd$retdat))
             return(list(dat.grp=dat.grp, X.fit=X.fit, study=study, dat.off = if (!is.null(dat.off)) dat.off else NULL, const=const, group1=group1, group2=group2, group12=group12, group=group, dat.fam=dat.fam))

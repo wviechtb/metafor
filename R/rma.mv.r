@@ -1241,6 +1241,10 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
 
    p <- NCOL(X) ### number of columns in X (including the intercept if it is included)
 
+   ### make sure variable names in X are unique
+
+   colnames(X) <- colnames(X.f) <- .make.unique(colnames(X))
+
    ### check whether this is an intercept-only model
 
    if ((p == 1L) && .is.intercept(X)) {

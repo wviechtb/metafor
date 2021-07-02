@@ -237,6 +237,9 @@
 
 .make.unique <- function(x) {
 
+   if (is.null(x))
+      return(NULL)
+
    x <- as.character(x)
    ux <- unique(x)
 
