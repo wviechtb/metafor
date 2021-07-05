@@ -16,9 +16,9 @@
 \arguments{
    \item{x}{an object of class \code{"cumul.rma"}.}
    \item{annotate}{logical to specify whether annotations should be added to the plot (the default is \code{TRUE}).}
-   \item{header}{logical to specify whether column headings should be added to the plot (the default is \code{FALSE}). Can also be a character vector to specify the left and right headings.}
+   \item{header}{logical to specify whether column headings should be added to the plot (the default is \code{FALSE}). Can also be a character vector to specify the left and right headings (or only the left one).}
    \item{xlim}{horizontal limits of the plot region. If unspecified, the function tries to set the horizontal plot limits to some sensible values.}
-   \item{alim}{the actual x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.}
+   \item{alim}{the x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.}
    \item{olim}{optional argument to specify observation/outcome limits. If unspecified, no limits are used.}
    \item{ylim}{the y-axis limits of the plot. If unspecified, the function tries to set the y-axis limits to some sensible values.}
    \item{top}{the amount of space to leave empty at the top of the plot (e.g., for adding headers) (the default is 3 rows).}

@@ -105,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1-6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1-8</span>
       </span>
     </div>
 
@@ -222,7 +222,7 @@
     </tr>
     <tr>
       <th>header</th>
-      <td><p>logical to specify whether column headings should be added to the plot (the default is <code>FALSE</code>). Can also be a character vector to specify the left and right headings.</p></td>
+      <td><p>logical to specify whether column headings should be added to the plot (the default is <code>FALSE</code>). Can also be a character vector to specify the left and right headings  (or only the left one).</p></td>
     </tr>
     <tr>
       <th>xlim</th>
@@ -230,7 +230,7 @@
     </tr>
     <tr>
       <th>alim</th>
-      <td><p>the actual x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.</p></td>
+      <td><p>the x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.</p></td>
     </tr>
     <tr>
       <th>olim</th>
@@ -370,8 +370,9 @@
 <li><p><code>order="obs"</code>: the studies are ordered by the observed outcomes,</p></li>
 <li><p><code>order="prec"</code>: the studies are ordered by their sampling variances.</p></li>
 </ul><p>Alternatively, it is also possible to set <code>order</code> equal to a variable based on which the studies will be ordered (see &#8216;Examples&#8217;).</p>
-<p>By default (i.e., when <code>psize</code> is not specified), the size of the points is a function of the precision (i.e., inverse standard error) of the outcomes. This way, more precise estimates are visually more prominent in the plot. By making the point sizes a function of the inverse standard error of the estimates, their area is proportional to the inverse sampling variances, which corresponds to the weights they would receive in a fixed-effects model. However, the point sizes are rescaled so that the smallest point size is <code>plim[1]</code> and the largest point size is <code>plim[2]</code>. As a result, their relative sizes (i.e., areas) no longer exactly correspond to their relative weights in such a model. If exactly relative point sizes are desired, one can set <code>plim[2]</code> to <code>NA</code>, in which case the points are rescaled so that the smallest point size corresponds to <code>plim[1]</code> and all other points are scaled accordingly. As a result, the largest point may be very large. Alternatively, one can set <code>plim[1]</code> to <code>NA</code>, in which case the points are rescaled so that the largest point size corresponds to <code>plim[2]</code> and all other points are scaled accordingly. As a result, the smallest point may be very small and essentially indistinguishable from the confidence interval line. To avoid the latter, one can also set <code>plim[3]</code>, which enforces a minimal point size.</p>
+<p>Additional columns with information about the studies can be added to the plot via the <code>ilab</code> argument. This can either be a single variable or an entire matrix / data frame (with as many rows as there are studies in the forest plot). The <code>ilab.xpos</code> argument must then also be specified to indicate the x-axis position of the variables specified via <code>ilab</code>.</p>
 <p>Summary estimates can be added to the plot with the <code><a href='addpoly.html'>addpoly</a></code> function. See the documentation for that function for examples.</p>
+<p>By default (i.e., when <code>psize</code> is not specified), the size of the points is a function of the precision (i.e., inverse standard error) of the outcomes. This way, more precise estimates are visually more prominent in the plot. By making the point sizes a function of the inverse standard error of the estimates, their area is proportional to the inverse sampling variances, which corresponds to the weights they would receive in a fixed-effects model. However, the point sizes are rescaled so that the smallest point size is <code>plim[1]</code> and the largest point size is <code>plim[2]</code>. As a result, their relative sizes (i.e., areas) no longer exactly correspond to their relative weights in such a model. If exactly relative point sizes are desired, one can set <code>plim[2]</code> to <code>NA</code>, in which case the points are rescaled so that the smallest point size corresponds to <code>plim[1]</code> and all other points are scaled accordingly. As a result, the largest point may be very large. Alternatively, one can set <code>plim[1]</code> to <code>NA</code>, in which case the points are rescaled so that the largest point size corresponds to <code>plim[2]</code> and all other points are scaled accordingly. As a result, the smallest point may be very small and essentially indistinguishable from the confidence interval line. To avoid the latter, one can also set <code>plim[3]</code>, which enforces a minimal point size.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>The function tries to set some sensible values for the optional arguments, but it may be necessary to adjust these in certain circumstances.</p>

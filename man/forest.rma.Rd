@@ -20,9 +20,9 @@
    \item{addfit}{logical to specify whether the summary estimate (for models without moderators) or fitted values (for models with moderators) should be added to the plot (the default is \code{TRUE}). See \sQuote{Details}.}
    \item{addpred}{logical to specify whether the bounds of the prediction interval should be added to the plot (the default is \code{FALSE}). See \sQuote{Details}.}
    \item{showweights}{logical to specify whether the annotations should also include the weights given to the observed outcomes during the model fitting (the default is \code{FALSE}). See \sQuote{Details}.}
-   \item{header}{logical to specify whether column headings should be added to the plot (the default is \code{FALSE}). Can also be a character vector to specify the left and right headings.}
+   \item{header}{logical to specify whether column headings should be added to the plot (the default is \code{FALSE}). Can also be a character vector to specify the left and right headings  (or only the left one).}
    \item{xlim}{horizontal limits of the plot region. If unspecified, the function tries to set the horizontal plot limits to some sensible values.}
-   \item{alim}{the actual x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.}
+   \item{alim}{the x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.}
    \item{olim}{optional argument to specify observation/outcome limits. If unspecified, no limits are used.}
    \item{ylim}{the y-axis limits of the plot. If unspecified, the function tries to set the y-axis limits to some sensible values.}
    \item{top}{the amount of space to leave empty at the top of the plot (e.g., for adding headers) (the default is 3 rows).}
@@ -79,6 +79,38 @@
    \item \code{order="abs.resid"}: the studies are ordered by the size of their absolute residuals,
    \item \code{order="abs.rstandard"}: the studies are ordered by the size of their absolute standardized residuals.
    } Alternatively, it is also possible to set \code{order} equal to a variable based on which the studies will be ordered (see \sQuote{Examples}).
+
+   Additional columns with information about the studies can be added to the plot via the \code{ilab} argument. This can either be a single variable or an entire matrix / data frame (with as many rows as there are studies in the forest plot). The \code{ilab.xpos} argument must then also be specified to indicate the x-axis position of the variables specified via \code{ilab}.
+
+   \if{html}{The figure below illustrates how the elements in a forest plot can be arranged and the meaning of the some of the arguments such as \code{xlim}, \code{alim} or \code{at}, \code{ilab}, and \code{ilab.xpos}.}
+
+   \if{html}{\figure{forest-arrangement.png}{options: width=800}}
+
+   \if{html}{The figure corresponds to the following code: \preformatted{
+   dat <- dat.bcg
+   dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat)
+   res <- rma(yi, vi, data=dat, slab=paste(author, year, sep=", "))
+   forest(res, addpred=TRUE, xlim=c(-16,7), at=seq(-3,2,by=1),
+          ilab=cbind(dat$tpos, dat$tneg, dat$cpos, dat$cneg),
+          ilab.xpos=c(-9.5,-8,-6,-4.5), cex=.75, header="Author(s) and Year")
+   text(c(-9.5,-8,-6,-4.5), 15, c("TB+", "TB-", "TB+", "TB-"), cex=.75, font=2)
+   text(c(-8.75,-5.25),     16, c("Vaccinated", "Control"),    cex=.75, font=2)}}
+
+   \if{latex}{The figure below illustrates how the elements in a forest plot can be arranged and the meaning of the some of the arguments such as \code{xlim}, \code{alim} or \code{at}, \code{ilab}, and \code{ilab.xpos}.
+
+   \figure{forest-arrangement.pdf}{options: width=5.5in}
+
+   The figure corresponds to the following code: \preformatted{
+   dat <- dat.bcg
+   dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat)
+   res <- rma(yi, vi, data=dat, slab=paste(author, year, sep=", "))
+
+   forest(res, addpred=TRUE, xlim=c(-16,7), at=seq(-3,2,by=1),
+          ilab=cbind(dat$tpos, dat$tneg, dat$cpos, dat$cneg),
+          ilab.xpos=c(-9.5,-8,-6,-4.5), cex=.75, header="Author(s) and Year")
+   text(c(-9.5,-8,-6,-4.5), 15, c("TB+", "TB-", "TB+", "TB-"), cex=.75, font=2)
+   text(c(-8.75,-5.25),     16, c("Vaccinated", "Control"),    cex=.75, font=2)
+   }}
 
    Additional summary estimates can be added to the plot with the \code{\link{addpoly}} function. See the documentation for that function for examples.
 

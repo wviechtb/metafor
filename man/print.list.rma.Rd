@@ -14,6 +14,8 @@
 }
 \value{
    See the documentation of the function that creates the \code{"list.rma"} object for details on what is printed. Regardless of what is printed, a data frame with the results is also returned invisibly.
+
+   See \code{\link{methods.list.rma}} for some additional method functions for \code{"list.rma"} objects.
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}

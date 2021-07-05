@@ -422,7 +422,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
    The \code{subset} argument can be used to select the studies that will be included in the data frame returned by the function. On the other hand, the \code{include} argument simply selects for which studies the measure will be computed (if it shouldn't be computed for all of them).
 
-   The object is formatted and printed with the \code{\link{print.escalc}} function. The \code{\link{summary.escalc}} function can be used to obtain confidence intervals for the individual outcomes.
+   The object is formatted and printed with the \code{\link{print.escalc}} function. The \code{\link{summary.escalc}} function can be used to obtain confidence intervals for the individual outcomes. See \code{\link{methods.escalc}} for some additional method functions for \code{"escalc"} objects.
 
    With the \code{\link{aggregate.escalc}} function, one can aggregate multiple effect sizes or outcomes belonging to the same study (or some other clustering variable) into a single combined effect size or outcome.
 }
