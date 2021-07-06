@@ -1043,12 +1043,8 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
          if (method == "HS") {
             tau2 <- ifelse(tau2.fix, tau2.val, (RSS - k) / sum(wi))
          } else {
+            ### "HSk"
             tau2 <- ifelse(tau2.fix, tau2.val, (k/(k-p)*RSS - k) / sum(wi))
-            ### HSk = (RSS - (k-p)) / sum(wi) * k/(k-p)
-            #trP  <- sum(wi) * (k-p) / k
-            #tau2 <- ifelse(tau2.fix, tau2.val, k/(k-p) * (RSS - (k-p)) / trP)
-            #tau2 <- ifelse(tau2.fix, tau2.val, (RSS - (k-p)) / trP)
-            #tau2 <- ifelse(tau2.fix, tau2.val, k/(k-p) * (RSS - (k-p)) / sum(wi))
          }
 
       }
@@ -1477,7 +1473,6 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
          se.tau2 <- sqrt(1/sum(wi)^2 * (2*(k-p) + 4*max(tau2,0)*.tr(P) + 2*max(tau2,0)^2*sum(P*P))) ### note: wi = 1/vi
       if (method == "HSk")
          se.tau2 <- k/(k-p) * sqrt(1/sum(wi)^2 * (2*(k-p) + 4*max(tau2,0)*.tr(P) + 2*max(tau2,0)^2*sum(P*P)))
-         #se.tau2 <- sqrt(1/trP^2 * (2*(k-p) + 4*max(tau2,0)*.tr(P) + 2*max(tau2,0)^2*sum(P*P))) # trP <- sum(wi) * (k-p) / k
       if (method == "HE")
          se.tau2 <- sqrt(1/(k-p)^2 * (2*sum(PV*t(PV)) + 4*max(tau2,0)*trPV + 2*max(tau2,0)^2*(k-p)))
       if (method == "DL" || method == "DLIT")
