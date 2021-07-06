@@ -2048,6 +2048,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
          #res.FE <- res[[1]]; res.QE <- res[[2]]; res.ML <- res[[3]]
 
          if (is.element(method, c("FE","EE","CE"))) {
+
             if (!is.element(optimizer, c("clogit","clogistic"))) {
                beta <- cbind(res.FE$par[seq_len(p)])
                chol.h <- try(chol(h.FE[seq_len(p),seq_len(p)]), silent=!verbose)    # see if Hessian can be inverted with chol()
@@ -2069,9 +2070,11 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             parms  <- p
             p.eff  <- p
             k.eff  <- k
+
          }
 
          if (method == "ML") {
+
             beta <- cbind(res.ML$par[seq_len(p)])
             chol.h <- try(chol(h.ML), silent=!verbose)      # see if Hessian can be inverted with chol()
             if (inherits(chol.h, "try-error")) {
@@ -2093,6 +2096,19 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             } else {
                se.tau2 <- NA
             }
+
+            tmp <- try(rma(measure="PETO", ai=ai, bi=bi, ci=ci, di=di, add=0, mods=X.fit, intercept=FALSE, skipr2=TRUE), silent=TRUE)
+
+            if (!inherits(tmp, "try-error")) {
+               gvar1 <- det(vcov(tmp))
+               gvar2 <- det(vb)
+               ratio <- (gvar1 / gvar2)^(1/(2*m))
+               if (ratio >= 100)
+                  warning(mstyle$warning("Standard errors of fixed effects appear to be unusually small. Treat results with caution."), call.=FALSE)
+               if (ratio <= 1/100)
+                  warning(mstyle$warning("Standard errors of fixed effects appear to be unusually large. Treat results with caution."), call.=FALSE)
+            }
+
          }
 
          #return(list(beta=beta, vb=vb, tau2=tau2, sigma2=sigma2, parms=parms, p.eff=p.eff, k.eff=k.eff, b2.QE=b2.QE, vb2.QE=vb2.QE))
