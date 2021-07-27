@@ -104,7 +104,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1-9</span>
       </span>
     </div>
 
@@ -173,15 +173,18 @@
       <small>Source: <a href='https://github.com/wviechtb/metafor/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="metafor-31-8-2021-07-05" class="section level1">
-<h1 class="page-header" data-toc-text="3.1-8">
-<a href="#metafor-31-8-2021-07-05" class="anchor"></a>metafor 3.1-8 (2021-07-05)<small> Unreleased </small>
+    <div id="metafor-31-9-2021-07-27" class="section level1">
+<h1 class="page-header" data-toc-text="3.1-9">
+<a href="#metafor-31-9-2021-07-27" class="anchor"></a>metafor 3.1-9 (2021-07-27)<small> Unreleased </small>
 </h1>
 <ul>
+<li><p>elements of <code>rho</code> and <code>phi</code> in <code><a href="../reference/rma.mv.html">rma.mv()</a></code> are now based on the lower triangular part of the respective correlation matrix (instead of the upper triangular part) for consistency with other functions; note that this is in principle a backwards incompatible change, although this should only be a concern in very special circumstances</p></li>
 <li><p>added measure <code>"MPORM"</code> to <code><a href="../reference/escalc.html">escalc()</a></code> for computing marginal log odds ratios based on marginal 2x2 tables directly (which requires specification of the correlation coefficients in the paired tables for the calculation of the sampling variances)</p></li>
 <li><p><code><a href="../reference/aggregate.escalc.html">aggregate.escalc()</a></code> gains <code>checkpd</code> argument</p></li>
 <li><p><code><a href="../reference/rma.glmm.html">rma.glmm()</a></code> now has entire array of optimizers available for <code>model="CM.EL"</code> and <code>measure="OR"</code></p></li>
 <li><p><code><a href="../reference/rma.uni.html">rma.uni()</a></code> now also provides R^2 for fixed-effects models</p></li>
+<li><p><code><a href="../reference/matreg.html">matreg()</a></code> can now also analyze a covariance matrix with a corresponding ‘V’ matrix</p></li>
+<li><p><code><a href="../reference/profile.rma.html">plot.profile.rma()</a></code> gains <code>refline</code> argument</p></li>
 <li><p>improved the documentation a bit</p></li>
 </ul>
 </div>

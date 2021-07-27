@@ -147,19 +147,19 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
             } else {
                G <- matrix(NA_real_, nrow=x$g.nlevels.f[1], ncol=x$g.nlevels.f[1])
             }
-            G[upper.tri(G)] <- rho
-            G[lower.tri(G)] <- t(G)[lower.tri(G)]
+            G[lower.tri(G)] <- rho
+            G[upper.tri(G)] <- t(G)[upper.tri(G)]
             diag(G) <- 1
-            #G[upper.tri(G)] <- ""
+            G[upper.tri(G)] <- ""
 
             if (length(x$rho) == 1L) {
                G.info <- matrix(NA_real_, nrow=2, ncol=2)
             } else {
                G.info <- matrix(NA_real_, nrow=x$g.nlevels.f[1], ncol=x$g.nlevels.f[1])
             }
-            G.info[upper.tri(G.info)] <- x$g.levels.comb.k
-            G.info[lower.tri(G.info)] <- t(G.info)[lower.tri(G.info)]
-            G.info[upper.tri(G.info)] <- ifelse(x$vc.fix$rho, "yes", "no")
+            G.info[lower.tri(G.info)] <- x$g.levels.comb.k
+            G.info[upper.tri(G.info)] <- t(G.info)[upper.tri(G.info)]
+            G.info[lower.tri(G.info)] <- ifelse(x$vc.fix$rho, "yes", "no")
             diag(G.info) <- "-"
 
             vc <- cbind(G, "", G.info)
@@ -178,7 +178,7 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
 
             G.info <- .fcf(cov2cor(x$G), digits[["var"]])
             diag(G.info) <- "-"
-            G.info[upper.tri(G.info)] <- ifelse(x$vc.fix$rho, "yes", "no")
+            G.info[lower.tri(G.info)] <- ifelse(x$vc.fix$rho, "yes", "no")
             colnames(G.info) <- abbreviate(x$g.names[-length(x$g.names)])
             vc <- cbind(vc, G.info)
             tmp <- capture.output(print(vc, quote=FALSE, right=right, print.gap=2))
@@ -278,8 +278,8 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
             } else {
                H <- matrix(NA_real_, nrow=x$h.nlevels.f[1], ncol=x$h.nlevels.f[1])
             }
-            H[upper.tri(H)] <- phi
-            H[lower.tri(H)] <- t(H)[lower.tri(H)]
+            H[lower.tri(H)] <- phi
+            H[upper.tri(H)] <- t(H)[upper.tri(H)]
             diag(H) <- 1
             #H[upper.tri(H)] <- ""
 
@@ -288,9 +288,9 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
             } else {
                H.info <- matrix(NA_real_, nrow=x$h.nlevels.f[1], ncol=x$h.nlevels.f[1])
             }
-            H.info[upper.tri(H.info)] <- x$h.levels.comb.k
-            H.info[lower.tri(H.info)] <- t(H.info)[lower.tri(H.info)]
-            H.info[upper.tri(H.info)] <- ifelse(x$vc.fix$phi, "yes", "no")
+            H.info[lower.tri(H.info)] <- x$h.levels.comb.k
+            H.info[upper.tri(H.info)] <- t(H.info)[upper.tri(H.info)]
+            H.info[lower.tri(H.info)] <- ifelse(x$vc.fix$phi, "yes", "no")
             diag(H.info) <- "-"
 
             vc <- cbind(H, "", H.info)
@@ -309,7 +309,7 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
 
             H.info <- .fcf(cov2cor(x$H), digits[["var"]])
             diag(H.info) <- "-"
-            H.info[upper.tri(H.info)] <- ifelse(x$vc.fix$phi, "yes", "no")
+            H.info[lower.tri(H.info)] <- ifelse(x$vc.fix$phi, "yes", "no")
             colnames(H.info) <- abbreviate(x$h.names[-length(x$h.names)])
             vc <- cbind(vc, H.info)
             tmp <- capture.output(print(vc, quote=FALSE, right=right, print.gap=2))

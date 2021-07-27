@@ -105,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1-9</span>
       </span>
     </div>
 
@@ -182,30 +182,30 @@
     <pre class="usage"><span class='co'># S3 method for rma.uni</span>
 <span class='fu'>profile</span><span class='op'>(</span><span class='va'>fitted</span>, <span class='va'>xlim</span>, <span class='va'>ylim</span>, steps<span class='op'>=</span><span class='fl'>20</span>,
         lltol<span class='op'>=</span><span class='fl'>1e-03</span>, progbar<span class='op'>=</span><span class='cn'>TRUE</span>, parallel<span class='op'>=</span><span class='st'>"no"</span>, ncpus<span class='op'>=</span><span class='fl'>1</span>, cl<span class='op'>=</span><span class='cn'>NULL</span>,
-        plot<span class='op'>=</span><span class='cn'>TRUE</span>, pch<span class='op'>=</span><span class='fl'>19</span>, cline<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
+        plot<span class='op'>=</span><span class='cn'>TRUE</span>, pch<span class='op'>=</span><span class='fl'>19</span>, refline<span class='op'>=</span><span class='cn'>TRUE</span>, cline<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for rma.mv</span>
 <span class='fu'>profile</span><span class='op'>(</span><span class='va'>fitted</span>, <span class='va'>sigma2</span>, <span class='va'>tau2</span>, <span class='va'>rho</span>, <span class='va'>gamma2</span>, <span class='va'>phi</span>,
         <span class='va'>xlim</span>, <span class='va'>ylim</span>, steps<span class='op'>=</span><span class='fl'>20</span>, lltol<span class='op'>=</span><span class='fl'>1e-03</span>, progbar<span class='op'>=</span><span class='cn'>TRUE</span>,
         parallel<span class='op'>=</span><span class='st'>"no"</span>, ncpus<span class='op'>=</span><span class='fl'>1</span>, cl<span class='op'>=</span><span class='cn'>NULL</span>,
-        plot<span class='op'>=</span><span class='cn'>TRUE</span>, pch<span class='op'>=</span><span class='fl'>19</span>, cline<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
+        plot<span class='op'>=</span><span class='cn'>TRUE</span>, pch<span class='op'>=</span><span class='fl'>19</span>, refline<span class='op'>=</span><span class='cn'>TRUE</span>, cline<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for rma.uni.selmodel</span>
 <span class='fu'>profile</span><span class='op'>(</span><span class='va'>fitted</span>, <span class='va'>tau2</span>, <span class='va'>delta</span>,
         <span class='va'>xlim</span>, <span class='va'>ylim</span>, steps<span class='op'>=</span><span class='fl'>20</span>, lltol<span class='op'>=</span><span class='fl'>1e-03</span>, progbar<span class='op'>=</span><span class='cn'>TRUE</span>,
         parallel<span class='op'>=</span><span class='st'>"no"</span>, ncpus<span class='op'>=</span><span class='fl'>1</span>, cl<span class='op'>=</span><span class='cn'>NULL</span>,
-        plot<span class='op'>=</span><span class='cn'>TRUE</span>, pch<span class='op'>=</span><span class='fl'>19</span>, cline<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
+        plot<span class='op'>=</span><span class='cn'>TRUE</span>, pch<span class='op'>=</span><span class='fl'>19</span>, refline<span class='op'>=</span><span class='cn'>TRUE</span>, cline<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for rma.ls</span>
 <span class='fu'>profile</span><span class='op'>(</span><span class='va'>fitted</span>, <span class='va'>alpha</span>, <span class='va'>xlim</span>, <span class='va'>ylim</span>, steps<span class='op'>=</span><span class='fl'>20</span>,
         lltol<span class='op'>=</span><span class='fl'>1e-03</span>, progbar<span class='op'>=</span><span class='cn'>TRUE</span>, parallel<span class='op'>=</span><span class='st'>"no"</span>, ncpus<span class='op'>=</span><span class='fl'>1</span>, cl<span class='op'>=</span><span class='cn'>NULL</span>,
-        plot<span class='op'>=</span><span class='cn'>TRUE</span>, pch<span class='op'>=</span><span class='fl'>19</span>, cline<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
+        plot<span class='op'>=</span><span class='cn'>TRUE</span>, pch<span class='op'>=</span><span class='fl'>19</span>, refline<span class='op'>=</span><span class='cn'>TRUE</span>, cline<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for profile.rma</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 <span class='co'># S3 method for profile.rma</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>xlim</span>, <span class='va'>ylim</span>, pch<span class='op'>=</span><span class='fl'>19</span>,
-     <span class='va'>xlab</span>, <span class='va'>ylab</span>, <span class='va'>main</span>, cline<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+     <span class='va'>xlab</span>, <span class='va'>ylab</span>, <span class='va'>main</span>, refline<span class='op'>=</span><span class='cn'>TRUE</span>, cline<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -287,6 +287,10 @@
       <td><p>plotting symbol to use. By default, a filled circle is used. See <code><a href='https://rdrr.io/r/graphics/points.html'>points</a></code> for other options.</p></td>
     </tr>
     <tr>
+      <th>refline</th>
+      <td><p>logical to specify whether the value of the parameter estimate should be indicated by a dotted vertical line and its log-likelihood value by a dotted horizontal line (the default is <code>TRUE</code>).</p></td>
+    </tr>
+    <tr>
       <th>cline</th>
       <td><p>logical to specify whether a horizontal reference line should be added to the plot that indicates the log-likelihood value corresponding to the 95% profile confidence interval (the default is <code>FALSE</code>).</p></td>
     </tr>
@@ -318,7 +322,7 @@
 <li><p>For location-scale model objects of class <code>"rma.ls"</code> obtained with the <code><a href='rma.uni.html'>rma.uni</a></code> function, profiling is done by default over all (non-fixed) \(\alpha\) parameters that are part of the scale model.</p></li>
 </ul>
 
-<p>A profile plot should show a single peak at the corresponding ML/REML estimate (assuming that the model was fitted with ML/REML estimation). The value of the parameter estimate is indicated by a dotted vertical line and its log-likelihood value by a dotted horizontal line. Hence, the intersection of these two lines should correspond to the peak.</p>
+<p>A profile plot should show a single peak at the corresponding ML/REML estimate (assuming that the model was fitted with ML/REML estimation). If <code>refline=TRUE</code> (the default), the value of the parameter estimate is indicated by a dotted vertical line and its log-likelihood value by a dotted horizontal line. Hence, the intersection of these two lines should correspond to the peak.</p>
 <p>When profiling a variance component (or some other parameter that cannot be negative), the peak may be at zero (if this corresponds to the ML/REML estimate of the parameter). In this case, the profiled log-likelihood should be a monotonically decreasing function of the parameter.</p>
 <p>If the profiled log-likelihood has multiple peaks, this indicates that the likelihood surface is not unimodal. In such cases, the ML/REML estimate may correspond to a local optimum (when the intersection of the two dotted lines is not at the highest peak).</p>
 <p>If the profile is flat (over the entire parameter space or large portions of it), then this suggests that at least some of the parameters of the model are not identifiable (and the parameter estimates obtained are to some extent arbitrary). See Raue et al. (2009) for some further discussion of parameter identifiability (structurally and practically) and the use of profile likelihoods to check for this.</p>
@@ -390,8 +394,8 @@
 #&gt; tau^2.2    2.6173  1.6178     13     no    exp 
 #&gt; 
 #&gt;      rho.con  rho.exp    con  exp 
-#&gt; con        1   0.9450      -   no 
-#&gt; exp   0.9450        1     13    - 
+#&gt; con        1               -   13 
+#&gt; exp   0.9450        1     no    - 
 #&gt; 
 #&gt; Test for Residual Heterogeneity:
 #&gt; QE(df = 24) = 5270.3863, p-val &lt; .0001

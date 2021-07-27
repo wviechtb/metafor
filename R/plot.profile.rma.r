@@ -1,4 +1,4 @@
-plot.profile.rma <- function(x, xlim, ylim, pch=19, xlab, ylab, main, cline=FALSE, ...) {
+plot.profile.rma <- function(x, xlim, ylim, pch=19, xlab, ylab, main, refline=TRUE, cline=FALSE, ...) {
 
    #########################################################################
 
@@ -47,8 +47,11 @@ plot.profile.rma <- function(x, xlim, ylim, pch=19, xlab, ylab, main, cline=FALS
       }
 
       lplot(x[[1]], x[[2]], type="o", xlab=xlab, ylab=ylab, main=main, bty="l", pch=pch, xlim=xlim, ylim=ylim, ...)
-      abline(v=x$vc, lty="dotted")
-      abline(h=x$maxll, lty="dotted")
+
+      if (refline) {
+         abline(v=x$vc, lty="dotted")
+         abline(h=x$maxll, lty="dotted")
+      }
 
       if (cline)
          abline(h=x$maxll - qchisq(0.95, df=1)/2, lty="dotted")

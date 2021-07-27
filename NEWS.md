@@ -1,4 +1,6 @@
-# metafor 3.1-8 (2021-07-05)
+# metafor 3.1-9 (2021-07-27)
+
+- elements of `rho` and `phi` in `rma.mv()` are now based on the lower triangular part of the respective correlation matrix (instead of the upper triangular part) for consistency with other functions; note that this is in principle a backwards incompatible change, although this should only be a concern in very special circumstances
 
 - added measure `"MPORM"` to `escalc()` for computing marginal log odds ratios based on marginal 2x2 tables directly (which requires specification of the correlation coefficients in the paired tables for the calculation of the sampling variances)
 
@@ -7,6 +9,10 @@
 - `rma.glmm()` now has entire array of optimizers available for `model="CM.EL"` and `measure="OR"`
 
 - `rma.uni()` now also provides R^2 for fixed-effects models
+
+- `matreg()` can now also analyze a covariance matrix with a corresponding 'V' matrix
+
+- `plot.profile.rma()` gains `refline` argument
 
 - improved the documentation a bit
 

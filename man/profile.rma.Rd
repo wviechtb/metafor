@@ -13,25 +13,25 @@
 \usage{
 \method{profile}{rma.uni}(fitted, xlim, ylim, steps=20,
         lltol=1e-03, progbar=TRUE, parallel="no", ncpus=1, cl=NULL,
-        plot=TRUE, pch=19, cline=FALSE, \dots)
+        plot=TRUE, pch=19, refline=TRUE, cline=FALSE, \dots)
 
 \method{profile}{rma.mv}(fitted, sigma2, tau2, rho, gamma2, phi,
         xlim, ylim, steps=20, lltol=1e-03, progbar=TRUE,
         parallel="no", ncpus=1, cl=NULL,
-        plot=TRUE, pch=19, cline=FALSE, \dots)
+        plot=TRUE, pch=19, refline=TRUE, cline=FALSE, \dots)
 
 \method{profile}{rma.uni.selmodel}(fitted, tau2, delta,
         xlim, ylim, steps=20, lltol=1e-03, progbar=TRUE,
         parallel="no", ncpus=1, cl=NULL,
-        plot=TRUE, pch=19, cline=FALSE, \dots)
+        plot=TRUE, pch=19, refline=TRUE, cline=FALSE, \dots)
 
 \method{profile}{rma.ls}(fitted, alpha, xlim, ylim, steps=20,
         lltol=1e-03, progbar=TRUE, parallel="no", ncpus=1, cl=NULL,
-        plot=TRUE, pch=19, cline=FALSE, \dots)
+        plot=TRUE, pch=19, refline=TRUE, cline=FALSE, \dots)
 
 \method{print}{profile.rma}(x, \dots)
 \method{plot}{profile.rma}(x, xlim, ylim, pch=19,
-     xlab, ylab, main, cline=FALSE, \dots)
+     xlab, ylab, main, refline=TRUE, cline=FALSE, \dots)
 }
 \arguments{
    \item{fitted}{an object of class \code{"rma.uni"}, \code{"rma.mv"}, \code{"rma.uni.selmodel"}, or \code{"rma.ls"}.}
@@ -53,6 +53,7 @@
    \item{cl}{optional cluster to use if \code{parallel="snow"}. If not supplied, a cluster on the local machine is created for the duration of the call.}
    \item{plot}{logical to specify whether the profile plot should be drawn after profiling is finished (the default is \code{TRUE}).}
    \item{pch}{plotting symbol to use. By default, a filled circle is used. See \code{\link{points}} for other options.}
+   \item{refline}{logical to specify whether the value of the parameter estimate should be indicated by a dotted vertical line and its log-likelihood value by a dotted horizontal line (the default is \code{TRUE}).}
    \item{cline}{logical to specify whether a horizontal reference line should be added to the plot that indicates the log-likelihood value corresponding to the 95\% profile confidence interval (the default is \code{FALSE}).}
    \item{xlab}{title for the x-axis. If unspecified, the function tries to set an appropriate axis title.}
    \item{ylab}{title for the y-axis. If unspecified, the function tries to set an appropriate axis title.}
@@ -70,7 +71,7 @@
    \item For location-scale model objects of class \code{"rma.ls"} obtained with the \code{\link{rma.uni}} function, profiling is done by default over all (non-fixed) \mjseqn{\alpha} parameters that are part of the scale model.
    }
 
-   A profile plot should show a single peak at the corresponding ML/REML estimate (assuming that the model was fitted with ML/REML estimation). The value of the parameter estimate is indicated by a dotted vertical line and its log-likelihood value by a dotted horizontal line. Hence, the intersection of these two lines should correspond to the peak.
+   A profile plot should show a single peak at the corresponding ML/REML estimate (assuming that the model was fitted with ML/REML estimation). If \code{refline=TRUE} (the default), the value of the parameter estimate is indicated by a dotted vertical line and its log-likelihood value by a dotted horizontal line. Hence, the intersection of these two lines should correspond to the peak.
 
    When profiling a variance component (or some other parameter that cannot be negative), the peak may be at zero (if this corresponds to the ML/REML estimate of the parameter). In this case, the profiled log-likelihood should be a monotonically decreasing function of the parameter.
 

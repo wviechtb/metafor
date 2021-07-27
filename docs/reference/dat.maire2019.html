@@ -105,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1-9</span>
       </span>
     </div>
 
@@ -392,7 +392,11 @@
 </div><div class='output co'>#&gt; Profiling tau2 = 1 </div><div class='img'><img src='dat.maire2019-1.png' alt='' width='864' height='768' /></div><div class='output co'>#&gt; Profiling rho = 1 </div><div class='img'><img src='dat.maire2019-2.png' alt='' width='864' height='768' /></div><div class='input'>
 <span class='co'>### effective range (river-km for which the spatial correlation is &gt;= .05)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span><span class='op'>(</span><span class='fl'>3</span><span class='op'>)</span> <span class='op'>*</span> <span class='va'>res2</span><span class='op'>$</span><span class='va'>rho</span>
-</div><div class='output co'>#&gt; [1] 26.07908</div></pre>
+</div><div class='output co'>#&gt; [1] 26.07908</div><div class='input'>
+<span class='co'>### note: it was necessary to adjust the starting value for rho in models</span>
+<span class='co'>### res2 and res3 so that the optimizer does not get stuck in a local maximum</span>
+<span class='fu'><a href='profile.rma.html'>profile</a></span><span class='op'>(</span><span class='va'>res2</span>, rho<span class='op'>=</span><span class='fl'>1</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>200</span><span class='op'>)</span>, steps<span class='op'>=</span><span class='fl'>100</span><span class='op'>)</span>
+</div><div class='img'><img src='dat.maire2019-3.png' alt='' width='864' height='768' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -1,5 +1,5 @@
 profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
-   xlim, ylim, steps=20, lltol=1e-03, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, plot=TRUE, pch=19, cline=FALSE, ...) {
+   xlim, ylim, steps=20, lltol=1e-03, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, plot=TRUE, pch=19, refline=TRUE, cline=FALSE, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -508,7 +508,7 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
    #########################################################################
 
    if (plot)
-      plot(sav, pch=pch, cline=cline, ...)
+      plot(sav, pch=pch, refline=refline, cline=cline, ...)
 
    #########################################################################
 

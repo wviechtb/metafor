@@ -1043,7 +1043,6 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
          if (method == "HS") {
             tau2 <- ifelse(tau2.fix, tau2.val, (RSS - k) / sum(wi))
          } else {
-            ### "HSk"
             tau2 <- ifelse(tau2.fix, tau2.val, (k/(k-p)*RSS - k) / sum(wi))
          }
 

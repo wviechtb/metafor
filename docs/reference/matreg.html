@@ -105,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1-9</span>
       </span>
     </div>
 
@@ -190,7 +190,7 @@
     </tr>
     <tr>
       <th>x</th>
-      <td><p>indices of the predictor variable(s).</p></td>
+      <td><p>indices of the predictor variables.</p></td>
     </tr>
     <tr>
       <th>R</th>
@@ -202,7 +202,7 @@
     </tr>
     <tr>
       <th>V</th>
-      <td><p>variance-covariance matrix of the lower triangular elements of the correlation matrix. Either <code>V</code> or <code>n</code> should be specified, not both. See &#8216;Details&#8217;.</p></td>
+      <td><p>variance-covariance matrix of the lower triangular elements of the correlation/covariance matrix. Either <code>V</code> or <code>n</code> should be specified, not both. See &#8216;Details&#8217;.</p></td>
     </tr>
     <tr>
       <th>cov</th>
@@ -232,10 +232,11 @@
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Let \(R\) be a \(p \times p\) correlation or covariance matrix. Let \(y\) denote the row/column of the outcome variable and \(x\) the row(s)/column(s) of the predictor variable(s) in this matrix. Let \(R_{x,x}\) and \(R_{x,y}\) denote the corresponding submatrices of \(R\). Then \[b = R_{x,x}^{-1} R_{x,y}\] yields the standardized or raw regression coefficients (depending on whether \(R\) is a correlation or covariance matrix) when regressing the outcome variable on the predictor variable(s).</p>
-<p>The \(R\) matrix may be computed based on a single sample of \(n\) subjects. In this case, one should specify the sample size via argument <code>n</code>. The variance-covariance matrix of the standardized regression coefficients is then given by \(\mbox{Var}[b] = \mbox{MSE} \times R_{x,x}^{-1}\), where \(\mbox{MSE} = (1 - b'R_{x,y}) / (n - m)\), where \(m\) denotes the number of predictor variables. The standard errors of the regression coefficients are then given by the square root of the diagonal elements of \(\mbox{Var}[b]\). Test statistics (in this case, t-statistics) and the corresponding p-values can then be computed as in a regular regression analysis. When \(R\) is a covariance matrix, one should set <code>cov=TRUE</code> and specify the means of the \(p\) variables via argument <code>means</code> to obtain raw regression coefficients including the intercept and corresponding standard errors.</p>
-<p>Alternatively, \(R\) may be the result of a meta-analysis of correlation coefficients. In this case, the elements in \(R\) are pooled correlation coefficients and the variance-covariance matrix of these pooled coefficients should be specified via argument <code>V</code>. The order of elements in <code>V</code> should correspond to the order of elements in the lower triangular part of \(R\) column-wise. For example, if \(R\) is a \(4 \times 4\) matrix, then the elements are \(r_{2,1}\), \(r_{3,1}\), \(r_{4,1}\), \(r_{3,2}\), \(r_{4,2}\), and \(r_{4,3}\) and hence <code>V</code> should be a \(6 \times 6\) variance-covariance matrix of these elements. The variance-covariance matrix of the standardized regression coefficients (i.e., \(\mbox{Var}[b]\)) is then computed as a function of <code>V</code> as described in Becker (1992) using the multivariate delta method. The standard errors of the standardized regression coefficients are then given by the square root of the diagonal elements of \(\mbox{Var}[b]\). Test statistics (in this case, z-statistics) and the corresponding p-values can then be computed in the usual manner.</p>
+    <p>Let \(R\) be a \(p \times p\) correlation or covariance matrix. Let \(y\) denote the row/column of the outcome variable and \(x\) the row(s)/column(s) of the predictor variable(s) in this matrix. Let \(R_{x,x}\) and \(R_{x,y}\) denote the corresponding submatrices of \(R\). Then \[b = R_{x,x}^{-1} R_{x,y}\] yields the standardized or raw regression coefficients (depending on whether \(R\) is a correlation or covariance matrix, respectively) when regressing the outcome variable on the predictor variable(s).</p>
+<p>The \(R\) matrix may be computed based on a single sample of \(n\) subjects. In this case, one should specify the sample size via argument <code>n</code>. The variance-covariance matrix of the standardized regression coefficients is then given by \(\mbox{Var}[b] = \mbox{MSE} \times R_{x,x}^{-1}\), where \(\mbox{MSE} = (1 - b'R_{x,y}) / (n - m)\) and \(m\) denotes the number of predictor variables. The standard errors of the regression coefficients are then given by the square root of the diagonal elements of \(\mbox{Var}[b]\). Test statistics (in this case, t-statistics) and the corresponding p-values can then be computed as in a regular regression analysis. When \(R\) is a covariance matrix, one should set <code>cov=TRUE</code> and specify the means of the \(p\) variables via argument <code>means</code> to obtain raw regression coefficients including the intercept and corresponding standard errors.</p>
+<p>Alternatively, \(R\) may be the result of a meta-analysis of correlation coefficients. In this case, the elements in \(R\) are pooled correlation coefficients and the variance-covariance matrix of these pooled coefficients should be specified via argument <code>V</code>. The order of elements in <code>V</code> should correspond to the order of elements in the lower triangular part of \(R\) column-wise. For example, if \(R\) is a \(4 \times 4\) matrix of the form: \[\begin{bmatrix} 1 & & & \\ r_{21} & 1 & & \\ r_{31} & r_{32} & 1 & \\ r_{41} & r_{42} & r_{43} & 1 \end{bmatrix}\] then the elements are \(r_{21}\), \(r_{31}\), \(r_{41}\), \(r_{32}\), \(r_{42}\), and \(r_{43}\) and hence <code>V</code> should be a \(6 \times 6\) variance-covariance matrix of these elements in this order. The variance-covariance matrix of the standardized regression coefficients (i.e., \(\mbox{Var}[b]\)) is then computed as a function of <code>V</code> as described in Becker (1992) using the multivariate delta method. The standard errors of the standardized regression coefficients are then given by the square root of the diagonal elements of \(\mbox{Var}[b]\). Test statistics (in this case, z-statistics) and the corresponding p-values can then be computed in the usual manner.</p>
 <p>In case \(R\) is the result of a meta-analysis of Fisher r-to-z transformed correlation coefficients (and hence <code>V</code> is then the corresponding variance-covariance matrix of these pooled transformed coefficients), one should set argument <code>ztor=TRUE</code>, so that the appropriate back-transformation is then applied to <code>R</code> (and <code>V</code>) within the function.</p>
+<p>Finally, \(R\) may be a covariance matrix based on a meta-analysis (e.g., the estimated variance-covariance matrix of the random effects in a multivariate model). In this case, one should set <code>cov=TRUE</code> and <code>V</code> should again be the variance-covariance matrix of the elements in \(R\), but now including the diagonal. Hence, if \(R\) is a \(4 \times 4\) matrix of the form: \[\begin{bmatrix} \tau_1^2 & & & \\ \tau_{21} & \tau_2^2 & & \\ \tau_{31} & \tau_{32} & \tau_3^2 & \\ \tau_{41} & \tau_{42} & \tau_{43} & \tau_4^2 \end{bmatrix}\] then the elements are \(\tau^2_1\), \(\tau_{21}\), \(\tau_{31}\), \(\tau_{41}\), \(\tau^2_2\), \(\tau_{32}\), \(\tau_{42}\), \(\tau^2_3\), \(\tau_{43}\), and \(\tau^2_4\), and hence <code>V</code> should be a \(10 \times 10\) variance-covariance matrix of these elements in this order.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class <code>"matreg"</code>. The object is a list containing the following components:</p>
@@ -293,25 +294,25 @@
 #&gt; tau^2.6    0.0111  0.1052      8     no  asom.conf 
 #&gt; 
 #&gt;            rho.acg.p  rho.asm.p  rho.cnf.  rho.acg.s  rho.acg.c  rho.asm.c 
-#&gt; acog.perf          1     0.9497   -0.6178     0.5491     0.0432     0.3532   
-#&gt; asom.perf     0.9497          1   -0.5969     0.4604    -0.0495     0.2688   
-#&gt; conf.perf    -0.6178    -0.5969         1    -0.9345     0.7023    -0.1311   
-#&gt; acog.asom     0.5491     0.4604   -0.9345          1    -0.6961    -0.0891   
-#&gt; acog.conf     0.0432    -0.0495    0.7023    -0.6961          1     0.4193   
+#&gt; acog.perf          1                                                         
+#&gt; asom.perf     0.9497          1                                              
+#&gt; conf.perf    -0.6178    -0.5969         1                                    
+#&gt; acog.asom     0.5491     0.4604   -0.9345          1                         
+#&gt; acog.conf     0.0432    -0.0495    0.7023    -0.6961          1              
 #&gt; asom.conf     0.3532     0.2688   -0.1311    -0.0891     0.4193          1   
 #&gt;            acg.p  asm.p  cnf.  acg.s  acg.c  asm.c 
-#&gt; acog.perf      -     no    no     no     no     no 
-#&gt; asom.perf      9      -    no     no     no     no 
-#&gt; conf.perf      8      8     -     no     no     no 
-#&gt; acog.asom      9      9     8      -     no     no 
-#&gt; acog.conf      8      8     8      8      -     no 
-#&gt; asom.conf      8      8     8      8      8      - 
+#&gt; acog.perf      -      9     8      9      8      8 
+#&gt; asom.perf     no      -     8      9      8      8 
+#&gt; conf.perf     no     no     -      8      8      8 
+#&gt; acog.asom     no     no    no      -      8      8 
+#&gt; acog.conf     no     no    no     no      -      8 
+#&gt; asom.conf     no     no    no     no     no      - 
 #&gt; 
 #&gt; Test for Residual Heterogeneity:
 #&gt; QE(df = 45) = 334.8358, p-val &lt; .0001
 #&gt; 
 #&gt; Test of Moderators (coefficients 1:6):
-#&gt; QM(df = 6) = 596.7703, p-val &lt; .0001
+#&gt; QM(df = 6) = 596.7711, p-val &lt; .0001
 #&gt; 
 #&gt; Model Results:
 #&gt; 
@@ -320,22 +321,21 @@
 #&gt; var1.var2asom.perf   -0.1423  0.0917  -1.5527  0.1205  -0.3220   0.0373      
 #&gt; var1.var2conf.perf    0.3167  0.0847   3.7393  0.0002   0.1507   0.4827  *** 
 #&gt; var1.var2acog.asom    0.5671  0.0367  15.4640  &lt;.0001   0.4953   0.6390  *** 
-#&gt; var1.var2acog.conf   -0.4888  0.0509  -9.6047  &lt;.0001  -0.5886  -0.3891  *** 
+#&gt; var1.var2acog.conf   -0.4888  0.0509  -9.6048  &lt;.0001  -0.5886  -0.3891  *** 
 #&gt; var1.var2asom.conf   -0.4750  0.0506  -9.3901  &lt;.0001  -0.5741  -0.3758  *** 
 #&gt; 
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; </div><div class='input'>
 <span class='co'>### restructure estimated mean correlations into a 4x4 matrix</span>
-<span class='va'>R</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='cn'>NA</span>, nrow<span class='op'>=</span><span class='fl'>4</span>, ncol<span class='op'>=</span><span class='fl'>4</span><span class='op'>)</span>
-<span class='va'>R</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/lower.tri.html'>lower.tri</a></span><span class='op'>(</span><span class='va'>R</span><span class='op'>)</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'><a href='coef.rma.html'>coef</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
+<span class='va'>R</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vec2mat.html'>vec2mat</a></span><span class='op'>(</span><span class='fu'><a href='coef.rma.html'>coef</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span><span class='op'>(</span><span class='va'>R</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>R</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"perf"</span>, <span class='st'>"acog"</span>, <span class='st'>"asom"</span>, <span class='st'>"conf"</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='va'>R</span>, digits<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;        perf   acog   asom conf
-#&gt; perf     NA     NA     NA   NA
-#&gt; acog -0.060     NA     NA   NA
-#&gt; asom -0.142  0.567     NA   NA
-#&gt; conf  0.317 -0.489 -0.475   NA</div><div class='input'>
+</div><div class='output co'>#&gt;        perf   acog   asom   conf
+#&gt; perf  1.000 -0.060 -0.142  0.317
+#&gt; acog -0.060  1.000  0.567 -0.489
+#&gt; asom -0.142  0.567  1.000 -0.475
+#&gt; conf  0.317 -0.489 -0.475  1.000</div><div class='input'>
 <span class='co'>### check that order in vcov(res) corresponds to order in R</span>
 <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='fu'><a href='vcov.rma.html'>vcov</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>, digits<span class='op'>=</span><span class='fl'>4</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;                    var1.var2acog.perf var1.var2asom.perf var1.var2conf.perf
@@ -373,8 +373,7 @@
 <span class='va'>dat</span><span class='op'>$</span><span class='va'>var1.var2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>var1.var2</span>,
    levels<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"acog.perf"</span>, <span class='st'>"asom.perf"</span>, <span class='st'>"conf.perf"</span>, <span class='st'>"acog.asom"</span>, <span class='st'>"acog.conf"</span>, <span class='st'>"asom.conf"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>V</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>var1.var2</span> <span class='op'>-</span> <span class='fl'>1</span>, random <span class='op'>=</span> <span class='op'>~</span> <span class='va'>var1.var2</span> <span class='op'>|</span> <span class='va'>study</span>, struct<span class='op'>=</span><span class='st'>"UN"</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: Rows with NAs omitted from model fitting.</span></div><div class='input'><span class='va'>R</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='cn'>NA</span>, nrow<span class='op'>=</span><span class='fl'>4</span>, ncol<span class='op'>=</span><span class='fl'>4</span><span class='op'>)</span>
-<span class='va'>R</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/lower.tri.html'>lower.tri</a></span><span class='op'>(</span><span class='va'>R</span><span class='op'>)</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'><a href='coef.rma.html'>coef</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Rows with NAs omitted from model fitting.</span></div><div class='input'><span class='va'>R</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vec2mat.html'>vec2mat</a></span><span class='op'>(</span><span class='fu'><a href='coef.rma.html'>coef</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span><span class='op'>(</span><span class='va'>R</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>R</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"perf"</span>, <span class='st'>"acog"</span>, <span class='st'>"asom"</span>, <span class='st'>"conf"</span><span class='op'>)</span>
 <span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>matreg</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>:</span><span class='fl'>4</span>, R<span class='op'>=</span><span class='va'>R</span>, V<span class='op'>=</span><span class='fu'><a href='vcov.rma.html'>vcov</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>, ztor<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
 <span class='va'>fit</span><span class='co'># }</span>

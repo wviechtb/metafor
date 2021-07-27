@@ -338,7 +338,7 @@
 
       g.levels.comb.k <- lapply(g.levels.comb.k, function(x) outer(x,x, FUN="&"))
       g.levels.comb.k <- Reduce("+", g.levels.comb.k)
-      g.levels.comb.k <- g.levels.comb.k[upper.tri(g.levels.comb.k)]
+      g.levels.comb.k <- g.levels.comb.k[lower.tri(g.levels.comb.k)]
 
       ### UN/UNR: if a particular combination of arms never occurs in any of the studies, then must fix the corresponding rho to 0 (if not already fixed)
       ### this also takes care of the case where each study has only a single arm
@@ -546,7 +546,7 @@
       if (struct == "PHYPD")
          rho.init <- 1
       if (!is.element(struct, c("PHYBM","PHYPL","PHYPD")))
-         rho.init <- unname(suppressMessages(quantile(Dmat[upper.tri(Dmat)], 0.25))) # suppressMessages() to avoid '<sparse>[ <logic> ] : .M.sub.i.logical() maybe inefficient' messages when sparse=TRUE
+         rho.init <- unname(suppressMessages(quantile(Dmat[lower.tri(Dmat)], 0.25))) # suppressMessages() to avoid '<sparse>[ <logic> ] : .M.sub.i.logical() maybe inefficient' messages when sparse=TRUE
    } else {
       rho.init <- NULL
    }
@@ -573,7 +573,7 @@
       G[g.levels.r,] <- 0
       G[,g.levels.r] <- 0
       tau2[g.levels.r] <- 0
-      rho <- G[upper.tri(G)]
+      rho <- G[lower.tri(G)]
       warning(mstyle$warning(paste0("Fixed ", ifelse(isG, 'tau2', 'gamma2'), " and corresponding ", ifelse(isG, 'rho', 'phi'), " value(s) to 0 for removed level(s).")), call.=FALSE)
    }
 
@@ -583,7 +583,7 @@
       G[g.levels.r,] <- 0
       G[,g.levels.r] <- 0
       diag(G) <- tau2 ### don't really need this
-      rho <- G[upper.tri(G)]
+      rho <- G[lower.tri(G)]
       warning(mstyle$warning(paste0("Fixed ", ifelse(isG, 'rho', 'phi'), " value(s) to 0 for removed level(s).")), call.=FALSE)
    }
 
@@ -607,13 +607,21 @@
 
 ### function to construct var-cov matrix for "UN" and "GEN" structures given vector of variances and correlations
 
-.con.vcov.UN <- function(vars, cors) {
+.con.vcov.UN <- function(vars, cors, vccov=FALSE) {
    dims <- length(vars)
-   G <- matrix(1, nrow=dims, ncol=dims)
-   G[upper.tri(G)] <- cors
-   G[lower.tri(G)] <- t(G)[lower.tri(G)]
-   H <- diag(sqrt(vars), nrow=dims, ncol=dims)
-   return(H %*% G %*% H)
+   if (vccov) {
+      G <- matrix(0, nrow=dims, ncol=dims)
+      G[lower.tri(G)] <- cors
+      G[upper.tri(G)] <- t(G)[upper.tri(G)]
+      diag(G) <- vars
+      return(G)
+   } else {
+      R <- matrix(1, nrow=dims, ncol=dims)
+      R[lower.tri(R)] <- cors
+      R[upper.tri(R)] <- t(R)[upper.tri(R)]
+      S <- diag(sqrt(vars), nrow=dims, ncol=dims)
+      return(S %*% R %*% S)
+   }
 }
 
 ### function to construct var-cov matrix for "UN" and "GEN" structures given vector of 'choled' variances and covariances
@@ -621,7 +629,7 @@
 .con.vcov.UN.chol <- function(vars, covs) {
    dims <- length(vars)
    G <- matrix(0, nrow=dims, ncol=dims)
-   G[upper.tri(G)] <- covs
+   G[lower.tri(G)] <- covs
    diag(G) <- vars
    return(crossprod(G))
 }
@@ -631,8 +639,8 @@
 .con.vcov.UNR <- function(var, cors) {
    dims <- round((1 + sqrt(1 + 8*length(cors)))/2)
    G <- matrix(1, nrow=dims, ncol=dims)
-   G[upper.tri(G)] <- cors
-   G[lower.tri(G)] <- t(G)[lower.tri(G)]
+   G[lower.tri(G)] <- cors
+   G[upper.tri(G)] <- t(G)[upper.tri(G)]
    return(var * G)
 }
 
@@ -641,7 +649,7 @@
 .con.vcov.UNR.chol <- function(var, cors) {
    dims <- round((1 + sqrt(1 + 8*length(cors)))/2)
    G <- matrix(0, nrow=dims, ncol=dims)
-   G[upper.tri(G)] <- cors
+   G[lower.tri(G)] <- cors
    diag(G) <- 1
    return(var * crossprod(G))
 }
@@ -650,7 +658,7 @@
 
 ### function to construct var-cov matrix (G or H) for '~ inner | outer' terms
 
-.con.E <- function(v, r, v.val, r.val, Z1, Z2, levels.r, values, Dmat, struct, cholesky, vctransf, posdefify, sparse) {
+.con.E <- function(v, r, v.val, r.val, Z1, Z2, levels.r, values, Dmat, struct, cholesky, vctransf, vccov, posdefify, sparse) {
 
    ### if cholesky=TRUE, back-transformation/substitution is done below; otherwise, back-transform and replace fixed values
 
@@ -675,7 +683,7 @@
          if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD"))) {
             r[r < 0] <- 0
          }
-         if (!is.element(struct, c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD"))) {
+         if (!is.element(struct, c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD")) && !vccov) {
             r[r < -1] <- -1
             r[r > 1] <- 1
          }
@@ -701,15 +709,15 @@
       if (cholesky) {
          E <- .con.vcov.UN.chol(v, r)
          v <- diag(E)                  ### need this, so correct values are shown when verbose=TRUE
-         r <- cov2cor(E)[upper.tri(E)] ### need this, so correct values are shown when verbose=TRUE
+         r <- cov2cor(E)[lower.tri(E)] ### need this, so correct values are shown when verbose=TRUE
          v[!is.na(v.val)] <- v.val[!is.na(v.val)] ### replace any fixed values
          r[!is.na(r.val)] <- r.val[!is.na(r.val)] ### replace any fixed values
       }
-      E <- .con.vcov.UN(v, r)
+      E <- .con.vcov.UN(v, r, vccov)
       if (posdefify) {
          E <- as.matrix(nearPD(E)$mat) ### nearPD() in Matrix package
          v <- diag(E)                  ### need this, so correct values are shown when verbose=TRUE
-         r <- cov2cor(E)[upper.tri(E)] ### need this, so correct values are shown when verbose=TRUE
+         r <- cov2cor(E)[lower.tri(E)] ### need this, so correct values are shown when verbose=TRUE
       }
    }
 
@@ -717,7 +725,7 @@
       if (cholesky) {
          E <- .con.vcov.UNR.chol(v, r)
          v <- diag(E)[1,1]             ### need this, so correct values are shown when verbose=TRUE
-         r <- cov2cor(E)[upper.tri(E)] ### need this, so correct values are shown when verbose=TRUE
+         r <- cov2cor(E)[lower.tri(E)] ### need this, so correct values are shown when verbose=TRUE
          v[!is.na(v.val)] <- v.val[!is.na(v.val)] ### replace any fixed values
          r[!is.na(r.val)] <- r.val[!is.na(r.val)] ### replace any fixed values
       }
@@ -725,7 +733,7 @@
       if (posdefify) {
          E <- as.matrix(nearPD(E, keepDiag=TRUE)$mat) ### nearPD() in Matrix package
          v <- E[1,1]                   ### need this, so correct values are shown when verbose=TRUE
-         r <- cov2cor(E)[upper.tri(E)] ### need this, so correct values are shown when verbose=TRUE
+         r <- cov2cor(E)[lower.tri(E)] ### need this, so correct values are shown when verbose=TRUE
       }
    }
 
@@ -823,7 +831,7 @@
                        sigma2s, tau2s, rhos, gamma2s, phis,
                        withS, withG, withH,
                        struct, g.levels.r, h.levels.r, g.values, h.values,
-                       sparse, cholesky, posdefify, vctransf,
+                       sparse, cholesky, posdefify, vctransf, vccov,
                        verbose, digits, REMLf, dofit=FALSE) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
@@ -853,9 +861,12 @@
 
    if (withG) {
 
-      resG <- .con.E(v=par[(sigma2s+1):(sigma2s+tau2s)], r=par[(sigma2s+tau2s+1):(sigma2s+tau2s+rhos)],
+      vars <- par[(sigma2s+1):(sigma2s+tau2s)]
+      cors <- par[(sigma2s+tau2s+1):(sigma2s+tau2s+rhos)]
+
+      resG <- .con.E(v=vars, r=cors,
                      v.val=tau2.val, r.val=rho.val, Z1=Z.G1, Z2=Z.G2, levels.r=g.levels.r, values=g.values, Dmat=g.Dmat,
-                     struct=struct[1], cholesky=cholesky[1], vctransf=vctransf, posdefify=posdefify, sparse=sparse)
+                     struct=struct[1], cholesky=cholesky[1], vctransf=vctransf, vccov=vccov, posdefify=posdefify, sparse=sparse)
       tau2 <- resG$v
       rho  <- resG$r
       G    <- resG$E
@@ -866,9 +877,12 @@
 
    if (withH) {
 
-      resH <- .con.E(v=par[(sigma2s+tau2s+rhos+1):(sigma2s+tau2s+rhos+gamma2s)], r=par[(sigma2s+tau2s+rhos+gamma2s+1):(sigma2s+tau2s+rhos+gamma2s+phis)],
+      vars <- par[(sigma2s+tau2s+rhos+1):(sigma2s+tau2s+rhos+gamma2s)]
+      cors <- par[(sigma2s+tau2s+rhos+gamma2s+1):(sigma2s+tau2s+rhos+gamma2s+phis)]
+
+      resH <- .con.E(v=vars, r=cors,
                      v.val=gamma2.val, r.val=phi.val, Z1=Z.H1, Z2=Z.H2, levels.r=h.levels.r, values=h.values, Dmat=h.Dmat,
-                     struct=struct[2], cholesky=cholesky[2], vctransf=vctransf, posdefify=posdefify, sparse=sparse)
+                     struct=struct[2], cholesky=cholesky[2], vctransf=vctransf, vccov=vccov, posdefify=posdefify, sparse=sparse)
       gamma2 <- resH$v
       phi    <- resH$r
       H      <- resH$E

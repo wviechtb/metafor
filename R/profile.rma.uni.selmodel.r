@@ -1,5 +1,5 @@
 profile.rma.uni.selmodel <- function(fitted, tau2, delta,
-   xlim, ylim, steps=20, lltol=1e-03, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, plot=TRUE, pch=19, cline=FALSE, ...) {
+   xlim, ylim, steps=20, lltol=1e-03, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, plot=TRUE, pch=19, refline=TRUE, cline=FALSE, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -319,7 +319,7 @@ profile.rma.uni.selmodel <- function(fitted, tau2, delta,
    #########################################################################
 
    if (plot)
-      plot(sav, pch=pch, cline=cline, ...)
+      plot(sav, pch=pch, refline=refline, cline=cline, ...)
 
    #########################################################################
 

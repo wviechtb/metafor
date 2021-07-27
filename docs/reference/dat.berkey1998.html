@@ -105,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1-9</span>
       </span>
     </div>
 
@@ -243,14 +243,14 @@
 #&gt; tau^2.2    0.012  0.108      5     no     PD 
 #&gt; 
 #&gt;     rho.AL  rho.PD    AL  PD 
-#&gt; AL       1   0.609     -  no 
-#&gt; PD   0.609       1     5   - 
+#&gt; AL       1             -   5 
+#&gt; PD   0.609       1    no   - 
 #&gt; 
 #&gt; Test for Residual Heterogeneity:
 #&gt; QE(df = 8) = 128.227, p-val &lt; .001
 #&gt; 
 #&gt; Test of Moderators (coefficients 1:2):
-#&gt; QM(df = 2) = 108.862, p-val &lt; .001
+#&gt; QM(df = 2) = 108.861, p-val &lt; .001
 #&gt; 
 #&gt; Model Results:
 #&gt; 
@@ -272,7 +272,7 @@
 #&gt; 1:  -0.6926 0.0744 -9.3120 &lt;.0001 
 #&gt; 
 #&gt; Test of Hypothesis:
-#&gt; QM(df = 1) = 86.7139, p-val &lt; .0001
+#&gt; QM(df = 1) = 86.7134, p-val &lt; .0001
 #&gt; </div><div class='input'>
 <span class='co'>### fit model including publication year as moderator for both outcomes (with ML estimation)</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>V</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>outcome</span> <span class='op'>+</span> <span class='va'>outcome</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/AsIs.html'>I</a></span><span class='op'>(</span><span class='va'>year</span> <span class='op'>-</span> <span class='fl'>1983</span><span class='op'>)</span> <span class='op'>-</span> <span class='fl'>1</span>,
@@ -291,14 +291,14 @@
 #&gt; tau^2.2    0.008  0.090      5     no     PD 
 #&gt; 
 #&gt;     rho.AL  rho.PD    AL  PD 
-#&gt; AL       1   0.659     -  no 
-#&gt; PD   0.659       1     5   - 
+#&gt; AL       1             -   5 
+#&gt; PD   0.659       1    no   - 
 #&gt; 
 #&gt; Test for Residual Heterogeneity:
 #&gt; QE(df = 6) = 125.756, p-val &lt; .001
 #&gt; 
 #&gt; Test of Moderators (coefficients 1:4):
-#&gt; QM(df = 4) = 143.430, p-val &lt; .001
+#&gt; QM(df = 4) = 143.432, p-val &lt; .001
 #&gt; 
 #&gt; Model Results:
 #&gt; 

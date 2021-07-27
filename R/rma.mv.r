@@ -1554,9 +1554,10 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
                cholesky = ifelse(is.element(struct, c("UN","UNR","GEN")), TRUE, FALSE), # by default, use Cholesky factorization for G and H matrix for "UN", "UNR", and "GEN" structures
                posdefify = FALSE,         # to force G and H matrix to become positive definite
                hessian = FALSE,           # to compute Hessian
-               hessianCtrl=list(r=8),     # arguments passed on to 'method.args' of hessian()
-               vctransf = FALSE)          # if FALSE, Hessian is computed for the untransformed (raw) variance components
+               hessianCtrl = list(r=8),   # arguments passed on to 'method.args' of hessian()
+               vctransf = FALSE,          # if FALSE, Hessian is computed for the untransformed (raw) variance components
                                           # if TRUE,  Hessian is computed for the transformed components (log/atahn/qlogis space)
+               vccov = FALSE)
 
    ### replace defaults with any user-defined values
 
@@ -1671,7 +1672,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
          con$tau2.init <- log(tau2.init)
       } else {
          con$tau2.init <- diag(G)        ### note: con$tau2.init and con$rho.init are the 'choled' values of the initial G matrix, so con$rho.init really
-         con$rho.init <- G[upper.tri(G)] ### contains the 'choled' covariances; and these values are also passed on the .ll.rma.mv as the initial values
+         con$rho.init <- G[lower.tri(G)] ### contains the 'choled' covariances; and these values are also passed on the .ll.rma.mv as the initial values
       }
       if (length(con$rho.init) == 0L)
          con$rho.init <- 0
@@ -1691,7 +1692,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
       if (inherits(H, "try-error"))
          stop(mstyle$stop("Cannot take Choleski decomposition of initial 'H' matrix."))
       con$gamma2.init <- diag(H)      ### note: con$gamma2.init and con$phi.init are the 'choled' values of the initial H matrix, so con$phi.init really
-      con$phi.init <- H[upper.tri(H)] ### contains the 'choled' covariances; and these values are also passed on the .ll.rma.mv as the initial values
+      con$phi.init <- H[lower.tri(H)] ### contains the 'choled' covariances; and these values are also passed on the .ll.rma.mv as the initial values
       if (length(con$phi.init) == 0L)
          con$phi.init <- 0
    } else {
@@ -1971,9 +1972,9 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
             D.S=D.S, Z.G1=Z.G1, Z.G2=Z.G2, Z.H1=Z.H1, Z.H2=Z.H2, g.Dmat=g.Dmat, h.Dmat=h.Dmat,
             sigma2.val=sigma2, tau2.val=tau2, rho.val=rho, gamma2.val=gamma2, phi.val=phi,
             sigma2s=sigma2s, tau2s=tau2s, rhos=rhos, gamma2s=gamma2s, phis=phis,
-            withS=withS, withG=withG, withH=withH,
-            struct=struct, g.levels.r=g.levels.r, h.levels.r=h.levels.r, g.values=g.values, h.values=h.values,
-            sparse=sparse, cholesky=cholesky, posdefify=posdefify, vctransf=TRUE,
+            withS=withS, withG=withG, withH=withH, struct=struct,
+            g.levels.r=g.levels.r, h.levels.r=h.levels.r, g.values=g.values, h.values=h.values,
+            sparse=sparse, cholesky=cholesky, posdefify=posdefify, vctransf=TRUE, vccov=FALSE,
             verbose=verbose, digits=digits, REMLf=con$REMLf, dofit=FALSE", ctrl.arg, ")\n", sep="")
 
          #return(optcall)
@@ -2069,7 +2070,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
       sigma2s=sigma2s, tau2s=tau2s, rhos=rhos, gamma2s=gamma2s, phis=phis,
       withS=withS, withG=withG, withH=withH, struct=struct,
       g.levels.r=g.levels.r, h.levels.r=h.levels.r, g.values=g.values, h.values=h.values,
-      sparse=sparse, cholesky=cholesky, posdefify=posdefify, vctransf=TRUE,
+      sparse=sparse, cholesky=cholesky, posdefify=posdefify, vctransf=TRUE, vccov=FALSE,
       verbose=FALSE, digits=digits, REMLf=con$REMLf, dofit=TRUE)
 
    ### extract elements
@@ -2090,6 +2091,9 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
          colnames(G) <- rownames(G) <- g.names[-length(g.names)]
       tau2 <- fitcall$tau2
       rho  <- fitcall$rho
+      cov1 <- G[lower.tri(G)]
+   } else {
+      cov1 <- 0
    }
 
    if (withH) {
@@ -2102,6 +2106,9 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
          colnames(H) <- rownames(H) <- h.names[-length(h.names)]
       gamma2 <- fitcall$gamma2
       phi    <- fitcall$phi
+      cov2   <- H[lower.tri(H)]
+   } else {
+      cov2   <- 0
    }
 
    M <- fitcall$M
@@ -2198,15 +2205,37 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
       if (verbose > 1)
          message(mstyle$message("Computing Hessian ..."))
 
-      hessian <- try(numDeriv::hessian(func=.ll.rma.mv, x = if (con$vctransf) opt.res$par else c(sigma2, tau2, rho, gamma2, phi),
-         method.args=con$hessianCtrl, reml=reml, Y=Y, M=V, A=NULL, X.fit=X, k=k, pX=p,
-         D.S=D.S, Z.G1=Z.G1, Z.G2=Z.G2, Z.H1=Z.H1, Z.H2=Z.H2, g.Dmat=g.Dmat, h.Dmat=h.Dmat,
-         sigma2.val=sigma2.val, tau2.val=tau2.val, rho.val=rho.val, gamma2.val=gamma2.val, phi.val=phi.val,
-         sigma2s=sigma2s, tau2s=tau2s, rhos=rhos, gamma2s=gamma2s, phis=phis,
-         withS=withS, withG=withG, withH=withH,
-         struct=struct, g.levels.r=g.levels.r, h.levels.r=h.levels.r, g.values=g.values, h.values=h.values,
-         sparse=sparse, cholesky=ifelse(c(con$vctransf,con$vctransf) & cholesky, TRUE, FALSE), posdefify=posdefify, vctransf=con$vctransf,
-         verbose=verbose, digits=digits, REMLf=con$REMLf), silent=TRUE)
+      if (con$vccov) {
+
+         if (any(sigma2.fix, na.rm=TRUE) || any(tau2.fix, na.rm=TRUE) || any(rho.fix, na.rm=TRUE) || any(gamma2.fix, na.rm=TRUE) || any(phi.fix, na.rm=TRUE))
+            stop(mstyle$stop("Cannot use 'vccov=TRUE' when one or more components are fixed."))
+
+         if (any(!is.element(struct, c("UN","GEN"))))
+            stop(mstyle$stop("Cannot use 'vccov=TRUE' for the specified structure(s)."))
+
+         hessian <- try(numDeriv::hessian(func=.ll.rma.mv, x = c(sigma2, tau2, cov1, gamma2, cov2),
+            method.args=con$hessianCtrl, reml=reml, Y=Y, M=V, A=NULL, X.fit=X, k=k, pX=p,
+            D.S=D.S, Z.G1=Z.G1, Z.G2=Z.G2, Z.H1=Z.H1, Z.H2=Z.H2, g.Dmat=g.Dmat, h.Dmat=h.Dmat,
+            sigma2.val=sigma2.val, tau2.val=tau2.val, rho.val=rho.val, gamma2.val=gamma2.val, phi.val=phi.val,
+            sigma2s=sigma2s, tau2s=tau2s, rhos=rhos, gamma2s=gamma2s, phis=phis,
+            withS=withS, withG=withG, withH=withH, struct=struct,
+            g.levels.r=g.levels.r, h.levels.r=h.levels.r, g.values=g.values, h.values=h.values,
+            sparse=sparse, cholesky=c(FALSE,FALSE), posdefify=posdefify, vctransf=FALSE, vccov=TRUE,
+            verbose=verbose, digits=digits, REMLf=con$REMLf), silent=TRUE)
+
+      } else {
+
+         hessian <- try(numDeriv::hessian(func=.ll.rma.mv, x = if (con$vctransf) opt.res$par else c(sigma2, tau2, rho, gamma2, phi),
+            method.args=con$hessianCtrl, reml=reml, Y=Y, M=V, A=NULL, X.fit=X, k=k, pX=p,
+            D.S=D.S, Z.G1=Z.G1, Z.G2=Z.G2, Z.H1=Z.H1, Z.H2=Z.H2, g.Dmat=g.Dmat, h.Dmat=h.Dmat,
+            sigma2.val=sigma2.val, tau2.val=tau2.val, rho.val=rho.val, gamma2.val=gamma2.val, phi.val=phi.val,
+            sigma2s=sigma2s, tau2s=tau2s, rhos=rhos, gamma2s=gamma2s, phis=phis,
+            withS=withS, withG=withG, withH=withH, struct=struct,
+            g.levels.r=g.levels.r, h.levels.r=h.levels.r, g.values=g.values, h.values=h.values,
+            sparse=sparse, cholesky=ifelse(c(con$vctransf,con$vctransf) & cholesky, TRUE, FALSE), posdefify=posdefify, vctransf=con$vctransf, vccov=con$vccov,
+            verbose=verbose, digits=digits, REMLf=con$REMLf), silent=TRUE)
+
+      }
 
       if (inherits(hessian, "try-error")) {
 
@@ -2228,22 +2257,24 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
          } else {
             colnames(hessian)[(sigma2s+1):(sigma2s+tau2s)] <- paste("tau^2.", seq_len(tau2s), sep="")
          }
+         term <- ifelse(con$vccov, "cov1", "rho")
          if (rhos == 1) {
-            colnames(hessian)[sigma2s+tau2s+1] <- "rho"
+            colnames(hessian)[sigma2s+tau2s+1] <- term
          } else {
-            #colnames(hessian)[(sigma2s+tau2s+1):(sigma2s+tau2s+rhos)] <- paste("rho.", outer(seq_len(g.nlevels.f[1]), seq_len(g.nlevels.f), paste, sep=".")[upper.tri(matrix(NA,nrow=g.nlevels.f,ncol=g.nlevels.f))], sep="")
-            colnames(hessian)[(sigma2s+tau2s+1):(sigma2s+tau2s+rhos)] <- paste("rho.", seq_len(rhos), sep="")
+            colnames(hessian)[(sigma2s+tau2s+1):(sigma2s+tau2s+rhos)] <- paste(term, ".", outer(seq_len(g.nlevels.f[1]), seq_len(g.nlevels.f[1]), paste, sep=".")[lower.tri(matrix(NA,nrow=g.nlevels.f,ncol=g.nlevels.f))], sep="")
+            #colnames(hessian)[(sigma2s+tau2s+1):(sigma2s+tau2s+rhos)] <- paste(term, ".", seq_len(rhos), sep="")
          }
          if (gamma2s == 1) {
             colnames(hessian)[sigma2s+tau2s+rhos+1] <- "gamma^2"
          } else {
             colnames(hessian)[(sigma2s+tau2s+rhos+1):(sigma2s+tau2s+rhos+gamma2s)] <- paste("gamma^2.", seq_len(gamma2s), sep="")
          }
+         term <- ifelse(con$vccov, "cov2", "phi")
          if (phis == 1) {
-            colnames(hessian)[sigma2s+tau2s+rhos+gamma2s+1] <- "phi"
+            colnames(hessian)[sigma2s+tau2s+rhos+gamma2s+1] <- term
          } else {
-            #colnames(hessian)[(sigma2s+tau2s+rhos+gamma2s+1):(sigma2s+tau2s+rhos+gamma2s+phis)] <- paste("phi.", outer(seq_len(h.nlevels.f[1]), seq_len(h.nlevels.f), paste, sep=".")[upper.tri(matrix(NA,nrow=h.nlevels.f,ncol=h.nlevels.f))], sep="")
-            colnames(hessian)[(sigma2s+tau2s+rhos+gamma2s+1):(sigma2s+tau2s+rhos+gamma2s+phis)] <- paste("phi.", seq_len(phis), sep="")
+            colnames(hessian)[(sigma2s+tau2s+rhos+gamma2s+1):(sigma2s+tau2s+rhos+gamma2s+phis)] <- paste(term, ".", outer(seq_len(h.nlevels.f[1]), seq_len(h.nlevels.f[1]), paste, sep=".")[lower.tri(matrix(NA,nrow=h.nlevels.f,ncol=h.nlevels.f))], sep="")
+            #colnames(hessian)[(sigma2s+tau2s+rhos+gamma2s+1):(sigma2s+tau2s+rhos+gamma2s+phis)] <- paste(term, ".", seq_len(phis), sep="")
          }
 
          rownames(hessian) <- colnames(hessian)
@@ -2264,6 +2295,28 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
             hessian <- hessian[2:(nrow(hessian)-2),2:(ncol(hessian)-2), drop=FALSE]
          if (!withS && !withG && !withH)
             hessian <- NA
+
+         ### reorder hessian when vccov into the order of the lower triangular elements of G/H
+
+         if (con$vccov && withG) {
+            posG <- matrix(NA, nrow=tau2s, ncol=tau2s)
+            diag(posG) <- 1:tau2s
+            posG[lower.tri(posG)] <- (tau2s+1):(tau2s*(tau2s+1)/2)
+            posG <- posG[lower.tri(posG, diag=TRUE)]
+            if (withS) {
+               pos <- c(1:sigma2s, sigma2s+posG)
+            } else {
+               pos <- posG
+            }
+            if (withH) {
+               posH <- matrix(NA, nrow=gamma2s, ncol=gamma2s)
+               diag(posH) <- 1:gamma2s
+               posH[lower.tri(posH)] <- (gamma2s+1):(gamma2s*(gamma2s+1)/2)
+               posH <- posH[lower.tri(posH, diag=TRUE)]
+               pos <- c(pos, max(pos)+posH)
+            }
+            hessian <- hessian[pos,pos]
+         }
 
       }
 

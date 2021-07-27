@@ -65,5 +65,9 @@ profile(res2, cline=TRUE)
 
 ### effective range (river-km for which the spatial correlation is >= .05)
 sqrt(3) * res2$rho
+
+### note: it was necessary to adjust the starting value for rho in models
+### res2 and res3 so that the optimizer does not get stuck in a local maximum
+profile(res2, rho=1, xlim=c(0,200), steps=100)
 }
 \keyword{datasets}
