@@ -220,11 +220,13 @@ matreg <- function(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearPD=FALSE, le
       ci.lb <- c(b - crit * se)
       ci.ub <- c(b + crit * se)
 
-      res <- list(tab = data.frame(beta=b, se=se, tval=tval, df=df, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub), vb=vb, R2=R2, R2adj=R2adj, F=F, Fp=Fp, digits=digits, test="t")
+      res <- list(tab = data.frame(beta=b, se=se, tval=tval, df=df, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub), vb=vb, R2=R2, R2adj=R2adj, F=F, Fdf=c(m,df), Fp=Fp, digits=digits, test="t")
 
    } else {
 
       # when a V matrix is specified
+
+      R2 <- c(t(b) %*% Rxy) # as in Becker & Aloe (2019); assume that this also applies for Cov matrices
 
       if (cov) {
 
@@ -272,7 +274,8 @@ matreg <- function(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearPD=FALSE, le
 
          b <- rbind(means[y] - means[x] %*% b, b)
          rownames(b)[1] <- "intrcpt"
-         vb <- cbind(NA,rbind(NA,vb)) # FIXME
+         X <- rbind(means[x], diag(m))
+         vb <- X %*% vb %*% t(X)
 
          if (!has.means) {
             b[1,]  <- NA
@@ -290,9 +293,9 @@ matreg <- function(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearPD=FALSE, le
       ci.ub <- c(b + crit * se)
 
       if (cov) {
-         QM <- try(t(b[-1,,drop=FALSE]) %*% chol2inv(chol(vb[-1,-1,drop=FALSE])) %*% b[-1,,drop=FALSE], silent=TRUE)
+         QM <- try(as.vector(t(b[-1,,drop=FALSE]) %*% chol2inv(chol(vb[-1,-1,drop=FALSE])) %*% b[-1,,drop=FALSE]), silent=TRUE)
       } else {
-         QM <- try(t(b) %*% chol2inv(chol(vb)) %*% b, silent=TRUE)
+         QM <- try(as.vector(t(b) %*% chol2inv(chol(vb)) %*% b), silent=TRUE)
       }
 
       if (inherits(QM, "try-error"))
@@ -300,15 +303,9 @@ matreg <- function(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearPD=FALSE, le
 
       QMp <- pchisq(QM, df=m, lower.tail=FALSE)
 
-      if (cov) {
-         R2 <- NA # FIXME
-      } else {
-         R2 <- c(t(b) %*% Rxy)
-      }
-
       rownames(vb) <- colnames(vb) <- rownames(b)
 
-      res <- list(tab = data.frame(beta=b, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub), vb=vb, R2=R2, digits=digits, test="z")
+      res <- list(tab = data.frame(beta=b, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub), vb=vb, R2=R2, QM=QM, QMdf=c(m,NA), QMp=QMp, digits=digits, test="z")
 
    }
 

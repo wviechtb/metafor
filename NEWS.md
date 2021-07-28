@@ -1,4 +1,4 @@
-# metafor 3.1-9 (2021-07-27)
+# metafor 3.1-10 (2021-07-28)
 
 - elements of `rho` and `phi` in `rma.mv()` are now based on the lower triangular part of the respective correlation matrix (instead of the upper triangular part) for consistency with other functions; note that this is in principle a backwards incompatible change, although this should only be a concern in very special circumstances
 

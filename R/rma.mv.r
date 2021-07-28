@@ -2257,7 +2257,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
          } else {
             colnames(hessian)[(sigma2s+1):(sigma2s+tau2s)] <- paste("tau^2.", seq_len(tau2s), sep="")
          }
-         term <- ifelse(con$vccov, "cov1", "rho")
+         term <- ifelse(con$vccov, ifelse(withH, "cov1", "cov"), "rho")
          if (rhos == 1) {
             colnames(hessian)[sigma2s+tau2s+1] <- term
          } else {
