@@ -1,4 +1,4 @@
-Changes in Version 3.1-10 (2021-07-28)
+Changes in Version 3.1-11 (2021-08-01)
 =====================================
 
    o elements of 'rho' and 'phi' in rma.mv() are now based on the lower
