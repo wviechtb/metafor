@@ -45,10 +45,10 @@
 
    g.names <- names(mf.g) ### names for inner and outer factors/variables
 
-   ### check that inner variable is a factor (or character variable) for structures that require this
+   ### check that inner variable is a factor (or character variable) for structures that require this (no longer required)
 
-   if (is.element(struct, c("CS","HCS","UN","UNR","ID","DIAG")) && !is.factor(mf.g[[1]]) && !is.character(mf.g[[1]]))
-      stop(mstyle$stop(paste0("Inner variable in '~ inner | outer' term must be a factor or character variable when 'struct=\"", struct, "\"'.")), call.=FALSE)
+   #if (is.element(struct, c("CS","HCS","UN","UNR","ID","DIAG")) && !is.factor(mf.g[[1]]) && !is.character(mf.g[[1]]))
+   #   stop(mstyle$stop(paste0("Inner variable in '~ inner | outer' term must be a factor or character variable when 'struct=\"", struct, "\"'.")), call.=FALSE)
 
    ### for struct="CAR", check that inner term is numeric and get the unique numeric values
 

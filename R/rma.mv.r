@@ -1,7 +1,7 @@
-### fixed/random/mixed-effects multivariate/multilevel model with:
-###    - possibly one or multiple random intercepts (sigma2) with potentially known correlation matrices
-###    - possibly correlated random effects for arms/groups/levels within studies (tau2 and rho for 1st term, gamma2 and phi for 2nd term)
-### model also allows for correlated sampling errors via non-diagonal V matrix
+# fixed/random/mixed-effects multivariate/multilevel model with:
+#    - possibly one or multiple random intercepts (sigma2) with potentially known correlation matrices
+#    - possibly correlated random effects for arms/groups/levels within studies (tau2 and rho for 1st term, gamma2 and phi for 2nd term)
+# model also allows for correlated sampling errors via non-diagonal V matrix
 
 # V      = variance-covariance matrix of the sampling errors
 # sigma2 = (preset) value(s) for the variance of the random intercept(s)
@@ -10,18 +10,19 @@
 # gamma2 = (preset) value(s) for the variance of the random effects
 # phi    = (preset) value(s) for the correlation(s) between random effects
 
-### structures when there is an '~ inner | outer' term in the random argument:
-### - CS   (compound symmetry)
-### - HCS  (heteroscedastic compound symmetry)
-### - UN   (general positive-definite matrix with no structure)
-### - UNR  (general positive-definite correlation matrix with a single tau2/gamma2 value)
-### - AR   (AR1 structure with a single tau2/gamma2 value and autocorrelation rho/phi)
-### - HAR  (heteroscedastic AR1 structure with multiple tau2/gamma2 values and autocorrelation rho/phi)
-### - CAR  (continuous time AR1 structure)
-### - ID   (same as CS but with rho/phi=0)
-### - DIAG (same as HCS but with rho/phi=0)
-### - SPEXP/SPGAU/SPLIN/SPRAT/SPSPH (spatial structures: exponential, gaussian, linear, rational quadratic, spherical)
-### - PHYBM/PHYPL/PHYPD (phylogenetic structures: Brownian motion, Pagel's lambda, Pagel's delta)
+# structures when there is an '~ inner | outer' term in the random argument:
+# - CS   (compound symmetry)
+# - HCS  (heteroscedastic compound symmetry)
+# - UN   (general positive-definite matrix with no structure)
+# - UNR  (general positive-definite correlation matrix with a single tau2/gamma2 value)
+# - AR   (AR1 structure with a single tau2/gamma2 value and autocorrelation rho/phi)
+# - HAR  (heteroscedastic AR1 structure with multiple tau2/gamma2 values and autocorrelation rho/phi)
+# - CAR  (continuous time AR1 structure)
+# - ID   (same as CS but with rho/phi=0)
+# - DIAG (same as HCS but with rho/phi=0)
+# - SPEXP/SPGAU/SPLIN/SPRAT/SPSPH (spatial structures: exponential, gaussian, linear, rational quadratic, spherical)
+# - GEN (general positive-definite matrix for an arbitrary number of predictors)
+# - PHYBM/PHYPL/PHYPD (phylogenetic structures: Brownian motion, Pagel's lambda, Pagel's delta)
 
 rma.mv <- function(yi, V, W, mods, random, struct="CS", intercept=TRUE, data, slab, subset, ### add ni as argument in the future
 method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, rho, gamma2, phi, sparse=FALSE, verbose=FALSE, control, ...) {

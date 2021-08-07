@@ -48,7 +48,7 @@ print(res.ml, digits=3)
 profile(res.ml, progbar=FALSE)
 
 ### multivariate parameterization of the model
-res.mv <- rma.mv(yi, vi, random = ~ factor(school) | district, data=dat)
+res.mv <- rma.mv(yi, vi, random = ~ school | district, data=dat)
 print(res.mv, digits=3)
 
 ### tau^2 from multivariate model = sum of the two variance components from the multilevel model

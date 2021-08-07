@@ -143,7 +143,7 @@ sav
 abline(v=sav$random[1,2:3], lty="dotted")}
 
 ### multivariate parameterization of the model
-res <- rma.mv(yi, vi, random = ~ factor(school) | district, data=dat.konstantopoulos2011)
+res <- rma.mv(yi, vi, random = ~ school | district, data=dat.konstantopoulos2011)
 
 ### profile plots and confidence intervals for the variance component and correlation
 \dontrun{
