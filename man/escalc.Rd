@@ -400,6 +400,8 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
          Note that the sign of the (semi-)partial correlation coefficients is determined based on the signs of the values specified via the \code{ti} argument. Also, the Fisher transformation can only be applied to partial correlation coefficient, not semi-partial coefficients.
 
+         A dataset corresponding to data of this type is provided in \code{\link{dat.aloe2013}}.
+
       }
 
    }

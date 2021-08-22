@@ -104,7 +104,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1-12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1-13</span>
       </span>
     </div>
 
@@ -173,9 +173,9 @@
       <small>Source: <a href='https://github.com/wviechtb/metafor/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="metafor-31-12-2021-08-07" class="section level1">
-<h1 class="page-header" data-toc-text="3.1-12">
-<a href="#metafor-31-12-2021-08-07" class="anchor"></a>metafor 3.1-12 (2021-08-07)<small> Unreleased </small>
+    <div id="metafor-31-13-2021-08-22" class="section level1">
+<h1 class="page-header" data-toc-text="3.1-13">
+<a href="#metafor-31-13-2021-08-22" class="anchor"></a>metafor 3.1-13 (2021-08-22)<small> Unreleased </small>
 </h1>
 <ul>
 <li><p>elements of <code>rho</code> and <code>phi</code> in <code><a href="../reference/rma.mv.html">rma.mv()</a></code> are now based on the lower triangular part of the respective correlation matrix (instead of the upper triangular part) for consistency with other functions; note that this is in principle a backwards incompatible change, although this should only be a concern in very special circumstances</p></li>
@@ -185,6 +185,7 @@
 <li><p><code><a href="../reference/rma.uni.html">rma.uni()</a></code> now also provides R^2 for fixed-effects models</p></li>
 <li><p><code><a href="../reference/matreg.html">matreg()</a></code> can now also analyze a covariance matrix with a corresponding ‘V’ matrix</p></li>
 <li><p><code><a href="../reference/profile.rma.html">plot.profile.rma()</a></code> gains <code>refline</code> argument</p></li>
+<li><p>datasets moved to the <code>metadat</code> package (<a href="https://cran.r-project.org/package=metadat" class="uri">https://cran.r-project.org/package=metadat</a>)</p></li>
 <li><p>improved the documentation a bit</p></li>
 </ul>
 </div>
@@ -460,7 +461,7 @@
 <li><p>element <code>fill</code> returned by <code><a href="../reference/trimfill.html">trimfill.rma.uni()</a></code> is now a logical vector (instead of a 0/1 dummy variable)</p></li>
 <li><p><code><a href="../reference/print.list.rma.html">print.list.rma()</a></code> now also returns the printed results invisibly as a data frame</p></li>
 <li><p>added a new dataset (<code>dat.senn2013</code>) as another illustration of a network meta-analysis</p></li>
-<li><p>metafor now depends on at least version 3.1.0 of R</p></li>
+<li><p><code>metafor</code> now depends on at least version 3.1.0 of R</p></li>
 </ul>
 </div>
     <div id="metafor-19-5-2014-11-24" class="section level1">
@@ -612,7 +613,7 @@
 </h1>
 <ul>
 <li><p>vignette renamed to <code>metafor</code> so <code>vignette("metafor")</code> works now</p></li>
-<li><p>added a diagram to the documentation, showing the various functions in the metafor package (and how they relate to each other); can be loaded with <code>vignette("metafor_diagram")</code></p></li>
+<li><p>added a diagram to the documentation, showing the various functions in the <code>metafor</code> package (and how they relate to each other); can be loaded with <code>vignette("metafor_diagram")</code></p></li>
 <li><p><code>anova.rma.uni()</code> function can now also be used to test (sub)sets of model coefficients with a Wald-type test when a single model is passed to the function</p></li>
 <li><p>the pseudo R^2 statistic is now automatically calculated by the <code><a href="../reference/rma.uni.html">rma.uni()</a></code> function and supplied in the output (only for mixed-effects models and when the model includes an intercept, so that the random- effects model is clearly nested within the mixed-effects model)</p></li>
 <li><p>component <code>VAF</code> is now called <code>R2</code> in <code>anova.rma.uni()</code> function</p></li>
@@ -742,7 +743,7 @@
 <a href="#metafor-15-0-2010-12-16" class="anchor"></a>metafor 1.5-0 (2010-12-16)<small> 2010-12-16 </small>
 </h1>
 <ul>
-<li><p>the <code>metafor</code> package now has its own project website at: <a href="http://www.metafor-project.org/" class="uri">http://www.metafor-project.org/</a></p></li>
+<li><p>the <code>metafor</code> package now has its own project website at: <a href="https://www.metafor-project.org/" class="uri">https://www.metafor-project.org/</a></p></li>
 <li><p>added <code><a href="../reference/labbe.html">labbe()</a></code> function to create L’Abbe plots</p></li>
 <li><p>the <code><a href="../reference/forest.default.html">forest.default()</a></code> and <code><a href="../reference/addpoly.default.html">addpoly.default()</a></code> functions now allow the user to directly specify the lower and upper confidence interval bounds (this can be useful when the CI bounds have been calculated with other methods/functions)</p></li>
 <li><p>added the incidence rate for a single group and for two groups (and transformations thereof) as possible outcome measures to the <code><a href="../reference/escalc.html">escalc()</a></code> and <code><a href="../reference/rma.uni.html">rma.uni()</a></code> functions (<code>measure="IRR"</code>, <code>"IRD"</code>, <code>"IRSD"</code>, <code>"IR"</code>, <code>"IRLN"</code>, <code>"IRS"</code>, and <code>"IRFT"</code>)</p></li>

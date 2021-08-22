@@ -6,7 +6,7 @@ source("tolerances.r") # read in tolerances
 
 test_that("anova() works correctly for comparing nested models.", {
 
-   data(dat.bcg, package="metafor")
+   data(dat.bcg)
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
    res1 <- rma(yi, vi, data=dat, method="ML")
    res2 <- rma(yi ~ ablat, vi, data=dat, method="ML")
@@ -25,7 +25,7 @@ test_that("anova() works correctly for comparing nested models.", {
 
 test_that("anova() works correctly when using the 'btt' argument.", {
 
-   data(dat.bcg, package="metafor")
+   data(dat.bcg)
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
    res <- rma(yi, vi, mods = ~ ablat + alloc, data=dat)
    sav <- anova(res, btt=3:4)
@@ -51,7 +51,7 @@ test_that("anova() works correctly when using the 'btt' argument.", {
 
 test_that("anova() works correctly when using the 'X' argument.", {
 
-   data(dat.bcg, package="metafor")
+   data(dat.bcg)
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
    res <- rma(yi, vi, mods = ~ ablat + alloc, data=dat)
    sav <- anova(res, X=rbind(c(1, 10, 0, 0), c(1, 30, 0, 0), c(1, 50, 0, 0)))

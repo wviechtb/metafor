@@ -91,8 +91,7 @@ res
 robust(res, cluster=dat$district)
 
 ### illustrate use of the clubSandwich package together with metafor
-\dontrun{
-require(clubSandwich)
+if (require(clubSandwich)) {
 coef_test(res, vcov="CR2", cluster=dat$district)
 conf_int(res, vcov="CR2", cluster=dat$district)
 }
@@ -114,8 +113,7 @@ res
 robust(res, cluster=dat$trial)
 
 ### illustrate use of the clubSandwich package together with metafor
-\dontrun{
-require(clubSandwich)
+if (require(clubSandwich)) {
 coef_test(res, vcov="CR2", cluster=dat$trial)
 conf_int(res, vcov="CR2", cluster=dat$trial)
 }

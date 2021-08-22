@@ -6,7 +6,7 @@ source("tolerances.r") # read in tolerances
 
 test_that("location-scale model results are correct for in intercept-only model", {
 
-   data(dat.bcg, package="metafor")
+   data(dat.bcg)
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
    res1 <- rma(yi, vi, data=dat, test="t")
@@ -19,7 +19,7 @@ test_that("location-scale model results are correct for in intercept-only model"
 
 test_that("location-scale model results are correct for a categorical predictor", {
 
-   data(dat.bcg, package="metafor")
+   data(dat.bcg)
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
    res1 <- rma(yi ~ alloc, vi, scale = ~ alloc - 1, data=dat)
@@ -32,7 +32,7 @@ test_that("location-scale model results are correct for a categorical predictor"
 
 test_that("location-scale model results are correct for a continuous predictor", {
 
-   data(dat.laopaiboon2015, package="metafor")
+   data(dat.laopaiboon2015)
    dat <- escalc(measure="RR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat.laopaiboon2015)
 
    dat$ni <- dat$n1i + dat$n2i

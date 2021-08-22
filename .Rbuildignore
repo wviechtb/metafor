@@ -4,4 +4,6 @@
 ^_pkgdown\.yml$
 ^docs$
 ^vignettes/pkgdown$
-^CRAN_version$
+^data-raw$
+^.*\.Rproj$
+^\.Rproj\.user$

@@ -6,7 +6,7 @@ source("tolerances.r") # read in tolerances
 
 test_that("influence() works for rma().", {
 
-   data(dat.bcg, package="metafor")
+   data(dat.bcg)
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
    res <- rma(yi, vi, data=dat)
    sav <- influence(res)
@@ -23,7 +23,7 @@ test_that("influence() works for rma().", {
 
 test_that("leave1out() works for rma().", {
 
-   data(dat.bcg, package="metafor")
+   data(dat.bcg)
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
    res <- rma(yi, vi, data=dat)
    inf <- leave1out(res)
@@ -37,7 +37,7 @@ test_that("leave1out() works for rma().", {
 
 test_that("leave1out() works for rma.mh().", {
 
-   data(dat.bcg, package="metafor")
+   data(dat.bcg)
    res <- rma.mh(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
    inf <- leave1out(res)
    inf <- inf[1]
@@ -51,7 +51,7 @@ test_that("leave1out() works for rma.mh().", {
 
 test_that("leave1out() works for rma.peto().", {
 
-   data(dat.bcg, package="metafor")
+   data(dat.bcg)
    res <- rma.peto(ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
    inf <- leave1out(res)
    inf <- inf[1]
@@ -65,7 +65,7 @@ test_that("leave1out() works for rma.peto().", {
 
 test_that("model.matrix() works for rma().", {
 
-   data(dat.bcg, package="metafor")
+   data(dat.bcg)
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
    res <- rma(yi, vi, mods = ~ ablat, data=dat)
 
@@ -77,7 +77,7 @@ test_that("model.matrix() works for rma().", {
 
 test_that("hatvalues() works for rma().", {
 
-   data(dat.bcg, package="metafor")
+   data(dat.bcg)
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
    res <- rma(yi, vi, mods = ~ ablat, data=dat)
 
@@ -90,7 +90,7 @@ test_that("hatvalues() works for rma().", {
 
 test_that("hatvalues() works for rma.mv().", {
 
-   data(dat.bcg, package="metafor")
+   data(dat.bcg)
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
    res <- rma.mv(yi, vi, mods = ~ ablat, random = ~ 1 | trial, data=dat)
 
@@ -103,7 +103,7 @@ test_that("hatvalues() works for rma.mv().", {
 
 test_that("cooks.distance() works for rma().", {
 
-   data(dat.bcg, package="metafor")
+   data(dat.bcg)
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
    res <- rma(yi, vi, mods = ~ ablat, data=dat)
 
@@ -113,7 +113,7 @@ test_that("cooks.distance() works for rma().", {
 
 test_that("cooks.distance() works for rma.mv().", {
 
-   data(dat.bcg, package="metafor")
+   data(dat.bcg)
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
    res <- rma.mv(yi, vi, mods = ~ ablat, random = ~ 1 | trial, data=dat)
 
@@ -125,7 +125,7 @@ test_that("cooks.distance() works for rma.mv().", {
 
 test_that("influence() correctly works with 'na.omit' and 'na.pass'.", {
 
-   data(dat.bcg, package="metafor")
+   data(dat.bcg)
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, slab=paste0("Trial ", dat.bcg$trial))
 
    dat$yi[2] <- NA
@@ -157,7 +157,7 @@ test_that("influence() correctly works with 'na.omit' and 'na.pass'.", {
 
 test_that("'infonly' argument works correctly with influence().", {
 
-   data(dat.bcg, package="metafor")
+   data(dat.bcg)
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, slab=paste0("Trial ", dat.bcg$trial))
    res <- rma(yi, vi, data=dat, method="FE")
    inf <- influence(res)

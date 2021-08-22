@@ -9,6 +9,7 @@ import(Matrix)
 importFrom(nlme, ranef)
 export(ranef)
 import(mathjaxr)
+import(metadat)
 
 S3method("[", list.rma)
 S3method("$<-", list.rma)

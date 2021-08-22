@@ -9,7 +9,7 @@ source("tolerances.r") # read in tolerances
 
 test_that("results for rma() and lm() match for method='FE'.", {
 
-   data(dat.molloy2014, package="metafor")
+   data(dat.molloy2014)
 
    dat <- escalc(measure="ZCOR", ri=ri, ni=ni, data=dat.molloy2014)
 
@@ -37,7 +37,7 @@ test_that("results for rma() and lme() match for method='ML'.", {
 
    library("nlme")
 
-   data(dat.molloy2014, package="metafor")
+   data(dat.molloy2014)
 
    dat <- escalc(measure="ZCOR", ri=ri, ni=ni, data=dat.molloy2014)
    dat$study <- 1:nrow(dat)
@@ -60,7 +60,7 @@ test_that("results for rma() and lme() match for method='REML'.", {
 
    library("nlme")
 
-   data(dat.molloy2014, package="metafor")
+   data(dat.molloy2014)
 
    dat <- escalc(measure="ZCOR", ri=ri, ni=ni, data=dat.molloy2014)
    dat$study <- 1:nrow(dat)

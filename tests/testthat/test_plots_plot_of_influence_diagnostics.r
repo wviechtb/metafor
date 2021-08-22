@@ -13,7 +13,7 @@ test_that("plot can be drawn.", {
    opar <- par(no.readonly=TRUE)
 
    ### load validity of employment interviews data
-   data(dat.mcdaniel1994, package="metafor")
+   data(dat.mcdaniel1994)
 
    ### fit random-effects model with r-to-z transformed correlations
    res <- rma(ri=ri, ni=ni, measure="ZCOR", data=dat.mcdaniel1994)

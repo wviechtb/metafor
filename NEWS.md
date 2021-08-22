@@ -1,4 +1,4 @@
-# metafor 3.1-12 (2021-08-07)
+# metafor 3.1-13 (2021-08-22)
 
 - elements of `rho` and `phi` in `rma.mv()` are now based on the lower triangular part of the respective correlation matrix (instead of the upper triangular part) for consistency with other functions; note that this is in principle a backwards incompatible change, although this should only be a concern in very special circumstances
 
@@ -13,6 +13,8 @@
 - `matreg()` can now also analyze a covariance matrix with a corresponding 'V' matrix
 
 - `plot.profile.rma()` gains `refline` argument
+
+- datasets moved to the `metadat` package (https://cran.r-project.org/package=metadat)
 
 - improved the documentation a bit
 
@@ -468,7 +470,7 @@
 
 - added a new dataset (`dat.senn2013`) as another illustration of a network meta-analysis
 
-- metafor now depends on at least version 3.1.0 of R
+- `metafor` now depends on at least version 3.1.0 of R
 
 # metafor 1.9-5 (2014-11-24)
 
@@ -700,7 +702,7 @@
 
 - vignette renamed to `metafor` so `vignette("metafor")` works now
 
-- added a diagram to the documentation, showing the various functions in the metafor package (and how they relate to each other); can be loaded with `vignette("metafor_diagram")`
+- added a diagram to the documentation, showing the various functions in the `metafor` package (and how they relate to each other); can be loaded with `vignette("metafor_diagram")`
 
 - `anova.rma.uni()` function can now also be used to test (sub)sets of model coefficients with a Wald-type test when a single model is passed to the function
 
@@ -901,7 +903,7 @@
 
 # metafor 1.5-0 (2010-12-16)
 
-- the `metafor` package now has its own project website at: http://www.metafor-project.org/
+- the `metafor` package now has its own project website at: https://www.metafor-project.org/
 
 - added `labbe()` function to create L'Abbe plots
 

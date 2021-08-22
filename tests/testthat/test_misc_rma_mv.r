@@ -4,7 +4,7 @@ context("Checking misc: rma.mv() function")
 
 source("tolerances.r") # read in tolerances
 
-data(dat.bcg, package="metafor")
+data(dat.bcg)
 dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
 test_that("rma.mv() correctly handles a formula for the 'yi' argument", {
@@ -74,7 +74,7 @@ test_that("rma.mv() correctly handles the R argument", {
 
 })
 
-data(dat.bcg, package="metafor")
+data(dat.bcg)
 dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
 test_that("rma.mv() correctly computes the Hessian", {

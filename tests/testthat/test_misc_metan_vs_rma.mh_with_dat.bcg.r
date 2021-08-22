@@ -6,7 +6,7 @@ source("tolerances.r") # read in tolerances
 
 test_that("results match (FE model, measure='RR').", {
 
-   data(dat.bcg, package="metafor")
+   data(dat.bcg)
 
    ### compare results with: metan tpos tneg cpos cneg, fixed nograph rr log
 
@@ -30,7 +30,7 @@ test_that("results match (FE model, measure='RR').", {
 
 test_that("results match (FE model, measure='OR').", {
 
-   data(dat.bcg, package="metafor")
+   data(dat.bcg)
 
    ### compare results with: metan tpos tneg cpos cneg, fixed nograph or log
 
@@ -54,7 +54,7 @@ test_that("results match (FE model, measure='OR').", {
 
 test_that("results match (FE model, measure='RD').", {
 
-   data(dat.bcg, package="metafor")
+   data(dat.bcg)
 
    ### compare results with: metan tpos tneg cpos cneg, fixed nograph rd
 

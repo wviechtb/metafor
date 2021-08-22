@@ -7,7 +7,7 @@ source("tolerances.r") # read in tolerances
 context("Checking analysis example: berkey1995")
 
 ### load BCG dataset
-data(dat.bcg, package="metafor")
+data(dat.bcg)
 
 ### calculate log ratio ratios and corresponding sampling variances
 dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)

@@ -105,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1-12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1-13</span>
       </span>
     </div>
 
@@ -389,7 +389,7 @@
 
 <p>Note that the log is taken of the risk ratio and the odds ratio, which makes these outcome measures symmetric around 0 and yields corresponding sampling distributions that are closer to normality. Also, when multiplied by 2, the arcsine square root transformed risk difference is actually identical to Cohen's h (Cohen, 1988).</p>
 <p>Cell entries with a zero count can be problematic, especially for the risk ratio and the odds ratio. Adding a small constant to the cells of the \(2 \times 2\) tables is a common solution to this problem. When <code>to="only0"</code> (the default), the value of <code>add</code> (the default is <code>1/2</code>; but see &#8216;Note&#8217;) is added to each cell of those \(2 \times 2\) tables with at least one cell equal to 0. When <code>to="all"</code>, the value of <code>add</code> is added to each cell of all \(2 \times 2\) tables. When <code>to="if0all"</code>, the value of <code>add</code> is added to each cell of all \(2 \times 2\) tables, but only when there is at least one \(2 \times 2\) table with a zero cell. Setting <code>to="none"</code> or <code>add=0</code> has the same effect: No adjustment to the observed table frequencies is made. Depending on the outcome measure and the data, this may lead to division by zero (when this occurs, the resulting value is recoded to <code>NA</code>). Also, studies where <code>ai=ci=0</code> or <code>bi=di=0</code> may be considered to be uninformative about the size of the effect and dropping such studies has sometimes been recommended (Higgins et al., 2019). This can be done by setting <code>drop00=TRUE</code>. The values for such studies will then be set to <code>NA</code>.</p>
-<p>Datasets corresponding to data of this type are provided in <code><a href='dat.colditz1994.html'>dat.bcg</a></code>, <code><a href='dat.collins1985a.html'>dat.collins1985a</a></code>, <code><a href='dat.collins1985b.html'>dat.collins1985b</a></code>, <code><a href='dat.egger2001.html'>dat.egger2001</a></code>, <code><a href='dat.hine1989.html'>dat.hine1989</a></code>, <code><a href='dat.laopaiboon2015.html'>dat.laopaiboon2015</a></code>, <code><a href='dat.lee2004.html'>dat.lee2004</a></code>, <code><a href='dat.li2007.html'>dat.li2007</a></code>, <code><a href='dat.linde2005.html'>dat.linde2005</a></code>, <code><a href='dat.nielweise2007.html'>dat.nielweise2007</a></code>, and <code><a href='dat.yusuf1985.html'>dat.yusuf1985</a></code>.</p>
+<p>Datasets corresponding to data of this type are provided in <code>dat.bcg</code>, <code>dat.collins1985a</code>, <code>dat.collins1985b</code>, <code>dat.egger2001</code>, <code>dat.hine1989</code>, <code>dat.laopaiboon2015</code>, <code>dat.lee2004</code>, <code>dat.li2007</code>, <code>dat.linde2005</code>, <code>dat.nielweise2007</code>, and <code>dat.yusuf1985</code>.</p>
 <p>Assuming that the dichotomous outcome is actually a dichotomized version of the responses on an underlying quantitative scale, it is also possible to estimate the standardized mean difference based on \(2 \times 2\) table data, using either the probit transformed risk difference or a transformation of the odds ratio (e.g., Cox &amp; Snell, 1989; Chinn, 2000; Hasselblad &amp; Hedges, 1995; Sánchez-Meca et al., 2003). The options for the <code>measure</code> argument are then:</p><ul>
 <li><p><code>"PBIT"</code> for the <em>probit transformed risk difference</em> as an estimate of the standardized mean difference,</p></li>
 <li><p><code>"OR2DN"</code> for the <em>transformed odds ratio</em> as an estimate of the standardized mean difference (assuming normal distributions),</p></li>
@@ -397,7 +397,7 @@
 </ul>
 
 <p>The probit transformation assumes that the responses on the underlying quantitative scale are normally distributed. There are two versions of the odds ratio transformation, the first also assuming normal distributions within the two groups, while the second assumes that the responses within groups follow logistic distributions.</p>
-<p>A dataset corresponding to data of this type is provided in <code><a href='dat.gibson2002.html'>dat.gibson2002</a></code>.</p>
+<p>A dataset corresponding to data of this type is provided in <code>dat.gibson2002</code>.</p>
 <p></p>
 
 <p></p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Measures for Event Counts</h4>
@@ -418,7 +418,7 @@
 
 <p>Note that the log is taken of the incidence rate ratio, which makes this outcome measure symmetric around 0 and yields a corresponding sampling distribution that is closer to normality.</p>
 <p>Studies with zero events in one or both groups can be problematic, especially for the incidence rate ratio. Adding a small constant to the number of events is a common solution to this problem. When <code>to="only0"</code> (the default), the value of <code>add</code> (the default is <code>1/2</code>; but see &#8216;Note&#8217;) is added to <code>x1i</code> and <code>x2i</code> only in the studies that have zero events in one or both groups. When <code>to="all"</code>, the value of <code>add</code> is added to <code>x1i</code> and <code>x2i</code> in all studies. When <code>to="if0all"</code>, the value of <code>add</code> is added to <code>x1i</code> and <code>x2i</code> in all studies, but only when there is at least one study with zero events in one or both groups. Setting <code>to="none"</code> or <code>add=0</code> has the same effect: No adjustment to the observed number of events is made. Depending on the outcome measure and the data, this may lead to division by zero (when this occurs, the resulting value is recoded to <code>NA</code>). Like for \(2 \times 2\) table data, studies where <code>x1i=x2i=0</code> may be considered to be uninformative about the size of the effect and dropping such studies has sometimes been recommended. This can be done by setting <code>drop00=TRUE</code>. The values for such studies will then be set to <code>NA</code>.</p>
-<p>Datasets corresponding to data of this type are provided in <code><a href='dat.hart1999.html'>dat.hart1999</a></code> and <code><a href='dat.nielweise2008.html'>dat.nielweise2008</a></code>.</p>
+<p>Datasets corresponding to data of this type are provided in <code>dat.hart1999</code> and <code>dat.nielweise2008</code>.</p>
 <p></p>
 
 <p></p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Measures for Quantitative Variables</h4>
@@ -439,14 +439,14 @@
 
 <p>For <code>measure="ROM"</code>, the log is taken of the ratio of means, which makes this outcome measure symmetric around 0 and yields a corresponding sampling distribution that is closer to normality. Hence, this measure cannot be computed when <code>m1i</code> and <code>m2i</code> have opposite signs (i.e., it is meant to be used for ratio scale measurements, where both means should be positive anyway). For <code>measure="SMD"</code>, the positive bias in the standardized mean difference is automatically corrected for within the function, yielding Hedges' g (Hedges, 1981). Similarly, the same bias correction is applied for <code>measure="SMDH"</code> (Bonett, 2009).</p>
 <p>For <code>measure="MD"</code>, one can choose between <code>vtype="LS"</code> (the default) and <code>vtype="HO"</code>. The former computes the sampling variances without assuming homoscedasticity (i.e., that the true variances of the measurements are the same in group 1 and group 2 within each study), while the latter assumes homoscedasticity (equations 12.5 and 12.3 in Borenstein, 2009, respectively). For <code>measure="SMD"</code>, one can choose between <code>vtype="LS"</code> (the default) for the usual large-sample approximation to compute the sampling variances (equation 8 in Hedges, 1982), <code>vtype="UB"</code> to compute unbiased estimates of the sampling variances (equation 9 in Hedges, 1983), <code>vtype="LS2"</code> to compute the sampling variances as described in Borenstein (2009) (i.e., equation 12.17), and <code>vtype="AV"</code> to compute the sampling variances with the usual large-sample approximation but plugging the sample-size weighted average of the Hedges' g values into the equation. For <code>measure="ROM"</code>, one can choose between <code>vtype="LS"</code> (the default) for the usual large-sample approximation to compute the sampling variances (equation 1 in Hedges et al., 1999), <code>vtype="HO"</code> to compute the sampling variances assuming homoscedasticity (the unnumbered equation after equation 1 in Hedges et al., 1999), <code>vtype="AV"</code> to compute the sampling variances assuming homoscedasticity of the coefficient of variation within each group across studies, and <code>vtype="AVHO"</code> to compute the sampling variances assuming homoscedasticity of the coefficient of variation for both groups across studies.</p>
-<p>Datasets corresponding to data of this type are provided in <code><a href='dat.normand1999.html'>dat.normand1999</a></code> and <code><a href='dat.curtis1998.html'>dat.curtis1998</a></code>.</p>
+<p>Datasets corresponding to data of this type are provided in <code>dat.normand1999</code> and <code>dat.curtis1998</code>.</p>
 <p>It is also possible to transform standardized mean differences into log odds ratios (e.g., Cox &amp; Snell, 1989; Chinn, 2000; Hasselblad &amp; Hedges, 1995; Sánchez-Meca et al., 2003). The options for the <code>measure</code> argument are then:</p><ul>
 <li><p><code>"D2ORN"</code> for the <em>transformed standardized mean difference</em> as an estimate of the log odds ratio (assuming normal distributions),</p></li>
 <li><p><code>"D2ORL"</code> for the <em>transformed standardized mean difference</em> as an estimate of the log odds ratio (assuming logistic distributions).</p></li>
 </ul>
 
 <p>Both of these transformations provide an estimate of the log odds ratio, the first assuming that the responses within the two groups are normally distributed, while the second assumes that the responses follow logistic distributions.</p>
-<p>A dataset illustrating the combined analysis of standardized mean differences and probit transformed risk differences is provided in <code><a href='dat.gibson2002.html'>dat.gibson2002</a></code>.</p>
+<p>A dataset illustrating the combined analysis of standardized mean differences and probit transformed risk differences is provided in <code>dat.gibson2002</code>.</p>
 <p>Finally, interest may also be focused on differences between the two groups with respect to their variability. Here, the (log transformed) ratio of the coefficient of variation of the two groups (also called the coefficient of variation ratio) can be a useful measure (Nakagawa et al., 2015). If focus is solely on the variability of the measurements within the two groups, then the (log transformed) ratio of the standard deviations (also called the variability ratio) can be used (Nakagawa et al., 2015). For the latter, one only needs to specify <code>sd1i</code>, <code>sd2i</code>, <code>n1i</code>, and <code>n2i</code>. The options for the <code>measure</code> argument are:</p><ul>
 <li><p><code>"CVR"</code> for the <em>log transformed coefficient of variation ratio</em>,</p></li>
 <li><p><code>"VR"</code> for the <em>log transformed variability ratio</em>.</p></li>
@@ -472,7 +472,7 @@
 </ul>
 
 <p>For <code>measure="COR"</code> and <code>measure="UCOR"</code>, one can choose between <code>vtype="LS"</code> (the default) for the usual large-sample approximation to compute the sampling variances (i.e., plugging the (biased-corrected) correlation coefficients into equation 12.27 in Borenstein, 2009), <code>vtype="UB"</code> to compute unbiased estimates of the sampling variances (see Hedges, 1989, but using the exact equation instead of the approximation), and <code>vtype="AV"</code> to compute the sampling variances with the usual large-sample approximation but plugging the sample-size weighted average of the (bias-corrected) correlation coefficients into the equation.</p>
-<p>Datasets corresponding to data of this type are provided in <code><a href='dat.mcdaniel1994.html'>dat.mcdaniel1994</a></code> and <code><a href='dat.molloy2014.html'>dat.molloy2014</a></code>.</p>
+<p>Datasets corresponding to data of this type are provided in <code>dat.mcdaniel1994</code> and <code>dat.molloy2014</code>.</p>
 <p>For meta-analyses involving multiple correlations extracted from the same sample, see also the <code><a href='rcalc.html'>rcalc</a></code> function.</p>
 <p></p>
 
@@ -490,7 +490,7 @@
 </ul>
 
 <p>Tables with one or more zero counts are handled as described earlier. For <code>measure="PHI"</code>, one must indicate via <code>vtype="ST"</code> or <code>vtype="CS"</code> whether the data for the studies were obtained using stratified or cross-sectional (i.e., multinomial) sampling, respectively (it is also possible to specify an entire vector for the <code>vtype</code> argument in case the sampling scheme differed for the various studies).</p>
-<p>A dataset corresponding to data of this type is provided in <code><a href='dat.bourassa1996.html'>dat.bourassa1996</a></code>.</p>
+<p>A dataset corresponding to data of this type is provided in <code>dat.bourassa1996</code>.</p>
 <p></p>
 
 <p></p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Measures for Mixed Variable Types</h4>
@@ -523,7 +523,7 @@
 </ul>
 
 <p>Zero cell entries can be problematic for certain outcome measures. When <code>to="only0"</code> (the default), the value of <code>add</code> (the default is <code>1/2</code>; but see &#8216;Note&#8217;) is added to <code>xi</code> and <code>mi</code> only for studies where <code>xi</code> or <code>mi</code> is equal to 0. When <code>to="all"</code>, the value of <code>add</code> is added to <code>xi</code> and <code>mi</code> in all studies. When <code>to="if0all"</code>, the value of <code>add</code> is added in all studies, but only when there is at least one study with a zero value for <code>xi</code> or <code>mi</code>. Setting <code>to="none"</code> or <code>add=0</code> has the same effect: No adjustment to the observed values is made. Depending on the outcome measure and the data, this may lead to division by zero (when this occurs, the resulting value is recoded to <code>NA</code>).</p>
-<p>Datasets corresponding to data of this type are provided in <code><a href='dat.pritz1997.html'>dat.pritz1997</a></code> and <code><a href='dat.debruin2009.html'>dat.debruin2009</a></code>.</p>
+<p>Datasets corresponding to data of this type are provided in <code>dat.pritz1997</code> and <code>dat.debruin2009</code>.</p>
 <p></p>
 
 <p></p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Measures for Event Counts</h4>
@@ -627,7 +627,7 @@
 </ul>
 
 <p>Note that the transformations implemented here are slightly different from the ones described by Hakstian and Whalen (1976) and Bonett (2002). In particular, for <code>"AHW"</code>, the transformation \(1-(1-\alpha)^{1/3}\) is used, while for <code>"ABT"</code>, the transformation \(-\ln(1-\alpha)\) is used. This ensures that the transformed values are monotonically increasing functions of \(\alpha\).</p>
-<p>A dataset corresponding to data of this type is provided in <code><a href='dat.bonett2010.html'>dat.bonett2010</a></code>.</p>
+<p>A dataset corresponding to data of this type is provided in <code>dat.bonett2010</code>.</p>
 <p></p>
 
 <p></p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Partial and Semi-Partial Correlations</h4>
@@ -640,6 +640,7 @@
 </ul>
 
 <p>Note that the sign of the (semi-)partial correlation coefficients is determined based on the signs of the values specified via the <code>ti</code> argument. Also, the Fisher transformation can only be applied to partial correlation coefficient, not semi-partial coefficients.</p>
+<p>A dataset corresponding to data of this type is provided in <code>dat.aloe2013</code>.</p>
 <p></p>
 
 <p></p>

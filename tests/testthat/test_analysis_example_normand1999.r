@@ -9,7 +9,7 @@ source("tolerances.r") # read in tolerances
 test_that("results are correct for the first example (using dat.hine1989).", {
 
    ### load data
-   data(dat.hine1989, package="metafor")
+   data(dat.hine1989)
 
    ### calculate risk differences and corresponding sampling variances
    dat <- escalc(measure="RD", n1i=n1i, n2i=n2i, ai=ai, ci=ci, data=dat.hine1989)
@@ -62,7 +62,7 @@ test_that("results are correct for the first example (using dat.hine1989).", {
 test_that("results are correct for the second example (using dat.normand1999).", {
 
    ### load data
-   data(dat.normand1999, package="metafor")
+   data(dat.normand1999)
 
    ### compute pooled SD
    dat.normand1999$sdpi <- with(dat.normand1999, sqrt(((n1i-1)*sd1i^2 + (n2i-1)*sd2i^2)/(n1i+n2i-2)))

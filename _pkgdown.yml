@@ -154,11 +154,11 @@ reference:
       - print.ranktest
       - print.regtest
       - print.robust.rma
-  - title: "Datasets"
-    desc: >
-      Datasets included with the package.
-    contents:
-      - starts_with("dat")
+  # - title: "Datasets"
+  #   desc: >
+  #     Datasets included with the package.
+  #   contents:
+  #     - starts_with("dat")
   - title: "Extractor Functions"
     desc: >
       Functions to extract various elements from model objects.

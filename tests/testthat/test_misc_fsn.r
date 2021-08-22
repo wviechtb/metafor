@@ -6,7 +6,7 @@ source("tolerances.r") # read in tolerances
 
 test_that("confint() gives correct results for the 'expectancy data' in Becker (2005).", {
 
-   data(dat.raudenbush1985, package="metafor")
+   data(dat.raudenbush1985)
    sav <- fsn(yi, vi, data=dat.raudenbush1985)
 
    expect_equivalent(sav$fsnum, 26)
@@ -30,7 +30,7 @@ test_that("confint() gives correct results for the 'expectancy data' in Becker (
 
 test_that("confint() gives correct results for the 'passive smoking data' in Becker (2005).", {
 
-   data(dat.hackshaw1998, package="metafor")
+   data(dat.hackshaw1998)
    sav <- fsn(yi, vi, data=dat.hackshaw1998)
 
    expect_equivalent(sav$fsnum, 393)
@@ -48,7 +48,7 @@ test_that("confint() gives correct results for the 'passive smoking data' in Bec
 
 test_that("confint() gives correct results for the 'interview data' in Becker (2005).", {
 
-   data(dat.mcdaniel1994, package="metafor")
+   data(dat.mcdaniel1994)
    dat <- escalc(measure="ZCOR", ri=ri, ni=ni, data=dat.mcdaniel1994)
    sav <- fsn(yi, vi, data=dat)
 

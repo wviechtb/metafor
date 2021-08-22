@@ -6,7 +6,7 @@ source("tolerances.r") # read in tolerances
 
 test_that("results match (FE model, measure='RR').", {
 
-   data(dat.bcg, package="metafor")
+   data(dat.bcg)
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
    ### compare results with: metan tpos tneg cpos cneg, fixedi nograph rr log
@@ -31,7 +31,7 @@ test_that("results match (FE model, measure='RR').", {
 
 test_that("results match (RE model w/ DL estimator, measure='RR').", {
 
-   data(dat.bcg, package="metafor")
+   data(dat.bcg)
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
    ### compare results with: metan tpos tneg cpos cneg, randomi nograph rr log
@@ -57,7 +57,7 @@ test_that("results match (RE model w/ DL estimator, measure='RR').", {
 
 test_that("results match (FE model, measure='OR').", {
 
-   data(dat.bcg, package="metafor")
+   data(dat.bcg)
    dat <- escalc(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
    ### compare results with: metan tpos tneg cpos cneg, fixedi nograph or log
@@ -82,7 +82,7 @@ test_that("results match (FE model, measure='OR').", {
 
 test_that("results match (RE model w/ DL estimator, measure='OR').", {
 
-   data(dat.bcg, package="metafor")
+   data(dat.bcg)
    dat <- escalc(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
    ### compare results with: metan tpos tneg cpos cneg, randomi nograph or log
@@ -108,7 +108,7 @@ test_that("results match (RE model w/ DL estimator, measure='OR').", {
 
 test_that("results match (FE model, measure='RD').", {
 
-   data(dat.bcg, package="metafor")
+   data(dat.bcg)
    dat <- escalc(measure="RD", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
    ### compare results with: metan tpos tneg cpos cneg, fixedi nograph rd
@@ -125,7 +125,7 @@ test_that("results match (FE model, measure='RD').", {
 
 test_that("results match (RE model w/ DL estimator, measure='RD').", {
 
-   data(dat.bcg, package="metafor")
+   data(dat.bcg)
    dat <- escalc(measure="RD", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
    ### compare results with: metan tpos tneg cpos cneg, randomi nograph rd

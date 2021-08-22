@@ -6,7 +6,7 @@ source("tolerances.r") # read in tolerances
 
 test_that("head.list.rma() works correctly.", {
 
-   data(dat.bcg, package="metafor")
+   data(dat.bcg)
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
    res <- rma(yi, vi, data=dat)
    res <- head(rstandard(res), 4)
@@ -19,7 +19,7 @@ test_that("head.list.rma() works correctly.", {
 
 test_that("tail.list.rma() works correctly.", {
 
-   data(dat.bcg, package="metafor")
+   data(dat.bcg)
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
    res <- rma(yi, vi, data=dat)
    res <- tail(rstandard(res), 4)
@@ -32,7 +32,7 @@ test_that("tail.list.rma() works correctly.", {
 
 test_that("as.data.frame.list.rma() works correctly.", {
 
-   data(dat.bcg, package="metafor")
+   data(dat.bcg)
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
    res <- rma(yi, vi, mods = ~ ablat, data=dat)
    res <- predict(res)
@@ -47,7 +47,7 @@ test_that("as.data.frame.list.rma() works correctly.", {
 
 test_that("as.matrix.list.rma() works correctly.", {
 
-   data(dat.bcg, package="metafor")
+   data(dat.bcg)
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
    res <- rma(yi, vi, mods = ~ ablat, data=dat)
    res <- predict(res)

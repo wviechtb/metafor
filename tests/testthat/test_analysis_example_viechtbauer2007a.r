@@ -7,7 +7,7 @@ context("Checking analysis example: viechtbauer2007a")
 source("tolerances.r") # read in tolerances
 
 ### load data
-data(dat.collins1985b, package="metafor")
+data(dat.collins1985b)
 dat <- dat.collins1985b[,1:7]
 dat <- escalc(measure="OR", ai=pre.xti, n1i=pre.nti, ci=pre.xci, n2i=pre.nci, data=dat)
 

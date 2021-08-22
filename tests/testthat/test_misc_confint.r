@@ -6,7 +6,7 @@ source("tolerances.r") # read in tolerances
 
 test_that("confint() works correctly for 'rma.uni' objects.", {
 
-   data(dat.bcg, package="metafor")
+   data(dat.bcg)
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
    res <- rma(yi, vi, data=dat, method="DL")
    sav <- confint(res, fixed=TRUE, transf=exp)
@@ -20,7 +20,7 @@ test_that("confint() works correctly for 'rma.uni' objects.", {
 
 test_that("confint() works correctly for 'rma.mh' objects.", {
 
-   data(dat.bcg, package="metafor")
+   data(dat.bcg)
    res <- rma.mh(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
    sav <- confint(res, transf=exp)
 
@@ -30,7 +30,7 @@ test_that("confint() works correctly for 'rma.mh' objects.", {
 
 test_that("confint() works correctly for 'rma.peto' objects.", {
 
-   data(dat.bcg, package="metafor")
+   data(dat.bcg)
    res <- rma.peto(ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
    sav <- confint(res, transf=exp)
 
