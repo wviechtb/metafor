@@ -30,8 +30,8 @@ digits, cols=c("gray80","gray10"), grid=TRUE, pch=19, cex=1, lwd=2, ...) {
    if (missing(atransf))
       atransf <- FALSE
 
-   transf.char  <- deparse(substitute(transf))
-   atransf.char <- deparse(substitute(atransf))
+   transf.char  <- deparse(transf)
+   atransf.char <- deparse(atransf)
 
    if (is.function(transf) && is.function(atransf))
       stop(mstyle$stop("Use either 'transf' or 'atransf' to specify a transformation (not both)."))

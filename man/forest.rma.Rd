@@ -180,7 +180,7 @@ forest(res, xlim=c(-18,10))
 forest(res, xlim=c(-10,10))
 
 ### illustrate transf argument
-forest(res, transf=exp, at=c(0,1,2,4,6), xlim=c(-8,12), cex=.8, refline=1, header=TRUE)
+forest(res, transf=exp, at=0:7, xlim=c(-8,12), cex=.8, refline=1, header=TRUE)
 
 ### illustrate atransf argument
 forest(res, atransf=exp, at=log(c(.05,.25,1,4,20)), xlim=c(-8,7), cex=.8, header=TRUE)
@@ -223,7 +223,7 @@ forest(res, ylim=c(-1.5, 20), rows=c(17:15, 12:6, 3:1)) ### set positions
 ### note: may need to widen plotting device to avoid overlapping text
 forest(res, xlim=c(-16, 4.6), at=log(c(.05, .25, 1, 4)), atransf=exp,
        ilab=cbind(dat.bcg$tpos, dat.bcg$tneg, dat.bcg$cpos, dat.bcg$cneg),
-       ilab.xpos=c(-9.5,-8,-6,-4.5), cex=.75, ylim=c(-1, 21),
+       ilab.xpos=c(-9.5,-8,-6,-4.5), cex=.75, ylim=c(0.5, 21),
        order=dat.bcg$alloc, rows=c(1:2,5:11,14:17),
        header="Author(s) and Year")
 op <- par(cex=0.75, font=2)

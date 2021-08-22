@@ -29,7 +29,7 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
    if (missing(transf))
       transf <- FALSE
 
-   transf.char <- deparse(substitute(transf))
+   transf.char <- deparse(transf)
 
    if (missing(targs))
       targs <- NULL

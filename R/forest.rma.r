@@ -24,8 +24,8 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
    if (missing(atransf))
       atransf <- FALSE
 
-   transf.char  <- deparse(substitute(transf))
-   atransf.char <- deparse(substitute(atransf))
+   transf.char  <- deparse(transf)
+   atransf.char <- deparse(atransf)
 
    if (is.function(transf) && is.function(atransf))
       stop(mstyle$stop("Use either 'transf' or 'atransf' to specify a transformation (not both)."))

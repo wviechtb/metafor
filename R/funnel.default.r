@@ -21,7 +21,7 @@ label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
    if (missing(atransf))
       atransf <- FALSE
 
-   atransf.char <- deparse(substitute(atransf))
+   atransf.char <- deparse(atransf)
 
    yi <- x
 
@@ -179,15 +179,18 @@ label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
 
    ddd <- list(...)
 
-   lplot     <- function(..., refline2, level2, lty2) plot(...)
-   labline   <- function(..., refline2, level2, lty2) abline(...)
-   lsegments <- function(..., refline2, level2, lty2) segments(...)
-   laxis     <- function(..., refline2, level2, lty2) axis(...)
-   lpolygon  <- function(..., refline2, level2, lty2) polygon(...)
-   llines    <- function(..., refline2, level2, lty2) lines(...)
-   lpoints   <- function(..., refline2, level2, lty2) points(...)
-   lrect     <- function(..., refline2, level2, lty2) rect(...)
-   ltext     <- function(..., refline2, level2, lty2) text(...)
+   if (!is.null(ddd$transf))
+      warning("Function does not have a 'transf' argument (use 'atransf' instead).", call.=FALSE)
+
+   lplot     <- function(..., refline2, level2, lty2, transf) plot(...)
+   labline   <- function(..., refline2, level2, lty2, transf) abline(...)
+   lsegments <- function(..., refline2, level2, lty2, transf) segments(...)
+   laxis     <- function(..., refline2, level2, lty2, transf) axis(...)
+   lpolygon  <- function(..., refline2, level2, lty2, transf) polygon(...)
+   llines    <- function(..., refline2, level2, lty2, transf) lines(...)
+   lpoints   <- function(..., refline2, level2, lty2, transf) points(...)
+   lrect     <- function(..., refline2, level2, lty2, transf) rect(...)
+   ltext     <- function(..., refline2, level2, lty2, transf) text(...)
 
    ### refline2, level2, and lty2 for adding a second reference line / funnel
 

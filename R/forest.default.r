@@ -21,20 +21,13 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
    if (missing(atransf))
       atransf <- FALSE
 
-   transf.char  <- deparse(substitute(transf))
-   atransf.char <- deparse(substitute(atransf))
+   transf.char  <- deparse(transf)
+   atransf.char <- deparse(atransf)
 
    if (is.function(transf) && is.function(atransf))
       stop(mstyle$stop("Use either 'transf' or 'atransf' to specify a transformation (not both)."))
 
    yi <- x
-
-   ### note: transf and atransf must be function names and cannot, for example, be arguments
-   ### passed down from other functions (i.e., deparse(substitute(...)) will grab exactly what
-   ### is specified for the argument), so the following function would not work:
-   ###
-   ### misc <- function(x, vi, tfunction=FALSE)
-   ###   forest.default(x, vi, atransf=tfunction)
 
    if (missing(targs))
       targs <- NULL

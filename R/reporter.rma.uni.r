@@ -152,7 +152,7 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
 
    ### get measure name
 
-   measure <- tolower(.setlab(x$measure, transf.char=FALSE, atransf.char=FALSE, gentype=1))
+   measure <- tolower(.setlab(x$measure, transf.char="FALSE", atransf.char="FALSE", gentype=1))
    measure <- sub("observed outcome", "outcome", measure)
    measure <- sub("fisher's z", "Fisher r-to-z", measure)
    measure <- sub("yule", "Yule", measure)
