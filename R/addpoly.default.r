@@ -9,7 +9,7 @@
 
 addpoly.default <- function(x, vi, sei, ci.lb, ci.ub, pi.lb, pi.ub,
 rows=-1, level=95, annotate=TRUE, digits=2, width, mlab, transf,
-atransf, targs, efac=1, col, border, fonts, cex, ...) {
+atransf, targs, efac=1, col, border, lty, fonts, cex, ...) {
 
    #########################################################################
 
@@ -41,6 +41,9 @@ atransf, targs, efac=1, col, border, fonts, cex, ...) {
    if (missing(border))
       border <- "black"
 
+   if (missing(lty))
+      lty <- "dotted"
+
    if (missing(cex))
       cex <- NULL
 
@@ -51,9 +54,18 @@ atransf, targs, efac=1, col, border, fonts, cex, ...) {
    if (!is.null(ddd$cr.ub))
       pi.ub <- ddd$cr.ub
 
-   lsegments <- function(..., cr.lb, cr.ub, addcred, pi.type) segments(...)
-   ltext     <- function(..., cr.lb, cr.ub, addcred, pi.type) text(...)
-   lpolygon  <- function(..., cr.lb, cr.ub, addcred, pi.type) polygon(...)
+   if (length(lty) == 1L)
+      lty <- c(lty, "solid")
+
+   if (!is.null(ddd$lcol)) {
+      lcol <- ddd$lcol
+   } else {
+      lcol <- "gray50"
+   }
+
+   lsegments <- function(..., cr.lb, cr.ub, addcred, pi.type, lcol) segments(...)
+   ltext     <- function(..., cr.lb, cr.ub, addcred, pi.type, lcol) text(...)
+   lpolygon  <- function(..., cr.lb, cr.ub, addcred, pi.type, lcol) polygon(...)
 
    ### set/get fonts (1st for labels, 2nd for annotations)
    ### when passing a named vector, the names are for 'family' and the values are for 'font'
@@ -276,13 +288,16 @@ atransf, targs, efac=1, col, border, fonts, cex, ...) {
    if (length(border) == 1L)
       border <- rep(border, k)
 
+   if (length(lcol) == 1L)
+      lcol <- rep(lcol, k)
+
    ### add polygon(s)
 
    for (i in seq_len(k)) {
 
-      lsegments(pi.lb[i], rows[i], pi.ub[i], rows[i], lty="dotted", col="gray50", ...)
-      lsegments(pi.lb[i], rows[i]-(height/150)*cex*efac, pi.lb[i], rows[i]+(height/150)*cex*efac, col="gray50", ...)
-      lsegments(pi.ub[i], rows[i]-(height/150)*cex*efac, pi.ub[i], rows[i]+(height/150)*cex*efac, col="gray50", ...)
+      lsegments(pi.lb[i], rows[i], pi.ub[i], rows[i], lty=lty[1], col=lcol[i], ...)
+      lsegments(pi.lb[i], rows[i]-(height/150)*cex*efac, pi.lb[i], rows[i]+(height/150)*cex*efac, col=lcol[i], lty=lty[2], ...)
+      lsegments(pi.ub[i], rows[i]-(height/150)*cex*efac, pi.ub[i], rows[i]+(height/150)*cex*efac, col=lcol[i], lty=lty[2], ...)
 
       lpolygon(x=c(ci.lb[i], yi[i], ci.ub[i], yi[i]), y=c(rows[i], rows[i]+(height/100)*cex*efac, rows[i], rows[i]-(height/100)*cex*efac), col=col[i], border=border[i], ...)
 

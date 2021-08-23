@@ -14,6 +14,8 @@
 
 - `plot.profile.rma()` gains `refline` argument
 
+- `addpoly.default()` and `addpoly.rma()` gain `lty` argument
+
 - datasets moved to the `metadat` package (https://cran.r-project.org/package=metadat)
 
 - improved the documentation a bit

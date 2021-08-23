@@ -7,7 +7,7 @@
 \usage{
 \method{addpoly}{default}(x, vi, sei, ci.lb, ci.ub, pi.lb, pi.ub,
         rows=-1, level=95, annotate=TRUE, digits=2, width, mlab,
-        transf, atransf, targs, efac=1, col, border, fonts, cex, \dots)
+        transf, atransf, targs, efac=1, col, border, lty, fonts, cex, \dots)
 }
 \arguments{
    \item{x}{vector with the values at which the polygons should be drawn.}
@@ -29,6 +29,7 @@
    \item{efac}{vertical expansion factor for the polygons. The default value of 1 should usually work okay.}
    \item{col}{optional character string to specify the name of a color to use for the polygons. If unspecified, the function sets a default color.}
    \item{border}{optional character string to specify the name of a color to use for the border of the polygons. If unspecified, the function sets a default color.}
+   \item{lty}{optional character string to specify the line type for the prediction interval. If unspecified, the function sets this to \code{"dotted"} by default.}
    \item{fonts}{optional character string to specify the font to use for the labels and annotations. If unspecified, the default font is used.}
    \item{cex}{optional symbol expansion factor. If unspecified, the function tries to set this to a sensible value.}
    \item{\dots}{other arguments.}
