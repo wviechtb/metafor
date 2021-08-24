@@ -122,15 +122,21 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
 
    if (!is.null(ddd$dist)) {
 
+      if (is.data.frame(ddd$dist) || is.matrix(ddd$dist))
+         ddd$dist <- list(ddd$dist)
+
+      if (!inherits(ddd$dist, "list"))
+         ddd$dist <- as.list(ddd$dist)
+
       if (length(ddd$dist) == 1L)
          ddd$dist <- c(ddd$dist, ddd$dist)
-
-      if (!is.list(ddd$dist))
-         ddd$dist <- as.list(ddd$dist)
 
       dist.methods <- c("euclidean", "maximum", "manhattan", "gcd")
 
       for (j in 1:2) {
+
+         if (is.data.frame(ddd$dist[[j]]))
+            ddd$dist[[j]] <- as.matrix(ddd$dist[[j]])
 
          if (!is.function(ddd$dist[[j]]) && !is.matrix(ddd$dist[[j]])) {
             ddd$dist[[j]] <- charmatch(ddd$dist[[j]], dist.methods, nomatch = 0)
