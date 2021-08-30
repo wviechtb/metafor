@@ -1888,7 +1888,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
          if (inherits(H, "try-error")) {
 
-            warning(mstyle$warning("Error when trying to compute Hessian."), call.=FALSE)
+            warning(mstyle$warning("Error when trying to compute the Hessian."), call.=FALSE)
 
          } else {
 

@@ -1562,6 +1562,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
                posdefify = FALSE,         # to force G and H matrix to become positive definite
                hessian = FALSE,           # to compute Hessian
                hessianCtrl = list(r=8),   # arguments passed on to 'method.args' of hessian()
+               hessian0 = .Machine$double.eps^0.5, # threshold for detecting fixed elements in Hessian
                vctransf = FALSE,          # if FALSE, Hessian is computed for the untransformed (raw) variance components
                                           # if TRUE,  Hessian is computed for the transformed components (log/atahn/qlogis space)
                vccov = FALSE)
@@ -2246,7 +2247,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
 
       if (inherits(hessian, "try-error")) {
 
-         warning(mstyle$warning("Error when trying to compute Hessian."), call.=FALSE)
+         warning(mstyle$warning("Error when trying to compute the Hessian."), call.=FALSE)
 
       } else {
 
@@ -2288,7 +2289,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
 
          ### select correct rows/columns from Hessian depending on components in the model
          ### FIXME: this isn't quite right, since "DIAG" and "ID" have a rho/phi element, but this is fixed at 0, so should also exclude this
-         ###        in fact, all fixed elements should be filtered out
+         ###        in fact, all fixed elements should be filtered out (done below)
 
          #if (withS && withG && withH)
             #hessian <- hessian[1:nrow(hessian),1:ncol(hessian), drop=FALSE]
@@ -2324,6 +2325,11 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
             }
             hessian <- hessian[pos,pos]
          }
+
+         ### detect rows/columns that are essentially all equal to 0 (fixed elements) and filter them out
+
+         all0 <- apply(hessian, 1, function(x) all(abs(x) <= con$hessian0))
+         hessian <- hessian[!all0, !all0, drop=FALSE]
 
       }
 

@@ -913,7 +913,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
       if (inherits(H, "try-error")) {
 
-         warning(mstyle$warning("Error when trying to compute Hessian."), call.=FALSE)
+         warning(mstyle$warning("Error when trying to compute the Hessian."), call.=FALSE)
 
       } else {
 
