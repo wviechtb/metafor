@@ -390,7 +390,7 @@ anova.rma <- function(object, object2, btt, X, att, Z, digits, ...) {
          } else if (identical(model.r$tau2,0)) {
             R2 <- 0
          } else {
-            R2 <- 100 * max(0, (model.r$tau2 - model.f$tau2)/model.r$tau2)
+            R2 <- 100 * max(0, (model.r$tau2 - model.f$tau2) / model.r$tau2)
          }
       } else {
          R2 <- NA

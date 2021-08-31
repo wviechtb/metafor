@@ -63,7 +63,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("tdist", "outlist", "onlyo1", "addyi", "addvi", "time", "retdat", "family", "retfit", "skiphet"))
+   .chkdots(ddd, c("tdist", "outlist", "onlyo1", "addyi", "addvi", "time", "retdat", "family", "retfit", "skiphet", "i2def"))
 
    ### handle 'tdist' argument from ... (note: overrides test argument)
 
@@ -80,6 +80,10 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    onlyo1 <- ifelse(is.null(ddd$onlyo1), FALSE, ddd$onlyo1)
    addyi  <- ifelse(is.null(ddd$addyi),  TRUE,  ddd$addyi)
    addvi  <- ifelse(is.null(ddd$addvi),  TRUE,  ddd$addvi)
+
+   ### set default for i2def
+
+   i2def <- ifelse(is.null(ddd$i2def), "1", ddd$i2def)
 
    ### set defaults for digits
 
@@ -2382,11 +2386,13 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    W     <- diag(wi, nrow=k.yi, ncol=k.yi)
    stXWX <- .invcalc(X=X.yi, W=W, k=k.yi)
    P     <- W - W %*% X.yi %*% stXWX %*% crossprod(X.yi,W)
-   #vt   <- (k-1) / (sum(wi) - sum(wi^2)/sum(wi)) # this only applies to the RE model
-   #vt   <- 1/mean(wi) # harmonic mean of vi's (see Takkouche et al., 1999)
-   vt    <- (k.yi-p) / .tr(P)
-   I2    <- 100 * tau2 / (vt + tau2)
-   H2    <- tau2 / vt + 1
+   if (i2def == "1")
+      vt <- (k.yi-p) / .tr(P)
+   if (i2def == "2")
+      vt <- 1/mean(wi) # harmonic mean of vi's (see Takkouche et al., 1999)
+   #vt <- (k-1) / (sum(wi) - sum(wi^2)/sum(wi)) # this only applies to the RE model
+   I2  <- 100 * tau2 / (vt + tau2)
+   H2  <- tau2 / vt + 1
 
    ### testing of the fixed effects in the model
 

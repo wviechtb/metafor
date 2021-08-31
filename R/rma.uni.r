@@ -60,7 +60,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("knha", "link", "alpha", "outlist", "onlyo1", "addyi", "addvi", "time", "skipr2", "skiphes"))
+   .chkdots(ddd, c("knha", "link", "alpha", "outlist", "onlyo1", "addyi", "addvi", "time", "skipr2", "skiphes", "i2def", "r2def"))
 
    ### handle 'knha' argument from ... (note: overrides test argument)
 
@@ -105,6 +105,11 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
    onlyo1 <- ifelse(is.null(ddd$onlyo1), FALSE, ddd$onlyo1)
    addyi  <- ifelse(is.null(ddd$addyi),  TRUE,  ddd$addyi)
    addvi  <- ifelse(is.null(ddd$addvi),  TRUE,  ddd$addvi)
+
+   ### set defaults for i2def and r2def
+
+   i2def <- ifelse(is.null(ddd$i2def), "1", ddd$i2def)
+   r2def <- ifelse(is.null(ddd$r2def), "1", ddd$r2def)
 
    ### set defaults for digits
 
@@ -2174,9 +2179,11 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
          ### calculation of 'typical' sampling variance
 
+         if (i2def == "1")
+            vt <- (k-p) / .tr(P)
+         if (i2def == "2")
+            vt <- 1/mean(wi) ### harmonic mean of vi's (see Takkouche et al., 1999)
          #vt <- (k-1) / (sum(wi) - sum(wi^2)/sum(wi)) ### this only applies to the RE model
-         #vt <- 1/mean(wi) ### harmonic mean of vi's (see Takkouche et al., 1999)
-         vt <- (k-p) / .tr(P)
 
          ### calculation of I^2 and H^2
 
@@ -2204,63 +2211,6 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
          warning(mstyle$warning(paste0("Cannot compute ", ifelse(int.only, "Q", "QE"), "-test, I^2, or H^2 when there are non-positive sampling variances in the data.")), call.=FALSE)
 
       vt <- NA
-
-   }
-
-   #########################################################################
-
-   ### compute pseudo R^2 statistic for mixed-effects models with an intercept (only for rma.uni models)
-
-   if (!int.only && int.incl && model == "rma.uni" && !isTRUE(ddd$skipr2)) {
-
-      if (verbose > 1)
-         message(mstyle$message("Computing R^2 ..."))
-
-      if (is.element(method, c("FE","EE","CE"))) {
-
-         if (identical(var(yi),0)) {
-            R2 <- 0
-         } else {
-            if (weighted) {
-               if (is.null(weights)) {
-                  R2 <- max(0, 100 * summary(lm(yi ~ X, weights=wi))$adj.r.squared)
-               } else {
-                  R2 <- max(0, 100 * summary(lm(yi ~ X, weights=weights))$adj.r.squared)
-               }
-            } else {
-               R2 <- max(0, 100 * summary(lm(yi ~ X))$adj.r.squared)
-            }
-         }
-
-      } else {
-
-         if (verbose > 1) {
-            res0 <- try(rma.uni(yi, vi, weights=weights, method=method, weighted=weighted, test=test, verbose=ifelse(verbose, TRUE, FALSE), control=con, digits=digits), silent=FALSE)
-         } else {
-            res0 <- try(suppressWarnings(rma.uni(yi, vi, weights=weights, method=method, weighted=weighted, test=test, verbose=ifelse(verbose, TRUE, FALSE), control=con, digits=digits)), silent=TRUE)
-         }
-
-         if (!inherits(res0, "try-error")) {
-
-            tau2.RE <- res0$tau2
-
-            if (identical(tau2.RE,0)) {
-               R2 <- 0
-            } else {
-               R2 <- max(0, 100 * (tau2.RE - tau2) / tau2.RE)
-            }
-
-         } else {
-
-            R2 <- NA
-
-         }
-
-      }
-
-   } else {
-
-      R2 <- NULL
 
    }
 
@@ -2294,6 +2244,131 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
    fit.stats <- matrix(c(ll.ML, dev.ML, AIC.ML, BIC.ML, AICc.ML, ll.REML, dev.REML, AIC.REML, BIC.REML, AICc.REML), ncol=2, byrow=FALSE)
    dimnames(fit.stats) <- list(c("ll","dev","AIC","BIC","AICc"), c("ML","REML"))
    fit.stats <- data.frame(fit.stats)
+
+   #########################################################################
+
+   ### compute pseudo R^2 statistic for mixed-effects models with an intercept (only for rma.uni models)
+
+   if (!int.only && int.incl && model == "rma.uni" && !isTRUE(ddd$skipr2)) {
+
+      if (verbose > 1)
+         message(mstyle$message("Computing R^2 ..."))
+
+      if (is.element(method, c("FE","EE","CE"))) {
+
+         if (identical(var(yi),0)) {
+            R2 <- 0
+         } else {
+            if (weighted) {
+               if (is.null(weights)) {
+                  R2 <- max(0, 100 * summary(lm(yi ~ X, weights=wi))$adj.r.squared)
+               } else {
+                  R2 <- max(0, 100 * summary(lm(yi ~ X, weights=weights))$adj.r.squared)
+               }
+            } else {
+               R2 <- max(0, 100 * summary(lm(yi ~ X))$adj.r.squared)
+            }
+         }
+
+      } else {
+
+         if (r2def %in% c("1","1v","3","3v","5","6","7","8")) {
+
+            if (verbose > 1) {
+               res0 <- try(rma.uni(yi, vi, weights=weights, method=method, weighted=weighted, test=test, verbose=ifelse(verbose, TRUE, FALSE), control=con, digits=digits), silent=FALSE)
+            } else {
+               res0 <- try(suppressWarnings(rma.uni(yi, vi, weights=weights, method=method, weighted=weighted, test=test, verbose=ifelse(verbose, TRUE, FALSE), control=con, digits=digits)), silent=TRUE)
+            }
+
+            if (!inherits(res0, "try-error")) {
+
+               tau2.RE <- res0$tau2
+
+               if (identical(tau2.RE,0) && r2def %in% c("1","3")) {
+
+                  R2 <- 0
+
+               } else {
+
+                  ll0 <- logLik(res0)
+                  ll1 <- ifelse(method == "ML", ll.ML, ll.REML)
+                  lls <- (ifelse(method == "ML", dev.ML, dev.REML) + 2*ll1) / 2
+
+                  # based on Raudenbush (1994)
+                  if (r2def == "1")
+                     R2 <- (tau2.RE - tau2) / tau2.RE
+
+                  # like Raudenbush (1994) but with total variance (including sampling variance) in the denominator
+                  if (r2def == "1v")
+                     R2 <- (tau2.RE - tau2) / (tau2.RE + 1/mean(1/vi))
+
+                  # model component definition with tau^2_RE in the denominator
+                  if (r2def == "3")
+                     R2 <- var(c(X%*%beta)) / tau2.RE
+
+                  # model component definition with total variance (including sampling variance) in the denominator
+                  if (r2def == "3v")
+                     R2 <- var(c(X%*%beta)) / (tau2.RE + 1/mean(1/vi))
+
+                  # like McFadden's R^2
+                  if (r2def == "5")
+                     R2 <- 1 - ll1 / ll0
+
+                  # like Cox & Snell R^2
+                  if (r2def == "6")
+                     R2 <- 1 - (exp(ll0) / exp(ll1))^(2/k)
+
+                  # like Nagelkerke R^2
+                  if (r2def == "7")
+                     R2 <- (1 - (exp(ll0) / exp(ll1))^(2/k)) / (1 - exp(ll0)^(2/k))
+
+                  # how close ME model is to the saturated model in terms of ll (same as 5 for REML)
+                  if (r2def == "8")
+                     R2 <- (ll1 - ll0) / (lls - ll0)
+
+               }
+
+            } else {
+
+               R2 <- NA
+
+            }
+
+         } else {
+
+            # model component definition
+            if (r2def == "2")
+               R2 <- var(c(X%*%beta)) / (var(c(X%*%beta)) + tau2)
+
+            # model component definition with total variance (including sampling variance) in the denominator
+            if (r2def == "2v")
+               R2 <- var(c(X%*%beta)) / (var(c(X%*%beta)) + tau2 + 1/mean(1/vi))
+
+            # squared correlation between observed and fitted values
+            if (r2def == "4")
+               R2 <- cor(yi, c(X%*%beta))^2
+
+            # squared weighted correlation between observed and fitted values
+            if (r2def == "4w") {
+               if (is.null(weights)) {
+                  # identical to eta^2 = F * df1 / (F * df1 + df2) when test="knha"
+                  R2 <- cov.wt(cbind(dat$yi, c(X%*%beta)), cor=TRUE, wt=1/(vi+tau2))$cor[1,2]^2
+               } else {
+                  R2 <- cov.wt(cbind(dat$yi, c(X%*%beta)), cor=TRUE, wt=weights)$cor[1,2]^2
+               }
+            }
+
+         }
+
+         R2 <- max(0, 100 * R2)
+
+      }
+
+   } else {
+
+      R2 <- NULL
+
+   }
 
    #########################################################################
 

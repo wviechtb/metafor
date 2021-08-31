@@ -141,7 +141,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
       ### if new moderator values have been specified
 
       if (!(.is.vector(newmods) || inherits(newmods, "matrix")))
-         stop(mstyle$stop(paste0("Argument 'newmods' should be a vector or matrix, but is of class '", class(newmods), "'.")))
+         stop(mstyle$stop(paste0("Argument 'newmods' should be a vector or matrix, but is of class '", class(newmods)[1], "'.")))
 
       if ((!x$int.incl && x$p == 1L) || (x$int.incl && x$p == 2L)) { # if single moderator (multiple k.new possible) (either without or with intercept in the model)
          k.new <- length(newmods)                                    #
