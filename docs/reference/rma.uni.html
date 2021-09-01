@@ -105,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1-13</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1-14</span>
       </span>
     </div>
 
@@ -361,7 +361,7 @@
     </tr>
     <tr>
       <th>btt</th>
-      <td><p>optional vector of indices to specify which coefficients to include in the omnibus test of moderators. Can also be a string to grep for. See &#8216;Details&#8217;.</p></td>
+      <td><p>optional vector of indices to specify which coefficients to include in the omnibus test of moderators. Can also be a string to <code><a href='https://rdrr.io/r/base/grep.html'>grep</a></code> for. See &#8216;Details&#8217;.</p></td>
     </tr>
     <tr>
       <th>att</th>
@@ -417,7 +417,7 @@
 <p><b>Categorical Moderators</b></p>
 <p>Categorical moderator variables can be included in the model via the <code>mods</code> argument in the same way that appropriately (dummy) coded categorical independent variables can be included in linear models. One can either do the dummy coding manually or use a model formula together with the <code><a href='https://rdrr.io/r/base/factor.html'>factor</a></code> function to let <span style="R">R</span> handle the coding automatically (note that string/character variables in a model formula are automatically converted to factors). An example to illustrate these different approaches is provided below.</p>
 <p><b>Tests and Confidence Intervals</b></p>
-<p>By default, tests of individual coefficients in the model (and the corresponding confidence intervals) are based on a standard normal distribution, while the omnibus test is based on a chi-square distribution (see above). As an alternative, one can set <code>test="t"</code>, in which case tests of individual coefficients and confidence intervals are based on a t-distribution with \(k-p\) degrees of freedom, while the omnibus test statistic then uses an F-distribution with \(m\) and \(k-p\) degrees of freedom (with \(k\) denoting the total number of estimates included in the analysis and \(p\) the total number of model coefficients including the intercept if it is present). Finally, when <code>test="knha"</code>, the Knapp and Hartung (2003) method is used, which applies an adjustment to the standard errors of the estimated coefficients (to account for the uncertainty in the estimate of the amount of (residual) heterogeneity) and uses t- and F-distributions as described above.</p>
+<p>By default, tests of individual coefficients in the model (and the corresponding confidence intervals) are based on a standard normal distribution, while the omnibus test is based on a chi-square distribution (see above). As an alternative, one can set <code>test="t"</code>, in which case tests of individual coefficients and confidence intervals are based on a t-distribution with \(k-p\) degrees of freedom, while the omnibus test statistic then uses an F-distribution with \(m\) and \(k-p\) degrees of freedom (with \(k\) denoting the total number of estimates included in the analysis and \(p\) the total number of model coefficients including the intercept if it is present). Furthermore, when <code>test="knha"</code>, the Knapp and Hartung (2003) method is used, which applies an adjustment to the standard errors of the estimated coefficients (to account for the uncertainty in the estimate of the amount of (residual) heterogeneity) and uses t- and F-distributions as described above. Finally, one can set <code>test="adhoc"</code>, in which case the Knapp and Hartung (2003) method is used, but with the restriction that the adjustment to the standard errors can never result in adjusted standard errors that are smaller than the unadjusted ones (see Jackson et al., 2017, section 4.3).</p>
 <p><b>Test for (Residual) Heterogeneity</b></p>
 <p>A test for (residual) heterogeneity is automatically carried out by the function. Without moderators in the model, this is simply Cochran's \(Q\)-test (Cochran, 1954), which tests whether the variability in the observed effect sizes or outcomes is larger than would be expected based on sampling variability alone. A significant test suggests that the true effects/outcomes are heterogeneous. When moderators are included in the model, this is the \(Q_E\)-test for residual heterogeneity, which tests whether the variability in the observed effect sizes or outcomes not accounted for by the moderators included in the model is larger than would be expected based on sampling variability alone.</p>
 <p><b>Location-Scale Models</b></p>
@@ -506,6 +506,7 @@
 <p>Hedges, L. V., &amp; Olkin, I. (1985). <em>Statistical methods for meta-analysis</em>. San Diego, CA: Academic Press.</p>
 <p>Henmi, M., &amp; Copas, J. B. (2010). Confidence intervals for random effects meta-analysis and robustness to publication bias. <em>Statistics in Medicine</em>, <b>29</b>(29), 2969--2983. <a href='https://doi.org/10.1002/sim.4029'>https://doi.org/10.1002/sim.4029</a></p>
 <p>Hunter, J. E., &amp; Schmidt, F. L. (2004). <em>Methods of meta-analysis: Correcting error and bias in research findings</em> (2nd ed.). Thousand Oaks, CA: Sage.</p>
+<p>Jackson, D., Law, M., Rücker, G., &amp; Schwarzer, G. (2017). The Hartung-Knapp modification for random-effects meta-analysis: A useful refinement but are there any residual concerns? <em>Statistics in Medicine</em>, <b>36</b>(25), 3923--3934. <a href='https://doi.org/10.1002/sim.7411'>https://doi.org/10.1002/sim.7411</a></p>
 <p>Jennrich, R. I., &amp; Sampson, P. F. (1976). Newton-Raphson and related algorithms for maximum likelihood variance component estimation. <em>Technometrics</em>, <b>18</b>(1), 11--17. <a href='https://doi.org/10.2307/1267911'>https://doi.org/10.2307/1267911</a></p>
 <p>Knapp, G., &amp; Hartung, J. (2003). Improved tests for a random effects meta-regression with a single covariate. <em>Statistics in Medicine</em>, <b>22</b>(17), 2693--2710. <a href='https://doi.org/10.1002/sim.1482'>https://doi.org/10.1002/sim.1482</a></p>
 <p>Morris, C. N. (1983). Parametric empirical Bayes inference: Theory and applications. <em>Journal of the American Statistical Association</em>, <b>78</b>(381), 47--55. <a href='https://doi.org/10.2307/2287098'>https://doi.org/10.2307/2287098</a></p>

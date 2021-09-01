@@ -15,9 +15,6 @@ test_that("plot can be drawn.", {
    ### decrease margins so the more space is used
    par(mar=c(5,5,2,2))
 
-   ### load BCG vaccine data
-   data(dat.bcg)
-
    ### calculate log risk ratios and corresponding sampling variances
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 

@@ -125,7 +125,7 @@ test_that("NAs are correctly handled by various method functions for rma.uni() m
 
 test_that("NAs are correctly handled by rma.mv() intercept-only models.", {
 
-   dat <- get(data(dat.konstantopoulos2011))
+   dat <- dat.konstantopoulos2011
 
    res1 <- rma.mv(yi, vi, random = ~ 1 | district/study, data=dat)
    res2 <- rma.mv(yi, vi, random = ~ factor(study) | district, data=dat)

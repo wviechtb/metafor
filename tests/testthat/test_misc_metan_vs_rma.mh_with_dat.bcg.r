@@ -6,8 +6,6 @@ source("tolerances.r") # read in tolerances
 
 test_that("results match (FE model, measure='RR').", {
 
-   data(dat.bcg)
-
    ### compare results with: metan tpos tneg cpos cneg, fixed nograph rr log
 
    res <- rma.mh(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
@@ -30,8 +28,6 @@ test_that("results match (FE model, measure='RR').", {
 
 test_that("results match (FE model, measure='OR').", {
 
-   data(dat.bcg)
-
    ### compare results with: metan tpos tneg cpos cneg, fixed nograph or log
 
    res <- rma.mh(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
@@ -53,8 +49,6 @@ test_that("results match (FE model, measure='OR').", {
 })
 
 test_that("results match (FE model, measure='RD').", {
-
-   data(dat.bcg)
 
    ### compare results with: metan tpos tneg cpos cneg, fixed nograph rd
 

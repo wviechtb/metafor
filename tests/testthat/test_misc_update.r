@@ -6,7 +6,6 @@ source("tolerances.r") # read in tolerances
 
 test_that("update() works for rma().", {
 
-   data(dat.bcg)
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
    res1 <- rma(yi, vi, data=dat, method="FE")
@@ -25,7 +24,6 @@ test_that("update() works for rma().", {
 
 test_that("update() works for rma.mv().", {
 
-   data(dat.bcg)
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
    res1 <- rma.mv(yi, vi, data=dat, method="FE")
@@ -46,7 +44,6 @@ test_that("update() works for rma.glmm().", {
 
    skip_on_cran()
 
-   data(dat.bcg)
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
    res1 <- rma.glmm(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, method="FE")

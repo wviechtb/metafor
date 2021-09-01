@@ -6,7 +6,6 @@ source("tolerances.r") # read in tolerances
 
 test_that("weights are correct for rma() with method='FE'.", {
 
-   data(dat.bcg)
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
    ### weighted analysis
@@ -40,7 +39,6 @@ test_that("weights are correct for rma() with method='FE'.", {
 
 test_that("weights are correct for rma() with method='DL'.", {
 
-   data(dat.bcg)
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
    ### weighted analysis
@@ -74,7 +72,6 @@ test_that("weights are correct for rma() with method='DL'.", {
 
 test_that("weights are correct for rma.mv() with method='REML'.", {
 
-   data(dat.bcg)
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
    ### weighted analysis

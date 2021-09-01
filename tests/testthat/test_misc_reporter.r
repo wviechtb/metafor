@@ -8,7 +8,6 @@ test_that("reporter() works correctly for 'rma.uni' objects.", {
 
    skip_on_cran()
 
-   data(dat.bcg)
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
    res <- rma(yi, vi, data=dat)
 

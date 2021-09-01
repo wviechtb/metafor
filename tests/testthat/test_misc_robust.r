@@ -6,7 +6,6 @@ source("tolerances.r") # read in tolerances
 
 test_that("robust() works correctly for 'rma' objects.", {
 
-   data(dat.bcg)
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
    res <- rma(yi, vi, data=dat)
 
@@ -24,7 +23,6 @@ test_that("robust() works correctly for 'rma' objects.", {
 
 test_that("robust() works correctly for 'rma.mv' objects.", {
 
-   data(dat.bcg)
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
    res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat)
 

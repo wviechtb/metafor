@@ -6,7 +6,6 @@ source("tolerances.r") # read in tolerances
 
 test_that("results match (FE model).", {
 
-   data(dat.bcg)
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
    res <- rma(yi, vi, mods = ~ ablat + year, data=dat, method="FE")

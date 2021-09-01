@@ -61,7 +61,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \item{test}{character string to specify how test statistics and confidence intervals for the fixed effects should be computed. By default (\code{test="z"}), Wald-type tests and CIs are obtained, which are based on a standard normal distribution. When \code{test="t"}, a t-distribution is used instead. When \code{test="knha"}, the method by Knapp and Hartung (2003) is used. See \sQuote{Details}.}
    \item{level}{numeric value between 0 and 100 to specify the confidence interval level (the default is 95).}
    \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4.}
-   \item{btt}{optional vector of indices to specify which coefficients to include in the omnibus test of moderators. Can also be a string to grep for. See \sQuote{Details}.}
+   \item{btt}{optional vector of indices to specify which coefficients to include in the omnibus test of moderators. Can also be a string to \code{\link{grep}} for. See \sQuote{Details}.}
    \item{att}{optional vector of indices to specify which scale coefficients to include in the omnibus test. Only relevant for location-scale models. See \sQuote{Details}.}
    \item{tau2}{optional numeric value to specify the amount of (residual) heterogeneity in a random- or mixed-effects model (instead of estimating it). Useful for sensitivity analyses (e.g., for plotting results as a function of \mjseqn{\tau^2}). When unspecified, the value of \mjseqn{\tau^2} is estimated from the data.}
    \item{verbose}{logical to specify whether output should be generated on the progress of the model fitting (the default is \code{FALSE}). Can also be an integer. Values > 1 generate more verbose output. See \sQuote{Note}.}
@@ -114,7 +114,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
    \bold{Tests and Confidence Intervals}
 
-   By default, tests of individual coefficients in the model (and the corresponding confidence intervals) are based on a standard normal distribution, while the omnibus test is based on a chi-square distribution (see above). As an alternative, one can set \code{test="t"}, in which case tests of individual coefficients and confidence intervals are based on a t-distribution with \mjseqn{k-p} degrees of freedom, while the omnibus test statistic then uses an F-distribution with \mjseqn{m} and \mjseqn{k-p} degrees of freedom (with \mjseqn{k} denoting the total number of estimates included in the analysis and \mjseqn{p} the total number of model coefficients including the intercept if it is present). Finally, when \code{test="knha"}, the Knapp and Hartung (2003) method is used, which applies an adjustment to the standard errors of the estimated coefficients (to account for the uncertainty in the estimate of the amount of (residual) heterogeneity) and uses t- and F-distributions as described above.
+   By default, tests of individual coefficients in the model (and the corresponding confidence intervals) are based on a standard normal distribution, while the omnibus test is based on a chi-square distribution (see above). As an alternative, one can set \code{test="t"}, in which case tests of individual coefficients and confidence intervals are based on a t-distribution with \mjseqn{k-p} degrees of freedom, while the omnibus test statistic then uses an F-distribution with \mjseqn{m} and \mjseqn{k-p} degrees of freedom (with \mjseqn{k} denoting the total number of estimates included in the analysis and \mjseqn{p} the total number of model coefficients including the intercept if it is present). Furthermore, when \code{test="knha"}, the Knapp and Hartung (2003) method is used, which applies an adjustment to the standard errors of the estimated coefficients (to account for the uncertainty in the estimate of the amount of (residual) heterogeneity) and uses t- and F-distributions as described above. Finally, one can set \code{test="adhoc"}, in which case the Knapp and Hartung (2003) method is used, but with the restriction that the adjustment to the standard errors can never result in adjusted standard errors that are smaller than the unadjusted ones (see Jackson et al., 2017, section 4.3).
 
    \bold{Test for (Residual) Heterogeneity}
 
@@ -232,6 +232,8 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    Henmi, M., & Copas, J. B. (2010). Confidence intervals for random effects meta-analysis and robustness to publication bias. \emph{Statistics in Medicine}, \bold{29}(29), 2969--2983. \verb{https://doi.org/10.1002/sim.4029}
 
    Hunter, J. E., & Schmidt, F. L. (2004). \emph{Methods of meta-analysis: Correcting error and bias in research findings} (2nd ed.). Thousand Oaks, CA: Sage.
+
+   Jackson, D., Law, M., \enc{Rücker}{Ruecker}, G., & Schwarzer, G. (2017). The Hartung-Knapp modification for random-effects meta-analysis: A useful refinement but are there any residual concerns? \emph{Statistics in Medicine}, \bold{36}(25), 3923--3934. \verb{https://doi.org/10.1002/sim.7411}
 
    Jennrich, R. I., & Sampson, P. F. (1976). Newton-Raphson and related algorithms for maximum likelihood variance component estimation. \emph{Technometrics}, \bold{18}(1), 11--17. \verb{https://doi.org/10.2307/1267911}
 

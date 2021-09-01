@@ -4,7 +4,6 @@ context("Checking misc: rma.mv() function")
 
 source("tolerances.r") # read in tolerances
 
-data(dat.bcg)
 dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
 test_that("rma.mv() correctly handles a formula for the 'yi' argument", {
@@ -74,13 +73,12 @@ test_that("rma.mv() correctly handles the R argument", {
 
 })
 
-data(dat.bcg)
 dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
 test_that("rma.mv() correctly computes the Hessian", {
 
-   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(hessian=TRUE))
-   expect_equivalent(c(sqrt(1/res$hessian)), 0.1678, tolerance=.tol[["se"]])
+   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, cvvc=TRUE)
+   expect_equivalent(c(sqrt(res$vvc)), 0.1678, tolerance=.tol[["se"]])
 
 })
 

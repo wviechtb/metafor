@@ -6,7 +6,6 @@ source("tolerances.r") # read in tolerances
 
 test_that("results for rma() and lm() match.", {
 
-   data(dat.molloy2014)
    dat <- escalc(measure="ZCOR", ri=ri, ni=ni, data=dat.molloy2014)
 
    res1 <- rma(yi, 0, data=dat)
@@ -22,7 +21,6 @@ test_that("results for rma() and lm() match.", {
 
 test_that("results for rma.mv() and lm() match.", {
 
-   data(dat.molloy2014)
    dat <- escalc(measure="ZCOR", ri=ri, ni=ni, data=dat.molloy2014)
    dat$id <- 1:nrow(dat)
 

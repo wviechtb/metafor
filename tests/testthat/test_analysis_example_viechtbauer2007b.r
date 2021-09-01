@@ -7,7 +7,6 @@ context("Checking analysis example: viechtbauer2007b")
 source("tolerances.r") # read in tolerances
 
 ### create dataset for example
-data(dat.linde2005)
 dat <- escalc(measure="RR", ai=ai, ci=ci, n1i=n1i, n2i=n2i, data=dat.linde2005)
 dat <- dat[c(7:10,13:25), c(13:16,18:19,11,6,7,9)]
 dat$dosage <- (dat$dosage * 7) / 1000

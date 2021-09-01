@@ -21,7 +21,7 @@ test_that("location-scale model works correctly for an intercept-only model", {
 
 test_that("location-scale model works correctly for two subgroups with different tau^2 values", {
 
-   res1 <- rma.mv(yi, vi, data=dat, random = ~ factor(meta) | id, struct="DIAG", subset=!is.na(meta), control=list(hessian=TRUE, vctransf=TRUE))
+   res1 <- rma.mv(yi, vi, data=dat, random = ~ factor(meta) | id, struct="DIAG", subset=!is.na(meta), cvvc="transf")
    expect_warning(res2 <- rma(yi, vi, data=dat, scale = ~ meta))
    expect_warning(res3 <- rma(yi, vi, data=dat, scale = res2$Z.f))
 
@@ -30,7 +30,7 @@ test_that("location-scale model works correctly for two subgroups with different
 
    expect_warning(res4 <- rma(yi, vi, data=dat, scale = ~  0 + factor(meta)))
 
-   expect_equivalent(unname(sqrt(diag(solve(res1$hessian[1:2, 1:2])))), res4$se.alpha, tolerance=.tol[["se"]])
+   expect_equivalent(unname(sqrt(diag(res1$vvc))), res4$se.alpha, tolerance=.tol[["se"]])
 
    expect_warning(res5 <- rma(yi, vi, data=dat, scale = ~  0 + factor(meta), link="identity"))
    expect_equivalent(res1$tau2, res5$alpha, tolerance=.tol[["var"]])
@@ -95,10 +95,10 @@ test_that("location-scale model works correctly for a continuous predictor", {
    expect_equivalent(res2$alpha, c(0.042926535, 0.002729234), tolerance=.tol[["coef"]])
    #expect_equivalent(res1$tau2, res2$tau2, tolerance=.tol[["var"]]) # not true
 
-   res3 <- rma.mv(yi, vi, data=dat, random = ~ sqrt(grade) | id, rho=0, struct="GEN", control=list(hessian=TRUE, vctransf=FALSE))
+   res3 <- rma.mv(yi, vi, data=dat, random = ~ sqrt(grade) | id, rho=0, struct="GEN", cvvc=TRUE)
    expect_equivalent(c(res2$alpha), diag(res3$G), tolerance=.tol[["coef"]])
    expect_equivalent(diag(res2$M),  diag(res3$M), tolerance=.tol[["var"]])
-   expect_equivalent(unname(sqrt(diag(solve(res3$hessian[1:2, 1:2])))), res2$se.alpha, tolerance=.tol[["se"]])
+   expect_equivalent(unname(sqrt(diag(res3$vvc))), res2$se.alpha, tolerance=.tol[["se"]])
 
    conf1 <- confint(res1)
    expect_equivalent(conf1[[1]]$random, c(-3.10513, -5.25032, -1.21713), tolerance=.tol[["var"]])

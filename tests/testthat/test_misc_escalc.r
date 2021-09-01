@@ -6,8 +6,6 @@ source("tolerances.r") # read in tolerances
 
 test_that("escalc() works correctly for measure='RR'", {
 
-   data(dat.bcg)
-
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
    expect_equivalent(dat$yi[1], -0.8893, tolerance=.tol[["est"]])

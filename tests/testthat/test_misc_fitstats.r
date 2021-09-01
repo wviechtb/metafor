@@ -6,9 +6,6 @@ source("tolerances.r") # read in tolerances
 
 test_that("fit statistics are correct for rma.uni().", {
 
-   ### load BCG dataset
-   data(dat.bcg)
-
    ### calculate log risk ratios and corresponding sampling variances
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 

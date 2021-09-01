@@ -9,8 +9,6 @@ source("tolerances.r") # read in tolerances
 
 test_that("results for rma() and lm() match for method='FE'.", {
 
-   data(dat.molloy2014)
-
    dat <- escalc(measure="ZCOR", ri=ri, ni=ni, data=dat.molloy2014)
 
    res.fe <- rma(yi, vi, data=dat, method="FE")
@@ -37,8 +35,6 @@ test_that("results for rma() and lme() match for method='ML'.", {
 
    library("nlme")
 
-   data(dat.molloy2014)
-
    dat <- escalc(measure="ZCOR", ri=ri, ni=ni, data=dat.molloy2014)
    dat$study <- 1:nrow(dat)
    res.lme <- lme(yi ~ 1, random = ~ 1 | study, weights = varFixed(~ vi), data=dat, method="ML")
@@ -59,8 +55,6 @@ test_that("results for rma() and lme() match for method='ML'.", {
 test_that("results for rma() and lme() match for method='REML'.", {
 
    library("nlme")
-
-   data(dat.molloy2014)
 
    dat <- escalc(measure="ZCOR", ri=ri, ni=ni, data=dat.molloy2014)
    dat$study <- 1:nrow(dat)

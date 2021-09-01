@@ -15,9 +15,6 @@ test_that("plot can be drawn.", {
    ### decrease margins so the full space is used
    par(mar=c(5,4,1,2))
 
-   ### load BCG vaccine data
-   data(dat.bcg)
-
    ### fit random-effects model
    res <- rma(ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, measure="RR")
 

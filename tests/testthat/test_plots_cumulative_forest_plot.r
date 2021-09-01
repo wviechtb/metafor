@@ -15,9 +15,6 @@ test_that("plot can be drawn for 'rma.uni' object.", {
    ### decrease margins so the full space is used
    par(mar=c(4,4,1,2))
 
-   ### load BCG vaccine data
-   data(dat.bcg)
-
    ### calculate log risk ratios and corresponding sampling variances
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
@@ -46,9 +43,6 @@ test_that("plot can be drawn for 'rma.mh' object.", {
    ### decrease margins so the full space is used
    par(mar=c(4,4,1,2))
 
-   ### load BCG vaccine data
-   data(dat.bcg)
-
    ### fit fixed-effects models using the Mantel-Haenszel method
    res <- rma.mh(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, slab=paste(author, year, sep=", "))
 
@@ -73,9 +67,6 @@ test_that("plot can be drawn for 'rma.peto' object.", {
 
    ### decrease margins so the full space is used
    par(mar=c(4,4,1,2))
-
-   ### load BCG vaccine data
-   data(dat.bcg)
 
    ### fit fixed-effects models using Peto's method
    res <- rma.peto(ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, slab=paste(author, year, sep=", "))

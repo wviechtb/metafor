@@ -1,6 +1,8 @@
-# metafor 3.1-13 (2021-08-22)
+# metafor 3.1-14 (2021-09-01)
 
 - elements of `rho` and `phi` in `rma.mv()` are now based on the lower triangular part of the respective correlation matrix (instead of the upper triangular part) for consistency with other functions; note that this is in principle a backwards incompatible change, although this should only be a concern in very special circumstances
+
+- `rma.mv()` gains `cvvc` argument (for calculating the var-cov matrix of the variance/correlation components)
 
 - added measure `"MPORM"` to `escalc()` for computing marginal log odds ratios based on marginal 2x2 tables directly (which requires specification of the correlation coefficients in the paired tables for the calculation of the sampling variances)
 

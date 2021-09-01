@@ -6,7 +6,6 @@ source("tolerances.r") # read in tolerances
 
 test_that("predict() correctly matches named vectors in 'newmods'", {
 
-   data(dat.bcg)
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
    dat$alloc[dat$alloc == "systematic"] <- "system"
 
@@ -48,7 +47,6 @@ test_that("predict() correctly matches named vectors in 'newmods'", {
 
 test_that("predict() gives correct results when vcov=TRUE", {
 
-   data(dat.bcg)
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
    res <- rma(yi, vi, data=dat)

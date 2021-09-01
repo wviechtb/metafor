@@ -8,7 +8,6 @@ test_that("plot can be drawn for rma().", {
 
    expect_equivalent(TRUE, TRUE) # avoid 'Empty test' message
 
-   data(dat.bcg)
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
    res <- rma(yi, vi, data=dat)
    plot(res)
@@ -22,7 +21,6 @@ test_that("plot can be drawn for rma.mh().", {
 
    expect_equivalent(TRUE, TRUE) # avoid 'Empty test' message
 
-   data(dat.bcg)
    res <- rma.mh(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
    plot(res)
 
@@ -32,7 +30,6 @@ test_that("plot can be drawn for rma.peto().", {
 
    expect_equivalent(TRUE, TRUE) # avoid 'Empty test' message
 
-   data(dat.bcg)
    res <- rma.peto(ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
    plot(res)
 

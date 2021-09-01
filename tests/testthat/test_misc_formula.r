@@ -4,7 +4,6 @@ context("Checking misc: formula() function")
 
 source("tolerances.r") # read in tolerances
 
-data(dat.bcg)
 dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
 test_that("formula() works correctly for 'rma.uni' objects.", {

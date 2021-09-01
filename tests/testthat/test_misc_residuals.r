@@ -6,7 +6,6 @@ source("tolerances.r") # read in tolerances
 
 test_that("residuals are correct for rma().", {
 
-   data(dat.bcg)
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, subset=1:6)
 
    res <- rma(yi, vi, data=dat)
@@ -22,7 +21,6 @@ test_that("residuals are correct for rma().", {
 
 test_that("rstudent() yields the same results as a mean shift outlier model for rma().", {
 
-   data(dat.bcg)
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, subset=1:6)
    dat$trial1 <- ifelse(dat$trial == 1, 1, 0)
 
@@ -44,7 +42,6 @@ test_that("rstudent() yields the same results as a mean shift outlier model for 
 
 test_that("residuals are correct for rma.mv().", {
 
-   data(dat.bcg)
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, subset=1:6)
 
    res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat)
@@ -59,7 +56,6 @@ test_that("residuals are correct for rma.mv().", {
 
 test_that("residuals are correct for rma.mh().", {
 
-   data(dat.bcg)
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, subset=1:6)
 
    res <- rma.mh(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, subset=1:6)
@@ -71,7 +67,6 @@ test_that("residuals are correct for rma.mh().", {
 
 test_that("residuals are correct for rma.peto().", {
 
-   data(dat.bcg)
    dat <- escalc(measure="PETO", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, subset=1:6)
 
    res <- rma.peto(ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, subset=1:6)
@@ -85,7 +80,6 @@ test_that("residuals are correct for rma.glmm().", {
 
    skip_on_cran()
 
-   data(dat.bcg)
    dat <- escalc(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, subset=1:6)
 
    res <- rma.glmm(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, subset=1:6)

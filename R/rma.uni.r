@@ -1902,7 +1902,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
             if (inherits(iH.hest, "try-error") || anyNA(iH.hest) || any(is.infinite(iH.hest))) {
 
-               warning(mstyle$warning("Error when trying to invert Hessian."), call.=FALSE)
+               warning(mstyle$warning("Error when trying to invert the Hessian."), call.=FALSE)
 
             } else {
 

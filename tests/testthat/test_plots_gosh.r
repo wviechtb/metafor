@@ -12,9 +12,6 @@ test_that("plot can be drawn.", {
 
    opar <- par(no.readonly=TRUE)
 
-   ### load data
-   data(dat.egger2001)
-
    ### meta-analysis of all trials including ISIS-4 using a FE model
    res <- rma(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat.egger2001, method="FE")
 

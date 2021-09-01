@@ -25,7 +25,7 @@
 # - PHYBM/PHYPL/PHYPD (phylogenetic structures: Brownian motion, Pagel's lambda, Pagel's delta)
 
 rma.mv <- function(yi, V, W, mods, random, struct="CS", intercept=TRUE, data, slab, subset, ### add ni as argument in the future
-method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, rho, gamma2, phi, sparse=FALSE, verbose=FALSE, control, ...) {
+method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, rho, gamma2, phi, cvvc=FALSE, sparse=FALSE, verbose=FALSE, control, ...) {
 
    #########################################################################
 
@@ -1560,12 +1560,8 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
                evtol = 1e-07,             # lower bound for eigenvalues to determine if model matrix is positive definite
                cholesky = ifelse(is.element(struct, c("UN","UNR","GEN")), TRUE, FALSE), # by default, use Cholesky factorization for G and H matrix for "UN", "UNR", and "GEN" structures
                posdefify = FALSE,         # to force G and H matrix to become positive definite
-               hessian = FALSE,           # to compute Hessian
                hessianCtrl = list(r=8),   # arguments passed on to 'method.args' of hessian()
-               hessian0 = .Machine$double.eps^0.5, # threshold for detecting fixed elements in Hessian
-               vctransf = FALSE,          # if FALSE, Hessian is computed for the untransformed (raw) variance components
-                                          # if TRUE,  Hessian is computed for the transformed components (log/atahn/qlogis space)
-               vccov = FALSE)
+               hessian0 = .Machine$double.eps^0.5) # threshold for detecting fixed elements in Hessian
 
    ### replace defaults with any user-defined values
 
@@ -1779,7 +1775,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
          stop(mstyle$stop("Please install the 'optimParallel' package to use this optimizer."))
    }
 
-   if (con$hessian && !requireNamespace("numDeriv", quietly=TRUE))
+   if ((.isTRUE(cvvc) || cvvc %in% c("varcor","varcov","transf")) && !requireNamespace("numDeriv", quietly=TRUE))
       stop(mstyle$stop("Please install the 'numDeriv' package to compute the Hessian."))
 
    ### check if length of sigma2.init, tau2.init, rho.init, gamma2.init, and phi.init matches number of variance components
@@ -2207,19 +2203,24 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
    ###### compute Hessian
 
    hessian <- NA
+   vvc <- NA
 
-   if (con$hessian) {
+   if (.isTRUE(cvvc) || cvvc %in% c("varcor","varcov","transf")) {
 
       if (verbose > 1)
          message(mstyle$message("Computing Hessian ..."))
 
-      if (con$vccov) {
+      if (cvvc == "varcov" && (any(sigma2.fix, na.rm=TRUE) || any(tau2.fix, na.rm=TRUE) || any(rho.fix, na.rm=TRUE) || any(gamma2.fix, na.rm=TRUE) || any(phi.fix, na.rm=TRUE))) {
+         warning(mstyle$warning("Cannot use cvvc='varcov' when one or more components are fixed. Setting cvvc='varcor'."), call.=FALSE)
+         cvvc <- "varcor"
+      }
 
-         if (any(sigma2.fix, na.rm=TRUE) || any(tau2.fix, na.rm=TRUE) || any(rho.fix, na.rm=TRUE) || any(gamma2.fix, na.rm=TRUE) || any(phi.fix, na.rm=TRUE))
-            stop(mstyle$stop("Cannot use 'vccov=TRUE' when one or more components are fixed."))
+      if (cvvc == "varcov" && any(!is.element(struct, c("UN","GEN")))) {
+         warning(mstyle$warning("Cannot use cvvc='varcov' for the specified structure(s). Setting cvvc='varcor'."), call.=FALSE)
+         cvvc <- "varcor"
+      }
 
-         if (any(!is.element(struct, c("UN","GEN"))))
-            stop(mstyle$stop("Cannot use 'vccov=TRUE' for the specified structure(s)."))
+      if (cvvc == "varcov") {
 
          hessian <- try(numDeriv::hessian(func=.ll.rma.mv, x = c(sigma2, tau2, cov1, gamma2, cov2),
             method.args=con$hessianCtrl, reml=reml, Y=Y, M=V, A=NULL, X.fit=X, k=k, pX=p,
@@ -2231,23 +2232,35 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
             sparse=sparse, cholesky=c(FALSE,FALSE), posdefify=posdefify, vctransf=FALSE, vccov=TRUE,
             verbose=verbose, digits=digits, REMLf=con$REMLf), silent=TRUE)
 
+         # note: vctransf=FALSE and cholesky=c(FALSE,FALSE), so we get the Hessian for the untransfored variances and covariances
+
       } else {
 
-         hessian <- try(numDeriv::hessian(func=.ll.rma.mv, x = if (con$vctransf) opt.res$par else c(sigma2, tau2, rho, gamma2, phi),
+         hessian <- try(numDeriv::hessian(func=.ll.rma.mv, x = if (cvvc=="transf") opt.res$par else c(sigma2, tau2, rho, gamma2, phi),
             method.args=con$hessianCtrl, reml=reml, Y=Y, M=V, A=NULL, X.fit=X, k=k, pX=p,
             D.S=D.S, Z.G1=Z.G1, Z.G2=Z.G2, Z.H1=Z.H1, Z.H2=Z.H2, g.Dmat=g.Dmat, h.Dmat=h.Dmat,
             sigma2.val=sigma2.val, tau2.val=tau2.val, rho.val=rho.val, gamma2.val=gamma2.val, phi.val=phi.val,
             sigma2s=sigma2s, tau2s=tau2s, rhos=rhos, gamma2s=gamma2s, phis=phis,
             withS=withS, withG=withG, withH=withH, struct=struct,
             g.levels.r=g.levels.r, h.levels.r=h.levels.r, g.values=g.values, h.values=h.values,
-            sparse=sparse, cholesky=ifelse(c(con$vctransf,con$vctransf) & cholesky, TRUE, FALSE), posdefify=posdefify, vctransf=con$vctransf, vccov=con$vccov,
+            sparse=sparse, cholesky=ifelse(c(cvvc=="transf",cvvc=="transf") & cholesky, TRUE, FALSE),
+            posdefify=posdefify, vctransf=cvvc=="transf", vccov=FALSE,
             verbose=verbose, digits=digits, REMLf=con$REMLf), silent=TRUE)
+
+         # note: when cvvc=TRUE/"covcor", get the Hessian for the (untransfored) variances and correlations
+         #       when cvvc="transf", get the Hessian for the transformed variances and correlations
+
+
+               # if FALSE, Hessian is computed for the untransformed (raw) variance components
+               # if TRUE,  Hessian is computed for the transformed components (log/atahn/qlogis space)
+
 
       }
 
       if (inherits(hessian, "try-error")) {
 
          warning(mstyle$warning("Error when trying to compute the Hessian."), call.=FALSE)
+         hessian <- NA
 
       } else {
 
@@ -2265,7 +2278,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
          } else {
             colnames(hessian)[(sigma2s+1):(sigma2s+tau2s)] <- paste("tau^2.", seq_len(tau2s), sep="")
          }
-         term <- ifelse(con$vccov, ifelse(withH, "cov1", "cov"), "rho")
+         term <- ifelse(cvvc == "varcov", ifelse(withH, "cov1", "cov"), "rho")
          if (rhos == 1) {
             colnames(hessian)[sigma2s+tau2s+1] <- term
          } else {
@@ -2277,7 +2290,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
          } else {
             colnames(hessian)[(sigma2s+tau2s+rhos+1):(sigma2s+tau2s+rhos+gamma2s)] <- paste("gamma^2.", seq_len(gamma2s), sep="")
          }
-         term <- ifelse(con$vccov, "cov2", "phi")
+         term <- ifelse(cvvc == "varcov", "cov2", "phi")
          if (phis == 1) {
             colnames(hessian)[sigma2s+tau2s+rhos+gamma2s+1] <- term
          } else {
@@ -2306,7 +2319,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
 
          ### reorder hessian when vccov into the order of the lower triangular elements of G/H
 
-         if (con$vccov && withG) {
+         if (cvvc == "varcov" && withG) {
             posG <- matrix(NA, nrow=tau2s, ncol=tau2s)
             diag(posG) <- 1:tau2s
             posG[lower.tri(posG)] <- (tau2s+1):(tau2s*(tau2s+1)/2)
@@ -2328,8 +2341,19 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
 
          ### detect rows/columns that are essentially all equal to 0 (fixed elements) and filter them out
 
-         all0 <- apply(hessian, 1, function(x) all(abs(x) <= con$hessian0))
-         hessian <- hessian[!all0, !all0, drop=FALSE]
+         hest <- !apply(hessian, 1, function(x) all(abs(x) <= con$hessian0))
+         hessian <- hessian[hest, hest, drop=FALSE]
+
+         ### try to invert Hessian
+
+         vvc <- try(suppressWarnings(chol2inv(chol(hessian))), silent=TRUE)
+
+         if (inherits(vvc, "try-error") || anyNA(vvc) || any(is.infinite(vvc))) {
+            warning(mstyle$warning("Error when trying to invert Hessian."), call.=FALSE)
+            vvc <- NA
+         } else {
+            dimnames(vvc) <- dimnames(hessian)
+         }
 
       }
 
@@ -2388,7 +2412,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
                   QE=QE, QEp=QEp, QM=QM, QMdf=QMdf, QMp=QMp,
                   k=k, k.f=k.f, k.eff=k.eff, k.all=k.all, p=p, p.eff=p.eff, parms=parms,
                   int.only=int.only, int.incl=int.incl, intercept=intercept, allvipos=allvipos, coef.na=coef.na,
-                  yi=yi, vi=vi, V=V, W=A, X=X, yi.f=yi.f, vi.f=vi.f, V.f=V.f, X.f=X.f, W.f=W.f, ni=ni, ni.f=ni.f, M=M, G=G, H=H, hessian=hessian,
+                  yi=yi, vi=vi, V=V, W=A, X=X, yi.f=yi.f, vi.f=vi.f, V.f=V.f, X.f=X.f, W.f=W.f, ni=ni, ni.f=ni.f, M=M, G=G, H=H, hessian=hessian, vvc=vvc,
                   ids=ids, not.na=not.na, subset=subset, slab=slab, slab.null=slab.null,
                   measure=measure, method=method, weighted=weighted,
                   test=test, dfs=dfs, ddf=ddf, btt=btt, m=m,

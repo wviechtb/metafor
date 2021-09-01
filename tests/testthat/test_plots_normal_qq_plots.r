@@ -15,9 +15,6 @@ test_that("plot can be drawn for 'rma.uni' object.", {
    ### set up 2x2 array for plotting
    par(mfrow=c(2,2))
 
-   ### load BCG vaccine data
-   data(dat.bcg)
-
    ### calculate log risk ratios and corresponding sampling variances
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
@@ -49,7 +46,6 @@ test_that("plot can be drawn for 'rma.mh' object.", {
    skip_on_cran()
 
    opar <- par(no.readonly=TRUE)
-   data(dat.bcg)
    res <- rma.mh(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
    qqnorm(res)
    qqnorm(res, type="rstudent", label=TRUE)
@@ -64,7 +60,6 @@ test_that("plot can be drawn for 'rma.peto' object.", {
    skip_on_cran()
 
    opar <- par(no.readonly=TRUE)
-   data(dat.bcg)
    res <- rma.peto(ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
    qqnorm(res)
    qqnorm(res, type="rstudent", label=TRUE)
@@ -74,7 +69,6 @@ test_that("plot can be drawn for 'rma.peto' object.", {
 
 test_that("plot cannot be drawn for 'rma.mv' object.", {
 
-   data(dat.bcg)
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
    res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat)
    expect_error(qqnorm(res))

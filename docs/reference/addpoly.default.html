@@ -105,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1-13</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1-14</span>
       </span>
     </div>
 
@@ -182,7 +182,7 @@
     <pre class="usage"><span class='co'># S3 method for default</span>
 <span class='fu'><a href='addpoly.html'>addpoly</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>vi</span>, <span class='va'>sei</span>, <span class='va'>ci.lb</span>, <span class='va'>ci.ub</span>, <span class='va'>pi.lb</span>, <span class='va'>pi.ub</span>,
         rows<span class='op'>=</span><span class='op'>-</span><span class='fl'>1</span>, level<span class='op'>=</span><span class='fl'>95</span>, annotate<span class='op'>=</span><span class='cn'>TRUE</span>, digits<span class='op'>=</span><span class='fl'>2</span>, <span class='va'>width</span>, <span class='va'>mlab</span>,
-        <span class='va'>transf</span>, <span class='va'>atransf</span>, <span class='va'>targs</span>, efac<span class='op'>=</span><span class='fl'>1</span>, <span class='va'>col</span>, <span class='va'>border</span>, <span class='va'>fonts</span>, <span class='va'>cex</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+        <span class='va'>transf</span>, <span class='va'>atransf</span>, <span class='va'>targs</span>, efac<span class='op'>=</span><span class='fl'>1</span>, <span class='va'>col</span>, <span class='va'>border</span>, <span class='va'>lty</span>, <span class='va'>fonts</span>, <span class='va'>cex</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -262,6 +262,10 @@
     <tr>
       <th>border</th>
       <td><p>optional character string to specify the name of a color to use for the border of the polygons. If unspecified, the function sets a default color.</p></td>
+    </tr>
+    <tr>
+      <th>lty</th>
+      <td><p>optional character string to specify the line type for the prediction interval. If unspecified, the function sets this to <code>"dotted"</code> by default.</p></td>
     </tr>
     <tr>
       <th>fonts</th>

@@ -6,8 +6,6 @@ source("tolerances.r") # read in tolerances
 
 test_that("results match (FE model, measure='OR').", {
 
-   data(dat.bcg)
-
    ### compare results with: metan tpos tneg cpos cneg, peto nograph or log
 
    res <- rma.peto(ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
