@@ -7,6 +7,9 @@ aggregate.escalc <- function(x, cluster, time, V, struct="CS", rho, phi, weighte
    if (any(!is.element(struct, c("ID","CS","CAR","CS+CAR"))))
       stop(mstyle$stop("Unknown 'struct' specified."))
 
+   if (missing(cluster))
+      stop(mstyle$stop("Must specify 'cluster' variable."))
+
    if (length(na.rm) == 1L)
       na.rm <- c(na.rm, na.rm)
 
@@ -23,17 +26,17 @@ aggregate.escalc <- function(x, cluster, time, V, struct="CS", rho, phi, weighte
    mf.time    <- mf[[match("time",    names(mf))]]
    mf.subset  <- mf[[match("subset",  names(mf))]]
 
-   V       <- eval(mf.V,       x, enclos=sys.frame(sys.parent())) # NULL if user does not specify this
-   cluster <- eval(mf.cluster, x, enclos=sys.frame(sys.parent())) # NULL if user does not specify this
-   time    <- eval(mf.time,    x, enclos=sys.frame(sys.parent())) # NULL if user does not specify this
-   subset  <- eval(mf.subset,  x, enclos=sys.frame(sys.parent())) # NULL if user does not specify this
+   V       <- eval(mf.V,       x, enclos=sys.frame(sys.parent()))
+   cluster <- eval(mf.cluster, x, enclos=sys.frame(sys.parent()))
+   time    <- eval(mf.time,    x, enclos=sys.frame(sys.parent()))
+   subset  <- eval(mf.subset,  x, enclos=sys.frame(sys.parent()))
 
    #########################################################################
 
    ### checks on cluster variable
 
-   if (is.null(cluster))
-      stop(mstyle$stop("Must specify 'cluster' variable."))
+   if (!.is.vector(cluster))
+      stop(mstyle$stop("Cannot find specified 'cluster' variable."))
 
    if (anyNA(cluster))
       stop(mstyle$stop("No missing values allowed in 'cluster' variable."))
@@ -104,7 +107,7 @@ aggregate.escalc <- function(x, cluster, time, V, struct="CS", rho, phi, weighte
 
          ### checks on time variable
 
-         if (is.null(time))
+         if (!.is.vector(time))
             stop(mstyle$stop("Must specify 'time' variable for this var-cov structure."))
 
          if (length(time) != k)

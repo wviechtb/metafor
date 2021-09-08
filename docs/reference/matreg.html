@@ -179,7 +179,7 @@
     <p>Function to fit regression models based on correlation and covariance matrices. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
     </div>
 
-    <pre class="usage"><span class='fu'>matreg</span><span class='op'>(</span><span class='va'>y</span>, <span class='va'>x</span>, <span class='va'>R</span>, <span class='va'>n</span>, <span class='va'>V</span>, cov<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>means</span>, ztor<span class='op'>=</span><span class='cn'>FALSE</span>, nearPD<span class='op'>=</span><span class='cn'>FALSE</span>, level<span class='op'>=</span><span class='fl'>95</span>, <span class='va'>digits</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>matreg</span><span class='op'>(</span><span class='va'>y</span>, <span class='va'>x</span>, <span class='va'>R</span>, <span class='va'>n</span>, <span class='va'>V</span>, cov<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>means</span>, ztor<span class='op'>=</span><span class='cn'>FALSE</span>, nearpd<span class='op'>=</span><span class='cn'>FALSE</span>, level<span class='op'>=</span><span class='fl'>95</span>, <span class='va'>digits</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -217,7 +217,7 @@
       <td><p>logical to specify whether <code>R</code> is a matrix of r-to-z transformed correlations and it should be back-transformed to raw correlations (the default is <code>FALSE</code>). See &#8216;Details&#8217;.</p></td>
     </tr>
     <tr>
-      <th>nearPD</th>
+      <th>nearpd</th>
       <td><p>logical to specify whether the <code><a href='https://rdrr.io/pkg/Matrix/man/nearPD.html'>nearPD</a></code> function from the <a href='https://cran.r-project.org/package=Matrix'>Matrix</a> package should be used when the \(R_{x,x}\) matrix cannot be inverted. See &#8216;Note&#8217;.</p></td>
     </tr>
     <tr>
@@ -227,6 +227,10 @@
     <tr>
       <th>digits</th>
       <td><p>integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>other arguments.</p></td>
     </tr>
     </table>
 
@@ -249,7 +253,7 @@
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>Only the lower triangular part of <code>R</code> (and <code>V</code> if it is specified) is used in the computations.</p>
-<p>If \(R_{x,x}\) is not invertible, an error will be issued. In this case, one can set argument <code>nearPD=TRUE</code>, in which case the <code><a href='https://rdrr.io/pkg/Matrix/man/nearPD.html'>nearPD</a></code> function from the <a href='https://cran.r-project.org/package=Matrix'>Matrix</a> package will be used to find the nearest positive semi-definite matrix, which should be invertible. The results should be treated with caution when this is done.</p>
+<p>If \(R_{x,x}\) is not invertible, an error will be issued. In this case, one can set argument <code>nearpd=TRUE</code>, in which case the <code><a href='https://rdrr.io/pkg/Matrix/man/nearPD.html'>nearPD</a></code> function from the <a href='https://cran.r-project.org/package=Matrix'>Matrix</a> package will be used to find the nearest positive semi-definite matrix, which should be invertible. The results should be treated with caution when this is done.</p>
 <p>When \(R\) is a covariance matrix with <code>V</code> and <code>means</code> specified, the means are treated as known constants when estimating the standard error of the intercept.</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 

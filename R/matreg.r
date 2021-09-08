@@ -1,4 +1,4 @@
-matreg <- function(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearPD=FALSE, level=95, digits) {
+matreg <- function(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearpd=FALSE, level=95, digits, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -53,6 +53,17 @@ matreg <- function(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearPD=FALSE, le
 
    if (!is.null(V) && !missing(n))
       stop(mstyle$stop("Either 'V' or 'n' must be specified, not both."))
+
+   ### get ... argument and check for extra/superfluous arguments
+
+   ddd <- list(...)
+
+   .chkdots(ddd, c("nearPD"))
+
+   if (.isTRUE(ddd$nearPD))
+      nearpd <- TRUE
+
+   ############################################################################
 
    m <- length(x)
 
@@ -118,7 +129,7 @@ matreg <- function(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearPD=FALSE, le
    invRxx <- try(chol2inv(chol(Rxx)), silent=TRUE)
 
    if (inherits(invRxx, "try-error")) {
-      if (nearPD) {
+      if (nearpd) {
          message(mstyle$message("Cannot invert R[x,x] matrix. Using nearPD(). Treat results with caution."))
          Rxx <- as.matrix(nearPD(Rxx, corr=TRUE)$mat)
       } else {

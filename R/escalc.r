@@ -1875,10 +1875,10 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
                if (vtype[i] == "LS")
                   vi[i] <- 2*(1-ri[i])/ni[i] + yi[i]^2 / (2*ni[i])
 
-               ### large sample approximation to the sampling variance (using corrected (!) equation from Borenstein, 2009)
+               ### large sample approximation to the sampling variance (using corrected (!) equation from Borenstein et al., 2009)
                if (vtype[i] == "LS2")
                   vi[i] <- cmi[i]^2 * (2*(1-ri[i])/ni[i] + di[i]^2 / (2*ni[i]))
-                  #vi[i] <- cmi[i]^2 * 2*(1-ri[i]) * (1/ni[i] + di[i]^2 / (2*ni[i])) # as in  Borenstein (2009) but this is incorrect
+                  #vi[i] <- cmi[i]^2 * 2*(1-ri[i]) * (1/ni[i] + di[i]^2 / (2*ni[i])) # as in Borenstein et al. (2009) but this is incorrect
 
             }
 

@@ -433,13 +433,18 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
 
    if (inherits(mods, "formula")) {
       formula.mods <- mods
-      options(na.action = "na.pass")        ### set na.action to na.pass, so that NAs are not filtered out (we'll do that later)
-      mods <- model.matrix(mods, data=data) ### extract model matrix
-      attr(mods, "assign") <- NULL          ### strip assign attribute (not needed at the moment)
-      attr(mods, "contrasts") <- NULL       ### strip contrasts attribute (not needed at the moment)
-      options(na.action = na.act)           ### set na.action back to na.act
-      intercept <- FALSE                    ### set to FALSE since formula now controls whether the intercept is included or not
-   }                                        ### note: code further below ([b]) actually checks whether intercept is included or not
+      if (isTRUE(all.equal(formula.mods, ~1))) { # needed so 'mods = ~ 1' without 'data' specified works
+         mods <- matrix(1, nrow=k, ncol=1)
+         intercept <- FALSE
+      } else {
+         options(na.action = "na.pass")        ### set na.action to na.pass, so that NAs are not filtered out (we'll do that later)
+         mods <- model.matrix(mods, data=data) ### extract model matrix
+         attr(mods, "assign") <- NULL          ### strip assign attribute (not needed at the moment)
+         attr(mods, "contrasts") <- NULL       ### strip contrasts attribute (not needed at the moment)
+         options(na.action = na.act)           ### set na.action back to na.act
+         intercept <- FALSE                    ### set to FALSE since formula now controls whether the intercept is included or not
+      }                                        ### note: code further below ([b]) actually checks whether intercept is included or not
+   }
 
    ### turn a vector for mods into a column vector
 

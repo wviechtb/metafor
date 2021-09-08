@@ -657,13 +657,18 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
    if (inherits(mods, "formula")) {
       formula.mods <- mods
-      options(na.action = "na.pass")        ### set na.action to na.pass, so that NAs are not filtered out (we'll do that later)
-      mods <- model.matrix(mods, data=data) ### extract model matrix
-      attr(mods, "assign") <- NULL          ### strip assign attribute (not needed at the moment)
-      attr(mods, "contrasts") <- NULL       ### strip contrasts attribute (not needed at the moment)
-      options(na.action = na.act)           ### set na.action back to na.act
-      intercept <- FALSE                    ### set to FALSE since formula now controls whether the intercept is included or not
-   }                                        ### note: code further below ([b]) actually checks whether intercept is included or not
+      if (isTRUE(all.equal(formula.mods, ~1))) { ### needed so 'mods = ~ 1' without 'data' specified works
+         mods <- matrix(1, nrow=k, ncol=1)
+         intercept <- FALSE
+      } else {
+         options(na.action = "na.pass")        ### set na.action to na.pass, so that NAs are not filtered out (we'll do that later)
+         mods <- model.matrix(mods, data=data) ### extract model matrix
+         attr(mods, "assign") <- NULL          ### strip assign attribute (not needed at the moment)
+         attr(mods, "contrasts") <- NULL       ### strip contrasts attribute (not needed at the moment)
+         options(na.action = na.act)           ### set na.action back to na.act
+         intercept <- FALSE                    ### set to FALSE since formula now controls whether the intercept is included or not
+      }                                        ### note: code further below ([b]) actually checks whether intercept is included or not
+   }
 
    ### turn a vector for mods into a column vector
 
@@ -690,12 +695,17 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
    if (model == "rma.ls") {
       if (inherits(scale, "formula")) {
          formula.scale <- scale
-         options(na.action = "na.pass")
-         Z <- model.matrix(scale, data=data)
-         colnames(Z)[grep("(Intercept)", colnames(Z))] <- "intrcpt"
-         attr(Z, "assign") <- NULL
-         attr(Z, "contrasts") <- NULL
-         options(na.action = na.act)
+         if (isTRUE(all.equal(formula.scale, ~1))) { ### needed so 'scale = ~ 1' without 'data' specified works
+            Z <- matrix(1, nrow=k, ncol=1)
+            colnames(Z) <- "intrcpt"
+         } else {
+            options(na.action = "na.pass")
+            Z <- model.matrix(scale, data=data)
+            colnames(Z)[grep("(Intercept)", colnames(Z))] <- "intrcpt"
+            attr(Z, "assign") <- NULL
+            attr(Z, "contrasts") <- NULL
+            options(na.action = na.act)
+         }
       } else {
          Z <- scale
          if (.is.vector(Z))

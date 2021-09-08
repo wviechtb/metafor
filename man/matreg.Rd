@@ -5,7 +5,7 @@
    Function to fit regression models based on correlation and covariance matrices. \loadmathjax
 }
 \usage{
-matreg(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearPD=FALSE, level=95, digits)
+matreg(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearpd=FALSE, level=95, digits, \dots)
 }
 \arguments{
    \item{y}{index of the outcome variable.}
@@ -16,9 +16,10 @@ matreg(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearPD=FALSE, level=95, digi
    \item{cov}{logical to specify whether \code{R} is a covariance matrix (the default is \code{FALSE}).}
    \item{means}{optional vector to specify the means of the variables (only relevant when \code{cov=TRUE}).}
    \item{ztor}{logical to specify whether \code{R} is a matrix of r-to-z transformed correlations and it should be back-transformed to raw correlations (the default is \code{FALSE}). See \sQuote{Details}.}
-   \item{nearPD}{logical to specify whether the \code{\link[Matrix]{nearPD}} function from the \href{https://cran.r-project.org/package=Matrix}{Matrix} package should be used when the \mjeqn{R_{x,x}}{R[x,x]} matrix cannot be inverted. See \sQuote{Note}.}
+   \item{nearpd}{logical to specify whether the \code{\link[Matrix]{nearPD}} function from the \href{https://cran.r-project.org/package=Matrix}{Matrix} package should be used when the \mjeqn{R_{x,x}}{R[x,x]} matrix cannot be inverted. See \sQuote{Note}.}
    \item{level}{numeric value between 0 and 100 to specify the confidence interval level (the default is 95).}
    \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4.}
+   \item{\dots}{other arguments.}
 }
 \details{
    Let \mjseqn{R} be a \mjeqn{p \times p}{pxp} correlation or covariance matrix. Let \mjseqn{y} denote the row/column of the outcome variable and \mjseqn{x} the row(s)/column(s) of the predictor variable(s) in this matrix. Let \mjeqn{R_{x,x}}{R[x,x]} and \mjeqn{R_{x,y}}{R[x,y]} denote the corresponding submatrices of \mjseqn{R}. Then \mjdeqn{b = R_{x,x}^{-1} R_{x,y}}{b = R[x,x]^(-1) R[x,y]} yields the standardized or raw regression coefficients (depending on whether \mjseqn{R} is a correlation or covariance matrix, respectively) when regressing the outcome variable on the predictor variable(s).
@@ -42,7 +43,7 @@ matreg(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearPD=FALSE, level=95, digi
 \note{
    Only the lower triangular part of \code{R} (and \code{V} if it is specified) is used in the computations.
 
-   If \mjeqn{R_{x,x}}{R[x,x]} is not invertible, an error will be issued. In this case, one can set argument \code{nearPD=TRUE}, in which case the \code{\link[Matrix]{nearPD}} function from the \href{https://cran.r-project.org/package=Matrix}{Matrix} package will be used to find the nearest positive semi-definite matrix, which should be invertible. The results should be treated with caution when this is done.
+   If \mjeqn{R_{x,x}}{R[x,x]} is not invertible, an error will be issued. In this case, one can set argument \code{nearpd=TRUE}, in which case the \code{\link[Matrix]{nearPD}} function from the \href{https://cran.r-project.org/package=Matrix}{Matrix} package will be used to find the nearest positive semi-definite matrix, which should be invertible. The results should be treated with caution when this is done.
 
    When \mjseqn{R} is a covariance matrix with \code{V} and \code{means} specified, the means are treated as known constants when estimating the standard error of the intercept.
 }

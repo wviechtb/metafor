@@ -14,6 +14,8 @@
 
 - `matreg()` can now also analyze a covariance matrix with a corresponding 'V' matrix
 
+- renamed argument `nearPD` to `nearpd` in `matreg()` (but `nearPD` continues to work)
+
 - `plot.profile.rma()` gains `refline` argument
 
 - `addpoly.default()` and `addpoly.rma()` gain `lty` argument

@@ -43,9 +43,9 @@
 
    Finally, if one actually knows the correlation (and hence the covariance) between each pair of estimates, one can also specify the entire variance-covariance matrix of the estimates (or more precisely, their sampling errors) via the \code{V} argument. In this case, arguments \code{struct}, \code{rho}, and  \code{phi} are ignored.
 
-   Instead of using inverse-variance weighting (i.e., weighted/generalized least squares) to combine the estimates within clusters, one can set \code{weighted=FALSE} in which case the estimates are averaged within clusters without any weighting.
+   Instead of using inverse-variance weighting (i.e., weighted/generalized least squares) to combine the estimates within clusters, one can set \code{weighted=FALSE} in which case the estimates are averaged within clusters without any weighting (although the correlations between estimates as specified are still taken into consideration).
 
-   Other variables (besides the estimates) will also be aggregated to the cluster level. By default, numeric/integer type variables are averaged, logicals are also averaged (yielding the proportion of \code{TRUE} values), and for all other types of variables (e.g., character variables or factors) the most frequent category/level is returned. One can also specify a list of three functions via the \code{fun} argument for aggregating variables belong to these three types.
+   Other variables (besides the estimates) will also be aggregated to the cluster level. By default, numeric/integer type variables are averaged, logicals are also averaged (yielding the proportion of \code{TRUE} values), and for all other types of variables (e.g., character variables or factors) the most frequent category/level is returned. One can also specify a list of three functions via the \code{fun} argument for aggregating variables belonging to these three types.
 
    Argument \code{na.rm} controls how missing values should be handled. By default, any missing estimates are first removed before aggregating the non-missing values within each cluster. The same applies when aggregating the other variables. One can also specify a vector with two logicals for the \code{na.rm} argument to control how missing values should be handled when aggregating the estimates and when aggregating all other variables.
 }
