@@ -50,7 +50,7 @@ anova.rma <- function(object, object2, btt, X, att, Z, digits, ...) {
             if (inherits(QS, "try-error"))
                QS <- NA
 
-            if (x$test == "t") {
+            if (is.element(x$test, c("knha","adhoc","t"))) {
                QS   <- QS / m
                QSdf <- c(m, x$QSdf[2])
                QSp  <- pf(QS, df1=QSdf[1], df2=QSdf[2], lower.tail=FALSE)
@@ -130,7 +130,7 @@ anova.rma <- function(object, object2, btt, X, att, Z, digits, ...) {
             se <- sqrt(diag(vZa))
             zval <- c(Za/se)
 
-            if (x$test == "t") {
+            if (is.element(x$test, c("knha","adhoc","t"))) {
                pval <- if (x$ddf.alpha > 0) 2*pt(abs(zval), df=x$ddf.alpha, lower.tail=FALSE) else rep(NA,m)
             } else {
                pval <- 2*pnorm(abs(zval), lower.tail=FALSE)
@@ -148,7 +148,7 @@ anova.rma <- function(object, object2, btt, X, att, Z, digits, ...) {
                if (inherits(QS, "try-error"))
                   QS <- NA
 
-               if (x$test == "t") {
+               if (is.element(x$test, c("knha","adhoc","t"))) {
                   QS   <- QS / m
                   QSdf <- c(m, x$QSdf[2])
                   QSp  <- if (QSdf[2] > 0) pf(QS, df1=QSdf[1], df2=QSdf[2], lower.tail=FALSE) else NA

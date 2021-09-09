@@ -376,7 +376,7 @@ confint.rma.uni.selmodel <- function(object, parm, level, fixed=FALSE, tau2, del
 
    if (fixed) {
 
-      if (x$test == "t") {
+      if (is.element(x$test, c("knha","adhoc","t"))) {
          crit <- qt(level/2, df=x$ddf, lower.tail=FALSE)
       } else {
          crit <- qnorm(level/2, lower.tail=FALSE)

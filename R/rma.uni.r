@@ -81,8 +81,8 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
       #if (!inherits(scale, "formula"))
       #   stop(mstyle$stop("Must specify a formula for the 'scale' argument."))
 
-      if (is.element(test, c("knha", "adhoc")))
-         stop(mstyle$stop("Cannot use Knapp & Hartung method with location-scale models."))
+      #if (is.element(test, c("knha", "adhoc")))
+      #   stop(mstyle$stop("Cannot use Knapp & Hartung method with location-scale models."))
 
       model <- "rma.ls"
 
@@ -1948,13 +1948,13 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
       ### ddf calculation
 
-      if (test == "t") {
+      if (is.element(test, c("knha","adhoc","t"))) {
          ddf.alpha <- k-q
       } else {
          ddf.alpha <- NA
       }
 
-      ### QM calculation
+      ### QS calculation
 
       QS <- try(as.vector(t(alpha)[att] %*% chol2inv(chol(va[att,att])) %*% alpha[att]), silent=TRUE)
 
@@ -1968,7 +1968,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
       names(se.alpha) <- NULL
       zval.alpha  <- c(alpha/se.alpha)
 
-      if (test == "t") {
+      if (is.element(test, c("knha","adhoc","t"))) {
          QS         <- QS / m.alpha
          QSdf       <- c(m.alpha, k-q)
          QSp        <- if (QSdf[2] > 0) pf(QS, df1=QSdf[1], df2=QSdf[2], lower.tail=FALSE) else NA

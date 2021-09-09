@@ -30,7 +30,7 @@ print.anova.rma <- function(x, digits=x$digits, ...) {
 
       cat(mstyle$section(paste0("Test of Scale Coefficients (coefficient", ifelse(x$m == 1, " ", "s "), .format.btt(x$att),"):")))
       cat("\n")
-      if (x$test == "t") {
+      if (is.element(x$test, c("knha","adhoc","t"))) {
          cat(mstyle$result(paste0("F(df1 = ", x$QSdf[1], ", df2 = ", x$QSdf[2], ") = ", .fcf(x$QS, digits[["test"]]), ", p-val ", .pval(x$QSp, digits[["pval"]], showeq=TRUE, sep=" "))))
       } else {
          cat(mstyle$result(paste0("QS(df = ", x$QSdf[1], ") = ", .fcf(x$QS, digits[["test"]]), ", p-val ", .pval(x$QSp, digits[["pval"]], showeq=TRUE, sep=" "))))
@@ -96,7 +96,7 @@ print.anova.rma <- function(x, digits=x$digits, ...) {
       cat(mstyle$section("Results:"))
       cat("\n")
 
-      if (x$test == "t") {
+      if (is.element(x$test, c("knha","adhoc","t"))) {
          res.table <- data.frame(estimate=.fcf(c(x$Za), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), tval=.fcf(x$zval, digits[["test"]]), df=round(x$ddf,2), pval=.pval(x$pval, digits[["pval"]]), stringsAsFactors=FALSE)
       } else {
          res.table <- data.frame(estimate=.fcf(c(x$Za), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), zval=.fcf(x$zval, digits[["test"]]), pval=.pval(x$pval, digits[["pval"]]), stringsAsFactors=FALSE)
@@ -113,7 +113,7 @@ print.anova.rma <- function(x, digits=x$digits, ...) {
             cat(mstyle$section("Omnibus Test of Hypotheses:"))
          }
          cat("\n")
-         if (x$test == "t") {
+         if (is.element(x$test, c("knha","adhoc","t"))) {
             cat(mstyle$result(paste0("F(df1 = ", x$QSdf[1], ", df2 = ", x$QSdf[2], ") = ", .fcf(x$QS, digits[["test"]]), ", p-val ", .pval(x$QSp, digits[["pval"]], showeq=TRUE, sep=" "))))
          } else {
             cat(mstyle$result(paste0("QS(df = ", x$QSdf[1], ") = ", .fcf(x$QS, digits[["test"]]), ", p-val ", .pval(x$QSp, digits[["pval"]], showeq=TRUE, sep=" "))))

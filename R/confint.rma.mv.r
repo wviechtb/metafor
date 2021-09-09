@@ -551,7 +551,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
 
    if (fixed) {
 
-      if (x$test == "t") {
+      if (is.element(x$test, c("knha","adhoc","t"))) {
          crit <- sapply(seq_along(x$ddf), function(j) if (x$ddf[j] > 0) qt(level/2, df=x$ddf[j], lower.tail=FALSE) else NA)
       } else {
          crit <- qnorm(level/2, lower.tail=FALSE)

@@ -14,7 +14,7 @@ coef.summary.rma <- function(object, ...) {
 
    if (inherits(x, "rma.ls")) {
       res.table <- list(beta=res.table)
-      if (x$test == "t") {
+      if (is.element(x$test, c("knha","adhoc","t"))) {
          res.table$alpha <- data.frame(estimate=x$alpha, se=x$se.alpha, tval=x$zval.alpha, df=x$ddf.alpha, pval=x$pval.alpha, ci.lb=x$ci.lb.alpha, ci.ub=x$ci.ub.alpha)
       } else {
          res.table$alpha <- data.frame(estimate=x$alpha, se=x$se.alpha, zval=x$zval.alpha, pval=x$pval.alpha, ci.lb=x$ci.lb.alpha, ci.ub=x$ci.ub.alpha)

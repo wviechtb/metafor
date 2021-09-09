@@ -285,7 +285,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
          vpred[i] <- Xi.new %*% tcrossprod(x$vb, Xi.new)
       }
 
-      if (x$test == "t") {
+      if (is.element(x$test, c("knha","adhoc","t"))) {
          crit <- if (ddf > 0) qt(level/2, df=ddf, lower.tail=FALSE) else NA
       } else {
          crit <- qnorm(level/2, lower.tail=FALSE)
@@ -301,7 +301,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
          vpred[i] <- Zi.new %*% tcrossprod(x$va, Zi.new)
       }
 
-      if (x$test == "t") {
+      if (is.element(x$test, c("knha","adhoc","t"))) {
          crit <- if (ddf > 0) qt(level/2, df=ddf, lower.tail=FALSE) else NA
       } else {
          crit <- qnorm(level/2, lower.tail=FALSE)

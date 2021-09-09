@@ -2135,7 +2135,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
 
    ### ddf calculation
 
-   if (test == "t") {
+   if (is.element(test, c("knha","adhoc","t"))) {
       ddf <- .ddf.calc(dfs, X=X, k=k, p=p, mf.s=mf.s, mf.g=mf.g, mf.h=mf.h)
    } else {
       ddf <- rep(NA, p)
@@ -2154,7 +2154,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
    names(se) <- NULL
    zval <- c(beta/se)
 
-   if (test == "t") {
+   if (is.element(test, c("knha","adhoc","t"))) {
       QM   <- QM / m
       QMdf <- c(m, min(ddf[btt]))
       QMp  <- if (QMdf[2] > 0) pf(QM, df1=QMdf[1], df2=QMdf[2], lower.tail=FALSE) else NA

@@ -30,7 +30,7 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
 
    level <- ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
 
-   if (x$test != "t")
+   if (x$test == "z")
       crit <- qnorm(level/2, lower.tail=FALSE)
 
    ### TODO: check computations for user-defined weights
@@ -102,7 +102,7 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
          #vpred <- D - (DZtW %*% x$Z.S[[j]] %*% D) # same as lme4::ranef()
          #vpred <- DZtW %*% x$Z.S[[j]] %*% D
 
-         if (x$test == "t") {
+         if (is.element(x$test, c("knha","adhoc","t"))) {
             ddf <- .ddf.calc(x$dfs, k=x$k, p=x$p, mf.s=x$mf.s[[j]], beta=FALSE)
             crit <- qt(level/2, df=ddf, lower.tail=FALSE)
          }
@@ -173,7 +173,7 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
       #vpred <- G - (GW %*% G - GW %*% x$X %*% stXWX %*% t(x$X) %*% W %*% G)
       vpred <- G - (GW %*% (I - Hmat) %*% G)
 
-      if (x$test == "t") {
+      if (is.element(x$test, c("knha","adhoc","t"))) {
          ddf <- .ddf.calc(x$dfs, k=x$k, p=x$p, mf.g=x$mf.g[[2]], beta=FALSE)
          crit <- qt(level/2, df=ddf, lower.tail=FALSE)
       }
@@ -236,7 +236,7 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
       #vpred <- H - (HW %*% H - HW %*% x$X %*% stXWX %*% t(x$X) %*% W %*% H)
       vpred <- H - (HW %*% (I - Hmat) %*% H)
 
-      if (x$test == "t") {
+      if (is.element(x$test, c("knha","adhoc","t"))) {
          ddf <- .ddf.calc(x$dfs, k=x$k, p=x$p, mf.h=x$mf.h[[2]], beta=FALSE)
          crit <- qt(level/2, df=ddf, lower.tail=FALSE)
       }

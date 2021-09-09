@@ -321,7 +321,7 @@ confint.rma.ls <- function(object, parm, level, fixed=FALSE, alpha, digits, tran
 
    if (fixed) {
 
-      if (x$test == "t") {
+      if (is.element(x$test, c("knha","adhoc","t"))) {
          crit <- qt(level/2, df=x$ddf, lower.tail=FALSE)
       } else {
          crit <- qnorm(level/2, lower.tail=FALSE)
