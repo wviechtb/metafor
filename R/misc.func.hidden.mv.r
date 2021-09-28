@@ -658,7 +658,7 @@
 
 ### function to construct var-cov matrix (G or H) for '~ inner | outer' terms
 
-.con.E <- function(v, r, v.val, r.val, Z1, Z2, levels.r, values, Dmat, struct, cholesky, vctransf, vccov, posdefify, sparse) {
+.con.E <- function(v, r, v.val, r.val, Z1, Z2, levels.r, values, Dmat, struct, cholesky, vctransf, vccov, nearpd, sparse) {
 
    ### if cholesky=TRUE, back-transformation/substitution is done below; otherwise, back-transform and replace fixed values
 
@@ -714,7 +714,7 @@
          r[!is.na(r.val)] <- r.val[!is.na(r.val)] ### replace any fixed values
       }
       E <- .con.vcov.UN(v, r, vccov)
-      if (posdefify) {
+      if (nearpd) {
          E <- as.matrix(nearPD(E)$mat) ### nearPD() in Matrix package
          v <- diag(E)                  ### need this, so correct values are shown when verbose=TRUE
          r <- cov2cor(E)[lower.tri(E)] ### need this, so correct values are shown when verbose=TRUE
@@ -730,7 +730,7 @@
          r[!is.na(r.val)] <- r.val[!is.na(r.val)] ### replace any fixed values
       }
       E <- .con.vcov.UNR(v, r)
-      if (posdefify) {
+      if (nearpd) {
          E <- as.matrix(nearPD(E, keepDiag=TRUE)$mat) ### nearPD() in Matrix package
          v <- E[1,1]                   ### need this, so correct values are shown when verbose=TRUE
          r <- cov2cor(E)[lower.tri(E)] ### need this, so correct values are shown when verbose=TRUE
@@ -831,7 +831,7 @@
                        sigma2s, tau2s, rhos, gamma2s, phis,
                        withS, withG, withH,
                        struct, g.levels.r, h.levels.r, g.values, h.values,
-                       sparse, cholesky, posdefify, vctransf, vccov,
+                       sparse, cholesky, nearpd, vctransf, vccov,
                        verbose, digits, REMLf, dofit=FALSE) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
@@ -866,7 +866,7 @@
 
       resG <- .con.E(v=vars, r=cors,
                      v.val=tau2.val, r.val=rho.val, Z1=Z.G1, Z2=Z.G2, levels.r=g.levels.r, values=g.values, Dmat=g.Dmat,
-                     struct=struct[1], cholesky=cholesky[1], vctransf=vctransf, vccov=vccov, posdefify=posdefify, sparse=sparse)
+                     struct=struct[1], cholesky=cholesky[1], vctransf=vctransf, vccov=vccov, nearpd=nearpd, sparse=sparse)
       tau2 <- resG$v
       rho  <- resG$r
       G    <- resG$E
@@ -882,7 +882,7 @@
 
       resH <- .con.E(v=vars, r=cors,
                      v.val=gamma2.val, r.val=phi.val, Z1=Z.H1, Z2=Z.H2, levels.r=h.levels.r, values=h.values, Dmat=h.Dmat,
-                     struct=struct[2], cholesky=cholesky[2], vctransf=vctransf, vccov=vccov, posdefify=posdefify, sparse=sparse)
+                     struct=struct[2], cholesky=cholesky[2], vctransf=vctransf, vccov=vccov, nearpd=nearpd, sparse=sparse)
       gamma2 <- resH$v
       phi    <- resH$r
       H      <- resH$E
@@ -893,7 +893,7 @@
 
    ### note: if M is sparse, then using nearPD() could blow up
 
-   if (posdefify)
+   if (nearpd)
       M <- as.matrix(nearPD(M)$mat)
 
    if (verbose > 1) {

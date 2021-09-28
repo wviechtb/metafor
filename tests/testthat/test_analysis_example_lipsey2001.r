@@ -102,7 +102,7 @@ test_that("results are correct for the comutation of R^2 via the anova() functio
 
    res.ME <- rma(yi, vi, mods = ~ random + intensity, data=dat, method="DL")
    res.RE <- rma(yi, vi, data=dat, method="DL")
-   tmp <- anova(res.RE, res.ME)
+   expect_warning(tmp <- anova(res.RE, res.ME))
 
    expect_equivalent(tmp$R2, 81.2023, tolerance=.tol[["r2"]])
 

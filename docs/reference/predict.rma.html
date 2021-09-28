@@ -105,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1-14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1-15</span>
       </span>
     </div>
 
@@ -216,7 +216,7 @@
     </tr>
     <tr>
       <th>newscale</th>
-      <td><p>optional vector or matrix to specify the values of the scale variables for which the predicted values should be calculated. Only relevant for location-scale models (see <code><a href='rma.uni.html'>rma</a></code>). See &#8216;Details&#8217;.</p></td>
+      <td><p>optional vector or matrix to specify the values of the scale variables for which the predicted values should be calculated. Only relevant for location-scale models (see <code><a href='rma.uni.html'>rma.uni</a></code>). See &#8216;Details&#8217;.</p></td>
     </tr>
     <tr>
       <th>addz</th>
@@ -257,7 +257,7 @@
 <p>For random/mixed-effects models, an approximate prediction interval is also calculated (Riley et al., 2011). The interval estimates where <code>level</code> % of the true effect sizes or outcomes fall in the hypothetical population of studies (and hence where the true effect or outcome of a new study from the population of studies should fall in <code>level</code> % of the cases).</p>
 <p>For random-effects models that were fitted with the <code><a href='rma.mv.html'>rma.mv</a></code> function, the model may actually include multiple \(\tau^2\) values (i.e., when the <code>random</code> argument includes an &#8216;<code>~ inner | outer</code>&#8217; term and <code>struct="HCS"</code>, <code>struct="DIAG"</code>, <code>struct="HAR"</code>, or <code>struct="UN"</code>). In that case, the function will provide prediction intervals for each level of the inner factor (since the prediction intervals differ depending on the \(\tau^2\) value). Alternatively, one can use the <code>tau2.levels</code> argument to specify for which level(s) the prediction interval should be provided. If the model includes a second &#8216;<code>~ inner | outer</code>&#8217; term with multiple \(\gamma^2\) values, prediction intervals for each combination of levels of the inner factors will be provided. Alternatively, one can use the <code>tau2.levels</code> and <code>gamma2.levels</code> arguments to specify for which level combination(s) the prediction interval should be provided.</p>
 <p>When using the <code>newmods</code> argument for mixed-effects models that were fitted with the <code><a href='rma.mv.html'>rma.mv</a></code> function, if the model includes multiple \(\tau^2\) (and multiple \(\gamma^2\)) values, then one must use the <code>tau2.levels</code> (and <code>gamma2.levels</code>) argument to specify the levels of the inner factor(s) (i.e., a vector of length \(k_{new}\)) to obtain the appropriate prediction interval(s).</p>
-<p>For location-scale models fitted with the <code><a href='rma.uni.html'>rma</a></code> function, one can use <code>newmods</code> to specify the values of the \(p'\) moderator variables included in the model and <code>newscale</code> to specify the values of the \(q'\) scale variables included in the model. Whenever <code>newmods</code> is specified, the function computes predicted effects/outcomes for the specified moderators values. To obtain the corresponding prediction intervals, one must also specify the corresponding <code>newscale</code> values. If only <code>newscale</code> is specified (and not <code>newmods</code>), the function computes the predicted log-transformed \(\tau^2\) values (when using a log link) for to the specified scale values. By setting <code>transf=exp</code>, one can then obtain the predicted \(\tau^2\) values.</p>
+<p>For location-scale models fitted with the <code><a href='rma.uni.html'>rma.uni</a></code> function, one can use <code>newmods</code> to specify the values of the \(p'\) moderator variables included in the model and <code>newscale</code> to specify the values of the \(q'\) scale variables included in the model. Whenever <code>newmods</code> is specified, the function computes predicted effects/outcomes for the specified moderators values. To obtain the corresponding prediction intervals, one must also specify the corresponding <code>newscale</code> values. If only <code>newscale</code> is specified (and not <code>newmods</code>), the function computes the predicted log-transformed \(\tau^2\) values (when using a log link) for to the specified scale values. By setting <code>transf=exp</code>, one can then obtain the predicted \(\tau^2\) values.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class <code>"list.rma"</code>. The object is a list containing the following components:</p>

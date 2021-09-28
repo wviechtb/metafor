@@ -100,14 +100,15 @@ test_that("location-scale model works correctly for a continuous predictor", {
    expect_equivalent(diag(res2$M),  diag(res3$M), tolerance=.tol[["var"]])
    expect_equivalent(unname(sqrt(diag(res3$vvc))), res2$se.alpha, tolerance=.tol[["se"]])
 
-   conf1 <- confint(res1)
-   expect_equivalent(conf1[[1]]$random, c(-3.10513, -5.25032, -1.21713), tolerance=.tol[["var"]])
-   expect_equivalent(conf1[[2]]$random, c( 0.04136, -0.65819,  0.69562), tolerance=.tol[["var"]])
+   conf11 <- confint(res1, alpha=1)
+   expect_equivalent(conf11$random, c(-3.10513, -5.25032, -1.21713), tolerance=.tol[["var"]])
+   conf12 <- confint(res1, alpha=2, xlim=c(-1,1))
+   expect_equivalent(conf12$random, c( 0.04136, -0.65819,  0.69562), tolerance=.tol[["var"]])
 
    profile(res1, alpha=1, progbar=FALSE, cline=TRUE)
-   abline(v=conf1[[1]]$random[2:3], lty="dotted")
+   abline(v=conf11$random[2:3], lty="dotted")
    profile(res1, alpha=2, progbar=FALSE, cline=TRUE)
-   abline(v=conf1[[2]]$random[2:3], lty="dotted")
+   abline(v=conf12$random[2:3], lty="dotted")
 
    conf21 <- confint(res2, alpha=1, control=list(vc.min=-0.4, vc.max=0.3))
    conf22 <- confint(res2, alpha=2, control=list(vc.min=-0.1, vc.max=0.05))

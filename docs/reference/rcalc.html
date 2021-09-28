@@ -22,7 +22,7 @@
   }
 </script>
 
-<title>Calculate the Variance-Covariance of Correlation Coefficients — rcalc • metafor</title>
+<title>Calculate the Variance-Covariance of Dependent Correlation Coefficients — rcalc • metafor</title>
 
 
 <!-- jquery -->
@@ -66,7 +66,7 @@
 
 
 
-<meta property="og:title" content="Calculate the Variance-Covariance of Correlation Coefficients — rcalc" />
+<meta property="og:title" content="Calculate the Variance-Covariance of Dependent Correlation Coefficients — rcalc" />
 <meta property="og:description" content="The function can be used to calculate the variance-covariance matrix of correlation coefficients computed based on the same sample of subjects. " />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@wviechtb" />
@@ -105,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1-14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1-15</span>
       </span>
     </div>
 
@@ -170,7 +170,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Calculate the Variance-Covariance of Correlation Coefficients</h1>
+    <h1>Calculate the Variance-Covariance of Dependent Correlation Coefficients</h1>
     
     <div class="hidden name"><code>rcalc.Rd</code></div>
     </div>
@@ -217,11 +217,14 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>A meta-analysis of correlation coefficients may involve multiple correlation coefficients extracted from the same study. When these correlations are computed based on the same sample of subjects, then they are typically not independent. The <code>rcalc</code> function can be used to create a dataset with the correlation coefficients (possibly transformed with Fisher's r-to-z transformation) and the corresponding variance-covariance matrix. The dataset and variance-covariance matrix can then be further meta-analyzed using the <code><a href='rma.mv.html'>rma.mv</a></code> function.</p>
-<p>When computing the covariance between two correlation coefficients, we can distinguish two cases. In the first case, one of the variables involved in the two correlation coefficients is the same. For example, in \(r_{12}\) and \(r_{13}\), variable 1 is common to both correlation coefficients. This is sometimes called the (partially) &#8216;overlapping&#8217; case. The covariance between the two correlation coefficients, \(\mbox{Cov}[r_{12}, r_{13}]\), then depends on the degree of correlation between variables 2 and 3 (i.e., \(r_{23}\)).</p>
-<p>In the second case, none of the variables are common to both correlation coefficients. For example, this would be the case if we have correlations \(r_{12}\) and \(r_{34}\) based on 4 variables. This sometimes called the &#8216;non-overlapping&#8217; case. The covariance between the two correlation coefficients, \(\mbox{Cov}[r_{12}, r_{34}]\), then depends on \(r_{13}\), \(r_{14}\), \(r_{23}\), and \(r_{24}\).</p>
-<p>Equations for these covariances can be found, for example, in Steiger (1980) and Olkin and Finn (1990).</p>
-<p>To use the <code>rcalc</code> function, one needs to construct a data frame that contains a study identifier (say <code>study</code>), two variable identifiers (say <code>var1</code> and <code>var2</code>), the corresponding correlation coefficient (say <code>ri</code>), and the sample size based on which the correlation coefficient was computed (say <code>ni</code>). Then the first argument should be a formula of the form <code>ri ~ var1 + var2 | study</code>, argument <code>ni</code> is set equal to the variable name containing the sample sizes, and the data frame containing these variables is specified via the <code>data</code> argument. When using the function for a single study, one can leave out the study identifier from the formula.</p>
-<p>When argument <code>rtoz</code> is set to <code>TRUE</code>, then the correlations are transformed with Fisher's r-to-z transformation and the variance-covariance matrix is computed for the transformed values.</p>
+<p>When computing the covariance between two correlation coefficients, we can distinguish two cases:</p><ol>
+<li><p>In the first case, one of the variables involved in the two correlation coefficients is the same. For example, in \(r_{12}\) and \(r_{13}\), variable 1 is common to both correlation coefficients. This is sometimes called the (partially) &#8216;overlapping&#8217; case. The covariance between the two correlation coefficients, \(\mbox{Cov}[r_{12}, r_{13}]\), then depends on the degree of correlation between variables 2 and 3 (i.e., \(r_{23}\)).</p></li>
+<li><p>In the second case, none of the variables are common to both correlation coefficients. For example, this would be the case if we have correlations \(r_{12}\) and \(r_{34}\) based on 4 variables. This sometimes called the &#8216;non-overlapping&#8217; case. The covariance between the two correlation coefficients, \(\mbox{Cov}[r_{12}, r_{34}]\), then depends on \(r_{13}\), \(r_{14}\), \(r_{23}\), and \(r_{24}\).</p></li>
+</ol>
+
+<p>Equations to compute these covariances can be found, for example, in Steiger (1980) and Olkin and Finn (1990).</p>
+<p>To use the <code>rcalc</code> function, one needs to construct a data frame that contains a study identifier (say <code>study</code>), two variable identifiers (say <code>var1</code> and <code>var2</code>), the corresponding correlation coefficients (say <code>ri</code>), and the sample sizes based on which the correlation coefficients were computed (say <code>ni</code>). Then the first argument should be a formula of the form <code>ri ~ var1 + var2 | study</code>, argument <code>ni</code> is set equal to the variable name containing the sample sizes, and the data frame containing these variables is specified via the <code>data</code> argument. When using the function for a single study, one can leave out the study identifier from the formula.</p>
+<p>When argument <code>rtoz</code> is set to <code>TRUE</code>, then the correlations are transformed with Fisher's r-to-z transformation (Fisher, 1921) and the variance-covariance matrix is computed for the transformed values.</p>
 <p>In some cases, the sample size may not be identical within a study (e.g., \(r_{12}\) may have been computed based on 120 subjects while \(r_{13}\) was computed based on 118 subjects due to 2 missing values in variable 3). For constructing the variance-covariance matrix, we need to assume a &#8216;common&#8217; sample size for all correlation coefficients within the study. Argument <code>nfun</code> provides some options for how the common sample size should be computed. Possible options are <code>"min"</code> (for using the minimum sample size within a study as the common sample size), <code>"harmonic"</code> (for using the harmonic mean), or <code>"mean"</code> (for using the arithmetic mean). The default is <code>"min"</code>, which is a conservative choice (i.e., it will overestimate the sampling variances of coefficients that were computed based on a sample size that was actually larger than the minimum sample size). One can also specify a function via the <code>nfun</code> argument (which should take a numeric vector as input and return a single value).</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -240,7 +243,8 @@
     <p>Wolfgang Viechtbauer <a href='mailto:wvb@metafor-project.org'>wvb@metafor-project.org</a> <a href='https://www.metafor-project.org'>https://www.metafor-project.org</a></p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Olkin, I., &amp; Finn, J. D. (1990). Testing correlated correlations. <em>Psychological Bulletin</em>, <b>108</b>(2), 330--333. <a href='https://doi.org/10.1037/0033-2909.108.2.330'>https://doi.org/10.1037/0033-2909.108.2.330</a></p>
+    <p>Fisher, R. A. (1921). On the &#8220;probable error&#8221; of a coefficient of correlation deduced from a small sample. <em>Metron</em>, <b>1</b>, 1--32. <a href='http://hdl.handle.net/2440/15169'>http://hdl.handle.net/2440/15169</a></p>
+<p>Olkin, I., &amp; Finn, J. D. (1990). Testing correlated correlations. <em>Psychological Bulletin</em>, <b>108</b>(2), 330--333. <a href='https://doi.org/10.1037/0033-2909.108.2.330'>https://doi.org/10.1037/0033-2909.108.2.330</a></p>
 <p>Steiger, J. H. (1980). Tests for comparing elements of a correlation matrix. <em>Psychological Bulletin</em>, <b>87</b>(2), 245--251. <a href='https://doi.org/10.1037/0033-2909.87.2.245'>https://doi.org/10.1037/0033-2909.87.2.245</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 

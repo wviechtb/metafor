@@ -40,7 +40,8 @@ test_that("results are correct for the mixed-effects meta-regression model.", {
    expect_equivalent(coef(res.ME), c(-0.6303, -0.0268), tolerance=.tol[["coef"]]) ### -0.6304 in article
    expect_equivalent(res.ME$se, c(0.1591, 0.0110), tolerance=.tol[["se"]])
    expect_equivalent(res.ME$tau2, 0.1572, tolerance=.tol[["var"]])
-   expect_equivalent(anova(res.RE, res.ME)$R2, 41.3844, tolerance=.tol[["r2"]])
+   expect_warning(tmp <- anova(res.RE, res.ME))
+   expect_equivalent(tmp$R2, 41.3844, tolerance=.tol[["r2"]])
 
    ### predicted average risk ratios
    tmp <- predict(res.ME, newmods=c(33.46,42)-33.46, transf=exp, digits=2)

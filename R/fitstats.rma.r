@@ -4,6 +4,9 @@ fitstats.rma <- function(object, ..., REML) {
 
    .chkclass(class(object), must="rma")
 
+   ### unless REML argument is specified, method of first object determines
+   ### whether to show fit statistics based on the ML or REML likelihood
+
    if (missing(REML)) {
       if (object$method == "REML") {
          REML <- TRUE

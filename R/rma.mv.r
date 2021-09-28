@@ -1564,7 +1564,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
                REMLf = TRUE,              # full REML likelihood (including all constants)
                evtol = 1e-07,             # lower bound for eigenvalues to determine if model matrix is positive definite
                cholesky = ifelse(is.element(struct, c("UN","UNR","GEN")), TRUE, FALSE), # by default, use Cholesky factorization for G and H matrix for "UN", "UNR", and "GEN" structures
-               posdefify = FALSE,         # to force G and H matrix to become positive definite
+               nearpd = FALSE,            # to force G and H matrix to become positive definite
                hessianCtrl = list(r=8),   # arguments passed on to 'method.args' of hessian()
                hessian0 = .Machine$double.eps^0.5) # threshold for detecting fixed elements in Hessian
 
@@ -1717,7 +1717,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
    optimizer  <- match.arg(con$optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","optimParallel"))
    optmethod  <- match.arg(con$optmethod, c("Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent"))
    evtol      <- con$evtol
-   posdefify  <- con$posdefify
+   nearpd     <- con$nearpd
    cholesky   <- con$cholesky
    parallel   <- con$parallel
    cl         <- con$cl
@@ -1751,7 +1751,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
    if (optimizer=="mads" && !is.element("tol", names(optcontrol)))
       optcontrol$tol <- 1e-6
 
-   #return(list(con=con, optimizer=optimizer, optmethod=optmethod, parallel=parallel, cl=cl, ncpus=ncpus, evtol=evtol, posdefify=posdefify, optcontrol=optcontrol))
+   #return(list(con=con, optimizer=optimizer, optmethod=optmethod, parallel=parallel, cl=cl, ncpus=ncpus, evtol=evtol, nearpd=nearpd, optcontrol=optcontrol))
 
    ### check that the required packages are installed
 
@@ -1983,7 +1983,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
             sigma2s=sigma2s, tau2s=tau2s, rhos=rhos, gamma2s=gamma2s, phis=phis,
             withS=withS, withG=withG, withH=withH, struct=struct,
             g.levels.r=g.levels.r, h.levels.r=h.levels.r, g.values=g.values, h.values=h.values,
-            sparse=sparse, cholesky=cholesky, posdefify=posdefify, vctransf=TRUE, vccov=FALSE,
+            sparse=sparse, cholesky=cholesky, nearpd=nearpd, vctransf=TRUE, vccov=FALSE,
             verbose=verbose, digits=digits, REMLf=con$REMLf, dofit=FALSE", ctrl.arg, ")\n", sep="")
 
          #return(optcall)
@@ -2079,7 +2079,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
       sigma2s=sigma2s, tau2s=tau2s, rhos=rhos, gamma2s=gamma2s, phis=phis,
       withS=withS, withG=withG, withH=withH, struct=struct,
       g.levels.r=g.levels.r, h.levels.r=h.levels.r, g.values=g.values, h.values=h.values,
-      sparse=sparse, cholesky=cholesky, posdefify=posdefify, vctransf=TRUE, vccov=FALSE,
+      sparse=sparse, cholesky=cholesky, nearpd=nearpd, vctransf=TRUE, vccov=FALSE,
       verbose=FALSE, digits=digits, REMLf=con$REMLf, dofit=TRUE)
 
    ### extract elements
@@ -2234,7 +2234,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
             sigma2s=sigma2s, tau2s=tau2s, rhos=rhos, gamma2s=gamma2s, phis=phis,
             withS=withS, withG=withG, withH=withH, struct=struct,
             g.levels.r=g.levels.r, h.levels.r=h.levels.r, g.values=g.values, h.values=h.values,
-            sparse=sparse, cholesky=c(FALSE,FALSE), posdefify=posdefify, vctransf=FALSE, vccov=TRUE,
+            sparse=sparse, cholesky=c(FALSE,FALSE), nearpd=nearpd, vctransf=FALSE, vccov=TRUE,
             verbose=verbose, digits=digits, REMLf=con$REMLf), silent=TRUE)
 
          # note: vctransf=FALSE and cholesky=c(FALSE,FALSE), so we get the Hessian for the untransfored variances and covariances
@@ -2249,7 +2249,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
             withS=withS, withG=withG, withH=withH, struct=struct,
             g.levels.r=g.levels.r, h.levels.r=h.levels.r, g.values=g.values, h.values=h.values,
             sparse=sparse, cholesky=ifelse(c(cvvc=="transf",cvvc=="transf") & cholesky, TRUE, FALSE),
-            posdefify=posdefify, vctransf=cvvc=="transf", vccov=FALSE,
+            nearpd=nearpd, vctransf=cvvc=="transf", vccov=FALSE,
             verbose=verbose, digits=digits, REMLf=con$REMLf), silent=TRUE)
 
          # note: when cvvc=TRUE/"covcor", get the Hessian for the (untransfored) variances and correlations

@@ -1,4 +1,6 @@
-# metafor 3.1-14 (2021-09-01)
+# metafor 3.1-15 (2021-09-28)
+
+- `anova()` now gives a warning when running LRTs not based on ML/REML estimation
 
 - elements of `rho` and `phi` in `rma.mv()` are now based on the lower triangular part of the respective correlation matrix (instead of the upper triangular part) for consistency with other functions; note that this is in principle a backwards incompatible change, although this should only be a concern in very special circumstances
 

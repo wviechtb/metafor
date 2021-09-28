@@ -357,6 +357,16 @@ anova.rma <- function(object, object2, btt, X, att, Z, digits, ...) {
       if (is.element(model.f$method, c("FE","EE","CE")) && !is.element(model.r$method, c("FE","EE","CE")))
          stop(mstyle$stop("Full model uses a fixed- and reduced model uses a random/mixed-effects model."))
 
+      ### but have to check for a ML/REML mismatch
+
+      if ((model.f$method == "ML" && model.r$method == "REML") || model.r$method == "ML" && model.f$method == "REML")
+         stop(mstyle$stop("Mismatch between the use of ML and REML in the full versus reduced model."))
+
+      ### for LRTs, using anything besides ML/REML is strictly speaking incorrect
+
+      if (test == "LRT" && (!is.element(model.f$method, c("FE","EE","CE","ML","REML")) || !is.element(model.r$method, c("FE","EE","CE","ML","REML"))))
+         warning(mstyle$warning("LRTs should be based on ML/REML estimation."))
+
       ### could do even more checks for cases where the models are clearly not nested
 
       ######################################################################

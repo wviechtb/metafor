@@ -153,8 +153,11 @@ confint.rma.ls <- function(object, parm, level, fixed=FALSE, alpha, digits, tran
             con$vc.min <- vc - 10 * abs(vc)
             con$vc.max <- vc + 10 * abs(vc)
          } else {
-            con$vc.min <- vc - 10 * qnorm(level/2, lower.tail=FALSE) * x$se.alpha[alpha]
-            con$vc.max <- vc + 10 * qnorm(level/2, lower.tail=FALSE) * x$se.alpha[alpha]
+            #con$vc.min <- vc - 10 * qnorm(level/2, lower.tail=FALSE) * x$se.alpha[alpha]
+            #con$vc.max <- vc + 10 * qnorm(level/2, lower.tail=FALSE) * x$se.alpha[alpha]
+            # using this now to deal with cases where the SE may be extremely large
+            con$vc.min <- max(vc - 10 * abs(vc), vc - 10 * qnorm(level/2, lower.tail=FALSE) * x$se.alpha[alpha])
+            con$vc.max <- min(vc + 10 * abs(vc), vc + 10 * qnorm(level/2, lower.tail=FALSE) * x$se.alpha[alpha])
          }
       }
 
