@@ -1,4 +1,4 @@
-# metafor 3.1-16 (2021-09-28)
+# metafor 3.1-17 (2021-09-28)
 
 - `anova()` now gives a warning when running LRTs not based on ML/REML estimation
 
