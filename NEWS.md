@@ -1,4 +1,6 @@
-# metafor 3.1-17 (2021-09-28)
+# metafor 3.1-18 (2021-09-29)
+
+- added `vcalc()` function
 
 - `anova()` now gives a warning when running LRTs not based on ML/REML estimation
 
