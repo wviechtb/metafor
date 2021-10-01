@@ -176,6 +176,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
                delta.fix = FALSE,     # fix delta in Hessian computation
                htransf = FALSE,       # FALSE/TRUE: Hessian is computed for the untransformed/transformed delta and tau^2 estimates
                hessianCtrl=list(r=6), # arguments passed on to 'method.args' of hessian()
+               hesspack = "numDeriv", # package for computing the Hessian (numDeriv or pracma)
                scaleX = !betaspec)    # whether non-dummy variables in the X matrix should be rescaled before model fitting
 
    ### replace defaults with any user-defined values
@@ -328,8 +329,8 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
          stop(mstyle$stop("Please install the 'optimParallel' package to use this optimizer."))
    }
 
-   if (!isTRUE(ddd$skiphes) && !requireNamespace("numDeriv", quietly=TRUE))
-      stop(mstyle$stop("Please install the 'numDeriv' package to compute the Hessian."))
+   if (!isTRUE(ddd$skiphes) && !requireNamespace(con$hesspack, quietly=TRUE))
+      stop(mstyle$stop(paste0("Please install the '", con$hesspack, "' package to compute the Hessian.")))
 
    ############################################################################
 
@@ -884,21 +885,37 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
       if (con$htransf) {
 
-         hescall <- paste("numDeriv::hessian(", .selmodel.ll, ", x=opt.res$par, method.args=con$hessianCtrl,
-            yi=yi, vi=vi, X.fit=X, preci=preci, k=k, pX=p, pvals=pvals,
-            deltas=deltas, delta.val=delta.hes, delta.transf=TRUE, mapfun=mapfun, delta.min=delta.min, delta.max=delta.max,
-            tau2.val=tau2.hes, tau2.transf=TRUE, tau2.max=tau2.max, beta.val=beta.hes,
-            wi.fun=wi.fun, steps=steps, pgrp=pgrp,
-            alternative=alternative, pval.min=pval.min, intCtrl=intCtrl, verbose=ifelse(verbose > 3, verbose, 0), digits=digits)\n", sep="")
+         if (con$hesspack == "numDeriv")
+            hescall <- paste("numDeriv::hessian(", .selmodel.ll, ", x=opt.res$par, method.args=con$hessianCtrl,
+               yi=yi, vi=vi, X.fit=X, preci=preci, k=k, pX=p, pvals=pvals,
+               deltas=deltas, delta.val=delta.hes, delta.transf=TRUE, mapfun=mapfun, delta.min=delta.min, delta.max=delta.max,
+               tau2.val=tau2.hes, tau2.transf=TRUE, tau2.max=tau2.max, beta.val=beta.hes,
+               wi.fun=wi.fun, steps=steps, pgrp=pgrp,
+               alternative=alternative, pval.min=pval.min, intCtrl=intCtrl, verbose=ifelse(verbose > 3, verbose, 0), digits=digits)\n", sep="")
+      if (con$hesspack == "pracma")
+            hescall <- paste("pracma::hessian(", .selmodel.ll, ", x0=opt.res$par,
+               yi=yi, vi=vi, X.fit=X, preci=preci, k=k, pX=p, pvals=pvals,
+               deltas=deltas, delta.val=delta.hes, delta.transf=TRUE, mapfun=mapfun, delta.min=delta.min, delta.max=delta.max,
+               tau2.val=tau2.hes, tau2.transf=TRUE, tau2.max=tau2.max, beta.val=beta.hes,
+               wi.fun=wi.fun, steps=steps, pgrp=pgrp,
+               alternative=alternative, pval.min=pval.min, intCtrl=intCtrl, verbose=ifelse(verbose > 3, verbose, 0), digits=digits)\n", sep="")
 
       } else {
 
-         hescall <- paste("numDeriv::hessian(", .selmodel.ll, ", x=c(beta, tau2, delta), method.args=con$hessianCtrl,
-            yi=yi, vi=vi, X.fit=X, preci=preci, k=k, pX=p, pvals=pvals,
-            deltas=deltas, delta.val=delta.hes, delta.transf=FALSE, mapfun=mapfun, delta.min=delta.min, delta.max=delta.max,
-            tau2.val=tau2.hes, tau2.transf=FALSE, tau2.max=tau2.max, beta.val=beta.hes,
-            wi.fun=wi.fun, steps=steps, pgrp=pgrp,
-            alternative=alternative, pval.min=pval.min, intCtrl=intCtrl, verbose=ifelse(verbose > 3, verbose, 0), digits=digits)\n", sep="")
+         if (con$hesspack == "numDeriv")
+            hescall <- paste("numDeriv::hessian(", .selmodel.ll, ", x=c(beta, tau2, delta), method.args=con$hessianCtrl,
+               yi=yi, vi=vi, X.fit=X, preci=preci, k=k, pX=p, pvals=pvals,
+               deltas=deltas, delta.val=delta.hes, delta.transf=FALSE, mapfun=mapfun, delta.min=delta.min, delta.max=delta.max,
+               tau2.val=tau2.hes, tau2.transf=FALSE, tau2.max=tau2.max, beta.val=beta.hes,
+               wi.fun=wi.fun, steps=steps, pgrp=pgrp,
+               alternative=alternative, pval.min=pval.min, intCtrl=intCtrl, verbose=ifelse(verbose > 3, verbose, 0), digits=digits)\n", sep="")
+      if (con$hesspack == "pracma")
+            hescall <- paste("pracma::hessian(", .selmodel.ll, ", x0=c(beta, tau2, delta),
+               yi=yi, vi=vi, X.fit=X, preci=preci, k=k, pX=p, pvals=pvals,
+               deltas=deltas, delta.val=delta.hes, delta.transf=FALSE, mapfun=mapfun, delta.min=delta.min, delta.max=delta.max,
+               tau2.val=tau2.hes, tau2.transf=FALSE, tau2.max=tau2.max, beta.val=beta.hes,
+               wi.fun=wi.fun, steps=steps, pgrp=pgrp,
+               alternative=alternative, pval.min=pval.min, intCtrl=intCtrl, verbose=ifelse(verbose > 3, verbose, 0), digits=digits)\n", sep="")
 
       }
 

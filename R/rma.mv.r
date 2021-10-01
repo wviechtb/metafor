@@ -103,6 +103,9 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
    if (is.character(dfs))
       dfs <- match.arg(dfs, c("residual", "contain"))
 
+   if (dfs == "contain")
+      test <- "t"
+
    ### handle Rscale argument (either character, logical, or integer)
 
    if (is.character(Rscale))
@@ -1566,7 +1569,8 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
                cholesky = ifelse(is.element(struct, c("UN","UNR","GEN")), TRUE, FALSE), # by default, use Cholesky factorization for G and H matrix for "UN", "UNR", and "GEN" structures
                nearpd = FALSE,            # to force G and H matrix to become positive definite
                hessianCtrl = list(r=8),   # arguments passed on to 'method.args' of hessian()
-               hessian0 = .Machine$double.eps^0.5) # threshold for detecting fixed elements in Hessian
+               hessian0 = .Machine$double.eps^0.5, # threshold for detecting fixed elements in Hessian
+               hesspack = "numDeriv")     # package for computing the Hessian (numDeriv or pracma)
 
    ### replace defaults with any user-defined values
 
@@ -1780,8 +1784,8 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
          stop(mstyle$stop("Please install the 'optimParallel' package to use this optimizer."))
    }
 
-   if ((.isTRUE(cvvc) || cvvc %in% c("varcor","varcov","transf")) && !requireNamespace("numDeriv", quietly=TRUE))
-      stop(mstyle$stop("Please install the 'numDeriv' package to compute the Hessian."))
+   if ((.isTRUE(cvvc) || cvvc %in% c("varcor","varcov","transf")) && !requireNamespace(con$hesspack, quietly=TRUE))
+      stop(mstyle$stop(paste0("Please install the '", con$hesspack, "' package to compute the Hessian.")))
 
    ### check if length of sigma2.init, tau2.init, rho.init, gamma2.init, and phi.init matches number of variance components
    ### note: if a particular component is not included, reset (transformed) initial values (in case the user still specifies multiple initial values)
@@ -2227,30 +2231,53 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
 
       if (cvvc == "varcov") {
 
-         hessian <- try(numDeriv::hessian(func=.ll.rma.mv, x = c(sigma2, tau2, cov1, gamma2, cov2),
-            method.args=con$hessianCtrl, reml=reml, Y=Y, M=V, A=NULL, X.fit=X, k=k, pX=p,
-            D.S=D.S, Z.G1=Z.G1, Z.G2=Z.G2, Z.H1=Z.H1, Z.H2=Z.H2, g.Dmat=g.Dmat, h.Dmat=h.Dmat,
-            sigma2.val=sigma2.val, tau2.val=tau2.val, rho.val=rho.val, gamma2.val=gamma2.val, phi.val=phi.val,
-            sigma2s=sigma2s, tau2s=tau2s, rhos=rhos, gamma2s=gamma2s, phis=phis,
-            withS=withS, withG=withG, withH=withH, struct=struct,
-            g.levels.r=g.levels.r, h.levels.r=h.levels.r, g.values=g.values, h.values=h.values,
-            sparse=sparse, cholesky=c(FALSE,FALSE), nearpd=nearpd, vctransf=FALSE, vccov=TRUE,
-            verbose=verbose, digits=digits, REMLf=con$REMLf), silent=TRUE)
+         if (con$hesspack == "numDeriv")
+            hessian <- try(numDeriv::hessian(func=.ll.rma.mv, x = c(sigma2, tau2, cov1, gamma2, cov2),
+               method.args=con$hessianCtrl, reml=reml, Y=Y, M=V, A=NULL, X.fit=X, k=k, pX=p,
+               D.S=D.S, Z.G1=Z.G1, Z.G2=Z.G2, Z.H1=Z.H1, Z.H2=Z.H2, g.Dmat=g.Dmat, h.Dmat=h.Dmat,
+               sigma2.val=sigma2.val, tau2.val=tau2.val, rho.val=rho.val, gamma2.val=gamma2.val, phi.val=phi.val,
+               sigma2s=sigma2s, tau2s=tau2s, rhos=rhos, gamma2s=gamma2s, phis=phis,
+               withS=withS, withG=withG, withH=withH, struct=struct,
+               g.levels.r=g.levels.r, h.levels.r=h.levels.r, g.values=g.values, h.values=h.values,
+               sparse=sparse, cholesky=c(FALSE,FALSE), nearpd=nearpd, vctransf=FALSE, vccov=TRUE,
+               verbose=verbose, digits=digits, REMLf=con$REMLf), silent=TRUE)
+         if (con$hesspack == "pracma")
+            hessian <- try(pracma::hessian(f=.ll.rma.mv, x0 = c(sigma2, tau2, cov1, gamma2, cov2),
+               reml=reml, Y=Y, M=V, A=NULL, X.fit=X, k=k, pX=p,
+               D.S=D.S, Z.G1=Z.G1, Z.G2=Z.G2, Z.H1=Z.H1, Z.H2=Z.H2, g.Dmat=g.Dmat, h.Dmat=h.Dmat,
+               sigma2.val=sigma2.val, tau2.val=tau2.val, rho.val=rho.val, gamma2.val=gamma2.val, phi.val=phi.val,
+               sigma2s=sigma2s, tau2s=tau2s, rhos=rhos, gamma2s=gamma2s, phis=phis,
+               withS=withS, withG=withG, withH=withH, struct=struct,
+               g.levels.r=g.levels.r, h.levels.r=h.levels.r, g.values=g.values, h.values=h.values,
+               sparse=sparse, cholesky=c(FALSE,FALSE), nearpd=nearpd, vctransf=FALSE, vccov=TRUE,
+               verbose=verbose, digits=digits, REMLf=con$REMLf), silent=TRUE)
 
          # note: vctransf=FALSE and cholesky=c(FALSE,FALSE), so we get the Hessian for the untransfored variances and covariances
 
       } else {
 
-         hessian <- try(numDeriv::hessian(func=.ll.rma.mv, x = if (cvvc=="transf") opt.res$par else c(sigma2, tau2, rho, gamma2, phi),
-            method.args=con$hessianCtrl, reml=reml, Y=Y, M=V, A=NULL, X.fit=X, k=k, pX=p,
-            D.S=D.S, Z.G1=Z.G1, Z.G2=Z.G2, Z.H1=Z.H1, Z.H2=Z.H2, g.Dmat=g.Dmat, h.Dmat=h.Dmat,
-            sigma2.val=sigma2.val, tau2.val=tau2.val, rho.val=rho.val, gamma2.val=gamma2.val, phi.val=phi.val,
-            sigma2s=sigma2s, tau2s=tau2s, rhos=rhos, gamma2s=gamma2s, phis=phis,
-            withS=withS, withG=withG, withH=withH, struct=struct,
-            g.levels.r=g.levels.r, h.levels.r=h.levels.r, g.values=g.values, h.values=h.values,
-            sparse=sparse, cholesky=ifelse(c(cvvc=="transf",cvvc=="transf") & cholesky, TRUE, FALSE),
-            nearpd=nearpd, vctransf=cvvc=="transf", vccov=FALSE,
-            verbose=verbose, digits=digits, REMLf=con$REMLf), silent=TRUE)
+         if (con$hesspack == "numDeriv")
+            hessian <- try(numDeriv::hessian(func=.ll.rma.mv, x = if (cvvc=="transf") opt.res$par else c(sigma2, tau2, rho, gamma2, phi),
+               method.args=con$hessianCtrl, reml=reml, Y=Y, M=V, A=NULL, X.fit=X, k=k, pX=p,
+               D.S=D.S, Z.G1=Z.G1, Z.G2=Z.G2, Z.H1=Z.H1, Z.H2=Z.H2, g.Dmat=g.Dmat, h.Dmat=h.Dmat,
+               sigma2.val=sigma2.val, tau2.val=tau2.val, rho.val=rho.val, gamma2.val=gamma2.val, phi.val=phi.val,
+               sigma2s=sigma2s, tau2s=tau2s, rhos=rhos, gamma2s=gamma2s, phis=phis,
+               withS=withS, withG=withG, withH=withH, struct=struct,
+               g.levels.r=g.levels.r, h.levels.r=h.levels.r, g.values=g.values, h.values=h.values,
+               sparse=sparse, cholesky=ifelse(c(cvvc=="transf",cvvc=="transf") & cholesky, TRUE, FALSE),
+               nearpd=nearpd, vctransf=cvvc=="transf", vccov=FALSE,
+               verbose=verbose, digits=digits, REMLf=con$REMLf), silent=TRUE)
+         if (con$hesspack == "pracma")
+            hessian <- try(pracma::hessian(f=.ll.rma.mv, x0 = if (cvvc=="transf") opt.res$par else c(sigma2, tau2, rho, gamma2, phi),
+               reml=reml, Y=Y, M=V, A=NULL, X.fit=X, k=k, pX=p,
+               D.S=D.S, Z.G1=Z.G1, Z.G2=Z.G2, Z.H1=Z.H1, Z.H2=Z.H2, g.Dmat=g.Dmat, h.Dmat=h.Dmat,
+               sigma2.val=sigma2.val, tau2.val=tau2.val, rho.val=rho.val, gamma2.val=gamma2.val, phi.val=phi.val,
+               sigma2s=sigma2s, tau2s=tau2s, rhos=rhos, gamma2s=gamma2s, phis=phis,
+               withS=withS, withG=withG, withH=withH, struct=struct,
+               g.levels.r=g.levels.r, h.levels.r=h.levels.r, g.values=g.values, h.values=h.values,
+               sparse=sparse, cholesky=ifelse(c(cvvc=="transf",cvvc=="transf") & cholesky, TRUE, FALSE),
+               nearpd=nearpd, vctransf=cvvc=="transf", vccov=FALSE,
+               verbose=verbose, digits=digits, REMLf=con$REMLf), silent=TRUE)
 
          # note: when cvvc=TRUE/"covcor", get the Hessian for the (untransfored) variances and correlations
          #       when cvvc="transf", get the Hessian for the transformed variances and correlations

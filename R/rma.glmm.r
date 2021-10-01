@@ -628,7 +628,8 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                scaleX = TRUE,              # whether non-dummy variables in the X matrix should be rescaled before model fitting
                evtol = 1e-07,              # lower bound for eigenvalues to determine if model matrix is positive definite
                dnchgcalc = "dFNCHypergeo", # method for calculating dnchg ("dFNCHypergeo" from BiasedUrn package or "dnoncenhypergeom")
-               dnchgprec = 1e-10)          # precision for dFNCHypergeo()
+               dnchgprec = 1e-10,          # precision for dFNCHypergeo()
+               hesspack = "numDeriv")      # package for computing the Hessian (numDeriv or pracma)
 
    ### replace defaults with any user-defined values
 
@@ -818,8 +819,8 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       }
 
       if (is.element(optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","optimParallel"))) {
-         if (!requireNamespace("numDeriv", quietly=TRUE))
-            stop(mstyle$stop("Please install the 'numDeriv' package to fit this model."))
+         if (!requireNamespace(con$hesspack, quietly=TRUE))
+         stop(mstyle$stop(paste0("Please install the '", con$hesspack, "' package to fit this model.")))
          if (con$dnchgcalc == "dFNCHypergeo") {
             if (!requireNamespace("BiasedUrn", quietly=TRUE))
                stop(mstyle$stop("Please install the 'BiasedUrn' package to fit this model."))
@@ -1703,7 +1704,10 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             if (verbose > 1)
                message(mstyle$message("Computing Hessian ..."))
 
-            h.FE <- numDeriv::hessian(.dnchg, x=res.FE$par, method.args=hessianCtrl, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=FALSE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec)
+            if (con$hesspack == "numDeriv")
+               h.FE <- numDeriv::hessian(.dnchg, x=res.FE$par, method.args=hessianCtrl, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=FALSE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec)
+            if (con$hesspack == "pracma")
+               h.FE <- pracma::hessian(.dnchg, x0=res.FE$par, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=FALSE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec)
             #return(list(res.FE, h.FE))
 
             ### log-likelihood
@@ -1810,7 +1814,10 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                   if (QEconv) {
                      if (verbose > 1)
                         message(mstyle$message("Computing Hessian ..."))
-                     h.QE <- numDeriv::hessian(.dnchg, x=res.QE$par, method.args=hessianCtrl, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.QE, random=FALSE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec)
+                     if (con$hesspack == "numDeriv")
+                        h.QE <- numDeriv::hessian(.dnchg, x=res.QE$par, method.args=hessianCtrl, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.QE, random=FALSE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec)
+                     if (con$hesspack == "pracma")
+                        h.QE <- pracma::hessian(.dnchg, x0=res.QE$par, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.QE, random=FALSE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec)
                   }
 
                } else {
@@ -2037,7 +2044,10 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             if (verbose > 1)
                message(mstyle$message("Computing Hessian ..."))
 
-            h.ML <- numDeriv::hessian(.dnchg, x=res.ML$par, method.args=hessianCtrl, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=TRUE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, intCtrl=intCtrl)
+            if (con$hesspack == "numDeriv")
+               h.ML <- numDeriv::hessian(.dnchg, x=res.ML$par, method.args=hessianCtrl, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=TRUE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, intCtrl=intCtrl)
+            if (con$hesspack == "pracma")
+               h.ML <- pracma::hessian(.dnchg, x0=res.ML$par, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=TRUE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, intCtrl=intCtrl)
             #return(list(res.ML, h.ML))
 
             ### log-likelihood

@@ -966,6 +966,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
                cl = NULL,                 # arguments for optimParallel()
                ncpus = 1L,                # arguments for optimParallel()
                hessianCtrl=list(r=8),     # arguments passed on to 'method.args' of hessian()
+               hesspack = "numDeriv",     # package for computing the Hessian (numDeriv or pracma)
                scaleZ = TRUE)
 
    ### replace defaults with any user-defined values
@@ -1149,7 +1150,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
          A     <- diag(weights, nrow=k, ncol=k)
          stXAX <- .invcalc(X=X, W=A, k=k)
-         P     <- A - A %*% X %*% stXAX %*% t(X) %*% A
+         P     <- A - A %*% X %*% stXAX %*% crossprod(X,A)
          V     <- diag(vi, nrow=k, ncol=k)
          PV    <- P %*% V ### note: this is not symmetric
          trP   <- .tr(P)
@@ -1168,7 +1169,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
          A     <- diag(weights, nrow=k, ncol=k)
          stXAX <- .invcalc(X=X, W=A, k=k)
-         P     <- A - A %*% X %*% stXAX %*% t(X) %*% A
+         P     <- A - A %*% X %*% stXAX %*% crossprod(X,A)
          V     <- diag(vi, nrow=k, ncol=k)
          PV    <- P %*% V ### note: this is not symmetric
          trP   <- .tr(P)
@@ -1596,8 +1597,8 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
             stop(mstyle$stop("Please install the 'optimParallel' package to use this optimizer."))
       }
 
-      if (!isTRUE(ddd$skiphes) && !requireNamespace("numDeriv", quietly=TRUE))
-         stop(mstyle$stop("Please install the 'numDeriv' package to compute the Hessian."))
+      if (!isTRUE(ddd$skiphes) && !requireNamespace(con$hesspack, quietly=TRUE))
+         stop(mstyle$stop(paste0("Please install the '", con$hesspack, "' package to compute the Hessian.")))
 
       ### drop redundant predictors
 
@@ -1898,8 +1899,12 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
          if (verbose > 1)
             message(mstyle$message("\nComputing Hessian ..."))
 
-         H <- try(numDeriv::hessian(func=.ll.rma.ls, x=opt.res$par, method.args=con$hessianCtrl, yi=yi, vi=vi, X=X,
-                                    Z=Z, reml=reml, k=k, pX=p, alpha.val=alpha, verbose=FALSE, digits=digits, REMLf=con$REMLf, link=link, mZ=mZ), silent=TRUE)
+         if (con$hesspack == "numDeriv")
+            H <- try(numDeriv::hessian(func=.ll.rma.ls, x=opt.res$par, method.args=con$hessianCtrl, yi=yi, vi=vi, X=X,
+                                       Z=Z, reml=reml, k=k, pX=p, alpha.val=alpha, verbose=FALSE, digits=digits, REMLf=con$REMLf, link=link, mZ=mZ), silent=TRUE)
+         if (con$hesspack == "pracma")
+            H <- try(pracma::hessian(f=.ll.rma.ls, x0=opt.res$par, yi=yi, vi=vi, X=X,
+                                     Z=Z, reml=reml, k=k, pX=p, alpha.val=alpha, verbose=FALSE, digits=digits, REMLf=con$REMLf, link=link, mZ=mZ), silent=TRUE)
 
          if (inherits(H, "try-error")) {
 
