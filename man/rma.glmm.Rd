@@ -2,7 +2,7 @@
 \alias{rma.glmm}
 \title{Meta-Analysis via Generalized Linear (Mixed-Effects) Models}
 \description{
-   Function to fit meta-analytic fixed- and random/mixed-effects models with or without moderators via generalized linear (mixed-effects) models. See below and the documentation of the \pkg{\link{metafor-package}} for more details on these models. \loadmathjax
+   Function to fit meta-analytic fixed- and random/mixed-effects models with or without moderators via generalized linear (mixed-effects) models. See below and the introduction to the \pkg{\link{metafor-package}} for more details on these models. \loadmathjax
 }
 \usage{
 rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
@@ -200,7 +200,7 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
 \seealso{
    \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, and \code{\link{rma.mv}} for other model fitting functions.
 
-   \code{\link{dat.nielweise2007}}, \code{\link{dat.nielweise2008}}, \code{\link{dat.collins1985a}}, and \code{\link{dat.pritz1997}} for further examples of the use of the \code{rma.glmm} function.
+   \code{\link[metadat]{dat.nielweise2007}}, \code{\link[metadat]{dat.nielweise2008}}, \code{\link[metadat]{dat.collins1985a}}, and \code{\link[metadat]{dat.pritz1997}} for further examples of the use of the \code{rma.glmm} function.
 }
 \examples{
 ### random-effects model using rma.uni() (standard RE model analysis)

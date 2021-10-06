@@ -2,7 +2,7 @@
 \alias{rma.mh}
 \title{Meta-Analysis via the Mantel-Haenszel Method}
 \description{
-   Function to fit fixed-effects models to \mjeqn{2 \times 2}{2x2} table and person-time data via the Mantel-Haenszel method. See below and the documentation of the \pkg{\link{metafor-package}} for more details on these models. \loadmathjax
+   Function to fit fixed-effects models to \mjeqn{2 \times 2}{2x2} table and person-time data via the Mantel-Haenszel method. See below and the introduction to the \pkg{\link{metafor-package}} for more details on these models. \loadmathjax
 }
 \usage{
 rma.mh(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,

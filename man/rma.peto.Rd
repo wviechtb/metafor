@@ -2,7 +2,7 @@
 \alias{rma.peto}
 \title{Meta-Analysis via Peto's Method}
 \description{
-   Function to fit fixed-effects models to \mjeqn{2 \times 2}{2x2} table data via Peto's method. See below and the documentation of the \pkg{\link{metafor-package}} for more details on these models. \loadmathjax
+   Function to fit fixed-effects models to \mjeqn{2 \times 2}{2x2} table data via Peto's method. See below and the introduction to the \pkg{\link{metafor-package}} for more details on these models. \loadmathjax
 }
 \usage{
 rma.peto(ai, bi, ci, di, n1i, n2i,
@@ -94,7 +94,7 @@ rma.peto(ai, bi, ci, di, n1i, n2i,
 \seealso{
    \code{\link{rma.uni}}, \code{\link{rma.glmm}}, \code{\link{rma.mh}}, and \code{\link{rma.mv}} for other model fitting functions.
 
-   \code{\link{dat.collins1985a}}, \code{\link{dat.collins1985b}}, and \code{\link{dat.yusuf1985}} for further examples of the use of the \code{rma.peto} function.
+   \code{\link[metadat]{dat.collins1985a}}, \code{\link[metadat]{dat.collins1985b}}, and \code{\link[metadat]{dat.yusuf1985}} for further examples of the use of the \code{rma.peto} function.
 }
 \examples{
 ### meta-analysis of the (log) odds ratios using Peto's method

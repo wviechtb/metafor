@@ -103,7 +103,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
          Cell entries with a zero count can be problematic, especially for the risk ratio and the odds ratio. Adding a small constant to the cells of the \mjeqn{2 \times 2}{2x2} tables is a common solution to this problem. When \code{to="only0"} (the default), the value of \code{add} (the default is \code{1/2}; but see \sQuote{Note}) is added to each cell of those \mjeqn{2 \times 2}{2x2} tables with at least one cell equal to 0. When \code{to="all"}, the value of \code{add} is added to each cell of all \mjeqn{2 \times 2}{2x2} tables. When \code{to="if0all"}, the value of \code{add} is added to each cell of all \mjeqn{2 \times 2}{2x2} tables, but only when there is at least one \mjeqn{2 \times 2}{2x2} table with a zero cell. Setting \code{to="none"} or \code{add=0} has the same effect: No adjustment to the observed table frequencies is made. Depending on the outcome measure and the data, this may lead to division by zero (when this occurs, the resulting value is recoded to \code{NA}). Also, studies where \code{ai=ci=0} or \code{bi=di=0} may be considered to be uninformative about the size of the effect and dropping such studies has sometimes been recommended (Higgins et al., 2019). This can be done by setting \code{drop00=TRUE}. The values for such studies will then be set to \code{NA}.
 
-         Datasets corresponding to data of this type are provided in \code{\link{dat.bcg}}, \code{\link{dat.collins1985a}}, \code{\link{dat.collins1985b}}, \code{\link{dat.egger2001}}, \code{\link{dat.hine1989}}, \code{\link{dat.laopaiboon2015}}, \code{\link{dat.lee2004}}, \code{\link{dat.li2007}}, \code{\link{dat.linde2005}}, \code{\link{dat.nielweise2007}}, and \code{\link{dat.yusuf1985}}.
+         Datasets corresponding to data of this type are provided in \code{\link[metadat]{dat.bcg}}, \code{\link[metadat]{dat.collins1985a}}, \code{\link[metadat]{dat.collins1985b}}, \code{\link[metadat]{dat.egger2001}}, \code{\link[metadat]{dat.hine1989}}, \code{\link[metadat]{dat.laopaiboon2015}}, \code{\link[metadat]{dat.lee2004}}, \code{\link[metadat]{dat.li2007}}, \code{\link[metadat]{dat.linde2005}}, \code{\link[metadat]{dat.nielweise2007}}, and \code{\link[metadat]{dat.yusuf1985}}.
 
          Assuming that the dichotomous outcome is actually a dichotomized version of the responses on an underlying quantitative scale, it is also possible to estimate the standardized mean difference based on \mjeqn{2 \times 2}{2x2} table data, using either the probit transformed risk difference or a transformation of the odds ratio (e.g., Cox & Snell, 1989; Chinn, 2000; Hasselblad & Hedges, 1995; \enc{Sánchez-Meca}{Sanchez-Meca} et al., 2003). The options for the \code{measure} argument are then:
          \itemize{
@@ -114,7 +114,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
          The probit transformation assumes that the responses on the underlying quantitative scale are normally distributed. There are two versions of the odds ratio transformation, the first also assuming normal distributions within the two groups, while the second assumes that the responses within groups follow logistic distributions.
 
-         A dataset corresponding to data of this type is provided in \code{\link{dat.gibson2002}}.
+         A dataset corresponding to data of this type is provided in \code{\link[metadat]{dat.gibson2002}}.
 
       }
 
@@ -140,7 +140,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
          Studies with zero events in one or both groups can be problematic, especially for the incidence rate ratio. Adding a small constant to the number of events is a common solution to this problem. When \code{to="only0"} (the default), the value of \code{add} (the default is \code{1/2}; but see \sQuote{Note}) is added to \code{x1i} and \code{x2i} only in the studies that have zero events in one or both groups. When \code{to="all"}, the value of \code{add} is added to \code{x1i} and \code{x2i} in all studies. When \code{to="if0all"}, the value of \code{add} is added to \code{x1i} and \code{x2i} in all studies, but only when there is at least one study with zero events in one or both groups. Setting \code{to="none"} or \code{add=0} has the same effect: No adjustment to the observed number of events is made. Depending on the outcome measure and the data, this may lead to division by zero (when this occurs, the resulting value is recoded to \code{NA}). Like for \mjeqn{2 \times 2}{2x2} table data, studies where \code{x1i=x2i=0} may be considered to be uninformative about the size of the effect and dropping such studies has sometimes been recommended. This can be done by setting \code{drop00=TRUE}. The values for such studies will then be set to \code{NA}.
 
-         Datasets corresponding to data of this type are provided in \code{\link{dat.hart1999}} and \code{\link{dat.nielweise2008}}.
+         Datasets corresponding to data of this type are provided in \code{\link[metadat]{dat.hart1999}} and \code{\link[metadat]{dat.nielweise2008}}.
 
       }
 
@@ -165,7 +165,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
          For \code{measure="MD"}, one can choose between \code{vtype="LS"} (the default) and \code{vtype="HO"}. The former computes the sampling variances without assuming homoscedasticity (i.e., that the true variances of the measurements are the same in group 1 and group 2 within each study), while the latter assumes homoscedasticity (equations 12.5 and 12.3 in Borenstein, 2009, respectively). For \code{measure="SMD"}, one can choose between \code{vtype="LS"} (the default) for the usual large-sample approximation to compute the sampling variances (equation 8 in Hedges, 1982), \code{vtype="UB"} to compute unbiased estimates of the sampling variances (equation 9 in Hedges, 1983), \code{vtype="LS2"} to compute the sampling variances as described in Borenstein (2009) (i.e., equation 12.17), and \code{vtype="AV"} to compute the sampling variances with the usual large-sample approximation but plugging the sample-size weighted average of the Hedges' g values into the equation. For \code{measure="ROM"}, one can choose between \code{vtype="LS"} (the default) for the usual large-sample approximation to compute the sampling variances (equation 1 in Hedges et al., 1999), \code{vtype="HO"} to compute the sampling variances assuming homoscedasticity (the unnumbered equation after equation 1 in Hedges et al., 1999), \code{vtype="AV"} to compute the sampling variances assuming homoscedasticity of the coefficient of variation within each group across studies, and \code{vtype="AVHO"} to compute the sampling variances assuming homoscedasticity of the coefficient of variation for both groups across studies.
 
-         Datasets corresponding to data of this type are provided in \code{\link{dat.normand1999}} and \code{\link{dat.curtis1998}}.
+         Datasets corresponding to data of this type are provided in \code{\link[metadat]{dat.normand1999}} and \code{\link[metadat]{dat.curtis1998}}.
 
          It is also possible to transform standardized mean differences into log odds ratios (e.g., Cox & Snell, 1989; Chinn, 2000; Hasselblad & Hedges, 1995; \enc{Sánchez-Meca}{Sanchez-Meca} et al., 2003). The options for the \code{measure} argument are then:
          \itemize{
@@ -175,7 +175,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
          Both of these transformations provide an estimate of the log odds ratio, the first assuming that the responses within the two groups are normally distributed, while the second assumes that the responses follow logistic distributions.
 
-         A dataset illustrating the combined analysis of standardized mean differences and probit transformed risk differences is provided in \code{\link{dat.gibson2002}}.
+         A dataset illustrating the combined analysis of standardized mean differences and probit transformed risk differences is provided in \code{\link[metadat]{dat.gibson2002}}.
 
          Finally, interest may also be focused on differences between the two groups with respect to their variability. Here, the (log transformed) ratio of the coefficient of variation of the two groups (also called the coefficient of variation ratio) can be a useful measure (Nakagawa et al., 2015). If focus is solely on the variability of the measurements within the two groups, then the (log transformed) ratio of the standard deviations (also called the variability ratio) can be used (Nakagawa et al., 2015). For the latter, one only needs to specify \code{sd1i}, \code{sd2i}, \code{n1i}, and \code{n2i}. The options for the \code{measure} argument are:
          \itemize{
@@ -206,7 +206,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
          For \code{measure="COR"} and \code{measure="UCOR"}, one can choose between \code{vtype="LS"} (the default) for the usual large-sample approximation to compute the sampling variances (i.e., plugging the (biased-corrected) correlation coefficients into equation 12.27 in Borenstein, 2009), \code{vtype="UB"} to compute unbiased estimates of the sampling variances (see Hedges, 1989, but using the exact equation instead of the approximation), and \code{vtype="AV"} to compute the sampling variances with the usual large-sample approximation but plugging the sample-size weighted average of the (bias-corrected) correlation coefficients into the equation.
 
-         Datasets corresponding to data of this type are provided in \code{\link{dat.mcdaniel1994}} and \code{\link{dat.molloy2014}}.
+         Datasets corresponding to data of this type are provided in \code{\link[metadat]{dat.mcdaniel1994}} and \code{\link[metadat]{dat.molloy2014}}.
 
          For meta-analyses involving multiple correlations extracted from the same sample, see also the \code{\link{rcalc}} function.
 
@@ -229,7 +229,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
          Tables with one or more zero counts are handled as described earlier. For \code{measure="PHI"}, one must indicate via \code{vtype="ST"} or \code{vtype="CS"} whether the data for the studies were obtained using stratified or cross-sectional (i.e., multinomial) sampling, respectively (it is also possible to specify an entire vector for the \code{vtype} argument in case the sampling scheme differed for the various studies).
 
-         A dataset corresponding to data of this type is provided in \code{\link{dat.bourassa1996}}.
+         A dataset corresponding to data of this type is provided in \code{\link[metadat]{dat.bourassa1996}}.
 
       }
 
@@ -266,7 +266,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
          Zero cell entries can be problematic for certain outcome measures. When \code{to="only0"} (the default), the value of \code{add} (the default is \code{1/2}; but see \sQuote{Note}) is added to \code{xi} and \code{mi} only for studies where \code{xi} or \code{mi} is equal to 0. When \code{to="all"}, the value of \code{add} is added to \code{xi} and \code{mi} in all studies. When \code{to="if0all"}, the value of \code{add} is added in all studies, but only when there is at least one study with a zero value for \code{xi} or \code{mi}. Setting \code{to="none"} or \code{add=0} has the same effect: No adjustment to the observed values is made. Depending on the outcome measure and the data, this may lead to division by zero (when this occurs, the resulting value is recoded to \code{NA}).
 
-         Datasets corresponding to data of this type are provided in \code{\link{dat.pritz1997}} and \code{\link{dat.debruin2009}}.
+         Datasets corresponding to data of this type are provided in \code{\link[metadat]{dat.pritz1997}} and \code{\link[metadat]{dat.debruin2009}}.
 
       }
 
@@ -385,7 +385,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
          Note that the transformations implemented here are slightly different from the ones described by Hakstian and Whalen (1976) and Bonett (2002). In particular, for \code{"AHW"}, the transformation \mjeqn{1-(1-\alpha)^{1/3}}{1-(1-\alpha)^(1/3)} is used, while for \code{"ABT"}, the transformation \mjeqn{-\ln(1-\alpha)}{-ln(1-\alpha)} is used. This ensures that the transformed values are monotonically increasing functions of \mjseqn{\alpha}.
 
-         A dataset corresponding to data of this type is provided in \code{\link{dat.bonett2010}}.
+         A dataset corresponding to data of this type is provided in \code{\link[metadat]{dat.bonett2010}}.
 
       }
 
@@ -400,7 +400,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
          Note that the sign of the (semi-)partial correlation coefficients is determined based on the signs of the values specified via the \code{ti} argument. Also, the Fisher transformation can only be applied to partial correlation coefficient, not semi-partial coefficients.
 
-         A dataset corresponding to data of this type is provided in \code{\link{dat.aloe2013}}.
+         A dataset corresponding to data of this type is provided in \code{\link[metadat]{dat.aloe2013}}.
 
       }
 
