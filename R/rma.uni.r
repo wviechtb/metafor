@@ -282,11 +282,6 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
          }
       }
 
-      ### catch cases where 'vi' is the utils::vi() function
-
-      if (identical(vi, utils::vi))
-         stop(mstyle$stop("Variable specified for 'vi' argument cannot be found."))
-
       ### in case user passes a matrix to vi, convert it to a vector
       ### note: only a row or column matrix with the right dimensions will end with the right length
 

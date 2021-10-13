@@ -282,8 +282,10 @@
 
    spec <- x %in% names(mf)
 
-   if (inherits(out, "try-error") || (spec && is.null(out)))
+   if (inherits(out, "try-error") || is.function(out) || (spec && is.null(out)))
       stop(mstyle$stop(paste0("Cannot find object/variable ('", deparse(mf.x), "') specified for '", x, "' argument.")), call.=FALSE)
+
+   # note: is.function() check catches case where 'vi' is the utils::vi() function and other shenanigans
 
    return(out)
 

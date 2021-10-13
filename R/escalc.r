@@ -1968,11 +1968,6 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          }
       }
 
-      ### catch cases where 'vi' is the utils::vi() function
-
-      if (identical(vi, utils::vi))
-         stop(mstyle$stop("Variable specified for 'vi' argument cannot be found."))
-
       if (!.equal.length(yi, vi, ni))
          stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
