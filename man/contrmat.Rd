@@ -58,7 +58,7 @@ dat <- to.wide(dat, study="study", grp="trt", ref="no_contact", grpvars=6:7)
 dat
 
 ### add contrast matrix
-dat <- contrmat(dat, grp1="trt.1", grp2="trt.2", shorten=TRUE)
+dat <- contrmat(dat, grp1="trt.1", grp2="trt.2", shorten=TRUE, minlen=3)
 dat
 }
 \keyword{manip}

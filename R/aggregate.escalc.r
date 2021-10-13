@@ -17,19 +17,14 @@ aggregate.escalc <- function(x, cluster, time, V, struct="CS", rho, phi, weighte
 
    #########################################################################
 
-   ### extract V, cluster, and subset variables
+   ### extract V, cluster, time, and subset variables
 
    mf <- match.call()
 
-   mf.V       <- mf[[match("V",       names(mf))]]
-   mf.cluster <- mf[[match("cluster", names(mf))]]
-   mf.time    <- mf[[match("time",    names(mf))]]
-   mf.subset  <- mf[[match("subset",  names(mf))]]
-
-   V       <- eval(mf.V,       x, enclos=sys.frame(sys.parent()))
-   cluster <- eval(mf.cluster, x, enclos=sys.frame(sys.parent()))
-   time    <- eval(mf.time,    x, enclos=sys.frame(sys.parent()))
-   subset  <- eval(mf.subset,  x, enclos=sys.frame(sys.parent()))
+   V       <- .getx("V",       mf=mf, data=x)
+   cluster <- .getx("cluster", mf=mf, data=x)
+   time    <- .getx("time",    mf=mf, data=x)
+   subset  <- .getx("subset",  mf=mf, data=x)
 
    #########################################################################
 
@@ -107,8 +102,11 @@ aggregate.escalc <- function(x, cluster, time, V, struct="CS", rho, phi, weighte
 
          ### checks on time variable
 
-         if (!.is.vector(time))
+         if (!is.element("time", names(mf)))
             stop(mstyle$stop("Must specify 'time' variable for this var-cov structure."))
+
+         if (!.is.vector(time))
+            stop(mstyle$stop("Cannot find specified 'time' variable."))
 
          if (length(time) != k)
             stop(mstyle$stop(paste0("Length of variable specified via 'time' (", length(time), ") does not match length of data (", k, ").")))

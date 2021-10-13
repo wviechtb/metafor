@@ -68,23 +68,17 @@ lty, lwd, col, level=99.99, refline=0, ...) {
    ### extract values, possibly from the data frame specified via data (arguments not specified are NULL)
 
    mf <- match.call()
-   mf.subset <- mf[[match("subset", names(mf))]]
-   mf.lty    <- mf[[match("lty",    names(mf))]]
-   mf.lwd    <- mf[[match("lwd",    names(mf))]]
-   mf.col    <- mf[[match("col",    names(mf))]]
-   subset <- eval(mf.subset, data, enclos=sys.frame(sys.parent()))
-   lty    <- eval(mf.lty,    data, enclos=sys.frame(sys.parent()))
-   lwd    <- eval(mf.lwd,    data, enclos=sys.frame(sys.parent()))
-   col    <- eval(mf.col,    data, enclos=sys.frame(sys.parent()))
+
+   subset  <- .getx("subset", mf=mf, data=data)
+   lty     <- .getx("lty",    mf=mf, data=data)
+   lwd     <- .getx("lwd",    mf=mf, data=data)
+   col     <- .getx("col",    mf=mf, data=data)
 
    if (measure == "GEN") {
 
-      mf.yi  <- mf[[match("yi",  names(mf))]]
-      mf.vi  <- mf[[match("vi",  names(mf))]]
-      mf.sei <- mf[[match("sei", names(mf))]]
-      yi  <- eval(mf.yi,  data, enclos=sys.frame(sys.parent()))
-      vi  <- eval(mf.vi,  data, enclos=sys.frame(sys.parent()))
-      sei <- eval(mf.sei, data, enclos=sys.frame(sys.parent()))
+      yi  <- .getx("yi",  mf=mf, data=data)
+      vi  <- .getx("vi",  mf=mf, data=data)
+      sei <- .getx("sei", mf=mf, data=data)
 
       if (is.null(vi)) {
          if (is.null(sei)) {
@@ -114,18 +108,12 @@ lty, lwd, col, level=99.99, refline=0, ...) {
 
    if (measure == "OR") {
 
-      mf.ai  <- mf[[match("ai",  names(mf))]]
-      mf.bi  <- mf[[match("bi",  names(mf))]]
-      mf.ci  <- mf[[match("ci",  names(mf))]]
-      mf.di  <- mf[[match("di",  names(mf))]]
-      mf.n1i <- mf[[match("n1i", names(mf))]]
-      mf.n2i <- mf[[match("n2i", names(mf))]]
-      ai  <- eval(mf.ai,  data, enclos=sys.frame(sys.parent()))
-      bi  <- eval(mf.bi,  data, enclos=sys.frame(sys.parent()))
-      ci  <- eval(mf.ci,  data, enclos=sys.frame(sys.parent()))
-      di  <- eval(mf.di,  data, enclos=sys.frame(sys.parent()))
-      n1i <- eval(mf.n1i, data, enclos=sys.frame(sys.parent()))
-      n2i <- eval(mf.n2i, data, enclos=sys.frame(sys.parent()))
+      ai  <- .getx("ai",  mf=mf, data=data)
+      bi  <- .getx("bi",  mf=mf, data=data)
+      ci  <- .getx("ci",  mf=mf, data=data)
+      di  <- .getx("di",  mf=mf, data=data)
+      n1i <- .getx("n1i", mf=mf, data=data)
+      n2i <- .getx("n2i", mf=mf, data=data)
 
       if (!.equal.length(ai, bi, ci, di, n1i, n2i))
          stop(mstyle$stop("Supplied data vectors are not all of the same length."))
@@ -187,7 +175,9 @@ lty, lwd, col, level=99.99, refline=0, ...) {
          di <- di[subset]
       }
 
-      dat <- escalc(measure="OR", ai=ai, bi=bi, ci=ci, di=di, drop00=drop00, onlyo1=onlyo1, addyi=addyi, addvi=addvi)
+      args <- list(measure="OR", ai=ai, bi=bi, ci=ci, di=di, drop00=drop00, onlyo1=onlyo1, addyi=addyi, addvi=addvi)
+      args <- args[!sapply(args, is.null)]
+      dat <- do.call(escalc, args)
 
       yi <- dat$yi ### one or more yi/vi pairs may be NA/NA
       vi <- dat$vi ### one or more yi/vi pairs may be NA/NA

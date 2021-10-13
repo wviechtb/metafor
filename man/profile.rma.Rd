@@ -12,21 +12,21 @@
 }
 \usage{
 \method{profile}{rma.uni}(fitted, xlim, ylim, steps=20,
-        lltol=1e-03, progbar=TRUE, parallel="no", ncpus=1, cl=NULL,
+        lltol=1e-03, progbar=TRUE, parallel="no", ncpus=1, cl,
         plot=TRUE, pch=19, refline=TRUE, cline=FALSE, \dots)
 
 \method{profile}{rma.mv}(fitted, sigma2, tau2, rho, gamma2, phi,
         xlim, ylim, steps=20, lltol=1e-03, progbar=TRUE,
-        parallel="no", ncpus=1, cl=NULL,
+        parallel="no", ncpus=1, cl,
         plot=TRUE, pch=19, refline=TRUE, cline=FALSE, \dots)
 
 \method{profile}{rma.uni.selmodel}(fitted, tau2, delta,
         xlim, ylim, steps=20, lltol=1e-03, progbar=TRUE,
-        parallel="no", ncpus=1, cl=NULL,
+        parallel="no", ncpus=1, cl,
         plot=TRUE, pch=19, refline=TRUE, cline=FALSE, \dots)
 
 \method{profile}{rma.ls}(fitted, alpha, xlim, ylim, steps=20,
-        lltol=1e-03, progbar=TRUE, parallel="no", ncpus=1, cl=NULL,
+        lltol=1e-03, progbar=TRUE, parallel="no", ncpus=1, cl,
         plot=TRUE, pch=19, refline=TRUE, cline=FALSE, \dots)
 
 \method{print}{profile.rma}(x, \dots)
@@ -50,7 +50,7 @@
    \item{progbar}{logical to specify whether a progress bar should be shown (the default is \code{TRUE}).}
    \item{parallel}{character string to specify whether parallel processing should be used (the default is \code{"no"}). For parallel processing, set to either \code{"snow"} or \code{"multicore"}. See \sQuote{Details}.}
    \item{ncpus}{integer to specify the number of processes to use in the parallel processing.}
-   \item{cl}{optional cluster to use if \code{parallel="snow"}. If not supplied, a cluster on the local machine is created for the duration of the call.}
+   \item{cl}{optional cluster to use if \code{parallel="snow"}. If unspecified, a cluster on the local machine is created for the duration of the call.}
    \item{plot}{logical to specify whether the profile plot should be drawn after profiling is finished (the default is \code{TRUE}).}
    \item{pch}{plotting symbol to use. By default, a filled circle is used. See \code{\link{points}} for other options.}
    \item{refline}{logical to specify whether the value of the parameter estimate should be indicated by a dotted vertical line and its log-likelihood value by a dotted horizontal line (the default is \code{TRUE}).}

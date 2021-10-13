@@ -3,9 +3,9 @@ metafor: A Meta-Analysis Package for R
 
 [![License: GPL (>=2)](https://img.shields.io/badge/license-GPL-blue)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
 [![R build status](https://github.com/wviechtb/metafor/workflows/R-CMD-check/badge.svg)](https://github.com/wviechtb/metafor/actions)
-[![Code Coverage](https://codecov.io/gh/wviechtb/metafor/branch/master/graph/badge.svg)](https://codecov.io/gh/wviechtb/metafor)
+[![Code Coverage](https://codecov.io/gh/wviechtb/metafor/branch/master/graph/badge.svg)](https://app.codecov.io/gh/wviechtb/metafor)
 [![CRAN Version](https://www.r-pkg.org/badges/version/metafor)](https://cran.r-project.org/package=metafor)
-[![devel Version](https://img.shields.io/badge/devel-3.1--20-brightgreen.svg)](https://www.metafor-project.org/doku.php/installation#development_version)
+[![devel Version](https://img.shields.io/badge/devel-3.1--21-brightgreen.svg)](https://www.metafor-project.org/doku.php/installation#development_version)
 [![Monthly Downloads](https://cranlogs.r-pkg.org/badges/metafor)](https://cranlogs.r-pkg.org/badges/metafor)
 [![Total Downloads](https://cranlogs.r-pkg.org/badges/grand-total/metafor)](https://cranlogs.r-pkg.org/badges/grand-total/metafor)
 

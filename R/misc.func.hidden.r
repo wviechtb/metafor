@@ -273,6 +273,24 @@
 
 ############################################################################
 
+.getx <- function(x, mf, data, enclos=sys.frame(sys.parent(n=2))) {
+
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
+   mf.x <- mf[[match(x, names(mf))]]
+   out <- try(eval(mf.x, data, enclos), silent=TRUE) # NULL if x was not specifified
+
+   spec <- x %in% names(mf)
+
+   if (inherits(out, "try-error") || (spec && is.null(out)))
+      stop(mstyle$stop(paste0("Cannot find object/variable ('", deparse(mf.x), "') specified for '", x, "' argument.")), call.=FALSE)
+
+   return(out)
+
+}
+
+############################################################################
+
 .chkclass <- function(class, must, notap, notav, type="Method") {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())

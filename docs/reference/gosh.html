@@ -105,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1-20</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1-21</span>
       </span>
     </div>
 
@@ -182,7 +182,7 @@
     <pre class="usage"><span class='fu'>gosh</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for rma</span>
-<span class='fu'>gosh</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>subsets</span>, progbar<span class='op'>=</span><span class='cn'>TRUE</span>, parallel<span class='op'>=</span><span class='st'>"no"</span>, ncpus<span class='op'>=</span><span class='fl'>1</span>, cl<span class='op'>=</span><span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='fu'>gosh</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>subsets</span>, progbar<span class='op'>=</span><span class='cn'>TRUE</span>, parallel<span class='op'>=</span><span class='st'>"no"</span>, ncpus<span class='op'>=</span><span class='fl'>1</span>, <span class='va'>cl</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -209,7 +209,7 @@
     </tr>
     <tr>
       <th>cl</th>
-      <td><p>optional cluster to use if <code>parallel="snow"</code>. If not supplied, a cluster on the local machine is created for the duration of the call.</p></td>
+      <td><p>optional cluster to use if <code>parallel="snow"</code>. If unspecified, a cluster on the local machine is created for the duration of the call.</p></td>
     </tr>
     <tr>
       <th>...</th>

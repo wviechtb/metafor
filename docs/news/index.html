@@ -104,7 +104,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1-20</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1-21</span>
       </span>
     </div>
 
@@ -173,9 +173,9 @@
       <small>Source: <a href='https://github.com/wviechtb/metafor/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="metafor-31-20-2021-10-06" class="section level1">
-<h1 class="page-header" data-toc-text="3.1-20">
-<a href="#metafor-31-20-2021-10-06" class="anchor"></a>metafor 3.1-20 (2021-10-06)<small> Unreleased </small>
+    <div id="metafor-31-21-2021-10-13" class="section level1">
+<h1 class="page-header" data-toc-text="3.1-21">
+<a href="#metafor-31-21-2021-10-13" class="anchor"></a>metafor 3.1-21 (2021-10-13)<small> Unreleased </small>
 </h1>
 <ul>
 <li><p>added <code><a href="../reference/vcalc.html">vcalc()</a></code> function</p></li>
@@ -373,7 +373,7 @@
 <a href="#metafor-19-9-2016-09-25" class="anchor"></a>metafor 1.9-9 (2016-09-25)<small> 2016-09-25 </small>
 </h1>
 <ul>
-<li><p>started to use git as version control system, GitHub to host the repository (<a href="https://github.com/wviechtb/metafor" class="uri">https://github.com/wviechtb/metafor</a>) for the development version of the package, Travis CI as continuous integration service (<a href="https://travis-ci.org/wviechtb/metafor" class="uri">https://travis-ci.org/wviechtb/metafor</a>), and Codecov for automated code coverage reporting (<a href="https://codecov.io/github/wviechtb/metafor" class="uri">https://codecov.io/github/wviechtb/metafor</a>)</p></li>
+<li><p>started to use git as version control system, GitHub to host the repository (<a href="https://github.com/wviechtb/metafor" class="uri">https://github.com/wviechtb/metafor</a>) for the development version of the package, Travis CI as continuous integration service (<a href="https://travis-ci.org/wviechtb/metafor" class="uri">https://travis-ci.org/wviechtb/metafor</a>), and Codecov for automated code coverage reporting (<a href="https://app.codecov.io/gh/wviechtb/metafor" class="uri">https://app.codecov.io/gh/wviechtb/metafor</a>)</p></li>
 <li><p>argument <code>knha</code> in <code><a href="../reference/rma.uni.html">rma.uni()</a></code> and argument <code>tdist</code> in <code><a href="../reference/rma.glmm.html">rma.glmm()</a></code> and <code><a href="../reference/rma.mv.html">rma.mv()</a></code> are now superseded by argument <code>test</code> in all three functions; for backwards compatibility, the <code>knha</code> and <code>tdist</code> arguments still work, but are no longer documented</p></li>
 <li><p><code><a href="../reference/rma.uni.html">rma(yi, vi, weights=1, test="knha")</a></code> now yields the same results as <code><a href="../reference/rma.uni.html">rma(yi, vi, weighted=FALSE, test="knha")</a></code> (but use of the Knapp and Hartung method in the context of an unweighted analysis remains an experimental feature)</p></li>
 <li><p>one can now pass an <code>escalc</code> object directly to <code><a href="../reference/rma.uni.html">rma.uni()</a></code>, which then tries to automatically determine the <code>yi</code> and <code>vi</code> variables in the data frame (thanks to Christian Roever for the suggestion)</p></li>

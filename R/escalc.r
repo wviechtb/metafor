@@ -111,19 +111,15 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
    mf <- match.call()
 
-   ### get slab and subset arguments (will be NULL when unspecified)
+   ### get slab, subset, and include arguments (NULL when unspecified)
 
-   mf.slab    <- mf[[match("slab",    names(mf))]]
-   mf.subset  <- mf[[match("subset",  names(mf))]]
-   mf.include <- mf[[match("include", names(mf))]]
-   slab       <- eval(mf.slab,    data, enclos=sys.frame(sys.parent()))
-   subset     <- eval(mf.subset,  data, enclos=sys.frame(sys.parent()))
-   include    <- eval(mf.include, data, enclos=sys.frame(sys.parent()))
+   slab    <- .getx("slab",    mf=mf, data=data)
+   subset  <- .getx("subset",  mf=mf, data=data)
+   include <- .getx("include", mf=mf, data=data)
 
    ### get yi (in case it has been specified)
 
-   mf.yi <- mf[[match("yi", names(mf))]]
-   yi    <- eval(mf.yi, data, enclos=sys.frame(sys.parent()))
+   yi <- .getx("yi", mf=mf, data=data)
 
    ### for certain measures, set add=0 by default unless user explicitly sets the add argument
 
@@ -140,22 +136,17 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
       if (is.element(measure, c("RR","OR","RD","AS","PETO","PHI","YUQ","YUY","RTET","PBIT","OR2D","OR2DN","OR2DL","MPRD","MPRR","MPOR","MPORC","MPPETO","MPORM"))) {
 
-         mf.ai  <- mf[[match("ai",  names(mf))]]
+         mf.ai <- mf[[match("ai", names(mf))]]
          if (any("~" %in% as.character(mf.ai)))
             stop(mstyle$stop("The 'formula interface' to escalc() has been deprecated."))
-         mf.bi  <- mf[[match("bi",  names(mf))]]
-         mf.ci  <- mf[[match("ci",  names(mf))]]
-         mf.di  <- mf[[match("di",  names(mf))]]
-         mf.n1i <- mf[[match("n1i", names(mf))]]
-         mf.n2i <- mf[[match("n2i", names(mf))]]
-         mf.ri  <- mf[[match("ri",  names(mf))]]
-         ai     <- eval(mf.ai,  data, enclos=sys.frame(sys.parent()))
-         bi     <- eval(mf.bi,  data, enclos=sys.frame(sys.parent()))
-         ci     <- eval(mf.ci,  data, enclos=sys.frame(sys.parent()))
-         di     <- eval(mf.di,  data, enclos=sys.frame(sys.parent()))
-         n1i    <- eval(mf.n1i, data, enclos=sys.frame(sys.parent()))
-         n2i    <- eval(mf.n2i, data, enclos=sys.frame(sys.parent()))
-         ri     <- eval(mf.ri,  data, enclos=sys.frame(sys.parent()))
+
+         ai  <- .getx("ai",  mf=mf, data=data)
+         bi  <- .getx("bi",  mf=mf, data=data)
+         ci  <- .getx("ci",  mf=mf, data=data)
+         di  <- .getx("di",  mf=mf, data=data)
+         n1i <- .getx("n1i", mf=mf, data=data)
+         n2i <- .getx("n2i", mf=mf, data=data)
+         ri  <- .getx("ri",  mf=mf, data=data)
 
          if (!.equal.length(ai, bi, ci, di, n1i, n2i, ri))
             stop(mstyle$stop("Supplied data vectors are not all of the same length."))
@@ -588,14 +579,10 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
       if (is.element(measure, c("IRR","IRD","IRSD"))) {
 
-         mf.x1i <- mf[[match("x1i", names(mf))]]
-         mf.x2i <- mf[[match("x2i", names(mf))]]
-         mf.t1i <- mf[[match("t1i", names(mf))]]
-         mf.t2i <- mf[[match("t2i", names(mf))]]
-         x1i    <- eval(mf.x1i, data, enclos=sys.frame(sys.parent()))
-         x2i    <- eval(mf.x2i, data, enclos=sys.frame(sys.parent()))
-         t1i    <- eval(mf.t1i, data, enclos=sys.frame(sys.parent()))
-         t2i    <- eval(mf.t2i, data, enclos=sys.frame(sys.parent()))
+         x1i <- .getx("x1i", mf=mf, data=data)
+         x2i <- .getx("x2i", mf=mf, data=data)
+         t1i <- .getx("t1i", mf=mf, data=data)
+         t2i <- .getx("t2i", mf=mf, data=data)
 
          if (!.all.specified(x1i, x2i, t1i, t2i))
             stop(mstyle$stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments."))
@@ -731,18 +718,12 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
       if (is.element(measure, c("MD","SMD","SMDH","ROM","RPB","RBIS","D2OR","D2ORN","D2ORL","CVR","VR"))) {
 
-         mf.m1i  <- mf[[match("m1i",  names(mf))]] ### for VR, do not need to supply this
-         mf.m2i  <- mf[[match("m2i",  names(mf))]] ### for VR, do not need to supply this
-         mf.sd1i <- mf[[match("sd1i", names(mf))]]
-         mf.sd2i <- mf[[match("sd2i", names(mf))]]
-         mf.n1i  <- mf[[match("n1i",  names(mf))]]
-         mf.n2i  <- mf[[match("n2i",  names(mf))]]
-         m1i     <- eval(mf.m1i,  data, enclos=sys.frame(sys.parent()))
-         m2i     <- eval(mf.m2i,  data, enclos=sys.frame(sys.parent()))
-         sd1i    <- eval(mf.sd1i, data, enclos=sys.frame(sys.parent()))
-         sd2i    <- eval(mf.sd2i, data, enclos=sys.frame(sys.parent()))
-         n1i     <- eval(mf.n1i,  data, enclos=sys.frame(sys.parent()))
-         n2i     <- eval(mf.n2i,  data, enclos=sys.frame(sys.parent()))
+         m1i  <- .getx("m1i",  mf=mf, data=data) ### for VR, do not need to supply this
+         m2i  <- .getx("m2i",  mf=mf, data=data) ### for VR, do not need to supply this
+         sd1i <- .getx("sd1i", mf=mf, data=data)
+         sd2i <- .getx("sd2i", mf=mf, data=data)
+         n1i  <- .getx("n1i",  mf=mf, data=data)
+         n2i  <- .getx("n2i",  mf=mf, data=data)
 
          ### for these measures, need m1i, m2i, sd1i, sd2i, n1i, and n2i
 
@@ -1006,10 +987,8 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
       if (is.element(measure, c("COR","UCOR","ZCOR"))) {
 
-         mf.ri <- mf[[match("ri", names(mf))]]
-         mf.ni <- mf[[match("ni", names(mf))]]
-         ri    <- eval(mf.ri, data, enclos=sys.frame(sys.parent()))
-         ni    <- eval(mf.ni, data, enclos=sys.frame(sys.parent()))
+         ri <- .getx("ri", mf=mf, data=data)
+         ni <- .getx("ni", mf=mf, data=data)
 
          if (!.all.specified(ri, ni))
             stop(mstyle$stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments."))
@@ -1108,14 +1087,10 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
       if (is.element(measure, c("PCOR","ZPCOR","SPCOR"))) {
 
-         mf.ti  <- mf[[match("ti",  names(mf))]]
-         mf.r2i <- mf[[match("r2i", names(mf))]]
-         mf.mi  <- mf[[match("mi",  names(mf))]]
-         mf.ni  <- mf[[match("ni",  names(mf))]]
-         ti     <- eval(mf.ti,  data, enclos=sys.frame(sys.parent()))
-         r2i    <- eval(mf.r2i, data, enclos=sys.frame(sys.parent()))
-         mi     <- eval(mf.mi,  data, enclos=sys.frame(sys.parent()))
-         ni     <- eval(mf.ni,  data, enclos=sys.frame(sys.parent()))
+         ti  <- .getx("ti",  mf=mf, data=data)
+         r2i <- .getx("r2i", mf=mf, data=data)
+         mi  <- .getx("mi",  mf=mf, data=data)
+         ni  <- .getx("ni",  mf=mf, data=data)
 
          if (measure=="PCOR" && !.all.specified(ti, ni, mi))
             stop(mstyle$stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments."))
@@ -1229,12 +1204,9 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
       if (is.element(measure, c("PR","PLN","PLO","PAS","PFT"))) {
 
-         mf.xi <- mf[[match("xi", names(mf))]]
-         mf.mi <- mf[[match("mi", names(mf))]]
-         mf.ni <- mf[[match("ni", names(mf))]]
-         xi    <- eval(mf.xi, data, enclos=sys.frame(sys.parent()))
-         mi    <- eval(mf.mi, data, enclos=sys.frame(sys.parent()))
-         ni    <- eval(mf.ni, data, enclos=sys.frame(sys.parent()))
+         xi <- .getx("xi", mf=mf, data=data)
+         mi <- .getx("mi", mf=mf, data=data)
+         ni <- .getx("ni", mf=mf, data=data)
 
          if (!.equal.length(xi, mi, ni))
             stop(mstyle$stop("Supplied data vectors are not all of the same length."))
@@ -1503,10 +1475,8 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
       if (is.element(measure, c("IR","IRLN","IRS","IRFT"))) {
 
-         mf.xi <- mf[[match("xi", names(mf))]]
-         mf.ti <- mf[[match("ti", names(mf))]]
-         xi    <- eval(mf.xi, data, enclos=sys.frame(sys.parent()))
-         ti    <- eval(mf.ti, data, enclos=sys.frame(sys.parent()))
+         xi <- .getx("xi", mf=mf, data=data)
+         ti <- .getx("ti", mf=mf, data=data)
 
          if (!.all.specified(xi, ti))
             stop(mstyle$stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments."))
@@ -1632,12 +1602,9 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
       if (is.element(measure, c("MN","MNLN","CVLN","SDLN","SMD1"))) {
 
-         mf.mi  <- mf[[match("mi",  names(mf))]] ### for SDLN, do not need to supply this
-         mf.sdi <- mf[[match("sdi", names(mf))]]
-         mf.ni  <- mf[[match("ni",  names(mf))]]
-         mi     <- eval(mf.mi,  data, enclos=sys.frame(sys.parent()))
-         sdi    <- eval(mf.sdi, data, enclos=sys.frame(sys.parent()))
-         ni     <- eval(mf.ni,  data, enclos=sys.frame(sys.parent()))
+         mi  <- .getx("mi",  mf=mf, data=data) ### for SDLN, do not need to supply this
+         sdi <- .getx("sdi", mf=mf, data=data)
+         ni  <- .getx("ni",  mf=mf, data=data)
 
          ### for these measures, need mi, sdi, and ni
 
@@ -1729,18 +1696,12 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
       if (is.element(measure, c("MC","SMCC","SMCR","SMCRH","ROMC","CVRC","VRC"))) {
 
-         mf.m1i  <- mf[[match("m1i",  names(mf))]] ### for VRC, do not need to supply this
-         mf.m2i  <- mf[[match("m2i",  names(mf))]] ### for VRC, do not need to supply this
-         mf.sd1i <- mf[[match("sd1i", names(mf))]]
-         mf.sd2i <- mf[[match("sd2i", names(mf))]] ### for SMCR, do not need to supply this
-         mf.ni   <- mf[[match("ni",   names(mf))]]
-         mf.ri   <- mf[[match("ri",   names(mf))]]
-         m1i     <- eval(mf.m1i,  data, enclos=sys.frame(sys.parent()))
-         m2i     <- eval(mf.m2i,  data, enclos=sys.frame(sys.parent()))
-         sd1i    <- eval(mf.sd1i, data, enclos=sys.frame(sys.parent()))
-         sd2i    <- eval(mf.sd2i, data, enclos=sys.frame(sys.parent()))
-         ni      <- eval(mf.ni,   data, enclos=sys.frame(sys.parent()))
-         ri      <- eval(mf.ri,   data, enclos=sys.frame(sys.parent()))
+         m1i  <- .getx("m1i",  mf=mf, data=data) ### for VRC, do not need to supply this
+         m2i  <- .getx("m2i",  mf=mf, data=data) ### for VRC, do not need to supply this
+         sd1i <- .getx("sd1i", mf=mf, data=data)
+         sd2i <- .getx("sd2i", mf=mf, data=data) ### for SMCR, do not need to supply this
+         ri   <- .getx("ri",   mf=mf, data=data)
+         ni   <- .getx("ni",   mf=mf, data=data)
 
          if (is.element(measure, c("MC","SMCC","SMCRH","ROMC","CVRC"))) {
 
@@ -1925,12 +1886,9 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
       if (is.element(measure, c("ARAW","AHW","ABT"))) {
 
-         mf.ai <- mf[[match("ai", names(mf))]]
-         mf.mi <- mf[[match("mi", names(mf))]]
-         mf.ni <- mf[[match("ni", names(mf))]]
-         ai    <- eval(mf.ai, data, enclos=sys.frame(sys.parent()))
-         mi    <- eval(mf.mi, data, enclos=sys.frame(sys.parent()))
-         ni    <- eval(mf.ni, data, enclos=sys.frame(sys.parent()))
+         ai <- .getx("ai", mf=mf, data=data)
+         mi <- .getx("mi", mf=mf, data=data)
+         ni <- .getx("ni", mf=mf, data=data)
 
          if (!.all.specified(ai, mi, ni))
             stop(mstyle$stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments."))
@@ -1994,12 +1952,9 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
       ### get vi, sei, and ni
 
-      mf.vi  <- mf[[match("vi",  names(mf))]]
-      mf.sei <- mf[[match("sei", names(mf))]]
-      mf.ni  <- mf[[match("ni", names(mf))]]
-      vi     <- eval(mf.vi,  data, enclos=sys.frame(sys.parent()))
-      sei    <- eval(mf.sei, data, enclos=sys.frame(sys.parent()))
-      ni     <- eval(mf.ni,  data, enclos=sys.frame(sys.parent()))
+      vi  <- .getx("vi",  mf=mf, data=data)
+      sei <- .getx("sei", mf=mf, data=data)
+      ni  <- .getx("ni",  mf=mf, data=data)
 
       ### if neither vi nor sei is specified, then throw an error
       ### if only sei is specified, then square those values to get vi
@@ -2012,6 +1967,11 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             vi <- sei^2
          }
       }
+
+      ### catch cases where 'vi' is the utils::vi() function
+
+      if (identical(vi, utils::vi))
+         stop(mstyle$stop("Variable specified for 'vi' argument cannot be found."))
 
       if (!.equal.length(yi, vi, ni))
          stop(mstyle$stop("Supplied data vectors are not all of the same length."))

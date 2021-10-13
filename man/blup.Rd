@@ -77,7 +77,7 @@ segments(rep(1,13), dat$yi, rep(2,13), blups, col="darkgray")
 points(rep(1,13), dat$yi, pch=19)
 points(rep(2,13), blups, pch=19)
 axis(side=1, at=c(1,2), labels=c("Observed\nValues", "BLUPs"), lwd=0)
-segments(.7, res$beta, 2.15, res$beta, lty="dotted")
-text(2.3, res$beta, expression(hat(mu)==-0.71), cex=1)
+segments(0, res$beta, 2.15, res$beta, lty="dotted")
+text(2.3, res$beta, substitute(hat(mu)==muhat, list(muhat=round(res$beta[[1]], 2))), cex=1)
 }
 \keyword{models}

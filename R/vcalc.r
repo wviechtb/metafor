@@ -44,61 +44,17 @@ data, rho, phi, rvars, checkpd=TRUE, nearpd=FALSE, ...) {
 
    mf <- match.call()
 
-   mf.vi       <- mf[[match("vi",       names(mf))]]
-   mf.cluster  <- mf[[match("cluster",  names(mf))]]
-   mf.subgroup <- mf[[match("subgroup", names(mf))]]
-   mf.type     <- mf[[match("type",     names(mf))]]
-   mf.obs      <- mf[[match("obs",      names(mf))]]
-   mf.grp1     <- mf[[match("grp1",     names(mf))]]
-   mf.grp2     <- mf[[match("grp2",     names(mf))]]
-   mf.time1    <- mf[[match("time1",    names(mf))]]
-   mf.time2    <- mf[[match("time2",    names(mf))]]
-   mf.w1       <- mf[[match("w1",       names(mf))]]
-   mf.w2       <- mf[[match("w2",       names(mf))]]
-   vi       <- try(eval(mf.vi,       data, enclos=sys.frame(sys.parent())), silent=TRUE)
-   cluster  <- try(eval(mf.cluster,  data, enclos=sys.frame(sys.parent())), silent=TRUE)
-   subgroup <- try(eval(mf.subgroup, data, enclos=sys.frame(sys.parent())), silent=TRUE)
-   type     <- try(eval(mf.type,     data, enclos=sys.frame(sys.parent())), silent=TRUE)
-   obs      <- try(eval(mf.obs,      data, enclos=sys.frame(sys.parent())), silent=TRUE)
-   grp1     <- try(eval(mf.grp1,     data, enclos=sys.frame(sys.parent())), silent=TRUE)
-   grp2     <- try(eval(mf.grp2,     data, enclos=sys.frame(sys.parent())), silent=TRUE)
-   time1    <- try(eval(mf.time1,    data, enclos=sys.frame(sys.parent())), silent=TRUE)
-   time2    <- try(eval(mf.time2,    data, enclos=sys.frame(sys.parent())), silent=TRUE)
-   w1       <- try(eval(mf.w1,       data, enclos=sys.frame(sys.parent())), silent=TRUE)
-   w2       <- try(eval(mf.w2,       data, enclos=sys.frame(sys.parent())), silent=TRUE)
-
-   if (is.null(vi) || inherits(vi, "try-error"))
-      stop(mstyle$stop("Cannot find specified 'vi' variable."))
-
-   if (is.null(cluster) || inherits(cluster, "try-error"))
-      stop(mstyle$stop("Cannot find specified 'cluster' variable."))
-
-   if (subgroup.spec && (is.null(subgroup) || inherits(subgroup, "try-error")))
-      stop(mstyle$stop("Cannot find specified 'subgroup' variable."))
-
-   if (type.spec && (is.null(type) || inherits(type, "try-error")))
-      stop(mstyle$stop("Cannot find specified 'type' variable."))
-
-   if (obs.spec && (is.null(obs) || inherits(obs, "try-error")))
-      stop(mstyle$stop("Cannot find specified 'obs' variable."))
-
-   if (grp1.spec && (is.null(grp1) || inherits(grp1, "try-error")))
-      stop(mstyle$stop("Cannot find specified 'grp1' variable."))
-
-   if (grp2.spec && (is.null(grp2) || inherits(grp2, "try-error")))
-      stop(mstyle$stop("Cannot find specified 'grp2' variable."))
-
-   if (time1.spec && (is.null(time1) || inherits(time1, "try-error")))
-      stop(mstyle$stop("Cannot find specified 'time1' variable."))
-
-   if (time2.spec && (is.null(time2) || inherits(time2, "try-error")))
-      stop(mstyle$stop("Cannot find specified 'time2' variable."))
-
-   if (w1.spec && (is.null(w1) || inherits(w1, "try-error")))
-      stop(mstyle$stop("Cannot find specified 'w1' variable."))
-
-   if (w2.spec && (is.null(w2) || inherits(w2, "try-error")))
-      stop(mstyle$stop("Cannot find specified 'w2' variable."))
+   vi       <- .getx("vi",       mf=mf, data=data)
+   cluster  <- .getx("cluster",  mf=mf, data=data)
+   subgroup <- .getx("subgroup", mf=mf, data=data)
+   type     <- .getx("type",     mf=mf, data=data)
+   obs      <- .getx("obs",      mf=mf, data=data)
+   grp1     <- .getx("grp1",     mf=mf, data=data)
+   grp2     <- .getx("grp2",     mf=mf, data=data)
+   time1    <- .getx("time1",    mf=mf, data=data)
+   time2    <- .getx("time2",    mf=mf, data=data)
+   w1       <- .getx("w1",       mf=mf, data=data)
+   w2       <- .getx("w2",       mf=mf, data=data)
 
    ############################################################################
 

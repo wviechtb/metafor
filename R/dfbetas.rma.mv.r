@@ -1,4 +1,4 @@
-dfbetas.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE, parallel="no", ncpus=1, cl=NULL, ...) {
+dfbetas.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE, parallel="no", ncpus=1, cl, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -15,6 +15,9 @@ dfbetas.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE, paral
 
    if (parallel == "no" && ncpus > 1)
       parallel <- "snow"
+
+   if (missing(cl))
+      cl <- NULL
 
    if (!is.null(cl) && inherits(cl, "SOCKcluster")) {
       parallel <- "snow"

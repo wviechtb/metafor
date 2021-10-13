@@ -42,7 +42,9 @@ rstudent.rma.peto <- function(model, digits, progbar=FALSE, ...) {
       if (!x$not.na[i])
          next
 
-      res <- try(suppressWarnings(rma.peto(ai=x$ai.f, bi=x$bi.f, ci=x$ci.f, di=x$di.f, add=x$add, to=x$to, drop00=x$drop00, level=x$level, subset=-i)), silent=TRUE)
+      args <- list(ai=x$ai.f, bi=x$bi.f, ci=x$ci.f, di=x$di.f, add=x$add, to=x$to, drop00=x$drop00, level=x$level, subset=-i)
+      args <- args[!sapply(args, is.null)]
+      res <- try(suppressWarnings(do.call(rma.peto, args)), silent=TRUE)
 
       if (inherits(res, "try-error"))
          next

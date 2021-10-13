@@ -105,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1-20</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1-21</span>
       </span>
     </div>
 
@@ -498,7 +498,7 @@
 #&gt; 25   78  584 in-no    in-no
 #&gt; 26   69 1177 in-no    in-no</div><div class='input'>
 <span class='co'>### add contrast matrix</span>
-<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'>contrmat</span><span class='op'>(</span><span class='va'>dat</span>, grp1<span class='op'>=</span><span class='st'>"trt.1"</span>, grp2<span class='op'>=</span><span class='st'>"trt.2"</span>, shorten<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'>contrmat</span><span class='op'>(</span><span class='va'>dat</span>, grp1<span class='op'>=</span><span class='st'>"trt.1"</span>, grp2<span class='op'>=</span><span class='st'>"trt.2"</span>, shorten<span class='op'>=</span><span class='cn'>TRUE</span>, minlen<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span>
 <span class='va'>dat</span>
 </div><div class='output co'>#&gt;    id study            authors year          trt.1 xi.1 ni.1          trt.2
 #&gt; 1   1     1        Reid et al. 1974 ind_counseling  363  714     no_contact
@@ -527,33 +527,33 @@
 #&gt; 24 24    22 Stewart and Rosser 1982 ind_counseling   36  504     no_contact
 #&gt; 25 25    23     Russell et al. 1979 ind_counseling   73  675     no_contact
 #&gt; 26 26    24    Kendrick et al. 1995 ind_counseling   54  888     no_contact
-#&gt;    xi.2 ni.2  comp   design gr in. se no
-#&gt; 1    75  731 in-no    in-no  0   1  0 -1
-#&gt; 2     9  140 gr-no gr-in-no  1   0  0 -1
-#&gt; 3     9  140 in-no gr-in-no  0   1  0 -1
-#&gt; 4     2  106 in-no    in-no  0   1  0 -1
-#&gt; 5    58  549 in-no    in-no  0   1  0 -1
-#&gt; 6     0   33 in-no    in-no  0   1  0 -1
-#&gt; 7    20   49 in-se    in-se  0   1 -1  0
-#&gt; 8     3  100 in-no    in-no  0   1  0 -1
-#&gt; 9     1   31 in-no    in-no  0   1  0 -1
-#&gt; 10   11   78 gr-se gr-in-se  1   0 -1  0
-#&gt; 11   11   78 in-se gr-in-se  0   1 -1  0
-#&gt; 12    6   39 in-no    in-no  0   1  0 -1
-#&gt; 13   79  702 se-no    se-no  0   0  1 -1
-#&gt; 14   18  671 se-no    se-no  0   0  1 -1
-#&gt; 15   64  642 in-no    in-no  0   1  0 -1
-#&gt; 16   12   76 gr-in    gr-in  1  -1  0  0
-#&gt; 17    9   55 gr-in    gr-in  1  -1  0  0
-#&gt; 18    7   66 gr-se    gr-se  1   0 -1  0
-#&gt; 19    5   62 in-no    in-no  0   1  0 -1
-#&gt; 20   20  234 in-no    in-no  0   1  0 -1
-#&gt; 21    0   20 gr-no    gr-no  1   0  0 -1
-#&gt; 22    8  116 se-no    se-no  0   0  1 -1
-#&gt; 23   95 1107 in-no    in-no  0   1  0 -1
-#&gt; 24   15  187 in-no    in-no  0   1  0 -1
-#&gt; 25   78  584 in-no    in-no  0   1  0 -1
-#&gt; 26   69 1177 in-no    in-no  0   1  0 -1</div></pre>
+#&gt;    xi.2 ni.2  comp   design grp ind sel no_
+#&gt; 1    75  731 in-no    in-no   0   1   0  -1
+#&gt; 2     9  140 gr-no gr-in-no   1   0   0  -1
+#&gt; 3     9  140 in-no gr-in-no   0   1   0  -1
+#&gt; 4     2  106 in-no    in-no   0   1   0  -1
+#&gt; 5    58  549 in-no    in-no   0   1   0  -1
+#&gt; 6     0   33 in-no    in-no   0   1   0  -1
+#&gt; 7    20   49 in-se    in-se   0   1  -1   0
+#&gt; 8     3  100 in-no    in-no   0   1   0  -1
+#&gt; 9     1   31 in-no    in-no   0   1   0  -1
+#&gt; 10   11   78 gr-se gr-in-se   1   0  -1   0
+#&gt; 11   11   78 in-se gr-in-se   0   1  -1   0
+#&gt; 12    6   39 in-no    in-no   0   1   0  -1
+#&gt; 13   79  702 se-no    se-no   0   0   1  -1
+#&gt; 14   18  671 se-no    se-no   0   0   1  -1
+#&gt; 15   64  642 in-no    in-no   0   1   0  -1
+#&gt; 16   12   76 gr-in    gr-in   1  -1   0   0
+#&gt; 17    9   55 gr-in    gr-in   1  -1   0   0
+#&gt; 18    7   66 gr-se    gr-se   1   0  -1   0
+#&gt; 19    5   62 in-no    in-no   0   1   0  -1
+#&gt; 20   20  234 in-no    in-no   0   1   0  -1
+#&gt; 21    0   20 gr-no    gr-no   1   0   0  -1
+#&gt; 22    8  116 se-no    se-no   0   0   1  -1
+#&gt; 23   95 1107 in-no    in-no   0   1   0  -1
+#&gt; 24   15  187 in-no    in-no   0   1   0  -1
+#&gt; 25   78  584 in-no    in-no   0   1   0  -1
+#&gt; 26   69 1177 in-no    in-no   0   1   0  -1</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

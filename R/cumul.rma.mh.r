@@ -94,10 +94,12 @@ cumul.rma.mh <- function(x, order, digits, transf, targs, progbar=FALSE, ...) {
          next
 
       if (is.element(x$measure, c("RR","OR","RD"))) {
-         res <- try(suppressWarnings(rma.mh(ai=ai.f, bi=bi.f, ci=ci.f, di=di.f, measure=x$measure, add=x$add, to=x$to, drop00=x$drop00, correct=x$correct, level=x$level, subset=seq_len(i))), silent=TRUE)
+         args <- list(ai=ai.f, bi=bi.f, ci=ci.f, di=di.f, measure=x$measure, add=x$add, to=x$to, drop00=x$drop00, correct=x$correct, level=x$level, subset=seq_len(i))
       } else {
-         res <- try(suppressWarnings(rma.mh(x1i=x1i.f, x2i=x2i.f, t1i=t1i.f, t2i=t2i.f, measure=x$measure, add=x$add, to=x$to, drop00=x$drop00, correct=x$correct, level=x$level, subset=seq_len(i))), silent=TRUE)
+         args <- list(x1i=x1i.f, x2i=x2i.f, t1i=t1i.f, t2i=t2i.f, measure=x$measure, add=x$add, to=x$to, drop00=x$drop00, correct=x$correct, level=x$level, subset=seq_len(i))
       }
+      args <- args[!sapply(args, is.null)]
+      res <- try(suppressWarnings(do.call(rma.mh, args)), silent=TRUE)
 
       if (inherits(res, "try-error"))
          next

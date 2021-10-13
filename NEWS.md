@@ -1,4 +1,4 @@
-# metafor 3.1-20 (2021-10-06)
+# metafor 3.1-21 (2021-10-13)
 
 - added `vcalc()` function
 
@@ -330,7 +330,7 @@
 
 # metafor 1.9-9 (2016-09-25)
 
-- started to use git as version control system, GitHub to host the repository (https://github.com/wviechtb/metafor) for the development version of the package, Travis CI as continuous integration service (https://travis-ci.org/wviechtb/metafor), and Codecov for automated code coverage reporting (https://codecov.io/github/wviechtb/metafor)
+- started to use git as version control system, GitHub to host the repository (https://github.com/wviechtb/metafor) for the development version of the package, Travis CI as continuous integration service (https://travis-ci.org/wviechtb/metafor), and Codecov for automated code coverage reporting (https://app.codecov.io/gh/wviechtb/metafor)
 
 - argument `knha` in `rma.uni()` and argument `tdist` in `rma.glmm()` and `rma.mv()` are now superseded by argument `test` in all three functions; for backwards compatibility, the `knha` and `tdist` arguments still work, but are no longer documented
 

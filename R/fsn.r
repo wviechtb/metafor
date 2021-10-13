@@ -71,16 +71,12 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, weighted
    }
 
    mf <- match.call()
-   mf.yi      <- mf[[match("yi",      names(mf))]]
-   mf.vi      <- mf[[match("vi",      names(mf))]]
-   mf.sei     <- mf[[match("sei",     names(mf))]]
-   #mf.weights <- mf[[match("weights", names(mf))]]
-   mf.subset  <- mf[[match("subset",  names(mf))]]
-   yi      <- eval(mf.yi,      data, enclos=sys.frame(sys.parent()))
-   vi      <- eval(mf.vi,      data, enclos=sys.frame(sys.parent()))
-   sei     <- eval(mf.sei,     data, enclos=sys.frame(sys.parent()))
-   #weights <- eval(mf.weights, data, enclos=sys.frame(sys.parent()))
-   subset  <- eval(mf.subset,  data, enclos=sys.frame(sys.parent()))
+
+   yi     <- .getx("yi",      mf=mf, data=data)
+   vi     <- .getx("vi",      mf=mf, data=data)
+   sei    <- .getx("sei",     mf=mf, data=data)
+   #weight <- .getx("weights", mf=mf, data=data)
+   subset <- .getx("subset",  mf=mf, data=data)
 
    if (type %in% c("Rosenthal", "Rosenberg", "REM") || (type == "Orwin" && weighted)) {
       if (is.null(vi)) {

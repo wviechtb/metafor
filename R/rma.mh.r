@@ -93,10 +93,8 @@ correct=TRUE, level=95, digits, verbose=FALSE, ...) {
 
    ### extract slab and subset values, possibly from the data frame specified via data (arguments not specified are NULL)
 
-   mf.slab   <- mf[[match("slab",   names(mf))]]
-   mf.subset <- mf[[match("subset", names(mf))]]
-   slab   <- eval(mf.slab,   data, enclos=sys.frame(sys.parent()))
-   subset <- eval(mf.subset, data, enclos=sys.frame(sys.parent()))
+   slab   <- .getx("slab",   mf=mf, data=data)
+   subset <- .getx("subset", mf=mf, data=data)
 
    #########################################################################
 
@@ -106,18 +104,13 @@ correct=TRUE, level=95, digits, verbose=FALSE, ...) {
 
       x1i <- x2i <- t1i <- t2i <- x1i.f <- x2i.f <- t1i.f <- t2i.f <- NA
 
-      mf.ai  <- mf[[match("ai",  names(mf))]]
-      mf.bi  <- mf[[match("bi",  names(mf))]]
-      mf.ci  <- mf[[match("ci",  names(mf))]]
-      mf.di  <- mf[[match("di",  names(mf))]]
-      mf.n1i <- mf[[match("n1i", names(mf))]]
-      mf.n2i <- mf[[match("n2i", names(mf))]]
-      ai  <- eval(mf.ai,  data, enclos=sys.frame(sys.parent()))
-      bi  <- eval(mf.bi,  data, enclos=sys.frame(sys.parent()))
-      ci  <- eval(mf.ci,  data, enclos=sys.frame(sys.parent()))
-      di  <- eval(mf.di,  data, enclos=sys.frame(sys.parent()))
-      n1i <- eval(mf.n1i, data, enclos=sys.frame(sys.parent()))
-      n2i <- eval(mf.n2i, data, enclos=sys.frame(sys.parent()))
+      ai  <- .getx("ai",  mf=mf, data=data)
+      bi  <- .getx("bi",  mf=mf, data=data)
+      ci  <- .getx("ci",  mf=mf, data=data)
+      di  <- .getx("di",  mf=mf, data=data)
+      n1i <- .getx("n1i", mf=mf, data=data)
+      n2i <- .getx("n2i", mf=mf, data=data)
+
       if (is.null(bi)) bi <- n1i - ai
       if (is.null(di)) di <- n2i - ci
       ni <- ai + bi + ci + di
@@ -182,9 +175,11 @@ correct=TRUE, level=95, digits, verbose=FALSE, ...) {
 
       ### calculate observed effect estimates and sampling variances
 
-      dat <- escalc(measure=measure, ai=ai, bi=bi, ci=ci, di=di, add=add[1], to=to[1], drop00=drop00[1], onlyo1=onlyo1, addyi=addyi, addvi=addvi)
-      yi  <- dat$yi ### one or more yi/vi pairs may be NA/NA
-      vi  <- dat$vi ### one or more yi/vi pairs may be NA/NA
+      args <- list(measure=measure, ai=ai, bi=bi, ci=ci, di=di, add=add[1], to=to[1], drop00=drop00[1], onlyo1=onlyo1, addyi=addyi, addvi=addvi)
+      args <- args[!sapply(args, is.null)]
+      dat <- do.call(escalc, args)
+      yi <- dat$yi ### one or more yi/vi pairs may be NA/NA
+      vi <- dat$vi ### one or more yi/vi pairs may be NA/NA
 
       ### if drop00[2]=TRUE, set counts to NA for studies that have no events (or all events) in both arms
 
@@ -325,14 +320,11 @@ correct=TRUE, level=95, digits, verbose=FALSE, ...) {
 
       ai <- bi <- ci <- di <- ai.f <- bi.f <- ci.f <- di.f <- NA
 
-      mf.x1i <- mf[[match("x1i", names(mf))]]
-      mf.x2i <- mf[[match("x2i", names(mf))]]
-      mf.t1i <- mf[[match("t1i", names(mf))]]
-      mf.t2i <- mf[[match("t2i", names(mf))]]
-      x1i <- eval(mf.x1i, data, enclos=sys.frame(sys.parent()))
-      x2i <- eval(mf.x2i, data, enclos=sys.frame(sys.parent()))
-      t1i <- eval(mf.t1i, data, enclos=sys.frame(sys.parent()))
-      t2i <- eval(mf.t2i, data, enclos=sys.frame(sys.parent()))
+      x1i <- .getx("x1i", mf=mf, data=data)
+      x2i <- .getx("x2i", mf=mf, data=data)
+      t1i <- .getx("t1i", mf=mf, data=data)
+      t2i <- .getx("t2i", mf=mf, data=data)
+
       ni  <- t1i + t2i
 
       k <- length(x1i) ### number of outcomes before subsetting
@@ -392,7 +384,9 @@ correct=TRUE, level=95, digits, verbose=FALSE, ...) {
 
       ### calculate observed effect estimates and sampling variances
 
-      dat <- escalc(measure=measure, x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i, add=add[1], to=to[1], drop00=drop00[1], onlyo1=onlyo1, addyi=addyi, addvi=addvi)
+      args <- list(measure=measure, x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i, add=add[1], to=to[1], drop00=drop00[1], onlyo1=onlyo1, addyi=addyi, addvi=addvi)
+      args <- args[!sapply(args, is.null)]
+      dat <- do.call(escalc, args)
       yi  <- dat$yi ### one or more yi/vi pairs may be NA/NA
       vi  <- dat$vi ### one or more yi/vi pairs may be NA/NA
 

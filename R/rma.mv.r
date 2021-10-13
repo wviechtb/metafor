@@ -205,41 +205,13 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
 
    ### extract yi, V, W, ni, slab, subset, and mods values, possibly from the data frame specified via data (arguments not specified are NULL)
 
-   mf.yi     <- mf[[match("yi", names(mf))]]
-   mf.V      <- mf[[match("V",  names(mf))]]
-   mf.W      <- mf[[match("W",  names(mf))]]
-   mf.ni     <- mf[[match("ni", names(mf))]] ### not yet possible to specify this
-   mf.slab   <- mf[[match("slab",   names(mf))]]
-   mf.subset <- mf[[match("subset", names(mf))]]
-   mf.mods   <- mf[[match("mods",   names(mf))]]
-   if (is.null(mf.yi))
-      yi <- NULL
-   if (is.null(mf.V))
-      V <- NULL
-   if (is.null(mf.W))
-      W <- NULL
-   if (is.null(mf.ni))
-      ni <- NULL
-   if (is.null(mf.slab))
-      slab <- NULL
-   if (is.null(mf.subset))
-      subset <- NULL
-   if (is.null(mf.mods))
-      mods <- NULL
-   if (!is.null(mf.yi) && !any(grepl("$", mf.yi, fixed=TRUE)))
-      yi <- eval(mf.yi, data, enclos=sys.frame(sys.parent()))           ### NULL if user does not specify this
-   if (!is.null(mf.V) && !any(grepl("$", mf.V, fixed=TRUE)))
-      V <- eval(mf.V, data, enclos=sys.frame(sys.parent()))             ### NULL if user does not specify this
-   if (!is.null(mf.W) && !any(grepl("$", mf.W, fixed=TRUE)))
-      W <- eval(mf.W, data, enclos=sys.frame(sys.parent()))             ### NULL if user does not specify this
-   if (!is.null(mf.ni) && !any(grepl("$", mf.ni, fixed=TRUE)))
-      ni <- eval(mf.ni, data, enclos=sys.frame(sys.parent()))           ### NULL if user does not specify this
-   if (!is.null(mf.slab) && !any(grepl("$", mf.slab, fixed=TRUE)))
-      slab <- eval(mf.slab, data, enclos=sys.frame(sys.parent()))       ### NULL if user does not specify this
-   if (!is.null(mf.subset) && !any(grepl("$", mf.subset, fixed=TRUE)))
-      subset <- eval(mf.subset, data, enclos=sys.frame(sys.parent()))   ### NULL if user does not specify this
-   if (!is.null(mf.mods) && !any(grepl("$", mf.mods, fixed=TRUE)))
-      mods <- eval(mf.mods, data, enclos=sys.frame(sys.parent()))       ### NULL if user does not specify this
+   yi     <- .getx("yi",     mf=mf, data=data)
+   V      <- .getx("V",      mf=mf, data=data)
+   W      <- .getx("W",      mf=mf, data=data)
+   ni     <- .getx("ni",     mf=mf, data=data) ### not yet possible to specify this
+   slab   <- .getx("slab",   mf=mf, data=data)
+   subset <- .getx("subset", mf=mf, data=data)
+   mods   <- .getx("mods",   mf=mf, data=data)
 
    ### if yi is a formula, extract yi and X (this overrides anything specified via the mods argument further below)
 
@@ -280,6 +252,11 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
 
    if (is.null(V))
       stop(mstyle$stop("Must specify 'V' argument."))
+
+   ### catch cases where 'V' is the utils::vi() function
+
+   if (identical(V, utils::vi))
+      stop(mstyle$stop("Variable specified for 'V' argument cannot be found."))
 
    if (is.list(V) && !is.data.frame(V)) {
 

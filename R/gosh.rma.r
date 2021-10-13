@@ -1,4 +1,4 @@
-gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, ...) {
+gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -16,6 +16,9 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, 
 
    if (parallel == "no" && ncpus > 1)
       parallel <- "snow"
+
+   if (missing(cl))
+      cl <- NULL
 
    if (!is.null(cl) && inherits(cl, "SOCKcluster")) {
       parallel <- "snow"

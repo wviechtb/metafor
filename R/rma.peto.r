@@ -86,25 +86,18 @@ level=95, digits, verbose=FALSE, ...) {
 
    ### extract slab and subset values, possibly from the data frame specified via data (arguments not specified are NULL)
 
-   mf.slab   <- mf[[match("slab",   names(mf))]]
-   mf.subset <- mf[[match("subset", names(mf))]]
-   slab   <- eval(mf.slab,   data, enclos=sys.frame(sys.parent()))
-   subset <- eval(mf.subset, data, enclos=sys.frame(sys.parent()))
+   slab   <- .getx("slab",   mf=mf, data=data)
+   subset <- .getx("subset", mf=mf, data=data)
 
    ### extract/calculate ai,bi,ci,di,n1i,n2i values
 
-   mf.ai  <- mf[[match("ai",  names(mf))]]
-   mf.bi  <- mf[[match("bi",  names(mf))]]
-   mf.ci  <- mf[[match("ci",  names(mf))]]
-   mf.di  <- mf[[match("di",  names(mf))]]
-   mf.n1i <- mf[[match("n1i", names(mf))]]
-   mf.n2i <- mf[[match("n2i", names(mf))]]
-   ai  <- eval(mf.ai,  data, enclos=sys.frame(sys.parent()))
-   bi  <- eval(mf.bi,  data, enclos=sys.frame(sys.parent()))
-   ci  <- eval(mf.ci,  data, enclos=sys.frame(sys.parent()))
-   di  <- eval(mf.di,  data, enclos=sys.frame(sys.parent()))
-   n1i <- eval(mf.n1i, data, enclos=sys.frame(sys.parent()))
-   n2i <- eval(mf.n2i, data, enclos=sys.frame(sys.parent()))
+   ai  <- .getx("ai",  mf=mf, data=data)
+   bi  <- .getx("bi",  mf=mf, data=data)
+   ci  <- .getx("ci",  mf=mf, data=data)
+   di  <- .getx("di",  mf=mf, data=data)
+   n1i <- .getx("n1i", mf=mf, data=data)
+   n2i <- .getx("n2i", mf=mf, data=data)
+
    if (is.null(bi)) bi <- n1i - ai
    if (is.null(di)) di <- n2i - ci
    ni <- ai + bi + ci + di
@@ -169,9 +162,11 @@ level=95, digits, verbose=FALSE, ...) {
 
    ### calculate observed effect estimates and sampling variances
 
-   dat <- escalc(measure="PETO", ai=ai, bi=bi, ci=ci, di=di, add=add[1], to=to[1], drop00=drop00[1])
-   yi  <- dat$yi ### one or more yi/vi pairs may be NA/NA
-   vi  <- dat$vi ### one or more yi/vi pairs may be NA/NA
+   args <- list(measure="PETO", ai=ai, bi=bi, ci=ci, di=di, add=add[1], to=to[1], drop00=drop00[1])
+   args <- args[!sapply(args, is.null)]
+   dat <- do.call(escalc, args)
+   yi <- dat$yi ### one or more yi/vi pairs may be NA/NA
+   vi <- dat$vi ### one or more yi/vi pairs may be NA/NA
 
    ### if drop00[2]=TRUE, set counts to NA for studies that have no events (or all events) in both arms
 

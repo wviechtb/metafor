@@ -1,5 +1,5 @@
 profile.rma.ls <- function(fitted, alpha,
-   xlim, ylim, steps=20, lltol=1e-03, progbar=TRUE, parallel="no", ncpus=1, cl=NULL, plot=TRUE, pch=19, refline=TRUE, cline=FALSE, ...) {
+   xlim, ylim, steps=20, lltol=1e-03, progbar=TRUE, parallel="no", ncpus=1, cl, plot=TRUE, pch=19, refline=TRUE, cline=FALSE, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -14,6 +14,9 @@ profile.rma.ls <- function(fitted, alpha,
 
    if (parallel == "no" && ncpus > 1)
       parallel <- "snow"
+
+   if (missing(cl))
+      cl <- NULL
 
    if (!is.null(cl) && inherits(cl, "SOCKcluster")) {
       parallel <- "snow"
