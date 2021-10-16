@@ -88,6 +88,9 @@ atransf, targs, efac=1, col, border, lty, fonts, cex, ...) {
 
    yi <- x
 
+   if (!missing(vi) && is.function(vi)) # if vi is utils::vi()
+      stop(mstyle$stop("Cannot find variable specified for 'vi' argument."), call.=FALSE)
+
    if (hasArg(ci.lb) && hasArg(ci.ub)) {
 
       ### CI bounds are specified by user

@@ -46,6 +46,9 @@ label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
    if (missing(vi))
       vi <- NULL
 
+   if (is.function(vi)) # if vi is utils::vi()
+      stop(mstyle$stop("Cannot find variable specified for 'vi' argument."), call.=FALSE)
+
    if (missing(sei))
       sei <- NULL
 

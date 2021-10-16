@@ -1805,7 +1805,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
                if (vtype[i] == "LS")
                   vi[i] <- 1/ni[i] + yi[i]^2 / (2*ni[i])
 
-               ### large sample approximation to the sampling variance
+               ### large sample approximation to the sampling variance (analogous to LS2 for SMD and SMCR)
                if (vtype[i] == "LS2")
                   vi[i] <- cmi[i]^2 * (1/ni[i] + di[i]^2 / (2*ni[i]))
 
