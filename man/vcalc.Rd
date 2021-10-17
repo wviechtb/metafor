@@ -29,7 +29,7 @@ vcalc(vi, cluster, subgroup, obs, type, time1, time2, grp1, grp2, w1, w2,
    \item{\dots}{other arguments.}
 }
 \details{
-   Standard meta-analytic models (such as those that can be fitted with the \code{\link{rma.uni}} function) assume that the observed effect sizes or outcomes (or more precisely, their sampling errors) are independent. This assumption is typically violated whenever multiple observed effect sizes or outcomes are computed based on the same sample of subjects (or whatever the unit of analysis is) or if there is at least partial overlap of subjects that contribute information to the computation of multiple effect sizes or outcomes.
+   Standard meta-analytic models (such as those that can be fitted with the \code{\link{rma.uni}} function) assume that the observed effect sizes or outcomes (or more precisely, their sampling errors) are independent. This assumption is typically violated whenever multiple observed effect sizes or outcomes are computed based on the same sample of subjects (or whatever the study units are) or if there is at least partial overlap of subjects that contribute information to the computation of multiple effect sizes or outcomes.
 
    The present function can be used to construct or approximate the variance-covariance matrix of the sampling errors of dependent effect sizes or outcomes for a wide variety of circumstances (this variance-covariance matrix is the so-called \code{V} matrix that may be needed as input for multilevel/multivariate meta-analytic models as can be fitted with the \code{\link{rma.mv}} function).
 

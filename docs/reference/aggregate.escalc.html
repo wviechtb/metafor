@@ -105,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1-21</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1-23</span>
       </span>
     </div>
 
@@ -180,7 +180,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for escalc</span>
-<span class='fu'>aggregate</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>cluster</span>, <span class='va'>time</span>, <span class='va'>V</span>, struct<span class='op'>=</span><span class='st'>"CS"</span>, <span class='va'>rho</span>, <span class='va'>phi</span>,
+<span class='fu'>aggregate</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>cluster</span>, <span class='va'>time</span>, <span class='va'>obs</span>, <span class='va'>V</span>, struct<span class='op'>=</span><span class='st'>"CS"</span>, <span class='va'>rho</span>, <span class='va'>phi</span>,
           weighted<span class='op'>=</span><span class='cn'>TRUE</span>, checkpd<span class='op'>=</span><span class='cn'>TRUE</span>, <span class='va'>fun</span>, na.rm<span class='op'>=</span><span class='cn'>TRUE</span>, <span class='va'>subset</span>, <span class='va'>select</span>, <span class='va'>digits</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -196,7 +196,11 @@
     </tr>
     <tr>
       <th>time</th>
-      <td><p>optional vector to specify the time points (only relevant when <code>struct="CAR"</code> or <code>struct="CS+CAR"</code>).</p></td>
+      <td><p>optional vector to specify the time points (only relevant when <code>struct="CAR"</code>, <code>struct="CS+CAR"</code>, or <code>struct="CS*CAR"</code>).</p></td>
+    </tr>
+    <tr>
+      <th>obs</th>
+      <td><p>optional vector to distinguish different observed effect sizes or outcomes measured at the same time point (only relevant when <code>struct="CS*CAR"</code>).</p></td>
     </tr>
     <tr>
       <th>V</th>
@@ -204,15 +208,15 @@
     </tr>
     <tr>
       <th>struct</th>
-      <td><p>character string to specify the variance-covariance structure of the sampling errors within the same cluster (either <code>"ID"</code>, <code>"CS"</code>, <code>"CAR"</code>, or <code>"CS+CAR"</code>). See &#8216;Details&#8217;.</p></td>
+      <td><p>character string to specify the variance-covariance structure of the sampling errors within the same cluster (either <code>"ID"</code>, <code>"CS"</code>, <code>"CAR"</code>, <code>struct="CS+CAR"</code>, or <code>"CS*CAR"</code>). See &#8216;Details&#8217;.</p></td>
     </tr>
     <tr>
       <th>rho</th>
-      <td><p>value of the correlation of the sampling errors within clusters (when <code>struct="CS"</code> or <code>struct="CS+CAR"</code>). Can also be a vector with the value of the correlation for each cluster.</p></td>
+      <td><p>value of the correlation of the sampling errors within clusters (when <code>struct="CS"</code>,<code>struct="CS+CAR"</code>, or <code>struct="CS*CAR"</code>). Can also be a vector with the value of the correlation for each cluster.</p></td>
     </tr>
     <tr>
       <th>phi</th>
-      <td><p>value of the autocorrelation of the sampling errors within clusters (when <code>struct="CAR"</code> or <code>struct="CS+CAR"</code>). Can also be a vector with the value of the autocorrelation for each cluster.</p></td>
+      <td><p>value of the autocorrelation of the sampling errors within clusters (when <code>struct="CAR"</code>,<code>struct="CS+CAR"</code>, or <code>struct="CS*CAR"</code>). Can also be a vector with the value of the autocorrelation for each cluster.</p></td>
     </tr>
     <tr>
       <th>weighted</th>
@@ -228,7 +232,7 @@
     </tr>
     <tr>
       <th>na.rm</th>
-      <td><p>logical to specify whether <code>NA</code> values should be removed before aggregating values within clusters. Can also be a vector with two logicals (the first pertains to the effect sizes or outcomes, the second to all other variables).</p></td>
+      <td><p>logical to specify whether <code>NA</code> values should be removed before aggregating values within clusters. Can also be a vector with two logicals (the first pertaining to the effect sizes or outcomes, the second to all other variables).</p></td>
     </tr>
     <tr>
       <th>subset</th>
@@ -253,11 +257,12 @@
     <p>In many meta-analyses, multiple effect sizes or outcomes can be extracted from the same study. Ideally, such structures should be analyzed using an appropriate multilevel/multivariate model as can be fitted with the <code><a href='rma.mv.html'>rma.mv</a></code> function. However, there may occasionally be reasons for aggregating multiple effect sizes or outcomes belonging to the same study (or to the same level of some other clustering variable) into a single combined effect size or outcome. The present function can be used for this purpose.</p>
 <p>The input must be an object of class <code>"escalc"</code>. The error &#8216;<code>Error in match.fun(FUN): argument "FUN" is missing, with no default</code>&#8217; indicates that a regular data frame was passed to the function, but this does not work. One can turn a regular data frame (containing the effect sizes or outcomes and the corresponding sampling variances) into an <code>"escalc"</code> object with the <code><a href='escalc.html'>escalc</a></code> function. See the &#8216;Examples&#8217; below for an illustration of this.</p>
 <p>The <code>cluster</code> variable is used to specify which estimates/outcomes belong to the same study/cluster.</p>
-<p>In the simplest case, the estimates/outcomes within clusters (or, to be precise, their sampling errors) are assumed to be independent. This is usually a safe assumption as long as each study participant (or whatever the unit of analysis is) only contributes data to a single estimate/outcome. For example, if a study provides effect size estimates for male and female subjects separately, then the sampling errors can usually be assumed to be independent. In this case, one can set <code>struct="ID"</code> and multiple estimates/outcomes within the same cluster are combined using standard inverse-variance weighting (i.e., using weighted least squares) under the assumption of independence.</p>
-<p>In other cases, the estimates/outcomes within clusters cannot be assumed to be independent. For example, if multiple effect size estimates are computed for the same group of subjects (e.g., for different dependent variables), then the estimates are likely to be correlated. If the actual correlation between the estimates is unknown, one can often still make an educated guess and set argument <code>rho</code> to this value, which is then assumed to be the same for all pairs of estimates within clusters when <code>struct="CS"</code> (for a compound symmetric structure). Multiple estimates/outcomes within the same cluster are then combined using inverse-variance weighting taking their correlation into consideration (i.e., using generalized least squares). One can also specify a different value of <code>rho</code> for each cluster by passing a vector (of the same length as the number of clusters) to this argument.</p>
-<p>If multiple effect size estimates are computed for the same group of subjects at different time points, then it may be more sensible to assume that the correlation between estimates decreases as a function of the distance between the time points. If so, one can specify <code>struct="CAR"</code> (for a continuous-time autoregressive structure), set <code>phi</code> to the autocorrelation (for two estimates one time-unit apart), and use argument <code>time</code> to specify the actual time points corresponding to the estimates. The correlation between two estimates, \(y_{ij}\) and \(y_{ij'}\), in the \(i\)th cluster, with time points \(t_{ij}\) and \(t_{ij'}\), is then given by \(\phi^{|t_{ij} - t_{ij'}|}\). One can also specify a different value of <code>phi</code> for each cluster by passing a vector (of the same length as the number of clusters) to this argument.</p>
-<p>One can also combine the compound symmetric and autoregressive structures by specifying <code>struct="CS+CAR"</code>. In this case, one must specify both <code>rho</code> and <code>phi</code>. The correlation between two estimates, \(y_{ij}\) and \(y_{ij'}\), in the \(i\)th cluster, with time points \(t_{ij}\) and \(t_{ij'}\), is then given by \(\rho + (1 - \rho) \phi^{|t_{ij} - t_{ij'}|}\).</p>
-<p>Finally, if one actually knows the correlation (and hence the covariance) between each pair of estimates, one can also specify the entire variance-covariance matrix of the estimates (or more precisely, their sampling errors) via the <code>V</code> argument. In this case, arguments <code>struct</code>, <code>rho</code>, and  <code>phi</code> are ignored.</p>
+<p>In the simplest case, the estimates/outcomes within clusters (or, to be precise, their sampling errors) are assumed to be independent. This is usually a safe assumption as long as each study participant (or whatever the study units are) only contributes data to a single estimate/outcome. For example, if a study provides effect size estimates for male and female subjects separately, then the sampling errors can usually be assumed to be independent. In this case, one can set <code>struct="ID"</code> and multiple estimates/outcomes within the same cluster are combined using standard inverse-variance weighting (i.e., using weighted least squares) under the assumption of independence.</p>
+<p>In other cases, the estimates/outcomes within clusters cannot be assumed to be independent. For example, if multiple effect size estimates are computed for the same group of subjects (e.g., based on different scales to measure some construct of interest), then the estimates are likely to be correlated. If the actual correlation between the estimates is unknown, one can often still make an educated guess and set argument <code>rho</code> to this value, which is then assumed to be the same for all pairs of estimates within clusters when <code>struct="CS"</code> (for a compound symmetric structure). Multiple estimates/outcomes within the same cluster are then combined using inverse-variance weighting taking their correlation into consideration (i.e., using generalized least squares). One can also specify a different value of <code>rho</code> for each cluster by passing a vector (of the same length as the number of clusters) to this argument.</p>
+<p>If multiple effect size estimates are computed for the same group of subjects at different time points, then it may be more sensible to assume that the correlation between estimates decreases as a function of the distance between the time points. If so, one can specify <code>struct="CAR"</code> (for a continuous-time autoregressive structure), set <code>phi</code> to the autocorrelation (for two estimates one time-unit apart), and use argument <code>time</code> to specify the actual time points corresponding to the estimates. The correlation between two estimates, \(y_{it}\) and \(y_{it'}\), in the \(i\)th cluster, with time points \(\textrm{time}_{it}\) and \(\textrm{time}_{it'}\), is then given by \(\phi^{|\textrm{time}_{it} - \textrm{time}_{it'}|}\). One can also specify a different value of <code>phi</code> for each cluster by passing a vector (of the same length as the number of clusters) to this argument.</p>
+<p>One can also combine the compound symmetric and autoregressive structures if there are multiple time points and multiple observed effect sizes or outcomes at these time points. One option is <code>struct="CS+CAR"</code>. In this case, one must specify the <code>time</code> argument and both <code>rho</code> and <code>phi</code>. The correlation between two estimates, \(y_{it}\) and \(y_{it'}\), in the \(i\)th cluster, with time points \(\textrm{time}_{it}\) and \(\textrm{time}_{it'}\), is then given by \(\rho + (1 - \rho) \phi^{|\textrm{time}_{it} - \textrm{time}_{it'}|}\).</p>
+<p>Alternatively, one can specify <code>struct="CS*CAR"</code>. In this case, one must specify both the <code>time</code> and <code>obs</code> arguments and both <code>rho</code> and <code>phi</code>. The correlation between two estimates, \(y_{ijt}\) and \(y_{ijt'}\), with the same value for <code>obs</code> but different values for <code>time</code>, is then given by \(\phi^{|\textrm{time}_{ijt} - \textrm{time}_{ijt'}|}\), the correlation between two estimates, \(y_{ijt}\) and \(y_{ij't}\), with different values for <code>obs</code> but the same value for <code>time</code>, is then given by \(\rho\), and the correlation between two estimates, \(y_{ijt}\) and \(y_{ij't'}\), with different values for <code>obs</code> and different values for <code>time</code>, is then given by \(\rho \times \phi^{|\textrm{time}_{ijt} - \textrm{time}_{ijt'}|}\).</p>
+<p>Finally, if one actually knows the correlation (and hence the covariance) between each pair of estimates (or has an approximation thereof), one can also specify the entire variance-covariance matrix of the estimates (or more precisely, their sampling errors) via the <code>V</code> argument (in this case, arguments <code>struct</code>, <code>time</code>, <code>obs</code>, <code>rho</code>, and <code>phi</code> are ignored). Note that the <code><a href='vcalc.html'>vcalc</a></code> function can be used to construct such a <code>V</code> matrix and provides even more flexibility for specifying various types of dependencies.</p>
 <p>Instead of using inverse-variance weighting (i.e., weighted/generalized least squares) to combine the estimates within clusters, one can set <code>weighted=FALSE</code> in which case the estimates are averaged within clusters without any weighting (although the correlations between estimates as specified are still taken into consideration).</p>
 <p>Other variables (besides the estimates) will also be aggregated to the cluster level. By default, numeric/integer type variables are averaged, logicals are also averaged (yielding the proportion of <code>TRUE</code> values), and for all other types of variables (e.g., character variables or factors) the most frequent category/level is returned. One can also specify a list of three functions via the <code>fun</code> argument for aggregating variables belonging to these three types.</p>
 <p>Argument <code>na.rm</code> controls how missing values should be handled. By default, any missing estimates are first removed before aggregating the non-missing values within each cluster. The same applies when aggregating the other variables. One can also specify a vector with two logicals for the <code>na.rm</code> argument to control how missing values should be handled when aggregating the estimates and when aggregating all other variables.</p>
@@ -485,6 +490,52 @@
 #&gt; 15    15  2.0 77.0  0.0908 0.1269         1 -13.5 general 
 #&gt; 16    16  8.5 86.5  0.0181 0.0169         1   2.5  covert 
 #&gt; 17    17  3.5 97.5 -0.0552 0.0072         1   5.5 general </div><div class='input'>
+<span class='co'>### use vcalc() and then the V argument</span>
+<span class='va'>V</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vcalc.html'>vcalc</a></span><span class='op'>(</span><span class='va'>vi</span>, cluster<span class='op'>=</span><span class='va'>study</span>, obs<span class='op'>=</span><span class='va'>esid</span>, data<span class='op'>=</span><span class='va'>dat</span>, rho<span class='op'>=</span><span class='fl'>0.6</span><span class='op'>)</span>
+<span class='va'>agg</span> <span class='op'>&lt;-</span> <span class='fu'>aggregate</span><span class='op'>(</span><span class='va'>dat</span>, cluster<span class='op'>=</span><span class='va'>study</span>, V<span class='op'>=</span><span class='va'>V</span><span class='op'>)</span>
+<span class='va'>agg</span>
+</div><div class='output co'>#&gt;    study esid   id      yi     vi pubstatus  year deltype 
+#&gt; 1      1  3.5  3.5  0.1629 0.0197         1   4.5 general 
+#&gt; 2      2  2.0  8.0  0.4060 0.0056         1   1.5 general 
+#&gt; 3      3  5.5 14.5  1.0790 0.0832         1  -7.7 general 
+#&gt; 4      4  1.0 20.0 -0.0447 0.0331         1  -7.5 general 
+#&gt; 5      5  1.0 21.0  1.5490 0.1384         1 -11.5 general 
+#&gt; 6      6  3.0 24.0 -0.0550 0.0214         1   5.5 general 
+#&gt; 7      7  3.5 29.5  1.0072 0.0545         1   3.5 general 
+#&gt; 8      8  1.0 33.0  0.3695 0.0199         1   1.5 general 
+#&gt; 9      9  1.5 34.5  0.1379 0.0271         1   5.5 general 
+#&gt; 10    10  3.0 38.0  0.1167 0.0107         1   4.5 general 
+#&gt; 11    11 11.5 51.5  0.5258 0.0114         0  -6.5 general 
+#&gt; 12    12  3.0 65.0  0.2805 0.0028         0   4.5   overt 
+#&gt; 13    13  1.5 68.5  0.3018 0.0110         1  -3.5 general 
+#&gt; 14    14  3.5 72.5  0.0356 0.0014         1  -1.5 general 
+#&gt; 15    15  2.0 77.0  0.0908 0.1269         1 -13.5 general 
+#&gt; 16    16  8.5 86.5  0.0181 0.0169         1   2.5  covert 
+#&gt; 17    17  3.5 97.5 -0.0552 0.0072         1   5.5 general </div><div class='input'>
+<span class='co'>### use a correlation of 0.7 for effect sizes corresponding to the same type of</span>
+<span class='co'>### delinquent behavior and a correlation of 0.5 for effect sizes corresponding</span>
+<span class='co'>### to different types of delinquent behavior</span>
+<span class='va'>V</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vcalc.html'>vcalc</a></span><span class='op'>(</span><span class='va'>vi</span>, cluster<span class='op'>=</span><span class='va'>study</span>, type<span class='op'>=</span><span class='va'>deltype</span>, obs<span class='op'>=</span><span class='va'>esid</span>, data<span class='op'>=</span><span class='va'>dat</span>, rho<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.7</span>, <span class='fl'>0.5</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>agg</span> <span class='op'>&lt;-</span> <span class='fu'>aggregate</span><span class='op'>(</span><span class='va'>dat</span>, cluster<span class='op'>=</span><span class='va'>study</span>, V<span class='op'>=</span><span class='va'>V</span><span class='op'>)</span>
+<span class='va'>agg</span>
+</div><div class='output co'>#&gt;    study esid   id      yi     vi pubstatus  year deltype 
+#&gt; 1      1  3.5  3.5  0.1275 0.0190         1   4.5 general 
+#&gt; 2      2  2.0  8.0  0.3922 0.0059         1   1.5 general 
+#&gt; 3      3  5.5 14.5  0.9909 0.0783         1  -7.7 general 
+#&gt; 4      4  1.0 20.0 -0.0447 0.0331         1  -7.5 general 
+#&gt; 5      5  1.0 21.0  1.5490 0.1384         1 -11.5 general 
+#&gt; 6      6  3.0 24.0 -0.0838 0.0193         1   5.5 general 
+#&gt; 7      7  3.5 29.5  1.0821 0.0573         1   3.5 general 
+#&gt; 8      8  1.0 33.0  0.3695 0.0199         1   1.5 general 
+#&gt; 9      9  1.5 34.5  0.1372 0.0287         1   5.5 general 
+#&gt; 10    10  3.0 38.0  0.1025 0.0102         1   4.5 general 
+#&gt; 11    11 11.5 51.5  0.4522 0.0093         0  -6.5 general 
+#&gt; 12    12  3.0 65.0  0.2840 0.0028         0   4.5   overt 
+#&gt; 13    13  1.5 68.5  0.3016 0.0117         1  -3.5 general 
+#&gt; 14    14  3.5 72.5  0.0334 0.0012         1  -1.5 general 
+#&gt; 15    15  2.0 77.0  0.0827 0.1359         1 -13.5 general 
+#&gt; 16    16  8.5 86.5 -0.2268 0.0176         1   2.5  covert 
+#&gt; 17    17  3.5 97.5 -0.0914 0.0071         1   5.5 general </div><div class='input'>
 <span class='co'>### reshape 'dat.ishak2007' into long format</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.ishak2007</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/reshape.html'>reshape</a></span><span class='op'>(</span><span class='va'>dat.ishak2007</span>, direction<span class='op'>=</span><span class='st'>"long"</span>, idvar<span class='op'>=</span><span class='st'>"study"</span>, v.names<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"yi"</span>,<span class='st'>"vi"</span><span class='op'>)</span>,

@@ -1,10 +1,10 @@
-aggregate.escalc <- function(x, cluster, time, V, struct="CS", rho, phi, weighted=TRUE, checkpd=TRUE, fun, na.rm=TRUE, subset, select, digits, ...) {
+aggregate.escalc <- function(x, cluster, time, obs, V, struct="CS", rho, phi, weighted=TRUE, checkpd=TRUE, fun, na.rm=TRUE, subset, select, digits, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
    .chkclass(class(x), must="escalc")
 
-   if (any(!is.element(struct, c("ID","CS","CAR","CS+CAR"))))
+   if (any(!is.element(struct, c("ID","CS","CAR","CS+CAR","CS*CAR"))))
       stop(mstyle$stop("Unknown 'struct' specified."))
 
    if (missing(cluster))
@@ -24,6 +24,7 @@ aggregate.escalc <- function(x, cluster, time, V, struct="CS", rho, phi, weighte
    V       <- .getx("V",       mf=mf, data=x)
    cluster <- .getx("cluster", mf=mf, data=x)
    time    <- .getx("time",    mf=mf, data=x)
+   obs     <- .getx("obs",     mf=mf, data=x)
    subset  <- .getx("subset",  mf=mf, data=x)
 
    #########################################################################
@@ -70,7 +71,7 @@ aggregate.escalc <- function(x, cluster, time, V, struct="CS", rho, phi, weighte
       if (struct=="ID")
          R <- diag(1, nrow=k, ncol=k)
 
-      if (is.element(struct, c("CS","CS+CAR"))) {
+      if (is.element(struct, c("CS","CS+CAR","CS*CAR"))) {
 
          if (missing(rho))
             stop(mstyle$stop("Must specify 'rho' for this var-cov structure."))
@@ -86,7 +87,7 @@ aggregate.escalc <- function(x, cluster, time, V, struct="CS", rho, phi, weighte
 
       }
 
-      if (is.element(struct, c("CAR","CS+CAR"))) {
+      if (is.element(struct, c("CAR","CS+CAR","CS*CAR"))) {
 
          if (missing(phi))
             stop(mstyle$stop("Must specify 'phi' for this var-cov structure."))
@@ -110,6 +111,21 @@ aggregate.escalc <- function(x, cluster, time, V, struct="CS", rho, phi, weighte
 
          if (length(time) != k)
             stop(mstyle$stop(paste0("Length of variable specified via 'time' (", length(time), ") does not match length of data (", k, ").")))
+
+         if (struct == "CS*CAR") {
+
+            ### checks on obs variable
+
+         if (!is.element("obs", names(mf)))
+            stop(mstyle$stop("Must specify 'obs' variable for this var-cov structure."))
+
+            if (!.is.vector(obs))
+               stop(mstyle$stop("Must specify 'obs' variable for this var-cov structure."))
+
+            if (length(obs) != k)
+               stop(mstyle$stop(paste0("Length of variable specified via 'obs' (", length(obs), ") does not match length of data (", k, ").")))
+
+         }
 
       }
 
@@ -136,6 +152,15 @@ aggregate.escalc <- function(x, cluster, time, V, struct="CS", rho, phi, weighte
          R <- matrix(0, nrow=k, ncol=k)
          for (i in 1:n) {
             R[cluster == ucluster[i], cluster == ucluster[i]] <- rho[i] + (1 - rho[i]) * outer(time[cluster == ucluster[i]], time[cluster == ucluster[i]], function(x,y) phi[i]^(abs(x-y)))
+         }
+
+      }
+
+      if (struct == "CS*CAR") {
+
+         R <- matrix(0, nrow=k, ncol=k)
+         for (i in 1:n) {
+            R[cluster == ucluster[i], cluster == ucluster[i]] <- outer(obs[cluster == ucluster[i]], obs[cluster == ucluster[i]], function(x,y) ifelse(x==y, 1, rho[i])) * outer(time[cluster == ucluster[i]], time[cluster == ucluster[i]], function(x,y) phi[i]^(abs(x-y)))
          }
 
       }
@@ -180,7 +205,7 @@ aggregate.escalc <- function(x, cluster, time, V, struct="CS", rho, phi, weighte
 
       for (i in 1:n) {
          if (any(abs(V[cluster == ucluster[i], cluster != ucluster[i]]) >= .Machine$double.eps, na.rm=TRUE))
-            warning(mstyle$warning(paste0("Estimates in cluster '", ucluster[i], "' appear to have non-zero covariances with estimates belonging to a different cluster.")), call.=FALSE)
+            warning(mstyle$warning(paste0("Estimates in cluster '", ucluster[i], "' appear to have non-zero covariances with estimates belonging to different clusters.")), call.=FALSE)
       }
 
    }

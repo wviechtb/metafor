@@ -1,4 +1,4 @@
-# metafor 3.1-22 (2021-10-16)
+# metafor 3.1-23 (2021-10-17)
 
 - added `vcalc()` function
 

@@ -105,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1-21</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1-23</span>
       </span>
     </div>
 
@@ -261,7 +261,7 @@
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Standard meta-analytic models (such as those that can be fitted with the <code><a href='rma.uni.html'>rma.uni</a></code> function) assume that the observed effect sizes or outcomes (or more precisely, their sampling errors) are independent. This assumption is typically violated whenever multiple observed effect sizes or outcomes are computed based on the same sample of subjects (or whatever the unit of analysis is) or if there is at least partial overlap of subjects that contribute information to the computation of multiple effect sizes or outcomes.</p>
+    <p>Standard meta-analytic models (such as those that can be fitted with the <code><a href='rma.uni.html'>rma.uni</a></code> function) assume that the observed effect sizes or outcomes (or more precisely, their sampling errors) are independent. This assumption is typically violated whenever multiple observed effect sizes or outcomes are computed based on the same sample of subjects (or whatever the study units are) or if there is at least partial overlap of subjects that contribute information to the computation of multiple effect sizes or outcomes.</p>
 <p>The present function can be used to construct or approximate the variance-covariance matrix of the sampling errors of dependent effect sizes or outcomes for a wide variety of circumstances (this variance-covariance matrix is the so-called <code>V</code> matrix that may be needed as input for multilevel/multivariate meta-analytic models as can be fitted with the <code><a href='rma.mv.html'>rma.mv</a></code> function).</p>
 <p>Argument <code>cluster</code> is used to specify the clustering variable. Rows with the same value of this variable are allowed to be dependent, while rows with different values are assumed to be independent. Typically, <code>cluster</code> will be a study identifier.</p>
 <p>Within the same cluster, there may be different subgroups with no overlap of subjects across subgroups. Argument <code>subgroup</code> can be used to distinguish such subgroups. Rows with the same value of this variable within a cluster are allowed to be dependent, while rows with different values are assumed to be independent even if they come from the same cluster.</p>
