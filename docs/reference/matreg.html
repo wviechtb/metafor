@@ -298,20 +298,20 @@
 #&gt; tau^2.5    0.0125  0.1119      8     no  acog.conf 
 #&gt; tau^2.6    0.0111  0.1052      8     no  asom.conf 
 #&gt; 
-#&gt;            rho.acg.p  rho.asm.p  rho.cnf.  rho.acg.s  rho.acg.c  rho.asm.c 
-#&gt; acog.perf          1                                                         
-#&gt; asom.perf     0.9497          1                                              
-#&gt; conf.perf    -0.6178    -0.5969         1                                    
-#&gt; acog.asom     0.5491     0.4604   -0.9345          1                         
-#&gt; acog.conf     0.0432    -0.0495    0.7023    -0.6961          1              
-#&gt; asom.conf     0.3532     0.2688   -0.1311    -0.0891     0.4193          1   
-#&gt;            acg.p  asm.p  cnf.  acg.s  acg.c  asm.c 
-#&gt; acog.perf      -      9     8      9      8      8 
-#&gt; asom.perf     no      -     8      9      8      8 
-#&gt; conf.perf     no     no     -      8      8      8 
-#&gt; acog.asom     no     no    no      -      8      8 
-#&gt; acog.conf     no     no    no     no      -      8 
-#&gt; asom.conf     no     no    no     no     no      - 
+#&gt;            rho.acg.p  rho.asm.p  rho.cnf.  rho.acg.s  rho.acg.c  rho.asm.c    acg.p  asm.p  cnf. 
+#&gt; acog.perf          1                                                              -      9     8 
+#&gt; asom.perf     0.9497          1                                                  no      -     8 
+#&gt; conf.perf    -0.6178    -0.5969         1                                        no     no     - 
+#&gt; acog.asom     0.5491     0.4604   -0.9345          1                             no     no    no 
+#&gt; acog.conf     0.0432    -0.0495    0.7023    -0.6961          1                  no     no    no 
+#&gt; asom.conf     0.3532     0.2688   -0.1311    -0.0891     0.4193          1       no     no    no 
+#&gt;            acg.s  acg.c  asm.c 
+#&gt; acog.perf      9      8      8 
+#&gt; asom.perf      9      8      8 
+#&gt; conf.perf      8      8      8 
+#&gt; acog.asom      -      8      8 
+#&gt; acog.conf     no      -      8 
+#&gt; asom.conf     no     no      - 
 #&gt; 
 #&gt; Test for Residual Heterogeneity:
 #&gt; QE(df = 45) = 334.8358, p-val &lt; .0001
@@ -343,20 +343,20 @@
 #&gt; conf  0.317 -0.489 -0.475  1.000</div><div class='input'>
 <span class='co'>### check that order in vcov(res) corresponds to order in R</span>
 <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='fu'><a href='vcov.rma.html'>vcov</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>, digits<span class='op'>=</span><span class='fl'>4</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                    var1.var2acog.perf var1.var2asom.perf var1.var2conf.perf
-#&gt; var1.var2acog.perf             0.0198             0.0115            -0.0069
-#&gt; var1.var2asom.perf             0.0115             0.0084            -0.0043
-#&gt; var1.var2conf.perf            -0.0069            -0.0043             0.0072
-#&gt; var1.var2acog.asom             0.0017             0.0009            -0.0017
-#&gt; var1.var2acog.conf             0.0004            -0.0002             0.0023
-#&gt; var1.var2asom.conf             0.0018             0.0010            -0.0004
-#&gt;                    var1.var2acog.asom var1.var2acog.conf var1.var2asom.conf
-#&gt; var1.var2acog.perf             0.0017             0.0004             0.0018
-#&gt; var1.var2asom.perf             0.0009            -0.0002             0.0010
-#&gt; var1.var2conf.perf            -0.0017             0.0023            -0.0004
-#&gt; var1.var2acog.asom             0.0013            -0.0009            -0.0004
-#&gt; var1.var2acog.conf            -0.0009             0.0026             0.0011
-#&gt; var1.var2asom.conf            -0.0004             0.0011             0.0026</div><div class='input'>
+</div><div class='output co'>#&gt;                    var1.var2acog.perf var1.var2asom.perf var1.var2conf.perf var1.var2acog.asom
+#&gt; var1.var2acog.perf             0.0198             0.0115            -0.0069             0.0017
+#&gt; var1.var2asom.perf             0.0115             0.0084            -0.0043             0.0009
+#&gt; var1.var2conf.perf            -0.0069            -0.0043             0.0072            -0.0017
+#&gt; var1.var2acog.asom             0.0017             0.0009            -0.0017             0.0013
+#&gt; var1.var2acog.conf             0.0004            -0.0002             0.0023            -0.0009
+#&gt; var1.var2asom.conf             0.0018             0.0010            -0.0004            -0.0004
+#&gt;                    var1.var2acog.conf var1.var2asom.conf
+#&gt; var1.var2acog.perf             0.0004             0.0018
+#&gt; var1.var2asom.perf            -0.0002             0.0010
+#&gt; var1.var2conf.perf             0.0023            -0.0004
+#&gt; var1.var2acog.asom            -0.0009            -0.0004
+#&gt; var1.var2acog.conf             0.0026             0.0011
+#&gt; var1.var2asom.conf             0.0011             0.0026</div><div class='input'>
 <span class='co'>### fit regression model with 'perf' as outcome and 'acog', 'asom', and 'conf' as predictors</span>
 <span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>matreg</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>:</span><span class='fl'>4</span>, R<span class='op'>=</span><span class='va'>R</span>, V<span class='op'>=</span><span class='fu'><a href='vcov.rma.html'>vcov</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>fit</span>

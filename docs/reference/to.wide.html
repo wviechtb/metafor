@@ -316,62 +316,62 @@
 <span class='co'>### restructure to wide format</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'>to.wide</span><span class='op'>(</span><span class='va'>dat</span>, study<span class='op'>=</span><span class='st'>"study"</span>, grp<span class='op'>=</span><span class='st'>"treatment"</span>, ref<span class='op'>=</span><span class='st'>"placebo"</span>, grpvars<span class='op'>=</span><span class='fl'>4</span><span class='op'>:</span><span class='fl'>6</span><span class='op'>)</span>
 <span class='va'>dat</span>
-</div><div class='output co'>#&gt;                    study comment   treatment.1 ni.1  mi.1 sdi.1   treatment.2
-#&gt; 1            Alex (1998)  change     metformin  291  0.13 1.428  sulfonylurea
-#&gt; 2           Baksi (2004)  change rosiglitazone  218 -1.20 1.112       placebo
-#&gt; 3           Costa (1997)  change      acarbose   36 -1.10 0.360       placebo
-#&gt; 4        Davidson (2007)  change rosiglitazone  117 -1.20 1.097       placebo
-#&gt; 5       De Fronzo (1995)  change     metformin  213 -1.70 1.459       placebo
-#&gt; 6          Derosa (2004)     raw  pioglitazone   45  6.80 0.800 rosiglitazone
-#&gt; 7          Garber (2008)  change  vildagliptin  132 -0.63 1.034       placebo
-#&gt; 8  Gonzalez-Ortiz (2004)  change     metformin   34 -1.30 1.861       placebo
-#&gt; 9        Hanefeld (2004)     raw     metformin  320  7.45 1.073  pioglitazone
-#&gt; 10      Hermansen (2007)  change   sitagliptin  106 -0.30 0.940       placebo
-#&gt; 11       Johnston (1994)  change      miglitol   68 -0.41 1.072       placebo
-#&gt; 12      Johnston (1998a)  change      miglitol   91 -0.43 0.954       placebo
-#&gt; 13      Johnston (1998b)  change      miglitol   49 -0.12 1.400       placebo
-#&gt; 14        Kerenyi (2004)  change rosiglitazone  160 -0.91 0.990       placebo
-#&gt; 15            Kim (2007)  change     metformin   56 -1.10 1.139 rosiglitazone
-#&gt; 16         Kipnes (2001)  change  pioglitazone  182 -1.20 1.369       placebo
-#&gt; 17          Lewin (2007)  change     metformin  431 -0.74 1.106       placebo
-#&gt; 18         Moulin (2006)  change    benfluorex  161 -0.82 1.028       placebo
-#&gt; 19          Oyama (2008)  change      acarbose   41 -0.70 0.800  sulfonylurea
-#&gt; 20     Rosenstock (2008)  change rosiglitazone   59 -1.17 1.229       placebo
-#&gt; 21         Stucci (1996)     raw    benfluorex   28  8.03 1.290       placebo
-#&gt; 22 Vongthavaravat (2002)  change rosiglitazone  164 -1.10 1.559  sulfonylurea
-#&gt; 23         Willms (1999)  change      acarbose   31 -2.30 1.782       placebo
-#&gt; 24         Willms (1999)  change     metformin   29 -2.50 0.862       placebo
-#&gt; 25  Wolffenbuttel (1999)  change rosiglitazone  183 -0.90 1.100       placebo
-#&gt; 26           Yang (2003)  change     metformin   96 -0.95 1.500 rosiglitazone
-#&gt; 27            Zhu (2003)  change rosiglitazone  210 -1.90 1.470       placebo
-#&gt;    ni.2  mi.2 sdi.2 id  comp   design
-#&gt; 1   300  0.50 1.450  1 me-su    me-su
-#&gt; 2   233  0.10 1.036  2 ro-pl    ro-pl
-#&gt; 3    29 -0.30 0.700  3 ac-pl    ac-pl
-#&gt; 4   116  0.14 1.093  4 ro-pl    ro-pl
-#&gt; 5   209  0.20 1.446  5 me-pl    me-pl
-#&gt; 6    42  6.70 0.900  6 pi-ro    pi-ro
-#&gt; 7   144  0.07 1.080  7 vi-pl    vi-pl
-#&gt; 8    37 -0.90 1.803  8 me-pl    me-pl
-#&gt; 9   319  7.61 1.072  9 me-pi    me-pi
-#&gt; 10  106  0.27 0.940 10 si-pl    si-pl
-#&gt; 11   63  0.33 1.032 11 mi-pl    mi-pl
-#&gt; 12   43  0.98 1.311 12 mi-pl    mi-pl
-#&gt; 13   34  0.56 1.166 13 mi-pl    mi-pl
-#&gt; 14  154 -0.14 0.920 14 ro-pl    ro-pl
-#&gt; 15   57 -1.10 1.341 15 me-ro    me-ro
-#&gt; 16  181  0.10 1.024 16 pi-pl    pi-pl
-#&gt; 17  144  0.08 1.004 17 me-pl    me-pl
-#&gt; 18  156  0.19 1.374 18 be-pl    be-pl
-#&gt; 19   43 -0.30 0.600 19 ac-su    ac-su
-#&gt; 20   57 -0.08 1.208 20 ro-pl    ro-pl
-#&gt; 21   30  8.26 1.350 21 be-pl    be-pl
-#&gt; 22  170  0.10 0.992 22 ro-su    ro-su
-#&gt; 23   29 -1.30 1.831 23 ac-pl ac-me-pl
-#&gt; 24   29 -1.30 1.831 24 me-pl ac-me-pl
-#&gt; 25  192  0.20 1.110 25 ro-pl    ro-pl
-#&gt; 26  102 -1.09 1.650 26 me-ro    me-ro
-#&gt; 27  105 -0.40 1.300 27 ro-pl    ro-pl</div><div class='input'>
+</div><div class='output co'>#&gt;                    study comment   treatment.1 ni.1  mi.1 sdi.1   treatment.2 ni.2  mi.2 sdi.2 id
+#&gt; 1            Alex (1998)  change     metformin  291  0.13 1.428  sulfonylurea  300  0.50 1.450  1
+#&gt; 2           Baksi (2004)  change rosiglitazone  218 -1.20 1.112       placebo  233  0.10 1.036  2
+#&gt; 3           Costa (1997)  change      acarbose   36 -1.10 0.360       placebo   29 -0.30 0.700  3
+#&gt; 4        Davidson (2007)  change rosiglitazone  117 -1.20 1.097       placebo  116  0.14 1.093  4
+#&gt; 5       De Fronzo (1995)  change     metformin  213 -1.70 1.459       placebo  209  0.20 1.446  5
+#&gt; 6          Derosa (2004)     raw  pioglitazone   45  6.80 0.800 rosiglitazone   42  6.70 0.900  6
+#&gt; 7          Garber (2008)  change  vildagliptin  132 -0.63 1.034       placebo  144  0.07 1.080  7
+#&gt; 8  Gonzalez-Ortiz (2004)  change     metformin   34 -1.30 1.861       placebo   37 -0.90 1.803  8
+#&gt; 9        Hanefeld (2004)     raw     metformin  320  7.45 1.073  pioglitazone  319  7.61 1.072  9
+#&gt; 10      Hermansen (2007)  change   sitagliptin  106 -0.30 0.940       placebo  106  0.27 0.940 10
+#&gt; 11       Johnston (1994)  change      miglitol   68 -0.41 1.072       placebo   63  0.33 1.032 11
+#&gt; 12      Johnston (1998a)  change      miglitol   91 -0.43 0.954       placebo   43  0.98 1.311 12
+#&gt; 13      Johnston (1998b)  change      miglitol   49 -0.12 1.400       placebo   34  0.56 1.166 13
+#&gt; 14        Kerenyi (2004)  change rosiglitazone  160 -0.91 0.990       placebo  154 -0.14 0.920 14
+#&gt; 15            Kim (2007)  change     metformin   56 -1.10 1.139 rosiglitazone   57 -1.10 1.341 15
+#&gt; 16         Kipnes (2001)  change  pioglitazone  182 -1.20 1.369       placebo  181  0.10 1.024 16
+#&gt; 17          Lewin (2007)  change     metformin  431 -0.74 1.106       placebo  144  0.08 1.004 17
+#&gt; 18         Moulin (2006)  change    benfluorex  161 -0.82 1.028       placebo  156  0.19 1.374 18
+#&gt; 19          Oyama (2008)  change      acarbose   41 -0.70 0.800  sulfonylurea   43 -0.30 0.600 19
+#&gt; 20     Rosenstock (2008)  change rosiglitazone   59 -1.17 1.229       placebo   57 -0.08 1.208 20
+#&gt; 21         Stucci (1996)     raw    benfluorex   28  8.03 1.290       placebo   30  8.26 1.350 21
+#&gt; 22 Vongthavaravat (2002)  change rosiglitazone  164 -1.10 1.559  sulfonylurea  170  0.10 0.992 22
+#&gt; 23         Willms (1999)  change      acarbose   31 -2.30 1.782       placebo   29 -1.30 1.831 23
+#&gt; 24         Willms (1999)  change     metformin   29 -2.50 0.862       placebo   29 -1.30 1.831 24
+#&gt; 25  Wolffenbuttel (1999)  change rosiglitazone  183 -0.90 1.100       placebo  192  0.20 1.110 25
+#&gt; 26           Yang (2003)  change     metformin   96 -0.95 1.500 rosiglitazone  102 -1.09 1.650 26
+#&gt; 27            Zhu (2003)  change rosiglitazone  210 -1.90 1.470       placebo  105 -0.40 1.300 27
+#&gt;     comp   design
+#&gt; 1  me-su    me-su
+#&gt; 2  ro-pl    ro-pl
+#&gt; 3  ac-pl    ac-pl
+#&gt; 4  ro-pl    ro-pl
+#&gt; 5  me-pl    me-pl
+#&gt; 6  pi-ro    pi-ro
+#&gt; 7  vi-pl    vi-pl
+#&gt; 8  me-pl    me-pl
+#&gt; 9  me-pi    me-pi
+#&gt; 10 si-pl    si-pl
+#&gt; 11 mi-pl    mi-pl
+#&gt; 12 mi-pl    mi-pl
+#&gt; 13 mi-pl    mi-pl
+#&gt; 14 ro-pl    ro-pl
+#&gt; 15 me-ro    me-ro
+#&gt; 16 pi-pl    pi-pl
+#&gt; 17 me-pl    me-pl
+#&gt; 18 be-pl    be-pl
+#&gt; 19 ac-su    ac-su
+#&gt; 20 ro-pl    ro-pl
+#&gt; 21 be-pl    be-pl
+#&gt; 22 ro-su    ro-su
+#&gt; 23 ac-pl ac-me-pl
+#&gt; 24 me-pl ac-me-pl
+#&gt; 25 ro-pl    ro-pl
+#&gt; 26 me-ro    me-ro
+#&gt; 27 ro-pl    ro-pl</div><div class='input'>
 <span class='co'>### data in long format</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.hasselblad1998</span>
 <span class='va'>dat</span>
@@ -429,60 +429,33 @@
 <span class='co'>### restructure to wide format</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'>to.wide</span><span class='op'>(</span><span class='va'>dat</span>, study<span class='op'>=</span><span class='st'>"study"</span>, grp<span class='op'>=</span><span class='st'>"trt"</span>, ref<span class='op'>=</span><span class='st'>"no_contact"</span>, grpvars<span class='op'>=</span><span class='fl'>6</span><span class='op'>:</span><span class='fl'>7</span><span class='op'>)</span>
 <span class='va'>dat</span>
-</div><div class='output co'>#&gt;    id study            authors year          trt.1 xi.1 ni.1          trt.2
-#&gt; 1   1     1        Reid et al. 1974 ind_counseling  363  714     no_contact
-#&gt; 2   2     2    Cottraux et al. 1983 grp_counseling   10  138     no_contact
-#&gt; 3   3     2    Cottraux et al. 1983 ind_counseling   23  140     no_contact
-#&gt; 4   4     3       Slama et al. 1990 ind_counseling    9  205     no_contact
-#&gt; 5   5     4    Jamrozik et al. 1984 ind_counseling  237 1561     no_contact
-#&gt; 6   6     5      Rabkin et al. 1984 ind_counseling    9   48     no_contact
-#&gt; 7   7     6   Decker and Evans 1989 ind_counseling   16   43      self_help
-#&gt; 8   8     7    Richmond et al. 1986 ind_counseling   31   98     no_contact
-#&gt; 9   9     8              Leung 1991 ind_counseling   26   95     no_contact
-#&gt; 10 10     9  Mothersill et al. 1988 grp_counseling   29  170      self_help
-#&gt; 11 11     9  Mothersill et al. 1988 ind_counseling   12   85      self_help
-#&gt; 12 12    10    Langford et al. 1983 ind_counseling   17   77     no_contact
-#&gt; 13 13    11       Gritz et al. 1992      self_help   77  694     no_contact
-#&gt; 14 14    12    Campbell et al. 1986      self_help   21  535     no_contact
-#&gt; 15 15    13     Sanders et al. 1989 ind_counseling  107  761     no_contact
-#&gt; 16 16    14    Hilleman et al. 1993 grp_counseling   20   74 ind_counseling
-#&gt; 17 17    15     Gillams et al. 1984 grp_counseling    3   26 ind_counseling
-#&gt; 18 18    16 Mogielnicki et al. 1986 grp_counseling   32  127      self_help
-#&gt; 19 19    17        Page et al. 1986 ind_counseling    8   90     no_contact
-#&gt; 20 20    18    Vetter and Ford 1990 ind_counseling   34  237     no_contact
-#&gt; 21 21    19  Williams and Hall 1988 grp_counseling    9   20     no_contact
-#&gt; 22 22    20    Pallonen et al. 1994      self_help   19  149     no_contact
-#&gt; 23 23    21     Russell et al. 1983 ind_counseling  143 1031     no_contact
-#&gt; 24 24    22 Stewart and Rosser 1982 ind_counseling   36  504     no_contact
-#&gt; 25 25    23     Russell et al. 1979 ind_counseling   73  675     no_contact
-#&gt; 26 26    24    Kendrick et al. 1995 ind_counseling   54  888     no_contact
-#&gt;    xi.2 ni.2  comp   design
-#&gt; 1    75  731 in-no    in-no
-#&gt; 2     9  140 gr-no gr-in-no
-#&gt; 3     9  140 in-no gr-in-no
-#&gt; 4     2  106 in-no    in-no
-#&gt; 5    58  549 in-no    in-no
-#&gt; 6     0   33 in-no    in-no
-#&gt; 7    20   49 in-se    in-se
-#&gt; 8     3  100 in-no    in-no
-#&gt; 9     1   31 in-no    in-no
-#&gt; 10   11   78 gr-se gr-in-se
-#&gt; 11   11   78 in-se gr-in-se
-#&gt; 12    6   39 in-no    in-no
-#&gt; 13   79  702 se-no    se-no
-#&gt; 14   18  671 se-no    se-no
-#&gt; 15   64  642 in-no    in-no
-#&gt; 16   12   76 gr-in    gr-in
-#&gt; 17    9   55 gr-in    gr-in
-#&gt; 18    7   66 gr-se    gr-se
-#&gt; 19    5   62 in-no    in-no
-#&gt; 20   20  234 in-no    in-no
-#&gt; 21    0   20 gr-no    gr-no
-#&gt; 22    8  116 se-no    se-no
-#&gt; 23   95 1107 in-no    in-no
-#&gt; 24   15  187 in-no    in-no
-#&gt; 25   78  584 in-no    in-no
-#&gt; 26   69 1177 in-no    in-no</div></pre>
+</div><div class='output co'>#&gt;    id study            authors year          trt.1 xi.1 ni.1          trt.2 xi.2 ni.2  comp   design
+#&gt; 1   1     1        Reid et al. 1974 ind_counseling  363  714     no_contact   75  731 in-no    in-no
+#&gt; 2   2     2    Cottraux et al. 1983 grp_counseling   10  138     no_contact    9  140 gr-no gr-in-no
+#&gt; 3   3     2    Cottraux et al. 1983 ind_counseling   23  140     no_contact    9  140 in-no gr-in-no
+#&gt; 4   4     3       Slama et al. 1990 ind_counseling    9  205     no_contact    2  106 in-no    in-no
+#&gt; 5   5     4    Jamrozik et al. 1984 ind_counseling  237 1561     no_contact   58  549 in-no    in-no
+#&gt; 6   6     5      Rabkin et al. 1984 ind_counseling    9   48     no_contact    0   33 in-no    in-no
+#&gt; 7   7     6   Decker and Evans 1989 ind_counseling   16   43      self_help   20   49 in-se    in-se
+#&gt; 8   8     7    Richmond et al. 1986 ind_counseling   31   98     no_contact    3  100 in-no    in-no
+#&gt; 9   9     8              Leung 1991 ind_counseling   26   95     no_contact    1   31 in-no    in-no
+#&gt; 10 10     9  Mothersill et al. 1988 grp_counseling   29  170      self_help   11   78 gr-se gr-in-se
+#&gt; 11 11     9  Mothersill et al. 1988 ind_counseling   12   85      self_help   11   78 in-se gr-in-se
+#&gt; 12 12    10    Langford et al. 1983 ind_counseling   17   77     no_contact    6   39 in-no    in-no
+#&gt; 13 13    11       Gritz et al. 1992      self_help   77  694     no_contact   79  702 se-no    se-no
+#&gt; 14 14    12    Campbell et al. 1986      self_help   21  535     no_contact   18  671 se-no    se-no
+#&gt; 15 15    13     Sanders et al. 1989 ind_counseling  107  761     no_contact   64  642 in-no    in-no
+#&gt; 16 16    14    Hilleman et al. 1993 grp_counseling   20   74 ind_counseling   12   76 gr-in    gr-in
+#&gt; 17 17    15     Gillams et al. 1984 grp_counseling    3   26 ind_counseling    9   55 gr-in    gr-in
+#&gt; 18 18    16 Mogielnicki et al. 1986 grp_counseling   32  127      self_help    7   66 gr-se    gr-se
+#&gt; 19 19    17        Page et al. 1986 ind_counseling    8   90     no_contact    5   62 in-no    in-no
+#&gt; 20 20    18    Vetter and Ford 1990 ind_counseling   34  237     no_contact   20  234 in-no    in-no
+#&gt; 21 21    19  Williams and Hall 1988 grp_counseling    9   20     no_contact    0   20 gr-no    gr-no
+#&gt; 22 22    20    Pallonen et al. 1994      self_help   19  149     no_contact    8  116 se-no    se-no
+#&gt; 23 23    21     Russell et al. 1983 ind_counseling  143 1031     no_contact   95 1107 in-no    in-no
+#&gt; 24 24    22 Stewart and Rosser 1982 ind_counseling   36  504     no_contact   15  187 in-no    in-no
+#&gt; 25 25    23     Russell et al. 1979 ind_counseling   73  675     no_contact   78  584 in-no    in-no
+#&gt; 26 26    24    Kendrick et al. 1995 ind_counseling   54  888     no_contact   69 1177 in-no    in-no</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -358,55 +358,55 @@
 <span class='co'>### examine how the factor was actually coded for the studies in the dataset</span>
 <span class='fu'>predict</span><span class='op'>(</span><span class='va'>res</span>, addx<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 
-#&gt;       pred     se   ci.lb   ci.ub   pi.lb   pi.ub X.intrcpt X.ablat 
-#&gt; 1  -1.1744 0.2137 -1.5932 -0.7557 -2.0293 -0.3196         1      44 
-#&gt; 2  -1.4745 0.2742 -2.0119 -0.9370 -2.3933 -0.5556         1      55 
-#&gt; 3  -1.1199 0.2061 -1.5238 -0.7159 -1.9676 -0.2722         1      42 
-#&gt; 4  -1.3926 0.2552 -1.8928 -0.8925 -2.2902 -0.4951         1      52 
-#&gt; 5  -0.0614 0.3336 -0.7152  0.5924 -1.0528  0.9300         1      13 
-#&gt; 6  -0.9069 0.3176 -1.5295 -0.2844 -1.8780  0.0642         1      44 
-#&gt; 7  -0.4925 0.2338 -0.9508 -0.0343 -1.3674  0.3823         1      19 
-#&gt; 8  -0.3289 0.2694 -0.8568  0.1991 -1.2422  0.5845         1      13 
-#&gt; 9  -0.7107 0.2007 -1.1040 -0.3175 -1.5534  0.1320         1      27 
-#&gt; 10 -0.7939 0.2667 -1.3166 -0.2712 -1.7042  0.1164         1      42 
-#&gt; 11 -0.1393 0.2654 -0.6594  0.3808 -1.0481  0.7695         1      18 
-#&gt; 12 -0.5484 0.2438 -1.0263 -0.0706 -1.4337  0.3369         1      33 
-#&gt; 13 -0.5484 0.2438 -1.0263 -0.0706 -1.4337  0.3369         1      33 
-#&gt;    X.factor.alloc.random X.factor.alloc.systematic 
-#&gt; 1                      1                         0 
-#&gt; 2                      1                         0 
-#&gt; 3                      1                         0 
-#&gt; 4                      1                         0 
-#&gt; 5                      0                         0 
-#&gt; 6                      0                         0 
-#&gt; 7                      1                         0 
-#&gt; 8                      1                         0 
-#&gt; 9                      1                         0 
-#&gt; 10                     0                         1 
-#&gt; 11                     0                         1 
-#&gt; 12                     0                         1 
-#&gt; 13                     0                         1 
+#&gt;       pred     se   ci.lb   ci.ub   pi.lb   pi.ub X.intrcpt X.ablat X.factor.alloc.random 
+#&gt; 1  -1.1744 0.2137 -1.5932 -0.7557 -2.0293 -0.3196         1      44                     1 
+#&gt; 2  -1.4745 0.2742 -2.0119 -0.9370 -2.3933 -0.5556         1      55                     1 
+#&gt; 3  -1.1199 0.2061 -1.5238 -0.7159 -1.9676 -0.2722         1      42                     1 
+#&gt; 4  -1.3926 0.2552 -1.8928 -0.8925 -2.2902 -0.4951         1      52                     1 
+#&gt; 5  -0.0614 0.3336 -0.7152  0.5924 -1.0528  0.9300         1      13                     0 
+#&gt; 6  -0.9069 0.3176 -1.5295 -0.2844 -1.8780  0.0642         1      44                     0 
+#&gt; 7  -0.4925 0.2338 -0.9508 -0.0343 -1.3674  0.3823         1      19                     1 
+#&gt; 8  -0.3289 0.2694 -0.8568  0.1991 -1.2422  0.5845         1      13                     1 
+#&gt; 9  -0.7107 0.2007 -1.1040 -0.3175 -1.5534  0.1320         1      27                     1 
+#&gt; 10 -0.7939 0.2667 -1.3166 -0.2712 -1.7042  0.1164         1      42                     0 
+#&gt; 11 -0.1393 0.2654 -0.6594  0.3808 -1.0481  0.7695         1      18                     0 
+#&gt; 12 -0.5484 0.2438 -1.0263 -0.0706 -1.4337  0.3369         1      33                     0 
+#&gt; 13 -0.5484 0.2438 -1.0263 -0.0706 -1.4337  0.3369         1      33                     0 
+#&gt;    X.factor.alloc.systematic 
+#&gt; 1                          0 
+#&gt; 2                          0 
+#&gt; 3                          0 
+#&gt; 4                          0 
+#&gt; 5                          0 
+#&gt; 6                          0 
+#&gt; 7                          0 
+#&gt; 8                          0 
+#&gt; 9                          0 
+#&gt; 10                         1 
+#&gt; 11                         1 
+#&gt; 12                         1 
+#&gt; 13                         1 
 #&gt; </div><div class='input'>
 <span class='co'>### predictd average risk ratios at 30 degrees for the three factor levels</span>
 <span class='co'>### note: the contrast (dummy) variables need to specified explicitly here</span>
 <span class='fu'>predict</span><span class='op'>(</span><span class='va'>res</span>, newmods<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>30</span>, <span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span>, addx<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>   <span class='co'># for alternate  allocation</span>
 </div><div class='output co'>#&gt; 
-#&gt;     pred     se   ci.lb  ci.ub   pi.lb  pi.ub X.intrcpt X.ablat 
-#&gt;  -0.5251 0.2923 -1.0980 0.0478 -1.4651 0.4149         1      30 
-#&gt;  X.factor.alloc.random X.factor.alloc.systematic 
-#&gt;                      0                         0 
+#&gt;     pred     se   ci.lb  ci.ub   pi.lb  pi.ub X.intrcpt X.ablat X.factor.alloc.random 
+#&gt;  -0.5251 0.2923 -1.0980 0.0478 -1.4651 0.4149         1      30                     0 
+#&gt;  X.factor.alloc.systematic 
+#&gt;                          0 
 #&gt; </div><div class='input'><span class='fu'>predict</span><span class='op'>(</span><span class='va'>res</span>, newmods<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>30</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span>, addx<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>   <span class='co'># for random     allocation</span>
 </div><div class='output co'>#&gt; 
-#&gt;     pred     se   ci.lb   ci.ub   pi.lb  pi.ub X.intrcpt X.ablat 
-#&gt;  -0.7926 0.1941 -1.1729 -0.4122 -1.6293 0.0442         1      30 
-#&gt;  X.factor.alloc.random X.factor.alloc.systematic 
-#&gt;                      1                         0 
+#&gt;     pred     se   ci.lb   ci.ub   pi.lb  pi.ub X.intrcpt X.ablat X.factor.alloc.random 
+#&gt;  -0.7926 0.1941 -1.1729 -0.4122 -1.6293 0.0442         1      30                     1 
+#&gt;  X.factor.alloc.systematic 
+#&gt;                          0 
 #&gt; </div><div class='input'><span class='fu'>predict</span><span class='op'>(</span><span class='va'>res</span>, newmods<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>30</span>, <span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span>, addx<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>   <span class='co'># for systematic allocation</span>
 </div><div class='output co'>#&gt; 
-#&gt;     pred     se   ci.lb  ci.ub   pi.lb  pi.ub X.intrcpt X.ablat 
-#&gt;  -0.4666 0.2420 -0.9410 0.0078 -1.3501 0.4168         1      30 
-#&gt;  X.factor.alloc.random X.factor.alloc.systematic 
-#&gt;                      0                         1 
+#&gt;     pred     se   ci.lb  ci.ub   pi.lb  pi.ub X.intrcpt X.ablat X.factor.alloc.random 
+#&gt;  -0.4666 0.2420 -0.9410 0.0078 -1.3501 0.4168         1      30                     0 
+#&gt;  X.factor.alloc.systematic 
+#&gt;                          1 
 #&gt; </div><div class='input'>
 <span class='co'>### can also use named vector with arbitrary order and abbreviated variable names</span>
 <span class='fu'>predict</span><span class='op'>(</span><span class='va'>res</span>, newmods<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>sys<span class='op'>=</span><span class='fl'>0</span>, ran<span class='op'>=</span><span class='fl'>0</span>, abl<span class='op'>=</span><span class='fl'>30</span><span class='op'>)</span><span class='op'>)</span>

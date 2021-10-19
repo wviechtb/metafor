@@ -316,12 +316,9 @@
 <span class='co'>### corresponding likelihood ratio test</span>
 <span class='fu'>anova</span><span class='op'>(</span><span class='va'>res1</span>, <span class='va'>res2</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 
-#&gt;         df     AIC     BIC    AICc   logLik     LRT   pval       QE  tau^2 
-#&gt; Full     4 23.2922 25.5520 28.2922  -7.6461                 28.3251 0.0269 
-#&gt; Reduced  2 29.3302 30.4601 30.5302 -12.6651 10.0379 0.0066 152.2330 0.2800 
-#&gt;              R^2 
-#&gt; Full 
-#&gt; Reduced 90.3948% 
+#&gt;         df     AIC     BIC    AICc   logLik     LRT   pval       QE  tau^2      R^2 
+#&gt; Full     4 23.2922 25.5520 28.2922  -7.6461                 28.3251 0.0269          
+#&gt; Reduced  2 29.3302 30.4601 30.5302 -12.6651 10.0379 0.0066 152.2330 0.2800 90.3948% 
 #&gt; </div><div class='input'>
 <span class='co'>### test of a linear combination</span>
 <span class='fu'>anova</span><span class='op'>(</span><span class='va'>res2</span>, X<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>35</span>,<span class='fl'>1970</span><span class='op'>)</span><span class='op'>)</span>

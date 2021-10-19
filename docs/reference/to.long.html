@@ -338,199 +338,106 @@
     <pre class="examples"><div class='input'><span class='co'>### convert data to long format</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'>to.long</span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"OR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span><span class='op'>)</span>
 <span class='va'>dat</span>
-</div><div class='output co'>#&gt;    trial               author year tpos  tneg cpos  cneg ablat      alloc study
-#&gt; 1      1              Aronson 1948    4   119   11   128    44     random     1
-#&gt; 2      1              Aronson 1948    4   119   11   128    44     random     1
-#&gt; 3      2     Ferguson &amp; Simes 1949    6   300   29   274    55     random     2
-#&gt; 4      2     Ferguson &amp; Simes 1949    6   300   29   274    55     random     2
-#&gt; 5      3      Rosenthal et al 1960    3   228   11   209    42     random     3
-#&gt; 6      3      Rosenthal et al 1960    3   228   11   209    42     random     3
-#&gt; 7      4    Hart &amp; Sutherland 1977   62 13536  248 12619    52     random     4
-#&gt; 8      4    Hart &amp; Sutherland 1977   62 13536  248 12619    52     random     4
-#&gt; 9      5 Frimodt-Moller et al 1973   33  5036   47  5761    13  alternate     5
-#&gt; 10     5 Frimodt-Moller et al 1973   33  5036   47  5761    13  alternate     5
-#&gt; 11     6      Stein &amp; Aronson 1953  180  1361  372  1079    44  alternate     6
-#&gt; 12     6      Stein &amp; Aronson 1953  180  1361  372  1079    44  alternate     6
-#&gt; 13     7     Vandiviere et al 1973    8  2537   10   619    19     random     7
-#&gt; 14     7     Vandiviere et al 1973    8  2537   10   619    19     random     7
-#&gt; 15     8           TPT Madras 1980  505 87886  499 87892    13     random     8
-#&gt; 16     8           TPT Madras 1980  505 87886  499 87892    13     random     8
-#&gt; 17     9     Coetzee &amp; Berjak 1968   29  7470   45  7232    27     random     9
-#&gt; 18     9     Coetzee &amp; Berjak 1968   29  7470   45  7232    27     random     9
-#&gt; 19    10      Rosenthal et al 1961   17  1699   65  1600    42 systematic    10
-#&gt; 20    10      Rosenthal et al 1961   17  1699   65  1600    42 systematic    10
-#&gt; 21    11       Comstock et al 1974  186 50448  141 27197    18 systematic    11
-#&gt; 22    11       Comstock et al 1974  186 50448  141 27197    18 systematic    11
-#&gt; 23    12   Comstock &amp; Webster 1969    5  2493    3  2338    33 systematic    12
-#&gt; 24    12   Comstock &amp; Webster 1969    5  2493    3  2338    33 systematic    12
-#&gt; 25    13       Comstock et al 1976   27 16886   29 17825    33 systematic    13
-#&gt; 26    13       Comstock et al 1976   27 16886   29 17825    33 systematic    13
-#&gt;    group out1  out2
-#&gt; 1      1    4   119
-#&gt; 2      2   11   128
-#&gt; 3      1    6   300
-#&gt; 4      2   29   274
-#&gt; 5      1    3   228
-#&gt; 6      2   11   209
-#&gt; 7      1   62 13536
-#&gt; 8      2  248 12619
-#&gt; 9      1   33  5036
-#&gt; 10     2   47  5761
-#&gt; 11     1  180  1361
-#&gt; 12     2  372  1079
-#&gt; 13     1    8  2537
-#&gt; 14     2   10   619
-#&gt; 15     1  505 87886
-#&gt; 16     2  499 87892
-#&gt; 17     1   29  7470
-#&gt; 18     2   45  7232
-#&gt; 19     1   17  1699
-#&gt; 20     2   65  1600
-#&gt; 21     1  186 50448
-#&gt; 22     2  141 27197
-#&gt; 23     1    5  2493
-#&gt; 24     2    3  2338
-#&gt; 25     1   27 16886
-#&gt; 26     2   29 17825</div><div class='input'>
+</div><div class='output co'>#&gt;    trial               author year tpos  tneg cpos  cneg ablat      alloc study group out1  out2
+#&gt; 1      1              Aronson 1948    4   119   11   128    44     random     1     1    4   119
+#&gt; 2      1              Aronson 1948    4   119   11   128    44     random     1     2   11   128
+#&gt; 3      2     Ferguson &amp; Simes 1949    6   300   29   274    55     random     2     1    6   300
+#&gt; 4      2     Ferguson &amp; Simes 1949    6   300   29   274    55     random     2     2   29   274
+#&gt; 5      3      Rosenthal et al 1960    3   228   11   209    42     random     3     1    3   228
+#&gt; 6      3      Rosenthal et al 1960    3   228   11   209    42     random     3     2   11   209
+#&gt; 7      4    Hart &amp; Sutherland 1977   62 13536  248 12619    52     random     4     1   62 13536
+#&gt; 8      4    Hart &amp; Sutherland 1977   62 13536  248 12619    52     random     4     2  248 12619
+#&gt; 9      5 Frimodt-Moller et al 1973   33  5036   47  5761    13  alternate     5     1   33  5036
+#&gt; 10     5 Frimodt-Moller et al 1973   33  5036   47  5761    13  alternate     5     2   47  5761
+#&gt; 11     6      Stein &amp; Aronson 1953  180  1361  372  1079    44  alternate     6     1  180  1361
+#&gt; 12     6      Stein &amp; Aronson 1953  180  1361  372  1079    44  alternate     6     2  372  1079
+#&gt; 13     7     Vandiviere et al 1973    8  2537   10   619    19     random     7     1    8  2537
+#&gt; 14     7     Vandiviere et al 1973    8  2537   10   619    19     random     7     2   10   619
+#&gt; 15     8           TPT Madras 1980  505 87886  499 87892    13     random     8     1  505 87886
+#&gt; 16     8           TPT Madras 1980  505 87886  499 87892    13     random     8     2  499 87892
+#&gt; 17     9     Coetzee &amp; Berjak 1968   29  7470   45  7232    27     random     9     1   29  7470
+#&gt; 18     9     Coetzee &amp; Berjak 1968   29  7470   45  7232    27     random     9     2   45  7232
+#&gt; 19    10      Rosenthal et al 1961   17  1699   65  1600    42 systematic    10     1   17  1699
+#&gt; 20    10      Rosenthal et al 1961   17  1699   65  1600    42 systematic    10     2   65  1600
+#&gt; 21    11       Comstock et al 1974  186 50448  141 27197    18 systematic    11     1  186 50448
+#&gt; 22    11       Comstock et al 1974  186 50448  141 27197    18 systematic    11     2  141 27197
+#&gt; 23    12   Comstock &amp; Webster 1969    5  2493    3  2338    33 systematic    12     1    5  2493
+#&gt; 24    12   Comstock &amp; Webster 1969    5  2493    3  2338    33 systematic    12     2    3  2338
+#&gt; 25    13       Comstock et al 1976   27 16886   29 17825    33 systematic    13     1   27 16886
+#&gt; 26    13       Comstock et al 1976   27 16886   29 17825    33 systematic    13     2   29 17825</div><div class='input'>
 <span class='co'>### extra long format</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'>to.long</span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"OR"</span>, ai<span class='op'>=</span><span class='va'>tpos</span>, bi<span class='op'>=</span><span class='va'>tneg</span>, ci<span class='op'>=</span><span class='va'>cpos</span>, di<span class='op'>=</span><span class='va'>cneg</span>, data<span class='op'>=</span><span class='va'>dat.bcg</span>, vlong<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
 <span class='va'>dat</span>
-</div><div class='output co'>#&gt;    trial               author year tpos  tneg cpos  cneg ablat      alloc study
-#&gt; 1      1              Aronson 1948    4   119   11   128    44     random     1
-#&gt; 2      1              Aronson 1948    4   119   11   128    44     random     1
-#&gt; 3      1              Aronson 1948    4   119   11   128    44     random     1
-#&gt; 4      1              Aronson 1948    4   119   11   128    44     random     1
-#&gt; 5      2     Ferguson &amp; Simes 1949    6   300   29   274    55     random     2
-#&gt; 6      2     Ferguson &amp; Simes 1949    6   300   29   274    55     random     2
-#&gt; 7      2     Ferguson &amp; Simes 1949    6   300   29   274    55     random     2
-#&gt; 8      2     Ferguson &amp; Simes 1949    6   300   29   274    55     random     2
-#&gt; 9      3      Rosenthal et al 1960    3   228   11   209    42     random     3
-#&gt; 10     3      Rosenthal et al 1960    3   228   11   209    42     random     3
-#&gt; 11     3      Rosenthal et al 1960    3   228   11   209    42     random     3
-#&gt; 12     3      Rosenthal et al 1960    3   228   11   209    42     random     3
-#&gt; 13     4    Hart &amp; Sutherland 1977   62 13536  248 12619    52     random     4
-#&gt; 14     4    Hart &amp; Sutherland 1977   62 13536  248 12619    52     random     4
-#&gt; 15     4    Hart &amp; Sutherland 1977   62 13536  248 12619    52     random     4
-#&gt; 16     4    Hart &amp; Sutherland 1977   62 13536  248 12619    52     random     4
-#&gt; 17     5 Frimodt-Moller et al 1973   33  5036   47  5761    13  alternate     5
-#&gt; 18     5 Frimodt-Moller et al 1973   33  5036   47  5761    13  alternate     5
-#&gt; 19     5 Frimodt-Moller et al 1973   33  5036   47  5761    13  alternate     5
-#&gt; 20     5 Frimodt-Moller et al 1973   33  5036   47  5761    13  alternate     5
-#&gt; 21     6      Stein &amp; Aronson 1953  180  1361  372  1079    44  alternate     6
-#&gt; 22     6      Stein &amp; Aronson 1953  180  1361  372  1079    44  alternate     6
-#&gt; 23     6      Stein &amp; Aronson 1953  180  1361  372  1079    44  alternate     6
-#&gt; 24     6      Stein &amp; Aronson 1953  180  1361  372  1079    44  alternate     6
-#&gt; 25     7     Vandiviere et al 1973    8  2537   10   619    19     random     7
-#&gt; 26     7     Vandiviere et al 1973    8  2537   10   619    19     random     7
-#&gt; 27     7     Vandiviere et al 1973    8  2537   10   619    19     random     7
-#&gt; 28     7     Vandiviere et al 1973    8  2537   10   619    19     random     7
-#&gt; 29     8           TPT Madras 1980  505 87886  499 87892    13     random     8
-#&gt; 30     8           TPT Madras 1980  505 87886  499 87892    13     random     8
-#&gt; 31     8           TPT Madras 1980  505 87886  499 87892    13     random     8
-#&gt; 32     8           TPT Madras 1980  505 87886  499 87892    13     random     8
-#&gt; 33     9     Coetzee &amp; Berjak 1968   29  7470   45  7232    27     random     9
-#&gt; 34     9     Coetzee &amp; Berjak 1968   29  7470   45  7232    27     random     9
-#&gt; 35     9     Coetzee &amp; Berjak 1968   29  7470   45  7232    27     random     9
-#&gt; 36     9     Coetzee &amp; Berjak 1968   29  7470   45  7232    27     random     9
-#&gt; 37    10      Rosenthal et al 1961   17  1699   65  1600    42 systematic    10
-#&gt; 38    10      Rosenthal et al 1961   17  1699   65  1600    42 systematic    10
-#&gt; 39    10      Rosenthal et al 1961   17  1699   65  1600    42 systematic    10
-#&gt; 40    10      Rosenthal et al 1961   17  1699   65  1600    42 systematic    10
-#&gt; 41    11       Comstock et al 1974  186 50448  141 27197    18 systematic    11
-#&gt; 42    11       Comstock et al 1974  186 50448  141 27197    18 systematic    11
-#&gt; 43    11       Comstock et al 1974  186 50448  141 27197    18 systematic    11
-#&gt; 44    11       Comstock et al 1974  186 50448  141 27197    18 systematic    11
-#&gt; 45    12   Comstock &amp; Webster 1969    5  2493    3  2338    33 systematic    12
-#&gt; 46    12   Comstock &amp; Webster 1969    5  2493    3  2338    33 systematic    12
-#&gt; 47    12   Comstock &amp; Webster 1969    5  2493    3  2338    33 systematic    12
-#&gt; 48    12   Comstock &amp; Webster 1969    5  2493    3  2338    33 systematic    12
-#&gt; 49    13       Comstock et al 1976   27 16886   29 17825    33 systematic    13
-#&gt; 50    13       Comstock et al 1976   27 16886   29 17825    33 systematic    13
-#&gt; 51    13       Comstock et al 1976   27 16886   29 17825    33 systematic    13
-#&gt; 52    13       Comstock et al 1976   27 16886   29 17825    33 systematic    13
-#&gt;    group outcome  freq
-#&gt; 1      1       1     4
-#&gt; 2      1       2   119
-#&gt; 3      2       1    11
-#&gt; 4      2       2   128
-#&gt; 5      1       1     6
-#&gt; 6      1       2   300
-#&gt; 7      2       1    29
-#&gt; 8      2       2   274
-#&gt; 9      1       1     3
-#&gt; 10     1       2   228
-#&gt; 11     2       1    11
-#&gt; 12     2       2   209
-#&gt; 13     1       1    62
-#&gt; 14     1       2 13536
-#&gt; 15     2       1   248
-#&gt; 16     2       2 12619
-#&gt; 17     1       1    33
-#&gt; 18     1       2  5036
-#&gt; 19     2       1    47
-#&gt; 20     2       2  5761
-#&gt; 21     1       1   180
-#&gt; 22     1       2  1361
-#&gt; 23     2       1   372
-#&gt; 24     2       2  1079
-#&gt; 25     1       1     8
-#&gt; 26     1       2  2537
-#&gt; 27     2       1    10
-#&gt; 28     2       2   619
-#&gt; 29     1       1   505
-#&gt; 30     1       2 87886
-#&gt; 31     2       1   499
-#&gt; 32     2       2 87892
-#&gt; 33     1       1    29
-#&gt; 34     1       2  7470
-#&gt; 35     2       1    45
-#&gt; 36     2       2  7232
-#&gt; 37     1       1    17
-#&gt; 38     1       2  1699
-#&gt; 39     2       1    65
-#&gt; 40     2       2  1600
-#&gt; 41     1       1   186
-#&gt; 42     1       2 50448
-#&gt; 43     2       1   141
-#&gt; 44     2       2 27197
-#&gt; 45     1       1     5
-#&gt; 46     1       2  2493
-#&gt; 47     2       1     3
-#&gt; 48     2       2  2338
-#&gt; 49     1       1    27
-#&gt; 50     1       2 16886
-#&gt; 51     2       1    29
-#&gt; 52     2       2 17825</div><div class='input'>
+</div><div class='output co'>#&gt;    trial               author year tpos  tneg cpos  cneg ablat      alloc study group outcome  freq
+#&gt; 1      1              Aronson 1948    4   119   11   128    44     random     1     1       1     4
+#&gt; 2      1              Aronson 1948    4   119   11   128    44     random     1     1       2   119
+#&gt; 3      1              Aronson 1948    4   119   11   128    44     random     1     2       1    11
+#&gt; 4      1              Aronson 1948    4   119   11   128    44     random     1     2       2   128
+#&gt; 5      2     Ferguson &amp; Simes 1949    6   300   29   274    55     random     2     1       1     6
+#&gt; 6      2     Ferguson &amp; Simes 1949    6   300   29   274    55     random     2     1       2   300
+#&gt; 7      2     Ferguson &amp; Simes 1949    6   300   29   274    55     random     2     2       1    29
+#&gt; 8      2     Ferguson &amp; Simes 1949    6   300   29   274    55     random     2     2       2   274
+#&gt; 9      3      Rosenthal et al 1960    3   228   11   209    42     random     3     1       1     3
+#&gt; 10     3      Rosenthal et al 1960    3   228   11   209    42     random     3     1       2   228
+#&gt; 11     3      Rosenthal et al 1960    3   228   11   209    42     random     3     2       1    11
+#&gt; 12     3      Rosenthal et al 1960    3   228   11   209    42     random     3     2       2   209
+#&gt; 13     4    Hart &amp; Sutherland 1977   62 13536  248 12619    52     random     4     1       1    62
+#&gt; 14     4    Hart &amp; Sutherland 1977   62 13536  248 12619    52     random     4     1       2 13536
+#&gt; 15     4    Hart &amp; Sutherland 1977   62 13536  248 12619    52     random     4     2       1   248
+#&gt; 16     4    Hart &amp; Sutherland 1977   62 13536  248 12619    52     random     4     2       2 12619
+#&gt; 17     5 Frimodt-Moller et al 1973   33  5036   47  5761    13  alternate     5     1       1    33
+#&gt; 18     5 Frimodt-Moller et al 1973   33  5036   47  5761    13  alternate     5     1       2  5036
+#&gt; 19     5 Frimodt-Moller et al 1973   33  5036   47  5761    13  alternate     5     2       1    47
+#&gt; 20     5 Frimodt-Moller et al 1973   33  5036   47  5761    13  alternate     5     2       2  5761
+#&gt; 21     6      Stein &amp; Aronson 1953  180  1361  372  1079    44  alternate     6     1       1   180
+#&gt; 22     6      Stein &amp; Aronson 1953  180  1361  372  1079    44  alternate     6     1       2  1361
+#&gt; 23     6      Stein &amp; Aronson 1953  180  1361  372  1079    44  alternate     6     2       1   372
+#&gt; 24     6      Stein &amp; Aronson 1953  180  1361  372  1079    44  alternate     6     2       2  1079
+#&gt; 25     7     Vandiviere et al 1973    8  2537   10   619    19     random     7     1       1     8
+#&gt; 26     7     Vandiviere et al 1973    8  2537   10   619    19     random     7     1       2  2537
+#&gt; 27     7     Vandiviere et al 1973    8  2537   10   619    19     random     7     2       1    10
+#&gt; 28     7     Vandiviere et al 1973    8  2537   10   619    19     random     7     2       2   619
+#&gt; 29     8           TPT Madras 1980  505 87886  499 87892    13     random     8     1       1   505
+#&gt; 30     8           TPT Madras 1980  505 87886  499 87892    13     random     8     1       2 87886
+#&gt; 31     8           TPT Madras 1980  505 87886  499 87892    13     random     8     2       1   499
+#&gt; 32     8           TPT Madras 1980  505 87886  499 87892    13     random     8     2       2 87892
+#&gt; 33     9     Coetzee &amp; Berjak 1968   29  7470   45  7232    27     random     9     1       1    29
+#&gt; 34     9     Coetzee &amp; Berjak 1968   29  7470   45  7232    27     random     9     1       2  7470
+#&gt; 35     9     Coetzee &amp; Berjak 1968   29  7470   45  7232    27     random     9     2       1    45
+#&gt; 36     9     Coetzee &amp; Berjak 1968   29  7470   45  7232    27     random     9     2       2  7232
+#&gt; 37    10      Rosenthal et al 1961   17  1699   65  1600    42 systematic    10     1       1    17
+#&gt; 38    10      Rosenthal et al 1961   17  1699   65  1600    42 systematic    10     1       2  1699
+#&gt; 39    10      Rosenthal et al 1961   17  1699   65  1600    42 systematic    10     2       1    65
+#&gt; 40    10      Rosenthal et al 1961   17  1699   65  1600    42 systematic    10     2       2  1600
+#&gt; 41    11       Comstock et al 1974  186 50448  141 27197    18 systematic    11     1       1   186
+#&gt; 42    11       Comstock et al 1974  186 50448  141 27197    18 systematic    11     1       2 50448
+#&gt; 43    11       Comstock et al 1974  186 50448  141 27197    18 systematic    11     2       1   141
+#&gt; 44    11       Comstock et al 1974  186 50448  141 27197    18 systematic    11     2       2 27197
+#&gt; 45    12   Comstock &amp; Webster 1969    5  2493    3  2338    33 systematic    12     1       1     5
+#&gt; 46    12   Comstock &amp; Webster 1969    5  2493    3  2338    33 systematic    12     1       2  2493
+#&gt; 47    12   Comstock &amp; Webster 1969    5  2493    3  2338    33 systematic    12     2       1     3
+#&gt; 48    12   Comstock &amp; Webster 1969    5  2493    3  2338    33 systematic    12     2       2  2338
+#&gt; 49    13       Comstock et al 1976   27 16886   29 17825    33 systematic    13     1       1    27
+#&gt; 50    13       Comstock et al 1976   27 16886   29 17825    33 systematic    13     1       2 16886
+#&gt; 51    13       Comstock et al 1976   27 16886   29 17825    33 systematic    13     2       1    29
+#&gt; 52    13       Comstock et al 1976   27 16886   29 17825    33 systematic    13     2       2 17825</div><div class='input'>
 <span class='co'>### convert data to long format</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'>to.long</span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"IRR"</span>, x1i<span class='op'>=</span><span class='va'>x1i</span>, x2i<span class='op'>=</span><span class='va'>x2i</span>, t1i<span class='op'>=</span><span class='va'>t1i</span>, t2i<span class='op'>=</span><span class='va'>t2i</span>,
                data<span class='op'>=</span><span class='va'>dat.hart1999</span>, var.names<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"id"</span>, <span class='st'>"group"</span>, <span class='st'>"events"</span>, <span class='st'>"ptime"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>dat</span>
-</div><div class='output co'>#&gt;    trial  study year x1i n1i t1i x2i n2i t2i compgrp  prevtype   trinr id group
-#&gt; 1      1 AFASAK 1989   9 335 413  19 336 398 placebo   primary 2.8-4.2  1     1
-#&gt; 2      1 AFASAK 1989   9 335 413  19 336 398 placebo   primary 2.8-4.2  1     2
-#&gt; 3      2   SPAF 1991   8 210 263  19 211 245 placebo   primary 2.0-4.5  2     1
-#&gt; 4      2   SPAF 1991   8 210 263  19 211 245 placebo   primary 2.0-4.5  2     2
-#&gt; 5      3 BAATAF 1990   3 212 487  13 208 435 control   primary 1.5-2.7  3     1
-#&gt; 6      3 BAATAF 1990   3 212 487  13 208 435 control   primary 1.5-2.7  3     2
-#&gt; 7      4   CAFA 1991   6 187 237   9 191 241 placebo   primary 2.0-3.0  4     1
-#&gt; 8      4   CAFA 1991   6 187 237   9 191 241 placebo   primary 2.0-3.0  4     2
-#&gt; 9      5 SPINAF 1992   7 281 489  23 290 483 placebo   primary 1.4-2.8  5     1
-#&gt; 10     5 SPINAF 1992   7 281 489  23 290 483 placebo   primary 1.4-2.8  5     2
-#&gt; 11     6   EAFT 1993  20 225 507  50 214 405 placebo secondary 2.5-4.0  6     1
-#&gt; 12     6   EAFT 1993  20 225 507  50 214 405 placebo secondary 2.5-4.0  6     2
-#&gt;    events ptime
-#&gt; 1       9   413
-#&gt; 2      19   398
-#&gt; 3       8   263
-#&gt; 4      19   245
-#&gt; 5       3   487
-#&gt; 6      13   435
-#&gt; 7       6   237
-#&gt; 8       9   241
-#&gt; 9       7   489
-#&gt; 10     23   483
-#&gt; 11     20   507
-#&gt; 12     50   405</div><div class='input'>
+</div><div class='output co'>#&gt;    trial  study year x1i n1i t1i x2i n2i t2i compgrp  prevtype   trinr id group events ptime
+#&gt; 1      1 AFASAK 1989   9 335 413  19 336 398 placebo   primary 2.8-4.2  1     1      9   413
+#&gt; 2      1 AFASAK 1989   9 335 413  19 336 398 placebo   primary 2.8-4.2  1     2     19   398
+#&gt; 3      2   SPAF 1991   8 210 263  19 211 245 placebo   primary 2.0-4.5  2     1      8   263
+#&gt; 4      2   SPAF 1991   8 210 263  19 211 245 placebo   primary 2.0-4.5  2     2     19   245
+#&gt; 5      3 BAATAF 1990   3 212 487  13 208 435 control   primary 1.5-2.7  3     1      3   487
+#&gt; 6      3 BAATAF 1990   3 212 487  13 208 435 control   primary 1.5-2.7  3     2     13   435
+#&gt; 7      4   CAFA 1991   6 187 237   9 191 241 placebo   primary 2.0-3.0  4     1      6   237
+#&gt; 8      4   CAFA 1991   6 187 237   9 191 241 placebo   primary 2.0-3.0  4     2      9   241
+#&gt; 9      5 SPINAF 1992   7 281 489  23 290 483 placebo   primary 1.4-2.8  5     1      7   489
+#&gt; 10     5 SPINAF 1992   7 281 489  23 290 483 placebo   primary 1.4-2.8  5     2     23   483
+#&gt; 11     6   EAFT 1993  20 225 507  50 214 405 placebo secondary 2.5-4.0  6     1     20   507
+#&gt; 12     6   EAFT 1993  20 225 507  50 214 405 placebo secondary 2.5-4.0  6     2     50   405</div><div class='input'>
 <span class='co'>### convert data to long format</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'>to.long</span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"MD"</span>, m1i<span class='op'>=</span><span class='va'>m1i</span>, sd1i<span class='op'>=</span><span class='va'>sd1i</span>, n1i<span class='op'>=</span><span class='va'>n1i</span>,
                m2i<span class='op'>=</span><span class='va'>m2i</span>, sd2i<span class='op'>=</span><span class='va'>sd2i</span>, n2i<span class='op'>=</span><span class='va'>n2i</span>, data<span class='op'>=</span><span class='va'>dat.normand1999</span>,

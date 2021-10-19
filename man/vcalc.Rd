@@ -118,17 +118,17 @@ vcalc(vi, cluster, subgroup, obs, type, time1, time2, grp1, grp2, w1, w2,
 ### see help(dat.assink2016) for further details on this dataset
 
 dat <- dat.assink2016
-dat
+head(dat, 9)
 
 ### assume that the effect sizes within studies are correlated with rho=0.6
 V <- vcalc(vi, cluster=study, obs=esid, data=dat, rho=0.6)
-V[dat$study \%in\% c(1,2), dat$study \%in\% c(1,2)]
+round(V[dat$study \%in\% c(1,2), dat$study \%in\% c(1,2)], 4)
 
 ### use a correlation of 0.7 for effect sizes corresponding to the same type of
 ### delinquent behavior and a correlation of 0.5 for effect sizes corresponding
 ### to different types of delinquent behavior
 V <- vcalc(vi, cluster=study, type=deltype, obs=esid, data=dat, rho=c(0.7, 0.5))
-V[dat$study \%in\% 16, dat$study \%in\% 16]
+round(V[dat$study \%in\% 16, dat$study \%in\% 16], 4)
 ### examine the correlation matrix for study 16
 cov2cor(V[dat$study \%in\% 16, dat$study \%in\% 16])
 
@@ -160,7 +160,7 @@ cov2cor(V[1:8, 1:8])
 ### see help(dat.kalaian1996) for further details on this dataset
 
 dat <- dat.kalaian1996
-dat
+dat[1:12,1:7]
 
 ### construct the variance-covariance matrix assuming rho = 0.66 for effect sizes
 ### corresponding to the 'verbal' and 'math' outcome types

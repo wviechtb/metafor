@@ -270,10 +270,8 @@
                             <span class='fu'>u</span><span class='op'>(</span><span class='va'>pers</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'>u</span><span class='op'>(</span><span class='va'>imag</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'>u</span><span class='op'>(</span><span class='va'>meta</span><span class='op'>)</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: Studies with NAs omitted from model fitting.</span></div><div class='input'><span class='fu'>vif</span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 
-#&gt;   u(length)      u(wic) u(feedback)     u(info)     u(pers)     u(imag) 
-#&gt;      1.5371      1.3860      1.6490      1.8340      5.6780      1.1554 
-#&gt;     u(meta) 
-#&gt;      4.5333 
+#&gt;   u(length)      u(wic) u(feedback)     u(info)     u(pers)     u(imag)     u(meta) 
+#&gt;      1.5371      1.3860      1.6490      1.8340      5.6780      1.1554      4.5333 
 #&gt; </div><div class='input'>
 <span class='co'>### get full table</span>
 <span class='fu'>vif</span><span class='op'>(</span><span class='va'>res</span>, table<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
@@ -297,16 +295,11 @@
 <span class='co'>### get variance inflation factors for all individual coefficients</span>
 <span class='fu'>vif</span><span class='op'>(</span><span class='va'>res</span>, table<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 
-#&gt;                  estimate      se     zval    pval    ci.lb    ci.ub     vif 
-#&gt; intrcpt            0.2932  0.4050   0.7239  0.4691  -0.5006   1.0870      NA 
-#&gt; ablat             -0.0273  0.0092  -2.9650  0.0030  -0.0453  -0.0092  1.0151 
-#&gt; allocrandom       -0.2675  0.3504  -0.7633  0.4453  -0.9543   0.4193  1.7224 
-#&gt; allocsystematic    0.0585  0.3795   0.1540  0.8776  -0.6854   0.8023  1.7111 
-#&gt;                     sif 
-#&gt; intrcpt              NA 
-#&gt; ablat            1.0075 
-#&gt; allocrandom      1.3124 
-#&gt; allocsystematic  1.3081 
+#&gt;                  estimate      se     zval    pval    ci.lb    ci.ub     vif     sif 
+#&gt; intrcpt            0.2932  0.4050   0.7239  0.4691  -0.5006   1.0870      NA      NA 
+#&gt; ablat             -0.0273  0.0092  -2.9650  0.0030  -0.0453  -0.0092  1.0151  1.0075 
+#&gt; allocrandom       -0.2675  0.3504  -0.7633  0.4453  -0.9543   0.4193  1.7224  1.3124 
+#&gt; allocsystematic    0.0585  0.3795   0.1540  0.8776  -0.6854   0.8023  1.7111  1.3081 
 #&gt; </div><div class='input'>
 <span class='co'>### generalized variance inflation factor for the 'alloc' factor</span>
 <span class='fu'>vif</span><span class='op'>(</span><span class='va'>res</span>, btt<span class='op'>=</span><span class='fl'>3</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span>
