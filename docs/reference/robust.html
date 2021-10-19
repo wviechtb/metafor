@@ -105,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1-23</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1-24</span>
       </span>
     </div>
 
@@ -312,11 +312,8 @@
 <span class='co'>### copy data from Berkey et al. (1998) into 'dat'</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.berkey1998</span>
 
-<span class='co'>### construct list with the variance-covariance matrices of the observed outcomes for the studies</span>
-<span class='va'>V</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/split.html'>split</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"v1i"</span>, <span class='st'>"v2i"</span><span class='op'>)</span><span class='op'>]</span>, <span class='va'>dat</span><span class='op'>$</span><span class='va'>trial</span><span class='op'>)</span>, <span class='va'>as.matrix</span><span class='op'>)</span>
-
-<span class='co'>### construct block diagonal matrix</span>
-<span class='va'>V</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bldiag.html'>bldiag</a></span><span class='op'>(</span><span class='va'>V</span><span class='op'>)</span>
+<span class='co'>### construct block diagonal var-cov matrix of the observed outcomes based on variables v1i and v2i</span>
+<span class='va'>V</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vcalc.html'>vcalc</a></span><span class='op'>(</span>vi<span class='op'>=</span><span class='fl'>1</span>, cluster<span class='op'>=</span><span class='va'>author</span>, rvars<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>v1i</span>, <span class='va'>v2i</span><span class='op'>)</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
 
 <span class='co'>### fit multivariate model</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rma.mv.html'>rma.mv</a></span><span class='op'>(</span><span class='va'>yi</span>, <span class='va'>V</span>, mods <span class='op'>=</span> <span class='op'>~</span> <span class='va'>outcome</span> <span class='op'>-</span> <span class='fl'>1</span>, random <span class='op'>=</span> <span class='op'>~</span> <span class='va'>outcome</span> <span class='op'>|</span> <span class='va'>trial</span>, struct<span class='op'>=</span><span class='st'>"UN"</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>

@@ -69,7 +69,7 @@
 \examples{
 ### copy data into 'dat' and examine data
 dat <- dat.konstantopoulos2011
-dat
+head(dat, 11)
 
 ### aggregate estimates to the district level, assuming independent sampling
 ### errors for multiples studies/schools within the same district
@@ -78,7 +78,7 @@ agg
 
 ### copy data into 'dat' and examine data
 dat <- dat.assink2016
-dat
+head(dat, 19)
 
 ### note: 'dat' is a regular data frame
 class(dat)
@@ -109,14 +109,13 @@ dat <- dat.ishak2007
 dat <- reshape(dat.ishak2007, direction="long", idvar="study", v.names=c("yi","vi"),
                     varying=list(c(2,4,6,8), c(3,5,7,9)))
 dat <- dat[order(dat$study, dat$time),]
-is.miss  <- is.na(dat$yi)
-dat <- dat[!is.miss,]
+dat <- dat[!is.na(dat$yi),]
 rownames(dat) <- NULL
-dat
+head(dat, 8)
 
 ### aggregate the estimates to the study level, assuming a CAR structure for
 ### the sampling errors within studies with an autocorrelation of 0.9
 agg <- aggregate(dat, cluster=study, struct="CAR", time=time, phi=0.9)
-agg
+head(agg, 5)
 }
 \keyword{models}

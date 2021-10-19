@@ -25,6 +25,9 @@ data, rho, phi, rvars, checkpd=TRUE, nearpd=FALSE, ...) {
    if (missing(data))
       data <- NULL
 
+   if (is.null(data) && !missing(rvars))
+      stop(mstyle$stop("Must specify 'data' argument when using 'rvars'."))
+
    if (is.null(data)) {
       data <- sys.frame(sys.parent())
    } else {
@@ -355,7 +358,56 @@ data, rho, phi, rvars, checkpd=TRUE, nearpd=FALSE, ...) {
 
    } else {
 
-      stop(mstyle$stop("Not currently possible to use the 'rvars' argument."))
+      ### when rvars are specified
+
+      ### warn user if non-relevant arguments have been specified
+
+      not.miss <- c(type.spec, obs.spec, grp1.spec, grp2.spec, time1.spec, time2.spec, w1.spec, w2.spec, !missing(rho), !missing(phi))
+
+      if (any(not.miss)) {
+         args <- c("type", "obs", "grp1", "grp2", "time1", "time2", "w1", "w2", "rho", "phi")
+         warning(mstyle$warning("Argument", ifelse(sum(not.miss) > 1, "s", ""), " '", paste0(args[not.miss], collapse=","), "' ignored for when 'rvars' is specified."), call.=FALSE)
+      }
+
+      ### get position of rvars in data
+
+      nl <- as.list(seq_along(data))
+      names(nl) <- names(data)
+      rvars <- try(eval(substitute(rvars), envir=nl, enclos=NULL), silent=TRUE)
+
+      if (inherits(rvars, "try-error"))
+         stop(mstyle$stop("Could not find all variables specified via 'rvars' in 'data'."))
+
+      ### get rvars from data
+
+      has.colon <- grepl(":", deparse(substitute(rvars)), fixed=TRUE)
+
+      if (has.colon && length(rvars) == 2L) {
+         rvars <- data[seq(from = rvars[1], to = rvars[2])]
+      } else {
+         rvars <- data[rvars]
+      }
+
+      ### check that number of rvars makes sense given the k per cluster
+
+      k.cluster <- tapply(cluster, cluster, length)
+
+      if (max(k.cluster) > length(rvars))
+         stop(mstyle$stop(paste0("There ", ifelse(length(rvars) == 1L, "is 1 variable ", paste0("are ", length(rvars), " variables ")), "specified via 'rvars', but there are clusters with more rows.")))
+
+      if (max(k.cluster) != length(rvars))
+         stop(mstyle$stop(paste0("There ", ifelse(length(rvars) == 1L, "is 1 variable ", paste0("are ", length(rvars), " variables ")), "specified via 'rvars', but no cluster with this many more rows.")))
+
+      ### construct R matrix based on rvars
+
+      R <- lapply(split(rvars, cluster), function(x) {
+         k <- nrow(x)
+         x <- x[seq_len(k)]
+         x[upper.tri(x)] <- t(x)[upper.tri(x)]
+         as.matrix(x)
+         })
+
+      R <- bldiag(R, order=cluster)
 
    }
 

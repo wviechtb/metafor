@@ -105,7 +105,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1-23</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1-24</span>
       </span>
     </div>
 
@@ -243,7 +243,7 @@
     </tr>
     <tr>
       <th>rvars</th>
-      <td><p>unused argument for the moment.</p></td>
+      <td><p>optional argument for specifying the variables that correspond to the correlation matrices of the studies (if this is specified, all arguments above except for <code>cluster</code> and <code>subgroup</code> are ignored). See &#8216;Details&#8217;.</p></td>
     </tr>
     <tr>
       <th>checkpd</th>
@@ -264,26 +264,44 @@
     <p>Standard meta-analytic models (such as those that can be fitted with the <code><a href='rma.uni.html'>rma.uni</a></code> function) assume that the observed effect sizes or outcomes (or more precisely, their sampling errors) are independent. This assumption is typically violated whenever multiple observed effect sizes or outcomes are computed based on the same sample of subjects (or whatever the study units are) or if there is at least partial overlap of subjects that contribute information to the computation of multiple effect sizes or outcomes.</p>
 <p>The present function can be used to construct or approximate the variance-covariance matrix of the sampling errors of dependent effect sizes or outcomes for a wide variety of circumstances (this variance-covariance matrix is the so-called <code>V</code> matrix that may be needed as input for multilevel/multivariate meta-analytic models as can be fitted with the <code><a href='rma.mv.html'>rma.mv</a></code> function).</p>
 <p>Argument <code>cluster</code> is used to specify the clustering variable. Rows with the same value of this variable are allowed to be dependent, while rows with different values are assumed to be independent. Typically, <code>cluster</code> will be a study identifier.</p>
-<p>Within the same cluster, there may be different subgroups with no overlap of subjects across subgroups. Argument <code>subgroup</code> can be used to distinguish such subgroups. Rows with the same value of this variable within a cluster are allowed to be dependent, while rows with different values are assumed to be independent even if they come from the same cluster.</p>
-<p>Multiple effect sizes or outcomes belonging to the same cluster and subgroup may be dependent due to a variety of reasons:</p><ol>
-<li><p>The same construct of interest (e.g., severity of depression) may have been measured using different scales or instruments within a study (e.g., using the Beck Depression Inventory (BDI) and the Hamilton Depression Rating Scale (HDRS)) based on which multiple effect sizes can be computed in the same group of subjects (e.g., contrasting a treated versus a control group with respect to each scale). In this case, we have multiple effect sizes that are different &#8216;observations&#8217; of the effect with respect to the same type of construct.</p>
+<p>Within the same cluster, there may be different subgroups with no overlap of subjects across subgroups. Argument <code>subgroup</code> can be used to distinguish such subgroups. Rows with the same value of this variable within a cluster are allowed to be dependent, while rows with different values are assumed to be independent even if they come from the same cluster. Therefore, from hereon, &#8216;cluster&#8217; really refers to the combination of <code>cluster</code> and <code>subgroup</code>.</p>
+<p>Multiple effect sizes or outcomes belonging to the same cluster may be dependent due to a variety of reasons:</p><ol>
+<li><p>The same construct of interest (e.g., severity of depression) may have been measured using different scales or instruments within a study (e.g., using the Beck Depression Inventory (BDI) and the Hamilton Depression Rating Scale (HDRS)) based on which multiple effect sizes can be computed for the same group of subjects (e.g., contrasting a treatment versus a control group with respect to each scale). In this case, we have multiple effect sizes that are different &#8216;observations&#8217; of the effect with respect to the same type of construct.</p>
 <p>Argument <code>obs</code> is then used to distinguish different effect sizes corresponding to the same construct. If <code>obs</code> is specified, then argument <code>rho</code> must also be specified to indicate the degree of correlation among the sampling errors of the different effect sizes. Since this correlation is typically not known, the correlation among the various scales (or a rough &#8216;guestimate&#8217; thereof) can be used as a proxy (i.e., the (typical) correlation between BDI and HDRS measurements).</p>
 <p>One can also specify an entire correlation matrix via <code>rho</code> to indicate, for each possible pair of <code>obs</code> values, the corresponding correlation. The row/column names of the matrix must then correspond to the unique values of the <code>obs</code> variable.</p></li>
 <li><p>Multiple types of constructs (or more generally, types of response/dependent variables) may have been measured in the same group of subjects (e.g., severity of depression as measured with the Beck Depression Inventory (BDI) and severity of anxiety as measured with the State-Trait Anxiety Inventory (STAI)). If this is of interest for a meta-analysis, effect sizes can then be computed with respect to each &#8216;type&#8217; of construct.</p>
 <p>Argument <code>type</code> is then used to distinguish effect sizes corresponding to these different types of constructs. If <code>type</code> is specified, then argument <code>rho</code> must also be specified to indicate the degree of correlation among the sampling errors of effect sizes belonging to these different types. As above, the correlation among the various scales is typically used here as a proxy (i.e., the (typical) correlation between BDI and STAI measurements).</p>
 <p>One can also specify an entire correlation matrix via <code>rho</code> to indicate, for each possible pair of <code>type</code> values, the corresponding correlation. The row/column names of the matrix must then correspond to the unique values of the <code>type</code> variable.</p></li>
-<li><p>If there are multiple constructs, multiple scales or instruments may also have been used (in at least some of the studies) to measure the same construct and hence there may again be multiple effect sizes that are &#8216;observations&#8217; of the same type of construct. Arguments <code>type</code> and <code>obs</code> should then be used together to indicate the various construct types and observations thereof. In this case, argument <code>rho</code> must be a vector of two values, the first to specify the within-construct correlation and the second to specify the between-construct correlation.</p>
+<li><p>If there are multiple types of constructs, multiple scales or instruments may also have been used (in at least some of the studies) to measure the same construct and hence there may again be multiple effect sizes that are &#8216;observations&#8217; of the same type of construct. Arguments <code>type</code> and <code>obs</code> should then be used together to indicate the various construct types and observations thereof. In this case, argument <code>rho</code> must be a vector of two values, the first to specify the within-construct correlation and the second to specify the between-construct correlation.</p>
 <p>One can also specify a list with two elements for <code>rho</code>, the first element being either a scalar or an entire correlation matrix for the within-construct correlation(s) and the second element being a scalar or an entire correlation matrix for the between-construct correlation(s). As above, any matrices specified must have row/column names corresponding to the unique values of the <code>obs</code> and/or <code>type</code> variables.</p></li>
 <li><p>The same construct and scale may have been assessed/used multiple times, allowing the computation of multiple effect sizes for the same group of subjects at different time points (e.g., right after the end of a treatment, at a short-term follow-up, and at a long-term follow-up). Argument <code>time1</code> is then used to specify the time points when the observed effect sizes were obtained. Argument <code>phi</code> must then also be specified to indicate the autocorrelation among the sampling errors of two effect sizes that differ by one unit on the <code>time1</code> variable. As above, the autocorrelation of the measurements themselves can be used here as a proxy.</p>
 <p>If multiple constructs and/or multiple scales have also been assessed at the various time points, then arguments <code>type</code> and/or <code>obs</code> (together with argument <code>rho</code>) should be used as needed to differentiate effect sizes corresponding to the different constructs and/or scales.</p></li>
 <li><p>Many effect size or outcome measures (e.g., raw or standardized mean differences, log-transformed ratios of means, log risk/odds ratios and risk differences) reflect the difference between two conditions (i.e., a contrast). Within a study, there may be more than two conditions, allowing the computation of multiple such contrasts (e.g., treatment A versus a control condition and treatment B versus the same control condition) and hence corresponding effect sizes. The reuse of information from the &#8216;shared&#8217; condition (in this example, the control condition) then induces correlation among the effect sizes.</p>
-<p>To account for this, arguments <code>grp1</code> and <code>grp2</code> should be specified to indicate (within a cluster or subgroup thereof) which two groups were compared in the computation of each effect size (e.g., in the example above, the coding could be <code>grp1=c(1,2)</code> and <code>grp2=c(3,3)</code>; whether numbers or strings are used as identifiers is irrelevant).</p>
+<p>To account for this, arguments <code>grp1</code> and <code>grp2</code> should be specified to indicate (within each cluster) which two groups were compared in the computation of each effect size (e.g., in the example above, the coding could be <code>grp1=c(1,2)</code> and <code>grp2=c(3,3)</code>; whether numbers or strings are used as identifiers is irrelevant).</p>
 <p>The degree of correlation between two contrast-type effect sizes that is induced by the use of a shared condition is a function of the size of the groups involved in the computation of the two effect sizes (or, more generally, the inverse-sampling variance weights of the condition-specific outcomes). By default, the group sizes (weights) are assumed to be identical across conditions, which implies a correlation of 0.5. If the group sizes (weights) are known, they can be specified via arguments <code>w1</code> and <code>w2</code>.</p>
 <p>In fact, a contrast-type effect size can be based on a between- or a within-subjects design. When at least one or more of the contrast-type effect sizes are based on a within-subjects design, then <code>time1</code> and <code>time2</code> should be used in combination with <code>grp1</code> and <code>grp2</code> to indicate for each effect size the group(s) and time point(s) involved.</p>
 <p>For example, <code>grp1=c(1,2)</code> and <code>grp2=c(3,3)</code> as above in combination with <code>time1=c(1,1)</code> and <code>time2=c(1,1)</code> would imply a between-subjects design involving three groups where two effect size were computed contrasting groups 1 and 2 versus group 3 at a single time point. On the other hand, <code>grp1=c(1,1)</code> and <code>grp2=c(1,1)</code> in combination with <code>time1=c(2,1)</code> and <code>time2=c(3,1)</code> would imply a within-subjects design where two effect size were computed contrasting time points 2 and 3 versus time point 1 in a single group. Argument <code>phi</code> is then used as above to indicate the autocorrelation of the measurements within groups (i.e., for the within-subjects design above, it would be the autocorrelation between time points 2 and 1 or equivalently, between time points 3 and 2).</p></li>
 </ol>
 
+<p>All of the arguments above can be specified together to account for a fairly wide variety of dependency types.</p>
+<p><b>Using the <code>rvars</code> Argument</b></p>
+<p>The function also provides an alternative approach for constructing the variance-covariance matrix using the <code>rvars</code> argument. Here, one must specify the names of the variables in the dataset that correspond to the correlation matrices of the studies (the variables should be specified as a vector; e.g., <code><a href='https://rdrr.io/r/base/c.html'>c(var1, var2, var3)</a></code>).</p>
+<p>In particular, let \(k_i\) denote the number of rows corresponding to the \(i\)th cluster. Then the values of the first \(k_i\) variables from <code>rvars</code> are used to construct the correlation matrix and, together with the sampling variances (specified via <code>vi</code>), the variance-covariance matrix. Say there are three studies, the first with two correlated estimates, the second with a single estimate, and the third with four correlated estimates. Then the data structure should look like this:</p>
+<pre>  study  yi  vi  r1  r2  r3  r4
+=============================
+    1   .   .   1  NA  NA  NA
+    1   .   .  .6   1  NA  NA
+-----------------------------
+    2   .   .   1  NA  NA  NA
+-----------------------------
+    3   .   .   1  NA  NA  NA
+    3   .   .  .8   1  NA  NA
+    3   .   .  .5  .5   1  NA
+    3   .   .  .5  .5  .8   1
+=============================</pre>
 
+<p>with <code>rvars = c(r1, r2, r3, r4)</code>. If the <code>rvars</code> variables are a consecutive set in the data frame (as above), then one can use the shorthand notation <code>rvars = c(r1:r4)</code>, so <code>r1</code> denotes the first and <code>r4</code> the last variable in the set. Note that only the lower triangular part of the submatrices defined by the <code>rvars</code> variables is used.</p>
+<p>There must be as many variables specified via <code>rvars</code> as the number of rows in the <em>largest</em> cluster (in smaller clusters, the non-relevant variables can just be set to <code>NA</code>; see above).</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A \(k \times k\) variance-covariance matrix, where \(k\) denotes the length of the <code>vi</code> variable (i.e., the number of rows in the dataset).</p>
@@ -304,7 +322,7 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>############################################################################</span>
 
-<span class='co'># see help(dat.assink2016) for further details on this dataset</span>
+<span class='co'>### see help(dat.assink2016) for further details on this dataset</span>
 
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.assink2016</span>
 <span class='va'>dat</span>
@@ -409,7 +427,7 @@
 #&gt; 98     17    4  98  0.0040 0.0208         1   5.5 general
 #&gt; 99     17    5  99 -0.0207 0.0123         1   5.5 general
 #&gt; 100    17    6 100 -0.0660 0.0100         1   5.5 general</div><div class='input'>
-<span class='co'># assume that the effect sizes within studies are correlated with rho=0.6</span>
+<span class='co'>### assume that the effect sizes within studies are correlated with rho=0.6</span>
 <span class='va'>V</span> <span class='op'>&lt;-</span> <span class='fu'>vcalc</span><span class='op'>(</span><span class='va'>vi</span>, cluster<span class='op'>=</span><span class='va'>study</span>, obs<span class='op'>=</span><span class='va'>esid</span>, data<span class='op'>=</span><span class='va'>dat</span>, rho<span class='op'>=</span><span class='fl'>0.6</span><span class='op'>)</span>
 <span class='va'>V</span><span class='op'>[</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>study</span> <span class='op'>%in%</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span>, <span class='va'>dat</span><span class='op'>$</span><span class='va'>study</span> <span class='op'>%in%</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span><span class='op'>]</span>
 </div><div class='output co'>#&gt;             [,1]       [,2]       [,3]       [,4]       [,5]       [,6]
@@ -432,9 +450,9 @@
 #&gt;  [7,] 0.011500000 0.005609278 0.005187485
 #&gt;  [8,] 0.005609278 0.007600000 0.004217108
 #&gt;  [9,] 0.005187485 0.004217108 0.006500000</div><div class='input'>
-<span class='co'># use a correlation of 0.7 for effect sizes corresponding to the same type of</span>
-<span class='co'># delinquent behavior and a correlation of 0.5 for effect sizes corresponding</span>
-<span class='co'># to different types of delinquent behavior</span>
+<span class='co'>### use a correlation of 0.7 for effect sizes corresponding to the same type of</span>
+<span class='co'>### delinquent behavior and a correlation of 0.5 for effect sizes corresponding</span>
+<span class='co'>### to different types of delinquent behavior</span>
 <span class='va'>V</span> <span class='op'>&lt;-</span> <span class='fu'>vcalc</span><span class='op'>(</span><span class='va'>vi</span>, cluster<span class='op'>=</span><span class='va'>study</span>, type<span class='op'>=</span><span class='va'>deltype</span>, obs<span class='op'>=</span><span class='va'>esid</span>, data<span class='op'>=</span><span class='va'>dat</span>, rho<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.7</span>, <span class='fl'>0.5</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>V</span><span class='op'>[</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>study</span> <span class='op'>%in%</span> <span class='fl'>16</span>, <span class='va'>dat</span><span class='op'>$</span><span class='va'>study</span> <span class='op'>%in%</span> <span class='fl'>16</span><span class='op'>]</span>
 </div><div class='output co'>#&gt;             [,1]       [,2]       [,3]       [,4]       [,5]       [,6]
@@ -487,7 +505,7 @@
 #&gt; [13,] 0.06670000 0.04058928 0.03333500 0.03779216
 #&gt; [14,] 0.04058928 0.09880000 0.02897930 0.03285407
 #&gt; [15,] 0.03333500 0.02897930 0.03400000 0.02698225
-#&gt; [16,] 0.03779216 0.03285407 0.02698225 0.04370000</div><div class='input'><span class='co'># examine the correlation matrix for study 16</span>
+#&gt; [16,] 0.03779216 0.03285407 0.02698225 0.04370000</div><div class='input'><span class='co'>### examine the correlation matrix for study 16</span>
 <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cov2cor</a></span><span class='op'>(</span><span class='va'>V</span><span class='op'>[</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>study</span> <span class='op'>%in%</span> <span class='fl'>16</span>, <span class='va'>dat</span><span class='op'>$</span><span class='va'>study</span> <span class='op'>%in%</span> <span class='fl'>16</span><span class='op'>]</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13]
 #&gt;  [1,]  1.0  0.5  0.5  0.5  0.5  0.5  0.7  0.5  0.5   0.5   0.5   0.5   0.5
@@ -525,7 +543,59 @@
 #&gt; [16,]   0.5   0.7   1.0</div><div class='input'>
 <span class='co'>############################################################################</span>
 
-<span class='co'># see help(dat.kalaian1996) for further details on this dataset</span>
+<span class='co'>### see help(dat.ishak2007) for further details on this dataset</span>
+
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.ishak2007</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>dat</span>, <span class='fl'>5</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;               study   y1i  v1i   y2i   v2i   y3i v3i  y4i  v4i mdur mbase 
+#&gt; 1    Alegret (2001) -33.4 14.3    NA    NA    NA  NA &lt;NA&gt; &lt;NA&gt; 16.1  53.6 
+#&gt; 2 Barichella (2003) -20.0  7.3    NA    NA -30.0 5.7 &lt;NA&gt; &lt;NA&gt; 13.5  45.3 
+#&gt; 3     Berney (2002) -21.1  7.3    NA    NA    NA  NA &lt;NA&gt; &lt;NA&gt; 13.6  45.6 
+#&gt; 4   Burchiel (1999) -20.0  8.0 -20.0   8.0 -18.0 5.0 &lt;NA&gt; &lt;NA&gt; 13.6  48.0 
+#&gt; 5       Chen (2003)    NA   NA -32.9 125.0    NA  NA &lt;NA&gt; &lt;NA&gt; 12.1  65.7 </div><div class='input'>
+<span class='co'>### create long format dataset</span>
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/reshape.html'>reshape</a></span><span class='op'>(</span><span class='va'>dat</span>, direction<span class='op'>=</span><span class='st'>"long"</span>, idvar<span class='op'>=</span><span class='st'>"study"</span>, v.names<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"yi"</span>,<span class='st'>"vi"</span><span class='op'>)</span>,
+               varying<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>,<span class='fl'>4</span>,<span class='fl'>6</span>,<span class='fl'>8</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>,<span class='fl'>5</span>,<span class='fl'>7</span>,<span class='fl'>9</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/order.html'>order</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>study</span>, <span class='va'>dat</span><span class='op'>$</span><span class='va'>time</span><span class='op'>)</span>,<span class='op'>]</span>
+
+<span class='co'>### remove missing measurement occasions from dat.long</span>
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat</span><span class='op'>[</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>yi</span><span class='op'>)</span>,<span class='op'>]</span>
+<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='cn'>NULL</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>dat</span>, <span class='fl'>8</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;               study mdur mbase time    yi    vi 
+#&gt; 1    Alegret (2001) 16.1  53.6    1 -33.4  14.3 
+#&gt; 2 Barichella (2003) 13.5  45.3    1 -20.0   7.3 
+#&gt; 3 Barichella (2003) 13.5  45.3    3 -30.0   5.7 
+#&gt; 4     Berney (2002) 13.6  45.6    1 -21.1   7.3 
+#&gt; 5   Burchiel (1999) 13.6  48.0    1 -20.0   8.0 
+#&gt; 6   Burchiel (1999) 13.6  48.0    2 -20.0   8.0 
+#&gt; 7   Burchiel (1999) 13.6  48.0    3 -18.0   5.0 
+#&gt; 8       Chen (2003) 12.1  65.7    2 -32.9 125.0 </div><div class='input'>
+<span class='co'>### construct the full (block diagonal) V matrix with an AR(1) structure</span>
+<span class='co'>### assuming an autocorrelation of 0.97 as estimated by Ishak et al. (2007)</span>
+<span class='va'>V</span> <span class='op'>&lt;-</span> <span class='fu'>vcalc</span><span class='op'>(</span><span class='va'>vi</span>, cluster<span class='op'>=</span><span class='va'>study</span>, time1<span class='op'>=</span><span class='va'>time</span>, phi<span class='op'>=</span><span class='fl'>0.97</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
+<span class='va'>V</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>8</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>8</span><span class='op'>]</span>
+</div><div class='output co'>#&gt;      [,1]     [,2]     [,3] [,4]     [,5]     [,6]     [,7] [,8]
+#&gt; [1,] 14.3 0.000000 0.000000  0.0 0.000000 0.000000 0.000000    0
+#&gt; [2,]  0.0 7.300000 6.069352  0.0 0.000000 0.000000 0.000000    0
+#&gt; [3,]  0.0 6.069352 5.700000  0.0 0.000000 0.000000 0.000000    0
+#&gt; [4,]  0.0 0.000000 0.000000  7.3 0.000000 0.000000 0.000000    0
+#&gt; [5,]  0.0 0.000000 0.000000  0.0 8.000000 7.760000 5.950774    0
+#&gt; [6,]  0.0 0.000000 0.000000  0.0 7.760000 8.000000 6.134819    0
+#&gt; [7,]  0.0 0.000000 0.000000  0.0 5.950774 6.134819 5.000000    0
+#&gt; [8,]  0.0 0.000000 0.000000  0.0 0.000000 0.000000 0.000000  125</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cov2cor</a></span><span class='op'>(</span><span class='va'>V</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>8</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>8</span><span class='op'>]</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;      [,1]   [,2]   [,3] [,4]   [,5] [,6]   [,7] [,8]
+#&gt; [1,]    1 0.0000 0.0000    0 0.0000 0.00 0.0000    0
+#&gt; [2,]    0 1.0000 0.9409    0 0.0000 0.00 0.0000    0
+#&gt; [3,]    0 0.9409 1.0000    0 0.0000 0.00 0.0000    0
+#&gt; [4,]    0 0.0000 0.0000    1 0.0000 0.00 0.0000    0
+#&gt; [5,]    0 0.0000 0.0000    0 1.0000 0.97 0.9409    0
+#&gt; [6,]    0 0.0000 0.0000    0 0.9700 1.00 0.9700    0
+#&gt; [7,]    0 0.0000 0.0000    0 0.9409 0.97 1.0000    0
+#&gt; [8,]    0 0.0000 0.0000    0 0.0000 0.00 0.0000    1</div><div class='input'>
+<span class='co'>############################################################################</span>
+
+<span class='co'>### see help(dat.kalaian1996) for further details on this dataset</span>
 
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.kalaian1996</span>
 <span class='va'>dat</span>
@@ -665,40 +735,299 @@
 #&gt; 65        0    3
 #&gt; 66        1    3
 #&gt; 67        1    3</div><div class='input'>
-<span class='co'># construct the variance-covariance matrix assuming rho = 0.66 for effect sizes</span>
-<span class='co'># corresponding to the 'verbal' and 'math' outcome types</span>
+<span class='co'>### construct the variance-covariance matrix assuming rho = 0.66 for effect sizes</span>
+<span class='co'>### corresponding to the 'verbal' and 'math' outcome types</span>
 <span class='va'>V</span> <span class='op'>&lt;-</span> <span class='fu'>vcalc</span><span class='op'>(</span><span class='va'>vi</span>, cluster<span class='op'>=</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>study</span>, type<span class='op'>=</span><span class='va'>outcome</span>, data<span class='op'>=</span><span class='va'>dat</span>, rho<span class='op'>=</span><span class='fl'>0.66</span><span class='op'>)</span>
-<span class='va'>V</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>14</span>,<span class='fl'>1</span><span class='op'>:</span><span class='fl'>14</span><span class='op'>]</span>
-</div><div class='output co'>#&gt;         [,1]   [,2]   [,3]   [,4]   [,5]   [,6]   [,7]   [,8]     [,9]    [,10]
-#&gt;  [1,] 0.0817 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.000000 0.000000
-#&gt;  [2,] 0.0000 0.0507 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.000000 0.000000
-#&gt;  [3,] 0.0000 0.0000 0.1045 0.0000 0.0000 0.0000 0.0000 0.0000 0.000000 0.000000
-#&gt;  [4,] 0.0000 0.0000 0.0000 0.0442 0.0000 0.0000 0.0000 0.0000 0.000000 0.000000
-#&gt;  [5,] 0.0000 0.0000 0.0000 0.0000 0.0535 0.0000 0.0000 0.0000 0.000000 0.000000
-#&gt;  [6,] 0.0000 0.0000 0.0000 0.0000 0.0000 0.0557 0.0000 0.0000 0.000000 0.000000
-#&gt;  [7,] 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0561 0.0000 0.000000 0.000000
-#&gt;  [8,] 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.1151 0.000000 0.000000
-#&gt;  [9,] 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.014700 0.009702
-#&gt; [10,] 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.009702 0.014700
-#&gt; [11,] 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.000000 0.000000
-#&gt; [12,] 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.000000 0.000000
-#&gt; [13,] 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.000000 0.000000
-#&gt; [14,] 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.000000 0.000000
-#&gt;            [,11]      [,12]      [,13]      [,14]
-#&gt;  [1,] 0.00000000 0.00000000 0.00000000 0.00000000
-#&gt;  [2,] 0.00000000 0.00000000 0.00000000 0.00000000
-#&gt;  [3,] 0.00000000 0.00000000 0.00000000 0.00000000
-#&gt;  [4,] 0.00000000 0.00000000 0.00000000 0.00000000
-#&gt;  [5,] 0.00000000 0.00000000 0.00000000 0.00000000
-#&gt;  [6,] 0.00000000 0.00000000 0.00000000 0.00000000
-#&gt;  [7,] 0.00000000 0.00000000 0.00000000 0.00000000
-#&gt;  [8,] 0.00000000 0.00000000 0.00000000 0.00000000
-#&gt;  [9,] 0.00000000 0.00000000 0.00000000 0.00000000
-#&gt; [10,] 0.00000000 0.00000000 0.00000000 0.00000000
-#&gt; [11,] 0.02180000 0.01432185 0.00000000 0.00000000
-#&gt; [12,] 0.01432185 0.02160000 0.00000000 0.00000000
-#&gt; [13,] 0.00000000 0.00000000 0.02210000 0.01451985
-#&gt; [14,] 0.00000000 0.00000000 0.01451985 0.02190000</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='va'>V</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>12</span>,<span class='fl'>1</span><span class='op'>:</span><span class='fl'>12</span><span class='op'>]</span>, <span class='fl'>4</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;         [,1]   [,2]   [,3]   [,4]   [,5]   [,6]   [,7]   [,8]   [,9]  [,10]
+#&gt;  [1,] 0.0817 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000
+#&gt;  [2,] 0.0000 0.0507 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000
+#&gt;  [3,] 0.0000 0.0000 0.1045 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000
+#&gt;  [4,] 0.0000 0.0000 0.0000 0.0442 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000
+#&gt;  [5,] 0.0000 0.0000 0.0000 0.0000 0.0535 0.0000 0.0000 0.0000 0.0000 0.0000
+#&gt;  [6,] 0.0000 0.0000 0.0000 0.0000 0.0000 0.0557 0.0000 0.0000 0.0000 0.0000
+#&gt;  [7,] 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0561 0.0000 0.0000 0.0000
+#&gt;  [8,] 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.1151 0.0000 0.0000
+#&gt;  [9,] 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0147 0.0097
+#&gt; [10,] 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0097 0.0147
+#&gt; [11,] 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000
+#&gt; [12,] 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000
+#&gt;        [,11]  [,12]
+#&gt;  [1,] 0.0000 0.0000
+#&gt;  [2,] 0.0000 0.0000
+#&gt;  [3,] 0.0000 0.0000
+#&gt;  [4,] 0.0000 0.0000
+#&gt;  [5,] 0.0000 0.0000
+#&gt;  [6,] 0.0000 0.0000
+#&gt;  [7,] 0.0000 0.0000
+#&gt;  [8,] 0.0000 0.0000
+#&gt;  [9,] 0.0000 0.0000
+#&gt; [10,] 0.0000 0.0000
+#&gt; [11,] 0.0218 0.0143
+#&gt; [12,] 0.0143 0.0216</div><div class='input'>
+<span class='co'>############################################################################</span>
+
+<span class='co'>### see help(dat.berkey1998) for further details on this dataset</span>
+
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.berkey1998</span>
+
+<span class='co'>### variables v1i and v2i correspond to the 2x2 var-cov matrices of the studies;</span>
+<span class='co'>### so use these variables to construct the V matrix (note: since v1i and v2i are</span>
+<span class='co'>### var-cov matrices and not correlation matrices, set vi=1 for all rows)</span>
+<span class='va'>V</span> <span class='op'>&lt;-</span> <span class='fu'>vcalc</span><span class='op'>(</span>vi<span class='op'>=</span><span class='fl'>1</span>, cluster<span class='op'>=</span><span class='va'>author</span>, rvars<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>v1i</span>, <span class='va'>v2i</span><span class='op'>)</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
+<span class='va'>V</span>
+</div><div class='output co'>#&gt;         [,1]   [,2]   [,3]  [,4]   [,5]   [,6]   [,7]   [,8]   [,9]  [,10]
+#&gt;  [1,] 0.0075 0.0030 0.0000 0e+00 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000
+#&gt;  [2,] 0.0030 0.0077 0.0000 0e+00 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000
+#&gt;  [3,] 0.0000 0.0000 0.0057 9e-04 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000
+#&gt;  [4,] 0.0000 0.0000 0.0009 8e-04 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000
+#&gt;  [5,] 0.0000 0.0000 0.0000 0e+00 0.0021 0.0007 0.0000 0.0000 0.0000 0.0000
+#&gt;  [6,] 0.0000 0.0000 0.0000 0e+00 0.0007 0.0014 0.0000 0.0000 0.0000 0.0000
+#&gt;  [7,] 0.0000 0.0000 0.0000 0e+00 0.0000 0.0000 0.0029 0.0009 0.0000 0.0000
+#&gt;  [8,] 0.0000 0.0000 0.0000 0e+00 0.0000 0.0000 0.0009 0.0015 0.0000 0.0000
+#&gt;  [9,] 0.0000 0.0000 0.0000 0e+00 0.0000 0.0000 0.0000 0.0000 0.0148 0.0072
+#&gt; [10,] 0.0000 0.0000 0.0000 0e+00 0.0000 0.0000 0.0000 0.0000 0.0072 0.0304</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cov2cor</a></span><span class='op'>(</span><span class='va'>V</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;           [,1]     [,2]      [,3]      [,4]      [,5]      [,6]     [,7]
+#&gt;  [1,] 1.000000 0.394771 0.0000000 0.0000000 0.0000000 0.0000000 0.000000
+#&gt;  [2,] 0.394771 1.000000 0.0000000 0.0000000 0.0000000 0.0000000 0.000000
+#&gt;  [3,] 0.000000 0.000000 1.0000000 0.4214636 0.0000000 0.0000000 0.000000
+#&gt;  [4,] 0.000000 0.000000 0.4214636 1.0000000 0.0000000 0.0000000 0.000000
+#&gt;  [5,] 0.000000 0.000000 0.0000000 0.0000000 1.0000000 0.4082483 0.000000
+#&gt;  [6,] 0.000000 0.000000 0.0000000 0.0000000 0.4082483 1.0000000 0.000000
+#&gt;  [7,] 0.000000 0.000000 0.0000000 0.0000000 0.0000000 0.0000000 1.000000
+#&gt;  [8,] 0.000000 0.000000 0.0000000 0.0000000 0.0000000 0.0000000 0.431517
+#&gt;  [9,] 0.000000 0.000000 0.0000000 0.0000000 0.0000000 0.0000000 0.000000
+#&gt; [10,] 0.000000 0.000000 0.0000000 0.0000000 0.0000000 0.0000000 0.000000
+#&gt;           [,8]      [,9]     [,10]
+#&gt;  [1,] 0.000000 0.0000000 0.0000000
+#&gt;  [2,] 0.000000 0.0000000 0.0000000
+#&gt;  [3,] 0.000000 0.0000000 0.0000000
+#&gt;  [4,] 0.000000 0.0000000 0.0000000
+#&gt;  [5,] 0.000000 0.0000000 0.0000000
+#&gt;  [6,] 0.000000 0.0000000 0.0000000
+#&gt;  [7,] 0.431517 0.0000000 0.0000000
+#&gt;  [8,] 1.000000 0.0000000 0.0000000
+#&gt;  [9,] 0.000000 1.0000000 0.3394414
+#&gt; [10,] 0.000000 0.3394414 1.0000000</div><div class='input'>
+<span class='co'>### construct the variance-covariance matrix assuming rho = 0.4 for effect sizes</span>
+<span class='co'>### corresponding to the 'PD' and 'AL' outcome types</span>
+<span class='va'>V</span> <span class='op'>&lt;-</span> <span class='fu'>vcalc</span><span class='op'>(</span>vi<span class='op'>=</span><span class='va'>vi</span>, cluster<span class='op'>=</span><span class='va'>trial</span>, type<span class='op'>=</span><span class='va'>outcome</span>, data<span class='op'>=</span><span class='va'>dat</span>, rho<span class='op'>=</span><span class='fl'>0.4</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='va'>V</span>,<span class='fl'>4</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;         [,1]   [,2]   [,3]  [,4]   [,5]   [,6]   [,7]   [,8]   [,9]  [,10]
+#&gt;  [1,] 0.0075 0.0030 0.0000 0e+00 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000
+#&gt;  [2,] 0.0030 0.0077 0.0000 0e+00 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000
+#&gt;  [3,] 0.0000 0.0000 0.0057 9e-04 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000
+#&gt;  [4,] 0.0000 0.0000 0.0009 8e-04 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000
+#&gt;  [5,] 0.0000 0.0000 0.0000 0e+00 0.0021 0.0007 0.0000 0.0000 0.0000 0.0000
+#&gt;  [6,] 0.0000 0.0000 0.0000 0e+00 0.0007 0.0014 0.0000 0.0000 0.0000 0.0000
+#&gt;  [7,] 0.0000 0.0000 0.0000 0e+00 0.0000 0.0000 0.0029 0.0008 0.0000 0.0000
+#&gt;  [8,] 0.0000 0.0000 0.0000 0e+00 0.0000 0.0000 0.0008 0.0015 0.0000 0.0000
+#&gt;  [9,] 0.0000 0.0000 0.0000 0e+00 0.0000 0.0000 0.0000 0.0000 0.0148 0.0085
+#&gt; [10,] 0.0000 0.0000 0.0000 0e+00 0.0000 0.0000 0.0000 0.0000 0.0085 0.0304</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cov2cor</a></span><span class='op'>(</span><span class='va'>V</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+#&gt;  [1,]  1.0  0.4  0.0  0.0  0.0  0.0  0.0  0.0  0.0   0.0
+#&gt;  [2,]  0.4  1.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0   0.0
+#&gt;  [3,]  0.0  0.0  1.0  0.4  0.0  0.0  0.0  0.0  0.0   0.0
+#&gt;  [4,]  0.0  0.0  0.4  1.0  0.0  0.0  0.0  0.0  0.0   0.0
+#&gt;  [5,]  0.0  0.0  0.0  0.0  1.0  0.4  0.0  0.0  0.0   0.0
+#&gt;  [6,]  0.0  0.0  0.0  0.0  0.4  1.0  0.0  0.0  0.0   0.0
+#&gt;  [7,]  0.0  0.0  0.0  0.0  0.0  0.0  1.0  0.4  0.0   0.0
+#&gt;  [8,]  0.0  0.0  0.0  0.0  0.0  0.0  0.4  1.0  0.0   0.0
+#&gt;  [9,]  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  1.0   0.4
+#&gt; [10,]  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.4   1.0</div><div class='input'>
+<span class='co'>############################################################################</span>
+
+<span class='co'>### see help(dat.knapp2017) for further details on this dataset</span>
+
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.knapp2017</span>
+<span class='va'>dat</span>
+</div><div class='output co'>#&gt;                 authors year study            task difficulty group1 group2
+#&gt; 1        Badcock et al. 2005     1    SOC (CANTAB)       3.83     SZ     HC
+#&gt; 2           Braw et al. 2008     2    SOC (CANTAB)       3.83    SZ1     HC
+#&gt; 3           Braw et al. 2008     2    SOC (CANTAB)       3.83    SZ2     HC
+#&gt; 4           Braw et al. 2012     3    SOC (CANTAB)       3.83    SZ1     HC
+#&gt; 5           Braw et al. 2012     3    SOC (CANTAB)       3.83    SZ2     HC
+#&gt; 6           Braw et al. 2012     3    SOC (CANTAB)       3.83    SZ3     HC
+#&gt; 7           Braw et al. 2012     3    SOC (CANTAB)       3.83    SZ4     HC
+#&gt; 8        Bustini et al. 1999     4             TOH         NA     SZ     HC
+#&gt; 9        Dichter et al. 2006     5             TOL         NA     SZ     HC
+#&gt; 10       Elliott et al. 1998     6    SOC (CANTAB)       2.00     SZ     HC
+#&gt; 11       Elliott et al. 1998     6    SOC (CANTAB)       3.00     SZ     HC
+#&gt; 12       Elliott et al. 1998     6    SOC (CANTAB)       4.00     SZ     HC
+#&gt; 13       Elliott et al. 1998     6    SOC (CANTAB)       5.00     SZ     HC
+#&gt; 14       Elliott et al. 1998     6 SOC (one-touch)       2.00     SZ     HC
+#&gt; 15       Elliott et al. 1998     6 SOC (one-touch)       3.00     SZ     HC
+#&gt; 16       Elliott et al. 1998     6 SOC (one-touch)       4.00     SZ     HC
+#&gt; 17       Elliott et al. 1998     6 SOC (one-touch)       5.00     SZ     HC
+#&gt; 18      Feldmann et al. 2006     7             SOC       3.50     SZ     HC
+#&gt; 19      Goldberg et al. 1990     8             TOH         NA     SZ     HC
+#&gt; 20     Greenwood et al. 2011     9             TOL       4.00    SZ1     HC
+#&gt; 21     Greenwood et al. 2011     9             TOL       4.00    SZ2     HC
+#&gt; 22         Hilti et al. 2010    10    SOC (CANTAB)       3.83     SZ     HC
+#&gt; 23         Huddy et al. 2007    11    SOC (CANTAB)       3.83     SZ     HC
+#&gt; 24         Joyce et al. 2002    12    SOC (CANTAB)       2.00     SZ     HC
+#&gt; 25         Joyce et al. 2002    12    SOC (CANTAB)       3.00     SZ     HC
+#&gt; 26         Joyce et al. 2002    12    SOC (CANTAB)       4.00     SZ     HC
+#&gt; 27         Joyce et al. 2002    12    SOC (CANTAB)       5.00     SZ     HC
+#&gt; 28    Krabbendam et al. 1999    13             TOL         NA     SZ     HC
+#&gt; 29       Langdon et al. 2001    14             TOL       2.00     SZ     HC
+#&gt; 30       Langdon et al. 2001    14             TOL       3.00     SZ     HC
+#&gt; 31       Langdon et al. 2001    14             TOL       4.00     SZ     HC
+#&gt; 32       Langdon et al. 2001    14             TOL       5.00     SZ     HC
+#&gt; 33       Langdon et al. 2002    15             TOL       2.00     SZ     HC
+#&gt; 34       Langdon et al. 2002    15             TOL       3.00     SZ     HC
+#&gt; 35       Langdon et al. 2002    15             TOL       4.00     SZ     HC
+#&gt; 36       Langdon et al. 2002    15             TOL       5.00     SZ     HC
+#&gt; 37    Marczewski et al. 2001    16             TOL       4.67     SZ     HC
+#&gt; 38        Morice et al. 1996    17             TOL       3.50     SZ     HC
+#&gt; 39        Morris et al. 1995    18             TOL       3.00     SZ     HC
+#&gt; 40        Morris et al. 1995    18             TOL       4.00     SZ     HC
+#&gt; 41        Morris et al. 1995    18             TOL       5.00     SZ     HC
+#&gt; 42      Pantelis et al. 1997    19    SOC (CANTAB)       2.00     SZ     HC
+#&gt; 43      Pantelis et al. 1997    19    SOC (CANTAB)       3.00     SZ     HC
+#&gt; 44      Pantelis et al. 1997    19    SOC (CANTAB)       4.00     SZ     HC
+#&gt; 45      Pantelis et al. 1997    19    SOC (CANTAB)       5.00     SZ     HC
+#&gt; 46        Tenjin et al. 2012    20          BACS-J         NA    SZ1     HC
+#&gt; 47        Tenjin et al. 2012    20          BACS-J         NA    SZ2     HC
+#&gt; 48         Tyson et al. 2004    21    SOC (CANTAB)       3.83     SZ     HC
+#&gt; 49           Zhu et al. 2010    22             TOL       2.00     SZ     HC
+#&gt; 50           Zhu et al. 2010    22             TOL       3.00     SZ     HC
+#&gt; 51           Zhu et al. 2010    22             TOL       4.00     SZ     HC
+#&gt; 52             Andersen 2013    23             SOC       3.83     SZ     HC
+#&gt; 53 Ayesa-Arriola et al. 2013    24      TOL-Drexel       5.50    SZ1    HC1
+#&gt; 54 Ayesa-Arriola et al. 2013    24      TOL-Drexel       5.50    SZ2    HC2
+#&gt; 55            Fagerlund 2004    25             SOC       3.83     SZ     HC
+#&gt; 56        Kontis et al. 2013    26             SOC       2.00     SZ     HC
+#&gt; 57        Kontis et al. 2013    26             SOC       3.00     SZ     HC
+#&gt; 58        Kontis et al. 2013    26             SOC       4.00     SZ     HC
+#&gt; 59        Kontis et al. 2013    26             SOC       5.00     SZ     HC
+#&gt; 60      Okruszek et al. 2013    27      TOL-Drexel       5.50     SZ     HC
+#&gt; 61        Saleem et al. 2013    28             SOC       3.83     SZ     HC
+#&gt; 62    Tsuchimine et al. 2013    29          BACS-J         NA    SZ1    HC1
+#&gt; 63    Tsuchimine et al. 2013    29          BACS-J         NA    SZ2    HC2
+#&gt; 64    Tsuchimine et al. 2013    29          BACS-J         NA    SZ3    HC3
+#&gt; 65       Asevedo et al. 2013    30             TOL       3.83     SZ     HC
+#&gt; 66          Shum et al. 2004    31 TOL (four-disk)       5.60     SZ     HC
+#&gt;    comp    yi    vi n_sz n_hc yi_iq vi_iq
+#&gt; 1     1  0.62 0.075   24   33  0.72 0.076
+#&gt; 2     1  0.46 0.047   44   44    NA    NA
+#&gt; 3     2  0.73 0.052   38   44    NA    NA
+#&gt; 4     1  1.18 0.062   39   37    NA    NA
+#&gt; 5     2  1.09 0.073   27   37    NA    NA
+#&gt; 6     3  0.91 0.102   15   37    NA    NA
+#&gt; 7     4  0.91 0.084   20   37    NA    NA
+#&gt; 8     1  0.57 0.074   28   28    NA    NA
+#&gt; 9     1  0.40 0.180   13   10    NA    NA
+#&gt; 10    1  0.43 0.170   12   12  0.12 0.167
+#&gt; 11    2  1.37 0.206   12   12  0.12 0.167
+#&gt; 12    3  0.23 0.168   12   12  0.12 0.167
+#&gt; 13    4  0.97 0.186   12   12  0.12 0.167
+#&gt; 14    5  0.56 0.173   12   12  0.12 0.167
+#&gt; 15    6  0.79 0.180   12   12  0.12 0.167
+#&gt; 16    7  1.19 0.196   12   12  0.12 0.167
+#&gt; 17    8  0.92 0.184   12   12  0.12 0.167
+#&gt; 18    1  0.20 0.096   22   20  0.62 0.100
+#&gt; 19    1  1.42 0.180   13   15    NA    NA
+#&gt; 20    1  0.35 0.074   27   28  1.21 0.086
+#&gt; 21    2  0.88 0.078   28   28  1.26 0.086
+#&gt; 22    1  1.08 0.079   26   33  0.76 0.074
+#&gt; 23    1  0.94 0.111   20   20  0.42 0.102
+#&gt; 24    1  0.44 0.020  135   81  0.49 0.020
+#&gt; 25    2  0.63 0.021  135   81  0.49 0.020
+#&gt; 26    3  0.38 0.020  135   81  0.49 0.020
+#&gt; 27    4  0.93 0.022  135   81  0.49 0.020
+#&gt; 28    1  0.33 0.102   24   17    NA    NA
+#&gt; 29    1  0.00 0.073   32   24    NA    NA
+#&gt; 30    2 -0.06 0.073   32   24    NA    NA
+#&gt; 31    3  0.73 0.078   32   24    NA    NA
+#&gt; 32    4  0.48 0.075   32   24    NA    NA
+#&gt; 33    1  0.43 0.092   25   20    NA    NA
+#&gt; 34    2  0.72 0.096   25   20    NA    NA
+#&gt; 35    3  0.80 0.097   25   20    NA    NA
+#&gt; 36    4  1.30 0.109   25   20    NA    NA
+#&gt; 37    1  1.84 0.190   15   15    NA    NA
+#&gt; 38    1  2.58 0.216   17   17  0.58 0.123
+#&gt; 39    1  0.25 0.071   30   27  0.18 0.071
+#&gt; 40    2  0.86 0.077   30   27  0.18 0.071
+#&gt; 41    3  0.68 0.074   30   27  0.18 0.071
+#&gt; 42    1  0.21 0.060   36   31  0.48 0.062
+#&gt; 43    2  0.65 0.063   36   31  0.48 0.062
+#&gt; 44    3  0.30 0.061   36   31  0.48 0.062
+#&gt; 45    4  0.45 0.062   36   31  0.48 0.062
+#&gt; 46    1  1.03 0.054   20  340    NA    NA
+#&gt; 47    2  0.92 0.104   10  340    NA    NA
+#&gt; 48    1  1.12 0.108   28   17    NA    NA
+#&gt; 49    1  0.52 0.052   40   40    NA    NA
+#&gt; 50    2  0.50 0.052   40   40    NA    NA
+#&gt; 51    3  0.49 0.051   40   40    NA    NA
+#&gt; 52    1  0.30 0.042   48   48    NA    NA
+#&gt; 53    1  0.36 0.022   86   97  0.47 0.023
+#&gt; 54    2  0.41 0.030   75   62  0.10 0.030
+#&gt; 55    1  0.79 0.086   25   25    NA    NA
+#&gt; 56    1  0.23 0.031   77   55    NA    NA
+#&gt; 57    2  0.58 0.032   77   55    NA    NA
+#&gt; 58    3  0.57 0.032   77   55    NA    NA
+#&gt; 59    4  0.79 0.034   77   55    NA    NA
+#&gt; 60    1  0.70 0.071   30   30    NA    NA
+#&gt; 61    1  1.16 0.136   20   15  0.23 0.117
+#&gt; 62    1  1.29 0.039   56   68  0.37 0.033
+#&gt; 63    2  0.63 0.039   47   62  0.43 0.038
+#&gt; 64    3  0.31 0.121   15   19  1.00 0.134
+#&gt; 65    1  0.11 0.070   30   27    NA    NA
+#&gt; 66    1  0.87 0.036   60   60    NA    NA</div><div class='input'>
+<span class='co'>### create variable that indicates the task and difficulty combination as increasing integers</span>
+<span class='va'>dat</span><span class='op'>$</span><span class='va'>task.diff</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/unlist.html'>unlist</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/split.html'>split</a></span><span class='op'>(</span><span class='va'>dat</span>, <span class='va'>dat</span><span class='op'>$</span><span class='va'>study</span><span class='op'>)</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>{</span>
+   <span class='va'>task.int</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>$</span><span class='va'>task</span><span class='op'>)</span><span class='op'>)</span>
+   <span class='va'>diff.int</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>$</span><span class='va'>difficulty</span><span class='op'>)</span><span class='op'>)</span>
+   <span class='va'>diff.int</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>diff.int</span><span class='op'>)</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fl'>1</span>
+   <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='va'>task.int</span>, <span class='st'>"."</span>, <span class='va'>diff.int</span><span class='op'>)</span><span class='op'>}</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='co'>### construct correlation matrix for two tasks with four different difficulties where the</span>
+<span class='co'>### correlation is 0.4 for different difficulties of the same task, 0.7 for the same</span>
+<span class='co'>### difficulty of different tasks, and 0.28 for different difficulties of different tasks</span>
+<span class='va'>R</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fl'>0.4</span>, nrow<span class='op'>=</span><span class='fl'>8</span>, ncol<span class='op'>=</span><span class='fl'>8</span><span class='op'>)</span>
+<span class='va'>R</span><span class='op'>[</span><span class='fl'>5</span><span class='op'>:</span><span class='fl'>8</span>,<span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='va'>R</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>,<span class='fl'>5</span><span class='op'>:</span><span class='fl'>8</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fl'>0.28</span>
+<span class='fu'><a href='https://rdrr.io/r/base/diag.html'>diag</a></span><span class='op'>(</span><span class='va'>R</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>,<span class='fl'>5</span><span class='op'>:</span><span class='fl'>8</span><span class='op'>]</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fl'>0.7</span>
+<span class='fu'><a href='https://rdrr.io/r/base/diag.html'>diag</a></span><span class='op'>(</span><span class='va'>R</span><span class='op'>[</span><span class='fl'>5</span><span class='op'>:</span><span class='fl'>8</span>,<span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>]</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fl'>0.7</span>
+<span class='fu'><a href='https://rdrr.io/r/base/diag.html'>diag</a></span><span class='op'>(</span><span class='va'>R</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fl'>1</span>
+<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span><span class='op'>(</span><span class='va'>R</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>R</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>, each<span class='op'>=</span><span class='fl'>4</span><span class='op'>)</span>, <span class='st'>"."</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span>
+<span class='va'>R</span>
+</div><div class='output co'>#&gt;      1.1  1.2  1.3  1.4  2.1  2.2  2.3  2.4
+#&gt; 1.1 1.00 0.40 0.40 0.40 0.70 0.28 0.28 0.28
+#&gt; 1.2 0.40 1.00 0.40 0.40 0.28 0.70 0.28 0.28
+#&gt; 1.3 0.40 0.40 1.00 0.40 0.28 0.28 0.70 0.28
+#&gt; 1.4 0.40 0.40 0.40 1.00 0.28 0.28 0.28 0.70
+#&gt; 2.1 0.70 0.28 0.28 0.28 1.00 0.40 0.40 0.40
+#&gt; 2.2 0.28 0.70 0.28 0.28 0.40 1.00 0.40 0.40
+#&gt; 2.3 0.28 0.28 0.70 0.28 0.40 0.40 1.00 0.40
+#&gt; 2.4 0.28 0.28 0.28 0.70 0.40 0.40 0.40 1.00</div><div class='input'>
+<span class='co'>### construct an approximate V matrix accounting for the use of shared groups and</span>
+<span class='co'>### for correlations among tasks/difficulties as specified in the R matrix above</span>
+<span class='va'>V</span> <span class='op'>&lt;-</span> <span class='fu'>vcalc</span><span class='op'>(</span><span class='va'>vi</span>, cluster<span class='op'>=</span><span class='va'>study</span>, grp1<span class='op'>=</span><span class='va'>group1</span>, grp2<span class='op'>=</span><span class='va'>group2</span>, w1<span class='op'>=</span><span class='va'>n_sz</span>, w2<span class='op'>=</span><span class='va'>n_hc</span>,
+           obs<span class='op'>=</span><span class='va'>task.diff</span>, rho<span class='op'>=</span><span class='va'>R</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cov2cor</a></span><span class='op'>(</span><span class='va'>V</span><span class='op'>[</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>study</span> <span class='op'>==</span>  <span class='fl'>3</span>, <span class='va'>dat</span><span class='op'>$</span><span class='va'>study</span> <span class='op'>==</span>  <span class='fl'>3</span><span class='op'>]</span><span class='op'>)</span> <span class='co'># study with multiple SZ groups and a single HC group</span>
+</div><div class='output co'>#&gt;           [,1]      [,2]      [,3]      [,4]
+#&gt; [1,] 1.0000000 0.4652832 0.3847419 0.4243294
+#&gt; [2,] 0.4652832 1.0000000 0.3488477 0.3847419
+#&gt; [3,] 0.3847419 0.3488477 1.0000000 0.3181424
+#&gt; [4,] 0.4243294 0.3847419 0.3181424 1.0000000</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cov2cor</a></span><span class='op'>(</span><span class='va'>V</span><span class='op'>[</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>study</span> <span class='op'>==</span>  <span class='fl'>6</span>, <span class='va'>dat</span><span class='op'>$</span><span class='va'>study</span> <span class='op'>==</span>  <span class='fl'>6</span><span class='op'>]</span><span class='op'>)</span> <span class='co'># study with two task types and multiple difficulties</span>
+</div><div class='output co'>#&gt;      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8]
+#&gt; [1,] 1.00 0.40 0.40 0.40 0.70 0.28 0.28 0.28
+#&gt; [2,] 0.40 1.00 0.40 0.40 0.28 0.70 0.28 0.28
+#&gt; [3,] 0.40 0.40 1.00 0.40 0.28 0.28 0.70 0.28
+#&gt; [4,] 0.40 0.40 0.40 1.00 0.28 0.28 0.28 0.70
+#&gt; [5,] 0.70 0.28 0.28 0.28 1.00 0.40 0.40 0.40
+#&gt; [6,] 0.28 0.70 0.28 0.28 0.40 1.00 0.40 0.40
+#&gt; [7,] 0.28 0.28 0.70 0.28 0.40 0.40 1.00 0.40
+#&gt; [8,] 0.28 0.28 0.28 0.70 0.40 0.40 0.40 1.00</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cov2cor</a></span><span class='op'>(</span><span class='va'>V</span><span class='op'>[</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>study</span> <span class='op'>==</span> <span class='fl'>12</span>, <span class='va'>dat</span><span class='op'>$</span><span class='va'>study</span> <span class='op'>==</span> <span class='fl'>12</span><span class='op'>]</span><span class='op'>)</span> <span class='co'># study with multiple difficulties for the same task</span>
+</div><div class='output co'>#&gt;      [,1] [,2] [,3] [,4]
+#&gt; [1,]  1.0  0.4  0.4  0.4
+#&gt; [2,]  0.4  1.0  0.4  0.4
+#&gt; [3,]  0.4  0.4  1.0  0.4
+#&gt; [4,]  0.4  0.4  0.4  1.0</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cov2cor</a></span><span class='op'>(</span><span class='va'>V</span><span class='op'>[</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>study</span> <span class='op'>==</span> <span class='fl'>24</span>, <span class='va'>dat</span><span class='op'>$</span><span class='va'>study</span> <span class='op'>==</span> <span class='fl'>24</span><span class='op'>]</span><span class='op'>)</span> <span class='co'># study with separate rows for males and females</span>
+</div><div class='output co'>#&gt;      [,1] [,2]
+#&gt; [1,]    1    0
+#&gt; [2,]    0    1</div><div class='input'>
 <span class='co'>############################################################################</span>
 </div></pre>
   </div>
