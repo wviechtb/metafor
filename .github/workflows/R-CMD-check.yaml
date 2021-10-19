@@ -37,6 +37,7 @@ jobs:
         run: |
           install.packages(c("remotes", "rcmdcheck"))
           remotes::install_deps(dependencies = TRUE)
+          remotes::install_github("wviechtb/metadat")
         shell: Rscript {0}
       - name: Check
         run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran", "--no-tests"), error_on = "warning")
