@@ -78,7 +78,7 @@ vcalc(vi, cluster, subgroup, obs, type, time1, time2, grp1, grp2, w1, w2,
 
    In particular, let \mjseqn{k_i} denote the number of rows corresponding to the \mjseqn{i}th cluster. Then the values of the first \mjseqn{k_i} variables from \code{rvars} are used to construct the correlation matrix and, together with the sampling variances (specified via \code{vi}), the variance-covariance matrix. Say there are three studies, the first with two correlated estimates, the second with a single estimate, and the third with four correlated estimates. Then the data structure should look like this:
 
-\preformatted{  study  yi  vi  r1  r2  r3  r4
+\preformatted{study  yi  vi  r1  r2  r3  r4
 =============================
     1   .   .   1  NA  NA  NA
     1   .   .  .6   1  NA  NA
@@ -128,7 +128,7 @@ round(V[dat$study \%in\% c(1,2), dat$study \%in\% c(1,2)], 4)
 ### delinquent behavior and a correlation of 0.5 for effect sizes corresponding
 ### to different types of delinquent behavior
 V <- vcalc(vi, cluster=study, type=deltype, obs=esid, data=dat, rho=c(0.7, 0.5))
-round(V[dat$study \%in\% 16, dat$study \%in\% 16], 4)
+round(V[dat$study \%in\% 16, dat$study \%in\% 16], 3)
 ### examine the correlation matrix for study 16
 cov2cor(V[dat$study \%in\% 16, dat$study \%in\% 16])
 
@@ -160,7 +160,7 @@ cov2cor(V[1:8, 1:8])
 ### see help(dat.kalaian1996) for further details on this dataset
 
 dat <- dat.kalaian1996
-dat[1:12,1:7]
+head(dat, 12)
 
 ### construct the variance-covariance matrix assuming rho = 0.66 for effect sizes
 ### corresponding to the 'verbal' and 'math' outcome types
@@ -178,7 +178,7 @@ dat <- dat.berkey1998
 ### var-cov matrices and not correlation matrices, set vi=1 for all rows)
 V <- vcalc(vi=1, cluster=author, rvars=c(v1i, v2i), data=dat)
 V
-cov2cor(V)
+round(cov2cor(V), 2)
 
 ### construct the variance-covariance matrix assuming rho = 0.4 for effect sizes
 ### corresponding to the 'PD' and 'AL' outcome types
@@ -191,7 +191,7 @@ cov2cor(V)
 ### see help(dat.knapp2017) for further details on this dataset
 
 dat <- dat.knapp2017
-dat
+dat[-c(1:2)]
 
 ### create variable that indicates the task and difficulty combination as increasing integers
 dat$task.diff <- unlist(lapply(split(dat, dat$study), function(x) {

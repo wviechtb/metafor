@@ -118,7 +118,7 @@
   </a>
 </li>
 <li>
-  <a href="../reference/metafor-package.html">Intro</a>
+  <a href="../reference/metafor-package.html">Introduction</a>
 </li>
 <li>
   <a href="../reference/index.html">Functions</a>
@@ -827,49 +827,28 @@
 
 <span class='co'># copy data into 'dat' and examine data</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.cohen1981</span>
-<span class='va'>dat</span>
-</div><div class='output co'>#&gt;                     study                         sample                                      control
-#&gt; 1      Bolton et al. 1979             General psychology                            Random assignment
-#&gt; 2             Bryson 1974                College algebra                                 CIAT pretest
-#&gt; 3             Centra 1977                General biology Final exam for prior semester of same course
-#&gt; 4             Centra 1977             General psychology Final exam for prior semester of same course
-#&gt; 5     Crooks &amp; Smock 1974                General physics                                 Math pretest
-#&gt; 6   Doyle &amp; Crichton 1978    Introductory communications                            PSAT verbal score
-#&gt; 7    Doyle &amp; Whitely 1974               Beginning French           Minnesota Scholastic Aptitude Test
-#&gt; 8            Elliott 1950              General chemistry                 College entrance exam scores
-#&gt; 9    Ellis &amp; Rickard 1977             General psychology                            Random assignment
-#&gt; 10       Frey et al. 1975          Introductory calculus                              SAT math scores
-#&gt; 11  Greenwood et al. 1976 Analytic geometry and calculus                          Achievement pretest
-#&gt; 12           Hoffman 1978              Introductory math                              SAT math scores
-#&gt; 13  McKeachie et al. 1971             General psychology                     Intelligence test scores
-#&gt; 14      Morsh et al. 1956             Aircraft mechanics                           Hydraulics pretest
-#&gt; 15    Remmers et al. 1949              General chemistry                      Orientation test scores
-#&gt; 16 Sullivan &amp; Skanes 1974             First-year science                            Random assignment
-#&gt; 17 Sullivan &amp; Skanes 1974        Introductory psychology                            Random assignment
-#&gt; 18 Sullivan &amp; Skanes 1974                First-year math                            Random assignment
-#&gt; 19 Sullivan &amp; Skanes 1974             First-year biology                            Random assignment
-#&gt; 20            Wherry 1952        Introductory psychology                               Ability scores
-#&gt;     ni    ri
-#&gt; 1   10  0.68
-#&gt; 2   20  0.56
-#&gt; 3   13  0.23
-#&gt; 4   22  0.64
-#&gt; 5   28  0.49
-#&gt; 6   12 -0.04
-#&gt; 7   12  0.49
-#&gt; 8   36  0.33
-#&gt; 9   19  0.58
-#&gt; 10  12  0.18
-#&gt; 11  36 -0.11
-#&gt; 12  75  0.27
-#&gt; 13  33  0.26
-#&gt; 14 121  0.40
-#&gt; 15  37  0.49
-#&gt; 16  14  0.51
-#&gt; 17  40  0.40
-#&gt; 18  16  0.34
-#&gt; 19  14  0.42
-#&gt; 20  20  0.16</div><div class='input'>
+<span class='va'>dat</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>4</span>,<span class='fl'>5</span><span class='op'>)</span><span class='op'>]</span>
+</div><div class='output co'>#&gt;                     study  ni    ri
+#&gt; 1      Bolton et al. 1979  10  0.68
+#&gt; 2             Bryson 1974  20  0.56
+#&gt; 3             Centra 1977  13  0.23
+#&gt; 4             Centra 1977  22  0.64
+#&gt; 5     Crooks &amp; Smock 1974  28  0.49
+#&gt; 6   Doyle &amp; Crichton 1978  12 -0.04
+#&gt; 7    Doyle &amp; Whitely 1974  12  0.49
+#&gt; 8            Elliott 1950  36  0.33
+#&gt; 9    Ellis &amp; Rickard 1977  19  0.58
+#&gt; 10       Frey et al. 1975  12  0.18
+#&gt; 11  Greenwood et al. 1976  36 -0.11
+#&gt; 12           Hoffman 1978  75  0.27
+#&gt; 13  McKeachie et al. 1971  33  0.26
+#&gt; 14      Morsh et al. 1956 121  0.40
+#&gt; 15    Remmers et al. 1949  37  0.49
+#&gt; 16 Sullivan &amp; Skanes 1974  14  0.51
+#&gt; 17 Sullivan &amp; Skanes 1974  40  0.40
+#&gt; 18 Sullivan &amp; Skanes 1974  16  0.34
+#&gt; 19 Sullivan &amp; Skanes 1974  14  0.42
+#&gt; 20            Wherry 1952  20  0.16</div><div class='input'>
 <span class='co'># calculate r-to-z transformed correlations and corresponding sampling variances</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='escalc.html'>escalc</a></span><span class='op'>(</span>measure<span class='op'>=</span><span class='st'>"ZCOR"</span>, ri<span class='op'>=</span><span class='va'>ri</span>, ni<span class='op'>=</span><span class='va'>ni</span>, data<span class='op'>=</span><span class='va'>dat</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>4</span>,<span class='fl'>5</span><span class='op'>)</span><span class='op'>]</span><span class='op'>)</span>
 <span class='va'>dat</span>

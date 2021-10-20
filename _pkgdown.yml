@@ -47,7 +47,7 @@ navbar:
   left:
     - icon: fa-home fa-lg
       href: index.html
-    - text: Intro
+    - text: Introduction
       href: reference/metafor-package.html
     - text: "Functions"
       href: reference/index.html

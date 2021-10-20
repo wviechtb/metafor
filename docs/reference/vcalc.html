@@ -118,7 +118,7 @@
   </a>
 </li>
 <li>
-  <a href="../reference/metafor-package.html">Intro</a>
+  <a href="../reference/metafor-package.html">Introduction</a>
 </li>
 <li>
   <a href="../reference/index.html">Functions</a>
@@ -287,7 +287,7 @@
 <p><b>Using the <code>rvars</code> Argument</b></p>
 <p>The function also provides an alternative approach for constructing the variance-covariance matrix using the <code>rvars</code> argument. Here, one must specify the names of the variables in the dataset that correspond to the correlation matrices of the studies (the variables should be specified as a vector; e.g., <code><a href='https://rdrr.io/r/base/c.html'>c(var1, var2, var3)</a></code>).</p>
 <p>In particular, let \(k_i\) denote the number of rows corresponding to the \(i\)th cluster. Then the values of the first \(k_i\) variables from <code>rvars</code> are used to construct the correlation matrix and, together with the sampling variances (specified via <code>vi</code>), the variance-covariance matrix. Say there are three studies, the first with two correlated estimates, the second with a single estimate, and the third with four correlated estimates. Then the data structure should look like this:</p>
-<pre>  study  yi  vi  r1  r2  r3  r4
+<pre>study  yi  vi  r1  r2  r3  r4
 =============================
     1   .   .   1  NA  NA  NA
     1   .   .  .6   1  NA  NA
@@ -353,41 +353,24 @@
 <span class='co'>### delinquent behavior and a correlation of 0.5 for effect sizes corresponding</span>
 <span class='co'>### to different types of delinquent behavior</span>
 <span class='va'>V</span> <span class='op'>&lt;-</span> <span class='fu'>vcalc</span><span class='op'>(</span><span class='va'>vi</span>, cluster<span class='op'>=</span><span class='va'>study</span>, type<span class='op'>=</span><span class='va'>deltype</span>, obs<span class='op'>=</span><span class='va'>esid</span>, data<span class='op'>=</span><span class='va'>dat</span>, rho<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.7</span>, <span class='fl'>0.5</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='va'>V</span><span class='op'>[</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>study</span> <span class='op'>%in%</span> <span class='fl'>16</span>, <span class='va'>dat</span><span class='op'>$</span><span class='va'>study</span> <span class='op'>%in%</span> <span class='fl'>16</span><span class='op'>]</span>, <span class='fl'>4</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;         [,1]   [,2]   [,3]   [,4]   [,5]   [,6]   [,7]   [,8]   [,9]  [,10]  [,11]  [,12]  [,13]
-#&gt;  [1,] 0.0914 0.0447 0.0275 0.0444 0.0302 0.0394 0.0759 0.0275 0.0344 0.0299 0.0390 0.0430 0.0390
-#&gt;  [2,] 0.0447 0.0875 0.0269 0.0608 0.0296 0.0386 0.0531 0.0269 0.0471 0.0409 0.0534 0.0589 0.0535
-#&gt;  [3,] 0.0275 0.0269 0.0330 0.0267 0.0254 0.0332 0.0326 0.0232 0.0207 0.0179 0.0234 0.0258 0.0235
-#&gt;  [4,] 0.0444 0.0608 0.0267 0.0861 0.0293 0.0383 0.0526 0.0267 0.0467 0.0406 0.0529 0.0584 0.0530
-#&gt;  [5,] 0.0302 0.0296 0.0254 0.0293 0.0400 0.0365 0.0359 0.0255 0.0227 0.0197 0.0258 0.0284 0.0258
-#&gt;  [6,] 0.0394 0.0386 0.0332 0.0383 0.0365 0.0680 0.0468 0.0333 0.0296 0.0257 0.0336 0.0371 0.0337
-#&gt;  [7,] 0.0759 0.0531 0.0326 0.0526 0.0359 0.0468 0.1287 0.0327 0.0408 0.0354 0.0462 0.0510 0.0463
-#&gt;  [8,] 0.0275 0.0269 0.0232 0.0267 0.0255 0.0333 0.0327 0.0332 0.0207 0.0180 0.0235 0.0259 0.0235
-#&gt;  [9,] 0.0344 0.0471 0.0207 0.0467 0.0227 0.0296 0.0408 0.0207 0.0517 0.0314 0.0410 0.0453 0.0411
-#&gt; [10,] 0.0299 0.0409 0.0179 0.0406 0.0197 0.0257 0.0354 0.0180 0.0314 0.0390 0.0356 0.0393 0.0357
-#&gt; [11,] 0.0390 0.0534 0.0234 0.0529 0.0258 0.0336 0.0462 0.0235 0.0410 0.0356 0.0664 0.0513 0.0466
-#&gt; [12,] 0.0430 0.0589 0.0258 0.0584 0.0284 0.0371 0.0510 0.0259 0.0453 0.0393 0.0513 0.0809 0.0514
-#&gt; [13,] 0.0390 0.0535 0.0235 0.0530 0.0258 0.0337 0.0463 0.0235 0.0411 0.0357 0.0466 0.0514 0.0667
-#&gt; [14,] 0.0665 0.0465 0.0285 0.0461 0.0314 0.0410 0.0789 0.0286 0.0357 0.0310 0.0405 0.0447 0.0406
-#&gt; [15,] 0.0279 0.0382 0.0167 0.0379 0.0184 0.0240 0.0331 0.0168 0.0293 0.0255 0.0333 0.0367 0.0333
-#&gt; [16,] 0.0316 0.0433 0.0190 0.0429 0.0209 0.0273 0.0375 0.0190 0.0333 0.0289 0.0377 0.0416 0.0378
-#&gt;        [,14]  [,15]  [,16]
-#&gt;  [1,] 0.0665 0.0279 0.0316
-#&gt;  [2,] 0.0465 0.0382 0.0433
-#&gt;  [3,] 0.0285 0.0167 0.0190
-#&gt;  [4,] 0.0461 0.0379 0.0429
-#&gt;  [5,] 0.0314 0.0184 0.0209
-#&gt;  [6,] 0.0410 0.0240 0.0273
-#&gt;  [7,] 0.0789 0.0331 0.0375
-#&gt;  [8,] 0.0286 0.0168 0.0190
-#&gt;  [9,] 0.0357 0.0293 0.0333
-#&gt; [10,] 0.0310 0.0255 0.0289
-#&gt; [11,] 0.0405 0.0333 0.0377
-#&gt; [12,] 0.0447 0.0367 0.0416
-#&gt; [13,] 0.0406 0.0333 0.0378
-#&gt; [14,] 0.0988 0.0290 0.0329
-#&gt; [15,] 0.0290 0.0340 0.0270
-#&gt; [16,] 0.0329 0.0270 0.0437</div><div class='input'><span class='co'>### examine the correlation matrix for study 16</span>
+<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='va'>V</span><span class='op'>[</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>study</span> <span class='op'>%in%</span> <span class='fl'>16</span>, <span class='va'>dat</span><span class='op'>$</span><span class='va'>study</span> <span class='op'>%in%</span> <span class='fl'>16</span><span class='op'>]</span>, <span class='fl'>3</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;        [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10] [,11] [,12] [,13] [,14] [,15] [,16]
+#&gt;  [1,] 0.091 0.045 0.027 0.044 0.030 0.039 0.076 0.028 0.034 0.030 0.039 0.043 0.039 0.067 0.028 0.032
+#&gt;  [2,] 0.045 0.087 0.027 0.061 0.030 0.039 0.053 0.027 0.047 0.041 0.053 0.059 0.053 0.046 0.038 0.043
+#&gt;  [3,] 0.027 0.027 0.033 0.027 0.025 0.033 0.033 0.023 0.021 0.018 0.023 0.026 0.023 0.029 0.017 0.019
+#&gt;  [4,] 0.044 0.061 0.027 0.086 0.029 0.038 0.053 0.027 0.047 0.041 0.053 0.058 0.053 0.046 0.038 0.043
+#&gt;  [5,] 0.030 0.030 0.025 0.029 0.040 0.037 0.036 0.026 0.023 0.020 0.026 0.028 0.026 0.031 0.018 0.021
+#&gt;  [6,] 0.039 0.039 0.033 0.038 0.037 0.068 0.047 0.033 0.030 0.026 0.034 0.037 0.034 0.041 0.024 0.027
+#&gt;  [7,] 0.076 0.053 0.033 0.053 0.036 0.047 0.129 0.033 0.041 0.035 0.046 0.051 0.046 0.079 0.033 0.037
+#&gt;  [8,] 0.028 0.027 0.023 0.027 0.026 0.033 0.033 0.033 0.021 0.018 0.023 0.026 0.024 0.029 0.017 0.019
+#&gt;  [9,] 0.034 0.047 0.021 0.047 0.023 0.030 0.041 0.021 0.052 0.031 0.041 0.045 0.041 0.036 0.029 0.033
+#&gt; [10,] 0.030 0.041 0.018 0.041 0.020 0.026 0.035 0.018 0.031 0.039 0.036 0.039 0.036 0.031 0.025 0.029
+#&gt; [11,] 0.039 0.053 0.023 0.053 0.026 0.034 0.046 0.023 0.041 0.036 0.066 0.051 0.047 0.040 0.033 0.038
+#&gt; [12,] 0.043 0.059 0.026 0.058 0.028 0.037 0.051 0.026 0.045 0.039 0.051 0.081 0.051 0.045 0.037 0.042
+#&gt; [13,] 0.039 0.053 0.023 0.053 0.026 0.034 0.046 0.024 0.041 0.036 0.047 0.051 0.067 0.041 0.033 0.038
+#&gt; [14,] 0.067 0.046 0.029 0.046 0.031 0.041 0.079 0.029 0.036 0.031 0.040 0.045 0.041 0.099 0.029 0.033
+#&gt; [15,] 0.028 0.038 0.017 0.038 0.018 0.024 0.033 0.017 0.029 0.025 0.033 0.037 0.033 0.029 0.034 0.027
+#&gt; [16,] 0.032 0.043 0.019 0.043 0.021 0.027 0.037 0.019 0.033 0.029 0.038 0.042 0.038 0.033 0.027 0.044</div><div class='input'><span class='co'>### examine the correlation matrix for study 16</span>
 <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cov2cor</a></span><span class='op'>(</span><span class='va'>V</span><span class='op'>[</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>study</span> <span class='op'>%in%</span> <span class='fl'>16</span>, <span class='va'>dat</span><span class='op'>$</span><span class='va'>study</span> <span class='op'>%in%</span> <span class='fl'>16</span><span class='op'>]</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14] [,15] [,16]
 #&gt;  [1,]  1.0  0.5  0.5  0.5  0.5  0.5  0.7  0.5  0.5   0.5   0.5   0.5   0.5   0.7   0.5   0.5
@@ -463,20 +446,20 @@
 <span class='co'>### see help(dat.kalaian1996) for further details on this dataset</span>
 
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.kalaian1996</span>
-<span class='va'>dat</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>12</span>,<span class='fl'>1</span><span class='op'>:</span><span class='fl'>7</span><span class='op'>]</span>
-</div><div class='output co'>#&gt;    id                 study year n1i n2i outcome    yi
-#&gt; 1   1 Alderman &amp; Powers (A) 1980  28  22  verbal  0.22
-#&gt; 2   2 Alderman &amp; Powers (B) 1980  39  40  verbal  0.09
-#&gt; 3   3 Alderman &amp; Powers (C) 1980  22  17  verbal  0.14
-#&gt; 4   4 Alderman &amp; Powers (D) 1980  48  43  verbal  0.14
-#&gt; 5   5 Alderman &amp; Powers (E) 1980  25  74  verbal -0.01
-#&gt; 6   6 Alderman &amp; Powers (F) 1980  37  35  verbal  0.14
-#&gt; 7   7 Alderman &amp; Powers (G) 1980  24  70  verbal  0.18
-#&gt; 8   8 Alderman &amp; Powers (H) 1980  16  19  verbal  0.01
-#&gt; 9   9      Evans &amp; Pike (A) 1973 145 129  verbal  0.13
-#&gt; 10 10      Evans &amp; Pike (A) 1973 145 129    math  0.12
-#&gt; 11 11      Evans &amp; Pike (B) 1973  72 129  verbal  0.25
-#&gt; 12 12      Evans &amp; Pike (B) 1973  72 129    math  0.06</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>dat</span>, <span class='fl'>12</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;    id                 study year n1i n2i outcome    yi     vi  hrs ets homework type
+#&gt; 1   1 Alderman &amp; Powers (A) 1980  28  22  verbal  0.22 0.0817  7.0   1        1    1
+#&gt; 2   2 Alderman &amp; Powers (B) 1980  39  40  verbal  0.09 0.0507 10.0   1        1    1
+#&gt; 3   3 Alderman &amp; Powers (C) 1980  22  17  verbal  0.14 0.1045 10.5   1        1    1
+#&gt; 4   4 Alderman &amp; Powers (D) 1980  48  43  verbal  0.14 0.0442 10.0   1        1    1
+#&gt; 5   5 Alderman &amp; Powers (E) 1980  25  74  verbal -0.01 0.0535  6.0   1        1    1
+#&gt; 6   6 Alderman &amp; Powers (F) 1980  37  35  verbal  0.14 0.0557  5.0   1        1    1
+#&gt; 7   7 Alderman &amp; Powers (G) 1980  24  70  verbal  0.18 0.0561 11.0   1        1    1
+#&gt; 8   8 Alderman &amp; Powers (H) 1980  16  19  verbal  0.01 0.1151 45.0   1        1    1
+#&gt; 9   9      Evans &amp; Pike (A) 1973 145 129  verbal  0.13 0.0147 21.0   1        1    1
+#&gt; 10 10      Evans &amp; Pike (A) 1973 145 129    math  0.12 0.0147 21.0   1        1    1
+#&gt; 11 11      Evans &amp; Pike (B) 1973  72 129  verbal  0.25 0.0218 21.0   1        1    1
+#&gt; 12 12      Evans &amp; Pike (B) 1973  72 129    math  0.06 0.0216 21.0   1        1    1</div><div class='input'>
 <span class='co'>### construct the variance-covariance matrix assuming rho = 0.66 for effect sizes</span>
 <span class='co'>### corresponding to the 'verbal' and 'math' outcome types</span>
 <span class='va'>V</span> <span class='op'>&lt;-</span> <span class='fu'>vcalc</span><span class='op'>(</span><span class='va'>vi</span>, cluster<span class='op'>=</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>study</span>, type<span class='op'>=</span><span class='va'>outcome</span>, data<span class='op'>=</span><span class='va'>dat</span>, rho<span class='op'>=</span><span class='fl'>0.66</span><span class='op'>)</span>
@@ -515,18 +498,18 @@
 #&gt;  [7,] 0.0000 0.0000 0.0000 0e+00 0.0000 0.0000 0.0029 0.0009 0.0000 0.0000
 #&gt;  [8,] 0.0000 0.0000 0.0000 0e+00 0.0000 0.0000 0.0009 0.0015 0.0000 0.0000
 #&gt;  [9,] 0.0000 0.0000 0.0000 0e+00 0.0000 0.0000 0.0000 0.0000 0.0148 0.0072
-#&gt; [10,] 0.0000 0.0000 0.0000 0e+00 0.0000 0.0000 0.0000 0.0000 0.0072 0.0304</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cov2cor</a></span><span class='op'>(</span><span class='va'>V</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;           [,1]     [,2]      [,3]      [,4]      [,5]      [,6]     [,7]     [,8]      [,9]     [,10]
-#&gt;  [1,] 1.000000 0.394771 0.0000000 0.0000000 0.0000000 0.0000000 0.000000 0.000000 0.0000000 0.0000000
-#&gt;  [2,] 0.394771 1.000000 0.0000000 0.0000000 0.0000000 0.0000000 0.000000 0.000000 0.0000000 0.0000000
-#&gt;  [3,] 0.000000 0.000000 1.0000000 0.4214636 0.0000000 0.0000000 0.000000 0.000000 0.0000000 0.0000000
-#&gt;  [4,] 0.000000 0.000000 0.4214636 1.0000000 0.0000000 0.0000000 0.000000 0.000000 0.0000000 0.0000000
-#&gt;  [5,] 0.000000 0.000000 0.0000000 0.0000000 1.0000000 0.4082483 0.000000 0.000000 0.0000000 0.0000000
-#&gt;  [6,] 0.000000 0.000000 0.0000000 0.0000000 0.4082483 1.0000000 0.000000 0.000000 0.0000000 0.0000000
-#&gt;  [7,] 0.000000 0.000000 0.0000000 0.0000000 0.0000000 0.0000000 1.000000 0.431517 0.0000000 0.0000000
-#&gt;  [8,] 0.000000 0.000000 0.0000000 0.0000000 0.0000000 0.0000000 0.431517 1.000000 0.0000000 0.0000000
-#&gt;  [9,] 0.000000 0.000000 0.0000000 0.0000000 0.0000000 0.0000000 0.000000 0.000000 1.0000000 0.3394414
-#&gt; [10,] 0.000000 0.000000 0.0000000 0.0000000 0.0000000 0.0000000 0.000000 0.000000 0.3394414 1.0000000</div><div class='input'>
+#&gt; [10,] 0.0000 0.0000 0.0000 0e+00 0.0000 0.0000 0.0000 0.0000 0.0072 0.0304</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cov2cor</a></span><span class='op'>(</span><span class='va'>V</span><span class='op'>)</span>, <span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+#&gt;  [1,] 1.00 0.39 0.00 0.00 0.00 0.00 0.00 0.00 0.00  0.00
+#&gt;  [2,] 0.39 1.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00  0.00
+#&gt;  [3,] 0.00 0.00 1.00 0.42 0.00 0.00 0.00 0.00 0.00  0.00
+#&gt;  [4,] 0.00 0.00 0.42 1.00 0.00 0.00 0.00 0.00 0.00  0.00
+#&gt;  [5,] 0.00 0.00 0.00 0.00 1.00 0.41 0.00 0.00 0.00  0.00
+#&gt;  [6,] 0.00 0.00 0.00 0.00 0.41 1.00 0.00 0.00 0.00  0.00
+#&gt;  [7,] 0.00 0.00 0.00 0.00 0.00 0.00 1.00 0.43 0.00  0.00
+#&gt;  [8,] 0.00 0.00 0.00 0.00 0.00 0.00 0.43 1.00 0.00  0.00
+#&gt;  [9,] 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 1.00  0.34
+#&gt; [10,] 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.34  1.00</div><div class='input'>
 <span class='co'>### construct the variance-covariance matrix assuming rho = 0.4 for effect sizes</span>
 <span class='co'>### corresponding to the 'PD' and 'AL' outcome types</span>
 <span class='va'>V</span> <span class='op'>&lt;-</span> <span class='fu'>vcalc</span><span class='op'>(</span>vi<span class='op'>=</span><span class='va'>vi</span>, cluster<span class='op'>=</span><span class='va'>trial</span>, type<span class='op'>=</span><span class='va'>outcome</span>, data<span class='op'>=</span><span class='va'>dat</span>, rho<span class='op'>=</span><span class='fl'>0.4</span><span class='op'>)</span>
@@ -558,141 +541,74 @@
 <span class='co'>### see help(dat.knapp2017) for further details on this dataset</span>
 
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>dat.knapp2017</span>
-<span class='va'>dat</span>
-</div><div class='output co'>#&gt;                 authors year study            task difficulty group1 group2 comp    yi    vi n_sz
-#&gt; 1        Badcock et al. 2005     1    SOC (CANTAB)       3.83     SZ     HC    1  0.62 0.075   24
-#&gt; 2           Braw et al. 2008     2    SOC (CANTAB)       3.83    SZ1     HC    1  0.46 0.047   44
-#&gt; 3           Braw et al. 2008     2    SOC (CANTAB)       3.83    SZ2     HC    2  0.73 0.052   38
-#&gt; 4           Braw et al. 2012     3    SOC (CANTAB)       3.83    SZ1     HC    1  1.18 0.062   39
-#&gt; 5           Braw et al. 2012     3    SOC (CANTAB)       3.83    SZ2     HC    2  1.09 0.073   27
-#&gt; 6           Braw et al. 2012     3    SOC (CANTAB)       3.83    SZ3     HC    3  0.91 0.102   15
-#&gt; 7           Braw et al. 2012     3    SOC (CANTAB)       3.83    SZ4     HC    4  0.91 0.084   20
-#&gt; 8        Bustini et al. 1999     4             TOH         NA     SZ     HC    1  0.57 0.074   28
-#&gt; 9        Dichter et al. 2006     5             TOL         NA     SZ     HC    1  0.40 0.180   13
-#&gt; 10       Elliott et al. 1998     6    SOC (CANTAB)       2.00     SZ     HC    1  0.43 0.170   12
-#&gt; 11       Elliott et al. 1998     6    SOC (CANTAB)       3.00     SZ     HC    2  1.37 0.206   12
-#&gt; 12       Elliott et al. 1998     6    SOC (CANTAB)       4.00     SZ     HC    3  0.23 0.168   12
-#&gt; 13       Elliott et al. 1998     6    SOC (CANTAB)       5.00     SZ     HC    4  0.97 0.186   12
-#&gt; 14       Elliott et al. 1998     6 SOC (one-touch)       2.00     SZ     HC    5  0.56 0.173   12
-#&gt; 15       Elliott et al. 1998     6 SOC (one-touch)       3.00     SZ     HC    6  0.79 0.180   12
-#&gt; 16       Elliott et al. 1998     6 SOC (one-touch)       4.00     SZ     HC    7  1.19 0.196   12
-#&gt; 17       Elliott et al. 1998     6 SOC (one-touch)       5.00     SZ     HC    8  0.92 0.184   12
-#&gt; 18      Feldmann et al. 2006     7             SOC       3.50     SZ     HC    1  0.20 0.096   22
-#&gt; 19      Goldberg et al. 1990     8             TOH         NA     SZ     HC    1  1.42 0.180   13
-#&gt; 20     Greenwood et al. 2011     9             TOL       4.00    SZ1     HC    1  0.35 0.074   27
-#&gt; 21     Greenwood et al. 2011     9             TOL       4.00    SZ2     HC    2  0.88 0.078   28
-#&gt; 22         Hilti et al. 2010    10    SOC (CANTAB)       3.83     SZ     HC    1  1.08 0.079   26
-#&gt; 23         Huddy et al. 2007    11    SOC (CANTAB)       3.83     SZ     HC    1  0.94 0.111   20
-#&gt; 24         Joyce et al. 2002    12    SOC (CANTAB)       2.00     SZ     HC    1  0.44 0.020  135
-#&gt; 25         Joyce et al. 2002    12    SOC (CANTAB)       3.00     SZ     HC    2  0.63 0.021  135
-#&gt; 26         Joyce et al. 2002    12    SOC (CANTAB)       4.00     SZ     HC    3  0.38 0.020  135
-#&gt; 27         Joyce et al. 2002    12    SOC (CANTAB)       5.00     SZ     HC    4  0.93 0.022  135
-#&gt; 28    Krabbendam et al. 1999    13             TOL         NA     SZ     HC    1  0.33 0.102   24
-#&gt; 29       Langdon et al. 2001    14             TOL       2.00     SZ     HC    1  0.00 0.073   32
-#&gt; 30       Langdon et al. 2001    14             TOL       3.00     SZ     HC    2 -0.06 0.073   32
-#&gt; 31       Langdon et al. 2001    14             TOL       4.00     SZ     HC    3  0.73 0.078   32
-#&gt; 32       Langdon et al. 2001    14             TOL       5.00     SZ     HC    4  0.48 0.075   32
-#&gt; 33       Langdon et al. 2002    15             TOL       2.00     SZ     HC    1  0.43 0.092   25
-#&gt; 34       Langdon et al. 2002    15             TOL       3.00     SZ     HC    2  0.72 0.096   25
-#&gt; 35       Langdon et al. 2002    15             TOL       4.00     SZ     HC    3  0.80 0.097   25
-#&gt; 36       Langdon et al. 2002    15             TOL       5.00     SZ     HC    4  1.30 0.109   25
-#&gt; 37    Marczewski et al. 2001    16             TOL       4.67     SZ     HC    1  1.84 0.190   15
-#&gt; 38        Morice et al. 1996    17             TOL       3.50     SZ     HC    1  2.58 0.216   17
-#&gt; 39        Morris et al. 1995    18             TOL       3.00     SZ     HC    1  0.25 0.071   30
-#&gt; 40        Morris et al. 1995    18             TOL       4.00     SZ     HC    2  0.86 0.077   30
-#&gt; 41        Morris et al. 1995    18             TOL       5.00     SZ     HC    3  0.68 0.074   30
-#&gt; 42      Pantelis et al. 1997    19    SOC (CANTAB)       2.00     SZ     HC    1  0.21 0.060   36
-#&gt; 43      Pantelis et al. 1997    19    SOC (CANTAB)       3.00     SZ     HC    2  0.65 0.063   36
-#&gt; 44      Pantelis et al. 1997    19    SOC (CANTAB)       4.00     SZ     HC    3  0.30 0.061   36
-#&gt; 45      Pantelis et al. 1997    19    SOC (CANTAB)       5.00     SZ     HC    4  0.45 0.062   36
-#&gt; 46        Tenjin et al. 2012    20          BACS-J         NA    SZ1     HC    1  1.03 0.054   20
-#&gt; 47        Tenjin et al. 2012    20          BACS-J         NA    SZ2     HC    2  0.92 0.104   10
-#&gt; 48         Tyson et al. 2004    21    SOC (CANTAB)       3.83     SZ     HC    1  1.12 0.108   28
-#&gt; 49           Zhu et al. 2010    22             TOL       2.00     SZ     HC    1  0.52 0.052   40
-#&gt; 50           Zhu et al. 2010    22             TOL       3.00     SZ     HC    2  0.50 0.052   40
-#&gt; 51           Zhu et al. 2010    22             TOL       4.00     SZ     HC    3  0.49 0.051   40
-#&gt; 52             Andersen 2013    23             SOC       3.83     SZ     HC    1  0.30 0.042   48
-#&gt; 53 Ayesa-Arriola et al. 2013    24      TOL-Drexel       5.50    SZ1    HC1    1  0.36 0.022   86
-#&gt; 54 Ayesa-Arriola et al. 2013    24      TOL-Drexel       5.50    SZ2    HC2    2  0.41 0.030   75
-#&gt; 55            Fagerlund 2004    25             SOC       3.83     SZ     HC    1  0.79 0.086   25
-#&gt; 56        Kontis et al. 2013    26             SOC       2.00     SZ     HC    1  0.23 0.031   77
-#&gt; 57        Kontis et al. 2013    26             SOC       3.00     SZ     HC    2  0.58 0.032   77
-#&gt; 58        Kontis et al. 2013    26             SOC       4.00     SZ     HC    3  0.57 0.032   77
-#&gt; 59        Kontis et al. 2013    26             SOC       5.00     SZ     HC    4  0.79 0.034   77
-#&gt; 60      Okruszek et al. 2013    27      TOL-Drexel       5.50     SZ     HC    1  0.70 0.071   30
-#&gt; 61        Saleem et al. 2013    28             SOC       3.83     SZ     HC    1  1.16 0.136   20
-#&gt; 62    Tsuchimine et al. 2013    29          BACS-J         NA    SZ1    HC1    1  1.29 0.039   56
-#&gt; 63    Tsuchimine et al. 2013    29          BACS-J         NA    SZ2    HC2    2  0.63 0.039   47
-#&gt; 64    Tsuchimine et al. 2013    29          BACS-J         NA    SZ3    HC3    3  0.31 0.121   15
-#&gt; 65       Asevedo et al. 2013    30             TOL       3.83     SZ     HC    1  0.11 0.070   30
-#&gt; 66          Shum et al. 2004    31 TOL (four-disk)       5.60     SZ     HC    1  0.87 0.036   60
-#&gt;    n_hc yi_iq vi_iq
-#&gt; 1    33  0.72 0.076
-#&gt; 2    44    NA    NA
-#&gt; 3    44    NA    NA
-#&gt; 4    37    NA    NA
-#&gt; 5    37    NA    NA
-#&gt; 6    37    NA    NA
-#&gt; 7    37    NA    NA
-#&gt; 8    28    NA    NA
-#&gt; 9    10    NA    NA
-#&gt; 10   12  0.12 0.167
-#&gt; 11   12  0.12 0.167
-#&gt; 12   12  0.12 0.167
-#&gt; 13   12  0.12 0.167
-#&gt; 14   12  0.12 0.167
-#&gt; 15   12  0.12 0.167
-#&gt; 16   12  0.12 0.167
-#&gt; 17   12  0.12 0.167
-#&gt; 18   20  0.62 0.100
-#&gt; 19   15    NA    NA
-#&gt; 20   28  1.21 0.086
-#&gt; 21   28  1.26 0.086
-#&gt; 22   33  0.76 0.074
-#&gt; 23   20  0.42 0.102
-#&gt; 24   81  0.49 0.020
-#&gt; 25   81  0.49 0.020
-#&gt; 26   81  0.49 0.020
-#&gt; 27   81  0.49 0.020
-#&gt; 28   17    NA    NA
-#&gt; 29   24    NA    NA
-#&gt; 30   24    NA    NA
-#&gt; 31   24    NA    NA
-#&gt; 32   24    NA    NA
-#&gt; 33   20    NA    NA
-#&gt; 34   20    NA    NA
-#&gt; 35   20    NA    NA
-#&gt; 36   20    NA    NA
-#&gt; 37   15    NA    NA
-#&gt; 38   17  0.58 0.123
-#&gt; 39   27  0.18 0.071
-#&gt; 40   27  0.18 0.071
-#&gt; 41   27  0.18 0.071
-#&gt; 42   31  0.48 0.062
-#&gt; 43   31  0.48 0.062
-#&gt; 44   31  0.48 0.062
-#&gt; 45   31  0.48 0.062
-#&gt; 46  340    NA    NA
-#&gt; 47  340    NA    NA
-#&gt; 48   17    NA    NA
-#&gt; 49   40    NA    NA
-#&gt; 50   40    NA    NA
-#&gt; 51   40    NA    NA
-#&gt; 52   48    NA    NA
-#&gt; 53   97  0.47 0.023
-#&gt; 54   62  0.10 0.030
-#&gt; 55   25    NA    NA
-#&gt; 56   55    NA    NA
-#&gt; 57   55    NA    NA
-#&gt; 58   55    NA    NA
-#&gt; 59   55    NA    NA
-#&gt; 60   30    NA    NA
-#&gt; 61   15  0.23 0.117
-#&gt; 62   68  0.37 0.033
-#&gt; 63   62  0.43 0.038
-#&gt; 64   19  1.00 0.134
-#&gt; 65   27    NA    NA
-#&gt; 66   60    NA    NA</div><div class='input'>
+<span class='va'>dat</span><span class='op'>[</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>)</span><span class='op'>]</span>
+</div><div class='output co'>#&gt;    study            task difficulty group1 group2 comp    yi    vi n_sz n_hc yi_iq vi_iq
+#&gt; 1      1    SOC (CANTAB)       3.83     SZ     HC    1  0.62 0.075   24   33  0.72 0.076
+#&gt; 2      2    SOC (CANTAB)       3.83    SZ1     HC    1  0.46 0.047   44   44    NA    NA
+#&gt; 3      2    SOC (CANTAB)       3.83    SZ2     HC    2  0.73 0.052   38   44    NA    NA
+#&gt; 4      3    SOC (CANTAB)       3.83    SZ1     HC    1  1.18 0.062   39   37    NA    NA
+#&gt; 5      3    SOC (CANTAB)       3.83    SZ2     HC    2  1.09 0.073   27   37    NA    NA
+#&gt; 6      3    SOC (CANTAB)       3.83    SZ3     HC    3  0.91 0.102   15   37    NA    NA
+#&gt; 7      3    SOC (CANTAB)       3.83    SZ4     HC    4  0.91 0.084   20   37    NA    NA
+#&gt; 8      4             TOH         NA     SZ     HC    1  0.57 0.074   28   28    NA    NA
+#&gt; 9      5             TOL         NA     SZ     HC    1  0.40 0.180   13   10    NA    NA
+#&gt; 10     6    SOC (CANTAB)       2.00     SZ     HC    1  0.43 0.170   12   12  0.12 0.167
+#&gt; 11     6    SOC (CANTAB)       3.00     SZ     HC    2  1.37 0.206   12   12  0.12 0.167
+#&gt; 12     6    SOC (CANTAB)       4.00     SZ     HC    3  0.23 0.168   12   12  0.12 0.167
+#&gt; 13     6    SOC (CANTAB)       5.00     SZ     HC    4  0.97 0.186   12   12  0.12 0.167
+#&gt; 14     6 SOC (one-touch)       2.00     SZ     HC    5  0.56 0.173   12   12  0.12 0.167
+#&gt; 15     6 SOC (one-touch)       3.00     SZ     HC    6  0.79 0.180   12   12  0.12 0.167
+#&gt; 16     6 SOC (one-touch)       4.00     SZ     HC    7  1.19 0.196   12   12  0.12 0.167
+#&gt; 17     6 SOC (one-touch)       5.00     SZ     HC    8  0.92 0.184   12   12  0.12 0.167
+#&gt; 18     7             SOC       3.50     SZ     HC    1  0.20 0.096   22   20  0.62 0.100
+#&gt; 19     8             TOH         NA     SZ     HC    1  1.42 0.180   13   15    NA    NA
+#&gt; 20     9             TOL       4.00    SZ1     HC    1  0.35 0.074   27   28  1.21 0.086
+#&gt; 21     9             TOL       4.00    SZ2     HC    2  0.88 0.078   28   28  1.26 0.086
+#&gt; 22    10    SOC (CANTAB)       3.83     SZ     HC    1  1.08 0.079   26   33  0.76 0.074
+#&gt; 23    11    SOC (CANTAB)       3.83     SZ     HC    1  0.94 0.111   20   20  0.42 0.102
+#&gt; 24    12    SOC (CANTAB)       2.00     SZ     HC    1  0.44 0.020  135   81  0.49 0.020
+#&gt; 25    12    SOC (CANTAB)       3.00     SZ     HC    2  0.63 0.021  135   81  0.49 0.020
+#&gt; 26    12    SOC (CANTAB)       4.00     SZ     HC    3  0.38 0.020  135   81  0.49 0.020
+#&gt; 27    12    SOC (CANTAB)       5.00     SZ     HC    4  0.93 0.022  135   81  0.49 0.020
+#&gt; 28    13             TOL         NA     SZ     HC    1  0.33 0.102   24   17    NA    NA
+#&gt; 29    14             TOL       2.00     SZ     HC    1  0.00 0.073   32   24    NA    NA
+#&gt; 30    14             TOL       3.00     SZ     HC    2 -0.06 0.073   32   24    NA    NA
+#&gt; 31    14             TOL       4.00     SZ     HC    3  0.73 0.078   32   24    NA    NA
+#&gt; 32    14             TOL       5.00     SZ     HC    4  0.48 0.075   32   24    NA    NA
+#&gt; 33    15             TOL       2.00     SZ     HC    1  0.43 0.092   25   20    NA    NA
+#&gt; 34    15             TOL       3.00     SZ     HC    2  0.72 0.096   25   20    NA    NA
+#&gt; 35    15             TOL       4.00     SZ     HC    3  0.80 0.097   25   20    NA    NA
+#&gt; 36    15             TOL       5.00     SZ     HC    4  1.30 0.109   25   20    NA    NA
+#&gt; 37    16             TOL       4.67     SZ     HC    1  1.84 0.190   15   15    NA    NA
+#&gt; 38    17             TOL       3.50     SZ     HC    1  2.58 0.216   17   17  0.58 0.123
+#&gt; 39    18             TOL       3.00     SZ     HC    1  0.25 0.071   30   27  0.18 0.071
+#&gt; 40    18             TOL       4.00     SZ     HC    2  0.86 0.077   30   27  0.18 0.071
+#&gt; 41    18             TOL       5.00     SZ     HC    3  0.68 0.074   30   27  0.18 0.071
+#&gt; 42    19    SOC (CANTAB)       2.00     SZ     HC    1  0.21 0.060   36   31  0.48 0.062
+#&gt; 43    19    SOC (CANTAB)       3.00     SZ     HC    2  0.65 0.063   36   31  0.48 0.062
+#&gt; 44    19    SOC (CANTAB)       4.00     SZ     HC    3  0.30 0.061   36   31  0.48 0.062
+#&gt; 45    19    SOC (CANTAB)       5.00     SZ     HC    4  0.45 0.062   36   31  0.48 0.062
+#&gt; 46    20          BACS-J         NA    SZ1     HC    1  1.03 0.054   20  340    NA    NA
+#&gt; 47    20          BACS-J         NA    SZ2     HC    2  0.92 0.104   10  340    NA    NA
+#&gt; 48    21    SOC (CANTAB)       3.83     SZ     HC    1  1.12 0.108   28   17    NA    NA
+#&gt; 49    22             TOL       2.00     SZ     HC    1  0.52 0.052   40   40    NA    NA
+#&gt; 50    22             TOL       3.00     SZ     HC    2  0.50 0.052   40   40    NA    NA
+#&gt; 51    22             TOL       4.00     SZ     HC    3  0.49 0.051   40   40    NA    NA
+#&gt; 52    23             SOC       3.83     SZ     HC    1  0.30 0.042   48   48    NA    NA
+#&gt; 53    24      TOL-Drexel       5.50    SZ1    HC1    1  0.36 0.022   86   97  0.47 0.023
+#&gt; 54    24      TOL-Drexel       5.50    SZ2    HC2    2  0.41 0.030   75   62  0.10 0.030
+#&gt; 55    25             SOC       3.83     SZ     HC    1  0.79 0.086   25   25    NA    NA
+#&gt; 56    26             SOC       2.00     SZ     HC    1  0.23 0.031   77   55    NA    NA
+#&gt; 57    26             SOC       3.00     SZ     HC    2  0.58 0.032   77   55    NA    NA
+#&gt; 58    26             SOC       4.00     SZ     HC    3  0.57 0.032   77   55    NA    NA
+#&gt; 59    26             SOC       5.00     SZ     HC    4  0.79 0.034   77   55    NA    NA
+#&gt; 60    27      TOL-Drexel       5.50     SZ     HC    1  0.70 0.071   30   30    NA    NA
+#&gt; 61    28             SOC       3.83     SZ     HC    1  1.16 0.136   20   15  0.23 0.117
+#&gt; 62    29          BACS-J         NA    SZ1    HC1    1  1.29 0.039   56   68  0.37 0.033
+#&gt; 63    29          BACS-J         NA    SZ2    HC2    2  0.63 0.039   47   62  0.43 0.038
+#&gt; 64    29          BACS-J         NA    SZ3    HC3    3  0.31 0.121   15   19  1.00 0.134
+#&gt; 65    30             TOL       3.83     SZ     HC    1  0.11 0.070   30   27    NA    NA
+#&gt; 66    31 TOL (four-disk)       5.60     SZ     HC    1  0.87 0.036   60   60    NA    NA</div><div class='input'>
 <span class='co'>### create variable that indicates the task and difficulty combination as increasing integers</span>
 <span class='va'>dat</span><span class='op'>$</span><span class='va'>task.diff</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/unlist.html'>unlist</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/split.html'>split</a></span><span class='op'>(</span><span class='va'>dat</span>, <span class='va'>dat</span><span class='op'>$</span><span class='va'>study</span><span class='op'>)</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>{</span>
    <span class='va'>task.int</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>$</span><span class='va'>task</span><span class='op'>)</span><span class='op'>)</span>

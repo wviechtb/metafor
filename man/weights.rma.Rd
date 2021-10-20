@@ -51,6 +51,6 @@ res <- rma(yi, vi, mods = ~ ablat + year, data=dat)
 weights(res)
 
 ### extract the weight matrix
-weights(res, type="matrix")
+round(weights(res, type="matrix"), 4)
 }
 \keyword{models}

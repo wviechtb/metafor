@@ -352,7 +352,7 @@ plot(sel)}
 
 # copy data into 'dat' and examine data
 dat <- dat.cohen1981
-dat
+dat[c(1,4,5)]
 
 # calculate r-to-z transformed correlations and corresponding sampling variances
 dat <- escalc(measure="ZCOR", ri=ri, ni=ni, data=dat[c(1,4,5)])

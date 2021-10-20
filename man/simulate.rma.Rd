@@ -47,8 +47,8 @@ dat
 res <- rma(yi, vi, data=dat)
 res
 
-### simulate 10 sets of new outcomes based on the fitted model
-newdat <- simulate(res, nsim=10, seed=1234)
+### simulate 5 sets of new outcomes based on the fitted model
+newdat <- simulate(res, nsim=5, seed=1234)
 newdat
 }
 \keyword{datagen}

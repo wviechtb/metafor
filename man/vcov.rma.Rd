@@ -43,12 +43,12 @@ res <- rma(yi, vi, mods = ~ ablat + year, data=dat)
 vcov(res)
 
 ### marginal var-cov matrix of the observed log risk ratios
-vcov(res, type="obs")
+round(vcov(res, type="obs"), 3)
 
 ### var-cov matrix of the fitted values
-vcov(res, type="fitted")
+round(vcov(res, type="fitted"), 3)
 
 ### var-cov matrix of the residuals
-vcov(res, type="resid")
+round(vcov(res, type="resid"), 3)
 }
 \keyword{models}
