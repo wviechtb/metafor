@@ -301,8 +301,8 @@ level, digits, transf, targs, vcov=FALSE, ...) {
    } else {
       ddf <- rep(NA, k.new)
       for (j in seq_len(k.new)) {
-         bn0 <- X.new[j,] != 0
-         ddf[j] <- min(x$ddf[bn0])
+         bn0 <- X.new[j,] != 0     # determine which coefficients are involved in the linear contrast
+         ddf[j] <- min(x$ddf[bn0]) # take the smallest ddf value for those coefficients
       }
    }
    ddf[is.na(ddf)] <- x$k - x$p

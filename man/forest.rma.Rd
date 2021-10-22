@@ -86,31 +86,27 @@
 
    \if{html}{\figure{forest-arrangement.png}{options: width=800}}
 
-   \if{html}{The figure corresponds to the following code: \preformatted{
-   dat <- dat.bcg
-   dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat)
-   res <- rma(yi, vi, data=dat, slab=paste(author, year, sep=", "))
-   forest(res, addpred=TRUE, xlim=c(-16,7), at=seq(-3,2,by=1),
-          ilab=cbind(dat$tpos, dat$tneg, dat$cpos, dat$cneg),
-          ilab.xpos=c(-9.5,-8,-6,-4.5), cex=.75, header="Author(s) and Year")
-   text(c(-9.5,-8,-6,-4.5), 15, c("TB+", "TB-", "TB+", "TB-"), cex=.75, font=2)
-   text(c(-8.75,-5.25),     16, c("Vaccinated", "Control"),    cex=.75, font=2)}}
+   \if{html}{The figure corresponds to the following code: \preformatted{dat <- dat.bcg
+dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat)
+res <- rma(yi, vi, data=dat, slab=paste(author, year, sep=", "))
+forest(res, addpred=TRUE, xlim=c(-16,7), at=seq(-3,2,by=1),
+       ilab=cbind(dat$tpos, dat$tneg, dat$cpos, dat$cneg),
+       ilab.xpos=c(-9.5,-8,-6,-4.5), cex=.75, header="Author(s) and Year")
+text(c(-9.5,-8,-6,-4.5), 15, c("TB+", "TB-", "TB+", "TB-"), cex=.75, font=2)
+text(c(-8.75,-5.25),     16, c("Vaccinated", "Control"),    cex=.75, font=2)}}
 
    \if{latex}{The figure below illustrates how the elements in a forest plot can be arranged and the meaning of the some of the arguments such as \code{xlim}, \code{alim} or \code{at}, \code{ilab}, and \code{ilab.xpos}.
 
    \figure{forest-arrangement.pdf}{options: width=5.5in}
 
-   The figure corresponds to the following code: \preformatted{
-   dat <- dat.bcg
-   dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat)
-   res <- rma(yi, vi, data=dat, slab=paste(author, year, sep=", "))
-
-   forest(res, addpred=TRUE, xlim=c(-16,7), at=seq(-3,2,by=1),
-          ilab=cbind(dat$tpos, dat$tneg, dat$cpos, dat$cneg),
-          ilab.xpos=c(-9.5,-8,-6,-4.5), cex=.75, header="Author(s) and Year")
-   text(c(-9.5,-8,-6,-4.5), 15, c("TB+", "TB-", "TB+", "TB-"), cex=.75, font=2)
-   text(c(-8.75,-5.25),     16, c("Vaccinated", "Control"),    cex=.75, font=2)
-   }}
+   The figure corresponds to the following code: \preformatted{dat <- dat.bcg
+dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat)
+res <- rma(yi, vi, data=dat, slab=paste(author, year, sep=", "))
+forest(res, addpred=TRUE, xlim=c(-16,7), at=seq(-3,2,by=1),
+       ilab=cbind(dat$tpos, dat$tneg, dat$cpos, dat$cneg),
+       ilab.xpos=c(-9.5,-8,-6,-4.5), cex=.75, header="Author(s) and Year")
+text(c(-9.5,-8,-6,-4.5), 15, c("TB+", "TB-", "TB+", "TB-"), cex=.75, font=2)
+text(c(-8.75,-5.25),     16, c("Vaccinated", "Control"),    cex=.75, font=2)}}
 
    Additional summary estimates can be added to the plot with the \code{\link{addpoly}} function. See the documentation for that function for examples.
 
