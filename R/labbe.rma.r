@@ -152,10 +152,8 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
       args.c <- list(measure=measure, xi=x2i, ti=t2i, add=add, to=to, addyi=addyi, addvi=addvi)
    }
 
-   args.t <- args.t[!sapply(args.t, is.null)]
-   dat.t <- do.call(escalc, args.t)
-   args.c <- args.c[!sapply(args.c, is.null)]
-   dat.c <- do.call(escalc, args.c)
+   dat.t <- .do.call(escalc, args.t)
+   dat.c <- .do.call(escalc, args.c)
 
    options(na.action = na.act)
 

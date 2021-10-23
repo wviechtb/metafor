@@ -30,26 +30,33 @@ rma.peto(ai, bi, ci, di, n1i, n2i,
 }
 \details{
 
-   \bold{Specifying the Data}
+   \subsection{Specifying the Data}{
 
-   The studies are assumed to provide data in terms of \mjeqn{2 \times 2}{2x2} tables of the form:
-   \tabular{lccc}{
-           \tab outcome 1 \tab outcome 2 \tab total      \cr
-   group 1 \tab \code{ai} \tab \code{bi} \tab \code{n1i} \cr
-   group 2 \tab \code{ci} \tab \code{di} \tab \code{n2i}
-   } where \code{ai}, \code{bi}, \code{ci}, and \code{di} denote the cell frequencies and \code{n1i} and \code{n2i} the row totals. For example, in a set of randomized clinical trials (RCTs) or cohort studies, group 1 and group 2 may refer to the treatment (exposed) and placebo/control (not exposed) group, with outcome 1 denoting some event of interest (e.g., death) and outcome 2 its complement. In a set of case-control studies, group 1 and group 2 may refer to the group of cases and the group of controls, with outcome 1 denoting, for example, exposure to some risk factor and outcome 2 non-exposure.
+      The studies are assumed to provide data in terms of \mjeqn{2 \times 2}{2x2} tables of the form:
+      \tabular{lccc}{
+              \tab outcome 1 \tab outcome 2 \tab total      \cr
+      group 1 \tab \code{ai} \tab \code{bi} \tab \code{n1i} \cr
+      group 2 \tab \code{ci} \tab \code{di} \tab \code{n2i}
+      } where \code{ai}, \code{bi}, \code{ci}, and \code{di} denote the cell frequencies and \code{n1i} and \code{n2i} the row totals. For example, in a set of randomized clinical trials (RCTs) or cohort studies, group 1 and group 2 may refer to the treatment (exposed) and placebo/control (not exposed) group, with outcome 1 denoting some event of interest (e.g., death) and outcome 2 its complement. In a set of case-control studies, group 1 and group 2 may refer to the group of cases and the group of controls, with outcome 1 denoting, for example, exposure to some risk factor and outcome 2 non-exposure.
 
-   \bold{Peto's Method}
+   }
 
-   An approach for aggregating data of this type was suggested by Peto (see Yusuf et al., 1985). The method provides a weighted estimate of the (log) odds ratio under a fixed-effects model. The method is particularly advantageous when the event of interest is rare, but it should only be used when the group sizes within the individual studies are not too dissimilar and the effect sizes are generally small (Greenland & Salvan, 1990; Sweeting et al., 2004; Bradburn et al., 2007). Note that the printed results are given both in terms of the log and the raw units (for easier interpretation).
+   \subsection{Peto's Method}{
 
-   \bold{Observed Effect Sizes or Outcomes of the Individual Studies}
+      An approach for aggregating data of this type was suggested by Peto (see Yusuf et al., 1985). The method provides a weighted estimate of the (log) odds ratio under a fixed-effects model. The method is particularly advantageous when the event of interest is rare, but it should only be used when the group sizes within the individual studies are not too dissimilar and the effect sizes are generally small (Greenland & Salvan, 1990; Sweeting et al., 2004; Bradburn et al., 2007). Note that the printed results are given both in terms of the log and the raw units (for easier interpretation).
 
-   Peto's method itself does not require the calculation of the observed (log) odds ratios of the individual studies and directly makes use of the \mjeqn{2 \times 2}{2x2} table counts. Zero cells are not a problem (except in extreme cases, such as when one of the two outcomes never occurs in any of the tables). Therefore, it is unnecessary to add some constant to the cell counts when there are zero cells.
+   }
 
-   However, for plotting and various other functions, it is necessary to calculate the observed (log) odds ratios for the \mjseqn{k} studies. Here, zero cells can be problematic, so adding a constant value to the cell counts ensures that all \mjseqn{k} values can be calculated. The \code{add} and \code{to} arguments are used to specify what value should be added to the cell frequencies and under what circumstances when calculating the observed (log) odds ratios and when applying Peto's method. Similarly, the \code{drop00} argument is used to specify how studies with no cases (or only cases) in both groups should be handled. The documentation of the \code{\link{escalc}} function explains how the \code{add}, \code{to}, and \code{drop00} arguments work. If only a single value for these arguments is specified (as per default), then these values are used when calculating the observed (log) odds ratios and no adjustment to the cell counts is made when applying Peto's method. Alternatively, when specifying two values for these arguments, the first value applies when calculating the observed (log) odds ratios and the second value when applying Peto's method.
+   \subsection{Observed Effect Sizes or Outcomes of the Individual Studies}{
 
-   Note that \code{drop00} is set to \code{TRUE} by default. Therefore, the observed (log) odds ratios for studies where \code{ai=ci=0} or \code{bi=di=0} are set to \code{NA}. When applying Peto's method, such studies are not explicitly dropped (unless the second value of \code{drop00} argument is also set to \code{TRUE}), but this is practically not necessary, as they do not actually influence the results (assuming no adjustment to the cell/event counts are made when applying Peto's method).
+      Peto's method itself does not require the calculation of the observed (log) odds ratios of the individual studies and directly makes use of the \mjeqn{2 \times 2}{2x2} table counts. Zero cells are not a problem (except in extreme cases, such as when one of the two outcomes never occurs in any of the tables). Therefore, it is unnecessary to add some constant to the cell counts when there are zero cells.
+
+      However, for plotting and various other functions, it is necessary to calculate the observed (log) odds ratios for the \mjseqn{k} studies. Here, zero cells can be problematic, so adding a constant value to the cell counts ensures that all \mjseqn{k} values can be calculated. The \code{add} and \code{to} arguments are used to specify what value should be added to the cell frequencies and under what circumstances when calculating the observed (log) odds ratios and when applying Peto's method. Similarly, the \code{drop00} argument is used to specify how studies with no cases (or only cases) in both groups should be handled. The documentation of the \code{\link{escalc}} function explains how the \code{add}, \code{to}, and \code{drop00} arguments work. If only a single value for these arguments is specified (as per default), then these values are used when calculating the observed (log) odds ratios and no adjustment to the cell counts is made when applying Peto's method. Alternatively, when specifying two values for these arguments, the first value applies when calculating the observed (log) odds ratios and the second value when applying Peto's method.
+
+      Note that \code{drop00} is set to \code{TRUE} by default. Therefore, the observed (log) odds ratios for studies where \code{ai=ci=0} or \code{bi=di=0} are set to \code{NA}. When applying Peto's method, such studies are not explicitly dropped (unless the second value of \code{drop00} argument is also set to \code{TRUE}), but this is practically not necessary, as they do not actually influence the results (assuming no adjustment to the cell/event counts are made when applying Peto's method).
+
+   }
+
 }
 \value{
    An object of class \code{c("rma.peto","rma")}. The object is a list containing the following components:

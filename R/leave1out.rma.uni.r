@@ -63,8 +63,7 @@ leave1out.rma.uni <- function(x, digits, transf, targs, progbar=FALSE, ...) {
          next
 
       args <- list(yi=x$yi.f, vi=x$vi.f, weights=x$weights.f, intercept=TRUE, method=x$method, weighted=x$weighted, test=x$test, level=x$level, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, subset=-i, skipr2=TRUE)
-      args <- args[!sapply(args, is.null)]
-      res <- try(suppressWarnings(do.call(rma.uni, args)), silent=TRUE)
+      res <- try(suppressWarnings(.do.call(rma.uni, args)), silent=TRUE)
 
       if (inherits(res, "try-error"))
          next

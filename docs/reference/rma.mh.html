@@ -152,16 +152,35 @@
     <h2>Details</h2>
     
 
-<p><b>Specifying the Data</b></p>
+<p></p><div class="section">
+<h3 id="specifying-the-data">Specifying the Data<a class="anchor" aria-label="anchor" href="#specifying-the-data"></a></h3>
+
+
 <p>When the outcome measure is either the risk ratio (measure=<code>"RR"</code>), odds ratio (<code>measure="OR"</code>), or risk difference (<code>measure="RD"</code>), the studies are assumed to provide data in terms of \(2 \times 2\) tables of the form:</p><table class="table table"><tr><td></td><td>outcome 1</td><td>outcome 2</td><td>total</td></tr><tr><td>group 1</td><td><code>ai</code></td><td><code>bi</code></td><td><code>n1i</code></td></tr><tr><td>group 2</td><td><code>ci</code></td><td><code>di</code></td><td><code>n2i</code></td></tr></table><p>where <code>ai</code>, <code>bi</code>, <code>ci</code>, and <code>di</code> denote the cell frequencies and <code>n1i</code> and <code>n2i</code> the row totals. For example, in a set of randomized clinical trials (RCTs) or cohort studies, group 1 and group 2 may refer to the treatment (exposed) and placebo/control (not exposed) group, with outcome 1 denoting some event of interest (e.g., death) and outcome 2 its complement. In a set of case-control studies, group 1 and group 2 may refer to the group of cases and the group of controls, with outcome 1 denoting, for example, exposure to some risk factor and outcome 2 non-exposure. For these outcome measures, one needs to specify either <code>ai</code>, <code>bi</code>, <code>ci</code>, and <code>di</code> or alternatively <code>ai</code>, <code>ci</code>, <code>n1i</code>, and <code>n2i</code>.</p>
 <p>Alternatively, when the outcome measure is the incidence rate ratio (<code>measure="IRR"</code>) or the incidence rate difference (<code>measure="IRD"</code>), the studies are assumed to provide data in terms of tables of the form:</p><table class="table table"><tr><td></td><td>events</td><td>person-time</td></tr><tr><td>group 1</td><td><code>x1i</code></td><td><code>t1i</code></td></tr><tr><td>group 2</td><td><code>x2i</code></td><td><code>t2i</code></td></tr></table><p>where <code>x1i</code> and <code>x2i</code> denote the number of events in the first and the second group, respectively, and <code>t1i</code> and <code>t2i</code> the corresponding total person-times at risk.</p>
-<p><b>Mantel-Haenszel Method</b></p>
+<p></p>
+</div>
+
+<p></p><div class="section">
+<h3 id="mantel-haenszel-method">Mantel-Haenszel Method<a class="anchor" aria-label="anchor" href="#mantel-haenszel-method"></a></h3>
+
+
 <p>An approach for aggregating data of these types was suggested by Mantel and Haenszel (1959) and later extended by various authors (see references). The Mantel-Haenszel method provides a weighted estimate under a fixed-effects model. The method is particularly advantageous when aggregating a large number of studies with small sample sizes (the so-called sparse data or increasing strata case).</p>
 <p>When analyzing odds ratios, the Cochran-Mantel-Haenszel (CMH) test (Cochran, 1954; Mantel &amp; Haenszel, 1959) and Tarone's test for heterogeneity (Tarone, 1985) are also provided (by default, the CMH test statistic is computed with the continuity correction; this can be switched off with <code>correct=FALSE</code>). When analyzing incidence rate ratios, the Mantel-Haenszel (MH) test (Rothman et al., 2008) for person-time data is also provided (again, the <code>correct</code> argument controls whether the continuity correction is applied). When analyzing risk ratios, odds ratios, or incidence rate ratios, the printed results are given both in terms of the log and the raw units (for easier interpretation).</p>
-<p><b>Observed Effect Sizes or Outcomes of the Individual Studies</b></p>
+<p></p>
+</div>
+
+<p></p><div class="section">
+<h3 id="observed-effect-sizes-or-outcomes-of-the-individual-studies">Observed Effect Sizes or Outcomes of the Individual Studies<a class="anchor" aria-label="anchor" href="#observed-effect-sizes-or-outcomes-of-the-individual-studies"></a></h3>
+
+
 <p>The Mantel-Haenszel method itself does not require the calculation of the observed effect sizes or outcomes of the individual studies (e.g., the observed odds or incidence rate ratios of the \(k\) studies) and directly makes use of the table/event counts. Zero cells/events are not a problem (except in extreme cases, such as when one of the two outcomes never occurs in any of the \(2 \times 2\) tables or when there are no events for one of the two groups in any of the tables). Therefore, it is unnecessary to add some constant to the cell/event counts when there are zero cells/events.</p>
 <p>However, for plotting and various other functions, it is necessary to calculate the observed effect sizes or outcomes for the \(k\) studies. Here, zero cells/events can be problematic, so adding a constant value to the cell/event counts ensures that all \(k\) values can be calculated. The <code>add</code> and <code>to</code> arguments are used to specify what value should be added to the cell/event counts and under what circumstances when calculating the observed effect sizes or outcomes and when applying the Mantel-Haenszel method. Similarly, the <code>drop00</code> argument is used to specify how studies with no cases/events (or only cases) in both groups should be handled. The documentation of the <code><a href="escalc.html">escalc</a></code> function explains how the <code>add</code>, <code>to</code>, and <code>drop00</code> arguments work. If only a single value for these arguments is specified (as per default), then these values are used when calculating the observed effect sizes or outcomes and no adjustment to the cell/event counts is made when applying the Mantel-Haenszel method. Alternatively, when specifying two values for these arguments, the first value applies when calculating the observed effect sizes or outcomes and the second value when applying the Mantel-Haenszel method.</p>
 <p>Note that <code>drop00</code> is set to <code>TRUE</code> by default. Therefore, the observed effect sizes or outcomes for studies where <code>ai=ci=0</code> or <code>bi=di=0</code> or studies where <code>x1i=x2i=0</code> are set to <code>NA</code>. When applying the Mantel-Haenszel method, such studies are not explicitly dropped (unless the second value of <code>drop00</code> argument is also set to <code>TRUE</code>), but this is practically not necessary, as they do not actually influence the results (assuming no adjustment to the cell/event counts are made when applying the Mantel-Haenszel method).</p>
+<p></p>
+</div>
+
+
     </div>
     <div id="value">
     <h2>Value</h2>

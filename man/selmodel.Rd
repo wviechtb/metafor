@@ -32,105 +32,105 @@ selmodel(x, \dots)
 
    \subsection{Beta Selection Model}{
 
-   When \code{type="beta"}, the function can be used to fit the \sQuote{beta selection model} by Citkowicz and Vevea (2017). For this model, the selection function is given by \mjsdeqn{w(p_i) = p_i^{\delta_1 - 1} \times (1 - p_i)^{\delta_2 - 1}} where \mjseqn{\delta_1 > 0} and \mjseqn{\delta_2 > 0}. The null hypothesis \mjeqn{\mbox{H}_0{:}\; \delta_1 = \delta_2 = 1}{H_0: \delta_1 = \delta_2 = 1} represents the case where there is no selection (at least not depending on the p-values). \ifelse{text}{}{The figure below illustrates with some examples how the relative likelihood of selection can depend on the p-value for various combinations of \mjseqn{\delta_1} and \mjseqn{\delta_2}.} Note that the model allows for a non-monotonic selection function.
+      When \code{type="beta"}, the function can be used to fit the \sQuote{beta selection model} by Citkowicz and Vevea (2017). For this model, the selection function is given by \mjsdeqn{w(p_i) = p_i^{\delta_1 - 1} \times (1 - p_i)^{\delta_2 - 1}} where \mjseqn{\delta_1 > 0} and \mjseqn{\delta_2 > 0}. The null hypothesis \mjeqn{\mbox{H}_0{:}\; \delta_1 = \delta_2 = 1}{H_0: \delta_1 = \delta_2 = 1} represents the case where there is no selection (at least not depending on the p-values). \ifelse{text}{}{The figure below illustrates with some examples how the relative likelihood of selection can depend on the p-value for various combinations of \mjseqn{\delta_1} and \mjseqn{\delta_2}.} Note that the model allows for a non-monotonic selection function.
 
-   \if{html}{\figure{selmodel-beta.png}{options: width=600}}
-   \if{latex}{\figure{selmodel-beta.pdf}{options: width=4in}}
+      \if{html}{\figure{selmodel-beta.png}{options: width=600}}
+      \if{latex}{\figure{selmodel-beta.pdf}{options: width=4in}}
 
    }
 
    \subsection{Half-Normal, Negative-Exponential, Logistic, and Power Selection Models}{
 
-   Preston et al. (2004) suggested the first three of the following selection functions:
+      Preston et al. (2004) suggested the first three of the following selection functions:
 
-   \tabular{lllll}{
-   \bold{name}          \tab \ics \tab \bold{\code{type}} \tab \ics \tab \bold{selection function} \cr
-   half-normal          \tab \ics \tab \code{"halfnorm"}  \tab \ics \tab \mjseqn{w(p_i) = \exp(-\delta \times p_i^2)} \cr
-   negative-exponential \tab \ics \tab \code{"negexp"}    \tab \ics \tab \mjseqn{w(p_i) = \exp(-\delta \times p_i)} \cr
-   logistic             \tab \ics \tab \code{"logistic"}  \tab \ics \tab \mjseqn{w(p_i) = 2 \times \exp(-\delta \times p_i) / (1 + \exp(-\delta \times p_i))} \cr
-   power                \tab \ics \tab \code{"power"}     \tab \ics \tab \mjseqn{w(p_i) = (1-p_i)^\delta}
-   }
+      \tabular{lllll}{
+      \bold{name}          \tab \ics \tab \bold{\code{type}} \tab \ics \tab \bold{selection function} \cr
+      half-normal          \tab \ics \tab \code{"halfnorm"}  \tab \ics \tab \mjseqn{w(p_i) = \exp(-\delta \times p_i^2)} \cr
+      negative-exponential \tab \ics \tab \code{"negexp"}    \tab \ics \tab \mjseqn{w(p_i) = \exp(-\delta \times p_i)} \cr
+      logistic             \tab \ics \tab \code{"logistic"}  \tab \ics \tab \mjseqn{w(p_i) = 2 \times \exp(-\delta \times p_i) / (1 + \exp(-\delta \times p_i))} \cr
+      power                \tab \ics \tab \code{"power"}     \tab \ics \tab \mjseqn{w(p_i) = (1-p_i)^\delta}
+      }
 
-   The power selection model is added here as it has similar properties as the models suggested by Preston et al. (2004). For all models, assume \mjseqn{\delta \ge 0}, so that all functions imply a monotonically decreasing relationship between the p-value and the selection probability. For all functions, \mjeqn{\mbox{H}_0{:}\; \delta = 0}{H_0: \delta = 0} implies no selection. \ifelse{text}{}{The figure below shows the relative likelihood of selection as a function of the p-value for \mjseqn{\delta = 0} and for the various selection functions when \mjseqn{\delta = 6}.}
+      The power selection model is added here as it has similar properties as the models suggested by Preston et al. (2004). For all models, assume \mjseqn{\delta \ge 0}, so that all functions imply a monotonically decreasing relationship between the p-value and the selection probability. For all functions, \mjeqn{\mbox{H}_0{:}\; \delta = 0}{H_0: \delta = 0} implies no selection. \ifelse{text}{}{The figure below shows the relative likelihood of selection as a function of the p-value for \mjseqn{\delta = 0} and for the various selection functions when \mjseqn{\delta = 6}.}
 
-   \if{html}{\figure{selmodel-preston.png}{options: width=600}}
-   \if{latex}{\figure{selmodel-preston.pdf}{options: width=4in}}
+      \if{html}{\figure{selmodel-preston.png}{options: width=600}}
+      \if{latex}{\figure{selmodel-preston.pdf}{options: width=4in}}
 
-   Here, these functions are extended to allow for the possibility that \mjseqn{w(p_i) = 1} for p-values below a certain significance threshold denoted by \mjseqn{\alpha} (e.g., to model the case that the relative likelihood of selection is equally high for all significant studies but decreases monotonically for p-values above the significance threshold). To fit such a selection model, one should specify the \mjseqn{\alpha} value (with \mjseqn{0 < \alpha < 1}) via the \code{steps} argument. There must be at least one observed p-value below and above the chosen threshold to fit these models. \ifelse{text}{}{The figure below shows some examples of the relative likelihood of selection when \code{steps=.05}.}
+      Here, these functions are extended to allow for the possibility that \mjseqn{w(p_i) = 1} for p-values below a certain significance threshold denoted by \mjseqn{\alpha} (e.g., to model the case that the relative likelihood of selection is equally high for all significant studies but decreases monotonically for p-values above the significance threshold). To fit such a selection model, one should specify the \mjseqn{\alpha} value (with \mjseqn{0 < \alpha < 1}) via the \code{steps} argument. There must be at least one observed p-value below and above the chosen threshold to fit these models. \ifelse{text}{}{The figure below shows some examples of the relative likelihood of selection when \code{steps=.05}.}
 
-   \if{html}{\figure{selmodel-preston-step.png}{options: width=600}}
-   \if{latex}{\figure{selmodel-preston-step.pdf}{options: width=4in}}
+      \if{html}{\figure{selmodel-preston-step.png}{options: width=600}}
+      \if{latex}{\figure{selmodel-preston-step.pdf}{options: width=4in}}
 
-   Preston et al. (2004) also suggested selection functions where the relatively likelihood of selection not only depends on the p-value, but also the precision (e.g., standard error) of the estimate (if two studies have similar p-values, it may be plausible to assume that the larger / more precise study has a higher probability of selection). These selection functions plus the corresponding power functions are given by:
+      Preston et al. (2004) also suggested selection functions where the relatively likelihood of selection not only depends on the p-value, but also the precision (e.g., standard error) of the estimate (if two studies have similar p-values, it may be plausible to assume that the larger / more precise study has a higher probability of selection). These selection functions plus the corresponding power functions are given by:
 
-   \tabular{lllll}{
-   \bold{name}          \tab \ics \tab \bold{\code{type}} \tab \ics \tab \bold{selection function} \cr
-   half-normal          \tab \ics \tab \code{"halfnorm"}  \tab \ics \tab \mjseqn{w(p_i) = \exp(-\delta \times \mathrm{prec}_i \times p_i^2)} \cr
-   negative-exponential \tab \ics \tab \code{"negexp"}    \tab \ics \tab \mjseqn{w(p_i) = \exp(-\delta \times \mathrm{prec}_i \times p_i)} \cr
-   logistic             \tab \ics \tab \code{"logistic"}  \tab \ics \tab \mjseqn{w(p_i) = 2 \times \exp(-\delta \times \mathrm{prec}_i \times p_i) / (1 + \exp(-\delta \times \mathrm{prec}_i \times p_i))} \cr
-   power                \tab \ics \tab \code{"power"}     \tab \ics \tab \mjseqn{w(p_i) = (1-p_i)^{\delta \times \mathrm{prec}_i}}
-   }
+      \tabular{lllll}{
+      \bold{name}          \tab \ics \tab \bold{\code{type}} \tab \ics \tab \bold{selection function} \cr
+      half-normal          \tab \ics \tab \code{"halfnorm"}  \tab \ics \tab \mjseqn{w(p_i) = \exp(-\delta \times \mathrm{prec}_i \times p_i^2)} \cr
+      negative-exponential \tab \ics \tab \code{"negexp"}    \tab \ics \tab \mjseqn{w(p_i) = \exp(-\delta \times \mathrm{prec}_i \times p_i)} \cr
+      logistic             \tab \ics \tab \code{"logistic"}  \tab \ics \tab \mjseqn{w(p_i) = 2 \times \exp(-\delta \times \mathrm{prec}_i \times p_i) / (1 + \exp(-\delta \times \mathrm{prec}_i \times p_i))} \cr
+      power                \tab \ics \tab \code{"power"}     \tab \ics \tab \mjseqn{w(p_i) = (1-p_i)^{\delta \times \mathrm{prec}_i}}
+      }
 
-   where \mjseqn{\mathrm{prec}_i = \sqrt{v_i}} (i.e., the standard error of the \mjseqn{i}th study) according to Preston et al. (2004). Here, this idea is generalized to allow the user to specify the specific measure of precision to use (via the \code{prec} argument). Possible options are:
-   \itemize{
-   \item \code{prec="sei"} for the standard errors,
-   \item \code{prec="vi"} for the sampling variances,
-   \item \code{prec="ninv"} for the inverse of the sample sizes,
-   \item \code{prec="sqrtninv"} for the inverse square root of the sample sizes.
-   } Using some function of the sample sizes as a measure of precision is only possible when information about the sample sizes is actually stored within the object passed to the \code{selmodel} function. See \sQuote{Note}.
+      where \mjseqn{\mathrm{prec}_i = \sqrt{v_i}} (i.e., the standard error of the \mjseqn{i}th study) according to Preston et al. (2004). Here, this idea is generalized to allow the user to specify the specific measure of precision to use (via the \code{prec} argument). Possible options are:
+      \itemize{
+      \item \code{prec="sei"} for the standard errors,
+      \item \code{prec="vi"} for the sampling variances,
+      \item \code{prec="ninv"} for the inverse of the sample sizes,
+      \item \code{prec="sqrtninv"} for the inverse square root of the sample sizes.
+      } Using some function of the sample sizes as a measure of precision is only possible when information about the sample sizes is actually stored within the object passed to the \code{selmodel} function. See \sQuote{Note}.
 
-   Note that \mjseqn{\mathrm{prec}_i} is really a measure of imprecision (with higher values corresponding to lower precision). Also, regardless of the specific measure chosen, the values are actually rescaled with \mjseqn{\mathrm{prec}_i = \mathrm{prec}_i / \max(\mathrm{prec}_i)} inside of the function, such that \mjseqn{\mathrm{prec}_i = 1} for the least precise study and \mjseqn{\mathrm{prec}_i < 1} for the remaining studies (the rescaling does not actually change the fit of the model, it only helps to improve the stability of model fitting algorithm). \ifelse{text}{}{The figure below shows some examples of the relative likelihood of selection using these selection functions for two different precision values.}
+      Note that \mjseqn{\mathrm{prec}_i} is really a measure of imprecision (with higher values corresponding to lower precision). Also, regardless of the specific measure chosen, the values are actually rescaled with \mjseqn{\mathrm{prec}_i = \mathrm{prec}_i / \max(\mathrm{prec}_i)} inside of the function, such that \mjseqn{\mathrm{prec}_i = 1} for the least precise study and \mjseqn{\mathrm{prec}_i < 1} for the remaining studies (the rescaling does not actually change the fit of the model, it only helps to improve the stability of model fitting algorithm). \ifelse{text}{}{The figure below shows some examples of the relative likelihood of selection using these selection functions for two different precision values.}
 
-   \if{html}{\figure{selmodel-preston-prec.png}{options: width=600}}
-   \if{latex}{\figure{selmodel-preston-prec.pdf}{options: width=4in}}
+      \if{html}{\figure{selmodel-preston-prec.png}{options: width=600}}
+      \if{latex}{\figure{selmodel-preston-prec.pdf}{options: width=4in}}
 
-   One can also use the \code{steps} argument as described above in combination with these selection functions (studies with p-values below the chosen threshold then have \mjseqn{w(p_i) = 1} regardless of their exact p-value or precision).
+      One can also use the \code{steps} argument as described above in combination with these selection functions (studies with p-values below the chosen threshold then have \mjseqn{w(p_i) = 1} regardless of their exact p-value or precision).
 
    }
 
    \subsection{Negative Exponential Power Selection Model}{
 
-   As an extension of the half-normal and negative-exponential models, one can also choose \code{type="negexppow"} for a \sQuote{negative exponential power selection model}. The selection function is then given by \mjsdeqn{w(p_i) = \exp(-\delta_1 \times p_i^{1/\delta_2})} where \mjseqn{\delta_1 \ge 0} and \mjseqn{\delta_2 \ge 0} (see Begg & Mazumdar, 1994, although here a different parameterization is used, such that increasing \mjseqn{\delta_2} leads to more severe selection). \ifelse{text}{}{The figure below shows some examples of this selection function when holding \mjseqn{\delta_1} constant while increasing \mjseqn{\delta_2}.}
+      As an extension of the half-normal and negative-exponential models, one can also choose \code{type="negexppow"} for a \sQuote{negative exponential power selection model}. The selection function is then given by \mjsdeqn{w(p_i) = \exp(-\delta_1 \times p_i^{1/\delta_2})} where \mjseqn{\delta_1 \ge 0} and \mjseqn{\delta_2 \ge 0} (see Begg & Mazumdar, 1994, although here a different parameterization is used, such that increasing \mjseqn{\delta_2} leads to more severe selection). \ifelse{text}{}{The figure below shows some examples of this selection function when holding \mjseqn{\delta_1} constant while increasing \mjseqn{\delta_2}.}
 
-   \if{html}{\figure{selmodel-negexppow.png}{options: width=600}}
-   \if{latex}{\figure{selmodel-negexppow.pdf}{options: width=4in}}
+      \if{html}{\figure{selmodel-negexppow.png}{options: width=600}}
+      \if{latex}{\figure{selmodel-negexppow.pdf}{options: width=4in}}
 
-   This model affords greater flexibility in the shape of the selection function, but requires the estimation of the additional power parameter (the half-normal and negative-exponential models are therefore special cases when fixing \mjseqn{\delta_2} to 0.5 or 1, respectively). \mjeqn{\mbox{H}_0{:}\; \delta_1 = 0}{H_0: \delta_1 = 0} again implies no selection, but so does \mjeqn{\mbox{H}_0{:}\; \delta_2 = 0}{H_0: \delta_2 = 0}.
+      This model affords greater flexibility in the shape of the selection function, but requires the estimation of the additional power parameter (the half-normal and negative-exponential models are therefore special cases when fixing \mjseqn{\delta_2} to 0.5 or 1, respectively). \mjeqn{\mbox{H}_0{:}\; \delta_1 = 0}{H_0: \delta_1 = 0} again implies no selection, but so does \mjeqn{\mbox{H}_0{:}\; \delta_2 = 0}{H_0: \delta_2 = 0}.
 
-   One can again use the \code{steps} argument to specify a single significance threshold, \mjseqn{\alpha}, so that \mjseqn{w(p_i) = 1} for p-values below this threshold and otherwise \mjseqn{w(p_i)} follows the selection function as given above. One can also use the \code{prec} argument to specify a measure of precision in combination with this model, which leads to the selection function \mjsdeqn{w(p_i) = \exp(-\delta_1 \times \mathrm{prec}_i \times p_i^{1/\delta_2})} and hence is the logical extension of the negative exponential power selection model that also incorporates some measure of precision into the selection process.
+      One can again use the \code{steps} argument to specify a single significance threshold, \mjseqn{\alpha}, so that \mjseqn{w(p_i) = 1} for p-values below this threshold and otherwise \mjseqn{w(p_i)} follows the selection function as given above. One can also use the \code{prec} argument to specify a measure of precision in combination with this model, which leads to the selection function \mjsdeqn{w(p_i) = \exp(-\delta_1 \times \mathrm{prec}_i \times p_i^{1/\delta_2})} and hence is the logical extension of the negative exponential power selection model that also incorporates some measure of precision into the selection process.
 
    }
 
    \subsection{Step Function Selection Models}{
 
-   When \code{type="stepfun"}, the function can be used to fit \sQuote{step function models} as described by Iyengar and Greenhouse (1988), Hedges (1992), Vevea and Hedges (1995), and Vevea and Woods (2005). For these models, one must specify one or multiple values via the \code{steps} argument, which define intervals in which the relative likelihood of selection is constant. Let \mjsdeqn{\alpha_1 < \alpha_2 < \ldots < \alpha_c} denote these cutpoints sorted in increasing order, with the constraint that \mjseqn{\alpha_c = 1} (if the highest value specified via \code{steps} is not 1, the function will automatically add this cutpoint), and define \mjseqn{\alpha_0 = 0}. The selection function is then given by \mjseqn{w(p_i) = \delta_j} if \mjseqn{\alpha_{j-1} < p_i \le \alpha_j}. To make the model identifiable, we set \mjseqn{\delta_1 = 1}. The \mjseqn{\delta_j} values therefore denote the likelihood of selection in the various intervals relative to the interval for p-values between 0 and \mjseqn{\alpha_1}. Hence, the null hypothesis \mjeqn{\mbox{H}_0{:}\; \delta_j = 1}{H_0: \delta_j = 1} for \mjseqn{j = 1, \ldots, c} implies no selection.
+      When \code{type="stepfun"}, the function can be used to fit \sQuote{step function models} as described by Iyengar and Greenhouse (1988), Hedges (1992), Vevea and Hedges (1995), and Vevea and Woods (2005). For these models, one must specify one or multiple values via the \code{steps} argument, which define intervals in which the relative likelihood of selection is constant. Let \mjsdeqn{\alpha_1 < \alpha_2 < \ldots < \alpha_c} denote these cutpoints sorted in increasing order, with the constraint that \mjseqn{\alpha_c = 1} (if the highest value specified via \code{steps} is not 1, the function will automatically add this cutpoint), and define \mjseqn{\alpha_0 = 0}. The selection function is then given by \mjseqn{w(p_i) = \delta_j} if \mjseqn{\alpha_{j-1} < p_i \le \alpha_j}. To make the model identifiable, we set \mjseqn{\delta_1 = 1}. The \mjseqn{\delta_j} values therefore denote the likelihood of selection in the various intervals relative to the interval for p-values between 0 and \mjseqn{\alpha_1}. Hence, the null hypothesis \mjeqn{\mbox{H}_0{:}\; \delta_j = 1}{H_0: \delta_j = 1} for \mjseqn{j = 1, \ldots, c} implies no selection.
 
-   For example, if \code{steps=c(.05, .10, .50, 1)}, then \mjseqn{\delta_2} is the likelihood of selection for p-values between .05 and .10, \mjseqn{\delta_3} is the likelihood of selection for p-values between .10 and .50, and \mjseqn{\delta_4} is the likelihood of selection for p-values between .50 and 1 relative to the likelihood of selection for p-values between 0 and .05. \ifelse{text}{}{The figure below shows the corresponding selection function for some arbitrarily chosen \mjseqn{\delta_j} values.}
+      For example, if \code{steps=c(.05, .10, .50, 1)}, then \mjseqn{\delta_2} is the likelihood of selection for p-values between .05 and .10, \mjseqn{\delta_3} is the likelihood of selection for p-values between .10 and .50, and \mjseqn{\delta_4} is the likelihood of selection for p-values between .50 and 1 relative to the likelihood of selection for p-values between 0 and .05. \ifelse{text}{}{The figure below shows the corresponding selection function for some arbitrarily chosen \mjseqn{\delta_j} values.}
 
-   \if{html}{\figure{selmodel-stepfun.png}{options: width=600}}
-   \if{latex}{\figure{selmodel-stepfun.pdf}{options: width=4in}}
+      \if{html}{\figure{selmodel-stepfun.png}{options: width=600}}
+      \if{latex}{\figure{selmodel-stepfun.pdf}{options: width=4in}}
 
-   There must be at least one observed p-value within each interval to fit this model. If this is not the case, an error will be issued (setting \code{verbose=TRUE} provides information about the number of p-values falling into each interval).
+      There must be at least one observed p-value within each interval to fit this model. If this is not the case, an error will be issued (setting \code{verbose=TRUE} provides information about the number of p-values falling into each interval).
 
-   When specifying a single cutpoint in the context of a random-effects model, this model is sometimes called the \sQuote{three-parameter selection model} (3PSM), corresponding to the parameters \mjseqn{\mu}, \mjseqn{\tau^2}, and \mjseqn{\delta_2} (e.g., Carter et al., 2019; McShane et al., 2016; Pustejovsky & Rodgers, 2019). The same idea but in the context of a fixed-effects model was also described by Iyengar and Greenhouse (1988).
+      When specifying a single cutpoint in the context of a random-effects model, this model is sometimes called the \sQuote{three-parameter selection model} (3PSM), corresponding to the parameters \mjseqn{\mu}, \mjseqn{\tau^2}, and \mjseqn{\delta_2} (e.g., Carter et al., 2019; McShane et al., 2016; Pustejovsky & Rodgers, 2019). The same idea but in the context of a fixed-effects model was also described by Iyengar and Greenhouse (1988).
 
-   Note that when \code{alternative="greater"} or \code{alternative="less"} (i.e., when we assume that the relative likelihood of selection is not only related to the p-values of the studies, but also the directionality of the outcomes), then it would usually make sense to divide conventional levels of significance (e.g., .05) by 2 before passing these values to the \code{steps} argument. For example, if we think that studies were selected for positive outcomes that are significant at two-tailed \mjseqn{\alpha = .05}, then we should use \code{alternative="greater"} in combination with \code{steps=c(.025, 1)}.
+      Note that when \code{alternative="greater"} or \code{alternative="less"} (i.e., when we assume that the relative likelihood of selection is not only related to the p-values of the studies, but also the directionality of the outcomes), then it would usually make sense to divide conventional levels of significance (e.g., .05) by 2 before passing these values to the \code{steps} argument. For example, if we think that studies were selected for positive outcomes that are significant at two-tailed \mjseqn{\alpha = .05}, then we should use \code{alternative="greater"} in combination with \code{steps=c(.025, 1)}.
 
-   One of the challenges when fitting this model with many cutpoints is the large number of parameters that need to be estimated (which is especially problematic when the number of studies is small). An alternative approach suggested by Vevea and Woods (2005) is to fix the \mjseqn{\delta_j} values to some a priori chosen values instead of estimating them. One can then conduct a sensitivity analysis by examining the results (e.g., the estimates of \mjseqn{\mu} and \mjseqn{\tau^2} in a random-effects model) for a variety of different sets of \mjseqn{\delta_j} values (reflecting more or less severe forms of selection). This can be done by specifying the \mjseqn{\delta_j} values via the \code{delta} argument. Table 1 in Vevea and Woods (2005) provides some illustrative examples of moderate and severe selection functions for one- and two-tailed selection. The code below creates a data frame that contains these functions.
+      One of the challenges when fitting this model with many cutpoints is the large number of parameters that need to be estimated (which is especially problematic when the number of studies is small). An alternative approach suggested by Vevea and Woods (2005) is to fix the \mjseqn{\delta_j} values to some a priori chosen values instead of estimating them. One can then conduct a sensitivity analysis by examining the results (e.g., the estimates of \mjseqn{\mu} and \mjseqn{\tau^2} in a random-effects model) for a variety of different sets of \mjseqn{\delta_j} values (reflecting more or less severe forms of selection). This can be done by specifying the \mjseqn{\delta_j} values via the \code{delta} argument. Table 1 in Vevea and Woods (2005) provides some illustrative examples of moderate and severe selection functions for one- and two-tailed selection. The code below creates a data frame that contains these functions.
 
-   \preformatted{tab <- data.frame(
-   steps = c(0.005, 0.01, 0.05, 0.10, 0.25, 0.35, 0.50, 0.65, 0.75, 0.90, 0.95, 0.99, 0.995, 1),
-   delta.mod.1 = c(1, 0.99, 0.95, 0.80, 0.75, 0.65, 0.60, 0.55, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50),
-   delta.sev.1 = c(1, 0.99, 0.90, 0.75, 0.60, 0.50, 0.40, 0.35, 0.30, 0.25, 0.10, 0.10, 0.10, 0.10),
-   delta.mod.2 = c(1, 0.99, 0.95, 0.90, 0.80, 0.75, 0.60, 0.60, 0.75, 0.80, 0.90, 0.95, 0.99, 1.00),
-   delta.sev.2 = c(1, 0.99, 0.90, 0.75, 0.60, 0.50, 0.25, 0.25, 0.50, 0.60, 0.75, 0.90, 0.99, 1.00))}
+      \preformatted{tab <- data.frame(
+  steps = c(0.005, 0.01, 0.05, 0.10, 0.25, 0.35, 0.50, 0.65, 0.75, 0.90, 0.95, 0.99, 0.995, 1),
+  delta.mod.1 = c(1, 0.99, 0.95, 0.80, 0.75, 0.65, 0.60, 0.55, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50),
+  delta.sev.1 = c(1, 0.99, 0.90, 0.75, 0.60, 0.50, 0.40, 0.35, 0.30, 0.25, 0.10, 0.10, 0.10, 0.10),
+  delta.mod.2 = c(1, 0.99, 0.95, 0.90, 0.80, 0.75, 0.60, 0.60, 0.75, 0.80, 0.90, 0.95, 0.99, 1.00),
+  delta.sev.2 = c(1, 0.99, 0.90, 0.75, 0.60, 0.50, 0.25, 0.25, 0.50, 0.60, 0.75, 0.90, 0.99, 1.00))}
 
-   \ifelse{text}{}{The figure below shows the corresponding selection functions.}
+      \ifelse{text}{}{The figure below shows the corresponding selection functions.}
 
-   \if{html}{\figure{selmodel-stepfun-fixed.png}{options: width=600}}
-   \if{latex}{\figure{selmodel-stepfun-fixed.pdf}{options: width=4in}}
+      \if{html}{\figure{selmodel-stepfun-fixed.png}{options: width=600}}
+      \if{latex}{\figure{selmodel-stepfun-fixed.pdf}{options: width=4in}}
 
-   These four functions are \dQuote{merely examples and should not be regarded as canonical} (Vevea & Woods, 2005).
+      These four functions are \dQuote{merely examples and should not be regarded as canonical} (Vevea & Woods, 2005).
 
    }
 

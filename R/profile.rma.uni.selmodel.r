@@ -259,9 +259,9 @@ profile.rma.uni.selmodel <- function(fitted, tau2, delta,
    }
 
    lls <- sapply(res, function(x) x$ll)
-   beta  <- do.call("rbind", lapply(res, function(x) t(x$beta)))
-   ci.lb <- do.call("rbind", lapply(res, function(x) t(x$ci.lb)))
-   ci.ub <- do.call("rbind", lapply(res, function(x) t(x$ci.ub)))
+   beta  <- do.call(rbind, lapply(res, function(x) t(x$beta)))
+   ci.lb <- do.call(rbind, lapply(res, function(x) t(x$ci.lb)))
+   ci.ub <- do.call(rbind, lapply(res, function(x) t(x$ci.ub)))
 
    #########################################################################
 

@@ -175,9 +175,7 @@ lty, lwd, col, level=99.99, refline=0, ...) {
          di <- di[subset]
       }
 
-      args <- list(measure="OR", ai=ai, bi=bi, ci=ci, di=di, drop00=drop00, onlyo1=onlyo1, addyi=addyi, addvi=addvi)
-      args <- args[!sapply(args, is.null)]
-      dat <- do.call(escalc, args)
+      dat <- .do.call(escalc, measure="OR", ai=ai, bi=bi, ci=ci, di=di, drop00=drop00, onlyo1=onlyo1, addyi=addyi, addvi=addvi)
 
       yi <- dat$yi ### one or more yi/vi pairs may be NA/NA
       vi <- dat$vi ### one or more yi/vi pairs may be NA/NA

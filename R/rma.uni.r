@@ -579,8 +579,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
       }
 
-      args <- args[!sapply(args, is.null)]
-      dat <- do.call(escalc, args)
+      dat <- .do.call(escalc, args)
 
       if (is.element(measure, "GEN"))
          stop(mstyle$stop("Specify the desired outcome measure via the 'measure' argument."))
@@ -2253,12 +2252,11 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
          if (r2def %in% c("1","1v","3","3v","5","6","7","8")) {
 
             args <- list(yi=yi, vi=vi, weights=weights, method=method, weighted=weighted, test=test, verbose=ifelse(verbose, TRUE, FALSE), control=con, digits=digits)
-            args <- args[!sapply(args, is.null)]
 
             if (verbose > 1) {
-               res0 <- try(do.call(rma.uni, args), silent=FALSE)
+               res0 <- try(.do.call(rma.uni, args), silent=FALSE)
             } else {
-               res0 <- try(suppressWarnings(do.call(rma.uni, args)), silent=TRUE)
+               res0 <- try(suppressWarnings(.do.call(rma.uni, args)), silent=TRUE)
             }
 
             if (!inherits(res0, "try-error")) {

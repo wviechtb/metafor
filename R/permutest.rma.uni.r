@@ -139,8 +139,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
          for (i in seq_len(iter)) {
 
             args <- list(yi=signmat[i,]*x$yi, vi=x$vi, weights=x$weights, intercept=TRUE, method=x$method, weighted=x$weighted, test=x$test, level=x$level, btt=1, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, skipr2=TRUE)
-            args <- args[!sapply(args, is.null)]
-            res <- try(suppressWarnings(do.call(rma.uni, args)), silent=FALSE)
+            res <- try(suppressWarnings(.do.call(rma.uni, args)), silent=FALSE)
 
             if (inherits(res, "try-error"))
                next
@@ -164,8 +163,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
             #signs <- 2*rbinom(x$k,1,.5)-1
 
             args <- list(yi=signs*x$yi, vi=x$vi, weights=x$weights, intercept=TRUE, method=x$method, weighted=x$weighted, test=x$test, level=x$level, btt=1, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, skipr2=TRUE)
-            args <- args[!sapply(args, is.null)]
-            res <- try(suppressWarnings(do.call(rma.uni, args)), silent=FALSE)
+            res <- try(suppressWarnings(.do.call(rma.uni, args)), silent=FALSE)
 
             if (inherits(res, "try-error"))
                next
@@ -277,8 +275,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
          for (i in seq_len(iter)) {
 
             args <- list(yi=x$yi, vi=x$vi, weights=x$weights, mods=cbind(X[permmat[i,],]), intercept=FALSE, method=x$method, weighted=x$weighted, test=x$test, level=x$level, btt=x$btt, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, skipr2=TRUE)
-            args <- args[!sapply(args, is.null)]
-            res <- try(suppressWarnings(do.call(rma.uni, args)), silent=FALSE)
+            res <- try(suppressWarnings(.do.call(rma.uni, args)), silent=FALSE)
 
             if (inherits(res, "try-error"))
                next
@@ -299,8 +296,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
          while (i <= iter) {
 
             args <- list(yi=x$yi, vi=x$vi, weights=x$weights, mods=cbind(X[sample(x$k),]), intercept=FALSE, method=x$method, weighted=x$weighted, test=x$test, level=x$level, btt=x$btt, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, skipr2=TRUE)
-            args <- args[!sapply(args, is.null)]
-            res <- try(suppressWarnings(do.call(rma.uni, args)), silent=FALSE)
+            res <- try(suppressWarnings(.do.call(rma.uni, args)), silent=FALSE)
 
             if (inherits(res, "try-error"))
                next

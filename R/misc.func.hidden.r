@@ -301,6 +301,18 @@
 
 }
 
+### a version of do.call() that allows for the arguments to be passed via ... (i.e., can either be a list or not) and removes NULL arguments
+
+.do.call <- function(fun, ...) {
+   if (is.list(..1) && ...length() == 1L) {
+      args <- c(...)
+   } else {
+      args <- list(...)
+   }
+   args <- args[!sapply(args, is.null)]
+   do.call(fun, args)
+}
+
 ############################################################################
 
 .chkclass <- function(class, must, notap, notav, type="Method") {

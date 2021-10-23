@@ -47,8 +47,7 @@ rstudent.rma.mh <- function(model, digits, progbar=FALSE, ...) {
       } else {
          args <- list(x1i=x$x1i.f, x2i=x$x2i.f, t1i=x$t1i.f, t2i=x$t2i.f, measure=x$measure, add=x$add, to=x$to, drop00=x$drop00, correct=x$correct, level=x$level, subset=-i)
       }
-      args <- args[!sapply(args, is.null)]
-      res <- try(suppressWarnings(do.call(rma.mh, args)), silent=TRUE)
+      res <- try(suppressWarnings(.do.call(rma.mh, args)), silent=TRUE)
 
       if (inherits(res, "try-error"))
          next

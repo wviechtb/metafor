@@ -51,68 +51,85 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
 }
 \details{
 
-   \bold{Specifying the Data}
+   \subsection{Specifying the Data}{
 
-   The function can be used in conjunction with the following effect size or outcome measures:
-   \itemize{
-   \item \code{measure="OR"} for odds ratios (analyzed in log units)
-   \item \code{measure="IRR"} for incidence rate ratios (analyzed in log units)
-   \item \code{measure="PLO"} for logit transformed proportions (i.e., log odds)
-   \item \code{measure="IRLN"} for log transformed incidence rates.
+      The function can be used in conjunction with the following effect size or outcome measures:
+      \itemize{
+      \item \code{measure="OR"} for odds ratios (analyzed in log units)
+      \item \code{measure="IRR"} for incidence rate ratios (analyzed in log units)
+      \item \code{measure="PLO"} for logit transformed proportions (i.e., log odds)
+      \item \code{measure="IRLN"} for log transformed incidence rates.
+      }
+      The \code{\link{escalc}} function describes the data/arguments that should be specified/used for these measures.
+
    }
-   The \code{\link{escalc}} function describes the data/arguments that should be specified/used for these measures.
 
-   \bold{Specifying the Model}
+   \subsection{Specifying the Model}{
 
-   A variety of model types are available when analyzing \mjeqn{2 \times 2}{2x2} table data (i.e., when \code{measure="OR"}) or two-group event count data (i.e., when \code{measure="IRR"}):
-   \itemize{
-   \item \code{model="UM.FS"} for an unconditional generalized linear mixed-effects model with fixed study effects
-   \item \code{model="UM.RS"} for an unconditional generalized linear mixed-effects model with random study effects
-   \item \code{model="CM.AL"} for a conditional generalized linear mixed-effects model (approximate likelihood)
-   \item \code{model="CM.EL"} for a conditional generalized linear mixed-effects model (exact likelihood).
+      A variety of model types are available when analyzing \mjeqn{2 \times 2}{2x2} table data (i.e., when \code{measure="OR"}) or two-group event count data (i.e., when \code{measure="IRR"}):
+      \itemize{
+      \item \code{model="UM.FS"} for an unconditional generalized linear mixed-effects model with fixed study effects
+      \item \code{model="UM.RS"} for an unconditional generalized linear mixed-effects model with random study effects
+      \item \code{model="CM.AL"} for a conditional generalized linear mixed-effects model (approximate likelihood)
+      \item \code{model="CM.EL"} for a conditional generalized linear mixed-effects model (exact likelihood).
+      }
+      For \code{measure="OR"}, models \code{"UM.FS"} and \code{"UM.RS"} are essentially (mixed-effects) logistic regression models, while for \code{measure="IRR"}, these models are (mixed-effects) Poisson regression models. A choice must be made on how to model study level variability (i.e., differences in outcomes across studies irrespective of group membership). One can choose between using fixed study effects (which means that \mjseqn{k} dummy variables are added to the model) or random study effects (which means that random effects corresponding to the levels of the study factor are added to the model).
+
+      The conditional model (\code{model="CM.EL"}) avoids having to model study level variability by conditioning on the total numbers of cases/events in each study. For \code{measure="OR"}, this leads to a non-central hypergeometric distribution for the data within each study and the corresponding model is then a (mixed-effects) conditional logistic model. Fitting this model can be difficult and computationally expensive. When the number of cases in each study is small relative to the group sizes, one can approximate the exact likelihood by a binomial distribution, which leads to a regular (mixed-effects) logistic regression model (\code{model="CM.AL"}). For \code{measure="IRR"}, the conditional model leads directly to a binomial distribution for the data within each study and the resulting model is again a (mixed-effects) logistic regression model (no approximate likelihood model is needed here).
+
+      When analyzing proportions (i.e., \code{measure="PLO"}) or incidence rates (i.e., \code{measure="IRLN"}) of individual groups, the model type is always a (mixed-effects) logistic or Poisson regression model, respectively (i.e., the \code{model} argument is not relevant here).
+
+      Aside from choosing the general model type, one has to decide whether to fit a fixed- or random-effects model to the data. A \emph{fixed-effects model} is fitted by setting \code{method="FE"}. A \emph{random-effects model} is fitted by setting \code{method="ML"} (the default). Note that random-effects models with dichotomous data are often referred to as \sQuote{binomial-normal} models in the meta-analytic literature. Analogously, for event count data, such models could be referred to as \sQuote{Poisson-normal} models.
+
+      One or more moderators can be included in all of these models via the \code{mods} argument. A single moderator can be given as a (row or column) vector of length \mjseqn{k} specifying the values of the moderator. Multiple moderators are specified by giving an appropriate model matrix (i.e., \mjseqn{X}) with \mjseqn{k} rows and as many columns as there are moderator variables (e.g., \code{mods = cbind(mod1, mod2, mod3)}, where \code{mod1}, \code{mod2}, and \code{mod3} correspond to the names of the variables for three moderator variables). The intercept is added to the model matrix by default unless \code{intercept=FALSE}.
+
+      Alternatively, one can use standard \code{\link{formula}} syntax to specify the model. In this case, the \code{mods} argument should be set equal to a one-sided formula of the form \code{mods = ~ model} (e.g., \code{mods = ~ mod1 + mod2 + mod3}). Interactions, polynomial terms, and factors can be easily added to the model in this manner. When specifying a model formula via the \code{mods} argument, the \code{intercept} argument is ignored. Instead, the inclusion/exclusion of the intercept is controlled by the specified formula (e.g., \code{mods = ~ mod1 + mod2 + mod3 - 1} would lead to the removal of the intercept).
+
    }
-   For \code{measure="OR"}, models \code{"UM.FS"} and \code{"UM.RS"} are essentially (mixed-effects) logistic regression models, while for \code{measure="IRR"}, these models are (mixed-effects) Poisson regression models. A choice must be made on how to model study level variability (i.e., differences in outcomes across studies irrespective of group membership). One can choose between using fixed study effects (which means that \mjseqn{k} dummy variables are added to the model) or random study effects (which means that random effects corresponding to the levels of the study factor are added to the model).
 
-   The conditional model (\code{model="CM.EL"}) avoids having to model study level variability by conditioning on the total numbers of cases/events in each study. For \code{measure="OR"}, this leads to a non-central hypergeometric distribution for the data within each study and the corresponding model is then a (mixed-effects) conditional logistic model. Fitting this model can be difficult and computationally expensive. When the number of cases in each study is small relative to the group sizes, one can approximate the exact likelihood by a binomial distribution, which leads to a regular (mixed-effects) logistic regression model (\code{model="CM.AL"}). For \code{measure="IRR"}, the conditional model leads directly to a binomial distribution for the data within each study and the resulting model is again a (mixed-effects) logistic regression model (no approximate likelihood model is needed here).
+   \subsection{Fixed-, Saturated-, and Random/Mixed-Effects Models}{
 
-   When analyzing proportions (i.e., \code{measure="PLO"}) or incidence rates (i.e., \code{measure="IRLN"}) of individual groups, the model type is always a (mixed-effects) logistic or Poisson regression model, respectively (i.e., the \code{model} argument is not relevant here).
+      When fitting a particular model, actually up to three different models are fitted within the function:
+      \itemize{
+      \item the fixed-effects model (i.e., where \mjseqn{\tau^2} is set to 0),
+      \item the saturated model (i.e., the model with a deviance of 0), and
+      \item the random/mixed-effects model (i.e., where \mjseqn{\tau^2} is estimated) (only if \code{method="ML"}).
+      } The saturated model is obtained by adding as many dummy variables to the model as needed so that the model deviance is equal to zero. Even when \code{method="ML"}, the fixed-effects and saturated models are fitted, as they are used to compute the test statistics for the Wald-type and likelihood ratio tests for (residual) heterogeneity (see below).
 
-   Aside from choosing the general model type, one has to decide whether to fit a fixed- or random-effects model to the data. A \emph{fixed-effects model} is fitted by setting \code{method="FE"}. A \emph{random-effects model} is fitted by setting \code{method="ML"} (the default). Note that random-effects models with dichotomous data are often referred to as \sQuote{binomial-normal} models in the meta-analytic literature. Analogously, for event count data, such models could be referred to as \sQuote{Poisson-normal} models.
+   }
 
-   One or more moderators can be included in all of these models via the \code{mods} argument. A single moderator can be given as a (row or column) vector of length \mjseqn{k} specifying the values of the moderator. Multiple moderators are specified by giving an appropriate model matrix (i.e., \mjseqn{X}) with \mjseqn{k} rows and as many columns as there are moderator variables (e.g., \code{mods = cbind(mod1, mod2, mod3)}, where \code{mod1}, \code{mod2}, and \code{mod3} correspond to the names of the variables for three moderator variables). The intercept is added to the model matrix by default unless \code{intercept=FALSE}.
+   \subsection{Omnibus Test of Moderators}{
 
-   Alternatively, one can use standard \code{\link{formula}} syntax to specify the model. In this case, the \code{mods} argument should be set equal to a one-sided formula of the form \code{mods = ~ model} (e.g., \code{mods = ~ mod1 + mod2 + mod3}). Interactions, polynomial terms, and factors can be easily added to the model in this manner. When specifying a model formula via the \code{mods} argument, the \code{intercept} argument is ignored. Instead, the inclusion/exclusion of the intercept is controlled by the specified formula (e.g., \code{mods = ~ mod1 + mod2 + mod3 - 1} would lead to the removal of the intercept).
+      For models including moderators, an omnibus test of all model coefficients is conducted that excludes the intercept (the first coefficient) if it is included in the model. If no intercept is included in the model, then the omnibus test includes all of the coefficients in the model including the first. Alternatively, one can manually specify the indices of the coefficients to test via the \code{btt} argument. For example, with \code{btt=c(3,4)}, only the third and fourth coefficient from the model would be included in the test (if an intercept is included in the model, then it corresponds to the first coefficient in the model). Instead of specifying the coefficient numbers, one can specify a string for \code{btt}. In that case, \code{\link{grep}} will be used to search for all coefficient names that match the string. The omnibus test is called the \mjseqn{Q_M}-test and follows, under the assumptions of the model, a chi-square distribution with \mjseqn{m} degrees of freedom (with \mjseqn{m} denoting the number of coefficients tested) under the null hypothesis (that the true value of all coefficients tested is equal to 0).
 
-   \bold{Fixed-, Saturated-, and Random/Mixed-Effects Models}
+   }
 
-   When fitting a particular model, actually up to three different models are fitted within the function:
-   \itemize{
-   \item the fixed-effects model (i.e., where \mjseqn{\tau^2} is set to 0),
-   \item the saturated model (i.e., the model with a deviance of 0), and
-   \item the random/mixed-effects model (i.e., where \mjseqn{\tau^2} is estimated) (only if \code{method="ML"}).
-   } The saturated model is obtained by adding as many dummy variables to the model as needed so that the model deviance is equal to zero. Even when \code{method="ML"}, the fixed-effects and saturated models are fitted, as they are used to compute the test statistics for the Wald-type and likelihood ratio tests for (residual) heterogeneity (see below).
+   \subsection{Categorical Moderators}{
 
-   \bold{Omnibus Test of Moderators}
+      Categorical moderator variables can be included in the model via the \code{mods} argument in the same way that appropriately (dummy) coded categorical independent variables can be included in linear models. One can either do the dummy coding manually or use a model formula together with the \code{\link{factor}} function to let \R handle the coding automatically (note that string/character variables in a model formula are automatically converted to factors).
 
-   For models including moderators, an omnibus test of all model coefficients is conducted that excludes the intercept (the first coefficient) if it is included in the model. If no intercept is included in the model, then the omnibus test includes all of the coefficients in the model including the first. Alternatively, one can manually specify the indices of the coefficients to test via the \code{btt} argument. For example, with \code{btt=c(3,4)}, only the third and fourth coefficient from the model would be included in the test (if an intercept is included in the model, then it corresponds to the first coefficient in the model). Instead of specifying the coefficient numbers, one can specify a string for \code{btt}. In that case, \code{\link{grep}} will be used to search for all coefficient names that match the string. The omnibus test is called the \mjseqn{Q_M}-test and follows, under the assumptions of the model, a chi-square distribution with \mjseqn{m} degrees of freedom (with \mjseqn{m} denoting the number of coefficients tested) under the null hypothesis (that the true value of all coefficients tested is equal to 0).
+   }
 
-   \bold{Categorical Moderators}
+   \subsection{Tests and Confidence Intervals}{
 
-   Categorical moderator variables can be included in the model via the \code{mods} argument in the same way that appropriately (dummy) coded categorical independent variables can be included in linear models. One can either do the dummy coding manually or use a model formula together with the \code{\link{factor}} function to let \R handle the coding automatically (note that string/character variables in a model formula are automatically converted to factors).
+      By default, tests of individual coefficients in the model (and the corresponding confidence intervals) are based on a standard normal distribution, while the omnibus test is based on a chi-square distribution (see above). As an alternative, one can set \code{test="t"}, in which case tests of individual coefficients and confidence intervals are based on a t-distribution with \mjseqn{k-p} degrees of freedom, while the omnibus test statistic then uses an F-distribution with \mjseqn{m} and \mjseqn{k-p} degrees of freedom (with \mjseqn{k} denoting the total number of estimates included in the analysis and \mjseqn{p} the total number of model coefficients including the intercept if it is present). Note that \code{test="t"} is not the same as \code{test="knha"} in \code{\link{rma.uni}}, as no adjustment to the standard errors of the estimated coefficients is made.
 
-   \bold{Tests and Confidence Intervals}
+   }
 
-   By default, tests of individual coefficients in the model (and the corresponding confidence intervals) are based on a standard normal distribution, while the omnibus test is based on a chi-square distribution (see above). As an alternative, one can set \code{test="t"}, in which case tests of individual coefficients and confidence intervals are based on a t-distribution with \mjseqn{k-p} degrees of freedom, while the omnibus test statistic then uses an F-distribution with \mjseqn{m} and \mjseqn{k-p} degrees of freedom (with \mjseqn{k} denoting the total number of estimates included in the analysis and \mjseqn{p} the total number of model coefficients including the intercept if it is present). Note that \code{test="t"} is not the same as \code{test="knha"} in \code{\link{rma.uni}}, as no adjustment to the standard errors of the estimated coefficients is made.
+   \subsection{Tests for (Residual) Heterogeneity}{
 
-   \bold{Tests for (Residual) Heterogeneity}
+      Two different tests for (residual) heterogeneity are automatically carried out by the function. The first is a Wald-type test, which tests the coefficients corresponding to the dummy variables added in the saturated model for significance. The second is a likelihood ratio test, which tests the same set of coefficients, but does so by computing \mjseqn{-2} times the difference in the log-likelihood of the fixed-effects and the saturated model. These two tests are not identical for the types of models fitted by the \code{rma.glmm} function and may even lead to conflicting conclusions.
 
-   Two different tests for (residual) heterogeneity are automatically carried out by the function. The first is a Wald-type test, which tests the coefficients corresponding to the dummy variables added in the saturated model for significance. The second is a likelihood ratio test, which tests the same set of coefficients, but does so by computing \mjseqn{-2} times the difference in the log-likelihood of the fixed-effects and the saturated model. These two tests are not identical for the types of models fitted by the \code{rma.glmm} function and may even lead to conflicting conclusions.
+   }
 
-   \bold{Observed Effect Sizes or Outcomes of the Individual Studies}
+   \subsection{Observed Effect Sizes or Outcomes of the Individual Studies}{
 
-   The various models do not require the calculation of the observed effect sizes or outcomes of the individual studies (e.g., the observed odds ratios of the \mjseqn{k} studies) and directly make use of the table/event counts. Zero cells/events are not a problem (except in extreme cases, such as when one of the two outcomes never occurs or when there are no events in any of the studies). Therefore, it is unnecessary to add some constant to the cell/event counts when there are zero cells/events.
+      The various models do not require the calculation of the observed effect sizes or outcomes of the individual studies (e.g., the observed odds ratios of the \mjseqn{k} studies) and directly make use of the table/event counts. Zero cells/events are not a problem (except in extreme cases, such as when one of the two outcomes never occurs or when there are no events in any of the studies). Therefore, it is unnecessary to add some constant to the cell/event counts when there are zero cells/events.
 
-   However, for plotting and various other functions, it is necessary to calculate the observed effect sizes or outcomes for the \mjseqn{k} studies. Here, zero cells/events can be problematic, so adding a constant value to the cell/event counts ensures that all \mjseqn{k} values can be calculated. The \code{add} and \code{to} arguments are used to specify what value should be added to the cell/event counts and under what circumstances when calculating the observed effect sizes or outcomes. The documentation of the \code{\link{escalc}} function explains how the \code{add} and \code{to} arguments work. Note that \code{drop00} is set to \code{TRUE} by default, since studies where \code{ai=ci=0} or \code{bi=di=0} or studies where \code{x1i=x2i=0} are uninformative about the size of the effect.
+      However, for plotting and various other functions, it is necessary to calculate the observed effect sizes or outcomes for the \mjseqn{k} studies. Here, zero cells/events can be problematic, so adding a constant value to the cell/event counts ensures that all \mjseqn{k} values can be calculated. The \code{add} and \code{to} arguments are used to specify what value should be added to the cell/event counts and under what circumstances when calculating the observed effect sizes or outcomes. The documentation of the \code{\link{escalc}} function explains how the \code{add} and \code{to} arguments work. Note that \code{drop00} is set to \code{TRUE} by default, since studies where \code{ai=ci=0} or \code{bi=di=0} or studies where \code{x1i=x2i=0} are uninformative about the size of the effect.
+
+   }
+
 }
 \value{
    An object of class \code{c("rma.glmm","rma")}. The object is a list containing the following components:

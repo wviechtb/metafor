@@ -28,8 +28,7 @@ trimfill.rma.uni <- function(x, side, estimator="L0", maxiter=100, verbose=FALSE
 
    if (is.null(side)) {
       args <- list(yi=yi, vi=vi, weights=wi, mods=sqrt(vi), method=x$method, weighted=x$weighted, ...)
-      args <- args[!sapply(args, is.null)]
-      res <- suppressWarnings(do.call(rma.uni, args))
+      res <- suppressWarnings(.do.call(rma.uni, args))
       ### TODO: add check in case there are problems with fitting the model
       if (res$beta[2] < 0) {
          side <- "right"
@@ -80,8 +79,7 @@ trimfill.rma.uni <- function(x, side, estimator="L0", maxiter=100, verbose=FALSE
       wi.t <- wi[seq_len(k-k0)]
 
       args <- list(yi=yi.t, vi=vi.t, weights=wi.t, method=x$method, weighted=x$weighted, ...)
-      args <- args[!sapply(args, is.null)]
-      res <- suppressWarnings(do.call(rma.uni, args))
+      res <- suppressWarnings(.do.call(rma.uni, args))
 
       ### intercept estimate based on truncated data
 
@@ -167,8 +165,7 @@ trimfill.rma.uni <- function(x, side, estimator="L0", maxiter=100, verbose=FALSE
       ### fit model with imputed data
 
       args <- list(yi=yi.fill, vi=vi.fill, weights=wi.fill, ni=ni.fill, method=x$method, weighted=x$weighted, digits=x$digits, ...)
-      args <- args[!sapply(args, is.null)]
-      res <- suppressWarnings(do.call(rma.uni, args))
+      res <- suppressWarnings(.do.call(rma.uni, args))
 
       ### fill, ids, and slab are of length 'k.f + k0' (i.e., subsetted but with NAs)
 

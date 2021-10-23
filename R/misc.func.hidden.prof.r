@@ -14,8 +14,7 @@
       ### for profile and confint, fit model with tau2 fixed to 'val'
 
       args <- list(yi=obj$yi, vi=obj$vi, weights=obj$weights, mods=obj$X, intercept=FALSE, method=obj$method, weighted=obj$weighted, test=obj$test, level=obj$level, control=obj$control, tau2=val, skipr2=TRUE, outlist="minimal")
-      args <- args[!sapply(args, is.null)]
-      res <- try(suppressWarnings(do.call(rma.uni, args)), silent=TRUE)
+      res <- try(suppressWarnings(.do.call(rma.uni, args)), silent=TRUE)
 
    }
 
@@ -82,8 +81,7 @@
       } else {
 
          args <- list(yi=obj$yi, vi=obj$vi, weights=obj$weights, mods=obj$X, intercept=FALSE, method=obj$method, weighted=obj$weighted, test=obj$test, level=obj$level, control=obj$control, tau2=ifelse(obj$tau2.fix, obj$tau2, NA), subset=val, skipr2=TRUE, outlist=outlist)
-         args <- args[!sapply(args, is.null)]
-         sav <- try(suppressWarnings(do.call(rma.uni, args)), silent=TRUE)
+         sav <- try(suppressWarnings(.do.call(rma.uni, args)), silent=TRUE)
 
       }
 
@@ -131,8 +129,7 @@
       obj$control$hessian  <- FALSE
 
       args <- list(yi=obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, dfs=obj$dfs, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=sigma2.arg, tau2=tau2.arg, rho=rho.arg, gamma2=gamma2.arg, phi=phi.arg, sparse=obj$sparse, dist=obj$dist, control=obj$control, outlist="minimal")
-      args <- args[!sapply(args, is.null)]
-      res <- try(suppressWarnings(do.call(rma.mv, args)), silent=TRUE)
+      res <- try(suppressWarnings(.do.call(rma.mv, args)), silent=TRUE)
 
    }
 
@@ -184,8 +181,7 @@
       } else {
          args <- list(x1i=obj$x1i, x2i=obj$x2i, t1i=obj$t1i, t2i=obj$t2i, measure=obj$measure, add=obj$add, to=obj$to, drop00=obj$drop00, correct=obj$correct, level=obj$level, subset=val, outlist=outlist)
       }
-      args <- args[!sapply(args, is.null)]
-      sav <- try(suppressWarnings(do.call(rma.mh, args)), silent=TRUE)
+      sav <- try(suppressWarnings(.do.call(rma.mh, args)), silent=TRUE)
 
    }
 
@@ -203,8 +199,7 @@
       ### for subset, fit model to subset as specified by 'val'
 
       args <- list(ai=obj$ai, bi=obj$bi, ci=obj$ci, di=obj$di, add=obj$add, to=obj$to, drop00=obj$drop00, level=obj$level, subset=val, outlist=outlist)
-      args <- args[!sapply(args, is.null)]
-      sav <- try(suppressWarnings(do.call(rma.peto, args)), silent=TRUE)
+      sav <- try(suppressWarnings(.do.call(rma.peto, args)), silent=TRUE)
 
    }
 
@@ -300,8 +295,7 @@
          alpha.arg[alpha.pos] <- val
 
       args <- list(yi=obj$yi, vi=obj$vi, weights=obj$weights, mods=obj$X, intercept=FALSE, scale=obj$Z, link=obj$link, method=obj$method, weighted=obj$weighted, test=obj$test, level=obj$level, control=obj$control, skiphes=TRUE, alpha=alpha.arg, outlist="minimal")
-      args <- args[!sapply(args, is.null)]
-      res <- try(suppressWarnings(do.call(rma.uni, args)), silent=TRUE)
+      res <- try(suppressWarnings(.do.call(rma.uni, args)), silent=TRUE)
 
    }
 

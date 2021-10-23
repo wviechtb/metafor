@@ -86,8 +86,7 @@
 
    \if{html}{\figure{forest-arrangement.png}{options: width=800}}
 
-   \if{html}{The figure corresponds to the following code: \preformatted{dat <- dat.bcg
-dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat)
+   \if{html}{The figure corresponds to the following code: \preformatted{dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 res <- rma(yi, vi, data=dat, slab=paste(author, year, sep=", "))
 forest(res, addpred=TRUE, xlim=c(-16,7), at=seq(-3,2,by=1),
        ilab=cbind(dat$tpos, dat$tneg, dat$cpos, dat$cneg),
@@ -99,8 +98,7 @@ text(c(-8.75,-5.25),     16, c("Vaccinated", "Control"),    cex=.75, font=2)}}
 
    \figure{forest-arrangement.pdf}{options: width=5.5in}
 
-   The figure corresponds to the following code: \preformatted{dat <- dat.bcg
-dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat)
+   The figure corresponds to the following code: \preformatted{dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 res <- rma(yi, vi, data=dat, slab=paste(author, year, sep=", "))
 forest(res, addpred=TRUE, xlim=c(-16,7), at=seq(-3,2,by=1),
        ilab=cbind(dat$tpos, dat$tneg, dat$cpos, dat$cneg),

@@ -224,8 +224,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    }
 
-   args <- args[!sapply(args, is.null)]
-   dat <- do.call(escalc, args)
+   dat <- .do.call(escalc, args)
 
    yi <- dat$yi         # one or more yi/vi pairs may be NA/NA (note: yi/vi pairs that are NA/NA may still have 'valid' table data)
    vi <- dat$vi         # one or more yi/vi pairs may be NA/NA (note: yi/vi pairs that are NA/NA may still have 'valid' table data)

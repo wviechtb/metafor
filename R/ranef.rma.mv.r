@@ -26,8 +26,6 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
    if (missing(targs))
       targs <- NULL
 
-   expand <- FALSE # TODO: make this an option?
-
    level <- ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
 
    if (x$test == "z")
@@ -37,6 +35,8 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
 
    if (!is.null(x$W))
       stop(mstyle$stop("Extraction of random effects not available for models with non-standard weights."))
+
+   expand <- FALSE # TODO: make this an option?
 
    #########################################################################
 

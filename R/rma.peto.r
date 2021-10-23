@@ -162,9 +162,7 @@ level=95, digits, verbose=FALSE, ...) {
 
    ### calculate observed effect estimates and sampling variances
 
-   args <- list(measure="PETO", ai=ai, bi=bi, ci=ci, di=di, add=add[1], to=to[1], drop00=drop00[1])
-   args <- args[!sapply(args, is.null)]
-   dat <- do.call(escalc, args)
+   dat <- .do.call(escalc, measure="PETO", ai=ai, bi=bi, ci=ci, di=di, add=add[1], to=to[1], drop00=drop00[1])
    yi <- dat$yi ### one or more yi/vi pairs may be NA/NA
    vi <- dat$vi ### one or more yi/vi pairs may be NA/NA
 

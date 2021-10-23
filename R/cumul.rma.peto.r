@@ -90,8 +90,7 @@ cumul.rma.peto <- function(x, order, digits, transf, targs, progbar=FALSE, ...) 
          next
 
       args <- list(ai=ai.f, bi=bi.f, ci=ci.f, di=di.f, add=x$add, to=x$to, drop00=x$drop00, level=x$level, subset=seq_len(i))
-      args <- args[!sapply(args, is.null)]
-      res <- try(suppressWarnings(do.call(rma.peto, args)), silent=TRUE)
+      res <- try(suppressWarnings(.do.call(rma.peto, args)), silent=TRUE)
 
       if (inherits(res, "try-error"))
          next

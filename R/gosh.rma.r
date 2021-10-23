@@ -184,8 +184,8 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl, ...) 
 
    }
 
-   beta <- do.call("rbind", lapply(res, function(x) if (inherits(x, "try-error") || any(x$coef.na)) NA else t(x$beta)))
-   het  <- do.call("rbind", lapply(res, function(x) if (inherits(x, "try-error") || any(x$coef.na)) NA else c(x$k, x$QE, x$I2, x$H2, x$tau2)))
+   beta <- do.call(rbind, lapply(res, function(x) if (inherits(x, "try-error") || any(x$coef.na)) NA else t(x$beta)))
+   het  <- do.call(rbind, lapply(res, function(x) if (inherits(x, "try-error") || any(x$coef.na)) NA else c(x$k, x$QE, x$I2, x$H2, x$tau2)))
 
    if (all(is.na(het)))
       stop(mstyle$stop("All model fits failed."))

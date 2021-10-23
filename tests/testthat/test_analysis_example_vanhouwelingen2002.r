@@ -159,6 +159,18 @@ test_that("results for the bivariate model are correct.", {
    tmp <- res$tau2[1] + res$tau2[2] - 2*res$rho*sqrt(res$tau2[1]*res$tau2[2])
    expect_equivalent(tmp, 0.3241, tolerance=.tol[["var"]])
 
+   ### regression of log(odds)_EXP on log(odds)_CON
+   res <- rma.mv(yi, vi, mods = ~ group - 1, random = ~ group | trial, struct="UN", data=dat.long, method="ML")
+   reg <- matreg(y=2, x=1, R=res$G, cov=TRUE, means=coef(res), n=res$g.levels.comb.k)
+   expect_equivalent(reg$tab$beta, c(-1.8437, 0.7300), tolerance=.tol[["coef"]])
+   expect_equivalent(reg$tab$se,   c( 0.3265, 0.0749), tolerance=.tol[["se"]])
+
+   ### same idea but now use var-cov matrix of tau^2_1, tau_12, tau^2_2 for this
+   res <- rma.mv(yi, vi, mods = ~ group - 1, random = ~ group | trial, struct="UN", data=dat.long, method="ML", cvvc="varcov", control=list(nearpd=TRUE))
+   reg <- matreg(y=2, x=1, R=res$G, cov=TRUE, means=coef(res), V=res$vvc)
+   expect_equivalent(reg$tab$beta, c(-1.8437, 0.7300), tolerance=.tol[["coef"]])
+   expect_equivalent(reg$tab$se,   c( 0.3548, 0.0866), tolerance=.tol[["se"]])
+
 })
 
 ############################################################################

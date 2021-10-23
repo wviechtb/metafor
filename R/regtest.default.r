@@ -147,8 +147,7 @@ regtest.default <- function(x, vi, sei, ni, subset, model="rma", predictor="sei"
    if (model == "rma") {
 
       args <- list(yi=yi, vi=vi, mods=X, intercept=FALSE, ...)
-      args <- args[!sapply(args, is.null)]
-      fit  <- do.call(rma.uni, args)
+      fit  <- .do.call(rma.uni, args)
       zval <- fit$zval[2]
       pval <- fit$pval[2]
       ddf  <- fit$ddf

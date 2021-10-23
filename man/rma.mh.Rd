@@ -36,35 +36,42 @@ rma.mh(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 }
 \details{
 
-   \bold{Specifying the Data}
+   \subsection{Specifying the Data}{
 
-   When the outcome measure is either the risk ratio (measure=\code{"RR"}), odds ratio (\code{measure="OR"}), or risk difference (\code{measure="RD"}), the studies are assumed to provide data in terms of \mjeqn{2 \times 2}{2x2} tables of the form:
-   \tabular{lccc}{
-           \tab outcome 1 \tab outcome 2 \tab total      \cr
-   group 1 \tab \code{ai} \tab \code{bi} \tab \code{n1i} \cr
-   group 2 \tab \code{ci} \tab \code{di} \tab \code{n2i}
-   } where \code{ai}, \code{bi}, \code{ci}, and \code{di} denote the cell frequencies and \code{n1i} and \code{n2i} the row totals. For example, in a set of randomized clinical trials (RCTs) or cohort studies, group 1 and group 2 may refer to the treatment (exposed) and placebo/control (not exposed) group, with outcome 1 denoting some event of interest (e.g., death) and outcome 2 its complement. In a set of case-control studies, group 1 and group 2 may refer to the group of cases and the group of controls, with outcome 1 denoting, for example, exposure to some risk factor and outcome 2 non-exposure. For these outcome measures, one needs to specify either \code{ai}, \code{bi}, \code{ci}, and \code{di} or alternatively \code{ai}, \code{ci}, \code{n1i}, and \code{n2i}.
+      When the outcome measure is either the risk ratio (measure=\code{"RR"}), odds ratio (\code{measure="OR"}), or risk difference (\code{measure="RD"}), the studies are assumed to provide data in terms of \mjeqn{2 \times 2}{2x2} tables of the form:
+      \tabular{lccc}{
+              \tab outcome 1 \tab outcome 2 \tab total      \cr
+      group 1 \tab \code{ai} \tab \code{bi} \tab \code{n1i} \cr
+      group 2 \tab \code{ci} \tab \code{di} \tab \code{n2i}
+      } where \code{ai}, \code{bi}, \code{ci}, and \code{di} denote the cell frequencies and \code{n1i} and \code{n2i} the row totals. For example, in a set of randomized clinical trials (RCTs) or cohort studies, group 1 and group 2 may refer to the treatment (exposed) and placebo/control (not exposed) group, with outcome 1 denoting some event of interest (e.g., death) and outcome 2 its complement. In a set of case-control studies, group 1 and group 2 may refer to the group of cases and the group of controls, with outcome 1 denoting, for example, exposure to some risk factor and outcome 2 non-exposure. For these outcome measures, one needs to specify either \code{ai}, \code{bi}, \code{ci}, and \code{di} or alternatively \code{ai}, \code{ci}, \code{n1i}, and \code{n2i}.
 
-   Alternatively, when the outcome measure is the incidence rate ratio (\code{measure="IRR"}) or the incidence rate difference (\code{measure="IRD"}), the studies are assumed to provide data in terms of tables of the form:
-   \tabular{lcc}{
-           \tab events     \tab person-time \cr
-   group 1 \tab \code{x1i} \tab \code{t1i}  \cr
-   group 2 \tab \code{x2i} \tab \code{t2i}
-   } where \code{x1i} and \code{x2i} denote the number of events in the first and the second group, respectively, and \code{t1i} and \code{t2i} the corresponding total person-times at risk.
+      Alternatively, when the outcome measure is the incidence rate ratio (\code{measure="IRR"}) or the incidence rate difference (\code{measure="IRD"}), the studies are assumed to provide data in terms of tables of the form:
+      \tabular{lcc}{
+              \tab events     \tab person-time \cr
+      group 1 \tab \code{x1i} \tab \code{t1i}  \cr
+      group 2 \tab \code{x2i} \tab \code{t2i}
+      } where \code{x1i} and \code{x2i} denote the number of events in the first and the second group, respectively, and \code{t1i} and \code{t2i} the corresponding total person-times at risk.
 
-   \bold{Mantel-Haenszel Method}
+   }
 
-   An approach for aggregating data of these types was suggested by Mantel and Haenszel (1959) and later extended by various authors (see references). The Mantel-Haenszel method provides a weighted estimate under a fixed-effects model. The method is particularly advantageous when aggregating a large number of studies with small sample sizes (the so-called sparse data or increasing strata case).
+   \subsection{Mantel-Haenszel Method}{
 
-   When analyzing odds ratios, the Cochran-Mantel-Haenszel (CMH) test (Cochran, 1954; Mantel & Haenszel, 1959) and Tarone's test for heterogeneity (Tarone, 1985) are also provided (by default, the CMH test statistic is computed with the continuity correction; this can be switched off with \code{correct=FALSE}). When analyzing incidence rate ratios, the Mantel-Haenszel (MH) test (Rothman et al., 2008) for person-time data is also provided (again, the \code{correct} argument controls whether the continuity correction is applied). When analyzing risk ratios, odds ratios, or incidence rate ratios, the printed results are given both in terms of the log and the raw units (for easier interpretation).
+      An approach for aggregating data of these types was suggested by Mantel and Haenszel (1959) and later extended by various authors (see references). The Mantel-Haenszel method provides a weighted estimate under a fixed-effects model. The method is particularly advantageous when aggregating a large number of studies with small sample sizes (the so-called sparse data or increasing strata case).
 
-   \bold{Observed Effect Sizes or Outcomes of the Individual Studies}
+      When analyzing odds ratios, the Cochran-Mantel-Haenszel (CMH) test (Cochran, 1954; Mantel & Haenszel, 1959) and Tarone's test for heterogeneity (Tarone, 1985) are also provided (by default, the CMH test statistic is computed with the continuity correction; this can be switched off with \code{correct=FALSE}). When analyzing incidence rate ratios, the Mantel-Haenszel (MH) test (Rothman et al., 2008) for person-time data is also provided (again, the \code{correct} argument controls whether the continuity correction is applied). When analyzing risk ratios, odds ratios, or incidence rate ratios, the printed results are given both in terms of the log and the raw units (for easier interpretation).
 
-   The Mantel-Haenszel method itself does not require the calculation of the observed effect sizes or outcomes of the individual studies (e.g., the observed odds or incidence rate ratios of the \mjseqn{k} studies) and directly makes use of the table/event counts. Zero cells/events are not a problem (except in extreme cases, such as when one of the two outcomes never occurs in any of the \mjeqn{2 \times 2}{2x2} tables or when there are no events for one of the two groups in any of the tables). Therefore, it is unnecessary to add some constant to the cell/event counts when there are zero cells/events.
+   }
 
-   However, for plotting and various other functions, it is necessary to calculate the observed effect sizes or outcomes for the \mjseqn{k} studies. Here, zero cells/events can be problematic, so adding a constant value to the cell/event counts ensures that all \mjseqn{k} values can be calculated. The \code{add} and \code{to} arguments are used to specify what value should be added to the cell/event counts and under what circumstances when calculating the observed effect sizes or outcomes and when applying the Mantel-Haenszel method. Similarly, the \code{drop00} argument is used to specify how studies with no cases/events (or only cases) in both groups should be handled. The documentation of the \code{\link{escalc}} function explains how the \code{add}, \code{to}, and \code{drop00} arguments work. If only a single value for these arguments is specified (as per default), then these values are used when calculating the observed effect sizes or outcomes and no adjustment to the cell/event counts is made when applying the Mantel-Haenszel method. Alternatively, when specifying two values for these arguments, the first value applies when calculating the observed effect sizes or outcomes and the second value when applying the Mantel-Haenszel method.
+   \subsection{Observed Effect Sizes or Outcomes of the Individual Studies}{
 
-   Note that \code{drop00} is set to \code{TRUE} by default. Therefore, the observed effect sizes or outcomes for studies where \code{ai=ci=0} or \code{bi=di=0} or studies where \code{x1i=x2i=0} are set to \code{NA}. When applying the Mantel-Haenszel method, such studies are not explicitly dropped (unless the second value of \code{drop00} argument is also set to \code{TRUE}), but this is practically not necessary, as they do not actually influence the results (assuming no adjustment to the cell/event counts are made when applying the Mantel-Haenszel method).
+      The Mantel-Haenszel method itself does not require the calculation of the observed effect sizes or outcomes of the individual studies (e.g., the observed odds or incidence rate ratios of the \mjseqn{k} studies) and directly makes use of the table/event counts. Zero cells/events are not a problem (except in extreme cases, such as when one of the two outcomes never occurs in any of the \mjeqn{2 \times 2}{2x2} tables or when there are no events for one of the two groups in any of the tables). Therefore, it is unnecessary to add some constant to the cell/event counts when there are zero cells/events.
+
+      However, for plotting and various other functions, it is necessary to calculate the observed effect sizes or outcomes for the \mjseqn{k} studies. Here, zero cells/events can be problematic, so adding a constant value to the cell/event counts ensures that all \mjseqn{k} values can be calculated. The \code{add} and \code{to} arguments are used to specify what value should be added to the cell/event counts and under what circumstances when calculating the observed effect sizes or outcomes and when applying the Mantel-Haenszel method. Similarly, the \code{drop00} argument is used to specify how studies with no cases/events (or only cases) in both groups should be handled. The documentation of the \code{\link{escalc}} function explains how the \code{add}, \code{to}, and \code{drop00} arguments work. If only a single value for these arguments is specified (as per default), then these values are used when calculating the observed effect sizes or outcomes and no adjustment to the cell/event counts is made when applying the Mantel-Haenszel method. Alternatively, when specifying two values for these arguments, the first value applies when calculating the observed effect sizes or outcomes and the second value when applying the Mantel-Haenszel method.
+
+      Note that \code{drop00} is set to \code{TRUE} by default. Therefore, the observed effect sizes or outcomes for studies where \code{ai=ci=0} or \code{bi=di=0} or studies where \code{x1i=x2i=0} are set to \code{NA}. When applying the Mantel-Haenszel method, such studies are not explicitly dropped (unless the second value of \code{drop00} argument is also set to \code{TRUE}), but this is practically not necessary, as they do not actually influence the results (assuming no adjustment to the cell/event counts are made when applying the Mantel-Haenszel method).
+
+   }
+
 }
 \value{
    An object of class \code{c("rma.mh","rma")}. The object is a list containing the following components:

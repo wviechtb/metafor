@@ -100,5 +100,32 @@ R <- vec2mat(coef(res))
 rownames(R) <- colnames(R) <- c("perf", "acog", "asom", "conf")
 fit <- matreg(1, 2:4, R=R, V=vcov(res), ztor=TRUE)
 fit}
+
+### a different example based on van Houwelingen et al. (2002)
+
+### create dataset in long format
+dat.long <- to.long(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.colditz1994)
+dat.long <- escalc(measure="PLO", xi=out1, mi=out2, data=dat.long)
+dat.long$tpos <- dat.long$tneg <- dat.long$cpos <- dat.long$cneg <- NULL
+levels(dat.long$group) <- c("CON", "EXP")
+
+### fit bivariate model
+res <- rma.mv(yi, vi, mods = ~ group - 1, random = ~ group | trial, struct="UN",
+              data=dat.long, method="ML")
+res
+
+### regression of log(odds)_EXP on log(odds)_CON
+reg <- matreg(y=2, x=1, R=res$G, cov=TRUE, means=coef(res), n=res$g.levels.comb.k)
+reg
+
+### but the SE of the CON coefficient is not computed correctly, since above we treat res$G as if
+### it was a var-cov matrix computed from raw data based on res$g.levels.comb.k (= 13) data points
+
+### fit bivariate model and get the var-cov matrix of the estimates in res$G
+res <- rma.mv(yi, vi, mods = ~ group - 1, random = ~ group | trial, struct="UN",
+              data=dat.long, method="ML", cvvc="varcov", control=list(nearpd=TRUE))
+
+### now use res$vvc as the var-cov matrix of the estimates in res$G
+matreg(y=2, x=1, R=res$G, cov=TRUE, means=coef(res), V=res$vvc)
 }
 \keyword{models}

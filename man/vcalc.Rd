@@ -72,11 +72,11 @@ vcalc(vi, cluster, subgroup, obs, type, time1, time2, grp1, grp2, w1, w2,
 
    All of the arguments above can be specified together to account for a fairly wide variety of dependency types.
 
-   \bold{Using the \code{rvars} Argument}
+   \subsection{Using the \code{rvars} Argument}{
 
-   The function also provides an alternative approach for constructing the variance-covariance matrix using the \code{rvars} argument. Here, one must specify the names of the variables in the dataset that correspond to the correlation matrices of the studies (the variables should be specified as a vector; e.g., \code{c(var1, var2, var3)}).
+      The function also provides an alternative approach for constructing the variance-covariance matrix using the \code{rvars} argument. Here, one must specify the names of the variables in the dataset that correspond to the correlation matrices of the studies (the variables should be specified as a vector; e.g., \code{c(var1, var2, var3)}).
 
-   In particular, let \mjseqn{k_i} denote the number of rows corresponding to the \mjseqn{i}th cluster. Then the values of the first \mjseqn{k_i} variables from \code{rvars} are used to construct the correlation matrix and, together with the sampling variances (specified via \code{vi}), the variance-covariance matrix. Say there are three studies, the first with two correlated estimates, the second with a single estimate, and the third with four correlated estimates. Then the data structure should look like this:
+      In particular, let \mjseqn{k_i} denote the number of rows corresponding to the \mjseqn{i}th cluster. Then the values of the first \mjseqn{k_i} variables from \code{rvars} are used to construct the correlation matrix and, together with the sampling variances (specified via \code{vi}), the variance-covariance matrix. Say there are three studies, the first with two correlated estimates, the second with a single estimate, and the third with four correlated estimates. Then the data structure should look like this:
 
 \preformatted{study  yi  vi  r1  r2  r3  r4
 =============================
@@ -91,9 +91,12 @@ vcalc(vi, cluster, subgroup, obs, type, time1, time2, grp1, grp2, w1, w2,
     3   .   .  .5  .5  .8   1
 =============================}
 
-   with \code{rvars = c(r1, r2, r3, r4)}. If the \code{rvars} variables are a consecutive set in the data frame (as above), then one can use the shorthand notation \code{rvars = c(r1:r4)}, so \code{r1} denotes the first and \code{r4} the last variable in the set. Note that only the lower triangular part of the submatrices defined by the \code{rvars} variables is used.
+      with \code{rvars = c(r1, r2, r3, r4)}. If the \code{rvars} variables are a consecutive set in the data frame (as above), then one can use the shorthand notation \code{rvars = c(r1:r4)}, so \code{r1} denotes the first and \code{r4} the last variable in the set. Note that only the lower triangular part of the submatrices defined by the \code{rvars} variables is used.
 
-   There must be as many variables specified via \code{rvars} as the number of rows in the \emph{largest} cluster (in smaller clusters, the non-relevant variables can just be set to \code{NA}; see above).
+      There must be as many variables specified via \code{rvars} as the number of rows in the \emph{largest} cluster (in smaller clusters, the non-relevant variables can just be set to \code{NA}; see above).
+
+   }
+
 }
 \value{
    A \mjseqn{k \times k} variance-covariance matrix, where \mjseqn{k} denotes the length of the \code{vi} variable (i.e., the number of rows in the dataset).

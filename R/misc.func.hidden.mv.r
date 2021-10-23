@@ -1040,16 +1040,14 @@
       ### fit model without data from ith cluster
 
       args <- list(yi=obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, dfs=obj$dfs, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=ifelse(obj$vc.fix$sigma2, obj$sigma2, NA), tau2=ifelse(obj$vc.fix$tau2, obj$tau2, NA), rho=ifelse(obj$vc.fix$rho, obj$rho, NA), gamma2=ifelse(obj$vc.fix$gamma2, obj$gamma2, NA), phi=ifelse(obj$vc.fix$phi, obj$phi, NA), sparse=obj$sparse, dist=obj$dist, control=control, subset=!incl)
-      args <- args[!sapply(args, is.null)]
-      res <- try(suppressWarnings(do.call(rma.mv, args)), silent=TRUE)
+      res <- try(suppressWarnings(.do.call(rma.mv, args)), silent=TRUE)
 
    } else {
 
       ### set values of variance/correlation components to those from the 'full' model
 
       args <- list(yi=obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, dfs=obj$dfs, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=obj$sigma2, tau2=obj$tau2, rho=obj$rho, gamma2=obj$gamma2, phi=obj$phi, sparse=obj$sparse, dist=obj$dist, control=obj$control, subset=!incl)
-      args <- args[!sapply(args, is.null)]
-      res <- try(suppressWarnings(do.call(rma.mv, args)), silent=TRUE)
+      res <- try(suppressWarnings(.do.call(rma.mv, args)), silent=TRUE)
 
    }
 
@@ -1094,16 +1092,14 @@
       ### fit model without data from ith cluster
 
       args <- list(yi=obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, dfs=obj$dfs, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=ifelse(obj$vc.fix$sigma2, obj$sigma2, NA), tau2=ifelse(obj$vc.fix$tau2, obj$tau2, NA), rho=ifelse(obj$vc.fix$rho, obj$rho, NA), gamma2=ifelse(obj$vc.fix$gamma2, obj$gamma2, NA), phi=ifelse(obj$vc.fix$phi, obj$phi, NA), sparse=obj$sparse, dist=obj$dist, control=control, subset=!incl)
-      args <- args[!sapply(args, is.null)]
-      res <- try(suppressWarnings(do.call(rma.mv, args)), silent=TRUE)
+      res <- try(suppressWarnings(.do.call(rma.mv, args)), silent=TRUE)
 
    } else {
 
       ### set values of variance/correlation components to those from the 'full' model
 
       args <- list(yi=obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, dfs=obj$dfs, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=obj$sigma2, tau2=obj$tau2, rho=obj$rho, gamma2=obj$gamma2, phi=obj$phi, sparse=obj$sparse, dist=obj$dist, control=obj$control, subset=!incl)
-      args <- args[!sapply(args, is.null)]
-      res <- try(suppressWarnings(do.call(rma.mv, args)), silent=TRUE)
+      res <- try(suppressWarnings(.do.call(rma.mv, args)), silent=TRUE)
 
    }
 
@@ -1118,8 +1114,7 @@
    ### fit model based on all data but with var/cor components fixed to those from res
 
    args <- list(yi=obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, dfs=obj$dfs, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=res$sigma2, tau2=res$tau2, rho=res$rho, gamma2=res$gamma2, phi=res$phi, sparse=obj$sparse, dist=obj$dist, control=obj$control)
-   args <- args[!sapply(args, is.null)]
-   tmp <- try(suppressWarnings(do.call(rma.mv, args)), silent=TRUE)
+   tmp <- try(suppressWarnings(.do.call(rma.mv, args)), silent=TRUE)
 
    Xi <- obj$X[incl,,drop=FALSE]
    delpred  <- Xi %*% res$beta
@@ -1160,16 +1155,14 @@
       ### fit model without data from ith cluster
 
       args <- list(yi=obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, dfs=obj$dfs, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=ifelse(obj$vc.fix$sigma2, obj$sigma2, NA), tau2=ifelse(obj$vc.fix$tau2, obj$tau2, NA), rho=ifelse(obj$vc.fix$rho, obj$rho, NA), gamma2=ifelse(obj$vc.fix$gamma2, obj$gamma2, NA), phi=ifelse(obj$vc.fix$phi, obj$phi, NA), sparse=obj$sparse, dist=obj$dist, control=control, subset=!incl)
-      args <- args[!sapply(args, is.null)]
-      res <- try(suppressWarnings(do.call(rma.mv, args)), silent=TRUE)
+      res <- try(suppressWarnings(.do.call(rma.mv, args)), silent=TRUE)
 
    } else {
 
       ### set values of variance/correlation components to those from the 'full' model
 
       args <- list(yi=obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, dfs=obj$dfs, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=obj$sigma2, tau2=obj$tau2, rho=obj$rho, gamma2=obj$gamma2, phi=obj$phi, sparse=obj$sparse, dist=obj$dist, control=obj$control, subset=!incl)
-      args <- args[!sapply(args, is.null)]
-      res <- try(suppressWarnings(do.call(rma.mv, args)), silent=TRUE)
+      res <- try(suppressWarnings(.do.call(rma.mv, args)), silent=TRUE)
 
    }
 
@@ -1184,8 +1177,7 @@
    ### fit model based on all data but with var/cor components fixed to those from res
 
    args <- list(yi=obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, dfs=obj$dfs, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=res$sigma2, tau2=res$tau2, rho=res$rho, gamma2=res$gamma2, phi=res$phi, sparse=obj$sparse, dist=obj$dist, control=obj$control)
-   args <- args[!sapply(args, is.null)]
-   tmp <- try(suppressWarnings(do.call(rma.mv, args)), silent=TRUE)
+   tmp <- try(suppressWarnings(.do.call(rma.mv, args)), silent=TRUE)
 
    ### compute dfbeta value(s)
 

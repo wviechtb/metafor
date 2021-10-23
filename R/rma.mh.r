@@ -175,9 +175,7 @@ correct=TRUE, level=95, digits, verbose=FALSE, ...) {
 
       ### calculate observed effect estimates and sampling variances
 
-      args <- list(measure=measure, ai=ai, bi=bi, ci=ci, di=di, add=add[1], to=to[1], drop00=drop00[1], onlyo1=onlyo1, addyi=addyi, addvi=addvi)
-      args <- args[!sapply(args, is.null)]
-      dat <- do.call(escalc, args)
+      dat <- .do.call(escalc, measure=measure, ai=ai, bi=bi, ci=ci, di=di, add=add[1], to=to[1], drop00=drop00[1], onlyo1=onlyo1, addyi=addyi, addvi=addvi)
       yi <- dat$yi ### one or more yi/vi pairs may be NA/NA
       vi <- dat$vi ### one or more yi/vi pairs may be NA/NA
 
@@ -384,9 +382,7 @@ correct=TRUE, level=95, digits, verbose=FALSE, ...) {
 
       ### calculate observed effect estimates and sampling variances
 
-      args <- list(measure=measure, x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i, add=add[1], to=to[1], drop00=drop00[1], onlyo1=onlyo1, addyi=addyi, addvi=addvi)
-      args <- args[!sapply(args, is.null)]
-      dat <- do.call(escalc, args)
+      dat <- .do.call(escalc, measure=measure, x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i, add=add[1], to=to[1], drop00=drop00[1], onlyo1=onlyo1, addyi=addyi, addvi=addvi)
       yi  <- dat$yi ### one or more yi/vi pairs may be NA/NA
       vi  <- dat$vi ### one or more yi/vi pairs may be NA/NA
 

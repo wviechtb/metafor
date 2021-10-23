@@ -296,6 +296,80 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">### a different example based on van Houwelingen et al. (2002)</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">### create dataset in long format</span></span>
+<span class="r-in"><span class="va">dat.long</span> <span class="op">&lt;-</span> <span class="fu"><a href="to.long.html">to.long</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"OR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="va">dat.colditz1994</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">dat.long</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"PLO"</span>, xi<span class="op">=</span><span class="va">out1</span>, mi<span class="op">=</span><span class="va">out2</span>, data<span class="op">=</span><span class="va">dat.long</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">dat.long</span><span class="op">$</span><span class="va">tpos</span> <span class="op">&lt;-</span> <span class="va">dat.long</span><span class="op">$</span><span class="va">tneg</span> <span class="op">&lt;-</span> <span class="va">dat.long</span><span class="op">$</span><span class="va">cpos</span> <span class="op">&lt;-</span> <span class="va">dat.long</span><span class="op">$</span><span class="va">cneg</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">dat.long</span><span class="op">$</span><span class="va">group</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CON"</span>, <span class="st">"EXP"</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">### fit bivariate model</span></span>
+<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.mv.html">rma.mv</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">group</span> <span class="op">-</span> <span class="fl">1</span>, random <span class="op">=</span> <span class="op">~</span> <span class="va">group</span> <span class="op">|</span> <span class="va">trial</span>, struct<span class="op">=</span><span class="st">"UN"</span>,</span>
+<span class="r-in">              data<span class="op">=</span><span class="va">dat.long</span>, method<span class="op">=</span><span class="st">"ML"</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">res</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Multivariate Meta-Analysis Model (k = 26; method: ML)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variance Components:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> outer factor: trial (nlvls = 13)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> inner factor: group (nlvls = 2)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             estim    sqrt  k.lvl  fixed  level </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau^2.1    2.4073  1.5516     13     no    CON </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau^2.2    1.4314  1.1964     13     no    EXP </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      rho.CON  rho.EXP    CON  EXP </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> CON        1               -   13 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> EXP   0.9467        1     no    - </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test for Residual Heterogeneity:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QE(df = 24) = 5270.3863, p-val &lt; .0001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test of Moderators (coefficients 1:2):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QM(df = 2) = 292.4633, p-val &lt; .0001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           estimate      se      zval    pval    ci.lb    ci.ub </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> groupCON   -4.0960  0.4347   -9.4226  &lt;.0001  -4.9480  -3.2440  *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> groupEXP   -4.8337  0.3396  -14.2329  &lt;.0001  -5.4994  -4.1681  *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">### regression of log(odds)_EXP on log(odds)_CON</span></span>
+<span class="r-in"><span class="va">reg</span> <span class="op">&lt;-</span> <span class="fu">matreg</span><span class="op">(</span>y<span class="op">=</span><span class="fl">2</span>, x<span class="op">=</span><span class="fl">1</span>, R<span class="op">=</span><span class="va">res</span><span class="op">$</span><span class="va">G</span>, cov<span class="op">=</span><span class="cn">TRUE</span>, means<span class="op">=</span><span class="fu"><a href="coef.rma.html">coef</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span>, n<span class="op">=</span><span class="va">res</span><span class="op">$</span><span class="va">g.levels.comb.k</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">reg</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          estimate      se     tval  df    pval    ci.lb    ci.ub </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> intrcpt   -1.8437  0.3265  -5.6477  11  0.0001  -2.5623  -1.1252  *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> CON        0.7300  0.0749   9.7467  11  &lt;.0001   0.5651   0.8948  *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">### but the SE of the CON coefficient is not computed correctly, since above we treat res$G as if</span></span>
+<span class="r-in"><span class="co">### it was a var-cov matrix computed from raw data based on res$g.levels.comb.k (= 13) data points</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">### fit bivariate model and get the var-cov matrix of the estimates in res$G</span></span>
+<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.mv.html">rma.mv</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">group</span> <span class="op">-</span> <span class="fl">1</span>, random <span class="op">=</span> <span class="op">~</span> <span class="va">group</span> <span class="op">|</span> <span class="va">trial</span>, struct<span class="op">=</span><span class="st">"UN"</span>,</span>
+<span class="r-in">              data<span class="op">=</span><span class="va">dat.long</span>, method<span class="op">=</span><span class="st">"ML"</span>, cvvc<span class="op">=</span><span class="st">"varcov"</span>, control<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>nearpd<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">### now use res$vvc as the var-cov matrix of the estimates in res$G</span></span>
+<span class="r-in"><span class="fu">matreg</span><span class="op">(</span>y<span class="op">=</span><span class="fl">2</span>, x<span class="op">=</span><span class="fl">1</span>, R<span class="op">=</span><span class="va">res</span><span class="op">$</span><span class="va">G</span>, cov<span class="op">=</span><span class="cn">TRUE</span>, means<span class="op">=</span><span class="fu"><a href="coef.rma.html">coef</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span>, V<span class="op">=</span><span class="va">res</span><span class="op">$</span><span class="va">vvc</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          estimate      se     zval    pval    ci.lb    ci.ub </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> intrcpt   -1.8437  0.3548  -5.1967  &lt;.0001  -2.5391  -1.1484  *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> CON        0.7300  0.0866   8.4276  &lt;.0001   0.5602   0.8998  *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
   </div>
