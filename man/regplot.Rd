@@ -86,7 +86,7 @@ regplot(x, \dots)
    \item{bg}{the background colors of the points that were plotted.}
    \item{label}{logical vector indicating whether a point was labeled or not.}
 
-   Note that the object is returned invisibly. Using \code{points.regplot}, one can redraw the points in case one wants to superimpose the points on top of any elements that were added manually to the plot (see \sQuote{Examples}).
+   Note that the object is returned invisibly. Using \code{points.regplot}, one can redraw the points (and labels) in case one wants to superimpose the points on top of any elements that were added manually to the plot (see \sQuote{Examples}).
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}

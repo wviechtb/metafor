@@ -1,4 +1,4 @@
-# metafor 3.1-24 (2021-10-19)
+# metafor 3.1-25 (2021-10-24)
 
 - added `vcalc()` function
 
@@ -25,6 +25,8 @@
 - `plot.profile.rma()` gains `refline` argument
 
 - `addpoly.default()` and `addpoly.rma()` gain `lty` argument
+
+- `points.regplot()` function now also redraws the labels (if there were any)
 
 - datasets moved to the `metadat` package (https://cran.r-project.org/package=metadat)
 

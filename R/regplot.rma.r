@@ -773,6 +773,10 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
    ############################################################################
 
    sav <- data.frame(slab, ids, xi, yi, pch, psize, col, bg, label, order=order.vec)
+   if (length(yi.pred) != 0L) # yi.pred might be NULL or list()
+      sav$pred <- yi.pred
+   attr(sav, "offset")  <- offset
+   attr(sav, "labsize") <- labsize
    class(sav) <- "regplot"
    invisible(sav)
 
