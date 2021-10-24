@@ -63,39 +63,56 @@
 \details{
    The function fixes a particular parameter of the model and then computes the maximized (restricted) log-likelihood over the remaining parameters of the model. By doing this for a range of values for the parameter that was fixed, a profile of the (restricted) log-likelihood is constructed.
 
-   The parameter(s) that can be profiled depend on the model object:
-   \itemize{
-   \item For objects of class \code{"rma.uni"} obtained with the \code{\link{rma.uni}} function, the function profiles over parameter \mjseqn{\tau^2} (not for fixed-effects models).
-   \item For objects of class \code{"rma.mv"} obtained with the \code{\link{rma.mv}} function, profiling is done by default over all (non-fixed) variance and correlation components of the model. Alternatively, one can use the \code{sigma2}, \code{tau2}, \code{rho}, \code{gamma2}, or \code{phi} arguments to specify over which parameter the profiling should be done. Only one of these arguments can be used at a time. A single integer is used to specify the number of the parameter.
-   \item For selection model objects of class \code{"rma.uni.selmodel"} obtained with the \code{\link{selmodel.rma.uni}} function, profiling is done by default over \mjseqn{\tau^2} (for models where this is an estimated parameter) and all (non-fixed) selection model parameters. Alternatively, one can choose to profile only \mjseqn{\tau^2} by setting \code{tau2=TRUE} or one can select one of the selection model parameters to profile by specifying its number via the \code{delta} argument.
-   \item For location-scale model objects of class \code{"rma.ls"} obtained with the \code{\link{rma.uni}} function, profiling is done by default over all (non-fixed) \mjseqn{\alpha} parameters that are part of the scale model.
+   \subsection{Selecting the Parameter(s) to Profile}{
+
+      The parameters that can be profiled depend on the model object:
+      \itemize{
+      \item For objects of class \code{"rma.uni"} obtained with the \code{\link{rma.uni}} function, the function profiles over \mjseqn{\tau^2} (not for fixed-effects models).
+      \item For objects of class \code{"rma.mv"} obtained with the \code{\link{rma.mv}} function, profiling is done by default over all (non-fixed) variance and correlation components of the model. Alternatively, one can use the \code{sigma2}, \code{tau2}, \code{rho}, \code{gamma2}, or \code{phi} arguments to specify over which parameter the profiling should be done. Only one of these arguments can be used at a time. A single integer is used to specify the number of the parameter.
+      \item For selection model objects of class \code{"rma.uni.selmodel"} obtained with the \code{\link{selmodel.rma.uni}} function, profiling is done by default over \mjseqn{\tau^2} (for models where this is an estimated parameter) and all (non-fixed) selection model parameters. Alternatively, one can choose to profile only \mjseqn{\tau^2} by setting \code{tau2=TRUE} or one can select one of the selection model parameters to profile by specifying its number via the \code{delta} argument.
+      \item For location-scale model objects of class \code{"rma.ls"} obtained with the \code{\link{rma.uni}} function, profiling is done by default over all (non-fixed) \mjseqn{\alpha} parameters that are part of the scale model.
+      }
+
    }
 
-   A profile plot should show a single peak at the corresponding ML/REML estimate (assuming that the model was fitted with ML/REML estimation). If \code{refline=TRUE} (the default), the value of the parameter estimate is indicated by a dotted vertical line and its log-likelihood value by a dotted horizontal line. Hence, the intersection of these two lines should correspond to the peak.
+   \subsection{Interpreting a Likelihood Profile}{
 
-   When profiling a variance component (or some other parameter that cannot be negative), the peak may be at zero (if this corresponds to the ML/REML estimate of the parameter). In this case, the profiled log-likelihood should be a monotonically decreasing function of the parameter.
+      A profile plot should show a single peak at the corresponding ML/REML estimate (assuming that the model was fitted with ML/REML estimation). If \code{refline=TRUE} (the default), the value of the parameter estimate is indicated by a dotted vertical line and its log-likelihood value by a dotted horizontal line. Hence, the intersection of these two lines should correspond to the peak.
 
-   If the profiled log-likelihood has multiple peaks, this indicates that the likelihood surface is not unimodal. In such cases, the ML/REML estimate may correspond to a local optimum (when the intersection of the two dotted lines is not at the highest peak).
+      When profiling a variance component (or some other parameter that cannot be negative), the peak may be at zero (if this corresponds to the ML/REML estimate of the parameter). In this case, the profiled log-likelihood should be a monotonically decreasing function of the parameter.
 
-   If the profile is flat (over the entire parameter space or large portions of it), then this suggests that at least some of the parameters of the model are not identifiable (and the parameter estimates obtained are to some extent arbitrary). See Raue et al. (2009) for some further discussion of parameter identifiability (structurally and practically) and the use of profile likelihoods to check for this.
+      If the profiled log-likelihood has multiple peaks, this indicates that the likelihood surface is not unimodal. In such cases, the ML/REML estimate may correspond to a local optimum (when the intersection of the two dotted lines is not at the highest peak).
 
-   The function checks whether any profiled log-likelihood value is actually larger than the log-likelihood of the fitted model (using a numerical tolerance of \code{lltol}). If so, a warning is issued as this might indicate that the optimizer did not identify the actual ML/REML estimate.
+      If the profile is flat (over the entire parameter space or large portions of it), then this suggests that at least some of the parameters of the model are not identifiable (and the parameter estimates obtained are to some extent arbitrary). See Raue et al. (2009) for some further discussion of parameter identifiability (structurally and practically) and the use of profile likelihoods to check for this.
 
-   Profiling requires repeatedly refitting the model, which can be slow when \mjseqn{k} is large and/or the model is complex (the latter especially applies to \code{"rma.mv"} objects and also to certain \code{"rma.uni.selmodel"} or \code{"rma.ls"} objects). On machines with multiple cores, one can usually speed things up by delegating the model fitting to separate worker processes, that is, by setting \code{parallel="snow"} or \code{parallel="multicore"} and \code{ncpus} to some value larger than 1. Parallel processing makes use of the \code{\link[parallel]{parallel}} package, using the \code{\link[parallel]{makePSOCKcluster}} and \code{\link[parallel]{parLapply}} functions when \code{parallel="snow"} or using \code{\link[parallel]{mclapply}} when \code{parallel="multicore"} (the latter only works on Unix/Linux-alikes). With \code{parallel::detectCores()}, one can check on the number of available cores on the local machine.
+      The function checks whether any profiled log-likelihood value is actually larger than the log-likelihood of the fitted model (using a numerical tolerance of \code{lltol}). If so, a warning is issued as this might indicate that the optimizer did not identify the actual ML/REML estimate.
+
+   }
+
+   \subsection{Parallel Processing}{
+
+      Profiling requires repeatedly refitting the model, which can be slow when \mjseqn{k} is large and/or the model is complex (the latter especially applies to \code{"rma.mv"} objects and also to certain \code{"rma.uni.selmodel"} or \code{"rma.ls"} objects). On machines with multiple cores, one can usually speed things up by delegating the model fitting to separate worker processes, that is, by setting \code{parallel="snow"} or \code{parallel="multicore"} and \code{ncpus} to some value larger than 1. Parallel processing makes use of the \code{\link[parallel]{parallel}} package, using the \code{\link[parallel]{makePSOCKcluster}} and \code{\link[parallel]{parLapply}} functions when \code{parallel="snow"} or using \code{\link[parallel]{mclapply}} when \code{parallel="multicore"} (the latter only works on Unix/Linux-alikes). With \code{parallel::detectCores()}, one can check on the number of available cores on the local machine.
+
+   }
+
 }
 \value{
-   An object of class \code{"profile.rma"}. The object is a list (or list of lists) containing the following components:
-   \item{sigma2}{values of \mjseqn{\sigma^2} over which the likelihood was profiled (only when profiling was actually done over \mjseqn{\sigma^2}).}
-   \item{tau2}{values of \mjseqn{\tau^2} over which the likelihood was profiled (only when profiling was actually done over \mjseqn{\tau^2}).}
-   \item{rho}{values of \mjseqn{\rho} over which the likelihood was profiled (only when profiling was actually done over \mjseqn{\rho}).}
-   \item{gamma2}{values of \mjseqn{\gamma^2} over which the likelihood was profiled (only when profiling was actually done over \mjseqn{\gamma^2}).}
-   \item{phi}{values of \mjseqn{\phi} over which the likelihood was profiled (only when profiling was actually done over \mjseqn{\phi}).}
-   \item{delta}{values of \mjseqn{\delta} over which the likelihood was profiled (only when profiling was actually done over \mjseqn{\delta}).}
-   \item{alpha}{values of \mjseqn{\alpha} over which the likelihood was profiled (only when profiling was actually done over \mjseqn{\alpha}).}
-   \item{ll}{(restricted) log-likelihood at the corresponding parameter value.}
-   \item{beta}{a matrix with the estimated model coefficients at the corresponding parameter value.}
-   \item{ci.lb}{a matrix with the lower confidence interval bounds for the model coefficients at the corresponding parameter value.}
-   \item{ci.ub}{a matrix with the upper confidence interval bounds for the model coefficients at the corresponding parameter value.}
+   An object of class \code{"profile.rma"}. The object is a list (or list of such lists) containing the following components:
+
+   One of the following (depending on the parameter that was actually profiled):
+   \item{sigma2}{values of \mjseqn{\sigma^2} over which the likelihood was profiled.}
+   \item{tau2}{values of \mjseqn{\tau^2} over which the likelihood was profiled.}
+   \item{rho}{values of \mjseqn{\rho} over which the likelihood was profiled.}
+   \item{gamma2}{values of \mjseqn{\gamma^2} over which the likelihood was profiled.}
+   \item{phi}{values of \mjseqn{\phi} over which the likelihood was profiled.}
+   \item{delta}{values of \mjseqn{\delta} over which the likelihood was profiled.}
+   \item{alpha}{values of \mjseqn{\alpha} over which the likelihood was profiled.}
+
+   In addition, the following components are included:
+   \item{ll}{(restricted) log-likelihood values at the corresponding parameter values.}
+   \item{beta}{a matrix with the estimated model coefficients at the corresponding parameter values.}
+   \item{ci.lb}{a matrix with the lower confidence interval bounds of the model coefficients at the corresponding parameter values.}
+   \item{ci.ub}{a matrix with the upper confidence interval bounds of the model coefficients at the corresponding parameter values.}
    \item{\dots}{some additional elements/values.}
    Note that the list is returned invisibly.
 }

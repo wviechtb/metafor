@@ -13,7 +13,7 @@ print.permutest.rma.uni <- function(x, digits=x$digits, signif.stars=getOption("
       cat(mstyle$section(paste0("Test of Moderators (coefficient", ifelse(x$m == 1, " ", "s "), .format.btt(x$btt),"):")))
       cat("\n")
       if (is.element(x$test, c("knha","adhoc","t"))) {
-         cat(mstyle$result(paste0("F(df1 = ", x$QMdf[1], ", df2 = ", x$QMdf[2], ") = ", .fcf(x$QM, digits[["test"]]), ", p-val* ", .pval(x$QMp, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
+         cat(mstyle$result(paste0("F(df1 = ", x$QMdf[1], ", df2 = ", round(x$QMdf[2], 2), ") = ", .fcf(x$QM, digits[["test"]]), ", p-val* ", .pval(x$QMp, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
       } else {
          cat(mstyle$result(paste0("QM(df = ", x$QMdf[1], ") = ", .fcf(x$QM, digits[["test"]]), ", p-val* ", .pval(x$QMp, digits[["pval"]], showeq=TRUE, sep=" "))))
       }
@@ -53,7 +53,6 @@ print.permutest.rma.uni <- function(x, digits=x$digits, signif.stars=getOption("
    if (signif.legend) {
       cat("\n")
       cat(mstyle$legend("---\nSignif. codes: "), mstyle$legend(attr(signif, "legend")))
-      cat("\n")
    }
 
    if (!exists(".rmspace"))
