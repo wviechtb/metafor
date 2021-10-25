@@ -6,8 +6,7 @@ print.robust.rma <- function(x, digits=x$digits, signif.stars=getOption("show.si
 
    digits <- .get.digits(digits=digits, xdigits=x$digits, dmiss=FALSE)
 
-   if (!exists(".rmspace"))
-      cat("\n")
+   .space()
 
    cat(mstyle$text("Number of outcomes:   "))
    cat(mstyle$result(x$k))
@@ -57,8 +56,7 @@ print.robust.rma <- function(x, digits=x$digits, signif.stars=getOption("show.si
       cat("\n")
    }
 
-   if (!exists(".rmspace"))
-      cat("\n")
+   .space()
 
    invisible()
 

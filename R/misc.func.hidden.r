@@ -205,12 +205,42 @@
    len.max <- pmax(len.n, len.x)
    format  <- sapply(len.max, function(x) paste("%", x, "s", sep=""))
 
-   row.n <- paste(sprintf(format, names(x)), collapse="  ")
-   row.x <- paste(sprintf(format, x), collapse="  ")
+   #row.n <- paste(sprintf(format, names(x)), collapse="  ") # sprintf("%3s", "\u00b9") isn't right
+   #row.x <- paste(sprintf(format, x), collapse="  ")
+
+   #f <- function(x, n)
+   #   paste0(paste0(rep(" ", n-nchar(x)), collapse=""), x, collapse="")
+   #row.n <- paste(mapply(f, names(x), len.max), collapse="  ")
+   #row.x <- paste(mapply(f, unname(x), len.max), collapse="  ")
+
+   row.n <- paste(mapply(formatC, names(x), width=len.max), collapse="  ") # formatC("\u00b9", width=3) works
+   row.x <- paste(mapply(formatC, x, width=len.max), collapse="  ")
 
    cat(row.n, "\n", row.x, "\n", sep="")
 
 }
+
+############################################################################
+
+.space <- function(x=TRUE) {
+   no.rmspace <- !exists(".rmspace")
+   if (no.rmspace && x)
+      cat("\n")
+}
+
+.get.footsym <- function() {
+
+   if (exists(".footsym")) {
+      fs <- get(".footsym")
+   } else {
+      fs <- c("\u00b9", "1)", "\u00b2", "2)", "\u00b3", "3)")
+   }
+
+   return(fs)
+
+}
+
+# .footsym <- c("\u00b9", "\u00b9\u207e", "\u00b2", "\u00b2\u207e", "\u00b3", "\u00b3\u207e")
 
 ############################################################################
 

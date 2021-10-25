@@ -6,8 +6,7 @@ print.tes <- function(x, digits=x$digits, ...) {
 
    digits <- .get.digits(digits=digits, xdigits=x$digits, dmiss=FALSE)
 
-   if (!exists(".rmspace"))
-      cat("\n")
+   .space()
 
    cat(mstyle$section(paste("Test of Excess Significance")))
    cat("\n\n")
@@ -79,8 +78,7 @@ print.tes <- function(x, digits=x$digits, ...) {
 
    }
 
-   if (!exists(".rmspace"))
-      cat("\n")
+   .space()
 
    invisible()
 

@@ -134,8 +134,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
    #########################################################################
 
-   if (verbose && !exists(".rmspace"))
-      cat("\n")
+   if (verbose) .space()
 
    if (verbose > 1)
       message(mstyle$message("Extracting/computing yi/vi values ..."))

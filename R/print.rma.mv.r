@@ -10,8 +10,7 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
       digits <- .get.digits(digits=digits, xdigits=x$digits, dmiss=FALSE)
    }
 
-   if (!exists(".rmspace"))
-      cat("\n")
+   .space()
 
    cat(mstyle$section("Multivariate Meta-Analysis Model"))
    cat(mstyle$section(paste0(" (k = ", x$k, "; ")))
@@ -394,8 +393,7 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
       cat("\n")
    }
 
-   if (!exists(".rmspace"))
-      cat("\n")
+   .space()
 
    invisible()
 

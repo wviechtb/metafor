@@ -8,8 +8,7 @@ print.list.confint.rma <- function(x, digits=x$digits, ...) {
 
    x$digits <- NULL # so length(x) is correct
 
-   if (!exists(".rmspace"))
-      cat("\n")
+   .space()
 
    len <- length(x)
 
@@ -26,8 +25,7 @@ print.list.confint.rma <- function(x, digits=x$digits, ...) {
 
    }
 
-   if (!exists(".rmspace"))
-      cat("\n")
+   .space()
 
    invisible()
 

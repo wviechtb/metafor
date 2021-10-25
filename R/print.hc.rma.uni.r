@@ -18,14 +18,12 @@ print.hc.rma.uni <- function(x, digits=x$digits, ...) {
 
    rownames(res.table) <- c("rma", "hc")
 
-   if (!exists(".rmspace"))
-      cat("\n")
+   .space()
 
    tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE))
    .print.table(tmp, mstyle)
 
-   if (!exists(".rmspace"))
-      cat("\n")
+   .space()
 
    invisible(res.table)
 

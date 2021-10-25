@@ -6,8 +6,7 @@ print.anova.rma <- function(x, digits=x$digits, ...) {
 
    digits <- .get.digits(digits=digits, xdigits=x$digits, dmiss=FALSE)
 
-   if (!exists(".rmspace"))
-      cat("\n")
+   .space()
 
    if (x$type == "Wald.btt") {
 
@@ -158,8 +157,7 @@ print.anova.rma <- function(x, digits=x$digits, ...) {
 
    }
 
-   if (!exists(".rmspace"))
-      cat("\n")
+   .space()
 
    invisible()
 

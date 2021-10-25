@@ -6,8 +6,7 @@ print.regtest <- function(x, digits=x$digits, ret.fit=x$ret.fit, ...) {
 
    digits <- .get.digits(digits=digits, xdigits=x$digits, dmiss=FALSE)
 
-   if (!exists(".rmspace"))
-      cat("\n")
+   .space()
 
    cat(mstyle$section("Regression Test for Funnel Plot Asymmetry"))
    cat("\n\n")
@@ -33,15 +32,13 @@ print.regtest <- function(x, digits=x$digits, ret.fit=x$ret.fit, ...) {
    cat("\n")
 
    if (ret.fit) {
-      if (exists(".rmspace"))
-         cat("\n")
+      .space(FALSE)
       if (x$model == "lm") {
          print(summary(x$fit))
       } else {
          print(x$fit)
       }
-      if (exists(".rmspace"))
-         cat("\n")
+      .space(FALSE)
    } else {
       cat("\n")
    }
@@ -65,8 +62,7 @@ print.regtest <- function(x, digits=x$digits, ret.fit=x$ret.fit, ...) {
       cat("\n")
    }
 
-   if (!exists(".rmspace"))
-      cat("\n")
+   .space()
 
    invisible()
 

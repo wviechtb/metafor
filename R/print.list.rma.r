@@ -96,14 +96,12 @@ print.list.rma <- function(x, digits=x$digits, ...) {
       }
    }
 
-   if (!exists(".rmspace"))
-      cat("\n")
+   .space()
 
    tmp <- capture.output(print(out, quote=FALSE, right=TRUE))
    .print.table(tmp, mstyle)
 
-   if (!exists(".rmspace") & is.null(attr(x, ".rmspace")))
-      cat("\n")
+   if (is.null(attr(x, ".rmspace"))) .space()
 
    invisible(sav)
 

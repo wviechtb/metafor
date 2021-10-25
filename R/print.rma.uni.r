@@ -11,8 +11,7 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
    }
 
    if (inherits(x, "rma.uni.trimfill")) {
-      if (!exists(".rmspace"))
-         cat("\n")
+      .space()
       cat(mstyle$text(paste0("Estimated number of missing studies on the ", x$side, " side: ")))
       cat(mstyle$result(paste0(x$k0, " (SE = ", ifelse(is.na(x$se.k0), NA, .fcf(x$se.k0, digits[["se"]])), ")")))
       cat("\n")
@@ -22,12 +21,10 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
          cat(mstyle$result(paste0("p-val ", .pval(x$p.k0, digits[["pval"]], showeq=TRUE, sep=" "))))
          cat("\n")
       }
-      if (exists(".rmspace"))
-         cat("\n")
+      .space(FALSE)
    }
 
-   if (!exists(".rmspace"))
-      cat("\n")
+   .space()
 
    if (x$model == "rma.ls") {
 
@@ -313,8 +310,7 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
       cat("\n")
    }
 
-   if (!exists(".rmspace"))
-      cat("\n")
+   .space()
 
    invisible()
 

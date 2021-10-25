@@ -10,8 +10,7 @@ print.matreg <- function(x, digits=x$digits, signif.stars=getOption("show.signif
       digits <- .get.digits(digits=digits, xdigits=x$digits, dmiss=FALSE)
    }
 
-   if (!exists(".rmspace"))
-      cat("\n")
+   .space()
 
    if (x$test == "t") {
       res.table <- data.frame(estimate=.fcf(c(x$tab$beta), digits[["est"]]), se=.fcf(x$tab$se, digits[["se"]]), tval=.fcf(x$tab$tval, digits[["test"]]), df=round(x$tab$df,2), pval=.pval(x$tab$pval, digits[["pval"]]), ci.lb=.fcf(x$tab$ci.lb, digits[["ci"]]), ci.ub=.fcf(x$tab$ci.ub, digits[["ci"]]), stringsAsFactors=FALSE)
@@ -34,8 +33,7 @@ print.matreg <- function(x, digits=x$digits, signif.stars=getOption("show.signif
       cat("\n")
    }
 
-   if (!exists(".rmspace"))
-      cat("\n")
+   .space()
 
    invisible()
 

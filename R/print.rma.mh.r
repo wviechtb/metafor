@@ -10,8 +10,7 @@ print.rma.mh <- function(x, digits, showfit=FALSE, ...) {
       digits <- .get.digits(digits=digits, xdigits=x$digits, dmiss=FALSE)
    }
 
-   if (!exists(".rmspace"))
-      cat("\n")
+   .space()
 
    cat(mstyle$section("Fixed-Effects Model"))
    cat(mstyle$section(paste0(" (k = ", x$k, ")")))
@@ -112,8 +111,7 @@ print.rma.mh <- function(x, digits, showfit=FALSE, ...) {
 
    }
 
-   if (!exists(".rmspace"))
-      cat("\n")
+   .space()
 
    invisible()
 

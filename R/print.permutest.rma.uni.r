@@ -6,30 +6,31 @@ print.permutest.rma.uni <- function(x, digits=x$digits, signif.stars=getOption("
 
    digits <- .get.digits(digits=digits, xdigits=x$digits, dmiss=FALSE)
 
-   if (!exists(".rmspace"))
-      cat("\n")
+   .space()
+
+   fs <- .get.footsym()
 
    if (!x$int.only) {
       cat(mstyle$section(paste0("Test of Moderators (coefficient", ifelse(x$m == 1, " ", "s "), .format.btt(x$btt),"):")))
       cat("\n")
       if (is.element(x$test, c("knha","adhoc","t"))) {
-         cat(mstyle$result(paste0("F(df1 = ", x$QMdf[1], ", df2 = ", round(x$QMdf[2], 2), ") = ", .fcf(x$QM, digits[["test"]]), ", p-val* ", .pval(x$QMp, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
+         cat(mstyle$result(paste0("F(df1 = ", x$QMdf[1], ", df2 = ", round(x$QMdf[2], 2), ") = ", .fcf(x$QM, digits[["test"]]), ", p-val", fs[1], " ", .pval(x$QMp, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
       } else {
-         cat(mstyle$result(paste0("QM(df = ", x$QMdf[1], ") = ", .fcf(x$QM, digits[["test"]]), ", p-val* ", .pval(x$QMp, digits[["pval"]], showeq=TRUE, sep=" "))))
+         cat(mstyle$result(paste0("QM(df = ", x$QMdf[1], ") = ", .fcf(x$QM, digits[["test"]]), ", p-val", fs[1], " ", .pval(x$QMp, digits[["pval"]], showeq=TRUE, sep=" "))))
       }
       cat("\n\n")
    }
 
    if (is.element(x$test, c("knha","adhoc","t"))) {
-      res.table <- data.frame(estimate=.fcf(c(x$beta), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), tval=.fcf(x$zval, digits[["test"]]), df=round(x$ddf,2), "pval*"=.pval(x$pval, digits[["pval"]]), ci.lb=.fcf(x$ci.lb, digits[["ci"]]), ci.ub=.fcf(x$ci.ub, digits[["ci"]]), stringsAsFactors=FALSE)
-      colnames(res.table)[5] <- "pval*" # rename 'pval.' to 'pval*'
+      res.table <- data.frame(estimate=.fcf(c(x$beta), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), tval=.fcf(x$zval, digits[["test"]]), df=round(x$ddf,2), "pval"=.pval(x$pval, digits[["pval"]]), ci.lb=.fcf(x$ci.lb, digits[["ci"]]), ci.ub=.fcf(x$ci.ub, digits[["ci"]]), stringsAsFactors=FALSE)
+      colnames(res.table)[5] <- paste0("pval", fs[1])
       if (x$permci)
-         colnames(res.table)[6:7] <- c("ci.lb*", "ci.ub*")
+         colnames(res.table)[6:7] <- paste0(c("ci.lb", "ci.ub"), fs[1])
    } else {
-      res.table <- data.frame(estimate=.fcf(c(x$beta), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), zval=.fcf(x$zval, digits[["test"]]), "pval*"=.pval(x$pval, digits[["pval"]]), ci.lb=.fcf(x$ci.lb, digits[["ci"]]), ci.ub=.fcf(x$ci.ub, digits[["ci"]]), stringsAsFactors=FALSE)
-      colnames(res.table)[4] <- "pval*" # rename 'pval.' to 'pval*'
+      res.table <- data.frame(estimate=.fcf(c(x$beta), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), zval=.fcf(x$zval, digits[["test"]]), "pval"=.pval(x$pval, digits[["pval"]]), ci.lb=.fcf(x$ci.lb, digits[["ci"]]), ci.ub=.fcf(x$ci.ub, digits[["ci"]]), stringsAsFactors=FALSE)
+      colnames(res.table)[4] <- paste0("pval", fs[1])
       if (x$permci)
-         colnames(res.table)[5:6] <- c("ci.lb*", "ci.ub*")
+         colnames(res.table)[5:6] <- paste0(c("ci.lb", "ci.ub"), fs[1])
    }
    rownames(res.table) <- rownames(x$beta)
    signif <- symnum(x$pval, corr=FALSE, na=FALSE, cutpoints=c(0, 0.001, 0.01, 0.05, 0.1, 1), symbols = c("***", "**", "*", ".", " "))
@@ -53,10 +54,12 @@ print.permutest.rma.uni <- function(x, digits=x$digits, signif.stars=getOption("
    if (signif.legend) {
       cat("\n")
       cat(mstyle$legend("---\nSignif. codes: "), mstyle$legend(attr(signif, "legend")))
+      cat("\n\n")
+      cat(mstyle$legend(fs[2], " p-value", ifelse(x$int.only, "", "s"), ifelse(x$permci, " and CI bounds", ""), " based on permutation testing"))
+      cat("\n")
    }
 
-   if (!exists(".rmspace"))
-      cat("\n")
+   .space()
 
    invisible()
 

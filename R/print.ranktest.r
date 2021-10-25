@@ -6,8 +6,7 @@ print.ranktest <- function(x, digits=x$digits, ...) {
 
    digits <- .get.digits(digits=digits, xdigits=x$digits, dmiss=FALSE)
 
-   if (!exists(".rmspace"))
-      cat("\n")
+   .space()
 
    cat(mstyle$section("Rank Correlation Test for Funnel Plot Asymmetry"))
    cat("\n\n")
@@ -15,8 +14,7 @@ print.ranktest <- function(x, digits=x$digits, ...) {
    cat("\n")
    #cat("H0: true tau is equal to 0\n\n")
 
-   if (!exists(".rmspace"))
-      cat("\n")
+   .space()
 
    invisible()
 

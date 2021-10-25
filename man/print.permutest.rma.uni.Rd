@@ -18,8 +18,8 @@
 \details{
    The output includes:
    \itemize{
-   \item the results of the omnibus test of moderators. Suppressed if the model includes only one coefficient (e.g., only an intercept, like in the fixed- and random-effects model). The p-value based on the permutation test is indicated by \code{p-val*}.
-   \item a table with the estimated coefficients, corresponding standard errors, test statistics, p-values, and confidence interval bounds. The p-values based on the permutation tests are indicated by \code{pval*}. When permutation-based CIs have been obtained, then the CI bounds are indicated with \code{ci.lb*} and \code{ci.ub*}.
+   \item the results of the omnibus test of moderators. Suppressed if the model includes only one coefficient (e.g., only an intercept, like in the fixed- and random-effects model). The p-value is based on the permutation test.
+   \item a table with the estimated coefficients, corresponding standard errors, test statistics, p-values, and confidence interval bounds. The p-values are based on permutation tests. If \code{permci} was set to \code{TRUE}, then the permutation-based CI bounds are shown.
    }
 }
 \value{
