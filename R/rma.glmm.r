@@ -2426,7 +2426,24 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       ddf <- NA
    }
 
-   rownames(beta) <- rownames(vb) <- colnames(vb) <- colnames(X)
+   ### abbreviate some types of coefficient names
+
+   if (.isTRUE(ddd$abbrev)) {
+      tmp <- colnames(X)
+      tmp <- gsub("relevel(factor(", "", tmp, fixed=TRUE)
+      tmp <- gsub("\\), ref = \"[[:alnum:]]*\")", "", tmp)
+      tmp <- gsub("poly(", "", tmp, fixed=TRUE)
+      tmp <- gsub(", degree = [[:digit:]], raw = TRUE)", "^", tmp)
+      tmp <- gsub(", degree = [[:digit:]], raw = T)", "^", tmp)
+      tmp <- gsub(", degree = [[:digit:]])", "^", tmp)
+      tmp <- gsub("rcs\\([[:alnum:]]*, [[:digit:]]\\)", "", tmp)
+      tmp <- gsub("factor(", "", tmp, fixed=TRUE)
+      tmp <- gsub("I(", "", tmp, fixed=TRUE)
+      tmp <- gsub(")", "", tmp, fixed=TRUE)
+      colnames(X) <- tmp
+   }
+
+   rownames(beta) <- rownames(vb) <- colnames(vb) <- colnames(X.f) <- colnames(X)
 
    ve <- diag(vb)
    se <- ifelse(ve >= 0, sqrt(ve), NA)

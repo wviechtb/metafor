@@ -60,7 +60,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("knha", "link", "alpha", "outlist", "onlyo1", "addyi", "addvi", "time", "skipr2", "skiphes", "i2def", "r2def"))
+   .chkdots(ddd, c("knha", "link", "alpha", "outlist", "onlyo1", "addyi", "addvi", "time", "skipr2", "skiphes", "i2def", "r2def", "abbrev"))
 
    ### handle 'knha' argument from ... (note: overrides test argument)
 
@@ -2103,7 +2103,24 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
    if (inherits(QM, "try-error"))
       QM <- NA
 
-   rownames(beta) <- rownames(vb) <- colnames(vb) <- colnames(X)
+   ### abbreviate some types of coefficient names
+
+   if (.isTRUE(ddd$abbrev)) {
+      tmp <- colnames(X)
+      tmp <- gsub("relevel(factor(", "", tmp, fixed=TRUE)
+      tmp <- gsub("\\), ref = \"[[:alnum:]]*\")", "", tmp)
+      tmp <- gsub("poly(", "", tmp, fixed=TRUE)
+      tmp <- gsub(", degree = [[:digit:]], raw = TRUE)", "^", tmp)
+      tmp <- gsub(", degree = [[:digit:]], raw = T)", "^", tmp)
+      tmp <- gsub(", degree = [[:digit:]])", "^", tmp)
+      tmp <- gsub("rcs\\([[:alnum:]]*, [[:digit:]]\\)", "", tmp)
+      tmp <- gsub("factor(", "", tmp, fixed=TRUE)
+      tmp <- gsub("I(", "", tmp, fixed=TRUE)
+      tmp <- gsub(")", "", tmp, fixed=TRUE)
+      colnames(X) <- tmp
+   }
+
+   rownames(beta) <- rownames(vb) <- colnames(vb) <- colnames(X.f) <- colnames(X)
 
    se <- sqrt(diag(vb))
    names(se) <- NULL

@@ -88,7 +88,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("tdist", "outlist", "time", "dist"))
+   .chkdots(ddd, c("tdist", "outlist", "time", "dist", "abbrev"))
 
    ### handle 'tdist' argument from ... (note: overrides test argument)
 
@@ -2129,7 +2129,24 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
    if (inherits(QM, "try-error"))
       QM <- NA
 
-   rownames(beta) <- rownames(vb) <- colnames(vb) <- colnames(X)
+   ### abbreviate some types of coefficient names
+
+   if (.isTRUE(ddd$abbrev)) {
+      tmp <- colnames(X)
+      tmp <- gsub("relevel(factor(", "", tmp, fixed=TRUE)
+      tmp <- gsub("\\), ref = \"[[:alnum:]]*\")", "", tmp)
+      tmp <- gsub("poly(", "", tmp, fixed=TRUE)
+      tmp <- gsub(", degree = [[:digit:]], raw = TRUE)", "^", tmp)
+      tmp <- gsub(", degree = [[:digit:]], raw = T)", "^", tmp)
+      tmp <- gsub(", degree = [[:digit:]])", "^", tmp)
+      tmp <- gsub("rcs\\([[:alnum:]]*, [[:digit:]]\\)", "", tmp)
+      tmp <- gsub("factor(", "", tmp, fixed=TRUE)
+      tmp <- gsub("I(", "", tmp, fixed=TRUE)
+      tmp <- gsub(")", "", tmp, fixed=TRUE)
+      colnames(X) <- tmp
+   }
+
+   rownames(beta) <- rownames(vb) <- colnames(vb) <- colnames(X.f) <- colnames(X)
 
    se <- sqrt(diag(vb))
    names(se) <- NULL
