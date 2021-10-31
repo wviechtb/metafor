@@ -154,7 +154,6 @@ reference:
       - print.permutest.rma.uni
       - print.ranktest
       - print.regtest
-      - print.robust.rma
   # - title: "Datasets"
   #   desc: >
   #     Datasets included with the package.

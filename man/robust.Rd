@@ -2,31 +2,32 @@
 \alias{robust}
 \alias{robust.rma.uni}
 \alias{robust.rma.mv}
-\title{(Cluster) Robust Tests and Confidence Intervals for 'rma' Objects}
+\title{Cluster-Robust Tests and Confidence Intervals for 'rma' Objects}
 \description{
-   The function provides (cluster) robust tests and confidence intervals of the model coefficients for objects of class \code{"rma"}. \loadmathjax
+   The function provides cluster-robust tests and confidence intervals of the model coefficients for objects of class \code{"rma"}. \loadmathjax
 }
 \usage{
 robust(x, cluster, \dots)
 
-\method{robust}{rma.uni}(x, cluster, adjust=TRUE, digits, \dots)
-\method{robust}{rma.mv}(x, cluster, adjust=TRUE, digits, \dots)
+\method{robust}{rma.uni}(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, \dots)
+\method{robust}{rma.mv}(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma.uni"} or \code{"rma.mv"}.}
-   \item{cluster}{a vector to specify a clustering variable to use for constructing the sandwich estimator of the variance-covariance matrix.}
+   \item{cluster}{vector to specify the clustering variable to use for constructing the sandwich estimator of the variance-covariance matrix.}
    \item{adjust}{logical to specify whether a small-sample correction should be applied to the variance-covariance matrix.}
+   \item{clubSandwich}{logical to specify whether the \href{https://cran.r-project.org/package=clubSandwich}{clubSandwich} package should be used to obtain the cluster-robust tests and confidence intervals.}
    \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.}
    \item{\dots}{other arguments.}
 }
 \details{
-   The function constructs a (cluster) robust estimate of the variance-covariance matrix of the model coefficients based on a sandwich-type estimator and then computes tests and confidence intervals of the model coefficients.
+   The function constructs a cluster-robust estimate of the variance-covariance matrix of the model coefficients based on a sandwich-type estimator and then computes tests and confidence intervals of the model coefficients.
 
-   Tests of individual coefficients and confidence intervals are based on a t-distribution with \mjseqn{n-p} degrees of freedom is used, while the omnibus test statistic uses an F-distribution with \mjseqn{m} and \mjseqn{n-p} degrees of freedom, where \mjseqn{n} is the number of clusters, \mjseqn{p} denotes the total number of model coefficients (including the intercept if it is present), and \mjseqn{m} denotes the number of coefficients tested (in the omnibus test).
+   By default, tests of individual coefficients and confidence intervals are based on a t-distribution with \mjseqn{n-p} degrees of freedom, while the omnibus test statistic uses an F-distribution with \mjseqn{m} and \mjseqn{n-p} degrees of freedom, where \mjseqn{n} is the number of clusters, \mjseqn{p} denotes the total number of model coefficients (including the intercept if it is present), and \mjseqn{m} denotes the number of coefficients tested by the omnibus test. This is sometimes called the \sQuote{residual} method for approximating the degrees of freedom.
 
-   When \code{adjust=TRUE} (the default), the (cluster) robust estimate of the variance-covariance matrix is multiplied by the factor \mjseqn{n/(n-p)}, which serves as a small-sample adjustment that tends to improve the performance of the method when the number of clusters is small.
+   When \code{adjust=TRUE} (the default), the cluster-robust estimate of the variance-covariance matrix is multiplied by the factor \mjseqn{n/(n-p)}, which serves as a small-sample adjustment that tends to improve the performance of the method when the number of clusters is small. This is sometimes called the \sQuote{CR1} adjustment/estimator (in contrast to \sQuote{CR0} when \code{adjust=FALSE}).
 
-   For even better small-sample adjustments (Pustejovsky & Tipton, 2018), see the \href{https://cran.r-project.org/package=clubSandwich}{clubSandwich} package, which nicely works together with the \pkg{metafor} package (see \sQuote{Examples}).
+   For an even better small-sample adjustment, one can set \code{clubSandwich=TRUE} in which case the \href{https://cran.r-project.org/package=clubSandwich}{clubSandwich} package is used to obtain the cluster-robust tests and confidence intervals. The variance-covariance matrix of the model coefficients is then estimated using the \sQuote{bias-reduced linearization} adjustment proposed by Bell and McCaffrey (2002) and further developed in Pustejovsky and Tipton (2018). This is sometimes called the \sQuote{CR2} adjustment/estimator. The (denominator) degrees of freedom of the t- and F-tests are then estimated using a Satterthwaite approximation.
 }
 \value{
    An object of class \code{"robust.rma"}. The object is a list containing the following components:
@@ -41,17 +42,19 @@ robust(x, cluster, \dots)
    \item{QMp}{corresponding p-value.}
    \item{\dots}{some additional elements/values.}
 
-   The results are formatted and printed with the \code{\link{print.robust.rma}} function.
+   The results are formatted and printed with the \code{\link{print.rma.uni}} and \code{\link{print.rma.mv}} functions (depending on the type of model).
 }
 \note{
    The variable specified via \code{cluster} is assumed to be of the same length as the data originally passed to the \code{rma.uni} or \code{rma.mv} functions. Any subsetting and removal of studies with missing values that was applied during the model fitting is also automatically applied to the variable specified via the \code{cluster} argument.
 
-   The idea of the robust (sandwich-type) estimator for models with unspecified heteroscedasticity can be traced back to Eicker (1967), Huber (1967), and White (1980). Hence, the method in general is often referred to as the Eicker-Huber-White method. Some small-sample improvements to the method are described by MacKinnon and White (1985). The extension to the cluster robust estimator can be found in Froot (1989) and Williams (2000). Cameron and Miller (2015) provide an extensive overview of cluster robust methods. Sidik and Jonkman (2005, 2006) introduced robust methods in the meta-analytic context for standard random/mixed-effects models. The use of the cluster robust estimator for multivariate/multilevel meta-analytic models is described in Hedges, Tipton, and Johnson (2010).
+   The idea of the robust (sandwich-type) estimator for models with unspecified heteroscedasticity can be traced back to Eicker (1967), Huber (1967), and White (1980). Hence, the method in general is often referred to as the Eicker-Huber-White method. Some small-sample improvements to the method are described by MacKinnon and White (1985). The extension to the cluster-robust estimator can be found in Froot (1989) and Williams (2000). Cameron and Miller (2015) provide an extensive overview of cluster-robust methods. Sidik and Jonkman (2005, 2006) introduced robust methods in the meta-analytic context for standard random/mixed-effects models. The use of the cluster-robust methods for multivariate/multilevel meta-analytic models is described in Hedges, Tipton, and Johnson (2010).
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
 }
 \references{
+   Bell, R. M., & McCaffry, D. F. (2002). Bias reduction in standard errors for linear regression with multi-stage samples. \emph{Survey Methodology}, \bold{28}(2), 169--181. \verb{https://www150.statcan.gc.ca/n1/en/catalogue/12-001-X20020029058}
+
    Cameron, A. C., & Miller, D. L. (2015). A practitioner's guide to cluster-robust inference. \emph{Journal of Human Resources}, \bold{50}(2), 317--372. \verb{https://doi.org/10.3368/jhr.50.2.317}
 
    Eicker, F. (1967). Limit theorems for regressions with unequal and dependent errors. In L. M. LeCam & J. Neyman (Eds.), \emph{Proceedings of the Fifth Berkeley Symposium on Mathematical Statistics and Probability} (pp. 59--82). Berkeley: University of California Press.
@@ -90,16 +93,15 @@ res
 ### obtain results based on the sandwich method
 robust(res, cluster=dat$district)
 
-### illustrate use of the clubSandwich package together with metafor
-if (require(clubSandwich)) {
-coef_test(res, vcov="CR2", cluster=dat$district)
-conf_int(res, vcov="CR2", cluster=dat$district)
-}
+### use methods from clubSandwich package
+robust(res, cluster=dat$district, clubSandwich=TRUE)
 
 ### copy data from Berkey et al. (1998) into 'dat'
 dat <- dat.berkey1998
 
-### construct block diagonal var-cov matrix of the observed outcomes based on variables v1i and v2i
+### variables v1i and v2i correspond to the 2x2 var-cov matrices of the studies;
+### so use these variables to construct the V matrix (note: since v1i and v2i are
+### var-cov matrices and not correlation matrices, set vi=1 for all rows)
 V <- vcalc(vi=1, cluster=author, rvars=c(v1i, v2i), data=dat)
 
 ### fit multivariate model
@@ -109,10 +111,7 @@ res
 ### obtain results based on sandwich method
 robust(res, cluster=dat$trial)
 
-### illustrate use of the clubSandwich package together with metafor
-if (require(clubSandwich)) {
-coef_test(res, vcov="CR2", cluster=dat$trial)
-conf_int(res, vcov="CR2", cluster=dat$trial)
-}
+### use methods from clubSandwich package
+robust(res, cluster=dat$trial, clubSandwich=TRUE)
 }
 \keyword{htest}

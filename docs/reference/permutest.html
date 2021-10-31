@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-25</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-26</span>
       </span>
     </div>
 
@@ -214,22 +214,26 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> estimate      se     zval   pval*    ci.lb    ci.ub </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> estimate      se     zval   pval¹    ci.lb    ci.ub </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  -0.7145  0.1798  -3.9744  0.0030  -1.0669  -0.3622  ** </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1) p-value based on permutation testing</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span class="fu">permutest</span><span class="op">(</span><span class="va">res</span>, exact<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="co"># }</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Running 8192 iterations for exact permutation test.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> estimate      se     zval   pval*    ci.lb    ci.ub </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> estimate      se     zval   pval¹    ci.lb    ci.ub </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  -0.7145  0.1798  -3.9744  0.0015  -1.0669  -0.3622  ** </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1) p-value based on permutation testing</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### mixed-effects model with two moderators (absolute latitude and publication year)</span></span>
@@ -268,18 +272,20 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Running 10000 iterations for approximate permutation test.</span>
 <span class="r-in"><span class="va">permres</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Test of Moderators (coefficients 2:3):</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> QM(df = 2) = 12.2043, p-val* = 0.0214</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test of Moderators (coefficients 2:3):¹</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QM(df = 2) = 12.2043, p-val = 0.0214</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          estimate       se     zval   pval*     ci.lb    ci.ub </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          estimate       se     zval   pval¹     ci.lb    ci.ub </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> intrcpt   -3.5455  29.0959  -0.1219  0.9099  -60.5724  53.4814    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ablat     -0.0280   0.0102  -2.7371  0.0187   -0.0481  -0.0080  * </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> year       0.0019   0.0147   0.1299  0.9031   -0.0269   0.0307    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1) p-values based on permutation testing</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### histogram of permutation distribution for absolute latitude</span></span>

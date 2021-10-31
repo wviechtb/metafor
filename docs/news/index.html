@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-25</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-26</span>
       </span>
     </div>
 
@@ -91,21 +91,24 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="3.1-25" id="metafor-31-25-2021-10-24">metafor 3.1-25 (2021-10-24)<a class="anchor" aria-label="anchor" href="#metafor-31-25-2021-10-24"></a></h2>
+<h2 class="page-header" data-toc-text="3.1-26" id="metafor-31-26-2021-10-31">metafor 3.1-26 (2021-10-31)<a class="anchor" aria-label="anchor" href="#metafor-31-26-2021-10-31"></a></h2>
 <ul><li><p>added <code><a href="../reference/vcalc.html">vcalc()</a></code> function</p></li>
+<li><p><code><a href="../reference/robust.html">robust()</a></code> gains <code>clubSandwich</code> argument; if set to <code>TRUE</code>, the methods from the <code>clubSandwich</code> package (<a href="https://cran.r-project.org/package=clubSandwich" class="external-link uri">https://cran.r-project.org/package=clubSandwich</a>) are used to obtain the cluster-robust results</p></li>
+<li><p>results from <code><a href="../reference/robust.html">robust()</a></code> are no longer printed with <code>print.robust.rma()</code> but with the print methods <code><a href="../reference/print.rma.html">print.rma.uni()</a></code> and <code><a href="../reference/print.rma.html">print.rma.mv()</a></code></p></li>
 <li><p><code><a href="../reference/anova.rma.html">anova()</a></code> now gives a warning when running LRTs not based on ML/REML estimation</p></li>
 <li><p>setting <code>dfs="contain"</code> in <code><a href="../reference/rma.mv.html">rma.mv()</a></code> automatically sets <code>test="t"</code></p></li>
 <li><p>elements of <code>rho</code> and <code>phi</code> in <code><a href="../reference/rma.mv.html">rma.mv()</a></code> are now based on the lower triangular part of the respective correlation matrix (instead of the upper triangular part) for consistency with other functions; note that this is in principle a backwards incompatible change, although this should only be a concern in very special circumstances</p></li>
-<li><p><code><a href="../reference/rma.mv.html">rma.mv()</a></code> gains <code>cvvc</code> argument (for calculating the var-cov matrix of the variance/correlation components)</p></li>
-<li><p>added measure <code>"MPORM"</code> to <code><a href="../reference/escalc.html">escalc()</a></code> for computing marginal log odds ratios based on marginal 2x2 tables directly (which requires specification of the correlation coefficients in the paired tables for the calculation of the sampling variances)</p></li>
-<li><p><code><a href="../reference/aggregate.escalc.html">aggregate.escalc()</a></code> gains <code>checkpd</code> argument</p></li>
+<li><p><code><a href="../reference/rma.mv.html">rma.mv()</a></code> gains <code>cvvc</code> argument (for calculating the var-cov matrix of the variance/correlation/covariance components)</p></li>
+<li><p>added measure <code>"MPORM"</code> to <code><a href="../reference/escalc.html">escalc()</a></code> for computing marginal log odds ratios based on marginal 2x2 tables directly (which requires specification of the correlation coefficients in the paired tables for the calculation of the sampling variances via the <code>ri</code> argument)</p></li>
+<li><p><code><a href="../reference/aggregate.escalc.html">aggregate.escalc()</a></code> gains <code>checkpd</code> argument and <code>struct="CS+CAR"</code></p></li>
 <li><p><code><a href="../reference/rma.glmm.html">rma.glmm()</a></code> now has entire array of optimizers available for <code>model="CM.EL"</code> and <code>measure="OR"</code></p></li>
+<li><p><code><a href="../reference/rma.glmm.html">rma.glmm()</a></code> gains <code>coding</code> and <code>cor</code> arguments and hence more flexibility how the group variable should be coded in the random effects structure and whether the random study effects should be allowed to be correlated with the random group effects</p></li>
 <li><p><code><a href="../reference/rma.uni.html">rma.uni()</a></code> now also provides R^2 for fixed-effects models</p></li>
-<li><p><code><a href="../reference/matreg.html">matreg()</a></code> can now also analyze a covariance matrix with a corresponding ‘V’ matrix</p></li>
+<li><p><code><a href="../reference/matreg.html">matreg()</a></code> can now also analyze a covariance matrix with a corresponding <code>V</code> matrix</p></li>
 <li><p>renamed argument <code>nearPD</code> to <code>nearpd</code> in <code><a href="../reference/matreg.html">matreg()</a></code> (but <code>nearPD</code> continues to work)</p></li>
 <li><p><code><a href="../reference/profile.rma.html">plot.profile.rma()</a></code> gains <code>refline</code> argument</p></li>
 <li><p><code><a href="../reference/addpoly.default.html">addpoly.default()</a></code> and <code><a href="../reference/addpoly.rma.html">addpoly.rma()</a></code> gain <code>lty</code> argument</p></li>
-<li><p><code><a href="../reference/regplot.html">points.regplot()</a></code> function now also redraws the labels (if there were any)</p></li>
+<li><p><code><a href="../reference/regplot.html">points.regplot()</a></code> function now also redraws the labels (if there were any to begin with)</p></li>
 <li><p>datasets moved to the <code>metadat</code> package (<a href="https://cran.r-project.org/package=metadat" class="external-link uri">https://cran.r-project.org/package=metadat</a>)</p></li>
 <li><p>improved the documentation a bit</p></li>
 </ul></div>

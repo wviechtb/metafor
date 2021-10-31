@@ -11,7 +11,7 @@
       "<link id=\"css\" rel=\"stylesheet\" href=\"https://bootswatch.com/3/flatly/bootstrap.css\" onload=\"document.documentElement.style.display = ''\">"
     );
   }
-</script><title>(Cluster) Robust Tests and Confidence Intervals for 'rma' Objects — robust • metafor</title><!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- Flatly Theme - Light  --><link id="css-light" rel="stylesheet" href="https://bootswatch.com/3/flatly/bootstrap.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"><!-- Darkly Theme - Dark --><link id="css-dark" rel="stylesheet" href="https://bootswatch.com/3/darkly/bootstrap.css" media="(prefers-color-scheme: dark)"><!-- preferably CSS --><link rel="stylesheet" href="../preferably.css"><link id="css-code-light" rel="stylesheet" href="../code-color-scheme-light.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"><link id="css-code-dark" rel="stylesheet" href="../code-color-scheme-dark.css" media="(prefers-color-scheme: dark)"><script src="../darkswitch.js"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css"><script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet"><script src="../pkgdown.js"></script><meta property="og:title" content="(Cluster) Robust Tests and Confidence Intervals for 'rma' Objects — robust"><meta property="og:description" content='The function provides (cluster) robust tests and confidence intervals of the model coefficients for objects of class "rma". '><meta name="twitter:card" content="summary_large_image"><meta name="twitter:creator" content="@wviechtb"><meta name="twitter:site" content="@wviechtb"><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
+</script><title>Cluster-Robust Tests and Confidence Intervals for 'rma' Objects — robust • metafor</title><!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- Flatly Theme - Light  --><link id="css-light" rel="stylesheet" href="https://bootswatch.com/3/flatly/bootstrap.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"><!-- Darkly Theme - Dark --><link id="css-dark" rel="stylesheet" href="https://bootswatch.com/3/darkly/bootstrap.css" media="(prefers-color-scheme: dark)"><!-- preferably CSS --><link rel="stylesheet" href="../preferably.css"><link id="css-code-light" rel="stylesheet" href="../code-color-scheme-light.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"><link id="css-code-dark" rel="stylesheet" href="../code-color-scheme-dark.css" media="(prefers-color-scheme: dark)"><script src="../darkswitch.js"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css"><script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet"><script src="../pkgdown.js"></script><meta property="og:title" content="Cluster-Robust Tests and Confidence Intervals for 'rma' Objects — robust"><meta property="og:description" content='The function provides cluster-robust tests and confidence intervals of the model coefficients for objects of class "rma". '><meta name="twitter:card" content="summary_large_image"><meta name="twitter:creator" content="@wviechtb"><meta name="twitter:site" content="@wviechtb"><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-25</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-26</span>
       </span>
     </div>
 
@@ -86,21 +86,21 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>(Cluster) Robust Tests and Confidence Intervals for 'rma' Objects</h1>
+    <h1>Cluster-Robust Tests and Confidence Intervals for 'rma' Objects</h1>
     
     <div class="hidden name"><code>robust.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The function provides (cluster) robust tests and confidence intervals of the model coefficients for objects of class <code>"rma"</code>. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
+    <p>The function provides cluster-robust tests and confidence intervals of the model coefficients for objects of class <code>"rma"</code>. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
     </div>
 
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">robust</span><span class="op">(</span><span class="va">x</span>, <span class="va">cluster</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for rma.uni</span>
-<span class="fu">robust</span><span class="op">(</span><span class="va">x</span>, <span class="va">cluster</span>, adjust<span class="op">=</span><span class="cn">TRUE</span>, <span class="va">digits</span>, <span class="va">...</span><span class="op">)</span>
+<span class="fu">robust</span><span class="op">(</span><span class="va">x</span>, <span class="va">cluster</span>, adjust<span class="op">=</span><span class="cn">TRUE</span>, clubSandwich<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">digits</span>, <span class="va">...</span><span class="op">)</span>
 <span class="co"># S3 method for rma.mv</span>
-<span class="fu">robust</span><span class="op">(</span><span class="va">x</span>, <span class="va">cluster</span>, adjust<span class="op">=</span><span class="cn">TRUE</span>, <span class="va">digits</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+<span class="fu">robust</span><span class="op">(</span><span class="va">x</span>, <span class="va">cluster</span>, adjust<span class="op">=</span><span class="cn">TRUE</span>, clubSandwich<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">digits</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
 
     <div id="ref-sections">
     <div id="arguments">
@@ -108,9 +108,11 @@
     <p></p>
 <dl><dt>x</dt><dd><p>an object of class <code>"rma.uni"</code> or <code>"rma.mv"</code>.</p></dd>
 </dl><p></p>
-<dl><dt>cluster</dt><dd><p>a vector to specify a clustering variable to use for constructing the sandwich estimator of the variance-covariance matrix.</p></dd>
+<dl><dt>cluster</dt><dd><p>vector to specify the clustering variable to use for constructing the sandwich estimator of the variance-covariance matrix.</p></dd>
 </dl><p></p>
 <dl><dt>adjust</dt><dd><p>logical to specify whether a small-sample correction should be applied to the variance-covariance matrix.</p></dd>
+</dl><p></p>
+<dl><dt>clubSandwich</dt><dd><p>logical to specify whether the <a href="https://cran.r-project.org/package=clubSandwich" class="external-link">clubSandwich</a> package should be used to obtain the cluster-robust tests and confidence intervals.</p></dd>
 </dl><p></p>
 <dl><dt>digits</dt><dd><p>integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.</p></dd>
 </dl><p></p>
@@ -118,10 +120,10 @@
 </dl></div>
     <div id="details">
     <h2>Details</h2>
-    <p>The function constructs a (cluster) robust estimate of the variance-covariance matrix of the model coefficients based on a sandwich-type estimator and then computes tests and confidence intervals of the model coefficients.</p>
-<p>Tests of individual coefficients and confidence intervals are based on a t-distribution with \(n-p\) degrees of freedom is used, while the omnibus test statistic uses an F-distribution with \(m\) and \(n-p\) degrees of freedom, where \(n\) is the number of clusters, \(p\) denotes the total number of model coefficients (including the intercept if it is present), and \(m\) denotes the number of coefficients tested (in the omnibus test).</p>
-<p>When <code>adjust=TRUE</code> (the default), the (cluster) robust estimate of the variance-covariance matrix is multiplied by the factor \(n/(n-p)\), which serves as a small-sample adjustment that tends to improve the performance of the method when the number of clusters is small.</p>
-<p>For even better small-sample adjustments (Pustejovsky &amp; Tipton, 2018), see the <a href="https://cran.r-project.org/package=clubSandwich" class="external-link">clubSandwich</a> package, which nicely works together with the <span class="pkg">metafor</span> package (see ‘Examples’).</p>
+    <p>The function constructs a cluster-robust estimate of the variance-covariance matrix of the model coefficients based on a sandwich-type estimator and then computes tests and confidence intervals of the model coefficients.</p>
+<p>By default, tests of individual coefficients and confidence intervals are based on a t-distribution with \(n-p\) degrees of freedom, while the omnibus test statistic uses an F-distribution with \(m\) and \(n-p\) degrees of freedom, where \(n\) is the number of clusters, \(p\) denotes the total number of model coefficients (including the intercept if it is present), and \(m\) denotes the number of coefficients tested by the omnibus test. This is sometimes called the ‘residual’ method for approximating the degrees of freedom.</p>
+<p>When <code>adjust=TRUE</code> (the default), the cluster-robust estimate of the variance-covariance matrix is multiplied by the factor \(n/(n-p)\), which serves as a small-sample adjustment that tends to improve the performance of the method when the number of clusters is small. This is sometimes called the ‘CR1’ adjustment/estimator (in contrast to ‘CR0’ when <code>adjust=FALSE</code>).</p>
+<p>For an even better small-sample adjustment, one can set <code>clubSandwich=TRUE</code> in which case the <a href="https://cran.r-project.org/package=clubSandwich" class="external-link">clubSandwich</a> package is used to obtain the cluster-robust tests and confidence intervals. The variance-covariance matrix of the model coefficients is then estimated using the ‘bias-reduced linearization’ adjustment proposed by Bell and McCaffrey (2002) and further developed in Pustejovsky and Tipton (2018). This is sometimes called the ‘CR2’ adjustment/estimator. The (denominator) degrees of freedom of the t- and F-tests are then estimated using a Satterthwaite approximation.</p>
     </div>
     <div id="value">
     <h2>Value</h2>
@@ -145,12 +147,12 @@
 <dl><dt>QMp</dt><dd><p>corresponding p-value.</p></dd>
 </dl><p></p>
 <dl><dt>...</dt><dd><p>some additional elements/values.</p></dd>
-</dl><p>The results are formatted and printed with the <code><a href="print.robust.rma.html">print.robust.rma</a></code> function.</p>
+</dl><p>The results are formatted and printed with the <code><a href="print.rma.html">print.rma.uni</a></code> and <code><a href="print.rma.html">print.rma.mv</a></code> functions (depending on the type of model).</p>
     </div>
     <div id="note">
     <h2>Note</h2>
     <p>The variable specified via <code>cluster</code> is assumed to be of the same length as the data originally passed to the <code>rma.uni</code> or <code>rma.mv</code> functions. Any subsetting and removal of studies with missing values that was applied during the model fitting is also automatically applied to the variable specified via the <code>cluster</code> argument.</p>
-<p>The idea of the robust (sandwich-type) estimator for models with unspecified heteroscedasticity can be traced back to Eicker (1967), Huber (1967), and White (1980). Hence, the method in general is often referred to as the Eicker-Huber-White method. Some small-sample improvements to the method are described by MacKinnon and White (1985). The extension to the cluster robust estimator can be found in Froot (1989) and Williams (2000). Cameron and Miller (2015) provide an extensive overview of cluster robust methods. Sidik and Jonkman (2005, 2006) introduced robust methods in the meta-analytic context for standard random/mixed-effects models. The use of the cluster robust estimator for multivariate/multilevel meta-analytic models is described in Hedges, Tipton, and Johnson (2010).</p>
+<p>The idea of the robust (sandwich-type) estimator for models with unspecified heteroscedasticity can be traced back to Eicker (1967), Huber (1967), and White (1980). Hence, the method in general is often referred to as the Eicker-Huber-White method. Some small-sample improvements to the method are described by MacKinnon and White (1985). The extension to the cluster-robust estimator can be found in Froot (1989) and Williams (2000). Cameron and Miller (2015) provide an extensive overview of cluster-robust methods. Sidik and Jonkman (2005, 2006) introduced robust methods in the meta-analytic context for standard random/mixed-effects models. The use of the cluster-robust methods for multivariate/multilevel meta-analytic models is described in Hedges, Tipton, and Johnson (2010).</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -158,7 +160,8 @@
     </div>
     <div id="references">
     <h2>References</h2>
-    <p>Cameron, A. C., &amp; Miller, D. L. (2015). A practitioner's guide to cluster-robust inference. <em>Journal of Human Resources</em>, <b>50</b>(2), 317--372. <a href="https://doi.org/10.3368/jhr.50.2.317" class="external-link">https://doi.org/10.3368/jhr.50.2.317</a></p>
+    <p>Bell, R. M., &amp; McCaffry, D. F. (2002). Bias reduction in standard errors for linear regression with multi-stage samples. <em>Survey Methodology</em>, <b>28</b>(2), 169--181. <a href="https://www150.statcan.gc.ca/n1/en/catalogue/12-001-X20020029058" class="external-link">https://www150.statcan.gc.ca/n1/en/catalogue/12-001-X20020029058</a></p>
+<p>Cameron, A. C., &amp; Miller, D. L. (2015). A practitioner's guide to cluster-robust inference. <em>Journal of Human Resources</em>, <b>50</b>(2), 317--372. <a href="https://doi.org/10.3368/jhr.50.2.317" class="external-link">https://doi.org/10.3368/jhr.50.2.317</a></p>
 <p>Eicker, F. (1967). Limit theorems for regressions with unequal and dependent errors. In L. M. LeCam &amp; J. Neyman (Eds.), <em>Proceedings of the Fifth Berkeley Symposium on Mathematical Statistics and Probability</em> (pp. 59--82). Berkeley: University of California Press.</p>
 <p>Froot, K. A. (1989). Consistent covariance matrix estimation with cross-sectional dependence and heteroskedasticity in financial data. <em>Journal of Financial and Quantitative Analysis</em>, <b>24</b>(3), 333--355. <a href="https://doi.org/10.2307/2330815" class="external-link">https://doi.org/10.2307/2330815</a></p>
 <p>Hedges, L. V., Tipton, E., &amp; Johnson, M. C. (2010). Robust variance estimation in meta-regression with dependent effect size estimates. <em>Research Synthesis Methods</em>, <b>1</b>(1), 39--65. <a href="https://doi.org/10.1002/jrsm.5" class="external-link">https://doi.org/10.1002/jrsm.5</a></p>
@@ -209,35 +212,69 @@
 <span class="r-in"><span class="co">### obtain results based on the sandwich method</span></span>
 <span class="r-in"><span class="fu">robust</span><span class="op">(</span><span class="va">res</span>, cluster<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">district</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Number of outcomes:   56</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Number of clusters:   11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Outcomes per cluster: 3-11 (mean: 5.09, median: 4)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Multivariate Meta-Analysis Model (k = 56; method: REML)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variance Components:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             estim    sqrt  nlvls  fixed           factor </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sigma^2.1  0.0651  0.2551     11     no         district </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sigma^2.2  0.0327  0.1809     56     no  district/school </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test for Heterogeneity:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Q(df = 55) = 578.8640, p-val &lt; .0001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Number of estimates:   56</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Number of clusters:    11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Estimates per cluster: 3-11 (mean: 5.09, median: 4)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> estimate      se    tval  df    pval    ci.lb   ci.ub </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   0.1847  0.0845  2.1859  10  0.0537  -0.0036  0.3730  . </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> estimate     se¹   tval¹  df¹   pval¹   ci.lb¹  ci.ub¹ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   0.1847  0.0845  2.1859   10  0.0537  -0.0036  0.3730  . </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1) results based on cluster-robust inference (var-cov estimator: CR1,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    approx. t-test and confidence interval, dfs = residual method)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
-<span class="r-in"><span class="co">### illustrate use of the clubSandwich package together with metafor</span></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jepusto/clubSandwich" class="external-link">clubSandwich</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/pkg/clubSandwich/man/coef_test.html" class="external-link">coef_test</a></span><span class="op">(</span><span class="va">res</span>, vcov<span class="op">=</span><span class="st">"CR2"</span>, cluster<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">district</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/pkg/clubSandwich/man/conf_int.html" class="external-link">conf_int</a></span><span class="op">(</span><span class="va">res</span>, vcov<span class="op">=</span><span class="st">"CR2"</span>, cluster<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">district</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: clubSandwich</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Registered S3 method overwritten by 'clubSandwich':</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   method    from    </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   bread.mlm sandwich</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      Coef Estimate     SE d.f. Lower 95% CI Upper 95% CI</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 intrcpt    0.185 0.0845 9.86     -0.00383        0.373</span>
+<span class="r-in"><span class="co">### use methods from clubSandwich package</span></span>
+<span class="r-in"><span class="fu">robust</span><span class="op">(</span><span class="va">res</span>, cluster<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">district</span>, clubSandwich<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Multivariate Meta-Analysis Model (k = 56; method: REML)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variance Components:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             estim    sqrt  nlvls  fixed           factor </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sigma^2.1  0.0651  0.2551     11     no         district </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sigma^2.2  0.0327  0.1809     56     no  district/school </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test for Heterogeneity:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Q(df = 55) = 578.8640, p-val &lt; .0001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Number of estimates:   56</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Number of clusters:    11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Estimates per cluster: 3-11 (mean: 5.09, median: 4)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> estimate     se¹   tval¹   df¹   pval¹   ci.lb¹  ci.ub¹ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   0.1847  0.0845  2.1870  9.86  0.0540  -0.0038  0.3733  . </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1) results based on cluster-robust inference (var-cov estimator: CR2,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    approx. t-test and confidence interval, dfs = Satterthwaite method)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### copy data from Berkey et al. (1998) into 'dat'</span></span>
 <span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">dat.berkey1998</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="co">### construct block diagonal var-cov matrix of the observed outcomes based on variables v1i and v2i</span></span>
+<span class="r-in"><span class="co">### variables v1i and v2i correspond to the 2x2 var-cov matrices of the studies;</span></span>
+<span class="r-in"><span class="co">### so use these variables to construct the V matrix (note: since v1i and v2i are</span></span>
+<span class="r-in"><span class="co">### var-cov matrices and not correlation matrices, set vi=1 for all rows)</span></span>
 <span class="r-in"><span class="va">V</span> <span class="op">&lt;-</span> <span class="fu"><a href="vcalc.html">vcalc</a></span><span class="op">(</span>vi<span class="op">=</span><span class="fl">1</span>, cluster<span class="op">=</span><span class="va">author</span>, rvars<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">v1i</span>, <span class="va">v2i</span><span class="op">)</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### fit multivariate model</span></span>
@@ -278,31 +315,84 @@
 <span class="r-in"><span class="co">### obtain results based on sandwich method</span></span>
 <span class="r-in"><span class="fu">robust</span><span class="op">(</span><span class="va">res</span>, cluster<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">trial</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Number of outcomes:   10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Number of clusters:   5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Outcomes per cluster: 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Multivariate Meta-Analysis Model (k = 10; method: REML)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Test of Moderators (coefficients 1:2):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variance Components:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> outer factor: trial   (nlvls = 5)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> inner factor: outcome (nlvls = 2)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             estim    sqrt  k.lvl  fixed  level </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau^2.1    0.0327  0.1807      5     no     AL </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau^2.2    0.0117  0.1083      5     no     PD </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     rho.AL  rho.PD    AL  PD </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> AL       1             -   5 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PD  0.6088       1    no   - </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test for Residual Heterogeneity:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QE(df = 8) = 128.2267, p-val &lt; .0001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Number of estimates:   10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Number of clusters:    5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Estimates per cluster: 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test of Moderators (coefficients 1:2):¹</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> F(df1 = 2, df2 = 3) = 41.6137, p-val = 0.0065</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            estimate      se     tval  df    pval    ci.lb    ci.ub </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> outcomeAL   -0.3392  0.1010  -3.3597   3  0.0437  -0.6605  -0.0179  * </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> outcomePD    0.3534  0.0675   5.2338   3  0.0136   0.1385   0.5683  * </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            estimate     se¹    tval¹  df¹   pval¹   ci.lb¹   ci.ub¹ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> outcomeAL   -0.3392  0.1010  -3.3597    3  0.0437  -0.6605  -0.0179  * </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> outcomePD    0.3534  0.0675   5.2338    3  0.0136   0.1385   0.5683  * </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1) results based on cluster-robust inference (var-cov estimator: CR1,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    approx. t/F-tests and confidence intervals, dfs = residual method)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
-<span class="r-in"><span class="co">### illustrate use of the clubSandwich package together with metafor</span></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jepusto/clubSandwich" class="external-link">clubSandwich</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/pkg/clubSandwich/man/coef_test.html" class="external-link">coef_test</a></span><span class="op">(</span><span class="va">res</span>, vcov<span class="op">=</span><span class="st">"CR2"</span>, cluster<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">trial</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/pkg/clubSandwich/man/conf_int.html" class="external-link">conf_int</a></span><span class="op">(</span><span class="va">res</span>, vcov<span class="op">=</span><span class="st">"CR2"</span>, cluster<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">trial</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        Coef Estimate     SE d.f. Lower 95% CI Upper 95% CI</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 outcomeAL   -0.339 0.0892 3.81       -0.592      -0.0866</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 outcomePD    0.353 0.0582 3.79        0.188       0.5185</span>
+<span class="r-in"><span class="co">### use methods from clubSandwich package</span></span>
+<span class="r-in"><span class="fu">robust</span><span class="op">(</span><span class="va">res</span>, cluster<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">trial</span>, clubSandwich<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Multivariate Meta-Analysis Model (k = 10; method: REML)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variance Components:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> outer factor: trial   (nlvls = 5)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> inner factor: outcome (nlvls = 2)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             estim    sqrt  k.lvl  fixed  level </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau^2.1    0.0327  0.1807      5     no     AL </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau^2.2    0.0117  0.1083      5     no     PD </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     rho.AL  rho.PD    AL  PD </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> AL       1             -   5 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PD  0.6088       1    no   - </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test for Residual Heterogeneity:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QE(df = 8) = 128.2267, p-val &lt; .0001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Number of estimates:   10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Number of clusters:    5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Estimates per cluster: 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test of Moderators (coefficients 1:2):¹</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> F(df1 = 2, df2 = 2.76) = 40.7910, p-val = 0.0089</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            estimate     se¹    tval¹   df¹   pval¹   ci.lb¹   ci.ub¹ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> outcomeAL   -0.3392  0.0892  -3.8031  3.81  0.0208  -0.5919  -0.0866   * </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> outcomePD    0.3534  0.0582   6.0776  3.79  0.0044   0.1884   0.5185  ** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1) results based on cluster-robust inference (var-cov estimator: CR2,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    approx. t/F-tests and confidence intervals, dfs = Satterthwaite method)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
   </div>

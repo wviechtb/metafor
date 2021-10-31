@@ -1,6 +1,10 @@
-# metafor 3.1-25 (2021-10-24)
+# metafor 3.1-26 (2021-10-31)
 
 - added `vcalc()` function
+
+- `robust()` gains `clubSandwich` argument; if set to `TRUE`, the methods from the `clubSandwich` package (https://cran.r-project.org/package=clubSandwich) are used to obtain the cluster-robust results
+
+- results from `robust()` are no longer printed with `print.robust.rma()` but with the print methods `print.rma.uni()` and `print.rma.mv()`
 
 - `anova()` now gives a warning when running LRTs not based on ML/REML estimation
 
@@ -8,17 +12,19 @@
 
 - elements of `rho` and `phi` in `rma.mv()` are now based on the lower triangular part of the respective correlation matrix (instead of the upper triangular part) for consistency with other functions; note that this is in principle a backwards incompatible change, although this should only be a concern in very special circumstances
 
-- `rma.mv()` gains `cvvc` argument (for calculating the var-cov matrix of the variance/correlation components)
+- `rma.mv()` gains `cvvc` argument (for calculating the var-cov matrix of the variance/correlation/covariance components)
 
-- added measure `"MPORM"` to `escalc()` for computing marginal log odds ratios based on marginal 2x2 tables directly (which requires specification of the correlation coefficients in the paired tables for the calculation of the sampling variances)
+- added measure `"MPORM"` to `escalc()` for computing marginal log odds ratios based on marginal 2x2 tables directly (which requires specification of the correlation coefficients in the paired tables for the calculation of the sampling variances via the `ri` argument)
 
-- `aggregate.escalc()` gains `checkpd` argument
+- `aggregate.escalc()` gains `checkpd` argument and `struct="CS+CAR"`
 
 - `rma.glmm()` now has entire array of optimizers available for `model="CM.EL"` and `measure="OR"`
 
+- `rma.glmm()` gains `coding` and `cor` arguments and hence more flexibility how the group variable should be coded in the random effects structure and whether the random study effects should be allowed to be correlated with the random group effects
+
 - `rma.uni()` now also provides R^2 for fixed-effects models
 
-- `matreg()` can now also analyze a covariance matrix with a corresponding 'V' matrix
+- `matreg()` can now also analyze a covariance matrix with a corresponding `V` matrix
 
 - renamed argument `nearPD` to `nearpd` in `matreg()` (but `nearPD` continues to work)
 
@@ -26,7 +32,7 @@
 
 - `addpoly.default()` and `addpoly.rma()` gain `lty` argument
 
-- `points.regplot()` function now also redraws the labels (if there were any)
+- `points.regplot()` function now also redraws the labels (if there were any to begin with)
 
 - datasets moved to the `metadat` package (https://cran.r-project.org/package=metadat)
 

@@ -1,4 +1,4 @@
-robust.rma.uni <- function(x, cluster, adjust=TRUE, digits, ...) {
+robust.rma.uni <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -14,6 +14,10 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, digits, ...) {
    }
 
    level <- ifelse(x$level == 0, 1, ifelse(x$level >= 1, (100-x$level)/100, ifelse(x$level > .5, 1-x$level, x$level)))
+
+   ddd <- list(...)
+
+   .chkdots(ddd, c("vcov", "test", "wald_test", "verbose"))
 
    #########################################################################
 
@@ -49,125 +53,234 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, digits, ...) {
    if (dfs <= 0)
       stop(mstyle$stop(paste0("Number of clusters (", n, ") must be larger than the number of fixed effects (", x$p, ").")))
 
-   ### note: since we use split() below and then put things back together into a block-diagonal matrix,
-   ### we have to make sure everything is properly ordered by the cluster variable; otherwise, the 'meat'
-   ### block-diagonal matrix is not in the same order as the rest; so we sort all relevant variables by
-   ### the cluster variable (including the cluster variable itself)
+   ### use clubSandwich if requested to do so
 
-   ocl <- order(cluster)
-   cluster <- cluster[ocl]
+   if (clubSandwich) {
 
-   ### construct bread = (X'WX)^-1 X'W, where W is the weight matrix
+      if (!suppressMessages(requireNamespace("clubSandwich", quietly=TRUE)))
+         stop(mstyle$stop(paste0("Please install the 'clubSandwich' package to make use of its methods.")))
 
-   if (x$weighted) {
+      ### check for vcov, coef_test, conf_test, and wald_test arguments in ... and set values accordingly
 
-      ### for weighted analysis
+      if (is.null(ddd$vcov)) {
+         ddd$vcov <- "CR2"
+      } else {
+         ddd$vcov <- match.arg(ddd$vcov, c("CR0", "CR1", "CR1p", "CR1S", "CR2", "CR3"))
+      }
+      if (is.null(ddd$coef_test)) {
+         ddd$coef_test <- "Satterthwaite"
+      } else {
+         ddd$coef_test <- match.arg(ddd$coef_test, c("z", "naive-t", "Satterthwaite", "saddlepoint"))
+      }
+      if (is.null(ddd$conf_test)) {
+         ddd$conf_test <- ddd$coef_test
+         if (ddd$conf_test == "saddlepoint") {
+            ddd$conf_test <- "Satterthwaite"
+            warning(mstyle$warning("Cannot use 'saddlepoint' for conf_test() - using 'Satterthwaite' instead."), call.=FALSE)
+         }
+      } else {
+         ddd$conf_test <- match.arg(ddd$conf_test, c("z", "naive-t", "Satterthwaite"))
+      }
+      if (is.null(ddd$wald_test)) {
+         ddd$wald_test <- "HTZ"
+      } else {
+         ddd$wald_test <- match.arg(ddd$conf_test, c("chi-sq", "Naive-F", "HTA", "HTB", "HTZ", "EDF", "EDT"))
+      }
 
-      if (is.null(x$weights)) {
+      ### calculate cluster-robust var-cov matrix of the estimated fixed effects
 
-         ### if no weights were specified, then vb = (X'WX)^-1, so we can use that part
+      vb <- try(clubSandwich::vcovCR(x, cluster=cluster, type=ddd$vcov), silent=!isTRUE(ddd$verbose))
 
-         wi    <- 1/(x$vi + x$tau2)
-         wi    <- wi[ocl]
-         W     <- diag(wi, nrow=x$k, ncol=x$k)
-         bread <- x$vb %*% crossprod(x$X[ocl,], W)
+      if (inherits(vb, "try-error"))
+         stop(mstyle$stop(paste0("Could not obtain the cluster-robust variance-covariance matrix (use verbose=TRUE for more details).")))
+
+      ### obtain cluster-robust inferences
+
+      cs.coef <- try(clubSandwich::coef_test(x, cluster=cluster, vcov=vb, test=ddd$coef_test), silent=!isTRUE(ddd$verbose))
+
+      if (inherits(cs.coef, "try-error"))
+         stop(mstyle$stop(paste0("Could not obtain the cluster-robust tests (use verbose=TRUE for more details).")))
+
+      cs.conf <- try(clubSandwich::conf_int(x,  cluster=cluster, vcov=vb, test=ddd$conf_test, level=1-level), silent=!isTRUE(ddd$verbose))
+
+      if (inherits(cs.conf, "try-error"))
+         stop(mstyle$stop(paste0("Could not obtain the cluster-robust confidence intervals (use verbose=TRUE for more details).")))
+
+      if (x$int.only) {
+
+         cs.wald <- NA
 
       } else {
 
-         ### if weights were specified, then vb cannot be used
+         cs.wald <- try(clubSandwich::Wald_test(x, cluster=cluster, vcov=vb, test=ddd$wald_test, constraints=clubSandwich::constrain_zero(x$btt)), silent=!isTRUE(ddd$verbose))
 
-         A     <- diag(x$weights[ocl], nrow=x$k, ncol=x$k)
-         stXAX <- .invcalc(X=x$X[ocl,], W=A, k=x$k)
-         bread <- stXAX %*% crossprod(x$X[ocl,], A)
+         if (inherits(cs.wald, "try-error"))
+            stop(mstyle$stop(paste0("Could not obtain the cluster-robust Wald test (use verbose=TRUE for more details).")))
 
       }
 
+      #return(list(coef_test=cs.coef, conf_int=cs.conf, Wald_test=cs.wald))
+
+      vbest <- ddd$vcov
+
+      beta  <- x$beta
+      se    <- cs.coef$SE
+      zval  <- cs.coef$tstat
+      pval  <- switch(ddd$coef_test, "z" = cs.coef$p_z, "naive-t" = cs.coef$p_t, "Satterthwaite" = cs.coef$p_Satt, "saddlepoint" = cs.coef$p_saddle)
+      dfs   <- switch(ddd$coef_test, "z" = Inf, "naive-t" = n-1, "Satterthwaite" = cs.coef$df, "saddlepoint" = NA)
+      ci.lb <- cs.conf$CI_L # note: if ddd$coef_test != ddd$conf_test, dfs for CI may be different
+      ci.ub <- cs.conf$CI_U
+
+      if (x$int.only) {
+         QM   <- zval^2
+         QMdf <- c(1, dfs)
+         QMp  <- pval
+      } else {
+         QM   <- cs.wald$Fstat
+         QMdf <- c(cs.wald$df_num, cs.wald$df_denom)
+         QMp  <- cs.wald$p_val
+      }
+
+      x$sandwiches <- list(coef_test=cs.coef, conf_int=cs.conf, Wald_test=cs.wald)
+      x$coef_test <- ddd$coef_test
+      x$conf_test <- ddd$conf_test
+      x$wald_test <- ddd$wald_test
+
    } else {
 
-      ### for unweighted analysis
+      ### note: since we use split() below and then put things back together into a block-diagonal matrix,
+      ### we have to make sure everything is properly ordered by the cluster variable; otherwise, the 'meat'
+      ### block-diagonal matrix is not in the same order as the rest; so we sort all relevant variables by
+      ### the cluster variable (including the cluster variable itself)
 
-      stXX  <- .invcalc(X=x$X[ocl,], W=diag(x$k), k=x$k)
-      bread <- stXX %*% t(x$X[ocl,])
+      ocl <- order(cluster)
+      cluster <- cluster[ocl]
+
+      ### construct bread = (X'WX)^-1 X'W, where W is the weight matrix
+
+      if (x$weighted) {
+
+         ### for weighted analysis
+
+         if (is.null(x$weights)) {
+
+            ### if no weights were specified, then vb = (X'WX)^-1, so we can use that part
+
+            wi    <- 1/(x$vi + x$tau2)
+            wi    <- wi[ocl]
+            W     <- diag(wi, nrow=x$k, ncol=x$k)
+            bread <- x$vb %*% crossprod(x$X[ocl,], W)
+
+         } else {
+
+            ### if weights were specified, then vb cannot be used
+
+            A     <- diag(x$weights[ocl], nrow=x$k, ncol=x$k)
+            stXAX <- .invcalc(X=x$X[ocl,], W=A, k=x$k)
+            bread <- stXAX %*% crossprod(x$X[ocl,], A)
+
+         }
+
+      } else {
+
+         ### for unweighted analysis
+
+         stXX  <- .invcalc(X=x$X[ocl,], W=diag(x$k), k=x$k)
+         bread <- stXX %*% t(x$X[ocl,])
+
+      }
+
+      ### construct meat part
+
+      ei <- c(x$yi - x$X %*% x$beta) ### use this instead of resid(), since this guarantees that the length is correct
+      ei <- ei[ocl]
+
+      cluster <- factor(cluster, levels=unique(cluster))
+
+      meat <- bldiag(lapply(split(ei, cluster), function(e) tcrossprod(e)))
+
+      ### construct robust var-cov matrix
+
+      vb <- bread %*% meat %*% t(bread)
+
+      ### apply adjustments to vb as needed
+
+      vbest <- "CR0"
+
+      ### suggested in Hedges, Tipton, & Johnson (2010) -- analogous to HC1 adjustment
+
+      if (.isTRUE(adjust)) {
+         vb <- (n / dfs) * vb
+         vbest <- "CR1"
+      }
+
+      ### what Stata does
+
+      if (is.character(adjust) && (adjust=="Stata" || adjust=="Stata1")) {
+         vb <- (n / (n-1) * (x$k-1) / (x$k-x$p)) * vb ### when the model was fitted with regress
+         vbest <- "CR1.S1"
+      }
+
+      if (is.character(adjust) && adjust=="Stata2") {
+         vb <- (n / (n-1)) * vb                       ### when the model was fitted with mixed
+         vbest <- "CR1.S2"
+      }
+
+      ### prepare results
+
+      beta <- x$beta
+      se <- sqrt(diag(vb))
+      names(se) <- NULL
+      zval <- c(beta/se)
+      pval <- 2*pt(abs(zval), df=dfs, lower.tail=FALSE)
+      crit <- qt(level/2, df=dfs, lower.tail=FALSE)
+      ci.lb <- c(beta - crit * se)
+      ci.ub <- c(beta + crit * se)
+
+      QM <- try(as.vector(t(beta)[x$btt] %*% chol2inv(chol(vb[x$btt,x$btt])) %*% beta[x$btt]), silent=TRUE)
+
+      if (inherits(QM, "try-error"))
+         QM <- NA
+
+      QM   <- QM / x$m ### note: m is the number of coefficients in btt, not the number of unique clusters
+      QMdf <- c(x$m, dfs)
+      QMp  <- pf(QM, df1=x$m, df2=dfs, lower.tail=FALSE)
+
+      ### don't need this anymore at the moment
+
+      #x$meat <- matrix(NA_real_, nrow=nrow(meat), ncol=ncol(meat))
+      #x$meat[ocl,ocl] <- meat
 
    }
-
-   ### construct meat part
-
-   ei <- c(x$yi - x$X %*% x$beta) ### use this instead of resid(), since this guarantees that the length is correct
-   ei <- ei[ocl]
-
-   cluster <- factor(cluster, levels=unique(cluster))
-
-   meat <- bldiag(lapply(split(ei, cluster), function(e) tcrossprod(e)))
-
-   ### construct robust var-cov matrix
-
-   vb <- bread %*% meat %*% t(bread)
-
-   ### apply adjustments to vb as needed
-
-   ### suggested in Hedges, Tipton, & Johnson (2010) -- analogous to HC1 adjustment
-
-   if (.isTRUE(adjust))
-      vb <- (n / dfs) * vb
-
-   ### what Stata does
-
-   if (is.character(adjust) && (adjust=="Stata" || adjust=="Stata1"))
-      vb <- (n / (n-1) * (x$k-1) / (x$k-x$p)) * vb ### when the model was fitted with regress
-
-   if (is.character(adjust) && adjust=="Stata2")
-      vb <- (n / (n-1)) * vb                       ### when the model was fitted with mixed
-
-   ### prepare results
-
-   beta <- x$beta
-   se <- sqrt(diag(vb))
-   names(se) <- NULL
-   zval <- c(beta/se)
-   pval <- 2*pt(abs(zval), df=dfs, lower.tail=FALSE)
-   crit <- qt(level/2, df=dfs, lower.tail=FALSE)
-   ci.lb <- c(beta - crit * se)
-   ci.ub <- c(beta + crit * se)
-
-   QM <- try(as.vector(t(beta)[x$btt] %*% chol2inv(chol(vb[x$btt,x$btt])) %*% beta[x$btt]), silent=TRUE)
-
-   if (inherits(QM, "try-error"))
-      QM <- NA
-
-   QM   <- QM / x$m ### note: m is the number of coefficients in btt, not the number of unique clusters
-   QMdf <- c(x$m, dfs)
-   QMp  <- pf(QM, df1=x$m, df2=dfs, lower.tail=FALSE)
 
    #########################################################################
 
    ### table of cluster variable
    tcl <- table(cluster)
 
-   res <- x
-   res$digits <- digits
+   x$digits <- digits
 
    ### replace elements with robust results
 
-   res$ddf   <- dfs
-   res$dfs   <- dfs
-   res$vb    <- vb
-   res$se    <- se
-   res$zval  <- zval
-   res$pval  <- pval
-   res$ci.lb <- ci.lb
-   res$ci.ub <- ci.ub
-   res$QM    <- QM
-   res$QMdf  <- QMdf
-   res$QMp   <- QMp
-   res$n     <- n
-   res$tcl   <- tcl
-   res$test  <- "t"
-   res$s2w   <- 1 ### just in case test="knha" originally
-   res$meat <- matrix(NA_real_, nrow=nrow(meat), ncol=ncol(meat))
-   res$meat[ocl,ocl] <- meat
+   x$ddf   <- dfs
+   x$dfs   <- dfs
+   x$vb    <- vb
+   x$se    <- se
+   x$zval  <- zval
+   x$pval  <- pval
+   x$ci.lb <- ci.lb
+   x$ci.ub <- ci.ub
+   x$QM    <- QM
+   x$QMdf  <- QMdf
+   x$QMp   <- QMp
+   x$n     <- n
+   x$tcl   <- tcl
+   x$test  <- "t"
+   x$vbest <- vbest
+   x$s2w   <- 1 ### just in case test="knha" originally
+   x$robumethod <- ifelse(clubSandwich, "clubsw", "default")
 
-   class(res) <- c("robust.rma", "rma", "rma.uni")
-   return(res)
+   class(x) <- c("robust.rma", "rma", "rma.uni")
+   return(x)
 
 }

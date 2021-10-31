@@ -10,6 +10,12 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
       digits <- .get.digits(digits=digits, xdigits=x$digits, dmiss=FALSE)
    }
 
+   footsym <- .get.footsym()
+
+   ddd <- list(...)
+
+   .chkdots(ddd, c("num", "legend"))
+
    if (inherits(x, "rma.uni.trimfill")) {
       .space()
       cat(mstyle$text(paste0("Estimated number of missing studies on the ", x$side, " side: ")))
@@ -127,7 +133,7 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
          cat("\n")
       }
 
-      if (!is.na(x$I2) || !is.na(x$H2) || !is.null(x$R2))
+      if (!is.element(x$method, c("FE","EE","CE")) || !is.na(x$I2) || !is.na(x$H2) || !is.null(x$R2))
          cat("\n")
 
    }
@@ -158,11 +164,31 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
       cat("\n\n")
    }
 
+   if (inherits(x, "robust.rma")) {
+
+      cat(mstyle$text("Number of estimates:   "))
+      cat(mstyle$result(x$k))
+      cat("\n")
+      cat(mstyle$text("Number of clusters:    "))
+      cat(mstyle$result(x$n))
+      cat("\n")
+
+      cat(mstyle$text("Estimates per cluster: "))
+      if (all(x$tcl[1] == x$tcl)) {
+         cat(mstyle$result(x$tcl[1]))
+      } else {
+         cat(mstyle$result(paste0(min(x$tcl), "-", max(x$tcl), " (mean: ", .fcf(mean(x$tcl), digits=2), ", median: ", round(median(x$tcl), digits=2), ")")))
+      }
+      cat("\n\n")
+
+   }
+
    if (x$p > 1L && !is.na(x$QM)) {
       if (x$model == "rma.ls") {
          cat(mstyle$section(paste0("Test of Location Coefficients (coefficient", ifelse(x$m == 1, " ", "s "), .format.btt(x$btt),"):")))
       } else {
-         cat(mstyle$section(paste0("Test of Moderators (coefficient", ifelse(x$m == 1, " ", "s "), .format.btt(x$btt),"):")))      }
+         cat(mstyle$section(paste0("Test of Moderators (coefficient", ifelse(x$m == 1, " ", "s "), .format.btt(x$btt),"):", ifelse(inherits(x, "robust.rma"), footsym[1], ""))))
+      }
       cat("\n")
       if (is.element(x$test, c("knha","adhoc","t"))) {
          cat(mstyle$result(paste0("F(df1 = ", x$QMdf[1], ", df2 = ", round(x$QMdf[2], 2), ") = ", .fcf(x$QM, digits[["test"]]), ", p-val ", .pval(x$QMp, digits[["pval"]], showeq=TRUE, sep=" "))))
@@ -174,6 +200,8 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
 
    if (is.element(x$test, c("knha","adhoc","t"))) {
       res.table <- data.frame(estimate=.fcf(c(x$beta), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), tval=.fcf(x$zval, digits[["test"]]), df=round(x$ddf,2), pval=.pval(x$pval, digits[["pval"]]), ci.lb=.fcf(x$ci.lb, digits[["ci"]]), ci.ub=.fcf(x$ci.ub, digits[["ci"]]), stringsAsFactors=FALSE)
+      if (inherits(x, "robust.rma"))
+         colnames(res.table)[c(2:7)] <- paste0(colnames(res.table)[c(2:7)], footsym[1])
    } else {
       res.table <- data.frame(estimate=.fcf(c(x$beta), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), zval=.fcf(x$zval, digits[["test"]]), pval=.pval(x$pval, digits[["pval"]]), ci.lb=.fcf(x$ci.lb, digits[["ci"]]), ci.ub=.fcf(x$ci.ub, digits[["ci"]]), stringsAsFactors=FALSE)
    }
@@ -184,12 +212,14 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
       colnames(res.table)[ncol(res.table)] <- ""
    }
 
-   ddd <- list(...)
-
-   .chkdots(ddd, c("num"))
-
    if (.isTRUE(ddd$num))
       rownames(res.table) <- paste0(1:nrow(res.table), ") ", rownames(res.table))
+
+   if (is.null(ddd$legend)) {
+      legend <- TRUE
+   } else {
+      legend <- .isTRUE(ddd$legend)
+   }
 
    if (x$int.only)
       res.table <- res.table[1,]
@@ -304,9 +334,27 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
 
    }
 
+   if (signif.legend || legend)
+      cat("\n---")
+
    if (signif.legend) {
       cat("\n")
-      cat(mstyle$legend("---\nSignif. codes: "), mstyle$legend(attr(signif, "legend")))
+      cat(mstyle$legend("Signif. codes: "), mstyle$legend(attr(signif, "legend")))
+      cat("\n")
+   }
+
+   if (inherits(x, "robust.rma") && legend) {
+      cat("\n")
+      cat(mstyle$legend(footsym[2], " results based on cluster-robust inference (var-cov estimator: ", x$vbest))
+      if (x$robumethod == "default") {
+         cat(mstyle$legend(",\n   approx. ", ifelse(x$int.only, "t-test and confidence interval", "t/F-tests and confidence intervals"), ", dfs = residual method)"))
+      } else {
+         if (x$coef_test == "Satterthwaite" && x$conf_test == "Satterthwaite" && x$wald_test == "HTZ") {
+            cat(mstyle$legend(",\n   approx. ", ifelse(x$int.only, "t-test and confidence interval", "t/F-tests and confidence intervals"), ", dfs = Satterthwaite method)"))
+         } else {
+            cat(mstyle$legend(")"))
+         }
+      }
       cat("\n")
    }
 

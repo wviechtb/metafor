@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-25</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-26</span>
       </span>
     </div>
 
@@ -107,17 +107,17 @@
 </dl><p></p>
 <dl><dt>cluster</dt><dd><p>vector to specify the clustering variable (e.g., study).</p></dd>
 </dl><p></p>
-<dl><dt>time</dt><dd><p>optional vector to specify the time points (only relevant when <code>struct="CAR"</code>, <code>struct="CS+CAR"</code>, or <code>struct="CS*CAR"</code>).</p></dd>
+<dl><dt>time</dt><dd><p>optional vector to specify the time points (only relevant when <code>struct="CAR"</code>, <code>"CS+CAR"</code>, or <code>"CS*CAR"</code>).</p></dd>
 </dl><p></p>
 <dl><dt>obs</dt><dd><p>optional vector to distinguish different observed effect sizes or outcomes measured at the same time point (only relevant when <code>struct="CS*CAR"</code>).</p></dd>
 </dl><p></p>
 <dl><dt>V</dt><dd><p>optional argument to specify the variance-covariance matrix of the sampling errors. If not specified, argument <code>struct</code> is used to specify the variance-covariance structure.</p></dd>
 </dl><p></p>
-<dl><dt>struct</dt><dd><p>character string to specify the variance-covariance structure of the sampling errors within the same cluster (either <code>"ID"</code>, <code>"CS"</code>, <code>"CAR"</code>, <code>struct="CS+CAR"</code>, or <code>"CS*CAR"</code>). See ‘Details’.</p></dd>
+<dl><dt>struct</dt><dd><p>character string to specify the variance-covariance structure of the sampling errors within the same cluster (either <code>"ID"</code>, <code>"CS"</code>, <code>"CAR"</code>, <code>"CS+CAR"</code>, or <code>"CS*CAR"</code>). See ‘Details’.</p></dd>
 </dl><p></p>
-<dl><dt>rho</dt><dd><p>value of the correlation of the sampling errors within clusters (when <code>struct="CS"</code>,<code>struct="CS+CAR"</code>, or <code>struct="CS*CAR"</code>). Can also be a vector with the value of the correlation for each cluster.</p></dd>
+<dl><dt>rho</dt><dd><p>value of the correlation of the sampling errors within clusters (when <code>struct="CS"</code>, <code>"CS+CAR"</code>, or <code>"CS*CAR"</code>). Can also be a vector with the value of the correlation for each cluster.</p></dd>
 </dl><p></p>
-<dl><dt>phi</dt><dd><p>value of the autocorrelation of the sampling errors within clusters (when <code>struct="CAR"</code>,<code>struct="CS+CAR"</code>, or <code>struct="CS*CAR"</code>). Can also be a vector with the value of the autocorrelation for each cluster.</p></dd>
+<dl><dt>phi</dt><dd><p>value of the autocorrelation of the sampling errors within clusters (when <code>struct="CAR"</code>, <code>"CS+CAR"</code>, or <code>"CS*CAR"</code>). Can also be a vector with the value of the autocorrelation for each cluster.</p></dd>
 </dl><p></p>
 <dl><dt>weighted</dt><dd><p>logical to specify whether estimates within clusters should be aggregated using inverse-variance weighting (the default is <code>TRUE</code>). If set to <code>FALSE</code>, unweighted averages are computed.</p></dd>
 </dl><p></p>
