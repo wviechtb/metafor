@@ -100,20 +100,20 @@
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <p></p>
-<dl><dt>x</dt><dd><p>a formula of the form <code>ri ~ var1 + var2 | study</code>. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>ni</dt><dd><p>vector to specify the sample sizes based on which the correlations were computed.</p></dd>
-</dl><p></p>
-<dl><dt>data</dt><dd><p>data frame containing the variables specified via the formula (and the sample sizes).</p></dd>
-</dl><p></p>
-<dl><dt>rtoz</dt><dd><p>logical to specify whether to transform the correlations via Fisher's r-to-z transformation (the default is <code>FALSE</code>).</p></dd>
-</dl><p></p>
-<dl><dt>nfun</dt><dd><p>a character string to specify how the ‘common’ sample size within each study should be computed. Possible options are <code>"min"</code> (for the minimum), <code>"harmonic"</code> (for the harmonic mean), or <code>"mean"</code> (for the arithmetic mean). Can also be a function. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>sparse</dt><dd><p>logical to specify whether the variance-covariance matrix should be returned as a sparse matrix (the default is <code>FALSE</code>).</p></dd>
-</dl><p></p>
-<dl><dt>...</dt><dd><p>other arguments.</p></dd>
+    <dl><dt>x</dt>
+<dd><p>a formula of the form <code>ri ~ var1 + var2 | study</code>. See ‘Details’.</p></dd>
+<dt>ni</dt>
+<dd><p>vector to specify the sample sizes based on which the correlations were computed.</p></dd>
+<dt>data</dt>
+<dd><p>data frame containing the variables specified via the formula (and the sample sizes).</p></dd>
+<dt>rtoz</dt>
+<dd><p>logical to specify whether to transform the correlations via Fisher's r-to-z transformation (the default is <code>FALSE</code>).</p></dd>
+<dt>nfun</dt>
+<dd><p>a character string to specify how the ‘common’ sample size within each study should be computed. Possible options are <code>"min"</code> (for the minimum), <code>"harmonic"</code> (for the harmonic mean), or <code>"mean"</code> (for the arithmetic mean). Can also be a function. See ‘Details’.</p></dd>
+<dt>sparse</dt>
+<dd><p>logical to specify whether the variance-covariance matrix should be returned as a sparse matrix (the default is <code>FALSE</code>).</p></dd>
+<dt>...</dt>
+<dd><p>other arguments.</p></dd>
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -128,9 +128,10 @@
     <div id="value">
     <h2>Value</h2>
     <p>A list containing the following components:</p>
-<dl><dt>dat</dt><dd><p>a data frame with the study identifier, the two variable identifiers, a variable pair identifier, the correlation coefficients (possibly transformed with Fisher's r-to-z transformation), and the (common) sample sizes.</p></dd>
-</dl><p></p>
-<dl><dt>V</dt><dd><p>corresponding variance-covariance matrix (given as a sparse matrix when <code>sparse=TRUE</code>).</p></dd>
+<dl><dt>dat</dt>
+<dd><p>a data frame with the study identifier, the two variable identifiers, a variable pair identifier, the correlation coefficients (possibly transformed with Fisher's r-to-z transformation), and the (common) sample sizes.</p></dd>
+<dt>V</dt>
+<dd><p>corresponding variance-covariance matrix (given as a sparse matrix when <code>sparse=TRUE</code>).</p></dd>
 </dl><p>Note that a particular covariance can only be computed when all of the correlation coefficients involved in the covariance equation are included in the dataset. If one or more coefficients needed for the computation are missing, then the resulting covariance will also be missing (i.e., <code>NA</code>).</p>
     </div>
     <div id="note">

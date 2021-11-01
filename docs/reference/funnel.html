@@ -117,70 +117,70 @@
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <p></p>
-<dl><dt>x</dt><dd><p>an object of class <code>"rma"</code> or a vector with the observed effect sizes or outcomes.</p></dd>
-</dl><p></p>
-<dl><dt>vi</dt><dd><p>vector with the corresponding sampling variances (needed if <code>x</code> is a vector with the observed effect sizes or outcomes).</p></dd>
-</dl><p></p>
-<dl><dt>sei</dt><dd><p>vector with the corresponding standard errors (note: only one of the two, <code>vi</code> or <code>sei</code>, needs to be specified).</p></dd>
-</dl><p></p>
-<dl><dt>ni</dt><dd><p>vector with the corresponding sample sizes. Only relevant when passing a vector via <code>x</code>.</p></dd>
-</dl><p></p>
-<dl><dt>subset</dt><dd><p>optional (logical or numeric) vector to specify the subset of studies that should be included in the plot. Only relevant when passing a vector via <code>x</code>.</p></dd>
-</dl><p></p>
-<dl><dt>yaxis</dt><dd><p>either <code>"sei"</code>, <code>"vi"</code>, <code>"seinv"</code>, <code>"vinv"</code>, <code>"ni"</code>, <code>"ninv"</code>, <code>"sqrtni"</code>, <code>"sqrtninv"</code>, <code>"lni"</code>, or <code>"wi"</code> to indicate what values should be placed on the y-axis. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>xlim</dt><dd><p>x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.</p></dd>
-</dl><p></p>
-<dl><dt>ylim</dt><dd><p>y-axis limits. If unspecified, the function tries to set the y-axis limits to some sensible values.</p></dd>
-</dl><p></p>
-<dl><dt>xlab</dt><dd><p>title for the x-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
-</dl><p></p>
-<dl><dt>ylab</dt><dd><p>title for the y-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
-</dl><p></p>
-<dl><dt>steps</dt><dd><p>the number of tick marks for the y-axis (the default is 5).</p></dd>
-</dl><p></p>
-<dl><dt>at</dt><dd><p>position of the x-axis tick marks and corresponding labels. If unspecified, the function tries to set the tick mark positions/labels to some sensible values.</p></dd>
-</dl><p></p>
-<dl><dt>atransf</dt><dd><p>optional argument to specify a function that should be used to transform the x-axis labels (e.g., <code>atransf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
-</dl><p></p>
-<dl><dt>targs</dt><dd><p>optional arguments needed by the function specified via <code>atransf</code>.</p></dd>
-</dl><p></p>
-<dl><dt>digits</dt><dd><p>integer to specify the number of decimal places to which the tick mark labels of the x- and y-axis should be rounded. Can also be a vector of two integers, the first to specify the number of decimal places for the x-axis, the second for the y-axis labels (e.g., <code>digits=c(2,3)</code>). If unspecified, the function tries to set the argument to some sensible values.</p></dd>
-</dl><p></p>
-<dl><dt>level</dt><dd><p>numeric value between 0 and 100 to specify the level of the pseudo confidence interval region (for <code>"rma"</code> objects, the default is to take the value from the object). May also be a vector of values to obtain multiple regions. See ‘Examples’.</p></dd>
-</dl><p></p>
-<dl><dt>addtau2</dt><dd><p>logical to indicate whether the amount of heterogeneity should be accounted for when drawing the pseudo confidence interval region (the default is <code>FALSE</code>). Ignored when the model includes moderators and residuals are plotted. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>type</dt><dd><p>either <code>"rstandard"</code> (default) or <code>"rstudent"</code> to specify whether the usual or deleted residuals should be used in creating the funnel plot when the model involves moderators. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>back</dt><dd><p>color to use for the background of the plotting region (default is <code>"lightgray"</code>).</p></dd>
-</dl><p></p>
-<dl><dt>shade</dt><dd><p>color to use for shading the pseudo confidence interval region (default is <code>"white"</code>). When <code>level</code> is a vector of values, different shading colors can be specified for each region.</p></dd>
-</dl><p></p>
-<dl><dt>hlines</dt><dd><p>color of the horizontal reference lines (default is <code>"white"</code>).</p></dd>
-</dl><p></p>
-<dl><dt>refline</dt><dd><p>numeric value to specify the location of the vertical ‘reference’ line and where the pseudo confidence interval should be centered. If unspecified, the reference line is drawn at the fixed- or random-effects model estimate when the model does not include moderators and at zero when moderators are included (and therefore residuals are plotted) or when directly plotting observed outcomes.</p></dd>
-</dl><p></p>
-<dl><dt>lty</dt><dd><p>line type for the pseudo confidence interval region and the reference line. The default is to draw dotted lines (see <code><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></code> for other options). Can also be a vector to specify the two line types separately.</p></dd>
-</dl><p></p>
-<dl><dt>pch</dt><dd><p>plotting symbol to use for the observed outcomes. By default, a filled circle is used. Can also be a vector of values. See <code><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></code> for other options.</p></dd>
-</dl><p></p>
-<dl><dt>pch.fill</dt><dd><p>plotting symbol to use for the outcomes filled in by the trim and fill method. By default, a circle is used. Only relevant when plotting an object created by the <code><a href="trimfill.html">trimfill</a></code> function.</p></dd>
-</dl><p></p>
-<dl><dt>col</dt><dd><p>optional character string to specify the name of a color to use for the points (<code>"black"</code> is used by default if not specified). Can also be a vector of color names.</p></dd>
-</dl><p></p>
-<dl><dt>bg</dt><dd><p>optional character string to specify the name of a background color for open plot symbols (<code>"white"</code> is used by default if not specified). Can also be a vector of color names.</p></dd>
-</dl><p></p>
-<dl><dt>label</dt><dd><p>argument to control the labeling of the points (the default is <code>FALSE</code>). See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>offset</dt><dd><p>argument to control the distance between the points and the corresponding labels.</p></dd>
-</dl><p></p>
-<dl><dt>legend</dt><dd><p>logical to indicate whether a legend should be added to the plot (the default is <code>FALSE</code>). Can also be a keyword to indicate the position of the legend (see <code><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></code>).</p></dd>
-</dl><p></p>
-<dl><dt>ci.res</dt><dd><p>integer to specify the number of y-axis values at which to calculate the bounds of the pseudo confidence interval. The default is <code>1000</code>, which usually provides a sufficient resolution for the plotting.</p></dd>
-</dl><p></p>
-<dl><dt>...</dt><dd><p>other arguments.</p></dd>
+    <dl><dt>x</dt>
+<dd><p>an object of class <code>"rma"</code> or a vector with the observed effect sizes or outcomes.</p></dd>
+<dt>vi</dt>
+<dd><p>vector with the corresponding sampling variances (needed if <code>x</code> is a vector with the observed effect sizes or outcomes).</p></dd>
+<dt>sei</dt>
+<dd><p>vector with the corresponding standard errors (note: only one of the two, <code>vi</code> or <code>sei</code>, needs to be specified).</p></dd>
+<dt>ni</dt>
+<dd><p>vector with the corresponding sample sizes. Only relevant when passing a vector via <code>x</code>.</p></dd>
+<dt>subset</dt>
+<dd><p>optional (logical or numeric) vector to specify the subset of studies that should be included in the plot. Only relevant when passing a vector via <code>x</code>.</p></dd>
+<dt>yaxis</dt>
+<dd><p>either <code>"sei"</code>, <code>"vi"</code>, <code>"seinv"</code>, <code>"vinv"</code>, <code>"ni"</code>, <code>"ninv"</code>, <code>"sqrtni"</code>, <code>"sqrtninv"</code>, <code>"lni"</code>, or <code>"wi"</code> to indicate what values should be placed on the y-axis. See ‘Details’.</p></dd>
+<dt>xlim</dt>
+<dd><p>x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.</p></dd>
+<dt>ylim</dt>
+<dd><p>y-axis limits. If unspecified, the function tries to set the y-axis limits to some sensible values.</p></dd>
+<dt>xlab</dt>
+<dd><p>title for the x-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
+<dt>ylab</dt>
+<dd><p>title for the y-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
+<dt>steps</dt>
+<dd><p>the number of tick marks for the y-axis (the default is 5).</p></dd>
+<dt>at</dt>
+<dd><p>position of the x-axis tick marks and corresponding labels. If unspecified, the function tries to set the tick mark positions/labels to some sensible values.</p></dd>
+<dt>atransf</dt>
+<dd><p>optional argument to specify a function that should be used to transform the x-axis labels (e.g., <code>atransf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
+<dt>targs</dt>
+<dd><p>optional arguments needed by the function specified via <code>atransf</code>.</p></dd>
+<dt>digits</dt>
+<dd><p>integer to specify the number of decimal places to which the tick mark labels of the x- and y-axis should be rounded. Can also be a vector of two integers, the first to specify the number of decimal places for the x-axis, the second for the y-axis labels (e.g., <code>digits=c(2,3)</code>). If unspecified, the function tries to set the argument to some sensible values.</p></dd>
+<dt>level</dt>
+<dd><p>numeric value between 0 and 100 to specify the level of the pseudo confidence interval region (for <code>"rma"</code> objects, the default is to take the value from the object). May also be a vector of values to obtain multiple regions. See ‘Examples’.</p></dd>
+<dt>addtau2</dt>
+<dd><p>logical to indicate whether the amount of heterogeneity should be accounted for when drawing the pseudo confidence interval region (the default is <code>FALSE</code>). Ignored when the model includes moderators and residuals are plotted. See ‘Details’.</p></dd>
+<dt>type</dt>
+<dd><p>either <code>"rstandard"</code> (default) or <code>"rstudent"</code> to specify whether the usual or deleted residuals should be used in creating the funnel plot when the model involves moderators. See ‘Details’.</p></dd>
+<dt>back</dt>
+<dd><p>color to use for the background of the plotting region (default is <code>"lightgray"</code>).</p></dd>
+<dt>shade</dt>
+<dd><p>color to use for shading the pseudo confidence interval region (default is <code>"white"</code>). When <code>level</code> is a vector of values, different shading colors can be specified for each region.</p></dd>
+<dt>hlines</dt>
+<dd><p>color of the horizontal reference lines (default is <code>"white"</code>).</p></dd>
+<dt>refline</dt>
+<dd><p>numeric value to specify the location of the vertical ‘reference’ line and where the pseudo confidence interval should be centered. If unspecified, the reference line is drawn at the fixed- or random-effects model estimate when the model does not include moderators and at zero when moderators are included (and therefore residuals are plotted) or when directly plotting observed outcomes.</p></dd>
+<dt>lty</dt>
+<dd><p>line type for the pseudo confidence interval region and the reference line. The default is to draw dotted lines (see <code><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></code> for other options). Can also be a vector to specify the two line types separately.</p></dd>
+<dt>pch</dt>
+<dd><p>plotting symbol to use for the observed outcomes. By default, a filled circle is used. Can also be a vector of values. See <code><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></code> for other options.</p></dd>
+<dt>pch.fill</dt>
+<dd><p>plotting symbol to use for the outcomes filled in by the trim and fill method. By default, a circle is used. Only relevant when plotting an object created by the <code><a href="trimfill.html">trimfill</a></code> function.</p></dd>
+<dt>col</dt>
+<dd><p>optional character string to specify the name of a color to use for the points (<code>"black"</code> is used by default if not specified). Can also be a vector of color names.</p></dd>
+<dt>bg</dt>
+<dd><p>optional character string to specify the name of a background color for open plot symbols (<code>"white"</code> is used by default if not specified). Can also be a vector of color names.</p></dd>
+<dt>label</dt>
+<dd><p>argument to control the labeling of the points (the default is <code>FALSE</code>). See ‘Details’.</p></dd>
+<dt>offset</dt>
+<dd><p>argument to control the distance between the points and the corresponding labels.</p></dd>
+<dt>legend</dt>
+<dd><p>logical to indicate whether a legend should be added to the plot (the default is <code>FALSE</code>). Can also be a keyword to indicate the position of the legend (see <code><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></code>).</p></dd>
+<dt>ci.res</dt>
+<dd><p>integer to specify the number of y-axis values at which to calculate the bounds of the pseudo confidence interval. The default is <code>1000</code>, which usually provides a sufficient resolution for the plotting.</p></dd>
+<dt>...</dt>
+<dd><p>other arguments.</p></dd>
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -211,11 +211,12 @@
     <div id="value">
     <h2>Value</h2>
     <p>A data frame with components:</p>
-<dl><dt>x</dt><dd><p>the x-axis coordinates of the points that were plotted.</p></dd>
-</dl><p></p>
-<dl><dt>y</dt><dd><p>the y-axis coordinates of the points that were plotted.</p></dd>
-</dl><p></p>
-<dl><dt>slab</dt><dd><p>the study labels.</p></dd>
+<dl><dt>x</dt>
+<dd><p>the x-axis coordinates of the points that were plotted.</p></dd>
+<dt>y</dt>
+<dd><p>the y-axis coordinates of the points that were plotted.</p></dd>
+<dt>slab</dt>
+<dd><p>the study labels.</p></dd>
 </dl><p>Note that the data frame is returned invisibly.</p>
     </div>
     <div id="author">
@@ -248,14 +249,14 @@
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### draw a standard funnel plot</span></span>
 <span class="r-in"><span class="fu">funnel</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
-<span class="r-plt"><img src="funnel-1.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="funnel-1.png" alt="" width="864" height="768"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### show risk ratio values on x-axis (log scale)</span></span>
 <span class="r-in"><span class="fu">funnel</span><span class="op">(</span><span class="va">res</span>, atransf<span class="op">=</span><span class="va">exp</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### label points outside of the pseudo confidence interval region</span></span>
 <span class="r-in"><span class="fu">funnel</span><span class="op">(</span><span class="va">res</span>, atransf<span class="op">=</span><span class="va">exp</span>, label<span class="op">=</span><span class="st">"out"</span><span class="op">)</span></span>
-<span class="r-plt"><img src="funnel-2.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="funnel-2.png" alt="" width="864" height="768"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### passing log risk ratios and sampling variances directly to the function</span></span>
 <span class="r-in"><span class="co">### note: same plot, except that reference line is centered at zero</span></span>
@@ -263,36 +264,36 @@
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### can accomplish the same thing by setting refline=0</span></span>
 <span class="r-in"><span class="fu">funnel</span><span class="op">(</span><span class="va">res</span>, refline<span class="op">=</span><span class="fl">0</span><span class="op">)</span></span>
-<span class="r-plt"><img src="funnel-3.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="funnel-3.png" alt="" width="864" height="768"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### adjust the position of the x-axis labels, number of digits, and y-axis limits</span></span>
 <span class="r-in"><span class="fu">funnel</span><span class="op">(</span><span class="va">res</span>, atransf<span class="op">=</span><span class="va">exp</span>, at<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.125</span>, <span class="fl">.25</span>, <span class="fl">.5</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>, digits<span class="op">=</span><span class="fl">3L</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">.8</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-plt"><img src="funnel-4.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="funnel-4.png" alt="" width="864" height="768"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### contour-enhanced funnel plot centered at 0 (see Peters et al., 2008)</span></span>
 <span class="r-in"><span class="fu">funnel</span><span class="op">(</span><span class="va">res</span>, level<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">90</span>, <span class="fl">95</span>, <span class="fl">99</span><span class="op">)</span>, shade<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"white"</span>, <span class="st">"gray55"</span>, <span class="st">"gray75"</span><span class="op">)</span>, refline<span class="op">=</span><span class="fl">0</span>, legend<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-plt"><img src="funnel-5.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="funnel-5.png" alt="" width="864" height="768"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### same, but show risk ratio values on the x-axis and some further adjustments</span></span>
 <span class="r-in"><span class="fu">funnel</span><span class="op">(</span><span class="va">res</span>, level<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">90</span>, <span class="fl">95</span>, <span class="fl">99</span><span class="op">)</span>, shade<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"white"</span>, <span class="st">"gray55"</span>, <span class="st">"gray75"</span><span class="op">)</span>, digits<span class="op">=</span><span class="fl">3L</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">.8</span><span class="op">)</span>,</span>
 <span class="r-in">       refline<span class="op">=</span><span class="fl">0</span>, legend<span class="op">=</span><span class="cn">TRUE</span>, atransf<span class="op">=</span><span class="va">exp</span>, at<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.125</span>, <span class="fl">.25</span>, <span class="fl">.5</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">8</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-plt"><img src="funnel-6.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="funnel-6.png" alt="" width="864" height="768"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### illustrate the use of vectors for 'pch' and 'col'</span></span>
 <span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, subset<span class="op">=</span><span class="fl">2</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu">funnel</span><span class="op">(</span><span class="va">res</span>, pch<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">yi</span> <span class="op">&gt;</span> <span class="op">-</span><span class="fl">1</span>, <span class="fl">19</span>, <span class="fl">21</span><span class="op">)</span>, col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">vi</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">.3</span>, <span class="st">"red"</span>, <span class="st">"blue"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-plt"><img src="funnel-7.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="funnel-7.png" alt="" width="864" height="768"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### can add a second funnel via (undocumented) argument refline2</span></span>
 <span class="r-in"><span class="fu">funnel</span><span class="op">(</span><span class="va">res</span>, atransf<span class="op">=</span><span class="va">exp</span>, at<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.125</span>, <span class="fl">.25</span>, <span class="fl">.5</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span>, digits<span class="op">=</span><span class="fl">3L</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">.8</span><span class="op">)</span>, refline2<span class="op">=</span><span class="fl">0</span><span class="op">)</span></span>
-<span class="r-plt"><img src="funnel-8.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="funnel-8.png" alt="" width="864" height="768"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### mixed-effects model with absolute latitude in the model</span></span>
 <span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">ablat</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### funnel plot of the residuals</span></span>
 <span class="r-in"><span class="fu">funnel</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
-<span class="r-plt"><img src="funnel-9.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="funnel-9.png" alt="" width="864" height="768"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### simulate a large meta-analytic dataset (correlations with rho = 0.2)</span></span>
 <span class="r-in"><span class="co">### with no heterogeneity or publication bias; then try out different</span></span>
@@ -313,25 +314,25 @@
 <span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"ZCOR"</span>, ri<span class="op">=</span><span class="va">ri</span>, ni<span class="op">=</span><span class="va">ni</span>, method<span class="op">=</span><span class="st">"FE"</span><span class="op">)</span> <span class="co">### use r-to-z transformed correlations</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu">funnel</span><span class="op">(</span><span class="va">res</span>, yaxis<span class="op">=</span><span class="st">"sei"</span><span class="op">)</span></span>
-<span class="r-plt"><img src="funnel-10.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="funnel-10.png" alt="" width="864" height="768"></span>
 <span class="r-in"><span class="fu">funnel</span><span class="op">(</span><span class="va">res</span>, yaxis<span class="op">=</span><span class="st">"vi"</span><span class="op">)</span></span>
-<span class="r-plt"><img src="funnel-11.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="funnel-11.png" alt="" width="864" height="768"></span>
 <span class="r-in"><span class="fu">funnel</span><span class="op">(</span><span class="va">res</span>, yaxis<span class="op">=</span><span class="st">"seinv"</span><span class="op">)</span></span>
-<span class="r-plt"><img src="funnel-12.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="funnel-12.png" alt="" width="864" height="768"></span>
 <span class="r-in"><span class="fu">funnel</span><span class="op">(</span><span class="va">res</span>, yaxis<span class="op">=</span><span class="st">"vinv"</span><span class="op">)</span></span>
-<span class="r-plt"><img src="funnel-13.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="funnel-13.png" alt="" width="864" height="768"></span>
 <span class="r-in"><span class="fu">funnel</span><span class="op">(</span><span class="va">res</span>, yaxis<span class="op">=</span><span class="st">"ni"</span><span class="op">)</span></span>
-<span class="r-plt"><img src="funnel-14.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="funnel-14.png" alt="" width="864" height="768"></span>
 <span class="r-in"><span class="fu">funnel</span><span class="op">(</span><span class="va">res</span>, yaxis<span class="op">=</span><span class="st">"ninv"</span><span class="op">)</span></span>
-<span class="r-plt"><img src="funnel-15.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="funnel-15.png" alt="" width="864" height="768"></span>
 <span class="r-in"><span class="fu">funnel</span><span class="op">(</span><span class="va">res</span>, yaxis<span class="op">=</span><span class="st">"sqrtni"</span><span class="op">)</span></span>
-<span class="r-plt"><img src="funnel-16.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="funnel-16.png" alt="" width="864" height="768"></span>
 <span class="r-in"><span class="fu">funnel</span><span class="op">(</span><span class="va">res</span>, yaxis<span class="op">=</span><span class="st">"sqrtninv"</span><span class="op">)</span></span>
-<span class="r-plt"><img src="funnel-17.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="funnel-17.png" alt="" width="864" height="768"></span>
 <span class="r-in"><span class="fu">funnel</span><span class="op">(</span><span class="va">res</span>, yaxis<span class="op">=</span><span class="st">"lni"</span><span class="op">)</span></span>
-<span class="r-plt"><img src="funnel-18.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="funnel-18.png" alt="" width="864" height="768"></span>
 <span class="r-in"><span class="fu">funnel</span><span class="op">(</span><span class="va">res</span>, yaxis<span class="op">=</span><span class="st">"wi"</span><span class="op">)</span></span>
-<span class="r-plt"><img src="funnel-19.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="funnel-19.png" alt="" width="864" height="768"></span>
 </code></pre></div>
     </div>
   </div>

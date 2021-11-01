@@ -103,42 +103,42 @@
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <p></p>
-<dl><dt>x</dt><dd><p>an object of class <code>"gosh.rma"</code>.</p></dd>
-</dl><p></p>
-<dl><dt>het</dt><dd><p>character string to specify the heterogeneity measure to plot. Either <code>"I2"</code>, <code>"H2"</code>, <code>"QE"</code>, or <code>"tau2"</code> (the last only for random/mixed-effects models).</p></dd>
-</dl><p></p>
-<dl><dt>pch</dt><dd><p>plotting symbol to use. By default, a borderless filled circle is used. See <code><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></code> for other options.</p></dd>
-</dl><p></p>
-<dl><dt>cex</dt><dd><p>symbol expansion factor.</p></dd>
-</dl><p></p>
-<dl><dt>out</dt><dd><p>optional integer to specify the number of a study that may be a potential outlier. If specified, subsets containing the specified study are drawn in a different color than those not containing the study.</p></dd>
-</dl><p></p>
-<dl><dt>col</dt><dd><p>optional character string to specify the name of a color to use for the points (if not provided, points are drawn in black). When <code>out</code> is used, two colors should be specified (if not provided, red is used for subsets containing the specified study and blue otherwise).</p></dd>
-</dl><p></p>
-<dl><dt>alpha</dt><dd><p>optional alpha transparency value for the points (0 means fully transparent and 1 means opaque). If unspecified, the function tries to set this to a sensible value.</p></dd>
-</dl><p></p>
-<dl><dt>border</dt><dd><p>optional character string to specify the name of a color to use for the borders of the histogram (if not provided, borders are drawn in white). Set to <code>FALSE</code> to omit the borders.</p></dd>
-</dl><p></p>
-<dl><dt>xlim</dt><dd><p>x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.</p></dd>
-</dl><p></p>
-<dl><dt>ylim</dt><dd><p>y-axis limits. If unspecified, the function tries to set the y-axis limits to some sensible values.</p></dd>
-</dl><p></p>
-<dl><dt>xhist</dt><dd><p>logical to specify whether a histogram should be drawn for the x-axis (the default is <code>TRUE</code>).</p></dd>
-</dl><p></p>
-<dl><dt>yhist</dt><dd><p>logical to specify whether a histogram should be drawn for the y-axis (the default is <code>TRUE</code>).</p></dd>
-</dl><p></p>
-<dl><dt>hh</dt><dd><p>optional numeric value (or vector of two values) to adjust the height of the histogram(s). Must be between 0 and 1, but should not be too close to 0 or 1, as otherwise the plot cannot be drawn.</p></dd>
-</dl><p></p>
-<dl><dt>breaks</dt><dd><p>optional argument passed on to <code><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></code> for choosing the (number of) breakpoints of the histogram(s).</p></dd>
-</dl><p></p>
-<dl><dt>adjust</dt><dd><p>optional argument passed on to <code><a href="https://rdrr.io/r/stats/density.html" class="external-link">density</a></code> for adjusting the bandwidth of the kernel density estimate(s) (values larger than 1 result in more smoothing).</p></dd>
-</dl><p></p>
-<dl><dt>lwd</dt><dd><p>optional numeric value to specify the line width of the estimated densities. Set to <code>0</code> to omit the line(s).</p></dd>
-</dl><p></p>
-<dl><dt>labels</dt><dd><p>optional argument to specify the x-axis and y-axis labels (or passed on to <code><a href="https://rdrr.io/r/graphics/pairs.html" class="external-link">pairs</a></code> to specify the names of the variables in the scatter plot matrix).</p></dd>
-</dl><p></p>
-<dl><dt>...</dt><dd><p>other arguments.</p></dd>
+    <dl><dt>x</dt>
+<dd><p>an object of class <code>"gosh.rma"</code>.</p></dd>
+<dt>het</dt>
+<dd><p>character string to specify the heterogeneity measure to plot. Either <code>"I2"</code>, <code>"H2"</code>, <code>"QE"</code>, or <code>"tau2"</code> (the last only for random/mixed-effects models).</p></dd>
+<dt>pch</dt>
+<dd><p>plotting symbol to use. By default, a borderless filled circle is used. See <code><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></code> for other options.</p></dd>
+<dt>cex</dt>
+<dd><p>symbol expansion factor.</p></dd>
+<dt>out</dt>
+<dd><p>optional integer to specify the number of a study that may be a potential outlier. If specified, subsets containing the specified study are drawn in a different color than those not containing the study.</p></dd>
+<dt>col</dt>
+<dd><p>optional character string to specify the name of a color to use for the points (if not provided, points are drawn in black). When <code>out</code> is used, two colors should be specified (if not provided, red is used for subsets containing the specified study and blue otherwise).</p></dd>
+<dt>alpha</dt>
+<dd><p>optional alpha transparency value for the points (0 means fully transparent and 1 means opaque). If unspecified, the function tries to set this to a sensible value.</p></dd>
+<dt>border</dt>
+<dd><p>optional character string to specify the name of a color to use for the borders of the histogram (if not provided, borders are drawn in white). Set to <code>FALSE</code> to omit the borders.</p></dd>
+<dt>xlim</dt>
+<dd><p>x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.</p></dd>
+<dt>ylim</dt>
+<dd><p>y-axis limits. If unspecified, the function tries to set the y-axis limits to some sensible values.</p></dd>
+<dt>xhist</dt>
+<dd><p>logical to specify whether a histogram should be drawn for the x-axis (the default is <code>TRUE</code>).</p></dd>
+<dt>yhist</dt>
+<dd><p>logical to specify whether a histogram should be drawn for the y-axis (the default is <code>TRUE</code>).</p></dd>
+<dt>hh</dt>
+<dd><p>optional numeric value (or vector of two values) to adjust the height of the histogram(s). Must be between 0 and 1, but should not be too close to 0 or 1, as otherwise the plot cannot be drawn.</p></dd>
+<dt>breaks</dt>
+<dd><p>optional argument passed on to <code><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></code> for choosing the (number of) breakpoints of the histogram(s).</p></dd>
+<dt>adjust</dt>
+<dd><p>optional argument passed on to <code><a href="https://rdrr.io/r/stats/density.html" class="external-link">density</a></code> for adjusting the bandwidth of the kernel density estimate(s) (values larger than 1 result in more smoothing).</p></dd>
+<dt>lwd</dt>
+<dd><p>optional numeric value to specify the line width of the estimated densities. Set to <code>0</code> to omit the line(s).</p></dd>
+<dt>labels</dt>
+<dd><p>optional argument to specify the x-axis and y-axis labels (or passed on to <code><a href="https://rdrr.io/r/graphics/pairs.html" class="external-link">pairs</a></code> to specify the names of the variables in the scatter plot matrix).</p></dd>
+<dt>...</dt>
+<dd><p>other arguments.</p></dd>
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -177,7 +177,7 @@
 <span class="r-in"><span class="co">### red points for subsets that include and blue points</span></span>
 <span class="r-in"><span class="co">### for subsets that exclude study 16 (the ISIS-4 trial)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sav</span>, out<span class="op">=</span><span class="fl">16</span>, breaks<span class="op">=</span><span class="fl">100</span><span class="op">)</span><span class="co"># }</span></span>
-<span class="r-plt"><img src="plot.gosh.rma-1.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="plot.gosh.rma-1.png" alt="" width="864" height="768"></span>
 </code></pre></div>
     </div>
   </div>

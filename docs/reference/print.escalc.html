@@ -105,51 +105,52 @@
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <p></p>
-<dl><dt>x</dt><dd><p>an object of class <code>"escalc"</code>.</p></dd>
-</dl><p></p>
-<dl><dt>object</dt><dd><p>an object of class <code>"escalc"</code>.</p></dd>
-</dl><p></p>
-<dl><dt>digits</dt><dd><p>integer to specify the number of decimal places to which the printed results should be rounded (the default is to take the value from the object).</p></dd>
-</dl><p></p>
-<dl><dt>out.names</dt><dd><p>character string with four elements to specify the variable names for the standard errors, test statistics, and lower/upper confidence interval bounds.</p></dd>
-</dl><p></p>
-<dl><dt>var.names</dt><dd><p>character string with two elements to specify the variable names for the observed effect sizes or outcomes and the sampling variances (the default is to take the value from the object if possible).</p></dd>
-</dl><p></p>
-<dl><dt>H0</dt><dd><p>numeric value to specify the value of the effect size or outcome under the null hypothesis (the default is 0).</p></dd>
-</dl><p></p>
-<dl><dt>append</dt><dd><p>logical to specify whether the data frame specified via the <code>object</code> argument should be returned together with the additional variables that are calculated by the <code>summary</code> function (the default is <code>TRUE</code>).</p></dd>
-</dl><p></p>
-<dl><dt>replace</dt><dd><p>logical to specify whether existing values for <code>sei</code>, <code>zi</code>, <code>ci.lb</code>, and <code>ci.ub</code> in the data frame should be replaced or not. Only relevant when the data frame already contains these variables. If <code>replace=TRUE</code> (the default), all of the existing values will be overwritten. If <code>replace=FALSE</code>, only <code>NA</code> values will be replaced.</p></dd>
-</dl><p></p>
-<dl><dt>level</dt><dd><p>numeric value between 0 and 100 to specify the confidence interval level (the default is 95).</p></dd>
-</dl><p></p>
-<dl><dt>olim</dt><dd><p>optional argument to specify observation/outcome limits. If unspecified, no limits are used.</p></dd>
-</dl><p></p>
-<dl><dt>transf</dt><dd><p>optional argument to specify a function that should be used to transform the observed effect sizes or outcomes and interval bounds (e.g., <code>transf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used. Any additional arguments needed for the function specified here can be passed via <code>...</code>.</p></dd>
-</dl><p></p>
-<dl><dt>...</dt><dd><p>other arguments.</p></dd>
+    <dl><dt>x</dt>
+<dd><p>an object of class <code>"escalc"</code>.</p></dd>
+<dt>object</dt>
+<dd><p>an object of class <code>"escalc"</code>.</p></dd>
+<dt>digits</dt>
+<dd><p>integer to specify the number of decimal places to which the printed results should be rounded (the default is to take the value from the object).</p></dd>
+<dt>out.names</dt>
+<dd><p>character string with four elements to specify the variable names for the standard errors, test statistics, and lower/upper confidence interval bounds.</p></dd>
+<dt>var.names</dt>
+<dd><p>character string with two elements to specify the variable names for the observed effect sizes or outcomes and the sampling variances (the default is to take the value from the object if possible).</p></dd>
+<dt>H0</dt>
+<dd><p>numeric value to specify the value of the effect size or outcome under the null hypothesis (the default is 0).</p></dd>
+<dt>append</dt>
+<dd><p>logical to specify whether the data frame specified via the <code>object</code> argument should be returned together with the additional variables that are calculated by the <code>summary</code> function (the default is <code>TRUE</code>).</p></dd>
+<dt>replace</dt>
+<dd><p>logical to specify whether existing values for <code>sei</code>, <code>zi</code>, <code>ci.lb</code>, and <code>ci.ub</code> in the data frame should be replaced or not. Only relevant when the data frame already contains these variables. If <code>replace=TRUE</code> (the default), all of the existing values will be overwritten. If <code>replace=FALSE</code>, only <code>NA</code> values will be replaced.</p></dd>
+<dt>level</dt>
+<dd><p>numeric value between 0 and 100 to specify the confidence interval level (the default is 95).</p></dd>
+<dt>olim</dt>
+<dd><p>optional argument to specify observation/outcome limits. If unspecified, no limits are used.</p></dd>
+<dt>transf</dt>
+<dd><p>optional argument to specify a function that should be used to transform the observed effect sizes or outcomes and interval bounds (e.g., <code>transf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used. Any additional arguments needed for the function specified here can be passed via <code>...</code>.</p></dd>
+<dt>...</dt>
+<dd><p>other arguments.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>The <code>print.escalc</code> function formats and prints the data frame, so that the observed effect sizes or outcomes and sampling variances are rounded (to the number of digits specified).</p>
-<p>The <code>summary.escalc</code> function creates an object that is a data frame containing the original data (if <code>append=TRUE</code>) and the following components:</p>
-<dl><dt>yi</dt><dd><p>observed effect sizes or outcomes (transformed if <code>transf</code> is specified).</p></dd>
-</dl><p></p>
-<dl><dt>vi</dt><dd><p>corresponding sampling variances.</p></dd>
-</dl><p></p>
-<dl><dt>sei</dt><dd><p>correponding standard errors.</p></dd>
-</dl><p></p>
-<dl><dt>zi</dt><dd><p>test statistics for testing \(\mbox{H}_0{:}\; \theta_i = \mbox{H0}\) (i.e., <code>(yi-H0)/sei</code>).</p></dd>
-</dl><p></p>
-<dl><dt>pval</dt><dd><p>corresponding p-values.</p></dd>
-</dl><p></p>
-<dl><dt>ci.lb</dt><dd><p>lower confidence interval bounds (transformed if <code>transf</code> is specified).</p></dd>
-</dl><p></p>
-<dl><dt>ci.ub</dt><dd><p>upper confidence interval bounds (transformed if <code>transf</code> is specified).</p></dd>
-</dl><p>When the <code>transf</code> argument is specified, elements <code>vi</code>, <code>sei</code>, <code>zi</code>, and <code>pval</code> are not included (since these only apply to the untransformed effect sizes or outcomes).</p>
-<p>Note that the actual variable names above depend on the <code>out.names</code> (and <code>var.names</code>) arguments. If the data frame already contains variables with names as specified by the <code>out.names</code> argument, the values for these variables will be overwritten when <code>replace=TRUE</code> (which is the default). By setting <code>replace=FALSE</code>, only values that are <code>NA</code> will be replaced.</p>
-<p>The <code>print.escalc</code> function again formats and prints the data frame, rounding the added variables to the number of digits specified.</p>
+    <p>The <code>print.escalc</code> function formats and prints the data frame, so that the observed effect sizes or outcomes and sampling variances are rounded (to the number of digits specified).
+   The <code>summary.escalc</code> function creates an object that is a data frame containing the original data (if <code>append=TRUE</code>) and the following components:</p>
+<dl><dt>yi</dt>
+<dd><p>observed effect sizes or outcomes (transformed if <code>transf</code> is specified).</p></dd>
+<dt>vi</dt>
+<dd><p>corresponding sampling variances.</p></dd>
+<dt>sei</dt>
+<dd><p>correponding standard errors.</p></dd>
+<dt>zi</dt>
+<dd><p>test statistics for testing \(\mbox{H}_0{:}\; \theta_i = \mbox{H0}\) (i.e., <code>(yi-H0)/sei</code>).</p></dd>
+<dt>pval</dt>
+<dd><p>corresponding p-values.</p></dd>
+<dt>ci.lb</dt>
+<dd><p>lower confidence interval bounds (transformed if <code>transf</code> is specified).</p></dd>
+<dt>ci.ub</dt>
+<dd><p>upper confidence interval bounds (transformed if <code>transf</code> is specified).</p></dd>
+</dl><p>When the <code>transf</code> argument is specified, elements <code>vi</code>, <code>sei</code>, <code>zi</code>, and <code>pval</code> are not included (since these only apply to the untransformed effect sizes or outcomes).
+   Note that the actual variable names above depend on the <code>out.names</code> (and <code>var.names</code>) arguments. If the data frame already contains variables with names as specified by the <code>out.names</code> argument, the values for these variables will be overwritten when <code>replace=TRUE</code> (which is the default). By setting <code>replace=FALSE</code>, only values that are <code>NA</code> will be replaced.
+   The <code>print.escalc</code> function again formats and prints the data frame, rounding the added variables to the number of digits specified.</p>
     </div>
     <div id="note">
     <h2>Note</h2>

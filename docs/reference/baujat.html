@@ -103,26 +103,26 @@
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <p></p>
-<dl><dt>x</dt><dd><p>an object of class <code>"rma"</code>.</p></dd>
-</dl><p></p>
-<dl><dt>xlim</dt><dd><p>x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.</p></dd>
-</dl><p></p>
-<dl><dt>ylim</dt><dd><p>y-axis limits. If unspecified, the function tries to set the y-axis limits to some sensible values.</p></dd>
-</dl><p></p>
-<dl><dt>xlab</dt><dd><p>title for the x-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
-</dl><p></p>
-<dl><dt>ylab</dt><dd><p>title for the y-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
-</dl><p></p>
-<dl><dt>cex</dt><dd><p>optional character expansion factor. If unspecified, the function tries to set this to a sensible value.</p></dd>
-</dl><p></p>
-<dl><dt>symbol</dt><dd><p>either an integer to specify the <code>pch</code> value (i.e., plotting symbol), or <code>"slab"</code> to plot the study labels, or <code>"ids"</code> (the default) to plot the study id numbers.</p></dd>
-</dl><p></p>
-<dl><dt>grid</dt><dd><p>logical to specify whether a grid should be added to the plot (can also be a color name).</p></dd>
-</dl><p></p>
-<dl><dt>progbar</dt><dd><p>logical to specify whether a progress bar should be shown (the default is <code>FALSE</code>).</p></dd>
-</dl><p></p>
-<dl><dt>...</dt><dd><p>other arguments.</p></dd>
+    <dl><dt>x</dt>
+<dd><p>an object of class <code>"rma"</code>.</p></dd>
+<dt>xlim</dt>
+<dd><p>x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.</p></dd>
+<dt>ylim</dt>
+<dd><p>y-axis limits. If unspecified, the function tries to set the y-axis limits to some sensible values.</p></dd>
+<dt>xlab</dt>
+<dd><p>title for the x-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
+<dt>ylab</dt>
+<dd><p>title for the y-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
+<dt>cex</dt>
+<dd><p>optional character expansion factor. If unspecified, the function tries to set this to a sensible value.</p></dd>
+<dt>symbol</dt>
+<dd><p>either an integer to specify the <code>pch</code> value (i.e., plotting symbol), or <code>"slab"</code> to plot the study labels, or <code>"ids"</code> (the default) to plot the study id numbers.</p></dd>
+<dt>grid</dt>
+<dd><p>logical to specify whether a grid should be added to the plot (can also be a color name).</p></dd>
+<dt>progbar</dt>
+<dd><p>logical to specify whether a progress bar should be shown (the default is <code>FALSE</code>).</p></dd>
+<dt>...</dt>
+<dd><p>other arguments.</p></dd>
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -134,13 +134,14 @@
     <div id="value">
     <h2>Value</h2>
     <p>A data frame with components:</p>
-<dl><dt>x</dt><dd><p>the x-axis coordinates of the points that were plotted.</p></dd>
-</dl><p></p>
-<dl><dt>y</dt><dd><p>the y-axis coordinates of the points that were plotted.</p></dd>
-</dl><p></p>
-<dl><dt>ids</dt><dd><p>the study id numbers.</p></dd>
-</dl><p></p>
-<dl><dt>slab</dt><dd><p>the study labels.</p></dd>
+<dl><dt>x</dt>
+<dd><p>the x-axis coordinates of the points that were plotted.</p></dd>
+<dt>y</dt>
+<dd><p>the y-axis coordinates of the points that were plotted.</p></dd>
+<dt>ids</dt>
+<dd><p>the study id numbers.</p></dd>
+<dt>slab</dt>
+<dd><p>the study labels.</p></dd>
 </dl><p>Note that the data frame is returned invisibly.</p>
     </div>
     <div id="author">
@@ -173,19 +174,19 @@
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### create Baujat plot</span></span>
 <span class="r-in"><span class="fu">baujat</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
-<span class="r-plt"><img src="baujat-1.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="baujat-1.png" alt="" width="864" height="768"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### some variations of the plotting symbol</span></span>
 <span class="r-in"><span class="fu">baujat</span><span class="op">(</span><span class="va">res</span>, symbol<span class="op">=</span><span class="fl">19</span><span class="op">)</span></span>
-<span class="r-plt"><img src="baujat-2.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="baujat-2.png" alt="" width="864" height="768"></span>
 <span class="r-in"><span class="fu">baujat</span><span class="op">(</span><span class="va">res</span>, symbol<span class="op">=</span><span class="st">"slab"</span><span class="op">)</span></span>
-<span class="r-plt"><img src="baujat-3.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="baujat-3.png" alt="" width="864" height="768"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### label only a selection of the more 'extreme' points</span></span>
 <span class="r-in"><span class="va">sav</span> <span class="op">&lt;-</span> <span class="fu">baujat</span><span class="op">(</span><span class="va">res</span>, symbol<span class="op">=</span><span class="fl">19</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">20</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">sav</span> <span class="op">&lt;-</span> <span class="va">sav</span><span class="op">[</span><span class="va">sav</span><span class="op">$</span><span class="va">x</span> <span class="op">&gt;=</span> <span class="fl">10</span> <span class="op">|</span> <span class="va">sav</span><span class="op">$</span><span class="va">y</span> <span class="op">&gt;=</span> <span class="fl">0.10</span>,<span class="op">]</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/text.html" class="external-link">text</a></span><span class="op">(</span><span class="va">sav</span><span class="op">$</span><span class="va">x</span>, <span class="va">sav</span><span class="op">$</span><span class="va">y</span>, <span class="va">sav</span><span class="op">$</span><span class="va">slab</span>, pos<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
-<span class="r-plt"><img src="baujat-4.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="baujat-4.png" alt="" width="864" height="768"></span>
 </code></pre></div>
     </div>
   </div>

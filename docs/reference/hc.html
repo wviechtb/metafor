@@ -103,18 +103,18 @@
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <p></p>
-<dl><dt>object</dt><dd><p>an object of class <code>"rma.uni"</code>.</p></dd>
-</dl><p></p>
-<dl><dt>digits</dt><dd><p>integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.</p></dd>
-</dl><p></p>
-<dl><dt>transf</dt><dd><p>optional argument to specify a function that should be used to transform the estimate and the corresponding interval bounds (e.g., <code>transf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
-</dl><p></p>
-<dl><dt>targs</dt><dd><p>optional arguments needed by the function specified under <code>transf</code>.</p></dd>
-</dl><p></p>
-<dl><dt>control</dt><dd><p>list of control values for the iterative algorithm. If unspecified, default values are defined inside the function. See ‘Note’.</p></dd>
-</dl><p></p>
-<dl><dt>...</dt><dd><p>other arguments.</p></dd>
+    <dl><dt>object</dt>
+<dd><p>an object of class <code>"rma.uni"</code>.</p></dd>
+<dt>digits</dt>
+<dd><p>integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.</p></dd>
+<dt>transf</dt>
+<dd><p>optional argument to specify a function that should be used to transform the estimate and the corresponding interval bounds (e.g., <code>transf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
+<dt>targs</dt>
+<dd><p>optional arguments needed by the function specified under <code>transf</code>.</p></dd>
+<dt>control</dt>
+<dd><p>list of control values for the iterative algorithm. If unspecified, default values are defined inside the function. See ‘Note’.</p></dd>
+<dt>...</dt>
+<dd><p>other arguments.</p></dd>
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -125,15 +125,16 @@
     <div id="value">
     <h2>Value</h2>
     <p>An object of class <code>"hc.rma.uni"</code>. The object is a list containing the following components:</p>
-<dl><dt>beta</dt><dd><p>estimated average true outcome.</p></dd>
-</dl><p></p>
-<dl><dt>se</dt><dd><p>corresponding standard error.</p></dd>
-</dl><p></p>
-<dl><dt>ci.lb</dt><dd><p>lower bound of the confidence intervals for the average true outcome.</p></dd>
-</dl><p></p>
-<dl><dt>ci.ub</dt><dd><p>upper bound of the confidence intervals for the average true outcome.</p></dd>
-</dl><p></p>
-<dl><dt>...</dt><dd><p>some additional elements/values.</p></dd>
+<dl><dt>beta</dt>
+<dd><p>estimated average true outcome.</p></dd>
+<dt>se</dt>
+<dd><p>corresponding standard error.</p></dd>
+<dt>ci.lb</dt>
+<dd><p>lower bound of the confidence intervals for the average true outcome.</p></dd>
+<dt>ci.ub</dt>
+<dd><p>upper bound of the confidence intervals for the average true outcome.</p></dd>
+<dt>...</dt>
+<dd><p>some additional elements/values.</p></dd>
 </dl><p>The results are formatted and printed with the <code><a href="print.hc.rma.uni.html">print.hc.rma.uni</a></code> function.</p>
     </div>
     <div id="note">
@@ -203,7 +204,7 @@
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### funnel plot as in Henmi and Copas (2010)</span></span>
 <span class="r-in"><span class="fu"><a href="funnel.html">funnel</a></span><span class="op">(</span><span class="va">res</span>, yaxis<span class="op">=</span><span class="st">"seinv"</span>, refline<span class="op">=</span><span class="fl">0</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3</span>,<span class="fl">3</span><span class="op">)</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.5</span>,<span class="fl">3.5</span><span class="op">)</span>, steps<span class="op">=</span><span class="fl">7</span>, digits<span class="op">=</span><span class="fl">1</span>, back<span class="op">=</span><span class="st">"white"</span><span class="op">)</span></span>
-<span class="r-plt"><img src="hc-1.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="hc-1.png" alt="" width="864" height="768"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### use method by Henmi and Copas (2010) as a sensitivity analysis</span></span>
 <span class="r-in"><span class="fu">hc</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>

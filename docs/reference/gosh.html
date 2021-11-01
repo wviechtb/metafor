@@ -103,20 +103,20 @@
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <p></p>
-<dl><dt>x</dt><dd><p>an object of class <code>"rma"</code>.</p></dd>
-</dl><p></p>
-<dl><dt>subsets</dt><dd><p>optional integer to specify the number of subsets.</p></dd>
-</dl><p></p>
-<dl><dt>progbar</dt><dd><p>logical to specify whether a progress bar should be shown (the default is <code>TRUE</code>).</p></dd>
-</dl><p></p>
-<dl><dt>parallel</dt><dd><p>character string to specify whether parallel processing should be used (the default is <code>"no"</code>). For parallel processing, set to either <code>"snow"</code> or <code>"multicore"</code>. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>ncpus</dt><dd><p>integer to specify the number of processes to use in the parallel processing.</p></dd>
-</dl><p></p>
-<dl><dt>cl</dt><dd><p>optional cluster to use if <code>parallel="snow"</code>. If unspecified, a cluster on the local machine is created for the duration of the call.</p></dd>
-</dl><p></p>
-<dl><dt>...</dt><dd><p>other arguments.</p></dd>
+    <dl><dt>x</dt>
+<dd><p>an object of class <code>"rma"</code>.</p></dd>
+<dt>subsets</dt>
+<dd><p>optional integer to specify the number of subsets.</p></dd>
+<dt>progbar</dt>
+<dd><p>logical to specify whether a progress bar should be shown (the default is <code>TRUE</code>).</p></dd>
+<dt>parallel</dt>
+<dd><p>character string to specify whether parallel processing should be used (the default is <code>"no"</code>). For parallel processing, set to either <code>"snow"</code> or <code>"multicore"</code>. See ‘Details’.</p></dd>
+<dt>ncpus</dt>
+<dd><p>integer to specify the number of processes to use in the parallel processing.</p></dd>
+<dt>cl</dt>
+<dd><p>optional cluster to use if <code>parallel="snow"</code>. If unspecified, a cluster on the local machine is created for the duration of the call.</p></dd>
+<dt>...</dt>
+<dd><p>other arguments.</p></dd>
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -130,11 +130,12 @@
     <div id="value">
     <h2>Value</h2>
     <p>An object of class <code>"gosh.rma"</code>. The object is a list containing the following components:</p>
-<dl><dt>res</dt><dd><p>a data frame with the results for each subset (various heterogeneity statistics and the model coefficient(s)).</p></dd>
-</dl><p></p>
-<dl><dt>incl</dt><dd><p>a matrix indicating which studies were included in which subset.</p></dd>
-</dl><p></p>
-<dl><dt>...</dt><dd><p>some additional elements/values.</p></dd>
+<dl><dt>res</dt>
+<dd><p>a data frame with the results for each subset (various heterogeneity statistics and the model coefficient(s)).</p></dd>
+<dt>incl</dt>
+<dd><p>a matrix indicating which studies were included in which subset.</p></dd>
+<dt>...</dt>
+<dd><p>some additional elements/values.</p></dd>
 </dl><p>The results can be printed with the <code><a href="print.gosh.rma.html">print.gosh.rma</a></code> function and plotted with the <code><a href="plot.gosh.rma.html">plot.gosh.rma</a></code> function.</p>
     </div>
     <div id="author">
@@ -181,7 +182,7 @@
 <span class="r-in"><span class="co">### red points for subsets that include and blue points</span></span>
 <span class="r-in"><span class="co">### for subsets that exclude study 16 (the ISIS-4 trial)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sav</span>, out<span class="op">=</span><span class="fl">16</span>, breaks<span class="op">=</span><span class="fl">100</span><span class="op">)</span><span class="co"># }</span></span>
-<span class="r-plt"><img src="gosh-1.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="gosh-1.png" alt="" width="864" height="768"></span>
 </code></pre></div>
     </div>
   </div>

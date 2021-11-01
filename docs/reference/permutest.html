@@ -104,24 +104,24 @@
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <p></p>
-<dl><dt>x</dt><dd><p>an object of class <code>"rma.uni"</code>.</p></dd>
-</dl><p></p>
-<dl><dt>exact</dt><dd><p>logical to specify whether an exact permutation test should be carried out or not (the default is <code>FALSE</code>). See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>iter</dt><dd><p>integer to specify the number of iterations for the permutation test when not doing an exact test (the default is <code>1000</code> iterations).</p></dd>
-</dl><p></p>
-<dl><dt>permci</dt><dd><p>logical to specify whether permutation-based CIs should also be calculated (the default is <code>FALSE</code>). Can also be a vector of indices to specify for which coefficients a permutation-based CI should be obtained.</p></dd>
-</dl><p></p>
-<dl><dt>progbar</dt><dd><p>logical to specify whether a progress bar should be shown (the default is <code>TRUE</code>).</p></dd>
-</dl><p></p>
-<dl><dt>retpermdist</dt><dd><p>logical to specify whether the permutation distributions of the test statistics should be returned (the default is <code>FALSE</code>).</p></dd>
-</dl><p></p>
-<dl><dt>digits</dt><dd><p>integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.</p></dd>
-</dl><p></p>
-<dl><dt>control</dt><dd><p>list of control values for numerical comparisons (<code>comptol</code>) and for <code>uniroot</code> (i.e., <code>tol</code> and <code>maxiter</code>). The latter is only relevant when <code>permci=TRUE</code>. See ‘Note’.</p></dd>
-</dl><p></p>
-<dl><dt>...</dt><dd><p>other arguments.</p></dd>
+    <dl><dt>x</dt>
+<dd><p>an object of class <code>"rma.uni"</code>.</p></dd>
+<dt>exact</dt>
+<dd><p>logical to specify whether an exact permutation test should be carried out or not (the default is <code>FALSE</code>). See ‘Details’.</p></dd>
+<dt>iter</dt>
+<dd><p>integer to specify the number of iterations for the permutation test when not doing an exact test (the default is <code>1000</code> iterations).</p></dd>
+<dt>permci</dt>
+<dd><p>logical to specify whether permutation-based CIs should also be calculated (the default is <code>FALSE</code>). Can also be a vector of indices to specify for which coefficients a permutation-based CI should be obtained.</p></dd>
+<dt>progbar</dt>
+<dd><p>logical to specify whether a progress bar should be shown (the default is <code>TRUE</code>).</p></dd>
+<dt>retpermdist</dt>
+<dd><p>logical to specify whether the permutation distributions of the test statistics should be returned (the default is <code>FALSE</code>).</p></dd>
+<dt>digits</dt>
+<dd><p>integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.</p></dd>
+<dt>control</dt>
+<dd><p>list of control values for numerical comparisons (<code>comptol</code>) and for <code>uniroot</code> (i.e., <code>tol</code> and <code>maxiter</code>). The latter is only relevant when <code>permci=TRUE</code>. See ‘Note’.</p></dd>
+<dt>...</dt>
+<dd><p>other arguments.</p></dd>
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -137,21 +137,22 @@
     <div id="value">
     <h2>Value</h2>
     <p>An object of class <code>"permutest.rma.uni"</code>. The object is a list containing the following components:</p>
-<dl><dt>pval</dt><dd><p>p-value(s) based on the permutation test.</p></dd>
-</dl><p></p>
-<dl><dt>QMp</dt><dd><p>p-value for the omnibus test of moderators based on the permutation test.</p></dd>
-</dl><p></p>
-<dl><dt>zval.perm</dt><dd><p>values of the test statistics of the coefficients under the various permutations (only when <code>retpermdist=TRUE</code>).</p></dd>
-</dl><p></p>
-<dl><dt>b.perm</dt><dd><p>the model coefficients under the various permutations (only when <code>retpermdist=TRUE</code>).</p></dd>
-</dl><p></p>
-<dl><dt>QM.perm</dt><dd><p>the test statistic of the omnibus test of moderators under the various permutations (only when <code>retpermdist=TRUE</code>).</p></dd>
-</dl><p></p>
-<dl><dt>ci.lb</dt><dd><p>lower bound of the confidence intervals for the coefficients (permutation-based when <code>permci=TRUE</code>).</p></dd>
-</dl><p></p>
-<dl><dt>ci.ub</dt><dd><p>upper bound of the confidence intervals for the coefficients (permutation-based when <code>permci=TRUE</code>).</p></dd>
-</dl><p></p>
-<dl><dt>...</dt><dd><p>some additional elements/values are passed on.</p></dd>
+<dl><dt>pval</dt>
+<dd><p>p-value(s) based on the permutation test.</p></dd>
+<dt>QMp</dt>
+<dd><p>p-value for the omnibus test of moderators based on the permutation test.</p></dd>
+<dt>zval.perm</dt>
+<dd><p>values of the test statistics of the coefficients under the various permutations (only when <code>retpermdist=TRUE</code>).</p></dd>
+<dt>b.perm</dt>
+<dd><p>the model coefficients under the various permutations (only when <code>retpermdist=TRUE</code>).</p></dd>
+<dt>QM.perm</dt>
+<dd><p>the test statistic of the omnibus test of moderators under the various permutations (only when <code>retpermdist=TRUE</code>).</p></dd>
+<dt>ci.lb</dt>
+<dd><p>lower bound of the confidence intervals for the coefficients (permutation-based when <code>permci=TRUE</code>).</p></dd>
+<dt>ci.ub</dt>
+<dd><p>upper bound of the confidence intervals for the coefficients (permutation-based when <code>permci=TRUE</code>).</p></dd>
+<dt>...</dt>
+<dd><p>some additional elements/values are passed on.</p></dd>
 </dl><p>The results are formatted and printed with the <code><a href="print.permutest.rma.uni.html">print.permutest.rma.uni</a></code> function. One can also use <code><a href="coef.permutest.rma.uni.html">coef.permutest.rma.uni</a></code> to obtain the table with the model coefficients, corresponding standard errors, test statistics, p-values, and confidence interval bounds.</p>
     </div>
     <div id="note">
@@ -300,7 +301,7 @@
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v<span class="op">=</span><span class="fl">0</span>, lwd<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/curve.html" class="external-link">curve</a></span><span class="op">(</span><span class="va">dnorm</span>, from<span class="op">=</span><span class="op">-</span><span class="fl">5</span>, to<span class="op">=</span><span class="fl">5</span>, add<span class="op">=</span><span class="cn">TRUE</span>, lwd<span class="op">=</span><span class="fl">2</span>, col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/grDevices/rgb.html" class="external-link">rgb</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">0</span>,alpha<span class="op">=</span><span class="fl">.7</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/density.html" class="external-link">density</a></span><span class="op">(</span><span class="va">permres</span><span class="op">$</span><span class="va">zval.perm</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span><span class="op">)</span>, lwd<span class="op">=</span><span class="fl">2</span>, col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/grDevices/rgb.html" class="external-link">rgb</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">1</span>,alpha<span class="op">=</span><span class="fl">.7</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-plt"><img src="permutest-1.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="permutest-1.png" alt="" width="864" height="768"></span>
 <span class="r-in"><span class="co"># }</span></span>
 </code></pre></div>
     </div>

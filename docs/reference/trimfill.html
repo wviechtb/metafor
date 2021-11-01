@@ -103,20 +103,20 @@
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <p></p>
-<dl><dt>x</dt><dd><p>an object of class <code>"rma.uni"</code>.</p></dd>
-</dl><p></p>
-<dl><dt>side</dt><dd><p>optional character string (either <code>"left"</code> or <code>"right"</code>) to specify on which side of the funnel plot the missing studies should be imputed. If left unspecified, the side is chosen within the function depending on the results of Egger's regression test (see <code><a href="regtest.html">regtest</a></code> for details on this test).</p></dd>
-</dl><p></p>
-<dl><dt>estimator</dt><dd><p>character string (either <code>"L0"</code>, <code>"R0"</code>, or <code>"Q0"</code>) to specify the estimator to use for estimating the number of missing studies (the default is <code>"L0"</code>).</p></dd>
-</dl><p></p>
-<dl><dt>maxiter</dt><dd><p>integer to specify the maximum number of iterations to use for the trim and fill method (the default is <code>100</code>).</p></dd>
-</dl><p></p>
-<dl><dt>verbose</dt><dd><p>logical to specify whether output should be generated on the progress of the iterative algorithm used as part of the trim and fill method (the default is <code>FALSE</code>).</p></dd>
-</dl><p></p>
-<dl><dt>ilim</dt><dd><p>limits for the imputed values. If unspecified, no limits are used.</p></dd>
-</dl><p></p>
-<dl><dt>...</dt><dd><p>other arguments.</p></dd>
+    <dl><dt>x</dt>
+<dd><p>an object of class <code>"rma.uni"</code>.</p></dd>
+<dt>side</dt>
+<dd><p>optional character string (either <code>"left"</code> or <code>"right"</code>) to specify on which side of the funnel plot the missing studies should be imputed. If left unspecified, the side is chosen within the function depending on the results of Egger's regression test (see <code><a href="regtest.html">regtest</a></code> for details on this test).</p></dd>
+<dt>estimator</dt>
+<dd><p>character string (either <code>"L0"</code>, <code>"R0"</code>, or <code>"Q0"</code>) to specify the estimator to use for estimating the number of missing studies (the default is <code>"L0"</code>).</p></dd>
+<dt>maxiter</dt>
+<dd><p>integer to specify the maximum number of iterations to use for the trim and fill method (the default is <code>100</code>).</p></dd>
+<dt>verbose</dt>
+<dd><p>logical to specify whether output should be generated on the progress of the iterative algorithm used as part of the trim and fill method (the default is <code>FALSE</code>).</p></dd>
+<dt>ilim</dt>
+<dd><p>limits for the imputed values. If unspecified, no limits are used.</p></dd>
+<dt>...</dt>
+<dd><p>other arguments.</p></dd>
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -125,19 +125,20 @@
     <div id="value">
     <h2>Value</h2>
     <p>An object of class <code>c("rma.uni.trimfill","rma.uni","rma")</code>. The object is a list containing the same components as objects created by <code><a href="rma.uni.html">rma.uni</a></code>, except that the data are augmented by the trim and fill method. The following components are also added:</p>
-<dl><dt>k0</dt><dd><p>estimated number of missing studies.</p></dd>
-</dl><p></p>
-<dl><dt>side</dt><dd><p>either <code>"left"</code> or <code>"right"</code>, indicating on which side of the funnel plot the missing studies (if any) were imputed.</p></dd>
-</dl><p></p>
-<dl><dt>se.k0</dt><dd><p>standard error of k0.</p></dd>
-</dl><p></p>
-<dl><dt>p.k0</dt><dd><p>p-value for the test of \(\mbox{H}_0\): no missing studies on the chosen side (only when <code>estimator="R0"</code>; <code>NA</code> otherwise).</p></dd>
-</dl><p></p>
-<dl><dt>yi</dt><dd><p>the observed effect sizes or outcomes plus the augmented values (if there are any).</p></dd>
-</dl><p></p>
-<dl><dt>vi</dt><dd><p>the corresponding sampling variances</p></dd>
-</dl><p></p>
-<dl><dt>fill</dt><dd><p>a logical vector indicating which of the values in <code>yi</code> are the observed (<code>FALSE</code>) and the augmented (<code>TRUE</code>) data.</p></dd>
+<dl><dt>k0</dt>
+<dd><p>estimated number of missing studies.</p></dd>
+<dt>side</dt>
+<dd><p>either <code>"left"</code> or <code>"right"</code>, indicating on which side of the funnel plot the missing studies (if any) were imputed.</p></dd>
+<dt>se.k0</dt>
+<dd><p>standard error of k0.</p></dd>
+<dt>p.k0</dt>
+<dd><p>p-value for the test of \(\mbox{H}_0\): no missing studies on the chosen side (only when <code>estimator="R0"</code>; <code>NA</code> otherwise).</p></dd>
+<dt>yi</dt>
+<dd><p>the observed effect sizes or outcomes plus the augmented values (if there are any).</p></dd>
+<dt>vi</dt>
+<dd><p>the corresponding sampling variances</p></dd>
+<dt>fill</dt>
+<dd><p>a logical vector indicating which of the values in <code>yi</code> are the observed (<code>FALSE</code>) and the augmented (<code>TRUE</code>) data.</p></dd>
 </dl><p>The results of the fitted model after the data augmentation are printed with the <code><a href="print.rma.html">print.rma.uni</a></code> function. Calling <code><a href="funnel.html">funnel.rma</a></code> on the object provides a funnel plot of the observed and augmented data.</p>
     </div>
     <div id="note">
@@ -192,7 +193,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span class="fu"><a href="funnel.html">funnel</a></span><span class="op">(</span><span class="va">res.tf</span>, legend<span class="op">=</span><span class="cn">TRUE</span>, cex<span class="op">=</span><span class="fl">1.2</span><span class="op">)</span></span>
-<span class="r-plt"><img src="trimfill-1.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="trimfill-1.png" alt="" width="864" height="768"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### estimator "R0" also provides test</span></span>
 <span class="r-in"><span class="va">res.tf</span> <span class="op">&lt;-</span> <span class="fu">trimfill</span><span class="op">(</span><span class="va">res</span>, estimator<span class="op">=</span><span class="st">"R0"</span><span class="op">)</span></span>
@@ -244,7 +245,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span class="fu"><a href="funnel.html">funnel</a></span><span class="op">(</span><span class="va">res.tf</span>, legend<span class="op">=</span><span class="cn">TRUE</span>, cex<span class="op">=</span><span class="fl">1.2</span><span class="op">)</span></span>
-<span class="r-plt"><img src="trimfill-2.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="trimfill-2.png" alt="" width="864" height="768"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### the examples above are fixed-fixed and random-random approaches</span></span>
 <span class="r-in"></span>

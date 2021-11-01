@@ -111,100 +111,100 @@
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <p></p>
-<dl><dt>yi</dt><dd><p>vector of length \(k\) with the observed effect sizes or outcomes. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>vi</dt><dd><p>vector of length \(k\) with the corresponding sampling variances. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>sei</dt><dd><p>vector of length \(k\) with the corresponding standard errors (only relevant when not using <code>vi</code>). See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>weights</dt><dd><p>optional argument to specify a vector of length \(k\) with user-defined weights. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>ai</dt><dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-</dl><p></p>
-<dl><dt>bi</dt><dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-</dl><p></p>
-<dl><dt>ci</dt><dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-</dl><p></p>
-<dl><dt>di</dt><dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-</dl><p></p>
-<dl><dt>n1i</dt><dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-</dl><p></p>
-<dl><dt>n2i</dt><dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-</dl><p></p>
-<dl><dt>x1i</dt><dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-</dl><p></p>
-<dl><dt>x2i</dt><dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-</dl><p></p>
-<dl><dt>t1i</dt><dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-</dl><p></p>
-<dl><dt>t2i</dt><dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-</dl><p></p>
-<dl><dt>m1i</dt><dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-</dl><p></p>
-<dl><dt>m2i</dt><dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-</dl><p></p>
-<dl><dt>sd1i</dt><dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-</dl><p></p>
-<dl><dt>sd2i</dt><dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-</dl><p></p>
-<dl><dt>xi</dt><dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-</dl><p></p>
-<dl><dt>mi</dt><dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-</dl><p></p>
-<dl><dt>ri</dt><dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-</dl><p></p>
-<dl><dt>ti</dt><dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-</dl><p></p>
-<dl><dt>sdi</dt><dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-</dl><p></p>
-<dl><dt>r2i</dt><dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-</dl><p></p>
-<dl><dt>ni</dt><dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-</dl><p></p>
-<dl><dt>mods</dt><dd><p>optional argument to include one or more moderators in the model. A single moderator can be given as a vector of length \(k\) specifying the values of the moderator. Multiple moderators are specified by giving a matrix with \(k\) rows and as many columns as there are moderator variables. Alternatively, a model <code><a href="formula.rma.html">formula</a></code> can be used to specify the model. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>scale</dt><dd><p>optional argument to include one or more predictors for the scale part in a location-scale model. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>measure</dt><dd><p>character string to specify the type of data supplied to the function. When <code>measure="GEN"</code> (default), the observed effect sizes or outcomes and corresponding sampling variances (or standard errors) should be supplied to the function via the <code>yi</code>, <code>vi</code>, and <code>sei</code> arguments (only one of the two, <code>vi</code> or <code>sei</code>, needs to be specified). Alternatively, one can set <code>measure</code> to one of the effect size or outcome measures described under the documentation for the <code><a href="escalc.html">escalc</a></code> function in which case one must specify the required data via the appropriate arguments.</p></dd>
-</dl><p></p>
-<dl><dt>intercept</dt><dd><p>logical to specify whether an intercept should be added to the model (the default is <code>TRUE</code>). Ignored when <code>mods</code> is a formula.</p></dd>
-</dl><p></p>
-<dl><dt>data</dt><dd><p>optional data frame containing the data supplied to the function.</p></dd>
-</dl><p></p>
-<dl><dt>slab</dt><dd><p>optional vector with labels for the \(k\) studies.</p></dd>
-</dl><p></p>
-<dl><dt>subset</dt><dd><p>optional (logical or numeric) vector to specify the subset of studies that should be used for the analysis.</p></dd>
-</dl><p></p>
-<dl><dt>add</dt><dd><p>see the documentation of the <code><a href="escalc.html">escalc</a></code> function.</p></dd>
-</dl><p></p>
-<dl><dt>to</dt><dd><p>see the documentation of the <code><a href="escalc.html">escalc</a></code> function.</p></dd>
-</dl><p></p>
-<dl><dt>drop00</dt><dd><p>see the documentation of the <code><a href="escalc.html">escalc</a></code> function.</p></dd>
-</dl><p></p>
-<dl><dt>vtype</dt><dd><p>see the documentation of the <code><a href="escalc.html">escalc</a></code> function.</p></dd>
-</dl><p></p>
-<dl><dt>method</dt><dd><p>character string to specify whether a fixed- or a random/mixed-effects model should be fitted. A fixed-effects model (with or without moderators) is fitted when using <code>method="FE"</code>. Random/mixed-effects models are fitted by setting <code>method</code> equal to one of the following: <code>"DL"</code>, <code>"HE"</code>, <code>"HS"</code>, <code>"HSk"</code>, <code>"SJ"</code>, <code>"ML"</code>, <code>"REML"</code>, <code>"EB"</code>, <code>"PM"</code>, <code>"GENQ"</code>, <code>"PMM"</code>, or <code>"GENQM"</code>. Default is <code>"REML"</code>. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>weighted</dt><dd><p>logical to specify whether weighted (default) or unweighted estimation should be used to fit the model.</p></dd>
-</dl><p></p>
-<dl><dt>test</dt><dd><p>character string to specify how test statistics and confidence intervals for the fixed effects should be computed. By default (<code>test="z"</code>), Wald-type tests and CIs are obtained, which are based on a standard normal distribution. When <code>test="t"</code>, a t-distribution is used instead. When <code>test="knha"</code>, the method by Knapp and Hartung (2003) is used. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>level</dt><dd><p>numeric value between 0 and 100 to specify the confidence interval level (the default is 95).</p></dd>
-</dl><p></p>
-<dl><dt>digits</dt><dd><p>integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4.</p></dd>
-</dl><p></p>
-<dl><dt>btt</dt><dd><p>optional vector of indices to specify which coefficients to include in the omnibus test of moderators. Can also be a string to <code><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></code> for. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>att</dt><dd><p>optional vector of indices to specify which scale coefficients to include in the omnibus test. Only relevant for location-scale models. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>tau2</dt><dd><p>optional numeric value to specify the amount of (residual) heterogeneity in a random- or mixed-effects model (instead of estimating it). Useful for sensitivity analyses (e.g., for plotting results as a function of \(\tau^2\)). When unspecified, the value of \(\tau^2\) is estimated from the data.</p></dd>
-</dl><p></p>
-<dl><dt>verbose</dt><dd><p>logical to specify whether output should be generated on the progress of the model fitting (the default is <code>FALSE</code>). Can also be an integer. Values &gt; 1 generate more verbose output. See ‘Note’.</p></dd>
-</dl><p></p>
-<dl><dt>control</dt><dd><p>optional list of control values for the iterative estimation algorithms. If unspecified, default values are defined inside the function. See ‘Note’.</p></dd>
-</dl><p></p>
-<dl><dt>...</dt><dd><p>additional arguments.</p></dd>
+    <dl><dt>yi</dt>
+<dd><p>vector of length \(k\) with the observed effect sizes or outcomes. See ‘Details’.</p></dd>
+<dt>vi</dt>
+<dd><p>vector of length \(k\) with the corresponding sampling variances. See ‘Details’.</p></dd>
+<dt>sei</dt>
+<dd><p>vector of length \(k\) with the corresponding standard errors (only relevant when not using <code>vi</code>). See ‘Details’.</p></dd>
+<dt>weights</dt>
+<dd><p>optional argument to specify a vector of length \(k\) with user-defined weights. See ‘Details’.</p></dd>
+<dt>ai</dt>
+<dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
+<dt>bi</dt>
+<dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
+<dt>ci</dt>
+<dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
+<dt>di</dt>
+<dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
+<dt>n1i</dt>
+<dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
+<dt>n2i</dt>
+<dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
+<dt>x1i</dt>
+<dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
+<dt>x2i</dt>
+<dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
+<dt>t1i</dt>
+<dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
+<dt>t2i</dt>
+<dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
+<dt>m1i</dt>
+<dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
+<dt>m2i</dt>
+<dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
+<dt>sd1i</dt>
+<dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
+<dt>sd2i</dt>
+<dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
+<dt>xi</dt>
+<dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
+<dt>mi</dt>
+<dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
+<dt>ri</dt>
+<dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
+<dt>ti</dt>
+<dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
+<dt>sdi</dt>
+<dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
+<dt>r2i</dt>
+<dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
+<dt>ni</dt>
+<dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
+<dt>mods</dt>
+<dd><p>optional argument to include one or more moderators in the model. A single moderator can be given as a vector of length \(k\) specifying the values of the moderator. Multiple moderators are specified by giving a matrix with \(k\) rows and as many columns as there are moderator variables. Alternatively, a model <code><a href="formula.rma.html">formula</a></code> can be used to specify the model. See ‘Details’.</p></dd>
+<dt>scale</dt>
+<dd><p>optional argument to include one or more predictors for the scale part in a location-scale model. See ‘Details’.</p></dd>
+<dt>measure</dt>
+<dd><p>character string to specify the type of data supplied to the function. When <code>measure="GEN"</code> (default), the observed effect sizes or outcomes and corresponding sampling variances (or standard errors) should be supplied to the function via the <code>yi</code>, <code>vi</code>, and <code>sei</code> arguments (only one of the two, <code>vi</code> or <code>sei</code>, needs to be specified). Alternatively, one can set <code>measure</code> to one of the effect size or outcome measures described under the documentation for the <code><a href="escalc.html">escalc</a></code> function in which case one must specify the required data via the appropriate arguments.</p></dd>
+<dt>intercept</dt>
+<dd><p>logical to specify whether an intercept should be added to the model (the default is <code>TRUE</code>). Ignored when <code>mods</code> is a formula.</p></dd>
+<dt>data</dt>
+<dd><p>optional data frame containing the data supplied to the function.</p></dd>
+<dt>slab</dt>
+<dd><p>optional vector with labels for the \(k\) studies.</p></dd>
+<dt>subset</dt>
+<dd><p>optional (logical or numeric) vector to specify the subset of studies that should be used for the analysis.</p></dd>
+<dt>add</dt>
+<dd><p>see the documentation of the <code><a href="escalc.html">escalc</a></code> function.</p></dd>
+<dt>to</dt>
+<dd><p>see the documentation of the <code><a href="escalc.html">escalc</a></code> function.</p></dd>
+<dt>drop00</dt>
+<dd><p>see the documentation of the <code><a href="escalc.html">escalc</a></code> function.</p></dd>
+<dt>vtype</dt>
+<dd><p>see the documentation of the <code><a href="escalc.html">escalc</a></code> function.</p></dd>
+<dt>method</dt>
+<dd><p>character string to specify whether a fixed- or a random/mixed-effects model should be fitted. A fixed-effects model (with or without moderators) is fitted when using <code>method="FE"</code>. Random/mixed-effects models are fitted by setting <code>method</code> equal to one of the following: <code>"DL"</code>, <code>"HE"</code>, <code>"HS"</code>, <code>"HSk"</code>, <code>"SJ"</code>, <code>"ML"</code>, <code>"REML"</code>, <code>"EB"</code>, <code>"PM"</code>, <code>"GENQ"</code>, <code>"PMM"</code>, or <code>"GENQM"</code>. Default is <code>"REML"</code>. See ‘Details’.</p></dd>
+<dt>weighted</dt>
+<dd><p>logical to specify whether weighted (default) or unweighted estimation should be used to fit the model.</p></dd>
+<dt>test</dt>
+<dd><p>character string to specify how test statistics and confidence intervals for the fixed effects should be computed. By default (<code>test="z"</code>), Wald-type tests and CIs are obtained, which are based on a standard normal distribution. When <code>test="t"</code>, a t-distribution is used instead. When <code>test="knha"</code>, the method by Knapp and Hartung (2003) is used. See ‘Details’.</p></dd>
+<dt>level</dt>
+<dd><p>numeric value between 0 and 100 to specify the confidence interval level (the default is 95).</p></dd>
+<dt>digits</dt>
+<dd><p>integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4.</p></dd>
+<dt>btt</dt>
+<dd><p>optional vector of indices to specify which coefficients to include in the omnibus test of moderators. Can also be a string to <code><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></code> for. See ‘Details’.</p></dd>
+<dt>att</dt>
+<dd><p>optional vector of indices to specify which scale coefficients to include in the omnibus test. Only relevant for location-scale models. See ‘Details’.</p></dd>
+<dt>tau2</dt>
+<dd><p>optional numeric value to specify the amount of (residual) heterogeneity in a random- or mixed-effects model (instead of estimating it). Useful for sensitivity analyses (e.g., for plotting results as a function of \(\tau^2\)). When unspecified, the value of \(\tau^2\) is estimated from the data.</p></dd>
+<dt>verbose</dt>
+<dd><p>logical to specify whether output should be generated on the progress of the model fitting (the default is <code>FALSE</code>). Can also be an integer. Values &gt; 1 generate more verbose output. See ‘Note’.</p></dd>
+<dt>control</dt>
+<dd><p>optional list of control values for the iterative estimation algorithms. If unspecified, default values are defined inside the function. See ‘Note’.</p></dd>
+<dt>...</dt>
+<dd><p>additional arguments.</p></dd>
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -289,75 +289,77 @@
     <div id="value">
     <h2>Value</h2>
     <p>An object of class <code>c("rma.uni","rma")</code>. The object is a list containing the following components:</p>
-<dl><dt>beta</dt><dd><p>estimated coefficients of the model.</p></dd>
-</dl><p></p>
-<dl><dt>se</dt><dd><p>standard errors of the coefficients.</p></dd>
-</dl><p></p>
-<dl><dt>zval</dt><dd><p>test statistics of the coefficients.</p></dd>
-</dl><p></p>
-<dl><dt>pval</dt><dd><p>corresponding p-values.</p></dd>
-</dl><p></p>
-<dl><dt>ci.lb</dt><dd><p>lower bound of the confidence intervals for the coefficients.</p></dd>
-</dl><p></p>
-<dl><dt>ci.ub</dt><dd><p>upper bound of the confidence intervals for the coefficients.</p></dd>
-</dl><p></p>
-<dl><dt>vb</dt><dd><p>variance-covariance matrix of the estimated coefficients.</p></dd>
-</dl><p></p>
-<dl><dt>tau2</dt><dd><p>estimated amount of (residual) heterogeneity. Always <code>0</code> when <code>method="FE"</code>.</p></dd>
-</dl><p></p>
-<dl><dt>se.tau2</dt><dd><p>standard error of the estimated amount of (residual) heterogeneity.</p></dd>
-</dl><p></p>
-<dl><dt>k</dt><dd><p>number of studies included in the analysis.</p></dd>
-</dl><p></p>
-<dl><dt>p</dt><dd><p>number of coefficients in the model (including the intercept).</p></dd>
-</dl><p></p>
-<dl><dt>m</dt><dd><p>number of coefficients included in the omnibus test of moderators.</p></dd>
-</dl><p></p>
-<dl><dt>QE</dt><dd><p>test statistic of the test for (residual) heterogeneity.</p></dd>
-</dl><p></p>
-<dl><dt>QEp</dt><dd><p>corresponding p-value.</p></dd>
-</dl><p></p>
-<dl><dt>QM</dt><dd><p>test statistic of the omnibus test of moderators.</p></dd>
-</dl><p></p>
-<dl><dt>QMp</dt><dd><p>corresponding p-value.</p></dd>
-</dl><p></p>
-<dl><dt>I2</dt><dd><p>value of \(I^2\). See <code><a href="print.rma.html">print.rma.uni</a></code> for more details.</p></dd>
-</dl><p></p>
-<dl><dt>H2</dt><dd><p>value of \(H^2\). See <code><a href="print.rma.html">print.rma.uni</a></code> for more details.</p></dd>
-</dl><p></p>
-<dl><dt>R2</dt><dd><p>value of \(R^2\). See <code><a href="print.rma.html">print.rma.uni</a></code> for more details.</p></dd>
-</dl><p></p>
-<dl><dt>int.only</dt><dd><p>logical that indicates whether the model is an intercept-only model.</p></dd>
-</dl><p></p>
-<dl><dt>yi, vi, X</dt><dd><p>the vector of outcomes, the corresponding sampling variances, and the model matrix.</p></dd>
-</dl><p></p>
-<dl><dt>fit.stats</dt><dd><p>a list with the log-likelihood, deviance, AIC, BIC, and AICc values under the unrestricted and restricted likelihood.</p></dd>
-</dl><p></p>
-<dl><dt>...</dt><dd><p>some additional elements/values.</p></dd>
+<dl><dt>beta</dt>
+<dd><p>estimated coefficients of the model.</p></dd>
+<dt>se</dt>
+<dd><p>standard errors of the coefficients.</p></dd>
+<dt>zval</dt>
+<dd><p>test statistics of the coefficients.</p></dd>
+<dt>pval</dt>
+<dd><p>corresponding p-values.</p></dd>
+<dt>ci.lb</dt>
+<dd><p>lower bound of the confidence intervals for the coefficients.</p></dd>
+<dt>ci.ub</dt>
+<dd><p>upper bound of the confidence intervals for the coefficients.</p></dd>
+<dt>vb</dt>
+<dd><p>variance-covariance matrix of the estimated coefficients.</p></dd>
+<dt>tau2</dt>
+<dd><p>estimated amount of (residual) heterogeneity. Always <code>0</code> when <code>method="FE"</code>.</p></dd>
+<dt>se.tau2</dt>
+<dd><p>standard error of the estimated amount of (residual) heterogeneity.</p></dd>
+<dt>k</dt>
+<dd><p>number of studies included in the analysis.</p></dd>
+<dt>p</dt>
+<dd><p>number of coefficients in the model (including the intercept).</p></dd>
+<dt>m</dt>
+<dd><p>number of coefficients included in the omnibus test of moderators.</p></dd>
+<dt>QE</dt>
+<dd><p>test statistic of the test for (residual) heterogeneity.</p></dd>
+<dt>QEp</dt>
+<dd><p>corresponding p-value.</p></dd>
+<dt>QM</dt>
+<dd><p>test statistic of the omnibus test of moderators.</p></dd>
+<dt>QMp</dt>
+<dd><p>corresponding p-value.</p></dd>
+<dt>I2</dt>
+<dd><p>value of \(I^2\). See <code><a href="print.rma.html">print.rma.uni</a></code> for more details.</p></dd>
+<dt>H2</dt>
+<dd><p>value of \(H^2\). See <code><a href="print.rma.html">print.rma.uni</a></code> for more details.</p></dd>
+<dt>R2</dt>
+<dd><p>value of \(R^2\). See <code><a href="print.rma.html">print.rma.uni</a></code> for more details.</p></dd>
+<dt>int.only</dt>
+<dd><p>logical that indicates whether the model is an intercept-only model.</p></dd>
+<dt>yi, vi, X</dt>
+<dd><p>the vector of outcomes, the corresponding sampling variances, and the model matrix.</p></dd>
+<dt>fit.stats</dt>
+<dd><p>a list with the log-likelihood, deviance, AIC, BIC, and AICc values under the unrestricted and restricted likelihood.</p></dd>
+<dt>...</dt>
+<dd><p>some additional elements/values.</p></dd>
 </dl><p>For location-scale models, the object is of class <code>c("rma.ls","rma.uni","rma")</code> and includes the following components in addition to the ones listed above:</p>
-<dl><dt>alpha</dt><dd><p>estimated scale coefficients of the model.</p></dd>
-</dl><p></p>
-<dl><dt>se.alpha</dt><dd><p>standard errors of the coefficients.</p></dd>
-</dl><p></p>
-<dl><dt>zval.alpha</dt><dd><p>test statistics of the coefficients.</p></dd>
-</dl><p></p>
-<dl><dt>pval.alpha</dt><dd><p>corresponding p-values.</p></dd>
-</dl><p></p>
-<dl><dt>ci.lb.alpha</dt><dd><p>lower bound of the confidence intervals for the coefficients.</p></dd>
-</dl><p></p>
-<dl><dt>ci.ub.alpha</dt><dd><p>upper bound of the confidence intervals for the coefficients.</p></dd>
-</dl><p></p>
-<dl><dt>va</dt><dd><p>variance-covariance matrix of the estimated coefficients.</p></dd>
-</dl><p></p>
-<dl><dt>tau2</dt><dd><p>as above, but now a vector of values.</p></dd>
-</dl><p></p>
-<dl><dt>q</dt><dd><p>number of scale coefficients in the model (including the intercept).</p></dd>
-</dl><p></p>
-<dl><dt>QS</dt><dd><p>test statistic of the omnibus test of the scale coefficients.</p></dd>
-</dl><p></p>
-<dl><dt>QSp</dt><dd><p>corresponding p-value.</p></dd>
-</dl><p></p>
-<dl><dt>...</dt><dd><p>some additional elements/values.</p></dd>
+<dl><dt>alpha</dt>
+<dd><p>estimated scale coefficients of the model.</p></dd>
+<dt>se.alpha</dt>
+<dd><p>standard errors of the coefficients.</p></dd>
+<dt>zval.alpha</dt>
+<dd><p>test statistics of the coefficients.</p></dd>
+<dt>pval.alpha</dt>
+<dd><p>corresponding p-values.</p></dd>
+<dt>ci.lb.alpha</dt>
+<dd><p>lower bound of the confidence intervals for the coefficients.</p></dd>
+<dt>ci.ub.alpha</dt>
+<dd><p>upper bound of the confidence intervals for the coefficients.</p></dd>
+<dt>va</dt>
+<dd><p>variance-covariance matrix of the estimated coefficients.</p></dd>
+<dt>tau2</dt>
+<dd><p>as above, but now a vector of values.</p></dd>
+<dt>q</dt>
+<dd><p>number of scale coefficients in the model (including the intercept).</p></dd>
+<dt>QS</dt>
+<dd><p>test statistic of the omnibus test of the scale coefficients.</p></dd>
+<dt>QSp</dt>
+<dd><p>corresponding p-value.</p></dd>
+<dt>...</dt>
+<dd><p>some additional elements/values.</p></dd>
 </dl></div>
     <div id="methods">
     <h2>Methods</h2>

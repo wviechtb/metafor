@@ -110,12 +110,12 @@
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <p></p>
-<dl><dt>x</dt><dd><p>an object of class <code>"rma.uni"</code>, <code>"rma.mh"</code>, or <code>"rma.peto"</code>. The method is not yet implemented for objects of class <code>"rma.glmm"</code>.</p></dd>
-</dl><p></p>
-<dl><dt>qqplot</dt><dd><p>logical to specify whether a normal QQ plot should be drawn (the default is <code>FALSE</code>).</p></dd>
-</dl><p></p>
-<dl><dt>...</dt><dd><p>other arguments.</p></dd>
+    <dl><dt>x</dt>
+<dd><p>an object of class <code>"rma.uni"</code>, <code>"rma.mh"</code>, or <code>"rma.peto"</code>. The method is not yet implemented for objects of class <code>"rma.glmm"</code>.</p></dd>
+<dt>qqplot</dt>
+<dd><p>logical to specify whether a normal QQ plot should be drawn (the default is <code>FALSE</code>).</p></dd>
+<dt>...</dt>
+<dd><p>other arguments.</p></dd>
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -150,14 +150,14 @@
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### plot results</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res</span>, qqplot<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-plt"><img src="plot.rma-1.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="plot.rma-1.png" alt="" width="864" height="768"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### fit mixed-effects model with absolute latitude and publication year as moderators</span></span>
 <span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">ablat</span> <span class="op">+</span> <span class="va">year</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### plot results</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res</span>, qqplot<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-plt"><img src="plot.rma-2.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="plot.rma-2.png" alt="" width="864" height="768"></span>
 </code></pre></div>
     </div>
   </div>

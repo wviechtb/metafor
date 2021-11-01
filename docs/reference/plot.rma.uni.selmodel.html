@@ -103,32 +103,32 @@
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <p></p>
-<dl><dt>x</dt><dd><p>an object of class <code>"rma.uni.selmodel"</code>.</p></dd>
-</dl><p></p>
-<dl><dt>xlim</dt><dd><p>x-axis limits. Essentially the range of p-values for which the selection function should be drawn. If unspecified, the function sets the limits automatically.</p></dd>
-</dl><p></p>
-<dl><dt>ylim</dt><dd><p>y-axis limits. If unspecified, the function sets the limits automatically.</p></dd>
-</dl><p></p>
-<dl><dt>n</dt><dd><p>numeric value to specify for how many p-values within the x-axis limits the function value should be computed (the default is 1000).</p></dd>
-</dl><p></p>
-<dl><dt>prec</dt><dd><p>either a character string (with options <code>"max"</code>, <code>"min"</code>, <code>"mean"</code>, or <code>"median"</code>) or a numeric value. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>scale</dt><dd><p>logical to specify whether the function values should be rescaled to a 0 to 1 range (the default is <code>FALSE</code>).</p></dd>
-</dl><p></p>
-<dl><dt>ci</dt><dd><p>logical to specify whether a confidence interval should be drawn around the selection function (the default is <code>FALSE</code>). Can also be a string (with options <code>"boot"</code> or <code>"wald"</code>). See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>reps</dt><dd><p>numeric value to specify the number of bootstrap samples to draw for generating the confidence interval bounds (the default is 1000).</p></dd>
-</dl><p></p>
-<dl><dt>rug</dt><dd><p>logical to specify whether the observed p-values should be added as tick marks on the x-axis (the default is <code>TRUE</code>).</p></dd>
-</dl><p></p>
-<dl><dt>add</dt><dd><p>logical to specify whether the function should be added to an existing plot (the default is <code>FALSE</code>).</p></dd>
-</dl><p></p>
-<dl><dt>lty</dt><dd><p>the line types for the selection function and the confidence interval bounds.</p></dd>
-</dl><p></p>
-<dl><dt>lwd</dt><dd><p>the line widths for the selection function and the confidence interval bounds.</p></dd>
-</dl><p></p>
-<dl><dt>...</dt><dd><p>other arguments.</p></dd>
+    <dl><dt>x</dt>
+<dd><p>an object of class <code>"rma.uni.selmodel"</code>.</p></dd>
+<dt>xlim</dt>
+<dd><p>x-axis limits. Essentially the range of p-values for which the selection function should be drawn. If unspecified, the function sets the limits automatically.</p></dd>
+<dt>ylim</dt>
+<dd><p>y-axis limits. If unspecified, the function sets the limits automatically.</p></dd>
+<dt>n</dt>
+<dd><p>numeric value to specify for how many p-values within the x-axis limits the function value should be computed (the default is 1000).</p></dd>
+<dt>prec</dt>
+<dd><p>either a character string (with options <code>"max"</code>, <code>"min"</code>, <code>"mean"</code>, or <code>"median"</code>) or a numeric value. See ‘Details’.</p></dd>
+<dt>scale</dt>
+<dd><p>logical to specify whether the function values should be rescaled to a 0 to 1 range (the default is <code>FALSE</code>).</p></dd>
+<dt>ci</dt>
+<dd><p>logical to specify whether a confidence interval should be drawn around the selection function (the default is <code>FALSE</code>). Can also be a string (with options <code>"boot"</code> or <code>"wald"</code>). See ‘Details’.</p></dd>
+<dt>reps</dt>
+<dd><p>numeric value to specify the number of bootstrap samples to draw for generating the confidence interval bounds (the default is 1000).</p></dd>
+<dt>rug</dt>
+<dd><p>logical to specify whether the observed p-values should be added as tick marks on the x-axis (the default is <code>TRUE</code>).</p></dd>
+<dt>add</dt>
+<dd><p>logical to specify whether the function should be added to an existing plot (the default is <code>FALSE</code>).</p></dd>
+<dt>lty</dt>
+<dd><p>the line types for the selection function and the confidence interval bounds.</p></dd>
+<dt>lwd</dt>
+<dd><p>the line widths for the selection function and the confidence interval bounds.</p></dd>
+<dt>...</dt>
+<dd><p>other arguments.</p></dd>
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -190,11 +190,11 @@
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### add selection function to the existing plot</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sel2</span>, add<span class="op">=</span><span class="cn">TRUE</span>, col<span class="op">=</span><span class="st">"blue"</span><span class="op">)</span></span>
-<span class="r-plt"><img src="plot.rma.uni.selmodel-1.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="plot.rma.uni.selmodel-1.png" alt="" width="864" height="768"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### plot selection function with CI</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sel1</span>, ci<span class="op">=</span><span class="st">"wald"</span><span class="op">)</span></span>
-<span class="r-plt"><img src="plot.rma.uni.selmodel-2.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="plot.rma.uni.selmodel-2.png" alt="" width="864" height="768"></span>
 </code></pre></div>
     </div>
   </div>

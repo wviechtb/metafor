@@ -106,40 +106,40 @@
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <p></p>
-<dl><dt>x</dt><dd><p>an object of class <code>"rma"</code>. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>xlim</dt><dd><p>x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.</p></dd>
-</dl><p></p>
-<dl><dt>ylim</dt><dd><p>y-axis limits. If unspecified, the function tries to set the y-axis limits to some sensible values.</p></dd>
-</dl><p></p>
-<dl><dt>xlab</dt><dd><p>title for the x-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
-</dl><p></p>
-<dl><dt>ylab</dt><dd><p>title for the y-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
-</dl><p></p>
-<dl><dt>add</dt><dd><p>See ‘Details’ and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-</dl><p></p>
-<dl><dt>to</dt><dd><p>See ‘Details’ and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-</dl><p></p>
-<dl><dt>transf</dt><dd><p>optional argument to specify a function that should be used to transform the outcomes (e.g., <code>transf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
-</dl><p></p>
-<dl><dt>targs</dt><dd><p>optional arguments needed by the function specified under <code>transf</code>.</p></dd>
-</dl><p></p>
-<dl><dt>pch</dt><dd><p>plotting symbol to use for the outcomes. By default, a filled circle is used. Can also be a vector of values. See <code><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></code> for other options.</p></dd>
-</dl><p></p>
-<dl><dt>psize</dt><dd><p>optional numeric vector to specify the point sizes for the outcomes. If unspecified, the point sizes are a function of the precision of the outcomes. Can also be a vector of values.</p></dd>
-</dl><p></p>
-<dl><dt>plim</dt><dd><p>numeric vector of length 2 to scale the point sizes (ignored when <code>psize</code> is specified). See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>col</dt><dd><p>optional character string to specify the name of a color to use for the points (<code>"black"</code> is used by default if not specified). Can also be a vector of color names.</p></dd>
-</dl><p></p>
-<dl><dt>bg</dt><dd><p>optional character string to specify the name of a background color for open plot symbols (<code>"gray"</code> is used by default if not specified). Can also be a vector of color names. Set to <code>NA</code> to make the plotting symbols transparent.</p></dd>
-</dl><p></p>
-<dl><dt>grid</dt><dd><p>logical to specify whether a grid should be added to the plot (can also be a color name).</p></dd>
-</dl><p></p>
-<dl><dt>lty</dt><dd><p>optional character vector to specify the line type for the diagonal reference line of no effect and the line that indicates the estimated effect based on the fitted model. If unspecified, the function sets this to <code>c("solid","dashed")</code> by default (use <code>"blank"</code> to suppress a line).</p></dd>
-</dl><p></p>
-<dl><dt>...</dt><dd><p>other arguments.</p></dd>
+    <dl><dt>x</dt>
+<dd><p>an object of class <code>"rma"</code>. See ‘Details’.</p></dd>
+<dt>xlim</dt>
+<dd><p>x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.</p></dd>
+<dt>ylim</dt>
+<dd><p>y-axis limits. If unspecified, the function tries to set the y-axis limits to some sensible values.</p></dd>
+<dt>xlab</dt>
+<dd><p>title for the x-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
+<dt>ylab</dt>
+<dd><p>title for the y-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
+<dt>add</dt>
+<dd><p>See ‘Details’ and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
+<dt>to</dt>
+<dd><p>See ‘Details’ and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
+<dt>transf</dt>
+<dd><p>optional argument to specify a function that should be used to transform the outcomes (e.g., <code>transf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
+<dt>targs</dt>
+<dd><p>optional arguments needed by the function specified under <code>transf</code>.</p></dd>
+<dt>pch</dt>
+<dd><p>plotting symbol to use for the outcomes. By default, a filled circle is used. Can also be a vector of values. See <code><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></code> for other options.</p></dd>
+<dt>psize</dt>
+<dd><p>optional numeric vector to specify the point sizes for the outcomes. If unspecified, the point sizes are a function of the precision of the outcomes. Can also be a vector of values.</p></dd>
+<dt>plim</dt>
+<dd><p>numeric vector of length 2 to scale the point sizes (ignored when <code>psize</code> is specified). See ‘Details’.</p></dd>
+<dt>col</dt>
+<dd><p>optional character string to specify the name of a color to use for the points (<code>"black"</code> is used by default if not specified). Can also be a vector of color names.</p></dd>
+<dt>bg</dt>
+<dd><p>optional character string to specify the name of a background color for open plot symbols (<code>"gray"</code> is used by default if not specified). Can also be a vector of color names. Set to <code>NA</code> to make the plotting symbols transparent.</p></dd>
+<dt>grid</dt>
+<dd><p>logical to specify whether a grid should be added to the plot (can also be a color name).</p></dd>
+<dt>lty</dt>
+<dd><p>optional character vector to specify the line type for the diagonal reference line of no effect and the line that indicates the estimated effect based on the fitted model. If unspecified, the function sets this to <code>c("solid","dashed")</code> by default (use <code>"blank"</code> to suppress a line).</p></dd>
+<dt>...</dt>
+<dd><p>other arguments.</p></dd>
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -152,21 +152,22 @@
     <div id="value">
     <h2>Value</h2>
     <p>A data frame with components:</p>
-<dl><dt>x</dt><dd><p>the x-axis coordinates of the points that were plotted.</p></dd>
-</dl><p></p>
-<dl><dt>y</dt><dd><p>the y-axis coordinates of the points that were plotted.</p></dd>
-</dl><p></p>
-<dl><dt>cex</dt><dd><p>the point sizes.</p></dd>
-</dl><p></p>
-<dl><dt>pch</dt><dd><p>the plotting symbols.</p></dd>
-</dl><p></p>
-<dl><dt>col</dt><dd><p>the point colors.</p></dd>
-</dl><p></p>
-<dl><dt>bg</dt><dd><p>the background colors.</p></dd>
-</dl><p></p>
-<dl><dt>ids</dt><dd><p>the study id numbers.</p></dd>
-</dl><p></p>
-<dl><dt>slab</dt><dd><p>the study labels.</p></dd>
+<dl><dt>x</dt>
+<dd><p>the x-axis coordinates of the points that were plotted.</p></dd>
+<dt>y</dt>
+<dd><p>the y-axis coordinates of the points that were plotted.</p></dd>
+<dt>cex</dt>
+<dd><p>the point sizes.</p></dd>
+<dt>pch</dt>
+<dd><p>the plotting symbols.</p></dd>
+<dt>col</dt>
+<dd><p>the point colors.</p></dd>
+<dt>bg</dt>
+<dd><p>the background colors.</p></dd>
+<dt>ids</dt>
+<dd><p>the study id numbers.</p></dd>
+<dt>slab</dt>
+<dd><p>the study labels.</p></dd>
 </dl><p>Note that the data frame is returned invisibly.</p>
     </div>
     <div id="author">
@@ -191,11 +192,11 @@
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### default plot</span></span>
 <span class="r-in"><span class="fu">labbe</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
-<span class="r-plt"><img src="labbe-1.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="labbe-1.png" alt="" width="864" height="768"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### funnel plot with risk values on the x- and y-axis and add grid</span></span>
 <span class="r-in"><span class="fu">labbe</span><span class="op">(</span><span class="va">res</span>, transf<span class="op">=</span><span class="va">exp</span>, grid<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-plt"><img src="labbe-2.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="labbe-2.png" alt="" width="864" height="768"></span>
 </code></pre></div>
     </div>
   </div>

@@ -1,7 +1,7 @@
 pandoc: '2.5'
 pkgdown: 1.9000.9000.9000
-pkgdown_sha: 91bfd1d4d76be135ee074ab4f80bba922ad0a49d
+pkgdown_sha: 137c91ed085e6fee0711891f2e5b11a894cfc9ff
 articles:
   diagram: pkgdown/diagram.html
-last_built: 2021-10-31T10:35Z
+last_built: 2021-11-01T10:45Z
 

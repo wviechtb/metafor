@@ -102,64 +102,64 @@
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <p></p>
-<dl><dt>measure</dt><dd><p>a character string to specify the effect size or outcome measure corresponding to the summary data supplied. See ‘Details’ and the documentation of the <code><a href="escalc.html">escalc</a></code> function for possible options.</p></dd>
-</dl><p></p>
-<dl><dt>ai</dt><dd><p>vector to specify the \(2 \times 2\) table frequencies (upper left cell).</p></dd>
-</dl><p></p>
-<dl><dt>bi</dt><dd><p>vector to specify the \(2 \times 2\) table frequencies (upper right cell).</p></dd>
-</dl><p></p>
-<dl><dt>ci</dt><dd><p>vector to specify the \(2 \times 2\) table frequencies (lower left cell).</p></dd>
-</dl><p></p>
-<dl><dt>di</dt><dd><p>vector to specify the \(2 \times 2\) table frequencies (lower right cell).</p></dd>
-</dl><p></p>
-<dl><dt>n1i</dt><dd><p>vector to specify the group sizes or row totals (first group/row).</p></dd>
-</dl><p></p>
-<dl><dt>n2i</dt><dd><p>vector to specify the group sizes or row totals (second group/row).</p></dd>
-</dl><p></p>
-<dl><dt>x1i</dt><dd><p>vector to specify the number of events (first group).</p></dd>
-</dl><p></p>
-<dl><dt>x2i</dt><dd><p>vector to specify the number of events (second group).</p></dd>
-</dl><p></p>
-<dl><dt>t1i</dt><dd><p>vector to specify the total person-times (first group).</p></dd>
-</dl><p></p>
-<dl><dt>t2i</dt><dd><p>vector to specify the total person-times (second group).</p></dd>
-</dl><p></p>
-<dl><dt>m1i</dt><dd><p>vector to specify the means (first group or time point).</p></dd>
-</dl><p></p>
-<dl><dt>m2i</dt><dd><p>vector to specify the means (second group or time point).</p></dd>
-</dl><p></p>
-<dl><dt>sd1i</dt><dd><p>vector to specify the standard deviations (first group or time point).</p></dd>
-</dl><p></p>
-<dl><dt>sd2i</dt><dd><p>vector to specify the standard deviations (second group or time point).</p></dd>
-</dl><p></p>
-<dl><dt>xi</dt><dd><p>vector to specify the frequencies of the event of interest.</p></dd>
-</dl><p></p>
-<dl><dt>mi</dt><dd><p>vector to specify the frequencies of the complement of the event of interest or the group means.</p></dd>
-</dl><p></p>
-<dl><dt>ri</dt><dd><p>vector to specify the raw correlation coefficients.</p></dd>
-</dl><p></p>
-<dl><dt>ti</dt><dd><p>vector to specify the total person-times.</p></dd>
-</dl><p></p>
-<dl><dt>sdi</dt><dd><p>vector to specify the standard deviations.</p></dd>
-</dl><p></p>
-<dl><dt>ni</dt><dd><p>vector to specify the sample/group sizes.</p></dd>
-</dl><p></p>
-<dl><dt>data</dt><dd><p>optional data frame containing the variables given to the arguments above.</p></dd>
-</dl><p></p>
-<dl><dt>slab</dt><dd><p>optional vector with labels for the studies.</p></dd>
-</dl><p></p>
-<dl><dt>subset</dt><dd><p>optional (logical or numeric) vector to specify the subset of studies that should be included in the array returned by the function.</p></dd>
-</dl><p></p>
-<dl><dt>add</dt><dd><p>see the documentation of the <code><a href="escalc.html">escalc</a></code> function.</p></dd>
-</dl><p></p>
-<dl><dt>to</dt><dd><p>see the documentation of the <code><a href="escalc.html">escalc</a></code> function.</p></dd>
-</dl><p></p>
-<dl><dt>drop00</dt><dd><p>see the documentation of the <code><a href="escalc.html">escalc</a></code> function.</p></dd>
-</dl><p></p>
-<dl><dt>rows</dt><dd><p>optional vector with row/group names.</p></dd>
-</dl><p></p>
-<dl><dt>cols</dt><dd><p>optional vector with column/outcome names.</p></dd>
+    <dl><dt>measure</dt>
+<dd><p>a character string to specify the effect size or outcome measure corresponding to the summary data supplied. See ‘Details’ and the documentation of the <code><a href="escalc.html">escalc</a></code> function for possible options.</p></dd>
+<dt>ai</dt>
+<dd><p>vector to specify the \(2 \times 2\) table frequencies (upper left cell).</p></dd>
+<dt>bi</dt>
+<dd><p>vector to specify the \(2 \times 2\) table frequencies (upper right cell).</p></dd>
+<dt>ci</dt>
+<dd><p>vector to specify the \(2 \times 2\) table frequencies (lower left cell).</p></dd>
+<dt>di</dt>
+<dd><p>vector to specify the \(2 \times 2\) table frequencies (lower right cell).</p></dd>
+<dt>n1i</dt>
+<dd><p>vector to specify the group sizes or row totals (first group/row).</p></dd>
+<dt>n2i</dt>
+<dd><p>vector to specify the group sizes or row totals (second group/row).</p></dd>
+<dt>x1i</dt>
+<dd><p>vector to specify the number of events (first group).</p></dd>
+<dt>x2i</dt>
+<dd><p>vector to specify the number of events (second group).</p></dd>
+<dt>t1i</dt>
+<dd><p>vector to specify the total person-times (first group).</p></dd>
+<dt>t2i</dt>
+<dd><p>vector to specify the total person-times (second group).</p></dd>
+<dt>m1i</dt>
+<dd><p>vector to specify the means (first group or time point).</p></dd>
+<dt>m2i</dt>
+<dd><p>vector to specify the means (second group or time point).</p></dd>
+<dt>sd1i</dt>
+<dd><p>vector to specify the standard deviations (first group or time point).</p></dd>
+<dt>sd2i</dt>
+<dd><p>vector to specify the standard deviations (second group or time point).</p></dd>
+<dt>xi</dt>
+<dd><p>vector to specify the frequencies of the event of interest.</p></dd>
+<dt>mi</dt>
+<dd><p>vector to specify the frequencies of the complement of the event of interest or the group means.</p></dd>
+<dt>ri</dt>
+<dd><p>vector to specify the raw correlation coefficients.</p></dd>
+<dt>ti</dt>
+<dd><p>vector to specify the total person-times.</p></dd>
+<dt>sdi</dt>
+<dd><p>vector to specify the standard deviations.</p></dd>
+<dt>ni</dt>
+<dd><p>vector to specify the sample/group sizes.</p></dd>
+<dt>data</dt>
+<dd><p>optional data frame containing the variables given to the arguments above.</p></dd>
+<dt>slab</dt>
+<dd><p>optional vector with labels for the studies.</p></dd>
+<dt>subset</dt>
+<dd><p>optional (logical or numeric) vector to specify the subset of studies that should be included in the array returned by the function.</p></dd>
+<dt>add</dt>
+<dd><p>see the documentation of the <code><a href="escalc.html">escalc</a></code> function.</p></dd>
+<dt>to</dt>
+<dd><p>see the documentation of the <code><a href="escalc.html">escalc</a></code> function.</p></dd>
+<dt>drop00</dt>
+<dd><p>see the documentation of the <code><a href="escalc.html">escalc</a></code> function.</p></dd>
+<dt>rows</dt>
+<dd><p>optional vector with row/group names.</p></dd>
+<dt>cols</dt>
+<dd><p>optional vector with column/outcome names.</p></dd>
 </dl></div>
     <div id="details">
     <h2>Details</h2>

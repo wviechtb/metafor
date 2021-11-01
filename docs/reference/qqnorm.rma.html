@@ -111,34 +111,34 @@
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <p></p>
-<dl><dt>y</dt><dd><p>an object of class <code>"rma.uni"</code>, <code>"rma.mh"</code>, or <code>"rma.peto"</code>. The method is not yet implemented for objects of class <code>"rma.glmm"</code> or <code>"rma.mv"</code>.</p></dd>
-</dl><p></p>
-<dl><dt>type</dt><dd><p>character string (either <code>"rstandard"</code> (default) or <code>"rstudent"</code>) to specify whether standardized residuals or studentized deleted residuals should be used in creating the plot. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>pch</dt><dd><p>plotting symbol to use for the observed outcomes. By default, a filled circle is used. See <code><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></code> for other options.</p></dd>
-</dl><p></p>
-<dl><dt>envelope</dt><dd><p>logical to specify whether a pseudo confidence envelope should be simulated and added to the plot (the default is <code>TRUE</code>)). Only for objects of class <code>"rma.uni"</code>. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>level</dt><dd><p>numeric value between 0 and 100 to specify the level of the pseudo confidence envelope (the default is to take the value from the object).</p></dd>
-</dl><p></p>
-<dl><dt>bonferroni</dt><dd><p>logical to specify whether the bounds of the envelope should be Bonferroni corrected.</p></dd>
-</dl><p></p>
-<dl><dt>reps</dt><dd><p>numeric value to specify the number of iterations to use for simulating the pseudo confidence envelope (the default is 1000).</p></dd>
-</dl><p></p>
-<dl><dt>smooth</dt><dd><p>logical to specify whether the results from the simulation should be smoothed (the default is <code>TRUE</code>).</p></dd>
-</dl><p></p>
-<dl><dt>bass</dt><dd><p>numeric value that controls the degree of smoothing (the default is 0).</p></dd>
-</dl><p></p>
-<dl><dt>label</dt><dd><p>argument to control the labeling of the points (the default is <code>FALSE</code>). See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>offset</dt><dd><p>argument to control the distance between the points and the corresponding labels.</p></dd>
-</dl><p></p>
-<dl><dt>pos</dt><dd><p>argument to control the position of the labels.</p></dd>
-</dl><p></p>
-<dl><dt>lty</dt><dd><p>optional character string to specify the line type for the diagonal line and the pseudo confidence envelope. If unspecified, the function sets this to <code>c("solid", "dotted")</code> by default.</p></dd>
-</dl><p></p>
-<dl><dt>...</dt><dd><p>other arguments.</p></dd>
+    <dl><dt>y</dt>
+<dd><p>an object of class <code>"rma.uni"</code>, <code>"rma.mh"</code>, or <code>"rma.peto"</code>. The method is not yet implemented for objects of class <code>"rma.glmm"</code> or <code>"rma.mv"</code>.</p></dd>
+<dt>type</dt>
+<dd><p>character string (either <code>"rstandard"</code> (default) or <code>"rstudent"</code>) to specify whether standardized residuals or studentized deleted residuals should be used in creating the plot. See ‘Details’.</p></dd>
+<dt>pch</dt>
+<dd><p>plotting symbol to use for the observed outcomes. By default, a filled circle is used. See <code><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></code> for other options.</p></dd>
+<dt>envelope</dt>
+<dd><p>logical to specify whether a pseudo confidence envelope should be simulated and added to the plot (the default is <code>TRUE</code>)). Only for objects of class <code>"rma.uni"</code>. See ‘Details’.</p></dd>
+<dt>level</dt>
+<dd><p>numeric value between 0 and 100 to specify the level of the pseudo confidence envelope (the default is to take the value from the object).</p></dd>
+<dt>bonferroni</dt>
+<dd><p>logical to specify whether the bounds of the envelope should be Bonferroni corrected.</p></dd>
+<dt>reps</dt>
+<dd><p>numeric value to specify the number of iterations to use for simulating the pseudo confidence envelope (the default is 1000).</p></dd>
+<dt>smooth</dt>
+<dd><p>logical to specify whether the results from the simulation should be smoothed (the default is <code>TRUE</code>).</p></dd>
+<dt>bass</dt>
+<dd><p>numeric value that controls the degree of smoothing (the default is 0).</p></dd>
+<dt>label</dt>
+<dd><p>argument to control the labeling of the points (the default is <code>FALSE</code>). See ‘Details’.</p></dd>
+<dt>offset</dt>
+<dd><p>argument to control the distance between the points and the corresponding labels.</p></dd>
+<dt>pos</dt>
+<dd><p>argument to control the position of the labels.</p></dd>
+<dt>lty</dt>
+<dd><p>optional character string to specify the line type for the diagonal line and the pseudo confidence envelope. If unspecified, the function sets this to <code>c("solid", "dotted")</code> by default.</p></dd>
+<dt>...</dt>
+<dd><p>other arguments.</p></dd>
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -150,9 +150,10 @@
     <div id="value">
     <h2>Value</h2>
     <p>A list with components:</p>
-<dl><dt>x</dt><dd><p>the x-axis coordinates of the points that were plotted.</p></dd>
-</dl><p></p>
-<dl><dt>y</dt><dd><p>the y-axis coordinates of the points that were plotted.</p></dd>
+<dl><dt>x</dt>
+<dd><p>the x-axis coordinates of the points that were plotted.</p></dd>
+<dt>y</dt>
+<dd><p>the y-axis coordinates of the points that were plotted.</p></dd>
 </dl><p>Note that the list is returned invisibly.</p>
     </div>
     <div id="author">
@@ -181,14 +182,14 @@
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### draw QQ plot</span></span>
 <span class="r-in"><span class="fu">qqnorm</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
-<span class="r-plt"><img src="qqnorm.rma-1.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="qqnorm.rma-1.png" alt="" width="864" height="768"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### fit mixed-effects model with absolute latitude as moderator</span></span>
 <span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">ablat</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### draw QQ plot</span></span>
 <span class="r-in"><span class="fu">qqnorm</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
-<span class="r-plt"><img src="qqnorm.rma-2.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="qqnorm.rma-2.png" alt="" width="864" height="768"></span>
 </code></pre></div>
     </div>
   </div>

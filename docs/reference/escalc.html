@@ -105,84 +105,84 @@
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <p></p>
-<dl><dt>measure</dt><dd><p>a character string to specify which effect size or outcome measure should be calculated. See ‘Details’ for possible options and how the data needed to compute the selected effect size or outcome measure should then be specified.</p></dd>
-</dl><p></p>
-<dl><dt>ai</dt><dd><p>vector to specify the \(2 \times 2\) table frequencies (upper left cell).</p></dd>
-</dl><p></p>
-<dl><dt>bi</dt><dd><p>vector to specify the \(2 \times 2\) table frequencies (upper right cell).</p></dd>
-</dl><p></p>
-<dl><dt>ci</dt><dd><p>vector to specify the \(2 \times 2\) table frequencies (lower left cell).</p></dd>
-</dl><p></p>
-<dl><dt>di</dt><dd><p>vector to specify the \(2 \times 2\) table frequencies (lower right cell).</p></dd>
-</dl><p></p>
-<dl><dt>n1i</dt><dd><p>vector to specify the group sizes or row totals (first group/row).</p></dd>
-</dl><p></p>
-<dl><dt>n2i</dt><dd><p>vector to specify the group sizes or row totals (second group/row).</p></dd>
-</dl><p></p>
-<dl><dt>x1i</dt><dd><p>vector to specify the number of events (first group).</p></dd>
-</dl><p></p>
-<dl><dt>x2i</dt><dd><p>vector to specify the number of events (second group).</p></dd>
-</dl><p></p>
-<dl><dt>t1i</dt><dd><p>vector to specify the total person-times (first group).</p></dd>
-</dl><p></p>
-<dl><dt>t2i</dt><dd><p>vector to specify the total person-times (second group).</p></dd>
-</dl><p></p>
-<dl><dt>m1i</dt><dd><p>vector to specify the means (first group or time point).</p></dd>
-</dl><p></p>
-<dl><dt>m2i</dt><dd><p>vector to specify the means (second group or time point).</p></dd>
-</dl><p></p>
-<dl><dt>sd1i</dt><dd><p>vector to specify the standard deviations (first group or time point).</p></dd>
-</dl><p></p>
-<dl><dt>sd2i</dt><dd><p>vector to specify the standard deviations (second group or time point).</p></dd>
-</dl><p></p>
-<dl><dt>xi</dt><dd><p>vector to specify the frequencies of the event of interest.</p></dd>
-</dl><p></p>
-<dl><dt>mi</dt><dd><p>vector to specify the frequencies of the complement of the event of interest or the group means.</p></dd>
-</dl><p></p>
-<dl><dt>ri</dt><dd><p>vector to specify the raw correlation coefficients.</p></dd>
-</dl><p></p>
-<dl><dt>ti</dt><dd><p>vector to specify the total person-times.</p></dd>
-</dl><p></p>
-<dl><dt>sdi</dt><dd><p>vector to specify the standard deviations.</p></dd>
-</dl><p></p>
-<dl><dt>r2i</dt><dd><p>vector to specify the \(R^2\) values.</p></dd>
-</dl><p></p>
-<dl><dt>ni</dt><dd><p>vector to specify the sample/group sizes.</p></dd>
-</dl><p></p>
-<dl><dt>yi</dt><dd><p>vector to specify the observed effect sizes or outcomes.</p></dd>
-</dl><p></p>
-<dl><dt>vi</dt><dd><p>vector to specify the corresponding sampling variances.</p></dd>
-</dl><p></p>
-<dl><dt>sei</dt><dd><p>vector to specify the corresponding standard errors.</p></dd>
-</dl><p></p>
-<dl><dt>data</dt><dd><p>optional data frame containing the variables given to the arguments above.</p></dd>
-</dl><p></p>
-<dl><dt>slab</dt><dd><p>optional vector with labels for the studies.</p></dd>
-</dl><p></p>
-<dl><dt>subset</dt><dd><p>optional (logical or numeric) vector to specify the subset of studies that will be included in the data frame returned by the function.</p></dd>
-</dl><p></p>
-<dl><dt>include</dt><dd><p>optional (logical or numeric) vector to specify the subset of studies for which the measure should be calculated. See the ‘Value’ section for more details.</p></dd>
-</dl><p></p>
-<dl><dt>add</dt><dd><p>a non-negative number to specify the amount to add to zero cells, counts, or frequencies. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>to</dt><dd><p>a character string to specify when the values under <code>add</code> should be added (either <code>"all"</code>, <code>"only0"</code>, <code>"if0all"</code>, or <code>"none"</code>). See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>drop00</dt><dd><p>logical to specify whether studies with no cases/events (or only cases) in both groups should be dropped when calculating the observed effect sizes or outcomes. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>vtype</dt><dd><p>a character string to specify the type of sampling variances to calculate. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>var.names</dt><dd><p>character string with two elements to specify the name of the variable for the observed effect sizes or outcomes and the name of the variable for the corresponding sampling variances (the defaults are <code>"yi"</code> and <code>"vi"</code>).</p></dd>
-</dl><p></p>
-<dl><dt>add.measure</dt><dd><p>logical to specify whether a variable should be added to the data frame (with default name <code>"measure"</code>) that indicates the type of outcome measure computed. When using this option, <code>var.names</code> can have a third element to change this variable name.</p></dd>
-</dl><p></p>
-<dl><dt>append</dt><dd><p>logical to specify whether the data frame provided via the <code>data</code> argument should be returned together with the observed effect sizes or outcomes and corresponding sampling variances (the default is <code>TRUE</code>).</p></dd>
-</dl><p></p>
-<dl><dt>replace</dt><dd><p>logical to specify whether existing values for <code>yi</code> and <code>vi</code> in the data frame should be replaced or not. Only relevant when <code>append=TRUE</code> and the data frame already contains the <code>yi</code> and <code>vi</code> variables. If <code>replace=TRUE</code> (the default), all of the existing values will be overwritten. If <code>replace=FALSE</code>, only <code>NA</code> values will be replaced. See the ‘Value’ section for more details.</p></dd>
-</dl><p></p>
-<dl><dt>digits</dt><dd><p>integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4. Note that the values are stored without rounding in the returned object.</p></dd>
-</dl><p></p>
-<dl><dt>...</dt><dd><p>other arguments.</p></dd>
+    <dl><dt>measure</dt>
+<dd><p>a character string to specify which effect size or outcome measure should be calculated. See ‘Details’ for possible options and how the data needed to compute the selected effect size or outcome measure should then be specified.</p></dd>
+<dt>ai</dt>
+<dd><p>vector to specify the \(2 \times 2\) table frequencies (upper left cell).</p></dd>
+<dt>bi</dt>
+<dd><p>vector to specify the \(2 \times 2\) table frequencies (upper right cell).</p></dd>
+<dt>ci</dt>
+<dd><p>vector to specify the \(2 \times 2\) table frequencies (lower left cell).</p></dd>
+<dt>di</dt>
+<dd><p>vector to specify the \(2 \times 2\) table frequencies (lower right cell).</p></dd>
+<dt>n1i</dt>
+<dd><p>vector to specify the group sizes or row totals (first group/row).</p></dd>
+<dt>n2i</dt>
+<dd><p>vector to specify the group sizes or row totals (second group/row).</p></dd>
+<dt>x1i</dt>
+<dd><p>vector to specify the number of events (first group).</p></dd>
+<dt>x2i</dt>
+<dd><p>vector to specify the number of events (second group).</p></dd>
+<dt>t1i</dt>
+<dd><p>vector to specify the total person-times (first group).</p></dd>
+<dt>t2i</dt>
+<dd><p>vector to specify the total person-times (second group).</p></dd>
+<dt>m1i</dt>
+<dd><p>vector to specify the means (first group or time point).</p></dd>
+<dt>m2i</dt>
+<dd><p>vector to specify the means (second group or time point).</p></dd>
+<dt>sd1i</dt>
+<dd><p>vector to specify the standard deviations (first group or time point).</p></dd>
+<dt>sd2i</dt>
+<dd><p>vector to specify the standard deviations (second group or time point).</p></dd>
+<dt>xi</dt>
+<dd><p>vector to specify the frequencies of the event of interest.</p></dd>
+<dt>mi</dt>
+<dd><p>vector to specify the frequencies of the complement of the event of interest or the group means.</p></dd>
+<dt>ri</dt>
+<dd><p>vector to specify the raw correlation coefficients.</p></dd>
+<dt>ti</dt>
+<dd><p>vector to specify the total person-times.</p></dd>
+<dt>sdi</dt>
+<dd><p>vector to specify the standard deviations.</p></dd>
+<dt>r2i</dt>
+<dd><p>vector to specify the \(R^2\) values.</p></dd>
+<dt>ni</dt>
+<dd><p>vector to specify the sample/group sizes.</p></dd>
+<dt>yi</dt>
+<dd><p>vector to specify the observed effect sizes or outcomes.</p></dd>
+<dt>vi</dt>
+<dd><p>vector to specify the corresponding sampling variances.</p></dd>
+<dt>sei</dt>
+<dd><p>vector to specify the corresponding standard errors.</p></dd>
+<dt>data</dt>
+<dd><p>optional data frame containing the variables given to the arguments above.</p></dd>
+<dt>slab</dt>
+<dd><p>optional vector with labels for the studies.</p></dd>
+<dt>subset</dt>
+<dd><p>optional (logical or numeric) vector to specify the subset of studies that will be included in the data frame returned by the function.</p></dd>
+<dt>include</dt>
+<dd><p>optional (logical or numeric) vector to specify the subset of studies for which the measure should be calculated. See the ‘Value’ section for more details.</p></dd>
+<dt>add</dt>
+<dd><p>a non-negative number to specify the amount to add to zero cells, counts, or frequencies. See ‘Details’.</p></dd>
+<dt>to</dt>
+<dd><p>a character string to specify when the values under <code>add</code> should be added (either <code>"all"</code>, <code>"only0"</code>, <code>"if0all"</code>, or <code>"none"</code>). See ‘Details’.</p></dd>
+<dt>drop00</dt>
+<dd><p>logical to specify whether studies with no cases/events (or only cases) in both groups should be dropped when calculating the observed effect sizes or outcomes. See ‘Details’.</p></dd>
+<dt>vtype</dt>
+<dd><p>a character string to specify the type of sampling variances to calculate. See ‘Details’.</p></dd>
+<dt>var.names</dt>
+<dd><p>character string with two elements to specify the name of the variable for the observed effect sizes or outcomes and the name of the variable for the corresponding sampling variances (the defaults are <code>"yi"</code> and <code>"vi"</code>).</p></dd>
+<dt>add.measure</dt>
+<dd><p>logical to specify whether a variable should be added to the data frame (with default name <code>"measure"</code>) that indicates the type of outcome measure computed. When using this option, <code>var.names</code> can have a third element to change this variable name.</p></dd>
+<dt>append</dt>
+<dd><p>logical to specify whether the data frame provided via the <code>data</code> argument should be returned together with the observed effect sizes or outcomes and corresponding sampling variances (the default is <code>TRUE</code>).</p></dd>
+<dt>replace</dt>
+<dd><p>logical to specify whether existing values for <code>yi</code> and <code>vi</code> in the data frame should be replaced or not. Only relevant when <code>append=TRUE</code> and the data frame already contains the <code>yi</code> and <code>vi</code> variables. If <code>replace=TRUE</code> (the default), all of the existing values will be overwritten. If <code>replace=FALSE</code>, only <code>NA</code> values will be replaced. See the ‘Value’ section for more details.</p></dd>
+<dt>digits</dt>
+<dd><p>integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4. Note that the values are stored without rounding in the returned object.</p></dd>
+<dt>...</dt>
+<dd><p>other arguments.</p></dd>
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -213,6 +213,7 @@
 <li><p><code>"AS"</code> for the <em>arcsine square root transformed risk difference</em> (Rücker et al., 2009),</p></li>
 <li><p><code>"PETO"</code> for the <em>log odds ratio</em> estimated with Peto's method (Yusuf et al., 1985).</p></li>
 </ul><p>Note that the log is taken of the risk ratio and the odds ratio, which makes these outcome measures symmetric around 0 and yields corresponding sampling distributions that are closer to normality. Also, when multiplied by 2, the arcsine square root transformed risk difference is actually identical to Cohen's h (Cohen, 1988).</p>
+<p>If the \(2 \times 2\) table is not available (or cannot be reconstructed) for a study, but measures such as the odds ratio and corresponding confidence interval bounds are reported, one one can easily transform these values into the corresponding log odds ratio and sampling variance directly. See <a href="https://www.metafor-project.org/doku.php/tips:assembling_data_or" class="external-link">here</a> for an illustration/discussion of this.</p>
 <p>Cell entries with a zero count can be problematic, especially for the risk ratio and the odds ratio. Adding a small constant to the cells of the \(2 \times 2\) tables is a common solution to this problem. When <code>to="only0"</code> (the default), the value of <code>add</code> (the default is <code>1/2</code>; but see ‘Note’) is added to each cell of those \(2 \times 2\) tables with at least one cell equal to 0. When <code>to="all"</code>, the value of <code>add</code> is added to each cell of all \(2 \times 2\) tables. When <code>to="if0all"</code>, the value of <code>add</code> is added to each cell of all \(2 \times 2\) tables, but only when there is at least one \(2 \times 2\) table with a zero cell. Setting <code>to="none"</code> or <code>add=0</code> has the same effect: No adjustment to the observed table frequencies is made. Depending on the outcome measure and the data, this may lead to division by zero (when this occurs, the resulting value is recoded to <code>NA</code>). Also, studies where <code>ai=ci=0</code> or <code>bi=di=0</code> may be considered to be uninformative about the size of the effect and dropping such studies has sometimes been recommended (Higgins et al., 2019). This can be done by setting <code>drop00=TRUE</code>. The values for such studies will then be set to <code>NA</code>.</p>
 <p>Datasets corresponding to data of this type are provided in <code><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></code>, <code><a href="https://wviechtb.github.io/metadat/reference/dat.collins1985a.html" class="external-link">dat.collins1985a</a></code>, <code><a href="https://wviechtb.github.io/metadat/reference/dat.collins1985b.html" class="external-link">dat.collins1985b</a></code>, <code><a href="https://wviechtb.github.io/metadat/reference/dat.egger2001.html" class="external-link">dat.egger2001</a></code>, <code><a href="https://wviechtb.github.io/metadat/reference/dat.hine1989.html" class="external-link">dat.hine1989</a></code>, <code><a href="https://wviechtb.github.io/metadat/reference/dat.laopaiboon2015.html" class="external-link">dat.laopaiboon2015</a></code>, <code><a href="https://wviechtb.github.io/metadat/reference/dat.lee2004.html" class="external-link">dat.lee2004</a></code>, <code><a href="https://wviechtb.github.io/metadat/reference/dat.li2007.html" class="external-link">dat.li2007</a></code>, <code><a href="https://wviechtb.github.io/metadat/reference/dat.linde2005.html" class="external-link">dat.linde2005</a></code>, <code><a href="https://wviechtb.github.io/metadat/reference/dat.nielweise2007.html" class="external-link">dat.nielweise2007</a></code>, and <code><a href="https://wviechtb.github.io/metadat/reference/dat.yusuf1985.html" class="external-link">dat.yusuf1985</a></code>.</p>
 <p>Assuming that the dichotomous outcome is actually a dichotomized version of the responses on an underlying quantitative scale, it is also possible to estimate the standardized mean difference based on \(2 \times 2\) table data, using either the probit transformed risk difference or a transformation of the odds ratio (e.g., Cox &amp; Snell, 1989; Chinn, 2000; Hasselblad &amp; Hedges, 1995; Sánchez-Meca et al., 2003). The options for the <code>measure</code> argument are then:</p><ul><li><p><code>"PBIT"</code> for the <em>probit transformed risk difference</em> as an estimate of the standardized mean difference,</p></li>
@@ -247,7 +248,8 @@
 <li><p><code>"SMD"</code> for the <em>standardized mean difference</em> (Hedges, 1981),</p></li>
 <li><p><code>"SMDH"</code> for the <em>standardized mean difference</em> with heteroscedastic population variances in the two groups (Bonett, 2008, 2009),</p></li>
 <li><p><code>"ROM"</code> for the <em>log transformed ratio of means</em> (Hedges et al., 1999; Lajeunesse, 2011).</p></li>
-</ul><p>For <code>measure="ROM"</code>, the log is taken of the ratio of means, which makes this outcome measure symmetric around 0 and yields a corresponding sampling distribution that is closer to normality. Hence, this measure cannot be computed when <code>m1i</code> and <code>m2i</code> have opposite signs (i.e., it is meant to be used for ratio scale measurements, where both means should be positive anyway). For <code>measure="SMD"</code>, the positive bias in the standardized mean difference is automatically corrected for within the function, yielding Hedges' g (Hedges, 1981). Similarly, the same bias correction is applied for <code>measure="SMDH"</code> (Bonett, 2009).</p>
+</ul><p>For <code>measure="ROM"</code>, the log is taken of the ratio of means, which makes this outcome measure symmetric around 0 and yields a corresponding sampling distribution that is closer to normality. Hence, this measure cannot be computed when <code>m1i</code> and <code>m2i</code> have opposite signs (i.e., it is meant to be used for ratio scale measurements, where both means should be positive anyway). For <code>measure="SMD"</code>, the positive bias in the standardized mean difference (i.e., in a Cohen's d value) is automatically corrected for within the function, yielding Hedges' g (Hedges, 1981). Similarly, the same bias correction is applied for <code>measure="SMDH"</code> (Bonett, 2009).</p>
+<p>For <code>measure="SMD"</code>, if the means and standard deviations are unknown for a study, but the t-statistic from an independent samples t-test is reported (or the corresponding p-value, which can be transformed into the t-statistic), one can easily transform the t-statistic to a d-value directly. See <a href="https://www.metafor-project.org/doku.php/tips:assembling_data_smd" class="external-link">here</a> for an illustration/discussion of this.</p>
 <p>For <code>measure="MD"</code>, one can choose between <code>vtype="LS"</code> (the default) and <code>vtype="HO"</code>. The former computes the sampling variances without assuming homoscedasticity (i.e., that the true variances of the measurements are the same in group 1 and group 2 within each study), while the latter assumes homoscedasticity (equations 12.5 and 12.3 in Borenstein, 2009, respectively). For <code>measure="SMD"</code>, one can choose between <code>vtype="LS"</code> (the default) for the usual large-sample approximation to compute the sampling variances (equation 8 in Hedges, 1982), <code>vtype="UB"</code> to compute unbiased estimates of the sampling variances (equation 9 in Hedges, 1983), <code>vtype="LS2"</code> to compute the sampling variances as described in Borenstein (2009) (i.e., equation 12.17), and <code>vtype="AV"</code> to compute the sampling variances with the usual large-sample approximation but plugging the sample-size weighted average of the Hedges' g values into the equation. For <code>measure="ROM"</code>, one can choose between <code>vtype="LS"</code> (the default) for the usual large-sample approximation to compute the sampling variances (equation 1 in Hedges et al., 1999), <code>vtype="HO"</code> to compute the sampling variances assuming homoscedasticity (the unnumbered equation after equation 1 in Hedges et al., 1999), <code>vtype="AV"</code> to compute the sampling variances assuming homoscedasticity of the coefficient of variation within each group across studies, and <code>vtype="AVHO"</code> to compute the sampling variances assuming homoscedasticity of the coefficient of variation for both groups across studies.</p>
 <p>Datasets corresponding to data of this type are provided in <code><a href="https://wviechtb.github.io/metadat/reference/dat.normand1999.html" class="external-link">dat.normand1999</a></code> and <code><a href="https://wviechtb.github.io/metadat/reference/dat.curtis1998.html" class="external-link">dat.curtis1998</a></code>.</p>
 <p>It is also possible to transform standardized mean differences into log odds ratios (e.g., Cox &amp; Snell, 1989; Chinn, 2000; Hasselblad &amp; Hedges, 1995; Sánchez-Meca et al., 2003). The options for the <code>measure</code> argument are then:</p><ul><li><p><code>"D2ORN"</code> for the <em>transformed standardized mean difference</em> as an estimate of the log odds ratio (assuming normal distributions),</p></li>
@@ -446,14 +448,15 @@
     <div id="value">
     <h2>Value</h2>
     <p>An object of class <code>c("escalc","data.frame")</code>. The object is a data frame containing the following components:</p>
-<dl><dt>yi</dt><dd><p>observed effect sizes or outcomes.</p></dd>
-</dl><p></p>
-<dl><dt>vi</dt><dd><p>corresponding sampling variances.</p></dd>
-</dl><p>If <code>append=TRUE</code> and a data frame was specified via the <code>data</code> argument, then <code>yi</code> and <code>vi</code> are appended to this data frame. Note that the <code>var.names</code> argument actually specifies the names of these two variables (<code>yi</code> and <code>vi</code> are the defaults).</p>
-<p>If the data frame already contains two variables with names as specified by the <code>var.names</code> argument, the values for these two variables will be overwritten when <code>replace=TRUE</code> (which is the default). By setting <code>replace=FALSE</code>, only values that are <code>NA</code> will be replaced.</p>
-<p>The <code>subset</code> argument can be used to select the studies that will be included in the data frame returned by the function. On the other hand, the <code>include</code> argument simply selects for which studies the measure will be computed (if it shouldn't be computed for all of them).</p>
-<p>The object is formatted and printed with the <code><a href="print.escalc.html">print.escalc</a></code> function. The <code><a href="print.escalc.html">summary.escalc</a></code> function can be used to obtain confidence intervals for the individual outcomes. See <code><a href="methods.escalc.html">methods.escalc</a></code> for some additional method functions for <code>"escalc"</code> objects.</p>
-<p>With the <code><a href="aggregate.escalc.html">aggregate.escalc</a></code> function, one can aggregate multiple effect sizes or outcomes belonging to the same study (or some other clustering variable) into a single combined effect size or outcome.</p>
+<dl><dt>yi</dt>
+<dd><p>observed effect sizes or outcomes.</p></dd>
+<dt>vi</dt>
+<dd><p>corresponding sampling variances.</p></dd>
+</dl><p>If <code>append=TRUE</code> and a data frame was specified via the <code>data</code> argument, then <code>yi</code> and <code>vi</code> are appended to this data frame. Note that the <code>var.names</code> argument actually specifies the names of these two variables (<code>yi</code> and <code>vi</code> are the defaults).
+   If the data frame already contains two variables with names as specified by the <code>var.names</code> argument, the values for these two variables will be overwritten when <code>replace=TRUE</code> (which is the default). By setting <code>replace=FALSE</code>, only values that are <code>NA</code> will be replaced.
+   The <code>subset</code> argument can be used to select the studies that will be included in the data frame returned by the function. On the other hand, the <code>include</code> argument simply selects for which studies the measure will be computed (if it shouldn't be computed for all of them).
+   The object is formatted and printed with the <code><a href="print.escalc.html">print.escalc</a></code> function. The <code><a href="print.escalc.html">summary.escalc</a></code> function can be used to obtain confidence intervals for the individual outcomes. See <code><a href="methods.escalc.html">methods.escalc</a></code> for some additional method functions for <code>"escalc"</code> objects.
+   With the <code><a href="aggregate.escalc.html">aggregate.escalc</a></code> function, one can aggregate multiple effect sizes or outcomes belonging to the same study (or some other clustering variable) into a single combined effect size or outcome.</p>
     </div>
     <div id="note">
     <h2>Note</h2>

@@ -107,72 +107,72 @@
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <p></p>
-<dl><dt>x</dt><dd><p>an object of class <code>"cumul.rma"</code>.</p></dd>
-</dl><p></p>
-<dl><dt>annotate</dt><dd><p>logical to specify whether annotations should be added to the plot (the default is <code>TRUE</code>).</p></dd>
-</dl><p></p>
-<dl><dt>header</dt><dd><p>logical to specify whether column headings should be added to the plot (the default is <code>FALSE</code>). Can also be a character vector to specify the left and right headings (or only the left one).</p></dd>
-</dl><p></p>
-<dl><dt>xlim</dt><dd><p>horizontal limits of the plot region. If unspecified, the function tries to set the horizontal plot limits to some sensible values.</p></dd>
-</dl><p></p>
-<dl><dt>alim</dt><dd><p>the x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.</p></dd>
-</dl><p></p>
-<dl><dt>olim</dt><dd><p>optional argument to specify observation/outcome limits. If unspecified, no limits are used.</p></dd>
-</dl><p></p>
-<dl><dt>ylim</dt><dd><p>the y-axis limits of the plot. If unspecified, the function tries to set the y-axis limits to some sensible values.</p></dd>
-</dl><p></p>
-<dl><dt>top</dt><dd><p>the amount of space to leave empty at the top of the plot (e.g., for adding headers) (the default is 3 rows).</p></dd>
-</dl><p></p>
-<dl><dt>at</dt><dd><p>position of the x-axis tick marks and corresponding labels. If unspecified, the function tries to set the tick mark positions/labels to some sensible values.</p></dd>
-</dl><p></p>
-<dl><dt>steps</dt><dd><p>the number of tick marks for the x-axis (the default is 5). Ignored when the positions are specified via the <code>at</code> argument.</p></dd>
-</dl><p></p>
-<dl><dt>level</dt><dd><p>numeric value between 0 and 100 to specify the confidence interval level (the default is to take the value from the object).</p></dd>
-</dl><p></p>
-<dl><dt>refline</dt><dd><p>numeric value to specify the location of the vertical ‘reference’ line (the default is 0). The line can be suppressed by setting this argument to <code>NA</code>.</p></dd>
-</dl><p></p>
-<dl><dt>digits</dt><dd><p>integer to specify the number of decimal places to which the tick mark labels of the x-axis and the annotations should be rounded (the default is <code>2L</code>). Can also be a vector of two integers, the first to specify the number of decimal places for the annotations, the second for the x-axis labels. When specifying an integer (e.g., <code>2L</code>), trailing zeros after the decimal mark are dropped for the x-axis labels. When specifying a numeric value (e.g., <code>2</code>), trailing zeros are retained.</p></dd>
-</dl><p></p>
-<dl><dt>width</dt><dd><p>optional integer to manually adjust the width of the columns for the annotations.</p></dd>
-</dl><p></p>
-<dl><dt>xlab</dt><dd><p>title for the x-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
-</dl><p></p>
-<dl><dt>ilab</dt><dd><p>optional vector, matrix, or data frame providing additional information about the studies that should be added to the plot.</p></dd>
-</dl><p></p>
-<dl><dt>ilab.xpos</dt><dd><p>numeric vector to specify the x-axis position(s) of the variable(s) given via <code>ilab</code> (must be specified if <code>ilab</code> is specified).</p></dd>
-</dl><p></p>
-<dl><dt>ilab.pos</dt><dd><p>integer(s) (either 1, 2, 3, or 4) to specify the alignment of the vector(s) given via <code>ilab</code> (2 means right, 4 mean left aligned). If unspecified, the default is to center the labels.</p></dd>
-</dl><p></p>
-<dl><dt>transf</dt><dd><p>optional argument to specify the name of a function that should be used to transform the estimates and confidence interval bounds (e.g., <code>transf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
-</dl><p></p>
-<dl><dt>atransf</dt><dd><p>optional argument to specify the name of a function that should be used to transform the x-axis labels and annotations (e.g., <code>atransf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
-</dl><p></p>
-<dl><dt>targs</dt><dd><p>optional arguments needed by the function specified via <code>transf</code> or <code>atransf</code>.</p></dd>
-</dl><p></p>
-<dl><dt>rows</dt><dd><p>optional vector to specify the rows (or more generally, the horizontal positions) for plotting the outcomes. Can also be a single value to specify the row (horizontal position) of the first outcome (the remaining outcomes are then plotted below this starting row). If unspecified, the function sets this value automatically.</p></dd>
-</dl><p></p>
-<dl><dt>efac</dt><dd><p>vertical expansion factor for confidence interval limits and arrows. The default value of 1 should usually work okay. Can also be a vector of two numbers, the first for CI limits, the second for arrows.</p></dd>
-</dl><p></p>
-<dl><dt>pch</dt><dd><p>plotting symbol to use for the estimates. By default, a filled square is used. See <code><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></code> for other options. Can also be a vector of values.</p></dd>
-</dl><p></p>
-<dl><dt>psize</dt><dd><p>numeric value to specify the point sizes for the estimates (the default is 1). Can also be a vector of values.</p></dd>
-</dl><p></p>
-<dl><dt>col</dt><dd><p>optional character string to specify the name of a color to use for plotting (<code>"black"</code> is used by default if not specified). Can also be a vector of color names.</p></dd>
-</dl><p></p>
-<dl><dt>lty</dt><dd><p>optional character string to specify the line type for the confidence intervals. If unspecified, the function sets this to <code>"solid"</code> by default.</p></dd>
-</dl><p></p>
-<dl><dt>fonts</dt><dd><p>optional character string to specify the font to use for the study labels, annotations, and the extra information (if specified via <code>ilab</code>). If unspecified, the default font is used.</p></dd>
-</dl><p></p>
-<dl><dt>cex</dt><dd><p>optional character and symbol expansion factor. If unspecified, the function tries to set this to a sensible value.</p></dd>
-</dl><p></p>
-<dl><dt>cex.lab</dt><dd><p>optional expansion factor for the x-axis title. If unspecified, the function tries to set this to a sensible value.</p></dd>
-</dl><p></p>
-<dl><dt>cex.axis</dt><dd><p>optional expansion factor for the x-axis labels. If unspecified, the function tries to set this to a sensible value.</p></dd>
-</dl><p></p>
-<dl><dt>annosym</dt><dd><p>optional vector of length 3 to change the left bracket, separation, and right bracket symbols for the annotations.</p></dd>
-</dl><p></p>
-<dl><dt>...</dt><dd><p>other arguments.</p></dd>
+    <dl><dt>x</dt>
+<dd><p>an object of class <code>"cumul.rma"</code>.</p></dd>
+<dt>annotate</dt>
+<dd><p>logical to specify whether annotations should be added to the plot (the default is <code>TRUE</code>).</p></dd>
+<dt>header</dt>
+<dd><p>logical to specify whether column headings should be added to the plot (the default is <code>FALSE</code>). Can also be a character vector to specify the left and right headings (or only the left one).</p></dd>
+<dt>xlim</dt>
+<dd><p>horizontal limits of the plot region. If unspecified, the function tries to set the horizontal plot limits to some sensible values.</p></dd>
+<dt>alim</dt>
+<dd><p>the x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.</p></dd>
+<dt>olim</dt>
+<dd><p>optional argument to specify observation/outcome limits. If unspecified, no limits are used.</p></dd>
+<dt>ylim</dt>
+<dd><p>the y-axis limits of the plot. If unspecified, the function tries to set the y-axis limits to some sensible values.</p></dd>
+<dt>top</dt>
+<dd><p>the amount of space to leave empty at the top of the plot (e.g., for adding headers) (the default is 3 rows).</p></dd>
+<dt>at</dt>
+<dd><p>position of the x-axis tick marks and corresponding labels. If unspecified, the function tries to set the tick mark positions/labels to some sensible values.</p></dd>
+<dt>steps</dt>
+<dd><p>the number of tick marks for the x-axis (the default is 5). Ignored when the positions are specified via the <code>at</code> argument.</p></dd>
+<dt>level</dt>
+<dd><p>numeric value between 0 and 100 to specify the confidence interval level (the default is to take the value from the object).</p></dd>
+<dt>refline</dt>
+<dd><p>numeric value to specify the location of the vertical ‘reference’ line (the default is 0). The line can be suppressed by setting this argument to <code>NA</code>.</p></dd>
+<dt>digits</dt>
+<dd><p>integer to specify the number of decimal places to which the tick mark labels of the x-axis and the annotations should be rounded (the default is <code>2L</code>). Can also be a vector of two integers, the first to specify the number of decimal places for the annotations, the second for the x-axis labels. When specifying an integer (e.g., <code>2L</code>), trailing zeros after the decimal mark are dropped for the x-axis labels. When specifying a numeric value (e.g., <code>2</code>), trailing zeros are retained.</p></dd>
+<dt>width</dt>
+<dd><p>optional integer to manually adjust the width of the columns for the annotations.</p></dd>
+<dt>xlab</dt>
+<dd><p>title for the x-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
+<dt>ilab</dt>
+<dd><p>optional vector, matrix, or data frame providing additional information about the studies that should be added to the plot.</p></dd>
+<dt>ilab.xpos</dt>
+<dd><p>numeric vector to specify the x-axis position(s) of the variable(s) given via <code>ilab</code> (must be specified if <code>ilab</code> is specified).</p></dd>
+<dt>ilab.pos</dt>
+<dd><p>integer(s) (either 1, 2, 3, or 4) to specify the alignment of the vector(s) given via <code>ilab</code> (2 means right, 4 mean left aligned). If unspecified, the default is to center the labels.</p></dd>
+<dt>transf</dt>
+<dd><p>optional argument to specify the name of a function that should be used to transform the estimates and confidence interval bounds (e.g., <code>transf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
+<dt>atransf</dt>
+<dd><p>optional argument to specify the name of a function that should be used to transform the x-axis labels and annotations (e.g., <code>atransf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
+<dt>targs</dt>
+<dd><p>optional arguments needed by the function specified via <code>transf</code> or <code>atransf</code>.</p></dd>
+<dt>rows</dt>
+<dd><p>optional vector to specify the rows (or more generally, the horizontal positions) for plotting the outcomes. Can also be a single value to specify the row (horizontal position) of the first outcome (the remaining outcomes are then plotted below this starting row). If unspecified, the function sets this value automatically.</p></dd>
+<dt>efac</dt>
+<dd><p>vertical expansion factor for confidence interval limits and arrows. The default value of 1 should usually work okay. Can also be a vector of two numbers, the first for CI limits, the second for arrows.</p></dd>
+<dt>pch</dt>
+<dd><p>plotting symbol to use for the estimates. By default, a filled square is used. See <code><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></code> for other options. Can also be a vector of values.</p></dd>
+<dt>psize</dt>
+<dd><p>numeric value to specify the point sizes for the estimates (the default is 1). Can also be a vector of values.</p></dd>
+<dt>col</dt>
+<dd><p>optional character string to specify the name of a color to use for plotting (<code>"black"</code> is used by default if not specified). Can also be a vector of color names.</p></dd>
+<dt>lty</dt>
+<dd><p>optional character string to specify the line type for the confidence intervals. If unspecified, the function sets this to <code>"solid"</code> by default.</p></dd>
+<dt>fonts</dt>
+<dd><p>optional character string to specify the font to use for the study labels, annotations, and the extra information (if specified via <code>ilab</code>). If unspecified, the default font is used.</p></dd>
+<dt>cex</dt>
+<dd><p>optional character and symbol expansion factor. If unspecified, the function tries to set this to a sensible value.</p></dd>
+<dt>cex.lab</dt>
+<dd><p>optional expansion factor for the x-axis title. If unspecified, the function tries to set this to a sensible value.</p></dd>
+<dt>cex.axis</dt>
+<dd><p>optional expansion factor for the x-axis labels. If unspecified, the function tries to set this to a sensible value.</p></dd>
+<dt>annosym</dt>
+<dd><p>optional vector of length 3 to change the left bracket, separation, and right bracket symbols for the annotations.</p></dd>
+<dt>...</dt>
+<dd><p>other arguments.</p></dd>
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -215,9 +215,9 @@
 <span class="r-in"><span class="co">### draw cumulative forest plots</span></span>
 <span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="cumul.html">cumul</a></span><span class="op">(</span><span class="va">res</span>, order<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">year</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="forest.html">forest</a></span><span class="op">(</span><span class="va">x</span>, cex<span class="op">=</span><span class="fl">.8</span>, header<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-plt"><img src="forest.cumul.rma-1.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="forest.cumul.rma-1.png" alt="" width="864" height="768"></span>
 <span class="r-in"><span class="fu"><a href="forest.html">forest</a></span><span class="op">(</span><span class="va">x</span>, alim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span>, cex<span class="op">=</span><span class="fl">.8</span>, header<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-plt"><img src="forest.cumul.rma-2.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="forest.cumul.rma-2.png" alt="" width="864" height="768"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### meta-analysis of the (log) risk ratios using the Mantel-Haenszel method</span></span>
 <span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.mh.html">rma.mh</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="va">dat.bcg</span>,</span>
@@ -226,7 +226,7 @@
 <span class="r-in"><span class="co">### draw cumulative forest plot</span></span>
 <span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="cumul.html">cumul</a></span><span class="op">(</span><span class="va">res</span>, order<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">year</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="forest.html">forest</a></span><span class="op">(</span><span class="va">x</span>, alim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span>, cex<span class="op">=</span><span class="fl">.8</span>, header<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-plt"><img src="forest.cumul.rma-3.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="forest.cumul.rma-3.png" alt="" width="864" height="768"></span>
 </code></pre></div>
     </div>
   </div>

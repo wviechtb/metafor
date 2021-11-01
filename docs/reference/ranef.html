@@ -103,35 +103,36 @@
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <p></p>
-<dl><dt>object</dt><dd><p>an object of class <code>"rma.uni"</code> or <code>"rma.mv"</code>.</p></dd>
-</dl><p></p>
-<dl><dt>level</dt><dd><p>numeric value between 0 and 100 to specify the prediction interval level. If unspecified, the default is to take the value from the object.</p></dd>
-</dl><p></p>
-<dl><dt>digits</dt><dd><p>integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.</p></dd>
-</dl><p></p>
-<dl><dt>transf</dt><dd><p>optional argument to specify a function that should be used to transform the predicted values and interval bounds (e.g., <code>transf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
-</dl><p></p>
-<dl><dt>targs</dt><dd><p>optional arguments needed by the function specified under <code>transf</code>.</p></dd>
-</dl><p></p>
-<dl><dt>verbose</dt><dd><p>logical to specify whether output should be generated on the progress of the computations (the default is <code>FALSE</code>).</p></dd>
-</dl><p></p>
-<dl><dt>...</dt><dd><p>other arguments.</p></dd>
+    <dl><dt>object</dt>
+<dd><p>an object of class <code>"rma.uni"</code> or <code>"rma.mv"</code>.</p></dd>
+<dt>level</dt>
+<dd><p>numeric value between 0 and 100 to specify the prediction interval level. If unspecified, the default is to take the value from the object.</p></dd>
+<dt>digits</dt>
+<dd><p>integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.</p></dd>
+<dt>transf</dt>
+<dd><p>optional argument to specify a function that should be used to transform the predicted values and interval bounds (e.g., <code>transf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
+<dt>targs</dt>
+<dd><p>optional arguments needed by the function specified under <code>transf</code>.</p></dd>
+<dt>verbose</dt>
+<dd><p>logical to specify whether output should be generated on the progress of the computations (the default is <code>FALSE</code>).</p></dd>
+<dt>...</dt>
+<dd><p>other arguments.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
     <p>For objects of class <code>"rma.uni"</code>, an object of class <code>"list.rma"</code>. The object is a list containing the following components:</p>
-<dl><dt>pred</dt><dd><p>predicted values.</p></dd>
-</dl><p></p>
-<dl><dt>se</dt><dd><p>corresponding standard errors.</p></dd>
-</dl><p></p>
-<dl><dt>pi.lb</dt><dd><p>lower bound of the prediction intervals.</p></dd>
-</dl><p></p>
-<dl><dt>pi.ub</dt><dd><p>upper bound of the prediction intervals.</p></dd>
-</dl><p></p>
-<dl><dt>...</dt><dd><p>some additional elements/values.</p></dd>
-</dl><p>The object is formatted and printed with <code><a href="print.list.rma.html">print.list.rma</a></code>.</p>
-<p>For objects of class <code>"rma.mv"</code>, a list of data frames with the same components as described above.</p>
+<dl><dt>pred</dt>
+<dd><p>predicted values.</p></dd>
+<dt>se</dt>
+<dd><p>corresponding standard errors.</p></dd>
+<dt>pi.lb</dt>
+<dd><p>lower bound of the prediction intervals.</p></dd>
+<dt>pi.ub</dt>
+<dd><p>upper bound of the prediction intervals.</p></dd>
+<dt>...</dt>
+<dd><p>some additional elements/values.</p></dd>
+</dl><p>The object is formatted and printed with <code><a href="print.list.rma.html">print.list.rma</a></code>.
+   For objects of class <code>"rma.mv"</code>, a list of data frames with the same components as described above.</p>
     </div>
     <div id="note">
     <h2>Note</h2>

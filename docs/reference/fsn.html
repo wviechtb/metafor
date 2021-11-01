@@ -101,28 +101,28 @@
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <p></p>
-<dl><dt>yi</dt><dd><p>vector with the observed effect sizes or outcomes.</p></dd>
-</dl><p></p>
-<dl><dt>vi</dt><dd><p>vector with the corresponding sampling variances.</p></dd>
-</dl><p></p>
-<dl><dt>sei</dt><dd><p>vector with the corresponding standard errors (note: only one of the two, <code>vi</code> or <code>sei</code>, needs to be specified).</p></dd>
-</dl><p></p>
-<dl><dt>data</dt><dd><p>optional data frame containing the variables given to the arguments above.</p></dd>
-</dl><p></p>
-<dl><dt>type</dt><dd><p>character string to specify the method to use for the calculation of the fail-safe N. Possible options are <code>"Rosenthal"</code> (the default), <code>"Orwin"</code>, or <code>"Rosenberg"</code>. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>alpha</dt><dd><p>target alpha level to use for the Rosenthal and Rosenberg methods (the default is .05).</p></dd>
-</dl><p></p>
-<dl><dt>target</dt><dd><p>target average effect size or outcome to use for the Orwin method. If undefined, then the target average effect size or outcome will be equal to the observed average effect size or outcome divided by 2.</p></dd>
-</dl><p></p>
-<dl><dt>weighted</dt><dd><p>logical to specify whether Orwin's method should be based on unweighted (the default) or weighted averages.</p></dd>
-</dl><p></p>
-<dl><dt>subset</dt><dd><p>optional (logical or numeric) vector to specify the subset of studies that should be used for the calculations.</p></dd>
-</dl><p></p>
-<dl><dt>digits</dt><dd><p>integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4.</p></dd>
-</dl><p></p>
-<dl><dt>...</dt><dd><p>other arguments.</p></dd>
+    <dl><dt>yi</dt>
+<dd><p>vector with the observed effect sizes or outcomes.</p></dd>
+<dt>vi</dt>
+<dd><p>vector with the corresponding sampling variances.</p></dd>
+<dt>sei</dt>
+<dd><p>vector with the corresponding standard errors (note: only one of the two, <code>vi</code> or <code>sei</code>, needs to be specified).</p></dd>
+<dt>data</dt>
+<dd><p>optional data frame containing the variables given to the arguments above.</p></dd>
+<dt>type</dt>
+<dd><p>character string to specify the method to use for the calculation of the fail-safe N. Possible options are <code>"Rosenthal"</code> (the default), <code>"Orwin"</code>, or <code>"Rosenberg"</code>. See ‘Details’.</p></dd>
+<dt>alpha</dt>
+<dd><p>target alpha level to use for the Rosenthal and Rosenberg methods (the default is .05).</p></dd>
+<dt>target</dt>
+<dd><p>target average effect size or outcome to use for the Orwin method. If undefined, then the target average effect size or outcome will be equal to the observed average effect size or outcome divided by 2.</p></dd>
+<dt>weighted</dt>
+<dd><p>logical to specify whether Orwin's method should be based on unweighted (the default) or weighted averages.</p></dd>
+<dt>subset</dt>
+<dd><p>optional (logical or numeric) vector to specify the subset of studies that should be used for the calculations.</p></dd>
+<dt>digits</dt>
+<dd><p>integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4.</p></dd>
+<dt>...</dt>
+<dd><p>other arguments.</p></dd>
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -135,17 +135,18 @@
     <div id="value">
     <h2>Value</h2>
     <p>An object of class <code>"fsn"</code>. The object is a list containing the following components:</p>
-<dl><dt>type</dt><dd><p>the method used.</p></dd>
-</dl><p></p>
-<dl><dt>fsnum</dt><dd><p>the calculated fail-safe N.</p></dd>
-</dl><p></p>
-<dl><dt>alpha</dt><dd><p>the specified alpha level.</p></dd>
-</dl><p></p>
-<dl><dt>pval</dt><dd><p>the p-value of the observed results. <code>NA</code> for the Orwin method.</p></dd>
-</dl><p></p>
-<dl><dt>meanes</dt><dd><p>the average outcome of the observed results. <code>NA</code> for the Rosenthal method.</p></dd>
-</dl><p></p>
-<dl><dt>target</dt><dd><p>the target value. <code>NA</code> for the Rosenthal and Rosenberg methods.</p></dd>
+<dl><dt>type</dt>
+<dd><p>the method used.</p></dd>
+<dt>fsnum</dt>
+<dd><p>the calculated fail-safe N.</p></dd>
+<dt>alpha</dt>
+<dd><p>the specified alpha level.</p></dd>
+<dt>pval</dt>
+<dd><p>the p-value of the observed results. <code>NA</code> for the Orwin method.</p></dd>
+<dt>meanes</dt>
+<dd><p>the average outcome of the observed results. <code>NA</code> for the Rosenthal method.</p></dd>
+<dt>target</dt>
+<dd><p>the target value. <code>NA</code> for the Rosenthal and Rosenberg methods.</p></dd>
 </dl><p>The results are formatted and printed with the <code><a href="print.fsn.html">print.fsn</a></code> function.</p>
     </div>
     <div id="note">

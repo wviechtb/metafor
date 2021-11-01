@@ -105,18 +105,18 @@
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <p></p>
-<dl><dt>x</dt><dd><p>an object of class <code>"rma.uni"</code> or <code>"rma.mv"</code>.</p></dd>
-</dl><p></p>
-<dl><dt>cluster</dt><dd><p>vector to specify the clustering variable to use for constructing the sandwich estimator of the variance-covariance matrix.</p></dd>
-</dl><p></p>
-<dl><dt>adjust</dt><dd><p>logical to specify whether a small-sample correction should be applied to the variance-covariance matrix.</p></dd>
-</dl><p></p>
-<dl><dt>clubSandwich</dt><dd><p>logical to specify whether the <a href="https://cran.r-project.org/package=clubSandwich" class="external-link">clubSandwich</a> package should be used to obtain the cluster-robust tests and confidence intervals.</p></dd>
-</dl><p></p>
-<dl><dt>digits</dt><dd><p>integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.</p></dd>
-</dl><p></p>
-<dl><dt>...</dt><dd><p>other arguments.</p></dd>
+    <dl><dt>x</dt>
+<dd><p>an object of class <code>"rma.uni"</code> or <code>"rma.mv"</code>.</p></dd>
+<dt>cluster</dt>
+<dd><p>vector to specify the clustering variable to use for constructing the sandwich estimator of the variance-covariance matrix.</p></dd>
+<dt>adjust</dt>
+<dd><p>logical to specify whether a small-sample correction should be applied to the variance-covariance matrix.</p></dd>
+<dt>clubSandwich</dt>
+<dd><p>logical to specify whether the <a href="https://cran.r-project.org/package=clubSandwich" class="external-link">clubSandwich</a> package should be used to obtain the cluster-robust tests and confidence intervals.</p></dd>
+<dt>digits</dt>
+<dd><p>integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.</p></dd>
+<dt>...</dt>
+<dd><p>other arguments.</p></dd>
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -128,25 +128,26 @@
     <div id="value">
     <h2>Value</h2>
     <p>An object of class <code>"robust.rma"</code>. The object is a list containing the following components:</p>
-<dl><dt>beta</dt><dd><p>estimated coefficients of the model.</p></dd>
-</dl><p></p>
-<dl><dt>se</dt><dd><p>robust standard errors of the coefficients.</p></dd>
-</dl><p></p>
-<dl><dt>zval</dt><dd><p>test statistics of the coefficients.</p></dd>
-</dl><p></p>
-<dl><dt>pval</dt><dd><p>corresponding p-values.</p></dd>
-</dl><p></p>
-<dl><dt>ci.lb</dt><dd><p>lower bound of the confidence intervals for the coefficients.</p></dd>
-</dl><p></p>
-<dl><dt>ci.ub</dt><dd><p>upper bound of the confidence intervals for the coefficients.</p></dd>
-</dl><p></p>
-<dl><dt>vb</dt><dd><p>robust variance-covariance matrix of the estimated coefficients.</p></dd>
-</dl><p></p>
-<dl><dt>QM</dt><dd><p>test statistic of the omnibus test of moderators.</p></dd>
-</dl><p></p>
-<dl><dt>QMp</dt><dd><p>corresponding p-value.</p></dd>
-</dl><p></p>
-<dl><dt>...</dt><dd><p>some additional elements/values.</p></dd>
+<dl><dt>beta</dt>
+<dd><p>estimated coefficients of the model.</p></dd>
+<dt>se</dt>
+<dd><p>robust standard errors of the coefficients.</p></dd>
+<dt>zval</dt>
+<dd><p>test statistics of the coefficients.</p></dd>
+<dt>pval</dt>
+<dd><p>corresponding p-values.</p></dd>
+<dt>ci.lb</dt>
+<dd><p>lower bound of the confidence intervals for the coefficients.</p></dd>
+<dt>ci.ub</dt>
+<dd><p>upper bound of the confidence intervals for the coefficients.</p></dd>
+<dt>vb</dt>
+<dd><p>robust variance-covariance matrix of the estimated coefficients.</p></dd>
+<dt>QM</dt>
+<dd><p>test statistic of the omnibus test of moderators.</p></dd>
+<dt>QMp</dt>
+<dd><p>corresponding p-value.</p></dd>
+<dt>...</dt>
+<dd><p>some additional elements/values.</p></dd>
 </dl><p>The results are formatted and printed with the <code><a href="print.rma.html">print.rma.uni</a></code> and <code><a href="print.rma.html">print.rma.mv</a></code> functions (depending on the type of model).</p>
     </div>
     <div id="note">

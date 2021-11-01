@@ -103,38 +103,38 @@
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <p></p>
-<dl><dt>ai</dt><dd><p>vector to specify the \(2 \times 2\) table frequencies (upper left cell). See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-</dl><p></p>
-<dl><dt>bi</dt><dd><p>vector to specify the \(2 \times 2\) table frequencies (upper right cell). See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-</dl><p></p>
-<dl><dt>ci</dt><dd><p>vector to specify the \(2 \times 2\) table frequencies (lower left cell). See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-</dl><p></p>
-<dl><dt>di</dt><dd><p>vector to specify the \(2 \times 2\) table frequencies (lower right cell). See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-</dl><p></p>
-<dl><dt>n1i</dt><dd><p>vector to specify the group sizes or row totals (first group). See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-</dl><p></p>
-<dl><dt>n2i</dt><dd><p>vector to specify the group sizes or row totals (second group). See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-</dl><p></p>
-<dl><dt>data</dt><dd><p>optional data frame containing the data supplied to the function.</p></dd>
-</dl><p></p>
-<dl><dt>slab</dt><dd><p>optional vector with labels for the \(k\) studies.</p></dd>
-</dl><p></p>
-<dl><dt>subset</dt><dd><p>optional (logical or numeric) vector to specify the subset of studies that should be used for the analysis.</p></dd>
-</dl><p></p>
-<dl><dt>add</dt><dd><p>non-negative number to specify the amount to add to zero cells, counts, or frequencies when calculating the observed effect sizes or outcomes of the individual studies. Can also be a vector of two numbers, where the first number is used in the calculation of the observed effect sizes outcomes and the second number is used when applying Peto's method. See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-</dl><p></p>
-<dl><dt>to</dt><dd><p>character string to specify when the values under <code>add</code> should be added (either <code>"only0"</code>, <code>"all"</code>, <code>"if0all"</code>, or <code>"none"</code>). Can also be a character vector, where the first string again applies when calculating the observed effect sizes or outcomes and the second string when applying Peto's method. See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-</dl><p></p>
-<dl><dt>drop00</dt><dd><p>logical to specify whether studies with no cases (or only cases) in both groups should be dropped when calculating the observed effect sizes or outcomes (the outcomes for such studies are set to <code>NA</code>). Can also be a vector of two logicals, where the first applies to the calculation of the observed effect sizes or outcomes and the second when applying Peto's method. See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-</dl><p></p>
-<dl><dt>level</dt><dd><p>numeric value between 0 and 100 to specify the confidence interval level (the default is 95).</p></dd>
-</dl><p></p>
-<dl><dt>digits</dt><dd><p>integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4.</p></dd>
-</dl><p></p>
-<dl><dt>verbose</dt><dd><p>logical to specify whether output should be generated on the progress of the model fitting (the default is <code>FALSE</code>).</p></dd>
-</dl><p></p>
-<dl><dt>...</dt><dd><p>additional arguments.</p></dd>
+    <dl><dt>ai</dt>
+<dd><p>vector to specify the \(2 \times 2\) table frequencies (upper left cell). See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
+<dt>bi</dt>
+<dd><p>vector to specify the \(2 \times 2\) table frequencies (upper right cell). See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
+<dt>ci</dt>
+<dd><p>vector to specify the \(2 \times 2\) table frequencies (lower left cell). See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
+<dt>di</dt>
+<dd><p>vector to specify the \(2 \times 2\) table frequencies (lower right cell). See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
+<dt>n1i</dt>
+<dd><p>vector to specify the group sizes or row totals (first group). See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
+<dt>n2i</dt>
+<dd><p>vector to specify the group sizes or row totals (second group). See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
+<dt>data</dt>
+<dd><p>optional data frame containing the data supplied to the function.</p></dd>
+<dt>slab</dt>
+<dd><p>optional vector with labels for the \(k\) studies.</p></dd>
+<dt>subset</dt>
+<dd><p>optional (logical or numeric) vector to specify the subset of studies that should be used for the analysis.</p></dd>
+<dt>add</dt>
+<dd><p>non-negative number to specify the amount to add to zero cells, counts, or frequencies when calculating the observed effect sizes or outcomes of the individual studies. Can also be a vector of two numbers, where the first number is used in the calculation of the observed effect sizes outcomes and the second number is used when applying Peto's method. See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
+<dt>to</dt>
+<dd><p>character string to specify when the values under <code>add</code> should be added (either <code>"only0"</code>, <code>"all"</code>, <code>"if0all"</code>, or <code>"none"</code>). Can also be a character vector, where the first string again applies when calculating the observed effect sizes or outcomes and the second string when applying Peto's method. See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
+<dt>drop00</dt>
+<dd><p>logical to specify whether studies with no cases (or only cases) in both groups should be dropped when calculating the observed effect sizes or outcomes (the outcomes for such studies are set to <code>NA</code>). Can also be a vector of two logicals, where the first applies to the calculation of the observed effect sizes or outcomes and the second when applying Peto's method. See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
+<dt>level</dt>
+<dd><p>numeric value between 0 and 100 to specify the confidence interval level (the default is 95).</p></dd>
+<dt>digits</dt>
+<dd><p>integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4.</p></dd>
+<dt>verbose</dt>
+<dd><p>logical to specify whether output should be generated on the progress of the model fitting (the default is <code>FALSE</code>).</p></dd>
+<dt>...</dt>
+<dd><p>additional arguments.</p></dd>
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -171,29 +171,30 @@
     <div id="value">
     <h2>Value</h2>
     <p>An object of class <code>c("rma.peto","rma")</code>. The object is a list containing the following components:</p>
-<dl><dt>beta</dt><dd><p>aggregated log odds ratio.</p></dd>
-</dl><p></p>
-<dl><dt>se</dt><dd><p>standard error of the aggregated value.</p></dd>
-</dl><p></p>
-<dl><dt>zval</dt><dd><p>test statistics of the aggregated value.</p></dd>
-</dl><p></p>
-<dl><dt>pval</dt><dd><p>corresponding p-value.</p></dd>
-</dl><p></p>
-<dl><dt>ci.lb</dt><dd><p>lower bound of the confidence interval.</p></dd>
-</dl><p></p>
-<dl><dt>ci.ub</dt><dd><p>upper bound of the confidence interval.</p></dd>
-</dl><p></p>
-<dl><dt>QE</dt><dd><p>test statistic of the test for heterogeneity.</p></dd>
-</dl><p></p>
-<dl><dt>QEp</dt><dd><p>corresponding p-value.</p></dd>
-</dl><p></p>
-<dl><dt>k</dt><dd><p>number of studies included in the analysis.</p></dd>
-</dl><p></p>
-<dl><dt>yi, vi</dt><dd><p>the vector of individual log odds ratios and corresponding sampling variances.</p></dd>
-</dl><p></p>
-<dl><dt>fit.stats</dt><dd><p>a list with the log-likelihood, deviance, AIC, BIC, and AICc values under the unrestricted and restricted likelihood.</p></dd>
-</dl><p></p>
-<dl><dt>...</dt><dd><p>some additional elements/values.</p></dd>
+<dl><dt>beta</dt>
+<dd><p>aggregated log odds ratio.</p></dd>
+<dt>se</dt>
+<dd><p>standard error of the aggregated value.</p></dd>
+<dt>zval</dt>
+<dd><p>test statistics of the aggregated value.</p></dd>
+<dt>pval</dt>
+<dd><p>corresponding p-value.</p></dd>
+<dt>ci.lb</dt>
+<dd><p>lower bound of the confidence interval.</p></dd>
+<dt>ci.ub</dt>
+<dd><p>upper bound of the confidence interval.</p></dd>
+<dt>QE</dt>
+<dd><p>test statistic of the test for heterogeneity.</p></dd>
+<dt>QEp</dt>
+<dd><p>corresponding p-value.</p></dd>
+<dt>k</dt>
+<dd><p>number of studies included in the analysis.</p></dd>
+<dt>yi, vi</dt>
+<dd><p>the vector of individual log odds ratios and corresponding sampling variances.</p></dd>
+<dt>fit.stats</dt>
+<dd><p>a list with the log-likelihood, deviance, AIC, BIC, and AICc values under the unrestricted and restricted likelihood.</p></dd>
+<dt>...</dt>
+<dd><p>some additional elements/values.</p></dd>
 </dl></div>
     <div id="methods">
     <h2>Methods</h2>

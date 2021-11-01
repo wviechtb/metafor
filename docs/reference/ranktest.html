@@ -106,18 +106,18 @@
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <p></p>
-<dl><dt>x</dt><dd><p>an object of class <code>"rma"</code> or a vector with the observed effect sizes or outcomes.</p></dd>
-</dl><p></p>
-<dl><dt>vi</dt><dd><p>vector with the corresponding sampling variances (needed if <code>x</code> is a vector with the observed effect sizes or outcomes).</p></dd>
-</dl><p></p>
-<dl><dt>sei</dt><dd><p>vector with the corresponding standard errors (note: only one of the two, <code>vi</code> or <code>sei</code>, needs to be specified).</p></dd>
-</dl><p></p>
-<dl><dt>subset</dt><dd><p>optional (logical or numeric) vector to specify the subset of studies that should be included in the test. Only relevant when passing a vector via <code>x</code>.</p></dd>
-</dl><p></p>
-<dl><dt>digits</dt><dd><p>integer to specify the number of decimal places to which the printed results should be rounded (the default is 4).</p></dd>
-</dl><p></p>
-<dl><dt>...</dt><dd><p>other arguments.</p></dd>
+    <dl><dt>x</dt>
+<dd><p>an object of class <code>"rma"</code> or a vector with the observed effect sizes or outcomes.</p></dd>
+<dt>vi</dt>
+<dd><p>vector with the corresponding sampling variances (needed if <code>x</code> is a vector with the observed effect sizes or outcomes).</p></dd>
+<dt>sei</dt>
+<dd><p>vector with the corresponding standard errors (note: only one of the two, <code>vi</code> or <code>sei</code>, needs to be specified).</p></dd>
+<dt>subset</dt>
+<dd><p>optional (logical or numeric) vector to specify the subset of studies that should be included in the test. Only relevant when passing a vector via <code>x</code>.</p></dd>
+<dt>digits</dt>
+<dd><p>integer to specify the number of decimal places to which the printed results should be rounded (the default is 4).</p></dd>
+<dt>...</dt>
+<dd><p>other arguments.</p></dd>
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -127,9 +127,10 @@
     <div id="value">
     <h2>Value</h2>
     <p>An object of class <code>"ranktest"</code>. The object is a list containing the following components:</p>
-<dl><dt>tau</dt><dd><p>the estimated value of Kendall's tau rank correlation coefficient</p></dd>
-</dl><p></p>
-<dl><dt>pval</dt><dd><p>the corresponding p-value for the test that the true tau is equal to zero</p></dd>
+<dl><dt>tau</dt>
+<dd><p>the estimated value of Kendall's tau rank correlation coefficient</p></dd>
+<dt>pval</dt>
+<dd><p>the corresponding p-value for the test that the true tau is equal to zero</p></dd>
 </dl><p>The results are formatted and printed with the <code><a href="print.ranktest.rma.html">print.ranktest</a></code> function.</p>
     </div>
     <div id="note">

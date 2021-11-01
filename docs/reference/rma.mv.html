@@ -104,62 +104,62 @@
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <p></p>
-<dl><dt>yi</dt><dd><p>vector of length \(k\) with the observed effect sizes or outcomes. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>V</dt><dd><p>vector of length \(k\) with the corresponding sampling variances or a \(k \times k\) variance-covariance matrix of the sampling errors. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>W</dt><dd><p>optional argument to specify a vector of length \(k\) with user-defined weights or a \(k \times k\) user-defined weight matrix. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>mods</dt><dd><p>optional argument to include one or more moderators in the model. A single moderator can be given as a vector of length \(k\) specifying the values of the moderator. Multiple moderators are specified by giving a matrix with \(k\) rows and as many columns as there are moderator variables. Alternatively, a model <code><a href="formula.rma.html">formula</a></code> can be used to specify the model. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>random</dt><dd><p>either a single one-sided formula or list of one-sided formulas to specify the random-effects structure of the model. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>struct</dt><dd><p>character string to specify the variance structure of an <code>~ inner | outer</code> formula in the <code>random</code> argument. Either <code>"CS"</code> for compound symmetry, <code>"HCS"</code> for heteroscedastic compound symmetry, <code>"UN"</code> or <code>"GEN"</code> for an unstructured variance-covariance matrix, <code>"ID"</code> for a scaled identity matrix, <code>"DIAG"</code> for a diagonal matrix, <code>"AR"</code> for an AR(1) autoregressive structure, <code>"HAR"</code> for a heteroscedastic AR(1) autoregressive structure, <code>"CAR"</code> for a continuous-time autoregressive structure, or one of <code>"SPEXP"</code>, <code>"SPGAU"</code>, <code>"SPLIN"</code>, <code>"SPRAT"</code>, or <code>"SPSPH"</code> for one of the spatial correlation structures. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>intercept</dt><dd><p>logical to specify whether an intercept should be added to the model (the default is <code>TRUE</code>). Ignored when <code>mods</code> is a formula.</p></dd>
-</dl><p></p>
-<dl><dt>data</dt><dd><p>optional data frame containing the data supplied to the function.</p></dd>
-</dl><p></p>
-<dl><dt>slab</dt><dd><p>optional vector with labels for the \(k\) outcomes/studies.</p></dd>
-</dl><p></p>
-<dl><dt>subset</dt><dd><p>optional (logical or numeric) vector to specify the subset of studies (or more precisely, rows of the dataset) that should be used for the analysis.</p></dd>
-</dl><p></p>
-<dl><dt>method</dt><dd><p>character string to specify whether the model should be fitted via maximum-likelihood (<code>"ML"</code>) or via restricted maximum-likelihood (<code>"REML"</code>) estimation. Default is <code>"REML"</code>.</p></dd>
-</dl><p></p>
-<dl><dt>test</dt><dd><p>character string to specify how test statistics and confidence intervals for the fixed effects should be computed. By default (<code>test="z"</code>), Wald-type tests and CIs are obtained, which are based on a standard normal distribution. When <code>test="t"</code>, a t-distribution is used instead. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>dfs</dt><dd><p>character string to specify how the (denominator) degrees of freedom should be calculated when <code>test="t"</code>. Either <code>dfs="residual"</code> or <code>dfs="contain"</code>. Can also be a numeric vector with the degrees of freedom for each model coefficient. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>level</dt><dd><p>numeric value between 0 and 100 to specify the confidence interval level (the default is 95).</p></dd>
-</dl><p></p>
-<dl><dt>digits</dt><dd><p>integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4.</p></dd>
-</dl><p></p>
-<dl><dt>btt</dt><dd><p>optional vector of indices to specify which coefficients to include in the omnibus test of moderators. Can also be a string to <code><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></code> for. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>R</dt><dd><p>an optional named list of known correlation matrices corresponding to (some of) the components specified via the <code>random</code> argument. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>Rscale</dt><dd><p>character string, integer, or logical to specify how matrices specified via the <code>R</code> argument should be scaled. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>sigma2</dt><dd><p>optional numeric vector (of the same length as the number of random intercept components specified via the <code>random</code> argument) to fix the corresponding \(\sigma^2\) value(s). A specific \(\sigma^2\) value can be fixed by setting the corresponding element of this argument to the desired value. A specific \(\sigma^2\) value will be estimated if the corresponding element is set equal to <code>NA</code>. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>tau2</dt><dd><p>optional numeric value (for <code>struct="CS"</code>, <code>"AR"</code>, <code>"CAR"</code>, or a spatial correlation structure) or vector (for <code>struct="HCS"</code>, <code>"UN"</code>, or <code>"HAR"</code>) to fix the amount of (residual) heterogeneity for the levels of the <code>inner</code> factor corresponding to an <code>~ inner | outer</code> formula specified in the <code>random</code> argument. A numeric value fixes a particular \(\tau^2\) value, while <code>NA</code> means that the value should be estimated. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>rho</dt><dd><p>optional numeric value (for <code>struct="CS"</code>, <code>"HCS"</code>, <code>"AR"</code>, <code>"HAR"</code>, <code>"CAR"</code>, or a spatial correlation structure) or vector (for <code>struct="UN"</code>) to fix the correlation between the levels of the <code>inner</code> factor corresponding to an <code>~ inner | outer</code> formula specified in the <code>random</code> argument. A numeric value fixes a particular \(\rho\) value, while <code>NA</code> means that the value should be estimated. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>gamma2</dt><dd><p>as <code>tau2</code> argument, but for a second <code>~ inner | outer</code> formula specified in the <code>random</code> argument. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>phi</dt><dd><p>as <code>rho</code> argument, but for a second <code>~ inner | outer</code> formula specified in the <code>random</code> argument. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>cvvc</dt><dd><p>logical to specify whether to calculate the variance-covariance matrix of the variance/correlation component estimates (can also be set to <code>"varcov"</code> or <code>"varcor"</code>). See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>sparse</dt><dd><p>logical to specify whether the function should use sparse matrix objects to the extent possible (can speed up model fitting substantially for certain models). See ‘Note’.</p></dd>
-</dl><p></p>
-<dl><dt>verbose</dt><dd><p>logical to specify whether output should be generated on the progress of the model fitting (the default is <code>FALSE</code>). Can also be an integer. Values &gt; 1 generate more verbose output. See ‘Note’.</p></dd>
-</dl><p></p>
-<dl><dt>control</dt><dd><p>optional list of control values for the estimation algorithms. If unspecified, default values are defined inside the function. See ‘Note’.</p></dd>
-</dl><p></p>
-<dl><dt>...</dt><dd><p>additional arguments.</p></dd>
+    <dl><dt>yi</dt>
+<dd><p>vector of length \(k\) with the observed effect sizes or outcomes. See ‘Details’.</p></dd>
+<dt>V</dt>
+<dd><p>vector of length \(k\) with the corresponding sampling variances or a \(k \times k\) variance-covariance matrix of the sampling errors. See ‘Details’.</p></dd>
+<dt>W</dt>
+<dd><p>optional argument to specify a vector of length \(k\) with user-defined weights or a \(k \times k\) user-defined weight matrix. See ‘Details’.</p></dd>
+<dt>mods</dt>
+<dd><p>optional argument to include one or more moderators in the model. A single moderator can be given as a vector of length \(k\) specifying the values of the moderator. Multiple moderators are specified by giving a matrix with \(k\) rows and as many columns as there are moderator variables. Alternatively, a model <code><a href="formula.rma.html">formula</a></code> can be used to specify the model. See ‘Details’.</p></dd>
+<dt>random</dt>
+<dd><p>either a single one-sided formula or list of one-sided formulas to specify the random-effects structure of the model. See ‘Details’.</p></dd>
+<dt>struct</dt>
+<dd><p>character string to specify the variance structure of an <code>~ inner | outer</code> formula in the <code>random</code> argument. Either <code>"CS"</code> for compound symmetry, <code>"HCS"</code> for heteroscedastic compound symmetry, <code>"UN"</code> or <code>"GEN"</code> for an unstructured variance-covariance matrix, <code>"ID"</code> for a scaled identity matrix, <code>"DIAG"</code> for a diagonal matrix, <code>"AR"</code> for an AR(1) autoregressive structure, <code>"HAR"</code> for a heteroscedastic AR(1) autoregressive structure, <code>"CAR"</code> for a continuous-time autoregressive structure, or one of <code>"SPEXP"</code>, <code>"SPGAU"</code>, <code>"SPLIN"</code>, <code>"SPRAT"</code>, or <code>"SPSPH"</code> for one of the spatial correlation structures. See ‘Details’.</p></dd>
+<dt>intercept</dt>
+<dd><p>logical to specify whether an intercept should be added to the model (the default is <code>TRUE</code>). Ignored when <code>mods</code> is a formula.</p></dd>
+<dt>data</dt>
+<dd><p>optional data frame containing the data supplied to the function.</p></dd>
+<dt>slab</dt>
+<dd><p>optional vector with labels for the \(k\) outcomes/studies.</p></dd>
+<dt>subset</dt>
+<dd><p>optional (logical or numeric) vector to specify the subset of studies (or more precisely, rows of the dataset) that should be used for the analysis.</p></dd>
+<dt>method</dt>
+<dd><p>character string to specify whether the model should be fitted via maximum-likelihood (<code>"ML"</code>) or via restricted maximum-likelihood (<code>"REML"</code>) estimation. Default is <code>"REML"</code>.</p></dd>
+<dt>test</dt>
+<dd><p>character string to specify how test statistics and confidence intervals for the fixed effects should be computed. By default (<code>test="z"</code>), Wald-type tests and CIs are obtained, which are based on a standard normal distribution. When <code>test="t"</code>, a t-distribution is used instead. See ‘Details’.</p></dd>
+<dt>dfs</dt>
+<dd><p>character string to specify how the (denominator) degrees of freedom should be calculated when <code>test="t"</code>. Either <code>dfs="residual"</code> or <code>dfs="contain"</code>. Can also be a numeric vector with the degrees of freedom for each model coefficient. See ‘Details’.</p></dd>
+<dt>level</dt>
+<dd><p>numeric value between 0 and 100 to specify the confidence interval level (the default is 95).</p></dd>
+<dt>digits</dt>
+<dd><p>integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4.</p></dd>
+<dt>btt</dt>
+<dd><p>optional vector of indices to specify which coefficients to include in the omnibus test of moderators. Can also be a string to <code><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></code> for. See ‘Details’.</p></dd>
+<dt>R</dt>
+<dd><p>an optional named list of known correlation matrices corresponding to (some of) the components specified via the <code>random</code> argument. See ‘Details’.</p></dd>
+<dt>Rscale</dt>
+<dd><p>character string, integer, or logical to specify how matrices specified via the <code>R</code> argument should be scaled. See ‘Details’.</p></dd>
+<dt>sigma2</dt>
+<dd><p>optional numeric vector (of the same length as the number of random intercept components specified via the <code>random</code> argument) to fix the corresponding \(\sigma^2\) value(s). A specific \(\sigma^2\) value can be fixed by setting the corresponding element of this argument to the desired value. A specific \(\sigma^2\) value will be estimated if the corresponding element is set equal to <code>NA</code>. See ‘Details’.</p></dd>
+<dt>tau2</dt>
+<dd><p>optional numeric value (for <code>struct="CS"</code>, <code>"AR"</code>, <code>"CAR"</code>, or a spatial correlation structure) or vector (for <code>struct="HCS"</code>, <code>"UN"</code>, or <code>"HAR"</code>) to fix the amount of (residual) heterogeneity for the levels of the <code>inner</code> factor corresponding to an <code>~ inner | outer</code> formula specified in the <code>random</code> argument. A numeric value fixes a particular \(\tau^2\) value, while <code>NA</code> means that the value should be estimated. See ‘Details’.</p></dd>
+<dt>rho</dt>
+<dd><p>optional numeric value (for <code>struct="CS"</code>, <code>"HCS"</code>, <code>"AR"</code>, <code>"HAR"</code>, <code>"CAR"</code>, or a spatial correlation structure) or vector (for <code>struct="UN"</code>) to fix the correlation between the levels of the <code>inner</code> factor corresponding to an <code>~ inner | outer</code> formula specified in the <code>random</code> argument. A numeric value fixes a particular \(\rho\) value, while <code>NA</code> means that the value should be estimated. See ‘Details’.</p></dd>
+<dt>gamma2</dt>
+<dd><p>as <code>tau2</code> argument, but for a second <code>~ inner | outer</code> formula specified in the <code>random</code> argument. See ‘Details’.</p></dd>
+<dt>phi</dt>
+<dd><p>as <code>rho</code> argument, but for a second <code>~ inner | outer</code> formula specified in the <code>random</code> argument. See ‘Details’.</p></dd>
+<dt>cvvc</dt>
+<dd><p>logical to specify whether to calculate the variance-covariance matrix of the variance/correlation component estimates (can also be set to <code>"varcov"</code> or <code>"varcor"</code>). See ‘Details’.</p></dd>
+<dt>sparse</dt>
+<dd><p>logical to specify whether the function should use sparse matrix objects to the extent possible (can speed up model fitting substantially for certain models). See ‘Note’.</p></dd>
+<dt>verbose</dt>
+<dd><p>logical to specify whether output should be generated on the progress of the model fitting (the default is <code>FALSE</code>). Can also be an integer. Values &gt; 1 generate more verbose output. See ‘Note’.</p></dd>
+<dt>control</dt>
+<dd><p>optional list of control values for the estimation algorithms. If unspecified, default values are defined inside the function. See ‘Note’.</p></dd>
+<dt>...</dt>
+<dd><p>additional arguments.</p></dd>
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -273,55 +273,56 @@
     <div id="value">
     <h2>Value</h2>
     <p>An object of class <code>c("rma.mv","rma")</code>. The object is a list containing the following components:</p>
-<dl><dt>beta</dt><dd><p>estimated coefficients of the model.</p></dd>
-</dl><p></p>
-<dl><dt>se</dt><dd><p>standard errors of the coefficients.</p></dd>
-</dl><p></p>
-<dl><dt>zval</dt><dd><p>test statistics of the coefficients.</p></dd>
-</dl><p></p>
-<dl><dt>pval</dt><dd><p>corresponding p-values.</p></dd>
-</dl><p></p>
-<dl><dt>ci.lb</dt><dd><p>lower bound of the confidence intervals for the coefficients.</p></dd>
-</dl><p></p>
-<dl><dt>ci.ub</dt><dd><p>upper bound of the confidence intervals for the coefficients.</p></dd>
-</dl><p></p>
-<dl><dt>vb</dt><dd><p>variance-covariance matrix of the estimated coefficients.</p></dd>
-</dl><p></p>
-<dl><dt>sigma2</dt><dd><p>estimated \(\sigma^2\) value(s).</p></dd>
-</dl><p></p>
-<dl><dt>tau2</dt><dd><p>estimated \(\tau^2\) value(s).</p></dd>
-</dl><p></p>
-<dl><dt>rho</dt><dd><p>estimated \(\rho\) value(s).</p></dd>
-</dl><p></p>
-<dl><dt>gamma2</dt><dd><p>estimated \(\gamma^2\) value(s).</p></dd>
-</dl><p></p>
-<dl><dt>phi</dt><dd><p>estimated \(\phi\) value(s).</p></dd>
-</dl><p></p>
-<dl><dt>k</dt><dd><p>number of observed effect sizes or outcomes included in the analysis.</p></dd>
-</dl><p></p>
-<dl><dt>p</dt><dd><p>number of coefficients in the model (including the intercept).</p></dd>
-</dl><p></p>
-<dl><dt>m</dt><dd><p>number of coefficients included in the omnibus test of moderators.</p></dd>
-</dl><p></p>
-<dl><dt>QE</dt><dd><p>test statistic of the test for (residual) heterogeneity.</p></dd>
-</dl><p></p>
-<dl><dt>QEp</dt><dd><p>corresponding p-value.</p></dd>
-</dl><p></p>
-<dl><dt>QM</dt><dd><p>test statistic of the omnibus test of moderators.</p></dd>
-</dl><p></p>
-<dl><dt>QMp</dt><dd><p>corresponding p-value.</p></dd>
-</dl><p></p>
-<dl><dt>int.only</dt><dd><p>logical that indicates whether the model is an intercept-only model.</p></dd>
-</dl><p></p>
-<dl><dt>yi, V, X</dt><dd><p>the vector of outcomes, the corresponding variance-covariance matrix of the sampling errors, and the model matrix.</p></dd>
-</dl><p></p>
-<dl><dt>M</dt><dd><p>the estimated marginal variance-covariance matrix of the observed effect sizes or outcomes.</p></dd>
-</dl><p></p>
-<dl><dt>fit.stats</dt><dd><p>a list with the log-likelihood, deviance, AIC, BIC, and AICc values.</p></dd>
-</dl><p></p>
-<dl><dt>vvc</dt><dd><p>variance-covariance matrix of the variance/correlation component estimates (<code>NA</code> when <code>cvvc=FALSE</code>).</p></dd>
-</dl><p></p>
-<dl><dt>...</dt><dd><p>some additional elements/values.</p></dd>
+<dl><dt>beta</dt>
+<dd><p>estimated coefficients of the model.</p></dd>
+<dt>se</dt>
+<dd><p>standard errors of the coefficients.</p></dd>
+<dt>zval</dt>
+<dd><p>test statistics of the coefficients.</p></dd>
+<dt>pval</dt>
+<dd><p>corresponding p-values.</p></dd>
+<dt>ci.lb</dt>
+<dd><p>lower bound of the confidence intervals for the coefficients.</p></dd>
+<dt>ci.ub</dt>
+<dd><p>upper bound of the confidence intervals for the coefficients.</p></dd>
+<dt>vb</dt>
+<dd><p>variance-covariance matrix of the estimated coefficients.</p></dd>
+<dt>sigma2</dt>
+<dd><p>estimated \(\sigma^2\) value(s).</p></dd>
+<dt>tau2</dt>
+<dd><p>estimated \(\tau^2\) value(s).</p></dd>
+<dt>rho</dt>
+<dd><p>estimated \(\rho\) value(s).</p></dd>
+<dt>gamma2</dt>
+<dd><p>estimated \(\gamma^2\) value(s).</p></dd>
+<dt>phi</dt>
+<dd><p>estimated \(\phi\) value(s).</p></dd>
+<dt>k</dt>
+<dd><p>number of observed effect sizes or outcomes included in the analysis.</p></dd>
+<dt>p</dt>
+<dd><p>number of coefficients in the model (including the intercept).</p></dd>
+<dt>m</dt>
+<dd><p>number of coefficients included in the omnibus test of moderators.</p></dd>
+<dt>QE</dt>
+<dd><p>test statistic of the test for (residual) heterogeneity.</p></dd>
+<dt>QEp</dt>
+<dd><p>corresponding p-value.</p></dd>
+<dt>QM</dt>
+<dd><p>test statistic of the omnibus test of moderators.</p></dd>
+<dt>QMp</dt>
+<dd><p>corresponding p-value.</p></dd>
+<dt>int.only</dt>
+<dd><p>logical that indicates whether the model is an intercept-only model.</p></dd>
+<dt>yi, V, X</dt>
+<dd><p>the vector of outcomes, the corresponding variance-covariance matrix of the sampling errors, and the model matrix.</p></dd>
+<dt>M</dt>
+<dd><p>the estimated marginal variance-covariance matrix of the observed effect sizes or outcomes.</p></dd>
+<dt>fit.stats</dt>
+<dd><p>a list with the log-likelihood, deviance, AIC, BIC, and AICc values.</p></dd>
+<dt>vvc</dt>
+<dd><p>variance-covariance matrix of the variance/correlation component estimates (<code>NA</code> when <code>cvvc=FALSE</code>).</p></dd>
+<dt>...</dt>
+<dd><p>some additional elements/values.</p></dd>
 </dl></div>
     <div id="methods">
     <h2>Methods</h2>

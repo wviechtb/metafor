@@ -106,18 +106,18 @@
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <p></p>
-<dl><dt>x</dt><dd><p>an object of class <code>"rma"</code> (for <code>vif</code>) or <code>"vif.rma"</code> (for <code>print</code>).</p></dd>
-</dl><p></p>
-<dl><dt>btt</dt><dd><p>optional vector of indices to specify a set of coefficients for which a generalized variance inflation factor (GVIF) should be computed. Can also be a string to grep for. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>intercept</dt><dd><p>logical to specify whether to include the intercept (if the model includes one) in the computation of the VIFs (the default is <code>FALSE</code>). See ‘Note’.</p></dd>
-</dl><p></p>
-<dl><dt>table</dt><dd><p>logical to specify whether the VIFs should be added to the model coefficient table (the default is <code>FALSE</code>).</p></dd>
-</dl><p></p>
-<dl><dt>digits</dt><dd><p>integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.</p></dd>
-</dl><p></p>
-<dl><dt>...</dt><dd><p>other arguments.</p></dd>
+    <dl><dt>x</dt>
+<dd><p>an object of class <code>"rma"</code> (for <code>vif</code>) or <code>"vif.rma"</code> (for <code>print</code>).</p></dd>
+<dt>btt</dt>
+<dd><p>optional vector of indices to specify a set of coefficients for which a generalized variance inflation factor (GVIF) should be computed. Can also be a string to grep for. See ‘Details’.</p></dd>
+<dt>intercept</dt>
+<dd><p>logical to specify whether to include the intercept (if the model includes one) in the computation of the VIFs (the default is <code>FALSE</code>). See ‘Note’.</p></dd>
+<dt>table</dt>
+<dd><p>logical to specify whether the VIFs should be added to the model coefficient table (the default is <code>FALSE</code>).</p></dd>
+<dt>digits</dt>
+<dd><p>integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.</p></dd>
+<dt>...</dt>
+<dd><p>other arguments.</p></dd>
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -128,21 +128,22 @@
     <div id="value">
     <h2>Value</h2>
     <p>If <code>btt</code> is not specified, either a vector (if <code>table=FALSE</code>) with the VIFs or a data frame (if <code>table=TRUE</code>) with the following elements:</p>
-<dl><dt>estimate</dt><dd><p>estimated model coefficients.</p></dd>
-</dl><p></p>
-<dl><dt>se</dt><dd><p>corresponding standard errors.</p></dd>
-</dl><p></p>
-<dl><dt>zval</dt><dd><p>corresponding test statistics.</p></dd>
-</dl><p></p>
-<dl><dt>pval</dt><dd><p>corresponding p-values.</p></dd>
-</dl><p></p>
-<dl><dt>ci.lb</dt><dd><p>corresponding lower bound of the confidence intervals.</p></dd>
-</dl><p></p>
-<dl><dt>ci.ub</dt><dd><p>corresponding upper bound of the confidence intervals.</p></dd>
-</dl><p></p>
-<dl><dt>vif</dt><dd><p>corresponding variance inflation factors.</p></dd>
-</dl><p></p>
-<dl><dt>sif</dt><dd><p>corresponding standard error inflation factors.</p></dd>
+<dl><dt>estimate</dt>
+<dd><p>estimated model coefficients.</p></dd>
+<dt>se</dt>
+<dd><p>corresponding standard errors.</p></dd>
+<dt>zval</dt>
+<dd><p>corresponding test statistics.</p></dd>
+<dt>pval</dt>
+<dd><p>corresponding p-values.</p></dd>
+<dt>ci.lb</dt>
+<dd><p>corresponding lower bound of the confidence intervals.</p></dd>
+<dt>ci.ub</dt>
+<dd><p>corresponding upper bound of the confidence intervals.</p></dd>
+<dt>vif</dt>
+<dd><p>corresponding variance inflation factors.</p></dd>
+<dt>sif</dt>
+<dd><p>corresponding standard error inflation factors.</p></dd>
 </dl><p>If <code>btt</code> is specified, a list with elements <code>gvif</code> and <code>gsif</code> with the GVIF and GSIF values for the set of coefficients specified.</p>
     </div>
     <div id="note">

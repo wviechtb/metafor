@@ -102,56 +102,56 @@
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <p></p>
-<dl><dt>measure</dt><dd><p>a character string to specify for which effect size or outcome measure the likelihoods should be calculated. See ‘Details’ for possible options and how the data should then be specified.</p></dd>
-</dl><p></p>
-<dl><dt>yi</dt><dd><p>vector with the observed effect sizes or outcomes.</p></dd>
-</dl><p></p>
-<dl><dt>vi</dt><dd><p>vector with the corresponding sampling variances.</p></dd>
-</dl><p></p>
-<dl><dt>sei</dt><dd><p>vector to specify the corresponding standard.</p></dd>
-</dl><p></p>
-<dl><dt>ai</dt><dd><p>vector to specify the \(2 \times 2\) table frequencies (upper left cell).</p></dd>
-</dl><p></p>
-<dl><dt>bi</dt><dd><p>vector to specify the \(2 \times 2\) table frequencies (upper right cell).</p></dd>
-</dl><p></p>
-<dl><dt>ci</dt><dd><p>vector to specify the \(2 \times 2\) table frequencies (lower left cell).</p></dd>
-</dl><p></p>
-<dl><dt>di</dt><dd><p>vector to specify the \(2 \times 2\) table frequencies (lower right cell).</p></dd>
-</dl><p></p>
-<dl><dt>n1i</dt><dd><p>vector to specify the group sizes or row totals (first group/row).</p></dd>
-</dl><p></p>
-<dl><dt>n2i</dt><dd><p>vector to specify the group sizes or row totals (second group/row).</p></dd>
-</dl><p></p>
-<dl><dt>data</dt><dd><p>optional data frame containing the variables given to the arguments above.</p></dd>
-</dl><p></p>
-<dl><dt>subset</dt><dd><p>optional (logical or numeric) vector to specify the subset of studies that should be included in the plot.</p></dd>
-</dl><p></p>
-<dl><dt>drop00</dt><dd><p>logical to specify whether studies with no cases (or only cases) in both groups should be dropped. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>xvals</dt><dd><p>integer to specify for how many distinct values the likelihood should be evaluated.</p></dd>
-</dl><p></p>
-<dl><dt>xlim</dt><dd><p>x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.</p></dd>
-</dl><p></p>
-<dl><dt>ylim</dt><dd><p>y-axis limits. If unspecified, the function tries to set the y-axis limits to some sensible values.</p></dd>
-</dl><p></p>
-<dl><dt>xlab</dt><dd><p>title for the x-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
-</dl><p></p>
-<dl><dt>ylab</dt><dd><p>title for the y-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
-</dl><p></p>
-<dl><dt>scale</dt><dd><p>logical to specify whether the likelihood values should be scaled, so that the total area under each curve is (approximately) equal to 1.</p></dd>
-</dl><p></p>
-<dl><dt>lty</dt><dd><p>the line types (either a single value or a vector of length \(k\)). If unspecified, the function sets the line types according to some characteristics of the likelihood function. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>lwd</dt><dd><p>the line widths (either a single value or a vector of length \(k\)). If unspecified, the function sets the widths according to the sampling variances (so that the line is thicker for more precise studies and vice-versa).</p></dd>
-</dl><p></p>
-<dl><dt>col</dt><dd><p>the line colors (either a single value or a vector of length \(k\)). If unspecified, the function uses various shades of gray according to the sampling variances (so that darker shades are used for more precise studies and vice-versa).</p></dd>
-</dl><p></p>
-<dl><dt>level</dt><dd><p>numeric value between 0 and 100 to specify the plotting limits for each likelihood line in terms of the confidence interval (the default is 99.99).</p></dd>
-</dl><p></p>
-<dl><dt>refline</dt><dd><p>numeric value to specify the location of the vertical ‘reference’ line (the default is 0). The line can be suppressed by setting this argument to <code>NA</code>.</p></dd>
-</dl><p></p>
-<dl><dt>...</dt><dd><p>other arguments.</p></dd>
+    <dl><dt>measure</dt>
+<dd><p>a character string to specify for which effect size or outcome measure the likelihoods should be calculated. See ‘Details’ for possible options and how the data should then be specified.</p></dd>
+<dt>yi</dt>
+<dd><p>vector with the observed effect sizes or outcomes.</p></dd>
+<dt>vi</dt>
+<dd><p>vector with the corresponding sampling variances.</p></dd>
+<dt>sei</dt>
+<dd><p>vector to specify the corresponding standard.</p></dd>
+<dt>ai</dt>
+<dd><p>vector to specify the \(2 \times 2\) table frequencies (upper left cell).</p></dd>
+<dt>bi</dt>
+<dd><p>vector to specify the \(2 \times 2\) table frequencies (upper right cell).</p></dd>
+<dt>ci</dt>
+<dd><p>vector to specify the \(2 \times 2\) table frequencies (lower left cell).</p></dd>
+<dt>di</dt>
+<dd><p>vector to specify the \(2 \times 2\) table frequencies (lower right cell).</p></dd>
+<dt>n1i</dt>
+<dd><p>vector to specify the group sizes or row totals (first group/row).</p></dd>
+<dt>n2i</dt>
+<dd><p>vector to specify the group sizes or row totals (second group/row).</p></dd>
+<dt>data</dt>
+<dd><p>optional data frame containing the variables given to the arguments above.</p></dd>
+<dt>subset</dt>
+<dd><p>optional (logical or numeric) vector to specify the subset of studies that should be included in the plot.</p></dd>
+<dt>drop00</dt>
+<dd><p>logical to specify whether studies with no cases (or only cases) in both groups should be dropped. See ‘Details’.</p></dd>
+<dt>xvals</dt>
+<dd><p>integer to specify for how many distinct values the likelihood should be evaluated.</p></dd>
+<dt>xlim</dt>
+<dd><p>x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.</p></dd>
+<dt>ylim</dt>
+<dd><p>y-axis limits. If unspecified, the function tries to set the y-axis limits to some sensible values.</p></dd>
+<dt>xlab</dt>
+<dd><p>title for the x-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
+<dt>ylab</dt>
+<dd><p>title for the y-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
+<dt>scale</dt>
+<dd><p>logical to specify whether the likelihood values should be scaled, so that the total area under each curve is (approximately) equal to 1.</p></dd>
+<dt>lty</dt>
+<dd><p>the line types (either a single value or a vector of length \(k\)). If unspecified, the function sets the line types according to some characteristics of the likelihood function. See ‘Details’.</p></dd>
+<dt>lwd</dt>
+<dd><p>the line widths (either a single value or a vector of length \(k\)). If unspecified, the function sets the widths according to the sampling variances (so that the line is thicker for more precise studies and vice-versa).</p></dd>
+<dt>col</dt>
+<dd><p>the line colors (either a single value or a vector of length \(k\)). If unspecified, the function uses various shades of gray according to the sampling variances (so that darker shades are used for more precise studies and vice-versa).</p></dd>
+<dt>level</dt>
+<dd><p>numeric value between 0 and 100 to specify the plotting limits for each likelihood line in terms of the confidence interval (the default is 99.99).</p></dd>
+<dt>refline</dt>
+<dd><p>numeric value to specify the location of the vertical ‘reference’ line (the default is 0). The line can be suppressed by setting this argument to <code>NA</code>.</p></dd>
+<dt>...</dt>
+<dd><p>other arguments.</p></dd>
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -181,13 +181,13 @@
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### draw likelihoods</span></span>
 <span class="r-in"><span class="fu">llplot</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"GEN"</span>, yi<span class="op">=</span><span class="va">yi</span>, vi<span class="op">=</span><span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, lwd<span class="op">=</span><span class="fl">1</span>, refline<span class="op">=</span><span class="cn">NA</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-plt"><img src="llplot-1.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="llplot-1.png" alt="" width="864" height="768"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### create plot (Figure 2 in van Houwelingen, Zwinderman, &amp; Stijnen, 1993)</span></span>
 <span class="r-in"><span class="fu">llplot</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"OR"</span>, ai<span class="op">=</span><span class="va">b.xci</span>, n1i<span class="op">=</span><span class="va">nci</span>, ci<span class="op">=</span><span class="va">b.xti</span>, n2i<span class="op">=</span><span class="va">nti</span>, data<span class="op">=</span><span class="va">dat.collins1985a</span>,</span>
 <span class="r-in">       lwd<span class="op">=</span><span class="fl">1</span>, refline<span class="op">=</span><span class="cn">NA</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">4</span>,<span class="fl">4</span><span class="op">)</span>, drop00<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Studies with NAs omitted from plotting.</span>
-<span class="r-plt"><img src="llplot-2.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="llplot-2.png" alt="" width="864" height="768"></span>
 </code></pre></div>
     </div>
   </div>

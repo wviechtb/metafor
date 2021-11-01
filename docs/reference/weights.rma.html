@@ -109,19 +109,19 @@
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <p></p>
-<dl><dt>object</dt><dd><p>an object of class <code>"rma.uni"</code>, <code>"rma.mh"</code>, <code>"rma.peto"</code>, or <code>"rma.mv"</code>. The method is not yet implemented for objects of class <code>"rma.glmm"</code>.</p></dd>
-</dl><p></p>
-<dl><dt>type</dt><dd><p>character string to specify whether to return only the diagonal of the weight matrix (<code>"diagonal"</code>) or the entire weight matrix (<code>"matrix"</code>). For <code>"rma.mv"</code>, this can also be <code>"rowsum"</code> for ‘row-sum weights’ (for intercept-only models).</p></dd>
-</dl><p></p>
-<dl><dt>...</dt><dd><p>other arguments.</p></dd>
+    <dl><dt>object</dt>
+<dd><p>an object of class <code>"rma.uni"</code>, <code>"rma.mh"</code>, <code>"rma.peto"</code>, or <code>"rma.mv"</code>. The method is not yet implemented for objects of class <code>"rma.glmm"</code>.</p></dd>
+<dt>type</dt>
+<dd><p>character string to specify whether to return only the diagonal of the weight matrix (<code>"diagonal"</code>) or the entire weight matrix (<code>"matrix"</code>). For <code>"rma.mv"</code>, this can also be <code>"rowsum"</code> for ‘row-sum weights’ (for intercept-only models).</p></dd>
+<dt>...</dt>
+<dd><p>other arguments.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Either a vector with the diagonal elements of the weight matrix or the entire weight matrix. When only the diagonal elements are returned, they are given in % (and they add up to 100%).</p>
-<p>When the entire weight matrix is requested, this is always a diagonal matrix for objects of class <code>"rma.uni"</code>, <code>"rma.mh"</code>, <code>"rma.peto"</code>.</p>
-<p>For <code>"rma.mv"</code>, the structure of the weight matrix depends on the model fitted (i.e., the random effects included and the variance-covariance matrix of the sampling errors) but is often more complex and not just diagonal.</p>
-<p>For <code>"rma.mv"</code> intercept-only models, one can also take the sum over the rows in the weight matrix, which are actually the weights assigned to the observed effect sizes or outcomes when estimating the model intercept. These weights can be obtained with <code>type="rowsum"</code> (as with <code>type="diagonal"</code>, they are also given in %).</p>
+    <p>Either a vector with the diagonal elements of the weight matrix or the entire weight matrix. When only the diagonal elements are returned, they are given in % (and they add up to 100%).
+   When the entire weight matrix is requested, this is always a diagonal matrix for objects of class <code>"rma.uni"</code>, <code>"rma.mh"</code>, <code>"rma.peto"</code>.
+   For <code>"rma.mv"</code>, the structure of the weight matrix depends on the model fitted (i.e., the random effects included and the variance-covariance matrix of the sampling errors) but is often more complex and not just diagonal.
+   For <code>"rma.mv"</code> intercept-only models, one can also take the sum over the rows in the weight matrix, which are actually the weights assigned to the observed effect sizes or outcomes when estimating the model intercept. These weights can be obtained with <code>type="rowsum"</code> (as with <code>type="diagonal"</code>, they are also given in %).</p>
     </div>
     <div id="author">
     <h2>Author</h2>

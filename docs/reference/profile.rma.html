@@ -126,56 +126,56 @@
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <p></p>
-<dl><dt>fitted</dt><dd><p>an object of class <code>"rma.uni"</code>, <code>"rma.mv"</code>, <code>"rma.uni.selmodel"</code>, or <code>"rma.ls"</code>.</p></dd>
-</dl><p></p>
-<dl><dt>x</dt><dd><p>an object of class <code>"profile.rma"</code> (for <code>plot</code> and <code>print</code>).</p></dd>
-</dl><p></p>
-<dl><dt>sigma2</dt><dd><p>optional integer to specify for which \(\sigma^2\) value the likelihood should be profiled.</p></dd>
-</dl><p></p>
-<dl><dt>tau2</dt><dd><p>optional integer to specify for which \(\tau^2\) value the likelihood should be profiled.</p></dd>
-</dl><p></p>
-<dl><dt>rho</dt><dd><p>optional integer to specify for which \(\rho\) value the likelihood should be profiled.</p></dd>
-</dl><p></p>
-<dl><dt>gamma2</dt><dd><p>optional integer to specify for which \(\gamma^2\) value the likelihood should be profiled.</p></dd>
-</dl><p></p>
-<dl><dt>phi</dt><dd><p>optional integer to specify for which \(\phi\) value the likelihood should be profiled.</p></dd>
-</dl><p></p>
-<dl><dt>delta</dt><dd><p>optional integer to specify for which \(\delta\) value the likelihood should be profiled.</p></dd>
-</dl><p></p>
-<dl><dt>alpha</dt><dd><p>optional integer to specify for which \(\alpha\) value the likelihood should be profiled.</p></dd>
-</dl><p></p>
-<dl><dt>xlim</dt><dd><p>optional vector to specify the lower and upper limit of the parameter over which the profiling should be done. If unspecified, the function tries to set these limits automatically.</p></dd>
-</dl><p></p>
-<dl><dt>ylim</dt><dd><p>optional vector to specify the y-axis limits when plotting the profiled likelihood. If unspecified, the function tries to set these limits automatically.</p></dd>
-</dl><p></p>
-<dl><dt>steps</dt><dd><p>number of points between <code>xlim[1]</code> and <code>xlim[2]</code> (inclusive) for which the likelihood should be evaluated (the default is 20).</p></dd>
-</dl><p></p>
-<dl><dt>lltol</dt><dd><p>numerical tolerance used when comparing values of the profiled log-likelihood with the log-likelihood of the fitted model (the default is 1e-03).</p></dd>
-</dl><p></p>
-<dl><dt>progbar</dt><dd><p>logical to specify whether a progress bar should be shown (the default is <code>TRUE</code>).</p></dd>
-</dl><p></p>
-<dl><dt>parallel</dt><dd><p>character string to specify whether parallel processing should be used (the default is <code>"no"</code>). For parallel processing, set to either <code>"snow"</code> or <code>"multicore"</code>. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>ncpus</dt><dd><p>integer to specify the number of processes to use in the parallel processing.</p></dd>
-</dl><p></p>
-<dl><dt>cl</dt><dd><p>optional cluster to use if <code>parallel="snow"</code>. If unspecified, a cluster on the local machine is created for the duration of the call.</p></dd>
-</dl><p></p>
-<dl><dt>plot</dt><dd><p>logical to specify whether the profile plot should be drawn after profiling is finished (the default is <code>TRUE</code>).</p></dd>
-</dl><p></p>
-<dl><dt>pch</dt><dd><p>plotting symbol to use. By default, a filled circle is used. See <code><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></code> for other options.</p></dd>
-</dl><p></p>
-<dl><dt>refline</dt><dd><p>logical to specify whether the value of the parameter estimate should be indicated by a dotted vertical line and its log-likelihood value by a dotted horizontal line (the default is <code>TRUE</code>).</p></dd>
-</dl><p></p>
-<dl><dt>cline</dt><dd><p>logical to specify whether a horizontal reference line should be added to the plot that indicates the log-likelihood value corresponding to the 95% profile confidence interval (the default is <code>FALSE</code>).</p></dd>
-</dl><p></p>
-<dl><dt>xlab</dt><dd><p>title for the x-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
-</dl><p></p>
-<dl><dt>ylab</dt><dd><p>title for the y-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
-</dl><p></p>
-<dl><dt>main</dt><dd><p>title for the plot. If unspecified, the function tries to set an appropriate title.</p></dd>
-</dl><p></p>
-<dl><dt>...</dt><dd><p>other arguments.</p></dd>
+    <dl><dt>fitted</dt>
+<dd><p>an object of class <code>"rma.uni"</code>, <code>"rma.mv"</code>, <code>"rma.uni.selmodel"</code>, or <code>"rma.ls"</code>.</p></dd>
+<dt>x</dt>
+<dd><p>an object of class <code>"profile.rma"</code> (for <code>plot</code> and <code>print</code>).</p></dd>
+<dt>sigma2</dt>
+<dd><p>optional integer to specify for which \(\sigma^2\) value the likelihood should be profiled.</p></dd>
+<dt>tau2</dt>
+<dd><p>optional integer to specify for which \(\tau^2\) value the likelihood should be profiled.</p></dd>
+<dt>rho</dt>
+<dd><p>optional integer to specify for which \(\rho\) value the likelihood should be profiled.</p></dd>
+<dt>gamma2</dt>
+<dd><p>optional integer to specify for which \(\gamma^2\) value the likelihood should be profiled.</p></dd>
+<dt>phi</dt>
+<dd><p>optional integer to specify for which \(\phi\) value the likelihood should be profiled.</p></dd>
+<dt>delta</dt>
+<dd><p>optional integer to specify for which \(\delta\) value the likelihood should be profiled.</p></dd>
+<dt>alpha</dt>
+<dd><p>optional integer to specify for which \(\alpha\) value the likelihood should be profiled.</p></dd>
+<dt>xlim</dt>
+<dd><p>optional vector to specify the lower and upper limit of the parameter over which the profiling should be done. If unspecified, the function tries to set these limits automatically.</p></dd>
+<dt>ylim</dt>
+<dd><p>optional vector to specify the y-axis limits when plotting the profiled likelihood. If unspecified, the function tries to set these limits automatically.</p></dd>
+<dt>steps</dt>
+<dd><p>number of points between <code>xlim[1]</code> and <code>xlim[2]</code> (inclusive) for which the likelihood should be evaluated (the default is 20).</p></dd>
+<dt>lltol</dt>
+<dd><p>numerical tolerance used when comparing values of the profiled log-likelihood with the log-likelihood of the fitted model (the default is 1e-03).</p></dd>
+<dt>progbar</dt>
+<dd><p>logical to specify whether a progress bar should be shown (the default is <code>TRUE</code>).</p></dd>
+<dt>parallel</dt>
+<dd><p>character string to specify whether parallel processing should be used (the default is <code>"no"</code>). For parallel processing, set to either <code>"snow"</code> or <code>"multicore"</code>. See ‘Details’.</p></dd>
+<dt>ncpus</dt>
+<dd><p>integer to specify the number of processes to use in the parallel processing.</p></dd>
+<dt>cl</dt>
+<dd><p>optional cluster to use if <code>parallel="snow"</code>. If unspecified, a cluster on the local machine is created for the duration of the call.</p></dd>
+<dt>plot</dt>
+<dd><p>logical to specify whether the profile plot should be drawn after profiling is finished (the default is <code>TRUE</code>).</p></dd>
+<dt>pch</dt>
+<dd><p>plotting symbol to use. By default, a filled circle is used. See <code><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></code> for other options.</p></dd>
+<dt>refline</dt>
+<dd><p>logical to specify whether the value of the parameter estimate should be indicated by a dotted vertical line and its log-likelihood value by a dotted horizontal line (the default is <code>TRUE</code>).</p></dd>
+<dt>cline</dt>
+<dd><p>logical to specify whether a horizontal reference line should be added to the plot that indicates the log-likelihood value corresponding to the 95% profile confidence interval (the default is <code>FALSE</code>).</p></dd>
+<dt>xlab</dt>
+<dd><p>title for the x-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
+<dt>ylab</dt>
+<dd><p>title for the y-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
+<dt>main</dt>
+<dd><p>title for the plot. If unspecified, the function tries to set an appropriate title.</p></dd>
+<dt>...</dt>
+<dd><p>other arguments.</p></dd>
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -215,31 +215,33 @@
     </div>
     <div id="value">
     <h2>Value</h2>
-    <p>An object of class <code>"profile.rma"</code>. The object is a list (or list of such lists) containing the following components:</p>
-<p>One of the following (depending on the parameter that was actually profiled):</p>
-<dl><dt>sigma2</dt><dd><p>values of \(\sigma^2\) over which the likelihood was profiled.</p></dd>
-</dl><p></p>
-<dl><dt>tau2</dt><dd><p>values of \(\tau^2\) over which the likelihood was profiled.</p></dd>
-</dl><p></p>
-<dl><dt>rho</dt><dd><p>values of \(\rho\) over which the likelihood was profiled.</p></dd>
-</dl><p></p>
-<dl><dt>gamma2</dt><dd><p>values of \(\gamma^2\) over which the likelihood was profiled.</p></dd>
-</dl><p></p>
-<dl><dt>phi</dt><dd><p>values of \(\phi\) over which the likelihood was profiled.</p></dd>
-</dl><p></p>
-<dl><dt>delta</dt><dd><p>values of \(\delta\) over which the likelihood was profiled.</p></dd>
-</dl><p></p>
-<dl><dt>alpha</dt><dd><p>values of \(\alpha\) over which the likelihood was profiled.</p></dd>
+    <p>An object of class <code>"profile.rma"</code>. The object is a list (or list of such lists) containing the following components:
+   One of the following (depending on the parameter that was actually profiled):</p>
+<dl><dt>sigma2</dt>
+<dd><p>values of \(\sigma^2\) over which the likelihood was profiled.</p></dd>
+<dt>tau2</dt>
+<dd><p>values of \(\tau^2\) over which the likelihood was profiled.</p></dd>
+<dt>rho</dt>
+<dd><p>values of \(\rho\) over which the likelihood was profiled.</p></dd>
+<dt>gamma2</dt>
+<dd><p>values of \(\gamma^2\) over which the likelihood was profiled.</p></dd>
+<dt>phi</dt>
+<dd><p>values of \(\phi\) over which the likelihood was profiled.</p></dd>
+<dt>delta</dt>
+<dd><p>values of \(\delta\) over which the likelihood was profiled.</p></dd>
+<dt>alpha</dt>
+<dd><p>values of \(\alpha\) over which the likelihood was profiled.</p></dd>
 </dl><p>In addition, the following components are included:</p>
-<dl><dt>ll</dt><dd><p>(restricted) log-likelihood values at the corresponding parameter values.</p></dd>
-</dl><p></p>
-<dl><dt>beta</dt><dd><p>a matrix with the estimated model coefficients at the corresponding parameter values.</p></dd>
-</dl><p></p>
-<dl><dt>ci.lb</dt><dd><p>a matrix with the lower confidence interval bounds of the model coefficients at the corresponding parameter values.</p></dd>
-</dl><p></p>
-<dl><dt>ci.ub</dt><dd><p>a matrix with the upper confidence interval bounds of the model coefficients at the corresponding parameter values.</p></dd>
-</dl><p></p>
-<dl><dt>...</dt><dd><p>some additional elements/values.</p></dd>
+<dl><dt>ll</dt>
+<dd><p>(restricted) log-likelihood values at the corresponding parameter values.</p></dd>
+<dt>beta</dt>
+<dd><p>a matrix with the estimated model coefficients at the corresponding parameter values.</p></dd>
+<dt>ci.lb</dt>
+<dd><p>a matrix with the lower confidence interval bounds of the model coefficients at the corresponding parameter values.</p></dd>
+<dt>ci.ub</dt>
+<dd><p>a matrix with the upper confidence interval bounds of the model coefficients at the corresponding parameter values.</p></dd>
+<dt>...</dt>
+<dd><p>some additional elements/values.</p></dd>
 </dl><p>Note that the list is returned invisibly.</p>
     </div>
     <div id="author">
@@ -267,7 +269,7 @@
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### profile over tau^2</span></span>
 <span class="r-in"><span class="fu">profile</span><span class="op">(</span><span class="va">res</span>, progbar<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
-<span class="r-plt"><img src="profile.rma-1.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="profile.rma-1.png" alt="" width="864" height="768"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### change data into long format</span></span>
 <span class="r-in"><span class="va">dat.long</span> <span class="op">&lt;-</span> <span class="fu"><a href="to.long.html">to.long</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"OR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="va">dat.bcg</span><span class="op">)</span></span>
@@ -323,14 +325,14 @@
 <span class="r-in"><span class="fu">profile</span><span class="op">(</span><span class="va">res</span>, tau2<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu">profile</span><span class="op">(</span><span class="va">res</span>, tau2<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu">profile</span><span class="op">(</span><span class="va">res</span>, rho<span class="op">=</span><span class="fl">1</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.90</span>, <span class="fl">.98</span><span class="op">)</span><span class="op">)</span><span class="co"># }</span></span>
-<span class="r-plt"><img src="profile.rma-2.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="profile.rma-2.png" alt="" width="864" height="768"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### an example where the peak is at 0</span></span>
 <span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RD"</span>, n1i<span class="op">=</span><span class="va">n1i</span>, n2i<span class="op">=</span><span class="va">n2i</span>, ai<span class="op">=</span><span class="va">ai</span>, ci<span class="op">=</span><span class="va">ci</span>, data<span class="op">=</span><span class="va">dat.hine1989</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu">profile</span><span class="op">(</span><span class="va">res</span>, progbar<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
-<span class="r-plt"><img src="profile.rma-3.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="profile.rma-3.png" alt="" width="864" height="768"></span>
 </code></pre></div>
     </div>
   </div>

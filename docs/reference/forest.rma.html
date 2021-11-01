@@ -108,90 +108,90 @@
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <p></p>
-<dl><dt>x</dt><dd><p>an object of class <code>"rma"</code>.</p></dd>
-</dl><p></p>
-<dl><dt>annotate</dt><dd><p>logical to specify whether annotations should be added to the plot (the default is <code>TRUE</code>).</p></dd>
-</dl><p></p>
-<dl><dt>addfit</dt><dd><p>logical to specify whether the summary estimate (for models without moderators) or fitted values (for models with moderators) should be added to the plot (the default is <code>TRUE</code>). See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>addpred</dt><dd><p>logical to specify whether the bounds of the prediction interval should be added to the plot (the default is <code>FALSE</code>). See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>showweights</dt><dd><p>logical to specify whether the annotations should also include the weights given to the observed outcomes during the model fitting (the default is <code>FALSE</code>). See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>header</dt><dd><p>logical to specify whether column headings should be added to the plot (the default is <code>FALSE</code>). Can also be a character vector to specify the left and right headings  (or only the left one).</p></dd>
-</dl><p></p>
-<dl><dt>xlim</dt><dd><p>horizontal limits of the plot region. If unspecified, the function tries to set the horizontal plot limits to some sensible values.</p></dd>
-</dl><p></p>
-<dl><dt>alim</dt><dd><p>the x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.</p></dd>
-</dl><p></p>
-<dl><dt>olim</dt><dd><p>optional argument to specify observation/outcome limits. If unspecified, no limits are used.</p></dd>
-</dl><p></p>
-<dl><dt>ylim</dt><dd><p>the y-axis limits of the plot. If unspecified, the function tries to set the y-axis limits to some sensible values.</p></dd>
-</dl><p></p>
-<dl><dt>top</dt><dd><p>the amount of space to leave empty at the top of the plot (e.g., for adding headers) (the default is 3 rows).</p></dd>
-</dl><p></p>
-<dl><dt>at</dt><dd><p>position of the x-axis tick marks and corresponding labels. If unspecified, the function tries to set the tick mark positions/labels to some sensible values.</p></dd>
-</dl><p></p>
-<dl><dt>steps</dt><dd><p>the number of tick marks for the x-axis (the default is 5). Ignored when the positions are specified via the <code>at</code> argument.</p></dd>
-</dl><p></p>
-<dl><dt>level</dt><dd><p>numeric value between 0 and 100 to specify the confidence interval level (the default is to take the value from the object).</p></dd>
-</dl><p></p>
-<dl><dt>refline</dt><dd><p>numeric value to specify the location of the vertical ‘reference’ line (the default is 0). The line can be suppressed by setting this argument to <code>NA</code>.</p></dd>
-</dl><p></p>
-<dl><dt>digits</dt><dd><p>integer to specify the number of decimal places to which the tick mark labels of the x-axis and the annotations should be rounded (the default is <code>2L</code>). Can also be a vector of two integers, the first to specify the number of decimal places for the annotations, the second for the x-axis labels. When specifying an integer (e.g., <code>2L</code>), trailing zeros after the decimal mark are dropped for the x-axis labels. When specifying a numeric value (e.g., <code>2</code>), trailing zeros are retained.</p></dd>
-</dl><p></p>
-<dl><dt>width</dt><dd><p>optional integer to manually adjust the width of the columns for the annotations.</p></dd>
-</dl><p></p>
-<dl><dt>xlab</dt><dd><p>title for the x-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
-</dl><p></p>
-<dl><dt>slab</dt><dd><p>optional vector with labels for the \(k\) studies. If unspecified, the labels are either taken from the object (if study labels were specified) or simple labels are created within the function. To suppress labels, set this argument to <code>NA</code>.</p></dd>
-</dl><p></p>
-<dl><dt>mlab</dt><dd><p>optional character string giving a label to the summary estimate from a fixed- or random-effects model. If unspecified, the label is created within the function.</p></dd>
-</dl><p></p>
-<dl><dt>ilab</dt><dd><p>optional vector, matrix, or data frame providing additional information about the studies that should be added to the plot.</p></dd>
-</dl><p></p>
-<dl><dt>ilab.xpos</dt><dd><p>numeric vector to specify the x-axis position(s) of the variable(s) given via <code>ilab</code> (must be specified if <code>ilab</code> is specified).</p></dd>
-</dl><p></p>
-<dl><dt>ilab.pos</dt><dd><p>integer(s) (either 1, 2, 3, or 4) to specify the alignment of the vector(s) given via <code>ilab</code> (2 means right, 4 mean left aligned). If unspecified, the default is to center the labels.</p></dd>
-</dl><p></p>
-<dl><dt>order</dt><dd><p>optional character string to specify how the studies should be ordered. Can also be a variable based on which the studies will be ordered. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>transf</dt><dd><p>optional argument to specify a function that should be used to transform the observed outcomes, summary estimates, fitted values, and confidence interval bounds (e.g., <code>transf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
-</dl><p></p>
-<dl><dt>atransf</dt><dd><p>optional argument to specify a function that should be used to transform the x-axis labels and annotations (e.g., <code>atransf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
-</dl><p></p>
-<dl><dt>targs</dt><dd><p>optional arguments needed by the function specified via <code>transf</code> or <code>atransf</code>.</p></dd>
-</dl><p></p>
-<dl><dt>rows</dt><dd><p>optional vector to specify the rows (or more generally, the horizontal positions) for plotting the outcomes. Can also be a single value to specify the row (horizontal position) of the first outcome (the remaining outcomes are then plotted below this starting row). If unspecified, the function sets this value automatically.</p></dd>
-</dl><p></p>
-<dl><dt>efac</dt><dd><p>vertical expansion factor for confidence interval limits, arrows, and the symbol used to denote summary estimates. The default value of 1 should usually work okay. Can also be a vector of two numbers, the first for CI limits and arrows, the second for summary estimates. Can also be a vector of three numbers, the first for CI limits, the second for arrows, the third for summary estimates.</p></dd>
-</dl><p></p>
-<dl><dt>pch</dt><dd><p>plotting symbol to use for the observed outcomes. By default, a filled square is used. See <code><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></code> for other options. Can also be a vector of values.</p></dd>
-</dl><p></p>
-<dl><dt>psize</dt><dd><p>optional numeric value to specify the point sizes for the observed outcomes. If unspecified, the point sizes are a function of the model weights. Can also be a vector of values.</p></dd>
-</dl><p></p>
-<dl><dt>plim</dt><dd><p>numeric vector of length 2 to scale the point sizes (ignored when <code>psize</code> is specified). See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>colout</dt><dd><p>optional character string to specify the name of a color to use for plotting the observed outcomes (<code>"black"</code> is used by default if not specified). Can also be a vector of color names.</p></dd>
-</dl><p></p>
-<dl><dt>col</dt><dd><p>optional character string to specify the name of a color to use for the summary polygon or fitted values. If unspecified, the function sets a default color.</p></dd>
-</dl><p></p>
-<dl><dt>border</dt><dd><p>optional character string to specify the name of a color to use for the border of the summary polygon or fitted values. If unspecified, the function sets a default color.</p></dd>
-</dl><p></p>
-<dl><dt>lty</dt><dd><p>optional character string to specify the line type for the confidence intervals. If unspecified, the function sets this to <code>"solid"</code> by default.</p></dd>
-</dl><p></p>
-<dl><dt>fonts</dt><dd><p>optional character string to specify the font to use for the study labels, annotations, and the extra information (if specified via <code>ilab</code>). If unspecified, the default font is used.</p></dd>
-</dl><p></p>
-<dl><dt>cex</dt><dd><p>optional character and symbol expansion factor. If unspecified, the function tries to set this to a sensible value.</p></dd>
-</dl><p></p>
-<dl><dt>cex.lab</dt><dd><p>optional expansion factor for the x-axis title. If unspecified, the function tries to set this to a sensible value.</p></dd>
-</dl><p></p>
-<dl><dt>cex.axis</dt><dd><p>optional expansion factor for the x-axis labels. If unspecified, the function tries to set this to a sensible value.</p></dd>
-</dl><p></p>
-<dl><dt>annosym</dt><dd><p>optional vector of length 3 to change the left bracket, separation, and right bracket symbols for the annotations.</p></dd>
-</dl><p></p>
-<dl><dt>...</dt><dd><p>other arguments.</p></dd>
+    <dl><dt>x</dt>
+<dd><p>an object of class <code>"rma"</code>.</p></dd>
+<dt>annotate</dt>
+<dd><p>logical to specify whether annotations should be added to the plot (the default is <code>TRUE</code>).</p></dd>
+<dt>addfit</dt>
+<dd><p>logical to specify whether the summary estimate (for models without moderators) or fitted values (for models with moderators) should be added to the plot (the default is <code>TRUE</code>). See ‘Details’.</p></dd>
+<dt>addpred</dt>
+<dd><p>logical to specify whether the bounds of the prediction interval should be added to the plot (the default is <code>FALSE</code>). See ‘Details’.</p></dd>
+<dt>showweights</dt>
+<dd><p>logical to specify whether the annotations should also include the weights given to the observed outcomes during the model fitting (the default is <code>FALSE</code>). See ‘Details’.</p></dd>
+<dt>header</dt>
+<dd><p>logical to specify whether column headings should be added to the plot (the default is <code>FALSE</code>). Can also be a character vector to specify the left and right headings  (or only the left one).</p></dd>
+<dt>xlim</dt>
+<dd><p>horizontal limits of the plot region. If unspecified, the function tries to set the horizontal plot limits to some sensible values.</p></dd>
+<dt>alim</dt>
+<dd><p>the x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.</p></dd>
+<dt>olim</dt>
+<dd><p>optional argument to specify observation/outcome limits. If unspecified, no limits are used.</p></dd>
+<dt>ylim</dt>
+<dd><p>the y-axis limits of the plot. If unspecified, the function tries to set the y-axis limits to some sensible values.</p></dd>
+<dt>top</dt>
+<dd><p>the amount of space to leave empty at the top of the plot (e.g., for adding headers) (the default is 3 rows).</p></dd>
+<dt>at</dt>
+<dd><p>position of the x-axis tick marks and corresponding labels. If unspecified, the function tries to set the tick mark positions/labels to some sensible values.</p></dd>
+<dt>steps</dt>
+<dd><p>the number of tick marks for the x-axis (the default is 5). Ignored when the positions are specified via the <code>at</code> argument.</p></dd>
+<dt>level</dt>
+<dd><p>numeric value between 0 and 100 to specify the confidence interval level (the default is to take the value from the object).</p></dd>
+<dt>refline</dt>
+<dd><p>numeric value to specify the location of the vertical ‘reference’ line (the default is 0). The line can be suppressed by setting this argument to <code>NA</code>.</p></dd>
+<dt>digits</dt>
+<dd><p>integer to specify the number of decimal places to which the tick mark labels of the x-axis and the annotations should be rounded (the default is <code>2L</code>). Can also be a vector of two integers, the first to specify the number of decimal places for the annotations, the second for the x-axis labels. When specifying an integer (e.g., <code>2L</code>), trailing zeros after the decimal mark are dropped for the x-axis labels. When specifying a numeric value (e.g., <code>2</code>), trailing zeros are retained.</p></dd>
+<dt>width</dt>
+<dd><p>optional integer to manually adjust the width of the columns for the annotations.</p></dd>
+<dt>xlab</dt>
+<dd><p>title for the x-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
+<dt>slab</dt>
+<dd><p>optional vector with labels for the \(k\) studies. If unspecified, the labels are either taken from the object (if study labels were specified) or simple labels are created within the function. To suppress labels, set this argument to <code>NA</code>.</p></dd>
+<dt>mlab</dt>
+<dd><p>optional character string giving a label to the summary estimate from a fixed- or random-effects model. If unspecified, the label is created within the function.</p></dd>
+<dt>ilab</dt>
+<dd><p>optional vector, matrix, or data frame providing additional information about the studies that should be added to the plot.</p></dd>
+<dt>ilab.xpos</dt>
+<dd><p>numeric vector to specify the x-axis position(s) of the variable(s) given via <code>ilab</code> (must be specified if <code>ilab</code> is specified).</p></dd>
+<dt>ilab.pos</dt>
+<dd><p>integer(s) (either 1, 2, 3, or 4) to specify the alignment of the vector(s) given via <code>ilab</code> (2 means right, 4 mean left aligned). If unspecified, the default is to center the labels.</p></dd>
+<dt>order</dt>
+<dd><p>optional character string to specify how the studies should be ordered. Can also be a variable based on which the studies will be ordered. See ‘Details’.</p></dd>
+<dt>transf</dt>
+<dd><p>optional argument to specify a function that should be used to transform the observed outcomes, summary estimates, fitted values, and confidence interval bounds (e.g., <code>transf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
+<dt>atransf</dt>
+<dd><p>optional argument to specify a function that should be used to transform the x-axis labels and annotations (e.g., <code>atransf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
+<dt>targs</dt>
+<dd><p>optional arguments needed by the function specified via <code>transf</code> or <code>atransf</code>.</p></dd>
+<dt>rows</dt>
+<dd><p>optional vector to specify the rows (or more generally, the horizontal positions) for plotting the outcomes. Can also be a single value to specify the row (horizontal position) of the first outcome (the remaining outcomes are then plotted below this starting row). If unspecified, the function sets this value automatically.</p></dd>
+<dt>efac</dt>
+<dd><p>vertical expansion factor for confidence interval limits, arrows, and the symbol used to denote summary estimates. The default value of 1 should usually work okay. Can also be a vector of two numbers, the first for CI limits and arrows, the second for summary estimates. Can also be a vector of three numbers, the first for CI limits, the second for arrows, the third for summary estimates.</p></dd>
+<dt>pch</dt>
+<dd><p>plotting symbol to use for the observed outcomes. By default, a filled square is used. See <code><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></code> for other options. Can also be a vector of values.</p></dd>
+<dt>psize</dt>
+<dd><p>optional numeric value to specify the point sizes for the observed outcomes. If unspecified, the point sizes are a function of the model weights. Can also be a vector of values.</p></dd>
+<dt>plim</dt>
+<dd><p>numeric vector of length 2 to scale the point sizes (ignored when <code>psize</code> is specified). See ‘Details’.</p></dd>
+<dt>colout</dt>
+<dd><p>optional character string to specify the name of a color to use for plotting the observed outcomes (<code>"black"</code> is used by default if not specified). Can also be a vector of color names.</p></dd>
+<dt>col</dt>
+<dd><p>optional character string to specify the name of a color to use for the summary polygon or fitted values. If unspecified, the function sets a default color.</p></dd>
+<dt>border</dt>
+<dd><p>optional character string to specify the name of a color to use for the border of the summary polygon or fitted values. If unspecified, the function sets a default color.</p></dd>
+<dt>lty</dt>
+<dd><p>optional character string to specify the line type for the confidence intervals. If unspecified, the function sets this to <code>"solid"</code> by default.</p></dd>
+<dt>fonts</dt>
+<dd><p>optional character string to specify the font to use for the study labels, annotations, and the extra information (if specified via <code>ilab</code>). If unspecified, the default font is used.</p></dd>
+<dt>cex</dt>
+<dd><p>optional character and symbol expansion factor. If unspecified, the function tries to set this to a sensible value.</p></dd>
+<dt>cex.lab</dt>
+<dd><p>optional expansion factor for the x-axis title. If unspecified, the function tries to set this to a sensible value.</p></dd>
+<dt>cex.axis</dt>
+<dd><p>optional expansion factor for the x-axis labels. If unspecified, the function tries to set this to a sensible value.</p></dd>
+<dt>annosym</dt>
+<dd><p>optional vector of length 3 to change the left bracket, separation, and right bracket symbols for the annotations.</p></dd>
+<dt>...</dt>
+<dd><p>other arguments.</p></dd>
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -263,12 +263,12 @@
 <span class="r-in"><span class="co">### and other annotations; headings (if requested) in line k+2</span></span>
 <span class="r-in"><span class="va">op</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>xpd<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/text.html" class="external-link">text</a></span><span class="op">(</span>x<span class="op">=</span><span class="op">-</span><span class="fl">8.4</span>, y<span class="op">=</span><span class="op">-</span><span class="fl">1</span><span class="op">:</span><span class="fl">16</span>, <span class="op">-</span><span class="fl">1</span><span class="op">:</span><span class="fl">16</span>, pos<span class="op">=</span><span class="fl">4</span>, cex<span class="op">=</span><span class="fl">.6</span><span class="op">)</span></span>
-<span class="r-plt"><img src="forest.rma-1.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="forest.rma-1.png" alt="" width="864" height="768"></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span><span class="va">op</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### can also inspect defaults chosen</span></span>
 <span class="r-in"><span class="va">defaults</span> <span class="op">&lt;-</span> <span class="fu"><a href="forest.html">forest</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
-<span class="r-plt"><img src="forest.rma-2.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="forest.rma-2.png" alt="" width="864" height="768"></span>
 <span class="r-in"><span class="va">defaults</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $xlim</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] -8.00  7.26</span>
@@ -297,40 +297,40 @@
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### several forest plots illustrating the use of various arguments</span></span>
 <span class="r-in"><span class="fu"><a href="forest.html">forest</a></span><span class="op">(</span><span class="va">res</span>, cex<span class="op">=</span><span class="fl">.8</span><span class="op">)</span></span>
-<span class="r-plt"><img src="forest.rma-3.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="forest.rma-3.png" alt="" width="864" height="768"></span>
 <span class="r-in"><span class="fu"><a href="forest.html">forest</a></span><span class="op">(</span><span class="va">res</span>, cex<span class="op">=</span><span class="fl">.8</span>, addpred<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-plt"><img src="forest.rma-4.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="forest.rma-4.png" alt="" width="864" height="768"></span>
 <span class="r-in"><span class="fu"><a href="forest.html">forest</a></span><span class="op">(</span><span class="va">res</span>, cex<span class="op">=</span><span class="fl">.8</span>, alim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-plt"><img src="forest.rma-5.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="forest.rma-5.png" alt="" width="864" height="768"></span>
 <span class="r-in"><span class="fu"><a href="forest.html">forest</a></span><span class="op">(</span><span class="va">res</span>, cex<span class="op">=</span><span class="fl">.8</span>, order<span class="op">=</span><span class="st">"prec"</span>, alim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-plt"><img src="forest.rma-6.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="forest.rma-6.png" alt="" width="864" height="768"></span>
 <span class="r-in"><span class="fu"><a href="forest.html">forest</a></span><span class="op">(</span><span class="va">res</span>, cex<span class="op">=</span><span class="fl">.8</span>, order<span class="op">=</span><span class="va">dat.bcg</span><span class="op">$</span><span class="va">ablat</span>, addpred<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-plt"><img src="forest.rma-7.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="forest.rma-7.png" alt="" width="864" height="768"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### adjust xlim values to see how that changes the plot</span></span>
 <span class="r-in"><span class="fu"><a href="forest.html">forest</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
-<span class="r-plt"><img src="forest.rma-8.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="forest.rma-8.png" alt="" width="864" height="768"></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span><span class="st">"usr"</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span> <span class="co">### this shows what xlim values were chosen by default</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] -8.00  7.26</span>
 <span class="r-in"><span class="fu"><a href="forest.html">forest</a></span><span class="op">(</span><span class="va">res</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">16</span>,<span class="fl">14</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-plt"><img src="forest.rma-9.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="forest.rma-9.png" alt="" width="864" height="768"></span>
 <span class="r-in"><span class="fu"><a href="forest.html">forest</a></span><span class="op">(</span><span class="va">res</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">18</span>,<span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-plt"><img src="forest.rma-10.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="forest.rma-10.png" alt="" width="864" height="768"></span>
 <span class="r-in"><span class="fu"><a href="forest.html">forest</a></span><span class="op">(</span><span class="va">res</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>,<span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-plt"><img src="forest.rma-11.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="forest.rma-11.png" alt="" width="864" height="768"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### illustrate transf argument</span></span>
 <span class="r-in"><span class="fu"><a href="forest.html">forest</a></span><span class="op">(</span><span class="va">res</span>, transf<span class="op">=</span><span class="va">exp</span>, at<span class="op">=</span><span class="fl">0</span><span class="op">:</span><span class="fl">7</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">8</span>,<span class="fl">12</span><span class="op">)</span>, cex<span class="op">=</span><span class="fl">.8</span>, refline<span class="op">=</span><span class="fl">1</span>, header<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-plt"><img src="forest.rma-12.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="forest.rma-12.png" alt="" width="864" height="768"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### illustrate atransf argument</span></span>
 <span class="r-in"><span class="fu"><a href="forest.html">forest</a></span><span class="op">(</span><span class="va">res</span>, atransf<span class="op">=</span><span class="va">exp</span>, at<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.05</span>,<span class="fl">.25</span>,<span class="fl">1</span>,<span class="fl">4</span>,<span class="fl">20</span><span class="op">)</span><span class="op">)</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">8</span>,<span class="fl">7</span><span class="op">)</span>, cex<span class="op">=</span><span class="fl">.8</span>, header<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-plt"><img src="forest.rma-13.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="forest.rma-13.png" alt="" width="864" height="768"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### showweights argument</span></span>
 <span class="r-in"><span class="fu"><a href="forest.html">forest</a></span><span class="op">(</span><span class="va">res</span>, atransf<span class="op">=</span><span class="va">exp</span>, at<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.05</span>,<span class="fl">.25</span>,<span class="fl">1</span>,<span class="fl">4</span>,<span class="fl">20</span><span class="op">)</span><span class="op">)</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">8</span>,<span class="fl">8</span><span class="op">)</span>,</span>
 <span class="r-in">       order<span class="op">=</span><span class="st">"prec"</span>, showweights<span class="op">=</span><span class="cn">TRUE</span>, cex<span class="op">=</span><span class="fl">.8</span><span class="op">)</span></span>
-<span class="r-plt"><img src="forest.rma-14.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="forest.rma-14.png" alt="" width="864" height="768"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### forest plot with extra annotations</span></span>
 <span class="r-in"><span class="co">### note: may need to widen plotting device to avoid overlapping text</span></span>
@@ -340,7 +340,7 @@
 <span class="r-in"><span class="va">op</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>cex<span class="op">=</span><span class="fl">.75</span>, font<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/text.html" class="external-link">text</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">9.5</span>,<span class="op">-</span><span class="fl">8</span>,<span class="op">-</span><span class="fl">6</span>,<span class="op">-</span><span class="fl">4.5</span><span class="op">)</span>, <span class="fl">15</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TB+"</span>, <span class="st">"TB-"</span>, <span class="st">"TB+"</span>, <span class="st">"TB-"</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/text.html" class="external-link">text</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">8.75</span>,<span class="op">-</span><span class="fl">5.25</span><span class="op">)</span>,     <span class="fl">16</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Vaccinated"</span>, <span class="st">"Control"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-plt"><img src="forest.rma-15.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="forest.rma-15.png" alt="" width="864" height="768"></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span><span class="va">op</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### mixed-effects model with absolute latitude in the model</span></span>
@@ -352,7 +352,7 @@
 <span class="r-in">       ilab.xpos<span class="op">=</span><span class="op">-</span><span class="fl">4</span>, atransf<span class="op">=</span><span class="va">exp</span>, at<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.05</span>,<span class="fl">.25</span>,<span class="fl">1</span>,<span class="fl">4</span><span class="op">)</span><span class="op">)</span>,</span>
 <span class="r-in">       header<span class="op">=</span><span class="st">"Author(s) and Year"</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/text.html" class="external-link">text</a></span><span class="op">(</span><span class="op">-</span><span class="fl">4</span>, <span class="fl">15</span>, <span class="st">"Latitude"</span>, cex<span class="op">=</span><span class="fl">.8</span>, font<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
-<span class="r-plt"><img src="forest.rma-16.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="forest.rma-16.png" alt="" width="864" height="768"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### meta-analysis of the log risk ratios using a random-effects model</span></span>
 <span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="va">dat.bcg</span>,</span>
@@ -361,11 +361,11 @@
 <span class="r-in"><span class="co">### for more complicated plots, the ylim and rows arguments may be useful</span></span>
 <span class="r-in"><span class="fu"><a href="forest.html">forest</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="forest.html">forest</a></span><span class="op">(</span><span class="va">res</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1.5</span>, <span class="fl">16</span><span class="op">)</span><span class="op">)</span> <span class="co">### the default</span></span>
-<span class="r-plt"><img src="forest.rma-17.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="forest.rma-17.png" alt="" width="864" height="768"></span>
 <span class="r-in"><span class="fu"><a href="forest.html">forest</a></span><span class="op">(</span><span class="va">res</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1.5</span>, <span class="fl">20</span><span class="op">)</span><span class="op">)</span> <span class="co">### extra space in plot</span></span>
-<span class="r-plt"><img src="forest.rma-18.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="forest.rma-18.png" alt="" width="864" height="768"></span>
 <span class="r-in"><span class="fu"><a href="forest.html">forest</a></span><span class="op">(</span><span class="va">res</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1.5</span>, <span class="fl">20</span><span class="op">)</span>, rows<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">17</span><span class="op">:</span><span class="fl">15</span>, <span class="fl">12</span><span class="op">:</span><span class="fl">6</span>, <span class="fl">3</span><span class="op">:</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="co">### set positions</span></span>
-<span class="r-plt"><img src="forest.rma-19.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="forest.rma-19.png" alt="" width="864" height="768"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### forest plot with subgrouping of studies</span></span>
 <span class="r-in"><span class="co">### note: may need to widen plotting device to avoid overlapping text</span></span>
@@ -380,7 +380,7 @@
 <span class="r-in"><span class="va">op</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>font<span class="op">=</span><span class="fl">4</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/text.html" class="external-link">text</a></span><span class="op">(</span><span class="op">-</span><span class="fl">16</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">18</span>,<span class="fl">12</span>,<span class="fl">3</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Systematic Allocation"</span>, <span class="st">"Random Allocation"</span>,</span>
 <span class="r-in">                        <span class="st">"Alternate Allocation"</span><span class="op">)</span>, pos<span class="op">=</span><span class="fl">4</span><span class="op">)</span></span>
-<span class="r-plt"><img src="forest.rma-20.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="forest.rma-20.png" alt="" width="864" height="768"></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span><span class="va">op</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### see also the addpoly.rma function for an example where summaries</span></span>
@@ -392,7 +392,7 @@
 <span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"PR"</span>, xi<span class="op">=</span><span class="va">xi</span>, ni<span class="op">=</span><span class="va">ni</span>, data<span class="op">=</span><span class="va">dat.pritz1997</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, slab<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">study</span>, <span class="st">") "</span>, <span class="va">authors</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="forest.html">forest</a></span><span class="op">(</span><span class="va">res</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.8</span>,<span class="fl">1.6</span><span class="op">)</span>, alim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>, psize<span class="op">=</span><span class="fl">1</span>, refline<span class="op">=</span><span class="fu"><a href="coef.rma.html">coef</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span>, olim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>, header<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-plt"><img src="forest.rma-21.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="forest.rma-21.png" alt="" width="864" height="768"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### an example of a forest plot where the data have a multilevel structure and</span></span>
 <span class="r-in"><span class="co">### we want to reflect this by grouping together estimates from the same cluster</span></span>
@@ -405,7 +405,7 @@
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>tck<span class="op">=</span><span class="op">-</span><span class="fl">.01</span>, mgp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.6</span>,<span class="fl">.2</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="forest.html">forest</a></span><span class="op">(</span><span class="va">res</span>, cex<span class="op">=</span><span class="fl">0.5</span>, header<span class="op">=</span><span class="cn">TRUE</span>, rows<span class="op">=</span><span class="va">rows</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>,<span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">rows</span><span class="op">)</span><span class="op">+</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>h <span class="op">=</span> <span class="va">rows</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fu"><a href="https://rdrr.io/r/base/diff.html" class="external-link">diff</a></span><span class="op">(</span><span class="va">rows</span><span class="op">)</span><span class="op">)</span> <span class="op">==</span> <span class="fl">2</span><span class="op">]</span> <span class="op">-</span> <span class="fl">1</span>, lty<span class="op">=</span><span class="st">"dotted"</span><span class="op">)</span></span>
-<span class="r-plt"><img src="forest.rma-22.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="forest.rma-22.png" alt="" width="864" height="768"></span>
 </code></pre></div>
     </div>
   </div>

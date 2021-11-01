@@ -103,31 +103,32 @@
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <p></p>
-<dl><dt>x</dt><dd><p>an object of class <code>"rma.uni"</code>.</p></dd>
-</dl><p></p>
-<dl><dt>level</dt><dd><p>numeric value between 0 and 100 to specify the prediction interval level. If unspecified, the default is to take the value from the object.</p></dd>
-</dl><p></p>
-<dl><dt>digits</dt><dd><p>integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.</p></dd>
-</dl><p></p>
-<dl><dt>transf</dt><dd><p>optional argument to specify a function that should be used to transform the predicted values and interval bounds (e.g., <code>transf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
-</dl><p></p>
-<dl><dt>targs</dt><dd><p>optional arguments needed by the function specified under <code>transf</code>.</p></dd>
-</dl><p></p>
-<dl><dt>...</dt><dd><p>other arguments.</p></dd>
+    <dl><dt>x</dt>
+<dd><p>an object of class <code>"rma.uni"</code>.</p></dd>
+<dt>level</dt>
+<dd><p>numeric value between 0 and 100 to specify the prediction interval level. If unspecified, the default is to take the value from the object.</p></dd>
+<dt>digits</dt>
+<dd><p>integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.</p></dd>
+<dt>transf</dt>
+<dd><p>optional argument to specify a function that should be used to transform the predicted values and interval bounds (e.g., <code>transf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
+<dt>targs</dt>
+<dd><p>optional arguments needed by the function specified under <code>transf</code>.</p></dd>
+<dt>...</dt>
+<dd><p>other arguments.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
     <p>An object of class <code>"list.rma"</code>. The object is a list containing the following components:</p>
-<dl><dt>pred</dt><dd><p>predicted values.</p></dd>
-</dl><p></p>
-<dl><dt>se</dt><dd><p>corresponding standard errors.</p></dd>
-</dl><p></p>
-<dl><dt>pi.lb</dt><dd><p>lower bound of the prediction intervals.</p></dd>
-</dl><p></p>
-<dl><dt>pi.ub</dt><dd><p>upper bound of the prediction intervals.</p></dd>
-</dl><p></p>
-<dl><dt>...</dt><dd><p>some additional elements/values.</p></dd>
+<dl><dt>pred</dt>
+<dd><p>predicted values.</p></dd>
+<dt>se</dt>
+<dd><p>corresponding standard errors.</p></dd>
+<dt>pi.lb</dt>
+<dd><p>lower bound of the prediction intervals.</p></dd>
+<dt>pi.ub</dt>
+<dd><p>upper bound of the prediction intervals.</p></dd>
+<dt>...</dt>
+<dd><p>some additional elements/values.</p></dd>
 </dl><p>The object is formatted and printed with <code><a href="print.list.rma.html">print.list.rma</a></code>.</p>
     </div>
     <div id="note">
@@ -195,7 +196,7 @@
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html" class="external-link">axis</a></span><span class="op">(</span>side<span class="op">=</span><span class="fl">1</span>, at<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>, labels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Observed\nValues"</span>, <span class="st">"BLUPs"</span><span class="op">)</span>, lwd<span class="op">=</span><span class="fl">0</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/segments.html" class="external-link">segments</a></span><span class="op">(</span><span class="fl">0</span>, <span class="va">res</span><span class="op">$</span><span class="va">beta</span>, <span class="fl">2.15</span>, <span class="va">res</span><span class="op">$</span><span class="va">beta</span>, lty<span class="op">=</span><span class="st">"dotted"</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/text.html" class="external-link">text</a></span><span class="op">(</span><span class="fl">2.3</span>, <span class="va">res</span><span class="op">$</span><span class="va">beta</span>, <span class="fu"><a href="https://rdrr.io/r/base/substitute.html" class="external-link">substitute</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/grDevices/plotmath.html" class="external-link">hat</a></span><span class="op">(</span><span class="va">mu</span><span class="op">)</span><span class="op">==</span><span class="va">muhat</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>muhat<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">beta</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>, cex<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
-<span class="r-plt"><img src="blup-1.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="blup-1.png" alt="" width="864" height="768"></span>
 </code></pre></div>
     </div>
   </div>

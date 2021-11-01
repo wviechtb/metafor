@@ -101,25 +101,26 @@
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <p></p>
-<dl><dt>object</dt><dd><p>an object of class <code>"permutest.rma.uni"</code>.</p></dd>
-</dl><p></p>
-<dl><dt>...</dt><dd><p>other arguments.</p></dd>
+    <dl><dt>object</dt>
+<dd><p>an object of class <code>"permutest.rma.uni"</code>.</p></dd>
+<dt>...</dt>
+<dd><p>other arguments.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
     <p>A data frame with the following elements:</p>
-<dl><dt>estimate</dt><dd><p>estimated model coefficient(s).</p></dd>
-</dl><p></p>
-<dl><dt>se</dt><dd><p>corresponding standard error(s).</p></dd>
-</dl><p></p>
-<dl><dt>zval</dt><dd><p>corresponding test statistic(s).</p></dd>
-</dl><p></p>
-<dl><dt>pval</dt><dd><p>p-value(s) based on the permutation test(s).</p></dd>
-</dl><p></p>
-<dl><dt>ci.lb</dt><dd><p>lower bound of the (permutation-based) confidence interval(s).</p></dd>
-</dl><p></p>
-<dl><dt>ci.ub</dt><dd><p>upper bound of the (permutation-based) confidence interval(s).</p></dd>
+<dl><dt>estimate</dt>
+<dd><p>estimated model coefficient(s).</p></dd>
+<dt>se</dt>
+<dd><p>corresponding standard error(s).</p></dd>
+<dt>zval</dt>
+<dd><p>corresponding test statistic(s).</p></dd>
+<dt>pval</dt>
+<dd><p>p-value(s) based on the permutation test(s).</p></dd>
+<dt>ci.lb</dt>
+<dd><p>lower bound of the (permutation-based) confidence interval(s).</p></dd>
+<dt>ci.ub</dt>
+<dd><p>upper bound of the (permutation-based) confidence interval(s).</p></dd>
 </dl><p>When the model was fitted with <code>test="t"</code> or <code>test="knha"</code>, then <code>zval</code> is called <code>tval</code> in the data frame that is returned by the function.</p>
     </div>
     <div id="author">
@@ -150,9 +151,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Running 1000 iterations for approximate permutation test.</span>
 <span class="r-in"><span class="fu"><a href="coef.rma.html">coef</a></span><span class="op">(</span><span class="va">sav</span><span class="op">)</span><span class="co"># }</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             estimate          se       zval  pval        ci.lb        ci.ub</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> intrcpt -3.545505079 29.09587983 -0.1218559 0.905 -60.57238164 53.481371479</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ablat   -0.028011275  0.01023404 -2.7370689 0.018  -0.04806963 -0.007952924</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> year     0.001907557  0.01468382  0.1299088 0.899  -0.02687219  0.030687307</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> intrcpt -3.545505079 29.09587983 -0.1218559 0.910 -60.57238164 53.481371479</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ablat   -0.028011275  0.01023404 -2.7370689 0.012  -0.04806963 -0.007952924</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> year     0.001907557  0.01468382  0.1299088 0.904  -0.02687219  0.030687307</span>
 </code></pre></div>
     </div>
   </div>

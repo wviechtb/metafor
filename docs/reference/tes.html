@@ -112,40 +112,40 @@
     <div id="arguments">
     <h2>Arguments</h2>
     <p><em>These arguments pertain to data input:</em></p>
-<p></p>
-<dl><dt>x</dt><dd><p>an object of class <code>"rma"</code> or a vector with the observed effect sizes or outcomes.</p></dd>
-</dl><p></p>
-<dl><dt>vi</dt><dd><p>vector with the corresponding sampling variances.</p></dd>
-</dl><p></p>
-<dl><dt>sei</dt><dd><p>vector with the corresponding standard errors (note: only one of the two, <code>vi</code> or <code>sei</code>, needs to be specified).</p></dd>
-</dl><p></p>
-<dl><dt>subset</dt><dd><p>optional (logical or numeric) vector to specify the subset of studies that should be included.</p></dd>
+<dl><dt>x</dt>
+<dd><p>an object of class <code>"rma"</code> or a vector with the observed effect sizes or outcomes.</p></dd>
+<dt>vi</dt>
+<dd><p>vector with the corresponding sampling variances.</p></dd>
+<dt>sei</dt>
+<dd><p>vector with the corresponding standard errors (note: only one of the two, <code>vi</code> or <code>sei</code>, needs to be specified).</p></dd>
+<dt>subset</dt>
+<dd><p>optional (logical or numeric) vector to specify the subset of studies that should be included.</p></dd>
 </dl><p><em>These arguments pertain to the tests of the observed effect sizes or outcomes:</em></p>
-<p></p>
-<dl><dt>H0</dt><dd><p>numeric value to specify the value of the effect size or outcome under the null hypothesis (the default is 0).</p></dd>
-</dl><p></p>
-<dl><dt>alternative</dt><dd><p>character string to specify the sidedness of the hypothesis when testing the observed effect sizes or outcomes. Possible options are <code>"two.sided"</code> (the default), <code>"greater"</code>, or <code>"less"</code>. Can be abbreviated.</p></dd>
-</dl><p></p>
-<dl><dt>alpha</dt><dd><p>alpha level for testing the observed effect sizes or outcomes (the default is .05).</p></dd>
+<dl><dt>H0</dt>
+<dd><p>numeric value to specify the value of the effect size or outcome under the null hypothesis (the default is 0).</p></dd>
+<dt>alternative</dt>
+<dd><p>character string to specify the sidedness of the hypothesis when testing the observed effect sizes or outcomes. Possible options are <code>"two.sided"</code> (the default), <code>"greater"</code>, or <code>"less"</code>. Can be abbreviated.</p></dd>
+<dt>alpha</dt>
+<dd><p>alpha level for testing the observed effect sizes or outcomes (the default is .05).</p></dd>
 </dl><p><em>These arguments pertain to the power of the tests:</em></p>
-<p></p>
-<dl><dt>theta</dt><dd><p>numeric value to specify the value of the true effect size or outcome under the alternative hypothesis. If unspecified, it will be estimated based on the data or the value is taken from the <code>"rma"</code> object.</p></dd>
-</dl><p></p>
-<dl><dt>tau2</dt><dd><p>numeric value to specify the amount of heterogeneity in the true effect sizes or outcomes. If unspecified, the true effect sizes or outcomes are assumed to be homogeneous or the value is taken from the <code>"rma"</code> object.</p></dd>
+<dl><dt>theta</dt>
+<dd><p>numeric value to specify the value of the true effect size or outcome under the alternative hypothesis. If unspecified, it will be estimated based on the data or the value is taken from the <code>"rma"</code> object.</p></dd>
+<dt>tau2</dt>
+<dd><p>numeric value to specify the amount of heterogeneity in the true effect sizes or outcomes. If unspecified, the true effect sizes or outcomes are assumed to be homogeneous or the value is taken from the <code>"rma"</code> object.</p></dd>
 </dl><p><em>These arguments pertain to the test of excess significance:</em></p>
-<p></p>
-<dl><dt>test</dt><dd><p>character string to specify the type of test to use for conducting the test of excess significance. Possible options are <code>"chi2"</code>, <code>"binom"</code>, or <code>"exact"</code>. Can be abbreviated. If unspecified, the function chooses the type of test based on the data.</p></dd>
-</dl><p></p>
-<dl><dt>tes.alternative</dt><dd><p>character string to specify the sidedness of the hypothesis for the test of excess significance. Possible options are <code>"greater"</code> (the default), <code>"two.sided"</code>, or <code>"less"</code>. Can be abbreviated.</p></dd>
-</dl><p></p>
-<dl><dt>progbar</dt><dd><p>logical to specify whether a progress bar should be shown (the default is <code>TRUE</code>). Only relevant when conducting an exact test.</p></dd>
-</dl><p></p>
-<dl><dt>tes.alpha</dt><dd><p>alpha level for the test of excess significance (the default is .10). Only relevant for finding the ‘limit estimate’.</p></dd>
+<dl><dt>test</dt>
+<dd><p>character string to specify the type of test to use for conducting the test of excess significance. Possible options are <code>"chi2"</code>, <code>"binom"</code>, or <code>"exact"</code>. Can be abbreviated. If unspecified, the function chooses the type of test based on the data.</p></dd>
+<dt>tes.alternative</dt>
+<dd><p>character string to specify the sidedness of the hypothesis for the test of excess significance. Possible options are <code>"greater"</code> (the default), <code>"two.sided"</code>, or <code>"less"</code>. Can be abbreviated.</p></dd>
+<dt>progbar</dt>
+<dd><p>logical to specify whether a progress bar should be shown (the default is <code>TRUE</code>). Only relevant when conducting an exact test.</p></dd>
+<dt>tes.alpha</dt>
+<dd><p>alpha level for the test of excess significance (the default is .10). Only relevant for finding the ‘limit estimate’.</p></dd>
 </dl><p><em>Miscellaneous arguments:</em></p>
-<p></p>
-<dl><dt>digits</dt><dd><p>integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4.</p></dd>
-</dl><p></p>
-<dl><dt>...</dt><dd><p>other arguments.</p></dd>
+<dl><dt>digits</dt>
+<dd><p>integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4.</p></dd>
+<dt>...</dt>
+<dd><p>other arguments.</p></dd>
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -159,27 +159,28 @@
     <div id="value">
     <h2>Value</h2>
     <p>An object of class <code>"tes"</code>. The object is a list containing the following components:</p>
-<dl><dt>k</dt><dd><p>the number of studies included in the analysis.</p></dd>
-</dl><p></p>
-<dl><dt>O</dt><dd><p>the observed number of significant tests.</p></dd>
-</dl><p></p>
-<dl><dt>E</dt><dd><p>the expected number of significant tests.</p></dd>
-</dl><p></p>
-<dl><dt>OEratio</dt><dd><p>the ratio of O over E.</p></dd>
-</dl><p></p>
-<dl><dt>test</dt><dd><p>the type of test conducted.</p></dd>
-</dl><p></p>
-<dl><dt>pval</dt><dd><p>the p-value of the test of excess significance.</p></dd>
-</dl><p></p>
-<dl><dt>power</dt><dd><p>the (estimated) power of the tests.</p></dd>
-</dl><p></p>
-<dl><dt>sig</dt><dd><p>logical vector indicating which tests were significant.</p></dd>
-</dl><p></p>
-<dl><dt>theta</dt><dd><p>the value of \(\theta\) used for computing the power of the tests.</p></dd>
-</dl><p></p>
-<dl><dt>theta.lim</dt><dd><p>the ‘limit estimate’ (i.e., \(\theta_{lim}\)).</p></dd>
-</dl><p></p>
-<dl><dt>...</dt><dd><p>some additional elements/values.</p></dd>
+<dl><dt>k</dt>
+<dd><p>the number of studies included in the analysis.</p></dd>
+<dt>O</dt>
+<dd><p>the observed number of significant tests.</p></dd>
+<dt>E</dt>
+<dd><p>the expected number of significant tests.</p></dd>
+<dt>OEratio</dt>
+<dd><p>the ratio of O over E.</p></dd>
+<dt>test</dt>
+<dd><p>the type of test conducted.</p></dd>
+<dt>pval</dt>
+<dd><p>the p-value of the test of excess significance.</p></dd>
+<dt>power</dt>
+<dd><p>the (estimated) power of the tests.</p></dd>
+<dt>sig</dt>
+<dd><p>logical vector indicating which tests were significant.</p></dd>
+<dt>theta</dt>
+<dd><p>the value of \(\theta\) used for computing the power of the tests.</p></dd>
+<dt>theta.lim</dt>
+<dd><p>the ‘limit estimate’ (i.e., \(\theta_{lim}\)).</p></dd>
+<dt>...</dt>
+<dd><p>some additional elements/values.</p></dd>
 </dl><p>The results are formatted and printed with the <code>print.tes</code> function.</p>
     </div>
     <div id="note">
@@ -254,7 +255,7 @@
 <span class="r-in"><span class="va">sav</span> <span class="op">&lt;-</span> <span class="fu">tes</span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">yi</span>, <span class="va">dat</span><span class="op">$</span><span class="va">vi</span>, test<span class="op">=</span><span class="st">"chi2"</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>h<span class="op">=</span><span class="va">sav</span><span class="op">$</span><span class="va">tes.alpha</span>, lty<span class="op">=</span><span class="st">"dotted"</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v<span class="op">=</span><span class="va">sav</span><span class="op">$</span><span class="va">theta.lim</span>, lty<span class="op">=</span><span class="st">"dotted"</span><span class="op">)</span></span>
-<span class="r-plt"><img src="tes-1.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="tes-1.png" alt="" width="864" height="768"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### examine significance of test as a function of alpha (to examine 'significance chasing')</span></span>
 <span class="r-in"><span class="va">alphas</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">.01</span>,<span class="fl">.99</span>,length<span class="op">=</span><span class="fl">101</span><span class="op">)</span></span>
@@ -262,7 +263,7 @@
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">alphas</span>, <span class="va">pvals</span>, type<span class="op">=</span><span class="st">"o"</span>, pch<span class="op">=</span><span class="fl">19</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v<span class="op">=</span><span class="fl">.05</span>, lty<span class="op">=</span><span class="st">"dotted"</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>h<span class="op">=</span><span class="fl">.10</span>, lty<span class="op">=</span><span class="st">"dotted"</span><span class="op">)</span></span>
-<span class="r-plt"><img src="tes-2.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="tes-2.png" alt="" width="864" height="768"></span>
 </code></pre></div>
     </div>
   </div>

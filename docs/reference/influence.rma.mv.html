@@ -109,24 +109,24 @@
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <p></p>
-<dl><dt>model</dt><dd><p>an object of class <code>"rma.mv"</code>.</p></dd>
-</dl><p></p>
-<dl><dt>progbar</dt><dd><p>logical to specify whether a progress bar should be shown (the default is <code>FALSE</code>).</p></dd>
-</dl><p></p>
-<dl><dt>cluster</dt><dd><p>optional vector to specify a clustering variable to use for computing the Cook's distances or DFBETAS values. If not specified, these measures are computed for the individual observed effect sizes or outcomes.</p></dd>
-</dl><p></p>
-<dl><dt>reestimate</dt><dd><p>logical to specify whether variance/correlation components should be re-estimated after deletion of the \(i\)th case (the default is <code>TRUE</code>).</p></dd>
-</dl><p></p>
-<dl><dt>parallel</dt><dd><p>character string to specify whether parallel processing should be used (the default is <code>"no"</code>). For parallel processing, set to either <code>"snow"</code> or <code>"multicore"</code>. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>ncpus</dt><dd><p>integer to specify the number of processes to use in the parallel processing.</p></dd>
-</dl><p></p>
-<dl><dt>cl</dt><dd><p>optional cluster to use if <code>parallel="snow"</code>. If unspecified, a cluster on the local machine is created for the duration of the call.</p></dd>
-</dl><p></p>
-<dl><dt>type</dt><dd><p>character string to specify whether only the diagonal of the hat matrix (<code>"diagonal"</code>) or the entire hat matrix (<code>"matrix"</code>) should be returned.</p></dd>
-</dl><p></p>
-<dl><dt>...</dt><dd><p>other arguments.</p></dd>
+    <dl><dt>model</dt>
+<dd><p>an object of class <code>"rma.mv"</code>.</p></dd>
+<dt>progbar</dt>
+<dd><p>logical to specify whether a progress bar should be shown (the default is <code>FALSE</code>).</p></dd>
+<dt>cluster</dt>
+<dd><p>optional vector to specify a clustering variable to use for computing the Cook's distances or DFBETAS values. If not specified, these measures are computed for the individual observed effect sizes or outcomes.</p></dd>
+<dt>reestimate</dt>
+<dd><p>logical to specify whether variance/correlation components should be re-estimated after deletion of the \(i\)th case (the default is <code>TRUE</code>).</p></dd>
+<dt>parallel</dt>
+<dd><p>character string to specify whether parallel processing should be used (the default is <code>"no"</code>). For parallel processing, set to either <code>"snow"</code> or <code>"multicore"</code>. See ‘Details’.</p></dd>
+<dt>ncpus</dt>
+<dd><p>integer to specify the number of processes to use in the parallel processing.</p></dd>
+<dt>cl</dt>
+<dd><p>optional cluster to use if <code>parallel="snow"</code>. If unspecified, a cluster on the local machine is created for the duration of the call.</p></dd>
+<dt>type</dt>
+<dd><p>character string to specify whether only the diagonal of the hat matrix (<code>"diagonal"</code>) or the entire hat matrix (<code>"matrix"</code>) should be returned.</p></dd>
+<dt>...</dt>
+<dd><p>other arguments.</p></dd>
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -211,7 +211,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>           50           51           52           53           54           55           56 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2.803636e-04 3.453698e-03 1.101867e-02 1.405349e-04 1.257869e-02 1.606173e-03 4.733739e-03 </span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, type<span class="op">=</span><span class="st">"o"</span>, pch<span class="op">=</span><span class="fl">19</span>, xlab<span class="op">=</span><span class="st">"Observed Outcome"</span>, ylab<span class="op">=</span><span class="st">"Cook's Distance"</span><span class="op">)</span></span>
-<span class="r-plt"><img src="influence.rma.mv-1.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="influence.rma.mv-1.png" alt="" width="864" height="768"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### Cook's distances for each district</span></span>
 <span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="influence.rma.uni.html">cooks.distance</a></span><span class="op">(</span><span class="va">res</span>, cluster<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">district</span><span class="op">)</span></span>
@@ -222,7 +222,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0.0656500671 0.0037438517 0.0548839759 0.0003441647 </span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, type<span class="op">=</span><span class="st">"o"</span>, pch<span class="op">=</span><span class="fl">19</span>, xlab<span class="op">=</span><span class="st">"District"</span>, ylab<span class="op">=</span><span class="st">"Cook's Distance"</span>, xaxt<span class="op">=</span><span class="st">"n"</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html" class="external-link">axis</a></span><span class="op">(</span>side<span class="op">=</span><span class="fl">1</span>, at<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, labels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-plt"><img src="influence.rma.mv-2.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="influence.rma.mv-2.png" alt="" width="864" height="768"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### hat values</span></span>
 <span class="r-in"><span class="fu"><a href="influence.rma.uni.html">hatvalues</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>

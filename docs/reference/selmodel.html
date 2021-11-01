@@ -104,26 +104,26 @@
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <p></p>
-<dl><dt>x</dt><dd><p>an object of class <code>"rma.uni"</code>.</p></dd>
-</dl><p></p>
-<dl><dt>type</dt><dd><p>character string to specify the type of selection model. Possible options are <code>"beta"</code>, <code>"halfnorm"</code>, <code>"negexp"</code>, <code>"logistic"</code>, <code>"power"</code>, <code>"negexppow"</code>, or <code>"stepfun"</code>. Can be abbreviated. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>alternative</dt><dd><p>character string to specify the sidedness of the hypothesis when testing the observed outcomes. Possible options are <code>"greater"</code> (the default), <code>"less"</code>, or <code>"two.sided"</code>. Can be abbreviated.</p></dd>
-</dl><p></p>
-<dl><dt>prec</dt><dd><p>optional character string to specify the measure of precision (only relevant for selection models that can incorporate this into the selection function). Possible options are <code>"sei"</code>, <code>"vi"</code>, <code>"ninv"</code>, or <code>"sqrtninv"</code>. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>delta</dt><dd><p>optional numeric vector (of the same length as the number of selection model parameters) to fix the corresponding \(\delta\) value(s). A specific \(\delta\) value can be fixed by setting the corresponding element of this argument to the desired value. A specific \(\delta\) value will be estimated if the corresponding element is set equal to <code>NA</code>. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>steps</dt><dd><p>numeric vector of one or more values between 0 and 1 that can or must be specified for certain selection functions. See ‘Details’.</p></dd>
-</dl><p></p>
-<dl><dt>verbose</dt><dd><p>logical to specify whether output should be generated on the progress of the model fitting (the default is <code>FALSE</code>). Can also be an integer. Values &gt; 1 generate more verbose output. See ‘Note’.</p></dd>
-</dl><p></p>
-<dl><dt>digits</dt><dd><p>integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.</p></dd>
-</dl><p></p>
-<dl><dt>control</dt><dd><p>optional list of control values for the estimation algorithm. If unspecified, default values are defined inside the function. See ‘Note’.</p></dd>
-</dl><p></p>
-<dl><dt>...</dt><dd><p>other arguments.</p></dd>
+    <dl><dt>x</dt>
+<dd><p>an object of class <code>"rma.uni"</code>.</p></dd>
+<dt>type</dt>
+<dd><p>character string to specify the type of selection model. Possible options are <code>"beta"</code>, <code>"halfnorm"</code>, <code>"negexp"</code>, <code>"logistic"</code>, <code>"power"</code>, <code>"negexppow"</code>, or <code>"stepfun"</code>. Can be abbreviated. See ‘Details’.</p></dd>
+<dt>alternative</dt>
+<dd><p>character string to specify the sidedness of the hypothesis when testing the observed outcomes. Possible options are <code>"greater"</code> (the default), <code>"less"</code>, or <code>"two.sided"</code>. Can be abbreviated.</p></dd>
+<dt>prec</dt>
+<dd><p>optional character string to specify the measure of precision (only relevant for selection models that can incorporate this into the selection function). Possible options are <code>"sei"</code>, <code>"vi"</code>, <code>"ninv"</code>, or <code>"sqrtninv"</code>. See ‘Details’.</p></dd>
+<dt>delta</dt>
+<dd><p>optional numeric vector (of the same length as the number of selection model parameters) to fix the corresponding \(\delta\) value(s). A specific \(\delta\) value can be fixed by setting the corresponding element of this argument to the desired value. A specific \(\delta\) value will be estimated if the corresponding element is set equal to <code>NA</code>. See ‘Details’.</p></dd>
+<dt>steps</dt>
+<dd><p>numeric vector of one or more values between 0 and 1 that can or must be specified for certain selection functions. See ‘Details’.</p></dd>
+<dt>verbose</dt>
+<dd><p>logical to specify whether output should be generated on the progress of the model fitting (the default is <code>FALSE</code>). Can also be an integer. Values &gt; 1 generate more verbose output. See ‘Note’.</p></dd>
+<dt>digits</dt>
+<dd><p>integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.</p></dd>
+<dt>control</dt>
+<dd><p>optional list of control values for the estimation algorithm. If unspecified, default values are defined inside the function. See ‘Note’.</p></dd>
+<dt>...</dt>
+<dd><p>other arguments.</p></dd>
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -200,47 +200,49 @@
     <div id="value">
     <h2>Value</h2>
     <p>An object of class <code>c("rma.uni","rma")</code>. The object is a list containing the same components as a regular <code>c("rma.uni","rma")</code> object, but the parameter estimates are based on the selection model. Most importantly, the following elements are modified based on the selection model:</p>
-<dl><dt>beta</dt><dd><p>estimated coefficients of the model.</p></dd>
-</dl><p></p>
-<dl><dt>se</dt><dd><p>standard errors of the coefficients.</p></dd>
-</dl><p></p>
-<dl><dt>zval</dt><dd><p>test statistics of the coefficients.</p></dd>
-</dl><p></p>
-<dl><dt>pval</dt><dd><p>corresponding p-values.</p></dd>
-</dl><p></p>
-<dl><dt>ci.lb</dt><dd><p>lower bound of the confidence intervals for the coefficients.</p></dd>
-</dl><p></p>
-<dl><dt>ci.ub</dt><dd><p>upper bound of the confidence intervals for the coefficients.</p></dd>
-</dl><p></p>
-<dl><dt>vb</dt><dd><p>variance-covariance matrix of the estimated coefficients.</p></dd>
-</dl><p></p>
-<dl><dt>tau2</dt><dd><p>estimated amount of (residual) heterogeneity. Always <code>0</code> when <code>method="FE"</code>.</p></dd>
-</dl><p></p>
-<dl><dt>se.tau2</dt><dd><p>standard error of the estimated amount of (residual) heterogeneity.</p></dd>
+<dl><dt>beta</dt>
+<dd><p>estimated coefficients of the model.</p></dd>
+<dt>se</dt>
+<dd><p>standard errors of the coefficients.</p></dd>
+<dt>zval</dt>
+<dd><p>test statistics of the coefficients.</p></dd>
+<dt>pval</dt>
+<dd><p>corresponding p-values.</p></dd>
+<dt>ci.lb</dt>
+<dd><p>lower bound of the confidence intervals for the coefficients.</p></dd>
+<dt>ci.ub</dt>
+<dd><p>upper bound of the confidence intervals for the coefficients.</p></dd>
+<dt>vb</dt>
+<dd><p>variance-covariance matrix of the estimated coefficients.</p></dd>
+<dt>tau2</dt>
+<dd><p>estimated amount of (residual) heterogeneity. Always <code>0</code> when <code>method="FE"</code>.</p></dd>
+<dt>se.tau2</dt>
+<dd><p>standard error of the estimated amount of (residual) heterogeneity.</p></dd>
 </dl><p>In addition, the object contains the following additional elements:</p>
-<dl><dt>delta</dt><dd><p>estimated selection model parameter(s).</p></dd>
-</dl><p></p>
-<dl><dt>se.delta</dt><dd><p>corresponding standard error(s).</p></dd>
-</dl><p></p>
-<dl><dt>zval.delta</dt><dd><p>corresponding test statistic(s).</p></dd>
-</dl><p></p>
-<dl><dt>pval.delta</dt><dd><p>corresponding p-value(s).</p></dd>
-</dl><p></p>
-<dl><dt>ci.lb.delta</dt><dd><p>lower bound of the confidence intervals for the parameter(s).</p></dd>
-</dl><p></p>
-<dl><dt>ci.ub.delta</dt><dd><p>upper bound of the confidence intervals for the parameter(s).</p></dd>
-</dl><p></p>
-<dl><dt>LRT</dt><dd><p>test statistic of the likelihood ratio test for the selection model parameter(s).</p></dd>
-</dl><p></p>
-<dl><dt>LRTdf</dt><dd><p>degrees of freedom for the likelihood ratio test.</p></dd>
-</dl><p></p>
-<dl><dt>LRTp</dt><dd><p>p-value for the likelihood ratio test.</p></dd>
-</dl><p></p>
-<dl><dt>LRT.tau2</dt><dd><p>test statistic of the likelihood ratio test for testing \(\mbox{H}_0{:}\; \tau^2 = 0\) (<code>NA</code> when fitting a fixed-effects model).</p></dd>
-</dl><p></p>
-<dl><dt>LRTp.tau2</dt><dd><p>p-value for the likelihood ratio test.</p></dd>
-</dl><p></p>
-<dl><dt>...</dt><dd><p>some additional elements/values.</p></dd>
+<dl><dt>delta</dt>
+<dd><p>estimated selection model parameter(s).</p></dd>
+<dt>se.delta</dt>
+<dd><p>corresponding standard error(s).</p></dd>
+<dt>zval.delta</dt>
+<dd><p>corresponding test statistic(s).</p></dd>
+<dt>pval.delta</dt>
+<dd><p>corresponding p-value(s).</p></dd>
+<dt>ci.lb.delta</dt>
+<dd><p>lower bound of the confidence intervals for the parameter(s).</p></dd>
+<dt>ci.ub.delta</dt>
+<dd><p>upper bound of the confidence intervals for the parameter(s).</p></dd>
+<dt>LRT</dt>
+<dd><p>test statistic of the likelihood ratio test for the selection model parameter(s).</p></dd>
+<dt>LRTdf</dt>
+<dd><p>degrees of freedom for the likelihood ratio test.</p></dd>
+<dt>LRTp</dt>
+<dd><p>p-value for the likelihood ratio test.</p></dd>
+<dt>LRT.tau2</dt>
+<dd><p>test statistic of the likelihood ratio test for testing \(\mbox{H}_0{:}\; \tau^2 = 0\) (<code>NA</code> when fitting a fixed-effects model).</p></dd>
+<dt>LRTp.tau2</dt>
+<dd><p>p-value for the likelihood ratio test.</p></dd>
+<dt>...</dt>
+<dd><p>some additional elements/values.</p></dd>
 </dl></div>
     <div id="methods">
     <h2>Methods</h2>
@@ -366,7 +368,7 @@
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># funnel plot</span></span>
 <span class="r-in"><span class="fu"><a href="funnel.html">funnel</a></span><span class="op">(</span><span class="va">res</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0.6</span><span class="op">)</span>, xlab<span class="op">=</span><span class="st">"Standardized Mean Difference"</span><span class="op">)</span></span>
-<span class="r-plt"><img src="selmodel-1.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="selmodel-1.png" alt="" width="864" height="768"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># fit beta selection model</span></span>
 <span class="r-in"><span class="co"># \dontrun{</span></span>
@@ -401,7 +403,7 @@
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># plot selection function</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sel</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">40</span><span class="op">)</span><span class="op">)</span><span class="co"># }</span></span>
-<span class="r-plt"><img src="selmodel-2.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="selmodel-2.png" alt="" width="864" height="768"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># fit mixed-effects meta-regression model with 'blind' dummy variable as moderator</span></span>
 <span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">smd</span>, <span class="va">se</span><span class="op">^</span><span class="fl">2</span>, data<span class="op">=</span><span class="va">dat</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">blind</span>, method<span class="op">=</span><span class="st">"ML"</span>, digits<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span>
@@ -558,7 +560,7 @@
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># funnel plot</span></span>
 <span class="r-in"><span class="fu"><a href="funnel.html">funnel</a></span><span class="op">(</span><span class="va">res</span>, atransf<span class="op">=</span><span class="va">exp</span>, at<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.01</span>,<span class="fl">0.1</span>,<span class="fl">1</span>,<span class="fl">10</span>,<span class="fl">100</span><span class="op">)</span><span class="op">)</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-plt"><img src="selmodel-3.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="selmodel-3.png" alt="" width="864" height="768"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># fit half-normal, negative-exponential, logistic, and power selection models</span></span>
 <span class="r-in"><span class="co"># \dontrun{</span></span>
@@ -572,7 +574,7 @@
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sel2</span>, add<span class="op">=</span><span class="cn">TRUE</span>, col<span class="op">=</span><span class="st">"blue"</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sel3</span>, add<span class="op">=</span><span class="cn">TRUE</span>, col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sel4</span>, add<span class="op">=</span><span class="cn">TRUE</span>, col<span class="op">=</span><span class="st">"green"</span><span class="op">)</span></span>
-<span class="r-plt"><img src="selmodel-4.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="selmodel-4.png" alt="" width="864" height="768"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># show estimates of delta (and corresponding SEs)</span></span>
 <span class="r-in"><span class="va">tab</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>delta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">sel1</span><span class="op">$</span><span class="va">delta</span>, <span class="va">sel2</span><span class="op">$</span><span class="va">delta</span>, <span class="va">sel3</span><span class="op">$</span><span class="va">delta</span>, <span class="va">sel4</span><span class="op">$</span><span class="va">delta</span><span class="op">)</span>,</span>
@@ -729,7 +731,7 @@
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># funnel plot</span></span>
 <span class="r-in"><span class="fu"><a href="funnel.html">funnel</a></span><span class="op">(</span><span class="va">res</span>, atransf<span class="op">=</span><span class="va">exp</span>, at<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.25</span>,<span class="fl">0.5</span>,<span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">4</span>,<span class="fl">8</span><span class="op">)</span><span class="op">)</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0.8</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-plt"><img src="selmodel-5.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="selmodel-5.png" alt="" width="864" height="768"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># step function selection model</span></span>
 <span class="r-in"><span class="co"># \dontrun{</span></span>
@@ -766,7 +768,7 @@
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># plot selection function</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sel</span><span class="op">)</span><span class="co"># }</span></span>
-<span class="r-plt"><img src="selmodel-6.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="selmodel-6.png" alt="" width="864" height="768"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">############################################################################</span></span>
 <span class="r-in"></span>
@@ -854,7 +856,7 @@
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># funnel plot</span></span>
 <span class="r-in"><span class="fu"><a href="funnel.html">funnel</a></span><span class="op">(</span><span class="va">res</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0.4</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-plt"><img src="selmodel-7.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="selmodel-7.png" alt="" width="864" height="768"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># selection functions from Vevea &amp; Woods (2005)</span></span>
 <span class="r-in"><span class="va">tab</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
