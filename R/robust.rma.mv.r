@@ -132,11 +132,11 @@ robust.rma.mv <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, .
       ci.ub <- cs.conf$CI_U
 
       if (x$int.only) {
-         QM   <- zval^2
+         QM   <- max(0, zval^2)
          QMdf <- c(1, dfs)
          QMp  <- pval
       } else {
-         QM   <- cs.wald$Fstat
+         QM   <- max(0, cs.wald$Fstat)
          QMdf <- c(cs.wald$df_num, cs.wald$df_denom)
          QMp  <- cs.wald$p_val
       }

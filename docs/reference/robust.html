@@ -121,9 +121,9 @@
     <div id="details">
     <h2>Details</h2>
     <p>The function constructs a cluster-robust estimate of the variance-covariance matrix of the model coefficients based on a sandwich-type estimator and then computes tests and confidence intervals of the model coefficients.</p>
-<p>By default, tests of individual coefficients and confidence intervals are based on a t-distribution with \(n-p\) degrees of freedom, while the omnibus test statistic uses an F-distribution with \(m\) and \(n-p\) degrees of freedom, where \(n\) is the number of clusters, \(p\) denotes the total number of model coefficients (including the intercept if it is present), and \(m\) denotes the number of coefficients tested by the omnibus test. This is sometimes called the ‘residual’ method for approximating the degrees of freedom.</p>
+<p>By default, tests of individual coefficients and confidence intervals are based on a t-distribution with \(n-p\) degrees of freedom, while the omnibus test statistic uses an F-distribution with \(m\) and \(n-p\) degrees of freedom, where \(n\) is the number of clusters, \(p\) denotes the total number of model coefficients (including the intercept if it is present), and \(m\) denotes the number of coefficients tested by the omnibus test. This is sometimes called the ‘residual’ method for approximating the (denominator) degrees of freedom.</p>
 <p>When <code>adjust=TRUE</code> (the default), the cluster-robust estimate of the variance-covariance matrix is multiplied by the factor \(n/(n-p)\), which serves as a small-sample adjustment that tends to improve the performance of the method when the number of clusters is small. This is sometimes called the ‘CR1’ adjustment/estimator (in contrast to ‘CR0’ when <code>adjust=FALSE</code>).</p>
-<p>For an even better small-sample adjustment, one can set <code>clubSandwich=TRUE</code> in which case the <a href="https://cran.r-project.org/package=clubSandwich" class="external-link">clubSandwich</a> package is used to obtain the cluster-robust tests and confidence intervals. The variance-covariance matrix of the model coefficients is then estimated using the ‘bias-reduced linearization’ adjustment proposed by Bell and McCaffrey (2002) and further developed in Pustejovsky and Tipton (2018). This is sometimes called the ‘CR2’ adjustment/estimator. The (denominator) degrees of freedom of the t- and F-tests are then estimated using a Satterthwaite approximation.</p>
+<p>For an even better small-sample adjustment, one can set <code>clubSandwich=TRUE</code> in which case the <a href="https://cran.r-project.org/package=clubSandwich" class="external-link">clubSandwich</a> package is used to obtain the cluster-robust tests and confidence intervals. The variance-covariance matrix of the model coefficients is then estimated using the ‘bias-reduced linearization’ adjustment proposed by Bell and McCaffrey (2002) and further developed in Tipton (2015) and Pustejovsky and Tipton (2018). This is sometimes called the ‘CR2’ adjustment/estimator. The degrees of freedom of the t-tests are then estimated using a Satterthwaite approximation. F-tests are then based on an approximate Hotelling's T-squared reference distribution, with denominator degrees of freedom estimated using a method by Zhang (2012, 2013), as further described in Tipton and Pustejovky (2015).</p>
     </div>
     <div id="value">
     <h2>Value</h2>
@@ -153,7 +153,7 @@
     <div id="note">
     <h2>Note</h2>
     <p>The variable specified via <code>cluster</code> is assumed to be of the same length as the data originally passed to the <code>rma.uni</code> or <code>rma.mv</code> functions. Any subsetting and removal of studies with missing values that was applied during the model fitting is also automatically applied to the variable specified via the <code>cluster</code> argument.</p>
-<p>The idea of the robust (sandwich-type) estimator for models with unspecified heteroscedasticity can be traced back to Eicker (1967), Huber (1967), and White (1980). Hence, the method in general is often referred to as the Eicker-Huber-White method. Some small-sample improvements to the method are described by MacKinnon and White (1985). The extension to the cluster-robust estimator can be found in Froot (1989) and Williams (2000). Cameron and Miller (2015) provide an extensive overview of cluster-robust methods. Sidik and Jonkman (2005, 2006) introduced robust methods in the meta-analytic context for standard random/mixed-effects models. The use of the cluster-robust methods for multivariate/multilevel meta-analytic models is described in Hedges, Tipton, and Johnson (2010).</p>
+<p>The idea of the robust (sandwich-type) estimator for models with unspecified heteroscedasticity can be traced back to Eicker (1967), Huber (1967), and White (1980, 1984). Hence, the method in general is often referred to as the Eicker-Huber-White method. Some small-sample improvements to the method are described by MacKinnon and White (1985). The extension to the cluster-robust estimator can be found in Froot (1989) and Williams (2000), which is also related to the GEE approach by Liang and Zeger (1986). Cameron and Miller (2015) provide an extensive overview of cluster-robust methods. Sidik and Jonkman (2005, 2006) introduced robust methods in the meta-analytic context for standard random/mixed-effects models. The use of cluster-robust methods for multivariate/multilevel meta-analytic models was introduced by Hedges, Tipton, and Johnson (2010).</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -166,14 +166,19 @@
 <p>Eicker, F. (1967). Limit theorems for regressions with unequal and dependent errors. In L. M. LeCam &amp; J. Neyman (Eds.), <em>Proceedings of the Fifth Berkeley Symposium on Mathematical Statistics and Probability</em> (pp. 59--82). Berkeley: University of California Press.</p>
 <p>Froot, K. A. (1989). Consistent covariance matrix estimation with cross-sectional dependence and heteroskedasticity in financial data. <em>Journal of Financial and Quantitative Analysis</em>, <b>24</b>(3), 333--355. <a href="https://doi.org/10.2307/2330815" class="external-link">https://doi.org/10.2307/2330815</a></p>
 <p>Hedges, L. V., Tipton, E., &amp; Johnson, M. C. (2010). Robust variance estimation in meta-regression with dependent effect size estimates. <em>Research Synthesis Methods</em>, <b>1</b>(1), 39--65. <a href="https://doi.org/10.1002/jrsm.5" class="external-link">https://doi.org/10.1002/jrsm.5</a></p>
-<p>Huber, P. (1967). The behavior of maximum-likelihood estimates under nonstandard conditions. In L. M. LeCam &amp; J. Neyman (Eds.), <em>Proceedings of the Fifth Berkeley Symposium on Mathematical Statistics and Probability</em> (pp. 221--233). Berkeley: University of California Press.</p>
+<p>Huber, P. (1967). The behavior of maximum-likelihood estimates under nonstandard conditions. In L. M. LeCam &amp; J. Neyman (Eds.), <em>Proceedings of the Fifth Berkeley Symposium on Mathematical Statistics and Probability</em> (pp. 221--233). University of California Press.</p>
+<p>Liang, K. Y., &amp; Zeger, S. L. (1986). Longitudinal data analysis using generalized linear models. <em>Biometrika</em>, <b>73</b>(1), 13--22. <a href="https://doi.org/10.1093/biomet/73.1.13" class="external-link">https://doi.org/10.1093/biomet/73.1.13</a></p>
 <p>MacKinnon, J. G., &amp; White, H. (1985). Some heteroskedasticity-consistent covariance matrix estimators with improved finite sample properties. <em>Journal of Econometrics</em>, <b>29</b>(3), 305--325. <a href="https://doi.org/10.1016/0304-4076(85)90158-7" class="external-link">https://doi.org/10.1016/0304-4076(85)90158-7</a></p>
-<p>Pustejovsky, J. E., &amp; Tipton, E. (2018). Small-sample methods for cluster-robust variance estimation and hypothesis testing in fixed effects models. <em>Journal of Business &amp; Economic Statistics</em>, <b>36</b>(4), 672--683. <a href="https://doi.org/10.1080/07350015.2016.1247004" class="external-link">https://doi.org/10.1080/07350015.2016.1247004</a></p>
+<p>Tipton, E. (2015). Small sample adjustments for robust variance estimation with meta-regression. <em>Psychological Methods</em>, <b>20</b>(3), 375--393. <a href="https://doi.org/10.1037/met0000011" class="external-link">https://doi.org/10.1037/met0000011</a></p>
+<p>Tipton, E., &amp; Pustejovsky, J. E. (2015). Small-sample adjustments for tests of moderators and model fit using robust variance estimation in meta-regression. <em>Journal of Educational and Behavioral Statistics</em>, <b>40</b>(6), 604--634. <a href="https://doi.org/10.3102/1076998615606099" class="external-link">https://doi.org/10.3102/1076998615606099</a></p>
 <p>Sidik, K., &amp; Jonkman, J. N. (2005). A note on variance estimation in random effects meta-regression. <em>Journal of Biopharmaceutical Statistics</em>, <b>15</b>(5), 823--838. <a href="https://doi.org/10.1081/BIP-200067915" class="external-link">https://doi.org/10.1081/BIP-200067915</a></p>
 <p>Sidik, K., &amp; Jonkman, J. N. (2006). Robust variance estimation for random effects meta-analysis. <em>Computational Statistics &amp; Data Analysis</em>, <b>50</b>(12), 3681--3701. <a href="https://doi.org/10.1016/j.csda.2005.07.019" class="external-link">https://doi.org/10.1016/j.csda.2005.07.019</a></p>
 <p>White, H. (1980). A heteroskedasticity-consistent covariance matrix estimator and a direct test for heteroskedasticity. <em>Econometrica</em>, <b>48</b>(4), 817--838. <a href="https://doi.org/10.2307/1912934" class="external-link">https://doi.org/10.2307/1912934</a></p>
+<p>White, H. (1984). <em>Asymptotic theory for econometricians</em>. Academic Press.</p>
 <p>Williams, R. L. (2000). A note on robust variance estimation for cluster-correlated data. <em>Biometrics</em>, <b>56</b>(2), 645--646. <a href="https://doi.org/10.1111/j.0006-341x.2000.00645.x" class="external-link">https://doi.org/10.1111/j.0006-341x.2000.00645.x</a></p>
 <p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1--48. <a href="https://doi.org/10.18637/jss.v036.i03" class="external-link">https://doi.org/10.18637/jss.v036.i03</a></p>
+<p>Zhang, J.-T. (2012). An approximate Hotelling T2-test for heteroscedastic one-way MANOVA. <em>Open Journal of Statistics</em>, <b>2</b>(1), 1--11. <a href="https://doi.org/10.4236/ojs.2012.21001" class="external-link">https://doi.org/10.4236/ojs.2012.21001</a></p>
+<p>Zhang, J.-T. (2013). Tests of linear hypotheses in the ANOVA under heteroscedasticity. <em>International Journal of Advanced Statistics and Probability</em>, <b>1</b>, 9--24. <a href="https://doi.org/10.14419/ijasp.v1i2.908" class="external-link">https://doi.org/10.14419/ijasp.v1i2.908</a></p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -183,7 +188,192 @@
 
     <div id="examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">### copy data from Konstantopoulos (2011) into 'dat'</span></span>
+    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">############################################################################</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">### copy data from Bangert-Drowns et al. (2004) into 'dat'</span></span>
+<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">dat.bangertdrowns2004</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">### fit random-effects model</span></span>
+<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">res</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Random-Effects Model (k = 48; tau^2 estimator: REML)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau^2 (estimated amount of total heterogeneity): 0.0499 (SE = 0.0197)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau (square root of estimated tau^2 value):      0.2235</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> I^2 (total heterogeneity / total variability):   58.37%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> H^2 (total variability / sampling variability):  2.40</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test for Heterogeneity:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Q(df = 47) = 107.1061, p-val &lt; .0001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> estimate      se    zval    pval   ci.lb   ci.ub </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   0.2219  0.0460  4.8209  &lt;.0001  0.1317  0.3122  *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">### obtain results based on the sandwich method</span></span>
+<span class="r-in"><span class="fu">robust</span><span class="op">(</span><span class="va">res</span>, cluster<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">id</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Random-Effects Model (k = 48; tau^2 estimator: REML)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau^2 (estimated amount of total heterogeneity): 0.0499 (SE = 0.0197)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau (square root of estimated tau^2 value):      0.2235</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> I^2 (total heterogeneity / total variability):   58.37%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> H^2 (total variability / sampling variability):  2.40</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test for Heterogeneity:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Q(df = 47) = 107.1061, p-val &lt; .0001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Number of estimates:   48</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Number of clusters:    48</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Estimates per cluster: 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> estimate     se¹   tval¹  df¹   pval¹  ci.lb¹  ci.ub¹ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   0.2219  0.0460  4.8283   47  &lt;.0001  0.1295  0.3144  *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1) results based on cluster-robust inference (var-cov estimator: CR1,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    approx. t-test and confidence interval, dfs = residual method)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">### use methods from clubSandwich package</span></span>
+<span class="r-in"><span class="fu">robust</span><span class="op">(</span><span class="va">res</span>, cluster<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">id</span>, clubSandwich<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Random-Effects Model (k = 48; tau^2 estimator: REML)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau^2 (estimated amount of total heterogeneity): 0.0499 (SE = 0.0197)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau (square root of estimated tau^2 value):      0.2235</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> I^2 (total heterogeneity / total variability):   58.37%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> H^2 (total variability / sampling variability):  2.40</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test for Heterogeneity:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Q(df = 47) = 107.1061, p-val &lt; .0001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Number of estimates:   48</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Number of clusters:    48</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Estimates per cluster: 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> estimate     se¹   tval¹    df¹   pval¹  ci.lb¹  ci.ub¹ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   0.2219  0.0460  4.8280  41.04  &lt;.0001  0.1291  0.3148  *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1) results based on cluster-robust inference (var-cov estimator: CR2,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    approx. t-test and confidence interval, dfs = Satterthwaite method)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">### fit meta-regression model</span></span>
+<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">length</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Studies with NAs omitted from model fitting.</span>
+<span class="r-in"><span class="va">res</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mixed-Effects Model (k = 46; tau^2 estimator: REML)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau^2 (estimated amount of residual heterogeneity):     0.0441 (SE = 0.0188)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau (square root of estimated tau^2 value):             0.2100</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> I^2 (residual heterogeneity / unaccounted variability): 55.26%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> H^2 (unaccounted variability / sampling variability):   2.24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> R^2 (amount of heterogeneity accounted for):            5.08%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test for Residual Heterogeneity:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QE(df = 44) = 96.2810, p-val &lt; .0001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test of Moderators (coefficient 2):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QM(df = 1) = 4.2266, p-val = 0.0398</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          estimate      se    zval    pval    ci.lb   ci.ub </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> intrcpt    0.0692  0.0825  0.8384  0.4018  -0.0925  0.2309    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> length     0.0149  0.0073  2.0559  0.0398   0.0007  0.0292  * </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">### obtain results based on the sandwich method</span></span>
+<span class="r-in"><span class="fu">robust</span><span class="op">(</span><span class="va">res</span>, cluster<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">id</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mixed-Effects Model (k = 46; tau^2 estimator: REML)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau^2 (estimated amount of residual heterogeneity):     0.0441 (SE = 0.0188)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau (square root of estimated tau^2 value):             0.2100</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> I^2 (residual heterogeneity / unaccounted variability): 55.26%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> H^2 (unaccounted variability / sampling variability):   2.24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> R^2 (amount of heterogeneity accounted for):            5.08%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test for Residual Heterogeneity:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QE(df = 44) = 96.2810, p-val &lt; .0001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Number of estimates:   46</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Number of clusters:    46</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Estimates per cluster: 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test of Moderators (coefficient 2):¹</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> F(df1 = 1, df2 = 44) = 6.4843, p-val = 0.0145</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          estimate     se¹   tval¹  df¹   pval¹   ci.lb¹  ci.ub¹ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> intrcpt    0.0692  0.0651  1.0628   44  0.2937  -0.0620  0.2004    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> length     0.0149  0.0059  2.5464   44  0.0145   0.0031  0.0268  * </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1) results based on cluster-robust inference (var-cov estimator: CR1,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    approx. t/F-tests and confidence intervals, dfs = residual method)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">### use methods from clubSandwich package</span></span>
+<span class="r-in"><span class="fu">robust</span><span class="op">(</span><span class="va">res</span>, cluster<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">id</span>, clubSandwich<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mixed-Effects Model (k = 46; tau^2 estimator: REML)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau^2 (estimated amount of residual heterogeneity):     0.0441 (SE = 0.0188)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau (square root of estimated tau^2 value):             0.2100</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> I^2 (residual heterogeneity / unaccounted variability): 55.26%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> H^2 (unaccounted variability / sampling variability):   2.24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> R^2 (amount of heterogeneity accounted for):            5.08%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test for Residual Heterogeneity:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QE(df = 44) = 96.2810, p-val &lt; .0001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Number of estimates:   46</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Number of clusters:    46</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Estimates per cluster: 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test of Moderators (coefficient 2):¹</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> F(df1 = 1, df2 = 19.16) = 6.3961, p-val = 0.0204</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          estimate     se¹   tval¹    df¹   pval¹   ci.lb¹  ci.ub¹ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> intrcpt    0.0692  0.0655  1.0560  16.51  0.3062  -0.0694  0.2077    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> length     0.0149  0.0059  2.5290  19.16  0.0204   0.0026  0.0273  * </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1) results based on cluster-robust inference (var-cov estimator: CR2,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    approx. t/F-tests and confidence intervals, dfs = Satterthwaite method)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">############################################################################</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">### copy data from Konstantopoulos (2011) into 'dat'</span></span>
 <span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">dat.konstantopoulos2011</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### fit multilevel random-effects model</span></span>
@@ -269,6 +459,8 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1) results based on cluster-robust inference (var-cov estimator: CR2,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    approx. t-test and confidence interval, dfs = Satterthwaite method)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">############################################################################</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### copy data from Berkey et al. (1998) into 'dat'</span></span>
 <span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">dat.berkey1998</span></span>
@@ -394,6 +586,8 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1) results based on cluster-robust inference (var-cov estimator: CR2,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    approx. t/F-tests and confidence intervals, dfs = Satterthwaite method)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">############################################################################</span></span>
 </code></pre></div>
     </div>
   </div>

@@ -23,11 +23,11 @@ robust(x, cluster, \dots)
 \details{
    The function constructs a cluster-robust estimate of the variance-covariance matrix of the model coefficients based on a sandwich-type estimator and then computes tests and confidence intervals of the model coefficients.
 
-   By default, tests of individual coefficients and confidence intervals are based on a t-distribution with \mjseqn{n-p} degrees of freedom, while the omnibus test statistic uses an F-distribution with \mjseqn{m} and \mjseqn{n-p} degrees of freedom, where \mjseqn{n} is the number of clusters, \mjseqn{p} denotes the total number of model coefficients (including the intercept if it is present), and \mjseqn{m} denotes the number of coefficients tested by the omnibus test. This is sometimes called the \sQuote{residual} method for approximating the degrees of freedom.
+   By default, tests of individual coefficients and confidence intervals are based on a t-distribution with \mjseqn{n-p} degrees of freedom, while the omnibus test statistic uses an F-distribution with \mjseqn{m} and \mjseqn{n-p} degrees of freedom, where \mjseqn{n} is the number of clusters, \mjseqn{p} denotes the total number of model coefficients (including the intercept if it is present), and \mjseqn{m} denotes the number of coefficients tested by the omnibus test. This is sometimes called the \sQuote{residual} method for approximating the (denominator) degrees of freedom.
 
    When \code{adjust=TRUE} (the default), the cluster-robust estimate of the variance-covariance matrix is multiplied by the factor \mjseqn{n/(n-p)}, which serves as a small-sample adjustment that tends to improve the performance of the method when the number of clusters is small. This is sometimes called the \sQuote{CR1} adjustment/estimator (in contrast to \sQuote{CR0} when \code{adjust=FALSE}).
 
-   For an even better small-sample adjustment, one can set \code{clubSandwich=TRUE} in which case the \href{https://cran.r-project.org/package=clubSandwich}{clubSandwich} package is used to obtain the cluster-robust tests and confidence intervals. The variance-covariance matrix of the model coefficients is then estimated using the \sQuote{bias-reduced linearization} adjustment proposed by Bell and McCaffrey (2002) and further developed in Pustejovsky and Tipton (2018). This is sometimes called the \sQuote{CR2} adjustment/estimator. The (denominator) degrees of freedom of the t- and F-tests are then estimated using a Satterthwaite approximation.
+   For an even better small-sample adjustment, one can set \code{clubSandwich=TRUE} in which case the \href{https://cran.r-project.org/package=clubSandwich}{clubSandwich} package is used to obtain the cluster-robust tests and confidence intervals. The variance-covariance matrix of the model coefficients is then estimated using the \sQuote{bias-reduced linearization} adjustment proposed by Bell and McCaffrey (2002) and further developed in Tipton (2015) and Pustejovsky and Tipton (2018). This is sometimes called the \sQuote{CR2} adjustment/estimator. The degrees of freedom of the t-tests are then estimated using a Satterthwaite approximation. F-tests are then based on an approximate Hotelling's T-squared reference distribution, with denominator degrees of freedom estimated using a method by Zhang (2012, 2013), as further described in Tipton and Pustejovky (2015).
 }
 \value{
    An object of class \code{"robust.rma"}. The object is a list containing the following components:
@@ -47,7 +47,7 @@ robust(x, cluster, \dots)
 \note{
    The variable specified via \code{cluster} is assumed to be of the same length as the data originally passed to the \code{rma.uni} or \code{rma.mv} functions. Any subsetting and removal of studies with missing values that was applied during the model fitting is also automatically applied to the variable specified via the \code{cluster} argument.
 
-   The idea of the robust (sandwich-type) estimator for models with unspecified heteroscedasticity can be traced back to Eicker (1967), Huber (1967), and White (1980). Hence, the method in general is often referred to as the Eicker-Huber-White method. Some small-sample improvements to the method are described by MacKinnon and White (1985). The extension to the cluster-robust estimator can be found in Froot (1989) and Williams (2000). Cameron and Miller (2015) provide an extensive overview of cluster-robust methods. Sidik and Jonkman (2005, 2006) introduced robust methods in the meta-analytic context for standard random/mixed-effects models. The use of the cluster-robust methods for multivariate/multilevel meta-analytic models is described in Hedges, Tipton, and Johnson (2010).
+   The idea of the robust (sandwich-type) estimator for models with unspecified heteroscedasticity can be traced back to Eicker (1967), Huber (1967), and White (1980, 1984). Hence, the method in general is often referred to as the Eicker-Huber-White method. Some small-sample improvements to the method are described by MacKinnon and White (1985). The extension to the cluster-robust estimator can be found in Froot (1989) and Williams (2000), which is also related to the GEE approach by Liang and Zeger (1986). Cameron and Miller (2015) provide an extensive overview of cluster-robust methods. Sidik and Jonkman (2005, 2006) introduced robust methods in the meta-analytic context for standard random/mixed-effects models. The use of cluster-robust methods for multivariate/multilevel meta-analytic models was introduced by Hedges, Tipton, and Johnson (2010).
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
@@ -63,11 +63,15 @@ robust(x, cluster, \dots)
 
    Hedges, L. V., Tipton, E., & Johnson, M. C. (2010). Robust variance estimation in meta-regression with dependent effect size estimates. \emph{Research Synthesis Methods}, \bold{1}(1), 39--65. \verb{https://doi.org/10.1002/jrsm.5}
 
-   Huber, P. (1967). The behavior of maximum-likelihood estimates under nonstandard conditions. In L. M. LeCam & J. Neyman (Eds.), \emph{Proceedings of the Fifth Berkeley Symposium on Mathematical Statistics and Probability} (pp. 221--233). Berkeley: University of California Press.
+   Huber, P. (1967). The behavior of maximum-likelihood estimates under nonstandard conditions. In L. M. LeCam & J. Neyman (Eds.), \emph{Proceedings of the Fifth Berkeley Symposium on Mathematical Statistics and Probability} (pp. 221--233). University of California Press.
+
+   Liang, K. Y., & Zeger, S. L. (1986). Longitudinal data analysis using generalized linear models. \emph{Biometrika}, \bold{73}(1), 13--22. \verb{https://doi.org/10.1093/biomet/73.1.13}
 
    MacKinnon, J. G., & White, H. (1985). Some heteroskedasticity-consistent covariance matrix estimators with improved finite sample properties. \emph{Journal of Econometrics}, \bold{29}(3), 305--325. \verb{https://doi.org/10.1016/0304-4076(85)90158-7}
 
-   Pustejovsky, J. E., & Tipton, E. (2018). Small-sample methods for cluster-robust variance estimation and hypothesis testing in fixed effects models. \emph{Journal of Business & Economic Statistics}, \bold{36}(4), 672--683. \verb{https://doi.org/10.1080/07350015.2016.1247004}
+   Tipton, E. (2015). Small sample adjustments for robust variance estimation with meta-regression. \emph{Psychological Methods}, \bold{20}(3), 375--393. \verb{https://doi.org/10.1037/met0000011}
+
+   Tipton, E., & Pustejovsky, J. E. (2015). Small-sample adjustments for tests of moderators and model fit using robust variance estimation in meta-regression. \emph{Journal of Educational and Behavioral Statistics}, \bold{40}(6), 604--634. \verb{https://doi.org/10.3102/1076998615606099}
 
    Sidik, K., & Jonkman, J. N. (2005). A note on variance estimation in random effects meta-regression. \emph{Journal of Biopharmaceutical Statistics}, \bold{15}(5), 823--838. \verb{https://doi.org/10.1081/BIP-200067915}
 
@@ -75,14 +79,47 @@ robust(x, cluster, \dots)
 
    White, H. (1980). A heteroskedasticity-consistent covariance matrix estimator and a direct test for heteroskedasticity. \emph{Econometrica}, \bold{48}(4), 817--838. \verb{https://doi.org/10.2307/1912934}
 
+   White, H. (1984). \emph{Asymptotic theory for econometricians}. Academic Press.
+
    Williams, R. L. (2000). A note on robust variance estimation for cluster-correlated data. \emph{Biometrics}, \bold{56}(2), 645--646. \verb{https://doi.org/10.1111/j.0006-341x.2000.00645.x}
 
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}
+
+   Zhang, J.-T. (2012). An approximate Hotelling T2-test for heteroscedastic one-way MANOVA. \emph{Open Journal of Statistics}, \bold{2}(1), 1--11. \verb{https://doi.org/10.4236/ojs.2012.21001}
+
+   Zhang, J.-T. (2013). Tests of linear hypotheses in the ANOVA under heteroscedasticity. \emph{International Journal of Advanced Statistics and Probability}, \bold{1}, 9--24. \verb{https://doi.org/10.14419/ijasp.v1i2.908}
 }
 \seealso{
    \code{\link{rma.uni}}, \code{\link{rma.mv}}
 }
 \examples{
+############################################################################
+
+### copy data from Bangert-Drowns et al. (2004) into 'dat'
+dat <- dat.bangertdrowns2004
+
+### fit random-effects model
+res <- rma(yi, vi, data=dat)
+res
+
+### obtain results based on the sandwich method
+robust(res, cluster=dat$id)
+
+### use methods from clubSandwich package
+robust(res, cluster=dat$id, clubSandwich=TRUE)
+
+### fit meta-regression model
+res <- rma(yi, vi, mods = ~ length, data=dat)
+res
+
+### obtain results based on the sandwich method
+robust(res, cluster=dat$id)
+
+### use methods from clubSandwich package
+robust(res, cluster=dat$id, clubSandwich=TRUE)
+
+############################################################################
+
 ### copy data from Konstantopoulos (2011) into 'dat'
 dat <- dat.konstantopoulos2011
 
@@ -95,6 +132,8 @@ robust(res, cluster=dat$district)
 
 ### use methods from clubSandwich package
 robust(res, cluster=dat$district, clubSandwich=TRUE)
+
+############################################################################
 
 ### copy data from Berkey et al. (1998) into 'dat'
 dat <- dat.berkey1998
@@ -113,5 +152,7 @@ robust(res, cluster=dat$trial)
 
 ### use methods from clubSandwich package
 robust(res, cluster=dat$trial, clubSandwich=TRUE)
+
+############################################################################
 }
 \keyword{htest}
