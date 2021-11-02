@@ -921,6 +921,8 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
                REMLf = TRUE,              # should |X'X| term be included in the REML log likelihood?
                evtol = 1e-07,             # lower bound for eigenvalues to determine if model matrix is positive definite (also for checking if vimaxmin >= 1/con$evtol)
                alpha.init = NULL,         # initial values for scale parameters
+               alpha.min = -Inf,          # min possible value(s) for scale parameter(s)
+               alpha.max = Inf,           # max possible value(s) for scale parameter(s)
                optimizer = "nlminb",      # optimizer to use ("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","optimParallel","constrOptim") for location-scale models
                optmethod = "BFGS",        # argument 'method' for optim() ("Nelder-Mead" and "BFGS" are sensible options)
                parallel = list(),         # parallel argument for optimParallel() (note: 'cl' argument in parallel is not passed; this is directly specified via 'cl')
@@ -1615,9 +1617,9 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
             stop(mstyle$stop(paste0("Length of 'alpha' argument (", length(alpha), ") does not match actual number of parameters (", q, ").")))
       }
 
-      ### rescale Z matrix (only for models with moderators and models including an intercept term and when alpha[1] is not fixed)
+      ### rescale Z matrix (only for models with moderators, models including a non-fixed intercept term, and when not placing constraints on the alpha values)
 
-      if (!Z.int.only && Z.int.incl && con$scaleZ && is.na(alpha[1])) {
+      if (!Z.int.only && Z.int.incl && con$scaleZ && is.na(alpha[1]) && all(is.infinite(con$alpha.min)) && all(is.infinite(con$alpha.max))) {
          Zsave <- Z
          meanZ <- colMeans(Z[, 2:q, drop=FALSE])
          sdZ   <- apply(Z[, 2:q, drop=FALSE], 2, sd) ### consider using colSds() from matrixStats package
@@ -1678,7 +1680,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
          alpha.init <- con$alpha.init
 
-         if (!Z.int.only && Z.int.incl && con$scaleZ && is.na(alpha[1])) {
+         if (!is.null(mZ)) {
             if (inherits(imZ, "try-error"))
                stop(mstyle$stop("Unable to rescale starting values for the scale parameters."))
             alpha.init <- c(imZ %*% cbind(alpha.init))
@@ -1694,6 +1696,19 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
       if (anyNA(alpha.init))
          stop(mstyle$stop("No missing values allowed in 'alpha.init'."))
+
+      ### set potential constraints on alpha values
+
+      if (length(con$alpha.min) == 1L)
+            con$alpha.min <- rep(con$alpha.min, q)
+
+      if (length(con$alpha.max) == 1L)
+            con$alpha.max <- rep(con$alpha.max, q)
+
+      alpha.min <- con$alpha.min
+      alpha.max <- con$alpha.max
+
+      alpha.init <- mapply(.mapinvfun.alpha, alpha.init, alpha.min, alpha.max)
 
       if (verbose > 1)
          message(mstyle$message("Estimating scale parameters ...\n"))
@@ -1784,16 +1799,16 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
       if (link == "log") {
 
          optcall <- paste(optimizer, "(", par.arg, "=alpha.init, .ll.rma.ls, ", ifelse(optimizer=="optim", "method=optmethod, ", ""),
-                                                       "yi=yi, vi=vi, X=X, Z=Z, reml=reml, k=k, pX=p, alpha.val=alpha, verbose=verbose, digits=digits,
-                                                       #hessian=TRUE,
-                                                       REMLf=con$REMLf, link=link, mZ=mZ", ctrl.arg, ")\n", sep="")
+                          "yi=yi, vi=vi, X=X, Z=Z, reml=reml, k=k, pX=p, alpha.val=alpha, verbose=verbose, digits=digits,
+                          #hessian=TRUE,
+                          REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=TRUE", ctrl.arg, ")\n", sep="")
       }
 
       if (link == "identity") {
 
          optcall <- paste0("constrOptim(theta=alpha.init, f=.ll.rma.ls, grad=NULL, ui=Z, ci=rep(0,k),
-                                yi=yi, vi=vi, X=X, Z=Z, reml=reml, k=k, pX=p, alpha.val=alpha, verbose=verbose, digits=digits,
-                                REMLf=con$REMLf, link=link, mZ=mZ", ctrl.arg, ")\n")
+                           yi=yi, vi=vi, X=X, Z=Z, reml=reml, k=k, pX=p, alpha.val=alpha, verbose=verbose, digits=digits,
+                           REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=TRUE", ctrl.arg, ")\n")
 
       }
 
@@ -1845,6 +1860,10 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
       if (optimizer=="nlm")
          opt.res$par <- opt.res$estimate
 
+      ### back-transform in case constraints were placed on alpha values
+
+      opt.res$par <- mapply(.mapfun.alpha, opt.res$par, alpha.min, alpha.max)
+
       ### replace fixed alpha values in opt.res$par
 
       opt.res$par <- ifelse(is.na(alpha), opt.res$par, alpha)
@@ -1862,10 +1881,12 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
          if (con$hesspack == "numDeriv")
             H <- try(numDeriv::hessian(func=.ll.rma.ls, x=opt.res$par, method.args=con$hessianCtrl, yi=yi, vi=vi, X=X,
-                                       Z=Z, reml=reml, k=k, pX=p, alpha.val=alpha, verbose=FALSE, digits=digits, REMLf=con$REMLf, link=link, mZ=mZ), silent=TRUE)
+                                       Z=Z, reml=reml, k=k, pX=p, alpha.val=alpha, verbose=FALSE, digits=digits,
+                                       REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=FALSE), silent=TRUE)
          if (con$hesspack == "pracma")
             H <- try(pracma::hessian(f=.ll.rma.ls, x0=opt.res$par, yi=yi, vi=vi, X=X,
-                                     Z=Z, reml=reml, k=k, pX=p, alpha.val=alpha, verbose=FALSE, digits=digits, REMLf=con$REMLf, link=link, mZ=mZ), silent=TRUE)
+                                     Z=Z, reml=reml, k=k, pX=p, alpha.val=alpha, verbose=FALSE, digits=digits,
+                                     REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=FALSE), silent=TRUE)
 
          if (inherits(H, "try-error")) {
 
@@ -1895,9 +1916,12 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
       alpha.val <- alpha
       alpha <- cbind(opt.res$par)
 
-      ### scale back alpha and va
+      if (any(alpha <= alpha.min + 10*.Machine$double.eps^0.25) || any(alpha >= alpha.max - 10*.Machine$double.eps^0.25))
+         warning(mstyle$warning("One or more 'alpha' estimates are (almost) equal to their lower or upper bound.\nTreat results with caution (or consider adjusting 'alpha.min' and/or 'alpha.max')."), call.=FALSE)
 
-      if (!Z.int.only && Z.int.incl && con$scaleZ && is.na(alpha.val[1])) {
+      ### scale back alpha and va when Z matrix was rescaled
+
+      if (!is.null(mZ)) {
          alpha <- mZ %*% alpha
          va[!hest,] <- 0
          va[,!hest] <- 0

@@ -198,8 +198,8 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    parallel   <- con$parallel
    cl         <- con$cl
    ncpus      <- con$ncpus
-   optcontrol <- control[is.na(con.pos)] ### get arguments that are control arguments for optimizer
-   optcontrol$intCtrl <- NULL # but remove intCtrl from this list
+   optcontrol <- control[is.na(con.pos)] # get arguments that are control arguments for optimizer
+   optcontrol$intCtrl <- NULL            # but remove intCtrl from this list
 
    if (length(optcontrol) == 0L)
       optcontrol <- list()

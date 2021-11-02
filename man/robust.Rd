@@ -79,7 +79,7 @@ robust(x, cluster, \dots)
 
    White, H. (1980). A heteroskedasticity-consistent covariance matrix estimator and a direct test for heteroskedasticity. \emph{Econometrica}, \bold{48}(4), 817--838. \verb{https://doi.org/10.2307/1912934}
 
-   White, H. (1984). \emph{Asymptotic theory for econometricians}. Academic Press.
+   White, H. (1984). \emph{Asymptotic theory for econometricians}. Orlando, FL: Academic Press.
 
    Williams, R. L. (2000). A note on robust variance estimation for cluster-correlated data. \emph{Biometrics}, \bold{56}(2), 645--646. \verb{https://doi.org/10.1111/j.0006-341x.2000.00645.x}
 

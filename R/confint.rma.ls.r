@@ -161,6 +161,17 @@ confint.rma.ls <- function(object, parm, level, fixed=FALSE, alpha, digits, tran
          }
       }
 
+      if (!is.null(x$control$alpha.min)) {
+         if (length(x$control$alpha.min) == 1L)
+            x$control$alpha.min <- rep(x$control$alpha.min, x$q)
+         con$vc.min <- max(con$vc.min, x$control$alpha.min[alpha])
+      }
+      if (!is.null(x$control$alpha.max)) {
+         if (length(x$control$alpha.max) == 1L)
+            x$control$alpha.max <- rep(x$control$alpha.max, x$q)
+         con$vc.max <- min(con$vc.max, x$control$alpha.max[alpha])
+      }
+
       con.pos <- pmatch(names(control), names(con))
       con[c(na.omit(con.pos))] <- control[!is.na(con.pos)]
 

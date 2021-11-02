@@ -151,9 +151,25 @@
 
 ############################################################################
 
+.mapfun.alpha <- function(x, lb, ub) {
+   if (is.infinite(lb) || is.infinite(ub)) {
+      x
+   } else {
+      lb + (ub-lb) / (1 + exp(-x))
+   }
+}
+
+.mapinvfun.alpha <- function(x, lb, ub) {
+   if (is.infinite(lb) || is.infinite(ub)) {
+      x
+   } else {
+      log((x-lb)/(ub-x))
+   }
+}
+
 ### -1 times the log likelihood (regular or restricted) for location-scale model
 
-.ll.rma.ls <- function(par, yi, vi, X, Z, reml, k, pX, alpha.val, verbose, digits, REMLf, link, mZ) {
+.ll.rma.ls <- function(par, yi, vi, X, Z, reml, k, pX, alpha.val, verbose, digits, REMLf, link, mZ, alpha.min, alpha.max, alpha.transf) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -161,6 +177,10 @@
    #alpha <- par[-seq_len(pX)]
 
    alpha <- par
+
+   if (alpha.transf)
+      alpha <- mapply(.mapfun.alpha, alpha, alpha.min, alpha.max)
+
    alpha <- ifelse(is.na(alpha.val), alpha, alpha.val)
 
    ### compute predicted tau2 values

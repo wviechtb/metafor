@@ -159,6 +159,17 @@ profile.rma.ls <- function(fitted, alpha,
       if (is.na(vc.lb) || is.na(vc.ub))
          stop(mstyle$stop("Cannot set 'xlim' automatically. Please set this argument manually."))
 
+      if (!is.null(x$control$alpha.min)) {
+         if (length(x$control$alpha.min) == 1L)
+            x$control$alpha.min <- rep(x$control$alpha.min, x$q)
+         vc.lb <- max(vc.lb, x$con$alpha.min[alpha])
+      }
+      if (!is.null(x$control$alpha.max)) {
+         if (length(x$control$alpha.max) == 1L)
+            x$control$alpha.max <- rep(x$control$alpha.max, x$q)
+         vc.ub <- min(vc.ub, x$con$alpha.max[alpha])
+      }
+
       xlim <- sort(c(vc.lb, vc.ub))
 
    } else {
