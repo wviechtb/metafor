@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-27</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-28</span>
       </span>
     </div>
 
@@ -230,6 +230,8 @@
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### assume that the effect sizes within studies are correlated with rho=0.6</span></span>
 <span class="r-in"><span class="va">V</span> <span class="op">&lt;-</span> <span class="fu">vcalc</span><span class="op">(</span><span class="va">vi</span>, cluster<span class="op">=</span><span class="va">study</span>, obs<span class="op">=</span><span class="va">esid</span>, data<span class="op">=</span><span class="va">dat</span>, rho<span class="op">=</span><span class="fl">0.6</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">### show part of V matrix for studies 1 and 2</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">V</span><span class="op">[</span><span class="va">dat</span><span class="op">$</span><span class="va">study</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>, <span class="va">dat</span><span class="op">$</span><span class="va">study</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">]</span>, <span class="fl">4</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         [,1]   [,2]   [,3]   [,4]   [,5]   [,6]   [,7]   [,8]   [,9]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1,] 0.0740 0.0326 0.0358 0.0252 0.0297 0.0486 0.0000 0.0000 0.0000</span>
@@ -242,11 +244,30 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [8,] 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0056 0.0076 0.0042</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [9,] 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0052 0.0042 0.0065</span>
 <span class="r-in"></span>
+<span class="r-in"><span class="co">### or show as list of matrices</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="blsplit.html">blsplit</a></span><span class="op">(</span><span class="va">V</span>, <span class="va">dat</span><span class="op">$</span><span class="va">study</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, <span class="va">round</span>, <span class="fl">4</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`1`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        [,1]   [,2]   [,3]   [,4]   [,5]   [,6]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.0740 0.0326 0.0358 0.0252 0.0297 0.0486</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.0326 0.0398 0.0263 0.0185 0.0218 0.0356</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 0.0358 0.0263 0.0481 0.0203 0.0239 0.0392</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4,] 0.0252 0.0185 0.0203 0.0239 0.0169 0.0276</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5,] 0.0297 0.0218 0.0239 0.0169 0.0331 0.0325</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6,] 0.0486 0.0356 0.0392 0.0276 0.0325 0.0886</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`2`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        [,1]   [,2]   [,3]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.0115 0.0056 0.0052</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.0056 0.0076 0.0042</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 0.0052 0.0042 0.0065</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"></span>
 <span class="r-in"><span class="co">### use a correlation of 0.7 for effect sizes corresponding to the same type of</span></span>
 <span class="r-in"><span class="co">### delinquent behavior and a correlation of 0.5 for effect sizes corresponding</span></span>
 <span class="r-in"><span class="co">### to different types of delinquent behavior</span></span>
 <span class="r-in"><span class="va">V</span> <span class="op">&lt;-</span> <span class="fu">vcalc</span><span class="op">(</span><span class="va">vi</span>, cluster<span class="op">=</span><span class="va">study</span>, type<span class="op">=</span><span class="va">deltype</span>, obs<span class="op">=</span><span class="va">esid</span>, data<span class="op">=</span><span class="va">dat</span>, rho<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.7</span>, <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">V</span><span class="op">[</span><span class="va">dat</span><span class="op">$</span><span class="va">study</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fl">16</span>, <span class="va">dat</span><span class="op">$</span><span class="va">study</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fl">16</span><span class="op">]</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="blsplit.html">blsplit</a></span><span class="op">(</span><span class="va">V</span>, <span class="va">dat</span><span class="op">$</span><span class="va">study</span><span class="op">)</span><span class="op">[</span><span class="fl">16</span><span class="op">]</span>, <span class="va">round</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`16`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10] [,11] [,12] [,13] [,14] [,15] [,16]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1,] 0.091 0.045 0.027 0.044 0.030 0.039 0.076 0.028 0.034 0.030 0.039 0.043 0.039 0.067 0.028 0.032</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [2,] 0.045 0.087 0.027 0.061 0.030 0.039 0.053 0.027 0.047 0.041 0.053 0.059 0.053 0.046 0.038 0.043</span>
@@ -264,8 +285,11 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [14,] 0.067 0.046 0.029 0.046 0.031 0.041 0.079 0.029 0.036 0.031 0.040 0.045 0.041 0.099 0.029 0.033</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [15,] 0.028 0.038 0.017 0.038 0.018 0.024 0.033 0.017 0.029 0.025 0.033 0.037 0.033 0.029 0.034 0.027</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [16,] 0.032 0.043 0.019 0.043 0.021 0.027 0.037 0.019 0.033 0.029 0.038 0.042 0.038 0.033 0.027 0.044</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"></span>
 <span class="r-in"><span class="co">### examine the correlation matrix for study 16</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cov2cor</a></span><span class="op">(</span><span class="va">V</span><span class="op">[</span><span class="va">dat</span><span class="op">$</span><span class="va">study</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fl">16</span>, <span class="va">dat</span><span class="op">$</span><span class="va">study</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fl">16</span><span class="op">]</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="blsplit.html">blsplit</a></span><span class="op">(</span><span class="va">V</span>, <span class="va">dat</span><span class="op">$</span><span class="va">study</span><span class="op">)</span><span class="op">[</span><span class="fl">16</span><span class="op">]</span>, <span class="va">cov2cor</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`16`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14] [,15] [,16]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1,]  1.0  0.5  0.5  0.5  0.5  0.5  0.7  0.5  0.5   0.5   0.5   0.5   0.5   0.7   0.5   0.5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [2,]  0.5  1.0  0.5  0.7  0.5  0.5  0.5  0.5  0.7   0.7   0.7   0.7   0.7   0.5   0.7   0.7</span>
@@ -283,6 +307,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [14,]  0.7  0.5  0.5  0.5  0.5  0.5  0.7  0.5  0.5   0.5   0.5   0.5   0.5   1.0   0.5   0.5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [15,]  0.5  0.7  0.5  0.7  0.5  0.5  0.5  0.5  0.7   0.7   0.7   0.7   0.7   0.5   1.0   0.7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [16,]  0.5  0.7  0.5  0.7  0.5  0.5  0.5  0.5  0.7   0.7   0.7   0.7   0.7   0.5   0.7   1.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">############################################################################</span></span>
 <span class="r-in"></span>
@@ -305,6 +330,8 @@
 <span class="r-in"><span class="co">### remove missing measurement occasions from dat.long</span></span>
 <span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">yi</span><span class="op">)</span>,<span class="op">]</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">### show the data for the first 5 studies</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">dat</span>, <span class="fl">8</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               study mdur mbase time    yi    vi </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1    Alegret (2001) 16.1  53.6    1 -33.4  14.3 </span>
@@ -339,6 +366,56 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [6,]    0 0.0000 0.0000    0 0.9700 1.00 0.9700    0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [7,]    0 0.0000 0.0000    0 0.9409 0.97 1.0000    0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [8,]    0 0.0000 0.0000    0 0.0000 0.00 0.0000    1</span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">### or show as a list of matrices</span></span>
+<span class="r-in"><span class="fu"><a href="blsplit.html">blsplit</a></span><span class="op">(</span><span class="va">V</span>, <span class="va">dat</span><span class="op">$</span><span class="va">study</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`Alegret (2001)`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      [,1]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 14.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`Barichella (2003)`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          [,1]     [,2]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 7.300000 6.069352</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 6.069352 5.700000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`Berney (2002)`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      [,1]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  7.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`Burchiel (1999)`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          [,1]     [,2]     [,3]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 8.000000 7.760000 5.950774</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 7.760000 8.000000 6.134819</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 5.950774 6.134819 5.000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`Chen (2003)`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      [,1]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  125</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="blsplit.html">blsplit</a></span><span class="op">(</span><span class="va">V</span>, <span class="va">dat</span><span class="op">$</span><span class="va">study</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, <span class="va">cov2cor</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`Alegret (2001)`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      [,1]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]    1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`Barichella (2003)`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        [,1]   [,2]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 1.0000 0.9409</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.9409 1.0000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`Berney (2002)`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      [,1]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]    1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`Burchiel (1999)`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        [,1] [,2]   [,3]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 1.0000 0.97 0.9409</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.9700 1.00 0.9700</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 0.9409 0.97 1.0000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`Chen (2003)`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      [,1]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]    1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">############################################################################</span></span>
 <span class="r-in"></span>
@@ -412,6 +489,34 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [8,] 0.00 0.00 0.00 0.00 0.00 0.00 0.43 1.00 0.00  0.00</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [9,] 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 1.00  0.34</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [10,] 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.34  1.00</span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">### or show as a list of matrices</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="blsplit.html">blsplit</a></span><span class="op">(</span><span class="va">V</span>, <span class="va">dat</span><span class="op">$</span><span class="va">author</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cov2cor</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`Pihlstrom et al.`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      [,1] [,2]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 1.00 0.39</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.39 1.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`Lindhe et al.`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      [,1] [,2]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 1.00 0.42</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.42 1.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`Knowles et al.`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      [,1] [,2]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 1.00 0.41</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.41 1.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`Ramfjord et al.`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      [,1] [,2]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 1.00 0.43</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.43 1.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`Becker et al.`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      [,1] [,2]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 1.00 0.34</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.34 1.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### construct the variance-covariance matrix assuming rho = 0.4 for effect sizes</span></span>
 <span class="r-in"><span class="co">### corresponding to the 'PD' and 'AL' outcome types</span></span>
@@ -546,13 +651,14 @@
 <span class="r-in"><span class="co">### for correlations among tasks/difficulties as specified in the R matrix above</span></span>
 <span class="r-in"><span class="va">V</span> <span class="op">&lt;-</span> <span class="fu">vcalc</span><span class="op">(</span><span class="va">vi</span>, cluster<span class="op">=</span><span class="va">study</span>, grp1<span class="op">=</span><span class="va">group1</span>, grp2<span class="op">=</span><span class="va">group2</span>, w1<span class="op">=</span><span class="va">n_sz</span>, w2<span class="op">=</span><span class="va">n_hc</span>,</span>
 <span class="r-in">           obs<span class="op">=</span><span class="va">task.diff</span>, rho<span class="op">=</span><span class="va">R</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cov2cor</a></span><span class="op">(</span><span class="va">V</span><span class="op">[</span><span class="va">dat</span><span class="op">$</span><span class="va">study</span> <span class="op">==</span>  <span class="fl">3</span>, <span class="va">dat</span><span class="op">$</span><span class="va">study</span> <span class="op">==</span>  <span class="fl">3</span><span class="op">]</span><span class="op">)</span> <span class="co"># study with multiple SZ groups and a single HC group</span></span>
+<span class="r-in"><span class="va">Vs</span> <span class="op">&lt;-</span> <span class="fu"><a href="blsplit.html">blsplit</a></span><span class="op">(</span><span class="va">V</span>, <span class="va">dat</span><span class="op">$</span><span class="va">study</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cov2cor</a></span><span class="op">(</span><span class="va">Vs</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>  <span class="co"># study with multiple SZ groups and a single HC group</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           [,1]      [,2]      [,3]      [,4]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 1.0000000 0.4652832 0.3847419 0.4243294</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.4652832 1.0000000 0.3488477 0.3847419</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 0.3847419 0.3488477 1.0000000 0.3181424</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [4,] 0.4243294 0.3847419 0.3181424 1.0000000</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cov2cor</a></span><span class="op">(</span><span class="va">V</span><span class="op">[</span><span class="va">dat</span><span class="op">$</span><span class="va">study</span> <span class="op">==</span>  <span class="fl">6</span>, <span class="va">dat</span><span class="op">$</span><span class="va">study</span> <span class="op">==</span>  <span class="fl">6</span><span class="op">]</span><span class="op">)</span> <span class="co"># study with two task types and multiple difficulties</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cov2cor</a></span><span class="op">(</span><span class="va">Vs</span><span class="op">[[</span><span class="fl">6</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>  <span class="co"># study with two task types and multiple difficulties</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 1.00 0.40 0.40 0.40 0.70 0.28 0.28 0.28</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.40 1.00 0.40 0.40 0.28 0.70 0.28 0.28</span>
@@ -562,16 +668,21 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [6,] 0.28 0.70 0.28 0.28 0.40 1.00 0.40 0.40</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [7,] 0.28 0.28 0.70 0.28 0.40 0.40 1.00 0.40</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [8,] 0.28 0.28 0.28 0.70 0.40 0.40 0.40 1.00</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cov2cor</a></span><span class="op">(</span><span class="va">V</span><span class="op">[</span><span class="va">dat</span><span class="op">$</span><span class="va">study</span> <span class="op">==</span> <span class="fl">12</span>, <span class="va">dat</span><span class="op">$</span><span class="va">study</span> <span class="op">==</span> <span class="fl">12</span><span class="op">]</span><span class="op">)</span> <span class="co"># study with multiple difficulties for the same task</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cov2cor</a></span><span class="op">(</span><span class="va">Vs</span><span class="op">[[</span><span class="fl">12</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="co"># study with multiple difficulties for the same task</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      [,1] [,2] [,3] [,4]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  1.0  0.4  0.4  0.4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,]  0.4  1.0  0.4  0.4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [3,]  0.4  0.4  1.0  0.4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [4,]  0.4  0.4  0.4  1.0</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cov2cor</a></span><span class="op">(</span><span class="va">V</span><span class="op">[</span><span class="va">dat</span><span class="op">$</span><span class="va">study</span> <span class="op">==</span> <span class="fl">24</span>, <span class="va">dat</span><span class="op">$</span><span class="va">study</span> <span class="op">==</span> <span class="fl">24</span><span class="op">]</span><span class="op">)</span> <span class="co"># study with separate rows for males and females</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cov2cor</a></span><span class="op">(</span><span class="va">Vs</span><span class="op">[[</span><span class="fl">24</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="co"># study with separate rows for males and females</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      [,1] [,2]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]    1    0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,]    0    1</span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cov2cor</a></span><span class="op">(</span><span class="va">Vs</span><span class="op">[[</span><span class="fl">29</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="co"># study with separate rows for three genotypes</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      [,1] [,2] [,3]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]    1    0    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]    0    1    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,]    0    0    1</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">############################################################################</span></span>
 </code></pre></div>

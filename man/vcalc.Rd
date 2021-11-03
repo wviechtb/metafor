@@ -125,15 +125,21 @@ head(dat, 9)
 
 ### assume that the effect sizes within studies are correlated with rho=0.6
 V <- vcalc(vi, cluster=study, obs=esid, data=dat, rho=0.6)
+
+### show part of V matrix for studies 1 and 2
 round(V[dat$study \%in\% c(1,2), dat$study \%in\% c(1,2)], 4)
+
+### or show as list of matrices
+lapply(blsplit(V, dat$study)[1:2], round, 4)
 
 ### use a correlation of 0.7 for effect sizes corresponding to the same type of
 ### delinquent behavior and a correlation of 0.5 for effect sizes corresponding
 ### to different types of delinquent behavior
 V <- vcalc(vi, cluster=study, type=deltype, obs=esid, data=dat, rho=c(0.7, 0.5))
-round(V[dat$study \%in\% 16, dat$study \%in\% 16], 3)
+lapply(blsplit(V, dat$study)[16], round, 3)
+
 ### examine the correlation matrix for study 16
-cov2cor(V[dat$study \%in\% 16, dat$study \%in\% 16])
+lapply(blsplit(V, dat$study)[16], cov2cor)
 
 ############################################################################
 
@@ -150,6 +156,8 @@ dat <- dat[order(dat$study, dat$time),]
 ### remove missing measurement occasions from dat.long
 dat <- dat[!is.na(dat$yi),]
 rownames(dat) <- NULL
+
+### show the data for the first 5 studies
 head(dat, 8)
 
 ### construct the full (block diagonal) V matrix with an AR(1) structure
@@ -157,6 +165,10 @@ head(dat, 8)
 V <- vcalc(vi, cluster=study, time1=time, phi=0.97, data=dat)
 V[1:8, 1:8]
 cov2cor(V[1:8, 1:8])
+
+### or show as a list of matrices
+blsplit(V, dat$study)[1:5]
+lapply(blsplit(V, dat$study)[1:5], cov2cor)
 
 ############################################################################
 
@@ -182,6 +194,9 @@ dat <- dat.berkey1998
 V <- vcalc(vi=1, cluster=author, rvars=c(v1i, v2i), data=dat)
 V
 round(cov2cor(V), 2)
+
+### or show as a list of matrices
+lapply(blsplit(V, dat$author), function(x) round(cov2cor(x), 2))
 
 ### construct the variance-covariance matrix assuming rho = 0.4 for effect sizes
 ### corresponding to the 'PD' and 'AL' outcome types
@@ -218,10 +233,12 @@ R
 ### for correlations among tasks/difficulties as specified in the R matrix above
 V <- vcalc(vi, cluster=study, grp1=group1, grp2=group2, w1=n_sz, w2=n_hc,
            obs=task.diff, rho=R, data=dat)
-cov2cor(V[dat$study ==  3, dat$study ==  3]) # study with multiple SZ groups and a single HC group
-cov2cor(V[dat$study ==  6, dat$study ==  6]) # study with two task types and multiple difficulties
-cov2cor(V[dat$study == 12, dat$study == 12]) # study with multiple difficulties for the same task
-cov2cor(V[dat$study == 24, dat$study == 24]) # study with separate rows for males and females
+Vs <- blsplit(V, dat$study)
+cov2cor(Vs[[3]])  # study with multiple SZ groups and a single HC group
+cov2cor(Vs[[6]])  # study with two task types and multiple difficulties
+cov2cor(Vs[[12]]) # study with multiple difficulties for the same task
+cov2cor(Vs[[24]]) # study with separate rows for males and females
+cov2cor(Vs[[29]]) # study with separate rows for three genotypes
 
 ############################################################################
 }

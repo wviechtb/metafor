@@ -1,6 +1,6 @@
-# metafor 3.1-27 (2021-11-03)
+# metafor 3.1-28 (2021-11-03)
 
-- added `vcalc()` function
+- added `vcalc()` and `blsplit()` functions
 
 - `robust()` gains `clubSandwich` argument; if set to `TRUE`, the methods from the `clubSandwich` package (https://cran.r-project.org/package=clubSandwich) are used to obtain the cluster-robust results
 

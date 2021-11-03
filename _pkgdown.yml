@@ -173,6 +173,7 @@ reference:
       Some miscellaneous convenience functions.
     contents:
       - bldiag
+      - blsplit
       - dfround
       - replmiss
       - to.long

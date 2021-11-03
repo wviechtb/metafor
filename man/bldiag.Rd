@@ -15,7 +15,7 @@ bldiag(\dots, order)
    Posted to R-help by Berton Gunter (2 Sep 2005) with some further adjustments by Wolfgang Viechtbauer
 }
 \seealso{
-   \code{\link{rma.mv}}
+   \code{\link{rma.mv}}, \code{\link{blsplit}}
 }
 \examples{
 ### copy data into 'dat'

@@ -69,14 +69,14 @@ dat <- tmp$dat
 
 ### examine data for study 1
 dat[dat$study == 1,]
-V[dat$study == 1, dat$study == 1]
+blsplit(V, dat$study)$`6`
 
 ### examine data for study 6
 dat[dat$study == 6,]
-V[dat$study == 6, dat$study == 6]
+blsplit(V, dat$study)$`6`
 
 ### examine data for study 17
 dat[dat$study == 17,]
-V[dat$study == 17, dat$study == 17]
+blsplit(V, dat$study)$`17`
 }
 \keyword{datagen}
