@@ -181,7 +181,7 @@
     <div id="examples">
     <h2>Examples</h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">### calculate log risk ratios and corresponding sampling variances</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="va">dat.bcg</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### fit random-effects model</span></span>
 <span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
@@ -206,10 +206,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### meta-analysis of the (log) risk ratios using the Mantel-Haenszel method</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.mh.html">rma.mh</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="va">dat.bcg</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.mh.html">rma.mh</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### cumulative meta-analysis</span></span>
-<span class="r-in"><span class="fu">cumul</span><span class="op">(</span><span class="va">res</span>, order<span class="op">=</span><span class="va">dat.bcg</span><span class="op">$</span><span class="va">year</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">cumul</span><span class="op">(</span><span class="va">res</span>, order<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">$</span><span class="va">year</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    estimate     se     zval   pval   ci.lb   ci.ub        Q     Qp      I2      H2 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1   -0.8893 0.5706  -1.5586 0.1191 -2.0077  0.2290   0.0000 1.0000  0.0000  1.0000 </span>
@@ -226,7 +226,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4   -0.7758 0.0520 -14.9267 0.0000 -0.8777 -0.6739  68.3763 0.0000 83.9126  6.2160 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 8   -0.4537 0.0393 -11.5338 0.0000 -0.5308 -0.3766 152.5676 0.0000 92.1346 12.7140 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="fu">cumul</span><span class="op">(</span><span class="va">res</span>, order<span class="op">=</span><span class="va">dat.bcg</span><span class="op">$</span><span class="va">year</span>, transf<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">cumul</span><span class="op">(</span><span class="va">res</span>, order<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">$</span><span class="va">year</span>, transf<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    estimate     zval   pval  ci.lb  ci.ub        Q     Qp      I2      H2 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1    0.4109  -1.5586 0.1191 0.1343 1.2574   0.0000 1.0000  0.0000  1.0000 </span>
@@ -245,10 +245,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### meta-analysis of the (log) odds ratios using Peto's method</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.mh.html">rma.mh</a></span><span class="op">(</span>ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="va">dat.bcg</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.mh.html">rma.mh</a></span><span class="op">(</span>ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### cumulative meta-analysis</span></span>
-<span class="r-in"><span class="fu">cumul</span><span class="op">(</span><span class="va">res</span>, order<span class="op">=</span><span class="va">dat.bcg</span><span class="op">$</span><span class="va">year</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">cumul</span><span class="op">(</span><span class="va">res</span>, order<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">$</span><span class="va">year</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    estimate     se     zval   pval   ci.lb   ci.ub        Q     Qp      I2      H2 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1   -0.9387 0.5976  -1.5708 0.1162 -2.1100  0.2326   0.0000 1.0000  0.0000  1.0000 </span>
@@ -265,7 +265,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4   -0.8333 0.0552 -15.0934 0.0000 -0.9415 -0.7251  73.1329 0.0000 84.9589  6.6484 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 8   -0.4734 0.0410 -11.5444 0.0000 -0.5538 -0.3930 163.9426 0.0000 92.6804 13.6619 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="fu">cumul</span><span class="op">(</span><span class="va">res</span>, order<span class="op">=</span><span class="va">dat.bcg</span><span class="op">$</span><span class="va">year</span>, transf<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">cumul</span><span class="op">(</span><span class="va">res</span>, order<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">$</span><span class="va">year</span>, transf<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    estimate     zval   pval  ci.lb  ci.ub        Q     Qp      I2      H2 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1    0.3911  -1.5708 0.1162 0.1212 1.2619   0.0000 1.0000  0.0000  1.0000 </span>
