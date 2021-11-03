@@ -193,8 +193,12 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
    verbose <- con$verbose
 
-   optimizer  <- match.arg(con$optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","optimParallel"))
+   optimizer  <- match.arg(con$optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","optimParallel","Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent"))
    optmethod  <- match.arg(con$optmethod, c("Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent"))
+   if (optimizer %in% c("Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent")) {
+      optmethod <- optimizer
+      optimizer <- "optim"
+   }
    parallel   <- con$parallel
    cl         <- con$cl
    ncpus      <- con$ncpus

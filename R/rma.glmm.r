@@ -627,12 +627,16 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    verbose <- con$verbose
 
-   optimizer  <- match.arg(con$optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","optimParallel","clogit","clogistic"))
-   optmethod  <- match.arg(con$optmethod, c("Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent"))
-   package    <- match.arg(con$package, c("lme4","GLMMadaptive","glmmTMB"))
-   parallel   <- con$parallel
-   cl         <- con$cl
-   ncpus      <- con$ncpus
+   optimizer <- match.arg(con$optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","optimParallel","clogit","clogistic","Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent"))
+   optmethod <- match.arg(con$optmethod, c("Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent"))
+   if (optimizer %in% c("Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent")) {
+      optmethod <- optimizer
+      optimizer <- "optim"
+   }
+   package  <- match.arg(con$package, c("lme4","GLMMadaptive","glmmTMB"))
+   parallel <- con$parallel
+   cl       <- con$cl
+   ncpus    <- con$ncpus
 
    if (con$dnchgcalc != "dnoncenhypergeom" && con$dnchgcalc != "dFNCHypergeo")
       stop(mstyle$stop("Unknown dnchgcalc method specified."))

@@ -1695,8 +1695,12 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
          con$phi.init  <- atanh(phi.init)
    }
 
-   optimizer  <- match.arg(con$optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","optimParallel"))
-   optmethod  <- match.arg(con$optmethod, c("Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent"))
+   optimizer <- match.arg(con$optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","optimParallel","Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent"))
+   optmethod <- match.arg(con$optmethod, c("Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent"))
+   if (optimizer %in% c("Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent")) {
+      optmethod <- optimizer
+      optimizer <- "optim"
+   }
    evtol      <- con$evtol
    nearpd     <- con$nearpd
    cholesky   <- con$cholesky
