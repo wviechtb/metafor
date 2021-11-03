@@ -154,6 +154,12 @@ rma.mv(yi, V, W, mods, random, struct="CS", intercept=TRUE,
 
    }
 
+   \subsection{Tests and Confidence Intervals for Variance/Correlation Components}{
+
+      Depending on the random effects structure specified, the model may include one or multiple variance/correlation components. Profile likelihood confidence intervals for such components can be obtained using the \code{\link{confint.rma.mv}} function. Corresponding likelihood ratio tests can be obtained using the \code{\link{anova.rma}} function (by comparing two models where the size of the component to be tested is constrained to some null value in the reduced model). It is also always a good idea to examine plots of the (restricted) log-likelihood as a function of the variance/correlation components in the model using the \code{\link{profile.rma.mv}} function to check for parameter identifiability (see \sQuote{Note}).
+
+   }
+
    \subsection{Test for (Residual) Heterogeneity}{
 
       A test for (residual) heterogeneity is automatically carried out by the function. Without moderators in the model, this test is the generalized/weighted least squares extension of Cochran's \mjseqn{Q}-test, which tests whether the variability in the observed effect sizes or outcomes is larger than one would expect based on sampling variability (and the given covariances among the sampling errors) alone. A significant test suggests that the true effects/outcomes are heterogeneous. When moderators are included in the model, this is the \mjseqn{Q_E}-test for residual heterogeneity, which tests whether the variability in the observed effect sizes or outcomes that is not accounted for by the moderators included in the model is larger than one would expect based on sampling variability (and the given covariances among the sampling errors) alone.
