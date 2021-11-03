@@ -1708,6 +1708,9 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
       alpha.min <- con$alpha.min
       alpha.max <- con$alpha.max
 
+      alpha.init <- pmax(alpha.init, alpha.min)
+      alpha.init <- pmin(alpha.init, alpha.max)
+
       alpha.init <- mapply(.mapinvfun.alpha, alpha.init, alpha.min, alpha.max)
 
       if (verbose > 1)
