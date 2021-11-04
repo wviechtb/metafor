@@ -150,7 +150,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - aggregate.escalc() gains checkpd argument and struct="CS+CAR"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - rma.glmm() now has entire array of optimizers available for</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     model="CM.EL" and measure="OR"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     model="CM.EL" and measure="OR"; switched the default from optim()</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     with method BFGS to nlminb() for consistency with rma.mv(),</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     rma.uni(), and selmodel.rma.uni()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - rma.glmm() gains coding and cor arguments and hence more flexibility</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     how the group variable should be coded in the random effects</span>
@@ -173,7 +175,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>     any to begin with)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - added lbfgsb3c, subplex, and BBoptim as possible optimizer in</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     rma.mv(), rma.glmm(),rma.uni(), and selmodel.rma.uni()</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     rma.mv(), rma.glmm(), rma.uni(), and selmodel.rma.uni()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - datasets moved to the metadat package</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     (https://cran.r-project.org/package=metadat)</span>

@@ -87,12 +87,12 @@ test_that("results for the conditional logistic model with exact likelihood are 
 
    ### compare with results on page 3052 (Table III)
    expect_equivalent(coef(res), -1.3532, tolerance=.tol[["coef"]])
-   expect_equivalent(res$se, 0.3510, tolerance=.tol[["se"]])
+   expect_equivalent(res$se, 0.3511, tolerance=.tol[["se"]])
    expect_equivalent(sqrt(res$tau2), 0.8327, tolerance=.tol[["var"]])
    tmp <- predict(res, transf=exp)
    expect_equivalent(tmp$pred, 0.2584, tolerance=.tol[["pred"]]) ### 0.25 in paper
    expect_equivalent(tmp$ci.lb, 0.1299, tolerance=.tol[["ci"]])
-   expect_equivalent(tmp$ci.ub, 0.5141, tolerance=.tol[["ci"]])
+   expect_equivalent(tmp$ci.ub, 0.5142, tolerance=.tol[["ci"]])
 
 })
 

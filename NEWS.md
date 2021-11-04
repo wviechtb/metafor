@@ -18,7 +18,7 @@
 
 - `aggregate.escalc()` gains `checkpd` argument and `struct="CS+CAR"`
 
-- `rma.glmm()` now has entire array of optimizers available for `model="CM.EL"` and `measure="OR"`
+- `rma.glmm()` now has entire array of optimizers available for `model="CM.EL"` and `measure="OR"`; switched the default from `optim()` with method `BFGS` to `nlminb()` for consistency with `rma.mv()`, `rma.uni()`, and `selmodel.rma.uni()`
 
 - `rma.glmm()` gains `coding` and `cor` arguments and hence more flexibility how the group variable should be coded in the random effects structure and whether the random study effects should be allowed to be correlated with the random group effects
 
@@ -34,7 +34,7 @@
 
 - `points.regplot()` function now also redraws the labels (if there were any to begin with)
 
-- added `lbfgsb3c`, `subplex`, and `BBoptim` as possible optimizer in `rma.mv()`, `rma.glmm()`,`rma.uni()`, and `selmodel.rma.uni()`
+- added `lbfgsb3c`, `subplex`, and `BBoptim` as possible optimizer in `rma.mv()`, `rma.glmm()`, `rma.uni()`, and `selmodel.rma.uni()`
 
 - datasets moved to the `metadat` package (https://cran.r-project.org/package=metadat)
 

@@ -606,7 +606,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    con <- list(verbose = FALSE,            # also passed on to glm/glmer/optim/nlminb/minqa (uobyqa/newuoa/bobyqa)
                package="lme4",             # package for fitting logistic mixed-effects models ("lme4", "GLMMadaptive", "glmmTMB")
-               optimizer = "optim",        # optimizer to use for CM.EL+OR ("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","lbfgsb3c","subplex","BBoptim","optimParallel","clogit","clogistic")
+               optimizer = "nlminb",       # optimizer to use for CM.EL+OR ("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","lbfgsb3c","subplex","BBoptim","optimParallel","clogit","clogistic")
                optmethod = "BFGS",         # argument 'method' for optim() ("Nelder-Mead" and "BFGS" are sensible options)
                parallel = list(),          # parallel argument for optimParallel() (note: 'cl' argument in parallel is not passed; this is directly specified via 'cl')
                cl = NULL,                  # arguments for optimParallel()
@@ -680,7 +680,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    ### for subplex, set reltol=1e-8 by default (the default in subplex() is .Machine$double.eps)
 
-   if (optimizer == "subplex" && !is.element("reltol", names(optcontrol)))
+   if (optimizer == "subplex" && !is.element("reltol", names(optCtrl)))
       optCtrl$reltol <- 1e-8
 
    ### for BBoptim, set trace=FALSE by default

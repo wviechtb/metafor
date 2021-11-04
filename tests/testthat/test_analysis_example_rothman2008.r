@@ -136,17 +136,17 @@ test_that("results are correct for Mantel-Haenszel method.", {
    res <- rma.glmm(ai=ai, bi=bi, ci=ci, di=di, data=dat, measure="OR", model="CM.EL", method="FE")
 
    expect_equivalent(coef(res),  0.3381, tolerance=.tol[["coef"]])
-   expect_equivalent(res$ci.lb, -0.2707, tolerance=.tol[["ci"]])
-   expect_equivalent(res$ci.ub,  0.9468, tolerance=.tol[["ci"]])
-   expect_equivalent(res$QE.Wld,  0.3484, tolerance=.tol[["test"]])
-   expect_equivalent(res$QEp.Wld, 0.5550, tolerance=.tol[["pval"]])
+   expect_equivalent(res$ci.lb, -0.2699, tolerance=.tol[["ci"]])
+   expect_equivalent(res$ci.ub,  0.9461, tolerance=.tol[["ci"]])
+   expect_equivalent(res$QE.Wld,  0.3480, tolerance=.tol[["test"]])
+   expect_equivalent(res$QEp.Wld, 0.5552, tolerance=.tol[["pval"]])
    expect_equivalent(res$QE.LRT,  0.3502, tolerance=.tol[["test"]])
    expect_equivalent(res$QEp.LRT, 0.5540, tolerance=.tol[["pval"]])
 
    tmp <- predict(res, transf=exp)
    expect_equivalent(tmp$pred,  1.4022, tolerance=.tol[["pred"]])
-   expect_equivalent(tmp$ci.lb, 0.7629, tolerance=.tol[["ci"]])
-   expect_equivalent(tmp$ci.ub, 2.5774, tolerance=.tol[["ci"]])
+   expect_equivalent(tmp$ci.lb, 0.7634, tolerance=.tol[["ci"]])
+   expect_equivalent(tmp$ci.ub, 2.5756, tolerance=.tol[["ci"]])
 
 })
 
@@ -382,17 +382,17 @@ test_that("results are correct for Mantel-Haenszel method.", {
    res <- rma.glmm(ai=ai, bi=bi, ci=ci, di=di, data=dat, measure="OR", digits=2, level=90, model="CM.EL", method="FE")
 
    expect_equivalent(coef(res), 1.3257, tolerance=.tol[["coef"]])
-   expect_equivalent(res$ci.lb, 0.3551, tolerance=.tol[["ci"]])
-   expect_equivalent(res$ci.ub, 2.2962, tolerance=.tol[["ci"]])
-   expect_equivalent(res$QE.Wld,  0.1237, tolerance=.tol[["test"]])
-   expect_equivalent(res$QEp.Wld, 0.7250, tolerance=.tol[["pval"]])
+   expect_equivalent(res$ci.lb, 0.3559, tolerance=.tol[["ci"]])
+   expect_equivalent(res$ci.ub, 2.2954, tolerance=.tol[["ci"]])
+   expect_equivalent(res$QE.Wld,  0.1327, tolerance=.tol[["test"]])
+   expect_equivalent(res$QEp.Wld, 0.7156, tolerance=.tol[["pval"]])
    expect_equivalent(res$QE.LRT,  0.1188, tolerance=.tol[["test"]])
    expect_equivalent(res$QEp.LRT, 0.7304, tolerance=.tol[["pval"]])
 
    tmp <- predict(res, transf=exp)
    expect_equivalent(tmp$pred,  3.7647, tolerance=.tol[["pred"]])
-   expect_equivalent(tmp$ci.lb, 1.4264, tolerance=.tol[["ci"]])
-   expect_equivalent(tmp$ci.ub, 9.9361, tolerance=.tol[["ci"]])
+   expect_equivalent(tmp$ci.lb, 1.4274, tolerance=.tol[["ci"]])
+   expect_equivalent(tmp$ci.ub, 9.9287, tolerance=.tol[["ci"]])
 
 })
 
