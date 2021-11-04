@@ -237,7 +237,7 @@ addid=TRUE, addcomp=TRUE, adddesign=TRUE, minlen=2, var.names=c("id","comp","des
 
    if (addid) {
 
-      dat[[var.names[1]]] <- 1:nrow(dat)
+      dat[[var.names[1]]] <- seq_len(nrow(dat))
 
       ### make sure that row id variable is always the first variable in the dataset
       #id.pos <- which(names(dat) == "id")

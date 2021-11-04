@@ -44,7 +44,7 @@ print.permutest.rma.uni <- function(x, digits=x$digits, signif.stars=getOption("
    .chkdots(ddd, c("num", "legend"))
 
    if (.isTRUE(ddd$num))
-      rownames(res.table) <- paste0(1:nrow(res.table), ") ", rownames(res.table))
+      rownames(res.table) <- paste0(seq_len(nrow(res.table)), ") ", rownames(res.table))
 
    if (is.null(ddd$legend)) {
       legend <- TRUE

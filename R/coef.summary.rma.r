@@ -27,7 +27,7 @@ coef.summary.rma <- function(object, ...) {
       if (length(x$delta) == 1L) {
          rownames(res.table$delta) <- "delta"
       } else {
-         rownames(res.table$delta) <- paste0("delta.", 1:length(x$delta))
+         rownames(res.table$delta) <- paste0("delta.", seq_along(x$delta))
       }
    }
 

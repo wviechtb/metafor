@@ -24,7 +24,7 @@ xlim, ylim, xhist=TRUE, yhist=TRUE, hh=0.3, breaks, adjust, lwd, labels, ...) {
 
       X <- cbind(x$res[,het], x$res[,6:ncol(x$res)])
       del <- rep(FALSE, nrow(X))
-      for (i in 1:ncol(X)) {
+      for (i in seq_len(ncol(X))) {
          del[X[,i] < quantile(X[,i], trim[[i]][1], na.rm=TRUE) | X[,i] > quantile(X[,i], 1-trim[[i]][length(trim[[i]])], na.rm=TRUE)] <- TRUE
       }
 

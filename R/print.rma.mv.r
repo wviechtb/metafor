@@ -396,7 +396,7 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
    }
 
    if (.isTRUE(ddd$num))
-      rownames(res.table) <- paste0(1:nrow(res.table), ") ", rownames(res.table))
+      rownames(res.table) <- paste0(seq_len(nrow(res.table)), ") ", rownames(res.table))
 
    if (is.null(ddd$legend)) {
       legend <- TRUE

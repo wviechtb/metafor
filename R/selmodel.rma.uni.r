@@ -668,7 +668,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
       pad.l    <- sapply(max(len.l) - len.l, function(x) paste0(rep(" ", x), collapse=""))
       psteps.l <- paste0(psteps.l, pad.l)
       psteps   <- paste0(psteps.l, " < p <= ", psteps.r)
-      ptable   <- table(factor(pgrp, levels=1:length(steps), labels=psteps))
+      ptable   <- table(factor(pgrp, levels=seq_along(steps), labels=psteps))
       ptable   <- data.frame(k=as.vector(ptable), row.names=names(ptable))
 
       if (any(ptable[["k"]] == 0L)) {
@@ -963,7 +963,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
          if (deltas == 1L) {
             rownames(H) <- colnames(H) <- c(colnames(X), "tau2", "delta")
          } else {
-            rownames(H) <- colnames(H) <- c(colnames(X), "tau2", paste0("delta.", 1:deltas))
+            rownames(H) <- colnames(H) <- c(colnames(X), "tau2", paste0("delta.", seq_len(deltas)))
          }
 
          H.hest  <- H[hest, hest, drop=FALSE]

@@ -19,7 +19,7 @@ coef.rma <- function(object, ...) {
       if (length(object$delta) == 1L) {
          names(coefs$delta) <- "delta"
       } else {
-         names(coefs$delta) <- paste0("delta.", 1:length(object$delta))
+         names(coefs$delta) <- paste0("delta.", seq_along(object$delta))
       }
    }
 

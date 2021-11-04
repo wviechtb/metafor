@@ -142,7 +142,7 @@ print.rma.glmm <- function(x, digits, showfit=FALSE, signif.stars=getOption("sho
    .chkdots(ddd, c("num"))
 
    if (.isTRUE(ddd$num))
-      rownames(res.table) <- paste0(1:nrow(res.table), ") ", rownames(res.table))
+      rownames(res.table) <- paste0(seq_len(nrow(res.table)), ") ", rownames(res.table))
 
    if (x$int.only)
       res.table <- res.table[1,]

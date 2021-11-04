@@ -22,7 +22,7 @@ print.vif.rma <- function(x, digits=x$digits, ...) {
             colnames(res.table)[3] <- "tval"
 
          if (.isTRUE(ddd$num))
-            rownames(res.table) <- paste0(1:nrow(res.table), ") ", rownames(res.table))
+            rownames(res.table) <- paste0(seq_len(nrow(res.table)), ") ", rownames(res.table))
 
          tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE, print.gap=2))
          .print.table(tmp, mstyle)

@@ -12,7 +12,7 @@ print.list.confint.rma <- function(x, digits=x$digits, ...) {
 
    len <- length(x)
 
-   for (j in 1:len) {
+   for (j in seq_len(len)) {
 
       res.random <- .fcf(x[[j]]$random, digits[["var"]])
       res.random[,2] <- paste0(x[[j]]$lb.sign, res.random[,2])

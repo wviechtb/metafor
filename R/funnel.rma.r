@@ -658,7 +658,7 @@ label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
       pval2 <- NULL
       phantom <- NULL
 
-      ltxt <- sapply(1:lvals, function(i) {
+      ltxt <- sapply(seq_len(lvals), function(i) {
          if (i == 1)
             return(as.expression(bquote(paste(.(pval1) < p, phantom() <= .(pval2)), list(pval1=.fcf(level[i], lchars), pval2=.fcf(1, lchars)))))
             #return(as.expression(bquote(p > .(pval), list(pval=.fcf(level[i], lchars)))))

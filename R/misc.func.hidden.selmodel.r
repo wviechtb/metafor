@@ -70,7 +70,7 @@
    yhat <- c(X.fit %*% beta)
 
    Ai <- rep(NA_real_, k)
-   for (i in 1:k) {
+   for (i in seq_len(k)) {
       tmp <- try(integrate(.selmodel.int, lower=intCtrl$lower, upper=intCtrl$upper, yi=yi[i], vi=vi[i], preci=preci[i], yhat=yhat[i], wi.fun=wi.fun, delta=delta, tau2=tau2, alternative=alternative, pval.min=pval.min, steps=steps, subdivisions=intCtrl$subdivisions, rel.tol=intCtrl$rel.tol)$value, silent=TRUE)
       if (inherits(tmp, "try-error"))
          stop(mstyle$stop(paste0("Could not integrate over density in study ", i, ".")), call.=FALSE)
@@ -130,7 +130,7 @@
 
    Ai <- rep(NA_real_, k)
    if (alternative == "greater") {
-      for (i in 1:k) {
+      for (i in seq_len(k)) {
          sei <- sqrt(vi[i]+tau2)
          Ai[i] <- pnorm(qnorm(steps[1], 0, sqrt(vi[i]), lower.tail=FALSE), yhat[i], sei, lower.tail=FALSE)
          for (j in 2:N) {
@@ -143,7 +143,7 @@
       }
    }
    if (alternative == "less") {
-      for (i in 1:k) {
+      for (i in seq_len(k)) {
          sei <- sqrt(vi[i]+tau2)
          Ai[i] <- pnorm(qnorm(steps[1], 0, sqrt(vi[i]), lower.tail=TRUE), yhat[i], sei, lower.tail=TRUE)
          for (j in 2:N) {
@@ -156,7 +156,7 @@
       }
    }
    if (alternative == "two.sided") {
-      for (i in 1:k) {
+      for (i in seq_len(k)) {
          sei <- sqrt(vi[i]+tau2)
          Ai[i] <- pnorm(qnorm(steps[1]/2, 0, sqrt(vi[i]), lower.tail=FALSE), yhat[i], sei, lower.tail=FALSE) + pnorm(qnorm(steps[1]/2, 0, sqrt(vi[i]), lower.tail=TRUE), yhat[i], sei, lower.tail=TRUE)
          for (j in 2:N) {

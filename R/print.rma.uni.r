@@ -213,7 +213,7 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
    }
 
    if (.isTRUE(ddd$num))
-      rownames(res.table) <- paste0(1:nrow(res.table), ") ", rownames(res.table))
+      rownames(res.table) <- paste0(seq_len(nrow(res.table)), ") ", rownames(res.table))
 
    if (is.null(ddd$legend)) {
       legend <- TRUE
@@ -263,13 +263,13 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
          colnames(res.table)[ncol(res.table)] <- ""
       }
 
-      for (j in 1:nrow(res.table)) {
+      for (j in seq_len(nrow(res.table))) {
          res.table[j, is.na(res.table[j,])]  <- ifelse(x$alpha.fix[j], "---", "NA")
          res.table[j, res.table[j,] == "NA"] <- ifelse(x$alpha.fix[j], "---", "NA")
       }
 
       if (.isTRUE(ddd$num))
-         rownames(res.table) <- paste0(1:nrow(res.table), ") ", rownames(res.table))
+         rownames(res.table) <- paste0(seq_len(nrow(res.table)), ") ", rownames(res.table))
 
       if (length(x$alpha) == 1L)
          res.table <- res.table[1,]
@@ -313,7 +313,7 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
          colnames(res.table)[ncol(res.table)] <- ""
       }
 
-      for (j in 1:nrow(res.table)) {
+      for (j in seq_len(nrow(res.table))) {
          res.table[j, is.na(res.table[j,])]  <- ifelse(x$delta.fix[j], "---", "NA")
          res.table[j, res.table[j,] == "NA"] <- ifelse(x$delta.fix[j], "---", "NA")
       }

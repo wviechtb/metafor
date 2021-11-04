@@ -123,7 +123,7 @@ aggregate.escalc <- function(x, cluster, time, obs, V, struct="CS", rho, phi, we
       if (struct=="CS") {
 
          R <- matrix(0, nrow=k, ncol=k)
-         for (i in 1:n) {
+         for (i in seq_len(n)) {
             R[cluster == ucluster[i], cluster == ucluster[i]] <- rho[i]
          }
 
@@ -132,7 +132,7 @@ aggregate.escalc <- function(x, cluster, time, obs, V, struct="CS", rho, phi, we
       if (struct == "CAR") {
 
          R <- matrix(0, nrow=k, ncol=k)
-         for (i in 1:n) {
+         for (i in seq_len(n)) {
             R[cluster == ucluster[i], cluster == ucluster[i]] <- outer(time[cluster == ucluster[i]], time[cluster == ucluster[i]], function(x,y) phi[i]^(abs(x-y)))
          }
 
@@ -141,7 +141,7 @@ aggregate.escalc <- function(x, cluster, time, obs, V, struct="CS", rho, phi, we
       if (struct == "CS+CAR") {
 
          R <- matrix(0, nrow=k, ncol=k)
-         for (i in 1:n) {
+         for (i in seq_len(n)) {
             R[cluster == ucluster[i], cluster == ucluster[i]] <- rho[i] + (1 - rho[i]) * outer(time[cluster == ucluster[i]], time[cluster == ucluster[i]], function(x,y) phi[i]^(abs(x-y)))
          }
 
@@ -150,7 +150,7 @@ aggregate.escalc <- function(x, cluster, time, obs, V, struct="CS", rho, phi, we
       if (struct == "CS*CAR") {
 
          R <- matrix(0, nrow=k, ncol=k)
-         for (i in 1:n) {
+         for (i in seq_len(n)) {
             R[cluster == ucluster[i], cluster == ucluster[i]] <- outer(obs[cluster == ucluster[i]], obs[cluster == ucluster[i]], function(x,y) ifelse(x==y, 1, rho[i])) * outer(time[cluster == ucluster[i]], time[cluster == ucluster[i]], function(x,y) phi[i]^(abs(x-y)))
          }
 
@@ -194,7 +194,7 @@ aggregate.escalc <- function(x, cluster, time, obs, V, struct="CS", rho, phi, we
       ### check that covariances are really 0 for estimates belonging to different clusters
       ### note: if na.rm[1] is FALSE, there may be missings in V, so skip check in those clusters
 
-      for (i in 1:n) {
+      for (i in seq_len(n)) {
          if (any(abs(V[cluster == ucluster[i], cluster != ucluster[i]]) >= .Machine$double.eps, na.rm=TRUE))
             warning(mstyle$warning(paste0("Estimates in cluster '", ucluster[i], "' appear to have non-zero covariances with estimates belonging to different clusters.")), call.=FALSE)
       }
@@ -267,7 +267,7 @@ aggregate.escalc <- function(x, cluster, time, obs, V, struct="CS", rho, phi, we
 
       all.pd <- TRUE
 
-      for (i in 1:n) {
+      for (i in seq_len(n)) {
 
          Vi <- V[cluster == ucluster[i], cluster == ucluster[i]]
 
@@ -288,7 +288,7 @@ aggregate.escalc <- function(x, cluster, time, obs, V, struct="CS", rho, phi, we
    yi.agg <- rep(NA_real_, n)
    vi.agg <- rep(NA_real_, n)
 
-   for (i in 1:n) {
+   for (i in seq_len(n)) {
 
       Vi <- V[cluster == ucluster[i], cluster == ucluster[i]]
 

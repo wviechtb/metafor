@@ -1127,7 +1127,7 @@ tidy.rma <- function (x, ...) {
 
    maxlen <- max(nchar(unique(x)))
 
-   for (l in 1:maxlen) {
+   for (l in seq_len(maxlen)) {
       tab <- table(x, substr(x, 1, l))
       if (nrow(tab) == n && ncol(tab) == n && sum(tab[upper.tri(tab)]) == 0 && sum(tab[lower.tri(tab)]) == 0)
          break
@@ -1268,7 +1268,7 @@ tidy.rma <- function (x, ...) {
    mus   <- rep(NA_real_, iters)
    pvals <- rep(NA_real_, iters)
 
-   for (j in 1:iters) {
+   for (j in seq_len(iters)) {
       yinew <- c(yi, rnorm(new, 0, sqrt(vnew+tau2)))
       vinew <- c(vi, rep(vnew, new))
       tmp <- .fsn.fitre(yinew, vinew)

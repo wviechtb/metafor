@@ -96,7 +96,7 @@ rcalc <- function(x, ni, data, rtoz=FALSE, nfun="min", sparse=FALSE, ...) {
       Rlist <- list()
       nmi <- rep(NA, length(ni))
 
-      for (i in 1:length(dat)) {
+      for (i in seq_along(dat)) {
 
          if (any(ni[[i]] < 0, na.rm=TRUE))
             stop(mstyle$stop("One or more sample sizes are negative in study ", dat[[i]][[4]][[1]], "."))
@@ -139,7 +139,7 @@ rcalc <- function(x, ni, data, rtoz=FALSE, nfun="min", sparse=FALSE, ...) {
          diag(Ri) <- 1
          rownames(Ri) <- colnames(Ri) <- vars
 
-         for (j in 1:length(var1)) {
+         for (j in seq_along(var1)) {
             Ri[var1[j],var2[j]] <- Ri[var2[j],var1[j]] <- ri[j]
          }
 
@@ -166,12 +166,12 @@ rcalc <- function(x, ni, data, rtoz=FALSE, nfun="min", sparse=FALSE, ...) {
 
       res <- list()
 
-      for (i in 1:k) {
+      for (i in seq_len(k)) {
          res[[i]] <- rcalc(x[[i]], ni[i], upper=upper, rtoz=rtoz, ...)
       }
 
       if (is.null(names(x)))
-         names(x) <- 1:k
+         names(x) <- seq_len(k)
 
       if (simplify) {
 
@@ -199,7 +199,7 @@ rcalc <- function(x, ni, data, rtoz=FALSE, nfun="min", sparse=FALSE, ...) {
             dat[[1]] <- NULL
          }
 
-         rownames(dat) <- 1:nrow(dat)
+         rownames(dat) <- seq_len(nrow(dat))
          return(list(dat=dat, V=V))
 
       } else {
@@ -224,7 +224,7 @@ rcalc <- function(x, ni, data, rtoz=FALSE, nfun="min", sparse=FALSE, ...) {
    ### set default dimension names
 
    dimsx  <- nrow(x)
-   dnames <- paste0("x", 1:dimsx)
+   dnames <- paste0("x", seq_len(dimsx))
 
    ### in case x has dimension names, use those
 
@@ -276,8 +276,8 @@ rcalc <- function(x, ni, data, rtoz=FALSE, nfun="min", sparse=FALSE, ...) {
 
    ### I and J are matrices with 1:dimsx for rows and columns, respectively
 
-   I <- matrix(1:dimsx, nrow=dimsx, ncol=dimsx)
-   J <- matrix(1:dimsx, nrow=dimsx, ncol=dimsx, byrow=TRUE)
+   I <- matrix(seq_len(dimsx), nrow=dimsx, ncol=dimsx)
+   J <- matrix(seq_len(dimsx), nrow=dimsx, ncol=dimsx, byrow=TRUE)
 
    ### get upper/lower triangular elements of I and J
 
@@ -297,8 +297,8 @@ rcalc <- function(x, ni, data, rtoz=FALSE, nfun="min", sparse=FALSE, ...) {
 
    V <- matrix(NA, nrow=dimsV, ncol=dimsV)
 
-   for (ro in 1:dimsV) {
-      for (co in 1:dimsV) {
+   for (ro in seq_len(dimsV)) {
+      for (co in seq_len(dimsV)) {
 
          i <- I[ro]
          j <- J[ro]

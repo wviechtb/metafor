@@ -96,7 +96,7 @@ plot.rma.uni.selmodel <- function(x, xlim, ylim, n=1000, prec="max", scale=FALSE
 
          dsim <- .mvrnorm(reps, mu=delta, Sigma=vb.delta)
 
-         for (j in 1:ncol(dsim)) {
+         for (j in seq_len(ncol(dsim))) {
             dsim[,j] <- ifelse(dsim[,j] < x$delta.min[j], x$delta.min[j], dsim[,j])
             dsim[,j] <- ifelse(dsim[,j] > x$delta.max[j], x$delta.max[j], dsim[,j])
          }

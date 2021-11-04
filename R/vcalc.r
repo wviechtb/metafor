@@ -419,7 +419,7 @@ data, rho, phi, rvars, checkpd=TRUE, nearpd=FALSE, ...) {
 
    if (checkpd || nearpd) {
 
-      for (i in 1:n) {
+      for (i in seq_len(n)) {
 
          Ri <- R[cluster == ucluster[i], cluster == ucluster[i]]
 

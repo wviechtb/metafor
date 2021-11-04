@@ -274,7 +274,7 @@ tes.default <- function(x, vi, sei, subset,
       prj <- rep(NA_real_, length(js))
       id <- seq_len(k)
 
-      for (j in 1:length(js)) {
+      for (j in seq_along(js)) {
 
          if (progbar)
             pbapply::setpb(pbar, j)
