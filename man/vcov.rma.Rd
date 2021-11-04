@@ -16,7 +16,7 @@
 \details{
    Note that \code{type="obs"} currently only works for object of class \code{"rma.uni"} and \code{"rma.mv"}.
 
-   For objects of class \code{"rma.uni"}, the marginal variance-covariance matrix of the observed effect sizes or outcomes is just a diagonal matrix with \mjeqn{\hat{\tau}^2 + v_i}{\tau^2 + v_i} along the diagonal, where \mjeqn{\hat{\tau}^2}{\tau^2} is the estimated amount of (residual) heterogeneity (set to 0 in fixed-effects models) and \mjseqn{v_i} is the sampling variance of the \mjseqn{i}th study.
+   For objects of class \code{"rma.uni"}, the marginal variance-covariance matrix of the observed effect sizes or outcomes is just a diagonal matrix with \mjeqn{\hat{\tau}^2 + v_i}{\tau^2 + v_i} along the diagonal, where \mjeqn{\hat{\tau}^2}{\tau^2} is the estimated amount of (residual) heterogeneity (set to 0 in fixed-effects models) and \mjseqn{v_i} is the sampling variance of the \mjeqn{i\textrm{th}}{ith} study.
 
    For objects of class \code{"rma.mv"}, the structure can be more complex and depends on the random effects included in the model.
 }

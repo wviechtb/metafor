@@ -138,12 +138,12 @@
 <li><p>DFBETAS value(s).</p></li>
 </ul><p>The diagonal elements of the hat matrix and the weights (in %) given to the observed effect sizes or outcomes during the model fitting are also provided (except for their scaling, the hat values and weights are the same for models without moderators, but will differ when moderators are included).</p>
 <p>For details on externally standardized residuals, see <code><a href="residuals.rma.html">rstudent.rma.uni</a></code>.</p>
-<p>The DFFITS value essentially indicates how many standard deviations the predicted (average) effect or outcome for the \(i\)th case changes after excluding the \(i\)th case from the model fitting.</p>
-<p>Cook's distance can be interpreted as the Mahalanobis distance between the entire set of predicted values once with the \(i\)th case included and once with the \(i\)th case excluded from the model fitting.</p>
-<p>The covariance ratio is defined as the determinant of the variance-covariance matrix of the parameter estimates based on the dataset with the \(i\)th case removed divided by the determinant of the variance-covariance matrix of the parameter estimates based on the complete dataset. A value below 1 therefore indicates that removal of the \(i\)th case yields more precise estimates of the model coefficients.</p>
-<p>The leave-one-out amount of (residual) heterogeneity is the estimated value of \(\tau^2\) based on the dataset with the \(i\)th case removed. This is always equal to 0 for fixed-effects models.</p>
-<p>Similarly, the leave-one-out test statistic of the test for (residual) heterogeneity is the value of the test statistic of the test for (residual) heterogeneity calculated based on the dataset with the \(i\)th case removed.</p>
-<p>Finally, the DFBETAS value(s) essentially indicate(s) how many standard deviations the estimated coefficient(s) change(s) after excluding the \(i\)th case from the model fitting.</p>
+<p>The DFFITS value essentially indicates how many standard deviations the predicted (average) effect or outcome for the \(i\textrm{th}\) case changes after excluding the \(i\textrm{th}\) case from the model fitting.</p>
+<p>Cook's distance can be interpreted as the Mahalanobis distance between the entire set of predicted values once with the \(i\textrm{th}\) case included and once with the \(i\textrm{th}\) case excluded from the model fitting.</p>
+<p>The covariance ratio is defined as the determinant of the variance-covariance matrix of the parameter estimates based on the dataset with the \(i\textrm{th}\) case removed divided by the determinant of the variance-covariance matrix of the parameter estimates based on the complete dataset. A value below 1 therefore indicates that removal of the \(i\textrm{th}\) case yields more precise estimates of the model coefficients.</p>
+<p>The leave-one-out amount of (residual) heterogeneity is the estimated value of \(\tau^2\) based on the dataset with the \(i\textrm{th}\) case removed. This is always equal to 0 for fixed-effects models.</p>
+<p>Similarly, the leave-one-out test statistic of the test for (residual) heterogeneity is the value of the test statistic of the test for (residual) heterogeneity calculated based on the dataset with the \(i\textrm{th}\) case removed.</p>
+<p>Finally, the DFBETAS value(s) essentially indicate(s) how many standard deviations the estimated coefficient(s) change(s) after excluding the \(i\textrm{th}\) case from the model fitting.</p>
 <p>A case may be considered to be ‘influential’ if at least one of the following is true:</p><ul><li><p>The absolute DFFITS value is larger than \(3 \times \sqrt{p/(k-p)}\), where \(p\) is the number of model coefficients and \(k\) the number of cases.</p></li>
 <li><p>The lower tail area of a chi-square distribution with \(p\) degrees of freedom cut off by the Cook's distance is larger than 50%.</p></li>
 <li><p>The hat value is larger than \(3 \times (p/k)\).</p></li>
@@ -164,7 +164,7 @@
     <div id="note">
     <h2>Note</h2>
     <p>Right now, leave-one-out diagnostics are calculated by refitting the model \(k\) times. Depending on how large \(k\) is, it may take a few moments to finish the calculations. There are shortcuts for calculating at least some of these values without refitting the model each time, but these are currently not implemented (and may not exist for all of the leave-one-out diagnostics calculated by the function).</p>
-<p>It may not be possible to fit the model after deletion of the \(i\)th case from the dataset. This will result in <code>NA</code> values for that case.</p>
+<p>It may not be possible to fit the model after deletion of the \(i\textrm{th}\) case from the dataset. This will result in <code>NA</code> values for that case.</p>
 <p>Certain relationships between the leave-one-out diagnostics and the (internally or externally) standardized residuals (Belsley, Kuh, &amp; Welsch, 1980; Cook &amp; Weisberg, 1982) no longer hold for the meta-analytic models. Maybe there are other relationships. These remain to be determined.</p>
     </div>
     <div id="author">

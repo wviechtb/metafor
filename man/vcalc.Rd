@@ -76,7 +76,7 @@ vcalc(vi, cluster, subgroup, obs, type, time1, time2, grp1, grp2, w1, w2,
 
       The function also provides an alternative approach for constructing the variance-covariance matrix using the \code{rvars} argument. Here, one must specify the names of the variables in the dataset that correspond to the correlation matrices of the studies (the variables should be specified as a vector; e.g., \code{c(var1, var2, var3)}).
 
-      In particular, let \mjseqn{k_i} denote the number of rows corresponding to the \mjseqn{i}th cluster. Then the values of the first \mjseqn{k_i} variables from \code{rvars} are used to construct the correlation matrix and, together with the sampling variances (specified via \code{vi}), the variance-covariance matrix. Say there are three studies, the first with two correlated estimates, the second with a single estimate, and the third with four correlated estimates. Then the data structure should look like this:
+      In particular, let \mjseqn{k_i} denote the number of rows corresponding to the \mjeqn{i\textrm{th}}{ith} cluster. Then the values of the first \mjseqn{k_i} variables from \code{rvars} are used to construct the correlation matrix and, together with the sampling variances (specified via \code{vi}), the variance-covariance matrix. Say there are three studies, the first with two correlated estimates, the second with a single estimate, and the third with four correlated estimates. Then the data structure should look like this:
 
 \preformatted{study  yi  vi  r1  r2  r3  r4
 =============================
