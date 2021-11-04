@@ -606,7 +606,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    con <- list(verbose = FALSE,            # also passed on to glm/glmer/optim/nlminb/minqa (uobyqa/newuoa/bobyqa)
                package="lme4",             # package for fitting logistic mixed-effects models ("lme4", "GLMMadaptive", "glmmTMB")
-               optimizer = "optim",        # optimizer to use for CM.EL+OR ("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","optimParallel","clogit","clogistic")
+               optimizer = "optim",        # optimizer to use for CM.EL+OR ("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","lbfgsb3c","subplex","BBoptim","optimParallel","clogit","clogistic")
                optmethod = "BFGS",         # argument 'method' for optim() ("Nelder-Mead" and "BFGS" are sensible options)
                parallel = list(),          # parallel argument for optimParallel() (note: 'cl' argument in parallel is not passed; this is directly specified via 'cl')
                cl = NULL,                  # arguments for optimParallel()
@@ -627,7 +627,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    verbose <- con$verbose
 
-   optimizer <- match.arg(con$optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","optimParallel","clogit","clogistic","Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent"))
+   optimizer <- match.arg(con$optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","lbfgsb3c","subplex","BBoptim","optimParallel","clogit","clogistic","Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent"))
    optmethod <- match.arg(con$optmethod, c("Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent"))
    if (optimizer %in% c("Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent")) {
       optmethod <- optimizer
@@ -664,19 +664,29 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    ### set NLOPT_LN_BOBYQA as the default algorithm for nloptr optimizer
    ### and by default use a relative convergence criterion of 1e-8 on the function value
 
-   if (optimizer=="nloptr" && !is.element("algorithm", names(optCtrl)))
+   if (optimizer == "nloptr" && !is.element("algorithm", names(optCtrl)))
       optCtrl$algorithm <- "NLOPT_LN_BOBYQA"
 
-   if (optimizer=="nloptr" && !is.element("ftol_rel", names(optCtrl)))
+   if (optimizer == "nloptr" && !is.element("ftol_rel", names(optCtrl)))
       optCtrl$ftol_rel <- 1e-8
 
    ### for mads, set trace=FALSE and tol=1e-6 by default
 
-   if (optimizer=="mads" && !is.element("trace", names(optCtrl)))
+   if (optimizer == "mads" && !is.element("trace", names(optCtrl)))
       optCtrl$trace <- FALSE
 
-   if (optimizer=="mads" && !is.element("tol", names(optCtrl)))
+   if (optimizer == "mads" && !is.element("tol", names(optCtrl)))
       optCtrl$tol <- 1e-6
+
+   ### for subplex, set reltol=1e-8 by default (the default in subplex() is .Machine$double.eps)
+
+   if (optimizer == "subplex" && !is.element("reltol", names(optcontrol)))
+      optCtrl$reltol <- 1e-8
+
+   ### for BBoptim, set trace=FALSE by default
+
+   if (optimizer == "BBoptim" && !is.element("trace", names(optCtrl)))
+      optCtrl$trace <- FALSE
 
    if (optimizer == "optim") {
       con.pos <- pmatch(names(optCtrl), "REPORT", nomatch=0) # set REPORT to 1 if it is not already set by the user
@@ -788,9 +798,9 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
          #optimizer <- "minqa"
       }
 
-      if (optimizer == "nloptr") {
-         if (!requireNamespace("nloptr", quietly=TRUE))
-            stop(mstyle$stop("Please install the 'nloptr' package to use this optimizer."))
+      if (is.element(optimizer, c("nloptr","ucminf","lbfgsb3c","subplex","optimParallel"))) {
+         if (!requireNamespace(optimizer, quietly=TRUE))
+            stop(mstyle$stop(paste0("Please install the '", optimizer, "' package to use this optimizer.")))
       }
 
       if (is.element(optimizer, c("hjk","nmk","mads"))) {
@@ -798,17 +808,12 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             stop(mstyle$stop("Please install the 'dfoptim' package to use this optimizer."))
       }
 
-      if (optimizer == "ucminf") {
-         if (!requireNamespace("ucminf", quietly=TRUE))
-            stop(mstyle$stop("Please install the 'ucminf' package to use this optimizer."))
+      if (optimizer == "BBoptim") {
+         if (!requireNamespace("BB", quietly=TRUE))
+            stop(mstyle$stop("Please install the 'BB' package to use this optimizer."))
       }
 
-      if (optimizer == "optimParallel") {
-         if (!requireNamespace("optimParallel", quietly=TRUE))
-            stop(mstyle$stop("Please install the 'optimParallel' package to use this optimizer."))
-      }
-
-      if (is.element(optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","optimParallel"))) {
+      if (is.element(optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","lbfgsb3c","subplex","BBoptim","optimParallel"))) {
          if (!requireNamespace(con$hesspack, quietly=TRUE))
          stop(mstyle$stop(paste0("Please install the '", con$hesspack, "' package to fit this model.")))
          if (con$dnchgcalc == "dFNCHypergeo") {
@@ -1555,43 +1560,56 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
          if (verbose)
             message(mstyle$message("Fitting FE model ..."))
 
-         if (is.element(optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","optimParallel"))) {
+         if (is.element(optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","lbfgsb3c","subplex","BBoptim","optimParallel"))) {
 
-            if (optimizer=="optim") {
+            if (optimizer == "optim") {
                par.arg <- "par"
                ctrl.arg <- ", control=optCtrl"
             }
-            if (optimizer=="nlminb") {
+
+            if (optimizer == "nlminb") {
                par.arg <- "start"
                ctrl.arg <- ", control=optCtrl"
             }
+
             if (is.element(optimizer, c("uobyqa","newuoa","bobyqa"))) {
                par.arg <- "par"
                optimizer <- paste0("minqa::", optimizer) ### need to use this since loading nloptr masks bobyqa() and newuoa() functions
                ctrl.arg <- ", control=optCtrl"
             }
-            if (optimizer=="nloptr") {
+
+            if (optimizer == "nloptr") {
                par.arg <- "x0"
                optimizer <- paste0("nloptr::nloptr") ### need to use this due to requireNamespace()
                ctrl.arg <- ", opts=optCtrl"
             }
-            if (optimizer=="nlm") {
+
+            if (optimizer == "nlm") {
                par.arg <- "p"
                ctrl.arg <- paste(names(optCtrl), unlist(optCtrl), sep="=", collapse=", ")
                if (nchar(ctrl.arg) != 0L)
                   ctrl.arg <- paste0(", ", ctrl.arg)
             }
+
             if (is.element(optimizer, c("hjk","nmk","mads"))) {
                par.arg <- "par"
                optimizer <- paste0("dfoptim::", optimizer) ### need to use this so that the optimizers can be found
                ctrl.arg <- ", control=optCtrl"
             }
-            if (optimizer=="ucminf") {
+
+            if (is.element(optimizer, c("ucminf","lbfgsb3c","subplex"))) {
                par.arg <- "par"
-               optimizer <- paste0("ucminf::ucminf") ### need to use this due to requireNamespace()
+               optimizer <- paste0(optimizer, "::", optimizer) ### need to use this due to requireNamespace()
                ctrl.arg <- ", control=optCtrl"
             }
-            if (optimizer=="optimParallel") {
+
+            if (optimizer == "BBoptim") {
+               par.arg <- "par"
+               optimizer <- "BB::BBoptim"
+               ctrl.arg <- ", quiet=TRUE, control=optCtrl"
+            }
+
+            if (optimizer == "optimParallel") {
 
                par.arg <- "par"
                optimizer <- paste0("optimParallel::optimParallel") ### need to use this due to requireNamespace()
@@ -1663,7 +1681,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
             ### convergence checks
 
-            if (is.element(optimizer, c("optim","nlminb","dfoptim::hjk","dfoptim::nmk","optimParallel::optimParallel")) && res.FE$convergence != 0)
+            if (is.element(optimizer, c("optim","nlminb","dfoptim::hjk","dfoptim::nmk","lbfgsb3c::lbfgsb3c","subplex::subplex","BB::BBoptim","optimParallel::optimParallel")) && res.FE$convergence != 0)
                stop(mstyle$stop(paste0("Cannot fit FE model. Optimizer (", optimizer, ") did not achieve convergence (convergence = ", res.FE$convergence, ").")))
 
             if (is.element(optimizer, c("dfoptim::mads")) && res.FE$convergence > optCtrl$tol)
@@ -1702,7 +1720,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
             ### log-likelihood
 
-            if (is.element(optimizer, c("optim","dfoptim::hjk","dfoptim::nmk","dfoptim::mads","ucminf::ucminf","optimParallel::optimParallel")))
+            if (is.element(optimizer, c("optim","dfoptim::hjk","dfoptim::nmk","dfoptim::mads","ucminf::ucminf","lbfgsb3c::lbfgsb3c","subplex::subplex","BB::BBoptim","optimParallel::optimParallel")))
                ll.FE <- -1 * res.FE$value
             if (is.element(optimizer, c("nlminb","nloptr::nloptr")))
                ll.FE <- -1 * res.FE$objective
@@ -1758,7 +1776,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
                   ### convergence checks
 
-                  if (QEconv && is.element(optimizer, c("optim","nlminb","dfoptim::hjk","dfoptim::nmk","optimParallel::optimParallel")) && res.QE$convergence != 0) {
+                  if (QEconv && is.element(optimizer, c("optim","nlminb","dfoptim::hjk","dfoptim::nmk","lbfgsb3c::lbfgsb3c","subplex::subplex","BB::BBoptim","optimParallel::optimParallel")) && res.QE$convergence != 0) {
                      warning(mstyle$warning(paste0("Cannot fit saturated model. Optimizer (", optimizer, ") did not achieve convergence (convergence = ", res.QE$convergence, ").")), call.=FALSE)
                      QEconv <- FALSE
                      ll.QE <- NA
@@ -1823,7 +1841,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
                ### log-likelihood
 
-               if (is.element(optimizer, c("optim","dfoptim::hjk","dfoptim::nmk","dfoptim::mads","ucminf::ucminf","optimParallel::optimParallel")))
+               if (is.element(optimizer, c("optim","dfoptim::hjk","dfoptim::nmk","dfoptim::mads","ucminf::ucminf","lbfgsb3c::lbfgsb3c","subplex::subplex","BB::BBoptim","optimParallel::optimParallel")))
                   ll.QE <- -1 * res.QE$value
                if (is.element(optimizer, c("nlminb","nloptr::nloptr")))
                   ll.QE <- -1 * res.QE$objective
@@ -2003,7 +2021,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
             ### convergence checks
 
-            if (is.element(optimizer, c("optim","nlminb","dfoptim::hjk","dfoptim::nmk","optimParallel::optimParallel")) && res.ML$convergence != 0)
+            if (is.element(optimizer, c("optim","nlminb","dfoptim::hjk","dfoptim::nmk","lbfgsb3c::lbfgsb3c","subplex::subplex","BB::BBoptim","optimParallel::optimParallel")) && res.ML$convergence != 0)
                stop(mstyle$stop(paste0("Cannot fit ML model. Optimizer (", optimizer, ") did not achieve convergence (convergence = ", res.ML$convergence, ").")))
 
             if (is.element(optimizer, c("dfoptim::mads")) && res.ML$convergence > optCtrl$tol)
@@ -2042,7 +2060,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
             ### log-likelihood
 
-            if (is.element(optimizer, c("optim","dfoptim::hjk","dfoptim::nmk","dfoptim::mads","ucminf::ucminf","optimParallel::optimParallel")))
+            if (is.element(optimizer, c("optim","dfoptim::hjk","dfoptim::nmk","dfoptim::mads","ucminf::ucminf","lbfgsb3c::lbfgsb3c","subplex::subplex","BB::BBoptim","optimParallel::optimParallel")))
                ll.ML <- -1 * res.ML$value
             if (is.element(optimizer, c("nlminb","nloptr::nloptr")))
                ll.ML <- -1 * res.ML$objective

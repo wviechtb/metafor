@@ -1,4 +1,4 @@
-# metafor 3.1-28 (2021-11-03)
+# metafor 3.1-29 (2021-11-04)
 
 - added `vcalc()` and `blsplit()` functions
 
@@ -33,6 +33,8 @@
 - `addpoly.default()` and `addpoly.rma()` gain `lty` argument
 
 - `points.regplot()` function now also redraws the labels (if there were any to begin with)
+
+- added `lbfgsb3c`, `subplex`, and `BBoptim` as possible optimizer in `rma.mv()`, `rma.glmm()`,`rma.uni()`, and `selmodel.rma.uni()`
 
 - datasets moved to the `metadat` package (https://cran.r-project.org/package=metadat)
 

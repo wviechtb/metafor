@@ -170,7 +170,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
                delta.max = NULL,      # max possible value(s) for selection model parameter(s)
                tau2.max = Inf,        # max possible value for tau^2
                pval.min = NULL,       # minimum p-value to intergrate over (for selection models where this matters)
-               optimizer = "optim",   # optimizer to use ("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","optimParallel")
+               optimizer = "optim",   # optimizer to use ("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","lbfgsb3c","subplex","BBoptim","optimParallel")
                optmethod = "BFGS",    # argument 'method' for optim() ("Nelder-Mead" and "BFGS" are sensible options)
                parallel = list(),     # parallel argument for optimParallel() (note: 'cl' argument in parallel is not passed; this is directly specified via 'cl')
                cl = NULL,             # arguments for optimParallel()
@@ -193,8 +193,8 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
    verbose <- con$verbose
 
-   optimizer  <- match.arg(con$optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","optimParallel","Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent"))
-   optmethod  <- match.arg(con$optmethod, c("Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent"))
+   optimizer <- match.arg(con$optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","lbfgsb3c","subplex","BBoptim","optimParallel","Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent"))
+   optmethod <- match.arg(con$optmethod, c("Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent"))
    if (optimizer %in% c("Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent")) {
       optmethod <- optimizer
       optimizer <- "optim"
@@ -296,19 +296,29 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    ### set NLOPT_LN_BOBYQA as the default algorithm for nloptr optimizer
    ### and by default use a relative convergence criterion of 1e-8 on the function value
 
-   if (optimizer=="nloptr" && !is.element("algorithm", names(optcontrol)))
+   if (optimizer == "nloptr" && !is.element("algorithm", names(optcontrol)))
       optcontrol$algorithm <- "NLOPT_LN_BOBYQA"
 
-   if (optimizer=="nloptr" && !is.element("ftol_rel", names(optcontrol)))
+   if (optimizer == "nloptr" && !is.element("ftol_rel", names(optcontrol)))
       optcontrol$ftol_rel <- 1e-8
 
    ### for mads, set trace=FALSE and tol=1e-6 by default
 
-   if (optimizer=="mads" && !is.element("trace", names(optcontrol)))
+   if (optimizer == "mads" && !is.element("trace", names(optcontrol)))
       optcontrol$trace <- FALSE
 
-   if (optimizer=="mads" && !is.element("tol", names(optcontrol)))
+   if (optimizer == "mads" && !is.element("tol", names(optcontrol)))
       optcontrol$tol <- 1e-6
+
+   ### for subplex, set reltol=1e-8 by default (the default in subplex() is .Machine$double.eps)
+
+   if (optimizer == "subplex" && !is.element("reltol", names(optcontrol)))
+      optcontrol$reltol <- 1e-8
+
+   ### for BBoptim, set trace=FALSE by default
+
+   if (optimizer == "BBoptim" && !is.element("trace", names(optcontrol)))
+      optcontrol$trace <- FALSE
 
    ### check that the required packages are installed
 
@@ -317,9 +327,9 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
          stop(mstyle$stop("Please install the 'minqa' package to use this optimizer."))
    }
 
-   if (optimizer == "nloptr") {
-      if (!requireNamespace("nloptr", quietly=TRUE))
-         stop(mstyle$stop("Please install the 'nloptr' package to use this optimizer."))
+   if (is.element(optimizer, c("nloptr","ucminf","lbfgsb3c","subplex","optimParallel"))) {
+      if (!requireNamespace(optimizer, quietly=TRUE))
+         stop(mstyle$stop(paste0("Please install the '", optimizer, "' package to use this optimizer.")))
    }
 
    if (is.element(optimizer, c("hjk","nmk","mads"))) {
@@ -327,14 +337,9 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
          stop(mstyle$stop("Please install the 'dfoptim' package to use this optimizer."))
    }
 
-   if (optimizer == "ucminf") {
-      if (!requireNamespace("ucminf", quietly=TRUE))
-         stop(mstyle$stop("Please install the 'ucminf' package to use this optimizer."))
-   }
-
-   if (optimizer == "optimParallel") {
-      if (!requireNamespace("optimParallel", quietly=TRUE))
-         stop(mstyle$stop("Please install the 'optimParallel' package to use this optimizer."))
+   if (optimizer == "BBoptim") {
+      if (!requireNamespace("BB", quietly=TRUE))
+         stop(mstyle$stop("Please install the 'BB' package to use this optimizer."))
    }
 
    if (!isTRUE(ddd$skiphes) && !requireNamespace(con$hesspack, quietly=TRUE))
@@ -684,41 +689,54 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
    ############################################################################
 
-   if (optimizer=="optim") {
+   if (optimizer == "optim") {
       par.arg <- "par"
       ctrl.arg <- ", control=optcontrol"
    }
-   if (optimizer=="nlminb") {
+
+   if (optimizer == "nlminb") {
       par.arg <- "start"
       ctrl.arg <- ", control=optcontrol"
    }
+
    if (is.element(optimizer, c("uobyqa","newuoa","bobyqa"))) {
       par.arg <- "par"
       optimizer <- paste0("minqa::", optimizer) ### need to use this since loading nloptr masks bobyqa() and newuoa() functions
       ctrl.arg <- ", control=optcontrol"
    }
-   if (optimizer=="nloptr") {
+
+   if (optimizer == "nloptr") {
       par.arg <- "x0"
       optimizer <- paste0("nloptr::nloptr") ### need to use this due to requireNamespace()
       ctrl.arg <- ", opts=optcontrol"
    }
-   if (optimizer=="nlm") {
+
+   if (optimizer == "nlm") {
       par.arg <- "p" ### because of this, must use argument name pX for p (number of columns in X matrix)
       ctrl.arg <- paste(names(optcontrol), unlist(optcontrol), sep="=", collapse=", ")
       if (nchar(ctrl.arg) != 0L)
          ctrl.arg <- paste0(", ", ctrl.arg)
    }
+
    if (is.element(optimizer, c("hjk","nmk","mads"))) {
       par.arg <- "par"
       optimizer <- paste0("dfoptim::", optimizer) ### need to use this so that the optimizers can be found
       ctrl.arg <- ", control=optcontrol"
    }
-   if (optimizer=="ucminf") {
+
+   if (is.element(optimizer, c("ucminf","lbfgsb3c","subplex"))) {
       par.arg <- "par"
-      optimizer <- paste0("ucminf::ucminf") ### need to use this due to requireNamespace()
+      optimizer <- paste0(optimizer, "::", optimizer) ### need to use this due to requireNamespace()
       ctrl.arg <- ", control=optcontrol"
    }
-   if (optimizer=="optimParallel") {
+
+   if (optimizer == "BBoptim") {
+      par.arg <- "par"
+      optimizer <- "BB::BBoptim"
+      ctrl.arg <- ", quiet=TRUE, control=optcontrol"
+   }
+
+   if (optimizer == "optimParallel") {
 
       par.arg <- "par"
       optimizer <- paste0("optimParallel::optimParallel") ### need to use this due to requireNamespace()
@@ -791,7 +809,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
    ### convergence checks
 
-   if (is.element(optimizer, c("optim","nlminb","dfoptim::hjk","dfoptim::nmk","optimParallel::optimParallel")) && opt.res$convergence != 0)
+   if (is.element(optimizer, c("optim","nlminb","dfoptim::hjk","dfoptim::nmk","optimParallel::optimParallel","lbfgsb3c::lbfgsb3c","subplex::subplex","BB::BBoptim")) && opt.res$convergence != 0)
       stop(mstyle$stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (convergence = ", opt.res$convergence, ").")))
 
    if (is.element(optimizer, c("dfoptim::mads")) && opt.res$convergence > optcontrol$tol)
