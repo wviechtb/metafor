@@ -208,15 +208,16 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
-<span class="r-in"><span class="co">### permutation test (approximate and exact)</span></span>
 <span class="r-in"><span class="co"># \dontrun{</span></span>
+<span class="r-in"><span class="co">### permutation test (approximate and exact)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span> <span class="co"># for reproducibility</span></span>
 <span class="r-in"><span class="fu">permutest</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Running 1000 iterations for approximate permutation test.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> estimate      se     zval   pval¹    ci.lb    ci.ub </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  -0.7145  0.1798  -3.9744  0.0030  -1.0669  -0.3622  ** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  -0.7145  0.1798  -3.9744  0.0020  -1.0669  -0.3622  ** </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
@@ -269,19 +270,20 @@
 <span class="r-in"><span class="co">### permutation test (approximate only; exact not feasible)</span></span>
 <span class="r-in"><span class="co"># \dontrun{</span></span>
 <span class="r-in"></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span> <span class="co"># for reproducibility</span></span>
 <span class="r-in"><span class="va">permres</span> <span class="op">&lt;-</span> <span class="fu">permutest</span><span class="op">(</span><span class="va">res</span>, iter<span class="op">=</span><span class="fl">10000</span>, retpermdist<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Running 10000 iterations for approximate permutation test.</span>
 <span class="r-in"><span class="va">permres</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Test of Moderators (coefficients 2:3):¹</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> QM(df = 2) = 12.2043, p-val = 0.0214</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QM(df = 2) = 12.2043, p-val = 0.0237</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          estimate       se     zval   pval¹     ci.lb    ci.ub </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> intrcpt   -3.5455  29.0959  -0.1219  0.9099  -60.5724  53.4814    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ablat     -0.0280   0.0102  -2.7371  0.0187   -0.0481  -0.0080  * </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> year       0.0019   0.0147   0.1299  0.9031   -0.0269   0.0307    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> intrcpt   -3.5455  29.0959  -0.1219  0.9104  -60.5724  53.4814    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ablat     -0.0280   0.0102  -2.7371  0.0175   -0.0481  -0.0080  * </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> year       0.0019   0.0147   0.1299  0.9037   -0.0269   0.0307    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>

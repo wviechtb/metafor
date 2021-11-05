@@ -86,8 +86,9 @@ dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 res <- rma(yi, vi, data=dat)
 res
 
-### permutation test (approximate and exact)
 \dontrun{
+### permutation test (approximate and exact)
+set.seed(1234) # for reproducibility
 permutest(res)
 permutest(res, exact=TRUE)}
 
@@ -98,6 +99,7 @@ res
 ### permutation test (approximate only; exact not feasible)
 \dontrun{
 
+set.seed(1234) # for reproducibility
 permres <- permutest(res, iter=10000, retpermdist=TRUE)
 permres
 

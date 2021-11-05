@@ -40,6 +40,7 @@ res <- rma(yi, vi, mods = ~ ablat + year, data=dat)
 
 ### carry out permutation test
 \dontrun{
+set.seed(1234) # for reproducibility
 sav <- permutest(res)
 coef(sav)}
 }
