@@ -53,8 +53,8 @@ navbar:
       href: reference/index.html
     - text: "Diagram"
       href: articles/pkgdown/diagram.html
-    - text: "JSS Article (pdf)"
-      href: https://www.jstatsoft.org/index.php/jss/article/view/v036i03/v36i03.pdf
+    - text: "JSS Article"
+      href: https://www.jstatsoft.org/article/view/v036i03
     - text: "Changelog"
       href: news/index.html
   right:
