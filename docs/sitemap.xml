@@ -106,9 +106,6 @@
     <loc>/reference/index.html</loc>
   </url>
   <url>
-    <loc>/reference/inference.html</loc>
-  </url>
-  <url>
     <loc>/reference/influence.rma.mv.html</loc>
   </url>
   <url>
@@ -137,6 +134,9 @@
   </url>
   <url>
     <loc>/reference/methods.list.rma.html</loc>
+  </url>
+  <url>
+    <loc>/reference/misc-models.html</loc>
   </url>
   <url>
     <loc>/reference/model.matrix.rma.html</loc>

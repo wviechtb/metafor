@@ -192,8 +192,8 @@ reference:
     contents:
       - methods.escalc
       - methods.list.rma
-  - title: "Further Documentation"
+  - title: "Miscellaneous Documentation"
     desc: >
-      Further documentation.
+      Miscellaneous documentation.
     contents:
-      - inference
+      - misc-models
