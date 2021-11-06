@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-29</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-30</span>
       </span>
     </div>
 
@@ -118,8 +118,8 @@
 </dl></div>
     <div id="details">
     <h2>Details</h2>
-    <p>The model specified via <code>object</code> must be a model without moderators (i.e., either a fixed- or a random-effects model and not a fixed-effects with moderators or mixed-effects model).</p>
-<p>When using the usual method for fitting a random-effects model (i.e., weighted estimation with inverse-variance weights), the weights assigned to smaller and larger studies become more uniform as the amount of heterogeneity increases. As a consequence, the estimated average outcome could become increasingly biased under certain forms of publication bias (where smaller studies on one side of the funnel plot are missing). The method by Henmi and Copas (2010) tries to counteract this problem by providing an estimate of the average true outcome that is based on inverse-variance weights as used under a fixed-effects model (which do not take the amount of heterogeneity into consideration). The amount of heterogeneity is still estimated (with the DerSimonian-Laird estimator) and incorporated into the standard error of the estimated average outcome and the corresponding confidence interval.</p>
+    <p>The model specified via <code>object</code> must be a model without moderators (i.e., either an equal- or a random-effects model).</p>
+<p>When using the usual method for fitting a random-effects model (i.e., weighted estimation with inverse-variance weights), the weights assigned to smaller and larger studies become more uniform as the amount of heterogeneity increases. As a consequence, the estimated average outcome could become increasingly biased under certain forms of publication bias (where smaller studies on one side of the funnel plot are missing). The method by Henmi and Copas (2010) tries to counteract this problem by providing an estimate of the average true outcome that is based on inverse-variance weights as used under an equal-effects model (which do not take the amount of heterogeneity into consideration). The amount of heterogeneity is still estimated (with the DerSimonian-Laird estimator) and incorporated into the standard error of the estimated average outcome and the corresponding confidence interval.</p>
 <p>Currently, there is only a method for handling objects of class <code>"rma.uni"</code> with the <code>hc</code> function. It therefore provides a method for conducting a sensitivity analysis after the model has been fitted with the <code><a href="rma.uni.html">rma.uni</a></code> function.</p>
     </div>
     <div id="value">

@@ -23,7 +23,7 @@ leave1out(x, \dots)
    \item{\dots}{other arguments.}
 }
 \details{
-   For \code{"rma.uni"} objects, the model specified via \code{x} must be a model without moderators (i.e., either a fixed- or a random-effects model).
+   For \code{"rma.uni"} objects, the model specified via \code{x} must be a model without moderators (i.e., either an equal- or a random-effects model).
 }
 \value{
    An object of class \code{"list.rma"}. The object is a list containing the following components:

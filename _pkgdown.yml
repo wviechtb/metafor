@@ -192,3 +192,8 @@ reference:
     contents:
       - methods.escalc
       - methods.list.rma
+  - title: "Further Documentation"
+    desc: >
+      Further documentation.
+    contents:
+      - inference

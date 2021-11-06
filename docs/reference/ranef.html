@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-29</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-30</span>
       </span>
     </div>
 
@@ -138,7 +138,7 @@
     <h2>Note</h2>
     <p>For best linear unbiased predictions that combine the fitted values based on the fixed effects and the estimated contributions of the random effects, see <code><a href="blup.html">blup</a></code>.</p>
 <p>For predicted/fitted values that are based only on the fixed effects of the model, see <code><a href="fitted.rma.html">fitted.rma</a></code> and <code><a href="predict.rma.html">predict.rma</a></code>.</p>
-<p>Fixed-effects models (with or without moderators) do not contain random study effects. The BLUPs for these models will therefore be 0.</p>
+<p>Equal-effects models do not contain random study effects. The BLUPs for these models will therefore be 0.</p>
 <p>When using the <code>transf</code> argument, the transformation is applied to the predicted values and the corresponding interval bounds. The standard errors are then set equal to <code>NA</code> and are omitted from the printed output.</p>
 <p>By default, a standard normal distribution is used to calculate the prediction intervals. When the model was fitted with <code>test="t"</code> or <code>test="knha"</code>, then a t-distribution with \(k-p\) degrees of freedom is used.</p>
 <p>To be precise, it should be noted that the function actually calculates empirical BLUPs (eBLUPs), since the predicted values are a function of the estimated variance component(s).</p>

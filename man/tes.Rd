@@ -107,8 +107,8 @@ dat <- escalc(measure="RR", ai=x.a, n1i=n.a, ci=x.p, n2i=n.p, data=dat.dorn2007)
 ### conduct test of excess significance (using test="chi2" to speed things up)
 tes(dat$yi, dat$vi, test="chi2")
 
-### same as fitting a FE model and then passing the object to the function
-res <- rma(yi, vi, data=dat, method="FE")
+### same as fitting an EE model and then passing the object to the function
+res <- rma(yi, vi, data=dat, method="EE")
 tes(res, test="chi2")
 
 ### illustrate limit estimate (value of theta where p-value of test is equal to tes.alpha)

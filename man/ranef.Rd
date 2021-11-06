@@ -36,7 +36,7 @@
 
    For predicted/fitted values that are based only on the fixed effects of the model, see \code{\link{fitted.rma}} and \code{\link{predict.rma}}.
 
-   Fixed-effects models (with or without moderators) do not contain random study effects. The BLUPs for these models will therefore be 0.
+   Equal-effects models do not contain random study effects. The BLUPs for these models will therefore be 0.
 
    When using the \code{transf} argument, the transformation is applied to the predicted values and the corresponding interval bounds. The standard errors are then set equal to \code{NA} and are omitted from the printed output.
 

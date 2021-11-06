@@ -41,12 +41,12 @@ funnel(x, \dots)
    \item{targs}{optional arguments needed by the function specified via \code{atransf}.}
    \item{digits}{integer to specify the number of decimal places to which the tick mark labels of the x- and y-axis should be rounded. Can also be a vector of two integers, the first to specify the number of decimal places for the x-axis, the second for the y-axis labels (e.g., \code{digits=c(2,3)}). If unspecified, the function tries to set the argument to some sensible values.}
    \item{level}{numeric value between 0 and 100 to specify the level of the pseudo confidence interval region (for \code{"rma"} objects, the default is to take the value from the object). May also be a vector of values to obtain multiple regions. See \sQuote{Examples}.}
-   \item{addtau2}{logical to indicate whether the amount of heterogeneity should be accounted for when drawing the pseudo confidence interval region (the default is \code{FALSE}). Ignored when the model includes moderators and residuals are plotted. See \sQuote{Details}.}
-   \item{type}{either \code{"rstandard"} (default) or \code{"rstudent"} to specify whether the usual or deleted residuals should be used in creating the funnel plot when the model involves moderators. See \sQuote{Details}.}
+   \item{addtau2}{logical to indicate whether the amount of heterogeneity should be accounted for when drawing the pseudo confidence interval region (the default is \code{FALSE}). Ignored when \code{x} is a meta-regression model and residuals are plotted. See \sQuote{Details}.}
+   \item{type}{either \code{"rstandard"} (default) or \code{"rstudent"} to specify whether the usual or deleted residuals should be used in creating the funnel plot when \code{x} is a meta-regression model. See \sQuote{Details}.}
    \item{back}{color to use for the background of the plotting region (default is \code{"lightgray"}).}
    \item{shade}{color to use for shading the pseudo confidence interval region (default is \code{"white"}). When \code{level} is a vector of values, different shading colors can be specified for each region.}
    \item{hlines}{color of the horizontal reference lines (default is \code{"white"}).}
-   \item{refline}{numeric value to specify the location of the vertical \sQuote{reference} line and where the pseudo confidence interval should be centered. If unspecified, the reference line is drawn at the fixed- or random-effects model estimate when the model does not include moderators and at zero when moderators are included (and therefore residuals are plotted) or when directly plotting observed outcomes.}
+   \item{refline}{numeric value to specify the location of the vertical \sQuote{reference} line and where the pseudo confidence interval should be centered. If unspecified, the reference line is drawn at the equal- or random-effects model estimate and at zero for meta-regression models (in which case the residuals are plotted) or when directly plotting observed outcomes.}
    \item{lty}{line type for the pseudo confidence interval region and the reference line. The default is to draw dotted lines (see \code{\link{par}} for other options). Can also be a vector to specify the two line types separately.}
    \item{pch}{plotting symbol to use for the observed outcomes. By default, a filled circle is used. Can also be a vector of values. See \code{\link{points}} for other options.}
    \item{pch.fill}{plotting symbol to use for the outcomes filled in by the trim and fill method. By default, a circle is used. Only relevant when plotting an object created by the \code{\link{trimfill}} function.}
@@ -59,9 +59,9 @@ funnel(x, \dots)
    \item{\dots}{other arguments.}
 }
 \details{
-   For fixed- and random-effects models (i.e., models not involving moderators), the plot shows the observed effect sizes or outcomes on the x-axis against the corresponding standard errors (i.e., the square root of the sampling variances) on the y-axis. A vertical line indicates the estimate based on the model. A pseudo confidence interval region is drawn around this value with bounds equal to \mjeqn{\pm 1.96 \mbox{SE}}{±1.96*SE}, where \mjeqn{\mbox{SE}}{SE} is the standard error value from the y-axis (assuming \code{level=95}). If \code{addtau2=TRUE} (only for models of class \code{"rma.uni"}), then the bounds of the pseudo confidence interval region are equal to \mjeqn{\pm 1.96 \sqrt{\mbox{SE}^2 + \hat{\tau}^2}}{±1.96*\sqrt(SE^2 + \tau^2)}, where \mjeqn{\hat{\tau}^2}{\tau^2} is the amount of heterogeneity as estimated by the model.
+   For equal- and random-effects models (i.e., models not involving moderators), the plot shows the observed effect sizes or outcomes on the x-axis against the corresponding standard errors (i.e., the square root of the sampling variances) on the y-axis. A vertical line indicates the estimate based on the model. A pseudo confidence interval region is drawn around this value with bounds equal to \mjeqn{\pm 1.96 \mbox{SE}}{±1.96*SE}, where \mjeqn{\mbox{SE}}{SE} is the standard error value from the y-axis (assuming \code{level=95}). If \code{addtau2=TRUE} (only for models of class \code{"rma.uni"}), then the bounds of the pseudo confidence interval region are equal to \mjeqn{\pm 1.96 \sqrt{\mbox{SE}^2 + \hat{\tau}^2}}{±1.96*\sqrt(SE^2 + \tau^2)}, where \mjeqn{\hat{\tau}^2}{\tau^2} is the amount of heterogeneity as estimated by the model.
 
-   For models involving moderators, the plot shows the residuals on the x-axis against their corresponding standard errors. Either the usual or deleted residuals can be used for that purpose (set via the \code{type} argument). See \code{\link{residuals.rma}} for more details on the different types of residuals.
+   For (mixed-effects) meta-regression models (i.e., models involving moderators), the plot shows the residuals on the x-axis against their corresponding standard errors. Either the usual or deleted residuals can be used for that purpose (set via the \code{type} argument). See \code{\link{residuals.rma}} for more details on the different types of residuals.
 
    With the \code{atransf} argument, the labels on the x-axis can be transformed with some suitable function. For example, when plotting log odds ratios, one could use \code{transf=exp} to obtain a funnel plot with the values on the x-axis corresponding to the odds ratios. See also \link{transf} for some other useful transformation functions in the context of a meta-analysis.
 
@@ -180,7 +180,7 @@ k  <- 200                               ### number of studies to simulate
 ni <- round(rchisq(k, df=2) * 20 + 20)  ### simulate sample sizes (skewed distribution)
 ri <- mapply(gencor, rep(0.2,k), ni)    ### simulate correlations
 
-res <- rma(measure="ZCOR", ri=ri, ni=ni, method="FE") ### use r-to-z transformed correlations
+res <- rma(measure="ZCOR", ri=ri, ni=ni, method="EE") ### use r-to-z transformed correlations
 
 funnel(res, yaxis="sei")
 funnel(res, yaxis="vi")

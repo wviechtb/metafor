@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-29</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-30</span>
       </span>
     </div>
 
@@ -141,7 +141,7 @@
 <p>The DFFITS value essentially indicates how many standard deviations the predicted (average) effect or outcome for the \(i\textrm{th}\) case changes after excluding the \(i\textrm{th}\) case from the model fitting.</p>
 <p>Cook's distance can be interpreted as the Mahalanobis distance between the entire set of predicted values once with the \(i\textrm{th}\) case included and once with the \(i\textrm{th}\) case excluded from the model fitting.</p>
 <p>The covariance ratio is defined as the determinant of the variance-covariance matrix of the parameter estimates based on the dataset with the \(i\textrm{th}\) case removed divided by the determinant of the variance-covariance matrix of the parameter estimates based on the complete dataset. A value below 1 therefore indicates that removal of the \(i\textrm{th}\) case yields more precise estimates of the model coefficients.</p>
-<p>The leave-one-out amount of (residual) heterogeneity is the estimated value of \(\tau^2\) based on the dataset with the \(i\textrm{th}\) case removed. This is always equal to 0 for fixed-effects models.</p>
+<p>The leave-one-out amount of (residual) heterogeneity is the estimated value of \(\tau^2\) based on the dataset with the \(i\textrm{th}\) case removed. This is always equal to 0 for equal-effects models.</p>
 <p>Similarly, the leave-one-out test statistic of the test for (residual) heterogeneity is the value of the test statistic of the test for (residual) heterogeneity calculated based on the dataset with the \(i\textrm{th}\) case removed.</p>
 <p>Finally, the DFBETAS value(s) essentially indicate(s) how many standard deviations the estimated coefficient(s) change(s) after excluding the \(i\textrm{th}\) case from the model fitting.</p>
 <p>A case may be considered to be ‘influential’ if at least one of the following is true:</p><ul><li><p>The absolute DFFITS value is larger than \(3 \times \sqrt{p/(k-p)}\), where \(p\) is the number of model coefficients and \(k\) the number of cases.</p></li>

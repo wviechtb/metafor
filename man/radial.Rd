@@ -35,7 +35,7 @@ galbraith(x, \dots)
    \item{\dots}{other arguments.}
 }
 \details{
-   For a fixed-effects model, the plot shows the inverse of the standard errors on the horizontal axis against the observed effect sizes or outcomes standardized by their corresponding standard errors on the vertical axis. Since the vertical axis corresponds to standardized values, it is referred to as the z-axis within this function. On the right hand side of the plot, an arc is drawn (referred to as the y-axis within this function) corresponding to the observed effect sizes or outcomes. A line projected from (0,0) through a particular point within the plot onto this arc indicates the value of the observed effect size or outcome for that point.
+   For an equal-effects model, the plot shows the inverse of the standard errors on the horizontal axis against the observed effect sizes or outcomes standardized by their corresponding standard errors on the vertical axis. Since the vertical axis corresponds to standardized values, it is referred to as the z-axis within this function. On the right hand side of the plot, an arc is drawn (referred to as the y-axis within this function) corresponding to the observed effect sizes or outcomes. A line projected from (0,0) through a particular point within the plot onto this arc indicates the value of the observed effect size or outcome for that point.
 
    For a random-effects model, the function uses \mjeqn{1/\sqrt{v_i + \tau^2}}{1/\sqrt(v_i + \tau^2)} for the horizontal axis, where \mjseqn{v_i} is the sampling variance of the observed effect size or outcome and \mjseqn{\tau^2} is the amount of heterogeneity as estimated based on the model. For the z-axis, \mjeqn{\sqrt{v_i + \tau^2}}{\sqrt(v_i + \tau^2)} is used to standardize the observed effect sizes or outcomes.
 
@@ -69,8 +69,8 @@ galbraith(x, \dots)
 dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 dat
 
-### fixed-effects model
-res <- rma(yi, vi, data=dat, method="FE")
+### fit equal-effects model
+res <- rma(yi, vi, data=dat, method="EE")
 
 ### draw radial plot
 radial(res)

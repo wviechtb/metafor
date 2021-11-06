@@ -52,7 +52,7 @@
 
    The covariance ratio is defined as the determinant of the variance-covariance matrix of the parameter estimates based on the dataset with the \mjeqn{i\textrm{th}}{ith} case removed divided by the determinant of the variance-covariance matrix of the parameter estimates based on the complete dataset. A value below 1 therefore indicates that removal of the \mjeqn{i\textrm{th}}{ith} case yields more precise estimates of the model coefficients.
 
-   The leave-one-out amount of (residual) heterogeneity is the estimated value of \mjseqn{\tau^2} based on the dataset with the \mjeqn{i\textrm{th}}{ith} case removed. This is always equal to 0 for fixed-effects models.
+   The leave-one-out amount of (residual) heterogeneity is the estimated value of \mjseqn{\tau^2} based on the dataset with the \mjeqn{i\textrm{th}}{ith} case removed. This is always equal to 0 for equal-effects models.
 
    Similarly, the leave-one-out test statistic of the test for (residual) heterogeneity is the value of the test statistic of the test for (residual) heterogeneity calculated based on the dataset with the \mjeqn{i\textrm{th}}{ith} case removed.
 

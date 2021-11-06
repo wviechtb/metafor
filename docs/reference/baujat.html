@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-29</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-30</span>
       </span>
     </div>
 
@@ -127,8 +127,8 @@
     <div id="details">
     <h2>Details</h2>
     <p>The model specified via <code>x</code> must be a model fitted with either the <code><a href="rma.uni.html">rma.uni</a></code>, <code><a href="rma.mh.html">rma.mh</a></code>, or <code><a href="rma.peto.html">rma.peto</a></code> functions.</p>
-<p>Baujat et al. (2002) proposed a diagnostic plot to detect sources of heterogeneity in meta-analytic data. The plot shows the contribution of each study to the overall \(Q\)-test statistic for heterogeneity on the x-axis versus the influence of each study (defined as the standardized squared difference between the overall estimate based on a fixed-effects model with and without the study included in the model fitting) on the y-axis. The same type of plot can be produced by first fitting a fixed-effects model with either the <code><a href="rma.uni.html">rma.uni</a></code> (using <code>method="FE"</code>), <code><a href="rma.mh.html">rma.mh</a></code>, or <code><a href="rma.peto.html">rma.peto</a></code> functions and then passing the fitted model object to the <code>baujat</code> function.</p>
-<p>For models fitted with the <code><a href="rma.uni.html">rma.uni</a></code> function (which may involve moderators and/or which may be random/mixed-effects models), the idea underlying this type of plot can be generalized as follows (Viechtbauer, 2021): The x-axis then corresponds to the squared Pearson residual of a study, while the y-axis corresponds to the standardized squared difference between the predicted/fitted value for the study with and without the study included in the model fitting. Therefore, for a fixed-effects with moderators model, the x-axis corresponds to the contribution of the study to the \(Q_E\)-test statistic for residual heterogeneity.</p>
+<p>Baujat et al. (2002) proposed a diagnostic plot to detect sources of heterogeneity in meta-analytic data. The plot shows the contribution of each study to the overall \(Q\)-test statistic for heterogeneity on the x-axis versus the influence of each study (defined as the standardized squared difference between the overall estimate based on an equal-effects model with and without the study included in the model fitting) on the y-axis. The same type of plot can be produced by first fitting an equal-effects model with either the <code><a href="rma.uni.html">rma.uni</a></code> (using <code>method="EE"</code>), <code><a href="rma.mh.html">rma.mh</a></code>, or <code><a href="rma.peto.html">rma.peto</a></code> functions and then passing the fitted model object to the <code>baujat</code> function.</p>
+<p>For models fitted with the <code><a href="rma.uni.html">rma.uni</a></code> function (which may be random-effects or mixed-effects meta-regressions models), the idea underlying this type of plot can be generalized as follows (Viechtbauer, 2021): The x-axis then corresponds to the squared Pearson residual of a study, while the y-axis corresponds to the standardized squared difference between the predicted/fitted value for the study with and without the study included in the model fitting.</p>
 <p>By default, the points plotted are the study id numbers, but one can also plot the study labels by setting <code>symbol="slab"</code> (if study labels are available within the model object) or one can specify a plotting symbol via the <code>symbol</code> argument that gets passed to <code>pch</code> (see <code><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></code> for possible options).</p>
     </div>
     <div id="value">
@@ -170,7 +170,7 @@
 <span class="r-in"><span class="va">dat</span><span class="op">$</span><span class="va">vi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">dat</span>, <span class="fl">1</span><span class="op">/</span><span class="va">V</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### meta-analysis based on all 65 trials</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, method<span class="op">=</span><span class="st">"FE"</span>, slab<span class="op">=</span><span class="va">trial</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, method<span class="op">=</span><span class="st">"EE"</span>, slab<span class="op">=</span><span class="va">trial</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### create Baujat plot</span></span>
 <span class="r-in"><span class="fu">baujat</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>

@@ -12,7 +12,7 @@ print.rma.peto <- function(x, digits, showfit=FALSE, ...) {
 
    .space()
 
-   cat(mstyle$section("Fixed-Effects Model"))
+   cat(mstyle$section("Equal-Effects Model"))
    cat(mstyle$section(paste0(" (k = ", x$k, ")")))
 
    cat("\n")

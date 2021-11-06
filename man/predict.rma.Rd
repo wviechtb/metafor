@@ -30,7 +30,7 @@
    \item{\dots}{other arguments.}
 }
 \details{
-   For a fixed-effects model, \code{predict(object)} returns the estimated (average) outcome in the set of studies included in the meta-analysis. This is the same as the estimated intercept in the fixed-effects model (i.e., \mjseqn{\hat{\theta}}).
+   For an equal-effects model, \code{predict(object)} returns the estimated (average) outcome in the set of studies included in the meta-analysis. This is the same as the estimated intercept in the equal-effects model (i.e., \mjseqn{\hat{\theta}}).
 
    For a random-effects model, \code{predict(object)} returns the estimated (average) outcome in the hypothetical population of studies from which the set of studies included in the meta-analysis are assumed to be a random selection. This is the same as the estimated intercept in the random-effects model (i.e., \mjseqn{\hat{\mu}}).
 

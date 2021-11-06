@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-29</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-30</span>
       </span>
     </div>
 
@@ -126,10 +126,10 @@
 </dl></div>
     <div id="details">
     <h2>Details</h2>
-    <p>The function can be used in conjunction with any of the usual effect sizes / outcome measures used in meta-analyses (e.g., log risk ratios, log odds ratios, risk differences, mean differences, standardized mean differences, raw correlation coefficients, correlation coefficients transformed with Fisher's r-to-z transformation, and so on). Simply specify the observed outcomes via the <code>yi</code> argument and the corresponding sampling variances via the <code>vi</code> argument (instead of specifying <code>vi</code>, one can specify the standard errors via the <code>sei</code> argument). The <code><a href="escalc.html">escalc</a></code> function can be used to compute a wide variety of effect sizes / outcome measures (and the corresponding sampling variances) based on summary statistics.</p>
+    <p>The function can be used in combination with any of the usual effect sizes / outcome measures used in meta-analyses (e.g., log risk ratios, log odds ratios, risk differences, mean differences, standardized mean differences, raw correlation coefficients, correlation coefficients transformed with Fisher's r-to-z transformation, and so on). Simply specify the observed outcomes via the <code>yi</code> argument and the corresponding sampling variances via the <code>vi</code> argument (instead of specifying <code>vi</code>, one can specify the standard errors via the <code>sei</code> argument). The <code><a href="escalc.html">escalc</a></code> function can be used to compute a wide variety of effect sizes / outcome measures (and the corresponding sampling variances) based on summary statistics.</p>
 <p>The Rosenthal method (sometimes called a ‘file drawer analysis’) calculates the number of studies averaging null results that would have to be added to the given set of observed outcomes to reduce the combined significance level (p-value) to a particular alpha level (e.g., .05). The calculation is based on Stouffer's method to combine p-values and is described in Rosenthal (1979).</p>
 <p>The Orwin method calculates the number of studies averaging null results that would have to be added to the given set of observed outcomes to reduce the (unweighted or weighted) average outcome to a target value (as specified via the <code>target</code> argument). The method is described in Orwin (1983). If <code>weighted=FALSE</code> (the default), the method does not require (or makes use) of <code>vi</code> (or <code>sei</code>), so these arguments are then not relevant for this method. If the <code>target</code> argument is not specified, then the target average outcome will be equal to the observed average outcome divided by 2 (which is quite arbitrary). One should really set <code>target</code> to a value that reflects an outcome one would consider practically irrelevant. Note that if <code>target</code> has the opposite sign as the actually observed average outcome, then its sign is automatically flipped.</p>
-<p>The Rosenberg method calculates the number of studies averaging null results that would have to be added to the given set of observed outcomes to reduce the significance level (i.e., p-value) of the weighted average outcome (based on a fixed-effects model) to a particular alpha level (e.g., .05). The method is described in Rosenberg (2005).</p>
+<p>The Rosenberg method calculates the number of studies averaging null results that would have to be added to the given set of observed outcomes to reduce the significance level (i.e., p-value) of the weighted average outcome (based on an equal-effects model) to a particular alpha level (e.g., .05). The method is described in Rosenberg (2005).</p>
 <p>If the combined/observed significance level is above the specified alpha level (for <code>type = "Rosenthal"</code> or <code>type = "Rosenberg"</code>) or if the observed average outcome is below the target average outcome (for <code>type = "Orwin"</code>), then the fail-sage N value will be 0.</p>
     </div>
     <div id="value">
@@ -175,10 +175,10 @@
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">### calculate log risk ratios and corresponding sampling variances</span></span>
 <span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="co">### fit fixed-effects model</span></span>
-<span class="r-in"><span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, method<span class="op">=</span><span class="st">"FE"</span><span class="op">)</span></span>
+<span class="r-in"><span class="co">### fit equal-effects model</span></span>
+<span class="r-in"><span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, method<span class="op">=</span><span class="st">"EE"</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Fixed-Effects Model (k = 13)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Equal-Effects Model (k = 13)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> I^2 (total heterogeneity / total variability):   92.12%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> H^2 (total variability / sampling variability):  12.69</span>

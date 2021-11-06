@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-29</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-30</span>
       </span>
     </div>
 
@@ -169,7 +169,7 @@
 <h3 id="specifying-the-data">Specifying the Data<a class="anchor" aria-label="anchor" href="#specifying-the-data"></a></h3>
 
 
-<p>The function can be used in conjunction with any of the usual effect size or outcome measures used in meta-analyses (e.g., log risk ratios, log odds ratios, risk differences, mean differences, standardized mean differences, log transformed ratios of means, raw correlation coefficients, correlation coefficients transformed with Fisher's r-to-z transformation, and so on). Simply specify the observed effect sizes or outcomes via the <code>yi</code> argument and the corresponding sampling variances via the <code>V</code> argument. In case the sampling errors are correlated, then one can specify the entire variance-covariance matrix of the sampling errors via the <code>V</code> argument.</p>
+<p>The function can be used in combination with any of the usual effect size or outcome measures used in meta-analyses (e.g., log risk ratios, log odds ratios, risk differences, mean differences, standardized mean differences, log transformed ratios of means, raw correlation coefficients, correlation coefficients transformed with Fisher's r-to-z transformation, and so on). Simply specify the observed effect sizes or outcomes via the <code>yi</code> argument and the corresponding sampling variances via the <code>V</code> argument. In case the sampling errors are correlated, then one can specify the entire variance-covariance matrix of the sampling errors via the <code>V</code> argument.</p>
 <p>The <code><a href="escalc.html">escalc</a></code> function can be used to compute a wide variety of effect size or outcome measures (and the corresponding sampling variances) based on summary statistics. Equations for computing the covariance between the sampling errors for a variety of different effect size or outcome measures can be found, for example, in Gleser and Olkin (2009), Lajeunesse (2011), and Wei and Higgins (2013). For raw and Fisher r-to-z transformed correlations, one can find suitable equations, for example, in Steiger (1980). The latter are implemented in the <code><a href="rcalc.html">rcalc</a></code> function. See also <code><a href="vcalc.html">vcalc</a></code> for a function that can be used to construct or approximate the variance-covariance matrix of dependent effect sizes or outcomes for a wide variety of circumstances.</p>
 <p></p>
 </div>

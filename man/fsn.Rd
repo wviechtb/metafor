@@ -22,13 +22,13 @@ fsn(yi, vi, sei, data, type="Rosenthal", alpha=.05,
    \item{\dots}{other arguments.}
 }
 \details{
-   The function can be used in conjunction with any of the usual effect sizes / outcome measures used in meta-analyses (e.g., log risk ratios, log odds ratios, risk differences, mean differences, standardized mean differences, raw correlation coefficients, correlation coefficients transformed with Fisher's r-to-z transformation, and so on). Simply specify the observed outcomes via the \code{yi} argument and the corresponding sampling variances via the \code{vi} argument (instead of specifying \code{vi}, one can specify the standard errors via the \code{sei} argument). The \code{\link{escalc}} function can be used to compute a wide variety of effect sizes / outcome measures (and the corresponding sampling variances) based on summary statistics.
+   The function can be used in combination with any of the usual effect sizes / outcome measures used in meta-analyses (e.g., log risk ratios, log odds ratios, risk differences, mean differences, standardized mean differences, raw correlation coefficients, correlation coefficients transformed with Fisher's r-to-z transformation, and so on). Simply specify the observed outcomes via the \code{yi} argument and the corresponding sampling variances via the \code{vi} argument (instead of specifying \code{vi}, one can specify the standard errors via the \code{sei} argument). The \code{\link{escalc}} function can be used to compute a wide variety of effect sizes / outcome measures (and the corresponding sampling variances) based on summary statistics.
 
    The Rosenthal method (sometimes called a \sQuote{file drawer analysis}) calculates the number of studies averaging null results that would have to be added to the given set of observed outcomes to reduce the combined significance level (p-value) to a particular alpha level (e.g., .05). The calculation is based on Stouffer's method to combine p-values and is described in Rosenthal (1979).
 
    The Orwin method calculates the number of studies averaging null results that would have to be added to the given set of observed outcomes to reduce the (unweighted or weighted) average outcome to a target value (as specified via the \code{target} argument). The method is described in Orwin (1983). If \code{weighted=FALSE} (the default), the method does not require (or makes use) of \code{vi} (or \code{sei}), so these arguments are then not relevant for this method. If the \code{target} argument is not specified, then the target average outcome will be equal to the observed average outcome divided by 2 (which is quite arbitrary). One should really set \code{target} to a value that reflects an outcome one would consider practically irrelevant. Note that if \code{target} has the opposite sign as the actually observed average outcome, then its sign is automatically flipped.
 
-   The Rosenberg method calculates the number of studies averaging null results that would have to be added to the given set of observed outcomes to reduce the significance level (i.e., p-value) of the weighted average outcome (based on a fixed-effects model) to a particular alpha level (e.g., .05). The method is described in Rosenberg (2005).
+   The Rosenberg method calculates the number of studies averaging null results that would have to be added to the given set of observed outcomes to reduce the significance level (i.e., p-value) of the weighted average outcome (based on an equal-effects model) to a particular alpha level (e.g., .05). The method is described in Rosenberg (2005).
 
    If the combined/observed significance level is above the specified alpha level (for \code{type = "Rosenthal"} or \code{type = "Rosenberg"}) or if the observed average outcome is below the target average outcome (for \code{type = "Orwin"}), then the fail-sage N value will be 0.
 }
@@ -65,8 +65,8 @@ fsn(yi, vi, sei, data, type="Rosenthal", alpha=.05,
 ### calculate log risk ratios and corresponding sampling variances
 dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
-### fit fixed-effects model
-rma(yi, vi, data=dat, method="FE")
+### fit equal-effects model
+rma(yi, vi, data=dat, method="EE")
 
 ### fail-safe N computations
 fsn(yi, vi, data=dat)

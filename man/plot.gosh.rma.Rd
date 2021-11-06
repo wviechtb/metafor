@@ -51,8 +51,8 @@
 ### calculate log odds ratios and corresponding sampling variances
 dat <- escalc(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat.egger2001)
 
-### meta-analysis of all trials including ISIS-4 using a FE model
-res <- rma(yi, vi, data=dat, method="FE")
+### meta-analysis of all trials including ISIS-4 using an equal-effects model
+res <- rma(yi, vi, data=dat, method="EE")
 
 ### fit FE model to all possible subsets (65535 models)
 \dontrun{

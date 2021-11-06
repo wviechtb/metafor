@@ -3,7 +3,7 @@
 \alias{rma}
 \title{Meta-Analysis via Linear (Mixed-Effects) Models}
 \description{
-   Function to fit meta-analytic fixed- and random/mixed-effects models with or without moderators via linear (mixed-effects) models. See below and the introduction to the \pkg{\link{metafor-package}} for more details on these models. \loadmathjax
+   Function to fit meta-analytic equal-, fixed-, and random-effects models and (mixed-effects) meta-regression models using a linear (mixed-effects) model framework. See below and the introduction to the \pkg{\link{metafor-package}} for more details on these models. \loadmathjax
 }
 \usage{
 rma.uni(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
@@ -56,7 +56,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \item{to}{see the documentation of the \code{\link{escalc}} function.}
    \item{drop00}{see the documentation of the \code{\link{escalc}} function.}
    \item{vtype}{see the documentation of the \code{\link{escalc}} function.}
-   \item{method}{character string to specify whether a fixed- or a random/mixed-effects model should be fitted. A fixed-effects model (with or without moderators) is fitted when using \code{method="FE"}. Random/mixed-effects models are fitted by setting \code{method} equal to one of the following: \code{"DL"}, \code{"HE"}, \code{"HS"}, \code{"HSk"}, \code{"SJ"}, \code{"ML"}, \code{"REML"}, \code{"EB"}, \code{"PM"}, \code{"GENQ"}, \code{"PMM"}, or \code{"GENQM"}. Default is \code{"REML"}. See \sQuote{Details}.}
+   \item{method}{character string to specify whether an equal- or a random-effects model should be fitted. An equal-effects model is fitted when using \code{method="EE"}. A random-effects model is fitted by setting \code{method} equal to one of the following: \code{"DL"}, \code{"HE"}, \code{"HS"}, \code{"HSk"}, \code{"SJ"}, \code{"ML"}, \code{"REML"}, \code{"EB"}, \code{"PM"}, \code{"GENQ"}, \code{"PMM"}, or \code{"GENQM"}. Default is \code{"REML"}. See \sQuote{Details}.}
    \item{weighted}{logical to specify whether weighted (default) or unweighted estimation should be used to fit the model.}
    \item{test}{character string to specify how test statistics and confidence intervals for the fixed effects should be computed. By default (\code{test="z"}), Wald-type tests and CIs are obtained, which are based on a standard normal distribution. When \code{test="t"}, a t-distribution is used instead. When \code{test="knha"}, the method by Knapp and Hartung (2003) is used. See \sQuote{Details}.}
    \item{level}{numeric value between 0 and 100 to specify the confidence interval level (the default is 95).}
@@ -72,7 +72,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
    \subsection{Specifying the Data}{
 
-      The function can be used in conjunction with any of the usual effect size or outcome measures used in meta-analyses (e.g., log risk ratios, log odds ratios, risk differences, mean differences, standardized mean differences, log transformed ratios of means, raw correlation coefficients, correlation coefficients transformed with Fisher's r-to-z transformation, and so on). Simply specify the observed effect sizes or outcomes via the \code{yi} argument and the corresponding sampling variances via the \code{vi} argument. Instead of specifying \code{vi}, one can specify the standard errors (the square root of the sampling variances) via the \code{sei} argument. The \code{\link{escalc}} function can be used to compute a wide variety of effect size or outcome measures (and the corresponding sampling variances) based on summary statistics.
+      The function can be used in combination with any of the usual effect size or outcome measures used in meta-analyses (e.g., log risk ratios, log odds ratios, risk differences, mean differences, standardized mean differences, log transformed ratios of means, raw correlation coefficients, correlation coefficients transformed with Fisher's r-to-z transformation, and so on). Simply specify the observed effect sizes or outcomes via the \code{yi} argument and the corresponding sampling variances via the \code{vi} argument. Instead of specifying \code{vi}, one can specify the standard errors (the square root of the sampling variances) via the \code{sei} argument. The \code{\link{escalc}} function can be used to compute a wide variety of effect size or outcome measures (and the corresponding sampling variances) based on summary statistics.
 
       Alternatively, the function can automatically calculate the values of a chosen effect size or outcome measure (and the corresponding sampling variances) when supplied with the necessary data. The \code{\link{escalc}} function describes which effect size or outcome measures are currently implemented and what data/arguments should then be specified/used. The \code{measure} argument should then be set to the desired effect size or outcome measure.
 
@@ -80,9 +80,9 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
    \subsection{Specifying the Model}{
 
-      The function can be used to fit fixed- and random/mixed-effects models, as well as meta-regression models including moderators (the difference between the various models is described in detail on the introductory \pkg{\link{metafor-package}} help page).
+      The function can be used to fit equal- and random-effects models, as well as (mixed-effects) meta-regression models including one or multiple moderators (the difference between the various models is described in detail on the introductory \pkg{\link{metafor-package}} help page).
 
-      Assuming the observed effect sizes or outcomes and corresponding sampling variances are supplied via \code{yi} and \code{vi}, a \emph{fixed-effects model} can be fitted with \code{rma(yi, vi, method="FE")}. Weighted estimation (with inverse-variance weights) is used by default. User-defined weights can be supplied via the \code{weights} argument. Unweighted estimation can be used by setting \code{weighted=FALSE} (which is the same as setting the weights equal to a constant).
+      Assuming the observed effect sizes or outcomes and corresponding sampling variances are supplied via \code{yi} and \code{vi}, an \emph{equal-effects model} can be fitted with \code{rma(yi, vi, method="EE")}. Weighted estimation (with inverse-variance weights) is used by default. User-defined weights can be supplied via the \code{weights} argument. Unweighted estimation can be used by setting \code{weighted=FALSE} (which is the same as setting the weights equal to a constant).
 
       A \emph{random-effects model} can be fitted with the same code but setting the \code{method} argument to one of the various estimators for the amount of heterogeneity:
       \itemize{
@@ -100,7 +100,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
       \item \code{method="GENQM"} = median-unbiased generalized Q-statistic estimator.
       } For a description of the various estimators, see Brannick et al. (2019), DerSimonian and Kacker (2007), Raudenbush (2009), Veroniki et al. (2016), Viechtbauer (2005), and Viechtbauer et al. (2015). Note that the Hedges estimator is also called the \sQuote{variance component estimator} or \sQuote{Cochran estimator}, the Sidik-Jonkman estimator is also called the \sQuote{model error variance estimator}, the empirical Bayes estimator is actually identical to the Paule-Mandel estimator (Paule & Mandel, 1982), and the generalized Q-statistic estimator is a general method-of-moments estimator (DerSimonian & Kacker, 2007) requiring the specification of weights (the HE and DL estimators are just special cases with equal and inverse sampling variance weights, respectively). Finally, the two median-unbiased estimators are versions of the Paule-Mandel and generalized Q-statistic estimators that equate the respective estimating equations not to their expected values, but to the medians of their theoretical distributions.
 
-      One or more moderators can be included in these models via the \code{mods} argument. A single moderator can be given as a (row or column) vector of length \mjseqn{k} specifying the values of the moderator. Multiple moderators are specified by giving an appropriate model matrix (i.e., \mjseqn{X}) with \mjseqn{k} rows and as many columns as there are moderator variables (e.g., \code{mods = cbind(mod1, mod2, mod3)}, where \code{mod1}, \code{mod2}, and \code{mod3} correspond to the names of the variables for three moderator variables). The intercept is added to the model matrix by default unless \code{intercept=FALSE}.
+      One or more moderators can be included in a model via the \code{mods} argument. A single moderator can be given as a (row or column) vector of length \mjseqn{k} specifying the values of the moderator. Multiple moderators are specified by giving an appropriate model matrix (i.e., \mjseqn{X}) with \mjseqn{k} rows and as many columns as there are moderator variables (e.g., \code{mods = cbind(mod1, mod2, mod3)}, where \code{mod1}, \code{mod2}, and \code{mod3} correspond to the names of the variables for three moderator variables). The intercept is added to the model matrix by default unless \code{intercept=FALSE}.
 
       Alternatively, one can use standard \code{\link{formula}} syntax to specify the model. In this case, the \code{mods} argument should be set equal to a one-sided formula of the form \code{mods = ~ model} (e.g., \code{mods = ~ mod1 + mod2 + mod3}). Interactions, polynomial terms, and factors can be easily added to the model in this manner. When specifying a model formula via the \code{mods} argument, the \code{intercept} argument is ignored. Instead, the inclusion/exclusion of the intercept is controlled by the specified formula (e.g., \code{mods = ~ mod1 + mod2 + mod3 - 1} would lead to the removal of the intercept).
 
@@ -148,7 +148,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \item{ci.lb}{lower bound of the confidence intervals for the coefficients.}
    \item{ci.ub}{upper bound of the confidence intervals for the coefficients.}
    \item{vb}{variance-covariance matrix of the estimated coefficients.}
-   \item{tau2}{estimated amount of (residual) heterogeneity. Always \code{0} when \code{method="FE"}.}
+   \item{tau2}{estimated amount of (residual) heterogeneity. Always \code{0} when \code{method="EE"}.}
    \item{se.tau2}{standard error of the estimated amount of (residual) heterogeneity.}
    \item{k}{number of studies included in the analysis.}
    \item{p}{number of coefficients in the model (including the intercept).}
@@ -209,7 +209,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
    The Sidik-Jonkman estimator starts with a crude estimate of \mjseqn{\tau^2}, which is then updated as described in Sidik and Jonkman (2005b, 2007). If, instead of the crude estimate, one wants to use a better a priori estimate, one can do so by passing this value via \code{control=list(tau2.init=value)}.
 
-   Outcomes with non-positive sampling variances are problematic. If a sampling variance is equal to zero, then its weight will be \mjseqn{1/0} for fixed-effects models when using weighted estimation. Switching to unweighted estimation is a possible solution then. For random/mixed-effects model, some estimators of \mjseqn{\tau^2} are undefined when there is at least one sampling variance equal to zero. Other estimators may work, but it may still be necessary to switch to unweighted model fitting, especially when the estimate of \mjseqn{\tau^2} converges to zero.
+   Outcomes with non-positive sampling variances are problematic. If a sampling variance is equal to zero, then its weight will be \mjseqn{1/0} for equal-effects models when using weighted estimation. Switching to unweighted estimation is a possible solution then. For random/mixed-effects model, some estimators of \mjseqn{\tau^2} are undefined when there is at least one sampling variance equal to zero. Other estimators may work, but it may still be necessary to switch to unweighted model fitting, especially when the estimate of \mjseqn{\tau^2} converges to zero.
 
    When including moderators in the model, it is possible that the model matrix is not of full rank (i.e., there is a linear relationship between the moderator variables included in the model). The function automatically tries to reduce the model matrix to full rank by removing redundant predictors, but if this fails the model cannot be fitted and an error will be issued. Deleting (redundant) moderator variables from the model as needed should solve this problem.
 

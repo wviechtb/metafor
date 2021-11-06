@@ -22,9 +22,9 @@ gosh(x, \dots)
 \details{
    The model specified via \code{x} must be a model fitted with either the \code{\link{rma.uni}}, \code{\link{rma.mh}}, or \code{\link{rma.peto}} function.
 
-   Olkin et al. (2012) proposed the GOSH (graphical display of study heterogeneity) plot, which is based on examining the results of a fixed-effects model in all possible subsets of size \mjseqn{1, \ldots, k} of the \mjseqn{k} studies included in a meta-analysis. In a homogeneous set of studies, the model estimates obtained this way should form a roughly symmetric, contiguous, and unimodal distribution. On the other hand, when the distribution is multimodal, then this suggests the presence of heterogeneity, possibly due to outliers and/or distinct subgroupings of studies. Plotting the estimates against some measure of heterogeneity (e.g., \mjseqn{I^2}, \mjseqn{H^2}, or the \mjseqn{Q}-statistic) can also help to reveal subclusters, which are indicative of heterogeneity. The same type of plot can be produced by first fitting a fixed-effects model with either the \code{\link{rma.uni}} (using \code{method="FE"}), \code{\link{rma.mh}}, or \code{\link{rma.peto}} functions and then passing the fitted model object to the \code{gosh} function and then plotting the results.
+   Olkin et al. (2012) proposed the GOSH (graphical display of study heterogeneity) plot, which is based on examining the results of an equal-effects model in all possible subsets of size \mjseqn{1, \ldots, k} of the \mjseqn{k} studies included in a meta-analysis. In a homogeneous set of studies, the model estimates obtained this way should form a roughly symmetric, contiguous, and unimodal distribution. On the other hand, when the distribution is multimodal, then this suggests the presence of heterogeneity, possibly due to outliers and/or distinct subgroupings of studies. Plotting the estimates against some measure of heterogeneity (e.g., \mjseqn{I^2}, \mjseqn{H^2}, or the \mjseqn{Q}-statistic) can also help to reveal subclusters, which are indicative of heterogeneity. The same type of plot can be produced by first fitting an equal-effects model with either the \code{\link{rma.uni}} (using \code{method="EE"}), \code{\link{rma.mh}}, or \code{\link{rma.peto}} functions and then passing the fitted model object to the \code{gosh} function and then plotting the results.
 
-   For models fitted with the \code{\link{rma.uni}} function (which may involve moderators and/or may be random/mixed-effects models), the idea underlying this type of plot can be generalized (Viechtbauer, 2021) by examining the distribution of all model coefficients, plotting them against each other, and against some measure of (residual) heterogeneity (including the estimate of \mjseqn{\tau^2}).
+   For models fitted with the \code{\link{rma.uni}} function (which may be random-effects or mixed-effects meta-regressions models), the idea underlying this type of plot can be generalized (Viechtbauer, 2021) by examining the distribution of all model coefficients, plotting them against each other, and against some measure of (residual) heterogeneity (including the estimate of \mjseqn{\tau^2}).
 
    Note that for models without moderators, application of the method requires fitting a total of \mjseqn{2^k - 1} models, which could be an excessively large number when \mjseqn{k} is large. For example, for \mjseqn{k=10}, there are only 1023 possible subsets, but for \mjseqn{k=20}, this number already grows to 1048575. For even larger \mjseqn{k}, it may become computationally infeasible to consider all possible subsets. Instead, we can then examine (a sufficiently large number of) random subsets.
 
@@ -58,8 +58,8 @@ gosh(x, \dots)
 ### calculate log odds ratios and corresponding sampling variances
 dat <- escalc(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat.egger2001)
 
-### meta-analysis of all trials including ISIS-4 using a FE model
-res <- rma(yi, vi, data=dat, method="FE")
+### meta-analysis of all trials including ISIS-4 using an equal-effects model
+res <- rma(yi, vi, data=dat, method="EE")
 
 ### fit FE model to all possible subsets (65535 models)
 \dontrun{

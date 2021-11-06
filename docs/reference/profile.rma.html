@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-29</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-30</span>
       </span>
     </div>
 
@@ -184,7 +184,7 @@
 <h3 id="selecting-the-parameter-s-to-profile">Selecting the Parameter(s) to Profile<a class="anchor" aria-label="anchor" href="#selecting-the-parameter-s-to-profile"></a></h3>
 
 
-<p>The parameters that can be profiled depend on the model object:</p><ul><li><p>For objects of class <code>"rma.uni"</code> obtained with the <code><a href="rma.uni.html">rma.uni</a></code> function, the function profiles over \(\tau^2\) (not for fixed-effects models).</p></li>
+<p>The parameters that can be profiled depend on the model object:</p><ul><li><p>For objects of class <code>"rma.uni"</code> obtained with the <code><a href="rma.uni.html">rma.uni</a></code> function, the function profiles over \(\tau^2\) (not for equal-effects models).</p></li>
 <li><p>For objects of class <code>"rma.mv"</code> obtained with the <code><a href="rma.mv.html">rma.mv</a></code> function, profiling is done by default over all (non-fixed) variance and correlation components of the model. Alternatively, one can use the <code>sigma2</code>, <code>tau2</code>, <code>rho</code>, <code>gamma2</code>, or <code>phi</code> arguments to specify over which parameter the profiling should be done. Only one of these arguments can be used at a time. A single integer is used to specify the number of the parameter.</p></li>
 <li><p>For selection model objects of class <code>"rma.uni.selmodel"</code> obtained with the <code><a href="selmodel.html">selmodel.rma.uni</a></code> function, profiling is done by default over \(\tau^2\) (for models where this is an estimated parameter) and all (non-fixed) selection model parameters. Alternatively, one can choose to profile only \(\tau^2\) by setting <code>tau2=TRUE</code> or one can select one of the selection model parameters to profile by specifying its number via the <code>delta</code> argument.</p></li>
 <li><p>For location-scale model objects of class <code>"rma.ls"</code> obtained with the <code><a href="rma.uni.html">rma.uni</a></code> function, profiling is done by default over all (non-fixed) \(\alpha\) parameters that are part of the scale model.</p></li>

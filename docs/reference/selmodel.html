@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-29</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-30</span>
       </span>
     </div>
 
@@ -179,7 +179,7 @@
 <p>For example, if <code>steps=c(.05, .10, .50, 1)</code>, then \(\delta_2\) is the likelihood of selection for p-values between .05 and .10, \(\delta_3\) is the likelihood of selection for p-values between .10 and .50, and \(\delta_4\) is the likelihood of selection for p-values between .50 and 1 relative to the likelihood of selection for p-values between 0 and .05. The figure below shows the corresponding selection function for some arbitrarily chosen \(\delta_j\) values.</p>
 <p><img src="figures/selmodel-stepfun.png" width="600"></p>
 <p>There must be at least one observed p-value within each interval to fit this model. If this is not the case, an error will be issued (setting <code>verbose=TRUE</code> provides information about the number of p-values falling into each interval).</p>
-<p>When specifying a single cutpoint in the context of a random-effects model, this model is sometimes called the ‘three-parameter selection model’ (3PSM), corresponding to the parameters \(\mu\), \(\tau^2\), and \(\delta_2\) (e.g., Carter et al., 2019; McShane et al., 2016; Pustejovsky &amp; Rodgers, 2019). The same idea but in the context of a fixed-effects model was also described by Iyengar and Greenhouse (1988).</p>
+<p>When specifying a single cutpoint in the context of a random-effects model, this model is sometimes called the ‘three-parameter selection model’ (3PSM), corresponding to the parameters \(\mu\), \(\tau^2\), and \(\delta_2\) (e.g., Carter et al., 2019; McShane et al., 2016; Pustejovsky &amp; Rodgers, 2019). The same idea but in the context of an equal-effects model was also described by Iyengar and Greenhouse (1988).</p>
 <p>Note that when <code>alternative="greater"</code> or <code>alternative="less"</code> (i.e., when we assume that the relative likelihood of selection is not only related to the p-values of the studies, but also the directionality of the outcomes), then it would usually make sense to divide conventional levels of significance (e.g., .05) by 2 before passing these values to the <code>steps</code> argument. For example, if we think that studies were selected for positive outcomes that are significant at two-tailed \(\alpha = .05\), then we should use <code>alternative="greater"</code> in combination with <code>steps=c(.025, 1)</code>.</p>
 <p>One of the challenges when fitting this model with many cutpoints is the large number of parameters that need to be estimated (which is especially problematic when the number of studies is small). An alternative approach suggested by Vevea and Woods (2005) is to fix the \(\delta_j\) values to some a priori chosen values instead of estimating them. One can then conduct a sensitivity analysis by examining the results (e.g., the estimates of \(\mu\) and \(\tau^2\) in a random-effects model) for a variety of different sets of \(\delta_j\) values (reflecting more or less severe forms of selection). This can be done by specifying the \(\delta_j\) values via the <code>delta</code> argument. Table 1 in Vevea and Woods (2005) provides some illustrative examples of moderate and severe selection functions for one- and two-tailed selection. The code below creates a data frame that contains these functions.</p>
 <p></p><pre><code><span class="va">tab</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>
@@ -215,7 +215,7 @@
 <dt>vb</dt>
 <dd><p>variance-covariance matrix of the estimated coefficients.</p></dd>
 <dt>tau2</dt>
-<dd><p>estimated amount of (residual) heterogeneity. Always <code>0</code> when <code>method="FE"</code>.</p></dd>
+<dd><p>estimated amount of (residual) heterogeneity. Always <code>0</code> when <code>method="EE"</code>.</p></dd>
 <dt>se.tau2</dt>
 <dd><p>standard error of the estimated amount of (residual) heterogeneity.</p></dd>
 </dl><p>In addition, the object contains the following additional elements:</p>
@@ -238,7 +238,7 @@
 <dt>LRTp</dt>
 <dd><p>p-value for the likelihood ratio test.</p></dd>
 <dt>LRT.tau2</dt>
-<dd><p>test statistic of the likelihood ratio test for testing \(\mbox{H}_0{:}\; \tau^2 = 0\) (<code>NA</code> when fitting a fixed-effects model).</p></dd>
+<dd><p>test statistic of the likelihood ratio test for testing \(\mbox{H}_0{:}\; \tau^2 = 0\) (<code>NA</code> when fitting an equal-effects model).</p></dd>
 <dt>LRTp.tau2</dt>
 <dd><p>p-value for the likelihood ratio test.</p></dd>
 <dt>...</dt>
@@ -508,7 +508,7 @@
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Some yi/vi values are NA.</span>
 <span class="r-in"><span class="va">res</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Fixed-Effects Model (k = 12)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Equal-Effects Model (k = 12)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> I^2 (total heterogeneity / total variability):  0.00%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> H^2 (total variability / sampling variability): 0.82</span>
@@ -547,8 +547,8 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 11         USA 1982  0  15  1  20 -0.8690 2.7825 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 12         WHO 1995 33 221 43 218 -0.3363 0.0646 </span>
 <span class="r-in"></span>
-<span class="r-in"><span class="co"># fit fixed-effects model</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, method<span class="op">=</span><span class="st">"FE"</span><span class="op">)</span></span>
+<span class="r-in"><span class="co"># fit equal-effects model</span></span>
+<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, method<span class="op">=</span><span class="st">"EE"</span><span class="op">)</span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Studies with NAs omitted from model fitting.</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># predicted odds ratio (with 95% CI)</span></span>

@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-29</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-30</span>
       </span>
     </div>
 
@@ -120,7 +120,7 @@
 </dl></div>
     <div id="details">
     <h2>Details</h2>
-    <p>The trim and fill method is a nonparametric (rank-based) data augmentation technique proposed by Duval and Tweedie (2000a, 2000b; see also Duval, 2005). The method can be used to estimate the number of studies missing from a meta-analysis due to suppression of the most extreme results on one side of the funnel plot. The method then augments the observed data so that the funnel plot is more symmetric and recomputes the summary estimate based on the complete data. The trim and fill method can only be used in the context of a fixed- or random-effects model (i.e., in models without moderators). The method should not be regarded as a way of yielding a more ‘valid’ estimate of the overall effect or outcome, but as a way of examining the sensitivity of the results to one particular selection mechanism (i.e., one particular form of publication bias).</p>
+    <p>The trim and fill method is a nonparametric (rank-based) data augmentation technique proposed by Duval and Tweedie (2000a, 2000b; see also Duval, 2005). The method can be used to estimate the number of studies missing from a meta-analysis due to suppression of the most extreme results on one side of the funnel plot. The method then augments the observed data so that the funnel plot is more symmetric and recomputes the summary estimate based on the complete data. The trim and fill method can only be used in the context of an equal- or a random-effects model (i.e., in models without moderators). The method should not be regarded as a way of yielding a more ‘valid’ estimate of the overall effect or outcome, but as a way of examining the sensitivity of the results to one particular selection mechanism (i.e., one particular form of publication bias).</p>
     </div>
     <div id="value">
     <h2>Value</h2>
@@ -145,7 +145,7 @@
     <h2>Note</h2>
     <p>Three different estimators for the number of missing studies were proposed by Duval and Tweedie (2000a, 2000b). Based on these articles and Duval (2005), <code>"R0"</code> and <code>"L0"</code> are recommended. An advantage of estimator <code>"R0"</code> is that it provides a test of the null hypothesis that the number of missing studies (on the chosen side) is zero.</p>
 <p>If the outcome measure used for the analysis is bounded (e.g., correlations are bounded between -1 and +1, proportions are bounded between 0 and 1), one can use the <code>ilim</code> argument to enforce those limits when imputing values (imputed values cannot exceed those bounds then).</p>
-<p>The model used during the trim and fill procedure is the same as used by the original model object. Hence, if a fixed-effects model is passed to the function, then a fixed-effects model is also used during the trim and fill procedure and the results provided are also based on a fixed-effects model. This would be a ‘fixed-fixed’ approach. Similarly, if a random-effects model is passed to the function, then the same model is used as part of the trim and fill procedure and for the final analysis. This would be a ‘random-random’ approach. However, one can also easily fit a different model for the final analysis than was used for the trim and fill procedure. See ‘Examples’ for an illustration of a ‘fixed-random’ approach.</p>
+<p>The model used during the trim and fill procedure is the same as used by the original model object. Hence, if an equal-effects model is passed to the function, then an equal-effects model is also used during the trim and fill procedure and the results provided are also based on an equal-effects model. This would be a ‘equal-equal’ approach. Similarly, if a random-effects model is passed to the function, then the same model is used as part of the trim and fill procedure and for the final analysis. This would be a ‘random-random’ approach. However, one can also easily fit a different model for the final analysis than was used for the trim and fill procedure. See ‘Examples’ for an illustration of an ‘equal-random’ approach.</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -169,14 +169,14 @@
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">### calculate log risk ratios and corresponding sampling variances</span></span>
 <span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="co">### meta-analysis of the log risk ratios using a fixed-effects model</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, method<span class="op">=</span><span class="st">"FE"</span><span class="op">)</span></span>
+<span class="r-in"><span class="co">### meta-analysis of the log risk ratios using an equal-effects model</span></span>
+<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, method<span class="op">=</span><span class="st">"EE"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">res.tf</span> <span class="op">&lt;-</span> <span class="fu">trimfill</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">res.tf</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Estimated number of missing studies on the right side: 4 (SE = 2.3853)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Fixed-Effects Model (k = 17)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Equal-Effects Model (k = 17)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> I^2 (total heterogeneity / total variability):   93.91%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> H^2 (total variability / sampling variability):  16.42</span>
@@ -202,7 +202,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Estimated number of missing studies on the right side: 4 (SE = 3.1623)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Test of H0: no missing studies on the right side:      p-val = 0.0312</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Fixed-Effects Model (k = 17)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Equal-Effects Model (k = 17)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> I^2 (total heterogeneity / total variability):   93.91%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> H^2 (total variability / sampling variability):  16.42</span>
@@ -247,10 +247,10 @@
 <span class="r-in"><span class="fu"><a href="funnel.html">funnel</a></span><span class="op">(</span><span class="va">res.tf</span>, legend<span class="op">=</span><span class="cn">TRUE</span>, cex<span class="op">=</span><span class="fl">1.2</span><span class="op">)</span></span>
 <span class="r-plt img"><img src="trimfill-2.png" alt="" width="864" height="768"></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="co">### the examples above are fixed-fixed and random-random approaches</span></span>
+<span class="r-in"><span class="co">### the examples above are equal-equal and random-random approaches</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="co">### illustration of a fixed-random approach</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, method<span class="op">=</span><span class="st">"FE"</span><span class="op">)</span></span>
+<span class="r-in"><span class="co">### illustration of an equal-random approach</span></span>
+<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, method<span class="op">=</span><span class="st">"EE"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">res.tf</span> <span class="op">&lt;-</span> <span class="fu">trimfill</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">filled</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>yi <span class="op">=</span> <span class="va">res.tf</span><span class="op">$</span><span class="va">yi</span>, vi <span class="op">=</span> <span class="va">res.tf</span><span class="op">$</span><span class="va">vi</span>, fill <span class="op">=</span> <span class="va">res.tf</span><span class="op">$</span><span class="va">fill</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">filled</span></span>

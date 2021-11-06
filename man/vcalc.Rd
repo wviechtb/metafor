@@ -153,7 +153,7 @@ dat <- reshape(dat, direction="long", idvar="study", v.names=c("yi","vi"),
                varying=list(c(2,4,6,8), c(3,5,7,9)))
 dat <- dat[order(dat$study, dat$time),]
 
-### remove missing measurement occasions from dat.long
+### remove missing measurement occasions from dat
 dat <- dat[!is.na(dat$yi),]
 rownames(dat) <- NULL
 

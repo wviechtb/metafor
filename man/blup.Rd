@@ -35,7 +35,7 @@ blup(x, \dots)
 
    For conditional residuals (the deviations of the observed effect sizes or outcomes from the BLUPs), see \code{rstandard.rma.uni} with \code{type="conditional"}.
 
-   Fixed-effects models (with or without moderators) do not contain random study effects. The BLUPs for these models will therefore be equal to the fitted values, that is, those obtained with \code{\link{fitted.rma}} and \code{\link{predict.rma}}.
+   Equal-effects models do not contain random study effects. The BLUPs for these models will therefore be equal to the fitted values, that is, those obtained with \code{\link{fitted.rma}} and \code{\link{predict.rma}}.
 
    When using the \code{transf} argument, the transformation is applied to the predicted values and the corresponding interval bounds. The standard errors are then set equal to \code{NA} and are omitted from the printed output.
 

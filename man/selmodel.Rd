@@ -112,7 +112,7 @@ selmodel(x, \dots)
 
       There must be at least one observed p-value within each interval to fit this model. If this is not the case, an error will be issued (setting \code{verbose=TRUE} provides information about the number of p-values falling into each interval).
 
-      When specifying a single cutpoint in the context of a random-effects model, this model is sometimes called the \sQuote{three-parameter selection model} (3PSM), corresponding to the parameters \mjseqn{\mu}, \mjseqn{\tau^2}, and \mjseqn{\delta_2} (e.g., Carter et al., 2019; McShane et al., 2016; Pustejovsky & Rodgers, 2019). The same idea but in the context of a fixed-effects model was also described by Iyengar and Greenhouse (1988).
+      When specifying a single cutpoint in the context of a random-effects model, this model is sometimes called the \sQuote{three-parameter selection model} (3PSM), corresponding to the parameters \mjseqn{\mu}, \mjseqn{\tau^2}, and \mjseqn{\delta_2} (e.g., Carter et al., 2019; McShane et al., 2016; Pustejovsky & Rodgers, 2019). The same idea but in the context of an equal-effects model was also described by Iyengar and Greenhouse (1988).
 
       Note that when \code{alternative="greater"} or \code{alternative="less"} (i.e., when we assume that the relative likelihood of selection is not only related to the p-values of the studies, but also the directionality of the outcomes), then it would usually make sense to divide conventional levels of significance (e.g., .05) by 2 before passing these values to the \code{steps} argument. For example, if we think that studies were selected for positive outcomes that are significant at two-tailed \mjseqn{\alpha = .05}, then we should use \code{alternative="greater"} in combination with \code{steps=c(.025, 1)}.
 
@@ -144,7 +144,7 @@ selmodel(x, \dots)
    \item{ci.lb}{lower bound of the confidence intervals for the coefficients.}
    \item{ci.ub}{upper bound of the confidence intervals for the coefficients.}
    \item{vb}{variance-covariance matrix of the estimated coefficients.}
-   \item{tau2}{estimated amount of (residual) heterogeneity. Always \code{0} when \code{method="FE"}.}
+   \item{tau2}{estimated amount of (residual) heterogeneity. Always \code{0} when \code{method="EE"}.}
    \item{se.tau2}{standard error of the estimated amount of (residual) heterogeneity.}
 
    In addition, the object contains the following additional elements:
@@ -157,7 +157,7 @@ selmodel(x, \dots)
    \item{LRT}{test statistic of the likelihood ratio test for the selection model parameter(s).}
    \item{LRTdf}{degrees of freedom for the likelihood ratio test.}
    \item{LRTp}{p-value for the likelihood ratio test.}
-   \item{LRT.tau2}{test statistic of the likelihood ratio test for testing \mjeqn{\mbox{H}_0{:}\; \tau^2 = 0}{H_0: \tau^2 = 0} (\code{NA} when fitting a fixed-effects model).}
+   \item{LRT.tau2}{test statistic of the likelihood ratio test for testing \mjeqn{\mbox{H}_0{:}\; \tau^2 = 0}{H_0: \tau^2 = 0} (\code{NA} when fitting an equal-effects model).}
    \item{LRTp.tau2}{p-value for the likelihood ratio test.}
    \item{\dots}{some additional elements/values.}
 }
@@ -267,8 +267,8 @@ res
 dat <- escalc(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, drop00=TRUE)
 dat
 
-# fit fixed-effects model
-res <- rma(yi, vi, data=dat, method="FE")
+# fit equal-effects model
+res <- rma(yi, vi, data=dat, method="EE")
 
 # predicted odds ratio (with 95\% CI)
 predict(res, transf=exp, digits=2)

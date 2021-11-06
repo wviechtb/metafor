@@ -24,7 +24,7 @@ cumul(x, \dots)
    \item{\dots}{other arguments.}
 }
 \details{
-   For \code{"rma.uni"} objects, the model specified via \code{x} must be a model without moderators (i.e., either a fixed- or a random-effects model).
+   For \code{"rma.uni"} objects, the model specified via \code{x} must be a model without moderators (i.e., either an equal- or a random-effects model).
 
    If argument \code{order} is not specified, the studies are added according to their order in the original dataset.
 

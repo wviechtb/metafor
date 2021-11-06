@@ -2,7 +2,7 @@
 \alias{rma.mh}
 \title{Meta-Analysis via the Mantel-Haenszel Method}
 \description{
-   Function to fit fixed-effects models to \mjeqn{2 \times 2}{2x2} table and person-time data via the Mantel-Haenszel method. See below and the introduction to the \pkg{\link{metafor-package}} for more details on these models. \loadmathjax
+   Function to fit equal-effects models to \mjeqn{2 \times 2}{2x2} table and person-time data via the Mantel-Haenszel method. See below and the introduction to the \pkg{\link{metafor-package}} for more details on these models. \loadmathjax
 }
 \usage{
 rma.mh(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
@@ -56,7 +56,7 @@ rma.mh(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
    \subsection{Mantel-Haenszel Method}{
 
-      An approach for aggregating data of these types was suggested by Mantel and Haenszel (1959) and later extended by various authors (see references). The Mantel-Haenszel method provides a weighted estimate under a fixed-effects model. The method is particularly advantageous when aggregating a large number of studies with small sample sizes (the so-called sparse data or increasing strata case).
+      An approach for aggregating data of these types was suggested by Mantel and Haenszel (1959) and later extended by various authors (see references). The Mantel-Haenszel method provides a weighted estimate under an equal-effects model. The method is particularly advantageous when aggregating a large number of studies with small sample sizes (the so-called sparse data or increasing strata case).
 
       When analyzing odds ratios, the Cochran-Mantel-Haenszel (CMH) test (Cochran, 1954; Mantel & Haenszel, 1959) and Tarone's test for heterogeneity (Tarone, 1985) are also provided (by default, the CMH test statistic is computed with the continuity correction; this can be switched off with \code{correct=FALSE}). When analyzing incidence rate ratios, the Mantel-Haenszel (MH) test (Rothman et al., 2008) for person-time data is also provided (again, the \code{correct} argument controls whether the continuity correction is applied). When analyzing risk ratios, odds ratios, or incidence rate ratios, the printed results are given both in terms of the log and the raw units (for easier interpretation).
 

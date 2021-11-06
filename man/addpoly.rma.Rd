@@ -30,7 +30,7 @@
    \item{\dots}{other arguments.}
 }
 \details{
-   The function can be used to add a four-sided polygon, sometimes called a summary \sQuote{diamond}, to an existing forest plot created with the \code{\link{forest}} function. The polygon shows the summary estimate (with its confidence interval bounds) based on a fixed- or random-effects model. Using this function, summary estimates based on different types of models can be shown in the same plot. Also, summary estimates based on a subgrouping of the studies can be added to the plot this way. See \sQuote{Examples}.
+   The function can be used to add a four-sided polygon, sometimes called a summary \sQuote{diamond}, to an existing forest plot created with the \code{\link{forest}} function. The polygon shows the summary estimate (with its confidence interval bounds) based on an equal- or a random-effects model. Using this function, summary estimates based on different types of models can be shown in the same plot. Also, summary estimates based on a subgrouping of the studies can be added to the plot this way. See \sQuote{Examples}.
 
    The arguments \code{transf}, \code{atransf}, \code{efac}, and \code{cex} should always be set equal to the same values used to create the forest plot.
 }
