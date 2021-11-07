@@ -12,8 +12,8 @@
         H0=0, append=TRUE, replace=TRUE, level=95, olim, digits, transf, \dots)
 }
 \arguments{
-   \item{x}{an object of class \code{"escalc"}.}
-   \item{object}{an object of class \code{"escalc"}.}
+   \item{x}{an object of class \code{"escalc"} obtained with \code{\link{escalc}}.}
+   \item{object}{an object of class \code{"escalc"} obtained with \code{\link{escalc}}.}
    \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded (the default is to take the value from the object).}
    \item{out.names}{character string with four elements to specify the variable names for the standard errors, test statistics, and lower/upper confidence interval bounds.}
    \item{var.names}{character string with two elements to specify the variable names for the observed effect sizes or outcomes and the sampling variances (the default is to take the value from the object if possible).}

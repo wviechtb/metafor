@@ -25,7 +25,7 @@
 
    Alternatively, one can manually specify the indices of the coefficients to test via the \code{btt} argument. For example, with \code{btt=c(3,4)}, only the third and fourth coefficient from the model would be included in the test (if an intercept is included in the model, then it corresponds to the first coefficient in the model). Instead of specifying the coefficient numbers, one can specify a string for \code{btt}. In that case, \code{\link{grep}} will be used to search for all coefficient names that match the string. Using the \code{btt} argument, one can for example select all coefficients corresponding to a particular factor to test if the factor as a whole is significant. See \sQuote{Examples}.
 
-   Instead, one can use the \code{X} argument to specify a linear combination of the coefficients in the model that should be tested (i.e., whether the linear combination is significantly different from zero). If a matrix of linear combinations is specified, each row defines a particular linear combination to be tested. If the matrix is of full rank, an omnibus Wald-type test of all linear combinations is also provided. Linear combinations can also be obtained with the \code{\link{predict.rma}} function, which will provide corresponding confidence intervals.
+   Instead, one can use the \code{X} argument to specify a linear combination of the coefficients in the model that should be tested (i.e., whether the linear combination is significantly different from zero). If a matrix of linear combinations is specified, each row defines a particular linear combination to be tested. If the matrix is of full rank, an omnibus Wald-type test of all linear combinations is also provided. Linear combinations can also be obtained with the \code{\link[=predict.rma]{predict}} function, which will provide corresponding confidence intervals.
 
    When specifying two models for comparison, the function provides a likelihood ratio test (LRT) comparing the two models. The two models must be based on the same set of data, must be of the same class, and should be nested for the LRT to make sense. Note that LRTs are not meaningful when using REML estimation and the two models differ in terms of their fixed effects. Also, the theory underlying LRTs is only really applicable when comparing models that were fitted with ML/REML estimation.
 
@@ -64,7 +64,7 @@
    \item{R2}{amount (in percent) of the heterogeneity in the reduced model that is accounted for in the full model (\code{NA} for \code{"rma.mv"} objects). This can be regarded as a pseudo \mjseqn{R^2} statistic (Raudenbush, 2009). Note that the value may not be very accurate unless \mjseqn{k} is large (Lopez-Lopez et al., 2014).}
    \item{\dots}{some additional elements/values.}
 
-   The results are formatted and printed with the \code{\link{print.anova.rma}} function.
+   The results are formatted and printed with the \code{\link[=print.anova.rma]{print}} function.
 }
 \note{
    The function can also be used to conduct a likelihood ratio test (LRT) for the amount of (residual) heterogeneity in random- and mixed-effects models. The full model should then be fitted with either \code{method="ML"} or \code{method="REML"} and the reduced model with \code{method="EE"}. The p-value for the test is based on a chi-square distribution with 1 degree of freedom, but actually needs to be adjusted for the fact that the parameter (i.e., \mjseqn{\tau^2}) falls on the boundary of the parameter space under the null hypothesis (see Viechtbauer, 2007, for more details).

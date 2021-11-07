@@ -38,7 +38,7 @@ res
 # estimate      se    zval    pval   ci.lb   ci.ub
 #   0.1656  0.0269  6.1499  &amp;lt;.0001  0.1128  0.2184
 
-The Q-test suggests that the underlying true standardized mean differences are heterogeneous (\(Q(\textrm{df}=47) = 107.11, p estimate is an estimate of the inverse-variance weighted average of the true standardized mean differences of these 48 studies (i.e., \(\hat{\bar{\theta}}_w = 0.17\)).
+The Q-test suggests that the underlying true standardized mean differences are heterogeneous \((Q(\textrm{df}=47) = 107.11, p estimate is an estimate of the inverse-variance weighted average of the true standardized mean differences of these 48 studies (i.e., \(\hat{\bar{\theta}}_w = 0.17\)).
 One can also employ an unweighted estimation method (by setting weighted=FALSE in rma.uni), which provides an estimate of the unweighted average of the true effects/outcomes in the \(k\) studies, that is, an estimate of \[\bar{\theta}_u = \frac{\sum_{i=1}^k \theta_i}{k}.\]
 Returning to the example, we then find:
 # fit a fixed-effects model using unweighted estimation
@@ -213,7 +213,7 @@ res
 # estimate      se    zval    pval   ci.lb   ci.ub
 #   0.1656  0.0269  6.1499  &lt;.0001  0.1128  0.2184</code></pre>
 
-<p>The Q-test suggests that the underlying true standardized mean differences are heterogeneous (\(Q(\textrm{df}=47) = 107.11, p &lt; .0001\)). Therefore, if we believe this to be true, then the value shown under <code>estimate</code> is an estimate of the inverse-variance weighted average of the true standardized mean differences of these 48 studies (i.e., \(\hat{\bar{\theta}}_w = 0.17\)).</p>
+<p>The Q-test suggests that the underlying true standardized mean differences are heterogeneous \((Q(\textrm{df}=47) = 107.11, p &lt; .0001).\) Therefore, if we believe this to be true, then the value shown under <code>estimate</code> is an estimate of the inverse-variance weighted average of the true standardized mean differences of these 48 studies (i.e., \(\hat{\bar{\theta}}_w = 0.17\)).</p>
 <p>One can also employ an unweighted estimation method (by setting <code>weighted=FALSE</code> in <code><a href="rma.uni.html">rma.uni</a></code>), which provides an estimate of the <em>unweighted average</em> of the true effects/outcomes in the \(k\) studies, that is, an estimate of \[\bar{\theta}_u = \frac{\sum_{i=1}^k \theta_i}{k}.\]</p>
 <p>Returning to the example, we then find:</p>
 <pre><code># fit a fixed-effects model using unweighted estimation

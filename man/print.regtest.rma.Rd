@@ -8,7 +8,7 @@
 \method{print}{regtest}(x, digits=x$digits, ret.fit=x$ret.fit, \dots)
 }
 \arguments{
-   \item{x}{an object of class \code{"regtest"}.}
+   \item{x}{an object of class \code{"regtest"} obtained with \code{\link{regtest}}.}
    \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded (the default is to take the value from the object).}
    \item{ret.fit}{logical to specify whether the full results from the fitted model should also be returned. If unspecified, the default is to take the value from the object.}
    \item{\dots}{other arguments.}

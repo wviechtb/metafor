@@ -8,7 +8,7 @@
 \method{print}{ranktest}(x, digits=x$digits, \dots)
 }
 \arguments{
-   \item{x}{an object of class \code{"ranktest"}.}
+   \item{x}{an object of class \code{"ranktest"} obtained with \code{\link{ranktest}}.}
    \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded (the default is to take the value from the object).}
    \item{\dots}{other arguments.}
 }

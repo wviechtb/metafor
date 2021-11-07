@@ -31,7 +31,7 @@ ranktest(x, \dots)
    \item{tau}{the estimated value of Kendall's tau rank correlation coefficient}
    \item{pval}{the corresponding p-value for the test that the true tau is equal to zero}
 
-   The results are formatted and printed with the \code{\link{print.ranktest}} function.
+   The results are formatted and printed with the \code{\link[=print.ranktest]{print}} function.
 }
 \note{
    The method does not depend on the model fitted. Therefore, regardless of the model passed to the function, the results of the rank test will always be the same. See \code{\link{regtest}} for tests of funnel plot asymmetry that are based on regression models and model dependent.

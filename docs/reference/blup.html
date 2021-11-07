@@ -129,14 +129,14 @@
 <dd><p>upper bound of the prediction intervals.</p></dd>
 <dt>...</dt>
 <dd><p>some additional elements/values.</p></dd>
-</dl><p>The object is formatted and printed with <code><a href="print.list.rma.html">print.list.rma</a></code>.</p>
+</dl><p>The object is formatted and printed with the <code><a href="print.list.rma.html">print</a></code> function.</p>
     </div>
     <div id="note">
     <h2>Note</h2>
     <p>For best linear unbiased predictions of only the random effects, see <code><a href="ranef.html">ranef</a></code>.</p>
-<p>For predicted/fitted values that are based only on the fixed effects of the model, see <code><a href="fitted.rma.html">fitted.rma</a></code> and <code><a href="predict.rma.html">predict.rma</a></code>.</p>
+<p>For predicted/fitted values that are based only on the fixed effects of the model, see <code><a href="fitted.rma.html">fitted</a></code> and <code><a href="predict.rma.html">predict</a></code>.</p>
 <p>For conditional residuals (the deviations of the observed effect sizes or outcomes from the BLUPs), see <code>rstandard.rma.uni</code> with <code>type="conditional"</code>.</p>
-<p>Equal-effects models do not contain random study effects. The BLUPs for these models will therefore be equal to the fitted values, that is, those obtained with <code><a href="fitted.rma.html">fitted.rma</a></code> and <code><a href="predict.rma.html">predict.rma</a></code>.</p>
+<p>Equal-effects models do not contain random study effects. The BLUPs for these models will therefore be equal to the fitted values, that is, those obtained with <code><a href="fitted.rma.html">fitted</a></code> and <code><a href="predict.rma.html">predict</a></code>.</p>
 <p>When using the <code>transf</code> argument, the transformation is applied to the predicted values and the corresponding interval bounds. The standard errors are then set equal to <code>NA</code> and are omitted from the printed output.</p>
 <p>By default, a standard normal distribution is used to calculate the prediction intervals. When the model was fitted with <code>test="t"</code> or <code>test="knha"</code>, then a t-distribution with \(k-p\) degrees of freedom is used.</p>
 <p>To be precise, it should be noted that the function actually calculates empirical BLUPs (eBLUPs), since the predicted values are a function of the estimated value of \(\tau^2\).</p>

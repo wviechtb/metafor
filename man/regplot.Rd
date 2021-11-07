@@ -21,7 +21,7 @@ regplot(x, \dots)
 \arguments{
    \item{x}{an object of class \code{"rma.uni"}, \code{"rma.mv"}, or \code{"rma.glmm"} including one or multiple moderators (or an object of class \code{"regplot"} for \code{points}).}
    \item{mod}{either a scalar to specify the position of the moderator variable in the model or a character string to specify the name of the moderator variable.}
-   \item{pred}{logical to indicate whether the (marginal) regression line based on the moderator should be added to the plot (the default is \code{TRUE}). Can also be an object from \code{\link{predict.rma}}. See \sQuote{Details}.}
+   \item{pred}{logical to indicate whether the (marginal) regression line based on the moderator should be added to the plot (the default is \code{TRUE}). Can also be an object from \code{\link[=predict.rma]{predict}}. See \sQuote{Details}.}
    \item{ci}{logical to indicate whether the corresponding confidence interval bounds should be added to the plot (the default is \code{TRUE}).}
    \item{pi}{logical to indicate whether the corresponding prediction interval bounds should be added to the plot (the default is \code{FALSE}).}
    \item{shade}{logical to indicate whether the confidence/prediction interval regions should be shaded (the default is \code{TRUE}). Can also be a two-element character vector to specify the colors for shading the confidence and prediction interval regions (if shading only the former, a single color can also be specified).}
@@ -51,7 +51,7 @@ regplot(x, \dots)
    \item{lty}{optional vector of (up to) four elements to specify the line type of the regression line, of the confidence interval bounds, of the prediction interval bounds, and of the horizontal reference line.}
    \item{lwd}{optional vector of (up to) four elements to specify the line width of the regression line, of the confidence interval bounds, of the prediction interval bounds, and of the horizontal reference line.}
    \item{legend}{logical to indicate whether a legend should be added to the plot (the default is \code{FALSE}). Can also be a keyword to indicate the position of the legend (see \code{\link{legend}}).}
-   \item{xvals}{optional numeric vector to specify the values of the moderator for which predicted values should be computed. Needs to be specified when passing an object from \code{\link{predict.rma}} to the \code{pred} argument. See \sQuote{Details}.}
+   \item{xvals}{optional numeric vector to specify the values of the moderator for which predicted values should be computed. Needs to be specified when passing an object from \code{\link[=predict.rma]{predict}} to the \code{pred} argument. See \sQuote{Details}.}
    \item{\dots}{other arguments.}
 }
 \details{
@@ -65,7 +65,7 @@ regplot(x, \dots)
 
    With the \code{label} argument, one can control whether points in the plot will be labeled. If \code{label="all"} (or \code{label=TRUE}), all points in the plot will be labeled. If \code{label="ciout"} or \code{label="piout"}, points falling outside of the confidence/prediction interval will be labeled. Alternatively, one can set this argument to a logical or numeric vector to specify which points should be labeled. The labels are placed above the points when they fall above the regression line and otherwise below. With the \code{offset} argument, one can adjust the distance between the labels and the corresponding points. This can either be a single numeric value, which is used as a multiplicative factor for the point sizes (so that the distance between labels and points is larger for larger points) or a numeric vector with two values, where the first is used as an additive factor independent of the point sizes and the second again as a multiplicative factor for the point sizes. The values are given as percentages of the y-axis range. It may take some trial and error to find two values for the \code{offset} argument so that the labels are placed right next to the boundary of the points. With \code{labsize}, one can control the size of the labels.
 
-   One can also pass an object from \code{\link{predict.rma}} to the \code{pred} argument. This can be useful when the meta-regression model reflects a more complex relationship between the moderator variable and the effect sizes or outcomes (e.g., when using polynomials or splines) or when the model involves interactions. In this case, one also needs to specify the \code{xvals} argument. See \sQuote{Examples}.
+   One can also pass an object from \code{\link[=predict.rma]{predict}} to the \code{pred} argument. This can be useful when the meta-regression model reflects a more complex relationship between the moderator variable and the effect sizes or outcomes (e.g., when using polynomials or splines) or when the model involves interactions. In this case, one also needs to specify the \code{xvals} argument. See \sQuote{Examples}.
 }
 \note{
    For certain types of models, it may not be possible to draw the prediction interval bounds (if this is the case, a warning will be issued).

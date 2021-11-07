@@ -53,7 +53,7 @@
 
    If a particular case fits the model, its standardized residual follows (asymptotically) a standard normal distribution. A large standardized residual for a case therefore may suggest that the case does not fit the assumed model (i.e., it may be an outlier).
 
-   For \code{"rma.uni"} objects, \code{rstandard(model, type="conditional")} computes conditional residuals, which are the deviations of the observed effect sizes or outcomes from the best linear unbiased predictions (BLUPs) of the study-specific true effect sizes or outcomes (see \code{\link{blup.rma.uni}}).
+   For \code{"rma.uni"} objects, \code{rstandard(model, type="conditional")} computes conditional residuals, which are the deviations of the observed effect sizes or outcomes from the best linear unbiased predictions (BLUPs) of the study-specific true effect sizes or outcomes (see \code{\link[=blup.rma.uni]{blup}}).
 
    For \code{"rma.mv"} objects, one can specify a clustering variable (via the \code{cluster} argument). If specified, \code{rstandard(model)} and \code{rstudent(model)} also compute cluster-level multivariate (internally or externally) standardized residuals. If all outcomes within a cluster fit the model, then the multivariate standardized residual for the cluster follows (asymptotically) a chi-square distribution with \mjseqn{k_i} degrees of freedom (where \mjseqn{k_i} denotes the number of outcomes within the cluster).
 

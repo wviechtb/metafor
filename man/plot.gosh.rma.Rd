@@ -10,7 +10,7 @@
      adjust, lwd, labels, \dots)
 }
 \arguments{
-   \item{x}{an object of class \code{"gosh.rma"}.}
+   \item{x}{an object of class \code{"gosh.rma"} obtained with \code{\link{gosh}}.}
    \item{het}{character string to specify the heterogeneity measure to plot. Either \code{"I2"}, \code{"H2"}, \code{"QE"}, or \code{"tau2"} (the last only for random/mixed-effects models).}
    \item{pch}{plotting symbol to use. By default, a borderless filled circle is used. See \code{\link{points}} for other options.}
    \item{cex}{symbol expansion factor.}

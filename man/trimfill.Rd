@@ -32,7 +32,7 @@ trimfill(x, \dots)
    \item{vi}{the corresponding sampling variances}
    \item{fill}{a logical vector indicating which of the values in \code{yi} are the observed (\code{FALSE}) and the augmented (\code{TRUE}) data.}
 
-   The results of the fitted model after the data augmentation are printed with the \code{\link{print.rma.uni}} function. Calling \code{\link{funnel.rma}} on the object provides a funnel plot of the observed and augmented data.
+   The results of the fitted model after the data augmentation are printed with the \code{\link[=print.rma.uni]{print}} function. Calling \code{\link[=funnel.rma]{funnel}} on the object provides a funnel plot of the observed and augmented data.
 }
 \note{
    Three different estimators for the number of missing studies were proposed by Duval and Tweedie (2000a, 2000b). Based on these articles and Duval (2005), \code{"R0"} and \code{"L0"} are recommended. An advantage of estimator \code{"R0"} is that it provides a test of the null hypothesis that the number of missing studies (on the chosen side) is zero.

@@ -76,7 +76,7 @@ tes(x, \dots)
    \item{theta.lim}{the \sQuote{limit estimate} (i.e., \mjeqn{\theta_{lim}}{\theta_lim}).}
    \item{\dots}{some additional elements/values.}
 
-   The results are formatted and printed with the \code{print.tes} function.
+   The results are formatted and printed with the \code{print} function.
 }
 \note{
    When \code{tes.alternative="greater"} (the default), then the function tests if \mjseqn{O} is significantly greater than \mjseqn{E} and hence this is indeed a test of excess significance. When \code{tes.alternative="two.sided"}, then the function tests if \mjseqn{O} differs significantly from \mjseqn{E} in either direction and hence it would be more apt to describe this as a test of (in)consistency (between \mjseqn{O} and \mjseqn{E}). Finally, one can also set \code{tes.alternative="less"}, in which case the function tests if \mjseqn{O} is significantly lower than \mjseqn{E}, which could be considered a test of excess non-significance.

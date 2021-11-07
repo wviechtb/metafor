@@ -16,13 +16,13 @@ fsn(yi, vi, sei, data, type="Rosenthal", alpha=.05,
    \item{type}{character string to specify the method to use for the calculation of the fail-safe N. Possible options are \code{"Rosenthal"} (the default), \code{"Orwin"}, or \code{"Rosenberg"}. See \sQuote{Details}.}
    \item{alpha}{target alpha level to use for the Rosenthal and Rosenberg methods (the default is .05).}
    \item{target}{target average effect size or outcome to use for the Orwin method. If undefined, then the target average effect size or outcome will be equal to the observed average effect size or outcome divided by 2.}
-   \item{weighted}{logical to specify whether Orwin's method should be based on unweighted (the default) or weighted averages.}
+   \item{weighted}{logical to specify whether Orwin's method should be based on unweighted (the default) or weighted averages (the default is \code{FALSE}).}
    \item{subset}{optional (logical or numeric) vector to specify the subset of studies that should be used for the calculations.}
    \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4.}
    \item{\dots}{other arguments.}
 }
 \details{
-   The function can be used in combination with any of the usual effect sizes / outcome measures used in meta-analyses (e.g., log risk ratios, log odds ratios, risk differences, mean differences, standardized mean differences, raw correlation coefficients, correlation coefficients transformed with Fisher's r-to-z transformation, and so on). Simply specify the observed outcomes via the \code{yi} argument and the corresponding sampling variances via the \code{vi} argument (instead of specifying \code{vi}, one can specify the standard errors via the \code{sei} argument). The \code{\link{escalc}} function can be used to compute a wide variety of effect sizes / outcome measures (and the corresponding sampling variances) based on summary statistics.
+   The function can be used in combination with any of the usual effect sizes / outcome measures used in meta-analyses (e.g., log risk ratios, log odds ratios, risk differences, mean differences, standardized mean differences, raw correlation coefficients, correlation coefficients transformed with Fisher's r-to-z transformation), or, more generally, any set of estimates (with corresponding sampling variances) one would like to analyze. Simply specify the observed outcomes via the \code{yi} argument and the corresponding sampling variances via the \code{vi} argument (instead of specifying \code{vi}, one can specify the standard errors via the \code{sei} argument). The \code{\link{escalc}} function can be used to compute a wide variety of effect sizes / outcome measures (and the corresponding sampling variances) based on summary statistics.
 
    The Rosenthal method (sometimes called a \sQuote{file drawer analysis}) calculates the number of studies averaging null results that would have to be added to the given set of observed outcomes to reduce the combined significance level (p-value) to a particular alpha level (e.g., .05). The calculation is based on Stouffer's method to combine p-values and is described in Rosenthal (1979).
 
@@ -41,7 +41,7 @@ fsn(yi, vi, sei, data, type="Rosenthal", alpha=.05,
    \item{meanes}{the average outcome of the observed results. \code{NA} for the Rosenthal method.}
    \item{target}{the target value. \code{NA} for the Rosenthal and Rosenberg methods.}
 
-   The results are formatted and printed with the \code{\link{print.fsn}} function.
+   The results are formatted and printed with the \code{\link[=print.fsn]{print}} function.
 }
 \note{
    For the Rosenberg method, the p-value is calculated based on a standard normal distribution (instead of a t-distribution, as suggested by Rosenberg, 2005).

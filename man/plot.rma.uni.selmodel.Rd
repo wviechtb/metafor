@@ -10,7 +10,7 @@
       lty=c("solid","dotted"), lwd=c(2,1), \dots)
 }
 \arguments{
-   \item{x}{an object of class \code{"rma.uni.selmodel"}.}
+   \item{x}{an object of class \code{"rma.uni.selmodel"} obtained with \code{\link{selmodel}}.}
    \item{xlim}{x-axis limits. Essentially the range of p-values for which the selection function should be drawn. If unspecified, the function sets the limits automatically.}
    \item{ylim}{y-axis limits. If unspecified, the function sets the limits automatically.}
    \item{n}{numeric value to specify for how many p-values within the x-axis limits the function value should be computed (the default is 1000).}

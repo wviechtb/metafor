@@ -10,7 +10,7 @@
 \method{print}{list.confint.rma}(x, digits=x$digits, \dots)
 }
 \arguments{
-   \item{x}{an object of class \code{"confint.rma"} or \code{"list.confint.rma"}.}
+   \item{x}{an object of class \code{"confint.rma"} or \code{"list.confint.rma"} obtained with \code{\link[=confint.rma.uni]{confint}}.}
    \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded (the default is to take the value from the object).}
    \item{\dots}{other arguments.}
 }

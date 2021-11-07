@@ -14,7 +14,7 @@
        lty, fonts, cex, cex.lab, cex.axis, annosym, \dots)
 }
 \arguments{
-   \item{x}{an object of class \code{"cumul.rma"}.}
+   \item{x}{an object of class \code{"cumul.rma"} obtained with \code{\link{cumul}}.}
    \item{annotate}{logical to specify whether annotations should be added to the plot (the default is \code{TRUE}).}
    \item{header}{logical to specify whether column headings should be added to the plot (the default is \code{FALSE}). Can also be a character vector to specify the left and right headings (or only the left one).}
    \item{xlim}{horizontal limits of the plot region. If unspecified, the function tries to set the horizontal plot limits to some sensible values.}

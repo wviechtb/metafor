@@ -10,7 +10,7 @@
      bg.infl="red", col.na="lightgray", \dots)
 }
 \arguments{
-   \item{x}{an object of class \code{"infl.rma.uni"}.}
+   \item{x}{an object of class \code{"infl.rma.uni"} obtained with \code{\link[=influence.rma.uni]{influence}}.}
    \item{plotinf}{logical to specify whether the various case diagnostics should be plotted (the default is \code{TRUE}). Can also be a vector of up to 8 integers to specify which plots to draw. See \sQuote{Details} for the numbers corresponding to the various plots.}
    \item{plotdfbs}{logical to specify whether the DFBETAS values should be plotted (the default is \code{FALSE}). Can also be a vector of integers to specify for which coefficient(s) to plot the DFBETAS values.}
    \item{dfbsnew}{logical to specify whether a new device should be opened for plotting the DFBETAS values (the default is \code{FALSE}).}

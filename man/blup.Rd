@@ -26,16 +26,16 @@ blup(x, \dots)
    \item{pi.ub}{upper bound of the prediction intervals.}
    \item{\dots}{some additional elements/values.}
 
-   The object is formatted and printed with \code{\link{print.list.rma}}.
+   The object is formatted and printed with the \code{\link[=print.list.rma]{print}} function.
 }
 \note{
    For best linear unbiased predictions of only the random effects, see \code{\link{ranef}}.
 
-   For predicted/fitted values that are based only on the fixed effects of the model, see \code{\link{fitted.rma}} and \code{\link{predict.rma}}.
+   For predicted/fitted values that are based only on the fixed effects of the model, see \code{\link[=fitted.rma]{fitted}} and \code{\link[=predict.rma]{predict}}.
 
    For conditional residuals (the deviations of the observed effect sizes or outcomes from the BLUPs), see \code{rstandard.rma.uni} with \code{type="conditional"}.
 
-   Equal-effects models do not contain random study effects. The BLUPs for these models will therefore be equal to the fitted values, that is, those obtained with \code{\link{fitted.rma}} and \code{\link{predict.rma}}.
+   Equal-effects models do not contain random study effects. The BLUPs for these models will therefore be equal to the fitted values, that is, those obtained with \code{\link[=fitted.rma]{fitted}} and \code{\link[=predict.rma]{predict}}.
 
    When using the \code{transf} argument, the transformation is applied to the predicted values and the corresponding interval bounds. The standard errors are then set equal to \code{NA} and are omitted from the printed output.
 

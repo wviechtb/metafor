@@ -55,7 +55,7 @@
 \value{
    An object of class \code{c("escalc","data.frame")} that contains the (selected) variables aggregated to the cluster level.
 
-   The object is formatted and printed with the \code{\link{print.escalc}} function.
+   The object is formatted and printed with the \code{\link[=print.escalc]{print}} function.
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}

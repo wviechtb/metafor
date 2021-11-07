@@ -106,7 +106,7 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
 
    \subsection{Categorical Moderators}{
 
-      Categorical moderator variables can be included in the model via the \code{mods} argument in the same way that appropriately (dummy) coded categorical independent variables can be included in linear models. One can either do the dummy coding manually or use a model formula together with the \code{\link{factor}} function to let \R handle the coding automatically (note that string/character variables in a model formula are automatically converted to factors).
+      Categorical moderator variables can be included in the model via the \code{mods} argument in the same way that appropriately (dummy) coded categorical variables can be included in linear models. One can either do the dummy coding manually or use a model formula together with the \code{\link{factor}} function to autoamte the coding (note that string/character variables in a model formula are automatically converted to factors).
 
    }
 
@@ -159,7 +159,7 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
    \item{\dots}{some additional elements/values.}
 }
 \section{Methods}{
-   The results of the fitted model are formatted and printed with the \code{\link{print.rma.glmm}} function. If fit statistics should also be given, use \code{\link{summary.rma}} (or use the \code{\link{fitstats.rma}} function to extract them).
+   The results of the fitted model are formatted and printed with the \code{\link[=print.rma.glmm]{print}} function. If fit statistics should also be given, use \code{\link[=summary.rma]{summary}} (or use the \code{\link[=fitstats.rma]{fitstats}} function to extract them).
 }
 \note{
    When \code{measure="OR"} or \code{measure="IRR"}, \code{model="UM.FS"} or \code{model="UM.RS"}, and \code{method="ML"}, one has to choose a coding scheme for the group variable in the random effects structure. When \code{code=1/2} (the default), the two groups are coded with \code{+1/2} and \code{-1/2} (i.e., contrast coding), which is invariant under group label switching.

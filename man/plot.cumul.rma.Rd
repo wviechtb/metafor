@@ -10,7 +10,7 @@
      grid=TRUE, pch=19, cex=1, lwd=2, \dots)
 }
 \arguments{
-   \item{x}{an object of class \code{"cumul.rma"}.}
+   \item{x}{an object of class \code{"cumul.rma"} obtained with \code{\link{cumul}}.}
    \item{yaxis}{either \code{"tau2"}, \code{"I2"}, or \code{"H2"} to indicate what values should be placed on the y-axis. See \sQuote{Details}.}
    \item{xlim}{x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.}
    \item{ylim}{y-axis limits. If unspecified, the function tries to set the y-axis limits to some sensible values.}

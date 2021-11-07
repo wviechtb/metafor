@@ -62,14 +62,14 @@
 
    If \code{vcov=TRUE}, then the returned object is a list with the first element equal to the one as described above and the second element equal to the variance-covariance matrix of the predicted values.
 
-   The object is formatted and printed with \code{\link{print.list.rma}}.
+   The object is formatted and printed with the \code{\link[=print.list.rma]{print}} function.
 }
 \note{
    Confidence and prediction intervals are calculated based on the critical values from a standard normal distribution (i.e., \mjeqn{\pm 1.96}{±1.96} for \code{level=95}). When the model was fitted with \code{test="t"} or \code{test="knha"}, then a t-distribution with \mjseqn{k-p} degrees of freedom is used.
 
    For a random-effects model (where \mjseqn{p=1}) fitted with the \code{\link{rma.uni}} function, note that this differs slightly from Riley et al. (2001), who suggest to use a t-distribution with \mjseqn{k-2} degrees of freedom for constructing the prediction interval. Neither a normal, nor a t-distribution with \mjseqn{k-1} or \mjseqn{k-2} degrees of freedom is correct; all of these are approximations. The computations are done in the way described above, so that the prediction interval is identical to the confidence interval when \mjeqn{\hat{\tau}^2 = 0}{hat(\tau)^2 = 0}, which could be argued is the logical thing that should happen. If the prediction interval should be computed exactly as described by Riley et al. (2001), then one can use argument \code{pi.type="riley"}.
 
-   The predicted values are based only on the fixed effects of the model. Best linear unbiased predictions (BLUPs) that combine the fitted values based on the fixed effects and the estimated contributions of the random effects can be obtained with \code{\link{blup.rma.uni}} (currently only for objects of class \code{"rma.uni"}).
+   The predicted values are based only on the fixed effects of the model. Best linear unbiased predictions (BLUPs) that combine the fitted values based on the fixed effects and the estimated contributions of the random effects can be obtained with \code{\link[=blup.rma.uni]{blup}} (currently only for objects of class \code{"rma.uni"}).
 
    When using the \code{transf} option, the transformation is applied to the predicted values and the corresponding interval bounds. The standard errors are omitted from the printed output. Also, \code{vcov=TRUE} is ignored when using the \code{transf} option.
 }

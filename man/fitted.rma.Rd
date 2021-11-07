@@ -16,7 +16,7 @@
    A vector with the fitted values.
 }
 \note{
-   The \code{\link{predict.rma}} function also provides standard errors and confidence intervals for the fitted values. Best linear unbiased predictions (BLUPs) that combine the fitted values based on the fixed effects and the estimated contributions of the random effects can be obtained with \code{\link{blup.rma.uni}} (only for objects of class \code{"rma.uni"}).
+   The \code{\link[=predict.rma]{predict}} function also provides standard errors and confidence intervals for the fitted values. Best linear unbiased predictions (BLUPs) that combine the fitted values based on the fixed effects and the estimated contributions of the random effects can be obtained with \code{\link[=blup.rma.uni]{blup}} (only for objects of class \code{"rma.uni"}).
 
    For objects not involving moderators, the fitted values are all identical to the estimated value of the model intercept.
 }

@@ -233,7 +233,7 @@
 <h3 id="categorical-moderators">Categorical Moderators<a class="anchor" aria-label="anchor" href="#categorical-moderators"></a></h3>
 
 
-<p>Categorical moderator variables can be included in the model via the <code>mods</code> argument in the same way that appropriately (dummy) coded categorical independent variables can be included in linear models. One can either do the dummy coding manually or use a model formula together with the <code><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></code> function to let <span style="R">R</span> handle the coding automatically (note that string/character variables in a model formula are automatically converted to factors).</p>
+<p>Categorical moderator variables can be included in the model via the <code>mods</code> argument in the same way that appropriately (dummy) coded categorical variables can be included in linear models. One can either do the dummy coding manually or use a model formula together with the <code><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></code> function to autoamte the coding (note that string/character variables in a model formula are automatically converted to factors).</p>
 <p></p>
 </div>
 
@@ -318,7 +318,7 @@
 </dl></div>
     <div id="methods">
     <h2>Methods</h2>
-    <p>The results of the fitted model are formatted and printed with the <code><a href="print.rma.html">print.rma.glmm</a></code> function. If fit statistics should also be given, use <code><a href="print.rma.html">summary.rma</a></code> (or use the <code><a href="fitstats.html">fitstats.rma</a></code> function to extract them).</p>
+    <p>The results of the fitted model are formatted and printed with the <code><a href="print.rma.html">print</a></code> function. If fit statistics should also be given, use <code><a href="print.rma.html">summary</a></code> (or use the <code><a href="fitstats.html">fitstats</a></code> function to extract them).</p>
     </div>
     <div id="note">
     <h2>Note</h2>

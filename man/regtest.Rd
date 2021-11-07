@@ -60,7 +60,7 @@ regtest(x, \dots)
    \item{ci.lb}{lower bound of the confidence interval for the limit estimate.}
    \item{ci.ub}{upper bound of the confidence intervals for the limit estimate.}
 
-   The results are formatted and printed with the \code{\link{print.regtest}} function.
+   The results are formatted and printed with the \code{\link[=print.regtest]{print}} function.
 }
 \note{
    The classical \sQuote{Egger test} is obtained by setting \code{model="lm"} and \code{predictor="sei"}. For the random/mixed-effects version of the Egger test, one should first fit a random-effects model to the data and then set \code{model="rma"} and \code{predictor="sei"} when using the \code{regtest} function. See Sterne and Egger (2005) for details on these two types of models/tests.

@@ -35,7 +35,7 @@
    \item{\dots}{other arguments.}
 }
 \details{
-   The plot shows the theoretical quantiles of a normal distribution on the horizontal axis against the observed quantiles for either the standardized residuals (\code{type="rstandard"}, the default) or the externally standardized residuals (\code{type="rstudent"}) on the vertical axis (see \code{\link{residuals.rma}} for details on the definition of these residual types).
+   The plot shows the theoretical quantiles of a normal distribution on the horizontal axis against the observed quantiles for either the standardized residuals (\code{type="rstandard"}, the default) or the externally standardized residuals (\code{type="rstudent"}) on the vertical axis (see \code{\link[=residuals.rma]{residuals}} for details on the definition of these residual types).
 
    For reference, a line is added to the plot with slope of 1, going through the (0,0) point.
 

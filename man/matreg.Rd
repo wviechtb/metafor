@@ -38,7 +38,7 @@ matreg(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearpd=FALSE, level=95, digi
    \item{vb}{the variance-covariance matrix of the estimated model coefficients.}
    \item{\dots}{some additional elements/values.}
 
-   The results are formatted and printed with the \code{\link{print.matreg}} function.
+   The results are formatted and printed with the \code{\link[=print.matreg]{print}} function.
 }
 \note{
    Only the lower triangular part of \code{R} (and \code{V} if it is specified) is used in the computations.

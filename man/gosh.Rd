@@ -38,7 +38,7 @@ gosh(x, \dots)
    \item{incl}{a matrix indicating which studies were included in which subset.}
    \item{\dots}{some additional elements/values.}
 
-   The results can be printed with the \code{\link{print.gosh.rma}} function and plotted with the \code{\link{plot.gosh.rma}} function.
+   The results can be printed with the \code{\link[=print.gosh.rma]{print}} function and plotted with the \code{\link[=plot.gosh.rma]{plot}} function.
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}

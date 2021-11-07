@@ -8,7 +8,7 @@
 \method{print}{gosh.rma}(x, digits=x$digits, \dots)
 }
 \arguments{
-   \item{x}{an object of class \code{"gosh.rma"}.}
+   \item{x}{an object of class \code{"gosh.rma"} obtained with \code{\link{gosh}}.}
    \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded (the default is to take the value from the object).}
    \item{\dots}{other arguments.}
 }
