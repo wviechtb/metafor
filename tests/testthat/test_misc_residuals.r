@@ -13,7 +13,7 @@ test_that("residuals are correct for rma().", {
    expect_equivalent(rstandard(res)$z, c(0.1401, -0.9930, -0.4719, -1.0475, 1.6462, 0.4825), tolerance=.tol[["pred"]])
    expect_equivalent(rstudent(res)$z,  c(0.1426, -0.9957, -0.4591, -1.1949, 2.0949, 0.4330), tolerance=.tol[["test"]])
 
-   res <- rma(yi, vi, data=dat, method="FE")
+   res <- rma(yi, vi, data=dat, method="EE")
    expect_equivalent(sum(residuals(res, type="pearson")^2), res$QE, tolerance=.tol[["test"]])
    expect_equivalent(sum(residuals(res, type="cholesky")^2), res$QE, tolerance=.tol[["test"]])
 

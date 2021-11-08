@@ -12,8 +12,8 @@ test_that("plot can be drawn.", {
 
    opar <- par(no.readonly=TRUE)
 
-   ### fit fixed-effects model
-   res <- rma(yi, vi, data=dat.hackshaw1998, measure="OR", method="FE")
+   ### fit equal-effects model
+   res <- rma(yi, vi, data=dat.hackshaw1998, measure="OR", method="EE")
 
    ### set up 2x2 array for plotting
    par(mfrow=c(2,2))

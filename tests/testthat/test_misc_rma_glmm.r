@@ -8,7 +8,7 @@ dat <- dat.nielweise2007
 
 test_that("rma.glmm() works correctly for 'UM.RS' model.", {
 
-   expect_warning(res <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="UM.RS", method="FE"))
+   expect_warning(res <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="UM.RS", method="EE"))
    out <- capture.output(print(res))
 
    expect_equivalent(coef(res), -1.2207, tolerance=.tol[["coef"]])
@@ -35,9 +35,9 @@ test_that("rma.glmm() works correctly when using 'clogit' or 'clogistic'.", {
 
    skip_on_cran()
 
-   expect_warning(res1 <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="UM.FS", method="FE"))
-   expect_warning(res2 <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="UM.FS", method="FE", control=list(optimizer="clogit")))
-   expect_warning(res3 <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="UM.FS", method="FE", control=list(optimizer="clogistic")))
+   expect_warning(res1 <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="UM.FS", method="EE"))
+   expect_warning(res2 <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="UM.FS", method="EE", control=list(optimizer="clogit")))
+   expect_warning(res3 <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="UM.FS", method="EE", control=list(optimizer="clogistic")))
 
    expect_equivalent(coef(res1), -1.2286, tolerance=.tol[["coef"]])
    expect_equivalent(coef(res2), -1.2286, tolerance=.tol[["coef"]])

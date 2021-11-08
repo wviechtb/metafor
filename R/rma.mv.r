@@ -1898,13 +1898,13 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
 
    if (is.element(optimizer, c("uobyqa","newuoa","bobyqa"))) {
       par.arg <- "par"
-      optimizer <- paste0("minqa::", optimizer) ### need to use this since loading nloptr masks bobyqa() and newuoa() functions
+      optimizer <- paste0("minqa::", optimizer)
       ctrl.arg <- ", control=optcontrol"
    }
 
    if (optimizer == "nloptr") {
       par.arg <- "x0"
-      optimizer <- paste0("nloptr::nloptr") ### need to use this due to requireNamespace()
+      optimizer <- paste0("nloptr::nloptr")
       ctrl.arg <- ", opts=optcontrol"
    }
 
@@ -1917,13 +1917,13 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
 
    if (is.element(optimizer, c("hjk","nmk","mads"))) {
       par.arg <- "par"
-      optimizer <- paste0("dfoptim::", optimizer) ### need to use this so that the optimizers can be found
+      optimizer <- paste0("dfoptim::", optimizer)
       ctrl.arg <- ", control=optcontrol"
    }
 
    if (is.element(optimizer, c("ucminf","lbfgsb3c","subplex"))) {
       par.arg <- "par"
-      optimizer <- paste0(optimizer, "::", optimizer) ### need to use this due to requireNamespace()
+      optimizer <- paste0(optimizer, "::", optimizer)
       ctrl.arg <- ", control=optcontrol"
    }
 
@@ -1936,7 +1936,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
    if (optimizer == "optimParallel") {
 
       par.arg <- "par"
-      optimizer <- paste0("optimParallel::optimParallel") ### need to use this due to requireNamespace()
+      optimizer <- paste0("optimParallel::optimParallel")
       ctrl.arg <- ", control=optcontrol, parallel=parallel"
 
       parallel$cl <- NULL

@@ -43,7 +43,7 @@ test_that("plot can be drawn for 'rma.mh' object.", {
    ### decrease margins so the full space is used
    par(mar=c(4,4,1,2))
 
-   ### fit fixed-effects models using the Mantel-Haenszel method
+   ### fit equal-effects models using the Mantel-Haenszel method
    res <- rma.mh(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, slab=paste(author, year, sep=", "))
 
    ### cumulative meta-analysis (in the order of publication year)
@@ -68,7 +68,7 @@ test_that("plot can be drawn for 'rma.peto' object.", {
    ### decrease margins so the full space is used
    par(mar=c(4,4,1,2))
 
-   ### fit fixed-effects models using Peto's method
+   ### fit equal-effects models using Peto's method
    res <- rma.peto(ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, slab=paste(author, year, sep=", "))
 
    ### cumulative meta-analysis (in the order of publication year)

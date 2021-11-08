@@ -133,7 +133,7 @@ test_that("results are correct for Mantel-Haenszel method.", {
    skip_on_cran()
 
    ### conditional MLE of the odds ratio
-   res <- rma.glmm(ai=ai, bi=bi, ci=ci, di=di, data=dat, measure="OR", model="CM.EL", method="FE")
+   res <- rma.glmm(ai=ai, bi=bi, ci=ci, di=di, data=dat, measure="OR", model="CM.EL", method="EE")
 
    expect_equivalent(coef(res),  0.3381, tolerance=.tol[["coef"]])
    expect_equivalent(res$ci.lb, -0.2699, tolerance=.tol[["ci"]])
@@ -269,7 +269,7 @@ test_that("results are correct for Mantel-Haenszel method.", {
    skip_on_cran()
 
    ### unconditional MLE of the rate ratio
-   res <- rma.glmm(x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i, data=dat, measure="IRR", digits=2, level=90, model="UM.FS", method="FE")
+   res <- rma.glmm(x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i, data=dat, measure="IRR", digits=2, level=90, model="UM.FS", method="EE")
 
    expect_equivalent(coef(res), 0.3545, tolerance=.tol[["coef"]])
    expect_equivalent(res$ci.lb, 0.1779, tolerance=.tol[["ci"]])
@@ -285,7 +285,7 @@ test_that("results are correct for Mantel-Haenszel method.", {
    expect_equivalent(tmp$ci.ub, 1.7009, tolerance=.tol[["ci"]])
 
    ### conditional MLE of the rate ratio
-   res <- rma.glmm(x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i, data=dat, measure="IRR", digits=2, level=90, model="CM.EL", method="FE")
+   res <- rma.glmm(x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i, data=dat, measure="IRR", digits=2, level=90, model="CM.EL", method="EE")
 
    expect_equivalent(coef(res), 0.3545, tolerance=.tol[["coef"]])
    expect_equivalent(res$ci.lb, 0.1779, tolerance=.tol[["ci"]])
@@ -363,7 +363,7 @@ test_that("results are correct for Mantel-Haenszel method.", {
    skip_on_cran()
 
    ### unconditional MLE of the odds ratio
-   res <- rma.glmm(ai=ai, bi=bi, ci=ci, di=di, data=dat, measure="OR", digits=2, level=90, model="UM.FS", method="FE")
+   res <- rma.glmm(ai=ai, bi=bi, ci=ci, di=di, data=dat, measure="OR", digits=2, level=90, model="UM.FS", method="EE")
 
    expect_equivalent(coef(res), 1.3318, tolerance=.tol[["coef"]])
    expect_equivalent(res$ci.lb, 0.3582, tolerance=.tol[["ci"]])
@@ -379,7 +379,7 @@ test_that("results are correct for Mantel-Haenszel method.", {
    expect_equivalent(tmp$ci.ub, 10.0276, tolerance=.tol[["ci"]])
 
    ### conditional MLE of the odds ratio
-   res <- rma.glmm(ai=ai, bi=bi, ci=ci, di=di, data=dat, measure="OR", digits=2, level=90, model="CM.EL", method="FE")
+   res <- rma.glmm(ai=ai, bi=bi, ci=ci, di=di, data=dat, measure="OR", digits=2, level=90, model="CM.EL", method="EE")
 
    expect_equivalent(coef(res), 1.3257, tolerance=.tol[["coef"]])
    expect_equivalent(res$ci.lb, 0.3559, tolerance=.tol[["ci"]])

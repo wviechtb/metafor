@@ -9,15 +9,15 @@ source("tolerances.r") # read in tolerances
 ### load data
 dat <- dat.raudenbush1985
 
-test_that("results are correct for the fixed-effects model.", {
+test_that("results are correct for the equal-effects model.", {
 
-   ### fixed-effects model
-   res.FE <- rma(yi, vi, data=dat, digits=3, method="FE")
+   ### equal-effects model
+   res.EE <- rma(yi, vi, data=dat, digits=3, method="EE")
 
    ### compare with results on page 301 (Table 16.2) and page 302
-   expect_equivalent(coef(res.FE), 0.0604, tolerance=.tol[["coef"]])
-   expect_equivalent(res.FE$QE,   35.8295, tolerance=.tol[["test"]])
-   expect_equivalent(res.FE$zval,  1.6553, tolerance=.tol[["test"]]) ### 1.65 in chapter
+   expect_equivalent(coef(res.EE), 0.0604, tolerance=.tol[["coef"]])
+   expect_equivalent(res.EE$QE,   35.8295, tolerance=.tol[["test"]])
+   expect_equivalent(res.EE$zval,  1.6553, tolerance=.tol[["test"]]) ### 1.65 in chapter
 
 })
 
@@ -72,7 +72,7 @@ test_that("results are correct for the random-effects model (conventional approa
 
    res.std <- list()
 
-   res.std$FE   <- rma(yi, vi, data=dat, digits=3, method="FE")
+   res.std$EE   <- rma(yi, vi, data=dat, digits=3, method="EE")
    res.std$ML   <- rma(yi, vi, data=dat, digits=3, method="ML")
    res.std$REML <- rma(yi, vi, data=dat, digits=3, method="REML")
    res.std$DL   <- rma(yi, vi, data=dat, digits=3, method="DL")
@@ -81,7 +81,7 @@ test_that("results are correct for the random-effects model (conventional approa
    tmp <- t(sapply(res.std, function(x) c(tau2=x$tau2, mu=x$beta, se=x$se, z=x$zval, ci.lb=x$ci.lb, ci.ub=x$ci.ub)))
 
    expected <- structure(c(0, 0.0126, 0.0188, 0.0259, 0.0804, 0.0604, 0.0777, 0.0837, 0.0893, 0.1143, 0.0365, 0.0475, 0.0516, 0.0558, 0.0792, 1.6553, 1.6368, 1.6208, 1.6009, 1.4432, -0.0111, -0.0153, -0.0175, -0.02, -0.0409, 0.1318, 0.1708, 0.1849, 0.1987, 0.2696),
-                         .Dim = 5:6, .Dimnames = list(c("FE", "ML", "REML", "DL", "HE"), c("tau2", "mu", "se", "z", "ci.lb", "ci.ub")))
+                         .Dim = 5:6, .Dimnames = list(c("EE", "ML", "REML", "DL", "HE"), c("tau2", "mu", "se", "z", "ci.lb", "ci.ub")))
 
    ### compare with results on page 309 (Table 16.3)
    expect_equivalent(tmp, expected, tolerance=.tol[["misc"]])
@@ -92,7 +92,7 @@ test_that("results are correct for the random-effects model (Knapp & Hartung met
 
    res.knha <- list()
 
-   expect_warning(res.knha$FE <- rma(yi, vi, data=dat, digits=3, method="FE", test="knha"))
+   expect_warning(res.knha$EE <- rma(yi, vi, data=dat, digits=3, method="EE", test="knha"))
    res.knha$ML   <- rma(yi, vi, data=dat, digits=3, method="ML", test="knha")
    res.knha$REML <- rma(yi, vi, data=dat, digits=3, method="REML", test="knha")
    res.knha$DL   <- rma(yi, vi, data=dat, digits=3, method="DL", test="knha")
@@ -101,7 +101,7 @@ test_that("results are correct for the random-effects model (Knapp & Hartung met
    tmp <- t(sapply(res.knha, function(x) c(tau2=x$tau2, mu=x$beta, se=x$se, z=x$zval, ci.lb=x$ci.lb, ci.ub=x$ci.ub)))
 
    expected <- structure(c(0, 0.0126, 0.0188, 0.0259, 0.0804, 0.0604, 0.0777, 0.0837, 0.0893, 0.1143, 0.0515, 0.0593, 0.0616, 0.0636, 0.0711, 1.1733, 1.311, 1.3593, 1.405, 1.6078, -0.0477, -0.0468, -0.0457, -0.0442, -0.0351, 0.1685, 0.2023, 0.2131, 0.2229, 0.2637),
-                         .Dim = 5:6, .Dimnames = list(c("FE", "ML", "REML", "DL", "HE"), c("tau2", "mu", "se", "z", "ci.lb", "ci.ub")))
+                         .Dim = 5:6, .Dimnames = list(c("EE", "ML", "REML", "DL", "HE"), c("tau2", "mu", "se", "z", "ci.lb", "ci.ub")))
 
    ### compare with results on page 309 (Table 16.3)
    expect_equivalent(tmp, expected, tolerance=.tol[["misc"]])
@@ -112,7 +112,7 @@ test_that("results are correct for the random-effects model (Huber-White method)
 
    res.std <- list()
 
-   res.std$FE   <- rma(yi, vi, data=dat, digits=3, method="FE")
+   res.std$EE   <- rma(yi, vi, data=dat, digits=3, method="EE")
    res.std$ML   <- rma(yi, vi, data=dat, digits=3, method="ML")
    res.std$REML <- rma(yi, vi, data=dat, digits=3, method="REML")
    res.std$DL   <- rma(yi, vi, data=dat, digits=3, method="DL")
@@ -120,7 +120,7 @@ test_that("results are correct for the random-effects model (Huber-White method)
 
    res.hw <- list()
 
-   res.hw$FE   <- robust(res.std$FE,   cluster=dat$study, adjust=FALSE)
+   res.hw$EE   <- robust(res.std$EE,   cluster=dat$study, adjust=FALSE)
    res.hw$ML   <- robust(res.std$ML,   cluster=dat$study, adjust=FALSE)
    res.hw$REML <- robust(res.std$REML, cluster=dat$study, adjust=FALSE)
    res.hw$DL   <- robust(res.std$DL,   cluster=dat$study, adjust=FALSE)
@@ -131,7 +131,7 @@ test_that("results are correct for the random-effects model (Huber-White method)
    tmp <- t(sapply(res.hw, function(x) c(tau2=x$tau2, mu=x$beta, se=x$se, t=x$zval, ci.lb=x$ci.lb, ci.ub=x$ci.ub)))
 
    expected <- structure(c(0, 0.0126, 0.0188, 0.0259, 0.0804, 0.0604, 0.0777, 0.0837, 0.0893, 0.1143, 0.0398, 0.0475, 0.05, 0.0522, 0.0618, 1.5148, 1.6369, 1.6756, 1.7105, 1.8503, -0.0234, -0.022, -0.0213, -0.0204, -0.0155, 0.1441, 0.1775, 0.1887, 0.199, 0.2441),
-                         .Dim = 5:6, .Dimnames = list(c("FE", "ML", "REML", "DL", "HE"), c("tau2", "mu", "se", "t", "ci.lb", "ci.ub")))
+                         .Dim = 5:6, .Dimnames = list(c("EE", "ML", "REML", "DL", "HE"), c("tau2", "mu", "se", "t", "ci.lb", "ci.ub")))
 
    ### compare with results on page 309 (Table 16.3)
    expect_equivalent(tmp, expected, tolerance=.tol[["misc"]])

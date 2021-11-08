@@ -23,9 +23,9 @@ test_that("results are correct for the CIs.", {
 
 })
 
-test_that("results are correct for the fixed-effects model.", {
+test_that("results are correct for the equal-effects model.", {
 
-   res <- rma(yi, vi, data=dat, method="FE")
+   res <- rma(yi, vi, data=dat, method="EE")
    sav <- predict(res, transf=exp)
    tmp <- c(sav$pred, sav$ci.lb, sav$ci.ub)
 

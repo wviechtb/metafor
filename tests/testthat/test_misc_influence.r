@@ -148,7 +148,7 @@ test_that("influence() correctly works with 'na.omit' and 'na.pass'.", {
 test_that("'infonly' argument works correctly with influence().", {
 
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, slab=paste0("Trial ", dat.bcg$trial))
-   res <- rma(yi, vi, data=dat, method="FE")
+   res <- rma(yi, vi, data=dat, method="EE")
    inf <- influence(res)
    tmp <- capture.output(sav <- print(inf))
    expect_equivalent(length(sav$rstudent), 13)

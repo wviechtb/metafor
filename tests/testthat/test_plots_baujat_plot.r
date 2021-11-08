@@ -23,7 +23,7 @@ test_that("plot can be drawn.", {
    dat$vi <- with(dat, 1/V)
 
    ### meta-analysis based on all 65 trials
-   res <- rma(yi, vi, data=dat, method="FE", slab=id)
+   res <- rma(yi, vi, data=dat, method="EE", slab=id)
 
    ### create Baujat plot
    baujat(res, xlim=c(0,20), ylim=c(0,.20))

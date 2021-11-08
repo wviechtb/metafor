@@ -20,11 +20,11 @@ test_that("the log likelihood plot can be created.", {
 
 })
 
-test_that("results of the fixed-effects conditional logistic model are correct.", {
+test_that("results of the equal-effects conditional logistic model are correct.", {
 
    skip_on_cran()
 
-   expect_warning(res <- rma.glmm(measure="OR", ai=b.xci, n1i=nci, ci=b.xti, n2i=nti, data=dat, model="CM.EL", method="FE"))
+   expect_warning(res <- rma.glmm(measure="OR", ai=b.xci, n1i=nci, ci=b.xti, n2i=nti, data=dat, model="CM.EL", method="EE"))
 
    ### compare with results on page 2275 (in text)
    expect_equivalent(coef(res), 0.1216, tolerance=.tol[["coef"]])
@@ -34,7 +34,7 @@ test_that("results of the fixed-effects conditional logistic model are correct."
    expect_equivalent(c(logLik(res)), -53.6789, tolerance=.tol[["fit"]])
 
    ### run with control(dnchgcalc="dnoncenhypergeom")
-   expect_warning(res <- rma.glmm(measure="OR", ai=b.xci, n1i=nci, ci=b.xti, n2i=nti, data=dat, model="CM.EL", method="FE", control=list(dnchgcalc="dnoncenhypergeom")))
+   expect_warning(res <- rma.glmm(measure="OR", ai=b.xci, n1i=nci, ci=b.xti, n2i=nti, data=dat, model="CM.EL", method="EE", control=list(dnchgcalc="dnoncenhypergeom")))
 
    ### some very minor discrepancies
    expect_equivalent(coef(res), 0.1216, tolerance=.tol[["coef"]])

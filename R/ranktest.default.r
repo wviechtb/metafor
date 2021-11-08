@@ -91,7 +91,7 @@ ranktest.default <- function(x, vi, sei, subset, digits, ...) {
 
    #########################################################################
 
-   res  <- rma.uni(yi, vi, method="FE")
+   res  <- rma.uni(yi, vi, method="EE")
    beta <- c(res$beta)
    vb   <- c(res$vb)
 

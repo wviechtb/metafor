@@ -15,9 +15,9 @@ dat <- escalc(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat)
 ### 'center' year variable
 dat$year <- dat$year - 1900
 
-test_that("results for the fixed-effects model are correct.", {
+test_that("results for the equal-effects model are correct.", {
 
-   res <- rma(yi, vi, data=dat, method="FE")
+   res <- rma(yi, vi, data=dat, method="EE")
    tmp <- predict(res, transf=exp, digits=3)
 
    ### compare with results on page 596 (in text)
@@ -118,7 +118,7 @@ test_that("L'Abbe plot can be drawn.", {
 
    skip_on_cran()
 
-   res <- rma(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat, method="FE")
+   res <- rma(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat, method="EE")
 
    opar <- par(no.readonly=TRUE)
    labbe(res, xlim=c(-7,-1), ylim=c(-7,-1), xlab="ln(odds) not-vaccinated group", ylab="ln(odds) vaccinated group")

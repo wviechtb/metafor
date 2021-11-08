@@ -39,7 +39,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    ### refit RE/ME models with ML estimation
 
    if (!is.element(x$method, c("FE","EE","CE","ML"))) {
-      #stop(mstyle$stop("Argument 'x' must either be a fixed-effects model or a model fitted with ML estimation."))
+      #stop(mstyle$stop("Argument 'x' must either be an equal/fixed-effects model or a model fitted with ML estimation."))
       #x <- try(update(x, method="ML"), silent=TRUE)
       #x <- suppressWarnings(update(x, method="ML"))
       #x <- try(suppressWarnings(rma.uni(x$yi, x$vi, weights=x$weights, mods=x$X, intercept=FALSE, method="ML", weighted=x$weighted, test=x$test, level=x$level, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, skipr2=TRUE)), silent=TRUE)
@@ -701,13 +701,13 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
    if (is.element(optimizer, c("uobyqa","newuoa","bobyqa"))) {
       par.arg <- "par"
-      optimizer <- paste0("minqa::", optimizer) ### need to use this since loading nloptr masks bobyqa() and newuoa() functions
+      optimizer <- paste0("minqa::", optimizer)
       ctrl.arg <- ", control=optcontrol"
    }
 
    if (optimizer == "nloptr") {
       par.arg <- "x0"
-      optimizer <- paste0("nloptr::nloptr") ### need to use this due to requireNamespace()
+      optimizer <- paste0("nloptr::nloptr")
       ctrl.arg <- ", opts=optcontrol"
    }
 
@@ -720,13 +720,13 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
    if (is.element(optimizer, c("hjk","nmk","mads"))) {
       par.arg <- "par"
-      optimizer <- paste0("dfoptim::", optimizer) ### need to use this so that the optimizers can be found
+      optimizer <- paste0("dfoptim::", optimizer)
       ctrl.arg <- ", control=optcontrol"
    }
 
    if (is.element(optimizer, c("ucminf","lbfgsb3c","subplex"))) {
       par.arg <- "par"
-      optimizer <- paste0(optimizer, "::", optimizer) ### need to use this due to requireNamespace()
+      optimizer <- paste0(optimizer, "::", optimizer)
       ctrl.arg <- ", control=optcontrol"
    }
 
@@ -739,7 +739,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    if (optimizer == "optimParallel") {
 
       par.arg <- "par"
-      optimizer <- paste0("optimParallel::optimParallel") ### need to use this due to requireNamespace()
+      optimizer <- paste0("optimParallel::optimParallel")
       ctrl.arg <- ", control=optcontrol, parallel=parallel"
 
       parallel$cl <- NULL

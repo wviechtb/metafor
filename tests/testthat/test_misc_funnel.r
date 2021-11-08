@@ -28,7 +28,7 @@ test_that("funnel() works correctly.", {
    ri <- mapply(gencor, rep(0.0,k), ni)    ### simulate correlations
 
    dat <- escalc(measure="ZCOR", ri=ri, ni=ni) ### compute r-to-z transformed correlations
-   res <- rma(yi, vi, data=dat, method="FE")
+   res <- rma(yi, vi, data=dat, method="EE")
 
    opar <- par(no.readonly=TRUE)
 

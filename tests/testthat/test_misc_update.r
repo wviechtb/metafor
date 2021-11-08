@@ -8,7 +8,7 @@ test_that("update() works for rma().", {
 
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
-   res1 <- rma(yi, vi, data=dat, method="FE")
+   res1 <- rma(yi, vi, data=dat, method="EE")
    res2 <- update(res1, method="DL")
    res3 <- rma(yi, vi, data=dat, method="DL")
    res4 <- update(res3, ~ ablat)
@@ -26,7 +26,7 @@ test_that("update() works for rma.mv().", {
 
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
-   res1 <- rma.mv(yi, vi, data=dat, method="FE")
+   res1 <- rma.mv(yi, vi, data=dat, method="EE")
    res2 <- update(res1, random = ~ 1 | trial, method="REML")
    res3 <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, method="REML")
    res4 <- update(res3, ~ ablat)
@@ -46,7 +46,7 @@ test_that("update() works for rma.glmm().", {
 
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
-   res1 <- rma.glmm(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, method="FE")
+   res1 <- rma.glmm(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, method="EE")
    res2 <- update(res1, method="ML")
    res3 <- rma.glmm(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, method="ML")
    res4 <- update(res3, mods = ~ ablat)

@@ -15,8 +15,8 @@ test_that("plot can be drawn.", {
    ### adjust margins so the space is better used
    par(mar=c(5,4,0,2))
 
-   ### fit fixed-effects model
-   res <- rma(yi, vi, data=dat.hackshaw1998, method="FE")
+   ### fit equal-effects model
+   res <- rma(yi, vi, data=dat.hackshaw1998, method="EE")
 
    ### draw radial plot
    radial(res)

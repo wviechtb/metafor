@@ -4,7 +4,7 @@ context("Checking misc: rma.peto() against metan with 'dat.bcg'")
 
 source("tolerances.r") # read in tolerances
 
-test_that("results match (FE model, measure='OR').", {
+test_that("results match (EE model, measure='OR').", {
 
    ### compare results with: metan tpos tneg cpos cneg, peto nograph or log
 

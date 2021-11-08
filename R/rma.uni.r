@@ -2006,7 +2006,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
    }
 
-   ### fixed-effects model (note: sets tau2 to zero even when tau2 value is specified)
+   ### equal/fixed/common-effects model (note: sets tau2 to zero even when tau2 value is specified)
 
    if (is.element(method, c("FE","EE","CE")))
       tau2 <- 0

@@ -28,8 +28,8 @@ test_that("results are correct for the first example (using dat.hine1989).", {
    expect_equivalent(tmp$ci.lb, c(-5.4566, -12.0128, -3.6182, -4.6747, -2.0141, -0.4503), tolerance=.tol[["ci"]])
    expect_equivalent(tmp$ci.ub, c(11.0618, 12.0128, 7.5604, 8.2669, 9.0810, 9.2566), tolerance=.tol[["ci"]])
 
-   ### fit fixed-effects model
-   res <- rma(yi, vi, data=dat, method="FE", digits=2)
+   ### fit equal-effects model
+   res <- rma(yi, vi, data=dat, method="EE", digits=2)
 
    ### compare with results on page 349 (Table VII)
    expect_equivalent(coef(res), 2.9444, tolerance=.tol[["coef"]])
@@ -75,8 +75,8 @@ test_that("results are correct for the second example (using dat.normand1999).",
    expect_equivalent(tmp$ci.lb, c(-32.4864, -4.8041, -62.6616, -95.0223, -12.8073, -1.168, -8.1411, -15.5547, -1.9159), tolerance=.tol[["ci"]])
    expect_equivalent(tmp$ci.ub, c(-7.5136, 0.8041, -47.3384, -46.9777, 4.8073, 3.168, 30.1411, -4.4453, 15.9159), tolerance=.tol[["ci"]])
 
-   ### fit fixed-effects model
-   res <- rma(yi, vi, data=dat, method="FE", digits=2)
+   ### fit equal-effects model
+   res <- rma(yi, vi, data=dat, method="EE", digits=2)
 
    ### compare with results on page 352 (Table IX)
    expect_equivalent(coef(res), -3.4939, tolerance=.tol[["coef"]])

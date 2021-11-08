@@ -93,7 +93,7 @@ test_that("results are correct for the various exponential function models.", {
    n2i <- c(19,18,334,69,44,96,22,82,84,30,20,218)
    dat <- escalc(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, drop00=TRUE)
 
-   expect_warning(res <- rma(yi, vi, data=dat, method="FE"))
+   expect_warning(res <- rma(yi, vi, data=dat, method="EE"))
 
    alternative <- "less"
 

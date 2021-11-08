@@ -1574,13 +1574,13 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
             if (is.element(optimizer, c("uobyqa","newuoa","bobyqa"))) {
                par.arg <- "par"
-               optimizer <- paste0("minqa::", optimizer) ### need to use this since loading nloptr masks bobyqa() and newuoa() functions
+               optimizer <- paste0("minqa::", optimizer)
                ctrl.arg <- ", control=optCtrl"
             }
 
             if (optimizer == "nloptr") {
                par.arg <- "x0"
-               optimizer <- paste0("nloptr::nloptr") ### need to use this due to requireNamespace()
+               optimizer <- paste0("nloptr::nloptr")
                ctrl.arg <- ", opts=optCtrl"
             }
 
@@ -1593,13 +1593,13 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
             if (is.element(optimizer, c("hjk","nmk","mads"))) {
                par.arg <- "par"
-               optimizer <- paste0("dfoptim::", optimizer) ### need to use this so that the optimizers can be found
+               optimizer <- paste0("dfoptim::", optimizer)
                ctrl.arg <- ", control=optCtrl"
             }
 
             if (is.element(optimizer, c("ucminf","lbfgsb3c","subplex"))) {
                par.arg <- "par"
-               optimizer <- paste0(optimizer, "::", optimizer) ### need to use this due to requireNamespace()
+               optimizer <- paste0(optimizer, "::", optimizer)
                ctrl.arg <- ", control=optCtrl"
             }
 
@@ -1612,7 +1612,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             if (optimizer == "optimParallel") {
 
                par.arg <- "par"
-               optimizer <- paste0("optimParallel::optimParallel") ### need to use this due to requireNamespace()
+               optimizer <- paste0("optimParallel::optimParallel")
                ctrl.arg <- ", control=optCtrl, parallel=parallel"
 
                parallel$cl <- NULL

@@ -22,7 +22,7 @@ test_that("tes() works correctly for 'dat.dorn2007'.", {
    sav <- tes(dat$yi, dat$vi, test="exact", progbar=FALSE)
    expect_equivalent(sav$pval, 0.007778529, tolerance=.tol[["pval"]])
 
-   res <- rma(yi, vi, data=dat, method="FE")
+   res <- rma(yi, vi, data=dat, method="EE")
    sav <- tes(res, test="chi2")
 
    expect_identical(sav$O, 10L)

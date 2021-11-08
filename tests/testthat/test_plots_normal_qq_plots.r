@@ -18,8 +18,8 @@ test_that("plot can be drawn for 'rma.uni' object.", {
    ### calculate log risk ratios and corresponding sampling variances
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
-   ### fit fixed- and random-effects models
-   res1 <- rma(yi, vi, data=dat, method="FE")
+   ### fit equal- and random-effects models
+   res1 <- rma(yi, vi, data=dat, method="EE")
    res2 <- rma(yi, vi, data=dat)
 
    ### fit fixed- and random-effects models with absolute latitude moderator
@@ -27,7 +27,7 @@ test_that("plot can be drawn for 'rma.uni' object.", {
    res4 <- rma(yi, vi, mods=~ablat, data=dat)
 
    ### normal QQ plots for the various models
-   qqnorm(res1, main="Fixed-Effects Model")
+   qqnorm(res1, main="Equal-Effects Model")
    qqnorm(res2, main="Random-Effects Model")
    qqnorm(res3, main="Fixed-Effects with Moderators Model")
    qqnorm(res4, main="Mixed-Effects Model")

@@ -19,9 +19,9 @@ test_that("calculations of escalc() for measure='PFT' are correct.", {
 
 })
 
-test_that("results are correct for the fixed-effects model using unweighted estimation.", {
+test_that("results are correct for the equal-effects model using unweighted estimation.", {
 
-   res <- rma(yi, vi, method="FE", data=dat, weighted=FALSE)
+   res <- rma(yi, vi, method="EE", data=dat, weighted=FALSE)
 
    pred <- predict(res, transf=function(x) x*2)
    expect_equivalent(pred$pred, 1.2262, tolerance=.tol[["pred"]])
@@ -31,9 +31,9 @@ test_that("results are correct for the fixed-effects model using unweighted esti
 
 })
 
-test_that("results are correct for the fixed-effects model using weighted estimation.", {
+test_that("results are correct for the equal-effects model using weighted estimation.", {
 
-   res <- rma(yi, vi, method="FE", data=dat)
+   res <- rma(yi, vi, method="EE", data=dat)
 
    pred <- predict(res, transf=function(x) x*2)
    expect_equivalent(pred$pred, 1.3093, tolerance=.tol[["pred"]])
@@ -67,7 +67,7 @@ test_that("back-transformations work as intended for individual studies and the 
    expect_equivalent(transf.ipft(dat$yi, dat$ni), c(0.0, 0.4, 0.6, 0.8, 1.0))
 
    ### back-transformation of the estimated average
-   res <- rma(yi, vi, method="FE", data=dat)
+   res <- rma(yi, vi, method="EE", data=dat)
    pred <- predict(res, transf=transf.ipft.hm, targs=list(ni=dat$ni))
 
    expect_equivalent(pred$pred,  0.6886, tolerance=.tol[["pred"]])
@@ -84,7 +84,7 @@ test_that("back-transformations work as intended for individual studies and the 
    forest(dat.back$yi, ci.lb=dat.back$ci.lb, ci.ub=dat.back$ci.ub, psize=1,
           xlim=c(-.5,1.8), alim=c(0,1), ylim=c(-1,8), refline=NA, digits=3,
           xlab="Proportion", header=c("Study", "Proportion [95% CI]"))
-   addpoly(pred$pred, ci.lb=pred$ci.lb, ci.ub=pred$ci.ub, rows=-0.5, digits=3, mlab="FE Model", efac=1.3)
+   addpoly(pred$pred, ci.lb=pred$ci.lb, ci.ub=pred$ci.ub, rows=-0.5, digits=3, mlab="EE Model", efac=1.3)
    abline(h=0.5)
    par(opar)
 
