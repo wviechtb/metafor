@@ -7,6 +7,8 @@ Books and articles about meta-analysis often describe and discuss the difference
 Moreover, the term \sQuote{fixed-effects model} creates a bit of a conundrum. When authors use this term, they are really typically referring to the equal-effects model. There is however another type of model, the \sQuote{real} fixed-effects model, that is different from the equal-effects model, but now we would need to invent (unnecessarily) a different term to refer to this model. Some have done so or tried to make a distinction between the \sQuote{fixed-effect model} (without the s!) and the \sQuote{fixed-effects model}, but this subtle difference in terminology is easily overlooked/missed. Using the term \sQuote{equal-effects model} avoids this confusion and is more informative.
 
 However, the question then remains what the real fixed-effects model is all about. The purpose of this page is to describe this model and to contrast it with the well-known random-effects model.
+}
+\details{
 
 \subsection{Fixed-Effects Model}{
 
