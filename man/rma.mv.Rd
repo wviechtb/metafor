@@ -202,11 +202,11 @@ rma.mv(yi, V, W, mods, random, struct="CS", intercept=TRUE,
    \item{\dots}{some additional elements/values.}
 }
 \section{Methods}{
-   The results of the fitted model are formatted and printed with the \code{\link[=print.rma.mv]{print}} function. If fit statistics should also be given, use \code{\link[=summary.rma]{summary}} (or use the \code{\link[=fitstats.rma]{fitstats}} function to extract them). Full versus reduced model comparisons in terms of fit statistics and likelihoods can be obtained with \code{\link[=anova.rma]{anova}}. Wald-type tests for sets of model coefficients or linear combinations thereof can be obtained with the same function. Tests and confidence intervals based on (cluster) robust methods can be obtained with \code{\link[=robust.rma.mv]{robust}}.
+   The results of the fitted model are formatted and printed with the \code{\link[=print.rma.mv]{print}} function. If fit statistics should also be given, use \code{\link[=summary.rma]{summary}} (or use the \code{\link[=fitstats.rma]{fitstats}} function to extract them). Full versus reduced model comparisons in terms of fit statistics and likelihood ratio tests can be obtained with \code{\link[=anova.rma]{anova}}. Wald-type tests for sets of model coefficients or linear combinations thereof can be obtained with the same function. Tests and confidence intervals based on (cluster) robust methods can be obtained with \code{\link[=robust.rma.mv]{robust}}.
 
    Predicted/fitted values can be obtained with \code{\link[=predict.rma]{predict}} and \code{\link[=fitted.rma]{fitted}}. For best linear unbiased predictions, see \code{\link[=ranef.rma.mv]{ranef}}.
 
-   The \code{\link[=residuals.rma]{residuals}}, \code{\link[=rstandard.rma.mv]{rstandard}}, and \code{\link[=rstudent.rma.mv]{rstudent}} functions extract raw and standardized residuals. See \code{\link[=influence.rma.mv]{influence}} for additional case diagnostics (e.g., to determine influential studies). For models with moderators, variance inflation factors can be obtained with \code{\link[=vif.rma]{vif}}.
+   The \code{\link[=residuals.rma]{residuals}}, \code{\link[=rstandard.rma.mv]{rstandard}}, and \code{\link[=rstudent.rma.mv]{rstudent}} functions extract raw and standardized residuals. See \code{\link[=influence.rma.mv]{influence}} for additional diagnostics (e.g., to determine influential studies). For models with moderators, variance inflation factors can be obtained with \code{\link[=vif.rma]{vif}}.
 
    Confidence intervals for any variance/correlation components in the model can be obtained with \code{\link[=confint.rma.mv]{confint}}.
 

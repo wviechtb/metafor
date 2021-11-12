@@ -377,7 +377,7 @@
    if (length(ddd) == 0L) { # if nothing left, return TRUE
       return(TRUE)
    } else {
-      ks <- sapply(ddd, length)
+      ks <- lengths(ddd)
       return(length(unique(ks)) == 1L)
    }
 
@@ -388,7 +388,7 @@
 .all.specified <- function(...) {
 
    ddd  <- list(...)
-   not0  <- sapply(ddd, length) != 0L
+   not0  <- lengths(ddd) != 0L
    all(not0)
    #all(!sapply(ddd, is.null))
 

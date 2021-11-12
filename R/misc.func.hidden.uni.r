@@ -169,7 +169,7 @@
 
 ### -1 times the log likelihood (regular or restricted) for location-scale model
 
-.ll.rma.ls <- function(par, yi, vi, X, Z, reml, k, pX, alpha.val, verbose, digits, REMLf, link, mZ, alpha.min, alpha.max, alpha.transf) {
+.ll.rma.ls <- function(par, yi, vi, X, Z, reml, k, pX, alpha.val, verbose, digits, REMLf, link, mZ, alpha.min, alpha.max, alpha.transf, tau2.min, tau2.max) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -190,6 +190,9 @@
    } else {
       tau2 <- c(Z %*% alpha)
    }
+
+   if (any(is.na(tau2)) || any(tau2 < tau2.min) || any(tau2 > tau2.max))
+      return(Inf)
 
    if (any(tau2 < 0)) {
 

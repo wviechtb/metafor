@@ -942,11 +942,24 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
    verbose <- con$verbose
 
-   ### constrain negative tau2.min values to -min(vi) (to ensure that the marginal variance is always >= 0)
+   if (model == "rma.uni") {
 
-   if (con$tau2.min < 0 && (-con$tau2.min > min(vi))) {
-      con$tau2.min <- -min(vi)
-      warning(mstyle$warning(paste0("Value of 'tau2.min' constrained to -min(vi) = ", .fcf(-min(vi), digits[["est"]]), ".")), call.=FALSE)
+      ### constrain negative tau2.min values to -min(vi) (to ensure that the marginal variance is always >= 0)
+
+      if (con$tau2.min < 0 && (-con$tau2.min > min(vi))) {
+         con$tau2.min <- -min(vi)
+         warning(mstyle$warning(paste0("Value of 'tau2.min' constrained to -min(vi) = ", .fcf(-min(vi), digits[["est"]]), ".")), call.=FALSE)
+      }
+
+   } else {
+
+      if (con$tau2.min != 0 || con$tau2.max != 1000) {
+         con$tau2.min[con$tau2.min < 0] <- 0
+      } else {
+         con$tau2.min <- 0
+         con$tau2.max <- Inf
+      }
+
    }
 
    ### convergence indicator and change variable (for iterative estimators)
@@ -1714,6 +1727,15 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
       if (length(con$alpha.max) == 1L)
             con$alpha.max <- rep(con$alpha.max, q)
 
+      if (length(con$alpha.min) != q)
+         stop(mstyle$stop(paste0("Length of 'alpha.min' argument (", length(alpha.min), ") does not match actual number of parameters (", q, ").")))
+
+      if (length(con$alpha.max) != q)
+         stop(mstyle$stop(paste0("Length of 'alpha.max' argument (", length(alpha.max), ") does not match actual number of parameters (", q, ").")))
+
+      if (any(xor(is.infinite(con$alpha.min),is.infinite(con$alpha.max))))
+         stop(mstyle$stop("Constraints on scale coefficients must be placed on both the lower and upper bound."))
+
       alpha.min <- con$alpha.min
       alpha.max <- con$alpha.max
 
@@ -1826,14 +1848,16 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
          optcall <- paste(optimizer, "(", par.arg, "=alpha.init, .ll.rma.ls, ", ifelse(optimizer=="optim", "method=optmethod, ", ""),
                           "yi=yi, vi=vi, X=X, Z=Z, reml=reml, k=k, pX=p, alpha.val=alpha, verbose=verbose, digits=digits,
                           #hessian=TRUE,
-                          REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=TRUE", ctrl.arg, ")\n", sep="")
+                          REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=TRUE,
+                          tau2.min=con$tau2.min, tau2.max=con$tau2.max", ctrl.arg, ")\n", sep="")
       }
 
       if (link == "identity") {
 
          optcall <- paste0("constrOptim(theta=alpha.init, f=.ll.rma.ls, grad=NULL, ui=Z, ci=rep(0,k),
                            yi=yi, vi=vi, X=X, Z=Z, reml=reml, k=k, pX=p, alpha.val=alpha, verbose=verbose, digits=digits,
-                           REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=TRUE", ctrl.arg, ")\n")
+                           REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=TRUE,
+                           tau2.min=con$tau2.min, tau2.max=con$tau2.max", ctrl.arg, ")\n")
 
       }
 
@@ -1907,11 +1931,13 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
          if (con$hesspack == "numDeriv")
             H <- try(numDeriv::hessian(func=.ll.rma.ls, x=opt.res$par, method.args=con$hessianCtrl, yi=yi, vi=vi, X=X,
                                        Z=Z, reml=reml, k=k, pX=p, alpha.val=alpha, verbose=FALSE, digits=digits,
-                                       REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=FALSE), silent=TRUE)
+                                       REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=FALSE,
+                                       tau2.min=con$tau2.min, tau2.max=con$tau2.max), silent=TRUE)
          if (con$hesspack == "pracma")
             H <- try(pracma::hessian(f=.ll.rma.ls, x0=opt.res$par, yi=yi, vi=vi, X=X,
                                      Z=Z, reml=reml, k=k, pX=p, alpha.val=alpha, verbose=FALSE, digits=digits,
-                                     REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=FALSE), silent=TRUE)
+                                     REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=FALSE,
+                                     tau2.min=con$tau2.min, tau2.max=con$tau2.max), silent=TRUE)
 
          if (inherits(H, "try-error")) {
 
