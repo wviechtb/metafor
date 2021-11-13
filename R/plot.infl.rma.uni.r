@@ -64,7 +64,8 @@ col.na="lightgray", ...) {
    par.mar.adj <- par.mar - c(2,2,2,1)
    par.mar.adj[par.mar.adj < 1] <- 1
    par(mar = par.mar.adj)
-   on.exit(par(mar = par.mar))
+   par.mfrow <- par("mfrow")
+   on.exit(par(mar = par.mar, mfrow = par.mfrow))
 
    #########################################################################
 
@@ -89,9 +90,6 @@ col.na="lightgray", ...) {
 
       ### set layout (either defaults or user-specified)
       ### note: could also use n2mfrow() here, but this behaves slightly differently
-
-      par.mfrow <- par("mfrow")
-      on.exit(par(mfrow = par.mfrow), add=TRUE)
 
       if (missing(layout)) {
 

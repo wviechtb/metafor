@@ -1,4 +1,4 @@
-# metafor 3.1-32 (2021-11-12)
+# metafor 3.1-33 (2021-11-13)
 
 - added `vcalc()` and `blsplit()` functions
 
