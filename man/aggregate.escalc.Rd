@@ -24,7 +24,7 @@
    \item{na.rm}{logical to specify whether \code{NA} values should be removed before aggregating values within clusters. Can also be a vector with two logicals (the first pertaining to the effect sizes or outcomes, the second to all other variables).}
    \item{subset}{optional (logical or numeric) vector to specify the subset of rows to include when aggregating the effect sizes or outcomes.}
    \item{select}{optional vector to specify the names of the variables to include in the aggregated dataset.}
-   \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded (the default is to take the value from the object).}
+   \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded (the default is to take the value from the object).}
    \item{\dots}{other arguments.}
 }
 \details{

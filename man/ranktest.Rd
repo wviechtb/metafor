@@ -1,35 +1,30 @@
 \name{ranktest}
 \alias{ranktest}
-\alias{ranktest.rma}
-\alias{ranktest.default}
 \title{Rank Correlation Test for Funnel Plot Asymmetry}
 \description{
    The function can be used to carry out the rank correlation test for funnel plot asymmetry.
 }
 \usage{
-ranktest(x, \dots)
-
-\method{ranktest}{rma}(x, digits, \dots)
-
-\method{ranktest}{default}(x, vi, sei, subset, digits, \dots)
+ranktest(yi, vi, sei, subset, data, digits, \dots)
 }
 \arguments{
-   \item{x}{an object of class \code{"rma"} or a vector with the observed effect sizes or outcomes.}
-   \item{vi}{vector with the corresponding sampling variances (needed if \code{x} is a vector with the observed effect sizes or outcomes).}
+   \item{yi}{a vector with the observed effect sizes or outcomes or an object of class \code{"rma"}.}
+   \item{vi}{vector with the corresponding sampling variances (ignored if \code{yi} is an object of class \code{"rma"}).}
    \item{sei}{vector with the corresponding standard errors (note: only one of the two, \code{vi} or \code{sei}, needs to be specified).}
-   \item{subset}{optional (logical or numeric) vector to specify the subset of studies that should be included in the test. Only relevant when passing a vector via \code{x}.}
-   \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded (the default is 4).}
+   \item{subset}{optional (logical or numeric) vector to specify the subset of studies that should be included in the test (ignored if \code{yi} is an object of class \code{"rma"}).}
+   \item{data}{optional data frame containing the variables given to the arguments above.}
+   \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded.}
    \item{\dots}{other arguments.}
 }
 \details{
    The function carries out the rank correlation test as described by Begg and Mazumdar (1994). The test can be used to examine whether the observed effect sizes or outcomes and the corresponding sampling variances are correlated. A high correlation would indicate that the funnel plot is asymmetric, which may be a result of publication bias.
 
-   One can either pass an object of class \code{"rma"} to the function or a vector with the observed effect sizes or outcomes (via \code{x}) and the corresponding sampling variances via \code{vi} (or the standard errors via \code{sei}).
+   One can either pass a vector with the observed effect sizes or outcomes (via \code{yi}) and the corresponding sampling variances via \code{vi} (or the standard errors via \code{sei}) to the function or an object of class \code{"rma"}.
 }
 \value{
    An object of class \code{"ranktest"}. The object is a list containing the following components:
-   \item{tau}{the estimated value of Kendall's tau rank correlation coefficient}
-   \item{pval}{the corresponding p-value for the test that the true tau is equal to zero}
+   \item{tau}{the estimated value of Kendall's tau rank correlation coefficient.}
+   \item{pval}{the corresponding p-value for the test that the true tau value is equal to zero.}
 
    The results are formatted and printed with the \code{\link[=print.ranktest]{print}} function.
 }
@@ -60,6 +55,6 @@ res <- rma(yi, vi, data=dat)
 ranktest(res)
 
 ### can also pass the observed outcomes and corresponding sampling variances to the function
-ranktest(dat$yi, dat$vi)
+ranktest(yi, vi, data=dat)
 }
 \keyword{htest}

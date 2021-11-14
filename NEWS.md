@@ -1,4 +1,6 @@
-# metafor 3.1-33 (2021-11-13)
+# metafor 3.1-34 (2021-11-14)
+
+- simplified `regtest()`, `ranktest()`, and `tes()` to single functions instead of using generics and methods; this way, a `data` argument could be added
 
 - added `vcalc()` and `blsplit()` functions
 

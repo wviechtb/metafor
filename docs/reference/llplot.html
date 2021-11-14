@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-32</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-34</span>
       </span>
     </div>
 
@@ -111,13 +111,13 @@
 <dt>sei</dt>
 <dd><p>vector to specify the corresponding standard.</p></dd>
 <dt>ai</dt>
-<dd><p>vector to specify the \(2 \times 2\) table frequencies (upper left cell).</p></dd>
+<dd><p>vector to specify the <em></em>\(2 \times 2\) table frequencies (upper left cell).</p></dd>
 <dt>bi</dt>
-<dd><p>vector to specify the \(2 \times 2\) table frequencies (upper right cell).</p></dd>
+<dd><p>vector to specify the <em></em>\(2 \times 2\) table frequencies (upper right cell).</p></dd>
 <dt>ci</dt>
-<dd><p>vector to specify the \(2 \times 2\) table frequencies (lower left cell).</p></dd>
+<dd><p>vector to specify the <em></em>\(2 \times 2\) table frequencies (lower left cell).</p></dd>
 <dt>di</dt>
-<dd><p>vector to specify the \(2 \times 2\) table frequencies (lower right cell).</p></dd>
+<dd><p>vector to specify the <em></em>\(2 \times 2\) table frequencies (lower right cell).</p></dd>
 <dt>n1i</dt>
 <dd><p>vector to specify the group sizes or row totals (first group/row).</p></dd>
 <dt>n2i</dt>
@@ -141,11 +141,11 @@
 <dt>scale</dt>
 <dd><p>logical to specify whether the likelihood values should be scaled, so that the total area under each curve is (approximately) equal to 1.</p></dd>
 <dt>lty</dt>
-<dd><p>the line types (either a single value or a vector of length \(k\)). If unspecified, the function sets the line types according to some characteristics of the likelihood function. See ‘Details’.</p></dd>
+<dd><p>the line types (either a single value or a vector of length <em></em>\(k\)). If unspecified, the function sets the line types according to some characteristics of the likelihood function. See ‘Details’.</p></dd>
 <dt>lwd</dt>
-<dd><p>the line widths (either a single value or a vector of length \(k\)). If unspecified, the function sets the widths according to the sampling variances (so that the line is thicker for more precise studies and vice-versa).</p></dd>
+<dd><p>the line widths (either a single value or a vector of length <em></em>\(k\)). If unspecified, the function sets the widths according to the sampling variances (so that the line is thicker for more precise studies and vice-versa).</p></dd>
 <dt>col</dt>
-<dd><p>the line colors (either a single value or a vector of length \(k\)). If unspecified, the function uses various shades of gray according to the sampling variances (so that darker shades are used for more precise studies and vice-versa).</p></dd>
+<dd><p>the line colors (either a single value or a vector of length <em></em>\(k\)). If unspecified, the function uses various shades of gray according to the sampling variances (so that darker shades are used for more precise studies and vice-versa).</p></dd>
 <dt>level</dt>
 <dd><p>numeric value between 0 and 100 to specify the plotting limits for each likelihood line in terms of the confidence interval (the default is 99.99).</p></dd>
 <dt>refline</dt>
@@ -157,7 +157,7 @@
     <h2>Details</h2>
     <p>At the moment, the function only accepts <code>measure="GEN"</code> or <code>measure="OR"</code>.</p>
 <p>For <code>measure="GEN"</code>, one must specify arguments <code>yi</code> for the observed effect sizes or outcomes and <code>vi</code> for the corresponding sampling variances (instead of specifying <code>vi</code>, one can specify the standard errors via the <code>sei</code> argument). The function then plots the likelihood of the true effect size or outcome based on a normal sampling distribution with observed outcome as given by <code>yi</code> and variance as given by <code>vi</code> for each study.</p>
-<p>For <code>measure="OR"</code>, one must specify arguments <code>ai</code>, <code>bi</code>, <code>ci</code>, and <code>di</code>, which denote the cell frequencies of the \(2 \times 2\) tables. Alternatively, one can specify <code>ai</code>, <code>ci</code>, <code>n1i</code>, and <code>n2i</code>. See <code><a href="escalc.html">escalc</a></code> function for more details. The function then plots the likelihood of the true log odds ratio based on the non-central hypergeometric distribution for each \(2 \times 2\) table. Since studies with no cases (or only cases) in both groups have a flat likelihood and are not informative about the odds ratio, they are dropped by default (i.e., <code>drop00=TRUE</code>) and are hence not drawn (if <code>drop00=FALSE</code>, these likelihood are indicated by dotted lines). For studies that have a single zero count, the MLE of the odds ratio is infinite and these likelihoods are indicated by dashed lines.</p>
+<p>For <code>measure="OR"</code>, one must specify arguments <code>ai</code>, <code>bi</code>, <code>ci</code>, and <code>di</code>, which denote the cell frequencies of the <em></em>\(2 \times 2\) tables. Alternatively, one can specify <code>ai</code>, <code>ci</code>, <code>n1i</code>, and <code>n2i</code>. See <code><a href="escalc.html">escalc</a></code> function for more details. The function then plots the likelihood of the true log odds ratio based on the non-central hypergeometric distribution for each <em></em>\(2 \times 2\) table. Since studies with no cases (or only cases) in both groups have a flat likelihood and are not informative about the odds ratio, they are dropped by default (i.e., <code>drop00=TRUE</code>) and are hence not drawn (if <code>drop00=FALSE</code>, these likelihood are indicated by dotted lines). For studies that have a single zero count, the MLE of the odds ratio is infinite and these likelihoods are indicated by dashed lines.</p>
     </div>
     <div id="author">
     <h2>Author</h2>

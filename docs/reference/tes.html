@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-32</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-34</span>
       </span>
     </div>
 
@@ -95,14 +95,7 @@
     <p>Function to conduct the test of excess significance. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">tes</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for rma</span>
-<span class="fu">tes</span><span class="op">(</span><span class="va">x</span>, H0<span class="op">=</span><span class="fl">0</span>, alternative<span class="op">=</span><span class="st">"two.sided"</span>, alpha<span class="op">=</span><span class="fl">.05</span>,
-    <span class="va">test</span>, tes.alternative<span class="op">=</span><span class="st">"greater"</span>, progbar<span class="op">=</span><span class="cn">TRUE</span>, tes.alpha<span class="op">=</span><span class="fl">.10</span>, <span class="va">digits</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for default</span>
-<span class="fu">tes</span><span class="op">(</span><span class="va">x</span>, <span class="va">vi</span>, <span class="va">sei</span>, <span class="va">subset</span>, H0<span class="op">=</span><span class="fl">0</span>, alternative<span class="op">=</span><span class="st">"two.sided"</span>, alpha<span class="op">=</span><span class="fl">.05</span>, <span class="va">theta</span>, <span class="va">tau2</span>,
+    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">tes</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, <span class="va">sei</span>, <span class="va">subset</span>, <span class="va">data</span>, H0<span class="op">=</span><span class="fl">0</span>, alternative<span class="op">=</span><span class="st">"two.sided"</span>, alpha<span class="op">=</span><span class="fl">.05</span>, <span class="va">theta</span>, <span class="va">tau2</span>,
     <span class="va">test</span>, tes.alternative<span class="op">=</span><span class="st">"greater"</span>, progbar<span class="op">=</span><span class="cn">TRUE</span>, tes.alpha<span class="op">=</span><span class="fl">.10</span>, <span class="va">digits</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for tes</span>
@@ -112,14 +105,16 @@
     <div id="arguments">
     <h2>Arguments</h2>
     <p><em>These arguments pertain to data input:</em></p>
-<dl><dt>x</dt>
-<dd><p>an object of class <code>"rma"</code> or a vector with the observed effect sizes or outcomes.</p></dd>
+<dl><dt>yi</dt>
+<dd><p>a vector with the observed effect sizes or outcomes or an object of class <code>"rma"</code>.</p></dd>
 <dt>vi</dt>
-<dd><p>vector with the corresponding sampling variances.</p></dd>
+<dd><p>vector with the corresponding sampling variances (ignored if <code>yi</code> is an object of class <code>"rma"</code>).</p></dd>
 <dt>sei</dt>
 <dd><p>vector with the corresponding standard errors (note: only one of the two, <code>vi</code> or <code>sei</code>, needs to be specified).</p></dd>
 <dt>subset</dt>
-<dd><p>optional (logical or numeric) vector to specify the subset of studies that should be included.</p></dd>
+<dd><p>optional (logical or numeric) vector to specify the subset of studies that should be included (ignored if <code>yi</code> is an object of class <code>"rma"</code>).</p></dd>
+<dt>data</dt>
+<dd><p>optional data frame containing the variables given to the arguments above.</p></dd>
 </dl><p><em>These arguments pertain to the tests of the observed effect sizes or outcomes:</em></p>
 <dl><dt>H0</dt>
 <dd><p>numeric value to specify the value of the effect size or outcome under the null hypothesis (the default is 0).</p></dd>
@@ -129,12 +124,12 @@
 <dd><p>alpha level for testing the observed effect sizes or outcomes (the default is .05).</p></dd>
 </dl><p><em>These arguments pertain to the power of the tests:</em></p>
 <dl><dt>theta</dt>
-<dd><p>numeric value to specify the value of the true effect size or outcome under the alternative hypothesis. If unspecified, it will be estimated based on the data or the value is taken from the <code>"rma"</code> object.</p></dd>
+<dd><p>optional numeric value to specify the value of the true effect size or outcome under the alternative hypothesis. If unspecified, it will be estimated based on the data or the value is taken from the <code>"rma"</code> object.</p></dd>
 <dt>tau2</dt>
-<dd><p>numeric value to specify the amount of heterogeneity in the true effect sizes or outcomes. If unspecified, the true effect sizes or outcomes are assumed to be homogeneous or the value is taken from the <code>"rma"</code> object.</p></dd>
+<dd><p>optional numeric value to specify the amount of heterogeneity in the true effect sizes or outcomes. If unspecified, the true effect sizes or outcomes are assumed to be homogeneous or the value is taken from the <code>"rma"</code> object.</p></dd>
 </dl><p><em>These arguments pertain to the test of excess significance:</em></p>
 <dl><dt>test</dt>
-<dd><p>character string to specify the type of test to use for conducting the test of excess significance. Possible options are <code>"chi2"</code>, <code>"binom"</code>, or <code>"exact"</code>. Can be abbreviated. If unspecified, the function chooses the type of test based on the data.</p></dd>
+<dd><p>optional character string to specify the type of test to use for conducting the test of excess significance. Possible options are <code>"chi2"</code>, <code>"binom"</code>, or <code>"exact"</code>. Can be abbreviated. If unspecified, the function chooses the type of test based on the data.</p></dd>
 <dt>tes.alternative</dt>
 <dd><p>character string to specify the sidedness of the hypothesis for the test of excess significance. Possible options are <code>"greater"</code> (the default), <code>"two.sided"</code>, or <code>"less"</code>. Can be abbreviated.</p></dd>
 <dt>progbar</dt>
@@ -143,18 +138,21 @@
 <dd><p>alpha level for the test of excess significance (the default is .10). Only relevant for finding the ‘limit estimate’.</p></dd>
 </dl><p><em>Miscellaneous arguments:</em></p>
 <dl><dt>digits</dt>
-<dd><p>integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4.</p></dd>
+<dd><p>optional integer to specify the number of decimal places to which the printed results should be rounded.</p></dd>
 <dt>...</dt>
 <dd><p>other arguments.</p></dd>
+</dl><p><em>For the <code>print</code> method:</em></p>
+<dl><dt>x</dt>
+<dd><p>an object of class <code>"tes"</code>.</p></dd>
 </dl></div>
     <div id="details">
     <h2>Details</h2>
     <p>The function carries out the test of excess significance described by Ioannidis and Trikalinos (2007). The test can be used to examine whether the observed number of significant findings is greater than the number of significant findings expected given the power of the tests. An overabundance of significant tests may suggest that the collection of studies is not representative of all studies conducted on a particular topic.</p>
-<p>One can either pass an object of class <code>"rma"</code> to the function or a vector with the observed effect sizes or outcomes (via <code>x</code>) and the corresponding sampling variances via <code>vi</code> (or the standard errors via <code>sei</code>).</p>
-<p>The observed effect sizes or outcomes are tested for significance based on a standard Wald-type test, that is, by comparing \[z_i = \frac{y_i - \mbox{H}_0}{\sqrt{v_i}}\] against the appropriate critical value(s) of a standard normal distribution (e.g., \(\pm 1.96\) for <code>alternative="two.sided"</code> and <code>alpha=.05</code>, which are the defaults). Let \(O\) denote the observed number of significant tests.</p>
-<p>Given a particular value for the true effect or outcome denoted by \(\theta\) (which, if it is unspecified, is determined by computing the inverse-variance weighted average of the observed effect sizes or outcomes or the value is taken from the model object), let \(1-\beta_i\) denote the power of the \(i\textrm{th}\) test (where \(\beta_i\) denotes the Type II error probability). If \(\tau^2 &gt; 0\), let \(1-\beta_i\) denote the expected power (computed based on integrating the power over a normal distribution with mean \(\theta\) and variance \(\tau^2\)). Let \(E = \sum_{i=1}^k (1-\beta_i)\) denote the expected number of significant tests.</p>
-<p>The test of excess significance then tests if \(O\) is significantly greater (if <code>tes.alternative="greater"</code>) than \(E\). This can be done using Pearson's chi-squared test (if <code>test="chi2"</code>), a binomial test (if <code>test="binomial"</code>), or an exact test (if <code>test="exact"</code>). The latter is described in Francis (2013). If argument <code>test</code> is unspecified, the default is to do an exact test if the number of elements in the sum that needs to be computed is less than or equal to <code>10^6</code> and to do a chi-square test otherwise.</p>
-<p>One can also iteratively find the value of \(\theta\) such that the p-value of the test of excess significance is equal to <code>tes.alpha</code> (which is <code>.10</code> by default). The resulting value is called the ‘limit estimate’ and is denoted \(\theta_{lim}\) by Ioannidis and Trikalinos (2007). Note that the limit estimate is not computable if the p-value is larger than <code>tes.alpha</code> even if \(\theta = \mbox{H}_0\).</p>
+<p>One can either pass a vector with the observed effect sizes or outcomes (via <code>yi</code>) and the corresponding sampling variances via <code>vi</code> (or the standard errors via <code>sei</code>) to the function or an object of class <code>"rma"</code>.</p>
+<p>The observed effect sizes or outcomes are tested for significance based on a standard Wald-type test, that is, by comparing \[z_i = \frac{y_i - \mbox{H}_0}{\sqrt{v_i}}\] against the appropriate critical value(s) of a standard normal distribution (e.g., <em></em>\(\pm 1.96\) for <code>alternative="two.sided"</code> and <code>alpha=.05</code>, which are the defaults). Let <em></em>\(O\) denote the observed number of significant tests.</p>
+<p>Given a particular value for the true effect or outcome denoted by <em></em>\(\theta\) (which, if it is unspecified, is determined by computing the inverse-variance weighted average of the observed effect sizes or outcomes or the value is taken from the model object), let <em></em>\(1-\beta_i\) denote the power of the <em></em>\(i\textrm{th}\) test (where <em></em>\(\beta_i\) denotes the Type II error probability). If <em></em>\(\tau^2 &gt; 0\), let <em></em>\(1-\beta_i\) denote the expected power (computed based on integrating the power over a normal distribution with mean <em></em>\(\theta\) and variance <em></em>\(\tau^2\)). Let <em></em>\(E = \sum_{i=1}^k (1-\beta_i)\) denote the expected number of significant tests.</p>
+<p>The test of excess significance then tests if <em></em>\(O\) is significantly greater (if <code>tes.alternative="greater"</code>) than <em></em>\(E\). This can be done using Pearson's chi-squared test (if <code>test="chi2"</code>), a binomial test (if <code>test="binomial"</code>), or an exact test (if <code>test="exact"</code>). The latter is described in Francis (2013). If argument <code>test</code> is unspecified, the default is to do an exact test if the number of elements in the sum that needs to be computed is less than or equal to <code>10^6</code> and to do a chi-square test otherwise.</p>
+<p>One can also iteratively find the value of <em></em>\(\theta\) such that the p-value of the test of excess significance is equal to <code>tes.alpha</code> (which is <code>.10</code> by default). The resulting value is called the ‘limit estimate’ and is denoted <em></em>\(\theta_{lim}\) by Ioannidis and Trikalinos (2007). Note that the limit estimate is not computable if the p-value is larger than <code>tes.alpha</code> even if <em></em>\(\theta = \mbox{H}_0\).</p>
     </div>
     <div id="value">
     <h2>Value</h2>
@@ -176,16 +174,16 @@
 <dt>sig</dt>
 <dd><p>logical vector indicating which tests were significant.</p></dd>
 <dt>theta</dt>
-<dd><p>the value of \(\theta\) used for computing the power of the tests.</p></dd>
+<dd><p>the value of <em></em>\(\theta\) used for computing the power of the tests.</p></dd>
 <dt>theta.lim</dt>
-<dd><p>the ‘limit estimate’ (i.e., \(\theta_{lim}\)).</p></dd>
+<dd><p>the ‘limit estimate’ (i.e., <em></em>\(\theta_{lim}\)).</p></dd>
 <dt>...</dt>
 <dd><p>some additional elements/values.</p></dd>
 </dl><p>The results are formatted and printed with the <code>print</code> function.</p>
     </div>
     <div id="note">
     <h2>Note</h2>
-    <p>When <code>tes.alternative="greater"</code> (the default), then the function tests if \(O\) is significantly greater than \(E\) and hence this is indeed a test of excess significance. When <code>tes.alternative="two.sided"</code>, then the function tests if \(O\) differs significantly from \(E\) in either direction and hence it would be more apt to describe this as a test of (in)consistency (between \(O\) and \(E\)). Finally, one can also set <code>tes.alternative="less"</code>, in which case the function tests if \(O\) is significantly lower than \(E\), which could be considered a test of excess non-significance.</p>
+    <p>When <code>tes.alternative="greater"</code> (the default), then the function tests if <em></em>\(O\) is significantly greater than <em></em>\(E\) and hence this is indeed a test of excess significance. When <code>tes.alternative="two.sided"</code>, then the function tests if <em></em>\(O\) differs significantly from <em></em>\(E\) in either direction and hence it would be more apt to describe this as a test of (in)consistency (between <em></em>\(O\) and <em></em>\(E\)). Finally, one can also set <code>tes.alternative="less"</code>, in which case the function tests if <em></em>\(O\) is significantly lower than <em></em>\(E\), which could be considered a test of excess non-significance.</p>
 <p>When <code>tes.alternative="two.sided"</code>, one can actually compute two limit estimates. The function attempts to compute both.</p>
 <p>The function computes the significance and power of the studies based on Wald-type tests regardless of the effect size or outcome measure used as input. This works as an adequate approximation as long as the within-study sample sizes are not too small.</p>
 <p>Note that the test is not a test for publication bias but a test whether the set of studies includes an unusual number of significant findings given the power of the studies. The general usefulness of the test and its usefulness under particular circumstances (e.g., when there is substantial heterogeneity in the true effect sizes or outcomes) has been the subject of considerable debate. See Francis (2013) and the commentaries on this article in the same issue of the journal.</p>
@@ -212,7 +210,7 @@
 <span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">x.a</span>, n1i<span class="op">=</span><span class="va">n.a</span>, ci<span class="op">=</span><span class="va">x.p</span>, n2i<span class="op">=</span><span class="va">n.p</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.dorn2007.html" class="external-link">dat.dorn2007</a></span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### conduct test of excess significance (using test="chi2" to speed things up)</span></span>
-<span class="r-in"><span class="fu">tes</span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">yi</span>, <span class="va">dat</span><span class="op">$</span><span class="va">vi</span>, test<span class="op">=</span><span class="st">"chi2"</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">tes</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, test<span class="op">=</span><span class="st">"chi2"</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Test of Excess Significance</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -250,16 +248,16 @@
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### illustrate limit estimate (value of theta where p-value of test is equal to tes.alpha)</span></span>
 <span class="r-in"><span class="va">thetas</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span>,length<span class="op">=</span><span class="fl">101</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">pvals</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">thetas</span>, <span class="kw">function</span><span class="op">(</span><span class="va">theta</span><span class="op">)</span> <span class="fu">tes</span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">yi</span>, <span class="va">dat</span><span class="op">$</span><span class="va">vi</span>, test<span class="op">=</span><span class="st">"chi2"</span>, theta<span class="op">=</span><span class="va">theta</span><span class="op">)</span><span class="op">$</span><span class="va">pval</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">pvals</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">thetas</span>, <span class="kw">function</span><span class="op">(</span><span class="va">theta</span><span class="op">)</span> <span class="fu">tes</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, test<span class="op">=</span><span class="st">"chi2"</span>, theta<span class="op">=</span><span class="va">theta</span><span class="op">)</span><span class="op">$</span><span class="va">pval</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">thetas</span>, <span class="va">pvals</span>, type<span class="op">=</span><span class="st">"o"</span>, pch<span class="op">=</span><span class="fl">19</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">sav</span> <span class="op">&lt;-</span> <span class="fu">tes</span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">yi</span>, <span class="va">dat</span><span class="op">$</span><span class="va">vi</span>, test<span class="op">=</span><span class="st">"chi2"</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">sav</span> <span class="op">&lt;-</span> <span class="fu">tes</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, test<span class="op">=</span><span class="st">"chi2"</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>h<span class="op">=</span><span class="va">sav</span><span class="op">$</span><span class="va">tes.alpha</span>, lty<span class="op">=</span><span class="st">"dotted"</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v<span class="op">=</span><span class="va">sav</span><span class="op">$</span><span class="va">theta.lim</span>, lty<span class="op">=</span><span class="st">"dotted"</span><span class="op">)</span></span>
 <span class="r-plt img"><img src="tes-1.png" alt="" width="864" height="768"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### examine significance of test as a function of alpha (to examine 'significance chasing')</span></span>
 <span class="r-in"><span class="va">alphas</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">.01</span>,<span class="fl">.99</span>,length<span class="op">=</span><span class="fl">101</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">pvals</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">alphas</span>, <span class="kw">function</span><span class="op">(</span><span class="va">alpha</span><span class="op">)</span> <span class="fu">tes</span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">yi</span>, <span class="va">dat</span><span class="op">$</span><span class="va">vi</span>, test<span class="op">=</span><span class="st">"chi2"</span>, alpha<span class="op">=</span><span class="va">alpha</span><span class="op">)</span><span class="op">$</span><span class="va">pval</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">pvals</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">alphas</span>, <span class="kw">function</span><span class="op">(</span><span class="va">alpha</span><span class="op">)</span> <span class="fu">tes</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, test<span class="op">=</span><span class="st">"chi2"</span>, alpha<span class="op">=</span><span class="va">alpha</span><span class="op">)</span><span class="op">$</span><span class="va">pval</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">alphas</span>, <span class="va">pvals</span>, type<span class="op">=</span><span class="st">"o"</span>, pch<span class="op">=</span><span class="fl">19</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v<span class="op">=</span><span class="fl">.05</span>, lty<span class="op">=</span><span class="st">"dotted"</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>h<span class="op">=</span><span class="fl">.10</span>, lty<span class="op">=</span><span class="st">"dotted"</span><span class="op">)</span></span>

@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-32</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-34</span>
       </span>
     </div>
 
@@ -105,13 +105,13 @@
     <dl><dt>measure</dt>
 <dd><p>a character string to specify the effect size or outcome measure corresponding to the summary data supplied. See ‘Details’ and the documentation of the <code><a href="escalc.html">escalc</a></code> function for possible options.</p></dd>
 <dt>ai</dt>
-<dd><p>vector to specify the \(2 \times 2\) table frequencies (upper left cell).</p></dd>
+<dd><p>vector to specify the <em></em>\(2 \times 2\) table frequencies (upper left cell).</p></dd>
 <dt>bi</dt>
-<dd><p>vector to specify the \(2 \times 2\) table frequencies (upper right cell).</p></dd>
+<dd><p>vector to specify the <em></em>\(2 \times 2\) table frequencies (upper right cell).</p></dd>
 <dt>ci</dt>
-<dd><p>vector to specify the \(2 \times 2\) table frequencies (lower left cell).</p></dd>
+<dd><p>vector to specify the <em></em>\(2 \times 2\) table frequencies (lower left cell).</p></dd>
 <dt>di</dt>
-<dd><p>vector to specify the \(2 \times 2\) table frequencies (lower right cell).</p></dd>
+<dd><p>vector to specify the <em></em>\(2 \times 2\) table frequencies (lower right cell).</p></dd>
 <dt>n1i</dt>
 <dd><p>vector to specify the group sizes or row totals (first group/row).</p></dd>
 <dt>n2i</dt>
@@ -157,7 +157,7 @@
 <dt>drop00</dt>
 <dd><p>see the documentation of the <code><a href="escalc.html">escalc</a></code> function.</p></dd>
 <dt>vlong</dt>
-<dd><p>optional logical whether a very long format should be used (only relevant for \(2 \times 2\) or \(1 \times 2\) table data).</p></dd>
+<dd><p>optional logical whether a very long format should be used (only relevant for <em></em>\(2 \times 2\) or <em></em>\(1 \times 2\) table data).</p></dd>
 <dt>append</dt>
 <dd><p>logical to specify whether the data frame specified via the <code>data</code> argument (if one has been specified) should be returned together with the long format data (the default is <code>TRUE</code>).</p></dd>
 <dt>var.names</dt>
@@ -166,15 +166,15 @@
     <div id="details">
     <h2>Details</h2>
     <p>The <code><a href="escalc.html">escalc</a></code> function describes a wide variety of effect size or outcome measures that can be computed for a meta-analysis. The summary data used to compute those measures are typically contained in vectors, each element corresponding to a study. The <code>to.long</code> function takes this information and constructs a long format dataset from these data.</p>
-<p>For example, in various fields (such as the health and medical sciences), the response variable measured is often dichotomous (binary), so that the data from a study comparing two different groups can be expressed in terms of a \(2 \times 2\) table, such as:</p><table class="table table"><tr><td></td><td>outcome 1</td><td>outcome 2</td><td>total</td></tr><tr><td>group 1</td><td><code>ai</code></td><td><code>bi</code></td><td><code>n1i</code></td></tr><tr><td>group 2</td><td><code>ci</code></td><td><code>di</code></td><td><code>n2i</code></td></tr></table><p>where <code>ai</code>, <code>bi</code>, <code>ci</code>, and <code>di</code> denote the cell frequencies (i.e., the number of people falling into a particular category) and <code>n1i</code> and <code>n2i</code> the row totals (i.e., the group sizes).</p>
-<p>The cell frequencies in \(k\) such \(2 \times 2\) tables can be specified via the <code>ai</code>, <code>bi</code>, <code>ci</code>, and <code>di</code> arguments (or alternatively, via the <code>ai</code>, <code>ci</code>, <code>n1i</code>, and <code>n2i</code> arguments). The function then creates the corresponding long format dataset. The <code>measure</code> argument should then be set equal to one of the outcome measures that can be computed based on this type of data, such as <code>"RR"</code>, <code>"OR"</code>, <code>"RD"</code> (it is not relevant which specific measure is chosen, as long as it corresponds to the specified summary data). See the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details on the types of data formats available.</p>
+<p>For example, in various fields (such as the health and medical sciences), the response variable measured is often dichotomous (binary), so that the data from a study comparing two different groups can be expressed in terms of a <em></em>\(2 \times 2\) table, such as:</p><table class="table table"><tr><td></td><td>outcome 1</td><td>outcome 2</td><td>total</td></tr><tr><td>group 1</td><td><code>ai</code></td><td><code>bi</code></td><td><code>n1i</code></td></tr><tr><td>group 2</td><td><code>ci</code></td><td><code>di</code></td><td><code>n2i</code></td></tr></table><p>where <code>ai</code>, <code>bi</code>, <code>ci</code>, and <code>di</code> denote the cell frequencies (i.e., the number of people falling into a particular category) and <code>n1i</code> and <code>n2i</code> the row totals (i.e., the group sizes).</p>
+<p>The cell frequencies in <em></em>\(k\) such <em></em>\(2 \times 2\) tables can be specified via the <code>ai</code>, <code>bi</code>, <code>ci</code>, and <code>di</code> arguments (or alternatively, via the <code>ai</code>, <code>ci</code>, <code>n1i</code>, and <code>n2i</code> arguments). The function then creates the corresponding long format dataset. The <code>measure</code> argument should then be set equal to one of the outcome measures that can be computed based on this type of data, such as <code>"RR"</code>, <code>"OR"</code>, <code>"RD"</code> (it is not relevant which specific measure is chosen, as long as it corresponds to the specified summary data). See the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details on the types of data formats available.</p>
 <p>The long format for data of this type consists of two rows per study, a factor indicating the study (default name <code>study</code>), a dummy variable indicating the group (default name <code>group</code>, coded as 1 and 2), and two variables indicating the number of individuals experiencing outcome 1 or outcome 2 (default names <code>out1</code> and <code>out2</code>). Alternatively, if <code>vlong=TRUE</code>, then the long format consists of four rows per study, a factor indicating the study (default name <code>study</code>), a dummy variable indicating the group (default name <code>group</code>, coded as 1 and 2), a dummy variable indicating the outcome (default name <code>outcome</code>, coded as 1 and 2), and a variable indicating the frequency of the respective outcome (default name <code>freq</code>).</p>
 <p>The default variable names can be changed via the <code>var.names</code> argument (must be of the appropriate length, depending on the data type).</p>
 <p>The examples below illustrate the use of this function.</p>
     </div>
     <div id="value">
     <h2>Value</h2>
-    <p>A data frame with either \(k\), \(2 \times k\), or \(4 \times k\) rows and an appropriate number of columns (depending on the data type) with the data in long format. If <code>append=TRUE</code> and a data frame was specified via the <code>data</code> argument, then the data in long format are appended to the original data frame (with rows repeated an appropriate number of times).</p>
+    <p>A data frame with either <em></em>\(k\), <em></em>\(2 \times k\), or <em></em>\(4 \times k\) rows and an appropriate number of columns (depending on the data type) with the data in long format. If <code>append=TRUE</code> and a data frame was specified via the <code>data</code> argument, then the data in long format are appended to the original data frame (with rows repeated an appropriate number of times).</p>
     </div>
     <div id="author">
     <h2>Author</h2>

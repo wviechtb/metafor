@@ -1,19 +1,12 @@
 \name{tes}
 \alias{tes}
-\alias{tes.rma}
-\alias{tes.default}
 \alias{print.tes}
 \title{Test of Excess Significance}
 \description{
    Function to conduct the test of excess significance. \loadmathjax
 }
 \usage{
-tes(x, \dots)
-
-\method{tes}{rma}(x, H0=0, alternative="two.sided", alpha=.05,
-    test, tes.alternative="greater", progbar=TRUE, tes.alpha=.10, digits, \dots)
-
-\method{tes}{default}(x, vi, sei, subset, H0=0, alternative="two.sided", alpha=.05, theta, tau2,
+tes(yi, vi, sei, subset, data, H0=0, alternative="two.sided", alpha=.05, theta, tau2,
     test, tes.alternative="greater", progbar=TRUE, tes.alpha=.10, digits, \dots)
 
 \method{print}{tes}(x, digits=x$digits, \dots)
@@ -21,10 +14,11 @@ tes(x, \dots)
 \arguments{
    \emph{These arguments pertain to data input:}
 
-   \item{x}{an object of class \code{"rma"} or a vector with the observed effect sizes or outcomes.}
-   \item{vi}{vector with the corresponding sampling variances.}
+   \item{yi}{a vector with the observed effect sizes or outcomes or an object of class \code{"rma"}.}
+   \item{vi}{vector with the corresponding sampling variances (ignored if \code{yi} is an object of class \code{"rma"}).}
    \item{sei}{vector with the corresponding standard errors (note: only one of the two, \code{vi} or \code{sei}, needs to be specified).}
-   \item{subset}{optional (logical or numeric) vector to specify the subset of studies that should be included.}
+   \item{subset}{optional (logical or numeric) vector to specify the subset of studies that should be included (ignored if \code{yi} is an object of class \code{"rma"}).}
+   \item{data}{optional data frame containing the variables given to the arguments above.}
 
    \emph{These arguments pertain to the tests of the observed effect sizes or outcomes:}
 
@@ -34,25 +28,29 @@ tes(x, \dots)
 
    \emph{These arguments pertain to the power of the tests:}
 
-   \item{theta}{numeric value to specify the value of the true effect size or outcome under the alternative hypothesis. If unspecified, it will be estimated based on the data or the value is taken from the \code{"rma"} object.}
-   \item{tau2}{numeric value to specify the amount of heterogeneity in the true effect sizes or outcomes. If unspecified, the true effect sizes or outcomes are assumed to be homogeneous or the value is taken from the \code{"rma"} object.}
+   \item{theta}{optional numeric value to specify the value of the true effect size or outcome under the alternative hypothesis. If unspecified, it will be estimated based on the data or the value is taken from the \code{"rma"} object.}
+   \item{tau2}{optional numeric value to specify the amount of heterogeneity in the true effect sizes or outcomes. If unspecified, the true effect sizes or outcomes are assumed to be homogeneous or the value is taken from the \code{"rma"} object.}
 
    \emph{These arguments pertain to the test of excess significance:}
 
-   \item{test}{character string to specify the type of test to use for conducting the test of excess significance. Possible options are \code{"chi2"}, \code{"binom"}, or \code{"exact"}. Can be abbreviated. If unspecified, the function chooses the type of test based on the data.}
+   \item{test}{optional character string to specify the type of test to use for conducting the test of excess significance. Possible options are \code{"chi2"}, \code{"binom"}, or \code{"exact"}. Can be abbreviated. If unspecified, the function chooses the type of test based on the data.}
    \item{tes.alternative}{character string to specify the sidedness of the hypothesis for the test of excess significance. Possible options are \code{"greater"} (the default), \code{"two.sided"}, or \code{"less"}. Can be abbreviated.}
    \item{progbar}{logical to specify whether a progress bar should be shown (the default is \code{TRUE}). Only relevant when conducting an exact test.}
    \item{tes.alpha}{alpha level for the test of excess significance (the default is .10). Only relevant for finding the \sQuote{limit estimate}.}
 
    \emph{Miscellaneous arguments:}
 
-   \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4.}
+   \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded.}
    \item{\dots}{other arguments.}
+
+   \emph{For the \code{print} method:}
+
+   \item{x}{an object of class \code{"tes"}.}
 }
 \details{
    The function carries out the test of excess significance described by Ioannidis and Trikalinos (2007). The test can be used to examine whether the observed number of significant findings is greater than the number of significant findings expected given the power of the tests. An overabundance of significant tests may suggest that the collection of studies is not representative of all studies conducted on a particular topic.
 
-   One can either pass an object of class \code{"rma"} to the function or a vector with the observed effect sizes or outcomes (via \code{x}) and the corresponding sampling variances via \code{vi} (or the standard errors via \code{sei}).
+   One can either pass a vector with the observed effect sizes or outcomes (via \code{yi}) and the corresponding sampling variances via \code{vi} (or the standard errors via \code{sei}) to the function or an object of class \code{"rma"}.
 
    The observed effect sizes or outcomes are tested for significance based on a standard Wald-type test, that is, by comparing \mjdeqn{z_i = \frac{y_i - \mbox{H}_0}{\sqrt{v_i}}}{z_i = (y_i - H_0) / sqrt(v_i)} against the appropriate critical value(s) of a standard normal distribution (e.g., \mjseqn{\pm 1.96} for \code{alternative="two.sided"} and \code{alpha=.05}, which are the defaults). Let \mjseqn{O} denote the observed number of significant tests.
 
@@ -105,7 +103,7 @@ tes(x, \dots)
 dat <- escalc(measure="RR", ai=x.a, n1i=n.a, ci=x.p, n2i=n.p, data=dat.dorn2007)
 
 ### conduct test of excess significance (using test="chi2" to speed things up)
-tes(dat$yi, dat$vi, test="chi2")
+tes(yi, vi, data=dat, test="chi2")
 
 ### same as fitting an EE model and then passing the object to the function
 res <- rma(yi, vi, data=dat, method="EE")
@@ -113,15 +111,15 @@ tes(res, test="chi2")
 
 ### illustrate limit estimate (value of theta where p-value of test is equal to tes.alpha)
 thetas <- seq(0,1,length=101)
-pvals <- sapply(thetas, function(theta) tes(dat$yi, dat$vi, test="chi2", theta=theta)$pval)
+pvals <- sapply(thetas, function(theta) tes(yi, vi, data=dat, test="chi2", theta=theta)$pval)
 plot(thetas, pvals, type="o", pch=19, ylim=c(0,1))
-sav <- tes(dat$yi, dat$vi, test="chi2")
+sav <- tes(yi, vi, data=dat, test="chi2")
 abline(h=sav$tes.alpha, lty="dotted")
 abline(v=sav$theta.lim, lty="dotted")
 
 ### examine significance of test as a function of alpha (to examine 'significance chasing')
 alphas <- seq(.01,.99,length=101)
-pvals <- sapply(alphas, function(alpha) tes(dat$yi, dat$vi, test="chi2", alpha=alpha)$pval)
+pvals <- sapply(alphas, function(alpha) tes(yi, vi, data=dat, test="chi2", alpha=alpha)$pval)
 plot(alphas, pvals, type="o", pch=19, ylim=c(0,1))
 abline(v=.05, lty="dotted")
 abline(h=.10, lty="dotted")

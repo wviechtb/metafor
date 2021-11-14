@@ -18,7 +18,7 @@ fsn(yi, vi, sei, data, type="Rosenthal", alpha=.05,
    \item{target}{target average effect size or outcome to use for the Orwin method. If undefined, then the target average effect size or outcome will be equal to the observed average effect size or outcome divided by 2.}
    \item{weighted}{logical to specify whether Orwin's method should be based on unweighted (the default) or weighted averages (the default is \code{FALSE}).}
    \item{subset}{optional (logical or numeric) vector to specify the subset of studies that should be used for the calculations.}
-   \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4.}
+   \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded.}
    \item{\dots}{other arguments.}
 }
 \details{

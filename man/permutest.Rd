@@ -18,7 +18,7 @@ permutest(x, \dots)
    \item{permci}{logical to specify whether permutation-based CIs should also be calculated (the default is \code{FALSE}). Can also be a vector of indices to specify for which coefficients a permutation-based CI should be obtained.}
    \item{progbar}{logical to specify whether a progress bar should be shown (the default is \code{TRUE}).}
    \item{retpermdist}{logical to specify whether the permutation distributions of the test statistics should be returned (the default is \code{FALSE}).}
-   \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.}
+   \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.}
    \item{control}{list of control values for numerical comparisons (\code{comptol}) and for \code{uniroot} (i.e., \code{tol} and \code{maxiter}). The latter is only relevant when \code{permci=TRUE}. See \sQuote{Note}.}
    \item{\dots}{other arguments.}
 }

@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-32</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-34</span>
       </span>
     </div>
 
@@ -135,7 +135,7 @@
     <p>The function can be used to draw the estimated selection function based on objects of class <code>"plot.rma.uni.selmodel"</code>.</p>
 <p>When the selection function incorporates a measure of precision (which, strictly speaking, is really a measure of imprecision), one can specify for which level of precision the selection function should be drawn. When <code>prec="max"</code>, then the function is drawn for the <em>least</em> precise study (maximum imprecision), when <code>prec="min"</code>, then the function is drawn for the <em>most</em> precise study (minimum imprecision), while <code>prec="mean"</code> and <code>prec="median"</code> will show the function for the mean and median level of imprecision, respectively. Alternatively, one can specify a numeric value for argument <code>prec</code> to specify the precision value (where <code>prec="max"</code> corresponds to <code>prec=1</code> and higher levels of precision to <code>prec</code> values below 1).</p>
 <p>When <code>ci=TRUE</code> (or equivalently, <code>ci="boot"</code>), a confidence interval is drawn around the selection function. The bounds of this interval are generated using parametric bootstrapping, with argument <code>reps</code> controlling the number of bootstrap samples to draw for generating the confidence interval bounds. When both <code>n</code> and <code>reps</code> are large, constructing the confidence interval can take a few moments to complete.</p>
-<p>For models where the selection function involves a single \(\delta\) parameter, one can also set <code>ci="wald"</code>, in which case the confidence interval will be constructed based on the Wald-type CI of the \(\delta\) parameter (doing so is much quicker than using parametric bootstrapping). This option is also available for step function models (even if they involve multiple \(\delta\) parameters).</p>
+<p>For models where the selection function involves a single <em></em>\(\delta\) parameter, one can also set <code>ci="wald"</code>, in which case the confidence interval will be constructed based on the Wald-type CI of the <em></em>\(\delta\) parameter (doing so is much quicker than using parametric bootstrapping). This option is also available for step function models (even if they involve multiple <em></em>\(\delta\) parameters).</p>
     </div>
     <div id="author">
     <h2>Author</h2>

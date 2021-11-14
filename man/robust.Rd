@@ -17,7 +17,7 @@ robust(x, cluster, \dots)
    \item{cluster}{vector to specify the clustering variable to use for constructing the sandwich estimator of the variance-covariance matrix.}
    \item{adjust}{logical to specify whether a small-sample correction should be applied to the variance-covariance matrix.}
    \item{clubSandwich}{logical to specify whether the \href{https://cran.r-project.org/package=clubSandwich}{clubSandwich} package should be used to obtain the cluster-robust tests and confidence intervals.}
-   \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.}
+   \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.}
    \item{\dots}{other arguments.}
 }
 \details{

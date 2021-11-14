@@ -1,52 +1,50 @@
 \name{regtest}
 \alias{regtest}
-\alias{regtest.rma}
-\alias{regtest.default}
 \title{Regression Test for Funnel Plot Asymmetry}
 \description{
    The function can be used to carry out (various versions of) Egger's regression test for funnel plot asymmetry. \loadmathjax
 }
 \usage{
-regtest(x, \dots)
-
-\method{regtest}{rma}(x, model="rma", predictor="sei", ret.fit=FALSE, digits, \dots)
-
-\method{regtest}{default}(x, vi, sei, ni, subset, model="rma", predictor="sei", ret.fit=FALSE, digits, \dots)
+regtest(yi, vi, sei, ni, subset, data,
+        model="rma", predictor="sei", ret.fit=FALSE, digits, \dots)
 }
 \arguments{
-   \item{x}{an object of class \code{"rma"} or a vector with the observed effect sizes or outcomes.}
-   \item{vi}{vector with the corresponding sampling variances (needed if \code{x} is a vector with the observed effect sizes or outcomes).}
+   \item{yi}{a vector with the observed effect sizes or outcomes or an object of class \code{"rma"}.}
+   \item{vi}{vector with the corresponding sampling variances (ignored if \code{yi} is an object of class \code{"rma"}).}
    \item{sei}{vector with the corresponding standard errors (note: only one of the two, \code{vi} or \code{sei}, needs to be specified).}
-   \item{ni}{vector with the corresponding sample sizes.}
-   \item{subset}{optional (logical or numeric) vector to specify the subset of studies that should be included in the test. Only relevant when passing a vector via \code{x}.}
+   \item{ni}{optional vector with the corresponding sample sizes (only relevant when using the sample sizes (or a transformation thereof) as predictor).}
+   \item{subset}{optional (logical or numeric) vector to specify the subset of studies that should be included in the test (ignored if \code{yi} is an object of class \code{"rma"}).}
+   \item{data}{optional data frame containing the variables given to the arguments above.}
    \item{model}{either \code{"rma"} or \code{"lm"} to indicate the type of model to use for the regression test. See \sQuote{Details}.}
    \item{predictor}{either \code{"sei"} \code{"vi"}, \code{"ni"}, \code{"ninv"}, \code{"sqrtni"}, or \code{"sqrtninv"} to indicate the predictor to use for the regression test. See \sQuote{Details}.}
    \item{ret.fit}{logical to specify whether the full results from the fitted model should also be returned.}
-   \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded (the default is to take the value from the object or is 4 for the default method).}
+   \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded.}
    \item{\dots}{other arguments.}
 }
 \details{
    Various tests for funnel plot asymmetry have been suggested in the literature, including the rank correlation test by Begg and Mazumdar (1994) and the regression test by Egger et al. (1997). Extensions, modifications, and further developments of the regression test are described (among others) by Macaskill, Walter, and Irwig (2001), Sterne and Egger (2005), Harbord, Egger, and Sterne (2006), Peters et al. (2006), \enc{Rücker}{Ruecker} et al. (2008), and Moreno et al. (2009). The various versions of the regression test differ in terms of the model (either a weighted regression model with a multiplicative dispersion term or a fixed/mixed-effects meta-regression model is used), in terms of the predictor variable that the observed effect sizes or outcomes are hypothesized to be related to when publication bias is present (suggested predictors include the standard error, the sampling variance, and the sample size or transformations thereof), and in terms of the outcome measure used (e.g., for \mjeqn{2 \times 2}{2x2} table data, one has the choice between various outcome measures). The idea behind the various tests is the same though: If there is a relationship between the observed effect sizes or outcomes and the chosen predictor, then this usually implies asymmetry in the funnel plot, which in turn may be an indication of publication bias.
 
-   The \code{regtest} function can be used to carry out various versions of the regression test. The model is chosen via the \code{model} argument, with \code{model="lm"} for weighted regression with a multiplicative dispersion term or \code{model="rma"} for the meta-analytic models. In the latter case, arguments such as \code{method}, \code{weighted}, and \code{test} used during the initial model fitting are also used for the regression test. Therefore, if one wants to conduct the regression test with a random/mixed-effects model, one should first fit a random-effects model with the \code{rma} function and then use the \code{regtest} function on the fitted model object.
+   The \code{regtest} function can be used to carry out various versions of the regression test. One can either pass a vector with the observed effect sizes or outcomes (via \code{yi}) and the corresponding sampling variances via \code{vi} (or the standard errors via \code{sei}) to the function or an object of class \code{"rma"}.
 
-   The predictor is chosen via the \code{predictor} argument:
+   The model type for the regression test is chosen via the \code{model} argument, with \code{model="lm"} for a weighted regression model with a multiplicative dispersion term or \code{model="rma"} for a (mixed-effects) meta-regression model (the default).
+
+   The predictor for the test is chosen via the \code{predictor} argument:
    \itemize{
-   \item \code{predictor="sei"} for the standard error,
-   \item \code{predictor="vi"} for the sampling variance,
-   \item \code{predictor="ni"} for the sample size,
-   \item \code{predictor="ninv"} for the inverse of the sample size,
-   \item \code{predictor="sqrtni"} for the square root transformed sample size, and
-   \item \code{predictor="sqrtninv"} for the inverse of the square root transformed sample size.
-   } For predictors based on the sample size, the object \code{x} obviously must contain the information about the sample sizes. This will automatically be the case when \code{measure} was \emph{not} equal to \code{"GEN"} or the \code{ni} values were explicitly specified during the initial model fitting.
+   \item \code{predictor="sei"} for the standard errors (the default),
+   \item \code{predictor="vi"} for the sampling variances,
+   \item \code{predictor="ni"} for the sample sizes,
+   \item \code{predictor="ninv"} for the inverse of the sample sizes,
+   \item \code{predictor="sqrtni"} for the square root of the sample sizes, or
+   \item \code{predictor="sqrtninv"} for the inverse square root of the sample sizes.
+   }
 
-   If the model passed to the \code{regtest} function already included one or more moderators, then \code{regtest} will add the chosen predictor to the moderator(s) already included in the model. This way, one can test for funnel plot asymmetry after accounting first for the influence of the moderator(s) already included.
+   The outcome measure used for the regression test is simply determined by the values passed to \code{yi} or the measure that was used in fitting the original model (when passing an object of class \code{"rma"} to the function).
 
-   One can also pass a vector with the observed effect sizes or outcomes (via \code{x}) and the corresponding sampling variances via \code{vi} (or the standard errors via \code{sei}) directly to the function (in this case, the \code{regtest.default} function is used). When the predictor is the sample size or a transformation thereof, then \code{ni} needs to be specified here as well.
+   When using the sample sizes (or a transformation thereof) as the predictor, one can use the \code{ni} argument to specify the sample sizes. When \code{yi} is a vector with the observed effect sizes or outcomes and it was computed with \code{\link{escalc}}, then the sample sizes should automatically be stored as an attribute of \code{yi} and \code{ni} does not need to be specified. This should also be the case when passing an object of class \code{"rma"} to the function and the input to the model fitting function came from \code{\link{escalc}}.
 
-   The outcome measure used for the regression test is simply determined by what measure was used in fitting the original model (or what values are passed to \code{regtest.default}).
+   When passing an object of class \code{"rma"} to the function, arguments such as \code{method}, \code{weighted}, and \code{test} as used during the initial model fitting are also used for the regression test. If the model already included one or more moderators, then \code{regtest} will add the chosen predictor to the moderator(s) already included in the model. This way, one can test for funnel plot asymmetry after accounting first for the influence of the moderator(s) already included in the model.
 
-   The model used for conducting the regression test can also be used to obtain a \sQuote{limit estimate} of the (average) true effect or outcome. In particular, when the standard error, sampling variance, or inverse (square root) sample size is used as the predictor, the model intercept in essence reflects the estimate under infinite precision. This is sometimes (cautiously) interpreted as an estimate of the (average) true effect or outcome that is adjusted for publication bias.
+   The model used for conducting the regression test can also be used to obtain a \sQuote{limit estimate} of the (average) true effect or outcome. In particular, when the standard errors, sampling variances, or inverse (square root) sample sizes are used as the predictor, the model intercept in essence reflects the estimate under infinite precision. This is sometimes (cautiously) interpreted as an estimate of the (average) true effect or outcome that is adjusted for publication bias.
 }
 \value{
    An object of class \code{"regtest"}. The object is a list containing the following components:
@@ -56,14 +54,14 @@ regtest(x, \dots)
    \item{pval}{the corresponding p-value}
    \item{dfs}{the degrees of freedom of the test statistic (if the test is based on a t-distribution).}
    \item{fit}{the full results from the fitted model.}
-   \item{est}{the limit estimate (only for predictors \code{"sei"} \code{"vi"}, \code{"ninv"}, or \code{"sqrtninv"} and when the model does not contain any additional moderators; \code{NULL} otherwise)}
+   \item{est}{the limit estimate (only for predictors \code{"sei"} \code{"vi"}, \code{"ninv"}, or \code{"sqrtninv"} and when the model does not contain any additional moderators; \code{NULL} otherwise).}
    \item{ci.lb}{lower bound of the confidence interval for the limit estimate.}
    \item{ci.ub}{upper bound of the confidence intervals for the limit estimate.}
 
    The results are formatted and printed with the \code{\link[=print.regtest]{print}} function.
 }
 \note{
-   The classical \sQuote{Egger test} is obtained by setting \code{model="lm"} and \code{predictor="sei"}. For the random/mixed-effects version of the Egger test, one should first fit a random-effects model to the data and then set \code{model="rma"} and \code{predictor="sei"} when using the \code{regtest} function. See Sterne and Egger (2005) for details on these two types of models/tests.
+   The classical \sQuote{Egger test} is obtained by setting \code{model="lm"} and \code{predictor="sei"}. For the random/mixed-effects version of the test, set \code{model="rma"} (this is the default). See Sterne and Egger (2005) for details on these two types of models/tests.
 
    When conducting a classical \sQuote{Egger test}, the test of the limit estimate is the same as the \sQuote{precision-effect test} (PET) of Stanley and Doucouliagos (2014). The limit estimate when using the sampling variance as predictor is sometimes called the \sQuote{precision-effect estimate with SE} (PEESE) (Stanley & Doucouliagos, 2014). A conditional procedure where we use the limit estimate when PET is not significant (i.e., when using the standard error as predictor) and the PEESE (i.e., when using the sampling variance as predictor) when PET is significant is sometimes called the PET-PEESE procedure (Stanley & Doucouliagos, 2014).
 
@@ -110,34 +108,36 @@ res
 ### classical Egger test
 regtest(res, model="lm")
 
-### random/mixed-effects version of the Egger test
+### mixed-effects meta-regression version of the Egger test
 regtest(res)
 
 ### same tests, but passing outcomes directly
-regtest(dat$yi, dat$vi, model="lm")
-regtest(dat$yi, dat$vi)
-
-### examples using the sample size (or a transformation thereof) as predictor
-regtest(res, model="lm", predictor="ni")
-regtest(res, model="lm", predictor="ninv")
-regtest(res, model="rma", predictor="ni")
-regtest(res, model="rma", predictor="ninv")
+regtest(yi, vi, data=dat, model="lm")
+regtest(yi, vi, data=dat)
 
 ### if dat$yi is computed with escalc(), sample size information is stored in attributes
 dat$yi
 
-### then this will work
-regtest(dat$yi, dat$vi, predictor="ni")
+### then this will also work
+regtest(yi, vi, data=dat, predictor="ni")
+
+### similarly when passing a model object to the function
+regtest(res, model="lm", predictor="ni")
+regtest(res, model="lm", predictor="ninv")
+regtest(res, predictor="ni")
+regtest(res, predictor="ninv")
 
 ### otherwise have to supply sample sizes manually
-dat$ni <- with(dat, n1i + n2i)
+dat$nitotal <- with(dat, n1i + n2i)
 dat$yi <- c(dat$yi) # this removes the 'ni' attribute from 'yi'
-regtest(dat$yi, dat$vi, ni=dat$ni, predictor="ni")
+regtest(yi, vi, ni=nitotal, data=dat, predictor="ni")
+res <- rma(yi, vi, data=dat)
+regtest(res, predictor="ni", ni=nitotal, data=dat)
 
-### standard funnel plot (with standard error on y-axis)
+### standard funnel plot (with standard errors on the y-axis)
 funnel(res, refline=0)
 
-### regression test (by default the standard error is used as predictor)
+### regression test (by default the standard errors are used as predictor)
 reg <- regtest(res)
 reg
 
@@ -145,10 +145,10 @@ reg
 se <- seq(0,1.8,length=100)
 lines(coef(reg$fit)[1] + coef(reg$fit)[2]*se, se, lwd=2)
 
-### regression test (using the sampling variance as predictor)
+### regression test (using the sampling variances as predictor)
 reg <- regtest(res, predictor="vi")
 
-### add regression line to funnel plot (using the sampling variance as predictor)
+### add regression line to funnel plot (using the sampling variances as predictor)
 lines(coef(reg$fit)[1] + coef(reg$fit)[2]*se^2, se, lwd=2)
 
 ### testing for asymmetry after accounting for the influence of a moderator

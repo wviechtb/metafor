@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-32</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-34</span>
       </span>
     </div>
 
@@ -92,7 +92,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Function to fit equal-effects models to \(2 \times 2\) table and person-time data via the Mantel-Haenszel method. See below and the introduction to the <span class="pkg"><a href="metafor-package.html">metafor-package</a></span> for more details on these models. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
+    <p>Function to fit equal-effects models to <em></em>\(2 \times 2\) table and person-time data via the Mantel-Haenszel method. See below and the introduction to the <span class="pkg"><a href="metafor-package.html">metafor-package</a></span> for more details on these models. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
     </div>
 
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">rma.mh</span><span class="op">(</span><span class="va">ai</span>, <span class="va">bi</span>, <span class="va">ci</span>, <span class="va">di</span>, <span class="va">n1i</span>, <span class="va">n2i</span>, <span class="va">x1i</span>, <span class="va">x2i</span>, <span class="va">t1i</span>, <span class="va">t2i</span>,
@@ -104,13 +104,13 @@
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>ai</dt>
-<dd><p>vector to specify the \(2 \times 2\) table frequencies (upper left cell). See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
+<dd><p>vector to specify the <em></em>\(2 \times 2\) table frequencies (upper left cell). See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
 <dt>bi</dt>
-<dd><p>vector to specify the \(2 \times 2\) table frequencies (upper right cell). See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
+<dd><p>vector to specify the <em></em>\(2 \times 2\) table frequencies (upper right cell). See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
 <dt>ci</dt>
-<dd><p>vector to specify the \(2 \times 2\) table frequencies (lower left cell). See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
+<dd><p>vector to specify the <em></em>\(2 \times 2\) table frequencies (lower left cell). See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
 <dt>di</dt>
-<dd><p>vector to specify the \(2 \times 2\) table frequencies (lower right cell). See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
+<dd><p>vector to specify the <em></em>\(2 \times 2\) table frequencies (lower right cell). See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
 <dt>n1i</dt>
 <dd><p>vector to specify the group sizes or row totals (first group). See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
 <dt>n2i</dt>
@@ -128,7 +128,7 @@
 <dt>data</dt>
 <dd><p>optional data frame containing the data supplied to the function.</p></dd>
 <dt>slab</dt>
-<dd><p>optional vector with labels for the \(k\) studies.</p></dd>
+<dd><p>optional vector with labels for the <em></em>\(k\) studies.</p></dd>
 <dt>subset</dt>
 <dd><p>optional (logical or numeric) vector to specify the subset of studies that should be used for the analysis.</p></dd>
 <dt>add</dt>
@@ -142,7 +142,7 @@
 <dt>level</dt>
 <dd><p>numeric value between 0 and 100 to specify the confidence interval level (the default is 95).</p></dd>
 <dt>digits</dt>
-<dd><p>integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4.</p></dd>
+<dd><p>optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4.</p></dd>
 <dt>verbose</dt>
 <dd><p>logical to specify whether output should be generated on the progress of the model fitting (the default is <code>FALSE</code>).</p></dd>
 <dt>...</dt>
@@ -156,7 +156,7 @@
 <h3 id="specifying-the-data">Specifying the Data<a class="anchor" aria-label="anchor" href="#specifying-the-data"></a></h3>
 
 
-<p>When the outcome measure is either the risk ratio (measure=<code>"RR"</code>), odds ratio (<code>measure="OR"</code>), or risk difference (<code>measure="RD"</code>), the studies are assumed to provide data in terms of \(2 \times 2\) tables of the form:</p><table class="table table"><tr><td></td><td>outcome 1</td><td>outcome 2</td><td>total</td></tr><tr><td>group 1</td><td><code>ai</code></td><td><code>bi</code></td><td><code>n1i</code></td></tr><tr><td>group 2</td><td><code>ci</code></td><td><code>di</code></td><td><code>n2i</code></td></tr></table><p>where <code>ai</code>, <code>bi</code>, <code>ci</code>, and <code>di</code> denote the cell frequencies and <code>n1i</code> and <code>n2i</code> the row totals. For example, in a set of randomized clinical trials (RCTs) or cohort studies, group 1 and group 2 may refer to the treatment (exposed) and placebo/control (not exposed) group, with outcome 1 denoting some event of interest (e.g., death) and outcome 2 its complement. In a set of case-control studies, group 1 and group 2 may refer to the group of cases and the group of controls, with outcome 1 denoting, for example, exposure to some risk factor and outcome 2 non-exposure. For these outcome measures, one needs to specify either <code>ai</code>, <code>bi</code>, <code>ci</code>, and <code>di</code> or alternatively <code>ai</code>, <code>ci</code>, <code>n1i</code>, and <code>n2i</code>.</p>
+<p>When the outcome measure is either the risk ratio (measure=<code>"RR"</code>), odds ratio (<code>measure="OR"</code>), or risk difference (<code>measure="RD"</code>), the studies are assumed to provide data in terms of <em></em>\(2 \times 2\) tables of the form:</p><table class="table table"><tr><td></td><td>outcome 1</td><td>outcome 2</td><td>total</td></tr><tr><td>group 1</td><td><code>ai</code></td><td><code>bi</code></td><td><code>n1i</code></td></tr><tr><td>group 2</td><td><code>ci</code></td><td><code>di</code></td><td><code>n2i</code></td></tr></table><p>where <code>ai</code>, <code>bi</code>, <code>ci</code>, and <code>di</code> denote the cell frequencies and <code>n1i</code> and <code>n2i</code> the row totals. For example, in a set of randomized clinical trials (RCTs) or cohort studies, group 1 and group 2 may refer to the treatment (exposed) and placebo/control (not exposed) group, with outcome 1 denoting some event of interest (e.g., death) and outcome 2 its complement. In a set of case-control studies, group 1 and group 2 may refer to the group of cases and the group of controls, with outcome 1 denoting, for example, exposure to some risk factor and outcome 2 non-exposure. For these outcome measures, one needs to specify either <code>ai</code>, <code>bi</code>, <code>ci</code>, and <code>di</code> or alternatively <code>ai</code>, <code>ci</code>, <code>n1i</code>, and <code>n2i</code>.</p>
 <p>Alternatively, when the outcome measure is the incidence rate ratio (<code>measure="IRR"</code>) or the incidence rate difference (<code>measure="IRD"</code>), the studies are assumed to provide data in terms of tables of the form:</p><table class="table table"><tr><td></td><td>events</td><td>person-time</td></tr><tr><td>group 1</td><td><code>x1i</code></td><td><code>t1i</code></td></tr><tr><td>group 2</td><td><code>x2i</code></td><td><code>t2i</code></td></tr></table><p>where <code>x1i</code> and <code>x2i</code> denote the number of events in the first and the second group, respectively, and <code>t1i</code> and <code>t2i</code> the corresponding total person-times at risk.</p>
 <p></p>
 </div>
@@ -174,8 +174,8 @@
 <h3 id="observed-effect-sizes-or-outcomes-of-the-individual-studies">Observed Effect Sizes or Outcomes of the Individual Studies<a class="anchor" aria-label="anchor" href="#observed-effect-sizes-or-outcomes-of-the-individual-studies"></a></h3>
 
 
-<p>The Mantel-Haenszel method itself does not require the calculation of the observed effect sizes or outcomes of the individual studies (e.g., the observed odds or incidence rate ratios of the \(k\) studies) and directly makes use of the table/event counts. Zero cells/events are not a problem (except in extreme cases, such as when one of the two outcomes never occurs in any of the \(2 \times 2\) tables or when there are no events for one of the two groups in any of the tables). Therefore, it is unnecessary to add some constant to the cell/event counts when there are zero cells/events.</p>
-<p>However, for plotting and various other functions, it is necessary to calculate the observed effect sizes or outcomes for the \(k\) studies. Here, zero cells/events can be problematic, so adding a constant value to the cell/event counts ensures that all \(k\) values can be calculated. The <code>add</code> and <code>to</code> arguments are used to specify what value should be added to the cell/event counts and under what circumstances when calculating the observed effect sizes or outcomes and when applying the Mantel-Haenszel method. Similarly, the <code>drop00</code> argument is used to specify how studies with no cases/events (or only cases) in both groups should be handled. The documentation of the <code><a href="escalc.html">escalc</a></code> function explains how the <code>add</code>, <code>to</code>, and <code>drop00</code> arguments work. If only a single value for these arguments is specified (as per default), then these values are used when calculating the observed effect sizes or outcomes and no adjustment to the cell/event counts is made when applying the Mantel-Haenszel method. Alternatively, when specifying two values for these arguments, the first value applies when calculating the observed effect sizes or outcomes and the second value when applying the Mantel-Haenszel method.</p>
+<p>The Mantel-Haenszel method itself does not require the calculation of the observed effect sizes or outcomes of the individual studies (e.g., the observed odds or incidence rate ratios of the <em></em>\(k\) studies) and directly makes use of the table/event counts. Zero cells/events are not a problem (except in extreme cases, such as when one of the two outcomes never occurs in any of the <em></em>\(2 \times 2\) tables or when there are no events for one of the two groups in any of the tables). Therefore, it is unnecessary to add some constant to the cell/event counts when there are zero cells/events.</p>
+<p>However, for plotting and various other functions, it is necessary to calculate the observed effect sizes or outcomes for the <em></em>\(k\) studies. Here, zero cells/events can be problematic, so adding a constant value to the cell/event counts ensures that all <em></em>\(k\) values can be calculated. The <code>add</code> and <code>to</code> arguments are used to specify what value should be added to the cell/event counts and under what circumstances when calculating the observed effect sizes or outcomes and when applying the Mantel-Haenszel method. Similarly, the <code>drop00</code> argument is used to specify how studies with no cases/events (or only cases) in both groups should be handled. The documentation of the <code><a href="escalc.html">escalc</a></code> function explains how the <code>add</code>, <code>to</code>, and <code>drop00</code> arguments work. If only a single value for these arguments is specified (as per default), then these values are used when calculating the observed effect sizes or outcomes and no adjustment to the cell/event counts is made when applying the Mantel-Haenszel method. Alternatively, when specifying two values for these arguments, the first value applies when calculating the observed effect sizes or outcomes and the second value when applying the Mantel-Haenszel method.</p>
 <p>Note that <code>drop00</code> is set to <code>TRUE</code> by default. Therefore, the observed effect sizes or outcomes for studies where <code>ai=ci=0</code> or <code>bi=di=0</code> or studies where <code>x1i=x2i=0</code> are set to <code>NA</code>. When applying the Mantel-Haenszel method, such studies are not explicitly dropped (unless the second value of <code>drop00</code> argument is also set to <code>TRUE</code>), but this is practically not necessary, as they do not actually influence the results (assuming no adjustment to the cell/event counts are made when applying the Mantel-Haenszel method).</p>
 <p></p>
 </div>
@@ -232,7 +232,7 @@
     </div>
     <div id="references">
     <h2>References</h2>
-    <p>Cochran, W. G. (1954). Some methods for strengthening the common \(\chi^2\) tests. <em>Biometrics</em>, <b>10</b>(4), 417--451. <a href="https://doi.org/10.2307/3001616" class="external-link">https://doi.org/10.2307/3001616</a></p>
+    <p>Cochran, W. G. (1954). Some methods for strengthening the common <em></em>\(\chi^2\) tests. <em>Biometrics</em>, <b>10</b>(4), 417--451. <a href="https://doi.org/10.2307/3001616" class="external-link">https://doi.org/10.2307/3001616</a></p>
 <p>Greenland, S., &amp; Robins, J. M. (1985). Estimation of a common effect parameter from sparse follow-up data. <em>Biometrics</em>, <b>41</b>(1), 55--68. <a href="https://doi.org/10.2307/2530643" class="external-link">https://doi.org/10.2307/2530643</a></p>
 <p>Mantel, N., &amp; Haenszel, W. (1959). Statistical aspects of the analysis of data from retrospective studies of disease. <em>Journal of the National Cancer Institute</em>, <b>22</b>(4), 719--748. <a href="https://doi.org/10.1093/jnci/22.4.719" class="external-link">https://doi.org/10.1093/jnci/22.4.719</a></p>
 <p>Nurminen, M. (1981). Asymptotic efficiency of general noniterative estimators of common relative risk. <em>Biometrika</em>, <b>68</b>(2), 525--530. <a href="https://doi.org/10.1093/biomet/68.2.525" class="external-link">https://doi.org/10.1093/biomet/68.2.525</a></p>

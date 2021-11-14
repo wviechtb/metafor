@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-32</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-34</span>
       </span>
     </div>
 
@@ -146,7 +146,7 @@
 <dt>targs</dt>
 <dd><p>optional arguments needed by the function specified via <code>atransf</code>.</p></dd>
 <dt>digits</dt>
-<dd><p>integer to specify the number of decimal places to which the tick mark labels of the x- and y-axis should be rounded. Can also be a vector of two integers, the first to specify the number of decimal places for the x-axis, the second for the y-axis labels (e.g., <code>digits=c(2,3)</code>). If unspecified, the function tries to set the argument to some sensible values.</p></dd>
+<dd><p>optional integer to specify the number of decimal places to which the tick mark labels of the x- and y-axis should be rounded. Can also be a vector of two integers, the first to specify the number of decimal places for the x-axis, the second for the y-axis labels (e.g., <code>digits=c(2,3)</code>). If unspecified, the function tries to set the argument to some sensible values.</p></dd>
 <dt>level</dt>
 <dd><p>numeric value between 0 and 100 to specify the level of the pseudo confidence interval region (for <code>"rma"</code> objects, the default is to take the value from the object). May also be a vector of values to obtain multiple regions. See ‘Examples’.</p></dd>
 <dt>addtau2</dt>
@@ -184,7 +184,7 @@
 </dl></div>
     <div id="details">
     <h2>Details</h2>
-    <p>For equal- and random-effects models (i.e., models not involving moderators), the plot shows the observed effect sizes or outcomes on the x-axis against the corresponding standard errors (i.e., the square root of the sampling variances) on the y-axis. A vertical line indicates the estimate based on the model. A pseudo confidence interval region is drawn around this value with bounds equal to \(\pm 1.96 \mbox{SE}\), where \(\mbox{SE}\) is the standard error value from the y-axis (assuming <code>level=95</code>). If <code>addtau2=TRUE</code> (only for models of class <code>"rma.uni"</code>), then the bounds of the pseudo confidence interval region are equal to \(\pm 1.96 \sqrt{\mbox{SE}^2 + \hat{\tau}^2}\), where \(\hat{\tau}^2\) is the amount of heterogeneity as estimated by the model.</p>
+    <p>For equal- and random-effects models (i.e., models not involving moderators), the plot shows the observed effect sizes or outcomes on the x-axis against the corresponding standard errors (i.e., the square root of the sampling variances) on the y-axis. A vertical line indicates the estimate based on the model. A pseudo confidence interval region is drawn around this value with bounds equal to <em></em>\(\pm 1.96 \mbox{SE}\), where <em></em>\(\mbox{SE}\) is the standard error value from the y-axis (assuming <code>level=95</code>). If <code>addtau2=TRUE</code> (only for models of class <code>"rma.uni"</code>), then the bounds of the pseudo confidence interval region are equal to <em></em>\(\pm 1.96 \sqrt{\mbox{SE}^2 + \hat{\tau}^2}\), where <em></em>\(\hat{\tau}^2\) is the amount of heterogeneity as estimated by the model.</p>
 <p>For (mixed-effects) meta-regression models (i.e., models involving moderators), the plot shows the residuals on the x-axis against their corresponding standard errors. Either the usual or deleted residuals can be used for that purpose (set via the <code>type</code> argument). See <code><a href="residuals.rma.html">residuals</a></code> for more details on the different types of residuals.</p>
 <p>With the <code>atransf</code> argument, the labels on the x-axis can be transformed with some suitable function. For example, when plotting log odds ratios, one could use <code>transf=exp</code> to obtain a funnel plot with the values on the x-axis corresponding to the odds ratios. See also <a href="transf.html">transf</a> for some other useful transformation functions in the context of a meta-analysis.</p>
 <p>Instead of placing the standard errors on the y-axis, several other options are available by setting the <code>yaxis</code> argument to:</p><ul><li><p><code>yaxis="vi"</code> for the sampling variances,</p></li>
@@ -200,7 +200,7 @@
 <p>If the object passed to the function comes from the <code><a href="trimfill.html">trimfill</a></code> function, the outcomes that are filled in by the trim and fill method are also added to the funnel plot. The symbol to use for plotting the filled in values can be specified via the <code>pch.fill</code> argument.</p>
 <p>One can also directly pass a vector with the observed effect sizes or outcomes (via <code>x</code>) and the corresponding sampling variances (via <code>vi</code>), standard errors (via <code>sei</code>), and/or sample sizes (via <code>ni</code>) to the function. By default, the vertical reference line is then drawn at zero.</p>
 <p>The arguments <code>back</code>, <code>shade</code>, and <code>hlines</code> can be set to <code>NULL</code> to suppress the shading and the horizontal reference line.</p>
-<p>With the <code>label</code> argument, one can control whether points in the plot will be labeled. If <code>label="all"</code> (or <code>label=TRUE</code>), all points in the plot will be labeled. If <code>label="out"</code>, points falling outside of the pseudo confidence region will be labeled. Finally, one can also set this argument to a numeric value (between 1 and \(k\)) to specify how many of the most extreme points should be labeled (e.g., with <code>label=1</code> only the most extreme point would be labeled, while with <code>label=3</code>, the most extreme, and the second and third most extreme points would be labeled). With the <code>offset</code> argument, one can adjust the distance between the labels and the corresponding points.</p>
+<p>With the <code>label</code> argument, one can control whether points in the plot will be labeled. If <code>label="all"</code> (or <code>label=TRUE</code>), all points in the plot will be labeled. If <code>label="out"</code>, points falling outside of the pseudo confidence region will be labeled. Finally, one can also set this argument to a numeric value (between 1 and <em></em>\(k\)) to specify how many of the most extreme points should be labeled (e.g., with <code>label=1</code> only the most extreme point would be labeled, while with <code>label=3</code>, the most extreme, and the second and third most extreme points would be labeled). With the <code>offset</code> argument, one can adjust the distance between the labels and the corresponding points.</p>
     </div>
     <div id="note">
     <h2>Note</h2>

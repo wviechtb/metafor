@@ -44,7 +44,7 @@
    \item{delta}{integer to specify for which \mjseqn{\delta} parameter a confidence interval should be obtained.}
    \item{alpha}{integer to specify for which \mjseqn{\alpha} parameter a confidence interval should be obtained.}
    \item{level}{numeric value between 0 and 100 to specify the confidence interval level. If unspecified, the default is to take the value from the object.}
-   \item{digits}{integer to specify the number of decimal places to which the results should be rounded. If unspecified, the default is to take the value from the object.}
+   \item{digits}{optional integer to specify the number of decimal places to which the results should be rounded. If unspecified, the default is to take the value from the object.}
    \item{transf}{optional argument to specify a function that should be used to transform the model coefficients and interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified under \code{transf}.}
    \item{verbose}{logical to specify whether output should be generated on the progress of the iterative algorithms used to obtain the confidence intervals (the default is \code{FALSE}). See \sQuote{Details}.}

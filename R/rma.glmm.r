@@ -2124,7 +2124,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                se.tau2 <- NA
             }
 
-            tmp <- try(rma(measure="PETO", ai=ai, bi=bi, ci=ci, di=di, add=0, mods=X.fit, intercept=FALSE, skipr2=TRUE), silent=TRUE)
+            tmp <- try(rma.uni(measure="PETO", ai=ai, bi=bi, ci=ci, di=di, add=0, mods=X.fit, intercept=FALSE, skipr2=TRUE), silent=TRUE)
 
             if (!inherits(tmp, "try-error")) {
                gvar1 <- det(vcov(tmp))

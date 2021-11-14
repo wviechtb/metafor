@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-32</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-34</span>
       </span>
     </div>
 
@@ -91,8 +91,9 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="3.1-32" id="metafor-31-32-2021-11-12">metafor 3.1-32 (2021-11-12)<a class="anchor" aria-label="anchor" href="#metafor-31-32-2021-11-12"></a></h2>
-<ul><li><p>added <code><a href="../reference/vcalc.html">vcalc()</a></code> and <code><a href="../reference/blsplit.html">blsplit()</a></code> functions</p></li>
+<h2 class="page-header" data-toc-text="3.1-34" id="metafor-31-34-2021-11-14">metafor 3.1-34 (2021-11-14)<a class="anchor" aria-label="anchor" href="#metafor-31-34-2021-11-14"></a></h2>
+<ul><li><p>simplified <code><a href="../reference/regtest.html">regtest()</a></code>, <code><a href="../reference/ranktest.html">ranktest()</a></code>, and <code><a href="../reference/tes.html">tes()</a></code> to single functions instead of using generics and methods; this way, a <code>data</code> argument could be added</p></li>
+<li><p>added <code><a href="../reference/vcalc.html">vcalc()</a></code> and <code><a href="../reference/blsplit.html">blsplit()</a></code> functions</p></li>
 <li><p><code><a href="../reference/robust.html">robust()</a></code> gains <code>clubSandwich</code> argument; if set to <code>TRUE</code>, the methods from the <code>clubSandwich</code> package (<a href="https://cran.r-project.org/package=clubSandwich" class="external-link uri">https://cran.r-project.org/package=clubSandwich</a>) are used to obtain the cluster-robust results</p></li>
 <li><p>results from <code><a href="../reference/robust.html">robust()</a></code> are no longer printed with <code>print.robust.rma()</code> but with the print methods <code><a href="../reference/print.rma.html">print.rma.uni()</a></code> and <code><a href="../reference/print.rma.html">print.rma.mv()</a></code></p></li>
 <li><p><code><a href="../reference/anova.rma.html">anova()</a></code> now gives a warning when running LRTs not based on ML/REML estimation</p></li>
@@ -244,8 +245,8 @@
 <li><p>the <code>newmods</code> argument in <code><a href="../reference/predict.rma.html">predict()</a></code> can now be a named vector or a matrix/data frame with column names that get properly matched up with the variables in the model</p></li>
 <li><p>added <code><a href="../reference/ranef.html">ranef.rma.mv()</a></code> for extracting the BLUPs of the random effects for <code>rma.mv</code> models</p></li>
 <li><p>all functions that repeatedly refit models now have the option to show a progress bar</p></li>
-<li><p>added <code><a href="../reference/ranktest.html">ranktest.default()</a></code>, so user can now pass the outcomes and corresponding sampling variances directly to the function</p></li>
-<li><p>added <code><a href="../reference/regtest.html">regtest.default()</a></code>, so user can now pass the outcomes and corresponding sampling variances directly to the function</p></li>
+<li><p>added <code>ranktest.default()</code>, so user can now pass the outcomes and corresponding sampling variances directly to the function</p></li>
+<li><p>added <code>regtest.default()</code>, so user can now pass the outcomes and corresponding sampling variances directly to the function</p></li>
 <li><p><code><a href="../reference/funnel.html">funnel.default()</a></code> gains <code>subset</code> argument</p></li>
 <li><p><code><a href="../reference/funnel.html">funnel.default()</a></code> and <code><a href="../reference/funnel.html">funnel.rma()</a></code> gain <code>col</code> and <code>bg</code> arguments</p></li>
 <li><p><code><a href="../reference/profile.rma.html">plot.profile.rma()</a></code> gains <code>ylab</code> argument</p></li>
@@ -546,7 +547,7 @@
 <li><p>the <code><a href="../reference/permutest.html">permutest.rma.uni()</a></code> function now uses an algorithm to find only the unique permutations of the model matrix (which may be much smaller than the total number of permutations), making the exact permutation test feasible in a larger set of circumstances (thanks to John Hodgson for making me aware of this issue and to Hans-Jörg Viechtbauer for coming up with a recursive algorithm for finding the unique permutations)</p></li>
 <li><p>prediction interval in <code><a href="../reference/forest.rma.html">forest.rma()</a></code> is now indicated with a dotted (instead of a dashed) line; ends of the interval are now marked with vertical bars</p></li>
 <li><p>completely rewrote the <code><a href="../reference/funnel.html">funnel.rma()</a></code> function which now supports many more options for the values to put on the y-axis; <code><a href="../reference/trimfill.html">trimfill.rma.uni()</a></code> function was adapted accordingly</p></li>
-<li><p>removed the <code>ni</code> argument from the <code><a href="../reference/regtest.html">regtest.rma()</a></code> function; instead, sample sizes can now be explicitly specified via the <code>ni</code> argument when using the <code><a href="../reference/rma.uni.html">rma.uni()</a></code> function (i.e., when <code>measure="GEN"</code>); the <code><a href="../reference/escalc.html">escalc()</a></code> function also now adds information on the <code>ni</code> values to the resulting data frame (as an attribute of the <code>yi</code> variable), so, if possible, this information is passed on to <code><a href="../reference/regtest.html">regtest.rma()</a></code></p></li>
+<li><p>removed the <code>ni</code> argument from the <code>regtest.rma()</code> function; instead, sample sizes can now be explicitly specified via the <code>ni</code> argument when using the <code><a href="../reference/rma.uni.html">rma.uni()</a></code> function (i.e., when <code>measure="GEN"</code>); the <code><a href="../reference/escalc.html">escalc()</a></code> function also now adds information on the <code>ni</code> values to the resulting data frame (as an attribute of the <code>yi</code> variable), so, if possible, this information is passed on to <code>regtest.rma()</code></p></li>
 <li><p>added switch so that <code><a href="../reference/regtest.html">regtest()</a></code> can also provide the full results from the fitted model (thanks to Michael Dewey for the suggestion)</p></li>
 <li><p><code><a href="../reference/weights.rma.html">weights.rma.mh()</a></code> now shows the weights in % as intended (thanks to Gavin Stewart for pointing out this error)</p></li>
 <li><p>more flexible handling of the <code>digits</code> argument in the various forest functions</p></li>

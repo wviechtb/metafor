@@ -23,7 +23,7 @@
    \item{newscale}{optional vector or matrix to specify the values of the scale variables for which the predicted values should be calculated. Only relevant for location-scale models (see \code{\link{rma.uni}}). See \sQuote{Details}.}
    \item{addz}{logical to specify whether the values of the scale variables should be added to the returned object.}
    \item{level}{numeric value between 0 and 100 to specify the confidence and prediction interval level. If unspecified, the default is to take the value from the object.}
-   \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.}
+   \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.}
    \item{transf}{optional argument to specify a function that should be used to transform the predicted values and interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified under \code{transf}.}
    \item{vcov}{logical to specify whether the variance-covariance matrix of the predicted values should also be returned (the default is \code{FALSE}).}

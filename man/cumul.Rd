@@ -17,7 +17,7 @@ cumul(x, \dots)
 \arguments{
    \item{x}{an object of class \code{"rma.mh"}, \code{"rma.peto"}, \code{"rma.uni"}.}
    \item{order}{optional argument to specify a variable based on which the studies will be ordered for the cumulative meta-analysis.}
-   \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.}
+   \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.}
    \item{transf}{optional argument to specify a function that should be used to transform the model coefficients and interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified under \code{transf}.}
    \item{progbar}{logical to specify whether a progress bar should be shown (the default is \code{FALSE}).}

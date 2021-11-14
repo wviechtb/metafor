@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-32</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-34</span>
       </span>
     </div>
 
@@ -132,13 +132,13 @@
 </dl></div>
     <div id="details">
     <h2>Details</h2>
-    <p>When <code>plotinf=TRUE</code>, the function plots the (1) externally standardized residuals, (2) DFFITS values, (3) Cook's distances, (4) covariance ratios, (5) leave-one-out \(\tau^2\) estimates, (6) leave-one-out (residual) heterogeneity test statistics, (7) hat values, and (8) weights. If <code>plotdfbs=TRUE</code>, the DFBETAS values are also plotted either after confirming the page change (if <code>dfbsnew=FALSE</code>) or on a separate device (if <code>dfbsnew=TRUE</code>).</p>
-<p>A case (which is typically synonymous with study) may be considered to be ‘influential’ if at least one of the following is true:</p><ul><li><p>The absolute DFFITS value is larger than \(3 \times \sqrt{p/(k-p)}\), where \(p\) is the number of model coefficients and \(k\) the number of cases.</p></li>
-<li><p>The lower tail area of a chi-square distribution with \(p\) degrees of freedom cut off by the Cook's distance is larger than 50%.</p></li>
-<li><p>The hat value is larger than \(3 \times (p/k)\).</p></li>
-<li><p>Any DFBETAS value is larger than \(1\).</p></li>
+    <p>When <code>plotinf=TRUE</code>, the function plots the (1) externally standardized residuals, (2) DFFITS values, (3) Cook's distances, (4) covariance ratios, (5) leave-one-out <em></em>\(\tau^2\) estimates, (6) leave-one-out (residual) heterogeneity test statistics, (7) hat values, and (8) weights. If <code>plotdfbs=TRUE</code>, the DFBETAS values are also plotted either after confirming the page change (if <code>dfbsnew=FALSE</code>) or on a separate device (if <code>dfbsnew=TRUE</code>).</p>
+<p>A case (which is typically synonymous with study) may be considered to be ‘influential’ if at least one of the following is true:</p><ul><li><p>The absolute DFFITS value is larger than <em></em>\(3 \times \sqrt{p/(k-p)}\), where <em></em>\(p\) is the number of model coefficients and <em></em>\(k\) the number of cases.</p></li>
+<li><p>The lower tail area of a chi-square distribution with <em></em>\(p\) degrees of freedom cut off by the Cook's distance is larger than 50%.</p></li>
+<li><p>The hat value is larger than <em></em>\(3 \times (p/k)\).</p></li>
+<li><p>Any DFBETAS value is larger than <em></em>\(1\).</p></li>
 </ul><p>Cases which are considered influential with respect to any of these measures are indicated by the color specified for the <code>bg.infl</code> argument (the default is <code>"red"</code>).</p>
-<p>The cut-offs described above are indicated in the plot with horizontal reference lines. In addition, on the plot of the externally standardized residuals, horizontal reference lines are drawn at -1.96, 0, and 1.96. On the plot of the hat values, a horizontal reference line is drawn at \(p/k\). Since the sum of the hat values is equal to \(p\), the value \(p/k\) indicates equal hat values for all \(k\) cases. Finally, on the plot of weights, a horizontal reference line is drawn at \(100/k\), corresponding to the value for equal weights (in %) for all \(k\) cases. Note that all weights will automatically be equal to each other when using unweighted model fitting. Also, the hat values will be equal to the weights values (except for their scaling) in models without moderators.</p>
+<p>The cut-offs described above are indicated in the plot with horizontal reference lines. In addition, on the plot of the externally standardized residuals, horizontal reference lines are drawn at -1.96, 0, and 1.96. On the plot of the hat values, a horizontal reference line is drawn at <em></em>\(p/k\). Since the sum of the hat values is equal to <em></em>\(p\), the value <em></em>\(p/k\) indicates equal hat values for all <em></em>\(k\) cases. Finally, on the plot of weights, a horizontal reference line is drawn at <em></em>\(100/k\), corresponding to the value for equal weights (in %) for all <em></em>\(k\) cases. Note that all weights will automatically be equal to each other when using unweighted model fitting. Also, the hat values will be equal to the weights values (except for their scaling) in models without moderators.</p>
 <p>The chosen cut-offs are (somewhat) arbitrary. Substantively informed judgment should always be used when examining the influence of each case on the results.</p>
     </div>
     <div id="author">

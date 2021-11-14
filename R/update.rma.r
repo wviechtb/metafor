@@ -1,6 +1,6 @@
 ### based on stats:::update.default but with some adjustments
 
-update.rma <- function (object, formula., ..., evaluate=TRUE) {
+update.rma <- function(object, formula., ..., evaluate=TRUE) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 

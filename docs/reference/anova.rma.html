@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-32</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-34</span>
       </span>
     </div>
 
@@ -114,7 +114,7 @@
 <dt>Z</dt>
 <dd><p>optional numeric vector or matrix to specify one or more linear combinations of the scale coefficients in the model that should be tested. See ‘Details’. Only relevant for location-scale models (see <code><a href="rma.uni.html">rma.uni</a></code>).</p></dd>
 <dt>digits</dt>
-<dd><p>integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.</p></dd>
+<dd><p>optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.</p></dd>
 <dt>...</dt>
 <dd><p>other arguments.</p></dd>
 </dl></div>
@@ -181,18 +181,18 @@
 <dt>QE.r</dt>
 <dd><p>test statistic of the test for (residual) heterogeneity from the reduced model.</p></dd>
 <dt>tau2.f</dt>
-<dd><p>estimated \(\tau^2\) value from the full model. <code>NA</code> for <code>"rma.mv"</code> objects.</p></dd>
+<dd><p>estimated <em></em>\(\tau^2\) value from the full model. <code>NA</code> for <code>"rma.mv"</code> objects.</p></dd>
 <dt>tau2.r</dt>
-<dd><p>estimated \(\tau^2\) value from the reduced model. <code>NA</code> for <code>"rma.mv"</code> objects.</p></dd>
+<dd><p>estimated <em></em>\(\tau^2\) value from the reduced model. <code>NA</code> for <code>"rma.mv"</code> objects.</p></dd>
 <dt>R2</dt>
-<dd><p>amount (in percent) of the heterogeneity in the reduced model that is accounted for in the full model (<code>NA</code> for <code>"rma.mv"</code> objects). This can be regarded as a pseudo \(R^2\) statistic (Raudenbush, 2009). Note that the value may not be very accurate unless \(k\) is large (Lopez-Lopez et al., 2014).</p></dd>
+<dd><p>amount (in percent) of the heterogeneity in the reduced model that is accounted for in the full model (<code>NA</code> for <code>"rma.mv"</code> objects). This can be regarded as a pseudo <em></em>\(R^2\) statistic (Raudenbush, 2009). Note that the value may not be very accurate unless <em></em>\(k\) is large (Lopez-Lopez et al., 2014).</p></dd>
 <dt>...</dt>
 <dd><p>some additional elements/values.</p></dd>
 </dl><p>The results are formatted and printed with the <code><a href="print.anova.rma.html">print</a></code> function.</p>
     </div>
     <div id="note">
     <h2>Note</h2>
-    <p>The function can also be used to conduct a likelihood ratio test (LRT) for the amount of (residual) heterogeneity in random- and mixed-effects models. The full model should then be fitted with either <code>method="ML"</code> or <code>method="REML"</code> and the reduced model with <code>method="EE"</code>. The p-value for the test is based on a chi-square distribution with 1 degree of freedom, but actually needs to be adjusted for the fact that the parameter (i.e., \(\tau^2\)) falls on the boundary of the parameter space under the null hypothesis (see Viechtbauer, 2007, for more details).</p>
+    <p>The function can also be used to conduct a likelihood ratio test (LRT) for the amount of (residual) heterogeneity in random- and mixed-effects models. The full model should then be fitted with either <code>method="ML"</code> or <code>method="REML"</code> and the reduced model with <code>method="EE"</code>. The p-value for the test is based on a chi-square distribution with 1 degree of freedom, but actually needs to be adjusted for the fact that the parameter (i.e., <em></em>\(\tau^2\)) falls on the boundary of the parameter space under the null hypothesis (see Viechtbauer, 2007, for more details).</p>
 <p>LRTs for variance components in more complex models (as fitted with the <code><a href="rma.mv.html">rma.mv</a></code> function) can also be conducted in this manner (see ‘Examples’).</p>
     </div>
     <div id="author">

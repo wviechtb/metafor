@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-32</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-34</span>
       </span>
     </div>
 
@@ -92,7 +92,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Function to fit equal-effects models to \(2 \times 2\) table data via Peto's method. See below and the introduction to the <span class="pkg"><a href="metafor-package.html">metafor-package</a></span> for more details on these models. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
+    <p>Function to fit equal-effects models to <em></em>\(2 \times 2\) table data via Peto's method. See below and the introduction to the <span class="pkg"><a href="metafor-package.html">metafor-package</a></span> for more details on these models. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
     </div>
 
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">rma.peto</span><span class="op">(</span><span class="va">ai</span>, <span class="va">bi</span>, <span class="va">ci</span>, <span class="va">di</span>, <span class="va">n1i</span>, <span class="va">n2i</span>,
@@ -104,13 +104,13 @@
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>ai</dt>
-<dd><p>vector to specify the \(2 \times 2\) table frequencies (upper left cell). See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
+<dd><p>vector to specify the <em></em>\(2 \times 2\) table frequencies (upper left cell). See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
 <dt>bi</dt>
-<dd><p>vector to specify the \(2 \times 2\) table frequencies (upper right cell). See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
+<dd><p>vector to specify the <em></em>\(2 \times 2\) table frequencies (upper right cell). See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
 <dt>ci</dt>
-<dd><p>vector to specify the \(2 \times 2\) table frequencies (lower left cell). See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
+<dd><p>vector to specify the <em></em>\(2 \times 2\) table frequencies (lower left cell). See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
 <dt>di</dt>
-<dd><p>vector to specify the \(2 \times 2\) table frequencies (lower right cell). See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
+<dd><p>vector to specify the <em></em>\(2 \times 2\) table frequencies (lower right cell). See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
 <dt>n1i</dt>
 <dd><p>vector to specify the group sizes or row totals (first group). See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
 <dt>n2i</dt>
@@ -118,7 +118,7 @@
 <dt>data</dt>
 <dd><p>optional data frame containing the data supplied to the function.</p></dd>
 <dt>slab</dt>
-<dd><p>optional vector with labels for the \(k\) studies.</p></dd>
+<dd><p>optional vector with labels for the <em></em>\(k\) studies.</p></dd>
 <dt>subset</dt>
 <dd><p>optional (logical or numeric) vector to specify the subset of studies that should be used for the analysis.</p></dd>
 <dt>add</dt>
@@ -130,7 +130,7 @@
 <dt>level</dt>
 <dd><p>numeric value between 0 and 100 to specify the confidence interval level (the default is 95).</p></dd>
 <dt>digits</dt>
-<dd><p>integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4.</p></dd>
+<dd><p>optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4.</p></dd>
 <dt>verbose</dt>
 <dd><p>logical to specify whether output should be generated on the progress of the model fitting (the default is <code>FALSE</code>).</p></dd>
 <dt>...</dt>
@@ -144,7 +144,7 @@
 <h3 id="specifying-the-data">Specifying the Data<a class="anchor" aria-label="anchor" href="#specifying-the-data"></a></h3>
 
 
-<p>The studies are assumed to provide data in terms of \(2 \times 2\) tables of the form:</p><table class="table table"><tr><td></td><td>outcome 1</td><td>outcome 2</td><td>total</td></tr><tr><td>group 1</td><td><code>ai</code></td><td><code>bi</code></td><td><code>n1i</code></td></tr><tr><td>group 2</td><td><code>ci</code></td><td><code>di</code></td><td><code>n2i</code></td></tr></table><p>where <code>ai</code>, <code>bi</code>, <code>ci</code>, and <code>di</code> denote the cell frequencies and <code>n1i</code> and <code>n2i</code> the row totals. For example, in a set of randomized clinical trials (RCTs) or cohort studies, group 1 and group 2 may refer to the treatment (exposed) and placebo/control (not exposed) group, with outcome 1 denoting some event of interest (e.g., death) and outcome 2 its complement. In a set of case-control studies, group 1 and group 2 may refer to the group of cases and the group of controls, with outcome 1 denoting, for example, exposure to some risk factor and outcome 2 non-exposure.</p>
+<p>The studies are assumed to provide data in terms of <em></em>\(2 \times 2\) tables of the form:</p><table class="table table"><tr><td></td><td>outcome 1</td><td>outcome 2</td><td>total</td></tr><tr><td>group 1</td><td><code>ai</code></td><td><code>bi</code></td><td><code>n1i</code></td></tr><tr><td>group 2</td><td><code>ci</code></td><td><code>di</code></td><td><code>n2i</code></td></tr></table><p>where <code>ai</code>, <code>bi</code>, <code>ci</code>, and <code>di</code> denote the cell frequencies and <code>n1i</code> and <code>n2i</code> the row totals. For example, in a set of randomized clinical trials (RCTs) or cohort studies, group 1 and group 2 may refer to the treatment (exposed) and placebo/control (not exposed) group, with outcome 1 denoting some event of interest (e.g., death) and outcome 2 its complement. In a set of case-control studies, group 1 and group 2 may refer to the group of cases and the group of controls, with outcome 1 denoting, for example, exposure to some risk factor and outcome 2 non-exposure.</p>
 <p></p>
 </div>
 
@@ -160,8 +160,8 @@
 <h3 id="observed-effect-sizes-or-outcomes-of-the-individual-studies">Observed Effect Sizes or Outcomes of the Individual Studies<a class="anchor" aria-label="anchor" href="#observed-effect-sizes-or-outcomes-of-the-individual-studies"></a></h3>
 
 
-<p>Peto's method itself does not require the calculation of the observed (log) odds ratios of the individual studies and directly makes use of the \(2 \times 2\) table counts. Zero cells are not a problem (except in extreme cases, such as when one of the two outcomes never occurs in any of the tables). Therefore, it is unnecessary to add some constant to the cell counts when there are zero cells.</p>
-<p>However, for plotting and various other functions, it is necessary to calculate the observed (log) odds ratios for the \(k\) studies. Here, zero cells can be problematic, so adding a constant value to the cell counts ensures that all \(k\) values can be calculated. The <code>add</code> and <code>to</code> arguments are used to specify what value should be added to the cell frequencies and under what circumstances when calculating the observed (log) odds ratios and when applying Peto's method. Similarly, the <code>drop00</code> argument is used to specify how studies with no cases (or only cases) in both groups should be handled. The documentation of the <code><a href="escalc.html">escalc</a></code> function explains how the <code>add</code>, <code>to</code>, and <code>drop00</code> arguments work. If only a single value for these arguments is specified (as per default), then these values are used when calculating the observed (log) odds ratios and no adjustment to the cell counts is made when applying Peto's method. Alternatively, when specifying two values for these arguments, the first value applies when calculating the observed (log) odds ratios and the second value when applying Peto's method.</p>
+<p>Peto's method itself does not require the calculation of the observed (log) odds ratios of the individual studies and directly makes use of the <em></em>\(2 \times 2\) table counts. Zero cells are not a problem (except in extreme cases, such as when one of the two outcomes never occurs in any of the tables). Therefore, it is unnecessary to add some constant to the cell counts when there are zero cells.</p>
+<p>However, for plotting and various other functions, it is necessary to calculate the observed (log) odds ratios for the <em></em>\(k\) studies. Here, zero cells can be problematic, so adding a constant value to the cell counts ensures that all <em></em>\(k\) values can be calculated. The <code>add</code> and <code>to</code> arguments are used to specify what value should be added to the cell frequencies and under what circumstances when calculating the observed (log) odds ratios and when applying Peto's method. Similarly, the <code>drop00</code> argument is used to specify how studies with no cases (or only cases) in both groups should be handled. The documentation of the <code><a href="escalc.html">escalc</a></code> function explains how the <code>add</code>, <code>to</code>, and <code>drop00</code> arguments work. If only a single value for these arguments is specified (as per default), then these values are used when calculating the observed (log) odds ratios and no adjustment to the cell counts is made when applying Peto's method. Alternatively, when specifying two values for these arguments, the first value applies when calculating the observed (log) odds ratios and the second value when applying Peto's method.</p>
 <p>Note that <code>drop00</code> is set to <code>TRUE</code> by default. Therefore, the observed (log) odds ratios for studies where <code>ai=ci=0</code> or <code>bi=di=0</code> are set to <code>NA</code>. When applying Peto's method, such studies are not explicitly dropped (unless the second value of <code>drop00</code> argument is also set to <code>TRUE</code>), but this is practically not necessary, as they do not actually influence the results (assuming no adjustment to the cell/event counts are made when applying Peto's method).</p>
 <p></p>
 </div>

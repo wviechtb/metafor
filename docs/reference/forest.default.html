@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-32</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-34</span>
       </span>
     </div>
 
@@ -109,15 +109,15 @@
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
-<dd><p>vector of length \(k\) with the observed effect sizes or outcomes.</p></dd>
+<dd><p>vector of length <em></em>\(k\) with the observed effect sizes or outcomes.</p></dd>
 <dt>vi</dt>
-<dd><p>vector of length \(k\) with the corresponding sampling variances.</p></dd>
+<dd><p>vector of length <em></em>\(k\) with the corresponding sampling variances.</p></dd>
 <dt>sei</dt>
-<dd><p>vector of length \(k\) with the corresponding standard errors (note: only one of the two, <code>vi</code> or <code>sei</code>, needs to be specified).</p></dd>
+<dd><p>vector of length <em></em>\(k\) with the corresponding standard errors (note: only one of the two, <code>vi</code> or <code>sei</code>, needs to be specified).</p></dd>
 <dt>ci.lb</dt>
-<dd><p>vector of length \(k\) with the corresponding lower confidence interval bounds. Not needed if <code>vi</code> or <code>sei</code> is specified. See ‘Details’.</p></dd>
+<dd><p>vector of length <em></em>\(k\) with the corresponding lower confidence interval bounds. Not needed if <code>vi</code> or <code>sei</code> is specified. See ‘Details’.</p></dd>
 <dt>ci.ub</dt>
-<dd><p>vector of length \(k\) with the corresponding upper confidence interval bounds. Not needed if <code>vi</code> or <code>sei</code> is specified. See ‘Details’.</p></dd>
+<dd><p>vector of length <em></em>\(k\) with the corresponding upper confidence interval bounds. Not needed if <code>vi</code> or <code>sei</code> is specified. See ‘Details’.</p></dd>
 <dt>annotate</dt>
 <dd><p>logical to specify whether annotations should be added to the plot (the default is <code>TRUE</code>).</p></dd>
 <dt>showweights</dt>
@@ -149,7 +149,7 @@
 <dt>xlab</dt>
 <dd><p>title for the x-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
 <dt>slab</dt>
-<dd><p>optional vector with labels for the \(k\) studies. If unspecified, simple labels are created within the function. To suppress labels, set this argument to <code>NA</code>.</p></dd>
+<dd><p>optional vector with labels for the <em></em>\(k\) studies. If unspecified, simple labels are created within the function. To suppress labels, set this argument to <code>NA</code>.</p></dd>
 <dt>ilab</dt>
 <dd><p>optional vector, matrix, or data frame providing additional information about the studies that should be added to the plot.</p></dd>
 <dt>ilab.xpos</dt>
@@ -197,7 +197,7 @@
     <h2>Details</h2>
     <p>The plot shows the observed effect sizes or outcomes with corresponding confidence intervals. To use the function, one should specify the observed outcomes (via the <code>x</code> argument) together with the corresponding sampling variances (via the <code>vi</code> argument) or with the corresponding standard errors (via the <code>sei</code> argument). Alternatively, one can specify the observed outcomes together with the corresponding confidence interval bounds (via the <code>ci.lb</code> and <code>ci.ub</code> arguments).</p>
 <p>With the <code>transf</code> argument, the observed outcomes and corresponding confidence interval bounds can be transformed with some suitable function. For example, when plotting log odds ratios, then one could use <code>transf=exp</code> to obtain a forest plot showing the odds ratios. Alternatively, one can use the <code>atransf</code> argument to transform the x-axis labels and annotations (e.g., <code>atransf=exp</code>). See also <a href="transf.html">transf</a> for some other useful transformation functions in the context of a meta-analysis. The examples below illustrate the use of these arguments.</p>
-<p>By default, the studies are ordered from top to bottom (i.e., the first study in the dataset will be placed in row \(k\), the second study in row \(k-1\), and so on, until the last study, which is placed in the first row). The studies can be reordered with the <code>order</code> argument:</p><ul><li><p><code>order="obs"</code>: the studies are ordered by the observed outcomes,</p></li>
+<p>By default, the studies are ordered from top to bottom (i.e., the first study in the dataset will be placed in row <em></em>\(k\), the second study in row <em></em>\(k-1\), and so on, until the last study, which is placed in the first row). The studies can be reordered with the <code>order</code> argument:</p><ul><li><p><code>order="obs"</code>: the studies are ordered by the observed outcomes,</p></li>
 <li><p><code>order="prec"</code>: the studies are ordered by their sampling variances.</p></li>
 </ul><p>Alternatively, it is also possible to set <code>order</code> equal to a variable based on which the studies will be ordered (see ‘Examples’).</p>
 <p>Additional columns with information about the studies can be added to the plot via the <code>ilab</code> argument. This can either be a single variable or an entire matrix / data frame (with as many rows as there are studies in the forest plot). The <code>ilab.xpos</code> argument must then also be specified to indicate the x-axis position of the variables specified via <code>ilab</code>.</p>

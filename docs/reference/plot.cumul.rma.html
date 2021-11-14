@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-32</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-34</span>
       </span>
     </div>
 
@@ -124,7 +124,7 @@
 <dt>targs</dt>
 <dd><p>optional arguments needed by the function specified via <code>transf</code> or <code>atransf</code>.</p></dd>
 <dt>digits</dt>
-<dd><p>integer to specify the number of decimal places to which the tick mark labels of the x- and y-axis should be rounded. Can also be a vector of two integers, the first to specify the number of decimal places for the x-axis, the second for the y-axis labels (e.g., <code>digits=c(2,3)</code>). If unspecified, the function tries to set the argument to some sensible values.</p></dd>
+<dd><p>optional integer to specify the number of decimal places to which the tick mark labels of the x- and y-axis should be rounded. Can also be a vector of two integers, the first to specify the number of decimal places for the x-axis, the second for the y-axis labels (e.g., <code>digits=c(2,3)</code>). If unspecified, the function tries to set the argument to some sensible values.</p></dd>
 <dt>cols</dt>
 <dd><p>vector with two or more colors to use for visualizing the order of the cumulative results.</p></dd>
 <dt>grid</dt>
@@ -141,7 +141,7 @@
     <div id="details">
     <h2>Details</h2>
     <p>The function can be used to visualize the results from a cumulative meta-analysis as obtained with the <code><a href="cumul.html">cumul</a></code> function.</p>
-<p>The plot shows the model estimate (i.e., the estimated overall/average outcome) on the x-axis and some measure of heterogeneity on the y-axis in the cumulative order of the results in the <code>"cumul.rma"</code> object. By default, \(\tau^2\) is shown on the y-axis for a random-effects model and \(I^2\) otherwise, but one can also use argument <code>yaxis</code> to specify the measure of heterogeneity to place on the y-axis.</p>
+<p>The plot shows the model estimate (i.e., the estimated overall/average outcome) on the x-axis and some measure of heterogeneity on the y-axis in the cumulative order of the results in the <code>"cumul.rma"</code> object. By default, <em></em>\(\tau^2\) is shown on the y-axis for a random-effects model and <em></em>\(I^2\) otherwise, but one can also use argument <code>yaxis</code> to specify the measure of heterogeneity to place on the y-axis.</p>
 <p>The color gradient of the points/lines indicates the order of the cumulative results (by default, light gray at the beginning, dark gray at the end). A different set of colors can be chosen via the <code>cols</code> argument. See ‘Examples’.</p>
     </div>
     <div id="author">

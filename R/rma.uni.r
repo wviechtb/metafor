@@ -2536,6 +2536,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
    } else {
       class(res) <- c("rma.uni", "rma")
    }
+
    return(res)
 
 }

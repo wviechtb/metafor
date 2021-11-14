@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-32</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-34</span>
       </span>
     </div>
 
@@ -131,19 +131,19 @@
 <dt>x</dt>
 <dd><p>an object of class <code>"profile.rma"</code> (for <code>plot</code> and <code>print</code>).</p></dd>
 <dt>sigma2</dt>
-<dd><p>optional integer to specify for which \(\sigma^2\) value the likelihood should be profiled.</p></dd>
+<dd><p>optional integer to specify for which <em></em>\(\sigma^2\) value the likelihood should be profiled.</p></dd>
 <dt>tau2</dt>
-<dd><p>optional integer to specify for which \(\tau^2\) value the likelihood should be profiled.</p></dd>
+<dd><p>optional integer to specify for which <em></em>\(\tau^2\) value the likelihood should be profiled.</p></dd>
 <dt>rho</dt>
-<dd><p>optional integer to specify for which \(\rho\) value the likelihood should be profiled.</p></dd>
+<dd><p>optional integer to specify for which <em></em>\(\rho\) value the likelihood should be profiled.</p></dd>
 <dt>gamma2</dt>
-<dd><p>optional integer to specify for which \(\gamma^2\) value the likelihood should be profiled.</p></dd>
+<dd><p>optional integer to specify for which <em></em>\(\gamma^2\) value the likelihood should be profiled.</p></dd>
 <dt>phi</dt>
-<dd><p>optional integer to specify for which \(\phi\) value the likelihood should be profiled.</p></dd>
+<dd><p>optional integer to specify for which <em></em>\(\phi\) value the likelihood should be profiled.</p></dd>
 <dt>delta</dt>
-<dd><p>optional integer to specify for which \(\delta\) value the likelihood should be profiled.</p></dd>
+<dd><p>optional integer to specify for which <em></em>\(\delta\) value the likelihood should be profiled.</p></dd>
 <dt>alpha</dt>
-<dd><p>optional integer to specify for which \(\alpha\) value the likelihood should be profiled.</p></dd>
+<dd><p>optional integer to specify for which <em></em>\(\alpha\) value the likelihood should be profiled.</p></dd>
 <dt>xlim</dt>
 <dd><p>optional vector to specify the lower and upper limit of the parameter over which the profiling should be done. If unspecified, the function tries to set these limits automatically.</p></dd>
 <dt>ylim</dt>
@@ -184,10 +184,10 @@
 <h3 id="selecting-the-parameter-s-to-profile">Selecting the Parameter(s) to Profile<a class="anchor" aria-label="anchor" href="#selecting-the-parameter-s-to-profile"></a></h3>
 
 
-<p>The parameters that can be profiled depend on the model object:</p><ul><li><p>For objects of class <code>"rma.uni"</code> obtained with the <code><a href="rma.uni.html">rma.uni</a></code> function, the function profiles over \(\tau^2\) (not for equal-effects models).</p></li>
+<p>The parameters that can be profiled depend on the model object:</p><ul><li><p>For objects of class <code>"rma.uni"</code> obtained with the <code><a href="rma.uni.html">rma.uni</a></code> function, the function profiles over <em></em>\(\tau^2\) (not for equal-effects models).</p></li>
 <li><p>For objects of class <code>"rma.mv"</code> obtained with the <code><a href="rma.mv.html">rma.mv</a></code> function, profiling is done by default over all (non-fixed) variance and correlation components of the model. Alternatively, one can use the <code>sigma2</code>, <code>tau2</code>, <code>rho</code>, <code>gamma2</code>, or <code>phi</code> arguments to specify over which parameter the profiling should be done. Only one of these arguments can be used at a time. A single integer is used to specify the number of the parameter.</p></li>
-<li><p>For selection model objects of class <code>"rma.uni.selmodel"</code> obtained with the <code><a href="selmodel.html">selmodel</a></code> function, profiling is done by default over \(\tau^2\) (for models where this is an estimated parameter) and all (non-fixed) selection model parameters. Alternatively, one can choose to profile only \(\tau^2\) by setting <code>tau2=TRUE</code> or one can select one of the selection model parameters to profile by specifying its number via the <code>delta</code> argument.</p></li>
-<li><p>For location-scale model objects of class <code>"rma.ls"</code> obtained with the <code><a href="rma.uni.html">rma.uni</a></code> function, profiling is done by default over all (non-fixed) \(\alpha\) parameters that are part of the scale model.</p></li>
+<li><p>For selection model objects of class <code>"rma.uni.selmodel"</code> obtained with the <code><a href="selmodel.html">selmodel</a></code> function, profiling is done by default over <em></em>\(\tau^2\) (for models where this is an estimated parameter) and all (non-fixed) selection model parameters. Alternatively, one can choose to profile only <em></em>\(\tau^2\) by setting <code>tau2=TRUE</code> or one can select one of the selection model parameters to profile by specifying its number via the <code>delta</code> argument.</p></li>
+<li><p>For location-scale model objects of class <code>"rma.ls"</code> obtained with the <code><a href="rma.uni.html">rma.uni</a></code> function, profiling is done by default over all (non-fixed) <em></em>\(\alpha\) parameters that are part of the scale model.</p></li>
 </ul><p></p>
 </div>
 
@@ -207,7 +207,7 @@
 <h3 id="parallel-processing">Parallel Processing<a class="anchor" aria-label="anchor" href="#parallel-processing"></a></h3>
 
 
-<p>Profiling requires repeatedly refitting the model, which can be slow when \(k\) is large and/or the model is complex (the latter especially applies to <code>"rma.mv"</code> objects and also to certain <code>"rma.uni.selmodel"</code> or <code>"rma.ls"</code> objects). On machines with multiple cores, one can usually speed things up by delegating the model fitting to separate worker processes, that is, by setting <code>parallel="snow"</code> or <code>parallel="multicore"</code> and <code>ncpus</code> to some value larger than 1. Parallel processing makes use of the <code><a href="https://rdrr.io/r/parallel/parallel-package.html" class="external-link">parallel</a></code> package, using the <code><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">makePSOCKcluster</a></code> and <code><a href="https://rdrr.io/r/parallel/clusterApply.html" class="external-link">parLapply</a></code> functions when <code>parallel="snow"</code> or using <code><a href="https://rdrr.io/r/parallel/mclapply.html" class="external-link">mclapply</a></code> when <code>parallel="multicore"</code> (the latter only works on Unix/Linux-alikes). With <code><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">parallel::detectCores()</a></code>, one can check on the number of available cores on the local machine.</p>
+<p>Profiling requires repeatedly refitting the model, which can be slow when <em></em>\(k\) is large and/or the model is complex (the latter especially applies to <code>"rma.mv"</code> objects and also to certain <code>"rma.uni.selmodel"</code> or <code>"rma.ls"</code> objects). On machines with multiple cores, one can usually speed things up by delegating the model fitting to separate worker processes, that is, by setting <code>parallel="snow"</code> or <code>parallel="multicore"</code> and <code>ncpus</code> to some value larger than 1. Parallel processing makes use of the <code><a href="https://rdrr.io/r/parallel/parallel-package.html" class="external-link">parallel</a></code> package, using the <code><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">makePSOCKcluster</a></code> and <code><a href="https://rdrr.io/r/parallel/clusterApply.html" class="external-link">parLapply</a></code> functions when <code>parallel="snow"</code> or using <code><a href="https://rdrr.io/r/parallel/mclapply.html" class="external-link">mclapply</a></code> when <code>parallel="multicore"</code> (the latter only works on Unix/Linux-alikes). With <code><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">parallel::detectCores()</a></code>, one can check on the number of available cores on the local machine.</p>
 <p></p>
 </div>
 
@@ -218,19 +218,19 @@
     <p>An object of class <code>"profile.rma"</code>. The object is a list (or list of such lists) containing the following components:
    One of the following (depending on the parameter that was actually profiled):</p>
 <dl><dt>sigma2</dt>
-<dd><p>values of \(\sigma^2\) over which the likelihood was profiled.</p></dd>
+<dd><p>values of <em></em>\(\sigma^2\) over which the likelihood was profiled.</p></dd>
 <dt>tau2</dt>
-<dd><p>values of \(\tau^2\) over which the likelihood was profiled.</p></dd>
+<dd><p>values of <em></em>\(\tau^2\) over which the likelihood was profiled.</p></dd>
 <dt>rho</dt>
-<dd><p>values of \(\rho\) over which the likelihood was profiled.</p></dd>
+<dd><p>values of <em></em>\(\rho\) over which the likelihood was profiled.</p></dd>
 <dt>gamma2</dt>
-<dd><p>values of \(\gamma^2\) over which the likelihood was profiled.</p></dd>
+<dd><p>values of <em></em>\(\gamma^2\) over which the likelihood was profiled.</p></dd>
 <dt>phi</dt>
-<dd><p>values of \(\phi\) over which the likelihood was profiled.</p></dd>
+<dd><p>values of <em></em>\(\phi\) over which the likelihood was profiled.</p></dd>
 <dt>delta</dt>
-<dd><p>values of \(\delta\) over which the likelihood was profiled.</p></dd>
+<dd><p>values of <em></em>\(\delta\) over which the likelihood was profiled.</p></dd>
 <dt>alpha</dt>
-<dd><p>values of \(\alpha\) over which the likelihood was profiled.</p></dd>
+<dd><p>values of <em></em>\(\alpha\) over which the likelihood was profiled.</p></dd>
 </dl><p>In addition, the following components are included:</p>
 <dl><dt>ll</dt>
 <dd><p>(restricted) log-likelihood values at the corresponding parameter values.</p></dd>
