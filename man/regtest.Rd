@@ -5,15 +5,15 @@
    The function can be used to carry out (various versions of) Egger's regression test for funnel plot asymmetry. \loadmathjax
 }
 \usage{
-regtest(yi, vi, sei, ni, subset, data,
+regtest(x, vi, sei, ni, subset, data,
         model="rma", predictor="sei", ret.fit=FALSE, digits, \dots)
 }
 \arguments{
-   \item{yi}{a vector with the observed effect sizes or outcomes or an object of class \code{"rma"}.}
-   \item{vi}{vector with the corresponding sampling variances (ignored if \code{yi} is an object of class \code{"rma"}).}
+   \item{x}{a vector with the observed effect sizes or outcomes or an object of class \code{"rma"}.}
+   \item{vi}{vector with the corresponding sampling variances (ignored if \code{x} is an object of class \code{"rma"}).}
    \item{sei}{vector with the corresponding standard errors (note: only one of the two, \code{vi} or \code{sei}, needs to be specified).}
    \item{ni}{optional vector with the corresponding sample sizes (only relevant when using the sample sizes (or a transformation thereof) as predictor).}
-   \item{subset}{optional (logical or numeric) vector to specify the subset of studies that should be included in the test (ignored if \code{yi} is an object of class \code{"rma"}).}
+   \item{subset}{optional (logical or numeric) vector to specify the subset of studies that should be included in the test (ignored if \code{x} is an object of class \code{"rma"}).}
    \item{data}{optional data frame containing the variables given to the arguments above.}
    \item{model}{either \code{"rma"} or \code{"lm"} to indicate the type of model to use for the regression test. See \sQuote{Details}.}
    \item{predictor}{either \code{"sei"} \code{"vi"}, \code{"ni"}, \code{"ninv"}, \code{"sqrtni"}, or \code{"sqrtninv"} to indicate the predictor to use for the regression test. See \sQuote{Details}.}
@@ -24,7 +24,7 @@ regtest(yi, vi, sei, ni, subset, data,
 \details{
    Various tests for funnel plot asymmetry have been suggested in the literature, including the rank correlation test by Begg and Mazumdar (1994) and the regression test by Egger et al. (1997). Extensions, modifications, and further developments of the regression test are described (among others) by Macaskill, Walter, and Irwig (2001), Sterne and Egger (2005), Harbord, Egger, and Sterne (2006), Peters et al. (2006), \enc{Rücker}{Ruecker} et al. (2008), and Moreno et al. (2009). The various versions of the regression test differ in terms of the model (either a weighted regression model with a multiplicative dispersion term or a fixed/mixed-effects meta-regression model is used), in terms of the predictor variable that the observed effect sizes or outcomes are hypothesized to be related to when publication bias is present (suggested predictors include the standard error, the sampling variance, and the sample size or transformations thereof), and in terms of the outcome measure used (e.g., for \mjeqn{2 \times 2}{2x2} table data, one has the choice between various outcome measures). The idea behind the various tests is the same though: If there is a relationship between the observed effect sizes or outcomes and the chosen predictor, then this usually implies asymmetry in the funnel plot, which in turn may be an indication of publication bias.
 
-   The \code{regtest} function can be used to carry out various versions of the regression test. One can either pass a vector with the observed effect sizes or outcomes (via \code{yi}) and the corresponding sampling variances via \code{vi} (or the standard errors via \code{sei}) to the function or an object of class \code{"rma"}.
+   The \code{regtest} function can be used to carry out various versions of the regression test. One can either pass a vector with the observed effect sizes or outcomes (via \code{x}) and the corresponding sampling variances via \code{vi} (or the standard errors via \code{sei}) to the function or an object of class \code{"rma"}.
 
    The model type for the regression test is chosen via the \code{model} argument, with \code{model="lm"} for a weighted regression model with a multiplicative dispersion term or \code{model="rma"} for a (mixed-effects) meta-regression model (the default).
 
@@ -38,9 +38,9 @@ regtest(yi, vi, sei, ni, subset, data,
    \item \code{predictor="sqrtninv"} for the inverse square root of the sample sizes.
    }
 
-   The outcome measure used for the regression test is simply determined by the values passed to \code{yi} or the measure that was used in fitting the original model (when passing an object of class \code{"rma"} to the function).
+   The outcome measure used for the regression test is simply determined by the values passed to the function or the measure that was used in fitting the original model (when passing an object of class \code{"rma"} to the function).
 
-   When using the sample sizes (or a transformation thereof) as the predictor, one can use the \code{ni} argument to specify the sample sizes. When \code{yi} is a vector with the observed effect sizes or outcomes and it was computed with \code{\link{escalc}}, then the sample sizes should automatically be stored as an attribute of \code{yi} and \code{ni} does not need to be specified. This should also be the case when passing an object of class \code{"rma"} to the function and the input to the model fitting function came from \code{\link{escalc}}.
+   When using the sample sizes (or a transformation thereof) as the predictor, one can use the \code{ni} argument to specify the sample sizes. When \code{x} is a vector with the observed effect sizes or outcomes and it was computed with \code{\link{escalc}}, then the sample sizes should automatically be stored as an attribute of \code{x} and \code{ni} does not need to be specified. This should also be the case when passing an object of class \code{"rma"} to the function and the input to the model fitting function came from \code{\link{escalc}}.
 
    When passing an object of class \code{"rma"} to the function, arguments such as \code{method}, \code{weighted}, and \code{test} as used during the initial model fitting are also used for the regression test. If the model already included one or more moderators, then \code{regtest} will add the chosen predictor to the moderator(s) already included in the model. This way, one can test for funnel plot asymmetry after accounting first for the influence of the moderator(s) already included in the model.
 
@@ -143,13 +143,13 @@ reg
 
 ### add regression line to funnel plot
 se <- seq(0,1.8,length=100)
-lines(coef(reg$fit)[1] + coef(reg$fit)[2]*se, se, lwd=2)
+lines(coef(reg$fit)[1] + coef(reg$fit)[2]*se, se, lwd=3)
 
 ### regression test (using the sampling variances as predictor)
 reg <- regtest(res, predictor="vi")
 
 ### add regression line to funnel plot (using the sampling variances as predictor)
-lines(coef(reg$fit)[1] + coef(reg$fit)[2]*se^2, se, lwd=2)
+lines(coef(reg$fit)[1] + coef(reg$fit)[2]*se^2, se, lwd=3)
 
 ### testing for asymmetry after accounting for the influence of a moderator
 res <- rma(yi, vi, mods = ~ year, data=dat)

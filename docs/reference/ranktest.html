@@ -95,19 +95,19 @@
     <p>The function can be used to carry out the rank correlation test for funnel plot asymmetry.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">ranktest</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, <span class="va">sei</span>, <span class="va">subset</span>, <span class="va">data</span>, <span class="va">digits</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">ranktest</span><span class="op">(</span><span class="va">x</span>, <span class="va">vi</span>, <span class="va">sei</span>, <span class="va">subset</span>, <span class="va">data</span>, <span class="va">digits</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
 
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>yi</dt>
+    <dl><dt>x</dt>
 <dd><p>a vector with the observed effect sizes or outcomes or an object of class <code>"rma"</code>.</p></dd>
 <dt>vi</dt>
-<dd><p>vector with the corresponding sampling variances (ignored if <code>yi</code> is an object of class <code>"rma"</code>).</p></dd>
+<dd><p>vector with the corresponding sampling variances (ignored if <code>x</code> is an object of class <code>"rma"</code>).</p></dd>
 <dt>sei</dt>
 <dd><p>vector with the corresponding standard errors (note: only one of the two, <code>vi</code> or <code>sei</code>, needs to be specified).</p></dd>
 <dt>subset</dt>
-<dd><p>optional (logical or numeric) vector to specify the subset of studies that should be included in the test (ignored if <code>yi</code> is an object of class <code>"rma"</code>).</p></dd>
+<dd><p>optional (logical or numeric) vector to specify the subset of studies that should be included in the test (ignored if <code>x</code> is an object of class <code>"rma"</code>).</p></dd>
 <dt>data</dt>
 <dd><p>optional data frame containing the variables given to the arguments above.</p></dd>
 <dt>digits</dt>
@@ -118,7 +118,7 @@
     <div id="details">
     <h2>Details</h2>
     <p>The function carries out the rank correlation test as described by Begg and Mazumdar (1994). The test can be used to examine whether the observed effect sizes or outcomes and the corresponding sampling variances are correlated. A high correlation would indicate that the funnel plot is asymmetric, which may be a result of publication bias.</p>
-<p>One can either pass a vector with the observed effect sizes or outcomes (via <code>yi</code>) and the corresponding sampling variances via <code>vi</code> (or the standard errors via <code>sei</code>) to the function or an object of class <code>"rma"</code>.</p>
+<p>One can either pass a vector with the observed effect sizes or outcomes (via <code>x</code>) and the corresponding sampling variances via <code>vi</code> (or the standard errors via <code>sei</code>) to the function or an object of class <code>"rma"</code>.</p>
     </div>
     <div id="value">
     <h2>Value</h2>

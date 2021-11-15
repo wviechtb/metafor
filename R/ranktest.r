@@ -1,4 +1,4 @@
-ranktest <- function(yi, vi, sei, subset, data, digits, ...) {
+ranktest <- function(x, vi, sei, subset, data, digits, ...) {
 
    #########################################################################
 
@@ -35,16 +35,14 @@ ranktest <- function(yi, vi, sei, subset, data, digits, ...) {
 
    mf <- match.call()
 
-   yi <- .getx("yi", mf=mf, data=data)
+   x <- .getx("x", mf=mf, data=data)
 
    ############################################################################
 
-   if (inherits(yi, "rma")) {
-
-      x <- yi
+   if (inherits(x, "rma")) {
 
       if (!missing(vi) || !missing(sei) || !missing(subset))
-         warning(mstyle$warning("Arguments 'vi', 'sei', and 'subset' ignored when 'yi' is a model object."), call.=FALSE)
+         warning(mstyle$warning("Arguments 'vi', 'sei', and 'subset' ignored when 'x' is a model object."), call.=FALSE)
 
       yi <- x$yi
       vi <- x$vi
@@ -59,6 +57,11 @@ ranktest <- function(yi, vi, sei, subset, data, digits, ...) {
 
    } else {
 
+      if (!.is.vector(x))
+         stop(mstyle$stop("Argument 'x' must be a vector or an 'rma' model object."))
+
+      yi <- x
+
       ### set defaults for digits
 
       if (missing(digits)) {
@@ -66,9 +69,6 @@ ranktest <- function(yi, vi, sei, subset, data, digits, ...) {
       } else {
          digits <- .set.digits(digits, dmiss=FALSE)
       }
-
-      if (!.is.vector(yi))
-         stop(mstyle$stop("Argument 'yi' must be a vector or an 'rma' model object."))
 
       vi     <- .getx("vi",     mf=mf, data=data)
       sei    <- .getx("sei",    mf=mf, data=data)

@@ -95,7 +95,7 @@
     <p>Function to conduct the test of excess significance. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">tes</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, <span class="va">sei</span>, <span class="va">subset</span>, <span class="va">data</span>, H0<span class="op">=</span><span class="fl">0</span>, alternative<span class="op">=</span><span class="st">"two.sided"</span>, alpha<span class="op">=</span><span class="fl">.05</span>, <span class="va">theta</span>, <span class="va">tau2</span>,
+    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">tes</span><span class="op">(</span><span class="va">x</span>, <span class="va">vi</span>, <span class="va">sei</span>, <span class="va">subset</span>, <span class="va">data</span>, H0<span class="op">=</span><span class="fl">0</span>, alternative<span class="op">=</span><span class="st">"two.sided"</span>, alpha<span class="op">=</span><span class="fl">.05</span>, <span class="va">theta</span>, <span class="va">tau2</span>,
     <span class="va">test</span>, tes.alternative<span class="op">=</span><span class="st">"greater"</span>, progbar<span class="op">=</span><span class="cn">TRUE</span>, tes.alpha<span class="op">=</span><span class="fl">.10</span>, <span class="va">digits</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for tes</span>
@@ -105,14 +105,14 @@
     <div id="arguments">
     <h2>Arguments</h2>
     <p><em>These arguments pertain to data input:</em></p>
-<dl><dt>yi</dt>
+<dl><dt>x</dt>
 <dd><p>a vector with the observed effect sizes or outcomes or an object of class <code>"rma"</code>.</p></dd>
 <dt>vi</dt>
-<dd><p>vector with the corresponding sampling variances (ignored if <code>yi</code> is an object of class <code>"rma"</code>).</p></dd>
+<dd><p>vector with the corresponding sampling variances (ignored if <code>x</code> is an object of class <code>"rma"</code>).</p></dd>
 <dt>sei</dt>
 <dd><p>vector with the corresponding standard errors (note: only one of the two, <code>vi</code> or <code>sei</code>, needs to be specified).</p></dd>
 <dt>subset</dt>
-<dd><p>optional (logical or numeric) vector to specify the subset of studies that should be included (ignored if <code>yi</code> is an object of class <code>"rma"</code>).</p></dd>
+<dd><p>optional (logical or numeric) vector to specify the subset of studies that should be included (ignored if <code>x</code> is an object of class <code>"rma"</code>).</p></dd>
 <dt>data</dt>
 <dd><p>optional data frame containing the variables given to the arguments above.</p></dd>
 </dl><p><em>These arguments pertain to the tests of the observed effect sizes or outcomes:</em></p>
@@ -141,14 +141,11 @@
 <dd><p>optional integer to specify the number of decimal places to which the printed results should be rounded.</p></dd>
 <dt>...</dt>
 <dd><p>other arguments.</p></dd>
-</dl><p><em>For the <code>print</code> method:</em></p>
-<dl><dt>x</dt>
-<dd><p>an object of class <code>"tes"</code>.</p></dd>
 </dl></div>
     <div id="details">
     <h2>Details</h2>
     <p>The function carries out the test of excess significance described by Ioannidis and Trikalinos (2007). The test can be used to examine whether the observed number of significant findings is greater than the number of significant findings expected given the power of the tests. An overabundance of significant tests may suggest that the collection of studies is not representative of all studies conducted on a particular topic.</p>
-<p>One can either pass a vector with the observed effect sizes or outcomes (via <code>yi</code>) and the corresponding sampling variances via <code>vi</code> (or the standard errors via <code>sei</code>) to the function or an object of class <code>"rma"</code>.</p>
+<p>One can either pass a vector with the observed effect sizes or outcomes (via <code>x</code>) and the corresponding sampling variances via <code>vi</code> (or the standard errors via <code>sei</code>) to the function or an object of class <code>"rma"</code>.</p>
 <p>The observed effect sizes or outcomes are tested for significance based on a standard Wald-type test, that is, by comparing \[z_i = \frac{y_i - \mbox{H}_0}{\sqrt{v_i}}\] against the appropriate critical value(s) of a standard normal distribution (e.g., <em></em>\(\pm 1.96\) for <code>alternative="two.sided"</code> and <code>alpha=.05</code>, which are the defaults). Let <em></em>\(O\) denote the observed number of significant tests.</p>
 <p>Given a particular value for the true effect or outcome denoted by <em></em>\(\theta\) (which, if it is unspecified, is determined by computing the inverse-variance weighted average of the observed effect sizes or outcomes or the value is taken from the model object), let <em></em>\(1-\beta_i\) denote the power of the <em></em>\(i\textrm{th}\) test (where <em></em>\(\beta_i\) denotes the Type II error probability). If <em></em>\(\tau^2 &gt; 0\), let <em></em>\(1-\beta_i\) denote the expected power (computed based on integrating the power over a normal distribution with mean <em></em>\(\theta\) and variance <em></em>\(\tau^2\)). Let <em></em>\(E = \sum_{i=1}^k (1-\beta_i)\) denote the expected number of significant tests.</p>
 <p>The test of excess significance then tests if <em></em>\(O\) is significantly greater (if <code>tes.alternative="greater"</code>) than <em></em>\(E\). This can be done using Pearson's chi-squared test (if <code>test="chi2"</code>), a binomial test (if <code>test="binomial"</code>), or an exact test (if <code>test="exact"</code>). The latter is described in Francis (2013). If argument <code>test</code> is unspecified, the default is to do an exact test if the number of elements in the sum that needs to be computed is less than or equal to <code>10^6</code> and to do a chi-square test otherwise.</p>

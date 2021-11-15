@@ -6,7 +6,7 @@
    Function to conduct the test of excess significance. \loadmathjax
 }
 \usage{
-tes(yi, vi, sei, subset, data, H0=0, alternative="two.sided", alpha=.05, theta, tau2,
+tes(x, vi, sei, subset, data, H0=0, alternative="two.sided", alpha=.05, theta, tau2,
     test, tes.alternative="greater", progbar=TRUE, tes.alpha=.10, digits, \dots)
 
 \method{print}{tes}(x, digits=x$digits, \dots)
@@ -14,10 +14,10 @@ tes(yi, vi, sei, subset, data, H0=0, alternative="two.sided", alpha=.05, theta, 
 \arguments{
    \emph{These arguments pertain to data input:}
 
-   \item{yi}{a vector with the observed effect sizes or outcomes or an object of class \code{"rma"}.}
-   \item{vi}{vector with the corresponding sampling variances (ignored if \code{yi} is an object of class \code{"rma"}).}
+   \item{x}{a vector with the observed effect sizes or outcomes or an object of class \code{"rma"}.}
+   \item{vi}{vector with the corresponding sampling variances (ignored if \code{x} is an object of class \code{"rma"}).}
    \item{sei}{vector with the corresponding standard errors (note: only one of the two, \code{vi} or \code{sei}, needs to be specified).}
-   \item{subset}{optional (logical or numeric) vector to specify the subset of studies that should be included (ignored if \code{yi} is an object of class \code{"rma"}).}
+   \item{subset}{optional (logical or numeric) vector to specify the subset of studies that should be included (ignored if \code{x} is an object of class \code{"rma"}).}
    \item{data}{optional data frame containing the variables given to the arguments above.}
 
    \emph{These arguments pertain to the tests of the observed effect sizes or outcomes:}
@@ -42,15 +42,11 @@ tes(yi, vi, sei, subset, data, H0=0, alternative="two.sided", alpha=.05, theta, 
 
    \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded.}
    \item{\dots}{other arguments.}
-
-   \emph{For the \code{print} method:}
-
-   \item{x}{an object of class \code{"tes"}.}
 }
 \details{
    The function carries out the test of excess significance described by Ioannidis and Trikalinos (2007). The test can be used to examine whether the observed number of significant findings is greater than the number of significant findings expected given the power of the tests. An overabundance of significant tests may suggest that the collection of studies is not representative of all studies conducted on a particular topic.
 
-   One can either pass a vector with the observed effect sizes or outcomes (via \code{yi}) and the corresponding sampling variances via \code{vi} (or the standard errors via \code{sei}) to the function or an object of class \code{"rma"}.
+   One can either pass a vector with the observed effect sizes or outcomes (via \code{x}) and the corresponding sampling variances via \code{vi} (or the standard errors via \code{sei}) to the function or an object of class \code{"rma"}.
 
    The observed effect sizes or outcomes are tested for significance based on a standard Wald-type test, that is, by comparing \mjdeqn{z_i = \frac{y_i - \mbox{H}_0}{\sqrt{v_i}}}{z_i = (y_i - H_0) / sqrt(v_i)} against the appropriate critical value(s) of a standard normal distribution (e.g., \mjseqn{\pm 1.96} for \code{alternative="two.sided"} and \code{alpha=.05}, which are the defaults). Let \mjseqn{O} denote the observed number of significant tests.
 

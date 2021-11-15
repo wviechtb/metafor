@@ -1,4 +1,4 @@
-regtest <- function(yi, vi, sei, ni, subset, data, model="rma", predictor="sei", ret.fit=FALSE, digits, ...) {
+regtest <- function(x, vi, sei, ni, subset, data, model="rma", predictor="sei", ret.fit=FALSE, digits, ...) {
 
    #########################################################################
 
@@ -32,18 +32,16 @@ regtest <- function(yi, vi, sei, ni, subset, data, model="rma", predictor="sei",
 
    mf <- match.call()
 
-   yi <- .getx("yi", mf=mf, data=data)
+   x <- .getx("x", mf=mf, data=data)
 
    #########################################################################
 
-   if (inherits(yi, "rma")) {
-
-      x <- yi
+   if (inherits(x, "rma")) {
 
       .chkclass(class(x), must="rma", notav=c("robust.rma", "rma.glmm", "rma.mv", "rma.ls", "rma.uni.selmodel"))
 
       if (!missing(vi) || !missing(sei) || !missing(subset))
-         warning(mstyle$warning("Arguments 'vi', 'sei', and 'subset' ignored when 'yi' is a model object."), call.=FALSE)
+         warning(mstyle$warning("Arguments 'vi', 'sei', and 'subset' ignored when 'x' is a model object."), call.=FALSE)
 
       yi <- x$yi
       vi <- x$vi
@@ -106,8 +104,10 @@ regtest <- function(yi, vi, sei, ni, subset, data, model="rma", predictor="sei",
 
    } else {
 
-      if (!.is.vector(yi))
-         stop(mstyle$stop("Argument 'yi' must be a vector or an 'rma' model object."))
+      if (!.is.vector(x))
+         stop(mstyle$stop("Argument 'x' must be a vector or an 'rma' model object."))
+
+      yi <- x
 
       ### set defaults for digits
 

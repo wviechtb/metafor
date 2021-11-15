@@ -1,4 +1,4 @@
-tes <- function(yi, vi, sei, subset, data,
+tes <- function(x, vi, sei, subset, data,
    H0=0, alternative="two.sided", alpha=.05, theta, tau2,
    test, tes.alternative="greater", progbar=TRUE, tes.alpha=.10,
    digits, ...) {
@@ -33,13 +33,11 @@ tes <- function(yi, vi, sei, subset, data,
 
    mf <- match.call()
 
-   yi <- .getx("yi", mf=mf, data=data)
+   x <- .getx("x", mf=mf, data=data)
 
    #########################################################################
 
-   if (inherits(yi, "rma")) {
-
-      x <- yi
+   if (inherits(x, "rma")) {
 
       on.exit(options(na.action=na.act))
 
@@ -73,8 +71,10 @@ tes <- function(yi, vi, sei, subset, data,
 
       #########################################################################
 
-      if (!.is.vector(yi))
-         stop(mstyle$stop("Argument 'yi' must be a vector or an 'rma' model object."))
+      if (!.is.vector(x))
+         stop(mstyle$stop("Argument 'x' must be a vector or an 'rma' model object."))
+
+      yi <- x
 
       ### set defaults for digits
 
@@ -410,8 +410,8 @@ tes <- function(yi, vi, sei, subset, data,
 
          if (tes.alternative == "two.sided") {
 
-            theta.lim.lb <- tes(yi=yi, vi=vi, H0=H0, alternative=alternative, alpha=alpha, theta=theta.1, tau2=tau2, test=test, tes.alternative="greater", progbar=FALSE, tes.alpha=tes.alpha/2, correct=correct, rel.tol=rel.tol, subdivisions=subdivisions, tau2.lb=tau2.lb, find.lim=TRUE)$theta.lim
-            theta.lim.ub <- tes(yi=yi, vi=vi, H0=H0, alternative=alternative, alpha=alpha, theta=theta.1, tau2=tau2, test=test, tes.alternative="less", progbar=FALSE, tes.alpha=tes.alpha/2, correct=correct, rel.tol=rel.tol, subdivisions=subdivisions, tau2.lb=tau2.lb, find.lim=TRUE)$theta.lim
+            theta.lim.lb <- tes(x=yi, vi=vi, H0=H0, alternative=alternative, alpha=alpha, theta=theta.1, tau2=tau2, test=test, tes.alternative="greater", progbar=FALSE, tes.alpha=tes.alpha/2, correct=correct, rel.tol=rel.tol, subdivisions=subdivisions, tau2.lb=tau2.lb, find.lim=TRUE)$theta.lim
+            theta.lim.ub <- tes(x=yi, vi=vi, H0=H0, alternative=alternative, alpha=alpha, theta=theta.1, tau2=tau2, test=test, tes.alternative="less", progbar=FALSE, tes.alpha=tes.alpha/2, correct=correct, rel.tol=rel.tol, subdivisions=subdivisions, tau2.lb=tau2.lb, find.lim=TRUE)$theta.lim
             theta.lim <- c(theta.lim.lb, theta.lim.ub)
 
          }
