@@ -23,6 +23,12 @@ print.escalc <- function(x, digits=attr(x,"digits"), ...) {
    ### get rownames attribute so we can back-assign it
 
    rnames <- attr(x, "row.names")
+
+   ### for printing, turn expressions into strings
+
+   is.expr <- sapply(x, is.expression)
+   x[is.expr] <- lapply(x[is.expr], as.character)
+
    x <- data.frame(x)
    rownames(x) <- rnames
 
