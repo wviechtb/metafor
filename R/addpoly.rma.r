@@ -52,10 +52,14 @@ efac=1, col, border, lty, fonts, cex, ...) {
       pi.type <- ddd$pi.type
    }
 
+   pred <- predict(x, level=level, pi.type=pi.type)
+
+   ci.lb <- pred$ci.lb
+   ci.ub <- pred$ci.ub
+
    if (addpred) {
-      temp <- predict(x, level=level, pi.type=pi.type)
-      pi.lb <- temp$pi.lb
-      pi.ub <- temp$pi.ub
+      pi.lb <- pred$pi.lb
+      pi.ub <- pred$pi.ub
    } else {
       pi.lb <- NA
       pi.ub <- NA
@@ -70,7 +74,7 @@ efac=1, col, border, lty, fonts, cex, ...) {
 
    ### passing ci.lb and ci.ub, so that the bounds are correct when the model was fitted with test="knha"
 
-   addpoly(x$beta, ci.lb=x$ci.lb, ci.ub=x$ci.ub, pi.lb=pi.lb, pi.ub=pi.ub,
+   addpoly(x$beta, ci.lb=ci.lb, ci.ub=ci.ub, pi.lb=pi.lb, pi.ub=pi.ub,
            rows=row, level=level, annotate=annotate, digits=digits, width=width,
            mlab=mlab, transf=transf, atransf=atransf, targs=targs,
            efac=efac, col=col, border=border, lty=lty, fonts=fonts, cex=cex, ...)

@@ -34,6 +34,8 @@
 
 - `addpoly.default()` and `addpoly.rma()` gain `lty` argument
 
+- fixed that `level` argument in `addpoly.rma()` did not affect the CI width
+
 - `points.regplot()` function now also redraws the labels (if there were any to begin with)
 
 - added `lbfgsb3c`, `subplex`, and `BBoptim` as possible optimizer in `rma.mv()`, `rma.glmm()`, `rma.uni()`, and `selmodel.rma.uni()`
