@@ -31,13 +31,14 @@ This page documents some miscellaneous options and features that do not fit very
 
    \subsection{Styled Output with the \pkg{crayon} Package}{
 
-   The \href{https://cran.r-project.org/package=crayon}{crayon} package provides a way to create colored output. The \pkg{metafor} package is designed to automatically make use of this feature when the \pkg{crayon} package is installed and loaded (with \code{library(crayon)}). Note that this only works on terminals that support \sQuote{ANSI} color and highlight codes (e.g., not under RGui, but RStudio and all modern terminals should support this).
+   The \href{https://cran.r-project.org/package=crayon}{crayon} package provides a way to create colored output. The \pkg{metafor} package is designed to automatically make use of this feature when the \pkg{crayon} package is installed and loaded (with \code{library(crayon)}). Note that this only works on terminals that support \sQuote{ANSI} color and highlight codes (e.g., not under RGui on Windows or R.app on macOS, but the RStudio console and all modern terminals should support this).
 
    The default color theme that is used is quite plain, but should work with a light or dark colored background. One can modify the color theme by creating an object in the workspace named \code{.mtheme}, which should be a list whose elements specify the styles for various parts of the output (see below for some examples and the documentation of the \pkg{crayon} package for the syntax to specify styles). The following elements are recognized:
    \itemize{
    \item \code{header} for the header of tables (underlined by default),
    \item \code{body1} for odd numbered rows in the body of tables,
    \item \code{body2} for even numbered rows in the body of tables,
+   \item \code{na} for missing values in tables,
    \item \code{section} for section headers (bold by default),
    \item \code{text} for descriptive text in the output,
    \item \code{result} for the corresponding result(s),
@@ -52,6 +53,7 @@ This page documents some miscellaneous options and features that do not fit very
 \preformatted{.mstyle <- list(header=combine_styles("gray20", "underline"),
                 body1=make_style("gray40"),
                 body2=make_style("gray40"),
+                na=bold,
                 section=combine_styles("gray15", "bold"),
                 text=make_style("gray50"),
                 result=make_style("gray30"))}
@@ -59,6 +61,7 @@ This page documents some miscellaneous options and features that do not fit very
 \preformatted{.mstyle <- list(header=combine_styles("gray80", "underline"),
                 body1=make_style("gray60"),
                 body2=make_style("gray60"),
+                na=bold,
                 section=combine_styles("gray85", "bold"),
                 text=make_style("gray50"),
                 result=make_style("gray70"))}
@@ -66,6 +69,7 @@ This page documents some miscellaneous options and features that do not fit very
 \preformatted{.mstyle <- list(header=combine_styles("snow", make_style("royalblue4", bg=TRUE)),
                 body1=combine_styles("gray20", make_style("gray95", bg=TRUE)),
                 body2=combine_styles("gray20", make_style("gray85", bg=TRUE)),
+                na=combine_styles("red4", "bold"),
                 section=combine_styles("black", "bold", make_style("lightskyblue", bg=TRUE)),
                 text=make_style("gray50"),
                 result=make_style("blue"))}
@@ -73,6 +77,7 @@ This page documents some miscellaneous options and features that do not fit very
 \preformatted{.mstyle <- list(header=combine_styles("snow", make_style("royalblue4", bg=TRUE)),
                 body1=combine_styles("gray95", make_style("gray20", bg=TRUE)),
                 body2=combine_styles("gray95", make_style("gray30", bg=TRUE)),
+                na=combine_styles("orange1", "bold"),
                 section=combine_styles("white", "bold", make_style("blue", bg=TRUE)),
                 text=make_style("steelblue4"),
                 result=make_style("steelblue1"))}

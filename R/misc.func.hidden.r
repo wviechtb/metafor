@@ -874,6 +874,11 @@
       } else {
          body2 <- .mstyle$body2
       }
+      if (is.null(.mstyle$na)) {
+         na <- crayon::reset
+      } else {
+         na <- .mstyle$na
+      }
       if (is.null(.mstyle$text)) {
          text <- crayon::reset
       } else {
@@ -918,6 +923,7 @@
       header  <- tmp
       body1   <- tmp
       body2   <- tmp
+      na      <- tmp
       text    <- tmp
       result  <- tmp
       stop    <- tmp
@@ -928,7 +934,7 @@
 
    }
 
-   return(list(section=section, header=header, body1=body1, body2=body2, text=text, result=result, stop=stop, warning=warning, message=message, verbose=verbose, legend=legend))
+   return(list(section=section, header=header, body1=body1, body2=body2, na=na, text=text, result=result, stop=stop, warning=warning, message=message, verbose=verbose, legend=legend))
 
 }
 
@@ -958,6 +964,7 @@
          x[i] <- trimws(x[i], which="right")
          x[i] <- mstyle$header(x[i])
       } else {
+         x[i] <- gsub("NA", mstyle$na("NA"), x[i], fixed=TRUE)
          if (.is.even(i-has.header)) {
             x[i] <- mstyle$body2(x[i])
          } else {
