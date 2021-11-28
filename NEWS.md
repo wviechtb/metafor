@@ -1,4 +1,4 @@
-# metafor 3.1-34 (2021-11-14)
+# metafor 3.1-35 (2021-11-28)
 
 - simplified `regtest()`, `ranktest()`, and `tes()` to single functions instead of using generics and methods; this way, a `data` argument could be added
 

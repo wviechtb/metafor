@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-34</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-35</span>
       </span>
     </div>
 
@@ -128,7 +128,7 @@
 <dt>object</dt>
 <dd><p>an object of class <code>"rma"</code> (for <code>summary</code>).</p></dd>
 <dt>digits</dt>
-<dd><p>integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.</p></dd>
+<dd><p>integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object. See also <a href="misc-options.html">here</a> for further details on how to control the number of digits in the output.</p></dd>
 <dt>showfit</dt>
 <dd><p>logical to specify whether the fit statistics and information criteria should be printed (the default is <code>FALSE</code> for <code>print</code> and <code>TRUE</code> for <code>summary</code>).</p></dd>
 <dt>signif.stars</dt>
@@ -151,7 +151,8 @@
 <li><p>the results of the omnibus (Wald-type) test of the coefficients in the model (the indices of the coefficients tested are also indicated). Suppressed if the model includes only one coefficient (e.g., only an intercept, like in the equal- and random-effects models).</p></li>
 <li><p>a table with the estimated coefficients, corresponding standard errors, test statistics, p-values, and confidence interval bounds.</p></li>
 <li><p>the Cochran-Mantel-Haenszel test and Tarone's test for heterogeneity (only when analyzing odds ratios using the Mantel-Haenszel method, i.e., <code>"rma.mh"</code>).</p></li>
-</ul></div>
+</ul><p>See also <a href="misc-options.html">here</a> for details on the option to create styled/colored output with the help of the <a href="https://cran.r-project.org/package=crayon" class="external-link">crayon</a> package.</p>
+    </div>
     <div id="value">
     <h2>Value</h2>
     <p>The <code>print</code> functions do not return an object. The <code>summary</code> function returns the object passed to it (with additional class <code>"summary.rma"</code>).</p>

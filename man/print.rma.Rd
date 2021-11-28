@@ -33,7 +33,7 @@
 \arguments{
    \item{x}{an object of class \code{"rma.uni"}, \code{"rma.mh"}, \code{"rma.peto"}, \code{"rma.glmm"}, \code{"rma.mv"}, or \code{"summary.rma"} (for \code{print}).}
    \item{object}{an object of class \code{"rma"} (for \code{summary}).}
-   \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.}
+   \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object. See also \link[=misc-options]{here} for further details on how to control the number of digits in the output.}
    \item{showfit}{logical to specify whether the fit statistics and information criteria should be printed (the default is \code{FALSE} for \code{print} and \code{TRUE} for \code{summary}).}
    \item{signif.stars}{logical to specify whether p-values should be encoded visually with \sQuote{significance stars}. Defaults to the \code{show.signif.stars} slot of \code{\link{options}}.}
    \item{signif.legend}{logical to specify whether the legend for the \sQuote{significance stars} should be printed. Defaults to the value for \code{signif.stars}.}
@@ -54,6 +54,7 @@
    \item a table with the estimated coefficients, corresponding standard errors, test statistics, p-values, and confidence interval bounds.
    \item the Cochran-Mantel-Haenszel test and Tarone's test for heterogeneity (only when analyzing odds ratios using the Mantel-Haenszel method, i.e., \code{"rma.mh"}).
    }
+   See also \link[=misc-options]{here} for details on the option to create styled/colored output with the help of the \href{https://cran.r-project.org/package=crayon}{crayon} package.
 }
 \value{
    The \code{print} functions do not return an object. The \code{summary} function returns the object passed to it (with additional class \code{"summary.rma"}).

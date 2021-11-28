@@ -22,6 +22,7 @@ print.rma.mh <- function(x, digits, showfit=FALSE, ...) {
       names(fs) <- c("logLik", "deviance", "AIC", "BIC", "AICc")
       cat("\n")
       tmp <- capture.output(print(fs, quote=FALSE, print.gap=2))
+      tmp[1] <- paste0(tmp[1], intToUtf8("8203"))
       .print.table(tmp, mstyle)
    }
 

@@ -864,10 +864,15 @@
       } else {
          header <- .mstyle$header
       }
-      if (is.null(.mstyle$body)) {
-         body <- crayon::reset
+      if (is.null(.mstyle$body1)) {
+         body1 <- crayon::reset
       } else {
-         body <- .mstyle$body
+         body1 <- .mstyle$body1
+      }
+      if (is.null(.mstyle$body2)) {
+         body2 <- crayon::reset
+      } else {
+         body2 <- .mstyle$body2
       }
       if (is.null(.mstyle$text)) {
          text <- crayon::reset
@@ -901,6 +906,7 @@
       }
       if (is.null(.mstyle$legend)) {
          legend <- crayon::silver
+         #legend <- crayon::make_style("gray90")
       } else {
          legend <- .mstyle$legend
       }
@@ -910,7 +916,8 @@
       tmp <- function(...) paste0(...)
       section <- tmp
       header  <- tmp
-      body    <- tmp
+      body1   <- tmp
+      body2   <- tmp
       text    <- tmp
       result  <- tmp
       stop    <- tmp
@@ -921,7 +928,7 @@
 
    }
 
-   return(list(section=section, header=header, body=body, text=text, result=result, stop=stop, warning=warning, message=message, verbose=verbose, legend=legend))
+   return(list(section=section, header=header, body1=body1, body2=body2, text=text, result=result, stop=stop, warning=warning, message=message, verbose=verbose, legend=legend))
 
 }
 
@@ -939,16 +946,23 @@
 
 }
 
+.is.even <- function(x) x %% 2 == 0
+
 .print.table <- function(x, mstyle) {
 
    is.header <- !grepl(" [-0-9]", x)
+   has.header <- any(is.header)
 
    for (i in seq_along(x)) {
       if (is.header[i]) {
          x[i] <- trimws(x[i], which="right")
          x[i] <- mstyle$header(x[i])
       } else {
-         x[i] <- mstyle$body(x[i])
+         if (.is.even(i-has.header)) {
+            x[i] <- mstyle$body2(x[i])
+         } else {
+            x[i] <- mstyle$body1(x[i])
+         }
       }
       cat(x[i], "\n")
    }

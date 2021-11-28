@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-34</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-35</span>
       </span>
     </div>
 
@@ -315,12 +315,14 @@
 <span class="r-in"></span>
 <span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.ishak2007.html" class="external-link">dat.ishak2007</a></span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">dat</span>, <span class="fl">5</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               study   y1i  v1i   y2i   v2i   y3i v3i  y4i  v4i mdur mbase </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1    Alegret (2001) -33.4 14.3    NA    NA    NA  NA &lt;NA&gt; &lt;NA&gt; 16.1  53.6 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 Barichella (2003) -20.0  7.3    NA    NA -30.0 5.7 &lt;NA&gt; &lt;NA&gt; 13.5  45.3 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3     Berney (2002) -21.1  7.3    NA    NA    NA  NA &lt;NA&gt; &lt;NA&gt; 13.6  45.6 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4   Burchiel (1999) -20.0  8.0 -20.0   8.0 -18.0 5.0 &lt;NA&gt; &lt;NA&gt; 13.6  48.0 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5       Chen (2003)    NA   NA -32.9 125.0    NA  NA &lt;NA&gt; &lt;NA&gt; 12.1  65.7 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### create long format dataset</span></span>
 <span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/reshape.html" class="external-link">reshape</a></span><span class="op">(</span><span class="va">dat</span>, direction<span class="op">=</span><span class="st">"long"</span>, idvar<span class="op">=</span><span class="st">"study"</span>, v.names<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"yi"</span>,<span class="st">"vi"</span><span class="op">)</span>,</span>
@@ -333,6 +335,7 @@
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### show the data for the first 5 studies</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">dat</span>, <span class="fl">8</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               study mdur mbase time    yi    vi </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1    Alegret (2001) 16.1  53.6    1 -33.4  14.3 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 Barichella (2003) 13.5  45.3    1 -20.0   7.3 </span>
@@ -342,6 +345,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6   Burchiel (1999) 13.6  48.0    2 -20.0   8.0 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 7   Burchiel (1999) 13.6  48.0    3 -18.0   5.0 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 8       Chen (2003) 12.1  65.7    2 -32.9 125.0 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### construct the full (block diagonal) V matrix with an AR(1) structure</span></span>
 <span class="r-in"><span class="co">### assuming an autocorrelation of 0.97 as estimated by Ishak et al. (2007)</span></span>

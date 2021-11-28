@@ -26,7 +26,7 @@ rma.mv(yi, V, W, mods, random, struct="CS", intercept=TRUE,
    \item{test}{character string to specify how test statistics and confidence intervals for the fixed effects should be computed. By default (\code{test="z"}), Wald-type tests and CIs are obtained, which are based on a standard normal distribution. When \code{test="t"}, a t-distribution is used instead. See \sQuote{Details}.}
    \item{dfs}{character string to specify how the (denominator) degrees of freedom should be calculated when \code{test="t"}. Either \code{dfs="residual"} or \code{dfs="contain"}. Can also be a numeric vector with the degrees of freedom for each model coefficient. See \sQuote{Details}.}
    \item{level}{numeric value between 0 and 100 to specify the confidence interval level (the default is 95).}
-   \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4.}
+   \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4. See also \link[=misc-options]{here} for further details on how to control the number of digits in the output.}
    \item{btt}{optional vector of indices to specify which coefficients to include in the omnibus test of moderators. Can also be a string to \code{\link{grep}} for. See \sQuote{Details}.}
    \item{R}{an optional named list of known correlation matrices corresponding to (some of) the components specified via the \code{random} argument. See \sQuote{Details}.}
    \item{Rscale}{character string, integer, or logical to specify how matrices specified via the \code{R} argument should be scaled. See \sQuote{Details}.}

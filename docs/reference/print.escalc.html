@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-34</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-35</span>
       </span>
     </div>
 
@@ -177,6 +177,7 @@
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">### calculate log risk ratios and corresponding sampling variances</span></span>
 <span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span>
 <span class="r-in"><span class="va">dat</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    trial               author year tpos  tneg cpos  cneg ablat      alloc      yi     vi </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1      1              Aronson 1948    4   119   11   128    44     random -0.8893 0.3256 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2      2     Ferguson &amp; Simes 1949    6   300   29   274    55     random -1.5854 0.1946 </span>
@@ -191,9 +192,11 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 11    11       Comstock et al 1974  186 50448  141 27197    18 systematic -0.3394 0.0124 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 12    12   Comstock &amp; Webster 1969    5  2493    3  2338    33 systematic  0.4459 0.5325 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 13    13       Comstock et al 1976   27 16886   29 17825    33 systematic -0.0173 0.0714 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### apply summary function</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    trial               author year tpos  tneg cpos  cneg ablat      alloc      yi     vi    sei </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1      1              Aronson 1948    4   119   11   128    44     random -0.8893 0.3256 0.5706 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2      2     Ferguson &amp; Simes 1949    6   300   29   274    55     random -1.5854 0.1946 0.4411 </span>
@@ -222,7 +225,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 11  -3.0460 0.0023 -0.5577 -0.1210 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 12   0.6111 0.5412 -0.9843  1.8762 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 13  -0.0648 0.9483 -0.5410  0.5064 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">dat</span>, transf<span class="op">=</span><span class="va">exp</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    trial               author year tpos  tneg cpos  cneg ablat      alloc     yi  ci.lb  ci.ub </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1      1              Aronson 1948    4   119   11   128    44     random 0.4109 0.1343 1.2574 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2      2     Ferguson &amp; Simes 1949    6   300   29   274    55     random 0.2049 0.0863 0.4864 </span>
@@ -237,6 +242,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 11    11       Comstock et al 1974  186 50448  141 27197    18 systematic 0.7122 0.5725 0.8860 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 12    12   Comstock &amp; Webster 1969    5  2493    3  2338    33 systematic 1.5619 0.3737 6.5284 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 13    13       Comstock et al 1976   27 16886   29 17825    33 systematic 0.9828 0.5821 1.6593 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
   </div>

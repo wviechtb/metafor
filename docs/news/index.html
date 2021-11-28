@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-34</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-35</span>
       </span>
     </div>
 
@@ -91,7 +91,7 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="3.1-34" id="metafor-31-34-2021-11-14">metafor 3.1-34 (2021-11-14)<a class="anchor" aria-label="anchor" href="#metafor-31-34-2021-11-14"></a></h2>
+<h2 class="page-header" data-toc-text="3.1-35" id="metafor-31-35-2021-11-28">metafor 3.1-35 (2021-11-28)<a class="anchor" aria-label="anchor" href="#metafor-31-35-2021-11-28"></a></h2>
 <ul><li><p>simplified <code><a href="../reference/regtest.html">regtest()</a></code>, <code><a href="../reference/ranktest.html">ranktest()</a></code>, and <code><a href="../reference/tes.html">tes()</a></code> to single functions instead of using generics and methods; this way, a <code>data</code> argument could be added</p></li>
 <li><p>added <code><a href="../reference/vcalc.html">vcalc()</a></code> and <code><a href="../reference/blsplit.html">blsplit()</a></code> functions</p></li>
 <li><p><code><a href="../reference/robust.html">robust()</a></code> gains <code>clubSandwich</code> argument; if set to <code>TRUE</code>, the methods from the <code>clubSandwich</code> package (<a href="https://cran.r-project.org/package=clubSandwich" class="external-link uri">https://cran.r-project.org/package=clubSandwich</a>) are used to obtain the cluster-robust results</p></li>
@@ -109,6 +109,7 @@
 <li><p>renamed argument <code>nearPD</code> to <code>nearpd</code> in <code><a href="../reference/matreg.html">matreg()</a></code> (but <code>nearPD</code> continues to work)</p></li>
 <li><p><code><a href="../reference/profile.rma.html">plot.profile.rma()</a></code> gains <code>refline</code> argument</p></li>
 <li><p><code><a href="../reference/addpoly.default.html">addpoly.default()</a></code> and <code><a href="../reference/addpoly.rma.html">addpoly.rma()</a></code> gain <code>lty</code> argument</p></li>
+<li><p>fixed that <code>level</code> argument in <code><a href="../reference/addpoly.rma.html">addpoly.rma()</a></code> did not affect the CI width</p></li>
 <li><p><code><a href="../reference/regplot.html">points.regplot()</a></code> function now also redraws the labels (if there were any to begin with)</p></li>
 <li><p>added <code>lbfgsb3c</code>, <code>subplex</code>, and <code>BBoptim</code> as possible optimizer in <code><a href="../reference/rma.mv.html">rma.mv()</a></code>, <code><a href="../reference/rma.glmm.html">rma.glmm()</a></code>, <code><a href="../reference/rma.uni.html">rma.uni()</a></code>, and <code><a href="../reference/selmodel.html">selmodel.rma.uni()</a></code></p></li>
 <li><p>datasets moved to the <code>metadat</code> package (<a href="https://cran.r-project.org/package=metadat" class="external-link uri">https://cran.r-project.org/package=metadat</a>)</p></li>
