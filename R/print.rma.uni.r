@@ -235,6 +235,7 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
    } else {
       tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE, print.gap=2))
    }
+   tmp[1] <- paste0(tmp[1], intToUtf8("8203"))
    .print.table(tmp, mstyle)
 
    if (x$model == "rma.ls") {
@@ -334,8 +335,10 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
 
    }
 
-   if (signif.legend || legend)
-      cat("\n---")
+   if (signif.legend || legend) {
+      cat("\n")
+      cat(mstyle$legend("---"))
+   }
 
    if (signif.legend) {
       cat("\n")
@@ -345,12 +348,16 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
 
    if (inherits(x, "robust.rma") && legend) {
       cat("\n")
-      cat(mstyle$legend(footsym[2], " results based on cluster-robust inference (var-cov estimator: ", x$vbest))
+      cat(mstyle$legend(paste0(footsym[2], " results based on cluster-robust inference (var-cov estimator: ", x$vbest)))
       if (x$robumethod == "default") {
-         cat(mstyle$legend(",\n   approx. ", ifelse(x$int.only, "t-test and confidence interval", "t/F-tests and confidence intervals"), ", dfs = residual method)"))
+         cat(mstyle$legend(","))
+         cat("\n")
+         cat(mstyle$legend(paste0("   approx. ", ifelse(x$int.only, "t-test and confidence interval", "t/F-tests and confidence intervals"), ", dfs = residual method)")))
       } else {
          if (x$coef_test == "Satterthwaite" && x$conf_test == "Satterthwaite" && x$wald_test == "HTZ") {
-            cat(mstyle$legend(",\n   approx. ", ifelse(x$int.only, "t-test and confidence interval", "t/F-tests and confidence intervals"), ", dfs = Satterthwaite method)"))
+            cat(mstyle$legend(","))
+            cat("\n")
+            cat(mstyle$legend(paste0("   approx. ", ifelse(x$int.only, "t-test and confidence interval", "t/F-tests and confidence intervals"), ", dfs = Satterthwaite method)")))
          } else {
             cat(mstyle$legend(")"))
          }

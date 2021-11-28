@@ -29,7 +29,9 @@ print.matreg <- function(x, digits=x$digits, signif.stars=getOption("show.signif
 
    if (signif.legend) {
       cat("\n")
-      cat(mstyle$legend("---\nSignif. codes: "), mstyle$legend(attr(signif, "legend")))
+      cat(mstyle$legend("---"))
+      cat("\n")
+      cat(mstyle$legend("Signif. codes: "), mstyle$legend(attr(signif, "legend")))
       cat("\n")
    }
 

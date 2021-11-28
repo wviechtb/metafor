@@ -64,8 +64,10 @@ print.permutest.rma.uni <- function(x, digits=x$digits, signif.stars=getOption("
    }
    .print.table(tmp, mstyle)
 
-   if (signif.legend || legend)
-      cat("\n---")
+   if (signif.legend || legend) {
+      cat("\n")
+      cat(mstyle$legend("---"))
+   }
 
    if (signif.legend) {
       cat("\n")
@@ -75,7 +77,7 @@ print.permutest.rma.uni <- function(x, digits=x$digits, signif.stars=getOption("
 
    if (legend) {
       cat("\n")
-      cat(mstyle$legend(footsym[2], " p-value", ifelse(x$int.only, "", "s"), ifelse(x$permci, " and CI bounds", ""), " based on permutation testing"))
+      cat(mstyle$legend(paste0(footsym[2], " p-value", ifelse(x$int.only, "", "s"), ifelse(x$permci, " and CI bounds", ""), " based on permutation testing")))
       cat("\n")
    }
 

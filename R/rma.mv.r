@@ -663,7 +663,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
 
    } else {
 
-      ### set defaults for some elements when method="FE/EE"
+      ### set defaults for some elements when method="FE/EE/CE"
 
       formulas <- list(NULL, NULL)
       mf.r  <- NULL
@@ -676,11 +676,15 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
 
    }
 
-   ### warn user that 'struct' argument is disregarded if it has been changed
-   ### from the default, but the model doesn't contain '~ inner | outer' terms
+   ### warn that 'struct' argument is disregarded if it has been specified, but model contains no '~ inner | outer' terms
 
-   if (!withG && struct[1] != "CS")
+   if (!withG && "struct" %in% names(mf))
       warning(mstyle$warning("Model does not contain an '~ inner | outer' term, so 'struct' argument is disregaded."), call.=FALSE)
+
+   ### warn that 'random' argument is disregarded if it has been specified, but method="FE/EE/CE"
+
+   if (is.element(method, c("FE","EE","CE")) && "random" %in% names(mf))
+      warning(mstyle$warning(paste0("The 'random' argument is disregaded when method=\"", method, "\".")), call.=FALSE)
 
    #return(list(mf.r=mf.r, mf.s=mf.s, mf.g=mf.g, mf.h=mf.h))
 
