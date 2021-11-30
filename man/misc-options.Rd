@@ -96,8 +96,8 @@ summary(res)}
 
    \ifelse{html}{For example, using the color scheme above (for a light colored background), the output should look like this:
 
-   \figure{crayon1.png}{options: width=600}
-   \figure{crayon2.png}{options: width=600}}{}
+   \figure{crayon1.png}{options: width=800}
+   \figure{crayon2.png}{options: width=800}}{}
 
    Support for 256 different colors and formatting such as underlined and bold text differs across terminals.
 
