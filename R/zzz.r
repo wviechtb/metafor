@@ -1,10 +1,10 @@
 .onAttach <- function(libname, pkgname) {
 
-   ver <- "3.1-35"
+   ver <- "3.1-36"
 
    loadmsg <- paste0("\nLoading the 'metafor' package (version ", ver, "). For an\nintroduction to the package please type: help(metafor)\n")
 
-   inst.ver <- as.numeric(strsplit(gsub("-", ".", ver, fixed=TRUE), ".", fixed=TRUE)[[1]])
+   installed.ver <- as.numeric(strsplit(gsub("-", ".", ver, fixed=TRUE), ".", fixed=TRUE)[[1]])
 
    # only run version check in an interactive session and if METAFOR_VERSION_CHECK is not FALSE
 
@@ -12,24 +12,44 @@
 
    if (interactive() && verchk != "false") {
 
-      # pull version number from CRAN page
+      if (verchk  == "devel") {
 
-      tmp <- suppressWarnings(try(readLines("https://cran.r-project.org/web/packages/metafor/index.html"), silent=TRUE))
+         # pull version number from GitHub
 
-      # or pull version number from github
+         tmp <- suppressWarnings(try(readLines("https://raw.githubusercontent.com/wviechtb/metafor/master/DESCRIPTION", n=2), silent=TRUE))
 
-      # tmp <- suppressWarnings(try(readLines("https://raw.githubusercontent.com/wviechtb/metafor/master/CRAN_version", n=1), silent=TRUE))
+         if (!inherits(tmp, "try-error")) {
+            available.ver <- tmp[2]
+            if (!is.na(available.ver) && length(available.ver) != 0L)
+               available.ver <- substr(available.ver, 10, nchar(available.ver))
+         }
+
+      } else {
+
+         # pull version number from CRAN
+
+         tmp <- suppressWarnings(try(readLines("https://cran.r-project.org/web/packages/metafor/index.html"), silent=TRUE))
+
+         if (!inherits(tmp, "try-error")) {
+            available.ver <- tmp[grep("Version:", tmp, fixed=TRUE) + 1]
+            if (!is.na(available.ver) && length(available.ver) != 0L)
+               available.ver <- substr(available.ver, 5, nchar(available.ver)-5) # strip <td> and </td>
+         }
+
+      }
 
       if (!inherits(tmp, "try-error")) {
-         cran.ver <- tmp[grep("Version:", tmp, fixed=TRUE) + 1]
-         if (!is.na(cran.ver) && length(cran.ver) != 0L) {
-            cran.ver <- substr(cran.ver, 5, nchar(cran.ver)-5) # strip <td> and </td>
-            save.ver <- cran.ver # need this below is message
-            cran.ver <- as.numeric(strsplit(gsub("-", ".", cran.ver), ".", fixed=TRUE)[[1]])
-            inst.ver <- 100000 * inst.ver[1] + 1000 * inst.ver[2] + inst.ver[3]
-            cran.ver <- 100000 * cran.ver[1] + 1000 * cran.ver[2] + cran.ver[3]
-            if (isTRUE(inst.ver < cran.ver))
-               loadmsg <- paste0(loadmsg, "\nAn updated version of the package (version ", save.ver, ") is available!\nTo update to this version type: install.packages(\"metafor\")\n")
+         save.ver <- available.ver # need this below is message
+         available.ver <- as.numeric(strsplit(gsub("-", ".", available.ver), ".", fixed=TRUE)[[1]])
+         installed.ver <- 100000 * installed.ver[1] + 1000 * installed.ver[2] + installed.ver[3]
+         available.ver <- 100000 * available.ver[1] + 1000 * available.ver[2] + available.ver[3]
+         if (isTRUE(installed.ver < available.ver)) {
+            paste0(loadmsg, "\nAn updated version of the package (version ", save.ver, ") is available!\nTo update to this version type: ")
+            if (verchk  == "devel") {
+               loadmsg <- paste0(loadmsg, "install.packages(\"metafor\")\n")
+            } else {
+               loadmsg <- paste0(loadmsg, "remotes::install_github(\"wviechtb/metafor\")\n")
+            }
          }
       }
 

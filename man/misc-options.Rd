@@ -122,6 +122,14 @@ res}
 
    }
 
+   \subsection{Version Check}{
+
+   When loading the \pkg{metafor} package in an \code{\link{interactive}} session, an automatic check is run to compare the version number of the installed package with the one available on \href{https://cran.r-project.org/package=metafor}{CRAN}. If the installed version is older than the one available at CRAN, the user is notified that a new version is available. This check can be suppressed by setting the environment variable \env{METAFOR_VERSION_CHECK} to \code{FALSE} (e.g., with \code{Sys.setenv(METAFOR_VERSION_CHECK=FALSE)}).
+
+   By setting the environment variable to \code{"devel"} (e.g., with \code{Sys.setenv(METAFOR_VERSION_CHECK="devel")}), the version check is run against the \sQuote{development version} available on \href{https://github.com/wviechtb/metafor}{GitHub}.
+
+   }
+
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}

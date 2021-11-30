@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-35</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-36</span>
       </span>
     </div>
 
@@ -192,6 +192,15 @@
 <span class="va">res</span></code></pre>
 
 <p>shows the difference.</p>
+<p></p>
+</div>
+
+<p></p><div class="section">
+<h3 id="version-check">Version Check<a class="anchor" aria-label="anchor" href="#version-check"></a></h3>
+
+
+<p>When loading the <span class="pkg">metafor</span> package in an <code><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></code> session, an automatic check is run to compare the version number of the installed package with the one available on <a href="https://cran.r-project.org/package=metafor" class="external-link">CRAN</a>. If the installed version is older than the one available at CRAN, the user is notified that a new version is available. This check can be suppressed by setting the environment variable <code class="env">METAFOR_VERSION_CHECK</code> to <code>FALSE</code> (e.g., with <code>Sys.setenv(METAFOR_VERSION_CHECK=FALSE)</code>).</p>
+<p>By setting the environment variable to <code>"devel"</code> (e.g., with <code>Sys.setenv(METAFOR_VERSION_CHECK="devel")</code>), the version check is run against the ‘development version’ available on <a href="https://github.com/wviechtb/metafor" class="external-link">GitHub</a>.</p>
 <p></p>
 </div>
 

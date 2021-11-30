@@ -1,4 +1,6 @@
-# metafor 3.1-35 (2021-11-28)
+# metafor 3.1-36 (2021-11-30)
+
+- added `misc-models` and `misc-options` help pages
 
 - simplified `regtest()`, `ranktest()`, and `tes()` to single functions instead of using generics and methods; this way, a `data` argument could be added
 
