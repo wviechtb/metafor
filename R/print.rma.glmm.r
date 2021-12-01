@@ -47,7 +47,7 @@ print.rma.glmm <- function(x, digits, showfit=FALSE, signif.stars=getOption("sho
       names(fs) <- c("logLik", "deviance", "AIC", "BIC", "AICc")
       cat("\n")
       tmp <- capture.output(print(fs, quote=FALSE, print.gap=2))
-      tmp[1] <- paste0(tmp[1], intToUtf8("8203"))
+      tmp[1] <- paste0(tmp[1], "\u200b")
       .print.table(tmp, mstyle)
       cat("\n")
    } else {
@@ -155,7 +155,7 @@ print.rma.glmm <- function(x, digits, showfit=FALSE, signif.stars=getOption("sho
    } else {
       tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE, print.gap=2))
    }
-   tmp[1] <- paste0(tmp[1], intToUtf8("8203"))
+   tmp[1] <- paste0(tmp[1], "\u200b")
    .print.table(tmp, mstyle)
 
    if (signif.legend) {

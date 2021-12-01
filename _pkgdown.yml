@@ -1,5 +1,6 @@
 template:
-  package: preferably
+  #package: preferably
+  bootstrap: 5
   params:
     toggle: manual
   #params:
@@ -11,6 +12,9 @@ template:
     twitter:
       creator: "@wviechtb"
       card: summary_large_image
+
+code:
+  width: 102
 
 home:
   links:
