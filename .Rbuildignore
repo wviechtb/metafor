@@ -3,6 +3,7 @@
 ^\.gitignore$
 ^_pkgdown\.yml$
 ^docs$
+^docs_old$
 ^vignettes/pkgdown$
 ^data-raw$
 ^.*\.Rproj$
