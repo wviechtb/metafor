@@ -1,6 +1,6 @@
 template:
-  #package: preferably
-  bootstrap: 5
+  package: preferably
+  #bootstrap: 5
   params:
     toggle: manual
   #params:
@@ -70,7 +70,7 @@ navbar:
 reference:
   - title: "Outcome Measures"
     desc: >
-      Functions to compute various effect sizes and outcome measures.
+      Functions to compute various types of effect sizes and outcome measures.
     contents:
       - escalc
       - rcalc
@@ -84,13 +84,18 @@ reference:
       - rma.peto
       - rma.glmm
       - rma.mv
-  - title: "Plots"
+  - title: "Plots / Figures"
     desc: >
-      Functions for creating various types of plots.
+      Functions for creating various types of plots and figures.
     contents:
       - funnel
-      - starts_with("forest")
-      - starts_with("addpoly")
+      - forest
+      - forest.default
+      - forest.rma
+      - forest.cumul.rma
+      - addpoly
+      - addpoly.default
+      - addpoly.rma
       - regplot
       - baujat
       - labbe
@@ -103,14 +108,13 @@ reference:
       - plot.infl.rma.uni
       - plot.profile.rma
       - plot.rma.uni.selmodel
-      - points.regplot
       - starts_with("qqnorm")
   - title: "Publication Bias"
     desc: >
       Functions related to publication bias.
     contents:
-      - ranktest
       - regtest
+      - ranktest
       - trimfill
       - selmodel
       - hc
@@ -184,12 +188,12 @@ reference:
       - to.wide
       - to.table
       - contrmat
-      - metafor.news
       - reporter
       - matreg
       - vec2mat
       - transf
       - aggregate.escalc
+      - metafor.news
   - title: "Other Methods"
     desc: >
       Other method functions.

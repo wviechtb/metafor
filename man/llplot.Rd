@@ -1,6 +1,6 @@
 \name{llplot}
 \alias{llplot}
-\title{Likelihood Plot of a Parameter Corresponding to an Effect Size or Outcome Measure}
+\title{Plot of Likelihoods for Individual Studies}
 \description{
    Function to plot the likelihood of a certain parameter corresponding to an effect size or outcome measure given the study data. \loadmathjax
 }

@@ -6,7 +6,7 @@
 \alias{profile.rma.ls}
 \alias{print.profile.rma}
 \alias{plot.profile.rma}
-\title{Profile Plots for 'rma' Objects}
+\title{Profile Likelihood Plots for 'rma' Objects}
 \description{
    Function to profile the (restricted) log-likelihood for objects of class \code{"rma.uni"}, \code{"rma.mv"}, \code{"rma.uni.selmodel"}, and \code{"rma.ls"}. \loadmathjax
 }
