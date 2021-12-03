@@ -953,7 +953,13 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
    } else {
 
-      if (con$tau2.min != 0 || con$tau2.max != 1000) {
+      ### can also constrain the tau^2 values in location-scale models, but this is done in a very crude way
+      ### in the optimization (by returning Inf when any tau^2 value falls outside the bounds) and this is
+      ### not recommended / documented (instead, one can constrain the alpha values via alpha.min / alpha.max);
+      ### note: the tau^2 bounds are only in effect when either tau2.min or tau2.max was changed from their
+      ### defaults (if not, tau2.min and tau2.max are set to 0 and Inf, respectively)
+
+      if (con$tau2.min != 0 || con$tau2.max != 100) {
          con$tau2.min[con$tau2.min < 0] <- 0
       } else {
          con$tau2.min <- 0

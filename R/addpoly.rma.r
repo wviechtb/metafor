@@ -1,6 +1,6 @@
 addpoly.rma <- function(x, row=-2, level=x$level, annotate=TRUE,
 addpred=FALSE, digits=2, width, mlab, transf, atransf, targs,
-efac=1, col, border, lty, fonts, cex, ...) {
+efac=1, col, border, lty, fonts, cex, annosym, ...) {
 
    #########################################################################
 
@@ -41,6 +41,9 @@ efac=1, col, border, lty, fonts, cex, ...) {
    if (missing(cex))
       cex <- NULL
 
+   if (missing(annosym))
+      annosym <- NULL
+
    ddd <- list(...)
 
    if (!is.null(ddd$addcred))
@@ -77,6 +80,6 @@ efac=1, col, border, lty, fonts, cex, ...) {
    addpoly(x$beta, ci.lb=ci.lb, ci.ub=ci.ub, pi.lb=pi.lb, pi.ub=pi.ub,
            rows=row, level=level, annotate=annotate, digits=digits, width=width,
            mlab=mlab, transf=transf, atransf=atransf, targs=targs,
-           efac=efac, col=col, border=border, lty=lty, fonts=fonts, cex=cex, ...)
+           efac=efac, col=col, border=border, lty=lty, fonts=fonts, cex=cex, annosym=annosym, ...)
 
 }

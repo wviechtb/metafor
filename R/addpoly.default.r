@@ -9,7 +9,7 @@
 
 addpoly.default <- function(x, vi, sei, ci.lb, ci.ub, pi.lb, pi.ub,
 rows=-1, level=95, annotate=TRUE, digits=2, width, mlab, transf,
-atransf, targs, efac=1, col, border, lty, fonts, cex, ...) {
+atransf, targs, efac=1, col, border, lty, fonts, cex, annosym, ...) {
 
    #########################################################################
 
@@ -56,6 +56,15 @@ atransf, targs, efac=1, col, border, lty, fonts, cex, ...) {
 
    if (length(lty) == 1L)
       lty <- c(lty, "solid")
+
+   ### annotation symbols vector
+
+   if (missing(annosym) || is.null(annosym))
+      annosym <- c(" [", ", ", "]", "-") # 4th element for minus sign symbol
+   if (length(annosym) == 3L)
+      annosym <- c(annosym, "-")
+   if (length(annosym) != 4L)
+      stop(mstyle$stop("Argument 'annosym' must be a vector of length 3."))
 
    if (!is.null(ddd$lcol)) {
       lcol <- ddd$lcol
@@ -265,6 +274,7 @@ atransf, targs, efac=1, col, border, lty, fonts, cex, ...) {
       }
 
       annotext <- .fcf(annotext, digits)
+      annotext <- sub("-", annosym[4], annotext, fixed=TRUE)
 
       if (missing(width) || is.null(width)) {
          width <- apply(annotext, 2, function(x) max(nchar(x)))
@@ -277,7 +287,7 @@ atransf, targs, efac=1, col, border, lty, fonts, cex, ...) {
          annotext[,j] <- formatC(annotext[,j], width=width[j])
       }
 
-      annotext <- cbind(annotext[,1], " [", annotext[,2], ", ", annotext[,3], "]")
+      annotext <- cbind(annotext[,1], annosym[1], annotext[,2], annosym[2], annotext[,3], annosym[3])
       annotext <- apply(annotext, 1, paste, collapse="")
       par(family=names(fonts)[2], font=fonts[2])
       ltext(x=xlim[2], rows, labels=annotext, pos=2, cex=cex, ...)

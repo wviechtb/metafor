@@ -1,4 +1,4 @@
-# metafor 3.1-36 (2021-11-30)
+# metafor 3.1-37 (2021-12-03)
 
 - added `misc-models` and `misc-options` help pages
 
@@ -34,7 +34,7 @@
 
 - `plot.profile.rma()` gains `refline` argument
 
-- `addpoly.default()` and `addpoly.rma()` gain `lty` argument
+- `addpoly.default()` and `addpoly.rma()` gain `lty` and `annosym` arguments
 
 - fixed that `level` argument in `addpoly.rma()` did not affect the CI width
 
