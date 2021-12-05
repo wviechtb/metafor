@@ -9,7 +9,7 @@
 \alias{confint.rma.ls}
 \title{Confidence Intervals for 'rma' Objects}
 \description{
-   The function calculates confidence intervals for the model coefficients and/or other parameters in the model. \loadmathjax
+   The function computes confidence intervals for the model coefficients and/or other parameters in the model. \loadmathjax
 }
 \usage{
 \method{confint}{rma.uni}(object, parm, level, fixed=FALSE, random=TRUE, type,
