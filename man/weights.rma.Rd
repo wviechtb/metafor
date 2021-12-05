@@ -38,7 +38,9 @@
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}
 }
 \seealso{
-   \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, \code{\link{rma.mv}}, \code{\link{influence.rma.uni}}
+   \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, and \code{\link{rma.mv}} for functions to fit models for which model fitting weights can be extracted.
+
+   \code{\link{influence.rma.uni}} and \code{\link{influence.rma.mv}} for other outlier and influential case diagnostics.
 }
 \examples{
 ### calculate log risk ratios and corresponding sampling variances

@@ -64,7 +64,9 @@ to.table(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}
 }
 \seealso{
-   \code{\link{escalc}}, \code{\link{to.long}}
+   \code{\link{escalc}} for a function to compute observed effect sizes or outcomes (and corresponding sampling variances) based on similar inputs.
+
+   \code{\link{to.long}} for a function to turn similar inputs into a long format dataset.
 }
 \examples{
 ### create tables

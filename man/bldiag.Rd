@@ -15,7 +15,9 @@ bldiag(\dots, order)
    Posted to R-help by Berton Gunter (2 Sep 2005) with some further adjustments by Wolfgang Viechtbauer
 }
 \seealso{
-   \code{\link{rma.mv}}, \code{\link{blsplit}}
+   \code{\link{rma.mv}} for the model fitting function that can take such a block diagonal matrix as input (for the \code{V} argument).
+
+   \code{\link{blsplit}} for a function that can split a block diagonal matrix into a list of sub-matrices.
 }
 \examples{
 ### copy data into 'dat'

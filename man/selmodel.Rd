@@ -212,7 +212,7 @@ selmodel(x, \dots)
    Vevea, J. L., & Woods, C. M. (2005). Publication bias in research synthesis: Sensitivity analysis using a priori weight functions. \emph{Psychological Methods}, \bold{10}(4), 428--443. \verb{https://doi.org/10.1037/1082-989X.10.4.428}
 }
 \seealso{
-   \code{\link{rma.uni}}
+   \code{\link{rma.uni}} for the function to fit models which can be extended with selection models.
 }
 \examples{
 ############################################################################

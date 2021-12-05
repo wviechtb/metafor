@@ -56,7 +56,9 @@ rcalc(x, ni, data, rtoz=FALSE, nfun="min", sparse=FALSE, \dots)
    Steiger, J. H. (1980). Tests for comparing elements of a correlation matrix. \emph{Psychological Bulletin}, \bold{87}(2), 245--251. \verb{https://doi.org/10.1037/0033-2909.87.2.245}
 }
 \seealso{
-   \code{\link{rma.mv}}, \code{\link[metadat]{dat.craft2003}}
+   \code{\link{rma.mv}} for a model fitting function that can be used to meta-analyze dependent correlation coefficients.
+
+   \code{\link[metadat]{dat.craft2003}} for an illustrative example.
 }
 \examples{
 ### copy data into 'dat'

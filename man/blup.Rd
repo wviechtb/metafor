@@ -56,7 +56,9 @@ blup(x, \dots)
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}
 }
 \seealso{
-   \code{\link{rma.uni}}, \code{\link{predict.rma}}, \code{\link{fitted.rma}}, \code{\link{ranef.rma.uni}}
+   \code{\link{rma.uni}} for the function to fit models for which BLUPs can be extracted.
+
+   \code{\link{predict.rma}} and \code{\link{fitted.rma}} for functions to compute the predicted/fitted values based only on the fixed effects and \code{\link{ranef.rma.uni}} for a function to compute the BLUPs based only on the random effects.
 }
 \examples{
 ### calculate log risk ratios and corresponding sampling variances

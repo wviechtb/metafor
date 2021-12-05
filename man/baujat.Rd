@@ -50,7 +50,9 @@ baujat(x, \dots)
    Viechtbauer, W. (2021). Model checking in meta-analysis. In C. H. Schmid, T. Stijnen, & I. R. White (Eds.), \emph{Handbook of meta-analysis} (pp. 219--254). Boca Raton, FL: CRC Press. \verb{https://doi.org/10.1201/9781315119403}
 }
 \seealso{
-   \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, \code{\link{influence.rma.uni}}, \code{\link{radial}}
+   \code{\link{rma.uni}}, \code{\link{rma.mh}} and \code{\link{rma.peto}} for functions to fit models for which Baujat plots can be created.
+
+   \code{\link{influence.rma.uni}} for other outlier and influential case diagnostics.
 }
 \examples{
 ### copy data from Pignon et al. (2000) into 'dat'

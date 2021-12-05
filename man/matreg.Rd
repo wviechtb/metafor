@@ -54,9 +54,13 @@ matreg(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearpd=FALSE, level=95, digi
    Becker, B. J. (1992). Using results from replicated studies to estimate linear models. \emph{Journal of Educational Statistics}, \bold{17}(4), 341--362. \verb{https://doi.org/10.3102/10769986017004341}
 
    Becker, B. J. (1995). Corrections to "Using results from replicated studies to estimate linear models". \emph{Journal of Educational and Behavioral Statistics}, \bold{20}(1), 100--102. \verb{https://doi.org/10.3102/10769986020001100}
+
+   Becker, B. J., & Aloe, A. (2019). Model-based meta-analysis and related approaches. In H. Cooper, L. V. Hedges, & J. C. Valentine (Eds.), \emph{The handbook of research synthesis and meta-analysis} (3rd ed., pp. 339--363). New York: Russell Sage Foundation.
 }
 \seealso{
-   \code{\link{rcalc}}, \code{\link{rma.mv}}
+   \code{\link{rma.mv}} for a function to meta-analyze multiple correlation coefficients that can be used to construct an \mjseqn{R} matrix.
+
+   \code{\link{rcalc}} for a function to construct the variance-covariance matrix of dependent correlation coefficients.
 }
 \examples{
 ### copy data into 'dat'

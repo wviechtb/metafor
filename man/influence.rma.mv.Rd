@@ -59,7 +59,7 @@
    Viechtbauer, W., & Cheung, M. W.-L. (2010). Outlier and influence diagnostics for meta-analysis. \emph{Research Synthesis Methods}, \bold{1}(2), 112--125. \verb{https://doi.org/10.1002/jrsm.11}
 }
 \seealso{
-   \code{\link{rstudent.rma.mv}}, \code{\link{weights.rma.mv}}
+   \code{\link{rstudent.rma.mv}} for externally standardized residuals and \code{\link{weights.rma.mv}} for model fitting weights.
 }
 \examples{
 ### copy data from Konstantopoulos (2011) into 'dat'

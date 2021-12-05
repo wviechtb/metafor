@@ -109,7 +109,9 @@
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}
 }
 \seealso{
-   \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, \code{\link{rma.glmm}}, \code{\link{rma.mv}}, \code{\link{selmodel.rma.uni}}, \code{\link{profile.rma.uni}}, \code{\link{profile.rma.mv}}, \code{\link{profile.rma.uni.selmodel}}
+   \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, \code{\link{rma.glmm}}, \code{\link{rma.mv}}, and \code{\link{selmodel.rma.uni}} for functions to fit models for which confidence intervals can be computed.
+
+   \code{\link{profile.rma.uni}}, \code{\link{profile.rma.mv}}, and \code{\link{profile.rma.uni.selmodel}} for functions to create profile likelihood plots corresponding to profile likelihood confidence intervals.
 }
 \examples{
 ### calculate log risk ratios and corresponding sampling variances

@@ -96,7 +96,9 @@
    Viechtbauer, W., & Cheung, M. W.-L. (2010). Outlier and influence diagnostics for meta-analysis. \emph{Research Synthesis Methods}, \bold{1}(2), 112--125. \verb{https://doi.org/10.1002/jrsm.11}
 }
 \seealso{
-   \code{\link{plot.infl.rma.uni}}, \code{\link{rstudent.rma.uni}}, \code{\link{weights.rma.uni}}
+   \code{\link{plot.infl.rma.uni}} for a method to plot the outlier and influential case diagnostics.
+
+   \code{\link{rstudent.rma.uni}} for externally standardized residuals and \code{\link{weights.rma.uni}} for model fitting weights.
 }
 \examples{
 ### calculate log risk ratios and corresponding sampling variances

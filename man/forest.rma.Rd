@@ -138,7 +138,11 @@ text(c(-8.75,-5.25),     16, c("Vaccinated", "Control"),    cex=.75, font=2)}}
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}
 }
 \seealso{
-   \code{\link{forest}}, \code{\link{forest.default}}, \code{\link{addpoly}}
+   \code{\link{forest}} for an overview of the various \code{forest} functions and \code{\link{forest.default}} for the function draw forest plots without a summary polygon.
+
+   \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, \code{\link{rma.glmm}}, and \code{\link{rma.mv}} for functions to fit models for which forest plots can be drawn.
+
+   \code{\link{addpoly}} for a function to add polygons to forest plots.
 }
 \examples{
 ### meta-analysis of the log risk ratios using a random-effects model

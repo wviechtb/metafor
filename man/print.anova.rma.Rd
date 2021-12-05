@@ -39,6 +39,6 @@
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}
 }
 \seealso{
-   \code{\link{anova.rma}}
+   \code{\link{anova.rma}} for the function to create \code{anova.rma} objects.
 }
 \keyword{print}

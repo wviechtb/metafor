@@ -92,7 +92,7 @@ tes(x, vi, sei, subset, data, H0=0, alternative="two.sided", alpha=.05, theta, t
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}
 }
 \seealso{
-   \code{\link{ranktest}}, \code{\link{regtest}}, \code{\link{trimfill}}
+   \code{\link{ranktest}} for the rank test, \code{\link{regtest}} for the regression test, \code{\link{trimfill}} for the trim and fill method, and \code{\link{selmodel}} for selection models.
 }
 \examples{
 ### calculate log risk ratios and corresponding sampling variances

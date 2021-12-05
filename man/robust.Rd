@@ -90,7 +90,7 @@ robust(x, cluster, \dots)
    Zhang, J.-T. (2013). Tests of linear hypotheses in the ANOVA under heteroscedasticity. \emph{International Journal of Advanced Statistics and Probability}, \bold{1}, 9--24. \verb{https://doi.org/10.14419/ijasp.v1i2.908}
 }
 \seealso{
-   \code{\link{rma.uni}}, \code{\link{rma.mv}}
+   \code{\link{rma.uni}} and \code{\link{rma.mv}} for functions to fit models for which cluster-robust tests and confidence intervals can be obtained.
 }
 \examples{
 ############################################################################

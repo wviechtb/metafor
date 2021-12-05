@@ -76,7 +76,9 @@ permutest(x, \dots)
    Viechtbauer, W., \enc{López-López}{Lopez-Lopez}, J. A., \enc{Sánchez-Meca}{Sanchez-Meca}, J., & \enc{Marín-Martínez}{Marin-Martinez}, F. (2015). A comparison of procedures to test for moderators in mixed-effects meta-regression models. \emph{Psychological Methods}, \bold{20}(3), 360--374. \verb{https://doi.org/10.1037/met0000023}
 }
 \seealso{
-   \code{\link{rma.uni}}, \code{\link{print.permutest.rma.uni}}
+   \code{\link{rma.uni}} for the function to fit models for which permutation tests can be conducted.
+
+   \code{\link{print.permutest.rma.uni}} for the print method.
 }
 \examples{
 ### calculate log risk ratios and corresponding sampling variances

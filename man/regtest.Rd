@@ -92,7 +92,7 @@ regtest(x, vi, sei, ni, subset, data,
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}
 }
 \seealso{
-   \code{\link{ranktest}}
+   \code{\link{ranktest}} for the rank test, \code{\link{trimfill}} for the trim and fill method, \code{\link{tes}} for the test of excess significance, and \code{\link{selmodel}} for selection models.
 }
 \examples{
 ### copy data into 'dat' and examine data

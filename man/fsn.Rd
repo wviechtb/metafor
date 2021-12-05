@@ -59,7 +59,7 @@ fsn(yi, vi, sei, data, type="Rosenthal", alpha=.05,
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}
 }
 \seealso{
-   \code{\link{ranktest}}, \code{\link{regtest}}, \code{\link{trimfill}}
+   \code{\link{ranktest}} for the rank correlation test, \code{\link{regtest}} for the regression test, \code{\link{trimfill}} for the trim and fill method, \code{\link{tes}} for the test of excess significance, and \code{\link{selmodel}} for selection models.
 }
 \examples{
 ### calculate log risk ratios and corresponding sampling variances

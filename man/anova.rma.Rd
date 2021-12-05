@@ -88,7 +88,9 @@
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}
 }
 \seealso{
-   \code{\link{rma.uni}}, \code{\link{rma.mv}}, \code{\link{print.anova.rma}}
+   \code{\link{rma.uni}} and \code{\link{rma.mv}} for functions to fit models for which likelihood ratio and Wald-yype tests can be conducted.
+
+   \code{\link{print.anova.rma}} for the print method.
 }
 \examples{
 ### calculate log risk ratios and corresponding sampling variances

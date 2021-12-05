@@ -60,7 +60,7 @@
    Wang, M. C., & Bushman, B. J. (1998). Using the normal quantile plot to explore meta-analytic data sets. \emph{Psychological Methods}, \bold{3}(1), 46--54. \verb{https://doi.org/10.1037/1082-989X.3.1.46}
 }
 \seealso{
-   \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, \code{\link{rma.glmm}}, \code{\link{rma.mv}}
+   \code{\link{rma.uni}}, \code{\link{rma.mh}}, and \code{\link{rma.peto}} for functions to fit models for which normal QQ plots can be drawn.
 }
 \examples{
 ### calculate log risk ratios and corresponding sampling variances

@@ -42,7 +42,7 @@
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}
 }
 \seealso{
-   \code{\link{cumul.rma.uni}}
+   \code{\link{cumul.rma.uni}} for the function to conduct a cumulative meta-analysis.
 }
 \examples{
 ### calculate log risk ratios and corresponding sampling variances

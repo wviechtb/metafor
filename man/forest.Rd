@@ -29,6 +29,6 @@ forest(x, \dots)
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}
 }
 \seealso{
-   \code{\link{forest.rma}}, \code{\link{forest.default}}, \code{\link{forest.cumul.rma}}
+   \code{\link{forest.rma}}, \code{\link{forest.default}}, and \code{\link{forest.cumul.rma}} for the specific method functions.
 }
 \keyword{hplot}

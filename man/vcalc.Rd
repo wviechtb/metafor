@@ -113,7 +113,11 @@ vcalc(vi, cluster, subgroup, obs, type, time1, time2, grp1, grp2, w1, w2,
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}
 }
 \seealso{
-   \code{\link{escalc}}, \code{\link{rcalc}}, \code{\link{rma.mv}}
+   \code{\link{escalc}} for a function to compute the observed effect sizes or outcomes (and corresponding sampling variances) for which a variance-covariance matrix could be constructed.
+
+   \code{\link{rcalc}} for a function to construct the variance-covariance matrix of dependent correlation coefficients.
+
+   \code{\link{rma.mv}} for a model fitting function that can be used to meta-analyze dependent effect sizes or outcomes.
 }
 \examples{
 ############################################################################

@@ -546,7 +546,11 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    Zou, G. Y. (2007). One relative risk versus two odds ratios: Implications for meta-analyses involving paired and unpaired binary data. \emph{Clinical Trials}, \bold{4}(1), 25--31. \verb{https://doi.org/10.1177/1740774506075667}
 }
 \seealso{
-   \code{\link{print.escalc}}, \code{\link{summary.escalc}}, \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, \code{\link{rma.glmm}}, \code{\link{rma.mv}}
+   \code{\link{print.escalc}} and \code{\link{summary.escalc}} for the print and summary methods.
+
+   \code{\link{rma.uni}} and \code{\link{rma.mv}} for model fitting functions that can take the calculated effect sizes or outcomes (and the corresponding sampling variances) as input.
+
+   \code{\link{rma.mh}}, \code{\link{rma.peto}}, and \code{\link{rma.glmm}} for model fitting functions that take similar inputs.
 }
 \examples{
 ### calculate log risk ratios and corresponding sampling variances

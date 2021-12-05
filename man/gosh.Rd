@@ -52,7 +52,9 @@ gosh(x, \dots)
 
 }
 \seealso{
-   \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, \code{\link{influence.rma.uni}},
+   \code{\link{rma.uni}}, \code{\link{rma.mh}}, and \code{\link{rma.peto}} for functions to fit models for which GOSH plots can be drawn.
+
+   \code{\link{influence.rma.uni}} for other outlier and influential case diagnostics.
 }
 \examples{
 ### calculate log odds ratios and corresponding sampling variances
