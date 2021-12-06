@@ -400,7 +400,7 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
       rownames(res.table) <- paste0(seq_len(nrow(res.table)), ") ", rownames(res.table))
 
    if (is.null(ddd$legend)) {
-      legend <- TRUE
+      legend <- ifelse(inherits(x, "robust.rma"), TRUE, FALSE)
    } else {
       legend <- .isTRUE(ddd$legend)
    }
