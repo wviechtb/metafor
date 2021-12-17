@@ -1064,7 +1064,7 @@
 
 ### to register getfit method for 'rma.uni' and 'rma.mv' objects: eval(metafor:::.glmulti)
 
-.glmulti <- str2lang("
+.glmulti <- str2expression("
 
 if (!(\"glmulti\" %in% .packages()))
    stop(\"Must load the 'glmulti' package first to use this code.\")
@@ -1103,7 +1103,7 @@ setMethod(\"getfit\", \"rma.glmm\", function(object, ...) {
 
 ### helper functions to make MuMIn work together with metafor
 
-.MuMIn <- str2lang("
+.MuMIn <- str2expression("
 
 makeArgs.rma <- function (obj, termNames, comb, opt, ...) {
    ret <- MuMIn:::makeArgs.default(obj, termNames, comb, opt)
@@ -1120,7 +1120,7 @@ coefTable.rma <- function (model, ...) {
 ### helper functions to make mice work together with metafor (note: no longer
 ### needed, as there are glance and tidy methods for rma objects in broom now)
 
-.mice <- str2lang("
+.mice <- str2expression("
 
 glance.rma <- function (x, ...)
    data.frame(df.residual=df.residual(x))
