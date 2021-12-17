@@ -6,7 +6,7 @@
    For two (nested) models of class \code{"rma.uni"} or \code{"rma.mv"}, the function provides a full versus reduced model comparison in terms of model fit statistics and a likelihood ratio test. When a single model is specified, a Wald-type test of one or more model coefficients or linear combinations thereof is carried out. \loadmathjax
 }
 \usage{
-\method{anova}{rma}(object, object2, btt, X, att, Z, digits, \dots)
+\method{anova}{rma}(object, object2, btt, X, att, Z, rhs, digits, \dots)
 }
 \arguments{
    \item{object}{an object of class \code{"rma.uni"} or \code{"rma.mv"}.}
@@ -15,6 +15,7 @@
    \item{X}{optional numeric vector or matrix to specify one or more linear combinations of the coefficients in the model that should be tested. See \sQuote{Details}.}
    \item{att}{optional vector of indices to specify which scale coefficients should be included in the Wald-type test. Can also be a string to \code{\link{grep}} for. See \sQuote{Details}. Only relevant for location-scale models (see \code{\link{rma.uni}}).}
    \item{Z}{optional numeric vector or matrix to specify one or more linear combinations of the scale coefficients in the model that should be tested. See \sQuote{Details}. Only relevant for location-scale models (see \code{\link{rma.uni}}).}
+   \item{rhs}{optional vector of values for the right-hand side when testing linear combinations of coefficients via \code{X} or \code{Z}. If unspecified, this defaults to a vector of zeros. See \sQuote{Details}.}
    \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.}
    \item{\dots}{other arguments.}
 }
@@ -25,7 +26,7 @@
 
    Alternatively, one can manually specify the indices of the coefficients to test via the \code{btt} argument. For example, with \code{btt=c(3,4)}, only the third and fourth coefficient from the model would be included in the test (if an intercept is included in the model, then it corresponds to the first coefficient in the model). Instead of specifying the coefficient numbers, one can specify a string for \code{btt}. In that case, \code{\link{grep}} will be used to search for all coefficient names that match the string. Using the \code{btt} argument, one can for example select all coefficients corresponding to a particular factor to test if the factor as a whole is significant. See \sQuote{Examples}.
 
-   Instead, one can use the \code{X} argument to specify a linear combination of the coefficients in the model that should be tested (i.e., whether the linear combination is significantly different from zero). If a matrix of linear combinations is specified, each row defines a particular linear combination to be tested. If the matrix is of full rank, an omnibus Wald-type test of all linear combinations is also provided. Linear combinations can also be obtained with the \code{\link[=predict.rma]{predict}} function, which will provide corresponding confidence intervals.
+   Instead, one can use the \code{X} argument to specify a linear combination of the coefficients in the model that should be tested (i.e., by default whether the linear combination is significantly different from zero, but one can specify a different value under the null hypothesis via argument \code{rhs}). If a matrix of linear combinations is specified, each row defines a particular linear combination to be tested (if \code{rhs} is used, then it should be of the same length as the number of combinations to be tested). If the matrix is of full rank, an omnibus Wald-type test of all linear combinations is also provided. Linear combinations can also be obtained with the \code{\link[=predict.rma]{predict}} function, which will provide corresponding confidence intervals.
 
    When specifying two models for comparison, the function provides a likelihood ratio test (LRT) comparing the two models. The two models must be based on the same set of data, must be of the same class, and should be nested for the LRT to make sense. Note that LRTs are not meaningful when using REML estimation and the two models differ in terms of their fixed effects. Also, the theory underlying LRTs is only really applicable when comparing models that were fitted with ML/REML estimation.
 

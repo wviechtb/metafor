@@ -1,4 +1,4 @@
-anova.rma <- function(object, object2, btt, X, att, Z, digits, ...) {
+anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -109,22 +109,25 @@ anova.rma <- function(object, object2, btt, X, att, Z, digits, ...) {
             if (x$Z.int.incl && ncol(Z) == (x$q-1))
                Z <- cbind(1, Z)
 
-            ### if Z has q+1 columns, assume that last column is the right-hand side
-            ### leave this out for now; maybe add later or a 'rhs' argument (as linearHypothesis() from car package)
-
-            #if (ncol(Z) == (x$q+1)) {
-            #   rhs <- Z[,x$q+1]
-            #   Z <- Z[,seq_len(x$q)]
-            #}
-
             if (ncol(Z) != x$q)
                stop(mstyle$stop(paste0("Length or number of columns of 'Z' (", ncol(Z), ") does not match the number of scale coefficients (", x$q, ").")))
 
             m <- nrow(Z)
 
+            ### specification of the right-hand side
+
+            if (missing(rhs)) {
+               rhs <- rep(0, m)
+            } else {
+               if (length(rhs) == 1L)
+                  rhs <- rep(rhs, m)
+               if (length(rhs) != m)
+                  stop(mstyle$stop(paste0("Length of 'rhs' (", length(rhs), ") does not match the number of linear combinations (", m, ").")))
+            }
+
             ### test of individual hypotheses
 
-            Za  <- Z %*% x$alpha
+            Za  <- Z %*% x$alpha - rhs
             vZa <- Z %*% x$va %*% t(Z)
 
             se <- sqrt(diag(vZa))
@@ -169,7 +172,11 @@ anova.rma <- function(object, object2, btt, X, att, Z, digits, ...) {
                hyp[j] <- gsub("1*", "", hyp[j], fixed=TRUE) ### turn '+1' into '+' and '-1' into '-'
                hyp[j] <- gsub("+ -", "- ", hyp[j], fixed=TRUE) ### turn '+ -' into '-'
             }
-            hyp <- paste0(hyp, " = 0") ### add '= 0' at the right
+            if (identical(rhs, rep(0,m))) {
+               hyp <- paste0(hyp, " = 0") ### add '= 0' at the right
+            } else {
+               hyp <- paste0(hyp, " = ", .fcf(rhs, digits=digits[["est"]])) ### add '= rhs' at the right
+            }
             hyp <- data.frame(hyp, stringsAsFactors=FALSE)
             colnames(hyp) <- ""
             rownames(hyp) <- paste0(seq_len(m), ":") ### add '1:', '2:', ... as row names
@@ -194,14 +201,6 @@ anova.rma <- function(object, object2, btt, X, att, Z, digits, ...) {
             if (x$int.incl && ncol(X) == (x$p-1))
                X <- cbind(1, X)
 
-            ### if X has p+1 columns, assume that last column is the right-hand side
-            ### leave this out for now; maybe add later or a 'rhs' argument (as linearHypothesis() from car package)
-
-            #if (ncol(X) == (x$p+1)) {
-            #   rhs <- X[,x$p+1]
-            #   X <- X[,seq_len(x$p)]
-            #}
-
             if (ncol(X) != x$p)
                stop(mstyle$stop(paste0("Length or number of columns of 'X' (", ncol(X), ") does not match the number of ", ifelse(inherits(object, "rma.ls"), "location", "model"), " coefficients (", x$p, ").")))
 
@@ -223,9 +222,20 @@ anova.rma <- function(object, object2, btt, X, att, Z, digits, ...) {
                ddf <- rep(NA, m)
             }
 
+            ### specification of the right-hand side
+
+            if (missing(rhs)) {
+               rhs <- rep(0, m)
+            } else {
+               if (length(rhs) == 1L)
+                  rhs <- rep(rhs, m)
+               if (length(rhs) != m)
+                  stop(mstyle$stop(paste0("Length of 'rhs' (", length(rhs), ") does not match the number of linear combinations (", m, ").")))
+            }
+
             ### test of individual hypotheses
 
-            Xb  <- X %*% x$beta
+            Xb  <- X %*% x$beta - rhs
             vXb <- X %*% x$vb %*% t(X)
 
             se <- sqrt(diag(vXb))
@@ -276,7 +286,11 @@ anova.rma <- function(object, object2, btt, X, att, Z, digits, ...) {
                hyp[j] <- gsub("1*", "", hyp[j], fixed=TRUE) ### turn '+1' into '+' and '-1' into '-'
                hyp[j] <- gsub("+ -", "- ", hyp[j], fixed=TRUE) ### turn '+ -' into '-'
             }
-            hyp <- paste0(hyp, " = 0") ### add '= 0' at the right
+            if (identical(rhs, rep(0,m))) {
+               hyp <- paste0(hyp, " = 0") ### add '= 0' at the right
+            } else {
+               hyp <- paste0(hyp, " = ", .fcf(rhs, digits=digits[["est"]])) ### add '= rhs' at the right
+            }
             hyp <- data.frame(hyp, stringsAsFactors=FALSE)
             colnames(hyp) <- ""
             rownames(hyp) <- paste0(seq_len(m), ":") ### add '1:', '2:', ... as row names
