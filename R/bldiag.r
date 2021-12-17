@@ -44,7 +44,7 @@ bldiag <- function(..., order) {
          stop(mstyle$stop("Can only use 'order' argument for square matrices."))
       if (length(order) != nrow(out))
          stop(mstyle$stop(paste0("Length of the 'order' argument (", length(order), ") does not correspond to the dimensions of the matrix (", nrow(out), "x", ncol(out), ").")))
-      if (grepl("^order\\(", deparse(substitute(order)))) {
+      if (grepl("^order\\(", deparse1(substitute(order)))) {
          sort.vec <- order
       } else {
          sort.vec <- order(order)

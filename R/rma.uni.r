@@ -1870,9 +1870,9 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
       #return(optcall)
 
       if (verbose) {
-         opt.res <- try(eval(parse(text=optcall)), silent=!verbose)
+         opt.res <- try(eval(str2lang(optcall)), silent=!verbose)
       } else {
-         opt.res <- try(suppressWarnings(eval(parse(text=optcall))), silent=!verbose)
+         opt.res <- try(suppressWarnings(eval(str2lang(optcall))), silent=!verbose)
       }
 
       #return(opt.res)
@@ -2492,7 +2492,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
                      digits=digits,
                      fit.stats=fit.stats)
       } else {
-         res <- eval(parse(text=paste0("list(", ddd$outlist, ")")))
+         res <- eval(str2lang(paste0("list(", ddd$outlist, ")")))
       }
 
    }

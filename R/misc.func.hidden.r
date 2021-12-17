@@ -976,7 +976,7 @@
 
 }
 
-#.set.mstyle.1 <- parse(text=".mstyle <- list(section=make_style(\"gray90\")$bold, header=make_style(\"skyblue1\")$bold$underline, body=make_style(\"skyblue2\"), text=make_style(\"slateblue3\"), result=make_style(\"slateblue1\"))")
+#.set.mstyle.1 <- str2lang(".mstyle <- list(section=make_style(\"gray90\")$bold, header=make_style(\"skyblue1\")$bold$underline, body=make_style(\"skyblue2\"), text=make_style(\"slateblue3\"), result=make_style(\"slateblue1\"))")
 #eval(metafor:::.set.mstyle.1)
 
 ############################################################################
@@ -1064,7 +1064,7 @@
 
 ### to register getfit method for 'rma.uni' and 'rma.mv' objects: eval(metafor:::.glmulti)
 
-.glmulti <- parse(text="
+.glmulti <- str2lang("
 
 if (!(\"glmulti\" %in% .packages()))
    stop(\"Must load the 'glmulti' package first to use this code.\")
@@ -1103,7 +1103,7 @@ setMethod(\"getfit\", \"rma.glmm\", function(object, ...) {
 
 ### helper functions to make MuMIn work together with metafor
 
-.MuMIn <- parse(text="
+.MuMIn <- str2lang("
 
 makeArgs.rma <- function (obj, termNames, comb, opt, ...) {
    ret <- MuMIn:::makeArgs.default(obj, termNames, comb, opt)
@@ -1120,7 +1120,7 @@ coefTable.rma <- function (model, ...) {
 ### helper functions to make mice work together with metafor (note: no longer
 ### needed, as there are glance and tidy methods for rma objects in broom now)
 
-.mice <- parse(text="
+.mice <- str2lang("
 
 glance.rma <- function (x, ...)
    data.frame(df.residual=df.residual(x))

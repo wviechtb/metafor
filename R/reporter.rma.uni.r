@@ -71,7 +71,7 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
 
    ### set default filenames
 
-   object.name <- deparse(substitute(x))
+   object.name <- deparse1(substitute(x))
    has.object.name <- TRUE
 
    if (grepl("rma(", object.name, fixed=TRUE) || grepl("rma.uni(", object.name, fixed=TRUE)) { # check for 'reporter(rma(yi, vi))' usage

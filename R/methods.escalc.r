@@ -11,7 +11,7 @@
 
    for (l in seq_along(yi.names)) {
 
-      #eval(parse(text=paste0("attr(dat$", yi.names[l], ", 'measure') <- attr(x$", yi.names[l], ", 'measure')")))
+      #eval(str2lang(paste0("attr(dat$", yi.names[l], ", 'measure') <- attr(x$", yi.names[l], ", 'measure')")))
       attr(dat[[yi.names[l]]], "measure") <- attr(x[[yi.names[l]]], "measure")
 
       ### if selecting rows, also subset ni and slab attributes and add them back to each yi variable

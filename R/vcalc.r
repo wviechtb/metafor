@@ -380,7 +380,7 @@ data, rho, phi, rvars, checkpd=TRUE, nearpd=FALSE, ...) {
 
       ### get rvars from data
 
-      has.colon <- grepl(":", deparse(substitute(rvars)), fixed=TRUE)
+      has.colon <- grepl(":", deparse1(substitute(rvars)), fixed=TRUE)
 
       if (has.colon && length(rvars) == 2L) {
          rvars <- data[seq(from = rvars[1], to = rvars[2])]

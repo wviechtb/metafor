@@ -1664,9 +1664,9 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             #return(optcall)
 
             if (verbose) {
-               res.FE <- try(eval(parse(text=optcall)), silent=!verbose)
+               res.FE <- try(eval(str2lang(optcall)), silent=!verbose)
             } else {
-               res.FE <- try(suppressWarnings(eval(parse(text=optcall))), silent=!verbose)
+               res.FE <- try(suppressWarnings(eval(str2lang(optcall))), silent=!verbose)
             }
 
             #return(res.FE)
@@ -1756,9 +1756,9 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                   #return(optcall)
 
                   if (verbose) {
-                     res.QE <- try(eval(parse(text=optcall)), silent=!verbose)
+                     res.QE <- try(eval(str2lang(optcall)), silent=!verbose)
                   } else {
-                     res.QE <- try(suppressWarnings(eval(parse(text=optcall))), silent=!verbose)
+                     res.QE <- try(suppressWarnings(eval(str2lang(optcall))), silent=!verbose)
                   }
 
                   #return(res.QE)
@@ -2004,9 +2004,9 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             #return(optcall)
 
             if (verbose) {
-               res.ML <- try(eval(parse(text=optcall)), silent=!verbose)
+               res.ML <- try(eval(str2lang(optcall)), silent=!verbose)
             } else {
-               res.ML <- try(suppressWarnings(eval(parse(text=optcall))), silent=!verbose)
+               res.ML <- try(suppressWarnings(eval(str2lang(optcall))), silent=!verbose)
             }
 
             #return(res.ML)
@@ -2556,7 +2556,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                      digits=digits,
                      fit.stats=fit.stats)
       } else {
-         res <- eval(parse(text=paste0("list(", ddd$outlist, ")")))
+         res <- eval(str2lang(paste0("list(", ddd$outlist, ")")))
       }
    }
 

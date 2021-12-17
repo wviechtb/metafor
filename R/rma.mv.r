@@ -1996,9 +1996,9 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
          #return(optcall)
 
          if (verbose) {
-            opt.res <- try(eval(parse(text=optcall)), silent=!verbose)
+            opt.res <- try(eval(str2lang(optcall)), silent=!verbose)
          } else {
-            opt.res <- try(suppressWarnings(eval(parse(text=optcall))), silent=!verbose)
+            opt.res <- try(suppressWarnings(eval(str2lang(optcall))), silent=!verbose)
          }
 
          #return(opt.res)
@@ -2508,7 +2508,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
                      h.levels.f=h.levels.f, h.levels.k=h.levels.k, h.levels.comb.k=h.levels.comb.k,
                      struct=struct, Rfix=Rfix)
       } else {
-         res <- eval(parse(text=paste0("list(", ddd$outlist, ")")))
+         res <- eval(str2lang(paste0("list(", ddd$outlist, ")")))
       }
    }
 

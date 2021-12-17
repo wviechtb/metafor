@@ -39,7 +39,7 @@ cumul.rma.uni <- function(x, order, digits, transf, targs, progbar=FALSE, ...) {
 
    #########################################################################
 
-   if (grepl("^order\\(", deparse(substitute(order))))
+   if (grepl("^order\\(", deparse1(substitute(order))))
       warning(mstyle$warning("Use of order() in 'order' argument is probably erroneous."), call.=FALSE)
 
    if (missing(order))

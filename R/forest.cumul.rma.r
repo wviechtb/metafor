@@ -99,7 +99,7 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
 
    estlab <- .setlab(measure, transf.char, atransf.char, gentype=3, short=TRUE)
    if (is.expression(estlab)) {
-      header.right <- parse(text=paste0("bold(", estlab, " * '", annosym[1], "' * '", 100*(1-level), "% CI'", " * '", annosym[3], "')"))
+      header.right <- str2lang(paste0("bold(", estlab, " * '", annosym[1], "' * '", 100*(1-level), "% CI'", " * '", annosym[3], "')"))
    } else {
       header.right <- paste0(estlab, annosym[1], 100*(1-level), "% CI", annosym[3])
    }

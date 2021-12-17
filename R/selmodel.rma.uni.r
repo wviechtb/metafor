@@ -792,9 +792,9 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    #return(optcall)
 
    if (verbose) {
-      opt.res <- try(eval(parse(text=optcall)), silent=!verbose)
+      opt.res <- try(eval(str2lang(optcall)), silent=!verbose)
    } else {
-      opt.res <- try(suppressWarnings(eval(parse(text=optcall))), silent=!verbose)
+      opt.res <- try(suppressWarnings(eval(str2lang(optcall))), silent=!verbose)
    }
 
    #return(opt.res)
@@ -858,7 +858,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
       alternative=alternative, pval.min=pval.min, intCtrl=intCtrl, verbose=FALSE, digits=digits, dofit=TRUE)\n", sep="")
 
    #return(fitcall)
-   fitcall <- try(eval(parse(text=fitcall)), silent=!verbose)
+   fitcall <- try(eval(str2lang(fitcall)), silent=!verbose)
    #return(fitcall)
 
    if (inherits(fitcall, "try-error"))
@@ -947,7 +947,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
       #return(hescall)
 
-      H <- try(eval(parse(text=hescall)), silent=TRUE)
+      H <- try(eval(str2lang(hescall)), silent=TRUE)
 
       #return(H)
 
@@ -1086,7 +1086,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
          wi.fun=wi.fun, steps=steps, pgrp=pgrp,
          alternative=alternative, pval.min=pval.min, intCtrl=intCtrl, verbose=ifelse(verbose > 4, verbose, 0), digits=digits", ctrl.arg, ")\n", sep="")
 
-      opt.res <- try(eval(parse(text=optcall)), silent=!verbose)
+      opt.res <- try(eval(str2lang(optcall)), silent=!verbose)
 
       if (verbose > 4)
          cat("\n")
@@ -1100,7 +1100,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
             wi.fun=wi.fun, steps=steps, pgrp=pgrp,
             alternative=alternative, pval.min=pval.min, intCtrl=intCtrl, verbose=FALSE, digits=digits, dofit=TRUE)\n", sep="")
 
-         fitcall <- try(eval(parse(text=fitcall)), silent=!verbose)
+         fitcall <- try(eval(str2lang(fitcall)), silent=!verbose)
 
          if (!inherits(fitcall, "try-error")) {
             ll0 <- fitcall$ll

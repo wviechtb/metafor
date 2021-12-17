@@ -426,7 +426,7 @@ level=95, digits, verbose=FALSE, ...) {
                      digits=digits,
                      fit.stats=fit.stats)
       } else {
-         res <- eval(parse(text=paste0("list(", ddd$outlist, ")")))
+         res <- eval(str2lang(paste0("list(", ddd$outlist, ")")))
       }
    }
 

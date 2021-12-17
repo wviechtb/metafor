@@ -110,7 +110,7 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
 
    estlab <- .setlab(measure, transf.char, atransf.char, gentype=3, short=TRUE)
    if (is.expression(estlab)) {
-      header.right <- parse(text=paste0("bold(", estlab, " * '", annosym[1], "' * '", 100*(1-level), "% CI'", " * '", annosym[3], "')"))
+      header.right <- str2lang(paste0("bold(", estlab, " * '", annosym[1], "' * '", 100*(1-level), "% CI'", " * '", annosym[3], "')"))
    } else {
       header.right <- paste0(estlab, annosym[1], 100*(1-level), "% CI", annosym[3])
    }
@@ -280,7 +280,7 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
          if (length(order) != k)
             stop(mstyle$stop(paste0("Length of the 'order' argument (", length(order), ") does not correspond to the number of outcomes (", k, ").")))
 
-         if (grepl("^order\\(", deparse(substitute(order)))) {
+         if (grepl("^order\\(", deparse1(substitute(order)))) {
             sort.vec <- order
          } else {
             sort.vec <- order(order, decreasing=decreasing)
