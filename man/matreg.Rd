@@ -5,17 +5,18 @@
    Function to fit regression models based on correlation and covariance matrices. \loadmathjax
 }
 \usage{
-matreg(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearpd=FALSE, level=95, digits, \dots)
+matreg(y, x, R, n, V, cov=FALSE, means, ztor=FALSE,
+       nearpd=FALSE, level=95, digits, \dots)
 }
 \arguments{
-   \item{y}{index of the outcome variable.}
-   \item{x}{indices of the predictor variables.}
+   \item{y}{index (or name given as a character string) of the outcome variable.}
+   \item{x}{indices (or names given as a character vector) of the predictor variables.}
    \item{R}{correlation or covariance matrix (or only the lower triangular part including the diagonal).}
    \item{n}{sample size based on which the elements in the correlation/covariance matrix were computed.}
    \item{V}{variance-covariance matrix of the lower triangular elements of the correlation/covariance matrix. Either \code{V} or \code{n} should be specified, not both. See \sQuote{Details}.}
    \item{cov}{logical to specify whether \code{R} is a covariance matrix (the default is \code{FALSE}).}
    \item{means}{optional vector to specify the means of the variables (only relevant when \code{cov=TRUE}).}
-   \item{ztor}{logical to specify whether \code{R} is a matrix of r-to-z transformed correlations and it should be back-transformed to raw correlations (the default is \code{FALSE}). See \sQuote{Details}.}
+   \item{ztor}{logical to specify whether \code{R} is a matrix of r-to-z transformed correlations and hence should be back-transformed to raw correlations (the default is \code{FALSE}). See \sQuote{Details}.}
    \item{nearpd}{logical to specify whether the \code{\link[Matrix]{nearPD}} function from the \href{https://cran.r-project.org/package=Matrix}{Matrix} package should be used when the \mjeqn{R_{x,x}}{R[x,x]} matrix cannot be inverted. See \sQuote{Note}.}
    \item{level}{numeric value between 0 and 100 to specify the confidence interval level (the default is 95).}
    \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded.}
@@ -24,9 +25,9 @@ matreg(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearpd=FALSE, level=95, digi
 \details{
    Let \mjseqn{R} be a \mjeqn{p \times p}{pxp} correlation or covariance matrix. Let \mjseqn{y} denote the row/column of the outcome variable and \mjseqn{x} the row(s)/column(s) of the predictor variable(s) in this matrix. Let \mjeqn{R_{x,x}}{R[x,x]} and \mjeqn{R_{x,y}}{R[x,y]} denote the corresponding submatrices of \mjseqn{R}. Then \mjdeqn{b = R_{x,x}^{-1} R_{x,y}}{b = R[x,x]^(-1) R[x,y]} yields the standardized or raw regression coefficients (depending on whether \mjseqn{R} is a correlation or covariance matrix, respectively) when regressing the outcome variable on the predictor variable(s).
 
-   The \mjseqn{R} matrix may be computed based on a single sample of \mjseqn{n} subjects. In this case, one should specify the sample size via argument \code{n}. The variance-covariance matrix of the standardized regression coefficients is then given by \mjeqn{\mbox{Var}[b] = \mbox{MSE} \times R_{x,x}^{-1}}{Var[b] = MSE * R[x,x]^(-1)}, where \mjeqn{\mbox{MSE} = (1 - b'R_{x,y}) / (n - m)}{MSE = (1 - b'R[x,y]) / (n -m)} and \mjseqn{m} denotes the number of predictor variables. The standard errors of the regression coefficients are then given by the square root of the diagonal elements of \mjeqn{\mbox{Var}[b]}{Var[b]}. Test statistics (in this case, t-statistics) and the corresponding p-values can then be computed as in a regular regression analysis. When \mjseqn{R} is a covariance matrix, one should set \code{cov=TRUE} and specify the means of the \mjseqn{p} variables via argument \code{means} to obtain raw regression coefficients including the intercept and corresponding standard errors.
+   The \mjseqn{R} matrix may be computed based on a single sample of \mjseqn{n} subjects. In this case, one should specify the sample size via argument \code{n}. The variance-covariance matrix of the standardized regression coefficients is then given by \mjeqn{\mbox{Var}[b] = \mbox{MSE} \times R_{x,x}^{-1}}{Var[b] = MSE * R[x,x]^(-1)}, where \mjeqn{\mbox{MSE} = (1 - b'R_{x,y}) / (n - m)}{MSE = (1 - b'R[x,y]) / (n -m)} and \mjseqn{m} denotes the number of predictor variables. The standard errors are then given by the square root of the diagonal elements of \mjeqn{\mbox{Var}[b]}{Var[b]}. Test statistics (in this case, t-statistics) and the corresponding p-values can then be computed as in a regular regression analysis. When \mjseqn{R} is a covariance matrix, one should set \code{cov=TRUE} and specify the means of the \mjseqn{p} variables via argument \code{means} to obtain raw regression coefficients including the intercept and corresponding standard errors.
 
-   Alternatively, \mjseqn{R} may be the result of a meta-analysis of correlation coefficients. In this case, the elements in \mjseqn{R} are pooled correlation coefficients and the variance-covariance matrix of these pooled coefficients should be specified via argument \code{V}. The order of elements in \code{V} should correspond to the order of elements in the lower triangular part of \mjseqn{R} column-wise. For example, if \mjseqn{R} is a \mjeqn{4 \times 4}{4x4} matrix\ifelse{text}{,}{ of the form: \mjtdeqn{\left[ \begin{array}{cccc} 1 & & & \\\ r_{21} & 1 & & \\\ r_{31} & r_{32} & 1 & \\\ r_{41} & r_{42} & r_{43} & 1 \end{array} \right]}{\begin{bmatrix} 1 & & & \\\\\ r_{21} & 1 & & \\\\\ r_{31} & r_{32} & 1 & \\\\\ r_{41} & r_{42} & r_{43} & 1 \end{bmatrix}}{}} then the elements are \mjseqn{r_{21}}, \mjseqn{r_{31}}, \mjseqn{r_{41}}, \mjseqn{r_{32}}, \mjseqn{r_{42}}, and \mjseqn{r_{43}} and hence \code{V} should be a \mjeqn{6 \times 6}{6x6} variance-covariance matrix of these elements in this order. The variance-covariance matrix of the standardized regression coefficients (i.e., \mjeqn{\mbox{Var}[b]}{Var[b]}) is then computed as a function of \code{V} as described in Becker (1992) using the multivariate delta method. The standard errors of the standardized regression coefficients are then given by the square root of the diagonal elements of \mjeqn{\mbox{Var}[b]}{Var[b]}. Test statistics (in this case, z-statistics) and the corresponding p-values can then be computed in the usual manner.
+   Alternatively, \mjseqn{R} may be the result of a meta-analysis of correlation coefficients. In this case, the elements in \mjseqn{R} are pooled correlation coefficients and the variance-covariance matrix of these pooled coefficients should be specified via argument \code{V}. The order of elements in \code{V} should correspond to the order of elements in the lower triangular part of \mjseqn{R} column-wise. For example, if \mjseqn{R} is a \mjeqn{4 \times 4}{4x4} matrix\ifelse{text}{,}{ of the form: \mjtdeqn{\left[ \begin{array}{cccc} 1 & & & \\\ r_{21} & 1 & & \\\ r_{31} & r_{32} & 1 & \\\ r_{41} & r_{42} & r_{43} & 1 \end{array} \right]}{\begin{bmatrix} 1 & & & \\\\\ r_{21} & 1 & & \\\\\ r_{31} & r_{32} & 1 & \\\\\ r_{41} & r_{42} & r_{43} & 1 \end{bmatrix}}{}} then the elements are \mjseqn{r_{21}}, \mjseqn{r_{31}}, \mjseqn{r_{41}}, \mjseqn{r_{32}}, \mjseqn{r_{42}}, and \mjseqn{r_{43}} and hence \code{V} should be a \mjeqn{6 \times 6}{6x6} variance-covariance matrix of these elements in this order. The variance-covariance matrix of the standardized regression coefficients (i.e., \mjeqn{\mbox{Var}[b]}{Var[b]}) is then computed as a function of \code{V} as described in Becker (1992) using the multivariate delta method. The standard errors are then again given by the square root of the diagonal elements of \mjeqn{\mbox{Var}[b]}{Var[b]}. Test statistics (in this case, z-statistics) and the corresponding p-values can then be computed in the usual manner.
 
    In case \mjseqn{R} is the result of a meta-analysis of Fisher r-to-z transformed correlation coefficients (and hence \code{V} is then the corresponding variance-covariance matrix of these pooled transformed coefficients), one should set argument \code{ztor=TRUE}, so that the appropriate back-transformation is then applied to \code{R} (and \code{V}) within the function.
 
@@ -88,8 +89,10 @@ round(R, digits=3)
 round(vcov(res), digits=4)
 
 ### fit regression model with 'perf' as outcome and 'acog', 'asom', and 'conf' as predictors
-fit <- matreg(1, 2:4, R=R, V=vcov(res))
-fit
+matreg(1, 2:4, R=R, V=vcov(res))
+
+### can also specify variable names
+matreg("perf", c("acog","asom","conf"), R=R, V=vcov(res))
 
 \dontrun{
 ### repeat the above but with r-to-z transformed correlations
@@ -102,8 +105,9 @@ dat$var1.var2 <- factor(dat$var1.var2,
 res <- rma.mv(yi, V, mods = ~ var1.var2 - 1, random = ~ var1.var2 | study, struct="UN", data=dat)
 R <- vec2mat(coef(res))
 rownames(R) <- colnames(R) <- c("perf", "acog", "asom", "conf")
-fit <- matreg(1, 2:4, R=R, V=vcov(res), ztor=TRUE)
-fit}
+matreg(1, 2:4, R=R, V=vcov(res), ztor=TRUE)}
+
+############################################################################
 
 ### a different example based on van Houwelingen et al. (2002)
 
@@ -119,8 +123,7 @@ res <- rma.mv(yi, vi, mods = ~ group - 1, random = ~ group | trial, struct="UN",
 res
 
 ### regression of log(odds)_EXP on log(odds)_CON
-reg <- matreg(y=2, x=1, R=res$G, cov=TRUE, means=coef(res), n=res$g.levels.comb.k)
-reg
+matreg(y=2, x=1, R=res$G, cov=TRUE, means=coef(res), n=res$g.levels.comb.k)
 
 ### but the SE of the CON coefficient is not computed correctly, since above we treat res$G as if
 ### it was a var-cov matrix computed from raw data based on res$g.levels.comb.k (= 13) data points

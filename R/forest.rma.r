@@ -1004,6 +1004,8 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
 
    res <- list(xlim=par("usr")[1:2], alim=alim, at=at, ylim=ylim, rows=rows, cex=cex, cex.lab=cex.lab, cex.axis=cex.axis)
 
+   #assign("forest", res, envir=..metafor)
+
    invisible(res)
 
 }

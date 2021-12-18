@@ -7,6 +7,8 @@ matreg <- function(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearpd=FALSE, le
 
    level <- ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
 
+   ### check/process R argument
+
    if (missing(R))
       stop(mstyle$stop("Must specify 'R' argument."))
 
@@ -15,21 +17,64 @@ matreg <- function(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearpd=FALSE, le
    if (nrow(R) != ncol(R))
       stop(mstyle$stop("Argument 'R' must be a square matrix."))
 
+   if (is.null(rownames(R)))
+      rownames(R) <- colnames(R)
+   if (is.null(colnames(R)))
+      colnames(R) <- rownames(R)
+
    p <- nrow(R)
 
    if (p <= 1L)
       stop(mstyle$stop("The 'R' matrix must be at least of size 2x2."))
 
-   y <- round(y)
+   ### check/process y argument
 
    if (length(y) != 1L)
-      stop(mstyle$stop("Argument 'y' should be a single index."))
+      stop(mstyle$stop("Argument 'y' should specify a single variable."))
+
+   if (is.character(y)) {
+
+      if (is.null(rownames(R)))
+         stop(mstyle$stop("'R' must have dimension names when specifying a variable name for 'y'."))
+
+      if (anyDuplicated(rownames(R)))
+         stop(mstyle$stop("Dimension names of 'R' must be unique."))
+
+      y.pos <- pmatch(y, rownames(R)) # NA if no match or there are duplicates
+
+      if (is.na(y.pos))
+         stop(mstyle$stop("Could not find variable '", y, "' in the 'R' matrix."))
+
+      y <- y.pos
+
+   }
+
+   y <- round(y)
 
    if (y < 1 || y > p)
       stop(mstyle$stop("Index 'y' must be >= 1 or <= ", p, "."))
 
-   if (missing(x))
+   ### check/process x argument
+
+   if (missing(x)) # if not specified, use all other variables in R as predictors
       x <- seq_len(p)[-y]
+
+   if (is.character(x)) {
+
+      if (is.null(rownames(R)))
+         stop(mstyle$stop("'R' must have dimension names when specifying variable names for 'x'."))
+
+      if (anyDuplicated(rownames(R)))
+         stop(mstyle$stop("Dimension names of 'R' must be unique."))
+
+      x.pos <- pmatch(x, rownames(R)) # NA if no match or there are duplicates
+
+      if (anyNA(x.pos))
+         stop(mstyle$stop("Could not find variable", ifelse(sum(is.na(x.pos)) > 1L, "s", ""), " '", paste(x[is.na(x.pos)], collapse=", "), "' in the 'R' matrix."))
+
+      x <- x.pos
+
+   }
 
    x <- round(x)
 
@@ -40,19 +85,21 @@ matreg <- function(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearpd=FALSE, le
       stop(mstyle$stop("Indices in 'x' must be >= 1 or <= ", p, "."))
 
    if (y %in% x)
-      stop(mstyle$stop("Index 'y' should not be an element of 'x'."))
+      stop(mstyle$stop("Variable 'y' should not be an element of 'x'."))
+
+   ### check/process V/n arguments
 
    if (missing(V))
       V <- NULL
-
-   if (cov && ztor)
-      stop(mstyle$stop("Cannot use a covariance matrix as input when 'ztor=TRUE'."))
 
    if (is.null(V) && missing(n))
       stop(mstyle$stop("Either 'V' or 'n' must be specified."))
 
    if (!is.null(V) && !missing(n))
       stop(mstyle$stop("Either 'V' or 'n' must be specified, not both."))
+
+   if (cov && ztor)
+      stop(mstyle$stop("Cannot use a covariance matrix as input when 'ztor=TRUE'."))
 
    ### get ... argument and check for extra/superfluous arguments
 

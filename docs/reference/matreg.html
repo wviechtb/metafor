@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-37</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-38</span>
       </span>
     </div>
 
@@ -96,15 +96,16 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">matreg</span><span class="op">(</span><span class="va">y</span>, <span class="va">x</span>, <span class="va">R</span>, <span class="va">n</span>, <span class="va">V</span>, cov<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">means</span>, ztor<span class="op">=</span><span class="cn">FALSE</span>, nearpd<span class="op">=</span><span class="cn">FALSE</span>, level<span class="op">=</span><span class="fl">95</span>, <span class="va">digits</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">matreg</span><span class="op">(</span><span class="va">y</span>, <span class="va">x</span>, <span class="va">R</span>, <span class="va">n</span>, <span class="va">V</span>, cov<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">means</span>, ztor<span class="op">=</span><span class="cn">FALSE</span>,
+       nearpd<span class="op">=</span><span class="cn">FALSE</span>, level<span class="op">=</span><span class="fl">95</span>, <span class="va">digits</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>y</dt>
-<dd><p>index of the outcome variable.</p></dd>
+<dd><p>index (or name given as a character string) of the outcome variable.</p></dd>
 <dt>x</dt>
-<dd><p>indices of the predictor variables.</p></dd>
+<dd><p>indices (or names given as a character vector) of the predictor variables.</p></dd>
 <dt>R</dt>
 <dd><p>correlation or covariance matrix (or only the lower triangular part including the diagonal).</p></dd>
 <dt>n</dt>
@@ -116,7 +117,7 @@
 <dt>means</dt>
 <dd><p>optional vector to specify the means of the variables (only relevant when <code>cov=TRUE</code>).</p></dd>
 <dt>ztor</dt>
-<dd><p>logical to specify whether <code>R</code> is a matrix of r-to-z transformed correlations and it should be back-transformed to raw correlations (the default is <code>FALSE</code>). See ‘Details’.</p></dd>
+<dd><p>logical to specify whether <code>R</code> is a matrix of r-to-z transformed correlations and hence should be back-transformed to raw correlations (the default is <code>FALSE</code>). See ‘Details’.</p></dd>
 <dt>nearpd</dt>
 <dd><p>logical to specify whether the <code><a href="https://rdrr.io/pkg/Matrix/man/nearPD.html" class="external-link">nearPD</a></code> function from the <a href="https://cran.r-project.org/package=Matrix" class="external-link">Matrix</a> package should be used when the <em></em>\(R_{x,x}\) matrix cannot be inverted. See ‘Note’.</p></dd>
 <dt>level</dt>
@@ -129,8 +130,8 @@
     <div id="details">
     <h2>Details</h2>
     <p>Let <em></em>\(R\) be a <em></em>\(p \times p\) correlation or covariance matrix. Let <em></em>\(y\) denote the row/column of the outcome variable and <em></em>\(x\) the row(s)/column(s) of the predictor variable(s) in this matrix. Let <em></em>\(R_{x,x}\) and <em></em>\(R_{x,y}\) denote the corresponding submatrices of <em></em>\(R\). Then \[b = R_{x,x}^{-1} R_{x,y}\] yields the standardized or raw regression coefficients (depending on whether <em></em>\(R\) is a correlation or covariance matrix, respectively) when regressing the outcome variable on the predictor variable(s).</p>
-<p>The <em></em>\(R\) matrix may be computed based on a single sample of <em></em>\(n\) subjects. In this case, one should specify the sample size via argument <code>n</code>. The variance-covariance matrix of the standardized regression coefficients is then given by <em></em>\(\mbox{Var}[b] = \mbox{MSE} \times R_{x,x}^{-1}\), where <em></em>\(\mbox{MSE} = (1 - b'R_{x,y}) / (n - m)\) and <em></em>\(m\) denotes the number of predictor variables. The standard errors of the regression coefficients are then given by the square root of the diagonal elements of <em></em>\(\mbox{Var}[b]\). Test statistics (in this case, t-statistics) and the corresponding p-values can then be computed as in a regular regression analysis. When <em></em>\(R\) is a covariance matrix, one should set <code>cov=TRUE</code> and specify the means of the <em></em>\(p\) variables via argument <code>means</code> to obtain raw regression coefficients including the intercept and corresponding standard errors.</p>
-<p>Alternatively, <em></em>\(R\) may be the result of a meta-analysis of correlation coefficients. In this case, the elements in <em></em>\(R\) are pooled correlation coefficients and the variance-covariance matrix of these pooled coefficients should be specified via argument <code>V</code>. The order of elements in <code>V</code> should correspond to the order of elements in the lower triangular part of <em></em>\(R\) column-wise. For example, if <em></em>\(R\) is a <em></em>\(4 \times 4\) matrix of the form: \[\begin{bmatrix} 1 &amp; &amp; &amp; \\ r_{21} &amp; 1 &amp; &amp; \\ r_{31} &amp; r_{32} &amp; 1 &amp; \\ r_{41} &amp; r_{42} &amp; r_{43} &amp; 1 \end{bmatrix}\] then the elements are <em></em>\(r_{21}\), <em></em>\(r_{31}\), <em></em>\(r_{41}\), <em></em>\(r_{32}\), <em></em>\(r_{42}\), and <em></em>\(r_{43}\) and hence <code>V</code> should be a <em></em>\(6 \times 6\) variance-covariance matrix of these elements in this order. The variance-covariance matrix of the standardized regression coefficients (i.e., <em></em>\(\mbox{Var}[b]\)) is then computed as a function of <code>V</code> as described in Becker (1992) using the multivariate delta method. The standard errors of the standardized regression coefficients are then given by the square root of the diagonal elements of <em></em>\(\mbox{Var}[b]\). Test statistics (in this case, z-statistics) and the corresponding p-values can then be computed in the usual manner.</p>
+<p>The <em></em>\(R\) matrix may be computed based on a single sample of <em></em>\(n\) subjects. In this case, one should specify the sample size via argument <code>n</code>. The variance-covariance matrix of the standardized regression coefficients is then given by <em></em>\(\mbox{Var}[b] = \mbox{MSE} \times R_{x,x}^{-1}\), where <em></em>\(\mbox{MSE} = (1 - b'R_{x,y}) / (n - m)\) and <em></em>\(m\) denotes the number of predictor variables. The standard errors are then given by the square root of the diagonal elements of <em></em>\(\mbox{Var}[b]\). Test statistics (in this case, t-statistics) and the corresponding p-values can then be computed as in a regular regression analysis. When <em></em>\(R\) is a covariance matrix, one should set <code>cov=TRUE</code> and specify the means of the <em></em>\(p\) variables via argument <code>means</code> to obtain raw regression coefficients including the intercept and corresponding standard errors.</p>
+<p>Alternatively, <em></em>\(R\) may be the result of a meta-analysis of correlation coefficients. In this case, the elements in <em></em>\(R\) are pooled correlation coefficients and the variance-covariance matrix of these pooled coefficients should be specified via argument <code>V</code>. The order of elements in <code>V</code> should correspond to the order of elements in the lower triangular part of <em></em>\(R\) column-wise. For example, if <em></em>\(R\) is a <em></em>\(4 \times 4\) matrix of the form: \[\begin{bmatrix} 1 &amp; &amp; &amp; \\ r_{21} &amp; 1 &amp; &amp; \\ r_{31} &amp; r_{32} &amp; 1 &amp; \\ r_{41} &amp; r_{42} &amp; r_{43} &amp; 1 \end{bmatrix}\] then the elements are <em></em>\(r_{21}\), <em></em>\(r_{31}\), <em></em>\(r_{41}\), <em></em>\(r_{32}\), <em></em>\(r_{42}\), and <em></em>\(r_{43}\) and hence <code>V</code> should be a <em></em>\(6 \times 6\) variance-covariance matrix of these elements in this order. The variance-covariance matrix of the standardized regression coefficients (i.e., <em></em>\(\mbox{Var}[b]\)) is then computed as a function of <code>V</code> as described in Becker (1992) using the multivariate delta method. The standard errors are then again given by the square root of the diagonal elements of <em></em>\(\mbox{Var}[b]\). Test statistics (in this case, z-statistics) and the corresponding p-values can then be computed in the usual manner.</p>
 <p>In case <em></em>\(R\) is the result of a meta-analysis of Fisher r-to-z transformed correlation coefficients (and hence <code>V</code> is then the corresponding variance-covariance matrix of these pooled transformed coefficients), one should set argument <code>ztor=TRUE</code>, so that the appropriate back-transformation is then applied to <code>R</code> (and <code>V</code>) within the function.</p>
 <p>Finally, <em></em>\(R\) may be a covariance matrix based on a meta-analysis (e.g., the estimated variance-covariance matrix of the random effects in a multivariate model). In this case, one should set <code>cov=TRUE</code> and <code>V</code> should again be the variance-covariance matrix of the elements in <em></em>\(R\), but now including the diagonal. Hence, if <em></em>\(R\) is a <em></em>\(4 \times 4\) matrix of the form: \[\begin{bmatrix} \tau_1^2 &amp; &amp; &amp; \\ \tau_{21} &amp; \tau_2^2 &amp; &amp; \\ \tau_{31} &amp; \tau_{32} &amp; \tau_3^2 &amp; \\ \tau_{41} &amp; \tau_{42} &amp; \tau_{43} &amp; \tau_4^2 \end{bmatrix}\] then the elements are <em></em>\(\tau^2_1\), <em></em>\(\tau_{21}\), <em></em>\(\tau_{31}\), <em></em>\(\tau_{41}\), <em></em>\(\tau^2_2\), <em></em>\(\tau_{32}\), <em></em>\(\tau_{42}\), <em></em>\(\tau^2_3\), <em></em>\(\tau_{43}\), and <em></em>\(\tau^2_4\), and hence <code>V</code> should be a <em></em>\(10 \times 10\) variance-covariance matrix of these elements in this order. Argument <code>means</code> can then again be used to specify the means of the variables.</p>
     </div>
@@ -264,8 +265,19 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> var1.var2asom.conf             0.0011             0.0026</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### fit regression model with 'perf' as outcome and 'acog', 'asom', and 'conf' as predictors</span></span>
-<span class="r-in"><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">matreg</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">4</span>, R<span class="op">=</span><span class="va">R</span>, V<span class="op">=</span><span class="fu"><a href="vcov.rma.html">vcov</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">fit</span></span>
+<span class="r-in"><span class="fu">matreg</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">4</span>, R<span class="op">=</span><span class="va">R</span>, V<span class="op">=</span><span class="fu"><a href="vcov.rma.html">vcov</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       estimate      se     zval    pval    ci.lb   ci.ub     ​ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> acog    0.1482  0.1566   0.9465  0.3439  -0.1587  0.4550      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> asom   -0.0536  0.0768  -0.6979  0.4852  -0.2043  0.0970      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> conf    0.3637  0.0910   3.9985  &lt;.0001   0.1854  0.5419  *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">### can also specify variable names</span></span>
+<span class="r-in"><span class="fu">matreg</span><span class="op">(</span><span class="st">"perf"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"acog"</span>,<span class="st">"asom"</span>,<span class="st">"conf"</span><span class="op">)</span>, R<span class="op">=</span><span class="va">R</span>, V<span class="op">=</span><span class="fu"><a href="vcov.rma.html">vcov</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       estimate      se     zval    pval    ci.lb   ci.ub     ​ </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> acog    0.1482  0.1566   0.9465  0.3439  -0.1587  0.4550      </span>
@@ -288,8 +300,7 @@
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Rows with NAs omitted from model fitting.</span>
 <span class="r-in"><span class="va">R</span> <span class="op">&lt;-</span> <span class="fu"><a href="vec2mat.html">vec2mat</a></span><span class="op">(</span><span class="fu"><a href="coef.rma.html">coef</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">R</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">R</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"perf"</span>, <span class="st">"acog"</span>, <span class="st">"asom"</span>, <span class="st">"conf"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">matreg</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">4</span>, R<span class="op">=</span><span class="va">R</span>, V<span class="op">=</span><span class="fu"><a href="vcov.rma.html">vcov</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span>, ztor<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">fit</span><span class="co"># }</span></span>
+<span class="r-in"><span class="fu">matreg</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">4</span>, R<span class="op">=</span><span class="va">R</span>, V<span class="op">=</span><span class="fu"><a href="vcov.rma.html">vcov</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span>, ztor<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="co"># }</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       estimate      se     zval    pval    ci.lb   ci.ub     ​ </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> acog    0.1362  0.1697   0.8023  0.4224  -0.1965  0.4688      </span>
@@ -299,6 +310,8 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">############################################################################</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### a different example based on van Houwelingen et al. (2002)</span></span>
 <span class="r-in"></span>
@@ -345,8 +358,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### regression of log(odds)_EXP on log(odds)_CON</span></span>
-<span class="r-in"><span class="va">reg</span> <span class="op">&lt;-</span> <span class="fu">matreg</span><span class="op">(</span>y<span class="op">=</span><span class="fl">2</span>, x<span class="op">=</span><span class="fl">1</span>, R<span class="op">=</span><span class="va">res</span><span class="op">$</span><span class="va">G</span>, cov<span class="op">=</span><span class="cn">TRUE</span>, means<span class="op">=</span><span class="fu"><a href="coef.rma.html">coef</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span>, n<span class="op">=</span><span class="va">res</span><span class="op">$</span><span class="va">g.levels.comb.k</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">reg</span></span>
+<span class="r-in"><span class="fu">matreg</span><span class="op">(</span>y<span class="op">=</span><span class="fl">2</span>, x<span class="op">=</span><span class="fl">1</span>, R<span class="op">=</span><span class="va">res</span><span class="op">$</span><span class="va">G</span>, cov<span class="op">=</span><span class="cn">TRUE</span>, means<span class="op">=</span><span class="fu"><a href="coef.rma.html">coef</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span>, n<span class="op">=</span><span class="va">res</span><span class="op">$</span><span class="va">g.levels.comb.k</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          estimate      se     tval  df    pval    ci.lb    ci.ub     ​ </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> intrcpt   -1.8437  0.3265  -5.6477  11  0.0001  -2.5623  -1.1252  *** </span>
