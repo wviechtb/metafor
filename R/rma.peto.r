@@ -67,8 +67,10 @@ level=95, digits, verbose=FALSE, ...) {
 
    #########################################################################
 
+   if (verbose) .space()
+
    if (verbose)
-      message(mstyle$message("\nExtracting data and computing yi/vi values ..."))
+      message(mstyle$message("Extracting data and computing yi/vi values ..."))
 
    ### check if data argument has been specified
 

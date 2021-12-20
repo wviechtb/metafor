@@ -88,7 +88,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("tdist", "outlist", "time", "dist", "abbrev"))
+   .chkdots(ddd, c("tdist", "outlist", "time", "dist", "abbrev", "restart"))
 
    ### handle 'tdist' argument from ... (note: overrides test argument)
 
@@ -186,8 +186,10 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
 
    #########################################################################
 
+   if (verbose > 1) .space()
+
    if (verbose > 1)
-      message(mstyle$message("\nExtracting yi/V values ..."))
+      message(mstyle$message("Extracting yi/V values ..."))
 
    ### check if data argument has been specified
 
@@ -1563,6 +1565,16 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
 
    verbose <- con$verbose
 
+   ### when restart=TRUE, restart at current estimates
+
+   if (isTRUE(ddd$restart)) {
+      con$sigma2.init <- .getfromenv("rma.mv", "sigma2", default=sigma2.init)
+      con$tau2.init   <- .getfromenv("rma.mv", "tau2",   default=tau2.init)
+      con$rho.init    <- .getfromenv("rma.mv", "rho",    default=rho.init)
+      con$gamma2.init <- .getfromenv("rma.mv", "gamma2", default=gamma2.init)
+      con$phi.init    <- .getfromenv("rma.mv", "phi",    default=phi.init)
+   }
+
    ### check for missings in initial values
 
    if (anyNA(con$sigma2.init))
@@ -1991,9 +2003,12 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
             withS=withS, withG=withG, withH=withH, struct=struct,
             g.levels.r=g.levels.r, h.levels.r=h.levels.r, g.values=g.values, h.values=h.values,
             sparse=sparse, cholesky=cholesky, nearpd=nearpd, vctransf=TRUE, vccov=FALSE,
-            verbose=verbose, digits=digits, REMLf=con$REMLf, dofit=FALSE", ctrl.arg, ")\n", sep="")
+            verbose=verbose, digits=digits, REMLf=con$REMLf, dofit=FALSE, hessian=FALSE", ctrl.arg, ")\n", sep="")
 
          #return(optcall)
+
+         iteration <- 0
+         try(assign("iteration", iteration, envir=.metafor), silent=TRUE)
 
          if (verbose) {
             opt.res <- try(eval(str2lang(optcall)), silent=!verbose)
@@ -2138,7 +2153,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
    #print(M[1:8,1:8])
 
    if (verbose > 1)
-      message(mstyle$message("Conducting tests of the fixed effects ..."))
+      message(mstyle$message(ifelse(verbose > 2, "", "\n"), "Conducting tests of the fixed effects ..."))
 
    ### ddf calculation
 
@@ -2199,7 +2214,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
    ### heterogeneity test (Wald-type test of the extra coefficients in the saturated model)
 
    if (verbose > 1)
-      message(mstyle$message("\nConducting heterogeneity test ..."))
+      message(mstyle$message("Conducting heterogeneity test ..."))
 
    QE.df <- k-p
 
@@ -2237,7 +2252,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
    if (.isTRUE(cvvc) || cvvc %in% c("varcor","varcov","transf")) {
 
       if (verbose > 1)
-         message(mstyle$message("Computing Hessian ..."))
+         message(mstyle$message("Computing Hessian ...\n"))
 
       if (cvvc == "varcov" && (any(sigma2.fix, na.rm=TRUE) || any(tau2.fix, na.rm=TRUE) || any(rho.fix, na.rm=TRUE) || any(gamma2.fix, na.rm=TRUE) || any(phi.fix, na.rm=TRUE))) {
          warning(mstyle$warning("Cannot use cvvc='varcov' when one or more components are fixed. Setting cvvc='varcor'."), call.=FALSE)
@@ -2260,7 +2275,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
                withS=withS, withG=withG, withH=withH, struct=struct,
                g.levels.r=g.levels.r, h.levels.r=h.levels.r, g.values=g.values, h.values=h.values,
                sparse=sparse, cholesky=c(FALSE,FALSE), nearpd=nearpd, vctransf=FALSE, vccov=TRUE,
-               verbose=verbose, digits=digits, REMLf=con$REMLf), silent=TRUE)
+               verbose=verbose, digits=digits, REMLf=con$REMLf, hessian=TRUE), silent=TRUE)
          if (con$hesspack == "pracma")
             hessian <- try(pracma::hessian(f=.ll.rma.mv, x0 = c(sigma2, tau2, cov1, gamma2, cov2),
                reml=reml, Y=Y, M=V, A=NULL, X.fit=X, k=k, pX=p,
@@ -2270,7 +2285,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
                withS=withS, withG=withG, withH=withH, struct=struct,
                g.levels.r=g.levels.r, h.levels.r=h.levels.r, g.values=g.values, h.values=h.values,
                sparse=sparse, cholesky=c(FALSE,FALSE), nearpd=nearpd, vctransf=FALSE, vccov=TRUE,
-               verbose=verbose, digits=digits, REMLf=con$REMLf), silent=TRUE)
+               verbose=verbose, digits=digits, REMLf=con$REMLf, hessian=TRUE), silent=TRUE)
 
          # note: vctransf=FALSE and cholesky=c(FALSE,FALSE), so we get the Hessian for the untransfored variances and covariances
 
@@ -2286,7 +2301,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
                g.levels.r=g.levels.r, h.levels.r=h.levels.r, g.values=g.values, h.values=h.values,
                sparse=sparse, cholesky=ifelse(c(cvvc=="transf",cvvc=="transf") & cholesky, TRUE, FALSE),
                nearpd=nearpd, vctransf=cvvc=="transf", vccov=FALSE,
-               verbose=verbose, digits=digits, REMLf=con$REMLf), silent=TRUE)
+               verbose=verbose, digits=digits, REMLf=con$REMLf, hessian=TRUE), silent=TRUE)
          if (con$hesspack == "pracma")
             hessian <- try(pracma::hessian(f=.ll.rma.mv, x0 = if (cvvc=="transf") opt.res$par else c(sigma2, tau2, rho, gamma2, phi),
                reml=reml, Y=Y, M=V, A=NULL, X.fit=X, k=k, pX=p,
@@ -2297,15 +2312,10 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
                g.levels.r=g.levels.r, h.levels.r=h.levels.r, g.values=g.values, h.values=h.values,
                sparse=sparse, cholesky=ifelse(c(cvvc=="transf",cvvc=="transf") & cholesky, TRUE, FALSE),
                nearpd=nearpd, vctransf=cvvc=="transf", vccov=FALSE,
-               verbose=verbose, digits=digits, REMLf=con$REMLf), silent=TRUE)
+               verbose=verbose, digits=digits, REMLf=con$REMLf, hessian=TRUE), silent=TRUE)
 
          # note: when cvvc=TRUE/"covcor", get the Hessian for the (untransfored) variances and correlations
          #       when cvvc="transf", get the Hessian for the transformed variances and correlations
-
-
-               # if FALSE, Hessian is computed for the untransformed (raw) variance components
-               # if TRUE,  Hessian is computed for the transformed components (log/atahn/qlogis space)
-
 
       }
 
@@ -2408,6 +2418,9 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
          }
 
       }
+
+      if (verbose > 1)
+         cat("\n")
 
    }
 

@@ -106,8 +106,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    #########################################################################
 
-   if (verbose)
-      cat("\n")
+   if (verbose) .space()
 
    if (verbose > 1)
       message(mstyle$message("Extracting data and computing yi/vi values ..."))

@@ -832,7 +832,7 @@
                        withS, withG, withH,
                        struct, g.levels.r, h.levels.r, g.values, h.values,
                        sparse, cholesky, nearpd, vctransf, vccov,
-                       verbose, digits, REMLf, dofit=FALSE) {
+                       verbose, digits, REMLf, dofit=FALSE, hessian=FALSE) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -889,6 +889,17 @@
 
       M <- M + (Z.H1 %*% H %*% t(Z.H1)) * tcrossprod(Z.H2)
 
+   }
+
+   ### put estimates so far into .metafor environment
+
+   if (!hessian) {
+      pars <- list(sigma2 = if (withS) sigma2 else NULL,
+                   tau2   = if (withG) tau2 else NULL,
+                   rho    = if (withG) rho else NULL,
+                   gamma2 = if (withH) gamma2 else NULL,
+                   phi    = if (withH) phi else NULL)
+      try(assign("rma.mv", pars, envir=.metafor), silent=TRUE)
    }
 
    ### note: if M is sparse, then using nearPD() could blow up
@@ -997,6 +1008,18 @@
    }
 
    if ((vctransf && verbose) || (!vctransf && (verbose > 1))) {
+
+      if (!hessian) {
+
+         iteration <- .getfromenv("iteration", default=NULL)
+
+         if (!is.null(iteration)) {
+            cat(mstyle$verbose(paste0("Iteration ", iteration, "\t")))
+            try(assign("iteration", iteration+1, envir=.metafor), silent=TRUE)
+         }
+
+      }
+
       cat(mstyle$verbose(paste0("ll = ", ifelse(is.na(llval), NA, formatC(llval, digits=digits[["fit"]], format="f", flag=" ")))), "  ")
       if (withS)
          cat(mstyle$verbose(paste0("sigma2 =", paste(ifelse(is.na(sigma2), NA, formatC(sigma2, digits=digits[["var"]], format="f", flag=" ")), collapse=" "), "  ")))
