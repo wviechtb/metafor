@@ -49,7 +49,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       model <- "CM.EL"
 
    na.act <- getOption("na.action")
-   on.exit(options(na.action=na.act))
+   on.exit(options(na.action=na.act), add=TRUE)
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))
@@ -909,10 +909,10 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
          group1  <- rep(c(1,0), times=k)                             # group dummy for 1st group (ai,bi for group 1)
          group2  <- rep(c(0,1), times=k)                             # group dummy for 2nd group (ci,di for group 2) (not really needed)
          group12 <- rep(c(1/2,-1/2), times=k)                        # group dummy with +- 1/2 coding
-         study   <- factor(rep(seq_len(k), each=2))                  # study factor
+         study   <- factor(rep(seq_len(k), each=2L))                 # study factor
          const   <- cbind(rep(1,2*k))                                # intercept for random study effects model
 
-         X.fit   <- X[rep(seq(k), each=2),,drop=FALSE]               # duplicate each row in X (drop=FALSE, so column names are preserved)
+         X.fit   <- X[rep(seq(k), each=2L),,drop=FALSE]              # duplicate each row in X (drop=FALSE, so column names are preserved)
          X.fit   <- cbind(group1*X.fit[,,drop=FALSE])                # then multiply by group1 dummy (intercept, if included, becomes the group1 dummy)
 
          if (coding == 1/2)

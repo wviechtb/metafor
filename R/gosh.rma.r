@@ -42,7 +42,7 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl, ...) 
 
    if (!progbar) {
       pbo <- pbapply::pboptions(type="none")
-      on.exit(pbapply::pboptions(pbo))
+      on.exit(pbapply::pboptions(pbo), add=TRUE)
    }
 
    ddd <- list(...)

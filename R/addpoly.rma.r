@@ -1,6 +1,6 @@
-addpoly.rma <- function(x, row=-2, level=x$level, annotate=TRUE,
-addpred=FALSE, digits=2, width, mlab, transf, atransf, targs,
-efac=1, col, border, lty, fonts, cex, annosym, ...) {
+addpoly.rma <- function(x, row=-2, level=x$level, annotate,
+addpred=FALSE, digits, width, mlab, transf, atransf, targs,
+efac, col, border, lty, fonts, cex, annosym, ...) {
 
    #########################################################################
 
@@ -11,20 +11,29 @@ efac=1, col, border, lty, fonts, cex, annosym, ...) {
    if (!x$int.only)
       stop(mstyle$stop("Fitted model should not contain moderators."))
 
+   if (missing(annotate))
+      annotate <- .getfromenv("forest", "annotate", default=TRUE)
+
+   if (missing(digits))
+      digits <- .getfromenv("forest", "digits", default=2)
+
    if (missing(width))
-      width <- NULL
+      width <- .getfromenv("forest", "width", default=NULL)
 
    if (missing(mlab))
       mlab <- NULL
 
    if (missing(transf))
-      transf <- FALSE
+      transf <- .getfromenv("forest", "transf", default=FALSE)
 
    if (missing(atransf))
-      atransf <- FALSE
+      atransf <- .getfromenv("forest", "atransf", default=FALSE)
 
    if (missing(targs))
-      targs <- NULL
+      targs <- .getfromenv("forest", "targs", default=NULL)
+
+   if (missing(efac))
+      efac <- .getfromenv("forest", "efac", default=1)
 
    if (missing(col))
       col <- "black"
@@ -36,13 +45,13 @@ efac=1, col, border, lty, fonts, cex, annosym, ...) {
       lty <- "dotted"
 
    if (missing(fonts))
-      fonts <- NULL
+      fonts <- .getfromenv("forest", "fonts", default=NULL)
 
    if (missing(cex))
-      cex <- NULL
+      cex <- .getfromenv("forest", "cex", default=NULL)
 
    if (missing(annosym))
-      annosym <- NULL
+      annosym <- .getfromenv("forest", "annosym", default=NULL)
 
    ddd <- list(...)
 

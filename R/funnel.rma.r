@@ -11,7 +11,7 @@ label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
    .chkclass(class(x), must="rma")
 
    na.act <- getOption("na.action")
-   on.exit(options(na.action=na.act))
+   on.exit(options(na.action=na.act), add=TRUE)
 
    yaxis <- match.arg(yaxis, c("sei", "vi", "seinv", "vinv", "ni", "ninv", "sqrtni", "sqrtninv", "lni", "wi"))
    type  <- match.arg(type,  c("rstandard", "rstudent"))
@@ -92,7 +92,7 @@ label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
    ### note: digits can also be a list (e.g., digits=list(2L,3)); trailing 0's are dropped for intergers
 
    if (length(lty) == 1L)
-      lty <- rep(lty, 2) ### 1st value = funnel lines, 2nd value = reference line
+      lty <- rep(lty, 2L) ### 1st value = funnel lines, 2nd value = reference line
 
    ### note: pch, col, and bg must be of the same length as the original data passed to rma()
    ###       so we have to apply the same subsetting (if necessary) and removing of NAs as was

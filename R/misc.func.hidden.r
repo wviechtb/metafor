@@ -331,6 +331,26 @@
 
 }
 
+.getfromenv <- function(what, element, envir=.metafor, default=NULL) {
+
+   x <- try(get(what, envir=envir, inherits=FALSE), silent=TRUE)
+   if (inherits(x, "try-error")) {
+      return(default)
+   } else {
+      if (missing(element)) {
+         return(x)
+      } else {
+         x <- x[[element]]
+         if (is.null(x)) {
+            return(default)
+         } else {
+            return(x)
+         }
+      }
+   }
+
+}
+
 ### a version of do.call() that allows for the arguments to be passed via ... (i.e., can either be a list or not) and removes NULL arguments
 
 .do.call <- function(fun, ...) {

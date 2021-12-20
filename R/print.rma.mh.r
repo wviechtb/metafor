@@ -78,7 +78,7 @@ print.rma.mh <- function(x, digits, showfit=FALSE, ...) {
             cat(mstyle$result("test value not computable for these data"))
             cat("\n")
          } else {
-            cat(mstyle$result(paste0("CMH = ", formatC(MH, width=width), ", df = 1,", paste(rep(" ", nchar(x$k.pos)-1, collapse="")), " p-val ", .pval(x$MHp, digits[["pval"]], showeq=TRUE, sep=" ", add0=TRUE))))
+            cat(mstyle$result(paste0("CMH = ", formatC(MH, width=width), ", df = 1,", paste(rep(" ", nchar(x$k.pos)-1L), collapse=""), " p-val ", .pval(x$MHp, digits[["pval"]], showeq=TRUE, sep=" ", add0=TRUE))))
             cat("\n")
          }
          cat(mstyle$text("Tarone's Test for Heterogeneity: "))

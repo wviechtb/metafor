@@ -7,7 +7,7 @@ label=FALSE, offset=0.3, pos=13, lty, ...) {
    .chkclass(class(y), must="rma.uni", notav="rma.uni.selmodel")
 
    na.act <- getOption("na.action")
-   on.exit(options(na.action=na.act))
+   on.exit(options(na.action=na.act), add=TRUE)
 
    x <- y
 

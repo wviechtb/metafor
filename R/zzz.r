@@ -1,6 +1,6 @@
 .onAttach <- function(libname, pkgname) {
 
-   ver <- "3.1-38"
+   ver <- "3.1-39"
 
    loadmsg <- paste0("\nLoading the 'metafor' package (version ", ver, "). For an\nintroduction to the package please type: help(metafor)\n")
 
@@ -72,4 +72,4 @@
 
 }
 
-#..metafor <- new.env()
+.metafor <- new.env()

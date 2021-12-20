@@ -41,7 +41,7 @@ dfbetas.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE, paral
 
    if (!progbar) {
       pbo <- pbapply::pboptions(type="none")
-      on.exit(pbapply::pboptions(pbo))
+      on.exit(pbapply::pboptions(pbo), add=TRUE)
    }
 
    misscluster <- ifelse(missing(cluster), TRUE, FALSE)

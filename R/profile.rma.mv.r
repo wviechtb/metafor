@@ -40,7 +40,7 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
 
    if (!progbar) {
       pbo <- pbapply::pboptions(type="none")
-      on.exit(pbapply::pboptions(pbo))
+      on.exit(pbapply::pboptions(pbo), add=TRUE)
    }
 
    ddd <- list(...)
@@ -444,7 +444,7 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
             ylim <- range(lls, na.rm=TRUE)
          }
       } else {
-         ylim <- rep(logLik(x), 2)
+         ylim <- rep(logLik(x), 2L)
       }
       ylim[1] <- ylim[1] - .1
       ylim[2] <- ylim[2] + .1

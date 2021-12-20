@@ -18,7 +18,7 @@ simulate.rma <- function(object, nsim = 1, seed = NULL, olim, ...) {
       R.seed <- get(".Random.seed", envir = .GlobalEnv)
       set.seed(seed)
       RNGstate <- structure(seed, kind = as.list(RNGkind()))
-      on.exit(assign(".Random.seed", R.seed, envir = .GlobalEnv))
+      on.exit(assign(".Random.seed", R.seed, envir = .GlobalEnv), add=TRUE)
    }
 
    #########################################################################

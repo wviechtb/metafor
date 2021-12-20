@@ -62,7 +62,7 @@ level=95, digits, verbose=FALSE, ...) {
 
    if (verbose > 2) {
       opwarn <- options(warn=1)
-      on.exit(options(warn=opwarn$warn))
+      on.exit(options(warn=opwarn$warn), add=TRUE)
    }
 
    #########################################################################

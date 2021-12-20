@@ -1,5 +1,5 @@
 forest.cumul.rma <- function(x,
-annotate=TRUE, header=FALSE,
+annotate=TRUE,                                                header=FALSE,
 xlim, alim, olim, ylim, top=3, at, steps=5, level=x$level, refline=0, digits=2L, width,
 xlab,             ilab, ilab.xpos, ilab.pos,
 transf, atransf, targs, rows,
@@ -80,7 +80,7 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
    ### vertical expansion factor: 1st = CI end lines, 2nd = arrows
 
    if (length(efac) == 1L)
-      efac <- rep(efac, 2)
+      efac <- rep(efac, 2L)
 
    ### annotation symbols vector
 
@@ -407,16 +407,16 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
    ### when passing a named vector, the names are for 'family' and the values are for 'font'
 
    if (missing(fonts)) {
-      fonts <- rep(par("family"), 3)
+      fonts <- rep(par("family"), 3L)
    } else {
       if (length(fonts) == 1L)
-         fonts <- rep(fonts, 3)
+         fonts <- rep(fonts, 3L)
       if (length(fonts) == 2L)
          fonts <- c(fonts, fonts[1])
    }
 
    if (is.null(names(fonts)))
-      fonts <- structure(c(1L,1L,1L), names=fonts)
+      fonts <- setNames(c(1L,1L,1L), nm=fonts)
 
    par(family=names(fonts)[1], font=fonts[1])
 
@@ -426,7 +426,7 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
    par.mar.adj <- par.mar - c(0,3,1,1)
    par.mar.adj[par.mar.adj < 0] <- 0
    par(mar = par.mar.adj)
-   on.exit(par(mar = par.mar))
+   on.exit(par(mar = par.mar), add=TRUE)
 
    ### start plot
 
@@ -564,6 +564,8 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
       } else {
          if (length(width) == 1L)
             width <- rep(width, ncol(annotext))
+         if (length(width) != ncol(annotext))
+            stop(mstyle$stop(paste0("Length of 'width' argument (", length(width), ") does not the match number of annotation columns (", ncol(annotext), ").")))
       }
 
       for (j in seq_len(ncol(annotext))) {
@@ -578,6 +580,8 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
       ltext(ddd$textpos[2], rows+rowadj, labels=annotext, pos=2, cex=cex, col=col, ...)
       par(family=names(fonts)[1], font=fonts[1])
 
+   } else {
+      width <- NULL
    }
 
    ### add yi points
@@ -605,6 +609,11 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
    ### return some information about plot invisibly
 
    res <- list(xlim=par("usr")[1:2], alim=alim, at=at, ylim=ylim, rows=rows, cex=cex, cex.lab=cex.lab, cex.axis=cex.axis)
+
+   ### add some additional stuff to be put into .metafor environment, so that it can be used by addpoly()
+
+   sav <- c(res, list(level=level, annotate=annotate, digits=digits[1], width=width, transf=transf, atransf=atransf, targs=targs, fonts=fonts[1:2], annosym=annosym))
+   assign("forest", sav, envir=.metafor)
 
    invisible(res)
 

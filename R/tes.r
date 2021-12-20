@@ -39,7 +39,7 @@ tes <- function(x, vi, sei, subset, data,
 
    if (inherits(x, "rma")) {
 
-      on.exit(options(na.action=na.act))
+      on.exit(options(na.action=na.act), add=TRUE)
 
       .chkclass(class(x), must="rma", notav=c("rma.glmm", "rma.mv", "robust.rma", "rma.ls", "rma.uni.selmodel"))
 

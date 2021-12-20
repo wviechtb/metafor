@@ -1,4 +1,4 @@
-forest.rma <- function(x,
+forest.rma       <- function(x,
 annotate=TRUE, addfit=TRUE, addpred=FALSE, showweights=FALSE, header=FALSE,
 xlim, alim, olim, ylim, top=3, at, steps=5, level=x$level, refline=0, digits=2L, width,
 xlab, slab, mlab, ilab, ilab.xpos, ilab.pos, order,
@@ -13,7 +13,7 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
    .chkclass(class(x), must="rma", notav="rma.ls")
 
    na.act <- getOption("na.action")
-   on.exit(options(na.action=na.act))
+   on.exit(options(na.action=na.act), add=TRUE)
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))
@@ -111,7 +111,7 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
    ### vertical expansion factor: 1st = CI end lines, 2nd = arrows, 3rd = summary polygon or fitted polygons
 
    if (length(efac) == 1L)
-      efac <- rep(efac, 3)
+      efac <- rep(efac, 3L)
 
    if (length(efac) == 2L)
       efac <- c(efac[1], efac[1], efac[2]) # if 2 values specified: 1st = CI end lines and arrows, 2nd = summary polygon or fitted polygons
@@ -634,16 +634,16 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
    ### when passing a named vector, the names are for 'family' and the values are for 'font'
 
    if (missing(fonts)) {
-      fonts <- rep(par("family"), 3)
+      fonts <- rep(par("family"), 3L)
    } else {
       if (length(fonts) == 1L)
-         fonts <- rep(fonts, 3)
+         fonts <- rep(fonts, 3L)
       if (length(fonts) == 2L)
          fonts <- c(fonts, fonts[1])
    }
 
    if (is.null(names(fonts)))
-      fonts <- structure(c(1L,1L,1L), names=fonts)
+      fonts <- setNames(c(1L,1L,1L), nm=fonts)
 
    par(family=names(fonts)[1], font=fonts[1])
 
@@ -948,11 +948,16 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
       } else {
          if (length(width) == 1L)
             width <- rep(width, ncol(annotext))
+         if (length(width) != ncol(annotext))
+            stop(mstyle$stop(paste0("Length of 'width' argument (", length(width), ") does not match the number of annotation columns (", ncol(annotext), ").")))
       }
 
       for (j in seq_len(ncol(annotext))) {
          annotext[,j] <- formatC(annotext[,j], width=width[j])
       }
+
+      if (showweights)
+         width <- width[-1] # remove the first entry for the weights (so this can be used by addpoly() via .metafor)
 
       if (showweights) {
          annotext <- cbind(annotext[,1], "%   ", annotext[,2], annosym[1], annotext[,3], annosym[2], annotext[,4], annosym[3])
@@ -971,6 +976,8 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
       }
       par(family=names(fonts)[1], font=fonts[1])
 
+   } else {
+      width <- NULL
    }
 
    ### add yi points
@@ -1004,7 +1011,10 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
 
    res <- list(xlim=par("usr")[1:2], alim=alim, at=at, ylim=ylim, rows=rows, cex=cex, cex.lab=cex.lab, cex.axis=cex.axis)
 
-   #assign("forest", res, envir=..metafor)
+   ### put stuff into the .metafor environment, so that it can be used by addpoly()
+
+   sav <- c(res, list(level=level, annotate=annotate, digits=digits[1], width=width, transf=transf, atransf=atransf, targs=targs, efac=efac[3], fonts=fonts[1:2], annosym=annosym))
+   assign("forest", sav, envir=.metafor)
 
    invisible(res)
 

@@ -100,7 +100,7 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
    par.mar.adj <- par.mar - c(0,-3,0,-5)
    par.mar.adj[par.mar.adj < 1] <- 1
    par(mar = par.mar.adj)
-   on.exit(par(mar = par.mar))
+   on.exit(par(mar = par.mar), add=TRUE)
 
    ### label for the x-axis
 
@@ -273,10 +273,10 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
    atyis <- c(ci.lb, beta, ci.ub)
    len.l <- ci.xpos-.007*(xlims[2]-xlims[1])
    len.u <- ci.xpos+.007*(xlims[2]-xlims[1])
-   xis.l <- rep(NA_real_,3)
-   zis.l <- rep(NA_real_,3)
-   xis.u <- rep(NA_real_,3)
-   zis.u <- rep(NA_real_,3)
+   xis.l <- rep(NA_real_,3L)
+   zis.l <- rep(NA_real_,3L)
+   xis.u <- rep(NA_real_,3L)
+   zis.u <- rep(NA_real_,3L)
    for (i in seq_len(length(atyis))) {
       xis.l[i] <- sqrt(len.l^2/(1+(atyis[i]/asp.rat)^2))
       zis.l[i] <- xis.l[i]*atyis[i]

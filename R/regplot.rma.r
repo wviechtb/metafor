@@ -15,7 +15,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
       stop(mstyle$stop("Plot not applicable to intercept-only models."))
 
    na.act <- getOption("na.action")
-   on.exit(options(na.action=na.act))
+   on.exit(options(na.action=na.act), add=TRUE)
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))
@@ -90,7 +90,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
       lcol <- c("black", "black", "black", "gray40")
    } else {
       if (length(lcol) == 1L)
-         lcol <- rep(lcol, 4)
+         lcol <- rep(lcol, 4L)
       if (length(lcol) == 2L)
          lcol <- c(lcol[c(1,2,2)], "gray40")
       if (length(lcol) == 3L)
@@ -101,7 +101,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
       lty <- c("solid", "dashed", "dotted", "solid")
    } else {
       if (length(lty) == 1L)
-         lty <- rep(lty, 4)
+         lty <- rep(lty, 4L)
       if (length(lty) == 2L)
          lty <- c(lty[c(1,2,2)], "solid")
       if (length(lty) == 3L)
@@ -112,7 +112,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
       lwd <- c(3,1,1,2)
    } else {
       if (length(lwd) == 1L)
-         lwd <- rep(lwd, 4)
+         lwd <- rep(lwd, 4L)
       if (length(lwd) == 2L)
          lwd <- c(lwd[c(1,2,2)], 2)
       if (length(lwd) == 3L)

@@ -184,7 +184,7 @@ addid=TRUE, addcomp=TRUE, adddesign=TRUE, minlen=2, var.names=c("id","comp","des
 
    restruct <- function(x) {
       if (nrow(x) > 1L) {
-         cbind(x[-nrow(x),], x[rep(nrow(x),nrow(x)-1),grpvars.pos])
+         cbind(x[-nrow(x),], x[rep(nrow(x),nrow(x)-1L),grpvars.pos])
       } else {
          # to handle one-arm studies
          unname(c(x, rep(NA, length(grpvars.pos))))
@@ -223,7 +223,7 @@ addid=TRUE, addcomp=TRUE, adddesign=TRUE, minlen=2, var.names=c("id","comp","des
 
    restruct <- function(x) {
       if (length(x) > 1L) {
-         rep(paste0(x, collapse="-"), length(x)-1)
+         rep(paste0(x, collapse="-"), length(x)-1L)
       } else {
          NA
       }

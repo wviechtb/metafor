@@ -43,7 +43,7 @@ profile.rma.uni.selmodel <- function(fitted, tau2, delta,
 
    if (!progbar) {
       pbo <- pbapply::pboptions(type="none")
-      on.exit(pbapply::pboptions(pbo))
+      on.exit(pbapply::pboptions(pbo), add=TRUE)
    }
 
    ddd <- list(...)
@@ -287,7 +287,7 @@ profile.rma.uni.selmodel <- function(fitted, tau2, delta,
             ylim <- range(lls, na.rm=TRUE)
          }
       } else {
-         ylim <- rep(logLik(x), 2)
+         ylim <- rep(logLik(x), 2L)
       }
       ylim[1] <- ylim[1] - .1
       ylim[2] <- ylim[2] + .1

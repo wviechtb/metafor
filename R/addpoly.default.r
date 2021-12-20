@@ -8,8 +8,8 @@
 # pi.ub) arguments.
 
 addpoly.default <- function(x, vi, sei, ci.lb, ci.ub, pi.lb, pi.ub,
-rows=-1, level=95, annotate=TRUE, digits=2, width, mlab, transf,
-atransf, targs, efac=1, col, border, lty, fonts, cex, annosym, ...) {
+rows=-1, level, annotate, digits, width, mlab, transf,
+atransf, targs, efac, col, border, lty, fonts, cex, annosym, ...) {
 
    #########################################################################
 
@@ -20,17 +20,35 @@ atransf, targs, efac=1, col, border, lty, fonts, cex, annosym, ...) {
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
+   if (missing(level))
+      level <- .getfromenv("forest", "level", default=95)
+
+   if (missing(annotate))
+      annotate <- .getfromenv("forest", "annotate", default=TRUE)
+
+   if (missing(digits))
+      digits <- .getfromenv("forest", "digits", default=2)
+
+   if (missing(width))
+      width <- .getfromenv("forest", "width", default=NULL)
+
    if (missing(transf))
-      transf <- FALSE
+      transf <- .getfromenv("forest", "transf", default=FALSE)
 
    if (missing(atransf))
-      atransf <- FALSE
+      atransf <- .getfromenv("forest", "atransf", default=FALSE)
 
    if (is.function(transf) && is.function(atransf))
       stop(mstyle$stop("Use either 'transf' or 'atransf' to specify a transformation (not both)."))
 
    if (missing(targs))
-      targs <- NULL
+      targs <- .getfromenv("forest", "targs", default=NULL)
+
+   if (missing(efac))
+      efac <- .getfromenv("forest", "efac", default=1)
+
+   if (missing(fonts))
+      fonts <- .getfromenv("forest", "fonts", default=NULL)
 
    if (missing(mlab))
       mlab <- NULL
@@ -45,7 +63,10 @@ atransf, targs, efac=1, col, border, lty, fonts, cex, annosym, ...) {
       lty <- "dotted"
 
    if (missing(cex))
-      cex <- NULL
+      cex <- .getfromenv("forest", "cex", default=NULL)
+
+   if (missing(annosym))
+      annosym <- .getfromenv("forest", "annosym", default=NULL)
 
    ddd <- list(...)
 
@@ -59,7 +80,7 @@ atransf, targs, efac=1, col, border, lty, fonts, cex, annosym, ...) {
 
    ### annotation symbols vector
 
-   if (missing(annosym) || is.null(annosym))
+   if (is.null(annosym))
       annosym <- c(" [", ", ", "]", "-") # 4th element for minus sign symbol
    if (length(annosym) == 3L)
       annosym <- c(annosym, "-")
@@ -79,15 +100,15 @@ atransf, targs, efac=1, col, border, lty, fonts, cex, annosym, ...) {
    ### set/get fonts (1st for labels, 2nd for annotations)
    ### when passing a named vector, the names are for 'family' and the values are for 'font'
 
-   if (missing(fonts) || is.null(fonts)) {
-      fonts <- rep(par("family"), 2)
+   if (is.null(fonts)) {
+      fonts <- rep(par("family"), 2L)
    } else {
       if (length(fonts) == 1L)
-         fonts <- rep(fonts, 2)
+         fonts <- rep(fonts, 2L)
    }
 
    if (is.null(names(fonts)))
-      fonts <- structure(c(1L,1L), names=fonts)
+      fonts <- setNames(c(1L,1L), nm=fonts)
 
    par(family=names(fonts)[1], font=fonts[1])
 
@@ -276,7 +297,7 @@ atransf, targs, efac=1, col, border, lty, fonts, cex, annosym, ...) {
       annotext <- .fcf(annotext, digits)
       annotext <- sub("-", annosym[4], annotext, fixed=TRUE)
 
-      if (missing(width) || is.null(width)) {
+      if (is.null(width)) {
          width <- apply(annotext, 2, function(x) max(nchar(x)))
       } else {
          if (length(width) == 1L)

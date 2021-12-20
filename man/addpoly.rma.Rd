@@ -5,35 +5,35 @@
    Function to add a polygon to a forest plot showing the summary estimate with corresponding confidence interval based on an object of class \code{"rma"}.
 }
 \usage{
-\method{addpoly}{rma}(x, row=-2, level=x$level, annotate=TRUE,
-        addpred=FALSE, digits=2, width, mlab, transf, atransf, targs,
-        efac=1, col, border, lty, fonts, cex, annosym, \dots)
+\method{addpoly}{rma}(x, row=-2, level=x$level, annotate,
+        addpred=FALSE, digits, width, mlab, transf, atransf, targs,
+        efac, col, border, lty, fonts, cex, annosym, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma"}.}
    \item{row}{numeric value to specify the row (or more generally, the horizontal position) for plotting the polygon (the default is \code{-2}).}
    \item{level}{numeric value between 0 and 100 to specify the confidence interval level (the default is to take the value from the object).}
-   \item{annotate}{logical to specify whether annotations for the summary estimate should be added to the plot (the default is \code{TRUE}).}
+   \item{annotate}{optional logical to specify whether annotations for the summary estimate should be added to the plot.}
    \item{addpred}{logical to specify whether the bounds of the prediction interval should be added to the plot (the default is \code{FALSE}).}
-   \item{digits}{integer to specify the number of decimal places to which the annotations should be rounded (the default is 2).}
+   \item{digits}{optional integer to specify the number of decimal places to which the annotations should be rounded.}
    \item{width}{optional integer to manually adjust the width of the columns for the annotations.}
    \item{mlab}{optional character string giving a label for the summary estimate polygon. If unspecified, the function sets a default label.}
-   \item{transf}{optional argument to specify a function that should be used to transform the summary estimate and confidence interval bound (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
-   \item{atransf}{optional argument to specify a function that should be used to transform the annotations (e.g., \code{atransf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
+   \item{transf}{optional argument to specify a function that should be used to transform the summary estimate and confidence interval bound (e.g., \code{transf=exp}; see also \link{transf}).}
+   \item{atransf}{optional argument to specify a function that should be used to transform the annotations (e.g., \code{atransf=exp}; see also \link{transf}).}
    \item{targs}{optional arguments needed by the function specified via \code{transf} or \code{atransf}.}
-   \item{efac}{vertical expansion factor for the polygon. The default value of 1 should usually work okay.}
+   \item{efac}{optional vertical expansion factor for the polygon.}
    \item{col}{optional character string to specify the name of a color to use for the polygon. If unspecified, the function sets a default color.}
    \item{border}{optional character string to specify the name of a color to use for the border of the polygon. If unspecified, the function sets a default color.}
    \item{lty}{optional character string to specify the line type for the prediction interval. If unspecified, the function sets this to \code{"dotted"} by default.}
-   \item{fonts}{optional character string to specify the font to use for the label and annotations. If unspecified, the default font is used.}
-   \item{cex}{optional symbol expansion factor. If unspecified, the function tries to set this to a sensible value.}
+   \item{fonts}{optional character string to specify the font to use for the label and annotations.}
+   \item{cex}{optional symbol expansion factor.}
    \item{annosym}{optional vector of length 3 to change the left bracket, separation, and right bracket symbols for the annotations.}
    \item{\dots}{other arguments.}
 }
 \details{
    The function can be used to add a four-sided polygon, sometimes called a summary \sQuote{diamond}, to an existing forest plot created with the \code{\link{forest}} function. The polygon shows the summary estimate (with its confidence interval bounds) based on an equal- or a random-effects model. Using this function, summary estimates based on different types of models can be shown in the same plot. Also, summary estimates based on a subgrouping of the studies can be added to the plot this way. See \sQuote{Examples}.
 
-   The arguments \code{transf}, \code{atransf}, \code{efac}, and \code{cex} should always be set equal to the same values used to create the forest plot.
+   If unspecified, the arguments \code{annotate}, \code{digits}, \code{width}, \code{transf}, \code{atransf}, \code{targs}, \code{efac} (only if the forest plot was created with \code{\link{forest.rma}}), \code{fonts}, \code{cex}, and \code{annosym} are automatically set equal to the same values used to create the forest plot.
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
@@ -56,7 +56,7 @@ forest(res, atransf=exp, xlim=c(-8,6), ylim=c(-2.5,16), header=TRUE)
 res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
 ### add summary estimate from the random-effects model to the forest plot
-addpoly(res, atransf=exp)
+addpoly(res)
 
 ### forest plot with subgrouping of studies and summaries per subgroup
 res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg,
@@ -75,12 +75,12 @@ text(-16, c(24,16,5), c("Systematic Allocation", "Random Allocation",
 par(op)
 res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg,
            subset=(alloc=="systematic"))
-addpoly(res, row=18.5, cex=.75, atransf=exp, mlab="RE Model for Subgroup")
+addpoly(res, row=18.5, mlab="RE Model for Subgroup")
 res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg,
            subset=(alloc=="random"))
-addpoly(res, row=7.5, cex=.75, atransf=exp, mlab="RE Model for Subgroup")
+addpoly(res, row=7.5, mlab="RE Model for Subgroup")
 res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg,
            subset=(alloc=="alternate"))
-addpoly(res, row=1.5, cex=.75, atransf=exp, mlab="RE Model for Subgroup")
+addpoly(res, row=1.5, mlab="RE Model for Subgroup")
 }
 \keyword{aplot}

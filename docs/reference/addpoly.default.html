@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-38</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-39</span>
       </span>
     </div>
 
@@ -98,8 +98,8 @@
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for default</span>
 <span class="fu"><a href="addpoly.html">addpoly</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">vi</span>, <span class="va">sei</span>, <span class="va">ci.lb</span>, <span class="va">ci.ub</span>, <span class="va">pi.lb</span>, <span class="va">pi.ub</span>,
-        rows<span class="op">=</span><span class="op">-</span><span class="fl">1</span>, level<span class="op">=</span><span class="fl">95</span>, annotate<span class="op">=</span><span class="cn">TRUE</span>, digits<span class="op">=</span><span class="fl">2</span>, <span class="va">width</span>, <span class="va">mlab</span>,
-        <span class="va">transf</span>, <span class="va">atransf</span>, <span class="va">targs</span>, efac<span class="op">=</span><span class="fl">1</span>, <span class="va">col</span>, <span class="va">border</span>, <span class="va">lty</span>, <span class="va">fonts</span>,
+        rows<span class="op">=</span><span class="op">-</span><span class="fl">1</span>, <span class="va">level</span>, <span class="va">annotate</span>, <span class="va">digits</span>, <span class="va">width</span>, <span class="va">mlab</span>,
+        <span class="va">transf</span>, <span class="va">atransf</span>, <span class="va">targs</span>, <span class="va">efac</span>, <span class="va">col</span>, <span class="va">border</span>, <span class="va">lty</span>, <span class="va">fonts</span>,
         <span class="va">cex</span>, <span class="va">annosym</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
     </div>
 
@@ -122,23 +122,23 @@
 <dt>rows</dt>
 <dd><p>vector to specify the rows (or more generally, the horizontal positions) for plotting the polygons (defaults is <code>-1</code>). Can also be a single value to specify the row (horizontal position) of the first polygon (the remaining polygons are then plotted below this starting row).</p></dd>
 <dt>level</dt>
-<dd><p>numeric value between 0 and 100 to specify the confidence interval level (the default is 95).</p></dd>
+<dd><p>optional numeric value between 0 and 100 to specify the confidence interval level.</p></dd>
 <dt>annotate</dt>
-<dd><p>logical to specify whether annotations should be added to the plot for the polygons that are drawn (the default is <code>TRUE</code>).</p></dd>
+<dd><p>optional logical to specify whether annotations should be added to the plot for the polygons that are drawn.</p></dd>
 <dt>digits</dt>
-<dd><p>integer to specify the number of decimal places to which the annotations should be rounded (the default is 2).</p></dd>
+<dd><p>optional integer to specify the number of decimal places to which the annotations should be rounded.</p></dd>
 <dt>width</dt>
 <dd><p>optional integer to manually adjust the width of the columns for the annotations.</p></dd>
 <dt>mlab</dt>
 <dd><p>optional character vector with the same length as <code>x</code> giving labels for the polygons that are drawn.</p></dd>
 <dt>transf</dt>
-<dd><p>optional argument to specify a function that should be used to transform the <code>x</code> values and confidence interval bounds (e.g., <code>transf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
+<dd><p>optional argument to specify a function that should be used to transform the <code>x</code> values and confidence interval bounds (e.g., <code>transf=exp</code>; see also <a href="transf.html">transf</a>).</p></dd>
 <dt>atransf</dt>
-<dd><p>optional argument to specify a function that should be used to transform the annotations (e.g., <code>atransf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
+<dd><p>optional argument to specify a function that should be used to transform the annotations (e.g., <code>atransf=exp</code>; see also <a href="transf.html">transf</a>).</p></dd>
 <dt>targs</dt>
 <dd><p>optional arguments needed by the function specified via <code>transf</code> or <code>atransf</code>.</p></dd>
 <dt>efac</dt>
-<dd><p>vertical expansion factor for the polygons. The default value of 1 should usually work okay.</p></dd>
+<dd><p>optional vertical expansion factor for the polygons.</p></dd>
 <dt>col</dt>
 <dd><p>optional character string to specify the name of a color to use for the polygons. If unspecified, the function sets a default color.</p></dd>
 <dt>border</dt>
@@ -146,9 +146,9 @@
 <dt>lty</dt>
 <dd><p>optional character string to specify the line type for the prediction interval. If unspecified, the function sets this to <code>"dotted"</code> by default.</p></dd>
 <dt>fonts</dt>
-<dd><p>optional character string to specify the font to use for the labels and annotations. If unspecified, the default font is used.</p></dd>
+<dd><p>optional character string to specify the font to use for the labels and annotations.</p></dd>
 <dt>cex</dt>
-<dd><p>optional symbol expansion factor. If unspecified, the function tries to set this to a sensible value.</p></dd>
+<dd><p>optional symbol expansion factor.</p></dd>
 <dt>annosym</dt>
 <dd><p>optional vector of length 3 to change the left bracket, separation, and right bracket symbols for the annotations.</p></dd>
 <dt>...</dt>
@@ -158,7 +158,7 @@
     <h2>Details</h2>
     <p>The function can be used to add one or more polygons to an existing forest plot created with the <code><a href="forest.html">forest</a></code> function. For example, summary estimates based on a model involving moderators can be added to the plot this way (see ‘Examples’).</p>
 <p>To use the function, one should specify the values at which the polygons should be drawn (via the <code>x</code> argument) together with the corresponding variances (via the <code>vi</code> argument) or with the corresponding standard errors (via the <code>sei</code> argument). Alternatively, one can specify the values at which the polygons should be drawn together with the corresponding confidence interval bounds (via the <code>ci.lb</code> and <code>ci.ub</code> arguments). Optionally, one can also specify the bounds of the corresponding prediction interval bounds via the <code>pi.lb</code> and <code>pi.ub</code> arguments.</p>
-<p>The arguments <code>transf</code>, <code>atransf</code>, <code>efac</code>, and <code>cex</code> should always be set equal to the same values used to create the forest plot.</p>
+<p>If unspecified, the arguments <code>level</code>, <code>annotate</code>, <code>digits</code>, <code>width</code>, <code>transf</code>, <code>atransf</code>, <code>targs</code>, <code>efac</code> (only if the forest plot was created with <code><a href="forest.rma.html">forest.rma</a></code>), <code>fonts</code>, <code>cex</code>, and <code>annosym</code> are automatically set equal to the same values used to create the forest plot.</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -190,8 +190,7 @@
 <span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="predict.rma.html">predict</a></span><span class="op">(</span><span class="va">res</span>, newmods<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">30</span>, <span class="fl">50</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### add predicted average risk ratios to forest plot</span></span>
-<span class="r-in"><span class="fu"><a href="addpoly.html">addpoly</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">pred</span>, sei<span class="op">=</span><span class="va">x</span><span class="op">$</span><span class="va">se</span>, atransf<span class="op">=</span><span class="va">exp</span>, rows<span class="op">=</span><span class="op">-</span><span class="fl">2</span>,</span>
-<span class="r-in">        mlab<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"- at 10 Degrees"</span>, <span class="st">"- at 30 Degrees"</span>, <span class="st">"- at 50 Degrees"</span><span class="op">)</span>, cex<span class="op">=</span><span class="fl">.8</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="addpoly.html">addpoly</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">pred</span>, sei<span class="op">=</span><span class="va">x</span><span class="op">$</span><span class="va">se</span>, rows<span class="op">=</span><span class="op">-</span><span class="fl">2</span>, mlab<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"- at 10 Degrees"</span>, <span class="st">"- at 30 Degrees"</span>, <span class="st">"- at 50 Degrees"</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>h<span class="op">=</span><span class="fl">0</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/text.html" class="external-link">text</a></span><span class="op">(</span><span class="op">-</span><span class="fl">8</span>, <span class="op">-</span><span class="fl">1</span>, <span class="st">"Model-Based Estimates:"</span>, pos<span class="op">=</span><span class="fl">4</span>, cex<span class="op">=</span><span class="fl">.8</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/text.html" class="external-link">text</a></span><span class="op">(</span><span class="op">-</span><span class="fl">4</span>, <span class="fl">15</span>, <span class="st">"Latitude"</span>, cex<span class="op">=</span><span class="fl">.8</span>, font<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>

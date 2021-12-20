@@ -45,7 +45,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
       struct <- c(struct, struct)
 
    na.act <- getOption("na.action")
-   on.exit(options(na.action=na.act))
+   on.exit(options(na.action=na.act), add=TRUE)
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))
@@ -1619,7 +1619,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
    ### in case user manually sets con$cholesky and specifies only a single value
 
    if (length(con$cholesky) == 1L)
-      con$cholesky <- rep(con$cholesky, 2)
+      con$cholesky <- rep(con$cholesky, 2L)
 
    ### use of Cholesky factorization only applicable for models with "UN", "UNR", and "GEN" structure
 

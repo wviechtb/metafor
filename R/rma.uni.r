@@ -129,7 +129,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
    if (verbose > 2) {
       opwarn <- options(warn=1)
-      on.exit(options(warn=opwarn$warn))
+      on.exit(options(warn=opwarn$warn), add=TRUE)
    }
 
    #########################################################################

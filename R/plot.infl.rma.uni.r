@@ -65,7 +65,7 @@ col.na="lightgray", ...) {
    par.mar.adj[par.mar.adj < 1] <- 1
    par(mar = par.mar.adj)
    par.mfrow <- par("mfrow")
-   on.exit(par(mar = par.mar, mfrow = par.mfrow))
+   on.exit(par(mar = par.mar, mfrow = par.mfrow), add=TRUE)
 
    #########################################################################
 

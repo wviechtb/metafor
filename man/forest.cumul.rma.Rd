@@ -27,7 +27,7 @@
    \item{level}{numeric value between 0 and 100 to specify the confidence interval level (the default is to take the value from the object).}
    \item{refline}{numeric value to specify the location of the vertical \sQuote{reference} line (the default is 0). The line can be suppressed by setting this argument to \code{NA}.}
    \item{digits}{integer to specify the number of decimal places to which the tick mark labels of the x-axis and the annotations should be rounded (the default is \code{2L}). Can also be a vector of two integers, the first to specify the number of decimal places for the annotations, the second for the x-axis labels. When specifying an integer (e.g., \code{2L}), trailing zeros after the decimal mark are dropped for the x-axis labels. When specifying a numeric value (e.g., \code{2}), trailing zeros are retained.}
-   \item{width}{optional integer to manually adjust the width of the columns for the annotations.}
+   \item{width}{optional integer to manually adjust the width of the columns for the annotations (either a single integer or a vector of the same length as the number of annotation columns).}
    \item{xlab}{title for the x-axis. If unspecified, the function tries to set an appropriate axis title.}
    \item{ilab}{optional vector, matrix, or data frame providing additional information about the studies that should be added to the plot.}
    \item{ilab.xpos}{numeric vector to specify the x-axis position(s) of the variable(s) given via \code{ilab} (must be specified if \code{ilab} is specified).}

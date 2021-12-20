@@ -18,7 +18,7 @@ xlim, ylim, xhist=TRUE, yhist=TRUE, hh=0.3, breaks, adjust, lwd, labels, ...) {
 
       if (!is.list(trim)) {
          if (length(trim) == 1L)
-            trim <- rep(trim, ncol(x$res)-4)
+            trim <- rep(trim, ncol(x$res)-4L)
          trim <- as.list(trim)
       }
 
@@ -142,7 +142,7 @@ xlim, ylim, xhist=TRUE, yhist=TRUE, hh=0.3, breaks, adjust, lwd, labels, ...) {
       par.mar <- par("mar")
       par.mar.adj <- par.mar - c(0,-1,3.1,1.1)
       par.mar.adj[par.mar.adj < 0] <- 0
-      on.exit(par(mar = par.mar))
+      on.exit(par(mar = par.mar), add=TRUE)
 
       if (xhist & yhist)
          layout(mat=matrix(c(1,2,3,4), nrow=2, byrow=TRUE), widths=c(1-hh[2],hh[2]), heights=c(hh[1],1-hh[1]))

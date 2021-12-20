@@ -678,7 +678,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
          ### create very long format dataset
 
-         dat <- data.frame(rep(slab, each=4), stringsAsFactors=FALSE)
+         dat <- data.frame(rep(slab, each=4L), stringsAsFactors=FALSE)
 
          dat[[2]] <- rep(c(1,1,2,2), k)
          dat[[3]] <- rep(c(1,2,1,2), k)
@@ -697,13 +697,13 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
          dat[[3]] <- factor(dat[[3]], levels=c(2,1))
 
          if (has.data && append)
-            dat <- cbind(data[rep(seq_len(k), each=4),], dat)
+            dat <- cbind(data[rep(seq_len(k), each=4L),], dat)
 
       } else {
 
          ### create regular long format dataset
 
-         dat <- data.frame(rep(slab, each=2), stringsAsFactors=FALSE)
+         dat <- data.frame(rep(slab, each=2L), stringsAsFactors=FALSE)
 
          dat[[2]] <- rep(c(1,2), k)
          dat[[3]] <- c(rbind(ai,ci))
@@ -721,7 +721,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
          dat[[2]] <- factor(dat[[2]], levels=c(2,1))
 
          if (has.data && append)
-            dat <- cbind(data[rep(seq_len(k), each=2),], dat)
+            dat <- cbind(data[rep(seq_len(k), each=2L),], dat)
 
       }
 
@@ -768,7 +768,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
          ### create very long format dataset
 
-         dat <- data.frame(rep(slab, each=4), stringsAsFactors=FALSE)
+         dat <- data.frame(rep(slab, each=4L), stringsAsFactors=FALSE)
 
          dat[[2]] <- rep(c(1,1,2,2), k)
          dat[[3]] <- rep(c(1,2,1,2), k)
@@ -787,13 +787,13 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
          dat[[3]] <- factor(dat[[3]], levels=c(2,1))
 
          if (has.data && append)
-            dat <- data.frame(data[rep(seq_len(k), each=4),], dat)
+            dat <- data.frame(data[rep(seq_len(k), each=4L),], dat)
 
       } else {
 
          ### create regular long format dataset
 
-         dat <- data.frame(rep(slab, each=2), stringsAsFactors=FALSE)
+         dat <- data.frame(rep(slab, each=2L), stringsAsFactors=FALSE)
 
          dat[[2]] <- rep(c(1,2), k)
          dat[[3]] <- c(rbind(ai+bi,ai+ci))
@@ -811,7 +811,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
          dat[[2]] <- factor(dat[[2]], levels=c(2,1))
 
          if (has.data && append)
-            dat <- cbind(data[rep(seq_len(k), each=2),], dat)
+            dat <- cbind(data[rep(seq_len(k), each=2L),], dat)
 
       }
 
@@ -858,7 +858,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
          ### create very long format dataset
 
-         dat <- data.frame(rep(slab, each=4), stringsAsFactors=FALSE)
+         dat <- data.frame(rep(slab, each=4L), stringsAsFactors=FALSE)
 
          dat[[2]] <- rep(c(1,1,2,2), k)
          dat[[3]] <- rep(c(1,2,1,2), k)
@@ -877,13 +877,13 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
          dat[[3]] <- factor(dat[[3]], levels=c(2,1))
 
          if (has.data && append)
-            dat <- cbind(data[rep(seq_len(k), each=4),], dat)
+            dat <- cbind(data[rep(seq_len(k), each=4L),], dat)
 
       } else {
 
          ### create regular long format dataset
 
-         dat <- data.frame(rep(slab, each=2), stringsAsFactors=FALSE)
+         dat <- data.frame(rep(slab, each=2L), stringsAsFactors=FALSE)
 
          dat[[2]] <- rep(c(1,2), k)
          dat[[3]] <- c(rbind(ai,ci))
@@ -901,7 +901,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
          dat[[2]] <- factor(dat[[2]], levels=c(2,1))
 
          if (has.data && append)
-            dat <- cbind(data[rep(seq_len(k), each=2),], dat)
+            dat <- cbind(data[rep(seq_len(k), each=2L),], dat)
 
       }
 
@@ -944,7 +944,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
       ### create long format dataset
 
-      dat <- data.frame(rep(slab, each=2), stringsAsFactors=FALSE)
+      dat <- data.frame(rep(slab, each=2L), stringsAsFactors=FALSE)
 
       dat[[2]] <- rep(c(1,2), k)
       dat[[3]] <- c(rbind(x1i,x2i))
@@ -962,7 +962,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
       dat[[2]] <- factor(dat[[2]], levels=c(2,1))
 
       if (has.data && append)
-         dat <- cbind(data[rep(seq_len(k), each=2),], dat)
+         dat <- cbind(data[rep(seq_len(k), each=2L),], dat)
 
    }
 
@@ -1005,7 +1005,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
       ### create long format dataset
 
-      dat <- data.frame(rep(slab, each=2), stringsAsFactors=FALSE)
+      dat <- data.frame(rep(slab, each=2L), stringsAsFactors=FALSE)
 
       dat[[2]] <- rep(c(1,2), k)
       dat[[3]] <- c(rbind(m1i,m2i))
@@ -1024,7 +1024,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
       dat[[2]] <- factor(dat[[2]], levels=c(2,1))
 
       if (has.data && append)
-         dat <- cbind(data[rep(seq_len(k), each=2),], dat)
+         dat <- cbind(data[rep(seq_len(k), each=2L),], dat)
 
    }
 
@@ -1122,7 +1122,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
          ### create very long format dataset
 
-         dat <- data.frame(rep(slab, each=2), stringsAsFactors=FALSE)
+         dat <- data.frame(rep(slab, each=2L), stringsAsFactors=FALSE)
 
          dat[[2]] <- rep(c(1,2), k)
          dat[[3]] <- c(rbind(xi,mi))
@@ -1139,7 +1139,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
          dat[[2]] <- factor(dat[[2]], levels=c(2,1))
 
          if (has.data && append)
-            dat <- cbind(data[rep(seq_len(k), each=2),], dat)
+            dat <- cbind(data[rep(seq_len(k), each=2L),], dat)
 
       } else {
 

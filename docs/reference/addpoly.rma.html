@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-38</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-39</span>
       </span>
     </div>
 
@@ -97,9 +97,9 @@
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for rma</span>
-<span class="fu"><a href="addpoly.html">addpoly</a></span><span class="op">(</span><span class="va">x</span>, row<span class="op">=</span><span class="op">-</span><span class="fl">2</span>, level<span class="op">=</span><span class="va">x</span><span class="op">$</span><span class="va">level</span>, annotate<span class="op">=</span><span class="cn">TRUE</span>,
-        addpred<span class="op">=</span><span class="cn">FALSE</span>, digits<span class="op">=</span><span class="fl">2</span>, <span class="va">width</span>, <span class="va">mlab</span>, <span class="va">transf</span>, <span class="va">atransf</span>, <span class="va">targs</span>,
-        efac<span class="op">=</span><span class="fl">1</span>, <span class="va">col</span>, <span class="va">border</span>, <span class="va">lty</span>, <span class="va">fonts</span>, <span class="va">cex</span>, <span class="va">annosym</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="addpoly.html">addpoly</a></span><span class="op">(</span><span class="va">x</span>, row<span class="op">=</span><span class="op">-</span><span class="fl">2</span>, level<span class="op">=</span><span class="va">x</span><span class="op">$</span><span class="va">level</span>, <span class="va">annotate</span>,
+        addpred<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">digits</span>, <span class="va">width</span>, <span class="va">mlab</span>, <span class="va">transf</span>, <span class="va">atransf</span>, <span class="va">targs</span>,
+        <span class="va">efac</span>, <span class="va">col</span>, <span class="va">border</span>, <span class="va">lty</span>, <span class="va">fonts</span>, <span class="va">cex</span>, <span class="va">annosym</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -111,23 +111,23 @@
 <dt>level</dt>
 <dd><p>numeric value between 0 and 100 to specify the confidence interval level (the default is to take the value from the object).</p></dd>
 <dt>annotate</dt>
-<dd><p>logical to specify whether annotations for the summary estimate should be added to the plot (the default is <code>TRUE</code>).</p></dd>
+<dd><p>optional logical to specify whether annotations for the summary estimate should be added to the plot.</p></dd>
 <dt>addpred</dt>
 <dd><p>logical to specify whether the bounds of the prediction interval should be added to the plot (the default is <code>FALSE</code>).</p></dd>
 <dt>digits</dt>
-<dd><p>integer to specify the number of decimal places to which the annotations should be rounded (the default is 2).</p></dd>
+<dd><p>optional integer to specify the number of decimal places to which the annotations should be rounded.</p></dd>
 <dt>width</dt>
 <dd><p>optional integer to manually adjust the width of the columns for the annotations.</p></dd>
 <dt>mlab</dt>
 <dd><p>optional character string giving a label for the summary estimate polygon. If unspecified, the function sets a default label.</p></dd>
 <dt>transf</dt>
-<dd><p>optional argument to specify a function that should be used to transform the summary estimate and confidence interval bound (e.g., <code>transf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
+<dd><p>optional argument to specify a function that should be used to transform the summary estimate and confidence interval bound (e.g., <code>transf=exp</code>; see also <a href="transf.html">transf</a>).</p></dd>
 <dt>atransf</dt>
-<dd><p>optional argument to specify a function that should be used to transform the annotations (e.g., <code>atransf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
+<dd><p>optional argument to specify a function that should be used to transform the annotations (e.g., <code>atransf=exp</code>; see also <a href="transf.html">transf</a>).</p></dd>
 <dt>targs</dt>
 <dd><p>optional arguments needed by the function specified via <code>transf</code> or <code>atransf</code>.</p></dd>
 <dt>efac</dt>
-<dd><p>vertical expansion factor for the polygon. The default value of 1 should usually work okay.</p></dd>
+<dd><p>optional vertical expansion factor for the polygon.</p></dd>
 <dt>col</dt>
 <dd><p>optional character string to specify the name of a color to use for the polygon. If unspecified, the function sets a default color.</p></dd>
 <dt>border</dt>
@@ -135,9 +135,9 @@
 <dt>lty</dt>
 <dd><p>optional character string to specify the line type for the prediction interval. If unspecified, the function sets this to <code>"dotted"</code> by default.</p></dd>
 <dt>fonts</dt>
-<dd><p>optional character string to specify the font to use for the label and annotations. If unspecified, the default font is used.</p></dd>
+<dd><p>optional character string to specify the font to use for the label and annotations.</p></dd>
 <dt>cex</dt>
-<dd><p>optional symbol expansion factor. If unspecified, the function tries to set this to a sensible value.</p></dd>
+<dd><p>optional symbol expansion factor.</p></dd>
 <dt>annosym</dt>
 <dd><p>optional vector of length 3 to change the left bracket, separation, and right bracket symbols for the annotations.</p></dd>
 <dt>...</dt>
@@ -146,7 +146,7 @@
     <div id="details">
     <h2>Details</h2>
     <p>The function can be used to add a four-sided polygon, sometimes called a summary ‘diamond’, to an existing forest plot created with the <code><a href="forest.html">forest</a></code> function. The polygon shows the summary estimate (with its confidence interval bounds) based on an equal- or a random-effects model. Using this function, summary estimates based on different types of models can be shown in the same plot. Also, summary estimates based on a subgrouping of the studies can be added to the plot this way. See ‘Examples’.</p>
-<p>The arguments <code>transf</code>, <code>atransf</code>, <code>efac</code>, and <code>cex</code> should always be set equal to the same values used to create the forest plot.</p>
+<p>If unspecified, the arguments <code>annotate</code>, <code>digits</code>, <code>width</code>, <code>transf</code>, <code>atransf</code>, <code>targs</code>, <code>efac</code> (only if the forest plot was created with <code><a href="forest.rma.html">forest.rma</a></code>), <code>fonts</code>, <code>cex</code>, and <code>annosym</code> are automatically set equal to the same values used to create the forest plot.</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -174,7 +174,7 @@
 <span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### add summary estimate from the random-effects model to the forest plot</span></span>
-<span class="r-in"><span class="fu"><a href="addpoly.html">addpoly</a></span><span class="op">(</span><span class="va">res</span>, atransf<span class="op">=</span><span class="va">exp</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="addpoly.html">addpoly</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
 <span class="r-plt img"><img src="addpoly.rma-1.png" alt="" width="864" height="768"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### forest plot with subgrouping of studies and summaries per subgroup</span></span>
@@ -194,13 +194,13 @@
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span><span class="va">op</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span>,</span>
 <span class="r-in">           subset<span class="op">=</span><span class="op">(</span><span class="va">alloc</span><span class="op">==</span><span class="st">"systematic"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="addpoly.html">addpoly</a></span><span class="op">(</span><span class="va">res</span>, row<span class="op">=</span><span class="fl">18.5</span>, cex<span class="op">=</span><span class="fl">.75</span>, atransf<span class="op">=</span><span class="va">exp</span>, mlab<span class="op">=</span><span class="st">"RE Model for Subgroup"</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="addpoly.html">addpoly</a></span><span class="op">(</span><span class="va">res</span>, row<span class="op">=</span><span class="fl">18.5</span>, mlab<span class="op">=</span><span class="st">"RE Model for Subgroup"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span>,</span>
 <span class="r-in">           subset<span class="op">=</span><span class="op">(</span><span class="va">alloc</span><span class="op">==</span><span class="st">"random"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="addpoly.html">addpoly</a></span><span class="op">(</span><span class="va">res</span>, row<span class="op">=</span><span class="fl">7.5</span>, cex<span class="op">=</span><span class="fl">.75</span>, atransf<span class="op">=</span><span class="va">exp</span>, mlab<span class="op">=</span><span class="st">"RE Model for Subgroup"</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="addpoly.html">addpoly</a></span><span class="op">(</span><span class="va">res</span>, row<span class="op">=</span><span class="fl">7.5</span>, mlab<span class="op">=</span><span class="st">"RE Model for Subgroup"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span>,</span>
 <span class="r-in">           subset<span class="op">=</span><span class="op">(</span><span class="va">alloc</span><span class="op">==</span><span class="st">"alternate"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="addpoly.html">addpoly</a></span><span class="op">(</span><span class="va">res</span>, row<span class="op">=</span><span class="fl">1.5</span>, cex<span class="op">=</span><span class="fl">.75</span>, atransf<span class="op">=</span><span class="va">exp</span>, mlab<span class="op">=</span><span class="st">"RE Model for Subgroup"</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="addpoly.html">addpoly</a></span><span class="op">(</span><span class="va">res</span>, row<span class="op">=</span><span class="fl">1.5</span>, mlab<span class="op">=</span><span class="st">"RE Model for Subgroup"</span><span class="op">)</span></span>
 <span class="r-plt img"><img src="addpoly.rma-2.png" alt="" width="864" height="768"></span>
 </code></pre></div>
     </div>
