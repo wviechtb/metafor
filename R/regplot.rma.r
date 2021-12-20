@@ -119,7 +119,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
          lwd <- c(lwd, 2)
    }
 
-   level <- ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
+   level <- .level(level)
 
    ############################################################################
 

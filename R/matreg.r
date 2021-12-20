@@ -5,7 +5,7 @@ matreg <- function(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearpd=FALSE, le
    if (missing(digits))
       digits <- 4
 
-   level <- ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
+   level <- .level(level)
 
    ### check/process R argument
 

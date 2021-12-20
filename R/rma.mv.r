@@ -1875,7 +1875,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
       }
    }
 
-   level <- ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
+   level <- .level(level)
 
    #return(list(sigma2s, tau2s, rhos, gamma2s, phis))
 

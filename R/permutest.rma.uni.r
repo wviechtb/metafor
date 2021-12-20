@@ -396,7 +396,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
 
    if (.isTRUE(permci) || is.numeric(permci)) {
 
-      level <- ifelse(x$level == 0, 1, ifelse(x$level >= 1, (100-x$level)/100, ifelse(x$level > .5, 1-x$level, x$level)))
+      level <- .level(x$level)
 
       ### check if it is even possible to reject at level
 

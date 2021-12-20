@@ -61,9 +61,9 @@ test_that("plot can be drawn.", {
                 subset=(alloc=="alternate"), method="REML")
 
    ### add summary polygons for the three subgroups
-   addpoly(res.s, row=18.5, cex=0.75, atransf=exp, mlab="")
-   addpoly(res.r, row= 7.5, cex=0.75, atransf=exp, mlab="")
-   addpoly(res.a, row= 1.5, cex=0.75, atransf=exp, mlab="")
+   addpoly(res.s, row=18.5, mlab="")
+   addpoly(res.r, row= 7.5, mlab="")
+   addpoly(res.a, row= 1.5, mlab="")
 
    ### add text with Q-value, dfs, p-value, and I^2 statistic for subgroups
    text(-16, 18.5, pos=4, cex=0.75, bquote(paste("RE Model for Subgroup (Q = ",

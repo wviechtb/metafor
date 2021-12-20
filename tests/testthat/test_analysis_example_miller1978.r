@@ -84,7 +84,7 @@ test_that("back-transformations work as intended for individual studies and the 
    forest(dat.back$yi, ci.lb=dat.back$ci.lb, ci.ub=dat.back$ci.ub, psize=1,
           xlim=c(-.5,1.8), alim=c(0,1), ylim=c(-1,8), refline=NA, digits=3,
           xlab="Proportion", header=c("Study", "Proportion [95% CI]"))
-   addpoly(pred$pred, ci.lb=pred$ci.lb, ci.ub=pred$ci.ub, rows=-0.5, digits=3, mlab="EE Model", efac=1.3)
+   addpoly(pred$pred, ci.lb=pred$ci.lb, ci.ub=pred$ci.ub, rows=-0.5, mlab="EE Model", efac=1.3)
    abline(h=0.5)
    par(opar)
 

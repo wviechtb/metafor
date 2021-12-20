@@ -851,7 +851,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    rho <- NA
 
-   level <- ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
+   level <- .level(level)
 
    ###### model fitting, test statistics, and confidence intervals
 

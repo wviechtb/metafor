@@ -13,7 +13,7 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, 
       digits <- .get.digits(digits=digits, xdigits=x$digits, dmiss=FALSE)
    }
 
-   level <- ifelse(x$level == 0, 1, ifelse(x$level >= 1, (100-x$level)/100, ifelse(x$level > .5, 1-x$level, x$level)))
+   level <- .level(x$level)
 
    ddd <- list(...)
 

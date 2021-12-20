@@ -91,7 +91,7 @@ regtest <- function(x, vi, sei, ni, subset, data, model="rma", predictor="sei", 
       }
 
       if (!is.null(ddd$level)) {
-         level <- ifelse(ddd$level == 0, 1, ifelse(ddd$level >= 1, (100-ddd$level)/100, ifelse(ddd$level > .5, 1-ddd$level, ddd$level)))
+         level <- .level(ddd$level)
       } else {
          level <- x$level
       }
@@ -118,7 +118,7 @@ regtest <- function(x, vi, sei, ni, subset, data, model="rma", predictor="sei", 
       }
 
       if (!is.null(ddd$level)) {
-         level <- ifelse(ddd$level == 0, 1, ifelse(ddd$level >= 1, (100-ddd$level)/100, ifelse(ddd$level > .5, 1-ddd$level, ddd$level)))
+         level <- .level(ddd$level)
       } else {
          level <- .05
       }

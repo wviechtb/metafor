@@ -47,7 +47,7 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, type,
    if (!fixed && !random)
       stop(mstyle$stop("At least one of the arguments 'fixed' and 'random' must be TRUE."))
 
-   level <- ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
+   level <- .level(level)
 
    ddd <- list(...)
 

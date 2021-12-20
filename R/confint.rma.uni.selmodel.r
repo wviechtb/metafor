@@ -33,7 +33,7 @@ confint.rma.uni.selmodel <- function(object, parm, level, fixed=FALSE, tau2, del
    if (missing(control))
       control <- list()
 
-   level <- ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
+   level <- .level(level)
 
    ddd <- list(...)
 

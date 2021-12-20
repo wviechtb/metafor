@@ -63,7 +63,7 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
    if (missing(cex.axis))
       cex.axis <- NULL
 
-   level <- ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
+   level <- .level(level)
 
    ### digits[1] for annotations, digits[2] for x-axis labels
    ### note: digits can also be a list (e.g., digits=list(2L,3)); trailing 0's are dropped for intergers

@@ -26,7 +26,7 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
    if (missing(targs))
       targs <- NULL
 
-   level <- ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
+   level <- .level(level)
 
    if (x$test == "z")
       crit <- qnorm(level/2, lower.tail=FALSE)

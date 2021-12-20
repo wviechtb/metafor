@@ -998,7 +998,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
    s2w <- 1
 
-   level <- ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
+   level <- .level(level)
 
    Y <- as.matrix(yi)
 

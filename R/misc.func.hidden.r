@@ -190,6 +190,19 @@
 
 }
 
+### function to handle 'level' argument
+
+.level <- function(level, allow.vector=FALSE) {
+
+   if (!allow.vector && length(level) != 1L) {
+      mstyle <- .get.mstyle("crayon" %in% .packages())
+      stop(mstyle$stop("Argument 'level' must specify a single value."))
+   }
+
+   ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
+
+}
+
 ############################################################################
 
 ### function to print a named (character) vector right aligned with
