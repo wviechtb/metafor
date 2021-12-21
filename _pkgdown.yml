@@ -96,6 +96,7 @@ reference:
       - addpoly
       - addpoly.default
       - addpoly.rma
+      - addpoly.predict.rma
       - regplot
       - baujat
       - labbe

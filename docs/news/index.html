@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-39</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-40</span>
       </span>
     </div>
 
@@ -91,7 +91,7 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="3.1-39" id="metafor-31-39-2021-12-20">metafor 3.1-39 (2021-12-20)<a class="anchor" aria-label="anchor" href="#metafor-31-39-2021-12-20"></a></h2>
+<h2 class="page-header" data-toc-text="3.1-40" id="metafor-31-40-2021-12-21">metafor 3.1-40 (2021-12-21)<a class="anchor" aria-label="anchor" href="#metafor-31-40-2021-12-21"></a></h2>
 <ul><li><p>added <code>misc-models</code> and <code>misc-options</code> help pages</p></li>
 <li><p>simplified <code><a href="../reference/regtest.html">regtest()</a></code>, <code><a href="../reference/ranktest.html">ranktest()</a></code>, and <code><a href="../reference/tes.html">tes()</a></code> to single functions instead of using generics and methods; this way, a <code>data</code> argument could be added</p></li>
 <li><p>added <code><a href="../reference/vcalc.html">vcalc()</a></code> and <code><a href="../reference/blsplit.html">blsplit()</a></code> functions</p></li>
@@ -106,10 +106,11 @@
 <li><p><code><a href="../reference/rma.glmm.html">rma.glmm()</a></code> now has entire array of optimizers available for <code>model="CM.EL"</code> and <code>measure="OR"</code>; switched the default from <code><a href="https://rdrr.io/r/stats/optim.html" class="external-link">optim()</a></code> with method <code>BFGS</code> to <code><a href="https://rdrr.io/r/stats/nlminb.html" class="external-link">nlminb()</a></code> for consistency with <code><a href="../reference/rma.mv.html">rma.mv()</a></code>, <code><a href="../reference/rma.uni.html">rma.uni()</a></code>, and <code><a href="../reference/selmodel.html">selmodel.rma.uni()</a></code></p></li>
 <li><p><code><a href="../reference/rma.glmm.html">rma.glmm()</a></code> gains <code>coding</code> and <code>cor</code> arguments and hence more flexibility how the group variable should be coded in the random effects structure and whether the random study effects should be allowed to be correlated with the random group effects</p></li>
 <li><p><code><a href="../reference/rma.uni.html">rma.uni()</a></code> now also provides R^2 for fixed-effects models</p></li>
-<li><p><code><a href="../reference/matreg.html">matreg()</a></code> can now also analyze a covariance matrix with a corresponding <code>V</code> matrix</p></li>
+<li><p><code><a href="../reference/matreg.html">matreg()</a></code> can now also analyze a covariance matrix with a corresponding <code>V</code> matrix; can also specify variable names (instead of indices) for arguments <code>x</code> and <code>y</code></p></li>
 <li><p>renamed argument <code>nearPD</code> to <code>nearpd</code> in <code><a href="../reference/matreg.html">matreg()</a></code> (but <code>nearPD</code> continues to work)</p></li>
 <li><p><code><a href="../reference/profile.rma.html">plot.profile.rma()</a></code> gains <code>refline</code> argument</p></li>
-<li><p><code><a href="../reference/addpoly.default.html">addpoly.default()</a></code> and <code><a href="../reference/addpoly.rma.html">addpoly.rma()</a></code> gain <code>lty</code> and <code>annosym</code> arguments</p></li>
+<li><p>added <code>addpoly.rma.predict()</code> method</p></li>
+<li><p><code><a href="../reference/addpoly.default.html">addpoly.default()</a></code> and <code><a href="../reference/addpoly.rma.html">addpoly.rma()</a></code> gain <code>lty</code> and <code>annosym</code> arguments; if unspecified, arguments <code>annotate</code>, <code>digits</code>, <code>width</code>, <code>transf</code>, <code>atransf</code>, <code>targs</code>, <code>efac</code>, <code>fonts</code>, <code>cex</code>, and <code>annosym</code> are now automatically set equal to the same values that were used when creating the forest plot</p></li>
 <li><p>fixed that <code>level</code> argument in <code><a href="../reference/addpoly.rma.html">addpoly.rma()</a></code> did not affect the CI width</p></li>
 <li><p><code><a href="../reference/regplot.html">points.regplot()</a></code> function now also redraws the labels (if there were any to begin with)</p></li>
 <li><p>added <code>lbfgsb3c</code>, <code>subplex</code>, and <code>BBoptim</code> as possible optimizer in <code><a href="../reference/rma.mv.html">rma.mv()</a></code>, <code><a href="../reference/rma.glmm.html">rma.glmm()</a></code>, <code><a href="../reference/rma.uni.html">rma.uni()</a></code>, and <code><a href="../reference/selmodel.html">selmodel.rma.uni()</a></code></p></li>

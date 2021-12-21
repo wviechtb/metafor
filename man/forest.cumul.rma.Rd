@@ -39,7 +39,7 @@
    \item{efac}{vertical expansion factor for confidence interval limits and arrows. The default value of 1 should usually work okay. Can also be a vector of two numbers, the first for CI limits, the second for arrows.}
    \item{pch}{plotting symbol to use for the estimates. By default, a filled square is used. See \code{\link{points}} for other options. Can also be a vector of values.}
    \item{psize}{numeric value to specify the point sizes for the estimates (the default is 1). Can also be a vector of values.}
-   \item{col}{optional character string to specify the name of a color to use for plotting (\code{"black"} is used by default if not specified). Can also be a vector of color names.}
+   \item{col}{optional character string to specify the color to use for plotting (\code{"black"} is used by default if not specified). Can also be a vector.}
    \item{lty}{optional character string to specify the line type for the confidence intervals. If unspecified, the function sets this to \code{"solid"} by default.}
    \item{fonts}{optional character string to specify the font to use for the study labels, annotations, and the extra information (if specified via \code{ilab}). If unspecified, the default font is used.}
    \item{cex}{optional character and symbol expansion factor. If unspecified, the function tries to set this to a sensible value.}

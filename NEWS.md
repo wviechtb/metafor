@@ -1,4 +1,4 @@
-# metafor 3.1-39 (2021-12-20)
+# metafor 3.1-40 (2021-12-21)
 
 - added `misc-models` and `misc-options` help pages
 
@@ -28,13 +28,15 @@
 
 - `rma.uni()` now also provides R^2 for fixed-effects models
 
-- `matreg()` can now also analyze a covariance matrix with a corresponding `V` matrix
+- `matreg()` can now also analyze a covariance matrix with a corresponding `V` matrix; can also specify variable names (instead of indices) for arguments `x` and `y`
 
 - renamed argument `nearPD` to `nearpd` in `matreg()` (but `nearPD` continues to work)
 
 - `plot.profile.rma()` gains `refline` argument
 
-- `addpoly.default()` and `addpoly.rma()` gain `lty` and `annosym` arguments
+- added `addpoly.rma.predict()` method
+
+- `addpoly.default()` and `addpoly.rma()` gain `lty` and `annosym` arguments; if unspecified, arguments `annotate`, `digits`, `width`, `transf`, `atransf`, `targs`, `efac`, `fonts`, `cex`, and `annosym` are now automatically set equal to the same values that were used when creating the forest plot
 
 - fixed that `level` argument in `addpoly.rma()` did not affect the CI width
 

@@ -40,8 +40,8 @@ regplot(x, \dots)
    \item{pch}{plotting symbol to use for the observed outcomes. By default, a filled circle is used. Can also be a vector of values. See \code{\link{points}} for other options.}
    \item{psize}{optional numeric value to specify the point sizes for the observed outcomes. If unspecified, the point sizes are a function of the model weights. Can also be a vector of values. Can also be a character string (either \code{"seinv"} or \code{"vinv"}) to make the point sizes proportional to the inverse standard errors or inverse sampling variances.}
    \item{plim}{numeric vector of length 2 to scale the point sizes (ignored when a numeric value or vector is specified for \code{psize}). See \sQuote{Details}.}
-   \item{col}{character string to specify the name of a color to use for plotting the observed outcomes (the default is \code{"black"}). Can also be a vector of color names.}
-   \item{bg}{character string to specify the name of a background color for open plot symbols (the default is \code{"darkgray"}). Can also be a vector of color names.}
+   \item{col}{character string to specify the color to use for plotting the observed outcomes (the default is \code{"black"}). Can also be a vector.}
+   \item{bg}{character string to specify the background color for open plot symbols (the default is \code{"darkgray"}). Can also be a vector.}
    \item{grid}{logical to specify whether a grid should be added to the plot. Can also be a color name.}
    \item{refline}{optional numeric value to specify the location of a horizontal reference line that should be added to the plot.}
    \item{label}{argument to control the labeling of the points (the default is \code{FALSE}). See \sQuote{Details}.}

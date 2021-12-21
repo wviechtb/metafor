@@ -7,9 +7,9 @@
 # test="knha") directly to the function via the ci.lb and ci.ub (and pi.lb and
 # pi.ub) arguments.
 
-addpoly.default <- function(x, vi, sei, ci.lb, ci.ub, pi.lb, pi.ub,
-rows=-1, level, annotate, digits, width, mlab, transf,
-atransf, targs, efac, col, border, lty, fonts, cex, annosym, ...) {
+addpoly.default     <- function(x, vi, sei, ci.lb, ci.ub, pi.lb, pi.ub,
+rows=-1, level,         annotate,                digits, width, mlab,
+transf, atransf, targs, efac, col, border, lty, fonts, cex, annosym, ...) {
 
    #########################################################################
 
@@ -19,6 +19,11 @@ atransf, targs, efac, col, border, lty, fonts, cex, annosym, ...) {
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))
+
+   if (missing(x))
+      stop(mstyle$stop("Must specify the 'x' argument."))
+
+   k <- length(x)
 
    if (missing(level))
       level <- .getfromenv("forest", "level", default=95)
@@ -74,6 +79,15 @@ atransf, targs, efac, col, border, lty, fonts, cex, annosym, ...) {
       pi.lb <- ddd$cr.lb
    if (!is.null(ddd$cr.ub))
       pi.ub <- ddd$cr.ub
+
+   if (is.null(mlab)) {
+      mlab <- rep("", k)
+   } else {
+      if (length(mlab) == 1L)
+         mlab <- rep(mlab, k)
+      if (length(mlab) != k)
+         stop(mstyle$stop(paste0("Length of the 'mlab' argument (", length(mlab), ") does not correspond to the number of polygons to be plotted (", k, ").")))
+   }
 
    if (length(lty) == 1L)
       lty <- c(lty, "solid")
@@ -160,7 +174,7 @@ atransf, targs, efac, col, border, lty, fonts, cex, annosym, ...) {
          }
       }
 
-      if (length(yi) != length(vi))
+      if (length(vi) != k)
          stop(mstyle$stop("Length of 'vi' (or 'sei') does not match length of 'x'."))
 
       ci.lb <- yi - qnorm(level/2, lower.tail=FALSE) * sqrt(vi)
@@ -173,17 +187,15 @@ atransf, targs, efac, col, border, lty, fonts, cex, annosym, ...) {
       if (length(pi.lb) != length(pi.ub))
          stop(mstyle$stop("Length of 'pi.lb' and 'pi.ub' is not the same."))
 
-      if (length(pi.lb) != length(yi))
+      if (length(pi.lb) != k)
          stop(mstyle$stop("Length of ('pi.lb', 'pi.ub') does not match length of 'x'."))
 
    } else {
 
-      pi.lb <- rep(NA, length(yi))
-      pi.ub <- rep(NA, length(yi))
+      pi.lb <- rep(NA, k)
+      pi.ub <- rep(NA, k)
 
    }
-
-   k <- length(yi)
 
    ### set rows value
 
@@ -194,8 +206,8 @@ atransf, targs, efac, col, border, lty, fonts, cex, annosym, ...) {
          rows <- rows:(rows-k+1)
    }
 
-   if (length(rows) != length(yi))
-      stop(mstyle$stop(paste0("Length of the 'rows' argument (", length(rows), ") does not correspond to the number of polygons to be plotted (", length(yi), ").")))
+   if (length(rows) != k)
+      stop(mstyle$stop(paste0("Length of the 'rows' argument (", length(rows), ") does not correspond to the number of polygons to be plotted (", k, ").")))
 
    ### check for NAs in yi/vi and act accordingly
 
@@ -329,12 +341,15 @@ atransf, targs, efac, col, border, lty, fonts, cex, annosym, ...) {
 
    for (i in seq_len(k)) {
 
+      ### prediction interval(s)
       lsegments(pi.lb[i], rows[i], pi.ub[i], rows[i], lty=lty[1], col=lcol[i], ...)
       lsegments(pi.lb[i], rows[i]-(height/150)*cex*efac, pi.lb[i], rows[i]+(height/150)*cex*efac, col=lcol[i], lty=lty[2], ...)
       lsegments(pi.ub[i], rows[i]-(height/150)*cex*efac, pi.ub[i], rows[i]+(height/150)*cex*efac, col=lcol[i], lty=lty[2], ...)
 
+      ### polygon(s)
       lpolygon(x=c(ci.lb[i], yi[i], ci.ub[i], yi[i]), y=c(rows[i], rows[i]+(height/100)*cex*efac, rows[i], rows[i]-(height/100)*cex*efac), col=col[i], border=border[i], ...)
 
+      ### label(s)
       if (!is.null(mlab)) {
          if (is.list(mlab)) {
             ltext(xlim[1], rows[i], mlab[[i]], pos=4, cex=cex, ...)

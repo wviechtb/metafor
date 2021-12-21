@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-39</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-40</span>
       </span>
     </div>
 
@@ -145,11 +145,11 @@
 <p>For random/mixed-effects models, an approximate prediction interval is also constructed (Riley et al., 2011). The interval estimates where <code>level</code> % of the true effect sizes or outcomes fall in the hypothetical population of studies (and hence where the true effect or outcome of a new study from the population of studies should fall in <code>level</code> % of the cases).</p>
 <p>For random-effects models that were fitted with the <code><a href="rma.mv.html">rma.mv</a></code> function, the model may actually include multiple <em></em>\(\tau^2\) values (i.e., when the <code>random</code> argument includes an ‘<code>~ inner | outer</code>’ term and <code>struct="HCS"</code>, <code>struct="DIAG"</code>, <code>struct="HAR"</code>, or <code>struct="UN"</code>). In that case, the function will provide prediction intervals for each level of the inner factor (since the prediction intervals differ depending on the <em></em>\(\tau^2\) value). Alternatively, one can use the <code>tau2.levels</code> argument to specify for which level(s) the prediction interval should be provided. If the model includes a second ‘<code>~ inner | outer</code>’ term with multiple <em></em>\(\gamma^2\) values, prediction intervals for each combination of levels of the inner factors will be provided. Alternatively, one can use the <code>tau2.levels</code> and <code>gamma2.levels</code> arguments to specify for which level combination(s) the prediction interval should be provided.</p>
 <p>When using the <code>newmods</code> argument for mixed-effects models that were fitted with the <code><a href="rma.mv.html">rma.mv</a></code> function, if the model includes multiple <em></em>\(\tau^2\) (and multiple <em></em>\(\gamma^2\)) values, then one must use the <code>tau2.levels</code> (and <code>gamma2.levels</code>) argument to specify the levels of the inner factor(s) (i.e., a vector of length <em></em>\(k_{new}\)) to obtain the appropriate prediction interval(s).</p>
-<p>For location-scale models fitted with the <code><a href="rma.uni.html">rma.uni</a></code> function, one can use <code>newmods</code> to specify the values of the <em></em>\(p'\) moderator variables included in the model and <code>newscale</code> to specify the values of the <em></em>\(q'\) scale variables included in the model. Whenever <code>newmods</code> is specified, the function computes predicted effects/outcomes for the specified moderators values. To obtain the corresponding prediction intervals, one must also specify the corresponding <code>newscale</code> values. If only <code>newscale</code> is specified (and not <code>newmods</code>), the function computes the predicted log-transformed <em></em>\(\tau^2\) values (when using a log link) for to the specified scale values. By setting <code>transf=exp</code>, one can then obtain the predicted <em></em>\(\tau^2\) values.</p>
+<p>For location-scale models fitted with the <code><a href="rma.uni.html">rma.uni</a></code> function, one can use <code>newmods</code> to specify the values of the <em></em>\(p'\) moderator variables included in the model and <code>newscale</code> to specify the values of the <em></em>\(q'\) scale variables included in the model. Whenever <code>newmods</code> is specified, the function computes predicted effects/outcomes for the specified moderators values. To obtain the corresponding prediction intervals, one must also specify the corresponding <code>newscale</code> values. If only <code>newscale</code> is specified (and not <code>newmods</code>), the function computes the predicted log-transformed <em></em>\(\tau^2\) values (when using a log link) for the specified scale values. By setting <code>transf=exp</code>, one can then obtain the predicted <em></em>\(\tau^2\) values.</p>
     </div>
     <div id="value">
     <h2>Value</h2>
-    <p>An object of class <code>"list.rma"</code>. The object is a list containing the following components:</p>
+    <p>An object of class <code>c("predict.rma","list.rma")</code>. The object is a list containing the following components:</p>
 <dl><dt>pred</dt>
 <dd><p>predicted value(s).</p></dd>
 <dt>se</dt>
@@ -194,7 +194,7 @@
     </div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p><code><a href="fitted.rma.html">fitted.rma</a></code> for a function to extract the fitted values and <code><a href="blup.html">blup.rma.uni</a></code> for a function to compute BLUPs that combine the fitted values and predicted random effects.</p></div>
+    <div class="dont-index"><p><code><a href="fitted.rma.html">fitted.rma</a></code> for a function to extract the fitted values, <code><a href="blup.html">blup.rma.uni</a></code> for a function to compute BLUPs that combine the fitted values and predicted random effects, and <code><a href="addpoly.predict.rma.html">addpoly.predict.rma</a></code> to add polygons based on predicted values to a forest plot.</p></div>
     </div>
 
     <div id="ref-examples">

@@ -15,9 +15,9 @@
    \item{pch}{plotting symbol to use. By default, a borderless filled circle is used. See \code{\link{points}} for other options.}
    \item{cex}{symbol expansion factor.}
    \item{out}{optional integer to specify the number of a study that may be a potential outlier. If specified, subsets containing the specified study are drawn in a different color than those not containing the study.}
-   \item{col}{optional character string to specify the name of a color to use for the points (if not provided, points are drawn in black). When \code{out} is used, two colors should be specified (if not provided, red is used for subsets containing the specified study and blue otherwise).}
+   \item{col}{optional character string to specify the color to use for the points (if not provided, points are drawn in black). When \code{out} is used, two colors should be specified (if not provided, red is used for subsets containing the specified study and blue otherwise).}
    \item{alpha}{optional alpha transparency value for the points (0 means fully transparent and 1 means opaque). If unspecified, the function tries to set this to a sensible value.}
-   \item{border}{optional character string to specify the name of a color to use for the borders of the histogram (if not provided, borders are drawn in white). Set to \code{FALSE} to omit the borders.}
+   \item{border}{optional character string to specify the color to use for the borders of the histogram (if not provided, borders are drawn in white). Set to \code{FALSE} to omit the borders.}
    \item{xlim}{x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.}
    \item{ylim}{y-axis limits. If unspecified, the function tries to set the y-axis limits to some sensible values.}
    \item{xhist}{logical to specify whether a histogram should be drawn for the x-axis (the default is \code{TRUE}).}

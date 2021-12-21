@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-39</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-40</span>
       </span>
     </div>
 
@@ -129,9 +129,9 @@
 <dt>efac</dt>
 <dd><p>optional vertical expansion factor for the polygon.</p></dd>
 <dt>col</dt>
-<dd><p>optional character string to specify the name of a color to use for the polygon. If unspecified, the function sets a default color.</p></dd>
+<dd><p>optional character string to specify color to use for the polygon. If unspecified, the function sets a default color.</p></dd>
 <dt>border</dt>
-<dd><p>optional character string to specify the name of a color to use for the border of the polygon. If unspecified, the function sets a default color.</p></dd>
+<dd><p>optional character string to specify the color to use for the border of the polygon. If unspecified, the function sets a default color.</p></dd>
 <dt>lty</dt>
 <dd><p>optional character string to specify the line type for the prediction interval. If unspecified, the function sets this to <code>"dotted"</code> by default.</p></dd>
 <dt>fonts</dt>
@@ -146,7 +146,7 @@
     <div id="details">
     <h2>Details</h2>
     <p>The function can be used to add a four-sided polygon, sometimes called a summary ‘diamond’, to an existing forest plot created with the <code><a href="forest.html">forest</a></code> function. The polygon shows the summary estimate (with its confidence interval bounds) based on an equal- or a random-effects model. Using this function, summary estimates based on different types of models can be shown in the same plot. Also, summary estimates based on a subgrouping of the studies can be added to the plot this way. See ‘Examples’.</p>
-<p>If unspecified, the arguments <code>annotate</code>, <code>digits</code>, <code>width</code>, <code>transf</code>, <code>atransf</code>, <code>targs</code>, <code>efac</code> (only if the forest plot was created with <code><a href="forest.rma.html">forest.rma</a></code>), <code>fonts</code>, <code>cex</code>, and <code>annosym</code> are automatically set equal to the same values used to create the forest plot.</p>
+<p>If unspecified, arguments <code>annotate</code>, <code>digits</code>, <code>width</code>, <code>transf</code>, <code>atransf</code>, <code>targs</code>, <code>efac</code> (only if the forest plot was created with <code><a href="forest.rma.html">forest.rma</a></code>), <code>fonts</code>, <code>cex</code>, and <code>annosym</code> are automatically set equal to the same values that were used when creating the forest plot.</p>
     </div>
     <div id="author">
     <h2>Author</h2>

@@ -47,9 +47,9 @@
    \item{pch}{plotting symbol to use for the observed outcomes. By default, a filled square is used. See \code{\link{points}} for other options. Can also be a vector of values.}
    \item{psize}{optional numeric value to specify the point sizes for the observed outcomes. If unspecified, the point sizes are a function of the model weights. Can also be a vector of values.}
    \item{plim}{numeric vector of length 2 to scale the point sizes (ignored when \code{psize} is specified). See \sQuote{Details}.}
-   \item{colout}{optional character string to specify the name of a color to use for plotting the observed outcomes (\code{"black"} is used by default if not specified). Can also be a vector of color names.}
-   \item{col}{optional character string to specify the name of a color to use for the summary polygon or fitted values. If unspecified, the function sets a default color.}
-   \item{border}{optional character string to specify the name of a color to use for the border of the summary polygon or fitted values. If unspecified, the function sets a default color.}
+   \item{colout}{optional character string to specify the color to use for plotting the observed outcomes (\code{"black"} is used by default if not specified). Can also be a vector.}
+   \item{col}{optional character string to specify the color to use for the summary polygon or fitted values. If unspecified, the function sets a default color.}
+   \item{border}{optional character string to specify the color to use for the border of the summary polygon or fitted values. If unspecified, the function sets a default color.}
    \item{lty}{optional character string to specify the line type for the confidence intervals. If unspecified, the function sets this to \code{"solid"} by default.}
    \item{fonts}{optional character string to specify the font to use for the study labels, annotations, and the extra information (if specified via \code{ilab}). If unspecified, the default font is used.}
    \item{cex}{optional character and symbol expansion factor. If unspecified, the function tries to set this to a sensible value.}

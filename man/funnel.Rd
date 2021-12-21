@@ -50,8 +50,8 @@ funnel(x, \dots)
    \item{lty}{line type for the pseudo confidence interval region and the reference line. The default is to draw dotted lines (see \code{\link{par}} for other options). Can also be a vector to specify the two line types separately.}
    \item{pch}{plotting symbol to use for the observed outcomes. By default, a filled circle is used. Can also be a vector of values. See \code{\link{points}} for other options.}
    \item{pch.fill}{plotting symbol to use for the outcomes filled in by the trim and fill method. By default, a circle is used. Only relevant when plotting an object created by the \code{\link{trimfill}} function.}
-   \item{col}{optional character string to specify the name of a color to use for the points (\code{"black"} is used by default if not specified). Can also be a vector of color names.}
-   \item{bg}{optional character string to specify the name of a background color for open plot symbols (\code{"white"} is used by default if not specified). Can also be a vector of color names.}
+   \item{col}{optional character string to specify the color to use for the points (\code{"black"} is used by default if not specified). Can also be a vector.}
+   \item{bg}{optional character string to specify the background color for open plot symbols (\code{"white"} is used by default if not specified). Can also be a vector.}
    \item{label}{argument to control the labeling of the points (the default is \code{FALSE}). See \sQuote{Details}.}
    \item{offset}{argument to control the distance between the points and the corresponding labels.}
    \item{legend}{logical to indicate whether a legend should be added to the plot (the default is \code{FALSE}). Can also be a keyword to indicate the position of the legend (see \code{\link{legend}}).}

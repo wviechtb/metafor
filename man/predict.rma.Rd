@@ -44,10 +44,10 @@
 
    When using the \code{newmods} argument for mixed-effects models that were fitted with the \code{\link{rma.mv}} function, if the model includes multiple \mjseqn{\tau^2} (and multiple \mjseqn{\gamma^2}) values, then one must use the \code{tau2.levels} (and \code{gamma2.levels}) argument to specify the levels of the inner factor(s) (i.e., a vector of length \mjeqn{k_{new}}{k_new}) to obtain the appropriate prediction interval(s).
 
-   For location-scale models fitted with the \code{\link{rma.uni}} function, one can use \code{newmods} to specify the values of the \mjseqn{p'} moderator variables included in the model and \code{newscale} to specify the values of the \mjseqn{q'} scale variables included in the model. Whenever \code{newmods} is specified, the function computes predicted effects/outcomes for the specified moderators values. To obtain the corresponding prediction intervals, one must also specify the corresponding \code{newscale} values. If only \code{newscale} is specified (and not \code{newmods}), the function computes the predicted log-transformed \mjseqn{\tau^2} values (when using a log link) for to the specified scale values. By setting \code{transf=exp}, one can then obtain the predicted \mjseqn{\tau^2} values.
+   For location-scale models fitted with the \code{\link{rma.uni}} function, one can use \code{newmods} to specify the values of the \mjseqn{p'} moderator variables included in the model and \code{newscale} to specify the values of the \mjseqn{q'} scale variables included in the model. Whenever \code{newmods} is specified, the function computes predicted effects/outcomes for the specified moderators values. To obtain the corresponding prediction intervals, one must also specify the corresponding \code{newscale} values. If only \code{newscale} is specified (and not \code{newmods}), the function computes the predicted log-transformed \mjseqn{\tau^2} values (when using a log link) for the specified scale values. By setting \code{transf=exp}, one can then obtain the predicted \mjseqn{\tau^2} values.
 }
 \value{
-   An object of class \code{"list.rma"}. The object is a list containing the following components:
+   An object of class \code{c("predict.rma","list.rma")}. The object is a list containing the following components:
    \item{pred}{predicted value(s).}
    \item{se}{corresponding standard error(s).}
    \item{ci.lb}{lower bound of the confidence interval(s).}
@@ -84,7 +84,7 @@
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}
 }
 \seealso{
-   \code{\link{fitted.rma}} for a function to extract the fitted values and \code{\link{blup.rma.uni}} for a function to compute BLUPs that combine the fitted values and predicted random effects.
+   \code{\link{fitted.rma}} for a function to extract the fitted values, \code{\link{blup.rma.uni}} for a function to compute BLUPs that combine the fitted values and predicted random effects, and \code{\link{addpoly.predict.rma}} to add polygons based on predicted values to a forest plot.
 }
 \examples{
 ### calculate log risk ratios and corresponding sampling variances

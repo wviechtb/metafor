@@ -601,6 +601,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
    out$digits <- digits
    out$method <- x$method
    out$transf <- do.transf
+   out$pred.type <- "location"
 
    if (x$test != "z")
       out$ddf <- ddf
@@ -608,7 +609,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
    if ((x$test != "z" || is.element(pi.type, c("riley","t"))) && pi.type != "simple")
       out$pi.ddf <- pi.ddf
 
-   class(out) <- "list.rma"
+   class(out) <- c("predict.rma", "list.rma")
 
    if (vcov & !do.transf) {
       out <- list(pred=out)
