@@ -54,7 +54,7 @@
 \note{
    The function tries to set some sensible values for the optional arguments, but it may be necessary to adjust these in certain circumstances.
 
-   The function actually returns some information about the chosen defaults invisibly. Printing this information is useful as a starting point to make adjustments to the plot.
+   The function actually returns some information about the chosen values invisibly. Printing this information is useful as a starting point to make adjustments to the plot.
 
    If the number of studies is quite large, the labels, annotations, and symbols may become quite small and impossible to read. Stretching the plot window vertically may then provide a more readable figure (one should call the function again after adjusting the window size, so that the label/symbol sizes can be properly adjusted). Also, the \code{cex}, \code{cex.lab}, and \code{cex.axis} arguments are then useful to adjust the symbol and text sizes.
 

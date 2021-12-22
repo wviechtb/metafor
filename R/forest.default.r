@@ -772,7 +772,7 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
 
    ### return some information about plot invisibly
 
-   res <- list(xlim=par("usr")[1:2], alim=alim, at=at, ylim=ylim, rows=rows, cex=cex, cex.lab=cex.lab, cex.axis=cex.axis)
+   res <- list(xlim=par("usr")[1:2], alim=alim, at=at, ylim=ylim, rows=rows, cex=cex, cex.lab=cex.lab, cex.axis=cex.axis, ilab.xpos=ilab.xpos, ilab.pos=ilab.pos, textpos=ddd$textpos)
 
    ### add some additional stuff to be put into .metafor environment, so that it can be used by addpoly()
 
