@@ -179,10 +179,16 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
    if (!is.null(ddd$clim))
       olim <- ddd$clim
 
+   ### row adjustments for 1) study labels, 2) annotations, and 3) ilab elements
+
    if (is.null(ddd$rowadj)) {
-      rowadj <- 0
+      rowadj <- rep(0,3)
    } else {
       rowadj <- ddd$rowadj
+      if (length(rowadj) == 1L)
+         rowadj <- c(rowadj,rowadj,0) # if one value is specified, use it for both 1&2
+      if (length(rowadj) == 2L)
+         rowadj <- c(rowadj,0) # if two values are specified, use them for 1&2
    }
 
    lplot     <- function(..., textpos, addcred, pi.type, decreasing, clim, rowadj) plot(...)
@@ -819,9 +825,9 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
          mlab <- sapply(x$method, switch, "FE"="FE Model", "EE"="EE Model", "CE"="CE Model", "RE Model", USE.NAMES=FALSE)
 
       if (is.list(mlab)) {
-         ltext(ddd$textpos[1], -1+rowadj, mlab[[1]], pos=4, cex=cex, ...)
+         ltext(ddd$textpos[1], -1+rowadj[1], mlab[[1]], pos=4, cex=cex, ...)
       } else {
-         ltext(ddd$textpos[1], -1+rowadj, mlab, pos=4, cex=cex, ...)
+         ltext(ddd$textpos[1], -1+rowadj[1], mlab, pos=4, cex=cex, ...)
       }
 
    }
@@ -877,7 +883,7 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
 
    ### add study labels on the left
 
-   ltext(ddd$textpos[1], rows+rowadj, slab, pos=4, cex=cex, ...)
+   ltext(ddd$textpos[1], rows+rowadj[1], slab, pos=4, cex=cex, ...)
 
    ### add info labels
 
@@ -890,7 +896,7 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
          ilab.pos <- rep(ilab.pos, ncol(ilab))
       par(family=names(fonts)[3], font=fonts[3])
       for (l in seq_len(ncol(ilab))) {
-         ltext(ilab.xpos[l], rows+rowadj, ilab[,l], pos=ilab.pos[l], cex=cex, ...)
+         ltext(ilab.xpos[l], rows+rowadj[3], ilab[,l], pos=ilab.pos[l], cex=cex, ...)
       }
       par(family=names(fonts)[1], font=fonts[1])
    }
@@ -970,9 +976,9 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
 
       par(family=names(fonts)[2], font=fonts[2])
       if (addfit && x$int.only) {
-         ltext(ddd$textpos[2], c(rows,-1)+rowadj, labels=annotext, pos=2, cex=cex, ...)
+         ltext(ddd$textpos[2], c(rows,-1)+rowadj[2], labels=annotext, pos=2, cex=cex, ...)
       } else {
-         ltext(ddd$textpos[2], rows+rowadj, labels=annotext, pos=2, cex=cex, ...)
+         ltext(ddd$textpos[2], rows+rowadj[2], labels=annotext, pos=2, cex=cex, ...)
       }
       par(family=names(fonts)[1], font=fonts[1])
 
