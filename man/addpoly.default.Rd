@@ -7,8 +7,7 @@
 \usage{
 \method{addpoly}{default}(x, vi, sei, ci.lb, ci.ub, pi.lb, pi.ub,
         rows=-1, level, annotate, digits, width, mlab,
-        transf, atransf, targs, efac, col, border, lty, fonts,
-        cex, annosym, \dots)
+        transf, atransf, targs, efac, col, border, lty, fonts, cex, \dots)
 }
 \arguments{
    \item{x}{vector with the values at which the polygons should be drawn.}
@@ -33,7 +32,6 @@
    \item{lty}{optional character string to specify the line type for the prediction interval. If unspecified, the function sets this to \code{"dotted"} by default.}
    \item{fonts}{optional character string to specify the font to use for the labels and annotations.}
    \item{cex}{optional symbol expansion factor.}
-   \item{annosym}{optional vector of length 3 to change the left bracket, separation, and right bracket symbols for the annotations.}
    \item{\dots}{other arguments.}
 }
 \details{

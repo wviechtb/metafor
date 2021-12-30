@@ -1,4 +1,4 @@
-# metafor 3.1-40 (2021-12-21)
+# metafor 3.1-41 (2021-12-30)
 
 - added `misc-models` and `misc-options` help pages
 
@@ -37,6 +37,8 @@
 - added `addpoly.rma.predict()` method
 
 - `addpoly.default()` and `addpoly.rma()` gain `lty` and `annosym` arguments; if unspecified, arguments `annotate`, `digits`, `width`, `transf`, `atransf`, `targs`, `efac`, `fonts`, `cex`, and `annosym` are now automatically set equal to the same values that were used when creating the forest plot
+
+- documented `textpos` and `rowadj` arguments for the various `forest` functions and moved the `top` and `annosym` argument to the additional arguments
 
 - fixed that `level` argument in `addpoly.rma()` did not affect the CI width
 

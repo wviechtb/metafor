@@ -1,6 +1,6 @@
 addpoly.rma         <- function(x,
 row=-2,  level=x$level, annotate, addpred=FALSE, digits, width, mlab,
-transf, atransf, targs, efac, col, border, lty, fonts, cex, annosym, ...) {
+transf, atransf, targs, efac, col, border, lty, fonts, cex, ...) {
 
    #########################################################################
 
@@ -50,10 +50,13 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, annosym, ...) {
    if (missing(cex))
       cex <- .getfromenv("forest", "cex", default=NULL)
 
-   if (missing(annosym))
-      annosym <- .getfromenv("forest", "annosym", default=NULL)
-
    ddd <- list(...)
+
+   if (is.null(ddd$annosym)) {
+      annosym <- .getfromenv("forest", "annosym", default=NULL)
+   } else {
+      annosym <- ddd$annosym
+   }
 
    if (!is.null(ddd$addcred))
       addpred <- ddd$addcred

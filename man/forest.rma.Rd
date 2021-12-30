@@ -7,12 +7,12 @@
 \usage{
 \method{forest}{rma}(x, annotate=TRUE, addfit=TRUE, addpred=FALSE,
        showweights=FALSE, header=FALSE,
-       xlim, alim, olim, ylim, top=3, at, steps=5,
+       xlim, alim, olim, ylim, at, steps=5,
        level=x$level, refline=0, digits=2L, width,
        xlab, slab, mlab, ilab, ilab.xpos, ilab.pos,
        order, transf, atransf, targs, rows,
        efac=1, pch=15, psize, plim=c(0.5,1.5), colout,
-       col, border, lty, fonts, cex, cex.lab, cex.axis, annosym, \dots)
+       col, border, lty, fonts, cex, cex.lab, cex.axis, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma"}.}
@@ -25,7 +25,6 @@
    \item{alim}{the x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.}
    \item{olim}{optional argument to specify observation/outcome limits. If unspecified, no limits are used.}
    \item{ylim}{the y-axis limits of the plot. If unspecified, the function tries to set the y-axis limits to some sensible values.}
-   \item{top}{the amount of space to leave empty at the top of the plot (e.g., for adding headers) (the default is 3 rows).}
    \item{at}{position of the x-axis tick marks and corresponding labels. If unspecified, the function tries to set the tick mark positions/labels to some sensible values.}
    \item{steps}{the number of tick marks for the x-axis (the default is 5). Ignored when the positions are specified via the \code{at} argument.}
    \item{level}{numeric value between 0 and 100 to specify the confidence interval level (the default is to take the value from the object).}
@@ -36,7 +35,7 @@
    \item{slab}{optional vector with labels for the \mjseqn{k} studies. If unspecified, the labels are either taken from the object (if study labels were specified) or simple labels are created within the function. To suppress labels, set this argument to \code{NA}.}
    \item{mlab}{optional character string giving a label to the summary estimate from an equal- or a random-effects model. If unspecified, the label is created within the function.}
    \item{ilab}{optional vector, matrix, or data frame providing additional information about the studies that should be added to the plot.}
-   \item{ilab.xpos}{numeric vector to specify the x-axis position(s) of the variable(s) given via \code{ilab} (must be specified if \code{ilab} is specified).}
+   \item{ilab.xpos}{numeric vector to specify the horizontal position(s) of the variable(s) given via \code{ilab} (must be specified if \code{ilab} is specified).}
    \item{ilab.pos}{integer(s) (either 1, 2, 3, or 4) to specify the alignment of the vector(s) given via \code{ilab} (2 means right, 4 mean left aligned). If unspecified, the default is to center the labels.}
    \item{order}{optional character string to specify how the studies should be ordered. Can also be a variable based on which the studies will be ordered. See \sQuote{Details}.}
    \item{transf}{optional argument to specify a function that should be used to transform the observed outcomes, summary estimates, fitted values, and confidence interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
@@ -55,7 +54,6 @@
    \item{cex}{optional character and symbol expansion factor. If unspecified, the function tries to set this to a sensible value.}
    \item{cex.lab}{optional expansion factor for the x-axis title. If unspecified, the function tries to set this to a sensible value.}
    \item{cex.axis}{optional expansion factor for the x-axis labels. If unspecified, the function tries to set this to a sensible value.}
-   \item{annosym}{optional vector of length 3 to change the left bracket, separation, and right bracket symbols for the annotations.}
    \item{\dots}{other arguments.}
 }
 \details{
@@ -80,7 +78,7 @@
    \item \code{order="abs.rstandard"}: the studies are ordered by the size of their absolute standardized residuals.
    } Alternatively, it is also possible to set \code{order} equal to a variable based on which the studies will be ordered (see \sQuote{Examples}).
 
-   Additional columns with information about the studies can be added to the plot via the \code{ilab} argument. This can either be a single variable or an entire matrix / data frame (with as many rows as there are studies in the forest plot). The \code{ilab.xpos} argument must then also be specified to indicate the x-axis position of the variables specified via \code{ilab}.
+   Additional columns with information about the studies can be added to the plot via the \code{ilab} argument. This can either be a single variable or an entire matrix / data frame (with as many rows as there are studies in the forest plot). The \code{ilab.xpos} argument must then also be specified to indicate the horizontal position of the variables specified via \code{ilab}.
 
    \if{html}{The figure below illustrates how the elements in a forest plot can be arranged and the meaning of the some of the arguments such as \code{xlim}, \code{alim} or \code{at}, \code{ilab}, and \code{ilab.xpos}.}
 
@@ -112,7 +110,7 @@ text(c(-8.75,-5.25),     16, c("Vaccinated", "Control"),    cex=.75, font=2)}}
 
    By default (i.e., when \code{psize} is not specified), the point sizes are a function of the square root of the model weights. This way, their areas are proportional to the the weights. However, the point sizes are rescaled so that the smallest point size is \code{plim[1]} and the largest point size is \code{plim[2]}. As a result, their relative sizes (i.e., areas) no longer exactly correspond to their relative weights. If exactly relative point sizes are desired, one can set \code{plim[2]} to \code{NA}, in which case the points are rescaled so that the smallest point size corresponds to \code{plim[1]} and all other points are scaled accordingly. As a result, the largest point may be very large. Alternatively, one can set \code{plim[1]} to \code{NA}, in which case the points are rescaled so that the largest point size corresponds to \code{plim[2]} and all other points are scaled accordingly. As a result, the smallest point may be very small and essentially indistinguishable from the confidence interval line. To avoid the latter, one can also set \code{plim[3]}, which enforces a minimal point size.
 }
-\note{
+\section{Note}{
    The function tries to set some sensible values for the optional arguments, but it may be necessary to adjust these in certain circumstances.
 
    The function actually returns some information about the chosen values invisibly. Printing this information is useful as a starting point to make adjustments to the plot (see \sQuote{Examples}).
@@ -126,6 +124,15 @@ text(c(-8.75,-5.25),     16, c("Vaccinated", "Control"),    cex=.75, font=2)}}
    The models without moderators, the \code{col} argument can also be a vector of two elements, the first for specifying the color of the summary polygon, the second for specifying the color of the line for the prediction interval.
 
    The \code{lty} argument can also be a vector of up to three elements, the first for specifying the line type of the individual CIs (\code{"solid"} by default), the second for the line type of the prediction interval (\code{"dotted"} by default), the third for the line type of the horizontal lines that are automatically added to the plot (\code{"solid"} by default; set to \code{"blank"} to remove them).
+}
+\section{Additional Arguments}{
+   There are some additional arguments that can be passed to the function via \code{...} (hence, they cannot be abbreviated):
+   \describe{
+   \item{top}{the amount of space to leave empty at the top of the plot (e.g., for adding headers) (the default is 3 rows).}
+   \item{annosym}{optional vector of length 3 to select the left bracket, separation, and right bracket symbols for the annotations (the default is \code{c(" [", ", ", "]")}). Can also include a 4th element to adjust the look of the minus symbol, for example to use a proper minus (\ifelse{latex}{\mjseqn{-}}{\enc{−}{-}}) sign instead of a hyphen-minus (-).}
+   \item{textpos}{optional vector of length 2 to specify the placement of the study labels and the annotations (the default is to use the horizontal limits of the plot region, i.e., the study labels to the right of \code{xlim[1]} and the annotations to the left of \code{xlim[2]}).}
+   \item{rowadj}{optional vector of length 3 to vertically adjust the position of the study labels, the annotations, and the extra information (if specified via \code{ilab}). This is useful for fine-tuning the position of text added with different positional alignments (i.e., argument \code{pos} in the \code{\link{text}} function).}
+   }
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}

@@ -7,7 +7,7 @@
 \usage{
 \method{addpoly}{predict.rma}(x, rows=-2, annotate,
         addpred=FALSE, digits, width, mlab, transf, atransf, targs,
-        efac, col, border, lty, fonts, cex, annosym, \dots)
+        efac, col, border, lty, fonts, cex, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"predict.rma"}.}
@@ -26,7 +26,6 @@
    \item{lty}{optional character string to specify the line type for the prediction interval. If unspecified, the function sets this to \code{"dotted"} by default.}
    \item{fonts}{optional character string to specify the font to use for the labels and annotations.}
    \item{cex}{optional symbol expansion factor.}
-   \item{annosym}{optional vector of length 3 to change the left bracket, separation, and right bracket symbols for the annotations.}
    \item{\dots}{other arguments.}
 }
 \details{

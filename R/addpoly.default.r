@@ -9,7 +9,7 @@
 
 addpoly.default     <- function(x, vi, sei, ci.lb, ci.ub, pi.lb, pi.ub,
 rows=-1, level,         annotate,                digits, width, mlab,
-transf, atransf, targs, efac, col, border, lty, fonts, cex, annosym, ...) {
+transf, atransf, targs, efac, col, border, lty, fonts, cex, ...) {
 
    #########################################################################
 
@@ -70,9 +70,6 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, annosym, ...) {
    if (missing(cex))
       cex <- .getfromenv("forest", "cex", default=NULL)
 
-   if (missing(annosym))
-      annosym <- .getfromenv("forest", "annosym", default=NULL)
-
    ddd <- list(...)
 
    if (!is.null(ddd$cr.lb))
@@ -94,12 +91,18 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, annosym, ...) {
 
    ### annotation symbols vector
 
+   if (is.null(ddd$annosym)) {
+      annosym <- .getfromenv("forest", "annosym", default=NULL)
+   } else {
+      annosym <- ddd$annosym
+   }
+
    if (is.null(annosym))
       annosym <- c(" [", ", ", "]", "-") # 4th element for minus sign symbol
    if (length(annosym) == 3L)
       annosym <- c(annosym, "-")
    if (length(annosym) != 4L)
-      stop(mstyle$stop("Argument 'annosym' must be a vector of length 3."))
+      stop(mstyle$stop("Argument 'annosym' must be a vector of length 3 (or 4)."))
 
    if (!is.null(ddd$lcol)) {
       lcol <- ddd$lcol
@@ -107,9 +110,9 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, annosym, ...) {
       lcol <- "gray50"
    }
 
-   lsegments <- function(..., cr.lb, cr.ub, addcred, pi.type, lcol) segments(...)
-   ltext     <- function(..., cr.lb, cr.ub, addcred, pi.type, lcol) text(...)
-   lpolygon  <- function(..., cr.lb, cr.ub, addcred, pi.type, lcol) polygon(...)
+   lsegments <- function(..., cr.lb, cr.ub, addcred, pi.type, lcol, annosym) segments(...)
+   ltext     <- function(..., cr.lb, cr.ub, addcred, pi.type, lcol, annosym) text(...)
+   lpolygon  <- function(..., cr.lb, cr.ub, addcred, pi.type, lcol, annosym) polygon(...)
 
    ### set/get fonts (1st for labels, 2nd for annotations)
    ### when passing a named vector, the names are for 'family' and the values are for 'font'

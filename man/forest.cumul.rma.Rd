@@ -6,12 +6,12 @@
 }
 \usage{
 \method{forest}{cumul.rma}(x, annotate=TRUE, header=FALSE,
-       xlim, alim, olim, ylim, top=3, at, steps=5,
+       xlim, alim, olim, ylim, at, steps=5,
        level=x$level, refline=0, digits=2L, width,
        xlab, ilab, ilab.xpos, ilab.pos,
        transf, atransf, targs, rows,
        efac=1, pch=15, psize=1, col,
-       lty, fonts, cex, cex.lab, cex.axis, annosym, \dots)
+       lty, fonts, cex, cex.lab, cex.axis, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"cumul.rma"} obtained with \code{\link{cumul}}.}
@@ -21,7 +21,6 @@
    \item{alim}{the x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.}
    \item{olim}{optional argument to specify observation/outcome limits. If unspecified, no limits are used.}
    \item{ylim}{the y-axis limits of the plot. If unspecified, the function tries to set the y-axis limits to some sensible values.}
-   \item{top}{the amount of space to leave empty at the top of the plot (e.g., for adding headers) (the default is 3 rows).}
    \item{at}{position of the x-axis tick marks and corresponding labels. If unspecified, the function tries to set the tick mark positions/labels to some sensible values.}
    \item{steps}{the number of tick marks for the x-axis (the default is 5). Ignored when the positions are specified via the \code{at} argument.}
    \item{level}{numeric value between 0 and 100 to specify the confidence interval level (the default is to take the value from the object).}
@@ -30,7 +29,7 @@
    \item{width}{optional integer to manually adjust the width of the columns for the annotations (either a single integer or a vector of the same length as the number of annotation columns).}
    \item{xlab}{title for the x-axis. If unspecified, the function tries to set an appropriate axis title.}
    \item{ilab}{optional vector, matrix, or data frame providing additional information about the studies that should be added to the plot.}
-   \item{ilab.xpos}{numeric vector to specify the x-axis position(s) of the variable(s) given via \code{ilab} (must be specified if \code{ilab} is specified).}
+   \item{ilab.xpos}{numeric vector to specify the horizontal position(s) of the variable(s) given via \code{ilab} (must be specified if \code{ilab} is specified).}
    \item{ilab.pos}{integer(s) (either 1, 2, 3, or 4) to specify the alignment of the vector(s) given via \code{ilab} (2 means right, 4 mean left aligned). If unspecified, the default is to center the labels.}
    \item{transf}{optional argument to specify the name of a function that should be used to transform the estimates and confidence interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{atransf}{optional argument to specify the name of a function that should be used to transform the x-axis labels and annotations (e.g., \code{atransf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
@@ -45,13 +44,12 @@
    \item{cex}{optional character and symbol expansion factor. If unspecified, the function tries to set this to a sensible value.}
    \item{cex.lab}{optional expansion factor for the x-axis title. If unspecified, the function tries to set this to a sensible value.}
    \item{cex.axis}{optional expansion factor for the x-axis labels. If unspecified, the function tries to set this to a sensible value.}
-   \item{annosym}{optional vector of length 3 to change the left bracket, separation, and right bracket symbols for the annotations.}
    \item{\dots}{other arguments.}
 }
 \details{
    The plot shows the estimated (average) outcome with corresponding confidence interval as one study at a time is added to the analysis.
 }
-\note{
+\section{Note}{
    The function tries to set some sensible values for the optional arguments, but it may be necessary to adjust these in certain circumstances.
 
    The function actually returns some information about the chosen values invisibly. Printing this information is useful as a starting point to make adjustments to the plot.

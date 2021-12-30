@@ -1,10 +1,10 @@
 forest.cumul.rma <- function(x,
 annotate=TRUE,                                                header=FALSE,
-xlim, alim, olim, ylim, top=3, at, steps=5, level=x$level, refline=0, digits=2L, width,
+xlim, alim, olim, ylim, at, steps=5, level=x$level, refline=0, digits=2L, width,
 xlab,             ilab, ilab.xpos, ilab.pos,
 transf, atransf, targs, rows,
 efac=1, pch=15, psize=1,                        col,
-lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
+lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    #########################################################################
 
@@ -66,6 +66,8 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
    if (length(digits) == 1L)
       digits <- c(digits,digits)
 
+   ddd <- list(...)
+
    ############################################################################
 
    ### set default line types if user has not specified 'lty' argument
@@ -84,12 +86,15 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
 
    ### annotation symbols vector
 
-   if (missing(annosym))
+   if (is.null(ddd$annosym)) {
       annosym <- c(" [", ", ", "]", "-") # 4th element for minus sign symbol
-   if (length(annosym) == 3L)
-      annosym <- c(annosym, "-")
-   if (length(annosym) != 4L)
-      stop(mstyle$stop("Argument 'annosym' must be a vector of length 3."))
+   } else {
+      annosym <- ddd$annosym
+      if (length(annosym) == 3L)
+         annosym <- c(annosym, "-")
+      if (length(annosym) != 4L)
+         stop(mstyle$stop("Argument 'annosym' must be a vector of length 3 (or 4)."))
+   }
 
    ### get measure from object
 
@@ -125,8 +130,6 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
    if (!annotate)
       header.right <- NULL
 
-   ddd <- list(...)
-
    if (!is.null(ddd$clim))
       olim <- ddd$clim
 
@@ -142,14 +145,20 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
          rowadj <- c(rowadj,0) # if two values are specified, use them for 1&2
    }
 
-   lplot     <- function(..., textpos, clim, rowadj) plot(...)
-   labline   <- function(..., textpos, clim, rowadj) abline(...)
-   lsegments <- function(..., textpos, clim, rowadj) segments(...)
-   laxis     <- function(..., textpos, clim, rowadj) axis(...)
-   lmtext    <- function(..., textpos, clim, rowadj) mtext(...)
-   lpolygon  <- function(..., textpos, clim, rowadj) polygon(...)
-   ltext     <- function(..., textpos, clim, rowadj) text(...)
-   lpoints   <- function(..., textpos, clim, rowadj) points(...)
+   if (is.null(ddd$top)) {
+      top <- 3
+   } else {
+      top <- ddd$top
+   }
+
+   lplot     <- function(..., textpos, clim, rowadj, annosym, top) plot(...)
+   labline   <- function(..., textpos, clim, rowadj, annosym, top) abline(...)
+   lsegments <- function(..., textpos, clim, rowadj, annosym, top) segments(...)
+   laxis     <- function(..., textpos, clim, rowadj, annosym, top) axis(...)
+   lmtext    <- function(..., textpos, clim, rowadj, annosym, top) mtext(...)
+   lpolygon  <- function(..., textpos, clim, rowadj, annosym, top) polygon(...)
+   ltext     <- function(..., textpos, clim, rowadj, annosym, top) text(...)
+   lpoints   <- function(..., textpos, clim, rowadj, annosym, top) points(...)
 
    #########################################################################
 
@@ -359,17 +368,20 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
 
    ### allow adjustment of position of study labels and annotations via textpos argument
 
-   if (is.null(ddd$textpos))
-      ddd$textpos <- c(xlim[1], xlim[2])
+   if (is.null(ddd$textpos)) {
+      textpos <- c(xlim[1], xlim[2])
+   } else {
+      textpos <- ddd$textpos
+   }
 
-   if (length(ddd$textpos) != 2L)
+   if (length(textpos) != 2L)
       stop(mstyle$stop("Argument 'textpos' must be of length 2."))
 
-   if (is.na(ddd$textpos[1]))
-      ddd$textpos[1] <- xlim[1]
+   if (is.na(textpos[1]))
+      textpos[1] <- xlim[1]
 
-   if (is.na(ddd$textpos[2]))
-      ddd$textpos[2] <- xlim[2]
+   if (is.na(textpos[2]))
+      textpos[2] <- xlim[2]
 
    ### set y-axis limits
 
@@ -522,7 +534,7 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
 
    ### add study labels on the left
 
-   ltext(ddd$textpos[1], rows+rowadj[1], slab, pos=4, cex=cex, col=col, ...)
+   ltext(textpos[1], rows+rowadj[1], slab, pos=4, cex=cex, col=col, ...)
 
    ### add info labels
 
@@ -583,7 +595,7 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
       annotext[grepl("NA", annotext, fixed=TRUE)] <- ""
       annotext <- sub("-", annosym[4], annotext, fixed=TRUE)
       par(family=names(fonts)[2], font=fonts[2])
-      ltext(ddd$textpos[2], rows+rowadj[2], labels=annotext, pos=2, cex=cex, col=col, ...)
+      ltext(textpos[2], rows+rowadj[2], labels=annotext, pos=2, cex=cex, col=col, ...)
       par(family=names(fonts)[1], font=fonts[1])
 
    } else {
@@ -607,14 +619,14 @@ lty, fonts, cex, cex.lab, cex.axis, annosym, ...) {
 
    ### add header
 
-   ltext(ddd$textpos[1], ylim[2]-(top-1)+1, header.left,  pos=4, font=2, cex=cex, ...)
-   ltext(ddd$textpos[2], ylim[2]-(top-1)+1, header.right, pos=2, font=2, cex=cex, ...)
+   ltext(textpos[1], ylim[2]-(top-1)+1, header.left,  pos=4, font=2, cex=cex, ...)
+   ltext(textpos[2], ylim[2]-(top-1)+1, header.right, pos=2, font=2, cex=cex, ...)
 
    #########################################################################
 
    ### return some information about plot invisibly
 
-   res <- list(xlim=par("usr")[1:2], alim=alim, at=at, ylim=ylim, rows=rows, cex=cex, cex.lab=cex.lab, cex.axis=cex.axis, ilab.xpos=ilab.xpos, ilab.pos=ilab.pos, textpos=ddd$textpos)
+   res <- list(xlim=par("usr")[1:2], alim=alim, at=at, ylim=ylim, rows=rows, cex=cex, cex.lab=cex.lab, cex.axis=cex.axis, ilab.xpos=ilab.xpos, ilab.pos=ilab.pos, textpos=textpos)
 
    ### add some additional stuff to be put into .metafor environment, so that it can be used by addpoly()
 

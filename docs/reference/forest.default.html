@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-40</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-41</span>
       </span>
     </div>
 
@@ -99,12 +99,12 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for default</span>
 <span class="fu"><a href="forest.html">forest</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">vi</span>, <span class="va">sei</span>, <span class="va">ci.lb</span>, <span class="va">ci.ub</span>,
        annotate<span class="op">=</span><span class="cn">TRUE</span>, showweights<span class="op">=</span><span class="cn">FALSE</span>, header<span class="op">=</span><span class="cn">FALSE</span>,
-       <span class="va">xlim</span>, <span class="va">alim</span>, <span class="va">olim</span>, <span class="va">ylim</span>, top<span class="op">=</span><span class="fl">3</span>, <span class="va">at</span>, steps<span class="op">=</span><span class="fl">5</span>,
+       <span class="va">xlim</span>, <span class="va">alim</span>, <span class="va">olim</span>, <span class="va">ylim</span>, <span class="va">at</span>, steps<span class="op">=</span><span class="fl">5</span>,
        level<span class="op">=</span><span class="fl">95</span>, refline<span class="op">=</span><span class="fl">0</span>, digits<span class="op">=</span><span class="fl">2L</span>, <span class="va">width</span>,
        <span class="va">xlab</span>, <span class="va">slab</span>, <span class="va">ilab</span>, <span class="va">ilab.xpos</span>, <span class="va">ilab.pos</span>,
        <span class="va">order</span>, <span class="va">subset</span>, <span class="va">transf</span>, <span class="va">atransf</span>, <span class="va">targs</span>, <span class="va">rows</span>,
        efac<span class="op">=</span><span class="fl">1</span>, pch<span class="op">=</span><span class="fl">15</span>, <span class="va">psize</span>, plim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>,<span class="fl">1.5</span><span class="op">)</span>, <span class="va">col</span>,
-       <span class="va">lty</span>, <span class="va">fonts</span>, <span class="va">cex</span>, <span class="va">cex.lab</span>, <span class="va">cex.axis</span>, <span class="va">annosym</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+       <span class="va">lty</span>, <span class="va">fonts</span>, <span class="va">cex</span>, <span class="va">cex.lab</span>, <span class="va">cex.axis</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -133,8 +133,6 @@
 <dd><p>optional argument to specify observation/outcome limits. If unspecified, no limits are used.</p></dd>
 <dt>ylim</dt>
 <dd><p>the y-axis limits of the plot. If unspecified, the function tries to set the y-axis limits to some sensible values.</p></dd>
-<dt>top</dt>
-<dd><p>the amount of space to leave empty at the top of the plot (e.g., for adding headers) (the default is 3 rows).</p></dd>
 <dt>at</dt>
 <dd><p>position of the x-axis tick marks and corresponding labels. If unspecified, the function tries to set the tick mark positions/labels to some sensible values.</p></dd>
 <dt>steps</dt>
@@ -154,7 +152,7 @@
 <dt>ilab</dt>
 <dd><p>optional vector, matrix, or data frame providing additional information about the studies that should be added to the plot.</p></dd>
 <dt>ilab.xpos</dt>
-<dd><p>numeric vector to specify the x-axis position(s) of the variable(s) given via <code>ilab</code> (must be specified if <code>ilab</code> is specified).</p></dd>
+<dd><p>numeric vector to specify the horizontal position(s) of the variable(s) given via <code>ilab</code> (must be specified if <code>ilab</code> is specified).</p></dd>
 <dt>ilab.pos</dt>
 <dd><p>integer(s) (either 1, 2, 3, or 4) to specify the alignment of the vector(s) given via <code>ilab</code> (2 means right, 4 mean left aligned). If unspecified, the default is to center the labels.</p></dd>
 <dt>order</dt>
@@ -189,8 +187,6 @@
 <dd><p>optional expansion factor for the x-axis title. If unspecified, the function tries to set this to a sensible value.</p></dd>
 <dt>cex.axis</dt>
 <dd><p>optional expansion factor for the x-axis labels. If unspecified, the function tries to set this to a sensible value.</p></dd>
-<dt>annosym</dt>
-<dd><p>optional vector of length 3 to change the left bracket, separation, and right bracket symbols for the annotations.</p></dd>
 <dt>...</dt>
 <dd><p>other arguments.</p></dd>
 </dl></div>
@@ -201,19 +197,35 @@
 <p>By default, the studies are ordered from top to bottom (i.e., the first study in the dataset will be placed in row <em></em>\(k\), the second study in row <em></em>\(k-1\), and so on, until the last study, which is placed in the first row). The studies can be reordered with the <code>order</code> argument:</p><ul><li><p><code>order="obs"</code>: the studies are ordered by the observed outcomes,</p></li>
 <li><p><code>order="prec"</code>: the studies are ordered by their sampling variances.</p></li>
 </ul><p>Alternatively, it is also possible to set <code>order</code> equal to a variable based on which the studies will be ordered (see ‘Examples’).</p>
-<p>Additional columns with information about the studies can be added to the plot via the <code>ilab</code> argument. This can either be a single variable or an entire matrix / data frame (with as many rows as there are studies in the forest plot). The <code>ilab.xpos</code> argument must then also be specified to indicate the x-axis position of the variables specified via <code>ilab</code>.</p>
+<p>Additional columns with information about the studies can be added to the plot via the <code>ilab</code> argument. This can either be a single variable or an entire matrix / data frame (with as many rows as there are studies in the forest plot). The <code>ilab.xpos</code> argument must then also be specified to indicate the horizontal position of the variables specified via <code>ilab</code>.</p>
 <p>Summary estimates can be added to the plot with the <code><a href="addpoly.html">addpoly</a></code> function. See the documentation for that function for examples.</p>
 <p>By default (i.e., when <code>psize</code> is not specified), the point sizes are a function of the precision (i.e., inverse standard errors) of the outcomes. This way, more precise estimates are visually more prominent in the plot. By making the point sizes a function of the inverse standard errors of the estimates, their areas are proportional to the inverse sampling variances, which corresponds to the weights they would receive in an equal-effects model. However, the point sizes are rescaled so that the smallest point size is <code>plim[1]</code> and the largest point size is <code>plim[2]</code>. As a result, their relative sizes (i.e., areas) no longer exactly correspond to their relative weights in such a model. If exactly relative point sizes are desired, one can set <code>plim[2]</code> to <code>NA</code>, in which case the points are rescaled so that the smallest point size corresponds to <code>plim[1]</code> and all other points are scaled accordingly. As a result, the largest point may be very large. Alternatively, one can set <code>plim[1]</code> to <code>NA</code>, in which case the points are rescaled so that the largest point size corresponds to <code>plim[2]</code> and all other points are scaled accordingly. As a result, the smallest point may be very small and essentially indistinguishable from the confidence interval line. To avoid the latter, one can also set <code>plim[3]</code>, which enforces a minimal point size.</p>
     </div>
     <div id="note">
     <h2>Note</h2>
     <p>The function tries to set some sensible values for the optional arguments, but it may be necessary to adjust these in certain circumstances.</p>
-<p>The function actually returns some information about the chosen defaults invisibly. Printing this information is useful as a starting point to make adjustments to the plot.</p>
+<p>The function actually returns some information about the chosen values invisibly. Printing this information is useful as a starting point to make adjustments to the plot.</p>
 <p>If the number of studies is quite large, the labels, annotations, and symbols may become quite small and impossible to read. Stretching the plot window vertically may then provide a more readable figure (one should call the function again after adjusting the window size, so that the label/symbol sizes can be properly adjusted). Also, the <code>cex</code>, <code>cex.lab</code>, and <code>cex.axis</code> arguments are then useful to adjust the symbol and text sizes.</p>
 <p>If the horizontal plot and/or x-axis limits are set manually, then the horizontal plot limits (<code>xlim</code>) must be at least as wide as the x-axis limits (<code>alim</code>). This restriction is enforced inside the function.</p>
 <p>If the outcome measure used for creating the plot is bounded (e.g., correlations are bounded between -1 and +1, proportions are bounded between 0 and 1), one can use the <code>olim</code> argument to enforce those limits (the observed outcomes and confidence intervals cannot exceed those bounds then).</p>
 <p>The <code>lty</code> argument can also be a vector of two elements, the first for specifying the line type of the individual CIs (<code>"solid"</code> by default), the second for the line type of the horizontal line that is automatically added to the plot (<code>"solid"</code> by default; set to <code>"blank"</code> to remove it).</p>
     </div>
+    <div id="additional-arguments">
+    <h2>Additional Arguments</h2>
+    <p>There are some additional arguments that can be passed to the function via <code>...</code> (hence, they cannot be abbreviated):</p><dl><dt>top</dt>
+<dd><p>the amount of space to leave empty at the top of the plot (e.g., for adding headers) (the default is 3 rows).</p></dd>
+
+   <dt>annosym</dt>
+<dd><p>optional vector of length 3 to select the left bracket, separation, and right bracket symbols for the annotations (the default is <code>c(" [", ", ", "]")</code>). Can also include a 4th element to adjust the look of the minus symbol, for example to use a proper minus (−) sign instead of a hyphen-minus (-).</p></dd>
+
+   <dt>textpos</dt>
+<dd><p>optional vector of length 2 to specify the placement of the study labels and the annotations (the default is to use the horizontal limits of the plot region, i.e., the study labels to the right of <code>xlim[1]</code> and the annotations to the left of <code>xlim[2]</code>).</p></dd>
+
+   <dt>rowadj</dt>
+<dd><p>optional vector of length 3 to vertically adjust the position of the study labels, the annotations, and the extra information (if specified via <code>ilab</code>). This is useful for fine-tuning the position of text added with different positional alignments (i.e., argument <code>pos</code> in the <code><a href="https://rdrr.io/r/graphics/text.html" class="external-link">text</a></code> function).</p></dd>
+
+   
+</dl></div>
     <div id="author">
     <h2>Author</h2>
     <p>Wolfgang Viechtbauer <a href="mailto:wvb@metafor-project.org">wvb@metafor-project.org</a> <a href="https://www.metafor-project.org" class="external-link">https://www.metafor-project.org</a></p>
