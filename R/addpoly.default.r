@@ -110,9 +110,9 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, ...) {
       lcol <- "gray50"
    }
 
-   lsegments <- function(..., cr.lb, cr.ub, addcred, pi.type, lcol, annosym) segments(...)
-   ltext     <- function(..., cr.lb, cr.ub, addcred, pi.type, lcol, annosym) text(...)
-   lpolygon  <- function(..., cr.lb, cr.ub, addcred, pi.type, lcol, annosym) polygon(...)
+   lsegments <- function(..., cr.lb, cr.ub, addcred, pi.type, lcol, annosym, textpos) segments(...)
+   ltext     <- function(..., cr.lb, cr.ub, addcred, pi.type, lcol, annosym, textpos) text(...)
+   lpolygon  <- function(..., cr.lb, cr.ub, addcred, pi.type, lcol, annosym, textpos) polygon(...)
 
    ### set/get fonts (1st for labels, 2nd for annotations)
    ### when passing a named vector, the names are for 'family' and the values are for 'font'
@@ -287,6 +287,23 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, ...) {
    if (is.null(cex))
       cex <- par("cex") * cex.adj
 
+   ### allow adjustment of position of study labels and annotations via textpos argument
+
+   if (is.null(ddd$textpos)) {
+      textpos <- .getfromenv("forest", "textpos", default=xlim)
+   } else {
+      textpos <- ddd$textpos
+   }
+
+   if (length(textpos) != 2L)
+      stop(mstyle$stop("Argument 'textpos' must be of length 2."))
+
+   if (is.na(textpos[1]))
+      textpos[1] <- xlim[1]
+
+   if (is.na(textpos[2]))
+      textpos[2] <- xlim[2]
+
    ### add annotations
 
    if (annotate) {
@@ -326,7 +343,7 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, ...) {
       annotext <- cbind(annotext[,1], annosym[1], annotext[,2], annosym[2], annotext[,3], annosym[3])
       annotext <- apply(annotext, 1, paste, collapse="")
       par(family=names(fonts)[2], font=fonts[2])
-      ltext(x=xlim[2], rows, labels=annotext, pos=2, cex=cex, ...)
+      ltext(x=textpos[2], rows, labels=annotext, pos=2, cex=cex, ...)
       par(family=names(fonts)[1], font=fonts[1])
 
    }
@@ -355,9 +372,9 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, ...) {
       ### label(s)
       if (!is.null(mlab)) {
          if (is.list(mlab)) {
-            ltext(xlim[1], rows[i], mlab[[i]], pos=4, cex=cex, ...)
+            ltext(x=textpos[1], rows[i], mlab[[i]], pos=4, cex=cex, ...)
          } else {
-            ltext(xlim[1], rows[i], mlab[i], pos=4, cex=cex, ...)
+            ltext(x=textpos[1], rows[i], mlab[i], pos=4, cex=cex, ...)
          }
       }
 

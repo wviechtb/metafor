@@ -357,7 +357,7 @@ lty, lwd, col, level=99.99, refline=0, ...) {
       ylim <- sort(ylim)
    }
 
-   plot(NA, NA, xlim=c(xlim[1], xlim[2]), ylim=ylim, xlab=xlab, ylab=ylab, ...)
+   plot(NA, NA, xlim=xlim, ylim=ylim, xlab=xlab, ylab=ylab, ...)
 
    for (i in seq_len(k)[order(1/vi)]) {
       lines(xs, lls[i,], lty=lty[i], lwd=lwd[i], col=col[i], ...)

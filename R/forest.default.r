@@ -526,7 +526,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    ### allow adjustment of position of study labels and annotations via textpos argument
 
    if (is.null(ddd$textpos)) {
-      textpos <- c(xlim[1], xlim[2])
+      textpos <- xlim
    } else {
       textpos <- ddd$textpos
    }

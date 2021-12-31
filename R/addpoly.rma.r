@@ -52,12 +52,6 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, ...) {
 
    ddd <- list(...)
 
-   if (is.null(ddd$annosym)) {
-      annosym <- .getfromenv("forest", "annosym", default=NULL)
-   } else {
-      annosym <- ddd$annosym
-   }
-
    if (!is.null(ddd$addcred))
       addpred <- ddd$addcred
 
@@ -92,6 +86,6 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, ...) {
    addpoly(x$beta, ci.lb=ci.lb, ci.ub=ci.ub, pi.lb=pi.lb, pi.ub=pi.ub,
            rows=row, level=level, annotate=annotate, digits=digits, width=width,
            mlab=mlab, transf=transf, atransf=atransf, targs=targs,
-           efac=efac, col=col, border=border, lty=lty, fonts=fonts, cex=cex, annosym=annosym, ...)
+           efac=efac, col=col, border=border, lty=lty, fonts=fonts, cex=cex, ...)
 
 }

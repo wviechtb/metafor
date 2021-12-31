@@ -32,7 +32,7 @@
 \details{
    The function can be used to add a four-sided polygon, sometimes called a summary \sQuote{diamond}, to an existing forest plot created with the \code{\link{forest}} function. The polygon shows the summary estimate (with its confidence interval bounds) based on an equal- or a random-effects model. Using this function, summary estimates based on different types of models can be shown in the same plot. Also, summary estimates based on a subgrouping of the studies can be added to the plot this way. See \sQuote{Examples}.
 
-   If unspecified, arguments \code{annotate}, \code{digits}, \code{width}, \code{transf}, \code{atransf}, \code{targs}, \code{efac} (only if the forest plot was created with \code{\link{forest.rma}}), \code{fonts}, \code{cex}, and \code{annosym} are automatically set equal to the same values that were used when creating the forest plot.
+   If unspecified, arguments \code{annotate}, \code{digits}, \code{width}, \code{transf}, \code{atransf}, \code{targs}, \code{efac} (only if the forest plot was created with \code{\link{forest.rma}}), \code{fonts}, \code{cex}, \code{annosym}, and \code{textpos} are automatically set equal to the same values that were used when creating the forest plot.
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}

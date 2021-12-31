@@ -50,14 +50,6 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, ...) {
    if (missing(cex))
       cex <- .getfromenv("forest", "cex", default=NULL)
 
-   ddd <- list(...)
-
-   if (is.null(ddd$annosym)) {
-      annosym <- .getfromenv("forest", "annosym", default=NULL)
-   } else {
-      annosym <- ddd$annosym
-   }
-
    if (addpred) {
       pi.lb <- x$pi.lb
       pi.ub <- x$pi.ub
@@ -71,6 +63,6 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, ...) {
    addpoly(x$pred, ci.lb=x$ci.lb, ci.ub=x$ci.ub, pi.lb=pi.lb, pi.ub=pi.ub,
            rows=rows,             annotate=annotate, digits=digits, width=width,
            mlab=mlab, transf=transf, atransf=atransf, targs=targs,
-           efac=efac, col=col, border=border, lty=lty, fonts=fonts, cex=cex, annosym=annosym, ...)
+           efac=efac, col=col, border=border, lty=lty, fonts=fonts, cex=cex, ...)
 
 }
