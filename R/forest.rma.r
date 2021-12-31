@@ -209,6 +209,18 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    ltext     <- function(..., textpos, addcred, pi.type, decreasing, clim, rowadj, annosym, top) text(...)
    lpoints   <- function(..., textpos, addcred, pi.type, decreasing, clim, rowadj, annosym, top) points(...)
 
+   if (is.character(showweights)) {
+      weighttype  <- match.arg(showweights, c("diagonal", "rowsum"))
+      if (weighttype == "rowsum" && !inherits(x, "rma.mv"))
+         weighttype <- "diagonal"
+      showweights <- TRUE
+   } else {
+      weighttype <- "diagonal"
+   }
+
+   if (!is.logical(showweights))
+      stop(mstyle$stop("Argument 'showweights' must be a logical."))
+
    ### TODO: remove this when there is a weights() function for 'rma.glmm' objects
    if (inherits(x, "rma.glmm") && showweights)
       stop(mstyle$stop("Option 'showweights=TRUE' not possible for 'rma.glmm' objects."))
@@ -320,7 +332,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
          }
       }
 
-      weights <- try(weights(x), silent=TRUE) # does not work for rma.glmm and rma.uni.selmodel objects
+      weights <- try(weights(x, type=weighttype), silent=TRUE) # does not work for rma.glmm and rma.uni.selmodel objects
 
       if (inherits(weights, "try-error"))
          weights <- rep(1, k)

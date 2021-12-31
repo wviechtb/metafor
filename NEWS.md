@@ -38,7 +38,7 @@
 
 - `addpoly.default()` and `addpoly.rma()` gain `lty` and `annosym` arguments; if unspecified, arguments `annotate`, `digits`, `width`, `transf`, `atransf`, `targs`, `efac`, `fonts`, `cex`, and `annosym` are now automatically set equal to the same values that were used when creating the forest plot
 
-- documented `textpos` and `rowadj` arguments for the various `forest` functions and moved the `top` and `annosym` argument to the additional arguments
+- documented `textpos` and `rowadj` arguments for the various `forest` functions and moved the `top` and `annosym` arguments to 'additional arguments'
 
 - fixed that `level` argument in `addpoly.rma()` did not affect the CI width
 
