@@ -29,7 +29,7 @@
 
    For \code{"rma.mv"}, the structure of the weight matrix depends on the model fitted (i.e., the random effects included and the variance-covariance matrix of the sampling errors) but is often more complex and not just diagonal.
 
-   For \code{"rma.mv"} intercept-only models, one can also take the sum over the rows in the weight matrix, which are actually the weights assigned to the observed effect sizes or outcomes when estimating the model intercept. These weights can be obtained with \code{type="rowsum"} (as with \code{type="diagonal"}, they are also given in \%).
+   For intercept-only \code{"rma.mv"} models, one can also take the sum over the rows in the weight matrix, which are actually the weights assigned to the observed effect sizes or outcomes when estimating the model intercept. These weights can be obtained with \code{type="rowsum"} (as with \code{type="diagonal"}, they are also given in \%). See \href{https://www.metafor-project.org/doku.php/tips:weights_in_rma.mv_models}{here} for a discussion of this.
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
@@ -40,7 +40,7 @@
 \seealso{
    \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, and \code{\link{rma.mv}} for functions to fit models for which model fitting weights can be extracted.
 
-   \code{\link{influence.rma.uni}} and \code{\link{influence.rma.mv}} for other outlier and influential case diagnostics.
+   \code{\link{influence.rma.uni}} and \code{\link{influence.rma.mv}} for other model diagnostics.
 }
 \examples{
 ### calculate log risk ratios and corresponding sampling variances

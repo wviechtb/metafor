@@ -8,7 +8,7 @@
 \alias{cooks.distance.rma.uni}
 \alias{dfbetas.rma.uni}
 \alias{hatvalues.rma.uni}
-\title{Outlier and Influential Case Diagnostics for 'rma.uni' Objects}
+\title{Model Diagnostics for 'rma.uni' Objects}
 \description{
    The functions can be used to compute various outlier and influential case diagnostics (some of which indicate the influence of deleting one case at a time on the model fit or the fitted/residual values) for objects of class \code{"rma.uni"}. For the corresponding documentation for \code{"rma.mv"} objects, see \code{\link{influence.rma.mv}}. \loadmathjax
 }

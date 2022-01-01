@@ -3,7 +3,7 @@
 \alias{cooks.distance.rma.mv}
 \alias{dfbetas.rma.mv}
 \alias{hatvalues.rma.mv}
-\title{Outlier and Influential Case Diagnostics for 'rma.mv' Objects}
+\title{Model Diagnostics for 'rma.mv' Objects}
 \description{
    The functions can be used to compute various outlier and influential case diagnostics (some of which indicate the influence of deleting one case at a time on the model fit or the fitted/residual values) for objects of class \code{"rma.mv"}. \loadmathjax
 }

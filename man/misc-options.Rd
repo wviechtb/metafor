@@ -130,6 +130,25 @@ res}
 
    }
 
+   \subsection{Model Fitting / Processing Time}{
+
+   The various model fitting functions (i.e., \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, \code{\link{rma.glmm}}, \code{\link{rma.mv}}, and \code{\link{selmodel}}) and various other functions (e.g., \code{\link[=confint.rma]{confint}}, \code{\link{cumul}}, \code{\link{leave1out}}, \code{\link[=profile.rma]{profile}}, \code{\link[=residuals.rma]{rstudent}}) automatically keep track of the model fitting / processing time. This information is stored as element \code{time} (in seconds) in the object that is returned. One can also use argument \code{time=TRUE} to nicely print this information. For example:
+\preformatted{# fit multilevel mixed-effects meta-regression model and print processing time
+res <- rma.mv(yi, vi, mods = ~ condition,
+              random = list(~ 1 | article/experiment/sample/id, ~ 1 | pairing),
+              data=dat.mccurdy2020, sparse=TRUE, digits=3, time=TRUE)
+
+# extract processing time (should take somewhere around 10-20 seconds on a modern CPU)
+res$time}
+
+   }
+
+   \subsection{Load Balancing}{
+
+   Several functions in the \pkg{metafor} package can make use of parallel processing (e.g., \code{\link[=profile.rma]{profile}}) to speed up intensive computations on machines with multiple cores. When using \code{parallel="snow"}, the default is to use the \code{\link[parallel]{parLapply}} function from the \code{\link[parallel]{parallel}} package for this purpose. In some cases (especially when the parallelized computations take up quite variable amounts of time to complete), using \sQuote{load balancing} may help to speed things up further (by using the \code{\link[parallel]{parLapplyLB}} function). This can be enabled with \code{pbapply::pboptions(use_lb=TRUE)} before running the function that makes use of parallel processing. Whether this really does speed things up depends on many factors and is hard to predict.
+
+   }
+
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}

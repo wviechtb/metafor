@@ -184,7 +184,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
    Predicted/fitted values can be obtained with \code{\link[=predict.rma]{predict}} and \code{\link[=fitted.rma]{fitted}}. For best linear unbiased predictions, see \code{\link[=blup.rma.uni]{blup}} and \code{\link[=ranef.rma.uni]{ranef}}.
 
-   The \code{\link[=residuals.rma]{residuals}}, \code{\link[=rstandard.rma.uni]{rstandard}}, and \code{\link[=rstudent.rma.uni]{rstudent}} functions extract raw and standardized residuals. Additional diagnostics (e.g., to determine influential studies) can be obtained with the \code{\link[=influence.rma.uni]{influence}} function. For models without moderators, leave-one-out diagnostics can also be obtained with \code{\link[=leave1out.rma.uni]{leave1out}}. For models with moderators, variance inflation factors can be obtained with \code{\link[=vif.rma]{vif}}.
+   The \code{\link[=residuals.rma]{residuals}}, \code{\link[=rstandard.rma.uni]{rstandard}}, and \code{\link[=rstudent.rma.uni]{rstudent}} functions extract raw and standardized residuals. Additional model diagnostics (e.g., to determine influential studies) can be obtained with the \code{\link[=influence.rma.uni]{influence}} function. For models without moderators, leave-one-out diagnostics can also be obtained with \code{\link[=leave1out.rma.uni]{leave1out}}. For models with moderators, variance inflation factors can be obtained with \code{\link[=vif.rma]{vif}}.
 
    A confidence interval for the amount of (residual) heterogeneity in the random/mixed-effects model can be obtained with \code{\link[=confint.rma.uni]{confint}}. For location-scale models, \code{\link[=confint.rma.ls]{confint}} can provide confidence intervals for the scale coefficients.
 

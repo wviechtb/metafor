@@ -138,7 +138,7 @@ reference:
       - simulate.rma
       - update.rma
       - vif
-  - title: "Outlier / Influence Diagnostics"
+  - title: "Model Diagnostics"
     desc: >
       Functions for identifying outliers and/or influential studies and for conducting sensitivity analyses.
     contents:

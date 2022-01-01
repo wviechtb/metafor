@@ -97,7 +97,7 @@
 \seealso{
    \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, \code{\link{rma.glmm}}, and \code{\link{rma.mv}} for functions to fit models for which the various types of residuals can be computed.
 
-   \code{\link{influence.rma.uni}} and \code{\link{influence.rma.mv}} for other outlier and influential case diagnostics.
+   \code{\link{influence.rma.uni}} and \code{\link{influence.rma.mv}} for other model diagnostics.
 }
 \examples{
 ### calculate log risk ratios and corresponding sampling variances
