@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-41</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-42</span>
       </span>
     </div>
 
@@ -105,7 +105,7 @@
        addtau2<span class="op">=</span><span class="cn">FALSE</span>, type<span class="op">=</span><span class="st">"rstandard"</span>,
        back<span class="op">=</span><span class="st">"lightgray"</span>, shade<span class="op">=</span><span class="st">"white"</span>, hlines<span class="op">=</span><span class="st">"white"</span>,
        <span class="va">refline</span>, lty<span class="op">=</span><span class="fl">3</span>, pch<span class="op">=</span><span class="fl">19</span>, pch.fill<span class="op">=</span><span class="fl">21</span>, <span class="va">col</span>, <span class="va">bg</span>,
-       label<span class="op">=</span><span class="cn">FALSE</span>, offset<span class="op">=</span><span class="fl">0.4</span>, legend<span class="op">=</span><span class="cn">FALSE</span>, ci.res<span class="op">=</span><span class="fl">1000</span>, <span class="va">...</span><span class="op">)</span>
+       label<span class="op">=</span><span class="cn">FALSE</span>, offset<span class="op">=</span><span class="fl">0.4</span>, legend<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for default</span>
 <span class="fu">funnel</span><span class="op">(</span><span class="va">x</span>, <span class="va">vi</span>, <span class="va">sei</span>, <span class="va">ni</span>, <span class="va">subset</span>, yaxis<span class="op">=</span><span class="st">"sei"</span>,
@@ -113,7 +113,7 @@
        steps<span class="op">=</span><span class="fl">5</span>, <span class="va">at</span>, <span class="va">atransf</span>, <span class="va">targs</span>, <span class="va">digits</span>, level<span class="op">=</span><span class="fl">95</span>,
        back<span class="op">=</span><span class="st">"lightgray"</span>, shade<span class="op">=</span><span class="st">"white"</span>, hlines<span class="op">=</span><span class="st">"white"</span>,
        refline<span class="op">=</span><span class="fl">0</span>, lty<span class="op">=</span><span class="fl">3</span>, pch<span class="op">=</span><span class="fl">19</span>, <span class="va">col</span>, <span class="va">bg</span>,
-       label<span class="op">=</span><span class="cn">FALSE</span>, offset<span class="op">=</span><span class="fl">0.4</span>, legend<span class="op">=</span><span class="cn">FALSE</span>, ci.res<span class="op">=</span><span class="fl">1000</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+       label<span class="op">=</span><span class="cn">FALSE</span>, offset<span class="op">=</span><span class="fl">0.4</span>, legend<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -178,8 +178,6 @@
 <dd><p>argument to control the distance between the points and the corresponding labels.</p></dd>
 <dt>legend</dt>
 <dd><p>logical to indicate whether a legend should be added to the plot (the default is <code>FALSE</code>). Can also be a keyword to indicate the position of the legend (see <code><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></code>).</p></dd>
-<dt>ci.res</dt>
-<dd><p>integer to specify the number of y-axis values at which to calculate the bounds of the pseudo confidence interval. The default is <code>1000</code>, which usually provides a sufficient resolution for the plotting.</p></dd>
 <dt>...</dt>
 <dd><p>other arguments.</p></dd>
 </dl></div>

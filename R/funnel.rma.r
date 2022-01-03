@@ -2,7 +2,7 @@ funnel.rma <- function(x, yaxis="sei", xlim, ylim, xlab, ylab,
 steps=5, at, atransf, targs, digits, level=x$level, addtau2=FALSE,
 type="rstandard", back="lightgray", shade="white", hlines="white",
 refline, lty=3, pch=19, pch.fill=21, col, bg,
-label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
+label=FALSE, offset=0.4, legend=FALSE, ...) {
 
    #########################################################################
 
@@ -166,15 +166,15 @@ label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
    if (!is.null(ddd$transf))
       warning("Function does not have a 'transf' argument (use 'atransf' instead).", call.=FALSE)
 
-   lplot     <- function(..., refline2, level2, lty2, transf) plot(...)
-   labline   <- function(..., refline2, level2, lty2, transf) abline(...)
-   lsegments <- function(..., refline2, level2, lty2, transf) segments(...)
-   laxis     <- function(..., refline2, level2, lty2, transf) axis(...)
-   lpolygon  <- function(..., refline2, level2, lty2, transf) polygon(...)
-   llines    <- function(..., refline2, level2, lty2, transf) lines(...)
-   lpoints   <- function(..., refline2, level2, lty2, transf) points(...)
-   lrect     <- function(..., refline2, level2, lty2, transf) rect(...)
-   ltext     <- function(..., refline2, level2, lty2, transf) text(...)
+   lplot     <- function(..., refline2, level2, lty2, transf, ci.res) plot(...)
+   labline   <- function(..., refline2, level2, lty2, transf, ci.res) abline(...)
+   lsegments <- function(..., refline2, level2, lty2, transf, ci.res) segments(...)
+   laxis     <- function(..., refline2, level2, lty2, transf, ci.res) axis(...)
+   lpolygon  <- function(..., refline2, level2, lty2, transf, ci.res) polygon(...)
+   llines    <- function(..., refline2, level2, lty2, transf, ci.res) lines(...)
+   lpoints   <- function(..., refline2, level2, lty2, transf, ci.res) points(...)
+   lrect     <- function(..., refline2, level2, lty2, transf, ci.res) rect(...)
+   ltext     <- function(..., refline2, level2, lty2, transf, ci.res) text(...)
 
    ### refline2, level2, and lty2 for adding a second reference line / funnel
 
@@ -194,6 +194,14 @@ label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, ...) {
       lty2 <- ddd$lty2
    } else {
       lty2 <- 3
+   }
+
+   ### number of y-axis values at which to calculate the bounds of the pseudo confidence interval
+
+   if (!is.null(ddd$ci.res)) {
+      ci.res <- ddd$ci.res
+   } else {
+      ci.res <- 1000
    }
 
    #########################################################################

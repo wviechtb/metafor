@@ -6,7 +6,7 @@
    The function can be used to update and (by default) re-fit \code{"rma"} models. It does this by extracting the call stored in the object, updating the call and (by default) evaluating that call.
 }
 \usage{
-\method{update}{rma}(object, formula., \dots, evaluate = TRUE)
+\method{update}{rma}(object, formula., \dots, evaluate=TRUE)
 }
 \arguments{
    \item{object}{an object of class \code{"rma"}.}

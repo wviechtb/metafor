@@ -6,7 +6,7 @@
    The function simulates effect sizes or outcomes based on \code{"rma"} model object.
 }
 \usage{
-\method{simulate}{rma}(object, nsim = 1, seed = NULL, olim, \dots)
+\method{simulate}{rma}(object, nsim=1, seed=NULL, olim, \dots)
 }
 \arguments{
    \item{object}{an object of class \code{"rma"}.}

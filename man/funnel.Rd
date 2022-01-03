@@ -15,14 +15,14 @@ funnel(x, \dots)
        addtau2=FALSE, type="rstandard",
        back="lightgray", shade="white", hlines="white",
        refline, lty=3, pch=19, pch.fill=21, col, bg,
-       label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, \dots)
+       label=FALSE, offset=0.4, legend=FALSE, \dots)
 
 \method{funnel}{default}(x, vi, sei, ni, subset, yaxis="sei",
        xlim, ylim, xlab, ylab,
        steps=5, at, atransf, targs, digits, level=95,
        back="lightgray", shade="white", hlines="white",
        refline=0, lty=3, pch=19, col, bg,
-       label=FALSE, offset=0.4, legend=FALSE, ci.res=1000, \dots)
+       label=FALSE, offset=0.4, legend=FALSE, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma"} or a vector with the observed effect sizes or outcomes.}
@@ -55,7 +55,6 @@ funnel(x, \dots)
    \item{label}{argument to control the labeling of the points (the default is \code{FALSE}). See \sQuote{Details}.}
    \item{offset}{argument to control the distance between the points and the corresponding labels.}
    \item{legend}{logical to indicate whether a legend should be added to the plot (the default is \code{FALSE}). Can also be a keyword to indicate the position of the legend (see \code{\link{legend}}).}
-   \item{ci.res}{integer to specify the number of y-axis values at which to calculate the bounds of the pseudo confidence interval. The default is \code{1000}, which usually provides a sufficient resolution for the plotting.}
    \item{\dots}{other arguments.}
 }
 \details{
