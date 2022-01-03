@@ -52,7 +52,7 @@ matreg <- function(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearpd=FALSE, le
    y <- round(y)
 
    if (y < 1 || y > p)
-      stop(mstyle$stop("Index 'y' must be >= 1 or <= ", p, "."))
+      stop(mstyle$stop(paste0("Index 'y' must be >= 1 or <= ", p, ".")))
 
    ### check/process x argument
 
@@ -70,7 +70,7 @@ matreg <- function(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearpd=FALSE, le
       x.pos <- pmatch(x, rownames(R)) # NA if no match or there are duplicates
 
       if (anyNA(x.pos))
-         stop(mstyle$stop("Could not find variable", ifelse(sum(is.na(x.pos)) > 1L, "s", ""), " '", paste(x[is.na(x.pos)], collapse=", "), "' in the 'R' matrix."))
+         stop(mstyle$stop(paste0("Could not find variable", ifelse(sum(is.na(x.pos)) > 1L, "s", ""), " '", paste(x[is.na(x.pos)], collapse=", "), "' in the 'R' matrix.")))
 
       x <- x.pos
 
@@ -82,7 +82,7 @@ matreg <- function(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearpd=FALSE, le
       stop(mstyle$stop("Argument 'x' should not contain duplicated elements."))
 
    if (any(x < 1 | x > p))
-      stop(mstyle$stop("Indices in 'x' must be >= 1 or <= ", p, "."))
+      stop(mstyle$stop(paste0("Indices in 'x' must be >= 1 or <= ", p, ".")))
 
    if (y %in% x)
       stop(mstyle$stop("Variable 'y' should not be an element of 'x'."))

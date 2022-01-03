@@ -25,7 +25,7 @@
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
    if (any(tau2val + vi < 0))
-      stop(mstyle$stop("Some marginal variances are negative."))
+      stop(mstyle$stop("Some marginal variances are negative."), call.=FALSE)
 
    W     <- diag(1/(vi + tau2val), nrow=k, ncol=k)
    stXWX <- .invcalc(X=X, W=W, k=k)
