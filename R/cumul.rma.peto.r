@@ -40,8 +40,12 @@ cumul.rma.peto <- function(x, order, digits, transf, targs, progbar=FALSE, ...) 
    if (grepl("^order\\(", deparse1(substitute(order))))
       warning(mstyle$warning("Use of order() in 'order' argument is probably erroneous."), call.=FALSE)
 
-   if (missing(order))
+   if (missing(order)) {
       order <- seq_len(x$k.all)
+   } else {
+      mf <- match.call()
+      order <- .getx("order", mf=mf, data=x$data)
+   }
 
    if (length(order) != x$k.all)
       stop(mstyle$stop(paste0("Length of the 'order' argument (", length(order), ") does not correspond to the size of the original dataset (", x$k.all, ").")))

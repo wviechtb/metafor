@@ -3,7 +3,7 @@ annotate=TRUE,                             showweights=FALSE, header=FALSE,
 xlim, alim, olim, ylim, at, steps=5, level=95,      refline=0, digits=2L, width,
 xlab, slab,       ilab, ilab.xpos, ilab.pos, order, subset,
 transf, atransf, targs, rows,
-efac=1, pch=15, psize, plim=c(0.5,1.5),         col,
+efac=1, pch, psize, plim=c(0.5,1.5),         col,
 lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    #########################################################################
@@ -49,6 +49,9 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    if (missing(order))
       order <- NULL
+
+   if (missing(pch))
+      pch <- 15
 
    if (missing(psize))
       psize <- NULL
@@ -227,7 +230,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
          slab <- paste("Study", seq_len(k))
       }
    } else {
-      if (is.null(slab) || (length(slab) == 1L && is.na(slab))) # slab=NULL or slab=NA can be used to suppress study labels
+      if (length(slab) == 1L && is.na(slab))    # slab=NA can be used to suppress study labels
          slab <- rep("", k)
    }
 

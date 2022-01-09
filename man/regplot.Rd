@@ -70,7 +70,7 @@ regplot(x, \dots)
 \note{
    For certain types of models, it may not be possible to draw the prediction interval bounds (if this is the case, a warning will be issued).
 
-   When specifying vectors for \code{pch}, \code{psize}, \code{col}, \code{bg}, and/or \code{label}, the variables specified are assumed to be of the same length as the data passed to the model fitting function. Any subsetting and removal of studies with missing values is automatically applied to the variables specified via these arguments.
+   When specifying vectors for arguments \code{pch}, \code{psize}, \code{col}, \code{bg}, and/or \code{label}, the variables specified are assumed to be of the same length as the data passed to the model fitting function. Any subsetting and removal of studies with missing values is automatically applied to the variables specified via these arguments.
 
    If the outcome measure used for creating the plot is bounded (e.g., correlations are bounded between -1 and +1, proportions are bounded between 0 and 1), one can use the \code{olim} argument to enforce those limits (the observed outcomes and confidence/prediction intervals cannot exceed those bounds then).
 }

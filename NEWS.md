@@ -1,4 +1,4 @@
-# metafor 3.1-42 (2022-01-03)
+# metafor 3.1-43 (2022-01-09)
 
 - added `misc-models` and `misc-options` help pages
 
@@ -45,6 +45,8 @@
 - `points.regplot()` function now also redraws the labels (if there were any to begin with)
 
 - added `lbfgsb3c`, `subplex`, and `BBoptim` as possible optimizer in `rma.mv()`, `rma.glmm()`, `rma.uni()`, and `selmodel.rma.uni()`
+
+- the object returned by model fitting functions now includes the data frame specified via the `data` argument; various method functions now automatically look for specified variables within this data frame first
 
 - datasets moved to the `metadat` package (https://cran.r-project.org/package=metadat)
 

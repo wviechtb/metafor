@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-42</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-43</span>
       </span>
     </div>
 
@@ -141,7 +141,8 @@
     </div>
     <div id="note">
     <h2>Note</h2>
-    <p>Leave-one-out diagnostics are calculated by refitting the model <em></em>\(k\) times (where <em></em>\(k\) is the number of cases). Depending on how large <em></em>\(k\) is, it may take a few moments to finish the calculations. For complex models fitted with <code><a href="rma.mv.html">rma.mv</a></code>, this can become computationally expensive.</p>
+    <p>The variable specified via <code>cluster</code> is assumed to be of the same length as the data originally passed to the <code>rma.mv</code> function (and if the <code>data</code> argument was used in the original model fit, then the variable will be searched for within this data frame first). Any subsetting and removal of studies with missing values that was applied during the model fitting is also automatically applied to the variable specified via the <code>cluster</code> argument.</p>
+<p>Leave-one-out diagnostics are calculated by refitting the model <em></em>\(k\) times (where <em></em>\(k\) denotes the number of cases). Depending on how large <em></em>\(k\) is, it may take a few moments to finish the calculations. For complex models fitted with <code><a href="rma.mv.html">rma.mv</a></code>, this can become computationally expensive.</p>
 <p>On machines with multiple cores, one can usually speed things up by delegating the model fitting to separate worker processes, that is, by setting <code>parallel="snow"</code> or <code>parallel="multicore"</code> and <code>ncpus</code> to some value larger than 1. Parallel processing makes use of the <code><a href="https://rdrr.io/r/parallel/parallel-package.html" class="external-link">parallel</a></code> package, using the <code><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">makePSOCKcluster</a></code> and <code><a href="https://rdrr.io/r/parallel/clusterApply.html" class="external-link">parLapply</a></code> functions when <code>parallel="snow"</code> or using <code><a href="https://rdrr.io/r/parallel/mclapply.html" class="external-link">mclapply</a></code> when <code>parallel="multicore"</code> (the latter only works on Unix/Linux-alikes). With <code><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">parallel::detectCores()</a></code>, one can check on the number of available cores on the local machine.</p>
 <p>Alternatively (or in addition to using parallel processing), one can also set <code>reestimate=FALSE</code>, in which case any variance/correlation components in the model are not re-estimated after deleting the <em></em>\(i\textrm{th}\) case from the dataset. Doing so only yields an approximation to the Cook's distances and DFBETAS values that ignores the influence of the <em></em>\(i\textrm{th}\) case on the variance/correlation components, but is considerably faster (and often yields similar results).</p>
 <p>It may not be possible to fit the model after deletion of the <em></em>\(i\textrm{th}\) case from the dataset. This will result in <code>NA</code> values for that case.</p>
@@ -191,7 +192,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
-<span class="r-in"><span class="co">### Cook's distances for each observed outcome</span></span>
+<span class="r-in"><span class="co">### Cook's distance for each observed outcome</span></span>
 <span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="influence.rma.uni.html">cooks.distance</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">x</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            1            2            3            4            5            6            7 </span>
@@ -213,8 +214,8 @@
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, type<span class="op">=</span><span class="st">"o"</span>, pch<span class="op">=</span><span class="fl">19</span>, xlab<span class="op">=</span><span class="st">"Observed Outcome"</span>, ylab<span class="op">=</span><span class="st">"Cook's Distance"</span><span class="op">)</span></span>
 <span class="r-plt img"><img src="influence.rma.mv-1.png" alt="" width="864" height="768"></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="co">### Cook's distances for each district</span></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="influence.rma.uni.html">cooks.distance</a></span><span class="op">(</span><span class="va">res</span>, cluster<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">district</span><span class="op">)</span></span>
+<span class="r-in"><span class="co">### Cook's distance for each district</span></span>
+<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="influence.rma.uni.html">cooks.distance</a></span><span class="op">(</span><span class="va">res</span>, cluster<span class="op">=</span><span class="va">district</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">x</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           11           12           18           27           56           58           71 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0.0693784140 0.0161880606 0.0419849759 0.1192089452 0.0213566370 0.1014506985 0.5585174853 </span>

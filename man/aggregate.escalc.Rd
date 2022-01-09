@@ -107,9 +107,9 @@ agg
 ### reshape 'dat.ishak2007' into long format
 dat <- dat.ishak2007
 dat <- reshape(dat.ishak2007, direction="long", idvar="study", v.names=c("yi","vi"),
-                    varying=list(c(2,4,6,8), c(3,5,7,9)))
-dat <- dat[order(dat$study, dat$time),]
-dat <- dat[!is.na(dat$yi),]
+               varying=list(c(2,4,6,8), c(3,5,7,9)))
+dat <- dat[order(study, time),]
+dat <- dat[!is.na(yi),]
 rownames(dat) <- NULL
 head(dat, 8)
 

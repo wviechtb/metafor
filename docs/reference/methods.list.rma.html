@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-42</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-43</span>
       </span>
     </div>
 
@@ -117,6 +117,10 @@ $(x, name) &lt;- value</code></pre></div>
 <dt>...</dt>
 <dd><p>other arguments.</p></dd>
 </dl></div>
+    <div id="note">
+    <h2>Note</h2>
+    <p>For the <code>`[`</code> method, any variables specified as part of the <code>i</code> argument will be searched for within object <code>x</code> first (see ‘Examples’).</p>
+    </div>
     <div id="author">
     <h2>Author</h2>
     <p>Wolfgang Viechtbauer <a href="mailto:wvb@metafor-project.org">wvb@metafor-project.org</a> <a href="https://www.metafor-project.org" class="external-link">https://www.metafor-project.org</a></p>
@@ -126,6 +130,63 @@ $(x, name) &lt;- value</code></pre></div>
     <p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1–48. <a href="https://doi.org/10.18637/jss.v036.i03" class="external-link">https://doi.org/10.18637/jss.v036.i03</a></p>
     </div>
 
+    <div id="ref-examples">
+    <h2>Examples</h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">### copy data into 'dat' and examine data</span></span>
+<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.viechtbauer2021.html" class="external-link">dat.viechtbauer2021</a></span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">### calculate log odds ratios and corresponding sampling variances</span></span>
+<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"OR"</span>, ai<span class="op">=</span><span class="va">xTi</span>, n1i<span class="op">=</span><span class="va">nTi</span>, ci<span class="op">=</span><span class="va">xCi</span>, n2i<span class="op">=</span><span class="va">nCi</span>, add<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="fl">2</span>, to<span class="op">=</span><span class="st">"all"</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">### fit mixed-effects meta-regression model</span></span>
+<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">dose</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">### get studentized residuals</span></span>
+<span class="r-in"><span class="va">sav</span> <span class="op">&lt;-</span> <span class="fu"><a href="residuals.rma.html">rstudent</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">sav</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      resid     se       z </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   0.5344 0.4849  1.1021 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  -0.3653 0.5163 -0.7076 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  -0.0468 0.4815 -0.0972 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  -0.3142 0.4177 -0.7522 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   0.1743 0.4262  0.4089 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  -0.9963 0.3195 -3.1187 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7   0.0250 0.3723  0.0672 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8   0.9197 0.7572  1.2147 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9   0.7779 0.3678  2.1149 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10  0.3078 0.4548  0.6768 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11 -0.2261 0.3995 -0.5661 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12 -0.2763 0.4113 -0.6718 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13 -0.6072 0.4468 -1.3590 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14  0.9350 0.7213  1.2964 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15  0.2894 0.4754  0.6087 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16 -0.1011 0.5738 -0.1762 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17  0.2310 0.6001  0.3849 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18  0.0103 0.4944  0.0207 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19  0.3425 0.3941  0.8690 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20 -0.3079 0.4618 -0.6667 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">### studies with studentized residuals larger than +-1.96</span></span>
+<span class="r-in"><span class="va">sav</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">sav</span><span class="op">$</span><span class="va">z</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1.96</span>,<span class="op">]</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     resid     se       z </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 -0.9963 0.3195 -3.1187 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  0.7779 0.3678  2.1149 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">### variables specified are automatically searched for within the object itself</span></span>
+<span class="r-in"><span class="va">sav</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">z</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1.96</span>,<span class="op">]</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     resid     se       z </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 -0.9963 0.3195 -3.1187 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  0.7779 0.3678  2.1149 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">### note: this behavior is specific to 'rma.list' objects; this doesn't work for regular data frames</span></span>
+</code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

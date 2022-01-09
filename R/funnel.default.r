@@ -1,7 +1,7 @@
 funnel.default <- function(x, vi, sei, ni, subset, yaxis="sei", xlim, ylim, xlab, ylab,
 steps=5, at, atransf, targs, digits, level=95,
 back="lightgray", shade="white", hlines="white",
-refline=0, lty=3, pch=19, col, bg,
+refline=0, lty=3, pch, col, bg,
 label=FALSE, offset=0.4, legend=FALSE, ...) {
 
    #########################################################################
@@ -22,6 +22,9 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
       atransf <- FALSE
 
    atransf.char <- deparse(atransf)
+
+   if (missing(pch))
+      pch <- 19
 
    yi <- x
 

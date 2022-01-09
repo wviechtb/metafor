@@ -50,9 +50,9 @@ dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg,
               data=dat.bcg, slab=paste(author, year, sep=", "))
 
 ### forest plot of the observed risk ratios
-forest(dat$yi, dat$vi, atransf=exp, xlim=c(-8,4), ylim=c(-4.5,16),
-       at=log(c(.05, .25, 1, 4)), cex=.8, order=dat$alloc,
-       ilab=dat$alloc, ilab.xpos=-4, header="Author(s) and Year")
+with(dat, forest(yi, vi, atransf=exp, xlim=c(-8,4), ylim=c(-4.5,16),
+                 at=log(c(.05, .25, 1, 4)), cex=.8, order=alloc,
+                 ilab=alloc, ilab.xpos=-4, header="Author(s) and Year"))
 
 ### fit mixed-effects model with allocation method as a moderator
 res <- rma(yi, vi, mods = ~ 0 + alloc, data=dat)

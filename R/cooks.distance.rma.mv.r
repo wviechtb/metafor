@@ -49,8 +49,12 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
 
    misscluster <- ifelse(missing(cluster), TRUE, FALSE)
 
-   if (misscluster)
+   if (misscluster) {
       cluster <- seq_len(x$k.all)
+   } else {
+      mf <- match.call()
+      cluster <- .getx("cluster", mf=mf, data=x$data)
+   }
 
    ddd <- list(...)
 
@@ -71,6 +75,9 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
    # the same subsetting and removing of missings (if necessary) as was done
    # during model fitting
 
+   if (length(cluster) != x$k.all)
+      stop(mstyle$stop(paste0("Length of variable specified via 'cluster' (", length(cluster), ") does not match length of data (", x$k.all, ").")))
+
    if (!is.null(x$subset))
       cluster <- cluster[x$subset]
 
@@ -85,9 +92,6 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
 
    if (length(cluster.f) == 0L)
       stop(mstyle$stop(paste0("Cannot find 'cluster' variable (or it has zero length).")))
-
-   if (length(cluster) != x$k)
-      stop(mstyle$stop(paste0("Length of variable specified via 'cluster' (", length(cluster), ") does not match length of data (", x$k, ").")))
 
    ### cluster ids and number of clusters
 

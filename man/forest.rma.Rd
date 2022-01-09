@@ -11,7 +11,7 @@
        level=x$level, refline=0, digits=2L, width,
        xlab, slab, mlab, ilab, ilab.xpos, ilab.pos,
        order, transf, atransf, targs, rows,
-       efac=1, pch=15, psize, plim=c(0.5,1.5), colout,
+       efac=1, pch, psize, plim=c(0.5,1.5), colout,
        col, border, lty, fonts, cex, cex.lab, cex.axis, \dots)
 }
 \arguments{
@@ -87,8 +87,8 @@
    \if{html}{The figure corresponds to the following code: \preformatted{dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 res <- rma(yi, vi, data=dat, slab=paste(author, year, sep=", "))
 forest(res, addpred=TRUE, xlim=c(-16,7), at=seq(-3,2,by=1),
-       ilab=cbind(dat$tpos, dat$tneg, dat$cpos, dat$cneg),
-       ilab.xpos=c(-9.5,-8,-6,-4.5), cex=.75, header="Author(s) and Year")
+       ilab=cbind(tpos, tneg, cpos, cneg), ilab.xpos=c(-9.5,-8,-6,-4.5),
+       cex=.75, header="Author(s) and Year")
 text(c(-9.5,-8,-6,-4.5), 15, c("TB+", "TB-", "TB+", "TB-"), cex=.75, font=2)
 text(c(-8.75,-5.25),     16, c("Vaccinated", "Control"),    cex=.75, font=2)}}
 
@@ -99,8 +99,8 @@ text(c(-8.75,-5.25),     16, c("Vaccinated", "Control"),    cex=.75, font=2)}}
    The figure corresponds to the following code: \preformatted{dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 res <- rma(yi, vi, data=dat, slab=paste(author, year, sep=", "))
 forest(res, addpred=TRUE, xlim=c(-16,7), at=seq(-3,2,by=1),
-       ilab=cbind(dat$tpos, dat$tneg, dat$cpos, dat$cneg),
-       ilab.xpos=c(-9.5,-8,-6,-4.5), cex=.75, header="Author(s) and Year")
+       ilab=cbind(tpos, tneg, cpos, cneg), ilab.xpos=c(-9.5,-8,-6,-4.5),
+       cex=.75, header="Author(s) and Year")
 text(c(-9.5,-8,-6,-4.5), 15, c("TB+", "TB-", "TB+", "TB-"), cex=.75, font=2)
 text(c(-8.75,-5.25),     16, c("Vaccinated", "Control"),    cex=.75, font=2)}}
 
@@ -114,6 +114,8 @@ text(c(-8.75,-5.25),     16, c("Vaccinated", "Control"),    cex=.75, font=2)}}
    The function tries to set some sensible values for the optional arguments, but it may be necessary to adjust these in certain circumstances.
 
    The function actually returns some information about the chosen values invisibly. Printing this information is useful as a starting point to make adjustments to the plot (see \sQuote{Examples}).
+
+   Arguments \code{slab} and \code{ilab} and when specifying vectors for arguments \code{pch}, \code{psize}, \code{order}, and/or \code{colout}, the variables specified are assumed to be of the same length as the data originally passed to the model fitting function (and if the \code{data} argument was used in the original model fit, then the variables will be searched for within this data frame first). Any subsetting and removal of studies with missing values is automatically applied to the variables specified via these arguments.
 
    If the number of studies is quite large, the labels, annotations, and symbols may become quite small and impossible to read. Stretching the plot window vertically may then provide a more readable figure (one should call the function again after adjusting the window size, so that the label/symbol sizes can be properly adjusted). Also, the \code{cex}, \code{cex.lab}, and \code{cex.axis} arguments are then useful to adjust the symbol and text sizes.
 
@@ -175,7 +177,7 @@ forest(res, cex=.8)
 forest(res, cex=.8, addpred=TRUE)
 forest(res, cex=.8, alim=c(-3,3))
 forest(res, cex=.8, order="prec", alim=c(-3,3))
-forest(res, cex=.8, order=dat.bcg$ablat, addpred=TRUE)
+forest(res, cex=.8, order=ablat, addpred=TRUE)
 
 ### adjust xlim values to see how that changes the plot
 forest(res)
@@ -197,8 +199,8 @@ forest(res, atransf=exp, at=log(c(.05,.25,1,4,20)), xlim=c(-8,8),
 ### forest plot with extra annotations
 ### note: may need to widen plotting device to avoid overlapping text
 forest(res, atransf=exp, at=log(c(.05, .25, 1, 4)), xlim=c(-16,6),
-       ilab=cbind(dat.bcg$tpos, dat.bcg$tneg, dat.bcg$cpos, dat.bcg$cneg),
-       ilab.xpos=c(-9.5,-8,-6,-4.5), cex=.75, header="Author(s) and Year")
+       ilab=cbind(tpos, tneg, cpos, cneg), ilab.xpos=c(-9.5,-8,-6,-4.5),
+       cex=.75, header="Author(s) and Year")
 op <- par(cex=.75, font=2)
 text(c(-9.5,-8,-6,-4.5), 15, c("TB+", "TB-", "TB+", "TB-"))
 text(c(-8.75,-5.25),     16, c("Vaccinated", "Control"))
@@ -209,7 +211,7 @@ res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, mods = ~ ablat,
            data=dat.bcg, slab=paste(author, year, sep=", "))
 
 ### forest plot with observed and fitted values
-forest(res, xlim=c(-9,5), order="fit", cex=.8, ilab=dat.bcg$ablat,
+forest(res, xlim=c(-9,5), order="fit", cex=.8, ilab=ablat,
        ilab.xpos=-4, atransf=exp, at=log(c(.05,.25,1,4)),
        header="Author(s) and Year")
 text(-4, 15, "Latitude", cex=.8, font=2)
@@ -227,9 +229,9 @@ forest(res, ylim=c(-1.5, 20), rows=c(17:15, 12:6, 3:1)) ### set positions
 ### forest plot with subgrouping of studies
 ### note: may need to widen plotting device to avoid overlapping text
 forest(res, xlim=c(-16, 4.6), at=log(c(.05, .25, 1, 4)), atransf=exp,
-       ilab=cbind(dat.bcg$tpos, dat.bcg$tneg, dat.bcg$cpos, dat.bcg$cneg),
-       ilab.xpos=c(-9.5,-8,-6,-4.5), cex=.75, ylim=c(0.5, 21),
-       order=dat.bcg$alloc, rows=c(1:2,5:11,14:17),
+       ilab=cbind(tpos, tneg, cpos, cneg), ilab.xpos=c(-9.5,-8,-6,-4.5),
+       cex=.75, ylim=c(0.5, 21),
+       order=alloc, rows=c(1:2,5:11,14:17),
        header="Author(s) and Year")
 op <- par(cex=0.75, font=2)
 text(c(-9.5,-8,-6,-4.5), 20, c("TB+", "TB-", "TB+", "TB-"))

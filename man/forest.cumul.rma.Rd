@@ -87,7 +87,7 @@ dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 res <- rma(yi, vi, data=dat, slab=paste(author, year, sep=", "))
 
 ### draw cumulative forest plots
-x <- cumul(res, order=dat$year)
+x <- cumul(res, order=year)
 forest(x, cex=.8, header=TRUE)
 forest(x, alim=c(-2,1), cex=.8, header=TRUE)
 
@@ -96,7 +96,7 @@ res <- rma.mh(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg,
               slab=paste(author, year, sep=", "))
 
 ### draw cumulative forest plot
-x <- cumul(res, order=dat$year)
+x <- cumul(res, order=year)
 forest(x, alim=c(-2,1), cex=.8, header=TRUE)
 }
 \keyword{hplot}

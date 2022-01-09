@@ -396,7 +396,7 @@ level=95, digits, verbose=FALSE, ...) {
    test      <- "z"
    ddf       <- NA
 
-   if (is.null(ddd$outlist)) {
+   if (is.null(ddd$outlist) || ddd$outlist == "nodata") {
 
       res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
                   tau2=tau2, tau2.f=tau2,
@@ -413,9 +413,13 @@ level=95, digits, verbose=FALSE, ...) {
                   fit.stats=fit.stats,
                   formula.yi=NULL, formula.mods=NULL, version=packageVersion("metafor"), call=mf)
 
+      if (is.null(ddd$outlist))
+         res <- append(res, list(data=data), which(names(res) == "fit.stats"))
+
    }
 
    if (!is.null(ddd$outlist)) {
+
       if (ddd$outlist == "minimal") {
          res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
                      tau2=tau2,
@@ -430,6 +434,7 @@ level=95, digits, verbose=FALSE, ...) {
       } else {
          res <- eval(str2lang(paste0("list(", ddd$outlist, ")")))
       }
+
    }
 
    time.end <- proc.time()

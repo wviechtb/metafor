@@ -128,8 +128,8 @@ regtest(res, predictor="ni")
 regtest(res, predictor="ninv")
 
 ### otherwise have to supply sample sizes manually
-dat$nitotal <- with(dat, n1i + n2i)
 dat$yi <- c(dat$yi) # this removes the 'ni' attribute from 'yi'
+dat$nitotal <- with(dat, n1i + n2i)
 regtest(yi, vi, ni=nitotal, data=dat, predictor="ni")
 res <- rma(yi, vi, data=dat)
 regtest(res, predictor="ni", ni=nitotal, data=dat)

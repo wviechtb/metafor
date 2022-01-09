@@ -25,7 +25,7 @@ dat <- dat.berkey1998
 dat
 
 ### construct list with the variance-covariance matrices of the observed outcomes for the studies
-V <- lapply(split(dat[c("v1i", "v2i")], dat$trial), as.matrix)
+V <- lapply(split(dat[c("v1i","v2i")], dat$trial), as.matrix)
 V
 
 ### construct block diagonal matrix
@@ -33,7 +33,7 @@ V <- bldiag(V)
 V
 
 ### if we split based on 'author', the list elements in V are in a different order than tha data
-V <- lapply(split(dat[c("v1i", "v2i")], dat$author), as.matrix)
+V <- lapply(split(dat[c("v1i","v2i")], dat$author), as.matrix)
 V
 
 ### can use 'order' argument to reorder the block-diagonal matrix into the correct order

@@ -25,6 +25,9 @@ robust.rma.mv <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, .
    ### note: cluster variable is assumed to be of the same length as the original data passed to the model fitting function
    ###       so we have to apply the same subsetting (if necessary) and removing of missings as done during model fitting
 
+   mf <- match.call()
+   cluster <- .getx("cluster", mf=mf, data=x$data)
+
    if (length(cluster) != x$k.all)
       stop(mstyle$stop(paste0("Length of variable specified via 'cluster' (", length(cluster), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
 

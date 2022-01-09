@@ -45,7 +45,7 @@ robust(x, cluster, \dots)
    The results are formatted and printed with the \code{\link{print.rma.uni}} and \code{\link{print.rma.mv}} functions (depending on the type of model).
 }
 \note{
-   The variable specified via \code{cluster} is assumed to be of the same length as the data originally passed to the \code{rma.uni} or \code{rma.mv} functions. Any subsetting and removal of studies with missing values that was applied during the model fitting is also automatically applied to the variable specified via the \code{cluster} argument.
+   The variable specified via \code{cluster} is assumed to be of the same length as the data originally passed to the \code{rma.uni} or \code{rma.mv} functions (and if the \code{data} argument was used in the original model fit, then the variable will be searched for within this data frame first). Any subsetting and removal of studies with missing values that was applied during the model fitting is also automatically applied to the variable specified via the \code{cluster} argument.
 
    The idea of the robust (sandwich-type) estimator for models with unspecified heteroscedasticity can be traced back to Eicker (1967), Huber (1967), and White (1980, 1984). Hence, the method in general is often referred to as the Eicker-Huber-White method. Some small-sample improvements to the method are described by MacKinnon and White (1985). The extension to the cluster-robust estimator can be found in Froot (1989) and Williams (2000), which is also related to the GEE approach by Liang and Zeger (1986). Cameron and Miller (2015) provide an extensive overview of cluster-robust methods. Sidik and Jonkman (2005, 2006) introduced robust methods in the meta-analytic context for standard random/mixed-effects models. The use of cluster-robust methods for multivariate/multilevel meta-analytic models was introduced by Hedges, Tipton, and Johnson (2010).
 }
@@ -103,20 +103,20 @@ res <- rma(yi, vi, data=dat)
 res
 
 ### obtain results based on the sandwich method
-robust(res, cluster=dat$id)
+robust(res, cluster=id)
 
 ### use methods from clubSandwich package
-robust(res, cluster=dat$id, clubSandwich=TRUE)
+robust(res, cluster=id, clubSandwich=TRUE)
 
 ### fit meta-regression model
 res <- rma(yi, vi, mods = ~ length, data=dat)
 res
 
 ### obtain results based on the sandwich method
-robust(res, cluster=dat$id)
+robust(res, cluster=id)
 
 ### use methods from clubSandwich package
-robust(res, cluster=dat$id, clubSandwich=TRUE)
+robust(res, cluster=id, clubSandwich=TRUE)
 
 ############################################################################
 
@@ -128,10 +128,10 @@ res <- rma.mv(yi, vi, random = ~ 1 | district/school, data=dat)
 res
 
 ### obtain results based on the sandwich method
-robust(res, cluster=dat$district)
+robust(res, cluster=district)
 
 ### use methods from clubSandwich package
-robust(res, cluster=dat$district, clubSandwich=TRUE)
+robust(res, cluster=district, clubSandwich=TRUE)
 
 ############################################################################
 
@@ -148,10 +148,10 @@ res <- rma.mv(yi, V, mods = ~ outcome - 1, random = ~ outcome | trial, struct="U
 res
 
 ### obtain results based on sandwich method
-robust(res, cluster=dat$trial)
+robust(res, cluster=trial)
 
 ### use methods from clubSandwich package
-robust(res, cluster=dat$trial, clubSandwich=TRUE)
+robust(res, cluster=trial, clubSandwich=TRUE)
 
 ############################################################################
 }

@@ -155,10 +155,10 @@ head(dat, 5)
 ### create long format dataset
 dat <- reshape(dat, direction="long", idvar="study", v.names=c("yi","vi"),
                varying=list(c(2,4,6,8), c(3,5,7,9)))
-dat <- dat[order(dat$study, dat$time),]
+dat <- dat[order(study, time),]
 
 ### remove missing measurement occasions from dat
-dat <- dat[!is.na(dat$yi),]
+dat <- dat[!is.na(yi),]
 rownames(dat) <- NULL
 
 ### show the data for the first 5 studies
@@ -183,7 +183,7 @@ head(dat, 12)
 
 ### construct the variance-covariance matrix assuming rho = 0.66 for effect sizes
 ### corresponding to the 'verbal' and 'math' outcome types
-V <- vcalc(vi, cluster=dat$study, type=outcome, data=dat, rho=0.66)
+V <- vcalc(vi, cluster=study, type=outcome, data=dat, rho=0.66)
 round(V[1:12,1:12], 4)
 
 ############################################################################

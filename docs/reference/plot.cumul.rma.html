@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-42</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-43</span>
       </span>
     </div>
 
@@ -167,7 +167,7 @@
 <span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### cumulative meta-analysis (in the order of publication year)</span></span>
-<span class="r-in"><span class="va">sav</span> <span class="op">&lt;-</span> <span class="fu"><a href="cumul.html">cumul</a></span><span class="op">(</span><span class="va">res</span>, transf<span class="op">=</span><span class="va">exp</span>, order<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">year</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">sav</span> <span class="op">&lt;-</span> <span class="fu"><a href="cumul.html">cumul</a></span><span class="op">(</span><span class="va">res</span>, transf<span class="op">=</span><span class="va">exp</span>, order<span class="op">=</span><span class="va">year</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### plot of model estimate and tau^2 over time</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sav</span><span class="op">)</span></span>

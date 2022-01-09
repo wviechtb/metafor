@@ -2520,7 +2520,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    weighted  <- TRUE
 
-   if (is.null(ddd$outlist)) {
+   if (is.null(ddd$outlist) || ddd$outlist == "nodata") {
 
       res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
                   tau2=tau2, se.tau2=se.tau2, sigma2=sigma2, rho=rho,
@@ -2540,9 +2540,13 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                   fit.stats=fit.stats,
                   formula.yi=NULL, formula.mods=formula.mods, version=packageVersion("metafor"), call=mf)
 
+      if (is.null(ddd$outlist))
+         res <- append(res, list(data=data), which(names(res) == "fit.stats"))
+
    }
 
    if (!is.null(ddd$outlist)) {
+
       if (ddd$outlist == "minimal") {
          res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
                      tau2=tau2, se.tau2=se.tau2, sigma2=sigma2,
@@ -2557,6 +2561,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       } else {
          res <- eval(str2lang(paste0("list(", ddd$outlist, ")")))
       }
+
    }
 
    if (.isTRUE(ddd$retfit)) {

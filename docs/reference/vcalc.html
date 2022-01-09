@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-42</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-43</span>
       </span>
     </div>
 
@@ -329,10 +329,10 @@
 <span class="r-in"><span class="co">### create long format dataset</span></span>
 <span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/reshape.html" class="external-link">reshape</a></span><span class="op">(</span><span class="va">dat</span>, direction<span class="op">=</span><span class="st">"long"</span>, idvar<span class="op">=</span><span class="st">"study"</span>, v.names<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"yi"</span>,<span class="st">"vi"</span><span class="op">)</span>,</span>
 <span class="r-in">               varying<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">4</span>,<span class="fl">6</span>,<span class="fl">8</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">5</span>,<span class="fl">7</span>,<span class="fl">9</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">study</span>, <span class="va">dat</span><span class="op">$</span><span class="va">time</span><span class="op">)</span>,<span class="op">]</span></span>
+<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">study</span>, <span class="va">time</span><span class="op">)</span>,<span class="op">]</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### remove missing measurement occasions from dat</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">yi</span><span class="op">)</span>,<span class="op">]</span></span>
+<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">yi</span><span class="op">)</span>,<span class="op">]</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### show the data for the first 5 studies</span></span>
@@ -445,7 +445,7 @@
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### construct the variance-covariance matrix assuming rho = 0.66 for effect sizes</span></span>
 <span class="r-in"><span class="co">### corresponding to the 'verbal' and 'math' outcome types</span></span>
-<span class="r-in"><span class="va">V</span> <span class="op">&lt;-</span> <span class="fu">vcalc</span><span class="op">(</span><span class="va">vi</span>, cluster<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">study</span>, type<span class="op">=</span><span class="va">outcome</span>, data<span class="op">=</span><span class="va">dat</span>, rho<span class="op">=</span><span class="fl">0.66</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">V</span> <span class="op">&lt;-</span> <span class="fu">vcalc</span><span class="op">(</span><span class="va">vi</span>, cluster<span class="op">=</span><span class="va">study</span>, type<span class="op">=</span><span class="va">outcome</span>, data<span class="op">=</span><span class="va">dat</span>, rho<span class="op">=</span><span class="fl">0.66</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">V</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">12</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">12</span><span class="op">]</span>, <span class="fl">4</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         [,1]   [,2]   [,3]   [,4]   [,5]   [,6]   [,7]   [,8]   [,9]  [,10]  [,11]  [,12]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1,] 0.0817 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000</span>

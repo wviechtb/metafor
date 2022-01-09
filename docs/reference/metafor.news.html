@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-42</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-43</span>
       </span>
     </div>
 
@@ -116,7 +116,7 @@
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \dontrun{</span></span>
 <span class="r-in"><span class="fu">metafor.news</span><span class="op">(</span><span class="op">)</span><span class="co"># }</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  Changes in version 3.1-42 (2022-01-03)                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                  Changes in version 3.1-43 (2022-01-09)                 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - added misc-models and misc-options help pages</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -195,6 +195,11 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - added lbfgsb3c, subplex, and BBoptim as possible optimizer in</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     rma.mv(), rma.glmm(), rma.uni(), and selmodel.rma.uni()</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - the object returned by model fitting functions now includes the data</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     frame specified via the data argument; various method functions now</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     automatically look for specified variables within this data frame</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     first</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - datasets moved to the metadat package</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     (https://cran.r-project.org/package=metadat)</span>

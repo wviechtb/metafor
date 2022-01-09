@@ -38,7 +38,9 @@
    The \code{cooks.distance} function returns a vector. The \code{dfbetas} function returns a data frame. The \code{hatvalues} function returns either a vector with the diagonal elements of the hat matrix or the entire hat matrix.
 }
 \note{
-   Leave-one-out diagnostics are calculated by refitting the model \mjseqn{k} times (where \mjseqn{k} is the number of cases). Depending on how large \mjseqn{k} is, it may take a few moments to finish the calculations. For complex models fitted with \code{\link{rma.mv}}, this can become computationally expensive.
+   The variable specified via \code{cluster} is assumed to be of the same length as the data originally passed to the \code{rma.mv} function (and if the \code{data} argument was used in the original model fit, then the variable will be searched for within this data frame first). Any subsetting and removal of studies with missing values that was applied during the model fitting is also automatically applied to the variable specified via the \code{cluster} argument.
+
+   Leave-one-out diagnostics are calculated by refitting the model \mjseqn{k} times (where \mjseqn{k} denotes the number of cases). Depending on how large \mjseqn{k} is, it may take a few moments to finish the calculations. For complex models fitted with \code{\link{rma.mv}}, this can become computationally expensive.
 
    On machines with multiple cores, one can usually speed things up by delegating the model fitting to separate worker processes, that is, by setting \code{parallel="snow"} or \code{parallel="multicore"} and \code{ncpus} to some value larger than 1. Parallel processing makes use of the \code{\link[parallel]{parallel}} package, using the \code{\link[parallel]{makePSOCKcluster}} and \code{\link[parallel]{parLapply}} functions when \code{parallel="snow"} or using \code{\link[parallel]{mclapply}} when \code{parallel="multicore"} (the latter only works on Unix/Linux-alikes). With \code{parallel::detectCores()}, one can check on the number of available cores on the local machine.
 
@@ -69,13 +71,13 @@ dat <- dat.konstantopoulos2011
 res <- rma.mv(yi, vi, random = ~ 1 | district/school, data=dat)
 print(res, digits=3)
 
-### Cook's distances for each observed outcome
+### Cook's distance for each observed outcome
 x <- cooks.distance(res)
 x
 plot(x, type="o", pch=19, xlab="Observed Outcome", ylab="Cook's Distance")
 
-### Cook's distances for each district
-x <- cooks.distance(res, cluster=dat$district)
+### Cook's distance for each district
+x <- cooks.distance(res, cluster=district)
 x
 plot(x, type="o", pch=19, xlab="District", ylab="Cook's Distance", xaxt="n")
 axis(side=1, at=seq_along(x), labels=as.numeric(names(x)))

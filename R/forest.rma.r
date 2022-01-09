@@ -3,7 +3,7 @@ annotate=TRUE, addfit=TRUE, addpred=FALSE, showweights=FALSE, header=FALSE,
 xlim, alim, olim, ylim, at, steps=5, level=x$level, refline=0, digits=2L, width,
 xlab, slab, mlab, ilab, ilab.xpos, ilab.pos, order,
 transf, atransf, targs, rows,
-efac=1, pch=15, psize, plim=c(0.5,1.5), colout, col, border,
+efac=1, pch, psize, plim=c(0.5,1.5), colout, col, border,
 lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    #########################################################################
@@ -36,8 +36,13 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    if (missing(at))
       at <- NULL
 
-   if (missing(ilab))
+   mf <- match.call()
+
+   if (missing(ilab)) {
       ilab <- NULL
+   } else {
+      ilab <- .getx("ilab", mf=mf, data=x$data)
+   }
 
    if (missing(ilab.xpos))
       ilab.xpos <- NULL
@@ -45,14 +50,29 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    if (missing(ilab.pos))
       ilab.pos <- NULL
 
-   if (missing(order))
+   if (missing(order)) {
       order <- NULL
+   } else {
+      order <- .getx("order", mf=mf, data=x$data)
+   }
 
-   if (missing(colout))
+   if (missing(colout)) {
       colout <- "black"
+   } else {
+      colout <- .getx("colout", mf=mf, data=x$data)
+   }
 
-   if (missing(psize))
+   if (missing(pch)) {
+      pch <- 15
+   } else {
+      pch <- .getx("pch", mf=mf, data=x$data)
+   }
+
+   if (missing(psize)) {
       psize <- NULL
+   } else {
+      psize <- .getx("psize", mf=mf, data=x$data)
+   }
 
    if (missing(cex))
       cex <- NULL
@@ -257,7 +277,9 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    } else {
 
-      if (is.null(slab) || (length(slab) == 1L && is.na(slab))) # slab=NULL or slab=NA can be used to suppress study labels
+      slab <- .getx("slab", mf=mf, data=x$data)
+
+      if (length(slab) == 1L && is.na(slab))    # slab=NA can be used to suppress study labels
          slab <- rep("", x$k.all)
 
       if (length(slab) != x$k.all)

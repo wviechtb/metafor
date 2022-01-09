@@ -1,7 +1,7 @@
 funnel.rma <- function(x, yaxis="sei", xlim, ylim, xlab, ylab,
 steps=5, at, atransf, targs, digits, level=x$level, addtau2=FALSE,
 type="rstandard", back="lightgray", shade="white", hlines="white",
-refline, lty=3, pch=19, pch.fill=21, col, bg,
+refline, lty=3, pch, pch.fill=21, col, bg,
 label=FALSE, offset=0.4, legend=FALSE, ...) {
 
    #########################################################################
@@ -20,6 +20,14 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
       atransf <- FALSE
 
    atransf.char <- deparse(atransf)
+
+   mf <- match.call()
+
+   if (missing(pch)) {
+      pch <- 19
+   } else {
+      pch <- .getx("pch", mf=mf, data=x$data)
+   }
 
    ### check if sample size information is available if plotting (some function of) the sample sizes on the y-axis
 
@@ -104,6 +112,7 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
    } else {
       pch.vec <- TRUE
    }
+
    if (length(pch) != x$k.all)
       stop(mstyle$stop(paste0("Length of the 'pch' argument (", length(pch), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
 
@@ -112,8 +121,12 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
 
    if (!inherits(x, "rma.uni.trimfill")) {
 
-      if (missing(col))
+      if (missing(col)) {
          col <- "black"
+      } else {
+         col <- .getx("col", mf=mf, data=x$data)
+      }
+
       if (length(col) == 1L) {
          col.vec <- FALSE
          col <- rep(col, x$k.all)
@@ -126,8 +139,12 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
       if (!is.null(x$subset))
          col <- col[x$subset]
 
-      if (missing(bg))
+      if (missing(bg)) {
          bg <- "white"
+      } else {
+         bg <- .getx("bg", mf=mf, data=x$data)
+      }
+
       if (length(bg) == 1L) {
          bg.vec <- FALSE
          bg <- rep(bg, x$k.all)

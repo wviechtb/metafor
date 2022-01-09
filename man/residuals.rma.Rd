@@ -72,7 +72,7 @@
    The object is formatted and printed with \code{\link{print.list.rma}}.
 }
 \note{
-   The externally standardized residuals (obtained with \code{rstudent}) are calculated by refitting the model \mjseqn{k} times (where \mjseqn{k} is the number of cases). Depending on how large \mjseqn{k} is, it may take a few moments to finish the calculations. For complex models fitted with \code{\link{rma.mv}}, this can become computationally expensive.
+   The externally standardized residuals (obtained with \code{rstudent}) are calculated by refitting the model \mjseqn{k} times (where \mjseqn{k} denotes the number of cases). Depending on how large \mjseqn{k} is, it may take a few moments to finish the calculations. For complex models fitted with \code{\link{rma.mv}}, this can become computationally expensive.
 
    On machines with multiple cores, one can usually speed things up by delegating the model fitting to separate worker processes, that is, by setting \code{parallel="snow"} or \code{parallel="multicore"} and \code{ncpus} to some value larger than 1 (only for objects of class \code{"rma.mv"}). Parallel processing makes use of the \code{\link[parallel]{parallel}} package, using the \code{\link[parallel]{makePSOCKcluster}} and \code{\link[parallel]{parLapply}} functions when \code{parallel="snow"} or using \code{\link[parallel]{mclapply}} when \code{parallel="multicore"} (the latter only works on Unix/Linux-alikes). With \code{parallel::detectCores()}, one can check on the number of available cores on the local machine.
 
@@ -81,6 +81,8 @@
    It may not be possible to fit the model after deletion of the \mjeqn{i\textrm{th}}{ith} case from the dataset. This will result in \code{NA} values for that case when calling \code{rstudent}.
 
    Also, for \code{"rma.mv"} objects with a clustering variable specified, it may not be possible to compute the cluster-level multivariate standardized residual for a particular cluster (if the var-cov matrix of the residuals within a cluster is not of full rank). This will result in \code{NA} for that cluster.
+
+   The variable specified via \code{cluster} is assumed to be of the same length as the data originally passed to the \code{rma.mv} function (and if the \code{data} argument was used in the original model fit, then the variable will be searched for within this data frame first). Any subsetting and removal of studies with missing values that was applied during the model fitting is also automatically applied to the variable specified via the \code{cluster} argument.
 
    For objects of class \code{"rma.mh"} and \code{"rma.peto"}, \code{rstandard} actually computes Pearson (or semi-standardized) residuals.
 }

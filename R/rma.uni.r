@@ -2478,7 +2478,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
    p.eff <- p
    k.eff <- k
 
-   if (is.null(ddd$outlist)) {
+   if (is.null(ddd$outlist) || ddd$outlist == "nodata") {
 
       res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
                   tau2=tau2, se.tau2=se.tau2, tau2.fix=tau2.fix, tau2.f=tau2,
@@ -2497,6 +2497,9 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
                   fit.stats=fit.stats,
                   formula.yi=formula.yi, formula.mods=formula.mods,
                   version=packageVersion("metafor"), call=mf)
+
+      if (is.null(ddd$outlist))
+         res <- append(res, list(data=data), which(names(res) == "fit.stats"))
 
    }
 

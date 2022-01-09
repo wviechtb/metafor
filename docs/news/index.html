@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-42</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-43</span>
       </span>
     </div>
 
@@ -91,7 +91,7 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="3.1-42" id="metafor-31-42-2022-01-03">metafor 3.1-42 (2022-01-03)<a class="anchor" aria-label="anchor" href="#metafor-31-42-2022-01-03"></a></h2>
+<h2 class="page-header" data-toc-text="3.1-43" id="metafor-31-43-2022-01-09">metafor 3.1-43 (2022-01-09)<a class="anchor" aria-label="anchor" href="#metafor-31-43-2022-01-09"></a></h2>
 <ul><li><p>added <code>misc-models</code> and <code>misc-options</code> help pages</p></li>
 <li><p>simplified <code><a href="../reference/regtest.html">regtest()</a></code>, <code><a href="../reference/ranktest.html">ranktest()</a></code>, and <code><a href="../reference/tes.html">tes()</a></code> to single functions instead of using generics and methods; this way, a <code>data</code> argument could be added</p></li>
 <li><p>added <code><a href="../reference/vcalc.html">vcalc()</a></code> and <code><a href="../reference/blsplit.html">blsplit()</a></code> functions</p></li>
@@ -115,6 +115,7 @@
 <li><p>fixed that <code>level</code> argument in <code><a href="../reference/addpoly.rma.html">addpoly.rma()</a></code> did not affect the CI width</p></li>
 <li><p><code><a href="../reference/regplot.html">points.regplot()</a></code> function now also redraws the labels (if there were any to begin with)</p></li>
 <li><p>added <code>lbfgsb3c</code>, <code>subplex</code>, and <code>BBoptim</code> as possible optimizer in <code><a href="../reference/rma.mv.html">rma.mv()</a></code>, <code><a href="../reference/rma.glmm.html">rma.glmm()</a></code>, <code><a href="../reference/rma.uni.html">rma.uni()</a></code>, and <code><a href="../reference/selmodel.html">selmodel.rma.uni()</a></code></p></li>
+<li><p>the object returned by model fitting functions now includes the data frame specified via the <code>data</code> argument; various method functions now automatically look for specified variables within this data frame first</p></li>
 <li><p>datasets moved to the <code>metadat</code> package (<a href="https://cran.r-project.org/package=metadat" class="external-link uri">https://cran.r-project.org/package=metadat</a>)</p></li>
 <li><p>improved the documentation a bit</p></li>
 </ul></div>

@@ -14,14 +14,14 @@ funnel(x, \dots)
        steps=5, at, atransf, targs, digits, level=x$level,
        addtau2=FALSE, type="rstandard",
        back="lightgray", shade="white", hlines="white",
-       refline, lty=3, pch=19, pch.fill=21, col, bg,
+       refline, lty=3, pch, pch.fill=21, col, bg,
        label=FALSE, offset=0.4, legend=FALSE, \dots)
 
 \method{funnel}{default}(x, vi, sei, ni, subset, yaxis="sei",
        xlim, ylim, xlab, ylab,
        steps=5, at, atransf, targs, digits, level=95,
        back="lightgray", shade="white", hlines="white",
-       refline=0, lty=3, pch=19, col, bg,
+       refline=0, lty=3, pch, col, bg,
        label=FALSE, offset=0.4, legend=FALSE, \dots)
 }
 \arguments{
@@ -90,7 +90,7 @@ funnel(x, \dots)
 
    When using unweighted estimation, using \code{yaxis="wi"} will place all points on a horizontal line. When directly passing a vector with the observed effect sizes or outcomes to the function, \code{yaxis="wi"} is equivalent to \code{yaxis="vinv"}, except that the weights are expressed in percent.
 
-   When specifying vectors for \code{pch}, \code{col}, and/or \code{bg}, the variables specified are assumed to be of the same length as the data passed to the funnel function or the model fitting function (when using \code{funnel} on a model object). Any subsetting and removal of studies with missing values is automatically applied to the variables specified via these arguments.
+   When specifying vectors for arguments \code{pch}, \code{col}, and/or \code{bg} and \code{x} is an object of class \code{"rma"}, the variables specified are assumed to be of the same length as the data passed to the model fitting function (and if the \code{data} argument was used in the original model fit, then the variables will be searched for within this data frame first). Any subsetting and removal of studies with missing values is automatically applied to the variables specified via these arguments.
 }
 \value{
    A data frame with components:
@@ -124,7 +124,7 @@ dat <- dat.bcg
 dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat)
 
 ### fit random-effects model
-res <- rma(yi, vi, data=dat, slab=paste(dat$author, dat$year, sep=", "))
+res <- rma(yi, vi, data=dat, slab=paste(author, year, sep=", "))
 
 ### draw a standard funnel plot
 funnel(res)
@@ -154,7 +154,7 @@ funnel(res, level=c(90, 95, 99), shade=c("white", "gray55", "gray75"), digits=3L
 
 ### illustrate the use of vectors for 'pch' and 'col'
 res <- rma(yi, vi, data=dat, subset=2:10)
-funnel(res, pch=ifelse(dat$yi > -1, 19, 21), col=ifelse(sqrt(dat$vi) > .3, "red", "blue"))
+funnel(res, pch=ifelse(yi > -1, 19, 21), col=ifelse(sqrt(vi) > .3, "red", "blue"))
 
 ### can add a second funnel via (undocumented) argument refline2
 funnel(res, atransf=exp, at=log(c(.125, .25, .5, 1, 2, 4)), digits=3L, ylim=c(0,.8), refline2=0)

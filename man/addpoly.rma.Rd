@@ -61,9 +61,8 @@ addpoly(res)
 res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg,
            slab=paste(author, year, sep=", "))
 forest(res, xlim=c(-16, 4.6), at=log(c(.05, .25, 1, 4)), atransf=exp,
-       ilab=cbind(dat.bcg$tpos, dat.bcg$tneg, dat.bcg$cpos, dat.bcg$cneg),
-       ilab.xpos=c(-9.5,-8,-6,-4.5), cex=.75, ylim=c(-1, 27),
-       order=dat.bcg$alloc, rows=c(3:4,9:15,20:23),
+       ilab=cbind(tpos, tneg, cpos, cneg), ilab.xpos=c(-9.5,-8,-6,-4.5),
+       cex=.75, ylim=c(-1, 27), order=alloc, rows=c(3:4,9:15,20:23),
        mlab="RE Model for All Studies", header="Author(s) and Year")
 op <- par(cex=.75, font=2)
 text(c(-9.5,-8,-6,-4.5), 26, c("TB+", "TB-", "TB+", "TB-"))

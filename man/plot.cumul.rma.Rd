@@ -52,7 +52,7 @@ dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 res <- rma(yi, vi, data=dat)
 
 ### cumulative meta-analysis (in the order of publication year)
-sav <- cumul(res, transf=exp, order=dat$year)
+sav <- cumul(res, transf=exp, order=year)
 
 ### plot of model estimate and tau^2 over time
 plot(sav)

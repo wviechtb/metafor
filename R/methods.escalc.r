@@ -2,6 +2,11 @@
 
 "[.escalc" <- function(x, i, ...) {
 
+   if (!missing(i)) {
+      mf <- match.call()
+      i <- .getx("i", mf=mf, data=x)
+   }
+
    dat <- NextMethod("[")
 
    ### add measure attribute back to each yi variable (if that variable is still part of dat)
@@ -28,7 +33,7 @@
    all.names <- c("yi.names", "vi.names", "sei.names", "zi.names", "pval.names", "ci.lb.names", "ci.ub.names")
 
    for (l in seq_along(all.names)) {
-      if (any(is.element(attr(x, all.names[l]), names(dat)))) ### check if any of the variables still exist in the dataset
+      if (any(is.element(attr(x, all.names[l]), names(dat)))) # check if any of the variables still exist in the dataset
          attr(dat, all.names[l]) <- attr(x, all.names[l])[is.element(attr(x, all.names[l]), names(dat))]
    }
 

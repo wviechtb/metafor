@@ -15,7 +15,7 @@ leave1out(x, \dots)
 \method{leave1out}{rma.peto}(x, digits, transf, targs, progbar=FALSE, \dots)
 }
 \arguments{
-   \item{x}{an object of class \code{"rma.mh"}, \code{"rma.peto"}, or \code{"rma.uni"}.}
+   \item{x}{an object of class \code{"rma.uni"}, \code{"rma.mh"}, or \code{"rma.peto"}.}
    \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.}
    \item{transf}{optional argument to specify a function that should be used to transform the model coefficients and interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified under \code{transf}.}

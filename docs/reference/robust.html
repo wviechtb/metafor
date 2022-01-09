@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-42</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-43</span>
       </span>
     </div>
 
@@ -153,7 +153,7 @@
     </div>
     <div id="note">
     <h2>Note</h2>
-    <p>The variable specified via <code>cluster</code> is assumed to be of the same length as the data originally passed to the <code>rma.uni</code> or <code>rma.mv</code> functions. Any subsetting and removal of studies with missing values that was applied during the model fitting is also automatically applied to the variable specified via the <code>cluster</code> argument.</p>
+    <p>The variable specified via <code>cluster</code> is assumed to be of the same length as the data originally passed to the <code>rma.uni</code> or <code>rma.mv</code> functions (and if the <code>data</code> argument was used in the original model fit, then the variable will be searched for within this data frame first). Any subsetting and removal of studies with missing values that was applied during the model fitting is also automatically applied to the variable specified via the <code>cluster</code> argument.</p>
 <p>The idea of the robust (sandwich-type) estimator for models with unspecified heteroscedasticity can be traced back to Eicker (1967), Huber (1967), and White (1980, 1984). Hence, the method in general is often referred to as the Eicker-Huber-White method. Some small-sample improvements to the method are described by MacKinnon and White (1985). The extension to the cluster-robust estimator can be found in Froot (1989) and Williams (2000), which is also related to the GEE approach by Liang and Zeger (1986). Cameron and Miller (2015) provide an extensive overview of cluster-robust methods. Sidik and Jonkman (2005, 2006) introduced robust methods in the meta-analytic context for standard random/mixed-effects models. The use of cluster-robust methods for multivariate/multilevel meta-analytic models was introduced by Hedges, Tipton, and Johnson (2010).</p>
     </div>
     <div id="author">
@@ -217,7 +217,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### obtain results based on the sandwich method</span></span>
-<span class="r-in"><span class="fu">robust</span><span class="op">(</span><span class="va">res</span>, cluster<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">id</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">robust</span><span class="op">(</span><span class="va">res</span>, cluster<span class="op">=</span><span class="va">id</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Random-Effects Model (k = 48; tau^2 estimator: REML)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -246,7 +246,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### use methods from clubSandwich package</span></span>
-<span class="r-in"><span class="fu">robust</span><span class="op">(</span><span class="va">res</span>, cluster<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">id</span>, clubSandwich<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">robust</span><span class="op">(</span><span class="va">res</span>, cluster<span class="op">=</span><span class="va">id</span>, clubSandwich<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Random-Effects Model (k = 48; tau^2 estimator: REML)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -304,7 +304,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### obtain results based on the sandwich method</span></span>
-<span class="r-in"><span class="fu">robust</span><span class="op">(</span><span class="va">res</span>, cluster<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">id</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">robust</span><span class="op">(</span><span class="va">res</span>, cluster<span class="op">=</span><span class="va">id</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Mixed-Effects Model (k = 46; tau^2 estimator: REML)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -338,7 +338,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### use methods from clubSandwich package</span></span>
-<span class="r-in"><span class="fu">robust</span><span class="op">(</span><span class="va">res</span>, cluster<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">id</span>, clubSandwich<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">robust</span><span class="op">(</span><span class="va">res</span>, cluster<span class="op">=</span><span class="va">id</span>, clubSandwich<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Mixed-Effects Model (k = 46; tau^2 estimator: REML)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -401,7 +401,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### obtain results based on the sandwich method</span></span>
-<span class="r-in"><span class="fu">robust</span><span class="op">(</span><span class="va">res</span>, cluster<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">district</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">robust</span><span class="op">(</span><span class="va">res</span>, cluster<span class="op">=</span><span class="va">district</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Multivariate Meta-Analysis Model (k = 56; method: REML)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -431,7 +431,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### use methods from clubSandwich package</span></span>
-<span class="r-in"><span class="fu">robust</span><span class="op">(</span><span class="va">res</span>, cluster<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">district</span>, clubSandwich<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">robust</span><span class="op">(</span><span class="va">res</span>, cluster<span class="op">=</span><span class="va">district</span>, clubSandwich<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Multivariate Meta-Analysis Model (k = 56; method: REML)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -506,7 +506,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### obtain results based on sandwich method</span></span>
-<span class="r-in"><span class="fu">robust</span><span class="op">(</span><span class="va">res</span>, cluster<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">trial</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">robust</span><span class="op">(</span><span class="va">res</span>, cluster<span class="op">=</span><span class="va">trial</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Multivariate Meta-Analysis Model (k = 10; method: REML)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -547,7 +547,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### use methods from clubSandwich package</span></span>
-<span class="r-in"><span class="fu">robust</span><span class="op">(</span><span class="va">res</span>, cluster<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">trial</span>, clubSandwich<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">robust</span><span class="op">(</span><span class="va">res</span>, cluster<span class="op">=</span><span class="va">trial</span>, clubSandwich<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Multivariate Meta-Analysis Model (k = 10; method: REML)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
