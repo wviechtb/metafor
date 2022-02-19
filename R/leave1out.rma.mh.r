@@ -48,6 +48,10 @@ leave1out.rma.mh <- function(x, digits, transf, targs, progbar=FALSE, ...) {
    I2   <- rep(NA_real_, x$k.f)
    H2   <- rep(NA_real_, x$k.f)
 
+   ### elements that need to be returned
+
+   outlist <- "beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, QE=QE, QEp=QEp, tau2=tau2, I2=I2, H2=H2"
+
    ### note: skipping NA cases
 
    if (progbar)
@@ -62,9 +66,9 @@ leave1out.rma.mh <- function(x, digits, transf, targs, progbar=FALSE, ...) {
          next
 
       if (is.element(x$measure, c("RR","OR","RD"))) {
-         args <- list(ai=x$ai.f, bi=x$bi.f, ci=x$ci.f, di=x$di.f, measure=x$measure, add=x$add, to=x$to, drop00=x$drop00, correct=x$correct, level=x$level, subset=-i)
+         args <- list(ai=x$ai.f, bi=x$bi.f, ci=x$ci.f, di=x$di.f, measure=x$measure, add=x$add, to=x$to, drop00=x$drop00, correct=x$correct, level=x$level, subset=-i, outlist=outlist)
       } else {
-         args <- list(x1i=x$x1i.f, x2i=x$x2i.f, t1i=x$t1i.f, t2i=x$t2i.f, measure=x$measure, add=x$add, to=x$to, drop00=x$drop00, correct=x$correct, level=x$level, subset=-i)
+         args <- list(x1i=x$x1i.f, x2i=x$x2i.f, t1i=x$t1i.f, t2i=x$t2i.f, measure=x$measure, add=x$add, to=x$to, drop00=x$drop00, correct=x$correct, level=x$level, subset=-i, outlist=outlist)
       }
       res <- try(suppressWarnings(.do.call(rma.mh, args)), silent=TRUE)
 

@@ -29,6 +29,10 @@ rstudent.rma.peto <- function(model, digits, progbar=FALSE, ...) {
    delpred  <- rep(NA_real_, x$k.f)
    vdelpred <- rep(NA_real_, x$k.f)
 
+   ### elements that need to be returned
+
+   outlist <- "beta=beta, vb=vb"
+
    ### note: skipping NA tables
 
    if (progbar)
@@ -42,7 +46,7 @@ rstudent.rma.peto <- function(model, digits, progbar=FALSE, ...) {
       if (!x$not.na[i])
          next
 
-      args <- list(ai=x$ai.f, bi=x$bi.f, ci=x$ci.f, di=x$di.f, add=x$add, to=x$to, drop00=x$drop00, level=x$level, subset=-i)
+      args <- list(ai=x$ai.f, bi=x$bi.f, ci=x$ci.f, di=x$di.f, add=x$add, to=x$to, drop00=x$drop00, level=x$level, subset=-i, outlist=outlist)
       res <- try(suppressWarnings(.do.call(rma.peto, args)), silent=TRUE)
 
       if (inherits(res, "try-error"))

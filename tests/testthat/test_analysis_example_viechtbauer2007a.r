@@ -113,7 +113,7 @@ test_that("CI is correct for the parametric bootstrap method.", {
    maj <- as.numeric(R.Version()$major)
    min <- as.numeric(R.Version()$minor)
 
-   ### run test only on R versions 3.6.x (due to change in sampler)
+   ### run test only on R versions 3.6.x or later (due to change in sampler)
 
    if (maj >= 3 && min >= 6) {
 
@@ -151,7 +151,7 @@ test_that("CI is correct for the non-parametric bootstrap method.", {
    maj <- as.numeric(R.Version()$major)
    min <- as.numeric(R.Version()$minor)
 
-   ### run test only on R versions 3.6.x (due to change in sampler)
+   ### run test only on R versions 3.6.x or later (due to change in sampler)
 
    if (maj >= 3 && min >= 6) {
 

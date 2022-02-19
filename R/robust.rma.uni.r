@@ -195,7 +195,7 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, 
 
       ### construct meat part
 
-      ei <- c(x$yi - x$X %*% x$beta) ### use this instead of resid(), since this guarantees that the length is correct
+      ei <- c(x$yi - x$X %*% x$beta) # use this instead of resid(), since this guarantees that the length is correct
       ei <- ei[ocl]
 
       cluster <- factor(cluster, levels=unique(cluster))
@@ -220,12 +220,12 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, 
       ### what Stata does
 
       if (is.character(adjust) && (adjust=="Stata" || adjust=="Stata1")) {
-         vb <- (n / (n-1) * (x$k-1) / (x$k-x$p)) * vb ### when the model was fitted with regress
+         vb <- (n / (n-1) * (x$k-1) / (x$k-x$p)) * vb # when the model was fitted with regress
          vbest <- "CR1.S1"
       }
 
       if (is.character(adjust) && adjust=="Stata2") {
-         vb <- (n / (n-1)) * vb                       ### when the model was fitted with mixed
+         vb <- (n / (n-1)) * vb                       # when the model was fitted with mixed
          vbest <- "CR1.S2"
       }
 
@@ -245,7 +245,7 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, 
       if (inherits(QM, "try-error"))
          QM <- NA
 
-      QM   <- QM / x$m ### note: m is the number of coefficients in btt, not the number of unique clusters
+      QM   <- QM / x$m # note: m is the number of coefficients in btt, not the number of clusters
       QMdf <- c(x$m, dfs)
       QMp  <- pf(QM, df1=x$m, df2=dfs, lower.tail=FALSE)
 
@@ -280,7 +280,7 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, 
    x$tcl   <- tcl
    x$test  <- "t"
    x$vbest <- vbest
-   x$s2w   <- 1 ### just in case test="knha" originally
+   x$s2w   <- 1 # just in case test="knha" originally
    x$robumethod <- ifelse(clubSandwich, "clubsw", "default")
 
    class(x) <- c("robust.rma", "rma", "rma.uni")

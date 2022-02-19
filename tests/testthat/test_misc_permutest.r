@@ -60,7 +60,7 @@ test_that("permutest() gives correct results for a mixed-effects model.", {
    maj <- as.numeric(R.Version()$major)
    min <- as.numeric(R.Version()$minor)
 
-   ### run test only on R versions 3.6.x (due to change in sampler)
+   ### run test only on R versions 3.6.x or later (due to change in sampler)
 
    if (maj >= 3 && min >= 6) {
 

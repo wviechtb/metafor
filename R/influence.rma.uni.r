@@ -80,6 +80,10 @@ influence.rma.uni <- function(model, digits, progbar=FALSE, ...) {
    hat <- hatvalues(x)
    options(na.action = na.act)
 
+   ### elements that need to be returned
+
+   outlist <- "coef.na=coef.na, tau2=tau2, QE=QE, beta=beta, vb=vb, s2w=s2w"
+
    ### note: skipping NA cases
    ### also: it is possible that model fitting fails, so that generates more NAs (these NAs will always be shown in output)
 
@@ -91,7 +95,7 @@ influence.rma.uni <- function(model, digits, progbar=FALSE, ...) {
       if (progbar)
          pbapply::setpb(pbar, i)
 
-      args <- list(yi=x$yi, vi=x$vi, weights=x$weights, mods=x$X, intercept=FALSE, method=x$method, weighted=x$weighted, test=x$test, level=x$level, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, subset=-i, skipr2=TRUE)
+      args <- list(yi=x$yi, vi=x$vi, weights=x$weights, mods=x$X, intercept=FALSE, method=x$method, weighted=x$weighted, test=x$test, level=x$level, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, subset=-i, skipr2=TRUE, outlist=outlist)
       res <- try(suppressWarnings(.do.call(rma.uni, args)), silent=TRUE)
 
       if (inherits(res, "try-error"))

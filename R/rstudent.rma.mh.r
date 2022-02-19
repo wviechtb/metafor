@@ -29,6 +29,10 @@ rstudent.rma.mh <- function(model, digits, progbar=FALSE, ...) {
    delpred  <- rep(NA_real_, x$k.f)
    vdelpred <- rep(NA_real_, x$k.f)
 
+   ### elements that need to be returned
+
+   outlist <- "beta=beta, vb=vb"
+
    ### note: skipping NA tables
 
    if (progbar)
@@ -43,9 +47,9 @@ rstudent.rma.mh <- function(model, digits, progbar=FALSE, ...) {
          next
 
       if (is.element(x$measure, c("RR","OR","RD"))) {
-         args <- list(ai=x$ai.f, bi=x$bi.f, ci=x$ci.f, di=x$di.f, measure=x$measure, add=x$add, to=x$to, drop00=x$drop00, correct=x$correct, level=x$level, subset=-i)
+         args <- list(ai=x$ai.f, bi=x$bi.f, ci=x$ci.f, di=x$di.f, measure=x$measure, add=x$add, to=x$to, drop00=x$drop00, correct=x$correct, level=x$level, subset=-i, outlist=outlist)
       } else {
-         args <- list(x1i=x$x1i.f, x2i=x$x2i.f, t1i=x$t1i.f, t2i=x$t2i.f, measure=x$measure, add=x$add, to=x$to, drop00=x$drop00, correct=x$correct, level=x$level, subset=-i)
+         args <- list(x1i=x$x1i.f, x2i=x$x2i.f, t1i=x$t1i.f, t2i=x$t2i.f, measure=x$measure, add=x$add, to=x$to, drop00=x$drop00, correct=x$correct, level=x$level, subset=-i, outlist=outlist)
       }
       res <- try(suppressWarnings(.do.call(rma.mh, args)), silent=TRUE)
 

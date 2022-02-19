@@ -43,7 +43,7 @@ weights.rma.mv <- function(object, type="diagonal", ...) {
    if (type == "matrix") {
 
       Wfull <- matrix(NA_real_, nrow=x$k.f, ncol=x$k.f)
-      Wfull[x$not.na, x$not.na] <- W
+      Wfull[x$not.na, x$not.na] <- as.matrix(W) # need this in case W is sparse
 
       rownames(Wfull) <- x$slab
       colnames(Wfull) <- x$slab

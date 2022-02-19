@@ -14,7 +14,7 @@ test_that("regtest() works correctly for 'rma.uni' objects.", {
 
    out <- capture.output(print(sav)) ### so that print.regtest.rma() is run (at least once)
 
-   sav <- regtest(dat$yi, dat$vi)
+   sav <- regtest(yi, vi, data=dat)
    expect_equivalent(sav$zval, -4.6686, tolerance=.tol[["test"]])
 
    sav <- regtest(yi, vi, data=dat)
@@ -23,7 +23,7 @@ test_that("regtest() works correctly for 'rma.uni' objects.", {
    sav <- regtest(res, model="lm", predictor="sqrtninv")
    expect_equivalent(sav$zval, -5.6083, tolerance=.tol[["test"]])
 
-   sav <- regtest(dat$yi, dat$vi, model="lm", predictor="sqrtninv")
+   sav <- regtest(yi, vi, data=dat, model="lm", predictor="sqrtninv")
    expect_equivalent(sav$zval, -5.6083, tolerance=.tol[["test"]])
 
    sav <- regtest(yi, vi, data=dat, model="lm", predictor="sqrtninv")
@@ -40,7 +40,7 @@ test_that("ranktest() works correctly for 'rma.uni' objects.", {
    expect_equivalent(sav$tau, 0.15)
    expect_equivalent(sav$pval, 0.4503, tolerance=.tol[["pval"]])
 
-   sav <- ranktest(dat$yi, dat$vi)
+   sav <- ranktest(yi, vi, data=dat)
    expect_equivalent(sav$tau, 0.15)
    expect_equivalent(sav$pval, 0.4503, tolerance=.tol[["pval"]])
 

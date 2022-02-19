@@ -47,10 +47,10 @@ test_that("residuals are correct for rma.mv().", {
    res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat)
    expect_equivalent(c(residuals(res)), c(dat$yi - coef(res)))
    expect_equivalent(rstandard(res)$z, c(0.1401, -0.9930, -0.4719, -1.0476, 1.6462, 0.4825), tolerance=.tol[["test"]])
-   expect_equivalent(rstandard(res, cluster=dat$alloc)$cluster$X2, c(3.7017, 3.6145), tolerance=.tol[["test"]])
+   expect_equivalent(rstandard(res, cluster=alloc)$cluster$X2, c(3.7017, 3.6145), tolerance=.tol[["test"]])
    expect_equivalent(rstudent(res)$z, c(0.1426, -0.9957, -0.4591, -1.1949, 2.0949, 0.4330), tolerance=.tol[["test"]])
-   expect_equivalent(rstudent(res, cluster=dat$alloc)$cluster$X2, c(27.4717, 5.2128), tolerance=.tol[["test"]])
-   expect_equivalent(rstudent(res, cluster=dat$alloc, reestimate=FALSE)$cluster$X2, c(3.7017, 3.6145), tolerance=.tol[["test"]])
+   expect_equivalent(rstudent(res, cluster=alloc)$cluster$X2, c(27.4717, 5.2128), tolerance=.tol[["test"]])
+   expect_equivalent(rstudent(res, cluster=alloc, reestimate=FALSE)$cluster$X2, c(3.7017, 3.6145), tolerance=.tol[["test"]])
 
 })
 

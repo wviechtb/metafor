@@ -22,7 +22,7 @@ test_that("plot can be drawn for 'rma.uni' object.", {
    res <- rma(yi, vi, data=dat, slab=paste(author, year, sep=", "))
 
    ### cumulative meta-analysis (in the order of publication year)
-   tmp <- cumul(res, order=dat$year)
+   tmp <- cumul(res, order=year)
 
    ### cumulative forest plot
    forest(tmp, xlim=c(-4,2), at=log(c(.125, .25, .5, 1, 2)),

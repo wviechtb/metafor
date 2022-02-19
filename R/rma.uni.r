@@ -2370,7 +2370,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
          if (r2def %in% c("1","1v","3","3v","5","6","7","8")) {
 
-            args <- list(yi=yi, vi=vi, weights=weights, method=method, weighted=weighted, test=test, verbose=ifelse(verbose, TRUE, FALSE), control=con, digits=digits)
+            args <- list(yi=yi, vi=vi, weights=weights, method=method, weighted=weighted, test=test, verbose=ifelse(verbose, TRUE, FALSE), control=con, digits=digits, outlist="minimal")
 
             if (verbose > 1) {
                res0 <- try(.do.call(rma.uni, args), silent=FALSE)

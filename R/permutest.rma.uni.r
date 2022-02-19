@@ -105,6 +105,10 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
       }
    }
 
+   ### elements that need to be returned
+
+   outlist <- "beta=beta, zval=zval, QM=QM"
+
    #########################################################################
 
    if (progbar)
@@ -138,13 +142,13 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
 
          for (i in seq_len(iter)) {
 
-            args <- list(yi=signmat[i,]*x$yi, vi=x$vi, weights=x$weights, intercept=TRUE, method=x$method, weighted=x$weighted, test=x$test, level=x$level, btt=1, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, skipr2=TRUE)
+            args <- list(yi=signmat[i,]*x$yi, vi=x$vi, weights=x$weights, intercept=TRUE, method=x$method, weighted=x$weighted, test=x$test, level=x$level, btt=1, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, skipr2=TRUE, outlist=outlist)
             res <- try(suppressWarnings(.do.call(rma.uni, args)), silent=!isTRUE(ddd$verbose))
 
             if (inherits(res, "try-error"))
                next
 
-            beta.perm[i] <- coef(res)
+            beta.perm[i] <- res$beta[,1]
             zval.perm[i] <- res$zval
             QM.perm[i]   <- res$QM
 
@@ -162,13 +166,13 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
             signs <- sample(c(-1,1), x$k, replace=TRUE) ### easier to understand (a tad slower for small k, but faster for larger k)
             #signs <- 2*rbinom(x$k,1,.5)-1
 
-            args <- list(yi=signs*x$yi, vi=x$vi, weights=x$weights, intercept=TRUE, method=x$method, weighted=x$weighted, test=x$test, level=x$level, btt=1, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, skipr2=TRUE)
+            args <- list(yi=signs*x$yi, vi=x$vi, weights=x$weights, intercept=TRUE, method=x$method, weighted=x$weighted, test=x$test, level=x$level, btt=1, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, skipr2=TRUE, outlist=outlist)
             res <- try(suppressWarnings(.do.call(rma.uni, args)), silent=!isTRUE(ddd$verbose))
 
             if (inherits(res, "try-error"))
                next
 
-            beta.perm[i] <- coef(res)
+            beta.perm[i] <- res$beta[,1]
             zval.perm[i] <- res$zval
             QM.perm[i]   <- res$QM
 
@@ -184,7 +188,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
       ### the first random permutation is always the observed data (avoids possibility of p=0)
 
       if (!exact) {
-         beta.perm[1] <- coef(x)
+         beta.perm[1] <- x$beta[,1]
          zval.perm[1] <- x$zval
          QM.perm[1]   <- x$QM
       }
@@ -274,13 +278,13 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
 
          for (i in seq_len(iter)) {
 
-            args <- list(yi=x$yi, vi=x$vi, weights=x$weights, mods=cbind(X[permmat[i,],]), intercept=FALSE, method=x$method, weighted=x$weighted, test=x$test, level=x$level, btt=x$btt, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, skipr2=TRUE)
+            args <- list(yi=x$yi, vi=x$vi, weights=x$weights, mods=cbind(X[permmat[i,],]), intercept=FALSE, method=x$method, weighted=x$weighted, test=x$test, level=x$level, btt=x$btt, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, skipr2=TRUE, outlist=outlist)
             res <- try(suppressWarnings(.do.call(rma.uni, args)), silent=!isTRUE(ddd$verbose))
 
             if (inherits(res, "try-error"))
                next
 
-            beta.perm[i,] <- coef(res)
+            beta.perm[i,] <- res$beta[,1]
             zval.perm[i,] <- res$zval
             QM.perm[i]    <- res$QM
 
@@ -295,13 +299,13 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
 
          while (i <= iter) {
 
-            args <- list(yi=x$yi, vi=x$vi, weights=x$weights, mods=cbind(X[sample(x$k),]), intercept=FALSE, method=x$method, weighted=x$weighted, test=x$test, level=x$level, btt=x$btt, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, skipr2=TRUE)
+            args <- list(yi=x$yi, vi=x$vi, weights=x$weights, mods=cbind(X[sample(x$k),]), intercept=FALSE, method=x$method, weighted=x$weighted, test=x$test, level=x$level, btt=x$btt, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, skipr2=TRUE, outlist=outlist)
             res <- try(suppressWarnings(.do.call(rma.uni, args)), silent=!isTRUE(ddd$verbose))
 
             if (inherits(res, "try-error"))
                next
 
-            beta.perm[i,] <- coef(res)
+            beta.perm[i,] <- res$beta[,1]
             zval.perm[i,] <- res$zval
             QM.perm[i]    <- res$QM
 
@@ -317,7 +321,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
       ### the first random permutation is always the observed data (avoids possibility of p=0)
 
       if (!exact) {
-         beta.perm[1,] <- coef(x)
+         beta.perm[1,] <- x$beta[,1]
          zval.perm[1,] <- x$zval
          QM.perm[1]    <- x$QM
       }
@@ -433,8 +437,8 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
                con$alternative <- "two.sided"
             }
 
-            #tmp <- try(uniroot(.permci, interval=c(x$ci.lb[j], coef(x)[j]), extendInt="upX", tol=con$tol, maxiter=con$maxiter, obj=x, j=j, exact=exact, iter=iter, progbar=progbar, level=level, digits=digits, control=con)$root, silent=TRUE)
-            tmp <- try(uniroot(.permci, interval=c(x$ci.lb[j] - con$distfac*(coef(x)[j] - x$ci.lb[j]), coef(x)[j]), extendInt="no", tol=con$tol, maxiter=con$maxiter, obj=x, j=j, exact=exact, iter=iter, progbar=progbar, level=level, digits=digits, control=con)$root, silent=TRUE)
+            #tmp <- try(uniroot(.permci, interval=c(x$ci.lb[j], x$beta[j,1]), extendInt="upX", tol=con$tol, maxiter=con$maxiter, obj=x, j=j, exact=exact, iter=iter, progbar=progbar, level=level, digits=digits, control=con)$root, silent=TRUE)
+            tmp <- try(uniroot(.permci, interval=c(x$ci.lb[j] - con$distfac*(x$beta[j,1] - x$ci.lb[j]), x$beta[j,1]), extendInt="no", tol=con$tol, maxiter=con$maxiter, obj=x, j=j, exact=exact, iter=iter, progbar=progbar, level=level, digits=digits, control=con)$root, silent=TRUE)
 
             if (inherits(tmp, "try-error")) {
                ci.lb[j] <- NA
@@ -451,8 +455,8 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
                con$alternative <- "two.sided"
             }
 
-            #tmp <- try(uniroot(.permci, interval=c(coef(x)[j], x$ci.ub[j]), extendInt="downX", tol=con$tol, maxiter=con$maxiter, obj=x, j=j, exact=exact, iter=iter, progbar=progbar, level=level, digits=digits, control=con)$root, silent=TRUE)
-            tmp <- try(uniroot(.permci, interval=c(coef(x)[j], x$ci.ub[j] + con$distfac*(x$ci.ub[j] - coef(x)[j])), extendInt="no", tol=con$tol, maxiter=con$maxiter, obj=x, j=j, exact=exact, iter=iter, progbar=progbar, level=level, digits=digits, control=con)$root, silent=TRUE)
+            #tmp <- try(uniroot(.permci, interval=c(x$beta[j,1], x$ci.ub[j]), extendInt="downX", tol=con$tol, maxiter=con$maxiter, obj=x, j=j, exact=exact, iter=iter, progbar=progbar, level=level, digits=digits, control=con)$root, silent=TRUE)
+            tmp <- try(uniroot(.permci, interval=c(x$beta[j,1], x$ci.ub[j] + con$distfac*(x$ci.ub[j] - x$beta[j,1])), extendInt="no", tol=con$tol, maxiter=con$maxiter, obj=x, j=j, exact=exact, iter=iter, progbar=progbar, level=level, digits=digits, control=con)$root, silent=TRUE)
 
             if (inherits(tmp, "try-error")) {
                ci.ub[j] <- NA

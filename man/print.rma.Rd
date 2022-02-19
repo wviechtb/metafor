@@ -5,6 +5,7 @@
 \alias{print.rma.peto}
 \alias{print.rma.glmm}
 \alias{print.rma.mv}
+\alias{summary}
 \alias{summary.rma}
 \alias{print.summary.rma}
 \title{Print and Summary Methods for 'rma' Objects}

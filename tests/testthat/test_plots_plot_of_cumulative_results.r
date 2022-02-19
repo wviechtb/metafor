@@ -22,7 +22,7 @@ test_that("plot can be drawn.", {
    res <- rma(yi, vi, data=dat)
 
    ### cumulative meta-analysis (in the order of publication year)
-   tmp <- cumul(res, order=dat$year)
+   tmp <- cumul(res, order=year)
 
    ### plot of cumulative results
    plot(tmp, transf=exp, xlim=c(.25,.5), lwd=3, cex=1.3)

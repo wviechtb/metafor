@@ -32,9 +32,8 @@ test_that("aggregate() works correctly for 'dat.ishak2007'.", {
    dat <- dat.ishak2007
    dat <- reshape(dat.ishak2007, direction="long", idvar="study", v.names=c("yi","vi"),
                        varying=list(c(2,4,6,8), c(3,5,7,9)))
-   dat <- dat[order(dat$study, dat$time),]
-   is.miss  <- is.na(dat$yi)
-   dat <- dat[!is.miss,]
+   dat <- dat[order(study, time),]
+   dat <- dat[!is.na(yi),]
    rownames(dat) <- NULL
 
    agg <- aggregate(dat, cluster=study, struct="CAR", time=time, phi=0.9)

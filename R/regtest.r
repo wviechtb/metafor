@@ -246,7 +246,11 @@ regtest <- function(x, vi, sei, ni, subset, data, model="rma", predictor="sei", 
 
    if (model == "rma") {
 
-      args <- list(yi=yi, vi=vi, weights=weights, mods=X, intercept=FALSE, method=method, weighted=weighted, test=test, level=level, tau2=tau2, control=control, ...)
+      ddd$level  <- NULL
+      ddd$method <- NULL
+      ddd$test   <- NULL
+
+      args <- list(yi=yi, vi=vi, weights=weights, mods=X, intercept=FALSE, method=method, weighted=weighted, test=test, level=level, tau2=tau2, control=control, ddd)
       fit  <- .do.call(rma.uni, args)
       zval <- fit$zval[p+1]
       pval <- fit$pval[p+1]

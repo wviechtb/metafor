@@ -120,11 +120,11 @@ test_that("results are correct for the random-effects model (Huber-White method)
 
    res.hw <- list()
 
-   res.hw$EE   <- robust(res.std$EE,   cluster=dat$study, adjust=FALSE)
-   res.hw$ML   <- robust(res.std$ML,   cluster=dat$study, adjust=FALSE)
-   res.hw$REML <- robust(res.std$REML, cluster=dat$study, adjust=FALSE)
-   res.hw$DL   <- robust(res.std$DL,   cluster=dat$study, adjust=FALSE)
-   res.hw$HE   <- robust(res.std$HE,   cluster=dat$study, adjust=FALSE)
+   res.hw$EE   <- robust(res.std$EE,   cluster=study, adjust=FALSE)
+   res.hw$ML   <- robust(res.std$ML,   cluster=study, adjust=FALSE)
+   res.hw$REML <- robust(res.std$REML, cluster=study, adjust=FALSE)
+   res.hw$DL   <- robust(res.std$DL,   cluster=study, adjust=FALSE)
+   res.hw$HE   <- robust(res.std$HE,   cluster=study, adjust=FALSE)
 
    out <- capture.output(print(res.hw$REML)) ### so that print.robust.rma() is run (at least once)
 

@@ -109,8 +109,8 @@ test_that("cooks.distance() works for rma.mv().", {
    res <- rma.mv(yi, vi, mods = ~ ablat, random = ~ 1 | trial, data=dat)
 
    expect_equivalent(cooks.distance(res), c(0.0048, 0.0489, 0.0104, 0.2495, 0.0072, 0.2883, 0.3643, 0.2719, 0.02, 0.1645, 0.0009, 0.0404, 0.1434), tolerance=.tol[["inf"]])
-   expect_equivalent(cooks.distance(res, cluster=dat$alloc), c(0.2591, 2.4372, 0.1533), tolerance=.tol[["inf"]])
-   expect_equivalent(cooks.distance(res, cluster=dat$alloc, reestimate=FALSE), c(0.3199, 2.2194, 0.2421), tolerance=.tol[["inf"]])
+   expect_equivalent(cooks.distance(res, cluster=alloc), c(0.2591, 2.4372, 0.1533), tolerance=.tol[["inf"]])
+   expect_equivalent(cooks.distance(res, cluster=alloc, reestimate=FALSE), c(0.3199, 2.2194, 0.2421), tolerance=.tol[["inf"]])
 
 })
 

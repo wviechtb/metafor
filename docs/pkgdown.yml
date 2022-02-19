@@ -1,7 +1,7 @@
 pandoc: '2.5'
-pkgdown: 2.0.1
+pkgdown: 2.0.2
 pkgdown_sha: ~
 articles:
   diagram: pkgdown/diagram.html
-last_built: 2022-01-09T16:31Z
+last_built: 2022-02-19T17:03Z
 

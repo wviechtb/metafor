@@ -1,7 +1,7 @@
 funnel.rma <- function(x, yaxis="sei", xlim, ylim, xlab, ylab,
 steps=5, at, atransf, targs, digits, level=x$level, addtau2=FALSE,
 type="rstandard", back="lightgray", shade="white", hlines="white",
-refline, lty=3, pch, pch.fill=21, col, bg,
+refline, lty=3, pch, pch.fill, col, bg,
 label=FALSE, offset=0.4, legend=FALSE, ...) {
 
    #########################################################################
@@ -28,6 +28,9 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
    } else {
       pch <- .getx("pch", mf=mf, data=x$data)
    }
+
+   if (missing(pch.fill))
+      pch.fill <- 21
 
    ### check if sample size information is available if plotting (some function of) the sample sizes on the y-axis
 

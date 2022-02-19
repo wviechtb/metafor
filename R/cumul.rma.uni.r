@@ -81,6 +81,10 @@ cumul.rma.uni <- function(x, order, digits, transf, targs, progbar=FALSE, ...) {
    I2    <- rep(NA_real_, x$k.f)
    H2    <- rep(NA_real_, x$k.f)
 
+   ### elements that need to be returned
+
+   outlist <- "beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, QE=QE, QEp=QEp, tau2=tau2, I2=I2, H2=H2"
+
    ### note: skipping NA cases
    ### also: it is possible that model fitting fails, so that generates more NAs (these NAs will always be shown in output)
 
@@ -95,7 +99,7 @@ cumul.rma.uni <- function(x, order, digits, transf, targs, progbar=FALSE, ...) {
       if (!not.na[i])
          next
 
-      args <- list(yi=yi.f, vi=vi.f, weights=weights.f, intercept=TRUE, method=x$method, weighted=x$weighted, test=x$test, level=x$level, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, subset=seq_len(i))
+      args <- list(yi=yi.f, vi=vi.f, weights=weights.f, intercept=TRUE, method=x$method, weighted=x$weighted, test=x$test, level=x$level, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, subset=seq_len(i), outlist=outlist)
       res <- try(suppressWarnings(.do.call(rma.uni, args)), silent=TRUE)
 
       if (inherits(res, "try-error"))

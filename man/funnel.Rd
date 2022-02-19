@@ -14,7 +14,7 @@ funnel(x, \dots)
        steps=5, at, atransf, targs, digits, level=x$level,
        addtau2=FALSE, type="rstandard",
        back="lightgray", shade="white", hlines="white",
-       refline, lty=3, pch, pch.fill=21, col, bg,
+       refline, lty=3, pch, pch.fill, col, bg,
        label=FALSE, offset=0.4, legend=FALSE, \dots)
 
 \method{funnel}{default}(x, vi, sei, ni, subset, yaxis="sei",
@@ -138,6 +138,9 @@ funnel(res, atransf=exp, label="out")
 ### passing log risk ratios and sampling variances directly to the function
 ### note: same plot, except that reference line is centered at zero
 funnel(dat$yi, dat$vi)
+
+### the with() function can be used to avoid having to retype dat$... over and over
+with(dat, funnel(yi, vi))
 
 ### can accomplish the same thing by setting refline=0
 funnel(res, refline=0)
